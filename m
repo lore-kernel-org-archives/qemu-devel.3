@@ -4,96 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C34C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE3BAC021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:58:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmwGX-00079K-A8; Tue, 25 Feb 2025 09:50:33 -0500
+	id 1tmwNj-0000Nb-B3; Tue, 25 Feb 2025 09:57:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmwGU-00078X-Aj
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:50:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmwGS-0001sK-Kd
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:50:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740495027;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7zwOz03HrnyOh169HrOBEY0Ry0JjLl4gs6TpmAYzSw0=;
- b=cwUEGaQJktRArDGoi1QAAGo+RCEXFCUzSVwvi6Uwwa58gTJm7payErMi/bwZrWF+GWe090
- gu2nqGhYi9TI167Zr0dhPXiLY/xQe+nJasZCftDaEn12xCdAkSdEY1/nu/22TFg9NI9jPj
- RBynhFGBo72Z3EY4wYvxHAp0j3L1TzE=
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-H7nWVY4AMGCTkJZnTIkhkA-1; Tue, 25 Feb 2025 09:50:25 -0500
-X-MC-Unique: H7nWVY4AMGCTkJZnTIkhkA-1
-X-Mimecast-MFC-AGG-ID: H7nWVY4AMGCTkJZnTIkhkA_1740495025
-Received: by mail-oi1-f200.google.com with SMTP id
- 5614622812f47-3f40cd0175fso5080601b6e.2
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 06:50:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmwNg-0000NQ-TM
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:57:56 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmwNe-0002Tb-VF
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:57:56 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-38f1e8efe84so2130247f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 06:57:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740495473; x=1741100273; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+ykW2H8fOQHHaIK/G75uKxDgyRvAQilnX9kLMcMhxuk=;
+ b=AD0rRDJQl2muQjrpmIdAC+9QGJ0erAa8HtV3ZWqNyEibE3+mltEdnac3BQ2dvL/6yq
+ GSPOqi8Hjsbxhycv+hAXKVKZVAGYfzUJqaqoKxkvjUvv8DqHX0WNaZqHAxP/UsgI1hxE
+ vc+cac9pid+7o3EWwKy5DR4bdb5lzm41lcm3heqJBKGnz0o/VKo4l60RVNDEhyW6Ad59
+ hDLjBjiX+StZln+cvqq/gkORBZz9fD0dC4yRmcl4gRkyemegHggKORkT1VpEctfmrm0Y
+ 0c//jdiOkv4IjRQV5gj+4fnrNpt1O8UeEAyvY5SUqYiymynae0zSU8nzn3v5cAlwwmqE
+ 4log==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740495025; x=1741099825;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7zwOz03HrnyOh169HrOBEY0Ry0JjLl4gs6TpmAYzSw0=;
- b=fnLoHq6j0ztA6rRsx1LI86S73voMAui9ltmnGtUCWPBIa5wE6Kbcle2as0nlzPpJkD
- 6oZ4Kn9eUgd1yXJZlsg+AJqpN7r8n0nQpKnWZxMGLgP74VrFTv88Qypa6eP+GUEaybb5
- Z6CZtoh0Ngw1I0WYLkQFhVsJ+Re/k8nJ+2pjvwDwHEDqtrG1eDhr3/zBGasHPIFWq6u9
- 49nwQGB8DAgvvWGAo4D0oSqba7zMWLY4ziF9YYG9+CC6vVG3I30XhiCvr6BHS6zum8H0
- nY/r2rhtTX9KGqA26egAxALnS61O62el+k4+sy1leVUHWuHd/bPE8joqFkIQ1oZfOx0q
- rwKw==
-X-Gm-Message-State: AOJu0YzlVGy2u6BJJewcvPBBxbnTYUih/v9LE04XhZHPKiYaFb6kT8w+
- xYJHDpqwlWTXT3hFJvlqdon4A0mB/fm2vXr3FJjFicMA2PR23HWQn33fIWpOEJY6x6i/UJan/1N
- sCepuX4N7kUm3uDJBGfCi9SKQSZ0gXnid31h6wI2iMq035oA3g6l6
-X-Gm-Gg: ASbGncsikeJry3aOEnCEzSXgVf3oclnHd4bcpaq3k0CzrAg4rFK+FxQI+hKW+qeRVkt
- HU93RAW3KPnxw87JrA4kl0SGWn/gpO6QhNiDmzPzbZYu8OXHDM7WvT60nKxx6Sh06ffp6cUmljE
- 8BkMz/cit4RXt+Lvz2NyR9wew52wHADLl/SGQcB/Pofi/N55youualYXihv2Bw3jZHphmDg8Bqc
- iclg2cfGyFbs3K+me8Fzmi3NopzqRob7HtMI4R/J3OjIvwetHvOVgAyiSZJm+6D6CNpwA==
-X-Received: by 2002:a05:6808:4445:b0:3f3:d6d1:c051 with SMTP id
- 5614622812f47-3f4247c30c7mr14919828b6e.37.1740495024970; 
- Tue, 25 Feb 2025 06:50:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQsIeJ3FOuTBry5Np0N6wFWi0wlVbXfdS7ygtukLYsjcSXuLIsiXq3liIpI+RHAni0XjWUug==
-X-Received: by 2002:a05:6808:4445:b0:3f3:d6d1:c051 with SMTP id
- 5614622812f47-3f4247c30c7mr14919819b6e.37.1740495024717; 
- Tue, 25 Feb 2025 06:50:24 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5fe941209d9sm317209eaf.10.2025.02.25.06.50.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 06:50:24 -0800 (PST)
-Date: Tue, 25 Feb 2025 09:50:20 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 7/8] migration/rdma: Remove redundant
- migration_in_postcopy checks
-Message-ID: <Z73YrKRNV5Dy7mjj@x1.local>
-References: <20250221063612.695909-1-lizhijian@fujitsu.com>
- <20250221063612.695909-8-lizhijian@fujitsu.com>
- <Z7zP-HRmX-Oe89Yf@x1.local>
- <1e44eb40-9131-42ef-8544-ffda89ddd9e7@fujitsu.com>
+ d=1e100.net; s=20230601; t=1740495473; x=1741100273;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+ykW2H8fOQHHaIK/G75uKxDgyRvAQilnX9kLMcMhxuk=;
+ b=Kqgj7XaV5qw6iEgmwyST0MrMYzWkhR+OpuP4bjT621NWwdpXq0eJiPi+jl9/ec71qh
+ ZHx5aSAgoFKylzl3GWw9w9jHHArMtm6dNcWUPvy1bL9rvyVIVUUdClqhGBXguimWXyxj
+ /TvcmR/Y4LPvup4V0Wxr8IBZ1Vhvc7+b3O6VQQla1BocCtEOg4/2bMmt5uJtSyXSCofa
+ swcpRqV0GbamtltjzN9+vBhenQ2p2xo/Jx+mlsXKDPvKYHD2LxxLOyRD6Dk7MlpMIBKC
+ BYfY0KtF9qOXfaEyO5qxlqFmf+bHnWF2MsMGILO0JIt/ciePvOE40iG9icN1MWrxvkc2
+ KpUQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUydIhd45/z/lQU3t18h1mGX90PnHCW086AcmL6j9rMOc4F73KqmLesGtnfMgGY+Vxf0QLiXSQYNe40@nongnu.org
+X-Gm-Message-State: AOJu0Yx9EMgHWXqrPn8P9Oq/yU67K1BF90qAFJZvNLrM1IXq5FsStOJ5
+ T/1SWYrNPrIXybmGRw90IyuDvSXHdyp6A2ocR9uikOtLoOlVM6m2mt13UeYXkUk=
+X-Gm-Gg: ASbGnctzapS/DTfNwJP2gdOBHKd4xrzL0r4nvSRIWiGsrSydxHaHB2cdqxMxLNfmjFt
+ EBhIpExeoDybTrp7tyaLbi+JCg2hu9nR1z2uZst5xRGq8JAjuZo6JvdrBdUj2J+hjXNf4aDkVHM
+ ku9NIU9xvj0qO0t8F2sx+5TEDYFF1xMTjahQXwfVhAYx7IwH9gU83+1mje1I9X/u+/YgzKMzlQO
+ qGq1cHxGBh9BLSlP+LmSOVIfB92XLkNgt29Va3KgvfxsNXuzyEEPO5os/XoCol/Q4wFz8HiLYpg
+ TmS0HDlbRXM/NGklSDsZ+uKv1dwmopDGSlV3uL18jdnD/tCqA6IfahAJlm/fsyd3rvDVHA==
+X-Google-Smtp-Source: AGHT+IEB5TIgpkhg53SeDPuE7QP/y5YHXgR0OpoYuUfUTpTNK0SfL0rxPHRqMDxhUiUY1aRRXsprLw==
+X-Received: by 2002:a5d:64ce:0:b0:38f:4b15:32f1 with SMTP id
+ ffacd0b85a97d-38f6f0b8642mr16707600f8f.54.1740495472713; 
+ Tue, 25 Feb 2025 06:57:52 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390cd86ca0asm2608815f8f.32.2025.02.25.06.57.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Feb 2025 06:57:52 -0800 (PST)
+Message-ID: <4432876c-0182-4d2a-8cbd-0f4ff5243ca9@linaro.org>
+Date: Tue, 25 Feb 2025 15:57:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1e44eb40-9131-42ef-8544-ffda89ddd9e7@fujitsu.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/10] plugins/api: use tcg_ctx to get TARGET_PAGE_MASK
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20250225110844.3296991-1-alex.bennee@linaro.org>
+ <20250225110844.3296991-2-alex.bennee@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250225110844.3296991-2-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,50 +104,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 25, 2025 at 06:21:20AM +0000, Zhijian Li (Fujitsu) wrote:
+On 25/2/25 12:08, Alex Bennée wrote:
+> Requiring TARGET_PAGE_MASK to be defined gets in the way of building
+> this unit once. As tcg_ctx has the value lets use it.
 > 
-> 
-> On 25/02/2025 04:00, Peter Xu wrote:
-> > On Fri, Feb 21, 2025 at 02:36:11PM +0800, Li Zhijian wrote:
-> >> Since we have disabled RDMA + postcopy, it's safe to remove
-> >> the migration_in_postcopy()  that follows the migration_rdma().
-> >>
-> >> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> >> ---
-> >>   migration/ram.c  | 2 +-
-> >>   migration/rdma.c | 5 +++--
-> >>   2 files changed, 4 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/migration/ram.c b/migration/ram.c
-> >> index e07651aee8d..c363034c882 100644
-> >> --- a/migration/ram.c
-> >> +++ b/migration/ram.c
-> >> @@ -1939,7 +1939,7 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
-> >>       int res;
-> >>   
-> >>       /* Hand over to RDMA first */
-> >> -    if (migrate_rdma() && !migration_in_postcopy()) {
-> > 
-> > This line was just added in previous patch.
-> > 
-> > Would it be better move 5/6 above, then somehow squash 2/3/4/7 so that it
-> > doesn't need to add something and got removed again? 
-> 
-> Yeah, it sound good to me.
-> I tried to reorder the pathes and squash previous 2 3 4 to a single one
-> 
-> So the new layout will be like below:
-> 
-> e5b1998ad30 migration: Add qtest for migration over RDMA
-> 9a1b87e2db6 migration: Unfold control_save_page()  << this one squashed previous 2/3/4
-> b6ccd49e934 migration/rdma: Remove redundant migration_in_postcopy checks
-> c7c4209db6f migration: disable RDMA + postcopy-ram
-> 0463b54d7f9 migration: Add migration_capabilities_and_transport_compatible() helper
-> 21c76dcabee migration: Prioritize RDMA in ram_save_target_page()
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   plugins/api.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-I'll have another look when repost, but so far looks good, thanks.
-
--- 
-Peter Xu
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
