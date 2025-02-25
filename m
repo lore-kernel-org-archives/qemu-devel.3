@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB3CC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00800C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzKF-0000mI-Vt; Tue, 25 Feb 2025 13:06:36 -0500
+	id 1tmzKS-0000ui-EW; Tue, 25 Feb 2025 13:06:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJ3-0008HP-Ql
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:23 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1tmzJG-0008Nr-LE
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:36 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJ1-0002C7-C5
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:20 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43aac0390e8so15397385e9.2
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:18 -0800 (PST)
+ id 1tmzJC-0002Dy-BD
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:33 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-439a4dec9d5so57994845e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740506717; x=1741111517; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740506727; x=1741111527; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=u9s5E9vJL83glFBvhdpeE2aqzCOgd5BN92rYhBP9wLw=;
- b=jj+E+mW5duA8Nm3WJZZBPDZW2Z2VNUORVekIbxL5zoJqD2w+p254JOz4KVU1C3qEhp
- uN1jcVttE4upY8U5PAj7JoVK+d+rnzRi9fZRAhYZA9osN9PkokFCgY/jy3y+ih+vlmcH
- jUKcIGSWGDhbZ5Z2TFQAjpiv3hkr/qcjxcJiD8b586eGuFqFwgtCK0rq6ynHKrPO2QU2
- F9bleYDOX6ihk6tl/AEY0LJ7I3b7hOmA6uXnIyD/mmRXxDoyvpBZ72y56aHKruh8+JiW
- /rl4M1NFve9mRHYtklF0QbtLsD7FqmwGwvfwhw2JAK0g1fcs86CEgIAPHnx0nnY085jP
- JCQg==
+ :reply-to; bh=TAaeogw6RKMAjRuoPB+J8ccxwyd9NsxfEbAe4rMEEBo=;
+ b=XAG4fdOG0vuV7tKGU80aWXOSH933rN3/q9yL++lRdWgRsBaIR38O0/othkYwMgvavs
+ SSPc82rcTMmFStTfv6ttFc/SoqH1iSlj+reuEB/BbjKjrw4xZpGWIhmKkbebHASvsLAm
+ opEZSduzH6qCpGRf9Mz8tm/jqnheV4eBj/dBqCgavSnkEnUVUL35Iixfe8EmCh5Vm/mh
+ 00f9SXfDWFFBgtB2xb7+6Xg/tXMvBbERv2kbG3JdPSGMPw4TcC2IX4lMkYzRBuByhMfV
+ y8YtDUkxYZzQHGh/EI+YI5Gx30kCX7PTb5OwmbWGhQcTXvr2ue+7WYIZOrwtBN5dCy68
+ amzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740506717; x=1741111517;
+ d=1e100.net; s=20230601; t=1740506727; x=1741111527;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=u9s5E9vJL83glFBvhdpeE2aqzCOgd5BN92rYhBP9wLw=;
- b=rpELJ2Aa2GC20mjCklnx51kWQKXS6o2houyq/OtuXMuURCc6ZNY8eYkYDMBdIwTIqm
- 4cD1fhoZCFvWnw4XTix/kA+Lf8Q18U0XBjnfSDN39Gkb9DCJWJzDHXiKEHqRQF5l8/+N
- hwrGMAVVWXV24oEGI/LepWpwmHA2+/WcgT7dWyQY/IdRtBH2UobmxmX1BljioYBh6H8g
- uxCwF7n+mYWiz6xL0f9+doM2c6cuiTz2wDad1j40bf6rNQlZvEcDq6N0X9IuvY1upJFo
- p4GWe3L0Enawikl+cS7MyLnXJDtZs/rb96zzslp5hZDr9NBNsDsUV6oW13+90N9q2hW0
- iCJw==
-X-Gm-Message-State: AOJu0YzjMHyHE1ZcJWDMPPVfjoGeDOugnZV+oarMHZJXqpihFZ80Am5W
- fq0F9Hr0Xv8ZvAQHk2es60C1dHHgyF3W644NS8Uoz8A+K7FksuDdPsSgG/pAC2LKz8kZPA4IoGU
- J
-X-Gm-Gg: ASbGncsOSys5HJk1lk5h8Go9x3+mmYC5RBosXJ4fgOQwyOxQwQ7nktq3FONOFO2WgPt
- XINCZSo0wS18YtG4CL8XMoVpybWd2O52OTuvAlQkM9nw5MsLuDIGNj+5gi//swhukrs16fV2/3H
- dTKD6y/wrowohjJ7Mgd3DRYF+rj9GTlRx/4fMXfP+j/y476xFeDc0nYJvok8kQcnnhS0K1K+iVS
- 91PwL7lDC6M4Oxiflzj1nBbXgRWLfkjgCUQCqwjOJkybjJBnghoKYCudnypoLoI0s9+AbN/990f
- dRJVJa2vm8NIgJjB2+dkLGqS6lu2f77v
-X-Google-Smtp-Source: AGHT+IFv651/pReZgfsPrxrTA4JaZemUtu0Fu1aTOdENqus9mO+F8lZYXBX139yfYhrvcbzeh3GLsA==
-X-Received: by 2002:a05:600c:458e:b0:439:91dd:cfa3 with SMTP id
- 5b1f17b1804b1-439ae221d72mr147818635e9.29.1740506717137; 
- Tue, 25 Feb 2025 10:05:17 -0800 (PST)
+ bh=TAaeogw6RKMAjRuoPB+J8ccxwyd9NsxfEbAe4rMEEBo=;
+ b=ugAcJaewwPUWz9I3+pyWyfZL295eLzrniGFAHshyeKBDhUWUZy7vggqDdN4BqMpDfx
+ P10JxTLJqGYKCUAkv+CwDo65+BQe6/onyeu6SLm8CXIuFjWYbZ3OMPHoVwwJkI0RDArv
+ AJabrQZ6df34vxc9ZKy+OBFjBPeqf51lZkloeTyJat1RuzNbybYPHppXPoluwOaRAVpa
+ RxZoCghEUHLVJTL5FGQuz7SEmtOyo5jNqbVvgvhaUEWtoWRP8qZBOUo55QzkbhcPfF1w
+ FLqjVZ/HQXFZya2zsdNZmW0NVyMajcLehfAUQy3jRYrL1S4NHjjxIJR65vt+3WlEm6is
+ czBg==
+X-Gm-Message-State: AOJu0YwT8KqNJmMb1K6o8+foculK11lKIUwyqniGqgz9Ed+FZOajVr4o
+ Yw0otT6s5Rk/asBhCrfvOMjiC5++3ZzvBJNH+hiSMv82py1lzNnSLdhjP0nXzuAhLI5Vc5oN4st
+ 1
+X-Gm-Gg: ASbGnctuKtm8H2E3LNpNuGJ8ZU6qGlTBH08FuuH9P1GTX6xltrYVpuGt9vOuIt9QRs6
+ sm1fWOzCoKlbfBCGJtx1TrYCvB2fe5h6ssxasigyVDCBQA89sk7cJcd4RtA7q7gkTFov9Ry5D2s
+ f2yyiue6mY50LvgmwUd0szaZHFpgovD0tF8dTG2o+In3GyU3//R3QUOTpxvW74AT/F702dGrqXb
+ B68rv+O4a8xo/jrqBWnr4bNEzU96xmkLMAYhzRh9YzW7k3zQIupgUGOteoXXgEbxaljQHxEeauL
+ 5DD2u8IpRuQsS9OLbv2ChdgxLyCLwxJB
+X-Google-Smtp-Source: AGHT+IGR5W6QWC9QSAAA6xBkmVEWRcqzKp5/XDLMv4j5ihySqRKbssA9jSKataAbBvcHcUR1D3UPgA==
+X-Received: by 2002:a05:600c:4755:b0:439:9b39:b31 with SMTP id
+ 5b1f17b1804b1-43ab0f2df0fmr40529875e9.8.1740506727486; 
+ Tue, 25 Feb 2025 10:05:27 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.16
+ 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:05:16 -0800 (PST)
+ Tue, 25 Feb 2025 10:05:26 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/43] monitor/hmp-cmds.c: Clean up hmp_dumpdtb printf
-Date: Tue, 25 Feb 2025 18:04:29 +0000
-Message-ID: <20250225180510.1318207-4-peter.maydell@linaro.org>
+Subject: [PULL 12/43] fpu: Pass float_status to floatx80_is_infinity()
+Date: Tue, 25 Feb 2025 18:04:38 +0000
+Message-ID: <20250225180510.1318207-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225180510.1318207-1-peter.maydell@linaro.org>
 References: <20250225180510.1318207-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,31 +99,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In hmp_dumpdtb(), we print a message when the command succeeds.  This
-message is missing the trailing \n, so the HMP command prompt is
-printed immediately after it.  We also weren't capitalizing 'DTB', or
-quoting the filename in the message.  Fix these nits.
+Unlike the other float formats, whether a floatx80 value is
+considered to be an Infinity is target-dependent.  (On x86 if the
+explicit integer bit is clear this is a "pseudo-infinity" and not a
+valid infinity; m68k does not care about the value of the integer
+bit.)
+
+Currently we select this target-specific logic at compile time with
+an ifdef.  We're going to want to do this at runtime, so change the
+floatx80_is_infinity() function to take a float_status.
+
+This commit doesn't change any logic; we'll do that in the
+next commit.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250206151214.2947842-2-peter.maydell@linaro.org
+Message-id: 20250224111524.1101196-5-peter.maydell@linaro.org
 ---
- monitor/hmp-cmds.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/fpu/softfloat.h      |  2 +-
+ target/i386/tcg/fpu_helper.c | 20 +++++++++++---------
+ target/m68k/fpu_helper.c     |  2 +-
+ 3 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 3825ff40a9b..7ded3378cfc 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -431,6 +431,6 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
-         return;
-     }
- 
--    monitor_printf(mon, "dtb dumped to %s", filename);
-+    monitor_printf(mon, "DTB dumped to '%s'\n", filename);
+diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
+index afae3906024..3c83d703baf 100644
+--- a/include/fpu/softfloat.h
++++ b/include/fpu/softfloat.h
+@@ -996,7 +996,7 @@ static inline floatx80 floatx80_chs(floatx80 a)
+     return a;
  }
- #endif
+ 
+-static inline bool floatx80_is_infinity(floatx80 a)
++static inline bool floatx80_is_infinity(floatx80 a, float_status *status)
+ {
+ #if defined(TARGET_M68K)
+     return (a.high & 0x7fff) == floatx80_infinity.high && !(a.low << 1);
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 741af09f908..3b79bc049d1 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -1393,7 +1393,8 @@ void helper_fpatan(CPUX86State *env)
+         /* Pass this NaN through.  */
+     } else if (floatx80_is_zero(ST1) && !arg0_sign) {
+         /* Pass this zero through.  */
+-    } else if (((floatx80_is_infinity(ST0) && !floatx80_is_infinity(ST1)) ||
++    } else if (((floatx80_is_infinity(ST0, &env->fp_status) &&
++                 !floatx80_is_infinity(ST1, &env->fp_status)) ||
+                  arg0_exp - arg1_exp >= 80) &&
+                !arg0_sign) {
+         /*
+@@ -1442,8 +1443,8 @@ void helper_fpatan(CPUX86State *env)
+             rexp = pi_exp;
+             rsig0 = pi_sig_high;
+             rsig1 = pi_sig_low;
+-        } else if (floatx80_is_infinity(ST1)) {
+-            if (floatx80_is_infinity(ST0)) {
++        } else if (floatx80_is_infinity(ST1, &env->fp_status)) {
++            if (floatx80_is_infinity(ST0, &env->fp_status)) {
+                 if (arg0_sign) {
+                     rexp = pi_34_exp;
+                     rsig0 = pi_34_sig_high;
+@@ -1462,7 +1463,8 @@ void helper_fpatan(CPUX86State *env)
+             rexp = pi_2_exp;
+             rsig0 = pi_2_sig_high;
+             rsig1 = pi_2_sig_low;
+-        } else if (floatx80_is_infinity(ST0) || arg0_exp - arg1_exp >= 80) {
++        } else if (floatx80_is_infinity(ST0, &env->fp_status) ||
++                   arg0_exp - arg1_exp >= 80) {
+             /* ST0 is negative.  */
+             rexp = pi_exp;
+             rsig0 = pi_sig_high;
+@@ -1829,7 +1831,7 @@ void helper_fxtract(CPUX86State *env)
+         }
+         fpush(env);
+         ST0 = ST1;
+-    } else if (floatx80_is_infinity(ST0)) {
++    } else if (floatx80_is_infinity(ST0, &env->fp_status)) {
+         fpush(env);
+         ST0 = ST1;
+         ST1 = floatx80_default_inf(0, &env->fp_status);
+@@ -2173,7 +2175,7 @@ void helper_fyl2x(CPUX86State *env)
+     } else if (arg0_sign && !floatx80_is_zero(ST0)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         ST1 = floatx80_default_nan(&env->fp_status);
+-    } else if (floatx80_is_infinity(ST1)) {
++    } else if (floatx80_is_infinity(ST1, &env->fp_status)) {
+         FloatRelation cmp = floatx80_compare(ST0, floatx80_one,
+                                              &env->fp_status);
+         switch (cmp) {
+@@ -2188,7 +2190,7 @@ void helper_fyl2x(CPUX86State *env)
+             ST1 = floatx80_default_nan(&env->fp_status);
+             break;
+         }
+-    } else if (floatx80_is_infinity(ST0)) {
++    } else if (floatx80_is_infinity(ST0, &env->fp_status)) {
+         if (floatx80_is_zero(ST1)) {
+             float_raise(float_flag_invalid, &env->fp_status);
+             ST1 = floatx80_default_nan(&env->fp_status);
+@@ -2341,11 +2343,11 @@ void helper_fscale(CPUX86State *env)
+             float_raise(float_flag_invalid, &env->fp_status);
+             ST0 = floatx80_silence_nan(ST0, &env->fp_status);
+         }
+-    } else if (floatx80_is_infinity(ST1) &&
++    } else if (floatx80_is_infinity(ST1, &env->fp_status) &&
+                !floatx80_invalid_encoding(ST0) &&
+                !floatx80_is_any_nan(ST0)) {
+         if (floatx80_is_neg(ST1)) {
+-            if (floatx80_is_infinity(ST0)) {
++            if (floatx80_is_infinity(ST0, &env->fp_status)) {
+                 float_raise(float_flag_invalid, &env->fp_status);
+                 ST0 = floatx80_default_nan(&env->fp_status);
+             } else {
+diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
+index 339b73ad7dc..eb1cb8c6872 100644
+--- a/target/m68k/fpu_helper.c
++++ b/target/m68k/fpu_helper.c
+@@ -455,7 +455,7 @@ void HELPER(ftst)(CPUM68KState *env, FPReg *val)
+ 
+     if (floatx80_is_any_nan(val->d)) {
+         cc |= FPSR_CC_A;
+-    } else if (floatx80_is_infinity(val->d)) {
++    } else if (floatx80_is_infinity(val->d, &env->fp_status)) {
+         cc |= FPSR_CC_I;
+     } else if (floatx80_is_zero(val->d)) {
+         cc |= FPSR_CC_Z;
 -- 
 2.43.0
 
