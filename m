@@ -4,78 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54480C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 08:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 636B9C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 08:28:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmq66-0007gf-8e; Tue, 25 Feb 2025 03:15:22 -0500
+	id 1tmqIV-0001FP-IV; Tue, 25 Feb 2025 03:28:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tmq63-0007gA-M2
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 03:15:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tmqIR-0001Ei-Lm; Tue, 25 Feb 2025 03:28:07 -0500
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tmq5y-00045Z-K0
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 03:15:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740471312;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fkRx57SfpfBR44BQeKjf5mSFKTxvgvdOgb7ypLvIXNU=;
- b=hZWm6mLGnSvLEKxPzS/a+M/3XWZxw+L2XdL3R64tj7rBdmbSUZ52jow5cMHFMDq7fFH9QE
- +kJk/EADHJhgtmAqxdF5Zz3PDoMagiM4OGm/vHMa3r+mZMWdHdb3rdjVzOQRM5CkDavnTT
- Sj6Ql5z6UckqBDtJ+/CPQQBi/brgHio=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-0ktU5mHCPpuY_AzSDknNzQ-1; Tue,
- 25 Feb 2025 03:15:07 -0500
-X-MC-Unique: 0ktU5mHCPpuY_AzSDknNzQ-1
-X-Mimecast-MFC-AGG-ID: 0ktU5mHCPpuY_AzSDknNzQ_1740471306
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A25351801A1C; Tue, 25 Feb 2025 08:15:06 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5FA5A19560A3; Tue, 25 Feb 2025 08:15:05 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D1EA121E6741; Tue, 25 Feb 2025 09:15:02 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Thomas
- Huth <thuth@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Cleber Rosa
- <crosa@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 05/10] qapi/parser: adjust info location for doc body
- section
-In-Reply-To: <20250224033741.222749-6-jsnow@redhat.com> (John Snow's message
- of "Sun, 23 Feb 2025 22:37:36 -0500")
-References: <20250224033741.222749-1-jsnow@redhat.com>
- <20250224033741.222749-6-jsnow@redhat.com>
-Date: Tue, 25 Feb 2025 09:15:02 +0100
-Message-ID: <87mseacuex.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tmqIP-0005Ej-BC; Tue, 25 Feb 2025 03:28:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1740472086; x=1772008086;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=ypBnyjHK5BmToensLWhz1lncWac+k22jlQMcx1/9y9o=;
+ b=mCQIdNTprzjAYoHzzoD6EMCLcZFtexWKp74SpK9bfK6XdfN6BDvFKAji
+ WP1ApgRaUQHyBJsnfHVdRk8Wxt/JdgYFb3tIrm84GqSdYLPY8T3eQW6PS
+ 8DHImP4okFcN8gcVYiioAnsT0+kstzGYCwg4L4ynRUIl2jjButjiIlGON
+ 4njgxcIzpTl6vQk6AAn0E6KCarEplc1O4E/6k/l616nRaiQFUaN2yIe7K
+ E6HkhxzQV8y3Zw7AwEu4UgLc/9aIrHD/6a9j9ndiNZoJikizcj1YnyfRP
+ w47/7UY89X13amvgJo/ojr+vMVFEY1RISuwqgI3G7b/lyL3KmOMBC2qu0 g==;
+X-CSE-ConnectionGUID: +Dv2DDKxT4qmJfdXehiVJw==
+X-CSE-MsgGUID: InEr1FPsRwOvEQ/Jz41W4Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11355"; a="40451904"
+X-IronPort-AV: E=Sophos;i="6.13,313,1732608000"; d="scan'208,217";a="40451904"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Feb 2025 00:28:00 -0800
+X-CSE-ConnectionGUID: uKjO1oniRt2Cr46t0kZE/Q==
+X-CSE-MsgGUID: sISh+4hlRK2rRfyLdpZEQQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,313,1732608000"; 
+ d="scan'208,217";a="121262009"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 25 Feb 2025 00:27:58 -0800
+Date: Tue, 25 Feb 2025 16:47:35 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 10/15] rust: qom: wrap Object with Opaque<>
+Message-ID: <Z72Dp8BJdmZrgcXK@intel.com>
+References: <20250221170342.63591-1-pbonzini@redhat.com>
+ <20250221170342.63591-11-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250221170342.63591-11-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,25 +82,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+> @@ -621,7 +629,7 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
+>  /// We expect the FFI user of this function to pass a valid pointer that
+>  /// can be downcasted to type `T`. We also expect the device is
+>  /// readable/writeable from one thread at any time.
+> -unsafe extern "C" fn rust_unparent_fn<T: ObjectImpl>(dev: *mut Object) {
+> +unsafe extern "C" fn rust_unparent_fn<T: ObjectImpl>(dev: *mut bindings::Object) {
+>      let state = NonNull::new(dev).unwrap().cast::<T>();
+>      T::UNPARENT.unwrap()(unsafe { state.as_ref() });
+>  }
+> @@ -796,8 +804,9 @@ fn new() -> Owned<Self> {
+>          // SAFETY: the object created by object_new is allocated on
+>          // the heap and has a reference count of 1
+>          unsafe {
+> -            let obj = &*object_new(Self::TYPE_NAME.as_ptr());
+> -            Owned::from_raw(obj.unsafe_cast::<Self>())
+> +            let obj = object_new(Self::TYPE_NAME.as_ptr());
 
-> Instead of using the info object for the doc block as a whole (which
-> always points to the very first line of the block), update the info
-> pointer for each call to ensure_untagged_section when the existing
-> section is otherwise empty. This way, Sphinx error information will
-> match precisely to where the text actually starts.
->
-> For example, this patch will move the info pointer for the "Hello!"
-> untagged section ...
->
->> ##       <-- from here ...
->> # Hello! <-- ... to here.
->> ##
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+Having the same name is always not ideal, so let's name the first one raw_obj.
 
-This patch would be easier to accept with a test case where it improves
-the error location.  I tried to construct one quickly, but failed.  Can
-you help?
+> +            let obj = Object::from_raw(obj).unsafe_cast::<Self>();
+> +            Owned::from_raw(obj)
+>          }
+>      }
+>  }
 
+Others look good to me,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+> 
 
