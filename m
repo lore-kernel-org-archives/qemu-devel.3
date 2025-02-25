@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99564C021BB
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A54C021BC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmvwC-0000lL-4T; Tue, 25 Feb 2025 09:29:32 -0500
+	id 1tmw7C-0002bW-5j; Tue, 25 Feb 2025 09:40:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmvw9-0000ky-RE
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:29:29 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmw79-0002bJ-Cp
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:40:51 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmvw8-0008KH-29
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:29:29 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-6fb7d64908fso48173307b3.3
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 06:29:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmw76-000153-Fp
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:40:49 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-439350f1a0bso34187045e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 06:40:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740493766; x=1741098566; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lPHujlsLhltShdBoB8PvpgOtSi2hhPzbNlYdJCzOuL0=;
- b=LWDazoYDAPe2NKeaq0P4RqNwEccWIYjmsVxSwea0yBLCIh7u/T+nHO9gLkoi68NODQ
- Ek1tPPT08FOL9BV0OrpvdRwXnrwI7tgb/SOspukG1Bl1iuvu0+tg6gQYTwr5Zm3QrkaS
- km39bRlpKMR/hDkaoXzx9JTBWADYn0GBJ8jLUj+7O99it1DAWAinSXL9NeL1sdyB6m3d
- FWUFIBf7u9P3MJyKUV/g8XSdw021TEltVLk9iEzWfP7yq/S3iHceSPcf9pfdBvK6Cvoy
- DblOKxm9WdR/xNUzw0eAIpVPAJh/1+vS4uefUziP2Yulw+RuFS9hb+nLB8UHh7w6eS3V
- Ey7Q==
+ d=linaro.org; s=google; t=1740494446; x=1741099246; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ND3Zaho/gCO021FTzM5e0cHCQSeRgbzWsTCy4MLBOfM=;
+ b=ZSdXLYC2OkE8Aek2s2/W5NM3Amlu84Jh0piW/Q9lmnrj3NGtgKMma10QBdTXslXC7f
+ j6Ul6oy+Fognv0Yx6vJJoQUm487CLXdA4itrT6T2jTvIYUoCDEFu96mME/a8cmwwL/Ue
+ ne7VA4vwigNm5SSeUGNrOcNdTRtIDSIf61XN4ZnzV/NnlKhjnfE0BYmHxjQ3Wn5Lv0HD
+ 3wDkl5G6SJ0ycqeMbTMKe+nYwDsnVsHd7meTA+ctufZsfCFGy1SG+PcfuMLo9md3Gioq
+ pbCiO69zaedxvrwhhQCNfwZcV/lmwMB5SQtcnjHVLPKegoJ1mQJDo4njjzkk3mA68iMl
+ 7qAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740493766; x=1741098566;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lPHujlsLhltShdBoB8PvpgOtSi2hhPzbNlYdJCzOuL0=;
- b=WEXJ4XtV7S5qFXLISeuW/v2EvXN1L6q6Z+1RQAJG546LCapUlyk0Q7McAxEiUyxM2b
- SIcCxSpoEmRZQ0YwLSd+TO2a2wEocR8XELRmt3O+f9asCrYrEvUo4gJOXCZCYDQNQ8o+
- RpuRHhAsW61emCsTcnje2X0MtDvZ4LxJ2LmoVblPES2HJSS7Yek1pgc5G+im545S3vx6
- isuD5dgY7wK8NgP7aGt3NtYKkbowuodKmepoEiS3+M3KtB76DXlDsX8lpqWDyth7V9GU
- 17L7eEcSKqqe8TYLktb5AkS9OK7l7v8/EOJrO39DbxG6ihHnLJenOkMep9EnqqNItrdR
- RORA==
-X-Gm-Message-State: AOJu0YwCpBRtBq9A/bzBWDKFAljY+yvkB6w2ezfPrrepFYM+zKQ3x8/l
- DEwvdqMey7lrcX9w3gEn8w+W4JJXv+Hu1ccJSAzs1hd34XWu2umh6RcgBD+5rrTymUECOVioNph
- 79FVN4cvbyYUFRxh2jCfQqX7Ft/tQ6ZNostSRyQ==
-X-Gm-Gg: ASbGncvUiPvUcLrymofVnBuVDFGLjkfntW+bBV2mTzFgT8HFopWuNPKXPtQdlHgl58Q
- cDD3TL5OQUkWnyyK8BbM711RxXaXijnI6vkI9bn+8qfAR/yjRK0pWt+7iDHzZCYSrr7LMvuNrDw
- ZN1cbrbTwn
-X-Google-Smtp-Source: AGHT+IF2pZimpMrjZz0DzDLoqS6vNb3AwGsBxI6uLGnhK4ADol+Tte+KsEaBsr+rtZCBJ1OBogZXvavM3UdQ7sZ7kSQ=
-X-Received: by 2002:a05:690c:6f85:b0:6f9:7b99:8a29 with SMTP id
- 00721157ae682-6fbcc3a3ee3mr150342067b3.34.1740493766452; Tue, 25 Feb 2025
- 06:29:26 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740494446; x=1741099246;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ND3Zaho/gCO021FTzM5e0cHCQSeRgbzWsTCy4MLBOfM=;
+ b=PVU0GJN54M5XfnxDZRq9Qdo6uJFNTLL0l+EdC0c5Y97apk99oSdlfv/vOXBAapAxpX
+ X9R8/JMeFv6JiUF7YOh2Bi278zpghzGj5FtYel2UTAS4VacJmRiIZkUhWe+LnCTZ9lAG
+ vLRM7vMJ8gDc3+n1vDYjyFkg7qoKsnHcQfgo0jxP5dNG7qJI3FOW1S4BmrBuhdsUwpH0
+ 6jjXaVgJT73jRjvlaGkKNNx+EI2UqQxq9Weci1aBX5HHRdMryPGQYfgQdlwaifByKm3O
+ mL+wr6OU/paedYQYz9dIfxagGxqTyBbRjfakcGsOdgjOUDlUvzZE8YaueXyXV/j6O42A
+ xH4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVT1koBrg7mpNRy1TtdSQ3iG2mbmqSWeuki/dSzgsmwXjqBC8naB3PCRKBu0QavBrPVO8b050A8I87a@nongnu.org
+X-Gm-Message-State: AOJu0Ywou8EmQtau78K/DYqlmj9fnUz3KcUttzCqx/rR0ShwOnWHKqBj
+ 4AiwtESxpxkr6/QS//Wa8GivuYKqOAZNtVOkLzVSdbk57/9BHiZMX2s3+bsKQef1FFkMsJ9a+ac
+ VC2U=
+X-Gm-Gg: ASbGncvB+dXtQSj87GyhA0MttusUTW7trs4TT1D3rlFViBhMbCAlyKDW3pXnCh5DjKT
+ SiqT4nMKEJzmZr+feckNA56l/JttEJ8dQz82j5Ayfe96t1CrDRGB1C8GgpDFYcMgXQP+Up0DOeE
+ ioInK2Nlt+doK9m2JoPvAh1xI1LCjCNyR4rqSJSUtFnOlDhc+90Mq+caPOa0uHq5+7xbYiHvekj
+ Q5GPwQ/tLfuYCnMGSGWmFzhuPH8PEbOnijjj7DvO0pIpb0OavVjcpz522w0RM/7E5Ejv6qEWoq6
+ Wy849ACiiSG9oo1p5xo9N2kfFDWqGDDn021FT61bJgdclZd6oPYYE9aZgwW61bJlEv5+xw==
+X-Google-Smtp-Source: AGHT+IHHPTDS61KmpcMnoTCXnXcdksYBB0O118t7CV4ppS5kbY8Eql6y/uPy7kPINIJgk92Cm2a8VQ==
+X-Received: by 2002:a05:600c:3b1f:b0:439:9434:4f3b with SMTP id
+ 5b1f17b1804b1-439ae2eb6c6mr135115485e9.8.1740494445999; 
+ Tue, 25 Feb 2025 06:40:45 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-439b0372124sm141184235e9.39.2025.02.25.06.40.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Feb 2025 06:40:45 -0800 (PST)
+Message-ID: <127cd235-927c-441d-af75-1d6e4afe6edd@linaro.org>
+Date: Tue, 25 Feb 2025 15:40:44 +0100
 MIME-Version: 1.0
-References: <20250223114708.1780-1-shentey@gmail.com>
- <20250223114708.1780-17-shentey@gmail.com>
-In-Reply-To: <20250223114708.1780-17-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 25 Feb 2025 14:29:15 +0000
-X-Gm-Features: AWEUYZkQXFmCUgjaGJfkSE_kqM2ygGc7gci1ahus-kgRhkWasr957dmm07STbk8
-Message-ID: <CAFEAcA8L6CFvuTC+UqG7r5R27Yohc9vSVtPBHttBKKj-s-L0oA@mail.gmail.com>
-Subject: Re: [PATCH v2 16/18] hw/arm/fsl-imx8mp: Add boot ROM
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Andrey Smirnov <andrew.smirnov@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, Alistair Francis <alistair@alistair23.me>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/9] target/loongarch: Fix PGD CSR for LoongArch32
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>
+References: <20250225-la32-fixes1-v2-0-8ec68ada3dd5@flygoat.com>
+ <20250225-la32-fixes1-v2-3-8ec68ada3dd5@flygoat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250225-la32-fixes1-v2-3-8ec68ada3dd5@flygoat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,38 +102,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 23 Feb 2025 at 11:47, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> On a real device, the boot ROM contains the very first instructions the CPU
-> executes. Also, U-Boot calls into the ROM to determine the boot device. While
-> we're not actually implementing this here, let's create the infrastructure and
-> add a dummy ROM with all zeros. This allows for implementing a ROM later without
-> touching the source code and even allows for users to provide their own ROMs.
->
-> The imx8mp-boot.rom was created with
-> `dd if=/dev/zero of=imx8mp-boot.rom bs=1 count=258048`.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+On 25/2/25 01:40, Jiaxun Yang wrote:
+> As per manual, the source of PGD CSR is relevant to highest bit of
+> BADV. In LoongArch32, all CSRs are 32 bits only, thus we should check
+> bit 31 of BADV to determine PGDH/PGDL for LoongArch32.
+> 
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> ---
+>   target/loongarch/tcg/csr_helper.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Hi; I've thought about this a bit, and I think we should just
-postpone having code to load a rom blob until we have an
-actual rom blob that's not all zeroes. This makes this
-board the same as e.g. imx7 which also doesn't try to load
-a ROM blob. You can create a memory region for the ROM,
-like imx7; just don't load anything into it, and that's
-exactly the same as if there was an all-zeroes file that
-got loaded.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This doesn't prevent users from experimenting with providing
-their own ROM code, because they can do that with the
-generic loader (passing it either an ELF file set up to
-load to the ROM area or else a binary blob plus the
-start address of 0).
-
-That way we aren't carrying code we aren't using and an
-awkward binary blob in git; we can add those when we need
-them.
-
-thanks
--- PMM
 
