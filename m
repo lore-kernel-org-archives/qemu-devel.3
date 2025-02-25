@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1378EC021BC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABF4C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmrL6-0002fc-GR; Tue, 25 Feb 2025 04:34:56 -0500
+	id 1tmrQC-0004Ww-GE; Tue, 25 Feb 2025 04:40:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmrKz-0002ef-QD
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:34:50 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmrKx-0004mH-4V
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:34:49 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4398ec2abc2so46836515e9.1
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 01:34:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740476084; x=1741080884; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z/aOnmiLBL/MdJMrbpdNPso/NCDWVX7/KXn8mmcJks4=;
- b=y/UfIn9DD+csW0oJnrAGlrF690tcMopmcTsCRnpJUbCZcDHZphRg/ZYZHmfwqb6fnJ
- D4lBvCeH/0PGYLoBm4FtNHsH1kU7+WaBX5vofA7PAVvPBjrunIiGjJRbT/2ahxgD6kDA
- +odoJM4W98vU0N6UhLL2Fc8bvMhWqfaJDxiWOrpVeVYnmQSVL8pimjOsxjQWIvgBUBtK
- OAKLlgyYjbrtG2XJMWb4nT93nJ4kQ47cYFik+jFd3xg3ABtR15i8bp/Csn/n1002mfAR
- VtzXxmkx+IWbLYFskZl3YX2HGdt0Cglfm7sRyhdEfDAI496WECEp43uanpaaprMnZTgR
- nTBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740476084; x=1741080884;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=z/aOnmiLBL/MdJMrbpdNPso/NCDWVX7/KXn8mmcJks4=;
- b=luWWGxxmDKLgpbh//aTBEsFSqTnyAjeY5fYlByZTr+Wx6t3RaIwqYQeSLVraDYoMDx
- XTtr5gdIKu9t41pAvySoEjkaiW0xzkNSEdJNpEL4zvry4OhhMl8yu5/C6x1bsGSqCbcc
- iDLGzP33D+87tJf/XV6ice+qiHkSmvDscCyAYv+UlE18IlFRI+dpmrjSGPcv5la35YGv
- 9W5/SD713Zrcq+cZMy/m7C0inmHWONRPIrFsLRbJHX0F/kZsLNSMx4Z2QGUzEwit8Y7g
- 2QpJsMnq9yJRktsQrPdj5oqMOZRTFD1XKKM0h3hYIgwZ8IpOglJa9yOmEPIuf29ApRIY
- cujA==
-X-Gm-Message-State: AOJu0Yx0birREzlvJhdeSd9J5X/FV22hSuUmAXxDDsSs7Ba+IfdNxq0X
- V2V0iJ/X9Q6Fj4C3HFlQqoovXu3Sldbe5wSs96Iwa8OHquvGfCb2U1Br9mNIkKE=
-X-Gm-Gg: ASbGncsRTDc252F5id3dpMp9bK8S9Ryi1FVNLvdwpuYznpU0pLW7Ova6p3D6wVEAVlh
- o+bzT5KYijKGoCMytGTg+t2G6S1TO82rBTTmQYg9SGpjiEOOLziY4J7O9asdFbjOKbSmsZLZ8h7
- C0gu/68uSLzHjUrxmLxjyomjap80yGITXoJSQs6awifkzHvWGUI9W0WqZXD9JYKXaM/vvKvTGv8
- BUOUWwIR8OLSk/WF1RJdf92HLABi5j0t/4qwylqV1EGx96I8w8K44EJyD+H+ojff99L27/6rwi7
- aLVTtb/fjRTS83QCKAQ8u+covnw9
-X-Google-Smtp-Source: AGHT+IFxN2JG5TtZyYz6fnPCVm0BLnnBn3DEhqCz4MqMzlayRxjkXcL27JWB8lQWwgo047ttJHKO/Q==
-X-Received: by 2002:a05:6000:156b:b0:38f:2a82:4427 with SMTP id
- ffacd0b85a97d-38f6e95fe69mr12839485f8f.20.1740476084467; 
- Tue, 25 Feb 2025 01:34:44 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd866f15sm1648077f8f.4.2025.02.25.01.34.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 01:34:43 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E7F7E5F7DC;
- Tue, 25 Feb 2025 09:34:42 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Jayakrishnan A <jksoftdeveloper@gmail.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: Seeking help on implementing sync over ivshmem shared memory
-In-Reply-To: <CAEHwtECacvmv98uAvXisx57qEN1hMbLjHNWUkm8mOt56wtWGaQ@mail.gmail.com>
- (Jayakrishnan A.'s message of "Sun, 23 Feb 2025 20:18:22 +0530")
-References: <CAEHwtECacvmv98uAvXisx57qEN1hMbLjHNWUkm8mOt56wtWGaQ@mail.gmail.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Tue, 25 Feb 2025 09:34:42 +0000
-Message-ID: <87ldtu74gd.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tmrQ0-0004T7-Jw; Tue, 25 Feb 2025 04:40:05 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tmrPu-0005Ch-KS; Tue, 25 Feb 2025 04:39:59 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D25D4F1CD6;
+ Tue, 25 Feb 2025 12:39:25 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 469C51BE5E2;
+ Tue, 25 Feb 2025 12:39:51 +0300 (MSK)
+Message-ID: <4e00ff05-8a7c-488c-a3c5-3df48ce74e79@tls.msk.ru>
+Date: Tue, 25 Feb 2025 12:39:51 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] vhost-user-snd: correct the calculation of config_size
+To: Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-stable@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250217131255.829892-1-mvaralar@redhat.com>
+ <rmroel5kfax2inqmwtbu2bdabzppz46agjh2epjx7enup5kpsi@bqjc6oxnaagj>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <rmroel5kfax2inqmwtbu2bdabzppz46agjh2epjx7enup5kpsi@bqjc6oxnaagj>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,35 +109,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jayakrishnan A <jksoftdeveloper@gmail.com> writes:
+17.02.2025 17:07, Stefano Garzarella wrote:
+> On Mon, Feb 17, 2025 at 02:12:55PM +0100, Matias Ezequiel Vara Larsen wrote:
+>> Use virtio_get_config_size() rather than sizeof(struct
+>> virtio_snd_config) for the config_size in the vhost-user-snd frontend.
+>> The frontend shall rely on device features for the size of the device
+>> configuration space. The presence of `controls` in the config space
+>> depends on VIRTIO_SND_F_CTLS according to the specification (v1.3):
+>> `
+>> 5.14.4 Device Configuration Layout
+>> ...
+>>
+>> controls
+>> (driver-read-only) indicates a total number of all available control
+>> elements if VIRTIO_SND_F_CTLS has been negotiated.
+>> `
+>> This fixes an issue introduced by commit ab0c7fb2 ("linux-headers:
+>> update to current kvm/next") in which the optional field `controls` is
+>> added to the virtio_snd_config structure. This breaks vhost-user-device
+>> backends that do not implement the `controls` field.
+>>
+>> Fixes: ab0c7fb22b ("linux-headers: update to current kvm/next")
+> 
+> If we want to backport this on stable branches, better to add:
+> 
+> Cc: qemu-stable@nongnu.org
 
-> Hi Team ,
->
-> Seeking help on implementing sync over ivshmem shared memory , As part of=
- internal project we could able to achieve
-> shared ivshmem with doorbell mechanism ,But in order to achieve shared me=
-mory synchronisation we are trying to add
-> atomic operation  over this shared memory area variables , Just wanted to=
- analyse whether this atomic variable between
-> VMs shared memory will work as expected , If not is there any suggested w=
-ay ahead to implement synchronisation over
-> ivshmem shared memory for threads running in multiple VMs.
+There's a problem with stable branches though:
 
-Atomic accesses are properly modelled for all QEMU TCG guests that
-support MTTCG using the hosts underlying atomic support. The shared
-memory region ivshmem_bar2/server_bar2 are just pages shared between the
-two QEMU processes so atomic accesses should behave the same way.
+>> static const Property vsnd_properties[] = {
+>>     DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+>> +    DEFINE_PROP_BIT64("controls", VHostUserBase,
+>> +                      parent_obj.host_features, VIRTIO_SND_F_CTLS, false),
+>> };
 
-I'm unfamiliar with if both sides see the MMIO region but there is no
-intrinsic synchronisation for MMIO regions which are terminated by a
-MemoryRegionOps structure although vCPUS on the same QEMU will be
-serialised by the BQL.
+This change introduces an incompatible change in migration stream,
+it looks like.  I'm not sure how to handle this for stable branches,
+is there a way?
 
->
-> Thanks and Regards ,=20
-> Jayakrishnan A
+Thanks,
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+/mjt
 
