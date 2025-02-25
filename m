@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1AAEC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 17:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9F12C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 17:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmyXh-00080F-SD; Tue, 25 Feb 2025 12:16:25 -0500
+	id 1tmyab-0000hR-DL; Tue, 25 Feb 2025 12:19:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmyXg-0007zw-7f
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 12:16:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tmyaX-0000gJ-Ir
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 12:19:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmyXd-00042i-Lt
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 12:16:23 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tmyaT-0004cQ-SO
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 12:19:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740503780;
+ s=mimecast20190719; t=1740503954;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/mKJxsn3rooQ+zjk4FbXGJu6VkqR5puvW5Sbx3c476g=;
- b=D+KzbuCavA3FF/zDuCg/zE+Gkl6gc5+86I69d3w1BcpsJPskxKe5HFaD3XQBjrE6bwT2Jr
- J5FXd3EVE59MvymDQbc3UXq2+mQ+cwY6ta2cubbY1r6CfHPwPlA70TaUsMJ8+5mb00pGBt
- sDeL7Zh73U4RB0tEHIHcAD8icEdBVUY=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=v1wjH3iDqInf/l4UjmbMBSLofTwgBY4zvD65h79ELRc=;
+ b=Af+Wia50/iadmPTPA8/7o1Uow9TjKJeSWBHYme3jJg4zBvD4evZfrM0avt1Zaww9x+6hl9
+ o4mABl3xLLbxgH8vrPO9y2+dSMo95NKx1ht9d6Id00XJ7sueIKHA3umb/JvMHlewnZNxcq
+ 5pdXVGJdkiIcFH+7tj2vPP7k5QS/rI0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-205-glR2Po0ONJqKOheTdgioSw-1; Tue, 25 Feb 2025 12:16:16 -0500
-X-MC-Unique: glR2Po0ONJqKOheTdgioSw-1
-X-Mimecast-MFC-AGG-ID: glR2Po0ONJqKOheTdgioSw_1740503775
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6d89154adabso99916206d6.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 09:16:16 -0800 (PST)
+ us-mta-696-CyBoK-ZsOUyeC1TMImjvwA-1; Tue, 25 Feb 2025 12:19:07 -0500
+X-MC-Unique: CyBoK-ZsOUyeC1TMImjvwA-1
+X-Mimecast-MFC-AGG-ID: CyBoK-ZsOUyeC1TMImjvwA_1740503946
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-439a0e28cfaso32485435e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 09:19:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740503775; x=1741108575;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/mKJxsn3rooQ+zjk4FbXGJu6VkqR5puvW5Sbx3c476g=;
- b=aHtxo6Vp2Q6jWrseFxiLGCsOt1f8E0gbD/rRb/6VXWI/xiMN6WIT8fUxyqbzChusyX
- pfpzlfXydIL7vQGbTo6EEEFKAGG8RsQKpHFFp6d1SabeL7hXKEuo9mkQHh4gYf8hu0VM
- UPCGbzSy9CvBXD7CDwnI9FhoOvP56TtiAvKSk34yRxfX0Z/UtpdnvDy3Ga13ipkuONZn
- D0vS3/EApS0f3oPdvY4qOPWrB0sqXZvdLk8ZtTeVXCn8Czn8Am+1Wu5wT/tkSZXeag+6
- WLeyzCuoBx5whS5SUSicbpWVcohqttsTpYHq4UpNTcA74Apfhvr3XxhbH/IqMWESUe4Q
- xD+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUkaDGmZJN3ZexfSCbMGa2fgl6Cq5k4CqgjpO9Y+aVK9CuYPEYqiIJcGRvUsOxno3eCJgn3R4xlXtqW@nongnu.org
-X-Gm-Message-State: AOJu0YxTRham9bd8G7v6An36r3pNorYAOBd7gbz+JPug6BTMeLNZ8oj0
- ddj/p2trJ7hTKZ82gnax5s7DD1MrY2am32J0a5TXrOXJJbRGmPewYKYTfI5zMC0vBbdYrfTOzeK
- y2C5dhHk4zupTX/VqgKxYWwfa9iA8Vjx/fIAaaTT0Uf19IvmGavZf
-X-Gm-Gg: ASbGncsItLTqH0lmmcONn7bIrsGig6wncFyw9HNF8u8s1ZhYP2uHbzacp0RRc+JO6jB
- NzE1vMAtVkQ5beNT/DTJc3Zr41nJYKXWMZ9fkkfZyaV6sRvw7ONJ6lVjKamv+0KY6YZOU2DTVSS
- mfekILS/uhFWt26Vo5sUp3J30iepS7UIvijQtzCRLKB/QFp5zmKNWwpgE1LJ9MLuN3C6Cm63uWW
- vvTTXzS1KFfJHpGWLp60k+wO/lSh5bz9595Zh+N3HOXDjXJEKDL3CXBovZkWYD1Ub8rkA==
-X-Received: by 2002:a05:6214:518e:b0:6e4:7307:51af with SMTP id
- 6a1803df08f44-6e8868fd61emr960466d6.36.1740503775544; 
- Tue, 25 Feb 2025 09:16:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF+shOaKmcoLKLQfn4V8293ZhtW517tN/bwkYakd0ppf0sSefvZITX/rb7sZ9/6HVdM69otLg==
-X-Received: by 2002:a05:6214:518e:b0:6e4:7307:51af with SMTP id
- 6a1803df08f44-6e8868fd61emr960176d6.36.1740503775282; 
- Tue, 25 Feb 2025 09:16:15 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e87b08729dsm11475346d6.37.2025.02.25.09.16.14
+ d=1e100.net; s=20230601; t=1740503945; x=1741108745;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=v1wjH3iDqInf/l4UjmbMBSLofTwgBY4zvD65h79ELRc=;
+ b=gL99iN4kArpKzwfdirQJz5s0VmciAi1urn9bYeWKdO0GwGbofQPNpSyTnn2l8ZP694
+ 8+h/IYYrigS+HYgk1ulzQFm4tuSXkI6Q43xw4hQscu1cMIIkyrAYkCbNz+S++dTQfmy/
+ 2MZ2bUTmI/mx2ejivbHHeL3AQ2YHKcmMcg2EG659Mowktv2jhHSgoC4FoG2fmmyrnKzp
+ ue9WaDr0dk8GgrSsxNHdikxhiBSpwBHY1l484pocKzqLWpjPXqshAH1wOfvOnY+Fd2lT
+ ABBlBCnN1IkZ7tgDjcIDLq+qwUknw+92phv3NCYT3um6zstPgnnpoJfaVhmu8gaRBIeX
+ SdSQ==
+X-Gm-Message-State: AOJu0YznPr2p2vuNlJzSSur7XbWy2AZ2COWWmAeqxwQ0AApVw0ly8QEL
+ Ca07E0rnJE/oZ7IDsB9QDXthZtTs2yxkfsn1mBX3o+mshzDT0DsdcbMJNKQJwEdqEmcm9gLlxLA
+ GpI4kLp/5Y8LQohI4+j5VcQNBOBPmSUG48v3CL7cmtpB7Njh8Fbt1
+X-Gm-Gg: ASbGncu5e3nm6u+e8h5oWP4N/Ox6m9vP0bhEHPQJrIdCWTXxqAra7X74lhTyMm2uqoM
+ 03BDrQnHGxPO6NVtDR5VNZ7LUxCkiC7mDZ0I9AfCXWWPcU+7xZMGpJK8PCtNdKQVNm4ttBUIJmO
+ bjxTdZW1IUCuWNxDCIM7f4fPMgnwf30JF4cRG8KdFsLUEBMNDnHDCL0UoCotHo+Cu669dGOjxyr
+ GOq46tpF+M6BhEYbNSQDw0YX3xRCKqUHkmB2QauGKtZR3Jqa0AneuXd7URf0axZkFdnASVXlyGJ
+ H6v5F3S/pg2UVlN3q82GwRIwBRPCO1VpcYpr2drDYuLvM98K+kJGJwnhocrAEnE=
+X-Received: by 2002:a05:600c:4ecf:b0:439:a1c7:7b27 with SMTP id
+ 5b1f17b1804b1-43ab0f28895mr31340885e9.1.1740503945524; 
+ Tue, 25 Feb 2025 09:19:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFcx7bVDB1LclP1+wAYI3hNE/ATbR/NfJ4omcsh7wTtVG67S77yz1c6M5hbyVD+a6qrZOBECg==
+X-Received: by 2002:a05:600c:4ecf:b0:439:a1c7:7b27 with SMTP id
+ 5b1f17b1804b1-43ab0f28895mr31340715e9.1.1740503945145; 
+ Tue, 25 Feb 2025 09:19:05 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43ab153dba2sm32663865e9.16.2025.02.25.09.19.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 09:16:14 -0800 (PST)
-Date: Tue, 25 Feb 2025 12:16:11 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 07/36] migration: postcopy_ram_listen_thread() should
- take BQL for some calls
-Message-ID: <Z73620Mo_DHV3zK0@x1.local>
-References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <c331cfc5c87a33df856e58c203d3c1d7e39fc1c1.1739994627.git.maciej.szmigiero@oracle.com>
+ Tue, 25 Feb 2025 09:19:04 -0800 (PST)
+Date: Tue, 25 Feb 2025 18:19:03 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Philippe =?UTF-8?B?TWF0aGlldS1E?=
+ =?UTF-8?B?YXVkw6k=?= <philmd@linaro.org>, npiggin@gmail.com, BALATON Zoltan
+ <balaton@eik.bme.hu>
+Subject: Re: [PATCH v2 05/10] Revert "tcg/cputlb: remove other-cpu
+ capability from TLB flushing"
+Message-ID: <20250225181903.444729fe@imammedo.users.ipa.redhat.com>
+In-Reply-To: <87seo25h73.fsf@draig.linaro.org>
+References: <20250207162048.1890669-1-imammedo@redhat.com>
+ <20250207162048.1890669-6-imammedo@redhat.com>
+ <87seo25h73.fsf@draig.linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <c331cfc5c87a33df856e58c203d3c1d7e39fc1c1.1739994627.git.maciej.szmigiero@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,72 +114,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 19, 2025 at 09:33:49PM +0100, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> 
-> All callers to migration_incoming_state_destroy() other than
-> postcopy_ram_listen_thread() do this call with BQL held.
-> 
-> Since migration_incoming_state_destroy() ultimately calls "load_cleanup"
-> SaveVMHandlers and it will soon call BQL-sensitive code it makes sense
-> to always call that function under BQL rather than to have it deal with
-> both cases (with BQL and without BQL).
-> Add the necessary bql_lock() and bql_unlock() to
-> postcopy_ram_listen_thread().
+On Tue, 25 Feb 2025 12:42:24 +0000
+Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
 
-We can do that, but let's be explicit on what needs BQL to be taken.
+> Igor Mammedov <imammedo@redhat.com> writes:
+>=20
+> > 1)
+> > This reverts commit 30933c4fb4f3df95ae44c4c3c86a5df049852c01.
+> >   ("tcg/cputlb: remove other-cpu capability from TLB flushing")
+> >
+> > The commit caused a regression which went unnoticed due to
+> > affected being disabled by default (DEBUG_TLB_GATE 0)
+> > Previous patch switched to using tcg_debug_assert() so that
+> > at least on debug builds assert_cpu_is_self() path would be exercised.
+> >
+> > And that lead to exposing regression introduced by [1] with abort durin=
+g tests.
+> > to reproduce:
+> >   $ configure  --target-list=3Dx86_64-softmmu --enable-debug
+> >   $ make && ./qemu-system-x86_64
+> >
+> >   accel/tcg/cputlb.c:419: tlb_flush_by_mmuidx:
+> >     Assertion `!(cpu)->created || qemu_cpu_is_self(cpu)' failed.
+> >
+> > which is triggered by usage outside of cpu thread:
+> >     x86_cpu_new -> ... ->
+> >       x86_cpu_realizefn -> cpu_reset -> ... ->
+> >           tcg_cpu_reset_hold =20
+>=20
+> If the reset case is the only one I don't think we need to revert the
+> rest of the changes as only tlb_flush needs calling. How about something
+> like:
+>=20
+> --8<---------------cut here---------------start------------->8---
+> cputlb: introduce tlb_flush_other_cpu for reset use
 
-Could you add an assertion in migration_incoming_state_destroy() on
-bql_locked(), then add a rich comment above it listing what needs the BQL?
-We may consider dropping it some day when it's not needed.
+while that works for my reproducer it's not sufficient,
+'make check' is some tests fails anyway
 
-Thanks,
+ex:
 
-> 
-> qemu_loadvm_state_main() in postcopy_ram_listen_thread() could call
-> "load_state" SaveVMHandlers that are expecting BQL to be held.
-> 
-> In principle, the only devices that should be arriving on migration
-> channel serviced by postcopy_ram_listen_thread() are those that are
-> postcopiable and whose load handlers are safe to be called without BQL
-> being held.
-> 
-> But nothing currently prevents the source from sending data for "unsafe"
-> devices which would cause trouble there.
-> Add a TODO comment there so it's clear that it would be good to improve
-> handling of such (erroneous) case in the future.
-> 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> ---
->  migration/savevm.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 7c1aa8ad7b9d..3e86b572cfa8 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -1986,6 +1986,8 @@ static void *postcopy_ram_listen_thread(void *opaque)
->       * in qemu_file, and thus we must be blocking now.
->       */
->      qemu_file_set_blocking(f, true);
+10/378 qemu:qtest+qtest-x86_64 / qtest-x86_64/ahci-test ERROR 13.47s killed=
+ by signal 6 SIGABRT
+stderr:
+qemu-system-x86_64: qemu/accel/tcg/cputlb.c:419: tlb_flush_by_mmuidx: Asser=
+tion `qemu_cpu_is_self(cpu)' failed.
+Broken pipe
+qemu/tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from signa=
+l 6 (Aborted) (core dumped)
+
+
+
+>=20
+> The commit 30933c4fb4 (tcg/cputlb: remove other-cpu capability from
+> TLB flushing) introduced a regression that only shows up when
+> --enable-debug-tcg is used. The main use case of tlb_flush outside of
+> the current_cpu context is for handling reset and CPU creation. Rather
+> than revert the commit introduce a new helper and tweak the
+> documentation to make it clear where it should be used.
+>=20
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>=20
+> 3 files changed, 26 insertions(+), 5 deletions(-)
+> include/exec/exec-all.h   | 20 ++++++++++++++++----
+> accel/tcg/cputlb.c        |  9 +++++++++
+> accel/tcg/tcg-accel-ops.c |  2 +-
+>=20
+> modified   include/exec/exec-all.h
+> @@ -64,12 +64,24 @@ void tlb_flush_page_all_cpus_synced(CPUState *src, va=
+ddr addr);
+>   * tlb_flush:
+>   * @cpu: CPU whose TLB should be flushed
+>   *
+> - * Flush the entire TLB for the specified CPU. Most CPU architectures
+> - * allow the implementation to drop entries from the TLB at any time
+> - * so this is generally safe. If more selective flushing is required
+> - * use one of the other functions for efficiency.
+> + * Flush the entire TLB for the specified current CPU.
+> + *
+> + * Most CPU architectures allow the implementation to drop entries
+> + * from the TLB at any time so this is generally safe. If more
+> + * selective flushing is required use one of the other functions for
+> + * efficiency.
+>   */
+>  void tlb_flush(CPUState *cpu);
+> +/**
+> + * tlb_flush_other_cpu:
+> + * @cpu: CPU whose TLB should be flushed
+> + *
+> + * Flush the entire TLB for a specified CPU. For cross vCPU flushes
+> + * you shuld be using a more selective function. This is really only
+> + * used for flushing CPUs being reset from outside their current
+> + * context.
+> + */
+> +void tlb_flush_other_cpu(CPUState *cpu);
+>  /**
+>   * tlb_flush_all_cpus_synced:
+>   * @cpu: src CPU of the flush
+> modified   accel/tcg/cputlb.c
+> @@ -414,6 +414,15 @@ void tlb_flush(CPUState *cpu)
+>      tlb_flush_by_mmuidx(cpu, ALL_MMUIDX_BITS);
+>  }
+> =20
+> +void tlb_flush_other_cpu(CPUState *cpu)
+> +{
+> +    g_assert(!qemu_cpu_is_self(cpu));
 > +
-> +    /* TODO: sanity check that only postcopiable data will be loaded here */
->      load_res = qemu_loadvm_state_main(f, mis);
->  
->      /*
-> @@ -2046,7 +2048,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
->       * (If something broke then qemu will have to exit anyway since it's
->       * got a bad migration state).
->       */
-> +    bql_lock();
->      migration_incoming_state_destroy();
-> +    bql_unlock();
->  
->      rcu_unregister_thread();
->      mis->have_listen_thread = false;
-> 
-
--- 
-Peter Xu
+> +    async_run_on_cpu(cpu,
+> +                     tlb_flush_by_mmuidx_async_work,
+> +                     RUN_ON_CPU_HOST_INT(ALL_MMUIDX_BITS));
+> +}
+> +
+>  void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *src_cpu, uint16_t idx=
+map)
+>  {
+>      const run_on_cpu_func fn =3D tlb_flush_by_mmuidx_async_work;
+> modified   accel/tcg/tcg-accel-ops.c
+> @@ -85,7 +85,7 @@ static void tcg_cpu_reset_hold(CPUState *cpu)
+>  {
+>      tcg_flush_jmp_cache(cpu);
+> =20
+> -    tlb_flush(cpu);
+> +    tlb_flush_other_cpu(cpu);
+>  }
+> =20
+> --8<---------------cut here---------------end--------------->8---
+>=20
 
 
