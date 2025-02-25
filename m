@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE3BAC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A84C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmwNj-0000Nb-B3; Tue, 25 Feb 2025 09:57:59 -0500
+	id 1tmwOF-0000YP-Bw; Tue, 25 Feb 2025 09:58:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmwNg-0000NQ-TM
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:57:56 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmwOD-0000Xq-BP
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:58:29 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmwNe-0002Tb-VF
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:57:56 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-38f1e8efe84so2130247f8f.1
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 06:57:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmwOB-0002Zj-U7
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:58:29 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4398c8c8b2cso57700625e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 06:58:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740495473; x=1741100273; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740495506; x=1741100306; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+ykW2H8fOQHHaIK/G75uKxDgyRvAQilnX9kLMcMhxuk=;
- b=AD0rRDJQl2muQjrpmIdAC+9QGJ0erAa8HtV3ZWqNyEibE3+mltEdnac3BQ2dvL/6yq
- GSPOqi8Hjsbxhycv+hAXKVKZVAGYfzUJqaqoKxkvjUvv8DqHX0WNaZqHAxP/UsgI1hxE
- vc+cac9pid+7o3EWwKy5DR4bdb5lzm41lcm3heqJBKGnz0o/VKo4l60RVNDEhyW6Ad59
- hDLjBjiX+StZln+cvqq/gkORBZz9fD0dC4yRmcl4gRkyemegHggKORkT1VpEctfmrm0Y
- 0c//jdiOkv4IjRQV5gj+4fnrNpt1O8UeEAyvY5SUqYiymynae0zSU8nzn3v5cAlwwmqE
- 4log==
+ bh=dvQvWyv54uBoHNnslyv07xCf3EVB6afG4aoRt5qAol0=;
+ b=f5RVeoJnvatTqpHOdCq8gmmU7wYDElXNb0+A3gRNwRzv4pr7A8HV/EyOotVE0lAMRH
+ idT1LCLxEYFhIHMaUHaJrxSO0LFZEQuj902yuwCr/Cz4+DowFJZd6VQWMxhHWhz7RSJ1
+ yVSYkN2/lSeXHPfNz9IZ4Mw/HxZ7QmiHmn8qqk0dQuNdqs2wXNBwIpNb3ziMxDrtbwwI
+ 21Qsz3y8FDwiuaYnRah6zamNYm+VNeCELnld2K0DsulTpcgBKhLedPuzhLaHjPiTAq/E
+ MtiWxc7RJUqa6u6cyqPZj/ps/Mxvj0ngP6ktAHylZAI15XUJUMHNgfdgmcHkbog8jfVh
+ 1VaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740495473; x=1741100273;
+ d=1e100.net; s=20230601; t=1740495506; x=1741100306;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+ykW2H8fOQHHaIK/G75uKxDgyRvAQilnX9kLMcMhxuk=;
- b=Kqgj7XaV5qw6iEgmwyST0MrMYzWkhR+OpuP4bjT621NWwdpXq0eJiPi+jl9/ec71qh
- ZHx5aSAgoFKylzl3GWw9w9jHHArMtm6dNcWUPvy1bL9rvyVIVUUdClqhGBXguimWXyxj
- /TvcmR/Y4LPvup4V0Wxr8IBZ1Vhvc7+b3O6VQQla1BocCtEOg4/2bMmt5uJtSyXSCofa
- swcpRqV0GbamtltjzN9+vBhenQ2p2xo/Jx+mlsXKDPvKYHD2LxxLOyRD6Dk7MlpMIBKC
- BYfY0KtF9qOXfaEyO5qxlqFmf+bHnWF2MsMGILO0JIt/ciePvOE40iG9icN1MWrxvkc2
- KpUQ==
+ bh=dvQvWyv54uBoHNnslyv07xCf3EVB6afG4aoRt5qAol0=;
+ b=Et5a8bAtLvWabQinWcF4BFsyLpqqoWT2DKSWM5HUffRVEXD2UUiGtLd7GbD0LR6Xdl
+ eRLvxMY+U16MVbXC4a8FcOLU7YFofAAJEUEcmZfV2vLr90HMRkFEYtmMH5l4RkeA4Xf2
+ Jy5WYEoGh1dapE7p5DaUIVvTrKqCHKZP89g1f/t3nlf1Qo9XQWbqBwIrbYIdKTPVGCFd
+ E42alElRB4ZemUuVGWuN7PttIVla8ULo1wOpXMWos148wrZjacyR+abdtBENMUC2Rt/d
+ VMMKZiuDhdUUvvFde3uE1W5R0WIO0b6WlM7slK2yfp/77Tu73tCGXGCPnAghTWnNR33q
+ DVgQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUydIhd45/z/lQU3t18h1mGX90PnHCW086AcmL6j9rMOc4F73KqmLesGtnfMgGY+Vxf0QLiXSQYNe40@nongnu.org
-X-Gm-Message-State: AOJu0Yx9EMgHWXqrPn8P9Oq/yU67K1BF90qAFJZvNLrM1IXq5FsStOJ5
- T/1SWYrNPrIXybmGRw90IyuDvSXHdyp6A2ocR9uikOtLoOlVM6m2mt13UeYXkUk=
-X-Gm-Gg: ASbGnctzapS/DTfNwJP2gdOBHKd4xrzL0r4nvSRIWiGsrSydxHaHB2cdqxMxLNfmjFt
- EBhIpExeoDybTrp7tyaLbi+JCg2hu9nR1z2uZst5xRGq8JAjuZo6JvdrBdUj2J+hjXNf4aDkVHM
- ku9NIU9xvj0qO0t8F2sx+5TEDYFF1xMTjahQXwfVhAYx7IwH9gU83+1mje1I9X/u+/YgzKMzlQO
- qGq1cHxGBh9BLSlP+LmSOVIfB92XLkNgt29Va3KgvfxsNXuzyEEPO5os/XoCol/Q4wFz8HiLYpg
- TmS0HDlbRXM/NGklSDsZ+uKv1dwmopDGSlV3uL18jdnD/tCqA6IfahAJlm/fsyd3rvDVHA==
-X-Google-Smtp-Source: AGHT+IEB5TIgpkhg53SeDPuE7QP/y5YHXgR0OpoYuUfUTpTNK0SfL0rxPHRqMDxhUiUY1aRRXsprLw==
-X-Received: by 2002:a5d:64ce:0:b0:38f:4b15:32f1 with SMTP id
- ffacd0b85a97d-38f6f0b8642mr16707600f8f.54.1740495472713; 
- Tue, 25 Feb 2025 06:57:52 -0800 (PST)
+ AJvYcCVl94/tWy6CqhM4yjX7THOWQsx4flf5EnuPE0LyJH3dO/80k0L0J9ydFSLiXPqdQWalwxKz1KPx5vEK@nongnu.org
+X-Gm-Message-State: AOJu0YzwN3rpGN0IqXkXPQjdGQKBdX80G5N6PVroKlAJ1pTVMvc4Bs1X
+ zushrHS6YaA3KD33KGb9tKA2RB7lH2l7qtOyu6N9QwGFAv+61ylE1Tq10koapxQ=
+X-Gm-Gg: ASbGncu9gDJRdEPHlr8EeQ7BGF8Smh0VuRrkgpqXHS+fVfQwyHHLDMIhk49ctERUhDK
+ a5oBxNkX62MWiVSrRHmMn/Gb7lrPhJW7rPz4ccAmtkN2QZCu1QXj/b6w0X5/3b65xTXhhB3g4Ty
+ K6u+lVifCOoPKT6Lfz1WS3KM3Yo5tH06dOhwpt2/VF8Oc41aifpYRFBbVDYLg+jhfkrYJieUJPF
+ Nz7itXHi+PhXEYz8xuNkH/kzQEIuxx/Yc9iTQUZfiuvO1djofPmnNE2aY8fEazPAucvis1s6Xkg
+ NQU1c1Zed5EN+2R7RhV90aJ4VPKA7kAisr2B/NH1DvhKyyLFpuBjtwBhxLKbJqkq2EU/bw==
+X-Google-Smtp-Source: AGHT+IHfqUSN52pJjZ9yIV2YS1s15zMpiZc/RelHUu+BdUHe1kjK/7UxNyn2K5CjXf6u/6dLuYOOeg==
+X-Received: by 2002:a05:600c:444d:b0:439:89d1:30dc with SMTP id
+ 5b1f17b1804b1-43ab0f2dcbcmr40285835e9.10.1740495506371; 
+ Tue, 25 Feb 2025 06:58:26 -0800 (PST)
 Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd86ca0asm2608815f8f.32.2025.02.25.06.57.51
+ 5b1f17b1804b1-439b02f3e26sm143928585e9.23.2025.02.25.06.58.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 06:57:52 -0800 (PST)
-Message-ID: <4432876c-0182-4d2a-8cbd-0f4ff5243ca9@linaro.org>
-Date: Tue, 25 Feb 2025 15:57:51 +0100
+ Tue, 25 Feb 2025 06:58:25 -0800 (PST)
+Message-ID: <0b3eeb1d-8cad-4379-a784-b23d54c0029a@linaro.org>
+Date: Tue, 25 Feb 2025 15:58:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] plugins/api: use tcg_ctx to get TARGET_PAGE_MASK
+Subject: Re: [PATCH 02/10] plugins/loader: populate target_name with
+ target_name()
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <20250225110844.3296991-1-alex.bennee@linaro.org>
- <20250225110844.3296991-2-alex.bennee@linaro.org>
+ <20250225110844.3296991-3-alex.bennee@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250225110844.3296991-2-alex.bennee@linaro.org>
+In-Reply-To: <20250225110844.3296991-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,12 +106,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/2/25 12:08, Alex Bennée wrote:
-> Requiring TARGET_PAGE_MASK to be defined gets in the way of building
-> this unit once. As tcg_ctx has the value lets use it.
+> We have a function we can call for this, lets not rely on macros that
+> stop us building once.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   plugins/api.c | 2 +-
+>   plugins/loader.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
