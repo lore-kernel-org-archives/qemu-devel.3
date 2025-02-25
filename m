@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56AC1C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBA1FC021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:49:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmwAR-0003v4-EO; Tue, 25 Feb 2025 09:44:15 -0500
+	id 1tmwEg-0006KN-AD; Tue, 25 Feb 2025 09:48:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmwAO-0003uP-FK
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:44:12 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmwAG-0001BT-Kq
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:44:08 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-38f1e8efe82so5984613f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 06:44:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740494642; x=1741099442; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SfwduAnSn0GaJ109JcrQLoruPnhZV20e+COlV+vH434=;
- b=nuK6uVgt0/oI8gVswA7WOaxTIDHBq3v8bQU0HPdrTj94Q/x8uwXajAmEJdRsKYyvqr
- DIyLrj0513KGnir/HoFFM2M+RUYD03TRfsamgVi6Wa5MR2WIzCib0GWggD8nVYfzrSPB
- 2gizEdQ9dBrAaZ+Tb5ugYib9+WBPSvqFn3tSJRBul6wXYcQ+i0ck2uHbSFJQCo2zS8DH
- D1iWWch6UcxEky28lFouqrf11z+rSlAAedmOuACilNuitsC9xFIAScues8a148bBqcur
- mllVteikpkNvtxyiXajUjzwUZeU2l195lbmEu2b8jemQD7HDpEZq6pi0L4E/c9VDxVtJ
- dPXg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmwEY-0006Js-Cn
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:48:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmwEU-0001aF-Rz
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:48:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740494905;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dEtQP47RAlZqnEt0Vy/CSjZv53uus8MFp0Y0L+rmou8=;
+ b=O0DSmKiYSd/wf7zNMmvHKzji6wRGFeV6AUtOKZtBaKvv6XZ3wFHgTGTPEwmOK4PQ4xHWIV
+ Qan8KeGWbcphXHZgGr8Yu2abTWoSdyG2s/gDU4vSivvrgW7MR48z1yJ1rRt5NXgEjTH/kQ
+ i7V4RKRoYOylFxy+/YrQwwH4K5Ev0BU=
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
+ [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-636-2b66kzECNeKgqfMeG68IGg-1; Tue, 25 Feb 2025 09:48:20 -0500
+X-MC-Unique: 2b66kzECNeKgqfMeG68IGg-1
+X-Mimecast-MFC-AGG-ID: 2b66kzECNeKgqfMeG68IGg_1740494900
+Received: by mail-oa1-f70.google.com with SMTP id
+ 586e51a60fabf-2add2f6f16dso8707554fac.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 06:48:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740494642; x=1741099442;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SfwduAnSn0GaJ109JcrQLoruPnhZV20e+COlV+vH434=;
- b=jICSzbs+LizcT83ixIwSaa3I7+J+KQJIKTfHNMxBqguggCioAA+Wwmw++rTn3cdXpd
- R6K7k6VQ56dv9mVJA5nSVueOrlr1E7ocAPfbUxDgEa2+0uBU82oxmh/UK/apqkIya/2L
- S2aqgsqHWXbm7O2pQ4QsXYj+kTYeyPrgsdV2T/JIJmp1TRco1XpfZPYEegV+D+0I0+yJ
- R04CY7WsCQBJE0JsTUaD4P+DV7UOrARTyIbMEaw3+FatUBrFsoe23f2vd+Ux624hj005
- SOFNynX4JGrHZL+je0xSmmlYphHPwMFyOvjT3umVLM0yOQmPOq9MohP3PDYRZ0hmOVwd
- yJYQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvFWFyba9ViGuduVZ7pvARAvEjOGCcMS7ufm9u77Jlb/n+HzRPhBAc0LLVTUCJGO5Nr3KJBiC7ARG1@nongnu.org
-X-Gm-Message-State: AOJu0YxM+nRlFUsyJV0laPTJoXpomn+x98QqJb+OhbkoeWYoB0HxuKNo
- hUz0LVa6U7tKaKmWSAlSUat2wD3WFvDKQLgAufQyV2rP10BF6rozRQpacJW4lXU=
-X-Gm-Gg: ASbGncvUKZeXmclXMg+ct+pCjyVWD38ldA2+0ttI4HcsDKLMElZOGqFpSealyg/6ET2
- X1AbdznXb2FYRqqT/OUKKShbZ2H1qn1PFeeIh8+4hOYftWyggNZKezdm+kHYXf8QlXQOHiyx3bX
- 9YxN7VJ2xMK38jArEsxdhyfAa5IJ0syfw0Y8bDcQ5ZblUlOd/m5mOcxDH1rVjBAPPv8KPR84Er9
- TnyGLye/06HkiCa7CuvlBcPPQLQJ8288iWLawme8WzW9geJdg4iQlnhTMLMIzcWJvX2T6tquFpS
- UJUyoi0Hip9jmm7H9vz+zju2dOyUFQZcqJdpxA1ERxch7SBLP29MleJm4NyhKOUVAHilPg==
-X-Google-Smtp-Source: AGHT+IGUCSq3Za9PiLlSygqzEDbV1gCcTl6K7gSH69LKUkDhLcWiqv7a5S20ke+RD5Sr3wSkmhnoMQ==
-X-Received: by 2002:a5d:47a9:0:b0:38f:2856:7dc2 with SMTP id
- ffacd0b85a97d-390cc604026mr4173481f8f.18.1740494642274; 
- Tue, 25 Feb 2025 06:44:02 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab1539dc0sm28823265e9.9.2025.02.25.06.44.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 06:44:01 -0800 (PST)
-Message-ID: <4b103a04-b119-4704-b7c9-d8e3bb482832@linaro.org>
-Date: Tue, 25 Feb 2025 15:44:01 +0100
+ d=1e100.net; s=20230601; t=1740494900; x=1741099700;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dEtQP47RAlZqnEt0Vy/CSjZv53uus8MFp0Y0L+rmou8=;
+ b=rm2mtnbzyj39lqMb3xzcvgBjWRfo5fCeKDtsghE0QBim7mbaY+o3AM0XcsR+cy8XsR
+ RFJEKMLjR4385wIyAuMy6YReTwLtXW3LDMSVwCvZNu4fzCqhZyeaug3rKJ+0BKZHIgO8
+ D3isbowbSdpLHnO99Y4+c+97pKksb9Ku/+g3OtKJOEARJQH338g+Nji3O3iEI1+Ev5v9
+ BWiLGKtjhvVF1cMCW4MtECCNPTU7kmjkNz8+8hF1R6/o+S9cgKlAZzC5NaZpjvaJTN6H
+ 3dEsQdnP2EhONPHt6tronJqHWM8UCDmr+lqZsvRP94P5/Bob3az1ajr+UJmH+WDvX0lI
+ V7Fg==
+X-Gm-Message-State: AOJu0YwEkYf+SrQ/m9O0IyvZsSvykR+Tx+dF9RgHZPyUx2IH3lAMF9z1
+ 4cfqa20DKMfQaJWVd5HnIlDqvAQK4U5PkJtvLF5rkBSkvfcl+nFU/jyA3vFjfSd6HCcMWDFBdb7
+ j5te0zyXI1QqceqTZzqiU0HHqUKTkEWuzatVyjWovzzjca5jbITl9
+X-Gm-Gg: ASbGnctyoDLnDKS19BWzDHHPi3oX9ZWtdbIfbIrj23hOeZqr+aTCxbo/6s+e4oSwnt7
+ Imo/HyklLJTRsQC5fILcfKIG8ZOM/9hVuzspVmO0qdzIIH8j2vbva1lgvRYPE6x7VDQxMdy57x8
+ ePhb+Qa08oU4tgHiEpUOompjZNE13M2S+zVn81kCDYZQIYlXWeu6tKGOp0ZXTXYrlWWFjtvfY2n
+ gsgMDdZuxYgU2L0pr4+9Q2bXqdyJvE4ZI1YxKkdDTGczSboPf1rnMG3VFlBRoiohz+ABg==
+X-Received: by 2002:a05:6870:169d:b0:29e:4cab:5954 with SMTP id
+ 586e51a60fabf-2c10f2e75b7mr2241522fac.17.1740494900143; 
+ Tue, 25 Feb 2025 06:48:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEjo/+6w4VXWDnBYwpHzGyJj5uz2gq+dXgUAXtbavU3Gf6RPbE3SlFx9pxfbkK+jG5wJdb53w==
+X-Received: by 2002:a05:6870:169d:b0:29e:4cab:5954 with SMTP id
+ 586e51a60fabf-2c10f2e75b7mr2241507fac.17.1740494899800; 
+ Tue, 25 Feb 2025 06:48:19 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2c11128723csm399662fac.18.2025.02.25.06.48.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Feb 2025 06:48:19 -0800 (PST)
+Date: Tue, 25 Feb 2025 09:48:15 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 5/8] migration: Add
+ migration_capabilities_and_transport_compatible() helper
+Message-ID: <Z73YL3VnrmxHxZ5M@x1.local>
+References: <20250221063612.695909-1-lizhijian@fujitsu.com>
+ <20250221063612.695909-6-lizhijian@fujitsu.com>
+ <Z7zPYfWp2fLRB63W@x1.local>
+ <8e363920-aafa-4991-b633-fa9473406b17@fujitsu.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/9] target/loongarch: Fix some modifiers for log
- formatting
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>
-References: <20250225-la32-fixes1-v2-0-8ec68ada3dd5@flygoat.com>
- <20250225-la32-fixes1-v2-6-8ec68ada3dd5@flygoat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250225-la32-fixes1-v2-6-8ec68ada3dd5@flygoat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8e363920-aafa-4991-b633-fa9473406b17@fujitsu.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,32 +109,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/2/25 01:40, Jiaxun Yang wrote:
-> target_ulong -> TARGET_FMT_ld
-> vaddr -> VADDR_PRIx
-> uint32_t -> PRIx32
+On Tue, Feb 25, 2025 at 06:37:21AM +0000, Zhijian Li (Fujitsu) wrote:
 > 
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
->   target/loongarch/tcg/insn_trans/trans_atomic.c.inc | 2 +-
->   target/loongarch/tcg/tlb_helper.c                  | 2 +-
->   target/loongarch/tcg/translate.c                   | 5 ++---
->   3 files changed, 4 insertions(+), 5 deletions(-)
+> 
+> On 25/02/2025 03:58, Peter Xu wrote:
+> > On Fri, Feb 21, 2025 at 02:36:09PM +0800, Li Zhijian wrote:
+> >> Similar to migration_channels_and_transport_compatible(), introduce a
+> >> new helper migration_capabilities_and_transport_compatible() to check if
+> >> the capabilites is compatible with the transport.
+> >>
+> >> Currently, only move the capabilities vs RDMA transport to this
+> >> function.
+> >>
+> >> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> > 
+> > Yeah this is even better, thanks.
+> > 
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> 
+> Hi Peter,
+> 
+> Thinking one step further, this patch looks promising and can check
+> most situations. However, on the destination side, if the user first
+> specifies '-incoming' (with the startup parameter -incoming xxx or
+> migrate_incoming xxx) and then 'migrate_set_capability xxx on',
+> the function migration_capabilities_and_transport_compatible() will
+> not be called to check compatibility, which might lead to migration failure.
+> 
+> To address this, without introducing a new member 'transport' into the MigrationState
+> structure, the code might need to be adjusted to this:
+> 
+> The question is whether we need to consider it now(in this patch set)?
 
+We can do that in one patch.
 
-> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-> index 97f38fc391338ba4b76115b142fa76d89e45cd62..a1426b46f36c99e300ab924cb487875ec21ab226 100644
-> --- a/target/loongarch/tcg/tlb_helper.c
-> +++ b/target/loongarch/tcg/tlb_helper.c
-> @@ -517,7 +517,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+> 
+>   static bool migration_transport_compatible(MigrationAddress *addr, Error **errp)
+>   {
+>       return migration_channels_and_transport_compatible(addr, errp) &&
+> -           migration_capabilities_and_transport_compatible(addr, errp);
+> +           migration_capabilities_and_transport_compatible(addr->transport,
+> +               migrate_get_current()->capabilities, errp);
+
+Here IMHO we could make migration_capabilities_and_transport_compatible()
+taking addr+errp like before, then..
+
+>   }
+> 
+>   static gint page_request_addr_cmp(gconstpointer ap, gconstpointer bp)
+> diff --git a/migration/options.c b/migration/options.c
+> index bb259d192a9..59f0ed5b528 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -439,6 +439,29 @@ static bool migrate_incoming_started(void)
+>       return !!migration_incoming_get_current()->transport_data;
+>   }
 >   
->       if (unlikely((level == 0) || (level > 4))) {
->           qemu_log_mask(LOG_GUEST_ERROR,
-> -                      "Attepted LDDIR with level %"PRId64"\n", level);
-> +                      "Attepted LDDIR with level "TARGET_FMT_ld"\n", level);
+> +bool
+> +migration_capabilities_and_transport_compatible(MigrationAddressType transport,
+> +                                                bool *new_caps,
+> +                                                Error **errp)
+> +{
 
-"Attempted"?
+..  here fetch global capability list and feed it.
 
->           return base;
+> +    if (transport == MIGRATION_ADDRESS_TYPE_RDMA) {
+
+[1]
+
+> +        if (new_caps[MIGRATION_CAPABILITY_XBZRLE]) {
+> +            error_setg(errp, "RDMA and XBZRLE can't be used together");
+> +            return false;
+> +        }
+> +        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
+> +            error_setg(errp, "RDMA and multifd can't be used together");
+> +            return false;
+> +        }
+> +        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
+> +            error_setg(errp, "RDMA and postcopy-ram can't be used together");
+> +            return false;
+> +        }
+
+We could introduce migration_rdma_caps_check(&caps, errp) for this chunk
+(since [1]), then...
+
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>   /**
+>    * @migration_caps_check - check capability compatibility
+>    *
+> @@ -602,6 +625,15 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+>           }
 >       }
+>   
+> +    /*
+> +     * In destination side, check the cases that capability is being set
+> +     * after incoming thread has started.
+> +    */
+> +    if (migrate_rdma() &&
+> +        !migration_capabilities_and_transport_compatible(
+> +            MIGRATION_ADDRESS_TYPE_RDMA, new_caps, errp)) {
+> +        return false;
+> +    }
+
+... use migration_rdma_caps_check() here, might be slightly more readable:
+
+  if (migrate_rdma() && !migration_rdma_caps_check(new_caps, errp)) {
+      return false;
+  }
+
+>       return true;
+>   }
+>   
+> diff --git a/migration/options.h b/migration/options.h
+> index 762be4e641a..ca6a40e7545 100644
+> --- a/migration/options.h
+> +++ b/migration/options.h
+> @@ -58,6 +58,9 @@ bool migrate_tls(void);
+>   /* capabilities helpers */
+>   
+>   bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp);
+> +bool
+> +migration_capabilities_and_transport_compatible(MigrationAddressType transport,
+> +                                                bool *new_caps, Error **errp);
+> 
+> > 
+
+-- 
+Peter Xu
+
 
