@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D5B5C021A4
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 00:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E453C021A4
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 00:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmizq-0004YQ-BS; Mon, 24 Feb 2025 19:40:26 -0500
+	id 1tmizx-0004bZ-41; Mon, 24 Feb 2025 19:40:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tmizn-0004Wa-2M
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 19:40:23 -0500
+ id 1tmizr-0004a1-TF
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 19:40:28 -0500
 Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tmizk-0003Rw-Qq
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 19:40:22 -0500
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal
- [10.202.2.45])
- by mailfout.stl.internal (Postfix) with ESMTP id E818C11400E8;
- Mon, 24 Feb 2025 19:40:19 -0500 (EST)
+ id 1tmizq-0003Sl-8H
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 19:40:27 -0500
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal
+ [10.202.2.44])
+ by mailfout.stl.internal (Postfix) with ESMTP id 3FFFE114015F;
+ Mon, 24 Feb 2025 19:40:25 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Mon, 24 Feb 2025 19:40:20 -0500
+ by phl-compute-04.internal (MEProxy); Mon, 24 Feb 2025 19:40:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
  :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1740444019;
- x=1740530419; bh=HzRGBpSsuGYsqp1nebQkdwxhC9+0p8sAf3ZNP4r9fJ8=; b=
- fHT9BiTvtY+ddxUhVLdt2FfgdYwpRkVOJRcguXH3htak8U2cqoqtQYh9TKv/6Az2
- D9bEWzs/krCsgkgCBsvN2ccBO7Y98Ckqz9nBiOzcDtjRWlGVXwm9ydJ2VRciJ7yw
- MV2NpaLtNxc3t+g7MyFrLj04eDEEJqhbDcbJw34RVOsuqlJ1prrvLE6Ax/SpIi/M
- YmCQw5gPl0siJBIQWExLepGbDgGAwsn55dOQTYp0fg4b+MNfe6IwofkFkkTeIdrJ
- 3gUqEkKnF57pYId5pw9/FIeUUC5NepT8KmmZoE8evAlNQ14iguHkiwZ1tcemvqYj
- PbPs+ggSu/pRTtdG/unzEg==
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1740444025;
+ x=1740530425; bh=tFAQFqUAgdmLwYisLRxlA7J5J4yli3bv87ehvWOUb1w=; b=
+ gR7Z0GJb3JtGvDAjVCRyGfNoi4L5aztnUUHlQQW2w+DENKx6Adro/qwiBrpYRr1S
+ KMD2U+bIe6bdlxb+xSdcUWNcrUsRbmoR9YPEWUvEB7JHGmpQtftF3pWD6n9fwM11
+ BXNAP/b9fyIM6KO622Fmhz/5jAeD4SC1LVsd3UU05kTv0cYUgjJcfejI8ooSsalq
+ HhcKy1oxaUKI54A3Y0BKjZgpwso2W5yLyeen8CjX6prb9XEqOtW6yROVJsB+u3a7
+ 7/UXCDWa3+qdr5FQDurP9ECIE8v4hdsrYDBl4AISAbOrQ2n0w+MWq4IDFwirBmJM
+ o9HYlcc2mnPcpTtTtjrh4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740444019; x=
- 1740530419; bh=HzRGBpSsuGYsqp1nebQkdwxhC9+0p8sAf3ZNP4r9fJ8=; b=i
- wQ3bQDVg9u6GywUzJk82+y/MU8Xye+xeraDPTRK3Q5Rap2vwDzBAFnNUzIzuOsls
- sR7LvMpRjzxbnPskzvUlG+a4NGzcdkEOt/f5N31BJ30OLQCRokS8T0Y0Lp4StC2x
- Pqo5uvFJ1KOr578lag0GUAVn0LbV0vVceZcV86InXeQZyqfCrx5Ui45TKBeIPz+y
- vuBU1LNnTtnpFFlmJsVs12bBy/I8TxL6UXmMIqGasYshIS4oxUH7gcnLIptJbLsA
- GIT5jX49NHei+zsKWQOiAaQqxYbjL9Q58UgbgTSi5eVi+2lKdlhSFXKFWc3rG5H4
- Rg9J2g3A8N9fyNPytfnlw==
-X-ME-Sender: <xms:cxG9Z6mqB7nXzvF2y0vlxKHdSZWfjrmakBH7O_BFk6r7snv9Rvey1g>
- <xme:cxG9Zx2cWdWhX-lV9WJaAbGjHoCKoeNmi4Qk3h0X9wf7go1D6dxiBhRgAubXoJqn8
- iKlWVptCt4AqOJJ8wA>
-X-ME-Received: <xmr:cxG9Z4rehWHF9y-7qCN9Nk6Bv9DdpErQgaFUlKCHazY1E0Q8xbLCHaw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdektddvhecutefuodetggdotefrod
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740444025; x=
+ 1740530425; bh=tFAQFqUAgdmLwYisLRxlA7J5J4yli3bv87ehvWOUb1w=; b=T
+ 9wEku/LcKEMIpBb9gJ9sjEaFcd1M/n8RcAjNj7BTfKV2zJq21E++uOEOSqah0h7A
+ mSlkZiNzndJyRr6gsfD/mnfUdIju5jZVkA1lVIaf29/hNFc68I2gzZe4oBmPj7P3
+ Vyy1RUCfrPcP0DKi1b+579iierFxoOHHD6aLOAiZGHaDwydT4i/Kh3Pud6Qlggqo
+ jaVWQqeFA54/NvYyvHVerfkHCjtOMyvT0gIIX+I9oDIXt0W8ux9roIH7waEvbI/o
+ Q3bH0tBvaF9BQaapv6LB10Vbiky6JMtsWe42KYvdaJIUn7duITTd/bHxUZx0CDrX
+ te0+fleVDf7Zl1EotpKwA==
+X-ME-Sender: <xms:eBG9Z8AkqLRWGOur2TJUQ7lAY6JEO1Eng24_fwaK1Ma4U_S2p6lXcQ>
+ <xme:eBG9Z-hBkqUeloKZpHHeQGbztSO88KDgIBdjvuwEfw_OaG94_FNtklQctXRuJ3ekh
+ CwUSQdmbZMe6zJnbfg>
+X-ME-Received: <xmr:eBG9Z_nXvM_zQjkVaHqlf-XIAcjZBZiVSh8SDomsQzVMh_iGJoYGFYo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdektddviecutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
  uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
  hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
@@ -66,21 +66,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdektddvhecutefuodetgg
  hopehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmpdhrtghpthhtohepghgr
  ohhsohhngheslhhoohhnghhsohhnrdgtnhdprhgtphhtthhopehqvghmuhdquggvvhgvlh
  esnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:cxG9Z-koC-TqLTh3Xtt0MycoNk95ujw7gBt4qAX9Q14C7SthCQ1LZw>
- <xmx:cxG9Z42FkSAH9TzqVgEyMpfjYLwcjL5LOHnvJkPxnENhBKzxQjYb2g>
- <xmx:cxG9Z1sn1YCF2GeL7cjvTB24YYgv6PnK6mLZSOyesGgZBuqHHuVMtQ>
- <xmx:cxG9Z0UVnwARW5wRxKpopiwz2MkzUs_pBPP1-7YqDKkvTAT351gVVw>
- <xmx:cxG9Z1z9uhmIhqcErUxAsxt8OZEl9JgYXrrRRIlm_1Gjtt3Rv0zUJ2cR>
+X-ME-Proxy: <xmx:eBG9ZywX4WmT35I2NgLA3c-Z-Js9oMfsvFdy2yDFrlfM1XQ5sxlwrg>
+ <xmx:eRG9ZxQqfBB4IgWuRsgOMO4KrkRzs3opxZd6RKdEz8ni0Dz5ZdpGNA>
+ <xmx:eRG9Z9Z-AjbW_uH4fAde1I3RL0XjsnidYGj1HwHuRSaEJCZ-Y38-fA>
+ <xmx:eRG9Z6TW6TA73ngCR7oDRSxYw29rTZEOBnQYvh10hhlmIGr_ho05Sw>
+ <xmx:eRG9Zzepr6dUlNyHax4W34E5B2Fu8K3Ym_iL89GaBkqOVsKKLOZhhdog>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Feb 2025 19:40:19 -0500 (EST)
+ 24 Feb 2025 19:40:24 -0500 (EST)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Tue, 25 Feb 2025 00:40:15 +0000
-Subject: [PATCH v2 2/9] target/loongarch: Fix address generation for gen_sc
+Date: Tue, 25 Feb 2025 00:40:20 +0000
+Subject: [PATCH v2 7/9] target/loongarch: Use target_ulong for CSR helpers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250225-la32-fixes1-v2-2-8ec68ada3dd5@flygoat.com>
+Message-Id: <20250225-la32-fixes1-v2-7-8ec68ada3dd5@flygoat.com>
 References: <20250225-la32-fixes1-v2-0-8ec68ada3dd5@flygoat.com>
 In-Reply-To: <20250225-la32-fixes1-v2-0-8ec68ada3dd5@flygoat.com>
 To: qemu-devel@nongnu.org
@@ -111,44 +111,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gen_sc should use make_address_i to obtain source address
-to ensure that address is properly truncated.
-
-Another temp value is created in middle to avoid data corruption
-as make_address_i may return the same memory location as src1.
+All CSRs are meant to be target_ulong wide in our setting.
 
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- target/loongarch/tcg/insn_trans/trans_atomic.c.inc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/loongarch/helper.h        | 14 +++++++-------
+ target/loongarch/tcg/op_helper.c |  4 ++--
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-index 974bc2a70feddbf021a07b19a0859781eb3a11c4..c35f6f3ce47877ab6ad84fa2cbc50b46c0b23ad1 100644
---- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-@@ -22,13 +22,12 @@ static bool gen_sc(DisasContext *ctx, arg_rr_i *a, MemOp mop)
-     TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
-     TCGv src2 = gpr_src(ctx, a->rd, EXT_NONE);
--    TCGv t0 = tcg_temp_new();
-+    TCGv t0 = make_address_i(ctx, src1, a->imm);
-     TCGv val = tcg_temp_new();
+diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
+index 409d93a5b0808f0e32b8c0e2e17cebac9feaf8ed..a608754b7f52689da9e9f4da1cef68d5af72f2ed 100644
+--- a/target/loongarch/helper.h
++++ b/target/loongarch/helper.h
+@@ -97,13 +97,13 @@ DEF_HELPER_1(rdtime_d, i64, env)
  
-     TCGLabel *l1 = gen_new_label();
-     TCGLabel *done = gen_new_label();
+ #ifndef CONFIG_USER_ONLY
+ /* CSRs helper */
+-DEF_HELPER_1(csrrd_pgd, i64, env)
+-DEF_HELPER_1(csrrd_cpuid, i64, env)
+-DEF_HELPER_1(csrrd_tval, i64, env)
+-DEF_HELPER_2(csrwr_estat, i64, env, tl)
+-DEF_HELPER_2(csrwr_asid, i64, env, tl)
+-DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+-DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
++DEF_HELPER_1(csrrd_pgd, tl, env)
++DEF_HELPER_1(csrrd_cpuid, tl, env)
++DEF_HELPER_1(csrrd_tval, tl, env)
++DEF_HELPER_2(csrwr_estat, tl, env, tl)
++DEF_HELPER_2(csrwr_asid, tl, env, tl)
++DEF_HELPER_2(csrwr_tcfg, tl, env, tl)
++DEF_HELPER_2(csrwr_ticlr, tl, env, tl)
+ DEF_HELPER_2(iocsrrd_b, tl, env, tl)
+ DEF_HELPER_2(iocsrrd_h, tl, env, tl)
+ DEF_HELPER_2(iocsrrd_w, tl, env, tl)
+diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
+index b17208e5b962f2191b2afa60181bff311d618bba..c9d7e84e7ec9000bab655366bdf6ed8aaa4fd080 100644
+--- a/target/loongarch/tcg/op_helper.c
++++ b/target/loongarch/tcg/op_helper.c
+@@ -61,7 +61,7 @@ void helper_asrtgt_d(CPULoongArchState *env, target_ulong rj, target_ulong rk)
+     }
+ }
  
--    tcg_gen_addi_tl(t0, src1, a->imm);
-     tcg_gen_brcond_tl(TCG_COND_EQ, t0, cpu_lladdr, l1);
-     tcg_gen_movi_tl(dest, 0);
-     tcg_gen_br(done);
-@@ -36,6 +35,7 @@ static bool gen_sc(DisasContext *ctx, arg_rr_i *a, MemOp mop)
-     gen_set_label(l1);
-     tcg_gen_mov_tl(val, src2);
-     /* generate cmpxchg */
-+    t0 = tcg_temp_new();
-     tcg_gen_atomic_cmpxchg_tl(t0, cpu_lladdr, cpu_llval,
-                               val, ctx->mem_idx, mop);
-     tcg_gen_setcond_tl(TCG_COND_EQ, dest, t0, cpu_llval);
+-target_ulong helper_crc32(target_ulong val, target_ulong m, uint64_t sz)
++target_ulong helper_crc32(target_ulong val, target_ulong m, target_ulong sz)
+ {
+     uint8_t buf[8];
+     target_ulong mask = ((sz * 8) == 64) ? -1ULL : ((1ULL << (sz * 8)) - 1);
+@@ -71,7 +71,7 @@ target_ulong helper_crc32(target_ulong val, target_ulong m, uint64_t sz)
+     return (int32_t) (crc32(val ^ 0xffffffff, buf, sz) ^ 0xffffffff);
+ }
+ 
+-target_ulong helper_crc32c(target_ulong val, target_ulong m, uint64_t sz)
++target_ulong helper_crc32c(target_ulong val, target_ulong m, target_ulong sz)
+ {
+     uint8_t buf[8];
+     target_ulong mask = ((sz * 8) == 64) ? -1ULL : ((1ULL << (sz * 8)) - 1);
 
 -- 
 2.43.0
