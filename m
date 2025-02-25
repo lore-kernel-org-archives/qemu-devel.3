@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A34C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 138F4C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 10:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmrfe-0001DK-1r; Tue, 25 Feb 2025 04:56:10 -0500
+	id 1tmrj0-0001yb-GS; Tue, 25 Feb 2025 04:59:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tmrfb-0001D5-Cy
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:56:08 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tmrfY-00079h-TH
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:56:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740477365; x=1772013365;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=jDDPZgTYh2ucTSEU02Q+0XVKfJmHM7vvajnT3JsASxY=;
- b=I9SQN1EYHJG4TEBOwiNhmTL2PdCMUy9kyEzyG0MbJh9WizBXFNfGrUbA
- tGt27GjsF5W0xnZ0vNh5M0tlh8RQ3dCPl90QmzCHwV+RM0Wvzz0Mh0DV0
- qeIDNvbYPV8kBxaNzHcBOfNNylx/WVQPBbR01n6TuTgkOKQEIr3noiRB/
- 406U0h0DjXQ0Z1emEaE2xp758YrlN22UPKw2UfJu4dk5S0/mLVp6hk6Bd
- Fa1TBbfLBIektrTBwErCdpyZdB9LUbXW7boZQoM9qrpumDNQ75R9CMkKC
- jxsASdvYFsycK2PvhBIBWrtwJaJD0j4mNE0r5bxntzsYrwJdN5DGxNdQl w==;
-X-CSE-ConnectionGUID: xsRqd+EXScmE5Z6DENoyBQ==
-X-CSE-MsgGUID: 7FNc/0UYR1Sz8dx9/4oVDw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11355"; a="66644666"
-X-IronPort-AV: E=Sophos;i="6.13,313,1732608000"; d="scan'208";a="66644666"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Feb 2025 01:56:02 -0800
-X-CSE-ConnectionGUID: Jel9C8EYQySLBbMWybqPdA==
-X-CSE-MsgGUID: m/EPt7kvRJSqgnGXSuIsWg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,313,1732608000"; d="scan'208";a="121283339"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Feb 2025 01:55:56 -0800
-Message-ID: <77e3769b-7f79-42d0-8eaa-18e916800fa0@intel.com>
-Date: Tue, 25 Feb 2025 17:55:52 +0800
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1tmriz-0001yM-1d
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:59:37 -0500
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1tmriw-0007LS-PA
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:59:36 -0500
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-307325f2436so52654141fa.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 01:59:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740477572; x=1741082372; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Po7Lz/sghGD2x5lGd0wRJfCRK0yA4yZVJJ5pnvF0Uo4=;
+ b=m7hTwsD5uOpRYPvph0y3qFsZdr29VrFEspNPZxkkwhKp/ZwTyc9Y7BZrtW9YLxwn/D
+ brSA++/lN4+V8/5lPFgBz66i0+2xczoigajYbD+mM0xicBkaXQ5G82B9KTUfx8Bwr17P
+ EzekGP4aucDGnac5Yw8t4IydSOSGH2mOunGO9VRomZmTafYKS8NQXQY9AO6WZYkH2NEY
+ ILN5KAj99V4mjoOjEdp/LHe7XdTxagsnFUPhzEtdVW/DKsaluchxvOsZqJ6nDU/ZCsGs
+ GOLOws402f7vh2ZWjUtaB31Lt2zSaf7RWIus4GGkZmCI2jLSSlom/SG9HTAabB1mu0x1
+ ZI1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740477572; x=1741082372;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Po7Lz/sghGD2x5lGd0wRJfCRK0yA4yZVJJ5pnvF0Uo4=;
+ b=lyHxE9TN3skTurCSIaUqox5rPTbEfXV/12JHhKZaOyEtmH/CcBsE93JJbqHPS/lo0J
+ 2NhPbDx+9CKRqYq2DA9rkkDyfosEMVys1zBNH1UyJiFYicoOgYRdcHUmvOZHW99KjgOD
+ 6IbWCUILEqsttHsmvsbbWUonbv2Q2m6yxpjW3y30OjAjd9Li7KMa0rY/muazN9aBL7Z7
+ 7VAoUD2RbDH/Za8Ss7tXW5TJLfCYl7+0KIkuiBBZHtyOQWWJS639CS8iWw3xAhnSqfTj
+ T/NIfC2QY/xC5ZKRwOuUN8qgdWwmE7dVZpa9Ww4JFxnVONiymdm5pvFd34LQG43uu3V3
+ mbfw==
+X-Gm-Message-State: AOJu0Ywdp6J9WNvk7M7DEaFElAVU1Y3M73umDZ9Q1DISQlJ1QBQcP4Dd
+ jNr+7B45D2CjS73yOyXnyKxBySl5z9pAAQW+/NhzjXoDZk4kmTPk7D0FFAbWpBIw/neDcTCVbNc
+ YJtlX9meUsTrCwJxBAOk7+STTixs=
+X-Gm-Gg: ASbGncuECPn42IVk9Ms6tQ9a/yOTb22G7upPk6GXRKwzRINZ+BZ3ylPlL1s5KeePsiu
+ tLQN6kOn6gPc6Z/tKR9tb1Tng5ViObX/F+nEzz1soC9/MnyEcxPg6EjdGfJO1VMiqbBVmKgVSGO
+ dd52NxByw=
+X-Google-Smtp-Source: AGHT+IGe0ogXYP/Tqp411r5bWg5/hwpbu0KjziGwzsvAKl4xWLMHEqEuRL+j2mWQOwZteZP3TJ6UJUo6GUBvMfGnIbs=
+X-Received: by 2002:a2e:964f:0:b0:308:ec9d:d9d3 with SMTP id
+ 38308e7fff4ca-30a598f41cemr55956921fa.17.1740477571688; Tue, 25 Feb 2025
+ 01:59:31 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 08/52] i386/tdx: Initialize TDX before creating TD vcpus
-To: Francesco Lavra <francescolavra.fl@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Igor Mammedov <imammedo@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
- <20250124132048.3229049-9-xiaoyao.li@intel.com>
- <6571727841685f4276aa7c814776ff1fdd162a0a.camel@gmail.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <6571727841685f4276aa7c814776ff1fdd162a0a.camel@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250223145407.259924-1-r.peniaev@gmail.com>
+ <20250223145407.259924-6-r.peniaev@gmail.com>
+ <CAJ+F1CKMor3asfyOnNj6bVWFmzi10wtJxNuHzhcy4PqWysZU9A@mail.gmail.com>
+In-Reply-To: <CAJ+F1CKMor3asfyOnNj6bVWFmzi10wtJxNuHzhcy4PqWysZU9A@mail.gmail.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Tue, 25 Feb 2025 10:59:20 +0100
+X-Gm-Features: AWEUYZmpZc51ulEVB-2vn7on0X9xIN0rA8mzV-w7Cmcpoqs3E8R8hlwjlPZ8YdY
+Message-ID: <CACZ9PQWc7hDb9ochnT5mtUDAhqV2sRArgEZ2up77AGpoZBeT9w@mail.gmail.com>
+Subject: Re: [PATCH 5/5] ui/console-vc: implement DCH (delete) and ICH
+ (insert) commands
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lj1-x233.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,48 +96,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/2025 6:14 PM, Francesco Lavra wrote:
-> On Fri, 2025-01-24 at 08:20 -0500, Xiaoyao Li wrote:
->> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->> index 45867dbe0839..e35a9fbd687e 100644
->> --- a/accel/kvm/kvm-all.c
->> +++ b/accel/kvm/kvm-all.c
->> @@ -540,8 +540,15 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
->>   
->>       trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
->>   
->> +    /*
->> +     * tdx_pre_create_vcpu() may call cpu_x86_cpuid(). It in turn
->> may call
->> +     * kvm_vm_ioctl(). Set cpu->kvm_state in advance to avoid NULL
->> pointer
->> +     * dereference.
->> +     */
->> +    cpu->kvm_state = s;
-> 
-> This assignment should be removed from kvm_create_vcpu(), as now it's
-> redundant there.
+On Mon, Feb 24, 2025 at 8:25=E2=80=AFAM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
+>
+> Hi
+>
+> On Sun, Feb 23, 2025 at 6:56=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.co=
+m> wrote:
+> >
+> > This patch implements DCH (delete character) and ICH (insert
+> > character) commands.
+> >
+> > DCH - Delete Character:
+> >    "As characters are deleted, the remaining characters between the
+> >     cursor and right margin move to the left. Character attributes move
+> >     with the characters. The terminal adds blank spaces with no visual
+> >     character attributes at the right margin. DCH has no effect outside
+> >     the scrolling margins" [1].
+> >
+> > ICH - Insert Character:
+> >    "The ICH sequence inserts Pn blank characters with the normal
+> >     character attribute. The cursor remains at the beginning of the
+> >     blank characters. Text between the cursor and right margin moves to
+> >     the right. Characters scrolled past the right margin are lost. ICH
+> >     has no effect outside the scrolling margins" [2].
+> >
+> > Without these commands console is barely usable.
+> >
+> > [1] https://vt100.net/docs/vt510-rm/DCH.html
+> > [1] https://vt100.net/docs/vt510-rm/ICH.html
+> >
+> > Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+> > Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
+> > Cc: qemu-devel@nongnu.org
+> > ---
+> >  ui/console-vc.c | 108 +++++++++++++++++++++++++++++++++++++++++++++---
+> >  1 file changed, 102 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/ui/console-vc.c b/ui/console-vc.c
+> > index 522adc2806c8..bc667897d1bc 100644
+> > --- a/ui/console-vc.c
+> > +++ b/ui/console-vc.c
+> > @@ -598,21 +598,29 @@ static void vc_clear_xy(VCChardev *vc, int x, int=
+ y)
+> >      vc_update_xy(vc, x, y);
+> >  }
+> >
+> > -static void vc_put_one(VCChardev *vc, int ch)
+> > +static void vc_insert_xy(VCChardev *vc, int ch, int x, int y)
+> >  {
+> >      QemuTextConsole *s =3D vc->console;
+> >      TextCell *c;
+> >      int y1;
+> > +
+> > +    y1 =3D (s->y_base + y) % s->total_height;
+> > +    c =3D &s->cells[y1 * s->width + x];
+> > +    c->ch =3D ch;
+> > +    c->t_attrib =3D vc->t_attrib;
+> > +    vc_update_xy(vc, x, y);
+> > +}
+> > +
+> > +static void vc_put_one(VCChardev *vc, int ch)
+> > +{
+> > +    QemuTextConsole *s =3D vc->console;
+> > +
+> >      if (s->x >=3D s->width) {
+> >          /* line wrap */
+> >          s->x =3D 0;
+> >          vc_put_lf(vc);
+> >      }
+> > -    y1 =3D (s->y_base + s->y) % s->total_height;
+> > -    c =3D &s->cells[y1 * s->width + s->x];
+> > -    c->ch =3D ch;
+> > -    c->t_attrib =3D vc->t_attrib;
+> > -    vc_update_xy(vc, s->x, s->y);
+> > +    vc_insert_xy(vc, ch, s->x, s->y);
+> >      s->x++;
+> >  }
+> >
+> > @@ -645,6 +653,88 @@ static void vc_set_cursor(VCChardev *vc, int x, in=
+t y)
+> >      s->y =3D y;
+> >  }
+> >
+> > +/**
+> > + * vc_csi_P() - (DCH) deletes one or more characters from the cursor
+> > + * position to the right. As characters are deleted, the remaining
+> > + * characters between the cursor and right margin move to the
+> > + * left. Character attributes move with the characters.
+> > + */
+> > +static void vc_csi_P(struct VCChardev *vc, unsigned int nr)
+> > +{
+> > +    QemuTextConsole *s =3D vc->console;
+> > +    TextCell *c1, *c2;
+> > +    unsigned int x1, x2, y;
+> > +    unsigned int end, len;
+> > +
+> > +    if (!nr) {
+> > +        nr =3D 1;
+> > +    }
+> > +    if (nr > s->width - s->x) {
+> > +        nr =3D s->width - s->x;
+> > +        if (!nr) {
+> > +            return;
+> > +        }
+> > +    }
+> > +
+> > +    x1 =3D s->x;
+> > +    x2 =3D s->x + nr;
+> > +    len =3D s->width - x2;
+> > +    if (len) {
+> > +        y =3D (s->y_base + s->y) % s->total_height;
+> > +        c1 =3D &s->cells[y * s->width + x1];
+> > +        c2 =3D &s->cells[y * s->width + x2];
+> > +        memmove(c1, c2, len * sizeof(*c1));
+> > +        for (end =3D x1 + len; x1 < end; x1++) {
+> > +            vc_update_xy(vc, x1, s->y);
+> > +        }
+> > +    }
+> > +    /* Clear the rest */
+> > +    for (; x1 < s->width; x1++) {
+> > +        vc_clear_xy(vc, x1, s->y);
+> > +    }
+> > +}
+> > +
+> > +/**
+> > + * vc_csi_at() - (ICH) inserts `nr` blank characters with the normal
+> > + * character attribute. The cursor remains at the beginning of the
+>
+> What is "normal character attribute"?
+>
+> Should you set it to  TEXT_ATTRIBUTES_DEFAULT while inserting blank chars=
+?
 
-I'll just drop the change in this patch since there is no dependency in 
-cpu_x86_cpuid() in current upstream QEMU.
+Hi,
 
->>       ret = kvm_arch_pre_create_vcpu(cpu, errp);
->>       if (ret < 0) {
->> +        cpu->kvm_state = NULL;
-> 
-> No need to reset cpu->kvm_state to NULL, there already are other error
-> conditions under which cpu->kvm_state remains initialized.
-> 
->>           goto err;
->>       }
->>   
->> @@ -550,6 +557,7 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
->>           error_setg_errno(errp, -ret,
->>                            "kvm_init_vcpu: kvm_create_vcpu failed
->> (%lu)",
->>                            kvm_arch_vcpu_id(cpu));
->> +        cpu->kvm_state = NULL;
-> 
-> Same here.
+The wording "default attributes" is more precise, I like it. The
+original VT spec
+and ECMA-48 are rather vague about exactly what attributes should be set
+for "erased state", but various terminal implementations (including vt.c fr=
+om
+the Linux kernel) simply reset the character to the default state. From the
+perspective of the existing console-vc.c API, a more correct call is
+vt_clear_xt(),
+which clears attributes to default rather than inserting a "space"
+with vt_put_xy().
+I'll fix that. Thanks.
 
+--
+Roman
 
