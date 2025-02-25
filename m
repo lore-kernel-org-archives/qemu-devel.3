@@ -4,94 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F254DC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 11:28:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 424C9C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 11:34:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmt6b-0003Ol-FL; Tue, 25 Feb 2025 06:28:05 -0500
+	id 1tmtC1-0005Kb-QV; Tue, 25 Feb 2025 06:33:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmt6a-0003MU-9H
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:28:04 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmt6Y-0002Qv-LQ
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:28:04 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-38f73e6ed7fso1941193f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 03:28:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740482881; x=1741087681; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jtJ63S4m52FQjL8V9SEdJUf/oni7GEfE5fqT4tTxkk4=;
- b=tPabZC740hUPahvrXWTw1el1JdJO7M/0LFgHF5CXVBQH1OniJOcCAt+s+DxwF4yqpW
- z86UgKrbeuHa+9x2Kgp5/9dx/GhwxNlGA1hhVO0/RFMGsgX7qD1KADwsetMq1m7kLk4E
- BXM2e/j4KhhLhpCeAKllgp0z+Az/18OthBKMrwGeXLiXWmgUg+9yeLhW7HkHCAwnOGTD
- eKD3AeNLPoL78/L6g+W00T3GjzOkgsNWuziAqNY40cNSlvjCRXkRQRmODZAi6dfdbz+j
- VU3/I6vAbtmbsO0pZycPlcUJQlbsvACQNUtEflZYd5vxFUb2P9P7ov25za45nuFAgBeZ
- Keyg==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tmtC0-0005KA-31
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:33:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tmtBy-000349-8D
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:33:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740483216;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=koOypSBQkaeqPAzy8kIkTGkjrlguhVfuAhbYp4pbhDU=;
+ b=ZKVw7yfflsIyZ6guKNfsYVMd5OzFAt+NonZlenEedzYlha75pB7JVbfrG+UuhlBI3S41fk
+ VLGiflF7641+tDNUPF22D1vi/K3mVMS/h/1q+DW3GPE3sV6EUcTjj3RFlqitUMXQKJK2kA
+ 55X8nUxbcEhMJOhbCvtviPndVr4I3Q0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-497-zyIbWBjJMgegEl4B5ZbD2A-1; Tue, 25 Feb 2025 06:33:34 -0500
+X-MC-Unique: zyIbWBjJMgegEl4B5ZbD2A-1
+X-Mimecast-MFC-AGG-ID: zyIbWBjJMgegEl4B5ZbD2A_1740483214
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4394c0a58e7so44478535e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 03:33:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740482881; x=1741087681;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jtJ63S4m52FQjL8V9SEdJUf/oni7GEfE5fqT4tTxkk4=;
- b=Xdpuc5T1cqD/JS1njDVw8TuMbvJ0QJIjzcSY7HMf2HaXSe0Yp+oeCbLm5QqiGrM0Ga
- i/57H3pW6DwDo2NaCZ5F8IHcSCur10N5blbgUAz0J+KghJFjuSsuQRHFabCDPY4nPiAn
- rGvP3LaRunkfUk1fxXuAWosV064XNpzRMO0+41xl6B3o20CEyagq1oxExkz1Q+TxocGX
- ZM6sMJRnN1lKRgYTTNxO5HFmMG/9XbwdGdt67VZ34AVLymSnnU/2rf4z4k4L3d0sCHqU
- xBKMOP15qzJlDqqenDdLaoOGjkPVrGVKy1eVoSl7jUqjAhAwvUSKB2ZgTsCGfwwFXy/r
- TP3w==
-X-Gm-Message-State: AOJu0Yy7HJS6549Vh5CXMvzeCzz+32q9smmpvoLqRaKh1zawHOma4cyh
- QAQkcDLXrP0Za6Q6HUtaa0zAWxY73ZptvzRgNca49LIzTEUAMu7/XewvVEM6dagm8job084buqJ
- 0FgM=
-X-Gm-Gg: ASbGncvn9LB5fN73B6n5yN/tcQGWALvVRqRlpgGwgTt0fymifjIENNBFjDy6nNKF2Nw
- V5DEFaH496JhAt3eihu71GbeRR1EcZmynn5iJTCPJ9sGP641NjwEQtltE4hT/Vgu6oqG14c+e6g
- S/U//v3LpSOTQ8NjAYXEM1zE5BZXJiURa+AdCTNSoakKxk82Oq0QR2sPp/0chxWdgUbDRxDt4lr
- LUjoMvkyE9Ad6KsslCcUBJkMpn33KyClVZLdgAuFvSySpp5f9FmXdqGiuZI4W7EWdvs79+Qj5QN
- bwGY6YaR7sjqunncBuDNL/3Jshes
-X-Google-Smtp-Source: AGHT+IGmWGKOE7H8HB2nhP0PszMQP73UWSbWU63J/HkDKv+6Z7IDXn6EqWC4sI6zm0zGcecyWVkP/Q==
-X-Received: by 2002:a5d:64a2:0:b0:38d:e078:43a5 with SMTP id
- ffacd0b85a97d-38f6e947079mr15188157f8f.13.1740482880976; 
- Tue, 25 Feb 2025 03:28:00 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd86cc26sm2004991f8f.30.2025.02.25.03.28.00
+ d=1e100.net; s=20230601; t=1740483214; x=1741088014;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=koOypSBQkaeqPAzy8kIkTGkjrlguhVfuAhbYp4pbhDU=;
+ b=VGWad90IcVWiCTjIuwGl0PTMGzYaL7NNk5pDoJCcC5nZl00+Zgf3hol98/IVXnFbkP
+ ZS3ybGrm71lECMI3pAeyVWRWy9dzVeY+sG3dCdSe0q6vr6seiiv++Vvl91J/Ie6MEmJm
+ z1mbgOQhmhPeH4sOKuI1E8kkUbnQSHYIJREehadfWwH2ne7sz79cdn3hIhn44jqC1Vg+
+ 8Z6ifJgp3jOmbpSbAKraR+4c5cEpnNwUF6Q59CP9k8XjyiC368WN7qC3kTFu1Eui25KG
+ VC0wvx3sa6NGbpuY2L14xubJOD81HfQ+IkZ6WYt2WmbdduPoX8k7CInbOKJ7rv2M6CIN
+ JhcQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTQ3vQ4tutxad6S9G9lrg1iIXV3602N08Vith6ii6fjxFS2imuOyl9RmoYK38q7oWA6otsSMCzUBuE@nongnu.org
+X-Gm-Message-State: AOJu0Yy6gyegQSv10IoAy+LN5+Nte+/R69XrjQOwPnbzjXDpxQuCwf59
+ 3dCAlzCW8leCBhmgG4DqcnsggSsW+5bjPZIYnFSxfvqjhDfZOWwETtG0NOgx3mBMBR6QDtdX5OA
+ FIANs15lLkByrbWH6jxsKD3r5KHGwqf7vvfKBpB15RydINpGboa9W
+X-Gm-Gg: ASbGncvVQEfSg09F8uqBNAf7jtSUWIXRiLhvwRfQwv1sUxnvcCimlkdU3XFkgNpJBqH
+ w/7MBQcP8P74unh50o6MgzwStdxZ08DxFmma2GeMUzPYCH40RY9ERCrvcMmD7DNXygjiAkVskSX
+ 5KltGpCEdmHdgUPRD3OONcLsw52+PxniU089PWGNrHVemUeXSnnweFWd7X6pIvI3kZ2SUKAd/pt
+ 0WTTkJHhZae8SSMLWJDVA9H4aLW4yfzRxul83nHjETRS36iJEMFY57p0LkNd0CEcmCWqG0L4lGw
+ +jqrmDNZJLAMjAvqE3nrfQK7YvqsV2AiUg0IhLJN5PirSyeH4fvQgIG5C37QHwk=
+X-Received: by 2002:a05:600c:3b04:b0:439:9543:9491 with SMTP id
+ 5b1f17b1804b1-439aebcf126mr123007025e9.25.1740483213666; 
+ Tue, 25 Feb 2025 03:33:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFKv0Rb040W69aanjxzjRYk6wWRbquiAVsqiTHYubPS5jl1n3dQC5Q0A7tc4mRT5LeKPBlEjw==
+X-Received: by 2002:a05:600c:3b04:b0:439:9543:9491 with SMTP id
+ 5b1f17b1804b1-439aebcf126mr123006795e9.25.1740483213286; 
+ Tue, 25 Feb 2025 03:33:33 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-439b02ce615sm138270955e9.5.2025.02.25.03.33.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 03:28:00 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D0A9F5F7DC;
- Tue, 25 Feb 2025 11:27:59 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Dau?=
- =?utf-8?Q?d=C3=A9?=
- <philmd@linaro.org>,  Laurent Vivier <laurent@vivier.eu>
-Subject: Re: [PATCH v2 03/10] m68k: reset vcpu after it's created
-In-Reply-To: <20250207162048.1890669-4-imammedo@redhat.com> (Igor Mammedov's
- message of "Fri, 7 Feb 2025 17:20:41 +0100")
-References: <20250207162048.1890669-1-imammedo@redhat.com>
- <20250207162048.1890669-4-imammedo@redhat.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Tue, 25 Feb 2025 11:27:59 +0000
-Message-ID: <874j0i6z7k.fsf@draig.linaro.org>
+ Tue, 25 Feb 2025 03:33:32 -0800 (PST)
+Date: Tue, 25 Feb 2025 12:33:31 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Gerd Hoffman <kraxel@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, Alex Graf <graf@amazon.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe =?UTF-8?B?TWF0?=
+ =?UTF-8?B?aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Richard Henderson
+ <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <20250225123331.69472379@imammedo.users.ipa.redhat.com>
+In-Reply-To: <f35r3y76jdfjonw64yqpus6leeew26lmtct6wkyaazpaya6vny@nqgldtn3wlbg>
+References: <20250214153443.159889-1-anisinha@redhat.com>
+ <xhprkjs2yj5yli65opi7md7gfylqxgdkiwap76stcxcx7jdpub@fauqiqm5giyi>
+ <20250225112819.7cb8b32d@imammedo.users.ipa.redhat.com>
+ <f35r3y76jdfjonw64yqpus6leeew26lmtct6wkyaazpaya6vny@nqgldtn3wlbg>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,23 +121,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Igor Mammedov <imammedo@redhat.com> writes:
+On Tue, 25 Feb 2025 12:00:12 +0100
+Gerd Hoffman <kraxel@redhat.com> wrote:
 
-> Reseting vcpu before its thread is created, caused various issues in the =
-past
-> for other targets. It doesn't cause issues for m68k at the moment but
-> to be consistent with the rest of targets, move reset during realize time
-> after qemu_init_vcpu().
->
-> That basically prevents reset being run when when vCPU is in incositent s=
-tate
-> (i.e. accelerator hasn't initialized vCPU yet).
->
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+>   Hi,
+> 
+> > > See https://lore.kernel.org/qemu-devel/20250219071431.50626-2-kraxel@redhat.com/  
+> > 
+> > After looking at it, it seems to me that data will be in host byte order
+> > and guest has no idea what that is.
+> > Probably it should advertise byteorder as part of the structure,
+> > and guest side should then do conversion if necessary.    
+> 
+> The structure is already defined and in use by edk2, so changing it is
+> not an option.  Guest is little endian (there is no big endian UEFI).
+> So simply declaring the struct fields being little endian byte order
+> and convert them if needed on the host side makes alot more sense here.
+> I'll fix the patch accordingly for v5.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+given it's memcpy of blob it would be hard to do so in hardware_info_register(),
+doing it in caller is error prone/constant source of bugs
+(that was the case for ACPI tables until endianness conversion
+was hidden behind API).
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+But if it's small number of places perhaps it's ok to do
+conversion in the caller.
+
+or alternatively instead of structure, build data as
+a table, similar to aml_append(aml_int()) in ACPI,
+which will take care of conversion.
+Ugly? yes, but it takes care of endianness bugs,
+as practice showed up.
+
+PS:
+if there is a doc for etc/hardware-info, then describe it
+there as little-endian (so reader doesn't have to deduce
+byte-order, it's ABI after all)
+  
+> 
+> take care,
+>   Gerd
+> 
+
 
