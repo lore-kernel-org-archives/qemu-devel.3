@@ -4,101 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6512C021BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 12:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CFA0C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 12:12:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmtjx-0003aM-Sz; Tue, 25 Feb 2025 07:08:46 -0500
+	id 1tmtn3-0004f7-2J; Tue, 25 Feb 2025 07:11:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tmtjs-0003Ud-O2
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 07:08:40 -0500
-Received: from fout-b5-smtp.messagingengine.com ([202.12.124.148])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tmtmu-0004el-4H
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 07:11:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tmtjq-0007L9-D9
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 07:08:40 -0500
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal
- [10.202.2.43])
- by mailfout.stl.internal (Postfix) with ESMTP id 2A41F11400B5;
- Tue, 25 Feb 2025 07:08:36 -0500 (EST)
-Received: from phl-imap-12 ([10.202.2.86])
- by phl-compute-03.internal (MEProxy); Tue, 25 Feb 2025 07:08:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1740485316;
- x=1740571716; bh=H1CseWI94kZKIUtlN1eUptTfu/BpETdi7G4VVzz1deY=; b=
- pl8JBNgPi5kYQxG4vj6D48zKuwmiFvd46uWDixJd1WU3v+g8NYe8W9t4FThKIu8d
- aRd8L112pqfx3+Mnhn5POR/CncvqCLB7P0QT9iLbTgNFTejeBlExYnOHQrPRRVGI
- mXC3zClklDlePtgR8HEQmssgahcWzCvcbUL6MPCLz5koElgHk4zuAE04Hb+XzSAO
- qXQ2YWcfrviFg4DS2yrJrEbanhlrr2lH/ijLblUrB802KAZnAItZoBdEDWNN74BE
- vI/GA7wZn7888RrqaXxHlcA5sz6zkVxdfJ907w9aLkaqDxAO6g5fm86xBKr6TL5O
- RCGxEN5Py/Y961X8PBniGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740485316; x=
- 1740571716; bh=H1CseWI94kZKIUtlN1eUptTfu/BpETdi7G4VVzz1deY=; b=U
- uSZQ1sLG3Rcgn7CjBHik4gAadXCM8h98NmeYahfoLxQEQIGlaiQPRCpc1LfhYIgx
- 3IoBwdte1FwpeJqhA96Riqs57VEjVYG5AJTAhoK0CgP7vURacusUNBg8AAY4xSt7
- WiRheqAlKfLHl34bvQzTBK5P0bjV6yG3d5CAfvPwFi574mniOcluHf0YTZU+2Dnf
- X8tHC5Lrq3r7N9tjr+lvAXPbIoK0QouM9wBNE3wNW0nxi4iu0Y+HuNP1CON74Gld
- Aa4pHCBW7QPjMmfdYUHP/SHaYlH4CPwDYyKZQEFJXCXKGiavifcDhb+RENTPLuXE
- BvW+zpK4NPiHl4VIj98tQ==
-X-ME-Sender: <xms:w7K9Zz5vw42-rzNPJKwHSfZP-63SkWtGdIRbEtJr5HWGxIgm9m2NOQ>
- <xme:w7K9Z44tRouLDl1TjGf025LlGPy4uqNH53IqBklNe6DIlgZ5ii7SzoK2ZbpQLHcdm
- sjicQCvjClbrosWFOE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekudeiiecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
- jeenucfhrhhomhepfdflihgrgihunhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgse
- hflhihghhorghtrdgtohhmqeenucggtffrrghtthgvrhhnpedtveekgfelfeevffejudfg
- leegueehueffgfdtjeejieehjeevvefhheevleekfeenucffohhmrghinhepghhithgvvg
- drtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
- pehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmpdhnsggprhgtphhtthhope
- egpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhmugeslhhinhgrrhho
- rdhorhhgpdhrtghpthhtohepghgrohhsohhngheslhhoohhnghhsohhnrdgtnhdprhgtph
- htthhopehmrghosghisghosehlohhonhhgshhonhdrtghnpdhrtghpthhtohepqhgvmhhu
- qdguvghvvghlsehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:w7K9Z6dRF3RukR5uIl84KokogW04DMIwrSfQC6ex3Cd1tJ6uWPUtyQ>
- <xmx:w7K9Z0I6Ib7Sy394xmX_Inc4WBCYBA-JobOaDo3vlvIK5ZqK8zrw1w>
- <xmx:w7K9Z3LemPvjmgNJZKNZK9ccO6lRioi4HqPONFrRCjrPB_jEWV_GJQ>
- <xmx:w7K9Z9y-7-UtzBVGjztvtgLmP9Ru1MjmDJgWbTfQfpJvp00ux5cnkA>
- <xmx:xLK9Z_2j5qoc90px3tO1St5rgGEJ7i3ubnrtDQzYZSbRm2fIGfrzl9xd>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id BB8D81C20065; Tue, 25 Feb 2025 07:08:35 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tmtmq-0007jh-SX
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 07:11:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740485503;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qhU4fU4HGrZRzrMTbc4d7sC1urs0CJhb6FwuyuYLqFY=;
+ b=eVlxjMOSBIaop7wKQpSyn66kTgDI5YmoOql8H04sLs9mvSZzvT7TAcEgAfoPnIKHAtNLVL
+ 0Uxco7ApOA+/M1zTcH51Pmcbw5mtHE8QF+3RQTdj+8bprCVffW+tAGuSfwwydgKE4yR6b8
+ bfE7zrispx85JqRJvDG8MtDx0QEFcP0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-tWm0ZZrRMqeSslMztF88Ug-1; Tue,
+ 25 Feb 2025 07:11:39 -0500
+X-MC-Unique: tWm0ZZrRMqeSslMztF88Ug-1
+X-Mimecast-MFC-AGG-ID: tWm0ZZrRMqeSslMztF88Ug_1740485498
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6DE00180087F; Tue, 25 Feb 2025 12:11:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.59])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8626A1955BD4; Tue, 25 Feb 2025 12:11:36 +0000 (UTC)
+Date: Tue, 25 Feb 2025 12:11:33 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Victor Toso <victortoso@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, John Snow <jsnow@redhat.com>
+Subject: Re: [PATCH] qapi: pluggable backend code generators
+Message-ID: <Z72zdbM2GFq9OwXD@redhat.com>
+References: <20250217134927.1288486-1-berrange@redhat.com>
+ <87ikp5ujxi.fsf@pond.sub.org>
 MIME-Version: 1.0
-Date: Tue, 25 Feb 2025 12:08:17 +0000
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "Bibo Mao" <maobibo@loongson.cn>, "QEMU devel" <qemu-devel@nongnu.org>
-Cc: "Song Gao" <gaosong@loongson.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Message-Id: <23d25d66-07f4-454b-903a-f5704e1e686c@app.fastmail.com>
-In-Reply-To: <3fd27fd1-b976-2705-7093-aecc6ffa0438@loongson.cn>
-References: <20250225-la32-fixes1-v2-0-8ec68ada3dd5@flygoat.com>
- <3fd27fd1-b976-2705-7093-aecc6ffa0438@loongson.cn>
-Subject: Re: [PATCH v2 0/9] target/loongarch: LoongArch32 fixes 1
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=202.12.124.148;
- envelope-from=jiaxun.yang@flygoat.com; helo=fout-b5-smtp.messagingengine.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87ikp5ujxi.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,47 +86,213 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Feb 20, 2025 at 08:58:17AM +0100, Markus Armbruster wrote:
+> Cc: John for advice on my somewhat nebulous mypy worries at the end.
+> 
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > The 'qapi.backend.QAPIBackend' class defines an API contract for
+> > code generators. The current generator is put into a new class
+> > 'qapi.backend.QAPICBackend' and made to be the default impl.
+> >
+> > A custom generator can be requested using the '-k' arg which takes
+> > a fully qualified python class name
+> >
+> >    qapi-gen.py -k the.python.module.QAPIMyBackend
+> 
+> I understand why that will be useful, but explaining it briefly in the
+> commit message wouldn't hurt.
+
+I expanded on this.
 
 
-=E5=9C=A82025=E5=B9=B42=E6=9C=8825=E6=97=A5=E4=BA=8C=E6=9C=88 =E4=B8=8A=E5=
-=8D=888:50=EF=BC=8Cbibo mao=E5=86=99=E9=81=93=EF=BC=9A
-> On 2025/2/25 =E4=B8=8A=E5=8D=888:40, Jiaxun Yang wrote:
->> Hi all,
->>=20
->> This series is a collection of small fixes I made to TCG for
->> LoongArch32.
->>=20
->> There are still many thing broken, especially on CSRs. More
->> series following. However this is sufficient to boot 32bit
->> kernel.
-> Is there any product introduction about LoongArch32 board? such as MMU=20
-> type, memory type(DDR or SRAM), interrupt controller type.
+> > +class QAPIBackend(ABC):
+> > +
+> > +    def run(self,
+> > +            schema_file: str,
+> > +            output_dir: str,
+> > +            prefix: str,
+> > +            unmask: bool = False,
+> > +            builtins: bool = False,
+> > +            gen_tracing: bool = False) -> None:
+> > +        """
+> > +        Run the code generator for the given schema into the target directory.
+> > +
+> > +        :param schema_file: The primary QAPI schema file.
+> > +        :param output_dir: The output directory to store generated code.
+> > +        :param prefix: Optional C-code prefix for symbol names.
+> > +        :param unmask: Expose non-ABI names through introspection?
+> > +        :param builtins: Generate code for built-in types?
+> > +
+> > +        :raise QAPIError: On failures.
+> > +        """
+> > +        assert invalid_prefix_char(prefix) is None
+> > +
+> > +        schema = QAPISchema(schema_file)
+> 
+> Hmm.  This makes the backend run the frontend.  Could we keep this in
+> main.py instead?
 
-Sure, for LoongArch32 the most accessible board at the moment is chiplap=
- FPGA [1].
+Yes, that is better, and eliminates the need for the extra
+'run' method to call 'generate'.
 
-There are also some ASIC designs (BaiXing Project) based on chiplab.
+> > +        self.generate(schema, output_dir, prefix, unmask, builtins, gen_tracing)
+> > +
+> > +    @abstractmethod
+> > +    def generate(self,
+> > +                 schema: QAPISchema,
+> > +                 output_dir: str,
+> > +                 prefix: str,
+> > +                 unmask: bool,
+> > +                 builtins: bool,
+> > +                 gen_tracing: bool) -> None:
+> > +        """
+> > +        Generate code for the given schema into the target directory.
+> > +
+> > +        :param schema: The primary QAPI schema object.
+> > +        :param output_dir: The output directory to store generated code.
+> > +        :param prefix: Optional C-code prefix for symbol names.
+> > +        :param unmask: Expose non-ABI names through introspection?
+> > +        :param builtins: Generate code for built-in types?
+> > +
+> > +        :raise QAPIError: On failures.
+> > +        """
+> > +        pass
+> 
+> pylint prefers not to pass:
+> 
+>     scripts/qapi/backend.py:68:8: W0107: Unnecessary pass statement (unnecessary-pass)
 
-Long in short:
-
-- MMU: PG style
-- Mmeory: DDR
-- Interrupt controller: custom (Loongson-1C like) connected to CPU's
-                        int pin.
-
-Thanks
-
-[1]: https://gitee.com/loongson-edu/chiplab
-
->
-> Regards
-> Bibo Mao
->>=20
+Fun, I expected it to be a syntax error to not have a statement in the
+method body, but pylint is right.
 
 
---=20
-- Jiaxun
+> > diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
+> > index 324081b9fc..35552dffce 100644
+> > --- a/scripts/qapi/main.py
+> > +++ b/scripts/qapi/main.py
+> > @@ -8,53 +8,18 @@
+> >  """
+> >  
+> >  import argparse
+> > +from importlib import import_module
+> >  import sys
+> > -from typing import Optional
+> >  
+> > -from .commands import gen_commands
+> > -from .common import must_match
+> >  from .error import QAPIError
+> > -from .events import gen_events
+> > -from .features import gen_features
+> > -from .introspect import gen_introspect
+> > -from .schema import QAPISchema
+> > -from .types import gen_types
+> > -from .visit import gen_visit
+> > +from .backend import invalid_prefix_char
+> 
+> isort wants you to put this above from .error, like this:
+> 
+>    from .backend import invalid_prefix_char
+>    from .error import QAPIError
+
+Yep, I forgot we sorted imports
+
+
+> > +def import_class_from_string(path):
+> > +    module_path, _, class_name = path.rpartition('.')
+> > +    mod = import_module(module_path)
+> > +    klass = getattr(mod, class_name)
+> > +    return klass
+> 
+> Lacks error handling, see appended test cases.
+> 
+> Moreover, mypy points out
+> 
+>     scripts/qapi/main.py:18: error: Function is missing a type annotation  [no-untyped-def]
+> 
+> The argument is str, but what is returned?
+> 
+> The function name suggests it returns a class.
+> 
+> As coded, the function could return pretty much anything.
+> 
+> The caller actually needs a QAPIBackend class.
+> 
+> We need a checked cast to QAPIBackend class somewhere.  If you put it in
+> this function, it returns a QAPIBackend class, and its name should be
+> adjusted accordingly.  import_backend() maybe?
+
+Yeah, with all the error checking needed for the scenarios you
+illustrate below, this method was better turned into a more
+specialized "create_backend" method.
+
+> 
+> >  
+> >  
+> >  def main() -> int:
+> > @@ -77,6 +42,8 @@ def main() -> int:
+> >      parser.add_argument('-u', '--unmask-non-abi-names', action='store_true',
+> >                          dest='unmask',
+> >                          help="expose non-ABI names in introspection")
+> > +    parser.add_argument('-k', '--backend', default="qapi.backend.QAPICBackend",
+> 
+> Any particular reason for picking -k for --backend?
+
+There is a 'k' in 'backend' was the extent of my decision making:-)
+
+> -b is taken, but -B would be available.
+
+I've used -B now.
+
+
+> > @@ -92,13 +59,15 @@ def main() -> int:
+> >          print(f"{sys.argv[0]}: {msg}", file=sys.stderr)
+> >          return 1
+> >  
+> > +    backendclass = import_class_from_string(args.backend)
+> >      try:
+> > -        generate(args.schema,
+> > -                 output_dir=args.output_dir,
+> > -                 prefix=args.prefix,
+> > -                 unmask=args.unmask,
+> > -                 builtins=args.builtins,
+> > -                 gen_tracing=not args.suppress_tracing)
+> > +        backend = backendclass()
+> > +        backend.run(args.schema,
+> > +                    output_dir=args.output_dir,
+> > +                    prefix=args.prefix,
+> > +                    unmask=args.unmask,
+> > +                    builtins=args.builtins,
+> > +                    gen_tracing=not args.suppress_tracing)
+> >      except QAPIError as err:
+> >          print(err, file=sys.stderr)
+> >          return 1
+> 
+> The connection to the backend moves to run-time: static import
+> statements get replaced by a dynamic import_module().  Fine, it's what
+> it takes to support pluggable backends.
+> 
+> However, it might hide the bundled backend from tools like mypy.  Would
+> that be bad?  I'm not sure.
+> 
+> If it is, we could avoid it pretty easily: instead of defaulting the
+> module name, so we dynamically load the bundled backend module by
+> default, default the class, so we create the bundled backend class by
+> default.
+
+Yes, in v2 I've kept QAPICBackend as an explicit import so we
+avoid any questions about hiding from mypy.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
