@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5313AC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF092C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:10:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzL3-0002QY-KH; Tue, 25 Feb 2025 13:07:25 -0500
+	id 1tmzM6-0006qf-EC; Tue, 25 Feb 2025 13:08:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJE-0008Mu-ED
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:34 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tmzJj-0000JU-TB
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:12 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJ9-0002DT-FR
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:30 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4399deda4bfso41030165e9.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:25 -0800 (PST)
+ id 1tmzJd-0002JQ-BL
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:00 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4394036c0efso37901645e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740506724; x=1741111524; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740506746; x=1741111546; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sF2iTBSB9udDdHFGKwWu1r3tpgd/tit84mrcKjGT1yo=;
- b=Q5arw1QayYFb07WeXkME2mgz3VVh6/eeq4BIbDFimANtlnwjtaboVTzEqaITTyd/lm
- F1BuGb680GYImiykK5VxMKN46t9FkFBgLSFRtQX1oNw/qHwQBHkbFzWFaSEPQPf1dYQJ
- Yny0sofdWZy3lQ8ynOda5rStuSB1gbFd5sbyA3PEe2aI4ctmaAXGpX4KU4uCqN9PGEXg
- vpPpNI+4akGZTdtPP8+Ps5lAsJjxNmlHbT2ltIqSHhjMUiUK49+Dea4Y0bMd+LRoGryz
- TaXLOmgMlakqZjC9jyzoglihpL0ZeQ4hDuo1/Ohw2D1q62t9NFGhhCkGIrvaSIAWoJ0j
- lMfA==
+ :reply-to; bh=JM1z9IEOs0dWia7GldRmlxQ1KHltnDm7hKq9lC7Qz7k=;
+ b=H9TteOQAQeXZa1YetMyixTOlJ9SDxyOryL5oi32AWoXirgNG+2ASxEX+c76frLYrhc
+ VzSxBNMH41omXmdfxIi17GI3854+H0IPf6mYHnAxhXe1T7thVX/7G3cxZOVff2vW56TI
+ GSIfRliQSYDVjNfI9Kfh6fPBpYNKM4FNQVdCzjiaTqPi6kWrVLgSFP08vOvKTR9Z83jE
+ AjtLZ/5lL+Nlgw8QAe3MCH+yO1t5qRzU+2MgoSC/EUviRPsxZYEjsTXvjgT89XvsEahm
+ UZAw6TMP+Nmj6amJIOzjtnUqIZBpCasupuCtWOxTzm+gmdSbzDlrocmGWG2VMkoamfqV
+ fSpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740506724; x=1741111524;
+ d=1e100.net; s=20230601; t=1740506746; x=1741111546;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sF2iTBSB9udDdHFGKwWu1r3tpgd/tit84mrcKjGT1yo=;
- b=KUVUvPlLomceJLf90h8jkCRrxILE6dOp3xY/tv7I7PiVp6MNlMJeD7EWplj7hRA0OX
- lwK4gNLbEJJTnu8jDSl9YjHgF1eocmO4Oz3QvETyxcCeSww3JV3a30KOgDY6yslE+P9b
- S+8rrylFFMbfdqs9XZVvBkbjnx4+tm2+htizfqSE2i5et4FitYsjfL5wIeF5fPkmnFRN
- N/U9KG4V/34uSeOXcx1mi2pzxFn0DVGrD5kBB49zXEQPqEI8QOrs4Wft/8lQq9hnHrxi
- STaaRPr7yMxoG+oeD+64eh6UMKXOFBCp2ZTp/gteZ8B5z0+iJUPyBoLwhrH1X0KPY4OF
- zeMg==
-X-Gm-Message-State: AOJu0Yy4862ApdwnxvP8wt0B+sIBVh0jCr3adLOpK1P5GHeqlMXt1iQT
- GJpZ+m1Ki2DasqcpQjbKErzxypNGlsCGhUsm7Z8OtHpaYdPIYABZ5JUSIUNgb9v9EYwiEKsYCvI
+ bh=JM1z9IEOs0dWia7GldRmlxQ1KHltnDm7hKq9lC7Qz7k=;
+ b=qgzdbKBc8/GzHJ5M6nO8PymwHzunN8Pd682mAVxXIMJEb1LxJEw09GwZvL55A3ytaW
+ hjZTRmABMGszuN0v7oR0wubZvxB61A5DXw3PVHMWdatpr4YWJ+I10QwX2PBKiv7efBx0
+ CBkiP6ej9a7f2HFWC/DldhL0CzrxA4Jru+yFX3dBmf5H+97n9RKvj9ELeJgS4InwMjjW
+ 8dqTilHnTpumRv/skL0kiNPJnJJuawJsS8LcBqXEYNq4KpZiYBKEc/Qe9T+ppkq0/t5R
+ AdMmGUUbCW7eHsIq2Ao24G8bsLhyj9wdEUjZUoDLJg21hofx3fSm5+g98HB7uzqGVM6e
+ VNhQ==
+X-Gm-Message-State: AOJu0YxfrscSX5ib1WPZXct3mKdopnC6aX/4B9zGU8sMO/+v9xHGU2cK
+ z5ojx8unxL5WCcSwIl26CDZDakYaXA/Jrxx1b2L9xXBhUuN3J7GTczXEtP0SOd+zLRngC0tKl2+
  J
-X-Gm-Gg: ASbGncu05mSZge59nUzDKr4kaRCKXLm5rJG6hAW/zH7rr6jrPy75QWgJRMl6tsNTgK+
- ZmVBe9rXixCyBQE8aGls1Z31ZOxnV6XPSuQJsu3JpycIUD5ueytzZPevrVepJ7rm9Ox1qojOAJo
- D81Ca91rZvjTpHntKSVQfLs1PkMoOL42U6HSAJ6QXtMS+jykaQSCtw2kOGQiVMw5yW5y66iYu+i
- c+NIApTkNhZ42DiOOH7feBVPoDdYeyNpS3YND4FIPVSdCJYPVXZb4936YwPRRkMZDw9Kh+gosIW
- hxloJkAqLIEDpFIQbURHkjVCna7h5GFD
-X-Google-Smtp-Source: AGHT+IFzEygZ4UUVoljzEFTjTxSn7GITlI+vFiPuduDuES8vtjLkCg9VLNwWqMY+XN7+slNH0HdSRw==
-X-Received: by 2002:a05:600c:1e23:b0:439:987c:2309 with SMTP id
- 5b1f17b1804b1-439ae221d7dmr149077815e9.27.1740506724508; 
- Tue, 25 Feb 2025 10:05:24 -0800 (PST)
+X-Gm-Gg: ASbGnct7yd6uXm0/EOd3DljUyw7irKcCoDj18I4MnmK66f4sx1ffDSaR9fnyofC/vIQ
+ 1sfJvOQX50Wa7a2HPD30xPmFDmzY9vIn38wcjDIs0bZbwvunN2G/X3c/JanVRn2fq4mjPMslYSY
+ 5urCnU/9Z9VD5B9dbhzUTp7mEaRK9XLg5ZmJMdLXSDMNzsYp4ZJW/Kc6CeOKpqgqM8C1LULXdJW
+ fNHH3qnUnTNnEpyMm1JJQxpE6Edckk3Ctib/5TJf2Q8NeIFbsx+HqS18Vi0cIBzWz9ic7v70Hs/
+ SF67FO//g0v9SdoSmLnxCFgD10RVkCt5
+X-Google-Smtp-Source: AGHT+IFlE7NCzaac9t8TlelW8jl3fuxdhqqj4uL22vb9e2vlcVE77Tkc+PKc/2gej6Z3BXABv3lNWQ==
+X-Received: by 2002:a05:600c:4f0d:b0:439:98ca:e3a4 with SMTP id
+ 5b1f17b1804b1-43ab90169d5mr4441495e9.19.1740506746166; 
+ Tue, 25 Feb 2025 10:05:46 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.23
+ 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:05:23 -0800 (PST)
+ Tue, 25 Feb 2025 10:05:45 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/43] target/m68k: Avoid using floatx80_infinity global const
-Date: Tue, 25 Feb 2025 18:04:36 +0000
-Message-ID: <20250225180510.1318207-11-peter.maydell@linaro.org>
+Subject: [PULL 29/43] hw/pci-host/designware: Prevent device attachment on
+ internal PCIe root bus
+Date: Tue, 25 Feb 2025 18:04:55 +0000
+Message-ID: <20250225180510.1318207-30-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225180510.1318207-1-peter.maydell@linaro.org>
 References: <20250225180510.1318207-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,185 +99,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The global const floatx80_infinity is (unlike all the other
-float*_infinity values) target-specific, because whether the explicit
-Integer bit is set or not varies between m68k and i386.  We want to
-be able to compile softfloat once for multiple targets, so we can't
-continue to use a single global whose value needs to be different
-between targets.
+From: Bernhard Beschow <shentey@gmail.com>
 
-Replace the direct uses of floatx80_infinity in target/m68k with
-calls to the new floatx80_default_inf() function.
+On the real device, the PCIe root bus is only connected to a PCIe bridge and
+does not allow for direct attachment of devices. Doing so in QEMU results in no
+PCI devices being detected by Linux. Instead, PCI devices should plug into the
+secondary PCIe bus spawned by the internal PCIe bridge.
 
+Unfortunately, QEMU defaults to plugging devices into the PCIe root bus. To work
+around this, every PCI device created on the command line needs an extra
+`bus=dw-pcie` option which is error prone. Fix that by marking the PCIe root bus
+as full which makes QEMU decend into the child PCIe bus.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-id: 20250223114708.1780-3-shentey@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250224111524.1101196-3-peter.maydell@linaro.org
-Message-id: 20250217125055.160887-3-peter.maydell@linaro.org
 ---
- target/m68k/softfloat.c | 47 ++++++++++++++---------------------------
- 1 file changed, 16 insertions(+), 31 deletions(-)
+ include/hw/pci-host/designware.h |  7 +++++++
+ hw/pci-host/designware.c         | 18 +++++++++++++++++-
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/target/m68k/softfloat.c b/target/m68k/softfloat.c
-index 02dcc03d15d..d1f150e641f 100644
---- a/target/m68k/softfloat.c
-+++ b/target/m68k/softfloat.c
-@@ -142,8 +142,7 @@ floatx80 floatx80_scale(floatx80 a, floatx80 b, float_status *status)
-         if ((uint64_t) (aSig << 1)) {
-             return propagateFloatx80NaN(a, b, status);
-         }
--        return packFloatx80(aSign, floatx80_infinity.high,
--                            floatx80_infinity.low);
-+        return floatx80_default_inf(aSign, status);
-     }
-     if (aExp == 0) {
-         if (aSig == 0) {
-@@ -245,7 +244,7 @@ floatx80 floatx80_lognp1(floatx80 a, float_status *status)
-             float_raise(float_flag_invalid, status);
-             return floatx80_default_nan(status);
-         }
--        return packFloatx80(0, floatx80_infinity.high, floatx80_infinity.low);
-+        return floatx80_default_inf(0, status);
-     }
+diff --git a/include/hw/pci-host/designware.h b/include/hw/pci-host/designware.h
+index bf8b2789787..a35a3bd06c8 100644
+--- a/include/hw/pci-host/designware.h
++++ b/include/hw/pci-host/designware.h
+@@ -25,12 +25,19 @@
+ #include "hw/pci/pci_bridge.h"
+ #include "qom/object.h"
  
-     if (aExp == 0 && aSig == 0) {
-@@ -255,8 +254,7 @@ floatx80 floatx80_lognp1(floatx80 a, float_status *status)
-     if (aSign && aExp >= one_exp) {
-         if (aExp == one_exp && aSig == one_sig) {
-             float_raise(float_flag_divbyzero, status);
--            return packFloatx80(aSign, floatx80_infinity.high,
--                                floatx80_infinity.low);
-+            return floatx80_default_inf(aSign, status);
-         }
-         float_raise(float_flag_invalid, status);
-         return floatx80_default_nan(status);
-@@ -442,8 +440,7 @@ floatx80 floatx80_logn(floatx80 a, float_status *status)
-             propagateFloatx80NaNOneArg(a, status);
-         }
-         if (aSign == 0) {
--            return packFloatx80(0, floatx80_infinity.high,
--                                floatx80_infinity.low);
-+            return floatx80_default_inf(0, status);
-         }
-     }
++#define TYPE_DESIGNWARE_PCIE_ROOT_BUS "designware-pcie-root-BUS"
++OBJECT_DECLARE_SIMPLE_TYPE(DesignwarePCIERootBus, DESIGNWARE_PCIE_ROOT_BUS)
++
+ #define TYPE_DESIGNWARE_PCIE_HOST "designware-pcie-host"
+ OBJECT_DECLARE_SIMPLE_TYPE(DesignwarePCIEHost, DESIGNWARE_PCIE_HOST)
  
-@@ -452,8 +449,7 @@ floatx80 floatx80_logn(floatx80 a, float_status *status)
-     if (aExp == 0) {
-         if (aSig == 0) { /* zero */
-             float_raise(float_flag_divbyzero, status);
--            return packFloatx80(1, floatx80_infinity.high,
--                                floatx80_infinity.low);
-+            return floatx80_default_inf(1, status);
-         }
-         if ((aSig & one_sig) == 0) { /* denormal */
-             normalizeFloatx80Subnormal(aSig, &aExp, &aSig);
-@@ -610,15 +606,13 @@ floatx80 floatx80_log10(floatx80 a, float_status *status)
-             propagateFloatx80NaNOneArg(a, status);
-         }
-         if (aSign == 0) {
--            return packFloatx80(0, floatx80_infinity.high,
--                                floatx80_infinity.low);
-+            return floatx80_default_inf(0, status);
-         }
-     }
+ #define TYPE_DESIGNWARE_PCIE_ROOT "designware-pcie-root"
+ OBJECT_DECLARE_SIMPLE_TYPE(DesignwarePCIERoot, DESIGNWARE_PCIE_ROOT)
  
-     if (aExp == 0 && aSig == 0) {
-         float_raise(float_flag_divbyzero, status);
--        return packFloatx80(1, floatx80_infinity.high,
--                            floatx80_infinity.low);
-+        return floatx80_default_inf(1, status);
-     }
++struct DesignwarePCIERootBus {
++    PCIBus parent;
++};
++
+ typedef struct DesignwarePCIEViewport {
+     DesignwarePCIERoot *root;
  
-     if (aSign) {
-@@ -668,16 +662,14 @@ floatx80 floatx80_log2(floatx80 a, float_status *status)
-             propagateFloatx80NaNOneArg(a, status);
-         }
-         if (aSign == 0) {
--            return packFloatx80(0, floatx80_infinity.high,
--                                floatx80_infinity.low);
-+            return floatx80_default_inf(0, status);
-         }
-     }
+diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
+index 3e8c36e6a76..c07740bfaa4 100644
+--- a/hw/pci-host/designware.c
++++ b/hw/pci-host/designware.c
+@@ -55,6 +55,17 @@
+ #define DESIGNWARE_PCIE_ATU_DEVFN(x)               (((x) >> 16) & 0xff)
+ #define DESIGNWARE_PCIE_ATU_UPPER_TARGET           0x91C
  
-     if (aExp == 0) {
-         if (aSig == 0) {
-             float_raise(float_flag_divbyzero, status);
--            return packFloatx80(1, floatx80_infinity.high,
--                                floatx80_infinity.low);
-+            return floatx80_default_inf(1, status);
-         }
-         normalizeFloatx80Subnormal(aSig, &aExp, &aSig);
-     }
-@@ -740,8 +732,7 @@ floatx80 floatx80_etox(floatx80 a, float_status *status)
-         if (aSign) {
-             return packFloatx80(0, 0, 0);
-         }
--        return packFloatx80(0, floatx80_infinity.high,
--                            floatx80_infinity.low);
-+        return floatx80_default_inf(0, status);
-     }
++static void designware_pcie_root_bus_class_init(ObjectClass *klass, void *data)
++{
++    BusClass *k = BUS_CLASS(klass);
++
++    /*
++     * Designware has only a single root complex. Enforce the limit on the
++     * parent bus
++     */
++    k->max_dev = 1;
++}
++
+ static DesignwarePCIEHost *
+ designware_pcie_root_to_host(DesignwarePCIERoot *root)
+ {
+@@ -699,7 +710,7 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
+                                      &s->pci.memory,
+                                      &s->pci.io,
+                                      0, 4,
+-                                     TYPE_PCIE_BUS);
++                                     TYPE_DESIGNWARE_PCIE_ROOT_BUS);
+     pci->bus->flags |= PCI_BUS_EXTENDED_CONFIG_SPACE;
  
-     if (aExp == 0 && aSig == 0) {
-@@ -924,8 +915,7 @@ floatx80 floatx80_twotox(floatx80 a, float_status *status)
-         if (aSign) {
-             return packFloatx80(0, 0, 0);
-         }
--        return packFloatx80(0, floatx80_infinity.high,
--                            floatx80_infinity.low);
-+        return floatx80_default_inf(0, status);
-     }
+     memory_region_init(&s->pci.address_space_root,
+@@ -754,6 +765,11 @@ static void designware_pcie_host_init(Object *obj)
  
-     if (aExp == 0 && aSig == 0) {
-@@ -1075,8 +1065,7 @@ floatx80 floatx80_tentox(floatx80 a, float_status *status)
-         if (aSign) {
-             return packFloatx80(0, 0, 0);
-         }
--        return packFloatx80(0, floatx80_infinity.high,
--                            floatx80_infinity.low);
-+        return floatx80_default_inf(0, status);
-     }
- 
-     if (aExp == 0 && aSig == 0) {
-@@ -2260,8 +2249,7 @@ floatx80 floatx80_atanh(floatx80 a, float_status *status)
-     if (compact >= 0x3FFF8000) { /* |X| >= 1 */
-         if (aExp == one_exp && aSig == one_sig) { /* |X| == 1 */
-             float_raise(float_flag_divbyzero, status);
--            return packFloatx80(aSign, floatx80_infinity.high,
--                                floatx80_infinity.low);
-+            return floatx80_default_inf(aSign, status);
-         } else { /* |X| > 1 */
-             float_raise(float_flag_invalid, status);
-             return floatx80_default_nan(status);
-@@ -2320,8 +2308,7 @@ floatx80 floatx80_etoxm1(floatx80 a, float_status *status)
-         if (aSign) {
-             return packFloatx80(aSign, one_exp, one_sig);
-         }
--        return packFloatx80(0, floatx80_infinity.high,
--                            floatx80_infinity.low);
-+        return floatx80_default_inf(0, status);
-     }
- 
-     if (aExp == 0 && aSig == 0) {
-@@ -2687,8 +2674,7 @@ floatx80 floatx80_sinh(floatx80 a, float_status *status)
-         if ((uint64_t) (aSig << 1)) {
-             return propagateFloatx80NaNOneArg(a, status);
-         }
--        return packFloatx80(aSign, floatx80_infinity.high,
--                            floatx80_infinity.low);
-+        return floatx80_default_inf(aSign, status);
-     }
- 
-     if (aExp == 0 && aSig == 0) {
-@@ -2774,8 +2760,7 @@ floatx80 floatx80_cosh(floatx80 a, float_status *status)
-         if ((uint64_t) (aSig << 1)) {
-             return propagateFloatx80NaNOneArg(a, status);
-         }
--        return packFloatx80(0, floatx80_infinity.high,
--                            floatx80_infinity.low);
-+        return floatx80_default_inf(0, status);
-     }
- 
-     if (aExp == 0 && aSig == 0) {
+ static const TypeInfo designware_pcie_types[] = {
+     {
++        .name           = TYPE_DESIGNWARE_PCIE_ROOT_BUS,
++        .parent         = TYPE_PCIE_BUS,
++        .instance_size  = sizeof(DesignwarePCIERootBus),
++        .class_init     = designware_pcie_root_bus_class_init,
++    }, {
+         .name           = TYPE_DESIGNWARE_PCIE_HOST,
+         .parent         = TYPE_PCI_HOST_BRIDGE,
+         .instance_size  = sizeof(DesignwarePCIEHost),
 -- 
 2.43.0
 
