@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0251FC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51700C021BB
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:08:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzLC-0003WK-Id; Tue, 25 Feb 2025 13:07:34 -0500
+	id 1tmzLN-0004NN-Ar; Tue, 25 Feb 2025 13:07:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJc-00008A-Sd
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:57 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1tmzJr-0000Ox-Gp
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:15 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJW-0002KL-Tq
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:54 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4398738217aso51925765e9.3
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:49 -0800 (PST)
+ id 1tmzJi-0002ND-9q
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:11 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-439350f1a0bso501645e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740506748; x=1741111548; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740506757; x=1741111557; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tb2z/iCBDw+9Y/MjKpZH7HRISmiI4M+r/On2sHYXwd8=;
- b=woGqJns1t8osTEGxTxkIr4D5patN8YB35O8YuhW/xFFtr5VXS2mzhqgfaDAthAFb6X
- of6GRdpKW9I3n0l/RPNcW1B/BiLKDD2ne7ad19Ox3LeUMWDZUJmZ3vS8WVRXkfEoqcch
- XD/d6dOMCsyAVMzN54EWYl4nAL7ieSmCQfy+0iF2aXlh8zNR3VSNkYEytsA8sPz+8Ols
- F3/DNLYQfy/RbqWv6Rjx0hN9mLkwdKAtBGiHRwXkBnFLgRHXMpsbHjI0wrR8MwyQp2vk
- dl+AQx6Uiu7KluZFYJ5XeKoWjNCg+pdKd0qj1xGCi4Mgy4weubIs9NTz0Baot7wdNMg/
- rKeQ==
+ :reply-to; bh=zqLNsK4T5WhvJfF6fOD0iLHLs1+ifW05y1H6VNCDoMk=;
+ b=uaxV+V3mLhhmR8bCl06LTn3xKEW3MlA2imRvCxy80qTcMlj7wSAUcs5MS84AVZtTic
+ G1YwcaOVzs8SfnxkptNe+qzbw7gDQNEOeAsHbcuHfIMoqqs9hnsQKpadvU9HT4uLhFTf
+ j62aHOoUSePxVzhZVfksqIKI2/7Bf4Pt0I9eosVIfKhEEJLmDKEC1qkCMWN+a+7fa61w
+ e/+/dWwS3ILR3ASs74u9ni5tBe6ucay+rgt33Gj1KgfUIu5yYBcUPoSnR5QrZ8f18qGG
+ sVydaxIflByPO+qo3hilrroGVTDDlFPcGrAdZYmTFfnOj7h8t1VYxQGE/xsZyYFQ4Z+s
+ Eykw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740506748; x=1741111548;
+ d=1e100.net; s=20230601; t=1740506757; x=1741111557;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tb2z/iCBDw+9Y/MjKpZH7HRISmiI4M+r/On2sHYXwd8=;
- b=bxZSQbwGfgnZH7MmDE0HaYNK9TMgGsRY41My+M6jf58J1f/UasG0MwXzZ8CpV95g/3
- eE8soXpA5mcWL2tqbOuVSmDR0k144Spw4HvAeTgMTLrSGHT7DK3NWs1ltooOhsvtRZuj
- +FudJQ2aKpkPQmfld9Hz842B+GO3GU0tfshmrj8HVHYbHmiz52QHqG9O+R8W+l7NkyUC
- Cs8Uo5hhVBHrP8bKrJv1iWLv4qPGD20YJ3aD/pAuLU48+YU5ddqs26X6WrWthaBStj66
- RYOapeqKn7kOsBcuqlASxev5NuQ5FyjQtFTtfFSrFr72vxZAfDEg7lsEfujogBtaEO/J
- uzbw==
-X-Gm-Message-State: AOJu0Ywj1BYteYkzwiaqeBGpepe7i7NFLeldGVR2aCwxpZ70dcl4SKBv
- v98adk0KX5s5E83emIStcPbojtk8kiUuFkN8exikI9oRQWA7TFSReluovaf5ihI57n89HcGgYHg
- 4
-X-Gm-Gg: ASbGnctK3MEYlxr3HlNHRyiRhzFY5Zfue73hBahjN94L6ZdZvhDpevUYUE/cIbeoHKO
- uofDrhqvCACQ7P5UAwpvi/fl99Ka+nge99WxMjr7CMaFx77lJdmcP0MTQhBnDdj+jvApv7m73us
- IeIW47IHcT1rJM7GNtGN09Y+5dqexs/mUSJeR87LvWxJtF5P/udnESeVSA7mhQ9OE41wFU2HmY3
- kEAD2Ur7bZZWDTohkCmtk2tFjDQbIMfWiL7hflvVT0YfdzgvVFyITLPqnxPWBDQXtGmqOSfD51I
- gApJixfNKeaaudXnM2Q0vlF3m4Q+S7J3
-X-Google-Smtp-Source: AGHT+IEnA8zcZn3yiQzzQVUbKi1AgxW3E3uckNpzWcuWMKxBO5pJUsYVb2wo5VQi1FLmXqEwl1yp+A==
-X-Received: by 2002:a05:600c:190e:b0:439:689b:99eb with SMTP id
- 5b1f17b1804b1-43ab8fd8768mr4906095e9.7.1740506747063; 
- Tue, 25 Feb 2025 10:05:47 -0800 (PST)
+ bh=zqLNsK4T5WhvJfF6fOD0iLHLs1+ifW05y1H6VNCDoMk=;
+ b=qBtODqfk9tFG+Co/qMcqrna2EvwBeAtzjLO7UGxvHB/viKERdUZPAUvSQYqx4zokIX
+ TZCl4ak+1762UCDpgXxt0BWtz41Lm7cFfv0d4YfMTLIMNdi3Oo+v1Hsu+MBR0eusxGYG
+ l5UDFWzbTAqiKB1CR9wjKsfAGDAnmQ9ytd6fgqXgIikgJus12FKAd3OZLG3aleR+bmYi
+ PiPmtJvoY3LV37cuIK6f4+pzsCagYm/Zmdcc86YklI3bAovcLuxti2nc4QfUnYIZ+tx9
+ tKpvr2qU2ptwyYR8rtrun7h9sxd4G5amWsclrU0OPj8jZx5hUqyZ6SbElImYoLsv6H6u
+ 8aNw==
+X-Gm-Message-State: AOJu0YzT0oV8eceWShjGldllc101FNeh5OuATojX8TMNQQFEihzDjtl6
+ Iuup0X0NFqunQEItKiLG3QU+b9DWbBs+a2CajG3BHqbmaCEC6WHdsj3Due7h0pBz43vBeKOHPWX
+ f
+X-Gm-Gg: ASbGncsYEZOvcu/Zg6UGCHFPowk4yBA333H4tHpcqUDmtBFNOFRCaDFYfgU8bhh2r/P
+ PXJB2AqPNq+hYe5FmOf4y2RtwsWY7OnrjzwMRKL2RuUYJApKsXUDdmrjtI2zKrvkLDhgm/uUjLr
+ Va6sBRtS8KH1WvJoZL9ytMW2wjPqTIFOvzINdadmv2pd7W8a40BSlAg3RccvwMOaCPKdOY+yJq2
+ mkLt4v04c61KAeB1Oe7Fsfsvw2p/V/41SqcW7S5tSf5c6kNAT20eEvE4HcfA33NVlos79er9Eoh
+ diVMsDF3GEOR1j2v/nEgBx5ijyRKiaKB
+X-Google-Smtp-Source: AGHT+IFK9FLrPD0UTukyMyXGEo15G1HXkGrRh0B9sHggrn5d3jmrnF5mtp00J7LKqXcnNx5TCGK1yQ==
+X-Received: by 2002:a05:600c:6c46:b0:439:81e3:43ee with SMTP id
+ 5b1f17b1804b1-439a2fb3256mr162851545e9.6.1740506756635; 
+ Tue, 25 Feb 2025 10:05:56 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.46
+ 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:05:46 -0800 (PST)
+ Tue, 25 Feb 2025 10:05:56 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 30/43] hw/gpio/pca955*: Move Kconfig switches next to
- implementations
-Date: Tue, 25 Feb 2025 18:04:56 +0000
-Message-ID: <20250225180510.1318207-31-peter.maydell@linaro.org>
+Subject: [PULL 39/43] hw/arm/fsl-imx8mp: Add watchdog support
+Date: Tue, 25 Feb 2025 18:05:05 +0000
+Message-ID: <20250225180510.1318207-40-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225180510.1318207-1-peter.maydell@linaro.org>
 References: <20250225180510.1318207-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,58 +100,134 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-The move of the Kconfig bits to hw/gpio is fixing a bug in 6328d8ffa6cb9d
-("misc/pca955*: Move models under hw/gpio"), which moved the code but forgot to
-move the Kconfig sections.
-
-Fixes: 6328d8ffa6cb9d "misc/pca955*: Move models under hw/gpio"
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-id: 20250223114708.1780-4-shentey@gmail.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-id: 20250223114708.1780-13-shentey@gmail.com
+[PMM: drop static const from wdog_table for GCC 7.5]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/gpio/Kconfig | 8 ++++++++
- hw/misc/Kconfig | 8 --------
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ docs/system/arm/imx8mp-evk.rst |  1 +
+ include/hw/arm/fsl-imx8mp.h    |  7 +++++++
+ hw/arm/fsl-imx8mp.c            | 28 ++++++++++++++++++++++++++++
+ hw/arm/Kconfig                 |  1 +
+ 4 files changed, 37 insertions(+)
 
-diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-index c423e10f59f..a209294c20c 100644
---- a/hw/gpio/Kconfig
-+++ b/hw/gpio/Kconfig
-@@ -16,6 +16,14 @@ config SIFIVE_GPIO
- config STM32L4X5_GPIO
-     bool
+diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
+index 66e58651079..904de9aa7df 100644
+--- a/docs/system/arm/imx8mp-evk.rst
++++ b/docs/system/arm/imx8mp-evk.rst
+@@ -17,6 +17,7 @@ The ``imx8mp-evk`` machine implements the following devices:
+  * 5 GPIO Controllers
+  * 6 I2C Controllers
+  * 3 SPI Controllers
++ * 3 Watchdogs
+  * Secure Non-Volatile Storage (SNVS) including an RTC
+  * Clock Tree
  
-+config PCA9552
-+    bool
-+    depends on I2C
-+
-+config PCA9554
-+    bool
-+    depends on I2C
-+
- config PCF8574
-     bool
-     depends on I2C
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 8f9ce2f68c3..4271e2f4ac9 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -30,14 +30,6 @@ config EDU
-     default y if TEST_DEVICES
-     depends on PCI && MSI_NONBROKEN
+diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
+index 296a87eb504..dfbdc6ac7f2 100644
+--- a/include/hw/arm/fsl-imx8mp.h
++++ b/include/hw/arm/fsl-imx8mp.h
+@@ -21,6 +21,7 @@
+ #include "hw/pci-host/fsl_imx8m_phy.h"
+ #include "hw/sd/sdhci.h"
+ #include "hw/ssi/imx_spi.h"
++#include "hw/watchdog/wdt_imx2.h"
+ #include "qom/object.h"
+ #include "qemu/units.h"
  
--config PCA9552
--    bool
--    depends on I2C
--
--config PCA9554
--    bool
--    depends on I2C
--
- config I2C_ECHO
+@@ -38,6 +39,7 @@ enum FslImx8mpConfiguration {
+     FSL_IMX8MP_NUM_IRQS         = 160,
+     FSL_IMX8MP_NUM_UARTS        = 4,
+     FSL_IMX8MP_NUM_USDHCS       = 3,
++    FSL_IMX8MP_NUM_WDTS         = 3,
+ };
+ 
+ struct FslImx8mpState {
+@@ -53,6 +55,7 @@ struct FslImx8mpState {
+     IMXI2CState        i2c[FSL_IMX8MP_NUM_I2CS];
+     IMXSerialState     uart[FSL_IMX8MP_NUM_UARTS];
+     SDHCIState         usdhc[FSL_IMX8MP_NUM_USDHCS];
++    IMX2WdtState       wdt[FSL_IMX8MP_NUM_WDTS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
+ };
+@@ -235,6 +238,10 @@ enum FslImx8mpIrqs {
+     FSL_IMX8MP_I2C5_IRQ     = 76,
+     FSL_IMX8MP_I2C6_IRQ     = 77,
+ 
++    FSL_IMX8MP_WDOG1_IRQ    = 78,
++    FSL_IMX8MP_WDOG2_IRQ    = 79,
++    FSL_IMX8MP_WDOG3_IRQ    = 10,
++
+     FSL_IMX8MP_PCI_INTA_IRQ = 126,
+     FSL_IMX8MP_PCI_INTB_IRQ = 125,
+     FSL_IMX8MP_PCI_INTC_IRQ = 124,
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index 63f07eca8a4..762f2a52d8d 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -228,6 +228,11 @@ static void fsl_imx8mp_init(Object *obj)
+         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
+     }
+ 
++    for (i = 0; i < FSL_IMX8MP_NUM_WDTS; i++) {
++        g_autofree char *name = g_strdup_printf("wdt%d", i);
++        object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
++    }
++
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
+     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
+                             TYPE_FSL_IMX8M_PCIE_PHY);
+@@ -491,6 +496,28 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
+                     fsl_imx8mp_memmap[FSL_IMX8MP_SNVS_HP].addr);
+ 
++    /* Watchdogs */
++    for (i = 0; i < FSL_IMX8MP_NUM_WDTS; i++) {
++        struct {
++            hwaddr addr;
++            unsigned int irq;
++        } wdog_table[FSL_IMX8MP_NUM_WDTS] = {
++            { fsl_imx8mp_memmap[FSL_IMX8MP_WDOG1].addr, FSL_IMX8MP_WDOG1_IRQ },
++            { fsl_imx8mp_memmap[FSL_IMX8MP_WDOG2].addr, FSL_IMX8MP_WDOG2_IRQ },
++            { fsl_imx8mp_memmap[FSL_IMX8MP_WDOG3].addr, FSL_IMX8MP_WDOG3_IRQ },
++        };
++
++        object_property_set_bool(OBJECT(&s->wdt[i]), "pretimeout-support",
++                                 true, &error_abort);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
++            return;
++        }
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[i]), 0, wdog_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[i]), 0,
++                           qdev_get_gpio_in(gicdev, wdog_table[i].irq));
++    }
++
+     /* PCIe */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie), errp)) {
+         return;
+@@ -531,6 +558,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MP_SNVS_HP:
+         case FSL_IMX8MP_UART1 ... FSL_IMX8MP_UART4:
+         case FSL_IMX8MP_USDHC1 ... FSL_IMX8MP_USDHC3:
++        case FSL_IMX8MP_WDOG1 ... FSL_IMX8MP_WDOG3:
+             /* device implemented and treated above */
+             break;
+ 
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 28ae409c859..98ac93a23fc 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -606,6 +606,7 @@ config FSL_IMX8MP
+     select PCI_EXPRESS_FSL_IMX8M_PHY
+     select SDHCI
+     select UNIMP
++    select WDT_IMX2
+ 
+ config FSL_IMX8MP_EVK
      bool
-     default y if TEST_DEVICES
 -- 
 2.43.0
 
