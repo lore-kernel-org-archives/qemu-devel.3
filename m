@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBDC0C021B6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 11:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F254DC021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 11:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmt5p-00035c-BD; Tue, 25 Feb 2025 06:27:17 -0500
+	id 1tmt6b-0003Ol-FL; Tue, 25 Feb 2025 06:28:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmt5n-00035P-NB
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:27:15 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1tmt6a-0003MU-9H
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:28:04 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmt5m-0002Kn-4A
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:27:15 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-38f3486062eso4636891f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 03:27:13 -0800 (PST)
+ id 1tmt6Y-0002Qv-LQ
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:28:04 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-38f73e6ed7fso1941193f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 03:28:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740482832; x=1741087632; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740482881; x=1741087681; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1WLu1YcZRuNqGZOc3E6zggiosmKQ+o0V2aa7sKmAikE=;
- b=yILYxGipqJLgoz188REhDv1hVvEcFJS7Dr02csL+b5BhHXjyvAH69GxAzZPu8ZV+01
- 7nNzY9JoMqYvyEFnpKFVRGtxOYhfceNp/p3I6NLwOjUo7dARDVHgFGNDYE4znaNhhpnJ
- VDt48n4S7jiN4/jhyU8uPU1niaL/rVuSJ1D83kylTgubz0ZZDq/3QCjDxFC1FQ+sWKOM
- HhXahtoHdTzKZ872k0LaLWgTpUzzKZvT3R5c8j4qTLcdczXIOTcZqvBrmsD2l6dPg1ko
- 9yULUmyxejIbi5iN/aZnjMr+elx6WqT3V4mJ4ql5JQn6wo0v0a239jRdrmtJjYBbUgji
- Jymw==
+ bh=jtJ63S4m52FQjL8V9SEdJUf/oni7GEfE5fqT4tTxkk4=;
+ b=tPabZC740hUPahvrXWTw1el1JdJO7M/0LFgHF5CXVBQH1OniJOcCAt+s+DxwF4yqpW
+ z86UgKrbeuHa+9x2Kgp5/9dx/GhwxNlGA1hhVO0/RFMGsgX7qD1KADwsetMq1m7kLk4E
+ BXM2e/j4KhhLhpCeAKllgp0z+Az/18OthBKMrwGeXLiXWmgUg+9yeLhW7HkHCAwnOGTD
+ eKD3AeNLPoL78/L6g+W00T3GjzOkgsNWuziAqNY40cNSlvjCRXkRQRmODZAi6dfdbz+j
+ VU3/I6vAbtmbsO0pZycPlcUJQlbsvACQNUtEflZYd5vxFUb2P9P7ov25za45nuFAgBeZ
+ Keyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740482832; x=1741087632;
+ d=1e100.net; s=20230601; t=1740482881; x=1741087681;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1WLu1YcZRuNqGZOc3E6zggiosmKQ+o0V2aa7sKmAikE=;
- b=aQ0EFn5lSI5nl79exI3yTReaxr8C4FpAsXL7wKTkDawDrpeXFLYjm0Nmm7fAb2OiRF
- 8EuAAz5gcCy9OEIRSNTsudb7SE2iNw5s3eHn57kgGn+zYPgSQ+CZWeUdzBcS3VeFaUOV
- UUdTyvsX1268mnqehxJnCL25FAo8cj7Q2cwOysusjNOcokm85UPduzRDh7LupLZma3Ty
- d74ZNGcKNttzzVS98lwxjVExHCvB6xothsEGihuPqze48Sh5/jRTL6kxX6NqBlRGQ+g0
- 1yQ6c9t3lpRnyt1yL4aJBuv/rV+eSFWerjWryk5PnJcdhSDtCVGkbvXhEgSCfqzG5faW
- yVVg==
-X-Gm-Message-State: AOJu0Yzr28EcHDBdsYaN3vF43lMFvsn9WPy0mPKb/JHTJSkzGJ1SAmd+
- qo7za3RRBCgaExkhv8+ByuWoX01oLx5pVn0qZMQjIsTyJWK+viNJ6e7n49NO3qM=
-X-Gm-Gg: ASbGncvIf4hQ/Rg+iPZ0MRfMuiLYkr3eVCUNQ7XmEWEH7iCva7uf7hs/msMZlfP9Y8p
- rXGSMG6IptM9dEc8r1pyoV9i+s5yUcINov8UBXU2vEXFGSZl0OImRNnzNjUJxSHlNryOwm4GP/r
- PYR+nTyzH1oxhwIyV8ZyXux1NrE6N8Rdx0eVEWd6mtfV8Lr3diiYhKsLCd9HN+Lg4igNqlRKLmU
- j1SQlVFdTq+RxwXF+o9ijDPGkPO8iG5rmmc5LmSRNZdtROkGqkzeHiZSSRqAsSXHcXl+3CDGdIr
- c8WJofva7XuMRNaF+DWOWW5qG9d0
-X-Google-Smtp-Source: AGHT+IGCJJxU6jDvhjDwSY3JSWS/K6uaelygSgFhPc9mVKRSR8300+wxJSn7+7okHMuJnLi5/cyMCg==
-X-Received: by 2002:a05:6000:1865:b0:38f:32ac:7e53 with SMTP id
- ffacd0b85a97d-38f6f0b189dmr15403132f8f.39.1740482831567; 
- Tue, 25 Feb 2025 03:27:11 -0800 (PST)
+ bh=jtJ63S4m52FQjL8V9SEdJUf/oni7GEfE5fqT4tTxkk4=;
+ b=Xdpuc5T1cqD/JS1njDVw8TuMbvJ0QJIjzcSY7HMf2HaXSe0Yp+oeCbLm5QqiGrM0Ga
+ i/57H3pW6DwDo2NaCZ5F8IHcSCur10N5blbgUAz0J+KghJFjuSsuQRHFabCDPY4nPiAn
+ rGvP3LaRunkfUk1fxXuAWosV064XNpzRMO0+41xl6B3o20CEyagq1oxExkz1Q+TxocGX
+ ZM6sMJRnN1lKRgYTTNxO5HFmMG/9XbwdGdt67VZ34AVLymSnnU/2rf4z4k4L3d0sCHqU
+ xBKMOP15qzJlDqqenDdLaoOGjkPVrGVKy1eVoSl7jUqjAhAwvUSKB2ZgTsCGfwwFXy/r
+ TP3w==
+X-Gm-Message-State: AOJu0Yy7HJS6549Vh5CXMvzeCzz+32q9smmpvoLqRaKh1zawHOma4cyh
+ QAQkcDLXrP0Za6Q6HUtaa0zAWxY73ZptvzRgNca49LIzTEUAMu7/XewvVEM6dagm8job084buqJ
+ 0FgM=
+X-Gm-Gg: ASbGncvn9LB5fN73B6n5yN/tcQGWALvVRqRlpgGwgTt0fymifjIENNBFjDy6nNKF2Nw
+ V5DEFaH496JhAt3eihu71GbeRR1EcZmynn5iJTCPJ9sGP641NjwEQtltE4hT/Vgu6oqG14c+e6g
+ S/U//v3LpSOTQ8NjAYXEM1zE5BZXJiURa+AdCTNSoakKxk82Oq0QR2sPp/0chxWdgUbDRxDt4lr
+ LUjoMvkyE9Ad6KsslCcUBJkMpn33KyClVZLdgAuFvSySpp5f9FmXdqGiuZI4W7EWdvs79+Qj5QN
+ bwGY6YaR7sjqunncBuDNL/3Jshes
+X-Google-Smtp-Source: AGHT+IGmWGKOE7H8HB2nhP0PszMQP73UWSbWU63J/HkDKv+6Z7IDXn6EqWC4sI6zm0zGcecyWVkP/Q==
+X-Received: by 2002:a5d:64a2:0:b0:38d:e078:43a5 with SMTP id
+ ffacd0b85a97d-38f6e947079mr15188157f8f.13.1740482880976; 
+ Tue, 25 Feb 2025 03:28:00 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd8e72fcsm1915182f8f.80.2025.02.25.03.27.10
+ ffacd0b85a97d-390cd86cc26sm2004991f8f.30.2025.02.25.03.28.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 03:27:11 -0800 (PST)
+ Tue, 25 Feb 2025 03:28:00 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 201425F7DC;
- Tue, 25 Feb 2025 11:27:10 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id D0A9F5F7DC;
+ Tue, 25 Feb 2025 11:27:59 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
  Henderson <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Dau?=
  =?utf-8?Q?d=C3=A9?=
- <philmd@linaro.org>,  Warner Losh <imp@bsdimp.com>,  Kyle Evans
- <kevans@freebsd.org>
-Subject: Re: [PATCH v2 01/10] bsd-user: drop not longer used target_reset_cpu()
-In-Reply-To: <20250207162048.1890669-2-imammedo@redhat.com> (Igor Mammedov's
- message of "Fri, 7 Feb 2025 17:20:39 +0100")
+ <philmd@linaro.org>,  Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH v2 03/10] m68k: reset vcpu after it's created
+In-Reply-To: <20250207162048.1890669-4-imammedo@redhat.com> (Igor Mammedov's
+ message of "Fri, 7 Feb 2025 17:20:41 +0100")
 References: <20250207162048.1890669-1-imammedo@redhat.com>
- <20250207162048.1890669-2-imammedo@redhat.com>
+ <20250207162048.1890669-4-imammedo@redhat.com>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Tue, 25 Feb 2025 11:27:10 +0000
-Message-ID: <87a5aa6z8x.fsf@draig.linaro.org>
+Date: Tue, 25 Feb 2025 11:27:59 +0000
+Message-ID: <874j0i6z7k.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -109,13 +109,17 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Igor Mammedov <imammedo@redhat.com> writes:
 
-> target_reset_cpu() static inlines have no user,
-> remove them.
+> Reseting vcpu before its thread is created, caused various issues in the =
+past
+> for other targets. It doesn't cause issues for m68k at the moment but
+> to be consistent with the rest of targets, move reset during realize time
+> after qemu_init_vcpu().
+>
+> That basically prevents reset being run when when vCPU is in incositent s=
+tate
+> (i.e. accelerator hasn't initialized vCPU yet).
 >
 > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> ---
-> CC: Warner Losh <imp@bsdimp.com>
-> CC: Kyle Evans <kevans@freebsd.org>
 
 Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
