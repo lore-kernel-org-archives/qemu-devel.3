@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B086C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B954FC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:46:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzrr-0000Dk-LL; Tue, 25 Feb 2025 13:41:21 -0500
+	id 1tmzwN-0001xK-Vw; Tue, 25 Feb 2025 13:46:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmzrC-0008Ow-RB
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:40:48 -0500
+ id 1tmzwH-0001wr-3t
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:45:53 -0500
 Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmzrB-00081O-8m
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:40:38 -0500
+ id 1tmzwF-0000EQ-96
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:45:52 -0500
 Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-220d39a5627so92806055ad.1
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:40:36 -0800 (PST)
+ d9443c01a7336-22113560c57so36070155ad.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:45:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740508836; x=1741113636; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740509149; x=1741113949; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=iecd+Lf9+Xb6NF73imYU5tlVpOwTHcPVUlgvAg2DI6M=;
- b=L7XoMpw6It2Hge3i8xAy/71N8ZXWCXBKFfclukQDUXFcxeBggAsyOBl/nzFHrYAeZf
- aBWS+R8vfU6Qv7z2hZNjOr2fnuaYw5KM3Bw3MgNOsZlFaA+ePoJp30JA6UL2Vloe9MxL
- fGtz686EWd0z3gywTcAdxYBZCczRE5GApP7OIyKo1rBB6Jr1/FbX4YSRvG8HW4OtX9a2
- 5tT076XW3+NvDNwW11GLNhXFBeIjkDHN9P5UepSGj+DL5sO8VMLsFYSddH6a36UHlfay
- SByJ1a/TBQUM2jXLuwmcxPHlMI8n+X7Ct1Al/s43Yl7rrBwxHmu7V19xM5Jj3xeDABl3
- uD0g==
+ bh=Yhfoa+Ic2QVKitSjTHUBWal/jTEU3AA4Rm+Tf8toMts=;
+ b=k7cMMCj6kOvRKEsEt3t527XH6g1KpJTz7tShS93HfyWN05sQrjjW+1n6iFue34Kx7m
+ kYbtj371MZsWozloJdqV06vnYp4Lx/6izl/S+Ihu8e42Nr8v744vl5igL5/Krz/85Z82
+ Unmpqzl3jbl41HeLKzdLbx6WcdO8tzrO3QulGWDb5jIH7uD6sH2LFqFemax7/9X2d6z7
+ /qqep8fy2YcVL7UocY3T0pBDr94cJnMYJdtlLBDKpx9H+8H8zLHCO6Gj8qiWGoyAwXZs
+ fP8/z7uyL9dFYnxKt7h4VeCkWmzJKBnGsomxkHxrf1IKnRkM7D7pUgGnpynDG7k7DmFp
+ GZqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740508836; x=1741113636;
+ d=1e100.net; s=20230601; t=1740509149; x=1741113949;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iecd+Lf9+Xb6NF73imYU5tlVpOwTHcPVUlgvAg2DI6M=;
- b=imGOyD6dNg5xma0jta7iWBiroUJ3Hy91WpqqNwS0wJ4llht+NdPrm7ndFzc3D4vRKG
- p8BgnsIfQXSaKO+Ms0+injweH9HFZJE1f0rokxgNSZyfYQePzjRzHIjWumiEpwUkHtK3
- FVw+GIk3CoPOyzXat+ZxpRhoWzAHF5pjxVFryfcEV5Frkuo3pyzepCGyOCV6yHu5w5fp
- Ns2Rx8C5w8mzm3RNVgQsWPaJNVIna+EozUimdAwyar18MYQMiMsxVlgjqhDEgH/QmmYM
- AhPzbNSSquG2x+cOX/tfeY1x00iayLSD7uey88VWCiEEGmWaxzagvoFbL+MgMtj6n8Oa
- fENA==
-X-Gm-Message-State: AOJu0YyvCIt7EYU1Gn0w+oj3zJfB7h6Hwdfgj3lkiFT+91QgWU4vWKEx
- R12OUuZDFNIi2zTeFvJGq5eUC/gV8LeE9s4xaDyMdQ8R+11Nd56SoliVPFAb7W1K9wYBNgT8Oq8
- B
-X-Gm-Gg: ASbGncsQItXBZkCtwVXAspfpJ5DehcpPtDdE5+e9PH3Oj9N535P4l+L7jjHhSLh8uaq
- 2TXNFtklz+qotk2Ni10DKZlSnHwsrfIXqZul9bWtxR36BsQPv3FzNjlfWF53UcmKgW246jomGe3
- HnPPQFXBcxpcAulMZyYT8mkKnkE5bq1/Zs5J1PKrsWPvlMoqlVjb/e9hjk94fbyrKr36R+TudYp
- coOTo78JsUk15HXLvoUgIhEQMGmNBUfOoNla0GcaocvLL7h2xqRpUE15mky/xAhiWiL3qRWDc/i
- OxhCpYcusMCJLZWWv5B+aawJQDEcDlD5y8eR1zHt47DRk7tEkDVuOfiGbiFMFmfMU15dCqkrk4B
- 4OCQH5Z4=
-X-Google-Smtp-Source: AGHT+IGmvHKVvqBWfUmbXh5HdIxYHLTw5ryqaPUfffUYNyE3rCjRYghQn7b0vQFQB8GSpx2r2WubSA==
-X-Received: by 2002:a17:902:d48d:b0:21f:136a:a374 with SMTP id
- d9443c01a7336-221a0025a63mr316235285ad.43.1740508835695; 
- Tue, 25 Feb 2025 10:40:35 -0800 (PST)
+ bh=Yhfoa+Ic2QVKitSjTHUBWal/jTEU3AA4Rm+Tf8toMts=;
+ b=PKL/qrwmwWXhm0BCM3iKkbLUK8t2JwdN57BqErfHVE3FDnHhq60w9ZiTc1WDQv/Pl7
+ T6Iei24/6y9fQx9gmuUF4NeLPdScL5LuhNsY4LMJfZ46XEDyxn/eImDMjuKU3DVIPUkv
+ sZ3W4VwbrdRvQ9UquY7IRTPcnW6aJEb/xd1XsYh14ztme+/Ts4PbBW0VMOwOQ/jyO9vx
+ +3UT4lyN35NPymJYp+t6ya6vtKUk0UfLlZAhkhgFlQdV3Q8rGtX1dKCJ0qcIBRCXv5tQ
+ iuw6a0GFJt8OwnFyLPd0FNSzyAXD1IAIXMXdIlEVnmn+Mu6kew/tyKQR2Qv/uqVTQy5U
+ /NKQ==
+X-Gm-Message-State: AOJu0YzgpktWOiAEkDca0/C2l9Nxn4fyt9G1G6dxH0pvQskxzkhBewqs
+ 5ZHzRt22/ASFhMoyeU3ay3qUJDpnI8HUy26bRNp8VJUJJop0/BbpRTlgifk1teMBlJf+SJMMb06
+ L
+X-Gm-Gg: ASbGncs3U2xEuOe/loNNQFl9a7eiNdWsesSkMdBqk1FaUChcrZ8ZwARWeqJJzHRgsh+
+ RoL8EjSVgD3ksMtj6ac7VzfxTE6JUpjMk7M2boezlHtGNS9iZH/bgVO92sDLx3XGRRxBG2N4pvA
+ 5jPHBxbVy/fjlS5SMcnCWWA6KkHIP56MAh9lYh7FctWQ3hUB/RxV/01r/HQdIiVHtnA/ztGOIeJ
+ GoMLecPwOlPhMcMWAb22Tmp/uW3rUj/+8Jc55fOLk2JqHTdTty3zreE7R0wi4uuMlvqNBttOBrf
+ YJHfrrs/9XID9jzKUFrYFpFvwexD4sIwBBrO69p+QMAdNGefZbHZNWHVuxUqlx4lsuMtB9StZCi
+ x/TwlGPQ=
+X-Google-Smtp-Source: AGHT+IEO1pTJH6Zo0YYOrC4vqpQwyWkJ4xTtTRNdwLb+9vwGeh4z8a3Ls4ZDU6QlSx9ZUGqjXIvGfQ==
+X-Received: by 2002:a17:903:41ca:b0:21a:8d8c:450d with SMTP id
+ d9443c01a7336-221a11abd40mr310690215ad.53.1740509149619; 
+ Tue, 25 Feb 2025 10:45:49 -0800 (PST)
 Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
  [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2230a092f4fsm17584815ad.112.2025.02.25.10.40.35
+ d9443c01a7336-2230a0a3befsm17877905ad.165.2025.02.25.10.45.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 10:40:35 -0800 (PST)
-Message-ID: <dad41a1c-b48f-403a-9deb-6e8ea0a82e71@linaro.org>
-Date: Tue, 25 Feb 2025 10:40:33 -0800
+ Tue, 25 Feb 2025 10:45:49 -0800 (PST)
+Message-ID: <ca9e7dd3-dd43-43bc-a64e-992344a88a6a@linaro.org>
+Date: Tue, 25 Feb 2025 10:45:47 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] plugins/api: split out the vaddr/hwaddr helpers
+Subject: Re: [PATCH 09/10] plugins/api: split out time control helpers
 To: qemu-devel@nongnu.org
 References: <20250225110844.3296991-1-alex.bennee@linaro.org>
- <20250225110844.3296991-9-alex.bennee@linaro.org>
+ <20250225110844.3296991-10-alex.bennee@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250225110844.3296991-9-alex.bennee@linaro.org>
+In-Reply-To: <20250225110844.3296991-10-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
@@ -104,18 +104,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/25/25 03:08, Alex Bennée wrote:
-> These only work for system-mode and are NOPs for user-mode.
+> These are only usable in system mode where we control the timer. For
+> user-mode make them NOPs.
 > 
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   plugins/api-system.c | 58 ++++++++++++++++++++++++++++++++++++
->   plugins/api-user.c   | 40 +++++++++++++++++++++++++
->   plugins/api.c        | 70 --------------------------------------------
->   plugins/meson.build  |  2 +-
->   4 files changed, 99 insertions(+), 71 deletions(-)
->   create mode 100644 plugins/api-user.c
+>   plugins/api-system.c | 34 ++++++++++++++++++++++++++++++++++
+>   plugins/api-user.c   | 17 +++++++++++++++++
+>   plugins/api.c        | 41 -----------------------------------------
+>   3 files changed, 51 insertions(+), 41 deletions(-)
 
+Code movement, so,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+> +static bool has_control;
+> +static Error *migration_blocker;
+> +
+> +const void *qemu_plugin_request_time_control(void)
+> +{
+> +    if (!has_control) {
+> +        has_control = true;
+> +        error_setg(&migration_blocker,
+> +                   "TCG plugin time control does not support migration");
+> +        migrate_add_blocker(&migration_blocker, NULL);
+> +        return &has_control;
+> +    }
+> +    return NULL;
+> +}
+
+But I'm really not a fan of either this API, or the duplication between has_control and 
+migration_blocker != NULL.
+
 
 r~
 
