@@ -4,91 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3243BC021A4
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 04:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40997C021A4
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 04:59:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tn9Tw-0006SB-1G; Tue, 25 Feb 2025 23:57:16 -0500
+	id 1tn9Vj-0007CG-HP; Tue, 25 Feb 2025 23:59:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1tn9Tt-0006S0-Un
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 23:57:13 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1tn9Tr-0001vX-LS
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 23:57:13 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-220e6028214so139276965ad.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 20:57:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1740545829; x=1741150629;
- darn=nongnu.org; 
- h=message-id:in-reply-to:to:references:date:subject:mime-version
- :content-transfer-encoding:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CHTaSnYAThej+8730P0CwtDAUDA1nPOOzm1cksT3a50=;
- b=AgxyhlcqAgo8TLlnetiZ8wjR582q0aF/sjXxxm6VmXmHIP71k2XEs9rvYFpbVYI6sX
- cT0XFh5aureauq1zzQCGMyZuBC0uVnfqCOMJEC0Yjb0dzu0yo6tAcVpih59PLX++eNVb
- NjWpjXrKYO13e/zjIqxWlSzfAEgcAj59y3LU+DeZ5kr1dNILkYWc50jXQa647AVanUSo
- DvdNK4ISnB1L0vAT/VoCc08izZCCR/ct/BAXdtBeRY1OARbocVFPeE98f8Pzmb8wGsN1
- swHMfJR+p8W82oGUFb7d3IDdeRp5/TQlpWAKW0kE0oyM0XVETkTE1zcHiuL0bJVVFG61
- 5Wvw==
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tn9Vi-0007Bz-DT
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 23:59:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tn9Vg-000294-E8
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 23:59:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740545935;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jCnKTy/sgEG2ePdqmPVY/AE6ciXlhI5f1Xr2uhZKTd8=;
+ b=XYzWw48jXTvFlJDlRY8xRFmZLg1fmql8fGiJ/ELs6NuVw/B7Qx2x77cEOGVL/qAYDftHkh
+ 9SFD17DhRFBGjC21bUOKm8jAt9ycQw2Xx+G+bweAnOrvJ4otdriP8KMCOUbNqxSCa7hzT8
+ anzB96BTnqgS1s6fZDhoBcZb1HlFc1E=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-s6drM0n9MpCl0XpmjY64Xw-1; Tue, 25 Feb 2025 23:58:53 -0500
+X-MC-Unique: s6drM0n9MpCl0XpmjY64Xw-1
+X-Mimecast-MFC-AGG-ID: s6drM0n9MpCl0XpmjY64Xw_1740545932
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2fbff6426f5so13293065a91.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 20:58:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740545829; x=1741150629;
- h=message-id:in-reply-to:to:references:date:subject:mime-version
- :content-transfer-encoding:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CHTaSnYAThej+8730P0CwtDAUDA1nPOOzm1cksT3a50=;
- b=Hhf1v7skV86PwuNDIqXrwz+mKmniFa6p8Hq3RkUC020y0Dh90f2VkbinF5+GFGpLxt
- bCPtf8YJ8rg+pvdliwAQFhNYrB8flcST8i8Gmg9+pZZ7C/kodGSVrJsdEFLDTrAYOgPG
- nACQp0KDg0L1SNZTOzZhnG0Sm6j6bH31jWO54rGmo59uXUPLRo3hatG6b9zbt6AR/fiS
- 67LLna28E52aWlB5t55sCDdP7+wU1K0pG3oj0KVAsMZMPz2PmGYMf5TihNH2ppC/Oj6g
- uuBcroknA3wEqSPEiDvROC8oWuhsrJUDUBVKCfb/5u1cji4Pics94X9tJ84r3ZALkhM4
- IY1Q==
+ d=1e100.net; s=20230601; t=1740545932; x=1741150732;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jCnKTy/sgEG2ePdqmPVY/AE6ciXlhI5f1Xr2uhZKTd8=;
+ b=bxCEh/FdKz1zC+fNCSaCGcSZ5mW/T3c+74AkQsFhFr3pj/i0I+zwpdpKQdYXypyWxO
+ o6g3S5eOokQ7ovAaoZZyb0oKZmo6Id6soqASUPsfauz34fQqETxbx5JEEwgKiLEZBkw7
+ jiCmGve6c7FNrPouybk350iPhAAydEEdLI6oJwjYGOTIrgQUzgtceqJIvJEuLx3vOkI9
+ OS+ByRWMe5cLZBur5agAnQnStiTvXglA5PMziJAFH5X06FhRUm8AX3QjPW/s5SxLUCBO
+ S6UxMVxWIZCFFkgW0v8YMcE+qo3C+3sik98eZbz9wLguCsrmZDkGaXfcurv8CA0TgQiJ
+ mdZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWtSGv9XptMDhyVr96kn9LdKq6eAaFFxzaSCdpBkEv07EdGhd9nxJIGlAZWWIlBFQDBKinMGX1rjWvR@nongnu.org
-X-Gm-Message-State: AOJu0YwaO+VAU107rHKJov9dytZj2S/rWww5HHefUZM3Aog8SrEBH1Ly
- XwngqukDUqt/AnrLfCmC/6shIj0WK27fnY7Kgm5bgBb3OYEOklLOBLjE8QeB2+0=
-X-Gm-Gg: ASbGncuTFrWdpfnuoBLRrdUxQifEDQPM35QoP566SzVKj0YQEIfjQeKSxNVyvCNs2cA
- shQ9rXT33T1mEyauRVWOXrzdFr9wid9cjXy3ppyWcR/mjOve2JViXfyVpBsbQauAPfxXBq9BOeU
- nGZBFAFtqOjszGbKLK53HqESrXaD6F63MF+RU5vhprp3Yn0OsEHyaMzxk1IV3e94oH7VM7A9z4k
- rSy6ORAkjX8Rhml/SghPUjqGzN7kH5HYPE9bX99ERPGGyCDuaNlF95a3Ob7dU+vkd/ODjUkhx+c
- sI8unBC/RWOi9YWRgBWDzi4ji9HyHODOu7srow==
-X-Google-Smtp-Source: AGHT+IGlr58+55jfCZ9qNR/zozxDTSjxrjmTxFLoTdI6hNNdCwFjdS+ji0fJVdjesHjxx/WHXanVeA==
-X-Received: by 2002:a05:6a00:13a2:b0:730:927c:d451 with SMTP id
- d2e1a72fcca58-73426d989a0mr31619706b3a.20.1740545828183; 
- Tue, 25 Feb 2025 20:57:08 -0800 (PST)
-Received: from smtpclient.apple ([156.226.172.226])
+ AJvYcCUDtMHq+ImuSDVg2UxxAn0bZPt23ldJ+VfnF2jfgfo3SXyGbIz1HDTPCpQLg+Ss/7H/Iz3Ciy2SVzS3@nongnu.org
+X-Gm-Message-State: AOJu0YzJnbZGsPehY0sD+QeY+fTAvVZqNqyVUCnnjA0VqyaqbgFoh80l
+ ugMpqw4IIbzaTyHfv4Pu0zsXd13jVzReSqul8QTkGywBbz7pa9owTe5NnDcHfV8zRVErBrZONAI
+ YInIzeoFAodoakx+tiFMzEkRB4BrzjYE/3TBjSxTbNhkKsr6IWvhz
+X-Gm-Gg: ASbGncuRBXZEMeOXzS6i+KCuDBpN8R1DxH6IccuDviOJDAS1RMHqty4k82+ueUD7DAQ
+ +ncVJ9oSMxIfFqk8MwntJ31uNXC0wjxM5yEp3XZlsoCcQTTBLdZhsmAm9jiqztMUXyJx+ikO15B
+ Eiwl7gMKsKJY3MyIAdrZHiFxw9fXN5dBLCdgqDAieS6f2TV5bQfNKFSwYe7TKDMt/5KH39+3H+d
+ V2EakzZZFFF8SAMXwd/hFeIY/C0Fx3uyE0uwL0EL+WUOBywxa77mLZEetU4NUZ009nScoaejrTt
+ 2HXIyJgA1q6cuUq12A==
+X-Received: by 2002:a05:6a20:6a0d:b0:1ee:e808:732c with SMTP id
+ adf61e73a8af0-1f0fc1394c6mr9224764637.14.1740545932427; 
+ Tue, 25 Feb 2025 20:58:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEKexMxW3JXNyCIROB2TCz88X/lZMtrZP+npdPNqZxaN4RJoKZU57zAYVTfEmyQniU8WkyOcg==
+X-Received: by 2002:a05:6a20:6a0d:b0:1ee:e808:732c with SMTP id
+ adf61e73a8af0-1f0fc1394c6mr9224732637.14.1740545932110; 
+ Tue, 25 Feb 2025 20:58:52 -0800 (PST)
+Received: from [192.168.68.55] ([180.233.125.164])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7347a7f7de2sm2542494b3a.106.2025.02.25.20.57.06
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 25 Feb 2025 20:57:07 -0800 (PST)
-From: Haoqian He <haoqian.he@smartx.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.500.231\))
-Subject: Re: [PATCH] chardev: use remoteAddr if the chardev is client
-Date: Wed, 26 Feb 2025 12:56:55 +0800
-References: <20250225104526.2924175-1-haoqian.he@smartx.com>
- <CAJ+F1CLTXwgbJzxNiK7ZyrK_-ToD2ibwU8WR27y3w4Mj5O+eVw@mail.gmail.com>
- <C7E4AAD7-657F-4109-9627-49EB9F4CD7DA@smartx.com>
- <CAJ+F1C+hoQAUfvn6FN=TJ74vWaSfqa-rxa3HCOPe7gBDz3P=tA@mail.gmail.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- qemu-devel@nongnu.org
-In-Reply-To: <CAJ+F1C+hoQAUfvn6FN=TJ74vWaSfqa-rxa3HCOPe7gBDz3P=tA@mail.gmail.com>
-Message-Id: <EBF8821F-91BA-4EB4-AAD0-E4D00696941B@smartx.com>
-X-Mailer: Apple Mail (2.3731.500.231)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=haoqian.he@smartx.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ d2e1a72fcca58-7347a81edaesm2565592b3a.149.2025.02.25.20.58.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Feb 2025 20:58:51 -0800 (PST)
+Message-ID: <dafa471d-c5bb-4f6b-8483-17741e0caab1@redhat.com>
+Date: Wed, 26 Feb 2025 14:58:46 +1000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] target/arm: Retry pushing CPER error if necessary
+To: Igor Mammedov <imammedo@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
+ anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
+ pbonzini@redhat.com, shan.gavin@gmail.com,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+References: <20250214041635.608012-1-gshan@redhat.com>
+ <20250214041635.608012-5-gshan@redhat.com>
+ <20250219185518.767a48d9@imammedo.users.ipa.redhat.com>
+ <7caa54df-abe1-4833-bb59-cb83f8241962@redhat.com>
+ <20250221110435.00004a3b@huawei.com>
+ <20250225121939.7e0e2304@imammedo.users.ipa.redhat.com>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20250225121939.7e0e2304@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,60 +118,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/25/25 9:19 PM, Igor Mammedov wrote:
+> On Fri, 21 Feb 2025 11:04:35 +0000
+> Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+>>
+>> Ideally I'd like whatever we choose to look like what a bare metal machine
+>> does - mostly because we are less likely to hit untested OS paths.
+> 
+> Ack for that but,
+> that would need someone from hw/firmware side since error status block
+> handling is done by firmware.
+> 
+> right now we are just making things up based on spec interpretation.
+> 
 
-> 2025=E5=B9=B42=E6=9C=8825=E6=97=A5 21:29=EF=BC=8CMarc-Andr=C3=A9 =
-Lureau <marcandre.lureau@gmail.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> Hi Haoqian
->=20
-> On Tue, Feb 25, 2025 at 5:19=E2=80=AFPM Haoqian He =
-<haoqian.he@smartx.com> wrote:
->>=20
->> I use chardev to connect with a vhost-user target, the chardev =
-backend type is
->> socket, part of QEMU boot parameter:
->>  -device =
-vhost-user-blk-pci,chardev=3Dmy-vhost-blk-0,id=3Dmy-vhost-blk-0,\
->>  bus=3Dpci.1,addr=3D0x1,bootindex=3D1,num-queues=3D4 \
->>  -chardev socket,id=3Dmy-vhost-blk-0,path=3D/tmp/vhost-blk.1
->>=20
->> I want to log the chardev=E2=80=99s socket path when socket =
-successfully connected
->> in tcp_chr_connect (chr->filename), but i got "unix:" instead of the =
-expected
->> "unix:/tmp/vhost-blk.1".
->>=20
->> The chr->filename was computed from the function =
-qemu_chr_compute_filename,
->> which always return the unix path store by local QIOChannelSocket =
-localAddr.
->>=20
->> Unfortunately, the localAddr is obtained via getsockname (see the =
-function
->> qio_channel_socket_set_fd), and according to the man page:
->> "getsockname() returns the current address bound by the socket =
-sockfd".
->>=20
->> In this scenario, the socket client's sockfd is unbonded, so the =
-socket
->> filename in localAddr(ss) is NULL.
->> As a solution, we can use remoteAddr(ps) obtained by getpeername (see =
-the
->> function qio_channel_socket_set_fd).
->>=20
->=20
-> thanks a lot, I didn't notice ps !=3D ss in the patch. That makes =
-sense.
->=20
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->=20
->=20
->=20
-> --=20
-> Marc-Andr=C3=A9 Lureau
+It's a good point. I think it's worthwhile to understand how the RAS event
+is processed and turned to CPER by firmware.
 
-Thanks, Lureau.
+I didn't figure out how CPER is generated by edk2 after looking into tf-a (trust
+firmware ARM) and edk2 for a while. I will consult to EDK2 developers to seek
+their helps. However, there is a note in tf-a that briefly explaining how RAS
+event is handled.
 
---
-Haoqian=
+   From tf-a/plat/arm/board/fvp/aarch64/fvp_lsp_ras_sp.c:
+   (git@github.com:ARM-software/arm-trusted-firmware.git)
+
+   /*
+    * Note: Typical RAS error handling flow with Firmware First Handling
+    *
+    * Step 1: Exception resulting from a RAS error in the normal world is routed to
+    *         EL3.
+    * Step 2: This exception is typically signaled as either a synchronous external
+    *         abort or SError or interrupt. TF-A (EL3 firmware) delegates the
+    *         control to platform specific handler built on top of the RAS helper
+    *         utilities.
+    * Step 3: With the help of a Logical Secure Partition, TF-A sends a direct
+    *         message to dedicated S-EL0 (or S-EL1) RAS Partition managed by SPMC.
+    *         TF-A also populates a shared buffer with a data structure containing
+    *         enough information (such as system registers) to identify and triage
+    *         the RAS error.
+    * Step 4: RAS SP generates the Common Platform Error Record (CPER) and shares
+    *         it with normal world firmware and/or OS kernel through a reserved
+    *         buffer memory.
+    * Step 5: RAS SP responds to the direct message with information necessary for
+    *         TF-A to notify the OS kernel.
+    * Step 6: Consequently, TF-A dispatches an SDEI event to notify the OS kernel
+    *         about the CPER records for further logging.
+    */
+
+According to the note, RAS SP (Secure Partition) is the black box where the RAS
+event raised by tf-a is turned to CPER. Unfortunately, I didn't find the source
+code to understand the details yet.
+
+Thanks,
+Gavin
+
 
