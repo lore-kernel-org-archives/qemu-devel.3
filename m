@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC6C0C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 13:50:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FCABC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 13:53:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnHnV-0004BO-C0; Wed, 26 Feb 2025 08:50:01 -0500
+	id 1tnHqR-0005Ri-0G; Wed, 26 Feb 2025 08:53:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnHnS-0004Ar-I9
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 08:49:59 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnHqP-0005RG-6W
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 08:53:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnHnP-0003aS-Jj
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 08:49:58 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnHqN-0004Fs-FK
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 08:53:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740577792;
+ s=mimecast20190719; t=1740577978;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kya2Jbxgn8Gn3P5jN6211txp198DE/zCEzvhVMdK+ho=;
- b=FF0sEiBQ5BzSqVMznYUJA+qlmXo+1Ds4tlIOQbIV6V/nLIGnwDL0JZ7BNoVRUqLFV836AG
- qzHaEK7qperajbifFkvwBKbFktdTUliHBWOfCkw1qoaJ41UpdlpjCmIkvDL7t6k7f7NIQj
- 29v0d5jf+GgXySj1dXTvLsqLds7/Ksk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aUincokfNx45Wadwz1r/N34ms9Ti+BsCB5MtiU3fyXc=;
+ b=B6Ed9TKEyUymmfdJ8fWeuzAXe81CbUZtlO2YstQNuuD+zQF7h+SHIwWII533PRLWG1Q1TV
+ b3zDMIpMhd9Xbm0gznL/Ky0jyZPlfQf/TeZp+kmrj5UpFfpBvjaa+ayaPj8pZA0TJszEIW
+ Ab1iiCGuLxLWfG2qqFTN3Qrw3IUKcuE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-THjvss_2NuepFb2ssaZylQ-1; Wed, 26 Feb 2025 08:49:50 -0500
-X-MC-Unique: THjvss_2NuepFb2ssaZylQ-1
-X-Mimecast-MFC-AGG-ID: THjvss_2NuepFb2ssaZylQ_1740577790
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4393e89e910so37346285e9.0
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 05:49:50 -0800 (PST)
+ us-mta-453-l7cjXtXRMzmQRyW3t_bUxg-1; Wed, 26 Feb 2025 08:52:57 -0500
+X-MC-Unique: l7cjXtXRMzmQRyW3t_bUxg-1
+X-Mimecast-MFC-AGG-ID: l7cjXtXRMzmQRyW3t_bUxg_1740577976
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43945f32e2dso62645905e9.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 05:52:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740577789; x=1741182589;
+ d=1e100.net; s=20230601; t=1740577975; x=1741182775;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kya2Jbxgn8Gn3P5jN6211txp198DE/zCEzvhVMdK+ho=;
- b=Ui/KzZu8luDa30qFzkS0Kyq1jNQs0QcLxTolm4lfC8e0NvesoNyhjlOWau/0+xOXz5
- GyR8h//V1mNgd/QcUtWMrLCj5KDDEEsFETgByWVaNhwWQipnN3WcDCHrFiq91ipFftgw
- EFvdWXpJnyHW25F1L3COGeK9cNeL3wDYQRKEVE7/75BHVb490OQ4LT+SYtC3vgEesZ8Q
- /9dhNYHByyvBCf6O3N3oR67N4+CK1m1ZzkeqR2LB87IAxnAhkGlQctX9D9KAJmy4bXJH
- Pj2tIoIvBD7tKIPw7mbnP1TVhcy8RmrwD2EIth3+KLip7iciS9pU03LX4ppKGG6wH8Xb
- E/1w==
+ bh=aUincokfNx45Wadwz1r/N34ms9Ti+BsCB5MtiU3fyXc=;
+ b=XPqGpMmfmLZaaQWeXBHeYRkz9WT3zfp1oEp+jSMXJH5sdW2yo/zdqiB6131NvpXe3h
+ bVqv9keW/BcZ4tJlsnDmtHV+plv/orA4vVdVcFvXXS6J2lx/6OQJcEGpzr9o2KAt79a1
+ lRk3wgjFirxA2pRWASAZzeuG2C1xfXVNH0yVC1lX+6lq7a5YCmZ856HGzczq5itJNn2e
+ lJG4dluxABKtbRdi+a9dvJzUG8ZF7Zg2shN8k46mK+VngfxZCz8wlgM9VZX1I9PQEMtz
+ fCp/ZBaqFK6vly4XPNYdDX+dtogfOVIbad9zI/thLUbAL7ssIXBP4FKMSAOuKyUFJufq
+ /5XQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVF50ZnlLRRNaUE55HgWbY6fo0yg0baOAOnzh7aNjVmmithoL8uECUAPuBQdGbpR1ZsspaGKpJrufxr@nongnu.org
-X-Gm-Message-State: AOJu0YxICKNNeNsYoivLWB5bTW/8sLOFc0tWWhJ3ihUzBXONeCkJfdEc
- NLTN2C8IEkIFwqQlkJu+mQbKW0m38zFLMPMePXbnmv9OEcOIw9UWnOn6pJ8TiOSku6u5UFbkpRJ
- fpfbBkULcwoKUHH/2qyPZGVnNpVCYojRBvT77/zDBxCbMJSdS3W+x
-X-Gm-Gg: ASbGncsv5ZPdWSGBpMxrM6fuuxruKjiE7aMR8mb/WPvaVoyrNJopDbM4R9pLnhj8ssi
- benOnVUl8HHM80zwUaLU2jS8S4tnPakwmBedLrxghOjutBPJCi6V0A1H9IdhINPJYGWEQSQNWHR
- Xjoo5bpM1rDgKH9MKsXJylZU8ufHOe5VDpK7ZEncn7Tcx/3Zb+Ak2t2PC9IOFkL7qJymYF8HkrB
- Mqyx/2cp9SCZxGDgR72MP76xt28gYgO+eTYzm3HZAaYqOxCCb7wG3N0W6kr9lGisJE5NiufoLkV
- gn1FGmYup+HWpp74dPwq+/CjBvc5Z8q14YpRcTbDSW7XbG/pHco5yZ/kMPc=
-X-Received: by 2002:a05:600c:4f45:b0:439:88bb:d007 with SMTP id
- 5b1f17b1804b1-43ab0f28850mr65526855e9.3.1740577789416; 
- Wed, 26 Feb 2025 05:49:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF7mhs0FHXYLZodsU2F9ll4FcWd3u43McDj3ltYbPG6dDnFqgpA4NVXyGF/xhV5D4U5blKPKg==
-X-Received: by 2002:a05:600c:4f45:b0:439:88bb:d007 with SMTP id
- 5b1f17b1804b1-43ab0f28850mr65526585e9.3.1740577788892; 
- Wed, 26 Feb 2025 05:49:48 -0800 (PST)
+ AJvYcCXI6o5FeHD7B5hkeaEUcK+dmXoSnwTky0TCman0Zp1pZSm4ZfJwSAu+sRP/tZSG8AgHhgffSToRiUyw@nongnu.org
+X-Gm-Message-State: AOJu0Yy27pS1KX8Gw6QfziDP6GCtfXhBbq/0XnxCDrfnQyxTs64Ob+ZX
+ IWW/TVjX9JaSzxOME/T+s2chKwabtKlnjHBMNBnDPEyiQwO4MdMUlfW1oxGA/XV/FH6vjqQ4iWx
+ sjUSmYrrU2oopjrRMtv95BOhHlssFpUOYyimmjSq8q2Diz2TCt1jzjYKOxpQW
+X-Gm-Gg: ASbGncsx93bMiDahrjgaGKXtUQ8+UbjhmvyBPadFc9vCL6HuoKMUNmzWX8dSsavMluJ
+ nBmOlYv9+ZF+dG6pE5cUx0w4dulcU7yc2U5z4J5Tb7rgYbLGvzf7CYtuiyllIc0bi5J6TwUFZO1
+ A8IOBeCs8WQnLM6VlTEL9jLOBBkmLezH/PJqCZ+q+XZGpPyt+4qGzWOD9Kc6BBQFIR6k9n2odwr
+ 9ZfaYwdprHtqC9GKdKRsntOAvfqlA+R0/NpunK9THagOBU7vURLg3cYaMJ/3SN2kNyeCSimjhGX
+ A+QR/fQX/KhOAlo71X4azZbRGEMDJd0xdQGlaIa8IAJzjtnTo2R4XChvddo=
+X-Received: by 2002:a05:600c:138d:b0:439:9ee1:86bf with SMTP id
+ 5b1f17b1804b1-43ab0f2db6cmr81465715e9.7.1740577975623; 
+ Wed, 26 Feb 2025 05:52:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGIfPoOxNywiwcoX95levNE2SG/KUNaUecoqbIrbddyFox6yaGTzzVjqFqNbTMPKtL8e5pjrg==
+X-Received: by 2002:a05:600c:138d:b0:439:9ee1:86bf with SMTP id
+ 5b1f17b1804b1-43ab0f2db6cmr81465405e9.7.1740577975284; 
+ Wed, 26 Feb 2025 05:52:55 -0800 (PST)
 Received: from ?IPV6:2a01:cb19:9004:d500:a732:5611:7f59:8bb3?
  ([2a01:cb19:9004:d500:a732:5611:7f59:8bb3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba5327f0sm22616535e9.9.2025.02.26.05.49.47
+ 5b1f17b1804b1-43aba543fecsm23051715e9.30.2025.02.26.05.52.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 05:49:48 -0800 (PST)
-Message-ID: <573fab5e-4c0f-416c-bbd0-4786ad25e18f@redhat.com>
-Date: Wed, 26 Feb 2025 14:49:47 +0100
+ Wed, 26 Feb 2025 05:52:54 -0800 (PST)
+Message-ID: <96a45aae-ca5f-4830-8ab8-496fd08b1a62@redhat.com>
+Date: Wed, 26 Feb 2025 14:52:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 27/36] vfio/migration: Multifd device state transfer
- support - load thread
+Subject: Re: [PATCH v5 28/36] vfio/migration: Multifd device state transfer
+ support - config loading support
 To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -87,7 +87,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <9be8882ea2189c1a827bdf09835d6c65488d2ca6.1739994627.git.maciej.szmigiero@oracle.com>
+ <47be7bf2f46923e2a9d2b75b1d35c6b2915c20c8.1739994627.git.maciej.szmigiero@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,7 +133,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <9be8882ea2189c1a827bdf09835d6c65488d2ca6.1739994627.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <47be7bf2f46923e2a9d2b75b1d35c6b2915c20c8.1739994627.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -164,238 +164,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/19/25 21:34, Maciej S. Szmigiero wrote:
 > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> Since it's important to finish loading device state transferred via the
-> main migration channel (via save_live_iterate SaveVMHandler) before
-> starting loading the data asynchronously transferred via multifd the thread
-> doing the actual loading of the multifd transferred data is only started
-> from switchover_start SaveVMHandler.
+> Load device config received via multifd using the existing machinery
+> behind vfio_load_device_config_state().
 > 
-> switchover_start handler is called when MIG_CMD_SWITCHOVER_START
-> sub-command of QEMU_VM_COMMAND is received via the main migration channel.
-> 
-> This sub-command is only sent after all save_live_iterate data have already
-> been posted so it is safe to commence loading of the multifd-transferred
-> device state upon receiving it - loading of save_live_iterate data happens
-> synchronously in the main migration thread (much like the processing of
-> MIG_CMD_SWITCHOVER_START) so by the time MIG_CMD_SWITCHOVER_START is
-> processed all the proceeding data must have already been loaded.
+> Also, make sure to process the relevant main migration channel flags.
 > 
 > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 > ---
->   hw/vfio/migration-multifd.c | 225 ++++++++++++++++++++++++++++++++++++
->   hw/vfio/migration-multifd.h |   2 +
->   hw/vfio/migration.c         |  12 ++
->   hw/vfio/trace-events        |   5 +
->   4 files changed, 244 insertions(+)
+>   hw/vfio/migration-multifd.c   | 47 ++++++++++++++++++++++++++++++++++-
+>   hw/vfio/migration.c           |  8 +++++-
+>   include/hw/vfio/vfio-common.h |  2 ++
+>   3 files changed, 55 insertions(+), 2 deletions(-)
 > 
 > diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-> index 5d5ee1393674..b3a88c062769 100644
+> index b3a88c062769..7200f6f1c2a2 100644
 > --- a/hw/vfio/migration-multifd.c
 > +++ b/hw/vfio/migration-multifd.c
-> @@ -42,8 +42,13 @@ typedef struct VFIOStateBuffer {
->   } VFIOStateBuffer;
+> @@ -15,6 +15,7 @@
+>   #include "qemu/lockable.h"
+>   #include "qemu/main-loop.h"
+>   #include "qemu/thread.h"
+> +#include "io/channel-buffer.h"
+>   #include "migration/qemu-file.h"
+>   #include "migration-multifd.h"
+>   #include "trace.h"
+> @@ -186,7 +187,51 @@ bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
 >   
->   typedef struct VFIOMultifd {
-> +    QemuThread load_bufs_thread;
-> +    bool load_bufs_thread_running;
-> +    bool load_bufs_thread_want_exit;
-> +
->       VFIOStateBuffers load_bufs;
->       QemuCond load_bufs_buffer_ready_cond;
-> +    QemuCond load_bufs_thread_finished_cond;
->       QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
->       uint32_t load_buf_idx;
->       uint32_t load_buf_idx_last;
-> @@ -179,6 +184,175 @@ bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
->       return true;
->   }
->   
-> +static int vfio_load_bufs_thread_load_config(VFIODevice *vbasedev)
-> +{
-> +    return -EINVAL;
-> +}
+>   static int vfio_load_bufs_thread_load_config(VFIODevice *vbasedev)
 
-
-please move to next patch.
-
-> +static VFIOStateBuffer *vfio_load_state_buffer_get(VFIOMultifd *multifd)
-> +{
-> +    VFIOStateBuffer *lb;
-> +    guint bufs_len;
-
-guint:  I guess it's ok to use here. It is not common practice in VFIO.
-
-> +
-> +    bufs_len = vfio_state_buffers_size_get(&multifd->load_bufs);
-> +    if (multifd->load_buf_idx >= bufs_len) {
-> +        assert(multifd->load_buf_idx == bufs_len);
-> +        return NULL;
-> +    }
-> +
-> +    lb = vfio_state_buffers_at(&multifd->load_bufs,
-> +                               multifd->load_buf_idx);
-
-Could be one line. minor.
-
-> +    if (!lb->is_present) {
-> +        return NULL;
-> +    }
-> +
-> +    return lb;
-> +}
-> +
-> +static bool vfio_load_state_buffer_write(VFIODevice *vbasedev,
-> +                                         VFIOStateBuffer *lb,
-> +                                         Error **errp)
-> +{
-> +    VFIOMigration *migration = vbasedev->migration;
-> +    VFIOMultifd *multifd = migration->multifd;
-> +    g_autofree char *buf = NULL;
-> +    char *buf_cur;
-> +    size_t buf_len;
-> +
-> +    if (!lb->len) {
-> +        return true;
-> +    }
-> +
-> +    trace_vfio_load_state_device_buffer_load_start(vbasedev->name,
-> +                                                   multifd->load_buf_idx);
-
-I thin we can move this trace event to vfio_load_bufs_thread()
-
-> +    /* lb might become re-allocated when we drop the lock */
-> +    buf = g_steal_pointer(&lb->data);
-> +    buf_cur = buf;
-> +    buf_len = lb->len;
-> +    while (buf_len > 0) {
-> +        ssize_t wr_ret;
-> +        int errno_save;
-> +
-> +        /*
-> +         * Loading data to the device takes a while,
-> +         * drop the lock during this process.
-> +         */
-> +        qemu_mutex_unlock(&multifd->load_bufs_mutex);
-> +        wr_ret = write(migration->data_fd, buf_cur, buf_len);> +        errno_save = errno;
-> +        qemu_mutex_lock(&multifd->load_bufs_mutex);
-> +
-> +        if (wr_ret < 0) {
-> +            error_setg(errp,
-> +                       "writing state buffer %" PRIu32 " failed: %d",
-> +                       multifd->load_buf_idx, errno_save);
-> +            return false;
-> +        }
-> +
-> +        assert(wr_ret <= buf_len);
-> +        buf_len -= wr_ret;
-> +        buf_cur += wr_ret;
-> +    }
-> +
-> +    trace_vfio_load_state_device_buffer_load_end(vbasedev->name,
-> +                                                 multifd->load_buf_idx);
-
-and drop this trace event.
-
-In which case, we can modify the parameters of vfio_load_state_buffer_write()
-to use directly a 'VFIOMultifd *multifd'and an fd instead of "migration->data_fd".
-
-> +
-> +    return true;
-> +}
-> +
-> +static bool vfio_load_bufs_thread_want_exit(VFIOMultifd *multifd,
-> +                                            bool *should_quit)
-> +{
-> +    return multifd->load_bufs_thread_want_exit || qatomic_read(should_quit);
-> +}
-> +
-> +/*
-> + * This thread is spawned by vfio_multifd_switchover_start() which gets
-> + * called upon encountering the switchover point marker in main migration
-> + * stream.
-> + *
-> + * It exits after either:
-> + * * completing loading the remaining device state and device config, OR:
-> + * * encountering some error while doing the above, OR:
-> + * * being forcefully aborted by the migration core by it setting should_quit
-> + *   or by vfio_load_cleanup_load_bufs_thread() setting
-> + *   multifd->load_bufs_thread_want_exit.
-> + */
-> +static bool vfio_load_bufs_thread(void *opaque, bool *should_quit, Error **errp)
-> +{
-> +    VFIODevice *vbasedev = opaque;
-> +    VFIOMigration *migration = vbasedev->migration;
-> +    VFIOMultifd *multifd = migration->multifd;
-> +    bool ret = true;
-> +    int config_ret;
-
-No needed IMO. see below.
-
-> +
-> +    assert(multifd);
-> +    QEMU_LOCK_GUARD(&multifd->load_bufs_mutex);
-> +
-> +    assert(multifd->load_bufs_thread_running);
-
-We could add a trace event for the start and the end of the thread.
-
-> +    while (true) {
-> +        VFIOStateBuffer *lb;
-> +
-> +        /*
-> +         * Always check cancellation first after the buffer_ready wait below in
-> +         * case that cond was signalled by vfio_load_cleanup_load_bufs_thread().
-> +         */
-> +        if (vfio_load_bufs_thread_want_exit(multifd, should_quit)) {
-> +            error_setg(errp, "operation cancelled");
-> +            ret = false;
-> +            goto ret_signal;
-
-goto thread_exit ?
-
-> +        }
-> +
-> +        assert(multifd->load_buf_idx <= multifd->load_buf_idx_last);
-> +
-> +        lb = vfio_load_state_buffer_get(multifd);
-> +        if (!lb) {
-> +            trace_vfio_load_state_device_buffer_starved(vbasedev->name,
-> +                                                        multifd->load_buf_idx);
-> +            qemu_cond_wait(&multifd->load_bufs_buffer_ready_cond,
-> +                           &multifd->load_bufs_mutex);
-> +            continue;
-> +        }
-> +
-> +        if (multifd->load_buf_idx == multifd->load_buf_idx_last) {
-> +            break;
-> +        }
-> +
-> +        if (multifd->load_buf_idx == 0) {
-> +            trace_vfio_load_state_device_buffer_start(vbasedev->name);
-> +        }
-> +
-> +        if (!vfio_load_state_buffer_write(vbasedev, lb, errp)) {
-> +            ret = false;
-> +            goto ret_signal;
-> +        }
-> +
-> +        if (multifd->load_buf_idx == multifd->load_buf_idx_last - 1) {
-> +            trace_vfio_load_state_device_buffer_end(vbasedev->name);
-> +        }
-> +
-> +        multifd->load_buf_idx++;
-> +    }
-
-if ret is assigned to true here, the "ret = false" can dropped
-
-> +    config_ret = vfio_load_bufs_thread_load_config(vbasedev);
-> +    if (config_ret) {
-> +        error_setg(errp, "load config state failed: %d", config_ret);
-> +        ret = false;
-> +    }
-
-please move to next patch. This is adding nothing to this patch
-since it's returning -EINVAL.
+please modify to return a bool and take a "Error **errp" parameter.
 
 
 Thanks,
@@ -403,145 +200,95 @@ Thanks,
 C.
 
 
-
-> +ret_signal:
-> +    /*
-> +     * Notify possibly waiting vfio_load_cleanup_load_bufs_thread() that
-> +     * this thread is exiting.
-> +     */
-> +    multifd->load_bufs_thread_running = false;
-> +    qemu_cond_signal(&multifd->load_bufs_thread_finished_cond);
-> +
-> +    return ret;
-> +}
-> +
->   VFIOMultifd *vfio_multifd_new(void)
 >   {
->       VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
-> @@ -191,11 +365,42 @@ VFIOMultifd *vfio_multifd_new(void)
->       multifd->load_buf_idx_last = UINT32_MAX;
->       qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
->   
-> +    multifd->load_bufs_thread_running = false;
-> +    multifd->load_bufs_thread_want_exit = false;
-> +    qemu_cond_init(&multifd->load_bufs_thread_finished_cond);
-> +
->       return multifd;
->   }
->   
-> +/*
-> + * Terminates vfio_load_bufs_thread by setting
-> + * multifd->load_bufs_thread_want_exit and signalling all the conditions
-> + * the thread could be blocked on.
-> + *
-> + * Waits for the thread to signal that it had finished.
-> + */
-> +static void vfio_load_cleanup_load_bufs_thread(VFIOMultifd *multifd)
-> +{
-> +    /* The lock order is load_bufs_mutex -> BQL so unlock BQL here first */
-> +    bql_unlock();
-> +    WITH_QEMU_LOCK_GUARD(&multifd->load_bufs_mutex) {
-> +        while (multifd->load_bufs_thread_running) {
-> +            multifd->load_bufs_thread_want_exit = true;
-> +
-> +            qemu_cond_signal(&multifd->load_bufs_buffer_ready_cond);
-> +            qemu_cond_wait(&multifd->load_bufs_thread_finished_cond,
-> +                           &multifd->load_bufs_mutex);
-> +        }
-> +    }
-> +    bql_lock();
-> +}
-> +
->   void vfio_multifd_free(VFIOMultifd *multifd)
->   {
-> +    vfio_load_cleanup_load_bufs_thread(multifd);
-> +
-> +    qemu_cond_destroy(&multifd->load_bufs_thread_finished_cond);
-> +    vfio_state_buffers_destroy(&multifd->load_bufs);
->       qemu_cond_destroy(&multifd->load_bufs_buffer_ready_cond);
->       qemu_mutex_destroy(&multifd->load_bufs_mutex);
->   
-> @@ -225,3 +430,23 @@ bool vfio_multifd_transfer_setup(VFIODevice *vbasedev, Error **errp)
->   
->       return true;
->   }
-> +
-> +int vfio_multifd_switchover_start(VFIODevice *vbasedev)
-> +{
+> -    return -EINVAL;
 > +    VFIOMigration *migration = vbasedev->migration;
 > +    VFIOMultifd *multifd = migration->multifd;
+> +    VFIOStateBuffer *lb;
+> +    g_autoptr(QIOChannelBuffer) bioc = NULL;
+> +    QEMUFile *f_out = NULL, *f_in = NULL;
+> +    uint64_t mig_header;
+> +    int ret;
 > +
-> +    assert(multifd);
+> +    assert(multifd->load_buf_idx == multifd->load_buf_idx_last);
+> +    lb = vfio_state_buffers_at(&multifd->load_bufs, multifd->load_buf_idx);
+> +    assert(lb->is_present);
 > +
-> +    /* The lock order is load_bufs_mutex -> BQL so unlock BQL here first */
-> +    bql_unlock();
-> +    WITH_QEMU_LOCK_GUARD(&multifd->load_bufs_mutex) {
-> +        assert(!multifd->load_bufs_thread_running);
-> +        multifd->load_bufs_thread_running = true;
+> +    bioc = qio_channel_buffer_new(lb->len);
+> +    qio_channel_set_name(QIO_CHANNEL(bioc), "vfio-device-config-load");
+> +
+> +    f_out = qemu_file_new_output(QIO_CHANNEL(bioc));
+> +    qemu_put_buffer(f_out, (uint8_t *)lb->data, lb->len);
+> +
+> +    ret = qemu_fflush(f_out);
+> +    if (ret) {
+> +        g_clear_pointer(&f_out, qemu_fclose);
+> +        return ret;
 > +    }
-> +    bql_lock();
 > +
-> +    qemu_loadvm_start_load_thread(vfio_load_bufs_thread, vbasedev);
+> +    qio_channel_io_seek(QIO_CHANNEL(bioc), 0, 0, NULL);
+> +    f_in = qemu_file_new_input(QIO_CHANNEL(bioc));
+> +
+> +    mig_header = qemu_get_be64(f_in);
+> +    if (mig_header != VFIO_MIG_FLAG_DEV_CONFIG_STATE) {
+> +        g_clear_pointer(&f_out, qemu_fclose);
+> +        g_clear_pointer(&f_in, qemu_fclose);
+> +        return -EINVAL;
+> +    }
+> +
+> +    bql_lock();
+> +    ret = vfio_load_device_config_state(f_in, vbasedev);
+> +    bql_unlock();
+> +
+> +    g_clear_pointer(&f_out, qemu_fclose);
+> +    g_clear_pointer(&f_in, qemu_fclose);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
 > +
 > +    return 0;
-> +}
-> diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
-> index d5ab7d6f85f5..09cbb437d9d1 100644
-> --- a/hw/vfio/migration-multifd.h
-> +++ b/hw/vfio/migration-multifd.h
-> @@ -25,4 +25,6 @@ bool vfio_multifd_transfer_setup(VFIODevice *vbasedev, Error **errp);
->   bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
->                               Error **errp);
->   
-> +int vfio_multifd_switchover_start(VFIODevice *vbasedev);
-> +
->   #endif
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index abaf4d08d4a9..85f54cb22df2 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -793,6 +793,17 @@ static bool vfio_switchover_ack_needed(void *opaque)
->       return vfio_precopy_supported(vbasedev);
 >   }
 >   
-> +static int vfio_switchover_start(void *opaque)
-> +{
-> +    VFIODevice *vbasedev = opaque;
-> +
-> +    if (vfio_multifd_transfer_enabled(vbasedev)) {
-> +        return vfio_multifd_switchover_start(vbasedev);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->   static const SaveVMHandlers savevm_vfio_handlers = {
->       .save_prepare = vfio_save_prepare,
->       .save_setup = vfio_save_setup,
-> @@ -808,6 +819,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
->       .load_state = vfio_load_state,
->       .load_state_buffer = vfio_load_state_buffer,
->       .switchover_ack_needed = vfio_switchover_ack_needed,
-> +    .switchover_start = vfio_switchover_start,
->   };
+>   static VFIOStateBuffer *vfio_load_state_buffer_get(VFIOMultifd *multifd)
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 85f54cb22df2..b962309f7c27 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -264,7 +264,7 @@ static int vfio_save_device_config_state(QEMUFile *f, void *opaque,
+>       return ret;
+>   }
 >   
->   /* ---------------------------------------------------------------------- */
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index 042a3dc54a33..418b378ebd29 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -154,6 +154,11 @@ vfio_load_device_config_state_end(const char *name) " (%s)"
->   vfio_load_state(const char *name, uint64_t data) " (%s) data 0x%"PRIx64
->   vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size %"PRIu64" ret %d"
->   vfio_load_state_device_buffer_incoming(const char *name, uint32_t idx) " (%s) idx %"PRIu32
-> +vfio_load_state_device_buffer_start(const char *name) " (%s)"
-> +vfio_load_state_device_buffer_starved(const char *name, uint32_t idx) " (%s) idx %"PRIu32
-> +vfio_load_state_device_buffer_load_start(const char *name, uint32_t idx) " (%s) idx %"PRIu32
-> +vfio_load_state_device_buffer_load_end(const char *name, uint32_t idx) " (%s) idx %"PRIu32
-> +vfio_load_state_device_buffer_end(const char *name) " (%s)"
->   vfio_migration_realize(const char *name) " (%s)"
->   vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
->   vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
+> -static int vfio_load_device_config_state(QEMUFile *f, void *opaque)
+> +int vfio_load_device_config_state(QEMUFile *f, void *opaque)
+>   {
+>       VFIODevice *vbasedev = opaque;
+>       uint64_t data;
+> @@ -728,6 +728,12 @@ static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
+>           switch (data) {
+>           case VFIO_MIG_FLAG_DEV_CONFIG_STATE:
+>           {
+> +            if (vfio_multifd_transfer_enabled(vbasedev)) {
+> +                error_report("%s: got DEV_CONFIG_STATE but doing multifd transfer",
+> +                             vbasedev->name);
+> +                return -EINVAL;
+> +            }
+> +
+>               return vfio_load_device_config_state(f, opaque);
+>           }
+>           case VFIO_MIG_FLAG_DEV_SETUP_STATE:
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index ab110198bd6b..ce2bdea8a2c2 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -298,6 +298,8 @@ void vfio_add_bytes_transferred(unsigned long val);
+>   bool vfio_device_state_is_running(VFIODevice *vbasedev);
+>   bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
+>   
+> +int vfio_load_device_config_state(QEMUFile *f, void *opaque);
+> +
+>   #ifdef CONFIG_LINUX
+>   int vfio_get_region_info(VFIODevice *vbasedev, int index,
+>                            struct vfio_region_info **info);
 > 
 
 
