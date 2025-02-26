@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4026C021BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D676CC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:12:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnI1e-0001Xp-UM; Wed, 26 Feb 2025 09:04:38 -0500
+	id 1tnI94-00069T-11; Wed, 26 Feb 2025 09:12:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI12-00016v-PD
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:04:01 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1tnI8e-0005RY-FY
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:12:01 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI10-0005jv-68
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:04:00 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4398c8c8b2cso69757115e9.2
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:03:57 -0800 (PST)
+ id 1tnI8Z-0007a3-6B
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:11:50 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-390dc0a7605so369010f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:11:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740578637; x=1741183437; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740579105; x=1741183905; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ThH5BQgbHAmOS+UQy2wCG4a6AKm/DC+QNI57Vzuv2mA=;
- b=vcn7x9R7CFOC1/nGW0tBaRzt5Ic16agommM6MpU4orZ38uJkXhfWGFm1u7yl7vL+d8
- M6nh7mddfG+s+UGEMTqO9qBQhlRmH7VPodkPOoY9mejBX0hAe5e0f8okor9TaeU10/8f
- i5ElWUPxZcvj02zKbLq6J2PlUNtUodyIoosfyfmy9HQnfEiu4IubkAyQm3kaGNklzdlb
- zC0+stQCcCey8QXn8RwzbxdJH4+Qf/ntqyiDZLKBI/Kn5zmk3t3JhzuG+OouB1pgqyqQ
- yGHDdh4nQ2wR0I5qrpsFv5YEXwvzT1ZPEapzxLfB/W6YOTA5DeWkwACCrUlMnw8FEYCb
- z78w==
+ bh=sxlbdGkJ13G1o6ELtDmgQA5UFhIUKmW1fQAOczDQAMQ=;
+ b=HirU0ZBvm0G77HNQpEciENliLb1CKniSccK46oBmA8gPer9TofQzyLm2eEGYtsNYvo
+ 5WcDzxMDDeHdJJZxlkYvtpq9L0RBHNaT9CDPHLg1RKe+Bf9qPMlzenlVQFmFdFyDmooO
+ 4POH+a3PuY+NDZhJlfl9IhRaSA08XiIwjL+ezJIdm7sBYBa7ri8yuuFPKJH7bvR2G1w5
+ XXkBmD7CwrjW1r9gjaYdl82UHotAedsheBMU8DXOzrEItYKw08iyfIhVTKaexj2F27Ze
+ r+0KX2DUmlTHdumb70GeWA6Tq8Eh92oO38BUWoJCuoXYALH3jsmRpzztEjljZO6JTmrB
+ x1oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740578637; x=1741183437;
+ d=1e100.net; s=20230601; t=1740579105; x=1741183905;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ThH5BQgbHAmOS+UQy2wCG4a6AKm/DC+QNI57Vzuv2mA=;
- b=bOlZW8VM2iqh1obBlbG3obQ9OSzp2R30UQKgmIt1vZPfMY/Dgpk+sR2HopJtgBUFDk
- HhCIjMx23ldJAIrhl2feuPTlkJHocoGMIC3W4DJ6WlPf8AUsyI0fS6QY458Y5ltPFn4N
- GNC1WDJsUqsmetBHHjsLpzP73ZpvQc4aNv0Q2xtzP032wACrnxpL35EA0vAwm7I3DTCY
- 3X/OKzSIMzEdV/cmpcM0esGrSXsmu2K2LnyKGmwm+5BHjb09o1gbO6F7KNCVfAuKIMbH
- nI+0W66Lxusy08gn24qlx5snWzHR/UvXDpEI4fF3VOvu1zaKtSguAwDgmmdsHKrvhC3W
- n11A==
-X-Gm-Message-State: AOJu0Yy3iPdKvIgDgFGTMkBoKfdxzAQE+bzoz2hxbs973qG4WjK6UiT+
- PV4YLfjAtxicnrPTTO9sqbxmNbUnq1wD9HrQUNtE/h7M2zOkTr7567XodRzF+r0=
-X-Gm-Gg: ASbGnctT9YFrns4mfl12CfDESXI8bchv3yea9g/V4jrS4qRQv93jRuFscdsoxfL62GW
- ShSrhHqr7I8CJW2JjRmGj0q7xfe2L7l1duK/m2xYDKfNtbcEbmX1WaJXhNkLa2hC+94ZZ+EETh3
- m2xVWcQSGuAQHn2GiQJhrHgCT4XL25I/VuHSPSm6KQRVZMyxj2olMNncSzYflhAnng1KBmoFlX6
- Ptoug8rzl5rNd5g4c8pi571pBdTsk2b6B6uvp2/eEcsArH6u7BNT9B8wzec+wAz80KAAtAZLw01
- pjdPwXaZ2zNmeKmGB/dD6GM8Ox4g
-X-Google-Smtp-Source: AGHT+IFFNlhkw3kzVazdTaS3EZM4YWxJWGMoAB/2aOLRU0VRtSXmkLsvO3HWriiFXTOsZ1qMWEqvOQ==
-X-Received: by 2002:a05:600c:3d19:b0:43a:b186:8abc with SMTP id
- 5b1f17b1804b1-43ab1868ac3mr73031805e9.2.1740578636516; 
- Wed, 26 Feb 2025 06:03:56 -0800 (PST)
+ bh=sxlbdGkJ13G1o6ELtDmgQA5UFhIUKmW1fQAOczDQAMQ=;
+ b=VYcw3EZ5eglJhI3xUxX3l0iDBmX1ijYYxuV+k3rb6oBdj884BBlqTPdmX4gJieOkCj
+ qRnx2fBd9rwqZsiLx7+sXjPwZsJX7Dr/LJ7YVAkCStjNH2OZC8WqBB/l/TCZ9JchDOy6
+ egmAB97XnsEu7wDaD3MZhI43ZbZAxjVjqZMh12Wpu5JwzfpaTQNqlckjxVvBgH6XOiWV
+ OGpnJ15K/N9qqaqLo1Y13feRYwkr+tQA8lx1tE22AF40H06qeX6aHpU+dHnQUi0MIi45
+ BTyeLUVrAG4spU+6Ed8WtW5ZMSt6pESSb52fkPalOlRemTa4WI+aVRE/hW+bU5M3Vxrj
+ vTIg==
+X-Gm-Message-State: AOJu0YyC+B2UxJoob+9MFXwlNchMkz9ug0Hi8SPCQHR3xmQ2k2HiPfH/
+ RaL059NjX4OEPoI4q0VxxawffPhL1hPw5kzIfwHcuPOMspnyT1eAj8lbRGkC4R4=
+X-Gm-Gg: ASbGnct6kQ+2S43fqvSdAEI/p3WqmI72xrwTbh1LPGdeyTmWyrP265JCldm1xoojH9o
+ EKL+D3dK17na1aZE8r/mYxasoXOveK7fsAAIGjdNq5sfPYzYL7vYIBdInszuPhkTbCqGMJKqNJn
+ twqb1EXweap9P1hh1M9gixFet1K/TQsOBQzPGiHYogSppAUY/N9uu5agIjS374XA+7oAioPuR5Q
+ vYaCHVoMJ9mIA5sk8pCVIyRUJduXyqpvU3QvIOy56xO6ED7KMW1hXf6UIWlbm8WMjYltUH70g2D
+ bKfOILw5MA7GkbDSoAh57mzyAC6r
+X-Google-Smtp-Source: AGHT+IFT0IUg4cpty4YVRdJ4aIpaQ9yNJr0bPVGBNJb7rqWbKpLHerqXFpq5IfNsMy0IiYJlPcRU9Q==
+X-Received: by 2002:adf:e912:0:b0:38f:24f9:8bac with SMTP id
+ ffacd0b85a97d-390cc60c1f9mr5815480f8f.23.1740579104605; 
+ Wed, 26 Feb 2025 06:11:44 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba57145esm22493425e9.30.2025.02.26.06.03.48
+ ffacd0b85a97d-390d6a32299sm2210236f8f.55.2025.02.26.06.11.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 06:03:52 -0800 (PST)
+ Wed, 26 Feb 2025 06:11:42 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 38416603F4;
+ by draig.lan (Postfix) with ESMTP id 8DF925F924;
  Wed, 26 Feb 2025 14:03:45 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -82,17 +82,17 @@ Cc: qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 13/25] tests/tcg: fix constraints in test-i386-adcox
-Date: Wed, 26 Feb 2025 14:03:31 +0000
-Message-Id: <20250226140343.3907080-14-alex.bennee@linaro.org>
+Subject: [PATCH 17/25] include/qemu: plugin-memory.h doesn't need cpu-defs.h
+Date: Wed, 26 Feb 2025 14:03:35 +0000
+Message-Id: <20250226140343.3907080-18-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250226140343.3907080-1-alex.bennee@linaro.org>
 References: <20250226140343.3907080-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,50 +115,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clang complains:
+hwaddr is a fixed size on all builds.
 
-  clang -O2 -m64 -mcx16 /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c -o test-i386-adcox -static
-  /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c:32:26: error: invalid input constraint '0' in asm
-          : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
-                           ^
-  /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c:57:26: error: invalid input constraint '0' in asm
-          : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
-                           ^
-  2 errors generated.
-
-Pointing out a numbered input constraint can't point to a read/write
-output [1]. Convert to a read-only input constraint to allow this.
-
-[1] https://lists.llvm.org/pipermail/cfe-commits/Week-of-Mon-20101101/036036.html
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20250225110844.3296991-4-alex.bennee@linaro.org>
 ---
- tests/tcg/i386/test-i386-adcox.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/qemu/plugin-memory.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tests/tcg/i386/test-i386-adcox.c b/tests/tcg/i386/test-i386-adcox.c
-index 16169efff8..b56dbc00f2 100644
---- a/tests/tcg/i386/test-i386-adcox.c
-+++ b/tests/tcg/i386/test-i386-adcox.c
-@@ -28,7 +28,7 @@ void test_adox_adcx(uint32_t in_c, uint32_t in_o, REG adcx_operand, REG adox_ope
-         "adox %3, %2;"
-         "adcx %3, %1;"
-         "pushf; pop %0"
--        : "+r" (flags), "+r" (out_adcx), "+r" (out_adox)
-+        : "=r"(flags), "=r"(out_adcx), "=r"(out_adox)
-         : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
+diff --git a/include/qemu/plugin-memory.h b/include/qemu/plugin-memory.h
+index 71c1123308..6065ec7aaf 100644
+--- a/include/qemu/plugin-memory.h
++++ b/include/qemu/plugin-memory.h
+@@ -9,7 +9,6 @@
+ #ifndef PLUGIN_MEMORY_H
+ #define PLUGIN_MEMORY_H
  
-     assert(out_adcx == in_c + adcx_operand - 1);
-@@ -53,7 +53,7 @@ void test_adcx_adox(uint32_t in_c, uint32_t in_o, REG adcx_operand, REG adox_ope
-         "adcx %3, %1;"
-         "adox %3, %2;"
-         "pushf; pop %0"
--        : "+r" (flags), "+r" (out_adcx), "+r" (out_adox)
-+        : "=r"(flags), "=r"(out_adcx), "=r"(out_adox)
-         : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
+-#include "exec/cpu-defs.h"
+ #include "exec/hwaddr.h"
  
-     assert(out_adcx == in_c + adcx_operand - 1);
+ struct qemu_plugin_hwaddr {
 -- 
 2.39.5
 
