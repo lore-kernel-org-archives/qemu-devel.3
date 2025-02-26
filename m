@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E619C18E7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F83BC18E7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnK96-0001Mr-OB; Wed, 26 Feb 2025 11:20:28 -0500
+	id 1tnKFA-0002i6-QQ; Wed, 26 Feb 2025 11:26:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnK92-0001MW-3g
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:20:24 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnKF9-0002ho-Jr
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:26:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnK90-0008Vt-EZ
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:20:23 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnKF2-0000eu-Um
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:26:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740586821;
+ s=mimecast20190719; t=1740587188;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=LJvWGWPV2XDoQ/sMmEpMDN0NALwf1tRFwk94v81XVD8=;
- b=Y4afxEuLbPAVBv2uwRagaXKGwXxovtx1kTHFee3eMUib7ZAWUDTnolSUN1UZVPcxne206Q
- sbVgE5kRoyp80LErTgPzySv/Z4QoDDJYbXbxO+ydYeyFAEDN2YrLdYzC6/l/xvdUIT96vW
- KzQ/dmHh+gNUHIdXQW5osEqNgF2ZVNo=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VAmdflLTB5qcRbTe1Oox1WgdRPSWyC4vlzkSwoNkNJc=;
+ b=WQNIHxfwPYJ2k2Yo9RlUCPLEC/eWMGmZued5nPhuAWOG5Oz7Gfx7IPv6YpHXmoMvK3ZYhf
+ kQ+DKY9T/pgoDvB19E3gl3MsLamquP2WOkGvLJIEeCCcPRbIhaQD6k8udAOb/6DIroRKu9
+ HnBUdeYos25Ox9bAoMDQYUbxik8Q9NI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-V09kOvaTOaGBHipzUHrhOw-1; Wed, 26 Feb 2025 11:20:19 -0500
-X-MC-Unique: V09kOvaTOaGBHipzUHrhOw-1
-X-Mimecast-MFC-AGG-ID: V09kOvaTOaGBHipzUHrhOw_1740586818
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38f455a8fcaso5020983f8f.2
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 08:20:18 -0800 (PST)
+ us-mta-567-oBhmt-q7POu3H8JWqOrlUA-1; Wed, 26 Feb 2025 11:26:27 -0500
+X-MC-Unique: oBhmt-q7POu3H8JWqOrlUA-1
+X-Mimecast-MFC-AGG-ID: oBhmt-q7POu3H8JWqOrlUA_1740587186
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43942e82719so50754965e9.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 08:26:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740586817; x=1741191617;
+ d=1e100.net; s=20230601; t=1740587186; x=1741191986;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LJvWGWPV2XDoQ/sMmEpMDN0NALwf1tRFwk94v81XVD8=;
- b=CWLa9csXu4OHC64YuOKyfrs6MqGEnsA7M6EAt6S/TODI2gC4apBB3rjHdF33aCA7X+
- ZSUzmCM33xuoyauFqluImlx2MpSTBLJ/IZjG1FLVqHZzR1J4lqP+Pv73NtS1lVnj7xrr
- /4s/hKppsWmhza32KRmCvBsMrK1cHcj8lYJrUFdPudRiPH6NUVutGXSyjvYJqQ7QEe/5
- w9JUaa0x2MSHkiJgyWT7X58fQAQHTu4Bny3xNDmh/sSlCS1Xica2GxOrU/WBrorT7vWh
- avTXIQoGW+xjljvOszdXV7jVHyyfwl4LsPQWBH+C8nc4oJWx6Uxg5BKwaRH8vmqDl3tC
- Fr9w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUc53g7N8wVVuVmvdMPz4Z4xLxxtQXGv13R7pr5bc9TuMblJrDwlRt6sXvyuY3E4VVyEU+HN+L5nPQE@nongnu.org
-X-Gm-Message-State: AOJu0YzX6AGwf63+eP4oc/bNuDtEIcwmcGvHKY+z1lcri8NbKBOOcpcG
- qnZyNrpCp1ChBiXIbnEPvMuYFnYZg3smE8TGdxp/cBqCeUT/Gv7DnPQ0ghA52HPItBocRIFG4nb
- ar66Vvy/0dRnpbyc0bC2IH8UgYb3qzQE8Al2xv2mgJRKLuzETEHrH
-X-Gm-Gg: ASbGncvK4ptd6MWn6wRZDGUhYWUozhcMZT8PEGrAlHqouPvzH5JuIkMGdBGcQg4byzP
- 21gzWDcI0rsbdKDdWHe9N7OhKnds8v0/KJqkRJ38KySfuGRtP907j5AxIqm4YRm6f/pjgGJRNpn
- pWqX4KqAt+/ou7lX/0ubvV+fU6Kt61SKqirC0E0aNHdunNY+Df5svWJVPN5Kj1cxuLec/jXJfm2
- QraE49xfvmPbBiP6zhACksEQVhPo4Dw0HtKG3m7ydz8M/WVaodgY1JIV3vtMO7UnhoXhiPloY+7
- bqZ6h7z/lgYgTiP1S4LrQ6Xce6RTURSopd8icFSxeY74STCS5gt1GJqUbHQ=
-X-Received: by 2002:a5d:64ee:0:b0:38d:e6b6:508b with SMTP id
- ffacd0b85a97d-390d4f378ddmr2862591f8f.9.1740586817572; 
- Wed, 26 Feb 2025 08:20:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFuMk/jghtf/HlF+JqbUjlA9t6X/jsAyDeGJUrJSRbU1EDD5WK60i3u7QACzgaZy6qyht0gzw==
-X-Received: by 2002:a5d:64ee:0:b0:38d:e6b6:508b with SMTP id
- ffacd0b85a97d-390d4f378ddmr2862575f8f.9.1740586817189; 
- Wed, 26 Feb 2025 08:20:17 -0800 (PST)
+ bh=VAmdflLTB5qcRbTe1Oox1WgdRPSWyC4vlzkSwoNkNJc=;
+ b=qNbmoEEPK/i3n558Fq0KkWG2J2cg0efoK4Sr+2d745lTCJHqC5xKeJN37kJkNQE8Fa
+ Dtq9zjnrUWf7vFCH8M+xO9K3eyiN8I6Ra+A9LaTWjuI/dHa6Z/+E4KWuygT3zguKIIuu
+ at5MQcAXawClxTMZFYKK3PZu/Y04Ef5mleUrXpO21JhPkTYvGiO4Tes3jyDiVkHWy/VD
+ mjNSWuYm8he/ru67hExiMAFE+Km35rSEF3KZ9efk4VqIvMVxvn1ex5sUd7DroAjDAfcB
+ SH1qxXSZbSgV+jop3R1c7qz3d0DKe/PoNRyhAujJdMPd37ImhlEKmuH5IhL8IXzyiiVM
+ JBww==
+X-Gm-Message-State: AOJu0YxE2vkXrLRMUpZDfn6IoTCm2POIgZ1SCPRNrzxpW1CcI9B4JW3E
+ pPc44iReFZbiKXZCITlILpJN/f89vcFjQU59vKJ9T03bTZJfJhg2k8KUYCnRVMvdNga57uiHhB3
+ FQtrL9k5vjWybmKJhXUIvqoaRuayrO+sgbGZeJEpOHTJp8S2Rs5w3
+X-Gm-Gg: ASbGnctivz0J7nNWJ7oK+/YRhyD+ggJPjnk3+bNO6SJVU0OAg4VUQfOXJD+s98G3XWt
+ s6n3Fb1SVOaLsBi8hfx4h6OtyoBSHBhlLPXeqzVZ1eiVP8sdqX8dsSpagyzf0cJupR07xEpJLre
+ LsntubIUE4AYDlqlb3DiYqCob1hFiTOr6ZzWKy9onpz1kPV4sFQN6QauumW6wprwQ84Nfx2BUGk
+ OBLE3dkK2bAwI3tYj8OI5ychuP1Cq8zn6zOjxtV+yRkgT7WHYpYJDuVfBlo2AGBkHzWC5ocBafC
+ vDNwNm5SJWhpsRmPSTh8PRR22di6huK7OTayGneEHQr1iZ32XmT/F4sOQqk=
+X-Received: by 2002:a05:6000:1366:b0:38f:5120:129d with SMTP id
+ ffacd0b85a97d-390d4fa34demr2619203f8f.49.1740587185596; 
+ Wed, 26 Feb 2025 08:26:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHkIIM0GkTMJu82DDFrBN17TOKHtx0KNthBOeFQ48/oPB03MUIO27/3wCdn624zqT9qrN4iTQ==
+X-Received: by 2002:a05:6000:1366:b0:38f:5120:129d with SMTP id
+ ffacd0b85a97d-390d4fa34demr2619143f8f.49.1740587183753; 
+ Wed, 26 Feb 2025 08:26:23 -0800 (PST)
 Received: from ?IPV6:2a01:cb19:9004:d500:837f:93fd:c85e:5b97?
  ([2a01:cb19:9004:d500:837f:93fd:c85e:5b97])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd86cc3csm6227609f8f.33.2025.02.26.08.20.16
+ 5b1f17b1804b1-43aba549eb9sm26693395e9.37.2025.02.26.08.26.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 08:20:16 -0800 (PST)
-Message-ID: <5f2fcd6d-4b2a-4b72-8434-561f8e93b1dc@redhat.com>
-Date: Wed, 26 Feb 2025 17:20:15 +0100
+ Wed, 26 Feb 2025 08:26:23 -0800 (PST)
+Message-ID: <c60b7780-5b3f-43a0-a7f1-30820d4e6fb8@redhat.com>
+Date: Wed, 26 Feb 2025 17:26:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 19/36] vfio/migration: Convert bytes_transferred
- counter to atomic
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <dbb9b1047aca873a5ee0a91f352f282fe1004a15.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: Re: [PATCH 1/2] vfio: Make vfio-pci available on 64-bit host
+ platforms only
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Eric Auger <eric.auger@redhat.com>
+References: <20250226084721.232703-1-clg@redhat.com>
+ <20250226084721.232703-2-clg@redhat.com>
+ <a39e97c2-c6fd-34e4-f91b-b3491185b789@eik.bme.hu>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,7 +130,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <dbb9b1047aca873a5ee0a91f352f282fe1004a15.1739994627.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <a39e97c2-c6fd-34e4-f91b-b3491185b789@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -145,7 +142,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,69 +158,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/25 21:34, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On 2/26/25 15:12, BALATON Zoltan wrote:
+> On Wed, 26 Feb 2025, Cédric Le Goater wrote:
+>> VFIO PCI never worked on PPC32 nor ARM, S390x is 64-bit, it might have
+>> worked on i386 long ago but we have no plans to further support VFIO
+>> on any 32-bit host platforms. Restrict to 64-bit host platforms.
+>>
+>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>> Cc: Tony Krowiak <akrowiak@linux.ibm.com>
+>> Cc: Eric Farman <farman@linux.ibm.com>
+>> Cc: Eric Auger <eric.auger@redhat.com>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>> hw/vfio/Kconfig | 2 +-
+>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/hw/vfio/Kconfig b/hw/vfio/Kconfig
+>> index 7cdba0560aa821c88d3420b36f86020575834202..6ed825429a9151fcdff33e95d1a310210689b258 100644
+>> --- a/hw/vfio/Kconfig
+>> +++ b/hw/vfio/Kconfig
+>> @@ -7,7 +7,7 @@ config VFIO_PCI
+>>     default y
+>>     select VFIO
+>>     select EDID
+>> -    depends on LINUX && PCI
+>> +    depends on LINUX && PCI && (AARCH64 || PPC64 || X86_64 || S390X)
 > 
-> So it can be safety accessed from multiple threads.
-> 
-> This variable type needs to be changed to unsigned long since
-> 32-bit host platforms lack the necessary addition atomics on 64-bit
-> variables.
-> 
-> Using 32-bit counters on 32-bit host platforms should not be a problem
-> in practice since they can't realistically address more memory anyway.
-> 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> Are these defined for the host or target? 
 
+host.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> I see PPC is defined in target/ppc/Kconfig so I think these mark the target not the host. Vfio-pci works with qemu-system-ppc 
+
+Ah ! I am surprised. Which host and QEMU machine please ?
+
+> and we are trying to use it for GPU pass through for 32 bit PPC guests. Please keep that enabled.
+
+As per commit 6d701c9bac1d3571e9ad511e01b27df7237f0b13 "meson: Deprecate
+32-bit host support", support will be fully removed in 2 releases and
+it doesn't need to be addressed by VFIO.
+
 
 Thanks,
 
 C.
 
 
-> ---
->   hw/vfio/migration.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+
 > 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 03890eaa48a9..5532787be63b 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -55,7 +55,7 @@
->    */
->   #define VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE (1 * MiB)
->   
-> -static int64_t bytes_transferred;
-> +static unsigned long bytes_transferred;
->   
->   static const char *mig_state_to_str(enum vfio_device_mig_state state)
->   {
-> @@ -391,7 +391,7 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
->       qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
->       qemu_put_be64(f, data_size);
->       qemu_put_buffer(f, migration->data_buffer, data_size);
-> -    bytes_transferred += data_size;
-> +    qatomic_add(&bytes_transferred, data_size);
->   
->       trace_vfio_save_block(migration->vbasedev->name, data_size);
->   
-> @@ -1013,12 +1013,12 @@ static int vfio_block_migration(VFIODevice *vbasedev, Error *err, Error **errp)
->   
->   int64_t vfio_mig_bytes_transferred(void)
->   {
-> -    return bytes_transferred;
-> +    return MIN(qatomic_read(&bytes_transferred), INT64_MAX);
->   }
->   
->   void vfio_reset_bytes_transferred(void)
->   {
-> -    bytes_transferred = 0;
-> +    qatomic_set(&bytes_transferred, 0);
->   }
->   
->   /*
+> Regards,
+> BALATON Zoltan
 > 
+>> config VFIO_CCW
+>>     bool
+>>
 
 
