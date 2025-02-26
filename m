@@ -4,69 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793D1C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B91B2C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:40:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnIZY-0004ep-KM; Wed, 26 Feb 2025 09:39:42 -0500
+	id 1tnIaD-0005JI-Hv; Wed, 26 Feb 2025 09:40:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnIZU-0004dg-3H; Wed, 26 Feb 2025 09:39:36 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <florian.lugou@provenrun.com>)
+ id 1tnIaA-0005CJ-FU; Wed, 26 Feb 2025 09:40:18 -0500
+Received: from mail-francecentralazlp170110002.outbound.protection.outlook.com
+ ([2a01:111:f403:c20a::2] helo=PAUP264CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnIZM-0002vt-5w; Wed, 26 Feb 2025 09:39:31 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 1BF255C4AED;
- Wed, 26 Feb 2025 14:38:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874B6C4CED6;
- Wed, 26 Feb 2025 14:39:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1740580765;
- bh=PdfgDdLgn0IJXw0MEyFZqSpfBoy/QCZjj2OrYc2BhaM=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=EiuZnVdusmYzHSdb6I2fJJTx0wjQMJJg1KQ9ZIZRPuOpsCK1VdUgYWLRZXpmIEERt
- dvBG/PAIjDhM7kgaXkpcR4WImK8YNiJ41KRMU49S4fd7BbQ0fUM9iJ6xjW0pfTLuWY
- HODM8YlZNXTNOMQXlAOdTfNpf4wddkm1CFTDThQfZRcY3OoZLhjwD5vKuW7QRlDcSq
- p4rsWYtAxlrZpjIpsI/1jds7nbpNzIlc7dT9/gYQmJSTolV1U4lEEjTfGf5xqn1Kls
- 3PkN+nw6fH8SreM5/DOar8Jm7cpHRyhk7FQ4F4kQn2C0+Q63isaM/DAhMNbgDLdNF1
- a1GPIvWh0D1DA==
-Date: Wed, 26 Feb 2025 15:39:13 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Philippe =?UTF-8?B?TWF0aGll?=
- =?UTF-8?B?dS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
- <anisinha@redhat.com>, Cleber Rosa <crosa@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Eric Blake
- <eblake@redhat.com>, John Snow <jsnow@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Shannon Zhao
- <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
- <zhao1.liu@intel.com>, kvm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 00/14] Change ghes to use HEST-based offsets and add
- support for error inject
-Message-ID: <20250226153913.27255b1e@sal.lan>
-In-Reply-To: <20250226151656.10665bc9@imammedo.users.ipa.redhat.com>
-References: <cover.1740148260.git.mchehab+huawei@kernel.org>
- <20250226151656.10665bc9@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <florian.lugou@provenrun.com>)
+ id 1tnIa6-0003G1-Vt; Wed, 26 Feb 2025 09:40:17 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tgPMjgu39ZLwLSobvk+rMJXT7lfQDOvjv9GrSL+7gDvud5AE9SBjB+Vn5Vp77q8dLfTUKxLTuyWm10TwI9p678DKOCS6zDHaiVzoD+eq6EbVmFwg/bJ+Aaj9QdObommSoJHjORezwXJKQoUA6jeZJx9FGFSDzikcw4kCISHUMc4hD7X+3fYrxx8Mec2yaqeWb1ksy410Bc/qDrFJBJlwY4R0mtO+Y8vd1r+QPhPa9S86cY3/t1aIRhkJFQgqxnBT3UEpVkQx12obcRFdlJsRImdrMTuL03uxyHyQR4fD494ODGpylpTwUCtCzhDocfmJQYuQ0yNnBfvOc4+uzsJsNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aR4tZSQDD5qma9bM5S1o0VA6cQc8X7UEUwiUUgEXSfA=;
+ b=blToqfB1wBg8HrBu7AZTyF0MfFpYfi0I3evZqF/iwj8XzR5doa7tmCmv50nYCbxlnaXXDZGcbNPe0o+AaHAkUurHL8RWR8ZruGn7j21h9zz5tqBB/pgbsvz6ytP50xeOlkIjxzJDNtLszLk9d0/SuOyKVwzRLbQgXcP5c0u1FG9YP5WytKvtQpNlYhaPQUoD0PS7+54ESou88H9m3bePFXqjK6o6Pp8jmZOzSVR2v/fiKDnp1imUtfpjpyoxGBYcg5M7mFI49lvOA8plW5kfO3dEpQEJBvxyaNnqhG54hChMIy56A3sF/JNX0aNvrmJ/agkgBfejDj76Aaq6Ovp4xg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=provenrun.com; dmarc=pass action=none
+ header.from=provenrun.com; dkim=pass header.d=provenrun.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=provenrun.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aR4tZSQDD5qma9bM5S1o0VA6cQc8X7UEUwiUUgEXSfA=;
+ b=E/LXoE1KMhm9DcDqXWRHXy415hk3wxg2MxBvTPUfZNoIgdV+pxwtDM8fcH3GnBm59XUCd3MgUgsd3uWw7K6JQJ4QHvzFKK06oYrdENN3S66yNEldzmch+CztTu70YYkx9kw5wl/+5z/N6HYmcaJchIjFgB+9ZFD7nIJ/xJu6lg1n4TnjqpADZ+ZfIX9M7wXzq7asybb78ExMOorLRCmMt6OCbUSpzXyEjzJZAzJsDmpWQTgmP+vvtMTI/IR61Veb/fUbA8H6BA3YucYVA7hk9yUgrU77Y+6Hn//Tm0jNRE3Ad7D8Oq76PCvEnL14V14EWtxI6uZZIj1BtEoij+ak8g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=provenrun.com;
+Received: from PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:1f2::18)
+ by MR0P264MB5513.FRAP264.PROD.OUTLOOK.COM (2603:10a6:501:4b::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.19; Wed, 26 Feb
+ 2025 14:40:06 +0000
+Received: from PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM
+ ([fe80::ef1:e8a1:244f:3ca7]) by PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM
+ ([fe80::ef1:e8a1:244f:3ca7%5]) with mapi id 15.20.8489.018; Wed, 26 Feb 2025
+ 14:40:06 +0000
+From: Florian Lugou <florian.lugou@provenrun.com>
+To: qemu-devel@nongnu.org
+Cc: Florian Lugou <florian.lugou@provenrun.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+Subject: [PATCH 0/2] target/riscv: Support scontext-based trigger matching
+Date: Wed, 26 Feb 2025 15:39:12 +0100
+Message-ID: <20250226143914.769112-1-florian.lugou@provenrun.com>
+X-Mailer: git-send-email 2.43.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PA7P264CA0019.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:2df::15) To PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:1f2::18)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -74
-X-Spam_score: -7.5
-X-Spam_bar: -------
-X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PAZP264MB2990:EE_|MR0P264MB5513:EE_
+X-MS-Office365-Filtering-Correlation-Id: 21caba86-a45e-4153-2229-08dd5673767a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|52116014|366016|1800799024|10070799003; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?+Siwf+PUpMKG8keW+H/Sn+A5k9ZzLuiYf/zoT7DiC0x8M5u0z8FOb9W8/gE8?=
+ =?us-ascii?Q?xvkglZrRfExFbanmqq1F71H+nZj9+yxbua/elljCjF0JlxCYU7StIVQWtLNo?=
+ =?us-ascii?Q?vDVTOkn6rq9SZSxrM4hawgXkOYOghNfOOxuTz4Oti6ZsajyMf8JElo26768N?=
+ =?us-ascii?Q?E4us+Cd+EQ+Js7je9mH9Ac1miRbKH1q2Kt9Va7bB3qGJW1g0sIpTc91xt6aV?=
+ =?us-ascii?Q?gylqZaz0f/SLfYzRTx3JsYxHqV2VA7yEOY1c2nAdImPKmczfOdJC2t6vQRAI?=
+ =?us-ascii?Q?bVdqXHZ+suCHmiVm75DtqHcaaECz1d3OdUXEqhMI0IEIlinEg8Ivhw3KR032?=
+ =?us-ascii?Q?/ZJS0JhDoIfwztnJN56qKeSufvdCwr4MSiIPqWWqXYiVYXdYfvBLSVPP0PKU?=
+ =?us-ascii?Q?/sfHXgP9TJbwqspx+vVb3B8JzR7f54ov/QLt33VBfzoWKhoe9WE5/KJeF+1k?=
+ =?us-ascii?Q?68R3Yf+Mhca3dT8+vfWuWDRUkIS1/qf7GCjOWIV4mNCQ2xIzQrfB+SrwpCQQ?=
+ =?us-ascii?Q?FitkJ2pt/QstdI5WItTUhgy0SPpT13EGl0ohMOGl7o62ofnHXo4AlsMfKyh1?=
+ =?us-ascii?Q?3QrywedHjOz5PK4/XSS0XiOswSIvqu1UMlaGII1thswLvm/aV+5VwrWP0nRV?=
+ =?us-ascii?Q?RbpgnbnCyrezQGRzJYu+ANyEiriaSt6UsUSUVPq3EmooECUvtckAAH7ClK2t?=
+ =?us-ascii?Q?beH7+WoyrFjFeNklwvRDVZtIzahBAB7JTrutQvGylOdLR5Brbjedjeq6U0ia?=
+ =?us-ascii?Q?JgKmmcwFz3KSgqxO1PIoU7UuG2MteJaMqm01BjG6bxii7Xu+cA7AWX/xpQjZ?=
+ =?us-ascii?Q?2eopLcm6lpGp3QZUwA2FwbATIo/zn8/o4wu08pdoPvA1EKp2M2Cid95y52MG?=
+ =?us-ascii?Q?7NCezBsQcCamxOyxjSlDtm1rCywLEEdMfhjeqaJsIVVfF1cMAriGTg6HEavw?=
+ =?us-ascii?Q?nObWY3LF2H0TkY066AgcYeu45rboWOZqjWwKp3j0OpPWcg6678irZvlWcW1g?=
+ =?us-ascii?Q?Xz23LFJubo7XJnwVVr1KZodnHKPWz2K32JcC3pM7veAysITUyMTg2jn0k5wf?=
+ =?us-ascii?Q?4NLi+Xix0T7L6fbLAYcShRXLsosafYwKaeYexiwCeExaiSo4RyTwKwC4Be8U?=
+ =?us-ascii?Q?hn6N4ken7w0Tt75nQvw3FnYx7csdJUF54ULgPNO62RZtMPB9WM+N2HOVEskt?=
+ =?us-ascii?Q?+EUmdm/+anfM2JR3iw99EM84XXW0wXvIxs4ZQEM+eCAGYZ996CrKhMgCuvP1?=
+ =?us-ascii?Q?yx/hO2qhFfEjnLjKmPhQfxxOnGSjr6JGaPP0X2gRliqBcgOmyrUvrzqyJjXP?=
+ =?us-ascii?Q?DgIEN26KtCbRhXol1iUgqkBCjdDPzjxTAJuHD+kGcEM3GOY9VLhIIiH28i/v?=
+ =?us-ascii?Q?A/zrRCf5bWZ7GanwbYJ4tlr6T9ww?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(52116014)(366016)(1800799024)(10070799003); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?YYCQV15uB+5Zkp9uZ69cf0OlowyWBQgRPdkoINWAmmak67UdrpjQPTGJ3FQF?=
+ =?us-ascii?Q?bknCqFiyOAtjTunwE3Rt3AlgwdNh8Is/FA0BbqaV6+9n0pils8qeAb5GBolp?=
+ =?us-ascii?Q?X01FXkqW1fJw1Fll+KaKRSmGyuLlS251fjGY2NSLyypmggI58zpWHLckL2lc?=
+ =?us-ascii?Q?Uf6Jld2OJbDiwuaGbtEAkpVEqUdJy8TMZW/EPdRYos2RaLwvj4xJDXZHjVwj?=
+ =?us-ascii?Q?WPbxCVk0XfHLcsCkKbNw3ZSvtS9KKbUZNeadToGXMsx3OSRbzO4IgL0p4L4+?=
+ =?us-ascii?Q?uXhpJwCmXuBN9wH/lYrPhuICwD6qGPZLMBZjCo6ZRCswOHH/Ezet3xQCkr6S?=
+ =?us-ascii?Q?GwcIn74LB4e9RscPed1XBHfR5DMojzdiafmZ5W6ef3uUGfXWap+4/gIXUg0Z?=
+ =?us-ascii?Q?tDQ7mp8jH/w0Hb7LsX+UmuAdJi3o7gPpw8ONsgIFh0nXu7dEYFZXUf9bIL27?=
+ =?us-ascii?Q?g66q3TT+tTMcFREYHB8ckFAOoPksXD8YWdKrRQNLAHS8BIIJbukdbKbx7GRl?=
+ =?us-ascii?Q?wZGKvsJUXX/h5qHvS/19tDKUchNPOH4pdBlrACqTcfAEc1CXqNIa3mZs1Zji?=
+ =?us-ascii?Q?Q04LJbxXZjP9xOY8tlXjdrrGm9WmxxwFk3oM5U/IJvkXkq5zoiAicgQeExFn?=
+ =?us-ascii?Q?Lm2aM9De3URQX3klFfbxubnOxrk8OkgawwH4ooWTwG3HoczhJL+DZYAnqXyE?=
+ =?us-ascii?Q?jHqSjgUnT+rZjAbyr+eFIhfPe0h53fDPnaFBPkvEjNhpzK8ibQzxs8YDXpDk?=
+ =?us-ascii?Q?x0QG0dbiX1CAOyTpRG+Fc/WC96uJ1yneG4X04/vvsXlDzTinROFPhlrbf3xt?=
+ =?us-ascii?Q?89UlP13e2+hTVg4m1foRpvwV8X3iQZNEIsZSovQ43jnBi96en3dtPxCshzeO?=
+ =?us-ascii?Q?OOKz6wj2ynAaHUcdxGXDlzFsxgtcp2LDpcBGA+23msqiyg3YUUdtyk067rHD?=
+ =?us-ascii?Q?oTThVrhCDjxtnCoB+v7BdTaZXoXDMomVDJWtG9/Z8z4Vc+0SsV9WJsT/AYFj?=
+ =?us-ascii?Q?CFW5zhD3YUmbKqk4XftayOE0/zDoHU6E7jMkEZRk0Nd3OMoa4T2fKiQHw9An?=
+ =?us-ascii?Q?m+FHPUy44N3Yl+Lo+LL5/v5vumXgkSoqskVlvibLXxS88mffwVu+fpB+I6yQ?=
+ =?us-ascii?Q?pRw4IlcbLEzn8qD9JJShvl0CBhW9lTWH2+NbSsh//bp0Ew5DACbU1Ykm0N3a?=
+ =?us-ascii?Q?8OIUZ2wvOahcINCsE7vOAUR/xFKgoX6yO18htvVPVYF2MChGAxvc+nKp35iq?=
+ =?us-ascii?Q?6GPuG7kRdABy1CX5qpwpFLbEiklDXJXZQf1XKBpP5FABdUXv1hfp44LQgZVL?=
+ =?us-ascii?Q?jePukKO576W6SdI4io4lNJxWmApJWtHbw7Cj7oHFC0+CJ1xw8T1RICQABsPg?=
+ =?us-ascii?Q?kkv5pfBQ9cVqyg5SilVDW3c44lYZe4gUDS1nOj5lbzm5XiikCZysD+DNl0Yk?=
+ =?us-ascii?Q?8A2vWxjBhI2YVh28TtZf/frB0rT6ShnC+hys5MSNgA4eYjbaqzIOs9yXjg2z?=
+ =?us-ascii?Q?cfuPbH0TFu0wCs6yE2u0BLC0VlXbasTl2xM6lWLKlFElhdwKYli2CZnG2KII?=
+ =?us-ascii?Q?vyPmpq3K6AYDuY3BTMctLNLggps/R0IDKd50NY4G/aZC2zoxw6RAHwWlPVOz?=
+ =?us-ascii?Q?yy7Gr3kUh59hRGiZSqoakRmWpO7YegMb8TH71lAPUdj13ulDDu4BjAVfP+xI?=
+ =?us-ascii?Q?uv54HQ=3D=3D?=
+X-OriginatorOrg: provenrun.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 21caba86-a45e-4153-2229-08dd5673767a
+X-MS-Exchange-CrossTenant-AuthSource: PAZP264MB2990.FRAP264.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2025 14:40:06.7272 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: ff654c30-3eb4-4445-b89f-a54a92b1f03d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jyZCw0UbjKqS28DjqbRflVkVcGHgmJ+T4DUJflXtcet+C/nJLS/r1Og4dh1X5CxIoXtQVFjoVzkWA+WApdLd8WRAT62HW0lNu/BoHGFcYtQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MR0P264MB5513
+Received-SPF: pass client-ip=2a01:111:f403:c20a::2;
+ envelope-from=florian.lugou@provenrun.com;
+ helo=PAUP264CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,110 +163,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Wed, 26 Feb 2025 15:16:56 +0100
-Igor Mammedov <imammedo@redhat.com> escreveu:
+Hi,
 
-> On Fri, 21 Feb 2025 15:35:09 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > Now that the ghes preparation patches were merged, let's add support
-> > for error injection.
-> > 
-> > On this series, the first 6 patches chang to the math used to calculate offsets at HEST
-> > table and hardware_error firmware file, together with its migration code. Migration tested
-> > with both latest QEMU released kernel and upstream, on both directions.
-> > 
-> > The next patches add a new QAPI to allow injecting GHESv2 errors, and a script using such QAPI
-> >    to inject ARM Processor Error records.  
-> 
-> please, run ./scripts/checkpatch on patches before submitting them.
-> as it stands now series cannot be merged due to failing checkpatch
+These 2 patches allow scontext-based trigger matching as specified by the Sdtrig
+extension. Patch 1 allows access to the scontext CSR and patch 2 enforces
+scontext matching as specified by the textra CSRs.
 
-Weird... checkpatch is at pre-commit hook, as recommended at QEMU 
-documentation. It is actually a little harder to manage this way, as it 
-sometimes cause troubles with binary files.
+Florian Lugou (2):
+  target/riscv: Add scontext CSR handling
+  target/riscv: Support matching scontext in Sdtrig's textra CSRs
 
-Anyway, I'll run it by hand before sending the next version.
+ target/riscv/cpu.h      |  1 +
+ target/riscv/cpu_bits.h |  5 +++
+ target/riscv/csr.c      | 36 +++++++++++++++++++
+ target/riscv/debug.c    | 76 +++++++++++++++++++++++++++++------------
+ target/riscv/debug.h    |  3 ++
+ 5 files changed, 100 insertions(+), 21 deletions(-)
 
-> 
-> > 
-> > ---
-> > v4:
-> > - added an extra comment for AcpiGhesState structure;
-> > - patches reordered;
-> > - no functional changes, just code shift between the patches in this series.
-> > 
-> > v3:
-> > - addressed more nits;
-> > - hest_add_le now points to the beginning of HEST table;
-> > - removed HEST from tests/data/acpi;
-> > - added an extra patch to not use fw_cfg with virt-10.0 for hw_error_le
-> > 
-> > v2: 
-> > - address some nits;
-> > - improved ags cleanup patch and removed ags.present field;
-> > - added some missing le*_to_cpu() calls;
-> > - update date at copyright for new files to 2024-2025;
-> > - qmp command changed to: inject-ghes-v2-error ans since updated to 10.0;
-> > - added HEST and DSDT tables after the changes to make check target happy.
-> >   (two patches: first one whitelisting such tables; second one removing from
-> >    whitelist and updating/adding such tables to tests/data/acpi)
-> > 
-> > 
-> > 
-> > Mauro Carvalho Chehab (14):
-> >   acpi/ghes: prepare to change the way HEST offsets are calculated
-> >   acpi/ghes: add a firmware file with HEST address
-> >   acpi/ghes: Use HEST table offsets when preparing GHES records
-> >   acpi/ghes: don't hard-code the number of sources for HEST table
-> >   acpi/ghes: add a notifier to notify when error data is ready
-> >   acpi/ghes: create an ancillary acpi_ghes_get_state() function
-> >   acpi/generic_event_device: Update GHES migration to cover hest addr
-> >   acpi/generic_event_device: add logic to detect if HEST addr is
-> >     available
-> >   acpi/generic_event_device: add an APEI error device
-> >   tests/acpi: virt: allow acpi table changes for a new table: HEST
-> >   arm/virt: Wire up a GED error device for ACPI / GHES
-> >   tests/acpi: virt: add a HEST table to aarch64 virt and update DSDT
-> >   qapi/acpi-hest: add an interface to do generic CPER error injection
-> >   scripts/ghes_inject: add a script to generate GHES error inject
-> > 
-> >  MAINTAINERS                                   |  10 +
-> >  hw/acpi/Kconfig                               |   5 +
-> >  hw/acpi/aml-build.c                           |  10 +
-> >  hw/acpi/generic_event_device.c                |  43 ++
-> >  hw/acpi/ghes-stub.c                           |   7 +-
-> >  hw/acpi/ghes.c                                | 231 ++++--
-> >  hw/acpi/ghes_cper.c                           |  38 +
-> >  hw/acpi/ghes_cper_stub.c                      |  19 +
-> >  hw/acpi/meson.build                           |   2 +
-> >  hw/arm/virt-acpi-build.c                      |  37 +-
-> >  hw/arm/virt.c                                 |  19 +-
-> >  hw/core/machine.c                             |   2 +
-> >  include/hw/acpi/acpi_dev_interface.h          |   1 +
-> >  include/hw/acpi/aml-build.h                   |   2 +
-> >  include/hw/acpi/generic_event_device.h        |   1 +
-> >  include/hw/acpi/ghes.h                        |  54 +-
-> >  include/hw/arm/virt.h                         |   2 +
-> >  qapi/acpi-hest.json                           |  35 +
-> >  qapi/meson.build                              |   1 +
-> >  qapi/qapi-schema.json                         |   1 +
-> >  scripts/arm_processor_error.py                | 476 ++++++++++++
-> >  scripts/ghes_inject.py                        |  51 ++
-> >  scripts/qmp_helper.py                         | 702 ++++++++++++++++++
-> >  target/arm/kvm.c                              |   7 +-
-> >  tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5240 bytes
-> >  .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5326 bytes
-> >  tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6601 bytes
-> >  tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7723 bytes
-> >  tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5442 bytes
-> >  29 files changed, 1677 insertions(+), 79 deletions(-)
-> >  create mode 100644 hw/acpi/ghes_cper.c
-> >  create mode 100644 hw/acpi/ghes_cper_stub.c
-> >  create mode 100644 qapi/acpi-hest.json
-> >  create mode 100644 scripts/arm_processor_error.py
-> >  create mode 100755 scripts/ghes_inject.py
-> >  create mode 100755 scripts/qmp_helper.py
-> >   
-> 
+-- 
+2.43.0
+
 
