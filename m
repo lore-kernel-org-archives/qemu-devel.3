@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87546C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:08:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BEBEC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:08:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnI1a-0001Pp-IM; Wed, 26 Feb 2025 09:04:34 -0500
+	id 1tnI1X-0001He-6P; Wed, 26 Feb 2025 09:04:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI12-00015M-0U
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:04:00 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1tnI0y-0000zE-KM
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:03:56 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI0y-0005iq-Qu
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:03:59 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so59956985e9.1
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:03:56 -0800 (PST)
+ id 1tnI0v-0005gE-73
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:03:56 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-390d6426ca8so750847f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:03:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740578635; x=1741183435; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740578631; x=1741183431; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5BNemPe9wlDrqgAM6P13rVeo/N+AN387KhyfuJfKu9A=;
- b=n86RQzFIbECQbbsWpBFcyA5J3K7UWS5UvLgRC8pCrEQCKbjPTD3Ngdu+wkBlZBO2EZ
- fif9S0zcC6cN0Tni38FHbBkm81WK0DgBqsPshd3JgAxIcos6VUVJKq2bpPIAJjsczVlS
- SO0o3S/5YiBEuxi+VBeFWZ/eEsj+5TAOqf2u6zefMdbdEPDD3Rj3bXhHfnlPbiGfkYSV
- HOfB8iB2So7GU/rQ8px5pI5L6CGroYghWU73OISsVo6u5+2iSl1io9vnDxX+lAB2Ni6L
- WUPYphS3ox4oEnyo4RUSna4+dZxf8AgyC1CrO92EaWrtMqmFg+mEo7khFMpZh7UfFJrS
- tghA==
+ bh=u9BfwToqsdAvmr5T1oKvg6QCzmXVNMAZSUhDiWFdTr0=;
+ b=ZgJxL4YFLaMVAtReWLJ4HMknLSc7Kg2npbD2WomheDcNVPKbKFC39VVZpbhjYvAqFk
+ +vVrmrHGmQZP25kViY5togb4+gtezvRanT0bNbdOYxd5AFjFdGISE+s8SxIPdJKUUCV4
+ 0ooXhT7UInPoSy2g+E6blAPp2TKS7Bnj77eHUJIddKwJwrrIFXQZuaiES/KglqiYTlYL
+ yMNDN0XYvMv681aUisqeJ4WJQoxkVbOVIdXk+aqfGNfc65V0UclT2NoQiiOfFObspkZM
+ 09AUbqOPm5SA0wUz6kj7Ojtjfy6WfR56YwAmmCt8zlmsEuJ2pSeagQhONDBPujxrSuEk
+ dWPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740578635; x=1741183435;
+ d=1e100.net; s=20230601; t=1740578631; x=1741183431;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5BNemPe9wlDrqgAM6P13rVeo/N+AN387KhyfuJfKu9A=;
- b=eRSlD5YSpYOpwIiFnART+pP02l+ap+0hD5H6mnmgFEJfD3zPf/yF5lwXuaTcVicEYx
- msmGAUHNr+fusfVBS70DZieYza8Kf/6x8CDmuA/9FO2w8xb+Zi4/qn0Uq8IXjSyvSu7W
- HYz/gmhcgMhFids7onKo5j6y7cEMr2Wo5RANYMcE+Xdtj9ZTJyHmy9h2BJ/qf5iLp5oH
- J6HBchMvz3KcsrS4+PLAy7k9hzAGK9PSViwIbfczjATXzI3z3b8u+s6aA3L1ni/xqPgD
- 3jTWIveyR0B5FJUCK9sqmDSKUG7esUHnYg16TjNAypBkkH8S99zO6quej8wl4Qd02q/y
- Bw5g==
-X-Gm-Message-State: AOJu0YzYV9ivkpznA0QxGXjpqPZbfz/hlcoOEQ0YqUx8AuDR+0EZheXw
- YchVAseOD7J51A6mrS+AeHm3guO3Ns8i1T/MQcpDiWfGgwPmrYY+YHhqKcvwU8E=
-X-Gm-Gg: ASbGncuSWEITmKgqmzJgYpb6AbArEhF/Q/c2vWUHw0YyKSisjq5GM1KNoGZtIYcjPXt
- 4uvttZ25lSVoWarfRGTRCpw6Fb/P4w/V7mLjbfO+xlzsT+d5DpPDOUOI/jdXluCCoTKb3f7VlaF
- KQSTg1UKv4qJir1pOJq8yK9J4ls+D8vmX7cJyCCDZwlzlsvEYLXlVu7HWcIARAJZgI2lE7UaZAn
- uTdnGcDarmCsxlaEwtqJFmMINh31d1UzOgpvMTay5eNkaN4AoLyefebzOsusaME1JQ57OEGPBNy
- ER2k8t349fTd4geTB41QPZzX3QE/
-X-Google-Smtp-Source: AGHT+IEpA9WUnuiSyFwlj6mIeSqMthiIy5xrUvdcSYXriEO4NOyos4Gl6R3UEVHo0fohPqm9cJq8cQ==
-X-Received: by 2002:a05:600c:4f86:b0:439:967b:46fc with SMTP id
- 5b1f17b1804b1-43ab8fd73f2mr29573115e9.8.1740578634856; 
- Wed, 26 Feb 2025 06:03:54 -0800 (PST)
+ bh=u9BfwToqsdAvmr5T1oKvg6QCzmXVNMAZSUhDiWFdTr0=;
+ b=vV7R9MaZv8x1h1lk31C0hsesQD2bzIccwel9qZYb7VgtOjNyr0ubg2qMtWFovZk+uO
+ F3rP2/+gDAOtTmI8DXYnfjGlKQIuJGMt/dBXNbWQDUe2lGj1/7jKV7YuXggADEP5dxSl
+ nlctHy5vw4xw/bwc3MQBPBhTYZNTyH6z4vJ61XAZdQncRhX8F9ssIh38LO6UORTS7gsU
+ eZD7BL+fxn1xdXaiMYRAUoz8hNtAC+JovbpJ8rdNpLu8jBFSmKYgy9vNJ0jnudgvYd7E
+ XPkl6HRA+5ogBBFQERqzSX/VrgThTg+y2B1n+J02Tz6Vz4JAytA/MwdRNRarYLzozXdQ
+ 4R/g==
+X-Gm-Message-State: AOJu0YyNYhxWY1B2v3GigCnXUS9JHugkGszVjng8CyS7OGi6oKGWjNHt
+ iAJVkK8R4kyiYwqJe1uHZ4LCvENGnYJ7cTgomsOCRDDTxKSVr+Rqm4UM29p3izA=
+X-Gm-Gg: ASbGncuYXUU4NvmCXtb/5TCW/cG2PdZKIVbXvZb4CruMYGJ0fiW6TN3Z5qPbmnxr0a5
+ /M2xlvosBd+vBD6yAAutzCVMlg6VPh4H25yLnPlDNsf8aoh2+v0UanBF4Hp7MuhiMZroT0GSEGd
+ OG/ePDuIXAmNnHqtpqhaOmXjkFtcUtZThr8GuuGaGFcllKvNuZoqTk012n/iaFd9fRmcWhofObX
+ pazLVWfom3hdWWzRZYS7QmC5GsXxtF3l5couuwqm4K17fwtoxsoXeqmOiEC+PC3udzCwi3E68fv
+ /S/ZRNCoNvZoY4E/0oP7l4Q61d+s
+X-Google-Smtp-Source: AGHT+IGvUePK0+QJb5QRhze0sm2iwK03g8mGfOkusNYsZqCj5zakXObMp9hUfnIbbmbgCVfBtVy4DA==
+X-Received: by 2002:a05:6000:1a86:b0:38c:5bc1:1f03 with SMTP id
+ ffacd0b85a97d-390cc5f584dmr6865008f8f.7.1740578630807; 
+ Wed, 26 Feb 2025 06:03:50 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba5710c2sm22311775e9.32.2025.02.26.06.03.48
+ ffacd0b85a97d-390cd8fc31fsm5649296f8f.87.2025.02.26.06.03.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 06:03:52 -0800 (PST)
+ Wed, 26 Feb 2025 06:03:47 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4BC05604F0;
- Wed, 26 Feb 2025 14:03:45 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id EFC2260384;
+ Wed, 26 Feb 2025 14:03:44 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
@@ -82,17 +82,17 @@ Cc: qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 14/25] tests/tcg: enable -fwrapv for test-i386-bmi
-Date: Wed, 26 Feb 2025 14:03:32 +0000
-Message-Id: <20250226140343.3907080-15-alex.bennee@linaro.org>
+Subject: [PATCH 10/25] tests/vm: bump timeout for shutdown
+Date: Wed, 26 Feb 2025 14:03:28 +0000
+Message-Id: <20250226140343.3907080-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250226140343.3907080-1-alex.bennee@linaro.org>
 References: <20250226140343.3907080-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,31 +115,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We allow things like:
-
-  tests/tcg/i386/test-i386-bmi2.c:124:35: warning: shifting a negative signed value is undefined [-Wshift-negative-value]
-      assert(result == (mask & ~(-1 << 30)));
-
-in the main code, so allow it for the test.
+On my fairly beefy machine the timeout was triggering leaving a
+corrupted disk image due to power being pulled before the disk had
+synced. Double the timeout to avoid this.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/i386/Makefile.target | 2 +-
+ tests/vm/basevm.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/tcg/i386/Makefile.target b/tests/tcg/i386/Makefile.target
-index bbe2c44b2a..f1df40411b 100644
---- a/tests/tcg/i386/Makefile.target
-+++ b/tests/tcg/i386/Makefile.target
-@@ -22,7 +22,7 @@ run-test-i386-sse-exceptions: QEMU_OPTS += -cpu max
- test-i386-pcmpistri: CFLAGS += -msse4.2
- run-test-i386-pcmpistri: QEMU_OPTS += -cpu max
- 
--test-i386-bmi2: CFLAGS=-O2
-+test-i386-bmi2: CFLAGS=-O2 -fwrapv
- run-test-i386-bmi2: QEMU_OPTS += -cpu max
- 
- test-i386-adcox: CFLAGS=-O2
+diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
+index 6d41ac7574..9e879e966a 100644
+--- a/tests/vm/basevm.py
++++ b/tests/vm/basevm.py
+@@ -83,7 +83,7 @@ class BaseVM(object):
+     # command to halt the guest, can be overridden by subclasses
+     poweroff = "poweroff"
+     # Time to wait for shutdown to finish.
+-    shutdown_timeout_default = 30
++    shutdown_timeout_default = 90
+     # enable IPv6 networking
+     ipv6 = True
+     # This is the timeout on the wait for console bytes.
 -- 
 2.39.5
 
