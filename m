@@ -4,204 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD59FC021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 13:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40121C021BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 13:32:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnHTn-0007Fz-1T; Wed, 26 Feb 2025 08:29:39 -0500
+	id 1tnHVr-00082D-RE; Wed, 26 Feb 2025 08:31:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tnHTj-0007FD-Iz
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 08:29:35 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tnHVc-0007yQ-CK
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 08:31:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tnHTg-0001qD-JU
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 08:29:35 -0500
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51QAcZY9009577;
- Wed, 26 Feb 2025 13:29:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=Ab1TEitD9mIljrG+hh53ydTrikfk/F96yDeJcuzToWo=; b=
- J4Hw4Bgs7hQ8CZcB8iq+djURgmMBYpNPBN1v9hlrXrdWjjYf+QxleQ1A6acXqm9g
- v3A3rN7IOT9Joxm542lltAbhAUf/kQ9dWRmXs3G0uV/IdRk7VpokpbaBPanpPnUc
- fTxO0NmwAhurMca5u5SUcRucIbfP3hHaEyrSNJodCvVdZcyUqNzsN9QEXshV1fuh
- r9mBsrr14uGUBzBt5TJ4HalrrBvY7Rl77Perl4zEV9dYo8J0jvFC2cMj0FSyeC0q
- MOrd2gNrxOl0xGBqNiecIwKMy8Yv9JAHajEOQxCjPaqpvv1Iu3LIu84ajS4VAPWj
- RhQk6KcESr1RXwCCW8N+Xg==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 451psf12y1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Feb 2025 13:29:28 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 51QDA8n1002726; Wed, 26 Feb 2025 13:29:14 GMT
-Received: from nam10-bn7-obe.outbound.protection.outlook.com
- (mail-bn7nam10lp2042.outbound.protection.outlook.com [104.47.70.42])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 44y51awcvr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Feb 2025 13:29:14 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xfBdX84BD+yq/zLrb51ORqLtPVHh39FwHJti81ln2pNZu0i00uAZFJkSmDJxk009Slz30WeeeGsnX2dZGGOAWcp9N6CX0Tzo844+W/G0K8YvAanDlyAJ64NTfGDCRvP3KzbxOjiYRtBT6UfWD0CwnLHhIzQkae2AY8EUIyawVm9dCjc1i+nh/tbBJNdJDleW9FkRC9ZwKWRdCf4cmUt8B7nzCk9ao9AYbR1mjeGzS/P5m4vsbDNMw2N8SNViYLzbseOlOwsYHA2aPjoAlXdmLYEdZeJmLAWwR257LCs3iY3bpF/XSIBMoZRYEl6hBFW/nNJMdTazXHn4KMa7yIMa6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ab1TEitD9mIljrG+hh53ydTrikfk/F96yDeJcuzToWo=;
- b=tZoemGVej/4pwW3zAElwFUwEm749PPsdjnna4SOpSKp6mGCYRdsFpnyGxYkSTcpRLme0XdFGnmSs7WLcue4cpuXJbIxrlkIv/UAuELjs23qvCj6AcPh5vLG2KqBgOvy8jczFz32iHY/+H2y8S86+MzFQ/j2sBJ/9jeJjDi6l1vG1jnCCWwXGJQb05l79K/TLzcacSIksXuRRXM22E5DUKSF8Y8bQFjglo07UXtkamkRA8QKyPYy2lavwoLcM+m8VgQG06Q7W1tlB4kAL7R3eN48Xf0r9+o/T/wyaeeLP+BjU/p4yCmcxB570Ncz6f0h2+IWtyY9VjFFZ/XrcjhX7Ag==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ab1TEitD9mIljrG+hh53ydTrikfk/F96yDeJcuzToWo=;
- b=kURRbJJNeYh0g1WSmzVh0s1bCKY6vZn9nIUvXqJaNdzG/978NGlmdpk1n/rYEwYbfReh2S6m8krY4uswU/3+6FOXsUxZp9N3v4IF0+yxo2Im6Ks+rXJbiFuuHC2xc3PTYZMGYCVimiRx1fGoV6qeeKzZxiYxbujWB0W5GEtZ+EU=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by LV8PR10MB7728.namprd10.prod.outlook.com (2603:10b6:408:1e7::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.18; Wed, 26 Feb
- 2025 13:29:12 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.8466.016; Wed, 26 Feb 2025
- 13:29:12 +0000
-Message-ID: <fa6bd2bc-aef8-474d-b055-772ccc669b0c@oracle.com>
-Date: Wed, 26 Feb 2025 08:29:08 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4] migration: ram block cpr blockers
-To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <1740517563-245516-1-git-send-email-steven.sistare@oracle.com>
- <28175337-552e-45c3-b6db-86c8f06fbce8@redhat.com>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <28175337-552e-45c3-b6db-86c8f06fbce8@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO6P123CA0009.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:338::12) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tnHVW-00027c-TP
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 08:31:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740576686;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NmYCxxwC5ba6fBkiBrMulR5DeQzReQayOwVm6eQdOTE=;
+ b=EHlEo7qqZca/iVOk8fJqbtDgWYoH2gPrh6gsmOwZHpkXA04hKoNvOdlK4JsxoR3IW1YcPR
+ 9XLk01iu1UhHKXrQ7zKKaX2r+zXumUMidDq5VGV5QbYDq60cDBNNdYMsznIIHJrNcXoJD3
+ AQ8OjwPDlGVK1PCTdrWvZuTfM95L7R4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-458-Wy2qjOYUOrOIo3wHPtY95A-1; Wed, 26 Feb 2025 08:31:21 -0500
+X-MC-Unique: Wy2qjOYUOrOIo3wHPtY95A-1
+X-Mimecast-MFC-AGG-ID: Wy2qjOYUOrOIo3wHPtY95A_1740576680
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4394b8bd4e1so34513275e9.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 05:31:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740576680; x=1741181480;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NmYCxxwC5ba6fBkiBrMulR5DeQzReQayOwVm6eQdOTE=;
+ b=rssOQ2nHBdPM1O0pF8YyIQN1cIWMY6xm86MhLhQbOcUtizKwzSZqVIXtjIiI4PnZ29
+ jSKWH12FAxXGx7k0VkNmfmTfhBHru7zswuUyJKq1L9pxv5eOmFT6PGp+86MojJ6R8EzF
+ Mml6fcyKCK0q3ldjfqyPHWUVJO0Y3zBHIltdVkYKmVywryDCd9huW8pm5hUD5Kaftl3P
+ tLXuZ2aSEuXAcUdvrJGJ8l/pimtrieF0UeM4og9Rp7jLKlW+ZRmjdvAg2uEKSZNnfjsb
+ 1LdNuVAO01w/GvCmD7a+Cqb87STucEGLxaN1yooYBj7uz21YLF38qp3Ifz/7ur1AAgxS
+ +xxA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU7lGI+T4XKUs/J7DpZczarV/YID9ZTxRmykieV6usfh8t3untPkQDqF0+WiLiA7Zgyf26Bz3MDN3J/@nongnu.org
+X-Gm-Message-State: AOJu0YwAsiTD6jNhKyj2DqQerp8bkvq6aoZWjYbt5FykuuW5tZKsyYaS
+ YWKPagu0rIIWeg+apSBh0objomFl/SHWjQlCzw7Xk1EQGdSj/4xUq8u6z50rP6myNcRL5W1sSqY
+ XeRntjx9T7zcfkhOv+kpq3cKeD01gwQcsR6RoO4PUwrGeTQ+R4xnc
+X-Gm-Gg: ASbGncvwfqWSB3t2SC9huRIzoyAda0ec2oy+07QSOjqcCBdDIlRUb0Z1hU+0i1Dvw8F
+ 3JU31Ba55Bp65bEef1CwxH0/Ma6glpaDSeQyboJ6kNvNYHnpH4Xr1fykNQQlIRQauD644hoWU1S
+ pEK7gUE4nWKRc6arguy8k7vgC3ahbrxPhD/YUt5/ye9FtEZGCl5Uy2PEMr3C3hsTHtwOEIU9ART
+ ADv7/Gw0NBduy7xS0uiv3xm89z3iJhB+UGaBWwL80MQRm3QTgTS7OZs1kZDprGh1c1tLu48xG69
+ Ym+sk45XxN5FXpDaD1Xk9A7hBU02AdOlSmgs5ECGe8y9DJ5QDbutIoDLsdLdvYI=
+X-Received: by 2002:a5d:64c4:0:b0:38f:3c01:fb2c with SMTP id
+ ffacd0b85a97d-38f7085b1a9mr19171596f8f.48.1740576680134; 
+ Wed, 26 Feb 2025 05:31:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFvbFVJgQAZBEwO1tMtT0hWybmDr7462JYcdNsuGbzNVLpA3KTWt5J/Abr5gHHV8nTpldGWdQ==
+X-Received: by 2002:a5d:64c4:0:b0:38f:3c01:fb2c with SMTP id
+ ffacd0b85a97d-38f7085b1a9mr19171507f8f.48.1740576678839; 
+ Wed, 26 Feb 2025 05:31:18 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390cd866ed2sm5656022f8f.16.2025.02.26.05.31.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Feb 2025 05:31:18 -0800 (PST)
+Date: Wed, 26 Feb 2025 14:31:16 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>, Nicholas
+ Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH 4/4] tcg:tlb: use tcg_debug_assert() in
+ assert_cpu_is_self()
+Message-ID: <20250226143116.3d575622@imammedo.users.ipa.redhat.com>
+In-Reply-To: <c7c2d873-3ea7-41a5-8842-1ebf33b5a560@linaro.org>
+References: <20250225184628.3590671-1-alex.bennee@linaro.org>
+ <20250225184628.3590671-5-alex.bennee@linaro.org>
+ <c7c2d873-3ea7-41a5-8842-1ebf33b5a560@linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|LV8PR10MB7728:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7575380b-43b4-4c3c-0350-08dd56698ebe
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RkJobndSVUtrNHZ3anRNOW1YZkluOU43T2NQY1F0RVNvU05BOG5yaytJcDJq?=
- =?utf-8?B?MGl4cmRiQkl1bkFtQWlFZDltTHN0OXdLR1llWmo0cFRHeGxRWnR1bmVuUE5Q?=
- =?utf-8?B?ZXRibHBBRmFxYkxZZmFXcFlHczk3Uk1zM01LUlVkSnNvOGxuY1B5cDRzdnNs?=
- =?utf-8?B?eDJJQzZlQkFKR3BiK0JkQWJRT2xpMWhMOVEyM1IzS0dISHBUNUltTm9yY0kx?=
- =?utf-8?B?eSsvUmV3a3BZRU5uRCs2TWR2SWpoZ0JIejhYMlA4TkRkc0dORnFnM2RkazZo?=
- =?utf-8?B?clB5NEJrQUgxUW9zTW9rOTdZaEc5SjdIL2d0c1RQRG90cERyOUJzZVEyajV0?=
- =?utf-8?B?ZTJ5eGtvWFozVU42Z05nRDhjS05GNXZ0OVVqM05jUXhmQjlZRWZhWXYrdDd0?=
- =?utf-8?B?Z0tUNWx6a1lLOTZvaFJYSnVOZHloUDZacE9lSnNoU3U3Tzc1WXp2ZDVLSHdE?=
- =?utf-8?B?QW5oQnVNOUpjcS80a3NVeEZhYloxTVV3L3BySkxkWUtpUFJkUDJNcUV2UWlR?=
- =?utf-8?B?N3lJTWQrdFM2dlZVNUVDa3UrSFpjYk11ZVBXd0QvTmh4YkVwMnY5S080TVNL?=
- =?utf-8?B?a2ZSaTRxUjEwcWd5Y1RmQThDbFhaN1pnNk9qdE55ZitQUzg0Mm05VG1iaDhU?=
- =?utf-8?B?UytYM2VmNnVQdnZHa3NlSThYSUhCT0JIcEtjcGhpZUo1TnlIb3F4YTNSZXFZ?=
- =?utf-8?B?ZTd1WmNxVlBWTGhCTGFscjJvVzNuTDhtRWx4bkNUM3I5T01qbGFudXFxYXBC?=
- =?utf-8?B?SmV4Yi9FK3J4UEFrM29NQWlrVlcxaDRpNml4RmZUY1NkZXJieDFaMmxXUDJS?=
- =?utf-8?B?TzgyUTZYMThSYXk3NWJ2ZURhR2w4UGRMelJMQTU2YWtjUUhaL1V3QUhTdWhi?=
- =?utf-8?B?SE8xeCtjQ2NLWUJYRzdVdUpPL2lmSDNqS3hYTzlCVW9vNDk5L1lhVWZETCts?=
- =?utf-8?B?QWs3TWllemtCVk9qSTJkZHJJOUpEenlGVU1ZaVJZYTFBbzQ4cjhRLy82dWZq?=
- =?utf-8?B?OWt6Um1WWC9XQWdySmJoNGowaFBWdERUMzRCNjlMYmVycGhURG13NFh4UHBD?=
- =?utf-8?B?VWNIUGNlUlZEWCtYellTZVRHYnhLKzBwVnIzb1F4MW9LZ2w4K0c4cGRmSFhQ?=
- =?utf-8?B?azdTdDZURENJUm1YNGljakFWMEJYdi8reTF3bkw4eGNWTUlUUUhvWUYra1BB?=
- =?utf-8?B?N0d5Qll3Vk9SaW9Ua1orOGxNdWdFdmRRNjdab2p0cEkrcnJmTzRZTU5tWHpO?=
- =?utf-8?B?RFFjQzhBd3l0a0xsbHBybTFCTWluNUFyUkVvT1Y0SW95T0pUTGFvNml2ZzVP?=
- =?utf-8?B?ZTFFbVZOQjBnL1BoSVl5cHNLdFJER0ZIcEh4UFN4c2tMTThpeDVmczVjeXoz?=
- =?utf-8?B?T29vUmJna0IvdkVJbUwwaStjUnpPLzFqNm1VQmpnclJNYmFRTXlnbHRGR1N6?=
- =?utf-8?B?elUzUkttMG5TVnQ5WUgyd1k5YXBaSG4yd2lIem1hbFJMLzkzdmhuR3h3cldh?=
- =?utf-8?B?NWo2ME9HeEdFTUZuUTdTd0VmYWtaRXZwVUdoK1ArbFV0ZU9nTlJTTHZ3WE1B?=
- =?utf-8?B?Z0d6TDUyMFluKzc5ekJBaHhtcHlQRUNDcVRNc1FLMkMzd0YyZGgyTzNORkcy?=
- =?utf-8?B?QmNFc3FOUkhlWXNYbm1HeFNLVUFQM2hoM0wvYnhCK2N2YTZ2Q2tBYVdwRHZE?=
- =?utf-8?B?TzNiclVHV3RQY3lQTVVCbVBRK25oSjU3WEZHYlM2dkkwQ0x3QThtTFJHVDJh?=
- =?utf-8?B?QU1JdEtmdG5sRkM1a1dNSDhJbTVodm03S3lpeWNQWFBFSFh5ak9jbFBjLzJj?=
- =?utf-8?B?ekl6N0hiblExdzV6dWhLRWl0VktOclFwQm1PQ3FxaXhnQU9UM1dydDZrV1ZQ?=
- =?utf-8?Q?nAJe+XA8SNWU5?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZjhiOGpkVFdOM3BHbTZ5YThQQVB6RWdoa2hwRURQMVJ2V2NKYllOZVpZOG5Y?=
- =?utf-8?B?eGl5MmdFMGoxV094MHZUYi9nNmd6anB1ZEhDTGlNZ1Y2UU9MbXdSK1lqYkdw?=
- =?utf-8?B?eEN2TDF4TEpySDVPL1ZGa0tuZkxid2xHMFlqakZMYTB2UDYvQW55YmgyRXBr?=
- =?utf-8?B?Snk5K1dVMnNzWHU4VnRWVS9DaXJVS040cGFJb0FxV0MyQVl5cEVDVmgrYmFB?=
- =?utf-8?B?Q09aM1V5M3kzSE9OVGQrdEQyMjBSUWNIQUhlL01Tb2dYU3VDckJQMlJTZlJN?=
- =?utf-8?B?MGlPczEyQXhDSU9Sd3dhU0IrVFZsM3Y5QWg1c2ZxOFR4cXJUOFJHSzNTeFhK?=
- =?utf-8?B?MVBmWXVYL0JyNFE4K2hxRU9BbDhOUVdtT0tOY2NCS1lkcmQ2TjljV2tzaXRq?=
- =?utf-8?B?MGhmZjBvejJicjA5RTh5Z2szK1ZiMlBLVHYrbE55anBGV214SnVoaTlqMjl0?=
- =?utf-8?B?VGR0SVc3RmxMa1BldVNqWnVwRUJHMHZGRTdwTW5iNUNEc1ZJREFNVGJUTkxR?=
- =?utf-8?B?QWw4TFYyZVVoOGxqZllUR2ZwVERWVVloeFVQZkhmR2hQWVN5UTJ2dFp2TDNJ?=
- =?utf-8?B?c2lxdEcyS01CWjBBME5GdjFYdXhmUSttMUNJYlFkaExQZEhpRDlaNFF6ZmZm?=
- =?utf-8?B?cVpCNkpGdnNpa1dFS2NnZU9GT1R5bEs2L0NNOVBrRnQvUyt6MHhWQjZVU0x4?=
- =?utf-8?B?YUxldmdWL2RGUmt0YXpxbk9pcy8rVGRSU29uMnFIaDVxdE03TDJwWFdWb1F1?=
- =?utf-8?B?eWZ1cVJWQXNIZ0JheHdoT2xVMkxId25XTFZ2Um1OVFR2SlFSbDdTdU1WZXVL?=
- =?utf-8?B?RTdLYytFdS9sN3YveVc3TURpVjBrZWJlMUxLZU9hODBiaDJHdGhtdWZDaVJn?=
- =?utf-8?B?ZHI1em11TTh2dElGVFg3bWkxVVZodVFscEh3czFscmF5SFh2bFNqTTBlMXhZ?=
- =?utf-8?B?T3JIL2s0R2d0VHkrb0tNb3RBejJDZlNRWmhlcWdCSG1GN09uSlBwOGJxMXov?=
- =?utf-8?B?dy9TTE93WWtld3Qvek9ueExoRUttaS9sZjlyaytFZlpORFdJT056NzkvbW5J?=
- =?utf-8?B?bjl3RmdyMVZBemRwRnFkei9JV3owY3M1TjJMc0FqS3BLU1lDVCtQVVg4aGEz?=
- =?utf-8?B?WEJWL05JVU9McXhzYVVBRTYrWnl4aGlzWWZkUWlkQUswZUVmWGkyak9ESVFE?=
- =?utf-8?B?Nk9Jd0tzSnVXaWJUTDlDS2VNenR3MFpxOFJ6V1NWWGFKbmZsaFZmbVhEVWVK?=
- =?utf-8?B?WGtrODBhV1Nab3FTKzJiQ2p0RENVaE9aZFVjZm9DYVNMRno0RzlxU0NIZkx0?=
- =?utf-8?B?dkNocG5QSTczM0NFNDlHT3BTdFU0ajFEM3cveCtsd2cxMkIxMFRGeDBlb3g0?=
- =?utf-8?B?Vk1GZEwySDYrKy9RRDJ3Y04wY1FvaGtwQW1hc0laSHB6ZS9QeDJMNkNMeUI0?=
- =?utf-8?B?dmwva3IweDFpNjVUU2l1bml4SERzdllxbEx4aS9DVThqWm45bS83MGpEM1dC?=
- =?utf-8?B?b2lHUWtJK0E0OERPUm1oOG83d3AzRlBLRWVqakJTNFNiNDd5cjBKdlQ1UHlT?=
- =?utf-8?B?N1Fod3ovM0NETll6d2x4UU1VaXhIQThOUlEwRE9tNkNsYmthRzgyL0pmd0lT?=
- =?utf-8?B?U2pLaEJ3eEt4RXgvOUlpKzBiSUNnb2pkeERPM0tDaFRHMHBleUR3RnhPTTU1?=
- =?utf-8?B?Tldlak5wYjRMNHRwZDA3QXM4YlBpeFkvNlJBdzFSNXlkUmRSL0ZQWHJlUlc5?=
- =?utf-8?B?MXFaUHVCWDl1YVkrbmk1cFRkMjhPay9DcU1yMExpQnhXY2V4amdtbDlqRC9q?=
- =?utf-8?B?RURvR2p4d3F3dGY1eU5vMU5zM3daNVc3R3RtNjU0dEhaYVFCejhPZGNsSERm?=
- =?utf-8?B?OEoyVzFrZmh4bnE1cXJwZEdFcTBwaDZZbHcrZVMrUWJSWVB3dDVvdFE2YnJj?=
- =?utf-8?B?Uko1WTFhaU1vODRYQzM0MnFqemRYNmNYUzlKVUdIU0pvSHlEVGtTVGtsQXBQ?=
- =?utf-8?B?MkdEaHdvWUZ1a2x0NTVUd2NOQTIyRlg2WHk1SkF1TFBHTi9selNlQWhOQld1?=
- =?utf-8?B?V1FWc1k4Tm5WemdLNkVORmt6Yk1CcThvbk52OGtqdGVReDQ4TDhWT3RwOXB2?=
- =?utf-8?B?QWVuNzBQaUxHYlF2YmtVRUhOQWhaMU1hR0hMNzJOaGNnU2xWdi9UZlZBcDk5?=
- =?utf-8?B?K2c9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: sLYsOV/H88lciAULRZ9CwIEpc9VkDyLsqHJ1py3NnatVbAUmLHLeeyaTrW6b7NM0h47DQXKlo2DCMDpI0xMgd0pNGNlIC+t+SniZcA6V/g5+VmDzoMNjvXBcX5dueFheHGThY17qUG/0JcPVyi/2gDh7PyU/KdPRsEsCXkw9QLSRfOwQZqQn9EBWG2cKFqQsB4XkJjoQLQPFr0IaFOMjcmBXVUqwTKEKvNODZebugy9JJIf2W8/4nGwpYG33zogvdOhHZGU0yQIu/C3bOGmFnDtFV1UEA++7uiWABTO7wXZVwzPo3zST7Z6D61hCtWofc+jClHvKsgwUB4GV6UXfNBZN7n5I9XBabYzvRKiwtCFmUcN75Oxi4QcZDu4Uzk/Z2a+gUsekqPqpb/x7Tmj31BDUcDYh3RszeRB8s3uEFPuKvepLuiWBOB/Ix/UBPZKQD0EDreJQHQNOZESGm5AV/zBtXQIDYmIRSvuZpp4mf2fR5tWtILU2pScgtR2U6GehPO3kSrZQ+qJenaJcuqrCGgFq3JCAru7jP6MZkzA2EmpBT/UHTjiWbsSjhD/zPR0FSN+Z+tZfb9Qnz9Zo6iQddd/QO7oL+/xII1gOfdSw3H8=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7575380b-43b4-4c3c-0350-08dd56698ebe
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2025 13:29:12.5155 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1rNOzOWwNSbjo7rX8vb+oNR1DWPfpSYNBX2xh/MpHyezol7+lOdvTuWrzYrL3dw49AeePsdeRHGh0WwJXRON+hCw8BJPbgbKpDjr5sE5VKI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR10MB7728
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-26_03,2025-02-26_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- malwarescore=0
- mlxscore=0 adultscore=0 bulkscore=0 phishscore=0 spamscore=0
- mlxlogscore=828 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2502100000 definitions=main-2502260108
-X-Proofpoint-ORIG-GUID: YdwQtaVVFkXlTh28zJUrRoSWak6tMnLq
-X-Proofpoint-GUID: YdwQtaVVFkXlTh28zJUrRoSWak6tMnLq
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -217,66 +117,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/25/2025 4:10 PM, David Hildenbrand wrote:
->> +    /* Ram device is remapped in new QEMU */
->> +    if (memory_region_is_ram_device(mr)) {
->> +        return true;
->> +    }
->> +
->> +    /* Named files are remapped in new QEMU, same contents if shared (no COW) */
->> +    if (qemu_ram_is_shared(rb) && qemu_ram_is_named_file(rb)) {
->> +        return true;
->> +    }
->> +
->> +    /* A file descriptor is remapped in new QEMU */
->> +    if (rb->fd >= 0 && qemu_ram_is_shared(rb)) {
->> +        return true;
->> +    }
-> 
-> 
-> Sorry, I was not fast enough to reply to your v3 reply.
-> 
-> This is now essentially:
-> 
-> if (qemu_ram_is_shared(rb) &&
->      (qemu_ram_is_named_file(rb) || rb->fd >= 0)) {
->      return true;
-> }
-> 
-> But what is the purpose of the "name file" check then, if rb->fd essentially allows for any files?
-> 
-> So either the "fd >= 0" check is insufficient or the qemu_ram_is_named_file() check us superfluous.
+On Tue, 25 Feb 2025 12:02:02 -0800
+Richard Henderson <richard.henderson@linaro.org> wrote:
 
-Yup, qemu_ram_is_named_file always has an fd at this point, so that check is gratuitous.
-The preservation mechanism is different, which is why I thought of it as a different
-case, but that is just a commenting issue.
+> On 2/25/25 10:46, Alex Benn=C3=A9e wrote:
+> > From: Igor Mammedov <imammedo@redhat.com>
+> >=20
+> > that will enable assert_cpu_is_self when QEMU is configured with
+> >     --enable-debug
+> > without need for manual patching DEBUG_TLB_GATE define.
+> >=20
+> > Need to manually path DEBUG_TLB_GATE define to enable assert,
+> > let regression caused by [1] creep in unnoticed.
+> >=20
+> > 1) 30933c4fb4f3d ("tcg/cputlb: remove other-cpu capability from TLB flu=
+shing")
+> >=20
+> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> > Suggested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> > Message-Id: <20250207162048.1890669-5-imammedo@redhat.com>
+> > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> > ---
+> >   accel/tcg/cputlb.c | 7 ++-----
+> >   1 file changed, 2 insertions(+), 5 deletions(-)
+> >=20
+> > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> > index fc16a576f0..65b04b1055 100644
+> > --- a/accel/tcg/cputlb.c
+> > +++ b/accel/tcg/cputlb.c
+> > @@ -73,11 +73,8 @@
+> >       } \
+> >   } while (0)
+> >  =20
+> > -#define assert_cpu_is_self(cpu) do {                              \
+> > -        if (DEBUG_TLB_GATE) {                                     \
+> > -            g_assert(!(cpu)->created || qemu_cpu_is_self(cpu));   \
+> > -        }                                                         \
+> > -    } while (0)
+> > +#define assert_cpu_is_self(cpu)                             \
+> > +    tcg_debug_assert(!(cpu)->created || qemu_cpu_is_self(cpu)) =20
+>=20
+> I think this check is just wrong or incomplete.
 
-V5 will be:
+the point of the path is to bring out check out of ifdef limbo.
+Whether it's correct or not it's up to another patch to fix.
 
-static bool ram_is_cpr_compatible(RAMBlock *rb)
-{
-     MemoryRegion *mr = rb->mr;
 
-     if (!mr || !memory_region_is_ram(mr)) {
-         return true;
-     }
+> The intent here is to check that we're not attempting to modify the softm=
+mu tlb=20
+> asynchronously while a cpu is running.
+>=20
+> (0) A synchronous flush to the current cpu is (obviously?) ok.
+> (1) A flush to a cpu that is not yet created is (or should be) a no-op.
 
-     /* Ram device is remapped in new QEMU */
-     if (memory_region_is_ram_device(mr)) {
-         return true;
-     }
+my another patch that was touching the check
 
-     /*
-      * A file descriptor is passed to new QEMU and remapped, or its backing
-      * file is reopened and mapped.  It must be shared to avoid COW.
-      */
-     if (rb->fd >= 0 && qemu_ram_is_shared(rb)) {
-         return true;
-     }
+"[PATCH v2 06/10] tcg: drop cpu->created check"
 
-     return false;
-}
+is trying to remove (abusing)usage of cpu->created
+which should be used only for syncing main loop and
+a to be created vcpu thread.
+The creation of vcpu is not really complete yet by
+this point so it depends on luck (being nop).
 
-- Steve
+End goal from my side is to get rid of users that
+use cpu->created as workaround to move from one
+incomplete vcpu state to another still incomplete state.
+
+We can drop the check after reset/postload paths are
+fixed to schedule async flush.
+=20
+> Not checked here are any of the other reasons a flush might be ok:
+>=20
+> (2) The system as a whole is stopped, on the way in from migration/vmload.
+> (3) The cpu is offline, on the way in from poweroff/reset.
+>=20
+> If we decide that {1, 2, 3} are too complicated to check, then perhaps th=
+e solution to=20
+> queue flushes to the cpu's workqueue is the appropriate solution.  But so=
+ far all I see is=20
+> that we have an incomplete check, and no ready explanation for why that c=
+heck can't be=20
+> improved.
+>=20
+>=20
+> r~
+>=20
 
 
