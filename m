@@ -4,153 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC1FC19F2E
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 17:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F84C19F2E
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 17:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnKtI-0004Cs-DI; Wed, 26 Feb 2025 12:08:12 -0500
+	id 1tnL2X-0008Ui-Uc; Wed, 26 Feb 2025 12:17:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aleksandar.rakic@htecgroup.com>)
- id 1tnKtF-0004CM-Gy
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:08:09 -0500
-Received: from mail-dbaeur03on2116.outbound.protection.outlook.com
- ([40.107.104.116] helo=EUR03-DBA-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aleksandar.rakic@htecgroup.com>)
- id 1tnKtB-0006Oj-Vp
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:08:09 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cM3xcCapSyiOkod8Mxcp1VJai2p85AD63Np6GHMWq0P6hXwdKF/UiQi8aeTsPmX+pws5faaqq4Io7KKp/eJFxc4D7GF821ldLL7F2YKDcAnxuVmiglA0rbeVWOJzEZSX707gtJLWgbSAJ4EAf7B6zgq16IrL1Bu95pSufXfuxvK43nlKFhnZx54TEjM0fWWZtNV1c/EgqBH3ev3Y+73ub8YGh2Tq9So37jBfLE9Vq8L/STOxsRQ12NUqf8pKCTKbc/FQCDqiy3JLppDYqN0sl36wtIYSx+eAzBfbpkiTG5LUVBQMREtBmcP0/a1LXqJQGbPDwCqtxL0DzVIZjZQ+pA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DbWq8sey4nYExqgiiqp0c3oBzkfNpU1VUSr13xoBX+Y=;
- b=ptcS8aUyRc4uwn0Ks9J/ekwSuGqLdA/EaOjXwTk7TDn+uq43jwSy5FdV7rWpXXfkN1AlxbC/gttDJLi4cp8G32zRo6H7zihelTAAES6cfahLajIkKsxBZHa1CBxNrYTL/Dq0BP8qAc3EYbWtKrH0Pz8ajSi49hcxe7TwTZ95ECccSfNn0QETRQOqbPYoPU7dZu24l/gNu4fH/odqAMXhOhc9QIg+ZfQsPjSmmxnmsjschQzZom5KCflO5HVOip49MPOgsgK157K9XClu+tTG4BspG4smgxiGJIQuGaDVjw5z/t2O7/3SwjdKNQMuPLltZTQgIyT8w+MFQaCze/sAGQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=htecgroup.com; dmarc=pass action=none
- header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DbWq8sey4nYExqgiiqp0c3oBzkfNpU1VUSr13xoBX+Y=;
- b=fsB4MOvOQNh1gw7ZQ00DQfCtZ5E78AVIDWF0YWLkg4CiZdTQH1DddIhOCWx2S0arJ+3dXNXEK3wRrcHxeJatcZWhglRwTnoePCtViAPxBtiw/u0SbHL3dyK9JiuOELlMMBiW0yr11qSTE74BEZ/Rt63rV4d8nssTYyY6Smy9cWXAHzWa534RPPEeiqXtzPm/Oq4f2uRF/XeDO94nYQq1tq2k7NDvkChED0sVzE9Uslv4qlHsUHQQNaiPIBLn9E9MOqfwVTd3Bgr+Y5EKmWZklZn+rVYS9Zoa2PwNMmjOyJ+WQx4FRAm/AL/fC2Fqy6ymOdvYRLqCpKVz6QWEbQrYNg==
-Received: from PA4PR09MB4864.eurprd09.prod.outlook.com (2603:10a6:102:ed::17)
- by VI0PR09MB7419.eurprd09.prod.outlook.com (2603:10a6:800:24b::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.16; Wed, 26 Feb
- 2025 17:02:58 +0000
-Received: from PA4PR09MB4864.eurprd09.prod.outlook.com
- ([fe80::a02b:9d5c:eca5:e024]) by PA4PR09MB4864.eurprd09.prod.outlook.com
- ([fe80::a02b:9d5c:eca5:e024%6]) with mapi id 15.20.8489.018; Wed, 26 Feb 2025
- 17:02:58 +0000
-From: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "cfu@mips.com" <cfu@mips.com>, Djordje Todorovic
- <Djordje.Todorovic@htecgroup.com>, "arikalo@gmail.com" <arikalo@gmail.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>
-Subject: [PATCH v5 0/3] Improve Mips target
-Thread-Topic: [PATCH v5 0/3] Improve Mips target
-Thread-Index: AQHbiHBJvA4pfGMeIki7asRyZOfO2A==
-Date: Wed, 26 Feb 2025 17:02:58 +0000
-Message-ID: <20250226170246.1971355-1-aleksandar.rakic@htecgroup.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=htecgroup.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PA4PR09MB4864:EE_|VI0PR09MB7419:EE_
-x-ms-office365-filtering-correlation-id: c2656ed4-94c2-40d2-532c-08dd56876bf5
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700018;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?wDVDrd67uuwc3LwuEhxa1xQhQd2jQCZkS7OGyxrfvYq0xL40Ke8pziSL1p?=
- =?iso-8859-1?Q?2SMAr46iESfv5jVfaVNeP7h1K5kCAOyEODWF7fw0W2yWEsvz1qKTPIGs5Z?=
- =?iso-8859-1?Q?gt46czWiG04Bs6IpGlYTVSj+FYC04Z+Sk1IkRoyS4E/UwK0SwBl14tVzrZ?=
- =?iso-8859-1?Q?u/DQsnqNM8yNNTrKEtv3sDWxb0iVkoaIJFH+nJi3D2qisW9qS5yXKtwHa6?=
- =?iso-8859-1?Q?UriDUrr1cH7V2tTToF93GZ4ZLGUGcvr9l3gaumMsAFfhCyYthkY5V7u+og?=
- =?iso-8859-1?Q?Dvg/XzKR/hOgVOjL/quoi3Vr9C9kOD5L9VzzFq3+7XUWL0u3zFt5HES7vF?=
- =?iso-8859-1?Q?dMb9hkcw4WimUt8cocQshZG55rGtvZ+YHnRteHO1+INAzGxpiJIID5NaoA?=
- =?iso-8859-1?Q?yPdbhr32tqNqkMoNzsQpOkLGVswnQ0hoW9/A7ZhvS+MgMNy8LnTYnUZGhz?=
- =?iso-8859-1?Q?uthpbWE5pO6EEFRNKE89klDwZcYwDhxiTK4D0rHaThwB+Z8Ng8VO7iMhOU?=
- =?iso-8859-1?Q?dqXC/Z8YVRCZSj+ScTWWNpozlX2Mk/ICWm9mrrguvQC1CmrIrL/kqe2TJK?=
- =?iso-8859-1?Q?HNCiBxhSuQwJN/K1TwOH22UgLD+Sqcbqyu4mRUzLFrSu7cVWDwlSXcI3BF?=
- =?iso-8859-1?Q?M0n0Z+iOzRmtzS4iKDV9j7HLytgDXTSNHFTKQQQ3SVghAz8nLBelbfkZvW?=
- =?iso-8859-1?Q?48j6Mvxo0OUNmqa6X9IgaS0IvuUdSWFpl/oiBbP2FIENBJcgJzs5pRUHnZ?=
- =?iso-8859-1?Q?HQVf12oeKSoIVDutdYX+pNz+0p6BJ6Qu+gMhdi9Y8v8wQlon8EGuBz3Lny?=
- =?iso-8859-1?Q?a9M4nLxYJAkdiXAIeHmdFMUxRo64E0tx8asMo1ChbgR7V1uZCpVtE+uXh1?=
- =?iso-8859-1?Q?4B+LVOa4qjFjTBsgSudM6qoIGer/6UEFSr5aOJJNE5HADOAfsJIx/iJAsa?=
- =?iso-8859-1?Q?jQy0EdPJmjVdjmjeKGWMG+rGDAxDmXcrBd/KWZCtiLTsBbzXCBM1h7ntnt?=
- =?iso-8859-1?Q?4TUjnwugXeWsjWTaFGozOeYDAnqNLJAPJxv9pBDdFRxrCgz68WJQv7JX5G?=
- =?iso-8859-1?Q?XHaLAyU1r2jAhOQ1Zy9TMX1GI1gprwSySH0rJGKDoEZ7huJ0JRKdr919bw?=
- =?iso-8859-1?Q?+5acHyDRcbGuKBPHF1tJnuRBVSyRbcTzFeZgw9FuMUqC6nqPtsvucWxVkC?=
- =?iso-8859-1?Q?PmHtIykiyulqbAJtbdViKCo0s6WKTkov9DaH8U7Dy2eaRQ44oqywacuL2J?=
- =?iso-8859-1?Q?HjUd01LH/PaLShJWs11GDSNqLc9Pj7P5JCAaw1mZNw0gI2HCbL1vtgwZ/F?=
- =?iso-8859-1?Q?7Bmuy2cPUUXUY0Tc9FwDEzWgsSeHtxJHa++L9j99uKcCeZNlG6sFFm6AAr?=
- =?iso-8859-1?Q?l5EyyCtCozSwmujPuO35BIcXAYDSCeVZrq7mnJwEkoxKptUe4TlP0RJgnC?=
- =?iso-8859-1?Q?2hciBoHgOz8iSBGaKUDBvdrf2uq4sEdhRRcgfs3BRVZzUYy1ixa9MHRXz4?=
- =?iso-8859-1?Q?6d2EQNQBvwRsgAAkgbYHCU?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PA4PR09MB4864.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(38070700018); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ESt2P932hFS9UNC8MW/k1cR7gtlyMJxTEMN2z3IbQORXvJWLgT0hShth9i?=
- =?iso-8859-1?Q?bjRKrnXtiwN+YSE6ebGHuioKT6fGA3aWWtbpC+7nyKKnWmcpwSIceW49Wq?=
- =?iso-8859-1?Q?RwpEjD0vcT5nMaEUAoubVbkmYAVN3bWPX+CSR0ueNnsJEUqO0w82GKBDeq?=
- =?iso-8859-1?Q?1eVJzKIrJlcKWgIYQWF7DkKZ2Wb3ESvD+5g8KxCKm0ZTEaXpFzjEY/Nmwg?=
- =?iso-8859-1?Q?mmnyk8MLwgK/oeTzh265cBmiTrBLpD/ROyNiIc9yu27RpGHtvySBat7WM/?=
- =?iso-8859-1?Q?rtMNZRmqM7Eg282fzOvD4Mfadg/YwEbxLOtSJ55zOSC2r+1sn3D9m8KBSP?=
- =?iso-8859-1?Q?AJ/JFjj/45tBRn3wrWQljkhuzZM1M2PUX7HMmgDVh0pvcB/nK7IHpHy7Mn?=
- =?iso-8859-1?Q?ojlRTSbhOy1AfX95pNPdb+XHLkDSY3VTAtjy+fRFAYWIcsgQN92qIMSKEQ?=
- =?iso-8859-1?Q?fhprknO/Ome5gUZbJC2wDKeTZTrrloEUqUd9hdki/xAP/r/gM7ZDdogI4X?=
- =?iso-8859-1?Q?z3Y3iWP+d/K28eITKKIgwABPQqb/HwSWhqo0jU3WT+ONtvat2oByAH3lJX?=
- =?iso-8859-1?Q?quU8GuEfaP1BdS4xFCRZVVPLKQPOQQ9/nn10dgHf6zo/PjDA661a/N3ToY?=
- =?iso-8859-1?Q?pvvLHZnSH5x/GmhEVgweefaSbfUaJl8c9fL7jLHO4xJR2kr5R6y7QvolS6?=
- =?iso-8859-1?Q?VN3fOq4TJTiVswVgMHVnIPwkIDx+lalkaVlXMXUCA8VT4SUv7hsdKG3DUj?=
- =?iso-8859-1?Q?FKcctp797WOyZ1ruEkysC2VfGzaB7zjVDgnj0jPdsHteHW6DI6D7Wx/3xQ?=
- =?iso-8859-1?Q?7gDIBkOzwnCcdr6jnwa/2X8d1dhvz1jATBEAZaDO/U5YWt+DROjJt8mR+T?=
- =?iso-8859-1?Q?zcfkJx5lZC0FSwFAYj/LSneRizHJGMf3WWIF0OihsW8t99Fw4NEk82so0U?=
- =?iso-8859-1?Q?KYTjgE67mSFni038YsINBAmC8gbajfEpWqsBajZrxDbNoHTadRUOwRbuR6?=
- =?iso-8859-1?Q?MaRxOR/TxBoXzgbaMdIDokPc+kO3SQsyY6fduv43hRAQ0S9noZlwSkzi3T?=
- =?iso-8859-1?Q?zoc/sqoWgt/9Q7338qpZGTRiYn47IOtwdxFrhzt6UPwI7KxBO1ekQlwFOk?=
- =?iso-8859-1?Q?zf8unvM8y2IJ4hkHV2yZnQzJtiEPYun71VRnJZHbAJxBbOA8v/kn6sX09J?=
- =?iso-8859-1?Q?Uj6qNpteaCKUCjcdhvNU0VnfyukXd1HLAfHgOzZ2SgC6/zhEnSyINcslLp?=
- =?iso-8859-1?Q?OB0wkyKFhQ9u0xBbBRm6A+6cUrnWWNGZFXeIQZfkYt4glhzl0VKElTXrhl?=
- =?iso-8859-1?Q?dcl3dtS+9yLbLap8ThU1Q/CR/P/kuFRyXWMGf+kfmHPGTve226URqtuOOf?=
- =?iso-8859-1?Q?FMnT0EKgN6iFHTUZXTMt6Fup9/KGevNw5bSVJJfTciPh2sVK6OJ7UXyMHw?=
- =?iso-8859-1?Q?wmKCJY0esOv1XfCnL6q4XkMVhRU08iHN716Nx/OEDJNvKZsFsUusO/L62T?=
- =?iso-8859-1?Q?jqFN0xpztCa6eo/sSdcALvHpuFPHjl6/hi9TDrmAcnnHCn/NSrc1ALnm3/?=
- =?iso-8859-1?Q?Ax+NE7/KE50EUXoZr/x3GX3c5wxId1zAVPqfXifqLoyL10whn2ltWmuy9Z?=
- =?iso-8859-1?Q?R3qJ2Cl9esVCSUsdMKkLvGjfkti7zQJoUGWD2zibh6ahNmulxOUWbr5wy6?=
- =?iso-8859-1?Q?v8f0QpteD7c6BUbncqo=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tnL1u-0008IF-H8
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:17:08 -0500
+Received: from mail-qv1-xf2d.google.com ([2607:f8b0:4864:20::f2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tnL1r-0007Tj-S1
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:17:05 -0500
+Received: by mail-qv1-xf2d.google.com with SMTP id
+ 6a1803df08f44-6e6621960eeso11399936d6.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:17:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740590220; x=1741195020; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7CqkQ+0lPid/TmZ9PIusP2t2YhjjICdWsFKaBMFPXRg=;
+ b=hwN1uM7oTWgEc/Kp6u0yFuSB22ckhCqHpqrlPuEb0xfpGPQ4N+g5Ja4KikHGfYHb5B
+ GXlNj9Y8TDs4qwQyed2A3bv/5jhe+nHpFyUXPRlMFJKMUqOoLdtAKaT/O3uvq/353T1Y
+ XZ/pV49uQZ0vUCDLsjFZyCVVRFy7NldTfZSO91gKvzGtv7D43N5fPwUCY1N3nCBK5CtP
+ Wk0tHEyMJLKgSiescntkTm3T4Nljz0bcbGpWGCBzYjExQvy9OC6TWwQUZgdwdKVfax8W
+ EzlM/Ne7w3LGJa5adNXtg85d0K/ln7m8gJBgcH+oQKDQzei8BwEbWhenccKN7K1NbXR+
+ gqtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740590220; x=1741195020;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7CqkQ+0lPid/TmZ9PIusP2t2YhjjICdWsFKaBMFPXRg=;
+ b=CUtU6GUXsd11V4h/DlTR3KEZE//IZFxfTzlJQfNZ/ht1cHSIudMSPpcII9rH80u0Es
+ qyz52fxIBfEOlLd3XRPE7Pv/VRcqd6jVnrRvt6l7GIbrqHdL/TaoMV9HnW80AQqu1RLY
+ fbgKPXf1KtNvmuc+JtdAX8x/7r/v1fkjHEEMjjXKK3NPe4hithx2zsaUW1mosqGZ/jnA
+ f/2W1mLyWuKnRI6entArAhtnTUFBCmFEXKHBPg323N0kd9+mI+cJZdcI/TZkxkppZMX0
+ aZhzxzjzsITgketvaMrZ56/yP0EzsQwy53eNLV+lktn7keU1orGvnFEgCKzc+J68HAMb
+ 1+DQ==
+X-Gm-Message-State: AOJu0Yxy79EuTjrur4W2CtFKIYYY3VaMjBywneXvmjfLo0ovm6vnQvwb
+ hJn8WKO9dpogdbtetTcaSe1bfEN5x6XrP6HxBTnXDgcXgR7NsR4Qufx/wV7iUS2MjoNHNvqDssV
+ P
+X-Gm-Gg: ASbGnctWtNypo0A7c7/7GTy8p5dnyJR49vD4BZRIdISt+iWZ172whzIjx8L9nfV6Vfl
+ 3nAO8h4I4YWU++Qu7JkbNd1CmbcHPFXURgdFYTOfX3xbHtZv69i6rIyA1pStOuT1UTgZVzaM99C
+ xsO4LlXeTS8kEeubHTkwPq+KqRwnuzEn0kp6vALT9EiA1ZiRgNixaowhG9V091i1BbUMZsrZVdR
+ KgQWZJIqFavvgfwsogC47j7Bz1jLw/3nZh1brHV05hHVj9yCiAP+NMf9Se3SdLOkEeJS9SviEKj
+ oebYaDzxo10YDhdn86MxUSIglvj6htcVQv+wgoh0/xtSou/Q
+X-Google-Smtp-Source: AGHT+IGPtHeUjuEskRbHHKxbNYDzSKT/fZVwUFQY8jgrIn2CyBj+lmV8GikZ0NxwKD42kv3QmRQqbQ==
+X-Received: by 2002:a05:6214:2aa7:b0:6e8:8934:338c with SMTP id
+ 6a1803df08f44-6e8959ea03bmr2209196d6.10.1740590220450; 
+ Wed, 26 Feb 2025 09:17:00 -0800 (PST)
+Received: from [10.254.143.227] ([172.56.201.232])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e88b529365sm8627106d6.42.2025.02.26.09.16.59
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Feb 2025 09:17:00 -0800 (PST)
+Message-ID: <e9bf0606-c031-4e4e-89d9-a65a9f6171a4@linaro.org>
+Date: Wed, 26 Feb 2025 09:16:57 -0800
 MIME-Version: 1.0
-X-OriginatorOrg: htecgroup.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PA4PR09MB4864.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c2656ed4-94c2-40d2-532c-08dd56876bf5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Feb 2025 17:02:58.5884 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: JJKnY0Gzy1ZXATvNG7uCOczdGICL08sHFeKINPGa75/OFKdZgiPXmPc5f7HcMc3RnPOL0Q/rqaVD4aBb1JxoAn1sTOQp127pU2/uCBmyFow=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR09MB7419
-Received-SPF: pass client-ip=40.107.104.116;
- envelope-from=aleksandar.rakic@htecgroup.com;
- helo=EUR03-DBA-obe.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/3] target/mips: Enable MSA ASE using a CLI flag
+To: qemu-devel@nongnu.org
+References: <20250226170246.1971355-1-aleksandar.rakic@htecgroup.com>
+ <20250226170246.1971355-5-aleksandar.rakic@htecgroup.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250226170246.1971355-5-aleksandar.rakic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,23 +102,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 2/26/25 09:03, Aleksandar Rakic wrote:
+> --- a/target/mips/internal.h
+> +++ b/target/mips/internal.h
+> @@ -399,7 +399,7 @@ static inline void compute_hflags(CPUMIPSState *env)
+>           }
+>       }
+>       if (ase_msa_available(env)) {
+> -        if (env->CP0_Config5 & (1 << CP0C5_MSAEn)) {
+> +        if ((env->CP0_Config5 & (1 << CP0C5_MSAEn)) || (env->msa_on)) {
+>               env->hflags |= MIPS_HFLAG_MSA;
+>           }
+>       }
 
-This patch series adds support for emulation of CRC32 instructions for
-the Mips target in QEMU, enables CRC for mips64r6, skips NaN mode check
-for soft-float, and adds a CLI flag for enabling an MSA feature.
+This is the wrong place to force-enable msa.
+You should be enabling the bit in Config5 during cpu realize.
 
-The CRC32 instructions are available in MD00087 Revision 6.06.
-Since the disassembly for crc32 is hidden in commit 99029be1c28, the new
-version of the patch 1/3 is basically identical to v1, except tests
-being added.
 
-Most of the following patches are cherry-picked from the branch
-mips_rel/4_1_0/master on the MIPS' repository:
-https://github.com/MIPS/gnutools-qemu/
-Further details on individual changes are included in the respective
-patches.
-
-Kind regards,
-Aleksandar Rakic=
+r~
 
