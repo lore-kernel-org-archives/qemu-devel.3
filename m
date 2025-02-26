@@ -4,94 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD91C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 15:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD29C18E7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 15:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnJ5u-0000ga-Bx; Wed, 26 Feb 2025 10:13:06 -0500
+	id 1tnJ9J-0001pc-LU; Wed, 26 Feb 2025 10:16:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tnJ5n-0000fr-4w
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:12:59 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tnJ9G-0001nU-ET
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:16:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tnJ5j-0007Mp-2n
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:12:58 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tnJ9B-00083w-Mp
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:16:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740582773;
+ s=mimecast20190719; t=1740582987;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LA0pOXxE0yK04XxCvhTYiH9k6SyKJefiRNSoJmxj0U4=;
- b=DGp7lbxu4Uo5hzhdE3sjSejzsIMIxJhnC4gS250u9mqn20YGLh6WxT9+1AeufT7yM4Mm+Y
- symNPpwilXanisR82WwvoM2Xq73TqoMf4RwsofCdSItD0kVWrCKXNxuS28ScBdM++XUA/z
- pL7fYEdsBPYLx+6kOskeAr+LuB1OSGw=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YAMKaxbCuypd3vaZYRif/XLYSi0QvW8Uwy9pZuSSG5I=;
+ b=JzGARadcb4ODMMtNoYYkpPqQH470eE01/59sJFnMxz/jI7S2YIrBf/B1GHcvCXa0Sluqx1
+ ZgnLb5bx9wA0LnQPYqMoWIQatc6uatDAX4eWo3FB/vMtJveRUtI/NvUyFlmYN26AE2AtAG
+ 6xirunqFdCFnAwoUkrI3Z7k90D+JBAw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-kHPC7_TKNeOe53nS8veJIw-1; Wed, 26 Feb 2025 10:12:51 -0500
-X-MC-Unique: kHPC7_TKNeOe53nS8veJIw-1
-X-Mimecast-MFC-AGG-ID: kHPC7_TKNeOe53nS8veJIw_1740582770
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2f81a0d0a18so14835337a91.3
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 07:12:51 -0800 (PST)
+ us-mta-76--lXRrI49NTOkxkeDPxCpgg-1; Wed, 26 Feb 2025 10:16:24 -0500
+X-MC-Unique: -lXRrI49NTOkxkeDPxCpgg-1
+X-Mimecast-MFC-AGG-ID: -lXRrI49NTOkxkeDPxCpgg_1740582983
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-439a5c4dfb2so31677785e9.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 07:16:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740582770; x=1741187570;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LA0pOXxE0yK04XxCvhTYiH9k6SyKJefiRNSoJmxj0U4=;
- b=KqoAYZmS4qV0Lm0Krq72XI5Q1B0WMChbDGFr6PX7oHXXobNr1bY+IoJDI8ocxh8jBx
- /3Ii1IaMIbzGdSLLFDFbUm/92hv/9CxBzRjglsziRWjH47p3SCAa2cStjW49w/yvCW8W
- moId5Ssd7PTkdbnfN9KYIP11D+WraqNmKcr+arrqWVP9TRCAPS8ASRNeiaKHVymR7tnH
- LzoyTgBB+oShgRbhqRLg6UYaKsf3nvnJ+MmRJi99jjbtvB+4RPj4o026Ot0uFNArEJNG
- zvwkHgUTloQy/4FIk2p5WpnQyiCsUF9dWYhwM89zVRXReH43CkrFjUVHHTG5CnaeZdfq
- Uo5g==
-X-Gm-Message-State: AOJu0Yzqh5rBGbxIyStAodqD0HaJ/OHfBLnxQUH9ZOVCVJy3ysw2YPV7
- mQLHZJc+rmfubznZ5v5t1jbKMu8LY+PhGiZax7N29AD8ZLfdUnNso9MouFOlLgU8vt8ivsOd0U6
- nUKFIwyoPG69+ED9Zg38FiJo1UmULVMbuA66yyMSMPRsgIDLZB5K7rYSdOxJmmlQqz8ePwO1ijU
- nvU2nIFT/cotLEaUQTv9ylMKmfBKI=
-X-Gm-Gg: ASbGnct2+IaJ4eCqQs9pWv+JmXIPNnePqCHrIuncqScD2QTj2bPP4z3IfPxsKBmuinR
- chsZovH6EVus300hAAG/xW7QbyLTdzmhwiDZjydCZaz0o82AWtOk0e5wWXrx/lUAjH1dz2mFta7
- gnWUGmw+Xy46++jUXPhDBw6qDOilHg
-X-Received: by 2002:a17:90b:1f88:b0:2fc:bc04:2092 with SMTP id
- 98e67ed59e1d1-2fe68ae29cdmr13839474a91.17.1740582770410; 
- Wed, 26 Feb 2025 07:12:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFZzcuPuPKsCrw6Uu/V45rEAhjW++1lU5DyXAgsrwK4+uzCGPvf/Ys/nsk8ihpUb9Vc8eVYDaJaTljjwTFxeFk=
-X-Received: by 2002:a17:90b:1f88:b0:2fc:bc04:2092 with SMTP id
- 98e67ed59e1d1-2fe68ae29cdmr13839448a91.17.1740582770132; Wed, 26 Feb 2025
- 07:12:50 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740582983; x=1741187783;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YAMKaxbCuypd3vaZYRif/XLYSi0QvW8Uwy9pZuSSG5I=;
+ b=NWhJtqOkNlLGoo8rYNWZW51sP7+faUhMAg0qO1ZdqX3ROCGTTe6alOfDJ8JkmmIlXt
+ p7ok47IZJUbhTzMA8TN8qT8j4v+RFcf/aeDtwM0BPG5q/aB0+kuVxymaTyrO9yO88prz
+ D8yvRvxJhdtdERnnhmsXgozWIJbIXxm4taP+/yCfn48uyAS6ksbsOCAovDeDv0hTCdwx
+ m11QvugSpCdssT9eWwumJbsh+tnVNGw9tcEvweOci/s3zOE5HPUtsxpoy9AvMtDrD8NL
+ 9NWtyXyfAllIMoTs1TR0dI7I8RfRpDPYUCGZFLvYPHvW5KuV8slugaL+SIjF8bWzGtOB
+ SWmQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyDHkB7uXLyYOqZJ8qfCyNzJcfGmHxM0EnWPaIZ7ZIKPPXhZ6jI2TC1RS1bJ2RSH7cPjaZ+EJeQbMX@nongnu.org
+X-Gm-Message-State: AOJu0YxJiAEGlC6ufTtQulMXhG1y0g8Z+VvR7gBoMjJddW8SlXVgkEBH
+ 25/VNAhXYu0hJunTHFgCb5V1x95qou1Eu/W8ZZ4AK1o7c4SOMqNuwbVxlJD6E3k7a+uxSXxnpee
+ qfw1oDhByGwphIkELBIPFR0bFubocb9SUuvSvoPO2DDkdeqZaEO1g
+X-Gm-Gg: ASbGncsgUrdKvjcS5blZr6D5DizuuJL7nShBA69s1VAAacZdxjlhE75CjBAagNWdonH
+ PTSITiSaxDAqgYTC3nUlhqef+ynWflGfXj5ljWwrdt12igKsJbkLYVAUsQnbhz0tyHU69xc9Uik
+ siej4VcC1Vyy0qU4PZ6EwuaNxRlr+sb5zImxFocRfdQMbZDwFB0obILYkI8XLTpfHG4pMRhH0Kd
+ jM67P6WWxFNDt382khlIXckGhFEBOfwNKlLPOErRrQOBbJiyMa/hTedlv7gYYIWMD2584dwta9I
+ fNAT7m3T1PSpU7g7myjZ1aemo2lALJGTjfZir8LPwvs4Ng4LPvVQJ4jBVgLYrnA=
+X-Received: by 2002:a05:600c:3b13:b0:439:8b19:fa92 with SMTP id
+ 5b1f17b1804b1-43ab8fd1d5dmr31944425e9.3.1740582982931; 
+ Wed, 26 Feb 2025 07:16:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGlM6i8Ee/tLzlEeUpo6E2Z8sILDKY6kCfAi/XqI/dobpFiR2uV+QuL0e7RHhvki21w2RWp4g==
+X-Received: by 2002:a05:600c:3b13:b0:439:8b19:fa92 with SMTP id
+ 5b1f17b1804b1-43ab8fd1d5dmr31943985e9.3.1740582982458; 
+ Wed, 26 Feb 2025 07:16:22 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43aba549d6asm24515085e9.36.2025.02.26.07.16.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Feb 2025 07:16:21 -0800 (PST)
+Date: Wed, 26 Feb 2025 16:16:21 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 03/14] acpi/ghes: Use HEST table offsets when
+ preparing GHES records
+Message-ID: <20250226161621.61d482fc@imammedo.users.ipa.redhat.com>
+In-Reply-To: <0134424ddba15dea8daaf32b09e89f1bf7e81552.1740148260.git.mchehab+huawei@kernel.org>
+References: <cover.1740148260.git.mchehab+huawei@kernel.org>
+ <0134424ddba15dea8daaf32b09e89f1bf7e81552.1740148260.git.mchehab+huawei@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20250224033741.222749-1-jsnow@redhat.com>
- <20250224033741.222749-3-jsnow@redhat.com>
- <87o6yrfrjc.fsf@pond.sub.org>
- <CAFn=p-Y-jr289LnWULq60Fj=+dA2=CHhRQ7wQD-NZGwKUk3tLQ@mail.gmail.com>
- <87cyf52gwd.fsf@pond.sub.org>
-In-Reply-To: <87cyf52gwd.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 26 Feb 2025 10:12:38 -0500
-X-Gm-Features: AWEUYZlqj9XbI0ehTbno6oTgONQEm0ldhgbJjOz_1lxL7cqH4ONsvFYzzI3vNco
-Message-ID: <CAFn=p-aSfw2pgU_TtdpH4t17qsSNU2uco=759w+WYpR5u-NhMw@mail.gmail.com>
-Subject: Re: [PATCH 02/10] python: add qapi static analysis tests
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000b76339062f0d018c"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,356 +116,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b76339062f0d018c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Fri, 21 Feb 2025 15:35:12 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-On Wed, Feb 26, 2025 at 4:29=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+> There are two pointers that are needed during error injection:
+> 
+> 1. The start address of the CPER block to be stored;
+> 2. The address of the ack.
+s/ack/read_ack/
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > On Mon, Feb 24, 2025 at 7:36=E2=80=AFAM Markus Armbruster <armbru@redha=
-t.com>
-> wrote:
-> >
-> >> John Snow <jsnow@redhat.com> writes:
-> >>
-> >> > Update the python tests to also check qapi. No idea why I didn't do
-> this
-> >> > before. I guess I was counting on moving it under python/ and then
-> just
-> >> > forgot after that was NACKed. Oops, this turns out to be really easy=
-.
-> >> >
-> >> > flake8, isort and mypy use the tool configuration from the existing
-> >> > python directory. pylint continues to use the special configuration
-> >> > located in scripts/qapi/ - that configuration is more permissive. If
-> we
-> >> > wish to unify the two configurations, that's a separate series and a
-> >> > discussion for a later date.
-> >> >
-> >> > As a result of this patch, one would be able to run any of the
-> following
-> >> > tests locally from the qemu.git/python directory and have it cover t=
-he
-> >> > scripts/qapi/ module as well. All of the following options run the
-> >> > python tests, static analysis tests, and linter checks; but with
-> >> > different combinations of dependencies and interpreters.
-> >> >
-> >> > - "make check-minreqs" Run tests specifically under our oldest
-> supported
-> >> >   Python and our oldest supported dependencies. This is the test tha=
-t
-> >> >   runs on GitLab as "check-python-minreqs". This helps ensure we do
-> not
-> >> >   regress support on older platforms accidentally.
-> >> >
-> >> > - "make check-tox" Runs the tests under the newest supported
-> >> >   dependencies, but under each supported version of Python in turn. =
-At
-> >> >   time of writing, this is Python 3.8 to 3.13 inclusive. This test
-> helps
-> >> >   catch bleeding-edge problems before they become problems for
-> developer
-> >> >   workstations. This is the GitLab test "check-python-tox" and is an
-> >> >   optionally run, may-fail test due to the unpredictable nature of n=
-ew
-> >> >   dependencies being released into the ecosystem that may cause
-> >> >   regressions.
-> >> >
-> >> > - "make check-dev" Runs the tests under the newest supported
-> >> >   dependencies using whatever version of Python the user happens to
-> have
-> >> >   installed. This is a quick convenience check that does not map to
-> any
-> >> >   particular GitLab test.
-> >> >
-> >> > (Note! check-dev may be busted on Fedora 41 and bleeding edge versio=
-ns
-> >>
-> >> It is for me.
-> >>
-> >> > of setuptools. That's unrelated to this patch and I'll address it
-> >> > separately and soon. Thank you for your patience, --mgmt)
-> >>
-> >> Which of these tests, if any, run in "make check"?  In CI?
-> >>
-> >
-> > Under "make check", the top-level test in qemu.git, none. I swear on my
-> > future grave
->
-> "Not today!"
->
-> >              I am trying to fix that,
->
-> Also not today.  SCNR!
->
-> >                                       but there are barriers to it.
-> Adding
-> > make check support means installing testing dependencies in the configu=
-re
-> > venv, which means a slower ./configure invocation. I am trying to figur=
-e
-> > out how to minimize this penalty for cases where we either do not want
-> to,
-> > or can't, run the python tests. It's a long story, we can talk about it
-> > later.
-> >
-> > In CI, the "check-minreqs" test will run by default as a must-pass test
-> > under the job "check python minreqs".
-> >
-> > "check-tox" is an optional job in the CI pipeline that is allowed to fa=
-il
-> > as a warning, due to the nature of this test checking bleeding edge
-> > dependencies.
-> >
-> > All three local invocations run the exact same tests (literally "make
-> > check" in the python dir), just under different combinations of
-> > dependencies and python versions. "check-minreqs" is more or less the
-> > "canonical" one that *must* succeed, but as a Python maintainer I do my
-> > best to enforce "check-tox" as well, though it does lag behind.
-> >
-> > So, this isn't a perfect solution yet but it's certainly much better th=
-an
-> > carrying around ad-hoc linter shell scripts and attempting to manage th=
-e
-> > dependencies yourself. At least we all have access to the same
-> invocations.
->
-> So:
->
-> * At some point, we'll integrate whatever we want developers to run into
->   "make check".  Until then:
->
-> * Running "make check-dev" is nice and good enough.  CI might find
->   additional problems.  Expected to be rare and no big deal.
->
-> * Running "make check-minreqs" locally will get the exact same results
->   as the same test in CI will.  Run if you care.
->
-> * "make check-tox" is an early warning system.  Don't run unless you're
->   interested in preventing potential future problems.
->
+> 
+> It is preferable to calculate them from the HEST table.  This allows
+> checking the source ID, the size of the table and the type of the
+> HEST error block structures.
+> 
+> Yet, keep the old code, as this is needed for migration purposes
 
-More or less; though it does test in every supported python interpreter if
-you happen to have multiple installed, so it can be a way to catch errors
-that exist between minreqs and $current, but it's still generally only a
-test that I think you should run if you are touching the Python stuff in a
-major way; i.e. if you're sending something that's a PR for *me*, I think
-you should run it. If you're just doing a quick fix to qapi that doesn't do
-any deep Python trickery, I'd trust either check-minreqs/CI or check-dev to
-be sufficient due diligence.
++ from older QEMU versions
 
-In other words: *any one* of these tests are likely to catch errors due to
-incorrect code and is sufficient due diligence; making sure they *all* pass
-is more of a job for *me* to catch ecosystem problems across our wide
-platform and python version support matrix.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+>  hw/acpi/ghes.c         | 100 +++++++++++++++++++++++++++++++++++++++++
+>  include/hw/acpi/ghes.h |   2 +-
+>  2 files changed, 101 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index ba37be9e7022..7efea519f766 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -41,6 +41,12 @@
+>  /* Address offset in Generic Address Structure(GAS) */
+>  #define GAS_ADDR_OFFSET 4
+>  
+> +/*
+> + * ACPI spec 1.0b
+> + * 5.2.3 System Description Table Header
+> + */
+> +#define ACPI_DESC_HEADER_OFFSET     36
+> +
+>  /*
+>   * The total size of Generic Error Data Entry
+>   * ACPI 6.1/6.2: 18.3.2.7.1 Generic Error Data,
+> @@ -61,6 +67,30 @@
+>   */
+>  #define ACPI_GHES_GESB_SIZE                 20
+>  
+> +/*
+> + * See the memory layout map at docs/specs/acpi_hest_ghes.rst.
+> + */
+> +
+> +/*
+> + * ACPI 6.1: 18.3.2.8 Generic Hardware Error Source version 2
+> + * Table 18-344 Generic Hardware Error Source version 2 (GHESv2) Structure
+> + */
+> +#define HEST_GHES_V2_ENTRY_SIZE  92
+> +
+> +/*
+> + * ACPI 6.1: 18.3.2.7: Generic Hardware Error Source
+wrong chapter, read ack can't be in v1 GHES
 
-I very often run "check minreqs" and "check tox" and consider that
-exhaustive. the dev test is there only as a quick smoke test if you don't
-have a battleship of python interpreters installed, but it's busted at the
-moment due to fairly recent setuptools changes @_@
+> + * Table 18-344 Generic Hardware Error Source version 2 (GHESv2) Structure
+> + * Read Ack Register
+> + */
+> +#define GHES_READ_ACK_ADDR_OFF          64
+> +
+> +/*
+> + * ACPI 6.1: 18.3.2.7: Generic Hardware Error Source
+> + * Table 18-341 Generic Hardware Error Source Structure
+> + * Error Status Address
+> + */
+> +#define GHES_ERR_STATUS_ADDR_OFF  20
+> +
+>  /*
+>   * Values for error_severity field
+>   */
+> @@ -412,6 +442,73 @@ static void get_hw_error_offsets(uint64_t ghes_addr,
+>      *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
+>  }
+>  
+> +static void get_ghes_source_offsets(uint16_t source_id,
+> +                                    uint64_t hest_addr,
+> +                                    uint64_t *cper_addr,
+> +                                    uint64_t *read_ack_start_addr,
+> +                                    Error **errp)
+> +{
+> +    uint64_t hest_err_block_addr, hest_read_ack_addr;
+> +    uint64_t err_source_entry, error_block_addr;
+> +    uint32_t num_sources, i;
+> +
+> +    hest_addr += ACPI_DESC_HEADER_OFFSET;
+> +
+> +    cpu_physical_memory_read(hest_addr, &num_sources,
+> +                             sizeof(num_sources));
+> +    num_sources = le32_to_cpu(num_sources);
+> +
+> +    err_source_entry = hest_addr + sizeof(num_sources);
+> +
+> +    /*
+> +     * Currently, HEST Error source navigates only for GHESv2 tables
+> +     */
+> +    for (i = 0; i < num_sources; i++) {
+> +        uint64_t addr = err_source_entry;
+> +        uint16_t type, src_id;
+> +
+> +        cpu_physical_memory_read(addr, &type, sizeof(type));
+> +        type = le16_to_cpu(type);
+> +
+> +        /* For now, we only know the size of GHESv2 table */
+> +        if (type != ACPI_GHES_SOURCE_GENERIC_ERROR_V2) {
+> +            error_setg(errp, "HEST: type %d not supported.", type);
+> +            return;
+> +        }
+> +
+> +        /* Compare CPER source address at the GHESv2 structure */
+                                  ^^^^^ typo?
 
---js
-
-
->
-> Acked-by: Markus Armbruster <armbru@redhat.com>
->
-> [...]
->
->
-
---000000000000b76339062f0d018c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 26,=
- 2025 at 4:29=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
- target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; On Mon, Feb 24, 2025 at 7:36=E2=80=AFAM Markus Armbruster &lt;<a href=
-=3D"mailto:armbru@redhat.com" target=3D"_blank">armbru@redhat.com</a>&gt; w=
-rote:<br>
-&gt;<br>
-&gt;&gt; John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank=
-">jsnow@redhat.com</a>&gt; writes:<br>
-&gt;&gt;<br>
-&gt;&gt; &gt; Update the python tests to also check qapi. No idea why I did=
-n&#39;t do this<br>
-&gt;&gt; &gt; before. I guess I was counting on moving it under python/ and=
- then just<br>
-&gt;&gt; &gt; forgot after that was NACKed. Oops, this turns out to be real=
-ly easy.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; flake8, isort and mypy use the tool configuration from the ex=
-isting<br>
-&gt;&gt; &gt; python directory. pylint continues to use the special configu=
-ration<br>
-&gt;&gt; &gt; located in scripts/qapi/ - that configuration is more permiss=
-ive. If we<br>
-&gt;&gt; &gt; wish to unify the two configurations, that&#39;s a separate s=
-eries and a<br>
-&gt;&gt; &gt; discussion for a later date.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; As a result of this patch, one would be able to run any of th=
-e following<br>
-&gt;&gt; &gt; tests locally from the qemu.git/python directory and have it =
-cover the<br>
-&gt;&gt; &gt; scripts/qapi/ module as well. All of the following options ru=
-n the<br>
-&gt;&gt; &gt; python tests, static analysis tests, and linter checks; but w=
-ith<br>
-&gt;&gt; &gt; different combinations of dependencies and interpreters.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; - &quot;make check-minreqs&quot; Run tests specifically under=
- our oldest supported<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0Python and our oldest supported dependencies. Thi=
-s is the test that<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0runs on GitLab as &quot;check-python-minreqs&quot=
-;. This helps ensure we do not<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0regress support on older platforms accidentally.<=
-br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; - &quot;make check-tox&quot; Runs the tests under the newest =
-supported<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0dependencies, but under each supported version of=
- Python in turn. At<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0time of writing, this is Python 3.8 to 3.13 inclu=
-sive. This test helps<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0catch bleeding-edge problems before they become p=
-roblems for developer<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0workstations. This is the GitLab test &quot;check=
--python-tox&quot; and is an<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0optionally run, may-fail test due to the unpredic=
-table nature of new<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0dependencies being released into the ecosystem th=
-at may cause<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0regressions.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; - &quot;make check-dev&quot; Runs the tests under the newest =
-supported<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0dependencies using whatever version of Python the=
- user happens to have<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0installed. This is a quick convenience check that=
- does not map to any<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0particular GitLab test.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; (Note! check-dev may be busted on Fedora 41 and bleeding edge=
- versions<br>
-&gt;&gt;<br>
-&gt;&gt; It is for me.<br>
-&gt;&gt;<br>
-&gt;&gt; &gt; of setuptools. That&#39;s unrelated to this patch and I&#39;l=
-l address it<br>
-&gt;&gt; &gt; separately and soon. Thank you for your patience, --mgmt)<br>
-&gt;&gt;<br>
-&gt;&gt; Which of these tests, if any, run in &quot;make check&quot;?=C2=A0=
- In CI?<br>
-&gt;&gt;<br>
-&gt;<br>
-&gt; Under &quot;make check&quot;, the top-level test in qemu.git, none. I =
-swear on my<br>
-&gt; future grave<br>
-<br>
-&quot;Not today!&quot;<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 I am trying to fix tha=
-t,<br>
-<br>
-Also not today.=C2=A0 SCNR!<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0but th=
-ere are barriers to it. Adding<br>
-&gt; make check support means installing testing dependencies in the config=
-ure<br>
-&gt; venv, which means a slower ./configure invocation. I am trying to figu=
-re<br>
-&gt; out how to minimize this penalty for cases where we either do not want=
- to,<br>
-&gt; or can&#39;t, run the python tests. It&#39;s a long story, we can talk=
- about it<br>
-&gt; later.<br>
-&gt;<br>
-&gt; In CI, the &quot;check-minreqs&quot; test will run by default as a mus=
-t-pass test<br>
-&gt; under the job &quot;check python minreqs&quot;.<br>
-&gt;<br>
-&gt; &quot;check-tox&quot; is an optional job in the CI pipeline that is al=
-lowed to fail<br>
-&gt; as a warning, due to the nature of this test checking bleeding edge<br=
->
-&gt; dependencies.<br>
-&gt;<br>
-&gt; All three local invocations run the exact same tests (literally &quot;=
-make<br>
-&gt; check&quot; in the python dir), just under different combinations of<b=
-r>
-&gt; dependencies and python versions. &quot;check-minreqs&quot; is more or=
- less the<br>
-&gt; &quot;canonical&quot; one that *must* succeed, but as a Python maintai=
-ner I do my<br>
-&gt; best to enforce &quot;check-tox&quot; as well, though it does lag behi=
-nd.<br>
-&gt;<br>
-&gt; So, this isn&#39;t a perfect solution yet but it&#39;s certainly much =
-better than<br>
-&gt; carrying around ad-hoc linter shell scripts and attempting to manage t=
-he<br>
-&gt; dependencies yourself. At least we all have access to the same invocat=
-ions.<br>
-<br>
-So:<br>
-<br>
-* At some point, we&#39;ll integrate whatever we want developers to run int=
-o<br>
-=C2=A0 &quot;make check&quot;.=C2=A0 Until then:<br>
-<br>
-* Running &quot;make check-dev&quot; is nice and good enough.=C2=A0 CI migh=
-t find<br>
-=C2=A0 additional problems.=C2=A0 Expected to be rare and no big deal.<br>
-<br>
-* Running &quot;make check-minreqs&quot; locally will get the exact same re=
-sults<br>
-=C2=A0 as the same test in CI will.=C2=A0 Run if you care.<br>
-<br>
-* &quot;make check-tox&quot; is an early warning system.=C2=A0 Don&#39;t ru=
-n unless you&#39;re<br>
-=C2=A0 interested in preventing potential future problems.<br></blockquote>=
-<div><br></div><div>More or less; though it does test in every supported py=
-thon interpreter if you happen to have multiple installed, so it can be a w=
-ay to catch errors that exist between minreqs and $current, but it&#39;s st=
-ill generally only a test that I think you should run if you are touching t=
-he Python stuff in a major way; i.e. if you&#39;re sending something that&#=
-39;s a PR for *me*, I think you should run it. If you&#39;re just doing a q=
-uick fix to qapi that doesn&#39;t do any deep Python trickery, I&#39;d trus=
-t either check-minreqs/CI or check-dev to be sufficient due diligence.</div=
-><div><br></div><div>In other words: *any one* of these tests are likely to=
- catch errors due to incorrect code and is sufficient due diligence; making=
- sure they *all* pass is more of a job for *me* to catch ecosystem problems=
- across our wide platform and python version support matrix.</div><div><br>=
-</div><div>I very often run &quot;check minreqs&quot; and &quot;check tox&q=
-uot; and consider that exhaustive. the dev test is there only as a quick sm=
-oke test if you don&#39;t have a battleship of python interpreters installe=
-d, but it&#39;s busted at the moment due to fairly recent setuptools change=
-s <a class=3D"gmail_plusreply" id=3D"plusReplyChip-0">@_@</a></div><div><br=
-></div><div>--js</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">
-<br>
-Acked-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" target=
-=3D"_blank">armbru@redhat.com</a>&gt;<br>
-<br>
-[...]<br>
-<br>
-</blockquote></div></div>
-
---000000000000b76339062f0d018c--
+> +        addr += sizeof(type);
+> +        cpu_physical_memory_read(addr, &src_id, sizeof(src_id));
+> +        if (le16_to_cpu(src_id) == source_id) {
+> +            break;
+> +        }
+> +
+> +        err_source_entry += HEST_GHES_V2_ENTRY_SIZE;
+> +    }
+> +    if (i == num_sources) {
+> +        error_setg(errp, "HEST: Source %d not found.", source_id);
+> +        return;
+> +    }
+> +
+> +    /* Navigate though table address pointers */
+                   ^^^^^ typo
+ 
+> +    hest_err_block_addr = err_source_entry + GHES_ERR_STATUS_ADDR_OFF +
+> +                          GAS_ADDR_OFFSET;
+> +
+> +    cpu_physical_memory_read(hest_err_block_addr, &error_block_addr,
+> +                             sizeof(error_block_addr));
+> +    error_block_addr = le64_to_cpu(error_block_addr);
+> +
+> +    cpu_physical_memory_read(error_block_addr, cper_addr,
+> +                             sizeof(*cper_addr));
+> +    *cper_addr = le64_to_cpu(*cper_addr);
+> +
+> +    hest_read_ack_addr = err_source_entry + GHES_READ_ACK_ADDR_OFF +
+> +                         GAS_ADDR_OFFSET;
+> +    cpu_physical_memory_read(hest_read_ack_addr, read_ack_start_addr,
+> +                             sizeof(*read_ack_start_addr));
+> +    *read_ack_start_addr = le64_to_cpu(*read_ack_start_addr);
+> +}
+> +
+>  void ghes_record_cper_errors(const void *cper, size_t len,
+>                               uint16_t source_id, Error **errp)
+>  {
+> @@ -437,6 +534,9 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+>      if (!ags->use_hest_addr) {
+>          get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
+>                               &cper_addr, &read_ack_register_addr);
+> +    } else {
+> +        get_ghes_source_offsets(source_id, le64_to_cpu(ags->hest_addr_le),
+> +                                &cper_addr, &read_ack_register_addr, errp);
+>      }
+>  
+>      if (!cper_addr) {
+> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+> index 454e97b5341c..2f06e433ce04 100644
+> --- a/include/hw/acpi/ghes.h
+> +++ b/include/hw/acpi/ghes.h
+> @@ -80,7 +80,7 @@ enum {
+>  typedef struct AcpiGhesState {
+>      uint64_t hest_addr_le;
+>      uint64_t hw_error_le;
+> -    bool use_hest_addr;         /* Currently, always false */
+> +    bool use_hest_addr; /* True if HEST address is present */
+>  } AcpiGhesState;
+>  
+>  void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
 
 
