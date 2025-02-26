@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F85C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 08:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84105C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 08:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnD9m-0000QD-TT; Wed, 26 Feb 2025 03:52:42 -0500
+	id 1tnDBd-0001CL-MT; Wed, 26 Feb 2025 03:54:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnD9m-0000Q3-Ap
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 03:52:42 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnDBc-0001Bu-7j
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 03:54:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnD9k-0007BT-37
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 03:52:41 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnDBW-0007Me-BP
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 03:54:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740559957;
+ s=mimecast20190719; t=1740560069;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=I1eoAPvwdMHAxsridXUmI7xuHlHLqnsvumOwC/AaK4k=;
- b=GRqR+y1msVYOqYZu/RE9UvAwnpxcnTRh3fiXvfwFGb2a/bpYdv8u3HwvaxWyjFSpySuXur
- 2fi02aA5SLTm9+EcNidCoyZMn8leD/ZDH4/PN4coru1PEDDJ5PF2Fva8H4jZLpSrJfyi7t
- +CW2a8jbGjlwPUzCfCcM6f/vUyjgn/8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=n97+krRuLVDtXyPSfXlLRM5Nysc5dN6moE7au0gQzLo=;
+ b=M/GZX4cXUu6UCDQkRqxHgNtRLPuLxQoaHGCaYsgG4mehrBafSO/kv5Svp9mm5fDfuneDfO
+ tVwWukkGHVeS2XPyW0Ew6UBn2s2recngzGtBX23KQ5EDQkfWZz/odu7I1DBXVNdft/q8qx
+ p1oOuJAj9yrnEkC/lgZqztzEq3lzd7g=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-OTiMPjIDOASKkO_0V_KgHg-1; Wed, 26 Feb 2025 03:52:35 -0500
-X-MC-Unique: OTiMPjIDOASKkO_0V_KgHg-1
-X-Mimecast-MFC-AGG-ID: OTiMPjIDOASKkO_0V_KgHg_1740559954
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38f455a8fcaso4696572f8f.2
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 00:52:35 -0800 (PST)
+ us-mta-345-97Y1gnhpNhOTpHEJ7BAI0A-1; Wed, 26 Feb 2025 03:54:27 -0500
+X-MC-Unique: 97Y1gnhpNhOTpHEJ7BAI0A-1
+X-Mimecast-MFC-AGG-ID: 97Y1gnhpNhOTpHEJ7BAI0A_1740560067
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-390d5f1e05cso146701f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 00:54:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740559954; x=1741164754;
+ d=1e100.net; s=20230601; t=1740560066; x=1741164866;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I1eoAPvwdMHAxsridXUmI7xuHlHLqnsvumOwC/AaK4k=;
- b=wwL2wXP0ibx8Y58780eBXDkO3vPhpMAiK1mvvmNrCp/EO6oloW/j8MQbPsbgdsnQ7W
- KJkFbOwpXQktqmplrZ3KgqbXeWkKJupmRyUvWTGbv+BdbEJV67qEhH5RMglz9XLl193v
- nQYj8ayhyxMv0ibQQ1PDLuA52q1icUITtqcjUJ4unx4yZ3fnkmrvvwP5r4+NTwNh/9DM
- Z8hgnanRv/XwIeW0UWIAa39UPNPyHGY8B9wULVr2Bh1JqIZ21mmxqajjzAK1ePdZ1YG/
- hjuGN224xtuuvFfRYU6Gv4kbjwTHsTAiVfHbnetT6r+TpxEQaHC6i3NcqdFdsJz02ykz
- S5cA==
+ bh=n97+krRuLVDtXyPSfXlLRM5Nysc5dN6moE7au0gQzLo=;
+ b=GiDXAH7SP4oM3c/+WeTscfnAy38HKgGAx0pjkjmcB8cqqb5JaYuBSrF3yAP1ssjIrd
+ Np+RjgL9lzIlmypr1Wn77JdPTzLijEF0jaK6wPCO8x1rvbHJwXCnk8oGBJEt2k6xvZ3s
+ zysuc18I/Bx20aCoBhL+oRVlm1DikEHm7vxYgb6sndQ5U1hTB5WhzPZac63O36f4TaOr
+ tC6MhlBH9W6/OJVtFpUoELbTPDk9g7kwv0QgzegademCjp80lWz6RSg1w6mBNtXl+oFB
+ SFSCuQs9LsZDMHvlZF15fbGleuZDxW39LgWWc/L+g1ny+DPrQGw9ZuHlaAsuahpt74Fm
+ wYPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4SNno+5aLejC+HxU62gpQ9Nfvxs06Y1YZyzPgmamBx3Bh8fA0ZS4gm9Yw/gpu8m3xnk7d5Awg1ArW@nongnu.org
-X-Gm-Message-State: AOJu0YxQGH7TByiEusucxjKmiN0NnOXZYyAeQLgzQXOiB7HTrahYqZah
- MvazJsKEzEjzXws05S7jgl3sepQPhGpybzKwRIwvpmqJQjWZfoqnkYG08DL2vVbQDtbgziPfviL
- CAROCH29Tvk5FWL2viWYZvXybSSkYU3jXbAWwMOA+McT+vktnD/Ox
-X-Gm-Gg: ASbGncvv1FaNxL22Pq6JCH0wikLhagEkyW+SPv+cS8B3o8lfpkCtbIMHMp07H5pH5jR
- 25s1gISomFgWG31SEGOfA5I3K+9fw36gPq01ZkmoEqlitZY+ZsQ9kmJ+rPCLKRfZRdo42nduD+7
- jTyNVk1CWjxB2UkkucOnMmKqefOZSNi97Z8AegvLjSZ7QDv0i+nasRQteDWtzmLvgBHEGOLRKQj
- VqC/t0ifmtWdTeys8oJZZgT8Dwg8MoQTm5MAcLthG1CXVbR5tC+cWkpnLyaRPGlTNOq0IcrOeZN
- YedGVFVUrLKn4kw6Yd1qXgK99sIVKilUkIrN2kn+N3qZnZNJi9DWYZlSSHA=
-X-Received: by 2002:a05:6000:1f82:b0:38c:5cd0:ecd5 with SMTP id
- ffacd0b85a97d-390d4f8b468mr1959355f8f.38.1740559954050; 
- Wed, 26 Feb 2025 00:52:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEVWs/jZUGmxmOkb4GNKGoSiOkN/Yg+5S/DqPqfFYYCoyjdaKYbWyR6pcgd2JRWEjM8Ryd8HA==
-X-Received: by 2002:a05:6000:1f82:b0:38c:5cd0:ecd5 with SMTP id
- ffacd0b85a97d-390d4f8b468mr1959341f8f.38.1740559953705; 
- Wed, 26 Feb 2025 00:52:33 -0800 (PST)
+ AJvYcCXt42R7FpD6J+k4/2TM1eRUXP8tvasbypk56SK0/48SKyQqJvtccXCn8SBSOn7sXbqTCQIgyxBPks6R@nongnu.org
+X-Gm-Message-State: AOJu0YwbDrMI0Py3soBo7GV+zKSz6yCH878VjDOTOs4WWsaINHIAHPiP
+ /Q1u4lENaWdHK8JVHJD7ctc2kjmuCua/59MqQECDMa39E6IXlCi7gaY2tqAboAS5XrSW1l6oamH
+ h6aVl5ZA8AMJaBiiy5MlzxyrCT0EGH2E7HXBMuwf//a4CkPzyqzDX
+X-Gm-Gg: ASbGnct42AnONyCxDueTZwP5+BbJNWNAboo+8Wda0YFhqAgpHID+9yNpQCBo6ECAMo2
+ P/x3ZyhYYs958zcIUmNIpI29bckrBvjXc3CCSBrEvkzLFNmioWTUXoupT0cHQeYGQDNxYHyHE6u
+ Jjgy8TlfppNUULjd0OvmWvTvRPswuIhAfibyl4Gz9m3ooiCrwd1aYg3AtHoP3xIpMkQ33eNQJ9W
+ MCJdtYzlk94zmOBt2QmcF6FAd6BhcRidjd6wG1oeIDhH3Vn8AUkaKH1gfjcIYGzB0qDF08QtBWC
+ 9BSjCa1PGeXAruiLuntd5Ei/yDKD1m/4Yddcz80cIDKshHDRiIoJuTtAjkg=
+X-Received: by 2002:a05:6000:1cc6:b0:38a:8ed1:c5c7 with SMTP id
+ ffacd0b85a97d-390cc638914mr4237560f8f.46.1740560066618; 
+ Wed, 26 Feb 2025 00:54:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHYaekFhdPU45h/K/O03B93af5ATeL7EbZ3LjIPSUED0HzwiODxT7S+pu78iIzCjECLv9NEyA==
+X-Received: by 2002:a05:6000:1cc6:b0:38a:8ed1:c5c7 with SMTP id
+ ffacd0b85a97d-390cc638914mr4237538f8f.46.1740560066243; 
+ Wed, 26 Feb 2025 00:54:26 -0800 (PST)
 Received: from ?IPV6:2a01:cb19:9004:d500:a732:5611:7f59:8bb3?
  ([2a01:cb19:9004:d500:a732:5611:7f59:8bb3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba532bb1sm13419825e9.9.2025.02.26.00.52.32
+ ffacd0b85a97d-390cd8fb50asm4708252f8f.82.2025.02.26.00.54.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 00:52:33 -0800 (PST)
-Message-ID: <cfbff71b-3183-4291-ba00-90b8bb2c3529@redhat.com>
-Date: Wed, 26 Feb 2025 09:52:30 +0100
+ Wed, 26 Feb 2025 00:54:25 -0800 (PST)
+Message-ID: <ca0e8fe3-6832-4627-b09f-83207278d603@redhat.com>
+Date: Wed, 26 Feb 2025 09:54:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 22/36] vfio/migration: Multifd device state transfer
- support - basic types
+Subject: Re: [PATCH v5 23/36] vfio/migration: Multifd device state transfer
+ support - VFIOStateBuffer(s)
 To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -87,7 +87,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <b93731a2e5b4d6fcb673606cfd19178525204c19.1739994627.git.maciej.szmigiero@oracle.com>
+ <96303daed289e9c7a3261590027d18e425ea07c2.1739994627.git.maciej.szmigiero@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,9 +133,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <b93731a2e5b4d6fcb673606cfd19178525204c19.1739994627.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <96303daed289e9c7a3261590027d18e425ea07c2.1739994627.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -164,120 +164,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/19/25 21:34, Maciej S. Szmigiero wrote:
 > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> Add basic types and flags used by VFIO multifd device state transfer
-> support.
+> Add VFIOStateBuffer(s) types and the associated methods.
 > 
-> Since we'll be introducing a lot of multifd transfer specific code,
-> add a new file migration-multifd.c to home it, wired into main VFIO
-> migration code (migration.c) via migration-multifd.h header file.
+> These store received device state buffers and config state waiting to get
+> loaded into the device.
 > 
 > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> ---
->   hw/vfio/meson.build         |  1 +
->   hw/vfio/migration-multifd.c | 31 +++++++++++++++++++++++++++++++
->   hw/vfio/migration-multifd.h | 15 +++++++++++++++
->   hw/vfio/migration.c         |  1 +
->   4 files changed, 48 insertions(+)
->   create mode 100644 hw/vfio/migration-multifd.c
->   create mode 100644 hw/vfio/migration-multifd.h
-> 
-> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-> index bba776f75cc7..260d65febd6b 100644
-> --- a/hw/vfio/meson.build
-> +++ b/hw/vfio/meson.build
-> @@ -5,6 +5,7 @@ vfio_ss.add(files(
->     'container-base.c',
->     'container.c',
->     'migration.c',
-> +  'migration-multifd.c',
->     'cpr.c',
->   ))
->   vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
-> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-> new file mode 100644
-> index 000000000000..0c3185a26242
-> --- /dev/null
-> +++ b/hw/vfio/migration-multifd.c
-> @@ -0,0 +1,31 @@
-> +/*
 
-Please add :
 
-   SPDX-License-Identifier: GPL-2.0-or-later
-
-in new files.
-
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-
-
-> + * Multifd VFIO migration
-> + *
-> + * Copyright (C) 2024,2025 Oracle and/or its affiliates.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
+> ---
+>   hw/vfio/migration-multifd.c | 54 +++++++++++++++++++++++++++++++++++++
+>   1 file changed, 54 insertions(+)
+> 
+> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+> index 0c3185a26242..760b110a39b9 100644
+> --- a/hw/vfio/migration-multifd.c
+> +++ b/hw/vfio/migration-multifd.c
+> @@ -29,3 +29,57 @@ typedef struct VFIODeviceStatePacket {
+>       uint32_t flags;
+>       uint8_t data[0];
+>   } QEMU_PACKED VFIODeviceStatePacket;
 > +
-> +#include "qemu/osdep.h"
-> +#include "hw/vfio/vfio-common.h"
-> +#include "migration/misc.h"
-> +#include "qapi/error.h"
-> +#include "qemu/error-report.h"
-> +#include "qemu/lockable.h"
-> +#include "qemu/main-loop.h"
-> +#include "qemu/thread.h"
-> +#include "migration/qemu-file.h"
-> +#include "migration-multifd.h"
-> +#include "trace.h"
+> +/* type safety */
+> +typedef struct VFIOStateBuffers {
+> +    GArray *array;
+> +} VFIOStateBuffers;
 > +
-> +#define VFIO_DEVICE_STATE_CONFIG_STATE (1)
+> +typedef struct VFIOStateBuffer {
+> +    bool is_present;
+> +    char *data;
+> +    size_t len;
+> +} VFIOStateBuffer;
 > +
-> +#define VFIO_DEVICE_STATE_PACKET_VER_CURRENT (0)
+> +static void vfio_state_buffer_clear(gpointer data)
+> +{
+> +    VFIOStateBuffer *lb = data;
 > +
-> +typedef struct VFIODeviceStatePacket {
-> +    uint32_t version;
-> +    uint32_t idx;
-> +    uint32_t flags;
-> +    uint8_t data[0];
-> +} QEMU_PACKED VFIODeviceStatePacket;
-> diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
-> new file mode 100644
-> index 000000000000..64d117b27210
-> --- /dev/null
-> +++ b/hw/vfio/migration-multifd.h
-> @@ -0,0 +1,15 @@
-> +/*
-> + * Multifd VFIO migration
-> + *
-> + * Copyright (C) 2024,2025 Oracle and/or its affiliates.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
+> +    if (!lb->is_present) {
+> +        return;
+> +    }
 > +
-> +#ifndef HW_VFIO_MIGRATION_MULTIFD_H
-> +#define HW_VFIO_MIGRATION_MULTIFD_H
+> +    g_clear_pointer(&lb->data, g_free);
+> +    lb->is_present = false;
+> +}
 > +
-> +#include "hw/vfio/vfio-common.h"
+> +static void vfio_state_buffers_init(VFIOStateBuffers *bufs)
+> +{
+> +    bufs->array = g_array_new(FALSE, TRUE, sizeof(VFIOStateBuffer));
+> +    g_array_set_clear_func(bufs->array, vfio_state_buffer_clear);
+> +}
 > +
-> +#endif
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 46adb798352f..7b79be6ad293 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -23,6 +23,7 @@
->   #include "migration/qemu-file.h"
->   #include "migration/register.h"
->   #include "migration/blocker.h"
-> +#include "migration-multifd.h"
->   #include "qapi/error.h"
->   #include "qapi/qapi-events-vfio.h"
->   #include "exec/ramlist.h"
+> +static void vfio_state_buffers_destroy(VFIOStateBuffers *bufs)
+> +{
+> +    g_clear_pointer(&bufs->array, g_array_unref);
+> +}
+> +
+> +static void vfio_state_buffers_assert_init(VFIOStateBuffers *bufs)
+> +{
+> +    assert(bufs->array);
+> +}
+> +
+> +static guint vfio_state_buffers_size_get(VFIOStateBuffers *bufs)
+> +{
+> +    return bufs->array->len;
+> +}
+> +
+> +static void vfio_state_buffers_size_set(VFIOStateBuffers *bufs, guint size)
+> +{
+> +    g_array_set_size(bufs->array, size);
+> +}
+> +
+> +static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs, guint idx)
+> +{
+> +    return &g_array_index(bufs->array, VFIOStateBuffer, idx);
+> +}
 > 
 
 
