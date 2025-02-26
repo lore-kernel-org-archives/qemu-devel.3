@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F84C19F2E
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 17:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1BEC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 17:20:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnL2X-0008Ui-Uc; Wed, 26 Feb 2025 12:17:45 -0500
+	id 1tnL4T-0001SD-3u; Wed, 26 Feb 2025 12:19:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tnL1u-0008IF-H8
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:17:08 -0500
-Received: from mail-qv1-xf2d.google.com ([2607:f8b0:4864:20::f2d])
+ id 1tnL4M-0001KU-3i
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:19:42 -0500
+Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tnL1r-0007Tj-S1
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:17:05 -0500
-Received: by mail-qv1-xf2d.google.com with SMTP id
- 6a1803df08f44-6e6621960eeso11399936d6.0
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:17:01 -0800 (PST)
+ id 1tnL4J-0007jQ-PI
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:19:37 -0500
+Received: by mail-qt1-x834.google.com with SMTP id
+ d75a77b69052e-471f9d11176so446621cf.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:19:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740590220; x=1741195020; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740590374; x=1741195174; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=7CqkQ+0lPid/TmZ9PIusP2t2YhjjICdWsFKaBMFPXRg=;
- b=hwN1uM7oTWgEc/Kp6u0yFuSB22ckhCqHpqrlPuEb0xfpGPQ4N+g5Ja4KikHGfYHb5B
- GXlNj9Y8TDs4qwQyed2A3bv/5jhe+nHpFyUXPRlMFJKMUqOoLdtAKaT/O3uvq/353T1Y
- XZ/pV49uQZ0vUCDLsjFZyCVVRFy7NldTfZSO91gKvzGtv7D43N5fPwUCY1N3nCBK5CtP
- Wk0tHEyMJLKgSiescntkTm3T4Nljz0bcbGpWGCBzYjExQvy9OC6TWwQUZgdwdKVfax8W
- EzlM/Ne7w3LGJa5adNXtg85d0K/ln7m8gJBgcH+oQKDQzei8BwEbWhenccKN7K1NbXR+
- gqtA==
+ bh=G2o4KeiRue3272yfTehS/59McCHgrlJBh20j4BB/08w=;
+ b=pllZjmBch3QWxD8JkYjepKHu97MyJreNxin6NbvqBb4YNELxE2752V8Cvzm50SWcWR
+ 8hIF3/3UdQATFzyZ9cBzRW7VYT9jQWRfUwOjXisBi58x1OzpMBIPF5LZ+i7FgoqDW/Ww
+ NOjwHT1If88aPvueOW7nxJVWS5yQedFswM1Q8WWZWscPH28x/cWh/cJyI0yOjUerr2ZB
+ Y7UaEArQ9J/+TgwmPH870fpJRWtYIk6T8hobWQl3KMA85rEPHyf+YOse/Y//qnAijZmU
+ b7zH2472WNkfvcdP5sBqL/K7VK3dkDYhfFn4mF5iSAJHtISgbwTPcgLLhovkgPX1Gd9C
+ gCyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740590220; x=1741195020;
+ d=1e100.net; s=20230601; t=1740590374; x=1741195174;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7CqkQ+0lPid/TmZ9PIusP2t2YhjjICdWsFKaBMFPXRg=;
- b=CUtU6GUXsd11V4h/DlTR3KEZE//IZFxfTzlJQfNZ/ht1cHSIudMSPpcII9rH80u0Es
- qyz52fxIBfEOlLd3XRPE7Pv/VRcqd6jVnrRvt6l7GIbrqHdL/TaoMV9HnW80AQqu1RLY
- fbgKPXf1KtNvmuc+JtdAX8x/7r/v1fkjHEEMjjXKK3NPe4hithx2zsaUW1mosqGZ/jnA
- f/2W1mLyWuKnRI6entArAhtnTUFBCmFEXKHBPg323N0kd9+mI+cJZdcI/TZkxkppZMX0
- aZhzxzjzsITgketvaMrZ56/yP0EzsQwy53eNLV+lktn7keU1orGvnFEgCKzc+J68HAMb
- 1+DQ==
-X-Gm-Message-State: AOJu0Yxy79EuTjrur4W2CtFKIYYY3VaMjBywneXvmjfLo0ovm6vnQvwb
- hJn8WKO9dpogdbtetTcaSe1bfEN5x6XrP6HxBTnXDgcXgR7NsR4Qufx/wV7iUS2MjoNHNvqDssV
- P
-X-Gm-Gg: ASbGnctWtNypo0A7c7/7GTy8p5dnyJR49vD4BZRIdISt+iWZ172whzIjx8L9nfV6Vfl
- 3nAO8h4I4YWU++Qu7JkbNd1CmbcHPFXURgdFYTOfX3xbHtZv69i6rIyA1pStOuT1UTgZVzaM99C
- xsO4LlXeTS8kEeubHTkwPq+KqRwnuzEn0kp6vALT9EiA1ZiRgNixaowhG9V091i1BbUMZsrZVdR
- KgQWZJIqFavvgfwsogC47j7Bz1jLw/3nZh1brHV05hHVj9yCiAP+NMf9Se3SdLOkEeJS9SviEKj
- oebYaDzxo10YDhdn86MxUSIglvj6htcVQv+wgoh0/xtSou/Q
-X-Google-Smtp-Source: AGHT+IGPtHeUjuEskRbHHKxbNYDzSKT/fZVwUFQY8jgrIn2CyBj+lmV8GikZ0NxwKD42kv3QmRQqbQ==
-X-Received: by 2002:a05:6214:2aa7:b0:6e8:8934:338c with SMTP id
- 6a1803df08f44-6e8959ea03bmr2209196d6.10.1740590220450; 
- Wed, 26 Feb 2025 09:17:00 -0800 (PST)
+ bh=G2o4KeiRue3272yfTehS/59McCHgrlJBh20j4BB/08w=;
+ b=lr8UIT5Wb2LVA9tRkRDYETUXFgHW/odKPoVfl4SmznFqoqkP0nLIF/Xa3sEFPSEQYU
+ XIkFHMrRukM1ZBFAQjIrqhsOqSU7P28JaKEJRq/dXBLAlZutzo41dSSpSyjyI0BAcdhV
+ fSs5nFg1tzuL1fajYHFiW/86edA+JNuX4A3tKbdvJeTDHVtyOzCBimW9Wv6w3E+JfDIK
+ FJ81TPaSq3AFt1Zc5DpB9t0Vthpxr2JlXPB26FryNooDt9qJaGYhsDb0T4zEuan/m7Xo
+ rUm2Rii8oX+gtgbokIMar21KqqmwSOgdPF2oMfXvr4Z9HCoGD2JolsDwAzZJbH/1hSks
+ VWww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUuvCwvF8OES1prASfeRZa9EyaLcrYYWDgWsJPddxIMmpIRyDHOV9kJfDwvv8IDB88ukybEGlpFnCpV@nongnu.org
+X-Gm-Message-State: AOJu0Ywl42rxR3OC6hHaqpGAR3S+X1mY0515AkyoTiZ2DMy5uJIW8atc
+ bz8YxUtiURVd5dWQEEutoVsOZe8ai9KJ00ZXYt5wFE0GiOmjqrmQrM6Gjc2yuYvFq4gmJzWyeEj
+ O
+X-Gm-Gg: ASbGncvC2VfqVXDBvFdhhVj6nBq+xrd/TjOoE3xmH4OEzzpz0R/KOielyXHNfXPTWDn
+ sHhegtbCPgbPeLfi2ktoym12U+HfUmDDLC56ygHjO/qsujxfPjACHB6WPoH5xRRUv9adVgd/sBg
+ ROB5IIN9A29iVnA3yGHwZOIuacUmATrF3fnSTK42x4DJj4vp4FZEWEyNr+lLxrNizYR7A/vay2l
+ UYqkJedeDFEAubbcfHgJr7ph6awJfxJnw2JDYwV7mKd+YAIgZq44PrNomoaeZpdfryZ9PmVo8Ym
+ Aw068KcIHvdEVrrchu6HJgPzrQj/yX8FYDhwb08HoQTgNU+x
+X-Google-Smtp-Source: AGHT+IF7rhlVikVTaXJJYshG3FEArOtpRDYJi8b2ZQz1actjSqq2o80w0Z+53R3EFH6UYynK/wvhZw==
+X-Received: by 2002:a05:622a:6201:b0:472:13f8:a974 with SMTP id
+ d75a77b69052e-472248f4723mr301105801cf.41.1740590374373; 
+ Wed, 26 Feb 2025 09:19:34 -0800 (PST)
 Received: from [10.254.143.227] ([172.56.201.232])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e88b529365sm8627106d6.42.2025.02.26.09.16.59
- for <qemu-devel@nongnu.org>
+ d75a77b69052e-47377e238d9sm27255651cf.46.2025.02.26.09.19.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 09:17:00 -0800 (PST)
-Message-ID: <e9bf0606-c031-4e4e-89d9-a65a9f6171a4@linaro.org>
-Date: Wed, 26 Feb 2025 09:16:57 -0800
+ Wed, 26 Feb 2025 09:19:34 -0800 (PST)
+Message-ID: <f1e231b7-3d91-4efa-a2d9-32e731481c90@linaro.org>
+Date: Wed, 26 Feb 2025 09:19:30 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] target/mips: Enable MSA ASE using a CLI flag
-To: qemu-devel@nongnu.org
-References: <20250226170246.1971355-1-aleksandar.rakic@htecgroup.com>
- <20250226170246.1971355-5-aleksandar.rakic@htecgroup.com>
+Subject: Re: [PATCH 01/25] tests/functional: move aarch64 GPU test into own
+ file
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20250226140343.3907080-1-alex.bennee@linaro.org>
+ <20250226140343.3907080-2-alex.bennee@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250226170246.1971355-5-aleksandar.rakic@htecgroup.com>
+In-Reply-To: <20250226140343.3907080-2-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf2d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x834.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,21 +105,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/26/25 09:03, Aleksandar Rakic wrote:
-> --- a/target/mips/internal.h
-> +++ b/target/mips/internal.h
-> @@ -399,7 +399,7 @@ static inline void compute_hflags(CPUMIPSState *env)
->           }
->       }
->       if (ase_msa_available(env)) {
-> -        if (env->CP0_Config5 & (1 << CP0C5_MSAEn)) {
-> +        if ((env->CP0_Config5 & (1 << CP0C5_MSAEn)) || (env->msa_on)) {
->               env->hflags |= MIPS_HFLAG_MSA;
->           }
->       }
+On 2/26/25 06:03, Alex Bennée wrote:
+>     'aarch64_virt' : 720,
+> +  'aarch64_virt_gpu' : 720,
 
-This is the wrong place to force-enable msa.
-You should be enabling the bit in Config5 during cpu realize.
+Does the split mean that we can reduce the timeout?
 
 
 r~
