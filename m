@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9931C021B8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF5ECC021BC
 	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 08:00:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnCKG-0007Qu-0K; Wed, 26 Feb 2025 02:59:29 -0500
+	id 1tnCKE-0007PH-JQ; Wed, 26 Feb 2025 02:59:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tnCKD-0007Ma-DD
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:59:25 -0500
+ id 1tnCKA-0007IJ-Vy
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:59:23 -0500
 Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tnCKB-0007gn-63
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:59:25 -0500
+ id 1tnCK8-0007g3-Vd
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:59:22 -0500
 Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-ab771575040so106658066b.1
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 23:59:22 -0800 (PST)
+ a640c23a62f3a-aaec61d0f65so1305276366b.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 23:59:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740556761; x=1741161561; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740556759; x=1741161559; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ARVfbAZthN6G0J8zifHQamYji2miOgYkQ6/AWMTqiyg=;
- b=g5OJbl6sTwlNMA3UCSgSkZcD6fLBqn2Q654CKc6NrlxaJIOScQn+RdLxY66Qp8f061
- Ca3g4ZpnJzJD6zDwyKkdSC1pr4vQiWo9zC2qd4eQjtHq8LjiKyqszzT2SVy/YOFI6CTP
- ZS6oH0odED+aNvU9dSKV3N9Icex+6Lz81Kf4mqkAqcfH7LCeRiWz4KqqtrgpuWOxCSQQ
- YypQ7y5Yd+05+qvqOxrbY642CmoHdrpmISn54LG1QsjIoNUWmuIvTKbc4DEUszX2PCTP
- 7NZNZ8US/l8nqsf6UgRQsWynkER2X7mJ/aUkJfCgzPcdvrZSxFP3zepQ9kiyD6o7JYjQ
- rCMg==
+ bh=EISobMCtsGJwgBBoRUyUGsapTk7Zv2HzSGY51pLZdkY=;
+ b=K5Dg4OvfqrvdOmvG2hbYK7yXIxN9LEUDWAVxjA+pLxk4z8+tXH9bkyQHm1qV5xL8t6
+ raaD6rcLBAZBBmuNEK6WWxjOi1T/4o/qT+22KbdcpvxlDPS9VcuhkeJZH8Es0HYeEoSx
+ GuHN1v4O4e/LITIZkxACKugVuWHoX3uM5rGqrXMYmdIpMZuJxfGt269mtbdtdLNUDCdd
+ np0T5LM9jQAY8FexRxY2Uv7X1je73Uz13zxFcZ6qehXyNAQNgj4ZNjp3+LiVNTlhWy6/
+ kqCUykYEJR4W2Ho4fUZqn+xmYfXjWGQPOt6nibWn4qMaI1zUQOT8r0/2vIPDXsuwvTnR
+ 15eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740556761; x=1741161561;
+ d=1e100.net; s=20230601; t=1740556759; x=1741161559;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ARVfbAZthN6G0J8zifHQamYji2miOgYkQ6/AWMTqiyg=;
- b=INS19YqqpISL9SmOJ3xubBvZJw0NcWlQhjq5urQhzXXjGWzSgxBRyxXLtN1mB2MEMU
- vx/SCdh5L+a40vBozHLbqZNeJAs3PKKcV8RBLD4yrcrI7IEzucMxPbZvJbm4ufIZDfJN
- mdAOcDS6PsRcTUQYiNzJWFiEvG248l+KwvYOPm/8mwUsShqc2kTozSkeFvOfQVAB49nf
- uIPN4+UEtY1JuobbFPdKiuv25mC5GqI6yzlKdrQRQ+abENuvQNds5O7adUTzsg9CqVBQ
- T5yMpZt64waNsHHCwxPPBJwCQuSIUpCvdjfGiZk72qHZilrCgaRtYYCZkq7n0DJdX6LY
- 4kDw==
+ bh=EISobMCtsGJwgBBoRUyUGsapTk7Zv2HzSGY51pLZdkY=;
+ b=OQWswkJ0jKON6TyrhhPPyUnsefz4+mSDY37sXXv2o/xbcjRuII2PlCkxG5+qk6NuBm
+ 0HK4Nrx1ZdGuNwRD+03nG1+fheo6Stum9mf3W2/V2iCxq6ed/8MGgsKkp4wCbUJ8+6Dk
+ ukOnyz0F+hIk4erwtzEDIPyQ7TUHxgWKvnWqtzNgM3H9yg3YU8CTSDhlJla+yeNDvcF3
+ B1l07fIkUrnZQhqry5t88iKPXWxwVcTLvBHF74mSAK1Bk6xV48x7VhnHt18Se5n4eBSG
+ dYqnY6yC67OOx+AAXocBT1mjoz9rg0d5oEnduMqY6oxByHMPUZwigCg1ewFXli1iqbG3
+ F6oA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBVpPGyk5et1aNola15WJlvy+dlaUcr3TRdRRDeVnai5kxlqPK85DsNNG8B5XZu4J0GfyBswftdNly@nongnu.org
-X-Gm-Message-State: AOJu0YylKtxc5XGgtv1r6H7oi728a9ABZ/XwnC6RB7chsY6WP4QO8DBr
- xfua3RMCM7JTMGZ9xDBkFh9s9On+7ByjlF2tKffnTVYmp3gwOYGRLUI2DQ==
-X-Gm-Gg: ASbGncsmr4bGlapAcRzi3j6bSSzok7yxxcTaFus31jQY0BF09JmKkMH6x7/a4iah6Mb
- N7TZEGPvGa9GoWL1CXUzZxERlxeigP/mTTwk/xRSZQIGc4AkH8W8GsV43k6qSPpveDq6DQ5Kf4F
- /i8Yw2wGVFqMgd2C3fpFqnDEk82f7biMyDyeMpUetIu2IGW0OsRplOHzhz7DDUIHl89VJujQo7p
- eZRsPFV8+UmdV48C1Mn6HTPyawZzH8PQAVUOjnld9AW1SbnVqY8TYJ7xPQYcgvSPKYL0tIgzKzZ
- 85FH34GfittbODjCSFur/HsG/y7Qx0stmNA=
-X-Google-Smtp-Source: AGHT+IESuCS42A3aoL1h0RL0yFzUUnaSn2hH5S60F0GoJxuHORZJbS8s+nSzlpaAuDcnjY7pDnLryg==
-X-Received: by 2002:a17:906:3151:b0:ab6:504a:4c03 with SMTP id
- a640c23a62f3a-abc0b037859mr1551857866b.24.1740556761223; 
- Tue, 25 Feb 2025 23:59:21 -0800 (PST)
+ AJvYcCWdOuWsplHAo4gYWVbtMoXaGEmSqv3+iGBhVWYY4HJCB9jP8TPDIbPus6e56NHuCOSxMaaVPRWPqq0B@nongnu.org
+X-Gm-Message-State: AOJu0YyZnyt9R+Bhj/b9kqpvmg6s6j38cCOmJv2g5Su2Dcux16SXKrkF
+ cM4zqqlhuOQMLcHv5mHSXAJ9W1AyNX119IScfm7gXejAq5E0RmoW
+X-Gm-Gg: ASbGnctU8z92Wv3NMIUUhymPdU/Z6coBDx0oYjTlkKLhFEwxYZxHizpToLctelE0e4p
+ h58uKZDfW2nfZZn5glpGSNql42ASVk4FERqybMuvmt20B7Z4aPi9ncYKJjxlAqv2QUBs1rId22z
+ daMmw5dwP3xDehXh1ZdSDPfrj3UDnz55AZCWgmXuZPyxyzIQq6g09oxzmWfxt/yrmUltFhdvDth
+ WIuWhQs+C2qfjwrbq6Vry2NDzOT5K+26pgYVFtr/A21uUwHXCNcmzH0kezwzYuyGGFeR0iPr6fX
+ 70xVfDbK0srqrik9NAHZJZ+oUVbG2ZlT9gQ=
+X-Google-Smtp-Source: AGHT+IHWUH++GE8qoFPI1YIgth4LbdXUIY7e/s3mqIulhuZtZcEt6D3YItDv9e5k4A7jfUTQVp9oXQ==
+X-Received: by 2002:a17:907:7f90:b0:ab7:bc17:b3a4 with SMTP id
+ a640c23a62f3a-abed0e098a3mr808370866b.34.1740556759090; 
+ Tue, 25 Feb 2025 23:59:19 -0800 (PST)
 Received: from think.fritz.box ([2a02:8109:8384:1400:c48e:2efa:cdfc:e268])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abed2013355sm280107866b.113.2025.02.25.23.59.19
+ a640c23a62f3a-abed2013355sm280107866b.113.2025.02.25.23.59.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 23:59:20 -0800 (PST)
+ Tue, 25 Feb 2025 23:59:18 -0800 (PST)
 From: Roman Penyaev <r.peniaev@gmail.com>
 To: 
 Cc: Roman Penyaev <r.peniaev@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 3/5] ui/console-vc: report cursor position in the screen
- not in the scroll buffer
-Date: Wed, 26 Feb 2025 08:59:09 +0100
-Message-ID: <20250226075913.353676-4-r.peniaev@gmail.com>
+Subject: [PATCH v2 1/5] ui/console-vc: introduce parsing of the 'ESC ( <ch>'
+ sequence
+Date: Wed, 26 Feb 2025 08:59:07 +0100
+Message-ID: <20250226075913.353676-2-r.peniaev@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250226075913.353676-1-r.peniaev@gmail.com>
 References: <20250226075913.353676-1-r.peniaev@gmail.com>
@@ -104,46 +104,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The format of the CSI cursor position report is `ESC[row;columnR`,
-where `row` is a row of a cursor in the screen, not in the scrollback
-buffer. What's the difference? Let's say the terminal screen has 24
-lines, no matter how long the scrollback buffer may be, the last line
-is the 24th.
+This change introduces parsing of the 'ESC ( <ch>' sequence, which is
+supposed to change character set [1]. In the QEMU case, the
+introduced parsing logic does not actually change the character set, but
+simply parses the sequence and does not let output of a tool to be
+corrupted with leftovers: `top` sends 'ESC ( B', so if character
+sequence is not parsed correctly, chracter 'B' appears in the output:
 
-For example the following command can be executed in xterm on the last
-screen line:
+  Btop - 11:08:42 up 5 min,  1 user,  load average: 0BB
+  Tasks:B 158 Btotal,B  1 Brunning,B 157 Bsleeping,B   0 BsBB
+  %Cpu(s):B  0.0 Bus,B  0.0 Bsy,B  0.0 Bni,B 99.8 Bid,B  0.2 BB
+  MiB Mem :B   7955.6 Btotal,B   7778.6 Bfree,B     79.6 BB
+  MiB Swap:B      0.0 Btotal,B      0.0 Bfree,B      0.0 BB
 
-   $ echo -en '\e[6n'; IFS='[;' read -sdR _ row col; echo $row:$col
-   24:1
+      PID USER      PR  NI    VIRT    RES    SHR S B
+  B    735 root      20   0    9328   3540   3152 R B
+  B      1 root      20   0   20084  10904   8404 S B
+  B      2 root      20   0       0      0      0 S B
 
-It shows the cursor position on the current screen and not relative
-to the backscroll buffer.
-
-Before this change the row number was always increasing for the QEMU
-VC and represents the cursor position relative to the backscroll
-buffer.
+[1] https://vt100.net/docs/vt100-ug/chapter3.html#SCS
 
 Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
 Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org
 ---
- ui/console-vc.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ ui/console-vc.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/ui/console-vc.c b/ui/console-vc.c
-index d512f57e10a9..87f57f1c52c6 100644
+index fe20579832a5..90ff0ffda8c5 100644
 --- a/ui/console-vc.c
 +++ b/ui/console-vc.c
-@@ -827,8 +827,7 @@ static void vc_putchar(VCChardev *vc, int ch)
-                 case 6:
-                     /* report cursor position */
-                     response = g_strdup_printf("\033[%d;%dR",
--                           (s->y_base + s->y) % s->total_height + 1,
--                            s->x + 1);
-+                                               s->y + 1, s->x + 1);
-                     vc_respond_str(vc, response);
-                     break;
-                 }
+@@ -42,6 +42,8 @@ enum TTYState {
+     TTY_STATE_NORM,
+     TTY_STATE_ESC,
+     TTY_STATE_CSI,
++    TTY_STATE_G0,
++    TTY_STATE_G1,
+ };
+ 
+ typedef struct QemuTextConsole {
+@@ -694,6 +696,10 @@ static void vc_putchar(VCChardev *vc, int ch)
+                 vc->esc_params[i] = 0;
+             vc->nb_esc_params = 0;
+             vc->state = TTY_STATE_CSI;
++        } else if (ch == '(') {
++            vc->state = TTY_STATE_G0;
++        } else if (ch == ')') {
++            vc->state = TTY_STATE_G1;
+         } else {
+             vc->state = TTY_STATE_NORM;
+         }
+@@ -844,6 +850,16 @@ static void vc_putchar(VCChardev *vc, int ch)
+             }
+             break;
+         }
++        break;
++    case TTY_STATE_G0: /* set character sets */
++    case TTY_STATE_G1: /* set character sets */
++        switch (ch) {
++        case 'B':
++            /* Latin-1 map */
++            break;
++        }
++        vc->state = TTY_STATE_NORM;
++        break;
+     }
+ }
+ 
 -- 
 2.43.0
 
