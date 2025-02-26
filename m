@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E210C19776
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 18:00:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC05C19776
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 18:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnLhM-0007yk-SN; Wed, 26 Feb 2025 12:59:56 -0500
+	id 1tnLhQ-00080y-FS; Wed, 26 Feb 2025 13:00:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnLhD-0007qr-6W
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:59:49 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnLhL-0007vq-2p
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:59:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnLh9-0004nX-OO
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:59:46 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnLhJ-0004oM-LM
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:59:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740592781;
+ s=mimecast20190719; t=1740592791;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=PFLF8t8l79LzXggmpT6RRT+qVVnpyK7gLvK3KoU3ZNg=;
- b=a1RU9No/TjrvuPx99KQIxJotwaYX9y0ZcJo8l12v7y0X6y6y/Arnck4qzAGAafVYHC6Xv0
- tuE1Ai3TW7LTXrXGu/zVoJgGgx3VvY7EZ61WV1XEitOSaIgdkbps5yYNao2jmuU2cXG0w5
- sWQwnJUOnnXQIroTO6Bqobk3fRtWBjI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VYT4SPikEOqNkm8egAuZGdlWcXE3XhS/F3+r9b9uDGE=;
+ b=aATTfdRjXQUwUMKyMgGHAl8l7Q5vnHjJPRgXoTMiuhMKXkzG/GBeSujZFOdUYwHfgMrRbi
+ xi81hB6HU85YE2Y7U6QUbfCG0Ac03TpxTHU8VwKQxwZuF4DJ4uuNbJfnfvPu/1tWdkKXTE
+ JqTKN8a+NULRm1CN+ezIWX5Ag3gCvIA=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-567-pfLTlE4POm6lk0lahVBcaw-1; Wed, 26 Feb 2025 12:59:39 -0500
-X-MC-Unique: pfLTlE4POm6lk0lahVBcaw-1
-X-Mimecast-MFC-AGG-ID: pfLTlE4POm6lk0lahVBcaw_1740592779
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43998ec3733so462595e9.2
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:59:39 -0800 (PST)
+ us-mta-321-HkpFTAVfOae9Pfp5AACUEQ-1; Wed, 26 Feb 2025 12:59:50 -0500
+X-MC-Unique: HkpFTAVfOae9Pfp5AACUEQ-1
+X-Mimecast-MFC-AGG-ID: HkpFTAVfOae9Pfp5AACUEQ_1740592789
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4388eee7073so5248475e9.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:59:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740592779; x=1741197579;
+ d=1e100.net; s=20230601; t=1740592789; x=1741197589;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PFLF8t8l79LzXggmpT6RRT+qVVnpyK7gLvK3KoU3ZNg=;
- b=gYW9mdmLczcQjkZV8Uu184oF9JVsqb/vr4gybYjr37GfgKOK1fnMhM2qm43thu25GY
- xS5jEFi/0PkHlM5gwe66m2adVorFKPK4T8Lqk6q4ieVe73oSDR/VakfVOJVAvPyMDm4N
- YMegxxjmyPC0/gVQK3X57AiYsbAyg8AA3TEBMuq4Vq5ZgY1ydWhPD2PK8B28vbGL8WUp
- gPszMeNy92k3LoTGpCgR0XaqMMcrYFx7s0qW1IVn/7WjcSt7x1aVmCXmdV+293Z1qB0/
- gl0bVTgk8bFb5ypZnZZiGT3BxdWYDmbVPfqQTV9vS7OXHTe2/zkse/rRHpiOChR3ZpNQ
- 1ijA==
+ bh=VYT4SPikEOqNkm8egAuZGdlWcXE3XhS/F3+r9b9uDGE=;
+ b=XiuQbXb3k/ixYlOr8Z7A5GBzuYSxhJxIbVA03cmi1p7Z2V499wFs5tY/qR+/WFjlTy
+ LZ3YSULymWj3FsNrICdQs3/hJjMKpyCF9T3oV04ytNz7TCnJlNmmMznBJj5jwk6PFwMO
+ 9bP3aqcA1McYINgzLGZMeknZtnvBsOUDbjY5Jj9sLRr9unJmpNR1ZnycpPX7tQ4HusqA
+ 1p8D+mFMJDh2Fi2k6ydfggBeRVJgU7YF0Y7YC79twBkmFgNYfaKri63yoi2yxDyhMzv7
+ Xs/6AE4dRMUjkjn+ah4wh4CYD5ifPzCNZILcFWiwGdnSDdip1GUusoLHErX9R/jd54NN
+ 3lpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9KXwOcVKfQT9Z/f2gSd96TnVOrRyeoTJTmo/LvVWlssV71TOFX7ZCra83dzN5eZW8snSGLZWd+l2A@nongnu.org
-X-Gm-Message-State: AOJu0YxxyAdYuMLmhFiu474La8vT0LMOT5KZeXyjGYH/58QlWZIMfuLy
- LNdgWN4g/oaMwtOboj0LDxUTHEUgNB3U4ZiFb247En5BrAkwfuoMnCk1GrFkeS1EU3vFbhA0/Zu
- 3/gOoNePXp1EfdZ1Sjy0alj+jL3ij2oc6u2TJuYVsj43yq4e3Ouqu
-X-Gm-Gg: ASbGnctxWMBlJhBcn5J7BrUFjPnfS0gxP6fUmTGHLDla9pH25WEjlUBgPrXZXrnskJ4
- u95oMyybsqzMv03ZoGm/t1EZFDwuQ9v2+S0W0S95JAFNRwVpPA0ePGReSNC+0n3RVNDfBYxs2RC
- oQSurfp3LAko88f/NOg1/Al14IGtav7QwjZyNJwVRH5JFNf3RGTJlCyXcpUiTIYL83u+jVjS96f
- 8/CsxkzPlG0ff49PGljUwRTwieoQjintzONDtcifFQTD0zKQFYdl5KcGBdD+zIuIxuuSy+qO6nZ
- ZMss3tQtR4OmlTNizWoEYbzOHpAzgkjRUkRejDOzUiDFZMoldJ18KYgn5fw=
-X-Received: by 2002:a05:600c:3496:b0:439:9828:c425 with SMTP id
- 5b1f17b1804b1-43ab182d5bamr68755065e9.7.1740592778732; 
- Wed, 26 Feb 2025 09:59:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGDOdW3wEt9SmXo5wwd8sB0QTylZ2CUFu7id8qhqx9mjEOaFoCO3H8bmGHt9BghMtswFIc6pQ==
-X-Received: by 2002:a05:600c:3496:b0:439:9828:c425 with SMTP id
- 5b1f17b1804b1-43ab182d5bamr68754835e9.7.1740592778372; 
- Wed, 26 Feb 2025 09:59:38 -0800 (PST)
+ AJvYcCXN3HosgJ1BX86gD8yqASUK3zYyteBy0oK7qcENbSCD4LhLV1KMeV/QC5rW6aFsP9nk7+BqQM6qis/c@nongnu.org
+X-Gm-Message-State: AOJu0Yz+dvAb3iyUuMx+Yq4qn56Avc7IKZICEAIcyOwpeHP/nBnJ76Hw
+ NmdM1orLZqCDEDVayaFrQwNHezuKX3/UhfXQdsq0fys3RyZpHCHn9v6e9ahKAloSStvLQOIDnu7
+ SWSoY7pW6eELyoyVUV3+rjWUDihesiD/PyoVzd64SZc8ImaSBVkec
+X-Gm-Gg: ASbGnct5q34rkO3lo+M6lxF7ZVLK4iTi6e+Urba8kAYyNpkMQ3HQPcV5HwIzLL2Z7xg
+ Xw5AvRbTx9JgYJ4YhjIVzQjyEd7yln5s5EYf1GQ5DzaK9SABC3p5lCHioCC+QXEJlZowhW7jGpe
+ qChgAN1MTryp43az1hIKUlF61yRp/CcH64PQzfunVXHVVzKy/ppE5MTZb0vhicG+S/YuOrlPbJq
+ vqpHj+9UoS6D8iBKj12+kyie0aygvzSRZ9aUeZnDieWvS4BQJvgKcKczdNQIrGCVgijcBd2OdGy
+ W+pexWPSYeHlqjzcmbpmsB9ZMn02l489xbbk0+m6/uggo0qOy34rk2QxodQ=
+X-Received: by 2002:a05:600c:1552:b0:439:9434:4f3b with SMTP id
+ 5b1f17b1804b1-43afddcb3e2mr2841135e9.8.1740592788953; 
+ Wed, 26 Feb 2025 09:59:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFSmgjPFjUUSD/kFJcaARC8sPk0PJqJCEznTVeg8xMxQQfnVOQ3boUaDE7DCoV0ycYoCANfMQ==
+X-Received: by 2002:a05:600c:1552:b0:439:9434:4f3b with SMTP id
+ 5b1f17b1804b1-43afddcb3e2mr2840985e9.8.1740592788651; 
+ Wed, 26 Feb 2025 09:59:48 -0800 (PST)
 Received: from ?IPV6:2a01:cb19:9004:d500:a732:5611:7f59:8bb3?
  ([2a01:cb19:9004:d500:a732:5611:7f59:8bb3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd8fb50asm6236546f8f.82.2025.02.26.09.59.37
+ ffacd0b85a97d-390cd86cc31sm6536343f8f.38.2025.02.26.09.59.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 09:59:37 -0800 (PST)
-Message-ID: <4d8d1101-f0f4-4e9d-97dc-fe4e5a4b8f58@redhat.com>
-Date: Wed, 26 Feb 2025 18:59:36 +0100
+ Wed, 26 Feb 2025 09:59:48 -0800 (PST)
+Message-ID: <2c59be25-860d-4bac-aa8d-3068b12b6cb8@redhat.com>
+Date: Wed, 26 Feb 2025 18:59:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 32/36] vfio/migration: Make
- x-migration-multifd-transfer VFIO property mutable
+Subject: Re: [PATCH v5 33/36] hw/core/machine: Add compat for
+ x-migration-multifd-transfer VFIO property
 To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -87,7 +87,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <f558685fa2b2d82220d65120fb4bd9c77e28e2d4.1739994627.git.maciej.szmigiero@oracle.com>
+ <57d0b587299e27bd022ee2a04660a44868f5be06.1739994627.git.maciej.szmigiero@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,9 +133,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <f558685fa2b2d82220d65120fb4bd9c77e28e2d4.1739994627.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <57d0b587299e27bd022ee2a04660a44868f5be06.1739994627.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -164,69 +164,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/19/25 21:34, Maciej S. Szmigiero wrote:
 > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> DEFINE_PROP_ON_OFF_AUTO() property isn't runtime-mutable so using it
-> would mean that the source VM would need to decide upfront at startup
-> time whether it wants to do a multifd device state transfer at some
-> point.
-> 
-> Source VM can run for a long time before being migrated so it is
-> desirable to have a fallback mechanism to the old way of transferring
-> VFIO device state if it turns to be necessary.
-> 
-> This brings this property to the same mutability level as ordinary
-> migration parameters, which too can be adjusted at the run time.
+> Add a hw_compat entry for recently added x-migration-multifd-transfer VFIO
+> property.
 > 
 > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> ---
->   hw/vfio/pci.c | 12 +++++++++---
->   1 file changed, 9 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 184ff882f9d1..9111805ae06c 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3353,6 +3353,8 @@ static void vfio_instance_init(Object *obj)
->       pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
->   }
->   
-> +static PropertyInfo qdev_prop_on_off_auto_mutable;
 
-please use another name, like vfio_pci_migration_multifd_transfer_prop.
-I wish we could define the property info all at once.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-> +
->   static const Property vfio_pci_dev_properties[] = {
->       DEFINE_PROP_PCI_HOST_DEVADDR("host", VFIOPCIDevice, host),
->       DEFINE_PROP_UUID_NODEFAULT("vf-token", VFIOPCIDevice, vf_token),
-> @@ -3377,9 +3379,10 @@ static const Property vfio_pci_dev_properties[] = {
->                       VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
->       DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
->                               vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
-> -    DEFINE_PROP_ON_OFF_AUTO("x-migration-multifd-transfer", VFIOPCIDevice,
-> -                            vbasedev.migration_multifd_transfer,
-> -                            ON_OFF_AUTO_AUTO),
-> +    DEFINE_PROP("x-migration-multifd-transfer", VFIOPCIDevice,
-> +                vbasedev.migration_multifd_transfer,
-> +                qdev_prop_on_off_auto_mutable, OnOffAuto,
-> +                .set_default = true, .defval.i = ON_OFF_AUTO_AUTO),
->       DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
->                        vbasedev.migration_events, false),
->       DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
-> @@ -3475,6 +3478,9 @@ static const TypeInfo vfio_pci_nohotplug_dev_info = {
+> ---
+>   hw/core/machine.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 21c3bde92f08..d0a87f5ccbaa 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -44,6 +44,7 @@ GlobalProperty hw_compat_9_2[] = {
+>       { "virtio-mem-pci", "vectors", "0" },
+>       { "migration", "multifd-clean-tls-termination", "false" },
+>       { "migration", "send-switchover-start", "off"},
+> +    { "vfio-pci", "x-migration-multifd-transfer", "off" },
+>   };
+>   const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
 >   
->   static void register_vfio_pci_dev_type(void)
->   {
-> +    qdev_prop_on_off_auto_mutable = qdev_prop_on_off_auto;
-> +    qdev_prop_on_off_auto_mutable.realized_set_allowed = true;
-> +
->       type_register_static(&vfio_pci_dev_info);
->       type_register_static(&vfio_pci_nohotplug_dev_info);
->   }
 > 
 
 
