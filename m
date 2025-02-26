@@ -4,68 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8701AC021BE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 02:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A4AC021BE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 02:37:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tn6ko-0006cB-OS; Tue, 25 Feb 2025 21:02:30 -0500
+	id 1tn7Hd-00038L-Tv; Tue, 25 Feb 2025 21:36:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liweishi@kylinos.cn>)
- id 1tn6PS-0004Mb-Gy
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 20:40:26 -0500
-Received: from mailgw.kylinos.cn ([124.126.103.232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liweishi@kylinos.cn>)
- id 1tn6PM-0003O7-O7
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 20:40:25 -0500
-X-UUID: 98ef4fe2f3e211efa216b1d71e6e1362-20250226
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.45, REQID:d0dcfda1-a7ad-4a57-8880-49fe0344ce01, IP:0,
- U
- RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
- :release,TS:25
-X-CID-META: VersionHash:6493067, CLOUDID:85c6ec20e038505e25d237f32b7daf1b,
- BulkI
- D:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0|50,EDM:5,IP:nil,URL
- :0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SP
- R:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 0
-X-CID-BAS: 0,_,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-UUID: 98ef4fe2f3e211efa216b1d71e6e1362-20250226
-Received: from mail.kylinos.cn [(10.44.16.175)] by mailgw.kylinos.cn
- (envelope-from <liweishi@kylinos.cn>) (Generic MTA)
- with ESMTP id 928804927; Wed, 26 Feb 2025 09:40:02 +0800
-Received: from mail.kylinos.cn (localhost [127.0.0.1])
- by mail.kylinos.cn (NSMail) with SMTP id 37CFBE0080FF;
- Wed, 26 Feb 2025 09:40:02 +0800 (CST)
-X-ns-mid: postfix-67BE70F2-29200311
-Received: from localhost.localdomain (unknown [10.42.12.187])
- by mail.kylinos.cn (NSMail) with ESMTPA id D0833E0080FF;
- Wed, 26 Feb 2025 09:40:01 +0800 (CST)
-From: liweishi@kylinos.cn
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
-	Weishi Li <liweishi@kylinos.cn>
-Subject: [PATCH v1] virtio-gpu-virgl: Correct virgl_cmd_context_create()
-Date: Wed, 26 Feb 2025 09:39:59 +0800
-Message-Id: <20250226013959.37075-1-liweishi@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tn7HZ-00037C-9g; Tue, 25 Feb 2025 21:36:21 -0500
+Received: from mail-vs1-xe36.google.com ([2607:f8b0:4864:20::e36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tn7HX-0002tV-9J; Tue, 25 Feb 2025 21:36:21 -0500
+Received: by mail-vs1-xe36.google.com with SMTP id
+ ada2fe7eead31-4bd35d4407aso1975411137.0; 
+ Tue, 25 Feb 2025 18:36:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740537375; x=1741142175; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iQDMVifPtbDD4VK4+T2yVkMnTcQRN5bTGPPsrDRuZ1k=;
+ b=HMlsTG+zumPZpPi47hLzga2sKMCcdMcRY3hmtdiGlNkTACR+LwIZwFVPUCaU7K++in
+ oTviK0pFHRHM+UxcG4Shea9+wHauIrzh7UInkt75lNIZ/wCFv4fMpG/VD6uOOWDZgTPS
+ r9MiG/rwR0AEogZS9xvMhL6HUnbaRhbpmG6ITEY2GriLpQnJ4Kp90a9Op4sOsrIiF3AX
+ r6CZbTegXLC8c3QXHSHLW4tssvFRgjIryH3BKfkeuguVmTuASh/3iM5UNJzMy+EO4s6Q
+ fV391HW/K5nOb519ZY2rld/qVERsydoQYmMvIeE7UIhviBA8zliTMBHQEx8F3T+bl0p7
+ 5xFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740537375; x=1741142175;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iQDMVifPtbDD4VK4+T2yVkMnTcQRN5bTGPPsrDRuZ1k=;
+ b=Q9SynZVKQG1M99PvR75Rj1/u8Lj8pKycMUz/eB3E44DGFyp5bvpskepVcQjoymatWQ
+ ZZyw3hMA0/JiJvZ6MgwxgZP0OMkWLaZz9vGby+A8OWezXJeG76r6Vjwrh4s13lUiIa7e
+ pnpvJvlpAQ3aLzc0QhhxRW2CWL6eMjG3XcwkJaFaL9sUAZnKkYuL85THta62keuNOc3X
+ jn+2SK3kcZPCQ65spKpSnKnRW6Om1GanilIglNnEk4vcMeOMQuSAgkEH/74PR2l3BGdg
+ U9mJmTFDHJdEA1AvYE2uIMmv5eaMYjDSaAksK82kJOlIuBT4yO8nuyytDRQOYnLMY6gQ
+ gaYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUwx5Hk8cQfp26pJMqiUpk4efe8KQEXqy4+KB5r91Tf4ZLLHIl0X50+n23X8tEwVvBa4knlUFFXBpg5@nongnu.org
+X-Gm-Message-State: AOJu0YzFZ118jczNwZKrABXKNtARzrJdkMNXRnuNbr17WNV55mOy7Wsc
+ UDu0areZ81OVMfMMjQ4dsRSuIiX9CQ4GDKQXj/quOrlRaTTwe+E8lOgk/Q8L0SbR3ymLRJwv4zR
+ FuKE6yC6DtjMuSj8Jhm8Q5YvV8JI=
+X-Gm-Gg: ASbGncvvmdMPQjVMrVDPh5xrJ6Uzw9f/46pNbicEw97+07I3nIqtI8DGoXdMwN3vw64
+ xU7VMq0bAf+J+onjkqjnji66+spYBThjL4uJUiJZhF2iqZnC82Z65wrct7RKdLlp9NqIwx+ySSr
+ pk/ZNxasfymzdMhCArp5zNm242mjzOsblaj3CHDQ==
+X-Google-Smtp-Source: AGHT+IGE1wDFsM2XUS+RzG2F34P80rvIB13D3fo9g/KxqUnTKcuFvbeqhxhYnKZEArgl5pjEkLSebUO9OMN4J23Fe1g=
+X-Received: by 2002:a05:6102:c08:b0:4bd:3953:1b07 with SMTP id
+ ada2fe7eead31-4c00acf3f36mr4090531137.3.1740537375065; Tue, 25 Feb 2025
+ 18:36:15 -0800 (PST)
 MIME-Version: 1.0
+References: <20250224190826.1858473-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20250224190826.1858473-1-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 26 Feb 2025 12:35:49 +1000
+X-Gm-Features: AQ5f1JqFmgMkSGnv6MfZFUIv7RvncCZ0wErKBERVgGdt6mNQdoVMzJkS0t1R-Wg
+Message-ID: <CAKmqyKMTgSOcB54G9hU3Se-YZXVUC=3wq9htyeGNxYiwba6U7g@mail.gmail.com>
+Subject: Re: [PATCH v2 00/11] riscv: IOMMU HPM support
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=124.126.103.232; envelope-from=liweishi@kylinos.cn;
- helo=mailgw.kylinos.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e36;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe36.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 25 Feb 2025 21:02:26 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,42 +96,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Weishi Li <liweishi@kylinos.cn>
+On Tue, Feb 25, 2025 at 5:13=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> Hi,
+>
+> In this version no major changes were made. Just a rebase with
+> alistair/riscv-to-apply.next and acks from Alistair.
+>
+> All patches acked.
+>
+> v1 link: https://lore.kernel.org/qemu-riscv/20241205133003.184581-1-dbarb=
+oza@ventanamicro.com/
+>
+> Daniel Henrique Barboza (3):
+>   hw/riscv/riscv-iommu.h: add missing headers
+>   hw/riscv: add IOMMU HPM trace events
+>   docs/specs/riscv-iommu.rst: add HPM support info
+>
+> Tomasz Jeznach (8):
+>   hw/riscv/riscv-iommu-bits.h: HPM bits
+>   hw/riscv/riscv-iommu: add riscv-iommu-hpm file
+>   hw/riscv/riscv-iommu: add riscv_iommu_hpm_incr_ctr()
+>   hw/riscv/riscv-iommu: instantiate hpm_timer
+>   hw/riscv/riscv-iommu: add IOCOUNTINH mmio writes
+>   hw/riscv/riscv-iommu: add IOHPMCYCLES mmio write
+>   hw/riscv/riscv-iommu: add hpm events mmio write
+>   hw/riscv/riscv-iommu.c: add RISCV_IOMMU_CAP_HPM cap
 
-Due to the fact that g->parent_obj.conf only adds
-VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED setting when
-VIRGL_VERSION_MAJOR >=3D 1, virgl_cmd_comtext_create()
-will always return by error=3DVIRTIO_GPU_RESP_ERR_UNSPEC
-when VIRGL_VERSION_MAJOR < 1, resulting in gl context
-initialization failure.
+Thanks!
 
-Signed-off-by: Weishi Li <liweishi@kylinos.cn>
----
- hw/display/virtio-gpu-virgl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Applied to riscv-to-apply.next
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
-c
-index 145a0b3879..48f6121e16 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -338,6 +338,7 @@ static void virgl_cmd_context_create(VirtIOGPU *g,
-                                     cc.debug_name);
-=20
-     if (cc.context_init) {
-+#if VIRGL_VERSION_MAJOR >=3D 1
-         if (!virtio_gpu_context_init_enabled(g->parent_obj.conf)) {
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: context_init disabled",
-                           __func__);
-@@ -345,7 +346,6 @@ static void virgl_cmd_context_create(VirtIOGPU *g,
-             return;
-         }
-=20
--#if VIRGL_VERSION_MAJOR >=3D 1
-         virgl_renderer_context_create_with_flags(cc.hdr.ctx_id,
-                                                  cc.context_init,
-                                                  cc.nlen,
---=20
-2.25.1
+Alistair
 
+>
+>  docs/specs/riscv-iommu.rst  |   2 +
+>  hw/riscv/meson.build        |   3 +-
+>  hw/riscv/riscv-iommu-bits.h |  47 +++++
+>  hw/riscv/riscv-iommu-hpm.c  | 381 ++++++++++++++++++++++++++++++++++++
+>  hw/riscv/riscv-iommu-hpm.h  |  33 ++++
+>  hw/riscv/riscv-iommu.c      | 131 +++++++++++--
+>  hw/riscv/riscv-iommu.h      |  27 +++
+>  hw/riscv/trace-events       |   5 +
+>  8 files changed, 612 insertions(+), 17 deletions(-)
+>  create mode 100644 hw/riscv/riscv-iommu-hpm.c
+>  create mode 100644 hw/riscv/riscv-iommu-hpm.h
+>
+> --
+> 2.48.1
+>
+>
 
