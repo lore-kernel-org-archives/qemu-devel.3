@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE6B7C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:08:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E3EC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnJxD-0001v0-Rk; Wed, 26 Feb 2025 11:08:11 -0500
+	id 1tnK3a-0004HZ-5f; Wed, 26 Feb 2025 11:14:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnJwz-0001kv-4O
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:08:03 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnK3S-0004Ek-8i
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:14:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnJww-0006tA-0h
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:07:56 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnK3P-0007TY-9C
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:14:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740586072;
+ s=mimecast20190719; t=1740586474;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3wg6ZOCd43MRSnPl1PnnELQdbYFw1kzSUG4St9Z3JEA=;
- b=BE8sVtJxMfvMwBcHbWitEcSGKSo0Cw8/lnHr3MsUBFpuc2HKFxJrqXYjQXyPrJZtuS72O5
- yiV4aRMdZH7s26/P9nhGm9JtxPODZiqW2UHDTM7kgPqvbVcd+WHDAIODGYBkchMZUdzrPN
- tFawq6uA8iCwod5dyInjODG6fxXa3WI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=e6WptTDB312s9O4jIKbscZ5uDMmB+gpUnuK5GkWtL50=;
+ b=WMDCWr22cmFw/sv0xsYYnZATKpaOgEeTxTBPqTgRisinR4ErKpI+nPpG6gLWlfPM0BWhTd
+ H1hpukkL5E/qyum4XvM1vTrVKGWNYEK1W0ckmnyqVyrs3HaHd4tBuUgdSf4TEqiOIOlHvD
+ vCvEanmBjRA9YQqX43c2CUZFXTnCu5o=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-226-YaNmaK1HPr67z6PTN2lxLA-1; Wed, 26 Feb 2025 11:07:49 -0500
-X-MC-Unique: YaNmaK1HPr67z6PTN2lxLA-1
-X-Mimecast-MFC-AGG-ID: YaNmaK1HPr67z6PTN2lxLA_1740586065
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38f4e47d0b2so3162036f8f.2
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 08:07:46 -0800 (PST)
+ us-mta-642-jO-HRMYzNbKdUx2nL3mpyw-1; Wed, 26 Feb 2025 11:14:31 -0500
+X-MC-Unique: jO-HRMYzNbKdUx2nL3mpyw-1
+X-Mimecast-MFC-AGG-ID: jO-HRMYzNbKdUx2nL3mpyw_1740586470
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-438e4e9a53fso53347585e9.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 08:14:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740586065; x=1741190865;
+ d=1e100.net; s=20230601; t=1740586470; x=1741191270;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3wg6ZOCd43MRSnPl1PnnELQdbYFw1kzSUG4St9Z3JEA=;
- b=hZEXSq8ow/UBO/mCD14dgs6qFwdWlN1fbEpERJH1J8r/frMwBz2S1vO7JtiYvY5JJh
- oylg9jkRJH9DW/mkF3xHHH9whflCYudLKKM0cD+tOXjKiLhzw15OkCjx7e5KW6UlNuQA
- QELKCkv8YSXXBC10HlsqVIAGbFBP7MiCa2vHLbcNal8VwITSYCDO1JJ3dnQ6t8aQ9CTe
- ob+7EqTzZ7rdbuOa9Wm3gywubHesje5EUa+rn2rl1jNeiOJHU7tEbdYDHlFGTfoX2IC3
- U7aAeOLxyOcoza5R7a3UHa7ViFUTpVm0ViYNkASjhRk2eTm0FG/rvVchlyDE+AEnnWG6
- ak4Q==
+ bh=e6WptTDB312s9O4jIKbscZ5uDMmB+gpUnuK5GkWtL50=;
+ b=YBxdQcLNLlhDJgvDbo8FBmbC5heUO8ACac7XmHJR0nl8Zkjvt9NuPZ/5XrqzNpFYwU
+ H2B1mbAYdUTa0xDLLcXcb5IMiQR7HtKV472gmCyHNLQjucYmgXND73RC022qFVNhQ1cF
+ LhG1xe9K+nkqU9uwfdLMdAZsJKQKMIxFy0ELVoAO3aKUtHPI2nlvjoznypKH3k+pHatG
+ fKM7qWohTnKxYgWJLbZNHUu4zqJWELNH1zmZ5KizOk5VgbxDLcvJBR+pYbQK9RUwMBnH
+ b47PXM8Nn6V60F5J5NUagnrpmwG0ZfU/+I9oVNIhcjbpgpC9fW3h9P+FW1Sh+6omlDI6
+ Cxgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV20Uy3wJunpOSYvQe+jTIj4o7Jzc0GKTq8Z4PGoWig8Tb3Ra2YP59JjRqKV8ojROG9LLX5Ftum5Owb@nongnu.org
-X-Gm-Message-State: AOJu0Yz68RZKD8luweYWNhwXKQeOZnlHuwi5sCkJjQjjXCpg8VjTzv11
- pgh7mmn6i1LGm13Hu35LspKPx4Lq7P/RZLzZFIGxWUujkQjsviK0YSieXcyLCICeRu9L8q43PDN
- fSnB/Hm8TA/zvZo2fvkNGBpB1zLQui8NjuCEdigdmalaOgna87NnR
-X-Gm-Gg: ASbGncszhOk7ts0n8uiZ3qH6QDGydaTLY+1M2OvB64wNBmOlsgoR3DoaQB8XiUGZ/4N
- k7WCgvV7UnhWlc1nWaFVRe241hKZRIMJ6Wk5XT/neuqdjOiu4rFw7VrB8eb0/HFb2JwOWKl0W0e
- JME72AU7oadOyuPOqGH92LUf+C7CZtsd5cryZQ2Vb+oj8txaXtI9HRk3pEkZy7xsAkAwdOBsKaR
- XFCyiaBhphm4h+xBJHw5KRGBPYvpZNXdmCUIpnnDbo1SULc8L3/uD6Qe348cYeb7HftISIY3Jkc
- UHu9QmVZPVujYiCbIxZj0FTeahz29URjeQPAFPpX2oydjYg=
-X-Received: by 2002:a05:6000:1103:b0:38f:3d74:9af with SMTP id
- ffacd0b85a97d-390d4f9bfcbmr2751462f8f.45.1740586064990; 
- Wed, 26 Feb 2025 08:07:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFQCdnP93a3ZpjiWr+k9plKWrGyVHH0BoErr+TA4/WYcmYL/H4aT7mjnZAw62/krt5K6TVQ8w==
-X-Received: by 2002:a05:6000:1103:b0:38f:3d74:9af with SMTP id
- ffacd0b85a97d-390d4f9bfcbmr2751436f8f.45.1740586064575; 
- Wed, 26 Feb 2025 08:07:44 -0800 (PST)
+ AJvYcCWOvNhEVWia+ucr/3O0f8i93JLBS62szGQE+lqmmj/Da07Rtj9r7xIXg8CpkUgo2bjlisHydh4SaFnC@nongnu.org
+X-Gm-Message-State: AOJu0YyWKWFD44O+jZV0U1DVnF5jnBgHwoiqUyDJT6aUMchnP/8rnn6p
+ kkw5kPt9VW8nyxa8arICv2A2v4q0TSHIaXTtfes6M3DjDuuH7y27e2kKYYoqyg+fkOZwu0dHG6v
+ bbZ27W1bfKbJRqgiVBeSzvqWhgMLpe9DesWn1+fOa272laLJjb2b1
+X-Gm-Gg: ASbGnct7dGznHxAL56AVGGFmaBTgGmJhbDKdTd00N60OwTIS8j2eZyct44HfU/L/2l2
+ 5iZEo7vZw4muyNU3TNE9fGtXImm+JTyNTEsWCNh1YFwahnSN9ZD6+3V8EiLNo4lzcXz4FGmUcMd
+ a9WrGp3IB4W+LGRYEmJ8sAMyrpDVo/8XOsh8epVK9uWplLJXujZIi8Ci3nhneZC8jnCuSnflWmc
+ WDFRy3rBEOZESyfgxPG74T+9u5zSksqXrdMMb7N5NQWbK/ruNgOLJ5rTaNOWZgaRg0ZK+X8MOhX
+ GkEBkoetZT8xYeKxQLTmEYszB6VyLTeGgzEs2ICl014r/dU=
+X-Received: by 2002:a05:600c:1550:b0:439:a1b8:a246 with SMTP id
+ 5b1f17b1804b1-439aeb0d445mr162357725e9.8.1740586469955; 
+ Wed, 26 Feb 2025 08:14:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHyeQpehza3kpH6UZEzjbuh5K4W8L0PZYc7/besnbG15fUwGuwfCfqusfvTy0CrqOXXMS9/mg==
+X-Received: by 2002:a05:600c:1550:b0:439:a1b8:a246 with SMTP id
+ 5b1f17b1804b1-439aeb0d445mr162357405e9.8.1740586469609; 
+ Wed, 26 Feb 2025 08:14:29 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-49-245.web.vodafone.de.
  [109.42.49.245]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390db1aa6c8sm2062307f8f.72.2025.02.26.08.07.43
+ 5b1f17b1804b1-43ab2c4051bsm45127055e9.0.2025.02.26.08.14.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 08:07:44 -0800 (PST)
-Message-ID: <13ffd935-9b26-4a43-8009-834220b709a1@redhat.com>
-Date: Wed, 26 Feb 2025 17:07:42 +0100
+ Wed, 26 Feb 2025 08:14:29 -0800 (PST)
+Message-ID: <46bd3693-6883-4a80-aa52-e7d89f752806@redhat.com>
+Date: Wed, 26 Feb 2025 17:14:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/25] tests/functional: skip vulkan tests with nVidia
+Subject: Re: [PATCH 09/25] libvirt-ci: bump to latest for vulkan-tools
+ (libvirt MR 525)
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
@@ -90,10 +91,9 @@ Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Ed Maste <emaste@freebsd.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
+ Ed Maste <emaste@freebsd.org>
 References: <20250226140343.3907080-1-alex.bennee@linaro.org>
- <20250226140343.3907080-9-alex.bennee@linaro.org>
+ <20250226140343.3907080-10-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -138,7 +138,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250226140343.3907080-9-alex.bennee@linaro.org>
+In-Reply-To: <20250226140343.3907080-10-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -167,73 +167,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 26/02/2025 15.03, Alex Bennée wrote:
-> While running the new GPU tests it was noted that the proprietary
-> nVidia driver barfed when run under the sanitiser:
+> The alpine baseline has also been updated in the meantime so we need
+> to address that while we are at it.
 > 
->    2025-02-20 11:13:08,226: [11:13:07.782] Output 'headless' attempts
->    EOTF mode SDR and colorimetry mode default.
->    2025-02-20 11:13:08,227: [11:13:07.784] Output 'headless' using color
->    profile: stock sRGB color profile
-> 
->    and that's the last thing it outputs.
-> 
->    The sanitizer reports that when the framework sends the SIGTERM
->    because of the timeout we get a write to a NULL pointer (but
->    interesting not this time in an atexit callback):
-> 
->    UndefinedBehaviorSanitizer:DEADLYSIGNAL
->    ==471863==ERROR: UndefinedBehaviorSanitizer: SEGV on unknown address
->    0x000000000000 (pc 0x7a18ceaafe80 bp 0x000000000000 sp 0x7ffe8e3ff6d0
->    T471863)
->    ==471863==The signal is caused by a WRITE memory access.
->    ==471863==Hint: address points to the zero page.
->        #0 0x7a18ceaafe80
->    (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x16afe80)
->    (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->        #1 0x7a18ce9e72c0
->    (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15e72c0)
->    (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->        #2 0x7a18ce9f11bb
->    (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15f11bb)
->    (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->        #3 0x7a18ce6dc9d1
->    (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x12dc9d1)
->    (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->        #4 0x7a18e7d15326 in vrend_renderer_create_fence
->    /usr/src/virglrenderer-1.0.0-1ubuntu2/obj-x86_64-linux-gnu/../src/vrend_renderer.c:10883:26
->        #5 0x55bfb6621871 in virtio_gpu_virgl_process_cmd
-> 
-> The #dri-devel channel confirmed:
-> 
->    <digetx> stsquad: nv driver is known to not work with venus, don't use
->        it for testing
-> 
-> So lets skip running the test to avoid known failures.
-> 
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> 
 > ---
-> v2
->    - implement block at the test level
-> ---
->   tests/functional/test_aarch64_virt_gpu.py | 12 ++++++++++--
->   1 file changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-> index 7a8471d1ca..a4ae5777e6 100755
-> --- a/tests/functional/test_aarch64_virt_gpu.py
-> +++ b/tests/functional/test_aarch64_virt_gpu.py
-> @@ -9,8 +9,6 @@
->   #
->   # SPDX-License-Identifier: GPL-2.0-or-later
->   
-> -import logging
 
-That hunk should likely be squashed into patch 1 instead?
-
-With that change:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
