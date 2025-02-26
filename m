@@ -4,148 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED2E9C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 08:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54562C021BC
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 08:31:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnCdX-0008EU-Ge; Wed, 26 Feb 2025 03:19:23 -0500
+	id 1tnCoR-00022y-N2; Wed, 26 Feb 2025 03:30:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnCdT-0008E6-73
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 03:19:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnCoQ-00022d-LJ
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 03:30:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnCdR-0002W1-HZ
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 03:19:18 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnCoJ-0004Lw-DY
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 03:30:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740557956;
+ s=mimecast20190719; t=1740558628;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qkrAFL3CpS47TqGfQWk9ngn80Wj/eKFgHYUapCsKxrQ=;
- b=UzBDwKlo9ntT4RP4CSQ5t7AKIGj5Y6ux7t4ganOB7o9WBmkvRUFI3BgrwP5+TuGeMgkv+L
- irZnS+4g9T/q8/bbIYe6F/0u0QOEPCSUBoMKSf+3jFzXlYQT6rvsPG2P1V612xNqJJ8wMi
- GPwq+biJs9CZ8tjAL+7n5EJ8xNCMWFc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-19-7x7FzDvmN9qGGNcG1XKKJQ-1; Wed, 26 Feb 2025 03:19:14 -0500
-X-MC-Unique: 7x7FzDvmN9qGGNcG1XKKJQ-1
-X-Mimecast-MFC-AGG-ID: 7x7FzDvmN9qGGNcG1XKKJQ_1740557954
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4394c489babso35139625e9.1
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 00:19:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740557954; x=1741162754;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qkrAFL3CpS47TqGfQWk9ngn80Wj/eKFgHYUapCsKxrQ=;
- b=kmcd/HXpZUBrdZ6cqkvmZgFv8mk8xEgxMW07KdJ1g2a9F3jQUUEq/F9BHME6dKOsbF
- iqc12tiJwsrhbRVc95HJ1M/bdtnCk3/YPAcLVXzC1GwHdKAjY/puFO9ZbRYFQqOB1Jni
- UQ+YiVgyIKshf96TWmlwi79gOa85+HI8aRdEr7ae1sfgHdDD4bCF1hVCpens+kzZZ2GX
- qzzihdHuORN9da6lMQVDxXKRD5Faze4sEqdn+XwbPXmtGY7E0otgy8D0/zhte2yVtL6M
- wjrmV74m7GTsBrHMtm7Rjgnh1uauJnbAYhESbKARkjewgOk28PZQps7piMlQfnpMHBk7
- g5Ig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3WyhuLp9xWCQSLlQjhejU2bEheFyDG0VD8F086ucaVogUpKCBfRoEzIhfhLVgv/EJ4wk/EPe+GSwT@nongnu.org
-X-Gm-Message-State: AOJu0YzzX8n+/wbHK04Nx5SU3FMAClqhAFHcuTUOHdFLoKQmQEnoBfdB
- 63+WhaOvtVt+OsBw5oAf3GDpvBY/joZhhBdNBPInVCvbU9zEK5LFiiOnBmBl7bPMqhuYEYdRNee
- RVCLOXb7YBYdGAn0q9gByQZpI6XQbYUYL4q2ArmDYiEcfFgdHtD/t
-X-Gm-Gg: ASbGncsugnfAGBwj8pK8zPFiF3lWi2VZcPsW1Ub9KZokdwGzOBHWNRUZ+iTxG3zq6FJ
- UutajA7RddqXfSBMktiz7ScTybhQBbBHIxwfaJzgZUOib+xrk5gbi/weTKwE99h4Jb/ddxkMdMx
- MwVgQA2dI9vOxZndspsyQwCTprK+xFsxnI9RRJMxEfHuIxcfLvs8Rc428iYUs30ft/zzIdZXP8u
- L/afzCECHrKw6W6Pu52BWasEKC+w8DFQV16aM0yJMnlvn59WTFwLWzsmcPSzNz8doK1ZVUNChhS
- XVyI4qYcdYIJ1HXXp+K41XUMYmpzEsfQqOyn4XQ+D3IP/L9JfNEm+qu6zEs=
-X-Received: by 2002:a05:600c:4ecf:b0:439:a1c7:7b27 with SMTP id
- 5b1f17b1804b1-43ab0f28895mr45900305e9.1.1740557953765; 
- Wed, 26 Feb 2025 00:19:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEYgZ/8+ymJOYqho8SjcIbTwmAygFX+YnXh5NEcgR+50eyfp4p7hau1jyI86IJ8uEYGwE7qqQ==
-X-Received: by 2002:a05:600c:4ecf:b0:439:a1c7:7b27 with SMTP id
- 5b1f17b1804b1-43ab0f28895mr45900095e9.1.1740557953416; 
- Wed, 26 Feb 2025 00:19:13 -0800 (PST)
-Received: from ?IPV6:2a01:cb19:9004:d500:a732:5611:7f59:8bb3?
- ([2a01:cb19:9004:d500:a732:5611:7f59:8bb3])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd8e70a7sm4649657f8f.77.2025.02.26.00.19.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 00:19:12 -0800 (PST)
-Message-ID: <dc07772a-8c79-45a8-ba7f-d537e1319829@redhat.com>
-Date: Wed, 26 Feb 2025 09:19:11 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=ww3uKG8CmEWGXYyCLwQpcH4TmaP/mcFJg7JrSu50wKY=;
+ b=EuYCZPnt8qZv7LtkDsxXW30KXd92nh3t77roNURok5snfbeIQ66IUGCrGqpPJDDX0fS5LR
+ 1mPElXjirCsqW0pFsx3AfesP6oSW1/8rp4fW9ct+QZM8x6OZzg5UkHOk/8jSTw0/2ddjoi
+ 0RD5ER4381zZQ0AZA0uQKBBMNcKFaTo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-tzyb_C32P1ODdgAm12C2aw-1; Wed,
+ 26 Feb 2025 03:30:26 -0500
+X-MC-Unique: tzyb_C32P1ODdgAm12C2aw-1
+X-Mimecast-MFC-AGG-ID: tzyb_C32P1ODdgAm12C2aw_1740558624
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E5C018E6952; Wed, 26 Feb 2025 08:30:24 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9C6501800357; Wed, 26 Feb 2025 08:30:23 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2E5BE21E66B9; Wed, 26 Feb 2025 09:30:21 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,  qemu-arm@nongnu.org,  Ard
+ Biesheuvel <ardb@kernel.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Thomas Huth <thuth@redhat.com>,  "Michael
+ S. Tsirkin" <mst@redhat.com>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ graf@amazon.com,  Eric Blake <eblake@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH v5 14/24] hw/uefi: add var-service-json.c + qapi for NV
+ vars.
+In-Reply-To: <wyrnw2ur2xp7e6yr7f7hdbn3zbvolnvjojjrlaoax7hb2psxzo@xw7arzdtroer>
+ (Gerd Hoffmann's message of "Wed, 26 Feb 2025 08:47:57 +0100")
+References: <20250225163031.1409078-1-kraxel@redhat.com>
+ <20250225163031.1409078-15-kraxel@redhat.com>
+ <87zfi95khl.fsf@pond.sub.org>
+ <wyrnw2ur2xp7e6yr7f7hdbn3zbvolnvjojjrlaoax7hb2psxzo@xw7arzdtroer>
+Date: Wed, 26 Feb 2025 09:30:21 +0100
+Message-ID: <87bjup3y76.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 21/36] vfio/migration: Move migration channel flags to
- vfio-common.h header file
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <fefebe82e9be5b1c281a40ea7e2cd86eda064942.1739994627.git.maciej.szmigiero@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <fefebe82e9be5b1c281a40ea7e2cd86eda064942.1739994627.git.maciej.szmigiero@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,83 +98,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/25 21:34, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> 
-> This way they can also be referenced in other translation
-> units than migration.c.
-> 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Gerd Hoffmann <kraxel@redhat.com> writes:
 
+>   Hi,
+>
+>> > +# @data: variable value, encoded as hex string.
+>> 
+>> I understand this is a blob.  We commonly use base64 for that.  Why not
+>> here?
+>
+> It's an existing format already supported by other tools.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Having a second format for blobs is unfortunate.
 
-Thanks,
+I can't judge whether the convenience of sharing the format with other
+tools is worth the additional interface complexity and code.  It could
+be if it avoids having to re-encode from hex to base64 in multiple
+places.
 
-C.
+Got to trust your judgement here.
 
+>                                                            Guess I
+> should add that to the preamble.
 
-> ---
->   hw/vfio/migration.c           | 17 -----------------
->   include/hw/vfio/vfio-common.h | 17 +++++++++++++++++
->   2 files changed, 17 insertions(+), 17 deletions(-)
-> 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index e9645cb9d088..46adb798352f 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -31,23 +31,6 @@
->   #include "trace.h"
->   #include "hw/hw.h"
->   
-> -/*
-> - * Flags to be used as unique delimiters for VFIO devices in the migration
-> - * stream. These flags are composed as:
-> - * 0xffffffff => MSB 32-bit all 1s
-> - * 0xef10     => Magic ID, represents emulated (virtual) function IO
-> - * 0x0000     => 16-bits reserved for flags
-> - *
-> - * The beginning of state information is marked by _DEV_CONFIG_STATE,
-> - * _DEV_SETUP_STATE, or _DEV_DATA_STATE, respectively. The end of a
-> - * certain state information is marked by _END_OF_STATE.
-> - */
-> -#define VFIO_MIG_FLAG_END_OF_STATE      (0xffffffffef100001ULL)
-> -#define VFIO_MIG_FLAG_DEV_CONFIG_STATE  (0xffffffffef100002ULL)
-> -#define VFIO_MIG_FLAG_DEV_SETUP_STATE   (0xffffffffef100003ULL)
-> -#define VFIO_MIG_FLAG_DEV_DATA_STATE    (0xffffffffef100004ULL)
-> -#define VFIO_MIG_FLAG_DEV_INIT_DATA_SENT (0xffffffffef100005ULL)
-> -
->   /*
->    * This is an arbitrary size based on migration of mlx5 devices, where typically
->    * total device migration size is on the order of 100s of MB. Testing with
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index 70f2a1891ed1..64ee3b1a2547 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -36,6 +36,23 @@
->   
->   #define VFIO_MSG_PREFIX "vfio %s: "
->   
-> +/*
-> + * Flags to be used as unique delimiters for VFIO devices in the migration
-> + * stream. These flags are composed as:
-> + * 0xffffffff => MSB 32-bit all 1s
-> + * 0xef10     => Magic ID, represents emulated (virtual) function IO
-> + * 0x0000     => 16-bits reserved for flags
-> + *
-> + * The beginning of state information is marked by _DEV_CONFIG_STATE,
-> + * _DEV_SETUP_STATE, or _DEV_DATA_STATE, respectively. The end of a
-> + * certain state information is marked by _END_OF_STATE.
-> + */
-> +#define VFIO_MIG_FLAG_END_OF_STATE      (0xffffffffef100001ULL)
-> +#define VFIO_MIG_FLAG_DEV_CONFIG_STATE  (0xffffffffef100002ULL)
-> +#define VFIO_MIG_FLAG_DEV_SETUP_STATE   (0xffffffffef100003ULL)
-> +#define VFIO_MIG_FLAG_DEV_DATA_STATE    (0xffffffffef100004ULL)
-> +#define VFIO_MIG_FLAG_DEV_INIT_DATA_SENT (0xffffffffef100005ULL)
-> +
->   enum {
->       VFIO_DEVICE_TYPE_PCI = 0,
->       VFIO_DEVICE_TYPE_PLATFORM = 1,
-> 
+Commit messages are usually a good home for rationale.
+
+>> > +# @digest: variable certificate digest.  Used to verify the signature
+>> > +#     of updates for authenticated variables.
+>> 
+>> How to create and verify these digests will be obvious enough to users
+>> of this interface?
+>
+> Well, no.  It's a somewhat complicated story ...
+>
+> UEFI has two kinds of authenticated variables.  First, the secure boot
+> variables (PK, KEK, db, dbx).  These have hard-coded rules, the rule
+> most relevant in practice is that signed update requests for the 'db'
+> and 'dbx' variables are checked against the 'KEK' certificate database.
+>
+> For other authenticated variables UEFI essentially remembers the
+> certificate when the variable is created, and any update / delete
+> requests need a signature from the same certificate (simplified a
+> bit to keep it short, the actual rules are more complicated, details
+> are in the UEFI spec).
+>
+> This digest handles the "remembers the certificate" part.
+>
+> In practice the second kind of authenticated variables is rarely used.
+> I have yet to see a piece of software actually using that in practice
+> (other than the test case I have written).
+>
+>
+> Also note that this is *not* part of the QMP interface.  The driver uses
+> this to store the efi variable store in json format on disk (see
+> var-service-json.c in this patch).
+>
+> Adding support for reading/writing uefi variables is something we might
+> add to the monitor in the future.   Should that happen it is not clear
+> whenever such an interface would actually use the raw 'UefiVariable'
+> struct or if higher-level interfaces would be more useful.  For example
+> a command to query whenever the guest has secure boot turned on.
+
+I wonder how much of this, if anything, should be worked into the doc
+comment.  You decide :)
+
+With the typo I pointed out fixed:
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
