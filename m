@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4C9C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 21:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63565C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 21:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnObY-0004yR-MJ; Wed, 26 Feb 2025 16:06:08 -0500
+	id 1tnOef-0000tl-ET; Wed, 26 Feb 2025 16:09:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnObW-0004wi-C4
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 16:06:06 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
+ id 1tnOee-0000sf-6x
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 16:09:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnObU-0003rj-ME
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 16:06:06 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnObP-000000004k9-3k7R; Wed, 26 Feb 2025 22:05:59 +0100
-Message-ID: <62c96ca5-c3c5-491f-8b5d-b87cf7df1230@maciej.szmigiero.name>
-Date: Wed, 26 Feb 2025 22:05:59 +0100
+ (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
+ id 1tnOec-00041E-3m
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 16:09:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740604155;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CRUyxYPKije4hbhsOX++5Vel8YJvyKTxw8p++yWApw8=;
+ b=ia684/GOTCjcmO8puroYAIqXGSIcKp/pKp1V3Sf2LsuymAd6pqwjL/MWmjYvToM7RLVfUF
+ qhT9MAcnCdtMW+dDwPnB+Yg6TIEYUthFKM7nBxMzZwW7DY8s/LIzTtZP0fV3Dq4vvP9/5L
+ wLT+A02J0DJSHdcwrU+A9syHTSWtjfw=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-441-w1Tl8zUKOWeAcK2FyoOw0g-1; Wed, 26 Feb 2025 16:09:10 -0500
+X-MC-Unique: w1Tl8zUKOWeAcK2FyoOw0g-1
+X-Mimecast-MFC-AGG-ID: w1Tl8zUKOWeAcK2FyoOw0g_1740604150
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-47207b66f3eso4171621cf.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 13:09:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740604150; x=1741208950;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
+ :mime-version:references:from:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=CRUyxYPKije4hbhsOX++5Vel8YJvyKTxw8p++yWApw8=;
+ b=SGeRciWLww7WBmLIRzL95laerPG4ubkCeV7rfhY9zIzhof888ib1SSsEL/h+HAtXb+
+ tlUlyiTEWGhsR+70A816AtD/KMbnCzYH7v7JG+zqZtm4vIgNhqsVlugmyBG88XUGg8MK
+ w/PMeaH2yhDmn+DTn52bsCkwYkoAJoUI0iIlb7pPVQFMMHWIddkXBCdYKiBG9c2yC0Ps
+ 9YbtqYx9Ck21LHZk8XBsks3zCjBB/luS2BFfTKNISppwku4eYfE0NiWMSkNZ73sS/lMG
+ jxp7Ey6bxFhbv5fLH75/47wkFtWC5hEw4S0eRF2KmEqcjxRi1emxiNSjfsssg1lT+mue
+ OXmQ==
+X-Gm-Message-State: AOJu0YyUC6N5UcRcHOJxKWqKOFhiZxrgJEiJCUaikqF25jD5FZwudv7C
+ zhWcy1YznLaNzZtfFBsWWWO1zL1lG1qI2XTmKKkX3q2f902liYdYkN6PCKoV/cxVqQ1DsCOm21D
+ Pb0IGL5QrgdNvspzfAD/KbzpcNlCQaETR+A9f4kDAH0kmX7q3AtodkuiTL6FTxUSYFPY/Z9Kn8U
+ Se+DkTdm1nfya4TrW+i/x6ejnYeM4=
+X-Gm-Gg: ASbGnctO95UyyXdQaAnWLx9Fu7kBtTKzwjl3SrcCbYLBrL1GT9KLhiH3To7ES6/ROds
+ 5OjG2Vv9i9x78i7QPeOZ6fZ/2F80TdmAn2VXra6o3rcxNAj3V+srBrt7Ed/QIKjFo4ozjXMQ=
+X-Received: by 2002:a05:6214:2422:b0:6e6:68df:6059 with SMTP id
+ 6a1803df08f44-6e6b01dcda8mr333600236d6.45.1740604150244; 
+ Wed, 26 Feb 2025 13:09:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHW+HaTzwcmqBxpUEC0XNEP9+87DENVPCqHD1hdmAzlL4ERds53u7T3+1JvsRKKK181NOL8cF+vo4Bx/9R5KFI=
+X-Received: by 2002:a05:6214:2422:b0:6e6:68df:6059 with SMTP id
+ 6a1803df08f44-6e6b01dcda8mr333600046d6.45.1740604149932; Wed, 26 Feb 2025
+ 13:09:09 -0800 (PST)
+Received: from 744723338238 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 26 Feb 2025 13:09:08 -0800
+Received: from 744723338238 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 26 Feb 2025 13:09:08 -0800
+From: Andrea Bolognani <abologna@redhat.com>
+References: <20250127182924.103510-1-abologna@redhat.com>
+ <20250127182924.103510-3-abologna@redhat.com>
+ <CAKmqyKPJirY6YWOtTiKNwh7xM7kVuihVhnWe3UKWND1qX=p-gw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 32/36] vfio/migration: Make
- x-migration-multifd-transfer VFIO property mutable
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <f558685fa2b2d82220d65120fb4bd9c77e28e2d4.1739994627.git.maciej.szmigiero@oracle.com>
- <4d8d1101-f0f4-4e9d-97dc-fe4e5a4b8f58@redhat.com>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- xsFNBFpGusUBEADXUMM2t7y9sHhI79+2QUnDdpauIBjZDukPZArwD+sDlx5P+jxaZ13XjUQc
- 6oJdk+jpvKiyzlbKqlDtw/Y2Ob24tg1g/zvkHn8AVUwX+ZWWewSZ0vcwp7u/LvA+w2nJbIL1
- N0/QUUdmxfkWTHhNqgkNX5hEmYqhwUPozFR0zblfD/6+XFR7VM9yT0fZPLqYLNOmGfqAXlxY
- m8nWmi+lxkd/PYqQQwOq6GQwxjRFEvSc09m/YPYo9hxh7a6s8hAP88YOf2PD8oBB1r5E7KGb
- Fv10Qss4CU/3zaiyRTExWwOJnTQdzSbtnM3S8/ZO/sL0FY/b4VLtlZzERAraxHdnPn8GgxYk
- oPtAqoyf52RkCabL9dsXPWYQjkwG8WEUPScHDy8Uoo6imQujshG23A99iPuXcWc/5ld9mIo/
- Ee7kN50MOXwS4vCJSv0cMkVhh77CmGUv5++E/rPcbXPLTPeRVy6SHgdDhIj7elmx2Lgo0cyh
- uyxyBKSuzPvb61nh5EKAGL7kPqflNw7LJkInzHqKHDNu57rVuCHEx4yxcKNB4pdE2SgyPxs9
- 9W7Cz0q2Hd7Yu8GOXvMfQfrBiEV4q4PzidUtV6sLqVq0RMK7LEi0RiZpthwxz0IUFwRw2KS/
- 9Kgs9LmOXYimodrV0pMxpVqcyTepmDSoWzyXNP2NL1+GuQtaTQARAQABzTBNYWNpZWogUy4g
- U3ptaWdpZXJvIDxtYWlsQG1hY2llai5zem1pZ2llcm8ubmFtZT7CwZQEEwEIAD4CGwMFCwkI
- BwIGFQoJCAsCBBYCAwECHgECF4AWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCZ7BxhgUJD0w7
- wQAKCRCEf143kM4JdwHlD/9Ef793d6Q3WkcapGZLg1hrUg+S3d1brtJSKP6B8Ny0tt/6kjc2
- M8q4v0pY6rA/tksIbBw6ZVZNCoce0w3/sy358jcDldh/eYotwUCHQzXl2IZwRT2SbmEoJn9J
- nAOnjMCpMFRyBC1yiWzOR3XonLFNB+kWfTK3fwzKWCmpcUkI5ANrmNiDFPcsn+TzfeMV/CzT
- FMsqVmr+TCWl29QB3U0eFZP8Y01UiowugS0jW/B/zWYbWo2FvoOqGLRUWgQ20NBXHlV5m0qa
- wI2Isrbos1kXSl2TDovT0Ppt+66RhV36SGA2qzLs0B9LO7/xqF4/xwmudkpabOoH5g3T20aH
- xlB0WuTJ7FyxZGnO6NL9QTxx3t86FfkKVfTksKP0FRKujsOxGQ1JpqdazyO6k7yMFfcnxwAb
- MyLU6ZepXf/6LvcFFe0oXC+ZNqj7kT6+hoTkZJcxynlcxSRzRSpnS41MRHJbyQM7kjpuVdyQ
- BWPdBnW0bYamlsW00w5XaR+fvNr4fV0vcqB991lxD4ayBbYPz11tnjlOwqnawH1ctCy5rdBY
- eTC6olpkmyUhrrIpTgEuxNU4GvnBK9oEEtNPC/x58AOxQuf1FhqbHYjz8D2Pyhso8TwS7NTa
- Z8b8o0vfsuqd3GPJKMiEhLEgu/io2KtLG10ynfh0vDBDQ7bwKoVlqC3It87AzQRaRrwiAQwA
- xnVmJqeP9VUTISps+WbyYFYlMFfIurl7tzK74bc67KUBp+PHuDP9p4ZcJUGC3UZJP85/GlUV
- dE1NairYWEJQUB7bpogTuzMI825QXIB9z842HwWfP2RW5eDtJMeujzJeFaUpmeTG9snzaYxY
- N3r0TDKj5dZwSIThIMQpsmhH2zylkT0jH7kBPxb8IkCQ1c6wgKITwoHFjTIO0B75U7bBNSDp
- XUaUDvd6T3xd1Fz57ujAvKHrZfWtaNSGwLmUYQAcFvrKDGPB5Z3ggkiTtkmW3OCQbnIxGJJw
- /+HefYhB5/kCcpKUQ2RYcYgCZ0/WcES1xU5dnNe4i0a5gsOFSOYCpNCfTHttVxKxZZTQ/rxj
- XwTuToXmTI4Nehn96t25DHZ0t9L9UEJ0yxH2y8Av4rtf75K2yAXFZa8dHnQgCkyjA/gs0ujG
- wD+Gs7dYQxP4i+rLhwBWD3mawJxLxY0vGwkG7k7npqanlsWlATHpOdqBMUiAR22hs02FikAo
- iXNgWTy7ABEBAAHCwXwEGAEIACYCGwwWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCZ7BxrgUJ
- D0w6ggAKCRCEf143kM4Jd55ED/9M47pnUYDVoaa1Xu4dVHw2h0XhBS/svPqb80YtjcBVgRp0
- PxLkI6afwteLsjpDgr4QbjoF868ctjqs6p/M7+VkFJNSa4hPmCayU310zEawO4EYm+jPRUIJ
- i87pEmygoN4ZnXvOYA9lkkbbaJkYB+8rDFSYeeSjuez0qmISbzkRVBwhGXQG5s5Oyij2eJ7f
- OvtjExsYkLP3NqmsODWj9aXqWGYsHPa7NpcLvHtkhtc5+SjRRLzh/NWJUtgFkqNPfhGMNwE8
- IsgCYA1B0Wam1zwvVgn6yRcwaCycr/SxHZAR4zZQNGyV1CA+Ph3cMiL8s49RluhiAiDqbJDx
- voSNR7+hz6CXrAuFnUljMMWiSSeWDF+qSKVmUJIFHWW4s9RQofkF8/Bd6BZxIWQYxMKZm4S7
- dKo+5COEVOhSyYthhxNMCWDxLDuPoiGUbWBu/+8dXBusBV5fgcZ2SeQYnIvBzMj8NJ2vDU2D
- m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
- IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
- VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <4d8d1101-f0f4-4e9d-97dc-fe4e5a4b8f58@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <CAKmqyKPJirY6YWOtTiKNwh7xM7kVuihVhnWe3UKWND1qX=p-gw@mail.gmail.com>
+Date: Wed, 26 Feb 2025 13:09:08 -0800
+X-Gm-Features: AQ5f1Jpl4LEltgBpJ00zzaD84KG-6KQPxDPa2a0ydHlgwhMK_2IiYLIoKE3A0uU
+Message-ID: <CABJz62MmKwf-WVS3Hxbs3HEJdWR6hh3JNb50sxDGXgOr6F+UgA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] binfmt: Normalize host CPU architecture
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ David Abdurachmanov <davidlt@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=abologna@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,53 +109,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.02.2025 18:59, Cédric Le Goater wrote:
-> On 2/19/25 21:34, Maciej S. Szmigiero wrote:
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> DEFINE_PROP_ON_OFF_AUTO() property isn't runtime-mutable so using it
->> would mean that the source VM would need to decide upfront at startup
->> time whether it wants to do a multifd device state transfer at some
->> point.
->>
->> Source VM can run for a long time before being migrated so it is
->> desirable to have a fallback mechanism to the old way of transferring
->> VFIO device state if it turns to be necessary.
->>
->> This brings this property to the same mutability level as ordinary
->> migration parameters, which too can be adjusted at the run time.
->>
->> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->> ---
->>   hw/vfio/pci.c | 12 +++++++++---
->>   1 file changed, 9 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->> index 184ff882f9d1..9111805ae06c 100644
->> --- a/hw/vfio/pci.c
->> +++ b/hw/vfio/pci.c
->> @@ -3353,6 +3353,8 @@ static void vfio_instance_init(Object *obj)
->>       pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
->>   }
->> +static PropertyInfo qdev_prop_on_off_auto_mutable;
-> 
-> please use another name, like vfio_pci_migration_multifd_transfer_prop.
+On Mon, Feb 24, 2025 at 11:39:46AM +1000, Alistair Francis wrote:
+> On Tue, Jan 28, 2025 at 4:29=E2=80=AFAM Andrea Bolognani <abologna@redhat=
+.com> wrote:
+> > Right now information regarding the family each CPU type belongs
+> > to is recorded in two places: the large data table at the top of
+> > the script, and the qemu_host_family() function.
+> >
+> > We can make things better by mapping host CPU architecture to
+> > QEMU target in the few cases where the two don't already match
+> > and then using the data table to look up the family, same as
+> > we're already doing for the guest CPU architecture.
+> >
+> > Being able to reason in terms of QEMU target regardless of
+> > whether we're looking at the host or guest CPU architecture will
+> > come in handy to implement upcoming changes.
+> >
+> > A couple of entries are dropped in the process: BePC and Power
+> > Macintosh. I'm quite certain neither of those have ever been
+> > reported as CPU architectures by Linux. I believe many more of
+> > the entries that are carried forward could be dropped as well,
+> > but I don't have the same level of confidence there so I
+> > decided to play it safe just in case.
+> >
+> > Signed-off-by: Andrea Bolognani <abologna@redhat.com>
+>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Done.
+Thanks Alistair. Are you planning to review patch 3/3 as well?
 
-> I wish we could define the property info all at once.
-
-I'm not sure what you mean here, could you please elaborate a bit more?
-
-This property mutability patch was split out from the previous patch
-adding the actual x-migration-multifd-transfer VFIO property upon
-your request.
-
-> Thanks,
-> 
-> C.
-
-Thanks,
-Maciej
+--=20
+Andrea Bolognani / Red Hat / Virtualization
 
 
