@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42F3C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 08:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C3AC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 08:02:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnCKD-0007MB-JL; Wed, 26 Feb 2025 02:59:25 -0500
+	id 1tnCNP-00037G-01; Wed, 26 Feb 2025 03:02:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tnCKB-0007IT-Dx
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:59:23 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1tnCNN-00036q-4U
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 03:02:41 -0500
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tnCK9-0007g9-Gg
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:59:23 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-aaeec07b705so1081745166b.2
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 23:59:21 -0800 (PST)
+ id 1tnCNL-0008Ac-L1
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 03:02:40 -0500
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-54527a7270eso6523697e87.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 00:02:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740556760; x=1741161560; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1740556957; x=1741161757; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dSJ5Qdws0UG7tOHwHMA/CtMtB3b08dFPMK/T2yNcD94=;
- b=FJesK+VmL54mLyX1xasiCaovg52o95qOFSMEJHExRGwWO/PDIk6lmbiWJzcII6OQHg
- bX35qRPmI9a9Mc7rWUZLAMVUl0KIu/+nlIohdOolG6H5hNbbEONvomE0lI/pV6C3WNHA
- llGpHkmqHEkz4x2g2TsqMHNrSd9b33d6+0AWyKlrw5qSXyh25aWNgfwAvBpzFsDEVhFO
- ulQcwTFI3faPgOy/ws8kZYp0JAQbxOrTgjJjEOzI/aT9vagJPrH4M3bdNCciBQsGuRSy
- KqFYvb9cLhv8nxZurVupgzrsU5VVM8uog+LZgpv2VlQ1m4sgRxL9+F91JCqYi+Yj+rpx
- 7WGw==
+ bh=9WVNZiuGTDbaCo5Vkd45s/XtKphR7hD0g5ktY5NtxbM=;
+ b=CS1hxQaTNe5lmX3Ttyvy16UaFKOv32/Cq3DijX00fgazzGr4CSKZYWw5TcWuDebJDY
+ y22UVDEmvu0VDRRmkN1UzuzXWeWH9h0u6hEkNy2dk5/vCrisGa7s9CnILLPvPoKe0l+t
+ wwE4gqYvRJDGgJvltMykqy1UcEtpKc/YbXpxHxhJ4T73DRl0qdKASV0f/WvqfenYb6Gd
+ DHXXAxYQts3LVN61wBJqnHaNw3cyA9u1t2DOKIYWQclzE9EFzAuVTseZDtDTADbZdJGK
+ JKZpM7GpEvr3PUT93WPUG+Ewc6VVZvCfK+yOxFokUITDMsZ+/bFfmDHaByMUFwRwr7tG
+ wyrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740556760; x=1741161560;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1740556957; x=1741161757;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dSJ5Qdws0UG7tOHwHMA/CtMtB3b08dFPMK/T2yNcD94=;
- b=v3Ize7VQ/+4947GsyAZzOEHIeQp2RSBFiNTE88uIVZod++mVofoBy8hgjJ9+RXOVB5
- YIax7ZqwFlTHoR4lTOgcGLZ8fzXkiRgHyZXo5yI8JWKc+hawa0XtT3JWV92NFbwUroG5
- fK7vtwPYKmKdAbM3o8td8qy9ZhfvIDcU0ICO7dFoGDKJdxnew3Ey7bgzJbgC4q5m61fS
- btOvQ96s1qxUXenQjXAmAp7XHeZKNJx8OMfTb4TgpRbP02FFKMS4DRdjCNMuk1CIpJHG
- Uz2yG8PRi65dxbmFo3g5xikLcutnB+UFky0H19FMDF/9vAhYUNq/rWoyXOiseJAgO81d
- 5/Dw==
+ bh=9WVNZiuGTDbaCo5Vkd45s/XtKphR7hD0g5ktY5NtxbM=;
+ b=e01Ma6XyJLM3WB6umlAoUmZ85uqoR9+A3am2jalmsAtGMNtidD0HHS4K/HSc82RuwB
+ 8mBSmcNjeCDDQVgOfM8vf2yHGWsb7ZMYDcub6tNQCnncmhmZkEbf1vJ44Har3TzUJPdB
+ Co9/r/3j/zZRCBSZWcBQlyYEjGoPBH4rhTPoJU5SnbxU/sOsylnPAjBGp+6cDsu1L6Wk
+ A/mWOfLKEEY6h22kVCcCSzStzcfTJc5UiyXxbzesABGYuJFF1WXlVyevE4w89Op45TPx
+ CHxsbqajL+O9hCERTz605/TV4CzAtj7WU0EWOf6cJ0ly4M7UnwHkn0sdWTOfALJCbPR6
+ fN/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLaWoHSXEYziFeb3B+mQFx1An7MKQTct02ChYnE+fm/RmuAy0K+nIgKfu4Kti+dY547g3TGaa6Hc2B@nongnu.org
-X-Gm-Message-State: AOJu0Ywynx2qXrr5r/2luQN6b8fKPkWb02JzSIFkxBANOnAR/er7gZYq
- 1JigalhjZo5ND3B6XUe/8Fig3akARQzkqcfaRe7vLz6iTNfGn2IhRmvm+w==
-X-Gm-Gg: ASbGncu1MV/vKFpRwRBUxfCCJNCTXkVymXLKcCIMmYx83ZMX5GK1yAfLC3NVk0/LBfs
- uS5BM1ts0JnmYGjlnOH+LWx2wiI4K/bxLtHq/PleX0QF4Xhnw4dPi0TxG+hK53SOtJBi2oRpHhj
- vrC9HyX4CCo02QTREaZu1gPqlY85M0iAMdkCntZ55ZGMOyhdP2jIsRrKrYVwol1qURJNHElh1wn
- BjApb/KNxuaVOzeGuIrmVY9OIG8C67EKEKKpaMn6w8TB127C8nOnz8SnS7IPiuVns0wthC2cwnM
- 5qth7SO+0ihH/j2slq2AnMUKnoEYUG2KV7I=
-X-Google-Smtp-Source: AGHT+IEeaMN92comtl+sPf3175ewhNSPKmK+znHdmzN+rV5Gp+RVIQ0u//9ED09/vnpJYbGWN5NtLg==
-X-Received: by 2002:a17:907:6d05:b0:aba:598b:dbde with SMTP id
- a640c23a62f3a-abc0d97e504mr2147887566b.8.1740556759709; 
- Tue, 25 Feb 2025 23:59:19 -0800 (PST)
-Received: from think.fritz.box ([2a02:8109:8384:1400:c48e:2efa:cdfc:e268])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abed2013355sm280107866b.113.2025.02.25.23.59.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 23:59:19 -0800 (PST)
-From: Roman Penyaev <r.peniaev@gmail.com>
-To: 
-Cc: Roman Penyaev <r.peniaev@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH v2 2/5] ui/console-vc: report to the application instead of
- screen rendering
-Date: Wed, 26 Feb 2025 08:59:08 +0100
-Message-ID: <20250226075913.353676-3-r.peniaev@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250226075913.353676-1-r.peniaev@gmail.com>
-References: <20250226075913.353676-1-r.peniaev@gmail.com>
+ AJvYcCWRo/64SnJuv6H2buJFlYKtcZJTHH32CMwW/0WnnFW/W1vTNW34gSdQ98vzNYRZXBNtYHIeSMx2vq/W@nongnu.org
+X-Gm-Message-State: AOJu0YxrRqKGEKmsTtcE7Uey3pMB0oIcHpV2Pvnkp5rvm+XBg2WYLdlW
+ nku2aT3nM4ddaWiJqZAf4cVO0s102O/MxHHlwQjaugsmu/71nZBD9cS0aULwCvJ5AjcoV1h5B8x
+ j6lN/wFuXYtRcrX4zrm55hHob8WA=
+X-Gm-Gg: ASbGncswjwt5L0EuPXm3n+exBSntGJzXTPZc3cvixAwxLVQGYqfRoRo9FvTglZcMCH4
+ N+L9+RN0yCOZevJlK1KJsRcX+NT1JKRFiVaWfpCqcpmAmbGyo6UNoOYOnrHu9HEcGcp5JtL3Rm5
+ VQabtdf1BNmCrLoEnuLv7HREoyzoXWbBs2Qiu4vhVPdw==
+X-Google-Smtp-Source: AGHT+IEthVU83U8zWyWF7kQfBYS5uJKy+eeJNt3QaHck2XgW7DHeqBeSUgEb7tBqjny8SFbs8afJkiP1vf1vAo9YehA=
+X-Received: by 2002:a05:6512:1309:b0:545:aa5:d455 with SMTP id
+ 2adb3069b0e04-5483913f943mr10781286e87.15.1740556957022; Wed, 26 Feb 2025
+ 00:02:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x634.google.com
+References: <20250219090607.559887-1-r.peniaev@gmail.com>
+ <87frka12zq.fsf@pond.sub.org>
+In-Reply-To: <87frka12zq.fsf@pond.sub.org>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Wed, 26 Feb 2025 09:02:25 +0100
+X-Gm-Features: AQ5f1JqKeP43pATPPSOGq02afrFuO-tUW3Kbk1nE1NWnY3zmLrPG4Lk3hSgy1DU
+Message-ID: <CACZ9PQUAvarw7yZxUTYXQY2+n6F=A8aZbf498Mf0rP37_W8Z7g@mail.gmail.com>
+Subject: Re: [PATCH 1/1] qapi/char.json: minor doc rewording for `hub` device
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,56 +97,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Terminal Device Status Report (DSR) [1] should be sent to an
-application, not rendered to the screen. This patch fixes rendering of
-terminal report, which appear only on the graphical screen of the
-terminal (console "vc") and can be reproduced by the following
-command:
+Hi Marc-Andre,
 
-     echo -en '\e[6n'; IFS='[;' read -sdR _ row col; echo $row:$col
+If you don't have objections to this one small doc change,
+could you please pull the change?
 
-Command requests cursor position and waits for terminal response, but
-instead, the response is rendered to the graphical screen and never
-sent to an application.
+Thanks.
 
-Why bother? Busybox shell (ash) in Alpine distribution requests cursor
-position on each shell prompt (once <ENTER> is pressed), which makes a
-prompt on a graphical screen corrupted with repeating Cursor Position
-Report (CPR) [2]:
+--
+Roman
 
-   [root@alpine ~]# \033[57;1R]
-
-Which is very annoying and incorrect.
-
-[1] https://vt100.net/docs/vt100-ug/chapter3.html#DSR
-[2] https://vt100.net/docs/vt100-ug/chapter3.html#CPR
-
-Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
----
- ui/console-vc.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 90ff0ffda8c5..d512f57e10a9 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -617,10 +617,9 @@ static void vc_put_one(VCChardev *vc, int ch)
- 
- static void vc_respond_str(VCChardev *vc, const char *buf)
- {
--    while (*buf) {
--        vc_put_one(vc, *buf);
--        buf++;
--    }
-+    QemuTextConsole *s = vc->console;
-+
-+    qemu_chr_be_write(s->chr, (const uint8_t *)buf, strlen(buf));
- }
- 
- /* set cursor, checking bounds */
--- 
-2.43.0
-
+On Wed, Feb 19, 2025 at 2:24=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> Roman Penyaev <r.peniaev@gmail.com> writes:
+>
+> > Refine documentation for the hub device, specify the maximum.
+> >
+> > Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+> > Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > Cc: Markus Armbruster <armbru@redhat.com>
+> > Cc: qemu-devel@nongnu.org
+> > ---
+> >  qapi/char.json | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/qapi/char.json b/qapi/char.json
+> > index f02b66c06b3e..dde2f9538f81 100644
+> > --- a/qapi/char.json
+> > +++ b/qapi/char.json
+> > @@ -337,7 +337,7 @@
+> >  #
+> >  # Configuration info for hub chardevs.
+> >  #
+> > -# @chardevs: List of chardev IDs, which should be added to this hub
+> > +# @chardevs: IDs to be added to this hub (maximum 4 devices).
+> >  #
+> >  # Since: 10.0
+> >  ##
+>
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+>
+> Thank you, Roman!
+>
 
