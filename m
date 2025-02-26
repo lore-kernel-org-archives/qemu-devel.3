@@ -4,153 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42247C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 15:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A80FEC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 15:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnJJi-0005yw-PK; Wed, 26 Feb 2025 10:27:22 -0500
+	id 1tnJKo-0007G3-3f; Wed, 26 Feb 2025 10:28:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnJJg-0005tu-Hn
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:27:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tnJKk-00078J-63
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:28:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnJJf-0001B7-07
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:27:20 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tnJKi-0001JN-7q
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:28:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740583638;
+ s=mimecast20190719; t=1740583703;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=aSLI0UBvfVpH8vcL+mFWy59gnxBebYqtXeyZbhvBsuI=;
- b=DbhJ+S0BphHvkBQ38KBr6GCMvaVtW1nWaX1Wt/Eeu7yM9GZtUxO2sWBHLy15eWSKb5heat
- M5DgQ72ykDq4bRqhAlNRpDAEFlfUap6F4k98ZDbpo0W+pqrTb/ObbwuTub98gx2dm2kj9e
- pb3JHnzj49Wk7lEWtEJBF4HVVoAvsZ4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=JDSjAhNaEsPGsqfQodHWYIawfSPuR86AL2HuAi0cgdE=;
+ b=UtlTMn2RwOyMJBbGXnqHsdyOcktQKZk/PD9Z9ktfnTgXCP20YXsxCdBWQ/t/90JoEDEdX+
+ /tJT4bLyHFLG+uXE1Z3ewis+f/bJACqDoZlxW7+Thop1Ae1dxeyCcGbCxtCR5wfpY+pGxT
+ RPFzHJMtS4YBBdklBlKWyK5d8s+qpfg=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-180-kFpbzeDyNuCv4V6Txfo-Kw-1; Wed, 26 Feb 2025 10:27:17 -0500
-X-MC-Unique: kFpbzeDyNuCv4V6Txfo-Kw-1
-X-Mimecast-MFC-AGG-ID: kFpbzeDyNuCv4V6Txfo-Kw_1740583636
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43945f32e2dso63840245e9.2
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 07:27:16 -0800 (PST)
+ us-mta-387-TjGTvDJWPHmHvObynfgoDQ-1; Wed, 26 Feb 2025 10:28:21 -0500
+X-MC-Unique: TjGTvDJWPHmHvObynfgoDQ-1
+X-Mimecast-MFC-AGG-ID: TjGTvDJWPHmHvObynfgoDQ_1740583700
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2fe8de1297eso940869a91.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 07:28:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740583636; x=1741188436;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1740583700; x=1741188500;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=aSLI0UBvfVpH8vcL+mFWy59gnxBebYqtXeyZbhvBsuI=;
- b=GauSw4kbM9HXYE8+K2vz1/JGBt4bShgPdEQH42qh6rarr2jNFgA6m7JuVv/HzunFR/
- EQqUs9H2NswJjRb+GfOxFihpsiGosF0wVfsTBo/pm1CaZiDtC/YC2Jtr3KLTYcZOmMAb
- sAp0VgLP54VAd6EEMvs2UkmsNGoVRJ6clF+quWAUlrAWOOjDDVZk+Mu1tS+tYwxSTKRm
- 8Thc4E0jlZJ2WYapBbw0TW4Dq/FRGlJ02ByRRsTYwAzkBIEUB6FdIbR3zLiTx7OYPd/T
- CTPljjYxg5lkra1kpwrlFjG9XhSmCLNNfN6OOtCrTMULHqBo5Kbu+RQg+ZoUkGbCqjhA
- x8Kw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZ7xDtfl7PRJA74CxVdWz2tTwWc8p6kCL4V+1hf0wlYIQBr3uDtQJUzN1/CnwRb6yUv6E0V7aye7hZ@nongnu.org
-X-Gm-Message-State: AOJu0YyF8ic/xkWo5l/uOY/2ribjtVrmcedJqleJv9eomBlfK90puSli
- vhIUDGkwBAu05P4rmzDD6IeVYL7kpEHojvo9A8614vgX3JgX14aLYJM4Nl/xoOUFsMrOtX56Yo6
- uMFd+y8EGZl0YA1kk2t8CvERwialgO/mxgZMy4u+ChW3E34UADx3P
-X-Gm-Gg: ASbGncsuhuKSoN3wTa7u0n/7pmOgA0+dzod3R4HnE9yKzRq9DDmIEU50L0OBHorPj4I
- 649u75Mlklu47YcJhRRLA5cMpz4XYKStKFgZ8MGRWkMQusL8k3VdIugt4tMwFYMNKIaCyQKXQZU
- 0y+Zja5VtuRznJkKMXTvK5C1MyFjMsI91lQs8DgSN3DyeixlVCFRX6hrNXMtKOagvNIoPi0uoMF
- JGbTRTCzCurmo5I7pdYKc/QUayBxJHrfZO+A0k8oa5FqEpDDVzGX9Y8IYD2QXYfUXHisec0S1op
- 2oImDxtjG6HasCZTIGssyu/aUnpc50nfWP+ONFykTX/QdE0=
-X-Received: by 2002:a05:600c:3c9c:b0:439:96aa:e502 with SMTP id
- 5b1f17b1804b1-43ab0f312bcmr83709925e9.12.1740583635714; 
- Wed, 26 Feb 2025 07:27:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHWPNow9oIn9uTgBMtY6GWd205IgHIfBXhaoGzrnesCBNxdORvYr9NWY4o2rgCeJK/9GMCVww==
-X-Received: by 2002:a05:600c:3c9c:b0:439:96aa:e502 with SMTP id
- 5b1f17b1804b1-43ab0f312bcmr83709375e9.12.1740583635271; 
- Wed, 26 Feb 2025 07:27:15 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-49-245.web.vodafone.de.
- [109.42.49.245]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba539466sm26658195e9.18.2025.02.26.07.27.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 07:27:14 -0800 (PST)
-Message-ID: <354fdafb-9a09-4ac8-bfa0-86ac0e9ad01b@redhat.com>
-Date: Wed, 26 Feb 2025 16:27:12 +0100
+ bh=JDSjAhNaEsPGsqfQodHWYIawfSPuR86AL2HuAi0cgdE=;
+ b=I5fitHMTwfzST8pvAT2chcGKzh2AtXgUlYImsTPzxI3DxQoraaplTKNV27qOjLoSP9
+ JBt0wXhg3stIBvpAvNZhTcLQm6Ofg7ZXrazFm4u+GSnB168ro8R8Shdf1Nm/KpTEwKIy
+ AEzMzteqizdRXTpDG2pas32vcG8ayIA9RXKdQie6DylIbstg60le20LHRmCHhiqSEuSN
+ BpvK6BUUnI5aXdH43gOCHsTeBMhk5Lc/aWdMmOaj23cC6Nge+ErHp+PBdSUtNQL4wCsa
+ S0Xv5YsZ4ADSYLzBYGxXYTsqh6KwafJKZcirm3NHRi2VlIv45UzrYebnNK/AcdJupws6
+ 8e2w==
+X-Gm-Message-State: AOJu0Yz++R7OI9UnX1l5NovwJfUlDNtLdtgGAd/U4eogQWPiJsu8aYAI
+ f/txIvaWON1ah7mCV2dpasoouLBU8bTkjgwjsW6HjzYSu/dcPOnyosqNPQgz29gVnhBYSu/nt/8
+ 7CY1MgsUZUMyZdG71vl0+ufkzl4yEj5t+77h2xNJGwqNpKPEJbqqittcc2iO8MFGG7nVf0zwSzi
+ ncq0hh2NixVnX9eYCmBO1aYnTBbGQ=
+X-Gm-Gg: ASbGncsw8sA/Pdsvynw5MVLyVPsCowZ0N1K6QzivGm9F+eQ6qyw5rIggWI4Gf0yMw5X
+ g724PISeiY/dJ4Z0AuJmase7UR/YkSw6XPbRbx3fn6CL62uX3O7vV5pP8OrAVVdmfb2fPXSPoM4
+ P1j7NhZycZqI/ERL1rMugawaLV11P0
+X-Received: by 2002:a17:90b:350e:b0:2fa:2133:bc87 with SMTP id
+ 98e67ed59e1d1-2fccc1172demr42941987a91.6.1740583700158; 
+ Wed, 26 Feb 2025 07:28:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEalUdWFYUf2a2wQS/VHLaTbKuxRcYYxPB4+NvEKrnBERm/4Zcv6buB349hKI9jasWKtBVjlFRn043CvG1u+kw=
+X-Received: by 2002:a17:90b:350e:b0:2fa:2133:bc87 with SMTP id
+ 98e67ed59e1d1-2fccc1172demr42941950a91.6.1740583699794; Wed, 26 Feb 2025
+ 07:28:19 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/25] tests/functional: move aarch64 GPU test into own
- file
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, Eduardo Habkost <eduardo@habkost.net>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ed Maste <emaste@freebsd.org>
-References: <20250226140343.3907080-1-alex.bennee@linaro.org>
- <20250226140343.3907080-2-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250226140343.3907080-2-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+References: <20250224033741.222749-1-jsnow@redhat.com>
+ <20250224033741.222749-5-jsnow@redhat.com>
+ <87frk3fr45.fsf@pond.sub.org> <87wmdd11zd.fsf@pond.sub.org>
+In-Reply-To: <87wmdd11zd.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 26 Feb 2025 10:28:07 -0500
+X-Gm-Features: AWEUYZnWdoB3HmNDg79FIHVms-B4OhmFVERKqSvViwh8nND-kOt81dA3FJdp4Yw
+Message-ID: <CAFn=p-bGAXKZhJ8x39JC3p5NwYmG5+DwF5bF0ObuMJa+0sFdyQ@mail.gmail.com>
+Subject: Re: [PATCH 04/10] docs/qapidoc: support header-less freeform sections
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Michael Roth <michael.roth@amd.com>, 
+ Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000002117ad062f0d39ca"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,28 +106,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/02/2025 15.03, Alex Bennée wrote:
-> I want to expand the number of tests to cover a wide range of
-> configurations. That starts with splitting off from the normal virt
-> test from which it doesn't really share much code.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Message-Id: <20250219150009.1662688-2-alex.bennee@linaro.org>
-> ---
-...
-> +class Aarch64VirtGPUMachine(QemuSystemTest):
-> +    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-> +    timeout = 360
+--0000000000002117ad062f0d39ca
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Feb 26, 2025, 4:37=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
+ wrote:
+
+> Markus Armbruster <armbru@redhat.com> writes:
+>
+> > John Snow <jsnow@redhat.com> writes:
+> >
+> >> The code as written crashes when a free-form documentation block doesn=
+'t
+> >> start with a heading or subheading, for example:
+> >>
+> >> | ##
+> >> | # Just text, no heading.
+> >> | ##
+> >>
+> >> The code will attempt to use the `node` variable uninitialized. To fix=
+,
+> >> create a generic block to insert the doc text into.
+> >>
+> >> (This patch also removes a lingering pylint warning in the QAPIDoc
+> >> implementation that prevents getting a clean baseline to use for
+> >> forthcoming additions.)
+> >>
+> >> Fixes: 43e0d14ee09a (docs/sphinx: fix extra stuff in TOC after freefor=
+m
+> QMP sections)
+> >> Signed-off-by: John Snow <jsnow@redhat.com>
+> >> ---
+> >>  docs/sphinx/qapidoc.py | 2 ++
+> >>  1 file changed, 2 insertions(+)
+> >>
+> >> diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+> >> index 5f96b46270b..5a4d7388b29 100644
+> >> --- a/docs/sphinx/qapidoc.py
+> >> +++ b/docs/sphinx/qapidoc.py
+> >> @@ -421,6 +421,8 @@ def freeform(self, doc):
+> >>              node =3D self._start_new_heading(heading, len(leader))
+> >>              if text =3D=3D '':
+> >>                  return
+> >> +        else:
+> >> +            node =3D nodes.container()
+> >>
+> >>          self._parse_text_into_node(text, node)
+> >>          self._cur_doc =3D None
+> >
+> > Let's add a suitable free-form block to tests/qapi-schema/doc-good.json
+> > to catch regressions.  Not worth a respin by itself.
+>
+> With the appended obvious fixup:
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+>
+>
+> diff --git a/tests/qapi-schema/doc-good.json
+> b/tests/qapi-schema/doc-good.json
+> index f64bf38d85..0a4f139f83 100644
+> --- a/tests/qapi-schema/doc-good.json
+> +++ b/tests/qapi-schema/doc-good.json
+> @@ -11,6 +11,10 @@
+>  # =3D Section
+>  ##
+>
+> +##
+> +# Just text, no heading.
+> +##
 > +
-> +    def wait_for_console_pattern(self, success_message, vm=None):
-> +        wait_for_console_pattern(self, success_message,
-> +                                 failure_message='Kernel panic - not syncing',
-> +                                 vm=vm)
+>  ##
+>  # =3D=3D Subsection
+>  #
+> diff --git a/tests/qapi-schema/doc-good.out
+> b/tests/qapi-schema/doc-good.out
+> index ec277be91e..0a9da3efde 100644
+> --- a/tests/qapi-schema/doc-good.out
+> +++ b/tests/qapi-schema/doc-good.out
+> @@ -56,6 +56,9 @@ event EVT_BOXED Object
+>  doc freeform
+>      body=3D
+>  =3D Section
+> +doc freeform
+> +    body=3D
+> +Just text, no heading.
+>  doc freeform
+>      body=3D
+>  =3D=3D Subsection
+>
 
-You could inherit your class from LinuxKernelTest instead, then you would 
-get this wait_for_console_pattern() for free.
+Sold!
 
-Anyway,
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+>
+
+--0000000000002117ad062f0d39ca
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 26, 2025, 4:37=E2=80=
+=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@red=
+hat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
+margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Markus Armbr=
+uster &lt;<a href=3D"mailto:armbru@redhat.com" target=3D"_blank" rel=3D"nor=
+eferrer">armbru@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" re=
+l=3D"noreferrer">jsnow@redhat.com</a>&gt; writes:<br>
+&gt;<br>
+&gt;&gt; The code as written crashes when a free-form documentation block d=
+oesn&#39;t<br>
+&gt;&gt; start with a heading or subheading, for example:<br>
+&gt;&gt;<br>
+&gt;&gt; | ##<br>
+&gt;&gt; | # Just text, no heading.<br>
+&gt;&gt; | ##<br>
+&gt;&gt;<br>
+&gt;&gt; The code will attempt to use the `node` variable uninitialized. To=
+ fix,<br>
+&gt;&gt; create a generic block to insert the doc text into.<br>
+&gt;&gt;<br>
+&gt;&gt; (This patch also removes a lingering pylint warning in the QAPIDoc=
+<br>
+&gt;&gt; implementation that prevents getting a clean baseline to use for<b=
+r>
+&gt;&gt; forthcoming additions.)<br>
+&gt;&gt;<br>
+&gt;&gt; Fixes: 43e0d14ee09a (docs/sphinx: fix extra stuff in TOC after fre=
+eform QMP sections)<br>
+&gt;&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" t=
+arget=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
+&gt;&gt; ---<br>
+&gt;&gt;=C2=A0 docs/sphinx/qapidoc.py | 2 ++<br>
+&gt;&gt;=C2=A0 1 file changed, 2 insertions(+)<br>
+&gt;&gt;<br>
+&gt;&gt; diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py<br>
+&gt;&gt; index 5f96b46270b..5a4d7388b29 100644<br>
+&gt;&gt; --- a/docs/sphinx/qapidoc.py<br>
+&gt;&gt; +++ b/docs/sphinx/qapidoc.py<br>
+&gt;&gt; @@ -421,6 +421,8 @@ def freeform(self, doc):<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 node =3D self._sta=
+rt_new_heading(heading, len(leader))<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if text =3D=3D &#3=
+9;&#39;:<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 retu=
+rn<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 else:<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 node =3D nodes.containe=
+r()<br>
+&gt;&gt;=C2=A0 <br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self._parse_text_into_node(text,=
+ node)<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self._cur_doc =3D None<br>
+&gt;<br>
+&gt; Let&#39;s add a suitable free-form block to tests/qapi-schema/doc-good=
+.json<br>
+&gt; to catch regressions.=C2=A0 Not worth a respin by itself.<br>
+<br>
+With the appended obvious fixup:<br>
+Reviewed-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" tar=
+get=3D"_blank" rel=3D"noreferrer">armbru@redhat.com</a>&gt;<br>
+<br>
+<br>
+diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-good.j=
+son<br>
+index f64bf38d85..0a4f139f83 100644<br>
+--- a/tests/qapi-schema/doc-good.json<br>
++++ b/tests/qapi-schema/doc-good.json<br>
+@@ -11,6 +11,10 @@<br>
+=C2=A0# =3D Section<br>
+=C2=A0##<br>
+<br>
++##<br>
++# Just text, no heading.<br>
++##<br>
++<br>
+=C2=A0##<br>
+=C2=A0# =3D=3D Subsection<br>
+=C2=A0#<br>
+diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.ou=
+t<br>
+index ec277be91e..0a9da3efde 100644<br>
+--- a/tests/qapi-schema/doc-good.out<br>
++++ b/tests/qapi-schema/doc-good.out<br>
+@@ -56,6 +56,9 @@ event EVT_BOXED Object<br>
+=C2=A0doc freeform<br>
+=C2=A0 =C2=A0 =C2=A0body=3D<br>
+=C2=A0=3D Section<br>
++doc freeform<br>
++=C2=A0 =C2=A0 body=3D<br>
++Just text, no heading.<br>
+=C2=A0doc freeform<br>
+=C2=A0 =C2=A0 =C2=A0body=3D<br>
+=C2=A0=3D=3D Subsection<br></blockquote></div></div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto">Sold!</div><div dir=3D"auto"><div class=3D"gmail_quo=
+te gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin=
+:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"></blockquote></div=
+></div></div>
+
+--0000000000002117ad062f0d39ca--
 
 
