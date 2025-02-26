@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91919C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C2DC19777
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnEBW-0004DS-7h; Wed, 26 Feb 2025 04:58:34 -0500
+	id 1tnEB0-0003SA-Kr; Wed, 26 Feb 2025 04:58:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEBA-0003hp-Vc
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:58:13 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEAy-0003QC-H3
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:58:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEB6-00088a-OB
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:58:12 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEAs-00086N-5y
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:58:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740563886;
+ s=mimecast20190719; t=1740563872;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BXF7LFmBt338Lef95w4ZSyZz2+Sq5hjepW7pi7Shml0=;
- b=IIjbDCk9+SLMidiUyPD0dsV+V+HbJTAcU+WXFW+DcEH3g5vxRAax/81Vb7eWcHLSXjb5IV
- gD4DnfsWReqDUyTAfUw5qJEoWCCW0L7dmNa9fSrsln6fae9AwjIFSmWnox3j8eImhLUQGO
- ByaSBAzcMJIm082d9hkTm1m29mM9TnQ=
+ bh=jabR7PPYILetlsFQh6HraLsVxE9O0Tgk0ExljRonsHk=;
+ b=LTZmsZYlPdqyXSjZoxxcd/HSmvY5bd3ZmYR92b7KIOCcPHonEdC4o8sYIfE4IkZz97Anth
+ JhG1VW4jRUYjxkJMrgQXZCQ9BEBfRnq0rPlYxvpsWwKOQHLsoR5g9ip9u2fyKJf5wLj9eW
+ 7BNJ1uAesoGPlKbEZf+6vdsyKoK6BLo=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-y5I7mnnXODmsTdolmw_RjQ-1; Wed,
- 26 Feb 2025 04:58:03 -0500
-X-MC-Unique: y5I7mnnXODmsTdolmw_RjQ-1
-X-Mimecast-MFC-AGG-ID: y5I7mnnXODmsTdolmw_RjQ_1740563883
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-325-qXjz7JKMP7aToT_am09_Bw-1; Wed,
+ 26 Feb 2025 04:57:50 -0500
+X-MC-Unique: qXjz7JKMP7aToT_am09_Bw-1
+X-Mimecast-MFC-AGG-ID: qXjz7JKMP7aToT_am09_Bw_1740563868
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA3721800268
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:58:02 +0000 (UTC)
+ id 02576180087D
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:57:48 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.144])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8AB941800358; Wed, 26 Feb 2025 09:58:01 +0000 (UTC)
+ id 85D69180087F; Wed, 26 Feb 2025 09:57:46 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 12/18] tests/functional: Convert the alpha replay avocado tests
-Date: Wed, 26 Feb 2025 10:57:25 +0100
-Message-ID: <20250226095731.1172375-13-thuth@redhat.com>
+Subject: [PULL 05/18] tests/functional: Convert the sparc replay avocado test
+Date: Wed, 26 Feb 2025 10:57:18 +0100
+Message-ID: <20250226095731.1172375-6-thuth@redhat.com>
 In-Reply-To: <20250226095731.1172375-1-thuth@redhat.com>
 References: <20250226095731.1172375-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -64,9 +64,9 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,64 +82,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Put the tests into a separate file now (since in the functional
-framework, each file is run with one specific qemu-system-* binary).
+While we're at it, change the machine from SS-20 to SS-10 to
+increase the test coverage a little bit (SS-20 is already
+tested in the test_sparc_sun4m.py file).
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250218152744.228335-11-thuth@redhat.com>
+Message-ID: <20250218152744.228335-4-thuth@redhat.com>
 ---
- tests/avocado/replay_kernel.py        | 17 ----------------
+ tests/avocado/replay_kernel.py        | 12 ------------
  tests/functional/meson.build          |  1 +
- tests/functional/test_alpha_replay.py | 29 +++++++++++++++++++++++++++
- 3 files changed, 30 insertions(+), 17 deletions(-)
- create mode 100755 tests/functional/test_alpha_replay.py
+ tests/functional/test_sparc_replay.py | 27 +++++++++++++++++++++++++++
+ 3 files changed, 28 insertions(+), 12 deletions(-)
+ create mode 100755 tests/functional/test_sparc_replay.py
 
 diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
-index 02bd868a429..4347d202742 100644
+index 54b8417d3d5..412bf9e06e1 100644
 --- a/tests/avocado/replay_kernel.py
 +++ b/tests/avocado/replay_kernel.py
-@@ -176,20 +176,3 @@ def test_s390x_s390_ccw_virtio(self):
-         kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=sclp0'
-         console_pattern = 'Kernel command line: %s' % kernel_command_line
-         self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=9)
+@@ -387,15 +387,3 @@ def test_ppc_mac99(self):
+         file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+         self.do_test_advcal_2018(file_path, 'invaders.elf',
+                                  args=('-M', 'graphics=off'))
 -
--    def test_alpha_clipper(self):
+-    def test_sparc_ss20(self):
 -        """
--        :avocado: tags=arch:alpha
--        :avocado: tags=machine:clipper
+-        :avocado: tags=arch:sparc
+-        :avocado: tags=machine:SS-20
 -        """
--        kernel_url = ('http://archive.debian.org/debian/dists/lenny/main/'
--                      'installer-alpha/20090123lenny10/images/cdrom/vmlinuz')
--        kernel_hash = '3a943149335529e2ed3e74d0d787b85fb5671ba3'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-        tar_hash = 'b18550d5d61c7615d989a06edace051017726a9f'
+-        tar_url = ('https://qemu-advcal.gitlab.io'
+-                   '/qac-best-of-multiarch/download/day11.tar.xz')
+-        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+-        self.do_test_advcal_2018(file_path, 'zImage.elf')
 -
--        uncompressed_kernel = archive.uncompress(kernel_path, self.workdir)
--
--        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
--        console_pattern = 'Kernel command line: %s' % kernel_command_line
--        self.run_rr(uncompressed_kernel, kernel_command_line, console_pattern, shift=9,
--            args=('-nodefaults', ))
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index a46c4e89464..e8b934d7f5f 100644
+index 4d3d62f3fe7..46a97999ae3 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -90,6 +90,7 @@ tests_alpha_system_quick = [
- 
- tests_alpha_system_thorough = [
-   'alpha_clipper',
-+  'alpha_replay',
+@@ -258,6 +258,7 @@ tests_sparc_system_quick = [
  ]
  
- tests_arm_system_quick = [
-diff --git a/tests/functional/test_alpha_replay.py b/tests/functional/test_alpha_replay.py
+ tests_sparc_system_thorough = [
++  'sparc_replay',
+   'sparc_sun4m',
+ ]
+ 
+diff --git a/tests/functional/test_sparc_replay.py b/tests/functional/test_sparc_replay.py
 new file mode 100755
-index 00000000000..24a17ef5904
+index 00000000000..865d6486f99
 --- /dev/null
-+++ b/tests/functional/test_alpha_replay.py
-@@ -0,0 +1,29 @@
++++ b/tests/functional/test_sparc_replay.py
+@@ -0,0 +1,27 @@
 +#!/usr/bin/env python3
 +#
-+# Replay test that boots a Linux kernel on an Alpha machine
++# Replay test that boots a Linux kernel on a sparc sun4m machine
 +# and checks the console
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
@@ -148,20 +144,18 @@ index 00000000000..24a17ef5904
 +from replay_kernel import ReplayKernelBase
 +
 +
-+class AlphaReplay(ReplayKernelBase):
++class SparcReplay(ReplayKernelBase):
 +
-+    ASSET_KERNEL = Asset(
-+        ('http://archive.debian.org/debian/dists/lenny/main/installer-alpha/'
-+         '20090123lenny10/images/cdrom/vmlinuz'),
-+        '34f53da3fa32212e4f00b03cb944b2ad81c06bc8faaf9b7193b2e544ceeca576')
++    ASSET_DAY11 = Asset(
++        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day11.tar.xz',
++        'c776533ba756bf4dd3f1fc4c024fb50ef0d853e05c5f5ddf0900a32d1eaa49e0')
 +
-+    def test_clipper(self):
-+        self.set_machine('clipper')
-+        kernel_path = self.uncompress(self.ASSET_KERNEL, format='gz')
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
-+        console_pattern = 'Kernel command line: %s' % kernel_command_line
-+        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=9,
-+            args=('-nodefaults', ))
++    def test_replay(self):
++        self.set_machine('SS-10')
++        kernel_path = self.archive_extract(self.ASSET_DAY11,
++                                           member="day11/zImage.elf")
++        self.run_rr(kernel_path, self.REPLAY_KERNEL_COMMAND_LINE,
++                    'QEMU advent calendar')
 +
 +
 +if __name__ == '__main__':
