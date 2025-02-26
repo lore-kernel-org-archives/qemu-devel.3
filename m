@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 712ACC021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3419EC021BC
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:59:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnEBP-0003uq-6h; Wed, 26 Feb 2025 04:58:27 -0500
+	id 1tnEBF-0003lz-OX; Wed, 26 Feb 2025 04:58:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEBD-0003m0-WB
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:58:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEBA-0003hE-Gb
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:58:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEBA-000899-4o
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:58:14 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEB1-00088C-Qm
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:58:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740563890;
+ s=mimecast20190719; t=1740563883;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ESi9MCFdBjSgRtxf0JxAR6qz+buZecY5OU2BTKjo0H8=;
- b=MT8/G0cAG14f/R2o5PkoKh/BkZdrhSOw/ncTHthuSZwPyy9S4kM+YK8wAKd++Ei+9ZtGx2
- o49VTwpVcXiYEwxMhdeFjcETPG2paKjBhqPw7Xms8wRI2d5aCyLn0He+rNATyEYzeW40XW
- GZmWtGg4oZAj1bRtJIddCzncJxabS7k=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=SSERffrpfYEoAfw1ldo2O2dJQsT+VdHRt+CLn44vlac=;
+ b=YqP61ut+fPcyzAPLd9UArDRgdBGEUnVuc37mUlY/iX2LXbFDI0QQHEFrF4hp9fa3Fl/dwr
+ K/0R+eOUlMl9rAM9xnf72upCKTcyW997kFmj2emM+D48mBaytBc0aeOapo5MeBf3GarMnr
+ +Ua93Tir/m+xLZRdt+X2fVgucUezNbE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-602-3y4rmQoxNFufZqRTuqqcgA-1; Wed,
- 26 Feb 2025 04:58:08 -0500
-X-MC-Unique: 3y4rmQoxNFufZqRTuqqcgA-1
-X-Mimecast-MFC-AGG-ID: 3y4rmQoxNFufZqRTuqqcgA_1740563887
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-bYPayA7yO0CcwOJWOIO94Q-1; Wed,
+ 26 Feb 2025 04:57:57 -0500
+X-MC-Unique: bYPayA7yO0CcwOJWOIO94Q-1
+X-Mimecast-MFC-AGG-ID: bYPayA7yO0CcwOJWOIO94Q_1740563876
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C68B31800872
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:58:07 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9202619783B3
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:57:56 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.144])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BBCCD180035E; Wed, 26 Feb 2025 09:58:05 +0000 (UTC)
+ id 3DE33180035E; Wed, 26 Feb 2025 09:57:54 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 14/18] tests/functional: Convert the aarch64 replay avocado
+Subject: [PULL 09/18] tests/functional: Convert the microblaze replay avocado
  tests
-Date: Wed, 26 Feb 2025 10:57:27 +0100
-Message-ID: <20250226095731.1172375-15-thuth@redhat.com>
+Date: Wed, 26 Feb 2025 10:57:22 +0100
+Message-ID: <20250226095731.1172375-10-thuth@redhat.com>
 In-Reply-To: <20250226095731.1172375-1-thuth@redhat.com>
 References: <20250226095731.1172375-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -83,65 +83,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Put the tests into a separate file now (in the functional framework,
-each file is run with one specific qemu-system-* binary).
+Put the tests into a separate file now (since in the functional
+framework, each file is run with one specific qemu-system-* binary).
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250218152744.228335-13-thuth@redhat.com>
+Message-ID: <20250218152744.228335-8-thuth@redhat.com>
 ---
- tests/avocado/replay_kernel.py          | 18 ---------------
- tests/functional/meson.build            |  1 +
- tests/functional/test_aarch64_replay.py | 30 +++++++++++++++++++++++++
- 3 files changed, 31 insertions(+), 18 deletions(-)
- create mode 100755 tests/functional/test_aarch64_replay.py
+ tests/avocado/replay_kernel.py             | 11 ---------
+ tests/functional/meson.build               |  1 +
+ tests/functional/test_microblaze_replay.py | 28 ++++++++++++++++++++++
+ 3 files changed, 29 insertions(+), 11 deletions(-)
+ create mode 100755 tests/functional/test_microblaze_replay.py
 
 diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
-index 49543604613..dffced62aa2 100644
+index 397f7500463..b2097afc302 100644
 --- a/tests/avocado/replay_kernel.py
 +++ b/tests/avocado/replay_kernel.py
-@@ -143,21 +143,3 @@ def test_x86_64_q35(self):
-         console_pattern = 'VFS: Cannot open root device'
- 
-         self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
+@@ -296,14 +296,3 @@ def test_m68k_mcf5208evb(self):
+                    '/qac-best-of-multiarch/download/day07.tar.xz')
+         file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+         self.do_test_advcal_2018(file_path, 'sanity-clause.elf')
 -
--    def test_aarch64_virt(self):
+-    def test_microblaze_s3adsp1800(self):
 -        """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=machine:virt
--        :avocado: tags=cpu:cortex-a53
+-        :avocado: tags=arch:microblaze
+-        :avocado: tags=machine:petalogix-s3adsp1800
 -        """
--        kernel_url = ('https://archives.fedoraproject.org/pub/archive/fedora'
--                      '/linux/releases/29/Everything/aarch64/os/images/pxeboot'
--                      '/vmlinuz')
--        kernel_hash = '8c73e469fc6ea06a58dc83a628fc695b693b8493'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--
--        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
--                               'console=ttyAMA0')
--        console_pattern = 'VFS: Cannot open root device'
--
--        self.run_rr(kernel_path, kernel_command_line, console_pattern)
+-        tar_hash = '08bf3e3bfb6b6c7ce1e54ab65d54e189f2caf13f'
+-        tar_url = ('https://qemu-advcal.gitlab.io'
+-                   '/qac-best-of-multiarch/download/day17.tar.xz')
+-        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+-        self.do_test_advcal_2018(file_path, 'ballerina.bin')
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index acab5364281..e8e5a7757c3 100644
+index b68b4da6a3d..58f12f54d14 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -71,6 +71,7 @@ tests_aarch64_system_thorough = [
-   'aarch64_aspeed',
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-+  'aarch64_replay',
-   'aarch64_rme_virt',
-   'aarch64_rme_sbsaref',
-   'aarch64_sbsaref',
-diff --git a/tests/functional/test_aarch64_replay.py b/tests/functional/test_aarch64_replay.py
+@@ -152,6 +152,7 @@ tests_m68k_system_thorough = [
+ ]
+ 
+ tests_microblaze_system_thorough = [
++  'microblaze_replay',
+   'microblaze_s3adsp1800'
+ ]
+ 
+diff --git a/tests/functional/test_microblaze_replay.py b/tests/functional/test_microblaze_replay.py
 new file mode 100755
-index 00000000000..04cde433bcf
+index 00000000000..7484c4186f3
 --- /dev/null
-+++ b/tests/functional/test_aarch64_replay.py
-@@ -0,0 +1,30 @@
++++ b/tests/functional/test_microblaze_replay.py
+@@ -0,0 +1,28 @@
 +#!/usr/bin/env python3
 +#
-+# Replay test that boots a Linux kernel on an aarch64 machine
++# Replay test that boots a Linux kernel on an microblaze machine
 +# and checks the console
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
@@ -150,21 +143,19 @@ index 00000000000..04cde433bcf
 +from replay_kernel import ReplayKernelBase
 +
 +
-+class Aarch64Replay(ReplayKernelBase):
++class MicroblazeReplay(ReplayKernelBase):
 +
-+    ASSET_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
-+        '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
++    ASSET_DAY17 = Asset(
++        ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/'
++         'day17.tar.xz'),
++        '3ba7439dfbea7af4876662c97f8e1f0cdad9231fc166e4861d17042489270057')
 +
-+    def test_aarch64_virt(self):
-+        self.set_machine('virt')
-+        self.cpu = 'cortex-a53'
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'console=ttyAMA0')
-+        console_pattern = 'VFS: Cannot open root device'
-+        self.run_rr(kernel_path, kernel_command_line, console_pattern)
++    def test_microblaze_s3adsp1800(self):
++        self.set_machine('petalogix-s3adsp1800')
++        kernel_path = self.archive_extract(self.ASSET_DAY17,
++                                           member='day17/ballerina.bin')
++        self.run_rr(kernel_path, self.REPLAY_KERNEL_COMMAND_LINE,
++                    'QEMU advent calendar')
 +
 +
 +if __name__ == '__main__':
