@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2590C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EAF0C18E7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:05:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnI0y-0000y1-Ab; Wed, 26 Feb 2025 09:03:56 -0500
+	id 1tnI20-00023M-1S; Wed, 26 Feb 2025 09:05:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI0t-0000uO-Tk
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:03:52 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1tnI14-00018p-It
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:04:02 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI0q-0005dc-5n
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:03:51 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4397dff185fso59958965e9.2
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:03:46 -0800 (PST)
+ id 1tnI12-0005lt-HQ
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:04:02 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4399d14334aso60067455e9.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:04:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740578625; x=1741183425; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=aD8mJlxD2keTACfw2p6EEG00RXoqREFZi/wu7CwDcxo=;
- b=sxDiJz3XMO8HhyZbgpo+RtrtEF4KOUV5AEoPSK1yFoM7+qhwZgfci5t5/x9U7UmG+D
- OiKbLojWHvXTZhCIx6rSjueT8RKJ15IaTqE+FPudgm7bWip2JLQkCl0B2wCCdNyG8xSF
- 25dQoFq2XHhcWENjDPLSJ/ecwKW+CzANS1+m5qrkKASVWQJl9sE4t+/2T/4D7jsRarTa
- XM7OrZg2IGQWxpspCkZ1TKjT5ILmoMVn7Pnnm/jtjYt9jUUz+3SyKeZzekshUf2os9up
- GF3b8R52n2UJclN/qiTRnGjrP4OyycnZXkP5F6VrNc0X0qRAs045GHdVE0QqCPbe/gK4
- 9yZg==
+ d=linaro.org; s=google; t=1740578639; x=1741183439; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Jk0L9tiR8Pw91LWiTI1Z3wlxkKLipHgTcC6b1a+5kwk=;
+ b=VIpwlOdsIQjLe6n8GQZ0VPukngFEWdZeDShN5R7I+3aKM0/nt2MH97yq+G7HPb5s3t
+ N36p4fE9ghvJfS6T3684+FxQhl5X0deQhVwbQQK+lann9SOcEeqxhi0IleSK96Jb5HVi
+ zgjoeytI3K8rB2uAQHxqAbTKbEAma0CReT7kCYOgaIYxa44AbPbJQHrzE5v/Fu7e813G
+ gd+Yaqst/3gF9rgYuBCGXV7V8KS/DV3zpKV1rE3dFfECL5Rwxh28KVI3kBWmQc7PkFAb
+ yiN+JqydKJtSyt1/Cl4A6ya25GwWS1X9lHckGf7x6QTI2kfVgpvbPvRI0C9cFYTWDCaU
+ 865g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740578625; x=1741183425;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aD8mJlxD2keTACfw2p6EEG00RXoqREFZi/wu7CwDcxo=;
- b=K0hF374gYLAL/2Po7kq77AJOWTXi/mu8SyaM+cEKv+8jsDY72klVgTQfQVXCZ6XOP0
- iQNjqjH1PuV9iWLdxEE1IEa+FDalN7Xo/Ycw6wi/Ws38NKmbIJtydNGM7RLSi+HnzE4r
- /fjq1XbS3xmgEJ9IZqBBtYo7dfv2NY8jHq21q/Z2rapHiC5mw8lplhejM1OwzWZD+wC/
- BkLuam8wfMyeUjTfrs0AwSYNTxBVB+OFU3kcjiLnNFQikkQ/TR7mUPeQUpiCw8pDRugP
- rHRtt0Oh382r9kH3DXTtDBX9+5rkBxRq2S5EmLEzwYw2unhyhE6pXN+lL03HqoHxJMv2
- 7oVA==
-X-Gm-Message-State: AOJu0YyVXmLKXU5oxxy5svm0cwO1Opxpi4OyrWNsdFWv4xcINDkglwUf
- XxCrbBmURvTtggNKeVkcd5Yrr4pc/0ORAO0oRX/tcRenkyw/zBDlaCm+kgAwjaMxgqFdjpX/bRQ
- bwCI=
-X-Gm-Gg: ASbGnctT4QDJguqYQukkm6DHgfpIlcZmD0kK/VXsxRk3h1ofTC0+nfsMKDQB1jvUx4p
- BppKKYL8+QtqHpd4gVa4Ip1B9PiYOB26qKPxrxut0Qiy/nZvaB0FRZNN/+ngaWZ8bFOAwUa3O84
- 54Btfw8eYpUTgyrM6Fo/KfHVXdIHilT/gUkimyP4NUSO1vDv1T+ttPTdWskf/aJzsqsz1xfhC9W
- 4USRqYZ0/U7NYxneeasnDPD8BHiMFVswn/Zd2tvD+GfOt7FX/iQzzcrvOv0e6MhXks3HS4+rRgP
- TYlTELF9lcLutRgTFuOLygy/QBrm
-X-Google-Smtp-Source: AGHT+IEvmtVJRdcQ5FjKraocEINIdzykySmqG8YnoH3o8EsoukYF6IgwU8CmR0zOKqbz4VuEUckD5w==
-X-Received: by 2002:a05:600c:3b83:b0:439:86fb:7328 with SMTP id
- 5b1f17b1804b1-43ab901559fmr26151585e9.24.1740578625453; 
- Wed, 26 Feb 2025 06:03:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740578639; x=1741183439;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Jk0L9tiR8Pw91LWiTI1Z3wlxkKLipHgTcC6b1a+5kwk=;
+ b=HrdkUmkH/5qomA3HPi8YcLpI456WQUJiLebejBdDD9wft/4QhUV/u1NW/2s6/e78Vb
+ MoPmuQR8MhrRB9Y7YFPBFBom+rlc6QC2/S5lR1U+aTPnr1twUvE8sy7vGxmJPhI0HFwL
+ n9UiV+4vO1WHK3wiZ77tNm5HHqf90befPQkQUVSX8zBAoglzDSkUvIMz/uKm1CYmYZNX
+ 7iOWAzsK8G8KcTcF36eluL7t991JChU+VOpAfAyPRFrcGWJ3Cvp5ncVpik8sUbpPAc/w
+ vUKpgsgashXUgzP1MsprP2djCVuUFboQ0poJFAStQfr3UGTlc9tiqwaKy5xJbWGmdcI4
+ sCqg==
+X-Gm-Message-State: AOJu0YxCFWcS1POr4hBi4YLTLXCk6u2gnz8g12X9wxSiLe+kSlGIbFR8
+ vRd2e3aoICZqWMpeV1a/5EBIiUVvka6XZIaWD1yIpf81U7egGMqgWDhsCWm77vg=
+X-Gm-Gg: ASbGncv4lhiosbz82lqH9XjPcaKD3zzfVLQ7Izc4k9aNOa3z4AENNxhpYkGMcwQOiWD
+ wfCjfpW1kzYFd5RZXh6RYCigayteRTyNp2arJqQ217g8pPsaWPPAM3mDXDMUkop3rY8HtR8f2pc
+ 03Vrg5I6jILeSBM284VQqnwFLDhmJ2++elsSGnc5mbPdbe+OcX4/FWi5A6AXHYrJm6j1XVgK/vU
+ ZXb7zh5oZBad9uM85m135vje5Gr7PgQVrr34aANBRCusgrOXDpLQI7LPVJuFXLoTFMRwzwbE4GR
+ 6qQT/xzMwM2Um+MmmIDksTTsYhlp
+X-Google-Smtp-Source: AGHT+IF2S/46ddaGkbCFrC/nFtvPp4N+60pIBssQ0PTdgKTjFNv38cgtY2NZGSdf3l4GiBKeEZC9Bw==
+X-Received: by 2002:a05:600c:1c06:b0:439:64eb:67cf with SMTP id
+ 5b1f17b1804b1-43ab8fe027fmr30468845e9.13.1740578638944; 
+ Wed, 26 Feb 2025 06:03:58 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd882602sm5654984f8f.41.2025.02.26.06.03.44
+ 5b1f17b1804b1-43aba53961csm22477935e9.17.2025.02.26.06.03.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 06:03:44 -0800 (PST)
+ Wed, 26 Feb 2025 06:03:52 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DB8195F924;
- Wed, 26 Feb 2025 14:03:43 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 507DD608D4;
+ Wed, 26 Feb 2025 14:03:46 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
@@ -82,16 +82,17 @@ Cc: qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 00/25] maintainer updates for 10.0 softfreeze (gpu/tcg tests,
- plugins, MAINTAINERS)
-Date: Wed, 26 Feb 2025 14:03:18 +0000
-Message-Id: <20250226140343.3907080-1-alex.bennee@linaro.org>
+Subject: [PATCH 24/25] plugins/api: build only once
+Date: Wed, 26 Feb 2025 14:03:42 +0000
+Message-Id: <20250226140343.3907080-25-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250226140343.3907080-1-alex.bennee@linaro.org>
+References: <20250226140343.3907080-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -114,162 +115,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As we rapidly approach softfreeze (due March 11th) its time to collect
-together what I'm planning to merge for this release.
+Now all the softmmu/user-mode stuff has been split out we can build
+this compilation unit only once.
 
-Testing
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250225110844.3296991-11-alex.bennee@linaro.org>
+---
+ plugins/api.c       | 11 -----------
+ plugins/meson.build |  3 +--
+ 2 files changed, 1 insertion(+), 13 deletions(-)
 
-  - expand the aarch64 GPU tests
-  - bump libvirt-ci for vulkan-tools
-  - some fixes for clang compile of tcg
-
-I've dropped the host-gpu patch in favour of just skipping the test in
-python when we detect nVidia drivers.
-
-The clang fixes are part way to removing the skip we have in
-configure:
-
-      case $target_arch in
-        i386|x86_64)
-          if $target_cc --version | grep -qi "clang"; then
-            continue
-          fi
-          ;;
-      esac
-
-So that we can build tcg tests on the BSDs (at least for native
-guests) and widen the testing. The work is unfinished but anyone wants
-to tackle it just patch out the above bit in configure and try and
-build and run check-tcg.
-
-Plugins
-
-  - reduce the total number of compilation units
-
-I'll see if I can add a test to track the total number as we aim to
-clean-up stuff for single binary purposes.
-
-MAINTAINERS
-
-  - updates due to sanctions
-
-I should send out the pre-PR sometime next week, hopefully getting my
-10.0 PR submitted with time to spare ;-)
-
-The following still need review:
-
-  plugins/api: split out binary path/start/end/entry code
-  plugins/api: use qemu_target_page_mask() to get value
-  tests/tcg: enable -fwrapv for test-i386-bmi
-  tests/tcg: fix constraints in test-i386-adcox
-  tests/tcg: add message to _Static_assert in test-avx
-  tests/tcg: mark test-vma as a linux-only test
-  tests/vm: bump timeout for shutdown
-  libvirt-ci: bump to latest for vulkan-tools (libvirt MR 525)
-  tests/functional: skip vulkan tests with nVidia
-  tests/functional: expand tests to cover virgl
-  tests/functional: ensure we have a GPU device for tests
-  tests/functional: factor out common code in gpu test
-  tests/functional: move aarch64 GPU test into own file
-
-Alex.
-
-Alex Bennée (22):
-  tests/functional: move aarch64 GPU test into own file
-  tests/functional: factor out common code in gpu test
-  tests/functional: ensure we have a GPU device for tests
-  tests/functional: expand tests to cover virgl
-  tests/functional: skip vulkan tests with nVidia
-  libvirt-ci: bump to latest for vulkan-tools (libvirt MR 525)
-  tests/vm: bump timeout for shutdown
-  tests/tcg: mark test-vma as a linux-only test
-  tests/tcg: add message to _Static_assert in test-avx
-  tests/tcg: fix constraints in test-i386-adcox
-  tests/tcg: enable -fwrapv for test-i386-bmi
-  plugins/api: use qemu_target_page_mask() to get value
-  plugins/loader: populate target_name with target_name()
-  include/qemu: plugin-memory.h doesn't need cpu-defs.h
-  plugins/api: clean-up the includes
-  plugins/plugin.h: include queue.h
-  plugins/loader: compile loader only once
-  plugins/api: split out binary path/start/end/entry code
-  plugins/api: split out the vaddr/hwaddr helpers
-  plugins/api: split out time control helpers
-  plugins/api: build only once
-  MAINTAINERS: remove widely sanctioned entities
-
-Philippe Mathieu-Daudé (2):
-  tests/functional: Introduce the dso_suffix() helper
-  tests/functional: Allow running TCG plugins tests on non-Linux/BSD
-    hosts
-
-Pierrick Bouvier (1):
-  plugins: add explicit dependency in functional tests
-
- MAINTAINERS                                   |   7 +-
- meson.build                                   |   1 +
- include/qemu/plugin-memory.h                  |   1 -
- plugins/plugin.h                              |   7 +
- bsd-user/plugin-api.c                         |  15 ++
- linux-user/plugin-api.c                       |  14 ++
- plugins/api-system.c                          | 131 ++++++++++++++
- plugins/api-user.c                            |  57 ++++++
- plugins/api.c                                 | 171 +-----------------
- plugins/loader.c                              |  15 +-
- plugins/system.c                              |  24 +++
- plugins/user.c                                |  19 ++
- tests/tcg/i386/test-avx.c                     |   2 +-
- tests/tcg/i386/test-i386-adcox.c              |   4 +-
- tests/tcg/multiarch/{ => linux}/test-vma.c    |   0
- common-user/plugin-api.c.inc                  |  43 +++++
- .gitlab-ci.d/cirrus/freebsd-14.vars           |   2 +-
- .gitlab-ci.d/cirrus/macos-14.vars             |   2 +-
- bsd-user/meson.build                          |   1 +
- contrib/plugins/meson.build                   |   2 +
- linux-user/meson.build                        |   1 +
- plugins/meson.build                           |   8 +-
- .../ci/setup/ubuntu/ubuntu-2204-aarch64.yaml  |   1 +
- .../ci/setup/ubuntu/ubuntu-2204-s390x.yaml    |   1 +
- tests/docker/dockerfiles/alpine.docker        |   5 +-
- tests/docker/dockerfiles/centos9.docker       |   1 +
- .../dockerfiles/debian-amd64-cross.docker     |   3 +-
- .../dockerfiles/debian-arm64-cross.docker     |   3 +-
- .../dockerfiles/debian-armhf-cross.docker     |   3 +-
- .../dockerfiles/debian-i686-cross.docker      |   3 +-
- .../dockerfiles/debian-mips64el-cross.docker  |   3 +-
- .../dockerfiles/debian-mipsel-cross.docker    |   3 +-
- .../dockerfiles/debian-ppc64el-cross.docker   |   3 +-
- .../dockerfiles/debian-s390x-cross.docker     |   3 +-
- tests/docker/dockerfiles/debian.docker        |   3 +-
- .../dockerfiles/fedora-rust-nightly.docker    |   1 +
- .../dockerfiles/fedora-win64-cross.docker     |   1 +
- tests/docker/dockerfiles/fedora.docker        |   1 +
- tests/docker/dockerfiles/opensuse-leap.docker |   1 +
- tests/docker/dockerfiles/ubuntu2204.docker    |   1 +
- tests/functional/meson.build                  |   4 +-
- tests/functional/qemu_test/__init__.py        |   2 +-
- tests/functional/qemu_test/config.py          |   6 +
- tests/functional/test_aarch64_tcg_plugins.py  |  11 +-
- tests/functional/test_aarch64_virt.py         |  71 --------
- tests/functional/test_aarch64_virt_gpu.py     | 131 ++++++++++++++
- tests/lcitool/libvirt-ci                      |   2 +-
- tests/lcitool/projects/qemu.yml               |   1 +
- tests/lcitool/refresh                         |   2 +-
- tests/tcg/i386/Makefile.target                |   2 +-
- tests/tcg/plugins/meson.build                 |   2 +
- tests/vm/basevm.py                            |   2 +-
- tests/vm/generated/freebsd.json               |   1 +
- 53 files changed, 520 insertions(+), 284 deletions(-)
- create mode 100644 bsd-user/plugin-api.c
- create mode 100644 linux-user/plugin-api.c
- create mode 100644 plugins/api-system.c
- create mode 100644 plugins/api-user.c
- create mode 100644 plugins/system.c
- create mode 100644 plugins/user.c
- rename tests/tcg/multiarch/{ => linux}/test-vma.c (100%)
- create mode 100644 common-user/plugin-api.c.inc
- create mode 100755 tests/functional/test_aarch64_virt_gpu.py
-
+diff --git a/plugins/api.c b/plugins/api.c
+index 832bf6ee5e..604ce06802 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -46,17 +46,6 @@
+ #include "exec/translator.h"
+ #include "disas/disas.h"
+ #include "plugin.h"
+-#ifndef CONFIG_USER_ONLY
+-#include "qapi/error.h"
+-#include "migration/blocker.h"
+-#include "qemu/plugin-memory.h"
+-#include "hw/boards.h"
+-#else
+-#include "qemu.h"
+-#ifdef CONFIG_LINUX
+-#include "loader.h"
+-#endif
+-#endif
+ 
+ /* Uninstall and Reset handlers */
+ 
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 942b59e904..d27220d5ff 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -61,9 +61,8 @@ endif
+ user_ss.add(files('user.c', 'api-user.c'))
+ system_ss.add(files('system.c', 'api-system.c'))
+ 
+-common_ss.add(files('loader.c'))
++common_ss.add(files('loader.c', 'api.c'))
+ 
+ specific_ss.add(files(
+   'core.c',
+-  'api.c',
+ ))
 -- 
 2.39.5
 
