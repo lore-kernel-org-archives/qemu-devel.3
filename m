@@ -4,148 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 704F1C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30CAAC19F32
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 17:04:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnKW0-0008HJ-6J; Wed, 26 Feb 2025 11:44:08 -0500
+	id 1tnKp6-00018Z-4b; Wed, 26 Feb 2025 12:03:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnKVU-0008DK-5c
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:43:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <aleksandar.rakic@htecgroup.com>)
+ id 1tnKp5-00018Q-CD
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:03:51 -0500
+Received: from mail-vi1eur05on2071e.outbound.protection.outlook.com
+ ([2a01:111:f403:2613::71e]
+ helo=EUR05-VI1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnKVQ-0002zT-6K
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:43:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740588209;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=HxU5M6vnicZ7Bo7hEnTLbf8/HW87gfzsxev2MeIvj3o=;
- b=Bc1rk8hRmaDqpzWl43OPCpAq1qnQbBNdYkpX995xn1p0D+Rdq4B5Nnm10bjxMxvU1Y+zJA
- Os04gAuMuRiNXgMqPifmLy2Qk/brfew0AWaQuwzseHNJquOLWE10lzLZaqsX7JdUlSkauQ
- eHCOwXhbiaFRjFYeZ40OzImBld0Bt/U=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-pKmcUxSZMJa9ziQmH4Uu9Q-1; Wed, 26 Feb 2025 11:43:27 -0500
-X-MC-Unique: pKmcUxSZMJa9ziQmH4Uu9Q-1
-X-Mimecast-MFC-AGG-ID: pKmcUxSZMJa9ziQmH4Uu9Q_1740588206
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4394b8bd4e1so189945e9.0
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 08:43:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740588206; x=1741193006;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HxU5M6vnicZ7Bo7hEnTLbf8/HW87gfzsxev2MeIvj3o=;
- b=J4ipbz28wEoHQMrm4Z7jWyilQZ/zz+ob9EchjRZJGRF1J662fy/eNsm7saJ3omFNRw
- QrfRA/CfAvB9suF0d0vdOZDiQWTcsDRUdS3FKUmxe7Qu9uAC8u9RXWd2HyWR85sQP95Z
- tlu/Xhpfbk9RBK3WZz4AjcwCIO9JQ6w06ZqeZidMrdqR8lXD55/xf2ZaY6qiy7RGdyHA
- 7/xbxBU0HMm34H8RffzKIALUO1oP2ldUKKcnA29zhlqKjqOZSwzvFJhJLc/lD6a5qXM7
- fowyDWqRfT2klW6SgQCYpGcc+WXeIOCoX2pC/ztqchMhcZoDpD1wqUTWEDYPaS0QmRzg
- O5AQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVvfKBiEhg8yEhrNaDNwP/MdcyUf6Xa+z8C8HOfMNvMvOMbW8yOYgujuF+pJgbBaM5uoVCDZIgwHFWS@nongnu.org
-X-Gm-Message-State: AOJu0YwRDT4OctFMwoH7Wup3kc5agr+vqRvZ2Z1KrUoQoBicZEowuYP1
- Fimtr2BFRZBKGDhPENR+vSwLu8VS9qV6NrYBfWEr5TKh+ABFJ7sE/UbGD/Dyf2s4MQhEIvzPW50
- pE0HJ1ihnXm4kPfwSWx2qDcbna7ChNvuSHW0RBG+xWiPUHN8I6Fzx
-X-Gm-Gg: ASbGnctN0uHfq0SA3kFkScRKUk12ejpjUGk5HQuF6e6arGlKX6yZtObdSYA4sT9sNO5
- dJEdLu2qb4hUP+NzZBI8tbKOBBKc9fLjGuEpTZJuWm8wKPb0G4GQCBq7/KNrgPQhMl4p07FwXC1
- kInqzKWj7/4yQsSsiKjVRmGCxdEsHNptpeDPWz58CkqKHa4A2YrtNyWl0UT/RRx7RZZux+2uNoo
- iHDb0UBF1tQRe4RrbRrSHz2yBVFWs01+ugxLzi3fkVkFZMaMKTdOw/qkoebuBo5N1aLPGIu4ndl
- h1lcCKrMkIhKmYzJpp99/xHgcciBqBOXX3uPsMjVQCWT37ms68rIgGeJMX4=
-X-Received: by 2002:a05:600c:4ece:b0:439:9274:8203 with SMTP id
- 5b1f17b1804b1-439aeae0543mr181372205e9.6.1740588205996; 
- Wed, 26 Feb 2025 08:43:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF/tJ9RraU9iOfYRO8cdxDS4RBvZgi53AMNKV6f4xYDx8RPH/pCNFJqoz06FgN45ETHyZd/Yw==
-X-Received: by 2002:a05:600c:4ece:b0:439:9274:8203 with SMTP id
- 5b1f17b1804b1-439aeae0543mr181371935e9.6.1740588205516; 
- Wed, 26 Feb 2025 08:43:25 -0800 (PST)
-Received: from ?IPV6:2a01:cb19:9004:d500:837f:93fd:c85e:5b97?
- ([2a01:cb19:9004:d500:837f:93fd:c85e:5b97])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab2c50dcfsm45568865e9.0.2025.02.26.08.43.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 08:43:24 -0800 (PST)
-Message-ID: <59f0710b-fac6-4a37-9e0d-2cddd43eee24@redhat.com>
-Date: Wed, 26 Feb 2025 17:43:24 +0100
+ (Exim 4.90_1) (envelope-from <aleksandar.rakic@htecgroup.com>)
+ id 1tnKp3-0005r6-4D
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 12:03:50 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=v2gdhwgJEnsckYIKGMUcsKBFb3qGqAOgcqtB2TmDxIW/iIewdHzVKfQJ66PWc+qdf1wvyACVaFSwS+lIDd6sUYEn6nSx/rgXgGuFIy/o8iSOH4MFja5GUrPz6WlIXo5KXRy1p/KQe6VW9MpgOjxFbLrhsvWKUMhBxoP906/Bs7rw0iq/HD+6h+wBQR/2pctuEQV2yrFEzUK+jfqqcNrtUyTsACwrt4nDnZxmUlLSQlKmEfxQFgKStDCpqx4HMyjEyc/H3qGLke8K9+IwcyiROYaUt6WtYRPSj8S/W4VjmB4ZaQRIDc5JhcC7aY3TnwOZ1u6LMoVm629JG+JPYNGr9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OmvkKjNzWmlYL9hmD7xXtPKG9RBEhuwvo/Rh5fmAdAk=;
+ b=w+X4lQ7BorBuo/O742W3DqVhNbOnTDM/bsQdo0VKeNe6FUbAWUoIJaGZNPSRiEUsJ1sQzdpK+ulR5gheHQ8bCGra/MQM+glMnoQHhBYrQEd2a3yVWQw9A9y/3HvZs2L3h5vP6U+kkD8Oo8Vx5InAhm6IvkKdf0/ndQma+LJlTzX9iuPKLFxeGVI1A+hbyliQZWIxnpHvKFsXjm0VZ9bBGkAgCqm9RG5M8ne3lx2AVX+VL4rirm2LuSWx3giGEPBoofmA4GgOcgnzJof7wUspB14nFKv+UZxFUu8g5Us8a23CcY9c59JpkeQ1FPeD7jmj9Sk63LrU4lcxqFTmSW0Zcg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=htecgroup.com; dmarc=pass action=none
+ header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OmvkKjNzWmlYL9hmD7xXtPKG9RBEhuwvo/Rh5fmAdAk=;
+ b=TYaVO8hidPIQljD1XDM6yhYR9xJz9E0YztqnVOrmRzlVbWLANy/qQ5bPEJQGbmlBZJ2U1snk80atAp0jOfAUUkAvhLZ+k8hglVHvbsUJkXpiGKCseWrxBnRDSV0cMwspTXWm7viFduE4NunMtANL/jmIHWixTbfgxyK8qGHMGMfdlxfLpIgJGIuNbxkZ9g3CDI4f0aCf/lsCoSPbxNk7Rc4WD1a9YNj+YDdTkSHxv1BmBnqwI3hLFPRPp7vHEW/ss8Qx1eOPBglpHhyMeQOqCBI9SG4k3ReXcb2ywOEJuqGlk55QyYl0oJsgk8GiBguI6aKubf0k3k2sN36HJdDnHg==
+Received: from PA4PR09MB4864.eurprd09.prod.outlook.com (2603:10a6:102:ed::17)
+ by VI0PR09MB7419.eurprd09.prod.outlook.com (2603:10a6:800:24b::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.16; Wed, 26 Feb
+ 2025 17:03:05 +0000
+Received: from PA4PR09MB4864.eurprd09.prod.outlook.com
+ ([fe80::a02b:9d5c:eca5:e024]) by PA4PR09MB4864.eurprd09.prod.outlook.com
+ ([fe80::a02b:9d5c:eca5:e024%6]) with mapi id 15.20.8489.018; Wed, 26 Feb 2025
+ 17:03:05 +0000
+From: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "cfu@mips.com" <cfu@mips.com>, Djordje Todorovic
+ <Djordje.Todorovic@htecgroup.com>, "arikalo@gmail.com" <arikalo@gmail.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, Aleksandar Rakic
+ <aleksandar.rakic@htecgroup.com>, Faraz Shahbazker <fshahbazker@wavecomp.com>
+Subject: [PATCH v5 2/3] Skip NaN mode check for soft-float
+Thread-Topic: [PATCH v5 2/3] Skip NaN mode check for soft-float
+Thread-Index: AQHbiHBN9WWu61L0jUe8EWyWqAJpAg==
+Date: Wed, 26 Feb 2025 17:03:04 +0000
+Message-ID: <20250226170246.1971355-4-aleksandar.rakic@htecgroup.com>
+References: <20250226170246.1971355-1-aleksandar.rakic@htecgroup.com>
+In-Reply-To: <20250226170246.1971355-1-aleksandar.rakic@htecgroup.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=htecgroup.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PA4PR09MB4864:EE_|VI0PR09MB7419:EE_
+x-ms-office365-filtering-correlation-id: 564d127a-d0c4-4772-b329-08dd56876fa0
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700018;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?W0kfI94CDFHl0IFZdb6bAi4P5JgD6QdMFUMN+BW+KoSeDZCSw9goMvNeQf?=
+ =?iso-8859-1?Q?H6UWCRfoz4PosNldDJO/yUDf1ZZx3bFh6XscEeZt5L7B+Fml/oioPuUH4V?=
+ =?iso-8859-1?Q?Hbu3HQPh58jOFQm4GF2MsEFlcC0iqVfB/U5uMfJkptCMAKqXb1xc8OHGA7?=
+ =?iso-8859-1?Q?RAj9oK7fAeV3rKA/J3xKqjQ6yljICIPzyzCV4Lma+M7RIn+Men0Z0AMyXD?=
+ =?iso-8859-1?Q?1So8Tz4rLVxcOE+eRtWENXFD9QGw4PH4gC4Y1/TlBURm2a9IN0pFT+18nk?=
+ =?iso-8859-1?Q?K+0SZtdHmXLSXHYe2mCWpOQ8eV341ne/l/dGK60QOuulaGUdFsZfPuI/KA?=
+ =?iso-8859-1?Q?tp9mgCdUUeonOTUrLE0Vz9CgqEyLW+UaRcRH+C2ycT8hvbcz+GzUXLisPa?=
+ =?iso-8859-1?Q?Y+5JJrrdnm2y3IcFPt3e04+qf860bpHIKRW6vFEDvB18+LU+cEpP//KR1L?=
+ =?iso-8859-1?Q?v7u5XoV5SvXjSoLOtag4RcznLzfMpV03683qqDpqE6NFApvPXgfhU06uUl?=
+ =?iso-8859-1?Q?Gq2E/1QUF7uZORLlb4pxsqujE7YGnZVvHzdf/9bj4THaiFoZ/8qJe+j/d5?=
+ =?iso-8859-1?Q?zU0FlOprP/uVD/SASUy4lJt0FLSL1ATrkZSNXzuiknYvHwB/X6JNXknQe1?=
+ =?iso-8859-1?Q?7TXVVfF0e6/ccKH1QFMxl21Z1ci6oFLe+tP4vb1VeA1qp5ijtqxtr6+a+B?=
+ =?iso-8859-1?Q?gaxhO5cku8bmLxoPby4o10tz3zAcP1h2L1VuY5U/XMlZDSTL0qmhJDK++j?=
+ =?iso-8859-1?Q?hdx7PP0Z42O7SUXgbxg0QNe7b0byEhTOj3y+p7LTARTFfMFiQVp6imUl/3?=
+ =?iso-8859-1?Q?E8eleuSdZGeAag/I6ta182E61xeqMlgMIozBktRI+w7qJYkTuJp3xXfIsx?=
+ =?iso-8859-1?Q?OR0s0YPj9fx+4+tN0coPL9DFoVM9NaKBVidlXle+ecG7QijWxKtv0FjMsO?=
+ =?iso-8859-1?Q?PLpR8Nd8RStImsmrAB2c2QxQPJF4CRegglSNU6QHApmWy30r424Yg4e949?=
+ =?iso-8859-1?Q?ymm8r1dSvgQxefvR0HEYce2wJ7L24XA9XU1alMfBJsu9Q0HasDSnN6THPb?=
+ =?iso-8859-1?Q?Hicj6XAjuhDFv5D87E1Bbu+uBf1a+2wHctRjvQkk4BkOJqvI9N7Ll5le9n?=
+ =?iso-8859-1?Q?Ukc8KTEQfaK0R+eCD5MefYGE9rgugHiF7XYnkvYNJzu565IjR584VeKvco?=
+ =?iso-8859-1?Q?xNlRx2wa4+uo6/FQxwTPs2kp0s+PE102n+cjPLtXz9sRn5Bm9Bj3Pu/Q/W?=
+ =?iso-8859-1?Q?uDKns+shnQz9y2rUFANEeM39OyLFmPUfpO/TrtTcftRAs0DlbcHxcCXJMr?=
+ =?iso-8859-1?Q?GHVQMaickZJXmPiTDFnSj8Gjrq/YOm/WfRVSHIcmJDzq0q9EyIm7fDx3Qe?=
+ =?iso-8859-1?Q?yh1BXsXfZcSt6K+oChDAYbACGvP6n/qrr6qq2JXysj2ztHfxM4F1rHKRRs?=
+ =?iso-8859-1?Q?fqElmgO6Dunrp3scECyfNtmL6jISccRnOChgJEofcwRxv5em072S1Oaeps?=
+ =?iso-8859-1?Q?XZRBmt9d2fPNmm9ROyxfaG?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PA4PR09MB4864.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(38070700018); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?wGc3Ie/s7lQpBgMRDud8B2tLphWYkRCbR3MwTgHmAltPBieDPlvGJxsapk?=
+ =?iso-8859-1?Q?pxMqdDDJjVc7/mYtqrcUWCgRuljdBrRXxiPekTArc5MTxWrDpl58/IcEoQ?=
+ =?iso-8859-1?Q?HFTlGp441Uh5Md6nS/1n3sBDswNkwIIBP0jLuOd7LEdfzGmB6ssnyHyx5H?=
+ =?iso-8859-1?Q?V8Z0N9JDAKDEj1/tY2vy7pWZqKXcNHBRk3KgZNZJwpubko0GowJVXewoH9?=
+ =?iso-8859-1?Q?PwWvVLjoo5MdnboaBVn4vZdT4JauLdAS8ZBp9VbUk0NZfPQGe3SF7FaY+R?=
+ =?iso-8859-1?Q?rVhC5STWuA6DcWFZSxcvCXR6Wgk1EWOdy2SpaDPc73wxrwR7YaZ6g6MoFZ?=
+ =?iso-8859-1?Q?R+MQW3DK1CcE0Rv572zUeNYhk2NVuGVKle6xwfhQP7odGeGt7mvXN1Dc6W?=
+ =?iso-8859-1?Q?etQmAebGjE5rE38bUvW+vynd7TdxYA4mzam+8rKro+XNO1CyIerh9bs7Yv?=
+ =?iso-8859-1?Q?HKHNcfn6mi+ZOd8AGwb/AJt5EC6eXD6pGk5a+RyylaOVPO0k6PxtIiGM3J?=
+ =?iso-8859-1?Q?HlW9jxPvqB26mECbUdiNq3GPdSCV79ejUeJhRwxVWRSgbCIYQwbKkb+Lhv?=
+ =?iso-8859-1?Q?n0ef9sgm3ma8GGyL62F98NBy6fyHFs7fNrxbQ2j/TwsZTn5ayxaerKUS/X?=
+ =?iso-8859-1?Q?TY3u9EI65B6v9PnmyuckFMZ68EFvekA/UR7j2RZggu+W8Idr0ucCphbjM+?=
+ =?iso-8859-1?Q?9ApQ4/GXHVp4eUEoO5lyQpjTtFkxrTT1OVK47hts7u4aAA7nNaNnmeZD8s?=
+ =?iso-8859-1?Q?QDbJmantzD/iDqTMwaQS6B4f7XgkHfaWFB+9B3ipDxpjX8t5KVLUv2PYER?=
+ =?iso-8859-1?Q?57weRjXjjJlV0TtAdBwMtpLy+FQWd2QiwMmaJG/GTXu26i/ILjuRNyD8+N?=
+ =?iso-8859-1?Q?IkF5phUiWxMUoqeS7biZ6LK2nUsKS8o/pLjoFViEx11cABDReKKOkeGyAE?=
+ =?iso-8859-1?Q?XWynPrm4qMwtYjovy4HfoICiF2YopFM33fzhAoA1eFxQ4kmwZrgTCYy5Qu?=
+ =?iso-8859-1?Q?D+rqDbNKyHQDJ7YXH5JGhB9mz+fJQJn0swVtGY9zTeTBPkD8qHUj2DwMFO?=
+ =?iso-8859-1?Q?U9tjuuxJf1ga4LsWnRKcge4beVAjbAJg+WoXC/hUvqh4nRDuh+avG2+FM8?=
+ =?iso-8859-1?Q?xBvh/ORi3TIkn8Z12a39s5AL0FrNg3tHYLR3hUONoCBLL0mt/S6btB3Ruv?=
+ =?iso-8859-1?Q?G3ikli9LuAiRqIw5s6Nm2LcjnY9qGQrfUBWt1iYwJbK0zXJKCBp/eD6lPI?=
+ =?iso-8859-1?Q?yl/0RuvwnY5vArSOL1vLi0OR5FRqoo3NmkQ51YwPJX1LJhTIqhWZgVhBO+?=
+ =?iso-8859-1?Q?rSUiOelUxuFP+2RwFGpTinHDjGxXCbO5+vEyDiKsalw3WhxaU1s7D1lqkG?=
+ =?iso-8859-1?Q?iIA+IfasWYwjOyJsn77YOAZahBEzul8L9MlTA8QXloZyEOzNn40YExFlVt?=
+ =?iso-8859-1?Q?dGMoliwrGWmAHLO7W+tNJfHiyrrn/wUbjUJyUvH0Y6NvkwHohg+nPuHqCm?=
+ =?iso-8859-1?Q?TaB3IpZT1iOJ7eQcPUWgUx8/UVG/vfrWAHNlsu5IWAx7ZvnnmV1ySa//I/?=
+ =?iso-8859-1?Q?m7M7G6VxnmCUfPU/uNs3Y+Fv8B2H8W0KL92CmcBJg2txHqB9GJ04MoIa/1?=
+ =?iso-8859-1?Q?kAp8ykMz1fMMTdbTgfNiKcufJtMQBFF9YgENvSdDdzNveF8cK2Ey+qVzDB?=
+ =?iso-8859-1?Q?NO3GbXcFdNVWwhNlHyM=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 30/36] vfio/migration: Multifd device state transfer
- support - send side
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <608c869621ffe1688e08af98a373c33376487d53.1739994627.git.maciej.szmigiero@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <608c869621ffe1688e08af98a373c33376487d53.1739994627.git.maciej.szmigiero@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-OriginatorOrg: htecgroup.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR09MB4864.eurprd09.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 564d127a-d0c4-4772-b329-08dd56876fa0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Feb 2025 17:03:04.9436 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: G9Px+ge8EqoA9ncUjvWv9Tpn7BEqgFyFhXPycPkByLBT6Bs0+kyQt1YXfHN3goy94RK5HWST6GWWWpHNBcBY+0HIHSB+UsNgIMRoUtpJWGA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR09MB7419
+Received-SPF: pass client-ip=2a01:111:f403:2613::71e;
+ envelope-from=aleksandar.rakic@htecgroup.com;
+ helo=EUR05-VI1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,341 +169,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/25 21:34, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> 
-> Implement the multifd device state transfer via additional per-device
-> thread inside save_live_complete_precopy_thread handler.
-> 
-> Switch between doing the data transfer in the new handler and doing it
-> in the old save_state handler depending on the
-> x-migration-multifd-transfer device property value.
-> 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> ---
->   hw/vfio/migration-multifd.c   | 139 ++++++++++++++++++++++++++++++++++
->   hw/vfio/migration-multifd.h   |   5 ++
->   hw/vfio/migration.c           |  26 +++++--
->   hw/vfio/trace-events          |   2 +
->   include/hw/vfio/vfio-common.h |   8 ++
->   5 files changed, 174 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-> index 7200f6f1c2a2..0cfa9d31732a 100644
-> --- a/hw/vfio/migration-multifd.c
-> +++ b/hw/vfio/migration-multifd.c
-> @@ -476,6 +476,145 @@ bool vfio_multifd_transfer_setup(VFIODevice *vbasedev, Error **errp)
->       return true;
->   }
->   
-> +void vfio_multifd_emit_dummy_eos(VFIODevice *vbasedev, QEMUFile *f)
-> +{
-> +    assert(vfio_multifd_transfer_enabled(vbasedev));
-> +
-> +    /*
-> +     * Emit dummy NOP data on the main migration channel since the actual
-> +     * device state transfer is done via multifd channels.
-> +     */
-> +    qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
-> +}
-> +
-> +static bool
-> +vfio_save_complete_precopy_thread_config_state(VFIODevice *vbasedev,
-> +                                               char *idstr,
-> +                                               uint32_t instance_id,
-> +                                               uint32_t idx,
-> +                                               Error **errp)
-> +{
-> +    g_autoptr(QIOChannelBuffer) bioc = NULL;
-> +    g_autoptr(QEMUFile) f = NULL;
-> +    int ret;
-> +    g_autofree VFIODeviceStatePacket *packet = NULL;
-> +    size_t packet_len;
-> +
-> +    bioc = qio_channel_buffer_new(0);
-> +    qio_channel_set_name(QIO_CHANNEL(bioc), "vfio-device-config-save");
-> +
-> +    f = qemu_file_new_output(QIO_CHANNEL(bioc));
-> +
-> +    if (vfio_save_device_config_state(f, vbasedev, errp)) {
-> +        return false;
-> +    }
-> +
-> +    ret = qemu_fflush(f);
-> +    if (ret) {
-> +        error_setg(errp, "save config state flush failed: %d", ret);
-> +        return false;
-> +    }
-> +
-> +    packet_len = sizeof(*packet) + bioc->usage;
-> +    packet = g_malloc0(packet_len);
-> +    packet->version = VFIO_DEVICE_STATE_PACKET_VER_CURRENT;
-> +    packet->idx = idx;
-> +    packet->flags = VFIO_DEVICE_STATE_CONFIG_STATE;
-> +    memcpy(&packet->data, bioc->data, bioc->usage);
-> +
-> +    if (!multifd_queue_device_state(idstr, instance_id,
-> +                                    (char *)packet, packet_len)) {
-> +        error_setg(errp, "multifd config data queuing failed");
-> +        return false;
-> +    }
-> +
-> +    vfio_add_bytes_transferred(packet_len);
-> +
-> +    return true;
-> +}
-> +
-> +/*
-> + * This thread is spawned by the migration core directly via
-> + * .save_live_complete_precopy_thread SaveVMHandler.
-> + *
-> + * It exits after either:
-> + * * completing saving the remaining device state and device config, OR:
-> + * * encountering some error while doing the above, OR:
-> + * * being forcefully aborted by the migration core by
-> + *   multifd_device_state_save_thread_should_exit() returning true.
-> + */
-> +bool vfio_save_complete_precopy_thread(SaveLiveCompletePrecopyThreadData *d,
-> +                                       Error **errp)
+From: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
 
-In qemu_savevm_state_complete_precopy_iterable(), this handler is
-called :
+Skip NaN mode check for soft-float since NaN mode is irrelevant if an ELF
+binary's FPU mode is soft-float, i.e. it doesn't utilize a FPU.
 
-     ....
-     if (multifd_device_state) {
-         QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-             SaveLiveCompletePrecopyThreadHandler hdlr;
+Cherry-picked 63492a56485f6b755fccf7ad623f7a189bfc79b6
+from https://github.com/MIPS/gnutools-qemu
 
-             if (!se->ops || (in_postcopy && se->ops->has_postcopy &&
-                              se->ops->has_postcopy(se->opaque)) ||
-                 !se->ops->save_live_complete_precopy_thread) {
-                 continue;
-             }
+Signed-off-by: Faraz Shahbazker <fshahbazker@wavecomp.com>
+Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+---
+ linux-user/mips/cpu_loop.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-             hdlr = se->ops->save_live_complete_precopy_thread;
-             multifd_spawn_device_state_save_thread(hdlr,
-                                                    se->idstr, se->instance_id,
-                                                    se->opaque);
-         }
+diff --git a/linux-user/mips/cpu_loop.c b/linux-user/mips/cpu_loop.c
+index 462387a073..07c1ebe287 100644
+--- a/linux-user/mips/cpu_loop.c
++++ b/linux-user/mips/cpu_loop.c
+@@ -304,8 +304,10 @@ void target_cpu_copy_regs(CPUArchState *env, struct ta=
+rget_pt_regs *regs)
+     if (env->insn_flags & ISA_NANOMIPS32) {
+         return;
      }
-
-
-I suggest naming it : vfio_multifd_save_complete_precopy_thread()
-
-> +{
-> +    VFIODevice *vbasedev = d->handler_opaque;
-> +    VFIOMigration *migration = vbasedev->migration;
-> +    bool ret;
-> +    g_autofree VFIODeviceStatePacket *packet = NULL;
-> +    uint32_t idx;
-> +
-> +    if (!vfio_multifd_transfer_enabled(vbasedev)) {
-> +        /* Nothing to do, vfio_save_complete_precopy() does the transfer. */
-> +        return true;
-> +    }
-> +
-> +    trace_vfio_save_complete_precopy_thread_start(vbasedev->name,
-> +                                                  d->idstr, d->instance_id);
-> +
-> +    /* We reach here with device state STOP or STOP_COPY only */
-> +    if (vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
-> +                                 VFIO_DEVICE_STATE_STOP, errp)) {
-> +        ret = false;
-
-These "ret = false" can be avoided if the variable is set at the
-top of the function.
-
-> +        goto ret_finish;
-
-
-goto thread_exit ?
-> +    }
-> +
-> +    packet = g_malloc0(sizeof(*packet) + migration->data_buffer_size);
-> +    packet->version = VFIO_DEVICE_STATE_PACKET_VER_CURRENT;
-> +
-> +    for (idx = 0; ; idx++) {
-> +        ssize_t data_size;
-> +        size_t packet_size;
-> +
-> +        if (multifd_device_state_save_thread_should_exit()) {
-> +            error_setg(errp, "operation cancelled");
-> +            ret = false;
-> +            goto ret_finish;
-> +        }> +
-> +        data_size = read(migration->data_fd, &packet->data,
-> +                         migration->data_buffer_size);
-> +        if (data_size < 0) {
-> +            error_setg(errp, "reading state buffer %" PRIu32 " failed: %d",
-> +                       idx, errno);
-> +            ret = false;
-> +            goto ret_finish;
-> +        } else if (data_size == 0) {
-> +            break;
-> +        }
-> +
-> +        packet->idx = idx;
-> +        packet_size = sizeof(*packet) + data_size;
-> +
-> +        if (!multifd_queue_device_state(d->idstr, d->instance_id,
-> +                                        (char *)packet, packet_size)) {
-> +            error_setg(errp, "multifd data queuing failed");
-> +            ret = false;
-> +            goto ret_finish;
-> +        }
-> +
-> +        vfio_add_bytes_transferred(packet_size);
-> +    }
-> +
-> +    ret = vfio_save_complete_precopy_thread_config_state(vbasedev,
-> +                                                         d->idstr,
-> +                                                         d->instance_id,
-> +                                                         idx, errp);
-> +
-> +ret_finish:
-> +    trace_vfio_save_complete_precopy_thread_end(vbasedev->name, ret);
-> +
-> +    return ret;
-> +}
-> +
->   int vfio_multifd_switchover_start(VFIODevice *vbasedev)
->   {
->       VFIOMigration *migration = vbasedev->migration;
-> diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
-> index 09cbb437d9d1..79780d7b5392 100644
-> --- a/hw/vfio/migration-multifd.h
-> +++ b/hw/vfio/migration-multifd.h
-> @@ -25,6 +25,11 @@ bool vfio_multifd_transfer_setup(VFIODevice *vbasedev, Error **errp);
->   bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
->                               Error **errp);
->   
-> +void vfio_multifd_emit_dummy_eos(VFIODevice *vbasedev, QEMUFile *f);
-> +
-> +bool vfio_save_complete_precopy_thread(SaveLiveCompletePrecopyThreadData *d,
-> +                                       Error **errp);
-> +
->   int vfio_multifd_switchover_start(VFIODevice *vbasedev);
->   
->   #endif
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index b962309f7c27..69dcf2dac2fa 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -120,10 +120,10 @@ static void vfio_migration_set_device_state(VFIODevice *vbasedev,
->       vfio_migration_send_event(vbasedev);
->   }
->   
-> -static int vfio_migration_set_state(VFIODevice *vbasedev,
-> -                                    enum vfio_device_mig_state new_state,
-> -                                    enum vfio_device_mig_state recover_state,
-> -                                    Error **errp)
-> +int vfio_migration_set_state(VFIODevice *vbasedev,
-> +                             enum vfio_device_mig_state new_state,
-> +                             enum vfio_device_mig_state recover_state,
-> +                             Error **errp)
->   {
->       VFIOMigration *migration = vbasedev->migration;
->       uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature) +
-> @@ -238,8 +238,7 @@ static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
->       return ret;
->   }
->   
-> -static int vfio_save_device_config_state(QEMUFile *f, void *opaque,
-> -                                         Error **errp)
-> +int vfio_save_device_config_state(QEMUFile *f, void *opaque, Error **errp)
->   {
->       VFIODevice *vbasedev = opaque;
->       int ret;
-> @@ -453,6 +452,10 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
->       uint64_t stop_copy_size = VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE;
->       int ret;
->   
-> +    if (!vfio_multifd_transfer_setup(vbasedev, errp)) {
-> +        return -EINVAL;
-> +    }
-> +
-
-please move to another patch with the similar change of patch 25.
-
-
->       qemu_put_be64(f, VFIO_MIG_FLAG_DEV_SETUP_STATE);
->   
->       vfio_query_stop_copy_size(vbasedev, &stop_copy_size);
-> @@ -631,6 +634,11 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
->       int ret;
->       Error *local_err = NULL;
->   
-> +    if (vfio_multifd_transfer_enabled(vbasedev)) {
-> +        vfio_multifd_emit_dummy_eos(vbasedev, f);
-> +        return 0;
-> +    }
-> +
->       trace_vfio_save_complete_precopy_start(vbasedev->name);
->   
->       /* We reach here with device state STOP or STOP_COPY only */
-> @@ -662,6 +670,11 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
->       Error *local_err = NULL;
->       int ret;
->   
-> +    if (vfio_multifd_transfer_enabled(vbasedev)) {
-> +        vfio_multifd_emit_dummy_eos(vbasedev, f);
-> +        return;
-> +    }
-> +
->       ret = vfio_save_device_config_state(f, opaque, &local_err);
->       if (ret) {
->           error_prepend(&local_err,
-> @@ -819,6 +832,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
->       .is_active_iterate = vfio_is_active_iterate,
->       .save_live_iterate = vfio_save_iterate,
->       .save_live_complete_precopy = vfio_save_complete_precopy,
-> +    .save_live_complete_precopy_thread = vfio_save_complete_precopy_thread,
->       .save_state = vfio_save_state,
->       .load_setup = vfio_load_setup,
->       .load_cleanup = vfio_load_cleanup,
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index 418b378ebd29..039979bdd98f 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -168,6 +168,8 @@ vfio_save_block_precopy_empty_hit(const char *name) " (%s)"
->   vfio_save_cleanup(const char *name) " (%s)"
->   vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
->   vfio_save_complete_precopy_start(const char *name) " (%s)"
-> +vfio_save_complete_precopy_thread_start(const char *name, const char *idstr, uint32_t instance_id) " (%s) idstr %s instance %"PRIu32
-> +vfio_save_complete_precopy_thread_end(const char *name, int ret) " (%s) ret %d"
->   vfio_save_device_config_state(const char *name) " (%s)"
->   vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
->   vfio_save_iterate_start(const char *name) " (%s)"
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index ce2bdea8a2c2..ba851917f9fc 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -298,6 +298,14 @@ void vfio_add_bytes_transferred(unsigned long val);
->   bool vfio_device_state_is_running(VFIODevice *vbasedev);
->   bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
->   
-> +#ifdef CONFIG_LINUX
-> +int vfio_migration_set_state(VFIODevice *vbasedev,
-> +                             enum vfio_device_mig_state new_state,
-> +                             enum vfio_device_mig_state recover_state,
-> +                             Error **errp);
-
-please move below with the other declarations under #ifdef CONFIG_LINUX.
-
-> +#endif
-> +
-> +int vfio_save_device_config_state(QEMUFile *f, void *opaque, Error **errp);
->   int vfio_load_device_config_state(QEMUFile *f, void *opaque);
->   
->   #ifdef CONFIG_LINUX
-> 
-
-
-
-Thanks,
-
-C.
-
-
-
+-    if (((info->elf_flags & EF_MIPS_NAN2008) !=3D 0) !=3D
+-        ((env->active_fpu.fcr31 & (1 << FCR31_NAN2008)) !=3D 0)) {
++    if (info->fp_abi !=3D MIPS_ABI_FP_SOFT
++        && ((info->elf_flags & EF_MIPS_NAN2008) !=3D 0) !=3D
++           ((env->active_fpu.fcr31 & (1 << FCR31_NAN2008)) !=3D 0))
++      {
+         if ((env->active_fpu.fcr31_rw_bitmask &
+               (1 << FCR31_NAN2008)) =3D=3D 0) {
+             fprintf(stderr, "ELF binary's NaN mode not supported by CPU\n"=
+);
+--=20
+2.34.1
 
