@@ -4,93 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7452DC021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 15:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 408F9C18E7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 15:57:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnJlQ-0003kK-4H; Wed, 26 Feb 2025 10:56:04 -0500
+	id 1tnJmR-00043I-Bv; Wed, 26 Feb 2025 10:57:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tnJlK-0003ju-5c
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:55:55 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnJll-0003of-Fp
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:56:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tnJlI-0004j8-9H
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:55:53 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnJlj-0004lB-CE
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:56:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740585350;
+ s=mimecast20190719; t=1740585377;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r8CqY4o0DPQo+Y928L9zA4t9/2HrPF7Rgytn7kgXlYc=;
- b=Bj7UdVGIgY18SvqR/Il12ecs9gqQwrDoWzwyB0QZHcCb2DT0prD+gbCvfZd2zw+egp823J
- JxrOvNrXuoNIQggsyV7QJTBbwITO5A3zkSmDKtKAVgYJCBjNCfEG6tOA/PiC2Cv1bKJkf6
- +bEE6qKpDbv0eSsvCFRGE5MAwlIUT5o=
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=0RzG/UYd4/VTByBYbmtsz+ZYpJ5Vz9qs2kCPeYQiubs=;
+ b=NN6LI8s+fLa3fCTVlR+vphCRCEwqsEWbDatXoiSbVdz6yb+5Tgjjc7e9a7ztx9nESX3fvd
+ 4adOx1xjCBP513Gd8QMc7ZqWtIMel6JSNTf7mu9vYO/lYlgYkbBX5exGmdSrBjQWGHES/f
+ jRnT0UFh0zYmmq4vNAlYeCt7xIYYU9U=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-kaIOtGkgNLKXh0WFXo37iQ-1; Wed, 26 Feb 2025 10:55:49 -0500
-X-MC-Unique: kaIOtGkgNLKXh0WFXo37iQ-1
-X-Mimecast-MFC-AGG-ID: kaIOtGkgNLKXh0WFXo37iQ_1740585348
+ us-mta-689-owx_PQ5xNhmbRVoKvV263Q-1; Wed, 26 Feb 2025 10:56:16 -0500
+X-MC-Unique: owx_PQ5xNhmbRVoKvV263Q-1
+X-Mimecast-MFC-AGG-ID: owx_PQ5xNhmbRVoKvV263Q_1740585375
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38f4e3e9c5bso2853561f8f.1
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 07:55:49 -0800 (PST)
+ ffacd0b85a97d-38f3eb82fceso2737102f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 07:56:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740585348; x=1741190148;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=r8CqY4o0DPQo+Y928L9zA4t9/2HrPF7Rgytn7kgXlYc=;
- b=ZdZBCj8j+BQZ+iILbwJmnpkRQ9r3nDyyzFRNu6juSMrnXghIebnhe4QzULN2cGa/7S
- Wl5Mkhz/EwkN7DsMr9mp5uyPmGMFmVNmMMhxv9sOQbh8QqIq2M4i0gaPZFB7GXP1L/G5
- 99DZcLqEB1rBCpPTirP7SeoMchXNWRN/lcj6pfCw1+LJgY5X/MXyHZgGwU96rty3Pojw
- HeAWWUar4g0WuSFiwc9qHM0M544cS85xc2FdmVdhGDILniruankRQgF4tYUj9lQnvsT6
- FLXDK9s4D0x6wMwypjQ2lvr8MwY02U0eA2kjMbWxkDJeQcILF/9rqtw3fqZALsPpQZmP
- iTuA==
+ d=1e100.net; s=20230601; t=1740585375; x=1741190175;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0RzG/UYd4/VTByBYbmtsz+ZYpJ5Vz9qs2kCPeYQiubs=;
+ b=Xv1xWYovXQy2QLZAJV1y7KQjkkV120Dqt9npIbDEqhEsTBOSBN2+5fzfic2CdNSz/l
+ tTjPsclthcHVnmHEf62iuj6lmjH7EPZM97tcrcg4RuAj3HD5Me10AazQECGQfOnNGiDu
+ wGTMhEgVUkMFeqdFN+Au69kYFjTZs0JrGPUyJbeBN1goG0sE4cnFdEVckimWbWHBZ2V/
+ rypH2rE4iyj5pEqetoi1aloCNdXc1mli3B2LGBnUrRycxH+xjzlPVN8/m9ytZwQm2LsL
+ dx3JlxXU4CWmHdRZhQjp2P2MsTLeSBsEyUOzt2tFLQi2uwsFtQJAy31hZpNuPhdMFpu3
+ +rhQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU8tZrBys/JfIAWstwfuD9VFRMLDx8m4fA1ijXLXjW0lAKl57XIHHGna8PYsebvFgfC03vePDfHCBO9@nongnu.org
-X-Gm-Message-State: AOJu0YyEYU+WAsH9pvq2edQXhH7+3RMsBVa74nlw55eb/dQNM/TqLqJF
- ywIrfqtInNydWIe6TsF5M+/MSCMMwFVLSCtUw49XNuwU6t1MKmgV++cEOp3xGRDTcPUoNqV5jk7
- 0fIUCQPbiaJpjr15mZdlqWYPcOoynYyQhWFIJKPrEJD3OSgwjytOK
-X-Gm-Gg: ASbGncv7F5Xb8oZuQdkswzkYgA6wZY8IgudnEbGSj+Q0YOZbjS7LfoKztVafs8umIqV
- HtiW3auk9CSoizhXf1ahjMS5nUgQOqIFCloP7Y16bG5OBQ7/JN2OfRz4RTcZsFUt0Rof5DZ0OSG
- zxCFyosNEsZss8v6bMeyqo6fxdoJIgydCJ+19o9vQlhDfTNgPb1veDLLetMQHEBH9Ipogk0YvkB
- +ZDXGssKMEs6B0A40TA2HpG1Ox4NduFUaZz56NWtMsGRuycA/HHooNP1v1Y2ajoHuuiAyy+AEvs
- 6cTBoHTAmfHbABoxY0yP9Yg+s5jZWoyil7mqCDKmehffxEihIyJP5xE6VtEtQps=
-X-Received: by 2002:a05:6000:18ad:b0:38a:615b:9ec0 with SMTP id
- ffacd0b85a97d-390cc6475ddmr6949960f8f.54.1740585348083; 
- Wed, 26 Feb 2025 07:55:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFyuJQRaFb4583I4taVqxsuF1Qw2F0ZkJcIPI2a6MwWctYzyb+OQVaF4zA3fJ8tVybL/MtDRQ==
-X-Received: by 2002:a05:6000:18ad:b0:38a:615b:9ec0 with SMTP id
- ffacd0b85a97d-390cc6475ddmr6949942f8f.54.1740585347741; 
- Wed, 26 Feb 2025 07:55:47 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e1040844sm110155f8f.85.2025.02.26.07.55.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 07:55:47 -0800 (PST)
-Date: Wed, 26 Feb 2025 16:55:46 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 10/14] tests/acpi: virt: allow acpi table changes for
- a new table: HEST
-Message-ID: <20250226165546.3b1ded0b@imammedo.users.ipa.redhat.com>
-In-Reply-To: <94ff7f7ccde4c8d74c7838c0021cbb453e91f12a.1740148260.git.mchehab+huawei@kernel.org>
-References: <cover.1740148260.git.mchehab+huawei@kernel.org>
- <94ff7f7ccde4c8d74c7838c0021cbb453e91f12a.1740148260.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ AJvYcCUsOKStTG3JeSuVKf46FnsFb2c/aBHpOqAN/9SHPfUECx+jkV++JWPClooyCWsDn4F4svxvUFKq6aio@nongnu.org
+X-Gm-Message-State: AOJu0YzWz4Iq2fTuxGzS4qLjD77tUv8BzahuvhGzj+VcZVdnSMpq8EDi
+ IThWFvuccrDaF9/o2ecfsfXFNVVC2jMzyLe/puD/wlab4CHioKHLQ3Uriep/rKu9edAGWBCIbkw
+ TNgITXsVYzKobuFbTnsJrm2CZZ8SYPEZ6PhkUCHlWs9tJnlXQgAKu
+X-Gm-Gg: ASbGnct+Wb3a2w1pY2OObb7ej1f9yLjPRYtv7YUbZnjpeJaUMvTl/MEOFahSqbHIGXq
+ IIyAYIMrMs+16zMJZUSZnLyCvP+GO6Eh22ckoebVRzptbLH4xqaYig+sV2g/UcN+0dxFVJ4fk3E
+ GTOyOaPRXL96AjFXCVAhh5LCj4iAXungRJ04FmuKJM0Ipvm8yWCDZiaXGLRUIudzUg9BonxbYTw
+ Okr+8M/yy8bnwCtSPPbX8ec+iHm/CeZnAhOXuNH8DravzNboZfSKdtBiaN1KR3GxMJ0e/6hZPs4
+ qP0bAsMSScG6J8ggyeWWVSHi8IIY0p6LueIHxCdpf0A/RJzcV69cGuMO07s=
+X-Received: by 2002:adf:fa41:0:b0:38f:2bee:e13c with SMTP id
+ ffacd0b85a97d-390cc638bc7mr5562000f8f.53.1740585375221; 
+ Wed, 26 Feb 2025 07:56:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGubEGXsfKhTGmoBFCH5fnTMKZyjzP2OP9QpiDjZLb9L5X1qBD8Uc5VnOiUS07phF9f837uPA==
+X-Received: by 2002:adf:fa41:0:b0:38f:2bee:e13c with SMTP id
+ ffacd0b85a97d-390cc638bc7mr5561982f8f.53.1740585374815; 
+ Wed, 26 Feb 2025 07:56:14 -0800 (PST)
+Received: from ?IPV6:2a01:cb19:9004:d500:a732:5611:7f59:8bb3?
+ ([2a01:cb19:9004:d500:a732:5611:7f59:8bb3])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e00fef78sm426099f8f.98.2025.02.26.07.56.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Feb 2025 07:56:14 -0800 (PST)
+Message-ID: <a33db1bd-2acc-4c19-9203-ff02d7db890e@redhat.com>
+Date: Wed, 26 Feb 2025 16:56:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 19/36] vfio/migration: Convert bytes_transferred
+ counter to atomic
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
+ <dbb9b1047aca873a5ee0a91f352f282fe1004a15.1739994627.git.maciej.szmigiero@oracle.com>
+ <e9296dd6-63ec-4a3e-9b2c-14d7cff200c7@redhat.com>
+ <b06b6e16-e6aa-4fad-a745-19de05d5aa15@maciej.szmigiero.name>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <b06b6e16-e6aa-4fad-a745-19de05d5aa15@maciej.szmigiero.name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -115,24 +163,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 21 Feb 2025 15:35:19 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On 2/26/25 14:55, Maciej S. Szmigiero wrote:
+> On 26.02.2025 08:52, Cédric Le Goater wrote:
+>> On 2/19/25 21:34, Maciej S. Szmigiero wrote:
+>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>
+>>> So it can be safety accessed from multiple threads.
+>>>
+>>> This variable type needs to be changed to unsigned long since
+>>> 32-bit host platforms lack the necessary addition atomics on 64-bit
+>>> variables.
+>>>
+>>> Using 32-bit counters on 32-bit host platforms should not be a problem
+>>> in practice since they can't realistically address more memory anyway.
+>>
+>> Is it useful to have VFIO on 32-bit host platforms ?
+>>
+>> If not, VFIO PCI should depend on (AARCH64 || PPC64 || X86_64) and we
+>> could drop this patch. Let's address that independently.
+> 
+> Not sure how much use VFIO gets on 32-bit host platforms,
+> however totally disabling it on these would be a major functional regression -
+> at least if taken at its face value.
 
-> The DSDT table will also be affected by such change.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  tests/qtest/bios-tables-test-allowed-diff.h | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index dfb8523c8bf4..1a4c2277bd5a 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1 +1,2 @@
->  /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/aarch64/virt/DSDT",
-this and flowing update would also include HEST table, once you enable 'ras' in tests
+32-bit host platform support is being deprecated in QEMU 10.0 and should
+be removed in QEMU 10.2.
+
+> Especially considering that making it work on 32-bit platform requires
+> just this tiny variable type change here.
+
+yes. It raised my attention because x86 32-bit was the only host platform
+I was not sure about and Alex confirmed it worked. We should simply wait
+for removal.
+
+
+Thanks,
+
+C.
 
 
 
