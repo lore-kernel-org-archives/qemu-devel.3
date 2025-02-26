@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E5B2C19776
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 07:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F58C021BC
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 07:17:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnBbK-00018p-BE; Wed, 26 Feb 2025 02:13:02 -0500
+	id 1tnBf9-0003gH-IO; Wed, 26 Feb 2025 02:16:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnBbI-00017y-4x
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:13:00 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnBf8-0003fu-LE
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:16:58 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnBbG-0008LQ-4C
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:12:59 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-38f2b7ce2f3so4591343f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 23:12:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnBf6-0000pC-IZ
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:16:58 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4394345e4d5so42603655e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 23:16:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740553975; x=1741158775; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740554214; x=1741159014; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=i0RbDguo3dCo7/G2RUUEmVJ5uMry7l5DogAnuIZxaA8=;
- b=KEs/b2xNtIs9TcECxx8nFb7a2x5K+6EHqmdaLNXc+E+oMwxi4au6WiqSYGLdIHByqE
- uLNvMHFhPQpwOMMqr6Ecue8/fMlEu037VDPShXMoi05hpy/2BMdlVQ4w+TQtWeI3oYqo
- qhVz/wClbBiKzrpEOaVfZK+ar1daTpwXuG1DrN4Ilrc7ACH+vCsqe/qOJFZcTnUu1xZW
- INXOlzyrV+QuCpO241TKf5HAIA+1tzm7pfsf00+M9YzQBVu/nwwJGGB7REaiEBsZfwjD
- S23IZY64uaSGmJgtm+Q2oTACneAZP9F72elak1ofZVUCzk5m6fQMPkCM+J8sFev1ArPL
- optQ==
+ bh=0v5417qqXYQZlRddsBMaunFNfgBxqTSBb07yyd8Ic+8=;
+ b=s7m3MXzIqsL3q8n6b4tu5KdagiUXkWHlhzCvflzGf8cotQb3PgmrOvBoBZaDEGs0/z
+ rrfamk2Tav1IEGkDNOdgpJdGYRwwOPLY12c0G8OKEGrwQwSHYIVaCO5C9fyxf7zN/Oeo
+ 4Nzl2q/HjLDvJmdRgnkjJd6MVT5fRQv8zJ2VvJNpmBRgmWFF0UxigLmxZF0SlDPqvbCE
+ zpYcpYpOKPToY8YTK0G8/jlxgiVcyEkE/Ci4y9gjpYHuVjxA3aLA4XOnEMfqznxwa9wY
+ Ckckziz4gYRqfbyaG9tuITSmwjuHNQNvphloWBl8I8EWVzAESJ778XRnbE1akIG5Shw4
+ n+3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740553975; x=1741158775;
+ d=1e100.net; s=20230601; t=1740554214; x=1741159014;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i0RbDguo3dCo7/G2RUUEmVJ5uMry7l5DogAnuIZxaA8=;
- b=ODa5dewHnNXyhEblVkX77ySO8po2G+OS4tZDLVvInuZlntmce17aJ6kbqCxuMyhXDa
- ohHGnJbvyH1Hzky7dyl1BUXP8JjCX7ZlqdtlFOJuLC4yuPxJqR/YycR+Ln/cLccqLyIW
- qOVEQWMWihth+UlLbSuro5f4NrRJBFwcLfB+m3ZjxQN/0jas93dKbSi8nNn4R6NzVnjT
- E/fkvSm39hBW/NJjMRkCnSX7kti0G/93+f9prnyG3g1AB93+Qe8z1HGsoEgzZg0H6GpN
- EhCUtjAYYDMTyQvOa3Mf9U5MChxauIuIwNyzJlY5KYaZxlsWG0JAJaAYKMYffXBb6Tdw
- tmqA==
+ bh=0v5417qqXYQZlRddsBMaunFNfgBxqTSBb07yyd8Ic+8=;
+ b=MqCqBsWa/2juJ9XCAqQF5exJIJCnx+RD74n1Ovsfb51+nGLHIUU+ainAXtRMzYV+oT
+ qe645kCrBgkNxYbpJuuhyhGt/C2pFhPS1Y3KfoanH9MXqExHX2nCHJ88spHcMG07g+GJ
+ Mv2kIXrMZ+6ohaFi7p+h5fdkUFgGnhR+FK2QSBsVUfaRL0iYP1p+q+KvEudEwb5IW+d1
+ 3HVVcnQBZHO8sde2r7gmG6taA82QiER80GhnTyFQp3UYgAcLT1VCPbF4x0/NEeUXf/S2
+ y5omF1ragEnjkKW4tYSQt9UErcbVoHfJtJbSGir6rEAcCYB/81taq30GO07qc8UKkk06
+ dsnQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXrGnqY7fYIjtzqDW5bg4tuBHgsAtjf+t1Se/6ezaVhwokkI3wTiI9ZBYQp2ZflGtYjSfzZBhf7naqZ@nongnu.org
-X-Gm-Message-State: AOJu0YwHdmmw9KozvLHU5Wh2790bKSW08CqMlLnrnojyo6NtXB1tmHLS
- jpEEFde5q0iK6vdhQqXAvI/3aGsZpziOmabd4VrNTRfuK44X+vJISIf9OqxY5XI=
-X-Gm-Gg: ASbGncvSIM+64fUabID15GyrlynUt//RvM8dLUck+clbSiNhdHBHyCUd4Ir7u98BGHs
- 9Y67hrzGpXx/WdJywFsTSuq9w4s72NSYwUDhtWAbmhhHuG3BCsgmGnfU/TD55Vq21VXKD05AkAv
- hzx7J/u/E7wA/HUiKGC/Nls/6Y0EJmAF/Gd+LoFhSc71bGQO0AS76GGhS8sPVTncyPn32JcjgpC
- PiJEIsY3OtajaC7VAhqquv+4/5uY7wM1P4hYMyeN0E1NtfH2Sed4J4WIlYRZp0RDxRBVd0Zjbsl
- aAu6fERWJ2UN2mukr4rC7YaEKd3fY59btyRJQTwfWCrTvN0H4iGIwPgR2l9cFPF08wWtdVIKscU
+ AJvYcCWuwv9NRr92fqjAHCU/wV0xNqtx1ue7ixlpZPGNrM84ayX9apZCjVqL2L7MAQfdgVSWLIfQr5Se5VUb@nongnu.org
+X-Gm-Message-State: AOJu0Yy1VL1G9kbpz2Z6KT+KR3zRo/JRTPLYI4aG4TkXlCTnD5KowFVY
+ 8VMIPmyC9Qm7oJmD6q3yqGNlzTabnjUbulxGbMpVUqfafw7Iup17opOQvKyuevk=
+X-Gm-Gg: ASbGncu8eza8eA/CFUd5cqELtXBO2Tj8Rdy7uLKQ1+vnO5ZGujyxAhlzhXk+TlPjKkm
+ SM9NiAph8G3G/85tIn4IHkx3GuGApMxi9RZgTrOwYUvD+0+nLaNu5MyuHEvmFHQlw+IJv2gDq45
+ XAJiE+lDHww+KXqNR4/nqpH6+ihwvxiej0dj1/0LFc8rJmZBsOhTGCOUNTHXxQryQo96U0VhKj9
+ YERGlUzLZffAiX8nu4ek1AdGoybne+a6Rk+tvgzlpZD0SNxujnVq3StU5ZLpk2fn1bNRr9Lr3Eo
+ avZkZPRIOZo3jUv9eKM/qhqH7gokiDOxOgnRs2hN7cMZR09MU+Vk+QrVW/bbvuxxy67XfiVHpK0
  =
-X-Google-Smtp-Source: AGHT+IFjcYke/r7Rxz88j5ekehN5CCFXpEU3q4xWV7ZafQNPSw5zy8elM36GTgWmwRMNS87CJM+mBg==
-X-Received: by 2002:a05:6000:18a2:b0:38f:50bd:ad11 with SMTP id
- ffacd0b85a97d-38f707840afmr15594081f8f.5.1740553975138; 
- Tue, 25 Feb 2025 23:12:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFzffk8lnhjkz4mJADqheoG/w7EfXCrcHy9rRIiT61XfDVZNiIqZUJRzlUcRHGDA7YNRAZuCA==
+X-Received: by 2002:a05:600c:4fcf:b0:439:5a37:8157 with SMTP id
+ 5b1f17b1804b1-439aebf3613mr200525205e9.30.1740554214437; 
+ Tue, 25 Feb 2025 23:16:54 -0800 (PST)
 Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba532d7asm10976175e9.13.2025.02.25.23.12.52
+ 5b1f17b1804b1-43aba52b591sm11178795e9.6.2025.02.25.23.16.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 23:12:53 -0800 (PST)
-Message-ID: <26ca503f-9f35-4043-bf50-3bf7df2e1dd1@linaro.org>
-Date: Wed, 26 Feb 2025 08:12:52 +0100
+ Tue, 25 Feb 2025 23:16:53 -0800 (PST)
+Message-ID: <96b40129-072e-46c3-87c5-dd6a51dca1d6@linaro.org>
+Date: Wed, 26 Feb 2025 08:16:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/10] m68k: reset vcpu after it's created
+Subject: Re: [PATCH v2 08/10] cpus: expose only realized vCPUs to global
+ &cpus_queue
 To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
 References: <20250207162048.1890669-1-imammedo@redhat.com>
- <20250207162048.1890669-4-imammedo@redhat.com>
+ <20250207162048.1890669-9-imammedo@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250207162048.1890669-4-imammedo@redhat.com>
+In-Reply-To: <20250207162048.1890669-9-imammedo@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,26 +107,115 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/2/25 17:20, Igor Mammedov wrote:
-> Reseting vcpu before its thread is created, caused various issues in the past
-> for other targets. It doesn't cause issues for m68k at the moment but
-> to be consistent with the rest of targets, move reset during realize time
-> after qemu_init_vcpu().
+> cpu_list_add() was doing 2 distinct things:
+> - assign some index to vCPU
+> - add unrealized (thus in inconsistent state) vCPU to &cpus_queue
 > 
-> That basically prevents reset being run when when vCPU is in incositent state
+> Code using CPU_FOREACH() macro would iterate over possibly
+> unrealized vCPUs, often dealt with special casing.
+> 
+> Instead of working around of vCPU existence in cpus_queue,
+> split out cpu_index assignment from cpu_list_add(),
 
-(typo)
+Better split 2 distinct changes in 2 patches for clarity.
 
-> (i.e. accelerator hasn't initialized vCPU yet).
+> and move the later to the end of realize stage,
+> right before vCPU is let run.
 > 
 > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 > ---
-> CC: Laurent Vivier <laurent@vivier.eu>
+> CC: Yanan Wang <wangyanan55@huawei.com>
+> CC: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   target/m68k/cpu.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   include/hw/core/cpu.h |  6 ++++++
+>   cpu-common.c          | 23 ++++++++++++++---------
+>   cpu-target.c          |  2 +-
+>   hw/core/cpu-common.c  |  2 ++
+>   4 files changed, 23 insertions(+), 10 deletions(-)
+> 
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index fb397cdfc5..c338fd31bd 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -750,6 +750,12 @@ bool cpu_virtio_is_big_endian(CPUState *cpu);
+>   
+>   #endif /* CONFIG_USER_ONLY */
+>   
+> +/**
+> + * cpu_auto_assign_cpu_index:
+> + * @cpu: The CPU to be assigned a cpu_index
+> + */
+> +void cpu_auto_assign_cpu_index(CPUState *cpu);
+> +
+>   /**
+>    * cpu_list_add:
+>    * @cpu: The CPU to be added to the list of CPUs.
+> diff --git a/cpu-common.c b/cpu-common.c
+> index 4248b2d727..92f3d00e56 100644
+> --- a/cpu-common.c
+> +++ b/cpu-common.c
+> @@ -71,15 +71,7 @@ int cpu_get_free_index(void)
+>       return max_cpu_index;
+>   }
+>   
+> -CPUTailQ cpus_queue = QTAILQ_HEAD_INITIALIZER(cpus_queue);
+> -static unsigned int cpu_list_generation_id;
+> -
+> -unsigned int cpu_list_generation_id_get(void)
+> -{
+> -    return cpu_list_generation_id;
+> -}
+> -
+> -void cpu_list_add(CPUState *cpu)
+> +void cpu_auto_assign_cpu_index(CPUState *cpu)
+>   {
+>       static bool cpu_index_auto_assigned;
+>   
+> @@ -91,6 +83,19 @@ void cpu_list_add(CPUState *cpu)
+>       } else {
+>           assert(!cpu_index_auto_assigned);
+>       }
+> +}
+> +
+> +CPUTailQ cpus_queue = QTAILQ_HEAD_INITIALIZER(cpus_queue);
+> +static unsigned int cpu_list_generation_id;
+> +
+> +unsigned int cpu_list_generation_id_get(void)
+> +{
+> +    return cpu_list_generation_id;
+> +}
+> +
+> +void cpu_list_add(CPUState *cpu)
+> +{
+> +    QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
+>       QTAILQ_INSERT_TAIL_RCU(&cpus_queue, cpu, node);
+>       cpu_list_generation_id++;
+>   }
+> diff --git a/cpu-target.c b/cpu-target.c
+> index 667688332c..0c86c18a50 100644
+> --- a/cpu-target.c
+> +++ b/cpu-target.c
+> @@ -142,7 +142,7 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
+>       }
+>   
+>       /* Wait until cpu initialization complete before exposing cpu. */
+> -    cpu_list_add(cpu);
+> +    cpu_auto_assign_cpu_index(cpu);
+>   
+>   #ifdef CONFIG_USER_ONLY
+>       assert(qdev_get_vmsd(DEVICE(cpu)) == NULL ||
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index cb79566cc5..c29737e5e3 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -211,6 +211,8 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+>           }
+>       }
+>   
+> +    cpu_list_add(cpu);
+> +
+>       if (dev->hotplugged) {
+>           cpu_synchronize_post_init(cpu);
+>           cpu_resume(cpu);
 
 
