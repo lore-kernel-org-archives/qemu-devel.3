@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF11C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC4E5C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnI9B-0006fU-48; Wed, 26 Feb 2025 09:12:25 -0500
+	id 1tnI9G-0007CJ-LD; Wed, 26 Feb 2025 09:12:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI8e-0005Rh-Gj
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:12:01 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1tnI8b-0005RC-8m
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:11:54 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI8b-0007aD-02
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:11:50 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-38f325dd9e6so3628566f8f.1
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:11:46 -0800 (PST)
+ id 1tnI8X-0007ZC-5B
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:11:48 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4398ec2abc2so60168425e9.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:11:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740579105; x=1741183905; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740579103; x=1741183903; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fuqYR0pzDjdy/vyGlSpH8HOM+UQ/7j7Yz2MNCfS9jD0=;
- b=CRTv6jGwcVOcFhb7e+kixVY2ru8fgiwegX4zJVs53vmzXrmU1OOsYeRmvEFfdgOZT6
- G2IxmsmHO9fhJE+3bnRaDR7Ry1vv1eSdpNxZDKBz2K1raA0G+mjOSMPmySxRjkdQ+oIL
- OIOCPUXmuujaPjVd256yT8i3jHKoT4cPx7GsLl4r7mURE9+0FwNjKy7Tn/+vgd2efk/w
- sxJ57i8v87ayid8FauWULwk9FQ7jx54OBMgLyq6rRnrmB1KmMOKyTVuVwJf1+aWQwpvo
- iS28x0d9fxTneHrgiPJaQYAwc0hAHbq9EecvYXBvvctTROl7JrBPv/ji7nRVP7nj+xEM
- cxmA==
+ bh=RFdASjaX52m/LFBMdNIH+YRGWtE+XbpwGlPffnilBbc=;
+ b=syisNZssjAHCxXkFkV0CllLHmJDGR/vW0g4InZ2ZUnGYxFslVT5C0RPqUD87j/JU0r
+ pgn8UN1ZabsVXtAzZuDz21wioGVXJh0zcX6U5vh9ezUu2LUmZu+KhOIMEZCbzr+kyWDW
+ 37oXcE37gq2KOVB2+4wM9RKrVnkrKsvZt8+wRoGpR7uU9Os6nuWRjauLXwToKGrQ/vjq
+ rLM0UoiL+LOyKgmhIyb+NMv8BNZg1n8U671t6Swe/ELfrRHOOX4U25jGYGATR/IIx5In
+ nIuVV556dhQ9oLQXmDxM65lJcCCTLLs3e1VzY/5mXIKv9XKe6zzf6M7vUAvddoOeVbrp
+ 9Jpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740579105; x=1741183905;
+ d=1e100.net; s=20230601; t=1740579103; x=1741183903;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fuqYR0pzDjdy/vyGlSpH8HOM+UQ/7j7Yz2MNCfS9jD0=;
- b=aYDHgSQY42dJ9vfxrdNDCvFL8Oenlrv6uFrXo3TkpXNgJwKSzao5G0+++JNWAGvpDk
- xWg2hK5KNAmnAWoCaqv7cf59KcgCNLYYoSxTL2b1wNNDXWRmoi4eWgkGpKEevVsCxFm0
- LzQNKYA9qEtT7hviEkXUCQGtzdJMHGMtzDbza0QL/HyRSlOVQAezB/EErDUmX3Lz4EK3
- 3FMhQ3edKpb+S4u9PW3erlTlZRO+JFKnKRVoZM7RIdLF/5XLBzGjEtIeM0KqTzOSk6Rx
- gOzUvmZ4x95UioQ3tEVbqVFTPiWAZqZ8i9BbpyHipt5WXRalaWf99sJ8momedm0dGqP+
- 9isw==
-X-Gm-Message-State: AOJu0YyurnLKkSkFY70brUEKY437iOBopKd638TLO3A/PyqDeftVfeyg
- aubf9ihFX4ajLojAoOqDd/Dz2yomurNTh67goF7EgBjpoTx7N0tmjapNtoh+AsI=
-X-Gm-Gg: ASbGncuHhc5QsPA9EY7h75hiySL4M0w3MX1fq5HFOdWVTLOW9xtIKCLS+Z9+xL85gsx
- aYLzQfuSMUbcXC6tFYQIe6t5FVk5ecPr6sZOMmAf6U2i+InKDnpUrLobDUupx5LpJTQ7BgWHD84
- gncHqRXf+vunD+d+baCFRnjCD/5lFvX35E1U8KXCsm4VTxzS9MkksR7I4NKwMFdKYRCJI+tjMd0
- TzlQH8rzGsyzUemghiltcqM7y43CO+jsmMr00WeEp9BXI+RQ8XmBYQun2mwO49Z3dfXVwlZLDVB
- Ja0T8wsgaoblJ3KhnMevHimeKx01
-X-Google-Smtp-Source: AGHT+IEmzqR4yIfka9lOETpiDzckm1tWP2Y18QUXSLtp5vMiS3CsE23MxPF1Mz98RTU22xNbxa1xvA==
-X-Received: by 2002:a05:6000:2a9:b0:390:dd1c:45c4 with SMTP id
- ffacd0b85a97d-390dd1c4886mr1650668f8f.12.1740579105275; 
- Wed, 26 Feb 2025 06:11:45 -0800 (PST)
+ bh=RFdASjaX52m/LFBMdNIH+YRGWtE+XbpwGlPffnilBbc=;
+ b=dd7tkhn9U472dtiHiD1OkGmUWV1KWEQdVHjeun9fmVa9hS1pnvtQOXdgRjhMlpxuvs
+ F/+Xr0/Mo8QMHLdpr3FOX8cNoatxP8ZN4n3ivRmI1M7P096MefVk/0LjvX0QOEmHccsl
+ 8t0eZUW/PcsA5gW//kwEDR2drSvtX+9xML3OrVwMTNtMtbym6IUwHCe2cndegahJROLr
+ iZpHc1iiQM1VmmGne/S4zGCrrZ/zjOgNynXlMD1OhcOirE0xDc5fqcl/6dOIDsf17xm9
+ C0QH6iui9cgKVV+e6JODCuimWGy3LG/9U6bOIB0cyVMo53by7lk84c7j1mNYtgmEG47e
+ QTMg==
+X-Gm-Message-State: AOJu0YzS1oXDnA5LpsE5fsuR6iMyJm6zWcaogV/wQ1FdHI4jg/3/yA2x
+ sAeB7ke35SuhejQUrpbgIGSR/mJsR1cSMyKL8iCVEKBA9CEU3OZw8iULcTViKy8=
+X-Gm-Gg: ASbGncsRaIzLSPqm36XsEPHNT3tKRYnOkgyK26pe4OuQ6yY8wAZgOKs8EAqxWuOiXR2
+ o1Gz+VyoPTZkR55WbCGuqvWNjgZE/s63gsaYleXb7GnMwwoyS5Y01u0lu39Tkw84eQSPK9W1Ecu
+ PiFO9utq3RZ4E0+9DoMyGHCPQeJbw0CsIF9jbJzSbZzgqgAGoF2ckDstl0qUyoaiKIt1hj+12/6
+ ggleVL9p3vajIci0Ylgm179cgj0xeUAv4OlRnxYN/uMC6yfQRrmOEaKuxEOxzs0J2FCbw4L9lc9
+ IRTxorFhW6PwSo+1YHrqJQCvQRZ8
+X-Google-Smtp-Source: AGHT+IHIZKv/rn4CKhDiNy6dg0I6jgrot4jwFHquIT8dVOKLfVgh4vqogplzc8/LT6RCruY+7dxmQg==
+X-Received: by 2002:a05:600c:444e:b0:439:9543:9488 with SMTP id
+ 5b1f17b1804b1-43ab9015589mr26128155e9.21.1740579103243; 
+ Wed, 26 Feb 2025 06:11:43 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab2cb1063sm33164325e9.2.2025.02.26.06.11.42
+ 5b1f17b1804b1-43aba532d33sm22850475e9.15.2025.02.26.06.11.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 26 Feb 2025 06:11:42 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7972360605;
- Wed, 26 Feb 2025 14:03:45 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 1DBB66086F;
+ Wed, 26 Feb 2025 14:03:46 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
@@ -82,17 +82,17 @@ Cc: qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 16/25] plugins/loader: populate target_name with target_name()
-Date: Wed, 26 Feb 2025 14:03:34 +0000
-Message-Id: <20250226140343.3907080-17-alex.bennee@linaro.org>
+Subject: [PATCH 22/25] plugins/api: split out the vaddr/hwaddr helpers
+Date: Wed, 26 Feb 2025 14:03:40 +0000
+Message-Id: <20250226140343.3907080-23-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250226140343.3907080-1-alex.bennee@linaro.org>
 References: <20250226140343.3907080-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,30 +115,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have a function we can call for this, lets not rely on macros that
-stop us building once.
+These only work for system-mode and are NOPs for user-mode.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250225110844.3296991-3-alex.bennee@linaro.org>
+Message-Id: <20250225110844.3296991-9-alex.bennee@linaro.org>
 ---
- plugins/loader.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ plugins/api-system.c | 58 ++++++++++++++++++++++++++++++++++++
+ plugins/api-user.c   | 40 +++++++++++++++++++++++++
+ plugins/api.c        | 70 --------------------------------------------
+ plugins/meson.build  |  2 +-
+ 4 files changed, 99 insertions(+), 71 deletions(-)
+ create mode 100644 plugins/api-user.c
 
-diff --git a/plugins/loader.c b/plugins/loader.c
-index 99686b5466..827473c8b6 100644
---- a/plugins/loader.c
-+++ b/plugins/loader.c
-@@ -297,7 +297,7 @@ int qemu_plugin_load_list(QemuPluginList *head, Error **errp)
-     struct qemu_plugin_desc *desc, *next;
-     g_autofree qemu_info_t *info = g_new0(qemu_info_t, 1);
+diff --git a/plugins/api-system.c b/plugins/api-system.c
+index cb0dd8f730..38560de342 100644
+--- a/plugins/api-system.c
++++ b/plugins/api-system.c
+@@ -12,6 +12,10 @@
  
--    info->target_name = TARGET_NAME;
-+    info->target_name = target_name();
-     info->version.min = QEMU_PLUGIN_MIN_VERSION;
-     info->version.cur = QEMU_PLUGIN_VERSION;
- #ifndef CONFIG_USER_ONLY
+ #include "qemu/osdep.h"
+ #include "qemu/main-loop.h"
++#include "qapi/error.h"
++#include "migration/blocker.h"
++#include "hw/boards.h"
++#include "qemu/plugin-memory.h"
+ #include "qemu/plugin.h"
+ 
+ /*
+@@ -37,3 +41,57 @@ uint64_t qemu_plugin_entry_code(void)
+ {
+     return 0;
+ }
++
++/*
++ * Virtual Memory queries
++ */
++
++static __thread struct qemu_plugin_hwaddr hwaddr_info;
++
++struct qemu_plugin_hwaddr *qemu_plugin_get_hwaddr(qemu_plugin_meminfo_t info,
++                                                  uint64_t vaddr)
++{
++    CPUState *cpu = current_cpu;
++    unsigned int mmu_idx = get_mmuidx(info);
++    enum qemu_plugin_mem_rw rw = get_plugin_meminfo_rw(info);
++    hwaddr_info.is_store = (rw & QEMU_PLUGIN_MEM_W) != 0;
++
++    assert(mmu_idx < NB_MMU_MODES);
++
++    if (!tlb_plugin_lookup(cpu, vaddr, mmu_idx,
++                           hwaddr_info.is_store, &hwaddr_info)) {
++        error_report("invalid use of qemu_plugin_get_hwaddr");
++        return NULL;
++    }
++
++    return &hwaddr_info;
++}
++
++bool qemu_plugin_hwaddr_is_io(const struct qemu_plugin_hwaddr *haddr)
++{
++    return haddr->is_io;
++}
++
++uint64_t qemu_plugin_hwaddr_phys_addr(const struct qemu_plugin_hwaddr *haddr)
++{
++    if (haddr) {
++        return haddr->phys_addr;
++    }
++    return 0;
++}
++
++const char *qemu_plugin_hwaddr_device_name(const struct qemu_plugin_hwaddr *h)
++{
++    if (h && h->is_io) {
++        MemoryRegion *mr = h->mr;
++        if (!mr->name) {
++            unsigned maddr = (uintptr_t)mr;
++            g_autofree char *temp = g_strdup_printf("anon%08x", maddr);
++            return g_intern_string(temp);
++        } else {
++            return g_intern_string(mr->name);
++        }
++    } else {
++        return g_intern_static_string("RAM");
++    }
++}
+diff --git a/plugins/api-user.c b/plugins/api-user.c
+new file mode 100644
+index 0000000000..867b420339
+--- /dev/null
++++ b/plugins/api-user.c
+@@ -0,0 +1,40 @@
++/*
++ * QEMU Plugin API - user-mode only implementations
++ *
++ * This provides the APIs that have a user-mode specific
++ * implementations or are only relevant to user-mode.
++ *
++ * Copyright (C) 2017, Emilio G. Cota <cota@braap.org>
++ * Copyright (C) 2019-2025, Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/plugin.h"
++
++/*
++ * Virtual Memory queries - these are all NOPs for user-mode which
++ * only ever has visibility of virtual addresses.
++ */
++
++struct qemu_plugin_hwaddr *qemu_plugin_get_hwaddr(qemu_plugin_meminfo_t info,
++                                                  uint64_t vaddr)
++{
++    return NULL;
++}
++
++bool qemu_plugin_hwaddr_is_io(const struct qemu_plugin_hwaddr *haddr)
++{
++    return false;
++}
++
++uint64_t qemu_plugin_hwaddr_phys_addr(const struct qemu_plugin_hwaddr *haddr)
++{
++    return 0;
++}
++
++const char *qemu_plugin_hwaddr_device_name(const struct qemu_plugin_hwaddr *h)
++{
++    return g_intern_static_string("Invalid");
++}
+diff --git a/plugins/api.c b/plugins/api.c
+index ffccd71e4b..82241699a5 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -383,76 +383,6 @@ qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info)
+     return value;
+ }
+ 
+-/*
+- * Virtual Memory queries
+- */
+-
+-#ifdef CONFIG_SOFTMMU
+-static __thread struct qemu_plugin_hwaddr hwaddr_info;
+-#endif
+-
+-struct qemu_plugin_hwaddr *qemu_plugin_get_hwaddr(qemu_plugin_meminfo_t info,
+-                                                  uint64_t vaddr)
+-{
+-#ifdef CONFIG_SOFTMMU
+-    CPUState *cpu = current_cpu;
+-    unsigned int mmu_idx = get_mmuidx(info);
+-    enum qemu_plugin_mem_rw rw = get_plugin_meminfo_rw(info);
+-    hwaddr_info.is_store = (rw & QEMU_PLUGIN_MEM_W) != 0;
+-
+-    assert(mmu_idx < NB_MMU_MODES);
+-
+-    if (!tlb_plugin_lookup(cpu, vaddr, mmu_idx,
+-                           hwaddr_info.is_store, &hwaddr_info)) {
+-        error_report("invalid use of qemu_plugin_get_hwaddr");
+-        return NULL;
+-    }
+-
+-    return &hwaddr_info;
+-#else
+-    return NULL;
+-#endif
+-}
+-
+-bool qemu_plugin_hwaddr_is_io(const struct qemu_plugin_hwaddr *haddr)
+-{
+-#ifdef CONFIG_SOFTMMU
+-    return haddr->is_io;
+-#else
+-    return false;
+-#endif
+-}
+-
+-uint64_t qemu_plugin_hwaddr_phys_addr(const struct qemu_plugin_hwaddr *haddr)
+-{
+-#ifdef CONFIG_SOFTMMU
+-    if (haddr) {
+-        return haddr->phys_addr;
+-    }
+-#endif
+-    return 0;
+-}
+-
+-const char *qemu_plugin_hwaddr_device_name(const struct qemu_plugin_hwaddr *h)
+-{
+-#ifdef CONFIG_SOFTMMU
+-    if (h && h->is_io) {
+-        MemoryRegion *mr = h->mr;
+-        if (!mr->name) {
+-            unsigned maddr = (uintptr_t)mr;
+-            g_autofree char *temp = g_strdup_printf("anon%08x", maddr);
+-            return g_intern_string(temp);
+-        } else {
+-            return g_intern_string(mr->name);
+-        }
+-    } else {
+-        return g_intern_static_string("RAM");
+-    }
+-#else
+-    return g_intern_static_string("Invalid");
+-#endif
+-}
+-
+ int qemu_plugin_num_vcpus(void)
+ {
+     return plugin_num_vcpus();
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 9c9bc9e5bb..942b59e904 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -58,7 +58,7 @@ if host_os == 'windows'
+   )
+ endif
+ 
+-user_ss.add(files('user.c'))
++user_ss.add(files('user.c', 'api-user.c'))
+ system_ss.add(files('system.c', 'api-system.c'))
+ 
+ common_ss.add(files('loader.c'))
 -- 
 2.39.5
 
