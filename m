@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C574BC021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 23:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D16CC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 23:21:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnQh3-0001Ib-DO; Wed, 26 Feb 2025 18:19:57 -0500
+	id 1tnQi6-0002MS-JJ; Wed, 26 Feb 2025 18:21:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tnQh1-0001ID-AT; Wed, 26 Feb 2025 18:19:55 -0500
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ id 1tnQhu-00028y-Vs; Wed, 26 Feb 2025 18:20:51 -0500
+Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tnQgw-0000oJ-PS; Wed, 26 Feb 2025 18:19:54 -0500
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-8671d8a9c3eso219386241.3; 
- Wed, 26 Feb 2025 15:19:50 -0800 (PST)
+ id 1tnQht-0001M3-9r; Wed, 26 Feb 2025 18:20:50 -0500
+Received: by mail-vk1-xa2c.google.com with SMTP id
+ 71dfb90a1353d-521b5bd2268so276801e0c.0; 
+ Wed, 26 Feb 2025 15:20:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740611988; x=1741216788; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740612048; x=1741216848; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uwFO6EYO8LkvPJyZQ8iUJ1ZvrZlfserOnI1dgDkRP7E=;
- b=dUKLSxXAwHeD7FbiGbv63jrkVggsHTEWloI8+8khUlV84QJHvLGLiEa4xeWzjycFM+
- KArYBgXaj1z/zLJO1YpIWZuVFLw7BrDRiBAiTNeS9hBa/G9N+Fs01a7HFV8jvXi58a3k
- XPkl2AOgQ2UHq9BFGrr58R/U7c11sImqMBP7s1Yp0NSWas92F2nO7CUb/xDnIJ/A9Cd0
- 1FOSqDveCvoXew0vKJND+jPg9U1/59WTYFsgRcw4yPoh0kD5nHtbQ+qu44vFW/cxz//O
- VuLEkSdqT4icDtArB673lzKFeQA62L/SxdesuIa5oRNvR2fbIHp4xQXsSh6SwOLO4BZl
- pH4w==
+ bh=lihyeHMp5H2UMxaKitKFSk6Vszj7Vm/LIP8ICpGjSXQ=;
+ b=BaEyucwioNWkERFMUBORVXR+E/PTFmOsimzfXpnlRgtPvxZvKVaGK2jmS4L+Dwg0rI
+ JJlVXG2f9roNQjhn62TyVMNZgcaRQC3WMlY3eKeqXQcHXbfken/XTogsCUekF9sOXzwX
+ X7UU/snwRokxjeKrVINeyfXPal4wwp0NCBcghYYarXqnwkV83WOEDyO9U+JqmlhJFR8y
+ 50bpPP3gxJGocubXmtV7Sn5y0gyPHchzLulQ9GnzBbkHWtwpA5h0vkeFqLANlAjZhxPM
+ Zp1RjJdllses/nRqsNuZyEwAumiEq0p52SMek/lbp5HhOnH2YEuVdcJC7pT12LDwUPnz
+ 1JJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740611988; x=1741216788;
+ d=1e100.net; s=20230601; t=1740612048; x=1741216848;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uwFO6EYO8LkvPJyZQ8iUJ1ZvrZlfserOnI1dgDkRP7E=;
- b=OFIs6UGkEIunV5N+gmjfD5nIyKm9LpLZ7huQ386d98GknuhGOSv5iklt25JbEAXu3D
- KEFmRJJ5PeM3qyakacir9pQoZSOURLjmKABkLBrgCOaGcMQB/sZzBordFDZ1UuFWmCLb
- tVY1gCr5dncIme+lqlUmXLvfWup+Rg3psuokL9ovWb9y3teJ0HtmTeSVZnU0DLVVzY46
- romDC1SuWt3RHt12RzD1ll+WmpqSW25tMlmjBTc1fG+dISxJV5rK5+zz2jGinr18+WGY
- H6tDa7ORM5Cw51wYf1DjKiT4fKMk3PPHnRV7D3Q+88rDmHfSJgGRyog1c9wwuTZh/Ems
- NEFg==
+ bh=lihyeHMp5H2UMxaKitKFSk6Vszj7Vm/LIP8ICpGjSXQ=;
+ b=Jaj8YmOrroIToT6s02ZgI5eLgsAbJ85VQSSQ1OJrqJ9SvZAQUnZy/P7s7nZa4nUfNA
+ AXxlUkcInk4P7oHcTTbjVIv6pd2W7EamhG/ByI3yYl9GYLbrjNZzpmX80myVPgekq4Gt
+ +19Ne9JuzpYGDSQzc8l3XXVMLX5/Rv3UXFfrXBHgjYnxG/uPJnR4A7XwSfcxoBtsvDW0
+ iQLoCRx8ZEfkqxVgGuqb/CMFGFxqQt6s8pF4dkeUcBfC13IBlQ4E0xBOMA+yCOZp7W36
+ ddwl7otQ6xZeT779CQoK/AKyQP2emhKsPt+y9n4SjN7uGWakIxHLiN6ZLgOWAugFkbKz
+ qwTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2JNw/reiuWene+s4186N8EhY+V5z9KuCfetAT92oQrGXeAaP7sUoUNEslhALo/l3+HVQF+PLUDrvO@nongnu.org
-X-Gm-Message-State: AOJu0YyMSLb9eTcotOA9HR7o5X+i/4QxQVMAO3oRGac4gIHzeRkTBwcF
- 81YAinAZDNZZ2QHT4EBeGHRZslg2cTFpDsuS4qh/X3hNfoYzIuUJeftgI2akgas2iTPeC2vJ4Us
- 0EyTGPR87vEIglTHE0HjUstM8Qe0=
-X-Gm-Gg: ASbGncsfOXJH3eQQfovPDSoGmdLp3f+jHxzX4oHKhjihqIvGbvgMhtUFS+oJbXZZOka
- 4Wbwt+m3l7MLoUDn2tMEB6jJv+W0FjVL7atMuGHzOtQGvb2woPyJhfAPzZAu8BVA4qyzmAFgtao
- 89shedNp5cQdWUpSBVmAbRy5mCYSsuRhmGMnSssA==
-X-Google-Smtp-Source: AGHT+IHOtxRy/D97jKM9M869jhS5xw6OxzjmxGWCcKE/34ZRcrBP1gL6yFjpy5jNFEDaQOIaqvMeuNgqt9z0OT6udHg=
-X-Received: by 2002:a05:6102:dcb:b0:4bb:c24b:b61a with SMTP id
- ada2fe7eead31-4c01e2d6493mr3954972137.19.1740611988708; Wed, 26 Feb 2025
- 15:19:48 -0800 (PST)
+ AJvYcCVVWs+VUftIwiTa0xmeFigU0GEXIMKZITiGVMB0YgkITfRYwNaHHt3SWPVHELRf3mY/RuyhQxyyxSEV@nongnu.org
+X-Gm-Message-State: AOJu0YzFLzeDbpA7LjT5r/o9Y2YjPeDUPHIC7RSvETlw7yq/oBBM0BBA
+ 595iw0We7g19SWo4923a8f9GkHdaBxFFBfiaZiSOMd9jO4OkI2v02+d44eir9FqY+Wx1RnKczp6
+ m1Ek620Gq16eYTOBv4/yPtbIWvRk=
+X-Gm-Gg: ASbGnctSscDzIeF5GoSUfxuN84D+axUxfFoDwthQDFPKixacW2Jnkmb3b5J2ojrteLN
+ KvQ0xfIguOmqWQS+N3ovjIliV6LAcg79mFcP8CwMKWgUi+zQi/wPCXc9UhUBxQDpvZ1hvzmktWx
+ WtZ3eZKs9drCzWX5N0dnl+9nxHwugMoOLpSu0YEw==
+X-Google-Smtp-Source: AGHT+IHFM1ocPKcHeH+UXQfOGTcdEbK/sUAGxZRwTPzx4zoQjVVlux6tFyUvn5yM2yfM+fFxyI7lZGeflp4Df5OgFe0=
+X-Received: by 2002:a05:6122:32d5:b0:516:1ab2:9955 with SMTP id
+ 71dfb90a1353d-5224cced0b6mr3488737e0c.6.1740612047771; Wed, 26 Feb 2025
+ 15:20:47 -0800 (PST)
 MIME-Version: 1.0
-References: <174044811783.27139.4910941776283875756-0@git.sr.ht>
-In-Reply-To: <174044811783.27139.4910941776283875756-0@git.sr.ht>
+References: <303616ccad2b5309768157b50d93b3e89fecc9cb.1740371468.git.zhouquan@iscas.ac.cn>
+In-Reply-To: <303616ccad2b5309768157b50d93b3e89fecc9cb.1740371468.git.zhouquan@iscas.ac.cn>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 27 Feb 2025 09:19:22 +1000
-X-Gm-Features: AQ5f1Jq57Ir1GtdxT8qwthaBZ3jpFBkuZ6hvtPrzrLdAIDbrAUa_WMgiJqgKEvw
-Message-ID: <CAKmqyKO85YNhWSYVS7vUqTxi-ZnT4=rPAsGoj+8EPMh334bfTg@mail.gmail.com>
-Subject: Re: [PATCH qemu] target/riscv: Only check ext_zca for 16-bit aligned
- PC.
-To: "~yuming" <yumin686@andestech.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Thu, 27 Feb 2025 09:20:21 +1000
+X-Gm-Features: AQ5f1Jol6HTKbncCCO9b7LU1RZSmTybESWrWdyWiQmLuJ2_VL_WemsmB6_16Kek
+Message-ID: <CAKmqyKNGFj5rzfyMvn-5OEdADBa0-ULikuLczSoOUB+Dg_fQ_w@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv/kvm: Add some exts support
+To: zhouquan@iscas.ac.cn
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com, dbarboza@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,90 +96,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 25, 2025 at 11:49=E2=80=AFAM ~yuming <yuming@git.sr.ht> wrote:
+On Mon, Feb 24, 2025 at 2:46=E2=80=AFPM <zhouquan@iscas.ac.cn> wrote:
 >
-> From: Yu-Ming Chang <yumin686@andestech.com>
+> From: Quan Zhou <zhouquan@iscas.ac.cn>
 >
-> Since C always implies Zca, Zca is always enabled when 16-bit
-> insructions are supported. we can only check ext_zca to allow
-> 16-bit aligned PC addresses.
+> When the Sscofpmf/Svade/Svadu/Smnpm/Ssnpm exts is available
+> expose it to the guest so that guest can use it.
 >
-> Signed-off-by: Yu-Ming Chang <yumin686@andestech.com>
+> Signed-off-by: Quan Zhou <zhouquan@iscas.ac.cn>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 > ---
->  target/riscv/insn_trans/trans_rvi.c.inc | 5 ++---
->  target/riscv/op_helper.c                | 4 ++--
->  target/riscv/translate.c                | 2 +-
->  3 files changed, 5 insertions(+), 6 deletions(-)
+>  target/riscv/kvm/kvm-cpu.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_=
-trans/trans_rvi.c.inc
-> index 96c218a9d7..e5965201a7 100644
-> --- a/target/riscv/insn_trans/trans_rvi.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-> @@ -106,7 +106,7 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a=
-)
->          tcg_gen_ext32s_tl(target_pc, target_pc);
->      }
->
-> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca) {
-> +    if (!ctx->cfg_ptr->ext_zca) {
->          TCGv t0 =3D tcg_temp_new();
->
->          misaligned =3D gen_new_label();
-> @@ -236,8 +236,7 @@ static bool gen_branch(DisasContext *ctx, arg_b *a, T=
-CGCond cond)
->
->      gen_set_label(l); /* branch taken */
->
-> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca &&
-> -        (a->imm & 0x3)) {
-> +    if (!ctx->cfg_ptr->ext_zca && (a->imm & 0x3)) {
->          /* misaligned */
->          TCGv target_pc =3D tcg_temp_new();
->          gen_pc_plus_diff(target_pc, ctx, a->imm);
-> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index ce1256f439..68882136d7 100644
-> --- a/target/riscv/op_helper.c
-> +++ b/target/riscv/op_helper.c
-> @@ -276,7 +276,7 @@ target_ulong helper_sret(CPURISCVState *env)
->      }
->
->      target_ulong retpc =3D env->sepc;
-> -    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
-> +    if (!env_archcpu(env)->cfg.ext_zca && (retpc & 0x3)) {
->          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
->      }
->
-> @@ -349,7 +349,7 @@ static void check_ret_from_m_mode(CPURISCVState *env,=
- target_ulong retpc,
->          riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
->      }
->
-> -    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
-> +    if (!env_archcpu(env)->cfg.ext_zca && (retpc & 0x3)) {
->          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
->      }
->
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 698b74f7a8..34eeed50be 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -566,7 +566,7 @@ static void gen_jal(DisasContext *ctx, int rd, target=
-_ulong imm)
->      TCGv succ_pc =3D dest_gpr(ctx, rd);
->
->      /* check misaligned: */
-> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca) {
-> +    if (!ctx->cfg_ptr->ext_zca) {
->          if ((imm & 0x3) !=3D 0) {
->              TCGv target_pc =3D tcg_temp_new();
->              gen_pc_plus_diff(target_pc, ctx, imm);
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 23ce779359..06a9f30841 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -319,9 +319,14 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] =3D {
+>      KVM_EXT_CFG("zvksed", ext_zvksed, KVM_RISCV_ISA_EXT_ZVKSED),
+>      KVM_EXT_CFG("zvksh", ext_zvksh, KVM_RISCV_ISA_EXT_ZVKSH),
+>      KVM_EXT_CFG("zvkt", ext_zvkt, KVM_RISCV_ISA_EXT_ZVKT),
+> +    KVM_EXT_CFG("smnpm", ext_smnpm, KVM_RISCV_ISA_EXT_SMNPM),
+>      KVM_EXT_CFG("smstateen", ext_smstateen, KVM_RISCV_ISA_EXT_SMSTATEEN)=
+,
+>      KVM_EXT_CFG("ssaia", ext_ssaia, KVM_RISCV_ISA_EXT_SSAIA),
+> +    KVM_EXT_CFG("sscofpmf", ext_sscofpmf, KVM_RISCV_ISA_EXT_SSCOFPMF),
+> +    KVM_EXT_CFG("ssnpm", ext_ssnpm, KVM_RISCV_ISA_EXT_SSNPM),
+>      KVM_EXT_CFG("sstc", ext_sstc, KVM_RISCV_ISA_EXT_SSTC),
+> +    KVM_EXT_CFG("svade", ext_svade, KVM_RISCV_ISA_EXT_SVADE),
+> +    KVM_EXT_CFG("svadu", ext_svadu, KVM_RISCV_ISA_EXT_SVADU),
+>      KVM_EXT_CFG("svinval", ext_svinval, KVM_RISCV_ISA_EXT_SVINVAL),
+>      KVM_EXT_CFG("svnapot", ext_svnapot, KVM_RISCV_ISA_EXT_SVNAPOT),
+>      KVM_EXT_CFG("svpbmt", ext_svpbmt, KVM_RISCV_ISA_EXT_SVPBMT),
 > --
-> 2.45.3
+> 2.34.1
+>
 >
 
