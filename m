@@ -4,69 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BCD6C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3D67C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnEAm-0003Kt-Ov; Wed, 26 Feb 2025 04:57:48 -0500
+	id 1tnEAm-0003Ke-Fe; Wed, 26 Feb 2025 04:57:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEAk-0003KM-Pp
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEAj-0003Jp-Q0
  for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:57:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEAi-00084J-N6
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:57:46 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEAf-00083z-Hz
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:57:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740563863;
+ s=mimecast20190719; t=1740563859;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s2aEP/JHmTuI8Y3xeJ1CN1qv5nRQAbt1VifI3o4Let8=;
- b=BgKn9SPNvRNGXIAXvghAxUWC3ES3e7UoPnUEd0UeQHJeUUUX8FD7LgyBcVXYczCerfkn9R
- RgoRC+5XiQsL8bt0W9zbq0s5Ky4QgJ/tqiw6KPZQv3QsraI/n9/dU4MIsgTBfKXyZ6M6TU
- L4gmgU2gqsO7ekt5doQejsiD8jnuhoo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=+KQMaokrZg6n3ht6jZRx4Z9vziSpWj/IYljSW34WfpQ=;
+ b=AY1mt+/4jXV+qGQkO3wRTyzE69US+x8PfOd+DiP1PI9H1XxXBP3tXG69V+jBpV40uw1u66
+ EfcpIRqN7cQnQB7F4q6bdT2n1IiIktC6kRU4g1usCoGL6daawhkjBPlTZ4AiDB91+RiT/d
+ jmRxVTguht78RVqW1HKzhcncOoYJ3Ys=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-412-HGa-WTfOPnWyKzxr2XaMqQ-1; Wed,
- 26 Feb 2025 04:57:38 -0500
-X-MC-Unique: HGa-WTfOPnWyKzxr2XaMqQ-1
-X-Mimecast-MFC-AGG-ID: HGa-WTfOPnWyKzxr2XaMqQ_1740563858
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-139-XlFyMMdcO_61Y-MErL2sqg-1; Wed,
+ 26 Feb 2025 04:57:37 -0500
+X-MC-Unique: XlFyMMdcO_61Y-MErL2sqg-1
+X-Mimecast-MFC-AGG-ID: XlFyMMdcO_61Y-MErL2sqg_1740563856
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB57D1955F28; Wed, 26 Feb 2025 09:57:37 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CAAE190FF83
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:57:35 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.144])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 27ED11800358; Wed, 26 Feb 2025 09:57:35 +0000 (UTC)
+ id 35723180035E; Wed, 26 Feb 2025 09:57:33 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/18] tests/functional: Have microblaze tests inherit common
- parent class
-Date: Wed, 26 Feb 2025 10:57:14 +0100
-Message-ID: <20250226095731.1172375-2-thuth@redhat.com>
-In-Reply-To: <20250226095731.1172375-1-thuth@redhat.com>
-References: <20250226095731.1172375-1-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 00/18] Functional and other test improvements
+Date: Wed, 26 Feb 2025 10:57:13 +0100
+Message-ID: <20250226095731.1172375-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,124 +80,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+ Hi!
 
-Have the MicroblazeMachine class being common to both
-MicroblazeBigEndianMachine and MicroblazeLittleEndianMachine
-classes. Move the xmaton and ballerina tests to the parent class.
+The following changes since commit b69801dd6b1eb4d107f7c2f643adf0a4e3ec9124:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250212123659.52764-11-philmd@linaro.org>
-[thuth: Add missing ASSET statements to the leaf classes]
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- .../functional/test_microblaze_s3adsp1800.py  | 27 ++++++++++++++++
- .../test_microblazeel_s3adsp1800.py           | 31 +++----------------
- 2 files changed, 32 insertions(+), 26 deletions(-)
+  Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2025-02-22 05:06:39 +0800)
 
-diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
-index c4226f49cf3..c93fa14232b 100755
---- a/tests/functional/test_microblaze_s3adsp1800.py
-+++ b/tests/functional/test_microblaze_s3adsp1800.py
-@@ -7,6 +7,7 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later. See the COPYING file in the top-level directory.
- 
-+from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
- 
-@@ -20,6 +21,10 @@ class MicroblazeMachine(QemuSystemTest):
-          'day17.tar.xz'),
-         '3ba7439dfbea7af4876662c97f8e1f0cdad9231fc166e4861d17042489270057')
- 
-+    ASSET_IMAGE_LE = Asset(
-+        ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
-+        'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
-+
-     def do_ballerina_be_test(self, machine):
-         self.set_machine(machine)
-         self.archive_extract(self.ASSET_IMAGE_BE)
-@@ -34,8 +39,30 @@ def do_ballerina_be_test(self, machine):
-         # message, that's why we don't test for a later string here. This
-         # needs some investigation by a microblaze wizard one day...
- 
-+    def do_xmaton_le_test(self, machine):
-+        self.require_netdev('user')
-+        self.set_machine(machine)
-+        self.archive_extract(self.ASSET_IMAGE_LE)
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', self.scratch_file('day13', 'xmaton.bin'))
-+        tftproot = self.scratch_file('day13')
-+        self.vm.add_args('-nic', f'user,tftp={tftproot}')
-+        self.vm.launch()
-+        wait_for_console_pattern(self, 'QEMU Advent Calendar 2023')
-+        wait_for_console_pattern(self, 'buildroot login:')
-+        exec_command_and_wait_for_pattern(self, 'root', '#')
-+        exec_command_and_wait_for_pattern(self,
-+                'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
-+                '821cd3cab8efd16ad6ee5acc3642a8ea')
-+
-+
-+class MicroblazeBigEndianMachine(MicroblazeMachine):
-+
-+    ASSET_IMAGE_BE = MicroblazeMachine.ASSET_IMAGE_BE
-+
-     def test_microblaze_s3adsp1800_legacy_be(self):
-         self.do_ballerina_be_test('petalogix-s3adsp1800')
- 
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
-diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
-index 60aab4a45e8..ab59941d57a 100755
---- a/tests/functional/test_microblazeel_s3adsp1800.py
-+++ b/tests/functional/test_microblazeel_s3adsp1800.py
-@@ -7,37 +7,16 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later. See the COPYING file in the top-level directory.
- 
--from qemu_test import exec_command_and_wait_for_pattern
--from qemu_test import QemuSystemTest, Asset
--from qemu_test import wait_for_console_pattern
-+from test_microblaze_s3adsp1800 import MicroblazeMachine
- 
- 
--class MicroblazeelMachine(QemuSystemTest):
-+class MicroblazeLittleEndianMachine(MicroblazeMachine):
- 
--    timeout = 90
--
--    ASSET_IMAGE_LE = Asset(
--        ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
--        'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
--
--    def do_xmaton_le_test(self, machine):
--        self.require_netdev('user')
--        self.set_machine(machine)
--        self.archive_extract(self.ASSET_IMAGE_LE)
--        self.vm.set_console()
--        self.vm.add_args('-kernel', self.scratch_file('day13', 'xmaton.bin'))
--        tftproot = self.scratch_file('day13')
--        self.vm.add_args('-nic', f'user,tftp={tftproot}')
--        self.vm.launch()
--        wait_for_console_pattern(self, 'QEMU Advent Calendar 2023')
--        wait_for_console_pattern(self, 'buildroot login:')
--        exec_command_and_wait_for_pattern(self, 'root', '#')
--        exec_command_and_wait_for_pattern(self,
--                'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
--                '821cd3cab8efd16ad6ee5acc3642a8ea')
-+    ASSET_IMAGE_LE = MicroblazeMachine.ASSET_IMAGE_LE
- 
-     def test_microblaze_s3adsp1800_legacy_le(self):
-         self.do_xmaton_le_test('petalogix-s3adsp1800')
- 
-+
- if __name__ == '__main__':
--    QemuSystemTest.main()
-+    MicroblazeMachine.main()
--- 
-2.48.1
+are available in the Git repository at:
+
+  https://gitlab.com/thuth/qemu.git tags/pull-request-2025-02-26
+
+for you to fetch changes up to 72cdd672e18c486db7c54a7b33c8b4fe7a0026e6:
+
+  tests/functional: Replace the ppc64 e500 advent calendar test (2025-02-26 08:05:09 +0100)
+
+----------------------------------------------------------------
+* Convert more avocado tests to the functional framework
+* Fix a problem with the check-patch/check-dco CI jobs
+* Replace the ppc64 e500 functional test with a better one
+* Test retrieval of machine class properties
+
+----------------------------------------------------------------
+Cédric Le Goater (1):
+      tests/functional: Replace the ppc64 e500 advent calendar test
+
+Daniel P. Berrangé (1):
+      gitlab: use --refetch in check-patch/check-dco jobs
+
+Peter Maydell (1):
+      tests/functional: Bump some arm test timeouts
+
+Philippe Mathieu-Daudé (1):
+      tests/functional: Have microblaze tests inherit common parent class
+
+Thomas Huth (14):
+      tests/qtest/qom-test: Test retrieval of machine class properties
+      tests/functional: Provide a proper name for the VMs in the replay tests
+      tests/functional: Convert the xtensa replay test to the functional framework
+      tests/functional: Convert the sparc replay avocado test
+      tests/functional: Convert the 32-bit ppc replay avocado tests
+      tests/functional: Convert the or1k replay avocado tests
+      tests/functional: Convert the ppc64 replay avocado tests
+      tests/functional: Convert the microblaze replay avocado tests
+      tests/functional: Convert the m68k replay avocado tests
+      tests/functional: Convert the arm replay avocado tests
+      tests/functional: Convert the alpha replay avocado tests
+      tests/functional: Convert the s390x replay avocado tests
+      tests/functional: Convert the aarch64 replay avocado tests
+      tests/functional: Convert the x86_64 replay avocado tests
+
+ tests/qtest/qom-test.c                           |  11 +
+ .gitlab-ci.d/check-dco.py                        |   2 +-
+ .gitlab-ci.d/check-patch.py                      |   2 +-
+ tests/avocado/replay_kernel.py                   | 302 -----------------------
+ tests/functional/meson.build                     |  22 +-
+ tests/functional/replay_kernel.py                |   2 +-
+ tests/functional/test_aarch64_replay.py          |  30 +++
+ tests/functional/test_alpha_replay.py            |  29 +++
+ tests/functional/test_arm_replay.py              |  69 ++++++
+ tests/functional/test_arm_sx1.py                 |   6 +-
+ tests/functional/test_m68k_replay.py             |  42 ++++
+ tests/functional/test_microblaze_replay.py       |  28 +++
+ tests/functional/test_microblaze_s3adsp1800.py   |  27 ++
+ tests/functional/test_microblazeel_s3adsp1800.py |  31 +--
+ tests/functional/test_or1k_replay.py             |  27 ++
+ tests/functional/test_ppc64_e500.py              |  33 ++-
+ tests/functional/test_ppc64_replay.py            |  49 ++++
+ tests/functional/test_ppc_replay.py              |  34 +++
+ tests/functional/test_s390x_replay.py            |  28 +++
+ tests/functional/test_sparc_replay.py            |  27 ++
+ tests/functional/test_x86_64_replay.py           |  35 +++
+ tests/functional/test_xtensa_replay.py           |  28 +++
+ 22 files changed, 519 insertions(+), 345 deletions(-)
+ create mode 100755 tests/functional/test_aarch64_replay.py
+ create mode 100755 tests/functional/test_alpha_replay.py
+ create mode 100755 tests/functional/test_arm_replay.py
+ create mode 100755 tests/functional/test_m68k_replay.py
+ create mode 100755 tests/functional/test_microblaze_replay.py
+ create mode 100755 tests/functional/test_or1k_replay.py
+ create mode 100755 tests/functional/test_ppc64_replay.py
+ create mode 100755 tests/functional/test_ppc_replay.py
+ create mode 100755 tests/functional/test_s390x_replay.py
+ create mode 100755 tests/functional/test_sparc_replay.py
+ create mode 100755 tests/functional/test_x86_64_replay.py
+ create mode 100755 tests/functional/test_xtensa_replay.py
 
 
