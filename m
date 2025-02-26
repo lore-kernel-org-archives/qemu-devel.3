@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C066C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC32C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnK4n-0005lq-RA; Wed, 26 Feb 2025 11:16:01 -0500
+	id 1tnK66-0006hw-J9; Wed, 26 Feb 2025 11:17:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnK4f-0005Vq-Ri
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:15:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnK5L-0006DR-6l
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:16:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnK4e-0007xu-4Q
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:15:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnK5F-00082X-Hw
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:16:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740586550;
+ s=mimecast20190719; t=1740586588;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cgVCleQy6VV36R+FJeQRA3lc/wl+PQVefuez+MAXM3g=;
- b=ALz5FzZPSoXOiJWH/Oy9eGmzXr3rD2smmd1PK2oLrZZkhpJJJFt+niwocdVPoJCXQAfmWz
- AGRJhNErYnC/0DPYm9bPw1p1gMUKbO1KpUyjGVN3ZwlS5UyHYaOsNM77O+sM9bARlKsKVi
- HJE4q44qkIPxCBx9kZ+AcCofQZxM3d0=
+ bh=l6gjpLgXd86w5xvclAudwiAf93UtrJHiBjBNk3e8eA4=;
+ b=OPW07w9Qdvk2HkjDMQdrBh6aTqcGHVaNo18zYeIL/5GKKZHcSWZ6SANXzcbgWoeigX3Til
+ AWwDELq9OmZNFn7Nhzq6dUkbB0YPIouJPBNbSdsTB5XvesXpPlWjEyoqBz22OarzMJrynM
+ hGehN1qIb7oM30XUpP4WAW5dP+H/oTA=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-443-5MkFRzqhMjOc9KF_ZPiUpw-1; Wed, 26 Feb 2025 11:15:48 -0500
-X-MC-Unique: 5MkFRzqhMjOc9KF_ZPiUpw-1
-X-Mimecast-MFC-AGG-ID: 5MkFRzqhMjOc9KF_ZPiUpw_1740586547
+ us-mta-26-Ed21lEwpNyiXgVgspdG5Mg-1; Wed, 26 Feb 2025 11:16:27 -0500
+X-MC-Unique: Ed21lEwpNyiXgVgspdG5Mg-1
+X-Mimecast-MFC-AGG-ID: Ed21lEwpNyiXgVgspdG5Mg_1740586586
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-439a0e28cfaso38273245e9.2
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 08:15:48 -0800 (PST)
+ 5b1f17b1804b1-43947979ce8so61125e9.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 08:16:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740586547; x=1741191347;
+ d=1e100.net; s=20230601; t=1740586586; x=1741191386;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cgVCleQy6VV36R+FJeQRA3lc/wl+PQVefuez+MAXM3g=;
- b=hb50dcJKn0BluIPGriCrsLn3CMGlsNHHVUU3hHLAD4ycKu1+ENiQLJIKYMcRVsU/Sm
- F35Jf/0RqpDUd9pomP36bIbpn0C/gFihdLmIBVGh77yy8dBE+n6BcoJvbRQQglHiiH2P
- s+mqziZGmMzdyaANo9nBHACtVm3eEMRea1GxyhJNuxo49WLeSIcxO3HtLMWDhJBEDdUe
- S32BwzAqawc4PscpK0xF2czYdD0xWGOseNqKRiX7ZYms4WpTn0HTXs53q7aObR4BU6yH
- vSzeAancBo/TjkQItxvacyGMqZ21xPpW/of3z1GZv1BGcWUqxQavCuP0E8u4vTxcRvUf
- JBwA==
+ bh=l6gjpLgXd86w5xvclAudwiAf93UtrJHiBjBNk3e8eA4=;
+ b=bHLk/sbc3yOesfuGsWA3SIco0VOXvyAwfDQ8yDXpx3a32xSAaXZFwWu45UP2uZx1Wk
+ p0NOEpmFa0TYk4Xlhj3/LgvcboiXMcV/QNj3krj4mjbMCUGvmLO0KWSu4CjoYOYiUnwO
+ VlDpvEW7/PfOPQOhiKtymdWLtXI9HxqSoCAQQ9Frqnqx7EmzmoA0rdB6ba0qhV8TP8uI
+ cLBVfBVBbqb87IHX8Zn7FwZH9wH8NJ1VdESHjy2nM1Xb0GlldOZlMNm3WQKBvCvOez1b
+ 3PKMS2oWhNQZJMHmY6Ph7g/28FLtDCA0+bYMlf5KspRo3xC7ORFb7PO5ARS9aNaeimWq
+ ci+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHNy35++/ZNaG/VpjrVBuUxxNplIn/aHAI4c7AZLLZY/guttKKMrVX9qH2cOcJVLrdUk1treXHhFBN@nongnu.org
-X-Gm-Message-State: AOJu0YwTn814aNeI46p2oF0OggZQyBvNdPjsYmltWUO1e320nrEV8Swa
- 03O+/bDbFH989C7nZCHM1C8RpZYbcRx6x585caVxyXWz8FOg9D+kfGXErjI4g+8XylgGyjz5Ogg
- /Mx5DWP2Wp38sQ6qCrzOkFqhxKD0FhSJ8ngG629RlMk8A9tSM7rwQ
-X-Gm-Gg: ASbGncuGQfZAw8I9OdvzR/YzpmbwKj/YJZBXW0Dzn7XiQMcVAQqY9q+InNlOIwZy11J
- 03KdfObpIU/OV4uuGldhqyLlBQGQyViGTYN6oOYEOxk2qa2qLkBJz+f+LIlBcGvRx+70reD+p/t
- drH7giAer2XCasJ2BIBkUlzYdNOi3lRTmpjTWJqdupiHrGSa1YehZG/36+bvzS6ECby4SHnsuGA
- 9paL6x/HIy0bj4C1ZFLhEfcMxUGzu1M/QGmEgvDO9/SnI6MBZVbRr3HWK6A/Bos/WmfbNyB+Wee
- ivPKeCrcKnxdA5ioato2fnlm67RPezseJ8eaIQn5tUEsBPc=
-X-Received: by 2002:a05:600c:3b8e:b0:439:99ab:6178 with SMTP id
- 5b1f17b1804b1-43ab0f2883dmr70599805e9.6.1740586547215; 
- Wed, 26 Feb 2025 08:15:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF3O8yM1lMpTiOMbzCMbNgljSynBcj5qowMBMSafUW14cbpXClfP9s+8JifioxM3fTfJ/T2bQ==
-X-Received: by 2002:a05:600c:3b8e:b0:439:99ab:6178 with SMTP id
- 5b1f17b1804b1-43ab0f2883dmr70599475e9.6.1740586546878; 
- Wed, 26 Feb 2025 08:15:46 -0800 (PST)
+ AJvYcCUaSMsrPQjMjfM/A0xkNiMVgA+bTlEdfWVXDF4dptPMppWOEMCkM0ZvGd8Xzosm+Ci8frAryW/FzFsn@nongnu.org
+X-Gm-Message-State: AOJu0YzigQtQJr7aHYmjKmtxhvi1+zGMWpmxQQRg1Ad+8w2LEh+h81xS
+ g5Hf/fJqwstip0hXS0TJ4K1LqlVMj2GAuCE5g/BlAdTrtsZiZdLf45meI++IWr9vYkQ9epIKSuq
+ yYjPEJGC853R3j+CE2aXzp0BXrYzx8h8FPXuuOnt+FENkjJLFn51Y
+X-Gm-Gg: ASbGncvShyJcoT9C7GzjHGE/x1DnluNeOJnpPVxHRny6MnlkDSnL8xEHRTyStBQK2kk
+ pxzGZ/WMhYraN5i0h/60VuSyrFIbTqt6l7/JgwLZzKLw3P/E/b5vJofePcR1k0WHKgB3gf58JDF
+ yQJfNUQHFryYLkgTJC1yDZfawlN0HeU10W+f6Ck/hq0BnxmVnZKq14RZ9SruoOxSmNnooTkmWcL
+ 8g+rf1UqrMQsJs2axWm6VgnnJCSERFo2n0IyAbWyTYvB1RQRvSLTM3znpO7rjvn4vweD9yRa+rA
+ TANVuEB0wXyrLoSAB9V5XgAG9DA83B/ZhzDJnzA1pufP3+Q=
+X-Received: by 2002:a05:600c:4ed1:b0:439:a155:549d with SMTP id
+ 5b1f17b1804b1-439ae1eacfdmr192847085e9.12.1740586586056; 
+ Wed, 26 Feb 2025 08:16:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGTxjqgr+vLuQn5gQeFZC7DPGf71ZD39J/YCsQnwvZQzGUzKG9zcSP3HAZatwjUULrX1YV/1Q==
+X-Received: by 2002:a05:600c:4ed1:b0:439:a155:549d with SMTP id
+ 5b1f17b1804b1-439ae1eacfdmr192846735e9.12.1740586585681; 
+ Wed, 26 Feb 2025 08:16:25 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-49-245.web.vodafone.de.
  [109.42.49.245]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba539445sm26580685e9.22.2025.02.26.08.15.44
+ ffacd0b85a97d-390cd8e7108sm6207968f8f.69.2025.02.26.08.16.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 08:15:46 -0800 (PST)
-Message-ID: <cc8802a7-20fd-446d-ac15-e593333360b1@redhat.com>
-Date: Wed, 26 Feb 2025 17:15:44 +0100
+ Wed, 26 Feb 2025 08:16:25 -0800 (PST)
+Message-ID: <629561b3-56c7-4daf-b40e-ace2267d72ac@redhat.com>
+Date: Wed, 26 Feb 2025 17:16:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/25] tests/vm: bump timeout for shutdown
+Subject: Re: [PATCH 11/25] tests/tcg: mark test-vma as a linux-only test
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
@@ -92,7 +92,7 @@ Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  Richard Henderson <richard.henderson@linaro.org>,
  Ed Maste <emaste@freebsd.org>
 References: <20250226140343.3907080-1-alex.bennee@linaro.org>
- <20250226140343.3907080-11-alex.bennee@linaro.org>
+ <20250226140343.3907080-12-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -137,19 +137,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250226140343.3907080-11-alex.bennee@linaro.org>
+In-Reply-To: <20250226140343.3907080-12-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,32 +166,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 26/02/2025 15.03, Alex Bennée wrote:
-> On my fairly beefy machine the timeout was triggering leaving a
-> corrupted disk image due to power being pulled before the disk had
-> synced. Double the timeout to avoid this.
-
-Triple the timeout?
-
+> The main multiarch tests should compile for any POSIX system, however
+> test-vma's usage of MAP_NORESERVE makes it a linux-only test. Simply
+> moving the source file is enough for the build logic to skip on BSD's.
+> 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   tests/vm/basevm.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   tests/tcg/multiarch/{ => linux}/test-vma.c | 0
+>   1 file changed, 0 insertions(+), 0 deletions(-)
+>   rename tests/tcg/multiarch/{ => linux}/test-vma.c (100%)
 > 
-> diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
-> index 6d41ac7574..9e879e966a 100644
-> --- a/tests/vm/basevm.py
-> +++ b/tests/vm/basevm.py
-> @@ -83,7 +83,7 @@ class BaseVM(object):
->       # command to halt the guest, can be overridden by subclasses
->       poweroff = "poweroff"
->       # Time to wait for shutdown to finish.
-> -    shutdown_timeout_default = 30
-> +    shutdown_timeout_default = 90
->       # enable IPv6 networking
->       ipv6 = True
->       # This is the timeout on the wait for console bytes.
+> diff --git a/tests/tcg/multiarch/test-vma.c b/tests/tcg/multiarch/linux/test-vma.c
+> similarity index 100%
+> rename from tests/tcg/multiarch/test-vma.c
+> rename to tests/tcg/multiarch/linux/test-vma.c
 
-With the commit description fixed:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
