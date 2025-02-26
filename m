@@ -4,152 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC32C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37AB9C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:17:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnK66-0006hw-J9; Wed, 26 Feb 2025 11:17:23 -0500
+	id 1tnK6J-00071G-Uh; Wed, 26 Feb 2025 11:17:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnK5L-0006DR-6l
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:16:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnK5F-00082X-Hw
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:16:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740586588;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=l6gjpLgXd86w5xvclAudwiAf93UtrJHiBjBNk3e8eA4=;
- b=OPW07w9Qdvk2HkjDMQdrBh6aTqcGHVaNo18zYeIL/5GKKZHcSWZ6SANXzcbgWoeigX3Til
- AWwDELq9OmZNFn7Nhzq6dUkbB0YPIouJPBNbSdsTB5XvesXpPlWjEyoqBz22OarzMJrynM
- hGehN1qIb7oM30XUpP4WAW5dP+H/oTA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-26-Ed21lEwpNyiXgVgspdG5Mg-1; Wed, 26 Feb 2025 11:16:27 -0500
-X-MC-Unique: Ed21lEwpNyiXgVgspdG5Mg-1
-X-Mimecast-MFC-AGG-ID: Ed21lEwpNyiXgVgspdG5Mg_1740586586
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43947979ce8so61125e9.0
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 08:16:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <venture@google.com>)
+ id 1tnK5U-0006Hq-V3
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:16:55 -0500
+Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <venture@google.com>)
+ id 1tnK5P-000833-6r
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:16:44 -0500
+Received: by mail-vs1-xe35.google.com with SMTP id
+ ada2fe7eead31-4be68eadf2fso2078153137.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 08:16:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1740586597; x=1741191397; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Rfd8ez1be281m0pXL4wTzICVX5fPl02NDM2agZxbJKM=;
+ b=MG//cePcg7nL1AdG5hYu9C02HvMv7hCicAesWmNCdQpmXi4tOhXlwKAF+XDqL49v1E
+ hsOM+ylB6bc1VGJ9kqxybSa8rEjmWOar9nzBIbDFs56PY0PBkbzHBpbJJGS4ye4j3Q9r
+ sOQcSIA1ePHvvZqtEonLNCWJQciH5x3nm/woU5YFurCzTTDVoM5X/Syfpk/QwSgcDYmQ
+ ZckayEWdEEESlkvxygEf6gwmBSHFKf+CPXuFtMyJHmsoa6cNNTJzdT2Cr84OBJVyAeby
+ /wQP0BPiCzvS0CcmpqZGyQ8dm4Z6Yh7GkG9ngkkXw3IkwI+wn5CTlz6iWvfy5Unpu77B
+ oZ+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740586586; x=1741191386;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1740586597; x=1741191397;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=l6gjpLgXd86w5xvclAudwiAf93UtrJHiBjBNk3e8eA4=;
- b=bHLk/sbc3yOesfuGsWA3SIco0VOXvyAwfDQ8yDXpx3a32xSAaXZFwWu45UP2uZx1Wk
- p0NOEpmFa0TYk4Xlhj3/LgvcboiXMcV/QNj3krj4mjbMCUGvmLO0KWSu4CjoYOYiUnwO
- VlDpvEW7/PfOPQOhiKtymdWLtXI9HxqSoCAQQ9Frqnqx7EmzmoA0rdB6ba0qhV8TP8uI
- cLBVfBVBbqb87IHX8Zn7FwZH9wH8NJ1VdESHjy2nM1Xb0GlldOZlMNm3WQKBvCvOez1b
- 3PKMS2oWhNQZJMHmY6Ph7g/28FLtDCA0+bYMlf5KspRo3xC7ORFb7PO5ARS9aNaeimWq
- ci+A==
+ bh=Rfd8ez1be281m0pXL4wTzICVX5fPl02NDM2agZxbJKM=;
+ b=XTKuTnS48ErONaT7qDHqkAwUdUEV6brg9w1ZCjsM2wDQp0bIW1rqZgeR7drZ6agm7x
+ CbNNfj3AeZ2YcdrxnSoNG4fAbk2SNEENazfTUIcQ4P8YcM/5BPbKYVMmTU8Ydoy4Jl7f
+ 0vr10KKXEKWC4/LHHkmmCgXKZF3M4GtEm7Yk1zavHSHa/2m2Ty4o9adODuhQZEDFtj7v
+ SGkH9F+nFAekUr5tLEooAnPVDI2VV5J5FDsvcpin8E2O4W3zPJWscXTA9wXNWsNf9fXi
+ L2ZPNKsJnjyzEyNo98y04jzujHp/dazNtCRgr+Sdo3g5HTbloUiXTyUE9Jp9xoriZmOp
+ YREw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUaSMsrPQjMjfM/A0xkNiMVgA+bTlEdfWVXDF4dptPMppWOEMCkM0ZvGd8Xzosm+Ci8frAryW/FzFsn@nongnu.org
-X-Gm-Message-State: AOJu0YzigQtQJr7aHYmjKmtxhvi1+zGMWpmxQQRg1Ad+8w2LEh+h81xS
- g5Hf/fJqwstip0hXS0TJ4K1LqlVMj2GAuCE5g/BlAdTrtsZiZdLf45meI++IWr9vYkQ9epIKSuq
- yYjPEJGC853R3j+CE2aXzp0BXrYzx8h8FPXuuOnt+FENkjJLFn51Y
-X-Gm-Gg: ASbGncvShyJcoT9C7GzjHGE/x1DnluNeOJnpPVxHRny6MnlkDSnL8xEHRTyStBQK2kk
- pxzGZ/WMhYraN5i0h/60VuSyrFIbTqt6l7/JgwLZzKLw3P/E/b5vJofePcR1k0WHKgB3gf58JDF
- yQJfNUQHFryYLkgTJC1yDZfawlN0HeU10W+f6Ck/hq0BnxmVnZKq14RZ9SruoOxSmNnooTkmWcL
- 8g+rf1UqrMQsJs2axWm6VgnnJCSERFo2n0IyAbWyTYvB1RQRvSLTM3znpO7rjvn4vweD9yRa+rA
- TANVuEB0wXyrLoSAB9V5XgAG9DA83B/ZhzDJnzA1pufP3+Q=
-X-Received: by 2002:a05:600c:4ed1:b0:439:a155:549d with SMTP id
- 5b1f17b1804b1-439ae1eacfdmr192847085e9.12.1740586586056; 
- Wed, 26 Feb 2025 08:16:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGTxjqgr+vLuQn5gQeFZC7DPGf71ZD39J/YCsQnwvZQzGUzKG9zcSP3HAZatwjUULrX1YV/1Q==
-X-Received: by 2002:a05:600c:4ed1:b0:439:a155:549d with SMTP id
- 5b1f17b1804b1-439ae1eacfdmr192846735e9.12.1740586585681; 
- Wed, 26 Feb 2025 08:16:25 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-49-245.web.vodafone.de.
- [109.42.49.245]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd8e7108sm6207968f8f.69.2025.02.26.08.16.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 08:16:25 -0800 (PST)
-Message-ID: <629561b3-56c7-4daf-b40e-ace2267d72ac@redhat.com>
-Date: Wed, 26 Feb 2025 17:16:23 +0100
+ AJvYcCUk7wz/BTLgrLlNna/Kir7mJUtCCXUMcdcfC0sVv/bFJsolXpW/vJ13F/G2+sqsaFTJ8n8BD1BmuyQb@nongnu.org
+X-Gm-Message-State: AOJu0YyvrzMQ5625o+lMbH172vBEmYtblnl/Vpo/YJ7mlPi9Mwr+Mk9J
+ 5afFYc+9MH+1saOuQ7UhtoT71ezqiyYY8JScm+mNsmibIDwheAlu9oiXBUB1uCwvlvcrjvatUFo
+ XU+QXsnAUxsm7qtEqK6KOGd7rzt9nNgpzAQoV
+X-Gm-Gg: ASbGnctNKwu087gRf6GKgDgUV7dXhqC65hnXm7+ZhJl6nnkCMnHUAFziEq1dPrEnQlU
+ NiEqSy+91u0+sWENpJbGz/GT107WMplVFHHE5ET8ythRNhTMfPwM0yef3qPpcE3Sea97sOrZj9h
+ oWjc2Ooh5jWoDnd6QKIM7Mw1S6hT0Jdwjit+hp8w==
+X-Google-Smtp-Source: AGHT+IHCVrSadeVNcNXkBapqLnSYk0g40Bj/Cy1fUD2WRaAdRIObeTfGuRxN1dqKALV1bLvf9h/9Ls+KtCHhe9lOgGQ=
+X-Received: by 2002:a05:6102:290c:b0:4bb:ecb9:b34d with SMTP id
+ ada2fe7eead31-4c00ae577ccmr4852728137.18.1740586596984; Wed, 26 Feb 2025
+ 08:16:36 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/25] tests/tcg: mark test-vma as a linux-only test
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, Eduardo Habkost <eduardo@habkost.net>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ed Maste <emaste@freebsd.org>
-References: <20250226140343.3907080-1-alex.bennee@linaro.org>
- <20250226140343.3907080-12-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250226140343.3907080-12-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+References: <20250226024603.493148-1-venture@google.com>
+ <f4b1dfc6-5265-400b-8842-349668c8e972@linaro.org>
+In-Reply-To: <f4b1dfc6-5265-400b-8842-349668c8e972@linaro.org>
+From: Patrick Venture <venture@google.com>
+Date: Wed, 26 Feb 2025 08:16:25 -0800
+X-Gm-Features: AQ5f1JoZdt_B4TYWgbuiZqSvXwVfKomIu2XSllZ52u2dg_6mWC3lJW3JqxhxPgc
+Message-ID: <CAO=notzbY3wR+=gKeCS70ZpMAzhPZ-M4MHTF0MBP-GKMWXf_UQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/gpio: npcm7xx: fixup out-of-bounds access
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ kfting@nuvoton.com, wuhaotsh@google.com
+Content-Type: multipart/alternative; boundary="000000000000d10ccb062f0de537"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
+ envelope-from=venture@google.com; helo=mail-vs1-xe35.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,22 +96,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/02/2025 15.03, Alex Bennée wrote:
-> The main multiarch tests should compile for any POSIX system, however
-> test-vma's usage of MAP_NORESERVE makes it a linux-only test. Simply
-> moving the source file is enough for the build logic to skip on BSD's.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   tests/tcg/multiarch/{ => linux}/test-vma.c | 0
->   1 file changed, 0 insertions(+), 0 deletions(-)
->   rename tests/tcg/multiarch/{ => linux}/test-vma.c (100%)
-> 
-> diff --git a/tests/tcg/multiarch/test-vma.c b/tests/tcg/multiarch/linux/test-vma.c
-> similarity index 100%
-> rename from tests/tcg/multiarch/test-vma.c
-> rename to tests/tcg/multiarch/linux/test-vma.c
+--000000000000d10ccb062f0de537
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+On Tue, Feb 25, 2025 at 11:04=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philm=
+d@linaro.org>
+wrote:
 
+> On 26/2/25 03:46, Patrick Venture wrote:
+> > The reg isn't validated to be a possible register before
+> > it's dereferenced for one case.  The mmio space registered
+> > for the gpio device is 4KiB but there aren't that many
+> > registers in the struct.
+> >
+> > Google-Bug-Id: 397469048
+> > Change-Id: I2fb8d0d3d41422baab22e8fc7e9fadd0f2ee7068
+>
+> ^ Both lines are irrelevant on mainstream git history, otherwise:
+>
+
+Thanks, sorry, I was in a hurry last night to send this out and forgot to
+strip them.
+
+
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 526dbbe0874 ("hw/gpio: Add GPIO model for Nuvoton NPCM7xx")
+>
+> > Signed-off-by: Patrick Venture <venture@google.com>
+> > ---
+> >   hw/gpio/npcm7xx_gpio.c | 3 +--
+> >   1 file changed, 1 insertion(+), 2 deletions(-)
+>
+>
+
+--000000000000d10ccb062f0de537
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 25,=
+ 2025 at 11:04=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto=
+:philmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">On 26/2/25 03:46, Patrick Venture wrot=
+e:<br>
+&gt; The reg isn&#39;t validated to be a possible register before<br>
+&gt; it&#39;s dereferenced for one case.=C2=A0 The mmio space registered<br=
+>
+&gt; for the gpio device is 4KiB but there aren&#39;t that many<br>
+&gt; registers in the struct.<br>
+&gt; <br>
+&gt; Google-Bug-Id: 397469048<br>
+&gt; Change-Id: I2fb8d0d3d41422baab22e8fc7e9fadd0f2ee7068<br>
+<br>
+^ Both lines are irrelevant on mainstream git history, otherwise:<br></bloc=
+kquote><div><br></div><div>Thanks, sorry, I was in a hurry last night to se=
+nd this out and forgot to strip them.</div><div>=C2=A0</div><blockquote cla=
+ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
+rgb(204,204,204);padding-left:1ex">
+<br>
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linar=
+o.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+<br>
+Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-stable=
+@nongnu.org</a><br>
+Fixes: 526dbbe0874 (&quot;hw/gpio: Add GPIO model for Nuvoton NPCM7xx&quot;=
+)<br>
+<br>
+&gt; Signed-off-by: Patrick Venture &lt;<a href=3D"mailto:venture@google.co=
+m" target=3D"_blank">venture@google.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0hw/gpio/npcm7xx_gpio.c | 3 +--<br>
+&gt;=C2=A0 =C2=A01 file changed, 1 insertion(+), 2 deletions(-)<br>
+<br>
+</blockquote></div></div>
+
+--000000000000d10ccb062f0de537--
 
