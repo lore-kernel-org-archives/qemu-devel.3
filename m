@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1964EC021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 07:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9F63C021BC
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 07:54:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnCDy-0005DN-UE; Wed, 26 Feb 2025 02:52:58 -0500
+	id 1tnCFW-0005q8-HB; Wed, 26 Feb 2025 02:54:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnCDx-0005Cq-JJ
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:52:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnCFU-0005pF-KL
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:54:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnCDv-0006cG-5P
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:52:57 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnCFS-0006me-Ux
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:54:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740556374;
+ s=mimecast20190719; t=1740556469;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Uh1ZyKIADkJl5Wy0N6LpcNjfwUGgNimWNuICqHSKNLk=;
- b=NRXrxNGAMxK4erjaIZeh7X8ybavtk+DTT4L4NvhFfLfBPe013smyxDPGN8NiKAzFedMQSd
- BLwZa3aHCMq+zePz3Rs5jydbZ3Uu8X0LKrRUyD0Nb+eCD/rVzW/bJtEyb5c4TaPmeZn0Zr
- xGzqfYT/cQ2R+Wa++Ys1GN5b0ISqY4c=
+ bh=V8zDlKlzLN/PdVYfjlCqH1UzYBf6b17ENTGJMZ7XSg8=;
+ b=XfBQxs3uaMqXfEj5eFUyMs39ocHP1sGERKmzSAVEoXQ44ik4RN/CLwt2E1ANoi6+botlDa
+ xVf7LFkCPK+DZ3LrM8vpPBlGfSFNR2OZFA5Owp2OVcBSyFieIfusVlq6qtT2TH4BY+5hWn
+ TETT2aa1U0MxjAlHQb1zoC5yQxEtB7o=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-FLyZ_f30OkG-zbsBafm_4g-1; Wed, 26 Feb 2025 02:52:50 -0500
-X-MC-Unique: FLyZ_f30OkG-zbsBafm_4g-1
-X-Mimecast-MFC-AGG-ID: FLyZ_f30OkG-zbsBafm_4g_1740556370
+ us-mta-654-fPJx5KbLN6qTQTJAXVOE4Q-1; Wed, 26 Feb 2025 02:54:27 -0500
+X-MC-Unique: fPJx5KbLN6qTQTJAXVOE4Q-1
+X-Mimecast-MFC-AGG-ID: fPJx5KbLN6qTQTJAXVOE4Q_1740556466
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43aafafe6b7so14985125e9.1
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 23:52:50 -0800 (PST)
+ 5b1f17b1804b1-4393e89e910so35064985e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 23:54:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740556369; x=1741161169;
+ d=1e100.net; s=20230601; t=1740556466; x=1741161266;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Uh1ZyKIADkJl5Wy0N6LpcNjfwUGgNimWNuICqHSKNLk=;
- b=VWOW8YEsEuTxGPuCjbMbt9oac1pB+6avGjKE8fdVSdcLsoLXzvPD8iu0CbGM0P5rNA
- S/34/DW0Q0t50DCEJ1ki7kNbPjiOmrOhS2JWe7rdip6oh4s4bJDiY0RmKFNBKl8nuy+b
- 3UyHHU5WqPXhg2PKcHpNaBU8O0W3QfiPKnduoim8UKbyGDiXGJ+K4MVfsYqa2buwOdqm
- ONEfn0laaRR4twcp3gjPgo7oD+IooTul8b//hr5hzIRQXSuX5sUFoGHJhvKX4UPgHexO
- Ee7P8ZEozsDAsdV3vXunwwA3meT+uq2KekOaad0owCzLgZ7ZKsNowm5q1x3Z75lY5Qlc
- x2Ig==
+ bh=V8zDlKlzLN/PdVYfjlCqH1UzYBf6b17ENTGJMZ7XSg8=;
+ b=I/j/aHyqCWgLljhRoNNv/LoGwXhjXYwWDWZ8oEA+vcJFc7t5MgOq5qf7jbXyj6UqIZ
+ O9Qz6tVeB2adRfKTdputK4bL+lsVp/7yibQGL7NB6zgs6m/XNRY5IqTniiUq+Mlw8Zpn
+ RKXH8Z4+AhDyyPxFVQql/ilWEBlv+Z2dnYksevWYWdnirpPzmyeQhER1goyQJyyn2A16
+ egRQGN27oP4mbcch0A/spAbz+bE9TT5r4ipEKqa5ZrlgC6HJzq7D6Jz515I3mxNW7EGu
+ wKJNXCvT5/qFMjecoTU9SYyt6oYlVn4/76aeQ1xFBDltJze8LJQWPlBJz3JaUbZzWLNi
+ 0Q9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX9aVixrYA87TDKSVy1TVSWt81p81wGyBioHmwfFdyE5SXP1EdzBbNp4rEFuR8PQeK6ZzUZsjaEyXSO@nongnu.org
-X-Gm-Message-State: AOJu0Yx1YU2aNyEQ9e2CAFqz0mBQZIbVdAXt7sFg+Ri7qUFkYL0GS1L5
- L+3y6O3Pj/FA7Ad5fCCZsRflTe04pxL3pm4zVwnv0Ybw8QaAOXqE24gWCGrYsei9Q5oCd+uS7za
- mXnzTMBvWpIUhrOCywcbMBvsJgklRDEICsfXQ0oS83tY1vwwYpDv3
-X-Gm-Gg: ASbGncthHDCOZYqTDHdIRO6oCULbYDAWqLpOrvjYSylTO3deE55d2VU/TWD6wiWP0CK
- wbJ+Lr4XjPD75zw5ZVzFSbjoupxN7deUDkhKr9hIkoUS1ZKN7iScwRveGMUYg7Z+GBDdKL4pEg1
- u1E2eUGqmmkct14XPN5SdEyBaSnO0jIH3ipV2fRGsuQP+OIq/0/1qYRgoXs9DQVLLSBgS7sGRtJ
- DnBpkmJ+gLTEo4KLKjPtA6cJbgFMCDpSWpDSNc4/qg5GV8lF7qqge08cAUwoDXgclrKVbPoqxqk
- dsbFnwQey4rmUlgvRti83uafVHUJw854NMl1IbFActVgKcaOa+rA21KndcM=
-X-Received: by 2002:a05:6000:1848:b0:385:fa26:f0d9 with SMTP id
- ffacd0b85a97d-390d4e9d839mr2018235f8f.0.1740556369571; 
- Tue, 25 Feb 2025 23:52:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGLuwi4+LTU/p9iKN4xplnlcFH/7aCVSrHoJ6JzGariiuacjtaWbfhVn9JOof5u/DXfk9lRkg==
-X-Received: by 2002:a05:6000:1848:b0:385:fa26:f0d9 with SMTP id
- ffacd0b85a97d-390d4e9d839mr2018214f8f.0.1740556369196; 
- Tue, 25 Feb 2025 23:52:49 -0800 (PST)
+ AJvYcCUx1VtvqmieOofJRRQEknMIpdDvuyZqOPOVT6qMYbRkUPeu3gzwD0cj8iZOrNkMBm5nvWKTB3t/yoCg@nongnu.org
+X-Gm-Message-State: AOJu0Yy1XWVOL58bJibuL8oPjXMZn03EExSPBoYKNJFGpR+mUFLEKWVg
+ PVlYJHrUG5Wy8hCFqYUrUbYjy4RDx7ZHtkI0IGfYjX0KO5NzXsEf3rAGM6yEOVk67hnW4Y2Q4kr
+ 10umwNdKhn7S4Ios5aLBBZxrRU/WHreVGT9BSR1KHueKpqeTZCAyQ
+X-Gm-Gg: ASbGncuU5VYIw1/LEO6pOfqe+xKDMd2fYoCUtOLbYOCzInARZIWjv6Hut+SWJJfWNQH
+ aIf8fFwtPdaQeoaNfjyz/V+KsUaos8gmt2xkJVPOh9ghU9y/Eeyos+EDYuwWRIOxEgcCl3ODFcB
+ lyOgQwBvGQysWkSRnBHPOm9Jp7OmQItnNVfoKjxpG5SHwT1hWIxlu4pLptceZtTAd1h6O/ClUnI
+ nHVpJQ+IqwDWq+9KdVxj0MQ4KZcBy6WmPPjCPAYPKTeUarkVSgZQiya0P9tfybHpU1H9+/f7zFD
+ tu4fSmA3vMQwGeB0zyOJtIhcrCUnIdY+BO18ySW7lOZKMMCnNAgAIb35p20=
+X-Received: by 2002:a05:600c:4684:b0:439:56f3:d40f with SMTP id
+ 5b1f17b1804b1-43ab0f6dedcmr44560105e9.21.1740556465911; 
+ Tue, 25 Feb 2025 23:54:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEM+7ftOPnreqtLqToBXYro66dPvjE3lNWLwL6jA7WUEVyXPvmpsUxSQVdiMiJIuqFPlPZ0uw==
+X-Received: by 2002:a05:600c:4684:b0:439:56f3:d40f with SMTP id
+ 5b1f17b1804b1-43ab0f6dedcmr44560025e9.21.1740556465577; 
+ Tue, 25 Feb 2025 23:54:25 -0800 (PST)
 Received: from ?IPV6:2a01:cb19:9004:d500:a732:5611:7f59:8bb3?
  ([2a01:cb19:9004:d500:a732:5611:7f59:8bb3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd883934sm4716336f8f.59.2025.02.25.23.52.47
+ 5b1f17b1804b1-43ab2cb1063sm26554855e9.2.2025.02.25.23.54.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 23:52:47 -0800 (PST)
-Message-ID: <e9296dd6-63ec-4a3e-9b2c-14d7cff200c7@redhat.com>
-Date: Wed, 26 Feb 2025 08:52:46 +0100
+ Tue, 25 Feb 2025 23:54:24 -0800 (PST)
+Message-ID: <cb6e9bb4-5eee-4492-abe0-073ecf586267@redhat.com>
+Date: Wed, 26 Feb 2025 08:54:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 19/36] vfio/migration: Convert bytes_transferred
- counter to atomic
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <dbb9b1047aca873a5ee0a91f352f282fe1004a15.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: Re: [PATCH] tests/functional: Update the ppc64 pseries and pnv tests
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20250226065401.197915-1-clg@redhat.com>
+ <d61872e1-2eca-4af7-a135-96659ec5fb6e@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,19 +128,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <dbb9b1047aca873a5ee0a91f352f282fe1004a15.1739994627.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <d61872e1-2eca-4af7-a135-96659ec5fb6e@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,75 +156,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/25 21:34, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On 2/26/25 08:01, Thomas Huth wrote:
+> On 26/02/2025 07.54, Cédric Le Goater wrote:
+>> The tests are using a now archived Fedora29 release. Switch to the
+>> most recent Fedora41 release.
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   tests/functional/test_ppc64_powernv.py | 6 +++---
+>>   tests/functional/test_ppc64_pseries.py | 6 +++---
+>>   2 files changed, 6 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/tests/functional/test_ppc64_powernv.py b/tests/functional/test_ppc64_powernv.py
+>> index 685e2178ed78..a9da7905366e 100755
+>> --- a/tests/functional/test_ppc64_powernv.py
+>> +++ b/tests/functional/test_ppc64_powernv.py
+>> @@ -18,9 +18,9 @@ class powernvMachine(LinuxKernelTest):
+>>       good_message = 'VFS: Cannot open root device'
+>>       ASSET_KERNEL = Asset(
+>> -        ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
+>> -         'releases/29/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
+>> -        '383c2f5c23bc0d9d32680c3924d3fd7ee25cc5ef97091ac1aa5e1d853422fc5f')
+>> +        ('https://archives.fedoraproject.org/pub/fedora-secondary/'
+>> +         'releases/41/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
+>> +        'eca627adbe42437cacea169beeb4c3c12a5cfbca1a6b1ba5218d28139d2143c4')
 > 
-> So it can be safety accessed from multiple threads.
+> I think we should rather avoid the very latest and greatest Fedora URLs here... they will be invalid in a couple of months after Fedora 43 has been released. And if we keep switching the test assets all the time, this will make it more difficult to bisect regressions in the future.
 > 
-> This variable type needs to be changed to unsigned long since
-> 32-bit host platforms lack the necessary addition atomics on 64-bit
-> variables.
+>   Thomas
 > 
-> Using 32-bit counters on 32-bit host platforms should not be a problem
-> in practice since they can't realistically address more memory anyway.
 
-Is it useful to have VFIO on 32-bit host platforms ?
+So we should point to the latest archive (fedora38) then ?
 
-If not, VFIO PCI should depend on (AARCH64 || PPC64 || X86_64) and we
-could drop this patch. Let's address that independently.
 
 Thanks,
 
 C.
 
 
-
-
-
-
-> 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> ---
->   hw/vfio/migration.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 03890eaa48a9..5532787be63b 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -55,7 +55,7 @@
->    */
->   #define VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE (1 * MiB)
->   
-> -static int64_t bytes_transferred;
-> +static unsigned long bytes_transferred;
->   
->   static const char *mig_state_to_str(enum vfio_device_mig_state state)
->   {
-> @@ -391,7 +391,7 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
->       qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
->       qemu_put_be64(f, data_size);
->       qemu_put_buffer(f, migration->data_buffer, data_size);
-> -    bytes_transferred += data_size;
-> +    qatomic_add(&bytes_transferred, data_size);
->   
->       trace_vfio_save_block(migration->vbasedev->name, data_size);
->   
-> @@ -1013,12 +1013,12 @@ static int vfio_block_migration(VFIODevice *vbasedev, Error *err, Error **errp)
->   
->   int64_t vfio_mig_bytes_transferred(void)
->   {
-> -    return bytes_transferred;
-> +    return MIN(qatomic_read(&bytes_transferred), INT64_MAX);
->   }
->   
->   void vfio_reset_bytes_transferred(void)
->   {
-> -    bytes_transferred = 0;
-> +    qatomic_set(&bytes_transferred, 0);
->   }
->   
->   /*
-> 
 
 
