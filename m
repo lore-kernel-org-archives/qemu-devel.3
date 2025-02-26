@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB44BC021BC
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED1EC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:13:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnDRa-0002qC-PN; Wed, 26 Feb 2025 04:11:07 -0500
+	id 1tnDTq-0003da-45; Wed, 26 Feb 2025 04:13:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1tnDRX-0002pm-JU
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:11:03 -0500
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tnDTn-0003dJ-PP
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:13:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1tnDRV-0001dH-1k
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:11:03 -0500
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tnDTk-0001nF-RZ
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:13:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740561198;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4MkbkipicWd+mhUgPmkvxULCVWBGcvK1zbqjmohoEUw=;
+ b=YLwjH0lmXeQqD6P8RkY+6uctmxboYGM4AS2tE2XOP6ibvP/xsu9IdD8mPW9PxGD8gGgGfo
+ eCkpuMdCMrgHu66lbz2VazRzgasfYSggxY/Til+dwk2Q0GZiI/lCu8sdj/tZPV51PAXJci
+ aIHa+BwVm4RMxR6grQXeTcEtUQ4hw5o=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-153-bIKVG3jhOAWwrtvDH63kaw-1; Wed,
+ 26 Feb 2025 04:12:07 -0500
+X-MC-Unique: bIKVG3jhOAWwrtvDH63kaw-1
+X-Mimecast-MFC-AGG-ID: bIKVG3jhOAWwrtvDH63kaw_1740561125
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 11DAA40EBD
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:10:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1740561057;
- bh=GEVxtBgHI/j9ycqbjwXBw2EpTIBmtX+OVRWxlJPDuxU=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=TK0zoZHI0W/8YQca3FNLxp++ZOzDfVWGjQJkzd3Efk7FyDDCEFibPtXzEcUpUOUXx
- 5/mQgldpeOa96D29srJ0NNuUYyX2DzMw1cdR6esrw0JWHu+Jsbvv2T5Cw7uvB3d3V/
- o6ki0IYBv61ADq9JxCk/apTlt46QRLMjKIi5CGqeDbPkb/P8zZ2TG0jTSWUzQ/DwfR
- m8dNC7obggz18WUFF/ROxBVu+sIeEbr6yl1hTwxG1PZnk2YT7hAP+EkyQHhDDQHxwZ
- TerzQzJ0L1nDT/0KyDLBkecAFNEZ997QfvrcY9C0cko1PHNaLpHkTXWmED3ooLSdgU
- 6p4hfAnPJR5OQ==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id F22B47E220
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:10:56 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8D009180087A; Wed, 26 Feb 2025 09:12:05 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.45.224.219])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7C1F91800359; Wed, 26 Feb 2025 09:12:04 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 1CD551800091; Wed, 26 Feb 2025 10:12:02 +0100 (CET)
+Date: Wed, 26 Feb 2025 10:12:02 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org, 
+ Ard Biesheuvel <ardb@kernel.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, graf@amazon.com, 
+ Eric Blake <eblake@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v5 14/24] hw/uefi: add var-service-json.c + qapi for NV
+ vars.
+Message-ID: <pji24p6oag7cn2rovus7rquo7q2c6tokuquobfro2sqorky7vu@tk7cxud6jw7f>
+References: <20250225163031.1409078-1-kraxel@redhat.com>
+ <20250225163031.1409078-15-kraxel@redhat.com>
+ <87zfi95khl.fsf@pond.sub.org>
+ <wyrnw2ur2xp7e6yr7f7hdbn3zbvolnvjojjrlaoax7hb2psxzo@xw7arzdtroer>
+ <87bjup3y76.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 26 Feb 2025 09:01:17 -0000
-From: Launchpad Bug Tracker <2072564@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- status=Triaged; importance=Undecided; assignee=lukas.maerdian@canonical.com; 
-X-Launchpad-Bug-Tags: patch
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: crichton dimitry.unified-streaming.com michal.fita
- paelzer sergiodj thir820
-X-Launchpad-Bug-Reporter: Dimitry Andric (dimitry.unified-streaming.com)
-X-Launchpad-Bug-Modifier: Launchpad Janitor (janitor)
-References: <172053137048.3332067.13534832802726064667.malonedeb@juju-98d295-prod-launchpad-7>
-Message-Id: <174056047795.824404.5006779745837354366.launchpad@scripts-bzrsyncd.lp.internal>
-Subject: [Bug 2072564] Re: qemu-aarch64-static segfaults running ldconfig.real
- (amd64 host)
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="aa29ae0fff49e4e804b39147c9f259d2fb023199";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: 76aff2d1198c9cd3e0efe58f27af7aed93c01392
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87bjup3y76.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -90,80 +96,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2072564 <2072564@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-** Merge proposal linked:
-   https://code.launchpad.net/~slyon/ubuntu/+source/qemu/+git/qemu/+merge/4=
-81930
+> >> > +# @digest: variable certificate digest.  Used to verify the signature
+> >> > +#     of updates for authenticated variables.
+> >> 
+> >> How to create and verify these digests will be obvious enough to users
+> >> of this interface?
+> >
+> > Well, no.  It's a somewhat complicated story ...
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2072564
+> I wonder how much of this, if anything, should be worked into the doc
+> comment.  You decide :)
 
-Title:
-  qemu-aarch64-static segfaults running ldconfig.real (amd64 host)
+A bit verbose for something rarely used.  Tried to summarize it,
+incremental update below:
 
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Triaged
+take care,
+  Gerd
 
-Bug description:
-  This affects the qemu-user-static 1:8.2.2+ds-0ubuntu1 package on
-  Ubuntu 24.04, running on a amd64 host.
+------------------------- cut here -----------------------
+commit 3d2ef31cbd70f4637330fe8d8418befd907899c4
+Author: Gerd Hoffmann <kraxel@redhat.com>
+Date:   Wed Feb 26 09:07:10 2025 +0100
 
-  When running docker containers with Ubuntu 22.04 in them, emulating
-  arm64 with qemu-aarch64-static, invocations of ldconfig (actually
-  ldconfig.real) segfault. For example:
+    [fixup] qapi docs
 
-  $ docker run -ti --platform linux/arm64/v8 ubuntu:22.04=20
-  root@8861ff640a1c:/# /sbin/ldconfig.real
-  Segmentation fault
-
-  If you copy the ldconfig.real binary to the host, and run it directly
-  via qemu-aarch64-static:
-
-  $ gdb --args qemu-aarch64-static ./ldconfig.real=20
-  GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
-  Copyright (C) 2024 Free Software Foundation, Inc.
-  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.h=
-tml>
-  This is free software: you are free to change and redistribute it.
-  There is NO WARRANTY, to the extent permitted by law.
-  Type "show copying" and "show warranty" for details.
-  This GDB was configured as "x86_64-linux-gnu".
-  Type "show configuration" for configuration details.
-  For bug reporting instructions, please see:
-  <https://www.gnu.org/software/gdb/bugs/>.
-  Find the GDB manual and other documentation resources online at:
-      <http://www.gnu.org/software/gdb/documentation/>.
-
-  For help, type "help".
-  Type "apropos word" to search for commands related to "word"...
-  Reading symbols from qemu-aarch64-static...
-  Reading symbols from /home/dim/.cache/debuginfod_client/86579812b213be096=
-4189499f62f176bea817bf2/debuginfo...
-  (gdb) r
-  Starting program: /usr/bin/qemu-aarch64-static ./ldconfig.real
-  [Thread debugging using libthread_db enabled]
-  Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-  [New Thread 0x7ffff76006c0 (LWP 28378)]
-
-  Thread 1 "qemu-aarch64-st" received signal SIGSEGV, Segmentation fault.
-  0x00007fffe801645b in ?? ()
-  (gdb) disassemble=20
-  No function contains program counter for selected frame.
-
-  It looks like this is a known qemu regression after v8.1.1:
-  https://gitlab.com/qemu-project/qemu/-/issues/1913
-
-  Downgrading the package to qemu-user-
-  static_8.0.4+dfsg-1ubuntu3_amd64.deb fixes the segfault.
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2072564/+subscriptions
+diff --git a/qapi/uefi.json b/qapi/uefi.json
+index c1dfa76b6eb2..bdfcabe1df4d 100644
+--- a/qapi/uefi.json
++++ b/qapi/uefi.json
+@@ -6,7 +6,11 @@
+ # = UEFI Variable Store
+ #
+ # The qemu efi variable store implementation (hw/uefi/) uses this to
+-# store non-volatile variables on disk.
++# store non-volatile variables in json format on disk.
++#
++# This is an existing format already supported by (at least) two other
++# projects, specifically https://gitlab.com/kraxel/virt-firmware and
++# https://github.com/awslabs/python-uefivars.
+ ##
+ 
+ ##
+@@ -29,7 +33,12 @@
+ #     is set.
+ #
+ # @digest: variable certificate digest.  Used to verify the signature
+-#     of updates for authenticated variables.
++#     of updates for authenticated variables.  UEFI has two kinds of
++#     authenticated variables.  The secure boot variables ('PK',
++#     'KEK', 'db' and 'dbx') have hard coded signature checking rules.
++#     For other authenticated variables the firmware stores a digest
++#     of the signing certificate at variable creation time, and any
++#     updates must be signed with the same certificate.
+ #
+ # Since: 10.0
+ ##
+@@ -44,7 +53,7 @@
+ ##
+ # @UefiVarStore:
+ #
+-# @version: currently allways 2
++# @version: currently always 2
+ #
+ # @variables: list of UEFI variables
+ #
 
 
