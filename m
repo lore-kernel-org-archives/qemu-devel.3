@@ -4,93 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C7F2C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91631C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:08:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnDO8-0000Xf-Vl; Wed, 26 Feb 2025 04:07:33 -0500
+	id 1tnDOn-00011W-2V; Wed, 26 Feb 2025 04:08:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnDO7-0000X8-6i
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:07:31 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnDO4-00010F-9A
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:07:30 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-438a3216fc2so62195275e9.1
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 01:07:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740560846; x=1741165646; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3MCmR7gS5Y87Fafs23xbKTTX7NDp3ttYUbOOqVgHLkY=;
- b=cVKjYs0aSB5Wobq86Z9PFdAmyByliHhqIHtlf5E5bdR2y3Gn69gZRm403W1la4RCem
- IwZdnl+9VYapyQjW8J+P6pRRhXlV9cxVAUmZMSb5xJg2S96ZiqRTMl/HMiQIXroYYr/4
- /4SNphD7ubAiTIx80swzLK+HY7eTjxbaFDcOfFsjHGITNznrZFwr3Wq4nxghRWg0WIBU
- e4ieaQMT07En4u42r4VFx4j7s79H+jefjLvMXLRtuXmjenyVrj8bcpCruNaa8P4xAIwe
- /m6yKoLAn1ybV/MgXjkWDTu550Fn4uqP7WaVBFEgUyUYfajzh93eUUblolZVju4Or/gi
- iCtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740560846; x=1741165646;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3MCmR7gS5Y87Fafs23xbKTTX7NDp3ttYUbOOqVgHLkY=;
- b=B0W0dOvwWOEhxM+rEq4tBwTKWEG29NhvopgC7mjnmt7x0eZLdaIWuBGDL6zbMKXsV3
- C5TZrk3Y8rSZ4Q3gsa1HeraqqtvqtCjScdhoqGgp/7EED+kdnpiB5wrjy+Kg2ohIDuT0
- wPNK9i+HWG1NGPFcVq9ac8IoZtN0NlamaMPyx2Xl1Acoo017k53uYgkeTw/U6so9X0Vr
- sDAZTZNTkRfDneGK4oU/YYBagJ9PNfAwSsQ6tD6ys01gJ+1m+D8LIPgMeAvOvmHQieW4
- tiBX24JgwSM18F+Pv256bWVYXWCddYHoJWxjuZ4owz65fShfmZzWcSrI7MQ9rRkBTYLM
- 4rbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWu88UcYQopETV/MgnKJ21vAJ+yr3sjpQxEqy/skUSIzGzTgfWtYeIUCwQ8jKhlzj/xJVYRjJ8hCfvg@nongnu.org
-X-Gm-Message-State: AOJu0Yyx77Sw+IqLp/iGcnd0XndEL0+kWGcB52LY334YG+CJodKB9hyR
- 7we2qO0dYMu9xM7hidtHRAy2Rn4ZoHSkSpuy0RFvHni0Uv5i7vzjaJXrtk2BCjw=
-X-Gm-Gg: ASbGncse/KAbfVh8uAUXylMDCKOA9pHPGEqw9D2xbGuwKbjkZ9ZDLzGFIW6TD3gHkmu
- TWPCUIMsuZXt7sCqfFPUEAopLswA4lCXL5kuKDLs3dM+ALng0xMJZ4y1oVxDS60DxroBU6pShH2
- AO4qr4UN70mEJbz8qxc5QA0Pxoky8ZcjbqN3ppv+Sbh1KWhVgeLRriEscqB6ULD7KnIKG8ZEc5C
- Za+V1XpeikBNmuyKDXiGp/70gDo7+Gt7ZfxdSKGSXPkwahoWEyA4PCE1Fd0zUj+eiAolVR519bS
- JCwr6aIytiQ2vMpxhVwEa+bEHUcJ
-X-Google-Smtp-Source: AGHT+IGkHGGdrN0ajOa/uGFERpbJFWPASACiwouL4Vruqk8Ld4/gCMNeP2qLHTxTjKuwKxBCxJu7JQ==
-X-Received: by 2002:a05:600c:4687:b0:439:9aca:3285 with SMTP id
- 5b1f17b1804b1-439b6ad5cbfmr147501685e9.6.1740560837709; 
- Wed, 26 Feb 2025 01:07:17 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba532d7asm13929045e9.13.2025.02.26.01.07.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 01:07:17 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 94F305F87C;
- Wed, 26 Feb 2025 09:07:16 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  qemu-stable@nongnu.org
-Subject: Re: [PATCH v3 5/9] target/arm: Refactor handling of timer offset
- for direct register accesses
-In-Reply-To: <20250204125009.2281315-6-peter.maydell@linaro.org> (Peter
- Maydell's message of "Tue, 4 Feb 2025 12:50:05 +0000")
-References: <20250204125009.2281315-1-peter.maydell@linaro.org>
- <20250204125009.2281315-6-peter.maydell@linaro.org>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Wed, 26 Feb 2025 09:07:16 +0000
-Message-ID: <87cyf53whn.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tnDOd-0000uw-9z
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:08:03 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tnDOa-00012z-9C
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:08:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1740560880; x=1772096880;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=Q7yrOEWZYBO+5YQiQdQ8RxUY22I2+Us/YMUUugFJp8c=;
+ b=F7zZjL5grU8JjQitYCATg40cOx9zwQCi5dPsmo7KFwJn1EGUTN6su0zU
+ xUGt01TGUD3jL/cnjO+MhiGIAivnll5/G/L9UGBcf2ni7xigUzLwdTa9/
+ hmowBzyQ9o5Kxan+hgeRBCzWRWjiuLMHsezHpCrJ9+NhhFwIglNTaHxTA
+ K1zLIO/X5gpaQbSkycFfB2C6MRSTYRyr7EmYj/GCgHshuEamN5Ff8gLSc
+ wUBbTMAp6zTrVLjoeji0bkEut/O9DjfyQavxSDXav3m7aBJT9x3QSILhA
+ 1uSHJS7mw10iohukXNQo/bLm8M8oeR/Jycd2bnSBoPzfPDvNTzRZOhWmS A==;
+X-CSE-ConnectionGUID: /2NGfaR2TuKzphxg3S6XeQ==
+X-CSE-MsgGUID: vBab6GPGQreYopGkdScG5A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11356"; a="66768418"
+X-IronPort-AV: E=Sophos;i="6.13,316,1732608000"; d="scan'208";a="66768418"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Feb 2025 01:07:55 -0800
+X-CSE-ConnectionGUID: 550GVI5VSQe9bhVGUE8jjw==
+X-CSE-MsgGUID: kleEU+83RlSJNtU1iEbc1g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="147557391"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Feb 2025 01:07:50 -0800
+Message-ID: <3f62c928-d9ee-4ffc-b54d-17e24c943d2d@intel.com>
+Date: Wed, 26 Feb 2025 17:07:47 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 19/52] i386/tdx: Track mem_ptr for each firmware entry
+ of TDVF
+To: Francesco Lavra <francescolavra.fl@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Igor Mammedov <imammedo@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
+ <20250124132048.3229049-20-xiaoyao.li@intel.com>
+ <71f051114ab5db2a94506b4d8768ebfa79033590.camel@gmail.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <71f051114ab5db2a94506b4d8768ebfa79033590.camel@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,37 +96,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On 2/19/2025 7:26 PM, Francesco Lavra wrote:
+> On Fri, 2025-01-24 at 08:20 -0500, Xiaoyao Li wrote:
+>> +static void tdx_finalize_vm(Notifier *notifier, void *unused)
+>> +{
+>> +    TdxFirmware *tdvf = &tdx_guest->tdvf;
+>> +    TdxFirmwareEntry *entry;
+>> +
+>> +    for_each_tdx_fw_entry(tdvf, entry) {
+>> +        switch (entry->type) {
+>> +        case TDVF_SECTION_TYPE_BFV:
+>> +        case TDVF_SECTION_TYPE_CFV:
+>> +            entry->mem_ptr = tdvf->mem_ptr + entry->data_offset;
+>> +            break;
+>> +        case TDVF_SECTION_TYPE_TD_HOB:
+>> +        case TDVF_SECTION_TYPE_TEMP_MEM:
+>> +            entry->mem_ptr = qemu_ram_mmap(-1, entry->size,
+>> +
+>> qemu_real_host_page_size(), 0, 0);
+>> +            break;
+> 
+> Should check for MAP_FAILED return value.
 
-> When reading or writing the timer registers, sometimes we need to
-> apply one of the timer offsets.  Specifically, this happens for
-> direct reads of the counter registers CNTPCT_EL0 and CNTVCT_EL0 (and
-> their self-synchronized variants CNTVCTSS_EL0 and CNTPCTSS_EL0).  It
-> also applies for direct reads and writes of the CNT*_TVAL_EL*
-> registers that provide the 32-bit downcounting view of each timer.
->
-> We currently do this with duplicated code in gt_tval_read() and
-> gt_tval_write() and a special-case in gt_virt_cnt_read() and
-> gt_cnt_read().  Refactor this so that we handle it all in a single
-> function gt_direct_access_timer_offset(), to parallel how we handle
-> the offset for indirect accesses.
->
-> The call in the WFIT helper previously to gt_virt_cnt_offset() is
-> now to gt_direct_access_timer_offset(); this is the correct
-> behaviour, but it's not immediately obvious that it shouldn't be
-> considered an indirect access, so we add an explanatory comment.
->
-> This commit should make no behavioural changes.
->
-> (Cc to stable because the following bugfix commit will
-> depend on this one.)
->
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+will add the check for it.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> +        default:
+>> +            error_report("Unsupported TDVF section %d", entry-
+>>> type);
+>> +            exit(1);
+> 
+> Section entry types have already been checked against valid types in
+> tdvf_parse_and_check_section_entry(), no need to check them again here.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I would rather keep it. It does no harm and I help catch issue when 
+people adds new type in tdvf_parse_and_check_section_entry but miss this 
+place.
+
 
