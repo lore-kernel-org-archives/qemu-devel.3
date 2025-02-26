@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 829DAC021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C7F2C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:08:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnDN0-0007ll-An; Wed, 26 Feb 2025 04:06:22 -0500
+	id 1tnDO8-0000Xf-Vl; Wed, 26 Feb 2025 04:07:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnDMr-0007fs-AS
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:06:14 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1tnDO7-0000X8-6i
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:07:31 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnDMn-0000j6-U0
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:06:12 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-38f378498c9so6392221f8f.1
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 01:06:03 -0800 (PST)
+ id 1tnDO4-00010F-9A
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:07:30 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-438a3216fc2so62195275e9.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 01:07:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740560762; x=1741165562; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740560846; x=1741165646; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QBWrVeN4EVHwtHqwKyo9ht5xZB0DSq+t4haivjiFQkw=;
- b=Y6wKrKBCXdhHv5TVb1NX/1SNm30HP/YNl55CUBvgvRkTJoPih4vSM3C+hIihUFiHAz
- JqbBAJjpDtWY1ZZghXHknMwMjvN1Xw9HtOflaqCsIY9U6rbL8P754eJbz74e6Ost++C4
- OA/sjK3D4KtalDUaNwzyL8bRlcKP89FnE0x7jh8LXosI0y8Jl3TGbUcEg6K4Qcf7MaLC
- oN3HDdOswrwtnlPVMbFdITgGIeBo+yEHnIoXHxoEMEIc1mVsAx7m/0KcUKbmfrwyd6ig
- UPBhSkKsBf/oxuJMbgw2w9mZBFgrJ18GLb3TgLOP2KvBafIOZXBQ7DD2PonwaA/pguYb
- +jPg==
+ bh=3MCmR7gS5Y87Fafs23xbKTTX7NDp3ttYUbOOqVgHLkY=;
+ b=cVKjYs0aSB5Wobq86Z9PFdAmyByliHhqIHtlf5E5bdR2y3Gn69gZRm403W1la4RCem
+ IwZdnl+9VYapyQjW8J+P6pRRhXlV9cxVAUmZMSb5xJg2S96ZiqRTMl/HMiQIXroYYr/4
+ /4SNphD7ubAiTIx80swzLK+HY7eTjxbaFDcOfFsjHGITNznrZFwr3Wq4nxghRWg0WIBU
+ e4ieaQMT07En4u42r4VFx4j7s79H+jefjLvMXLRtuXmjenyVrj8bcpCruNaa8P4xAIwe
+ /m6yKoLAn1ybV/MgXjkWDTu550Fn4uqP7WaVBFEgUyUYfajzh93eUUblolZVju4Or/gi
+ iCtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740560762; x=1741165562;
+ d=1e100.net; s=20230601; t=1740560846; x=1741165646;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QBWrVeN4EVHwtHqwKyo9ht5xZB0DSq+t4haivjiFQkw=;
- b=afFuNAVse4teKBBAErZxX+/SVv0f1/eJOT00in8D9icmTTbEhT36EzfQ+hhg6cFAM1
- 88D5Jg56CwIBrt1E3pb0tcf7mC6uWBFwNKfx5DAteHA4wLNz4u8amPDZzjSyWua8f441
- FbQBnheQe6ImbWpm9vbdf/9nYe3Dzknxkr0pv4XpIhM8EXTZ6JyLZPjxDX2gelNpEFxu
- KGZO3jGlQM5odzqybb3NNvSrbDTVWk2Z3WVvOeqn9vJPh+IFGBQz/W7v8+/GWr49z7PD
- o56WAjcA7aFgiYPKrPq3Hs3RLFXMonZFJZwxfqBPmhGK2/MyLeDWXO14W2+TOnsCw0+u
- 4Etg==
+ bh=3MCmR7gS5Y87Fafs23xbKTTX7NDp3ttYUbOOqVgHLkY=;
+ b=B0W0dOvwWOEhxM+rEq4tBwTKWEG29NhvopgC7mjnmt7x0eZLdaIWuBGDL6zbMKXsV3
+ C5TZrk3Y8rSZ4Q3gsa1HeraqqtvqtCjScdhoqGgp/7EED+kdnpiB5wrjy+Kg2ohIDuT0
+ wPNK9i+HWG1NGPFcVq9ac8IoZtN0NlamaMPyx2Xl1Acoo017k53uYgkeTw/U6so9X0Vr
+ sDAZTZNTkRfDneGK4oU/YYBagJ9PNfAwSsQ6tD6ys01gJ+1m+D8LIPgMeAvOvmHQieW4
+ tiBX24JgwSM18F+Pv256bWVYXWCddYHoJWxjuZ4owz65fShfmZzWcSrI7MQ9rRkBTYLM
+ 4rbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVncNha37SgazJF7p91dZ+hDrD6TxP0z5jubzdYEmyNIFqntcxMrIk+bCJRRX+ifmEIR0Pgp6gMhB/D@nongnu.org
-X-Gm-Message-State: AOJu0YzAQD+++Iwk+IhOJBMo3YkwdmwI5qTeAwae+mprJ2AuJ4h9h8XC
- CocpZ6jYbeEV9np3s95JgWVEQTWaer2HaCsFAnmJhsvwccn7KDvqtgv28QPz0lQ=
-X-Gm-Gg: ASbGncuLB4CVwvn+513QyZkEUTsVz8hg3StY8T2wMEle1oNtOJW+OenTK+jQxGzpL/3
- CR8uwazBnb68friKRKkuYE2qe1tUXrBe3lv5vwpEyYjvvrsM2iaSgjaZuXaKPBG4N3P2sVIMyp8
- EUcYZADcQKrqrbFTH5kusoGV5IarpfOTLuetVROSuriSBiR4tmQKCEszqCVLYs4u1GaW0u7wVB8
- 1DciJ90LNiaPSX4lJ/6NZuMjeXWyLaharyw0Hqj+ez6KVObwRCyMRb31/1EBlxpIdwbUl5yQxje
- mBXlo6uxzSF93bclVw44q2KAKoLJ
-X-Google-Smtp-Source: AGHT+IE6lDytnnt/EgCisSZKqUaXgdV81dzoVdi0zdOm2dvvDR9J6kB7xq5P8f8C5Vs5Qd/QhdcBvg==
-X-Received: by 2002:a5d:6241:0:b0:38d:d371:e01d with SMTP id
- ffacd0b85a97d-390cc63c05bmr4397012f8f.49.1740560762505; 
- Wed, 26 Feb 2025 01:06:02 -0800 (PST)
+ AJvYcCWu88UcYQopETV/MgnKJ21vAJ+yr3sjpQxEqy/skUSIzGzTgfWtYeIUCwQ8jKhlzj/xJVYRjJ8hCfvg@nongnu.org
+X-Gm-Message-State: AOJu0Yyx77Sw+IqLp/iGcnd0XndEL0+kWGcB52LY334YG+CJodKB9hyR
+ 7we2qO0dYMu9xM7hidtHRAy2Rn4ZoHSkSpuy0RFvHni0Uv5i7vzjaJXrtk2BCjw=
+X-Gm-Gg: ASbGncse/KAbfVh8uAUXylMDCKOA9pHPGEqw9D2xbGuwKbjkZ9ZDLzGFIW6TD3gHkmu
+ TWPCUIMsuZXt7sCqfFPUEAopLswA4lCXL5kuKDLs3dM+ALng0xMJZ4y1oVxDS60DxroBU6pShH2
+ AO4qr4UN70mEJbz8qxc5QA0Pxoky8ZcjbqN3ppv+Sbh1KWhVgeLRriEscqB6ULD7KnIKG8ZEc5C
+ Za+V1XpeikBNmuyKDXiGp/70gDo7+Gt7ZfxdSKGSXPkwahoWEyA4PCE1Fd0zUj+eiAolVR519bS
+ JCwr6aIytiQ2vMpxhVwEa+bEHUcJ
+X-Google-Smtp-Source: AGHT+IGkHGGdrN0ajOa/uGFERpbJFWPASACiwouL4Vruqk8Ld4/gCMNeP2qLHTxTjKuwKxBCxJu7JQ==
+X-Received: by 2002:a05:600c:4687:b0:439:9aca:3285 with SMTP id
+ 5b1f17b1804b1-439b6ad5cbfmr147501685e9.6.1740560837709; 
+ Wed, 26 Feb 2025 01:07:17 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd86caa8sm4789219f8f.25.2025.02.26.01.06.01
+ 5b1f17b1804b1-43aba532d7asm13929045e9.13.2025.02.26.01.07.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 01:06:02 -0800 (PST)
+ Wed, 26 Feb 2025 01:07:17 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5983B5F87C;
- Wed, 26 Feb 2025 09:06:01 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 94F305F87C;
+ Wed, 26 Feb 2025 09:07:16 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  qemu-stable@nongnu.org
-Subject: Re: [PATCH v3 4/9] target/arm: Always apply CNTVOFF_EL2 for
- CNTV_TVAL_EL02 accesses
-In-Reply-To: <20250204125009.2281315-5-peter.maydell@linaro.org> (Peter
- Maydell's message of "Tue, 4 Feb 2025 12:50:04 +0000")
+Subject: Re: [PATCH v3 5/9] target/arm: Refactor handling of timer offset
+ for direct register accesses
+In-Reply-To: <20250204125009.2281315-6-peter.maydell@linaro.org> (Peter
+ Maydell's message of "Tue, 4 Feb 2025 12:50:05 +0000")
 References: <20250204125009.2281315-1-peter.maydell@linaro.org>
- <20250204125009.2281315-5-peter.maydell@linaro.org>
+ <20250204125009.2281315-6-peter.maydell@linaro.org>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Wed, 26 Feb 2025 09:06:01 +0000
-Message-ID: <87ikox3wjq.fsf@draig.linaro.org>
+Date: Wed, 26 Feb 2025 09:07:16 +0000
+Message-ID: <87cyf53whn.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -108,18 +108,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Maydell <peter.maydell@linaro.org> writes:
 
-> Currently we handle CNTV_TVAL_EL02 by calling gt_tval_read() for the
-> EL1 virt timer.  This is almost correct, but the underlying
-> CNTV_TVAL_EL0 register behaves slightly differently.  CNTV_TVAL_EL02
-> always applies the CNTVOFF_EL2 offset; CNTV_TVAL_EL0 doesn't do so if
-> we're at EL2 and HCR_EL2.E2H is 1.
+> When reading or writing the timer registers, sometimes we need to
+> apply one of the timer offsets.  Specifically, this happens for
+> direct reads of the counter registers CNTPCT_EL0 and CNTVCT_EL0 (and
+> their self-synchronized variants CNTVCTSS_EL0 and CNTPCTSS_EL0).  It
+> also applies for direct reads and writes of the CNT*_TVAL_EL*
+> registers that provide the 32-bit downcounting view of each timer.
 >
-> We were getting this wrong, because we ended up in
-> gt_virt_cnt_offset() and did the E2H check.
+> We currently do this with duplicated code in gt_tval_read() and
+> gt_tval_write() and a special-case in gt_virt_cnt_read() and
+> gt_cnt_read().  Refactor this so that we handle it all in a single
+> function gt_direct_access_timer_offset(), to parallel how we handle
+> the offset for indirect accesses.
 >
-> Factor out the tval read/write calculation from the selection of the
-> offset, so that we can special case gt_virt_tval_read() and
-> gt_virt_tval_write() to unconditionally pass CNTVOFF_EL2.
+> The call in the WFIT helper previously to gt_virt_cnt_offset() is
+> now to gt_direct_access_timer_offset(); this is the correct
+> behaviour, but it's not immediately obvious that it shouldn't be
+> considered an indirect access, so we add an explanatory comment.
+>
+> This commit should make no behavioural changes.
+>
+> (Cc to stable because the following bugfix commit will
+> depend on this one.)
 >
 > Cc: qemu-stable@nongnu.org
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
