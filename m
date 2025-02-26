@@ -4,109 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6FEC021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852F1C18E7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:31:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnIE2-0005h2-Pb; Wed, 26 Feb 2025 09:17:27 -0500
+	id 1tnIQD-0000f6-3Z; Wed, 26 Feb 2025 09:30:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tnIDl-0005T7-Lj
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:17:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tnIDg-0008Tf-Vw
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:17:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740579422;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U47VA7bQAyReFmXTz+SvCcW2YjnEudaZ9f05EVRkBHw=;
- b=Rwb1U3lRHYIOv7E3fXcGfs0TmTaYJbYgIxn2+e2OTaPB9kxXF1nM0WCQUbS8PDaNM7UwwG
- GJKpzL3YcIRz33BfLxKsqIInZKfymxEQvzHZevyzROUbb7KZMeR/mUbXJiqDSaanz9Pdns
- LO9u4ly8SFr6dsQBFR5Du2YBLK3J2tw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-Q1a3w7tHPRWPqALhbzUikQ-1; Wed, 26 Feb 2025 09:16:59 -0500
-X-MC-Unique: Q1a3w7tHPRWPqALhbzUikQ-1
-X-Mimecast-MFC-AGG-ID: Q1a3w7tHPRWPqALhbzUikQ_1740579418
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38f55ccb04bso4593790f8f.3
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:16:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tnIQ9-0000e8-5T
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:29:58 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tnIQ6-0001jy-Rh
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:29:56 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4399d14334aso60399005e9.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:29:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740580193; x=1741184993; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=haPH8Hps0tqtuB3HirXD/jQb6LYEBqe6kqfNTpwisNE=;
+ b=q1LXJdoFl79soAX7+h57B5ulxZy55P2ZCnRUb3RGoGqfe5Yb++rgWUivwWeclScEOf
+ YeUmRbfmefPfxhmts4HUSap2xOID47A4tV+c3hN9fsYdtMzAhssYQAHdCHUMWw/bu+GP
+ 1WNfqD3nV3vpFuD00Fehw+WCH732aINDUIIsoglgzi51O7Zs/VYea15vh+gyEs/qQ+db
+ nev80P/dPn2dDbjVG2I3gd/75P2rnslnAt1mLXNGPfhqbkXyECthgSP18XQ+BkjhyZg4
+ 50dVHJYIKvWf3DV6w+iVYkcHzRtGK7YtLtcQJZIC7tWKz1Bj2r16IpDjZfzR/jNDAj7m
+ sC5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740579418; x=1741184218;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U47VA7bQAyReFmXTz+SvCcW2YjnEudaZ9f05EVRkBHw=;
- b=MAnPLfsUC00dIXEJjrDsypRnufWBtENGSSK2ukI8CBUXAG7w+QFnZaJA+qC/8yjL7y
- qTVpsfD/89m/2g9vtnAQwzydyyGlP/0EdB5p8kaGsiRAlcqCJKI7IstzT2u6eiRbG1Kr
- +i0kQexdNG/unnWv86kbrJr70auaC4NRjS+SobTmbWQTTMxJbDfmtmE4U0Jhmrqfbabk
- cm5NvPCIHTycpFsStjHYhzgC8Gq9ffkuQ1wq6OE910nBr3CPlnCSpgS3l9W25IU5tlZK
- 4YKZuAS9mJvk69gMfMGKXbFXKwSGSrR4kr1mibId5zZ/F78MwA+VopbJmEAvKYBLPKtt
- Gm9w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbEebJ2yUZtRnQZ+en4PcqBMpVJgcJnp1dQ7NOqdFRsD01BxgS+RKAEEyMiEz6m6b6mB7DkouB/omO@nongnu.org
-X-Gm-Message-State: AOJu0YwYgNaNzbCWHFY2KpgpVXLyNpDKT04HTtBL0+pYmnkRZHUg1jJ+
- +uXGjaHjlLJrtO25Y9IaDSal4kmMcXONMoKWKuZA8zi78JEqUrlE6VbTsIHQuQBJvEYmYE3mDqT
- cU/pzNc+hBnRKhF/sQsG6NGm8MglOL9QKhEyoXWoGHdzLbC1/u4e0
-X-Gm-Gg: ASbGnct7FfAClci6F4mS4++gL6tBwo0XanbGueJYrX9DPSU8zOBwvp2buuYiPCOP4AG
- rGST9QRn2tkVgSV+aZg26ZOZPvaB3QinHQ+/mCef5NM14dT2Uql4z60HZUAEps19EwbWNFrkMnA
- 62Qy/T67ljWsckvnGuo/ursAQuM2KaPfAYyZtKLYlot5BXR0inbqdrSzfv71PqBE/YAEdYUt/aw
- zDGxT58XPfibAKCtzGlTuTwx4X528H4HDtetXpGAMjuDV6O7YTpB957h0JO/3ZUC3sG4amySo+S
- ZASMl7jKB/+SCvFZN8iN8JihqlXulF9Sbgq8Z8BlxfHbuFDD5cuQ16hARf1j/tE=
-X-Received: by 2002:a05:6000:1ac8:b0:38f:39e5:6b5d with SMTP id
- ffacd0b85a97d-390d4f8b64bmr2980524f8f.44.1740579418288; 
- Wed, 26 Feb 2025 06:16:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGpbWVd48qhAy+RqiOR6hOvkRh0yJcnowd3kVeAC9R1PEvlXonoM8kmft0OL4NXIEZaESe9oA==
-X-Received: by 2002:a05:6000:1ac8:b0:38f:39e5:6b5d with SMTP id
- ffacd0b85a97d-390d4f8b64bmr2980477f8f.44.1740579417874; 
- Wed, 26 Feb 2025 06:16:57 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390de5a5b5esm1102094f8f.89.2025.02.26.06.16.56
+ d=1e100.net; s=20230601; t=1740580193; x=1741184993;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=haPH8Hps0tqtuB3HirXD/jQb6LYEBqe6kqfNTpwisNE=;
+ b=YSPbL6UgYx4m8wptalEKeIJ+YbkpJvDvtq/eeZWVW1GIB3qsSPiG6hHU2dokt8dyrJ
+ hoKATRnP8/6AVuWOQR+ENVFTGjBKmvf0ZuCSBpfs8OoaU5a8uL50LHgLfcaUy3gfctu4
+ vLu3mt8XB69TV2XMX0lsvM8YrrMZDLdOQO3hjdrk0QR7y5SwkCCHRhxdkRAevizjh2GB
+ 8q7qwwJzhwI3udCIYyDTMi0zbRfoQnr4qya2IJNI3XBH+XBK3gX94EfBX4hnOmm7ksY9
+ qlZfq1GBMNQWU0hYGSzSrxoN5M4e99XMs2R1OSOqdqj9f+s4LJncSfuTN14Dolrf+2C+
+ 72qw==
+X-Gm-Message-State: AOJu0YxX59nQHAJXABaFY58oCJetPgr9pmasxtn2cySDPV+pON5ctzXH
+ GCRNL+uLNdJ2CTB4GeOgsYf8qah96Mxuz/ZjFxd2WorgkEn3W+6UhMs8fV+U6GA=
+X-Gm-Gg: ASbGnctF+lLGKj2aWw/6OwQkwszXJ1fAo4qjwU0oWKR7fQyzGv0pAgisobeV9W/OdW/
+ HDcywO77/n9DSgJzzIpR1Twz86qyL+8mP+A4tOly6sLOpQXhrAwWKo+rFQXwvTzsHt5MBO+r4xi
+ PucBPfkpihGLLjDjEu3XDcCtAPNAUFVFeJxf8mw7SHmeNpTWn+844n+pkzwwskw60+SqKAqBrqY
+ uUMNG+qRwz4Wi17kYb9zHja7DRuL97VfcUFbPgsfX53ZtB56/kU2iZXP/JgvGJTcEO5nJkiyV5Y
+ Pfk3R/0DFtf/TUxtaGQmThexAO55
+X-Google-Smtp-Source: AGHT+IFCwqd2lEkReOt4FxaE9LcLdO9E+9p14O5qcvITN5zBpC+NIAY1DQPqTcG43Uq5MdZDbkVh6A==
+X-Received: by 2002:a05:600c:5103:b0:439:5da7:8e0 with SMTP id
+ 5b1f17b1804b1-43ab8fe2fe9mr36991645e9.16.1740580192730; 
+ Wed, 26 Feb 2025 06:29:52 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43aba5393e5sm23409395e9.20.2025.02.26.06.29.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 06:16:57 -0800 (PST)
-Date: Wed, 26 Feb 2025 15:16:56 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Philippe =?UTF-8?B?TWF0aGll?=
- =?UTF-8?B?dS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
- <anisinha@redhat.com>, Cleber Rosa <crosa@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Eric Blake
- <eblake@redhat.com>, John Snow <jsnow@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Shannon Zhao
- <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
- <zhao1.liu@intel.com>, kvm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 00/14] Change ghes to use HEST-based offsets and add
- support for error inject
-Message-ID: <20250226151656.10665bc9@imammedo.users.ipa.redhat.com>
-In-Reply-To: <cover.1740148260.git.mchehab+huawei@kernel.org>
-References: <cover.1740148260.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Wed, 26 Feb 2025 06:29:52 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 62C975F924;
+ Wed, 26 Feb 2025 14:29:51 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>,  Helge Deller <deller@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Nicholas Piggin
+ <npiggin@gmail.com>,  qemu-ppc@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 3/4] cputlb: introduce tlb_flush_other_cpu for reset use
+In-Reply-To: <d033b2d7-a2b6-4ed8-ac46-85b52d46f8ea@linaro.org> (Richard
+ Henderson's message of "Tue, 25 Feb 2025 11:49:33 -0800")
+References: <20250225184628.3590671-1-alex.bennee@linaro.org>
+ <20250225184628.3590671-4-alex.bennee@linaro.org>
+ <d033b2d7-a2b6-4ed8-ac46-85b52d46f8ea@linaro.org>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Wed, 26 Feb 2025 14:29:51 +0000
+Message-ID: <877c5c4w4g.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,100 +107,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 21 Feb 2025 15:35:09 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-> Now that the ghes preparation patches were merged, let's add support
-> for error injection.
-> 
-> On this series, the first 6 patches chang to the math used to calculate offsets at HEST
-> table and hardware_error firmware file, together with its migration code. Migration tested
-> with both latest QEMU released kernel and upstream, on both directions.
-> 
-> The next patches add a new QAPI to allow injecting GHESv2 errors, and a script using such QAPI
->    to inject ARM Processor Error records.
+> On 2/25/25 10:46, Alex Benn=C3=A9e wrote:
+>> The commit 30933c4fb4 (tcg/cputlb: remove other-cpu capability from
+>> TLB flushing) introduced a regression that only shows up when
+>> --enable-debug-tcg is used. The main use case of tlb_flush outside of
+>> the current_cpu context is for handling reset and CPU creation. Rather
+>> than revert the commit introduce a new helper and tweak the
+>> documentation to make it clear where it should be used.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>> v2
+>>    - appraently reset can come from both cpu context and outside
+>>    - add cpu_common_post_load fixes
+>> ---
+>>   include/exec/exec-all.h   | 20 ++++++++++++++++----
+>>   accel/tcg/cputlb.c        | 11 +++++++++++
+>>   accel/tcg/tcg-accel-ops.c |  2 +-
+>>   cpu-target.c              |  2 +-
+>>   target/i386/machine.c     |  2 +-
+>>   5 files changed, 30 insertions(+), 7 deletions(-)
+>> diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+>> index d9045c9ac4..cf030001ca 100644
+>> --- a/include/exec/exec-all.h
+>> +++ b/include/exec/exec-all.h
+>> @@ -64,12 +64,24 @@ void tlb_flush_page_all_cpus_synced(CPUState *src, v=
+addr addr);
+>>    * tlb_flush:
+>>    * @cpu: CPU whose TLB should be flushed
+>>    *
+>> - * Flush the entire TLB for the specified CPU. Most CPU architectures
+>> - * allow the implementation to drop entries from the TLB at any time
+>> - * so this is generally safe. If more selective flushing is required
+>> - * use one of the other functions for efficiency.
+>> + * Flush the entire TLB for the specified current CPU.
+>> + *
+>> + * Most CPU architectures allow the implementation to drop entries
+>> + * from the TLB at any time so this is generally safe. If more
+>> + * selective flushing is required use one of the other functions for
+>> + * efficiency.
+>>    */
+>>   void tlb_flush(CPUState *cpu);
+>> +/**
+>> + * tlb_flush_other_cpu:
+>> + * @cpu: CPU whose TLB should be flushed
+>> + *
+>> + * Flush the entire TLB for a specified CPU. For cross vCPU flushes
+>> + * you shuld be using a more selective function. This is really only
+>> + * used for flushing CPUs being reset from outside their current
+>> + * context.
+>> + */
+>> +void tlb_flush_other_cpu(CPUState *cpu);
+>>   /**
+>>    * tlb_flush_all_cpus_synced:
+>>    * @cpu: src CPU of the flush
+>> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+>> index ad158050a1..fc16a576f0 100644
+>> --- a/accel/tcg/cputlb.c
+>> +++ b/accel/tcg/cputlb.c
+>> @@ -417,6 +417,17 @@ void tlb_flush(CPUState *cpu)
+>>       tlb_flush_by_mmuidx(cpu, ALL_MMUIDX_BITS);
+>>   }
+>>   +void tlb_flush_other_cpu(CPUState *cpu)
+>> +{
+>> +    if (qemu_cpu_is_self(cpu)) {
+>> +        tlb_flush(cpu);
+>> +    } else {
+>> +        async_run_on_cpu(cpu,
+>> +                         tlb_flush_by_mmuidx_async_work,
+>> +                         RUN_ON_CPU_HOST_INT(ALL_MMUIDX_BITS));
+>> +    }
+>> +}
+>
+> I'm not convinced this is necessary.
 
-please, run ./scripts/checkpatch on patches before submitting them.
-as it stands now series cannot be merged due to failing checkpatch
+I guess we want something like:
 
-> 
-> ---
-> v4:
-> - added an extra comment for AcpiGhesState structure;
-> - patches reordered;
-> - no functional changes, just code shift between the patches in this series.
-> 
-> v3:
-> - addressed more nits;
-> - hest_add_le now points to the beginning of HEST table;
-> - removed HEST from tests/data/acpi;
-> - added an extra patch to not use fw_cfg with virt-10.0 for hw_error_le
-> 
-> v2: 
-> - address some nits;
-> - improved ags cleanup patch and removed ags.present field;
-> - added some missing le*_to_cpu() calls;
-> - update date at copyright for new files to 2024-2025;
-> - qmp command changed to: inject-ghes-v2-error ans since updated to 10.0;
-> - added HEST and DSDT tables after the changes to make check target happy.
->   (two patches: first one whitelisting such tables; second one removing from
->    whitelist and updating/adding such tables to tests/data/acpi)
-> 
-> 
-> 
-> Mauro Carvalho Chehab (14):
->   acpi/ghes: prepare to change the way HEST offsets are calculated
->   acpi/ghes: add a firmware file with HEST address
->   acpi/ghes: Use HEST table offsets when preparing GHES records
->   acpi/ghes: don't hard-code the number of sources for HEST table
->   acpi/ghes: add a notifier to notify when error data is ready
->   acpi/ghes: create an ancillary acpi_ghes_get_state() function
->   acpi/generic_event_device: Update GHES migration to cover hest addr
->   acpi/generic_event_device: add logic to detect if HEST addr is
->     available
->   acpi/generic_event_device: add an APEI error device
->   tests/acpi: virt: allow acpi table changes for a new table: HEST
->   arm/virt: Wire up a GED error device for ACPI / GHES
->   tests/acpi: virt: add a HEST table to aarch64 virt and update DSDT
->   qapi/acpi-hest: add an interface to do generic CPER error injection
->   scripts/ghes_inject: add a script to generate GHES error inject
-> 
->  MAINTAINERS                                   |  10 +
->  hw/acpi/Kconfig                               |   5 +
->  hw/acpi/aml-build.c                           |  10 +
->  hw/acpi/generic_event_device.c                |  43 ++
->  hw/acpi/ghes-stub.c                           |   7 +-
->  hw/acpi/ghes.c                                | 231 ++++--
->  hw/acpi/ghes_cper.c                           |  38 +
->  hw/acpi/ghes_cper_stub.c                      |  19 +
->  hw/acpi/meson.build                           |   2 +
->  hw/arm/virt-acpi-build.c                      |  37 +-
->  hw/arm/virt.c                                 |  19 +-
->  hw/core/machine.c                             |   2 +
->  include/hw/acpi/acpi_dev_interface.h          |   1 +
->  include/hw/acpi/aml-build.h                   |   2 +
->  include/hw/acpi/generic_event_device.h        |   1 +
->  include/hw/acpi/ghes.h                        |  54 +-
->  include/hw/arm/virt.h                         |   2 +
->  qapi/acpi-hest.json                           |  35 +
->  qapi/meson.build                              |   1 +
->  qapi/qapi-schema.json                         |   1 +
->  scripts/arm_processor_error.py                | 476 ++++++++++++
->  scripts/ghes_inject.py                        |  51 ++
->  scripts/qmp_helper.py                         | 702 ++++++++++++++++++
->  target/arm/kvm.c                              |   7 +-
->  tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5240 bytes
->  .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5326 bytes
->  tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6601 bytes
->  tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7723 bytes
->  tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5442 bytes
->  29 files changed, 1677 insertions(+), 79 deletions(-)
->  create mode 100644 hw/acpi/ghes_cper.c
->  create mode 100644 hw/acpi/ghes_cper_stub.c
->  create mode 100644 qapi/acpi-hest.json
->  create mode 100644 scripts/arm_processor_error.py
->  create mode 100755 scripts/ghes_inject.py
->  create mode 100755 scripts/qmp_helper.py
-> 
 
+/* tlb_reset() - reset the TLB when the CPU is not running
+ * cs: the cpu
+ *
+ * Only to be used when the CPU is definitely not running
+ */
+
+void tlb_reset(CPUState *cs) {
+     g_assert(cs->cpu_stopped);
+
+    for (i =3D 0; i < NB_MMU_MODES; i++) {
+        tlb_mmu_flush_locked(&cpu->neg.tlb.d[i], &cpu->neg.tlb.f[i]);
+    }
+}
+
+?
+
+>
+>> diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+>> index 6e3f1fa92b..e85d317d34 100644
+>> --- a/accel/tcg/tcg-accel-ops.c
+>> +++ b/accel/tcg/tcg-accel-ops.c
+>> @@ -85,7 +85,7 @@ static void tcg_cpu_reset_hold(CPUState *cpu)
+>>   {
+>>       tcg_flush_jmp_cache(cpu);
+>>   -    tlb_flush(cpu);
+>> +    tlb_flush_other_cpu(cpu);
+>>   }
+>
+> I would really like to believe that at this point, hold phase, the cpu
+> is *not* running. Therefore it is safe to zero out the softmmu tlb
+> data structures.
+>
+>>     /* mask must never be zero, except for A20 change call */
+>> diff --git a/cpu-target.c b/cpu-target.c
+>> index 667688332c..8eb1633c02 100644
+>> --- a/cpu-target.c
+>> +++ b/cpu-target.c
+>> @@ -56,7 +56,7 @@ static int cpu_common_post_load(void *opaque, int vers=
+ion_id)
+>>       /* 0x01 was CPU_INTERRUPT_EXIT. This line can be removed when the
+>>          version_id is increased. */
+>>       cpu->interrupt_request &=3D ~0x01;
+>> -    tlb_flush(cpu);
+>> +    tlb_flush_other_cpu(cpu);
+>
+> Likewise, in post_load, the cpu is *not* running.
+>
+>> diff --git a/target/i386/machine.c b/target/i386/machine.c
+>> index d9d4f25d1a..e66f46758a 100644
+>> --- a/target/i386/machine.c
+>> +++ b/target/i386/machine.c
+>> @@ -401,7 +401,7 @@ static int cpu_post_load(void *opaque, int version_i=
+d)
+>>           env->dr[7] =3D dr7 & ~(DR7_GLOBAL_BP_MASK | DR7_LOCAL_BP_MASK);
+>>           cpu_x86_update_dr7(env, dr7);
+>>       }
+>> -    tlb_flush(cs);
+>> +    tlb_flush_other_cpu(cs);
+>>       return 0;
+>
+> Likewise.
+>
+>
+> r~
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
