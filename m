@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F458C021BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4497C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:07:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnI1w-0001sl-DM; Wed, 26 Feb 2025 09:04:56 -0500
+	id 1tnI1c-0001Ts-QS; Wed, 26 Feb 2025 09:04:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI13-000176-7h
+ id 1tnI12-00016y-RK
  for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:04:01 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI11-0005kE-1L
+ id 1tnI10-0005k2-Pp
  for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:04:00 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-38f2f391864so3910702f8f.3
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4397dff185fso59961515e9.2
  for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:03:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1740578637; x=1741183437; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3MUzqz6FU8Y/M1Y0uPwJOCVPftv09cieoqEpBt2LY4U=;
- b=xz6O0gKLw/VXIgarrIxeeO+DihB/0DDA8ZOE4267oykmDm+siJuCrvA2XBEHpF2rz5
- cE0+N1J6DTDsPmehD4WgzWbvU4rwsDkyptC3+nBv9ms3lP0lC0j19Pn8kzuJctNuSGbn
- T0Oz0cL1kd3KohaXJGAjqnXl7RcSIVDeUrMUhdqDfDXPjYbeooJGlcA7nCwC1sep4qWQ
- TugNQ4/S4t+amGh9kGRzDjSX/wiXAI8vpO4gGtbTwRkvh8gP77obcTCkk/xiuNXseVVW
- qomX969MIwZc/ZFWhkJJMSoThg6EizUM4Vn4Zg7k4YSXB7Z8KA6MjgPF0u3h0AzhuyKy
- Ydww==
+ bh=eFWFW+6NZINw/m6MJHmphcH27lcvn4J7lC5PnXB+pFU=;
+ b=I6p8pIubtOVnxywNO/PCIbwzhz4XKSey/Z0JkZE4pUR/3/6FnbjGsYgNzcySRKmZk2
+ l+AjyS5z25UU+U0piA218WI1xleApIIwOpdPeaLadCJLTKAXI9dpEGH5ZAV9jTayi/Ea
+ UUQrwovMYB3yHx3fu8SDtQuOg4E8rglkK80FGRT3nk5g3BGYK4TBAclSrooEgbLmLXCW
+ CsYLj3XQiv52a4iWBQ/6Mg+vCYRbEw5EXicxiy9IY6y9zMh8aU97MUo0dt5/Fsud8OaA
+ elY7uU8NaPtS2Zee6EAR6EzivR1SzfniSc8jLthFV1bvABXaDLZbAqkyswwJ47l0zyZL
+ aKZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1740578637; x=1741183437;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3MUzqz6FU8Y/M1Y0uPwJOCVPftv09cieoqEpBt2LY4U=;
- b=MdBDh3nHLlmpBp79JyMNcWOqkrQCOCZbGmhz8/ZWS33633Cgn4AKGhmbK26YdZ+qsX
- ekK8G9nnCLSbiT+q5FevmxPi+3MCpqEzNhXwLj/L/jhJ1kzhs1aYd8p/bldky+C5BQz9
- 6dnk8vQHiGeMK3RtOznFwqZt997UjIDXFh5YiV4yc1yYqiiUs+U0Uvzh2PkYX/Il2tqP
- Ls8FvyXQRLoV46POqZA+HnA/UvZLl+UN8srtOBtOV1BuQyR7YnQuIeIgGfMz1ZzCgTax
- 6/juuU2f8TdDYvOWy+3aCWl36n+vPiE8r0X0Xyv0ShIbZFYUafpgNSKWQ6JyBklyG2d0
- /qLg==
-X-Gm-Message-State: AOJu0YxER+rBcj2C3YsgTLO3xM+FwbLr/oAts+C5rU+gtPtqiDG/pz1i
- HlixpT30PbdaAh3p2qmNPm5nFgxM1v6wwdVeM2vCGQP7WH5oQv4iCuGebhYl3+s=
-X-Gm-Gg: ASbGncvopz6cvgqcDf2KVF/Q4Mk468Wi0b1/PmAayNgAvPw575AT+edHuX2xgiiIZCP
- 2IyLF+k7EernDiwMU2d7xbKftR9AjgmPeKrti+SkZLSAb+nH1VJjxcvsP0BWtTnRRaEpMYtA9jl
- UiJSjZw9QH1YF6gYVF3fKCPGnZLQHfwp1DoYCcXHx/YYb4Hmh4TWraFUF40C/Hmz3BdbyogNz7E
- QpeflE7Ik0QowJj3StTNW6zXe4f8nlZIvSVXnxfnPTcC2ZGMnMblK77X1k8XbOrxGAQ+l3jVH2V
- UwGjZ5iTD4zs32WyO564lJNuQNzC
-X-Google-Smtp-Source: AGHT+IEUcvdw1IaTUoKCYFEgx5PnlVjkTybddnFs1rMJ9kJQcWghkz9g9m7ZnxN31fMdFuSJxA641g==
-X-Received: by 2002:a05:6000:1a85:b0:38f:2403:8e98 with SMTP id
- ffacd0b85a97d-390d4f3c49cmr2884906f8f.20.1740578637431; 
- Wed, 26 Feb 2025 06:03:57 -0800 (PST)
+ bh=eFWFW+6NZINw/m6MJHmphcH27lcvn4J7lC5PnXB+pFU=;
+ b=ifjb//gPIGSbK9QDHElfRXQq74qsRbZO9pcesDFeFb849SfQYwsQhb5VIP+TY4h1Y3
+ WYxG5sWaI5bGG6Y/qWWcrZdPIxuqKt5D0SclFUw08ilQj+HhtLSg8NRGuul/GYLcy+2Q
+ NvhLS9GZoh0huv0pF4K5G9tu6YAZLtv3Q0VikBn2lPYVuG/qR0epVsMIVbDbkPR6OCYc
+ UcF+W0JRI8xlay47uHsffIXKbrM3YoZ9AVMeMUhxAQBQbMjKQbKGcDUuaECbXrVn5ZUJ
+ aUF9/VigsDMQw/x9a5J8jCgeGdJrTR2p87sb3ypaUOdHj5COjeGbZipYrffOx5AjDinu
+ IQAg==
+X-Gm-Message-State: AOJu0YxCvOjIGv78liEDiTs5ylgCukEzXz+dAma4RFHjSWnk1RqrQsd1
+ 6dTiFPdLXD2WK9iW7kttu4HXsy5MsVIkrqglplz+GWrgWaQ4CB4gOwtA7CDNXxw=
+X-Gm-Gg: ASbGncsYZMzVzv83vA4bYNULHiDaqcnhQ6zAxcpOUZTCWnAqsN0VvcUeveSj0nbfn5+
+ rjofJ0nSdQlr8tCnRznrgrTHZHoQZmjVRjQkHJyH3q0v7eSkqZq8+RZrArLy0ioE0vpLcuvab4/
+ mzCtp0lQDx5v7hU9xnbD9rW9gsyzCNEqg+a91am6bc88O3FYmjCM1HLB8Qt9pPkvGlw2hU7ks23
+ TKEUhHdX4FeVNVMGxcu+x6WONGHkLIku8MrsOk+EsMEiGdkXbFvZiQghMQgQNUI+bw1F6PucxL3
+ iGikU0FnAjpNlr+aKqLWAWjeuDVL
+X-Google-Smtp-Source: AGHT+IGcdCq0tB08QxeQfbH5w4GggS22UnqKtdKDnlGcLyAdYb6uH4jtxUtcFfwjwrl+Umq0sa8jqQ==
+X-Received: by 2002:a05:600c:4f0d:b0:439:6118:c188 with SMTP id
+ 5b1f17b1804b1-43ab90155acmr28424875e9.19.1740578636993; 
+ Wed, 26 Feb 2025 06:03:56 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd86ca0asm5841115f8f.32.2025.02.26.06.03.50
+ 5b1f17b1804b1-43ab2cb1063sm33002425e9.2.2025.02.26.06.03.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 26 Feb 2025 06:03:52 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BBF8C60689;
+ by draig.lan (Postfix) with ESMTP id 0E0DF603D2;
  Wed, 26 Feb 2025 14:03:45 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -82,17 +82,17 @@ Cc: qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 19/25] plugins/plugin.h: include queue.h
-Date: Wed, 26 Feb 2025 14:03:37 +0000
-Message-Id: <20250226140343.3907080-20-alex.bennee@linaro.org>
+Subject: [PATCH 11/25] tests/tcg: mark test-vma as a linux-only test
+Date: Wed, 26 Feb 2025 14:03:29 +0000
+Message-Id: <20250226140343.3907080-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250226140343.3907080-1-alex.bennee@linaro.org>
 References: <20250226140343.3907080-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,29 +115,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Headers should bring in what they need so don't rely on getting
-queue.h by side effects. This will help with clean-ups in the
-following patches.
+The main multiarch tests should compile for any POSIX system, however
+test-vma's usage of MAP_NORESERVE makes it a linux-only test. Simply
+moving the source file is enough for the build logic to skip on BSD's.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250225110844.3296991-6-alex.bennee@linaro.org>
 ---
- plugins/plugin.h | 1 +
- 1 file changed, 1 insertion(+)
+ tests/tcg/multiarch/{ => linux}/test-vma.c | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename tests/tcg/multiarch/{ => linux}/test-vma.c (100%)
 
-diff --git a/plugins/plugin.h b/plugins/plugin.h
-index 30e2299a54..9ed20b5c41 100644
---- a/plugins/plugin.h
-+++ b/plugins/plugin.h
-@@ -13,6 +13,7 @@
- #define PLUGIN_H
- 
- #include <gmodule.h>
-+#include "qemu/queue.h"
- #include "qemu/qht.h"
- 
- #define QEMU_PLUGIN_MIN_VERSION 2
+diff --git a/tests/tcg/multiarch/test-vma.c b/tests/tcg/multiarch/linux/test-vma.c
+similarity index 100%
+rename from tests/tcg/multiarch/test-vma.c
+rename to tests/tcg/multiarch/linux/test-vma.c
 -- 
 2.39.5
 
