@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825F8C021B2
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 01:03:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5EABC021BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 01:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tn5oA-0004Ex-If; Tue, 25 Feb 2025 20:01:54 -0500
+	id 1tn5oA-0004Du-Ar; Tue, 25 Feb 2025 20:01:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1tn5nd-0003rH-OP
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 20:01:22 -0500
-Received: from esa8.hc1455-7.c3s2.iphmx.com ([139.138.61.253])
+ id 1tn5nm-0003t9-Ge
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 20:01:34 -0500
+Received: from esa1.hc1455-7.c3s2.iphmx.com ([207.54.90.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1tn5nX-0004yT-Gg
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 20:01:20 -0500
+ id 1tn5nd-00051D-Ly
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 20:01:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1740531675; x=1772067675;
+ t=1740531682; x=1772067682;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=jd+DdY5eY77B7kVpkL1NpFZ69YDj7OrP1FP6uOvMgB8=;
- b=o/x70lEpq2sD/P4usaVmso8pOb60TDaiiyQFp3FKJGYNhYCBPZJGgdyc
- oKCTr0x6yeC1ScznAabDBYgXYx0/IQlhtLVoO93e9o9gVVNDqjGSd3s79
- FFQPtE95xMV7WUTQPm39h2int9JL2Y40SSY/l3F3DKXOxhPf6YKerRTK/
- FkdDZcQdhGvS+V8tccAZ5aL39ibAmw3+r18Kd+swcLBwWHvIMioofuLIm
- 6r2qBYrd9PRgFrwrny/f3bMO02QNpgOjVfHetpAsM40pLY2SA8a+ou5PD
- H7ZM7f37IhDMjOXfsLR50i4ljlSoEiLGigEdJJX45qYaHEL8foSN5vdRi g==;
-X-CSE-ConnectionGUID: f0N1Df3uRtKUIMq79vN59g==
-X-CSE-MsgGUID: HLYAI4VxRXWjS5ZQv8fxAA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11356"; a="179156084"
-X-IronPort-AV: E=Sophos;i="6.13,316,1732546800"; d="scan'208";a="179156084"
-Received: from unknown (HELO oym-r2.gw.nic.fujitsu.com) ([210.162.30.90])
- by esa8.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ bh=jYuHGHFwJgUSZ8fd1FkvvadoSY3u79MwvRktdvNIgbY=;
+ b=Dpx8gbWm8/nXwJUbsreQ5yTyt88OGY6Bok3VYXDh4L33HbATp5LvDDux
+ FuAy1xbdZH0D5vtnICSfjNFCoaIyBzvhktYYTEmxXizWzQ1mg5R+pgvwY
+ e+He2pm0C/fZQ3F6lLs6wFYlGJ+uREWqIKmg6NbQ9DAjLZK+e+5LPvy7k
+ BSfrnpA0AOW0lSqmGJEkTrnDlNUDhtATLtvgeuZrIPGviOD22MhnZ+10S
+ HrbtOlm1fg7E+4sdZLpiJn8w5B9VycFIN4UJWeZNuYmW6U8kfzuqPP4s2
+ PVRIqF1MNrtlNx0BQeZ41tsJXHy5MagDk4w49r+0zFC6bPRNFBtD88lO/ A==;
+X-CSE-ConnectionGUID: YWwKU41/R469v6Fz/2EACg==
+X-CSE-MsgGUID: RC+s+2WxSre/I9baq1/fZA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11356"; a="191206654"
+X-IronPort-AV: E=Sophos;i="6.13,316,1732546800"; d="scan'208";a="191206654"
+Received: from unknown (HELO oym-r3.gw.nic.fujitsu.com) ([210.162.30.91])
+ by esa1.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  26 Feb 2025 10:01:10 +0900
-Received: from oym-m2.gw.nic.fujitsu.com (oym-nat-oym-m2.gw.nic.fujitsu.com
- [192.168.87.59])
- by oym-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id 7F8F8E6881
+Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
+ [192.168.87.58])
+ by oym-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id 128B6C227C
  for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 10:01:08 +0900 (JST)
 Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by oym-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id 452BFBDC94
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 10:01:08 +0900 (JST)
+ by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id CBF0DD8B6A
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 10:01:07 +0900 (JST)
 Received: from iaas-rdma.. (unknown [10.167.135.44])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id A85861A006C;
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 3B6CD1A000B;
  Wed, 26 Feb 2025 09:01:07 +0800 (CST)
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PATCH v3 6/6] migration: Add qtest for migration over RDMA
-Date: Wed, 26 Feb 2025 09:02:38 +0800
-Message-ID: <20250226010238.727348-7-lizhijian@fujitsu.com>
+Subject: [PATCH v3 5/6] migration: Unfold control_save_page()
+Date: Wed, 26 Feb 2025 09:02:37 +0800
+Message-ID: <20250226010238.727348-6-lizhijian@fujitsu.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20250226010238.727348-1-lizhijian@fujitsu.com>
 References: <20250226010238.727348-1-lizhijian@fujitsu.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.138.61.253;
- envelope-from=lizhijian@fujitsu.com; helo=esa8.hc1455-7.c3s2.iphmx.com
+Received-SPF: pass client-ip=207.54.90.47; envelope-from=lizhijian@fujitsu.com;
+ helo=esa1.hc1455-7.c3s2.iphmx.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -88,174 +88,117 @@ From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This qtest requires there is a RDMA(RoCE) link in the host.
-In order to make the test work smoothly, introduce a
-scripts/rdma-migration-helper.sh to
-- setup a new Soft-RoCE(aka RXE) if it's root
-- detect existing RoCE link
+control_save_page() is for RDMA only, unfold it to make the code more
+clear.
+In addition:
+ - Similar to other branches style in ram_save_target_page(), involve RDMA
+   only if the condition 'migrate_rdma()' is true.
+ - Further simplify the code by removing the RAM_SAVE_CONTROL_NOT_SUPP.
 
-Test will be skipped if there is no available RoCE link.
- # Start of rdma tests
- # Running /x86_64/migration/precopy/rdma/plain
- ok 1 /x86_64/migration/precopy/rdma/plain # SKIP
- There is no available rdma link to run RDMA migration test.
- To enable the test:
- (1) Run 'scripts/rdma-migration-helper.sh setup' with root and rerun the test
- or
- (2) Run the test with root privilege
-
- # End of rdma tests
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 ---
- MAINTAINERS                           |  1 +
- scripts/rdma-migration-helper.sh      | 41 +++++++++++++++++
- tests/qtest/migration/precopy-tests.c | 64 +++++++++++++++++++++++++++
- 3 files changed, 106 insertions(+)
- create mode 100755 scripts/rdma-migration-helper.sh
+V3:
+  squash previous 2nd, 3th, 4th into one patch
+---
+ migration/ram.c  | 34 +++++++---------------------------
+ migration/rdma.c |  7 ++-----
+ migration/rdma.h |  3 +--
+ 3 files changed, 10 insertions(+), 34 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3848d37a38d..15360fcdc4b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3480,6 +3480,7 @@ R: Li Zhijian <lizhijian@fujitsu.com>
- R: Peter Xu <peterx@redhat.com>
- S: Odd Fixes
- F: migration/rdma*
-+F: scripts/rdma-migration-helper.sh
- 
- Migration dirty limit and dirty page rate
- M: Hyman Huang <yong.huang@smartx.com>
-diff --git a/scripts/rdma-migration-helper.sh b/scripts/rdma-migration-helper.sh
-new file mode 100755
-index 00000000000..66557d9e267
---- /dev/null
-+++ b/scripts/rdma-migration-helper.sh
-@@ -0,0 +1,41 @@
-+#!/bin/bash
-+
-+# Copied from blktests
-+get_ipv4_addr()
-+{
-+    ip -4 -o addr show dev "$1" |
-+        sed -n 's/.*[[:blank:]]inet[[:blank:]]*\([^[:blank:]/]*\).*/\1/p' |
-+        tr -d '\n'
-+}
-+
-+has_soft_rdma()
-+{
-+    rdma link | grep -q " netdev $1[[:blank:]]*\$"
-+}
-+
-+rdma_rxe_setup_detect()
-+{
-+    (
-+        cd /sys/class/net &&
-+            for i in *; do
-+                [ -e "$i" ] || continue
-+                [ "$i" = "lo" ] && continue
-+                [ "$(<"$i/addr_len")" = 6 ] || continue
-+                [ "$(<"$i/carrier")" = 1 ] || continue
-+
-+                has_soft_rdma "$i" && break
-+                [ "$operation" = "setup" ] &&
-+                    rdma link add "${i}_rxe" type rxe netdev "$i" && break
-+            done
-+        has_soft_rdma "$i" || return
-+        get_ipv4_addr "$i"
-+    )
-+}
-+
-+operation=${1:-setup}
-+
-+if [ "$operation" == "setup" ] || [ "$operation" == "detect" ]; then
-+    rdma_rxe_setup_detect
-+else
-+    echo "Usage: $0 [setup | detect]"
-+fi
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index ba273d10b9a..bf97f4e9325 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -99,6 +99,66 @@ static void test_precopy_unix_dirty_ring(void)
-     test_precopy_common(&args);
+diff --git a/migration/ram.c b/migration/ram.c
+index 424df6d9f13..c363034c882 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -1143,32 +1143,6 @@ static int save_zero_page(RAMState *rs, PageSearchStatus *pss,
+     return len;
  }
  
-+#ifdef CONFIG_RDMA
+-/*
+- * @pages: the number of pages written by the control path,
+- *        < 0 - error
+- *        > 0 - number of pages written
+- *
+- * Return true if the pages has been saved, otherwise false is returned.
+- */
+-static bool control_save_page(PageSearchStatus *pss,
+-                              ram_addr_t offset, int *pages)
+-{
+-    int ret;
+-
+-    ret = rdma_control_save_page(pss->pss_channel, pss->block->offset, offset,
+-                                 TARGET_PAGE_SIZE);
+-    if (ret == RAM_SAVE_CONTROL_NOT_SUPP) {
+-        return false;
+-    }
+-
+-    if (ret == RAM_SAVE_CONTROL_DELAYED) {
+-        *pages = 1;
+-        return true;
+-    }
+-    *pages = ret;
+-    return true;
+-}
+-
+ /*
+  * directly send the page to the stream
+  *
+@@ -1965,7 +1939,13 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+     int res;
+ 
+     /* Hand over to RDMA first */
+-    if (control_save_page(pss, offset, &res)) {
++    if (migrate_rdma()) {
++        res = rdma_control_save_page(pss->pss_channel, pss->block->offset,
++                                     offset, TARGET_PAGE_SIZE);
 +
-+#define RDMA_MIGRATION_HELPER "scripts/rdma-migration-helper.sh"
-+static int new_rdma_link(char *buffer)
-+{
-+    const char *argument = (geteuid() == 0) ? "setup" : "detect";
-+    char cmd[1024];
-+
-+    snprintf(cmd, sizeof(cmd), "%s %s", RDMA_MIGRATION_HELPER, argument);
-+
-+    FILE *pipe = popen(cmd, "r");
-+    if (pipe == NULL) {
-+        perror("Failed to run script");
-+        return -1;
-+    }
-+
-+    int idx = 0;
-+    while (fgets(buffer + idx, 128 - idx, pipe) != NULL) {
-+        idx += strlen(buffer);
-+    }
-+
-+    int status = pclose(pipe);
-+    if (status == -1) {
-+        perror("Error reported by pclose()");
-+        return -1;
-+    } else if (WIFEXITED(status)) {
-+        return WEXITSTATUS(status);
-+    }
-+
-+    return -1;
-+}
-+
-+static void test_precopy_rdma_plain(void)
-+{
-+    char buffer[128] = {};
-+
-+    if (new_rdma_link(buffer)) {
-+        g_test_skip("\nThere is no available rdma link to run RDMA migration test.\n"
-+                    "To enable the test:\n"
-+                    "(1) Run \'" RDMA_MIGRATION_HELPER " setup\' with root and rerun the test\n"
-+                    "or\n"
-+                    "(2) Run the test with root privilege\n");
-+        return;
-+    }
-+
-+    /*
-+     * TODO: query a free port instead of hard code.
-+     * 29200=('R'+'D'+'M'+'A')*100
-+     **/
-+    g_autofree char *uri = g_strdup_printf("rdma:%s:29200", buffer);
-+
-+    MigrateCommon args = {
-+        .listen_uri = uri,
-+        .connect_uri = uri,
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+#endif
-+
- static void test_precopy_tcp_plain(void)
++        if (res == RAM_SAVE_CONTROL_DELAYED) {
++            res = 1;
++        }
+         return res;
+     }
+ 
+diff --git a/migration/rdma.c b/migration/rdma.c
+index e5b4ac599b1..08eb924ffaa 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -3284,14 +3284,11 @@ err:
+ int rdma_control_save_page(QEMUFile *f, ram_addr_t block_offset,
+                            ram_addr_t offset, size_t size)
  {
-     MigrateCommon args = {
-@@ -1124,6 +1184,10 @@ static void migration_test_add_precopy_smoke(MigrationTestEnv *env)
-                        test_multifd_tcp_uri_none);
-     migration_test_add("/migration/multifd/tcp/plain/cancel",
-                        test_multifd_tcp_cancel);
-+#ifdef CONFIG_RDMA
-+    migration_test_add("/migration/precopy/rdma/plain",
-+                       test_precopy_rdma_plain);
-+#endif
- }
+-    if (!migrate_rdma()) {
+-        return RAM_SAVE_CONTROL_NOT_SUPP;
+-    }
++    assert(migrate_rdma());
  
- void migration_test_add_precopy(MigrationTestEnv *env)
+     int ret = qemu_rdma_save_page(f, block_offset, offset, size);
+ 
+-    if (ret != RAM_SAVE_CONTROL_DELAYED &&
+-        ret != RAM_SAVE_CONTROL_NOT_SUPP) {
++    if (ret != RAM_SAVE_CONTROL_DELAYED) {
+         if (ret < 0) {
+             qemu_file_set_error(f, ret);
+         }
+diff --git a/migration/rdma.h b/migration/rdma.h
+index f55f28bbed1..8eeb0117b91 100644
+--- a/migration/rdma.h
++++ b/migration/rdma.h
+@@ -33,7 +33,6 @@ void rdma_start_incoming_migration(InetSocketAddress *host_port, Error **errp);
+ #define RAM_CONTROL_ROUND     1
+ #define RAM_CONTROL_FINISH    3
+ 
+-#define RAM_SAVE_CONTROL_NOT_SUPP -1000
+ #define RAM_SAVE_CONTROL_DELAYED  -2000
+ 
+ #ifdef CONFIG_RDMA
+@@ -56,7 +55,7 @@ static inline
+ int rdma_control_save_page(QEMUFile *f, ram_addr_t block_offset,
+                            ram_addr_t offset, size_t size)
+ {
+-    return RAM_SAVE_CONTROL_NOT_SUPP;
++    g_assert_not_reached();
+ }
+ #endif
+ #endif
 -- 
 2.44.0
 
