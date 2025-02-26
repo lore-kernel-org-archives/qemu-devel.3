@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DBDEC021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 22:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C574BC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 23:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnPrW-0005tG-Qx; Wed, 26 Feb 2025 17:26:42 -0500
+	id 1tnQh3-0001Ib-DO; Wed, 26 Feb 2025 18:19:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnPrV-0005sf-2E
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 17:26:41 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tnQh1-0001ID-AT; Wed, 26 Feb 2025 18:19:55 -0500
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnPrT-0006i3-AH
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 17:26:40 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so2864045e9.1
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 14:26:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tnQgw-0000oJ-PS; Wed, 26 Feb 2025 18:19:54 -0500
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-8671d8a9c3eso219386241.3; 
+ Wed, 26 Feb 2025 15:19:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740608797; x=1741213597; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=onGhEuhiFf7mZ5I/v/m30+rNq+Jtn6AKzRpbfgvQL2s=;
- b=RVLuhAzEXd6ohxS54BEnFATfSn+EAyN7FA+3/j7V5F2Fa439mgoOpM6MdGzyVoCDwv
- M9YtzPp0ZLEV8hLDQVxaImDbyFHc5xSaKKv3WAqGQLDRGGGxVt7g76ctMz4cg2tOAFb4
- 3guPmGUZbHk8OFRRn4YJ4C08dsbtUouukvErTBJ4BQKZP9b8kLgoyuzE0SdHpSpl1fyu
- Hrqb3DrduLRIaqPsWutGhIa/8IDEhDD1IzrCxPeLTq1wUXrQrEKrL6NxdyeMdYJcTrR3
- CAJpo57hp+OCHSs83CFvOzsQoLUAi62Tzw+DJQE9107MYZexZG0F0Z0M98j5U1iFvrzm
- /fHw==
+ d=gmail.com; s=20230601; t=1740611988; x=1741216788; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uwFO6EYO8LkvPJyZQ8iUJ1ZvrZlfserOnI1dgDkRP7E=;
+ b=dUKLSxXAwHeD7FbiGbv63jrkVggsHTEWloI8+8khUlV84QJHvLGLiEa4xeWzjycFM+
+ KArYBgXaj1z/zLJO1YpIWZuVFLw7BrDRiBAiTNeS9hBa/G9N+Fs01a7HFV8jvXi58a3k
+ XPkl2AOgQ2UHq9BFGrr58R/U7c11sImqMBP7s1Yp0NSWas92F2nO7CUb/xDnIJ/A9Cd0
+ 1FOSqDveCvoXew0vKJND+jPg9U1/59WTYFsgRcw4yPoh0kD5nHtbQ+qu44vFW/cxz//O
+ VuLEkSdqT4icDtArB673lzKFeQA62L/SxdesuIa5oRNvR2fbIHp4xQXsSh6SwOLO4BZl
+ pH4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740608797; x=1741213597;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=onGhEuhiFf7mZ5I/v/m30+rNq+Jtn6AKzRpbfgvQL2s=;
- b=P22Q/GlOE7uQ32wacD+sPa0gM0Kag0CtwFgLi0Q1NXEp+/ByDS5Xb7G6r0TN3BTlbx
- RSRhjnqDYBSBP1rlfvCznI84+55xnBxGifDpO1GN6taoQS8zp+JHSPgvvF2JQUBtaRUI
- mEa6/r7jS0VfXLC41OPI0udjjB++iiCQvtivKqD5fi4AMaiRbTGTxHZCjqhdI32KZb1u
- TrAxceFzBBaYnHR6NAH9fRNxvJaO4Pwy/653aO0CT7jwq2+sk63MX4a6joZwdLCZV2SL
- 1yhA4zsVib/Q6r84yPBiS1Fwvy+32nz/eFue762BahuaFb9o3m4qKxqgwRRudcWL1pzx
- llVA==
+ d=1e100.net; s=20230601; t=1740611988; x=1741216788;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uwFO6EYO8LkvPJyZQ8iUJ1ZvrZlfserOnI1dgDkRP7E=;
+ b=OFIs6UGkEIunV5N+gmjfD5nIyKm9LpLZ7huQ386d98GknuhGOSv5iklt25JbEAXu3D
+ KEFmRJJ5PeM3qyakacir9pQoZSOURLjmKABkLBrgCOaGcMQB/sZzBordFDZ1UuFWmCLb
+ tVY1gCr5dncIme+lqlUmXLvfWup+Rg3psuokL9ovWb9y3teJ0HtmTeSVZnU0DLVVzY46
+ romDC1SuWt3RHt12RzD1ll+WmpqSW25tMlmjBTc1fG+dISxJV5rK5+zz2jGinr18+WGY
+ H6tDa7ORM5Cw51wYf1DjKiT4fKMk3PPHnRV7D3Q+88rDmHfSJgGRyog1c9wwuTZh/Ems
+ NEFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvEF4h57XKrtQtOZJum89pX4AMfKi7PvH13gaUW3RUzf2OUD3T0c4BS5eNBuLeBc/f+Yu/GeQRnnR+@nongnu.org
-X-Gm-Message-State: AOJu0YzDhMH3IhIM0qJy7l3oNvyMTh8HeXc1YRSfkwdyrmXAfKKczR9d
- hBCDo1vhZonCDVUq93DOOpNpXk786d/fGjAZdX7gANlwA0Egvl4+OpI09g9pJ1U=
-X-Gm-Gg: ASbGnctTdAHXadZG1LAckAvj5uzJS46ISJO5v1HodI2jPMrfXA1KFcd2tbWoN/taHte
- w8QM+TE03DGeDYemvo9tbkxMq4rVVY+quuGnqeQRP3t3b9vcT3dX5TO2UcJxlEMKzP5b52BN3Jv
- MPajrKD/FsZLXOzVgGCiUgRCupArhZOEDyiykOhE1YDUEmIMw3bAea+m32P3xpC92koE5xIyDfq
- uUPhO1LQGwNRn66YA+W2b50Nf6WdHmIGfSGubNsRAyihx+TEJ5wgUVVR+cPxdl2rMB4BJCqDqB+
- bp2bwVcbX3XQ6NLLBVnVkH9nf31qE78NTvNjGTvNQ4uRYrgKfidaUl9rSOMHwLzCsHBpWQ==
-X-Google-Smtp-Source: AGHT+IFEMbEEU+LInTHK2O5anxBEZeDTbWi3cHvJ/Pn/VqS3txmRfLgjSGbTzbzvVKNhMOrd7kTqaQ==
-X-Received: by 2002:a05:600c:a08:b0:439:60ef:ce94 with SMTP id
- 5b1f17b1804b1-43ab901d6f3mr37087175e9.21.1740608797405; 
- Wed, 26 Feb 2025 14:26:37 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba52b947sm35227965e9.2.2025.02.26.14.26.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 14:26:36 -0800 (PST)
-Message-ID: <3a2c6943-c49c-4ce1-be7f-c306a9309c00@linaro.org>
-Date: Wed, 26 Feb 2025 23:26:36 +0100
+ AJvYcCX2JNw/reiuWene+s4186N8EhY+V5z9KuCfetAT92oQrGXeAaP7sUoUNEslhALo/l3+HVQF+PLUDrvO@nongnu.org
+X-Gm-Message-State: AOJu0YyMSLb9eTcotOA9HR7o5X+i/4QxQVMAO3oRGac4gIHzeRkTBwcF
+ 81YAinAZDNZZ2QHT4EBeGHRZslg2cTFpDsuS4qh/X3hNfoYzIuUJeftgI2akgas2iTPeC2vJ4Us
+ 0EyTGPR87vEIglTHE0HjUstM8Qe0=
+X-Gm-Gg: ASbGncsfOXJH3eQQfovPDSoGmdLp3f+jHxzX4oHKhjihqIvGbvgMhtUFS+oJbXZZOka
+ 4Wbwt+m3l7MLoUDn2tMEB6jJv+W0FjVL7atMuGHzOtQGvb2woPyJhfAPzZAu8BVA4qyzmAFgtao
+ 89shedNp5cQdWUpSBVmAbRy5mCYSsuRhmGMnSssA==
+X-Google-Smtp-Source: AGHT+IHOtxRy/D97jKM9M869jhS5xw6OxzjmxGWCcKE/34ZRcrBP1gL6yFjpy5jNFEDaQOIaqvMeuNgqt9z0OT6udHg=
+X-Received: by 2002:a05:6102:dcb:b0:4bb:c24b:b61a with SMTP id
+ ada2fe7eead31-4c01e2d6493mr3954972137.19.1740611988708; Wed, 26 Feb 2025
+ 15:19:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/test_arm_sx1: Check whether the serial
- console is working
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org
-References: <20250226104833.1176253-1-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250226104833.1176253-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <174044811783.27139.4910941776283875756-0@git.sr.ht>
+In-Reply-To: <174044811783.27139.4910941776283875756-0@git.sr.ht>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 27 Feb 2025 09:19:22 +1000
+X-Gm-Features: AQ5f1Jq57Ir1GtdxT8qwthaBZ3jpFBkuZ6hvtPrzrLdAIDbrAUa_WMgiJqgKEvw
+Message-ID: <CAKmqyKO85YNhWSYVS7vUqTxi-ZnT4=rPAsGoj+8EPMh334bfTg@mail.gmail.com>
+Subject: Re: [PATCH qemu] target/riscv: Only check ext_zca for 16-bit aligned
+ PC.
+To: "~yuming" <yumin686@andestech.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,23 +100,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/2/25 11:48, Thomas Huth wrote:
-> The kernel that is used in the sx1 test prints the usual Linux log
-> onto the serial console, but this test currently ignores it. To
-> make sure that the serial device is working properly, let's check
-> for some strings in the output here.
-> 
-> While we're at it, also add the test to the corresponding section
-> in the MAINTAINERS file.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On Tue, Feb 25, 2025 at 11:49=E2=80=AFAM ~yuming <yuming@git.sr.ht> wrote:
+>
+> From: Yu-Ming Chang <yumin686@andestech.com>
+>
+> Since C always implies Zca, Zca is always enabled when 16-bit
+> insructions are supported. we can only check ext_zca to allow
+> 16-bit aligned PC addresses.
+>
+> Signed-off-by: Yu-Ming Chang <yumin686@andestech.com>
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
 > ---
->   Based-on: <20250221140640.786341-1-peter.maydell@linaro.org>
-> 
->   MAINTAINERS                      | 1 +
->   tests/functional/test_arm_sx1.py | 7 ++++---
->   2 files changed, 5 insertions(+), 3 deletions(-)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+>  target/riscv/insn_trans/trans_rvi.c.inc | 5 ++---
+>  target/riscv/op_helper.c                | 4 ++--
+>  target/riscv/translate.c                | 2 +-
+>  3 files changed, 5 insertions(+), 6 deletions(-)
+>
+> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_=
+trans/trans_rvi.c.inc
+> index 96c218a9d7..e5965201a7 100644
+> --- a/target/riscv/insn_trans/trans_rvi.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
+> @@ -106,7 +106,7 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a=
+)
+>          tcg_gen_ext32s_tl(target_pc, target_pc);
+>      }
+>
+> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca) {
+> +    if (!ctx->cfg_ptr->ext_zca) {
+>          TCGv t0 =3D tcg_temp_new();
+>
+>          misaligned =3D gen_new_label();
+> @@ -236,8 +236,7 @@ static bool gen_branch(DisasContext *ctx, arg_b *a, T=
+CGCond cond)
+>
+>      gen_set_label(l); /* branch taken */
+>
+> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca &&
+> -        (a->imm & 0x3)) {
+> +    if (!ctx->cfg_ptr->ext_zca && (a->imm & 0x3)) {
+>          /* misaligned */
+>          TCGv target_pc =3D tcg_temp_new();
+>          gen_pc_plus_diff(target_pc, ctx, a->imm);
+> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+> index ce1256f439..68882136d7 100644
+> --- a/target/riscv/op_helper.c
+> +++ b/target/riscv/op_helper.c
+> @@ -276,7 +276,7 @@ target_ulong helper_sret(CPURISCVState *env)
+>      }
+>
+>      target_ulong retpc =3D env->sepc;
+> -    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
+> +    if (!env_archcpu(env)->cfg.ext_zca && (retpc & 0x3)) {
+>          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
+>      }
+>
+> @@ -349,7 +349,7 @@ static void check_ret_from_m_mode(CPURISCVState *env,=
+ target_ulong retpc,
+>          riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+>      }
+>
+> -    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
+> +    if (!env_archcpu(env)->cfg.ext_zca && (retpc & 0x3)) {
+>          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
+>      }
+>
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 698b74f7a8..34eeed50be 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -566,7 +566,7 @@ static void gen_jal(DisasContext *ctx, int rd, target=
+_ulong imm)
+>      TCGv succ_pc =3D dest_gpr(ctx, rd);
+>
+>      /* check misaligned: */
+> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca) {
+> +    if (!ctx->cfg_ptr->ext_zca) {
+>          if ((imm & 0x3) !=3D 0) {
+>              TCGv target_pc =3D tcg_temp_new();
+>              gen_pc_plus_diff(target_pc, ctx, imm);
+> --
+> 2.45.3
+>
 
