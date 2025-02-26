@@ -4,64 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10BCDC19F2E
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C066C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 16:16:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnK3J-0004CC-HU; Wed, 26 Feb 2025 11:14:29 -0500
+	id 1tnK4n-0005lq-RA; Wed, 26 Feb 2025 11:16:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnK3F-0004B4-G4; Wed, 26 Feb 2025 11:14:25 -0500
-Received: from tor.source.kernel.org ([2600:3c04::f03c:95ff:fe5e:7468])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnK4f-0005Vq-Ri
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:15:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnK3C-0007Se-Ek; Wed, 26 Feb 2025 11:14:24 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 7502F611EA;
- Wed, 26 Feb 2025 16:14:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B976EC4CED6;
- Wed, 26 Feb 2025 16:14:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1740586456;
- bh=VWgjdVCCAYLfAMVoQ7sn9DmErxaB7SJqb0egoUiHw1o=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=TDvZO4Y9kztbbQJcuHJk1nAzPQRlbfmXQwy7E0kI3ypexpyGO+jGa+Vs1lhwnGdwL
- DxeVr5o7kjQ7OTLqMmbYi1MdEvX5HHcrBJxurqx9qzETplHq/zRF+R8GYdV3sBUM5k
- n+fNwO0zCAqkUKsOPa0Fer73E5ytusz9jEa9IJhajmT7cpPewUlTgm+yyTRbljyhTa
- 5vvxPYGZ27nIdz1dM/XRF1BscBP6RPv9sSL0LH4+SO+GRKHj+Ga8aUV3ES/pr2RnJ4
- FTXkbloQPHuG0vw4vkEgp+vYgFpL9rN/2Qbb7Igy7+mICtRFfA8TQGu0p2r+TvCeNM
- FXX5b9yV6Pp8Q==
-Date: Wed, 26 Feb 2025 17:14:06 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 03/14] acpi/ghes: Use HEST table offsets when
- preparing GHES records
-Message-ID: <20250226171406.19c2de6b@sal.lan>
-In-Reply-To: <20250225104327.0a2d1cb4@imammedo.users.ipa.redhat.com>
-References: <cover.1738345063.git.mchehab+huawei@kernel.org>
- <9610ff88cf6fdc59cbfc8871d653fd890391be1e.1738345063.git.mchehab+huawei@kernel.org>
- <20250203153423.3e4de17c@imammedo.users.ipa.redhat.com>
- <20250221070221.329bdfb0@foz.lan>
- <20250225104327.0a2d1cb4@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnK4e-0007xu-4Q
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 11:15:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740586550;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=cgVCleQy6VV36R+FJeQRA3lc/wl+PQVefuez+MAXM3g=;
+ b=ALz5FzZPSoXOiJWH/Oy9eGmzXr3rD2smmd1PK2oLrZZkhpJJJFt+niwocdVPoJCXQAfmWz
+ AGRJhNErYnC/0DPYm9bPw1p1gMUKbO1KpUyjGVN3ZwlS5UyHYaOsNM77O+sM9bARlKsKVi
+ HJE4q44qkIPxCBx9kZ+AcCofQZxM3d0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-443-5MkFRzqhMjOc9KF_ZPiUpw-1; Wed, 26 Feb 2025 11:15:48 -0500
+X-MC-Unique: 5MkFRzqhMjOc9KF_ZPiUpw-1
+X-Mimecast-MFC-AGG-ID: 5MkFRzqhMjOc9KF_ZPiUpw_1740586547
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-439a0e28cfaso38273245e9.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 08:15:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740586547; x=1741191347;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cgVCleQy6VV36R+FJeQRA3lc/wl+PQVefuez+MAXM3g=;
+ b=hb50dcJKn0BluIPGriCrsLn3CMGlsNHHVUU3hHLAD4ycKu1+ENiQLJIKYMcRVsU/Sm
+ F35Jf/0RqpDUd9pomP36bIbpn0C/gFihdLmIBVGh77yy8dBE+n6BcoJvbRQQglHiiH2P
+ s+mqziZGmMzdyaANo9nBHACtVm3eEMRea1GxyhJNuxo49WLeSIcxO3HtLMWDhJBEDdUe
+ S32BwzAqawc4PscpK0xF2czYdD0xWGOseNqKRiX7ZYms4WpTn0HTXs53q7aObR4BU6yH
+ vSzeAancBo/TjkQItxvacyGMqZ21xPpW/of3z1GZv1BGcWUqxQavCuP0E8u4vTxcRvUf
+ JBwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHNy35++/ZNaG/VpjrVBuUxxNplIn/aHAI4c7AZLLZY/guttKKMrVX9qH2cOcJVLrdUk1treXHhFBN@nongnu.org
+X-Gm-Message-State: AOJu0YwTn814aNeI46p2oF0OggZQyBvNdPjsYmltWUO1e320nrEV8Swa
+ 03O+/bDbFH989C7nZCHM1C8RpZYbcRx6x585caVxyXWz8FOg9D+kfGXErjI4g+8XylgGyjz5Ogg
+ /Mx5DWP2Wp38sQ6qCrzOkFqhxKD0FhSJ8ngG629RlMk8A9tSM7rwQ
+X-Gm-Gg: ASbGncuGQfZAw8I9OdvzR/YzpmbwKj/YJZBXW0Dzn7XiQMcVAQqY9q+InNlOIwZy11J
+ 03KdfObpIU/OV4uuGldhqyLlBQGQyViGTYN6oOYEOxk2qa2qLkBJz+f+LIlBcGvRx+70reD+p/t
+ drH7giAer2XCasJ2BIBkUlzYdNOi3lRTmpjTWJqdupiHrGSa1YehZG/36+bvzS6ECby4SHnsuGA
+ 9paL6x/HIy0bj4C1ZFLhEfcMxUGzu1M/QGmEgvDO9/SnI6MBZVbRr3HWK6A/Bos/WmfbNyB+Wee
+ ivPKeCrcKnxdA5ioato2fnlm67RPezseJ8eaIQn5tUEsBPc=
+X-Received: by 2002:a05:600c:3b8e:b0:439:99ab:6178 with SMTP id
+ 5b1f17b1804b1-43ab0f2883dmr70599805e9.6.1740586547215; 
+ Wed, 26 Feb 2025 08:15:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF3O8yM1lMpTiOMbzCMbNgljSynBcj5qowMBMSafUW14cbpXClfP9s+8JifioxM3fTfJ/T2bQ==
+X-Received: by 2002:a05:600c:3b8e:b0:439:99ab:6178 with SMTP id
+ 5b1f17b1804b1-43ab0f2883dmr70599475e9.6.1740586546878; 
+ Wed, 26 Feb 2025 08:15:46 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-49-245.web.vodafone.de.
+ [109.42.49.245]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43aba539445sm26580685e9.22.2025.02.26.08.15.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Feb 2025 08:15:46 -0800 (PST)
+Message-ID: <cc8802a7-20fd-446d-ac15-e593333360b1@redhat.com>
+Date: Wed, 26 Feb 2025 17:15:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c04::f03c:95ff:fe5e:7468;
- envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/25] tests/vm: bump timeout for shutdown
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Eduardo Habkost <eduardo@habkost.net>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
+ Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ed Maste <emaste@freebsd.org>
+References: <20250226140343.3907080-1-alex.bennee@linaro.org>
+ <20250226140343.3907080-11-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250226140343.3907080-11-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,158 +165,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Tue, 25 Feb 2025 10:43:27 +0100
-Igor Mammedov <imammedo@redhat.com> escreveu:
+On 26/02/2025 15.03, Alex Bennée wrote:
+> On my fairly beefy machine the timeout was triggering leaving a
+> corrupted disk image due to power being pulled before the disk had
+> synced. Double the timeout to avoid this.
 
-> On Fri, 21 Feb 2025 07:02:21 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+Triple the timeout?
+
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/vm/basevm.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> > Em Mon, 3 Feb 2025 15:34:23 +0100
-> > Igor Mammedov <imammedo@redhat.com> escreveu:
-> >   
-> > > On Fri, 31 Jan 2025 18:42:44 +0100
-> > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> > >     
-> > > > There are two pointers that are needed during error injection:
-> > > > 
-> > > > 1. The start address of the CPER block to be stored;
-> > > > 2. The address of the ack.
-> > > > 
-> > > > It is preferable to calculate them from the HEST table.  This allows
-> > > > checking the source ID, the size of the table and the type of the
-> > > > HEST error block structures.
-> > > > 
-> > > > Yet, keep the old code, as this is needed for migration purposes.
-> > > > 
-> > > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > > ---
-> > > >  hw/acpi/ghes.c         | 132 ++++++++++++++++++++++++++++++++++++-----
-> > > >  include/hw/acpi/ghes.h |   1 +
-> > > >  2 files changed, 119 insertions(+), 14 deletions(-)
-> > > > 
-> > > > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> > > > index 27478f2d5674..8f284fd191a6 100644
-> > > > --- a/hw/acpi/ghes.c
-> > > > +++ b/hw/acpi/ghes.c
-> > > > @@ -41,6 +41,12 @@
-> > > >  /* Address offset in Generic Address Structure(GAS) */
-> > > >  #define GAS_ADDR_OFFSET 4
-> > > >  
-> > > > +/*
-> > > > + * ACPI spec 1.0b
-> > > > + * 5.2.3 System Description Table Header
-> > > > + */
-> > > > +#define ACPI_DESC_HEADER_OFFSET     36
-> > > > +
-> > > >  /*
-> > > >   * The total size of Generic Error Data Entry
-> > > >   * ACPI 6.1/6.2: 18.3.2.7.1 Generic Error Data,
-> > > > @@ -61,6 +67,25 @@
-> > > >   */
-> > > >  #define ACPI_GHES_GESB_SIZE                 20
-> > > >  
-> > > > +/*
-> > > > + * Offsets with regards to the start of the HEST table stored at
-> > > > + * ags->hest_addr_le,      
-> > > 
-> > > If I read this literary, then offsets above are not what
-> > > declared later in this patch.
-> > > I'd really drop this comment altogether as it's confusing,
-> > > and rather get variables/macro naming right
-> > >     
-> > > > according with the memory layout map at
-> > > > + * docs/specs/acpi_hest_ghes.rst.
-> > > > + */      
-> > > 
-> > > what we need is update to above doc, describing new and old ways.
-> > > a separate patch.    
-> > 
-> > I can't see anything that should be changed at
-> > docs/specs/acpi_hest_ghes.rst, as this series doesn't change the
-> > firmware layout: we're still using two firmware tables:
-> > 
-> > - etc/acpi/tables, with HEST on it;
-> > - etc/hardware_errors, with:
-> > 	- error block addresses;
-> > 	- read_ack registers;
-> > 	- CPER records.
-> > 
-> > The only changes that this series introduce are related to how
-> > the error generation logic navigates between HEST and hw_errors
-> > firmware. This is not described at acpi_hest_ghes.rst, and both
-> > ways follow ACPI specs to the letter.
-> > 
-> > The only difference is that the code which populates the CPER
-> > record and the error/read offsets doesn't require to know how
-> > the HEST table generation placed offsets, as it will basically
-> > reproduce what OSPM firmware does when handling	HEST events.  
-> 
-> section 8 describes old way to get to address to record old CPER,
-> so it needs to amended to also describe a new approach and say
-> which way is used for which version.
-> 
-> possibly section 11 might need some messaging as well.
+> diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
+> index 6d41ac7574..9e879e966a 100644
+> --- a/tests/vm/basevm.py
+> +++ b/tests/vm/basevm.py
+> @@ -83,7 +83,7 @@ class BaseVM(object):
+>       # command to halt the guest, can be overridden by subclasses
+>       poweroff = "poweroff"
+>       # Time to wait for shutdown to finish.
+> -    shutdown_timeout_default = 30
+> +    shutdown_timeout_default = 90
+>       # enable IPv6 networking
+>       ipv6 = True
+>       # This is the timeout on the wait for console bytes.
 
-Ok, I'll modify it and place at the end of the series. Please
-see below if the new text is ok for you.
-
----
-
-[PATCH] docs/specs/acpi_hest_ghes.rst: update it to reflect some changes
-
-While the HEST layout didn't change, there are some internal
-changes related to how offsets are calculated and how memory error
-events are triggered.
-
-Update specs to reflect such changes.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-
-diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
-index c3e9f8d9a702..f22d2eefdec7 100644
---- a/docs/specs/acpi_hest_ghes.rst
-+++ b/docs/specs/acpi_hest_ghes.rst
-@@ -89,12 +89,21 @@ Design Details
-     addresses in the "error_block_address" fields with a pointer to the
-     respective "Error Status Data Block" in the "etc/hardware_errors" blob.
- 
--(8) QEMU defines a third and write-only fw_cfg blob which is called
--    "etc/hardware_errors_addr". Through that blob, the firmware can send back
--    the guest-side allocation addresses to QEMU. The "etc/hardware_errors_addr"
--    blob contains a 8-byte entry. QEMU generates a single WRITE_POINTER command
--    for the firmware. The firmware will write back the start address of
--    "etc/hardware_errors" blob to the fw_cfg file "etc/hardware_errors_addr".
-+(8) QEMU defines a third and write-only fw_cfg blob to store the location
-+    where the error block offsets, read ack registers and CPER records are
-+    stored.
-+
-+    Up to QEMU 9.2, the location was at "etc/hardware_errors_addr", and
-+    contains an offset for the beginning of "etc/hardware_errors".
-+
-+    Newer versions place the location at "etc/acpi_table_hest_addr",
-+    pointing to the beginning of the HEST table.
-+
-+    Through that such offsets, the firmware can send back the guest-side
-+    allocation addresses to QEMU. They contain a 8-byte entry. QEMU generates
-+    a single WRITE_POINTER command for the firmware. The firmware will write
-+    back the start address of either "etc/hardware_errors" or HEST table at
-+    the correspoinding address firmware.
- 
- (9) When QEMU gets a SIGBUS from the kernel, QEMU writes CPER into corresponding
-     "Error Status Data Block", guest memory, and then injects platform specific
-@@ -105,8 +114,6 @@ Design Details
-      kernel, on receiving notification, guest APEI driver could read the CPER error
-      and take appropriate action.
- 
--(11) kvm_arch_on_sigbus_vcpu() uses source_id as index in "etc/hardware_errors" to
--     find out "Error Status Data Block" entry corresponding to error source. So supported
--     source_id values should be assigned here and not be changed afterwards to make sure
--     that guest will write error into expected "Error Status Data Block" even if guest was
--     migrated to a newer QEMU.
-+(11) kvm_arch_on_sigbus_vcpu() report RAS errors via a SEA notifications,
-+     when a SIGBUS event is triggered. The logic to convert a SEA notification
-+     into a source ID is defined inside ghes.c source file.
-
-
+With the commit description fixed:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
