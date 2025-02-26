@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF00BC021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 07:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E9D1C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 07:33:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnBq3-000745-O3; Wed, 26 Feb 2025 02:28:15 -0500
+	id 1tnBub-0008As-LN; Wed, 26 Feb 2025 02:32:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnBq1-00073V-7D
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:28:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnBpz-0002Fk-FK
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:28:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740554890;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=z2rpj4I6Gi/sE2bEO64qKzLuMZZIZLHAuaolAXU4CRU=;
- b=D0dgl+Q+CXeipNSsN4GUIgy0JByVnY3AwB4F8/VSqQ4Ozvz1d9c9XJYGhTmH1XNppx/5de
- 9vIn3TxIYq3g4uFNh5KaOKja58v6Wd8hv8Me1EDoEsvopXjo/Lou2dS60R1UykhFqB2lEF
- ZakRYp8LG9fPwo2ZA6MD/3kziMevuq8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-fxUNbx31Osqmzxi_0Rd2yA-1; Wed,
- 26 Feb 2025 02:28:03 -0500
-X-MC-Unique: fxUNbx31Osqmzxi_0Rd2yA-1
-X-Mimecast-MFC-AGG-ID: fxUNbx31Osqmzxi_0Rd2yA_1740554881
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B836F19783B3; Wed, 26 Feb 2025 07:28:01 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E1FA1800352; Wed, 26 Feb 2025 07:28:01 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B6D8821E675E; Wed, 26 Feb 2025 08:27:58 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Thomas
- Huth <thuth@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Cleber Rosa
- <crosa@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 03/10] qapi: delete un-needed python static analysis
- configs
-In-Reply-To: <20250224033741.222749-4-jsnow@redhat.com> (John Snow's message
- of "Sun, 23 Feb 2025 22:37:34 -0500")
-References: <20250224033741.222749-1-jsnow@redhat.com>
- <20250224033741.222749-4-jsnow@redhat.com>
-Date: Wed, 26 Feb 2025 08:27:58 +0100
-Message-ID: <87bjup5fnl.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnBuZ-0008AZ-6s
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:32:55 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnBuW-000306-S4
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 02:32:54 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-38f2f391864so3652143f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 23:32:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740555168; x=1741159968; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=69g3bhTcyxlMe0VBrLeXRFtWrzHFbizmOxW4bTKexuY=;
+ b=mcV3CXTTq561bfb0hYNPzZWlQRJDapB9cPvbdtT+3OWBZ1bibxPUdr4lcBPYPPfPhO
+ O8L6rSgXNkLI02A8rznxKfSmnBSL18tRtCxB2UWjXHb2UeSlRE5VoCwwuIWv8abu3Xrr
+ cEbsAG898a2rxp7HmtSc8yavFcNZS37KTbBBHX3ys4XPiY5HBHdGDTQWg38vYj3Uk/BX
+ Y1rP+GspsYQ/OWRbnGI1Mtiaiopg7jhjMEtGd6y5Amfe92+9HDNY1u0W9qsBk9+Y4n+q
+ iJJJMHwSgZ3Oj/ddxFHOixWAjqrR1BWZIeRlCqhWb6b9MN7VbywBENKwTPUpuw8vmjah
+ V6pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740555168; x=1741159968;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=69g3bhTcyxlMe0VBrLeXRFtWrzHFbizmOxW4bTKexuY=;
+ b=aoRjhzhrbtgu3c6Vp8QTgY6MPw19A1TadQRUH6takTofNCojgfBG1Mp49nTV6M2SJD
+ S383FzhB9NBUSAz5rThXBKwU0MMXT4TMpJFQM0wrRINuB/BSN+an4AO3cVsKtu7qH1Wx
+ 9uAFWGsEyYVkIzqrVXtUYoNUbME+cMWdmlCvNGmlCa5VDn4gYTEJnEtscthe4BVC7vFe
+ R3ZfWw8kxBu2QODTJqtRWvYXTZWa8K9ylxNjSpvt1zSvAx86waeDUH+yRHM9whmX3N+1
+ bafRLa+ALkYSutANOyZWwClcj+sMOrS/3HWT+84qBrysvry/qmBlX/NQhFdv21fhcn4X
+ Olaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVLIeYYkqPZlJsS8xbMK2KEZ8Yk5Mt4kzzbb1imdWqOrZu3GVzlJQVTg75WBWfMPnhyGLBv1EiNT5CR@nongnu.org
+X-Gm-Message-State: AOJu0YxMQK2ADWb8a72sRvA4O/zJIBXElbxZSHyGkcbqjsgAtxzSdkF3
+ e8wNft8O77oNxOI0Msx3DBjZ6qIgu/K0idfKOxNsmkC7uFlUTjiNOhbURRflWXdyS7pGOP1GESi
+ llyM=
+X-Gm-Gg: ASbGncvf9SyV4/1JvEz3+7T1HyUhdXRet7b4xSrQmptHMMTSHkCSw8GudD2KYso8f1K
+ 677fGNIOr3qweQJI2TdbHSFwrhFaadsm+Hx1Y2IFR5M/ca+YgposKNUHmdOlWbqQTfW2NkEj6sw
+ Z+U1iZekfh0PaT6sLEsENbk9qdPryGCzL3a/0dyvgsoas60A6l6PqOG4itliWndnwGFRELhGW+V
+ IrJdxuLJIj9kEnvMMbgtJIJcm1s8txs48P3AJiA8QkeBsEa0Wa2fWVsV1owuYa0vnjnaJG35jMd
+ b/HYRyS1IAHBMqt8Wi2SLSdCBVFe8TbN/TnGRVf+4V+27RiWqFflZvsSBMv5luz0LmpqhpYLQVQ
+ =
+X-Google-Smtp-Source: AGHT+IE3l9DM8pxQpByiv2ExjdHZqZX29tTftAoJ7Csrpi3uBSui9eK0OIj3/jq0apV/Tsz5IP3eeQ==
+X-Received: by 2002:a5d:5988:0:b0:38f:3b41:c944 with SMTP id
+ ffacd0b85a97d-390d4f367d2mr1573232f8f.11.1740555168502; 
+ Tue, 25 Feb 2025 23:32:48 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390cd8fc9b3sm4591664f8f.97.2025.02.25.23.32.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Feb 2025 23:32:48 -0800 (PST)
+Message-ID: <71780b2d-444c-4d3e-b919-dd1ade058995@linaro.org>
+Date: Wed, 26 Feb 2025 08:32:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 012/162] tcg: Convert or to TCGOutOpBinary
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250216231012.2808572-1-richard.henderson@linaro.org>
+ <20250216231012.2808572-13-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250216231012.2808572-13-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,92 +102,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> The pylint config is being left in place because the settings differ
-> enough from the python/ directory settings that we need a chit-chat on
-> how to merge them O:-)
->
-> Everything else can go.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+On 17/2/25 00:07, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  scripts/qapi/.flake8    | 3 ---
->  scripts/qapi/.isort.cfg | 7 -------
->  scripts/qapi/mypy.ini   | 4 ----
->  3 files changed, 14 deletions(-)
->  delete mode 100644 scripts/qapi/.flake8
->  delete mode 100644 scripts/qapi/.isort.cfg
->  delete mode 100644 scripts/qapi/mypy.ini
->
-> diff --git a/scripts/qapi/.flake8 b/scripts/qapi/.flake8
-> deleted file mode 100644
-> index a873ff67309..00000000000
-> --- a/scripts/qapi/.flake8
-> +++ /dev/null
-> @@ -1,3 +0,0 @@
-> -[flake8]
-> -# Prefer pylint's bare-except checks to flake8's
-> -extend-ignore = E722
+>   tcg/tcg.c                        |  4 +++
+>   tcg/aarch64/tcg-target.c.inc     | 31 ++++++++++++---------
+>   tcg/arm/tcg-target.c.inc         | 24 ++++++++++++----
+>   tcg/i386/tcg-target.c.inc        | 25 +++++++++++++----
+>   tcg/loongarch64/tcg-target.c.inc | 29 ++++++++++++--------
+>   tcg/mips/tcg-target.c.inc        | 25 ++++++++++++-----
+>   tcg/ppc/tcg-target.c.inc         | 29 ++++++++++++--------
+>   tcg/riscv/tcg-target.c.inc       | 29 ++++++++++++--------
+>   tcg/s390x/tcg-target.c.inc       | 47 +++++++++++++++++---------------
+>   tcg/sparc64/tcg-target.c.inc     | 23 ++++++++++++----
+>   tcg/tci/tcg-target.c.inc         | 14 ++++++++--
+>   11 files changed, 186 insertions(+), 94 deletions(-)
 
-python/setup.cfg has:
 
-   [flake8]
-   # Prefer pylint's bare-except checks to flake8's
-   extend-ignore = E722
-   exclude = __pycache__,
+> diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
 
-Good.
 
-> diff --git a/scripts/qapi/.isort.cfg b/scripts/qapi/.isort.cfg
-> deleted file mode 100644
-> index 643caa1fbd6..00000000000
-> --- a/scripts/qapi/.isort.cfg
-> +++ /dev/null
-> @@ -1,7 +0,0 @@
-> -[settings]
-> -force_grid_wrap=4
-> -force_sort_within_sections=True
-> -include_trailing_comma=True
-> -line_length=72
-> -lines_after_imports=2
-> -multi_line_output=3
+> +static void tgen_ori(TCGContext *s, TCGType type,
+> +                     TCGReg a0, TCGReg a1, tcg_target_long a2)
+> +{
+> +    int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
+> +    tgen_arithi(s, ARITH_OR + rexw, a0, a2, 0);
 
-python/setup.cfg has:
+s/0/false/
 
-   [isort]
-   force_grid_wrap=4
-   force_sort_within_sections=True
-   include_trailing_comma=True
-   line_length=72
-   lines_after_imports=2
-   multi_line_output=3
+> +}
 
-Good.
 
-> diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini
-> deleted file mode 100644
-> index 8109470a031..00000000000
-> --- a/scripts/qapi/mypy.ini
-> +++ /dev/null
-> @@ -1,4 +0,0 @@
-> -[mypy]
-> -strict = True
-> -disallow_untyped_calls = False
-> -python_version = 3.8
+> diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
 
-python/setup.cfg has:
 
-   [mypy]
-   strict = True
-   python_version = 3.8
-   warn_unused_configs = True
-   namespace_packages = True
-   warn_unused_ignores = False
+> +static const TCGOutOpBinary outop_or = {
+> +    .base.static_constraint = C_O1_I2(r, r, rU),
 
-Can you briefly explain the differences?
+So 32-bit gets s/i/U/ which is TCG_CT_CONST_U32, a no-op, OK.
 
-python/setup.cfg additionally has a bunch of ignore_missing_imports that
-don't apply here, as far as I can tell.
+> +    .out_rrr = tgen_or,
+> +    .out_rri = tgen_ori,
+> +};
+
+
+> -    case INDEX_op_or_i32:
+>       case INDEX_op_xor_i32:
+>       case INDEX_op_orc_i32:
+>       case INDEX_op_eqv_i32:
+> @@ -4172,7 +4180,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+>   
+>       case INDEX_op_sub_i32:
+>           return C_O1_I2(r, rI, ri);
+> -    case INDEX_op_or_i64:
+>       case INDEX_op_xor_i64:
+>           return C_O1_I2(r, r, rU);
+>       case INDEX_op_sub_i64:
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
