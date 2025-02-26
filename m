@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B08C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91919C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 09:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnEAt-0003Mr-Ds; Wed, 26 Feb 2025 04:57:55 -0500
+	id 1tnEBW-0004DS-7h; Wed, 26 Feb 2025 04:58:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEAr-0003M1-Ar
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:57:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEBA-0003hp-Vc
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:58:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEAk-00084e-JN
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:57:52 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnEB6-00088a-OB
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 04:58:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740563864;
+ s=mimecast20190719; t=1740563886;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2M5PYFALtIPWw6gM+rJ5qYo7EJhQAol7H3JpncaODnE=;
- b=LxxcKu/58b2iNE+SxRrE+FlpwFxnTsr+n6HcwFrLNTf9CWtbcWYW+qP2DHRvQQr12FXvqF
- Wu9zysF7p+mm/7ocvFRffHdv8lmadYlS1Z16WetKELioF29cBT0TI99TI1+LGej2vhc5Rn
- DjGQmEpJz2JXD4kddZL7F5H/Zy6/aaE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=BXF7LFmBt338Lef95w4ZSyZz2+Sq5hjepW7pi7Shml0=;
+ b=IIjbDCk9+SLMidiUyPD0dsV+V+HbJTAcU+WXFW+DcEH3g5vxRAax/81Vb7eWcHLSXjb5IV
+ gD4DnfsWReqDUyTAfUw5qJEoWCCW0L7dmNa9fSrsln6fae9AwjIFSmWnox3j8eImhLUQGO
+ ByaSBAzcMJIm082d9hkTm1m29mM9TnQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-473-XiHZz-gvOFGNwN5_HED2KA-1; Wed,
- 26 Feb 2025 04:57:41 -0500
-X-MC-Unique: XiHZz-gvOFGNwN5_HED2KA-1
-X-Mimecast-MFC-AGG-ID: XiHZz-gvOFGNwN5_HED2KA_1740563860
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-y5I7mnnXODmsTdolmw_RjQ-1; Wed,
+ 26 Feb 2025 04:58:03 -0500
+X-MC-Unique: y5I7mnnXODmsTdolmw_RjQ-1
+X-Mimecast-MFC-AGG-ID: y5I7mnnXODmsTdolmw_RjQ_1740563883
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 412391800875; Wed, 26 Feb 2025 09:57:40 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA3721800268
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 09:58:02 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.144])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 98F091800358; Wed, 26 Feb 2025 09:57:38 +0000 (UTC)
+ id 8AB941800358; Wed, 26 Feb 2025 09:58:01 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
-	Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 02/18] tests/qtest/qom-test: Test retrieval of machine class
- properties
-Date: Wed, 26 Feb 2025 10:57:15 +0100
-Message-ID: <20250226095731.1172375-3-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 12/18] tests/functional: Convert the alpha replay avocado tests
+Date: Wed, 26 Feb 2025 10:57:25 +0100
+Message-ID: <20250226095731.1172375-13-thuth@redhat.com>
 In-Reply-To: <20250226095731.1172375-1-thuth@redhat.com>
 References: <20250226095731.1172375-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -65,7 +64,7 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,39 +82,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There were recently some crashes that occurred when trying to
-retrieve the properties of machines. Let's add a test to avoid
-regression here.
+Put the tests into a separate file now (since in the functional
+framework, each file is run with one specific qemu-system-* binary).
 
-Message-ID: <20250123204956.1561463-1-thuth@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250218152744.228335-11-thuth@redhat.com>
 ---
- tests/qtest/qom-test.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ tests/avocado/replay_kernel.py        | 17 ----------------
+ tests/functional/meson.build          |  1 +
+ tests/functional/test_alpha_replay.py | 29 +++++++++++++++++++++++++++
+ 3 files changed, 30 insertions(+), 17 deletions(-)
+ create mode 100755 tests/functional/test_alpha_replay.py
 
-diff --git a/tests/qtest/qom-test.c b/tests/qtest/qom-test.c
-index 1e30a5bfe8d..27d70bc11ce 100644
---- a/tests/qtest/qom-test.c
-+++ b/tests/qtest/qom-test.c
-@@ -88,6 +88,17 @@ static void test_machine(gconstpointer data)
+diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
+index 02bd868a429..4347d202742 100644
+--- a/tests/avocado/replay_kernel.py
++++ b/tests/avocado/replay_kernel.py
+@@ -176,20 +176,3 @@ def test_s390x_s390_ccw_virtio(self):
+         kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=sclp0'
+         console_pattern = 'Kernel command line: %s' % kernel_command_line
+         self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=9)
+-
+-    def test_alpha_clipper(self):
+-        """
+-        :avocado: tags=arch:alpha
+-        :avocado: tags=machine:clipper
+-        """
+-        kernel_url = ('http://archive.debian.org/debian/dists/lenny/main/'
+-                      'installer-alpha/20090123lenny10/images/cdrom/vmlinuz')
+-        kernel_hash = '3a943149335529e2ed3e74d0d787b85fb5671ba3'
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-
+-        uncompressed_kernel = archive.uncompress(kernel_path, self.workdir)
+-
+-        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
+-        console_pattern = 'Kernel command line: %s' % kernel_command_line
+-        self.run_rr(uncompressed_kernel, kernel_command_line, console_pattern, shift=9,
+-            args=('-nodefaults', ))
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index a46c4e89464..e8b934d7f5f 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -90,6 +90,7 @@ tests_alpha_system_quick = [
  
-     qts = qtest_initf("-machine %s", machine);
+ tests_alpha_system_thorough = [
+   'alpha_clipper',
++  'alpha_replay',
+ ]
  
-+    if (g_test_slow()) {
-+        /* Make sure we can get the machine class properties: */
-+        g_autofree char *qom_machine = g_strdup_printf("%s-machine", machine);
+ tests_arm_system_quick = [
+diff --git a/tests/functional/test_alpha_replay.py b/tests/functional/test_alpha_replay.py
+new file mode 100755
+index 00000000000..24a17ef5904
+--- /dev/null
++++ b/tests/functional/test_alpha_replay.py
+@@ -0,0 +1,29 @@
++#!/usr/bin/env python3
++#
++# Replay test that boots a Linux kernel on an Alpha machine
++# and checks the console
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+        response = qtest_qmp(qts, "{ 'execute': 'qom-list-properties',"
-+                                  "  'arguments': { 'typename': %s } }",
-+                             qom_machine);
-+        g_assert(response);
-+        qobject_unref(response);
-+    }
++from qemu_test import Asset
++from replay_kernel import ReplayKernelBase
 +
-     test_properties(qts, "/machine", true);
- 
-     response = qtest_qmp(qts, "{ 'execute': 'quit' }");
++
++class AlphaReplay(ReplayKernelBase):
++
++    ASSET_KERNEL = Asset(
++        ('http://archive.debian.org/debian/dists/lenny/main/installer-alpha/'
++         '20090123lenny10/images/cdrom/vmlinuz'),
++        '34f53da3fa32212e4f00b03cb944b2ad81c06bc8faaf9b7193b2e544ceeca576')
++
++    def test_clipper(self):
++        self.set_machine('clipper')
++        kernel_path = self.uncompress(self.ASSET_KERNEL, format='gz')
++        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
++        console_pattern = 'Kernel command line: %s' % kernel_command_line
++        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=9,
++            args=('-nodefaults', ))
++
++
++if __name__ == '__main__':
++    ReplayKernelBase.main()
 -- 
 2.48.1
 
