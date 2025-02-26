@@ -4,81 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B43E7C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 11:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D166C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 11:53:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnFvw-0001uU-AG; Wed, 26 Feb 2025 06:50:36 -0500
+	id 1tnFyh-0002h3-4A; Wed, 26 Feb 2025 06:53:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnFvt-0001tc-E3
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 06:50:33 -0500
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ id 1tnFyf-0002gG-8L
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 06:53:25 -0500
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnFvr-0005S5-EI
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 06:50:33 -0500
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e46ebe19489so4774089276.2
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 03:50:30 -0800 (PST)
+ id 1tnFyd-0005nK-75
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 06:53:24 -0500
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e461015fbd4so4945735276.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 03:53:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740570630; x=1741175430; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=h2Vatto6nSrvODRy+Qu/VnnAtl5w9cRYwpnb27LlFdw=;
- b=IowpKkvqGHOdI76X1Ws3Ed2ahFLjft6Y633VX6ZKQOamvL2yZjyELZrH1q2fEBkina
- Rq052b1mIDlEEvX8pRhIgPr3IAcygXl6NPQV27DXqFVecCejH0VVUQ21zxgSOMMYGSkQ
- 1GR3/7Ql9/0f5zPRh2xsSGwWqKWRU87+r9/pylszNgUwC7t2j8C8f9BwMyUN5gJoF9bX
- 6TrweDRE23rNQSFhvAGxoudj1YGaXk1JoOmHbQ7S3eZ2VegaI73lniZhRvJteDLreSkP
- 25pyeJQG7h6MjFb03LvcAVpfG/GFFSdrCnuraAez0B+Sj6AtQ+juXu6NdUU+u3uFDu51
- 9NtQ==
+ d=linaro.org; s=google; t=1740570802; x=1741175602; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YqPvyMOeEHsZyMMg3Pi86QbyPypugS3EcHBB4E9kGas=;
+ b=S2BI3dk1agpo5OjK0NKPAhgNNKNgVJRC7jYMKLV5A2/qd723h1S21b+LHF8cBu1gnB
+ 08EFWaalj7Q6zdW416nsKD62BfRWfrZfUtRr2cfWmmaEP4DL4+a4ICqgQDZwkaEvTszg
+ LygEOBmGL0YqSwJGkHrNHhx1chqX/TAb08+PR4oa7SNzwn7bc0AdQNUnzImaaiqn3eYV
+ 7Epfc41bEBgif2HpstIBvh7wmub1nh2HR/zeqLrjpkOTEowvdZB8KQ2fM1wKuo9AJGV8
+ YXhnVKDd32dt9Wjkah6fW3V60nJheMPU2PlyjY2Ifa3OKPd9VXbvRRmLrYHtF4KZTxT1
+ tl8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740570630; x=1741175430;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=h2Vatto6nSrvODRy+Qu/VnnAtl5w9cRYwpnb27LlFdw=;
- b=i1VIMFNbOGRD3/WNYSZLKvjTmKsm7Ivv1w8HDD4Xps8XNYhB+qYdY/ddMgYxvD0UEG
- MrWKLflvhDGFWceXa0PmEYiyvrYo9xxVYhR4aT9EHproSzr2gSgGFID/Efvs/FqBl044
- 43uKyKwnvQyVqwp4jaxKX0VM0iYpp2gwHopOHceY/JbN0dopyNxSGKVeBMGQ/fJK8ksS
- ixms+tpEaew4GxbnDf1Xyg/g5fPwia0XIeQ8Gti0kReu6dhO3YIynK2JswLT7I+4kg81
- n0kYM1WvARUbaM6ULVVxkOxG2QAThM1h7nQ4oaEdU0eK105BrXlCkARs/IUvuragJMCB
- HfvA==
-X-Gm-Message-State: AOJu0YzTSBGuIQOqOe+eudNPjHKMUJ+CaISscEwcmQVUHAEjO95qAz27
- ZIBYAblU9VoMDCyA+nVL4BDzEkRVdERc7mN4UsPAIPSel1fY5C7wZz3vuOegQNRYAzjL4A0n6wu
- oVvhteaivR3nIuQjH2C8pxQrsSp7VNHeJvr6v6Q==
-X-Gm-Gg: ASbGncvszvnlL8Rh+w6TNqVqrxVwill+zAzITCd9v9X7QmN0iH0ROMa7kvNp7wTkXs3
- PZx4T6tisLo65jz5qsz5ee6UHEQZgzU9tqcEnlWNHah89E+WdmjdBH22AlYiZOPnehUb7rH79OY
- s7aafQXPdp
-X-Google-Smtp-Source: AGHT+IEntVP7mzhZuoiwFprgLLFGyyXzVP+gOViMgUPRwWFxrrg6pcUUyL3LXnZkaSOFrICXuQErwLWhvLChmRtaMtw=
-X-Received: by 2002:a05:6902:1b04:b0:e58:30dc:615b with SMTP id
- 3f1490d57ef6-e608a56d282mr3011080276.22.1740570629981; Wed, 26 Feb 2025
- 03:50:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740570802; x=1741175602;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YqPvyMOeEHsZyMMg3Pi86QbyPypugS3EcHBB4E9kGas=;
+ b=fK5GTXmo1kQ9vPW+OWAPxQM2YCJ1DwGPn2Ex3fgGyzELE7hDNvx5mfBMG+g7VNJ7/f
+ UD9PXaoappW0lIXPVE6ZXPrjGrvRE1GgxwZLpvJdWefK9OanWaTtNHQXpnNpl/48fPJQ
+ px7SGPMY6jKEqYTrlUhO02pEymLKZub530YHSBOcL/4VWSlspvzROHSpN5/dZ65zabGD
+ yvyjRayG1EhDYKYzVaZ7YC7CpLUESGdMxzghoD7+CmYZO3KpOhAzVJ57Osijde9eehX6
+ Bue2aGdZeuljadK7KPY8KtwIuqrzoCes0hST0mXsc3rjE13+SfS2zAJVCwXMXo4QSQVy
+ krxg==
+X-Gm-Message-State: AOJu0Yzvgx6pmoJQx8446YuLHbspmLAUdQLAEl1gqwnBG1y7+qcdjpOv
+ Irscj0LXO6q+kiOISsFR9IpBl0GCHU72Nhw3ycTosbEKYXzUrfElVbL5xbzS1FWUdc1Xw56V85b
+ aEKcp7a5Lm2fTZ0PN+IfBbinoP62XAo9khEgmtA==
+X-Gm-Gg: ASbGncsVVrjQ3Y1H3+9dOPjt3M5nLdNMs7gjSHflSB3//08IZbSJ8GvxXGXJWE9OlTZ
+ gSRW5rbwoLxUQTdyqjrj2NJZ5pDhW0/AdpJFyJzfeSJ+kOqSPDjbUnlfN1PXe9qVyqH3KgbUJnT
+ 0LpdkD9xNQ
+X-Google-Smtp-Source: AGHT+IGy+UXcal8ZXjpa8MD6RSenG93ffo/wbBulvx1ukDv1elVjK4YLxtoyLzITFnAssg380Uy310kYr5tT9qKPfo0=
+X-Received: by 2002:a05:6902:a81:b0:e5b:1710:d3d0 with SMTP id
+ 3f1490d57ef6-e607a5693f4mr5117458276.43.1740570801872; Wed, 26 Feb 2025
+ 03:53:21 -0800 (PST)
 MIME-Version: 1.0
-References: <20250224205053.104959-1-pierrick.bouvier@linaro.org>
- <CAFEAcA_sz-_6WGCQ=4kC2vtK2RUBXbAtMVzh3iZsp0xmNbgaxQ@mail.gmail.com>
- <829e9fd0-2d0f-45e6-ab89-d933d344cfe2@linaro.org>
-In-Reply-To: <829e9fd0-2d0f-45e6-ab89-d933d344cfe2@linaro.org>
+References: <20250223114708.1780-1-shentey@gmail.com>
+ <20250223114708.1780-5-shentey@gmail.com>
+ <CAFEAcA_XJfAVEe3cgHiXgcewTL3kF3SEevrnMh-Edvfk56G6sQ@mail.gmail.com>
+ <CAFEAcA9e5FBrKLZrKRsw=wPThbwx3+gyVt9rv4_vx9OKfZ8qiQ@mail.gmail.com>
+ <3AC73313-B9B5-423D-9E01-189E9010556C@gmail.com>
+In-Reply-To: <3AC73313-B9B5-423D-9E01-189E9010556C@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 26 Feb 2025 11:50:18 +0000
-X-Gm-Features: AWEUYZkTC4CfXKM-iA9oHWkGexNeyUEl9CBDtKNHRCHZbKN9AzbswPYxU6-joBU
-Message-ID: <CAFEAcA8BHzA_P7yX+cDMb1WiyGTzkh6xjvam4RHs5aoM1X6mkw@mail.gmail.com>
-Subject: Re: [PATCH] hw/misc/npcm_clk: fix buffer-overflow
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, titusr@google.com, hskinnemoen@google.com, 
- wuhaotsh@google.com, qemu-arm@nongnu.org, Tyrone Ting <kfting@nuvoton.com>
+Date: Wed, 26 Feb 2025 11:53:10 +0000
+X-Gm-Features: AWEUYZkZzCodTHS8hKuXsa_I_7_0oaMVEPbahytCXcKZsaBFJBK-yr9rSvlk3uk
+Message-ID: <CAFEAcA83wAdgkaFL5oOvVNuWYYFW=ffgsqKF8OcDQh49XDryNA@mail.gmail.com>
+Subject: Re: [PATCH v2 04/18] hw/arm: Add i.MX 8M Plus EVK board
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Alistair Francis <alistair@alistair23.me>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,34 +103,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 25 Feb 2025 at 20:57, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On Wed, 26 Feb 2025 at 06:36, Bernhard Beschow <shentey@gmail.com> wrote:
 >
-> On 2/25/25 05:41, Peter Maydell wrote:
-> > (Looking more closely at the cold_reset_values handling
-> > in npcm_gcr.c, that looks not quite right in a different
-> > way; I'll send a reply to that patch email about that.)
+>
+>
+> Am 25. Februar 2025 17:00:53 UTC schrieb Peter Maydell <peter.maydell@lin=
+aro.org>:
+> >On Tue, 25 Feb 2025 at 15:42, Peter Maydell <peter.maydell@linaro.org> w=
+rote:
+> >> The C compiler for the OpenSUSE CI job doesn't seem to like this:
+> >> https://gitlab.com/pm215/qemu/-/jobs/9239416833
+> >>
+> >> ../hw/arm/fsl-imx8mp.c: In function =E2=80=98fsl_imx8mp_realize=E2=80=
+=99:
+> >> ../hw/arm/fsl-imx8mp.c:382:15: error: initializer element is not const=
+ant
+> >>              { fsl_imx8mp_memmap[FSL_IMX8MP_UART1].addr, FSL_IMX8MP_UA=
+RT1_IRQ },
+> >>                ^~~~~~~~~~~~~~~~~
+> >> ../hw/arm/fsl-imx8mp.c:382:15: note: (near initialization for
+> >> =E2=80=98serial_table[0].addr=E2=80=99)
+> >> ../hw/arm/fsl-imx8mp.c:383:15: error: initializer element is not const=
+ant
+> >>              { fsl_imx8mp_memmap[FSL_IMX8MP_UART2].addr, FSL_IMX8MP_UA=
+RT2_IRQ },
+> >>                ^~~~~~~~~~~~~~~~~
+> >>
+> >> This is (gcc 7.5.0 "cc (SUSE Linux) 7.5.0") apparently. That's
+> >> a pretty old compiler, only just within the bounds of our
+> >> version requirements (which are 7.4 or better), so I'm guessing
+> >> it's just not as smart about figuring out that the
+> >> initializer here really is a constant value.
+> >>
+> >> I'll fix this up by dropping the "const" from the serial_table[]
+> >> etc definitions.
 > >
+> >More specifically, you have to drop 'static const', leaving just 'struct=
+'.
+> >Minimal repro: https://godbolt.org/z/5css4hv67
 >
-> It may be a hole in our CI right now.
-> Would that be interesting for CI to run all tests (check-functional +
-> check w/o functional) with both ubsan and asan?
+> I haven't checked, but this might be caused by the multiplications (... *=
+ KiB)
 
-We do have at least some ubsan tests in our CI right now
-(eg the "clang-system" job). The problem with ubsan coverage
-is the usual one that we already have too much CI going on,
-and it takes forever and we don't have that much headroom
-for adding more jobs.
-
-On the asan front, also, yes, coverage would be a good idea.
-Here I think we will probably have to gradually ratchet
-up the coverage because I'm pretty sure that at the moment
-we will find we don't get a clean pass (mostly for "uninteresting"
-memory leaks).
-
-(I do also usually run a local
-ubsan test build when doing my acculumation of patches in
-target-arm, but since that's a manual step it is fallible :-))
+The godbolt repro case just uses plain constant values in the memmap
+array, so it's not the multiplication that's at fault.
 
 -- PMM
 
