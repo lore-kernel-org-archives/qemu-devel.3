@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 645ECC19776
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 21:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8C9DC19776
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 21:48:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnP5g-0005bB-NU; Wed, 26 Feb 2025 16:37:16 -0500
+	id 1tnPGE-0001NI-Bh; Wed, 26 Feb 2025 16:48:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnP5e-0005ap-RR
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 16:37:14 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnPGC-0001Ms-Uz
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 16:48:08 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnP5c-0007S6-FB
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 16:37:14 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-38a25d4b9d4so95084f8f.0
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 13:37:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnPGB-0000Iy-3G
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 16:48:08 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-38f29a1a93bso154200f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 13:48:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740605829; x=1741210629; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740606485; x=1741211285; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9LfgPyznGXoTvuUeXjk8keuJk5Al6WOywHvQ05kGlBU=;
- b=bWFMWZva8uwT9COQcr8fZPnV9oEPyYBuYvON2RYWUSakEcUOXod5MvhquicsWQ5UgS
- 5ZHpgMKLBy6NH8VKFS1ssC2NPqDf/y6Lt6KGNjjClUiCfWDnM7KYctWd0QY7BGGctQhW
- JBEW9Aig7QTxlIqxgiUuo5Ks5o3FrEB3KCqK8gVOr2CZr4p7JYSkwni8kANZ3cnKffJs
- akaBTCd+WdAObl+quI6P+zm09VThns/ddY29pHsv+HGYT3eIOJTygeAt//aFJjgSkVcr
- rdwAAoalH1JaQZMlmRVu/VkATZBK2qyEP2sfvHc6qsop2qYbhGVyBoj2VJ9RgWh6TxUc
- egfA==
+ bh=26os/+7vWSCnqeHXv+LK4Vp+8ZR8r33RGwy0/O8Fh9Q=;
+ b=d0d/6LLDbbyB/5CzK+YxHh1Hggxmts+9i3PYgflEvjsH3bDnicPMItbYUmuPOE+FMk
+ LBN4Xs0vajl4/tgfQrwbtH+cMealsNOl5bYcIn7s2ewk5eYht5dO57Zfh2ip0gpaXv2V
+ Q4hsCrEmcYMfjiSSvx4uTd03A1ibD79o56yTqu3BMwPGPkpvYbw8Elxspab997wMbKGG
+ sKlX9flhuglEpymkAq9tUpGo8XYiiMMOyXBDR+w1u4ayi70ECDF6bkXp1bAeueuvN6AI
+ fUbCpW6g3g3FGoqNVx/jeJWfQK4l7H2zGukhx2EFS47Em7WSZzGjbuE6k3rgEp+y4j3e
+ 1WiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740605829; x=1741210629;
+ d=1e100.net; s=20230601; t=1740606485; x=1741211285;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9LfgPyznGXoTvuUeXjk8keuJk5Al6WOywHvQ05kGlBU=;
- b=tc4s/VHl1PIUmpePKvrBvyLQQHa+UduC3d6KtxCdAlzxpBoHEhxdwbC2bykf+dvZ5S
- nl4VAAmIwW+IaBoP4HB1OGfWFzBUnEK6X+FIF7/GwBCgc0qs4Ta0x4XFhWO7OoDeHkqX
- JMoODyC5dh5nFV3UQuCvwqX42yPyKHR9hmbBAnFMx98UWUrXZ8RPH+5946j6oFaQvy/F
- FWYZs3mMk5w5XnqEXvXYqLBw0ki97ehfpPbA2n5SK6LUD6ILL/rNQvD2ZSz7dzI+t2KN
- +1gE6b/KPbDHduqyivmD2dvcYfxEHBjK2Wd2mZVLjCf4BGlbt5EiGbshG6++fXVNB7+p
- tcfA==
+ bh=26os/+7vWSCnqeHXv+LK4Vp+8ZR8r33RGwy0/O8Fh9Q=;
+ b=RX3tY1Ff0UnoUE0NRT/buqB4rnFTh09eSDjEVgG5t71Gz7v9PlQ3NOnFUezjdC5FOW
+ OjlvELnTSmxFQzv4BAlHBrFgrQuyW0dbleZNobX/br4bcH+52TlP5d585pdIZILzNlW7
+ AD73iYRX9K6mi+LhZvvHIg983Pl35+kX3AT+Qf8+0tRSsspd9NfXDauOALkxTrg/oDLo
+ 1dwHCzasqZ6wope9KtjTvs0Hoib/gssCg0poXYUcwouCxU7pQs6RQl2XKdWzY8hkYkxh
+ +/sgtZJrwUuJ4Et6y7fiwFylZoMU9DtuF7aGTPePdZCcxAqQygnw4Bz/kazyIiiSUYXi
+ 7wTw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW06I+yfRwerKTw7nNSRHJB9dGQTgtUTlwXlX+lMOK6n3/mifIzZUPUkhn5kDz43L1xKk6YSQuJ8N0r@nongnu.org
-X-Gm-Message-State: AOJu0YzarbGqjKcb34b7c3OZFVhdFexMg1EaOFGSuq8LsZj78tBDToiH
- TywKeyqlFAfh+wz7wpw132Uy0BRKKJkHbdJfMQJLPrjyXtT+xdu1fk0OOkjF9ek=
-X-Gm-Gg: ASbGnct990RQmukVA5oCa/T1WUrtIMcNiGG+RRE8SZwHXGBwbSn//901WPByEonLSuu
- Z4o+zsmwaiCHQ442dyZWI6Ewt77PYF2kyv+vj5+xtGH8eMk3TFeSARDR/K0R09Z6ZL/jeFF3VVu
- nnkEb5Lo+H92ZxWTg168cqUXPEpcNPgRWl7gwF4P11m0uueu8UXYRwZ9QR9pBudXqNMAtn4Wzov
- 2SRa4piZFWRGw0pAclO7BXiLFxR1qn7r2wPghW+QyOO8cHxV4gc0sYtP1bVg9GBsxy53JC0TU4N
- oKqtKHt9oDcPGHMrLwg3QZUcgezH/rLVLV2ktprZ2EuST5DF8nHBmLvyl25R9i61G4XREQ==
-X-Google-Smtp-Source: AGHT+IFLpCE+sLM8oCfONTGBzUg4mO66a4aDHvFjU95/PCyTFvNRC5i1hvMbYpNJI3wGCbzZtYoHug==
-X-Received: by 2002:a5d:6d87:0:b0:38d:d8c0:1f8c with SMTP id
- ffacd0b85a97d-390cc632334mr9441309f8f.38.1740605829587; 
- Wed, 26 Feb 2025 13:37:09 -0800 (PST)
+ AJvYcCX3xDtZd12FsUZviqb8SYH7n7U03CykYag+ZQCHFh8xoym9HW31dBESaA1FlZKQcMCIAppuquWl2RVp@nongnu.org
+X-Gm-Message-State: AOJu0Yyl8H3dZtVZA2KS7qK9gsx/kWXtutDx/LSeFiqzne1tz3L44cqm
+ w9ssfdU8lDNL1Sf3WntRLtjAJw8SnkTLts5NdkmNK8KI5aD/reEWHcfHWg5Y9SU=
+X-Gm-Gg: ASbGncur92El5fLGWGUTruCfApyZDU9wMX9XKI9gHfKFHPLnSo79+/NmHlocr1RsC7M
+ k0QMjvuaMWcL+UA0X33wB4ucU+fRbmmGTFNKX8hOSaMS0XE/YhJnNuCNyG1F/lVE25PH+IWqtIy
+ REs5BCBC8JApxlHjvlk3tlNoCThVLXYIkFSLXJ9i7T3NFi167S+tVN1Q0Qcx5+lBfLwfYyCZjXS
+ Hvojldg1JwjyU19kqdlvXHgUhjtAOAKtNhNvlNYabvD9oEFLGWA7KFDhyYCf1AEBF2ZOplHgNzo
+ ONKBcZVor6jVfu5zzXIfgPts63TlBIYF1/m3jd2+AhhF2yj2MTai2gBWpRUOtPgVFh1IlQ==
+X-Google-Smtp-Source: AGHT+IFXaSGNuI2rz9hpMoNzF032TubVZ2uiafuRA0q1qIli8A128fh4411HHbVZLCQ8tfOaPqKDiA==
+X-Received: by 2002:a05:6000:2a7:b0:38d:bccf:f342 with SMTP id
+ ffacd0b85a97d-390d4f8b6bbmr4716596f8f.43.1740606484978; 
+ Wed, 26 Feb 2025 13:48:04 -0800 (PST)
 Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43b737043aasm2005935e9.14.2025.02.26.13.37.08
+ ffacd0b85a97d-390e485e03asm57408f8f.95.2025.02.26.13.48.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 13:37:09 -0800 (PST)
-Message-ID: <0c1553c2-0f58-4a7b-9e91-7f81251d2652@linaro.org>
-Date: Wed, 26 Feb 2025 22:37:08 +0100
+ Wed, 26 Feb 2025 13:48:04 -0800 (PST)
+Message-ID: <375cb768-ba11-4a4e-98fe-1a0b6f3b21d6@linaro.org>
+Date: Wed, 26 Feb 2025 22:48:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 020/162] tcg: Convert eqv to TCGOutOpBinary
+Subject: Re: [PATCH v3 010/162] tcg: Convert andc to TCGOutOpBinary
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250216231012.2808572-1-richard.henderson@linaro.org>
- <20250216231012.2808572-21-richard.henderson@linaro.org>
+ <20250216231012.2808572-11-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250216231012.2808572-21-richard.henderson@linaro.org>
+In-Reply-To: <20250216231012.2808572-11-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,36 +101,40 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/2/25 00:07, Richard Henderson wrote:
+> At the same time, drop all backend support for immediate
+> operands, as we now transform andc to and during optimize.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/aarch64/tcg-target-has.h     |  2 --
->   tcg/arm/tcg-target-has.h         |  1 -
->   tcg/i386/tcg-target-has.h        |  2 --
->   tcg/loongarch64/tcg-target-has.h |  2 --
->   tcg/mips/tcg-target-has.h        |  2 --
->   tcg/ppc/tcg-target-has.h         |  2 --
->   tcg/riscv/tcg-target-con-set.h   |  1 -
->   tcg/riscv/tcg-target-con-str.h   |  1 -
->   tcg/riscv/tcg-target-has.h       |  2 --
->   tcg/s390x/tcg-target-con-set.h   |  1 -
->   tcg/s390x/tcg-target-has.h       |  2 --
->   tcg/sparc64/tcg-target-has.h     |  2 --
->   tcg/tcg-has.h                    |  1 -
->   tcg/tci/tcg-target-has.h         |  2 --
->   tcg/tcg-op.c                     |  4 ++--
->   tcg/tcg.c                        |  8 +++----
->   tcg/tci.c                        |  2 --
->   tcg/aarch64/tcg-target.c.inc     | 26 +++++++++------------
->   tcg/arm/tcg-target.c.inc         |  4 ++++
->   tcg/i386/tcg-target.c.inc        |  4 ++++
->   tcg/loongarch64/tcg-target.c.inc |  4 ++++
->   tcg/mips/tcg-target.c.inc        |  4 ++++
->   tcg/ppc/tcg-target.c.inc         | 22 +++++++++---------
->   tcg/riscv/tcg-target.c.inc       | 37 ++++++++++++------------------
->   tcg/s390x/tcg-target.c.inc       | 39 +++++++++++++-------------------
->   tcg/sparc64/tcg-target.c.inc     |  4 ++++
->   tcg/tci/tcg-target.c.inc         | 14 +++++++++---
->   27 files changed, 89 insertions(+), 106 deletions(-)
+>   tcg/aarch64/tcg-target-has.h         |  2 --
+>   tcg/arm/tcg-target-has.h             |  1 -
+>   tcg/i386/tcg-target-con-set.h        |  2 +-
+>   tcg/i386/tcg-target-has.h            |  2 --
+>   tcg/loongarch64/tcg-target-con-set.h |  1 +
+>   tcg/loongarch64/tcg-target-has.h     |  2 --
+>   tcg/mips/tcg-target-has.h            |  2 --
+>   tcg/ppc/tcg-target-has.h             |  2 --
+>   tcg/riscv/tcg-target-con-set.h       |  1 +
+>   tcg/riscv/tcg-target-has.h           |  2 --
+>   tcg/s390x/tcg-target-con-set.h       |  1 -
+>   tcg/s390x/tcg-target-has.h           |  2 --
+>   tcg/sparc64/tcg-target-has.h         |  2 --
+>   tcg/tcg-has.h                        |  1 -
+>   tcg/tci/tcg-target-has.h             |  2 --
+>   tcg/tcg-op.c                         |  4 +--
+>   tcg/tcg.c                            |  8 +++---
+>   tcg/tci.c                            |  2 --
+>   tcg/aarch64/tcg-target.c.inc         | 24 ++++++++--------
+>   tcg/arm/tcg-target.c.inc             | 16 +++++++----
+>   tcg/i386/tcg-target.c.inc            | 31 +++++++++++---------
+>   tcg/loongarch64/tcg-target.c.inc     | 23 ++++++++-------
+>   tcg/mips/tcg-target.c.inc            |  4 +++
+>   tcg/ppc/tcg-target.c.inc             | 29 ++++++++-----------
+>   tcg/riscv/tcg-target.c.inc           | 27 +++++++++++-------
+>   tcg/s390x/tcg-target.c.inc           | 42 ++++++++++++++--------------
+>   tcg/sparc64/tcg-target.c.inc         | 16 +++++++----
+>   tcg/tci/tcg-target.c.inc             | 14 ++++++++--
+>   28 files changed, 135 insertions(+), 130 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
