@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AFBBC021B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 10:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9C38C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 10:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnEev-0004Ge-Lu; Wed, 26 Feb 2025 05:28:57 -0500
+	id 1tnEf1-0004IX-Mm; Wed, 26 Feb 2025 05:29:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnEeu-0004FT-3B
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 05:28:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnEex-0004HY-Sp
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 05:28:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnEeq-0003fq-Ks
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 05:28:55 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnEes-0003g6-VW
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 05:28:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740565729;
+ s=mimecast20190719; t=1740565731;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+sEz+qKlhBfhwTwh2XVESCntzWnD9G5DdJ/8arWYldE=;
- b=fsV/cJyNAGZnJ1vFG8Z9R15jo+Ghp4vDwHTAjL4ommM3qJzNm5tRZeq1H9VQ9aLDmJatn/
- ldP35MtHyAUKGPyfrpR1h8LEk9PDOhfPQB4/N/dujibCmixvuRD6u9u2IQxQdB0iuDcD1N
- vAHPufp9YsxU1MF6vH8rvHMFtkZN7yY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=fqhPTV2opeo3LxBrsWghcovQIvhyyio3JsX6lcLZ67I=;
+ b=XLTZNx6hxlW/e43xzmVAqRPlDGpg7dfKK+43xo8eKgrxYh89dV+6oLEVyJX+suGaq8sSj3
+ qMtMWUrME+7wqqE7hUGfxqPllcbF+Yb3D+I1z3caE/RTgsrzMf2KWJaXVVOYaaUFmgKuSu
+ hM8CJDjQ8fOEAM/iRg6LxaqpjlHu+d8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-205-jbhY6Ro1Pg6KJKKLzbUT0A-1; Wed,
- 26 Feb 2025 05:28:47 -0500
-X-MC-Unique: jbhY6Ro1Pg6KJKKLzbUT0A-1
-X-Mimecast-MFC-AGG-ID: jbhY6Ro1Pg6KJKKLzbUT0A_1740565726
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-LRoQPOTqPuelXBSGzDeukA-1; Wed,
+ 26 Feb 2025 05:28:49 -0500
+X-MC-Unique: LRoQPOTqPuelXBSGzDeukA-1
+X-Mimecast-MFC-AGG-ID: LRoQPOTqPuelXBSGzDeukA_1740565728
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 85E0818E6952
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 10:28:46 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CCC4C18EB2CB
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 10:28:48 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1772B1800946
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 10:28:45 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 461551944D02
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 10:28:48 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9B74221E65EA; Wed, 26 Feb 2025 11:28:42 +0100 (CET)
+ id A348221E65FF; Wed, 26 Feb 2025 11:28:42 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL 4/6] docs/qapidoc: support header-less freeform sections
-Date: Wed, 26 Feb 2025 11:28:40 +0100
-Message-ID: <20250226102842.3721046-5-armbru@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 6/6] qapi: pluggable backend code generators
+Date: Wed, 26 Feb 2025 11:28:42 +0100
+Message-ID: <20250226102842.3721046-7-armbru@redhat.com>
 In-Reply-To: <20250226102842.3721046-1-armbru@redhat.com>
 References: <20250226102842.3721046-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,76 +87,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-The code as written crashes when a free-form documentation block doesn't
-start with a heading or subheading, for example:
+The 'qapi.backend.QAPIBackend' class defines an API contract for code
+generators. The current generator is put into a new class
+'qapi.backend.QAPICBackend' and made to be the default impl.
 
-| ##
-| # Just text, no heading.
-| ##
+A custom generator can be requested using the '-k' arg which takes a
+fully qualified python class name
 
-The code will attempt to use the `node` variable uninitialized. To fix,
-create a generic block to insert the doc text into.
+   qapi-gen.py -B the.python.module.QAPIMyBackend
 
-(This patch also removes a lingering pylint warning in the QAPIDoc
-implementation that prevents getting a clean baseline to use for
-forthcoming additions.)
+This allows out of tree code to use the QAPI generator infrastructure
+to create new language bindings for QAPI schemas. This has the caveat
+that the QAPI generator APIs are not guaranteed stable, so consumers
+of this feature may have to update their code to be compatible with
+future QEMU releases.
 
-Fixes: 43e0d14ee09a (docs/sphinx: fix extra stuff in TOC after freeform QMP sections)
-Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250224033741.222749-5-jsnow@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250224182030.2089959-1-berrange@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
-[Test updated to cover this]
+[Error checking and messages tweaked]
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/qapidoc.py          | 2 ++
- tests/qapi-schema/doc-good.json | 4 ++++
- tests/qapi-schema/doc-good.out  | 3 +++
- 3 files changed, 9 insertions(+)
+ scripts/qapi/backend.py | 63 ++++++++++++++++++++++++++++++++
+ scripts/qapi/main.py    | 80 +++++++++++++++++++++++------------------
+ 2 files changed, 108 insertions(+), 35 deletions(-)
+ create mode 100644 scripts/qapi/backend.py
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 5f96b46270..5a4d7388b2 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -421,6 +421,8 @@ def freeform(self, doc):
-             node = self._start_new_heading(heading, len(leader))
-             if text == '':
-                 return
-+        else:
-+            node = nodes.container()
- 
-         self._parse_text_into_node(text, node)
-         self._cur_doc = None
-diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-good.json
-index f64bf38d85..0a4f139f83 100644
---- a/tests/qapi-schema/doc-good.json
-+++ b/tests/qapi-schema/doc-good.json
-@@ -11,6 +11,10 @@
- # = Section
- ##
- 
-+##
-+# Just text, no heading.
-+##
+diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
+new file mode 100644
+index 0000000000..14e60aa67a
+--- /dev/null
++++ b/scripts/qapi/backend.py
+@@ -0,0 +1,63 @@
++# This work is licensed under the terms of the GNU GPL, version 2 or later.
++# See the COPYING file in the top-level directory.
 +
- ##
- # == Subsection
- #
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index ec277be91e..0a9da3efde 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -56,6 +56,9 @@ event EVT_BOXED Object
- doc freeform
-     body=
- = Section
-+doc freeform
-+    body=
-+Just text, no heading.
- doc freeform
-     body=
- == Subsection
++from abc import ABC, abstractmethod
++
++from .commands import gen_commands
++from .events import gen_events
++from .features import gen_features
++from .introspect import gen_introspect
++from .schema import QAPISchema
++from .types import gen_types
++from .visit import gen_visit
++
++
++class QAPIBackend(ABC):
++
++    @abstractmethod
++    def generate(self,
++                 schema: QAPISchema,
++                 output_dir: str,
++                 prefix: str,
++                 unmask: bool,
++                 builtins: bool,
++                 gen_tracing: bool) -> None:
++        """
++        Generate code for the given schema into the target directory.
++
++        :param schema: The primary QAPI schema object.
++        :param output_dir: The output directory to store generated code.
++        :param prefix: Optional C-code prefix for symbol names.
++        :param unmask: Expose non-ABI names through introspection?
++        :param builtins: Generate code for built-in types?
++
++        :raise QAPIError: On failures.
++        """
++
++
++class QAPICBackend(QAPIBackend):
++
++    def generate(self,
++                 schema: QAPISchema,
++                 output_dir: str,
++                 prefix: str,
++                 unmask: bool,
++                 builtins: bool,
++                 gen_tracing: bool) -> None:
++        """
++        Generate C code for the given schema into the target directory.
++
++        :param schema_file: The primary QAPI schema file.
++        :param output_dir: The output directory to store generated code.
++        :param prefix: Optional C-code prefix for symbol names.
++        :param unmask: Expose non-ABI names through introspection?
++        :param builtins: Generate code for built-in types?
++
++        :raise QAPIError: On failures.
++        """
++        gen_types(schema, output_dir, prefix, builtins)
++        gen_features(schema, output_dir, prefix)
++        gen_visit(schema, output_dir, prefix, builtins)
++        gen_commands(schema, output_dir, prefix, gen_tracing)
++        gen_events(schema, output_dir, prefix)
++        gen_introspect(schema, output_dir, prefix, unmask)
+diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
+index 324081b9fc..ff42b43cd6 100644
+--- a/scripts/qapi/main.py
++++ b/scripts/qapi/main.py
+@@ -8,18 +8,14 @@
+ """
+ 
+ import argparse
++from importlib import import_module
+ import sys
+ from typing import Optional
+ 
+-from .commands import gen_commands
++from .backend import QAPIBackend, QAPICBackend
+ from .common import must_match
+ from .error import QAPIError
+-from .events import gen_events
+-from .features import gen_features
+-from .introspect import gen_introspect
+ from .schema import QAPISchema
+-from .types import gen_types
+-from .visit import gen_visit
+ 
+ 
+ def invalid_prefix_char(prefix: str) -> Optional[str]:
+@@ -29,32 +25,42 @@ def invalid_prefix_char(prefix: str) -> Optional[str]:
+     return None
+ 
+ 
+-def generate(schema_file: str,
+-             output_dir: str,
+-             prefix: str,
+-             unmask: bool = False,
+-             builtins: bool = False,
+-             gen_tracing: bool = False) -> None:
+-    """
+-    Generate C code for the given schema into the target directory.
++def create_backend(path: str) -> QAPIBackend:
++    if path is None:
++        return QAPICBackend()
+ 
+-    :param schema_file: The primary QAPI schema file.
+-    :param output_dir: The output directory to store generated code.
+-    :param prefix: Optional C-code prefix for symbol names.
+-    :param unmask: Expose non-ABI names through introspection?
+-    :param builtins: Generate code for built-in types?
++    module_path, dot, class_name = path.rpartition('.')
++    if not dot:
++        print(f"argument of -B must be of the form MODULE.CLASS",
++              file=sys.stderr)
++        sys.exit(1)
+ 
+-    :raise QAPIError: On failures.
+-    """
+-    assert invalid_prefix_char(prefix) is None
++    try:
++        mod = import_module(module_path)
++    except Exception as ex:
++        print(f"unable to import '{module_path}': {ex}", file=sys.stderr)
++        sys.exit(1)
+ 
+-    schema = QAPISchema(schema_file)
+-    gen_types(schema, output_dir, prefix, builtins)
+-    gen_features(schema, output_dir, prefix)
+-    gen_visit(schema, output_dir, prefix, builtins)
+-    gen_commands(schema, output_dir, prefix, gen_tracing)
+-    gen_events(schema, output_dir, prefix)
+-    gen_introspect(schema, output_dir, prefix, unmask)
++    try:
++        klass = getattr(mod, class_name)
++    except AttributeError:
++        print(f"module '{module_path}' has no class '{class_name}'",
++              file=sys.stderr)
++        sys.exit(1)
++
++    try:
++        backend = klass()
++    except Exception as ex:
++        print(f"backend '{path}' cannot be instantiated: {ex}",
++              file=sys.stderr)
++        sys.exit(1)
++
++    if not isinstance(backend, QAPIBackend):
++        print(f"backend '{path}' must be an instance of QAPIBackend",
++              file=sys.stderr)
++        sys.exit(1)
++
++    return backend
+ 
+ 
+ def main() -> int:
+@@ -77,6 +83,8 @@ def main() -> int:
+     parser.add_argument('-u', '--unmask-non-abi-names', action='store_true',
+                         dest='unmask',
+                         help="expose non-ABI names in introspection")
++    parser.add_argument('-B', '--backend', default=None,
++                        help="Python module name for code generator")
+ 
+     # Option --suppress-tracing exists so we can avoid solving build system
+     # problems.  TODO Drop it when we no longer need it.
+@@ -93,12 +101,14 @@ def main() -> int:
+         return 1
+ 
+     try:
+-        generate(args.schema,
+-                 output_dir=args.output_dir,
+-                 prefix=args.prefix,
+-                 unmask=args.unmask,
+-                 builtins=args.builtins,
+-                 gen_tracing=not args.suppress_tracing)
++        schema = QAPISchema(args.schema)
++        backend = create_backend(args.backend)
++        backend.generate(schema,
++                         output_dir=args.output_dir,
++                         prefix=args.prefix,
++                         unmask=args.unmask,
++                         builtins=args.builtins,
++                         gen_tracing=not args.suppress_tracing)
+     except QAPIError as err:
+         print(err, file=sys.stderr)
+         return 1
 -- 
 2.48.1
 
