@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8793C021B8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4026C021BF
 	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 14:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnI17-0001C7-Be; Wed, 26 Feb 2025 09:04:05 -0500
+	id 1tnI1e-0001Xp-UM; Wed, 26 Feb 2025 09:04:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI0z-000114-8G
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:03:57 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1tnI12-00016v-PD
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:04:01 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnI0w-0005hC-3g
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:03:56 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-439946a49e1so44146835e9.0
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:03:53 -0800 (PST)
+ id 1tnI10-0005jv-68
+ for qemu-devel@nongnu.org; Wed, 26 Feb 2025 09:04:00 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4398c8c8b2cso69757115e9.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 06:03:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740578632; x=1741183432; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740578637; x=1741183437; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8OLAEfb1TFH74FrITh5hY7sd4JTAq5WSAJV1LNPh/Qg=;
- b=mXRhvDKMmie0mgnG8hhjmuU9NiYBKMcnNxiWUyqRLd4C1RvmSpkBVUqcewUxOy8oZ6
- 5WOkDMZ1lL0fK3iguzEnOQb887i95ge1XZXosmxyjDxjAD88bqASadZSgsHkjvmFvlY6
- rLUiX4oqwIMsPIAxvdoJ7E01o+FzFT+0219Xb84pLUK0iWnMINJOHP+8/VzBxPeHJEUi
- 63ipbmRi/ah7wdmuGn69HdWlhPKsZ55KsTbxHNrqxRb39Q6gm/8j6XPr4CO2l4k0AUhM
- 6MyMIEd9muidsGNe9QIGzoq5Uo9Al0nLDozJdRCBgoPoNnbPLII5gD5VqbEA9IpRkRPR
- AKoA==
+ bh=ThH5BQgbHAmOS+UQy2wCG4a6AKm/DC+QNI57Vzuv2mA=;
+ b=vcn7x9R7CFOC1/nGW0tBaRzt5Ic16agommM6MpU4orZ38uJkXhfWGFm1u7yl7vL+d8
+ M6nh7mddfG+s+UGEMTqO9qBQhlRmH7VPodkPOoY9mejBX0hAe5e0f8okor9TaeU10/8f
+ i5ElWUPxZcvj02zKbLq6J2PlUNtUodyIoosfyfmy9HQnfEiu4IubkAyQm3kaGNklzdlb
+ zC0+stQCcCey8QXn8RwzbxdJH4+Qf/ntqyiDZLKBI/Kn5zmk3t3JhzuG+OouB1pgqyqQ
+ yGHDdh4nQ2wR0I5qrpsFv5YEXwvzT1ZPEapzxLfB/W6YOTA5DeWkwACCrUlMnw8FEYCb
+ z78w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740578632; x=1741183432;
+ d=1e100.net; s=20230601; t=1740578637; x=1741183437;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8OLAEfb1TFH74FrITh5hY7sd4JTAq5WSAJV1LNPh/Qg=;
- b=q3MRZv27Ti/1faRTxIjvxzPEn6g3zvw0z5qiY7sHnYAM8HGPZTGxokhEGaMhiD6qYF
- 3kpJVlikCJV1m41mvBClLzXsH/6/THwVGWTCDYrBQHXfeGf8gabLcIST0B7y3FzSzNVJ
- e40kZYE5eyzCyL1+y45ezuC+Nkc+VnK3KtP+d5W6IGCY7IAhU4I85OthiPom4aZr0Zxe
- rOP2HnH7sRnYGFLo3X8sV72XufFpd4dRKzJkfgs6fXCwTEOcknU21eldvdL4wjvmK4ju
- 8Y3LQyx9WpqdUZ1Q7KdWDRWKbhI+EUjnSCQ8RJW+QOS4u3H566wv1ygZ2A+Tx/lLpSnc
- in4Q==
-X-Gm-Message-State: AOJu0Yzc2JObbnN/IvyCVCYVtT49AZX0A5PV1xq+3EC+yv6tXLs0284E
- x2QW4DnA2rfzXKLxMB3w+U3sbyWPwTmwhMItNTXXHAE7JnX5+JiTrrIr4x+cnVg=
-X-Gm-Gg: ASbGncvjG7KbpFhNJ5s9CLRHPPEItTKAoWGmcSAtidMl+LGIGqLjgkj/GtvP8YU1qQR
- Rm1TXK3p1VIS0r+T6fIsk28BCt+hpGXZ/Kj8owH1iZRECPMPBdlyEztd44gD0+YUtnSvFwxnJXX
- EFIWaJ9xtxVQ/UbrB9jHpaee2krEMKrF91MKT6iSMtjAQDlXtCj75RRHmz70irKfpbN++f07V6z
- xYTDJc9dRlNBrNTcZsYZLxWTiLRgmTyKiOn36+GbToNxnHOlQcQ1KN+iSI6Xfu9NAhjwDPMkG9s
- +Q0gEB0GS8huRwXcu22inmR/+k4v
-X-Google-Smtp-Source: AGHT+IE6AOHiFi8UETxjRSZnfI+8EyG7zhsKlcDWkooHEp9HVjJN5cw2ndmcfJu+OezpPsDJqiwCpw==
-X-Received: by 2002:a05:6000:1fa5:b0:38f:3015:b9f4 with SMTP id
- ffacd0b85a97d-390d4f42947mr2619273f8f.27.1740578632136; 
- Wed, 26 Feb 2025 06:03:52 -0800 (PST)
+ bh=ThH5BQgbHAmOS+UQy2wCG4a6AKm/DC+QNI57Vzuv2mA=;
+ b=bOlZW8VM2iqh1obBlbG3obQ9OSzp2R30UQKgmIt1vZPfMY/Dgpk+sR2HopJtgBUFDk
+ HhCIjMx23ldJAIrhl2feuPTlkJHocoGMIC3W4DJ6WlPf8AUsyI0fS6QY458Y5ltPFn4N
+ GNC1WDJsUqsmetBHHjsLpzP73ZpvQc4aNv0Q2xtzP032wACrnxpL35EA0vAwm7I3DTCY
+ 3X/OKzSIMzEdV/cmpcM0esGrSXsmu2K2LnyKGmwm+5BHjb09o1gbO6F7KNCVfAuKIMbH
+ nI+0W66Lxusy08gn24qlx5snWzHR/UvXDpEI4fF3VOvu1zaKtSguAwDgmmdsHKrvhC3W
+ n11A==
+X-Gm-Message-State: AOJu0Yy3iPdKvIgDgFGTMkBoKfdxzAQE+bzoz2hxbs973qG4WjK6UiT+
+ PV4YLfjAtxicnrPTTO9sqbxmNbUnq1wD9HrQUNtE/h7M2zOkTr7567XodRzF+r0=
+X-Gm-Gg: ASbGnctT9YFrns4mfl12CfDESXI8bchv3yea9g/V4jrS4qRQv93jRuFscdsoxfL62GW
+ ShSrhHqr7I8CJW2JjRmGj0q7xfe2L7l1duK/m2xYDKfNtbcEbmX1WaJXhNkLa2hC+94ZZ+EETh3
+ m2xVWcQSGuAQHn2GiQJhrHgCT4XL25I/VuHSPSm6KQRVZMyxj2olMNncSzYflhAnng1KBmoFlX6
+ Ptoug8rzl5rNd5g4c8pi571pBdTsk2b6B6uvp2/eEcsArH6u7BNT9B8wzec+wAz80KAAtAZLw01
+ pjdPwXaZ2zNmeKmGB/dD6GM8Ox4g
+X-Google-Smtp-Source: AGHT+IFFNlhkw3kzVazdTaS3EZM4YWxJWGMoAB/2aOLRU0VRtSXmkLsvO3HWriiFXTOsZ1qMWEqvOQ==
+X-Received: by 2002:a05:600c:3d19:b0:43a:b186:8abc with SMTP id
+ 5b1f17b1804b1-43ab1868ac3mr73031805e9.2.1740578636516; 
+ Wed, 26 Feb 2025 06:03:56 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390df959306sm470978f8f.58.2025.02.26.06.03.45
+ 5b1f17b1804b1-43aba57145esm22493425e9.30.2025.02.26.06.03.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 06:03:47 -0800 (PST)
+ Wed, 26 Feb 2025 06:03:52 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 77BEE60339;
- Wed, 26 Feb 2025 14:03:44 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 38416603F4;
+ Wed, 26 Feb 2025 14:03:45 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
@@ -82,17 +82,17 @@ Cc: qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 06/25] tests/functional: Introduce the dso_suffix() helper
-Date: Wed, 26 Feb 2025 14:03:24 +0000
-Message-Id: <20250226140343.3907080-7-alex.bennee@linaro.org>
+Subject: [PATCH 13/25] tests/tcg: fix constraints in test-i386-adcox
+Date: Wed, 26 Feb 2025 14:03:31 +0000
+Message-Id: <20250226140343.3907080-14-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250226140343.3907080-1-alex.bennee@linaro.org>
 References: <20250226140343.3907080-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,57 +115,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Clang complains:
 
-Introduce a helper to get the default shared library
-suffix used on the host.
+  clang -O2 -m64 -mcx16 /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c -o test-i386-adcox -static
+  /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c:32:26: error: invalid input constraint '0' in asm
+          : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
+                           ^
+  /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c:57:26: error: invalid input constraint '0' in asm
+          : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
+                           ^
+  2 errors generated.
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20250220080215.49165-3-philmd@linaro.org>
-[AJB: dropped whitespace cmd.py damage]
+Pointing out a numbered input constraint can't point to a read/write
+output [1]. Convert to a read-only input constraint to allow this.
+
+[1] https://lists.llvm.org/pipermail/cfe-commits/Week-of-Mon-20101101/036036.html
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/__init__.py | 2 +-
- tests/functional/qemu_test/config.py   | 6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ tests/tcg/i386/test-i386-adcox.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 5c972843a6..45f7befa37 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -7,7 +7,7 @@
+diff --git a/tests/tcg/i386/test-i386-adcox.c b/tests/tcg/i386/test-i386-adcox.c
+index 16169efff8..b56dbc00f2 100644
+--- a/tests/tcg/i386/test-i386-adcox.c
++++ b/tests/tcg/i386/test-i386-adcox.c
+@@ -28,7 +28,7 @@ void test_adox_adcx(uint32_t in_c, uint32_t in_o, REG adcx_operand, REG adox_ope
+         "adox %3, %2;"
+         "adcx %3, %1;"
+         "pushf; pop %0"
+-        : "+r" (flags), "+r" (out_adcx), "+r" (out_adox)
++        : "=r"(flags), "=r"(out_adcx), "=r"(out_adox)
+         : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
  
+     assert(out_adcx == in_c + adcx_operand - 1);
+@@ -53,7 +53,7 @@ void test_adcx_adox(uint32_t in_c, uint32_t in_o, REG adcx_operand, REG adox_ope
+         "adcx %3, %1;"
+         "adox %3, %2;"
+         "pushf; pop %0"
+-        : "+r" (flags), "+r" (out_adcx), "+r" (out_adox)
++        : "=r"(flags), "=r"(out_adcx), "=r"(out_adox)
+         : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
  
- from .asset import Asset
--from .config import BUILD_DIR
-+from .config import BUILD_DIR, dso_suffix
- from .cmd import is_readable_executable_file, \
-     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
-     exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
-diff --git a/tests/functional/qemu_test/config.py b/tests/functional/qemu_test/config.py
-index edd75b7fd0..0eab1baa54 100644
---- a/tests/functional/qemu_test/config.py
-+++ b/tests/functional/qemu_test/config.py
-@@ -13,6 +13,7 @@
- 
- import os
- from pathlib import Path
-+import platform
- 
- 
- def _source_dir():
-@@ -34,3 +35,8 @@ def _build_dir():
-     raise Exception("Cannot identify build dir, set QEMU_BUILD_ROOT")
- 
- BUILD_DIR = _build_dir()
-+
-+def dso_suffix():
-+    '''Return the dynamic libraries suffix for the current platform'''
-+    DSO_SUFFIXES = { 'Linux': 'so', 'Darwin': 'dylib', 'Windows': 'dll' }
-+    return DSO_SUFFIXES[platform.system()]
+     assert(out_adcx == in_c + adcx_operand - 1);
 -- 
 2.39.5
 
