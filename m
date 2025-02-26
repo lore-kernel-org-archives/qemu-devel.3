@@ -4,103 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD29C18E7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 15:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E404FC021B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Feb 2025 15:24:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnJ9J-0001pc-LU; Wed, 26 Feb 2025 10:16:38 -0500
+	id 1tnJGG-0004cK-Ej; Wed, 26 Feb 2025 10:23:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tnJ9G-0001nU-ET
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:16:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tnJFn-0004Yt-N3; Wed, 26 Feb 2025 10:23:23 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tnJ9B-00083w-Mp
- for qemu-devel@nongnu.org; Wed, 26 Feb 2025 10:16:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740582987;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YAMKaxbCuypd3vaZYRif/XLYSi0QvW8Uwy9pZuSSG5I=;
- b=JzGARadcb4ODMMtNoYYkpPqQH470eE01/59sJFnMxz/jI7S2YIrBf/B1GHcvCXa0Sluqx1
- ZgnLb5bx9wA0LnQPYqMoWIQatc6uatDAX4eWo3FB/vMtJveRUtI/NvUyFlmYN26AE2AtAG
- 6xirunqFdCFnAwoUkrI3Z7k90D+JBAw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76--lXRrI49NTOkxkeDPxCpgg-1; Wed, 26 Feb 2025 10:16:24 -0500
-X-MC-Unique: -lXRrI49NTOkxkeDPxCpgg-1
-X-Mimecast-MFC-AGG-ID: -lXRrI49NTOkxkeDPxCpgg_1740582983
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-439a5c4dfb2so31677785e9.1
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 07:16:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740582983; x=1741187783;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YAMKaxbCuypd3vaZYRif/XLYSi0QvW8Uwy9pZuSSG5I=;
- b=NWhJtqOkNlLGoo8rYNWZW51sP7+faUhMAg0qO1ZdqX3ROCGTTe6alOfDJ8JkmmIlXt
- p7ok47IZJUbhTzMA8TN8qT8j4v+RFcf/aeDtwM0BPG5q/aB0+kuVxymaTyrO9yO88prz
- D8yvRvxJhdtdERnnhmsXgozWIJbIXxm4taP+/yCfn48uyAS6ksbsOCAovDeDv0hTCdwx
- m11QvugSpCdssT9eWwumJbsh+tnVNGw9tcEvweOci/s3zOE5HPUtsxpoy9AvMtDrD8NL
- 9NWtyXyfAllIMoTs1TR0dI7I8RfRpDPYUCGZFLvYPHvW5KuV8slugaL+SIjF8bWzGtOB
- SWmQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWyDHkB7uXLyYOqZJ8qfCyNzJcfGmHxM0EnWPaIZ7ZIKPPXhZ6jI2TC1RS1bJ2RSH7cPjaZ+EJeQbMX@nongnu.org
-X-Gm-Message-State: AOJu0YxJiAEGlC6ufTtQulMXhG1y0g8Z+VvR7gBoMjJddW8SlXVgkEBH
- 25/VNAhXYu0hJunTHFgCb5V1x95qou1Eu/W8ZZ4AK1o7c4SOMqNuwbVxlJD6E3k7a+uxSXxnpee
- qfw1oDhByGwphIkELBIPFR0bFubocb9SUuvSvoPO2DDkdeqZaEO1g
-X-Gm-Gg: ASbGncsgUrdKvjcS5blZr6D5DizuuJL7nShBA69s1VAAacZdxjlhE75CjBAagNWdonH
- PTSITiSaxDAqgYTC3nUlhqef+ynWflGfXj5ljWwrdt12igKsJbkLYVAUsQnbhz0tyHU69xc9Uik
- siej4VcC1Vyy0qU4PZ6EwuaNxRlr+sb5zImxFocRfdQMbZDwFB0obILYkI8XLTpfHG4pMRhH0Kd
- jM67P6WWxFNDt382khlIXckGhFEBOfwNKlLPOErRrQOBbJiyMa/hTedlv7gYYIWMD2584dwta9I
- fNAT7m3T1PSpU7g7myjZ1aemo2lALJGTjfZir8LPwvs4Ng4LPvVQJ4jBVgLYrnA=
-X-Received: by 2002:a05:600c:3b13:b0:439:8b19:fa92 with SMTP id
- 5b1f17b1804b1-43ab8fd1d5dmr31944425e9.3.1740582982931; 
- Wed, 26 Feb 2025 07:16:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGlM6i8Ee/tLzlEeUpo6E2Z8sILDKY6kCfAi/XqI/dobpFiR2uV+QuL0e7RHhvki21w2RWp4g==
-X-Received: by 2002:a05:600c:3b13:b0:439:8b19:fa92 with SMTP id
- 5b1f17b1804b1-43ab8fd1d5dmr31943985e9.3.1740582982458; 
- Wed, 26 Feb 2025 07:16:22 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba549d6asm24515085e9.36.2025.02.26.07.16.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 07:16:21 -0800 (PST)
-Date: Wed, 26 Feb 2025 16:16:21 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 03/14] acpi/ghes: Use HEST table offsets when
- preparing GHES records
-Message-ID: <20250226161621.61d482fc@imammedo.users.ipa.redhat.com>
-In-Reply-To: <0134424ddba15dea8daaf32b09e89f1bf7e81552.1740148260.git.mchehab+huawei@kernel.org>
-References: <cover.1740148260.git.mchehab+huawei@kernel.org>
- <0134424ddba15dea8daaf32b09e89f1bf7e81552.1740148260.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tnJFi-0000jQ-L3; Wed, 26 Feb 2025 10:23:19 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id EF63DF27EA;
+ Wed, 26 Feb 2025 18:22:30 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6559D1BFC61;
+ Wed, 26 Feb 2025 18:22:58 +0300 (MSK)
+Message-ID: <e021e4d9-fe04-4832-bdde-c394473283ca@tls.msk.ru>
+Date: Wed, 26 Feb 2025 18:22:58 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] Emulated AMD IOMMU cleanup and fixes
+To: Vasant Hegde <vasant.hegde@amd.com>, Sairaj Kodilkar <sarunkod@amd.com>,
+ qemu-devel@nongnu.org
+Cc: mst@redhat.com, suravee.suthikulpanit@amd.com,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250207045354.27329-1-sarunkod@amd.com>
+ <985611f9-e7f9-44d0-a8c0-95fb48370591@tls.msk.ru>
+ <75adbcf1-0acd-40e7-b1ef-c699c07bf2fc@amd.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <75adbcf1-0acd-40e7-b1ef-c699c07bf2fc@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,182 +107,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 21 Feb 2025 15:35:12 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+26.02.2025 15:53, Vasant Hegde wrote:
+> Hi Michael,
 
-> There are two pointers that are needed during error injection:
+Hi!
+
+> On 2/25/2025 2:17 PM, Michael Tokarev wrote:
+...>> Is this qemu-stable material (current series: 7.2, 8.2, 9.2)?
 > 
-> 1. The start address of the CPER block to be stored;
-> 2. The address of the ack.
-s/ack/read_ack/
+> Linux kernel doesn't use these changes. So its fine. But I believe we care for
+> other OS as well? if yes then better to backport.
 
+Yes, we definitely care about other OSes.  There are numerous possible
+other questions though.  For example, how relevant these changes are
+for older 7.2.x series, where AMD IOMMU is in less current state (missing
+all further development) so might not be as relevant anymore.
+
+>> 3684717b74 "amd_iommu: Use correct bitmask to set capability BAR" does
+>> not apply to 7.2, since v8.0.0-10-g6291a28645 "hw/i386/amd_iommu: Explicit
+>> use of AMDVI_BASE_ADDR in amdvi_init" in not in 7.2, but the change can be
+>> adjusted for 7.2 easily, or 6291a28645 can be picked up too.
 > 
-> It is preferable to calculate them from the HEST table.  This allows
-> checking the source ID, the size of the table and the type of the
-> HEST error block structures.
-> 
-> Yet, keep the old code, as this is needed for migration purposes
+> How is this works? You will pick it up -OR- you want us to backport and send it
+> to stable mailing list?
 
-+ from older QEMU versions
+This is just a data point, nothing more.  Indicating that for 7.2, it needs some
+more work.  I picked it up for 7.2 already: https://gitlab.com/mjt0k/qemu/-/tree/staging-7.2
+But this is more mechanical way, maybe you, who know this area much better than
+me, prefer other way, like picking up already mentioned commit 6291a28645.
+Or maybe it isn't worth the effort for 7.2 anyway, provided the issue isn't
+that important and it needs any additional work to back-port.
 
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
->  hw/acpi/ghes.c         | 100 +++++++++++++++++++++++++++++++++++++++++
->  include/hw/acpi/ghes.h |   2 +-
->  2 files changed, 101 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index ba37be9e7022..7efea519f766 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -41,6 +41,12 @@
->  /* Address offset in Generic Address Structure(GAS) */
->  #define GAS_ADDR_OFFSET 4
->  
-> +/*
-> + * ACPI spec 1.0b
-> + * 5.2.3 System Description Table Header
-> + */
-> +#define ACPI_DESC_HEADER_OFFSET     36
-> +
->  /*
->   * The total size of Generic Error Data Entry
->   * ACPI 6.1/6.2: 18.3.2.7.1 Generic Error Data,
-> @@ -61,6 +67,30 @@
->   */
->  #define ACPI_GHES_GESB_SIZE                 20
->  
-> +/*
-> + * See the memory layout map at docs/specs/acpi_hest_ghes.rst.
-> + */
-> +
-> +/*
-> + * ACPI 6.1: 18.3.2.8 Generic Hardware Error Source version 2
-> + * Table 18-344 Generic Hardware Error Source version 2 (GHESv2) Structure
-> + */
-> +#define HEST_GHES_V2_ENTRY_SIZE  92
-> +
-> +/*
-> + * ACPI 6.1: 18.3.2.7: Generic Hardware Error Source
-wrong chapter, read ack can't be in v1 GHES
+If you especially care about some older stable releases and think one or
+another change really needs to be there *and* needs some backporting work,
+you might do a backport yourself or give some notes for me to do that.
 
-> + * Table 18-344 Generic Hardware Error Source version 2 (GHESv2) Structure
-> + * Read Ack Register
-> + */
-> +#define GHES_READ_ACK_ADDR_OFF          64
-> +
-> +/*
-> + * ACPI 6.1: 18.3.2.7: Generic Hardware Error Source
-> + * Table 18-341 Generic Hardware Error Source Structure
-> + * Error Status Address
-> + */
-> +#define GHES_ERR_STATUS_ADDR_OFF  20
-> +
->  /*
->   * Values for error_severity field
->   */
-> @@ -412,6 +442,73 @@ static void get_hw_error_offsets(uint64_t ghes_addr,
->      *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
->  }
->  
-> +static void get_ghes_source_offsets(uint16_t source_id,
-> +                                    uint64_t hest_addr,
-> +                                    uint64_t *cper_addr,
-> +                                    uint64_t *read_ack_start_addr,
-> +                                    Error **errp)
-> +{
-> +    uint64_t hest_err_block_addr, hest_read_ack_addr;
-> +    uint64_t err_source_entry, error_block_addr;
-> +    uint32_t num_sources, i;
-> +
-> +    hest_addr += ACPI_DESC_HEADER_OFFSET;
-> +
-> +    cpu_physical_memory_read(hest_addr, &num_sources,
-> +                             sizeof(num_sources));
-> +    num_sources = le32_to_cpu(num_sources);
-> +
-> +    err_source_entry = hest_addr + sizeof(num_sources);
-> +
-> +    /*
-> +     * Currently, HEST Error source navigates only for GHESv2 tables
-> +     */
-> +    for (i = 0; i < num_sources; i++) {
-> +        uint64_t addr = err_source_entry;
-> +        uint16_t type, src_id;
-> +
-> +        cpu_physical_memory_read(addr, &type, sizeof(type));
-> +        type = le16_to_cpu(type);
-> +
-> +        /* For now, we only know the size of GHESv2 table */
-> +        if (type != ACPI_GHES_SOURCE_GENERIC_ERROR_V2) {
-> +            error_setg(errp, "HEST: type %d not supported.", type);
-> +            return;
-> +        }
-> +
-> +        /* Compare CPER source address at the GHESv2 structure */
-                                  ^^^^^ typo?
+It's always a trade-off between "importance" of the change, age of the
+stable series, the amount of work needed for backporting, and possibility
+of breakage.  For less-important or less-used stuff, even thinking about
+this tradeoff is already too much work ;)
 
-> +        addr += sizeof(type);
-> +        cpu_physical_memory_read(addr, &src_id, sizeof(src_id));
-> +        if (le16_to_cpu(src_id) == source_id) {
-> +            break;
-> +        }
-> +
-> +        err_source_entry += HEST_GHES_V2_ENTRY_SIZE;
-> +    }
-> +    if (i == num_sources) {
-> +        error_setg(errp, "HEST: Source %d not found.", source_id);
-> +        return;
-> +    }
-> +
-> +    /* Navigate though table address pointers */
-                   ^^^^^ typo
- 
-> +    hest_err_block_addr = err_source_entry + GHES_ERR_STATUS_ADDR_OFF +
-> +                          GAS_ADDR_OFFSET;
-> +
-> +    cpu_physical_memory_read(hest_err_block_addr, &error_block_addr,
-> +                             sizeof(error_block_addr));
-> +    error_block_addr = le64_to_cpu(error_block_addr);
-> +
-> +    cpu_physical_memory_read(error_block_addr, cper_addr,
-> +                             sizeof(*cper_addr));
-> +    *cper_addr = le64_to_cpu(*cper_addr);
-> +
-> +    hest_read_ack_addr = err_source_entry + GHES_READ_ACK_ADDR_OFF +
-> +                         GAS_ADDR_OFFSET;
-> +    cpu_physical_memory_read(hest_read_ack_addr, read_ack_start_addr,
-> +                             sizeof(*read_ack_start_addr));
-> +    *read_ack_start_addr = le64_to_cpu(*read_ack_start_addr);
-> +}
-> +
->  void ghes_record_cper_errors(const void *cper, size_t len,
->                               uint16_t source_id, Error **errp)
->  {
-> @@ -437,6 +534,9 @@ void ghes_record_cper_errors(const void *cper, size_t len,
->      if (!ags->use_hest_addr) {
->          get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
->                               &cper_addr, &read_ack_register_addr);
-> +    } else {
-> +        get_ghes_source_offsets(source_id, le64_to_cpu(ags->hest_addr_le),
-> +                                &cper_addr, &read_ack_register_addr, errp);
->      }
->  
->      if (!cper_addr) {
-> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> index 454e97b5341c..2f06e433ce04 100644
-> --- a/include/hw/acpi/ghes.h
-> +++ b/include/hw/acpi/ghes.h
-> @@ -80,7 +80,7 @@ enum {
->  typedef struct AcpiGhesState {
->      uint64_t hest_addr_le;
->      uint64_t hw_error_le;
-> -    bool use_hest_addr;         /* Currently, always false */
-> +    bool use_hest_addr; /* True if HEST address is present */
->  } AcpiGhesState;
->  
->  void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
+Thanks,
 
+/mjt
 
