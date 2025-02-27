@@ -4,99 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17227C19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 10:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38D93C021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 10:12:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnaqb-0002PU-78; Thu, 27 Feb 2025 05:10:29 -0500
+	id 1tnard-0002yO-Lj; Thu, 27 Feb 2025 05:11:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnaqX-0002P0-E4
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:10:26 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tnaqV-0006lX-G3
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:10:25 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so6809955e9.1
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 02:10:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740651020; x=1741255820; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZlKvtGXTBu0xUJ0Wh3yYLlHmh6pQ8oJ5/KLtZo1trzQ=;
- b=kMYfQmrfRu1d6JT7cj5YVRMLWYckvdDaegSucrfK/ihufdIlHErEHpfymuO0DMPz3Y
- 5vdNEmJ/aqrYxhgs1PlhoHEq2vWmXO64G83mxFgnL90fyjp/gs6JUh1lwxUkgX7wMwb2
- qM/geRSKN5qH1cUSaGIceixHzhor4Jr8nfK+AFHehqkZ+zw4sXl6BlqCXTS1piKkuDCi
- HcbUQhmMoWSGmg7vtRaqQAfPTwAktVhX0U70XI22Swa8X8QPISPRVPWxtLLF+o+3WkKk
- VavY1w//xHtxhyVMP8wEWczZ8SgeTX7eaEeRp+6zMx/KlZ8CUNxCAlchSFmEtHWTiAQT
- NgeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740651020; x=1741255820;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZlKvtGXTBu0xUJ0Wh3yYLlHmh6pQ8oJ5/KLtZo1trzQ=;
- b=etXgD9ShzjhQ0ulb+y4QwOeBV5UzlgQ03zgKPbI/rKmkvnb5kVoPNkTtBEQuXm8BUW
- oZ/An7LTxjxAJzUbvuHVHIccNbngbpL5ALmezGwAqbPO/8ZflOXmaWN51bv8qeP+AtNw
- XF9LFWI7PbmYxGwZ6cKRGIgbDw6QDDuxb1/WrcxPi3nC5UvHru0xyLS6+92jjlQPzI9D
- Bf5F+pDCOi/c2p5PHw4YvhqUAXlfltXdoClFyUYpCZ2qldjGQKoXEnM6J2OLVr3btLa5
- McSU2QaMMZHozkdm72yqNh67OW6lnaVkjrRNiZ6uZqojz5nJ25GqjgWxkr8ltwDbI62w
- 6zMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7qMeM2/qXkBGZuXVQdnAax9rGpCINEYkt1TLPMBFb5j4H/aJd/uLJ4cnh8uUGK2OyWSZFuhvm7KVc@nongnu.org
-X-Gm-Message-State: AOJu0YyzR/jFeUzK6s+XAvPhC/wQFIEJ5XMDEuQqz8N9uzenmVri4FqY
- H8/RIBET7QrfCSO+Tzx9p0zS3HziY6M7AtftEu+oDUN+fWivTv8XgcuxagODXF4=
-X-Gm-Gg: ASbGncsmIm8mAxhNQhI7RJXpb6YhMdDDvW2K1xBWpkcu7G72FaN6PkCx2scuY9dLRZh
- Rqz8nKz+SNAvdhPC3biIiHm5jE0+NeY0aM5D2JGEwMdzCxIbBnQIGuup+ymCe3QdQkA651gtdHB
- TXJ5EVMmAcEdtkJfpZ+gK7hcAkqIAxAbtbTANrtqZmC8TC44/IKH3Yt2bQqceVOCF/ucGxqpEMp
- P8QsgeLcDahZ+epQAlTMipY+gSq+mn0WYKg3TIIriNV0I6TzmmnAgidswhPLu/JWuitjuDf/BsJ
- RAnYOi1RJ9i8L8jnGyq27chr/YzG
-X-Google-Smtp-Source: AGHT+IFIlmYQfaHaKTF5nf08hnELExkEF6goxoJE+gk4sx9l+Qgq9lIyDdOTbuX8BPzFFy7OrQ6ItA==
-X-Received: by 2002:a05:600c:3588:b0:439:6304:e28a with SMTP id
- 5b1f17b1804b1-43ab8f6fe56mr62314135e9.0.1740651020288; 
- Thu, 27 Feb 2025 02:10:20 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43b7a27abd6sm17209855e9.26.2025.02.27.02.10.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 02:10:19 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E2ABD5F8AB;
- Thu, 27 Feb 2025 10:10:18 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Nicholas Piggin" <npiggin@gmail.com>
-Cc: "Richard Henderson" <richard.henderson@linaro.org>,
- <qemu-devel@nongnu.org>,  "Daniel Henrique Barboza"
- <danielhb413@gmail.com>,  "Igor Mammedov" <imammedo@redhat.com>,  "Helge
- Deller" <deller@gmx.de>,  "Paolo Bonzini" <pbonzini@redhat.com>,
- <qemu-ppc@nongnu.org>,  "Zhao Liu" <zhao1.liu@intel.com>
-Subject: Re: [PATCH 2/4] target/hppa: defer hppa_ptlbe until CPU starts running
-In-Reply-To: <D833X0DADOYN.29O3TB1R6KTUI@gmail.com> (Nicholas Piggin's message
- of "Thu, 27 Feb 2025 19:05:47 +1000")
-References: <20250225184628.3590671-1-alex.bennee@linaro.org>
- <20250225184628.3590671-3-alex.bennee@linaro.org>
- <ecce2fe8-f2c0-48fb-a3dd-99a1c4720dd5@linaro.org>
- <c2e62cce-65f4-417e-bd57-85b64e78102c@linaro.org>
- <D833X0DADOYN.29O3TB1R6KTUI@gmail.com>
-User-Agent: mu4e 1.12.9; emacs 29.4
-Date: Thu, 27 Feb 2025 10:10:18 +0000
-Message-ID: <87senzwved.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tnarN-0002vW-QW; Thu, 27 Feb 2025 05:11:17 -0500
+Received: from tor.source.kernel.org ([2600:3c04::f03c:95ff:fe5e:7468])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tnarK-0006rg-HN; Thu, 27 Feb 2025 05:11:17 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id BF7FF61188;
+ Thu, 27 Feb 2025 10:11:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82F0C4CEE9;
+ Thu, 27 Feb 2025 10:11:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1740651070;
+ bh=3VbG0f+R5quSXn4piQUIOSAIYO8Kb99nmMmrqQDcbgI=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=eiYV5XgphA4L9gSM2Liy1EkmaHuBYOrU+Oz6IdWNgqqX1RyDWbpU+95EgZ/R9Nk+H
+ SXGGT1PU/Y6/qVFkWVPJFuLyLzlnJQ+SwMq2ZvB8S8J8p5uUzoa/A7gAvRV32Jkcub
+ ocsEAN3Sywe+P5i247MUC1V4pUS2lPqfX6d9iedWnJNuKNpsvtwXfX1xHYcmOwvXyp
+ mOg4qXUUzRzw3w7I5BDK4e6ZhiWhRWD2/OhQcwYqm7g4gRQtnrzCj28Aes8eXc64q2
+ TKaZi5XKJidI+j2q3zy1KbjQrSBV5yrzK+O5MBXL4+zhC2PbJkb7qdV4MIAALEDov9
+ AzbyKSR92m5gw==
+Date: Thu, 27 Feb 2025 11:11:05 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 03/14] acpi/ghes: Use HEST table offsets when
+ preparing GHES records
+Message-ID: <20250227111105.194037f1@foz.lan>
+In-Reply-To: <20250227102255.6843705e@imammedo.users.ipa.redhat.com>
+References: <cover.1738345063.git.mchehab+huawei@kernel.org>
+ <9610ff88cf6fdc59cbfc8871d653fd890391be1e.1738345063.git.mchehab+huawei@kernel.org>
+ <20250203153423.3e4de17c@imammedo.users.ipa.redhat.com>
+ <20250221070221.329bdfb0@foz.lan>
+ <20250225104327.0a2d1cb4@imammedo.users.ipa.redhat.com>
+ <20250226171406.19c2de6b@sal.lan>
+ <20250227102255.6843705e@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c04::f03c:95ff:fe5e:7468;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,49 +79,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Nicholas Piggin" <npiggin@gmail.com> writes:
+Em Thu, 27 Feb 2025 10:22:55 +0100
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-> On Wed Feb 26, 2025 at 5:38 AM AEST, Richard Henderson wrote:
->> On 2/25/25 11:33, Richard Henderson wrote:
->>> On 2/25/25 10:46, Alex Benn=C3=A9e wrote:
->>>> @@ -191,7 +199,7 @@ static void hppa_cpu_realizefn(DeviceState *dev, E=
-rror **errp)
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cpu->alarm_time=
-r =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 hppa_cpu_alarm_timer, cpu);
->>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hppa_ptlbe(&cpu->env);
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 async_run_on_cpu(cs, hppa_=
-clear_ptlbe, RUN_ON_CPU_HOST_PTR(&cpu->env));
->>>=20
->>> Nack, this is emulation of hardware, not softmmu.
->>
->> Hmm.  I see what you're thinking about though: this function, after rese=
-tting the data=20
->> structures associated with the hardware emulation, also calls the softmm=
-u flush.
->>
->> If we absolutely need to do so, I suppose delaying the hardware emulatio=
-n flush to the=20
->> work queue isn't the worst solution.  This is where the hppa patch is mo=
-re correct than=20
->> the ppc patch which completely eliminated the hardware emulation flush.
->
-> Could we expose a function that performs the hardware state reset,
-> and leave the TCG flushing to the TCG CPU reset?
+> On Wed, 26 Feb 2025 17:14:06 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > Em Tue, 25 Feb 2025 10:43:27 +0100
+> > Igor Mammedov <imammedo@redhat.com> escreveu:
+> >   
+> > > On Fri, 21 Feb 2025 07:02:21 +0100
+> > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > >     
+> > > > Em Mon, 3 Feb 2025 15:34:23 +0100
+> > > > Igor Mammedov <imammedo@redhat.com> escreveu:
+> > > >       
+> > > > > On Fri, 31 Jan 2025 18:42:44 +0100
+> > > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > > > >         
+> > > > > > There are two pointers that are needed during error injection:
+> > > > > > 
+> > > > > > 1. The start address of the CPER block to be stored;
+> > > > > > 2. The address of the ack.
+> > > > > > 
+> > > > > > It is preferable to calculate them from the HEST table.  This allows
+> > > > > > checking the source ID, the size of the table and the type of the
+> > > > > > HEST error block structures.
+> > > > > > 
+> > > > > > Yet, keep the old code, as this is needed for migration purposes.
+> > > > > > 
+> > > > > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > > > > > ---
+> > > > > >  hw/acpi/ghes.c         | 132 ++++++++++++++++++++++++++++++++++++-----
+> > > > > >  include/hw/acpi/ghes.h |   1 +
+> > > > > >  2 files changed, 119 insertions(+), 14 deletions(-)
+> > > > > > 
+> > > > > > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> > > > > > index 27478f2d5674..8f284fd191a6 100644
+> > > > > > --- a/hw/acpi/ghes.c
+> > > > > > +++ b/hw/acpi/ghes.c
+> > > > > > @@ -41,6 +41,12 @@
+> > > > > >  /* Address offset in Generic Address Structure(GAS) */
+> > > > > >  #define GAS_ADDR_OFFSET 4
+> > > > > >  
+> > > > > > +/*
+> > > > > > + * ACPI spec 1.0b
+> > > > > > + * 5.2.3 System Description Table Header
+> > > > > > + */
+> > > > > > +#define ACPI_DESC_HEADER_OFFSET     36
+> > > > > > +
+> > > > > >  /*
+> > > > > >   * The total size of Generic Error Data Entry
+> > > > > >   * ACPI 6.1/6.2: 18.3.2.7.1 Generic Error Data,
+> > > > > > @@ -61,6 +67,25 @@
+> > > > > >   */
+> > > > > >  #define ACPI_GHES_GESB_SIZE                 20
+> > > > > >  
+> > > > > > +/*
+> > > > > > + * Offsets with regards to the start of the HEST table stored at
+> > > > > > + * ags->hest_addr_le,          
+> > > > > 
+> > > > > If I read this literary, then offsets above are not what
+> > > > > declared later in this patch.
+> > > > > I'd really drop this comment altogether as it's confusing,
+> > > > > and rather get variables/macro naming right
+> > > > >         
+> > > > > > according with the memory layout map at
+> > > > > > + * docs/specs/acpi_hest_ghes.rst.
+> > > > > > + */          
+> > > > > 
+> > > > > what we need is update to above doc, describing new and old ways.
+> > > > > a separate patch.        
+> > > > 
+> > > > I can't see anything that should be changed at
+> > > > docs/specs/acpi_hest_ghes.rst, as this series doesn't change the
+> > > > firmware layout: we're still using two firmware tables:
+> > > > 
+> > > > - etc/acpi/tables, with HEST on it;
+> > > > - etc/hardware_errors, with:
+> > > > 	- error block addresses;
+> > > > 	- read_ack registers;
+> > > > 	- CPER records.
+> > > > 
+> > > > The only changes that this series introduce are related to how
+> > > > the error generation logic navigates between HEST and hw_errors
+> > > > firmware. This is not described at acpi_hest_ghes.rst, and both
+> > > > ways follow ACPI specs to the letter.
+> > > > 
+> > > > The only difference is that the code which populates the CPER
+> > > > record and the error/read offsets doesn't require to know how
+> > > > the HEST table generation placed offsets, as it will basically
+> > > > reproduce what OSPM firmware does when handling	HEST events.      
+> > > 
+> > > section 8 describes old way to get to address to record old CPER,
+> > > so it needs to amended to also describe a new approach and say
+> > > which way is used for which version.
+> > > 
+> > > possibly section 11 might need some messaging as well.    
+> > 
+> > Ok, I'll modify it and place at the end of the series. Please
+> > see below if the new text is ok for you.
+> > 
+> > ---
+> > 
+> > [PATCH] docs/specs/acpi_hest_ghes.rst: update it to reflect some changes  
+> 
+> s/^^^/docs: hest: add new "etc/acpi_table_hest_addr" and update workflow/
+> 
+> > 
+> > While the HEST layout didn't change, there are some internal
+> > changes related to how offsets are calculated and how memory error
+> > events are triggered.
+> > 
+> > Update specs to reflect such changes.
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > 
+> > diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
+> > index c3e9f8d9a702..f22d2eefdec7 100644
+> > --- a/docs/specs/acpi_hest_ghes.rst
+> > +++ b/docs/specs/acpi_hest_ghes.rst
+> > @@ -89,12 +89,21 @@ Design Details
+> >      addresses in the "error_block_address" fields with a pointer to the
+> >      respective "Error Status Data Block" in the "etc/hardware_errors" blob.
+> >  
+> > -(8) QEMU defines a third and write-only fw_cfg blob which is called
+> > -    "etc/hardware_errors_addr". Through that blob, the firmware can send back
+> > -    the guest-side allocation addresses to QEMU. The "etc/hardware_errors_addr"
+> > -    blob contains a 8-byte entry. QEMU generates a single WRITE_POINTER command
+> > -    for the firmware. The firmware will write back the start address of
+> > -    "etc/hardware_errors" blob to the fw_cfg file "etc/hardware_errors_addr".
+> > +(8) QEMU defines a third and write-only fw_cfg blob to store the location
+> > +    where the error block offsets, read ack registers and CPER records are
+> > +    stored.
+> > +
+> > +    Up to QEMU 9.2, the location was at "etc/hardware_errors_addr", and
+> > +    contains an offset for the beginning of "etc/hardware_errors".
+> > +
+> > +    Newer versions place the location at "etc/acpi_table_hest_addr",
+> > +    pointing to the beginning of the HEST table.
+> > +
+> > +    Through that such offsets, the firmware can send back the guest-side  
+>        ^^^^^^^^^^^^^^^^^^^^^^^^^ can't parse that, suggest to just drop the phrase
+> 
+> > +    allocation addresses to QEMU. They contain a 8-byte entry. QEMU generates
+> > +    a single WRITE_POINTER command for the firmware. The firmware will write
+> > +    back the start address of either "etc/hardware_errors" or HEST table at  
+>                 ^^^^ drop this?
+> 
+> > +    the correspoinding address firmware.
+> >  
+> >  (9) When QEMU gets a SIGBUS from the kernel, QEMU writes CPER into corresponding
+> >      "Error Status Data Block", guest memory, and then injects platform specific
+> > @@ -105,8 +114,6 @@ Design Details
+> >       kernel, on receiving notification, guest APEI driver could read the CPER error
+> >       and take appropriate action.
+> >  
+> > -(11) kvm_arch_on_sigbus_vcpu() uses source_id as index in "etc/hardware_errors" to
+> > -     find out "Error Status Data Block" entry corresponding to error source. So supported
+> > -     source_id values should be assigned here and not be changed afterwards to make sure
+> > -     that guest will write error into expected "Error Status Data Block" even if guest was
+> > -     migrated to a newer QEMU.
+> > +(11) kvm_arch_on_sigbus_vcpu() report RAS errors via a SEA notifications,
+> > +     when a SIGBUS event is triggered.  
+>  
+> >       The logic to convert a SEA notification
+> > +     into a source ID is defined inside ghes.c source file.  
+> that's cheating and not documentation by any means
 
-I did consider that - but the function is also called from helpers at
-which point you also do need to flush the softmmu TLB. However someone
-with better knowledge of the architecture might be able to do a slightly
-more refined flush (individual pages or mmuidxs) in those cases.
+I'll drop the last paragraph. I guess that (11) were here to document a hack on the
+original design:
+	"supported source_id values should be assigned here".
 
->
-> Thanks,
-> Nick
+The new code doesn't do any assumptions like that. All it needs is that the caller
+need to specify the notification type (currently, SEA or GPIO).
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+So, IMO the only thing eventually useful there is:
+
+	(11) kvm_arch_on_sigbus_vcpu() report RAS errors via a SEA notifications,
+	     when a SIGBUS event is triggered.  
+
+Yet, to be frank, I'm not sure if this should be documented. So perhaps
+the entire section (11) can be dropped.
+
+Thanks,
+Mauro
 
