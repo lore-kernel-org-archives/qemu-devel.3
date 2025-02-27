@@ -4,75 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF84C021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 06:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91572C021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 06:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnXIK-0003ZE-2J; Thu, 27 Feb 2025 01:22:52 -0500
+	id 1tnXJI-0003wV-68; Thu, 27 Feb 2025 01:23:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tnXIG-0003Ym-JY
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 01:22:48 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tnXJF-0003p0-5B; Thu, 27 Feb 2025 01:23:49 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tnXIA-0007vz-5X
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 01:22:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740637362; x=1772173362;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=iEVKpF7UnIq52/UIR99jPQQ910Ex7ozCZdIK5ktgMJI=;
- b=i6f9Fe963n/IfMKQSzXOf5epGpDf1YsCgsRjjKGh9/KrQzw0yS0tYShB
- VDKanrN+FTxwJj4YUMY4MEZiBFSSVPQA6N1agwMJCU1bCG2O8ln62JW3s
- dfiqN2EA1GDSwSDRx+XJsv7TNd7UmVNKYn7LpLwLQ6nm+JJCM5wRb7MDU
- IV9IPzRLAnoyAsWf5zK7HelEVZ9zMFIRtqVtkf4TOe5X4HIMN96ukajvx
- clhH7q8jtTkM5zpgo1Eq46q8RCUXk3GWxZQ/ny53vU+xOPMkLwprUg+eW
- pXH7h4OYrkDesDj35L93+ui3dHAf/UkW4ZyPX7SsBvhtg48yyFEBbUWW3 g==;
-X-CSE-ConnectionGUID: 7hxO2BLtTYeROAtsiA0qcA==
-X-CSE-MsgGUID: LQcE4ai8RL2u76wXmLN78w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11357"; a="41641799"
-X-IronPort-AV: E=Sophos;i="6.13,319,1732608000"; d="scan'208";a="41641799"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Feb 2025 22:22:33 -0800
-X-CSE-ConnectionGUID: 7UH/6/VcT46BAs492C6b8g==
-X-CSE-MsgGUID: EF1cyGRaSSyDgaK2RmYm+w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,319,1732608000"; d="scan'208";a="147753155"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 26 Feb 2025 22:22:30 -0800
-Date: Thu, 27 Feb 2025 14:42:35 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: "Moger, Babu" <babu.moger@amd.com>
-Cc: John Allen <john.allen@amd.com>, pbonzini@redhat.com,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, davydov-max@yandex-team.ru,
- Joao Martins <joao.m.martins@oracle.com>
-Subject: Re: [PATCH v5 1/6] target/i386: Update EPYC CPU model for Cache
- property, RAS, SVM feature bits
-Message-ID: <Z8AJW9VJKZXPD2d4@intel.com>
-References: <cover.1738869208.git.babu.moger@amd.com>
- <c777bf763a636c8922164a174685b4f03864452f.1738869208.git.babu.moger@amd.com>
- <Z7cLFrIPmrUGuqp4@intel.com> <Z733dp+gePxwDsyW@AUSJOHALLEN.amd.com>
- <7822f511-6b64-417f-830f-3ef912e572d7@amd.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tnXJD-000847-Ax; Thu, 27 Feb 2025 01:23:48 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51R2GYEJ005931;
+ Thu, 27 Feb 2025 06:23:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Kio/Of
+ 4pPfQQAte8swXeCaxVNhzbL9r/ZCf/CplA9w0=; b=QTwG1M59X+h+AU4ipUsf1V
+ sIFLfIp6ZtS/A8vyQm3jEsdcH/Ap6ogA0iuqLMg6ydvk3Foi2NyzN3B006gkHvT2
+ 4nEMdb/VY/2acVPZowIMqUQN9lPwteVdUAKdjG1009+YNA+QfBw4AkCXB7scFsH0
+ p5cZugzQ8RbuaSUAUvZMJGx/bMvXGVPFldjvvwUbmf37IWRYFo/BhCXYj1WYZ9nK
+ nqXGAROH31mHugyPW7FTb1WSa6OFOfMj6MBXNYwOaDbt/HHyjcVt3pnodxETIVly
+ VzPEpCg9ZJgWcSxW7CX70wdjm6w+TWzyzxllqTBJroXS23P2CFOO0GGTJyTuX/Rw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 451xnp5q6v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Feb 2025 06:23:35 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 51R6KIWd023887;
+ Thu, 27 Feb 2025 06:23:35 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 451xnp5q6s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Feb 2025 06:23:35 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51R2sBdu002551;
+ Thu, 27 Feb 2025 06:23:34 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 44yu4jxrag-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Feb 2025 06:23:34 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 51R6NVra58065314
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Feb 2025 06:23:31 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F1A2520043;
+ Thu, 27 Feb 2025 06:23:30 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 02A3E20040;
+ Thu, 27 Feb 2025 06:23:27 +0000 (GMT)
+Received: from [9.124.211.149] (unknown [9.124.211.149])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 27 Feb 2025 06:23:26 +0000 (GMT)
+Message-ID: <171ee322-e41e-42b2-816d-b45fde796874@linux.ibm.com>
+Date: Thu, 27 Feb 2025 11:53:25 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7822f511-6b64-417f-830f-3ef912e572d7@amd.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] Implement MPIPL for PowerNV
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250217071934.86131-1-adityag@linux.ibm.com>
+ <D82WY0RYB30R.3M0B68UOLV0EK@gmail.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <D82WY0RYB30R.3M0B68UOLV0EK@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: LWuYPPGMY3B5T8t0YOEM2_4mDzDP9fQf
+X-Proofpoint-GUID: iVz2O--4zaKFKsM7JQfVrGQJYnm81KiD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-27_03,2025-02-26_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=754 spamscore=0 phishscore=0
+ mlxscore=0 adultscore=0 malwarescore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502270044
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,64 +119,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 26, 2025 at 02:28:35PM -0600, Moger, Babu wrote:
-> Date: Wed, 26 Feb 2025 14:28:35 -0600
-> From: "Moger, Babu" <babu.moger@amd.com>
-> Subject: Re: [PATCH v5 1/6] target/i386: Update EPYC CPU model for Cache
->  property, RAS, SVM feature bits
-> 
-> Hi John,
-> 
-> On 2/25/25 11:01, John Allen wrote:
-> > On Thu, Feb 20, 2025 at 06:59:34PM +0800, Zhao Liu wrote:
-> >> And one more thing :-) ...
-> >>
-> >>>  static const CPUCaches epyc_rome_cache_info = {
-> >>>      .l1d_cache = &(CPUCacheInfo) {
-> >>>          .type = DATA_CACHE,
-> >>> @@ -5207,6 +5261,25 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-> >>>                  },
-> >>>                  .cache_info = &epyc_v4_cache_info
-> >>>              },
-> >>> +            {
-> >>> +                .version = 5,
-> >>> +                .props = (PropValue[]) {
-> >>> +                    { "overflow-recov", "on" },
-> >>> +                    { "succor", "on" },
-> >>
-> >> When I checks the "overflow-recov" and "succor" enabling, I find these 2
-> >> bits are set unconditionally.
-> >>
-> >> I'm not sure if all AMD platforms support both bits, do you think it's
-> >> necessary to check the host support?
-> > 
-> > Hi Zhao,
-> > 
-> > IIRC, we intentionally set these unconditionally since there is no
-> > specific support needed from the host side for guests to use these bits
-> > to handle MCEs. See the original discussion and rationale in this
-> > thread:
-> > 
-> > https://lore.kernel.org/all/20230706194022.2485195-2-john.allen@amd.com/
-> > 
-> > However, this discussion only applied to the SUCCOR feature and not the
-> > OVERFLOW_RECOV feature and now that you bring it up, I'm second guessing
-> > whether we can apply the same thinking to OVERFLOW_RECOV. I think we may
-> > want to keep setting the SUCCOR bit unconditionally, but we may want to
-> > handle OVERFLOW_RECOV normally. I'll have to track down some old
-> > hardware to see how this behaves when the hardware doesn't support it.
+Hi Nick,
 
-Yes, thanks!
+On 27/02/25 09:07, Nicholas Piggin wrote:
+> On Mon Feb 17, 2025 at 5:19 PM AEST, Aditya Gupta wrote:
+>> Overview
+>> =========
+>>
+>> Implemented MPIPL (Memory Preserving IPL, aka fadump) on PowerNV machine
+>> in QEMU.
+> Wow, that's a lot of effort.
 
-> Yes. We need to verify it on pre-EPYC hardware. Please let us know how it
-> goes.
-> 
-> But, this series updates only the EPYC based CPU models. It should not be
-> a concern here. Right?
+Thanks Nick.
 
-Yes, it doesn't block this series. :-)
 
-Thank you both,
-Zhao
+>> Note: It's okay if this isn't merged as there might be less users. Sending
+>> for archieval purpose, as the patches can be referred for how fadump/mpipl
+>> can be implemented in baremetal/PowerNV/any other arch QEMU.
+> I would like to add it. It helps test a bunch of code that is in Linux
+> and skiboot, so it would be quite useful. A functional test would be
+> important to have.
 
+Sure, it's not complete yet (didn't implement the CPU saving part) as I 
+just wanted to do a experiment I did, will improve those things by v2 
+then. It might take some time though.
+
+Will look into the functional test thing also.
+
+> I've had a glance through it, but better review might have to wait for
+> until the next development cycle.
+
+Sure, that's totally okay. Thank you for looking at it.
+
+
+Thanks,
+
+- Aditya G
+
+> Thanks,
+> Nick
 
