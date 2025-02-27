@@ -4,80 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1578DC282C1
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 17:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BFCC19F32
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 18:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tni9j-0001Qf-QF; Thu, 27 Feb 2025 12:58:47 -0500
+	id 1tniDt-0005m6-G2; Thu, 27 Feb 2025 13:03:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tni9S-0000xT-NW
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:58:27 -0500
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tni9R-0004ig-2I
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:58:26 -0500
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-6f666c94285so11657637b3.3
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 09:58:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740679103; x=1741283903; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wzmFJFg/3Xt6bqgdO90cXYu9Kxx2CEGVHGvrYvWq0cc=;
- b=bpbTIVYp1Fwdc0LFv+d30n9bVEIqu9sH0xVgCSAeP4QLJwvFOzvQtE2GIgNPXkdYNO
- Swz3w09OWiRZKs7erOKQS5SHOLlrXLzVweT2bZQ+DgZUso8rNIfVFvB1WOQx6lBsOKcE
- x/nUEUU3q9nOTFucgW/ApOc0wKIhTO1mEVb4Vnv2j6gnZdgF5ko+4y/hRRS8im26/OoQ
- RDbiwMBuC8CWpxucQWiOmFQrcPpESsqbNUkgoBqx4vvbo8XsxHQ3c7ON4bcAJtoPaDu4
- CK04kVCBMDSnzYKXAblwHHAznh4RY6m0zxcTTtmOhxcHyvXDi2+QESqa9rnsNc8L6GQF
- qTvQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tniDr-0005ll-Hz
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 13:02:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tniDp-0005Pw-FA
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 13:02:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740679375;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i3uUuTdaodCLIdelRr2SGz9srjUFLC3yiKG268lxufI=;
+ b=JkTnWC5sGSl8vByPvn7g6NJVsSnIZhXoTDQl4iAVaQmhaxkOpoaomWX/k9d6rvUTwYWpnR
+ lUBUkJ1+MSMolU/Q8U8Ty7oc+oCgZMYL2lI2+6S+BzPgus4LIIUdVmTB/3oWwDJRtPruou
+ wO8ZpgXMHjF+j294N7vRuYIWspo3lQA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-669-o2diBaxxOuKOPcXmMMyBnw-1; Thu, 27 Feb 2025 13:02:52 -0500
+X-MC-Unique: o2diBaxxOuKOPcXmMMyBnw-1
+X-Mimecast-MFC-AGG-ID: o2diBaxxOuKOPcXmMMyBnw_1740679372
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4399d2a1331so6856165e9.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 10:02:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740679103; x=1741283903;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wzmFJFg/3Xt6bqgdO90cXYu9Kxx2CEGVHGvrYvWq0cc=;
- b=clVbhKUn2igtWVA0SYR1J8ev4YMIcHhz8EWjhxK+t06Pxv8MMDPmfc3WpD0uJMa7Hg
- uI4eXJszSrmkcvaDB1S+8XKRrnDSOpcekcdg6b2ZvwdAROjby9hR0W9Ib3/CeQIEMGPY
- 6t4rNok9F5hommjTWfNg2CKqt6lURGb/M0q0lIjxdcJyoyRmlOZ9Zmxv2bSQfE3+YvXg
- EGZT0pYT8iz3didBNRFmTfpOpkgvfwGVCwC+z9Tc16RMukZZksW2BnI/IBqjZu6IAwxs
- OFtUiGePXbe8yBSc7WVsF0rJ/pTFkfetvNx19MdiZaGGpqC4EUBk8wxXnBwUsYTzCgGV
- hLhQ==
-X-Gm-Message-State: AOJu0YyIMFGKx0Crt9Nt0AWPFHCTPQxSyroxB5AvR4T3IxEVyjMqQpp6
- +R6N4ohqRQXNaRGZHDzjtyXXsDsquzTBqkB6AICGwkKjcBpItJIM/+6FeJ1nstPfBzseBYO6i9O
- I3Hjw0rdwBRJkZGVdWv+EAKSrORzxTuX/8aKYOA==
-X-Gm-Gg: ASbGncvhzaZmlm/k39w7DoCn1OmZH8QQUjznTlTAtkYG9SYPUA4PhQxFdNMjEweyAt1
- fO9FAzT0449yFZAXvTvbl8rGcB9LUrfzxsCEEEDSLzCT+40RMPzq0F0LZMykdniAV9mD7AVylNJ
- 8hPs0DgH3y
-X-Google-Smtp-Source: AGHT+IGl2IP20UokPZVUUQ0Abb+7Hu8DNIDNGMLgHzW4EPceMFwFt/n7mz7qfunVuz+IZbI6BCOTZ3a+PRwXw6Nmq5k=
-X-Received: by 2002:a05:6902:138b:b0:e60:9fd4:bdb9 with SMTP id
- 3f1490d57ef6-e60b2f1cf43mr14354276.44.1740679103362; Thu, 27 Feb 2025
- 09:58:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740679372; x=1741284172;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i3uUuTdaodCLIdelRr2SGz9srjUFLC3yiKG268lxufI=;
+ b=brIO8F50GXhO5HrVe50c6nh5dp4BLcRPCc6v6DE/LbscYuI/hc4dAndVucQa56oCIP
+ q6M6Ae9gnyMAPQrdxtSn3TmIBB+XOHNsHTz3XnncM4zTtHukE/mLmBwnm1ve6rhmNHq3
+ Lx519M5s8zK0z2eHhFXNKdPdoD76iyCeIfzZfHEMLpno17rTVkEy0p/rmDyy8Vsrr8gS
+ Gvm/ZiSjjWcv/xIstLJAPGs+1qQl3wBmL4eNA4mT86XSJQJDRY9gFRmAd/rDUIIE/ieC
+ Fm9DrlxH0c3l4BRozFIe+SSEOGE287FHOuRMY+91CrW46aNyPZWfruSyZd8wTSjEnG5f
+ SXSg==
+X-Gm-Message-State: AOJu0YxubYha+bGkp61jXG5z4KKoLDTcV2rXT+7wDWsH6GOAnc4X07Zl
+ pjJdGA8+X7TTAf/5EXvplXgnJ2TFPCvLqKaIjDOyT1daArST30JcXsGTQf8Zd+sT9VUEZ5zMX94
+ t81rUSXfLS66fk9b2Nw97FGj5aNBPU7OWKYX+KHPrrQ7+gMxhz2xcFwVF1eDqkY8fDGN0ELDzkT
+ VdVJI59B0GwV8jDCfxmiRvTS1HVwA=
+X-Gm-Gg: ASbGncsB6ae+g2PiVO1dzc/KpdBFBXAMRCceWIG3j5yanF+CzD05G4qTyWkS/wUuhav
+ GTv0YmUe3PMjCtqsLggMyoAad1jyorAjvIpEfEgpJmEiGTveJWL+0d8AWvbUNQwqXgnZ68gLs
+X-Received: by 2002:a05:600c:4fc2:b0:439:873a:1114 with SMTP id
+ 5b1f17b1804b1-43ba624af40mr3498445e9.6.1740679371513; 
+ Thu, 27 Feb 2025 10:02:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGiAqth/sxeOAKgHSm/PtyAkzwfR4NCXVAtzhUGMBhoYxN5FFhuGV1Y69BOA/SDnSq8Awyu/A+uX9RhDAg7FCw=
+X-Received: by 2002:a05:600c:4fc2:b0:439:873a:1114 with SMTP id
+ 5b1f17b1804b1-43ba624af40mr3497915e9.6.1740679370973; Thu, 27 Feb 2025
+ 10:02:50 -0800 (PST)
 MIME-Version: 1.0
-References: <20250227142746.1698904-1-peter.maydell@linaro.org>
- <20250227142746.1698904-2-peter.maydell@linaro.org>
- <69ae459d-90ff-441d-a039-ae3ee15c919e@linaro.org>
-In-Reply-To: <69ae459d-90ff-441d-a039-ae3ee15c919e@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 27 Feb 2025 17:58:11 +0000
-X-Gm-Features: AQ5f1JrW3uo3UWBJLAozTFWRlXUBh9eb58WYczCCOjWoEzuxMrAXiPMps1pywCc
-Message-ID: <CAFEAcA8=P0hJz45RFEBQX7QySR6+RiDqFA8BS8HF_k-m9BdZDw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] target/arm: Correct LDRD atomicity and fault behaviour
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+References: <20250227164538.814576-1-pbonzini@redhat.com>
+ <20250227164538.814576-5-pbonzini@redhat.com>
+ <CAFEAcA_WOxLvWnp8Tp-Q5xj3_cEs2OGhAbVFtymGwXYKxUePYg@mail.gmail.com>
+In-Reply-To: <CAFEAcA_WOxLvWnp8Tp-Q5xj3_cEs2OGhAbVFtymGwXYKxUePYg@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 27 Feb 2025 19:02:39 +0100
+X-Gm-Features: AQ5f1Jqstke_OnqSaGKiTVzw_sqwLfLWtR947kF4nxmdsWdvg-wSLMj8KxR4wMg
+Message-ID: <CABgObfZVxw2BnVYqbsaoy9W+YUgygOaYGpfW=D+7mfmQe8h+OA@mail.gmail.com>
+Subject: Re: [PATCH 4/5] rust: pl011: switch to safe chardev operation
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,59 +103,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Feb 2025 at 17:41, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Thu, Feb 27, 2025 at 6:25=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+> On Thu, 27 Feb 2025 at 16:48, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> > Switch bindings::CharBackend with chardev::CharBackend.  This removes
+> > occurrences of "unsafe" due to FFI and switches the wrappers for receiv=
+e,
+> > can_receive and event callbacks to the common ones implemented by
+> > chardev::CharBackend.
+> >
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 >
-> On 2/27/25 06:27, Peter Maydell wrote:
-> > +static void do_ldrd_load(DisasContext *s, TCGv_i32 addr, int rt, int rt2)
-> > +{
-> > +    /*
-> > +     * LDRD is required to be an atomic 64-bit access if the
-> > +     * address is 8-aligned, two atomic 32-bit accesses if
-> > +     * it's only 4-aligned, and to give an alignemnt fault
-> > +     * if it's not 4-aligned.
-> > +     * Rt is always the word from the lower address, and Rt2 the
-> > +     * data from the higher address, regardless of endianness.
-> > +     * So (like gen_load_exclusive) we avoid gen_aa32_ld_i64()
-> > +     * so we don't get its SCTLR_B check, and instead do a 64-bit access
-> > +     * using MO_BE if appropriate and then split the two halves.
-> > +     *
-> > +     * This also gives us the correct behaviour of not updating
-> > +     * rt if the load of rt2 faults; this is required for cases
-> > +     * like "ldrd r2, r3, [r2]" where rt is also the base register.
-> > +     */
-> > +    int mem_idx = get_mem_index(s);
-> > +    MemOp opc = MO_64 | MO_ALIGN_4 | MO_ATOM_SUBALIGN | s->be_data;
+> > @@ -567,21 +552,16 @@ fn write(&self, offset: hwaddr, value: u64, _size=
+: u32) {
 >
-> The 64-bit atomicity begins with armv7 + LPAE, and not present for any m-profile.
-> Worth checking ARM_FEATURE_LPAE, or at least adding to the comment?
+> > -            update_irq =3D self.regs.borrow_mut().write(
+> > -                field,
+> > -                value as u32,
+> > -                addr_of!(self.char_backend) as *mut _,
+> > -            );
+> > +            update_irq =3D self
+> > +                .regs
+> > +                .borrow_mut()
+> > +                .write(field, value as u32, &self.char_backend);
+> >          } else {
+> >              eprintln!("write bad offset {offset} value {value}");
+> >          }
 >
-> Getting 2 x 4-byte atomicity, but not require 8-byte atomicity, would use
-> MO_ATOM_IFALIGN_PAIR.
+> Entirely unrelated to this patch, but seeing this go past
+> reminded me that I had a question I didn't get round to
+> asking in the community call the other day. In this
+> PL011State::write function, we delegate the job of
+> updating the register state to PL011Registers::write,
+> which returns a bool to tell us whether to call update().
+>
+> I guess the underlying design idea here is "the register
+> object updates itself and tells the device object what
+> kinds of updates to the outside world it needs to do" ?
+> But then, why is the irq output something that PL011State
+> needs to handle itself whereas the chardev backend is
+> something we can pass into PL011Registers ?
 
-Definitely worth a comment at minimum. Do we generate better
-code for MO_ATOM_IFALIGN_PAIR ? (If not, then providing higher
-atomicity than the architecture mandates seems harmless.)
+Just because the IRQ update is needed in many places and the chardev
+backend only in one place.
 
+> In the C version, we just call pl011_update() where we
+> need to; we could validly call it unconditionally for any
+> write, we're just being (possibly prematurely) efficient
+> by avoiding a call when we happen to know that the register
+> write didn't touch any of the state that pl011_update()
+> cares about. So it feels a bit odd to me that in the Rust
+> version this "we happen to know that sometimes it would be
+> unnecessary to call the update function" has been kind of
+> promoted to being part of an interface between the two
+> different types PL011Registers and PL011State.
 
-For the comment in memop.h that currently reads
-     * MO_ATOM_SUBALIGN: the operation is single-copy atomic by parts
-     *    by the alignment.  E.g. if the address is 0 mod 4, then each
-     *    4-byte subobject is single-copy atomic.
-     *    This is the atomicity e.g. of IBM Power.
+Yeah, if I was writing from scratch I would probably call update()
+unconditionally. If it turns out to be inefficient you could cache the
+current value of
 
-maybe we could expand the e.g:
+        let flags =3D regs.int_level & regs.int_enabled;
 
-  E.g if an 8-byte value is accessed at an address which is 0 mod 8,
-  then the whole 8-byte access is single-copy atomic; otherwise,
-  if it is accessed at 0 mod 4 then each 4-byte subobject is
-  single-copy atomic; otherwise if it is accessed at 0 mod 2
-  then the four 2-byte subobjects are single-copy atomic.
+in PL011State as a BqlCell.
 
-? I wasn't sure when reading what we currently have whether
-it provided the 8-byte-aligned guarantee, rather than merely
-the 4-byte-aligned one.
+> Thinking about other devices, presumably for more complex
+> devices we might need to pass more than just a single 'bool'
+> back from PL011Registers::write. What other kinds of thing
+> might we need to do in the FooState function, and (since
+> the pl011 code is presumably going to be used as a template
+> for those other devices) is it worth having something that
+> expresses that better than just a raw 'bool' return ?
 
-thanks
--- PMM
+Ideally nothing, especially considering that more modern devices have
+edge-triggered interrupts like MSIs, instead of level-triggered
+interrupts that need qemu_set_irq() calls. But if you have something a
+lot more complex than a bool I would pass down the PL011State and do
+something like pl011.schedule_update_irq() which updates a BqlCell<>.
+The device could then use a bottom half or process them after
+"drop(regs)".
+
+HPET has another approach, which is to store a backpointer from
+HPETTimer to the HPETState, so that it can do
+
+    self.get_state().irqs[route].pulse();
+
+without passing down anything. The reason for this is that it has
+multiple timers on the same routine, and it assigns the timers to
+separate HPETTimers. I would not use it for PL011 because all accesses
+to the PL011Registers go through the PL011State.
+
+A while ago I checked how OpenVMM does it, and basically it does not
+have the PL011State/PL011Registers separation at all: the devices are
+automatically wrapped with a Mutex and memory accesses take a &mut.
+That removes some of the complexity, but also a lot of flexibility.
+
+Unfortunately, before being able to reason on how to make peace with
+the limitations of safe Rust, it was necessary to spend a lot of time
+writing API abstractions, otherwise you don't actually experience the
+limitations. But that means that the number of lines of code in
+qemu_api is not representative of my experience using it. :( I am
+sorry this isn't a great answer yet; certainly some aspects of the
+PL011 or HPET devices could be treated as a blueprint for future
+devices, but which and how to document that is something where I would
+like to consult with an actual Rust maven.
+
+Paolo
+
 
