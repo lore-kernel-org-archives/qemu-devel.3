@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9F9C19F2E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65424C1B0FF
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnem3-0002TA-81; Thu, 27 Feb 2025 09:22:03 -0500
+	id 1tnely-0001yG-EK; Thu, 27 Feb 2025 09:21:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnelB-0007yX-8I
+ id 1tnel7-0007td-Od
  for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnel8-0003sx-H2
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:08 -0500
+ id 1tnel6-0003sa-8Q
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740666065;
+ s=mimecast20190719; t=1740666063;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PQLxNgYdZM0KSbKDqppJfoYhlJo1A1+kCjsRcdbWf5w=;
- b=TGPc0Dh8XB0NcujX5PrtJB2CNrjNQJQWCM+nhuDA12dQqNrLSgU44E8prPV+1IsaKpPdi0
- zKFrwIt+ehWPRYkbGY/zOZykJHjgJJLG6HRfauknCAtHeNwuAlxU8FDmqZK8QNIGVhDcte
- dNyIy7JNnQQaTyhGnHGCfvucV17oH1o=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DNRcGZG9VCey+RCXjFT/3nzg+eoPhsw8VV+4T8TIEPQ=;
+ b=T97BhxVtfB13999Y3V3mF+81Jhy4jWQxwFMgeWSMD66CE+gzqsF0dDmZ7Aaw0Bhb7UeKe5
+ mtaRwYRCZR6ATA6UQD2IEHjRbLh4LSvqt3qA0EjgcvSv762Wctil0ITOM/VqbdFk0hEXwa
+ afmtZsBivsq/IGWIQOlKWzzzaTDiQb4=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-r8dWTlaUPMqaMfcGmY5pIg-1; Thu, 27 Feb 2025 09:21:04 -0500
-X-MC-Unique: r8dWTlaUPMqaMfcGmY5pIg-1
-X-Mimecast-MFC-AGG-ID: r8dWTlaUPMqaMfcGmY5pIg_1740666063
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5e4c2618332so1105360a12.2
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:21:04 -0800 (PST)
+ us-mta-136-HqeMUlXXNjCa1QNAXe7YHA-1; Thu, 27 Feb 2025 09:21:02 -0500
+X-MC-Unique: HqeMUlXXNjCa1QNAXe7YHA-1
+X-Mimecast-MFC-AGG-ID: HqeMUlXXNjCa1QNAXe7YHA_1740666061
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-abf16f47749so73159266b.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:21:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740666062; x=1741270862;
+ d=1e100.net; s=20230601; t=1740666060; x=1741270860;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PQLxNgYdZM0KSbKDqppJfoYhlJo1A1+kCjsRcdbWf5w=;
- b=nnip8UO2AGKeyshov07r2CrDIBYYlEzdQD1u9vnF8mnv2rWmNW4+gC3CVQfNOu5tPD
- SdBrqzX8NxN6mEkaGeanqhNYniDZygT6I0BNpBohIyMC5VTAmuF2+9dBmlosueE9pAZs
- qgSQozUghOVK0EYzaJ7KBUIoihh1jU7foo8IvQVPkCJ6YORVY6DqoMNgzP61uJ1/Nobc
- NI9haKt+C61QjakU+VzPdb7ayy5MTYomiv+9w+j7LuzIsP1v1kDNk3hB+JlQahPWMD/P
- ZOs9bJcQB4OQmWvyHKsL35NJkDDlGHTQFQVliQV6usuvjYVK3oV1Ydkw8MHH2HxnbgSN
- uhyw==
-X-Gm-Message-State: AOJu0Yy8OS+tySohcXJ332Xg7foPhqoUyK1CjZ5ZWdobCXxbasLTV5bN
- muZUEix602Z5s5xvytzVaGYT2wHFI4QdLpg/4r2lR2YvY3/V5s3zE9oPY5geptJ/1SFGTklpf0O
- 07v1Ff5YSwMjPmCYMwJo3UObMQT2p0UyHlBXOpQ6UthotMo7igX4/uSB8h/fp41gwSjudo/qM7u
- 87/sItI0W4PSikEPIKeHgSKFiJkQalg92DMRmEu5g=
-X-Gm-Gg: ASbGncvSBxlysvgOc1pZIj/LOJtN/XURYrdyrjcpEeh7aELqjBHjI8IVQNJvwoHL5iU
- xWAWufAJhaQ/egHlo4aq3JAK1eAGJ4Wr1Ezxn8A9kaYPjBdqN9cr4eRRB/CLP2u/skSW68mhdw+
- 67npcLX/kGopHIh1Q0ZGalKS2chXEK5nb6JuzhA08L3M1wcQq5anTum7HrxuezL6gTr7BxIE1m9
- gHLx8NJMMmx9Xo41Br2IkXOIFQl3+NO7nVxlJS4fGLzxAVyBDBwImu8ZtKztTrVyvPEsqhiCtA3
- o0HxhQ5MTqDix7uczUDF
-X-Received: by 2002:a05:6402:13d2:b0:5e0:2ce6:3d50 with SMTP id
- 4fb4d7f45d1cf-5e4a0dfc587mr8748723a12.23.1740666062366; 
- Thu, 27 Feb 2025 06:21:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGCxQV2zq3REPKF+9zeoHJgyF+JRF/UdepBUbu59xs1Yz8FPQaNnVqb30lOQv+FZCBkFCVC5Q==
-X-Received: by 2002:a05:6402:13d2:b0:5e0:2ce6:3d50 with SMTP id
- 4fb4d7f45d1cf-5e4a0dfc587mr8748697a12.23.1740666061853; 
- Thu, 27 Feb 2025 06:21:01 -0800 (PST)
+ bh=DNRcGZG9VCey+RCXjFT/3nzg+eoPhsw8VV+4T8TIEPQ=;
+ b=Cxq34rnA5fZIXN/6ZHYBplt90slKQNRcUuGyWbnNV7ger9ryk0eCh+x33o1CJ3dcg+
+ aIl37LoWPommi5mY+IGAszrhMQnrbvvXNimr9Q/kABPulWnK05Prp0yepRaQ0RsL/vnP
+ Is3Zde8DR9T45oZEPfDo2sLmdmAXK6cW2+3BvB3MeY9F2YvmIvSV+AxUTx0+XFSbshzC
+ HKgTFnCSHztyL31uciFNWG4q0T/hmgz9GM6EiWJOIgeN9tuU6+hZaJcQmkF4wFMKLCyt
+ eAxA0ZppQgasNdEcQeP3sq+rOyjISgtp5tirFo9lqJn47IpCstpBkmWvUWVOdhcDFR0i
+ DJkQ==
+X-Gm-Message-State: AOJu0YziTFwJ5NxP5EBZiuO/vvIH7pVl3pCPX3ewWHX7wFJsR3TSV8Z9
+ ZcmpRUUDf9Fu+F9wK+oOCpCsfyuQKmadv/iG80MQQSPkysEo07j5MW/wF+TUysGYnYxH+t2kDfn
+ ly44NqQrqLYxMkftz3zRIK4yMxuX9B7DBZ8hdIG0i38kTHSaPSi4p9toBL5iMJvaVPJaXLUy66s
+ UOyiL+a9tatK2HG8tmOgdvgw2sw2nbeayRsPkcwwU=
+X-Gm-Gg: ASbGncu+yMYLQd9tKH9fPSNP++/o/Ehy/hV5ru0WxCWlb35dkGm67whnbk+9zaIEM1v
+ kHrSPL/E+3F7dOdgZInuze/7nntCNgDIX1/bUnDoBSwwsUvSvaKfd+mBzDd5MDup6XBlolBUhYW
+ 3ctJXausyXnjNmeTvkw/cbellWPEYyd6JlnxmJG8PR+6diBpFJU46S9oGDm4931NwG5/K3rsLWF
+ DsoPQODow9fGUkapAoJtnp617UGtL1ujYyoVXubsxTHqoy6fKj5dmjRYDWqVpn8C5XZy/v+UAmM
+ Q5Z731/X4fNrsOsjILKv
+X-Received: by 2002:a17:907:96ac:b0:ab7:d34a:8f83 with SMTP id
+ a640c23a62f3a-abf0609c4d0mr495584566b.17.1740666060479; 
+ Thu, 27 Feb 2025 06:21:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFTX43Of/Epghw8hmGmiD6O53NB4l4EKHhhOOXLQoiHx+uUS/N88FvCkGJmZEDfGpdAio5RTA==
+X-Received: by 2002:a17:907:96ac:b0:ab7:d34a:8f83 with SMTP id
+ a640c23a62f3a-abf0609c4d0mr495580966b.17.1740666059998; 
+ Thu, 27 Feb 2025 06:20:59 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.102.52])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e4c3fb44dasm1162171a12.62.2025.02.27.06.21.00
+ a640c23a62f3a-abf1da15621sm48601066b.106.2025.02.27.06.20.57
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:21:00 -0800 (PST)
+ Thu, 27 Feb 2025 06:20:57 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: EwanHai <ewanhai-oc@zhaoxin.com>,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 31/34] target/i386: Add support for Zhaoxin CPU vendor
- identification
-Date: Thu, 27 Feb 2025 15:19:49 +0100
-Message-ID: <20250227141952.811410-32-pbonzini@redhat.com>
+Subject: [PULL 30/34] target/riscv: move 128-bit check to TCG realize
+Date: Thu, 27 Feb 2025 15:19:48 +0100
+Message-ID: <20250227141952.811410-31-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250227141952.811410-1-pbonzini@redhat.com>
 References: <20250227141952.811410-1-pbonzini@redhat.com>
@@ -110,64 +108,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: EwanHai <ewanhai-oc@zhaoxin.com>
+Besides removing non-declarative code in instance_init, this also fixes
+an issue with query-cpu-model-expansion.  Just invoking it for the
+x-rv128 CPU model causes QEMU to exit immediately.  With this patch it
+is possible to do
 
-Zhaoxin currently uses two vendors: "Shanghai" and "Centaurhauls".
-It is important to note that the latter now belongs to Zhaoxin. Therefore,
-this patch replaces CPUID_VENDOR_VIA with CPUID_VENDOR_ZHAOXIN1.
+  {'execute': 'query-cpu-model-expansion',
+   'arguments':{'type': 'full', 'model': {'name': 'x-rv128'}}}
 
-The previous CPUID_VENDOR_VIA macro was only defined but never used in
-QEMU, making this change straightforward.
-
-Additionally, the IS_ZHAOXIN_CPU macro has been added to simplify the
-checks for Zhaoxin CPUs.
-
-Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250113074413.297793-2-ewanhai-oc@zhaoxin.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ target/riscv/cpu.c         | 7 -------
+ target/riscv/tcg/tcg-cpu.c | 9 +++++++++
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index c67b42d34fc..4279cf5cdee 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1122,7 +1122,16 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define CPUID_VENDOR_AMD_3   0x444d4163 /* "cAMD" */
- #define CPUID_VENDOR_AMD   "AuthenticAMD"
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 0dcde546e47..d7ecf729d05 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -700,13 +700,6 @@ static void rv128_base_cpu_init(Object *obj)
+     RISCVCPU *cpu = RISCV_CPU(obj);
+     CPURISCVState *env = &cpu->env;
  
--#define CPUID_VENDOR_VIA   "CentaurHauls"
-+#define CPUID_VENDOR_ZHAOXIN1_1 0x746E6543 /* "Cent" */
-+#define CPUID_VENDOR_ZHAOXIN1_2 0x48727561 /* "aurH" */
-+#define CPUID_VENDOR_ZHAOXIN1_3 0x736C7561 /* "auls" */
+-    if (qemu_tcg_mttcg_enabled()) {
+-        /* Missing 128-bit aligned atomics */
+-        error_report("128-bit RISC-V currently does not work with Multi "
+-                     "Threaded TCG. Please use: -accel tcg,thread=single");
+-        exit(EXIT_FAILURE);
+-    }
+-
+     cpu->cfg.mmu = true;
+     cpu->cfg.pmp = true;
+ 
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 0a137281de1..d7e694fdb3d 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1014,6 +1014,7 @@ static bool riscv_cpu_is_generic(Object *cpu_obj)
+ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
++    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cpu);
+ 
+     if (!riscv_cpu_tcg_compatible(cpu)) {
+         g_autofree char *name = riscv_cpu_get_name(cpu);
+@@ -1022,6 +1023,14 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
+         return false;
+     }
+ 
++    if (mcc->misa_mxl_max >= MXL_RV128 && qemu_tcg_mttcg_enabled()) {
++        /* Missing 128-bit aligned atomics */
++        error_setg(errp,
++                   "128-bit RISC-V currently does not work with Multi "
++                   "Threaded TCG. Please use: -accel tcg,thread=single");
++        return false;
++    }
 +
-+#define CPUID_VENDOR_ZHAOXIN2_1 0x68532020 /* "  Sh" */
-+#define CPUID_VENDOR_ZHAOXIN2_2 0x68676E61 /* "angh" */
-+#define CPUID_VENDOR_ZHAOXIN2_3 0x20206961 /* "ai  " */
-+
-+#define CPUID_VENDOR_ZHAOXIN1   "CentaurHauls"
-+#define CPUID_VENDOR_ZHAOXIN2   "  Shanghai  "
+ #ifndef CONFIG_USER_ONLY
+     CPURISCVState *env = &cpu->env;
  
- #define CPUID_VENDOR_HYGON    "HygonGenuine"
- 
-@@ -1132,6 +1141,15 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define IS_AMD_CPU(env) ((env)->cpuid_vendor1 == CPUID_VENDOR_AMD_1 && \
-                          (env)->cpuid_vendor2 == CPUID_VENDOR_AMD_2 && \
-                          (env)->cpuid_vendor3 == CPUID_VENDOR_AMD_3)
-+#define IS_ZHAOXIN1_CPU(env) \
-+    ((env)->cpuid_vendor1 == CPUID_VENDOR_ZHAOXIN1_1 && \
-+     (env)->cpuid_vendor2 == CPUID_VENDOR_ZHAOXIN1_2 && \
-+     (env)->cpuid_vendor3 == CPUID_VENDOR_ZHAOXIN1_3)
-+#define IS_ZHAOXIN2_CPU(env) \
-+    ((env)->cpuid_vendor1 == CPUID_VENDOR_ZHAOXIN2_1 && \
-+     (env)->cpuid_vendor2 == CPUID_VENDOR_ZHAOXIN2_2 && \
-+     (env)->cpuid_vendor3 == CPUID_VENDOR_ZHAOXIN2_3)
-+#define IS_ZHAOXIN_CPU(env) (IS_ZHAOXIN1_CPU(env) || IS_ZHAOXIN2_CPU(env))
- 
- #define CPUID_MWAIT_IBE     (1U << 1) /* Interrupts can exit capability */
- #define CPUID_MWAIT_EMX     (1U << 0) /* enumeration supported */
 -- 
 2.48.1
 
