@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 750AAC197BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:19:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22AF8C19F32
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnmDb-0001vn-6N; Thu, 27 Feb 2025 17:18:59 -0500
+	id 1tnmHw-00058C-QC; Thu, 27 Feb 2025 17:23:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnmDO-0001rw-96
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:18:52 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnmHv-00055D-1w
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:23:27 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnmDM-0001vZ-IY
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:18:46 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4394036c0efso9701175e9.2
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 14:18:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnmHt-0002R1-CB
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:23:26 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-390dc0a7605so821237f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 14:23:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740694723; x=1741299523; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740695003; x=1741299803; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hCptzdxldMl3pzZW66domjqhVCcDOR6hIsxI8YUcwI4=;
- b=Sih3v+FxDGpm783AYbpFRqbn2iTFOnmHBUFCPBFrUQfPBwhZH6p2U5TdfxK+jYYo+o
- oLup9LZQtD+LT+Ek5+Zq+8aDaaufZ0NUgAVkz02GK4u/NBbXfhm3X0TikBUVqpe+iebA
- Rq4zep5P6ANOlsZAF7y2oB08A/X3y9OHJrNX5ghnHtZCtGHszSElMPM77/hpUg1CBzJV
- JRn6ozxPBGo8mTxTTCpaCp34n3uF+qH9fyv7qvCgVy2EQEaiUJKLJ/yQ15Lmb/y6H8FK
- DO+yW0PC0YyEec2wnzITEcWjkTxFd8xRPOjh8KE89ys2MQxtRjijLHC01SzWXI/x4Nnj
- o+DQ==
+ bh=3pGOEac6/oJsONdfzBlfSR6QH6lKZTWAL29EPkt8F1I=;
+ b=kYVmT/Ox8YNXs2JFTj2L9IDxiYY2qy6OjNYc8wvbQ5S22f229jRKxZnyvOj5j0phiw
+ CiTaY+VgtNSci0TPWlUq0I7RljARAQd6NGXA06u6r8r7/wfxN+gWiM+7cFpJCSJM+gC+
+ 8sE1A7gzutXWR4XiHZVdIUjH7jHmiXV0kaq5qq4M+/yWMj72pUQcv26SXg+vGiOa198Y
+ K++Zk8pQ4+J8ocRY8MQK/0hPV35ZPFivxwdfrLz2kAKJWGL3nj0OZTruN2aZaySPxpw2
+ QyFGlV8rVuikLXmvTxSqdpqtEHk8saAFF7T1PBI462b75FemsbNA3w75S4fPQhROUfue
+ tO1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740694723; x=1741299523;
+ d=1e100.net; s=20230601; t=1740695003; x=1741299803;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hCptzdxldMl3pzZW66domjqhVCcDOR6hIsxI8YUcwI4=;
- b=kY1p035lNFLWfvgMIz2dJfQpKS4WzZ38dSjFwDRzCdmeWNIEXPCZT2StSOfmBg8/SV
- GpSAm4F9O3FOj34aiwS8FTOW2XlE82PESp57ltX6csseRkshBiR7vnPTusZwyvXb65C+
- yrnlYlAUpQ2/p2t3DYMmdKAZZP3VqDJ7ij7p8Xdf5IHu4EQTc/gDiDyE1Mg5Ga9eLB+E
- nphitzg4J6qQOL+8U0iteVaJdP/y4qAimdL0UAnBUHMDZD6Fu1nER+6WQ/KNvIMR3DhU
- VBrRqbEf6Mqdt3wuv+IywBlfMpRnlxaylbirUTu9vhuUrqAPCd6MwOHvwoliFbXtGVmD
- o8qQ==
+ bh=3pGOEac6/oJsONdfzBlfSR6QH6lKZTWAL29EPkt8F1I=;
+ b=ESIYITqrsMS+rTF6RjiKMqPufZdZGfxbSHwLqgVBXA0FNeSnHVVQ5ye4v5+4vEF8nm
+ ewWr7XlpV31dkWlkx26INFKSykJ0+bYSfzZHRxqkhvdTlWF4ZoIvUpF3rVcV67CPpCRT
+ eNH2o8DFwJfP4TfgM5FN9JffnOzl0b64ROAAhixdhTOaDzvzfa3gDWNq1H3Xpr3JVNvt
+ oKx9GRv83SjN9+ffNce+XBQbgcd3zNDat/FPkw8cpbvEVmlyHtZ6dZdTx1/sakG2x3jZ
+ mRDpAG21YnxKLSPln1Bw1Hgyg3QshYuB+W2cRs3zv/+ZjWG+BffLqJwfhthkMA2k8W+w
+ 6QDg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVga/JcX4H2c0iBZWaiWlkRkj5pXeh7F0A6aOhN2HQteOWTXwxO5WaOXba4xEuXTm7yaP0JCDWI7OEq@nongnu.org
-X-Gm-Message-State: AOJu0Yw8aaAGlESQfvWEv+0c0rioZTe/GHD1KlO4VY0XLRp1/rp5q4nA
- 4bU1JY4hxj8qw8PesgSLD+mcskzzdcug6S+XwF9wZgdI+FlUOL/1UI8Y1q9fQ1M=
-X-Gm-Gg: ASbGncvND3bn5Vma16+egnfjQMJOivxSgKfvuQzX32Z/3dHrtNZeH48PfkqMyw+2aIZ
- K7UzY4QrTo5CyHgcpVoVnC2d8fjTbLrl4wsJhf64qsnHP0QygYFds0DZFUcfTrmJLdz/TUuCn1j
- PMCoos/64AQgFYsnRTe3yUOSnm9c3TbHS4C55QZrU8jUpmHpIbtyxDRa+JuMOmPAuDR0BKqXhjO
- sDpmhOds6FXf3dCsf9CFhUMaj8bsLYtYO/hjCjDOukIGvcLLhBtPx0X2smRJW+RsWpuZu3DRN/D
- 8Kil86pOGYswEUoWOp/I603FNS/MEx3ernFnyY0rgfIufbgq/2ax/BLUaKAnssnQ4qtMkg==
-X-Google-Smtp-Source: AGHT+IECS8nLQgkPPLd3GsXXz8/uFE3Tef4hIQu9hXGBC7JLawTSnVB3KyEHZqIQcz8qrJtvXPjgHg==
-X-Received: by 2002:a05:600c:4f89:b0:439:9951:1220 with SMTP id
- 5b1f17b1804b1-43ba66fa281mr6982655e9.13.1740694722654; 
- Thu, 27 Feb 2025 14:18:42 -0800 (PST)
+ AJvYcCXJAOznNO2sk4SAn7VIfjRHzRLi9m0a/2NOxyYL+05i0/YoRsDh+gSLv8ku5BCYk0BjcKSqW7qPWHA0@nongnu.org
+X-Gm-Message-State: AOJu0Yzqg9igp/uIVtoT5X3DTlkbmQNMlVOg9eG+b+B2jDKOe4JezvGV
+ d13YGrrtPUlYw74tURWqN8xaOcipfK8tmipRcZLzRmCcV1L2TyOzT1ZEHLMgZOP3+/mTyPZShkA
+ nFQUwgQ==
+X-Gm-Gg: ASbGncvZsir741iBEyq2xnxX2/6xWZEXwOkuMZXB/BF6aBVNF36Y3b6wDcxKjrVpoUn
+ aNMOOkkERa47wPGwY+pwWOheJNuA1J4y9GgLTe42wZk6LXDtvXihJPp4HEKOSjMTnXBNYHMJjHh
+ 5ukrzFgxbQfizfu/0p6SudAAv/379gmU9lXVMfscWXUp0ZHbAXyDDvZkKgyaBYD5senHwbzNElm
+ +Ihkp7YvL+suTeOG9IfjFOHnkVD2YBfaKLuDIDqS0DhmlPnFvci1gDDxhZrgawIrlS3fx27DJD6
+ VXvwBeObS18Mt886BfxhAYQMflm2P6euHVY0ioMM0UIySF8it7pTo5rlESG+1ZqjO3sotw==
+X-Google-Smtp-Source: AGHT+IEUVlxZvsY6kyQ8oh4IYiDxD5JM/pwb8mU594q4Pe21lyTrsfx3aYR2WegI8TYwiGqeWjxLTA==
+X-Received: by 2002:a5d:5848:0:b0:38f:295e:6331 with SMTP id
+ ffacd0b85a97d-390ec7d09abmr655889f8f.19.1740695003585; 
+ Thu, 27 Feb 2025 14:23:23 -0800 (PST)
 Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47b6ddesm3286202f8f.41.2025.02.27.14.18.41
+ ffacd0b85a97d-390e47a6d0asm3203562f8f.27.2025.02.27.14.23.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 14:18:42 -0800 (PST)
-Message-ID: <ed2cba1b-f0f4-4b33-9452-4279f84bc088@linaro.org>
-Date: Thu, 27 Feb 2025 23:18:41 +0100
+ Thu, 27 Feb 2025 14:23:23 -0800 (PST)
+Message-ID: <9abaa8f1-b2bc-41f7-913e-0c427106de7e@linaro.org>
+Date: Thu, 27 Feb 2025 23:23:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] hw/arm/versatilepb: Convert printfs to LOG_GUEST_ERROR
+Subject: Re: [PATCH 3/3] target/arm: Drop unused address_offset from
+ op_addr_{rr, ri}_post()
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-References: <20250227170117.1726895-1-peter.maydell@linaro.org>
- <20250227170117.1726895-6-peter.maydell@linaro.org>
+References: <20250227142746.1698904-1-peter.maydell@linaro.org>
+ <20250227142746.1698904-4-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250227170117.1726895-6-peter.maydell@linaro.org>
+In-Reply-To: <20250227142746.1698904-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,14 +103,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/2/25 18:01, Peter Maydell wrote:
-> Convert some printf() calls for attempts to access nonexistent
-> registers into LOG_GUEST_ERROR logging.
+On 27/2/25 15:27, Peter Maydell wrote:
+> All the callers of op_addr_rr_post() and op_addr_ri_post() now pass in
+> zero for the address_offset, so we can remove that argument.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/arm/versatilepb.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
+>   target/arm/tcg/translate.c | 26 +++++++++++++-------------
+>   1 file changed, 13 insertions(+), 13 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
