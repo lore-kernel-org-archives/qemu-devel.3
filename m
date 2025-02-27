@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6047C19F32
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 03:29:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FB1EC021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 03:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnUaB-0000kZ-21; Wed, 26 Feb 2025 22:29:07 -0500
+	id 1tnUex-00039S-0U; Wed, 26 Feb 2025 22:34:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnUa7-0000dY-Gx; Wed, 26 Feb 2025 22:29:03 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tnUeu-00039A-R9; Wed, 26 Feb 2025 22:34:00 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnUa5-0005oK-Pn; Wed, 26 Feb 2025 22:29:03 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2234bec7192so11412315ad.2; 
- Wed, 26 Feb 2025 19:29:00 -0800 (PST)
+ id 1tnUet-0006iS-3e; Wed, 26 Feb 2025 22:34:00 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-223378e2b0dso7099305ad.0; 
+ Wed, 26 Feb 2025 19:33:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740626939; x=1741231739; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740627237; x=1741232037; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FlvQSyw3lhTKi/QCMs6UB0ZZlrkLyHNRXnk/S/LWf9I=;
- b=Dfr96LxpauRJYWuGC25hnDsexlkbH7nU3XsQPSuJn7oWy/KIbEDbqYj4JjsHObebaC
- xNOJbKDmecR6Ro7voCp+/QoHssaTgxqlur5/XjUCkqDM+eFV9hj0msWSNehxNVrYkhEB
- v3Nvw/OHSY2WimKdG/J+mQ6eTRHhaADB6A6YVhD47pjgs+0GkF+c+XxidQc9lys+BBCX
- vE+jeAp71XJKILSuZ6+o2BVQppsH4KR28yJ4eGxsVQ2R30cGsakPC4tByjX4DIDE1zkf
- Fc5u+UieSuyAi7vSsGy1Hisv9VXvBNaDc89DuULDZ768yMP+E5Wq8LbBNGbpSow3L+Gh
- oKIA==
+ bh=jtQqggqFdRim7QPOYzoaU+Nn+5qGO/PWf3+cQvbmSUQ=;
+ b=RAEACDmJOOwd4/SlQo6JMGoPDshLOQdhfXbsGdc0TxXjSoVw6Jx0vS8DYChQ0feAp2
+ iP8TUAXInldU95/Gn8jhFCtRYqhUbKfXku6BbgsZNAI1fzUi1gPhl/uTVmefm5zFp4ws
+ ACu4rUij7Kh6ThcH3p1ZlaOHOIrrU+kSmsch4+e2BrkeRmkZ7hFBCAwWfGlqWc5EmYBU
+ 8c+s+VCJ/5NrORQG+aH6xqaY7refHaZezoCBunCImP9zfinFJScwgXd5tEBR7iBn6qmD
+ uF27QJd8MMGZFq6bJcNppnpfpsTkU/EP8sSLOyrDsTI8FBjhJIogmzOfSbydb72vv6zh
+ BI+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740626939; x=1741231739;
+ d=1e100.net; s=20230601; t=1740627237; x=1741232037;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=FlvQSyw3lhTKi/QCMs6UB0ZZlrkLyHNRXnk/S/LWf9I=;
- b=tLBok1C4y06OlsG0U13qb/LtWA4Fp5ZW95IO+ZQjAG0M4wYnS0VOl8BAT7yAeEqALa
- UYiRh/SeLE4dqBePJRkWwfhNNYrSF37OoNp1z4OAM7PIp9oKs/WeEYEnjO/AMoa1Dg9x
- K03xIT8BBeXTuEnvwvZ2gVLbJes50I54hwMln+W11ZbTK7hPXHQkBwygV+Ox6KZf4Jvk
- p+/gxKRTzBT+WPm5fMoiEcHf/1eEqUAhm9KypAY5t6Oq3Wqf//GvgC7q1uwoqiU734yW
- Ode6nZBbgMcmDj6dpFUq6Rn99OfDf13XKJ8QxmJmKdniyTUpPgKeb9qzCAs2TZw9p8ri
- JHeQ==
+ bh=jtQqggqFdRim7QPOYzoaU+Nn+5qGO/PWf3+cQvbmSUQ=;
+ b=RwERoMqv3ilwss/Z2ZufFhelkQ0bLotRyaocEY6wvzUMeE84YR1z0H6fvF1Wfv+QYS
+ JSIp3/d5uEFtMNyhM+i13m8+wuPC0HIgzvjpZjHpPsMUug0wKdHFERJHE6oNIe5MPgIF
+ wHcOF9C/R4aZdRcIPz1cei/ijAymeIXCMB5QcDYXYvkUdUwXcYSalq9ixoo/r+w+bvoS
+ odW3xS2wlQlPRSGxiypkaiWezllJmz21OYy25jMdobRzqGGVI0x7zs386o5Eg/ttytvy
+ 8aPUNE0i9rZVZgNcG6+LpIVqtC7ilNO52ZLZwSmlCdn26fdKgi/bvHFATcXEtdU9CC/O
+ CVcg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRePVoIKP0ylKjrtl3WKfammKan5kVoKgpckNf7WLzb4Ll6ZUea2NLxBDeEOfIxXZvbYYEuzcy/9Sf@nongnu.org
-X-Gm-Message-State: AOJu0YyzLJB9TOh0QZ1t9tezQA8tSNHEZSzU65rj30yV4kZNvM8Xzm9C
- k7WBGWVte7kXSlF9wIODLLtbQzkulpVjallpAq7V9GuWez8B1kuj
-X-Gm-Gg: ASbGncvPAsCz6jDVq0U4X2HItVVq1GGqRga5ao2P3WzJRwFBCOCoN4yha3nD4dCro/J
- qWBco4cl86/0X6Kg/zXLNJuwLsR6e8i0/MWlqRPlQ5oaycoPojKDWXZjNSjKApWnD7bwJ8kPRSP
- 9YYNRz/pvfdET/+FmpZSn/1smeMHCBy2Z92+PayPU3w/V/P1agXbqvwkaNd4RtKpWKSNMhixDHV
- VeiI3/9m2oSzU1B0qPBDUQZNm4Xsc1UDQB4gu1pYnY8ZqDvWB5tBFJ0PN7RkQh/V7n7c2fC6ZhV
- xeCTNllvN9V5lKNkRA==
-X-Google-Smtp-Source: AGHT+IEGkuFE89rxeBHj521pmQbSz4RHUevmqse34cQuCx1cCjLY5Qz2ILr24E58DNfNdlHYyQGmXQ==
-X-Received: by 2002:a05:6a21:328d:b0:1f0:ea9e:bd6b with SMTP id
- adf61e73a8af0-1f10ad762e3mr8307328637.20.1740626939110; 
- Wed, 26 Feb 2025 19:28:59 -0800 (PST)
+ AJvYcCXHYwp0U08a2kqsjJSrULpQgHYYlQwrL5GV3dxMF2iLLv+S6SkmCC862ao9cEh5C8Ug6P45mlaB9XPa@nongnu.org
+X-Gm-Message-State: AOJu0Yya6rGkQaul+KLi93YD+PvotOS5VQcoVOai0kqr1l1nSCImAUlr
+ fE0Tjd7Qy2naxGYD2Annj7vhWSKsWl0wkwrrO/EoarOOIxp1oEWi
+X-Gm-Gg: ASbGncuO0IT+BEZUT6ZBTaZ+U3KYvpxMZmHS9vARFzRqcEzK3SW+vAZRJJR4qNDk8ON
+ cWBvPV7wvu8q5eDU3iN1EGZvq2zMdrNIlAsPUTfDC31UzoiWgj1O/My/q85RrWYnB6BNwM7PraW
+ c9ERhT99p22CnHVKqUSJQiSgogEaafSoISdNrgTRb+8nPMs4ZJbLY6N9iXJiak5tyXJZhhnbCbe
+ N+y17YHuZdntRUoHCbgQK5K8pBytHOrbqW13KVp/iTSUMVZeiQH8IdO+5qOhBvfBI3WRzA2tMzF
+ BuWsaEMjTDhzPkSv9g==
+X-Google-Smtp-Source: AGHT+IGJSnPCoWVgo3QIpwEsWNDrHgLgx/aE5/2BbCZSNV/JXLx6XwBwcjA/23z15ELTiKYHb2QiDg==
+X-Received: by 2002:a05:6a00:c96:b0:730:8d25:4c24 with SMTP id
+ d2e1a72fcca58-734790c751emr14423136b3a.10.1740627237202; 
+ Wed, 26 Feb 2025 19:33:57 -0800 (PST)
 Received: from localhost ([1.146.90.134]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-734a0024bf9sm392154b3a.112.2025.02.26.19.28.55
+ d2e1a72fcca58-7349fe487b6sm408507b3a.47.2025.02.26.19.33.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 19:28:58 -0800 (PST)
+ Wed, 26 Feb 2025 19:33:56 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 27 Feb 2025 13:28:53 +1000
-Message-Id: <D82WR22WF5C9.20VWJUD0Y5IPN@gmail.com>
+Date: Thu, 27 Feb 2025 13:33:51 +1000
+Message-Id: <D82WUV05QWZP.10KAOOHN6YFFP@gmail.com>
 Cc: <qemu-ppc@nongnu.org>, "Daniel Henrique Barboza"
  <danielhb413@gmail.com>, "Harsh Prateek Bora" <harshpb@linux.ibm.com>,
  "Sourabh Jain" <sourabhjain@linux.ibm.com>, "Mahesh J Salgaonkar"
  <mahesh@linux.ibm.com>, "Hari Bathini" <hbathini@linux.ibm.com>
-Subject: Re: [PATCH 5/6] hw/ppc: Pass device tree properties for Fadump
+Subject: Re: [PATCH 6/6] hw/ppc: Enable Fadump for PSeries
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "Aditya Gupta" <adityag@linux.ibm.com>, <qemu-devel@nongnu.org>
 X-Mailer: aerc 0.19.0
 References: <20250217071711.83735-1-adityag@linux.ibm.com>
- <20250217071711.83735-6-adityag@linux.ibm.com>
-In-Reply-To: <20250217071711.83735-6-adityag@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
+ <20250217071711.83735-7-adityag@linux.ibm.com>
+In-Reply-To: <20250217071711.83735-7-adityag@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,139 +103,125 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon Feb 17, 2025 at 5:17 PM AEST, Aditya Gupta wrote:
-> Platform (ie. QEMU) is expected to pass few device tree properties for
-> details for fadump:
+> With all support in place, enable fadump by exporting the
+> "ibm,configure-kernel-dump" RTAS call in the device tree.
 >
->   * "ibm,configure-kernel-dump": RTAS call for fadump
->   * "ibm,configure-kernel-dump-sizes": Space required to store dump data
->     for firmware provided dump sections (ie. CPU & HPTE regions)
->   * "ibm,configure-kernel-dump-version": Versions of fadump supported
->   * "ibm,kernel-dump": Contains the Fadump Memory Structure on a fadump
->     boot
+> Presence of "ibm,configure-kernel-dump" tells the kernel that the
+> platform (QEMU) supports fadump.
 >
-> Implement passing configure-kernel-dump-sizes, and
-> configure-kernel-dump-version device tree properties, irrespective of
-> whether it's a fadump boot or not, so that kernel can reserve memory to
-> store the firmware provided dump sections in case of a crash
+> Pass "fadump=3Don" to enable Linux to use firmware assisted dump.
 >
-> Also, in case of a fadump boot, pass the fadump memory structure to the
-> kernel in "ibm,kernel-dump" device tree property.
+> Logs of a linux boot with firmware assisted dump:
+>
+>     ./build/qemu-system-ppc64 -M pseries,x-vof=3Don --cpu power10 --smp 4=
+ -m 4G -kernel some-vmlinux -initrd some-initrd -append "debug fadump=3Don =
+crashkernel=3D1G" -nographic
+>     [    0.000000] random: crng init done
+>     [    0.000000] fadump: Reserved 1024MB of memory at 0x00000040000000 =
+(System RAM: 4096MB)
+>     ...
+>     [    1.084686] rtas fadump: Registration is successful!
+>     ...
+>     # cat /sys/kernel/debug/powerpc/fadump_region
+>     CPU :[0x00000040000000-0x000000400013d3] 0x13d4 bytes, Dumped: 0x0
+>     HPTE:[0x000000400013d4-0x000000400013d3] 0x0 bytes, Dumped: 0x0
+>     DUMP: Src: 0x00000000000000, Dest: 0x00000040010000, Size: 0x40000000=
+, Dumped: 0x0 bytes
+>
+>     [0x000000fffff800-0x000000ffffffff]: cmdline append: ''
+>     # echo c > /proc/sysrq-trigger
+>
+> The fadump boot after crash:
+>
+>     [    0.000000] rtas fadump: Firmware-assisted dump is active.
+>     [    0.000000] fadump: Updated cmdline: debug fadump=3Don crashkernel=
+=3D1G
+>     [    0.000000] fadump: Firmware-assisted dump is active.
+>     [    0.000000] fadump: Reserving 3072MB of memory at 0x00000040000000=
+ for preserving crash data
+>     ....
+>     # file /proc/vmcore
+>     /proc/vmcore: ELF 64-bit LSB core file, 64-bit PowerPC or cisco 7500,=
+ OpenPOWER ELF V2 ABI, version 1 (SYSV), SVR4-style
+>
+> Analysing the vmcore with crash-utility:
+>
+>           KERNEL: vmlinux-6.14-rc2
+>         DUMPFILE: vmcore-a64dcfb451e2-nocma
+>             CPUS: 4
+>             DATE: Thu Jan  1 05:30:00 IST 1970
+>           UPTIME: 00:00:30
+>     LOAD AVERAGE: 0.74, 0.21, 0.07
+>            TASKS: 94
+>         NODENAME: buildroot
+>          RELEASE: 6.14.0-rc2+
+>          VERSION: #1 SMP Wed Feb 12 06:49:59 CST 2025
+>          MACHINE: ppc64le  (1000 Mhz)
+>           MEMORY: 4 GB
+>            PANIC: "Kernel panic - not syncing: sysrq triggered crash"
+>              PID: 270
+>          COMMAND: "sh"
+>             TASK: c000000009e7cc00  [THREAD_INFO: c000000009e7cc00]
+>              CPU: 3
+>            STATE: TASK_RUNNING (PANIC)
 >
 > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->  hw/ppc/spapr.c         | 62 ++++++++++++++++++++++++++++++++++++++++++
->  include/hw/ppc/spapr.h |  2 ++
->  2 files changed, 64 insertions(+)
->
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index f3a4b4235d43..3602e5b5d18d 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -897,9 +897,27 @@ static int spapr_dt_rng(void *fdt)
->  static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
->  {
 
-You might be able to add a spapr_dt_rtas_fadump() function
-and do it there to help keep functions small?
+This is very cool, nice work. Does it work with KVM? I think... probably
+it could?
+
+Are you able to add a functional test case for it? This is something
+that people (including me) will forget to test...
 
 Thanks,
 Nick
 
->      MachineState *ms =3D MACHINE(spapr);
-> +    MachineClass *mc =3D MACHINE_GET_CLASS(ms);
->      int rtas;
->      GString *hypertas =3D g_string_sized_new(256);
->      GString *qemu_hypertas =3D g_string_sized_new(256);
-> +    uint32_t max_possible_cpus =3D mc->possible_cpu_arch_ids(ms)->len;
-> +    uint64_t fadump_cpu_state_size =3D 0;
-> +    uint16_t fadump_versions[2] =3D {
-> +        FADUMP_VERSION /* min supported version */,
-> +        FADUMP_VERSION /* max supported version */
-> +    };
-> +    uint32_t fadump_rgn_sizes[2][3] =3D {
-> +        {
-> +            cpu_to_be32(FADUMP_CPU_STATE_DATA),
-> +            0, 0 /* Calculated later */
-> +        },
-> +        {
-> +            cpu_to_be32(FADUMP_HPTE_REGION),
-> +            0, 0 /* HPTE region not implemented */
-> +        }
-> +    };
-> +
->      uint32_t lrdr_capacity[] =3D {
->          0,
->          0,
-> @@ -1006,6 +1024,50 @@ static void spapr_dt_rtas(SpaprMachineState *spapr=
-, void *fdt)
->      _FDT(fdt_setprop(fdt, rtas, "ibm,lrdr-capacity",
->                       lrdr_capacity, sizeof(lrdr_capacity)));
+> ---
+>  hw/ppc/spapr_rtas.c    | 6 +++++-
+>  include/hw/ppc/spapr.h | 3 ++-
+>  2 files changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
+> index 0aca4270aee8..bd2ed16a46e3 100644
+> --- a/hw/ppc/spapr_rtas.c
+> +++ b/hw/ppc/spapr_rtas.c
+> @@ -692,7 +692,7 @@ static void trigger_fadump_boot(target_ulong spapr_re=
+tcode)
+>  }
 > =20
-> +    /*
-> +     * CPU State Data contains multiple fields such as header, num_cpus =
-and
-> +     * register entries
-> +     *
-> +     * Calculate the maximum CPU State Data size, according to maximum
-> +     * possible CPUs the QEMU VM can have
-> +     */
-> +    /* Reg save header */
-> +    fadump_cpu_state_size +=3D sizeof(struct rtas_fadump_reg_save_area_h=
-eader);
+>  /* Papr Section 7.4.9 ibm,configure-kernel-dump RTAS call */
+> -static __attribute((unused)) void rtas_configure_kernel_dump(PowerPCCPU =
+*cpu,
+> +static void rtas_configure_kernel_dump(PowerPCCPU *cpu,
+>                                     SpaprMachineState *spapr,
+>                                     uint32_t token, uint32_t nargs,
+>                                     target_ulong args,
+> @@ -1109,6 +1109,10 @@ static void core_rtas_register_types(void)
+>      spapr_rtas_register(RTAS_IBM_NMI_INTERLOCK, "ibm,nmi-interlock",
+>                          rtas_ibm_nmi_interlock);
+> =20
+> +    /* Register Fadump rtas call */
+> +    spapr_rtas_register(RTAS_CONFIGURE_KERNEL_DUMP, "ibm,configure-kerne=
+l-dump",
+> +                        rtas_configure_kernel_dump);
 > +
-> +    /* Num_cpus */
-> +    fadump_cpu_state_size +=3D sizeof(__be32);
-> +
-> +    /* Register Entries */
-> +    fadump_cpu_state_size +=3D max_possible_cpus   *
-> +                             FADUMP_NUM_PER_CPU_REGS *
-> +                             sizeof(struct rtas_fadump_reg_entry);
-> +
-> +    /* Set maximum size for CPU state data region */
-> +    assert(fadump_rgn_sizes[0][0] =3D=3D cpu_to_be32(FADUMP_CPU_STATE_DA=
-TA));
-> +
-> +    /* Upper 32 bits of size, usually 0 */
-> +    fadump_rgn_sizes[0][1] =3D cpu_to_be32(fadump_cpu_state_size >> 32);
-> +
-> +    /* Lower 32 bits of size */
-> +    fadump_rgn_sizes[0][2] =3D cpu_to_be32(fadump_cpu_state_size & 0xfff=
-fffff);
-> +
-> +    /* Add device tree properties required from platform for fadump */
-> +    _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-version",
-> +                    fadump_versions, sizeof(fadump_versions))));
-> +    _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-sizes",
-> +                    fadump_rgn_sizes, sizeof(fadump_rgn_sizes))));
-> +
-> +    if (is_next_boot_fadump) {
-> +        struct rtas_fadump_mem_struct *fdm =3D
-> +            &fadump_metadata.registered_fdm;
-> +
-> +        uint64_t fdm_size =3D
-> +            sizeof(struct rtas_fadump_section_header) +
-> +            (be16_to_cpu(fdm->header.dump_num_sections) *
-> +            sizeof(struct rtas_fadump_section));
-> +
-> +        _FDT((fdt_setprop(fdt, rtas, "ibm,kernel-dump", fdm, fdm_size)))=
-;
-> +    }
->      spapr_dt_rtas_tokens(fdt, rtas);
+>      qtest_set_command_cb(spapr_qtest_callback);
 >  }
 > =20
 > diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-> index 0e8002bad9e0..fa63008e57ec 100644
+> index fa63008e57ec..bde3bdc4b80c 100644
 > --- a/include/hw/ppc/spapr.h
 > +++ b/include/hw/ppc/spapr.h
-> @@ -928,6 +928,8 @@ static inline uint64_t fadump_gpr_id_to_u64(uint32_t =
-gpr_id)
->      return val;
->  }
+> @@ -768,8 +768,9 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
+>  #define RTAS_IBM_SUSPEND_ME                     (RTAS_TOKEN_BASE + 0x2A)
+>  #define RTAS_IBM_NMI_REGISTER                   (RTAS_TOKEN_BASE + 0x2B)
+>  #define RTAS_IBM_NMI_INTERLOCK                  (RTAS_TOKEN_BASE + 0x2C)
+> +#define RTAS_CONFIGURE_KERNEL_DUMP              (RTAS_TOKEN_BASE + 0x2D)
 > =20
-> +extern bool is_next_boot_fadump;
-> +
->  struct fadump_metadata {
->      bool fadump_registered;
->      bool fadump_dump_active;
+> -#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2D)
+> +#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2E)
+> =20
+>  /* Fadump commands */
+>  #define FADUMP_CMD_REGISTER            1
 
 
