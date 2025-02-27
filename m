@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0C64C021B8
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 01:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F09C9C021B8
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 01:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnSQV-0003zs-7x; Wed, 26 Feb 2025 20:10:59 -0500
+	id 1tnSaN-0005N9-UO; Wed, 26 Feb 2025 20:21:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnSQS-0003zO-K5; Wed, 26 Feb 2025 20:10:56 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tnSaM-0005Mw-Vs; Wed, 26 Feb 2025 20:21:11 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnSQP-0006Zz-4j; Wed, 26 Feb 2025 20:10:56 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2234e5347e2so5250945ad.1; 
- Wed, 26 Feb 2025 17:10:51 -0800 (PST)
+ id 1tnSaK-0000R4-RW; Wed, 26 Feb 2025 20:21:10 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-220e83d65e5so6140755ad.1; 
+ Wed, 26 Feb 2025 17:21:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740618650; x=1741223450; darn=nongnu.org;
- h=in-reply-to:references:from:subject:to:message-id:date
+ d=gmail.com; s=20230601; t=1740619266; x=1741224066; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CuSRKJcV2HYsb6R5VD+qFkOuD1bPm+sY5kcMBvfzha0=;
- b=VVIwBWANrB+LzGNodU9QElHepVbCZt/24h9Z9tMXDhfbEl5VFQOV/XbJ8E3sTIlwmb
- PevSMJiLhtWmbv4bmcfgOSVR3jL9OGnpo+FCSURRMp/k0PcxGgtpbCAJYkv+zYxldHLo
- 2L28TNiCG9KRYlDC0+XBRly1TlfGYqE9eGK1jaPqqnroTeCQhOPGs7yh2K8CDD1+nBQt
- RMOtuWSGcgwnudVRSnsRaOZuak1Amh+jeIcZF3Myl2dIav6SYb26Q59ME3bZsdUR60/y
- ypfWyvUhVyucgVHC/xv0s3gcxTQ2YzblbHzp97QqWNYqjnCocIPkqgtGI+Hw+fQJOo3H
- d5Bg==
+ bh=FcHUjHkUH76Q616JC/e15wqrTjoHvIDXG6KwBhRrFmA=;
+ b=PohfFtCo33A2b/9PnbTrTStlslN27WEz76I+wMzgFiiyxteVQfYpNEvQpYi0KnlHY1
+ CqdbuXswDkDQOZd+BfY/R42cRh/hOy8n7OMhrjoWDznkGZ74QeakSSTcNHvXgDUTmFml
+ 1N98Yqc2LXl++IgfoAiM1qYWl9fyoVOiA+hFKTobr1f1nGaZ1efGp3Xf3YZUWGUBY5j1
+ rH9EvyYBbmTsfCDrnFCwibowplBsn6rGnknK5MASxBDR+MT8+HsgumvWfnuFL9Gy2t1U
+ 9TgK7Pan0nhswZoX69Pavr3smD/U8g1uagve3/eP8adHurGrZyJwv3+j3s0o07NW4yvc
+ rBsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740618650; x=1741223450;
- h=in-reply-to:references:from:subject:to:message-id:date
+ d=1e100.net; s=20230601; t=1740619266; x=1741224066;
+ h=in-reply-to:references:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=CuSRKJcV2HYsb6R5VD+qFkOuD1bPm+sY5kcMBvfzha0=;
- b=TLbbu6ZgLr4K1Uvgdj7igkTrRv2ahU3QB4ftDyt7IhYiwnu3FyPkyTffk/ed7CnoDW
- gSNaeAG31pE3KY4ARjAZmpVOTLahxpKf8CEa+m2bBsiKPmQ6l+IBxgs8HaCsEG5y5/Vc
- rU6fcOKfTnl8vmKclKjZv9nGsWRBaDhhuoy8WO8oWMRovUTfxSwAD4nynuXxhnzqO0Mu
- cTOrltTqZ9lIRX34k3E4gHZMVqSLoq+QcpBwoMk21AxxzfJInIXykkk4Ql3oivYuVU9u
- +zhAeUQ4/Qh3pfGwnPB3jKdu+NSJ0mJ/mkO4SiIO1GCVWvGnnUYX5d6csRB8vaY1xKEI
- zkdw==
+ bh=FcHUjHkUH76Q616JC/e15wqrTjoHvIDXG6KwBhRrFmA=;
+ b=OaBbhNSoRIdEFA5r0T40Zb5X45XaWx/5GD0CarNeJ+GS2BgJ3Mu4t9dSDcYlvm7qNi
+ wumPPMZAOz6N18GPSYvtyba/wXNOEx+L0wFp5mLP3Y6r06hBBDHcZbYubrCtQ2uZ82AS
+ aWwZx8iJ8E0RDBuzdnGONPER1RAWaHkTE2ZDCg2jgZu7ofv/YP11fVtNojRxPoc/w3DN
+ 72ztZtGit4J1EXtBBTjWSvXadiVTkrByl3ztRIbJIjN9buqvIZtWzvpkPsArE9qqBQ5+
+ eceezhF5DhkLA6xp4SZqTlPR1wSlxsnuvmk/GtI/fwC3vtc/PhKL0sSyUKh6NNmTWDgk
+ pBsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUJseNegaYpdmKNfAl5fNdhkGOlTK9N8dWVyWOxrVc4VWD70VUd6NxKE6Woo3cay70zExCX/Jf6Ru0=@nongnu.org,
- AJvYcCVKVByr2pwbQkuYXO64MZjGSy/WsJbf2YHJfNB167NWLc0AlGRc2hLKaIGaXqDJfh3KXMm6tfc+YOYy@nongnu.org
-X-Gm-Message-State: AOJu0YwhGhvVMwyfgx7q2tt7SS3rxojfjY5RUhILSN1SUMryB1DOx29M
- vn541PIEnbwLGZobTkrz/kJIaAd66kG2ED2/jKjC0tb3TG4JDExICrD2fw==
-X-Gm-Gg: ASbGnctogZKY5IeKO1cbVniYN+fveAvMEG4Ueh03kjp3jgfUDoW53aMg/DNMJlLwOpG
- uZbFpdlTdtFL+N/6GYmkOGpgApdga9LZrorrWq8YqUYkdC7CvbHC/SXVTi+NdgvZJaVrXVDpGNl
- 78ADIQUC2GEnv0bUv+gm57q+2d6VOGKF2PmI5JmoZrRfMPUODlCycyuEkikZcO3PEEQzhTKkdae
- rTX901btGBDFx0Lz1m2rNnnQp+sZBJio5jjcrqilmmeOvz6cJ67GTrJvpDhKswzbVBkOe9wxzDj
- 1o+ooTD5J9CYsktd8w==
-X-Google-Smtp-Source: AGHT+IHtvdIvtD+yZgjpdH5mfSkU0yBR8KGqdnjw92PV2llQDqJcHj2wCQV6vAZUFYBCOtURVcajHw==
-X-Received: by 2002:a05:6a00:cd3:b0:728:9d19:d2ea with SMTP id
- d2e1a72fcca58-7348bdf1f46mr7203779b3a.13.1740618650432; 
- Wed, 26 Feb 2025 17:10:50 -0800 (PST)
+ AJvYcCVRKdLqaihrqmvpZeeFnCC/1yq9rVyoqG0U80TPHORSdMpNLJjzduuWAdBieUrgBZ1DK7b2tqjNIfo=@nongnu.org,
+ AJvYcCVnJgwaggm/W1QLimechR17bft7uvLqawbbpdg1fb4Tl7x8nhGQIdxBnlgNjSeqT5bC6A17C9JgK+TN@nongnu.org
+X-Gm-Message-State: AOJu0Yxs1aeCxvEJglQMsA2KYTn7zOKbUc3Yx6cjprTG0jqHkEgvsnk3
+ WdXs5Yc5XTLehCTRV6Jg+ido4VJQ/aR+AK2gZ7lZPAIVwNFayShtYvbyjQ==
+X-Gm-Gg: ASbGnctCCwRp8PKyBJ/cP6WVMMYH04KVEW1Llrw2B+6PbE6/2uLx7kZKUurBkGY19ve
+ kdlfLMyc6A8//gH3M4a+VUBn2cC7VgeZdH9rH9KhbKhx45oOboja3EjmUWHstdtEb88hm4x1nVb
+ h/qojZa2h2D2xPo0LM+ZwuXT+/p5QR85llTv6NSNGODheTLGb3/JlY3pp9v0Pm2QiUCkZ94Uk4K
+ VtUgqrvooEDxeBGDs82+A0unzPbIKSDeNX0hbbLRBzKD7qiB9jfudxCyuZPDfsfuD/86JIMI06Z
+ 8FkKgwuKcRHbhn4QVQ==
+X-Google-Smtp-Source: AGHT+IEe07o0LaDW/EAoTzlWD8DS6ndtTWdDzErtncPmzJ1FMzd2IqgK5wg7aVNUhTmz1+exxhTB9g==
+X-Received: by 2002:a05:6a20:12c5:b0:1ee:7d91:59bd with SMTP id
+ adf61e73a8af0-1f10ae2e106mr9242976637.31.1740619266605; 
+ Wed, 26 Feb 2025 17:21:06 -0800 (PST)
 Received: from localhost ([1.146.90.134]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7349fe2b0f9sm252716b3a.22.2025.02.26.17.10.48
+ d2e1a72fcca58-734a003dd31sm241225b3a.152.2025.02.26.17.21.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 17:10:50 -0800 (PST)
+ Wed, 26 Feb 2025 17:21:06 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 27 Feb 2025 11:10:45 +1000
-Message-Id: <D82TTAPY9JXE.3P3A8B5Y1GAB1@gmail.com>
+Date: Thu, 27 Feb 2025 11:21:01 +1000
+Message-Id: <D82U15TLWUH7.2HKA1PQKQGVMM@gmail.com>
+Subject: Re: [PATCH 3/4] ppc/amigaone: Add default environment
+From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
-Subject: Re: [PATCH 2/4] ppc/amigaone: Implement NVRAM emulation
-From: "Nicholas Piggin" <npiggin@gmail.com>
 X-Mailer: aerc 0.19.0
 References: <cover.1740243918.git.balaton@eik.bme.hu>
- <7fac3d50347adbb00bfcd1d1d0bfdf9e73515ebb.1740243918.git.balaton@eik.bme.hu>
-In-Reply-To: <7fac3d50347adbb00bfcd1d1d0bfdf9e73515ebb.1740243918.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
+ <f1b53e0822111c6c557797adcc75f8d2c7eed17f.1740243918.git.balaton@eik.bme.hu>
+In-Reply-To: <f1b53e0822111c6c557797adcc75f8d2c7eed17f.1740243918.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,200 +101,112 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Sun Feb 23, 2025 at 3:52 AM AEST, BALATON Zoltan wrote:
-> The board has a battery backed NVRAM where U-Boot environment is
-> stored which is also accessed by AmigaOS and e.g. C:NVGetVar command
-> crashes without it having at least a valid checksum.
->
+> Initialise empty NVRAM with default values. This also enables IDE UDMA
+> mode in AmigaOS that is faster but has to be enabled in environment
+> due to problems with real hardware but that does not affect emulation
+> so we can use faster defaults here.
+
+So this overwrites a blank NVRAM file. Okay I suppose if that works.
+You could have a property to supply the default environment
+alternatively. Anywhere to document this behaviour for users?
+
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->  hw/ppc/amigaone.c | 116 ++++++++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 113 insertions(+), 3 deletions(-)
+>  hw/ppc/amigaone.c | 37 ++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 36 insertions(+), 1 deletion(-)
 >
 > diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-> index 4290d58613..5273543460 100644
+> index 5273543460..35e4075cc3 100644
 > --- a/hw/ppc/amigaone.c
 > +++ b/hw/ppc/amigaone.c
-> @@ -21,10 +21,13 @@
->  #include "hw/ide/pci.h"
->  #include "hw/i2c/smbus_eeprom.h"
->  #include "hw/ppc/ppc.h"
-> +#include "system/block-backend.h"
->  #include "system/qtest.h"
->  #include "system/reset.h"
->  #include "kvm_ppc.h"
+> @@ -52,6 +52,28 @@ static const char dummy_fw[] =3D {
+>  #define NVRAM_ADDR 0xfd0e0000
+>  #define NVRAM_SIZE (4 * KiB)
 > =20
-> +#include <zlib.h> /* for crc32 */
+> +static char default_env[] =3D
+> +    "baudrate=3D115200\0"
+> +    "stdout=3Dvga\0"
+> +    "stdin=3Dps2kbd\0"
+> +    "bootcmd=3Dboota; menu; run menuboot_cmd\0"
+> +    "boot1=3Dide\0"
+> +    "boot2=3Dcdrom\0"
+> +    "boota_timeout=3D3\0"
+> +    "ide_doreset=3Don\0"
+> +    "pci_irqa=3D9\0"
+> +    "pci_irqa_select=3Dlevel\0"
+> +    "pci_irqb=3D10\0"
+> +    "pci_irqb_select=3Dlevel\0"
+> +    "pci_irqc=3D11\0"
+> +    "pci_irqc_select=3Dlevel\0"
+> +    "pci_irqd=3D7\0"
+> +    "pci_irqd_select=3Dlevel\0"
+> +    "a1ide_irq=3D1111\0"
+> +    "a1ide_xfer=3DFFFF\0";
+> +#define CRC32_DEFAULT_ENV 0xb5548481
+> +#define CRC32_ALL_ZEROS   0x603b0489
 > +
->  #define BUS_FREQ_HZ 100000000
+>  #define TYPE_A1_NVRAM "a1-nvram"
+>  OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
 > =20
->  /*
-> @@ -46,6 +49,103 @@ static const char dummy_fw[] =3D {
->      0x4e, 0x80, 0x00, 0x20, /* blr */
->  };
-> =20
-> +#define NVRAM_ADDR 0xfd0e0000
-> +#define NVRAM_SIZE (4 * KiB)
-> +
-> +#define TYPE_A1_NVRAM "a1-nvram"
-> +OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
-> +
-> +struct A1NVRAMState {
-> +    SysBusDevice parent_obj;
-> +
-> +    MemoryRegion mr;
-> +    BlockBackend *blk;
-> +};
-> +
-> +/* read callback not used because of romd mode, only here just in case *=
-/
-
-Better make it g_assert_not_reached() then.
-
-> +static uint64_t nvram_read(void *opaque, hwaddr addr, unsigned int size)
-> +{
-> +    A1NVRAMState *s =3D opaque;
-> +    uint8_t *p =3D memory_region_get_ram_ptr(&s->mr);
-> +
-> +    return p[addr];
-> +}
-> +
-> +static void nvram_write(void *opaque, hwaddr addr, uint64_t val,
-> +                        unsigned int size)
-> +{
-> +    A1NVRAMState *s =3D opaque;
-> +    uint8_t *p =3D memory_region_get_ram_ptr(&s->mr);
-> +
-> +    p[addr] =3D val;
-> +    if (s->blk) {
-> +        blk_pwrite(s->blk, addr, 1, &val, 0);
-> +    }
-> +}
-> +
-> +static const MemoryRegionOps nvram_ops =3D {
-> +    .read =3D nvram_read,
-> +    .write =3D nvram_write,
-> +    .endianness =3D DEVICE_BIG_ENDIAN,
-> +    .impl =3D {
-> +        .min_access_size =3D 1,
-> +        .max_access_size =3D 1,
-> +    },
-> +};
-> +
-> +static void nvram_realize(DeviceState *dev, Error **errp)
-> +{
-> +    A1NVRAMState *s =3D A1_NVRAM(dev);
-> +    void *p;
-> +    uint32_t *c;
-> +
-> +    memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram",
-> +                                  NVRAM_SIZE, &error_fatal);
-> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
-> +    c =3D p =3D memory_region_get_ram_ptr(&s->mr);
-> +    if (s->blk) {
-> +        if (blk_getlength(s->blk) !=3D NVRAM_SIZE) {
-> +            error_setg(errp, "NVRAM backing file size must be %ld bytes"=
-,
-> +                       NVRAM_SIZE);
-> +            return;
-> +        }
-> +        blk_set_perm(s->blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
-> +                     BLK_PERM_ALL, &error_fatal);
-> +        if (blk_pread(s->blk, 0, NVRAM_SIZE, p, 0) < 0) {
-> +            error_setg(errp, "Cannot read NVRAM contents from backing fi=
-le");
-> +            return;
-> +        }
-> +    }
-> +    if (*c =3D=3D 0) {
-> +        *c =3D cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
-> +        if (s->blk) {
-> +            blk_pwrite(s->blk, 0, 4, p, 0);
-> +        }
-> +    }
-> +}
-
-So, no need for a reset because it's persistent?
-
-> +
-> +static const Property nvram_properties[] =3D {
-> +    DEFINE_PROP_DRIVE("drive", A1NVRAMState, blk),
-> +};
-> +
-> +static void nvram_class_init(ObjectClass *oc, void *data)
-> +{
-> +    DeviceClass *dc =3D DEVICE_CLASS(oc);
-> +
-> +    dc->realize =3D nvram_realize;
-> +    device_class_set_props(dc, nvram_properties);
-> +}
-> +
-> +static const TypeInfo nvram_types[] =3D {
-> +    {
-> +        .name =3D TYPE_A1_NVRAM,
-> +        .parent =3D TYPE_SYS_BUS_DEVICE,
-> +        .instance_size =3D sizeof(A1NVRAMState),
-> +        .class_init =3D nvram_class_init,
-> +    },
-> +};
-> +DEFINE_TYPES(nvram_types)
-> +
->  static void amigaone_cpu_reset(void *opaque)
+> @@ -97,7 +119,7 @@ static void nvram_realize(DeviceState *dev, Error **er=
+rp)
 >  {
->      PowerPCCPU *cpu =3D opaque;
-> @@ -72,7 +172,7 @@ static void amigaone_init(MachineState *machine)
->      DeviceState *dev;
->      I2CBus *i2c_bus;
->      uint8_t *spd_data;
-> -    int i;
-> +    DriveInfo *di;
+>      A1NVRAMState *s =3D A1_NVRAM(dev);
+>      void *p;
+> -    uint32_t *c;
+> +    uint32_t crc, *c;
 > =20
->      /* init CPU */
->      cpu =3D POWERPC_CPU(cpu_create(machine->cpu_type));
-> @@ -97,6 +197,16 @@ static void amigaone_init(MachineState *machine)
->          memory_region_add_subregion(get_system_memory(), 0x40000000, mr)=
-;
+>      memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram",
+>                                    NVRAM_SIZE, &error_fatal);
+> @@ -116,12 +138,25 @@ static void nvram_realize(DeviceState *dev, Error *=
+*errp)
+>              return;
+>          }
 >      }
-> =20
-> +    /* nvram */
-> +    dev =3D qdev_new(TYPE_A1_NVRAM);
-> +    di =3D drive_get(IF_MTD, 0, 0);
-> +    if (di) {
-> +        qdev_prop_set_drive(dev, "drive", blk_by_legacy_dinfo(di));
+> +    crc =3D crc32(0, p + 4, NVRAM_SIZE - 4);
+> +    if (crc =3D=3D CRC32_ALL_ZEROS) { /* If env is uninitialized set def=
+ault */
+> +        *c =3D cpu_to_be32(CRC32_DEFAULT_ENV);
+> +        /* Also copies terminating \0 as env is terminated by \0\0 */
+> +        memcpy(p + 4, default_env, sizeof(default_env));
+> +        if (s->blk) {
+> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, =
+0);
+> +        }
+> +        return;
 > +    }
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +    memory_region_add_subregion(get_system_memory(), NVRAM_ADDR,
-> +                                sysbus_mmio_get_region(SYS_BUS_DEVICE(de=
-v), 0));
-> +
->      /* allocate and load firmware */
->      rom =3D g_new(MemoryRegion, 1);
->      memory_region_init_rom(rom, NULL, "rom", PROM_SIZE, &error_fatal);
-> @@ -136,7 +246,7 @@ static void amigaone_init(MachineState *machine)
->      pci_mem =3D sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
->      mr =3D g_new(MemoryRegion, 1);
->      memory_region_init_alias(mr, OBJECT(dev), "pci-mem-low", pci_mem,
-> -                             0, 0x1000000);
-> +                             0, 0xe0000);
->      memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
+>      if (*c =3D=3D 0) {
+>          *c =3D cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
+>          if (s->blk) {
+>              blk_pwrite(s->blk, 0, 4, p, 0);
+>          }
+>      }
+> +    if (be32_to_cpu(*c) !=3D crc) {
+> +        warn_report("NVRAM checksum mismatch");
+> +    }
 
-Better make these addresses #defines at the top of the file with
-the NVRAM_ADDR?
+Maybe the default environment should be set if there is no CRC? If there
+is a CRC already then that seems to indicate a valid rom file was
+supplied and user wanted it blank.
+
+This can also be rewritten:
+
+    crc =3D crc32(0, p + 4, NVRAM_SIZE - 4);
+    if (crc =3D=3D CRC32_ALL_ZEROS) { /* If env is uninitialized set defaul=
+t */
+        /* Also copies terminating \0 as env is terminated by \0\0 */
+        memcpy(p + 4, default_env, sizeof(default_env));
+        crc =3D CRC32_DEFAULT_ENV;
+    }
+    if (*c =3D=3D 0) {
+        *c =3D cpu_to_be32(crc);
+        if (s->blk) {
+            blk_pwrite(s->blk, 0, 4, p, 0);
+        }
+    } else if (be32_to_cpu(*c) !=3D crc) {
+        warn_report("NVRAM checksum mismatch");
+    }
 
 Thanks,
 Nick
-
->      mr =3D g_new(MemoryRegion, 1);
->      memory_region_init_alias(mr, OBJECT(dev), "pci-mem-high", pci_mem,
-> @@ -153,7 +263,7 @@ static void amigaone_init(MachineState *machine)
->      qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
->                                  qdev_get_gpio_in(DEVICE(cpu),
->                                  PPC6xx_INPUT_INT));
-> -    for (i =3D 0; i < PCI_NUM_PINS; i++) {
-> +    for (int i =3D 0; i < PCI_NUM_PINS; i++) {
->          qdev_connect_gpio_out(dev, i, qdev_get_gpio_in_named(DEVICE(via)=
-,
->                                                               "pirq", i))=
-;
->      }
-
 
