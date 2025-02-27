@@ -4,96 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BADEC19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F23C1B0FF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnelV-00006S-Up; Thu, 27 Feb 2025 09:21:30 -0500
+	id 1tnelw-0001o1-IJ; Thu, 27 Feb 2025 09:21:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnel6-0007sD-DA
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tnel5-0007s3-Nd
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnel3-0003ra-Cg
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:04 -0500
+ id 1tnel3-0003rc-Ar
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1740666060;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wxYYY1R7biz/YFz8OOn3xrn4YUgJT/5akSv9YjxqfqA=;
- b=J6/uHhb87Tv6c8wm0IR7tLWF0QpISWJpZsEhg3iwpr5Ri/GVQx8IY1nW2b42bgF4a2zffQ
- Ue6FERRqcKGvN83dwNpv/kF24F4TeTgp1t/P8NBnIuj9aIlhXe/h2AD6x0+Kvw85juAQZt
- bkPSZ8rgkwPdMw43WdHsT5hHeU7Xwjw=
+ bh=bMWORzOUwOCcEXcO5zGOU3VoKiAgJTGJeIEtqhhwSfc=;
+ b=Hhr/92fgP/0QQX0lOdKMw3NYqJpLtuG7SPVsbUA5bXEXdUcE77V9xulr6oX10We0pgqaht
+ WniEehLWR17beIl0OSoHVEjyR8F0gl0QX4l9rJC6tE/ua6rkwaoG6zuIqfNiMvQI26WSoC
+ MLKpfVIeqR6I7OfacEvc47EMZsUg2D0=
 Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
  [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-203-DIR0lcozOUKqRndGKx9XJg-1; Thu, 27 Feb 2025 09:20:59 -0500
-X-MC-Unique: DIR0lcozOUKqRndGKx9XJg-1
-X-Mimecast-MFC-AGG-ID: DIR0lcozOUKqRndGKx9XJg_1740666057
+ us-mta-686-iGLgRnGsP3WBsmm63IOKbA-1; Thu, 27 Feb 2025 09:20:59 -0500
+X-MC-Unique: iGLgRnGsP3WBsmm63IOKbA-1
+X-Mimecast-MFC-AGG-ID: iGLgRnGsP3WBsmm63IOKbA_1740666058
 Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-abb61c30566so93541766b.2
+ a640c23a62f3a-aa6b904a886so89110066b.0
  for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:20:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740666056; x=1741270856;
+ d=1e100.net; s=20230601; t=1740666057; x=1741270857;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wxYYY1R7biz/YFz8OOn3xrn4YUgJT/5akSv9YjxqfqA=;
- b=dv83nZ1TnZasMO81CvhKve9sVG6s227WpjeGe/HPgbb313KBPcpYLuIUyhQrsESTZX
- shWIavKXQYlZiZ3Mgy8x0u0F1p/CMhQTZ1c6OuvBTv4PuhB+6kKfcc+lClLoJlMfI9Av
- avRZHqeBLtVtmN0aIAf+49mwQfClW3swthRnniVtt5dXdmElUBcT1uxkC21CDrO7dCZQ
- Nqb+dK+q79KuwZQ9YXSvzc1iTH7poMceSdilYwAe/4Z2SfrPJYUReLTKIauFxJ8vqI7Q
- AjvusNNOjM02vm+h0NqLusnM0tFOqBAvKq+dgFsjbBEY+GH0Ks6ntKOqIHK7WUtuPf2B
- iqBQ==
-X-Gm-Message-State: AOJu0YyJbMUOyvTs+NO6rWbRVy447ILOi0Mswv2nMOZ6KEeuYebERbXG
- xKWhsG4IcBxY+/fQnP5jE3+R7gQESeNoA/gKDGUgujGVYQKDGPZ0ChqFhO6JtYdytBvJYC8Pm2n
- rcKAFp8l0XmMrl3fH2VILykTNApY0lxi0g0UkZOgma6Ki3gi7jfUDX4kDcWfoE3xZBuhApfPWq+
- 7Y8G4q0JImalmr/RFvk3VW5AWPBz/NO0IsXV0xX8g=
-X-Gm-Gg: ASbGncuZyXZY5J3FPbcyx/Z5v1jBF4CmQqeHKlHPqcF8Cs4abynEWvcY1PBb14EVUNA
- ObVZeO/OHP5cSOqhcL5MtG2NX5wiaUg11mzeuqBg53Eyto4/vgVZbR3z/zv9y+9SNRIRN7WQfdz
- b2T3mkpn0INemVTOV/rLgwO2qkvRndYlX4Y2ecOhb6Lba+EzOOTUBbwhlY6iXOtD6L0X7F9Vtrp
- 9ZQTfCV1/wjelcz2XtjpMtZR1/jr+P/JZhUFmJ7ttJfsQcy34+w/Gxr7xphmGy3lP795aNyXi08
- PXcpoy7JPB8XYRwDyr81
-X-Received: by 2002:a17:907:c407:b0:abc:4b7:e3d3 with SMTP id
- a640c23a62f3a-abeeedcfecbmr1035342766b.27.1740666055907; 
- Thu, 27 Feb 2025 06:20:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHbnHBHIeA7vDAqGtZEUn8x3VOIc4qFSRAuXBDdTB6Angr8zSECngHltyIUGtquqaCepK9zNg==
-X-Received: by 2002:a17:907:c407:b0:abc:4b7:e3d3 with SMTP id
- a640c23a62f3a-abeeedcfecbmr1035339566b.27.1740666055459; 
- Thu, 27 Feb 2025 06:20:55 -0800 (PST)
+ bh=bMWORzOUwOCcEXcO5zGOU3VoKiAgJTGJeIEtqhhwSfc=;
+ b=v74MbPtpB9JucdE2fFhfXBSWQuONrk7ldwvlXV+faK929l2CsenXZ/e40qd/HC+hE1
+ +r3rlAaKLwYJQkjluq8v9+pVaMwC/k6O8reHrKGhv1fQwheb93VefunbrZ3C3AGpjJ2g
+ JwfoC1LxbkhlR7arAsQIcR+zUuvXnPwSmv0umBlkMGxqWf0FE9FiH8tLRLahwNpH3P9l
+ GGWlE+q/fLbMMi6W+H6EQXfHdcu8Jd3pfMQ+uk1LW0P5XWzk/mn6Xg4EkP2Ur3x4IPRN
+ 04prdKcAto0M2RgxxFu4obe6vn1F9XzHhJGPUqIWvYcfCAdiufpIMCrShm4gN4O5TnWB
+ /0xA==
+X-Gm-Message-State: AOJu0YybPwcZXP7H1RSPmm/9h5hoI/+KGJxrM/KWDdB3XwD+BtXP4s2S
+ cpSzpqkDPbjf3AFevEvcT/JDADx8hjUV/0Ef4kT0JKX5xggh36zc7Krvwdh7EFY0O7QvqZe4Jo8
+ 8fqFD2yuJt8Oy2HErHn14Mu+M7PSwAibAIOCiQ4bd1wHYIKpAjTh8EPSVhQ/54I9jZGIvOeYtVW
+ Nrw/YH9hlvncdewSpBcmVG9iEvT5PtuI5Qoo68jt8=
+X-Gm-Gg: ASbGncvS0R9GIErihMfh2gS5eslA0iwQHBQ/aXxEIW251sLgPDYMgEQOD42OdQlflZP
+ PgWwIRUn0S9DQ9bQVAvIL3po/YBDhMbhFee/qr0XkqsIdRvKgxeykBGe3k7DjnqFJhohzyVk70w
+ QpmvMAe0LGWDF9aSsS3sVPB9SONfnyJehlO3ezaiGU+WO4eMSewmuFM9CHVUvM7qfFat+8/2OkW
+ LAho3L2WjWYH+rIXVaNtEFpzl46S0MyIYNZbewVj2zlPjjX/irfDq7vgz0GSVTLBLW5tQaHdugv
+ 8tGE7iG9k3eSwtgzbMP5
+X-Received: by 2002:a17:907:724b:b0:abf:3df:3ea with SMTP id
+ a640c23a62f3a-abf03df0cb4mr604542866b.44.1740666056974; 
+ Thu, 27 Feb 2025 06:20:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGq33zoWF8E7wTMdAUzbpWIGFna6zBFPUhdN42qs4Dg0LUSj3WNc+CNTjDZ5G7Q4mr1zGimWw==
+X-Received: by 2002:a17:907:724b:b0:abf:3df:3ea with SMTP id
+ a640c23a62f3a-abf03df0cb4mr604540366b.44.1740666056580; 
+ Thu, 27 Feb 2025 06:20:56 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.102.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf0c6ee4b3sm127042766b.112.2025.02.27.06.20.53
+ a640c23a62f3a-abf0c0dd9f1sm131562766b.62.2025.02.27.06.20.55
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:20:54 -0800 (PST)
+ Thu, 27 Feb 2025 06:20:56 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Alireza Sanaee <alireza.sanaee@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL 28/34] i386/cpu: add has_caches flag to check smp_cache
- configuration
-Date: Thu, 27 Feb 2025 15:19:46 +0100
-Message-ID: <20250227141952.811410-29-pbonzini@redhat.com>
+Subject: [PULL 29/34] target/riscv: remove unused macro DEFINE_CPU
+Date: Thu, 27 Feb 2025 15:19:47 +0100
+Message-ID: <20250227141952.811410-30-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250227141952.811410-1-pbonzini@redhat.com>
 References: <20250227141952.811410-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -111,81 +108,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alireza Sanaee <alireza.sanaee@huawei.com>
-
-Add has_caches flag to SMPCompatProps, which helps in avoiding
-extra checks for every single layer of caches in x86 (and ARM in
-future).
-
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://lore.kernel.org/r/20250110145115.1574345-6-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/boards.h   |  3 +++
- hw/core/machine-smp.c |  2 ++
- target/i386/cpu.c     | 11 +++++------
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ target/riscv/cpu.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 9360d1ce394..f22b2e7fc75 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -156,6 +156,8 @@ typedef struct {
-  * @modules_supported - whether modules are supported by the machine
-  * @cache_supported - whether cache (l1d, l1i, l2 and l3) configuration are
-  *                    supported by the machine
-+ * @has_caches - whether cache properties are explicitly specified in the
-+ *               user provided smp-cache configuration
-  */
- typedef struct {
-     bool prefer_sockets;
-@@ -166,6 +168,7 @@ typedef struct {
-     bool drawers_supported;
-     bool modules_supported;
-     bool cache_supported[CACHE_LEVEL_AND_TYPE__MAX];
-+    bool has_caches;
- } SMPCompatProps;
- 
- /**
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index 4e020c358b6..0be0ac044c2 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -332,6 +332,8 @@ bool machine_parse_smp_cache(MachineState *ms,
-             return false;
-         }
-     }
-+
-+    mc->smp_props.has_caches = true;
-     return true;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index cca24b9f1fc..0dcde546e47 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3051,15 +3051,6 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
  }
+ #endif
  
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 005ca4235df..2f9c604552b 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -8203,13 +8203,12 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
- 
- #ifndef CONFIG_USER_ONLY
-     MachineState *ms = MACHINE(qdev_get_machine());
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
- 
--    /*
--     * TODO: Add a SMPCompatProps.has_caches flag to avoid useless updates
--     * if user didn't set smp_cache.
--     */
--    if (!x86_cpu_update_smp_cache_topo(ms, cpu, errp)) {
--        return;
-+    if (mc->smp_props.has_caches) {
-+        if (!x86_cpu_update_smp_cache_topo(ms, cpu, errp)) {
-+            return;
-+        }
-     }
- 
-     qemu_register_reset(x86_cpu_machine_reset_cb, cpu);
+-#define DEFINE_CPU(type_name, misa_mxl_max, initfn)         \
+-    {                                                       \
+-        .name = (type_name),                                \
+-        .parent = TYPE_RISCV_CPU,                           \
+-        .instance_init = (initfn),                          \
+-        .class_init = riscv_cpu_class_init,                 \
+-        .class_data = (void *)(misa_mxl_max)                \
+-    }
+-
+ #define DEFINE_DYNAMIC_CPU(type_name, misa_mxl_max, initfn) \
+     {                                                       \
+         .name = (type_name),                                \
 -- 
 2.48.1
 
