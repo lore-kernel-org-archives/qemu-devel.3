@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B0ADC282C1
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 17:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 829BEC282C1
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 17:49:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnhun-0005qR-BE; Thu, 27 Feb 2025 12:43:19 -0500
+	id 1tni0h-0004wC-El; Thu, 27 Feb 2025 12:49:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tnhuf-0005hA-4C
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:43:09 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tni0d-0004pa-4n
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:49:19 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tnhud-0001lX-EZ
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:43:08 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-221057b6ac4so21285315ad.2
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 09:43:06 -0800 (PST)
+ id 1tni0b-0002ot-0h
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:49:18 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-220d132f16dso18557935ad.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 09:49:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740678185; x=1741282985; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740678555; x=1741283355; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+19GxuBXpLR7F9zaDqBwNGPVoSdqFS7ssRC3tjRDn+M=;
- b=xMZEMhG9fgo2N0GUpkfRnKHtvRo/ppfbU+Mt51YeGjkFoBHTcW5BrielVZNDfyR3y3
- FeodsMGN6sQZHYlfkHdEAmplFHgVnUa8DdiQkgCc5vB9fSc4KK4/4sa3/0HphDMYspRG
- FXnGFji95NBzbuePU+8haKxyizNbvH35+8Jc0SN8P2bYixITmz48/9Ngdi2cxGv+7QpO
- gYmZBXBVslStmSm+ZRLNYelWZrlwm6DaGDqVLId3PqF3/C6+kJs2QR4F8xxreFmQ2CmS
- sX/hbJcQseRI12hGSuVy1h7RAD9iFMS63UvFWA7rxEHmqDy9moYf3eKxHulBqUnJHdNV
- qOxg==
+ bh=gpVXUC9D62GEd9Dp8sCbHKDAhh148PxPU2XID+oMK00=;
+ b=OHx+vuJpejtibCFI2IngrH2H0mUKvaRTKLahl2ayOX4fAqbt7JoGCxqzDPxmX+FhR/
+ DscIOjulOOx775k/A+UIqbkxnA2L2OCGNOc4TCraQ+ae296w/HuFgYQDDLTHYsaotA6v
+ L+6ftR3TLG4w4D+f0XUg5wIq7qEsUhLmKjZ6XSJhm93Z54oCjmFhUaY6aFmD8QCW7PYW
+ nTPVO3BU97WSkUv20m0EtZkl+s+qevlsCz/6AaffGXjq3WRyvXS4g0ybwzy4axqxb2Rk
+ XrO9d5VdhVDEB1mtWJgDCejahoztCqxllJyjTgtQZ0yiorC21QKGdFKKql/u88ZXaFH/
+ XDWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740678185; x=1741282985;
+ d=1e100.net; s=20230601; t=1740678555; x=1741283355;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+19GxuBXpLR7F9zaDqBwNGPVoSdqFS7ssRC3tjRDn+M=;
- b=PfCB5cxBpkbSuLlYafSLs+6eW57Hud0XG0ljaD9OROInINYBGEsfZvQ5wXPdYCvJ3g
- qoBGZ3Iq7onR0RQ6eP/c3u9KZWSVmCgxDDoYUyebTxW+af9e09ArpF983cwn2lTWm+eX
- Dg/7YcietEGHnoHGBPQWajV12hXKHZJAO9Whg+EodK9HV8JKAHlXQ4xopckY7KTSsB6v
- Cvl6sG+NL5N6+qHxUZSxhumUqmC66RXVXpU5Y9Cx2bmPxc10/eoMdow4yoIQsMRi3W3G
- lH2hCFw8VoGbrLuzbUfzCTTYVG6N25CU/N8zhGmL7sKTzwZxJWHoEhvWnoceqG3EI4ZC
- QC5A==
-X-Gm-Message-State: AOJu0YziTegV9Bb2UrhuxpySel3h9D797VmChcCp01S9chqGnIQPF8cZ
- I6BunoSf/04r4kyaxAvYsQFoZcKPllBGXlJ7i8+JHwMd6TKc2wVHcllK+2RUOwARalZLSx1v+qr
- R
-X-Gm-Gg: ASbGncvVpylFtU7Ku4xGlGOvSmnZ30F7S0W+0gX4dQQlY/x3pF+Pl7g5u4o4MBlcI1z
- 3UJ3BNn0OTDQcyS+aV64ZTWY4jpgpexD7xytEfGTL/i6DJarF6sZJ+/mKrb7qzJ4cSVBNL4f2UH
- ZCVWVgnZfwVQg3FPli8Zz/YNrVkznqXKc8qF6M+aUSzMJD/RLHZUSF37YK5iLBOWU2uOjKAtjOQ
- uPFCMpEW54caZ28jUfaIeYyQ+ys9Fvrfp8fnu5fCml7swaNbWmmoWUX8FRPJlwKbv6iaGj9bpmM
- nO6OcUyYANN7OimUlrRNHtZ/CZa008rpBVAZUkFwcM6OjXXVWaWpvvCVlepzbYBgz4oWVgSYuwR
- 3d9DVfJI=
-X-Google-Smtp-Source: AGHT+IFTlsEo54rlCccLy7oqoR6KjkvUe44t24gSuSlJKQqOHR1D/6vOTTJTCNsFyZhh9nzywEaAaw==
-X-Received: by 2002:a17:903:74f:b0:223:5e56:a1ce with SMTP id
- d9443c01a7336-22369213d64mr276455ad.32.1740678185524; 
- Thu, 27 Feb 2025 09:43:05 -0800 (PST)
+ bh=gpVXUC9D62GEd9Dp8sCbHKDAhh148PxPU2XID+oMK00=;
+ b=FHtWmXijI2ivjaT57j+nCndgkqfoO6YJmZdqmH0S9Dt1UXEs1tdndskHksfAr3y0cN
+ axFJemYOkORoOjMabiNtlDzGKt6kv3+3iRy+v2hx9YpDfcVFD7eBlnzpipXsPL1MPJzs
+ hhJ+P/UMUELY3rubFBLBFFdhPdBuyK/yYiNBZ6+ByyFl5VC9TKSNkzjNiV6Ngj6s2Rdg
+ 3Jz5lptIjIkruZCaB/dU8TfCKH/K7xhNk2W6MsEccz2yerEJI0MAEwOgUCvsZ/AMwrD0
+ zpftMUGsqPxxDIzsFbA7/iFTdeHOA91wctNS5npp31E8LMBcwxHqry9qnewGEsJLAUWW
+ MdYA==
+X-Gm-Message-State: AOJu0YxqpCCOFTyZFb8OrCNp09r5FLo5iWHuobOQlzc2C4dDlEozr6eU
+ ZTD1118RtvmMCRTu52NGfKTvHSWNsK1zwoqofmfFHHgalIBCQ2pUVWH4a6VK1VYbL9FJkSrzxSq
+ C
+X-Gm-Gg: ASbGnctmHtQWUuIhWfv3r8T/LVmlYXVbAtD5bswSRTfrsXMwNfJEudjw0tyi2uQ8Z11
+ 0wXgrbLN5lBUrcRwYLvBV/d1/pRrY0fkOmqL+TPixy8N4iDAjtk6nSI0WFUvkF1A1BJ7Dx1lSq3
+ FPtN3VrxHoeKe4c06NGI1uI54JdXF2PeOdWLGrZnWeCVM1st1zBWu5x0ldzLctvYqMqNhCwBvwb
+ A7Mpsss4IDvq5uJOMNCckpcFecjVZ8gavic1dGCewG5LIJcXA54AZP3xJ9IAULtsh8XIyprN3q9
+ M2WFHEDN/4S9q/rrshuYxvEBg8FQV7ZfxCXv8Fov3niiwWU28WF/BG9cliQxgFZM4aLjsGUKvp0
+ 6pLYtZWI=
+X-Google-Smtp-Source: AGHT+IGWuugfQSB2ujo8A3zvr8AYxzl+wMvzgbmzil88QrSWJ0/oO8R7KZE1MxVDfLnrrVuNjz5xeA==
+X-Received: by 2002:a17:903:1b27:b0:220:da88:2009 with SMTP id
+ d9443c01a7336-2236925d082mr356205ad.45.1740678555079; 
+ Thu, 27 Feb 2025 09:49:15 -0800 (PST)
 Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
  [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223504c5a11sm17885205ad.150.2025.02.27.09.43.04
+ d9443c01a7336-223504c5bc6sm17604905ad.126.2025.02.27.09.49.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 09:43:05 -0800 (PST)
-Message-ID: <fd861c04-55f2-4568-8eb2-64edc933bb9e@linaro.org>
-Date: Thu, 27 Feb 2025 09:43:03 -0800
+ Thu, 27 Feb 2025 09:49:14 -0800 (PST)
+Message-ID: <23ce78fc-c4e0-4279-94ec-199a4ef90d81@linaro.org>
+Date: Thu, 27 Feb 2025 09:49:12 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/arm: Drop unused address_offset from
- op_addr_{rr, ri}_post()
+Subject: Re: [PATCH 0/5] hw/arm: Remove printf() calls
 To: qemu-devel@nongnu.org
-References: <20250227142746.1698904-1-peter.maydell@linaro.org>
- <20250227142746.1698904-4-peter.maydell@linaro.org>
+References: <20250227170117.1726895-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250227142746.1698904-4-peter.maydell@linaro.org>
+In-Reply-To: <20250227170117.1726895-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,14 +102,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/25 06:27, Peter Maydell wrote:
-> All the callers of op_addr_rr_post() and op_addr_ri_post() now pass in
-> zero for the address_offset, so we can remove that argument.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   target/arm/tcg/translate.c | 26 +++++++++++++-------------
->   1 file changed, 13 insertions(+), 13 deletions(-)
+On 2/27/25 09:01, Peter Maydell wrote:
+> Peter Maydell (5):
+>    hw/arm/omap1: Convert raw printfs to qemu_log_mask()
+>    hw/arm/omap1: Drop ALMDEBUG ifdeffed out code
+>    hw/arm/omap1: Convert information printfs to tracepoints
+>    hw/arm/omap_sx1.c: Remove ifdeffed out debug printf
+>    hw/arm/versatilepb: Convert printfs to LOG_GUEST_ERROR
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
