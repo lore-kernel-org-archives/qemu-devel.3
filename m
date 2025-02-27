@@ -4,71 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 766FEC1B087
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3612FC021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:09:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnYwS-00008O-6q; Thu, 27 Feb 2025 03:08:24 -0500
+	id 1tnYwT-00008T-05; Thu, 27 Feb 2025 03:08:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnYwD-0008L8-U1
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:08:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnYwB-0001fY-D1
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:08:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740643685;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XMB+4JXdPnIxG6SEB8UqGtM+jKjZl1DxQ/CtUfn5P70=;
- b=JydLpOmaTISPsF29abG2Tcza8vEM518CRyIdoyPEXhj5m1KJdD/R8EfV+ZLkZzPPB+2wza
- SMYGD9SKQ8b5MT4fxDylYjWEmGW+ueUUhvvJEEXPYwYkvPG6Xs9exvPwCII7Kyi6FpFFQS
- t92rzQG75dg3h6vnI/bnHhh4wWC3Yng=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-5MC4BHYyNESAVp8khNlVow-1; Thu,
- 27 Feb 2025 03:08:01 -0500
-X-MC-Unique: 5MC4BHYyNESAVp8khNlVow-1
-X-Mimecast-MFC-AGG-ID: 5MC4BHYyNESAVp8khNlVow_1740643681
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0FDB51954B1C; Thu, 27 Feb 2025 08:08:01 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 11A8919560AB; Thu, 27 Feb 2025 08:08:00 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 78B5521E65E0; Thu, 27 Feb 2025 09:07:57 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: michael.roth@amd.com,
-	jsnow@redhat.com
-Subject: [PATCH 2/3] qapi: Eliminate OrderedDict
-Date: Thu, 27 Feb 2025 09:07:56 +0100
-Message-ID: <20250227080757.3978333-3-armbru@redhat.com>
-In-Reply-To: <20250227080757.3978333-1-armbru@redhat.com>
-References: <20250227080757.3978333-1-armbru@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tnYwM-00007v-Nh; Thu, 27 Feb 2025 03:08:18 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tnYwK-0001hB-Oi; Thu, 27 Feb 2025 03:08:18 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2230c74c8b6so18202915ad.0; 
+ Thu, 27 Feb 2025 00:08:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740643695; x=1741248495; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L/ivrbhWG8WwJ8UXxTBdPWQ069q4Q+mqwhwxLYGh/xg=;
+ b=gMz87Cq3QvqIi7K3Cl+518YfPtNfEdQ3ET3mWyxclZNKeIpxJL5f1ngGbbMbm9uWFp
+ rrI0QLkbFcd/xtm7CMXc5QyWlclSZBf50KFMTUb1xxFbwDBXC1rXhaQH067tRK/S0NCN
+ powlY9+OoTAipFQ+wlJfw6yLOHnTL26h6g9H7iCMEeNelhTUhIQmKB7fcMo4jOTEmwMY
+ FU3w0VWLgiEgVY5UVoA4umoVP//JXPkAvpfBzcKMAKpMi74LOsNHRy/3NaKQ0A+Xep8O
+ zU4avHVzfvDngHCO0HlicSxXrOpwZYyUAxenXImctrgzZpcNSVGxhJfXxK0oBvR9f1P5
+ umow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740643695; x=1741248495;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=L/ivrbhWG8WwJ8UXxTBdPWQ069q4Q+mqwhwxLYGh/xg=;
+ b=ZxWXBKNqb7HgkMDMTgdLf024pEb1DpncaATgkVPHe9cGvQW9DJpvKgdNB/gPisfy77
+ Vgbs3hh4+8GFfSmE0QUvQ24iQ8cMkiuFGLJumYBKrzexEZu3Sm41NpEHqPl4v0W1PZLt
+ ZrQi9bk7MtlgjIs9CJyIECoNo7dd7IzW9b4zPJOyFbV5vTNwJEe5j3ypb0DE9tELiael
+ taUPBZh53I50myy1LOULxOgYCiO6ELYSolLBQbzXpq1nfKQCcNDFft863lC8s4jdUozd
+ WG74ltd07jRywkJtY/1stM5DdB4WPojTQyak/w9hehFRKgLYt4hlQ3a7/KmnRRcgXhCB
+ sA5g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/I4ltQ73RI2qFQBQAYx7fS+WZ5aiq/3LlhPPuCSQiKhfRNfio3voBQ+FDwzdhNRXtfN215r8g4A==@nongnu.org
+X-Gm-Message-State: AOJu0YzyIrWIcBHPlA985vUePaMmnzb8gBkML239/phBQvMmw9p7wPq8
+ 8c08MxvOXRF5DSHYTLyMclf8c1lQnVQauy7LX59kGxgELcP5bTzS
+X-Gm-Gg: ASbGncvIOLRe+8nt67j+tEjs96IfKRRgA4oZtrcaQ21hSi0P3XK8xY0wvyUUs3zEVU0
+ 4VqHBUcjB+l9Ws/UwkqYo9hn4mCVIIL+94ZUQxx2V3/81uqFCNdfB3cOlidXL1RD/CGKt6dz2qU
+ HnPf8+88H77UH2MPOu51NGHdAt5vVsBeb2vNqc5whgJUps/3UCGr4gmWj6qLaNCw76WuYKL70kV
+ S8uZKrKDNw7U6fO8B3v1mc8kl9M9BQ9ZwXcdSttbuRLQ7EqASb4+qQ38nNfDNYdeRZtvtm2Eov7
+ N3urrpa4JOH5l6Dr9w==
+X-Google-Smtp-Source: AGHT+IHbTSYUN5+SDLYdak4cX5BeDpFP//mddFbVspyAh4K8aMUdjzUdYmrU29bTs3/0BgbTjSy0sw==
+X-Received: by 2002:a05:6a20:1590:b0:1f2:e31c:527e with SMTP id
+ adf61e73a8af0-1f2e31c5401mr4721437637.34.1740643694506; 
+ Thu, 27 Feb 2025 00:08:14 -0800 (PST)
+Received: from localhost ([1.146.124.39]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7349fe2b886sm923814b3a.24.2025.02.27.00.08.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Feb 2025 00:08:14 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 27 Feb 2025 18:08:08 +1000
+Message-Id: <D832OVALUQAP.19HG8HTKN2EGJ@gmail.com>
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
+Subject: Re: [PATCH 2/4] ppc/amigaone: Implement NVRAM emulation
+X-Mailer: aerc 0.19.0
+References: <cover.1740243918.git.balaton@eik.bme.hu>
+ <7fac3d50347adbb00bfcd1d1d0bfdf9e73515ebb.1740243918.git.balaton@eik.bme.hu>
+ <D82TTAPY9JXE.3P3A8B5Y1GAB1@gmail.com>
+ <5bd464bc-bcbf-d5ad-abef-3506d255d7e5@eik.bme.hu>
+In-Reply-To: <5bd464bc-bcbf-d5ad-abef-3506d255d7e5@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,123 +101,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We use OrderedDict to ensure dictionary order is insertion order.
-Plain dict does that since Python 3.6, but it wasn't guaranteed until
-3.7.  Since we have 3.7 now, replace OrderedDict by dict.
+On Thu Feb 27, 2025 at 11:48 AM AEST, BALATON Zoltan wrote:
+> On Thu, 27 Feb 2025, Nicholas Piggin wrote:
+>> On Sun Feb 23, 2025 at 3:52 AM AEST, BALATON Zoltan wrote:
+>>> The board has a battery backed NVRAM where U-Boot environment is
+>>> stored which is also accessed by AmigaOS and e.g. C:NVGetVar command
+>>> crashes without it having at least a valid checksum.
+>>>
+>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>> ---
+>>>  hw/ppc/amigaone.c | 116 ++++++++++++++++++++++++++++++++++++++++++++--
+>>>  1 file changed, 113 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+>>> index 4290d58613..5273543460 100644
+>>> --- a/hw/ppc/amigaone.c
+>>> +++ b/hw/ppc/amigaone.c
+>>> @@ -21,10 +21,13 @@
+>>>  #include "hw/ide/pci.h"
+>>>  #include "hw/i2c/smbus_eeprom.h"
+>>>  #include "hw/ppc/ppc.h"
+>>> +#include "system/block-backend.h"
+>>>  #include "system/qtest.h"
+>>>  #include "system/reset.h"
+>>>  #include "kvm_ppc.h"
+>>>
+>>> +#include <zlib.h> /* for crc32 */
+>>> +
+>>>  #define BUS_FREQ_HZ 100000000
+>>>
+>>>  /*
+>>> @@ -46,6 +49,103 @@ static const char dummy_fw[] =3D {
+>>>      0x4e, 0x80, 0x00, 0x20, /* blr */
+>>>  };
+>>>
+>>> +#define NVRAM_ADDR 0xfd0e0000
+>>> +#define NVRAM_SIZE (4 * KiB)
+>>> +
+>>> +#define TYPE_A1_NVRAM "a1-nvram"
+>>> +OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
+>>> +
+>>> +struct A1NVRAMState {
+>>> +    SysBusDevice parent_obj;
+>>> +
+>>> +    MemoryRegion mr;
+>>> +    BlockBackend *blk;
+>>> +};
+>>> +
+>>> +/* read callback not used because of romd mode, only here just in case=
+ */
+>>
+>> Better make it g_assert_not_reached() then.
+>
+> There is a memory_region_rom_device_set_romd() function. It's not called=
+=20
+> here so a read function should not be needed but it's also trivial and=20
+> would work if romd mode is turned off for some reason in the future so=20
+> adding it seems safer to me. The comment is just to note it's a romd=20
+> region so reads normally don't go through this function unless romd mode=
+=20
+> is turned off.
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- scripts/qapi/parser.py         |  5 ++---
- scripts/qapi/schema.py         | 11 +++++------
- tests/qapi-schema/test-qapi.py | 11 +----------
- 3 files changed, 8 insertions(+), 19 deletions(-)
+It's trivial to add back if you do turn it off. Adding dead code is no
+good. The memory API default won't get changed underneath you without
+proper code audit or deprecating the API so that's no problem.
 
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index adc85b5b39..64f0bb824a 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -14,7 +14,6 @@
- # This work is licensed under the terms of the GNU GPL, version 2.
- # See the COPYING file in the top-level directory.
- 
--from collections import OrderedDict
- import os
- import re
- from typing import (
-@@ -154,7 +153,7 @@ def _parse(self) -> None:
-                                        "value of 'include' must be a string")
-                 incl_fname = os.path.join(os.path.dirname(self._fname),
-                                           include)
--                self._add_expr(OrderedDict({'include': incl_fname}), info)
-+                self._add_expr({'include': incl_fname}, info)
-                 exprs_include = self._include(include, info, incl_fname,
-                                               self._included)
-                 if exprs_include:
-@@ -355,7 +354,7 @@ def accept(self, skip_comment: bool = True) -> None:
-                 raise QAPIParseError(self, "stray '%s'" % match.group(0))
- 
-     def get_members(self) -> Dict[str, object]:
--        expr: Dict[str, object] = OrderedDict()
-+        expr: Dict[str, object] = {}
-         if self.tok == '}':
-             self.accept()
-             return expr
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index 7f70969c09..cbe3b5aa91 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -19,7 +19,6 @@
- from __future__ import annotations
- 
- from abc import ABC, abstractmethod
--from collections import OrderedDict
- import os
- import re
- from typing import (
-@@ -557,7 +556,7 @@ def check(self, schema: QAPISchema) -> None:
-         super().check(schema)
-         assert self._checked and not self._check_complete
- 
--        seen = OrderedDict()
-+        seen = {}
-         if self._base_name:
-             self.base = schema.resolve_type(self._base_name, self.info,
-                                             "'base'")
-@@ -1141,10 +1140,10 @@ def __init__(self, fname: str):
-         self.docs = parser.docs
-         self._entity_list: List[QAPISchemaEntity] = []
-         self._entity_dict: Dict[str, QAPISchemaDefinition] = {}
--        self._module_dict: Dict[str, QAPISchemaModule] = OrderedDict()
-+        self._module_dict: Dict[str, QAPISchemaModule] = {}
-         # NB, values in the dict will identify the first encountered
-         # usage of a named feature only
--        self._feature_dict: Dict[str, QAPISchemaFeature] = OrderedDict()
-+        self._feature_dict: Dict[str, QAPISchemaFeature] = {}
- 
-         # All schemas get the names defined in the QapiSpecialFeature enum.
-         # Rely on dict iteration order matching insertion order so that
-@@ -1454,7 +1453,7 @@ def _def_command(self, expr: QAPIExpression) -> None:
-         ifcond = QAPISchemaIfCond(expr.get('if'))
-         info = expr.info
-         features = self._make_features(expr.get('features'), info)
--        if isinstance(data, OrderedDict):
-+        if isinstance(data, dict):
-             data = self._make_implicit_object_type(
-                 name, info, ifcond,
-                 'arg', self._make_members(data, info))
-@@ -1473,7 +1472,7 @@ def _def_event(self, expr: QAPIExpression) -> None:
-         ifcond = QAPISchemaIfCond(expr.get('if'))
-         info = expr.info
-         features = self._make_features(expr.get('features'), info)
--        if isinstance(data, OrderedDict):
-+        if isinstance(data, dict):
-             data = self._make_implicit_object_type(
-                 name, info, ifcond,
-                 'arg', self._make_members(data, info))
-diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi.py
-index 7e3f9f4aa1..8fe951c880 100755
---- a/tests/qapi-schema/test-qapi.py
-+++ b/tests/qapi-schema/test-qapi.py
-@@ -96,17 +96,8 @@ def _print_variants(variants):
- 
-     @staticmethod
-     def _print_if(ifcond, indent=4):
--        # TODO Drop this hack after replacing OrderedDict by plain
--        # dict (requires Python 3.7)
--        def _massage(subcond):
--            if isinstance(subcond, str):
--                return subcond
--            if isinstance(subcond, list):
--                return [_massage(val) for val in subcond]
--            return {key: _massage(val) for key, val in subcond.items()}
--
-         if ifcond.is_present():
--            print('%sif %s' % (' ' * indent, _massage(ifcond.ifcond)))
-+            print('%sif %s' % (' ' * indent, ifcond.ifcond))
- 
-     @classmethod
-     def _print_features(cls, features, indent=4):
--- 
-2.48.1
+>>> +static uint64_t nvram_read(void *opaque, hwaddr addr, unsigned int siz=
+e)
+>>> +{
+>>> +    A1NVRAMState *s =3D opaque;
+>>> +    uint8_t *p =3D memory_region_get_ram_ptr(&s->mr);
+>>> +
+>>> +    return p[addr];
+>>> +}
+>>> +
+>>> +static void nvram_write(void *opaque, hwaddr addr, uint64_t val,
+>>> +                        unsigned int size)
+>>> +{
+>>> +    A1NVRAMState *s =3D opaque;
+>>> +    uint8_t *p =3D memory_region_get_ram_ptr(&s->mr);
+>>> +
+>>> +    p[addr] =3D val;
+>>> +    if (s->blk) {
+>>> +        blk_pwrite(s->blk, addr, 1, &val, 0);
+>>> +    }
+>>> +}
+>>> +
+>>> +static const MemoryRegionOps nvram_ops =3D {
+>>> +    .read =3D nvram_read,
+>>> +    .write =3D nvram_write,
+>>> +    .endianness =3D DEVICE_BIG_ENDIAN,
+>>> +    .impl =3D {
+>>> +        .min_access_size =3D 1,
+>>> +        .max_access_size =3D 1,
+>>> +    },
+>>> +};
+>>> +
+>>> +static void nvram_realize(DeviceState *dev, Error **errp)
+>>> +{
+>>> +    A1NVRAMState *s =3D A1_NVRAM(dev);
+>>> +    void *p;
+>>> +    uint32_t *c;
+>>> +
+>>> +    memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram"=
+,
+>>> +                                  NVRAM_SIZE, &error_fatal);
+>>> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
+>>> +    c =3D p =3D memory_region_get_ram_ptr(&s->mr);
+>>> +    if (s->blk) {
+>>> +        if (blk_getlength(s->blk) !=3D NVRAM_SIZE) {
+>>> +            error_setg(errp, "NVRAM backing file size must be %ld byte=
+s",
+>>> +                       NVRAM_SIZE);
+>>> +            return;
+>>> +        }
+>>> +        blk_set_perm(s->blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE=
+,
+>>> +                     BLK_PERM_ALL, &error_fatal);
+>>> +        if (blk_pread(s->blk, 0, NVRAM_SIZE, p, 0) < 0) {
+>>> +            error_setg(errp, "Cannot read NVRAM contents from backing =
+file");
+>>> +            return;
+>>> +        }
+>>> +    }
+>>> +    if (*c =3D=3D 0) {
+>>> +        *c =3D cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
+>>> +        if (s->blk) {
+>>> +            blk_pwrite(s->blk, 0, 4, p, 0);
+>>> +        }
+>>> +    }
+>>> +}
+>>
+>> So, no need for a reset because it's persistent?
+>
+> It's either written to the backing file when changed or stays unchanged o=
+n=20
+> reboot so no need to reset. The idea is to provide a default if there's n=
+o=20
+> backing file but allow the user to change it for the session but not keep=
+=20
+> changes between sessions. With backing file it's like real machine keepin=
+g=20
+> settings between reboots. I don't think it needs anything in reset.
 
+Yep, makes sense I think.
+
+>
+>>> +
+>>> +static const Property nvram_properties[] =3D {
+>>> +    DEFINE_PROP_DRIVE("drive", A1NVRAMState, blk),
+>>> +};
+>>> +
+>>> +static void nvram_class_init(ObjectClass *oc, void *data)
+>>> +{
+>>> +    DeviceClass *dc =3D DEVICE_CLASS(oc);
+>>> +
+>>> +    dc->realize =3D nvram_realize;
+>>> +    device_class_set_props(dc, nvram_properties);
+>>> +}
+>>> +
+>>> +static const TypeInfo nvram_types[] =3D {
+>>> +    {
+>>> +        .name =3D TYPE_A1_NVRAM,
+>>> +        .parent =3D TYPE_SYS_BUS_DEVICE,
+>>> +        .instance_size =3D sizeof(A1NVRAMState),
+>>> +        .class_init =3D nvram_class_init,
+>>> +    },
+>>> +};
+>>> +DEFINE_TYPES(nvram_types)
+>>> +
+>>>  static void amigaone_cpu_reset(void *opaque)
+>>>  {
+>>>      PowerPCCPU *cpu =3D opaque;
+>>> @@ -72,7 +172,7 @@ static void amigaone_init(MachineState *machine)
+>>>      DeviceState *dev;
+>>>      I2CBus *i2c_bus;
+>>>      uint8_t *spd_data;
+>>> -    int i;
+>>> +    DriveInfo *di;
+>>>
+>>>      /* init CPU */
+>>>      cpu =3D POWERPC_CPU(cpu_create(machine->cpu_type));
+>>> @@ -97,6 +197,16 @@ static void amigaone_init(MachineState *machine)
+>>>          memory_region_add_subregion(get_system_memory(), 0x40000000, m=
+r);
+>>>      }
+>>>
+>>> +    /* nvram */
+>>> +    dev =3D qdev_new(TYPE_A1_NVRAM);
+>>> +    di =3D drive_get(IF_MTD, 0, 0);
+>>> +    if (di) {
+>>> +        qdev_prop_set_drive(dev, "drive", blk_by_legacy_dinfo(di));
+>>> +    }
+>>> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>> +    memory_region_add_subregion(get_system_memory(), NVRAM_ADDR,
+>>> +                                sysbus_mmio_get_region(SYS_BUS_DEVICE(=
+dev), 0));
+>>> +
+>>>      /* allocate and load firmware */
+>>>      rom =3D g_new(MemoryRegion, 1);
+>>>      memory_region_init_rom(rom, NULL, "rom", PROM_SIZE, &error_fatal);
+>>> @@ -136,7 +246,7 @@ static void amigaone_init(MachineState *machine)
+>>>      pci_mem =3D sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
+>>>      mr =3D g_new(MemoryRegion, 1);
+>>>      memory_region_init_alias(mr, OBJECT(dev), "pci-mem-low", pci_mem,
+>>> -                             0, 0x1000000);
+>>> +                             0, 0xe0000);
+>>>      memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
+>>
+>> Better make these addresses #defines at the top of the file with
+>> the NVRAM_ADDR?
+>
+> I don't have defines for these as these are single use constants to set u=
+p=20
+> memory map and with defines it's less obvious and has to be looked up=20
+> where these are while this way I can see it directly without having to=20
+> scroll up so I prefer this. I've added defines where the constant is used=
+=20
+> more than once where it makes sense to keep consistency.
+
+But now you have to lok in two different places anyway because you have
+the NVRAM_ADDR etc defines at the top of the file. Seems like a good
+time to move all defines there so you can easily see the memory map in
+one place.
+
+Thanks,
+Nick
 
