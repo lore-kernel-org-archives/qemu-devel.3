@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3EE9C1B0FF
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9E2C19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnem7-0002t9-HW; Thu, 27 Feb 2025 09:22:07 -0500
+	id 1tnekX-0007Bu-Ld; Thu, 27 Feb 2025 09:20:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnelL-0008N3-F5
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tnekR-00074F-7C
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnelI-0003uf-Fj
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:18 -0500
+ id 1tnekO-0003jW-HP
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740666075;
+ s=mimecast20190719; t=1740666019;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cVvubKkZS2BJDfw7tQbs/X69Fi3+CKEkqZrpaVeftvc=;
- b=g9sTrzpxdfZELWJvCWLOPJg90D5ZVmYqFqzg+p0GDsKvpYE04XychCv07pyc7FPVs6qd1n
- VLREVuxuuuZr9oX8eY8SQE7Bt3/gmKud6V+Dn03YaHVMtI72+6ZumYxf0S6VrVtYuSUaXm
- Kx+JON5Bpwoz9nuCIlSWFLjI9AQTEZk=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RntUDexksFwvMT7+4/zwxw40OZKETlpI3GYu/coQJlI=;
+ b=DKPZupDbVCJVuo4t4ciXx8TIdgm2AYf+DOAqBxPHbmAsatkcabeEe12MJGf5h3eVqJPRVl
+ eDXoom/B1za5Ty5A0GLQtdv8vYYQfLzmvCrLYXMLKzHnI5AQ5ezcEdl4LePyYgteYx2WGM
+ MORdi5/nFE6KFJFcNcm/hThVom833s4=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-175--vbOxG-CMu-0UZz25Loznw-1; Thu, 27 Feb 2025 09:21:12 -0500
-X-MC-Unique: -vbOxG-CMu-0UZz25Loznw-1
-X-Mimecast-MFC-AGG-ID: -vbOxG-CMu-0UZz25Loznw_1740666072
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-abbc0572fc9so133364266b.0
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:21:12 -0800 (PST)
+ us-mta-638-kwogPHaZNdSr2sPjRa_Qfg-1; Thu, 27 Feb 2025 09:20:18 -0500
+X-MC-Unique: kwogPHaZNdSr2sPjRa_Qfg-1
+X-Mimecast-MFC-AGG-ID: kwogPHaZNdSr2sPjRa_Qfg_1740666017
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5e0573b9f60so1028416a12.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:20:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740666071; x=1741270871;
+ d=1e100.net; s=20230601; t=1740666016; x=1741270816;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cVvubKkZS2BJDfw7tQbs/X69Fi3+CKEkqZrpaVeftvc=;
- b=AxcnflNndxHESgcKDo1Cm52UbSOUKkIus5Ym+kPCrHeSt1Vy3CDKnWI0/IgR78kDbZ
- B5J9ykrMWS6tsAcNlx7Ale3jaL+pLnST4Ldm+SkaVkSoTEX9G6lqUBFNFqSCZUz21AUt
- OzVLXwEgvsX62QPOEgys28YT/hHdyOFIcpVSCSkNxoJNRWqrtCGLfYK9iDj3Bx+OgDLv
- gLapeFyijN08Hzdt06jYgEXr+8acnapr3KipYUw0Bm5eDvF77WB8/2ybKx2ytrMDnT1O
- u5iGLFlXCnFdpmyFZPT1gplgIE4KNFQo6SqyArGalJ3rkaNA+CmPrzMaoc60jLytxIXY
- 74Dg==
-X-Gm-Message-State: AOJu0YzJ7IbkTSzv5QpxS8tdhCvWhfLv26MAd2JrIyIbzcVJU2sb6d1L
- v7p+vOYFmjV2PB2fldxyEzbLJIr3GRCnkCnf/nV2TUe+2tYbO4tW7nSKNANyglVon4T1XkI/cT0
- SkhEZ/0oAQGcboeKpovPI+brl8fmMhIz4+PCttXxGMnsl/PWtqZ+7BF0pWZk9kfzYCUYCZ960pW
- pKm6Gazmh13TBNOXDDJmXLtI/iRBhmEqSQepQcRCo=
-X-Gm-Gg: ASbGncvZJwenWgnO5EoeVA2Usyb8zWuEAXS0K5nAaAPL75hQpshPrAFYUeTV8l0lIX0
- GXVlWrZGCMFrPHYVtfssFov67rye6B5z2oxznMvyKZcsmKe3s/ywc42AaLbCcrhc/sPPcYZYbrf
- Z6xP6fvOD67fBjuBm6Z9CfkqUEgjobQAohm9KzNb7eEDSFHEL2MGFjUNWS7Xpy6Kd1KvpxXnnYE
- c3ydmuimMNF+nB4Okqp4RTr8iyrou07nJegYTbOe16k7zc4GXurYeq/XPswqk0TCJLibPPGrrRD
- 2XBq2oTG42zJ6GK9xhiT
-X-Received: by 2002:a17:906:c00f:b0:ab7:b589:4f9e with SMTP id
- a640c23a62f3a-abc09c1a648mr2308367066b.39.1740666070913; 
- Thu, 27 Feb 2025 06:21:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFKgbYxuh+MB2gM/6flbYrUCoyOvV4GP3JqiNRJG+IufQ63cI4iQKOWSCRc0svq6y6TaSmeKw==
-X-Received: by 2002:a17:906:c00f:b0:ab7:b589:4f9e with SMTP id
- a640c23a62f3a-abc09c1a648mr2308363466b.39.1740666070450; 
- Thu, 27 Feb 2025 06:21:10 -0800 (PST)
+ bh=RntUDexksFwvMT7+4/zwxw40OZKETlpI3GYu/coQJlI=;
+ b=izjvTM0IEohcm2LbQDeDgyi5FHHFSxhUTYiCEdoTCBqjYm2I71H8qQpGfMyaDltekh
+ jP0jn0VtZ+5pXQDThiNY+GYoDX9cOlI5USd8vrNtuJy103+7RiPpJ/R3MGLDEwYp9g3C
+ 8m1hudRzyXl0HcEy9U0KcbPMupO+WegDgbaUhW93vJqlsG/DjufAuwPjmkZR/gKIJdpj
+ HQ4U40uA+0cOh1rr8V65VsRygM/5vxphStDPTrla5n1EZRBL1bVCSOUfWDHKWKXRxGa4
+ o14a7CRDhGbXLUCUAIp2P6qz5VifMTrnktrd2gOkI6NxH3H21D0nLQ4mWCgBVtLlytxP
+ ApgA==
+X-Gm-Message-State: AOJu0Yz5ExW5yByvzJzMBRWEkEF1lFRFqmeH2tzf9BxfmCaZITEOD+d/
+ GRB896lAYVSpP9gVmAPPXgVJIVy7CvawvGYKxsHZ1+QFX8YrMsYBgsSOUyjbnUwhAXBp3it0+hV
+ X/HdqhslyflN9CV2qFxoZV8r54oDanTQmQZCXRax+J/kHNoH7uZuZIcRS2B7ThG+sXdl1qHd5B5
+ gi4whLqxR2lso8kkbFY6+2yIytuvT77fGjdNnCwsc=
+X-Gm-Gg: ASbGnct3UjmhmplRE5LY5vjENP5Hup39z53f6rorO1Tdq8mPA4wrxx29nuuhzyXXqG0
+ 6qA/iKvGf+9oMErPqFDesPK1ThIsm0GIPl9Y1eFjUDVQ3yYQVweTXPhLm2IGTzIT/jak03j0fyN
+ gr8iYLFsvkViZn+pnLAduFbaZf6yx5+xlD1X4YYP1cT3ykarIMREduH+98Kxey46+Xs0Zv7hP3X
+ /yzKsAbXKV5Sewmo5EdOoC3sgk+Tw425EMrlBsUFj871Gg/kt1csbLAOYt/o6ak5TNwN3/7u22y
+ dGx6FV56Iz4iU1i8KJIq
+X-Received: by 2002:a05:6402:3554:b0:5de:5263:ae79 with SMTP id
+ 4fb4d7f45d1cf-5e0b70f0041mr27989570a12.12.1740666016422; 
+ Thu, 27 Feb 2025 06:20:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH9rccv8llgNynnIpHT98jNn2N6bzeWxaCSLX8hJwSQfyyn3+TQFQRqPmMSQUvBtNwarAxGNg==
+X-Received: by 2002:a05:6402:3554:b0:5de:5263:ae79 with SMTP id
+ 4fb4d7f45d1cf-5e0b70f0041mr27989534a12.12.1740666015948; 
+ Thu, 27 Feb 2025 06:20:15 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.102.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf1f1d5b4csm39341366b.85.2025.02.27.06.21.07
+ 4fb4d7f45d1cf-5e4c3b6d252sm1173607a12.26.2025.02.27.06.20.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:21:07 -0800 (PST)
+ Thu, 27 Feb 2025 06:20:14 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: EwanHai <ewanhai-oc@zhaoxin.com>,
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 34/34] target/i386: Mask CMPLegacy bit in CPUID[0x80000001].ECX
- for Zhaoxin CPUs
-Date: Thu, 27 Feb 2025 15:19:52 +0100
-Message-ID: <20250227141952.811410-35-pbonzini@redhat.com>
+Subject: [PULL 10/34] stub: Remove monitor-fd.c
+Date: Thu, 27 Feb 2025 15:19:28 +0100
+Message-ID: <20250227141952.811410-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250227141952.811410-1-pbonzini@redhat.com>
 References: <20250227141952.811410-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,54 +109,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: EwanHai <ewanhai-oc@zhaoxin.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Zhaoxin CPUs (including vendors "Shanghai" and "Centaurhauls") handle the
-CMPLegacy bit similarly to Intel CPUs. Therefore, this commit masks the
-CMPLegacy bit in CPUID[0x80000001].ECX for Zhaoxin CPUs, just as it is done
-for Intel CPUs.
+Both monitor-fd.c and monitor-internal.c contain a stub for
+monitor_get_fd(), which causes a duplicate symbol linker error when
+linking rust-qemu-api-integration. Use monitor-internal.c instead of
+monitor-fd.c and remove the latter.
 
-AMD uses the CMPLegacy bit (CPUID[0x80000001].ECX.bit1) along with other CPUID
-information to enumerate platform topology (e.g., the number of logical
-processors per package). However, for Intel and other CPUs that follow Intel's
-behavior, CPUID[0x80000001].ECX.bit1 is reserved.
-
-- Impact on Intel and similar CPUs:
-This change has no effect on Intel and similar CPUs, as the goal is to
-accurately emulate CPU CPUID information.
-
-- Impact on Linux Guests running on Intel (and similar) vCPUs:
-During boot, Linux checks if the CPU supports Hyper-Threading. For the Linux
-kernel before v6.9, if it detects X86_FEATURE_CMP_LEGACY, it assumes
-Hyper-Threading is not supported. For Intel and similar vCPUs, if the
-CMPLegacy bit is not masked in CPUID[0x80000001].ECX, Linux will incorrectly
-assume that Hyper-Threading is not supported, even if the vCPU does support it.
-
-Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
+Reported-by: Zhao Liu <zhao1.liu@intel.com>
+Suggested-by: Zhao Liu <zhao1.liu@intel.com>
+Fixes: fccb744f41c6 ("gdbstub: Try unlinking the unix socket before binding")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250113074413.297793-5-ewanhai-oc@zhaoxin.com
+Link: https://lore.kernel.org/r/20250217104900.230122-1-iii@linux.ibm.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ stubs/monitor-fd.c | 9 ---------
+ stubs/meson.build  | 2 +-
+ 2 files changed, 1 insertion(+), 10 deletions(-)
+ delete mode 100644 stubs/monitor-fd.c
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index bd407146136..0cd9b70938d 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7804,9 +7804,10 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-         /*
-          * The Linux kernel checks for the CMPLegacy bit and
-          * discards multiple thread information if it is set.
--         * So don't set it here for Intel to make Linux guests happy.
-+         * So don't set it here for Intel (and other processors
-+         * following Intel's behavior) to make Linux guests happy.
-          */
--        if (!IS_INTEL_CPU(env)) {
-+        if (!IS_INTEL_CPU(env) && !IS_ZHAOXIN_CPU(env)) {
-             env->features[FEAT_8000_0001_ECX] |= CPUID_EXT3_CMP_LEG;
-         }
-     }
+diff --git a/stubs/monitor-fd.c b/stubs/monitor-fd.c
+deleted file mode 100644
+index 9bb67498850..00000000000
+--- a/stubs/monitor-fd.c
++++ /dev/null
+@@ -1,9 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-or-later */
+-
+-#include "qemu/osdep.h"
+-#include "monitor/monitor.h"
+-
+-int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
+-{
+-    abort();
+-}
+diff --git a/stubs/meson.build b/stubs/meson.build
+index b0fee37e059..63392f5e785 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -62,7 +62,7 @@ if have_user
+     stub_ss.add(files('qdev.c'))
+   endif
+ 
+-  stub_ss.add(files('monitor-fd.c'))
++  stub_ss.add(files('monitor-internal.c'))
+ endif
+ 
+ if have_system
 -- 
 2.48.1
 
