@@ -4,74 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E761C197BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 12:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BC7DC021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 12:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tncuk-0005HO-M0; Thu, 27 Feb 2025 07:22:54 -0500
+	id 1tncuq-0005jt-Cp; Thu, 27 Feb 2025 07:23:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tncud-0005FH-RK
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 07:22:48 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tncuZ-0005w6-Nn
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 07:22:47 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxTWsIWcBnWrqEAA--.30631S3;
- Thu, 27 Feb 2025 20:22:32 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxLscFWcBnW+0rAA--.34520S3;
- Thu, 27 Feb 2025 20:22:31 +0800 (CST)
-Subject: Re: [PATCH v2 0/9] target/loongarch: LoongArch32 fixes 1
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, QEMU devel <qemu-devel@nongnu.org>
-Cc: Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
- <philmd@linaro.org>
-References: <20250225-la32-fixes1-v2-0-8ec68ada3dd5@flygoat.com>
- <3fd27fd1-b976-2705-7093-aecc6ffa0438@loongson.cn>
- <23d25d66-07f4-454b-903a-f5704e1e686c@app.fastmail.com>
- <baa9614a-a216-58bb-3bce-d56da0c7f287@loongson.cn>
- <b3aa056b-cde8-4f4f-879a-70b1c10e6824@app.fastmail.com>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <9c3dd441-97bc-6884-9863-371fb23441b0@loongson.cn>
-Date: Thu, 27 Feb 2025 20:21:53 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tncup-0005eJ-1f
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 07:22:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tncum-0005yR-6d
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 07:22:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740658973;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z0drJSCTbWN/ba75bqW+aniDK5NCt33vV1jPzY6YlkA=;
+ b=hk++juhsh/jlFscuZb2g7ibx0wuDNw0x8WS39Fi+gXAiASkLgBieuyl0muBKEg5H+NLg5u
+ O7Fo0qQHkWaCWEWJ0y63yrqpQjuEVlVNwQWVDF2d5I4iIVyQFqp2FzLxUz8HWJ2honHGFL
+ GdspqDNeC5LcuOUPdXTqf71/LLM959Q=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-279-5yabGHGkMUWlmqFvYx8_pg-1; Thu, 27 Feb 2025 07:22:52 -0500
+X-MC-Unique: 5yabGHGkMUWlmqFvYx8_pg-1
+X-Mimecast-MFC-AGG-ID: 5yabGHGkMUWlmqFvYx8_pg_1740658971
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4399c32efb4so8506475e9.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 04:22:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740658971; x=1741263771;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=z0drJSCTbWN/ba75bqW+aniDK5NCt33vV1jPzY6YlkA=;
+ b=oQIo6ZjC0LdELqGAuemltgGuRysQCwITXWKdSbrLTtJPObuC8N8J08a0zX5P577wHG
+ c3Q1SbHz7HyEquOqdW6milKLNUEcsOJxH/Zs9EFNo3x1Cd68KjkmrW40C7vVE5GGRQDh
+ eF1mG0+2Wm64FApMeOUFiQq4TCIEdAV5g9fdR7gC7ZjdC9XmZmTCRxZQVjKU6ry16o+x
+ 9622l2zDpgUhMIYsPHSTpXOKcOLEGA9GRxXN4krnEa0o7Zo145BYbF24EipHG18li5k5
+ OhfZ+SmsAZON5g/3OX70kD16gcVD61yqs5LXVd5jc5JcvYrmw6XKQr/z1mEgZ3d044vb
+ rGAQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWobnTanWGM6zdRvXNTYwZ0Eou5YKobKq6aDA4It7n5986tdeajczOxeqHRJXGmLWBAlkH1q5UOiPLg@nongnu.org
+X-Gm-Message-State: AOJu0YwbCdRsAqnMvz0XLIHc3nmvUaD8c4iXJJurjlSyZvogZPQMpgQV
+ Tv4SDYrnyb7qbOIkdGoLcynwdMk8OFWpMw2byKQ5qc+f8hovj2hJBRgGLQBUTenyQLQA8gqh3kb
+ 87FWeL/WgnLNA4AyMKshwsMtpy7cOdTpszIfi7Vm6Bo38L8pTkrlf
+X-Gm-Gg: ASbGncuQcj61xJ6BT2DOywYXkYUGCXbYTJsKn8dQ/iqliF85TCESY1wuzXtcwaZ4368
+ 23oXTYJAhURIGHvMvC7U0sZQxVVLYZAEpTq7OpB2SrbVBOTnga94vPmTMwXgcOqUBBhcgvisz7t
+ NSvc8+0LrqDPOoagdjT6RKMZPWBmAm9AIVCjl78+YnuxwLsnZLzhOjqy302X8O020RtuzOw/9kA
+ roJNAega4rl1aql4B+hXiKAa/7wcjNFNi6vRMt7iHtlQrnAT5NtSxG4eC9tKrCm97FjKfeCbJsR
+ FGIDySpitUI02TYtsojp6l1IdpO3bwZEk4QBBIYXDiw4OG8uS/S9v4ZRviVKfoU=
+X-Received: by 2002:a05:600c:1c23:b0:439:892c:dfd0 with SMTP id
+ 5b1f17b1804b1-43b04dc361amr26051785e9.14.1740658970837; 
+ Thu, 27 Feb 2025 04:22:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHQ83M4/KsXSQHu6pDlNDVcuk6Z5Ml2/r9st1BbY0/wCxIRxtiVX5idFzmIaNDSfkyk0vvAlA==
+X-Received: by 2002:a05:600c:1c23:b0:439:892c:dfd0 with SMTP id
+ 5b1f17b1804b1-43b04dc361amr26051585e9.14.1740658970475; 
+ Thu, 27 Feb 2025 04:22:50 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43b736f839asm21290255e9.2.2025.02.27.04.22.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 27 Feb 2025 04:22:49 -0800 (PST)
+Date: Thu, 27 Feb 2025 13:22:48 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 01/14] acpi/ghes: prepare to change the way HEST
+ offsets are calculated
+Message-ID: <20250227132248.17c6754b@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250227124538.7a2191e0@foz.lan>
+References: <cover.1740148260.git.mchehab+huawei@kernel.org>
+ <9eeaabf88e7ddc4884633702b7bc419075975bc8.1740148260.git.mchehab+huawei@kernel.org>
+ <20250226153714.20c57efe@imammedo.users.ipa.redhat.com>
+ <20250227124538.7a2191e0@foz.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <b3aa056b-cde8-4f4f-879a-70b1c10e6824@app.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxLscFWcBnW+0rAA--.34520S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7WFyfXryrWrW7Cw4UCrW3urX_yoW8Cr4kpF
- W8Aay3GF4Utr10v3Wvg34Fg3WYy3srGw15XwnYgry8CrnIvr10qrWqqw17Cry3urySqFy0
- qrWUtw17W3W5GrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70PfDUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.13,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,72 +119,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 27 Feb 2025 12:45:38 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+
+> Em Wed, 26 Feb 2025 15:37:14 +0100
+> Igor Mammedov <imammedo@redhat.com> escreveu:
+> 
+> > On Fri, 21 Feb 2025 15:35:10 +0100
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> >   
+> 
+> > > diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> > > index 3ac8f8e17861..8ab8d11b6536 100644
+> > > --- a/hw/arm/virt-acpi-build.c
+> > > +++ b/hw/arm/virt-acpi-build.c
+> > > @@ -946,9 +946,18 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+> > >      build_dbg2(tables_blob, tables->linker, vms);
+> > >  
+> > >      if (vms->ras) {
+> > > -        acpi_add_table(table_offsets, tables_blob);
+> > > -        acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
+> > > -                        vms->oem_id, vms->oem_table_id);
+> > > +        AcpiGedState *acpi_ged_state;
+> > > +        AcpiGhesState *ags;
+> > > +
+> > > +        acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,    
+> >                             ^^^ will explode if object_resolve_path_type() returns NULL  
+> > > +                                                       NULL));    
+> > 
+> > it's also expensive load-wise.
+> > You have access to vms with ged pointer here, use that
+> > (search for 'acpi_ged_state = ACPI_GED' example)  
+> 
+> Ok, but the state binding on ghes were designed to use ACPI_GED. I moved
+> the code that it is using ACPI_GED() to the beginning of v5 series,
+> just after the HEST table test addition.
+> 
+> With that, ACPI_GED() is now used only on two places inside ghes:
+> 
+> - at virt_acpi_build(), during VM initialization;
+
+ACPI_GED() is not expensive, what I'm referring to is
+  object_resolve_path_type()
+
+given it's a new code and virt_acpi_build() has direct access
+to ged pointer, there is no excuse to use object_resolve_path_type().
+
+all you have to do here is:
+
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index e6328af5d2..040d875d4e 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -949,8 +949,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+         AcpiGedState *acpi_ged_state;
+         AcpiGhesState *ags;
+ 
+-        acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
+-                                                       NULL));
++        acpi_ged_state = ACPI_GED(vms->acpi_dev);
+         ags = &acpi_ged_state->ghes_state;
+         if (ags) {
+             acpi_add_table(table_offsets, tables_blob);
 
 
-On 2025/2/27 下午6:44, Jiaxun Yang wrote:
-> 
-> 
-> 在2025年2月25日二月 下午12:33，bibo mao写道：
->> On 2025/2/25 下午8:08, Jiaxun Yang wrote:
->>>
->>>
->>> 在2025年2月25日二月 上午8:50，bibo mao写道：
->>>> On 2025/2/25 上午8:40, Jiaxun Yang wrote:
->>>>> Hi all,
->>>>>
->>>>> This series is a collection of small fixes I made to TCG for
->>>>> LoongArch32.
->>>>>
->>>>> There are still many thing broken, especially on CSRs. More
->>>>> series following. However this is sufficient to boot 32bit
->>>>> kernel.
->>>> Is there any product introduction about LoongArch32 board? such as MMU
->>>> type, memory type(DDR or SRAM), interrupt controller type.
->>>
->>> Sure, for LoongArch32 the most accessible board at the moment is chiplap FPGA [1].
->>>
->>> There are also some ASIC designs (BaiXing Project) based on chiplab.
->>>
->>> Long in short:
->>>
->>> - MMU: PG style
->>> - Mmeory: DDR
->>> - Interrupt controller: custom (Loongson-1C like) connected to CPU's
->>>                           int pin.
->> Thanks for the information, Would you like to emulate LoongArch32
->> chiplap FPGA board in qemu side or other LoongArch32 boards?
-> 
-> My plan is to use current virt machine (with EXTIOI and so on) for
-> LoongArch32, it is trivial to bring up in kernel and give us a lot more
-> flexibility rather than emulating an actual board.
-virt machine is mainly for kvm board. If it is used as LoongArch32 
-board, there is no much benefit to add bunch of code in kernel and qemu 
-to emulate non-exist board, on the contrast it is hard to maintain.
+> - at acpi_ghes_get_state().
 
-In LoongArch community There are many cases posting code in one time, 
-disappear and lose maintenance :(
-
-Regards
-Bibo MAo
+this one is different, it doesn't have access to ged so it
+has to look up for it.
 
 > 
-> Thanks
-> - Jiaxun
+> If you want to replace it by some other solution, IMO we should do
+> it on some separate series, as this is not related to neither error
+> injection nor with offset calculation to get read ack address. 
 > 
->>
->> Regards
->> Bibo Mao
->>>
->>> Thanks
->>>
->>> [1]: https://gitee.com/loongson-edu/chiplab
->>>
->>>>
->>>> Regards
->>>> Bibo Mao
->>>>>
->>>
->>>
+> > > +        if (acpi_ged_state) {    
+> > 
+> >                 hence, this check is not really needed,
+> >                 we have to have GED at this point or abort
+> > 
+> >                 earlier code that instantiates GED should take care of
+> >                 cleanly exiting if it failed to create GED so we would never get
+> >                 to missing GED here  
+> 
+> I dropped this check on v5.
+> 
+> Thanks,
+> Mauro
 > 
 
 
