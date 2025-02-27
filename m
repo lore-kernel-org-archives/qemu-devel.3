@@ -4,52 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E8BC021B8
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 01:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E27BC021B8
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 01:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnT1O-0006Wa-6P; Wed, 26 Feb 2025 20:49:06 -0500
+	id 1tnT7J-0007kr-7l; Wed, 26 Feb 2025 20:55:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tnT1J-0006W4-TR; Wed, 26 Feb 2025 20:49:01 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tnT1E-0004bC-Vz; Wed, 26 Feb 2025 20:49:00 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 62AC04E602B;
- Thu, 27 Feb 2025 02:48:50 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id HKHdCq7vwjtD; Thu, 27 Feb 2025 02:48:48 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 5BAFF4E6027; Thu, 27 Feb 2025 02:48:48 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 56F4474577C;
- Thu, 27 Feb 2025 02:48:48 +0100 (CET)
-Date: Thu, 27 Feb 2025 02:48:48 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Nicholas Piggin <npiggin@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH 2/4] ppc/amigaone: Implement NVRAM emulation
-In-Reply-To: <D82TTAPY9JXE.3P3A8B5Y1GAB1@gmail.com>
-Message-ID: <5bd464bc-bcbf-d5ad-abef-3506d255d7e5@eik.bme.hu>
-References: <cover.1740243918.git.balaton@eik.bme.hu>
- <7fac3d50347adbb00bfcd1d1d0bfdf9e73515ebb.1740243918.git.balaton@eik.bme.hu>
- <D82TTAPY9JXE.3P3A8B5Y1GAB1@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tnT7F-0007jk-A3; Wed, 26 Feb 2025 20:55:09 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tnT7D-0005mc-6A; Wed, 26 Feb 2025 20:55:09 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-223480ea43aso9263275ad.1; 
+ Wed, 26 Feb 2025 17:55:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740621305; x=1741226105; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/P+e23UNvTeLCd053K9HB8v564nTDca8A/b+i14AAjY=;
+ b=W3K3vdrcJ0PsoTW/sm360q89XfOajBZ+JjSqTRgF9TATAisRFLzZDu8vS0D54HLhGD
+ 3+nmAD1gis/PM1DdexuZYsUdzc6D3YpmdLl6ukTz0g94iQDJ0cRXsNuSbvh/DDoBFM1u
+ Ar7BXM9KyBNaa4GacHqsGrvaqFvOGsUq2zCz1k2mZr4QmdQdl2pQcUAyzNjoMOzKM9w0
+ En1iKBh3BtUYv1Fy7O3tBDpjEqWgVa6vCXaGN2oVtpB42N62FY+dm7B2O1XSEr8rIrzk
+ 5CMyw5n3YEKj9DLArOSaeKxlRVce/KgCm2W7FMX3iw432u8u/ha76rS0x+jLheu67yfx
+ JtIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740621305; x=1741226105;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=/P+e23UNvTeLCd053K9HB8v564nTDca8A/b+i14AAjY=;
+ b=mxrAqd0L8SSu0/LRnSj+1hc5GZ9h0UB25riNbJo+Vi+QpCfNxueKsUxVpvMcJdS51v
+ f2ayHGrOY/vmwIe4AVOThFv8lA9UsO8/+xTcryZZrt85dorkSFfLCfJ2vmYGnIbTRu2Q
+ NQ7S5ucqz7VxuxVLvDaf3TLgVJEEt3menI/2ekKmY4tNtd9pRujsAVjZAHUY9FeaYG7x
+ +MrJMwuLchII2OUt1VUg8V6o5BFa3UsA1jcV7SYElTmX8lulllp1z2yXBhU8pwy6xoTN
+ bi7q1fkRFNMiqyH3bXe9Ammhqir82tgF9pmdWlaej2LPHvIkMB3n7joGw+mfTmjpKIkm
+ niNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVqeGg1BzpfRXLATzbWN/3tb1qRW3jhdXq+0K5VqhxVI871MEAmMXzrwJ97y+oXp+VVHUb1iES9vadH@nongnu.org
+X-Gm-Message-State: AOJu0YwVwEy8ftWhvjFHi3iM19hw86uT2Z/XWirsE1C9JnPUrGuilU95
+ NAj+L9tQW3ADLvdtUHZH8CYIYuYOJfbgH7dly1sqaw5TKyftdx9S
+X-Gm-Gg: ASbGncvDeEVOTPjVBl8N1RpwUaQ1QxZVyI3ymh73oz2NXsBM5t3/iL5WATIEqBc2k5J
+ WQ623GqMVtTk8ch1zJC7rHkuilpJLzHLVwUImV/I26EFTUJvV+GwTPvTOO+M2hy3WBp1hIijlDK
+ 88LGi2zkYi9cWiqmUvavWiuYV2Y5Ffcg/OLAOyATusLIAvMMcSBaAl0KzpcpXjMofOB/shXlDHk
+ 7k5EpnRkT2BgtYmdAKzqPMsc/k+4LC7Lf95MSD8BBgj2NA4hbZtX0st2VINN/zlPjB46OQGNXQF
+ FjV4Z4xpnD57SPZUgw==
+X-Google-Smtp-Source: AGHT+IGOjFf0qt6yKmst6hwiFTb4vC9zcaNbNlmpFUMPBHOjo86eCv8lClsWKWVetp4+mOb/401siw==
+X-Received: by 2002:a05:6a00:4f88:b0:72a:8bb6:2963 with SMTP id
+ d2e1a72fcca58-73426cf11e7mr32798938b3a.13.1740621304907; 
+ Wed, 26 Feb 2025 17:55:04 -0800 (PST)
+Received: from localhost ([1.146.90.134]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7349fe2ad9csm304039b3a.7.2025.02.26.17.54.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Feb 2025 17:55:04 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 27 Feb 2025 11:54:56 +1000
+Message-Id: <D82UR4MO7WG9.RGLCRWPS8I29@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, <fbarrat@linux.ibm.com>, <clg@kaod.org>,
+ <calebs@linux.ibm.com>, <chalapathi.v@ibm.com>, <saif.abrar@linux.ibm.com>,
+ <dantan@linux.vnet.ibm.com>, <milesg@linux.ibm.com>, <philmd@linaro.org>,
+ <alistair@alistair23.me>
+Subject: Re: [PATCH v5 3/4] hw/ssi/pnv_spi: Make bus names distinct for each
+ controllers of a socket
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Chalapathi V" <chalapathi.v@linux.ibm.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.19.0
+References: <20250103161824.22469-1-chalapathi.v@linux.ibm.com>
+ <20250103161824.22469-4-chalapathi.v@linux.ibm.com>
+In-Reply-To: <20250103161824.22469-4-chalapathi.v@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,218 +103,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Feb 2025, Nicholas Piggin wrote:
-> On Sun Feb 23, 2025 at 3:52 AM AEST, BALATON Zoltan wrote:
->> The board has a battery backed NVRAM where U-Boot environment is
->> stored which is also accessed by AmigaOS and e.g. C:NVGetVar command
->> crashes without it having at least a valid checksum.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>  hw/ppc/amigaone.c | 116 ++++++++++++++++++++++++++++++++++++++++++++--
->>  1 file changed, 113 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
->> index 4290d58613..5273543460 100644
->> --- a/hw/ppc/amigaone.c
->> +++ b/hw/ppc/amigaone.c
->> @@ -21,10 +21,13 @@
->>  #include "hw/ide/pci.h"
->>  #include "hw/i2c/smbus_eeprom.h"
->>  #include "hw/ppc/ppc.h"
->> +#include "system/block-backend.h"
->>  #include "system/qtest.h"
->>  #include "system/reset.h"
->>  #include "kvm_ppc.h"
->>
->> +#include <zlib.h> /* for crc32 */
->> +
->>  #define BUS_FREQ_HZ 100000000
->>
->>  /*
->> @@ -46,6 +49,103 @@ static const char dummy_fw[] = {
->>      0x4e, 0x80, 0x00, 0x20, /* blr */
->>  };
->>
->> +#define NVRAM_ADDR 0xfd0e0000
->> +#define NVRAM_SIZE (4 * KiB)
->> +
->> +#define TYPE_A1_NVRAM "a1-nvram"
->> +OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
->> +
->> +struct A1NVRAMState {
->> +    SysBusDevice parent_obj;
->> +
->> +    MemoryRegion mr;
->> +    BlockBackend *blk;
->> +};
->> +
->> +/* read callback not used because of romd mode, only here just in case */
+On Sat Jan 4, 2025 at 2:18 AM AEST, Chalapathi V wrote:
+> Create a spi buses with distict names on each socket so that responders
+> are attached to correct SPI controllers.
 >
-> Better make it g_assert_not_reached() then.
+> QOM tree on a 2 socket machine:
+> (qemu) info qom-tree
+> /machine (powernv10-machine)
+>   /chip[0] (power10_v2.0-pnv-chip)
+>     /pib_spic[0] (pnv-spi)
+>       /chip0.pnv.spi.bus.0 (SSI)
+>       /xscom-spi[0] (memory-region)
+>   /chip[1] (power10_v2.0-pnv-chip)
+>     /pib_spic[0] (pnv-spi)
+>       /chip1.pnv.spi.bus.0 (SSI)
+>       /xscom-spi[0] (memory-region)
 
-There is a memory_region_rom_device_set_romd() function. It's not called 
-here so a read function should not be needed but it's also trivial and 
-would work if romd mode is turned off for some reason in the future so 
-adding it seems safer to me. The comment is just to note it's a romd 
-region so reads normally don't go through this function unless romd mode 
-is turned off.
+Mechanics of the patch looks fine. I don't know about the name
+though.
 
->> +static uint64_t nvram_read(void *opaque, hwaddr addr, unsigned int size)
->> +{
->> +    A1NVRAMState *s = opaque;
->> +    uint8_t *p = memory_region_get_ram_ptr(&s->mr);
->> +
->> +    return p[addr];
->> +}
->> +
->> +static void nvram_write(void *opaque, hwaddr addr, uint64_t val,
->> +                        unsigned int size)
->> +{
->> +    A1NVRAMState *s = opaque;
->> +    uint8_t *p = memory_region_get_ram_ptr(&s->mr);
->> +
->> +    p[addr] = val;
->> +    if (s->blk) {
->> +        blk_pwrite(s->blk, addr, 1, &val, 0);
->> +    }
->> +}
->> +
->> +static const MemoryRegionOps nvram_ops = {
->> +    .read = nvram_read,
->> +    .write = nvram_write,
->> +    .endianness = DEVICE_BIG_ENDIAN,
->> +    .impl = {
->> +        .min_access_size = 1,
->> +        .max_access_size = 1,
->> +    },
->> +};
->> +
->> +static void nvram_realize(DeviceState *dev, Error **errp)
->> +{
->> +    A1NVRAMState *s = A1_NVRAM(dev);
->> +    void *p;
->> +    uint32_t *c;
->> +
->> +    memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram",
->> +                                  NVRAM_SIZE, &error_fatal);
->> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
->> +    c = p = memory_region_get_ram_ptr(&s->mr);
->> +    if (s->blk) {
->> +        if (blk_getlength(s->blk) != NVRAM_SIZE) {
->> +            error_setg(errp, "NVRAM backing file size must be %ld bytes",
->> +                       NVRAM_SIZE);
->> +            return;
->> +        }
->> +        blk_set_perm(s->blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
->> +                     BLK_PERM_ALL, &error_fatal);
->> +        if (blk_pread(s->blk, 0, NVRAM_SIZE, p, 0) < 0) {
->> +            error_setg(errp, "Cannot read NVRAM contents from backing file");
->> +            return;
->> +        }
->> +    }
->> +    if (*c == 0) {
->> +        *c = cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
->> +        if (s->blk) {
->> +            blk_pwrite(s->blk, 0, 4, p, 0);
->> +        }
->> +    }
->> +}
+I think "pnv-spi-bus" is the right name for the bus. Using dots as
+with chip0. makes it seem like each element is part of a topology.
+
+Would chip0.pnv-spi-bus be better?
+
+I don't suppose there is a good way to create an alias so existing
+cmdline works and refers to the bus on chip0? Maybe the chip0 bus
+could just not have the chip0. prefix?
+
+Thanks,
+Nick
+
 >
-> So, no need for a reset because it's persistent?
-
-It's either written to the backing file when changed or stays unchanged on 
-reboot so no need to reset. The idea is to provide a default if there's no 
-backing file but allow the user to change it for the session but not keep 
-changes between sessions. With backing file it's like real machine keeping 
-settings between reboots. I don't think it needs anything in reset.
-
->> +
->> +static const Property nvram_properties[] = {
->> +    DEFINE_PROP_DRIVE("drive", A1NVRAMState, blk),
->> +};
->> +
->> +static void nvram_class_init(ObjectClass *oc, void *data)
->> +{
->> +    DeviceClass *dc = DEVICE_CLASS(oc);
->> +
->> +    dc->realize = nvram_realize;
->> +    device_class_set_props(dc, nvram_properties);
->> +}
->> +
->> +static const TypeInfo nvram_types[] = {
->> +    {
->> +        .name = TYPE_A1_NVRAM,
->> +        .parent = TYPE_SYS_BUS_DEVICE,
->> +        .instance_size = sizeof(A1NVRAMState),
->> +        .class_init = nvram_class_init,
->> +    },
->> +};
->> +DEFINE_TYPES(nvram_types)
->> +
->>  static void amigaone_cpu_reset(void *opaque)
->>  {
->>      PowerPCCPU *cpu = opaque;
->> @@ -72,7 +172,7 @@ static void amigaone_init(MachineState *machine)
->>      DeviceState *dev;
->>      I2CBus *i2c_bus;
->>      uint8_t *spd_data;
->> -    int i;
->> +    DriveInfo *di;
->>
->>      /* init CPU */
->>      cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
->> @@ -97,6 +197,16 @@ static void amigaone_init(MachineState *machine)
->>          memory_region_add_subregion(get_system_memory(), 0x40000000, mr);
->>      }
->>
->> +    /* nvram */
->> +    dev = qdev_new(TYPE_A1_NVRAM);
->> +    di = drive_get(IF_MTD, 0, 0);
->> +    if (di) {
->> +        qdev_prop_set_drive(dev, "drive", blk_by_legacy_dinfo(di));
->> +    }
->> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->> +    memory_region_add_subregion(get_system_memory(), NVRAM_ADDR,
->> +                                sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
->> +
->>      /* allocate and load firmware */
->>      rom = g_new(MemoryRegion, 1);
->>      memory_region_init_rom(rom, NULL, "rom", PROM_SIZE, &error_fatal);
->> @@ -136,7 +246,7 @@ static void amigaone_init(MachineState *machine)
->>      pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
->>      mr = g_new(MemoryRegion, 1);
->>      memory_region_init_alias(mr, OBJECT(dev), "pci-mem-low", pci_mem,
->> -                             0, 0x1000000);
->> +                             0, 0xe0000);
->>      memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
+> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+> ---
+>  include/hw/ssi/pnv_spi.h           | 3 ++-
+>  hw/ppc/pnv.c                       | 2 ++
+>  hw/ssi/pnv_spi.c                   | 5 +++--
+>  tests/qtest/pnv-spi-seeprom-test.c | 2 +-
+>  4 files changed, 8 insertions(+), 4 deletions(-)
 >
-> Better make these addresses #defines at the top of the file with
-> the NVRAM_ADDR?
+> diff --git a/include/hw/ssi/pnv_spi.h b/include/hw/ssi/pnv_spi.h
+> index 9878d9a25f..7fc5da1f84 100644
+> --- a/include/hw/ssi/pnv_spi.h
+> +++ b/include/hw/ssi/pnv_spi.h
+> @@ -31,7 +31,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PnvSpi, PNV_SPI)
+>  #define PNV_SPI_REG_SIZE 8
+>  #define PNV_SPI_REGS 7
+> =20
+> -#define TYPE_PNV_SPI_BUS "pnv-spi-bus"
+> +#define TYPE_PNV_SPI_BUS "pnv.spi.bus"
+>  typedef struct PnvSpi {
+>      SysBusDevice parent_obj;
+> =20
+> @@ -42,6 +42,7 @@ typedef struct PnvSpi {
+>      Fifo8 rx_fifo;
+>      /* SPI object number */
+>      uint32_t        spic_num;
+> +    uint32_t        chip_id;
+>      uint8_t         transfer_len;
+>      uint8_t         responder_select;
+>      /* To verify if shift_n1 happens prior to shift_n2 */
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 11fd477b71..ce23892fdf 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -2226,6 +2226,8 @@ static void pnv_chip_power10_realize(DeviceState *d=
+ev, Error **errp)
+>          /* pib_spic[2] connected to 25csm04 which implements 1 byte tran=
+sfer */
+>          object_property_set_int(OBJECT(&chip10->pib_spic[i]), "transfer_=
+len",
+>                                  (i =3D=3D 2) ? 1 : 4, &error_fatal);
+> +        object_property_set_int(OBJECT(&chip10->pib_spic[i]), "chip-id",
+> +                                chip->chip_id, &error_fatal);
+>          if (!sysbus_realize(SYS_BUS_DEVICE(OBJECT
+>                                          (&chip10->pib_spic[i])), errp)) =
+{
+>              return;
+> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
+> index 87eac666bb..41beb559c6 100644
+> --- a/hw/ssi/pnv_spi.c
+> +++ b/hw/ssi/pnv_spi.c
+> @@ -1116,14 +1116,15 @@ static const MemoryRegionOps pnv_spi_xscom_ops =
+=3D {
+> =20
+>  static const Property pnv_spi_properties[] =3D {
+>      DEFINE_PROP_UINT32("spic_num", PnvSpi, spic_num, 0),
+> +    DEFINE_PROP_UINT32("chip-id", PnvSpi, chip_id, 0),
+>      DEFINE_PROP_UINT8("transfer_len", PnvSpi, transfer_len, 4),
+>  };
+> =20
+>  static void pnv_spi_realize(DeviceState *dev, Error **errp)
+>  {
+>      PnvSpi *s =3D PNV_SPI(dev);
+> -    g_autofree char *name =3D g_strdup_printf(TYPE_PNV_SPI_BUS ".%d",
+> -                    s->spic_num);
+> +    g_autofree char *name =3D g_strdup_printf("chip%d." TYPE_PNV_SPI_BUS=
+ ".%d",
+> +                    s->chip_id, s->spic_num);
+>      s->ssi_bus =3D ssi_create_bus(dev, name);
+>      s->cs_line =3D g_new0(qemu_irq, 1);
+>      qdev_init_gpio_out_named(DEVICE(s), s->cs_line, "cs", 1);
+> diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-see=
+prom-test.c
+> index 57f20af76e..ef1005a926 100644
+> --- a/tests/qtest/pnv-spi-seeprom-test.c
+> +++ b/tests/qtest/pnv-spi-seeprom-test.c
+> @@ -92,7 +92,7 @@ static void test_spi_seeprom(const void *data)
+>      qts =3D qtest_initf("-machine powernv10 -smp 2,cores=3D2,"
+>                        "threads=3D1 -accel tcg,thread=3Dsingle -nographic=
+ "
+>                        "-blockdev node-name=3Dpib_spic2,driver=3Dfile,"
+> -                      "filename=3D%s -device 25csm04,bus=3Dpnv-spi-bus.2=
+,cs=3D0,"
+> +                      "filename=3D%s -device 25csm04,bus=3Dchip0.pnv.spi=
+.bus.2,cs=3D0,"
 
-I don't have defines for these as these are single use constants to set up 
-memory map and with defines it's less obvious and has to be looked up 
-where these are while this way I can see it directly without having to 
-scroll up so I prefer this. I've added defines where the constant is used 
-more than once where it makes sense to keep consistency.
 
-Regards,
-BALATON Zoltan
+>                        "drive=3Dpib_spic2", tmp_path);
+>      spi_seeprom_transaction(qts, chip);
+>      qtest_quit(qts);
 
-> Thanks,
-> Nick
->
->>      mr = g_new(MemoryRegion, 1);
->>      memory_region_init_alias(mr, OBJECT(dev), "pci-mem-high", pci_mem,
->> @@ -153,7 +263,7 @@ static void amigaone_init(MachineState *machine)
->>      qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
->>                                  qdev_get_gpio_in(DEVICE(cpu),
->>                                  PPC6xx_INPUT_INT));
->> -    for (i = 0; i < PCI_NUM_PINS; i++) {
->> +    for (int i = 0; i < PCI_NUM_PINS; i++) {
->>          qdev_connect_gpio_out(dev, i, qdev_get_gpio_in_named(DEVICE(via),
->>                                                               "pirq", i));
->>      }
->
->
 
