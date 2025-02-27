@@ -4,95 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8240C19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE27CC19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:35:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tneko-0007Nn-RS; Thu, 27 Feb 2025 09:20:47 -0500
+	id 1tnewj-0002qj-Qm; Thu, 27 Feb 2025 09:33:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnekl-0007Jo-3R
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnekd-0003ms-D9
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740666033;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vnzc4UUkvTQN2ZMghuf8CBTQIaTWTUioqbHttISTjcc=;
- b=fPXa/11tCb6aB9/UNQRqyg2P+557rsAIseHGf54R5cfnNcRHJhFyWOuMhCd4F/0zg4NmvV
- X/K4WevtuEl1Ww/mTmPlJ1PXvX7BZp2bGIP/AGmo9kOn3hYCN7MAocfqrRXxTIVjjuzkWd
- a3TdgRd9Bc7bPLfIT/jUWMwwW1L+53U=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-349-tJlK4aAJOdOQF12i_rt2Wg-1; Thu, 27 Feb 2025 09:20:31 -0500
-X-MC-Unique: tJlK4aAJOdOQF12i_rt2Wg-1
-X-Mimecast-MFC-AGG-ID: tJlK4aAJOdOQF12i_rt2Wg_1740666031
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-abec83a498cso114845166b.1
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:20:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740666030; x=1741270830;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vnzc4UUkvTQN2ZMghuf8CBTQIaTWTUioqbHttISTjcc=;
- b=ZwYpFQJseMJ93Yl5HFsy3CE1v9rDx/9gG61Epvpgx3dDbysB0fscdjrqjJyqBmWRx5
- 0I5YSvG6rcMdfAXzeEvucBJImgdxIw+vZVUAAEQIoeT3NSGorXoOlgHqS/ePms9KKU7S
- Ik/jgFXyIMR4R6l9wtUTgJPXAliS4t/OBED0F1daOIkN+Cw4Jo3Ne70mQrIl6hAKKx5o
- PJSfjCAGqO4hDe8/hU9Wx37r/tgheqlJd4b4FmIbvzLxGTls4Xm/Ts+EiNeGjfirPsYy
- 8X/3Rvlj9xh0x11EElwiv8z43IO8VDiV2ubbbG/MU4QAW/xfn4FGeMA/7wcvEhkZcwyB
- bCbA==
-X-Gm-Message-State: AOJu0YztdznSbvOp7IVFNpIVeVoPIOq+07KgxwCGauaGw/PbEXeVm5Sz
- PwV1J7JitV4FJeg5Q0V6a49W0Isij1Qhf+r0kOrhAss709l2hiOyCvnfIft6wzcd9J88a0R4mzk
- a86VWXFmkWRDYh+aLdTdSiFWkJphf4myzrw/3q1n9mfTt11Imz9xxlnSO1f3q1la8676NzdPdgz
- 8IxFiVajD7/PCWLRh+tfx79HxZlS3QjDt20Ne/JfI=
-X-Gm-Gg: ASbGncsaEqDs2DpgAildqROZxNyaJIINKZacckZiS0MvNHawAHn9W/OjOcMh4VET+1/
- vMc/Hn+8SARCHbzu1rjExMPMJ5QjJ+FO8emYxfSq89gm3kCBUikYUZyylT8bSta1dWoGPCbkwur
- Tq+cvrdaTDlmOA1XQAPDDiZCKlfFWedxq/e0pbmP9mhSutI+RcLYfQqnFSK9nzON+sAs09u9iFf
- JIE09tO9005nDaJWG6UnWG7wVd0ie93gPHyLPrgtukhYhS94scvhbfVILDOawiaBFfeVrzbe1rA
- knCTEVkZgMkIyfda2GXh
-X-Received: by 2002:a17:906:7952:b0:abb:cdca:1c08 with SMTP id
- a640c23a62f3a-abeeee04193mr935706366b.16.1740666029692; 
- Thu, 27 Feb 2025 06:20:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEZjEsyzbquHuhVPmRpyq7dOcfP6JQO5bBZtpIISEktuKe/oYs6IPGguM3FOyZrgD5r+CSkkQ==
-X-Received: by 2002:a17:906:7952:b0:abb:cdca:1c08 with SMTP id
- a640c23a62f3a-abeeee04193mr935703566b.16.1740666029223; 
- Thu, 27 Feb 2025 06:20:29 -0800 (PST)
-Received: from [192.168.10.48] ([176.206.102.52])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf0c0b98e1sm129714966b.9.2025.02.27.06.20.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:20:26 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@linux.microsoft.com>
-Subject: [PULL 16/34] target/i386/hvf: use x86_segment in x86_decode.c
-Date: Thu, 27 Feb 2025 15:19:34 +0100
-Message-ID: <20250227141952.811410-17-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250227141952.811410-1-pbonzini@redhat.com>
-References: <20250227141952.811410-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from
+ <61dd66de.AVIAAGMvXh8AAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd2@a3031119.bnc3.mailjet.com>)
+ id 1tnewH-0001UR-5Y
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:32:38 -0500
+Received: from o32.p25.mailjet.com ([185.189.236.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <61dd66de.AVIAAGMvXh8AAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd2@a3031119.bnc3.mailjet.com>)
+ id 1tnewC-0006Ll-LN
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:32:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; q=dns/txt;
+ d=randomman.co.uk; i=roy.hopkins@randomman.co.uk; s=mailjet; x=1740673942;
+ h=message-id:mime-version:from:from:to:to:subject:subject:date:date:list-unsubscribe-post:list-unsubscribe:
+ cc:feedback-id:in-reply-to:references:x-csa-complaints:x-mj-mid:x-mj-smtpguid:
+ x-report-abuse-to:content-transfer-encoding;
+ bh=akdFEJLNVZasuPzCASIwnSvNTNsx/1vk+8n5aNiDGzg=;
+ b=I2Bco9jB3TKhzvj8gsyRBbfCfW09IiHv2BB9goqAaKCuLZWpNFeiLidgu
+ 9IFHeSo3TTyK/lyhj9bstf6UalbZ7xvMfe2JdA4Z/OsEGA++48NQ0A8/gh19
+ k9H2aGbZ857feUvXgPioRoX01cLbnGPtYnxJmNCn1vCu1wJAfFwa0tNPX1de
+ jzQr9icXVRDFmSc2cv3llad5LPvyTh3yQHOX42VOlXIprdIVHDF7AGONEJgz
+ j2KGecdZUvgMc9d3SHqaF+MohaAbyucToQxvbkRuPD0Cz+6XGChsFE6DPkYq
+ /NA4z8CHt54wzVcAlCLe9QIeR87+8ZuxmzkD0OskaEGmg==
+Message-Id: <61dd66de.AVIAAGMvXh8AAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd2@mailjet.com>
 MIME-Version: 1.0
+From: Roy Hopkins <roy.hopkins@randomman.co.uk>
+To: qemu-devel@nongnu.org
+Subject: [PATCH v7 11/16] docs/interop/firmware.json: Add igvm to
+ FirmwareDevice
+Date: Thu, 27 Feb 2025 14:29:29 +0000
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>, Paolo Bonzini
+ <pbonzini@redhat.com>, "Daniel P . Berrange" <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Sergio Lopez <slp@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Alistair Francis
+ <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>, David Hildenbrand
+ <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Tom Lendacky
+ <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, Ani Sinha
+ <anisinha@redhat.com>, Joerg Roedel <jroedel@suse.com>
+Feedback-Id: 42.3031119.2785883:MJ
+In-Reply-To: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+X-CSA-Complaints: csa-complaints@eco.de
+X-MJ-Mid: AVIAAGMvXh8AAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd2_sVhdlCSRgGN6huN-1NfAgAqgls
+X-MJ-SMTPGUID: b5a4ec9e-4f21-4f30-93e3-968e37563de3
+X-REPORT-ABUSE-TO: Message sent by Mailjet please report to
+ abuse@mailjet.com with a copy of the message
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=185.189.236.32;
+ envelope-from=61dd66de.AVIAAGMvXh8AAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd2@a3031119.bnc3.mailjet.com;
+ helo=o32.p25.mailjet.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,71 +87,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wei Liu <liuwe@linux.microsoft.com>
+Create an enum entry within FirmwareDevice for 'igvm' to describe that
+an IGVM file can be used to map firmware into memory as an alternative
+to pre-existing firmware devices.
 
-Make the code to rely on the segment definition for checking cs.db.
-This allows removing HVF specific VMX related definition from the
-decoder.
-
-Introduce a function for retrieving the CS descriptor.
-
-No functional change intended.
-
-Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
-Link: https://lore.kernel.org/r/1740126987-8483-4-git-send-email-liuwe@linux.microsoft.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- target/i386/hvf/x86_decode.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ docs/interop/firmware.json | 30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/hvf/x86_decode.c b/target/i386/hvf/x86_decode.c
-index a4a28f113fd..d6d5894e54b 100644
---- a/target/i386/hvf/x86_decode.c
-+++ b/target/i386/hvf/x86_decode.c
-@@ -1893,6 +1893,16 @@ static void decode_prefix(CPUX86State *env, struct x86_decode *decode)
-     }
- }
+diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+index 57f55f6c54..70475e61e6 100644
+--- a/docs/interop/firmware.json
++++ b/docs/interop/firmware.json
+@@ -57,10 +57,17 @@
+ #
+ # @memory: The firmware is to be mapped into memory.
+ #
++# @igvm: The firmware is defined by a file conforming to the IGVM
++#        specification and mapped into memory according to directives
++#        defined in the file. This is similar to @memory but may
++#        include additional processing defined by the IGVM file
++#        including initial CPU state or population of metadata into
++#        the guest address space. Since: 10.0
++#
+ # Since: 3.0
+ ##
+ { 'enum' : 'FirmwareDevice',
+-  'data' : [ 'flash', 'kernel', 'memory' ] }
++  'data' : [ 'flash', 'kernel', 'memory', 'igvm' ] }
  
-+static struct x86_segment_descriptor get_cs_descriptor(CPUState *s)
-+{
-+    struct vmx_segment vmx_cs;
-+    x86_segment_descriptor cs;
-+    vmx_read_segment_descriptor(s, &vmx_cs, R_CS);
-+    vmx_segment_to_x86_descriptor(s, &vmx_cs, &cs);
+ ##
+ # @FirmwareArchitecture:
+@@ -367,6 +374,24 @@
+ { 'struct' : 'FirmwareMappingMemory',
+   'data'   : { 'filename' : 'str' } }
+ 
++##
++# @FirmwareMappingIgvm:
++#
++# Describes loading and mapping properties for the firmware executable,
++# when @FirmwareDevice is @igvm.
++#
++# @filename: Identifies the IGVM file containing the firmware executable
++#            along with other information used to configure the initial
++#            state of the guest. The IGVM file may be shared by multiple
++#            virtual machine definitions. This corresponds to creating
++#            an object on the command line with "-object igvm-cfg,
++#            file=@filename".
++#
++# Since: 10.0
++##
++{ 'struct' : 'FirmwareMappingIgvm',
++  'data'   : { 'filename' : 'str' } }
 +
-+    return cs;
-+}
-+
- void set_addressing_size(CPUX86State *env, struct x86_decode *decode)
- {
-     decode->addressing_size = -1;
-@@ -1904,10 +1914,9 @@ void set_addressing_size(CPUX86State *env, struct x86_decode *decode)
-         }
-     } else if (!x86_is_long_mode(env_cpu(env))) {
-         /* protected */
--        struct vmx_segment cs;
--        vmx_read_segment_descriptor(env_cpu(env), &cs, R_CS);
-+        x86_segment_descriptor cs = get_cs_descriptor(env_cpu(env));
-         /* check db */
--        if ((cs.ar >> 14) & 1) {
-+        if (cs.db) {
-             if (decode->addr_size_override) {
-                 decode->addressing_size = 2;
-             } else {
-@@ -1941,10 +1950,9 @@ void set_operand_size(CPUX86State *env, struct x86_decode *decode)
-         }
-     } else if (!x86_is_long_mode(env_cpu(env))) {
-         /* protected */
--        struct vmx_segment cs;
--        vmx_read_segment_descriptor(env_cpu(env), &cs, R_CS);
-+        x86_segment_descriptor cs = get_cs_descriptor(env_cpu(env));
-         /* check db */
--        if ((cs.ar >> 14) & 1) {
-+        if (cs.db) {
-             if (decode->op_size_override) {
-                 decode->operand_size = 2;
-             } else{
+ ##
+ # @FirmwareMapping:
+ #
+@@ -383,7 +408,8 @@
+   'discriminator' : 'device',
+   'data'          : { 'flash'  : 'FirmwareMappingFlash',
+                       'kernel' : 'FirmwareMappingKernel',
+-                      'memory' : 'FirmwareMappingMemory' } }
++                      'memory' : 'FirmwareMappingMemory',
++                      'igvm'   : 'FirmwareMappingIgvm' } }
+ 
+ ##
+ # @Firmware:
 -- 
-2.48.1
+2.43.0
 
 
