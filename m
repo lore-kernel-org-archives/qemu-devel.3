@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4A2C282C5
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 17:04:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AFE5C282C6
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 17:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnhIT-0006ya-3S; Thu, 27 Feb 2025 12:03:41 -0500
+	id 1tnhId-0007RF-0m; Thu, 27 Feb 2025 12:03:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnhGV-0005Cm-Rr
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:01:43 -0500
+ id 1tnhGV-0005Ce-AC
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:01:44 -0500
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnhGQ-0002La-Ul
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:01:39 -0500
+ id 1tnhGQ-0002LP-Vs
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:01:37 -0500
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4397dff185fso10930055e9.2
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 09:01:26 -0800 (PST)
+ 5b1f17b1804b1-439a331d981so11384095e9.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 09:01:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740675685; x=1741280485; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740675684; x=1741280484; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=x0ydyJO+hAGBCmhuOK11rHsC8IExSp5z9xqzobRVKxY=;
- b=UuoCST2+HnJsjq2u+WdfkPf1/ZWMcZuW+Ly8KMHfkLJgYkAXdVoVNFfNtxiyF/QRXC
- A7w1l/EYXyY2cN8LT1EZPo5FpsYghiRJ/NayRib8703cK3TRtnVn5kKxgcUH8VB8S+QI
- 5ttquJtbwOtcCQXGy5ffMSeeTfCFBYCL7KMziK8mWSlVVXJmz5/yB8soM/dB9goTzuiC
- 1Mc+NcQvQOItvpmXsgx8akdHJQx93ae0FhNdUBQXrjUDaiKLnwdGyqABHubSRvVh+kYj
- aOUT+GuBArn9x17g8U/MZEa4vEDjZVcERFEFxr6w+J84G0Y+BQHeSgmal9Wl05IkPLfw
- Zg/w==
+ :reply-to; bh=UF02YER6LE6cA8Ff3jhsAUNNOFSeF4BeX3fGvUwDcr8=;
+ b=IMnlzyQmRu9NFTY2Qpxd0zuu5otFx63Qt4HenisymcW7FIyvbVQUOWr4wic1qWWFxe
+ kY6CW9ux/1BQWMQoAhICh/6HgT7cBEtOelUI5WrER+JULyC0AnxhSrODcntPCRsLinJ+
+ Sz3P7EiPeIDnudxqQTx7OHH1sYJc3ENu7S2mmBhLMtpHL7reRQ7ZWODKFzcxl28/0vXN
+ 8mxEv7CLeMwercJvcs2ulZ6MX/973iZ7/S9dVZmoULkKK+DV6XkY7KeScd0i6jhqCyzC
+ o4UWMk0nvU+ZdQbHVctf36aDa+XWBJE9ZWIWKKXNV2iYfkuoAVVfKx9Vt0vDi5X8fM6g
+ mNnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740675685; x=1741280485;
+ d=1e100.net; s=20230601; t=1740675684; x=1741280484;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=x0ydyJO+hAGBCmhuOK11rHsC8IExSp5z9xqzobRVKxY=;
- b=SuH9lUUJBHEaVHTiz9Xe0YeHHG9Kc2ekMXVn4qQq6B7IS7AlaJA5g7UEL3Jdlo8a25
- lQncg9NIEzV4e/j/FPvpnQHdIfpOCNRVuIjfFXzeE4uMDkaJkB47U2Hqs7q1rXbKPmrQ
- 4dz7uE5QwOE9BF3uZX4a8IthY66b7WqyHuzyn0arTObI4K20WE2xK5L/bmiJSJLqa6dT
- las4j/h0KDnXZyK+3opSbmORSwE1CCuassUSysRR5GcRz2UuqX53QqUwNbB0DoEGJ8LB
- jmPpZOur8s/iLyCngH3Qbuj3LOulyfqk9KzCgJS/gzn6cF/vjEPieOmrDn1FKPRlVfWQ
- xt3w==
+ bh=UF02YER6LE6cA8Ff3jhsAUNNOFSeF4BeX3fGvUwDcr8=;
+ b=F94BnXMC6sRDA9PRhYPHee+zTAr7T4YPRCBC2ivwyorN/arMVWbEhsCfnjcBG0p3jP
+ ySOGdVPfj+eLXP36GabLqpoOf6J9WUcchy4Q2thUjRnEQB5iC6Sqm8uy8akwJAlPdru0
+ 3ov56S9PyqWCKQ3LazFd5bwGo08jAjaKiXwdlw5TAzQBcJC9P6K5PoTRBhwJ3VvFavF4
+ ZFvYasqN3CaJIwaO4OhOu2Y2OJn4fRNlKlo6W6+hGpJ0U/mhlvKcmdWL+dHqRTDHKFqO
+ xJMa1OMWY1lXego+KUOmFre+99TLMWfmdD//YA+Gky0vjQJzwZdNanuI0bHkiQ36QbNh
+ iZUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXoxiuxrRwAeimAso9Gvrk3RRmI+RiXUnYJM/HtLz0CyqIw+M9vDWCWGha3UzMZx8fr26kUWK5f+xc9@nongnu.org
-X-Gm-Message-State: AOJu0YwR+0rDsj5E1nQynJpYhtEJkL/f+OeNnxM6nVHlRqvf8ASM/5/H
- 7LK2Yk3JLosipuMW/Wn34j6bW2yArrhkf0v7ZEhOcl3YZqAWXn02F9HuL7yvbSdjFyiI8y65dDA
- 2
-X-Gm-Gg: ASbGncv1Q3tWWpbCFShjrsTOiNTyq+sqX4qhz0yG7u8kTl1Kr4kxuETkqkeCRLnWbOD
- oOTBkzmD4V+ZxpJT0lxqRyeXIcTTWkzqBl00p/nVTwt3SdbqzMkG3gMQwMM0lMW40zxQ+PwJeot
- we3GFFdh1XkfHTzZeo/JO4Q0GtT2+mHsHNA3avyFXkeKUlo868mlYRDy5Ad7fBc/LTPFNqU7Nwj
- XoL1hlyktnqRfHHYQNGuWkgK+zb9pFXClMsaqJeYIOIH6KrOsqCcUvlDaxEaH0HqK58u1xW/jNE
- x1/pxS5yymemYPr6WaI2cJVwPpw3YKIp
-X-Google-Smtp-Source: AGHT+IFimJeu9WeLm+jMlp0oAwGyrlEl2jWlTKKtg+25gFe4DesTYE4d1KqDF/sN1YMK1iET9m0Pww==
-X-Received: by 2002:a05:600c:4e8b:b0:439:6101:5440 with SMTP id
- 5b1f17b1804b1-43ab8fd875dmr70840565e9.8.1740675683826; 
- Thu, 27 Feb 2025 09:01:23 -0800 (PST)
+ AJvYcCXrSnFdmIPDbeZmoRzpYYs/krwiXTwGOs97IdRZZugdqNvvnyGl1Zq4Q46ODhbq8uuqf0PcUmAv+Cff@nongnu.org
+X-Gm-Message-State: AOJu0YzN+zxaGCI6TI1PXsH4S8GcOFKV7EaWyR1ENPeFJ5VA6Sq/tSH3
+ DQJ8uuDUHFpfGzhHfYbl4Yz8niYOEyga2FHfm2oCm0HIbpREFycn+t5VNK14ZiKAYEm4uyjfpPn
+ o
+X-Gm-Gg: ASbGnctzSWf/UlgPA6P9JAjp/EmCSHRNP6H5EhGThiR7JvB9qwpQPIxLAvGQKqwEF48
+ iFUUdLcgBiLgSdM80wTkyUhIDsqWTVLFVKVuI6l7o6PDhcaZdWzyzbCwW73a3Kl9xw4RKC02C6L
+ o2+Cs2F7nUgbcf16Rey+O0ao9Q5O4AgM4cx0kUYoApsJW72Bm3SoRQfUQsC/Pln6C1v8ZNrogY9
+ cILrZI9fPGMKWV7Z8fhCGNWtlXKzpNu65SvsQUuGv5LGX0Icm82279N0k6zjZYT9kdLlbNpGkT4
+ WtWhwoYz0VApUg+kiLGTCjxUu9DOlRHl
+X-Google-Smtp-Source: AGHT+IHUTthj7HwrLcOBTNDhkZmLZvSanZVqclSel26RA5rjqmJu5TpWwrZ7gd3arWlsSUUxCC/LwA==
+X-Received: by 2002:a05:600c:5103:b0:439:5da7:8e0 with SMTP id
+ 5b1f17b1804b1-43ab8fe2fe9mr83751495e9.16.1740675682878; 
+ Thu, 27 Feb 2025 09:01:22 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba5871f4sm62747565e9.39.2025.02.27.09.01.23
+ 5b1f17b1804b1-43aba5871f4sm62747565e9.39.2025.02.27.09.01.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 09:01:23 -0800 (PST)
+ Thu, 27 Feb 2025 09:01:21 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 3/5] hw/arm/omap1: Convert information printfs to tracepoints
-Date: Thu, 27 Feb 2025 17:01:15 +0000
-Message-ID: <20250227170117.1726895-4-peter.maydell@linaro.org>
+Subject: [PATCH 2/5] hw/arm/omap1: Drop ALMDEBUG ifdeffed out code
+Date: Thu, 27 Feb 2025 17:01:14 +0000
+Message-ID: <20250227170117.1726895-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250227170117.1726895-1-peter.maydell@linaro.org>
 References: <20250227170117.1726895-1-peter.maydell@linaro.org>
@@ -84,7 +84,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,117 +100,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The omap1 code uses raw printf() statements to print information
-about some events; convert these to tracepoints.
+In omap1.c, there are some debug printfs in the omap_rtc_write()
+function that are guardad by ifdef ALMDEBUG. ALMDEBUG is never
+set, so this is all dead code.
 
-In particular, this will stop the functional test for the sx1
-from printing the not-very-helpful note
- "omap_clkm_write: clocking scheme set to synchronous scalable"
-to the test's default.log.
+It's not worth the effort of converting all of these to tracepoints;
+a modern tracepoint approach would probably have a single tracepoint
+covering all the register writes anyway. Just delete the printf()s.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/omap1.c      | 27 ++++++++++++++-------------
- hw/arm/trace-events |  7 +++++++
- 2 files changed, 21 insertions(+), 13 deletions(-)
+ hw/arm/omap1.c | 51 --------------------------------------------------
+ 1 file changed, 51 deletions(-)
 
 diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index 8f5bb81c96a..605e733459c 100644
+index 3c0ce5e0979..8f5bb81c96a 100644
 --- a/hw/arm/omap1.c
 +++ b/hw/arm/omap1.c
-@@ -42,6 +42,7 @@
- #include "qemu/cutils.h"
- #include "qemu/bcd.h"
- #include "target/arm/cpu-qom.h"
-+#include "trace.h"
+@@ -2660,25 +2660,16 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
  
- static inline void omap_log_badwidth(const char *funcname, hwaddr addr, int sz)
- {
-@@ -1731,8 +1732,7 @@ static void omap_clkm_write(void *opaque, hwaddr addr,
-     case 0x18:	/* ARM_SYSST */
-         if ((s->clkm.clocking_scheme ^ (value >> 11)) & 7) {
-             s->clkm.clocking_scheme = (value >> 11) & 7;
--            printf("%s: clocking scheme set to %s\n", __func__,
--                   clkschemename[s->clkm.clocking_scheme]);
-+            trace_omap1_clocking_scheme(clkschemename[s->clkm.clocking_scheme]);
-         }
-         s->clkm.cold_start &= value & 0x3f;
+     switch (offset) {
+     case 0x00:	/* SECONDS_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC SEC_REG <-- %02x\n", value);
+-#endif
+         s->ti -= s->current_tm.tm_sec;
+         s->ti += from_bcd(value);
          return;
-@@ -2335,7 +2335,7 @@ static void omap_pwl_update(struct omap_pwl_s *s)
  
-     if (output != s->output) {
-         s->output = output;
--        printf("%s: Backlight now at %i/256\n", __func__, output);
-+        trace_omap1_backlight(output);
-     }
- }
+     case 0x04:	/* MINUTES_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC MIN_REG <-- %02x\n", value);
+-#endif
+         s->ti -= s->current_tm.tm_min * 60;
+         s->ti += from_bcd(value) * 60;
+         return;
  
-@@ -2470,8 +2470,8 @@ static void omap_pwt_write(void *opaque, hwaddr addr,
-         break;
-     case 0x04:	/* VRC */
-         if ((value ^ s->vrc) & 1) {
--            if (value & 1)
--                printf("%s: %iHz buzz on\n", __func__, (int)
-+            if (value & 1) {
-+                trace_omap1_buzz(
-                                 /* 1.5 MHz from a 12-MHz or 13-MHz PWT_CLK */
-                                 ((omap_clk_getrate(s->clk) >> 3) /
-                                  /* Pre-multiplexer divider */
-@@ -2487,8 +2487,9 @@ static void omap_pwt_write(void *opaque, hwaddr addr,
-                                  /*  80/127 divider */
-                                  ((value & (1 << 5)) ?  80 : 127) /
-                                  (107 * 55 * 63 * 127)));
--            else
--                printf("%s: silence!\n", __func__);
-+            } else {
-+                trace_omap1_silence();
-+            }
-         }
-         s->vrc = value & 0x7f;
-         break;
-@@ -3494,7 +3495,7 @@ static void omap_lpg_tick(void *opaque)
-         timer_mod(s->tm, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + s->on);
+     case 0x08:	/* HOURS_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC HRS_REG <-- %02x\n", value);
+-#endif
+         s->ti -= s->current_tm.tm_hour * 3600;
+         if (s->pm_am) {
+             s->ti += (from_bcd(value & 0x3f) & 12) * 3600;
+@@ -2688,17 +2679,11 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
+         return;
  
-     s->cycle = !s->cycle;
--    printf("%s: LED is %s\n", __func__, s->cycle ? "on" : "off");
-+    trace_omap1_led(s->cycle ? "on" : "off");
- }
+     case 0x0c:	/* DAYS_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC DAY_REG <-- %02x\n", value);
+-#endif
+         s->ti -= s->current_tm.tm_mday * 86400;
+         s->ti += from_bcd(value) * 86400;
+         return;
  
- static void omap_lpg_update(struct omap_lpg_s *s)
-@@ -3514,11 +3515,11 @@ static void omap_lpg_update(struct omap_lpg_s *s)
-     }
+     case 0x10:	/* MONTHS_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC MTH_REG <-- %02x\n", value);
+-#endif
+         memcpy(&new_tm, &s->current_tm, sizeof(new_tm));
+         new_tm.tm_mon = from_bcd(value);
+         ti[0] = mktimegm(&s->current_tm);
+@@ -2715,9 +2700,6 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
+         return;
  
-     timer_del(s->tm);
--    if (on == period && s->on < s->period)
--        printf("%s: LED is on\n", __func__);
--    else if (on == 0 && s->on)
--        printf("%s: LED is off\n", __func__);
--    else if (on && (on != s->on || period != s->period)) {
-+    if (on == period && s->on < s->period) {
-+        trace_omap1_led("on");
-+    } else if (on == 0 && s->on) {
-+        trace_omap1_led("off");
-+    } else if (on && (on != s->on || period != s->period)) {
-         s->cycle = 0;
-         s->on = on;
-         s->period = period;
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index 7790db780e0..70b137a6cfd 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -1,5 +1,12 @@
- # See docs/devel/tracing.rst for syntax documentation.
+     case 0x14:	/* YEARS_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC YRS_REG <-- %02x\n", value);
+-#endif
+         memcpy(&new_tm, &s->current_tm, sizeof(new_tm));
+         new_tm.tm_year += from_bcd(value) - (new_tm.tm_year % 100);
+         ti[0] = mktimegm(&s->current_tm);
+@@ -2737,25 +2719,16 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
+         return;	/* Ignored */
  
-+# omap1.c
-+omap1_clocking_scheme(const char *scheme) "omap1 CLKM: clocking scheme set to %s"
-+omap1_backlight(int output) "omap1 PWL: backlight now at %d/256"
-+omap1_buzz(int freq) "omap1 PWT: %dHz buzz on"
-+omap1_silence(void) "omap1 PWT: buzzer silenced"
-+omap1_led(const char *onoff) "omap1 LPG: LED is %s"
-+
- # virt-acpi-build.c
- virt_acpi_setup(void) "No fw cfg or ACPI disabled. Bailing out."
+     case 0x20:	/* ALARM_SECONDS_REG */
+-#ifdef ALMDEBUG
+-        printf("ALM SEC_REG <-- %02x\n", value);
+-#endif
+         s->alarm_tm.tm_sec = from_bcd(value);
+         omap_rtc_alarm_update(s);
+         return;
  
+     case 0x24:	/* ALARM_MINUTES_REG */
+-#ifdef ALMDEBUG
+-        printf("ALM MIN_REG <-- %02x\n", value);
+-#endif
+         s->alarm_tm.tm_min = from_bcd(value);
+         omap_rtc_alarm_update(s);
+         return;
+ 
+     case 0x28:	/* ALARM_HOURS_REG */
+-#ifdef ALMDEBUG
+-        printf("ALM HRS_REG <-- %02x\n", value);
+-#endif
+         if (s->pm_am)
+             s->alarm_tm.tm_hour =
+                     ((from_bcd(value & 0x3f)) % 12) +
+@@ -2766,33 +2739,21 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
+         return;
+ 
+     case 0x2c:	/* ALARM_DAYS_REG */
+-#ifdef ALMDEBUG
+-        printf("ALM DAY_REG <-- %02x\n", value);
+-#endif
+         s->alarm_tm.tm_mday = from_bcd(value);
+         omap_rtc_alarm_update(s);
+         return;
+ 
+     case 0x30:	/* ALARM_MONTHS_REG */
+-#ifdef ALMDEBUG
+-        printf("ALM MON_REG <-- %02x\n", value);
+-#endif
+         s->alarm_tm.tm_mon = from_bcd(value);
+         omap_rtc_alarm_update(s);
+         return;
+ 
+     case 0x34:	/* ALARM_YEARS_REG */
+-#ifdef ALMDEBUG
+-        printf("ALM YRS_REG <-- %02x\n", value);
+-#endif
+         s->alarm_tm.tm_year = from_bcd(value);
+         omap_rtc_alarm_update(s);
+         return;
+ 
+     case 0x40:	/* RTC_CTRL_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC CONTROL <-- %02x\n", value);
+-#endif
+         s->pm_am = (value >> 3) & 1;
+         s->auto_comp = (value >> 2) & 1;
+         s->round = (value >> 1) & 1;
+@@ -2802,32 +2763,20 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
+         return;
+ 
+     case 0x44:	/* RTC_STATUS_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC STATUSL <-- %02x\n", value);
+-#endif
+         s->status &= ~((value & 0xc0) ^ 0x80);
+         omap_rtc_interrupts_update(s);
+         return;
+ 
+     case 0x48:	/* RTC_INTERRUPTS_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC INTRS <-- %02x\n", value);
+-#endif
+         s->interrupts = value;
+         return;
+ 
+     case 0x4c:	/* RTC_COMP_LSB_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC COMPLSB <-- %02x\n", value);
+-#endif
+         s->comp_reg &= 0xff00;
+         s->comp_reg |= 0x00ff & value;
+         return;
+ 
+     case 0x50:	/* RTC_COMP_MSB_REG */
+-#ifdef ALMDEBUG
+-        printf("RTC COMPMSB <-- %02x\n", value);
+-#endif
+         s->comp_reg &= 0x00ff;
+         s->comp_reg |= 0xff00 & (value << 8);
+         return;
 -- 
 2.43.0
 
