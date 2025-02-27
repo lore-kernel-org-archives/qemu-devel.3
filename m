@@ -4,57 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B59F5C282C5
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 16:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A870CC19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 16:13:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tngVP-0005yF-R2; Thu, 27 Feb 2025 11:13:00 -0500
+	id 1tngK7-00077l-E2; Thu, 27 Feb 2025 11:01:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1tngV1-0005re-6p
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 11:12:38 -0500
-Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
- helo=smtp.livemail.co.uk)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tngJw-0006yG-4V; Thu, 27 Feb 2025 11:01:08 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1tngUw-00011i-U9
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 11:12:34 -0500
-Received: from [172.22.54.5] (unknown [145.40.191.116])
- (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 6770D40534;
- Thu, 27 Feb 2025 16:12:23 +0000 (GMT)
-Message-ID: <31de7209a08147e3c8d9fe3d17e118b727729587.camel@randomman.co.uk>
-Subject: Re: [PATCH v7 00/16] Introduce support for IGVM files
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P .
- Berrange" <berrange@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez
- <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Alistair Francis
- <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>, David Hildenbrand
- <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Tom Lendacky
- <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, Ani Sinha
- <anisinha@redhat.com>, Joerg Roedel <jroedel@suse.com>
-Date: Thu, 27 Feb 2025 16:12:23 +0000
-In-Reply-To: <ftgzr23cmis3sjwmbbfkw3ijrtythcwb3l6jg3aqsreebg46ll@mcm72sg3dbqs>
-References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
- <ftgzr23cmis3sjwmbbfkw3ijrtythcwb3l6jg3aqsreebg46ll@mcm72sg3dbqs>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tngJs-0007Fw-Mu; Thu, 27 Feb 2025 11:01:07 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 24BC45C0616;
+ Thu, 27 Feb 2025 16:00:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF96C4CEE7;
+ Thu, 27 Feb 2025 16:01:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1740672062;
+ bh=2V2qGBdYTM/mEFLNcLhl2H0xSYVkrwUTZ+ehxBlBqLs=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=L7ieHFW40eJ+G80m492ZISdav7ZnrMklLD0iiW4WnUOiKgj9okzNzmZnq2L8xFha4
+ uKRlrZB1n31r4ByW+chYfEWZgNEPRxQrDsIZeBXKREmmQfTB8x+gF7S8uZyJudBG74
+ iGKm5YpiIiwnmKuZ0OOxvm5tTSoo0ix1JoG65KUfgG5EbsdAVj2BIpgqddeMqxs3dx
+ JJEiYwKFp2fdMIQUYAGo5iewf9hw14e9kGJZvdYxsH9KUgGf+CgPhJDvha63ASr+rH
+ SspHqPeSSrgJpOC8jOAAwj1p+1wboVk9afPfY+55bv0M1eJPRNUp81jwTixKSR4aGW
+ Iolif/t8kPxLw==
+Received: from mchehab by mail.kernel.org with local (Exim 4.98)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tngJo-000000023at-3KcO; Thu, 27 Feb 2025 17:01:00 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Ani Sinha <anisinha@redhat.com>, linux-kernel@vger.kernel.org
+Subject: [PATCH v6 03/19] tests/acpi: virt: update HEST file with its current
+ data
+Date: Thu, 27 Feb 2025 17:00:41 +0100
+Message-ID: <342f2cbf20eee9cafbee834adc66ae81aa4df37b.1740671863.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <cover.1740671863.git.mchehab+huawei@kernel.org>
+References: <cover.1740671863.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Received-SPF: neutral client-ip=213.171.216.60;
- envelope-from=roy.hopkins@randomman.co.uk; helo=smtp.livemail.co.uk
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,119 +75,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVGh1LCAyMDI1LTAyLTI3IGF0IDE2OjMyICswMTAwLCBTdGVmYW5vIEdhcnphcmVsbGEgd3Jv
-dGU6Cj4gSGkgUm95LAo+IAo+IE9uIFRodSwgRmViIDI3LCAyMDI1IGF0IDAxOjM4OjA4UE0gKzAw
-MDAsIFJveSBIb3BraW5zIHdyb3RlOgo+ID4gSGVyZSBpcyB2NyBvZiB0aGUgc2V0IG9mIHBhdGNo
-ZXMgdG8gYWRkIHN1cHBvcnQgZm9yIElHVk0gZmlsZXMgdG8KPiA+IFFFTVUuwqAgVGhpcyBpcwo+
-ID4gYmFzZWQgb24gY29tbWl0IDQwZWZlNzMzZTEwY2MwMGU0ZmI0ZjlmNTc5MGEyOGU3NDRlNjNj
-NjIgb2YgcWVtdS4KPiAKPiBUaGFua3MgYWdhaW4gZm9yIHRoaXMgd29yayEKPiAKPiBJIG5vdGlj
-ZWQgdGhhdCB0aGUgbGFzdCBwYXRjaCBmb3IgdGhpcyBzZXJpZXMgaXMgbWlzc2luZywgYWxzbwo+
-IHBhdGNoZXcKPiBkaWRuJ3QgcmVjZWl2ZSBpdDoKPiAKPiBodHRwczovL3BhdGNoZXcub3JnL1FF
-TVUvY292ZXIuMTc0MDY2MzQxMC5naXQucm95LmhvcGtpbnNAcmFuZG9tbWFuLmNvLnVrLwo+IAo+
-IElmIHlvdSdyZSB1c2luZyBnaXQtcHVibGlzaCB5b3UgY2FuIGRvOgo+IAo+ICQgZ2l0IHB1Ymxp
-c2ggLS1za2lwIDE2IC1TIFwKPiDCoMKgwqDCoCAtUiBjb3Zlci4xNzQwNjYzNDEwLmdpdC5yb3ku
-aG9wa2luc0ByYW5kb21tYW4uY28udWsKPiAKPiBUaGFua3MsCj4gU3RlZmFubwo+IAoKVGhhbmtz
-IFN0ZWZhbm8uIEkgaGFkIGFsbCBzb3J0cyBvZiBwcm9ibGVtcyBnZXR0aW5nIGdpdCBzZW5kLW1h
-aWwgdG8Kc2VuZCB1c2luZyBteSBtYWlsIHNlcnZpY2UgcHJvdmlkZXIuIEkndmUgc29ydGVkIGl0
-IG5vdyBhbmQgc2VudCB0aGUKbWlzc2luZyBwYXRjaC4KClJlZ2FyZHMsClJveQoKPiA+IAo+ID4g
-Rmlyc3RseSwgYXBvbG9naWVzIGZvciB0aGUgYW1vdW50IG9mIHRpbWUgYmV0d2VlbiB0aGUgbGFz
-dCB2ZXJzaW9uCj4gPiBhbmQgdGhpcyBvbmUuCj4gPiBJIG1vdmVkIHJvbGVzIHRvIGEgZGlmZmVy
-ZW50IGNvbXBhbnkgYW5kLCBhbHRob3VnaCBJIGFsd2F5cyBwbGFubmVkCj4gPiB0byBzZWUgdGhp
-cwo+ID4gcGF0Y2ggc2VyaWVzIHRvIGNvbXBsZXRpb24sIGl0IHRvb2sgYSB3aGlsZSBiZWZvcmUg
-SSBmb3VuZCB0aW1lIHRvCj4gPiBzZXR1cCBhCj4gPiBkZXZlbG9wbWVudCBlbnZpcm9ubWVudCBh
-bmQgYmUgaW4gYSBwb3NpdGlvbiB0byBzZW5kIGEgbmV3IHZlcnNpb24uCj4gPiBJIHdpbGwKPiA+
-IGNvbnRpbnVlIHRoaXMgc2VyaWVzIHVzaW5nIGEgcGVyc29uYWwgZW1haWwgYWRkcmVzcyBmb3Ig
-bm93LCBoZW5jZQo+ID4gdGhlIGNoYW5nZQo+ID4gdG8gdGhlIGF1dGhvciBhbmQgc2lnbmVkLW9m
-Zi1ieSBlbWFpbHMuCj4gPiAKPiA+IFRoZSBvbmx5IGNoYW5nZXMgaW4gdGhpcyB2ZXJzaW9uIGFy
-ZSB0byByZWJhc2Ugb24gdGhlIGN1cnJlbnQKPiA+IG1hc3RlciBicmFuY2ggYW5kCj4gPiB1cGRh
-dGUgY29tbWl0IG1ldGFkYXRhLCBpbmNsdWRpbmcgU2lnbmVkLU9mZi1CeSBhbmQgQXV0aG9yIGVt
-YWlscwo+ID4gZm9yIG15Cj4gPiByZXBsYWNlbWVudCBlbWFpbCBhZGRyZXNzLCBhbmQgdG8gaW5j
-bHVkZSB0aGUgZmluYWwgUmV2aWV3ZWQtQnkKPiA+IHRoYXQgd2VyZSBhZGRlZAo+ID4gaW4gdGhl
-IGxhc3QgcmV2aWV3LiBUaGVyZSB3ZXJlIG5vIHJlcXVlc3RlZCBjaGFuZ2VzIG9uIHRoZSBwcmV2
-aW91cwo+ID4gdmVyc2lvbiBbMV0KPiA+IHNvIEkgYmVsaWV2ZSB0aGlzIHNlcmllcyBpcyByZWFk
-eSB0byBtZXJnZS4KPiA+IAo+ID4gQXMgYWx3YXlzLCB0aGFua3MgdG8gdGhvc2UgdGhhdCBoYXZl
-IGJlZW4gZm9sbG93aW5nIGFsb25nLAo+ID4gcmV2aWV3aW5nIGFuZCB0ZXN0aW5nCj4gPiB0aGlz
-IHNlcmllcy4gVGhpcyB2NyBwYXRjaCBzZXJpZXMgaXMgYWxzbyBhdmFpbGFibGUgb24gZ2l0aHVi
-OiBbMl0KPiA+IAo+ID4gRm9yIHRlc3RpbmcgSUdWTSBzdXBwb3J0IGluIFFFTVUgeW91IG5lZWQg
-dG8gZ2VuZXJhdGUgYW4gSUdWTSBmaWxlCj4gPiB0aGF0IGlzCj4gPiBjb25maWd1cmVkIGZvciB0
-aGUgcGxhdGZvcm0geW91IHdhbnQgdG8gbGF1bmNoLiBZb3UgY2FuIHVzZSB0aGUKPiA+IGBidWls
-ZGlndm1gCj4gPiB0ZXN0IHRvb2wgWzNdIHRvIGFsbG93IGdlbmVyYXRpb24gb2YgSUdWTSBmaWxl
-cyBmb3IgYWxsIGN1cnJlbnRseQo+ID4gc3VwcG9ydGVkCj4gPiBwbGF0Zm9ybXMuIFBhdGNoIDEx
-LzE3IGNvbnRhaW5zIGluZm9ybWF0aW9uIG9uIGhvdyB0byBnZW5lcmF0ZSBhbgo+ID4gSUdWTSBm
-aWxlCj4gPiB1c2luZyB0aGlzIHRvb2wuCj4gPiAKPiA+IENoYW5nZXMgaW4gdjc6Cj4gPiAKPiA+
-ICogVXBkYXRlIHZlcnNpb24gbnVtYmVycyBmb3IgSUdWTSBzdXBwb3J0IHRvIDEwLjAKPiA+ICog
-QWRkIFJldmlld2VkLWJ5IHRvIHJlbGV2YW50IGNvbW1pdHMuCj4gPiAqIFVwZGF0ZSBBdXRob3Ig
-ZW1haWwgYW5kIHNpZ24tb2ZmcyB0byBteSBuZXcgZW1haWwgYWRkcmVzcwo+ID4gCj4gPiBQYXRj
-aCBzdW1tYXJ5Ogo+ID4gCj4gPiAxLTExOiBBZGQgc3VwcG9ydCBhbmQgZG9jdW1lbnRhdGlvbiBm
-b3IgcHJvY2Vzc2luZyBJR1ZNIGZpbGVzIGZvcgo+ID4gU0VWLCBTRVYtRVMsCj4gPiBTRVYtU05Q
-IGFuZCBuYXRpdmUgcGxhdGZvcm1zLgo+ID4gCj4gPiAxMi0xNTogUHJvY2Vzc2luZyBvZiBwb2xp
-Y3kgYW5kIFNFVi1TTlAgSURfQkxPQ0sgZnJvbSBJR1ZNIGZpbGUuCj4gPiAKPiA+IDE2OiBBZGQg
-cHJlLXByb2Nlc3Npbmcgb2YgSUdWTSBmaWxlIHRvIHN1cHBvcnQgc3luY2hyb25pemF0aW9uIG9m
-Cj4gPiAnU0VWX0ZFQVRVUkVTJwo+ID4gZnJvbSBJR1ZNIFZNU0EgdG8gS1ZNLgo+ID4gCj4gPiBb
-MV0gTGluayB0byB2NjoKPiA+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvY292
-ZXIuMTcyNzM0MTc2OC5naXQucm95LmhvcGtpbnNAc3VzZS5jb20vCj4gPiAKPiA+IFsyXSB2NyBw
-YXRjaGVzIGFsc28gYXZhaWxhYmxlIGhlcmU6Cj4gPiBodHRwczovL2dpdGh1Yi5jb20vcm95LWhv
-cGtpbnMvcWVtdS90cmVlL2lndm1fbWFzdGVyX3Y3Cj4gPiAKPiA+IFszXSBgYnVpbGRpZ3ZtYCB0
-b29sIHYwLjIuMAo+ID4gaHR0cHM6Ly9naXRodWIuY29tL3JveS1ob3BraW5zL2J1aWxkaWd2bS9y
-ZWxlYXNlcy90YWcvdjAuMi4wCj4gPiAKPiA+IFJveSBIb3BraW5zICgxNik6Cj4gPiDCoG1lc29u
-OiBBZGQgb3B0aW9uYWwgZGVwZW5kZW5jeSBvbiBJR1ZNIGxpYnJhcnkKPiA+IMKgYmFja2VuZHMv
-Y29uZmlkZW50aWFsLWd1ZXN0LXN1cHBvcnQ6IEFkZCBmdW5jdGlvbnMgdG8gc3VwcG9ydCBJR1ZN
-Cj4gPiDCoGJhY2tlbmRzL2lndm06IEFkZCBJR1ZNIGxvYWRlciBhbmQgY29uZmlndXJhdGlvbgo+
-ID4gwqBody9pMzg2OiBBZGQgaWd2bS1jZmcgb2JqZWN0IGFuZCBwcm9jZXNzaW5nIGZvciBJR1ZN
-IGZpbGVzCj4gPiDCoGkzODYvcGNfc3lzZnc6IEVuc3VyZSBzeXNmdyBmbGFzaCBjb25maWd1cmF0
-aW9uIGRvZXMgbm90IGNvbmZsaWN0Cj4gPiB3aXRoCj4gPiDCoMKgIElHVk0KPiA+IMKgc2V2OiBV
-cGRhdGUgbGF1bmNoX3VwZGF0ZV9kYXRhIGZ1bmN0aW9ucyB0byB1c2UgRXJyb3IgaGFuZGxpbmcK
-PiA+IMKgdGFyZ2V0L2kzODY6IEFsbG93IHNldHRpbmcgb2YgUl9MRFRSIGFuZCBSX1RSIHdpdGgK
-PiA+IMKgwqAgY3B1X3g4Nl9sb2FkX3NlZ19jYWNoZSgpCj4gPiDCoGkzODYvc2V2OiBSZWZhY3Rv
-ciBzZXR0aW5nIG9mIHJlc2V0IHZlY3RvciBhbmQgaW5pdGlhbCBDUFUgc3RhdGUKPiA+IMKgaTM4
-Ni9zZXY6IEltcGxlbWVudCBDb25maWRlbnRpYWxHdWVzdFN1cHBvcnQgZnVuY3Rpb25zIGZvciBT
-RVYKPiA+IMKgZG9jcy9zeXN0ZW06IEFkZCBkb2N1bWVudGF0aW9uIG9uIHN1cHBvcnQgZm9yIElH
-Vk0KPiA+IMKgZG9jcy9pbnRlcm9wL2Zpcm13YXJlLmpzb246IEFkZCBpZ3ZtIHRvIEZpcm13YXJl
-RGV2aWNlCj4gPiDCoGJhY2tlbmRzL2NvbmZpZGVudGlhbC1ndWVzdC1zdXBwb3J0OiBBZGQgc2V0
-X2d1ZXN0X3BvbGljeSgpCj4gPiBmdW5jdGlvbgo+ID4gwqBiYWNrZW5kcy9pZ3ZtOiBQcm9jZXNz
-IGluaXRpYWxpemF0aW9uIHNlY3Rpb25zIGluIElHVk0gZmlsZQo+ID4gwqBiYWNrZW5kcy9pZ3Zt
-OiBIYW5kbGUgcG9saWN5IGZvciBTRVYgZ3Vlc3RzCj4gPiDCoGkzODYvc2V2OiBBZGQgaW1wbGVt
-ZW50YXRpb24gb2YgQ0dTIHNldF9ndWVzdF9wb2xpY3koKQo+ID4gwqBzZXY6IFByb3ZpZGUgc2V2
-X2ZlYXR1cmVzIGZsYWdzIGZyb20gSUdWTSBWTVNBIHRvIEtWTV9TRVZfSU5JVDIKPiA+IAo+ID4g
-YmFja2VuZHMvY29uZmlkZW50aWFsLWd1ZXN0LXN1cHBvcnQuY8KgwqDCoMKgwqDCoCB8wqAgNDMg
-Kwo+ID4gYmFja2VuZHMvaWd2bS1jZmcuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCB8wqAgNTIgKysKPiA+IGJhY2tlbmRzL2lndm0uY8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgOTY3Cj4gPiAr
-KysrKysrKysrKysrKysrKysrKwo+ID4gYmFja2VuZHMvaWd2bS5owqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDIzICsKPiA+IGJhY2tl
-bmRzL21lc29uLmJ1aWxkwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCB8wqDCoCA1ICsKPiA+IGRvY3MvaW50ZXJvcC9maXJtd2FyZS5qc29uwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMzAgKy0KPiA+IGRvY3Mvc3lzdGVtL2kzODYvYW1k
-LW1lbW9yeS1lbmNyeXB0aW9uLnJzdMKgIHzCoMKgIDIgKwo+ID4gZG9jcy9zeXN0ZW0vaWd2bS5y
-c3TCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgMTczICsr
-KysKPiA+IGRvY3Mvc3lzdGVtL2luZGV4LnJzdMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIHzCoMKgIDEgKwo+ID4gaHcvaTM4Ni9wYy5jwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDEyICsK
-PiA+IGh3L2kzODYvcGNfcGlpeC5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCB8wqAgMTAgKwo+ID4gaHcvaTM4Ni9wY19xMzUuY8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMTAgKwo+ID4g
-aHcvaTM4Ni9wY19zeXNmdy5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgfMKgIDMxICstCj4gPiBpbmNsdWRlL2h3L2kzODYveDg2LmjCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCAzICsKPiA+IGluY2x1ZGUv
-c3lzdGVtL2NvbmZpZGVudGlhbC1ndWVzdC1zdXBwb3J0LmggfMKgIDg4ICsrCj4gPiBpbmNsdWRl
-L3N5c3RlbS9pZ3ZtLWNmZy5owqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzC
-oCA0NyArCj4gPiBtZXNvbi5idWlsZMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAgOCArCj4gPiBtZXNvbl9vcHRpb25z
-LnR4dMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-fMKgwqAgMiArCj4gPiBxYXBpL3FvbS5qc29uwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxNyArCj4gPiBxZW11LW9wdGlvbnMu
-aHjCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCB8wqAgMjggKwo+ID4gc2NyaXB0cy9tZXNvbi1idWlsZG9wdGlvbnMuc2jCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIHzCoMKgIDMgKwo+ID4gdGFyZ2V0L2kzODYvY3B1LmjCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDkgKy0KPiA+
-IHRhcmdldC9pMzg2L3Nldi5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCB8IDg1MCArKysrKysrKysrKysrKystLQo+ID4gdGFyZ2V0L2kzODYvc2V2
-LmjCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwg
-MTI0ICsrKwo+ID4gMjQgZmlsZXMgY2hhbmdlZCwgMjQ1NCBpbnNlcnRpb25zKCspLCA4NCBkZWxl
-dGlvbnMoLSkKPiA+IGNyZWF0ZSBtb2RlIDEwMDY0NCBiYWNrZW5kcy9pZ3ZtLWNmZy5jCj4gPiBj
-cmVhdGUgbW9kZSAxMDA2NDQgYmFja2VuZHMvaWd2bS5jCj4gPiBjcmVhdGUgbW9kZSAxMDA2NDQg
-YmFja2VuZHMvaWd2bS5oCj4gPiBjcmVhdGUgbW9kZSAxMDA2NDQgZG9jcy9zeXN0ZW0vaWd2bS5y
-c3QKPiA+IGNyZWF0ZSBtb2RlIDEwMDY0NCBpbmNsdWRlL3N5c3RlbS9pZ3ZtLWNmZy5oCj4gPiAK
-PiA+IC0tIAo+ID4gMi40My4wCj4gPiAKPiAKCg==
+Now that HEST table is checked for aarch64, add the current
+firmware file.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+---
+ tests/data/acpi/aarch64/virt/HEST           | Bin 0 -> 132 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ 2 files changed, 1 deletion(-)
+
+diff --git a/tests/data/acpi/aarch64/virt/HEST b/tests/data/acpi/aarch64/virt/HEST
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4c5d8c5b5da5b3241f93cd0839e94272bf6b1486 100644
+GIT binary patch
+literal 132
+zcmeZp4Gw8xU|?W;<mB({5v<@85#X$#prF9Wz`y`vgJ=-uVqjqS|DS;o#%Ew*U|?_n
+dk++-~7#J8hWI!Yi09DHYRr~Kh1c1x}0RY>66afGL
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 39901c58d647..dfb8523c8bf4 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/HEST",
+-- 
+2.48.1
 
 
