@@ -4,76 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EFF5C19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91099C021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:20:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnY5x-0005YC-2z; Thu, 27 Feb 2025 02:14:09 -0500
+	id 1tnYBI-0000Cd-S2; Thu, 27 Feb 2025 02:19:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tnY5u-0005Wy-0n; Thu, 27 Feb 2025 02:14:06 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tnYBH-0000C6-QH; Thu, 27 Feb 2025 02:19:39 -0500
+Received: from tor.source.kernel.org ([2600:3c04::f03c:95ff:fe5e:7468])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tnY5n-0001MH-7R; Thu, 27 Feb 2025 02:14:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740640439; x=1772176439;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=qdAdZcAasHUhjX5Ys69joDLzr/BzyelEqQzOyO5Abjw=;
- b=aErysI4yfRIYUSaE3mezLpmI7kpPv4GcAdOqWTzofPOjZZMmNSAjyJfG
- aXP7QIIvyLMVFrr3ENLpVcBUSmNCjJzEHBGqtAMLIeNpPmEduxqjoiWmz
- NPDAGd5xURvdq5fQOZ9EAZKrSq9vQsk0mBRPt/pfumhpSaV+EDt+jwcZM
- 8biG8lcwVqAGBjhrFXAH027UUFNQBVYgr3BdRs9MkZGLGRMeKdZf1YGzb
- 4s8Y9uavt+vurvNNwE3j4YX1LEkEFxKWIT9w0TRL27t0B1nUa0V7Mnko7
- /dUioAIcqXus00IvSYZox/yKuShFFDhqZeVQM/mO5UtSk8LLkgqfWGbO0 g==;
-X-CSE-ConnectionGUID: LI3kOjitSOStpnVTLw2DGA==
-X-CSE-MsgGUID: +0Zrl6nqQTCSzxaQ1lamRw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11357"; a="66888390"
-X-IronPort-AV: E=Sophos;i="6.13,319,1732608000"; d="scan'208";a="66888390"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Feb 2025 23:13:55 -0800
-X-CSE-ConnectionGUID: 17T/iO2CRIChEWeJtA6wQg==
-X-CSE-MsgGUID: II06IYt2QWCYrK/xX61ClQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,319,1732608000"; d="scan'208";a="117116952"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Feb 2025 23:13:52 -0800
-Message-ID: <aada9fe4-b7c9-40b1-9111-e32f0a979db0@intel.com>
-Date: Thu, 27 Feb 2025 15:13:50 +0800
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tnYBE-0002eH-Ez; Thu, 27 Feb 2025 02:19:39 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 7BAC461142;
+ Thu, 27 Feb 2025 07:19:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD6BC4CEDD;
+ Thu, 27 Feb 2025 07:19:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1740640773;
+ bh=uTordXA6MaEuH41ZSrokwDn9YzrrXK3YvPjwk15VGEE=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=BrOS7tKFkZRzASt4b8/eCJhLAdguSzcQpduJsd61+sxwYKUchK7jsqEAdSVTSVgYu
+ vKjxCD6tWLLT2DZlUxJvdDDQvjbCF0TWnNsUIteWhCrVNKfGxfUY4jnP8TI6GYbVZY
+ R5yKx4nbOqPOf8ywzYUT50fPmYAFl8y3VflnckPuYlE6Z1ljYn63tSCUydeB7+ti44
+ wOHmjpwqJ84+f0PtMu8EdY6fSV7VsMUHBd2M5OlTkFyoqRI9qog9G7N22LLb/nhskm
+ /0l+eJDaO2bxGyONN8Sa4DzTojvXDYgLlqqmpGOXIn2YC/ND1PGHWzqw6HDvOZiGjT
+ x1gGQHu5bwIew==
+Date: Thu, 27 Feb 2025 08:19:27 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Philippe =?UTF-8?B?TWF0aGll?=
+ =?UTF-8?B?dS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
+ <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>, Yanan
+ Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 08/14] acpi/generic_event_device: add logic to detect
+ if HEST addr is available
+Message-ID: <20250227081927.726a1938@foz.lan>
+In-Reply-To: <20250226165226.49b88429@imammedo.users.ipa.redhat.com>
+References: <cover.1740148260.git.mchehab+huawei@kernel.org>
+ <e9e0aafd7cc8613709171ec5d8a6d9d9be62d7c1.1740148260.git.mchehab+huawei@kernel.org>
+ <20250226165226.49b88429@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] i386/cpu: Fix cpu number overflow in
- CPUID.01H.EBX[23:16]
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Chuang Xu <xuchuangxclwt@bytedance.com>,
- Isaku Yamahata <isaku.yamahata@intel.com>, Babu Moger <babu.moger@amd.com>
-Cc: qemu-devel@nongnu.org, Qian Wen <qian.wen@intel.com>,
- qemu-stable@nongnu.org
-References: <20250227062523.124601-1-zhao1.liu@intel.com>
- <20250227062523.124601-3-zhao1.liu@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250227062523.124601-3-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Received-SPF: pass client-ip=2600:3c04::f03c:95ff:fe5e:7468;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,83 +79,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/2025 2:25 PM, Zhao Liu wrote:
-> From: Qian Wen <qian.wen@intel.com>
-> 
-> The legacy topology enumerated by CPUID.1.EBX[23:16] is defined in SDM
-> Vol2:
-> 
-> Bits 23-16: Maximum number of addressable IDs for logical processors in
-> this physical package.
-> 
-> When threads_per_socket > 255, it will 1) overwrite bits[31:24] which is
-> apic_id, 2) bits [23:16] get truncated.
-> 
-> Specifically, if launching the VM with -smp 256, the value written to
-> EBX[23:16] is 0 because of data overflow. If the guest only supports
-> legacy topology, without V2 Extended Topology enumerated by CPUID.0x1f
-> or Extended Topology enumerated by CPUID.0x0b to support over 255 CPUs,
-> the return of the kernel invoking cpu_smt_allowed() is false and APs
-> (application processors) will fail to bring up. Then only CPU 0 is online,
-> and others are offline.
-> 
-> For example, launch VM via:
-> qemu-system-x86_64 -M q35,accel=kvm,kernel-irqchip=split \
->      -cpu qemu64,cpuid-0xb=off -smp 256 -m 32G \
->      -drive file=guest.img,if=none,id=virtio-disk0,format=raw \
->      -device virtio-blk-pci,drive=virtio-disk0,bootindex=1 --nographic
-> 
-> The guest shows:
->      CPU(s):               256
->      On-line CPU(s) list:  0
->      Off-line CPU(s) list: 1-255
-> 
-> To avoid this issue caused by overflow, limit the max value written to
-> EBX[23:16] to 255 as the HW does.
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Qian Wen <qian.wen@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Em Wed, 26 Feb 2025 16:52:26 +0100
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-
-> ---
-> Changes since original v4 [*]:
->   * Rebase on addressable ID fixup.
->   * Drop R/b tags since the code base changes.
+> On Fri, 21 Feb 2025 15:35:17 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 > 
-> [*] original v4: https://lore.kernel.org/qemu-devel/20230829042405.932523-2-qian.wen@intel.com/
-> ---
->   target/i386/cpu.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index b8a78276cd50..ae6c8bfd8b5e 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -6691,16 +6691,21 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->           }
->           *edx = env->features[FEAT_1_EDX];
->           if (threads_per_pkg > 1) {
-> +            uint32_t num;
-> +
->               /*
->                * For CPUID.01H.EBX[Bits 23-16], AMD requires logical processor
->                * count, but Intel needs maximum number of addressable IDs for
->                * logical processors per package.
->                */
->               if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
-> -                *ebx |= threads_per_pkg << 16;
-> +                num = threads_per_pkg;
->               } else {
-> -                *ebx |= 1 << apicid_pkg_offset(topo_info) << 16;
-> +                num = 1 << apicid_pkg_offset(topo_info);
->               }
-> +
-> +            /* Fixup overflow: max value for bits 23-16 is 255. */
-> +            *ebx |= MIN(num, 255) << 16;
->           }
->           if (!cpu->enable_pmu) {
->               *ecx &= ~CPUID_EXT_PDCM;
 
+> > diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> > index 5346cae573b7..14d8513a5440 100644
+> > --- a/hw/acpi/generic_event_device.c
+> > +++ b/hw/acpi/generic_event_device.c
+> > @@ -318,6 +318,7 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+> >  
+> >  static const Property acpi_ged_properties[] = {
+> >      DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
+> > +    DEFINE_PROP_BOOL("x-has-hest-addr", AcpiGedState, ghes_state.use_hest_addr, false),  
+> 
+> you below set it for 9.2 to false, so
+> shouldn't it be set to true by default here?
+
+Yes, but it is too early to do that here, as the DSDT table was not
+updated to contain the GED device.
+
+We're switching it to true later on, at patch 11::
+
+	d8c44ee13fbe ("arm/virt: Wire up a GED error device for ACPI / GHES")
+
+Thanks,
+Mauro
 
