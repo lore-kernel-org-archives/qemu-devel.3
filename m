@@ -4,79 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A456BC197BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 19:20:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7FD5C197BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 19:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnjPh-0002ax-ET; Thu, 27 Feb 2025 14:19:20 -0500
+	id 1tnjb7-0002yN-0G; Thu, 27 Feb 2025 14:31:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tnjPW-0002ZL-07
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 14:19:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tnjb0-0002x5-AJ
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 14:30:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tnjPN-0002n4-1z
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 14:19:05 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tnjax-00057N-3a
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 14:30:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740683933;
+ s=mimecast20190719; t=1740684653;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OgvhNxw26j5W+7YxZ3jOwBZRNFzwBjk4Uop0C9Cs2ik=;
- b=WEoKStZNoBTrIXaTTNVMv0bkOI44Uh6HFsQrPyUdQ8OlT/KQubXbg0toy6V7QbUyJfsOzk
- L0A0MZI59ZigXibYUX5vbO3ezDWjc7ZwaeCZcX3tnUsmsDUiAueYRt7/+iAYKbOaZf66oT
- DCoRL+tsV//a9JkArcuDdABa4TQLyRM=
+ bh=0q9tBcv/7BsfrLHzSvNVW/bD9t7BDHumvNZNro89jXk=;
+ b=Mvw78Kj13nDlZBp80OjpKgBE5iQ8uUCFnVFeQuGhtw1yjiV19TVxKoaJdpHnA+gAmmldJy
+ gxKhiuZByqnmAPd8LVoSZjrmDTaWqTgrUukIMC8HtGASI4GQRoomu+oZ+EtMYjsWmNoiuo
+ lOXnfoyacWPbeqWc8VLhtLEWBEBcX6o=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-240-wYrxeYiAMxyCW_TsIiyjjw-1; Thu,
- 27 Feb 2025 14:18:50 -0500
-X-MC-Unique: wYrxeYiAMxyCW_TsIiyjjw-1
-X-Mimecast-MFC-AGG-ID: wYrxeYiAMxyCW_TsIiyjjw_1740683929
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-fbBykwByMiSeyOefuErOYQ-1; Thu,
+ 27 Feb 2025 14:30:51 -0500
+X-MC-Unique: fbBykwByMiSeyOefuErOYQ-1
+X-Mimecast-MFC-AGG-ID: fbBykwByMiSeyOefuErOYQ_1740684650
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E51251800877; Thu, 27 Feb 2025 19:18:48 +0000 (UTC)
+ id C8C87180034A; Thu, 27 Feb 2025 19:30:49 +0000 (UTC)
 Received: from redhat.com (unknown [10.2.16.162])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7627E300019E; Thu, 27 Feb 2025 19:18:46 +0000 (UTC)
-Date: Thu, 27 Feb 2025 13:18:43 -0600
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 58CB51800371; Thu, 27 Feb 2025 19:30:47 +0000 (UTC)
+Date: Thu, 27 Feb 2025 13:30:44 -0600
 From: Eric Blake <eblake@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Qemu-block <qemu-block@nongnu.org>, QEMU Developers <qemu-devel@nongnu.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: Problem with iotest 233
-Message-ID: <ezl4qpizzprfy74idos2dytp7jdrutmpzhyrb4bnrfqmelhmgx@diz2t47zfbdt>
-References: <5a31e4fb-3e0f-4455-9941-18b00287b276@redhat.com>
- <Z72XfP8gI9-SB4B9@redhat.com>
- <f500b606-b999-426c-8d72-50a9ba9e84ac@redhat.com>
- <574cdf2e-6b8c-4ff3-9a2b-a7d00c92a788@redhat.com>
- <Z74En98KD0v11X8w@redhat.com>
- <84a51a63-50f7-4592-ba75-5e3234571987@redhat.com>
- <7a81b491-d982-4a5b-b250-f7b772f64eb4@redhat.com>
- <4dbc253d-fd6c-4feb-9597-81afbfa8d670@redhat.com>
- <5eb59c74-f426-4bee-a854-08c7a5f5050d@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Mads Ynddal <mads@ynddal.dk>
+Subject: Re: [PATCH] trace/simple: Fix hang when using simpletrace with fork()
+Message-ID: <bdzj3khw7bempzs3rmhdypks5nfnsamcqfs3touh5tuayftqhx@rxawe42qe7j3>
+References: <20250226085015.1143991-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5eb59c74-f426-4bee-a854-08c7a5f5050d@redhat.com>
+In-Reply-To: <20250226085015.1143991-1-thuth@redhat.com>
 User-Agent: NeoMutt/20250113
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,43 +84,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 26, 2025 at 09:55:18AM +0100, Thomas Huth wrote:
-> > > Though, that does not look like the thread from the simpletrace, but
-> > > the the QEMU RCU thread instead ... so no clue where that writer
-> > > thread might have gone...
-> > 
-> > OK, I think I now understood the problem: qemu-nbd is calling
-> > trace_init_backends() first, which creates the simpletrace threads and
-> > installs the atexit() handler. Then it is calling fork() since the test
-> > uses the --fork command line option. But fork() does not clone the
-> > simpletrace thread into the new process, only the main thread (see
-> > man-page of fork, the new process starts single-threaded). So when the
-> > new child process exits, the exit handler calls the simple trace flush
-> > function which tries to wait for a thread that has never been created in
-> > that process.
-
-That definitely explains the symptoms.
-
-> > 
-> > The test works when I move the trace_init_backends() behind the fork()
-> > in the main function... but I am not sure if we would miss some logs
-> > this way, so I don't know whether that's the right solution. Could a
-> > qemu-nbd expert please have a look at this?
-
-I'm also thinking about ways to avoid it.
-
+On Wed, Feb 26, 2025 at 09:50:15AM +0100, Thomas Huth wrote:
+> When compiling QEMU with --enable-trace-backends=simple , the
+> iotest 233 is currently hanging. This happens because qemu-nbd
+> calls trace_init_backends() first - which causes simpletrace to
+> install its writer thread and the atexit() handler - before
+> calling fork(). But the simpletrace writer thread is then only
+> available in the parent process, not in the child process anymore.
+> Thus when the child process exits, its atexit handler waits forever
+> on the trace_empty_cond condition to be set by the non-existing
+> writer thread, so the process never finishes.
 > 
-> After pondering about it for a while, maybe the best solution is to handle
-> it within the simpletrace backend itself, by using pthread_atfork() :
+> Fix it by installing a pthread_atfork() handler, too, which
+> makes sure that the trace_writeout_enabled variable gets set
+> to false again in the child process, so we can use it in the
+> atexit() handler to check whether we still need to wait on the
+> writer thread or not.
 > 
->  https://lore.kernel.org/qemu-devel/20250226085015.1143991-1-thuth@redhat.com/
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  trace/simple.c | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+> 
+> diff --git a/trace/simple.c b/trace/simple.c
+> index c0aba00cb7f..269bbda69f1 100644
+> --- a/trace/simple.c
+> +++ b/trace/simple.c
+> @@ -380,8 +380,22 @@ void st_print_trace_file_status(void)
+>  
+>  void st_flush_trace_buffer(void)
+>  {
+> -    flush_trace_file(true);
+> +    flush_trace_file(trace_writeout_enabled);
+> +}
+> +
+> +#ifndef _WIN32
+> +static void trace_thread_atfork(void)
+> +{
+> +    /*
+> +     * If we fork, the writer thread does not exist in the child, so
+> +     * make sure to allow st_flush_trace_buffer() to clean up correctly.
+> +     */
+> +    g_mutex_lock(&trace_lock);
 
-pthread_atfork() is an odd function - POSIX itself says it is
-unreliable, because there is NO sane way you can possibly know every
-action that any library you call into that might possibly need
-protection before fork.  That doesn't mean we can't try it, just that
-we can't expect it to solve every fork-related problem we might
-encounter.
+And are we sure trace_lock was previously initialized in memory
+visible to the thread that is calling the after-fork handler here?
+
+POSIX admits that pthread_atfork() is generally too hard to use
+successfully (there are just too many corner cases), and instead
+recommends that the only portable thing a multi-threaded app can do
+after forking is limit itself to async-signal-safe functions until it
+execs a new program.  The other common reason for forking is for
+daemonization; there, the advice is to be completely single-threaded
+until after the fork() has set up the right environment for the
+daemon, at which point the child can then finally go multi-threaded.
+
+And with either of those solutions (Using fork() to spawn a child
+process? do nothing unsafe after fork except for what it takes to
+reach exec. Using fork() to daemonize? do nothing unsafe before fork)
+eliminates the need for using pthread_atfork() in the first place.
+
+At any rate, per your plea elsewhere in the thread, I'll take a look
+at deferring the logging init until after qemu-nbd has daemonized.
 
 -- 
 Eric Blake, Principal Software Engineer
