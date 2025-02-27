@@ -4,86 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78336C1B0FF
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A168CC19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnesC-0007BQ-9n; Thu, 27 Feb 2025 09:28:24 -0500
+	id 1tneo9-0006dY-8M; Thu, 27 Feb 2025 09:24:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnern-0005aM-Kx
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:28:00 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnerj-0004v6-Rx
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:27:59 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-439a4fc2d65so10717655e9.3
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:27:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740666470; x=1741271270; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Qe4aJgheLC+WLLda+xlMEOvgcnf2Z7Yw6J5SwaqcyMo=;
- b=CGLwn7x8yw+yL6mTLa1jg4a3zaxYhlHdWUFv6MC4K/YJ6evKK8X7edUSPmISQdCgvg
- vNj2yu/WUTtaye+yitDW7j8Axd90OBL1ZNMGvzgzZapD6vPjdiROQO9+DMPHHWdlA53C
- MjptXRI/7uzmIkaKs0+mV+UFaBNDupD3v7WvMRntfzWoXdDZnjxLbdP/bGv5DuzvtOGU
- s76HL5GHvMO1rsIkFAPifv+IcIBW4JL3eXkLrdgGqpctgrprSTsTv/6Bb2Z/0H+pawFl
- SFOeYgdYrD4zUbwPIZGfrUs6v8ZOiu1RpxRbKk2g6y0AGhbDNhpCDrAnFw6TssjVKg6F
- xe8A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tnemc-0003qG-Kj
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:22:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tnema-000460-GJ
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:22:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740666155;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rpP0mKR1bYf8x/BopqJJucrB8oxIRdemZl6JUWYmoLk=;
+ b=FOpKrbpxgszyryqLe4YdgRxtHnZDr6wwya219/k1IYQOZ3NoVlpXlPMlVsw4fUctGXEUjt
+ e5xK3A/BeV8FTE+37SYZTieqGOWV5yT6ZUBpRDupVOFAJQyBcdNom9Dlq+z68vtYXDiQqv
+ 9rQNjFhxzU2idMMThHOW5RTRqdn+cv0=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-679-CIdWP2I5P8ij9o5Mj7lbqg-1; Thu, 27 Feb 2025 09:22:34 -0500
+X-MC-Unique: CIdWP2I5P8ij9o5Mj7lbqg-1
+X-Mimecast-MFC-AGG-ID: CIdWP2I5P8ij9o5Mj7lbqg_1740666153
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-abecbdb4272so119852666b.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:22:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740666470; x=1741271270;
+ d=1e100.net; s=20230601; t=1740666152; x=1741270952;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qe4aJgheLC+WLLda+xlMEOvgcnf2Z7Yw6J5SwaqcyMo=;
- b=i8ltbFRu+ig7J1FBnNook/3TVywfXPibIoxQnIIfR5YBJJkGGnbJcKITMLRGvn0OiA
- FEAVPWzbljeeKojJp9G4heFpvk6KRYJ7K7r9/oYyEyGe7zkkO8VKO/Ruemp1lwucJDPa
- nBhps+ubxqxDWvPIzp0+WK5NNsk7I5bTyZSxzt6Mq+snmPIYV9qRevP/7O5s4v0KLEpG
- IR/W8sKMD/gtnb7yeICx5e47RdqW22yJdEMQNyIZrrD3la442hX6wSAdv1ESsNIL4iPB
- lUaClH3L0v/lv+sYDIy57lzU8FpH6k7gLEGq3Az8QuyhwouNpLnhNoYNrJy1VpeXbcVB
- roYQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5RbhDdII4/NHwc/yiBrhA+DNMe2n//zWtDsZvaPul0SEYnPCHY3I1j/mMwJayaPvdZziY8MVB2awW@nongnu.org
-X-Gm-Message-State: AOJu0Ywh57uEnRwgDs44hpWU91K4Qi4j4WlEyXdAkTCvM70Ywm6+XRil
- f3IbsGA0g1AASNwfudqHc4A6w3myXOESf/IP7S1eCjzVbICr9vCiIn1Met3FYO8=
-X-Gm-Gg: ASbGncv81KPGT7r3Kw5kymaspL1uHCHtrEoKu9G3TAmUqp+I02kxzqLXEuAUxACwjY2
- 1csQkVsPQbo7jXiLv+GfFP4q6Hdi640oQF3TYsp/PGNMLp8c+Pfeic+8mvLIY6Vg4r0U3VRiaC6
- N2q7WT2o8v328+QWvZLDbYMSjnAARosTAtad1Aq0MNitgEB8xaqsYp/DX1KWDyTGqinK64EI4jx
- CVdeg7EQ2MNZbkKTUZiFL3uQF3tOWGvg+uHJTvNBNbxKOcfnt+SMJQnCHldAIQweUtTcYyaDBo3
- KfyV/TRgHIlzVnovJ1OIXbPZrbxRm3CM
-X-Google-Smtp-Source: AGHT+IGrwyync3NgMser08FgjGaCoYCZ7pdwQubFTuUt3KuoUKEYGIRTn2JptuI0nzgaPodEJy0A2A==
-X-Received: by 2002:a05:600c:5252:b0:439:88bb:d025 with SMTP id
- 5b1f17b1804b1-43ab0f26e5fmr110547285e9.1.1740666470162; 
- Thu, 27 Feb 2025 06:27:50 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ bh=rpP0mKR1bYf8x/BopqJJucrB8oxIRdemZl6JUWYmoLk=;
+ b=icSwCFl6mNFBE5aXiQYzBBKtrKnlS3Vrl1617s+jz1197CBD1sr48Tr2Je1YYbZs/W
+ 88g9VTMBSl5TJLi1nAnR6IYVj5KTx679LvftcaCol98gP8nvlt2qXRnV716qDtXUbu2o
+ Vo7OmkzEyV83aewObYIBjfe0t6zjlEtHaH4pR3sqF6yKQ0nOWgeiPW2kNmgkdM0XwtQz
+ MjvbqNn8qF9EIDPq8XQoGDBOZgNFF+K9wVcTV4VCMWeccmd3I+6Pl01pjS5hkLn3Ffu1
+ MiY1Egm9TRK5uigfB2aLQIVrQRmmhZfaR4CE2dFjmv48uMOULMp6q6DjCVQNjqSNtex4
+ kkHg==
+X-Gm-Message-State: AOJu0YyZBSSwkZlb4W/52vUUNd0bEkVECpwSOemT77F++D7eRX30Lem8
+ 76SXEyMIBSw/mGBf7q5OrBqYTUds63KtCbuuSQC8nCAaLVLy5vqVmnrOP+MQwGVNspwCc3bQWz6
+ OEUKcXfIE32MwC5MA0V03qUdgq5tU9GqCp8Kjntf1YLI3bgpxOIEj1i0Pt9NPCT2r0Yv0QvF5j1
+ NNXuYCtPWwv1W5GCyfZHAOTgQrVLl+hvFDgcRMBbM=
+X-Gm-Gg: ASbGncuH3Cj77cwYA0YFOsVqbtjDzZhRWcA906FaEYAOF20bkpqHIuUbRS90HlezwAi
+ hHmVRupSYi1wpqJk1hiVFPARz5r2fF0dPzZmLIr6f5MZDz0QiMg0bbYcji4kxv8grEEqHq2t+NT
+ 69J0bN+VUnfwB5Ae2js11ok9NmUZoRZ+GllJ3U7x4Hmpcvx8odlBM2LxwK2OXFREKWkRYMPLKIP
+ hVrUEOUrQW6/4me3vYUtwgHnUXzAvw427N44mgT00SGExQD8JzxbyPR+TqYS61MtPR+TvVV51m/
+ QrF24JIeDF0Y3NgbNsrs
+X-Received: by 2002:a17:907:9686:b0:ab7:d7fd:6250 with SMTP id
+ a640c23a62f3a-abed1015488mr1399571166b.43.1740666152606; 
+ Thu, 27 Feb 2025 06:22:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFvCk74a5ejhjBllkAOfm++110zW0HlAe/VNXfUAjWC6HXkOqOgZGXaU+RkRq9U/kJeZk+vSA==
+X-Received: by 2002:a17:907:9686:b0:ab7:d7fd:6250 with SMTP id
+ a640c23a62f3a-abed1015488mr1399568666b.43.1740666152200; 
+ Thu, 27 Feb 2025 06:22:32 -0800 (PST)
+Received: from [192.168.10.48] ([176.206.102.52])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba532b8dsm55968335e9.14.2025.02.27.06.27.49
+ a640c23a62f3a-abf0c0dbc43sm131935466b.51.2025.02.27.06.22.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:27:49 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 2/3] target/arm: Correct STRD atomicity
-Date: Thu, 27 Feb 2025 14:27:45 +0000
-Message-ID: <20250227142746.1698904-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250227142746.1698904-1-peter.maydell@linaro.org>
-References: <20250227142746.1698904-1-peter.maydell@linaro.org>
+ Thu, 27 Feb 2025 06:22:30 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org,
+	zhao1.liu@intel.com
+Subject: [PATCH 05/12] rust: irq: wrap IRQState with Opaque<>
+Date: Thu, 27 Feb 2025 15:22:12 +0100
+Message-ID: <20250227142219.812270-6-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250227142219.812270-1-pbonzini@redhat.com>
+References: <20250227142219.812270-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,112 +109,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Our STRD implementation doesn't correctly implement the requirement:
- * if the address is 8-aligned the access must be a 64-bit
-   single-copy atomic access, not two 32-bit accesses
-
-Rewrite the handling of STRD to use a single tcg_gen_qemu_st_i64()
-of a value produced by concatenating the two 32 bit source registers.
-This allows us to get the atomicity right.
-
-As with the LDRD change, now that we don't update 'addr' in the
-course of performing the store we need to adjust the offset
-we pass to op_addr_ri_post() and op_addr_rr_post().
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/arm/tcg/translate.c | 55 ++++++++++++++++++++++++--------------
- 1 file changed, 35 insertions(+), 20 deletions(-)
+ rust/qemu-api/src/irq.rs    | 15 ++++++++++-----
+ rust/qemu-api/src/sysbus.rs |  1 +
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index e10a1240c17..2020d18f019 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -5057,10 +5057,38 @@ static bool trans_LDRD_rr(DisasContext *s, arg_ldst_rr *a)
-     return true;
+diff --git a/rust/qemu-api/src/irq.rs b/rust/qemu-api/src/irq.rs
+index 34c19263c23..1222d4fde30 100644
+--- a/rust/qemu-api/src/irq.rs
++++ b/rust/qemu-api/src/irq.rs
+@@ -8,10 +8,16 @@
+ 
+ use crate::{
+     bindings::{self, qemu_set_irq},
++    cell::Opaque,
+     prelude::*,
+     qom::ObjectClass,
+ };
+ 
++/// An opaque wrapper around [`bindings::IRQState`].
++#[repr(transparent)]
++#[derive(Debug, qemu_api_macros::Wrapper)]
++pub struct IRQState(Opaque<bindings::IRQState>);
++
+ /// Interrupt sources are used by devices to pass changes to a value (typically
+ /// a boolean).  The interrupt sink is usually an interrupt controller or
+ /// GPIO controller.
+@@ -21,8 +27,7 @@
+ /// method sends a `true` value to the sink.  If the guest has to see a
+ /// different polarity, that change is performed by the board between the
+ /// device and the interrupt controller.
+-pub type IRQState = bindings::IRQState;
+-
++///
+ /// Interrupts are implemented as a pointer to the interrupt "sink", which has
+ /// type [`IRQState`].  A device exposes its source as a QOM link property using
+ /// a function such as [`SysBusDeviceMethods::init_irq`], and
+@@ -40,7 +45,7 @@ pub struct InterruptSource<T = bool>
+ where
+     c_int: From<T>,
+ {
+-    cell: BqlCell<*mut IRQState>,
++    cell: BqlCell<*mut bindings::IRQState>,
+     _marker: PhantomData<T>,
  }
  
-+static void do_strd_store(DisasContext *s, TCGv_i32 addr, int rt, int rt2)
-+{
-+    /*
-+     * STRD is required to be an atomic 64-bit access if the
-+     * address is 8-aligned, two atomic 32-bit accesses if
-+     * it's only 4-aligned, and to give an alignemnt fault
-+     * if it's not 4-aligned.
-+     * Rt is always the word from the lower address, and Rt2 the
-+     * data from the higher address, regardless of endianness.
-+     * So (like gen_store_exclusive) we avoid gen_aa32_ld_i64()
-+     * so we don't get its SCTLR_B check, and instead do a 64-bit access
-+     * using MO_BE if appropriate, using a value constructed
-+     * by putting the two halves together in the right order.
-+     */
-+    int mem_idx = get_mem_index(s);
-+    MemOp opc = MO_64 | MO_ALIGN_4 | MO_ATOM_SUBALIGN | s->be_data;
-+    TCGv taddr = gen_aa32_addr(s, addr, opc);
-+    TCGv_i32 t1 = load_reg(s, rt);
-+    TCGv_i32 t2 = load_reg(s, rt2);
-+    TCGv_i64 t64 = tcg_temp_new_i64();
-+
-+    if (s->be_data == MO_BE) {
-+        tcg_gen_concat_i32_i64(t64, t2, t1);
-+    } else {
-+        tcg_gen_concat_i32_i64(t64, t1, t2);
-+    }
-+    tcg_gen_qemu_st_i64(t64, taddr, mem_idx, opc);
-+}
-+
- static bool trans_STRD_rr(DisasContext *s, arg_ldst_rr *a)
- {
--    int mem_idx = get_mem_index(s);
--    TCGv_i32 addr, tmp;
-+    TCGv_i32 addr;
- 
-     if (!ENABLE_ARCH_5TE) {
-         return false;
-@@ -5071,15 +5099,9 @@ static bool trans_STRD_rr(DisasContext *s, arg_ldst_rr *a)
+@@ -79,11 +84,11 @@ pub fn set(&self, level: T) {
+         }
      }
-     addr = op_addr_rr_pre(s, a);
  
--    tmp = load_reg(s, a->rt);
--    gen_aa32_st_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
-+    do_strd_store(s, addr, a->rt, a->rt + 1);
+-    pub(crate) const fn as_ptr(&self) -> *mut *mut IRQState {
++    pub(crate) const fn as_ptr(&self) -> *mut *mut bindings::IRQState {
+         self.cell.as_ptr()
+     }
  
--    tcg_gen_addi_i32(addr, addr, 4);
--
--    tmp = load_reg(s, a->rt + 1);
--    gen_aa32_st_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
--
--    op_addr_rr_post(s, a, addr, -4);
-+    op_addr_rr_post(s, a, addr, 0);
-     return true;
- }
- 
-@@ -5207,20 +5229,13 @@ static bool trans_LDRD_ri_t32(DisasContext *s, arg_ldst_ri2 *a)
- 
- static bool op_strd_ri(DisasContext *s, arg_ldst_ri *a, int rt2)
- {
--    int mem_idx = get_mem_index(s);
--    TCGv_i32 addr, tmp;
-+    TCGv_i32 addr;
- 
-     addr = op_addr_ri_pre(s, a);
- 
--    tmp = load_reg(s, a->rt);
--    gen_aa32_st_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
-+    do_strd_store(s, addr, a->rt, rt2);
- 
--    tcg_gen_addi_i32(addr, addr, 4);
--
--    tmp = load_reg(s, rt2);
--    gen_aa32_st_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
--
--    op_addr_ri_post(s, a, addr, -4);
-+    op_addr_ri_post(s, a, addr, 0);
-     return true;
- }
- 
+-    pub(crate) const fn slice_as_ptr(slice: &[Self]) -> *mut *mut IRQState {
++    pub(crate) const fn slice_as_ptr(slice: &[Self]) -> *mut *mut bindings::IRQState {
+         assert!(!slice.is_empty());
+         slice[0].as_ptr()
+     }
+diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
+index 04821a2b9b3..48803a655f9 100644
+--- a/rust/qemu-api/src/sysbus.rs
++++ b/rust/qemu-api/src/sysbus.rs
+@@ -79,6 +79,7 @@ fn mmio_map(&self, id: u32, addr: u64) {
+     fn connect_irq(&self, id: u32, irq: &Owned<IRQState>) {
+         assert!(bql_locked());
+         let id: i32 = id.try_into().unwrap();
++        let irq: &IRQState = irq;
+         unsafe {
+             bindings::sysbus_connect_irq(self.as_mut_ptr(), id, irq.as_mut_ptr());
+         }
 -- 
-2.43.0
+2.48.1
 
 
