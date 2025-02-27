@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0867C1B0FF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A76C282C1
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnekP-000735-Hc; Thu, 27 Feb 2025 09:20:22 -0500
+	id 1tnekH-0006pz-Fu; Thu, 27 Feb 2025 09:20:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnekK-0006ya-UU
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tnekC-0006n6-6k
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnekH-0003hW-SD
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:16 -0500
+ id 1tnekA-0003gD-81
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740666012;
+ s=mimecast20190719; t=1740666005;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jtNzr8uYuWTsnD/A8rhDCCpOJ/XgomM+/PA3Y3Q8jKo=;
- b=JgO3DgRpxNo5V0ebeXinozC/Z+J7Dx+mSdAuKT8TfdYBEiaXodXBgZhoULOdRr2ImgDrYd
- jHNPZGD4GLeX5R59jEKU4OMz2CK0/qWIc6EHUn/e3mLSr9w8aLTISI29h1BoBg1gORMrgI
- sbqYHgnikP6MyxC0kCKE6eGxKvtunac=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LJB2c4bxzU4WmleXJ0VX4oOrax270tsJkQEdT3TL6CQ=;
+ b=JPQ6IEo7b23SziV76iDSYLxHbr3sIKp4FMvoeI5aYXNT5+i7iMoc41o6hvSEcjCSlE6D6w
+ EuSqRd25/v7KGmZeSyrdappTiRCj/cKJiXlts/W6zo/cM3pfMoG8nzQpdhUF7M883wpzWv
+ SGWsexRgqGqLhxAprOMnTRgwJ39wZUQ=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-425-wmXwe4eWMwq9AtxxpKWsdg-1; Thu, 27 Feb 2025 09:20:10 -0500
-X-MC-Unique: wmXwe4eWMwq9AtxxpKWsdg-1
-X-Mimecast-MFC-AGG-ID: wmXwe4eWMwq9AtxxpKWsdg_1740666009
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ab68fbe53a4so151877666b.2
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:20:10 -0800 (PST)
+ us-mta-558-X_g0KlgzP4S43QBinx6ECA-1; Thu, 27 Feb 2025 09:20:03 -0500
+X-MC-Unique: X_g0KlgzP4S43QBinx6ECA-1
+X-Mimecast-MFC-AGG-ID: X_g0KlgzP4S43QBinx6ECA_1740666002
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-abba896add9so116633066b.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:20:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740666008; x=1741270808;
+ d=1e100.net; s=20230601; t=1740666001; x=1741270801;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jtNzr8uYuWTsnD/A8rhDCCpOJ/XgomM+/PA3Y3Q8jKo=;
- b=SX1QOI/XBUiO39tofkVtVJaRZXbzDrWuzo65iMeaPbOXQBxm282WmjAp74yV1usCzK
- ro+DN4lIM2bW3YDxADyGzf1tk2XHFA9MkPZyOXOzFNzgbw2lJsIFjWprQEbCI4MYKWyD
- oIi2se4LmM5YWzNlH6AOLN6mknLo4HqN5XrSUG/zjaKUx+5ccWw1MDYLBTINDX4OqIL6
- TUHpDY+NLgI5/2zfCEH7TvyoityuK5IUloD3ONHrk1i9LJr9LkKWloX+XiJfVyrJlWLI
- I1JLz7KEEeDsEmRhIl4tON+iHyNZ0lE01BfnBmZtmK4dOyEWsypUgZdORABE3ud0Cf5/
- 4Jkw==
-X-Gm-Message-State: AOJu0YzRP/aQsbTGm6juE1e7TH31SdAhz2fnnSQ2yu6dx97gHzfvxUC+
- ZlDybhyLQM8QsXMgll9G0gTjy9F26G6UjTAgCjLd0E4Vqa/h2p/Fi9KtPutNQsyyH0Vq64bqyIf
- bjm1Nh6/eHk0FBZSBlzVLbUF10dyizyusl2QKvdW2nCQTECooqtOvKnBAAWHD3Pry4fgF5GlsBt
- LMxJkhMgIKMJX/CIFHDKDvIbrGPglCg47Sq7XLzOI=
-X-Gm-Gg: ASbGncsk2lu3vLEUeE6lSTPd2sgH+AuYleSdsBdtrkFyvdcPJHh4ZmzraCBDhM4VQoJ
- 19wk0RSw/ZQ+dyxHKkgLqCf0Fo57z/YFP2OdKWyuLShGslQ5vwemVx3zmqc7djmvB/P2u6Hzqm1
- d7idR9VQwu8hZoyEadMVfTp9frkW+4YjEC18kKLG934lC5101E9PfU8SY6JazjELjhDuYw6cnMw
- eGf0lSrT96PdH9bIVNHZDXn2obwDK5lSr788fikSywm8ykYs/uZkO4hWItyRmYDBO15xYIyiOt8
- yDOecIRL+D9fKjffBFxo
-X-Received: by 2002:a17:907:96a1:b0:aa6:8d51:8fdb with SMTP id
- a640c23a62f3a-abed0ce9953mr1269801466b.19.1740666008604; 
- Thu, 27 Feb 2025 06:20:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGPEeMfrnDw4VgOT3FXH1Rjs0vLsCS7hIAjBNG2UWO4gshvoAkn/3UmynDGL+MSsArUqsIQZg==
-X-Received: by 2002:a17:907:96a1:b0:aa6:8d51:8fdb with SMTP id
- a640c23a62f3a-abed0ce9953mr1269799266b.19.1740666008132; 
- Thu, 27 Feb 2025 06:20:08 -0800 (PST)
+ bh=LJB2c4bxzU4WmleXJ0VX4oOrax270tsJkQEdT3TL6CQ=;
+ b=t6/a1DcSzvc3t2rEZP7D+TWltUVmSNUC7HV1st8Z3s74w6MWyFQwBgyFjvriLKDXCo
+ BeGd7L2s1aHWveXmNb1GIKxUv+ogJjqlDu0hFa0SKIZSbX6mjaV07+8eM/chVN3BbNQI
+ yU5zlHOO36Z09XZ3Ovcuyqe6pjKfpAzRcfe4olfXfw6gVFeidP9ke3wOrsPej9WANGFQ
+ kXcLOvlR2GNNRGZpkxlna6oPmeH9RSq59dyMWVi3D8fFAFcr7Fu4haruw1VARVdQMkLz
+ Ihbio+1Ndgu7OknwyeRHhpVGtl4esxKHnjPIy4ItvvITL5Vjnpmt2aal0NYsppuLrE2Z
+ cHwg==
+X-Gm-Message-State: AOJu0YxyXHV5YF0YpNFUF/+pqD150CmRWxp04kiVUJrBoh8LVJj1u+Yj
+ Np0gwW8czTOKwp7ThYgFcqGMf3ol0jN8OGdqFMzN6kcmAAeETHoY3wE8T1Vas5sW7KNY8HFm5Fb
+ ZUdxC3dMVHI27zLnUS02W2/ngAoX7snd5TX5MM8utbtyHnqxjVK54qvj6I1Vpcz2ufulNy2Z1tx
+ XUiQebCA2HP8/jcjHbEO08tFoWKg5dD+/07C8qZao=
+X-Gm-Gg: ASbGncsC/qPwRsVtC2iWvku0QfN4NocJM+s0598wRk01dh2QRE5svEHUMW2Ssr77QPo
+ zxtbPYosQj/nYEBeInvHQYMwGJE02SqBcAaC4t1V9m5Bk+i30lUM6ArnjnqX+1VhbpvU4niRz1R
+ Bx97Y1d5yKtfkcAUb7u7kb+gT1SWAA5ypKAiq8edKFakKRzVsENeBgOuGwdCga6Pzwx6d9Ddum6
+ erqHKoesRc65APqpNpohkVR5Uj0qRgoH1nQczbadD1fDuG9hN0Ornw0RWK3m3TyUg6fZgskDwh9
+ Kj8yTnpvNEBvnXW3tura
+X-Received: by 2002:a17:906:6a19:b0:abb:6e95:b272 with SMTP id
+ a640c23a62f3a-abc09a8091emr2753678766b.30.1740666001305; 
+ Thu, 27 Feb 2025 06:20:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFN5q1EWZ4vpbjOAN8dICG2xZjo5vyycBjiz7KXuTPHwe5I3CuqRzdgEaQV0KEYm6igPgQFNQ==
+X-Received: by 2002:a17:906:6a19:b0:abb:6e95:b272 with SMTP id
+ a640c23a62f3a-abc09a8091emr2753675266b.30.1740666000845; 
+ Thu, 27 Feb 2025 06:20:00 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.102.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf0c7c18a3sm127464566b.185.2025.02.27.06.20.07
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-abf19aca8a0sm76306266b.178.2025.02.27.06.19.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:20:07 -0800 (PST)
+ Thu, 27 Feb 2025 06:19:57 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/34] rust: tests: do not import bindings::*
-Date: Thu, 27 Feb 2025 15:19:24 +0100
-Message-ID: <20250227141952.811410-7-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 03/34] i386: Fix the missing Rust HPET configuration option
+Date: Thu, 27 Feb 2025 15:19:21 +0100
+Message-ID: <20250227141952.811410-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250227141952.811410-1-pbonzini@redhat.com>
 References: <20250227141952.811410-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,34 +108,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similar to the devices, spell the exact set of C functions that are
-called directly.
+From: Zhao Liu <zhao1.liu@intel.com>
 
+The configuration option of Rust HPET is missing, so that PC machine
+can't boot with "hpet=on" when QEMU Rust support is enabled.
+
+Add the Rust HPET configuration option.
+
+Fixes: d128c341a744 ("i386: enable rust hpet for pc when rust is enabled")
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250217154416.3144571-1-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/tests/tests.rs | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ rust/hw/timer/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 92dbfb8a0c8..03569e4a44c 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -8,13 +8,14 @@
- };
- 
- use qemu_api::{
--    bindings::*,
-+    bindings::{module_call_init, module_init_type, object_new, object_unref, qdev_prop_bool},
-     c_str,
-     cell::{self, BqlCell},
-     declare_properties, define_property,
-     prelude::*,
-     qdev::{DeviceClass, DeviceImpl, DeviceState, Property, ResettablePhasesImpl},
-     qom::{ClassInitImpl, ObjectImpl, ParentField},
-+    sysbus::SysBusDevice,
-     vmstate::VMStateDescription,
-     zeroable::Zeroable,
- };
+diff --git a/rust/hw/timer/Kconfig b/rust/hw/timer/Kconfig
+index afd98033503..42e421317a5 100644
+--- a/rust/hw/timer/Kconfig
++++ b/rust/hw/timer/Kconfig
+@@ -1,2 +1,3 @@
+ config X_HPET_RUST
+     bool
++    default y if PC && HAVE_RUST
 -- 
 2.48.1
 
