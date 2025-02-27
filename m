@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73CEEC19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BADEC19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnekC-0006nE-UT; Thu, 27 Feb 2025 09:20:09 -0500
+	id 1tnelV-00006S-Up; Thu, 27 Feb 2025 09:21:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnek9-0006h2-Ik
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tnel6-0007sD-DA
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnek5-0003TF-E4
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:03 -0500
+ id 1tnel3-0003ra-Cg
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740665999;
+ s=mimecast20190719; t=1740666060;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=016GiMgPCDCxH4pGbauqv5pOlfa+t27Nzdjf4IvZ1wM=;
- b=NIEd3X8JA7vak89kixpWJSuSjCcUekhwR3jA17aDC8t7L/RW0Wip8hM9uyuxc5A6yueZ9p
- pX+Amg4PjwVNY9VfhsGJySrkn2UOa8wT2XA5DFMzoVwOFXGNvO3VKk2Y+gBiUyN+4KiNwI
- WptaVgshzKZah9s0OQxt6wY/ecMiJAc=
+ bh=wxYYY1R7biz/YFz8OOn3xrn4YUgJT/5akSv9YjxqfqA=;
+ b=J6/uHhb87Tv6c8wm0IR7tLWF0QpISWJpZsEhg3iwpr5Ri/GVQx8IY1nW2b42bgF4a2zffQ
+ Ue6FERRqcKGvN83dwNpv/kF24F4TeTgp1t/P8NBnIuj9aIlhXe/h2AD6x0+Kvw85juAQZt
+ bkPSZ8rgkwPdMw43WdHsT5hHeU7Xwjw=
 Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
  [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-66-jB1P_j1OPVWp6v7kCFiAGA-1; Thu, 27 Feb 2025 09:19:58 -0500
-X-MC-Unique: jB1P_j1OPVWp6v7kCFiAGA-1
-X-Mimecast-MFC-AGG-ID: jB1P_j1OPVWp6v7kCFiAGA_1740665997
+ us-mta-203-DIR0lcozOUKqRndGKx9XJg-1; Thu, 27 Feb 2025 09:20:59 -0500
+X-MC-Unique: DIR0lcozOUKqRndGKx9XJg-1
+X-Mimecast-MFC-AGG-ID: DIR0lcozOUKqRndGKx9XJg_1740666057
 Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-abbae81829fso114065966b.3
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:19:58 -0800 (PST)
+ a640c23a62f3a-abb61c30566so93541766b.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:20:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740665996; x=1741270796;
+ d=1e100.net; s=20230601; t=1740666056; x=1741270856;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=016GiMgPCDCxH4pGbauqv5pOlfa+t27Nzdjf4IvZ1wM=;
- b=OF6QWIdqEEHYPHWFfhA0Ho/etaw+1r6VcD9cQ5fYx9oTXd9a+6JuU2e2ZobU5X7P1+
- 69GzpS1aQeqEo8DBNPIhwNt3wjwAqJ4tCxofZq0c8KP+kXbuQRMGBtJBsK7rtpplGNA6
- abch2DuTWV0GTLSynnppgkObYKowE+229YczKFNLvFj9zDE8O0RT4u4O18dN3KrhoTs7
- 8mZetO5hd6f+w/tcJsxhC7j6ZBNhW8Eoum9H5Oxn3gdmKUvfVGPatfBNGaqDTntHVwte
- pxBZFImpml1nqNHeMCcdL3wo2pEUwYcwAT3Zf0cTOfvK1Chsu1VQr3W+sHXXXbkxjns9
- MfHg==
-X-Gm-Message-State: AOJu0YyB7UCoWhIpoektzvK/Obkl8vsjhpa7hVPupzQnxEXDjsGRkJ5p
- 2PGw/u0oa8u69mO62ntaoOADleJF/WXEsWb+UCvnqS8lcZpEBzGzlihTcfYW2Ck9plBKfjeHPx2
- hy25viC6BMQ8IV/1POFLJKy2Uko5G8gF6FVlQdvVGYw2oVpjqiKHvBzTYILUvo4d9ZKJnqWV4he
- QU4XOJvnMZSSXTLOz77kW19an5noINqalqY7xcnzk=
-X-Gm-Gg: ASbGncsGHkMJjAiQq3mBD4fe69kyNRTI0aRPQMC4sOnC6LFw/qXFezDp7Op0UZIC27Y
- bEBz5rz+JdfvyaCUvVQ48s09+gYF0jR+uZjBCl9tYUA/Ww07EEiT4tIk1ANDpGvLa51dtmfRxCI
- /PC5g1Mq3h4m1hFtPd1VkYF+5QFqD+1sbKRWCIIskXWwCZ8iGlYx33degY+PXOJ/Z4dD/zWoxWg
- Sp67IMweMyLO1SFVGNhwLmDd9uVnsY9Arg7nPI75dCUNg+0ohTic8CotUboX+AdyRjnSrTLrR8N
- l99GmiKcKCOkFSRwSbHC
-X-Received: by 2002:a17:906:3109:b0:aa6:7091:1e91 with SMTP id
- a640c23a62f3a-abed0c66947mr1240880666b.11.1740665995727; 
- Thu, 27 Feb 2025 06:19:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEP/XSbmvFTNNThmAOiFlW/7Pija0uKgDmKhE89+TZfCvGl0FL/GGGOnlXiMjRl0FuK80btxA==
-X-Received: by 2002:a17:906:3109:b0:aa6:7091:1e91 with SMTP id
- a640c23a62f3a-abed0c66947mr1240878666b.11.1740665995200; 
- Thu, 27 Feb 2025 06:19:55 -0800 (PST)
+ bh=wxYYY1R7biz/YFz8OOn3xrn4YUgJT/5akSv9YjxqfqA=;
+ b=dv83nZ1TnZasMO81CvhKve9sVG6s227WpjeGe/HPgbb313KBPcpYLuIUyhQrsESTZX
+ shWIavKXQYlZiZ3Mgy8x0u0F1p/CMhQTZ1c6OuvBTv4PuhB+6kKfcc+lClLoJlMfI9Av
+ avRZHqeBLtVtmN0aIAf+49mwQfClW3swthRnniVtt5dXdmElUBcT1uxkC21CDrO7dCZQ
+ Nqb+dK+q79KuwZQ9YXSvzc1iTH7poMceSdilYwAe/4Z2SfrPJYUReLTKIauFxJ8vqI7Q
+ AjvusNNOjM02vm+h0NqLusnM0tFOqBAvKq+dgFsjbBEY+GH0Ks6ntKOqIHK7WUtuPf2B
+ iqBQ==
+X-Gm-Message-State: AOJu0YyJbMUOyvTs+NO6rWbRVy447ILOi0Mswv2nMOZ6KEeuYebERbXG
+ xKWhsG4IcBxY+/fQnP5jE3+R7gQESeNoA/gKDGUgujGVYQKDGPZ0ChqFhO6JtYdytBvJYC8Pm2n
+ rcKAFp8l0XmMrl3fH2VILykTNApY0lxi0g0UkZOgma6Ki3gi7jfUDX4kDcWfoE3xZBuhApfPWq+
+ 7Y8G4q0JImalmr/RFvk3VW5AWPBz/NO0IsXV0xX8g=
+X-Gm-Gg: ASbGncuZyXZY5J3FPbcyx/Z5v1jBF4CmQqeHKlHPqcF8Cs4abynEWvcY1PBb14EVUNA
+ ObVZeO/OHP5cSOqhcL5MtG2NX5wiaUg11mzeuqBg53Eyto4/vgVZbR3z/zv9y+9SNRIRN7WQfdz
+ b2T3mkpn0INemVTOV/rLgwO2qkvRndYlX4Y2ecOhb6Lba+EzOOTUBbwhlY6iXOtD6L0X7F9Vtrp
+ 9ZQTfCV1/wjelcz2XtjpMtZR1/jr+P/JZhUFmJ7ttJfsQcy34+w/Gxr7xphmGy3lP795aNyXi08
+ PXcpoy7JPB8XYRwDyr81
+X-Received: by 2002:a17:907:c407:b0:abc:4b7:e3d3 with SMTP id
+ a640c23a62f3a-abeeedcfecbmr1035342766b.27.1740666055907; 
+ Thu, 27 Feb 2025 06:20:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHbnHBHIeA7vDAqGtZEUn8x3VOIc4qFSRAuXBDdTB6Angr8zSECngHltyIUGtquqaCepK9zNg==
+X-Received: by 2002:a17:907:c407:b0:abc:4b7:e3d3 with SMTP id
+ a640c23a62f3a-abeeedcfecbmr1035339566b.27.1740666055459; 
+ Thu, 27 Feb 2025 06:20:55 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.102.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf0c0dcb12sm129184566b.74.2025.02.27.06.19.54
+ a640c23a62f3a-abf0c6ee4b3sm127042766b.112.2025.02.27.06.20.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:19:54 -0800 (PST)
+ Thu, 27 Feb 2025 06:20:54 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PULL 01/34] qom: Use command line syntax for default values in help
-Date: Thu, 27 Feb 2025 15:19:19 +0100
-Message-ID: <20250227141952.811410-2-pbonzini@redhat.com>
+Cc: Alireza Sanaee <alireza.sanaee@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PULL 28/34] i386/cpu: add has_caches flag to check smp_cache
+ configuration
+Date: Thu, 27 Feb 2025 15:19:46 +0100
+Message-ID: <20250227141952.811410-29-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250227141952.811410-1-pbonzini@redhat.com>
 References: <20250227141952.811410-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,82 +111,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Alireza Sanaee <alireza.sanaee@huawei.com>
 
-object_property_help() uses the conventional command line syntax instead
-of the JSON syntax. In particular,
-- Key-value pairs are written in the command line syntax.
-- bool description passed to the function says on/off instead of
-  true/false.
+Add has_caches flag to SMPCompatProps, which helps in avoiding
+extra checks for every single layer of caches in x86 (and ARM in
+future).
 
-However, there is one exception: default values are formatted into JSON.
-While the command line and JSON syntaxes are consistent in many cases,
-there are two types where they disagree:
-
-string: The command line syntax omits quotes while JSON requires them.
-
-bool: JSON only accepts true/false for bool but the command line syntax
-      accepts on/off too, and on/off are also more popular than
-      true/false. For example, the docs directory has 2045 "on"
-      occurances while it has only 194 "true" occurances.
-      on/off are also accepted by OnOffAuto so users do not have to
-      remember the type is bool or OnOffAuto to use the values.
-
-Omit quotes for strings and use on/off for bools when formatting
-default values for better consistency.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Link: https://lore.kernel.org/r/20250207-bool-v1-1-5749d5d6df24@daynix.com
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://lore.kernel.org/r/20250110145115.1574345-6-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qom/object_interfaces.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ include/hw/boards.h   |  3 +++
+ hw/core/machine-smp.c |  2 ++
+ target/i386/cpu.c     | 11 +++++------
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index f35d3313317..1ffea1a7288 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -4,9 +4,11 @@
- #include "qapi/error.h"
- #include "qapi/qapi-visit-qom.h"
- #include "qobject/qobject.h"
-+#include "qobject/qbool.h"
- #include "qobject/qdict.h"
- #include "qapi/qmp/qerror.h"
- #include "qobject/qjson.h"
-+#include "qobject/qstring.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/qobject-output-visitor.h"
- #include "qom/object_interfaces.h"
-@@ -177,9 +179,25 @@ char *object_property_help(const char *name, const char *type,
-         g_string_append(str, description);
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 9360d1ce394..f22b2e7fc75 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -156,6 +156,8 @@ typedef struct {
+  * @modules_supported - whether modules are supported by the machine
+  * @cache_supported - whether cache (l1d, l1i, l2 and l3) configuration are
+  *                    supported by the machine
++ * @has_caches - whether cache properties are explicitly specified in the
++ *               user provided smp-cache configuration
+  */
+ typedef struct {
+     bool prefer_sockets;
+@@ -166,6 +168,7 @@ typedef struct {
+     bool drawers_supported;
+     bool modules_supported;
+     bool cache_supported[CACHE_LEVEL_AND_TYPE__MAX];
++    bool has_caches;
+ } SMPCompatProps;
+ 
+ /**
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index 4e020c358b6..0be0ac044c2 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -332,6 +332,8 @@ bool machine_parse_smp_cache(MachineState *ms,
+             return false;
+         }
      }
-     if (defval) {
--        g_autofree char *def_json = g_string_free(qobject_to_json(defval),
--                                                  false);
--        g_string_append_printf(str, " (default: %s)", def_json);
-+        g_autofree char *def_json = NULL;
-+        const char *def;
 +
-+        switch (qobject_type(defval)) {
-+        case QTYPE_QSTRING:
-+            def = qstring_get_str(qobject_to(QString, defval));
-+            break;
-+
-+        case QTYPE_QBOOL:
-+            def = qbool_get_bool(qobject_to(QBool, defval)) ? "on" : "off";
-+            break;
-+
-+        default:
-+            def_json = g_string_free(qobject_to_json(defval), false);
-+            def = def_json;
-+            break;
++    mc->smp_props.has_caches = true;
+     return true;
+ }
+ 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 005ca4235df..2f9c604552b 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -8203,13 +8203,12 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+ 
+ #ifndef CONFIG_USER_ONLY
+     MachineState *ms = MACHINE(qdev_get_machine());
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
+ 
+-    /*
+-     * TODO: Add a SMPCompatProps.has_caches flag to avoid useless updates
+-     * if user didn't set smp_cache.
+-     */
+-    if (!x86_cpu_update_smp_cache_topo(ms, cpu, errp)) {
+-        return;
++    if (mc->smp_props.has_caches) {
++        if (!x86_cpu_update_smp_cache_topo(ms, cpu, errp)) {
++            return;
 +        }
-+
-+        g_string_append_printf(str, " (default: %s)", def);
      }
  
-     return g_string_free(str, false);
+     qemu_register_reset(x86_cpu_machine_reset_cb, cpu);
 -- 
 2.48.1
 
