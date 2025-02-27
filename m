@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D94DC19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D9D5C021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:55:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnZdU-0001YP-4o; Thu, 27 Feb 2025 03:52:52 -0500
+	id 1tnZfL-0002nb-KI; Thu, 27 Feb 2025 03:54:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnZdS-0001Y9-2G; Thu, 27 Feb 2025 03:52:50 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnZfJ-0002n5-FS
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:54:45 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnZdQ-00016h-8b; Thu, 27 Feb 2025 03:52:49 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2fea47bcb51so1069904a91.2; 
- Thu, 27 Feb 2025 00:52:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnZfH-0001KN-1c
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:54:45 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-438a3216fc2so6676925e9.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 00:54:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740646366; x=1741251166; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0ujFaYe4TUypeC/SmoVj1IufzKJgfbMTG6FaXX45G50=;
- b=GtcAmLBS4o5DyciQ0zwvdW1CaDAMmoE/UpcdeIbCB6wBXCGA2p0OB4TjW4uQhqdMxY
- wFT++o1i8+IcrUeqA4HVAzz/n0nsNL4o1DlLMSrxBVlsHc3FOdX553vGBpEX7BjTYTmj
- 22eFyuvX6YXuZLrjG419WQKPG8JO35+EQ5meeZAMGhBpGbG4wY4IcRlvuZPzu1zdCY0F
- 0JG3TQvq6rHtL48U3LJYFpkTwWgVemO3P2DQO8ViTJbZSvVF48ihsM3+FUh1clfphucM
- hnez4/MNZxwxCLzZmVMutvwqqOP47aiK2UKaUTNCds6GMbLYETSr4994HPMNBCC1Gbrl
- tt8g==
+ d=linaro.org; s=google; t=1740646480; x=1741251280; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=z60gqmVupRyv8bYgjGl9QykHfjVgRaaROSY0nuZNdtw=;
+ b=KGnqtaMN1yix8frvF8hSgdLiCRbC7OYsuBlcfRDW3+D481iiN4v4tOHRWaBAKd/jhQ
+ BqvvndyO6oSFqobGkXp7Fw8Edo+OYri3nf3BzedsVl9s/KjmKxkzDiC8bJZsUOCk/+sp
+ ax+5WKruPLV5zsZdkZ+w8Rg8/Ec9tBY4ZhtD8Yqbdlryu4ch4VFlGXEWENSb0ccDOA9I
+ /nn19RBqYqa9wiNlchELaSlK8aLbaS4ZJ4nGBMr80RpSpAEzSgw5D7CBdpKQ9nwB9pTq
+ zu5pLw8B9J8TJ21zWUZGPFvlYxFM3Z53BCKEDE+79bbOFlYFPG1ilryMWRCDUscvH5gm
+ Ebrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740646366; x=1741251166;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=0ujFaYe4TUypeC/SmoVj1IufzKJgfbMTG6FaXX45G50=;
- b=B6iHK0dHTby0cryUYLeGlBZ4NF1I2PHb1KFMvUa7ntCZOxotBLuOPTahYSoXg8woJ9
- zfct2lxrTGEJnEkj10gIprPGdw6rfHY8tiQ/DDPPv3NIcJuW6DfTuYDLXQfGBf3EntJA
- AbpvvXENve+CB0MCjhW6EABHRzVT7FKpBoXMu62fAFDq9/pYXQfSNeHMxUQewqbQq5T4
- QIa9vukt/15ygXlNa74uiLo+HXSiS+U1zcx8Nqjbtd+KIW2/VuaSR5FpxhC/cXPPmKjO
- M7Khzfz2+17KH76r9Dl2H1LkXJx+PTlLQPqMDBdcSXlZt17iyeKnRgxsbeFEZN3rx/DG
- 3Hbw==
+ d=1e100.net; s=20230601; t=1740646480; x=1741251280;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=z60gqmVupRyv8bYgjGl9QykHfjVgRaaROSY0nuZNdtw=;
+ b=txZNpc+ALvSZbsWtgYbaEOArqKBAuOfJUOkx2o05QkBA+RZ8BVMmE0u9Ss7nCUZgYy
+ kGWEMmVqNKw4yW4LaIzu/bXAk0V1K+Krnoi4+wKac1Y9j1r2KqzcfuhwVgOHr1Zqd03D
+ 4IM/WBkDiIhBJxt+BtgdKNgz0mbHPsffHkabGROwfEptTxSRGgJaxSr2r198rEbnHhPX
+ zjRBdBrpZJxp11V2ectivodE4KkdRzSEZUaiMxivezIcovlhWHIxjoa71Tzj92B0HByS
+ hZGRE+XXogGEK76RNIaMYnwd9nbbh8auCmq3TWap4szyrdDwr7Ov8FET3+LHt147sglt
+ HIbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXEqOemMmKkW2dzjRiSCBP/TWEONYqQzm5OKV02LOaJhFJwov+LX0kw296XUNC6brd+eH5KGtkeg6kR@nongnu.org
-X-Gm-Message-State: AOJu0YzUv7YjVR1PfewSkbyt5D0ApKmaPQH6Dl+rmG5xHrzm+IR4scW4
- Eg1XMezVWNll+VGu5zX+ue+2n+nkQpNEigsIKZ7S/HN7WXbr3sE1
-X-Gm-Gg: ASbGnctqD2sR6sY80v/2ScFa0QtrsSrR3kd+NOhBjV1wwfkBjnSpkPRxzAreDqk6Ygo
- 5ErG9CDIUj530RGmDS9gweNJ4mmP6MUoHJMFqxE3Ryi/QPF9U7bkr5cCy6M8qMjU9EAPMWv4u8h
- 8Dj6zlE4ShPCLPlOUWKBob3noGe0nmEC612uQs/SeBiJPdxJkNTE2ghfX/+G/k6vgJ/FA5/ReDF
- 5DXPIsuThKTato3Bp8+t3FucYi5A6Jt1J90BWlEo+Bg6dV4czkL5ZPlIK4XoscVsjIy4A/y1hdS
- Ulv+oWYzPUyXkWIjsg==
-X-Google-Smtp-Source: AGHT+IEeIFOOL+XZQnSSdME1wEMfFevAzCqb2F8wRSYyhZ20dhfoYfzajscH/y83CrBM9lyq1vJZyg==
-X-Received: by 2002:a17:90b:3ece:b0:2ea:712d:9a82 with SMTP id
- 98e67ed59e1d1-2fce8740b67mr39541144a91.29.1740646365881; 
- Thu, 27 Feb 2025 00:52:45 -0800 (PST)
-Received: from localhost ([1.146.124.39]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fea675336dsm1002397a91.7.2025.02.27.00.52.42
+ AJvYcCUoKW+dTb46jY46hb2yqdoQITFpfQVAzsa3BYbeYB0e7J/kdH+wjvNGtG3Ro7YDYgEhzsGnlhlrKsks@nongnu.org
+X-Gm-Message-State: AOJu0Yw6u7nYr4Be+JllrdDqwypDofdUOW9cp0qWr2huJ2vapuRvpn/7
+ bYliQvAFT7EwhutMVpeowVw1mm8Fobfzsxx3CKGzqor/JU//S2Hh9I578+MjASc=
+X-Gm-Gg: ASbGncsCjz4yg/LyLSR7vOwbQVXwgy5LFwveqw0gKbXUJ5pVsd7RXrByuf1NAzj60/T
+ 5nvnf4ynZ2wpiEzWX/6BfL02OQ9lhpfza+2AUw2peLZ5C63ZomblLFCmhxvvrg+Pcd3cd+OId1A
+ wK9WRia6EFchVW3oxyvpuwsZVPKwM69qZLGs9FCZl+GsDefI+qFNh6Pej0aU66egu3tLAR8AJDt
+ r9gYqJd+DhrqIHUa4wgH+qZ0bmQNzgm6VBqiSyvBWMQLO7RpnKJjGuXH1BhxMVu2VcOsPsPW/KK
+ R27u/vGE/IVEer/g4r6UmDntgPg//dEU3SB8D+RVPkf4wRbFxpA0s24fUOn1BE7imAdLIg==
+X-Google-Smtp-Source: AGHT+IGJUOAh60oe4DFjrVsnmUVfpzMmylsiByP4RvJq3ByFeqmoZvxspk+EDnB9MJ/DZ9CTH36O2A==
+X-Received: by 2002:a05:600c:5489:b0:439:86fb:7326 with SMTP id
+ 5b1f17b1804b1-439aebb5558mr176748375e9.22.1740646480066; 
+ Thu, 27 Feb 2025 00:54:40 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43aba532c49sm46718975e9.16.2025.02.27.00.54.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 00:52:45 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 27 Feb 2025 18:52:38 +1000
-Message-Id: <D833MY4YIZIO.2WT22FPU95D09@gmail.com>
-Cc: <qemu-ppc@nongnu.org>, "Daniel Henrique Barboza"
- <danielhb413@gmail.com>, "Harsh Prateek Bora" <harshpb@linux.ibm.com>,
- "Sourabh Jain" <sourabhjain@linux.ibm.com>, "Mahesh J Salgaonkar"
- <mahesh@linux.ibm.com>, "Hari Bathini" <hbathini@linux.ibm.com>
-Subject: Re: [PATCH 6/6] hw/ppc: Enable Fadump for PSeries
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Aditya Gupta" <adityag@linux.ibm.com>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.19.0
-References: <20250217071711.83735-1-adityag@linux.ibm.com>
- <20250217071711.83735-7-adityag@linux.ibm.com>
- <D82WUV05QWZP.10KAOOHN6YFFP@gmail.com>
- <8108eb0d-7efe-4549-ba74-c7de50935dfe@linux.ibm.com>
-In-Reply-To: <8108eb0d-7efe-4549-ba74-c7de50935dfe@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
+ Thu, 27 Feb 2025 00:54:38 -0800 (PST)
+Message-ID: <681b4df0-0e89-4ba2-9ad0-edae330b23f5@linaro.org>
+Date: Thu, 27 Feb 2025 09:54:38 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 030/162] tcg: Convert neg to TCGOutOpUnary
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250216231012.2808572-1-richard.henderson@linaro.org>
+ <20250216231012.2808572-31-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250216231012.2808572-31-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,103 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu Feb 27, 2025 at 5:07 PM AEST, Aditya Gupta wrote:
-> On 27/02/25 09:03, Nicholas Piggin wrote:
->
->> On Mon Feb 17, 2025 at 5:17 PM AEST, Aditya Gupta wrote:
->>> With all support in place, enable fadump by exporting the
->>> "ibm,configure-kernel-dump" RTAS call in the device tree.
->>>
->>> Presence of "ibm,configure-kernel-dump" tells the kernel that the
->>> platform (QEMU) supports fadump.
->>>
->>> Pass "fadump=3Don" to enable Linux to use firmware assisted dump.
->>>
->>> Logs of a linux boot with firmware assisted dump:
->>>
->>>      ./build/qemu-system-ppc64 -M pseries,x-vof=3Don --cpu power10 --sm=
-p 4 -m 4G -kernel some-vmlinux -initrd some-initrd -append "debug fadump=3D=
-on crashkernel=3D1G" -nographic
->>>      [    0.000000] random: crng init done
->>>      [    0.000000] fadump: Reserved 1024MB of memory at 0x000000400000=
-00 (System RAM: 4096MB)
->>>      ...
->>>      [    1.084686] rtas fadump: Registration is successful!
->>>      ...
->>>      # cat /sys/kernel/debug/powerpc/fadump_region
->>>      CPU :[0x00000040000000-0x000000400013d3] 0x13d4 bytes, Dumped: 0x0
->>>      HPTE:[0x000000400013d4-0x000000400013d3] 0x0 bytes, Dumped: 0x0
->>>      DUMP: Src: 0x00000000000000, Dest: 0x00000040010000, Size: 0x40000=
-000, Dumped: 0x0 bytes
->>>
->>>      [0x000000fffff800-0x000000ffffffff]: cmdline append: ''
->>>      # echo c > /proc/sysrq-trigger
->>>
->>> The fadump boot after crash:
->>>
->>>      [    0.000000] rtas fadump: Firmware-assisted dump is active.
->>>      [    0.000000] fadump: Updated cmdline: debug fadump=3Don crashker=
-nel=3D1G
->>>      [    0.000000] fadump: Firmware-assisted dump is active.
->>>      [    0.000000] fadump: Reserving 3072MB of memory at 0x00000040000=
-000 for preserving crash data
->>>      ....
->>>      # file /proc/vmcore
->>>      /proc/vmcore: ELF 64-bit LSB core file, 64-bit PowerPC or cisco 75=
-00, OpenPOWER ELF V2 ABI, version 1 (SYSV), SVR4-style
->>>
->>> Analysing the vmcore with crash-utility:
->>>
->>>            KERNEL: vmlinux-6.14-rc2
->>>          DUMPFILE: vmcore-a64dcfb451e2-nocma
->>>              CPUS: 4
->>>              DATE: Thu Jan  1 05:30:00 IST 1970
->>>            UPTIME: 00:00:30
->>>      LOAD AVERAGE: 0.74, 0.21, 0.07
->>>             TASKS: 94
->>>          NODENAME: buildroot
->>>           RELEASE: 6.14.0-rc2+
->>>           VERSION: #1 SMP Wed Feb 12 06:49:59 CST 2025
->>>           MACHINE: ppc64le  (1000 Mhz)
->>>            MEMORY: 4 GB
->>>             PANIC: "Kernel panic - not syncing: sysrq triggered crash"
->>>               PID: 270
->>>           COMMAND: "sh"
->>>              TASK: c000000009e7cc00  [THREAD_INFO: c000000009e7cc00]
->>>               CPU: 3
->>>             STATE: TASK_RUNNING (PANIC)
->>>
->>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
->> This is very cool, nice work. Does it work with KVM? I think... probably
->> it could?
->
-> Yes it does, atleast for crashing CPU :)
->
-> But there are problems with reading the CPU regs, regs don't seem=20
-> correct for non-crashing CPUs.
->
-> Crash is able to work perfectly for the crashing CPU as of now (as the=20
-> registers are stored by the kernel in that case).
+On 17/2/25 00:07, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/tcg.c                        | 20 ++++++++++++++++++--
+>   tcg/aarch64/tcg-target.c.inc     | 18 +++++++++++-------
+>   tcg/arm/tcg-target.c.inc         | 14 ++++++++++----
+>   tcg/i386/tcg-target.c.inc        | 16 +++++++++++-----
+>   tcg/loongarch64/tcg-target.c.inc | 19 ++++++++++---------
+>   tcg/mips/tcg-target.c.inc        | 18 ++++++++++--------
+>   tcg/ppc/tcg-target.c.inc         | 17 ++++++++++-------
+>   tcg/riscv/tcg-target.c.inc       | 19 ++++++++++---------
+>   tcg/s390x/tcg-target.c.inc       | 22 ++++++++++++++--------
+>   tcg/sparc64/tcg-target.c.inc     | 15 ++++++++++-----
+>   tcg/tci/tcg-target.c.inc         | 13 ++++++++++---
+>   11 files changed, 124 insertions(+), 67 deletions(-)
 
-You may need to call cpu_synchronize_state() in the CPU_FOREACH loop
-before you read out the register state. Does that fix it?
 
->>
->> Are you able to add a functional test case for it? This is something
->> that people (including me) will forget to test...
->
-> Sure, I will add a test case.
->
->
-> Thanks for your reviews Nick.
->
-> It might take few weeks for me to post another version, will see into=20
-> the tests in qemu and arrange the code bit more nicely.
+> +    case INDEX_op_neg_i32:
+> +    case INDEX_op_neg_i64:
+> +        {
+> +            const TCGOutOpUnary *out =
+> +                container_of(all_outop[op->opc], TCGOutOpUnary, base);
+> +
 
-Yeah that's okay, I'm way behind with reviews and merging unfortunately
-so may have to wait for next release, but I'm keen to get it merged when
-we can. Sorry for the late review.
+      /* Constants should never appear in the first source operand. */
 
-Thanks,
-Nick
+> +            tcg_debug_assert(!const_args[1]);
+> +            out->out_rr(s, type, new_args[0], new_args[1]);
+> +        }
+> +        break;
+> +
+>       default:
+>           if (def->flags & TCG_OPF_VECTOR) {
+>               tcg_out_vec_op(s, op->opc, type - TCG_TYPE_V64,
+
+Easy one!
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
