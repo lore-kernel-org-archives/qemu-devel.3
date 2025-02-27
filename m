@@ -4,106 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68098C021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D40C021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:43:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnZKM-0006rd-RZ; Thu, 27 Feb 2025 03:33:06 -0500
+	id 1tnZTd-0005nS-Ud; Thu, 27 Feb 2025 03:42:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tnZKG-0006lI-Kz
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:33:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tnZKE-0006CD-9A
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:33:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740645173;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sO0AOQHXEk+AUU//gjRf2eXM/vQ1iK5L3uwX9ujjo8E=;
- b=OjFMZQzVb6SX96c/TGjHPbPdkiVPPtdchr0kU27uglm/jEEEttSpv/uc3hUq1y7I9QtvTo
- iiinaE+2L//22GglRJ8WoAVuQG95THrhl1GrVqXQ91Dm87p0opltmWzZgyYU1xuZNs5rEe
- taTlZdYtaAjC3erUVT+21VFWQbq75DU=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-44-OtclHmCAP1qG3rn08MuETA-1; Thu, 27 Feb 2025 03:32:51 -0500
-X-MC-Unique: OtclHmCAP1qG3rn08MuETA-1
-X-Mimecast-MFC-AGG-ID: OtclHmCAP1qG3rn08MuETA_1740645170
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38f28a4647eso224809f8f.1
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 00:32:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnZTb-0005n9-L1
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:42:39 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnZTZ-0007pS-Jy
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:42:39 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-38f504f087eso417092f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 00:42:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740645755; x=1741250555; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tCvEupuybjfM+oXsTdxzE1T17LAWQJNidicHSfrovks=;
+ b=hQQX1fjpRtoF7DeQ7Fa5HmjwIuN3S+e6sZh6AFdcp6td6jbCGEWLIJDQpX8IqrA+Va
+ E3/S2f0jfVn7te08Tv9g2mF4tkcH2ud9yKL9atDcu4YzhtRIkRA3BeFTL7ERdJuUpcZ6
+ 1hguu4WBq2433PeF9djy8424AM81nK42ZTjWB2SuwyTCX6bgqLdCTSmsUTZE3GN6CWIV
+ CB8F5DoohDanDpH0mwDn84lzQrvgiogkmFXv8zbIR5B7ADF5kJLE374XkrfohOJWHj50
+ 78Ma0lUoEnmMoCuoJwQzVCkPtkEv0WHUxxz6R2Dglv9SOHMgvLHluIFzpnpoAcKiKJXh
+ 6DIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740645170; x=1741249970;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sO0AOQHXEk+AUU//gjRf2eXM/vQ1iK5L3uwX9ujjo8E=;
- b=Wz/bLKDLtV1uwrXr6S5afLEnZUxPI4Su5DXo49qKcfAFrsY4OrmaqNFAZTptWe/o34
- rIlJSIPgkCUxDH1wfIAEKMwY0NPMrkFfcLiEWiz66bFUof+Wovm95POtcBNeq2qVUrbp
- pb3Zrm/5ZdvB/U5xoJEDISNJZdLhxWxQDfJQR28MBMkQOu/QwK9EXrvoBAwHX/1l+M5w
- 2nofC1p5LT3Lx6j3jqYO1AKsbkWUG4+XqcewlniFlySrrUoW1YaybT48pbYZxwvLRjW3
- G1ATiRWPlznIq0EIUhLyoh1n0Pb4pkcb3DtoC/w03qLuMciZQhNjgZW6izL9XarU/Lro
- kE2A==
+ d=1e100.net; s=20230601; t=1740645755; x=1741250555;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tCvEupuybjfM+oXsTdxzE1T17LAWQJNidicHSfrovks=;
+ b=X4oJxPZD5uc0hGBUKb4aI1Ciyi/n0mzLbdcdJpNViFbxuvwjgdpQ38ylHfrOFe32kk
+ ZyQ3KdDhJailsl0EspgpjjKkU2WTtKwB/lEh+xzyfqjPcoUGekZ42/29THvfnhXlFT+F
+ 5v0PIzk8fGVFCldBI1qs07YGL2hhtSOhqI0BfSual7RwK5gankzTqWQV649+Uh5qovZ6
+ KSjm6Nqv5up3Zx8FJzK63LVOpZTnc/Z7KN56gEO6Sojfm7FXHaUxj2TniZ7TSXulucbZ
+ AmjdYIzRc6SxRWQgVVDfN8QnMPTROGtuMjppaXfba4S1M79gFOSx7sew3EK6GWYCevzd
+ HmSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLgXq9w28gcWN3Bjm5yew3YX940biw2RLs/jauM+zn5HdgMI+Pc2higwKcSziVduMoBcv+PV42Zna1@nongnu.org
-X-Gm-Message-State: AOJu0YxT1bxDFeEuzHi560Bfgtj5nh82scJ0lGiecEbHJn7blJufQlAG
- YtMhO6eh+M+9wwpPwPPPXZCsPXBXrBXt1vAnsp+zxHPiF7U8hiM4nkXk2EOpFPmEBZR6uoTiyuF
- dTyTpndnVwGV+hjBmf2m6EkqSvdzfO+KZ1OivUnx2wcSsISeJs2zT
-X-Gm-Gg: ASbGnctcg/0W3SNizZ01fzFv8UGbJIuq4N6jR6aRFiYYLUqUnXgVbM+6kQNsduke141
- dhbGu9jnUw1a3cnCHyJ0oULOQT4PTzgAbYx8lvehnkKAJ0NhXSAdPveSmVLlBFAU7TpjUX6sSj4
- SVYEZi1/fHAR86YyobrJkWKq5C+AFpHQZt8Ds/bdF9QAwycKoaKTS0AmamiRpSyaoIJSwFKcogs
- l3hJCOyd+lKItOX9+5phDngo6xX3JTxO+Guc+48KTM9eh2mnHUCu5Y0tk+VCif5OccSceKl4huP
- umjFEt7Oon6glwbCIozQNp4ItLWBornmYkRfz62OzoVGNNJZeX/aQYSsdFlRhxE=
-X-Received: by 2002:a05:6000:1541:b0:38f:38eb:fcff with SMTP id
- ffacd0b85a97d-390cc60a682mr8613235f8f.29.1740645170269; 
- Thu, 27 Feb 2025 00:32:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEhQ2MdADVBZU0gvZjAuSNuJjM2ZG/ZdX0TQslY7caKr2BOptl2wLrmycGrY6zwPnIgYSEUlA==
-X-Received: by 2002:a05:6000:1541:b0:38f:38eb:fcff with SMTP id
- ffacd0b85a97d-390cc60a682mr8613216f8f.29.1740645169960; 
- Thu, 27 Feb 2025 00:32:49 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e485e03asm1280559f8f.95.2025.02.27.00.32.47
+ AJvYcCV1fAN6/ggrgAqnAkz1P37i/RKDXjGQ4/Q3ibHrrXjWqcrwU8GHzAeFnI0XDZgtManyCnGueS2UxNxj@nongnu.org
+X-Gm-Message-State: AOJu0Yy11ZNZbfS087AQirNY+l33g2ToWnaQ3m2uIYsfrIFP/kDT+wP8
+ EGjeJsJoI7G+mBsumHxPmYUXpYrJKUiKBHrFwXsXcmS52R22yOry99hk3C0KJ0vUSw+jsSYBOQH
+ UUqE=
+X-Gm-Gg: ASbGnctZQI3ArMFdM0gIiUDtcZrtaY/osRJoMcyvGwYAhOWHwM0BxxG4Ar0fOgbanBO
+ tN0C3xAxaUbIthAlzpaumMY0pcXWGmaycTe5h8FOqjJ5zfqADakkCoktGlRkIhdsGvIKPxh8rxO
+ b8F6UFECzn/VMSVU8PPxl15gO6G4udsiFDPd8AnXCBEf9LdhpSP5E5OugY8R9dGA3lkZX1SQrpO
+ pbvNWycnZ7eY6O7IKc3cMBI43qvweBaA4Z5M1Pw1OTnYMGBV3mzQeXpo8sDl893nc8Ffcaf+qrD
+ fuuYgHiY6bC+vJXU9asvL6pleMOzkYzNPmnm8WPinVL9tLYCe1fe17ozLSWplDLZZ1NN+w==
+X-Google-Smtp-Source: AGHT+IFUf1zPPb/QuPkfcuJDwsvRpSUvrLf9F1/63cGgeeJx/JBvDSwAp4CZx2i7xMMe7/MgKDs1OQ==
+X-Received: by 2002:adf:e341:0:b0:38f:513a:e12c with SMTP id
+ ffacd0b85a97d-390d4f9faf9mr4367971f8f.45.1740645755341; 
+ Thu, 27 Feb 2025 00:42:35 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47a6739sm1294657f8f.22.2025.02.27.00.42.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 00:32:47 -0800 (PST)
-Message-ID: <291bf12d-18bc-444f-b09d-3fb80e0f144a@redhat.com>
-Date: Thu, 27 Feb 2025 09:32:46 +0100
+ Thu, 27 Feb 2025 00:42:34 -0800 (PST)
+Message-ID: <96003060-0292-4e5b-b8cb-9d6b956e25c0@linaro.org>
+Date: Thu, 27 Feb 2025 09:42:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] vfio: Make vfio-platform available on Aarch64
- platforms only
+Subject: Re: [PATCH v3 002/162] tcg: Remove INDEX_op_ext{8,16,32}*
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250216231012.2808572-1-richard.henderson@linaro.org>
+ <20250216231012.2808572-3-richard.henderson@linaro.org>
+ <db558486-1eef-40e1-8b03-d89ee0c46fff@linaro.org>
+ <7035dcac-380b-49c6-a091-29afcdb631c2@linaro.org>
+ <471ba4e3-be12-4571-9165-80b780a6e9a1@linaro.org>
+ <7af17a02-84f0-4f5e-91bf-f1bd19d1e5ab@linaro.org>
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, Will Deacon <will@kernel.org>,
- Peter Maydell <peter.maydell@linaro.org>, Marc Zyngier <maz@kernel.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Alex Williamson <alex.williamson@redhat.com>
-References: <20250226084721.232703-1-clg@redhat.com>
- <20250226084721.232703-3-clg@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250226084721.232703-3-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <7af17a02-84f0-4f5e-91bf-f1bd19d1e5ab@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,50 +102,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
+On 26/2/25 22:52, Richard Henderson wrote:
+> On 2/26/25 13:51, Philippe Mathieu-Daudé wrote:
+>> On 22/2/25 18:41, Richard Henderson wrote:
+>>> On 2/20/25 14:17, Philippe Mathieu-Daudé wrote:
+>>>>> @@ -1794,23 +1715,19 @@ void tcg_gen_andi_i64(TCGv_i64 ret, 
+>>>>> TCGv_i64 arg1, int64_t arg2)
+>>>>>       case -1:
+>>>>>           tcg_gen_mov_i64(ret, arg1);
+>>>>>           return;
+>>>>> -    case 0xff:
+>>>>> -        /* Don't recurse with tcg_gen_ext8u_i64.  */
+>>>>> -        if (TCG_TARGET_HAS_ext8u_i64) {
+>>>>> -            tcg_gen_op2_i64(INDEX_op_ext8u_i64, ret, arg1);
+>>>>> -            return;
+>>>>> -        }
+>>>>> -        break;
+>>>>> -    case 0xffff:
+>>>>> -        if (TCG_TARGET_HAS_ext16u_i64) {
+>>>>> -            tcg_gen_op2_i64(INDEX_op_ext16u_i64, ret, arg1);
+>>>>> -            return;
+>>>>> -        }
+>>>>> -        break;
+>>>>> -    case 0xffffffffu:
+>>>>> -        if (TCG_TARGET_HAS_ext32u_i64) {
+>>>>> -            tcg_gen_op2_i64(INDEX_op_ext32u_i64, ret, arg1);
+>>>>> -            return;
+>>>>> +    default:
+>>>>> +        /*
+>>>>> +         * Canonicalize on extract, if valid.  This aids x86 with its
+>>>>> +         * 2 operand MOVZBL and 2 operand AND, selecting the 
+>>>>> TCGOpcode
+>>>>> +         * which does not require matching operands.  Other 
+>>>>> backends can
+>>>>> +         * trivially expand the extract to AND during code 
+>>>>> generation.
+>>>>> +         */
+>>>>
+>>>> Could also use s/0/ofs/ like for 32-bit.
+>>>
+>>> Pardon?  Are you confusing the tcg_gen_andi_{i32,i64} changes
+>>> with the tcg_gen_{s}extract_{i32,i64} changes?
+>>>
+>>> This andi_i64 hunk exactly matches the andi_i32 hunk.
+>>
+>> I am thinking of handling ofs > 0:
+>>
+>>             unsigned ofs = ctz64(arg2);
+>>             int64_t val = arg2 >> ofs;
+>>
+>>             if (!(val & (val + 1))) {
+>>                 unsigned len = cto64(val);
+>>                 if (TCG_TARGET_extract_valid(TCG_TYPE_I64, ofs, len)) {
+>>                     tcg_gen_extract_i64(ret, arg1, ofs, len);
+>>                     return;
+>>                 }
+>>             }
+>>
+> 
+> This is AND.  There is no shift involved.  If ofs != 0, you cannot use 
+> extract.
 
-On 2/26/25 9:47 AM, Cédric Le Goater wrote:
-> VFIO Platforms was designed for Aarch64. Restrict availability to
-> 64-bit host platforms.
->
-> Cc: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-As an outcome from last KVM forum, next step may be to simply remove
-VFIO_PLATFORM from the qemu tree.
-
-We also need to make a decision wrt linux vfio platform driver. As I
-can't test it anymore without hacks (my last tegra234 mgbe works are
-unlikely to land on qemu side and lack traction on kernel side too),
-either someone who can test it volunteers to take over the kernel
-maintainership or we remove it from kernel too.
-
-Taking this opportunity to add Will, Marc, Peter in CC
-
-Thanks
-
-Eric
-> ---
->  hw/vfio/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/hw/vfio/Kconfig b/hw/vfio/Kconfig
-> index 6ed825429a9151fcdff33e95d1a310210689b258..885630e8d30c656500fcd7dbb3f26a4c0113a17a 100644
-> --- a/hw/vfio/Kconfig
-> +++ b/hw/vfio/Kconfig
-> @@ -19,7 +19,7 @@ config VFIO_PLATFORM
->      bool
->      default y
->      select VFIO
-> -    depends on LINUX && PLATFORM_BUS
-> +    depends on LINUX && PLATFORM_BUS && AARCH64
->  
->  config VFIO_XGMAC
->      bool
-
+🤦 right...
 
