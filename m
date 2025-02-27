@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD77C021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 09:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1DDDC19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 09:31:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnaEC-00081q-TZ; Thu, 27 Feb 2025 04:30:49 -0500
+	id 1tnaE1-0007lP-2f; Thu, 27 Feb 2025 04:30:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1tnaDy-0007lZ-57; Thu, 27 Feb 2025 04:30:36 -0500
+ id 1tnaDv-0007dP-8d; Thu, 27 Feb 2025 04:30:31 -0500
 Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1tnaDv-0008Fk-FT; Thu, 27 Feb 2025 04:30:33 -0500
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal
- [10.202.2.41])
- by mailfout.phl.internal (Postfix) with ESMTP id 5867C1382F7E;
- Thu, 27 Feb 2025 04:30:30 -0500 (EST)
+ id 1tnaDs-0008En-UD; Thu, 27 Feb 2025 04:30:30 -0500
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfout.phl.internal (Postfix) with ESMTP id E86E01382F79;
+ Thu, 27 Feb 2025 04:30:27 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Thu, 27 Feb 2025 04:30:30 -0500
+ by phl-compute-06.internal (MEProxy); Thu, 27 Feb 2025 04:30:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1740648630; x=
- 1740735030; bh=/mc3xBeqRFRxpB4/dFAIRqOEU9FtF9Vd+rUYFybqzVk=; b=G
- /xg9IiC8plS3JeLqFv2nx2gkuAAX+CMjPNKGCNc+eyvxyJAUMEeQnEV9x/4ooGDr
- 57h/4R6enWeCFSZem/Lb1fYcywQIDjxhBGSRq91sm/j0/rf0xHOOaMXjanrN7qxB
- dQOrDjlpNGM9em/XQUdRdGHMwfltmWB1fobGvxy/VO6Et2Vfe/TnM+7S6hwz8NKl
- xPq7Y7aVaE4GUVhJQQCSAxkDTyQMv+ImIjI35/GwCEW1LO1H3GOVsDwhXZRMzzkO
- ChWkAG8GJC/Ot9mr8zcUBLQdTe1jRJJ0QmcIm3HJ57IPGL7Kx9fERAbMzDWWwSPp
- mDDwphhspre0NOwnTEs1A==
+ :reply-to:subject:subject:to:to; s=fm3; t=1740648627; x=
+ 1740735027; bh=71nKXCD5HsDTXriIYfUqdPCUY2WpZZReasEE7dQsRn0=; b=t
+ 2vOz4MlzB/lTMX8TkFXmLx4netKrImAkvFd22oO5ul6mt9kois3g+8Z2T+0PL+Un
+ d80xfJabpPMk7ejjlVzFXkOtVM99x64akPIMkUKVB/eEM0GGwIGa1xIB+/e+Jx1J
+ 5x7iomzfsr+gW1rM1GBJgTqgmnWD7oz6ahV4XbF0cvX7zQ9ffut+KIq4DLVl2Ock
+ 9haISL8O9xu83sOWzf3EVdL9vIdDR8uX6Ths9e4MoG/XWvAjTD9kN/no9C+4kKHY
+ V3ZMABimoug4oAw4Sa/idiKtv8wHIz+hNA1v94Jfd9vCT5I+MDpVAN0s2PQZYoYr
+ gBNMLUqMCCKhO8F9InTCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; t=1740648630; x=1740735030; bh=/
- mc3xBeqRFRxpB4/dFAIRqOEU9FtF9Vd+rUYFybqzVk=; b=GckOcuKxAbBCBS1TP
- qjztyjMn0iX4IBjmMdcZcV1QF2JjyyZwFNujixc9O+4lLIyLOnbEa0sklpFpkFS/
- Ghkh+V27pPNZjmYFOiIrKayGLetaW0mna4nfXYzQ2tK91diCviFGCf0USHZqvJDQ
- VxcipGEP8+UABz01kPsA0Isg5jvTA3akLPXxekahTRfpE2XWJhbx8ENpl/6C0C4u
- nyN8faJE9EUNeFIIRh3M0NNF2WDRYJNKp+JDVLmHD2yoqPR7FM58StY9t2/o9AVQ
- RCkVl0RVpQ8WY8k4xofLHQUm5p3jQsATzse7ipW/tMLyE6PWFxSm/+nrFzE1Kxhx
- NkunA==
-X-ME-Sender: <xms:tjDAZxuXM1HMpAfT9igoc7DWkWAX4pRMd3i6gYu3qjrVmJ6Hf3iXhg>
- <xme:tjDAZ6e0k-svcHxSnlUrilUVpBEqbRjQLAw9GfkCeyUjbe7XjQp8oTy2287tEKx96
- _G2j3f6rHofTQ5SSs8>
-X-ME-Received: <xmr:tjDAZ0xNhlXXJ_LnFKb-FnaFSMytWWm8Qsuq-jzxgSZ9QnorpU_p_e-Qq1dd5HyNas9h-rcAgZvqivifdVDtgMfD>
+ :x-me-sender:x-sasl-enc; s=fm1; t=1740648627; x=1740735027; bh=7
+ 1nKXCD5HsDTXriIYfUqdPCUY2WpZZReasEE7dQsRn0=; b=pFXbrCj9kJUJz2+BF
+ NqWE4OdSb7yPuFhx10rqYHLjVyqgcDbRDSim8vY7EsttdxI0JlycmjqHm/JEHZ/Y
+ fiLr5QzYDJVubo6A30rSYkHGScEJMQ4BipJjgJWeqZ+MwFLOIDQ73Kkv4yAhGnIP
+ nfl5lpK20vS2tXNG+KuKeP0PGDo/QZF+4RQFEBaW6/rO+C8ZbsvWyFuVuhLjLC8t
+ V/c+u4/eCWmn33Dp314ckb9J0yim2W2nv+IxP9SBpYqteQfcZXTy+shiwDhTG1YT
+ BTOZ6a+LxTEVdw+eJ664Z7Pv3W4EBgoU9K02ZYKt23RkI3AmUAQ+dkk+VOmt5TuB
+ xpAMA==
+X-ME-Sender: <xms:szDAZ4H8RxUSHXS71CQHbq6Ve__wIL6SNu2hgzJcvvU44N3Apse9bQ>
+ <xme:szDAZxWFZKnvCTGizX0TUM9FUkzdDuthHOTxUKk_E1Ch93axxpR4w01qvKlquIjdG
+ o3ZV1wUlgyqIiBxTWY>
+X-ME-Received: <xmr:szDAZyLgGUybwn4qY1-pSkAlYsl7HkBqlYWNsLN2YuEI-Kq06Q9TcqKsEH8QY-55mp8Uaio3RNYMGe716ZmO5m-m>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekjeduudcutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
  uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -60,35 +60,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekjeduudcutefuodetgg
  drughkqeenucggtffrrghtthgvrhhnpeejgfeilefgieevheekueevheehkeefveegiefg
  heefgfejjeehffefgedujedugeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
  epmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphht
- thhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepqhgvmhhuqdguvghvvg
- hlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehl
- ihhnrghrohdrohhrghdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtg
- homhdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehk
- sghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvh
- grnhhtrdgukhdprhgtphhtthhopehsthgvfhgrnhhhrgesrhgvughhrghtrdgtohhmpdhr
- tghpthhtohepfhgrmhesvghuphhhohhnrdhnvghtpdhrtghpthhtohepphhhihhlmhguse
- hlihhnrghrohdrohhrgh
-X-ME-Proxy: <xmx:tjDAZ4OdlILMmnQYWavBNlZ5aK4dQ_qg6Gsco6hKvrgdRJ9TJUQL9A>
- <xmx:tjDAZx-H0inxgv41XdgpzMGvU9gyC8NEJnWDRbj7QOg7BGeOJtc8hA>
- <xmx:tjDAZ4X-g-d8O0GqEuC4bQTOHYntLcRZfJKWyMccWx0vMi_hN6dsJg>
- <xmx:tjDAZyduGJX0m06s7H4zPHOx10NPH850EydsbnJ1tfQr18BNSRS_Gg>
- <xmx:tjDAZ0VGaDymJSRhDrhKnmlDBcFcZiiYgugt-e5FZcb9RPua45u7P4wx>
+ thhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdquggvvhgvlh
+ esnhhonhhgnhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhi
+ nhgrrhhordhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtoh
+ hmpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepkhgs
+ uhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhssehirhhrvghlvghvrg
+ hnthdrughkpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:szDAZ6FmngYCl-EUyAXFhc3fPf9llyVLbQ03qEP1btaeqvLthg-l8Q>
+ <xmx:szDAZ-UcVpjBWnNcrTVpZjIUto6EeiCbhrYc7t7lvyAFQ1kY8zdqHg>
+ <xmx:szDAZ9OnovTQ-8eoBe0uFQm8D_RtvRL5Z710_pAcXuhbIzcqvEXitQ>
+ <xmx:szDAZ12YKm_o-RogISZ_w7VsPq--Ub29RU19uINZi6iNGqpGtJTu5A>
+ <xmx:szDAZ5F-fetq_pwJ4YD_ERrtKJdQnzKL4sL-ASRGKnrHGlGipnFTQbhS>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Feb 2025 04:30:28 -0500 (EST)
+ 27 Feb 2025 04:30:26 -0500 (EST)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Klaus Jensen <k.jensen@samsung.com>,
  Jesper Wendel Devantier <foss@defmacro.it>,
  Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org
-Subject: [PULL 03/10] hw/nvme: make oacs dynamic
-Date: Thu, 27 Feb 2025 10:30:10 +0100
-Message-ID: <20250227093018.11262-4-its@irrelevant.dk>
+Subject: [PULL 02/10] hw/nvme: always initialize a subsystem
+Date: Thu, 27 Feb 2025 10:30:09 +0100
+Message-ID: <20250227093018.11262-3-its@irrelevant.dk>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250227093018.11262-1-its@irrelevant.dk>
 References: <20250227093018.11262-1-its@irrelevant.dk>
@@ -121,118 +116,180 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Klaus Jensen <k.jensen@samsung.com>
 
-Virtualization Management needs sriov-related parameters. Only report
-support for the command when that conditions are true.
+If no nvme-subsys is explicitly configured, instantiate one.
 
 Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c       | 25 ++++++++++++++++++-------
- hw/nvme/nvme.h       |  4 ++++
- include/block/nvme.h |  3 ++-
- 3 files changed, 24 insertions(+), 8 deletions(-)
+ hw/nvme/ctrl.c | 36 +++++++++++++++-------------
+ hw/nvme/ns.c   | 64 +++++++++++++++++---------------------------------
+ 2 files changed, 42 insertions(+), 58 deletions(-)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 5a7ccbcc1b80..4ee8588ca9ae 100644
+index 11687e597a11..5a7ccbcc1b80 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -266,7 +266,7 @@ static const uint32_t nvme_feature_cap[NVME_FID_MAX] = {
-     [NVME_FDP_EVENTS]               = NVME_FEAT_CAP_CHANGE | NVME_FEAT_CAP_NS,
- };
+@@ -8823,15 +8823,13 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
+     id->psd[0].enlat = cpu_to_le32(0x10);
+     id->psd[0].exlat = cpu_to_le32(0x4);
  
--static const uint32_t nvme_cse_acs[256] = {
-+static const uint32_t nvme_cse_acs_default[256] = {
-     [NVME_ADM_CMD_DELETE_SQ]        = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_CREATE_SQ]        = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_GET_LOG_PAGE]     = NVME_CMD_EFF_CSUPP,
-@@ -278,7 +278,6 @@ static const uint32_t nvme_cse_acs[256] = {
-     [NVME_ADM_CMD_GET_FEATURES]     = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_ASYNC_EV_REQ]     = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_NS_ATTACHMENT]    = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_NIC,
--    [NVME_ADM_CMD_VIRT_MNGMT]       = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_DBBUF_CONFIG]     = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_FORMAT_NVM]       = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_LBCC,
-     [NVME_ADM_CMD_DIRECTIVE_RECV]   = NVME_CMD_EFF_CSUPP,
-@@ -5174,7 +5173,7 @@ static uint16_t nvme_cmd_effects(NvmeCtrl *n, uint8_t csi, uint32_t buf_len,
+-    if (n->subsys) {
+-        id->cmic |= NVME_CMIC_MULTI_CTRL;
+-        ctratt |= NVME_CTRATT_ENDGRPS;
++    id->cmic |= NVME_CMIC_MULTI_CTRL;
++    ctratt |= NVME_CTRATT_ENDGRPS;
+ 
+-        id->endgidmax = cpu_to_le16(0x1);
++    id->endgidmax = cpu_to_le16(0x1);
+ 
+-        if (n->subsys->endgrp.fdp.enabled) {
+-            ctratt |= NVME_CTRATT_FDPS;
+-        }
++    if (n->subsys->endgrp.fdp.enabled) {
++        ctratt |= NVME_CTRATT_FDPS;
+     }
+ 
+     id->ctratt = cpu_to_le32(ctratt);
+@@ -8860,7 +8858,15 @@ static int nvme_init_subsys(NvmeCtrl *n, Error **errp)
+     int cntlid;
+ 
+     if (!n->subsys) {
+-        return 0;
++        DeviceState *dev = qdev_new(TYPE_NVME_SUBSYS);
++
++        qdev_prop_set_string(dev, "nqn", n->params.serial);
++
++        if (!qdev_realize(dev, NULL, errp)) {
++            return -1;
++        }
++
++        n->subsys = NVME_SUBSYS(dev);
+     }
+ 
+     cntlid = nvme_subsys_register_ctrl(n, errp);
+@@ -8950,17 +8956,15 @@ static void nvme_exit(PCIDevice *pci_dev)
+ 
+     nvme_ctrl_reset(n, NVME_RESET_FUNCTION);
+ 
+-    if (n->subsys) {
+-        for (i = 1; i <= NVME_MAX_NAMESPACES; i++) {
+-            ns = nvme_ns(n, i);
+-            if (ns) {
+-                ns->attached--;
+-            }
++    for (i = 1; i <= NVME_MAX_NAMESPACES; i++) {
++        ns = nvme_ns(n, i);
++        if (ns) {
++            ns->attached--;
          }
+-
+-        nvme_subsys_unregister_ctrl(n->subsys, n);
      }
  
--    memcpy(log.acs, nvme_cse_acs, sizeof(nvme_cse_acs));
-+    memcpy(log.acs, n->cse.acs, sizeof(log.acs));
++    nvme_subsys_unregister_ctrl(n->subsys, n);
++
+     g_free(n->cq);
+     g_free(n->sq);
+     g_free(n->aer_reqs);
+diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+index 410df2959192..94cabc6a5b8d 100644
+--- a/hw/nvme/ns.c
++++ b/hw/nvme/ns.c
+@@ -727,25 +727,14 @@ static void nvme_ns_realize(DeviceState *dev, Error **errp)
+     uint32_t nsid = ns->params.nsid;
+     int i;
  
-     if (src_iocs) {
-         memcpy(log.iocs, src_iocs, sizeof(log.iocs));
-@@ -7300,7 +7299,7 @@ static uint16_t nvme_admin_cmd(NvmeCtrl *n, NvmeRequest *req)
-     trace_pci_nvme_admin_cmd(nvme_cid(req), nvme_sqid(req), req->cmd.opcode,
-                              nvme_adm_opc_str(req->cmd.opcode));
- 
--    if (!(nvme_cse_acs[req->cmd.opcode] & NVME_CMD_EFF_CSUPP)) {
-+    if (!(n->cse.acs[req->cmd.opcode] & NVME_CMD_EFF_CSUPP)) {
-         trace_pci_nvme_err_invalid_admin_opc(req->cmd.opcode);
-         return NVME_INVALID_OPCODE | NVME_DNR;
+-    if (!n->subsys) {
+-        /* If no subsys, the ns cannot be attached to more than one ctrl. */
+-        ns->params.shared = false;
+-        if (ns->params.detached) {
+-            error_setg(errp, "detached requires that the nvme device is "
+-                       "linked to an nvme-subsys device");
+-            return;
+-        }
+-    } else {
+-        /*
+-         * If this namespace belongs to a subsystem (through a link on the
+-         * controller device), reparent the device.
+-         */
+-        if (!qdev_set_parent_bus(dev, &subsys->bus.parent_bus, errp)) {
+-            return;
+-        }
+-        ns->subsys = subsys;
+-        ns->endgrp = &subsys->endgrp;
++    assert(subsys);
++
++    /* reparent to subsystem bus */
++    if (!qdev_set_parent_bus(dev, &subsys->bus.parent_bus, errp)) {
++        return;
      }
-@@ -8740,6 +8739,9 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     uint64_t cap = ldq_le_p(&n->bar.cap);
-     NvmeSecCtrlEntry *sctrl = nvme_sctrl(n);
-     uint32_t ctratt;
-+    uint16_t oacs;
-+
-+    memcpy(n->cse.acs, nvme_cse_acs_default, sizeof(n->cse.acs));
++    ns->subsys = subsys;
++    ns->endgrp = &subsys->endgrp;
  
-     id->vid = cpu_to_le16(pci_get_word(pci_conf + PCI_VENDOR_ID));
-     id->ssvid = cpu_to_le16(pci_get_word(pci_conf + PCI_SUBSYSTEM_VENDOR_ID));
-@@ -8770,9 +8772,18 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
+     if (nvme_ns_setup(ns, errp)) {
+         return;
+@@ -753,7 +742,7 @@ static void nvme_ns_realize(DeviceState *dev, Error **errp)
  
-     id->mdts = n->params.mdts;
-     id->ver = cpu_to_le32(NVME_SPEC_VER);
--    id->oacs =
--        cpu_to_le16(NVME_OACS_NS_MGMT | NVME_OACS_FORMAT | NVME_OACS_DBBUF |
--                    NVME_OACS_DIRECTIVES);
-+
-+    oacs = NVME_OACS_NMS | NVME_OACS_FORMAT | NVME_OACS_DBBUF |
-+        NVME_OACS_DIRECTIVES;
-+
-+    if (n->params.sriov_max_vfs) {
-+        oacs |= NVME_OACS_VMS;
-+
-+        n->cse.acs[NVME_ADM_CMD_VIRT_MNGMT] = NVME_CMD_EFF_CSUPP;
+     if (!nsid) {
+         for (i = 1; i <= NVME_MAX_NAMESPACES; i++) {
+-            if (nvme_ns(n, i) || nvme_subsys_ns(subsys, i)) {
++            if (nvme_subsys_ns(subsys, i)) {
+                 continue;
+             }
+ 
+@@ -765,38 +754,29 @@ static void nvme_ns_realize(DeviceState *dev, Error **errp)
+             error_setg(errp, "no free namespace id");
+             return;
+         }
+-    } else {
+-        if (nvme_ns(n, nsid) || nvme_subsys_ns(subsys, nsid)) {
+-            error_setg(errp, "namespace id '%d' already allocated", nsid);
+-            return;
+-        }
++    } else if (nvme_subsys_ns(subsys, nsid)) {
++        error_setg(errp, "namespace id '%d' already allocated", nsid);
++        return;
+     }
+ 
+-    if (subsys) {
+-        subsys->namespaces[nsid] = ns;
++    subsys->namespaces[nsid] = ns;
+ 
+-        ns->id_ns.endgid = cpu_to_le16(0x1);
+-        ns->id_ns_ind.endgrpid = cpu_to_le16(0x1);
++    ns->id_ns.endgid = cpu_to_le16(0x1);
++    ns->id_ns_ind.endgrpid = cpu_to_le16(0x1);
+ 
+-        if (ns->params.detached) {
+-            return;
+-        }
++    if (ns->params.detached) {
++        return;
 +    }
-+
-+    id->oacs = cpu_to_le16(oacs);
-+
-     id->cntrltype = 0x1;
  
-     /*
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index e307e733e46a..b86cad388f5a 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -584,6 +584,10 @@ typedef struct NvmeCtrl {
-     uint64_t    dbbuf_eis;
-     bool        dbbuf_enabled;
+-        if (ns->params.shared) {
+-            for (i = 0; i < ARRAY_SIZE(subsys->ctrls); i++) {
+-                NvmeCtrl *ctrl = subsys->ctrls[i];
++    if (ns->params.shared) {
++        for (i = 0; i < ARRAY_SIZE(subsys->ctrls); i++) {
++            NvmeCtrl *ctrl = subsys->ctrls[i];
  
-+    struct {
-+        uint32_t acs[256];
-+    } cse;
-+
-     struct {
-         MemoryRegion mem;
-         uint8_t      *buf;
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 975d321c5c08..80fbcb420d48 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -1232,8 +1232,9 @@ enum NvmeIdCtrlOacs {
-     NVME_OACS_SECURITY      = 1 << 0,
-     NVME_OACS_FORMAT        = 1 << 1,
-     NVME_OACS_FW            = 1 << 2,
--    NVME_OACS_NS_MGMT       = 1 << 3,
-+    NVME_OACS_NMS           = 1 << 3,
-     NVME_OACS_DIRECTIVES    = 1 << 5,
-+    NVME_OACS_VMS           = 1 << 7,
-     NVME_OACS_DBBUF         = 1 << 8,
- };
+-                if (ctrl && ctrl != SUBSYS_SLOT_RSVD) {
+-                    nvme_attach_ns(ctrl, ns);
+-                }
++            if (ctrl && ctrl != SUBSYS_SLOT_RSVD) {
++                nvme_attach_ns(ctrl, ns);
+             }
+-
+-            return;
+         }
+-
+     }
+-
+-    nvme_attach_ns(n, ns);
+ }
  
+ static const Property nvme_ns_props[] = {
 -- 
 2.47.2
 
