@@ -4,107 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB74CC19F32
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 16:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA4EC19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 16:48:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tngz8-0005Ow-9G; Thu, 27 Feb 2025 11:43:42 -0500
+	id 1tnh1k-0000K5-Bz; Thu, 27 Feb 2025 11:46:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tngz1-0004w9-3w
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 11:43:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tnh1L-0008Rd-RH
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 11:46:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tngyv-0007Iy-G2
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 11:43:32 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tnh1H-0007qO-Pu
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 11:45:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740674607;
+ s=mimecast20190719; t=1740674752;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TQNCbBxi7eD7idYstTcVVTcDcXqJ3+FMvik+jAH6Dos=;
- b=Q6fPEnZx8nLEFQPAzBX7CCyKjB0JIFhgqsLYEMbMBhX8iq9ds9berfAbIIavAvAV9OlMHT
- dOkvXaoyGN1BCwy4K+YgLRYQtxbv7i0/B7bK9izLbf/u9Bw1tXxJPRfaKuuX2QiAbYOeNo
- Gq/7EZ3SLkqZsV4G0WLkRG/TISrqt70=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zefJ7UnWXlqmaoCwRCJyexCJHwxXHhIzI1N/mzD03TE=;
+ b=WPfs8Q8J2s4bv2xBPz6e1SgNiv5vEnxoh08T1IYuH/eEPR+8WdCEzHnkTdvvdEpH0NzZOq
+ W3794g+WAdFrAc+G73+GSH3XP6XZeyEiaMwDByJscFQIIBpv/jGeHQik7D2rpguVjTxQZQ
+ Qe1Sixe/t/a7U4P1w9PKFMpUMKhxyes=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-138-lAM1-2ydOESlMs3Np5diaA-1; Thu, 27 Feb 2025 11:43:26 -0500
-X-MC-Unique: lAM1-2ydOESlMs3Np5diaA-1
-X-Mimecast-MFC-AGG-ID: lAM1-2ydOESlMs3Np5diaA_1740674605
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-439a5c4dfb2so5949025e9.1
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 08:43:26 -0800 (PST)
+ us-mta-341--D6adOANOfuZzZM2WAH4lw-1; Thu, 27 Feb 2025 11:45:50 -0500
+X-MC-Unique: -D6adOANOfuZzZM2WAH4lw-1
+X-Mimecast-MFC-AGG-ID: -D6adOANOfuZzZM2WAH4lw_1740674749
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-abf16f47749so133605266b.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 08:45:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740674605; x=1741279405;
+ d=1e100.net; s=20230601; t=1740674748; x=1741279548;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TQNCbBxi7eD7idYstTcVVTcDcXqJ3+FMvik+jAH6Dos=;
- b=s65YcS6TVD5qIoqwBrnI1YyiG/Xbw9rDiBXfEySdgCY26VPXRqOdgHhMnjFujS7gub
- n2doXZ8Fw0U1LKGyfGNDKd9c9gxT9WjZV94g2BTh4+N9d7tkYMxZ034wBlpSA5LJ5fAA
- xbHIJRO3OkcIdnyMBWQ+61dbNV2Da0kZSK/bD3t1KY3TH1L2Dxho0RK0phwS4JkVrcWc
- jaIv9EZDZ6FyOqeYAEOTObgz+WBUAHsCnBx/Hi9MmBF94ancJHT+6DCOmtvWeL2XgB0+
- TAvf5jcsK1h29b7g+FyGnOPUkv5jvh6uCr3V5r1VGGbhORbIWY4Gpm7zJ6wxydC3E/JU
- /vEQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV//WdI1MrBV5OlTxfeTJCS2esV8ISkRw+zreyaeAigMUwlsMFjf+IbFNqwtQNIcwwKunO04n+8ZH0H@nongnu.org
-X-Gm-Message-State: AOJu0Yzy07V6p9L6R/46by/+DfIuv6A6NzwdXFDX6x4hyR0j0mold40P
- 7nE2kfs6fnYXNg19Y+QpoxIxXZtD9u3JbRUi16afADSdjhFy0kBhVtqgHwH6OPbvkq/vzWAg2e0
- +bArjT1Yv5nUX/iolYmuhZLuQmnRC5aN4xEN0SDL88nqtwIeoD51+
-X-Gm-Gg: ASbGncsJ47NvowZp5gleV5Jfg91kNqrgiGJQlcjhSXjoD8Bk2SMYPphb2X78kBDSW9W
- GhSftcgut6AgiSD5vEzgaEwBpezhvEmfugWYuSNr/4UwNdaT9Ff1EAviOWEzmAY7wGHbXVqmphd
- 7b1NRou8UTlfbTC4oOuY5VwRuGxCEDmrxd+cDNxvPB2iWN/5zRHVwddmHoYx/4KA2kMi6z9d+rz
- 8vDyqdcU9RpvyKyCFSuw1wBHPgPkTXwmlyV+v8NB9ERqUioUaAWwA3ZQAwxppLUUQlLo5LK3utI
- bX5sWDBrhp9ZBrcqbkVwH2mYtM5EMNWkue2+ATqBJCmXC8g40MrSO4GcDJwAEpA=
-X-Received: by 2002:a05:600c:3c83:b0:439:82de:9166 with SMTP id
- 5b1f17b1804b1-43ab8fd1e8dmr64031035e9.1.1740674605044; 
- Thu, 27 Feb 2025 08:43:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFrTKA/tq7v3HDQicW7l4zuzGDkJqwkvaaj/r610R8fS1dVqhjB9P9yfyCOg58tOjH/0/jlEQ==
-X-Received: by 2002:a05:600c:3c83:b0:439:82de:9166 with SMTP id
- 5b1f17b1804b1-43ab8fd1e8dmr64030785e9.1.1740674604620; 
- Thu, 27 Feb 2025 08:43:24 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43b737074d8sm29172345e9.16.2025.02.27.08.43.23
+ bh=zefJ7UnWXlqmaoCwRCJyexCJHwxXHhIzI1N/mzD03TE=;
+ b=k35Gg/iVACf6/jKJ9X3cn1sLgmmNaEj7Df++0aZ1hK8WbFRhNNPnSYixz2f9jHwZs+
+ Vz8I4au+ut5Po2ibwykMErjzLDtdMHfoFPBW/pRerz9FqyttnFZuLJItlRSRcmFReszw
+ LO4mkhDEE2ns7RacN2RrubHbhLZNqZUJsDK0JE8PbRLkyeC5tgp7c6LyKvgKCerS1CUx
+ Xrkgb9alE6aqV7VQXVf+uDdvYHHWg2qsIFRDQj1a8tOI0R1pzgMyqIh8taDrAZ3XalDJ
+ b7MI4iCK3WUEDN1HiPf98uew90zxjwEfA74sNfPgPDU+8xGXvFiWi4sc7VbyFpsMB2nx
+ /TYQ==
+X-Gm-Message-State: AOJu0YxKzImYQepBbIA940PXcQzxLI9YP65NsIBA2u7dDG5zotdD+NNA
+ +EhEQvf5bvIQk1LC8eKSqUbb6FENhGAK4Pv8+qq9eDtMZHc6w34pm4zhX40B41RUOd5S4BkNQt2
+ JPwSp8051nrUjOgdsY0pED2dJFsDeDU3B6iKz0vAwz3omqv2XmAv64szpzbTOOPHBjn7IooUc75
+ X988v8yVXoRyWbpIwTtbk/0elDXpXx2JfPwDo4v7E=
+X-Gm-Gg: ASbGncvOiSgzLXckIX80T3mHB0KuhTeyJKShqEKDAQ0Kjqs8Q/HbV1QkvAgFlU3NnzQ
+ 7/VhEwf89XeKt61abZrcC77gS7vMzcSZRqt2i4fo/adOgHeMPQzP90i1F/CLdaA1giG1o2nBfU2
+ Lx5e4wa0cFI7x9YEtdogWoFCBShdmoQuxKQ1EThpugZfBSPjd7CCw0q+0/mGGjKqEplH6skcK4/
+ hdefnrD1/zQf8fRexBPI1XvcT1PjqsVj/m5I+mtjC6o9oA2WnNA6hwZBsFjhJyh5NieLNFcn/tZ
+ C3I2373cWVxrjXrYxw==
+X-Received: by 2002:a17:907:1c8d:b0:abf:23a7:fc6 with SMTP id
+ a640c23a62f3a-abf2656e759mr13191266b.16.1740674747853; 
+ Thu, 27 Feb 2025 08:45:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGH9GAfGadHniLMOuyUNqZYDLLBNZvtPGF6ijMlgfnGohE0KjCB8TPO7n4+TCpPGm8mbx0hXg==
+X-Received: by 2002:a17:907:1c8d:b0:abf:23a7:fc6 with SMTP id
+ a640c23a62f3a-abf2656e759mr13187966b.16.1740674747351; 
+ Thu, 27 Feb 2025 08:45:47 -0800 (PST)
+Received: from [192.168.1.84] ([93.56.163.127])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-abf0c0ba3dbsm148426166b.22.2025.02.27.08.45.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 08:43:24 -0800 (PST)
-Date: Thu, 27 Feb 2025 17:43:21 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Philippe =?UTF-8?B?TWF0aGll?=
- =?UTF-8?B?dS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
- <anisinha@redhat.com>, Cleber Rosa <crosa@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Eric Blake
- <eblake@redhat.com>, John Snow <jsnow@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Shannon Zhao
- <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
- <zhao1.liu@intel.com>, kvm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 00/19] Change ghes to use HEST-based offsets and add
- support for error inject
-Message-ID: <20250227174321.0162a10f@imammedo.users.ipa.redhat.com>
-In-Reply-To: <cover.1740671863.git.mchehab+huawei@kernel.org>
-References: <cover.1740671863.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Thu, 27 Feb 2025 08:45:44 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org
+Subject: [PATCH 4/5] rust: pl011: switch to safe chardev operation
+Date: Thu, 27 Feb 2025 17:45:33 +0100
+Message-ID: <20250227164538.814576-5-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250227164538.814576-1-pbonzini@redhat.com>
+References: <20250227164538.814576-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,165 +108,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Feb 2025 17:00:38 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+Switch bindings::CharBackend with chardev::CharBackend.  This removes
+occurrences of "unsafe" due to FFI and switches the wrappers for receive,
+can_receive and event callbacks to the common ones implemented by
+chardev::CharBackend.
 
-> Now that the ghes preparation patches were merged, let's add support
-> for error injection.
-> 
-> On this version, HEST table got added to ACPI tables testing for aarch64 virt.
-> 
-> There are also some patch reorder to help reviewers to check the changes.
-> 
-> The code itself is almost identical to v4, with just a few minor nits addressed.
-checkpatch on my machine still complains
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/hw/char/pl011/src/device.rs | 116 +++++++------------------------
+ 1 file changed, 25 insertions(+), 91 deletions(-)
 
-0007-acpi-ghes-Use-HEST-table-offsets-when-preparing-GHES.patch has no obvious style problems and is ready for submission.
-Checking 0008-acpi-ghes-don-t-hard-code-the-number-of-sources-for-.patch...
-WARNING: line over 80 characters
-#170: FILE: hw/acpi/ghes.c:390:
-+        build_ghes_v2_entry(table_data, linker, &notif_source[i], i, num_sources);
-
-total: 0 errors, 1 warnings, 159 lines checked
-
-0008-acpi-ghes-don-t-hard-code-the-number-of-sources-for-.patch has style problems, please review.  If any of these errors
-are false positives report them to the maintainer, see
-CHECKPATCH in MAINTAINERS.
-Checking 0009-acpi-ghes-add-a-notifier-to-notify-when-error-data-i.patch...
-total: 0 errors, 0 warnings, 26 lines checked
-
-0009-acpi-ghes-add-a-notifier-to-notify-when-error-data-i.patch has no obvious style problems and is ready for submission.
-Checking 0010-acpi-generic_event_device-Update-GHES-migration-to-c.patch...
-total: 0 errors, 0 warnings, 41 lines checked
-
-0010-acpi-generic_event_device-Update-GHES-migration-to-c.patch has no obvious style problems and is ready for submission.
-Checking 0011-acpi-generic_event_device-add-logic-to-detect-if-HES.patch...
-total: 0 errors, 0 warnings, 59 lines checked
-
-0011-acpi-generic_event_device-add-logic-to-detect-if-HES.patch has no obvious style problems and is ready for submission.
-Checking 0012-acpi-generic_event_device-add-an-APEI-error-device.patch...
-total: 0 errors, 0 warnings, 72 lines checked
-
-0012-acpi-generic_event_device-add-an-APEI-error-device.patch has no obvious style problems and is ready for submission.
-Checking 0013-tests-acpi-virt-allow-acpi-table-changes-at-DSDT-and.patch...
-total: 0 errors, 0 warnings, 7 lines checked
-
-0013-tests-acpi-virt-allow-acpi-table-changes-at-DSDT-and.patch has no obvious style problems and is ready for submission.
-Checking 0014-arm-virt-Wire-up-a-GED-error-device-for-ACPI-GHES.patch...
-WARNING: line over 80 characters
-#68: FILE: hw/arm/virt.c:1015:
-+    VirtMachineState *s = container_of(n, VirtMachineState, generic_error_notifier);
-
-total: 0 errors, 1 warnings, 44 lines checked
-
-0014-arm-virt-Wire-up-a-GED-error-device-for-ACPI-GHES.patch has style problems, please review.  If any of these errors
-are false positives report them to the maintainer, see
-CHECKPATCH in MAINTAINERS.
-Checking 0015-qapi-acpi-hest-add-an-interface-to-do-generic-CPER-e.patch...
-total: 0 errors, 0 warnings, 178 lines checked
-
-
-
-> ---
-> v6:
-> - some minor nits addressed:
->    - use GPA instead of offset;
->    - merged two patches;
->    - fixed a couple of long line coding style issues;
->    - the HEST/DSDT diff inside a patch was changed to avoid troubles
->      applying it.
-> 
-> v5:
-> - make checkpatch happier;
-> - HEST table is now tested;
-> - some changes at HEST spec documentation to align with code changes;
-> - extra care was taken with regards to git bisectability.
-> 
-> v4:
-> - added an extra comment for AcpiGhesState structure;
-> - patches reordered;
-> - no functional changes, just code shift between the patches in this series.
-> 
-> v3:
-> - addressed more nits;
-> - hest_add_le now points to the beginning of HEST table;
-> - removed HEST from tests/data/acpi;
-> - added an extra patch to not use fw_cfg with virt-10.0 for hw_error_le
-> 
-> v2: 
-> - address some nits;
-> - improved ags cleanup patch and removed ags.present field;
-> - added some missing le*_to_cpu() calls;
-> - update date at copyright for new files to 2024-2025;
-> - qmp command changed to: inject-ghes-v2-error ans since updated to 10.0;
-> - added HEST and DSDT tables after the changes to make check target happy.
->   (two patches: first one whitelisting such tables; second one removing from
->    whitelist and updating/adding such tables to tests/data/acpi)
-> 
-> 
-> 
-> Mauro Carvalho Chehab (19):
->   tests/acpi: virt: add an empty HEST file
->   tests/qtest/bios-tables-test: extend to also check HEST table
->   tests/acpi: virt: update HEST file with its current data
->   acpi/ghes: Cleanup the code which gets ghes ged state
->   acpi/ghes: prepare to change the way HEST offsets are calculated
->   acpi/ghes: add a firmware file with HEST address
->   acpi/ghes: Use HEST table offsets when preparing GHES records
->   acpi/ghes: don't hard-code the number of sources for HEST table
->   acpi/ghes: add a notifier to notify when error data is ready
->   acpi/generic_event_device: Update GHES migration to cover hest addr
->   acpi/generic_event_device: add logic to detect if HEST addr is
->     available
->   acpi/generic_event_device: add an APEI error device
->   tests/acpi: virt: allow acpi table changes at DSDT and HEST tables
->   arm/virt: Wire up a GED error device for ACPI / GHES
->   qapi/acpi-hest: add an interface to do generic CPER error injection
->   acpi/generic_event_device.c: enable use_hest_addr for QEMU 10.x
->   tests/acpi: virt: update HEST and DSDT tables
->   docs: hest: add new "etc/acpi_table_hest_addr" and update workflow
->   scripts/ghes_inject: add a script to generate GHES error inject
-> 
->  MAINTAINERS                                   |  10 +
->  docs/specs/acpi_hest_ghes.rst                 |  28 +-
->  hw/acpi/Kconfig                               |   5 +
->  hw/acpi/aml-build.c                           |  10 +
->  hw/acpi/generic_event_device.c                |  44 ++
->  hw/acpi/ghes-stub.c                           |   7 +-
->  hw/acpi/ghes.c                                | 231 ++++--
->  hw/acpi/ghes_cper.c                           |  38 +
->  hw/acpi/ghes_cper_stub.c                      |  19 +
->  hw/acpi/meson.build                           |   2 +
->  hw/arm/virt-acpi-build.c                      |  35 +-
->  hw/arm/virt.c                                 |  19 +-
->  hw/core/machine.c                             |   2 +
->  include/hw/acpi/acpi_dev_interface.h          |   1 +
->  include/hw/acpi/aml-build.h                   |   2 +
->  include/hw/acpi/generic_event_device.h        |   1 +
->  include/hw/acpi/ghes.h                        |  51 +-
->  include/hw/arm/virt.h                         |   2 +
->  qapi/acpi-hest.json                           |  35 +
->  qapi/meson.build                              |   1 +
->  qapi/qapi-schema.json                         |   1 +
->  scripts/arm_processor_error.py                | 476 ++++++++++++
->  scripts/ghes_inject.py                        |  51 ++
->  scripts/qmp_helper.py                         | 703 ++++++++++++++++++
->  target/arm/kvm.c                              |   7 +-
->  tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5240 bytes
->  .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5326 bytes
->  tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6601 bytes
->  tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7723 bytes
->  tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5442 bytes
->  tests/data/acpi/aarch64/virt/HEST             | Bin 0 -> 224 bytes
->  tests/qtest/bios-tables-test.c                |   2 +-
->  32 files changed, 1692 insertions(+), 91 deletions(-)
->  create mode 100644 hw/acpi/ghes_cper.c
->  create mode 100644 hw/acpi/ghes_cper_stub.c
->  create mode 100644 qapi/acpi-hest.json
->  create mode 100644 scripts/arm_processor_error.py
->  create mode 100755 scripts/ghes_inject.py
->  create mode 100755 scripts/qmp_helper.py
->  create mode 100644 tests/data/acpi/aarch64/virt/HEST
-> 
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 4cdbbf4b73d..2283bae71eb 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -4,16 +4,11 @@
+ 
+ use std::{
+     ffi::CStr,
+-    os::raw::{c_int, c_void},
+-    ptr::{addr_of, addr_of_mut, NonNull},
++    ptr::addr_of_mut,
+ };
+ 
+ use qemu_api::{
+-    bindings::{
+-        qemu_chr_fe_accept_input, qemu_chr_fe_ioctl, qemu_chr_fe_set_handlers,
+-        qemu_chr_fe_write_all, CharBackend, QEMUChrEvent, CHR_IOCTL_SERIAL_SET_BREAK,
+-    },
+-    chardev::Chardev,
++    chardev::{CharBackend, Chardev, Event},
+     impl_vmstate_forward,
+     irq::{IRQState, InterruptSource},
+     memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder},
+@@ -235,7 +230,7 @@ pub(self) fn write(
+         &mut self,
+         offset: RegisterOffset,
+         value: u32,
+-        char_backend: *mut CharBackend,
++        char_backend: &CharBackend,
+     ) -> bool {
+         // eprintln!("write offset {offset} value {value}");
+         use RegisterOffset::*;
+@@ -269,17 +264,9 @@ pub(self) fn write(
+                     self.reset_tx_fifo();
+                 }
+                 let update = (self.line_control.send_break() != new_val.send_break()) && {
+-                    let mut break_enable: c_int = new_val.send_break().into();
+-                    // SAFETY: self.char_backend is a valid CharBackend instance after it's been
+-                    // initialized in realize().
+-                    unsafe {
+-                        qemu_chr_fe_ioctl(
+-                            char_backend,
+-                            CHR_IOCTL_SERIAL_SET_BREAK as i32,
+-                            addr_of_mut!(break_enable).cast::<c_void>(),
+-                        );
+-                    }
+-                    self.loopback_break(break_enable > 0)
++                    let break_enable = new_val.send_break();
++                    let _ = char_backend.send_break(break_enable);
++                    self.loopback_break(break_enable)
+                 };
+                 self.line_control = new_val;
+                 self.set_read_trigger();
+@@ -551,9 +538,7 @@ fn read(&self, offset: hwaddr, _size: u32) -> u64 {
+                 let (update_irq, result) = self.regs.borrow_mut().read(field);
+                 if update_irq {
+                     self.update();
+-                    unsafe {
+-                        qemu_chr_fe_accept_input(addr_of!(self.char_backend) as *mut _);
+-                    }
++                    self.char_backend.accept_input();
+                 }
+                 result.into()
+             }
+@@ -567,21 +552,16 @@ fn write(&self, offset: hwaddr, value: u64, _size: u32) {
+             // callback, so handle writes before entering PL011Registers.
+             if field == RegisterOffset::DR {
+                 // ??? Check if transmitter is enabled.
+-                let ch: u8 = value as u8;
+-                // SAFETY: char_backend is a valid CharBackend instance after it's been
+-                // initialized in realize().
++                let ch: [u8; 1] = [value as u8];
+                 // XXX this blocks entire thread. Rewrite to use
+                 // qemu_chr_fe_write and background I/O callbacks
+-                unsafe {
+-                    qemu_chr_fe_write_all(addr_of!(self.char_backend) as *mut _, &ch, 1);
+-                }
++                let _ = self.char_backend.write_all(&ch);
+             }
+ 
+-            update_irq = self.regs.borrow_mut().write(
+-                field,
+-                value as u32,
+-                addr_of!(self.char_backend) as *mut _,
+-            );
++            update_irq = self
++                .regs
++                .borrow_mut()
++                .write(field, value as u32, &self.char_backend);
+         } else {
+             eprintln!("write bad offset {offset} value {value}");
+         }
+@@ -590,15 +570,18 @@ fn write(&self, offset: hwaddr, value: u64, _size: u32) {
+         }
+     }
+ 
+-    pub fn can_receive(&self) -> bool {
+-        // trace_pl011_can_receive(s->lcr, s->read_count, r);
++    fn can_receive(&self) -> u32 {
+         let regs = self.regs.borrow();
+-        regs.read_count < regs.fifo_depth()
++        // trace_pl011_can_receive(s->lcr, s->read_count, r);
++        u32::from(regs.read_count < regs.fifo_depth())
+     }
+ 
+-    pub fn receive(&self, ch: u32) {
++    fn receive(&self, buf: &[u8]) {
++        if buf.is_empty() {
++            return;
++        }
+         let mut regs = self.regs.borrow_mut();
+-        let update_irq = !regs.loopback_enabled() && regs.put_fifo(ch);
++        let update_irq = !regs.loopback_enabled() && regs.put_fifo(buf[0].into());
+         // Release the BqlRefCell before calling self.update()
+         drop(regs);
+ 
+@@ -607,10 +590,10 @@ pub fn receive(&self, ch: u32) {
+         }
+     }
+ 
+-    pub fn event(&self, event: QEMUChrEvent) {
++    fn event(&self, event: Event) {
+         let mut update_irq = false;
+         let mut regs = self.regs.borrow_mut();
+-        if event == QEMUChrEvent::CHR_EVENT_BREAK && !regs.loopback_enabled() {
++        if event == Event::CHR_EVENT_BREAK && !regs.loopback_enabled() {
+             update_irq = regs.put_fifo(registers::Data::BREAK.into());
+         }
+         // Release the BqlRefCell before calling self.update()
+@@ -622,20 +605,8 @@ pub fn event(&self, event: QEMUChrEvent) {
+     }
+ 
+     fn realize(&self) {
+-        // SAFETY: self.char_backend has the correct size and alignment for a
+-        // CharBackend object, and its callbacks are of the correct types.
+-        unsafe {
+-            qemu_chr_fe_set_handlers(
+-                addr_of!(self.char_backend) as *mut CharBackend,
+-                Some(pl011_can_receive),
+-                Some(pl011_receive),
+-                Some(pl011_event),
+-                None,
+-                addr_of!(*self).cast::<c_void>() as *mut c_void,
+-                core::ptr::null_mut(),
+-                true,
+-            );
+-        }
++        self.char_backend
++            .enable_handlers(self, Self::can_receive, Self::receive, Self::event);
+     }
+ 
+     fn reset_hold(&self, _type: ResetType) {
+@@ -666,43 +637,6 @@ pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
+     Interrupt::E.0,
+ ];
+ 
+-/// # Safety
+-///
+-/// We expect the FFI user of this function to pass a valid pointer, that has
+-/// the same size as [`PL011State`]. We also expect the device is
+-/// readable/writeable from one thread at any time.
+-pub unsafe extern "C" fn pl011_can_receive(opaque: *mut c_void) -> c_int {
+-    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
+-    unsafe { state.as_ref().can_receive().into() }
+-}
+-
+-/// # Safety
+-///
+-/// We expect the FFI user of this function to pass a valid pointer, that has
+-/// the same size as [`PL011State`]. We also expect the device is
+-/// readable/writeable from one thread at any time.
+-///
+-/// The buffer and size arguments must also be valid.
+-pub unsafe extern "C" fn pl011_receive(opaque: *mut c_void, buf: *const u8, size: c_int) {
+-    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
+-    unsafe {
+-        if size > 0 {
+-            debug_assert!(!buf.is_null());
+-            state.as_ref().receive(u32::from(buf.read_volatile()));
+-        }
+-    }
+-}
+-
+-/// # Safety
+-///
+-/// We expect the FFI user of this function to pass a valid pointer, that has
+-/// the same size as [`PL011State`]. We also expect the device is
+-/// readable/writeable from one thread at any time.
+-pub unsafe extern "C" fn pl011_event(opaque: *mut c_void, event: QEMUChrEvent) {
+-    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
+-    unsafe { state.as_ref().event(event) }
+-}
+-
+ /// # Safety
+ ///
+ /// We expect the FFI user of this function to pass a valid pointer for `chr`
+-- 
+2.48.1
 
 
