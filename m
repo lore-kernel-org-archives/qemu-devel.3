@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1F0DC19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F35BBC19F32
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:43:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnewn-0003Lj-KO; Thu, 27 Feb 2025 09:33:11 -0500
+	id 1tnf6A-0001pS-1J; Thu, 27 Feb 2025 09:42:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <492a147d.AWQAAGXdcTUAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd3@a3031119.bnc3.mailjet.com>)
- id 1tnewE-0001Tr-QY
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:32:36 -0500
-Received: from o72.p38.mailjet.com ([185.250.237.72])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tnf5z-0001ns-4P
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:42:40 -0500
+Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <492a147d.AWQAAGXdcTUAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd3@a3031119.bnc3.mailjet.com>)
- id 1tnew8-0006Lf-QW
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:32:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; q=dns/txt;
- d=randomman.co.uk; i=roy.hopkins@randomman.co.uk; s=mailjet; x=1740673943;
- h=message-id:mime-version:from:from:to:to:subject:subject:date:date:list-unsubscribe:list-unsubscribe-post:
- cc:feedback-id:in-reply-to:references:x-csa-complaints:x-mj-mid:x-mj-smtpguid:
- x-report-abuse-to:content-type:content-transfer-encoding;
- bh=DVpozaxx/Uix4NnfQuB/nnLxENTtmruWdZuycPgN0XE=;
- b=Zm9fo3KU6nBRJS32rEvBSu4g8QsWfihSNxc7zSSLQHedpHDjc6CrigBX0
- Ef6b/jTT3j3cTqTt59ZllKFWsA8lNWv1wU1HTYXSo8NjJqV1KjqtO8J6PnvF
- 3nqEx3WBhPgZpV5hg5Bbtp6ZiuHG7Ct2UD0f1/T0sHvaOGqohnw0gPLstO/R
- 4cuPHjQ2cTeTAZT4ymSfaG948eKg0DC8yRWmdHU3IIzOn6v5FlP/XPFYuwNu
- w8DAaQ5qu7/5hC2UlVvqarABFWxWKuWxKk+x0HoqduSUYq1WA2aWmrM/XFnb
- V40shfC4mL9NLlJi7aDhZVscOHRnC5toYxFWysu8qozsQ==
-Message-Id: <492a147d.AWQAAGXdcTUAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd3@mailjet.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tnf5w-0008SD-Ks
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:42:38 -0500
+Received: by mail-yb1-xb32.google.com with SMTP id
+ 3f1490d57ef6-e589c258663so1183171276.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:42:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740667354; x=1741272154; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ocn/d1/FX1YV6bfS7ORusoHXK2VvAcMUIDGKps4AlVc=;
+ b=HNPFpwcV+MYen3EEVvhCzp7gTPT/I8YR/ZTvZhqQJjP1z2Z0Ob7ROT7MRmcl07fExu
+ 5DigGZulpBx8C3gymxcCm1Zkskc7AA85GQwxLei3xGxB9kIN5D4vk2Q8+tVl9TEhCH1/
+ wsKWjwZmfWwIvd0Pk+JZKYhDrhHza7cKU/GeogfTB8zveTJLPOieK3al3gwgdS//qawa
+ X9repq6FrjrQBTWm/fOMf4/7FKqg/iDFi7DAIXH8wF8frziX4D1unRLXn8JRyTOotdWi
+ k5pb/UTz9XS297iaTQ37LHouZhWdHUkhJyWgOaLN76r4NvOX998MEobpn10rLCSRpmD7
+ PqdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740667354; x=1741272154;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ocn/d1/FX1YV6bfS7ORusoHXK2VvAcMUIDGKps4AlVc=;
+ b=QKcf8QDrNbwGloxCl0kMIcuYP4iGanR/geJ+OUx3Z1ixwuAPF7UklXfrVFKxzYpHeZ
+ /kCBvCRK6OB1HLAlE0sCnR5F7e97rTVdEBJ2QfwL39jqFztjK5DicxVlFnymvENtqtfz
+ TSApTyx7SSbpTHvCGv0w/oKQBaxu/Dhu1xk6ozGRfwY4Qp5xVCrYAJ4uIC9vtRSIiT2y
+ JkecJdhx0SAjGAh1ijVZqf7/ehpYqVOx2ODPVjU4QLO1B1wjSFP4+j9jOl0Ysno1X1Dg
+ yVj3xOCS6cLl2apIQK6oSlPLSacsrvAkHoUsdvV9MSvoBjXNB0PDQ5tANAKNyH8cXeGe
+ O43A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdQLDPUGFKZ3T+as94v8r4M3w+ZDj92BoBI8wcVmFnIs4RcmsYU5Grmcv2YwQJouEgZs7QwVq9pmsJ@nongnu.org
+X-Gm-Message-State: AOJu0YyOoC8VKEix6Ofi1skbXGKXASJMudVwlBuBlN3h2Z8X10A4lrF5
+ 4l9x6iffCtqvIi77TF6NP5L5zOeqiZ6EnX+ULf628fMq/6MSN8GlB1PhOZufTGpctS8xqXYUtRn
+ b71epXAD1j4cJwTKSNytDlWLzrZBLt6w15N7mRg==
+X-Gm-Gg: ASbGncuxFtdb5KmYdG/ZZS72BA7M2TCtesC8LlcZUL2xSYKXbhWSwO6gw56RZST/lZP
+ 2LHRjeE08L0ZzeiJFEVBdcYpcmXsJKgZAbKOrcrXhpVPdWl66WQBrYJPkPPzqld9e44OdjkxjKG
+ wJB24fyMba
+X-Google-Smtp-Source: AGHT+IFIRR3f6DmHEJ2oHU4ZtUHQvlaf5gTLwKiy/iDcsV3ujyM7+NShp5NZLygXCMw/ywuyiSa3pbtBae/jqubfa80=
+X-Received: by 2002:a05:6902:150e:b0:e5e:85:a9f0 with SMTP id
+ 3f1490d57ef6-e608a6a09c0mr7332624276.6.1740667353910; Thu, 27 Feb 2025
+ 06:42:33 -0800 (PST)
 MIME-Version: 1.0
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v7 12/16] backends/confidential-guest-support: Add
- set_guest_policy() function
-Date: Thu, 27 Feb 2025 14:29:30 +0000
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>, Paolo Bonzini
- <pbonzini@redhat.com>, "Daniel P . Berrange" <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Sergio Lopez <slp@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Alistair Francis
- <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>, David Hildenbrand
- <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Tom Lendacky
- <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, Ani Sinha
- <anisinha@redhat.com>, Joerg Roedel <jroedel@suse.com>
-Feedback-Id: 42.3031119.2785883:MJ
-In-Reply-To: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
-References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
-X-CSA-Complaints: csa-complaints@eco.de
-X-MJ-Mid: AWQAAGXdcTUAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd3dyoWHjziS32LwwvBaok4yAAqgls
-X-MJ-SMTPGUID: 1fb25099-b410-48e3-ad94-b6dd030ba534
-X-REPORT-ABUSE-TO: Message sent by Mailjet please report to
- abuse@mailjet.com with a copy of the message
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.250.237.72;
- envelope-from=492a147d.AWQAAGXdcTUAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd3@a3031119.bnc3.mailjet.com;
- helo=o72.p38.mailjet.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <6866d6b6-24af-4743-8407-26ae2998dd21@gmail.com>
+ <CAFEAcA9B40F21r9RgeDd7k09juy35k9QWewzgkmyNkYVK_K0-g@mail.gmail.com>
+ <CAFEAcA-U3QTWKhNr4Nd39hX7e+i+HDEyu8EZfSOm37GvvaH-hw@mail.gmail.com>
+In-Reply-To: <CAFEAcA-U3QTWKhNr4Nd39hX7e+i+HDEyu8EZfSOm37GvvaH-hw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 27 Feb 2025 14:42:22 +0000
+X-Gm-Features: AQ5f1JqPj_GeB6VHJUzEIepiQLN3FpontCJ0wn56yXuIhxbHnGaNgJ4jOfCz6TQ
+Message-ID: <CAFEAcA8SFHQGdhSo0UGtSPFyuuJZWPDRMCROQHMBvLSVtQ2mBQ@mail.gmail.com>
+Subject: Re: ldrd implementation issue?
+To: Stu Grossman <stu.grossman@gmail.com>
+Cc: qemu-arm@nongnu.org, QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,95 +95,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For confidential guests a policy can be provided that defines the
-security level, debug status, expected launch measurement and other
-parameters that define the configuration of the confidential platform.
+On Mon, 17 Feb 2025 at 13:03, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Tue, 11 Feb 2025 at 10:46, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > (added qemu-devel to the cc list)
+> >
+> > On Mon, 10 Feb 2025 at 17:26, Stu Grossman <stu.grossman@gmail.com> wrote:
+> > >
+> > > I've been getting SIGBUS cores with a bunch of user apps running under
+> > > linux 5.15 and qemu-system-aarch64.  These happen to be 32 bit (T32?)
+> > > programs.
+>
+> > > The fix is to defer the register stores till after both words have been
+> > > read from memory.
+> > >
+> > > Here is my fix:
+>
+> [snip patch]
+>
+> > Yes, this fix looks correct to me. Can you provide a
+> > Signed-off-by: tag for it? We can't accept it as a patch
+> > without that. (I can do the other administrative tidying
+> > up of it into a commit, but the signed-off-by is what says
+> > you have the legal right and are happy to submit it to QEMU
+> > under our license (LGPLv2.1+ in this case)).
+>
+> Hi -- this is just a nudge about whether you can provide
+> a signed-off-by line for this fix. I'd love to take it,
+> but can't without a signed-off-by. (Otherwise I'll have to
+> reimplement it from scratch, which I'll do at some point.)
 
-This commit adds a new function named set_guest_policy() that can be
-implemented by each confidential platform, such as AMD SEV to set the
-policy. This will allow configuration of the policy from a
-multi-platform resource such as an IGVM file without the IGVM processor
-requiring specific implementation details for each platform.
+I had a closer look at our LDRD code, and I noticed that we also
+have another bug where we're not implementing the "must be 64-bit
+atomic if the address is 8-aligned" requirement. So I wrote some
+patches which fix that, and also will fix the page-crossing bug
+(because they mean we now ask the memory system to load 64 bits
+and then split it out into the two destination registers, rather
+than doing two separate 32-bit loads, so we will take the fault
+before updating either register).
 
-Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
----
- backends/confidential-guest-support.c       | 12 ++++++++++++
- include/system/confidential-guest-support.h | 21 +++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+If you're interested in testing those patches you can find them here:
+https://patchew.org/QEMU/20250227142746.1698904-1-peter.maydell@linaro.org/
 
-diff --git a/backends/confidential-guest-support.c b/backends/confidential-guest-support.c
-index ed1ff78b5c..0fe76444a4 100644
---- a/backends/confidential-guest-support.c
-+++ b/backends/confidential-guest-support.c
-@@ -38,6 +38,17 @@ static int set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-     return -1;
- }
- 
-+static int set_guest_policy(ConfidentialGuestPolicyType policy_type,
-+                            uint64_t policy,
-+                            void *policy_data1, uint32_t policy_data1_size,
-+                            void *policy_data2, uint32_t policy_data2_size,
-+                            Error **errp)
-+{
-+    error_setg(errp,
-+               "Setting confidential guest policy is not supported for this platform");
-+    return -1;
-+}
-+
- static int get_mem_map_entry(int index, ConfidentialGuestMemoryMapEntry *entry,
-                              Error **errp)
- {
-@@ -52,6 +63,7 @@ static void confidential_guest_support_class_init(ObjectClass *oc, void *data)
-     ConfidentialGuestSupportClass *cgsc = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
-     cgsc->check_support = check_support;
-     cgsc->set_guest_state = set_guest_state;
-+    cgsc->set_guest_policy = set_guest_policy;
-     cgsc->get_mem_map_entry = get_mem_map_entry;
- }
- 
-diff --git a/include/system/confidential-guest-support.h b/include/system/confidential-guest-support.h
-index b2cfd1f70c..dbf787a04b 100644
---- a/include/system/confidential-guest-support.h
-+++ b/include/system/confidential-guest-support.h
-@@ -61,6 +61,10 @@ typedef enum ConfidentialGuestPageType {
-     CGS_PAGE_TYPE_REQUIRED_MEMORY,
- } ConfidentialGuestPageType;
- 
-+typedef enum ConfidentialGuestPolicyType {
-+    GUEST_POLICY_SEV,
-+} ConfidentialGuestPolicyType;
-+
- struct ConfidentialGuestSupport {
-     Object parent;
- 
-@@ -127,6 +131,23 @@ typedef struct ConfidentialGuestSupportClass {
-                            ConfidentialGuestPageType memory_type,
-                            uint16_t cpu_index, Error **errp);
- 
-+    /*
-+     * Set the guest policy. The policy can be used to configure the
-+     * confidential platform, such as if debug is enabled or not and can contain
-+     * information about expected launch measurements, signed verification of
-+     * guest configuration and other platform data.
-+     *
-+     * The format of the policy data is specific to each platform. For example,
-+     * SEV-SNP uses a policy bitfield in the 'policy' argument and provides an
-+     * ID block and ID authentication in the 'policy_data' parameters. The type
-+     * of policy data is identified by the 'policy_type' argument.
-+     */
-+    int (*set_guest_policy)(ConfidentialGuestPolicyType policy_type,
-+                            uint64_t policy,
-+                            void *policy_data1, uint32_t policy_data1_size,
-+                            void *policy_data2, uint32_t policy_data2_size,
-+                            Error **errp);
-+
-     /*
-      * Iterate the system memory map, getting the entry with the given index
-      * that can be populated into guest memory.
--- 
-2.43.0
+Thanks again for reporting this bug.
 
+-- PMM
 
