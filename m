@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F7CBC19F32
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D416C197BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnlvg-0007GU-TG; Thu, 27 Feb 2025 17:00:29 -0500
+	id 1tnlvx-0007Hh-M4; Thu, 27 Feb 2025 17:00:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnlvf-0007Fu-8m
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:00:27 -0500
+ id 1tnlvg-0007GW-Kt
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:00:28 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnlvd-0007Lt-4y
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:00:27 -0500
+ id 1tnlve-0007NE-Rf
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:00:28 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnlvO-000000007Ni-1hH6; Thu, 27 Feb 2025 23:00:10 +0100
-Message-ID: <6546c3a4-bd81-42ea-88a2-b2f88ec2fbb3@maciej.szmigiero.name>
-Date: Thu, 27 Feb 2025 23:00:05 +0100
+ id 1tnlvS-000000007Ni-1yx5; Thu, 27 Feb 2025 23:00:14 +0100
+Message-ID: <19c2adeb-dce1-4bed-85c7-43a0ba323ef8@maciej.szmigiero.name>
+Date: Thu, 27 Feb 2025 23:00:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 25/36] vfio/migration: Multifd device state transfer
  support - receive init/cleanup
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
  <b555ee5b753efbf2f7152f0692858802fc1bcb80.1739994627.git.maciej.szmigiero@oracle.com>
- <37865f56-cc4d-40ce-83ed-10e6d304ff01@redhat.com>
+ <87286139-a297-492c-869f-6673f344bba3@redhat.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <37865f56-cc4d-40ce-83ed-10e6d304ff01@redhat.com>
+In-Reply-To: <87286139-a297-492c-869f-6673f344bba3@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -110,7 +110,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.02.2025 18:46, Cédric Le Goater wrote:
+On 26.02.2025 18:28, Cédric Le Goater wrote:
 > On 2/19/25 21:34, Maciej S. Szmigiero wrote:
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
@@ -217,32 +217,30 @@ On 26.02.2025 18:46, Cédric Le Goater wrote:
 >> +    if (vfio_multifd_transfer_enabled(vbasedev)) {
 >> +        assert(!migration->multifd);
 >> +        migration->multifd = vfio_multifd_new();
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static void vfio_multifd_cleanup(VFIODevice *vbasedev)
+>> +{
+>> +    VFIOMigration *migration = vbasedev->migration;
+>> +
+>> +    g_clear_pointer(&migration->multifd, vfio_multifd_free);
+>>   }
 > 
-> When called from vfio_load_setup(), I think vfio_multifd_transfer_setup()
-> should allocate migration->multifd at the same time. It would simplify
-> the setup to one step. Maybe we could add a bool parameter ? because,
-> IIRC, you didn't like the idea of allocating it always, that is in
-> vfio_save_setup() too.
+> Please move vfio_multifd_cleanup() to migration-multifd.c.
 
-I have added a "bool alloc_multifd" parameter to
-vfio_multifd_transfer_setup() and renamed it to vfio_multifd_setup() for
-consistency with vfio_multifd_cleanup().
-
-Unexported vfio_multifd_new() now that it is called only from
-vfio_multifd_setup() in the same translation unit.
-
-> 
-> For symmetry, could vfio_save_cleanup() call vfio_multifd_cleanup() too ?
-> a setup implies a cleanup.
-
-Added vfio_multifd_cleanup() call to vfio_save_cleanup() with a comment
-describing that it is currently a NOP.
+Done now.
 
 > Thanks,
 > 
 > C.
+>
 
 Thanks,
 Maciej
+
+  
 
 
