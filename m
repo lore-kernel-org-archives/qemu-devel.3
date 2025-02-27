@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CCD4C021B8
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 00:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26E08C021B8
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 00:51:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnS3D-0005pQ-SV; Wed, 26 Feb 2025 19:46:56 -0500
+	id 1tnS7M-0007D6-J1; Wed, 26 Feb 2025 19:51:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnS33-0005lN-2m; Wed, 26 Feb 2025 19:46:49 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tnS7J-0007CS-Gj; Wed, 26 Feb 2025 19:51:09 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnS30-0001aE-Hp; Wed, 26 Feb 2025 19:46:44 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-22349bb8605so6673675ad.0; 
- Wed, 26 Feb 2025 16:46:41 -0800 (PST)
+ id 1tnS7H-00027E-K6; Wed, 26 Feb 2025 19:51:09 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2234e4b079cso4334675ad.1; 
+ Wed, 26 Feb 2025 16:51:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740617201; x=1741222001; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1740617466; x=1741222266; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gSPVvf0NeNrtOsaLQEdTT2usxAjGWKlZVgsywQLoB2U=;
- b=JcVxl0CefLglBbEd9bBhuSKMvyp+ZL2mgOsHwGYhY9VL390REjC/OHCmySdnttBtnk
- fRn2ndRNLs1UJIRoJl9g2xMlZf0CrvTr1umRttSfeqfEFktB+eDqTeEtPJhOV5JBeTMu
- cXrw4U01PyUigd/wcI5KHoY5EGlCx3y9OgwVooTi2dig/YFB6WpP3WKS758GuRqLxnFD
- jC0jZP70sQBXrgQFg3tTlqPV/pEp8Yd3FzLuzyt5/khDgoHij290X87Qz1QNBajInkoh
- nzUOuPUPqoqiKZUAPLHqB8pUeykf3WdMqUPF4IHU+85dqpEydoJbR2ku5WkGawfQQ3eQ
- ngKQ==
+ bh=3Q8bZXMLhhcmBHGsN34NU9PAndMI29LhpHM5xzUGPs4=;
+ b=dW0mSBFffrjdT3oknS3TfjtupnI5+eM5Z4MDQtNXGmSi3AAer79Gq+mixxRpuqEKXP
+ AlHQbg+7a97FIb6dCvZ+/GNvRxok4xbz62XAq2TXIlwCCzqCd3ChUKaT2okcTg07+JMQ
+ OLn3EdPxMEX4sgmQL7F+Ar7TdMo00uW8jwYwv+5b2wNb/6Nteo8pWI8trGWb/LCqm8in
+ lQt3kBAohpxXMnjxFK6ekh4R51xKTgWD0pnLgpdV3slKRiT+VkubfSyMV69GZROXWbdn
+ XCNd3sCfxp16JzC0FTQYXjhuuvsrm3zbi1FLWIx0HalzTQ2ZjBzXctqU6Sff6wGCBf0U
+ dMQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740617201; x=1741222001;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1740617466; x=1741222266;
+ h=in-reply-to:references:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=gSPVvf0NeNrtOsaLQEdTT2usxAjGWKlZVgsywQLoB2U=;
- b=snlZqftlA1WgI1s//qblRDK52+ydTjgnnpZWSjaXZP9nViNcQNZqcYbupVtQdLRJAK
- aDHD9tb8Tjnn1T5jWitTx6L/NwYuzazMVrU8PoABRMT84X5DTCsiZaOaSMrlmrEbHwG+
- 4px8z4eHF9RMkJJG8BOGCsRcI5jk0KRFXs15+P5Sq/rdkW877Ajw8FSnKKtGs7lMOYA3
- IyCHN/QQBgQ+v36kPHXpa6MYS6WLY1srQoRlWgbfLx6kfC4qNLeRjyftlN/OQhlcHaDP
- m336IdS665xZV+viKD6hozXNu0DFTwfTm2NBRcJyQvG9XAahBPXkcuQ8NAmHWMJXytJO
- Yd7A==
+ bh=3Q8bZXMLhhcmBHGsN34NU9PAndMI29LhpHM5xzUGPs4=;
+ b=Na89uQwcuAtBgVTJaVSibSDnlxy+yj6UtvYQbveStSo1BceT7WlWUR6DyXwb/JKYaD
+ zffgq97FmD4K6C466nFFSPX90mTM05dNnj3o/uAgeE7Lgi1CyAg1xImbHE9L2DCV00LD
+ cGf2DLuzwWSZzFgSk0wZwxc8OP9Q4Qj6XwZJClwRz12AfsY+nAebFkNh7R7jOkh7/bC/
+ NqTzxt/zFfcDipiwUvyidvaaKPmwfCT07+IUfsnyjtS6gFq+c3cU4cFnmtcc1YVDaAFN
+ lpQ/Sxo6qUrtPlmobN0q4IxZUvk2F6h2dJ4VwqKop6TWJvpjalLpgzIaCmOwveJ2cELH
+ ANmg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJAdfJ9y7IHCdDmMG9QGyQ/evJxWIdDbvv2VGZw5oXl/E8EMoO0nxmSiM9UfOmcNzuydiM89n+mW6B@nongnu.org,
- AJvYcCXiBnomg7LS2ndA6AHrDMs9NCzoELCGLTa2huDfxJ52KVRrIBoCu5SwmEZ27ndL4wLX7Rr4PuAs2N4=@nongnu.org
-X-Gm-Message-State: AOJu0YyK8VW6cTue8pUk0bYOyCsHOvYKLnsG6ggTBKQM44IVI6m1N6w4
- 7lTaRAxELQIa0JgRxt1fg8jYZqDHI9vRq4bUNOsd1pmB6AVcGUnP
-X-Gm-Gg: ASbGnctAv9eY8XbdWXmD2JgZotBziVxNTUingiOfVoDYQCrBnB9ez2LW8uaC7H90piI
- kX/sDld8Uv7g9uTvEE5Yjm7sXTC45ykVdDrV+lPMwRy280PAA6yhrsSAjn89esZqLZCr+EfvQY9
- mLB8u1QJf6MzgvJCx/DZLs/hNNyyTKxF8AUyMQNq+FzBW7RJ6BTWoX+ZnmlMmPVPweC+jKdhiv5
- BmCxXZECKACOzi36SNSTnsjQ0i5WWQzgtVaXiLHRA4IrmU7m5tyRAsbHXlYxC1tSNvh9AkZHIBm
- R3AOYdPOlF2PthuXJA==
-X-Google-Smtp-Source: AGHT+IGEcOSsQZsrQzJoZP4RjV2liMlOGZxzYsBsxARytK6vWiMRQZ+zcEYcd+UarymE3sZJYqICeQ==
-X-Received: by 2002:a05:6a00:1828:b0:732:5b10:572b with SMTP id
- d2e1a72fcca58-734790cbaf5mr14243403b3a.10.1740617200666; 
- Wed, 26 Feb 2025 16:46:40 -0800 (PST)
+ AJvYcCUDG7PqFeysYocHvfstD7Wnlqs6bBQoMyPgiYpnjoz85gYMsA2OwPniE143WiHSNqKfxmxjp5xY8/V+@nongnu.org,
+ AJvYcCVZbD8h0Yr6UmL5QyRZmPvpyFrAoiu+5N7JcZ8LiqpRZwKNYlpnfAjEt9VzDJl24owkyNqQZqVu9B4=@nongnu.org
+X-Gm-Message-State: AOJu0Yw/f5i1/zzhBD6oQfmykOSZSgxobbrBGIqFzfIrq0Og8/q8De0o
+ UfOAfBIvSTv5U4QDyqvbVbXVonJyTUpM/FGFPyGj1aHyIspd8LksdenPRQ==
+X-Gm-Gg: ASbGncvrhjLYkk77r2cCUg70AmhqBj10lLd9d9SVbWJrV5cz8bT9xLYokzosyVhCual
+ Nm0xL1KjMXCvi2itoHWPj1MSIRVKLTurWmLFOTaroGUJHL3KTUC5GsmrYCUsSXqn/F51wdQM01+
+ jk4j3sZJM3BKKZUA5B7KUAb2hYjX+6Ogg6PoUsTXRGLmuXBmCZO5bDpzhH/CH8qNLEjhPmo5xF4
+ ixWWSE4GbXMVWjKcJ2xNsG3gmngIWnjGroPmCrZOOX2o5CzJ22Ta3cPejFZRBr+68uBw6JGy/jL
+ LnwFCpTyAK7lyCkH6w==
+X-Google-Smtp-Source: AGHT+IFspvlg+fPzriTMbNVElkpHxs1sXvIvvZTZpUObrKtOAFOq3Qe7suEnOhKZL+naCzlvVDt23A==
+X-Received: by 2002:a17:902:eccf:b0:21f:6fb9:9299 with SMTP id
+ d9443c01a7336-22307b69880mr134966185ad.27.1740617465545; 
+ Wed, 26 Feb 2025 16:51:05 -0800 (PST)
 Received: from localhost ([1.146.90.134]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-734a00249absm215586b3a.95.2025.02.26.16.46.37
+ d9443c01a7336-223504e2291sm2605665ad.187.2025.02.26.16.51.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 16:46:40 -0800 (PST)
+ Wed, 26 Feb 2025 16:51:05 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 27 Feb 2025 10:46:33 +1000
-Message-Id: <D82TARV6T6PL.UR4MRK6PM5N2@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>, "Richard Henderson"
- <richard.henderson@linaro.org>, <qemu-ppc@nongnu.org>
-Subject: Re: [PATCH v2 06/15] target/ppc: Ensure powerpc_checkstop() is only
- called under TCG
+Date: Thu, 27 Feb 2025 10:50:59 +1000
+Message-Id: <D82TE63DN8E5.1M16STS88RJO6@gmail.com>
+Subject: Re: [PATCH 1/4] ppc/amigaone: Simplify replacement dummy_fw
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.19.0
-References: <20250127102620.39159-1-philmd@linaro.org>
- <20250127102620.39159-7-philmd@linaro.org>
- <fe541a6b-ab7b-4d61-aad2-2674b1fd3c9b@linux.ibm.com>
-In-Reply-To: <fe541a6b-ab7b-4d61-aad2-2674b1fd3c9b@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+References: <cover.1740243918.git.balaton@eik.bme.hu>
+ <d9cec2b2294887c3849ee651e72fd31ecf43a935.1740243918.git.balaton@eik.bme.hu>
+In-Reply-To: <d9cec2b2294887c3849ee651e72fd31ecf43a935.1740243918.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,56 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Jan 28, 2025 at 4:43 PM AEST, Harsh Prateek Bora wrote:
+On Sun Feb 23, 2025 at 3:52 AM AEST, BALATON Zoltan wrote:
+> There's no need to do shift in a loop, doing it in one instruction
+> works just as well, only the result is used.
 >
->
-> On 1/27/25 15:56, Philippe Mathieu-Daud=C3=A9 wrote:
->> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->> ---
->>   target/ppc/excp_helper.c | 6 ++----
->>   1 file changed, 2 insertions(+), 4 deletions(-)
->>=20
->> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
->> index 8956466db1d..b08cd53688c 100644
->> --- a/target/ppc/excp_helper.c
->> +++ b/target/ppc/excp_helper.c
->> @@ -19,6 +19,7 @@
->>   #include "qemu/osdep.h"
->>   #include "qemu/main-loop.h"
->>   #include "qemu/log.h"
->> +#include "system/tcg.h"
->>   #include "system/system.h"
->>   #include "system/runstate.h"
->>   #include "cpu.h"
->> @@ -30,7 +31,6 @@
->>   #include "trace.h"
->>  =20
->>   #ifdef CONFIG_TCG
->> -#include "system/tcg.h"
->>   #include "exec/helper-proto.h"
->>   #include "exec/cpu_ldst.h"
->>   #endif
->> @@ -443,13 +443,11 @@ void helper_attn(CPUPPCState *env)
->>   static void powerpc_mcheck_checkstop(CPUPPCState *env)
->>   {
->>       /* KVM guests always have MSR[ME] enabled */
->> -#ifdef CONFIG_TCG
->>       if (FIELD_EX64(env->msr, MSR, ME)) {
->>           return;
->>       }
->> -
->> +    assert(tcg_enabled());
->
-> Shouldn't this be a no-op if not TCG ?
->
-> Nick, please advise ?
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 
-If KVM, I think we would rather catch that it got called instead of
-no-op.
+Resulting asm looks right to me.
 
-At this point the guest is crashed, so it's not overly rude to
-assert. I'm okay with this.
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-Thanks,
-Nick
+> ---
+>  hw/ppc/amigaone.c | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
+>
+> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+> index b02792221c..4290d58613 100644
+> --- a/hw/ppc/amigaone.c
+> +++ b/hw/ppc/amigaone.c
+> @@ -41,10 +41,7 @@
+> =20
+>  /* AmigaOS calls this routine from ROM, use this if no firmware loaded *=
+/
+>  static const char dummy_fw[] =3D {
+> -    0x38, 0x00, 0x00, 0x08, /* li      r0,8 */
+> -    0x7c, 0x09, 0x03, 0xa6, /* mtctr   r0 */
+> -    0x54, 0x63, 0xf8, 0x7e, /* srwi    r3,r3,1 */
+> -    0x42, 0x00, 0xff, 0xfc, /* bdnz    0x8 */
+> +    0x54, 0x63, 0xc2, 0x3e, /* srwi    r3,r3,8 */
+>      0x7c, 0x63, 0x18, 0xf8, /* not     r3,r3 */
+>      0x4e, 0x80, 0x00, 0x20, /* blr */
+>  };
+
 
