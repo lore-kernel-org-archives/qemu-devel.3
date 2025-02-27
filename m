@@ -4,141 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37DA5C021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE2FC021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnZGB-00043M-PL; Thu, 27 Feb 2025 03:28:47 -0500
+	id 1tnZJG-0006Kk-QN; Thu, 27 Feb 2025 03:31:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnZG9-000438-KU
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:28:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnZG7-0005GZ-23
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:28:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740644921;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0GbEhZH6Be8IYrABq2wy/IvkfDwsIUpHCdvJoV+uoO8=;
- b=PNMjLunc6+VOp1lIJwLTx+BUSDwnJscBioAo/SThfpJMZVmO52GqujHRt4oHsHb9djQ0C0
- 3V3lEyCsaeBpVjVAu4ty7vAjBKKOst+vFKIVHLt4bUz6G4MME81eDlHI0eOFUmEeSbhrNt
- Cv8snoa+RBIZwNJEzUJ65OWxSHcOT5g=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-222-d-oUxVjSP_qRz9uU6E-GNQ-1; Thu, 27 Feb 2025 03:28:39 -0500
-X-MC-Unique: d-oUxVjSP_qRz9uU6E-GNQ-1
-X-Mimecast-MFC-AGG-ID: d-oUxVjSP_qRz9uU6E-GNQ_1740644918
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4393e89e910so3257145e9.0
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 00:28:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740644918; x=1741249718;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tnZJE-0006KK-Sy; Thu, 27 Feb 2025 03:31:57 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tnZJC-0005y1-F0; Thu, 27 Feb 2025 03:31:56 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-220c8f38febso10750165ad.2; 
+ Thu, 27 Feb 2025 00:31:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740645112; x=1741249912; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0GbEhZH6Be8IYrABq2wy/IvkfDwsIUpHCdvJoV+uoO8=;
- b=rRTUQLdTZKNGQpTWbXmkeRL5glkAGviOgHT2XglNt53Azwbcv4YMDD8Ri0LSkRFX+D
- eCXUNKuy5oTgMGf7KX6JuznMqdfJHe3Q0IWaMSCiq9g/fW88aZfs0qLfe8ipBaIcRKZl
- W1UEqr5Ah2ErHQ3z7b9/NnIk5vwK1znftYiJDiz8litqigH6GlMYFcGBHgq0gaUGpHgs
- +x38B9fWks15UoWLnqWJqIO0JHLe6WecJJBkB161j6JGDO2RFeazY+yaqSntXvygsLsL
- HSNAw8hPyxPEXECNRi88Tgr1GbURqtqWiWFUlzkUBwchuRfU/c75ws7Nwx/2EVYklpid
- AB1Q==
-X-Gm-Message-State: AOJu0YzWHl3DIztl5xOcvZHssmTgRDtxB89H8dSH94ZTmlZ4nXkDdG1s
- j7MBjmoZ1apZFKqt3J0OGbLHd/RJ2qBeBVReqpjcHcvksRmjmE33iOKIbPSRr5oQI3N1uP7GFsW
- OeId750a5IK6idIpe1Ldg5T1YO121NBPJU/KWl27ULUC7+lA31NRW
-X-Gm-Gg: ASbGncsywiIlThMgfH7gNy0EJnOE9nVvD5azlTvrRXZqEmconSzjUwSX1ncWIVNtSmr
- AbAG5kA8z1Tsnh3EpC7sfI0T4ujabkPm2dowRi+G15UY3tOYUG9Ofkqdh+Vmy996NTMk35sJlDt
- xpWlFtWnUOIBmSVNDQw5tZXEVINsR7rQsrGiPM/HJEKHj7IcmnBokWS3HoLE9q7aL2/WOobKYB1
- SoR3dcQOG/UEF+Vr7h0QNrpj+G2G7suVAAf+zzXzztxopZHl5d8NjarrHojiHo1Q/wAWSwjjhXD
- 7y71Stb9ARbKvd1SqaL79GwUtRd8EYcr3icKtxjYjBw4nxlf7bKXQi83kUE=
-X-Received: by 2002:a05:600c:5246:b0:439:9c3a:bba7 with SMTP id
- 5b1f17b1804b1-43ab0f8dab7mr86553485e9.28.1740644918052; 
- Thu, 27 Feb 2025 00:28:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEK5IlJtnsrA4MgxT2j6Ouse4taOI8gVGOTXuGrXIp7koALKm4QBMFQn1GqQ/wNuhRIjjmWCQ==
-X-Received: by 2002:a05:600c:5246:b0:439:9c3a:bba7 with SMTP id
- 5b1f17b1804b1-43ab0f8dab7mr86553285e9.28.1740644917679; 
- Thu, 27 Feb 2025 00:28:37 -0800 (PST)
-Received: from ?IPV6:2a01:cb19:9004:d500:a732:5611:7f59:8bb3?
- ([2a01:cb19:9004:d500:a732:5611:7f59:8bb3])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43b736f74f3sm15003135e9.8.2025.02.27.00.28.36
+ bh=PrDpXVe8dpv7t1I8KLkj3/VmjhrRhfuHtNzj44soXF4=;
+ b=DeoVbq4RTGrgNloRT0L5fH5tPdERt9Ju6ovC3TIvISs4MOiwBiCjwuHLZMm/WA0QZm
+ hTSiWBf2+I6KnMcZJB1eukLznMt8gu1mTWoeVRCkSILap4ctWLyqVe9pzSFCGB632am2
+ Z7rzcxV5hjjvLNtOnDjKWbGYpXGO22MFgPlDD+LKHrie8R3d5iVgqh/ZET3UcH/yJ3fz
+ h56m6oRrJyQRRfx412VRwhQCEefiSHhzYL8Pog4P6vpFKjwzLP0zH57c+Ae8CpIPt4kj
+ 8p2OkDsxvWtoABcJhdLRzZ7mdNHXhMvk2lLCTX+D/ag35B1vh380JxKUB81YcTlCxGp2
+ zCPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740645112; x=1741249912;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=PrDpXVe8dpv7t1I8KLkj3/VmjhrRhfuHtNzj44soXF4=;
+ b=f94n39tBq/DHoky5MDmMT3WXxWT9JriDwV8151cO+1uiLdsdKBx+Rpb9TjMV0CvGdS
+ bT/rT9TAoBmQRle9jIeGAaBPRwm8NuS8PQwPZYDYH9VfiVUkWZyVr5TxG1W9AaYiHKEj
+ SFSBWJRIE2O+YATckdUEcrOIBmTKafL1XAeruOrtdSBQCdKzf40JFsVaJ6luoRWg1GFx
+ 1A7hvc+/uscQzpYqiX30rbPnqcDGydczCun+JQniHlQPTQen4spBoWqL3q9VHMTY+v94
+ jijgBEWE8oMOO31gUlWMimA1DD2WdLzG6apda32VHk0SW6JH0M4OzhW4Dx0hvbmpYGwm
+ mV8A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdeydDKWw8V201gbPQhaqFMAxIJrbpBIoxEVTjTw39ZsqL2Nk2NXvu0ujubeTtfZlsYU9Cx5j+Ow==@nongnu.org
+X-Gm-Message-State: AOJu0YyikKOPDTHOs2nUiunEbG+GMsd7QAdEV2aXdb84hiYqMsgPOZpJ
+ 2KTEJqGyyIl4fDC7V0DIYVqCrq9OUOqHQM+QRxYJHlifZvs53T4VXTM+Wg2p
+X-Gm-Gg: ASbGnctwi5gBkD/GcpoKo5GUV160UiUsLcuoo/LRS6TjWdgt7ORTk/Ra1bI/WtAmM+I
+ Jo46wRJkw/KsFZeVNgwFtUnvoeaQw4rg2ZCNXlJu0o+SpSj+0NLXWSDasFEtQpwESLe/F/DpZHk
+ 2dhyMqO+dVbPPwSIe5/StYSBD0gPr3pK5btegc6OrM2BskV5gbRM05RkmN8r7xh6/6hkupZw9Jj
+ E77+1bPkxfjHz20hZiW8CnOaOkRIaXcM8ElG2W9IeVVgLv9tZgFrmrhQjU2jfr6VbkVo/t7kKm2
+ tYVPCHkyhqYExxQAmw==
+X-Google-Smtp-Source: AGHT+IGIOOfP8MH6qONbfyQzSPYWXzA4dPDwID+p0e5xZCDCTQyfAn/H52gTtFG369BANEf+o2a5ow==
+X-Received: by 2002:a17:903:41c7:b0:220:f40c:71e9 with SMTP id
+ d9443c01a7336-2219ff8288amr383551145ad.9.1740645110612; 
+ Thu, 27 Feb 2025 00:31:50 -0800 (PST)
+Received: from localhost ([1.146.124.39]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-223501d323bsm9053765ad.3.2025.02.27.00.31.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 00:28:36 -0800 (PST)
-Message-ID: <4a8bcc23-8090-4877-86b2-e5ac126a6cb4@redhat.com>
-Date: Thu, 27 Feb 2025 09:28:35 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/10] vfio/igd: Remove legacy mode
-To: Tomita Moeko <tomitamoeko@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
- <corvin.koehne@gmail.com>
-References: <20250224182927.31519-1-tomitamoeko@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250224182927.31519-1-tomitamoeko@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ Thu, 27 Feb 2025 00:31:50 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 27 Feb 2025 18:31:44 +1000
+Message-Id: <D8336Y20C01W.31TRBEP0KTC1U@gmail.com>
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
+Subject: Re: [PATCH 3/4] ppc/amigaone: Add default environment
+X-Mailer: aerc 0.19.0
+References: <cover.1740243918.git.balaton@eik.bme.hu>
+ <f1b53e0822111c6c557797adcc75f8d2c7eed17f.1740243918.git.balaton@eik.bme.hu>
+ <D82U15TLWUH7.2HKA1PQKQGVMM@gmail.com>
+ <3a522e6f-5800-c530-e59f-a602c11a0fea@eik.bme.hu>
+In-Reply-To: <3a522e6f-5800-c530-e59f-a602c11a0fea@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,70 +101,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Tomita,
+On Thu Feb 27, 2025 at 12:18 PM AEST, BALATON Zoltan wrote:
+> On Thu, 27 Feb 2025, Nicholas Piggin wrote:
+>> On Sun Feb 23, 2025 at 3:52 AM AEST, BALATON Zoltan wrote:
+>>> Initialise empty NVRAM with default values. This also enables IDE UDMA
+>>> mode in AmigaOS that is faster but has to be enabled in environment
+>>> due to problems with real hardware but that does not affect emulation
+>>> so we can use faster defaults here.
+>>
+>> So this overwrites a blank NVRAM file. Okay I suppose if that works.
+>
+> We're emulating what U-Boot does. If it does not find a valid environment=
+=20
+> it will overwrite with defaults.
 
-+Corvin
+AFAIKS u-boot provides a default environment if the CRC does not match.
 
-On 2/24/25 19:29, Tomita Moeko wrote:
-> This patchset removes some legacy checks and converts the legacy mode
-> implicitly enabled by BDF 00:02.0 into x-igd-* options, including:
-> * Removing PCI ROM BAR and VGA IO/MMIO range check before applying quirk
-> * Using unified x-igd-opregion option for OpRegion access.
-> * Introducing new x-igd-lpc option for the LPC bridge / Host bridge ID
->    quirk. Currently this is only supported on i440fx.
-> * Extending quirk support when IGD is not assigned to BDF 00:02.0
-> 
-> The first 2 patches of this patchset was taken from a previous one,
-> details can be found at:
-> https://lore.kernel.org/all/20250124191245.12464-1-tomitamoeko@gmail.com/
-> 
-> This patchest was mainly tested on Alder Lake UHD770, with Debian 12
-> (kernel 6.1), Windows 11 (driver 32.0.101.6458) and Intel GOP driver
-> 17.0.1081.
+If all-zeros env was created with correct CRC, IMO it should be
+accepted.
 
-Did you try a Linux guest ?
+Does u-boot write back a default environment or corrected CRC to NVRAM
+if it was missing/bad?
 
-Could you provide the QEMU command line please ? I would like to
-reproduce on the AlderLake-S GT1 system I have access to.
+> These defaults are to get the same=20
+> behaviour and additionally to enable UDMA for IDE driver that until now=
+=20
+> had to be done manually to get the same speed as with pegasos2 where this=
+=20
+> is enabled by default. (That's because these VIA VT82C686B chips had some=
+=20
+> issues with DMA even in PCs but the emulated devices work so can be=20
+> enabled and that's faster on QEMU too.)
+>
+>> You could have a property to supply the default environment
+>> alternatively.
+>
+> U-Boot has the defaults hard coded. I set and use it from the same file s=
+o=20
+> I don't see the need to send this through a property. (Properties are als=
+o=20
+> listed in QEMU Monitor with info qtree and I don't know how a long string=
+=20
+> with embedded zeros would look there so I don't think that's a good idea.=
+)
+>
+>> Anywhere to document this behaviour for users?
+>
+> I've added docs in the cover letter that I hope would end up in the=20
+> changelog and I have a separate page for this which I'll update at=20
+> qmiga.codeberg.page (Haven't done that yet but would do it by the=20
+> release once this is merged.)
 
-Also, since you spent quite of lot time on IGD support, would you
-mind adding a vfio-igd entry in the MAINTAINERS file and propose
-your self as a maintainer ? The aim would be to keep you informed
-of the proposed changes on the vfio-igd device, not to handle PRs.
-  
-> If the design is good to go, I will update the documentation also.
+Okay. It would still be better to add QEMU options to docs/ files and
+point the amiga pages to that rather than the other way around, since
+this is QEMU specific stuff. Doc in cover letter unfortunately is
+not very good since it  just gets lost.
 
-yes please.
+>
+>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>> ---
+>>>  hw/ppc/amigaone.c | 37 ++++++++++++++++++++++++++++++++++++-
+>>>  1 file changed, 36 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+>>> index 5273543460..35e4075cc3 100644
+>>> --- a/hw/ppc/amigaone.c
+>>> +++ b/hw/ppc/amigaone.c
+>>> @@ -52,6 +52,28 @@ static const char dummy_fw[] =3D {
+>>>  #define NVRAM_ADDR 0xfd0e0000
+>>>  #define NVRAM_SIZE (4 * KiB)
+>>>
+>>> +static char default_env[] =3D
+>>> +    "baudrate=3D115200\0"
+>>> +    "stdout=3Dvga\0"
+>>> +    "stdin=3Dps2kbd\0"
+>>> +    "bootcmd=3Dboota; menu; run menuboot_cmd\0"
+>>> +    "boot1=3Dide\0"
+>>> +    "boot2=3Dcdrom\0"
+>>> +    "boota_timeout=3D3\0"
+>>> +    "ide_doreset=3Don\0"
+>>> +    "pci_irqa=3D9\0"
+>>> +    "pci_irqa_select=3Dlevel\0"
+>>> +    "pci_irqb=3D10\0"
+>>> +    "pci_irqb_select=3Dlevel\0"
+>>> +    "pci_irqc=3D11\0"
+>>> +    "pci_irqc_select=3Dlevel\0"
+>>> +    "pci_irqd=3D7\0"
+>>> +    "pci_irqd_select=3Dlevel\0"
 
-> A open question is whether the old legacy mode behavior should be kept
-> or not. Checking if all the condition of legacy mode were met and
-> toggling correspoding options is more complicated then I expected :(
-> Any ideas would be appreciated.
+Hmm, the u-boot default env (before it was removed) selected
+edge for these. Was that wrong?
 
-I will let Alex comment,
+>>> +    "a1ide_irq=3D1111\0"
+>>> +    "a1ide_xfer=3DFFFF\0";
+>>> +#define CRC32_DEFAULT_ENV 0xb5548481
+>>> +#define CRC32_ALL_ZEROS   0x603b0489
+>>> +
+>>>  #define TYPE_A1_NVRAM "a1-nvram"
+>>>  OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
+>>>
+>>> @@ -97,7 +119,7 @@ static void nvram_realize(DeviceState *dev, Error **=
+errp)
+>>>  {
+>>>      A1NVRAMState *s =3D A1_NVRAM(dev);
+>>>      void *p;
+>>> -    uint32_t *c;
+>>> +    uint32_t crc, *c;
+>>>
+>>>      memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram"=
+,
+>>>                                    NVRAM_SIZE, &error_fatal);
+>>> @@ -116,12 +138,25 @@ static void nvram_realize(DeviceState *dev, Error=
+ **errp)
+>>>              return;
+>>>          }
+>>>      }
+>>> +    crc =3D crc32(0, p + 4, NVRAM_SIZE - 4);
+>>> +    if (crc =3D=3D CRC32_ALL_ZEROS) { /* If env is uninitialized set d=
+efault */
+>>> +        *c =3D cpu_to_be32(CRC32_DEFAULT_ENV);
+>>> +        /* Also copies terminating \0 as env is terminated by \0\0 */
+>>> +        memcpy(p + 4, default_env, sizeof(default_env));
+>>> +        if (s->blk) {
+>>> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p=
+, 0);
+>>> +        }
+>>> +        return;
+>>> +    }
+>>>      if (*c =3D=3D 0) {
+>>>          *c =3D cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
+>>>          if (s->blk) {
+>>>              blk_pwrite(s->blk, 0, 4, p, 0);
+>>>          }
+>>>      }
+>>> +    if (be32_to_cpu(*c) !=3D crc) {
+>>> +        warn_report("NVRAM checksum mismatch");
+>>> +    }
+>>
+>> Maybe the default environment should be set if there is no CRC? If there
+>> is a CRC already then that seems to indicate a valid rom file was
+>> supplied and user wanted it blank.
+>
+> The idea is to allow supplying an environment via the backing file or let=
+=20
+> users edit it and clear the checksum in which case it will take the=20
+> supplied data and only fix the checksum. Unlike U-Boot it will only=20
+> replace empty backing file with defaults. (This is kind of undocumented=
+=20
+> for advanced users only but that's why the above code looks like that.)=
+=20
+> Having an empty NVRAM does not make much sense as U-Boot always has some=
+=20
+> values there so it's never empty. If it finds empty NVRAM then installs=
+=20
+> default env which is to help new users so they only need to create an=20
+> empty file to get started. It also works without backing file in which=20
+> case we want to use defaults and keep it persistent only for the session.
+>
+>> This can also be rewritten:
+>>
+>>    crc =3D crc32(0, p + 4, NVRAM_SIZE - 4);
+>>    if (crc =3D=3D CRC32_ALL_ZEROS) { /* If env is uninitialized set defa=
+ult */
+>>        /* Also copies terminating \0 as env is terminated by \0\0 */
+>>        memcpy(p + 4, default_env, sizeof(default_env));
+>>        crc =3D CRC32_DEFAULT_ENV;
+>>    }
+>>    if (*c =3D=3D 0) {
+>>        *c =3D cpu_to_be32(crc);
+>>        if (s->blk) {
+>>            blk_pwrite(s->blk, 0, 4, p, 0);
+>>        }
+>>    } else if (be32_to_cpu(*c) !=3D crc) {
+>>        warn_report("NVRAM checksum mismatch");
+>>    }
+>
+> I have the checksum check in separate if to warn if there is a checksum=
+=20
+> but it's wrong because I only want it to fix checksum if it's zero but no=
+t=20
+> touch it otherwise. Basically it will only overwrite zero values but leav=
+e=20
+> nonzero values there. (Might be useful for testing what does the guest do=
+=20
+> if the checksum is wrong, although on real machine U-Boot would have=20
+> replaced the env with default in that case so this would only happen if=
+=20
+> the NVRAM is changed during runtime without updating the checksum.)
+
+Right, you can just rewrite it a bit simpler to have only one exit point
+and only do the blk_pwrite once etc I think (although my version might
+have had a bug it was a bit hasty but you get the idea).
 
 Thanks,
-
-C.
-
-  
-> Tomita Moeko (10):
->    vfio/igd: Remove GTT write quirk in IO BAR 4
->    vfio/igd: Do not include GTT stolen size in etc/igd-bdsm-size
->    vfio/igd: Remove rombar check for legacy mode
->    vfio/igd: Remove implicit VGA access enabled by legacy mode
->    vfio/pci: Make vfio_populate_vga static
->    vfio/igd: Consolidate OpRegion initialization into a single function
->    vfio/igd: Move LPC bridge initialization to a separate function
->    vfio/pci: Add placeholder for device-specific config space quirks
->    vfio/igd: Refactor vfio_probe_igd_bar4_quirk into pci config quirk
->    vfio/igd: Replace legacy mode with options
-> 
->   hw/vfio/igd.c        | 476 ++++++++++++++-----------------------------
->   hw/vfio/pci-quirks.c |  51 +----
->   hw/vfio/pci.c        |  33 +--
->   hw/vfio/pci.h        |  12 +-
->   4 files changed, 166 insertions(+), 406 deletions(-)
-> 
-
+Nick
 
