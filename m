@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C45BC021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 10:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCD7C021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 10:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnb2C-0001Zb-D8; Thu, 27 Feb 2025 05:22:30 -0500
+	id 1tnb59-0004E4-Um; Thu, 27 Feb 2025 05:25:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnb25-0001Yy-CW
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:22:21 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnb50-0004DF-Qm
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:25:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnb22-0000My-O4
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:22:20 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnb4y-0000sm-TE
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:25:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740651737;
+ s=mimecast20190719; t=1740651920;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pMuTWyqSqLa/UwjoiexjicSoPCl5cwKsBC4HRzQ9He8=;
- b=LKm8yACwfcr2hj49y8OK61XtDju2rMdKMf7KGOWgR4Ebai3Cl9f9MxX9vRxYzsYJsh82LD
- 8CfK5TTm5kuBoK+TY7GF2sdyNt8jK5V9jFtj41fxw2Dg0D85esdqdTgIISQCqusgd/35vQ
- BvuWsCZiyu8hTDGRbfamaXrnP27mBq8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=4izwBpHuU7+6BaLcXuwAJHA8PZ1Zetd5X6CeOgk/MGw=;
+ b=heV9O37byXhlLLAuq9K9mqe9t0+EDJF3SKz2rSNjJWYcfCzTtfuq8nlBHA5c4djD5n9dSM
+ x2ZgzvKhwVImFLjeU0hNwjEfI+pw9vPcwVzt77ZRUy6wpTgsjR4xUyO7CtZ04xr/LyOnHY
+ MlqqQivnO76apXPusU/kB55SA13P7Ac=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-yc2l8f3eMEuNtH8UG-l5Lw-1; Thu,
- 27 Feb 2025 05:22:11 -0500
-X-MC-Unique: yc2l8f3eMEuNtH8UG-l5Lw-1
-X-Mimecast-MFC-AGG-ID: yc2l8f3eMEuNtH8UG-l5Lw_1740651731
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-rkTG27GSNMSSXkicS2YikA-1; Thu,
+ 27 Feb 2025 05:25:15 -0500
+X-MC-Unique: rkTG27GSNMSSXkicS2YikA-1
+X-Mimecast-MFC-AGG-ID: rkTG27GSNMSSXkicS2YikA_1740651914
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 138821801A16; Thu, 27 Feb 2025 10:22:10 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96B8E190ECDF; Thu, 27 Feb 2025 10:25:14 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A731E180036E; Thu, 27 Feb 2025 10:22:09 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C9041944F2E; Thu, 27 Feb 2025 10:25:13 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1819521E66B9; Thu, 27 Feb 2025 11:22:07 +0100 (CET)
+ id B013121E66B9; Thu, 27 Feb 2025 11:25:10 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,  eduardo@habkost.net
-Subject: Re: [PATCH v2 4/6] qdev: Change values of PropertyInfo member @type
- to be QAPI types
-In-Reply-To: <Z8Avjov46b3baoJr@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,
+ pbonzini@redhat.com,  eduardo@habkost.net
+Subject: Re: [PATCH v2 6/6] qdev: Improve a few more PropertyInfo
+ @description members
+In-Reply-To: <Z8Aw6wcsEiU_D7nB@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
  =?utf-8?Q?=C3=A9=22's?= message of
- "Thu, 27 Feb 2025 09:25:34 +0000")
+ "Thu, 27 Feb 2025 09:31:23 +0000")
 References: <20250227085601.4140852-1-armbru@redhat.com>
- <20250227085601.4140852-5-armbru@redhat.com>
- <Z8Avjov46b3baoJr@redhat.com>
-Date: Thu, 27 Feb 2025 11:22:07 +0100
-Message-ID: <87eczjg01c.fsf@pond.sub.org>
+ <20250227085601.4140852-7-armbru@redhat.com>
+ <Z8Aw6wcsEiU_D7nB@redhat.com>
+Date: Thu, 27 Feb 2025 11:25:10 +0100
+Message-ID: <87a5a7fzw9.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -92,25 +93,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On Thu, Feb 27, 2025 at 09:55:59AM +0100, Markus Armbruster wrote:
->> PropertyInfo member @type is externally visible via QMP
->> device-list-properties and qom-list-properies.
->>=20
->> Its meaning is not documented at its definition.
->>=20
->> It gets passed to as @type argument to object_property_add() and
+> On Thu, Feb 27, 2025 at 09:56:01AM +0100, Markus Armbruster wrote:
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>> ---
+>>  hw/block/xen-block.c             | 2 +-
+>>  hw/core/qdev-properties-system.c | 2 +-
+>>  hw/core/qdev-properties.c        | 1 +
+>>  hw/s390x/ccw-device.c            | 4 ++--
+>>  target/sparc/cpu.c               | 1 +
+>>  5 files changed, 6 insertions(+), 4 deletions(-)
 >
->                  ^^^^^  "passed as the @type argument" ?
-
-Yes.
-
->> object_class_property_add().  This argument's documentation isn't of
->> much help, either:
-
-[...]
-
 > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+>
+>> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+>> index 5a801057db..c04df3b337 100644
+>> --- a/hw/core/qdev-properties.c
+>> +++ b/hw/core/qdev-properties.c
+>> @@ -247,6 +247,7 @@ static void set_bool(Object *obj, Visitor *v, const =
+char *name, void *opaque,
+>>=20=20
+>>  const PropertyInfo qdev_prop_bool =3D {
+>>      .type  =3D "bool",
+>> +    .description =3D "on/off",
+>
+> Awkward as on/off for QemuOpts, but JSON true/false  for QMP, but I
+> guess clarifying this is beyond the scope of the .description field.
 
-Thank you!
+In my view, description applies to human-friendly dotted-keys syntax,
+not to JSON.  Trying to make it work for both would result in verbose
+and confusing descriptions.
+
+Thanks!
 
 
