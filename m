@@ -4,86 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9C16C19F32
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 18:14:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 458DCC19F32
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 18:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tniNc-00015g-R6; Thu, 27 Feb 2025 13:13:04 -0500
+	id 1tniT1-0003ri-Gc; Thu, 27 Feb 2025 13:18:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <venture@google.com>)
- id 1tniNH-00013n-Bb
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 13:12:50 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <venture@google.com>)
- id 1tniND-0006pA-3N
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 13:12:40 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-390df942558so930745f8f.2
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 10:12:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1740679955; x=1741284755; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2MLgPcoWN1rjM+lw/xMIBwTa10ujDuMKXxMFFUlvkoE=;
- b=pNfQ9l5as9G0OmDmC3YRhbAmYbCsmQFtyxWL5DC0KZDhXlxp9FcIJDqRKQG14Ea2D1
- kaRb8MeknKKhyW61nYjR+hVKyykCQwD+xbYoOILxAM9T5U5NMtrlXc/krH4ZMxM4VRNi
- NB0I45nGjFoOGTYeWHMnSXAiW99lRo977N1MFxo6LP/TFJJm9538KJLBvzmX/8zIp4pr
- Mu2l5CGHdN6Kus2XBlKBOqPEbke0jKldOy87JCGGWTdEyKRoDIY93SNMU7Bz9CHBtDaL
- lXh1crpolpJZo+aYSi8pCgezjyaSROQ58Af4fS+9Kcw4JYY/OwDb2261rndQMlKG2i9x
- WtfQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tniSq-0003hl-CS
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 13:18:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tniSo-0007fj-OR
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 13:18:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740680304;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=785TVKlH/oXg0JjIveQPUvowxX+WXLxIN+Z9t75+dXw=;
+ b=SPXGGmq47SJYwEvHjs4VkIZwq7KWR5GYOIJKFIXn1qqc21T218uVmyw11+y6O8SEYN7y1u
+ c8y9plknBNdo11VYco/TcbyxZUXMvMDdIE5yUsEI+xy1SXbh4fkZXvkn87RuM1s65vYePD
+ eCXaiRYZj6s6y0Y55hIkh+ytVz9HfX0=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-517-bfB3CLMrPvW31oRU3-Uw_Q-1; Thu, 27 Feb 2025 13:18:22 -0500
+X-MC-Unique: bfB3CLMrPvW31oRU3-Uw_Q-1
+X-Mimecast-MFC-AGG-ID: bfB3CLMrPvW31oRU3-Uw_Q_1740680301
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-abb76bd0feeso190774366b.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 10:18:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740679955; x=1741284755;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1740680301; x=1741285101;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2MLgPcoWN1rjM+lw/xMIBwTa10ujDuMKXxMFFUlvkoE=;
- b=rK+9NMW7osXiJ+6AICJuxjU9thgwALFzfh/IDqg3GHpwXSGbHQiAmJPI8zF/7LsS0P
- DuSQwz3oxyPkAeqY6qMSrXcUM5Ci/8RpABXu2P+4hVxJR4rPoxOKBzmKyS9kHF+juND6
- 1tNZpZPRRTE34+p/ITETwrJI6V+pYtDtSpH5JxdnxGFPabRbJfu7YtYIRPxHIDZrh7DO
- N04sphM8dqxPCEKIHyiYQfeFFhUXW+0oqdH0ZHSSqwOxmfOESfM+Nw6tBHwnC7XPgm2q
- KdwSsyd8zeJ6LudNcbWu/nTtuBwMZMCA4dVgP/xk2K8EE5Tmcy0T0F0Dci3x71N8gcaf
- RkcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCAabRrVFbJNGBdSdz2jMiCWm0FDbmBIGN6PCnN7mAVHRpVaOk8yR/WWhLNBHS+T0RuOExg3Tuod/a@nongnu.org
-X-Gm-Message-State: AOJu0YyrhITPyJLxhI5LlCegKZe3VnTCXe3HAMUC8hfAk2Abp1HTWsmj
- etwfHdkL27yF0tYJqFreZoRdyKj9jFfbVJD5HzNceKqM0uPNzOUb0Knv/225y2YhYtv2FCy77dX
- V6PQvhnp4TBz8y3KaWpN6jBFscsfMNDlC0W6i
-X-Gm-Gg: ASbGncvf0Nfnn60yE1sOa8qO5XQEk2Z0IE2dLu3hXWy4C41TfoTtb7yYDcCWdlX38ri
- XCHOuGp6q6a4CYQG52oCge52ZFD4urzXb2+lURvC+GJRYxAdNFxqPJOxKl2ax7L2HQtl5eZ9tvf
- ZVvbCcx7nBlXzOmhRFYFIj4Zw/8MMvvuVZbOWAow==
-X-Google-Smtp-Source: AGHT+IERnLoesF6ieTS3o5U/33GNuKCHjx+JRBZujMZ1NbRYoINtE1qVTBUNEplR7A+zjb2uPG1lAmL7tTPrasPyScQ=
-X-Received: by 2002:a5d:47cd:0:b0:38d:e481:c680 with SMTP id
- ffacd0b85a97d-390ec9bb569mr160835f8f.18.1740679955448; Thu, 27 Feb 2025
- 10:12:35 -0800 (PST)
+ bh=785TVKlH/oXg0JjIveQPUvowxX+WXLxIN+Z9t75+dXw=;
+ b=tW8bcKqdov63ZFwyxJu7EG3rG9abN4LKNHY1f3yqdg5ybAlgm/FCvn4vYXuqrFxiI1
+ klYne1xVO1Lam/fStWfdvtMDatb83WyaMUdsMBm4M4SyT69fkXH5YB6X2OlLVdLKTHbA
+ dkG6BPDcQBGb+4dff6gOnbzFulmfMbQBLs1D1RfVokS24cYr+Ek5T4O3hVhATtpx5Dp+
+ 6nbulqfUr6UaMe/rBjxzdnmzjPKJYSqgzlnAQkM7y9MCqtO0uW6K3lw2SUvURW6Qa43p
+ 3bWKnz0xWafxnx0kpuXoB39pF7qdFryf9vDgUWBp6cwj+UD3lHXkOOZ7ineZyE64lA9y
+ uKeQ==
+X-Gm-Message-State: AOJu0Yxt2ceixGoZY93idPg1wVre2BpxZtr8vn7cWdjXgB9QfiLHMrd6
+ XTRaNupO01UtxeOusfWBJNPaoaG8D6orWaOvHxOfFq8o6VeO3LTeojdGUgNgsaz3ajHUEUbnD9i
+ ThhQVgFNhMm1abFLg8FGJVqczZcnZnL/eRZHUeOZboh/eJkNxX8yBueatu7Pv1AY=
+X-Gm-Gg: ASbGnctxb0bsjPaL23pFBsX+qDTDrNd2AqxE09G2STohadixlijCXgYLPyBnZg+iTCJ
+ FIaVzwMBVzC+x4I1Y92Ya7KqhneU+Kn4QhlR+vDQCTyw6tdZ1xDzGxF7QkeyUEszDTybr2lVPQg
+ yg4VeaPM3QjbUt5V3a+JRKHj8Y9JzUl/UpdvHrIvBupBgqLww1elQ3cxYlSo+gP/hLlBqeNHEQI
+ w4NJc43oDjHDp0y08BoDLNCUDE0frxS44/cZCJaV6M01anCV1ZmLHGMsItQ2x2quh4DZ1cIoU0A
+ /Bq738SoFGhuqfLxgQ==
+X-Received: by 2002:a17:906:da82:b0:abf:27ac:2cf8 with SMTP id
+ a640c23a62f3a-abf27ac4019mr34713166b.21.1740680300806; 
+ Thu, 27 Feb 2025 10:18:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGPv7n1JodXu9FnaKFTXeHkAYLRR4mB/uo5fhVkWtfyzSV4SpX066QLdutO64njS1vLJyxIKA==
+X-Received: by 2002:a17:906:da82:b0:abf:27ac:2cf8 with SMTP id
+ a640c23a62f3a-abf27ac4019mr34710766b.21.1740680300404; 
+ Thu, 27 Feb 2025 10:18:20 -0800 (PST)
+Received: from [192.168.1.84] ([93.56.163.127])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-abf0c756f6csm161805966b.141.2025.02.27.10.18.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Feb 2025 10:18:19 -0800 (PST)
+Message-ID: <850cde98-4be4-4240-a8b3-428ff9f66ea0@redhat.com>
+Date: Thu, 27 Feb 2025 19:18:19 +0100
 MIME-Version: 1.0
-References: <20250227154003.1646017-1-venture@google.com>
- <CAFEAcA_wR-M3+BhZY0MFjv3OfoyL2gvukduvKZ6ksKwUKmdB6Q@mail.gmail.com>
- <CAO=noty89OsH=vGmemL7eLcR2wV6n4XG9a2HfT7Uzo8EPRy4PQ@mail.gmail.com>
- <CAFEAcA-gyMTz-KpmamyXcKX9QOL=yYHDMPRF2Xji_uJbG02WpA@mail.gmail.com>
- <CAO=notwcXTU9v4c_Hz=Si=QLrM5HNymYEO0ry4Td30GYUZqBwg@mail.gmail.com>
-In-Reply-To: <CAO=notwcXTU9v4c_Hz=Si=QLrM5HNymYEO0ry4Td30GYUZqBwg@mail.gmail.com>
-From: Patrick Venture <venture@google.com>
-Date: Thu, 27 Feb 2025 10:12:21 -0800
-X-Gm-Features: AQ5f1JpSRxJEd2_mP2Yj6ogaXvr7U2RsJigm3QDaHwaF3Ll7AJu6RDsk-6BUC3s
-Message-ID: <CAO=notxXT3m26=GxryTwJSqLQBfxrCCXV9ffdBGdYokxxnHz=A@mail.gmail.com>
-Subject: Re: [PATCH] hw/net: npcm7xx_emc: fix alignment to eth_hdr
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] rust: pl011: move register definitions out of lib.rs
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: kfting@nuvoton.com, wuhaotsh@google.com, jasowang@redhat.com, 
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000069fe6f062f23a29e"
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=venture@google.com; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20250227164538.814576-1-pbonzini@redhat.com>
+ <20250227164538.814576-3-pbonzini@redhat.com>
+ <CAFEAcA86CEbeGK6mDju5jyR7JQKB7SfnO4-JoAnyiL2kRNufkg@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <CAFEAcA86CEbeGK6mDju5jyR7JQKB7SfnO4-JoAnyiL2kRNufkg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,200 +147,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000069fe6f062f23a29e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Feb 27, 2025 at 8:08=E2=80=AFAM Patrick Venture <venture@google.com=
-> wrote:
-
->
->
-> On Thu, Feb 27, 2025 at 8:01=E2=80=AFAM Peter Maydell <peter.maydell@lina=
-ro.org>
-> wrote:
->
->> On Thu, 27 Feb 2025 at 15:55, Patrick Venture <venture@google.com> wrote=
-:
->> >
->> >
->> >
->> > On Thu, Feb 27, 2025 at 7:52=E2=80=AFAM Peter Maydell <peter.maydell@l=
-inaro.org>
->> wrote:
->> >>
->> >> On Thu, 27 Feb 2025 at 15:40, Patrick Venture <venture@google.com>
->> wrote:
->> >> >
->> >> > 'const struct eth_header', which requires 2 byte alignment
->> >> >
->> >> > Signed-off-by: Patrick Venture <venture@google.com>
->> >> > ---
->> >> >  hw/net/npcm7xx_emc.c | 7 ++++++-
->> >> >  1 file changed, 6 insertions(+), 1 deletion(-)
->> >> >
->> >> > diff --git a/hw/net/npcm7xx_emc.c b/hw/net/npcm7xx_emc.c
->> >> > index e06f652629..11ed4a9e6a 100644
->> >> > --- a/hw/net/npcm7xx_emc.c
->> >> > +++ b/hw/net/npcm7xx_emc.c
->> >> > @@ -424,7 +424,12 @@ static bool emc_can_receive(NetClientState *nc=
-)
->> >> >  static bool emc_receive_filter1(NPCM7xxEMCState *emc, const uint8_=
-t
->> *buf,
->> >> >                                  size_t len, const char
->> **fail_reason)
->> >> >  {
->> >> > -    eth_pkt_types_e pkt_type =3D
->> get_eth_packet_type(PKT_GET_ETH_HDR(buf));
->> >> > +    struct eth_header eth_hdr =3D {};
->> >> > +    eth_pkt_types_e pkt_type;
->> >> > +
->> >> > +    memcpy(&eth_hdr, PKT_GET_ETH_HDR(buf),
->> >> > +           (sizeof(eth_hdr) > len) ? len : sizeof(eth_hdr));
->> >> > +    pkt_type =3D get_eth_packet_type(&eth_hdr);
->> >>
->> >> Maybe better to mark struct eth_header as QEMU_PACKED?
->> >> Compare commit f8b94b4c5201 ("net: mark struct ip_header as
->> >> QEMU_PACKED"). The handling of these header structs in eth.h
->> >> is in general pretty suspect IMHO. We do the same
->> >> "get_eth_packet_type(PKT_GET_ETH_HDR(buf))" in other devices,
->> >> so this isn't just this device's bug.
+On 2/27/25 18:28, Peter Maydell wrote:
+> On Thu, 27 Feb 2025 at 16:48, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >>
->> > Roger that. We saw this in the two NICs we happened to be testing that
->> day, and yeah, I grepped and just figured that those other NICs were doi=
-ng
->> something with their buffer allocations that we didn't. I'll give
->> QEMU_PACKED  whirl.
->>
->> You might find you need to make some fixes to other
->> devices to get the QEMU_PACKED change to compile (do an
->> all-targets build to test that). For instance for the
->> ip_header change I had to first fix virtio-net.c in commit
->> 5814c0846793715. The kind of thing that will need fixing is
->> if there are places where code takes the address of the
->> h_proto field and puts it into a uint16_t* : the compiler
->> will complain about that. A quick grep suggests that the
->> rocker_of_dpa.c code might be doing something like this, but
->> hopefully that's it.
->>
->
-Ok, so digging, and I see that vlanhdr is used similarly in the
-rocker_of_dpa.c code, so, without trying to bit off the yak shave of fixing
-all ethernet headers, but in reality ethernet packets are packed
-structures, should we just make them all packed and bite that bullet?
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>   rust/hw/char/pl011/src/device.rs    |   7 +-
+>>   rust/hw/char/pl011/src/lib.rs       | 509 +---------------------------
+>>   rust/hw/char/pl011/src/registers.rs | 507 +++++++++++++++++++++++++++
+>>   3 files changed, 513 insertions(+), 510 deletions(-)
+>>   create mode 100644 rust/hw/char/pl011/src/registers.rs
+> 
+> Looking at this patch I'm sorely tempted to suggest significantly
+> trimming down the commentary in these comments: it contains
+> rather more text cut-n-pasted from the PL011 TRM than I'm
+> entirely comfortable with, and much of it is detail that
+> is irrelevant to QEMU.
 
+Yeah, that was a point that was made on the call last week, too.  I kind 
+of agree, but it wasn't a decision I really wanted to take or suggest.
 
->
-> Thanks for the head's up.
->
->>
->> thanks
->> -- PMM
->>
->
+Also, some of the stuff does not belong in the structs but could be 
+added to lib.rs, too, with more fair-use justification than in 
+registers.rs.  So perhaps delay removing it until more aspects of the 
+FIFO are modeled correctly, so that one does not have to reinvent the 
+wording from scratch.
 
---00000000000069fe6f062f23a29e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Paolo
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 27,=
- 2025 at 8:08=E2=80=AFAM Patrick Venture &lt;<a href=3D"mailto:venture@goog=
-le.com">venture@google.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><=
-div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb=
- 27, 2025 at 8:01=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:peter.mayd=
-ell@linaro.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt; wrote:<b=
-r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Thu, 27 Feb 20=
-25 at 15:55, Patrick Venture &lt;<a href=3D"mailto:venture@google.com" targ=
-et=3D"_blank">venture@google.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; On Thu, Feb 27, 2025 at 7:52=E2=80=AFAM Peter Maydell &lt;<a href=3D"m=
-ailto:peter.maydell@linaro.org" target=3D"_blank">peter.maydell@linaro.org<=
-/a>&gt; wrote:<br>
-&gt;&gt;<br>
-&gt;&gt; On Thu, 27 Feb 2025 at 15:40, Patrick Venture &lt;<a href=3D"mailt=
-o:venture@google.com" target=3D"_blank">venture@google.com</a>&gt; wrote:<b=
-r>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; &#39;const struct eth_header&#39;, which requires 2 byte alig=
-nment<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; Signed-off-by: Patrick Venture &lt;<a href=3D"mailto:venture@=
-google.com" target=3D"_blank">venture@google.com</a>&gt;<br>
-&gt;&gt; &gt; ---<br>
-&gt;&gt; &gt;=C2=A0 hw/net/npcm7xx_emc.c | 7 ++++++-<br>
-&gt;&gt; &gt;=C2=A0 1 file changed, 6 insertions(+), 1 deletion(-)<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; diff --git a/hw/net/npcm7xx_emc.c b/hw/net/npcm7xx_emc.c<br>
-&gt;&gt; &gt; index e06f652629..11ed4a9e6a 100644<br>
-&gt;&gt; &gt; --- a/hw/net/npcm7xx_emc.c<br>
-&gt;&gt; &gt; +++ b/hw/net/npcm7xx_emc.c<br>
-&gt;&gt; &gt; @@ -424,7 +424,12 @@ static bool emc_can_receive(NetClientSta=
-te *nc)<br>
-&gt;&gt; &gt;=C2=A0 static bool emc_receive_filter1(NPCM7xxEMCState *emc, c=
-onst uint8_t *buf,<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 size_t len, const =
-char **fail_reason)<br>
-&gt;&gt; &gt;=C2=A0 {<br>
-&gt;&gt; &gt; -=C2=A0 =C2=A0 eth_pkt_types_e pkt_type =3D get_eth_packet_ty=
-pe(PKT_GET_ETH_HDR(buf));<br>
-&gt;&gt; &gt; +=C2=A0 =C2=A0 struct eth_header eth_hdr =3D {};<br>
-&gt;&gt; &gt; +=C2=A0 =C2=A0 eth_pkt_types_e pkt_type;<br>
-&gt;&gt; &gt; +<br>
-&gt;&gt; &gt; +=C2=A0 =C2=A0 memcpy(&amp;eth_hdr, PKT_GET_ETH_HDR(buf),<br>
-&gt;&gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(sizeof(eth_hdr) &g=
-t; len) ? len : sizeof(eth_hdr));<br>
-&gt;&gt; &gt; +=C2=A0 =C2=A0 pkt_type =3D get_eth_packet_type(&amp;eth_hdr)=
-;<br>
-&gt;&gt;<br>
-&gt;&gt; Maybe better to mark struct eth_header as QEMU_PACKED?<br>
-&gt;&gt; Compare commit f8b94b4c5201 (&quot;net: mark struct ip_header as<b=
-r>
-&gt;&gt; QEMU_PACKED&quot;). The handling of these header structs in eth.h<=
-br>
-&gt;&gt; is in general pretty suspect IMHO. We do the same<br>
-&gt;&gt; &quot;get_eth_packet_type(PKT_GET_ETH_HDR(buf))&quot; in other dev=
-ices,<br>
-&gt;&gt; so this isn&#39;t just this device&#39;s bug.<br>
-<br>
-&gt; Roger that. We saw this in the two NICs we happened to be testing that=
- day, and yeah, I grepped and just figured that those other NICs were doing=
- something with their buffer allocations that we didn&#39;t. I&#39;ll give =
-QEMU_PACKED=C2=A0 whirl.<br>
-<br>
-You might find you need to make some fixes to other<br>
-devices to get the QEMU_PACKED change to compile (do an<br>
-all-targets build to test that). For instance for the<br>
-ip_header change I had to first fix virtio-net.c in commit<br>
-5814c0846793715. The kind of thing that will need fixing is<br>
-if there are places where code takes the address of the<br>
-h_proto field and puts it into a uint16_t* : the compiler<br>
-will complain about that. A quick grep suggests that the<br>
-rocker_of_dpa.c code might be doing something like this, but<br>
-hopefully that&#39;s it.<br></blockquote></div></div></blockquote><div><br>=
-</div><div>Ok, so digging, and I see that vlanhdr is used similarly in the =
-rocker_of_dpa.c code, so, without trying to bit off the yak shave of fixing=
- all ethernet headers, but in reality ethernet packets are packed structure=
-s, should we just make them all packed and bite that bullet?</div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"=
-><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x"></blockquote><div><br></div><div>Thanks for the head&#39;s up.=C2=A0</di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div></div>
-</blockquote></div></div>
-
---00000000000069fe6f062f23a29e--
 
