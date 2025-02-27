@@ -4,86 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8ADC021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 10:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D84C19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 10:39:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnbHn-0007GN-AS; Thu, 27 Feb 2025 05:38:35 -0500
+	id 1tnbIm-0007UL-O5; Thu, 27 Feb 2025 05:39:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnbHf-0007Fv-4V
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:38:27 -0500
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnbHc-0002w2-Li
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:38:26 -0500
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-e608e260563so789685276.0
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 02:38:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740652703; x=1741257503; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FA7KO17KL5FtFzsu8jkNlBne316D6NclL3zjm7CyMh0=;
- b=A4ZCvmd+7ei4p7pCupu4AkczsGwNPDrGzk29u0hj34sDnaeJqP6lS2Wa1EyYZ38vcW
- Sh2P079orJ8jB74cMHmGCaFh+qkT2XoMFRJ1uwGaz89Mbt9tuHnsSqMIhIXgpj9YhP8V
- LExdrNeKUkNirbf51D0fJaQ63Xla5s5vpB5VMnyvWzH4rykZOFtHl5yFkVUKLwH5k6G4
- QLzGKr75Q7n9U27WdvaAJCImKD7gJYfhyCLrRFX4iC+prIdFsgv14oQ924ZH62F713rx
- 5tN5sFVcosQhLAhGmOXRFJ4K2QiVZvt/6cYx5uoiMMNTD98SumzvNqrBzSIXzmEEfrwS
- oE7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740652703; x=1741257503;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FA7KO17KL5FtFzsu8jkNlBne316D6NclL3zjm7CyMh0=;
- b=rbQAJNk49baPHlHiuRPny6WcO1j/MrnMHwshQCbtYz4SpZ6r8KC7ti2+FpLtolItUB
- ACH7ij/TSzuk17Q/b8RQeZ8Tw06Wh/wPUVVXiguPPWw3YWJHsV07A8K7GaJdkq9Txgx1
- bK60yw2HXFaUx506/fL8HYHMMiWjgkZtJDUFJd6dmqLNY0rBPTuQrEF/XxWyo19HP8+v
- X4bKfJLVut+HTL4O2cVPOtO0c1nIxrCetLytLboeU2RzkLD4lWGpVeS+7BP9Md7a22rS
- Xip2QKnsfjPccKp7MoJWhE5D9FxWyucWkxHrfSZFAIY9g2S94+1/dx5YlLyCHcEFZlLV
- ionQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4V3RGt7KrvdFtGhwY9F5GYnSGxUWvrHgDZ78GVVCt8EmSPccR3KltlVd0D0q8Rf2bvvs2rjIHlIWf@nongnu.org
-X-Gm-Message-State: AOJu0YyUHptd46Y+wQGu50970KNvGxBYEAnoHqUkHykfbnxQ0DntcdST
- pUivq0goXNqZ15Lu7jvsNqp9p0cK9xJtiNOfR2VF95ZGjz/Tyttsy/WdG+oii6Xv17YOra7p1Tb
- +AGM10xljlsbVi1UdQjxqnOWDEo+seKQVR4qo9A==
-X-Gm-Gg: ASbGncs0hgqY9e+5Mufix6pqZK0TXsAyQaEQuQ+nhELoEcMh3RqfMFqGwiaf0iqg6aT
- KmdqPaUWWDi4wqbU1Rnn+g9MysUc0cXS42yLUyHHgQnwyCRWa90ExuhAC51y+Mo0pvMirat+5Fg
- 84prtGBUgB
-X-Google-Smtp-Source: AGHT+IGdRElJp01KTdRqyGiYO4n0o1J+cE/u2RSOnvVB1QnyT2yazRH7g1bLIUPziLOPYBc1XqRL/T6AORFeYT8N1OI=
-X-Received: by 2002:a05:6902:2e0b:b0:e5b:44f2:e2c9 with SMTP id
- 3f1490d57ef6-e5e244ffdf3mr19358847276.0.1740652702857; Thu, 27 Feb 2025
- 02:38:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnbIj-0007Ti-0t
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:39:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnbIg-0003BJ-VI
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:39:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740652768;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zlxVGV3B0mAKC1eYQKBaWnaiqdfQu8xjAw6cbRfHTt8=;
+ b=XMh6J3gFkKoiDDUxi1Yofvlz4DkOC7/fTptD0ipZyepSGPrWukUcfLc4eKVq1Y7PdP7GpT
+ KwAyepHfmz+jiR6L90Mu9WlsQUBm2Jg2PV6w/9DMF/nqwS/W68Up9zpXWR/jN0lYzgjbvp
+ D+PoMgxC6X9P3i7no1J5O3BKgxkp4GA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-88-4xfziyszNtmWCYfTjwMqZg-1; Thu,
+ 27 Feb 2025 05:39:23 -0500
+X-MC-Unique: 4xfziyszNtmWCYfTjwMqZg-1
+X-Mimecast-MFC-AGG-ID: 4xfziyszNtmWCYfTjwMqZg_1740652762
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B375180098B; Thu, 27 Feb 2025 10:39:21 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.184])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9E236300019E; Thu, 27 Feb 2025 10:39:17 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH 0/6] Convert the inux_ssh_mips_malta.p avocado test
+Date: Thu, 27 Feb 2025 11:39:09 +0100
+Message-ID: <20250227103915.19795-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20250204-jag-fix_meson-v1-1-ecb6bdb1db51@kernel.org>
- <5ea3a240-1805-40f8-9c5d-af12794ea34c@redhat.com>
- <opabljxycyh2huu4yicopg5dkur56pntyehozkrp2tai5orgnz@frubtj4drvma>
- <d788bb12-0d69-43eb-bf09-a94ead71c9e4@redhat.com>
-In-Reply-To: <d788bb12-0d69-43eb-bf09-a94ead71c9e4@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 27 Feb 2025 10:38:11 +0000
-X-Gm-Features: AQ5f1JpOgmkY-n_CaWIVEsmY4_PglQU4GV7SQ3QhBel_FJh-e_tIksTg-Dz8Qbc
-Message-ID: <CAFEAcA-zfLLwT206J7WFXW_ft-OJARv=UPgY7K54zTgDSPcK8A@mail.gmail.com>
-Subject: Re: [PATCH] build: Replace meson introspection argument with a
- builddir
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Joel Granados <joel.granados@kernel.org>, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,41 +81,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Feb 2025 at 10:20, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> On 2/27/25 11:07, Joel Granados wrote:
-> > Here is the error I see:
-> > cmd:
-> >    meson introspect --buildoptions /home/joel/src/qemu/meson.build
-> >
-> > output:
-> >    meson.build:88:12: ERROR: Unknown compiler(s): [['rustc']]
-> >    The following exception(s) were encountered:
-> >    Running `rustc --version` gave "[Errno 2] No such file or directory: 'rustc'"
->
-> Thanks, this helps.
->
-> > When I pass it a builddir it actually gives me all the buildoptions
-> > (which is what I expect)
-> > cmd:
-> >    meson introspect --buildoptions /home/joel/src/qemu/bdir
->
-> Yes, the difference is that the builddir version uses the results of
-> actually executing meson.build, whereas the srcdir version only does
-> some cursory parsing and always looks at both branches of "if" statements.
->
-> This is actually not a bug, and in fact now I remember why it is using
-> the srcdir version...  Looking at the required languages is needed in
-> order to figure out language-dependent build options, and the srcdir
-> version includes the options for all languages that QEMU could use.
->
-> None of the language-dependent options (for example c_std) are surfaced
-> in meson-buildoptions.sh, which is why your patch works in the first
-> place.  But I think it's a better fix for you to install rustc, since it
-> will anyway become mandatory sooner or later.
+Convert the linux_ssh_mips_malta.py avocado test to the functional
+framework. Since this test was exercising the network via ssh, and
+we don't have the ssh commands in the functional framework, we
+rather run the commands via the serial console now and use a HTTP
+download for testing whether the network works as expected.
 
-It's not mandatory *now*, though. So I think it would be better
-to fix whatever this problem is rather than papering over it...
+While I was working on these patches, I also noticed that one of
+the other MIPS malta images featured a TFTP client program, so
+I added some network testing there via TFTP now, too.
 
--- PMM
+Thomas Huth (6):
+  tests/functional: Move the code for testing HTTP downloads to a common
+    function
+  tests/functional/test_mips_malta: Add a network test via the pcnet NIC
+  tests/functional: Convert the 32-bit big endian Wheezy mips test
+  tests/functional: Convert the 32-bit little endian Wheezy mips test
+  tests/functional: Convert the 64-bit little endian Wheezy mips test
+  tests/functional: Convert the 64-bit big endian Wheezy mips test
+
+ MAINTAINERS                               |   1 -
+ tests/avocado/linux_ssh_mips_malta.py     | 205 ----------------------
+ tests/functional/meson.build              |   6 +-
+ tests/functional/qemu_test/linuxkernel.py |  26 ++-
+ tests/functional/test_intel_iommu.py      |  22 +--
+ tests/functional/test_mips64_malta.py     |  35 ++++
+ tests/functional/test_mips64el_malta.py   |  22 +++
+ tests/functional/test_mips_malta.py       | 128 +++++++++++++-
+ tests/functional/test_mipsel_malta.py     |  22 +++
+ 9 files changed, 235 insertions(+), 232 deletions(-)
+ delete mode 100644 tests/avocado/linux_ssh_mips_malta.py
+ create mode 100755 tests/functional/test_mips64_malta.py
+
+-- 
+2.48.1
+
 
