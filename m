@@ -4,134 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADF2C282C1
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 18:19:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF22DC197BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 18:45:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tniTN-0004E2-LQ; Thu, 27 Feb 2025 13:19:01 -0500
+	id 1tnis5-0008Le-DB; Thu, 27 Feb 2025 13:44:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tniTK-0004Ck-Ld
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 13:18:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tniTI-0007is-1U
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 13:18:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740680334;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4EePHXPg+ENBH562N4nKUDE93xTZsSNviHB9skXihDU=;
- b=EwdC4I73aPUNwqGpem2JIu3K3QTPtvV+ZcWMnCitJuZ6fBX+LHPcB85LIwF4pGVY7a4blb
- ckWTBwsbEVqAEK+CXhM+FUF2UoS19/4/1NfChIgUH7gh7D5brh7hUzTF5BzxId+v7CgTiJ
- wgfc3J4v4VS7p1VJOK61wMWqYIVeQJY=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-1-gRIsmUU9OuysVx7ypML0pQ-1; Thu, 27 Feb 2025 13:18:51 -0500
-X-MC-Unique: gRIsmUU9OuysVx7ypML0pQ-1
-X-Mimecast-MFC-AGG-ID: gRIsmUU9OuysVx7ypML0pQ_1740680330
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-abb8f65af3dso128235966b.1
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 10:18:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tnis0-0008K8-OF
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 13:44:30 -0500
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tnirx-0003yz-Gg
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 13:44:28 -0500
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e589c258663so1525018276.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 10:44:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740681860; x=1741286660; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tZVkcKKAl6NTFE7ZS5YKtyl4sdgiqPbOaIwKxrt6xrM=;
+ b=SPGvImEG08zddycxCK9AgL2rU+4CDrOLtVcpS39N3fpKnsf9KCZZM9dc1jQUSbZpMm
+ waRu7mDr6LZIfiEN9LW12zrxqKtBbbAmsEdUBQoaDqbguklcW8VoOwhIgOjXcN8CoQC+
+ cmZv8Xt0rdPuEKzTdK2+8CxG56T4vULrtPC1iRFLNmiUOdHZDCb3Sai/vur48Ek/2Mp4
+ km4IbAxBAKBr6iwmfbPVt10wNuwdrHpHs7ZD1sbuUkpZCvuanQ+v762cQxdkRo9LSacl
+ bQRJMAyDUE8IgdDYDOVhYLOpYF2lvBchP2ZNNILcMCfyM1m+qo7XKU/1W43apZkH8Pk2
+ 3mmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740680330; x=1741285130;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4EePHXPg+ENBH562N4nKUDE93xTZsSNviHB9skXihDU=;
- b=Yg9wjQvXXY8yUB1OoPcBIOQIOx/9WlbX5J/jHORCM81wniTQSCTwXdnX+4MgLvgXg0
- o7uZBJcTUrtRNFmNiUVIhfM25Qzlbg4KJZvwbTdfK+ddxR4Mlpgs/lsedzeNHtgtCQ/u
- X3KFAnR4SA5Nt43pFg+7Tg2JO7wWPotbzNEDtKCX5G0HpPiwbuBs+FKda4mMNmqKUwGQ
- aTxlTUNchWQLInJRVf/qCKx49yDBDPIm9XmWzGnwM+TAX9TQoLAdDl565psRXAB7gHzC
- uO2ljydKHoSxq2dIXCG1Ri7p/bqUsGdF563bf8Wyw8CPsOHNob8ul1W0fDP888pg4qtd
- 45VA==
-X-Gm-Message-State: AOJu0YzjxwFuRVPQHDqm1zqUXJj3b3SfWUOjdIKNme8XUoBSdzWzIv9M
- Z/BkA+6KXbz1cE+8g0/uoTcdDHYxn9vb34GNam6qBbp6BAQDmz3PGASAE2ukpHwo7P+cHZS1rab
- L6AbwNgcDD3NPjUOMg/Dy+TMwOzIUjK3afIQCqu7MhkpDox/vppXzaShUIQ4faFg=
-X-Gm-Gg: ASbGncv9wXhQKQvxxKcH+SPAhv85dosDHP92CoUU3rM6GpFLKM7t3d87xz6cg+ZNcX4
- Zj35KnqDjZCgwvdJnpdMJxYnZTAD5Dyr/JoCu+hWAzugU2pPfBwptAfIqxd4LuJK2ePQQNlxaVt
- AR4bNmhI29SWAFVIf3Nt/UKhQXXRxcjOLVruQoKBnKZvXVobBhNJhs6ujwhCs9m7m3YxfUaD6ie
- 81Wk84tDx064UntppVoRKhjxIFKAqBbQpPI37e6zo4HqhBT3qBJmQrtFQawHvCvzH/a6BgXOJo1
- yGQZP6lAaHW2YwutJg==
-X-Received: by 2002:a17:907:7f88:b0:ab6:cdc2:bf57 with SMTP id
- a640c23a62f3a-abf25d945cfmr55219566b.1.1740680329583; 
- Thu, 27 Feb 2025 10:18:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGaXXSZ1V/1d1bwJ83/v1blgFp/hg/tmqIrDFoTCS44e6o4GC5cFGbx2j6+LQN2GWTAsO8vHQ==
-X-Received: by 2002:a17:907:7f88:b0:ab6:cdc2:bf57 with SMTP id
- a640c23a62f3a-abf25d945cfmr55217466b.1.1740680329181; 
- Thu, 27 Feb 2025 10:18:49 -0800 (PST)
-Received: from [192.168.1.84] ([93.56.163.127])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-abf1c8b1158sm87292566b.113.2025.02.27.10.18.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 10:18:48 -0800 (PST)
-Message-ID: <db282c29-7422-49f8-a02b-803c42d53173@redhat.com>
-Date: Thu, 27 Feb 2025 19:18:48 +0100
+ d=1e100.net; s=20230601; t=1740681860; x=1741286660;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tZVkcKKAl6NTFE7ZS5YKtyl4sdgiqPbOaIwKxrt6xrM=;
+ b=E9AzFf65KAX3ZTnNUC3KR/SSSGNGnq5NcJF1CX29h2/Xl5aPILJ29MDvY/PYSiKRr7
+ AN1u1fvtNAiZoq8L8blyHPQfEQc5WJ2K5bDvd4I7jqV+Qop38nBj19wCVBdSe5bk32SX
+ Zw99cGPsjY/0ms1Fl/1l726Sg+DUPsDjulBO58vMjkER9XTUs74/ierlJGNP/FR+X1CJ
+ 6W37GDE4NIU82NHqEdY7xCGCbkNDBy3UPT0iiAjaCOdHc3HQ6RpEfoU5TDOnHQQJTJtP
+ yWIsqA0ylZwtFXTgKBrM8lNxCgmBHG0ChWUU7VRncTkMzCW2VDoxQuu3SHZ9bdkqszgG
+ Ssxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVT6/f6csKomSWHIs+dx48HgOZ17pfOmM0E6lXEVvyK2tedB+OtLqDzwHrF5W8V7TemXWEqXYmPg25+@nongnu.org
+X-Gm-Message-State: AOJu0YyT7pdNB+dqZ7J7eh8SumotqlvDHLRgswhkqBzAFLu2le5UrKVV
+ 1D078l05sDduzV6JDnZRxZ40v9nzaJeQWucrlloyKzplbYDUpb7rIJQXGIfaFTsxmxVP5yQ5Dpv
+ z4EQsbJ+vKo6koMDNS60gNCy6TCKV8Y7Q/M2HrA==
+X-Gm-Gg: ASbGncteS1bwnimNZGCaHXDohy0aPZ+URmYuUGWVfb0B3ErONTriKd4xIPCbvn8E1aE
+ PScE+2I4pAb2wPWc6MiWRwUGf0mfYzce3vGHYu25kXNIHfCjy0+T8I4cvG47uuCdaWqM3+94nS1
+ 007IASY3rl
+X-Google-Smtp-Source: AGHT+IE4GmQeUmwyP6L/1syC04gpP8lK8gCQHEi02wS/Xas+hwP4++AcKfi0Wb2y4UfgGVfjgGtMzYe2uAV6GyzO9SY=
+X-Received: by 2002:a05:6902:e93:b0:e4d:25c6:c398 with SMTP id
+ 3f1490d57ef6-e60b2e93d0bmr247660276.1.1740681860605; Thu, 27 Feb 2025
+ 10:44:20 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] rust: pl011: move register definitions out of lib.rs
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20250227164538.814576-1-pbonzini@redhat.com>
- <20250227164538.814576-3-pbonzini@redhat.com>
- <CAFEAcA86CEbeGK6mDju5jyR7JQKB7SfnO4-JoAnyiL2kRNufkg@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA86CEbeGK6mDju5jyR7JQKB7SfnO4-JoAnyiL2kRNufkg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20250227154003.1646017-1-venture@google.com>
+ <CAFEAcA_wR-M3+BhZY0MFjv3OfoyL2gvukduvKZ6ksKwUKmdB6Q@mail.gmail.com>
+ <CAO=noty89OsH=vGmemL7eLcR2wV6n4XG9a2HfT7Uzo8EPRy4PQ@mail.gmail.com>
+ <CAFEAcA-gyMTz-KpmamyXcKX9QOL=yYHDMPRF2Xji_uJbG02WpA@mail.gmail.com>
+ <CAO=notwcXTU9v4c_Hz=Si=QLrM5HNymYEO0ry4Td30GYUZqBwg@mail.gmail.com>
+ <CAO=notxXT3m26=GxryTwJSqLQBfxrCCXV9ffdBGdYokxxnHz=A@mail.gmail.com>
+In-Reply-To: <CAO=notxXT3m26=GxryTwJSqLQBfxrCCXV9ffdBGdYokxxnHz=A@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 27 Feb 2025 18:44:08 +0000
+X-Gm-Features: AQ5f1Johh4YRhSxYpvK-BelDemFxW9ipNuBd9w1Klk1RK_F5waPcuAh4XSVRrNw
+Message-ID: <CAFEAcA8x6Lj2uUVtESC9TAMrS-wkRAF3HT3Wj3JN5i6oQmm4mQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/net: npcm7xx_emc: fix alignment to eth_hdr
+To: Patrick Venture <venture@google.com>
+Cc: kfting@nuvoton.com, wuhaotsh@google.com, jasowang@redhat.com, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,33 +101,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/25 18:28, Peter Maydell wrote:
-> On Thu, 27 Feb 2025 at 16:48, Paolo Bonzini <pbonzini@redhat.com> wrote:
+On Thu, 27 Feb 2025 at 18:12, Patrick Venture <venture@google.com> wrote:
+>
+>
+>
+> On Thu, Feb 27, 2025 at 8:08=E2=80=AFAM Patrick Venture <venture@google.c=
+om> wrote:
 >>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->>   rust/hw/char/pl011/src/device.rs    |   7 +-
->>   rust/hw/char/pl011/src/lib.rs       | 509 +---------------------------
->>   rust/hw/char/pl011/src/registers.rs | 507 +++++++++++++++++++++++++++
->>   3 files changed, 513 insertions(+), 510 deletions(-)
->>   create mode 100644 rust/hw/char/pl011/src/registers.rs
-> 
-> Looking at this patch I'm sorely tempted to suggest significantly
-> trimming down the commentary in these comments: it contains
-> rather more text cut-n-pasted from the PL011 TRM than I'm
-> entirely comfortable with, and much of it is detail that
-> is irrelevant to QEMU.
+>>
+>>
+>> On Thu, Feb 27, 2025 at 8:01=E2=80=AFAM Peter Maydell <peter.maydell@lin=
+aro.org> wrote:
+>>>
+>>> On Thu, 27 Feb 2025 at 15:55, Patrick Venture <venture@google.com> wrot=
+e:
+>>> >
+>>> >
+>>> >
+>>> > On Thu, Feb 27, 2025 at 7:52=E2=80=AFAM Peter Maydell <peter.maydell@=
+linaro.org> wrote:
+>>> >>
+>>> >> On Thu, 27 Feb 2025 at 15:40, Patrick Venture <venture@google.com> w=
+rote:
+>>> >> >
+>>> >> > 'const struct eth_header', which requires 2 byte alignment
+>>> >> >
+>>> >> > Signed-off-by: Patrick Venture <venture@google.com>
+>>> >> > ---
+>>> >> >  hw/net/npcm7xx_emc.c | 7 ++++++-
+>>> >> >  1 file changed, 6 insertions(+), 1 deletion(-)
+>>> >> >
+>>> >> > diff --git a/hw/net/npcm7xx_emc.c b/hw/net/npcm7xx_emc.c
+>>> >> > index e06f652629..11ed4a9e6a 100644
+>>> >> > --- a/hw/net/npcm7xx_emc.c
+>>> >> > +++ b/hw/net/npcm7xx_emc.c
+>>> >> > @@ -424,7 +424,12 @@ static bool emc_can_receive(NetClientState *n=
+c)
+>>> >> >  static bool emc_receive_filter1(NPCM7xxEMCState *emc, const uint8=
+_t *buf,
+>>> >> >                                  size_t len, const char **fail_rea=
+son)
+>>> >> >  {
+>>> >> > -    eth_pkt_types_e pkt_type =3D get_eth_packet_type(PKT_GET_ETH_=
+HDR(buf));
+>>> >> > +    struct eth_header eth_hdr =3D {};
+>>> >> > +    eth_pkt_types_e pkt_type;
+>>> >> > +
+>>> >> > +    memcpy(&eth_hdr, PKT_GET_ETH_HDR(buf),
+>>> >> > +           (sizeof(eth_hdr) > len) ? len : sizeof(eth_hdr));
+>>> >> > +    pkt_type =3D get_eth_packet_type(&eth_hdr);
+>>> >>
+>>> >> Maybe better to mark struct eth_header as QEMU_PACKED?
+>>> >> Compare commit f8b94b4c5201 ("net: mark struct ip_header as
+>>> >> QEMU_PACKED"). The handling of these header structs in eth.h
+>>> >> is in general pretty suspect IMHO. We do the same
+>>> >> "get_eth_packet_type(PKT_GET_ETH_HDR(buf))" in other devices,
+>>> >> so this isn't just this device's bug.
+>>>
+>>> > Roger that. We saw this in the two NICs we happened to be testing tha=
+t day, and yeah, I grepped and just figured that those other NICs were doin=
+g something with their buffer allocations that we didn't. I'll give QEMU_PA=
+CKED  whirl.
+>>>
+>>> You might find you need to make some fixes to other
+>>> devices to get the QEMU_PACKED change to compile (do an
+>>> all-targets build to test that). For instance for the
+>>> ip_header change I had to first fix virtio-net.c in commit
+>>> 5814c0846793715. The kind of thing that will need fixing is
+>>> if there are places where code takes the address of the
+>>> h_proto field and puts it into a uint16_t* : the compiler
+>>> will complain about that. A quick grep suggests that the
+>>> rocker_of_dpa.c code might be doing something like this, but
+>>> hopefully that's it.
+>
+>
+> Ok, so digging, and I see that vlanhdr is used similarly in the rocker_of=
+_dpa.c code, so, without trying to bit off the yak shave of fixing all ethe=
+rnet headers, but in reality ethernet packets are packed structures, should=
+ we just make them all packed and bite that bullet?
 
-Yeah, that was a point that was made on the call last week, too.  I 
-think I agree, but it wasn't a decision I really wanted to take or 
-suggest myself...
+If you want to do all of them that's probably the long term
+right thing. But the patchset structure would be a series
+of "fix X that assumes struct A is not packed", "fix Y
+that assumes struct A is not packed", "mark struct A packed",
+"fix Z that assumes struct B is not packed", "mark struct B
+packed", etc -- so I don't mind if you stop partway through
+without doing all of them. (After all, that's exactly what
+I did with only doing ip_header :-))
 
-That said, some of the stuff does not belong in the structs but could be 
-added to lib.rs, too, with more fair-use justification than in 
-registers.rs.  So perhaps we could delay removing it until more aspects 
-of the FIFO are modeled correctly, so that one does not have to reinvent 
-the wording from scratch.
-
-Paolo
-
+thanks
+-- PMM
 
