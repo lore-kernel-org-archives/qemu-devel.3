@@ -4,90 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22AF8C19F32
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50BF2C197BF
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnmHw-00058C-QC; Thu, 27 Feb 2025 17:23:28 -0500
+	id 1tnmI9-0005QC-PS; Thu, 27 Feb 2025 17:23:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnmHv-00055D-1w
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:23:27 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnmHt-0002R1-CB
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:23:26 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-390dc0a7605so821237f8f.1
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 14:23:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740695003; x=1741299803; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3pGOEac6/oJsONdfzBlfSR6QH6lKZTWAL29EPkt8F1I=;
- b=kYVmT/Ox8YNXs2JFTj2L9IDxiYY2qy6OjNYc8wvbQ5S22f229jRKxZnyvOj5j0phiw
- CiTaY+VgtNSci0TPWlUq0I7RljARAQd6NGXA06u6r8r7/wfxN+gWiM+7cFpJCSJM+gC+
- 8sE1A7gzutXWR4XiHZVdIUjH7jHmiXV0kaq5qq4M+/yWMj72pUQcv26SXg+vGiOa198Y
- K++Zk8pQ4+J8ocRY8MQK/0hPV35ZPFivxwdfrLz2kAKJWGL3nj0OZTruN2aZaySPxpw2
- QyFGlV8rVuikLXmvTxSqdpqtEHk8saAFF7T1PBI462b75FemsbNA3w75S4fPQhROUfue
- tO1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740695003; x=1741299803;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3pGOEac6/oJsONdfzBlfSR6QH6lKZTWAL29EPkt8F1I=;
- b=ESIYITqrsMS+rTF6RjiKMqPufZdZGfxbSHwLqgVBXA0FNeSnHVVQ5ye4v5+4vEF8nm
- ewWr7XlpV31dkWlkx26INFKSykJ0+bYSfzZHRxqkhvdTlWF4ZoIvUpF3rVcV67CPpCRT
- eNH2o8DFwJfP4TfgM5FN9JffnOzl0b64ROAAhixdhTOaDzvzfa3gDWNq1H3Xpr3JVNvt
- oKx9GRv83SjN9+ffNce+XBQbgcd3zNDat/FPkw8cpbvEVmlyHtZ6dZdTx1/sakG2x3jZ
- mRDpAG21YnxKLSPln1Bw1Hgyg3QshYuB+W2cRs3zv/+ZjWG+BffLqJwfhthkMA2k8W+w
- 6QDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJAOznNO2sk4SAn7VIfjRHzRLi9m0a/2NOxyYL+05i0/YoRsDh+gSLv8ku5BCYk0BjcKSqW7qPWHA0@nongnu.org
-X-Gm-Message-State: AOJu0Yzqg9igp/uIVtoT5X3DTlkbmQNMlVOg9eG+b+B2jDKOe4JezvGV
- d13YGrrtPUlYw74tURWqN8xaOcipfK8tmipRcZLzRmCcV1L2TyOzT1ZEHLMgZOP3+/mTyPZShkA
- nFQUwgQ==
-X-Gm-Gg: ASbGncvZsir741iBEyq2xnxX2/6xWZEXwOkuMZXB/BF6aBVNF36Y3b6wDcxKjrVpoUn
- aNMOOkkERa47wPGwY+pwWOheJNuA1J4y9GgLTe42wZk6LXDtvXihJPp4HEKOSjMTnXBNYHMJjHh
- 5ukrzFgxbQfizfu/0p6SudAAv/379gmU9lXVMfscWXUp0ZHbAXyDDvZkKgyaBYD5senHwbzNElm
- +Ihkp7YvL+suTeOG9IfjFOHnkVD2YBfaKLuDIDqS0DhmlPnFvci1gDDxhZrgawIrlS3fx27DJD6
- VXvwBeObS18Mt886BfxhAYQMflm2P6euHVY0ioMM0UIySF8it7pTo5rlESG+1ZqjO3sotw==
-X-Google-Smtp-Source: AGHT+IEUVlxZvsY6kyQ8oh4IYiDxD5JM/pwb8mU594q4Pe21lyTrsfx3aYR2WegI8TYwiGqeWjxLTA==
-X-Received: by 2002:a5d:5848:0:b0:38f:295e:6331 with SMTP id
- ffacd0b85a97d-390ec7d09abmr655889f8f.19.1740695003585; 
- Thu, 27 Feb 2025 14:23:23 -0800 (PST)
-Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47a6d0asm3203562f8f.27.2025.02.27.14.23.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 14:23:23 -0800 (PST)
-Message-ID: <9abaa8f1-b2bc-41f7-913e-0c427106de7e@linaro.org>
-Date: Thu, 27 Feb 2025 23:23:21 +0100
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tnmI8-0005PT-6J
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:23:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tnmI5-0002Ru-Pg
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:23:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740695016;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jlbWbQg1KXBq4F7/AmWaBdbETYLZD0bgyo/KQsRioKw=;
+ b=Shl7tEleOdOtZuI7I6DI3f17jgsW2hIIcI0FFLyuh08YcglcFYtmQHuPJYbrnvbFRzyo7t
+ 9dHbvbQF5Q2dsfr0i1itHSLAMYWBX1K/4u5BBkAnrLLE/4ml6HeJf2qeOt4qYhvUfjGNjj
+ FzWl+ZnnXlA+WKYYAwvxkLaswuhtyU8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-Nl4BDsqVOUq5ggqRxeLMDg-1; Thu,
+ 27 Feb 2025 17:23:32 -0500
+X-MC-Unique: Nl4BDsqVOUq5ggqRxeLMDg-1
+X-Mimecast-MFC-AGG-ID: Nl4BDsqVOUq5ggqRxeLMDg_1740695011
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 83FBE193578F; Thu, 27 Feb 2025 22:23:31 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.162])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 62E8B1955BCB; Thu, 27 Feb 2025 22:23:29 +0000 (UTC)
+Date: Thu, 27 Feb 2025 16:23:26 -0600
+From: Eric Blake <eblake@redhat.com>
+To: prashant patil <pmgpatil@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: Query on the dirty bitmap
+Message-ID: <d2276vugq6wureu6zzrwci5sdtg3b6gllqskjv7hfvuulsmhyn@anl3d5htudty>
+References: <CAFvsdYns1yO6Wsm8VKP_khbTPm09Kf5KDmBpeMSrjboyccK4Aw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/arm: Drop unused address_offset from
- op_addr_{rr, ri}_post()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250227142746.1698904-1-peter.maydell@linaro.org>
- <20250227142746.1698904-4-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250227142746.1698904-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFvsdYns1yO6Wsm8VKP_khbTPm09Kf5KDmBpeMSrjboyccK4Aw@mail.gmail.com>
+User-Agent: NeoMutt/20250113
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,15 +82,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/2/25 15:27, Peter Maydell wrote:
-> All the callers of op_addr_rr_post() and op_addr_ri_post() now pass in
-> zero for the address_offset, so we can remove that argument.
+On Wed, Feb 19, 2025 at 04:23:26PM +0530, prashant patil wrote:
+> Hello All,
+> Hope this email finds you well.
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/tcg/translate.c | 26 +++++++++++++-------------
->   1 file changed, 13 insertions(+), 13 deletions(-)
+> I have been trying with qemu for a while now, and have come across a
+> problem specific to dirty bitmaps. I have enabled bitmap on the qcow2 disk
+> image using 'qemu-img bitmap' command, exposed the bitmap over a unix
+> socket using 'qemu-nbd' command. Now when I try to read the bitmap using
+> 'qemu-img map' command with 'x-dirty-bitmap=qemu:dirty-bitmap:{bitmap}'
+> option, I get one single extent which shows that the entire disk is dirty.
+> Note that the disk size is 5 GB, and has only a few MB of data in it, and
+> had added very small data after the bitmap was enabled. Bitmap output has
+> been pasted below.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Can you show the exact sequence of command lines you used to create
+the image, dirty a portion of it, then start up the qemu-nbd process
+to inspect it?  As written, I can't reproduce your issue, but I know
+it sounds similar to tests/qemu-iotests/tests/qemu-img-bitmaps which
+does what you're talking about, so I know the code works and have to
+suspect you may have missed a step or reordered things in such a way
+that the entire bitmap is reading as dirty.
+
+> 
+> [{ "start": 0, "length": 5368709120, "depth": 0, "present": true, "zero":
+> false, "data": true, "compressed": false, "offset": 0}]
+> 
+> Can someone please help me understand why the bitmap content shows the
+> entire disk as dirty?
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
