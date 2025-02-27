@@ -4,60 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B350C19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 13:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAFF3C19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:14:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnePW-0003xF-7y; Thu, 27 Feb 2025 08:58:46 -0500
+	id 1tnee9-0000t9-63; Thu, 27 Feb 2025 09:13:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1tne6J-0006b7-LO
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 08:38:55 -0500
-Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
- helo=smtp.livemail.co.uk)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1tne6H-0003yK-El
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 08:38:55 -0500
-Received: from localhost.localdomain (unknown [145.40.191.116])
- (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 42482401F3;
- Thu, 27 Feb 2025 13:38:27 +0000 (GMT)
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- Joerg Roedel <jroedel@suse.com>
-Subject: [PATCH v7 00/16] Introduce support for IGVM files
-Date: Thu, 27 Feb 2025 13:38:08 +0000
-Message-ID: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tnee7-0000lm-Ai
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:13:51 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tnee4-0002Ss-9H
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:13:51 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-38f3ac22948so515163f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:13:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740665626; x=1741270426; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qzJpewvz9X+JB4NWBVhEFyUkbwWtvrwjCE7+wIb8f1A=;
+ b=rxUWWu5JYnjp9BmJIrQa946+XjF+1JVXS4ohI3k1gXnaE5MSIVrxUgyJRWf/WYTBo1
+ qN4XqQIq00kE8GtyGtJ5daRDyTwGFfgvj1HVP9xglDqZGLfZKXZnPrLhIJVhMiJv8Twf
+ LhCL3qNYTblWlWKBHE/bV8qPCx4SlEcvQaqXZRojPduKPWwPJL9L728VvLmcERU5We0f
+ ymYWxCkgjrCxA8O6APLtCHNR0ngicpzV7vRCCfjhdr26Jd9/yB7t+PgcTwTMlYl8Yrh+
+ 2tWd2oFfPvSD2WKVtnA77mlF/6IbnBOwDdB0fvvoJ5iUkA+VdDTC/xvm8SjDjk0AgRL2
+ IycQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740665626; x=1741270426;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qzJpewvz9X+JB4NWBVhEFyUkbwWtvrwjCE7+wIb8f1A=;
+ b=NQzpgFaeO6As34YM8s8mHa5MTOgbfUlp4DCTyWZCAw7zIISYwI5d56XD+8GMBY1RtJ
+ 4f1dMsd8PPdxlNdj7Ab4iL5UZjml3hLp94sNxkJPXSuCC40AgXhc4sfULVBYjJVNtJfU
+ cEczzJ/HWyWi22KbOEshg7CwbM3qUQ6kgc7i3d8pee3tCU66tZS0luBojOLfyzum8HMj
+ srXZARlz3B6RyMs4kG1RSZIcPPg8ATWJGg4wz1vtCthdTd84Tgwwx5l8mv/nFH1SMrp1
+ ZIxEJvIGz6y2RuX/qnmyi3XpYvaRYxP8mbJ/67pEadgCXh/1EhPVxadfCwWwu94aeKxH
+ dJLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJyc34D4e30zzdpxkJOgOSL+wHBL6k2vBZJxfjd/LJnWkpl36oooAzbf26ViTPfhiclp8+wK3ZU7Bw@nongnu.org
+X-Gm-Message-State: AOJu0YygyLktDv1+bvXDmb/005diGLNTFM2+/7cQfmv/cfuOGe0y7Q0r
+ tkAfq/xmoz+c7qc1IjCAPwVYFUatn/hNTHaOM81HSA01ZW81WNeTwxr/kHqC150=
+X-Gm-Gg: ASbGncsLSEKdDIkU+w2MDv7ritU6Cyig2+0ihk/sXdNZwrENpP9hlNWgoXPBJo5LYsM
+ MBv+MsSX7GHzlDZ9R2MzNWj4JpThWtZYgoBnWFJNik3ZBwmMiLMaevn66zDz81q9IOccj2jeF9L
+ WBtiy28hyv/TfLdx2YoMn22CFoUyQRz37Zq+Q7kX6+fw6fPew74QJnydxvi5yZE/9IOJpIN8KKn
+ xDe/QmekxyE3b+7LANF3NEHMQZL7vZ7+Y0u9/oK1SXsz9dBzvSrYP6fn4e/ErD4AfowLoDnw8j/
+ zYblk20FaraveJ6FfCgOxSxTSQGXxLn2
+X-Google-Smtp-Source: AGHT+IEC3HLDlTAUEEd5q4LK4EsKjzPSas92qirYxdC5mCLGqvWQZlB7Y4+IazefhaaoW0UDCOaxSw==
+X-Received: by 2002:a5d:4b51:0:b0:38f:2bd2:45d0 with SMTP id
+ ffacd0b85a97d-390cc638d9emr7952897f8f.51.1740665625906; 
+ Thu, 27 Feb 2025 06:13:45 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47a6a9fsm2219764f8f.36.2025.02.27.06.13.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 27 Feb 2025 06:13:45 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] tests/tcg: Suppress compiler false-positive warning on sha1.c
+Date: Thu, 27 Feb 2025 14:13:43 +0000
+Message-ID: <20250227141343.1675415-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=213.171.216.60;
- envelope-from=roy.hopkins@randomman.co.uk; helo=smtp.livemail.co.uk
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 27 Feb 2025 08:58:26 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,107 +99,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here is v7 of the set of patches to add support for IGVM files to QEMU. This is
-based on commit 40efe733e10cc00e4fb4f9f5790a28e744e63c62 of qemu.
+GCC versions at least 12 through 15 incorrectly report a warning
+about code in sha1.c:
 
-Firstly, apologies for the amount of time between the last version and this one.
-I moved roles to a different company and, although I always planned to see this
-patch series to completion, it took a while before I found time to setup a
-development environment and be in a position to send a new version. I will
-continue this series using a personal email address for now, hence the change
-to the author and signed-off-by emails.
+tests/tcg/multiarch/sha1.c:161:13: warning: ‘SHA1Transform’ reading 64 bytes from a region of size 0 [-Wstringop-overread]
+  161 |             SHA1Transform(context->state, &data[i]);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The only changes in this version are to rebase on the current master branch and
-update commit metadata, including Signed-Off-By and Author emails for my
-replacement email address, and to include the final Reviewed-By that were added
-in the last review. There were no requested changes on the previous version [1]
-so I believe this series is ready to merge.
+This is a piece of stock library code for doing SHA1 which we've
+simply copied, rather than writing ourselves. The bug has been
+reported to upstream GCC (about a different library's use of this
+code):
+ https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106709
 
-As always, thanks to those that have been following along, reviewing and testing
-this series. This v7 patch series is also available on github: [2]
+For our test case, since this isn't our original code and there isn't
+actually a bug in it, suppress the incorrect warning rather than
+trying to modify the code to work around the compiler issue.
 
-For testing IGVM support in QEMU you need to generate an IGVM file that is
-configured for the platform you want to launch. You can use the `buildigvm`
-test tool [3] to allow generation of IGVM files for all currently supported
-platforms. Patch 11/17 contains information on how to generate an IGVM file
-using this tool.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2328
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/tcg/aarch64/Makefile.target   | 3 ++-
+ tests/tcg/arm/Makefile.target       | 3 ++-
+ tests/tcg/multiarch/Makefile.target | 8 ++++++++
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
-Changes in v7:
-
-* Update version numbers for IGVM support to 10.0
-* Add Reviewed-by to relevant commits.
-* Update Author email and sign-offs to my new email address
-
-Patch summary:
-
-1-11: Add support and documentation for processing IGVM files for SEV, SEV-ES,
-SEV-SNP and native platforms. 
-
-12-15: Processing of policy and SEV-SNP ID_BLOCK from IGVM file. 
-
-16: Add pre-processing of IGVM file to support synchronization of 'SEV_FEATURES'
-from IGVM VMSA to KVM.
-
-[1] Link to v6:
-https://lore.kernel.org/qemu-devel/cover.1727341768.git.roy.hopkins@suse.com/
-
-[2] v7 patches also available here:
-https://github.com/roy-hopkins/qemu/tree/igvm_master_v7
-
-[3] `buildigvm` tool v0.2.0
-https://github.com/roy-hopkins/buildigvm/releases/tag/v0.2.0
-
-Roy Hopkins (16):
-  meson: Add optional dependency on IGVM library
-  backends/confidential-guest-support: Add functions to support IGVM
-  backends/igvm: Add IGVM loader and configuration
-  hw/i386: Add igvm-cfg object and processing for IGVM files
-  i386/pc_sysfw: Ensure sysfw flash configuration does not conflict with
-    IGVM
-  sev: Update launch_update_data functions to use Error handling
-  target/i386: Allow setting of R_LDTR and R_TR with
-    cpu_x86_load_seg_cache()
-  i386/sev: Refactor setting of reset vector and initial CPU state
-  i386/sev: Implement ConfidentialGuestSupport functions for SEV
-  docs/system: Add documentation on support for IGVM
-  docs/interop/firmware.json: Add igvm to FirmwareDevice
-  backends/confidential-guest-support: Add set_guest_policy() function
-  backends/igvm: Process initialization sections in IGVM file
-  backends/igvm: Handle policy for SEV guests
-  i386/sev: Add implementation of CGS set_guest_policy()
-  sev: Provide sev_features flags from IGVM VMSA to KVM_SEV_INIT2
-
- backends/confidential-guest-support.c       |  43 +
- backends/igvm-cfg.c                         |  52 ++
- backends/igvm.c                             | 967 ++++++++++++++++++++
- backends/igvm.h                             |  23 +
- backends/meson.build                        |   5 +
- docs/interop/firmware.json                  |  30 +-
- docs/system/i386/amd-memory-encryption.rst  |   2 +
- docs/system/igvm.rst                        | 173 ++++
- docs/system/index.rst                       |   1 +
- hw/i386/pc.c                                |  12 +
- hw/i386/pc_piix.c                           |  10 +
- hw/i386/pc_q35.c                            |  10 +
- hw/i386/pc_sysfw.c                          |  31 +-
- include/hw/i386/x86.h                       |   3 +
- include/system/confidential-guest-support.h |  88 ++
- include/system/igvm-cfg.h                   |  47 +
- meson.build                                 |   8 +
- meson_options.txt                           |   2 +
- qapi/qom.json                               |  17 +
- qemu-options.hx                             |  28 +
- scripts/meson-buildoptions.sh               |   3 +
- target/i386/cpu.h                           |   9 +-
- target/i386/sev.c                           | 850 +++++++++++++++--
- target/i386/sev.h                           | 124 +++
- 24 files changed, 2454 insertions(+), 84 deletions(-)
- create mode 100644 backends/igvm-cfg.c
- create mode 100644 backends/igvm.c
- create mode 100644 backends/igvm.h
- create mode 100644 docs/system/igvm.rst
- create mode 100644 include/system/igvm-cfg.h
-
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 9efe2f81adf..16ddcf4f883 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -83,7 +83,8 @@ test-aes: CFLAGS += -O -march=armv8-a+aes
+ test-aes: test-aes-main.c.inc
+ 
+ # Vector SHA1
+-sha1-vector: CFLAGS=-O3
++# Work around compiler false-positive warning, as we do for the 'sha1' test
++sha1-vector: CFLAGS=-O3 -Wno-stringop-overread
+ sha1-vector: sha1.c
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+ run-sha1-vector: sha1-vector run-sha1
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+index 99a953b6671..6189d7a0e24 100644
+--- a/tests/tcg/arm/Makefile.target
++++ b/tests/tcg/arm/Makefile.target
+@@ -61,7 +61,8 @@ endif
+ ARM_TESTS += commpage
+ 
+ # Vector SHA1
+-sha1-vector: CFLAGS=-O3
++# Work around compiler false-positive warning, as we do for the 'sha1' test
++sha1-vector: CFLAGS=-O3 -Wno-stringop-overread
+ sha1-vector: sha1.c
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+ run-sha1-vector: sha1-vector run-sha1
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index 688a6be203c..c769a7d69d9 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -45,6 +45,14 @@ vma-pthread: LDFLAGS+=-pthread
+ sigreturn-sigmask: CFLAGS+=-pthread
+ sigreturn-sigmask: LDFLAGS+=-pthread
+ 
++# GCC versions 12/13/14/15 at least incorrectly complain about
++# "'SHA1Transform' reading 64 bytes from a region of size 0"; see the gcc bug
++# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106709
++# Since this is just a standard piece of library code we've borrowed for a
++# TCG test case, suppress the warning rather than trying to modify the
++# code to work around the compiler.
++sha1: CFLAGS+=-Wno-stringop-overread
++
+ # The vma-pthread seems very sensitive on gitlab and we currently
+ # don't know if its exposing a real bug or the test is flaky.
+ ifneq ($(GITLAB_CI),)
 -- 
 2.43.0
 
