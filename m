@@ -4,205 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD19EC021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 03:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B112C197BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 03:28:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnUYr-0007uU-UT; Wed, 26 Feb 2025 22:27:45 -0500
+	id 1tnUYn-0007tI-1u; Wed, 26 Feb 2025 22:27:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tnUYq-0007tu-5C; Wed, 26 Feb 2025 22:27:44 -0500
-Received: from mgamail.intel.com ([198.175.65.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tnUYm-0005XL-Of; Wed, 26 Feb 2025 22:27:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740626861; x=1772162861;
- h=message-id:date:subject:from:to:cc:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=69RZLgnbvEu9VyzGjRSxx0B2DyiNkZ1bnw6o4IxH6Ss=;
- b=JHDs717stnsN245R7dSvch8SGPf04WnnU9KzakGmU/EtGBwWCReiJcbi
- 7Z/LeBvQlZ/kaTI5JF8L/ywBGS8ahELEAxoxlDST5HJ9iIU3153TSWCF2
- f8yzw/hFH/2HvI6qwo782lQHhBJ7QEeW9C5xNy90c+/orQE3RnF9DoWXo
- w1FcANx1wVaowPL4SjyAfw1+7m+kFKoshfMcTFF15LGjshACVxTB5FxdW
- 4JWPRsOEUQ9t6vyMx0rmh8lOHQ/4WdJopF9cwIif+cyCS4LnivUq0JX9y
- VRoFTYFUno2GY2wsRMgxQZ1Vern4QmTkUPQU+iJbXGkELdV347vCxq4TM Q==;
-X-CSE-ConnectionGUID: FeRsezStSVmbbYKyfkR0pw==
-X-CSE-MsgGUID: hBQDlFZXR72gjjRAKua4fw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11357"; a="45156973"
-X-IronPort-AV: E=Sophos;i="6.13,319,1732608000"; d="scan'208";a="45156973"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Feb 2025 19:27:33 -0800
-X-CSE-ConnectionGUID: PA/8Sxh2R+SfG7TAAAGPjg==
-X-CSE-MsgGUID: r0v0YyvXSZ6c9HiSJtQwoQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="122152744"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by orviesa005.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 26 Feb 2025 19:27:32 -0800
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Wed, 26 Feb 2025 19:27:31 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Wed, 26 Feb 2025 19:27:31 -0800
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (104.47.74.48) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Wed, 26 Feb 2025 19:27:29 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XEESqSoRVQaYBYl+KoCvBOGs1WOQvXQG88FrCnrtGMnfCL1QqInHVTQ+zNKrBThaBntFiGBCXVbojaqX7njgfAMJTZM0r6Kg2oivEB3dhU3tRlXvA7I87SZL26iA+EuUMvVTcBTmpkP2txV5CFzi3Li+hlZ6QC9GRN10RAUmCOmuigeIBiiRB2A8qFK1e6/lAOqxyMcA3tsjkssftvstBznBMql7CMPBEThHHNtgwmTZRkKKLKCHiOxsKBhqjT77ajESCDzWoM+iXfkauwp5jFl5dMSzAtdAF+UBjOvG9mj+awrLYtyIi86lgTPQrAz0i3Kdt8Popo+hSRjs0AZfFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ccGTqL8BZ3pRe+f9WGRkwk7tf+SjjXR+pAf1SNV/WcU=;
- b=WJaB8r8vXJlxOhaldPh8FBL3dU4hm+RQ2tbWjCbgklkz80RRr/213RPDJMC9C9Nb9nA1/1bJLPbSFgGnB4ZNRupk/hpBM7v0Ar/B8nEjDyx3xiadm8ZeUSwZc/m6CVhNt0733bt/CzyrpiTSv2YINqv1kvnboY8vt5TgpZPBX6GEXXDZ6hi4QmJhYCwg0r4/cFW9/JdWc9uaUB8Ws80SZTk0HQJAd6ZEoARWHErdvI4haZ1ZoYhcGqVfwzYxAYAoI/G9+KSzDsPfkgy5JL4p8J1PZtbEAYsfJ/gnl2eiYDROlsEmgBKaOm6EGNM+zWHgkXmTlXLoLGJ/2sOfhaKC1w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- SA2PR11MB4892.namprd11.prod.outlook.com (2603:10b6:806:f9::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8466.22; Thu, 27 Feb 2025 03:26:46 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95%7]) with mapi id 15.20.8445.017; Thu, 27 Feb 2025
- 03:26:46 +0000
-Message-ID: <39155512-8d71-412e-aa5c-591d7317d210@intel.com>
-Date: Thu, 27 Feb 2025 11:26:38 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/2] system/memory: Allow creating IOMMU mappings from RAM
- discard populate notifiers
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-To: David Hildenbrand <david@redhat.com>, Jean-Philippe Brucker
- <jean-philippe@linaro.org>, <philmd@linaro.org>, <peterx@redhat.com>,
- <pbonzini@redhat.com>, <peter.maydell@linaro.org>, Alexey Kardashevskiy
- <aik@amd.com>, Gao Chao <chao.gao@intel.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-References: <20250220161320.518450-2-jean-philippe@linaro.org>
- <20250220161320.518450-3-jean-philippe@linaro.org>
- <0d761daf-174d-487f-80fe-09b04902006f@redhat.com>
- <75d90f78-151f-4169-84f5-cc3c13180518@intel.com>
- <ce2306f9-19a4-4979-80e6-29b1e8a92318@redhat.com>
- <108be3a5-cfc1-4268-a913-3a41d1e4451f@intel.com>
- <16cb9605-ba4c-441e-8709-369a37655b4a@intel.com>
- <4a589056-b331-4dde-aa77-9129106a14c0@redhat.com>
- <b0e11469-775e-45e3-bbcb-319557c20a47@intel.com>
-Content-Language: en-US
-In-Reply-To: <b0e11469-775e-45e3-bbcb-319557c20a47@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SG2PR06CA0232.apcprd06.prod.outlook.com
- (2603:1096:4:ac::16) To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|SA2PR11MB4892:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5a048fd6-75c8-42c7-5524-08dd56de9016
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?akRoRTJTQWZTVGZBQTZKMjUrc1dOMXoydVhUNjZrd1dLQlFUQkozcG9xcTVL?=
- =?utf-8?B?Q2RjZWViU2VsMnEwcFRZU25YYXBldHYraC9wWUp1ejAzNU5EYWlXWXlPdUZs?=
- =?utf-8?B?L0pUK3FYeGEzZG1RTmpaYVRWVGdsSERVcDFPQ21laXV1ZVUzUFd0ek4xZjdh?=
- =?utf-8?B?eEhQcTdER05TVmVPQlN3ZE5WdThWWUQxUWZhU0JnakN6UkJPam8vNTBUanZD?=
- =?utf-8?B?VVQ2TFppUHRHd2pQeStKWVJ0NU9WWE1DMDcvWlA0eHF1OGxiNmJ5OXF4MFo2?=
- =?utf-8?B?Q3h3N25PYTU5c3czMjAxRGQyVVFCTXFZRzVyTU5sQk81ckpMdkZwakkwRlNo?=
- =?utf-8?B?eFM2QmRhYVVhUk9VejI5SHhaQy9kajlUZ3dOL0t4RkZZSkpYbUZYcDlNcjR6?=
- =?utf-8?B?bGxhU0RxcDVISkc0b01SUXJFMXhVTjg2djVublhRYWlhL3FSRFdXWjdEYUd5?=
- =?utf-8?B?TVV5UmdTT3hRUkdjMHNKUDdTM05VVmkwUldrT2NLelJWY1BYRVUyckt5OWc1?=
- =?utf-8?B?bHBDZHc5TDZZNy9EUVphcjBZU0xFeFVzR3ZSbWlMVElWYks5QTgySjRJQWt0?=
- =?utf-8?B?akoySEtaMnJSeEFrclFXLzJMRlVVcUVVbkdDSXVJS05sRWFDVUpNK3EzajBQ?=
- =?utf-8?B?RnNneVFmeHJlM08zeHhtb2k3cmlFRW1zb2VHVmRPS3FENFJDR3AzTDNJcE9m?=
- =?utf-8?B?VEFOSjZxWVc1eW50UERBNk9Rc0k1V0ZKRmkydUlBa2Z1UVVJU0R0eFBvVG5N?=
- =?utf-8?B?RUdyNUkvMjZLREhMYnNURHBpazhiVkRodUl4WGk4b0VJNFNiZzZCbjhUSXQ1?=
- =?utf-8?B?M3RIUFB3Q215RUs5WVBiSE1zMytwcnhFLzJzWGVMTjErZ3llTkR4L2RFNjJ4?=
- =?utf-8?B?cDBqNWRqZXpFck5MOGlTN0lKTzVVcTJRSXRlWkZHT3JCYlFqTjNUSm1IVU90?=
- =?utf-8?B?cVhKZjZHNDNuancwcllSQ1hCa2tJclJsaWp4RDhSTFdBTzJIejhPZHlwMmVF?=
- =?utf-8?B?VTBSQ1NqdHA0QlhnK3pkWEQ3QWdtbHp3TlhlVW50ai8vakkxY1FPQTdjck9Z?=
- =?utf-8?B?a0JxWVBTSkRvY1lzeGQxeG5lVFVRTENIYVZ0Q1VSTVljcUt0YlhLRmJwaFdG?=
- =?utf-8?B?YnkvMFhaZG9mMkpKYzA2V2l2OXBjclpvTG41cVFQUWo4MVNnWFd4K2VCUS81?=
- =?utf-8?B?cEU2dzZRU1Q3Y09rUWVkYXdPZE9sZ3o0Nk9WK1IyVkQ0d0JsOFAvcFZnUlhU?=
- =?utf-8?B?M0g3R0ZQaXNaTXJwUEttYWRsd2Z2TmdrUFZwdDJtU01uVEtjMG5QM2tCUGkz?=
- =?utf-8?B?OGxTQlRpMXRkRXhrL3c2NWxMbFhpQjU5emYwQ0U4czVlQVRWT1B0dG9IbjF2?=
- =?utf-8?B?YWljb3cxSFFCRmdQZjVnbHMxN1Z3eS9WSGlzUHRxRisxbzUvOTNWdlhNVzFF?=
- =?utf-8?B?a3REUmMvZFZMZkw1VEdxaW9JcEh3T2pNY0ZyZXhRcU00cVVxcTZ6aHpRMFB6?=
- =?utf-8?B?bTA3OVlyQ2NMWkxvOE1ZYUlWMEx4amdxWE1GclNYa2MyZmc4U3VKaFpJaHFY?=
- =?utf-8?B?MFg5VkNTZ0hURFU2cUEwcHRheHBsWjF2eGw0V1VaaDEyVEpWbGFydVNYNk9k?=
- =?utf-8?B?eTVkakU4RnN1d3gyWWt0K0JmVlpaZTljbG5ESW1OVVQ3TmtoeURYb0RpYzNv?=
- =?utf-8?B?cXBLeGVpMDF4TEErd2ZSVE4vWTNQVE5wM09GeHF4QWNkM3JhTjhnSjh2VFEx?=
- =?utf-8?B?dTBiZHJWSlZhUGRUNUVKeDhlS1FHYUdxN0NRZHE5bGc1ZEtrRFZKZUtOWTZy?=
- =?utf-8?B?OEFDbVBQTW9EN0VXZ3V4RWdyVWs0bGtkeVRIakloYlNsUUVnbTM1eWlHa3NZ?=
- =?utf-8?Q?O6axX2aCBLe79?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?anNyd0JsOXJ2RHZlT3RTTlZ3RkZHU1gzVEFJZ2JMcnBHNE9haExTZXhpOXVs?=
- =?utf-8?B?WjV1cHRYeGtRQklteTRXNEh6ckhJOTV2QW96dXRmNllVeWtGVzZkWmVzdzl0?=
- =?utf-8?B?akVaQk1yTDd1dUFrOUxGUVhGcjRjanBtMnQ5U3VteUdvTVBLanZQZTdsNWpo?=
- =?utf-8?B?eExLRU4rajFBOXI2UDhQWE4ya1h1R3RGQXNxYkthVWd2M0JrM1hQMFlqbnVG?=
- =?utf-8?B?QUZhZ3NEODNodEUyeVc5YjFtVXRPZ2twTnNqNUZhTEdNSTZyNVVRYVhySS9k?=
- =?utf-8?B?OVBMVjFPYW9ZL1FjQU8ydFNjaExpVEJEcnZVRG02RjhwYkxYZ0FyMzVVODdh?=
- =?utf-8?B?UnBFdnRkbEFkMlA1VXlMbGlta3lvK2FMUGRzN2xVbU1BYW01SzlvalZERlVH?=
- =?utf-8?B?TThWaENhdC9WOVY4Szh1NUZTUHFOV2dEZzhtUjJOd3RybWE1SlFMYWpxNllJ?=
- =?utf-8?B?ckhQekt4UVFzNVoyOXBtSForVnNkU0pzcTEvRGxQeC83OFBlaGw4OXJzRzRt?=
- =?utf-8?B?MUpVVXl4dnNTS2NjaExtNU41N1h0QXlUM1hiS2p4UHFrMGhwY1R0RFpGdndB?=
- =?utf-8?B?ZVEwY25EZzk0bW5rUUJxOEQ0Y1RDMXdsbUFwNmRCc292ZmR0RTBSQ3l5bTZw?=
- =?utf-8?B?VG5sdHI0cStXajhoVmFMNlNkN3BZRldRODdtenZFQmpoVHpJUXVSRFBXbHh6?=
- =?utf-8?B?ek51SHJkNFZRbFlsTDc5aFZkNFBMN3Ric3lUOTVqMnl3WnRJRFVSU1FPdFJI?=
- =?utf-8?B?aDBzVEhhQjJHL3BMZmppRnEveldOekdOL0RFSk41dlczWFdJOTRvdit0TTFu?=
- =?utf-8?B?ekRRZjIyN1I5QjlMRnl2Z2dVdXdVc2RwSmtqTkM3OXB0aXExQXJaeXkrbnRX?=
- =?utf-8?B?elo0UDJWMVIzaEhmejgxeXFzWWtabUZIaUk0MjhXakpqaTgzaHN0cGVES290?=
- =?utf-8?B?M0d1Y3R1WHlZdUhmcHlXT1NYbnFNN0lCUFdMSkovbGpxcmpGN09KdnJKTGFl?=
- =?utf-8?B?Z20zWEVCMDdHaHdDYTJlQlBZL0FqOXJNNjRSZG9YaFdWeXhQK0Q2enpRcjIw?=
- =?utf-8?B?SlAxS3NnRXhzY0JYWVJjb21oaWRST1llbDMyME1iMG1jT0IwYXRZWm1reWpP?=
- =?utf-8?B?TlB1cVdaU1dXeERTNGcvL2NHdDcrS2pOdFlveEZKYXhuM0FXU21tbmlsb2Vq?=
- =?utf-8?B?cTlrc3BKM3psQTFvNldEY2tJVFZzcHJVUitNK2dENitVc0FsK2MvSVBXNnNV?=
- =?utf-8?B?SmxsVEVQSDB5cnFUMXZqMWsydTYrZGEwaDNXcVdDejNTMHBOZjJRcjY0T2Ru?=
- =?utf-8?B?U1RXaUkzc3pwcDVCK1VVdk54WUxHK3h4alA3Q05wMFF4cElSdkJFNzBudnNz?=
- =?utf-8?B?UHhSZ0sxMm5wWmdjWTloS1lIVnArVDhRbkdpUVQ1TVVFdzFZNXZFaDJMekNh?=
- =?utf-8?B?QWNqZDBNMXdxdzlrU3MwbnVzeTJ0dGNpTGo5MVQ2cFNiNUkzeFNwMjhjRVBW?=
- =?utf-8?B?UHAzOTFoa3ZVMkpmT29nM0tEYVBjb1VNb2txSlMwOWw0aXU1L0JKQ3RyVDN1?=
- =?utf-8?B?b3BoeHNlRzlKM0ljb3k3SG9KMjFBT09udVRneE95cURwOWplU2owRm56QnA4?=
- =?utf-8?B?VHRYOTlkcVByc0VGWEFsdWM1Z2d5VCtsbHkzb0lUVmdUTm1OVUhtanFmM0tF?=
- =?utf-8?B?WjNvb1JwdjFDT3VrL0FFUTN6UjV1SHFrMDNyWGpoR0FtRnN1aWNYbDhoTmha?=
- =?utf-8?B?Q21KeTZWS0todndHRkZoWFBMZUxJaGVLaFNoWFhRN3ZKRURMME5lWHJWaFQ2?=
- =?utf-8?B?TWhMTytLNzNEeTlhZVYxK0dYYTh3anhxODVrdUNvam9xTDJDWGU5cjBlQXNU?=
- =?utf-8?B?OTVranN0LzZCamdDdUQ0REFad05FNVZaa21KRVNKTHZRMDROUzdTdS80Uk1I?=
- =?utf-8?B?Z0lQSzUvN2dBRy9sSnEzdnNQZk1JNkJlTVVjNFVHZGNuUUwydlFCbmVmdzBp?=
- =?utf-8?B?djBLS2oxSHpKSUY2L0F6dk9lTytWbUtkTCtXbGlRWU1vS0FNMk8vbVpTT0I5?=
- =?utf-8?B?dGFNM2xaOWpSb1BiME51M0JkQXJ4amhtY1ZmRTA1ZUY5NkNwcCtmWWswUTNT?=
- =?utf-8?B?L28yU0dMUXJQQmo0U3lETGE1ZDdjbzd4TWthRUlGeDZ5QTBmYnJrL0hKTllU?=
- =?utf-8?B?cnc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5a048fd6-75c8-42c7-5524-08dd56de9016
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2025 03:26:46.0813 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: UNrC4XsszSJqnS56kPVBBcVb9Z2BxBh94udCudg8XpF6VaanBam8eKb3FpyhmqF6rdtWFxYaKmqRu3NXj/Djng==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB4892
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.15;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tnUYl-0007sy-D4; Wed, 26 Feb 2025 22:27:39 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tnUYj-0005X9-1l; Wed, 26 Feb 2025 22:27:39 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2fc1843495eso814326a91.1; 
+ Wed, 26 Feb 2025 19:27:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740626855; x=1741231655; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GtGmvabqvG7R4tF49ELlLiPLkwO0jEQoHMdWez5qohE=;
+ b=PQD0PxlLCc9+IXGAzN+Av5ZBAtImQUe7cbbLoVkjOk6sxsVlmDrE8t9FoMN9iwVRL6
+ Uqwh84XWmjSIYVlf9vEO0zmyCZ8AfqnHc6sKCPxVxaVPDsWyWTqdj0jyE1/Rs8MzlDGp
+ 9xhlFlGxUx/hZZb0TNuOnmuP6bdMj/L50QmLzoMmdY2sVUiUwIZwWa8KKIda4qbjqrkB
+ FLg9EErU5rG6D0ZBlJKgiCO2Vitj8rhPqxLy+r4qbANUFtqT9Uc3Wpf2Fy5bRuH6AvVM
+ UgDhmW2w3BqDYPhPwZfgwPnVTPGvdPB6Rt2uzE0jmBVy7BZ/l2aGKhNUru52BNkayB2e
+ y3+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740626855; x=1741231655;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=GtGmvabqvG7R4tF49ELlLiPLkwO0jEQoHMdWez5qohE=;
+ b=JUA/vXYm8KTqTt914IW+O7FnpKGyxFY+g+2UmdHVKgpSJT8B4PG19b6FaL4l07AhWf
+ 7ClBYNzpbp5BsPILnPtY/ClHE0dJG1CXo4PC+8eAyBhDBWdvLs1ArDJqT3Pvql251YNC
+ 5T7ow/stL+6HbgQlbIiqduipv5G9l92VhBNkbqIuvNn0LB0s6c5p4hDxHIbGYXUTEu33
+ C0BHnRFjQPCMCksLPS2ypLV4xKkjNT+BuxHdKsu23coRjOtMfWGFMFI5eJsjlcumlqNL
+ cGQEyy6+Xn4OLyGQda5ezT1WwNXqtpZ2XL+k6vF/W8oACk8vXZhuFBukO6m/58MbvkI2
+ NaYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUDbCy2cHa+PjX2wOkJ++VQ7FRj+7SuEqOMdMqW4QGP8vosMYTpJqbcKFWPTdG01++vpwIdG7rmmtWd@nongnu.org
+X-Gm-Message-State: AOJu0YxOCzLULD3fzhT8+GDuqfqp5RL2mMcjTuMBxsrpbskQ00cOMAkz
+ NHCkPGKu72xmEG/XoHO2hjb6So9Bs75irXz8NvAGAETyXzHqbxI6ibyWeQ==
+X-Gm-Gg: ASbGnct5pNCRt2H69gy7RDV3G0R7bZKf1nQjrTipLyR40L/Y9bIPQ9K2Vqlaey2b4d4
+ PZx3aCwwc+ryaZdLHhslcROaKo1R9Vs/BTyShuYaX+TPSThMm7yTmdNNFrsn6lvcrJExNdvC4Yu
+ 8TA3jQVNwzsyoUzKqHl5+taOqmo7dbu/FOmlo+I1KBnquhV+FhMCbR3lRCm/jZmseWT1wW41JVm
+ iljS27KcM2apWQLwF0vE4MePZ6EUhvSvr9giGMrZiR0oppS5nA+B9y54mA/eLNPPsOHLQiV/fPX
+ kUdM2Kcp3JVjjIOdSg==
+X-Google-Smtp-Source: AGHT+IEX3Etrjc29q9gpP73j9zZ04SJ3uV2wcYy8Z07c9BVozsklfMpedQP7aRQ67BX+mc2tApE5jg==
+X-Received: by 2002:a17:90b:1a88:b0:2ee:aa95:6de9 with SMTP id
+ 98e67ed59e1d1-2fce7b237cemr40982418a91.33.1740626855063; 
+ Wed, 26 Feb 2025 19:27:35 -0800 (PST)
+Received: from localhost ([1.146.90.134]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2fea6990030sm360027a91.44.2025.02.26.19.27.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Feb 2025 19:27:34 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 27 Feb 2025 13:27:28 +1000
+Message-Id: <D82WPYZ2R1DS.2JC91G6HRY0U7@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, "Daniel Henrique Barboza"
+ <danielhb413@gmail.com>, "Harsh Prateek Bora" <harshpb@linux.ibm.com>,
+ "Sourabh Jain" <sourabhjain@linux.ibm.com>, "Mahesh J Salgaonkar"
+ <mahesh@linux.ibm.com>, "Hari Bathini" <hbathini@linux.ibm.com>
+Subject: Re: [PATCH 4/6] hw/ppc: Implement saving CPU state in Fadump
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Aditya Gupta" <adityag@linux.ibm.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.19.0
+References: <20250217071711.83735-1-adityag@linux.ibm.com>
+ <20250217071711.83735-5-adityag@linux.ibm.com>
+In-Reply-To: <20250217071711.83735-5-adityag@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -219,251 +102,408 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon Feb 17, 2025 at 5:17 PM AEST, Aditya Gupta wrote:
+> Kernel expects CPU states/register states in the format mentioned in
+> "Register Save Area" in PAPR.
+>
+> The platform (in our case, QEMU) saves each CPU register in the form of
+> an array of "register entries", the start and end of this array is
+> signified by "CPUSTRT" and "CPUEND" register entries respectively.
+>
+> The CPUSTRT and CPUEND register entry also has 4-byte logical CPU ID,
+> thus storing the CPU ID corresponding to the array of register entries.
+>
+> Each register, and CPUSTRT, CPUEND has a predefined identifier.
+> Implement calculating identifier for a given register in
+> 'fadump_str_to_u64', which has been taken from the linux kernel
+>
+> Similarly GPRs also have predefined identifiers, and a corresponding
+> 64-bit resiter value (split into two 32-bit cells). Implement
+> calculation of GPR identifiers with 'fadump_gpr_id_to_u64'
+>
+> PAPR has restrictions on particular order of few registers, and is
+> free to be in any order for other registers.
+> Some registers mentioned in PAPR have not been exported as they are not
+> implemented in QEMU / don't make sense in QEMU.
+>
+> Implement saving of CPU state according to the PAPR document
+>
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>  hw/ppc/spapr_rtas.c    | 200 ++++++++++++++++++++++++++++++++++++++++-
+>  include/hw/ppc/spapr.h |  83 +++++++++++++++++
+>  2 files changed, 281 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
+> index 9b29cadab2c9..0aca4270aee8 100644
+> --- a/hw/ppc/spapr_rtas.c
+> +++ b/hw/ppc/spapr_rtas.c
+> @@ -348,9 +348,12 @@ bool is_next_boot_fadump;
+>  static bool fadump_preserve_mem(void)
+>  {
+>      struct rtas_fadump_mem_struct *fdm =3D &fadump_metadata.registered_f=
+dm;
+> +    struct rtas_fadump_section *cpu_state_region;
+>      uint64_t next_section_addr;
+>      int dump_num_sections, data_type;
+>      uint64_t src_addr, src_len, dest_addr;
+> +    uint64_t cpu_state_addr, cpu_state_len =3D 0;
+> +    void *cpu_state_buffer;
+>      void *copy_buffer;
+> =20
+>      assert(fadump_metadata.fadump_registered);
+> @@ -413,9 +416,174 @@ static bool fadump_preserve_mem(void)
+>          }
+> =20
+>          switch (data_type) {
+> -        case FADUMP_CPU_STATE_DATA:
+> -            /* TODO: Add CPU state data */
+> +        case FADUMP_CPU_STATE_DATA: {
 
+I would split these out into their own functions if they grow more than
+a few lines.
 
-On 2/26/2025 8:43 PM, Chenyi Qiang wrote:
-> 
-> 
-> On 2/25/2025 5:41 PM, David Hildenbrand wrote:
->> On 25.02.25 03:00, Chenyi Qiang wrote:
->>>
->>>
->>> On 2/21/2025 6:04 PM, Chenyi Qiang wrote:
->>>>
->>>>
->>>> On 2/21/2025 4:09 PM, David Hildenbrand wrote:
->>>>> On 21.02.25 03:25, Chenyi Qiang wrote:
->>>>>>
->>>>>>
->>>>>> On 2/21/2025 3:39 AM, David Hildenbrand wrote:
->>>>>>> On 20.02.25 17:13, Jean-Philippe Brucker wrote:
->>>>>>>> For Arm CCA we'd like the guest_memfd discard notifier to call the
->>>>>>>> IOMMU
->>>>>>>> notifiers and create e.g. VFIO mappings. The default VFIO discard
->>>>>>>> notifier isn't sufficient for CCA because the DMA addresses need a
->>>>>>>> translation (even without vIOMMU).
->>>>>>>>
->>>>>>>> At the moment:
->>>>>>>> * guest_memfd_state_change() calls the populate() notifier
->>>>>>>> * the populate notifier() calls IOMMU notifiers
->>>>>>>> * the IOMMU notifier handler calls memory_get_xlat_addr() to get
->>>>>>>> a VA
->>>>>>>> * it calls ram_discard_manager_is_populated() which fails.
->>>>>>>>
->>>>>>>> guest_memfd_state_change() only changes the section's state after
->>>>>>>> calling the populate() notifier. We can't easily invert the order of
->>>>>>>> operation because it uses the old state bitmap to know which
->>>>>>>> pages need
->>>>>>>> the populate() notifier.
->>>>>>>
->>>>>>> I assume we talk about this code: [1]
->>>>>>>
->>>>>>> [1] https://lkml.kernel.org/r/20250217081833.21568-1-
->>>>>>> chenyi.qiang@intel.com
->>>>>>>
->>>>>>>
->>>>>>> +static int memory_attribute_state_change(MemoryAttributeManager
->>>>>>> *mgr,
->>>>>>> uint64_t offset,
->>>>>>> +                                         uint64_t size, bool
->>>>>>> shared_to_private)
->>>>>>> +{
->>>>>>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
->>>>>>> +    int ret = 0;
->>>>>>> +
->>>>>>> +    if (!memory_attribute_is_valid_range(mgr, offset, size)) {
->>>>>>> +        error_report("%s, invalid range: offset 0x%lx, size 0x%lx",
->>>>>>> +                     __func__, offset, size);
->>>>>>> +        return -1;
->>>>>>> +    }
->>>>>>> +
->>>>>>> +    if ((shared_to_private &&
->>>>>>> memory_attribute_is_range_discarded(mgr,
->>>>>>> offset, size)) ||
->>>>>>> +        (!shared_to_private &&
->>>>>>> memory_attribute_is_range_populated(mgr,
->>>>>>> offset, size))) {
->>>>>>> +        return 0;
->>>>>>> +    }
->>>>>>> +
->>>>>>> +    if (shared_to_private) {
->>>>>>> +        memory_attribute_notify_discard(mgr, offset, size);
->>>>>>> +    } else {
->>>>>>> +        ret = memory_attribute_notify_populate(mgr, offset, size);
->>>>>>> +    }
->>>>>>> +
->>>>>>> +    if (!ret) {
->>>>>>> +        unsigned long first_bit = offset / block_size;
->>>>>>> +        unsigned long nbits = size / block_size;
->>>>>>> +
->>>>>>> +        g_assert((first_bit + nbits) <= mgr->bitmap_size);
->>>>>>> +
->>>>>>> +        if (shared_to_private) {
->>>>>>> +            bitmap_clear(mgr->shared_bitmap, first_bit, nbits);
->>>>>>> +        } else {
->>>>>>> +            bitmap_set(mgr->shared_bitmap, first_bit, nbits);
->>>>>>> +        }
->>>>>>> +
->>>>>>> +        return 0;
->>>>>>> +    }
->>>>>>> +
->>>>>>> +    return ret;
->>>>>>> +}
->>>>>>>
->>>>>>> Then, in memory_attribute_notify_populate(), we walk the bitmap
->>>>>>> again.
->>>>>>>
->>>>>>> Why?
->>>>>>>
->>>>>>> We just checked that it's all in the expected state, no?
->>>>>>>
->>>>>>>
->>>>>>> virtio-mem doesn't handle it that way, so I'm curious why we would
->>>>>>> have
->>>>>>> to do it here?
->>>>>>
->>>>>> I was concerned about the case where the guest issues a request that
->>>>>> only partial of the range is in the desired state.
->>>>>> I think the main problem is the policy for the guest conversion
->>>>>> request.
->>>>>> My current handling is:
->>>>>>
->>>>>> 1. When a conversion request is made for a range already in the
->>>>>> desired
->>>>>>     state, the helper simply returns success.
->>>>>
->>>>> Yes.
->>>>>
->>>>>> 2. For requests involving a range partially in the desired state, only
->>>>>>     the necessary segments are converted, ensuring the entire range
->>>>>>     complies with the request efficiently.
->>>>>
->>>>>
->>>>> Ah, now I get:
->>>>>
->>>>> +    if ((shared_to_private && memory_attribute_is_range_discarded(mgr,
->>>>> offset, size)) ||
->>>>> +        (!shared_to_private &&
->>>>> memory_attribute_is_range_populated(mgr,
->>>>> offset, size))) {
->>>>> +        return 0;
->>>>> +    }
->>>>> +
->>>>>
->>>>> We're not failing if it might already partially be in the other state.
->>>>>
->>>>>> 3. In scenarios where a conversion request is declined by other
->>>>>> systems,
->>>>>>     such as a failure from VFIO during notify_populate(), the
->>>>>> helper will
->>>>>>     roll back the request, maintaining consistency.
->>>>>>
->>>>>> And the policy of virtio-mem is to refuse the state change if not all
->>>>>> blocks are in the opposite state.
->>>>>
->>>>> Yes.
->>>>>
->>>>>>
->>>>>> Actually, this part is still a uncertain to me.
->>>>>>
->>>>>
->>>>> IIUC, the problem does not exist if we only convert a single page at a
->>>>> time.
->>>>>
->>>>> Is there a known use case where such partial conversions could happen?
->>>>
->>>> I don't see such case yet. Actually, I'm trying to follow the behavior
->>>> of KVM_SET_MEMORY_ATTRIBUTES ioctl during page conversion. In KVM, it
->>>> doesn't reject the request if the whole range isn't in the opposite
->>>> state. It just uses xa_store() to update it. Also, I don't see the spec
->>>> says how to handle such case. To be robust, I just allow this special
->>>> case.
->>>>
->>>>>
->>>>>> BTW, per the status/bitmap track, the virtio-mem also changes the
->>>>>> bitmap
->>>>>> after the plug/unplug notifier. This is the same, correct?
->>>>> Right. But because we reject these partial requests, we don't have to
->>>>> traverse the bitmap and could just adjust the bitmap operations.
->>>>
->>>> Yes, If we treat it as a guest error/bug, we can adjust it.
->>>
->>> Hi David, do you think which option is better? If prefer to reject the
->>> partial requests, I'll change it in my next version.
->>
->> Hi,
->>
->> still scratching my head. Having to work around it as in this patch here is
->> suboptimal.
->>
->> Could we simplify the whole thing while still allowing for (unexpected)
->> partial
->> conversions?
->>
->> Essentially: If states are mixed, fallback to a "1 block at a time"
->> handling.
->>
->> The only problem is: what to do if we fail halfway through? Well, we can
->> only have
->> such partial completions for "populate", not for discard.
->>
->> Option a) Just leave it as "partially completed populate" and return the
->> error. The
->> bitmap and the notifiers are consistent.
->>
->> Option b) Just discard everything: someone tried to convert something
->> "partial
->> shared" to "shared". So maybe, if anything goes wrong, we can just have
->> "all private".
->>
->> The question is also, what the expectation from the caller is: can the
->> caller
->> even make progress on failure or do we have to retry until it works?
-> 
-> Yes, That's the key problem.
-> 
-> For core mm side conversion, The caller (guest) handles three case:
-> success, failure and retry. guest can continue on failure but will keep
-> the memory in its original attribute and trigger some calltrace. While
-> in QEMU side, it would cause VM stop if kvm_set_memory_attributes() failed.
-> 
-> As for the VFIO conversion, at present, we allow it to fail and don't
-> return error code to guest as long as we undo the conversion. It only
-> causes the device not work in guest.
-> 
-> I think if we view the attribute mismatch between core mm and IOMMU as a
-> fatal error, we can call VM stop or let guest retry until it converts
-> successfully.
-> 
+> +            struct rtas_fadump_reg_save_area_header reg_save_hdr;
+> +            struct rtas_fadump_reg_entry **reg_entries;
+> +            struct rtas_fadump_reg_entry *curr_reg_entry;
+> +
+> +            uint32_t fadump_reg_entries_size;
+> +            __be32 num_cpus =3D 0;
+> +            uint32_t num_regs_per_cpu =3D 0;
+> +            CPUState *cpu;
+> +            CPUPPCState *env;
+> +            PowerPCCPU *ppc_cpu;
+> +
+> +            CPU_FOREACH(cpu) {
+> +                ++num_cpus;
+> +            }
+> +
+> +            reg_save_hdr.version =3D cpu_to_be32(1);
+> +            reg_save_hdr.magic_number =3D
+> +                cpu_to_be64(fadump_str_to_u64("REGSAVE"));
+> +
+> +            /* Reg save area header is immediately followed by num cpus =
+*/
+> +            reg_save_hdr.num_cpu_offset =3D
+> +                cpu_to_be32(sizeof(struct rtas_fadump_reg_save_area_head=
+er));
+> +
+> +            fadump_reg_entries_size =3D num_cpus *
+> +                                      FADUMP_NUM_PER_CPU_REGS *
+> +                                      sizeof(struct rtas_fadump_reg_entr=
+y);
+> +
+> +            reg_entries =3D malloc(fadump_reg_entries_size);
+> +            curr_reg_entry =3D (struct rtas_fadump_reg_entry *)reg_entri=
+es;
+> +
+> +            /* This must loop num_cpus time */
+> +            CPU_FOREACH(cpu) {
+> +                ppc_cpu =3D POWERPC_CPU(cpu);
+> +                env =3D cpu_env(cpu);
+> +                num_regs_per_cpu =3D 0;
+> +
+> +                curr_reg_entry->reg_id =3D
+> +                    cpu_to_be64(fadump_str_to_u64("CPUSTRT"));
+> +                curr_reg_entry->reg_value =3D ppc_cpu->vcpu_id;
+> +                ++curr_reg_entry;
+> +
+> +#define REG_ENTRY(id, val)                                     \
+> +                do {                                           \
+> +                    curr_reg_entry->reg_id =3D                   \
+> +                        cpu_to_be64(fadump_str_to_u64(#id));   \
+> +                    curr_reg_entry->reg_value =3D val;           \
+> +                    ++curr_reg_entry;                          \
+> +                    ++num_regs_per_cpu;                        \
+> +                } while (0)
+> +
+> +                REG_ENTRY(ACOP, env->spr[SPR_ACOP]);
+> +                REG_ENTRY(AMR, env->spr[SPR_AMR]);
+> +                REG_ENTRY(BESCR, env->spr[SPR_BESCR]);
+> +                REG_ENTRY(CFAR, env->spr[SPR_CFAR]);
+> +                REG_ENTRY(CIABR, env->spr[SPR_CIABR]);
+> +
+> +                /* Save the condition register */
+> +                uint64_t cr =3D 0;
+> +                cr |=3D (env->crf[0] & 0xf);
+> +                cr |=3D (env->crf[1] & 0xf) << 1;
+> +                cr |=3D (env->crf[2] & 0xf) << 2;
+> +                cr |=3D (env->crf[3] & 0xf) << 3;
+> +                cr |=3D (env->crf[4] & 0xf) << 4;
+> +                cr |=3D (env->crf[5] & 0xf) << 5;
+> +                cr |=3D (env->crf[6] & 0xf) << 6;
+> +                cr |=3D (env->crf[7] & 0xf) << 7;
 
-Just think more about the options for the failure case handling
-theoretically as we haven't hit such state_change() failure:
+Shift values wrong here I think... Use ppc_get_cr()
 
-1. Undo + return invalid error
-Pros: The guest can make progress
-Cons: Complicated undo operations: Option a) is not appliable, because
-it leaves it as partial completed populate, but the guest thinks the
-operation has failed.
-Also need to add the undo for set_memory_attribute() after
-state_change() failed. Maybe also apply the attribute bitmap to
-set_memory_attribute() operation to handle the mixed request case
+> +                REG_ENTRY(CR, cr);
+> +
+> +                REG_ENTRY(CTR, env->spr[SPR_CTR]);
+> +                REG_ENTRY(CTRL, env->spr[SPR_CTRL]);
+> +                REG_ENTRY(DABR, env->spr[SPR_DABR]);
+> +                REG_ENTRY(DABRX, env->spr[SPR_DABRX]);
+> +                REG_ENTRY(DAR, env->spr[SPR_DAR]);
+> +                REG_ENTRY(DAWR0, env->spr[SPR_DAWR0]);
+> +                REG_ENTRY(DAWR1, env->spr[SPR_DAWR1]);
+> +                REG_ENTRY(DAWRX0, env->spr[SPR_DAWRX0]);
+> +                REG_ENTRY(DAWRX1, env->spr[SPR_DAWRX1]);
+> +                REG_ENTRY(DPDES, env->spr[SPR_DPDES]);
+> +                REG_ENTRY(DSCR, env->spr[SPR_DSCR]);
+> +                REG_ENTRY(DSISR, env->spr[SPR_DSISR]);
+> +                REG_ENTRY(EBBHR, env->spr[SPR_EBBHR]);
+> +                REG_ENTRY(EBBRR, env->spr[SPR_EBBRR]);
+> +
+> +                REG_ENTRY(FPSCR, env->fpscr);
+> +                REG_ENTRY(FSCR, env->spr[SPR_FSCR]);
+> +
+> +                /* Save the GPRs */
+> +                for (int gpr_id =3D 0; gpr_id < 32; ++gpr_id) {
+> +                    curr_reg_entry->reg_id =3D
+> +                        cpu_to_be64(fadump_gpr_id_to_u64(gpr_id));
+> +                    curr_reg_entry->reg_value =3D env->gpr[i];
+> +                    ++curr_reg_entry;
+> +                    ++num_regs_per_cpu;
+> +                }
+> +
+> +                REG_ENTRY(IAMR, env->spr[SPR_IAMR]);
+> +                REG_ENTRY(IC, env->spr[SPR_IC]);
+> +                REG_ENTRY(LR, env->spr[SPR_LR]);
+> +
+> +                REG_ENTRY(MSR, env->msr);
+> +                REG_ENTRY(NIA, env->nip);   /* NIA */
+> +                REG_ENTRY(PIR, env->spr[SPR_PIR]);
+> +                REG_ENTRY(PSPB, env->spr[SPR_PSPB]);
+> +                REG_ENTRY(PVR, env->spr[SPR_PVR]);
+> +                REG_ENTRY(RPR, env->spr[SPR_RPR]);
+> +                REG_ENTRY(SPURR, env->spr[SPR_SPURR]);
+> +                REG_ENTRY(SRR0, env->spr[SPR_SRR0]);
+> +                REG_ENTRY(SRR1, env->spr[SPR_SRR1]);
+> +                REG_ENTRY(TAR, env->spr[SPR_TAR]);
+> +                REG_ENTRY(TEXASR, env->spr[SPR_TEXASR]);
+> +                REG_ENTRY(TFHAR, env->spr[SPR_TFHAR]);
+> +                REG_ENTRY(TFIAR, env->spr[SPR_TFIAR]);
+> +                REG_ENTRY(TIR, env->spr[SPR_TIR]);
+> +                REG_ENTRY(UAMOR, env->spr[SPR_UAMOR]);
+> +                REG_ENTRY(VRSAVE, env->spr[SPR_VRSAVE]);
+> +                REG_ENTRY(VSCR, env->vscr);
+> +                REG_ENTRY(VTB, env->spr[SPR_VTB]);
+> +                REG_ENTRY(WORT, env->spr[SPR_WORT]);
+> +                REG_ENTRY(XER, env->spr[SPR_XER]);
+> +
+> +                /*
+> +                 * Ignoring transaction checkpoint and few other registe=
+rs
+> +                 * mentioned in PAPR as not supported in QEMU
+> +                 */
+> +#undef REG_ENTRY
+> +
+> +                /* End the registers for this CPU with "CPUEND" reg entr=
+y */
+> +                curr_reg_entry->reg_id =3D
+> +                    cpu_to_be64(fadump_str_to_u64("CPUEND"));
+> +
+> +                /* Ensure the number of registers match (+2 for STRT & E=
+ND) */
+> +                assert(FADUMP_NUM_PER_CPU_REGS =3D=3D num_regs_per_cpu +=
+ 2);
+> +
+> +                ++curr_reg_entry;
+> +            }
+> +
+> +            cpu_state_len =3D 0;
+> +            cpu_state_len +=3D sizeof(reg_save_hdr);     /* reg save hea=
+der */
+> +            cpu_state_len +=3D sizeof(__be32);           /* num_cpus */
+> +            cpu_state_len +=3D fadump_reg_entries_size;  /* reg entries =
+*/
+> +
+> +            cpu_state_region =3D &fdm->rgn[i];
+> +            cpu_state_addr =3D dest_addr;
+> +            cpu_state_buffer =3D g_malloc(cpu_state_len);
+> +
+> +            uint64_t offset =3D 0;
+> +            memcpy(cpu_state_buffer + offset,
+> +                    &reg_save_hdr, sizeof(reg_save_hdr));
+> +            offset +=3D sizeof(reg_save_hdr);
+> +
+> +            /* Write num_cpus */
+> +            num_cpus =3D cpu_to_be32(num_cpus);
+> +            memcpy(cpu_state_buffer + offset, &num_cpus, sizeof(__be32))=
+;
+> +            offset +=3D sizeof(__be32);
+> +
+> +            /* Write the register entries */
+> +            memcpy(cpu_state_buffer + offset,
+> +                    reg_entries, fadump_reg_entries_size);
+> +            offset +=3D fadump_reg_entries_size;
+> +
+> +            /*
+> +             * We will write the cpu state data later, as otherwise it
+> +             * might get overwritten by other fadump regions
+> +             */
+> +
+>              break;
+> +        }
+>          case FADUMP_HPTE_REGION:
+>              /* TODO: Add hpte state data */
+>              break;
+> @@ -455,6 +623,34 @@ static bool fadump_preserve_mem(void)
+>          }
+>      }
+> =20
+> +    /*
+> +     * Write the Register Save Area
+> +     *
+> +     * CPU State/Register Save Area should be written after dumping the
+> +     * memory to prevent overwritting while saving other memory regions
+> +     *
+> +     * eg. If boot memory region is 1G, then both the first 1GB memory, =
+and
+> +     * the Register Save Area needs to be saved at 1GB.
+> +     * And as the CPU_STATE_DATA region comes first than the
+> +     * REAL_MODE_REGION region to be copied, the CPU_STATE_DATA will get
+> +     * overwritten if saved before the 0GB - 1GB region is copied after
+> +     * saving CPU state data
+> +     */
+> +    cpu_physical_memory_write(cpu_state_addr, cpu_state_buffer, cpu_stat=
+e_len);
 
-2. Undo in VFIO and no undo for set_memory_attribute() + return success
-(Current approach in my series)
-Pros: The guest can make progress although device doesn't work.
-Cons: the attribute bitmap only tracks the status in iommu.
+Check docs/devel/loads-stores.rst, address_space_* is preferred to check
+for failures. It also says devices should operate on their own address
+spaces and that doesn't really apply to spapr since the "virtual
+hypervisor" doesn't really fit the model of a device...
 
-3. No undo + return retry
-Pros: It keeps the attribute bitmap aligned in core mm and iommu.
-Cons: The guest doesn't know how to handle the retry. It would cause
-infinite loop.
+Perhaps look at h_enter_nested which uses CPU(cpu)->as.
 
-4. No undo + no return. Just VM stop.
-Pros: simple
-Cons: maybe overkill.
+> +    g_free(cpu_state_buffer);
+> +
+> +    /*
+> +     * Set bytes_dumped in cpu state region, so kernel knows platform ha=
+ve
+> +     * exported it
+> +     */
+> +    cpu_state_region->bytes_dumped =3D cpu_to_be64(cpu_state_len);
+> +
+> +    if (cpu_state_region->source_len !=3D cpu_state_region->bytes_dumped=
+) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                "CPU State region's length passed by kernel, doesn't mat=
+ch"
+> +                " with CPU State region length exported by QEMU");
+> +    }
+> +
+>      return true;
+>  }
+> =20
+> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+> index a80704187583..0e8002bad9e0 100644
+> --- a/include/hw/ppc/spapr.h
+> +++ b/include/hw/ppc/spapr.h
+> @@ -792,6 +792,9 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
+>  #define FADUMP_HPTE_REGION      0x0002
+>  #define FADUMP_REAL_MODE_REGION 0x0011
+> =20
+> +/* Number of registers stored per cpu */
+> +#define FADUMP_NUM_PER_CPU_REGS (32 /*GPR*/ + 45 /*others*/ + 2 /*STRT &=
+ END*/)
+> +
+>  /* OS defined sections */
+>  #define FADUMP_PARAM_AREA       0x0100
+> =20
+> @@ -845,6 +848,86 @@ struct rtas_fadump_mem_struct {
+>      struct rtas_fadump_section        rgn[FADUMP_MAX_SECTIONS];
+>  };
+> =20
+> +/*
+> + * The firmware-assisted dump format.
+> + *
+> + * The register save area is an area in the partition's memory used to p=
+reserve
+> + * the register contents (CPU state data) for the active CPUs during a f=
+irmware
+> + * assisted dump. The dump format contains register save area header fol=
+lowed
+> + * by register entries. Each list of registers for a CPU starts with "CP=
+USTRT"
+> + * and ends with "CPUEND".
+> + */
+> +
+> +/* Register save area header. */
+> +struct rtas_fadump_reg_save_area_header {
+> +    __be64    magic_number;
+> +    __be32    version;
+> +    __be32    num_cpu_offset;
+> +};
+> +
+> +/* Register entry. */
+> +struct rtas_fadump_reg_entry {
+> +    __be64    reg_id;
+> +    __be64    reg_value;
+> +};
+> +
+> +/*
+> + * Copy the ascii values for first 8 characters from a string into u64
+> + * variable at their respective indexes.
+> + * e.g.
+> + *  The string "FADMPINF" will be converted into 0x4641444d50494e46
+> + */
+> +static inline uint64_t fadump_str_to_u64(const char *str)
+> +{
+> +    uint64_t val =3D 0;
+> +    int i;
+> +
+> +    for (i =3D 0; i < sizeof(val); i++) {
+> +        val =3D (*str) ? (val << 8) | *str++ : val << 8;
+> +    }
+> +    return val;
+> +}
+> +
+> +/**
+> + * Get the identifier id for register entries of GPRs
+> + *
+> + * It gives the same id as 'fadump_str_to_u64' when the complete string =
+id
+> + * of the GPR is given, ie.
+> + *
+> + *   fadump_str_to_u64("GPR05") =3D=3D fadump_gpr_id_to_u64(5);
+> + *   fadump_str_to_u64("GPR12") =3D=3D fadump_gpr_id_to_u64(12);
+> + *
+> + * And so on. Hence this can be implemented by creating a dynamic
+> + * string for each GPR, such as "GPR00", "GPR01", ... "GPR31"
+> + * Instead of allocating a string, an observation from the math of
+> + * 'fadump_str_to_u64' or from PAPR tells us that there's a pattern
+> + * in the identifier IDs, such that the first 8 bytes are affected only =
+by
+> + * whether it is GPR0*, GPR1*, GPR2*, GPR3*. 9th byte is always 0x3. And
+> + * the the 10th byte is the index of the GPR modulo 10.
+> + */
+> +static inline uint64_t fadump_gpr_id_to_u64(uint32_t gpr_id)
+> +{
+> +    uint64_t val =3D 0;
+> +
+> +    /* Valid range of GPR id is only GPR0 to GPR31 */
+> +    assert(gpr_id < 32);
+> +
+> +    if (gpr_id <=3D 9) {
+> +        val =3D fadump_str_to_u64("GPR0");
+> +    } else if (gpr_id <=3D 19) {
+> +        val =3D fadump_str_to_u64("GPR1");
+> +    } else if (gpr_id <=3D 29) {
+> +        val =3D fadump_str_to_u64("GPR2");
+> +    } else {
+> +        val =3D fadump_str_to_u64("GPR3");
+> +    }
+> +
+> +    val |=3D 0x30000000;
+> +    val |=3D ((gpr_id % 10) << 12);
+> +
+> +    return val;
+> +}
 
-Maybe option 1 or 4 is better?
+These two functions could probably go out of line, I doubt they
+are performance critical and make them static if not used outside
+the file.
 
-> 
-
+Thanks,
+Nick
 
