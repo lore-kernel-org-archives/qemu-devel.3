@@ -4,103 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D48CC19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 15:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22794C19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 15:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tng5B-0000YW-BX; Thu, 27 Feb 2025 10:45:53 -0500
+	id 1tngAo-0003qS-C7; Thu, 27 Feb 2025 10:51:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tng50-0000Vt-9A
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 10:45:43 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tng4w-0004TY-OP
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 10:45:41 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2211cd4463cso21724325ad.2
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 07:45:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1740671134; x=1741275934; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kJ8rK0FFD6iEbjuP1Yv2J4L4iSn5M9Hv9g172C7QGlI=;
- b=oKYdevGwFvKlfjoIK5HdETUamijr+uzAS4+2UoWQUxO5Jnrn+JQv5aLEAJyF1DDR0E
- 6ozXHng5UBYKSri93g7pg0/ZhNoq7o3QHRbcHrsi0qDJN6/Dj8bgwNLvqIhBx+q4yp1j
- J41xGkrsHDkagnG4w6JXHWCMEPTu9eXLE4r4hZy64HQIeTys54O2axYu5V1oZrgAUbX8
- IjaUkdqv+/IR9xS9kCLbH3J68pCg43uFpSw3PDxy+fqe1/NhqUpEuL6+KPKPrxuqxWJW
- 4e9yvqF9SiiZiW5goQXgyy70fkoz6upsl0mBgyzDeFwxRq6SVlQJRdEbxiU3PB/Lokda
- NeRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740671134; x=1741275934;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kJ8rK0FFD6iEbjuP1Yv2J4L4iSn5M9Hv9g172C7QGlI=;
- b=qYMPRUbXrwfDWa7q0R8PVhusRWrIAvz9+8nKpZsgFuPpskr5Wxkx8ATNc+aQ0XEK8X
- ohzRJKnyQN3ZjP0/lIL/IO/PeH2qSMv3WuNkK2uM3HAgqaA5a4suOrA7UJr89D1m8MtD
- S04TLpIwziaY89PpSJsQCageJXrqzrKm9lBx+Mon8MBh8WcoOQB9OdQEucqiFYAOh8H1
- AddUMmhpcqpllrcjo+d+bIpEkUYE8ik3G4MxurFJMSjIt9prK8sl2ZeDdQm+2WzCmigJ
- TcIroZoHTHyAry33BxJrE4qHUvrx+aJHq3Df3GNYAhN+VR3D8ZQg7zHaPxYCXhGtR5aA
- CZMA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZwQ3Xhn/yl5gbSMH31hLIDcFRde7n+iICwIK2lqNIO+z4l7NOZR4Rhoc+H1XGyibFdO46BXydGacd@nongnu.org
-X-Gm-Message-State: AOJu0YwbCMRu0MSqb+GTwb+ML9JvEfIDdtpKO1Os/iTGzSpskgqNAUXh
- w0Vc5O/SIRVCcpmY8hB8UxX0uESnhSFfsZpyxnmo7SoZnJgPqeyrSUQgW9Chc8E=
-X-Gm-Gg: ASbGncvbHTimuw0CjcOr6oDwkxR00pqhw9wh1tr+1hGsxGkhMLXH9yLnSu+Vzu3QUBI
- z8RaryZqSSYrGIugrOnGNJ0XA88LO2feoiXg+dWYNKlQ5Hd4fhEsHQi+AQXB+yglyxefTpHz7OK
- zBuU0Yjgfpt/AuxhoYRpRAvDkUiaDyx1pD0M87kFa/v5950DX9MeWbVDRKIJe3R3B37Lte8xTpT
- ke65qY7ILupZcWh0lmeXebGsHuHHulmkPmMXNXPsRyE++9l+D0jr9bH2ckrtEolcBSQ7YBaTO9w
- HdnE+leuTiSihOGUH69lusDSSldUyuZBGwCJGFPcdw==
-X-Google-Smtp-Source: AGHT+IHFXIBpNBlGID65V8Gr7B4vd0ksr4mJHJ2zXHzdeQkUaKcamY4ln8eA3BPha/IgegU/x6wV1A==
-X-Received: by 2002:a05:6a21:6b0f:b0:1f0:e708:56e2 with SMTP id
- adf61e73a8af0-1f0fc24b3fcmr20780042637.22.1740671134486; 
- Thu, 27 Feb 2025 07:45:34 -0800 (PST)
-Received: from [192.168.68.110] ([177.170.227.219])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-aee7de1f7a6sm1583674a12.30.2025.02.27.07.45.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 07:45:33 -0800 (PST)
-Message-ID: <a069dbfb-c0bf-417d-9925-e419c071eb4c@ventanamicro.com>
-Date: Thu, 27 Feb 2025 12:45:27 -0300
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tngAj-0003kG-1n; Thu, 27 Feb 2025 10:51:37 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tngAg-0005Qd-E7; Thu, 27 Feb 2025 10:51:35 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 4CBC361133;
+ Thu, 27 Feb 2025 15:51:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE05FC4CEDD;
+ Thu, 27 Feb 2025 15:51:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1740671489;
+ bh=PHJN1RpbO9GMEWPKvKo8ZGNRDOt2AAgARtGo6eeodlE=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=vI9s8NCSEzDAoFvgPzU1qh5MCL9IOBnnspb+eNUrxnLkhf8JsddPi7oSkjFfPjdI1
+ 36YsEp8HvfILAwdOPXaN6DLjMezy2xilcZCbXtAeR2VTO2bGL4Vlo5oPsrGw+kjDfH
+ 2a02Gg/aPOJixzHrYEWwHxo1pG9SL9NFuHTfqLNrf3qeQ4Cw+MRZAO26/K3CBstNGb
+ M/Dp6nvD8ugZZS4rF4ZjvIWh7qXSrtMjTIqGI8mSBdlLm4HqHtcxLJQnT3JGPrzb1U
+ wS1A9QkcES7PtlX2rGtFKxjWtkDryIF9jLsXaW+NLE9Ee0QB9ZuqdHi05X1ndpA9I6
+ I3VH7J7Ec9jwA==
+Date: Thu, 27 Feb 2025 16:51:24 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 17/21] tests/acpi: virt: update HEST table to accept
+ two sources
+Message-ID: <20250227165124.221ef1b2@foz.lan>
+In-Reply-To: <20250227141603.3957e78b@imammedo.users.ipa.redhat.com>
+References: <cover.1740653898.git.mchehab+huawei@kernel.org>
+ <9d57e2a6ec3f523eb7691347403f05ad40782b94.1740653898.git.mchehab+huawei@kernel.org>
+ <20250227141038.28501d73@imammedo.users.ipa.redhat.com>
+ <20250227141603.3957e78b@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 25/25] MAINTAINERS: remove widely sanctioned entities
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, Eduardo Habkost <eduardo@habkost.net>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20250226140343.3907080-1-alex.bennee@linaro.org>
- <20250226140343.3907080-26-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250226140343.3907080-26-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=172.105.4.254;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,77 +75,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Em Thu, 27 Feb 2025 14:16:03 +0100
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-A bit offtopic: we just received patches from Syntacore [1]. Syntacore
-does not appear in the US sanction list website, but in a Google search
-I found out that Syntacore was acquired by Yadro in 2019, i.e. Yadro is
-its parent organization. And Yadro has been sanctioned.
+> On Thu, 27 Feb 2025 14:10:38 +0100
+> Igor Mammedov <imammedo@redhat.com> wrote:
+> 
+> > On Thu, 27 Feb 2025 12:03:47 +0100
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > 
+> > squash this patch into the next one
+> > 
+> > Also at this point there is no visible HEST changes yet, so a soon as you remove
+> > white-list without enabling new HEST, the tests should start failing.
+> > 
+> > I suggest to move 20/21 before this patch,
+> > as result one would see dsdt and hest diffs when running tests
+> > and then you can use rebuild-expected-aml.sh to generate updated
+> > tables and update them in one patch (that's what we typically do,
+> > we don't split updates in increments).  
+> 
+> on top of that,
+> it seems the patch doesn't apply for some reason.
 
-Does anybody know the rule in this case? If a parent company is sanctioned
-does that cascade to all its subsidiaries? I have no idea whether we can engage
-with these patches or not.
+Hmm... perhaps the diffstat that I place here (produced by bios-tables-test
+output) is causing some confusion when you're trying to apply the patch.
+
+Any suggestions to avoid that?
 
 
 Thanks,
-
-Daniel
-
-
-[1] https://lore.kernel.org/qemu-riscv/20250227144200.69270-1-saveliy.motov@syntacore.com/
-
-
-
-On 2/26/25 11:03 AM, Alex Bennée wrote:
-> The following organisations appear on the US sanctions list:
-> 
->    Yadro: https://sanctionssearch.ofac.treas.gov/Details.aspx?id=41125
->    ISPRAS: https://sanctionssearch.ofac.treas.gov/Details.aspx?id=50890
-> 
-> As a result maintainers interacting with such entities would face
-> legal risk in a number of jurisdictions. To reduce the risk of
-> inadvertent non-compliance remove entries from these organisations
-> from the MAINTAINERS file.
-> 
-> Mark the pcf8574 system as orphaned until someone volunteers to step
-> up as a maintainer. Add myself as a second reviewer to record/replay
-> so I can help with what odd fixes I can.
-> 
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Acked-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Message-Id: <20250221161443.2321327-1-alex.bennee@linaro.org>
-> ---
->   MAINTAINERS | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 1911949526..9cdfe19115 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2529,8 +2529,7 @@ F: hw/i2c/i2c_mux_pca954x.c
->   F: include/hw/i2c/i2c_mux_pca954x.h
->   
->   pcf8574
-> -M: Dmitrii Sharikhin <d.sharikhin@yadro.com>
-> -S: Maintained
-> +S: Orphaned
->   F: hw/gpio/pcf8574.c
->   F: include/gpio/pcf8574.h
->   
-> @@ -3627,10 +3626,10 @@ F: net/filter-mirror.c
->   F: tests/qtest/test-filter*
->   
->   Record/replay
-> -M: Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>
->   R: Paolo Bonzini <pbonzini@redhat.com>
-> +R: Alex Bennée <alex.bennee@linaro.org>
->   W: https://wiki.qemu.org/Features/record-replay
-> -S: Supported
-> +S: Odd Fixes
->   F: replay/*
->   F: block/blkreplay.c
->   F: net/filter-replay.c
-
+Mauro
 
