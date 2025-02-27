@@ -4,90 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26745C19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:35:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 845A5C021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:56:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnYPz-0005Vi-8C; Thu, 27 Feb 2025 02:34:51 -0500
+	id 1tnYkS-0002QD-D7; Thu, 27 Feb 2025 02:56:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tnYPw-0005UT-2B
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:34:49 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tnYkO-0002Lf-4A
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:55:57 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tnYPu-0004qB-Cf
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:34:47 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2235908a30aso3378615ad.3
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 23:34:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tnYkM-0008OM-Ah
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:55:55 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-38f1e8efe84so186126f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 23:55:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1740641684; x=1741246484; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=49Lqc3jo0xCLKFBce68EsedKQHxM1L0GYblpsYHQ2gI=;
- b=UrI5/ecO6NDwHaX1xl+ey5xlpzKs/17L5cq5VlAxNjKS7mNun/Q+pMDOyp+d6QxBwB
- eEabu1fZ9oF88k+bK4JwCkvz236o4/O9YNF152QUkgtsPs0mLDme8QJRXwLgKb6rD0KZ
- i/bBrS2lZk5KVqVCoQQaJVCFLqmjRJ0sG+iGPxe8XwCjRAK3EwS0HgLg3AtA5FIJK0OB
- F7xNYKwpybY4nhdl1pO9TEkokBodVk8l6GxuzWAV8IfWuAm5IdayqSKGHGdJDdwGZlJM
- R9oUxayx6WpY3dorYMxluTbC5HyM6J0snADaJFlhooQV2GxAW1mPzWkOGM29OUt9IBKt
- mIWw==
+ d=linaro.org; s=google; t=1740642952; x=1741247752; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RYNPWnV7+zrTid8Ih9GNWbvKspk66g8wle5T9oqpHXY=;
+ b=x7Ys9kBa/c9oBVpwxrJfbpJL54/D+eHcOBsoj1ZMLJ78gnfMbtIuoI3vbENcBg2C79
+ sNqgBwulkU5Y41G+VnCY61H2lLgM4j+seR2fcAcgHxEm2ZxmU3LrCxCWil6kgLnvw0c+
+ 2xfV2M1nJWHUhn7RN+510fAjwwRD2Ed4OU12CkFpEkcdsa/oxT2AkL/dGky+JzEOVXUT
+ hR0JJjMW/unP6CPZzGNHbE3geBSmvcOa3hTpPST6NrNkb/QnUKl95iwkCEgetkAFCqbw
+ gO+c4HuXyXPZgcf30+eWEe7HKsZxjAHW7WYLx5A2dSUA1f4L3VYw8kN95AC+qoe5FTXz
+ DAaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740641684; x=1741246484;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=49Lqc3jo0xCLKFBce68EsedKQHxM1L0GYblpsYHQ2gI=;
- b=A0a9cskWin6gf5HVpyZIJ1qTz50ruRDH6CsVptDjTAMOQ4pgP+u6R++J0sqThEdfCK
- d4fSaLN15HPcqyaoj8Q36g8keHLsoUePFyma2WRBWHDO3wzP/t9h1oPd2vEPricqWDrG
- 1cwKL/m5YAB9D569nF3oV9GXwAMvJi3ks3Hx8MFnsYx7MB9pKx7gCtrIOYikgkWtsDC7
- CwVGX264MeOEEKoypCgdvh/Uf0fwww2KbGhhaKnQgfOvWBRbe6LlPBeKDY8uVoJ3GSkZ
- XhBPUrv5u20UUgbxlPEf3BMNfoimtG0yA94Q2ht1fgEoLnXtPSWT8kWV9oMSGAveXddy
- E2Ow==
-X-Gm-Message-State: AOJu0Ywz18IHZ4h0ZMtXy/Mj2VPYjLQPdQGFAG23D0flcUX2Mmii0rhJ
- Fi1a9G4QIVNNa+jwGm4TJff1gYOk1djN8tJdvvotrneYkbAEU77pAV5NmUyE4naXG9iVlGE8pjS
- kNLudcrKibRxCW3cbB7WHzVC+hHqxIh4o6w9HKyo0vdjk6TlQjrWu3GHLAlvdkG1ioWelAmWD+2
- USVAJnig6vJSEDKC/zUSR01+QSL2kDrtToJAFJHTo=
-X-Gm-Gg: ASbGncvHNRovAVJQkxaJObE2icHC85K4yL9xaBxSJsXaceC3Lf+6GbjMxJ8PxAwlLrb
- BKMSp1Mt3nwq2HJInFjGshZLbDuYetaNDi73mBGv5B1Qvqo9Jd5opcOARN12PtD1PMxpekVgRPj
- +T4QW12MyIJE6KK2uA+EQXbg5IBM0Eq14iQH6xOAg5EJ7T7ZS3LsC+yIV05+Ra4yWWCzTCDeDv/
- miF1MOsEQlR/W55CDPf6Uq4tuThSVaUNVn1qtybZO+Yx5oPDamPLV/3DQfpy2+21xyc44N6JfZc
- CVns97ejzc7oI09lAUUvOFEgcSXJs/eBppBCy4P1DR+5bRxyPjxe3w==
-X-Google-Smtp-Source: AGHT+IEgaM8PvfnGnrNGlcHIjF2vTIhLkdqE8oaJxliNrDEdoHh+LtTKbTOqFaqRMin4hgqj2Xby8w==
-X-Received: by 2002:a05:6a21:99a1:b0:1ee:6fec:3e5c with SMTP id
- adf61e73a8af0-1f10acf5c0amr10762316637.7.1740641684075; 
- Wed, 26 Feb 2025 23:34:44 -0800 (PST)
-Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-aee7de1a642sm714350a12.22.2025.02.26.23.34.41
+ d=1e100.net; s=20230601; t=1740642952; x=1741247752;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RYNPWnV7+zrTid8Ih9GNWbvKspk66g8wle5T9oqpHXY=;
+ b=wKWKO3dfoY43CevZng2BOIwZqActhobPF0K3ADfy5lyeNReWpTwMNi7YKVQQlTVpnX
+ N7MincaFofuqDUAE7j/ctkOGtbic+uHzq+9IA+ogDcMpn/VrIDNbG/JkqLesJYiGmtJU
+ NIp6u56reTDvqF9LKJMdCxpW5rqBU1F8+rp2wRD3yj4NZ6JR5uQlxahCBJC5AJzwu4BY
+ f0y+qmeR57flUZO7NoKhu4Ae6XG9Zr2olEjRxqOfcyMn491651HxtzgdCqGDIuxUfpuh
+ hsWCDS1b6fMpSJWwBOwE7xdKyUsgKxV0VmMdSxSOj9pII+gtXDe1rGV4/D8srIqa8+Xi
+ mpxw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWVqE5cXdgM25N6n8wDBuHvxYv8F/9ewz6N1Yb5t5KzHEtFm0m6PWV6lk10mWNavTXH9wWwqffFyx46@nongnu.org
+X-Gm-Message-State: AOJu0YwE/s+IxKIXPXPcVEzHHGoJO/6dsRA8nLB6x4n67MFhbouABRSW
+ ofLL8azVgTmm7/JyJz9FgB3xWtKrwTcmg6vVVTUxE8zLUMD+4vBNc470appqOZE=
+X-Gm-Gg: ASbGncsg3Z5UaIXI5RJKz3HMszcvbjotBEdba5EXqhyB8JJfpwG1MhjT5zVXR4vAWcz
+ uJduojves26014gyvjLwfEFK9OwxWWiO3fMbYwc3fpHiTSBFCPfp55inw5bijjovqB1L4XYjT5e
+ IUxaCLD37Vj6L9vyP7pvaOOBrj4yfCzJFMPlHU9kMqM8wsg1uRO7Bcjk9qyf95Kn9ceGakbdTeE
+ v/oU5quTlD8Aeo6B19Ilbg/sV41vZ3Nv7oWpQS8YpwSiyGSoKiTn9bkqkRbsYfr2pT8gW+IfAEX
+ XRdu3FVmmD1RwOFS4S8ozV3EMbvf
+X-Google-Smtp-Source: AGHT+IGscGA/m7nEYpR0lJKIR/7dmsurqnXBgPgibgF2vmkTk9St2HMtKbDT1AFAXTL+5fAsIL/3Gw==
+X-Received: by 2002:a5d:5985:0:b0:38f:3ee5:fd36 with SMTP id
+ ffacd0b85a97d-38f6f0af903mr22231461f8f.53.1740642952109; 
+ Wed, 26 Feb 2025 23:55:52 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43aba532bbcsm45446275e9.11.2025.02.26.23.55.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 23:34:43 -0800 (PST)
-From: Jason Chien <jason.chien@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Jason Chien <jason.chien@sifive.com>
-Subject: [PATCH] hw/riscv/riscv-iommu: Fix process directory table walk
-Date: Thu, 27 Feb 2025 15:34:21 +0800
-Message-ID: <20250227073421.399-1-jason.chien@sifive.com>
-X-Mailer: git-send-email 2.43.2
+ Wed, 26 Feb 2025 23:55:50 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 034DF5F8AB;
+ Thu, 27 Feb 2025 07:55:50 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,  Stefan Weil <sw@weilnetz.de>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Thomas
+ Huth <thuth@redhat.com>,  Yonggang Luo <luoyonggang@gmail.com>,  Pierrick
+ Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v2 2/3] tests/functional: Introduce the dso_suffix() helper
+In-Reply-To: <7c7880f1-fd41-4e49-959d-6bbbb5689348@daynix.com> (Akihiko
+ Odaki's message of "Thu, 27 Feb 2025 16:06:10 +0900")
+References: <20250220080215.49165-1-philmd@linaro.org>
+ <20250220080215.49165-3-philmd@linaro.org>
+ <7c7880f1-fd41-4e49-959d-6bbbb5689348@daynix.com>
+User-Agent: mu4e 1.12.9; emacs 29.4
+Date: Thu, 27 Feb 2025 07:55:49 +0000
+Message-ID: <87y0xrx1mi.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=jason.chien@sifive.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,60 +113,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PPN field in a non-leaf PDT entry is positioned differently from that
-in a leaf PDT entry. The original implementation incorrectly used the leaf
-entry's PPN mask to extract the PPN from a non-leaf entry, leading to an
-erroneous page table walk.
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-This commit introduces new macros to properly define the fields for
-non-leaf PDT entries and corrects the page table walk.
+> On 2025/02/20 17:02, Philippe Mathieu-Daud=C3=A9 wrote:
+>> Introduce a helper to get the default shared library
+>> suffix used on the host.
+>> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   tests/functional/qemu_test/__init__.py | 2 +-
+>>   tests/functional/qemu_test/cmd.py      | 1 -
+>>   tests/functional/qemu_test/config.py   | 6 ++++++
+>>   3 files changed, 7 insertions(+), 2 deletions(-)
+>> diff --git a/tests/functional/qemu_test/__init__.py
+>> b/tests/functional/qemu_test/__init__.py
+>> index 5c972843a6d..45f7befa374 100644
+>> --- a/tests/functional/qemu_test/__init__.py
+>> +++ b/tests/functional/qemu_test/__init__.py
+>> @@ -7,7 +7,7 @@
+>>       from .asset import Asset
+>> -from .config import BUILD_DIR
+>> +from .config import BUILD_DIR, dso_suffix
+>>   from .cmd import is_readable_executable_file, \
+>>       interrupt_interactive_console_until_pattern, wait_for_console_patt=
+ern, \
+>>       exec_command, exec_command_and_wait_for_pattern, get_qemu_img, whi=
+ch
+>> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_t=
+est/cmd.py
+>> index dc5f422b77d..254e23ef748 100644
+>> --- a/tests/functional/qemu_test/cmd.py
+>> +++ b/tests/functional/qemu_test/cmd.py
+>> @@ -15,7 +15,6 @@
+>>   import os
+>>   import os.path
+>>   -
+>>   def which(tool):
+>>       """ looks up the full path for @tool, returns None if not found
+>>           or if @tool does not have executable permissions.
+>> diff --git a/tests/functional/qemu_test/config.py b/tests/functional/qem=
+u_test/config.py
+>> index edd75b7fd06..0eab1baa541 100644
+>> --- a/tests/functional/qemu_test/config.py
+>> +++ b/tests/functional/qemu_test/config.py
+>> @@ -13,6 +13,7 @@
+>>     import os
+>>   from pathlib import Path
+>> +import platform
+>>       def _source_dir():
+>> @@ -34,3 +35,8 @@ def _build_dir():
+>>       raise Exception("Cannot identify build dir, set QEMU_BUILD_ROOT")
+>>     BUILD_DIR =3D _build_dir()
+>> +
+>> +def dso_suffix():
+>> +    '''Return the dynamic libraries suffix for the current platform'''
+>> +    DSO_SUFFIXES =3D { 'Linux': 'so', 'Darwin': 'dylib', 'Windows': 'dl=
+l' }> +    return DSO_SUFFIXES[platform.system()]
+>
+> It may be too late to comment, but:
+> I'm a bit worried that this can break tests on platforms (BSDs?) not
+> listed here though I don't know if plugin tests work on BSDs in the
+> first place.
 
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
----
- hw/riscv/riscv-iommu-bits.h | 6 +++++-
- hw/riscv/riscv-iommu.c      | 4 ++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+Currently we don't run any of the check-tcg tests on BSD. Mostly because
+I couldn't find cross compilers packaged for BSD (and there is no
+docker-like thing to bring them in) and for the "native" cross compiler
+we currently block clang - although there are some fixes for that in my
+current maintainer series.
 
-diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-index de599b80d6..8d621c5b70 100644
---- a/hw/riscv/riscv-iommu-bits.h
-+++ b/hw/riscv/riscv-iommu-bits.h
-@@ -368,12 +368,16 @@ enum riscv_iommu_fq_causes {
- #define RISCV_IOMMU_DC_MSIPTP_MODE_OFF  0
- #define RISCV_IOMMU_DC_MSIPTP_MODE_FLAT 1
- 
-+/* 2.2 Process Directory Table */
-+#define RISCV_IOMMU_PDTE_VALID          BIT_ULL(0)
-+#define RISCV_IOMMU_PDTE_PPN            RISCV_IOMMU_PPN_FIELD
-+
- /* Translation attributes fields */
- #define RISCV_IOMMU_PC_TA_V             BIT_ULL(0)
- #define RISCV_IOMMU_PC_TA_RESERVED      GENMASK_ULL(63, 32)
- 
- /* First stage context fields */
--#define RISCV_IOMMU_PC_FSC_PPN          GENMASK_ULL(43, 0)
-+#define RISCV_IOMMU_PC_FSC_PPN          RISCV_IOMMU_ATP_PPN_FIELD
- #define RISCV_IOMMU_PC_FSC_RESERVED     GENMASK_ULL(59, 44)
- 
- enum riscv_iommu_fq_ttypes {
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index e7568ca227..1abe981244 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -1043,10 +1043,10 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
-             return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
-         }
-         le64_to_cpus(&de);
--        if (!(de & RISCV_IOMMU_PC_TA_V)) {
-+        if (!(de & RISCV_IOMMU_PDTE_VALID)) {
-             return RISCV_IOMMU_FQ_CAUSE_PDT_INVALID;
-         }
--        addr = PPN_PHYS(get_field(de, RISCV_IOMMU_PC_FSC_PPN));
-+        addr = PPN_PHYS(get_field(de, RISCV_IOMMU_PDTE_PPN));
-     }
- 
-     /* Leaf entry in PDT */
--- 
-2.43.2
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
