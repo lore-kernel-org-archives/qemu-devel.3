@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50BD7C19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:31:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2F1C1B0FF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:31:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnelb-0000XB-Ub; Thu, 27 Feb 2025 09:21:37 -0500
+	id 1tnem4-0002d6-Kr; Thu, 27 Feb 2025 09:22:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnekz-0007bs-1f
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tnelF-00089U-PO
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnekt-0003ps-Rg
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:55 -0500
+ id 1tnelD-0003tr-PH
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:21:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740666051;
+ s=mimecast20190719; t=1740666071;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qmdmd+wL1XBTd0QsgGEcFsO/eGydgDAort0AQ7Nq3Cg=;
- b=bva3h58GyCs3joj2fQ0T5HVjK5BK4roJ5gM4tnYCF4kSX6tek0DYRlP+xHIxGp/oFOvTUW
- EN2Gq7zy4sb7X3qmFAI3GzyHL1W4iSDCPcjsEFL3wRuC66IK5ryZBrJY8EIlMZxjetZS8Z
- 5fJLL7n6WqUQoSHiTIQ8P+f2l+sc7g8=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5VzTOknxE32oHEMhtjQjnFZQdG2DcQck0j4ELndUMhI=;
+ b=M84gsF5lYMEdAN0h9PlsMCuOgNMe7Q+wP7wECmgM9O3FBxnOicPs+DHAYrt42/dHHO3NCc
+ ZRJQ7o3F24QUzpYBbSa2CxDqRqNniKtidrr3e1BPJkjQP9FbzhMU07qsh+Wo/72lFwklUV
+ Cl/RPqwN6MssfP71LPXiwNeX2mORUQ8=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-79-W8QcDvCFMS2AUMicQYZAcA-1; Thu, 27 Feb 2025 09:20:49 -0500
-X-MC-Unique: W8QcDvCFMS2AUMicQYZAcA-1
-X-Mimecast-MFC-AGG-ID: W8QcDvCFMS2AUMicQYZAcA_1740666049
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5de5172cc5bso918655a12.0
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:20:49 -0800 (PST)
+ us-mta-86-PSe-n2p7OmG_bcHjQ8CNww-1; Thu, 27 Feb 2025 09:21:10 -0500
+X-MC-Unique: PSe-n2p7OmG_bcHjQ8CNww-1
+X-Mimecast-MFC-AGG-ID: PSe-n2p7OmG_bcHjQ8CNww_1740666069
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-abba6d94ae4so127509366b.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:21:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740666048; x=1741270848;
+ d=1e100.net; s=20230601; t=1740666067; x=1741270867;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qmdmd+wL1XBTd0QsgGEcFsO/eGydgDAort0AQ7Nq3Cg=;
- b=QrSk9W1o3B/Bay7hym+9slAsDa04dVRwXO67sQYDAorVgGWWfomJSNx2ozAe76gonr
- kfmeLi7BvjqkiBVPfXeX7X4HOF9U2M5Fdi1Nh6kY97qGMLEyX1kT4iDb7aztUx60aElM
- 1DFJNbxSbjnGohJeFKJoW1n5nADxvAj2Aem+JqO4wsEpl2zSSFOu9Uq993Y/6uvPBawd
- dtNLhbPjiyRr4feRuowS1agXS/IHWemWkDL7wCq+yqBtwe855qbLjtDJDaADTNdtKhc7
- DcoQfom3KYETb7qPbnzH0FQ8qtlBKevbPx5WAr40tCMSbInd42ZzhCEQBUATWRZWdkLz
- mwCg==
-X-Gm-Message-State: AOJu0YzZvdJdzYzcTZZYYSD3kJ+v89NJdc5SL8nWxQJL9RcHPxumjstZ
- MduZ54C8N7/fk073NX5ygCmoLze29cFXmcXWQT1GDlGui3yXD2T3aqnbDK4hlL5KtesEidknoMb
- sBfL6vPM5WZYM4/33XWFUGWCk+YLr4+SEV2c5UJ59Yta0eAc0BFU7J/bFkxG8hAsiPSgSm3Jwfl
- zPDQj7hoTcLGo4n1beHMMbjgS0BfO49iE+q5ePF0Y=
-X-Gm-Gg: ASbGncuzmVfwoxoPv0MZ2m8g7C7p3izjedn8Yu19T+NxrCti/YXKAXOOPvgjmF5L8qX
- vx7bMjZAY0k2ILulcSl/jXdI6Ul4fSbICpawhV3jZTG66XVrPwRRYvTStolzqU3Z8fO+0+jzd4M
- EJRF8bg7dhL7eL7AA9KWwc2fAYpXggRnPi8aAIFu1XvfXRX7ZW2FiQuuGvRtJWJvd6l1f4RpVVC
- Q9XQZkWZQoYosyMSvzoE4CxcddtQHIEILH2xhezz26Is53MjB8GiNh50OBQckT7kuWq1isbXFUT
- qRzhL9OcAhiRMLprCOv+
-X-Received: by 2002:a05:6402:524f:b0:5dc:5ada:e0c7 with SMTP id
- 4fb4d7f45d1cf-5e44a256c98mr29401273a12.26.1740666047551; 
- Thu, 27 Feb 2025 06:20:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEgoBTCfCzjELF+/8A5x3OoVRzl075bsimUN6iERAAzPqkkWzLwS32RmGxHgy73WV86TD7qiA==
-X-Received: by 2002:a05:6402:524f:b0:5dc:5ada:e0c7 with SMTP id
- 4fb4d7f45d1cf-5e44a256c98mr29401184a12.26.1740666046820; 
- Thu, 27 Feb 2025 06:20:46 -0800 (PST)
+ bh=5VzTOknxE32oHEMhtjQjnFZQdG2DcQck0j4ELndUMhI=;
+ b=k9/c1D0TIvMI6r28zaGYNIvJZqWBFJuuuHtEBv5R3HriFP3+QRR6GIsAxD72VNp45O
+ v5T9hUK9+JnWBA7kbWi4FMnhNnKV2XzLBLF5lhsPhaT9WSHq7C+lmKYVXcmYWqkC9/cf
+ enPJ+ehJZY66RqYNd8bMh3y2PesIYcCGkwvIZhu5wCotUtQHjnwFfMC2AGbIJSWy4msT
+ B+LpEWC5r9i0R2EudF+PFi1Bcji5tk5+QgL94NGCIiVf4t9Yizdg2hM12prUNeKJUsbN
+ ysHX7adBpS8jkmzlkdpV6BhhyKFS92eNpyGKplLFbbtaeTYPy0v0+UJtPOSs3uGLgt9d
+ emdQ==
+X-Gm-Message-State: AOJu0Yy6oXeLjm70codz9inTQ1wYebk1fp2MOmDbeSc371o+bWsVCltZ
+ hXDy4Ez0+NvDhIN0ksiRTm/W+/Qb6RPerNh2U7Cuk1e1MIE0UXm4wECR3HUkImyU5Ol/4XLSKCj
+ 3+rW9x/ZKdtWky24t9HRi4xjTl6+8IPlKSW9bO/pvT4h3QoYIKDSTLtYukbZUjcIeyS0VPBGhtx
+ MFBVW4s6WkjvbG3u0DIMz6AhxAK9YtljYC94HxJj8=
+X-Gm-Gg: ASbGncvNVZQIlnUUMVwkvznaDSe5kB8kchW0jD6lDvKD9bB3VaVmytiAI+R/L/BqVfF
+ n3ArlGl1o61J4r7ois/uACArfQLv3n0MBKLNXr2Q3zIn5SUoFFgDhvXeHhPbbJa+uXPcYlX+KVk
+ MgGzj9DBUuC1yLqoqJT71M3loYlCOlfztgiO6N9vz534csxW/5LMJdkH/5kk5VUiLWTdI1mP/5Z
+ xnesjTOjRO4jnC2cNzCseGBGXJRwYtez8eEgoNAtjhBLQbq44vCiYyr5RQkEe7yE1YPdR9w1Wsy
+ GV4skt2KcBkALtZIno3J
+X-Received: by 2002:a17:906:b2c4:b0:abe:e2ac:62db with SMTP id
+ a640c23a62f3a-abeeed11204mr818591366b.7.1740666067379; 
+ Thu, 27 Feb 2025 06:21:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH4zDlUj+KSRuamWFMeKk5jI359XJn9cJ/SimUbTBFq53R8L8f5eXszAKxNcGNQbNRlVdrABw==
+X-Received: by 2002:a17:906:b2c4:b0:abe:e2ac:62db with SMTP id
+ a640c23a62f3a-abeeed11204mr818589066b.7.1740666066980; 
+ Thu, 27 Feb 2025 06:21:06 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.102.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf0c7c083esm130186666b.175.2025.02.27.06.20.44
+ a640c23a62f3a-abf0c0dc150sm131359266b.61.2025.02.27.06.21.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:20:44 -0800 (PST)
+ Thu, 27 Feb 2025 06:21:05 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 24/34] rust: qom: get rid of ClassInitImpl
-Date: Thu, 27 Feb 2025 15:19:42 +0100
-Message-ID: <20250227141952.811410-25-pbonzini@redhat.com>
+Cc: EwanHai <ewanhai-oc@zhaoxin.com>,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 33/34] target/i386: Introduce Zhaoxin Yongfeng CPU model
+Date: Thu, 27 Feb 2025 15:19:51 +0100
+Message-ID: <20250227141952.811410-34-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250227141952.811410-1-pbonzini@redhat.com>
 References: <20250227141952.811410-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,426 +110,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Complete the conversion from the ClassInitImpl trait to class_init() methods.
-This will provide more freedom to split the qemu_api crate in separate parts.
+From: EwanHai <ewanhai-oc@zhaoxin.com>
 
+Introduce support for the Zhaoxin Yongfeng CPU model.
+The Zhaoxin Yongfeng CPU is Zhaoxin's latest server CPU.
+
+This new cpu model ensure that QEMU can correctly emulate the Zhaoxin
+Yongfeng CPU, providing accurate functionality and performance characteristics.
+
+Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250113074413.297793-4-ewanhai-oc@zhaoxin.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs |   6 +-
- rust/hw/timer/hpet/src/hpet.rs   |   4 +-
- rust/qemu-api/src/qdev.rs        |  38 ++++---
- rust/qemu-api/src/qom.rs         | 164 +++++++++++++------------------
- rust/qemu-api/src/sysbus.rs      |  15 ++-
- rust/qemu-api/tests/tests.rs     |   4 +-
- 6 files changed, 101 insertions(+), 130 deletions(-)
+ target/i386/cpu.c | 124 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 124 insertions(+)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 094049cb9e6..d0857b470c9 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -19,8 +19,8 @@
-     memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder},
-     prelude::*,
-     qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetType, ResettablePhasesImpl},
--    qom::{ClassInitImpl, ObjectImpl, Owned, ParentField},
--    sysbus::{SysBusDevice, SysBusDeviceClass, SysBusDeviceImpl},
-+    qom::{ObjectImpl, Owned, ParentField},
-+    sysbus::{SysBusDevice, SysBusDeviceImpl},
-     vmstate::VMStateDescription,
- };
- 
-@@ -145,7 +145,7 @@ trait PL011Impl: SysBusDeviceImpl + IsA<PL011State> {
- impl PL011Class {
-     fn class_init<T: PL011Impl>(&mut self) {
-         self.device_id = T::DEVICE_ID;
--        <T as ClassInitImpl<SysBusDeviceClass>>::class_init(&mut self.parent_class);
-+        self.parent_class.class_init::<T>();
-     }
- }
- 
-diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index e01b4b67064..be27eb0eff4 100644
---- a/rust/hw/timer/hpet/src/hpet.rs
-+++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -21,7 +21,7 @@
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 2f9c604552b..bd407146136 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -5498,6 +5498,130 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+         .model_id = "AMD EPYC-Genoa Processor",
+         .cache_info = &epyc_genoa_cache_info,
      },
-     prelude::*,
-     qdev::{DeviceImpl, DeviceMethods, DeviceState, Property, ResetType, ResettablePhasesImpl},
--    qom::{ClassInitImpl, ObjectImpl, ObjectType, ParentField},
-+    qom::{ObjectImpl, ObjectType, ParentField},
-     qom_isa,
-     sysbus::{SysBusDevice, SysBusDeviceImpl},
-     timer::{Timer, CLOCK_VIRTUAL},
-@@ -836,7 +836,7 @@ impl ObjectImpl for HPETState {
- 
-     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
-     const INSTANCE_POST_INIT: Option<fn(&Self)> = Some(Self::post_init);
--    const CLASS_INIT: fn(&mut Self::Class) = <Self as ClassInitImpl<Self::Class>>::class_init;
-+    const CLASS_INIT: fn(&mut Self::Class) = Self::Class::class_init::<Self>;
- }
- 
- // TODO: Make these properties user-configurable!
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index c4dd26b582c..c136457090c 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -19,7 +19,7 @@
-     chardev::Chardev,
-     irq::InterruptSource,
-     prelude::*,
--    qom::{ClassInitImpl, ObjectClass, ObjectImpl, Owned},
-+    qom::{ObjectClass, ObjectImpl, Owned},
-     vmstate::VMStateDescription,
++    {
++        .name = "YongFeng",
++        .level = 0x1F,
++        .vendor = CPUID_VENDOR_ZHAOXIN1,
++        .family = 7,
++        .model = 11,
++        .stepping = 3,
++        /* missing: CPUID_HT, CPUID_TM, CPUID_PBE */
++        .features[FEAT_1_EDX] =
++            CPUID_SS | CPUID_SSE2 | CPUID_SSE | CPUID_FXSR | CPUID_MMX |
++            CPUID_ACPI | CPUID_CLFLUSH | CPUID_PSE36 | CPUID_PAT | CPUID_CMOV |
++            CPUID_MCA | CPUID_PGE | CPUID_MTRR | CPUID_SEP | CPUID_APIC |
++            CPUID_CX8 | CPUID_MCE | CPUID_PAE | CPUID_MSR | CPUID_TSC |
++            CPUID_PSE | CPUID_DE | CPUID_VME | CPUID_FP87,
++        /*
++         * missing: CPUID_EXT_OSXSAVE, CPUID_EXT_XTPR, CPUID_EXT_TM2,
++         * CPUID_EXT_EST, CPUID_EXT_SMX, CPUID_EXT_VMX
++         */
++        .features[FEAT_1_ECX] =
++            CPUID_EXT_RDRAND | CPUID_EXT_F16C | CPUID_EXT_AVX |
++            CPUID_EXT_XSAVE | CPUID_EXT_AES | CPUID_EXT_TSC_DEADLINE_TIMER |
++            CPUID_EXT_POPCNT | CPUID_EXT_MOVBE | CPUID_EXT_X2APIC |
++            CPUID_EXT_SSE42 | CPUID_EXT_SSE41 | CPUID_EXT_PCID |
++            CPUID_EXT_CX16 | CPUID_EXT_FMA | CPUID_EXT_SSSE3 |
++            CPUID_EXT_MONITOR | CPUID_EXT_PCLMULQDQ | CPUID_EXT_SSE3,
++        .features[FEAT_7_0_EBX] =
++            CPUID_7_0_EBX_SHA_NI | CPUID_7_0_EBX_SMAP | CPUID_7_0_EBX_ADX |
++            CPUID_7_0_EBX_RDSEED | CPUID_7_0_EBX_INVPCID | CPUID_7_0_EBX_BMI2 |
++            CPUID_7_0_EBX_SMEP | CPUID_7_0_EBX_AVX2 | CPUID_7_0_EBX_BMI1 |
++            CPUID_7_0_EBX_FSGSBASE,
++        /* missing: CPUID_7_0_ECX_OSPKE */
++        .features[FEAT_7_0_ECX] =
++            CPUID_7_0_ECX_RDPID | CPUID_7_0_ECX_PKU | CPUID_7_0_ECX_UMIP,
++        .features[FEAT_7_0_EDX] =
++            CPUID_7_0_EDX_ARCH_CAPABILITIES | CPUID_7_0_EDX_SPEC_CTRL,
++        .features[FEAT_8000_0001_EDX] =
++            CPUID_EXT2_LM | CPUID_EXT2_RDTSCP | CPUID_EXT2_PDPE1GB |
++            CPUID_EXT2_NX | CPUID_EXT2_SYSCALL,
++        .features[FEAT_8000_0001_ECX] =
++            CPUID_EXT3_3DNOWPREFETCH | CPUID_EXT3_ABM | CPUID_EXT3_LAHF_LM,
++        .features[FEAT_8000_0007_EDX] = CPUID_APM_INVTSC,
++        /*
++         * TODO: When the Linux kernel introduces other existing definitions
++         * for this leaf, remember to update the definitions here.
++         */
++        .features[FEAT_C000_0001_EDX] =
++            CPUID_C000_0001_EDX_PMM_EN | CPUID_C000_0001_EDX_PMM |
++            CPUID_C000_0001_EDX_PHE_EN | CPUID_C000_0001_EDX_PHE |
++            CPUID_C000_0001_EDX_ACE2 |
++            CPUID_C000_0001_EDX_XCRYPT_EN | CPUID_C000_0001_EDX_XCRYPT |
++            CPUID_C000_0001_EDX_XSTORE_EN | CPUID_C000_0001_EDX_XSTORE,
++        .features[FEAT_XSAVE] =
++            CPUID_XSAVE_XSAVEOPT,
++        .features[FEAT_ARCH_CAPABILITIES] =
++            MSR_ARCH_CAP_RDCL_NO | MSR_ARCH_CAP_SKIP_L1DFL_VMENTRY |
++            MSR_ARCH_CAP_MDS_NO | MSR_ARCH_CAP_PSCHANGE_MC_NO |
++            MSR_ARCH_CAP_SSB_NO,
++        .features[FEAT_VMX_PROCBASED_CTLS] =
++            VMX_CPU_BASED_VIRTUAL_INTR_PENDING | VMX_CPU_BASED_HLT_EXITING |
++            VMX_CPU_BASED_USE_TSC_OFFSETING | VMX_CPU_BASED_INVLPG_EXITING |
++            VMX_CPU_BASED_MWAIT_EXITING | VMX_CPU_BASED_RDPMC_EXITING |
++            VMX_CPU_BASED_RDTSC_EXITING | VMX_CPU_BASED_CR3_LOAD_EXITING |
++            VMX_CPU_BASED_CR3_STORE_EXITING | VMX_CPU_BASED_CR8_LOAD_EXITING |
++            VMX_CPU_BASED_CR8_STORE_EXITING | VMX_CPU_BASED_TPR_SHADOW |
++            VMX_CPU_BASED_VIRTUAL_NMI_PENDING | VMX_CPU_BASED_MOV_DR_EXITING |
++            VMX_CPU_BASED_UNCOND_IO_EXITING | VMX_CPU_BASED_USE_IO_BITMAPS |
++            VMX_CPU_BASED_MONITOR_TRAP_FLAG | VMX_CPU_BASED_USE_MSR_BITMAPS |
++            VMX_CPU_BASED_MONITOR_EXITING | VMX_CPU_BASED_PAUSE_EXITING |
++            VMX_CPU_BASED_ACTIVATE_SECONDARY_CONTROLS,
++        /*
++         * missing: VMX_SECONDARY_EXEC_PAUSE_LOOP_EXITING,
++         * VMX_SECONDARY_EXEC_TSC_SCALING
++         */
++        .features[FEAT_VMX_SECONDARY_CTLS] =
++            VMX_SECONDARY_EXEC_VIRTUALIZE_APIC_ACCESSES |
++            VMX_SECONDARY_EXEC_ENABLE_EPT | VMX_SECONDARY_EXEC_DESC |
++            VMX_SECONDARY_EXEC_RDTSCP | VMX_SECONDARY_EXEC_ENABLE_VPID |
++            VMX_SECONDARY_EXEC_VIRTUALIZE_X2APIC_MODE |
++            VMX_SECONDARY_EXEC_WBINVD_EXITING |
++            VMX_SECONDARY_EXEC_UNRESTRICTED_GUEST |
++            VMX_SECONDARY_EXEC_APIC_REGISTER_VIRT |
++            VMX_SECONDARY_EXEC_VIRTUAL_INTR_DELIVERY |
++            VMX_SECONDARY_EXEC_RDRAND_EXITING |
++            VMX_SECONDARY_EXEC_ENABLE_INVPCID |
++            VMX_SECONDARY_EXEC_ENABLE_VMFUNC |
++            VMX_SECONDARY_EXEC_SHADOW_VMCS |
++            VMX_SECONDARY_EXEC_ENABLE_PML,
++        .features[FEAT_VMX_PINBASED_CTLS] =
++            VMX_PIN_BASED_EXT_INTR_MASK | VMX_PIN_BASED_NMI_EXITING |
++            VMX_PIN_BASED_VIRTUAL_NMIS | VMX_PIN_BASED_VMX_PREEMPTION_TIMER |
++            VMX_PIN_BASED_POSTED_INTR,
++        .features[FEAT_VMX_EXIT_CTLS] =
++            VMX_VM_EXIT_SAVE_DEBUG_CONTROLS | VMX_VM_EXIT_HOST_ADDR_SPACE_SIZE |
++            VMX_VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |
++            VMX_VM_EXIT_ACK_INTR_ON_EXIT | VMX_VM_EXIT_SAVE_IA32_PAT |
++            VMX_VM_EXIT_LOAD_IA32_PAT | VMX_VM_EXIT_SAVE_IA32_EFER |
++            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER,
++        /* missing: VMX_VM_ENTRY_SMM, VMX_VM_ENTRY_DEACT_DUAL_MONITOR */
++        .features[FEAT_VMX_ENTRY_CTLS] =
++            VMX_VM_ENTRY_LOAD_DEBUG_CONTROLS | VMX_VM_ENTRY_IA32E_MODE |
++            VMX_VM_ENTRY_LOAD_IA32_PERF_GLOBAL_CTRL |
++            VMX_VM_ENTRY_LOAD_IA32_PAT | VMX_VM_ENTRY_LOAD_IA32_EFER,
++        /*
++         * missing: MSR_VMX_MISC_ACTIVITY_SHUTDOWN,
++         * MSR_VMX_MISC_ACTIVITY_WAIT_SIPI
++         */
++        .features[FEAT_VMX_MISC] =
++            MSR_VMX_MISC_STORE_LMA | MSR_VMX_MISC_ACTIVITY_HLT |
++            MSR_VMX_MISC_VMWRITE_VMEXIT,
++        /* missing: MSR_VMX_EPT_UC */
++        .features[FEAT_VMX_EPT_VPID_CAPS] =
++            MSR_VMX_EPT_EXECONLY | MSR_VMX_EPT_PAGE_WALK_LENGTH_4 |
++            MSR_VMX_EPT_WB | MSR_VMX_EPT_2MB | MSR_VMX_EPT_1GB |
++            MSR_VMX_EPT_INVEPT | MSR_VMX_EPT_AD_BITS |
++            MSR_VMX_EPT_INVEPT_SINGLE_CONTEXT | MSR_VMX_EPT_INVEPT_ALL_CONTEXT |
++            MSR_VMX_EPT_INVVPID_SINGLE_CONTEXT | MSR_VMX_EPT_INVVPID |
++            MSR_VMX_EPT_INVVPID_ALL_CONTEXT | MSR_VMX_EPT_INVVPID_SINGLE_ADDR |
++            MSR_VMX_EPT_INVVPID_SINGLE_CONTEXT_NOGLOBALS,
++        .features[FEAT_VMX_BASIC] =
++            MSR_VMX_BASIC_INS_OUTS | MSR_VMX_BASIC_TRUE_CTLS,
++        .features[FEAT_VMX_VMFUNC] = MSR_VMX_VMFUNC_EPT_SWITCHING,
++        .xlevel = 0x80000008,
++        .model_id = "Zhaoxin YongFeng Processor",
++    },
  };
  
-@@ -113,7 +113,7 @@ fn vmsd() -> Option<&'static VMStateDescription> {
- /// # Safety
- ///
- /// This function is only called through the QOM machinery and
--/// used by the `ClassInitImpl<DeviceClass>` trait.
-+/// used by `DeviceClass::class_init`.
- /// We expect the FFI user of this function to pass a valid pointer that
- /// can be downcasted to type `T`. We also expect the device is
- /// readable/writeable from one thread at any time.
-@@ -127,43 +127,41 @@ unsafe impl InterfaceType for ResettableClass {
-         unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_RESETTABLE_INTERFACE) };
- }
- 
--impl<T> ClassInitImpl<ResettableClass> for T
--where
--    T: ResettablePhasesImpl,
--{
--    fn class_init(rc: &mut ResettableClass) {
-+impl ResettableClass {
-+    /// Fill in the virtual methods of `ResettableClass` based on the
-+    /// definitions in the `ResettablePhasesImpl` trait.
-+    pub fn class_init<T: ResettablePhasesImpl>(&mut self) {
-         if <T as ResettablePhasesImpl>::ENTER.is_some() {
--            rc.phases.enter = Some(rust_resettable_enter_fn::<T>);
-+            self.phases.enter = Some(rust_resettable_enter_fn::<T>);
-         }
-         if <T as ResettablePhasesImpl>::HOLD.is_some() {
--            rc.phases.hold = Some(rust_resettable_hold_fn::<T>);
-+            self.phases.hold = Some(rust_resettable_hold_fn::<T>);
-         }
-         if <T as ResettablePhasesImpl>::EXIT.is_some() {
--            rc.phases.exit = Some(rust_resettable_exit_fn::<T>);
-+            self.phases.exit = Some(rust_resettable_exit_fn::<T>);
-         }
-     }
- }
- 
--impl<T> ClassInitImpl<DeviceClass> for T
--where
--    T: ClassInitImpl<ObjectClass> + ClassInitImpl<ResettableClass> + DeviceImpl,
--{
--    fn class_init(dc: &mut DeviceClass) {
-+impl DeviceClass {
-+    /// Fill in the virtual methods of `DeviceClass` based on the definitions in
-+    /// the `DeviceImpl` trait.
-+    pub fn class_init<T: DeviceImpl>(&mut self) {
-         if <T as DeviceImpl>::REALIZE.is_some() {
--            dc.realize = Some(rust_realize_fn::<T>);
-+            self.realize = Some(rust_realize_fn::<T>);
-         }
-         if let Some(vmsd) = <T as DeviceImpl>::vmsd() {
--            dc.vmsd = vmsd;
-+            self.vmsd = vmsd;
-         }
-         let prop = <T as DeviceImpl>::properties();
-         if !prop.is_empty() {
-             unsafe {
--                bindings::device_class_set_props_n(dc, prop.as_ptr(), prop.len());
-+                bindings::device_class_set_props_n(self, prop.as_ptr(), prop.len());
-             }
-         }
- 
--        ResettableClass::interface_init::<T, DeviceState>(dc);
--        <T as ClassInitImpl<ObjectClass>>::class_init(&mut dc.parent_class);
-+        ResettableClass::cast::<DeviceState>(self).class_init::<T>();
-+        self.parent_class.class_init::<T>();
-     }
- }
- 
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index d821ac25acc..5488643a2fd 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -40,11 +40,6 @@
- //!   The traits have the appropriate specialization of `IsA<>` as a supertrait,
- //!   for example `IsA<DeviceState>` for `DeviceImpl`.
- //!
--//! * an implementation of [`ClassInitImpl`], for example
--//!   `ClassInitImpl<DeviceClass>`. This fills the vtable in the class struct;
--//!   the source for this is the `*Impl` trait; the associated consts and
--//!   functions if needed are wrapped to map C types into Rust types.
--//!
- //! * a trait for instance methods, for example `DeviceMethods`. This trait is
- //!   automatically implemented for any reference or smart pointer to a device
- //!   instance.  It calls into the vtable provides access across all subclasses
-@@ -54,6 +49,48 @@
- //!   This provides access to class-wide functionality that doesn't depend on
- //!   instance data. Like instance methods, these are automatically inherited by
- //!   child classes.
-+//!
-+//! # Class structures
-+//!
-+//! Each QOM class that has virtual methods describes them in a
-+//! _class struct_.  Class structs include a parent field corresponding
-+//! to the vtable of the parent class, all the way up to [`ObjectClass`].
-+//!
-+//! As mentioned above, virtual methods are defined via traits such as
-+//! `DeviceImpl`.  Class structs do not define any trait but, conventionally,
-+//! all of them have a `class_init` method to initialize the virtual methods
-+//! based on the trait and then call the same method on the superclass.
-+//!
-+//! ```ignore
-+//! impl YourSubclassClass
-+//! {
-+//!     pub fn class_init<T: YourSubclassImpl>(&mut self) {
-+//!         ...
-+//!         klass.parent_class::class_init<T>();
-+//!     }
-+//! }
-+//! ```
-+//!
-+//! If a class implements a QOM interface.  In that case, the function must
-+//! contain, for each interface, an extra forwarding call as follows:
-+//!
-+//! ```ignore
-+//! ResettableClass::cast::<Self>(self).class_init::<Self>();
-+//! ```
-+//!
-+//! These `class_init` functions are methods on the class rather than a trait,
-+//! because the bound on `T` (`DeviceImpl` in this case), will change for every
-+//! class struct.  The functions are pointed to by the
-+//! [`ObjectImpl::CLASS_INIT`] function pointer. While there is no default
-+//! implementation, in most cases it will be enough to write it as follows:
-+//!
-+//! ```ignore
-+//! const CLASS_INIT: fn(&mut Self::Class)> = Self::Class::class_init::<Self>;
-+//! ```
-+//!
-+//! This design incurs a small amount of code duplication but, by not using
-+//! traits, it allows the flexibility of implementing bindings in any crate,
-+//! without incurring into violations of orphan rules for traits.
- 
- use std::{
-     ffi::CStr,
-@@ -279,19 +316,25 @@ pub unsafe trait InterfaceType: Sized {
-     /// for this interface.
-     const TYPE_NAME: &'static CStr;
- 
--    /// Initialize the vtable for the interface; the generic argument `T` is the
--    /// type being initialized, while the generic argument `U` is the type that
-+    /// Return the vtable for the interface; `U` is the type that
-     /// lists the interface in its `TypeInfo`.
-     ///
-+    /// # Examples
-+    ///
-+    /// This function is usually called by a `class_init` method in `U::Class`.
-+    /// For example, `DeviceClass::class_init<T>` initializes its `Resettable`
-+    /// interface as follows:
-+    ///
-+    /// ```ignore
-+    /// ResettableClass::cast::<DeviceState>(self).class_init::<T>();
-+    /// ```
-+    ///
-+    /// where `T` is the concrete subclass that is being initialized.
-+    ///
-     /// # Panics
-     ///
-     /// Panic if the incoming argument if `T` does not implement the interface.
--    fn interface_init<
--        T: ObjectType + ClassInitImpl<Self> + ClassInitImpl<U::Class>,
--        U: ObjectType,
--    >(
--        klass: &mut U::Class,
--    ) {
-+    fn cast<U: ObjectType>(klass: &mut U::Class) -> &mut Self {
-         unsafe {
-             // SAFETY: upcasting to ObjectClass is always valid, and the
-             // return type is either NULL or the argument itself
-@@ -300,8 +343,7 @@ fn interface_init<
-                 Self::TYPE_NAME.as_ptr(),
-             )
-             .cast();
--
--            <T as ClassInitImpl<Self>>::class_init(result.as_mut().unwrap())
-+            result.as_mut().unwrap()
-         }
-     }
- }
-@@ -558,87 +600,20 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
-     /// the default values coming from the parent classes; the function
-     /// can change them to override virtual methods of a parent class.
-     ///
--    /// Usually defined as `<Self as ClassInitImpl<Self::Class>::class_init`.
--    const CLASS_INIT: fn(&mut Self::Class);
--}
--
--/// Internal trait used to automatically fill in a class struct.
--///
--/// Each QOM class that has virtual methods describes them in a
--/// _class struct_.  Class structs include a parent field corresponding
--/// to the vtable of the parent class, all the way up to [`ObjectClass`].
--/// Each QOM type has one such class struct; this trait takes care of
--/// initializing the `T` part of the class struct, for the type that
--/// implements the trait.
--///
--/// Each struct will implement this trait with `T` equal to each
--/// superclass.  For example, a device should implement at least
--/// `ClassInitImpl<`[`DeviceClass`](crate::qdev::DeviceClass)`>` and
--/// `ClassInitImpl<`[`ObjectClass`]`>`.  Such implementations are made
--/// in one of two ways.
--///
--/// For most superclasses, `ClassInitImpl` is provided by the `qemu-api`
--/// crate itself.  The Rust implementation of methods will come from a
--/// trait like [`ObjectImpl`] or [`DeviceImpl`](crate::qdev::DeviceImpl),
--/// and `ClassInitImpl` is provided by blanket implementations that
--/// operate on all implementors of the `*Impl`* trait.  For example:
--///
--/// ```ignore
--/// impl<T> ClassInitImpl<DeviceClass> for T
--/// where
--///     T: ClassInitImpl<ObjectClass> + DeviceImpl,
--/// ```
--///
--/// The bound on `ClassInitImpl<ObjectClass>` is needed so that,
--/// after initializing the `DeviceClass` part of the class struct,
--/// the parent [`ObjectClass`] is initialized as well.
--///
--/// The other case is when manual implementation of the trait is needed.
--/// This covers the following cases:
--///
--/// * if a class implements a QOM interface, the Rust code _has_ to define its
--///   own class struct `FooClass` and implement `ClassInitImpl<FooClass>`.
--///   `ClassInitImpl<FooClass>`'s `class_init` method will then forward to
--///   multiple other `class_init`s, for the interfaces as well as the
--///   superclass. (Note that there is no Rust example yet for using interfaces).
--///
--/// * for classes implemented outside the ``qemu-api`` crate, it's not possible
--///   to add blanket implementations like the above one, due to orphan rules. In
--///   that case, the easiest solution is to implement
--///   `ClassInitImpl<YourSuperclass>` for each subclass and not have a
--///   `YourSuperclassImpl` trait at all.
--///
--/// ```ignore
--/// impl ClassInitImpl<YourSuperclass> for YourSubclass {
--///     fn class_init(klass: &mut YourSuperclass) {
--///         klass.some_method = Some(Self::some_method);
--///         <Self as ClassInitImpl<SysBusDeviceClass>>::class_init(&mut klass.parent_class);
--///     }
--/// }
--/// ```
--///
--///   While this method incurs a small amount of code duplication,
--///   it is generally limited to the recursive call on the last line.
--///   This is because classes defined in Rust do not need the same
--///   glue code that is needed when the classes are defined in C code.
--///   You may consider using a macro if you have many subclasses.
--pub trait ClassInitImpl<T> {
--    /// Initialize `klass` to point to the virtual method implementations
--    /// for `Self`.  On entry, the virtual method pointers are set to
--    /// the default values coming from the parent classes; the function
--    /// can change them to override virtual methods of a parent class.
-+    /// Usually defined simply as `Self::Class::class_init::<Self>`;
-+    /// however a default implementation cannot be included here, because the
-+    /// bounds that the `Self::Class::class_init` method places on `Self` are
-+    /// not known in advance.
-     ///
--    /// The virtual method implementations usually come from another
--    /// trait, for example [`DeviceImpl`](crate::qdev::DeviceImpl)
--    /// when `T` is [`DeviceClass`](crate::qdev::DeviceClass).
-+    /// # Safety
-     ///
--    /// On entry, `klass`'s parent class is initialized, while the other fields
-+    /// While `klass`'s parent class is initialized on entry, the other fields
-     /// are all zero; it is therefore assumed that all fields in `T` can be
-     /// zeroed, otherwise it would not be possible to provide the class as a
-     /// `&mut T`.  TODO: add a bound of [`Zeroable`](crate::zeroable::Zeroable)
-     /// to T; this is more easily done once Zeroable does not require a manual
-     /// implementation (Rust 1.75.0).
--    fn class_init(klass: &mut T);
-+    const CLASS_INIT: fn(&mut Self::Class);
- }
- 
- /// # Safety
-@@ -651,13 +626,12 @@ pub trait ClassInitImpl<T> {
-     T::UNPARENT.unwrap()(unsafe { state.as_ref() });
- }
- 
--impl<T> ClassInitImpl<ObjectClass> for T
--where
--    T: ObjectImpl,
--{
--    fn class_init(oc: &mut ObjectClass) {
-+impl ObjectClass {
-+    /// Fill in the virtual methods of `ObjectClass` based on the definitions in
-+    /// the `ObjectImpl` trait.
-+    pub fn class_init<T: ObjectImpl>(&mut self) {
-         if <T as ObjectImpl>::UNPARENT.is_some() {
--            oc.unparent = Some(rust_unparent_fn::<T>);
-+            self.unparent = Some(rust_unparent_fn::<T>);
-         }
-     }
- }
-diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
-index fee2e3d478f..04821a2b9b3 100644
---- a/rust/qemu-api/src/sysbus.rs
-+++ b/rust/qemu-api/src/sysbus.rs
-@@ -14,8 +14,8 @@
-     irq::{IRQState, InterruptSource},
-     memory::MemoryRegion,
-     prelude::*,
--    qdev::{DeviceClass, DeviceImpl, DeviceState},
--    qom::{ClassInitImpl, Owned},
-+    qdev::{DeviceImpl, DeviceState},
-+    qom::Owned,
- };
- 
- unsafe impl ObjectType for SysBusDevice {
-@@ -28,12 +28,11 @@ unsafe impl ObjectType for SysBusDevice {
- // TODO: add virtual methods
- pub trait SysBusDeviceImpl: DeviceImpl + IsA<SysBusDevice> {}
- 
--impl<T> ClassInitImpl<SysBusDeviceClass> for T
--where
--    T: SysBusDeviceImpl + ClassInitImpl<DeviceClass>,
--{
--    fn class_init(sdc: &mut SysBusDeviceClass) {
--        <T as ClassInitImpl<DeviceClass>>::class_init(&mut sdc.parent_class);
-+impl SysBusDeviceClass {
-+    /// Fill in the virtual methods of `SysBusDeviceClass` based on the
-+    /// definitions in the `SysBusDeviceImpl` trait.
-+    pub fn class_init<T: SysBusDeviceImpl>(self: &mut SysBusDeviceClass) {
-+        self.parent_class.class_init::<T>();
-     }
- }
- 
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 93c5637bbc3..e3985782a38 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -14,7 +14,7 @@
-     declare_properties, define_property,
-     prelude::*,
-     qdev::{DeviceImpl, DeviceState, Property, ResettablePhasesImpl},
--    qom::{ClassInitImpl, ObjectImpl, ParentField},
-+    qom::{ObjectImpl, ParentField},
-     sysbus::SysBusDevice,
-     vmstate::VMStateDescription,
-     zeroable::Zeroable,
-@@ -43,7 +43,7 @@ pub struct DummyClass {
- 
- impl DummyClass {
-     pub fn class_init<T: DeviceImpl>(self: &mut DummyClass) {
--        <T as ClassInitImpl<DeviceClass>>::class_init(&mut self.parent_class);
-+        self.parent_class.class_init::<T>();
-     }
- }
- 
+ /*
 -- 
 2.48.1
 
