@@ -4,107 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E4B0C021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 072B9C19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnXzS-0000Fh-DQ; Thu, 27 Feb 2025 02:07:28 -0500
+	id 1tnY0b-0001td-7Q; Thu, 27 Feb 2025 02:08:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tnXzI-0000FK-Fk; Thu, 27 Feb 2025 02:07:17 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tnXzG-0007oP-Ho; Thu, 27 Feb 2025 02:07:16 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51QMnM2M014472;
- Thu, 27 Feb 2025 07:07:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=L29g5t
- /45wTXgZ+3umU3gTnQvn7wI9UWdWxzE9tS6qU=; b=H6BSAHTpWEROGVDMXQcriQ
- ptLyfc0UTe2mF/Bbdm3a6Quyz7jdgASvUru56xuQLHz54xIpj/DN4LmqnPkA9zs5
- vWWUgUL/xU4bByOKADcYRj3qgcZ2dQUewoM0facHAJxZb5YU7aPKwwipg576XatM
- nGI52TSCjGnPhxi/jP+84SwWGtNdrwuZST7AQBj7I4mQwDLMFtOfeokgh0YCQZSY
- Txt76C42cZuD0dQVvODz93N8OZW/7PEVHh3Ms1NSCmAPf74B4PrFRzUJINqvDnZ/
- Exv0gz0HA9l/7zAOtu/HHsJrem9FWnjjp4elw1KbvTESut2qJdvDHKc442+H7eCA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 452c3a1rx1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Feb 2025 07:07:12 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 51R76mPj016118;
- Thu, 27 Feb 2025 07:07:11 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 452c3a1rww-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Feb 2025 07:07:11 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51R3fLxa027376;
- Thu, 27 Feb 2025 07:07:10 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 44yum26ty7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Feb 2025 07:07:10 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 51R777jp35783108
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Feb 2025 07:07:07 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ECDF620040;
- Thu, 27 Feb 2025 07:07:05 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8B5462004D;
- Thu, 27 Feb 2025 07:07:03 +0000 (GMT)
-Received: from [9.124.211.149] (unknown [9.124.211.149])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 27 Feb 2025 07:07:03 +0000 (GMT)
-Message-ID: <8108eb0d-7efe-4549-ba74-c7de50935dfe@linux.ibm.com>
-Date: Thu, 27 Feb 2025 12:37:02 +0530
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tnY0Z-0001sx-5N
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:08:35 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tnY0W-0008B3-UK
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:08:34 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2233622fdffso10735165ad.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 23:08:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1740640111; x=1741244911;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JPhvSqB2an/d3tIKddzpnAQaWFJPCV+QPsn2CKu3hnY=;
+ b=1fgwtPLWnNHglV/7mVNNWU9gxjaQ7UUSQCkf3oJDa3MS1qsQAvtftb3hbxgR0oTlTN
+ zKMaX6k/joAfo+oem40ut9yEPtplARV2yZeIcYJzXEgX812Mh5X50C33Bz0mVuaxINID
+ sNXlhzwzplTb9oHk8KwcKhyDD0U4GvjlkocADyc+Z+5Gom3r41Grd6uUGK+9K/r4v7K2
+ 6oXWaQcCP5KFNTVva2Siv42SnDHtc6YN5IZ0ZE4pTxc1AVWuUhbz4YVPlBOlmhnQcS6y
+ EBVIYhxynkahjQFMdNc+8pZOzd2kQZey2oMNfmTKAgTYzp9myAtIAl27DHCV4qwkZa60
+ n8XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740640111; x=1741244911;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JPhvSqB2an/d3tIKddzpnAQaWFJPCV+QPsn2CKu3hnY=;
+ b=G6+wBt9MGIMbB8ifREGeUNqvKPdunCU81iTdnCAxXHLkMckdnp3HLYf2F/m8PphOrC
+ zp0ejDjzdLdZZdwC7qMBqXGwljiQmq+lYyjnr5ZKfsiutPd/rNuR8XiMdL9Q37ZG+iLZ
+ 6RmI6Ud+obTqsvOIAGs5upJwn9UgXEXRTgAjtEaXWxpmpWS5J/nbHcZ4b1HrrDPH6vV6
+ PitfhuZRmwfeInI6Z7aC0wGe7sYsCkHRGl+obr8i/9TkM9pIEaM4f4g6POB7+Hug+4Q5
+ x/QUjZtR0x1ePixm9Nl73jdRRojFwTiAZAhCJvNt9hMpJB08hEqnEyVUMWULPs2gKheV
+ x93g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+qT3zFkVaZDu8XCg6W3v+pIfyB8KCPqGtn16x54Y7JC+dFmiNfFOffTcAUOfTPfCA+eicmdwG9C1/@nongnu.org
+X-Gm-Message-State: AOJu0Yy6iE29b173XZ19lG//bA1lytBz9MzyCIJOQtIKtxyumtBIBNjc
+ 8lf2tMpSufwiwGnjGG89Cqfk4mYifTPCxWtBk4TRYlM6GFF9nYh2PGKp8sIKzQo=
+X-Gm-Gg: ASbGncvKlBhqkCejSNH9hbQY8CV0mAh80Cy+qUOhj+gecnpo61e3CU2VhVmoekq1FJb
+ Gulz8G5oHfkwLN2rbq4fdJwEsO93hqL/9gzfd6K0gqbQepeHvjlPzK/jlZhHq0AwLSWcKdR4VJN
+ KvTyMfnTuknvnhbQKyNjcbbD7u2lh5lYwGNrsF97lnlGKa8w011jBvxhg2pInrK6mRMTx0zo2b7
+ 66jiKztqfecGeF9tT9aUWTz6eTWCERVhiqKIz77kRm4ZIX4/WupmW1Umms9GWtdVtlHWdMzaIuh
+ 1VBVdNbxsNWGG0lS3knuOXLkroORhZlcYl2CE2c=
+X-Google-Smtp-Source: AGHT+IG2oufwW0bwXfiVWS+2gsl8QRlC9SyLTv6KNyxye8TQ7seNcC1wZx6rjoPfkSIm7rXz0br0Aw==
+X-Received: by 2002:a05:6a20:7f91:b0:1ee:ace8:8194 with SMTP id
+ adf61e73a8af0-1f0fc24b467mr18343343637.22.1740640111366; 
+ Wed, 26 Feb 2025 23:08:31 -0800 (PST)
+Received: from [157.82.207.107] ([157.82.207.107])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-aee7ddf245asm678774a12.5.2025.02.26.23.08.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Feb 2025 23:08:30 -0800 (PST)
+Message-ID: <7253855c-c54a-475f-9747-66b7e5df98e6@daynix.com>
+Date: Thu, 27 Feb 2025 16:08:24 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] hw/ppc: Enable Fadump for PSeries
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-References: <20250217071711.83735-1-adityag@linux.ibm.com>
- <20250217071711.83735-7-adityag@linux.ibm.com>
- <D82WUV05QWZP.10KAOOHN6YFFP@gmail.com>
+Subject: Re: [PATCH v5 4/4] virtio: Convert feature properties to OnOffAuto
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Luigi Rizzo <rizzo@iet.unipi.it>, Giuseppe Lettieri
+ <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Lei Yang <leiyang@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-devel@nongnu.org
+References: <20250208-virtio-v5-0-4376cb218c0f@daynix.com>
+ <20250208-virtio-v5-4-4376cb218c0f@daynix.com>
+ <20250220104248-mutt-send-email-mst@kernel.org>
 Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <D82WUV05QWZP.10KAOOHN6YFFP@gmail.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20250220104248-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: RU29WAAkl4rBsh19vxXHAHQ2_gDQTLy7
-X-Proofpoint-ORIG-GUID: IOhmexxJr8DIdeFQMrGdckpECQeRYWHT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-27_03,2025-02-26_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0
- priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0
- mlxlogscore=999 clxscore=1015 adultscore=0 spamscore=0 lowpriorityscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502270052
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,137 +118,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/02/25 09:03, Nicholas Piggin wrote:
-
-> On Mon Feb 17, 2025 at 5:17 PM AEST, Aditya Gupta wrote:
->> With all support in place, enable fadump by exporting the
->> "ibm,configure-kernel-dump" RTAS call in the device tree.
+On 2025/02/21 0:46, Michael S. Tsirkin wrote:
+> On Sat, Feb 08, 2025 at 04:51:10PM +0900, Akihiko Odaki wrote:
+>> Some features are not always available with vhost. Legacy features are
+>> not available with vp_vdpa in particular. virtio devices used to disable
+>> them when not available even if the corresponding properties were
+>> explicitly set to "on".
 >>
->> Presence of "ibm,configure-kernel-dump" tells the kernel that the
->> platform (QEMU) supports fadump.
+>> QEMU already has OnOffAuto type, which includes the "auto" value to let
+>> it automatically decide the effective value. Convert feature properties
+>> to OnOffAuto and set them "auto" by default to utilize it. This allows
+>> QEMU to report an error if they are set "on" and the corresponding
+>> features are not available.
 >>
->> Pass "fadump=on" to enable Linux to use firmware assisted dump.
->>
->> Logs of a linux boot with firmware assisted dump:
->>
->>      ./build/qemu-system-ppc64 -M pseries,x-vof=on --cpu power10 --smp 4 -m 4G -kernel some-vmlinux -initrd some-initrd -append "debug fadump=on crashkernel=1G" -nographic
->>      [    0.000000] random: crng init done
->>      [    0.000000] fadump: Reserved 1024MB of memory at 0x00000040000000 (System RAM: 4096MB)
->>      ...
->>      [    1.084686] rtas fadump: Registration is successful!
->>      ...
->>      # cat /sys/kernel/debug/powerpc/fadump_region
->>      CPU :[0x00000040000000-0x000000400013d3] 0x13d4 bytes, Dumped: 0x0
->>      HPTE:[0x000000400013d4-0x000000400013d3] 0x0 bytes, Dumped: 0x0
->>      DUMP: Src: 0x00000000000000, Dest: 0x00000040010000, Size: 0x40000000, Dumped: 0x0 bytes
->>
->>      [0x000000fffff800-0x000000ffffffff]: cmdline append: ''
->>      # echo c > /proc/sysrq-trigger
->>
->> The fadump boot after crash:
->>
->>      [    0.000000] rtas fadump: Firmware-assisted dump is active.
->>      [    0.000000] fadump: Updated cmdline: debug fadump=on crashkernel=1G
->>      [    0.000000] fadump: Firmware-assisted dump is active.
->>      [    0.000000] fadump: Reserving 3072MB of memory at 0x00000040000000 for preserving crash data
->>      ....
->>      # file /proc/vmcore
->>      /proc/vmcore: ELF 64-bit LSB core file, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (SYSV), SVR4-style
->>
->> Analysing the vmcore with crash-utility:
->>
->>            KERNEL: vmlinux-6.14-rc2
->>          DUMPFILE: vmcore-a64dcfb451e2-nocma
->>              CPUS: 4
->>              DATE: Thu Jan  1 05:30:00 IST 1970
->>            UPTIME: 00:00:30
->>      LOAD AVERAGE: 0.74, 0.21, 0.07
->>             TASKS: 94
->>          NODENAME: buildroot
->>           RELEASE: 6.14.0-rc2+
->>           VERSION: #1 SMP Wed Feb 12 06:49:59 CST 2025
->>           MACHINE: ppc64le  (1000 Mhz)
->>            MEMORY: 4 GB
->>             PANIC: "Kernel panic - not syncing: sysrq triggered crash"
->>               PID: 270
->>           COMMAND: "sh"
->>              TASK: c000000009e7cc00  [THREAD_INFO: c000000009e7cc00]
->>               CPU: 3
->>             STATE: TASK_RUNNING (PANIC)
->>
->> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> This is very cool, nice work. Does it work with KVM? I think... probably
-> it could?
-
-Yes it does, atleast for crashing CPU :)
-
-But there are problems with reading the CPU regs, regs don't seem 
-correct for non-crashing CPUs.
-
-Crash is able to work perfectly for the crashing CPU as of now (as the 
-registers are stored by the kernel in that case).
-
->
-> Are you able to add a functional test case for it? This is something
-> that people (including me) will forget to test...
-
-Sure, I will add a test case.
-
-
-Thanks for your reviews Nick.
-
-It might take few weeks for me to post another version, will see into 
-the tests in qemu and arrange the code bit more nicely.
-
-
-- Aditya G
-
->
-> Thanks,
-> Nick
->
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> 
 >> ---
->>   hw/ppc/spapr_rtas.c    | 6 +++++-
->>   include/hw/ppc/spapr.h | 3 ++-
->>   2 files changed, 7 insertions(+), 2 deletions(-)
+>>   include/hw/virtio/virtio.h | 38 +++++++++++++++++++++-----------------
+>>   hw/core/machine.c          |  1 +
+>>   hw/virtio/virtio-bus.c     | 14 ++++++++++++--
+>>   hw/virtio/virtio.c         |  4 +++-
+>>   4 files changed, 37 insertions(+), 20 deletions(-)
 >>
->> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
->> index 0aca4270aee8..bd2ed16a46e3 100644
->> --- a/hw/ppc/spapr_rtas.c
->> +++ b/hw/ppc/spapr_rtas.c
->> @@ -692,7 +692,7 @@ static void trigger_fadump_boot(target_ulong spapr_retcode)
->>   }
+>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+>> index 638691028050d2599592d8c7e95c75ac3913fbdd..b854c2cb1d04da0a35165289c28f87e8cb869df6 100644
+>> --- a/include/hw/virtio/virtio.h
+>> +++ b/include/hw/virtio/virtio.h
+>> @@ -113,7 +113,8 @@ struct VirtIODevice
+>>       uint16_t queue_sel;
+>>       /**
+>>        * These fields represent a set of VirtIO features at various
+>> -     * levels of the stack. @host_features indicates the complete
+>> +     * levels of the stack. @requested_features indicates the feature
+>> +     * set the user requested. @host_features indicates the complete
+>>        * feature set the VirtIO device can offer to the driver.
+>>        * @guest_features indicates which features the VirtIO driver has
+>>        * selected by writing to the feature register. Finally
+>> @@ -121,6 +122,7 @@ struct VirtIODevice
+>>        * backend (e.g. vhost) and could potentially be a subset of the
+>>        * total feature set offered by QEMU.
+>>        */
+>> +    OnOffAutoBit64 requested_features;
+>>       uint64_t host_features;
+>>       uint64_t guest_features;
+>>       uint64_t backend_features;
+>> @@ -149,6 +151,7 @@ struct VirtIODevice
+>>       bool started;
+>>       bool start_on_kick; /* when virtio 1.0 feature has not been negotiated */
+>>       bool disable_legacy_check;
+>> +    bool force_features_auto;
+>>       bool vhost_started;
+>>       VMChangeStateEntry *vmstate;
+>>       char *bus_name;
+>> @@ -376,22 +379,23 @@ typedef struct VirtIOSCSIConf VirtIOSCSIConf;
+>>   typedef struct VirtIORNGConf VirtIORNGConf;
 >>   
->>   /* Papr Section 7.4.9 ibm,configure-kernel-dump RTAS call */
->> -static __attribute((unused)) void rtas_configure_kernel_dump(PowerPCCPU *cpu,
->> +static void rtas_configure_kernel_dump(PowerPCCPU *cpu,
->>                                      SpaprMachineState *spapr,
->>                                      uint32_t token, uint32_t nargs,
->>                                      target_ulong args,
->> @@ -1109,6 +1109,10 @@ static void core_rtas_register_types(void)
->>       spapr_rtas_register(RTAS_IBM_NMI_INTERLOCK, "ibm,nmi-interlock",
->>                           rtas_ibm_nmi_interlock);
+>>   #define DEFINE_VIRTIO_COMMON_FEATURES(_state, _field) \
+>> -    DEFINE_PROP_BIT64("indirect_desc", _state, _field,    \
+>> -                      VIRTIO_RING_F_INDIRECT_DESC, true), \
+>> -    DEFINE_PROP_BIT64("event_idx", _state, _field,        \
+>> -                      VIRTIO_RING_F_EVENT_IDX, true),     \
+>> -    DEFINE_PROP_BIT64("notify_on_empty", _state, _field,  \
+>> -                      VIRTIO_F_NOTIFY_ON_EMPTY, true), \
+>> -    DEFINE_PROP_BIT64("any_layout", _state, _field, \
+>> -                      VIRTIO_F_ANY_LAYOUT, true), \
+>> -    DEFINE_PROP_BIT64("iommu_platform", _state, _field, \
+>> -                      VIRTIO_F_IOMMU_PLATFORM, false), \
+>> -    DEFINE_PROP_BIT64("packed", _state, _field, \
+>> -                      VIRTIO_F_RING_PACKED, false), \
+>> -    DEFINE_PROP_BIT64("queue_reset", _state, _field, \
+>> -                      VIRTIO_F_RING_RESET, true), \
+>> -    DEFINE_PROP_BIT64("in_order", _state, _field, \
+>> -                      VIRTIO_F_IN_ORDER, false)
+>> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("indirect_desc", _state, _field, \
+>> +                                  VIRTIO_RING_F_INDIRECT_DESC, \
+>> +                                  ON_OFF_AUTO_AUTO), \
+>> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("event_idx", _state, _field, \
+>> +                                  VIRTIO_RING_F_EVENT_IDX, ON_OFF_AUTO_AUTO), \
+>> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("notify_on_empty", _state, _field, \
+>> +                                  VIRTIO_F_NOTIFY_ON_EMPTY, ON_OFF_AUTO_AUTO), \
+>> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("any_layout", _state, _field, \
+>> +                                  VIRTIO_F_ANY_LAYOUT, ON_OFF_AUTO_AUTO), \
+>> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("iommu_platform", _state, _field, \
+>> +                                  VIRTIO_F_IOMMU_PLATFORM, ON_OFF_AUTO_OFF), \
+>> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("packed", _state, _field, \
+>> +                                  VIRTIO_F_RING_PACKED, ON_OFF_AUTO_OFF), \
+>> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("queue_reset", _state, _field, \
+>> +                                  VIRTIO_F_RING_RESET, ON_OFF_AUTO_AUTO), \
+>> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("in_order", _state, _field, \
+>> +                                  VIRTIO_F_IN_ORDER, ON_OFF_AUTO_OFF)
 >>   
->> +    /* Register Fadump rtas call */
->> +    spapr_rtas_register(RTAS_CONFIGURE_KERNEL_DUMP, "ibm,configure-kernel-dump",
->> +                        rtas_configure_kernel_dump);
+>>   hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
+>>   bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
+>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>> index c23b39949649054ac59d2a9b497f34e1b7bd8d6c..0de04baa61735ff02f797f778c626ef690625ce3 100644
+>> --- a/hw/core/machine.c
+>> +++ b/hw/core/machine.c
+>> @@ -38,6 +38,7 @@
+>>   
+>>   GlobalProperty hw_compat_9_2[] = {
+>>       {"arm-cpu", "backcompat-pauth-default-use-qarma5", "true"},
+>> +    { TYPE_VIRTIO_DEVICE, "x-force-features-auto", "on" },
+>>   };
+>>   const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
+>>   
+> 
+> Confused why this is on.
+> If set, this breaks existing setups if they run a configuration vhost
+> does not support, does it not?
+> And in particular, aren't some of these features exposed through
+> libvirt?
+
+This property enforces the existing behavior, which is to disable 
+unsupported features even if they are explicitly set to "on". It 
+introduces no breaking change.
+
+> 
+>> diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
+>> index 896feb37a1caa805543e971c150d3673675b9a6b..75d433b252d5337d91616a2847b3dc12e811c2da 100644
+>> --- a/hw/virtio/virtio-bus.c
+>> +++ b/hw/virtio/virtio-bus.c
+>> @@ -50,6 +50,7 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
+>>       bool has_iommu = virtio_host_has_feature(vdev, VIRTIO_F_IOMMU_PLATFORM);
+>>       bool vdev_has_iommu;
+>>       Error *local_err = NULL;
+>> +    uint64_t features;
+>>   
+>>       DPRINTF("%s: plug device.\n", qbus->name);
+>>   
+>> @@ -63,13 +64,22 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
+>>   
+>>       /* Get the features of the plugged device. */
+>>       assert(vdc->get_features != NULL);
+>> -    vdev->host_features = vdc->get_features(vdev, vdev->host_features,
+>> -                                            &local_err);
+>> +    features = vdev->host_features | vdev->requested_features.auto_bits |
+>> +               vdev->requested_features.on_bits;
+>> +    features = vdc->get_features(vdev, features, &local_err);
+>>       if (local_err) {
+>>           error_propagate(errp, local_err);
+>>           return;
+>>       }
+>>   
+>> +    if (!vdev->force_features_auto &&
+>> +        (features & vdev->requested_features.on_bits) != vdev->requested_features.on_bits) {
+>> +        error_setg(errp, "A requested feature is not supported by the device");
+>> +        return;
+>> +    }
 >> +
->>       qtest_set_command_cb(spapr_qtest_callback);
+>> +    vdev->host_features = features;
+>> +
+>>       if (klass->device_plugged != NULL) {
+>>           klass->device_plugged(qbus->parent, &local_err);
+>>       }
+>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>> index 85110bce37443bb46c4159761af112d0dba466b4..83f803fc703da6257608e21476305c8e9c6a8b07 100644
+>> --- a/hw/virtio/virtio.c
+>> +++ b/hw/virtio/virtio.c
+>> @@ -4013,11 +4013,13 @@ static void virtio_device_instance_finalize(Object *obj)
 >>   }
 >>   
->> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
->> index fa63008e57ec..bde3bdc4b80c 100644
->> --- a/include/hw/ppc/spapr.h
->> +++ b/include/hw/ppc/spapr.h
->> @@ -768,8 +768,9 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
->>   #define RTAS_IBM_SUSPEND_ME                     (RTAS_TOKEN_BASE + 0x2A)
->>   #define RTAS_IBM_NMI_REGISTER                   (RTAS_TOKEN_BASE + 0x2B)
->>   #define RTAS_IBM_NMI_INTERLOCK                  (RTAS_TOKEN_BASE + 0x2C)
->> +#define RTAS_CONFIGURE_KERNEL_DUMP              (RTAS_TOKEN_BASE + 0x2D)
+>>   static const Property virtio_properties[] = {
+>> -    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, host_features),
+>> +    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, requested_features),
+>>       DEFINE_PROP_BOOL("use-started", VirtIODevice, use_started, true),
+>>       DEFINE_PROP_BOOL("use-disabled-flag", VirtIODevice, use_disabled_flag, true),
+>>       DEFINE_PROP_BOOL("x-disable-legacy-check", VirtIODevice,
+>>                        disable_legacy_check, false),
+>> +    DEFINE_PROP_BOOL("x-force-features-auto", VirtIODevice,
+>> +                     force_features_auto, false),
+>>   };
 >>   
->> -#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2D)
->> +#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2E)
->>   
->>   /* Fadump commands */
->>   #define FADUMP_CMD_REGISTER            1
+>>   static int virtio_device_start_ioeventfd_impl(VirtIODevice *vdev)
+>>
+>> -- 
+>> 2.48.1
+> 
+
 
