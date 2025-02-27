@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF52C021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 09:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E4AC021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 09:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnZrr-0004Pw-Qc; Thu, 27 Feb 2025 04:07:43 -0500
+	id 1tnZtU-0005Tn-HN; Thu, 27 Feb 2025 04:09:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tnZrq-0004Pk-PJ
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 04:07:42 -0500
+ id 1tnZtS-0005Tc-LT
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 04:09:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tnZrp-0003xm-3w
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 04:07:42 -0500
+ id 1tnZtQ-0004E7-UM
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 04:09:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740647259;
+ s=mimecast20190719; t=1740647360;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8U+A/+irXHdvdcxDY39fxGUoxie4u463f4LBxj5ZjTc=;
- b=bfyfyMPVDS39l/5wA1yYk1OiL0XYCCb1nFD5U6s22DwKH2AXS5UH8qdsVBGS+5plOuWnhh
- pOuE99IxUD0+e6fgPqxpqXPsaR+Oi3I7Pe0F3WDbKWOxPc0Yl6Fbhjn05fUe4IRISwnU/2
- 8ttB+WLqjay4Xk96bN0XjPxeaVd0XoI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Yn/CitUZM0/qlfTlPo2FPIdZ8S+IFF4yGs/zZdDieWs=;
+ b=ZchjtH+bspLpOdky4m48utVxI13cq4R+MYPGEHMwagROV9Evym8CGpPqqKQZdYFi5AcKpy
+ wp3fyOyi+5rMIr9bqvDi0mFaYnPktywf4EbnEZ4vLW8w8jyWwvi60OWyH0/ZxSExw0i6Hs
+ WCbRMSngLCgt1R3fYv/z4fvwyD+TMXg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-2spNFWAnMuaPdaNjnoa_Sw-1; Thu,
- 27 Feb 2025 04:07:35 -0500
-X-MC-Unique: 2spNFWAnMuaPdaNjnoa_Sw-1
-X-Mimecast-MFC-AGG-ID: 2spNFWAnMuaPdaNjnoa_Sw_1740647254
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-319-2ZIkvE5YPS24NEmYkrYRmg-1; Thu,
+ 27 Feb 2025 04:09:15 -0500
+X-MC-Unique: 2ZIkvE5YPS24NEmYkrYRmg-1
+X-Mimecast-MFC-AGG-ID: 2ZIkvE5YPS24NEmYkrYRmg_1740647355
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 803381800873; Thu, 27 Feb 2025 09:07:34 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE6121955BFC; Thu, 27 Feb 2025 09:09:14 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.99])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1B2D1955DCE; Thu, 27 Feb 2025 09:07:32 +0000 (UTC)
-Date: Thu, 27 Feb 2025 09:07:29 +0000
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4853619560AE; Thu, 27 Feb 2025 09:09:13 +0000 (UTC)
+Date: Thu, 27 Feb 2025 09:09:09 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com
-Subject: Re: [PATCH 2/3] qapi: Eliminate OrderedDict
-Message-ID: <Z8ArURisT4bvkVpF@redhat.com>
+Subject: Re: [PATCH 3/3] qapi/introspect: Use @dataclass to simplify
+Message-ID: <Z8ArtZbw39vC1s2W@redhat.com>
 References: <20250227080757.3978333-1-armbru@redhat.com>
- <20250227080757.3978333-3-armbru@redhat.com>
+ <20250227080757.3978333-4-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250227080757.3978333-3-armbru@redhat.com>
+In-Reply-To: <20250227080757.3978333-4-armbru@redhat.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -89,17 +89,17 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 27, 2025 at 09:07:56AM +0100, Markus Armbruster wrote:
-> We use OrderedDict to ensure dictionary order is insertion order.
-> Plain dict does that since Python 3.6, but it wasn't guaranteed until
-> 3.7.  Since we have 3.7 now, replace OrderedDict by dict.
+On Thu, Feb 27, 2025 at 09:07:57AM +0100, Markus Armbruster wrote:
+> A TODO comment in class Annotated reminds us to simplify it once we
+> can use @dataclass, new in Python 3.7.  We have that now, so do it.
+> 
+> There's a similar comment in scripts/qapi/source.py, but I can't
+> figure out how to use @dataclass there.  Left for another day.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  scripts/qapi/parser.py         |  5 ++---
->  scripts/qapi/schema.py         | 11 +++++------
->  tests/qapi-schema/test-qapi.py | 11 +----------
->  3 files changed, 8 insertions(+), 19 deletions(-)
+>  scripts/qapi/introspect.py | 12 +++++-------
+>  1 file changed, 5 insertions(+), 7 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
