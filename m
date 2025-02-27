@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D04C021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 11:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA51C1B087
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 11:04:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnbgU-0004l7-1S; Thu, 27 Feb 2025 06:04:06 -0500
+	id 1tnbgT-0004kw-SN; Thu, 27 Feb 2025 06:04:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnbgR-0004k7-J4; Thu, 27 Feb 2025 06:04:03 -0500
+ id 1tnbgR-0004k6-Gg; Thu, 27 Feb 2025 06:04:03 -0500
 Received: from tor.source.kernel.org ([2600:3c04::f03c:95ff:fe5e:7468])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnbgP-0007SH-Lu; Thu, 27 Feb 2025 06:04:03 -0500
+ id 1tnbgP-0007SG-KF; Thu, 27 Feb 2025 06:04:03 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 374ED6158A;
- Thu, 27 Feb 2025 11:03:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3E8C4AF0E;
- Thu, 27 Feb 2025 11:03:58 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id E872E61521;
+ Thu, 27 Feb 2025 11:03:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D4CC4CEEA;
+ Thu, 27 Feb 2025 11:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1740654238;
- bh=WNgUSU0OrqFnvTXh8PzzTv6ghTQeysRMH1deXYrrJ9Y=;
+ bh=WFSs/B3Y34immM1a4OhkanKgJ7jJZGY58fcV+6YM6P4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ceS2Ouo7w7r7EK2hzfN0o273SzOemxtLhuz1YLh83NAH4zAI8qSohfhFBUH1+JgL5
- BU0UTEwqn8wHHwcvKlfm84H11GFSZxCFCl98ySElP1O7mH6NqsR3pqqSTsfsNe0PTN
- eWKZH94cyqi4J+w8/B6+uteOLjoQ9TqadLzBQT+KiFP0fwJe1ecvsm8p5KFDu/qcb4
- eOsH0ogozoESxmyfPFtR5jr8esgyFJBO+GbrDAZ1jU8GgWHltGksQlwO0Ktx2KbFgf
- VCzLva6CXkFnkFmL64BLjW2IKNfOFjUS1wMAtLwS7ymFgMgVsXGT9LqldXJJ5iQCIT
- fdo8dPJooCYpw==
+ b=iEg0GYNrvGcLEdkYD3sIqziy/IPNKk8xMz9vEDSXYibyAXRX6mnL1hO4hT/QkXcMX
+ tiwTsroWWil5RobhnMO5dXKnEUghjC/UrH43z5SGmMuY3nN7W0oyWbuFClOsUzgDsK
+ ZEY6CsWXr0mlUV6rcgZf/ooNykBBL8Dih0DrZZpcFigfzinlpltlkFIELrxTQWQ3q/
+ zEVgm+slR3VF7AnbmrlQhz8PzdFKt6DE6lB6G+v5LMdiLkP0L1A2JuGTUAA+1ApUPg
+ tJj37K1ierPwX5R+7239UhwqZyQAxY1HfndMldXXz7xdyt3emqM37rv1+pYAd9/DXW
+ u5q5Z/Y2gL9Xw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnbgK-00000001mRE-1Eo9; Thu, 27 Feb 2025 12:03:56 +0100
+ id 1tnbgK-00000001mQa-07zQ; Thu, 27 Feb 2025 12:03:56 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Ani Sinha <anisinha@redhat.com>, linux-kernel@vger.kernel.org
-Subject: [PATCH v5 11/21] acpi/generic_event_device: Update GHES migration to
- cover hest addr
-Date: Thu, 27 Feb 2025 12:03:41 +0100
-Message-ID: <8fb7cb334faa6ce86630899565ef57d1ba366873.1740653898.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v5 01/21] tests/acpi: virt: add an empty HEST file
+Date: Thu, 27 Feb 2025 12:03:31 +0100
+Message-ID: <3da2d197610ada25dacaee54d113fb87c5448b04.1740653898.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1740653898.git.mchehab+huawei@kernel.org>
 References: <cover.1740653898.git.mchehab+huawei@kernel.org>
@@ -74,62 +73,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GHES migration logic should now support HEST table location too.
+Such file will be used to track HEST table changes.
+
+For now, disallow HEST table check until we update it to the
+current data.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/generic_event_device.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ tests/data/acpi/aarch64/virt/HEST           | 0
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ 2 files changed, 1 insertion(+)
+ create mode 100644 tests/data/acpi/aarch64/virt/HEST
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index c85d97ca3776..5346cae573b7 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -386,6 +386,34 @@ static const VMStateDescription vmstate_ghes_state = {
-     }
- };
- 
-+static const VMStateDescription vmstate_hest = {
-+    .name = "acpi-hest",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(hest_addr_le, AcpiGhesState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static bool hest_needed(void *opaque)
-+{
-+    AcpiGedState *s = opaque;
-+    return s->ghes_state.hest_addr_le;
-+}
-+
-+static const VMStateDescription vmstate_hest_state = {
-+    .name = "acpi-ged/hest",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = hest_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
-+                       vmstate_hest, AcpiGhesState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static const VMStateDescription vmstate_acpi_ged = {
-     .name = "acpi-ged",
-     .version_id = 1,
-@@ -398,6 +426,7 @@ static const VMStateDescription vmstate_acpi_ged = {
-         &vmstate_memhp_state,
-         &vmstate_cpuhp_state,
-         &vmstate_ghes_state,
-+        &vmstate_hest_state,
-         NULL
-     }
- };
+diff --git a/tests/data/acpi/aarch64/virt/HEST b/tests/data/acpi/aarch64/virt/HEST
+new file mode 100644
+index 000000000000..e69de29bb2d1
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8bf4..39901c58d647 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/HEST",
 -- 
 2.48.1
 
