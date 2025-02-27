@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C608C197BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3412C197BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:02:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnlwj-000805-Fx; Thu, 27 Feb 2025 17:01:33 -0500
+	id 1tnlx7-00009O-Qq; Thu, 27 Feb 2025 17:01:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnlwg-0007rI-Tr
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:01:30 -0500
+ id 1tnlwz-00005c-TA
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:01:51 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnlwf-0007V1-03
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:01:30 -0500
+ id 1tnlwy-0007Xq-1C
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:01:49 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnlwZ-000000007OM-2P5R; Thu, 27 Feb 2025 23:01:23 +0100
-Message-ID: <cb56e530-9d34-4f17-bee6-0cf28af06215@maciej.szmigiero.name>
-Date: Thu, 27 Feb 2025 23:01:18 +0100
+ id 1tnlwu-000000007OW-03P9; Thu, 27 Feb 2025 23:01:44 +0100
+Message-ID: <7c41add3-72ad-4aec-bd74-3c9715fda5c7@maciej.szmigiero.name>
+Date: Thu, 27 Feb 2025 23:01:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 34/36] vfio/migration: Max in-flight VFIO device state
- buffer count limit
+Subject: Re: [PATCH v5 36/36] vfio/migration: Update VFIO migration
+ documentation
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
@@ -38,8 +38,8 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <719b309bb7bc13542d14e6ce0026cb9bb67e9f31.1739994627.git.maciej.szmigiero@oracle.com>
- <11ecf7fb-55f6-4606-b635-e53dbcc71dbc@redhat.com>
+ <2031790b755aa95b61470b286fa787b78be08107.1739994627.git.maciej.szmigiero@oracle.com>
+ <cbebee68-f891-4946-885d-01a8ed24e6c1@redhat.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <11ecf7fb-55f6-4606-b635-e53dbcc71dbc@redhat.com>
+In-Reply-To: <cbebee68-f891-4946-885d-01a8ed24e6c1@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -110,132 +110,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.02.2025 07:48, Cédric Le Goater wrote:
+On 27.02.2025 07:59, Cédric Le Goater wrote:
 > On 2/19/25 21:34, Maciej S. Szmigiero wrote:
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> Allow capping the maximum count of in-flight VFIO device state buffers
->> queued at the destination, otherwise a malicious QEMU source could
->> theoretically cause the target QEMU to allocate unlimited amounts of memory
->> for buffers-in-flight.
->>
->> Since this is not expected to be a realistic threat in most of VFIO live
->> migration use cases and the right value depends on the particular setup
->> disable the limit by default by setting it to UINT64_MAX.
+>> Update the VFIO documentation at docs/devel/migration describing the
+>> changes brought by the multifd device state transfer.
 >>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 >> ---
->>   hw/vfio/migration-multifd.c   | 14 ++++++++++++++
->>   hw/vfio/pci.c                 |  2 ++
->>   include/hw/vfio/vfio-common.h |  1 +
->>   3 files changed, 17 insertions(+)
+>>   docs/devel/migration/vfio.rst | 80 +++++++++++++++++++++++++++++++----
+>>   1 file changed, 71 insertions(+), 9 deletions(-)
 >>
->> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
->> index 18a5ff964a37..04aa3f4a6596 100644
->> --- a/hw/vfio/migration-multifd.c
->> +++ b/hw/vfio/migration-multifd.c
->> @@ -53,6 +53,7 @@ typedef struct VFIOMultifd {
->>       QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
->>       uint32_t load_buf_idx;
->>       uint32_t load_buf_idx_last;
->> +    uint32_t load_buf_queued_pending_buffers;
->>   } VFIOMultifd;
->>   static void vfio_state_buffer_clear(gpointer data)
->> @@ -121,6 +122,15 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
->>       assert(packet->idx >= multifd->load_buf_idx);
->> +    multifd->load_buf_queued_pending_buffers++;
->> +    if (multifd->load_buf_queued_pending_buffers >
->> +        vbasedev->migration_max_queued_buffers) {
->> +        error_setg(errp,
->> +                   "queuing state buffer %" PRIu32 " would exceed the max of %" PRIu64,
->> +                   packet->idx, vbasedev->migration_max_queued_buffers);
->> +        return false;
->> +    }
+>> diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
+>> index c49482eab66d..d9b169d29921 100644
+>> --- a/docs/devel/migration/vfio.rst
+>> +++ b/docs/devel/migration/vfio.rst
+>> @@ -16,6 +16,37 @@ helps to reduce the total downtime of the VM. VFIO devices opt-in to pre-copy
+>>   support by reporting the VFIO_MIGRATION_PRE_COPY flag in the
+>>   VFIO_DEVICE_FEATURE_MIGRATION ioctl.
+> 
+> Please add a new "multifd" documentation subsection at the end of the file
+> with this part :
+> 
+>> +Starting from QEMU version 10.0 there's a possibility to transfer VFIO device
+>> +_STOP_COPY state via multifd channels. This helps reduce downtime - especially
+>> +with multiple VFIO devices or with devices having a large migration state.
+>> +As an additional benefit, setting the VFIO device to _STOP_COPY state and
+>> +saving its config space is also parallelized (run in a separate thread) in
+>> +such migration mode.
 >> +
->>       lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
->>       lb->len = packet_total_size - sizeof(*packet);
->>       lb->is_present = true;
->> @@ -374,6 +384,9 @@ static bool vfio_load_bufs_thread(void *opaque, bool *should_quit, Error **errp)
->>               goto ret_signal;
->>           }
->> +        assert(multifd->load_buf_queued_pending_buffers > 0);
->> +        multifd->load_buf_queued_pending_buffers--;
+>> +The multifd VFIO device state transfer is controlled by
+>> +"x-migration-multifd-transfer" VFIO device property. This property defaults to
+>> +AUTO, which means that VFIO device state transfer via multifd channels is
+>> +attempted in configurations that otherwise support it.
 >> +
->>           if (multifd->load_buf_idx == multifd->load_buf_idx_last - 1) {
->>               trace_vfio_load_state_device_buffer_end(vbasedev->name);
->>           }
->> @@ -408,6 +421,7 @@ VFIOMultifd *vfio_multifd_new(void)
->>       multifd->load_buf_idx = 0;
->>       multifd->load_buf_idx_last = UINT32_MAX;
->> +    multifd->load_buf_queued_pending_buffers = 0;
->>       qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
->>       multifd->load_bufs_thread_running = false;
->> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->> index 9111805ae06c..247418f0fce2 100644
->> --- a/hw/vfio/pci.c
->> +++ b/hw/vfio/pci.c
->> @@ -3383,6 +3383,8 @@ static const Property vfio_pci_dev_properties[] = {
->>                   vbasedev.migration_multifd_transfer,
->>                   qdev_prop_on_off_auto_mutable, OnOffAuto,
->>                   .set_default = true, .defval.i = ON_OFF_AUTO_AUTO),
->> +    DEFINE_PROP_UINT64("x-migration-max-queued-buffers", VFIOPCIDevice,
->> +                       vbasedev.migration_max_queued_buffers, UINT64_MAX),
+
+Done - I also moved the parts about x-migration-max-queued-buffers
+and x-migration-load-config-after-iter description there since
+obviously they wouldn't make sense being left alone in the top section.
+
+> I was expecting a much more detailed explanation on the design too  :
 > 
-> UINT64_MAX doesn't make sense to me. What would be a reasonable value ?
-
-It's the value that effectively disables this limit.
-
-> Have you monitored the max ? Should we collect some statistics on this
-> value and raise a warning if a high water mark is reached ? I think
-> this would more useful.
-
-It's an additional mechanism, which is not expected to be necessary
-in most of real-world setups, hence it's disabled by default:
-> Since this is not expected to be a realistic threat in most of VFIO live
-> migration use cases and the right value depends on the particular setup
-> disable the limit by default by setting it to UINT64_MAX.
-
-The minimum value that works with particular setup depends on number of
-multifd channels, probably also the number of NIC queues, etc. so it's
-not something we should propose hard default to - unless it's a very
-high default like 100 buffers, but then why have it set by default?.
-
-IMHO setting it to UINT64_MAX clearly shows that it is disabled by
-default since it obviously couldn't be set higher.
-  
->>       DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
->>                        vbasedev.migration_events, false),
->>       DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
-> 
-> 
-> Please add property documentation in vfio_pci_dev_class_init()
+>   * in the cover letter
+>   * in the hw/vfio/migration-multifd.c
+>   * in some new file under docs/devel/migration/
 > 
 
-I'm not sure what you mean by that, vfio_pci_dev_class_init() doesn't
-contain any documentation or even references to either
-x-migration-max-queued-buffers or x-migration-multifd-transfer:
-> static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
-> {
->     DeviceClass *dc = DEVICE_CLASS(klass);
->     PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
+I'm not sure what descriptions you exactly want in these places, but since
+that's just documentation (not code) it could be added after the code freeze...
+
 > 
->     device_class_set_legacy_reset(dc, vfio_pci_reset);
->     device_class_set_props(dc, vfio_pci_dev_properties);
-> #ifdef CONFIG_IOMMUFD
->     object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
-> #endif
->     dc->desc = "VFIO-based PCI device assignment";
->     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
->     pdc->realize = vfio_realize;
->     pdc->exit = vfio_exitfn;
->     pdc->config_read = vfio_pci_read_config;
->     pdc->config_write = vfio_pci_write_config;
-> }
+> This section :
+> 
+>> +Since the target QEMU needs to load device state buffers in-order it needs to
+>> +queue incoming buffers until they can be loaded into the device.
+>> +This means that a malicious QEMU source could theoretically cause the target
+>> +QEMU to allocate unlimited amounts of memory for such buffers-in-flight.
+>> +
+>> +The "x-migration-max-queued-buffers" property allows capping the maximum count
+>> +of these VFIO device state buffers queued at the destination.
+>> +
+>> +Because a malicious QEMU source causing OOM on the target is not expected to be
+>> +a realistic threat in most of VFIO live migration use cases and the right value
+>> +depends on the particular setup by default this queued buffers limit is
+>> +disabled by setting it to UINT64_MAX.
+> 
+> should be in patch 34. It is not obvious it will be merged.
+> 
 
+...which brings us to this point.
 
+I think by this point in time (less then 2 weeks to code freeze) we should
+finally decide what is going to be included in the patch set.
+
+This way this patch set could be well tested in its final form rather than
+having significant parts taken out of it at the eleventh hour.
+
+If the final form is known also the documentation can be adjusted accordingly
+and user/admin documentation eventually written once the code is considered
+okay.
+
+I though we discussed a few times the rationale behind both
+x-migration-max-queued-buffers and x-migration-load-config-after-iter properties
+but if you still have some concerns there please let me know before I prepare
+the next version of this patch set so I know whether to include these.
+
+> This section :
+> 
+>> +Some host platforms (like ARM64) require that VFIO device config is loaded only
+>> +after all iterables were loaded.
+>> +Such interlocking is controlled by "x-migration-load-config-after-iter" VFIO
+>> +device property, which in its default setting (AUTO) does so only on platforms
+>> +that actually require it.
+> 
+> Should be in 35. Same reason.
+> 
+> 
+>>   When pre-copy is supported, it's possible to further reduce downtime by
+>>   enabling "switchover-ack" migration capability.
+>>   VFIO migration uAPI defines "initial bytes" as part of its pre-copy data stream
+>> @@ -67,14 +98,39 @@ VFIO implements the device hooks for the iterative approach as follows:
+>>   * A ``switchover_ack_needed`` function that checks if the VFIO device uses
+>>     "switchover-ack" migration capability when this capability is enabled.
+>> -* A ``save_state`` function to save the device config space if it is present.
+>> -
+>> -* A ``save_live_complete_precopy`` function that sets the VFIO device in
+>> -  _STOP_COPY state and iteratively copies the data for the VFIO device until
+>> -  the vendor driver indicates that no data remains.
+>> -
+>> -* A ``load_state`` function that loads the config section and the data
+>> -  sections that are generated by the save functions above.
+>> +* A ``switchover_start`` function that in the multifd mode starts a thread that
+>> +  reassembles the multifd received data and loads it in-order into the device.
+>> +  In the non-multifd mode this function is a NOP.
+>> +
+>> +* A ``save_state`` function to save the device config space if it is present
+>> +  in the non-multifd mode.
+>> +  In the multifd mode it just emits either a dummy EOS marker or
+>> +  "all iterables were loaded" flag for configurations that need to defer
+>> +  loading device config space after them.
+>> +
+>> +* A ``save_live_complete_precopy`` function that in the non-multifd mode sets
+>> +  the VFIO device in _STOP_COPY state and iteratively copies the data for the
+>> +  VFIO device until the vendor driver indicates that no data remains.
+>> +  In the multifd mode it just emits a dummy EOS marker.
+>> +
+>> +* A ``save_live_complete_precopy_thread`` function that in the multifd mode
+>> +  provides thread handler performing multifd device state transfer.
+>> +  It sets the VFIO device to _STOP_COPY state, iteratively reads the data
+>> +  from the VFIO device and queues it for multifd transmission until the vendor
+>> +  driver indicates that no data remains.
+>> +  After that, it saves the device config space and queues it for multifd
+>> +  transfer too.
+>> +  In the non-multifd mode this thread is a NOP.
+>> +
+>> +* A ``load_state`` function that loads the data sections that are generated
+>> +  by the main migration channel save functions above.
+>> +  In the non-multifd mode it also loads the config section, while in the
+>> +  multifd mode it handles the optional "all iterables were loaded" flag if
+>> +  it is in use.
+>> +
+>> +* A ``load_state_buffer`` function that loads the device state and the device
+>> +  config that arrived via multifd channels.
+>> +  It's used only in the multifd mode.
+> 
+> Please move the documentation of the new migration handlers in the
+> patch introducing them.
+> 
+>
 > Thanks,
 > 
 > C.
+> 
 
 Thanks,
 Maciej
