@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11A1C19F32
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 17:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA8AC19F32
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 17:13:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnhQL-0008Gd-5T; Thu, 27 Feb 2025 12:11:49 -0500
+	id 1tnhRL-00019k-SH; Thu, 27 Feb 2025 12:12:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1tnhQI-0008Du-6a
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:11:46 -0500
-Received: from mail-dm6nam04on2074.outbound.protection.outlook.com
- ([40.107.102.74] helo=NAM04-DM6-obe.outbound.protection.outlook.com)
+ id 1tnhRC-0000z2-Pk
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:12:44 -0500
+Received: from mail-mw2nam10on20616.outbound.protection.outlook.com
+ ([2a01:111:f403:2412::616]
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1tnhQA-0004P6-2j
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:11:45 -0500
+ id 1tnhR8-0004cs-Hf
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 12:12:42 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=spmU9dBkmRzGlx1qvraagn/oz9xEmacv08bWQvgIpC/r5vFw0PmVEKK9sJu4ydfBZfkpzPInYx18gG8K/YvECWKTZwkkcNiWYKZaqEiv8ObxF+3rD1fpZqdSTlyf86DE9O3eARaL4sKunIIyVMJGJ/BPTnsJ7doMP261pvZ6cygZH1jmeBQng46FV7kSP+aDvthaxGAINNvSAW2RI+cghOV0D4M/m3767zddUjg88soeTPLRWpYtbMYM4AK5UesN47l7gItNp7dclkAHrR+0dJdErvzbB0CywKxE1tiE0VJS02SBn4UCpHOfwSNo21MsCpwYk2SwqQ1XXvsNUsL3SA==
+ b=L3pHjeuNK4XUYoJiyO0uMNHr9wmYXmSqlzTYebrSFtJ6S1HuEAnffuzY7rnlngpaM5cBiIROBXG8SEOL/yoDa5lzO+YyE7RffEaisOzztUp+CYi/Lj3gIzbT5/tWxl6LkmCyVBspujGkato3U+a5CaIrUZg0ot96fN0NiQvLm9LzzBhxfY/X8sN3R2r/jAqHecwGXO1EiE7YNnQFGVB0bBSteO8XHTS55fijX7vz/HNS/b7rFrEDs184YmAg7BnPCQVX09RfAnps/W3YYgfjZgvvrdWqExPAsE5atcF43aQXWZBJCnVKhpTyimk8MFavYuHLbIk2+tR+gMU9l983fQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XHOVQ7Y5y5G5c3p5OjLGxbFMESUbrhe9GzaL2+vlVgg=;
- b=Rhkt4RdmVa9mjT35Ov2ppR7mhWLEL2T+vdiu+MxSLXLCpzCQXvBz9MmgNztOsqovs1Z/IL+RiqQZi9LLln6jzVnIiBZwahQhXkL779b59e7SMlTqrcH0hgt5O7SKwww6sueZerTUeeXZ7UiyVU6UR3nOCauERXxt/2GKDIiLCDuSnTPQasZSWHhPM1phqjPkB2r4WA2u2uUnRp68vZyDXLySZOmbb0E/ukLVYdVKwTvdByH5fH6YtKKXbdvPl5ubqSULm5w8SGIrQEFOBEI8EWCKKZDatsbIYkkptMOzGbpgPl14wWEZ322Jr5DJArIkgKbuybIpAxvBaPG60HjbVQ==
+ bh=Y7bnMxWT5w1YXrUlRa7K2/Ex/RGKia38qMwiEAXTcxQ=;
+ b=yIDHqmazscsxs22WQCgTn2Ym3hmUCXd1yvZhsDmsqkfU75hcguOWqLUM/0U+UYPM/joJuIyyx3+FHRgOq5YGZhFTnqS6dxVWu04indWB8CSOctOJ30fTNd4hFJK0NF8/n31pFvVotubt8o/mz04t7h6mO98WTm2moR1o89EWG9vpfzT5ARY+zYXQD39noKj/TaYo5awCIrIdOevbpVh7+TxussGqpm31KHfge+R6On8zGEURG3TqagQ8XgLypNPF4tJpIc9Ki+JdSZQ413qYTuKncYD564MoKgkhLy6n9w5isPf9B2ERGkdc1YIVFYqVnde3BsH0p/HKZtXPLh99KQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XHOVQ7Y5y5G5c3p5OjLGxbFMESUbrhe9GzaL2+vlVgg=;
- b=LWDs7Nsq1+b7jQUTvX+IEPQBi+AYf44CSEJwKiv8xXLu18lg6bQF4ERc7ch+B5jtEhDg4yI7qUbD0Zf7Vizu0dv613KOatOUlwbL0h9y67fPzmRKbcH8ZSe++cHbdCW572CFw2l4kF4f0ZHf92C6fxM/DOVIm8rehq0FXwDAJYs=
+ bh=Y7bnMxWT5w1YXrUlRa7K2/Ex/RGKia38qMwiEAXTcxQ=;
+ b=ihxOh+QX5cU7KgZUpYck8AxCHxNSF9aNAhbH1R6vzTJstBJig4DrvEZvDrPuLIMz+z15RRXI2kpZ7ZXcFz9s2as2frjbO4cf9XuKm3KzlnCIJjm/K5teW9F8vyRgxeimokHY/UNY7frub/o1jSxl2KYNxmnJQxb2Ri2TwWTquPA=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from IA1PR12MB8189.namprd12.prod.outlook.com (2603:10b6:208:3f0::13)
- by PH8PR12MB6841.namprd12.prod.outlook.com (2603:10b6:510:1c8::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.20; Thu, 27 Feb
- 2025 17:06:24 +0000
+ by DS7PR12MB6094.namprd12.prod.outlook.com (2603:10b6:8:9d::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.23; Thu, 27 Feb
+ 2025 17:12:30 +0000
 Received: from IA1PR12MB8189.namprd12.prod.outlook.com
  ([fe80::193b:bbfd:9894:dc48]) by IA1PR12MB8189.namprd12.prod.outlook.com
  ([fe80::193b:bbfd:9894:dc48%7]) with mapi id 15.20.8489.021; Thu, 27 Feb 2025
- 17:06:24 +0000
-Message-ID: <c522c153-5363-4672-9d39-41c0950a3d2c@amd.com>
-Date: Thu, 27 Feb 2025 18:06:08 +0100
+ 17:12:29 +0000
+Message-ID: <2e477178-4ef0-4aa1-839f-d113e8855ea9@amd.com>
+Date: Thu, 27 Feb 2025 18:12:14 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 08/16] i386/sev: Refactor setting of reset vector and
- initial CPU state
+Subject: Re: [PATCH v7 10/16] docs/system: Add documentation on support for
+ IGVM
 To: Roy Hopkins <roy.hopkins@randomman.co.uk>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>,
@@ -63,116 +64,114 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>,
  Ani Sinha <anisinha@redhat.com>, Joerg Roedel <jroedel@suse.com>
 References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
- <b8a8b588.AVUAAGPfklQAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHdy@mailjet.com>
+ <633885c6.AXAAAGU1VIQAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd1@mailjet.com>
 Content-Language: en-US
 From: "Gupta, Pankaj" <pankaj.gupta@amd.com>
-In-Reply-To: <b8a8b588.AVUAAGPfklQAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHdy@mailjet.com>
+In-Reply-To: <633885c6.AXAAAGU1VIQAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd1@mailjet.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0062.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:ce::19) To IA1PR12MB8189.namprd12.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR4P281CA0073.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:ce::13) To IA1PR12MB8189.namprd12.prod.outlook.com
  (2603:10b6:208:3f0::13)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR12MB8189:EE_|PH8PR12MB6841:EE_
-X-MS-Office365-Filtering-Correlation-Id: 85e323b1-6bb6-487c-ac4b-08dd575110f6
+X-MS-TrafficTypeDiagnostic: IA1PR12MB8189:EE_|DS7PR12MB6094:EE_
+X-MS-Office365-Filtering-Correlation-Id: ce5b449c-3e9a-4600-e820-08dd5751eaae
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|366016|1800799024|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?TkQ5VUdxUUZaV3BBK1c3dkJ1S0dpMzIvTmdUWEZBV3NZSm11UU1wUVozWXdF?=
- =?utf-8?B?TGE1cHViSTJTQ0ttV0dMRUZJcDlScEU3MHI1bzIvejdkWlNnU3RvOUNERlNm?=
- =?utf-8?B?SEY5eXovQzVaYzdsc3RuMEN2RGFKVXNoSVRlQ0o4cEpKVS9tMlAzM09Jd2xO?=
- =?utf-8?B?M2FmaDBXRnBOSWlqa3h2cTdPRVYxY0J6RW1kR3gvN2FhVEVlU0ZUTEw4VUQw?=
- =?utf-8?B?YVhEOHd4T1B1NU96N0QzOHNucWYvZEE2ZEVhenhJTzNFS3AyOS8rbk9vZEFV?=
- =?utf-8?B?Q2lWZkZrcll2Mnh3OXdOZFRGNysyb3BobmtINFl3WmlmK1FyS1NvTUw3N29o?=
- =?utf-8?B?S3NFb2FGZkNkOERFT1dXY211UkF2VVBoR2R0SjJiK2FMc1VvRG9rd3VUeXVJ?=
- =?utf-8?B?MElWeFRDWFI0Wkdkd0kyYjJORDhadWN6ZGxwVkVEb3VkM0w4TUZFK1dKN3RS?=
- =?utf-8?B?NlZpVW5zSDhHOWJNYkxtVXJUcmJUVm1KeWhyVm9kVkFoZ1hibFFZOEFvQmhN?=
- =?utf-8?B?THNXN0JBOXdNR2ZtMHNSTHQ1S2kzSDVrR2Y1WGVaQ1R2VmlDMld6eUNaeHNo?=
- =?utf-8?B?anJOdHkrVGg1THpxMlYxd29NQXVremNYNnVsRXVhNVlUSlgrQjBEb0JPZHU3?=
- =?utf-8?B?ajJvaytwSy82cmJPUG54dFptQ3dwLzhBc3pXUDlMQ3F5NHNCeFptOGhDeGY4?=
- =?utf-8?B?SS9xeGRxc3ZmNkQ5VDJ0Vlk0ckIrcS9NSU1Qc3NIS2QybmZ2Q1pITkpvMGhp?=
- =?utf-8?B?cDFzVlRzT2ZOektiQU1ZY3ZQR0FDR0dhVTY3VEwwRWRMaXpJVVJxRXB1K1J0?=
- =?utf-8?B?Z0FqNjhCV0NMYVBFRUUvNzlLMFMrdVNTb2oyNW1LQnVzYzVqNndDM3VlV2tx?=
- =?utf-8?B?OStRbDhWTEsvSkFDTjhTRXJRMW5sUitIY0ZXRDVOZUhZWWFwWE1QamVKT3B0?=
- =?utf-8?B?eU01cTZjdXV2Mnhhd2tjNVQyZVpUN2x5bFpRcFYxMFA3bnNmWFUwYUZUTzMr?=
- =?utf-8?B?MXBqeXRYTlE2c3ltalp3eEduRVNXS082dHhpSkN5dWhVWGwrWXprc3crWmlH?=
- =?utf-8?B?UzBkMzE2YTl0aFBja1pYa2pvL3VMWGNzVzV2Q21yVjNIWGFGTVhqMllqRFBQ?=
- =?utf-8?B?enJ2UUxTY21KSWY4V0VYclN2WE1VbFdiNGdxTHZVMTl4ekl0VkhCcjJ2aEpq?=
- =?utf-8?B?TkZMd3ZXRnNoaStYM1M0SDJ5emJEU21oRGdQdzl0SC9nVmpPRDFtc095dUVC?=
- =?utf-8?B?ZHFxOTdRUnhsdU1kRGh6bms5VFZQNTJBaGtpZzNsWnlLbGNOeXVMeXl5bFd5?=
- =?utf-8?B?eHZVU3J5ZzVzSzNJd1JvaGdVd0ZnNDBuUllIc1I0TXp0WHIyZ3h0cWJLckpi?=
- =?utf-8?B?S29Db2FtWjd2Z2NsYS9kZ1c3ejJXVU9RVXI4enNEby9PWm9JVmZyYlBxcFEw?=
- =?utf-8?B?R0hUUkpWMXFUalkwT1ptTHZUVmR1ZStiZHBrYitZYzNFVFB1M0RhU1lTYzl1?=
- =?utf-8?B?emZ2L2QvdkVOdkh0QTRMVnF5WWpYMmh1MkFWUkUxVDYzT200MEo2VFhwZito?=
- =?utf-8?B?OFJRRnR0VGdMbDNWdDNvby9FZURhM09OcWJiSGVSQmg5L2c2RU1zTEZkV05x?=
- =?utf-8?B?L2psS09kVEpQQWFWaEdRRVcyRU1CK1JiNHRZWUU0K1dwcXFsdFF1ZW10Zjhh?=
- =?utf-8?B?Tndnb094TDZGWTFEZ0RLdXZuOTFKa3Y4NXdGMnNBMU5MU2hsbVcvVHRRVjFD?=
- =?utf-8?B?dXQzYnpDc3UvOE1jWTg4L2wwN1E5VXllcjErVnJ2ak9xRmthdFNpL0NaNTRU?=
- =?utf-8?B?WTJwdy90aGszWGlxQStlRFlIak80ZFVySXRmUG16cUxCWXNkNlBKdlY5SFF6?=
- =?utf-8?Q?tAbwIlL0YL/Fa?=
+ ARA:13230040|366016|1800799024|376014|7416014|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VEdlUzkyREJ3RXY4Q2ZIQlN1WHZRQXVHbmZvWWhsSC9Ba2FHKzBpMXJnNHF6?=
+ =?utf-8?B?YXk3T0x6enloWWZGSE9XVkM2cTNHVTBieHk4MnpFRWxjNTZmT3BpeDl0V3lX?=
+ =?utf-8?B?T1VuYWE1ZGRSbnEwRWJCcnlJTDNhOWVnYXpoakFkZFRoZThIVXUyS0U0RXQy?=
+ =?utf-8?B?MHh3aUV3VW5Vd041M2xaQ2NqZEp1NzNoZEJjS2MyeEJLNDF5R0ZsdkM0L3ZM?=
+ =?utf-8?B?WENLNXFYT3phNFhyRytVb2FNK21MSHNyODFmSkFZc0FRSElpRjRBSFVDTFZ5?=
+ =?utf-8?B?blJ3cVJibjZJNnZLYkhFRHZrZVZFTGEyVVhLUzZURGwzRHFNSTZ2eEdLT0pi?=
+ =?utf-8?B?RElraXdhWGdQSmtyWjBwMTBsWGEyRWNlRUlzSEpqcW9BSTI3MCtub244UzRh?=
+ =?utf-8?B?K29GekhlV242c1FGdXdOTjVNSzBjdklmdWRaTVVPdmF5eDVvMjU3QWEzNlI4?=
+ =?utf-8?B?eTY3MDJVVnZEQUw0OFFNRmVSSWUrOXNNVERCclFib1NFazlzQ0pJMU12UlhZ?=
+ =?utf-8?B?ZSs5Q3pLdHp6T3FUelNVT1NNNFhRaWFhejJEOTg0Q3RoWFFUQytqeU40QTBn?=
+ =?utf-8?B?OTB6QUwyQzUyUXRGN0JYRkxJNEV3VlhPS0V5ZnV1aFZDZkdVUndaOGZaQjJ5?=
+ =?utf-8?B?TmJPd3FxVlI1dVhaRHdEak93eWNUY2F1bXpCMllvdlNqd1dheFdnbTB5dHVk?=
+ =?utf-8?B?UmVCVWhUUjM3R1VIVXM4S3BLY0FENkVrbUFaTEpHZVFpTXpOdXBsR3kwRmZS?=
+ =?utf-8?B?M2hpUStNcllVNTRHVUl2WCt6UEZseU5JemY1cnhTd241ZjBxNUtmaTBoYlIz?=
+ =?utf-8?B?VEJ5NEFkTEk2ZmFCZUFNZWM2WEVIb2pNR3pwaENRcGI1SkEvRW5vckUwMDNk?=
+ =?utf-8?B?RDFUZHZqWXJYM0kxR1UyODYwSDZCdDBYQ2RSS0ZHbHkwQWtZRER3YXRsM1Rv?=
+ =?utf-8?B?cklsUkhLNDNOa0hWOTNxSk82bmxzVU9VTmszV0xtVElzYjFTN3djNGp0SHZa?=
+ =?utf-8?B?bWZGVkcyVFdoaUh4NmpuRWI1UUIyZHFzZjVDWDFiRWlwR1htYW9sdXhTZWZw?=
+ =?utf-8?B?UUpSRWxSQW5Hek1pMlFWcGpLbkIvcFVGcjM4cUJ2aS9jbitacVVUemEyNGxq?=
+ =?utf-8?B?dFo3aWtuYzdxN09wS0NVM0dkQkxyYjVudkowc0tVOFJMek1tektVYmlMYld4?=
+ =?utf-8?B?eHJjUGt2bnViSDNDZjFzMGFuaVdvZ1hQcFFPdEhmdldNMGoyR1Y3VHhydng4?=
+ =?utf-8?B?b1cyT0dvNWtxYkpkczhVVmhkcEQwcXRKVk5Wc2VhSy9FUmhBdGF3UWIwU2Zl?=
+ =?utf-8?B?c2tseHlvazJ3YzFUSHNlRWppM3pWYXZPRExRV2N4RmZQaStqRFJxQ3lPSUZn?=
+ =?utf-8?B?Y3Z2clJZcTRDNDV0WVlKb3BaQ0Vob1ZYb0taelBLcDVGUmowdnd6N0V2SXI2?=
+ =?utf-8?B?aDNOS2VaUGw5cDU5aXZNbE04eDdLQW9QVTFlTTBPUHI0emtCb2NCT09GTkhn?=
+ =?utf-8?B?bnZkYVNnMC9tcVBWblRZaEQxWUZGaHRIRXc1aWFiQkF5UGhxd2VoeTlEd2FQ?=
+ =?utf-8?B?MklFTjFFWE1EK0F6aHA2MUZTclVPRCtSZ1RKYVpLTXJBS1hieXFKemN4elky?=
+ =?utf-8?B?ZWRDQU9lZ2w3SVptbW0wTU1Sdjg1UXBvb0xpNWUwRFlJQXF3VFQzYUFtdnNy?=
+ =?utf-8?B?bXJBWllLQ3R3WDBjRDFKdTB6d3VDTVRpOGozcDROeUVyY04xSDRENTh3Rm4v?=
+ =?utf-8?B?azRXZDREdy85R0V0UWRmSFM3NC91R2VNOUZUUjRnQTNEbEt3Rko2TFF6ak92?=
+ =?utf-8?B?eVdPL2VPUmtMY3VJMWljWUhmTDVnU0ltZitYeHZXL0lzRi93MmxVNXJQVVJO?=
+ =?utf-8?B?aFBnaFMxUzhRb0tEQ21VL1ZvbXMvWldpSXFyWlBYZVRDeFE9PQ==?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA1PR12MB8189.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(366016)(1800799024)(7053199007); DIR:OUT;
+ SFS:(13230040)(366016)(1800799024)(376014)(7416014)(7053199007); DIR:OUT;
  SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a1ZOLzhacnlialFlR0FJSGJRNHBXYWxIeW54NGprRVViRVp2dkFxM3VpQzRP?=
- =?utf-8?B?eEk0RzVxbUJOY0ZBWWlHaEk3c0dnaUN3K1RNRk16TzhmcXppR1gwQmxxcGRG?=
- =?utf-8?B?S21aRVBHclYyZ2VrRmtnWXZnU2lGRmpNeko3ZDBRYlovSXMwNlcrNHpHV1Mw?=
- =?utf-8?B?MWFndExvUm9yd052UGhvWXIzMXh3bndETTEyMDFCNVgwNDJkT3NEVmVzREdO?=
- =?utf-8?B?TURjYWZjcG5uNXN4MXI4U2ZXdlJ5dFY1TGJIcnJRS3pSdXpLaWk0NFJQOCs1?=
- =?utf-8?B?Yld5cFlPSWZ5TlhFcDd0RFgwUm5XN1VOWXhJajhrOVFJYTF6TEVaajYzMUp2?=
- =?utf-8?B?czJqcy9CU1VqWmk4KzlsamQyVzF3ZEVBc3hZZHBpbXkwYjdUNGtIZ2ZrdTFw?=
- =?utf-8?B?SmdpRk5SSm1jYzQ2allNSXZMVkNEQUpyM3ZPSzA5aVJ2RGtlWE9IUFAzaktJ?=
- =?utf-8?B?bjVjam1yQW9Jb0VpOTFpeXk5MlVNdktjL0xYY0xHOUdnVTNJUG41M2htS2pY?=
- =?utf-8?B?WkdwdzRKZ3V5VjJwYUx5TUNkcjJBdWk4QURJVlZLTFJQOXlUaC9JeFUvR3lZ?=
- =?utf-8?B?M2puMFoyMXVLZkhGa1FzU2o1NUJyWVNDWU9CRTVOTlZHdEQrNFZDSVNFMkF6?=
- =?utf-8?B?ejZGR0xNeVNsTUNsTWxGR2tqSDRQdlhVSW5ReWdrdFEwODYzaUwvYzZndGlI?=
- =?utf-8?B?QzV3M0JMMU05NVNHVUxzRzZLQTZIaDV6clNNK0VUUjV0Y0o2YzRPVjA5NUJs?=
- =?utf-8?B?ZXZRSGplU2lHNHV5Nm1JSXZWVkNZaGlvT1VZbTRHYVJGUjczN1ZKdjRPVURW?=
- =?utf-8?B?cFpielBDajgwdTdlSDNtdm9NU0FBYUlTWFRWTUp5bEsydHJYWWtWZnFhTFFU?=
- =?utf-8?B?d0FQNEVNc1VYUTg2MTlPL3BuNnlPZ0xmQmpwSSt2aWZJb0l3YkFsakRQckNk?=
- =?utf-8?B?c3lrcllJbFFzRVg1QkZEaGY2NzNvUzlOMDhXNytZZXNHRXozN2FVS1h5RjFG?=
- =?utf-8?B?eXF4b2IvZU9HQ2hQZVFpelNEQytnVU92NWd4MndCZ29WampkOTBlUFFFTzJ0?=
- =?utf-8?B?YlhsTnFxMTIxakQzcE0wTU00aUFxcGRHUk02aVp2eHF0aVZsRnRicS9kdmsy?=
- =?utf-8?B?S0ZsdEhFdlp6dGlQeWRzLzk5UDRiYkNadmdYMVRrWDdVaEZCdHVqMzVPb0dH?=
- =?utf-8?B?aGZvWjZPdmFJT0FTaHEwTzk2aFJ2L3IyQ3JmT1F2S0UrVXZQY2RaWGxJVC9p?=
- =?utf-8?B?cjBlN281cWtTcUZucXRGMTA3M3NKYkQ1M1Nnd0xKZkNyTnVuazdZalNBS3dl?=
- =?utf-8?B?UEQwczlZRGljRHBuL1RadUlrMzV1d3ljWVlyT3hjYldhQUlrSGl3N0V4QkM5?=
- =?utf-8?B?Y21ZL2R0WWNPTE0vOVBtZXllaXp3YnlPK1dQUEpBRDRjN05Mcm5GRHZvZ25i?=
- =?utf-8?B?aXZCVkpHWEtRZ2tacFZLQ21MTDByNmVyUE5OR3NUMVlwOG5mWCttV3MwdDJJ?=
- =?utf-8?B?YlBWTHJUWGQxZXNSdkhSLys0aTBJZS9jY0ZoOHFJYXVaZUdkSlFQNVo5eEMv?=
- =?utf-8?B?OE9XNjk1UEdzcC9CcE9xUWdhNjRUZzhhM09JcG92aFRGOExLNzIyUm5uNWFh?=
- =?utf-8?B?U0VrRTBlY0x2UWJ4UXNvYUZUK1FweWRONzFUYkgvRUVlcUQwcFVnTmloMkpp?=
- =?utf-8?B?WStZa2tab3BzcEVDK3ExcHI4UElhcnhqSko0ZlRBVWgwbHpDZE5mOXFUS2xD?=
- =?utf-8?B?aDBIMy9kY3FVbk9USFNPUWFHTytmVHVVWjFScmRDem5xNmpMejFnYjBSRW5N?=
- =?utf-8?B?VWdpTUxTcXJ5dHlNTlR1QTUzeVFuU2JuekN1aUN4dFhPczR3L0dEUkJCY3lD?=
- =?utf-8?B?TENyM2JTQytCU0pmRW5Xams1V2RqNnVLL1JWbFF5b00rNzN4V2RSWmZDZm1W?=
- =?utf-8?B?SUJFTlkzQWx6TlhQY1BGdHdrVi9rWVpZMlgwRzVWbHdrZmJNVEJwN3ZrR2tn?=
- =?utf-8?B?Qm9FMzAwZHc4eFNGQTAvcUtVdFJwODIrT3d1eFAzd3d1RjR3YjNuRXFuOUtL?=
- =?utf-8?B?WnNEOWtHZWQ1ZWRSS1RoMzBuSHhSYjZVU0RpM0MzZDIyeURDQ2kzM3lFR2U4?=
- =?utf-8?Q?hMv/o/Xe1Q2/D4EulPZjoHH3P?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aHdZQTE4ZWQva3RpU1FBR2RqOGM5cU8rRnBKS3Y1YkcwaDgyTWZybU5EOSs5?=
+ =?utf-8?B?NmZONGRmRG1LSXpBeEppRDd1ZVVlTEs5QXJobER6cFNEWlFlS3FEN2JlK3VF?=
+ =?utf-8?B?Z1Jpdis0am9vMHBMajl2UVF6M214eEtyUzR5VXZvcTRESjhreXVSRHNSaUxW?=
+ =?utf-8?B?UGdOR1dHNEx3UkpmWTR2NS9WMGNzVHBkRlBBZjJkaUdlZnRidXRPTlF5TWFZ?=
+ =?utf-8?B?bEpCMmpGaENjNGpzMXF1VVQ2WUd0ZU9zUVhXOEI0TzN6cnhab09NbFZsRlJw?=
+ =?utf-8?B?V0hTenJkQUE0a3Bxdng0bDZFRXppcmxoZzFHdWZQU3ZIZGh2c2xWVGZWSGxF?=
+ =?utf-8?B?YTBSNytSS0ZZd1JkcUd3S1UzQ1VPZG95VTRlQnU5T2xjZDFBZEh2QmtiZnd5?=
+ =?utf-8?B?NzZKVTZsYndDOEFGd3pzSHdHRGppYmhSM1JJTmpteEZKU1pWQkoyT0FlcVVG?=
+ =?utf-8?B?b2h3Mjd5cWg5TEZqalFCU01BWVBMTHE5M3YwTFhZbVVmcVlIOEJRN1dOK3R2?=
+ =?utf-8?B?WENRbDRVQ0x5b2tSaFFDOXRMU0RFOWVGMmY3bERrV1VONThCN3FsZm1wVzkr?=
+ =?utf-8?B?OXlEekhvZlFrSHRCU0gwZnBXdDd2S3UzVGp1N3l4YitMdGVzSzNERXFnNmJJ?=
+ =?utf-8?B?NE1zd0puL0FsckF3OFJKeHhyMUc3STJJa0tHVlJWaWd2ZTNXL24wV2hCbDFt?=
+ =?utf-8?B?VmMzZk92MkJmSUNoRDZpc2swSUdKbXhYb3REYmE2VGdXaHdCRlRpbVU1LzRr?=
+ =?utf-8?B?RlJZbzRJeHZFN3JtVjBUbnhiR3BwS29XQ1J6MVVMZEFTUlNpNGVsSGVzQ1Jk?=
+ =?utf-8?B?R0U0QUVSRGtMMjJ1K25nMmhqcUFHelNscVR0Vi91ZlFyVEdGVGxsczhiTjBW?=
+ =?utf-8?B?NnpLbVRMUFZCOHEwUGJQa3JQaXk2WmJlck9PUnBFODZmcHBUQ3hXTUdYbjlN?=
+ =?utf-8?B?Y1IyREd2VTU2VmF5QmxkUDBNRy9MR05lUFhBdmlNTUdyL0UxaHQyL2ZQbStW?=
+ =?utf-8?B?MDhzVVU1Qk1ySVNyK0tpYmY5aGlidnU2Qk81ZjV2T3J2Z1IxcTFzcWYyRXFS?=
+ =?utf-8?B?NXJBcXZhbDYvdnE3WEVwcC9CVDdsVXlwK3dZSjZkb21KVE9XQjdBSDRhRnk5?=
+ =?utf-8?B?MnV6WE1Rd1lpWXRvODZod3VQVW1vOS9aYjE3QTJyNG1xbnc5TFQ3SWNoMnRV?=
+ =?utf-8?B?b1M1QVluK1ZOQjcxWXZ1aDBsV3RuRG1SajkrRHpFVDZVL2wvK0R3aXpFTzk5?=
+ =?utf-8?B?Vyt5YUt5aTlsRnh0THNHakpuankzc3ppT3EwUlZrK2YyaE52YUdaTGZ2RWxx?=
+ =?utf-8?B?bEVsZXYxaEo1VnpHcWRnb0huT293SDcrcHJBTi9oSG1PN0ZRUUxVcVRkTDQ3?=
+ =?utf-8?B?MEpkemZqNmRBbENsVENQQkZYdm91dGNHSlNCS3hXOVMzeHBzZkFwQnJ1aHdH?=
+ =?utf-8?B?eG5URkhaUWFuZHA1MUxhSGdNNnE3WEVoekwrWnFBa3hITUlqSnplL3lCYTdU?=
+ =?utf-8?B?ckNsOHRKTVp2ajcvT1ZQWTZ6Qm9RMWFJbzRReGV3d2dzTVAwOGlSanlLaEZi?=
+ =?utf-8?B?TmF0NlZHeEhYUU02TUQ3djBPdFVRY3FrOWRaYWtVc0xVcUJZcFBYTTlQS09m?=
+ =?utf-8?B?dDFNSzVYT2lhTkovSFdvT2ZmeEwxemVWODUwR0k2NDNqMUVHRi93QzV1dlk0?=
+ =?utf-8?B?NW1ta0JhNm9jZitUUVhDeEdBa1NUbUxVcEI4R0c3SUlQTHFlTzhPT3NSN0Yw?=
+ =?utf-8?B?UVFoYTNOKzJ6TEp1NDhEOXdrOWQrdm0wbFhaNG5nbVRmalhDTDliOUtyeHEx?=
+ =?utf-8?B?R3QyQ0dudUpNT3BZYUNta1RYUGc0UVI5WkQ1b2gyN1o0N3hKQkJ5OWVOcU5X?=
+ =?utf-8?B?ZVBKQ0wyV3VGVE5rZTNOOFRRUTVYQWJIbkF4Q3B5eThUMitCSXNVbjNiZkJ4?=
+ =?utf-8?B?QlRsU1c3UExsM3lRZmN6N0swdUtrUFRUN0cxaEZ5UEl3d2ZwVFVoV2JjSnBa?=
+ =?utf-8?B?cGNqNC9wZHVmckttQUxqWk4zMnVIZmI3d0lJR1QwTE5heXpnd1V5bGMxdTNZ?=
+ =?utf-8?B?Uk1IUlN2bmkvMDBMNjEwSXczYzZ1TnFKNGQwbm51UnBENFJFMHdCZmZ3M1hJ?=
+ =?utf-8?Q?T9YYZtqb2wnCRXIbTmDfCLH/z?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 85e323b1-6bb6-487c-ac4b-08dd575110f6
+X-MS-Exchange-CrossTenant-Network-Message-Id: ce5b449c-3e9a-4600-e820-08dd5751eaae
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB8189.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2025 17:06:24.7320 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2025 17:12:29.8942 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: sMfTWx4/CuSF2L3bpk58hXEkx0Rdn4368wEy5+yjHIxZCfHWa9Xs8OTIEhTIN5RYUR50+eS/U+TOBUC4+g3WdA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6841
-Received-SPF: permerror client-ip=40.107.102.74;
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5C3PsT8BePTOm71DiKXUptE8FevZNQ5FxVau5NtSR62V5/QS1ORfeENeOBwBNE8u6/+cLHxefjy3wTHY1SV5lA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6094
+Received-SPF: permerror client-ip=2a01:111:f403:2412::616;
  envelope-from=Pankaj.Gupta@amd.com;
- helo=NAM04-DM6-obe.outbound.protection.outlook.com
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -190,539 +189,229 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/27/2025 3:29 PM, Roy Hopkins wrote:
-> When an SEV guest is started, the reset vector and state are
-> extracted from metadata that is contained in the firmware volume.
-> 
-> In preparation for using IGVM to setup the initial CPU state,
-> the code has been refactored to populate vmcb_save_area for each
-> CPU which is then applied during guest startup and CPU reset.
+> IGVM support has been implemented for Confidential Guests that support
+> AMD SEV and AMD SEV-ES. Add some documentation that gives some
+> background on the IGVM format and how to use it to configure a
+> confidential guest.
 > 
 > Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 > Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
+>   docs/system/i386/amd-memory-encryption.rst |   2 +
+>   docs/system/igvm.rst                       | 173 +++++++++++++++++++++
+>   docs/system/index.rst                      |   1 +
+>   3 files changed, 176 insertions(+)
+>   create mode 100644 docs/system/igvm.rst
+> 
+> diff --git a/docs/system/i386/amd-memory-encryption.rst b/docs/system/i386/amd-memory-encryption.rst
+> index 748f5094ba..6c23f3535f 100644
+> --- a/docs/system/i386/amd-memory-encryption.rst
+> +++ b/docs/system/i386/amd-memory-encryption.rst
+> @@ -1,3 +1,5 @@
+> +.. _amd-sev:
+> +
+>   AMD Secure Encrypted Virtualization (SEV)
+>   =========================================
+>   
+> diff --git a/docs/system/igvm.rst b/docs/system/igvm.rst
+> new file mode 100644
+> index 0000000000..36146a81df
+> --- /dev/null
+> +++ b/docs/system/igvm.rst
+> @@ -0,0 +1,173 @@
+> +Independent Guest Virtual Machine (IGVM) support
+> +================================================
+> +
+> +IGVM files are designed to encapsulate all the information required to launch a
+> +virtual machine on any given virtualization stack in a deterministic way. This
+> +allows the cryptographic measurement of initial guest state for Confidential
+> +Guests to be calculated when the IGVM file is built, allowing a relying party to
+> +verify the initial state of a guest via a remote attestation.
+> +
+> +Although IGVM files are designed with Confidential Computing in mind, they can
+> +also be used to configure non-confidential guests. Multiple platforms can be
+> +defined by a single IGVM file, allowing a single IGVM file to configure a
+> +virtual machine that can run on, for example, TDX, SEV and non-confidential
+> +hosts.
+> +
+> +QEMU supports IGVM files through the user-creatable ``igvm-cfg`` object. This
+> +object is used to define the filename of the IGVM file to process. A reference
+> +to the object is added to the ``-machine`` to configure the virtual machine
+> +to use the IGVM file for configuration.
+> +
+> +Confidential platform support is provided through the use of
+> +the ``ConfidentialGuestSupport`` object. If the virtual machine provides an
+> +instance of this object then this is used by the IGVM loader to configure the
+> +isolation properties of the directives within the file.
+> +
+> +Further Information on IGVM
+> +---------------------------
+> +
+> +Information about the IGVM format, including links to the format specification
+> +and documentation for the Rust and C libraries can be found at the project
+> +repository:
+> +
+> +https://github.com/microsoft/igvm
+> +
+> +
+> +Supported Platforms
+> +-------------------
+> +
+> +Currently, IGVM files can be provided for Confidential Guests on host systems
+> +that support AMD SEV, SEV-ES and SEV-SNP with KVM. IGVM files can also be
+> +provided for non-confidential guests.
+> +
+> +
+> +Limitations when using IGVM with AMD SEV, SEV-ES and SEV-SNP
+> +------------------------------------------------------------
+> +
+> +IGVM files configure the initial state of the guest using a set of directives.
+> +Not every directive is supported by every Confidential Guest type. For example,
+> +AMD SEV does not support encrypted save state regions, therefore setting the
+> +initial CPU state using IGVM for SEV is not possible. When an IGVM file contains
+> +directives that are not supported for the active platform, an error is generated
+> +and the guest launch is aborted.
+> +
+> +The table below describes the list of directives that are supported for SEV,
+> +SEV-ES, SEV-SNP and non-confidential platforms.
+> +
+> +.. list-table:: SEV, SEV-ES, SEV-SNP & non-confidential Supported Directives
+> +   :widths: 35 65
+> +   :header-rows: 1
+> +
+> +   * - IGVM directive
+> +     - Notes
+> +   * - IGVM_VHT_PAGE_DATA
+> +     - ``NORMAL`` zero, measured and unmeasured page types are supported. Other
+> +       page types result in an error.
+> +   * - IGVM_VHT_PARAMETER_AREA
+> +     -
+> +   * - IGVM_VHT_PARAMETER_INSERT
+> +     -
+> +   * - IGVM_VHT_VP_COUNT_PARAMETER
+> +     - The guest parameter page is populated with the CPU count.
+> +   * - IGVM_VHT_ENVIRONMENT_INFO_PARAMETER
+> +     - The ``memory_is_shared`` parameter is set to 1 in the guest parameter
+> +       page.
+> +
+> +.. list-table:: Additional SEV, SEV-ES & SEV_SNP Supported Directives
+> +   :widths: 25 75
+> +   :header-rows: 1
+> +
+> +   * - IGVM directive
+> +     - Notes
+> +   * - IGVM_VHT_MEMORY_MAP
+> +     - The memory map page is populated using entries from the E820 table.
+> +   * - IGVM_VHT_REQUIRED_MEMORY
+> +     -
+
+Is this '-' superflous? Or maybe you want to describe it here?
+
+Other than that:
 
 Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
 
-> ---
->   target/i386/sev.c | 323 +++++++++++++++++++++++++++++++++++++++++-----
->   target/i386/sev.h | 110 ++++++++++++++++
->   2 files changed, 400 insertions(+), 33 deletions(-)
-> 
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index 7d91985f41..1d1e36e3de 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -49,6 +49,12 @@ OBJECT_DECLARE_TYPE(SevSnpGuestState, SevCommonStateClass, SEV_SNP_GUEST)
->   /* hard code sha256 digest size */
->   #define HASH_SIZE 32
->   
-> +/* Convert between SEV-ES VMSA and SegmentCache flags/attributes */
-> +#define FLAGS_VMSA_TO_SEGCACHE(flags) \
-> +    ((((flags) & 0xff00) << 12) | (((flags) & 0xff) << 8))
-> +#define FLAGS_SEGCACHE_TO_VMSA(flags) \
-> +    ((((flags) & 0xff00) >> 8) | (((flags) & 0xf00000) >> 12))
+
 > +
->   typedef struct QEMU_PACKED SevHashTableEntry {
->       QemuUUID guid;
->       uint16_t len;
-> @@ -88,6 +94,14 @@ typedef struct QEMU_PACKED SevHashTableDescriptor {
->       uint32_t size;
->   } SevHashTableDescriptor;
->   
-> +typedef struct SevLaunchVmsa {
-> +    QTAILQ_ENTRY(SevLaunchVmsa) next;
+> +.. list-table:: Additional SEV-ES & SEV-SNP Supported Directives
+> +   :widths: 25 75
+> +   :header-rows: 1
 > +
-> +    uint16_t cpu_index;
-> +    uint64_t gpa;
-> +    struct sev_es_save_area vmsa;
-> +} SevLaunchVmsa;
+> +   * - IGVM directive
+> +     - Notes
+> +   * - IGVM_VHT_VP_CONTEXT
+> +     - Setting of the initial CPU state for the boot CPU and additional CPUs is
+> +       supported with limitations on the fields that can be provided in the
+> +       VMSA. See below for details on which fields are supported.
 > +
->   struct SevCommonState {
->       X86ConfidentialGuest parent_obj;
->   
-> @@ -106,9 +120,7 @@ struct SevCommonState {
->       int sev_fd;
->       SevState state;
->   
-> -    uint32_t reset_cs;
-> -    uint32_t reset_ip;
-> -    bool reset_data_valid;
-> +    QTAILQ_HEAD(, SevLaunchVmsa) launch_vmsa;
->   };
->   
->   struct SevCommonStateClass {
-> @@ -371,6 +383,172 @@ static struct RAMBlockNotifier sev_ram_notifier = {
->       .ram_block_removed = sev_ram_block_removed,
->   };
->   
-> +static void sev_apply_cpu_context(CPUState *cpu)
-> +{
-> +    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-> +    X86CPU *x86;
-> +    CPUX86State *env;
-> +    struct SevLaunchVmsa *launch_vmsa;
+> +Initial CPU state with VMSA
+> +---------------------------
 > +
-> +    /* See if an initial VMSA has been provided for this CPU */
-> +    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
-> +    {
-> +        if (cpu->cpu_index == launch_vmsa->cpu_index) {
-> +            x86 = X86_CPU(cpu);
-> +            env = &x86->env;
+> +The initial state of guest CPUs can be defined in the IGVM file for AMD SEV-ES
+> +and SEV-SNP. The state data is provided as a VMSA structure as defined in Table
+> +B-4 in the AMD64 Architecture Programmer's Manual, Volume 2 [1].
 > +
-> +            /*
-> +             * Ideally we would provide the VMSA directly to kvm which would
-> +             * ensure that the resulting initial VMSA measurement which is
-> +             * calculated during KVM_SEV_LAUNCH_UPDATE_VMSA is calculated from
-> +             * exactly what we provide here. Currently this is not possible so
-> +             * we need to copy the parts of the VMSA structure that we currently
-> +             * support into the CPU state.
-> +             */
-> +            cpu_load_efer(env, launch_vmsa->vmsa.efer);
-> +            cpu_x86_update_cr4(env, launch_vmsa->vmsa.cr4);
-> +            cpu_x86_update_cr0(env, launch_vmsa->vmsa.cr0);
-> +            cpu_x86_update_cr3(env, launch_vmsa->vmsa.cr3);
-> +            env->xcr0 = launch_vmsa->vmsa.xcr0;
-> +            env->pat = launch_vmsa->vmsa.g_pat;
+> +The IGVM VMSA is translated to CPU state in QEMU which is then synchronized
+> +by KVM to the guest VMSA during the launch process where it contributes to the
+> +launch measurement. See :ref:`amd-sev` for details on the launch process and
+> +guest launch measurement.
 > +
-> +            cpu_x86_load_seg_cache(
-> +                env, R_CS, launch_vmsa->vmsa.cs.selector,
-> +                launch_vmsa->vmsa.cs.base, launch_vmsa->vmsa.cs.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.cs.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_DS, launch_vmsa->vmsa.ds.selector,
-> +                launch_vmsa->vmsa.ds.base, launch_vmsa->vmsa.ds.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ds.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_ES, launch_vmsa->vmsa.es.selector,
-> +                launch_vmsa->vmsa.es.base, launch_vmsa->vmsa.es.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.es.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_FS, launch_vmsa->vmsa.fs.selector,
-> +                launch_vmsa->vmsa.fs.base, launch_vmsa->vmsa.fs.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.fs.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_GS, launch_vmsa->vmsa.gs.selector,
-> +                launch_vmsa->vmsa.gs.base, launch_vmsa->vmsa.gs.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gs.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_SS, launch_vmsa->vmsa.ss.selector,
-> +                launch_vmsa->vmsa.ss.base, launch_vmsa->vmsa.ss.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ss.attrib));
+> +It is important that no information is lost or changed when translating the
+> +VMSA provided by the IGVM file into the VSMA that is used to launch the guest.
+> +Therefore, QEMU restricts the VMSA fields that can be provided in the IGVM
+> +VMSA structure to the following registers:
 > +
-> +            env->gdt.base = launch_vmsa->vmsa.gdtr.base;
-> +            env->gdt.limit = launch_vmsa->vmsa.gdtr.limit;
-> +            env->gdt.flags =
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gdtr.attrib);
-> +            env->idt.base = launch_vmsa->vmsa.idtr.base;
-> +            env->idt.limit = launch_vmsa->vmsa.idtr.limit;
-> +            env->idt.flags =
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.idtr.attrib);
+> +RAX, RCX, RDX, RBX, RBP, RSI, RDI, R8-R15, RSP, RIP, CS, DS, ES, FS, GS, SS,
+> +CR0, CR3, CR4, XCR0, EFER, PAT, GDT, IDT, LDTR, TR, DR6, DR7, RFLAGS, X87_FCW,
+> +MXCSR.
 > +
-> +            cpu_x86_load_seg_cache(
-> +                env, R_LDTR, launch_vmsa->vmsa.ldtr.selector,
-> +                launch_vmsa->vmsa.ldtr.base, launch_vmsa->vmsa.ldtr.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ldtr.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_TR, launch_vmsa->vmsa.tr.selector,
-> +                launch_vmsa->vmsa.ldtr.base, launch_vmsa->vmsa.tr.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.tr.attrib));
+> +When processing the IGVM file, QEMU will check if any fields other than the
+> +above are non-zero and generate an error if this is the case.
 > +
-> +            env->dr[6] = launch_vmsa->vmsa.dr6;
-> +            env->dr[7] = launch_vmsa->vmsa.dr7;
+> +KVM uses a hardcoded GPA of 0xFFFFFFFFF000 for the VMSA. When an IGVM file
+> +defines initial CPU state, the GPA for each VMSA must match this hardcoded
+> +value.
 > +
-> +            env->regs[R_EAX] = launch_vmsa->vmsa.rax;
-> +            env->regs[R_ECX] = launch_vmsa->vmsa.rcx;
-> +            env->regs[R_EDX] = launch_vmsa->vmsa.rdx;
-> +            env->regs[R_EBX] = launch_vmsa->vmsa.rbx;
-> +            env->regs[R_ESP] = launch_vmsa->vmsa.rsp;
-> +            env->regs[R_EBP] = launch_vmsa->vmsa.rbp;
-> +            env->regs[R_ESI] = launch_vmsa->vmsa.rsi;
-> +            env->regs[R_EDI] = launch_vmsa->vmsa.rdi;
-> +#ifdef TARGET_X86_64
-> +            env->regs[R_R8] = launch_vmsa->vmsa.r8;
-> +            env->regs[R_R9] = launch_vmsa->vmsa.r9;
-> +            env->regs[R_R10] = launch_vmsa->vmsa.r10;
-> +            env->regs[R_R11] = launch_vmsa->vmsa.r11;
-> +            env->regs[R_R12] = launch_vmsa->vmsa.r12;
-> +            env->regs[R_R13] = launch_vmsa->vmsa.r13;
-> +            env->regs[R_R14] = launch_vmsa->vmsa.r14;
-> +            env->regs[R_R15] = launch_vmsa->vmsa.r15;
-> +#endif
-> +            env->eip = launch_vmsa->vmsa.rip;
-> +            env->eflags = launch_vmsa->vmsa.rflags;
+> +Firmware Images with IGVM
+> +-------------------------
 > +
-> +            cpu_set_fpuc(env, launch_vmsa->vmsa.x87_fcw);
-> +            env->mxcsr = launch_vmsa->vmsa.mxcsr;
+> +When an IGVM filename is specified for a Confidential Guest Support object it
+> +overrides the default handling of system firmware: the firmware image, such as
+> +an OVMF binary should be contained as a payload of the IGVM file and not
+> +provided as a flash drive or via the ``-bios`` parameter. The default QEMU
+> +firmware is not automatically populated into the guest memory space.
 > +
-> +            break;
-> +        }
-> +    }
-> +}
+> +If an IGVM file is provided along with either the ``-bios`` parameter or pflash
+> +devices then an error is displayed and the guest startup is aborted.
 > +
-> +static int sev_set_cpu_context(uint16_t cpu_index, const void *ctx,
-> +                               uint32_t ctx_len, hwaddr gpa, Error **errp)
-> +{
-> +    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-> +    SevLaunchVmsa *launch_vmsa;
-> +    CPUState *cpu;
-> +    bool exists = false;
+> +Running a guest configured using IGVM
+> +-------------------------------------
 > +
-> +    /*
-> +     * Setting the CPU context is only supported for SEV-ES and SEV-SNP. The
-> +     * context buffer will contain a sev_es_save_area from the Linux kernel
-> +     * which is defined by "Table B-4. VMSA Layout, State Save Area for SEV-ES"
-> +     * in the AMD64 APM, Volume 2.
-> +     */
+> +To run a guest configured with IGVM you firstly need to generate an IGVM file
+> +that contains a guest configuration compatible with the platform you are
+> +targeting.
 > +
-> +    if (!sev_es_enabled()) {
-> +        error_setg(errp, "SEV: unable to set CPU context: Not supported");
-> +        return -1;
-> +    }
+> +The ``buildigvm`` tool [2] is an example of a tool that can be used to generate
+> +IGVM files for non-confidential X86 platforms as well as for SEV, SEV-ES and
+> +SEV-SNP confidential platforms.
 > +
-> +    if (ctx_len < sizeof(struct sev_es_save_area)) {
-> +        error_setg(errp, "SEV: unable to set CPU context: "
-> +                     "Invalid context provided");
-> +        return -1;
-> +    }
+> +Example using this tool to generate an IGVM file for AMD SEV-SNP::
 > +
-> +    cpu = qemu_get_cpu(cpu_index);
-> +    if (!cpu) {
-> +        error_setg(errp, "SEV: unable to set CPU context for out of bounds "
-> +                     "CPU index %d", cpu_index);
-> +        return -1;
-> +    }
+> +    buildigvm --firmware /path/to/OVMF.fd --output sev-snp.igvm \
+> +              --cpucount 4 sev-snp
 > +
-> +    /*
-> +     * If the context of this VP has already been set then replace it with the
-> +     * new context.
-> +     */
-> +    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
-> +    {
-> +        if (cpu_index == launch_vmsa->cpu_index) {
-> +            launch_vmsa->gpa = gpa;
-> +            memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
-> +            exists = true;
-> +            break;
-> +        }
-> +    }
+> +To run a guest configured with the generated IGVM you need to add an
+> +``igvm-cfg`` object and refer to it from the ``-machine`` parameter:
 > +
-> +    if (!exists) {
-> +        /* New VP context */
-> +        launch_vmsa = g_new0(SevLaunchVmsa, 1);
-> +        memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
-> +        launch_vmsa->cpu_index = cpu_index;
-> +        launch_vmsa->gpa = gpa;
-> +        QTAILQ_INSERT_TAIL(&sev_common->launch_vmsa, launch_vmsa, next);
-> +    }
+> +Example (for AMD SEV)::
 > +
-> +    /* Synchronise the VMSA with the current CPU state */
-> +    sev_apply_cpu_context(cpu);
+> +    qemu-system-x86_64 \
+> +        <other parameters> \
+> +        -machine ...,confidential-guest-support=sev0,igvm-cfg=igvm0 \
+> +        -object sev-guest,id=sev0,cbitpos=47,reduced-phys-bits=1 \
+> +        -object igvm-cfg,id=igvm0,file=/path/to/sev-snp.igvm
 > +
-> +    return 0;
-> +}
+> +References
+> +----------
 > +
->   bool
->   sev_enabled(void)
->   {
-> @@ -1005,6 +1183,16 @@ static int
->   sev_launch_update_vmsa(SevGuestState *sev_guest)
->   {
->       int ret, fw_error;
-> +    CPUState *cpu;
+> +[1] AMD64 Architecture Programmer's Manual, Volume 2: System Programming
+> +  Rev 3.41
+> +  https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/programmer-references/24593.pdf
 > +
-> +    /*
-> +     * The initial CPU state is measured as part of KVM_SEV_LAUNCH_UPDATE_VMSA.
-> +     * Synchronise the CPU state to any provided launch VMSA structures.
-> +     */
-> +    CPU_FOREACH(cpu) {
-> +        sev_apply_cpu_context(cpu);
-> +    }
-> +
->   
->       ret = sev_ioctl(SEV_COMMON(sev_guest)->sev_fd, KVM_SEV_LAUNCH_UPDATE_VMSA,
->                       NULL, &fw_error);
-> @@ -1787,40 +1975,110 @@ sev_es_find_reset_vector(void *flash_ptr, uint64_t flash_size,
->       return sev_es_parse_reset_block(info, addr);
->   }
->   
-> -void sev_es_set_reset_vector(CPUState *cpu)
-> +
-> +static void seg_to_vmsa(const SegmentCache *cpu_seg, struct vmcb_seg *vmsa_seg)
->   {
-> -    X86CPU *x86;
-> -    CPUX86State *env;
-> -    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
-> -    SevCommonState *sev_common = SEV_COMMON(
-> -        object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON));
-> +    vmsa_seg->selector = cpu_seg->selector;
-> +    vmsa_seg->base = cpu_seg->base;
-> +    vmsa_seg->limit = cpu_seg->limit;
-> +    vmsa_seg->attrib = FLAGS_SEGCACHE_TO_VMSA(cpu_seg->flags);
-> +}
->   
-> -    /* Only update if we have valid reset information */
-> -    if (!sev_common || !sev_common->reset_data_valid) {
-> -        return;
-> -    }
-> +static void initialize_vmsa(const CPUState *cpu, struct sev_es_save_area *vmsa)
-> +{
-> +    const X86CPU *x86 = X86_CPU(cpu);
-> +    const CPUX86State *env = &x86->env;
->   
-> -    /* Do not update the BSP reset state */
-> -    if (cpu->cpu_index == 0) {
-> -        return;
-> +    /*
-> +     * Initialize the SEV-ES save area from the current state of
-> +     * the CPU. The entire state does not need to be copied, only the state
-> +     * that is copied back to the CPUState in sev_apply_cpu_context.
-> +     */
-> +    memset(vmsa, 0, sizeof(struct sev_es_save_area));
-> +    vmsa->efer = env->efer;
-> +    vmsa->cr0 = env->cr[0];
-> +    vmsa->cr3 = env->cr[3];
-> +    vmsa->cr4 = env->cr[4];
-> +    vmsa->xcr0 = env->xcr0;
-> +    vmsa->g_pat = env->pat;
-> +
-> +    seg_to_vmsa(&env->segs[R_CS], &vmsa->cs);
-> +    seg_to_vmsa(&env->segs[R_DS], &vmsa->ds);
-> +    seg_to_vmsa(&env->segs[R_ES], &vmsa->es);
-> +    seg_to_vmsa(&env->segs[R_FS], &vmsa->fs);
-> +    seg_to_vmsa(&env->segs[R_GS], &vmsa->gs);
-> +    seg_to_vmsa(&env->segs[R_SS], &vmsa->ss);
-> +
-> +    seg_to_vmsa(&env->gdt, &vmsa->gdtr);
-> +    seg_to_vmsa(&env->idt, &vmsa->idtr);
-> +    seg_to_vmsa(&env->ldt, &vmsa->ldtr);
-> +    seg_to_vmsa(&env->tr, &vmsa->tr);
-> +
-> +    vmsa->dr6 = env->dr[6];
-> +    vmsa->dr7 = env->dr[7];
-> +
-> +    vmsa->rax = env->regs[R_EAX];
-> +    vmsa->rcx = env->regs[R_ECX];
-> +    vmsa->rdx = env->regs[R_EDX];
-> +    vmsa->rbx = env->regs[R_EBX];
-> +    vmsa->rsp = env->regs[R_ESP];
-> +    vmsa->rbp = env->regs[R_EBP];
-> +    vmsa->rsi = env->regs[R_ESI];
-> +    vmsa->rdi = env->regs[R_EDI];
-> +
-> +#ifdef TARGET_X86_64
-> +    vmsa->r8 = env->regs[R_R8];
-> +    vmsa->r9 = env->regs[R_R9];
-> +    vmsa->r10 = env->regs[R_R10];
-> +    vmsa->r11 = env->regs[R_R11];
-> +    vmsa->r12 = env->regs[R_R12];
-> +    vmsa->r13 = env->regs[R_R13];
-> +    vmsa->r14 = env->regs[R_R14];
-> +    vmsa->r15 = env->regs[R_R15];
-> +#endif
-> +
-> +    vmsa->rip = env->eip;
-> +    vmsa->rflags = env->eflags;
-> +}
-> +
-> +static void sev_es_set_ap_context(uint32_t reset_addr)
-> +{
-> +    CPUState *cpu;
-> +    struct sev_es_save_area vmsa;
-> +    SegmentCache cs;
-> +
-> +    cs.selector = 0xf000;
-> +    cs.base = reset_addr & 0xffff0000;
-> +    cs.limit = 0xffff;
-> +    cs.flags = DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK | DESC_R_MASK |
-> +               DESC_A_MASK;
-> +
-> +    CPU_FOREACH(cpu) {
-> +        if (cpu->cpu_index == 0) {
-> +            /* Do not update the BSP reset state */
-> +            continue;
-> +        }
-> +        initialize_vmsa(cpu, &vmsa);
-> +        seg_to_vmsa(&cs, &vmsa.cs);
-> +        vmsa.rip = reset_addr & 0x0000ffff;
-> +        sev_set_cpu_context(cpu->cpu_index, &vmsa,
-> +                            sizeof(struct sev_es_save_area),
-> +                            0, &error_fatal);
-> +        sev_apply_cpu_context(cpu);
->       }
-> +}
->   
-> -    x86 = X86_CPU(cpu);
-> -    env = &x86->env;
-> -
-> -    cpu_x86_load_seg_cache(env, R_CS, 0xf000, sev_common->reset_cs, 0xffff,
-> -                           DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK |
-> -                           DESC_R_MASK | DESC_A_MASK);
-> -
-> -    env->eip = sev_common->reset_ip;
-> +void sev_es_set_reset_vector(CPUState *cpu)
-> +{
-> +    if (sev_enabled()) {
-> +        sev_apply_cpu_context(cpu);
-> +    }
->   }
->   
->   int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
->   {
-> -    CPUState *cpu;
->       uint32_t addr;
->       int ret;
-> -    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
->   
->       if (!sev_es_enabled()) {
->           return 0;
-> @@ -1833,14 +2091,12 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
->           return ret;
->       }
->   
-> +    /*
-> +     * The reset vector is saved into a CPU context for each AP but not for
-> +     * the BSP. This is applied during guest startup or when the CPU is reset.
-> +     */
->       if (addr) {
-> -        sev_common->reset_cs = addr & 0xffff0000;
-> -        sev_common->reset_ip = addr & 0x0000ffff;
-> -        sev_common->reset_data_valid = true;
-> -
-> -        CPU_FOREACH(cpu) {
-> -            sev_es_set_reset_vector(cpu);
-> -        }
-> +        sev_es_set_ap_context(addr);
->       }
->   
->       return 0;
-> @@ -2075,6 +2331,7 @@ sev_common_instance_init(Object *obj)
->       object_property_add_uint32_ptr(obj, "reduced-phys-bits",
->                                      &sev_common->reduced_phys_bits,
->                                      OBJ_PROP_FLAG_READWRITE);
-> +    QTAILQ_INIT(&sev_common->launch_vmsa);
->   }
->   
->   /* sev guest info common to sev/sev-es/sev-snp */
-> diff --git a/target/i386/sev.h b/target/i386/sev.h
-> index 373669eaac..38caa849f5 100644
-> --- a/target/i386/sev.h
-> +++ b/target/i386/sev.h
-> @@ -55,6 +55,116 @@ typedef struct SevKernelLoaderContext {
->       size_t cmdline_size;
->   } SevKernelLoaderContext;
->   
-> +/* Save area definition for SEV-ES and SEV-SNP guests */
-> +struct QEMU_PACKED sev_es_save_area {
-> +    struct vmcb_seg es;
-> +    struct vmcb_seg cs;
-> +    struct vmcb_seg ss;
-> +    struct vmcb_seg ds;
-> +    struct vmcb_seg fs;
-> +    struct vmcb_seg gs;
-> +    struct vmcb_seg gdtr;
-> +    struct vmcb_seg ldtr;
-> +    struct vmcb_seg idtr;
-> +    struct vmcb_seg tr;
-> +    uint64_t vmpl0_ssp;
-> +    uint64_t vmpl1_ssp;
-> +    uint64_t vmpl2_ssp;
-> +    uint64_t vmpl3_ssp;
-> +    uint64_t u_cet;
-> +    uint8_t reserved_0xc8[2];
-> +    uint8_t vmpl;
-> +    uint8_t cpl;
-> +    uint8_t reserved_0xcc[4];
-> +    uint64_t efer;
-> +    uint8_t reserved_0xd8[104];
-> +    uint64_t xss;
-> +    uint64_t cr4;
-> +    uint64_t cr3;
-> +    uint64_t cr0;
-> +    uint64_t dr7;
-> +    uint64_t dr6;
-> +    uint64_t rflags;
-> +    uint64_t rip;
-> +    uint64_t dr0;
-> +    uint64_t dr1;
-> +    uint64_t dr2;
-> +    uint64_t dr3;
-> +    uint64_t dr0_addr_mask;
-> +    uint64_t dr1_addr_mask;
-> +    uint64_t dr2_addr_mask;
-> +    uint64_t dr3_addr_mask;
-> +    uint8_t reserved_0x1c0[24];
-> +    uint64_t rsp;
-> +    uint64_t s_cet;
-> +    uint64_t ssp;
-> +    uint64_t isst_addr;
-> +    uint64_t rax;
-> +    uint64_t star;
-> +    uint64_t lstar;
-> +    uint64_t cstar;
-> +    uint64_t sfmask;
-> +    uint64_t kernel_gs_base;
-> +    uint64_t sysenter_cs;
-> +    uint64_t sysenter_esp;
-> +    uint64_t sysenter_eip;
-> +    uint64_t cr2;
-> +    uint8_t reserved_0x248[32];
-> +    uint64_t g_pat;
-> +    uint64_t dbgctl;
-> +    uint64_t br_from;
-> +    uint64_t br_to;
-> +    uint64_t last_excp_from;
-> +    uint64_t last_excp_to;
-> +    uint8_t reserved_0x298[80];
-> +    uint32_t pkru;
-> +    uint32_t tsc_aux;
-> +    uint8_t reserved_0x2f0[24];
-> +    uint64_t rcx;
-> +    uint64_t rdx;
-> +    uint64_t rbx;
-> +    uint64_t reserved_0x320; /* rsp already available at 0x01d8 */
-> +    uint64_t rbp;
-> +    uint64_t rsi;
-> +    uint64_t rdi;
-> +    uint64_t r8;
-> +    uint64_t r9;
-> +    uint64_t r10;
-> +    uint64_t r11;
-> +    uint64_t r12;
-> +    uint64_t r13;
-> +    uint64_t r14;
-> +    uint64_t r15;
-> +    uint8_t reserved_0x380[16];
-> +    uint64_t guest_exit_info_1;
-> +    uint64_t guest_exit_info_2;
-> +    uint64_t guest_exit_int_info;
-> +    uint64_t guest_nrip;
-> +    uint64_t sev_features;
-> +    uint64_t vintr_ctrl;
-> +    uint64_t guest_exit_code;
-> +    uint64_t virtual_tom;
-> +    uint64_t tlb_id;
-> +    uint64_t pcpu_id;
-> +    uint64_t event_inj;
-> +    uint64_t xcr0;
-> +    uint8_t reserved_0x3f0[16];
-> +
-> +    /* Floating point area */
-> +    uint64_t x87_dp;
-> +    uint32_t mxcsr;
-> +    uint16_t x87_ftw;
-> +    uint16_t x87_fsw;
-> +    uint16_t x87_fcw;
-> +    uint16_t x87_fop;
-> +    uint16_t x87_ds;
-> +    uint16_t x87_cs;
-> +    uint64_t x87_rip;
-> +    uint8_t fpreg_x87[80];
-> +    uint8_t fpreg_xmm[256];
-> +    uint8_t fpreg_ymm[256];
-> +};
-> +
->   bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
->   
->   int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
+> +[2] ``buildigvm`` - A tool to build example IGVM files containing OVMF firmware
+> +  https://github.com/roy-hopkins/buildigvm
+> \ No newline at end of file
+> diff --git a/docs/system/index.rst b/docs/system/index.rst
+> index c21065e519..6235dfab87 100644
+> --- a/docs/system/index.rst
+> +++ b/docs/system/index.rst
+> @@ -38,4 +38,5 @@ or Hypervisor.Framework.
+>      security
+>      multi-process
+>      confidential-guest-support
+> +   igvm
+>      vm-templating
 
 
