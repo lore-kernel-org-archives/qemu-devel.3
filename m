@@ -4,62 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F08ACC19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 11:08:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D36DC021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 11:08:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnbgw-00057Y-WD; Thu, 27 Feb 2025 06:04:35 -0500
+	id 1tnbiy-00082I-Kq; Thu, 27 Feb 2025 06:06:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnbgc-0004pJ-4z; Thu, 27 Feb 2025 06:04:17 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ id 1tnbiV-00078E-Nv; Thu, 27 Feb 2025 06:06:18 -0500
+Received: from tor.source.kernel.org ([2600:3c04::f03c:95ff:fe5e:7468])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnbgV-0007Vs-Ca; Thu, 27 Feb 2025 06:04:12 -0500
+ id 1tnbiK-0007uT-Hw; Thu, 27 Feb 2025 06:06:09 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id F043B5C4AEE;
- Thu, 27 Feb 2025 11:03:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484E0C4CEFB;
- Thu, 27 Feb 2025 11:03:58 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 98EAD6114B;
+ Thu, 27 Feb 2025 11:05:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8F1C4CEDD;
+ Thu, 27 Feb 2025 11:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1740654238;
- bh=Al4AdoIOAFP/tQuO9hNkATwo+NFCoCFaFs1W3IlU+a8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=txMUeTzxnpdVEOFl4/GII3ffChRPOrMs1sz3YttLbs2s0x7ibVenfpykLCWfJpG90
- rM7Wn4x+jtUErqzfhLtgJE0RjXKUboq1BrjcFZqFuNS0Le7udqQBXztEObx+SSVU2X
- 0645mHlcYyXNWi2orB9X8+OeqFHCquDK0J0Ljy7n0bNscIULYuOtdZfeFqMBsjjKXA
- PAZIeVKZo3FldINwIldM4fdxFDVRRKJAwPd5kY89TRRFekQgohvSUzHs5q/LwPZuSB
- DXFfHtVgLw01bHzUW0BPbJtBELvvF7nOJ+RShlb/NMFoyYiEbTO3RnK8xDyRM5XJ3N
- ahcy9k2GIRZxQ==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnbgK-00000001mRe-1utA; Thu, 27 Feb 2025 12:03:56 +0100
+ s=k20201202; t=1740654332;
+ bh=30VEPafuYaXUOzx4ugW+Q9XaK63O/Un27g6xe0Hutbk=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=Pq91ovwNVBny9JMf8+HSNMd53hixAs09BNZdZs5+XZvukQo19RDYmaAYsKuKnRqbO
+ 6qo83flXm7EcwbmofLf+K/qhsk3B2bAqdNTMyY/WKXRgvC0HaoCsudv+HdBkrxGgIy
+ W4UCV9K8pWXY1D6xpT48SrVORm8c4TjrcMZJLrS0G06NvYq+PWtK/eobNmfWXSBSh/
+ CVsZJQvI+myXNB+tNggscbw4QICP4mKpEB9mI3ofP3VY4nQvRUr5s9XHr7OZbBwiCw
+ Ng8h4v4zAUUE26KyhVo+9/xOxpgQphhwKFZmhAOYf68HoY/Kn1nPA1H87h4vqpLuKN
+ BwGFkzU7lAAHg==
+Date: Thu, 27 Feb 2025 12:05:25 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- linux-kernel@vger.kernel.org
-Subject: [PATCH v5 17/21] tests/acpi: virt: update HEST table to accept two
- sources
-Date: Thu, 27 Feb 2025 12:03:47 +0100
-Message-ID: <9d57e2a6ec3f523eb7691347403f05ad40782b94.1740653898.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <cover.1740653898.git.mchehab+huawei@kernel.org>
-References: <cover.1740653898.git.mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Philippe =?UTF-8?B?TWF0aGll?=
+ =?UTF-8?B?dS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
+ <anisinha@redhat.com>, Cleber Rosa <crosa@redhat.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Eric Blake
+ <eblake@redhat.com>, John Snow <jsnow@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Markus Armbruster <armbru@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
+ <zhao1.liu@intel.com>, kvm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 00/14] Change ghes to use HEST-based offsets and add
+ support for error inject
+Message-ID: <20250227120525.66c348a0@foz.lan>
+In-Reply-To: <20250227105454.69e3d459@imammedo.users.ipa.redhat.com>
+References: <cover.1740148260.git.mchehab+huawei@kernel.org>
+ <20250227105454.69e3d459@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c04::f03c:95ff:fe5e:7468;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,134 +81,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---- /tmp/asl-38PE22.dsl	2025-02-26 16:25:32.362148388 +0100
-+++ /tmp/asl-HSPE22.dsl	2025-02-26 16:25:32.361148402 +0100
-@@ -1,39 +1,39 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20240322 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/HEST
-+ * Disassembly of /tmp/aml-DMPE22
-  *
-  * ACPI Data Table [HEST]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
-  */
+Em Thu, 27 Feb 2025 10:54:54 +0100
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
- [000h 0000 004h]                   Signature : "HEST"    [Hardware Error Source Table]
--[004h 0004 004h]                Table Length : 00000084
-+[004h 0004 004h]                Table Length : 000000E0
- [008h 0008 001h]                    Revision : 01
--[009h 0009 001h]                    Checksum : E2
-+[009h 0009 001h]                    Checksum : 6C
- [00Ah 0010 006h]                      Oem ID : "BOCHS "
- [010h 0016 008h]                Oem Table ID : "BXPC    "
- [018h 0024 004h]                Oem Revision : 00000001
- [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
- [020h 0032 004h]       Asl Compiler Revision : 00000001
+> On Fri, 21 Feb 2025 15:35:09 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > Now that the ghes preparation patches were merged, let's add support
+> > for error injection.
+> > 
+> > On this series, the first 6 patches chang to the math used to calculate offsets at HEST
+> > table and hardware_error firmware file, together with its migration code. Migration tested
+> > with both latest QEMU released kernel and upstream, on both directions.
+> > 
+> > The next patches add a new QAPI to allow injecting GHESv2 errors, and a script using such QAPI
+> >    to inject ARM Processor Error records.
+> > 
+> > ---
+> > v4:
+> > - added an extra comment for AcpiGhesState structure;
+> > - patches reordered;
+> > - no functional changes, just code shift between the patches in this series.
+> > 
+> > v3:
+> > - addressed more nits;
+> > - hest_add_le now points to the beginning of HEST table;
+> > - removed HEST from tests/data/acpi;
+> > - added an extra patch to not use fw_cfg with virt-10.0 for hw_error_le
+> > 
+> > v2: 
+> > - address some nits;
+> > - improved ags cleanup patch and removed ags.present field;
+> > - added some missing le*_to_cpu() calls;
+> > - update date at copyright for new files to 2024-2025;
+> > - qmp command changed to: inject-ghes-v2-error ans since updated to 10.0;
+> > - added HEST and DSDT tables after the changes to make check target happy.
+> >   (two patches: first one whitelisting such tables; second one removing from
+> >    whitelist and updating/adding such tables to tests/data/acpi)
+> > 
+> > 
+> > 
+> > Mauro Carvalho Chehab (14):
+> >   acpi/ghes: prepare to change the way HEST offsets are calculated
+> >   acpi/ghes: add a firmware file with HEST address
+> >   acpi/ghes: Use HEST table offsets when preparing GHES records
+> >   acpi/ghes: don't hard-code the number of sources for HEST table
+> >   acpi/ghes: add a notifier to notify when error data is ready
+> >   acpi/ghes: create an ancillary acpi_ghes_get_state() function
+> >   acpi/generic_event_device: Update GHES migration to cover hest addr
+> >   acpi/generic_event_device: add logic to detect if HEST addr is
+> >     available
+> >   acpi/generic_event_device: add an APEI error device
+> >   tests/acpi: virt: allow acpi table changes for a new table: HEST
+> >   arm/virt: Wire up a GED error device for ACPI / GHES
+> >   tests/acpi: virt: add a HEST table to aarch64 virt and update DSDT
+> >   qapi/acpi-hest: add an interface to do generic CPER error injection
+> >   scripts/ghes_inject: add a script to generate GHES error inject
+> > 
+> >  MAINTAINERS                                   |  10 +
+> >  hw/acpi/Kconfig                               |   5 +
+> >  hw/acpi/aml-build.c                           |  10 +
+> >  hw/acpi/generic_event_device.c                |  43 ++
+> >  hw/acpi/ghes-stub.c                           |   7 +-
+> >  hw/acpi/ghes.c                                | 231 ++++--
+> >  hw/acpi/ghes_cper.c                           |  38 +
+> >  hw/acpi/ghes_cper_stub.c                      |  19 +
+> >  hw/acpi/meson.build                           |   2 +
+> >  hw/arm/virt-acpi-build.c                      |  37 +-
+> >  hw/arm/virt.c                                 |  19 +-
+> >  hw/core/machine.c                             |   2 +
+> >  include/hw/acpi/acpi_dev_interface.h          |   1 +
+> >  include/hw/acpi/aml-build.h                   |   2 +
+> >  include/hw/acpi/generic_event_device.h        |   1 +
+> >  include/hw/acpi/ghes.h                        |  54 +-
+> >  include/hw/arm/virt.h                         |   2 +
+> >  qapi/acpi-hest.json                           |  35 +
+> >  qapi/meson.build                              |   1 +
+> >  qapi/qapi-schema.json                         |   1 +
+> >  scripts/arm_processor_error.py                | 476 ++++++++++++
+> >  scripts/ghes_inject.py                        |  51 ++
+> >  scripts/qmp_helper.py                         | 702 ++++++++++++++++++
+> >  target/arm/kvm.c                              |   7 +-
+> >  tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5240 bytes
+> >  .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5326 bytes
+> >  tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6601 bytes
+> >  tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7723 bytes
+> >  tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5442 bytes
+> >  29 files changed, 1677 insertions(+), 79 deletions(-)
+> >  create mode 100644 hw/acpi/ghes_cper.c
+> >  create mode 100644 hw/acpi/ghes_cper_stub.c
+> >  create mode 100644 qapi/acpi-hest.json
+> >  create mode 100644 scripts/arm_processor_error.py
+> >  create mode 100755 scripts/ghes_inject.py
+> >  create mode 100755 scripts/qmp_helper.py
+> >   
+> 
+> once you enable, ras in tests as 1st patches and fixup minor issues
+> please try to do patch by patch compile/bios-tables-test testing, to avoid
+> unnecessary respin in case at table change crept in somewhere unnoticed. 
 
--[024h 0036 004h]          Error Source Count : 00000001
-+[024h 0036 004h]          Error Source Count : 00000002
+Just submitted v5.
 
- [028h 0040 002h]               Subtable Type : 000A [Generic Hardware Error Source V2]
- [02Ah 0042 002h]                   Source Id : 0000
- [02Ch 0044 002h]           Related Source Id : FFFF
- [02Eh 0046 001h]                    Reserved : 00
- [02Fh 0047 001h]                     Enabled : 01
- [030h 0048 004h]      Records To Preallocate : 00000001
- [034h 0052 004h]     Max Sections Per Record : 00000001
- [038h 0056 004h]         Max Raw Data Length : 00000400
+I took some extra care to avoid bisect issues. Still checkpatch 
+had some warnings, but they seemed false positives.
 
- [03Ch 0060 00Ch]        Error Status Address : [Generic Address Structure]
- [03Ch 0060 001h]                    Space ID : 00 [SystemMemory]
- [03Dh 0061 001h]                   Bit Width : 40
- [03Eh 0062 001h]                  Bit Offset : 00
- [03Fh 0063 001h]        Encoded Access Width : 04 [QWord Access:64]
- [040h 0064 008h]                     Address : 0000000043DA0000
-@@ -42,32 +42,75 @@
- [048h 0072 001h]                 Notify Type : 08 [SEA]
- [049h 0073 001h]               Notify Length : 1C
- [04Ah 0074 002h]  Configuration Write Enable : 0000
- [04Ch 0076 004h]                PollInterval : 00000000
- [050h 0080 004h]                      Vector : 00000000
- [054h 0084 004h]     Polling Threshold Value : 00000000
- [058h 0088 004h]    Polling Threshold Window : 00000000
- [05Ch 0092 004h]       Error Threshold Value : 00000000
- [060h 0096 004h]      Error Threshold Window : 00000000
-
- [064h 0100 004h]   Error Status Block Length : 00000400
- [068h 0104 00Ch]           Read Ack Register : [Generic Address Structure]
- [068h 0104 001h]                    Space ID : 00 [SystemMemory]
- [069h 0105 001h]                   Bit Width : 40
- [06Ah 0106 001h]                  Bit Offset : 00
- [06Bh 0107 001h]        Encoded Access Width : 04 [QWord Access:64]
--[06Ch 0108 008h]                     Address : 0000000043DA0008
-+[06Ch 0108 008h]                     Address : 0000000043DA0010
-
- [074h 0116 008h]           Read Ack Preserve : FFFFFFFFFFFFFFFE
- [07Ch 0124 008h]              Read Ack Write : 0000000000000001
-
--Raw Table Data: Length 132 (0x84)
-+[084h 0132 002h]               Subtable Type : 000A [Generic Hardware Error Source V2]
-+[086h 0134 002h]                   Source Id : 0001
-+[088h 0136 002h]           Related Source Id : FFFF
-+[08Ah 0138 001h]                    Reserved : 00
-+[08Bh 0139 001h]                     Enabled : 01
-+[08Ch 0140 004h]      Records To Preallocate : 00000001
-+[090h 0144 004h]     Max Sections Per Record : 00000001
-+[094h 0148 004h]         Max Raw Data Length : 00000400
-+
-+[098h 0152 00Ch]        Error Status Address : [Generic Address Structure]
-+[098h 0152 001h]                    Space ID : 00 [SystemMemory]
-+[099h 0153 001h]                   Bit Width : 40
-+[09Ah 0154 001h]                  Bit Offset : 00
-+[09Bh 0155 001h]        Encoded Access Width : 04 [QWord Access:64]
-+[09Ch 0156 008h]                     Address : 0000000043DA0008
-+
-+[0A4h 0164 01Ch]                      Notify : [Hardware Error Notification Structure]
-+[0A4h 0164 001h]                 Notify Type : 07 [GPIO]
-+[0A5h 0165 001h]               Notify Length : 1C
-+[0A6h 0166 002h]  Configuration Write Enable : 0000
-+[0A8h 0168 004h]                PollInterval : 00000000
-+[0ACh 0172 004h]                      Vector : 00000000
-+[0B0h 0176 004h]     Polling Threshold Value : 00000000
-+[0B4h 0180 004h]    Polling Threshold Window : 00000000
-+[0B8h 0184 004h]       Error Threshold Value : 00000000
-+[0BCh 0188 004h]      Error Threshold Window : 00000000
-+
-+[0C0h 0192 004h]   Error Status Block Length : 00000400
-+[0C4h 0196 00Ch]           Read Ack Register : [Generic Address Structure]
-+[0C4h 0196 001h]                    Space ID : 00 [SystemMemory]
-+[0C5h 0197 001h]                   Bit Width : 40
-+[0C6h 0198 001h]                  Bit Offset : 00
-+[0C7h 0199 001h]        Encoded Access Width : 04 [QWord Access:64]
-+[0C8h 0200 008h]                     Address : 0000000043DA0018
-
--    0000: 48 45 53 54 84 00 00 00 01 E2 42 4F 43 48 53 20  // HEST......BOCHS
-+[0D0h 0208 008h]           Read Ack Preserve : FFFFFFFFFFFFFFFE
-+[0D8h 0216 008h]              Read Ack Write : 0000000000000001
-+
-+Raw Table Data: Length 224 (0xE0)
-+
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- tests/data/acpi/aarch64/virt/HEST | Bin 132 -> 224 bytes
- 1 file changed, 0 insertions(+), 0 deletions(-)
-
-diff --git a/tests/data/acpi/aarch64/virt/HEST b/tests/data/acpi/aarch64/virt/HEST
-index 4c5d8c5b5da5b3241f93cd0839e94272bf6b1486..674272922db7d48f7821aa7c83ec76bb3b556d2a 100644
-GIT binary patch
-delta 68
-zcmZo+e89-%;TjzBfPsO5F=rx|6eH6_Rd+^#iMisuTnvm1|Nk>EGJ@nLCJHmL%S;Ru
-WnV7)J#lXPAz`)?Zz#=g*R~!HcF%5eF
-
-delta 29
-lcmaFB*uu!=;Tjy$!oa}5_-G=R6eHtARriT=I3|_|004Ge2nqlI
-
--- 
-2.48.1
-
+Thanks,
+Mauro
 
