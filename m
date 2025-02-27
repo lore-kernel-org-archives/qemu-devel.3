@@ -4,87 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D9D5C021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E560C19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnZfL-0002nb-KI; Thu, 27 Feb 2025 03:54:47 -0500
+	id 1tnZgk-0003ca-9D; Thu, 27 Feb 2025 03:56:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnZfJ-0002n5-FS
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:54:45 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnZfH-0001KN-1c
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:54:45 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-438a3216fc2so6676925e9.1
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 00:54:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740646480; x=1741251280; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=z60gqmVupRyv8bYgjGl9QykHfjVgRaaROSY0nuZNdtw=;
- b=KGnqtaMN1yix8frvF8hSgdLiCRbC7OYsuBlcfRDW3+D481iiN4v4tOHRWaBAKd/jhQ
- BqvvndyO6oSFqobGkXp7Fw8Edo+OYri3nf3BzedsVl9s/KjmKxkzDiC8bJZsUOCk/+sp
- ax+5WKruPLV5zsZdkZ+w8Rg8/Ec9tBY4ZhtD8Yqbdlryu4ch4VFlGXEWENSb0ccDOA9I
- /nn19RBqYqa9wiNlchELaSlK8aLbaS4ZJ4nGBMr80RpSpAEzSgw5D7CBdpKQ9nwB9pTq
- zu5pLw8B9J8TJ21zWUZGPFvlYxFM3Z53BCKEDE+79bbOFlYFPG1ilryMWRCDUscvH5gm
- Ebrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740646480; x=1741251280;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=z60gqmVupRyv8bYgjGl9QykHfjVgRaaROSY0nuZNdtw=;
- b=txZNpc+ALvSZbsWtgYbaEOArqKBAuOfJUOkx2o05QkBA+RZ8BVMmE0u9Ss7nCUZgYy
- kGWEMmVqNKw4yW4LaIzu/bXAk0V1K+Krnoi4+wKac1Y9j1r2KqzcfuhwVgOHr1Zqd03D
- 4IM/WBkDiIhBJxt+BtgdKNgz0mbHPsffHkabGROwfEptTxSRGgJaxSr2r198rEbnHhPX
- zjRBdBrpZJxp11V2ectivodE4KkdRzSEZUaiMxivezIcovlhWHIxjoa71Tzj92B0HByS
- hZGRE+XXogGEK76RNIaMYnwd9nbbh8auCmq3TWap4szyrdDwr7Ov8FET3+LHt147sglt
- HIbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoKW+dTb46jY46hb2yqdoQITFpfQVAzsa3BYbeYB0e7J/kdH+wjvNGtG3Ro7YDYgEhzsGnlhlrKsks@nongnu.org
-X-Gm-Message-State: AOJu0Yw6u7nYr4Be+JllrdDqwypDofdUOW9cp0qWr2huJ2vapuRvpn/7
- bYliQvAFT7EwhutMVpeowVw1mm8Fobfzsxx3CKGzqor/JU//S2Hh9I578+MjASc=
-X-Gm-Gg: ASbGncsCjz4yg/LyLSR7vOwbQVXwgy5LFwveqw0gKbXUJ5pVsd7RXrByuf1NAzj60/T
- 5nvnf4ynZ2wpiEzWX/6BfL02OQ9lhpfza+2AUw2peLZ5C63ZomblLFCmhxvvrg+Pcd3cd+OId1A
- wK9WRia6EFchVW3oxyvpuwsZVPKwM69qZLGs9FCZl+GsDefI+qFNh6Pej0aU66egu3tLAR8AJDt
- r9gYqJd+DhrqIHUa4wgH+qZ0bmQNzgm6VBqiSyvBWMQLO7RpnKJjGuXH1BhxMVu2VcOsPsPW/KK
- R27u/vGE/IVEer/g4r6UmDntgPg//dEU3SB8D+RVPkf4wRbFxpA0s24fUOn1BE7imAdLIg==
-X-Google-Smtp-Source: AGHT+IGJUOAh60oe4DFjrVsnmUVfpzMmylsiByP4RvJq3ByFeqmoZvxspk+EDnB9MJ/DZ9CTH36O2A==
-X-Received: by 2002:a05:600c:5489:b0:439:86fb:7326 with SMTP id
- 5b1f17b1804b1-439aebb5558mr176748375e9.22.1740646480066; 
- Thu, 27 Feb 2025 00:54:40 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba532c49sm46718975e9.16.2025.02.27.00.54.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 00:54:38 -0800 (PST)
-Message-ID: <681b4df0-0e89-4ba2-9ad0-edae330b23f5@linaro.org>
-Date: Thu, 27 Feb 2025 09:54:38 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnZgj-0003cO-6t
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:56:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnZgh-0001k0-2t
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 03:56:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740646569;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=FFQuXiQF1ESSl3fy9foLdxtXnjchWDdN0+l280fFDUs=;
+ b=ZyCIjUU0Qmr9ZqmgCcied+7uoU6f08bgvAaCb/yqVp/xi46nwC2U+SwoU+Tv32pa/8S0cS
+ YtdIXYxNqykKY/qC4MBbXQViYsgoYg05+OnVDzsCKdiNF4WvqN4UyDGWaJ53SOYMok+RRX
+ Tl0qMjt0anDwkz/UeeFujqDZU24yBIA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-28-Wv4c5N8iPaKRRNoYXaPJlw-1; Thu,
+ 27 Feb 2025 03:56:06 -0500
+X-MC-Unique: Wv4c5N8iPaKRRNoYXaPJlw-1
+X-Mimecast-MFC-AGG-ID: Wv4c5N8iPaKRRNoYXaPJlw_1740646566
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0065319560B5; Thu, 27 Feb 2025 08:56:06 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 95C231800357; Thu, 27 Feb 2025 08:56:04 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 03E2821E6741; Thu, 27 Feb 2025 09:56:02 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com,
+	berrange@redhat.com,
+	eduardo@habkost.net
+Subject: [PATCH v2 0/6] Property type reporting improvements
+Date: Thu, 27 Feb 2025 09:55:55 +0100
+Message-ID: <20250227085601.4140852-1-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 030/162] tcg: Convert neg to TCGOutOpUnary
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250216231012.2808572-1-richard.henderson@linaro.org>
- <20250216231012.2808572-31-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250216231012.2808572-31-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,43 +82,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/2/25 00:07, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/tcg.c                        | 20 ++++++++++++++++++--
->   tcg/aarch64/tcg-target.c.inc     | 18 +++++++++++-------
->   tcg/arm/tcg-target.c.inc         | 14 ++++++++++----
->   tcg/i386/tcg-target.c.inc        | 16 +++++++++++-----
->   tcg/loongarch64/tcg-target.c.inc | 19 ++++++++++---------
->   tcg/mips/tcg-target.c.inc        | 18 ++++++++++--------
->   tcg/ppc/tcg-target.c.inc         | 17 ++++++++++-------
->   tcg/riscv/tcg-target.c.inc       | 19 ++++++++++---------
->   tcg/s390x/tcg-target.c.inc       | 22 ++++++++++++++--------
->   tcg/sparc64/tcg-target.c.inc     | 15 ++++++++++-----
->   tcg/tci/tcg-target.c.inc         | 13 ++++++++++---
->   11 files changed, 124 insertions(+), 67 deletions(-)
+QOM properties could use similar work.  Left for another day.
 
+v2: Rebased
 
-> +    case INDEX_op_neg_i32:
-> +    case INDEX_op_neg_i64:
-> +        {
-> +            const TCGOutOpUnary *out =
-> +                container_of(all_outop[op->opc], TCGOutOpUnary, base);
-> +
+Markus Armbruster (6):
+  qdev: Delete unused qdev_prop_enum
+  qdev: Change qdev_prop_pci_devfn member @name from "int32" to "str"
+  qdev: Rename PropertyInfo member @name to @type
+  qdev: Change values of PropertyInfo member @type to be QAPI types
+  qdev: Improve PropertyInfo member @description for enum properties
+  qdev: Improve a few more PropertyInfo @description members
 
-      /* Constants should never appear in the first source operand. */
+ include/hw/qdev-properties.h     |  3 +-
+ backends/tpm/tpm_util.c          |  2 +-
+ hw/block/xen-block.c             |  4 +-
+ hw/core/qdev-properties-system.c | 78 +++++++++++++++-----------------
+ hw/core/qdev-properties.c        | 44 ++++++++----------
+ hw/misc/xlnx-versal-trng.c       |  2 +-
+ hw/nvme/nguid.c                  |  2 +-
+ hw/nvram/xlnx-bbram.c            |  2 +-
+ hw/nvram/xlnx-efuse.c            |  2 +-
+ hw/pci/pci.c                     |  2 +-
+ hw/s390x/ccw-device.c            |  6 +--
+ hw/s390x/css.c                   |  4 +-
+ hw/s390x/s390-pci-bus.c          |  3 +-
+ hw/vfio/pci-quirks.c             |  2 +-
+ target/riscv/cpu.c               | 44 ++++++++++++------
+ target/sparc/cpu.c               |  3 +-
+ hw/display/apple-gfx.m           |  2 +-
+ 17 files changed, 106 insertions(+), 99 deletions(-)
 
-> +            tcg_debug_assert(!const_args[1]);
-> +            out->out_rr(s, type, new_args[0], new_args[1]);
-> +        }
-> +        break;
-> +
->       default:
->           if (def->flags & TCG_OPF_VECTOR) {
->               tcg_out_vec_op(s, op->opc, type - TCG_TYPE_V64,
-
-Easy one!
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+-- 
+2.48.1
 
 
