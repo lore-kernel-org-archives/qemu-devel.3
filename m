@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BCF2C021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 11:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E426C021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 11:46:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnc7f-0001oL-Qs; Thu, 27 Feb 2025 06:32:11 -0500
+	id 1tncLL-0001QO-80; Thu, 27 Feb 2025 06:46:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnc7d-0001ne-U8; Thu, 27 Feb 2025 06:32:10 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1tncKq-00019g-7w; Thu, 27 Feb 2025 06:45:50 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tnc7b-0004kj-TK; Thu, 27 Feb 2025 06:32:09 -0500
+ id 1tncKo-0007bS-8g; Thu, 27 Feb 2025 06:45:47 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 5D1E561521;
- Thu, 27 Feb 2025 11:31:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EEAC4CEE4;
- Thu, 27 Feb 2025 11:32:02 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id B8CB65C493B;
+ Thu, 27 Feb 2025 11:45:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2270C4CEDD;
+ Thu, 27 Feb 2025 11:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1740655924;
- bh=4pQJjF/Q4Q3WBRwJ6HQNWdlWY6WeeaYy/8fF3m2MQs8=;
+ s=k20201202; t=1740656743;
+ bh=RbApozzYBuV1XvJ4VezhGxrAHX++zrZ0W8FPqStcTYw=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=b0xJdobA/gWddOf5S4ioanDDgZe0aVgoVbbx1BL7i1rGeCzvnUTTbp6HSFUxLFcz8
- zjhUDNlnIAHpVBAJey2QdC9/aH3Hlc4LwvfeqAOQOavUbFwxgzlCupE6T7PduKk5N1
- ysUy6opDNfIzKwL4cpFd7VBmS2JRh0Mov83pfW2FGn7DeuRVd7mu5tB+6BQVhstCbh
- Q9qeWKYagE/DxGHsENEzU6kCfPaVc1HZtiGc3+m3Mh6JIDc41w18yasE7YZWNiAr2A
- 5s6S74eP3FvYEajG7jO69Di0B5+ooeKvNgeX6+aYDVNOwzjThv4LSC+woAFD9Yu8g6
- aaiw2kKp1giuQ==
-Date: Thu, 27 Feb 2025 12:31:59 +0100
+ b=e11cxfxTuj0kBUHpM7kvJNlAipl9h2iRj2UT7uCU9ruFW2Rs6bCYfNlyZt6vheCcI
+ DN4KpT3iXyxK/kjMHyQnkCF1+GJ3dzDZ6oj00cJdy3e0GcsxDXPwr0G6H9ICLFjE4G
+ OP8KMKsftjEjSEPS4a2AxfyNM0ca30+9e+xan4fj76tFiPKVM+FfNvPCF2Wtx/kvt+
+ MsK69+5xk8wYgoc4C7sdshO017fxp/GhXAYqMyTN3MORws3w9mEEyeO1A7yXJ6Lt7m
+ fQzHsmJwwfJOExrghLZ6jdxjWnydspoWlpGT9BqD+vDjHZ4fYR+eFd1t0/dcl08hcm
+ IOCG038XBbvHw==
+Date: Thu, 27 Feb 2025 12:45:38 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani
- Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 10/21] acpi/ghes: create an ancillary
- acpi_ghes_get_state() function
-Message-ID: <20250227123159.46cf9b72@foz.lan>
-In-Reply-To: <a84cb4567f087231991ce05980d2f331b772dab5.1740653898.git.mchehab+huawei@kernel.org>
-References: <cover.1740653898.git.mchehab+huawei@kernel.org>
- <a84cb4567f087231991ce05980d2f331b772dab5.1740653898.git.mchehab+huawei@kernel.org>
+Subject: Re: [PATCH v4 01/14] acpi/ghes: prepare to change the way HEST
+ offsets are calculated
+Message-ID: <20250227124538.7a2191e0@foz.lan>
+In-Reply-To: <20250226153714.20c57efe@imammedo.users.ipa.redhat.com>
+References: <cover.1740148260.git.mchehab+huawei@kernel.org>
+ <9eeaabf88e7ddc4884633702b7bc419075975bc8.1740148260.git.mchehab+huawei@kernel.org>
+ <20250226153714.20c57efe@imammedo.users.ipa.redhat.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.105.4.254;
- envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,49 +77,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Thu, 27 Feb 2025 12:03:40 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
+Em Wed, 26 Feb 2025 15:37:14 +0100
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-> Instead of having a function to check if ACPI is enabled
-> (acpi_ghes_present), change its logic to be more generic,
-> returing a pointed to AcpiGhesState.
+> On Fri, 21 Feb 2025 15:35:10 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 > 
-> Such change allows cleanup the ghes GED state code, avoiding
-> to read it multiple times, and simplifying the code.
+
+> > diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> > index 3ac8f8e17861..8ab8d11b6536 100644
+> > --- a/hw/arm/virt-acpi-build.c
+> > +++ b/hw/arm/virt-acpi-build.c
+> > @@ -946,9 +946,18 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+> >      build_dbg2(tables_blob, tables->linker, vms);
+> >  
+> >      if (vms->ras) {
+> > -        acpi_add_table(table_offsets, tables_blob);
+> > -        acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
+> > -                        vms->oem_id, vms->oem_table_id);
+> > +        AcpiGedState *acpi_ged_state;
+> > +        AcpiGhesState *ags;
+> > +
+> > +        acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,  
+>                             ^^^ will explode if object_resolve_path_type() returns NULL
+> > +                                                       NULL));  
 > 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Reviewed-by:  Igor Mammedov <imammedo@redhat.com>
-> ---
->  hw/acpi/ghes.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> it's also expensive load-wise.
+> You have access to vms with ged pointer here, use that
+> (search for 'acpi_ged_state = ACPI_GED' example)
+
+Ok, but the state binding on ghes were designed to use ACPI_GED. I moved
+the code that it is using ACPI_GED() to the beginning of v5 series,
+just after the HEST table test addition.
+
+With that, ACPI_GED() is now used only on two places inside ghes:
+
+- at virt_acpi_build(), during VM initialization;
+- at acpi_ghes_get_state().
+
+If you want to replace it by some other solution, IMO we should do
+it on some separate series, as this is not related to neither error
+injection nor with offset calculation to get read ack address. 
+
+> > +        if (acpi_ged_state) {  
 > 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index c3a64adfe5ed..0135ac844bcf 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -608,7 +608,7 @@ AcpiGhesState *acpi_ghes_get_state(void)
->      }
->      ags = &acpi_ged_state->ghes_state;
->  
-> -    if (!ags->hw_error_le) {
-> +    if (!ags->hw_error_le && !ags->hest_addr_le) {
->          return NULL;
->      }
->      return ags;
+>                 hence, this check is not really needed,
+>                 we have to have GED at this point or abort
+> 
+>                 earlier code that instantiates GED should take care of
+>                 cleanly exiting if it failed to create GED so we would never get
+>                 to missing GED here
 
-Sorry, I moved most of the stuff on this patch to 
-	[PATCH 04/21] acpi/ghes: Cleanup the code which gets ghes ged state
+I dropped this check on v5.
 
-This hunk was a left over from it. I was meant to place this hunk
-elsewhere but I ended forgetting while waiting for the rebase bisect
-tests to pass.
-
- I'll move this hunk to
-	[PATCH 06/21] acpi/ghes: add a firmware file with HEST address
-
-for the next respin (and hopefully the final one).
-
-Regards,
+Thanks,
 Mauro
 
