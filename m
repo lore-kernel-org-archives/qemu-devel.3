@@ -4,90 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC97FC19F32
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B59F5C282C5
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 16:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tngO5-00051z-5F; Thu, 27 Feb 2025 11:05:27 -0500
+	id 1tngVP-0005yF-R2; Thu, 27 Feb 2025 11:13:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tngMv-0004Yy-Gj
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 11:04:17 -0500
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tngMt-0007zm-DD
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 11:04:13 -0500
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-22114b800f7so23432925ad.2
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 08:04:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740672249; x=1741277049; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1DILyirHrel6WMBzcQk+h/fm6lJ3uSL02z1Trx80nMs=;
- b=Uov4ICAy4nxtno6DhQgKTwxOYb/qjb9irlzZon86IAiTuaTfdUnujVq+Wwg/EHtFky
- AnEXDcfRMT12cR+SpMAkIc8s6N8jlVZU/urz+kIyqfXFc1n+qP6MnbXl0ONtyawmm3Y1
- GbfOtR9E+iqn4GW29dbx2hWrLnPl4kIYlDHJ7MbFhfca29oBDjVlkQO3nJxV0tRHj8ya
- lW/wEoHRChSNlbv5ym9QhelOIdqDE3Bnt/ZyQvWJNdMBD8+GGkbx6GUseVuBx4r+/81g
- ytsZHkpCESv4kaSTzVrVpIJfgwhf46D1TsAbi871xyRmb4G1zXm3YYSO5u6ESpGgZeGl
- 5kxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740672249; x=1741277049;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1DILyirHrel6WMBzcQk+h/fm6lJ3uSL02z1Trx80nMs=;
- b=o8JWCLCYp7PkPltsYvAL7LJ78dRgZ5XAAAQNp3S9FEY3+WZE+AoL15yB8q4nm7nIVN
- q53EX96Jmlhuu6tsoX2ZX+5nte0LXp8LncnPs0LqMC3tk4dvkOITZhCvu/We7Mf3I5SQ
- r2kUoCabmw9pBdW9wZp3y3n7MmthP/FlRgfhA4xuuD7DqlkIH4fior5JDGLVIjIZfKJm
- L4TkhCWvSGOa96N1JGIUJyrhteFjY5f5KDu77DJx81++CGdrr3DztUkVi0dOmExeAogT
- Iq677jTzTvjYRl0hZgL6iwxv9JZnwtMXM2PPjy8eJgyms4lke4bMry5zg4vcxuQFsyU9
- xyGw==
-X-Gm-Message-State: AOJu0YyLkfgVGaXozVnGgcJKRaxI8A27NccSBNX05uIBasyVyUbzNj+2
- ac7/afk22ahoZlO09LRH0M4X20h7Mk+d1qwfouYdsWTfpTh/pGRdF3Kf+iICdw==
-X-Gm-Gg: ASbGnctQciOEUBppn056o7mEqpPudQn4d1B9AbeBx4MQ6ckNk+LWRBLSm4RGyFjZgb+
- dInCxJGkQItTWGeII8UyabwFfBfjnp8t+LIk2VIhL3fUaVyWZ6YI13HiQrlfC9r6Kn89n1viQEv
- awZOShit47WGoM/EWEh9tqU+GO0WQ/FSGtcQa5fl8J4O75wkUK9OBBSABBne4fbzOBw3y4es4fq
- NzD42oEXEvm1MjAidtKpGpC7S/9zEOqglfY91LlsLLKZLK2Ko2kq95EtgsM02yCxZ6A20Xzhb73
- Utdz4T1CkIt7+WCy2TYch/gMRBWQGkA=
-X-Google-Smtp-Source: AGHT+IF25ZBQFyDCD7Vh2o6BjhzDXyWGtaXIDgyVITcLlYPWUXn8uDbAXC3FNVWz5IvQlD4eO0jlag==
-X-Received: by 2002:a05:6a00:2e1e:b0:725:df1a:285 with SMTP id
- d2e1a72fcca58-7348bdd003bmr12544044b3a.12.1740672248848; 
- Thu, 27 Feb 2025 08:04:08 -0800 (PST)
-Received: from [192.168.0.113] ([58.37.175.138])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-734a0024b98sm1828266b3a.108.2025.02.27.08.04.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 08:04:08 -0800 (PST)
-Message-ID: <14c1a116-2833-4a5b-812a-4477ef11f79e@gmail.com>
-Date: Fri, 28 Feb 2025 00:03:59 +0800
+ (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
+ id 1tngV1-0005re-6p
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 11:12:38 -0500
+Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
+ helo=smtp.livemail.co.uk)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
+ id 1tngUw-00011i-U9
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 11:12:34 -0500
+Received: from [172.22.54.5] (unknown [145.40.191.116])
+ (Authenticated sender: roy.hopkins@randomman.co.uk)
+ by smtp.livemail.co.uk (Postfix) with ESMTPSA id 6770D40534;
+ Thu, 27 Feb 2025 16:12:23 +0000 (GMT)
+Message-ID: <31de7209a08147e3c8d9fe3d17e118b727729587.camel@randomman.co.uk>
+Subject: Re: [PATCH v7 00/16] Introduce support for IGVM files
+From: Roy Hopkins <roy.hopkins@randomman.co.uk>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P .
+ Berrange" <berrange@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez
+ <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Alistair Francis
+ <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>, David Hildenbrand
+ <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Tom Lendacky
+ <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, Ani Sinha
+ <anisinha@redhat.com>, Joerg Roedel <jroedel@suse.com>
+Date: Thu, 27 Feb 2025 16:12:23 +0000
+In-Reply-To: <ftgzr23cmis3sjwmbbfkw3ijrtythcwb3l6jg3aqsreebg46ll@mcm72sg3dbqs>
+References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+ <ftgzr23cmis3sjwmbbfkw3ijrtythcwb3l6jg3aqsreebg46ll@mcm72sg3dbqs>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/10] vfio/igd: Remove legacy mode
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
- <corvin.koehne@gmail.com>
-References: <20250224182927.31519-1-tomitamoeko@gmail.com>
- <4a8bcc23-8090-4877-86b2-e5ac126a6cb4@redhat.com>
-Content-Language: en-US
-From: Tomita Moeko <tomitamoeko@gmail.com>
-In-Reply-To: <4a8bcc23-8090-4877-86b2-e5ac126a6cb4@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x643.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: neutral client-ip=213.171.216.60;
+ envelope-from=roy.hopkins@randomman.co.uk; helo=smtp.livemail.co.uk
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,117 +70,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Cédric,
+T24gVGh1LCAyMDI1LTAyLTI3IGF0IDE2OjMyICswMTAwLCBTdGVmYW5vIEdhcnphcmVsbGEgd3Jv
+dGU6Cj4gSGkgUm95LAo+IAo+IE9uIFRodSwgRmViIDI3LCAyMDI1IGF0IDAxOjM4OjA4UE0gKzAw
+MDAsIFJveSBIb3BraW5zIHdyb3RlOgo+ID4gSGVyZSBpcyB2NyBvZiB0aGUgc2V0IG9mIHBhdGNo
+ZXMgdG8gYWRkIHN1cHBvcnQgZm9yIElHVk0gZmlsZXMgdG8KPiA+IFFFTVUuwqAgVGhpcyBpcwo+
+ID4gYmFzZWQgb24gY29tbWl0IDQwZWZlNzMzZTEwY2MwMGU0ZmI0ZjlmNTc5MGEyOGU3NDRlNjNj
+NjIgb2YgcWVtdS4KPiAKPiBUaGFua3MgYWdhaW4gZm9yIHRoaXMgd29yayEKPiAKPiBJIG5vdGlj
+ZWQgdGhhdCB0aGUgbGFzdCBwYXRjaCBmb3IgdGhpcyBzZXJpZXMgaXMgbWlzc2luZywgYWxzbwo+
+IHBhdGNoZXcKPiBkaWRuJ3QgcmVjZWl2ZSBpdDoKPiAKPiBodHRwczovL3BhdGNoZXcub3JnL1FF
+TVUvY292ZXIuMTc0MDY2MzQxMC5naXQucm95LmhvcGtpbnNAcmFuZG9tbWFuLmNvLnVrLwo+IAo+
+IElmIHlvdSdyZSB1c2luZyBnaXQtcHVibGlzaCB5b3UgY2FuIGRvOgo+IAo+ICQgZ2l0IHB1Ymxp
+c2ggLS1za2lwIDE2IC1TIFwKPiDCoMKgwqDCoCAtUiBjb3Zlci4xNzQwNjYzNDEwLmdpdC5yb3ku
+aG9wa2luc0ByYW5kb21tYW4uY28udWsKPiAKPiBUaGFua3MsCj4gU3RlZmFubwo+IAoKVGhhbmtz
+IFN0ZWZhbm8uIEkgaGFkIGFsbCBzb3J0cyBvZiBwcm9ibGVtcyBnZXR0aW5nIGdpdCBzZW5kLW1h
+aWwgdG8Kc2VuZCB1c2luZyBteSBtYWlsIHNlcnZpY2UgcHJvdmlkZXIuIEkndmUgc29ydGVkIGl0
+IG5vdyBhbmQgc2VudCB0aGUKbWlzc2luZyBwYXRjaC4KClJlZ2FyZHMsClJveQoKPiA+IAo+ID4g
+Rmlyc3RseSwgYXBvbG9naWVzIGZvciB0aGUgYW1vdW50IG9mIHRpbWUgYmV0d2VlbiB0aGUgbGFz
+dCB2ZXJzaW9uCj4gPiBhbmQgdGhpcyBvbmUuCj4gPiBJIG1vdmVkIHJvbGVzIHRvIGEgZGlmZmVy
+ZW50IGNvbXBhbnkgYW5kLCBhbHRob3VnaCBJIGFsd2F5cyBwbGFubmVkCj4gPiB0byBzZWUgdGhp
+cwo+ID4gcGF0Y2ggc2VyaWVzIHRvIGNvbXBsZXRpb24sIGl0IHRvb2sgYSB3aGlsZSBiZWZvcmUg
+SSBmb3VuZCB0aW1lIHRvCj4gPiBzZXR1cCBhCj4gPiBkZXZlbG9wbWVudCBlbnZpcm9ubWVudCBh
+bmQgYmUgaW4gYSBwb3NpdGlvbiB0byBzZW5kIGEgbmV3IHZlcnNpb24uCj4gPiBJIHdpbGwKPiA+
+IGNvbnRpbnVlIHRoaXMgc2VyaWVzIHVzaW5nIGEgcGVyc29uYWwgZW1haWwgYWRkcmVzcyBmb3Ig
+bm93LCBoZW5jZQo+ID4gdGhlIGNoYW5nZQo+ID4gdG8gdGhlIGF1dGhvciBhbmQgc2lnbmVkLW9m
+Zi1ieSBlbWFpbHMuCj4gPiAKPiA+IFRoZSBvbmx5IGNoYW5nZXMgaW4gdGhpcyB2ZXJzaW9uIGFy
+ZSB0byByZWJhc2Ugb24gdGhlIGN1cnJlbnQKPiA+IG1hc3RlciBicmFuY2ggYW5kCj4gPiB1cGRh
+dGUgY29tbWl0IG1ldGFkYXRhLCBpbmNsdWRpbmcgU2lnbmVkLU9mZi1CeSBhbmQgQXV0aG9yIGVt
+YWlscwo+ID4gZm9yIG15Cj4gPiByZXBsYWNlbWVudCBlbWFpbCBhZGRyZXNzLCBhbmQgdG8gaW5j
+bHVkZSB0aGUgZmluYWwgUmV2aWV3ZWQtQnkKPiA+IHRoYXQgd2VyZSBhZGRlZAo+ID4gaW4gdGhl
+IGxhc3QgcmV2aWV3LiBUaGVyZSB3ZXJlIG5vIHJlcXVlc3RlZCBjaGFuZ2VzIG9uIHRoZSBwcmV2
+aW91cwo+ID4gdmVyc2lvbiBbMV0KPiA+IHNvIEkgYmVsaWV2ZSB0aGlzIHNlcmllcyBpcyByZWFk
+eSB0byBtZXJnZS4KPiA+IAo+ID4gQXMgYWx3YXlzLCB0aGFua3MgdG8gdGhvc2UgdGhhdCBoYXZl
+IGJlZW4gZm9sbG93aW5nIGFsb25nLAo+ID4gcmV2aWV3aW5nIGFuZCB0ZXN0aW5nCj4gPiB0aGlz
+IHNlcmllcy4gVGhpcyB2NyBwYXRjaCBzZXJpZXMgaXMgYWxzbyBhdmFpbGFibGUgb24gZ2l0aHVi
+OiBbMl0KPiA+IAo+ID4gRm9yIHRlc3RpbmcgSUdWTSBzdXBwb3J0IGluIFFFTVUgeW91IG5lZWQg
+dG8gZ2VuZXJhdGUgYW4gSUdWTSBmaWxlCj4gPiB0aGF0IGlzCj4gPiBjb25maWd1cmVkIGZvciB0
+aGUgcGxhdGZvcm0geW91IHdhbnQgdG8gbGF1bmNoLiBZb3UgY2FuIHVzZSB0aGUKPiA+IGBidWls
+ZGlndm1gCj4gPiB0ZXN0IHRvb2wgWzNdIHRvIGFsbG93IGdlbmVyYXRpb24gb2YgSUdWTSBmaWxl
+cyBmb3IgYWxsIGN1cnJlbnRseQo+ID4gc3VwcG9ydGVkCj4gPiBwbGF0Zm9ybXMuIFBhdGNoIDEx
+LzE3IGNvbnRhaW5zIGluZm9ybWF0aW9uIG9uIGhvdyB0byBnZW5lcmF0ZSBhbgo+ID4gSUdWTSBm
+aWxlCj4gPiB1c2luZyB0aGlzIHRvb2wuCj4gPiAKPiA+IENoYW5nZXMgaW4gdjc6Cj4gPiAKPiA+
+ICogVXBkYXRlIHZlcnNpb24gbnVtYmVycyBmb3IgSUdWTSBzdXBwb3J0IHRvIDEwLjAKPiA+ICog
+QWRkIFJldmlld2VkLWJ5IHRvIHJlbGV2YW50IGNvbW1pdHMuCj4gPiAqIFVwZGF0ZSBBdXRob3Ig
+ZW1haWwgYW5kIHNpZ24tb2ZmcyB0byBteSBuZXcgZW1haWwgYWRkcmVzcwo+ID4gCj4gPiBQYXRj
+aCBzdW1tYXJ5Ogo+ID4gCj4gPiAxLTExOiBBZGQgc3VwcG9ydCBhbmQgZG9jdW1lbnRhdGlvbiBm
+b3IgcHJvY2Vzc2luZyBJR1ZNIGZpbGVzIGZvcgo+ID4gU0VWLCBTRVYtRVMsCj4gPiBTRVYtU05Q
+IGFuZCBuYXRpdmUgcGxhdGZvcm1zLgo+ID4gCj4gPiAxMi0xNTogUHJvY2Vzc2luZyBvZiBwb2xp
+Y3kgYW5kIFNFVi1TTlAgSURfQkxPQ0sgZnJvbSBJR1ZNIGZpbGUuCj4gPiAKPiA+IDE2OiBBZGQg
+cHJlLXByb2Nlc3Npbmcgb2YgSUdWTSBmaWxlIHRvIHN1cHBvcnQgc3luY2hyb25pemF0aW9uIG9m
+Cj4gPiAnU0VWX0ZFQVRVUkVTJwo+ID4gZnJvbSBJR1ZNIFZNU0EgdG8gS1ZNLgo+ID4gCj4gPiBb
+MV0gTGluayB0byB2NjoKPiA+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvY292
+ZXIuMTcyNzM0MTc2OC5naXQucm95LmhvcGtpbnNAc3VzZS5jb20vCj4gPiAKPiA+IFsyXSB2NyBw
+YXRjaGVzIGFsc28gYXZhaWxhYmxlIGhlcmU6Cj4gPiBodHRwczovL2dpdGh1Yi5jb20vcm95LWhv
+cGtpbnMvcWVtdS90cmVlL2lndm1fbWFzdGVyX3Y3Cj4gPiAKPiA+IFszXSBgYnVpbGRpZ3ZtYCB0
+b29sIHYwLjIuMAo+ID4gaHR0cHM6Ly9naXRodWIuY29tL3JveS1ob3BraW5zL2J1aWxkaWd2bS9y
+ZWxlYXNlcy90YWcvdjAuMi4wCj4gPiAKPiA+IFJveSBIb3BraW5zICgxNik6Cj4gPiDCoG1lc29u
+OiBBZGQgb3B0aW9uYWwgZGVwZW5kZW5jeSBvbiBJR1ZNIGxpYnJhcnkKPiA+IMKgYmFja2VuZHMv
+Y29uZmlkZW50aWFsLWd1ZXN0LXN1cHBvcnQ6IEFkZCBmdW5jdGlvbnMgdG8gc3VwcG9ydCBJR1ZN
+Cj4gPiDCoGJhY2tlbmRzL2lndm06IEFkZCBJR1ZNIGxvYWRlciBhbmQgY29uZmlndXJhdGlvbgo+
+ID4gwqBody9pMzg2OiBBZGQgaWd2bS1jZmcgb2JqZWN0IGFuZCBwcm9jZXNzaW5nIGZvciBJR1ZN
+IGZpbGVzCj4gPiDCoGkzODYvcGNfc3lzZnc6IEVuc3VyZSBzeXNmdyBmbGFzaCBjb25maWd1cmF0
+aW9uIGRvZXMgbm90IGNvbmZsaWN0Cj4gPiB3aXRoCj4gPiDCoMKgIElHVk0KPiA+IMKgc2V2OiBV
+cGRhdGUgbGF1bmNoX3VwZGF0ZV9kYXRhIGZ1bmN0aW9ucyB0byB1c2UgRXJyb3IgaGFuZGxpbmcK
+PiA+IMKgdGFyZ2V0L2kzODY6IEFsbG93IHNldHRpbmcgb2YgUl9MRFRSIGFuZCBSX1RSIHdpdGgK
+PiA+IMKgwqAgY3B1X3g4Nl9sb2FkX3NlZ19jYWNoZSgpCj4gPiDCoGkzODYvc2V2OiBSZWZhY3Rv
+ciBzZXR0aW5nIG9mIHJlc2V0IHZlY3RvciBhbmQgaW5pdGlhbCBDUFUgc3RhdGUKPiA+IMKgaTM4
+Ni9zZXY6IEltcGxlbWVudCBDb25maWRlbnRpYWxHdWVzdFN1cHBvcnQgZnVuY3Rpb25zIGZvciBT
+RVYKPiA+IMKgZG9jcy9zeXN0ZW06IEFkZCBkb2N1bWVudGF0aW9uIG9uIHN1cHBvcnQgZm9yIElH
+Vk0KPiA+IMKgZG9jcy9pbnRlcm9wL2Zpcm13YXJlLmpzb246IEFkZCBpZ3ZtIHRvIEZpcm13YXJl
+RGV2aWNlCj4gPiDCoGJhY2tlbmRzL2NvbmZpZGVudGlhbC1ndWVzdC1zdXBwb3J0OiBBZGQgc2V0
+X2d1ZXN0X3BvbGljeSgpCj4gPiBmdW5jdGlvbgo+ID4gwqBiYWNrZW5kcy9pZ3ZtOiBQcm9jZXNz
+IGluaXRpYWxpemF0aW9uIHNlY3Rpb25zIGluIElHVk0gZmlsZQo+ID4gwqBiYWNrZW5kcy9pZ3Zt
+OiBIYW5kbGUgcG9saWN5IGZvciBTRVYgZ3Vlc3RzCj4gPiDCoGkzODYvc2V2OiBBZGQgaW1wbGVt
+ZW50YXRpb24gb2YgQ0dTIHNldF9ndWVzdF9wb2xpY3koKQo+ID4gwqBzZXY6IFByb3ZpZGUgc2V2
+X2ZlYXR1cmVzIGZsYWdzIGZyb20gSUdWTSBWTVNBIHRvIEtWTV9TRVZfSU5JVDIKPiA+IAo+ID4g
+YmFja2VuZHMvY29uZmlkZW50aWFsLWd1ZXN0LXN1cHBvcnQuY8KgwqDCoMKgwqDCoCB8wqAgNDMg
+Kwo+ID4gYmFja2VuZHMvaWd2bS1jZmcuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCB8wqAgNTIgKysKPiA+IGJhY2tlbmRzL2lndm0uY8KgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgOTY3Cj4gPiAr
+KysrKysrKysrKysrKysrKysrKwo+ID4gYmFja2VuZHMvaWd2bS5owqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDIzICsKPiA+IGJhY2tl
+bmRzL21lc29uLmJ1aWxkwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCB8wqDCoCA1ICsKPiA+IGRvY3MvaW50ZXJvcC9maXJtd2FyZS5qc29uwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMzAgKy0KPiA+IGRvY3Mvc3lzdGVtL2kzODYvYW1k
+LW1lbW9yeS1lbmNyeXB0aW9uLnJzdMKgIHzCoMKgIDIgKwo+ID4gZG9jcy9zeXN0ZW0vaWd2bS5y
+c3TCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgMTczICsr
+KysKPiA+IGRvY3Mvc3lzdGVtL2luZGV4LnJzdMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIHzCoMKgIDEgKwo+ID4gaHcvaTM4Ni9wYy5jwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDEyICsK
+PiA+IGh3L2kzODYvcGNfcGlpeC5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCB8wqAgMTAgKwo+ID4gaHcvaTM4Ni9wY19xMzUuY8KgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMTAgKwo+ID4g
+aHcvaTM4Ni9wY19zeXNmdy5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAgfMKgIDMxICstCj4gPiBpbmNsdWRlL2h3L2kzODYveDg2LmjCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCAzICsKPiA+IGluY2x1ZGUv
+c3lzdGVtL2NvbmZpZGVudGlhbC1ndWVzdC1zdXBwb3J0LmggfMKgIDg4ICsrCj4gPiBpbmNsdWRl
+L3N5c3RlbS9pZ3ZtLWNmZy5owqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzC
+oCA0NyArCj4gPiBtZXNvbi5idWlsZMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAgOCArCj4gPiBtZXNvbl9vcHRpb25z
+LnR4dMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+fMKgwqAgMiArCj4gPiBxYXBpL3FvbS5qc29uwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxNyArCj4gPiBxZW11LW9wdGlvbnMu
+aHjCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCB8wqAgMjggKwo+ID4gc2NyaXB0cy9tZXNvbi1idWlsZG9wdGlvbnMuc2jCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIHzCoMKgIDMgKwo+ID4gdGFyZ2V0L2kzODYvY3B1LmjCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDkgKy0KPiA+
+IHRhcmdldC9pMzg2L3Nldi5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCB8IDg1MCArKysrKysrKysrKysrKystLQo+ID4gdGFyZ2V0L2kzODYvc2V2
+LmjCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwg
+MTI0ICsrKwo+ID4gMjQgZmlsZXMgY2hhbmdlZCwgMjQ1NCBpbnNlcnRpb25zKCspLCA4NCBkZWxl
+dGlvbnMoLSkKPiA+IGNyZWF0ZSBtb2RlIDEwMDY0NCBiYWNrZW5kcy9pZ3ZtLWNmZy5jCj4gPiBj
+cmVhdGUgbW9kZSAxMDA2NDQgYmFja2VuZHMvaWd2bS5jCj4gPiBjcmVhdGUgbW9kZSAxMDA2NDQg
+YmFja2VuZHMvaWd2bS5oCj4gPiBjcmVhdGUgbW9kZSAxMDA2NDQgZG9jcy9zeXN0ZW0vaWd2bS5y
+c3QKPiA+IGNyZWF0ZSBtb2RlIDEwMDY0NCBpbmNsdWRlL3N5c3RlbS9pZ3ZtLWNmZy5oCj4gPiAK
+PiA+IC0tIAo+ID4gMi40My4wCj4gPiAKPiAKCg==
 
-On 2/27/25 16:28, Cédric Le Goater wrote:
-> Hello Tomita,
-> 
-> +Corvin
-> 
-> On 2/24/25 19:29, Tomita Moeko wrote:
->> This patchset removes some legacy checks and converts the legacy mode
->> implicitly enabled by BDF 00:02.0 into x-igd-* options, including:
->> * Removing PCI ROM BAR and VGA IO/MMIO range check before applying quirk
->> * Using unified x-igd-opregion option for OpRegion access.
->> * Introducing new x-igd-lpc option for the LPC bridge / Host bridge ID
->>    quirk. Currently this is only supported on i440fx.
->> * Extending quirk support when IGD is not assigned to BDF 00:02.0
->>
->> The first 2 patches of this patchset was taken from a previous one,
->> details can be found at:
->> https://lore.kernel.org/all/20250124191245.12464-1-tomitamoeko@gmail.com/
->>
->> This patchest was mainly tested on Alder Lake UHD770, with Debian 12
->> (kernel 6.1), Windows 11 (driver 32.0.101.6458) and Intel GOP driver
->> 17.0.1081.
-> 
-> Did you try a Linux guest ?
-> 
-> Could you provide the QEMU command line please ? I would like to
-> reproduce on the AlderLake-S GT1 system I have access to.
-
-Ofcourse I did. The command line I used is:
-./qemu-system-x86_64 --enable-kvm \
-  -cpu host -smp 4 -m 8G -nodefaults -serial mon:stdio \
-  -device vfio-pci,host=00:02.0,id=hostdev0,addr=0x2,x-igd-opregion=on \
-  -drive id=drive0,if=none,file=debian-vm.qcow2,format=qcow2 \
-  -netdev bridge,id=net0,br=br0 \
-  -device virtio-blk-pci,drive=drive0,id=virtio-blk-pci0,addr=0x3 \
-  -device virtio-net-pci,netdev=net0,addr=0x4 \
-  -usb -device usb-host,hostbus=1,hostaddr=5 \
-  -pflash /usr/share/OVMF/OVMF_CODE_4M.fd
-
-My guest is running Debian 11 with 6.1.0-31 kernel. Screenshot at
-https://imgur.com/a/gsHBpnn
-
-As there is no EFI GOP driver, display can only work after i915 driver
-initialized it. For Linux guest, x-igd-opregion=on is not a must as
-init_vbt_missing_defaults in i915 driver mocks one if VBT in OpRegion
-is not present. Looks like most desktop motherboards follows that intel
-default display output configuration.
-
-Note that currently IGD passthrough quirks only takes effect when IGD
-is exposed as VGA controller, that is to say, the primary GPU must be
-set to IGD in host BIOS.
-
-Btw, If your IGD device is exposed as Display Controller, you may also
-try the kernel patch at [1], and remove the vfio_is_vga check in qemu
-igd.c. I'm going to make a correspoding change in qemu side after that
-kernel patch gets merged.
-
-[1] https://lore.kernel.org/all/20250123163416.7653-1-tomitamoeko@gmail.com/
-
-If it is still not working, adding drm_debug=0x02 in kernel cmdline
-enables verbose log. Related options are "Bit 1 (0x02)  will enable
-DRIVER messages (drm controller code)" and  "Bit 2 (0x04)  will enable
-KMS messages (modesetting code)", 0x06 for both of them.
-
-> Also, since you spent quite of lot time on IGD support, would you
-> mind adding a vfio-igd entry in the MAINTAINERS file and propose
-> your self as a maintainer ? The aim would be to keep you informed
-> of the proposed changes on the vfio-igd device, not to handle PRs.
-
-Sure, I'd be glad to be a maintainer.
-
->> If the design is good to go, I will update the documentation also.
-> 
-> yes please.
-
-I will add the documentation in v2. For now, let me wait for Alex
-comment first.
-
-Thanks,
-Moeko
-
->> A open question is whether the old legacy mode behavior should be kept
->> or not. Checking if all the condition of legacy mode were met and
->> toggling correspoding options is more complicated then I expected :(
->> Any ideas would be appreciated.
-> 
-> I will let Alex comment,
-> 
-> Thanks,
-> 
-> C.
-> 
->  
->> Tomita Moeko (10):
->>    vfio/igd: Remove GTT write quirk in IO BAR 4
->>    vfio/igd: Do not include GTT stolen size in etc/igd-bdsm-size
->>    vfio/igd: Remove rombar check for legacy mode
->>    vfio/igd: Remove implicit VGA access enabled by legacy mode
->>    vfio/pci: Make vfio_populate_vga static
->>    vfio/igd: Consolidate OpRegion initialization into a single function
->>    vfio/igd: Move LPC bridge initialization to a separate function
->>    vfio/pci: Add placeholder for device-specific config space quirks
->>    vfio/igd: Refactor vfio_probe_igd_bar4_quirk into pci config quirk
->>    vfio/igd: Replace legacy mode with options
->>
->>   hw/vfio/igd.c        | 476 ++++++++++++++-----------------------------
->>   hw/vfio/pci-quirks.c |  51 +----
->>   hw/vfio/pci.c        |  33 +--
->>   hw/vfio/pci.h        |  12 +-
->>   4 files changed, 166 insertions(+), 406 deletions(-)
->>
-> 
 
