@@ -4,92 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5913C197BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 12:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E761C197BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 12:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tncqX-0001Zm-OK; Thu, 27 Feb 2025 07:18:33 -0500
+	id 1tncuk-0005HO-M0; Thu, 27 Feb 2025 07:22:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tncqT-0001YR-CH
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 07:18:29 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tncqL-0005Bp-GO
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 07:18:28 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-439846bc7eeso5544865e9.3
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 04:18:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740658699; x=1741263499; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8HkHhfzZGODfXhDhbZhS7ZCb/Btwu5fM/CX5IKhPPhs=;
- b=FDoLjcrJ3Y4yG6iJ6YuZ2uVrr1+nAu1Txcf8wY4LO5Zs1uZ61fLQ1VQOeu8YvUv1HS
- WxtGtbMlkz8rAYOaLBZ6NKeGv4T0Xvjz9oR6YmFXj7utIMsbpehEQYCXcwBeauDiMolH
- UcWbUNbEYsQ1FUzmPxd4R71npRpsL0W+J8U89OK0Xc4vC2MRTdVBAuN3+CHiRaX1oMUf
- 6Bwp2A8xsJkMJl3vIwtGSMBNVRagU4TmktKkXiOff4wPe/A6vd039TGKMu9uUkKsk/EB
- /6+HOUuEQiIdzDzgy8bydVpQ7HXGKDM6zbCHCX2gXh8C+qMmVk/zi94ImMgmVAeFYTTS
- hXPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740658699; x=1741263499;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8HkHhfzZGODfXhDhbZhS7ZCb/Btwu5fM/CX5IKhPPhs=;
- b=q22vRn/iPzIC0Sqvd2TKTU2CIKYkYZE5JOHTFhVXvsX+86e+Ucxn89beCxdCx6Q5K0
- ndrj3C/rPJqb8y7BJLxNhnS4+agkJZwdhamtyAOr5BB8CACTM3P8SfIZKRsh2+Eqe48Y
- 7uhOKhVgyllkKrIKszjVMzdoyxpWlQV+vty49r74wUH5RmJiMXH3/BaupEFvpmepGQm2
- G2rgF2XgR6OWP3Cm9zxGAeRknLF5yKSxBjJg3fLxrXhYv4khlWPbadkvmgUw4nn3EO7z
- B1W6XDd/WsTcnVjZqTcnfiXQS1/xmSKoQfPji4AlF+MsY6+PwIotIliw9wV62gfx8acm
- SI9g==
-X-Gm-Message-State: AOJu0YwBKMF/ttPZ/qvWP4MH7lJKbMMYrFleLZ2XhPWG9Xr9x3nzvewr
- pTJaZAqfpt0hFPFK14agFklZlQ93aAglQIJlSQiUbugrYE4C5XRbHXxqnYvO3hE=
-X-Gm-Gg: ASbGncsf/28+rgdd2a0RFqPoT3JPWXN3ly3XRxCUs0vbc1wTuu0yk5H8ziC8vrdpIIK
- dQtE38s5P0+KPUhFwcAhokK346cv67RAdxk2vge02Rwh4J2Q3tQbj2oDYYyruNxR4/qhggiqb0S
- lRl9bj5kucNzYgNzpTSEtE3XrZFQMuESAOogXoWXnIVcuvRC/MQKNHJihddOfbscNSg/fom3+T8
- TsnKnh6mWxH4BSMR0GyGIMR7Gu2GetjK0asbpUK61nZ+fVYHJlbPuWRLX6Q1z+GRaBEjY+19qUV
- Bq4rNFgfi/SYuJDIYFIMzyLjVzUw
-X-Google-Smtp-Source: AGHT+IFXNxsTL7s3LWPQO3czRZuhjADqh5AGmSmU2vK1FbdebX3eippbnp81fYQpYVwdnjK062MlTQ==
-X-Received: by 2002:a05:600c:3b83:b0:439:8346:505f with SMTP id
- 5b1f17b1804b1-43ab90169f2mr56346935e9.20.1740658699095; 
- Thu, 27 Feb 2025 04:18:19 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba538b9fsm54971045e9.17.2025.02.27.04.18.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 04:18:18 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9DFAC5F8AB;
- Thu, 27 Feb 2025 12:18:17 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] tests/avocado: Remove the boot_linux.py and
- replay_linux.py tests
-In-Reply-To: <20250227110014.21048-1-thuth@redhat.com> (Thomas Huth's message
- of "Thu, 27 Feb 2025 12:00:14 +0100")
-References: <20250227110014.21048-1-thuth@redhat.com>
-User-Agent: mu4e 1.12.9; emacs 29.4
-Date: Thu, 27 Feb 2025 12:18:17 +0000
-Message-ID: <87mse7wph2.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tncud-0005FH-RK
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 07:22:48 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tncuZ-0005w6-Nn
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 07:22:47 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxTWsIWcBnWrqEAA--.30631S3;
+ Thu, 27 Feb 2025 20:22:32 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxLscFWcBnW+0rAA--.34520S3;
+ Thu, 27 Feb 2025 20:22:31 +0800 (CST)
+Subject: Re: [PATCH v2 0/9] target/loongarch: LoongArch32 fixes 1
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, QEMU devel <qemu-devel@nongnu.org>
+Cc: Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
+ <philmd@linaro.org>
+References: <20250225-la32-fixes1-v2-0-8ec68ada3dd5@flygoat.com>
+ <3fd27fd1-b976-2705-7093-aecc6ffa0438@loongson.cn>
+ <23d25d66-07f4-454b-903a-f5704e1e686c@app.fastmail.com>
+ <baa9614a-a216-58bb-3bce-d56da0c7f287@loongson.cn>
+ <b3aa056b-cde8-4f4f-879a-70b1c10e6824@app.fastmail.com>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <9c3dd441-97bc-6884-9863-371fb23441b0@loongson.cn>
+Date: Thu, 27 Feb 2025 20:21:53 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <b3aa056b-cde8-4f4f-879a-70b1c10e6824@app.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxLscFWcBnW+0rAA--.34520S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7WFyfXryrWrW7Cw4UCrW3urX_yoW8Cr4kpF
+ W8Aay3GF4Utr10v3Wvg34Fg3WYy3srGw15XwnYgry8CrnIvr10qrWqqw17Cry3urySqFy0
+ qrWUtw17W3W5GrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70PfDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.13,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,30 +87,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
 
-> These tests are based on the cloudinit functions from Avocado.
-> The cloudinit is very, very slow compared to our other tests,
-> so most of these Avocado tests have either been disabled by default
-> with a decorator, or have been marked to only run with KVM.
 
-I have no objection to dropping the boot_linux tests. However the
-replay_linux tests could do with porting to use new images (the tuxrun
-ones?) so we have coverage. Otherwise we only do a simple kernel boot
-under replay and that covers a lot less.
+On 2025/2/27 下午6:44, Jiaxun Yang wrote:
+> 
+> 
+> 在2025年2月25日二月 下午12:33，bibo mao写道：
+>> On 2025/2/25 下午8:08, Jiaxun Yang wrote:
+>>>
+>>>
+>>> 在2025年2月25日二月 上午8:50，bibo mao写道：
+>>>> On 2025/2/25 上午8:40, Jiaxun Yang wrote:
+>>>>> Hi all,
+>>>>>
+>>>>> This series is a collection of small fixes I made to TCG for
+>>>>> LoongArch32.
+>>>>>
+>>>>> There are still many thing broken, especially on CSRs. More
+>>>>> series following. However this is sufficient to boot 32bit
+>>>>> kernel.
+>>>> Is there any product introduction about LoongArch32 board? such as MMU
+>>>> type, memory type(DDR or SRAM), interrupt controller type.
+>>>
+>>> Sure, for LoongArch32 the most accessible board at the moment is chiplap FPGA [1].
+>>>
+>>> There are also some ASIC designs (BaiXing Project) based on chiplab.
+>>>
+>>> Long in short:
+>>>
+>>> - MMU: PG style
+>>> - Mmeory: DDR
+>>> - Interrupt controller: custom (Loongson-1C like) connected to CPU's
+>>>                           int pin.
+>> Thanks for the information, Would you like to emulate LoongArch32
+>> chiplap FPGA board in qemu side or other LoongArch32 boards?
+> 
+> My plan is to use current virt machine (with EXTIOI and so on) for
+> LoongArch32, it is trivial to bring up in kernel and give us a lot more
+> flexibility rather than emulating an actual board.
+virt machine is mainly for kvm board. If it is used as LoongArch32 
+board, there is no much benefit to add bunch of code in kernel and qemu 
+to emulate non-exist board, on the contrast it is hard to maintain.
 
-Also don't forget to update MAINTAINERS.
+In LoongArch community There are many cases posting code in one time, 
+disappear and lose maintenance :(
 
->
-> We won't include this sluggish cloudinit stuff in the functional
-> framework, and we've already got plenty of other tests there that
-> check pretty much the same things, so let's simply get rid of these
-> old tests now.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-<snip>
+Regards
+Bibo MAo
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> 
+> Thanks
+> - Jiaxun
+> 
+>>
+>> Regards
+>> Bibo Mao
+>>>
+>>> Thanks
+>>>
+>>> [1]: https://gitee.com/loongson-edu/chiplab
+>>>
+>>>>
+>>>> Regards
+>>>> Bibo Mao
+>>>>>
+>>>
+>>>
+> 
+
 
