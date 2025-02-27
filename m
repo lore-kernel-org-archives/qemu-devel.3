@@ -4,148 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E135C19F38
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB26C021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:01:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnXsH-0007VL-2r; Thu, 27 Feb 2025 02:00:01 -0500
+	id 1tnXtU-0001EJ-Hz; Thu, 27 Feb 2025 02:01:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnXsF-0007V6-9V
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 01:59:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tnXtS-0001BH-71; Thu, 27 Feb 2025 02:01:14 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnXsC-0005zF-8B
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 01:59:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740639595;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2Ol04XdPLYTu+M/MIevYfieAvRIG/NSgxdMi0WH3eQ0=;
- b=fN/YTSe1nLevg5C5+rwaOEtuJ/a4Q/B+hXXI5ULv9ciV5AtdES6OKQ9jpvkxttLxD/hqYJ
- /aw2gPYj0CKtw8IaujSda4CKHjM8IaT8FiTAKCnMjOJexnLkutox7EONyWEp6Vs/zQMx2k
- /YUFZQz0KoJrI69ohVz6T1ZOuiPv/vw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-32-5AwaRw9FMO-6wxjnwKA8QQ-1; Thu, 27 Feb 2025 01:59:49 -0500
-X-MC-Unique: 5AwaRw9FMO-6wxjnwKA8QQ-1
-X-Mimecast-MFC-AGG-ID: 5AwaRw9FMO-6wxjnwKA8QQ_1740639588
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4394c747c72so2260065e9.1
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 22:59:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740639588; x=1741244388;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2Ol04XdPLYTu+M/MIevYfieAvRIG/NSgxdMi0WH3eQ0=;
- b=BuMLpfV0M2PnKmWcOo5AZlmhbppR952i+WGp1b/KJFr+a4Sbny9DzADgFP883AzaKx
- iAhisMH0nKr021BMrYwGTk7M5cGdNZTVqsDO20eAFKQ8ybFV10CUebEqxGDRjbdIzR6Q
- B2CC1LAo8r4b8VUu4xlbUsiCZPgD3Nq1SYXFpOPU6Krk0O/R1Z41AK7ZCiqBhQRJWUNy
- RgXXG9zCso04Q0CFm83ABuOJass8UlLCI5v1rxdDfhzhLDQXb59e4oThgJSAWR53Dkvt
- pbs+R49TgsGu7i2aDmUgUzkGb+GDhNdzlAwwAEu2gDr+2g0z0BpVvsK4Kwp5IcsIiPXc
- t+Ng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiv9UTW8Xp0Y8E3IhvynidEs1TaZz0zxkKRCPNOI3m8P+Zf9NzPJ1lK/JTZb3+lJIdC6Yt3d3wrmXg@nongnu.org
-X-Gm-Message-State: AOJu0YxpZ2M/SoqhdQC13XTEfchppzK2O4DsEo02A/XYUoThiiNNiA+c
- kMeTcgj8y4jF8/NG+D4QgBpDdMYoW7mmWUUsnRKRBb4Ojr01FJDFb4THNhvlPPOXehn9upUnCaE
- LBT/kfC7Wkn0xSGLG8EBr4KD6Q0fOF03u3Dw8yTZpqRS3X6FdNNV7
-X-Gm-Gg: ASbGncubafm+1RG73LmgWlzPRKdt5OiuQ6zA1ZSs7K9pVWbr+Cq58y6tvTtYzjuWBdF
- 0ScBjLvSiWS9jZhCW6NSHC141N68FSpZoXVY0+Y01epNWrwagSe39+x4+cESDkOHCKvd+VPjkRv
- nKntiiqS/tmB2IcVkLii51oVlWC5kFMPiBpP9zRfzj/t7nqW3ItXZsy52/r8RjaYcV+1gGrxSIH
- ApLS55/zM0pC6AOzFZ5XIEno6essgXe6kAYrT4T3h8XWcI9Dx56424s7uYQOjv3WwMc7s7U2i6+
- DoaRtvrHeDmy3uaJvH/X34DpCuLi1stcxjMBXhvfaEWTJhnaiq/xFMUlRFg=
-X-Received: by 2002:a05:600c:190b:b0:439:5747:7f2d with SMTP id
- 5b1f17b1804b1-439ae21cdeemr172894565e9.21.1740639588349; 
- Wed, 26 Feb 2025 22:59:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEuvNqGx0KzeWj6Y3KM6ng9j2wPrA9o4XfvHRPiVp1rtFalh/YYnxc7moZC5wecV+xqy9E5Fg==
-X-Received: by 2002:a05:600c:190b:b0:439:5747:7f2d with SMTP id
- 5b1f17b1804b1-439ae21cdeemr172894395e9.21.1740639587925; 
- Wed, 26 Feb 2025 22:59:47 -0800 (PST)
-Received: from ?IPV6:2a01:cb19:9004:d500:a732:5611:7f59:8bb3?
- ([2a01:cb19:9004:d500:a732:5611:7f59:8bb3])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba52b88asm44619525e9.4.2025.02.26.22.59.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 22:59:47 -0800 (PST)
-Message-ID: <cbebee68-f891-4946-885d-01a8ed24e6c1@redhat.com>
-Date: Thu, 27 Feb 2025 07:59:45 +0100
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tnXtP-0006IH-Ro; Thu, 27 Feb 2025 02:01:13 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51R21eAX006266;
+ Thu, 27 Feb 2025 07:01:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=YEwMoS
+ do3MLtyCF91hsl4twJlBdvzco9K1z89F2qHLo=; b=r9m614YbWyUPupkiMEwfRA
+ ja0q596HiudNLD1wzqZvqNq2IK8qqin+WLvB2/ZPw3/vBWJzdzOYESZM+lPDO5nB
+ iGiHpRIQj4IgUd0sk6RV9zogmI8LB1j6x4Jq2k+Ih6PNuTizMwMzf8y8NuZppbF+
+ r4tL4kMRAgMxuyzKBD3pFAYxe5laftzRXGFCynYFIxJQ8/DuR3qy0mv0Cg6lHXem
+ 6d4GGc0gfE3xIDd9z9giycjGTQ5tk9moke9bHS4Q5lIF1ueGK0u0i82Q3SctxJDQ
+ 3rRvYJMcfHCt96Z5WOFYzZmvgB6HfZF7XM/qX2327rtf9BSbA7sgazm1GbeiAMHw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 452ew0h1ut-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Feb 2025 07:01:10 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 51R70c1O029311;
+ Thu, 27 Feb 2025 07:01:09 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 452ew0h1ur-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Feb 2025 07:01:09 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51R3Pek2027327;
+ Thu, 27 Feb 2025 07:01:09 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 44yum26t12-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Feb 2025 07:01:08 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 51R715fQ36962576
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Feb 2025 07:01:05 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7BE3D20043;
+ Thu, 27 Feb 2025 07:01:05 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3D35020040;
+ Thu, 27 Feb 2025 07:01:03 +0000 (GMT)
+Received: from [9.124.211.149] (unknown [9.124.211.149])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 27 Feb 2025 07:01:03 +0000 (GMT)
+Message-ID: <dec641b5-6baa-49f3-993d-2bb77694bcbc@linux.ibm.com>
+Date: Thu, 27 Feb 2025 12:31:02 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 36/36] vfio/migration: Update VFIO migration
- documentation
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <2031790b755aa95b61470b286fa787b78be08107.1739994627.git.maciej.szmigiero@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <2031790b755aa95b61470b286fa787b78be08107.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: Re: [PATCH 4/6] hw/ppc: Implement saving CPU state in Fadump
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250217071711.83735-1-adityag@linux.ibm.com>
+ <20250217071711.83735-5-adityag@linux.ibm.com>
+ <D82WPYZ2R1DS.2JC91G6HRY0U7@gmail.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <D82WPYZ2R1DS.2JC91G6HRY0U7@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: xKRuJ0ILvbfYjo_dBArnGrk4YQb3KYKt
+X-Proofpoint-ORIG-GUID: Oh_962I_zfuQ0AmEMsG7EdTJJ6I4Jz5k
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-27_03,2025-02-26_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0
+ phishscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
+ impostorscore=0 malwarescore=0 mlxlogscore=999 lowpriorityscore=0
+ mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502270052
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,163 +121,352 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/25 21:34, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> 
-> Update the VFIO documentation at docs/devel/migration describing the
-> changes brought by the multifd device state transfer.
-> 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> ---
->   docs/devel/migration/vfio.rst | 80 +++++++++++++++++++++++++++++++----
->   1 file changed, 71 insertions(+), 9 deletions(-)
-> 
-> diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
-> index c49482eab66d..d9b169d29921 100644
-> --- a/docs/devel/migration/vfio.rst
-> +++ b/docs/devel/migration/vfio.rst
-> @@ -16,6 +16,37 @@ helps to reduce the total downtime of the VM. VFIO devices opt-in to pre-copy
->   support by reporting the VFIO_MIGRATION_PRE_COPY flag in the
->   VFIO_DEVICE_FEATURE_MIGRATION ioctl.
+On 27/02/25 08:57, Nicholas Piggin wrote:
 
-Please add a new "multifd" documentation subsection at the end of the file
-with this part :
+> On Mon Feb 17, 2025 at 5:17 PM AEST, Aditya Gupta wrote:
+>> <...snip...>
+>> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
+>> index 9b29cadab2c9..0aca4270aee8 100644
+>> <...snip...>
+>> --- a/hw/ppc/spapr_rtas.c
+>> +++ b/hw/ppc/spapr_rtas.c
+>> @@ -413,9 +416,174 @@ static bool fadump_preserve_mem(void)
+>>           }
+>>   
+>>           switch (data_type) {
+>> -        case FADUMP_CPU_STATE_DATA:
+>> -            /* TODO: Add CPU state data */
+>> +        case FADUMP_CPU_STATE_DATA: {
+> I would split these out into their own functions if they grow more than
+> a few lines.
+Makes sense. Will add this into a new helper function.
+>
+>> +            struct rtas_fadump_reg_save_area_header reg_save_hdr;
+>> +            struct rtas_fadump_reg_entry **reg_entries;
+>> +            struct rtas_fadump_reg_entry *curr_reg_entry;
+>> +
+>> +            uint32_t fadump_reg_entries_size;
+>> +            __be32 num_cpus = 0;
+>> +            uint32_t num_regs_per_cpu = 0;
+>> +            CPUState *cpu;
+>> +            CPUPPCState *env;
+>> +            PowerPCCPU *ppc_cpu;
+>> +
+>> +            CPU_FOREACH(cpu) {
+>> +                ++num_cpus;
+>> +            }
+>> +
+>> +            reg_save_hdr.version = cpu_to_be32(1);
+>> +            reg_save_hdr.magic_number =
+>> +                cpu_to_be64(fadump_str_to_u64("REGSAVE"));
+>> +
+>> +            /* Reg save area header is immediately followed by num cpus */
+>> +            reg_save_hdr.num_cpu_offset =
+>> +                cpu_to_be32(sizeof(struct rtas_fadump_reg_save_area_header));
+>> +
+>> +            fadump_reg_entries_size = num_cpus *
+>> +                                      FADUMP_NUM_PER_CPU_REGS *
+>> +                                      sizeof(struct rtas_fadump_reg_entry);
+>> +
+>> +            reg_entries = malloc(fadump_reg_entries_size);
+>> +            curr_reg_entry = (struct rtas_fadump_reg_entry *)reg_entries;
+>> +
+>> +            /* This must loop num_cpus time */
+>> +            CPU_FOREACH(cpu) {
+>> +                ppc_cpu = POWERPC_CPU(cpu);
+>> +                env = cpu_env(cpu);
+>> +                num_regs_per_cpu = 0;
+>> +
+>> +                curr_reg_entry->reg_id =
+>> +                    cpu_to_be64(fadump_str_to_u64("CPUSTRT"));
+>> +                curr_reg_entry->reg_value = ppc_cpu->vcpu_id;
+>> +                ++curr_reg_entry;
+>> +
+>> +#define REG_ENTRY(id, val)                                     \
+>> +                do {                                           \
+>> +                    curr_reg_entry->reg_id =                   \
+>> +                        cpu_to_be64(fadump_str_to_u64(#id));   \
+>> +                    curr_reg_entry->reg_value = val;           \
+>> +                    ++curr_reg_entry;                          \
+>> +                    ++num_regs_per_cpu;                        \
+>> +                } while (0)
+>> +
+>> +                REG_ENTRY(ACOP, env->spr[SPR_ACOP]);
+>> +                REG_ENTRY(AMR, env->spr[SPR_AMR]);
+>> +                REG_ENTRY(BESCR, env->spr[SPR_BESCR]);
+>> +                REG_ENTRY(CFAR, env->spr[SPR_CFAR]);
+>> +                REG_ENTRY(CIABR, env->spr[SPR_CIABR]);
+>> +
+>> +                /* Save the condition register */
+>> +                uint64_t cr = 0;
+>> +                cr |= (env->crf[0] & 0xf);
+>> +                cr |= (env->crf[1] & 0xf) << 1;
+>> +                cr |= (env->crf[2] & 0xf) << 2;
+>> +                cr |= (env->crf[3] & 0xf) << 3;
+>> +                cr |= (env->crf[4] & 0xf) << 4;
+>> +                cr |= (env->crf[5] & 0xf) << 5;
+>> +                cr |= (env->crf[6] & 0xf) << 6;
+>> +                cr |= (env->crf[7] & 0xf) << 7;
+> Shift values wrong here I think... Use ppc_get_cr()
+Okay, I had some issues getting this CR. Will use 'ppc_get_cr', thanks !
+>
+>> +                REG_ENTRY(CR, cr);
+>> +
+>> +                REG_ENTRY(CTR, env->spr[SPR_CTR]);
+>> +                REG_ENTRY(CTRL, env->spr[SPR_CTRL]);
+>> +                REG_ENTRY(DABR, env->spr[SPR_DABR]);
+>> +                REG_ENTRY(DABRX, env->spr[SPR_DABRX]);
+>> +                REG_ENTRY(DAR, env->spr[SPR_DAR]);
+>> +                REG_ENTRY(DAWR0, env->spr[SPR_DAWR0]);
+>> +                REG_ENTRY(DAWR1, env->spr[SPR_DAWR1]);
+>> +                REG_ENTRY(DAWRX0, env->spr[SPR_DAWRX0]);
+>> +                REG_ENTRY(DAWRX1, env->spr[SPR_DAWRX1]);
+>> +                REG_ENTRY(DPDES, env->spr[SPR_DPDES]);
+>> +                REG_ENTRY(DSCR, env->spr[SPR_DSCR]);
+>> +                REG_ENTRY(DSISR, env->spr[SPR_DSISR]);
+>> +                REG_ENTRY(EBBHR, env->spr[SPR_EBBHR]);
+>> +                REG_ENTRY(EBBRR, env->spr[SPR_EBBRR]);
+>> +
+>> +                REG_ENTRY(FPSCR, env->fpscr);
+>> +                REG_ENTRY(FSCR, env->spr[SPR_FSCR]);
+>> +
+>> +                /* Save the GPRs */
+>> +                for (int gpr_id = 0; gpr_id < 32; ++gpr_id) {
+>> +                    curr_reg_entry->reg_id =
+>> +                        cpu_to_be64(fadump_gpr_id_to_u64(gpr_id));
+>> +                    curr_reg_entry->reg_value = env->gpr[i];
+>> +                    ++curr_reg_entry;
+>> +                    ++num_regs_per_cpu;
+>> +                }
+>> +
+>> +                REG_ENTRY(IAMR, env->spr[SPR_IAMR]);
+>> +                REG_ENTRY(IC, env->spr[SPR_IC]);
+>> +                REG_ENTRY(LR, env->spr[SPR_LR]);
+>> +
+>> +                REG_ENTRY(MSR, env->msr);
+>> +                REG_ENTRY(NIA, env->nip);   /* NIA */
+>> +                REG_ENTRY(PIR, env->spr[SPR_PIR]);
+>> +                REG_ENTRY(PSPB, env->spr[SPR_PSPB]);
+>> +                REG_ENTRY(PVR, env->spr[SPR_PVR]);
+>> +                REG_ENTRY(RPR, env->spr[SPR_RPR]);
+>> +                REG_ENTRY(SPURR, env->spr[SPR_SPURR]);
+>> +                REG_ENTRY(SRR0, env->spr[SPR_SRR0]);
+>> +                REG_ENTRY(SRR1, env->spr[SPR_SRR1]);
+>> +                REG_ENTRY(TAR, env->spr[SPR_TAR]);
+>> +                REG_ENTRY(TEXASR, env->spr[SPR_TEXASR]);
+>> +                REG_ENTRY(TFHAR, env->spr[SPR_TFHAR]);
+>> +                REG_ENTRY(TFIAR, env->spr[SPR_TFIAR]);
+>> +                REG_ENTRY(TIR, env->spr[SPR_TIR]);
+>> +                REG_ENTRY(UAMOR, env->spr[SPR_UAMOR]);
+>> +                REG_ENTRY(VRSAVE, env->spr[SPR_VRSAVE]);
+>> +                REG_ENTRY(VSCR, env->vscr);
+>> +                REG_ENTRY(VTB, env->spr[SPR_VTB]);
+>> +                REG_ENTRY(WORT, env->spr[SPR_WORT]);
+>> +                REG_ENTRY(XER, env->spr[SPR_XER]);
+>> +
+>> +                /*
+>> +                 * Ignoring transaction checkpoint and few other registers
+>> +                 * mentioned in PAPR as not supported in QEMU
+>> +                 */
+>> +#undef REG_ENTRY
+>> +
+>> +                /* End the registers for this CPU with "CPUEND" reg entry */
+>> +                curr_reg_entry->reg_id =
+>> +                    cpu_to_be64(fadump_str_to_u64("CPUEND"));
+>> +
+>> +                /* Ensure the number of registers match (+2 for STRT & END) */
+>> +                assert(FADUMP_NUM_PER_CPU_REGS == num_regs_per_cpu + 2);
+>> +
+>> +                ++curr_reg_entry;
+>> +            }
+>> +
+>> +            cpu_state_len = 0;
+>> +            cpu_state_len += sizeof(reg_save_hdr);     /* reg save header */
+>> +            cpu_state_len += sizeof(__be32);           /* num_cpus */
+>> +            cpu_state_len += fadump_reg_entries_size;  /* reg entries */
+>> +
+>> +            cpu_state_region = &fdm->rgn[i];
+>> +            cpu_state_addr = dest_addr;
+>> +            cpu_state_buffer = g_malloc(cpu_state_len);
+>> +
+>> +            uint64_t offset = 0;
+>> +            memcpy(cpu_state_buffer + offset,
+>> +                    &reg_save_hdr, sizeof(reg_save_hdr));
+>> +            offset += sizeof(reg_save_hdr);
+>> +
+>> +            /* Write num_cpus */
+>> +            num_cpus = cpu_to_be32(num_cpus);
+>> +            memcpy(cpu_state_buffer + offset, &num_cpus, sizeof(__be32));
+>> +            offset += sizeof(__be32);
+>> +
+>> +            /* Write the register entries */
+>> +            memcpy(cpu_state_buffer + offset,
+>> +                    reg_entries, fadump_reg_entries_size);
+>> +            offset += fadump_reg_entries_size;
+>> +
+>> +            /*
+>> +             * We will write the cpu state data later, as otherwise it
+>> +             * might get overwritten by other fadump regions
+>> +             */
+>> +
+>>               break;
+>> +        }
+>>           case FADUMP_HPTE_REGION:
+>>               /* TODO: Add hpte state data */
+>>               break;
+>> @@ -455,6 +623,34 @@ static bool fadump_preserve_mem(void)
+>>           }
+>>       }
+>>   
+>> +    /*
+>> +     * Write the Register Save Area
+>> +     *
+>> +     * CPU State/Register Save Area should be written after dumping the
+>> +     * memory to prevent overwritting while saving other memory regions
+>> +     *
+>> +     * eg. If boot memory region is 1G, then both the first 1GB memory, and
+>> +     * the Register Save Area needs to be saved at 1GB.
+>> +     * And as the CPU_STATE_DATA region comes first than the
+>> +     * REAL_MODE_REGION region to be copied, the CPU_STATE_DATA will get
+>> +     * overwritten if saved before the 0GB - 1GB region is copied after
+>> +     * saving CPU state data
+>> +     */
+>> +    cpu_physical_memory_write(cpu_state_addr, cpu_state_buffer, cpu_state_len);
+> Check docs/devel/loads-stores.rst, address_space_* is preferred to check
+> for failures. It also says devices should operate on their own address
+> spaces and that doesn't really apply to spapr since the "virtual
+> hypervisor" doesn't really fit the model of a device...
+>
+> Perhaps look at h_enter_nested which uses CPU(cpu)->as.
+Got it. Will try to use address_space_read/write in v2.
+>> +    g_free(cpu_state_buffer);
+>> +
+>> +    /*
+>> +     * Set bytes_dumped in cpu state region, so kernel knows platform have
+>> +     * exported it
+>> +     */
+>> +    cpu_state_region->bytes_dumped = cpu_to_be64(cpu_state_len);
+>> +
+>> +    if (cpu_state_region->source_len != cpu_state_region->bytes_dumped) {
+>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>> +                "CPU State region's length passed by kernel, doesn't match"
+>> +                " with CPU State region length exported by QEMU");
+>> +    }
+>> +
+>>       return true;
+>>   }
+>>   
+>> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+>> index a80704187583..0e8002bad9e0 100644
+>> --- a/include/hw/ppc/spapr.h
+>> +++ b/include/hw/ppc/spapr.h
+>> @@ -792,6 +792,9 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
+>>   #define FADUMP_HPTE_REGION      0x0002
+>>   #define FADUMP_REAL_MODE_REGION 0x0011
+>>   
+>> +/* Number of registers stored per cpu */
+>> +#define FADUMP_NUM_PER_CPU_REGS (32 /*GPR*/ + 45 /*others*/ + 2 /*STRT & END*/)
+>> +
+>>   /* OS defined sections */
+>>   #define FADUMP_PARAM_AREA       0x0100
+>>   
+>> @@ -845,6 +848,86 @@ struct rtas_fadump_mem_struct {
+>>       struct rtas_fadump_section        rgn[FADUMP_MAX_SECTIONS];
+>>   };
+>>   
+>> +/*
+>> + * The firmware-assisted dump format.
+>> + *
+>> + * The register save area is an area in the partition's memory used to preserve
+>> + * the register contents (CPU state data) for the active CPUs during a firmware
+>> + * assisted dump. The dump format contains register save area header followed
+>> + * by register entries. Each list of registers for a CPU starts with "CPUSTRT"
+>> + * and ends with "CPUEND".
+>> + */
+>> +
+>> +/* Register save area header. */
+>> +struct rtas_fadump_reg_save_area_header {
+>> +    __be64    magic_number;
+>> +    __be32    version;
+>> +    __be32    num_cpu_offset;
+>> +};
+>> +
+>> +/* Register entry. */
+>> +struct rtas_fadump_reg_entry {
+>> +    __be64    reg_id;
+>> +    __be64    reg_value;
+>> +};
+>> +
+>> +/*
+>> + * Copy the ascii values for first 8 characters from a string into u64
+>> + * variable at their respective indexes.
+>> + * e.g.
+>> + *  The string "FADMPINF" will be converted into 0x4641444d50494e46
+>> + */
+>> +static inline uint64_t fadump_str_to_u64(const char *str)
+>> +{
+>> +    uint64_t val = 0;
+>> +    int i;
+>> +
+>> +    for (i = 0; i < sizeof(val); i++) {
+>> +        val = (*str) ? (val << 8) | *str++ : val << 8;
+>> +    }
+>> +    return val;
+>> +}
+>> +
+>> +/**
+>> + * Get the identifier id for register entries of GPRs
+>> + *
+>> + * It gives the same id as 'fadump_str_to_u64' when the complete string id
+>> + * of the GPR is given, ie.
+>> + *
+>> + *   fadump_str_to_u64("GPR05") == fadump_gpr_id_to_u64(5);
+>> + *   fadump_str_to_u64("GPR12") == fadump_gpr_id_to_u64(12);
+>> + *
+>> + * And so on. Hence this can be implemented by creating a dynamic
+>> + * string for each GPR, such as "GPR00", "GPR01", ... "GPR31"
+>> + * Instead of allocating a string, an observation from the math of
+>> + * 'fadump_str_to_u64' or from PAPR tells us that there's a pattern
+>> + * in the identifier IDs, such that the first 8 bytes are affected only by
+>> + * whether it is GPR0*, GPR1*, GPR2*, GPR3*. 9th byte is always 0x3. And
+>> + * the the 10th byte is the index of the GPR modulo 10.
+>> + */
+>> +static inline uint64_t fadump_gpr_id_to_u64(uint32_t gpr_id)
+>> +{
+>> +    uint64_t val = 0;
+>> +
+>> +    /* Valid range of GPR id is only GPR0 to GPR31 */
+>> +    assert(gpr_id < 32);
+>> +
+>> +    if (gpr_id <= 9) {
+>> +        val = fadump_str_to_u64("GPR0");
+>> +    } else if (gpr_id <= 19) {
+>> +        val = fadump_str_to_u64("GPR1");
+>> +    } else if (gpr_id <= 29) {
+>> +        val = fadump_str_to_u64("GPR2");
+>> +    } else {
+>> +        val = fadump_str_to_u64("GPR3");
+>> +    }
+>> +
+>> +    val |= 0x30000000;
+>> +    val |= ((gpr_id % 10) << 12);
+>> +
+>> +    return val;
+>> +}
+> These two functions could probably go out of line, I doubt they
+> are performance critical and make them static if not used outside
+> the file.
 
-> +Starting from QEMU version 10.0 there's a possibility to transfer VFIO device
-> +_STOP_COPY state via multifd channels. This helps reduce downtime - especially
-> +with multiple VFIO devices or with devices having a large migration state.
-> +As an additional benefit, setting the VFIO device to _STOP_COPY state and
-> +saving its config space is also parallelized (run in a separate thread) in
-> +such migration mode.
-> +
-> +The multifd VFIO device state transfer is controlled by
-> +"x-migration-multifd-transfer" VFIO device property. This property defaults to
-> +AUTO, which means that VFIO device state transfer via multifd channels is
-> +attempted in configurations that otherwise support it.
-> +
-
-I was expecting a much more detailed explanation on the design too  :
-
-  * in the cover letter
-  * in the hw/vfio/migration-multifd.c
-  * in some new file under docs/devel/migration/
+True, have marked them static (but in a header file), can see I can move 
+it into some .c file if not needed to be shared.
 
 
-
-This section :
-
-> +Since the target QEMU needs to load device state buffers in-order it needs to
-> +queue incoming buffers until they can be loaded into the device.
-> +This means that a malicious QEMU source could theoretically cause the target
-> +QEMU to allocate unlimited amounts of memory for such buffers-in-flight.
-> +
-> +The "x-migration-max-queued-buffers" property allows capping the maximum count
-> +of these VFIO device state buffers queued at the destination.
-> +
-> +Because a malicious QEMU source causing OOM on the target is not expected to be
-> +a realistic threat in most of VFIO live migration use cases and the right value
-> +depends on the particular setup by default this queued buffers limit is
-> +disabled by setting it to UINT64_MAX.
-
-should be in patch 34. It is not obvious it will be merged.
+Thanks for your reviews Nick.
 
 
-This section :
+- Aditya G
 
-> +Some host platforms (like ARM64) require that VFIO device config is loaded only
-> +after all iterables were loaded.
-> +Such interlocking is controlled by "x-migration-load-config-after-iter" VFIO
-> +device property, which in its default setting (AUTO) does so only on platforms
-> +that actually require it.
-
-Should be in 35. Same reason.
-
-
->   When pre-copy is supported, it's possible to further reduce downtime by
->   enabling "switchover-ack" migration capability.
->   VFIO migration uAPI defines "initial bytes" as part of its pre-copy data stream
-> @@ -67,14 +98,39 @@ VFIO implements the device hooks for the iterative approach as follows:
->   * A ``switchover_ack_needed`` function that checks if the VFIO device uses
->     "switchover-ack" migration capability when this capability is enabled.
->   
-> -* A ``save_state`` function to save the device config space if it is present.
-> -
-> -* A ``save_live_complete_precopy`` function that sets the VFIO device in
-> -  _STOP_COPY state and iteratively copies the data for the VFIO device until
-> -  the vendor driver indicates that no data remains.
-> -
-> -* A ``load_state`` function that loads the config section and the data
-> -  sections that are generated by the save functions above.
-> +* A ``switchover_start`` function that in the multifd mode starts a thread that
-> +  reassembles the multifd received data and loads it in-order into the device.
-> +  In the non-multifd mode this function is a NOP.
-> +
-> +* A ``save_state`` function to save the device config space if it is present
-> +  in the non-multifd mode.
-> +  In the multifd mode it just emits either a dummy EOS marker or
-> +  "all iterables were loaded" flag for configurations that need to defer
-> +  loading device config space after them.
-> +
-> +* A ``save_live_complete_precopy`` function that in the non-multifd mode sets
-> +  the VFIO device in _STOP_COPY state and iteratively copies the data for the
-> +  VFIO device until the vendor driver indicates that no data remains.
-> +  In the multifd mode it just emits a dummy EOS marker.
-> +
-> +* A ``save_live_complete_precopy_thread`` function that in the multifd mode
-> +  provides thread handler performing multifd device state transfer.
-> +  It sets the VFIO device to _STOP_COPY state, iteratively reads the data
-> +  from the VFIO device and queues it for multifd transmission until the vendor
-> +  driver indicates that no data remains.
-> +  After that, it saves the device config space and queues it for multifd
-> +  transfer too.
-> +  In the non-multifd mode this thread is a NOP.
-> +
-> +* A ``load_state`` function that loads the data sections that are generated
-> +  by the main migration channel save functions above.
-> +  In the non-multifd mode it also loads the config section, while in the
-> +  multifd mode it handles the optional "all iterables were loaded" flag if
-> +  it is in use.
-> +
-> +* A ``load_state_buffer`` function that loads the device state and the device
-> +  config that arrived via multifd channels.
-> +  It's used only in the multifd mode.
-
-Please move the documentation of the new migration handlers in the
-patch introducing them.
-
-
-Thanks,
-
-C.
-
-
-
->   
->   * ``cleanup`` functions for both save and load that perform any migration
->     related cleanup.
-> @@ -176,8 +232,11 @@ Live migration save path
->                   Then the VFIO device is put in _STOP_COPY state
->                        (FINISH_MIGRATE, _ACTIVE, _STOP_COPY)
->            .save_live_complete_precopy() is called for each active device
-> -      For the VFIO device, iterate in .save_live_complete_precopy() until
-> +              For the VFIO device: in the non-multifd mode iterate in
-> +                        .save_live_complete_precopy() until
->                                  pending data is 0
-> +	          In the multifd mode this iteration is done in
-> +	          .save_live_complete_precopy_thread() instead.
->                                         |
->                        (POSTMIGRATE, _COMPLETED, _STOP_COPY)
->               Migraton thread schedules cleanup bottom half and exits
-> @@ -194,6 +253,9 @@ Live migration resume path
->                             (RESTORE_VM, _ACTIVE, _STOP)
->                                         |
->        For each device, .load_state() is called for that device section data
-> +                 transmitted via the main migration channel.
-> +     For data transmitted via multifd channels .load_state_buffer() is called
-> +                                   instead.
->                           (RESTORE_VM, _ACTIVE, _RESUMING)
->                                         |
->     At the end, .load_cleanup() is called for each device and vCPUs are started
-> 
-
+>
+> Thanks,
+> Nick
 
