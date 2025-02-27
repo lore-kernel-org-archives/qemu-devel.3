@@ -4,96 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA0AC19F32
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78336C1B0FF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tneoD-0006gP-1w; Thu, 27 Feb 2025 09:24:21 -0500
+	id 1tnesC-0007BQ-9n; Thu, 27 Feb 2025 09:28:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnemh-0003t5-CT
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:22:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnemf-00047c-0j
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:22:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740666159;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tXHZ7ahE0SuDjTAp4gMKpg+0aMsCMDD4X5FjTPi4lj4=;
- b=V1VlqHXcsqUEgl4q5+CkWsZKQcR+SFgUIeJEM84JUIreNB9fNFrpYy+VQZb4X79/jOwLap
- 0FcqR468zMa+3kD5spH10vFmAIKch8UqV2tlQUJkWcNehQsffyCHwDSIy10GFUg9r2GB14
- HpY8uIwlga9BEo62x+RG5rGQsh64/9A=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93-EYidEQP2PiyUowx354ZfDw-1; Thu, 27 Feb 2025 09:22:38 -0500
-X-MC-Unique: EYidEQP2PiyUowx354ZfDw-1
-X-Mimecast-MFC-AGG-ID: EYidEQP2PiyUowx354ZfDw_1740666156
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-abb7e837a7aso112977566b.3
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:22:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740666155; x=1741270955;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tnern-0005aM-Kx
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:28:00 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tnerj-0004v6-Rx
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:27:59 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-439a4fc2d65so10717655e9.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:27:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740666470; x=1741271270; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Qe4aJgheLC+WLLda+xlMEOvgcnf2Z7Yw6J5SwaqcyMo=;
+ b=CGLwn7x8yw+yL6mTLa1jg4a3zaxYhlHdWUFv6MC4K/YJ6evKK8X7edUSPmISQdCgvg
+ vNj2yu/WUTtaye+yitDW7j8Axd90OBL1ZNMGvzgzZapD6vPjdiROQO9+DMPHHWdlA53C
+ MjptXRI/7uzmIkaKs0+mV+UFaBNDupD3v7WvMRntfzWoXdDZnjxLbdP/bGv5DuzvtOGU
+ s76HL5GHvMO1rsIkFAPifv+IcIBW4JL3eXkLrdgGqpctgrprSTsTv/6Bb2Z/0H+pawFl
+ SFOeYgdYrD4zUbwPIZGfrUs6v8ZOiu1RpxRbKk2g6y0AGhbDNhpCDrAnFw6TssjVKg6F
+ xe8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740666470; x=1741271270;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tXHZ7ahE0SuDjTAp4gMKpg+0aMsCMDD4X5FjTPi4lj4=;
- b=wEqyZYXL2dZ6D+WLb/yoRKnnhnuTiLolaLssP4fIFPeyqU+qfRPkEtq57dAbGhTg5a
- mFqKgNAWLcJKLAuzCgOdoR7RPngG18jXDdd6bkwwn27UB2HKwkJ4Wxv8H+e8JQc3C3nA
- sn3zjl2H6xMQDQHhlkdzqPDTAS3Hy5CVFAXNNDk8XrZjANvgy+oz1tQyNO1ZWhRNCdJA
- TZqK0W6PG3DXR5OURVwV5d0kygtB+w+7Vs5VvSkZd4VsU9irZlmkYY09Jz4jMlObl5+i
- b/Xe/OnnymJ3st7EXpiwOFeX9ccXWEBMCgcgvfMdPhv3GPIoluDoMSsX9DY+uw3xPRJ9
- OnaA==
-X-Gm-Message-State: AOJu0YzLHwbIUph9WVD0IfI+13+yIgBdo8542VAkR4mE4KrBws2EWUTf
- 4uCCeGHTd0sCuQ2SRMSQyLUaCSrqj+IkbSsibBB7xm7tpoj6LPo/yr+tjoSSJeX5vuefQ/qtcY/
- IfPGTcR6Ug/pTyGoWhQxDuwVix/uB6dO6JdIqCu1p/GzVFzOyIPkSXt+pj6Cxo+xr6G0HXYGJ5B
- ZPN7yoFnPKL9Z2RSSRTx4S62tugI8SSyu0VeSRdh0=
-X-Gm-Gg: ASbGncsryex07mTqkr/5tBPoeTled1qrnO7YnlXQFvr5DRvPuevgBHH1MI1Tg9fVSHn
- P/5F2Oz237aWH0eu/qmz1M8la603/jgNpWGbVW74K3GFm+xfS1coLPe/MkP+fWxQBZcxt5NA5U7
- WZ3UPHcuPJJn70NSVbuXZ69hSL2Ql/QBTki5SJo5q9Xx36OE41fv8dI7mpXna1x3eNCyss3ziuD
- iR69VYAHirZkE9OPeceDsYi90z7HK6dlPFRVS4XBPcWexnB6pSImOego343Vm6vigF9ImJrexaV
- ZjQ7qSbtMuPzX+NQrEAB
-X-Received: by 2002:a17:907:96a5:b0:ab7:fbb2:b47c with SMTP id
- a640c23a62f3a-abc09c1a51dmr3073941166b.35.1740666154847; 
- Thu, 27 Feb 2025 06:22:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF8W9WmasNs4OKJbm4Y1M3y+D2krJAGkB7w6y4aLrIrrp8CdNeeKERQYmZcCAQRy1rDqxjJqQ==
-X-Received: by 2002:a17:907:96a5:b0:ab7:fbb2:b47c with SMTP id
- a640c23a62f3a-abc09c1a51dmr3073937366b.35.1740666154343; 
- Thu, 27 Feb 2025 06:22:34 -0800 (PST)
-Received: from [192.168.10.48] ([176.206.102.52])
+ bh=Qe4aJgheLC+WLLda+xlMEOvgcnf2Z7Yw6J5SwaqcyMo=;
+ b=i8ltbFRu+ig7J1FBnNook/3TVywfXPibIoxQnIIfR5YBJJkGGnbJcKITMLRGvn0OiA
+ FEAVPWzbljeeKojJp9G4heFpvk6KRYJ7K7r9/oYyEyGe7zkkO8VKO/Ruemp1lwucJDPa
+ nBhps+ubxqxDWvPIzp0+WK5NNsk7I5bTyZSxzt6Mq+snmPIYV9qRevP/7O5s4v0KLEpG
+ IR/W8sKMD/gtnb7yeICx5e47RdqW22yJdEMQNyIZrrD3la442hX6wSAdv1ESsNIL4iPB
+ lUaClH3L0v/lv+sYDIy57lzU8FpH6k7gLEGq3Az8QuyhwouNpLnhNoYNrJy1VpeXbcVB
+ roYQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU5RbhDdII4/NHwc/yiBrhA+DNMe2n//zWtDsZvaPul0SEYnPCHY3I1j/mMwJayaPvdZziY8MVB2awW@nongnu.org
+X-Gm-Message-State: AOJu0Ywh57uEnRwgDs44hpWU91K4Qi4j4WlEyXdAkTCvM70Ywm6+XRil
+ f3IbsGA0g1AASNwfudqHc4A6w3myXOESf/IP7S1eCjzVbICr9vCiIn1Met3FYO8=
+X-Gm-Gg: ASbGncv81KPGT7r3Kw5kymaspL1uHCHtrEoKu9G3TAmUqp+I02kxzqLXEuAUxACwjY2
+ 1csQkVsPQbo7jXiLv+GfFP4q6Hdi640oQF3TYsp/PGNMLp8c+Pfeic+8mvLIY6Vg4r0U3VRiaC6
+ N2q7WT2o8v328+QWvZLDbYMSjnAARosTAtad1Aq0MNitgEB8xaqsYp/DX1KWDyTGqinK64EI4jx
+ CVdeg7EQ2MNZbkKTUZiFL3uQF3tOWGvg+uHJTvNBNbxKOcfnt+SMJQnCHldAIQweUtTcYyaDBo3
+ KfyV/TRgHIlzVnovJ1OIXbPZrbxRm3CM
+X-Google-Smtp-Source: AGHT+IGrwyync3NgMser08FgjGaCoYCZ7pdwQubFTuUt3KuoUKEYGIRTn2JptuI0nzgaPodEJy0A2A==
+X-Received: by 2002:a05:600c:5252:b0:439:88bb:d025 with SMTP id
+ 5b1f17b1804b1-43ab0f26e5fmr110547285e9.1.1740666470162; 
+ Thu, 27 Feb 2025 06:27:50 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf0c7c07d3sm128139866b.180.2025.02.27.06.22.32
+ 5b1f17b1804b1-43aba532b8dsm55968335e9.14.2025.02.27.06.27.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:22:32 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org,
-	zhao1.liu@intel.com
-Subject: [PATCH 06/12] rust: qom: wrap Object with Opaque<>
-Date: Thu, 27 Feb 2025 15:22:13 +0100
-Message-ID: <20250227142219.812270-7-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250227142219.812270-1-pbonzini@redhat.com>
-References: <20250227142219.812270-1-pbonzini@redhat.com>
+ Thu, 27 Feb 2025 06:27:49 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 2/3] target/arm: Correct STRD atomicity
+Date: Thu, 27 Feb 2025 14:27:45 +0000
+Message-ID: <20250227142746.1698904-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250227142746.1698904-1-peter.maydell@linaro.org>
+References: <20250227142746.1698904-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,182 +99,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/qemu-api/src/bindings.rs |  3 ---
- rust/qemu-api/src/memory.rs   |  2 +-
- rust/qemu-api/src/qdev.rs     |  6 +++---
- rust/qemu-api/src/qom.rs      | 35 ++++++++++++++++++++++-------------
- 4 files changed, 26 insertions(+), 20 deletions(-)
+Our STRD implementation doesn't correctly implement the requirement:
+ * if the address is 8-aligned the access must be a 64-bit
+   single-copy atomic access, not two 32-bit accesses
 
-diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
-index d2868639ff6..be6dd68c09c 100644
---- a/rust/qemu-api/src/bindings.rs
-+++ b/rust/qemu-api/src/bindings.rs
-@@ -46,9 +46,6 @@ unsafe impl Sync for MemoryRegion {}
- unsafe impl Send for ObjectClass {}
- unsafe impl Sync for ObjectClass {}
+Rewrite the handling of STRD to use a single tcg_gen_qemu_st_i64()
+of a value produced by concatenating the two 32 bit source registers.
+This allows us to get the atomicity right.
+
+As with the LDRD change, now that we don't update 'addr' in the
+course of performing the store we need to adjust the offset
+we pass to op_addr_ri_post() and op_addr_rr_post().
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/tcg/translate.c | 55 ++++++++++++++++++++++++--------------
+ 1 file changed, 35 insertions(+), 20 deletions(-)
+
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index e10a1240c17..2020d18f019 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -5057,10 +5057,38 @@ static bool trans_LDRD_rr(DisasContext *s, arg_ldst_rr *a)
+     return true;
+ }
  
--unsafe impl Send for Object {}
--unsafe impl Sync for Object {}
++static void do_strd_store(DisasContext *s, TCGv_i32 addr, int rt, int rt2)
++{
++    /*
++     * STRD is required to be an atomic 64-bit access if the
++     * address is 8-aligned, two atomic 32-bit accesses if
++     * it's only 4-aligned, and to give an alignemnt fault
++     * if it's not 4-aligned.
++     * Rt is always the word from the lower address, and Rt2 the
++     * data from the higher address, regardless of endianness.
++     * So (like gen_store_exclusive) we avoid gen_aa32_ld_i64()
++     * so we don't get its SCTLR_B check, and instead do a 64-bit access
++     * using MO_BE if appropriate, using a value constructed
++     * by putting the two halves together in the right order.
++     */
++    int mem_idx = get_mem_index(s);
++    MemOp opc = MO_64 | MO_ALIGN_4 | MO_ATOM_SUBALIGN | s->be_data;
++    TCGv taddr = gen_aa32_addr(s, addr, opc);
++    TCGv_i32 t1 = load_reg(s, rt);
++    TCGv_i32 t2 = load_reg(s, rt2);
++    TCGv_i64 t64 = tcg_temp_new_i64();
++
++    if (s->be_data == MO_BE) {
++        tcg_gen_concat_i32_i64(t64, t2, t1);
++    } else {
++        tcg_gen_concat_i32_i64(t64, t1, t2);
++    }
++    tcg_gen_qemu_st_i64(t64, taddr, mem_idx, opc);
++}
++
+ static bool trans_STRD_rr(DisasContext *s, arg_ldst_rr *a)
+ {
+-    int mem_idx = get_mem_index(s);
+-    TCGv_i32 addr, tmp;
++    TCGv_i32 addr;
+ 
+     if (!ENABLE_ARCH_5TE) {
+         return false;
+@@ -5071,15 +5099,9 @@ static bool trans_STRD_rr(DisasContext *s, arg_ldst_rr *a)
+     }
+     addr = op_addr_rr_pre(s, a);
+ 
+-    tmp = load_reg(s, a->rt);
+-    gen_aa32_st_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
++    do_strd_store(s, addr, a->rt, a->rt + 1);
+ 
+-    tcg_gen_addi_i32(addr, addr, 4);
 -
- unsafe impl Send for SysBusDevice {}
- unsafe impl Sync for SysBusDevice {}
- 
-diff --git a/rust/qemu-api/src/memory.rs b/rust/qemu-api/src/memory.rs
-index 682951ab44e..713c494ca2e 100644
---- a/rust/qemu-api/src/memory.rs
-+++ b/rust/qemu-api/src/memory.rs
-@@ -157,7 +157,7 @@ unsafe fn do_init_io(
-             let cstr = CString::new(name).unwrap();
-             memory_region_init_io(
-                 slot,
--                owner.cast::<Object>(),
-+                owner.cast::<bindings::Object>(),
-                 ops,
-                 owner.cast::<c_void>(),
-                 cstr.as_ptr(),
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index c136457090c..1a4d1f38762 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -52,7 +52,7 @@ pub trait ResettablePhasesImpl {
- /// can be downcasted to type `T`. We also expect the device is
- /// readable/writeable from one thread at any time.
- unsafe extern "C" fn rust_resettable_enter_fn<T: ResettablePhasesImpl>(
--    obj: *mut Object,
-+    obj: *mut bindings::Object,
-     typ: ResetType,
- ) {
-     let state = NonNull::new(obj).unwrap().cast::<T>();
-@@ -65,7 +65,7 @@ pub trait ResettablePhasesImpl {
- /// can be downcasted to type `T`. We also expect the device is
- /// readable/writeable from one thread at any time.
- unsafe extern "C" fn rust_resettable_hold_fn<T: ResettablePhasesImpl>(
--    obj: *mut Object,
-+    obj: *mut bindings::Object,
-     typ: ResetType,
- ) {
-     let state = NonNull::new(obj).unwrap().cast::<T>();
-@@ -78,7 +78,7 @@ pub trait ResettablePhasesImpl {
- /// can be downcasted to type `T`. We also expect the device is
- /// readable/writeable from one thread at any time.
- unsafe extern "C" fn rust_resettable_exit_fn<T: ResettablePhasesImpl>(
--    obj: *mut Object,
-+    obj: *mut bindings::Object,
-     typ: ResetType,
- ) {
-     let state = NonNull::new(obj).unwrap().cast::<T>();
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 5488643a2fd..2defbd23516 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -101,16 +101,24 @@
-     ptr::NonNull,
- };
- 
--pub use bindings::{Object, ObjectClass};
-+pub use bindings::ObjectClass;
- 
- use crate::{
-     bindings::{
-         self, object_class_dynamic_cast, object_dynamic_cast, object_get_class,
-         object_get_typename, object_new, object_ref, object_unref, TypeInfo,
-     },
--    cell::bql_locked,
-+    cell::{bql_locked, Opaque},
- };
- 
-+/// A safe wrapper around [`bindings::Object`].
-+#[repr(transparent)]
-+#[derive(Debug, qemu_api_macros::Wrapper)]
-+pub struct Object(Opaque<bindings::Object>);
-+
-+unsafe impl Send for Object {}
-+unsafe impl Sync for Object {}
-+
- /// Marker trait: `Self` can be statically upcasted to `P` (i.e. `P` is a direct
- /// or indirect parent of `Self`).
- ///
-@@ -199,7 +207,7 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
-     }
+-    tmp = load_reg(s, a->rt + 1);
+-    gen_aa32_st_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
+-
+-    op_addr_rr_post(s, a, addr, -4);
++    op_addr_rr_post(s, a, addr, 0);
+     return true;
  }
  
--unsafe extern "C" fn rust_instance_init<T: ObjectImpl>(obj: *mut Object) {
-+unsafe extern "C" fn rust_instance_init<T: ObjectImpl>(obj: *mut bindings::Object) {
-     let mut state = NonNull::new(obj).unwrap().cast::<T>();
-     // SAFETY: obj is an instance of T, since rust_instance_init<T>
-     // is called from QOM core as the instance_init function
-@@ -209,7 +217,7 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
-     }
+@@ -5207,20 +5229,13 @@ static bool trans_LDRD_ri_t32(DisasContext *s, arg_ldst_ri2 *a)
+ 
+ static bool op_strd_ri(DisasContext *s, arg_ldst_ri *a, int rt2)
+ {
+-    int mem_idx = get_mem_index(s);
+-    TCGv_i32 addr, tmp;
++    TCGv_i32 addr;
+ 
+     addr = op_addr_ri_pre(s, a);
+ 
+-    tmp = load_reg(s, a->rt);
+-    gen_aa32_st_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
++    do_strd_store(s, addr, a->rt, rt2);
+ 
+-    tcg_gen_addi_i32(addr, addr, 4);
+-
+-    tmp = load_reg(s, rt2);
+-    gen_aa32_st_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
+-
+-    op_addr_ri_post(s, a, addr, -4);
++    op_addr_ri_post(s, a, addr, 0);
+     return true;
  }
  
--unsafe extern "C" fn rust_instance_post_init<T: ObjectImpl>(obj: *mut Object) {
-+unsafe extern "C" fn rust_instance_post_init<T: ObjectImpl>(obj: *mut bindings::Object) {
-     let state = NonNull::new(obj).unwrap().cast::<T>();
-     // SAFETY: obj is an instance of T, since rust_instance_post_init<T>
-     // is called from QOM core as the instance_post_init function
-@@ -230,7 +238,7 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
-     <T as ObjectImpl>::CLASS_INIT(unsafe { klass.as_mut() })
- }
- 
--unsafe extern "C" fn drop_object<T: ObjectImpl>(obj: *mut Object) {
-+unsafe extern "C" fn drop_object<T: ObjectImpl>(obj: *mut bindings::Object) {
-     // SAFETY: obj is an instance of T, since drop_object<T> is called
-     // from the QOM core function object_deinit() as the instance_finalize
-     // function for class T.  Note that while object_deinit() will drop the
-@@ -280,14 +288,14 @@ pub unsafe trait ObjectType: Sized {
-     /// Return the receiver as an Object.  This is always safe, even
-     /// if this type represents an interface.
-     fn as_object(&self) -> &Object {
--        unsafe { &*self.as_object_ptr() }
-+        unsafe { &*self.as_ptr().cast() }
-     }
- 
-     /// Return the receiver as a const raw pointer to Object.
-     /// This is preferrable to `as_object_mut_ptr()` if a C
-     /// function only needs a `const Object *`.
--    fn as_object_ptr(&self) -> *const Object {
--        self.as_ptr().cast()
-+    fn as_object_ptr(&self) -> *const bindings::Object {
-+        self.as_object().as_ptr()
-     }
- 
-     /// Return the receiver as a mutable raw pointer to Object.
-@@ -297,8 +305,8 @@ fn as_object_ptr(&self) -> *const Object {
-     /// This cast is always safe, but because the result is mutable
-     /// and the incoming reference is not, this should only be used
-     /// for calls to C functions, and only if needed.
--    unsafe fn as_object_mut_ptr(&self) -> *mut Object {
--        self.as_object_ptr() as *mut _
-+    unsafe fn as_object_mut_ptr(&self) -> *mut bindings::Object {
-+        self.as_object().as_mut_ptr()
-     }
- }
- 
-@@ -621,7 +629,7 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
- /// We expect the FFI user of this function to pass a valid pointer that
- /// can be downcasted to type `T`. We also expect the device is
- /// readable/writeable from one thread at any time.
--unsafe extern "C" fn rust_unparent_fn<T: ObjectImpl>(dev: *mut Object) {
-+unsafe extern "C" fn rust_unparent_fn<T: ObjectImpl>(dev: *mut bindings::Object) {
-     let state = NonNull::new(dev).unwrap().cast::<T>();
-     T::UNPARENT.unwrap()(unsafe { state.as_ref() });
- }
-@@ -796,8 +804,9 @@ fn new() -> Owned<Self> {
-         // SAFETY: the object created by object_new is allocated on
-         // the heap and has a reference count of 1
-         unsafe {
--            let obj = &*object_new(Self::TYPE_NAME.as_ptr());
--            Owned::from_raw(obj.unsafe_cast::<Self>())
-+            let raw_obj = object_new(Self::TYPE_NAME.as_ptr());
-+            let obj = Object::from_raw(raw_obj).unsafe_cast::<Self>();
-+            Owned::from_raw(obj)
-         }
-     }
- }
 -- 
-2.48.1
+2.43.0
 
 
