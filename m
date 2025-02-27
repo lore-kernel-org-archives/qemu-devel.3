@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 106ECC19F32
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 16:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02654C19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 16:04:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tngK6-00077f-Kk; Thu, 27 Feb 2025 11:01:18 -0500
+	id 1tngKJ-0007Li-TH; Thu, 27 Feb 2025 11:01:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tngJz-00070e-Qe; Thu, 27 Feb 2025 11:01:11 -0500
+ id 1tngK2-00073i-I5; Thu, 27 Feb 2025 11:01:14 -0500
 Received: from tor.source.kernel.org ([2600:3c04::f03c:95ff:fe5e:7468])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tngJw-0007HA-8j; Thu, 27 Feb 2025 11:01:11 -0500
+ id 1tngJy-0007Ig-51; Thu, 27 Feb 2025 11:01:14 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 13A5E61F3C;
+ by tor.source.kernel.org (Postfix) with ESMTP id 35DDA61F43;
  Thu, 27 Feb 2025 16:00:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07947C4CEE9;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149A3C113D0;
  Thu, 27 Feb 2025 16:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1740672063;
- bh=5zJhfes57BAIUEr1wkVxprZJEF9UksszPvltIQNyQ7Y=;
+ bh=bxK9Et1UjLido8TcaM0YtPM1EGz6KNWSFKPtGUAIaGc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=u64danzuVXz/EHKksz7dnhZ96vCaejpVpcXohqXhy9nP6TFqP8ERAb5dwuFe+FBfh
- vPPTk1hTznXXfzGk8SaM8T2LqL7JSWJqVMvAlHz688siuaSsvpqnFQbGgf5dubh0RV
- KT1oG+x1nHFBKcIbnJ6FeXRzWhKTZRdt8hdR8Mf1mbQ6joX0ktRAapoKsR7CVecmIG
- 1kuTbOh4cVfryHtT890K/9bIGIlZMCkCRmxqlgLxggORs1mydwVcSQRn/r6AZwHz08
- 95HA299LGJqYV7+7+s4rC7McPkoHs+iFa1ZDIMLBPluxcHRtL0js9LkNWKtkIyDimJ
- PQwP1lgm9HXSA==
+ b=Ey7RwX5uYigzJuDdeBDBXHhjx2+oD7DhU0XnlvLVuXcnICl2v+ztVZqLXR0B9s3Mr
+ NF9yngAHJ4OdGd8+YuC/OeU/3O8uuZxMNlDwvOUJdmSbiKeQbgMsry2iyZwMxKOUnJ
+ yQGdeoQ/FYCbQvC3A8LdNHpkBWaohJw2d87ZBgmQi7Rywx47jWqekQHVI3KYJHZ9Zc
+ W1Hbrr+lbJR9G1AKOS8r4NSHoc89q0+Y7LcApvdfHAC0uVhDGMxqYuW33cJ9SxVyqU
+ Daox1uiMXivZBZXgRkaqzV63xALQPHyMs6yksUKyAIYgbH+fu3pq13GAGJdWymCITP
+ 4RBeR2DfVs1Qw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tngJp-000000023bl-0hDb; Thu, 27 Feb 2025 17:01:01 +0100
+ id 1tngJp-000000023bt-0vId; Thu, 27 Feb 2025 17:01:01 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Ani Sinha <anisinha@redhat.com>, linux-kernel@vger.kernel.org
-Subject: [PATCH v6 16/19] acpi/generic_event_device.c: enable use_hest_addr
- for QEMU 10.x
-Date: Thu, 27 Feb 2025 17:00:54 +0100
-Message-ID: <797c0199ef713241db145baf3860d32e0eb1d03a.1740671863.git.mchehab+huawei@kernel.org>
+ Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org
+Subject: [PATCH v6 18/19] docs: hest: add new "etc/acpi_table_hest_addr" and
+ update workflow
+Date: Thu, 27 Feb 2025 17:00:56 +0100
+Message-ID: <445f7d41b01ffc5bd79d6fd83bc7c4c621bcbc85.1740671863.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1740671863.git.mchehab+huawei@kernel.org>
 References: <cover.1740671863.git.mchehab+huawei@kernel.org>
@@ -74,27 +74,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that we have everything in place, enable using HEST GPA
-instead of etc/hardware_errors GPA.
+While the HEST layout didn't change, there are some internal
+changes related to how offsets are calculated and how memory error
+events are triggered.
+
+Update specs to reflect such changes.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- hw/acpi/generic_event_device.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/specs/acpi_hest_ghes.rst | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index f029753ab709..9fe70b74bd42 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -332,7 +332,7 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
- static const Property acpi_ged_properties[] = {
-     DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
-     DEFINE_PROP_BOOL("x-has-hest-addr", AcpiGedState,
--                     ghes_state.use_hest_addr, false),
-+                     ghes_state.use_hest_addr, true),
- };
+diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
+index c3e9f8d9a702..4311a9536b21 100644
+--- a/docs/specs/acpi_hest_ghes.rst
++++ b/docs/specs/acpi_hest_ghes.rst
+@@ -89,12 +89,21 @@ Design Details
+     addresses in the "error_block_address" fields with a pointer to the
+     respective "Error Status Data Block" in the "etc/hardware_errors" blob.
  
- static const VMStateDescription vmstate_memhp_state = {
+-(8) QEMU defines a third and write-only fw_cfg blob which is called
+-    "etc/hardware_errors_addr". Through that blob, the firmware can send back
+-    the guest-side allocation addresses to QEMU. The "etc/hardware_errors_addr"
+-    blob contains a 8-byte entry. QEMU generates a single WRITE_POINTER command
+-    for the firmware. The firmware will write back the start address of
+-    "etc/hardware_errors" blob to the fw_cfg file "etc/hardware_errors_addr".
++(8) QEMU defines a third and write-only fw_cfg blob to store the location
++    where the error block offsets, read ack registers and CPER records are
++    stored.
++
++    Up to QEMU 9.2, the location was at "etc/hardware_errors_addr", and
++    contains a GPA for the beginning of "etc/hardware_errors".
++
++    Newer versions place the location at "etc/acpi_table_hest_addr",
++    pointing to the GPA of the HEST table.
++
++    Through that such GPA values, the firmware can send back the guest-side
++    allocation addresses to QEMU. They contain a 8-byte entry. QEMU generates
++    a single WRITE_POINTER command for the firmware. The firmware will write
++    back the start address of either "etc/hardware_errors" or HEST table at
++    the corresponding fw_cfg file.
+ 
+ (9) When QEMU gets a SIGBUS from the kernel, QEMU writes CPER into corresponding
+     "Error Status Data Block", guest memory, and then injects platform specific
+@@ -105,8 +114,5 @@ Design Details
+      kernel, on receiving notification, guest APEI driver could read the CPER error
+      and take appropriate action.
+ 
+-(11) kvm_arch_on_sigbus_vcpu() uses source_id as index in "etc/hardware_errors" to
+-     find out "Error Status Data Block" entry corresponding to error source. So supported
+-     source_id values should be assigned here and not be changed afterwards to make sure
+-     that guest will write error into expected "Error Status Data Block" even if guest was
+-     migrated to a newer QEMU.
++(11) kvm_arch_on_sigbus_vcpu() report RAS errors via a SEA notifications,
++     when a SIGBUS event is triggered.
 -- 
 2.48.1
 
