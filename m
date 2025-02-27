@@ -4,67 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19ED2C197BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44E2FC197BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:14:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnm1l-0002WA-8T; Thu, 27 Feb 2025 17:06:45 -0500
+	id 1tnm8L-0006uZ-DU; Thu, 27 Feb 2025 17:13:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tnm1h-0002TH-Ug
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:06:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tnm1e-0000Ce-8a
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:06:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740693996;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ZIvbUNhwvyldi7bMLa/2gx4DBnYpihWI8z4IcALzIOY=;
- b=Y418/5ioMvNIgQJyNC5sTv7dOONWrskg/nvaUv1gMbwCmVvY0UeI1pkHuNH63QUX2yLo8/
- jFeBHiJtxtudqwGwqYJaGfRpJgJKNiA56D9lN4qppzjPh+FKyjh0C5s5jbNSTVgMxo3sTA
- kHQ3QDVdAhiXx5nIGo0x2EJeNRPOTlA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-nDbH0mpqOdeAe-xpXyEzPg-1; Thu,
- 27 Feb 2025 17:06:33 -0500
-X-MC-Unique: nDbH0mpqOdeAe-xpXyEzPg-1
-X-Mimecast-MFC-AGG-ID: nDbH0mpqOdeAe-xpXyEzPg_1740693992
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B46C91954B19; Thu, 27 Feb 2025 22:06:31 +0000 (UTC)
-Received: from green.redhat.com (unknown [10.2.16.162])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5BBA81800998; Thu, 27 Feb 2025 22:06:28 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH] nbd: Defer trace init until after daemonization
-Date: Thu, 27 Feb 2025 16:06:15 -0600
-Message-ID: <20250227220625.870246-2-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnm8J-0006uG-Hz
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:13:31 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tnm8F-0001Ad-5g
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:13:31 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-390df942558so1085319f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 14:13:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740694405; x=1741299205; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=EKjt7OaVeFCo/1mU93GE+u5feO/byVl6qntu/LV2L5w=;
+ b=ahClPwkXjgmeAnJhIOKwmCijlmI5Nexg5AXRBQOJmVKjtX+fc92Y7kEnXubmx6jwtC
+ k/t8bDi83BBcIMbGiJvGd5MUeY23tOw3wKUVLN2fBYWtiM2OmMCfpS56q4m9O4xkeuvP
+ tSWDi5kHgUwpkhy4rcrNM7m84u9+aSS67kv736GTGap6D2F4GZhCTMLDw+GPkBvI+Log
+ 80R6rD5bpFmV//3N1nnJtIX5837t/VHZJlil8Do2sb6fNlSREcHeEiBj2OjPkfpw8fgB
+ A+O336ZASD2kQXsTVVCW9D9gvixJ/Z9Uq4DNxQ2ywd7yeXOABf+D31tVR8Api/8+OsbM
+ WKJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740694405; x=1741299205;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EKjt7OaVeFCo/1mU93GE+u5feO/byVl6qntu/LV2L5w=;
+ b=aOjKMZG9MAO36ozpK2oNoeb9fGBIKGKSpvfRhzczcWfu20kNr/8VTXdhgAmckaJJAC
+ 21rpb0YLdQ6P87pZ1PLgfFo0qG8/lcR3Wm3E6fSobgTya4RvjQeD2VvncfWW5Kq5CS39
+ HUJCGDNaVk626/jCHKnD0kPnUHVToscZCNtYGrZnMimS1ifOuLaGHqRWILh5sAlHXH8M
+ DdXBYEAFh+MK0rCuCzYe7Azf5neNA/H0ba9WysDiPtneoZBM25MLPhsKL91UM6DOYxef
+ 3gLPVlhxo69+NbOLdsgdA8NOFdja6u2Jq5mku3cLydhb4ygx9gNdiN/vIx366/IK/Xm9
+ K2Ag==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJiIBy7XUmeLvPNnqgG3hAnUuEbgVXyTJLnvrgSraurK+3CybPyZydChOl1gvaGdrWF0HyFwHjEC5e@nongnu.org
+X-Gm-Message-State: AOJu0YzpUVsEe/+MjW/ZpFD1GaVVD5QCzwtRRgNvPVT05dOQuy8RD+0+
+ yZcuQmUbbOsfrhX0C2GXvXlDFdS/dW91HlRK2usT9paXrxHmR7zd0uOCD9JOWvtS+RjbiVF+47Y
+ Ul9Aqyw==
+X-Gm-Gg: ASbGncuPBZOrYXGr94ucobCc1Y6LcFYgReTIPogX1n40zdaAVjy7PfcwLDTm6j3R+GH
+ Rx02dpwc7xKHjm6d11TZ/WcGzX7x9dLQWJx+Qi7csEsqWAIYN0xvfV4+Hmkp3OcWHt14Fym2s4z
+ hSzC+18pv6hXc0MCIVl/nWoEMRgVNOJWcYWH1/aJ2TPs5Fg1wUHQH7CFpT6mb3dJ0aFSB4Z+D5C
+ pWw+X2uHH7/Z47mQ0zWrybycD60P3gpTPHXjX4r9QnR0xUeIuIxsw9hQ5r+InxHBg+ydXuQfaoh
+ MpxO10P/jhx09uWg+sIeUZOL7BEIVoCCxzCx9vQSyprfvzipkL9ElnSKhzzElZI7/7WS4Q==
+X-Google-Smtp-Source: AGHT+IG2JiV/h/j3MG+kyJpcqY64QdPNgtOEQoRyhJlpEirListzQ64z+ey9E/7vQiGRW5fBhFBcaw==
+X-Received: by 2002:a5d:6d0d:0:b0:38f:39e5:6b5d with SMTP id
+ ffacd0b85a97d-390eca5309dmr719346f8f.44.1740694404873; 
+ Thu, 27 Feb 2025 14:13:24 -0800 (PST)
+Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47a66c9sm3261277f8f.33.2025.02.27.14.13.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Feb 2025 14:13:23 -0800 (PST)
+Message-ID: <de97c1c5-b27e-4997-8009-4b9ff4984cfc@linaro.org>
+Date: Thu, 27 Feb 2025 23:13:22 +0100
 MIME-Version: 1.0
-Content-type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 034/162] tcg: Convert mul to TCGOutOpBinary
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250216231012.2808572-1-richard.henderson@linaro.org>
+ <20250216231012.2808572-35-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250216231012.2808572-35-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,63 +101,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At least the simple trace backend works by spawning a helper thread,
-and setting up an atexit() handler that coordinates completion with
-the helper thread.  But since atexit registrations survive fork() but
-helper threads do not, this means that qemu-nbd configured to use the
-simple trace will deadlock waiting for a thread that no longer exists
-when it has daemonized.
+On 17/2/25 00:08, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/tcg.c                        |  6 ++-
+>   tcg/aarch64/tcg-target.c.inc     | 18 ++++---
+>   tcg/arm/tcg-target.c.inc         | 23 ++++----
+>   tcg/i386/tcg-target.c.inc        | 47 +++++++++-------
+>   tcg/loongarch64/tcg-target.c.inc | 24 +++++----
+>   tcg/mips/tcg-target.c.inc        | 43 +++++++++------
+>   tcg/ppc/tcg-target.c.inc         | 42 +++++++--------
+>   tcg/riscv/tcg-target.c.inc       | 21 ++++----
+>   tcg/s390x/tcg-target.c.inc       | 92 ++++++++++++++++++--------------
+>   tcg/sparc64/tcg-target.c.inc     | 28 +++++++---
+>   tcg/tci/tcg-target.c.inc         | 14 +++--
+>   11 files changed, 210 insertions(+), 148 deletions(-)
 
-Better is to follow the example of vl.c: don't call any setup
-functions that might spawn helper threads until we are in the final
-process that will be doing the work worth tracing.
-
-Tested by configuring with --enable-trace-backends=simple, then running
-  qemu-nbd --fork --trace=nbd_\*,file=qemu-nbd.trace -f raw -r README.rst
-followed by `nbdinfo nbd://localhost`, and observing that the trace
-file is now created without hanging.
-
-Reported-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Eric Blake <eblake@redhat.com>
----
- qemu-nbd.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/qemu-nbd.c b/qemu-nbd.c
-index 05b61da51ea..ed5895861bb 100644
---- a/qemu-nbd.c
-+++ b/qemu-nbd.c
-@@ -852,10 +852,6 @@ int main(int argc, char **argv)
-         export_name = "";
-     }
-
--    if (!trace_init_backends()) {
--        exit(1);
--    }
--    trace_init_file();
-     qemu_set_log(LOG_TRACE, &error_fatal);
-
-     socket_activation = check_socket_activation();
-@@ -1045,6 +1041,18 @@ int main(int argc, char **argv)
- #endif /* WIN32 */
-     }
-
-+    /*
-+     * trace_init must be done after daemonization.  Why? Because at
-+     * least the simple backend spins up a helper thread as well as an
-+     * atexit() handler that waits on that thread, but the helper
-+     * thread won't survive a fork, leading to deadlock in the child
-+     * if we initialized pre-fork.
-+     */
-+    if (!trace_init_backends()) {
-+        exit(1);
-+    }
-+    trace_init_file();
-+
-     if (opts.device != NULL && sockpath == NULL) {
-         sockpath = g_malloc(128);
-         snprintf(sockpath, 128, SOCKET_PATH, basename(opts.device));
--- 
-2.48.1
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
