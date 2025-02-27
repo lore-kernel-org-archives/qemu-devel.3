@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D416C197BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C608C197BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 22:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnlvx-0007Hh-M4; Thu, 27 Feb 2025 17:00:46 -0500
+	id 1tnlwj-000805-Fx; Thu, 27 Feb 2025 17:01:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnlvg-0007GW-Kt
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:00:28 -0500
+ id 1tnlwg-0007rI-Tr
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:01:30 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnlve-0007NE-Rf
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:00:28 -0500
+ id 1tnlwf-0007V1-03
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 17:01:30 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tnlvS-000000007Ni-1yx5; Thu, 27 Feb 2025 23:00:14 +0100
-Message-ID: <19c2adeb-dce1-4bed-85c7-43a0ba323ef8@maciej.szmigiero.name>
-Date: Thu, 27 Feb 2025 23:00:14 +0100
+ id 1tnlwZ-000000007OM-2P5R; Thu, 27 Feb 2025 23:01:23 +0100
+Message-ID: <cb56e530-9d34-4f17-bee6-0cf28af06215@maciej.szmigiero.name>
+Date: Thu, 27 Feb 2025 23:01:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 25/36] vfio/migration: Multifd device state transfer
- support - receive init/cleanup
+Subject: Re: [PATCH v5 34/36] vfio/migration: Max in-flight VFIO device state
+ buffer count limit
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
@@ -38,8 +38,8 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <b555ee5b753efbf2f7152f0692858802fc1bcb80.1739994627.git.maciej.szmigiero@oracle.com>
- <87286139-a297-492c-869f-6673f344bba3@redhat.com>
+ <719b309bb7bc13542d14e6ce0026cb9bb67e9f31.1739994627.git.maciej.szmigiero@oracle.com>
+ <11ecf7fb-55f6-4606-b635-e53dbcc71dbc@redhat.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <87286139-a297-492c-869f-6673f344bba3@redhat.com>
+In-Reply-To: <11ecf7fb-55f6-4606-b635-e53dbcc71dbc@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -110,137 +110,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.02.2025 18:28, Cédric Le Goater wrote:
+On 27.02.2025 07:48, Cédric Le Goater wrote:
 > On 2/19/25 21:34, Maciej S. Szmigiero wrote:
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> Add support for VFIOMultifd data structure that will contain most of the
->> receive-side data together with its init/cleanup methods.
+>> Allow capping the maximum count of in-flight VFIO device state buffers
+>> queued at the destination, otherwise a malicious QEMU source could
+>> theoretically cause the target QEMU to allocate unlimited amounts of memory
+>> for buffers-in-flight.
+>>
+>> Since this is not expected to be a realistic threat in most of VFIO live
+>> migration use cases and the right value depends on the particular setup
+>> disable the limit by default by setting it to UINT64_MAX.
 >>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 >> ---
->>   hw/vfio/migration-multifd.c   | 33 +++++++++++++++++++++++++++++++++
->>   hw/vfio/migration-multifd.h   |  8 ++++++++
->>   hw/vfio/migration.c           | 29 +++++++++++++++++++++++++++--
->>   include/hw/vfio/vfio-common.h |  3 +++
->>   4 files changed, 71 insertions(+), 2 deletions(-)
+>>   hw/vfio/migration-multifd.c   | 14 ++++++++++++++
+>>   hw/vfio/pci.c                 |  2 ++
+>>   include/hw/vfio/vfio-common.h |  1 +
+>>   3 files changed, 17 insertions(+)
 >>
 >> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
->> index 7328ad8e925c..c2defc0efef0 100644
+>> index 18a5ff964a37..04aa3f4a6596 100644
 >> --- a/hw/vfio/migration-multifd.c
 >> +++ b/hw/vfio/migration-multifd.c
->> @@ -41,6 +41,9 @@ typedef struct VFIOStateBuffer {
->>       size_t len;
->>   } VFIOStateBuffer;
->> +typedef struct VFIOMultifd {
->> +} VFIOMultifd;
->> +
+>> @@ -53,6 +53,7 @@ typedef struct VFIOMultifd {
+>>       QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
+>>       uint32_t load_buf_idx;
+>>       uint32_t load_buf_idx_last;
+>> +    uint32_t load_buf_queued_pending_buffers;
+>>   } VFIOMultifd;
 >>   static void vfio_state_buffer_clear(gpointer data)
->>   {
->>       VFIOStateBuffer *lb = data;
->> @@ -84,8 +87,38 @@ static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs, guint idx)
->>       return &g_array_index(bufs->array, VFIOStateBuffer, idx);
->>   }
->> +VFIOMultifd *vfio_multifd_new(void)
->> +{
->> +    VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
->> +
->> +    return multifd;
->> +}
->> +
->> +void vfio_multifd_free(VFIOMultifd *multifd)
->> +{
->> +    g_free(multifd);
->> +}
->> +
->>   bool vfio_multifd_transfer_supported(void)
->>   {
->>       return multifd_device_state_supported() &&
->>           migrate_send_switchover_start();
->>   }
->> +
->> +bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev)
->> +{
->> +    return false;
->> +}
->> +
->> +bool vfio_multifd_transfer_setup(VFIODevice *vbasedev, Error **errp)
->> +{
->> +    if (vfio_multifd_transfer_enabled(vbasedev) &&
->> +        !vfio_multifd_transfer_supported()) {
+>> @@ -121,6 +122,15 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
+>>       assert(packet->idx >= multifd->load_buf_idx);
+>> +    multifd->load_buf_queued_pending_buffers++;
+>> +    if (multifd->load_buf_queued_pending_buffers >
+>> +        vbasedev->migration_max_queued_buffers) {
 >> +        error_setg(errp,
->> +                   "%s: Multifd device transfer requested but unsupported in the current config",
->> +                   vbasedev->name);
+>> +                   "queuing state buffer %" PRIu32 " would exceed the max of %" PRIu64,
+>> +                   packet->idx, vbasedev->migration_max_queued_buffers);
 >> +        return false;
 >> +    }
 >> +
->> +    return true;
->> +}
->> diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
->> index 8fe004c1da81..1eefba3b2eed 100644
->> --- a/hw/vfio/migration-multifd.h
->> +++ b/hw/vfio/migration-multifd.h
->> @@ -12,6 +12,14 @@
->>   #include "hw/vfio/vfio-common.h"
->> +typedef struct VFIOMultifd VFIOMultifd;
+>>       lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
+>>       lb->len = packet_total_size - sizeof(*packet);
+>>       lb->is_present = true;
+>> @@ -374,6 +384,9 @@ static bool vfio_load_bufs_thread(void *opaque, bool *should_quit, Error **errp)
+>>               goto ret_signal;
+>>           }
+>> +        assert(multifd->load_buf_queued_pending_buffers > 0);
+>> +        multifd->load_buf_queued_pending_buffers--;
 >> +
->> +VFIOMultifd *vfio_multifd_new(void);
->> +void vfio_multifd_free(VFIOMultifd *multifd);
->> +
->>   bool vfio_multifd_transfer_supported(void);
->> +bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev);
->> +
->> +bool vfio_multifd_transfer_setup(VFIODevice *vbasedev, Error **errp);
->>   #endif
->> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->> index 7b79be6ad293..4311de763885 100644
->> --- a/hw/vfio/migration.c
->> +++ b/hw/vfio/migration.c
->> @@ -674,15 +674,40 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
->>   static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
->>   {
->>       VFIODevice *vbasedev = opaque;
->> +    VFIOMigration *migration = vbasedev->migration;
->> +    int ret;
->> +
->> +    if (!vfio_multifd_transfer_setup(vbasedev, errp)) {
->> +        return -EINVAL;
->> +    }
->> +
->> +    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
->> +                                   migration->device_state, errp);
->> +    if (ret) {
->> +        return ret;
->> +    }
->> -    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
->> -                                    vbasedev->migration->device_state, errp);
->> +    if (vfio_multifd_transfer_enabled(vbasedev)) {
->> +        assert(!migration->multifd);
->> +        migration->multifd = vfio_multifd_new();
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +static void vfio_multifd_cleanup(VFIODevice *vbasedev)
->> +{
->> +    VFIOMigration *migration = vbasedev->migration;
->> +
->> +    g_clear_pointer(&migration->multifd, vfio_multifd_free);
->>   }
+>>           if (multifd->load_buf_idx == multifd->load_buf_idx_last - 1) {
+>>               trace_vfio_load_state_device_buffer_end(vbasedev->name);
+>>           }
+>> @@ -408,6 +421,7 @@ VFIOMultifd *vfio_multifd_new(void)
+>>       multifd->load_buf_idx = 0;
+>>       multifd->load_buf_idx_last = UINT32_MAX;
+>> +    multifd->load_buf_queued_pending_buffers = 0;
+>>       qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
+>>       multifd->load_bufs_thread_running = false;
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index 9111805ae06c..247418f0fce2 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -3383,6 +3383,8 @@ static const Property vfio_pci_dev_properties[] = {
+>>                   vbasedev.migration_multifd_transfer,
+>>                   qdev_prop_on_off_auto_mutable, OnOffAuto,
+>>                   .set_default = true, .defval.i = ON_OFF_AUTO_AUTO),
+>> +    DEFINE_PROP_UINT64("x-migration-max-queued-buffers", VFIOPCIDevice,
+>> +                       vbasedev.migration_max_queued_buffers, UINT64_MAX),
 > 
-> Please move vfio_multifd_cleanup() to migration-multifd.c.
+> UINT64_MAX doesn't make sense to me. What would be a reasonable value ?
 
-Done now.
+It's the value that effectively disables this limit.
+
+> Have you monitored the max ? Should we collect some statistics on this
+> value and raise a warning if a high water mark is reached ? I think
+> this would more useful.
+
+It's an additional mechanism, which is not expected to be necessary
+in most of real-world setups, hence it's disabled by default:
+> Since this is not expected to be a realistic threat in most of VFIO live
+> migration use cases and the right value depends on the particular setup
+> disable the limit by default by setting it to UINT64_MAX.
+
+The minimum value that works with particular setup depends on number of
+multifd channels, probably also the number of NIC queues, etc. so it's
+not something we should propose hard default to - unless it's a very
+high default like 100 buffers, but then why have it set by default?.
+
+IMHO setting it to UINT64_MAX clearly shows that it is disabled by
+default since it obviously couldn't be set higher.
+  
+>>       DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
+>>                        vbasedev.migration_events, false),
+>>       DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
+> 
+> 
+> Please add property documentation in vfio_pci_dev_class_init()
+> 
+
+I'm not sure what you mean by that, vfio_pci_dev_class_init() doesn't
+contain any documentation or even references to either
+x-migration-max-queued-buffers or x-migration-multifd-transfer:
+> static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
+> {
+>     DeviceClass *dc = DEVICE_CLASS(klass);
+>     PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
+> 
+>     device_class_set_legacy_reset(dc, vfio_pci_reset);
+>     device_class_set_props(dc, vfio_pci_dev_properties);
+> #ifdef CONFIG_IOMMUFD
+>     object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
+> #endif
+>     dc->desc = "VFIO-based PCI device assignment";
+>     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>     pdc->realize = vfio_realize;
+>     pdc->exit = vfio_exitfn;
+>     pdc->config_read = vfio_pci_read_config;
+>     pdc->config_write = vfio_pci_write_config;
+> }
+
 
 > Thanks,
 > 
 > C.
->
 
 Thanks,
 Maciej
-
-  
 
 
