@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD77C19F32
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F306BC19F32
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnewm-0003FT-AH; Thu, 27 Feb 2025 09:33:08 -0500
+	id 1tnewP-0001Wo-QZ; Thu, 27 Feb 2025 09:32:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <12feba5f.AXEAAGV4IjsAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd6@a3031119.bnc3.mailjet.com>)
- id 1tnewI-0001V8-Co
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:32:41 -0500
-Received: from o40.p25.mailjet.com ([185.189.236.40])
+ <a9eb9d1c.AV4AAGLkPb4AAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHdt@a3031119.bnc3.mailjet.com>)
+ id 1tnew2-0001Co-Sr
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:32:26 -0500
+Received: from o39.p25.mailjet.com ([185.189.236.39])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <12feba5f.AXEAAGV4IjsAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd6@a3031119.bnc3.mailjet.com>)
- id 1tnewE-0006MI-JY
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:32:38 -0500
+ <a9eb9d1c.AV4AAGLkPb4AAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHdt@a3031119.bnc3.mailjet.com>)
+ id 1tnevx-0006Jv-FD
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:32:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; q=dns/txt;
- d=randomman.co.uk; i=roy.hopkins@randomman.co.uk; s=mailjet; x=1740673946;
+ d=randomman.co.uk; i=roy.hopkins@randomman.co.uk; s=mailjet; x=1740673933;
  h=message-id:mime-version:from:from:to:to:subject:subject:date:date:list-unsubscribe-post:list-unsubscribe:
  cc:feedback-id:in-reply-to:references:x-csa-complaints:x-mj-mid:x-mj-smtpguid:
  x-report-abuse-to:content-transfer-encoding;
- bh=nwE1kclYkP+QK9pDsgafUoK3A615CkGpPbibQPfdXJc=;
- b=G4KFdq9iTys61GmRQqOpr+wTRpEnCbCKMNg72gALRFtA7X7+vzPeME1Hg
- 6/cWYnjyu0Pg78bdfWg8jiNM3ZmcM2OieDX/9m7TR3DHA/1L5knKZkIbYBrX
- vLThBfzr6xrkHPpF5oCsJHHy+rjwTxCAWI7tBHXZLXa7D31gG4i3NnSYMucO
- J0AGjL889gwnvDNSBakBB4RP+wUgGKEyzQSTltLqpgzMOA1p0EhFWvI9bp7z
- KmBeW+/jf8zYuaggOlzNALdVUp65UcawzPAOaudEPkp9AFG6YjiP1m1RYV/D
- UHlAhGrQz6an08Zv1fOB3GGQZ+F273tQC7Got8hWpdvtQ==
-Message-Id: <12feba5f.AXEAAGV4IjsAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd6@mailjet.com>
+ bh=k6dXh2J9kp75wBnDpo9fi7Lb/5oIzZ5h+SHKJliol/o=;
+ b=fTPPasDz5oj61yhWK/Yz+mwf5xBucL2q6UMIefc/dJBFQx3guWRdEsQCi
+ 4G84SawyNqaG9k8dAjLnlFC+/JhvEjc2GTuSEabPHcad7zUH6jD784k6jc3D
+ zE1ySm1IBKZunMWjqbF6o39QJOj+zW9p0weOm2gjHSC+Wzl/x1MS/TxTPPlC
+ 582d26cGpFyiYieA6zkEwI0P8GzBAbML7px1PzSZfq+bLk7hHRPLpZv0tJgj
+ GbGdJttVYZXYNC8PMFgR+47VcQ3lrdGd5QJKil0dB6o7hY5TGq57D//JkOwD
+ FqsCzdnCOkaPRuwyxLXbgRXWkmX4StXsN9zuuuD5FHO+w==
+Message-Id: <a9eb9d1c.AV4AAGLkPb4AAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHdt@mailjet.com>
 MIME-Version: 1.0
 From: Roy Hopkins <roy.hopkins@randomman.co.uk>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v7 14/16] backends/igvm: Handle policy for SEV guests
-Date: Thu, 27 Feb 2025 14:29:32 +0000
+Subject: [PATCH v7 06/16] sev: Update launch_update_data functions to use
+ Error handling
+Date: Thu, 27 Feb 2025 14:29:24 +0000
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>, Paolo Bonzini
  <pbonzini@redhat.com>, "Daniel P . Berrange" <berrange@redhat.com>,
@@ -50,25 +51,26 @@ Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>, Paolo Bonzini
  <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>, David Hildenbrand
  <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Tom Lendacky
  <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, Ani Sinha
- <anisinha@redhat.com>, Joerg Roedel <jroedel@suse.com>
+ <anisinha@redhat.com>, Joerg Roedel <jroedel@suse.com>, Pankaj Gupta
+ <pankaj.gupta@amd.com>
 Feedback-Id: 42.3031119.2785883:MJ
 In-Reply-To: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
 References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
 X-CSA-Complaints: csa-complaints@eco.de
-X-MJ-Mid: AXEAAGV4IjsAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd6jmW02K7TRA2IMvD6K1KWcgAqgls
-X-MJ-SMTPGUID: 4e6e597c-6f01-4306-97d4-f37e739198da
+X-MJ-Mid: AV4AAGLkPb4AAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHdtBBzY5bANTomh05PQ5NISBwAqgls
+X-MJ-SMTPGUID: ff3bf59a-ec47-401a-8d30-a83ee0c537bb
 X-REPORT-ABUSE-TO: Message sent by Mailjet please report to
  abuse@mailjet.com with a copy of the message
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.189.236.40;
- envelope-from=12feba5f.AXEAAGV4IjsAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHd6@a3031119.bnc3.mailjet.com;
- helo=o40.p25.mailjet.com
+Received-SPF: pass client-ip=185.189.236.39;
+ envelope-from=a9eb9d1c.AV4AAGLkPb4AAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwHdt@a3031119.bnc3.mailjet.com;
+ helo=o39.p25.mailjet.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,228 +88,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a handler for the guest policy initialization IGVM section and
-builds an SEV policy based on this information and the ID block
-directive if present. The policy is applied using by calling
-'set_guest_policy()' on the ConfidentialGuestSupport object.
+The class function and implementations for updating launch data return
+a code in case of error. In some cases an error message is generated and
+in other cases, just the error return value is used.
+
+This small refactor adds an 'Error **errp' parameter to all functions
+which consistently set an error condition if a non-zero value is
+returned.
 
 Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- backends/igvm.c | 138 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 138 insertions(+)
+ target/i386/sev.c | 68 +++++++++++++++++++++++------------------------
+ 1 file changed, 33 insertions(+), 35 deletions(-)
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index cbe833db9d..7673e4a882 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -28,6 +28,33 @@ typedef struct QIgvmParameterData {
-     uint32_t index;
- } QIgvmParameterData;
- 
-+/*
-+ * Some directives are specific to particular confidential computing platforms.
-+ * Define required types for each of those platforms here.
-+ */
-+
-+/* SEV/SEV-ES/SEV-SNP */
-+struct QEMU_PACKED sev_id_block {
-+    uint8_t ld[48];
-+    uint8_t family_id[16];
-+    uint8_t image_id[16];
-+    uint32_t version;
-+    uint32_t guest_svn;
-+    uint64_t policy;
-+};
-+
-+struct QEMU_PACKED sev_id_authentication {
-+    uint32_t id_key_alg;
-+    uint32_t auth_key_algo;
-+    uint8_t reserved[56];
-+    uint8_t id_block_sig[512];
-+    uint8_t id_key[1028];
-+    uint8_t reserved2[60];
-+    uint8_t id_key_sig[512];
-+    uint8_t author_key[1028];
-+    uint8_t reserved3[892];
-+};
-+
- /*
-  * QIgvm contains the information required during processing
-  * of a single IGVM file.
-@@ -39,6 +66,17 @@ typedef struct QIgvm {
-     uint32_t compatibility_mask;
-     unsigned current_header_index;
-     QTAILQ_HEAD(, QIgvmParameterData) parameter_data;
-+    IgvmPlatformType platform_type;
-+
-+    /*
-+     * SEV-SNP platforms can contain an ID block and authentication
-+     * that should be verified by the guest.
-+     */
-+    struct sev_id_block *id_block;
-+    struct sev_id_authentication *id_auth;
-+
-+    /* Define the guest policy for SEV guests */
-+    uint64_t sev_policy;
- 
-     /* These variables keep track of contiguous page regions */
-     IGVM_VHS_PAGE_DATA region_prev_page_data;
-@@ -68,6 +106,11 @@ static int qigvm_directive_environment_info(QIgvm *ctx,
- static int qigvm_directive_required_memory(QIgvm *ctx,
-                                            const uint8_t *header_data,
-                                            Error **errp);
-+static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
-+                                  Error **errp);
-+static int qigvm_initialization_guest_policy(QIgvm *ctx,
-+                                       const uint8_t *header_data,
-+                                       Error **errp);
- 
- struct QIGVMHandler {
-     uint32_t type;
-@@ -92,6 +135,10 @@ static struct QIGVMHandler handlers[] = {
-       qigvm_directive_environment_info },
-     { IGVM_VHT_REQUIRED_MEMORY, IGVM_HEADER_SECTION_DIRECTIVE,
-       qigvm_directive_required_memory },
-+    { IGVM_VHT_SNP_ID_BLOCK, IGVM_HEADER_SECTION_DIRECTIVE,
-+      qigvm_directive_snp_id_block },
-+    { IGVM_VHT_GUEST_POLICY, IGVM_HEADER_SECTION_INITIALIZATION,
-+      qigvm_initialization_guest_policy },
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 0e1dbb6959..7d91985f41 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -121,7 +121,8 @@ struct SevCommonStateClass {
+                                        Error **errp);
+     int (*launch_start)(SevCommonState *sev_common);
+     void (*launch_finish)(SevCommonState *sev_common);
+-    int (*launch_update_data)(SevCommonState *sev_common, hwaddr gpa, uint8_t *ptr, size_t len);
++    int (*launch_update_data)(SevCommonState *sev_common, hwaddr gpa,
++                              uint8_t *ptr, size_t len, Error **errp);
+     int (*kvm_init)(ConfidentialGuestSupport *cgs, Error **errp);
  };
  
- static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
-@@ -633,6 +680,70 @@ static int qigvm_directive_required_memory(QIgvm *ctx,
-     return 0;
+@@ -977,9 +978,8 @@ sev_snp_mask_cpuid_features(X86ConfidentialGuest *cg, uint32_t feature, uint32_t
+     return value;
  }
  
-+static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
-+                                  Error **errp)
-+{
-+    const IGVM_VHS_SNP_ID_BLOCK *igvm_id =
-+        (const IGVM_VHS_SNP_ID_BLOCK *)header_data;
-+
-+    if (!(igvm_id->compatibility_mask & ctx->compatibility_mask)) {
-+        return 0;
-+    }
-+
-+    if (ctx->id_block) {
-+        error_setg(errp, "IGVM: Multiple ID blocks encountered "
-+                            "in IGVM file.");
-+        return -1;
-+    }
-+    ctx->id_block = g_new0(struct sev_id_block, 1);
-+    ctx->id_auth = g_new0(struct sev_id_authentication, 1);
-+
-+    memcpy(ctx->id_block->family_id, igvm_id->family_id,
-+            sizeof(ctx->id_block->family_id));
-+    memcpy(ctx->id_block->image_id, igvm_id->image_id,
-+            sizeof(ctx->id_block->image_id));
-+    ctx->id_block->guest_svn = igvm_id->guest_svn;
-+    ctx->id_block->version = 1;
-+    memcpy(ctx->id_block->ld, igvm_id->ld, sizeof(ctx->id_block->ld));
-+
-+    ctx->id_auth->id_key_alg = igvm_id->id_key_algorithm;
-+    memcpy(ctx->id_auth->id_block_sig, &igvm_id->id_key_signature,
-+            sizeof(igvm_id->id_key_signature));
-+
-+    ctx->id_auth->auth_key_algo = igvm_id->author_key_algorithm;
-+    memcpy(ctx->id_auth->id_key_sig, &igvm_id->author_key_signature,
-+            sizeof(igvm_id->author_key_signature));
-+
-+    /*
-+     * SEV and IGVM public key structure population are slightly different.
-+     * See SEV Secure Nested Paging Firmware ABI Specification, Chapter 10.
-+     */
-+    *((uint32_t *)ctx->id_auth->id_key) = igvm_id->id_public_key.curve;
-+    memcpy(&ctx->id_auth->id_key[4], &igvm_id->id_public_key.qx, 72);
-+    memcpy(&ctx->id_auth->id_key[76], &igvm_id->id_public_key.qy, 72);
-+
-+    *((uint32_t *)ctx->id_auth->author_key) =
-+        igvm_id->author_public_key.curve;
-+    memcpy(&ctx->id_auth->author_key[4], &igvm_id->author_public_key.qx,
-+            72);
-+    memcpy(&ctx->id_auth->author_key[76], &igvm_id->author_public_key.qy,
-+            72);
-+
-+    return 0;
-+}
-+
-+static int qigvm_initialization_guest_policy(QIgvm *ctx,
-+                                       const uint8_t *header_data, Error **errp)
-+{
-+    const IGVM_VHS_GUEST_POLICY *guest =
-+        (const IGVM_VHS_GUEST_POLICY *)header_data;
-+
-+    if (guest->compatibility_mask & ctx->compatibility_mask) {
-+        ctx->sev_policy = guest->policy;
-+    }
-+    return 0;
-+}
-+
- static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
+-static int
+-sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
+-                       uint8_t *addr, size_t len)
++static int sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
++                                  uint8_t *addr, size_t len, Error **errp)
  {
-     int32_t header_count;
-@@ -702,12 +813,16 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
-     /* Choose the strongest supported isolation technology */
-     if (compatibility_mask_sev_snp != 0) {
-         ctx->compatibility_mask = compatibility_mask_sev_snp;
-+        ctx->platform_type = IGVM_PLATFORM_TYPE_SEV_SNP;
-     } else if (compatibility_mask_sev_es != 0) {
-         ctx->compatibility_mask = compatibility_mask_sev_es;
-+        ctx->platform_type = IGVM_PLATFORM_TYPE_SEV_ES;
-     } else if (compatibility_mask_sev != 0) {
-         ctx->compatibility_mask = compatibility_mask_sev;
-+        ctx->platform_type = IGVM_PLATFORM_TYPE_SEV;
-     } else if (compatibility_mask != 0) {
-         ctx->compatibility_mask = compatibility_mask;
-+        ctx->platform_type = IGVM_PLATFORM_TYPE_NATIVE;
-     } else {
-         error_setg(
-             errp,
-@@ -717,6 +832,23 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
-     return 0;
- }
- 
-+static int qigvm_handle_policy(QIgvm *ctx, Error **errp)
-+{
-+    if (ctx->platform_type == IGVM_PLATFORM_TYPE_SEV_SNP) {
-+        int id_block_len = 0;
-+        int id_auth_len = 0;
-+        if (ctx->id_block) {
-+            ctx->id_block->policy = ctx->sev_policy;
-+            id_block_len = sizeof(struct sev_id_block);
-+            id_auth_len = sizeof(struct sev_id_authentication);
-+        }
-+        return ctx->cgsc->set_guest_policy(GUEST_POLICY_SEV, ctx->sev_policy,
-+                                          ctx->id_block, id_block_len,
-+                                          ctx->id_auth, id_auth_len, errp);
-+    }
-+    return 0;
-+}
-+
- static IgvmHandle qigvm_file_init(char *filename, Error **errp)
- {
-     IgvmHandle igvm;
-@@ -815,12 +947,18 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-      */
-     retval = qigvm_process_mem_page(&ctx, NULL, errp);
- 
-+    if (retval == 0) {
-+        retval = qigvm_handle_policy(&ctx, errp);
-+    }
-+
- cleanup_parameters:
-     QTAILQ_FOREACH(parameter, &ctx.parameter_data, next)
-     {
-         g_free(parameter->data);
-         parameter->data = NULL;
+     int ret, fw_error;
+     struct kvm_sev_launch_update_data update;
+@@ -994,8 +994,8 @@ sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
+     ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_LAUNCH_UPDATE_DATA,
+                     &update, &fw_error);
+     if (ret) {
+-        error_report("%s: LAUNCH_UPDATE ret=%d fw_error=%d '%s'",
+-                __func__, ret, fw_error, fw_error_to_str(fw_error));
++        error_setg(errp, "%s: LAUNCH_UPDATE ret=%d fw_error=%d '%s'", __func__,
++                   ret, fw_error, fw_error_to_str(fw_error));
      }
-+    g_free(ctx.id_block);
-+    g_free(ctx.id_auth);
  
- cleanup:
-     igvm_free(ctx.file);
+     return ret;
+@@ -1123,8 +1123,8 @@ sev_launch_finish(SevCommonState *sev_common)
+     migrate_add_blocker(&sev_mig_blocker, &error_fatal);
+ }
+ 
+-static int
+-snp_launch_update_data(uint64_t gpa, void *hva, size_t len, int type)
++static int snp_launch_update_data(uint64_t gpa, void *hva, size_t len,
++                                  int type, Error **errp)
+ {
+     SevLaunchUpdateData *data;
+ 
+@@ -1139,23 +1139,21 @@ snp_launch_update_data(uint64_t gpa, void *hva, size_t len, int type)
+     return 0;
+ }
+ 
+-static int
+-sev_snp_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
+-                           uint8_t *ptr, size_t len)
++static int sev_snp_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
++                                      uint8_t *ptr, size_t len, Error **errp)
+ {
+-       int ret = snp_launch_update_data(gpa, ptr, len,
+-                                         KVM_SEV_SNP_PAGE_TYPE_NORMAL);
+-       return ret;
++    return snp_launch_update_data(gpa, ptr, len,
++                                     KVM_SEV_SNP_PAGE_TYPE_NORMAL, errp);
+ }
+ 
+ static int
+ sev_snp_cpuid_info_fill(SnpCpuidInfo *snp_cpuid_info,
+-                        const KvmCpuidInfo *kvm_cpuid_info)
++                        const KvmCpuidInfo *kvm_cpuid_info, Error **errp)
+ {
+     size_t i;
+ 
+     if (kvm_cpuid_info->cpuid.nent > SNP_CPUID_FUNCTION_MAXCOUNT) {
+-        error_report("SEV-SNP: CPUID entry count (%d) exceeds max (%d)",
++        error_setg(errp, "SEV-SNP: CPUID entry count (%d) exceeds max (%d)",
+                      kvm_cpuid_info->cpuid.nent, SNP_CPUID_FUNCTION_MAXCOUNT);
+         return -1;
+     }
+@@ -1197,8 +1195,8 @@ sev_snp_cpuid_info_fill(SnpCpuidInfo *snp_cpuid_info,
+     return 0;
+ }
+ 
+-static int
+-snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, size_t cpuid_len)
++static int snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva,
++                                   size_t cpuid_len, Error **errp)
+ {
+     KvmCpuidInfo kvm_cpuid_info = {0};
+     SnpCpuidInfo snp_cpuid_info;
+@@ -1215,26 +1213,25 @@ snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, size_t cpuid_len)
+     } while (ret == -E2BIG);
+ 
+     if (ret) {
+-        error_report("SEV-SNP: unable to query CPUID values for CPU: '%s'",
+-                     strerror(-ret));
+-        return 1;
++        error_setg(errp, "SEV-SNP: unable to query CPUID values for CPU: '%s'",
++                   strerror(-ret));
++        return -1;
+     }
+ 
+-    ret = sev_snp_cpuid_info_fill(&snp_cpuid_info, &kvm_cpuid_info);
+-    if (ret) {
+-        error_report("SEV-SNP: failed to generate CPUID table information");
+-        return 1;
++    ret = sev_snp_cpuid_info_fill(&snp_cpuid_info, &kvm_cpuid_info, errp);
++    if (ret < 0) {
++        return -1;
+     }
+ 
+     memcpy(hva, &snp_cpuid_info, sizeof(snp_cpuid_info));
+ 
+     return snp_launch_update_data(cpuid_addr, hva, cpuid_len,
+-                                  KVM_SEV_SNP_PAGE_TYPE_CPUID);
++                                  KVM_SEV_SNP_PAGE_TYPE_CPUID, errp);
+ }
+ 
+-static int
+-snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp, uint32_t addr,
+-                                void *hva, uint32_t len)
++static int snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp,
++                                           uint32_t addr, void *hva,
++                                           uint32_t len, Error **errp)
+ {
+     int type = KVM_SEV_SNP_PAGE_TYPE_ZERO;
+     if (sev_snp->parent_obj.kernel_hashes) {
+@@ -1246,7 +1243,7 @@ snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp, uint32_t addr,
+                sizeof(*sev_snp->kernel_hashes_data));
+         type = KVM_SEV_SNP_PAGE_TYPE_NORMAL;
+     }
+-    return snp_launch_update_data(addr, hva, len, type);
++    return snp_launch_update_data(addr, hva, len, type, errp);
+ }
+ 
+ static int
+@@ -1284,12 +1281,14 @@ snp_populate_metadata_pages(SevSnpGuestState *sev_snp,
+         }
+ 
+         if (type == KVM_SEV_SNP_PAGE_TYPE_CPUID) {
+-            ret = snp_launch_update_cpuid(desc->base, hva, desc->len);
++            ret = snp_launch_update_cpuid(desc->base, hva, desc->len,
++                                          &error_fatal);
+         } else if (desc->type == SEV_DESC_TYPE_SNP_KERNEL_HASHES) {
+             ret = snp_launch_update_kernel_hashes(sev_snp, desc->base, hva,
+-                                                  desc->len);
++                                                  desc->len, &error_fatal);
+         } else {
+-            ret = snp_launch_update_data(desc->base, hva, desc->len, type);
++            ret = snp_launch_update_data(desc->base, hva, desc->len, type,
++                                         &error_fatal);
+         }
+ 
+         if (ret) {
+@@ -1622,9 +1621,8 @@ sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
+     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
+         int ret;
+ 
+-        ret = klass->launch_update_data(sev_common, gpa, ptr, len);
++        ret = klass->launch_update_data(sev_common, gpa, ptr, len, errp);
+         if (ret < 0) {
+-            error_setg(errp, "SEV: Failed to encrypt pflash rom");
+             return ret;
+         }
+     }
 -- 
 2.43.0
 
