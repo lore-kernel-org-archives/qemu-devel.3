@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A0EC021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8895FC19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnXxa-00064F-Io; Thu, 27 Feb 2025 02:05:30 -0500
+	id 1tnXxs-0006Uy-3O; Thu, 27 Feb 2025 02:05:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnXxW-00062e-CA
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:05:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tnXxp-0006J8-7c
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:05:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tnXxU-0006lv-F7
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:05:26 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tnXxn-0006nb-GX
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:05:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740639922;
+ s=mimecast20190719; t=1740639941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GgxCkE0RR65y9piky2YsPjHOf4mCzDxN9N90SKQsRWU=;
- b=WpvLnQqW1V5R14nprJWPBw0HL4F2SYp6L6iycnqF0O4v6Obb5bPqongQYf3pE/kwUwZQ/n
- zcX5q3fcNXSt2qxzHpI/zcEXyf+fpWQmGwWenm+X89goIl51MLn/t5ngbb5iCf7SfRMv0X
- /+uWii/yBH8dVtpaMnS7eEeFAdQ/hKs=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=vbK1WhZmOcf3gcVh2+VrhIk2EyIIOIP/wZG8mYOXTE4=;
+ b=EKdzZOWnWlQpVmxKXvT10KqwGvWAqAETIdr+JfA8JsNbQDkYeuoBwoVUvw6hn0daYk5083
+ 3DOrZ+nTii8SQ+miFwPjCZnEcE+TtYFb/eirrJfndOgFKz4Q0Y+O6JFxCWY4vBVynb/Bcl
+ P0pVutiUmAWC66M/XiNg44tPNtwXdzk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-5NHBvtyfOC-d8d1xrxKZxA-1; Thu,
- 27 Feb 2025 02:05:17 -0500
-X-MC-Unique: 5NHBvtyfOC-d8d1xrxKZxA-1
-X-Mimecast-MFC-AGG-ID: 5NHBvtyfOC-d8d1xrxKZxA_1740639916
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-206-NZhNlWmGPFWoDMPpnSlUAw-1; Thu,
+ 27 Feb 2025 02:05:35 -0500
+X-MC-Unique: NZhNlWmGPFWoDMPpnSlUAw-1
+X-Mimecast-MFC-AGG-ID: NZhNlWmGPFWoDMPpnSlUAw_1740639932
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A0F619039C2; Thu, 27 Feb 2025 07:05:15 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3ED4E1944D02; Thu, 27 Feb 2025 07:05:13 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AAC4821E6741; Thu, 27 Feb 2025 08:05:10 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Thomas
- Huth <thuth@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Cleber Rosa
- <crosa@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 03/10] qapi: delete un-needed python static analysis
- configs
-In-Reply-To: <CAFn=p-aPSKn1iL3evY4YKyqUnntQZ+y9Tmh_Bq8-YxwMtWQx-w@mail.gmail.com>
- (John Snow's message of "Wed, 26 Feb 2025 10:05:54 -0500")
-References: <20250224033741.222749-1-jsnow@redhat.com>
- <20250224033741.222749-4-jsnow@redhat.com>
- <87bjup5fnl.fsf@pond.sub.org>
- <CAFn=p-aPSKn1iL3evY4YKyqUnntQZ+y9Tmh_Bq8-YxwMtWQx-w@mail.gmail.com>
-Date: Thu, 27 Feb 2025 08:05:10 +0100
-Message-ID: <875xkvvpeh.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F13CE1801A13; Thu, 27 Feb 2025 07:05:30 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.46])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A5CAA1800945; Thu, 27 Feb 2025 07:05:26 +0000 (UTC)
+Date: Thu, 27 Feb 2025 15:05:23 +0800
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, danielhb413@gmail.com
+Subject: Re: [PATCH] trace/simple: Fix hang when using simpletrace with fork()
+Message-ID: <20250227070523.GC85709@fedora>
+References: <20250226085015.1143991-1-thuth@redhat.com>
+ <Z77bqqKiV7etJNCf@redhat.com>
+ <2a7c4f21-ee27-4407-8191-dd1f0547990c@redhat.com>
+ <Z77ksR0vcySWC0CS@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="Z5Rz4Crf7PowmNb2"
+Content-Disposition: inline
+In-Reply-To: <Z77ksR0vcySWC0CS@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,140 +90,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
 
-> On Wed, Feb 26, 2025 at 2:28=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
->
->> John Snow <jsnow@redhat.com> writes:
->>
->> > The pylint config is being left in place because the settings differ
->> > enough from the python/ directory settings that we need a chit-chat on
->> > how to merge them O:-)
->> >
->> > Everything else can go.
->> >
->> > Signed-off-by: John Snow <jsnow@redhat.com>
+--Z5Rz4Crf7PowmNb2
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[...]
+On Wed, Feb 26, 2025 at 09:53:53AM +0000, Daniel P. Berrang=E9 wrote:
+> On Wed, Feb 26, 2025 at 10:38:56AM +0100, Thomas Huth wrote:
+> > On 26/02/2025 10.15, Daniel P. Berrang=E9 wrote:
+> > > On Wed, Feb 26, 2025 at 09:50:15AM +0100, Thomas Huth wrote:
+> > > > When compiling QEMU with --enable-trace-backends=3Dsimple , the
+> > > > iotest 233 is currently hanging. This happens because qemu-nbd
+> > > > calls trace_init_backends() first - which causes simpletrace to
+> > > > install its writer thread and the atexit() handler - before
+> > > > calling fork(). But the simpletrace writer thread is then only
+> > > > available in the parent process, not in the child process anymore.
+> > > > Thus when the child process exits, its atexit handler waits forever
+> > > > on the trace_empty_cond condition to be set by the non-existing
+> > > > writer thread, so the process never finishes.
+> > > >=20
+> > > > Fix it by installing a pthread_atfork() handler, too, which
+> > > > makes sure that the trace_writeout_enabled variable gets set
+> > > > to false again in the child process, so we can use it in the
+> > > > atexit() handler to check whether we still need to wait on the
+> > > > writer thread or not.
+> > > >=20
+> > > > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > > > ---
+> > > >   trace/simple.c | 17 ++++++++++++++++-
+> > > >   1 file changed, 16 insertions(+), 1 deletion(-)
+> > > >=20
+> > > > diff --git a/trace/simple.c b/trace/simple.c
+> > > > index c0aba00cb7f..269bbda69f1 100644
+> > > > --- a/trace/simple.c
+> > > > +++ b/trace/simple.c
+> > > > @@ -380,8 +380,22 @@ void st_print_trace_file_status(void)
+> > > >   void st_flush_trace_buffer(void)
+> > > >   {
+> > > > -    flush_trace_file(true);
+> > > > +    flush_trace_file(trace_writeout_enabled);
+> > > > +}
+> > > > +
+> > > > +#ifndef _WIN32
+> > > > +static void trace_thread_atfork(void)
+> > > > +{
+> > > > +    /*
+> > > > +     * If we fork, the writer thread does not exist in the child, =
+so
+> > > > +     * make sure to allow st_flush_trace_buffer() to clean up corr=
+ectly.
+> > > > +     */
+> > > > +    g_mutex_lock(&trace_lock);
+> > > > +    trace_writeout_enabled =3D false;
+> > > > +    g_cond_signal(&trace_empty_cond);
+> > > > +    g_mutex_unlock(&trace_lock);
+> > > >   }
+> > > > +#endif
+> > >=20
+> > > This doesn't seem right to me. This is being run in the child and whi=
+le
+> > > it may avoid the hang when the child exits, surely it still leaves tr=
+acing
+> > > non-functional in the child as we're lacking the thread to write out =
+the
+> > > trace data.
+> >=20
+> > Well, you cannot write to the same file from the parent and child at the
+> > same time, so one of both needs to be shut up AFAIU. And the simpletrace
+> > code cannot now which one of the two processes should be allowed to con=
+tinue
+> > with the logging, so we either have to disable tracing in one of the two
+> > processes, or think of something completely different, e.g. using
+> > pthread_atfork(abort, NULL, NULL) to make people aware that they are not
+> > allowed to start tracing before calling fork()...? But in that case we =
+still
+> > need a qemu-nbd expert to fix qemu-nbd, so that it does not initialize =
+the
+> > trace backend before calling fork().
+>=20
+> As precedent, in system/vl.c we delay trace_init() until after daemonizing
+> which is the simple way to avoid the worst of the danger.
 
->> > diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini
->> > deleted file mode 100644
->> > index 8109470a031..00000000000
->> > --- a/scripts/qapi/mypy.ini
->> > +++ /dev/null
->> > @@ -1,4 +0,0 @@
->> > -[mypy]
->> > -strict =3D True
->> > -disallow_untyped_calls =3D False
->> > -python_version =3D 3.8
->>
->> python/setup.cfg has:
->>
->>    [mypy]
->>    strict =3D True
->>    python_version =3D 3.8
->>    warn_unused_configs =3D True
->>    namespace_packages =3D True
->>    warn_unused_ignores =3D False
->>
->> Can you briefly explain the differences?
->>
->
-> warn_unused_configs: Catches config values that aren't actually recognized
-> or used. Was helpful once upon a time when re-arranging the Python
-> directory to behave like a package to ensure that the conf files were
-> working correctly.
+That sounds good to me.
 
-Could this be culled now?
+Adding Daniel Henrique Barboza because he fixed a similar issue in
+commit 10b6ee1616f9 ("vl.c: do not execute trace_init_backends() before
+daemonizing").
 
-Hmm, according to mypy(1), strict implies warn-unused-configs.
+Stefan
 
-The question does not block this patch.
+--Z5Rz4Crf7PowmNb2
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> namespace_packages: Needed for the python/ directory structure (nested
-> packages under a namespace, "qemu"). Doesn't impact scripts/qapi at all.
-> Read up on PEP420 if you are curious. Details in commit message, see below
-> if you're still curious.
+-----BEGIN PGP SIGNATURE-----
 
-mypy(1) makes me suspect this is the default.  If that's true across the
-versions we care for, this could be culled.
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfADrMACgkQnKSrs4Gr
+c8ggAAgAww5j9KlaOt6ulTSjVzJUgETqogbybtmFOGE9ryiOlNohRGEsxsETKwvB
+4HmTWkvfgBU/vYvVrCB/K9UM/Lz1QAaU8W3U/+vEhcfc3/J/kNfHeVjlvVL0JT6+
+jYH80v4JL3ETXwS3r1cPPsniOapeTHHF0hBPrHn+qbgJS2/rbfEhae2n6u6bhCIb
+tFNL/OZZ7m60nMQ1b79q8hw0hH+ytdubJxK04Ckn2uwSClpZDBH0ied65x0dbdu9
+pl7kyzOLLmn+yWXL1hWw4ZTYt2w5MLi9meEwvrE4vAq6uUGCmKH2Evej39yo1fgy
+PnUIo+PwXPZfDonNkfqxatwSVEsonA==
+=wbeE
+-----END PGP SIGNATURE-----
 
-Also does not block this patch.
-
-> warn_unused_ignores: Needed once upon a time for cross-version mypy suppo=
-rt
-> where some versions would warn in some cases and others would not. Adding
-> an ignore would effectively just invert which versions complained. Probab=
-ly
-> still needed, but it's hard to measure.
-
-Harmless enough.
-
-> python_version: Changes mypy behavior regardless of the invoking python
-> interpreter to check the file as if it were to be executed by Python 3.8.=
- I
-> actually want to remove this value from setup.cfg but haven't yet. I
-> removed it from the python-qemu-qmp repo and never added it for qapi.
-> Removing it is actually probably correct as it will catch errors specific
-> to various python versions we support, but there are some nits to iron out
-> in my neck of the woods. This is a case where scripts/qapi/ is stricter
-> than python/ :)
-> (Not reasonable to solve for this series.)
-
-Also present in the deleted file, so no change.
-
-> lack of disallow_untyped_calls =3D False: I think this might be a remnant
-> from when we gradually typed qapi; it's evidently no longer needed since
-> qapi still checks fine without this affordance. The default under strict =
-is
-> True.
-
-Fair enough.
-
-> e941c844e444 (John Snow                   2021-05-27 17:17:05 -0400  79)
-> [mypy]
-> e941c844e444 (John Snow                   2021-05-27 17:17:05 -0400  80)
-> strict =3D True
-> ca056f4499c2 (Paolo Bonzini               2023-05-03 12:48:02 +0200  81)
-> python_version =3D 3.8
-> e941c844e444 (John Snow                   2021-05-27 17:17:05 -0400  82)
-> warn_unused_configs =3D True
-> 0542a4c95767 (John Snow                   2021-05-27 17:17:06 -0400  83)
-> namespace_packages =3D True
-> e7874a50ff3f (John Snow                   2022-05-25 20:09:13 -0400  84)
-> warn_unused_ignores =3D False
->
->
->>
->> python/setup.cfg additionally has a bunch of ignore_missing_imports that
->> don't apply here, as far as I can tell.
->>
->
-> Right, that's all stuff for fuse and the interactive qmp shell that use
-> untyped dependencies.
-
-Good.
-
-Let's mention the differences in the commit message.  Here's my try:
-
-    Since the previous commit, python/setup.cfg applies to scripts/qapi/
-    as well.  Configuration files in scripts/qapi/ override
-    python/setup.cfg.
-
-    scripts/qapi/.flake8 and scripts/qapi/.isort.cfg actually match
-    python/setup.cfg exactly, and can go.
-
-    The differences between scripts/qapi/mypy.ini and python/setup.cfg
-    are harmless: [list the differences, explain why they're harmless as
-    long as you can keep it brief, and if not, fall back to "trust me"].
-    So scripts/qapi/mypy.ini can go, too.
-
-    The pylint config is being left in place because the settings differ
-    enough from the python/ directory settings that we need a chit-chat on
-    how to merge them O:-)
-
-With something like that
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+--Z5Rz4Crf7PowmNb2--
 
 
