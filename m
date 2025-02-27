@@ -4,89 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BA0BC021B8
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 01:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF2DC021B8
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 02:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnT9A-0008WK-Ef; Wed, 26 Feb 2025 20:57:08 -0500
+	id 1tnTTq-00046l-9h; Wed, 26 Feb 2025 21:18:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnT98-0008Vo-Ex; Wed, 26 Feb 2025 20:57:06 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnT96-00062p-Lj; Wed, 26 Feb 2025 20:57:05 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-22349dc31bcso6247685ad.3; 
- Wed, 26 Feb 2025 17:57:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740621423; x=1741226223; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Arub7aZlZ6pXMCkbhrl0oQ4a3TKW5SrYggBPelLo6j0=;
- b=k7xwUqU00GxeABhpyxTJ9ii9y5PkE/8MFR5DaJ/JUvSlQWD8o+H5Gq3LUV7OAEE+KK
- A5ypdH+mhx8loHnYn/aZH4hrl9ffKJpl6ze5qkbzPp74LmclwrYiKMx34YzGfHtQl2KX
- XKijvDHw8JbDuUyYGxQMJ9H0Xi+zZ8TeYIX2shvcUkKVie6kvMKYP4jRcW6huQItHq+w
- 1hTrw1SJiqI2Nah6rO/HPiARSCZY+qwCW/74xIj+djgPCbcK9Q8zgVhVZo+c7gvnvjJm
- NAl39u7DOpM1uCwyaMgpVwtwRrJZ3Kvi+zp2z/WPBbZC3LhgGKw69rj8G2x1Z8UA6O3Q
- uw/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740621423; x=1741226223;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Arub7aZlZ6pXMCkbhrl0oQ4a3TKW5SrYggBPelLo6j0=;
- b=ozkgQIH5D7uS6IFTY1DYDGjmLg7yL/AhnFL8zUhFpkaVy7fnSWmWqQooPPrnEB/wo4
- BzgNKkmP5GumWMGNq+6x4lDyq8k+jodZqmogzmQVKWxOQnQ50WsU82EeeyM7Znl2k8VW
- Zr9LwwxALsiGUbkJzVTdYxcp7bTbRhbz+WqC+vTZ37P9bxkLAuP54K1VLFK7lF5TYIm4
- 6TIFKa+i9B47K4kMpiv8z8PmXPKgvLGe4a34i91V86vu9/YMjfZQT++qHhvr7HsGRu6w
- 2ADF0crOX8fuBdvNhY2FvWPiexLFx3ZPfm66y2HVIEQWGM567qUwHSq4siv3tdCMZb4g
- wr7g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIL0+42zgLvC5b8l70b4ztNonYX6esYcUH4wjklsYIQ6CYjIuA6R6XNU+93FTeRLwiDpXoRauqEvie@nongnu.org
-X-Gm-Message-State: AOJu0YwMq70dxlbTDPYW9RKLDTfBIP33j+/de8R+x40+wg5Jf/I/KhBe
- 2Koenh8GViXQzxGMa/TgJV38W1D4roAPr2CaMcbI+QZPM9+zH4UglPrRMw==
-X-Gm-Gg: ASbGncsRHm9UPiGCTc2rNMi7amrBbF3T+P2p9gYaHGQdsTWIywECasdcOHrGlM4gMBo
- OSlqLlJar2SMlICYqWynSPKSAMI86kH0uuktGeRs4XpEy8RfwmdYUzyBv21jGI3zHsbfHxnkght
- iwSc2ynPWc5SoLH213LpggObja/ohJqjp6aqwkZWquJfvfkkmg5D6Mnd08Lqmy2iDnk02dVaQXu
- KNFngY73Uh6ualKVTlojrX4qAL4+fhOzRbcQlLUljJ/itg5w8c7n25GGsLH89lE69O/L5FKaEEf
- CU4DsLH20HT6Rdc/gA==
-X-Google-Smtp-Source: AGHT+IFx/vukSs3zKOECV/7bWYocnyyXh1Nq1c508b1Rzt8vJcIZzDnN5r3dlFLfaqxwz//WH42M+Q==
-X-Received: by 2002:a17:902:ce88:b0:21f:4c8b:c511 with SMTP id
- d9443c01a7336-221a1191b71mr381902545ad.33.1740621422782; 
- Wed, 26 Feb 2025 17:57:02 -0800 (PST)
-Received: from localhost ([1.146.90.134]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223501d2732sm3394055ad.23.2025.02.26.17.56.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Feb 2025 17:57:02 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 27 Feb 2025 11:56:54 +1000
-Message-Id: <D82USMP2EKXB.1LFUGZQZKVFL2@gmail.com>
-To: "Chalapathi V" <chalapathi.v@linux.ibm.com>, <qemu-devel@nongnu.org>
-Cc: <qemu-ppc@nongnu.org>, <fbarrat@linux.ibm.com>, <clg@kaod.org>,
- <calebs@linux.ibm.com>, <chalapathi.v@ibm.com>, <saif.abrar@linux.ibm.com>,
- <dantan@linux.vnet.ibm.com>, <milesg@linux.ibm.com>, <philmd@linaro.org>,
- <alistair@alistair23.me>
-Subject: Re: [PATCH v5 4/4] hw/ssi/pnv_spi: Put a limit to RDR match failures
-From: "Nicholas Piggin" <npiggin@gmail.com>
-X-Mailer: aerc 0.19.0
-References: <20250103161824.22469-1-chalapathi.v@linux.ibm.com>
- <20250103161824.22469-5-chalapathi.v@linux.ibm.com>
-In-Reply-To: <20250103161824.22469-5-chalapathi.v@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tnTTj-00046K-VS; Wed, 26 Feb 2025 21:18:24 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tnTTh-0003IP-B0; Wed, 26 Feb 2025 21:18:23 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E8FE24E602B;
+ Thu, 27 Feb 2025 03:18:16 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id i7-gY2ht20Eu; Thu, 27 Feb 2025 03:18:15 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 072F04E6027; Thu, 27 Feb 2025 03:18:15 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 04E5B74577C;
+ Thu, 27 Feb 2025 03:18:15 +0100 (CET)
+Date: Thu, 27 Feb 2025 03:18:14 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Nicholas Piggin <npiggin@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH 3/4] ppc/amigaone: Add default environment
+In-Reply-To: <D82U15TLWUH7.2HKA1PQKQGVMM@gmail.com>
+Message-ID: <3a522e6f-5800-c530-e59f-a602c11a0fea@eik.bme.hu>
+References: <cover.1740243918.git.balaton@eik.bme.hu>
+ <f1b53e0822111c6c557797adcc75f8d2c7eed17f.1740243918.git.balaton@eik.bme.hu>
+ <D82U15TLWUH7.2HKA1PQKQGVMM@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,38 +65,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat Jan 4, 2025 at 2:18 AM AEST, Chalapathi V wrote:
-> There is a possibility that SPI controller can get into loop due to indef=
-inite
-> RDR match failures. Hence put a limit to failures and stop the sequencer.
+On Thu, 27 Feb 2025, Nicholas Piggin wrote:
+> On Sun Feb 23, 2025 at 3:52 AM AEST, BALATON Zoltan wrote:
+>> Initialise empty NVRAM with default values. This also enables IDE UDMA
+>> mode in AmigaOS that is faster but has to be enabled in environment
+>> due to problems with real hardware but that does not affect emulation
+>> so we can use faster defaults here.
 >
-> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
-> ---
->  hw/ssi/pnv_spi.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+> So this overwrites a blank NVRAM file. Okay I suppose if that works.
+
+We're emulating what U-Boot does. If it does not find a valid environment 
+it will overwrite with defaults. These defaults are to get the same 
+behaviour and additionally to enable UDMA for IDE driver that until now 
+had to be done manually to get the same speed as with pegasos2 where this 
+is enabled by default. (That's because these VIA VT82C686B chips had some 
+issues with DMA even in PCs but the emulated devices work so can be 
+enabled and that's faster on QEMU too.)
+
+> You could have a property to supply the default environment
+> alternatively.
+
+U-Boot has the defaults hard coded. I set and use it from the same file so 
+I don't see the need to send this through a property. (Properties are also 
+listed in QEMU Monitor with info qtree and I don't know how a long string 
+with embedded zeros would look there so I don't think that's a good idea.)
+
+> Anywhere to document this behaviour for users?
+
+I've added docs in the cover letter that I hope would end up in the 
+changelog and I have a separate page for this which I'll update at 
+qmiga.codeberg.page (Haven't done that yet but would do it by the 
+release once this is merged.)
+
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>  hw/ppc/amigaone.c | 37 ++++++++++++++++++++++++++++++++++++-
+>>  1 file changed, 36 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+>> index 5273543460..35e4075cc3 100644
+>> --- a/hw/ppc/amigaone.c
+>> +++ b/hw/ppc/amigaone.c
+>> @@ -52,6 +52,28 @@ static const char dummy_fw[] = {
+>>  #define NVRAM_ADDR 0xfd0e0000
+>>  #define NVRAM_SIZE (4 * KiB)
+>>
+>> +static char default_env[] =
+>> +    "baudrate=115200\0"
+>> +    "stdout=vga\0"
+>> +    "stdin=ps2kbd\0"
+>> +    "bootcmd=boota; menu; run menuboot_cmd\0"
+>> +    "boot1=ide\0"
+>> +    "boot2=cdrom\0"
+>> +    "boota_timeout=3\0"
+>> +    "ide_doreset=on\0"
+>> +    "pci_irqa=9\0"
+>> +    "pci_irqa_select=level\0"
+>> +    "pci_irqb=10\0"
+>> +    "pci_irqb_select=level\0"
+>> +    "pci_irqc=11\0"
+>> +    "pci_irqc_select=level\0"
+>> +    "pci_irqd=7\0"
+>> +    "pci_irqd_select=level\0"
+>> +    "a1ide_irq=1111\0"
+>> +    "a1ide_xfer=FFFF\0";
+>> +#define CRC32_DEFAULT_ENV 0xb5548481
+>> +#define CRC32_ALL_ZEROS   0x603b0489
+>> +
+>>  #define TYPE_A1_NVRAM "a1-nvram"
+>>  OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
+>>
+>> @@ -97,7 +119,7 @@ static void nvram_realize(DeviceState *dev, Error **errp)
+>>  {
+>>      A1NVRAMState *s = A1_NVRAM(dev);
+>>      void *p;
+>> -    uint32_t *c;
+>> +    uint32_t crc, *c;
+>>
+>>      memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram",
+>>                                    NVRAM_SIZE, &error_fatal);
+>> @@ -116,12 +138,25 @@ static void nvram_realize(DeviceState *dev, Error **errp)
+>>              return;
+>>          }
+>>      }
+>> +    crc = crc32(0, p + 4, NVRAM_SIZE - 4);
+>> +    if (crc == CRC32_ALL_ZEROS) { /* If env is uninitialized set default */
+>> +        *c = cpu_to_be32(CRC32_DEFAULT_ENV);
+>> +        /* Also copies terminating \0 as env is terminated by \0\0 */
+>> +        memcpy(p + 4, default_env, sizeof(default_env));
+>> +        if (s->blk) {
+>> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, 0);
+>> +        }
+>> +        return;
+>> +    }
+>>      if (*c == 0) {
+>>          *c = cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
+>>          if (s->blk) {
+>>              blk_pwrite(s->blk, 0, 4, p, 0);
+>>          }
+>>      }
+>> +    if (be32_to_cpu(*c) != crc) {
+>> +        warn_report("NVRAM checksum mismatch");
+>> +    }
 >
-> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-> index 41beb559c6..d605fa8b46 100644
-> --- a/hw/ssi/pnv_spi.c
-> +++ b/hw/ssi/pnv_spi.c
-> @@ -20,6 +20,7 @@
->  #define PNV_SPI_OPCODE_LO_NIBBLE(x) (x & 0x0F)
->  #define PNV_SPI_MASKED_OPCODE(x) (x & 0xF0)
->  #define PNV_SPI_FIFO_SIZE 16
-> +#define RDR_MATCH_FAILURE_LIMIT 16
-> =20
->  /*
->   * Macro from include/hw/ppc/fdt.h
-> @@ -838,21 +839,31 @@ static void operation_sequencer(PnvSpi *s)
->               */
->              if (GETFIELD(SPI_STS_RDR_FULL, s->status) =3D=3D 1) {
->                  bool rdr_matched =3D false;
-> +                static int fail_count;
+> Maybe the default environment should be set if there is no CRC? If there
+> is a CRC already then that seems to indicate a valid rom file was
+> supplied and user wanted it blank.
 
-This will be shared by SPI instances, is that okay or should it be
-in PnvSpi?
+The idea is to allow supplying an environment via the backing file or let 
+users edit it and clear the checksum in which case it will take the 
+supplied data and only fix the checksum. Unlike U-Boot it will only 
+replace empty backing file with defaults. (This is kind of undocumented 
+for advanced users only but that's why the above code looks like that.) 
+Having an empty NVRAM does not make much sense as U-Boot always has some 
+values there so it's never empty. If it finds empty NVRAM then installs 
+default env which is to help new users so they only need to create an 
+empty file to get started. It also works without backing file in which 
+case we want to use defaults and keep it persistent only for the session.
 
-Other than that, looks good.
+> This can also be rewritten:
+>
+>    crc = crc32(0, p + 4, NVRAM_SIZE - 4);
+>    if (crc == CRC32_ALL_ZEROS) { /* If env is uninitialized set default */
+>        /* Also copies terminating \0 as env is terminated by \0\0 */
+>        memcpy(p + 4, default_env, sizeof(default_env));
+>        crc = CRC32_DEFAULT_ENV;
+>    }
+>    if (*c == 0) {
+>        *c = cpu_to_be32(crc);
+>        if (s->blk) {
+>            blk_pwrite(s->blk, 0, 4, p, 0);
+>        }
+>    } else if (be32_to_cpu(*c) != crc) {
+>        warn_report("NVRAM checksum mismatch");
+>    }
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+I have the checksum check in separate if to warn if there is a checksum 
+but it's wrong because I only want it to fix checksum if it's zero but not 
+touch it otherwise. Basically it will only overwrite zero values but leave 
+nonzero values there. (Might be useful for testing what does the guest do 
+if the checksum is wrong, although on real machine U-Boot would have 
+replaced the env with default in that case so this would only happen if 
+the NVRAM is changed during runtime without updating the checksum.)
+
+Regards,
+BALATON Zoltan
 
