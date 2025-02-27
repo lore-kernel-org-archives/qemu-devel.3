@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51632C19F2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D94DC19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 08:53:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnZZj-0000KQ-L1; Thu, 27 Feb 2025 03:48:59 -0500
+	id 1tnZdU-0001YP-4o; Thu, 27 Feb 2025 03:52:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnZZh-0000Js-6p; Thu, 27 Feb 2025 03:48:57 -0500
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1tnZdS-0001Y9-2G; Thu, 27 Feb 2025 03:52:50 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tnZZf-0000QT-As; Thu, 27 Feb 2025 03:48:56 -0500
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2fe848040b1so1438016a91.3; 
- Thu, 27 Feb 2025 00:48:54 -0800 (PST)
+ id 1tnZdQ-00016h-8b; Thu, 27 Feb 2025 03:52:49 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2fea47bcb51so1069904a91.2; 
+ Thu, 27 Feb 2025 00:52:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740646133; x=1741250933; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740646366; x=1741251166; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NyoLGRcN2Qs1kmufYOQ4ZS0muaC0RDxZDUoeISj23Gw=;
- b=jjKrrYZ57yjiD+hc/Ish9AYOX/ZXOf37GUcyI+o9LLT6PAfmce6zZSBuY9bxEYUSKD
- wXgY6BXTDDL6Gw4ehBN+63OaB6in0Inx5DU9Tm9OgiRvSBgD54w2idnRHMBwk9tVeUSr
- TVH18ImJOEu8u+4A0uAOvBRct141T+MuBtZdwLpJ9VMH5IzF/shSdIK/z8vlHgvCAnAz
- zMfaYNuFiPX04Ypca29lvcGRE0y9xJ5L5l/ucTNbCY8HZk6tGYVnFIrvYQd8jkKtGXvF
- ykCsaVoCp9dXFiNUm7Et/vnH2FBnb4WXf6V0gm/V5t48XnzELz2AgpUxrOniLnL6QEbH
- 4DQA==
+ bh=0ujFaYe4TUypeC/SmoVj1IufzKJgfbMTG6FaXX45G50=;
+ b=GtcAmLBS4o5DyciQ0zwvdW1CaDAMmoE/UpcdeIbCB6wBXCGA2p0OB4TjW4uQhqdMxY
+ wFT++o1i8+IcrUeqA4HVAzz/n0nsNL4o1DlLMSrxBVlsHc3FOdX553vGBpEX7BjTYTmj
+ 22eFyuvX6YXuZLrjG419WQKPG8JO35+EQ5meeZAMGhBpGbG4wY4IcRlvuZPzu1zdCY0F
+ 0JG3TQvq6rHtL48U3LJYFpkTwWgVemO3P2DQO8ViTJbZSvVF48ihsM3+FUh1clfphucM
+ hnez4/MNZxwxCLzZmVMutvwqqOP47aiK2UKaUTNCds6GMbLYETSr4994HPMNBCC1Gbrl
+ tt8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740646133; x=1741250933;
+ d=1e100.net; s=20230601; t=1740646366; x=1741251166;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=NyoLGRcN2Qs1kmufYOQ4ZS0muaC0RDxZDUoeISj23Gw=;
- b=lYNAvSes+ZiVVkOPTETIsmLsqG1FoaowjAYzk/rnCzbWJr9q3io7dqPGbM3Rkrns/m
- cWB4k9lJDgaeuISg/Vm4HATTfQpb4kFfk2lljzM6DRsuiOkpKfh7PBbCEA3rK8ZADSXw
- D4kFFxp65ITe6GHGFES4/KCbZkVWYW/kpKc//oU7tQlwbnnhS37e9Nsuk2SuNZtKK0FY
- gCStXpYKBE8aHiD4VGp9Svyf93t3kjj+3je+hQqryEEGfQRFtxNqcEsHjRbOdqgQS5L9
- XUZ8rSIAM4CFvvAt+lKFVqj0s83CtBEyksSpooK3/mJzMimU/X4NbstwZ9s8XXUpp5+K
- 1f3w==
+ bh=0ujFaYe4TUypeC/SmoVj1IufzKJgfbMTG6FaXX45G50=;
+ b=B6iHK0dHTby0cryUYLeGlBZ4NF1I2PHb1KFMvUa7ntCZOxotBLuOPTahYSoXg8woJ9
+ zfct2lxrTGEJnEkj10gIprPGdw6rfHY8tiQ/DDPPv3NIcJuW6DfTuYDLXQfGBf3EntJA
+ AbpvvXENve+CB0MCjhW6EABHRzVT7FKpBoXMu62fAFDq9/pYXQfSNeHMxUQewqbQq5T4
+ QIa9vukt/15ygXlNa74uiLo+HXSiS+U1zcx8Nqjbtd+KIW2/VuaSR5FpxhC/cXPPmKjO
+ M7Khzfz2+17KH76r9Dl2H1LkXJx+PTlLQPqMDBdcSXlZt17iyeKnRgxsbeFEZN3rx/DG
+ 3Hbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWt1gof0gR9SS1sQCC4ugpeqtIEMDXMqfms72zsj/TWaf0SdZvo4pyQhS48H+CAbDUucHwulLt0Fxyw@nongnu.org
-X-Gm-Message-State: AOJu0YwDqjnHk02TqAQ1rzTO404mmG45mZXAlsvX3VF98b5i/+HAWXCc
- LttoqVJsrqjiSj5EL2dZ82PWiRgBBdI/vvEDCxEEKq2O/fVUjY18
-X-Gm-Gg: ASbGncvmcwWLdP7Ti7ogUGVe4iHA6t2k80Ijl0KjzatOVqqMnnu+LYHP/QxngGxJNy0
- nCZj2GJN7h9rVKYpO36rxawdW4lMUtMhaxudTqQCued67kZJ4B34rT6Skq3aQAYTwFNdE5KIld3
- T4rIG8v6+9dE0tQG1T+zrCinNIyNjtxXmYFNo84FJ9JXQPVUggzWAA4CJPxb8VL7Xv1adFq2/Ti
- /xN65EizQ5Z8wX+gk02Nj+q6JOtChgO7Nq5LWTq+9rLLBZ2s2yDJwDg4BuIk/NvorGZKmBBu9JR
- 63UjW/JBpUqYS6grRw==
-X-Google-Smtp-Source: AGHT+IH+t9CoF4QNlx9Mox4V885PjyLMNf9u1YORkkdExsvCmpZwusXy/UpCBaufROitcJc23nQW4A==
-X-Received: by 2002:a17:90b:268d:b0:2ee:59af:a432 with SMTP id
- 98e67ed59e1d1-2fce874088emr36530694a91.31.1740646133103; 
- Thu, 27 Feb 2025 00:48:53 -0800 (PST)
+ AJvYcCXEqOemMmKkW2dzjRiSCBP/TWEONYqQzm5OKV02LOaJhFJwov+LX0kw296XUNC6brd+eH5KGtkeg6kR@nongnu.org
+X-Gm-Message-State: AOJu0YzUv7YjVR1PfewSkbyt5D0ApKmaPQH6Dl+rmG5xHrzm+IR4scW4
+ Eg1XMezVWNll+VGu5zX+ue+2n+nkQpNEigsIKZ7S/HN7WXbr3sE1
+X-Gm-Gg: ASbGnctqD2sR6sY80v/2ScFa0QtrsSrR3kd+NOhBjV1wwfkBjnSpkPRxzAreDqk6Ygo
+ 5ErG9CDIUj530RGmDS9gweNJ4mmP6MUoHJMFqxE3Ryi/QPF9U7bkr5cCy6M8qMjU9EAPMWv4u8h
+ 8Dj6zlE4ShPCLPlOUWKBob3noGe0nmEC612uQs/SeBiJPdxJkNTE2ghfX/+G/k6vgJ/FA5/ReDF
+ 5DXPIsuThKTato3Bp8+t3FucYi5A6Jt1J90BWlEo+Bg6dV4czkL5ZPlIK4XoscVsjIy4A/y1hdS
+ Ulv+oWYzPUyXkWIjsg==
+X-Google-Smtp-Source: AGHT+IEeIFOOL+XZQnSSdME1wEMfFevAzCqb2F8wRSYyhZ20dhfoYfzajscH/y83CrBM9lyq1vJZyg==
+X-Received: by 2002:a17:90b:3ece:b0:2ea:712d:9a82 with SMTP id
+ 98e67ed59e1d1-2fce8740b67mr39541144a91.29.1740646365881; 
+ Thu, 27 Feb 2025 00:52:45 -0800 (PST)
 Received: from localhost ([1.146.124.39]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fea676bf4esm986135a91.18.2025.02.27.00.48.48
+ 98e67ed59e1d1-2fea675336dsm1002397a91.7.2025.02.27.00.52.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 00:48:52 -0800 (PST)
+ Thu, 27 Feb 2025 00:52:45 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 27 Feb 2025 18:48:44 +1000
-Message-Id: <D833JYHF1A5A.1QP2LM99MU7XE@gmail.com>
+Date: Thu, 27 Feb 2025 18:52:38 +1000
+Message-Id: <D833MY4YIZIO.2WT22FPU95D09@gmail.com>
 Cc: <qemu-ppc@nongnu.org>, "Daniel Henrique Barboza"
  <danielhb413@gmail.com>, "Harsh Prateek Bora" <harshpb@linux.ibm.com>,
  "Sourabh Jain" <sourabhjain@linux.ibm.com>, "Mahesh J Salgaonkar"
  <mahesh@linux.ibm.com>, "Hari Bathini" <hbathini@linux.ibm.com>
-Subject: Re: [PATCH 1/6] hw/ppc: Implement skeleton code for fadump in PSeries
+Subject: Re: [PATCH 6/6] hw/ppc: Enable Fadump for PSeries
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "Aditya Gupta" <adityag@linux.ibm.com>, <qemu-devel@nongnu.org>
 X-Mailer: aerc 0.19.0
 References: <20250217071711.83735-1-adityag@linux.ibm.com>
- <20250217071711.83735-2-adityag@linux.ibm.com>
- <D82WB0T0PJ0H.3M2NGHZT4M9SW@gmail.com>
- <7ec1dc4f-e7b1-492a-8cf2-b971b11bc31b@linux.ibm.com>
-In-Reply-To: <7ec1dc4f-e7b1-492a-8cf2-b971b11bc31b@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
+ <20250217071711.83735-7-adityag@linux.ibm.com>
+ <D82WUV05QWZP.10KAOOHN6YFFP@gmail.com>
+ <8108eb0d-7efe-4549-ba74-c7de50935dfe@linux.ibm.com>
+In-Reply-To: <8108eb0d-7efe-4549-ba74-c7de50935dfe@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,156 +104,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu Feb 27, 2025 at 4:49 PM AEST, Aditya Gupta wrote:
-> Hi Nick,
+On Thu Feb 27, 2025 at 5:07 PM AEST, Aditya Gupta wrote:
+> On 27/02/25 09:03, Nicholas Piggin wrote:
 >
-> On 27/02/25 08:37, Nicholas Piggin wrote:
 >> On Mon Feb 17, 2025 at 5:17 PM AEST, Aditya Gupta wrote:
->>> Implement the handler for "ibm,configure-kernel-dump" rtas call in QEMU=
-.
+>>> With all support in place, enable fadump by exporting the
+>>> "ibm,configure-kernel-dump" RTAS call in the device tree.
 >>>
->>> Currently the handler just does basic checks and handles
->>> register/unregister/invalidate requests from kernel.
+>>> Presence of "ibm,configure-kernel-dump" tells the kernel that the
+>>> platform (QEMU) supports fadump.
 >>>
->>> Fadump will be enabled in a later patch.
+>>> Pass "fadump=3Don" to enable Linux to use firmware assisted dump.
+>>>
+>>> Logs of a linux boot with firmware assisted dump:
+>>>
+>>>      ./build/qemu-system-ppc64 -M pseries,x-vof=3Don --cpu power10 --sm=
+p 4 -m 4G -kernel some-vmlinux -initrd some-initrd -append "debug fadump=3D=
+on crashkernel=3D1G" -nographic
+>>>      [    0.000000] random: crng init done
+>>>      [    0.000000] fadump: Reserved 1024MB of memory at 0x000000400000=
+00 (System RAM: 4096MB)
+>>>      ...
+>>>      [    1.084686] rtas fadump: Registration is successful!
+>>>      ...
+>>>      # cat /sys/kernel/debug/powerpc/fadump_region
+>>>      CPU :[0x00000040000000-0x000000400013d3] 0x13d4 bytes, Dumped: 0x0
+>>>      HPTE:[0x000000400013d4-0x000000400013d3] 0x0 bytes, Dumped: 0x0
+>>>      DUMP: Src: 0x00000000000000, Dest: 0x00000040010000, Size: 0x40000=
+000, Dumped: 0x0 bytes
+>>>
+>>>      [0x000000fffff800-0x000000ffffffff]: cmdline append: ''
+>>>      # echo c > /proc/sysrq-trigger
+>>>
+>>> The fadump boot after crash:
+>>>
+>>>      [    0.000000] rtas fadump: Firmware-assisted dump is active.
+>>>      [    0.000000] fadump: Updated cmdline: debug fadump=3Don crashker=
+nel=3D1G
+>>>      [    0.000000] fadump: Firmware-assisted dump is active.
+>>>      [    0.000000] fadump: Reserving 3072MB of memory at 0x00000040000=
+000 for preserving crash data
+>>>      ....
+>>>      # file /proc/vmcore
+>>>      /proc/vmcore: ELF 64-bit LSB core file, 64-bit PowerPC or cisco 75=
+00, OpenPOWER ELF V2 ABI, version 1 (SYSV), SVR4-style
+>>>
+>>> Analysing the vmcore with crash-utility:
+>>>
+>>>            KERNEL: vmlinux-6.14-rc2
+>>>          DUMPFILE: vmcore-a64dcfb451e2-nocma
+>>>              CPUS: 4
+>>>              DATE: Thu Jan  1 05:30:00 IST 1970
+>>>            UPTIME: 00:00:30
+>>>      LOAD AVERAGE: 0.74, 0.21, 0.07
+>>>             TASKS: 94
+>>>          NODENAME: buildroot
+>>>           RELEASE: 6.14.0-rc2+
+>>>           VERSION: #1 SMP Wed Feb 12 06:49:59 CST 2025
+>>>           MACHINE: ppc64le  (1000 Mhz)
+>>>            MEMORY: 4 GB
+>>>             PANIC: "Kernel panic - not syncing: sysrq triggered crash"
+>>>               PID: 270
+>>>           COMMAND: "sh"
+>>>              TASK: c000000009e7cc00  [THREAD_INFO: c000000009e7cc00]
+>>>               CPU: 3
+>>>             STATE: TASK_RUNNING (PANIC)
 >>>
 >>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
->>> ---
->>>   hw/ppc/spapr_rtas.c    | 99 +++++++++++++++++++++++++++++++++++++++++=
-+
->>>   include/hw/ppc/spapr.h | 59 +++++++++++++++++++++++++
->>>   2 files changed, 158 insertions(+)
->>>
->>> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
->>> index df2e837632aa..eebdf13b1552 100644
->>> --- a/hw/ppc/spapr_rtas.c
->>> +++ b/hw/ppc/spapr_rtas.c
->>> @@ -341,6 +341,105 @@ static void rtas_ibm_set_system_parameter(PowerPC=
-CPU *cpu,
->>>       rtas_st(rets, 0, ret);
->>>   }
->>>  =20
->>> +struct fadump_metadata fadump_metadata;
->> Can this (and other globals added in other patches) come under
->> SpaprMachineState?
+>> This is very cool, nice work. Does it work with KVM? I think... probably
+>> it could?
+>
+> Yes it does, atleast for crashing CPU :)
+>
+> But there are problems with reading the CPU regs, regs don't seem=20
+> correct for non-crashing CPUs.
+>
+> Crash is able to work perfectly for the crashing CPU as of now (as the=20
+> registers are stored by the kernel in that case).
+
+You may need to call cpu_synchronize_state() in the CPU_FOREACH loop
+before you read out the register state. Does that fix it?
+
 >>
->> And could most of the fadump code and structures go under new
->> spapr_fadump.[ch] files?
-> Yes, i can move it inside SpaprMachineState. Will put the code in new fil=
-es.
->>> +
->>> +/* Papr Section 7.4.9 ibm,configure-kernel-dump RTAS call */
->>> +static __attribute((unused)) void rtas_configure_kernel_dump(PowerPCCP=
-U *cpu,
->>> +                                   SpaprMachineState *spapr,
->>> +                                   uint32_t token, uint32_t nargs,
->>> +                                   target_ulong args,
->>> +                                   uint32_t nret, target_ulong rets)
->> I don't know about adding a new unused function like this, is there
->> a way to juggle patches around to add it when it's wired up?
+>> Are you able to add a functional test case for it? This is something
+>> that people (including me) will forget to test...
 >
-> Ah, that is problematic agreed. I tried to move around things, but=20
-> arrived at this.
->
-> I will spend some time thinking how to arrange this.
->
-> Will need some guidance. How should I approach arranging the code in=20
-> such situations ?
->
-> My idea was to
-> * First one is the skeleton: mentions the steps, but doesn't implement=20
-> the steps
-> * Middle patches implement the steps one by one
-> * Last patch enables it all. So in future if someone checks out the=20
-> "Enable fadump" commit they would have all the support ready.
->
-> The major problem is "everything" remains unused till this last patch.=20
-> But this 1st patch gave me the chance to logically build upon this, eg.=
-=20
-> first implement preserving memory regions, then add the fadump_trigger=20
-> in os-term rtas call, etc.
->
-> Any advice to approach this ?
-
-Yeah, sometimes it's difficult to avoid. Especially with a new
-feature like this. If you can't find a better way, that's okay.
-
-One thing could be to return errors from calls. RTAS is a little
-bit tricky since there is no general "unsupported" error because
-the presence of the token implies some support. You could return
--1 hardware error perhaps.
-
-Another option is implement the call but not all functionality.
-E.g., permit dump register/unregister, but don't actually provide
-a valid dump on reboot (you could ignore, or provide empty or
-invalid format). Downside of that is that if you bisect, a kernel
-test case could go bad because it appears to be supported but
-produces invalid result.
-
-To avoid that, perhaps you could trip an assert or just log an
-error message when performing a reboot with crash dump registered.
-
-But as I said, don't make it too convoluted or lots more work if
-it's not easy to rework.
-
->
->>> +{
->>> +    struct rtas_fadump_section_header header;
->>> +    target_ulong cmd =3D rtas_ld(args, 0);
->>> +    target_ulong fdm_addr =3D rtas_ld(args, 1);
->>> +    target_ulong fdm_size =3D rtas_ld(args, 2);
->>> +
->>> +    /* Number outputs has to be 1 */
->>> +    if (nret !=3D 1) {
->>> +        qemu_log_mask(LOG_GUEST_ERROR,
->>> +                "FADUMP: ibm,configure-kernel-dump RTAS called with nr=
-et !=3D 1.\n");
->>> +        return;
->>> +    }
->>> +
->>> +    /* Number inputs has to be 3 */
->>> +    if (nargs !=3D 3) {
->>> +        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
->>> +        return;
->>> +    }
->>> +
->>> +    switch (cmd) {
->>> +    case FADUMP_CMD_REGISTER:
->>> +        if (fadump_metadata.fadump_registered) {
->>> +            /* Fadump already registered */
->>> +            rtas_st(rets, 0, RTAS_OUT_DUMP_ALREADY_REGISTERED);
->>> +            return;
->>> +        }
->>> +
->>> +        if (fadump_metadata.fadump_dump_active =3D=3D 1) {
->>> +            rtas_st(rets, 0, RTAS_OUT_DUMP_ACTIVE);
->>> +            return;
->>> +        }
->>> +
->>> +        if (fdm_size < sizeof(struct rtas_fadump_section_header)) {
->>> +            qemu_log_mask(LOG_GUEST_ERROR,
->>> +                "FADUMP: Header size is invalid: %lu\n", fdm_size);
->>> +            rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
->>> +            return;
->>> +        }
->>> +
->>> +        /* XXX: Can we ensure fdm_addr points to a valid RMR-memory bu=
-ffer ? */
->> RMR memory? There is spapr_rma_size() if that's what you need?
+> Sure, I will add a test case.
 >
 >
-> Thanks, will use `spapr_rma_size`. The PAPR says fdm_addr should point=20
-> to a valid RMR buffer, I guess that means it should be in the RMA, ie.=20
-> `< spapr_rma_size()` ?
+> Thanks for your reviews Nick.
+>
+> It might take few weeks for me to post another version, will see into=20
+> the tests in qemu and arrange the code bit more nicely.
 
-Ah yes, PAPR glossray says:
-
-Real Mode Region. This is an obsolete term that is deprecated in favor of R=
-MA.
-
-So that should do what you want.
+Yeah that's okay, I'm way behind with reviews and merging unfortunately
+so may have to wait for next release, but I'm keen to get it merged when
+we can. Sorry for the late review.
 
 Thanks,
 Nick
-
 
