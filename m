@@ -4,102 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 834EEC197BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 12:04:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4DCFC021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 12:16:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnccl-000174-4D; Thu, 27 Feb 2025 07:04:19 -0500
+	id 1tncnc-0000Te-0W; Thu, 27 Feb 2025 07:15:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tnccC-0000Z6-Ri
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 07:03:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tncna-0000TG-0M; Thu, 27 Feb 2025 07:15:30 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tnccB-0002R6-2S
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 07:03:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740657822;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=A3IIRWTfz/eEhKgTnFWptplWM8F1KHYcG7w57dEy7Ao=;
- b=am7+JUtMPqkiFw/Q1B69GBbiDyxp6IFrT2iSRND8Yg5jS30LW2lrqlZLLGeqYMNcr4CLwT
- K/CSMkhog6O1kyNUAD5gvgoWQF/8wsM1k2LvIPRT62udYGD7KrPNedk/wx+qX2aJcw56D0
- b+Vzqox8uhwO4ffwSPsDuxBofEJfnVg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-mDe7OrUTM5-7N_yeRPuEBg-1; Thu, 27 Feb 2025 07:03:40 -0500
-X-MC-Unique: mDe7OrUTM5-7N_yeRPuEBg-1
-X-Mimecast-MFC-AGG-ID: mDe7OrUTM5-7N_yeRPuEBg_1740657819
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-390de58dc09so585243f8f.0
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 04:03:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740657819; x=1741262619;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=A3IIRWTfz/eEhKgTnFWptplWM8F1KHYcG7w57dEy7Ao=;
- b=YIVEk1YQBjgV5yhoFs1GKUUno3+RHotZAVcaiEnED4u7Vonp/386U+6ZN6gtmqlwY0
- RyBaJk2uGgHMVkXE7mbb6yAgJmz6mZK8xP9lFoF4gLlBauclhSlnQYgyOR9zurIA/v2x
- qt6i3sSJlb55xIBIb+SVabO9O64qd9QAyVthi8aPFuQDF19pdVDrEXXJgJuGJs7CPdzP
- fF4wn7Be1eIhDNXdNk33b3MOpdyUoBpfxrUso7Wcau30FhbMwZfUZ5GsEUpY0KYwmyFS
- EFRe4NTvouzqzT0HbhjWa6S/NAF4pd0t+C16XzTO6Fz1dDw67KkKxZQ1wKSJn4KJBj9p
- cZYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU03MNi9JrU0ucXnV0zJZN1Ff9rPM3LOcvfsEtqSSEvIDv7u5WcDRSrbwtkTT28AeDEtXEIeFg6/iT8@nongnu.org
-X-Gm-Message-State: AOJu0YwJoWbpfv8Mhg+zDBO1BmqTSrgtfjE7EJQsBA8ddVLvBkfAHBh0
- M2hughlKNdQt7d9f3apGdDSTzLF5rF7/JFsxPWti6oPeU2dStK/qfp130vJtcdCBdjOnyJpRwaC
- 3bcPSc5QHSDLfD8pPoJjW/Eed7r2TjWwOp64IzCrQ4tuubHsO8epl
-X-Gm-Gg: ASbGncuPEBk3PFqRHUQwHnIkaiL1IdCxTkXT3y861nAtl2+9oBRMuHkC/RJ6p9VmXW0
- J5tUJGrHZsSQ2oWe/8mo+vJiYqJcsBDW5u4G4mptulHHkb6jRYjfN2irQ9FHaAMGCYwundHA+yh
- 8NpHCQrny5eMbh+2Mv5Gl0b7Ok2asF/wb2G+zN7OIQSuBn24i7LV6XCmCCYzGntHUaXmXu8TQv+
- Nwsg6qgD53T5YW/FQKun/bGzMJMEdYDXWesbBZ2y0EVwz+vVLG1/ScR4XXK5fz0sl8REJs2ZeEB
- xOAhHgC+wpcWI3Z32F1RzUFCw9PktVPTdk7wadNmdJMbwRzIco5sZeParYKEYgY=
-X-Received: by 2002:a05:6000:18a5:b0:390:de58:d7fe with SMTP id
- ffacd0b85a97d-390de58dbc6mr4083580f8f.51.1740657818811; 
- Thu, 27 Feb 2025 04:03:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHIvLiWh2tdVmP6HZrr7TBnk071x+cG1W0d6K0NLkz3NzaVfzLf567WwsMpcijntSKKBlKQ5A==
-X-Received: by 2002:a05:6000:18a5:b0:390:de58:d7fe with SMTP id
- ffacd0b85a97d-390de58dbc6mr4083544f8f.51.1740657818495; 
- Thu, 27 Feb 2025 04:03:38 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e485d906sm1828794f8f.90.2025.02.27.04.03.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 04:03:38 -0800 (PST)
-Date: Thu, 27 Feb 2025 13:03:37 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 03/21] tests/acpi: virt: update HEST file with its
- current data
-Message-ID: <20250227130337.31f2a285@imammedo.users.ipa.redhat.com>
-In-Reply-To: <5bb163b260d6a29b082d12cbae31035fa68342df.1740653898.git.mchehab+huawei@kernel.org>
-References: <cover.1740653898.git.mchehab+huawei@kernel.org>
- <5bb163b260d6a29b082d12cbae31035fa68342df.1740653898.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tncnX-0004lr-Nb; Thu, 27 Feb 2025 07:15:29 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51R5OoR0021089;
+ Thu, 27 Feb 2025 12:15:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=t3FuNB
+ qIzUAA7jg4vPZnQWn7Jo1Mpn/NpG+pnS19aww=; b=P5eMYrj42ETY2Luo0SIEfz
+ VIGR8MVVuQnXYagI8ko9BMsmOlF6t/d/3RpTJaS9ph+mQk2x7OLP0wkDNYcuKINo
+ NqJh2jh2qoT5Y0eJqWz2Jk16J/uxSFin9U2lFhzMIyYOvvNY/Kx1A+Me81atwWsW
+ 46ocVWdALoGcSA2Pjd+OgXoJOdvcFdL38+AGzcRFBM69Czxtg8R05Xxq8hr4XIkw
+ K6h+c6m9vPVTqhX0CT0+XESM0th5yPeGiNvlq+eCKne19vUyEDfnO2WKCd54vs1D
+ o46Rc6fdc4NDEjybrVlpRsMoO4aYe2qgyp5daltYR15tg7TuDyK/SJD/6eWaiauQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 452hv8sur9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Feb 2025 12:15:24 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 51RCEOsT032020;
+ Thu, 27 Feb 2025 12:15:24 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 452hv8suqy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Feb 2025 12:15:24 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51RAXGYj002588;
+ Thu, 27 Feb 2025 12:15:23 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 44yu4k0679-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Feb 2025 12:15:23 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 51RCFJjc19726794
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Feb 2025 12:15:19 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B54E22004B;
+ Thu, 27 Feb 2025 12:15:19 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A780720040;
+ Thu, 27 Feb 2025 12:15:17 +0000 (GMT)
+Received: from [9.109.199.160] (unknown [9.109.199.160])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 27 Feb 2025 12:15:17 +0000 (GMT)
+Message-ID: <ebf91be5-071d-4b5b-ad30-6d99d12af86e@linux.ibm.com>
+Date: Thu, 27 Feb 2025 17:45:16 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] hw/ppc: Implement skeleton code for fadump in PSeries
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250217071711.83735-1-adityag@linux.ibm.com>
+ <20250217071711.83735-2-adityag@linux.ibm.com>
+ <D82WB0T0PJ0H.3M2NGHZT4M9SW@gmail.com>
+ <7ec1dc4f-e7b1-492a-8cf2-b971b11bc31b@linux.ibm.com>
+ <D833JYHF1A5A.1QP2LM99MU7XE@gmail.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <D833JYHF1A5A.1QP2LM99MU7XE@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: xpBuMe2R8Of8vWZKkmlFtnt-xM6297bQ
+X-Proofpoint-GUID: AKLa3j09XNqjOwOXHKHuTyz8EIrkvh-w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-27_05,2025-02-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0
+ phishscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=999 priorityscore=1501 mlxscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2502270091
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,37 +123,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Feb 2025 12:03:33 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On 27/02/25 14:18, Nicholas Piggin wrote:
+> On Thu Feb 27, 2025 at 4:49 PM AEST, Aditya Gupta wrote:
+>> Hi Nick,
+>>
+>> On 27/02/25 08:37, Nicholas Piggin wrote:
+>>> On Mon Feb 17, 2025 at 5:17 PM AEST, Aditya Gupta wrote:
+>>> <...snip...>
+>> Ah, that is problematic agreed. I tried to move around things, but
+>> arrived at this.
+>>
+>> I will spend some time thinking how to arrange this.
+>>
+>> Will need some guidance. How should I approach arranging the code in
+>> such situations ?
+>>
+>> My idea was to
+>> * First one is the skeleton: mentions the steps, but doesn't implement
+>> the steps
+>> * Middle patches implement the steps one by one
+>> * Last patch enables it all. So in future if someone checks out the
+>> "Enable fadump" commit they would have all the support ready.
+>>
+>> The major problem is "everything" remains unused till this last patch.
+>> But this 1st patch gave me the chance to logically build upon this, eg.
+>> first implement preserving memory regions, then add the fadump_trigger
+>> in os-term rtas call, etc.
+>>
+>> Any advice to approach this ?
+> Yeah, sometimes it's difficult to avoid. Especially with a new
+> feature like this. If you can't find a better way, that's okay.
+>
+> One thing could be to return errors from calls. RTAS is a little
+> bit tricky since there is no general "unsupported" error because
+> the presence of the token implies some support. You could return
+> -1 hardware error perhaps.
+>
+> Another option is implement the call but not all functionality.
+> E.g., permit dump register/unregister, but don't actually provide
+> a valid dump on reboot (you could ignore, or provide empty or
+> invalid format). Downside of that is that if you bisect, a kernel
+> test case could go bad because it appears to be supported but
+> produces invalid result.
+>
+> To avoid that, perhaps you could trip an assert or just log an
+> error message when performing a reboot with crash dump registered.
+>
+> But as I said, don't make it too convoluted or lots more work if
+> it's not easy to rework.
 
-> Now that HEST table is checked for aarch64, add the current
-> firmware file.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Thanks for the ideas Nick. I guess the first one makes sense if we want 
+to not need the unused functions.
 
-Acked-by: Igor Mammedov <imammedo@redhat.com>
+Only thing I want to check there is, since the 
+"ibm,configure-kernel-dump" rtas call is registered, kernel will think 
+fadump is supported, and might try registering fadump (if "fadump=on" 
+passed in kernel), will see what the kernel does on a failure to 
+register fadump in earlyboot.
 
-> ---
->  tests/data/acpi/aarch64/virt/HEST           | Bin 0 -> 132 bytes
->  tests/qtest/bios-tables-test-allowed-diff.h |   1 -
->  2 files changed, 1 deletion(-)
-> 
-> diff --git a/tests/data/acpi/aarch64/virt/HEST b/tests/data/acpi/aarch64/virt/HEST
-> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4c5d8c5b5da5b3241f93cd0839e94272bf6b1486 100644
-> GIT binary patch
-> literal 132
-> zcmeZp4Gw8xU|?W;<mB({5v<@85#X$#prF9Wz`y`vgJ=-uVqjqS|DS;o#%Ew*U|?_n
-> dk++-~7#J8hWI!Yi09DHYRr~Kh1c1x}0RY>66afGL
-> 
-> literal 0
-> HcmV?d00001
-> 
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index 39901c58d647..dfb8523c8bf4 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1,2 +1 @@
->  /* List of comma-separated changed AML files to ignore */
-> -"tests/data/acpi/aarch64/virt/HEST",
+It generally falls back to kdump, will check.
 
+
+>>>> +{
+>>>> +    struct rtas_fadump_section_header header;
+>>>> +    target_ulong cmd = rtas_ld(args, 0);
+>>>> +    target_ulong fdm_addr = rtas_ld(args, 1);
+>>>> +    target_ulong fdm_size = rtas_ld(args, 2);
+>>>> +
+>>>> +    /* Number outputs has to be 1 */
+>>>> +    if (nret != 1) {
+>>>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>>>> +                "FADUMP: ibm,configure-kernel-dump RTAS called with nret != 1.\n");
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>> +    /* Number inputs has to be 3 */
+>>>> +    if (nargs != 3) {
+>>>> +        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>> +    switch (cmd) {
+>>>> +    case FADUMP_CMD_REGISTER:
+>>>> +        if (fadump_metadata.fadump_registered) {
+>>>> +            /* Fadump already registered */
+>>>> +            rtas_st(rets, 0, RTAS_OUT_DUMP_ALREADY_REGISTERED);
+>>>> +            return;
+>>>> +        }
+>>>> +
+>>>> +        if (fadump_metadata.fadump_dump_active == 1) {
+>>>> +            rtas_st(rets, 0, RTAS_OUT_DUMP_ACTIVE);
+>>>> +            return;
+>>>> +        }
+>>>> +
+>>>> +        if (fdm_size < sizeof(struct rtas_fadump_section_header)) {
+>>>> +            qemu_log_mask(LOG_GUEST_ERROR,
+>>>> +                "FADUMP: Header size is invalid: %lu\n", fdm_size);
+>>>> +            rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
+>>>> +            return;
+>>>> +        }
+>>>> +
+>>>> +        /* XXX: Can we ensure fdm_addr points to a valid RMR-memory buffer ? */
+>>> RMR memory? There is spapr_rma_size() if that's what you need?
+>>
+>> Thanks, will use `spapr_rma_size`. The PAPR says fdm_addr should point
+>> to a valid RMR buffer, I guess that means it should be in the RMA, ie.
+>> `< spapr_rma_size()` ?
+> Ah yes, PAPR glossray says:
+>
+> Real Mode Region. This is an obsolete term that is deprecated in favor of RMA.
+>
+> So that should do what you want.
+
+Sure, thanks !
+
+
+- Aditya Gupta
+
+>
+> Thanks,
+> Nick
+>
 
