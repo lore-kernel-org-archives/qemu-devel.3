@@ -4,182 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E776FC021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 10:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD210C021BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 11:00:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnbXa-0004bL-8Z; Thu, 27 Feb 2025 05:54:54 -0500
+	id 1tnbd6-0002o3-V5; Thu, 27 Feb 2025 06:00:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1tnbXY-0004YK-KQ
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:54:53 -0500
-Received: from smarthost4.eviden.com ([80.78.11.85])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnbd2-0002hH-9K
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 06:00:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1tnbXW-0005pC-N2
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 05:54:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1740653691; x=1772189691;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=MFzdMfJRvzeRB8KN3cYhlmgFrM88PNKvAD0/WZFjBos=;
- b=BkMfzQ+aAf9ovwvfd/UOCplD3QpexGoMwgmJiOpTDBdlFmUDeNqSM4sA
- 1ReQb7V/8ZWlaCrPkgZrmdwBRToNcGnf+G/StxLnFgbOiSETFehmNtf2Y
- GsYLTvZnpcqOPqd0xcy7+zn2y8Htg3PQ2Q/aC9AfxQpNYZSFkHtZIa1lx
- 0ms93CbYGLSdZrfvh+mgWjFXlAUDW8pZsV8wKtTMesRPH8FmAvTL/1p+i
- uz2g2jM3WEwg9tS/VuJwl5eUWO15ufBOcLR6nX1Rb46goeOAXnAQNXkuN
- 46/airXTNqIug/KWXHs6HAKN3IuwQHo/cCoFkPwuUAJUjIcRniuY2UTCw w==;
-X-CSE-ConnectionGUID: 6LNfxTgnSo+PJtr9gtz/jw==
-X-CSE-MsgGUID: hPWD7/qjTmSu7tQ0fQnnBQ==
-X-IronPort-AV: E=Sophos;i="6.13,319,1732575600"; d="scan'208";a="33331842"
-X-MGA-submission: =?us-ascii?q?MDFSuJsID7FS2o5yFRpzQrqqYq4QdsUi/ozObK?=
- =?us-ascii?q?VvvEc67lDlPHYoVgRbuoL7gIyi90GIrx0mc7Z48TrHptNKbNcypdAf1G?=
- =?us-ascii?q?2HknOVwsE9LYRxWr0tYmKoxkkSHT/aoM2RGfei0aL89mE0ttFguTAbj2?=
- =?us-ascii?q?Kan937t93jZVvSvVc9lEHrbw=3D=3D?=
-Received: from mail-db8eur05lp2110.outbound.protection.outlook.com (HELO
- EUR05-DB8-obe.outbound.protection.outlook.com) ([104.47.17.110])
- by smarthost4.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 27 Feb 2025 11:54:47 +0100
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jwSShu8ikxIXDoyhP7UWUfk0g7mwRY1/Sxlv7ZTCSfirObUPPrlbRc6bSX+tca06LHeU5ie6Eat2JBCW5fUeJtpF4/zhXWrZkPj2lU8MIoyIThFJwzfKGpApl/nvM1xqjgE0R+Z3+39ok7S/7AXIsnmpMDH0hL2zsTsNBYY2BRjlHWXS2W+zDxCwPNXxcAV1sxZqARxOZ4b9F0iQVIoLcAQriHFNz8K1+UNy85amj/vNTyxgrmck8cPsHMjqqM8sC9rEzVzMb9rRNwl9s3YkBe4SwuUn83EacWgxwftmJE42Q/5Ayg2yL12bvJG/FHG09BaBQpxho/AUdqQHV9LYZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=o2iXVLFV52LhyndbqvldJ6WUjzWPJC+MCtn8QEwVLZg=;
- b=VTKyIbnRejOjbtjel5N97ETGYh4kAr+0vo6+YssFd2FdRH2Ym0D9dFfqaycpHXE8MZa+TdJZNTBfxWGI2CF+MPpXfJ3DP43ABV9BbmyZbJowNHGbzmJau0EKK8g/6tPDbjrJlwxqQ7pkpcNHO1/6RAQQjN+Ow1vWowqhKiVAopLKW3DFK0+A4cM2A3AoJz+yLrE+mczGFx3sV+6ZgQQqbjo6pkNHJ1wlXtqXzb/PzDCyCp+OblPIi9gropDR/BoMfuwVT5moWSOu62+YWH8o0FldkZ4qVLY1PbtFEIn4RtPoGC8eCgeV7zNqcntcfWEKtGqHNR6Ci8Zhzdqsm1L3yQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
- dkim=pass header.d=eviden.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=o2iXVLFV52LhyndbqvldJ6WUjzWPJC+MCtn8QEwVLZg=;
- b=Som5GbyzqVb38tts5RAuRWbgeLjk7/TsSDoFNTA8TCXxwNIJtnG6x3aQXqHC9fJnFf6wkAenNhlCHY7d1vGzbwwZJftJqkS9HTZeOAlP0M2OeaB2WK26wdAd/RIAMyw6pghMPd//6YmrCJjdqokAFlrWomkEaVUcvn4oceOHzIQeCMeJ8owoDSHGoCxqCX0VjGjEgyXI8Nw0q5TFg3JN0Zy/WjNi6VMKVlm3GZP3tqgu1oMBgNAR4Y/sb9ZjdcTqlD4DVOEzBwmNGLhtz1AwkHgV9ql/PCKGQbVeJO0Rxc+zBIiePfSRR+4+P7d+AohP24AI07UmKfja4ZxJK3yCpg==
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by AS2PR07MB9097.eurprd07.prod.outlook.com (2603:10a6:20b:558::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.19; Thu, 27 Feb
- 2025 10:54:44 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d%7]) with mapi id 15.20.8445.017; Thu, 27 Feb 2025
- 10:54:44 +0000
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "jasowang@redhat.com" <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
- <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "tjeznach@rivosinc.com"
- <tjeznach@rivosinc.com>, "minwoo.im@samsung.com" <minwoo.im@samsung.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Subject: [PATCH v4 10/19] intel_iommu: Implement the get_memory_region_pasid
- iommu operation
-Thread-Topic: [PATCH v4 10/19] intel_iommu: Implement the
- get_memory_region_pasid iommu operation
-Thread-Index: AQHbiQYCkIzSXfWcU0GCACeeqhivIw==
-Date: Thu, 27 Feb 2025 10:54:44 +0000
-Message-ID: <20250227105339.388598-11-clement.mathieu--drif@eviden.com>
-References: <20250227105339.388598-1-clement.mathieu--drif@eviden.com>
-In-Reply-To: <20250227105339.388598-1-clement.mathieu--drif@eviden.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=eviden.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|AS2PR07MB9097:EE_
-x-ms-office365-filtering-correlation-id: 45a3a1dd-301a-457a-3b3c-08dd571d253f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|7416014|376014|366016|38070700018; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?8wc9tj2PIZiJqPr+SoiaZQhAhgTf/VjvPeTRXPVct9uDFFlmGd36+7eXNe?=
- =?iso-8859-1?Q?YssHvkV/iuAXQNKq8G8ws5vZ0mDiRGlLnAmAURKVaE2Vi6eDCSuI9hvTJx?=
- =?iso-8859-1?Q?P2zzrd2HT2c0HTVrzeS14+7wvnZg5jALmY6D0aezCyX6NQgqqCeNEBgDS4?=
- =?iso-8859-1?Q?oqyovRvmt+DWWZt0AaZ7GGBK6W4zE6+0G6aIKSnc7MslO/lDkTLkjFVtXe?=
- =?iso-8859-1?Q?z+kYF/p5kPQjVAfCuhRU00+xVe+k9IVkBLeuHgYC/81S4+VMv8IVfLeEZj?=
- =?iso-8859-1?Q?LwVPQVk5XZakEZ9h1jcOYW/+qY09jLPTfycekNwk6RHNqG6E2TX4xl3s4C?=
- =?iso-8859-1?Q?IUUW1y90PjrhuR+bzpQpe1wmkusTjVrz0yPv3dIvDXdfOVQGtQAMvkz9EM?=
- =?iso-8859-1?Q?O0Y0oAeSmpgQ0wKsxf/a08JsTclZle1LqQvhGBrEWZtZpuUs8/xVUNvwST?=
- =?iso-8859-1?Q?WsCef1njbOouJ7bkPFooyLuyiAaLmX4orz7Xx0x82S34/ZTnjw5uiYzHCf?=
- =?iso-8859-1?Q?kZbpIFk/BEk1DKAopQjkvf4kHEe5O69DFTK6Te3r5jBUpHdFNaiIfuB4k/?=
- =?iso-8859-1?Q?GBjqOsNWZzhdwIOGouN3nYAalPSlaqalqZAhwNx9sIgK7J4Kfrq5FUC8CA?=
- =?iso-8859-1?Q?Le+lQLZOZxd8WoP9feJBhLusqJPt7n1zVwqEVKq185mdZq2BbTyeOnOUvx?=
- =?iso-8859-1?Q?sZGQ6mMGQZg2qv5wwJXF+QL6zdyY2JETlAAvFY7qnP5FNjFmFde3Ybg6At?=
- =?iso-8859-1?Q?5IbevnfLx5I85KfNOV/CY0EAO79++nTbWXuTtA8fdyo83UvKduJQARVbZn?=
- =?iso-8859-1?Q?j/hT3Jg7f6eOci7+dFI907WHJY18YzXkQEF3fbtM9r4PlHsFlflPNz1dG4?=
- =?iso-8859-1?Q?rLXbqgzlDRw1cOo4s84f+V4EQDmF9usD8ypzDDvbpiStl2hzw3OnI76UNU?=
- =?iso-8859-1?Q?YReNy1L4tQh9Ys4k/SQpIGxfoP/HKzuV8/zKMj4YbZfiBEhRRsVOVYQpgq?=
- =?iso-8859-1?Q?nef5Mh2F0p6V+QYMjAsbaZSEao1KaxWBJmXLDsdfqG/Q6/YanHL1eC6kQQ?=
- =?iso-8859-1?Q?flLBaT7Wa/efflPf+Re1S7CRO1oixla2DhvNH/YSKe2tJ1qY/s/TKJP71K?=
- =?iso-8859-1?Q?hZRhJxosHFT8UdoBfrKcuNAOd3WMBW4WuDI20xqWQmpzaCo9az1pfienHJ?=
- =?iso-8859-1?Q?bR9IKIJNDrdF8Yz60MNrHfHx83FwtUUiG37X+KD92PQtxBriD4qSb8vK/Y?=
- =?iso-8859-1?Q?OrpsrEsWVP9V2cq97eUQp031uLMnLO+hJRqsIz64ha9BWYy++XfgjdxDUa?=
- =?iso-8859-1?Q?2NLVxcm3lMYHc3m9spGO2LzUMZ+OXSkSZ15ZQWnuMnHY+MaiYn+6f4/JwZ?=
- =?iso-8859-1?Q?kyadK7z0IC6SbQZaH2SkiYhsasor2NONCHDKE5ml5XzLPpxYD4QBwltr4Q?=
- =?iso-8859-1?Q?Fd0QgqwRR1dxugf3HLJR4rNh+P9rjUZu9GL3VTysfQHRTpOPRlJzhPy3X9?=
- =?iso-8859-1?Q?nfg9IUbhp2gBHdtBKc8/Eo?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Zdvwjddvyc6Gb/JD2TUCwOZfIKnQzO9EpapHzP/qjnYK4oUBjpt0yzWeZX?=
- =?iso-8859-1?Q?Ia7+l9eT9Z7OI64wAjbF/dU1F34JT69Ww6ZjoeA7QoyYT/Z5RfndXp2iPK?=
- =?iso-8859-1?Q?LuUU7Z4f+PH0oVSkWIfsNenejA3Y7au+GnMxDFJ2BiRZAQoCSjj69UyCd1?=
- =?iso-8859-1?Q?J/oNERZ94KM7zWswuAgbZgSc0uTH9nkjG/3GrEYaQm30aVtWvHNqzvgU/W?=
- =?iso-8859-1?Q?UgWd5YWAcCsEjy6ifnR+Wxei8IyGICyi8AqsMjOBVLQVhhVunVP9jE2XAq?=
- =?iso-8859-1?Q?gKGV8f6KUWHote7ey+7Yu+UrplnpznJDDR558CqQb+cjg54ByTQ8Ywn9af?=
- =?iso-8859-1?Q?pWpbt+8jwRDPr6Z2iAMNAwZcDFoi2I7XaA2rh/PZCUNfcbBe8sJsNBekif?=
- =?iso-8859-1?Q?u2t/XhyQBgQhMHshKv82VMxsOlRvef7nmgUZnD89NQB7zSPSgq5A6qBpyW?=
- =?iso-8859-1?Q?RHxtcXg8B1Sq8bBwdMO8RdUzlKrMnBqqpIadMTmXzRhm3owh91gHa6XuHL?=
- =?iso-8859-1?Q?zrF9KSZf7jqSPIJLwZMvll19OAVc5G57zIV2iTB24IprV3JtFYTKcKARli?=
- =?iso-8859-1?Q?zvdx14gFlhIqnKCH+uI5IUYWZfYQMhyvTsDbgppE57gZUMxKlJZ0EB/NUM?=
- =?iso-8859-1?Q?PDvBE4PcglrwUBuC4fLm/VP0NuFj8dGvn8D70C2VNlDw40anpUUFc7y9+j?=
- =?iso-8859-1?Q?zioD6tUSGn/mOFKEzSoEBHft+KSTd7ePqzThgU+xt19Jk9Jc3qHaEj7ybI?=
- =?iso-8859-1?Q?+wHRYShfddimSYcmfTiETT4gwYVHvQEjrVPMh6wFuoLLcE2rb0qghL/1iv?=
- =?iso-8859-1?Q?VCSBkAL7DqPYkSGh8UlPj+ZGGYpbw4p9HkAsPN6jZWPOGxhsEOAhoQADh2?=
- =?iso-8859-1?Q?t3hCnAzckmjAzRab4UF+9puv8uJxaKq73RwPwHekFwEbk7JxLVixyv4JuE?=
- =?iso-8859-1?Q?gVW10bciL81OI1BMMTTypfI5Uwneg0sROEUUGlpXWg8+ol8Wwcr//sZwEc?=
- =?iso-8859-1?Q?icmhkCxG4RiopAcIejh+YE2ukEtQVbRbLegg/sA3Si+SGBQNH01NIv8lsx?=
- =?iso-8859-1?Q?IC+dcvaHQahL6U0ZApJVRqsKIx9ItsdlMNfzw93gqoy8bQKN5/js4yj/pp?=
- =?iso-8859-1?Q?laK9EgTMWUQuo+SmntDu3z5UsAoua5hKzEzp5NkUyYuwjWGczj+vAYSZAa?=
- =?iso-8859-1?Q?CR+RdMJspRRnJvfJ1ORDbc+VtEdof+NYZY2OrVCz/6d2Kte1goiQ7TiryJ?=
- =?iso-8859-1?Q?kSgOHVFk7YDdv6H1+q2olYCP2yYtGLyPAKxafMNagU/zubcWK2sENdiMGm?=
- =?iso-8859-1?Q?js8/Lhq7CDwfLgMu8hGnp55Y27ifz7xajGD5N+q2a7Jfd2x0TGEB0LvF8K?=
- =?iso-8859-1?Q?E2Cc8bCOgv2Dlpj8rqHlCTIEIAGj6cV2gY6SMweiTvJ/dyXwyXxyZzYSJF?=
- =?iso-8859-1?Q?3ND/sFSs3CWB39QZRFYwKyqdBJrKVD1b4sP3ZFcGae82t01cEgApFjSVTJ?=
- =?iso-8859-1?Q?E5kt1ylRBBna78KWKeQJ1IjjePy8tvEZ0Ak0IDgbxkbk/zAIX26MbUrMhx?=
- =?iso-8859-1?Q?7Ho5QLNebSWcc+ZhUx2aPAT2utWo68MRMR/MJMTCr6XFzBSRw+cpo4dyAy?=
- =?iso-8859-1?Q?kldau3KkMXszX7Xq+E8NKDg5bn2fWdp5KtmZnILOAwrbtePUj4aMnF0VY9?=
- =?iso-8859-1?Q?Oeif3p7u7K+b5C+6rCw=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tnbcx-0006zq-MB
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 06:00:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740654024;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Zo6DyPSAv2JcYtJVHblpCSdKkVIsSIgM7UWICPOOvKE=;
+ b=PdXNNg8uDRrHlZl4fwdThleniXxCUg5AFd6enYpemq9c9hTC3hjm2HHdDZzIo/Thsm0sTc
+ y1mje/DcoE+fVncUtR0bsKggSkNzBFeHhGHJ/zCeDu0wC6MP3h/+thX65D5DcH0cmxp2Em
+ g9ec3mN7kcZFq0Dt/gyU/D09EzF+N6s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-ymxAumHfOz2YYn3F-VsPQQ-1; Thu,
+ 27 Feb 2025 06:00:22 -0500
+X-MC-Unique: ymxAumHfOz2YYn3F-VsPQQ-1
+X-Mimecast-MFC-AGG-ID: ymxAumHfOz2YYn3F-VsPQQ_1740654021
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6BD7B180099F; Thu, 27 Feb 2025 11:00:21 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.184])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E9DEA1800371; Thu, 27 Feb 2025 11:00:16 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] tests/avocado: Remove the boot_linux.py and replay_linux.py
+ tests
+Date: Thu, 27 Feb 2025 12:00:14 +0100
+Message-ID: <20250227110014.21048-1-thuth@redhat.com>
 MIME-Version: 1.0
-X-OriginatorOrg: eviden.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45a3a1dd-301a-457a-3b3c-08dd571d253f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Feb 2025 10:54:44.6789 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: FzssABBRmKMeemdzsHCJ9J64B3AIHbQrY7Rb9cRAFD4fQpyFUy/jFNWQhG2UJAjNbE0OJBgK/d5RwdN3Ya69+PpPjwYSoU2AqM2/3gxfBanYBe4feq52zS9RJOiUL7r4
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR07MB9097
-Received-SPF: pass client-ip=80.78.11.85;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.eviden.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -195,65 +80,375 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+These tests are based on the cloudinit functions from Avocado.
+The cloudinit is very, very slow compared to our other tests,
+so most of these Avocado tests have either been disabled by default
+with a decorator, or have been marked to only run with KVM.
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+We won't include this sluggish cloudinit stuff in the functional
+framework, and we've already got plenty of other tests there that
+check pretty much the same things, so let's simply get rid of these
+old tests now.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/i386/intel_iommu.c         | 17 ++++++++++++++++-
- include/hw/i386/intel_iommu.h |  2 +-
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ tests/avocado/boot_linux.py   | 132 ----------------------
+ tests/avocado/replay_linux.py | 206 ----------------------------------
+ 2 files changed, 338 deletions(-)
+ delete mode 100644 tests/avocado/boot_linux.py
+ delete mode 100644 tests/avocado/replay_linux.py
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index a360119fbe..d3772d8902 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4202,7 +4202,7 @@ static const MemoryRegionOps vtd_mem_ir_fault_ops =3D=
- {
- };
-=20
- VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
--                                 int devfn, unsigned int pasid)
-+                                 int devfn, uint32_t pasid)
- {
-     /*
-      * We can't simply use sid here since the bus number might not be
-@@ -4719,8 +4719,23 @@ static AddressSpace *vtd_host_dma_iommu(PCIBus *bus,=
- void *opaque, int devfn)
-     return &vtd_as->as;
- }
-=20
-+static IOMMUMemoryRegion *vtd_get_memory_region_pasid(PCIBus *bus,
-+                                                      void *opaque,
-+                                                      int devfn,
-+                                                      uint32_t pasid)
-+{
-+    IntelIOMMUState *s =3D opaque;
-+    VTDAddressSpace *vtd_as;
-+
-+    assert(0 <=3D devfn && devfn < PCI_DEVFN_MAX);
-+
-+    vtd_as =3D vtd_find_add_as(s, bus, devfn, pasid);
-+    return &vtd_as->iommu;
-+}
-+
- static PCIIOMMUOps vtd_iommu_ops =3D {
-     .get_address_space =3D vtd_host_dma_iommu,
-+    .get_memory_region_pasid =3D vtd_get_memory_region_pasid,
-     .set_iommu_device =3D vtd_dev_set_iommu_device,
-     .unset_iommu_device =3D vtd_dev_unset_iommu_device,
- };
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index e95477e855..08f71c262e 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -324,6 +324,6 @@ struct IntelIOMMUState {
-  * create a new one if none exists
-  */
- VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
--                                 int devfn, unsigned int pasid);
-+                                 int devfn, uint32_t pasid);
-=20
- #endif
---=20
+diff --git a/tests/avocado/boot_linux.py b/tests/avocado/boot_linux.py
+deleted file mode 100644
+index a029ef4ad1e..00000000000
+--- a/tests/avocado/boot_linux.py
++++ /dev/null
+@@ -1,132 +0,0 @@
+-# Functional test that boots a complete Linux system via a cloud image
+-#
+-# Copyright (c) 2018-2020 Red Hat, Inc.
+-#
+-# Author:
+-#  Cleber Rosa <crosa@redhat.com>
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later.  See the COPYING file in the top-level directory.
+-
+-import os
+-
+-from avocado_qemu.linuxtest import LinuxTest
+-from avocado_qemu import BUILD_DIR
+-
+-from avocado import skipUnless
+-
+-
+-class BootLinuxX8664(LinuxTest):
+-    """
+-    :avocado: tags=arch:x86_64
+-    """
+-    timeout = 480
+-
+-    def test_pc_i440fx_tcg(self):
+-        """
+-        :avocado: tags=machine:pc
+-        :avocado: tags=accel:tcg
+-        """
+-        self.require_accelerator("tcg")
+-        self.vm.add_args("-accel", "tcg")
+-        self.launch_and_wait(set_up_ssh_connection=False)
+-
+-    def test_pc_i440fx_kvm(self):
+-        """
+-        :avocado: tags=machine:pc
+-        :avocado: tags=accel:kvm
+-        """
+-        self.require_accelerator("kvm")
+-        self.vm.add_args("-accel", "kvm")
+-        self.launch_and_wait(set_up_ssh_connection=False)
+-
+-    def test_pc_q35_tcg(self):
+-        """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=accel:tcg
+-        """
+-        self.require_accelerator("tcg")
+-        self.vm.add_args("-accel", "tcg")
+-        self.launch_and_wait(set_up_ssh_connection=False)
+-
+-    def test_pc_q35_kvm(self):
+-        """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=accel:kvm
+-        """
+-        self.require_accelerator("kvm")
+-        self.vm.add_args("-accel", "kvm")
+-        self.launch_and_wait(set_up_ssh_connection=False)
+-
+-
+-# For Aarch64 we only boot KVM tests in CI as booting the current
+-# Fedora OS in TCG tests is very heavyweight. There are lighter weight
+-# distros which we use in the machine_aarch64_virt.py tests.
+-class BootLinuxAarch64(LinuxTest):
+-    """
+-    :avocado: tags=arch:aarch64
+-    :avocado: tags=machine:virt
+-    """
+-    timeout = 720
+-
+-    def test_virt_kvm(self):
+-        """
+-        :avocado: tags=accel:kvm
+-        :avocado: tags=cpu:host
+-        """
+-        self.require_accelerator("kvm")
+-        self.vm.add_args("-accel", "kvm")
+-        self.vm.add_args("-machine", "virt,gic-version=host")
+-        self.vm.add_args('-bios',
+-                         os.path.join(BUILD_DIR, 'pc-bios',
+-                                      'edk2-aarch64-code.fd'))
+-        self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
+-        self.vm.add_args('-object', 'rng-random,id=rng0,filename=/dev/urandom')
+-        self.launch_and_wait(set_up_ssh_connection=False)
+-
+-
+-# See the tux_baseline.py tests for almost the same coverage in a lot
+-# less time.
+-class BootLinuxPPC64(LinuxTest):
+-    """
+-    :avocado: tags=arch:ppc64
+-    """
+-
+-    timeout = 360
+-
+-    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
+-    def test_pseries_tcg(self):
+-        """
+-        :avocado: tags=machine:pseries
+-        :avocado: tags=accel:tcg
+-        """
+-        self.require_accelerator("tcg")
+-        self.vm.add_args("-accel", "tcg")
+-        self.launch_and_wait(set_up_ssh_connection=False)
+-
+-    def test_pseries_kvm(self):
+-        """
+-        :avocado: tags=machine:pseries
+-        :avocado: tags=accel:kvm
+-        """
+-        self.require_accelerator("kvm")
+-        self.vm.add_args("-accel", "kvm")
+-        self.vm.add_args("-machine", "cap-ccf-assist=off")
+-        self.launch_and_wait(set_up_ssh_connection=False)
+-
+-class BootLinuxS390X(LinuxTest):
+-    """
+-    :avocado: tags=arch:s390x
+-    """
+-
+-    timeout = 240
+-
+-    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
+-    def test_s390_ccw_virtio_tcg(self):
+-        """
+-        :avocado: tags=machine:s390-ccw-virtio
+-        :avocado: tags=accel:tcg
+-        """
+-        self.require_accelerator("tcg")
+-        self.vm.add_args("-accel", "tcg")
+-        self.launch_and_wait(set_up_ssh_connection=False)
+diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
+deleted file mode 100644
+index 59169224353..00000000000
+--- a/tests/avocado/replay_linux.py
++++ /dev/null
+@@ -1,206 +0,0 @@
+-# Record/replay test that boots a complete Linux system via a cloud image
+-#
+-# Copyright (c) 2020 ISP RAS
+-#
+-# Author:
+-#  Pavel Dovgalyuk <Pavel.Dovgaluk@ispras.ru>
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later.  See the COPYING file in the top-level directory.
+-
+-import os
+-import logging
+-import time
+-
+-from avocado import skipUnless
+-from avocado_qemu import BUILD_DIR
+-from avocado.utils import cloudinit
+-from avocado.utils import network
+-from avocado.utils import vmimage
+-from avocado.utils import datadrainer
+-from avocado.utils.path import find_command
+-from avocado_qemu.linuxtest import LinuxTest
+-
+-class ReplayLinux(LinuxTest):
+-    """
+-    Boots a Linux system, checking for a successful initialization
+-    """
+-
+-    timeout = 1800
+-    chksum = None
+-    hdd = 'ide-hd'
+-    cd = 'ide-cd'
+-    bus = 'ide'
+-
+-    def setUp(self):
+-        # LinuxTest does many replay-incompatible things, but includes
+-        # useful methods. Do not setup LinuxTest here and just
+-        # call some functions.
+-        super(LinuxTest, self).setUp()
+-        self._set_distro()
+-        self.boot_path = self.download_boot()
+-        self.phone_server = cloudinit.PhoneHomeServer(('0.0.0.0', 0),
+-                                                      self.name)
+-        ssh_pubkey, self.ssh_key = self.set_up_existing_ssh_keys()
+-        self.cloudinit_path = self.prepare_cloudinit(ssh_pubkey)
+-
+-    def vm_add_disk(self, vm, path, id, device):
+-        bus_string = ''
+-        if self.bus:
+-            bus_string = ',bus=%s.%d' % (self.bus, id,)
+-        vm.add_args('-drive', 'file=%s,snapshot=on,id=disk%s,if=none' % (path, id))
+-        vm.add_args('-drive',
+-            'driver=blkreplay,id=disk%s-rr,if=none,image=disk%s' % (id, id))
+-        vm.add_args('-device',
+-            '%s,drive=disk%s-rr%s' % (device, id, bus_string))
+-
+-    def vm_add_cdrom(self, vm, path, id, device):
+-        vm.add_args('-drive', 'file=%s,id=disk%s,if=none,media=cdrom' % (path, id))
+-
+-    def launch_and_wait(self, record, args, shift):
+-        self.require_netdev('user')
+-        vm = self.get_vm()
+-        vm.add_args('-smp', '1')
+-        vm.add_args('-m', '1024')
+-        vm.add_args('-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
+-                    '-device', 'virtio-net,netdev=vnet')
+-        vm.add_args('-object', 'filter-replay,id=replay,netdev=vnet')
+-        if args:
+-            vm.add_args(*args)
+-        self.vm_add_disk(vm, self.boot_path, 0, self.hdd)
+-        self.vm_add_cdrom(vm, self.cloudinit_path, 1, self.cd)
+-        logger = logging.getLogger('replay')
+-        if record:
+-            logger.info('recording the execution...')
+-            mode = 'record'
+-        else:
+-            logger.info('replaying the execution...')
+-            mode = 'replay'
+-        replay_path = os.path.join(self.workdir, 'replay.bin')
+-        vm.add_args('-icount', 'shift=%s,rr=%s,rrfile=%s' %
+-                    (shift, mode, replay_path))
+-
+-        start_time = time.time()
+-
+-        vm.set_console()
+-        vm.launch()
+-        console_drainer = datadrainer.LineLogger(vm.console_socket.fileno(),
+-                                    logger=self.log.getChild('console'),
+-                                    stop_check=(lambda : not vm.is_running()))
+-        console_drainer.start()
+-        if record:
+-            while not self.phone_server.instance_phoned_back:
+-                self.phone_server.handle_request()
+-            vm.shutdown()
+-            logger.info('finished the recording with log size %s bytes'
+-                % os.path.getsize(replay_path))
+-            self.run_replay_dump(replay_path)
+-            logger.info('successfully tested replay-dump.py')
+-        else:
+-            vm.event_wait('SHUTDOWN', self.timeout)
+-            vm.wait()
+-            logger.info('successfully finished the replay')
+-        elapsed = time.time() - start_time
+-        logger.info('elapsed time %.2f sec' % elapsed)
+-        return elapsed
+-
+-    def run_rr(self, args=None, shift=7):
+-        t1 = self.launch_and_wait(True, args, shift)
+-        t2 = self.launch_and_wait(False, args, shift)
+-        logger = logging.getLogger('replay')
+-        logger.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
+-
+-    def run_replay_dump(self, replay_path):
+-        try:
+-            subprocess.check_call(["./scripts/replay-dump.py",
+-                                   "-f", replay_path],
+-                                  stdout=subprocess.DEVNULL)
+-        except subprocess.CalledProcessError:
+-            self.fail('replay-dump.py failed')
+-
+-@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+-class ReplayLinuxX8664(ReplayLinux):
+-    """
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=accel:tcg
+-    """
+-
+-    chksum = 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0'
+-
+-    def test_pc_i440fx(self):
+-        """
+-        :avocado: tags=machine:pc
+-        """
+-        self.run_rr(shift=1)
+-
+-    def test_pc_q35(self):
+-        """
+-        :avocado: tags=machine:q35
+-        """
+-        self.run_rr(shift=3)
+-
+-@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+-class ReplayLinuxX8664Virtio(ReplayLinux):
+-    """
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=virtio
+-    :avocado: tags=accel:tcg
+-    """
+-
+-    hdd = 'virtio-blk-pci'
+-    cd = 'virtio-blk-pci'
+-    bus = None
+-
+-    chksum = 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0'
+-
+-    def test_pc_i440fx(self):
+-        """
+-        :avocado: tags=machine:pc
+-        """
+-        self.run_rr(shift=1)
+-
+-    def test_pc_q35(self):
+-        """
+-        :avocado: tags=machine:q35
+-        """
+-        self.run_rr(shift=3)
+-
+-@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+-class ReplayLinuxAarch64(ReplayLinux):
+-    """
+-    :avocado: tags=accel:tcg
+-    :avocado: tags=arch:aarch64
+-    :avocado: tags=machine:virt
+-    :avocado: tags=cpu:max
+-    """
+-
+-    chksum = '1e18d9c0cf734940c4b5d5ec592facaed2af0ad0329383d5639c997fdf16fe49'
+-
+-    hdd = 'virtio-blk-device'
+-    cd = 'virtio-blk-device'
+-    bus = None
+-
+-    def get_common_args(self):
+-        return ('-bios',
+-                os.path.join(BUILD_DIR, 'pc-bios', 'edk2-aarch64-code.fd'),
+-                "-cpu", "max,lpa2=off",
+-                '-device', 'virtio-rng-pci,rng=rng0',
+-                '-object', 'rng-builtin,id=rng0')
+-
+-    def test_virt_gicv2(self):
+-        """
+-        :avocado: tags=machine:gic-version=2
+-        """
+-
+-        self.run_rr(shift=3,
+-                    args=(*self.get_common_args(),
+-                          "-machine", "virt,gic-version=2"))
+-
+-    def test_virt_gicv3(self):
+-        """
+-        :avocado: tags=machine:gic-version=3
+-        """
+-
+-        self.run_rr(shift=3,
+-                    args=(*self.get_common_args(),
+-                          "-machine", "virt,gic-version=3"))
+-- 
 2.48.1
+
 
