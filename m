@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA2EC19F32
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:27:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8D36C19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:27:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnelE-00085E-EX; Thu, 27 Feb 2025 09:21:14 -0500
+	id 1tnenA-0005RM-Fu; Thu, 27 Feb 2025 09:23:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tneko-0007Nm-AJ
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:46 -0500
+ id 1tnemc-0003qD-Ib
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:22:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnekk-0003ne-UB
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:45 -0500
+ id 1tnemY-00045V-F8
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:22:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740666036;
+ s=mimecast20190719; t=1740666153;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kREDGuRWTSnetD6IUegbVc8rafPOtZ5CPk3iVS4K+Rc=;
- b=X2O7nkuY0dRtzu9AyZGzW3siwUHgpLv+WO9n2lC0dSBw5MUFQmoK0PWP7Hq2cotWFbKbi2
- G6czk1M+Q0zWpiNm+RVVf+xCpG188/vpGgv4mFicGDdBIDZTYZY+Mrwq4YNL4CSHD/oOQd
- JlU73/FQzIEVJiMBKVGT1KrAG0/Tm+g=
+ bh=nk4rG8BvOrBCUFxfsl3zj+sJAUqBN7gnD9BX4ggHZ8E=;
+ b=Of8fQR6DKSW+gy895Yp1/se+99G5E6TNzTqqJkpPGZXjS1C51yISSv7maC7ZEj3gTWO6NQ
+ C7RKOltVVUvI1TFlcQi0ARbEM6jNhkQyCqGLMLfpghsZgUlA9W06iPYYusFUaiKeXUqM0A
+ tgGMdHVH5jLfvZBNS1GtIObdVrhjVhI=
 Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
  [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-323-bkBhKyI9PwuQw9XQT3k2gA-1; Thu, 27 Feb 2025 09:20:35 -0500
-X-MC-Unique: bkBhKyI9PwuQw9XQT3k2gA-1
-X-Mimecast-MFC-AGG-ID: bkBhKyI9PwuQw9XQT3k2gA_1740666034
+ us-mta-423-cX38hNcHNGmPKacPrlPRLg-1; Thu, 27 Feb 2025 09:22:32 -0500
+X-MC-Unique: cX38hNcHNGmPKacPrlPRLg-1
+X-Mimecast-MFC-AGG-ID: cX38hNcHNGmPKacPrlPRLg_1740666151
 Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ab68fbe53a4so151935566b.2
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:20:34 -0800 (PST)
+ a640c23a62f3a-abb86503062so118528066b.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:22:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740666033; x=1741270833;
+ d=1e100.net; s=20230601; t=1740666151; x=1741270951;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kREDGuRWTSnetD6IUegbVc8rafPOtZ5CPk3iVS4K+Rc=;
- b=pkuAE3D/DnctosFtRVAVVc5R8uBViDvAKVAqZinmaP504BGctPBD7cy7TDPXukwisV
- v9zv+du1zqZW1/+NoEX/r4T+gI+Wohu3obIONLje25vocdm/pyhY28HVMlxmwSrtJgCj
- paU5GfNnYPOkZzm9Gemj7MQchyTRRVxxxqPGjIt6xVefd7byMGuXQATTwLOKbu+Ra2v5
- F9fSmzmsrpu2ryfn8zeMJN9By/6VhtA10eF8BjCJ2pTjYrLlBT74l2tsQuSG131PassF
- 9PhT6VlET667qyoaFp2xB3luRYZjLkUn8MSpLzefbJiu8hBD3h2Yga7errmDbORpFgZB
- lUig==
-X-Gm-Message-State: AOJu0YyHcRxhJWhi378YF061A8Y6BP0JdCRwqFoiuvYdhqS20byacHdq
- aeOle8/Yv3ffRb+oOqSanrWDx2fNPgS8HmmN/+KfuxSfhUHRx3/aILdmS2fOpSmXCOD9xRmZlLQ
- E6LH1whzieP2oOOR+3VnJN9K8ZjEIruds3wygOX7Yj4+ADu+huUzROd+CYzKDsNU3yx63lQr3HQ
- 2lvZf2hP+gnF3Aws0nZkheYzuHJWAkyp5ZY3+gaAY=
-X-Gm-Gg: ASbGncuub7qTyx3xZY8FmE7ysriMGWiXtbRMTCVbpnPMk9YzV4NmaydQH1FAj+Z9EzH
- wyqiD7+/9HEC4oA1wB4QcO3x5FhDK+1hrc8LuBjErC7xMUmmb6+F2j2RGrZNYfU8ROa6IbUFZtg
- FBIFEU1xwGqjfLB1yaBWEVWgjqrQfB+1gqzua3GpiMk5uEkkqJW8PHagymiku7LDz1OtGw8iGRe
- vfmSlEQuZxfVE4p7JLKT4mXl8iAwehtGMGnefsXK3CnBAqFneG/LXSrCWTjqSVVqa9Y82b53mY+
- srEkHKh8yR0RATkgxXlb
-X-Received: by 2002:a17:907:2ce2:b0:ab7:d87:50f2 with SMTP id
- a640c23a62f3a-abed101dd89mr1442889066b.44.1740666032648; 
- Thu, 27 Feb 2025 06:20:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFagW/zcje0zwDc9ll7PjYs3gpck6Hbc6M8vl/UAXFWCH5dqmF+rFyZNglzK7/QJE2o66H03w==
-X-Received: by 2002:a17:907:2ce2:b0:ab7:d87:50f2 with SMTP id
- a640c23a62f3a-abed101dd89mr1442883866b.44.1740666032034; 
- Thu, 27 Feb 2025 06:20:32 -0800 (PST)
+ bh=nk4rG8BvOrBCUFxfsl3zj+sJAUqBN7gnD9BX4ggHZ8E=;
+ b=gTCPcEwIMt6uw/xPUbXTTPYCI0G/fsfPk1HrnYfar0PaHNdRDmOtYuxS7h3IOwBRog
+ H0lqk4wIsTAVOqLhJbmVDEJUsQo2PyNtat0xelkMIM7jDMOx9oLK0x3tykdzbjvfMzO3
+ hmE7WsXkT5WjFL+hWfykZcCb/pOLyy3LayoqJvJ0//M7sMmr/wnDVDm9ukKbpo8OqPai
+ A1pSdo8H6kuxJSTPg4uyq16ZLG+qh6YZARIFIXGPnWORFeYHbrS15N3eGEKNwL8E6vnJ
+ x9jL/c3Zc0eVTCb4f3rSO7fvoLoozY4i06/OzRAKbdgSWCEbY7vmrMCPnk3KDqsAhANA
+ 1p4A==
+X-Gm-Message-State: AOJu0YyiBlpvs3FkBLxwnu/UAIwCUN9HpYyGXvj/dFvgCBB1mrYkxxsT
+ eq8VKfx5Z/s5JzH/JKYOqW//T2+gdg95wDMIC5KKsAyq7Zd3mRobXoKqgNFT3TnHAbeAxSMXQxM
+ NObgzvY6YzZYnhtGdNrU3Imp7soI+0Ut9ZmrIeXIdgMBnmcDXxutNbGCtTTj8mwsOmq7NVp1jKq
+ SW32W/TUxa5Mb7+VVMFhSG3rqPoGn0uezuNY+zJXQ=
+X-Gm-Gg: ASbGncuJ+Hx6grhmsEeGNTsGeGvWqjidFd6MoErQKcRDX3G5nPdcC0VfDTCtumzInD9
+ NLKXd+nzpPDh4MOxWqKyRtSTOYyp+XYyBauftDyGbJOa3gxneqF/Tbw8SHOBF4vGKgW6ioxp8vK
+ byivXn7hiNVT6awQvk55WviypX8Z4YH7P7KVjiv+E49DMay6nHbFx6y5qLjOqw1xCOEAS4/ug2e
+ 9v/IHztnGeyvX1VcADfc9MT+4adIifRSK+IoNHsacboj6vLtIXlQo3ChQQXHnykh0jr3Wd675Rq
+ Fuo36rgk6C+qQypAD9/S
+X-Received: by 2002:a17:906:318a:b0:abb:fcbb:ab20 with SMTP id
+ a640c23a62f3a-abeeed8bfdcmr836456366b.22.1740666150635; 
+ Thu, 27 Feb 2025 06:22:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEre39vytYWAHhZhXaM95fI3eTfMy8Xz3vq9jO0H3LoqMNmrk3eKo/DJWQnPtAQh4wcgpPdlg==
+X-Received: by 2002:a17:906:318a:b0:abb:fcbb:ab20 with SMTP id
+ a640c23a62f3a-abeeed8bfdcmr836454166b.22.1740666150047; 
+ Thu, 27 Feb 2025 06:22:30 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.102.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf0c0db671sm129939766b.72.2025.02.27.06.20.29
+ 4fb4d7f45d1cf-5e4c3fb4384sm1176263a12.49.2025.02.27.06.22.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:20:30 -0800 (PST)
+ Thu, 27 Feb 2025 06:22:28 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@linux.microsoft.com>
-Subject: [PULL 17/34] target/i386/hvf: move and rename {load, store}_regs
-Date: Thu, 27 Feb 2025 15:19:35 +0100
-Message-ID: <20250227141952.811410-18-pbonzini@redhat.com>
+Cc: qemu-rust@nongnu.org,
+	zhao1.liu@intel.com
+Subject: [PATCH 04/12] rust: timer: wrap QEMUTimer with Opaque<> and express
+ pinning requirements
+Date: Thu, 27 Feb 2025 15:22:11 +0100
+Message-ID: <20250227142219.812270-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250227141952.811410-1-pbonzini@redhat.com>
-References: <20250227141952.811410-1-pbonzini@redhat.com>
+In-Reply-To: <20250227142219.812270-1-pbonzini@redhat.com>
+References: <20250227142219.812270-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -92,7 +94,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,284 +110,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wei Liu <liuwe@linux.microsoft.com>
+Timers must be pinned in memory, because modify() stores a pointer to them
+in the TimerList.  To ensure this is the case, replace the separate new()
+and init_full() with a single function that returns a pinned box.  Because
+the only way to obtain a Timer is through Timer::new_full(), modify()
+knows that the timer it got is also pinned.  In the future the pinning
+requirement will be expressed through the pin_init crate instead.
 
-They contain HVF specific code. Move them to a better location and
-add "hvf_" prefix. Fix up all the call sites.
+Note that Timer is a bit different from other users of Opaque, in that
+it is created in Rust code rather than C code.  This is why it has to
+use the unsafe Opaque::new() function.
 
-No functional change.
-
-Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
-Link: https://lore.kernel.org/r/1740126987-8483-7-git-send-email-liuwe@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/hvf/x86_emu.h  |  3 --
- target/i386/hvf/x86hvf.h   |  3 ++
- target/i386/hvf/hvf.c      | 71 +++++++++++++++++++++++++++++++-------
- target/i386/hvf/x86_emu.c  | 46 ------------------------
- target/i386/hvf/x86_task.c |  4 +--
- 5 files changed, 64 insertions(+), 63 deletions(-)
+ meson.build                    |  7 -----
+ rust/hw/timer/hpet/src/hpet.rs | 23 ++++++++---------
+ rust/qemu-api/src/timer.rs     | 47 ++++++++++++++++++++++------------
+ 3 files changed, 41 insertions(+), 36 deletions(-)
 
-diff --git a/target/i386/hvf/x86_emu.h b/target/i386/hvf/x86_emu.h
-index 8bd97608c42..cd953849c99 100644
---- a/target/i386/hvf/x86_emu.h
-+++ b/target/i386/hvf/x86_emu.h
-@@ -26,9 +26,6 @@
- void init_emu(void);
- bool exec_instruction(CPUX86State *env, struct x86_decode *ins);
+diff --git a/meson.build b/meson.build
+index 0a2c61d2bfa..fc02e5fc763 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4098,13 +4098,6 @@ if have_rust
+   foreach enum : c_bitfields
+     bindgen_args += ['--bitfield-enum', enum]
+   endforeach
+-  c_nocopy = [
+-    'QEMUTimer',
+-  ]
+-  # Used to customize Drop trait
+-  foreach struct : c_nocopy
+-    bindgen_args += ['--no-copy', struct]
+-  endforeach
  
--void load_regs(CPUState *cpu);
--void store_regs(CPUState *cpu);
--
- void simulate_rdmsr(CPUX86State *env);
- void simulate_wrmsr(CPUX86State *env);
+   # TODO: Remove this comment when the clang/libclang mismatch issue is solved.
+   #
+diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
+index be27eb0eff4..ce4b289d0c8 100644
+--- a/rust/hw/timer/hpet/src/hpet.rs
++++ b/rust/hw/timer/hpet/src/hpet.rs
+@@ -4,6 +4,7 @@
  
-diff --git a/target/i386/hvf/x86hvf.h b/target/i386/hvf/x86hvf.h
-index 423a89b6ad3..8c46ce8ad02 100644
---- a/target/i386/hvf/x86hvf.h
-+++ b/target/i386/hvf/x86hvf.h
-@@ -31,4 +31,7 @@ void hvf_get_xsave(CPUState *cs);
- void hvf_get_msrs(CPUState *cs);
- void vmx_clear_int_window_exiting(CPUState *cs);
- void vmx_update_tpr(CPUState *cs);
-+
-+void hvf_load_regs(CPUState *cpu);
-+void hvf_store_regs(CPUState *cpu);
- #endif
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 1ecb6993ba1..3ab3c0043db 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -61,6 +61,7 @@
- #include "vmx.h"
- #include "x86.h"
- #include "x86_descr.h"
-+#include "x86_flags.h"
- #include "x86_mmu.h"
- #include "x86_decode.h"
- #include "x86_emu.h"
-@@ -434,6 +435,52 @@ static void hvf_cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+ use std::{
+     ffi::CStr,
++    pin::Pin,
+     ptr::{addr_of_mut, null_mut, NonNull},
+     slice::from_ref,
+ };
+@@ -156,7 +157,7 @@ pub struct HPETTimer {
+     /// timer N index within the timer block (`HPETState`)
+     #[doc(alias = "tn")]
+     index: usize,
+-    qemu_timer: Option<Box<Timer>>,
++    qemu_timer: Option<Pin<Box<Timer>>>,
+     /// timer block abstraction containing this timer
+     state: Option<NonNull<HPETState>>,
+ 
+@@ -189,18 +190,14 @@ fn init(&mut self, index: usize, state_ptr: *mut HPETState) -> &mut Self {
      }
- }
  
-+void hvf_load_regs(CPUState *cs)
-+{
-+    X86CPU *cpu = X86_CPU(cs);
-+    CPUX86State *env = &cpu->env;
-+
-+    int i = 0;
-+    RRX(env, R_EAX) = rreg(cs->accel->fd, HV_X86_RAX);
-+    RRX(env, R_EBX) = rreg(cs->accel->fd, HV_X86_RBX);
-+    RRX(env, R_ECX) = rreg(cs->accel->fd, HV_X86_RCX);
-+    RRX(env, R_EDX) = rreg(cs->accel->fd, HV_X86_RDX);
-+    RRX(env, R_ESI) = rreg(cs->accel->fd, HV_X86_RSI);
-+    RRX(env, R_EDI) = rreg(cs->accel->fd, HV_X86_RDI);
-+    RRX(env, R_ESP) = rreg(cs->accel->fd, HV_X86_RSP);
-+    RRX(env, R_EBP) = rreg(cs->accel->fd, HV_X86_RBP);
-+    for (i = 8; i < 16; i++) {
-+        RRX(env, i) = rreg(cs->accel->fd, HV_X86_RAX + i);
-+    }
-+
-+    env->eflags = rreg(cs->accel->fd, HV_X86_RFLAGS);
-+    rflags_to_lflags(env);
-+    env->eip = rreg(cs->accel->fd, HV_X86_RIP);
-+}
-+
-+void hvf_store_regs(CPUState *cs)
-+{
-+    X86CPU *cpu = X86_CPU(cs);
-+    CPUX86State *env = &cpu->env;
-+
-+    int i = 0;
-+    wreg(cs->accel->fd, HV_X86_RAX, RAX(env));
-+    wreg(cs->accel->fd, HV_X86_RBX, RBX(env));
-+    wreg(cs->accel->fd, HV_X86_RCX, RCX(env));
-+    wreg(cs->accel->fd, HV_X86_RDX, RDX(env));
-+    wreg(cs->accel->fd, HV_X86_RSI, RSI(env));
-+    wreg(cs->accel->fd, HV_X86_RDI, RDI(env));
-+    wreg(cs->accel->fd, HV_X86_RBP, RBP(env));
-+    wreg(cs->accel->fd, HV_X86_RSP, RSP(env));
-+    for (i = 8; i < 16; i++) {
-+        wreg(cs->accel->fd, HV_X86_RAX + i, RRX(env, i));
-+    }
-+
-+    lflags_to_rflags(env);
-+    wreg(cs->accel->fd, HV_X86_RFLAGS, env->eflags);
-+    macvm_set_rip(cs, env->eip);
-+}
-+
- int hvf_vcpu_exec(CPUState *cpu)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-@@ -517,10 +564,10 @@ int hvf_vcpu_exec(CPUState *cpu)
-             if (ept_emulation_fault(slot, gpa, exit_qual)) {
-                 struct x86_decode decode;
- 
--                load_regs(cpu);
-+                hvf_load_regs(cpu);
-                 decode_instruction(env, &decode);
-                 exec_instruction(env, &decode);
--                store_regs(cpu);
-+                hvf_store_regs(cpu);
-                 break;
-             }
-             break;
-@@ -535,7 +582,7 @@ int hvf_vcpu_exec(CPUState *cpu)
- 
-             if (!string && in) {
-                 uint64_t val = 0;
--                load_regs(cpu);
-+                hvf_load_regs(cpu);
-                 hvf_handle_io(env_cpu(env), port, &val, 0, size, 1);
-                 if (size == 1) {
-                     AL(env) = val;
-@@ -547,7 +594,7 @@ int hvf_vcpu_exec(CPUState *cpu)
-                     RAX(env) = (uint64_t)val;
-                 }
-                 env->eip += ins_len;
--                store_regs(cpu);
-+                hvf_store_regs(cpu);
-                 break;
-             } else if (!string && !in) {
-                 RAX(env) = rreg(cpu->accel->fd, HV_X86_RAX);
-@@ -557,11 +604,11 @@ int hvf_vcpu_exec(CPUState *cpu)
-             }
-             struct x86_decode decode;
- 
--            load_regs(cpu);
-+            hvf_load_regs(cpu);
-             decode_instruction(env, &decode);
-             assert(ins_len == decode.len);
-             exec_instruction(env, &decode);
--            store_regs(cpu);
-+            hvf_store_regs(cpu);
- 
-             break;
-         }
-@@ -614,21 +661,21 @@ int hvf_vcpu_exec(CPUState *cpu)
-         case EXIT_REASON_RDMSR:
-         case EXIT_REASON_WRMSR:
-         {
--            load_regs(cpu);
-+            hvf_load_regs(cpu);
-             if (exit_reason == EXIT_REASON_RDMSR) {
-                 simulate_rdmsr(env);
-             } else {
-                 simulate_wrmsr(env);
-             }
-             env->eip += ins_len;
--            store_regs(cpu);
-+            hvf_store_regs(cpu);
-             break;
-         }
-         case EXIT_REASON_CR_ACCESS: {
-             int cr;
-             int reg;
- 
--            load_regs(cpu);
-+            hvf_load_regs(cpu);
-             cr = exit_qual & 15;
-             reg = (exit_qual >> 8) & 15;
- 
-@@ -656,16 +703,16 @@ int hvf_vcpu_exec(CPUState *cpu)
-                 abort();
-             }
-             env->eip += ins_len;
--            store_regs(cpu);
-+            hvf_store_regs(cpu);
-             break;
-         }
-         case EXIT_REASON_APIC_ACCESS: { /* TODO */
-             struct x86_decode decode;
- 
--            load_regs(cpu);
-+            hvf_load_regs(cpu);
-             decode_instruction(env, &decode);
-             exec_instruction(env, &decode);
--            store_regs(cpu);
-+            hvf_store_regs(cpu);
-             break;
-         }
-         case EXIT_REASON_TPR: {
-diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
-index 2c7da10c1d2..8b0d54d69a0 100644
---- a/target/i386/hvf/x86_emu.c
-+++ b/target/i386/hvf/x86_emu.c
-@@ -1452,52 +1452,6 @@ static void init_cmd_handler(void)
+     fn init_timer_with_state(&mut self) {
+-        self.qemu_timer = Some(Box::new({
+-            let mut t = Timer::new();
+-            t.init_full(
+-                None,
+-                CLOCK_VIRTUAL,
+-                Timer::NS,
+-                0,
+-                timer_handler,
+-                &self.get_state().timers[self.index],
+-            );
+-            t
+-        }));
++        self.qemu_timer = Some(Timer::new_full(
++            None,
++            CLOCK_VIRTUAL,
++            Timer::NS,
++            0,
++            timer_handler,
++            &self.get_state().timers[self.index],
++        ));
      }
- }
  
--void load_regs(CPUState *cs)
--{
--    X86CPU *cpu = X86_CPU(cs);
--    CPUX86State *env = &cpu->env;
--
--    int i = 0;
--    RRX(env, R_EAX) = rreg(cs->accel->fd, HV_X86_RAX);
--    RRX(env, R_EBX) = rreg(cs->accel->fd, HV_X86_RBX);
--    RRX(env, R_ECX) = rreg(cs->accel->fd, HV_X86_RCX);
--    RRX(env, R_EDX) = rreg(cs->accel->fd, HV_X86_RDX);
--    RRX(env, R_ESI) = rreg(cs->accel->fd, HV_X86_RSI);
--    RRX(env, R_EDI) = rreg(cs->accel->fd, HV_X86_RDI);
--    RRX(env, R_ESP) = rreg(cs->accel->fd, HV_X86_RSP);
--    RRX(env, R_EBP) = rreg(cs->accel->fd, HV_X86_RBP);
--    for (i = 8; i < 16; i++) {
--        RRX(env, i) = rreg(cs->accel->fd, HV_X86_RAX + i);
+     fn get_state(&self) -> &HPETState {
+diff --git a/rust/qemu-api/src/timer.rs b/rust/qemu-api/src/timer.rs
+index a593538917a..a8b2ab058b6 100644
+--- a/rust/qemu-api/src/timer.rs
++++ b/rust/qemu-api/src/timer.rs
+@@ -2,40 +2,51 @@
+ // Author(s): Zhao Liu <zhai1.liu@intel.com>
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-use std::os::raw::{c_int, c_void};
++use std::{
++    os::raw::{c_int, c_void},
++    pin::Pin,
++};
+ 
+ use crate::{
+     bindings::{self, qemu_clock_get_ns, timer_del, timer_init_full, timer_mod, QEMUClockType},
+     callbacks::FnCall,
++    cell::Opaque,
+ };
+ 
+-pub type Timer = bindings::QEMUTimer;
+-pub type TimerListGroup = bindings::QEMUTimerListGroup;
++/// A safe wrapper around [`bindings::QEMUTimer`].
++#[repr(transparent)]
++#[derive(Debug, qemu_api_macros::Wrapper)]
++pub struct Timer(Opaque<bindings::QEMUTimer>);
++
++unsafe impl Send for Timer {}
++unsafe impl Sync for Timer {}
++
++#[repr(transparent)]
++#[derive(qemu_api_macros::Wrapper)]
++pub struct TimerListGroup(Opaque<bindings::QEMUTimerListGroup>);
++
++unsafe impl Send for TimerListGroup {}
++unsafe impl Sync for TimerListGroup {}
+ 
+ impl Timer {
+     pub const MS: u32 = bindings::SCALE_MS;
+     pub const US: u32 = bindings::SCALE_US;
+     pub const NS: u32 = bindings::SCALE_NS;
+ 
+-    pub fn new() -> Self {
+-        Default::default()
 -    }
 -
--    env->eflags = rreg(cs->accel->fd, HV_X86_RFLAGS);
--    rflags_to_lflags(env);
--    env->eip = rreg(cs->accel->fd, HV_X86_RIP);
--}
--
--void store_regs(CPUState *cs)
--{
--    X86CPU *cpu = X86_CPU(cs);
--    CPUX86State *env = &cpu->env;
--
--    int i = 0;
--    wreg(cs->accel->fd, HV_X86_RAX, RAX(env));
--    wreg(cs->accel->fd, HV_X86_RBX, RBX(env));
--    wreg(cs->accel->fd, HV_X86_RCX, RCX(env));
--    wreg(cs->accel->fd, HV_X86_RDX, RDX(env));
--    wreg(cs->accel->fd, HV_X86_RSI, RSI(env));
--    wreg(cs->accel->fd, HV_X86_RDI, RDI(env));
--    wreg(cs->accel->fd, HV_X86_RBP, RBP(env));
--    wreg(cs->accel->fd, HV_X86_RSP, RSP(env));
--    for (i = 8; i < 16; i++) {
--        wreg(cs->accel->fd, HV_X86_RAX + i, RRX(env, i));
+-    const fn as_mut_ptr(&self) -> *mut Self {
+-        self as *const Timer as *mut _
 -    }
 -
--    lflags_to_rflags(env);
--    wreg(cs->accel->fd, HV_X86_RFLAGS, env->eflags);
--    macvm_set_rip(cs, env->eip);
--}
--
- bool exec_instruction(CPUX86State *env, struct x86_decode *ins)
- {
-     /*if (hvf_vcpu_id(cs))
-diff --git a/target/i386/hvf/x86_task.c b/target/i386/hvf/x86_task.c
-index 287fe11cf70..161217991fc 100644
---- a/target/i386/hvf/x86_task.c
-+++ b/target/i386/hvf/x86_task.c
-@@ -119,7 +119,7 @@ void vmx_handle_task_switch(CPUState *cpu, x86_segment_selector tss_sel, int rea
-         return;
+-    pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+-        &'timer mut self,
++    pub fn new_full<'opaque, T, F>(
+         timer_list_group: Option<&TimerListGroup>,
+         clk_type: ClockType,
+         scale: u32,
+         attributes: u32,
+         _cb: F,
+         opaque: &'opaque T,
+-    ) where
++    ) -> Pin<Box<Self>>
+         F: for<'a> FnCall<(&'a T,)>,
+     {
++        // SAFETY: returning a pinned box makes it certain that the object
++        // will not move when added to a TimerList with `modify()`.
++        let t = unsafe { Box::pin(Self(Opaque::new())) };
+         let _: () = F::ASSERT_IS_SOME;
+ 
+         /// timer expiration callback
+@@ -51,7 +62,7 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+         // SAFETY: the opaque outlives the timer
+         unsafe {
+             timer_init_full(
+-                self,
++                t.as_mut_ptr(),
+                 if let Some(g) = timer_list_group {
+                     g as *const TimerListGroup as *mut _
+                 } else {
+@@ -62,11 +73,14 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+                 attributes as c_int,
+                 Some(timer_cb),
+                 (opaque as *const T).cast::<c_void>() as *mut c_void,
+-            )
++            );
+         }
++        t
      }
  
--    load_regs(cpu);
-+    hvf_load_regs(cpu);
+     pub fn modify(&self, expire_time: u64) {
++        // SAFETY: the only way to obtain a Timer is via methods that return a
++        // Pin<Box<Self>>, therefore the timer is pinned
+         unsafe { timer_mod(self.as_mut_ptr(), expire_time as i64) }
+     }
  
-     struct x86_segment_descriptor curr_tss_desc, next_tss_desc;
-     x86_segment_selector old_tss_sel = vmx_read_segment_selector(cpu, R_TR);
-@@ -178,7 +178,7 @@ void vmx_handle_task_switch(CPUState *cpu, x86_segment_selector tss_sel, int rea
-     x86_segment_descriptor_to_vmx(cpu, tss_sel, &next_tss_desc, &vmx_seg);
-     vmx_write_segment_descriptor(cpu, &vmx_seg, R_TR);
- 
--    store_regs(cpu);
-+    hvf_store_regs(cpu);
- 
-     hv_vcpu_invalidate_tlb(cpu->accel->fd);
+@@ -75,6 +89,7 @@ pub fn delete(&self) {
+     }
  }
+ 
++// FIXME: use something like PinnedDrop from the pinned_init crate
+ impl Drop for Timer {
+     fn drop(&mut self) {
+         self.delete()
 -- 
 2.48.1
 
