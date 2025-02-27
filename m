@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CDDC19F32
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B896EC19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 14:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnelj-0000io-Oh; Thu, 27 Feb 2025 09:21:44 -0500
+	id 1tnekl-0007GF-GK; Thu, 27 Feb 2025 09:20:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnekr-0007Ot-QU
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:50 -0500
+ id 1tnekb-0007Ej-Ka
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tneko-0003oQ-2M
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:49 -0500
+ id 1tnekZ-0003lz-43
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 09:20:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740666044;
+ s=mimecast20190719; t=1740666029;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VMmBZwWfeUJ0S3v0Efj9vDO4/Kt8kiAMYCBrnhv0TtQ=;
- b=UdX+0w+WuRqtX5hQsMK9ynayCjkZIikr8auAco8tJ4ifchG+qsePEg38pBAlGw8ZJ363Pe
- 3Mv77cBlBiZOJxMx8f7g/cFtIA+pjxIRAHDdQ7Cz/5PuLySxwV4PSoR9VpdvijRNbVLRAX
- xwgaeGbQugww1FiLuTHOIza5+bjj5b4=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BzevOw2v7eV63sKXI0ynTRS0gFenKTHy7ijiSe2WtG8=;
+ b=Rd1Vaf067brtPWNmwnUkppQEQpPWF/XwqUNtFhQqAnZsOJvhGcMXsqFaa3ZSgQhth+i1VR
+ bYp1mABHfwuMVwVIXmVcCm9TwPfZGhdxvq2i6H+3W1GqEtlt16ShEuEzbkacmwUVT+ySBP
+ zPSpqqh3Q1YAMtRf+JYW4aDUnpGPuDc=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-26-mk5VR0o9NUyKfWUsrdcrDQ-1; Thu, 27 Feb 2025 09:20:40 -0500
-X-MC-Unique: mk5VR0o9NUyKfWUsrdcrDQ-1
-X-Mimecast-MFC-AGG-ID: mk5VR0o9NUyKfWUsrdcrDQ_1740666040
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5e4987b2107so1060025a12.0
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:20:40 -0800 (PST)
+ us-mta-306-uccrlwbJOJ6LSCjSRvNpVQ-1; Thu, 27 Feb 2025 09:20:28 -0500
+X-MC-Unique: uccrlwbJOJ6LSCjSRvNpVQ-1
+X-Mimecast-MFC-AGG-ID: uccrlwbJOJ6LSCjSRvNpVQ_1740666027
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-abbc0572fc9so133284766b.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 06:20:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740666039; x=1741270839;
+ d=1e100.net; s=20230601; t=1740666025; x=1741270825;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VMmBZwWfeUJ0S3v0Efj9vDO4/Kt8kiAMYCBrnhv0TtQ=;
- b=oVTkgvy9jokgOQFubeiEd3Ro80V9aMG4erF1w30RuAnuIF2x1AyrfloSB7Gn4IwLZr
- mptTnS2eFXTfZRlzunoILCmJJbOKrtPPrKXWmKmxKHWi9gbWiwmgr3bABnnTenPrCEdk
- Qbg7MkF1ZILe/UX1rrwPpXXyN3LAznJP7wrf2u4QSBCWslcV1pJ8aHmTdqtbUuxdH57Z
- V4OLkUkgdXNBt6EzdWEz3tQMHKNiBnnRYQ9YA37DJdTupF9hSpwpWY67jbKhFYQNDung
- LHa8EruT+Ken6ZxkIjOKUXTB0J5PFOSX8cPCG6InV9uYLXbu6a52EQ79YRxSk4fKbl7B
- Jrpw==
-X-Gm-Message-State: AOJu0YyYq99A1J/XlJxLl9bj8hkL9bktOMKArCxbjSYtzQ45J2w0LG0a
- kmSsH6P64wiq3MmHn4i/IsVQd/qP00Tx6gT5Nu6qbv/qt20LzBVmtBamQQsv6sg/R9UfTGOwMqV
- PHH5E37JZy0ySEEYloapMr+rouEhteQu/lNvP2zDnBfvNpX/6eI1FdBqns0B/X/Da68Sn6BHhLs
- UwdXKWLkka8O92cdr2kgxSRWAiEPj1jGMWj6IKFRo=
-X-Gm-Gg: ASbGncvJOdpb6F2NhNGVwgAG8YsBWovot2zWn2WEzmLzSqw+5J7J8oXrdvntiYkR3Bw
- c0zpHXa8oz7jdSYIuN4HT6qZDQhkgLrzq7ERptYlo3xFdk/MkosYtGb+4Dyh53XLGMxsOXu3AYz
- WMe8nyl+srQGQRhk0qJpdqhBor2wrILfRPxV7ikwg80e+LhQndHAdP/o24/O97zYxLesFEjattC
- qoqlB9kYRsC89NIH6LwGEbQNAnDaQiPx8sspv2A18tzY7o0EELTPh7BBgaYp6WqjefRQ2ijg7Mm
- yW13ITM2n59SU/ecbvG7
-X-Received: by 2002:a05:6402:3483:b0:5e4:c522:51cd with SMTP id
- 4fb4d7f45d1cf-5e4c5225c72mr2888192a12.20.1740666038596; 
- Thu, 27 Feb 2025 06:20:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHdxIZkrf6vaXaGryO1U5cLNzE8R58b3C28wriZ9epCFj4Y53ya5Cbw65qd+d7rpqyN7rr1+g==
-X-Received: by 2002:a05:6402:3483:b0:5e4:c522:51cd with SMTP id
- 4fb4d7f45d1cf-5e4c5225c72mr2888153a12.20.1740666037999; 
- Thu, 27 Feb 2025 06:20:37 -0800 (PST)
+ bh=BzevOw2v7eV63sKXI0ynTRS0gFenKTHy7ijiSe2WtG8=;
+ b=oZSagxcD3UGwns5tcHlJPEPxOiSLTCLH2ffy+z9imdTmn4aDHOu74yr8QJRXNexyvt
+ H8t1f/bL1CsBywpc0ywUkNFU8aF0W14IzZHFyXuS6U6X2V8N9sRgHctrHWsgwXP1Un1r
+ PGY1gGdx4lPzwrUhWN7a23ntEFVoZ+sp5cxl+ww+xGTGKuH5cSNzqagVVu13yceGBX6H
+ TVf4tOhibsJSVmzV3EtbRAIJtlf/3ViuBDVKp43v3f9JYfN0L8OREicRT7iYY4JFhWbs
+ z/AhpK99twpaigtj+m6vjeT4L2Z++TQMq5TLvejaUFzTKWX3gVqROD1Ergq/MbqWp28w
+ XMSw==
+X-Gm-Message-State: AOJu0YzIhsUb6BjoOHAgGOcRDtV011NyZdlnvMVRaVnylfJeYe7XyMN8
+ e0LusJUzCofvR190Jf8T7WvlzAdIkUwynedZnGp9iKEXNIVTfmPnwKpgf41Fe2G8RQqGteEaf45
+ 1z0ysefTBmo0D7dNU6kP9xPwMKNMZDfhENpLLLCHQNOv1zlW9DlbYkixQ5a5LfJPnqT4SDoBJ15
+ 6kn4XeCjyzGNoNXdKJMx49D9JcZYR1zF7EUnSCnyc=
+X-Gm-Gg: ASbGncseswNcb2cRIzKaE7Jn5NhQlckWMHtff21CLm+llxSBvygH/qsxgXgULkay9p8
+ OmqXyGCUKU3M5TDwzO2MRLch9ehGNmyHRqijYQsntiAOUTbCeSaphmLiQfzN6EFXOftWwX3V6HO
+ vEEy5KXHDXjZrj/B1AslViprSHz6elJSAh9amvCSBiYX2tmC9WyM4/vPHZaZh35qtL+HnVi7hH0
+ dcFZtOHmWQiGOMUPQ+3STnfcVOzIBPRl4TXuiVYZ/cAHZAp6ls4/uVYmcqUtAks4p5i/OWUnWM7
+ vw6xin3MK/VPFc76Qm4L
+X-Received: by 2002:a17:907:7704:b0:ab7:ef38:1277 with SMTP id
+ a640c23a62f3a-abc09a74646mr2372138266b.26.1740666025173; 
+ Thu, 27 Feb 2025 06:20:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHQMrpA+80/oIoceAbfVOiXOR2QDCzYmfvXCr/nYuVn95AM2fdhPGzTIoMHxUbswgTP5t2+CQ==
+X-Received: by 2002:a17:907:7704:b0:ab7:ef38:1277 with SMTP id
+ a640c23a62f3a-abc09a74646mr2372133166b.26.1740666024311; 
+ Thu, 27 Feb 2025 06:20:24 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.102.52])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e4c3bb733asm1152112a12.38.2025.02.27.06.20.37
+ a640c23a62f3a-abf0c74fba2sm128900366b.131.2025.02.27.06.20.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Feb 2025 06:20:37 -0800 (PST)
+ Thu, 27 Feb 2025 06:20:22 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 20/34] rust: add IsA bounds to QOM implementation traits
-Date: Thu, 27 Feb 2025 15:19:38 +0100
-Message-ID: <20250227141952.811410-21-pbonzini@redhat.com>
+Cc: Wei Liu <liuwe@linux.microsoft.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 14/34] target/i386/hvf: fix a typo in a type name
+Date: Thu, 27 Feb 2025 15:19:32 +0100
+Message-ID: <20250227141952.811410-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250227141952.811410-1-pbonzini@redhat.com>
 References: <20250227141952.811410-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -108,53 +110,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check that the right bounds are provided to the qom_isa! macro
-whenever the class is defined to implement a certain class.
-This removes the need to add IsA<> bounds together with the
-*Impl trait bounds.
+From: Wei Liu <liuwe@linux.microsoft.com>
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+The prefix x68 is wrong. Change it to x86.
+
+Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/1740126987-8483-2-git-send-email-liuwe@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/qdev.rs | 2 +-
- rust/qemu-api/src/qom.rs  | 4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ target/i386/hvf/x86.h       |  8 ++++----
+ target/i386/hvf/x86_descr.h |  6 +++---
+ target/i386/hvf/x86_task.h  |  2 +-
+ target/i386/hvf/hvf.c       |  2 +-
+ target/i386/hvf/x86.c       |  4 ++--
+ target/i386/hvf/x86_descr.c |  8 ++++----
+ target/i386/hvf/x86_task.c  | 22 +++++++++++-----------
+ 7 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index 3a7aa4def62..c4dd26b582c 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -86,7 +86,7 @@ pub trait ResettablePhasesImpl {
+diff --git a/target/i386/hvf/x86.h b/target/i386/hvf/x86.h
+index 3570f29aa9d..063cd0b83ec 100644
+--- a/target/i386/hvf/x86.h
++++ b/target/i386/hvf/x86.h
+@@ -183,7 +183,7 @@ static inline uint32_t x86_call_gate_offset(x86_call_gate *gate)
+ #define GDT_SEL     0
+ #define LDT_SEL     1
+ 
+-typedef struct x68_segment_selector {
++typedef struct x86_segment_selector {
+     union {
+         uint16_t sel;
+         struct {
+@@ -192,7 +192,7 @@ typedef struct x68_segment_selector {
+             uint16_t index:13;
+         };
+     };
+-} __attribute__ ((__packed__)) x68_segment_selector;
++} __attribute__ ((__packed__)) x86_segment_selector;
+ 
+ /* useful register access  macros */
+ #define x86_reg(cpu, reg) ((x86_register *) &cpu->regs[reg])
+@@ -250,10 +250,10 @@ typedef struct x68_segment_selector {
+ /* deal with GDT/LDT descriptors in memory */
+ bool x86_read_segment_descriptor(CPUState *cpu,
+                                  struct x86_segment_descriptor *desc,
+-                                 x68_segment_selector sel);
++                                 x86_segment_selector sel);
+ bool x86_write_segment_descriptor(CPUState *cpu,
+                                   struct x86_segment_descriptor *desc,
+-                                  x68_segment_selector sel);
++                                  x86_segment_selector sel);
+ 
+ bool x86_read_call_gate(CPUState *cpu, struct x86_call_gate *idt_desc,
+                         int gate);
+diff --git a/target/i386/hvf/x86_descr.h b/target/i386/hvf/x86_descr.h
+index 9f06014b56a..ce5de983497 100644
+--- a/target/i386/hvf/x86_descr.h
++++ b/target/i386/hvf/x86_descr.h
+@@ -34,10 +34,10 @@ void vmx_read_segment_descriptor(CPUState *cpu,
+ void vmx_write_segment_descriptor(CPUState *cpu, struct vmx_segment *desc,
+                                   enum X86Seg seg);
+ 
+-x68_segment_selector vmx_read_segment_selector(CPUState *cpu,
++x86_segment_selector vmx_read_segment_selector(CPUState *cpu,
+                                                enum X86Seg seg);
+ void vmx_write_segment_selector(CPUState *cpu,
+-                                x68_segment_selector selector,
++                                x86_segment_selector selector,
+                                 enum X86Seg seg);
+ 
+ uint64_t vmx_read_segment_base(CPUState *cpu, enum X86Seg seg);
+@@ -45,7 +45,7 @@ void vmx_write_segment_base(CPUState *cpu, enum X86Seg seg,
+                             uint64_t base);
+ 
+ void x86_segment_descriptor_to_vmx(CPUState *cpu,
+-                                   x68_segment_selector selector,
++                                   x86_segment_selector selector,
+                                    struct x86_segment_descriptor *desc,
+                                    struct vmx_segment *vmx_desc);
+ 
+diff --git a/target/i386/hvf/x86_task.h b/target/i386/hvf/x86_task.h
+index 4eaa61a7dee..b9afac6a47b 100644
+--- a/target/i386/hvf/x86_task.h
++++ b/target/i386/hvf/x86_task.h
+@@ -15,6 +15,6 @@
+ #ifndef HVF_X86_TASK_H
+ #define HVF_X86_TASK_H
+ 
+-void vmx_handle_task_switch(CPUState *cpu, x68_segment_selector tss_sel,
++void vmx_handle_task_switch(CPUState *cpu, x86_segment_selector tss_sel,
+         int reason, bool gate_valid, uint8_t gate, uint64_t gate_type);
+ #endif
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index ca08f0753f0..353549fa779 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -674,7 +674,7 @@ int hvf_vcpu_exec(CPUState *cpu)
+         }
+         case EXIT_REASON_TASK_SWITCH: {
+             uint64_t vinfo = rvmcs(cpu->accel->fd, VMCS_IDT_VECTORING_INFO);
+-            x68_segment_selector sel = {.sel = exit_qual & 0xffff};
++            x86_segment_selector sel = {.sel = exit_qual & 0xffff};
+             vmx_handle_task_switch(cpu, sel, (exit_qual >> 30) & 0x3,
+              vinfo & VMCS_INTR_VALID, vinfo & VECTORING_INFO_VECTOR_MASK, vinfo
+              & VMCS_INTR_T_MASK);
+diff --git a/target/i386/hvf/x86.c b/target/i386/hvf/x86.c
+index 80e36136d04..a0ede138865 100644
+--- a/target/i386/hvf/x86.c
++++ b/target/i386/hvf/x86.c
+@@ -48,7 +48,7 @@
+ 
+ bool x86_read_segment_descriptor(CPUState *cpu,
+                                  struct x86_segment_descriptor *desc,
+-                                 x68_segment_selector sel)
++                                 x86_segment_selector sel)
+ {
+     target_ulong base;
+     uint32_t limit;
+@@ -78,7 +78,7 @@ bool x86_read_segment_descriptor(CPUState *cpu,
+ 
+ bool x86_write_segment_descriptor(CPUState *cpu,
+                                   struct x86_segment_descriptor *desc,
+-                                  x68_segment_selector sel)
++                                  x86_segment_selector sel)
+ {
+     target_ulong base;
+     uint32_t limit;
+diff --git a/target/i386/hvf/x86_descr.c b/target/i386/hvf/x86_descr.c
+index f33836d6cba..7b599c90377 100644
+--- a/target/i386/hvf/x86_descr.c
++++ b/target/i386/hvf/x86_descr.c
+@@ -60,14 +60,14 @@ uint64_t vmx_read_segment_base(CPUState *cpu, X86Seg seg)
+     return rvmcs(cpu->accel->fd, vmx_segment_fields[seg].base);
  }
  
- /// Trait providing the contents of [`DeviceClass`].
--pub trait DeviceImpl: ObjectImpl + ResettablePhasesImpl {
-+pub trait DeviceImpl: ObjectImpl + ResettablePhasesImpl + IsA<DeviceState> {
-     /// _Realization_ is the second stage of device creation. It contains
-     /// all operations that depend on device properties and can fail (note:
-     /// this is not yet supported for Rust devices).
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 3d5ab2d9018..10ce359becb 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -37,6 +37,8 @@
- //! * a trait for virtual method implementations, for example `DeviceImpl`.
- //!   Child classes implement this trait to provide their own behavior for
- //!   virtual methods. The trait's methods take `&self` to access instance data.
-+//!   The traits have the appropriate specialization of `IsA<>` as a supertrait,
-+//!   for example `IsA<DeviceState>` for `DeviceImpl`.
- //!
- //! * an implementation of [`ClassInitImpl`], for example
- //!   `ClassInitImpl<DeviceClass>`. This fills the vtable in the class struct;
-@@ -497,7 +499,7 @@ impl<T: ObjectType> ObjectDeref for &mut T {}
- impl<T: ObjectType> ObjectCastMut for &mut T {}
+-x68_segment_selector vmx_read_segment_selector(CPUState *cpu, X86Seg seg)
++x86_segment_selector vmx_read_segment_selector(CPUState *cpu, X86Seg seg)
+ {
+-    x68_segment_selector sel;
++    x86_segment_selector sel;
+     sel.sel = rvmcs(cpu->accel->fd, vmx_segment_fields[seg].selector);
+     return sel;
+ }
  
- /// Trait a type must implement to be registered with QEMU.
--pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
-+pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> + IsA<Object> {
-     /// The parent of the type.  This should match the first field of the
-     /// struct that implements `ObjectImpl`, minus the `ParentField<_>` wrapper.
-     type ParentType: ObjectType;
+-void vmx_write_segment_selector(CPUState *cpu, x68_segment_selector selector, X86Seg seg)
++void vmx_write_segment_selector(CPUState *cpu, x86_segment_selector selector, X86Seg seg)
+ {
+     wvmcs(cpu->accel->fd, vmx_segment_fields[seg].selector, selector.sel);
+ }
+@@ -90,7 +90,7 @@ void vmx_write_segment_descriptor(CPUState *cpu, struct vmx_segment *desc, X86Se
+     wvmcs(cpu->accel->fd, sf->ar_bytes, desc->ar);
+ }
+ 
+-void x86_segment_descriptor_to_vmx(CPUState *cpu, x68_segment_selector selector,
++void x86_segment_descriptor_to_vmx(CPUState *cpu, x86_segment_selector selector,
+                                    struct x86_segment_descriptor *desc,
+                                    struct vmx_segment *vmx_desc)
+ {
+diff --git a/target/i386/hvf/x86_task.c b/target/i386/hvf/x86_task.c
+index bcd844cff60..287fe11cf70 100644
+--- a/target/i386/hvf/x86_task.c
++++ b/target/i386/hvf/x86_task.c
+@@ -76,16 +76,16 @@ static void load_state_from_tss32(CPUState *cpu, struct x86_tss_segment32 *tss)
+     RSI(env) = tss->esi;
+     RDI(env) = tss->edi;
+ 
+-    vmx_write_segment_selector(cpu, (x68_segment_selector){{tss->ldt}}, R_LDTR);
+-    vmx_write_segment_selector(cpu, (x68_segment_selector){{tss->es}}, R_ES);
+-    vmx_write_segment_selector(cpu, (x68_segment_selector){{tss->cs}}, R_CS);
+-    vmx_write_segment_selector(cpu, (x68_segment_selector){{tss->ss}}, R_SS);
+-    vmx_write_segment_selector(cpu, (x68_segment_selector){{tss->ds}}, R_DS);
+-    vmx_write_segment_selector(cpu, (x68_segment_selector){{tss->fs}}, R_FS);
+-    vmx_write_segment_selector(cpu, (x68_segment_selector){{tss->gs}}, R_GS);
++    vmx_write_segment_selector(cpu, (x86_segment_selector){{tss->ldt}}, R_LDTR);
++    vmx_write_segment_selector(cpu, (x86_segment_selector){{tss->es}}, R_ES);
++    vmx_write_segment_selector(cpu, (x86_segment_selector){{tss->cs}}, R_CS);
++    vmx_write_segment_selector(cpu, (x86_segment_selector){{tss->ss}}, R_SS);
++    vmx_write_segment_selector(cpu, (x86_segment_selector){{tss->ds}}, R_DS);
++    vmx_write_segment_selector(cpu, (x86_segment_selector){{tss->fs}}, R_FS);
++    vmx_write_segment_selector(cpu, (x86_segment_selector){{tss->gs}}, R_GS);
+ }
+ 
+-static int task_switch_32(CPUState *cpu, x68_segment_selector tss_sel, x68_segment_selector old_tss_sel,
++static int task_switch_32(CPUState *cpu, x86_segment_selector tss_sel, x86_segment_selector old_tss_sel,
+                           uint64_t old_tss_base, struct x86_segment_descriptor *new_desc)
+ {
+     struct x86_tss_segment32 tss_seg;
+@@ -108,7 +108,7 @@ static int task_switch_32(CPUState *cpu, x68_segment_selector tss_sel, x68_segme
+     return 0;
+ }
+ 
+-void vmx_handle_task_switch(CPUState *cpu, x68_segment_selector tss_sel, int reason, bool gate_valid, uint8_t gate, uint64_t gate_type)
++void vmx_handle_task_switch(CPUState *cpu, x86_segment_selector tss_sel, int reason, bool gate_valid, uint8_t gate, uint64_t gate_type)
+ {
+     uint64_t rip = rreg(cpu->accel->fd, HV_X86_RIP);
+     if (!gate_valid || (gate_type != VMCS_INTR_T_HWEXCEPTION &&
+@@ -122,7 +122,7 @@ void vmx_handle_task_switch(CPUState *cpu, x68_segment_selector tss_sel, int rea
+     load_regs(cpu);
+ 
+     struct x86_segment_descriptor curr_tss_desc, next_tss_desc;
+-    x68_segment_selector old_tss_sel = vmx_read_segment_selector(cpu, R_TR);
++    x86_segment_selector old_tss_sel = vmx_read_segment_selector(cpu, R_TR);
+     uint64_t old_tss_base = vmx_read_segment_base(cpu, R_TR);
+     uint32_t desc_limit;
+     struct x86_call_gate task_gate_desc;
+@@ -140,7 +140,7 @@ void vmx_handle_task_switch(CPUState *cpu, x68_segment_selector tss_sel, int rea
+         x86_read_call_gate(cpu, &task_gate_desc, gate);
+ 
+         dpl = task_gate_desc.dpl;
+-        x68_segment_selector cs = vmx_read_segment_selector(cpu, R_CS);
++        x86_segment_selector cs = vmx_read_segment_selector(cpu, R_CS);
+         if (tss_sel.rpl > dpl || cs.rpl > dpl)
+             ;//DPRINTF("emulate_gp");
+     }
 -- 
 2.48.1
 
