@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 147ECC021BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:32:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26745C19F2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Feb 2025 07:35:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnYMT-0003x9-M6; Thu, 27 Feb 2025 02:31:13 -0500
+	id 1tnYPz-0005Vi-8C; Thu, 27 Feb 2025 02:34:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tnYMH-0003ul-DE
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:31:03 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1tnYPw-0005UT-2B
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:34:49 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tnYMF-0004Mh-1s
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:31:00 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2fea65dcc3cso790070a91.0
- for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 23:30:57 -0800 (PST)
+ id 1tnYPu-0004qB-Cf
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 02:34:47 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2235908a30aso3378615ad.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Feb 2025 23:34:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1740641456; x=1741246256; darn=nongnu.org;
+ d=sifive.com; s=google; t=1740641684; x=1741246484; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=W1cRaC5gQFqx4sw4ws+KyDi9AyCOSvamK2A+8kQRjfk=;
- b=A7r6sHWwgOQIY9V8YO88XfzfnsO0sHMe+21ecBXtuSbwPmPpsdDynZ1mngsGm6uPsW
- umHtVd+3BC+xxTVMLhSvjGcncH5OkdX9A20GOBuSJrHMHnpIdO7q9Pu7m/GNENGqURXG
- I9h3YofQiG5+oWWX7lR26m/5qJ5R+h2wWgut5ENF1yNn+GmRx2LbeopPM4FK8ZsXHNQp
- gRwOI8BKzyQ61BfuOw9O0H/GiLWKDv7VAuCJjDfV/FD0RgJsHWbi0yWSKV+lSCVWqkEZ
- UURtPSgeoOgdrMDxc7FxVdWjkSA6STW+0wce1RZiMBWYmZM2uz0tUVMzV21B88Jtisnp
- 50Qw==
+ bh=49Lqc3jo0xCLKFBce68EsedKQHxM1L0GYblpsYHQ2gI=;
+ b=UrI5/ecO6NDwHaX1xl+ey5xlpzKs/17L5cq5VlAxNjKS7mNun/Q+pMDOyp+d6QxBwB
+ eEabu1fZ9oF88k+bK4JwCkvz236o4/O9YNF152QUkgtsPs0mLDme8QJRXwLgKb6rD0KZ
+ i/bBrS2lZk5KVqVCoQQaJVCFLqmjRJ0sG+iGPxe8XwCjRAK3EwS0HgLg3AtA5FIJK0OB
+ F7xNYKwpybY4nhdl1pO9TEkokBodVk8l6GxuzWAV8IfWuAm5IdayqSKGHGdJDdwGZlJM
+ R9oUxayx6WpY3dorYMxluTbC5HyM6J0snADaJFlhooQV2GxAW1mPzWkOGM29OUt9IBKt
+ mIWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740641456; x=1741246256;
+ d=1e100.net; s=20230601; t=1740641684; x=1741246484;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=W1cRaC5gQFqx4sw4ws+KyDi9AyCOSvamK2A+8kQRjfk=;
- b=ECRePi8KaDq4u3hK1RdmLXxSnXWCcDohVqmItLuG1ezoZ5dbAN6eGBgmXTh0UoWU80
- 0g6EM569v7siOn2rFAL7Lyi2UPCWGdTvVfplX7HuZvMgE9EigarLGfU3vglIxTmqs4VD
- AOAmKY2zfTTLFw+niyk4ueIZYjET6RCN+a/VJxlSUDrxWsNErjMzWNvqYAqJXm17DAX3
- kkq9iQmYvsoPyVIX945dijzVlKzf6VnAIWG4Z8uG78FGW/3ztxlO6cnFLLnZ0ZinO3xd
- zsVJjwYm4SrqjTMw6gRWgbCyJsV+LWJNaubsp7fix7/4KeEmZyvNbAvRaSggt0ycxsMo
- c0MA==
-X-Gm-Message-State: AOJu0Yz4EE0RQRXPwOTBZY5Stx1hf2KoSNJRfvxz3kzspRdwxxo4Zies
- wDGZKKGvlDBAEp0emV0vsUSKb3HTJk++SL/3e3qVE+i4JmxQlSTvb3WtVbjnVt4yo0hefT7xAvJ
- rookdm6z+L63GT0IaonQBGHtiOBxL910RtUw9z3QUgGrsQWDPt7bkvd0lwwZhQmL0/zr6F9YwqF
- qBwRNgf/0/cZEyYcdtmbvKNogOnuiULY+NTV3KXvI=
-X-Gm-Gg: ASbGncu8LsT7Cp+uxOCTeWUbDm6/qha9yJh22esvdpdgYSB1thWSb9y8pIF6644T3KR
- IBtRYKX7kVVi0PWt6bDO4K51dMpHTpt6DkQiXMwZHZjxpmlduduPwxvrBEK7+5GDYhrlDi3Ds+P
- 0G4WvfdFbiqH2iQpcOkBbYKyYgLyyeafJbYa2RSFD9JcqCBQ3SKmnM01BPxkt+++NINWJM/fdZt
- aJJW2BwBLYZabX618QaDydjbQGr6w7HvCofCXKvPHPNFmyRizGAsevt3wjK60LbH5HclPKe3E2V
- 4ZhhpitOH3uMLVjb82IrGtRf2rDHNXsuP4Sg2lSd5QXHy7zeYNswXQ==
-X-Google-Smtp-Source: AGHT+IFDxKXagRZxdP/bUaV7OZcddxqG+Egy14RcpjwohSoEoHaJNhvo4C47QQbATRh45ZyZXkt7QQ==
-X-Received: by 2002:a05:6a21:8801:b0:1f0:e3b9:6b17 with SMTP id
- adf61e73a8af0-1f0e3b96b1amr21723557637.26.1740641455623; 
- Wed, 26 Feb 2025 23:30:55 -0800 (PST)
+ bh=49Lqc3jo0xCLKFBce68EsedKQHxM1L0GYblpsYHQ2gI=;
+ b=A0a9cskWin6gf5HVpyZIJ1qTz50ruRDH6CsVptDjTAMOQ4pgP+u6R++J0sqThEdfCK
+ d4fSaLN15HPcqyaoj8Q36g8keHLsoUePFyma2WRBWHDO3wzP/t9h1oPd2vEPricqWDrG
+ 1cwKL/m5YAB9D569nF3oV9GXwAMvJi3ks3Hx8MFnsYx7MB9pKx7gCtrIOYikgkWtsDC7
+ CwVGX264MeOEEKoypCgdvh/Uf0fwww2KbGhhaKnQgfOvWBRbe6LlPBeKDY8uVoJ3GSkZ
+ XhBPUrv5u20UUgbxlPEf3BMNfoimtG0yA94Q2ht1fgEoLnXtPSWT8kWV9oMSGAveXddy
+ E2Ow==
+X-Gm-Message-State: AOJu0Ywz18IHZ4h0ZMtXy/Mj2VPYjLQPdQGFAG23D0flcUX2Mmii0rhJ
+ Fi1a9G4QIVNNa+jwGm4TJff1gYOk1djN8tJdvvotrneYkbAEU77pAV5NmUyE4naXG9iVlGE8pjS
+ kNLudcrKibRxCW3cbB7WHzVC+hHqxIh4o6w9HKyo0vdjk6TlQjrWu3GHLAlvdkG1ioWelAmWD+2
+ USVAJnig6vJSEDKC/zUSR01+QSL2kDrtToJAFJHTo=
+X-Gm-Gg: ASbGncvHNRovAVJQkxaJObE2icHC85K4yL9xaBxSJsXaceC3Lf+6GbjMxJ8PxAwlLrb
+ BKMSp1Mt3nwq2HJInFjGshZLbDuYetaNDi73mBGv5B1Qvqo9Jd5opcOARN12PtD1PMxpekVgRPj
+ +T4QW12MyIJE6KK2uA+EQXbg5IBM0Eq14iQH6xOAg5EJ7T7ZS3LsC+yIV05+Ra4yWWCzTCDeDv/
+ miF1MOsEQlR/W55CDPf6Uq4tuThSVaUNVn1qtybZO+Yx5oPDamPLV/3DQfpy2+21xyc44N6JfZc
+ CVns97ejzc7oI09lAUUvOFEgcSXJs/eBppBCy4P1DR+5bRxyPjxe3w==
+X-Google-Smtp-Source: AGHT+IEgaM8PvfnGnrNGlcHIjF2vTIhLkdqE8oaJxliNrDEdoHh+LtTKbTOqFaqRMin4hgqj2Xby8w==
+X-Received: by 2002:a05:6a21:99a1:b0:1ee:6fec:3e5c with SMTP id
+ adf61e73a8af0-1f10acf5c0amr10762316637.7.1740641684075; 
+ Wed, 26 Feb 2025 23:34:44 -0800 (PST)
 Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-aee7dec6727sm716764a12.51.2025.02.26.23.30.54
+ 41be03b00d2f7-aee7de1a642sm714350a12.22.2025.02.26.23.34.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Feb 2025 23:30:55 -0800 (PST)
+ Wed, 26 Feb 2025 23:34:43 -0800 (PST)
 From: Jason Chien <jason.chien@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
-Cc: Jiri Slaby <jslaby@suse.cz>,
-	Jason Chien <jason.chien@sifive.com>
-Subject: [PATCH] hw/misc/edu: Rename macros indicating the direction of DMA
- operations
-Date: Thu, 27 Feb 2025 15:30:49 +0800
-Message-ID: <20250227073049.32655-1-jason.chien@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Jason Chien <jason.chien@sifive.com>
+Subject: [PATCH] hw/riscv/riscv-iommu: Fix process directory table walk
+Date: Thu, 27 Feb 2025 15:34:21 +0800
+Message-ID: <20250227073421.399-1-jason.chien@sifive.com>
 X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=jason.chien@sifive.com; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=jason.chien@sifive.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,43 +103,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit renames the macros to accurately reflect the direction of
-DMA operations.
+The PPN field in a non-leaf PDT entry is positioned differently from that
+in a leaf PDT entry. The original implementation incorrectly used the leaf
+entry's PPN mask to extract the PPN from a non-leaf entry, leading to an
+erroneous page table walk.
 
-EDU_DMA_TO_PCI now represents reading memory content into the EDU buffer,
-while EDU_DMA_FROM_PCI represents writing EDU buffer content to memory.
-
-The previous naming was misleading, as the definitions were reversed.
+This commit introduces new macros to properly define the fields for
+non-leaf PDT entries and corrects the page table walk.
 
 Signed-off-by: Jason Chien <jason.chien@sifive.com>
 ---
- hw/misc/edu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/riscv/riscv-iommu-bits.h | 6 +++++-
+ hw/riscv/riscv-iommu.c      | 4 ++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/hw/misc/edu.c b/hw/misc/edu.c
-index 504178b4a2..1353c67dc2 100644
---- a/hw/misc/edu.c
-+++ b/hw/misc/edu.c
-@@ -63,8 +63,8 @@ struct EduState {
+diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
+index de599b80d6..8d621c5b70 100644
+--- a/hw/riscv/riscv-iommu-bits.h
++++ b/hw/riscv/riscv-iommu-bits.h
+@@ -368,12 +368,16 @@ enum riscv_iommu_fq_causes {
+ #define RISCV_IOMMU_DC_MSIPTP_MODE_OFF  0
+ #define RISCV_IOMMU_DC_MSIPTP_MODE_FLAT 1
  
- #define EDU_DMA_RUN             0x1
- #define EDU_DMA_DIR(cmd)        (((cmd) & 0x2) >> 1)
--# define EDU_DMA_FROM_PCI       0
--# define EDU_DMA_TO_PCI         1
-+# define EDU_DMA_TO_PCI         0
-+# define EDU_DMA_FROM_PCI       1
- #define EDU_DMA_IRQ             0x4
-     struct dma_state {
-         dma_addr_t src;
-@@ -146,7 +146,7 @@ static void edu_dma_timer(void *opaque)
-         return;
++/* 2.2 Process Directory Table */
++#define RISCV_IOMMU_PDTE_VALID          BIT_ULL(0)
++#define RISCV_IOMMU_PDTE_PPN            RISCV_IOMMU_PPN_FIELD
++
+ /* Translation attributes fields */
+ #define RISCV_IOMMU_PC_TA_V             BIT_ULL(0)
+ #define RISCV_IOMMU_PC_TA_RESERVED      GENMASK_ULL(63, 32)
+ 
+ /* First stage context fields */
+-#define RISCV_IOMMU_PC_FSC_PPN          GENMASK_ULL(43, 0)
++#define RISCV_IOMMU_PC_FSC_PPN          RISCV_IOMMU_ATP_PPN_FIELD
+ #define RISCV_IOMMU_PC_FSC_RESERVED     GENMASK_ULL(59, 44)
+ 
+ enum riscv_iommu_fq_ttypes {
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index e7568ca227..1abe981244 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1043,10 +1043,10 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+             return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+         }
+         le64_to_cpus(&de);
+-        if (!(de & RISCV_IOMMU_PC_TA_V)) {
++        if (!(de & RISCV_IOMMU_PDTE_VALID)) {
+             return RISCV_IOMMU_FQ_CAUSE_PDT_INVALID;
+         }
+-        addr = PPN_PHYS(get_field(de, RISCV_IOMMU_PC_FSC_PPN));
++        addr = PPN_PHYS(get_field(de, RISCV_IOMMU_PDTE_PPN));
      }
  
--    if (EDU_DMA_DIR(edu->dma.cmd) == EDU_DMA_FROM_PCI) {
-+    if (EDU_DMA_DIR(edu->dma.cmd) == EDU_DMA_TO_PCI) {
-         uint64_t dst = edu->dma.dst;
-         edu_check_range(dst, edu->dma.cnt, DMA_START, DMA_SIZE);
-         dst -= DMA_START;
+     /* Leaf entry in PDT */
 -- 
 2.43.2
 
