@@ -4,107 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 096BAC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 03:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73764C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 03:02:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnqcC-0006JK-RC; Thu, 27 Feb 2025 22:00:41 -0500
+	id 1tnqdu-0007gg-5h; Thu, 27 Feb 2025 22:02:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1tnqc9-0006In-0r; Thu, 27 Feb 2025 22:00:37 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1tnqc4-0005uF-CX; Thu, 27 Feb 2025 22:00:36 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51RMo1DB015651;
- Fri, 28 Feb 2025 03:00:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=sD2G7dKcwzR3Hwfr92/HdxuQZ8hTK5
- PaBqR8iPkDjPs=; b=nUvJ8QXERbXaYj8AgPeJLQaD04WRqf9SS7c7Ychi/59bGP
- PUYzb6cS3iATzRkUwc9wAX+8NI+GIoEPOUrNAxK5wed+VLrRU3eTvjQa2MQa/0LA
- Il6aLOKPkl6KG6yw6wr768FqPNw32fSbN1EcjjrW3/GA48WbYcmQBbBeizPXp3Nz
- HdT4h/d3Ieh/ke79eQ9j4zMB3WLWDk27RF4twbwIF5Vk2HuQUyjMECNH3cMJjl54
- QWG1N4S9bfxcSVRCrRg7vxHdU/4gIwI7Jwf71QFYdNb9mp2O1q89jo3hvNVQxHhQ
- nNqqg5vo12GaKjHVeODKvq/GdSWfOKi90KhOaRdg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45316a8u51-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 28 Feb 2025 03:00:16 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 51S2qeCC010602;
- Fri, 28 Feb 2025 03:00:16 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45316a8u4y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 28 Feb 2025 03:00:16 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51S1XMkp012499;
- Fri, 28 Feb 2025 03:00:15 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44ys9yvdvg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 28 Feb 2025 03:00:14 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 51S30APX29557318
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 28 Feb 2025 03:00:10 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 247712004D;
- Fri, 28 Feb 2025 03:00:10 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ADDC520040;
- Fri, 28 Feb 2025 02:59:50 +0000 (GMT)
-Received: from [9.43.106.183] (unknown [9.43.106.183])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 28 Feb 2025 02:59:50 +0000 (GMT)
-Content-Type: multipart/alternative;
- boundary="------------D0K9h9bmFtkI0bqtZIMy0CpB"
-Message-ID: <a4e1e393-4f12-4242-848b-e67a9a55dc0f@linux.ibm.com>
-Date: Fri, 28 Feb 2025 08:29:48 +0530
+ (Exim 4.90_1) (envelope-from
+ <4838dff7.AWMAAGLknwIAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwScy@a3031119.bnc3.mailjet.com>)
+ id 1tnqds-0007ep-UU
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 22:02:24 -0500
+Received: from o0.p27.mailjet.com ([185.189.238.0])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <4838dff7.AWMAAGLknwIAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwScy@a3031119.bnc3.mailjet.com>)
+ id 1tnqdj-0005xO-FC
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 22:02:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; q=dns/txt;
+ d=randomman.co.uk; i=roy.hopkins@randomman.co.uk; s=mailjet; x=1740718930;
+ h=message-id:mime-version:from:from:to:to:subject:subject:date:date:list-unsubscribe-post:list-unsubscribe:
+ cc:feedback-id:in-reply-to:references:x-csa-complaints:x-mj-mid:x-mj-smtpguid:
+ x-report-abuse-to:content-transfer-encoding;
+ bh=GXWbG44eui7Mwpp5Xz2SyJS+nkh+OwE/jSi4x/FzpTE=;
+ b=CTk6i1xogbFtJtgRKi3+ZzUwofBiiCZ2BzRRDCpdURuhOYL1tb8R5vZjr
+ N+W8pa+rzZaUMnbh5g7qoAIYMeMOug4hAqUDmyYx/MfvKxsb+xDAKKi5nZrT
+ iW5wfpysorc8qDe4YpwRMuMH5wrcGCbFT35esH03mZldKV8+f/fmpK6+EGvk
+ +cohR2bnVCJY10ccq5uD1YSqztjLk8D8WBwRXzGNdjofTaPhY8UD08Uy+Vt+
+ m1NanTP7GA7vTUrSseGeglwY34PdJHIDwlv+uwT5WyMhU/GjL4ONZajUPRNl
+ T+RHcItJtI3Eshj5wGshcepGh6UNrihwDmOLqA37kENYw==
+Message-Id: <4838dff7.AWMAAGLknwIAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwScy@mailjet.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/4] hw/ssi/pnv_spi: Replace PnvXferBuffer with Fifo8
- structure
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, clg@kaod.org,
- calebs@linux.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.ibm.com,
- dantan@linux.vnet.ibm.com, milesg@linux.ibm.com, philmd@linaro.org,
- alistair@alistair23.me
-References: <20250103161824.22469-1-chalapathi.v@linux.ibm.com>
- <20250103161824.22469-2-chalapathi.v@linux.ibm.com>
- <D82UFOB22C3K.31271R5VWD0LU@gmail.com>
-Content-Language: en-US
-From: Chalapathi V <chalapathi.v@linux.ibm.com>
-In-Reply-To: <D82UFOB22C3K.31271R5VWD0LU@gmail.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: NX1s6N_rVGkzlurfu0M6DuQPzHg5EnBK
-X-Proofpoint-GUID: PsG0i4Q_97nPf7Vo-f8afdVIun9t_5f_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-27_08,2025-02-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015
- adultscore=0 mlxlogscore=999 spamscore=0 phishscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 priorityscore=1501 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502280020
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+From: Roy Hopkins <roy.hopkins@randomman.co.uk>
+To: qemu-devel@nongnu.org
+Subject: [PATCH v7 16/16] sev: Provide sev_features flags from IGVM VMSA to
+ KVM_SEV_INIT2
+Date: Thu, 27 Feb 2025 15:35:07 +0000
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>, Paolo Bonzini
+ <pbonzini@redhat.com>, "Daniel P . Berrange" <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Sergio Lopez <slp@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Alistair Francis
+ <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>, David Hildenbrand
+ <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Tom Lendacky
+ <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, Ani Sinha
+ <anisinha@redhat.com>, Joerg Roedel <jroedel@suse.com>
+Feedback-Id: 42.3031119.2785883:MJ
+In-Reply-To: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+X-CSA-Complaints: csa-complaints@eco.de
+X-MJ-Mid: AWMAAGLknwIAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwScywoT4CCt1Rk68DE_xSddeOgAqgls
+X-MJ-SMTPGUID: 75f866be-6ecf-4e0c-9cb7-ee383e6371e1
+X-REPORT-ABUSE-TO: Message sent by Mailjet please report to
+ abuse@mailjet.com with a copy of the message
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=185.189.238.0;
+ envelope-from=4838dff7.AWMAAGLknwIAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwScy@a3031119.bnc3.mailjet.com;
+ helo=o0.p27.mailjet.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,1216 +88,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------D0K9h9bmFtkI0bqtZIMy0CpB
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+IGVM files can contain an initial VMSA that should be applied to each
+vcpu as part of the initial guest state. The sev_features flags are
+provided as part of the VMSA structure. However, KVM only allows
+sev_features to be set during initialization and not as the guest is
+being prepared for launch.
 
-Hello Nick,
+This patch queries KVM for the supported set of sev_features flags and
+processes the IGVM file during kvm_init to determine any sev_features
+flags set in the IGVM file. These are then provided in the call to
+KVM_SEV_INIT2 to ensure the guest state matches that specified in the
+IGVM file.
 
-Thank You for reviewing this series.
+This does cause the IGVM file to be processed twice. Firstly to extract
+the sev_features then secondly to actually configure the guest. However,
+the first pass is largely ignored meaning the overhead is minimal.
 
-On 27-02-2025 07:09, Nicholas Piggin wrote:
-> On Sat Jan 4, 2025 at 2:18 AM AEST, Chalapathi V wrote:
->> In PnvXferBuffer dynamically allocating and freeing is a
->> process overhead. Hence used an existing Fifo8 buffer with
->> capacity of 16 bytes.
->>
->> Signed-off-by: Chalapathi V<chalapathi.v@linux.ibm.com>
->> ---
->>   include/hw/ssi/pnv_spi.h |   3 +
->>   hw/ssi/pnv_spi.c         | 237 +++++++++++++--------------------------
->>   2 files changed, 81 insertions(+), 159 deletions(-)
->>
->> diff --git a/include/hw/ssi/pnv_spi.h b/include/hw/ssi/pnv_spi.h
->> index 8815f67d45..9878d9a25f 100644
->> --- a/include/hw/ssi/pnv_spi.h
->> +++ b/include/hw/ssi/pnv_spi.h
->> @@ -23,6 +23,7 @@
->>   
->>   #include "hw/ssi/ssi.h"
->>   #include "hw/sysbus.h"
->> +#include "qemu/fifo8.h"
->>   
->>   #define TYPE_PNV_SPI "pnv-spi"
->>   OBJECT_DECLARE_SIMPLE_TYPE(PnvSpi, PNV_SPI)
->> @@ -37,6 +38,8 @@ typedef struct PnvSpi {
->>       SSIBus *ssi_bus;
->>       qemu_irq *cs_line;
->>       MemoryRegion    xscom_spic_regs;
->> +    Fifo8 tx_fifo;
->> +    Fifo8 rx_fifo;
->>       /* SPI object number */
->>       uint32_t        spic_num;
->>       uint8_t         transfer_len;
->> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
->> index 15e25bd1be..63d298980d 100644
->> --- a/hw/ssi/pnv_spi.c
->> +++ b/hw/ssi/pnv_spi.c
->> @@ -19,6 +19,7 @@
->>   
->>   #define PNV_SPI_OPCODE_LO_NIBBLE(x) (x & 0x0F)
->>   #define PNV_SPI_MASKED_OPCODE(x) (x & 0xF0)
->> +#define PNV_SPI_FIFO_SIZE 16
->>   
->>   /*
->>    * Macro from include/hw/ppc/fdt.h
->> @@ -35,48 +36,14 @@
->>           }                                                          \
->>       } while (0)
->>   
->> -/* PnvXferBuffer */
->> -typedef struct PnvXferBuffer {
->> -
->> -    uint32_t    len;
->> -    uint8_t    *data;
->> -
->> -} PnvXferBuffer;
->> -
->> -/* pnv_spi_xfer_buffer_methods */
->> -static PnvXferBuffer *pnv_spi_xfer_buffer_new(void)
->> -{
->> -    PnvXferBuffer *payload = g_malloc0(sizeof(*payload));
->> -
->> -    return payload;
->> -}
->> -
->> -static void pnv_spi_xfer_buffer_free(PnvXferBuffer *payload)
->> -{
->> -    g_free(payload->data);
->> -    g_free(payload);
->> -}
->> -
->> -static uint8_t *pnv_spi_xfer_buffer_write_ptr(PnvXferBuffer *payload,
->> -                uint32_t offset, uint32_t length)
->> -{
->> -    if (payload->len < (offset + length)) {
->> -        payload->len = offset + length;
->> -        payload->data = g_realloc(payload->data, payload->len);
->> -    }
->> -    return &payload->data[offset];
->> -}
->> -
->>   static bool does_rdr_match(PnvSpi *s)
->>   {
->>       /*
->>        * According to spec, the mask bits that are 0 are compared and the
->>        * bits that are 1 are ignored.
->>        */
->> -    uint16_t rdr_match_mask = GETFIELD(SPI_MM_RDR_MATCH_MASK,
->> -                                        s->regs[SPI_MM_REG]);
->> -    uint16_t rdr_match_val = GETFIELD(SPI_MM_RDR_MATCH_VAL,
->> -                                        s->regs[SPI_MM_REG]);
->> +    uint16_t rdr_match_mask = GETFIELD(SPI_MM_RDR_MATCH_MASK, s->regs[SPI_MM_REG]);
->> +    uint16_t rdr_match_val = GETFIELD(SPI_MM_RDR_MATCH_VAL, s->regs[SPI_MM_REG]);
->>   
->>       if ((~rdr_match_mask & rdr_match_val) == ((~rdr_match_mask) &
->>               GETFIELD(PPC_BITMASK(48, 63), s->regs[SPI_RCV_DATA_REG]))) {
-> Usually try to avoid unrelated / cleanup in the same patch that acually
-> changes things. In this case it's quite minor but it helps with review
-> and rebasing to avoid.
->
-> If it's on the same line or very close line to your change, or
-> occasional ones I don't mind so much, but you have quite a few
-> more further down the patch.
-Sorry about that!. Should I create a new patch in v6 or keep it as is 
-for now?
-
-Going forward will create new patches for distinct changes.
-
-Thank You.
-
->> @@ -107,8 +74,8 @@ static uint8_t get_from_offset(PnvSpi *s, uint8_t offset)
->>       return byte;
->>   }
->>   
->> -static uint8_t read_from_frame(PnvSpi *s, uint8_t *read_buf, uint8_t nr_bytes,
->> -                uint8_t ecc_count, uint8_t shift_in_count)
->> +static uint8_t read_from_frame(PnvSpi *s, uint8_t nr_bytes, uint8_t ecc_count,
->> +                uint8_t shift_in_count)
->>   {
->>       uint8_t byte;
->>       int count = 0;
->> @@ -118,20 +85,23 @@ static uint8_t read_from_frame(PnvSpi *s, uint8_t *read_buf, uint8_t nr_bytes,
->>           if ((ecc_count != 0) &&
->>               (shift_in_count == (PNV_SPI_REG_SIZE + ecc_count))) {
->>               shift_in_count = 0;
->> -        } else {
->> -            byte = read_buf[count];
->> +        } else if (!fifo8_is_empty(&s->rx_fifo)) {
->> +            byte = fifo8_pop(&s->rx_fifo);
->>               trace_pnv_spi_shift_rx(byte, count);
->>               s->regs[SPI_RCV_DATA_REG] = (s->regs[SPI_RCV_DATA_REG] << 8) | byte;
->> +        } else {
->> +            qemu_log_mask(LOG_GUEST_ERROR, "pnv_spi: Reading empty RX_FIFO\n");
->>           }
->>           count++;
->>       } /* end of while */
->>       return shift_in_count;
->>   }
->>   
->> -static void spi_response(PnvSpi *s, int bits, PnvXferBuffer *rsp_payload)
->> +static void spi_response(PnvSpi *s)
->>   {
->>       uint8_t ecc_count;
->>       uint8_t shift_in_count;
->> +    uint32_t rx_len;
->>   
->>       /*
->>        * Processing here must handle:
->> @@ -144,13 +114,14 @@ static void spi_response(PnvSpi *s, int bits, PnvXferBuffer *rsp_payload)
->>        * First check that the response payload is the exact same
->>        * number of bytes as the request payload was
->>        */
->> -    if (rsp_payload->len != (s->N1_bytes + s->N2_bytes)) {
->> +    rx_len = fifo8_num_used(&s->rx_fifo);
->> +    if (rx_len != (s->N1_bytes + s->N2_bytes)) {
->>           qemu_log_mask(LOG_GUEST_ERROR, "Invalid response payload size in "
->>                          "bytes, expected %d, got %d\n",
->> -                       (s->N1_bytes + s->N2_bytes), rsp_payload->len);
->> +                       (s->N1_bytes + s->N2_bytes), rx_len);
->>       } else {
->>           uint8_t ecc_control;
->> -        trace_pnv_spi_rx_received(rsp_payload->len);
->> +        trace_pnv_spi_rx_received(rx_len);
->>           trace_pnv_spi_log_Ncounts(s->N1_bits, s->N1_bytes, s->N1_tx,
->>                           s->N1_rx, s->N2_bits, s->N2_bytes, s->N2_tx, s->N2_rx);
->>           /*
->> @@ -175,15 +146,12 @@ static void spi_response(PnvSpi *s, int bits, PnvXferBuffer *rsp_payload)
->>           /* Handle the N1 portion of the frame first */
->>           if (s->N1_rx != 0) {
->>               trace_pnv_spi_rx_read_N1frame();
->> -            shift_in_count = read_from_frame(s, &rsp_payload->data[0],
->> -                            s->N1_bytes, ecc_count, shift_in_count);
->> +            shift_in_count = read_from_frame(s, s->N1_bytes, ecc_count, shift_in_count);
->>           }
->>           /* Handle the N2 portion of the frame */
->>           if (s->N2_rx != 0) {
->>               trace_pnv_spi_rx_read_N2frame();
->> -            shift_in_count = read_from_frame(s,
->> -                            &rsp_payload->data[s->N1_bytes], s->N2_bytes,
->> -                            ecc_count, shift_in_count);
->> +            shift_in_count = read_from_frame(s, s->N2_bytes, ecc_count, shift_in_count);
->>           }
->>           if ((s->N1_rx + s->N2_rx) > 0) {
->>               /*
->> @@ -210,36 +178,38 @@ static void spi_response(PnvSpi *s, int bits, PnvXferBuffer *rsp_payload)
->>       } /* end of else */
->>   } /* end of spi_response() */
->>   
->> -static void transfer(PnvSpi *s, PnvXferBuffer *payload)
->> +static void transfer(PnvSpi *s)
->>   {
->> -    uint32_t tx;
->> -    uint32_t rx;
->> -    PnvXferBuffer *rsp_payload = NULL;
->> +    uint32_t tx, rx, payload_len;
->> +    uint8_t rx_byte;
->>   
->> -    rsp_payload = pnv_spi_xfer_buffer_new();
->> -    if (!rsp_payload) {
->> -        return;
->> -    }
->> -    for (int offset = 0; offset < payload->len; offset += s->transfer_len) {
->> +    payload_len = fifo8_num_used(&s->tx_fifo);
->> +    for (int offset = 0; offset < payload_len; offset += s->transfer_len) {
->>           tx = 0;
->>           for (int i = 0; i < s->transfer_len; i++) {
->> -            if ((offset + i) >= payload->len) {
->> +            if ((offset + i) >= payload_len) {
->>                   tx <<= 8;
->> +            } else if (!fifo8_is_empty(&s->tx_fifo)) {
->> +                tx = (tx << 8) | fifo8_pop(&s->tx_fifo);
->>               } else {
->> -                tx = (tx << 8) | payload->data[offset + i];
->> +                qemu_log_mask(LOG_GUEST_ERROR, "pnv_spi: TX_FIFO underflow\n");
->>               }
->>           }
->>           rx = ssi_transfer(s->ssi_bus, tx);
->>           for (int i = 0; i < s->transfer_len; i++) {
->> -            if ((offset + i) >= payload->len) {
->> +            if (((offset + i) >= payload_len) || fifo8_is_full(&s->rx_fifo)) {
->>                   break;
->>               }
->> -            *(pnv_spi_xfer_buffer_write_ptr(rsp_payload, rsp_payload->len, 1)) =
->> -                    (rx >> (8 * (s->transfer_len - 1) - i * 8)) & 0xFF;
->> +            rx_byte = (rx >> (8 * (s->transfer_len - 1) - i * 8)) & 0xFF;
->> +            if (!fifo8_is_full(&s->rx_fifo)) {
->> +                fifo8_push(&s->rx_fifo, rx_byte);
->> +            }
->>           }
->>       }
->> -    spi_response(s, s->N1_bits, rsp_payload);
->> -    pnv_spi_xfer_buffer_free(rsp_payload);
->> +    spi_response(s);
->> +    /* Reset fifo for next frame */
->> +    fifo8_reset(&s->tx_fifo);
->> +    fifo8_reset(&s->rx_fifo);
->>   }
->>   
->>   static inline uint8_t get_seq_index(PnvSpi *s)
->> @@ -310,13 +280,11 @@ static void calculate_N1(PnvSpi *s, uint8_t opcode)
->>                * If Forced Implicit mode and count control doesn't
->>                * indicate transmit then reset the tx count to 0
->>                */
->> -            if (GETFIELD(SPI_CTR_CFG_N1_CTRL_B2,
->> -                                    s->regs[SPI_CTR_CFG_REG]) == 0) {
->> +            if (GETFIELD(SPI_CTR_CFG_N1_CTRL_B2, s->regs[SPI_CTR_CFG_REG]) == 0) {
->>                   s->N1_tx = 0;
->>               }
->>               /* If rx count control for N1 is set, load the rx value */
->> -            if (GETFIELD(SPI_CTR_CFG_N1_CTRL_B3,
->> -                                    s->regs[SPI_CTR_CFG_REG]) == 1) {
->> +            if (GETFIELD(SPI_CTR_CFG_N1_CTRL_B3, s->regs[SPI_CTR_CFG_REG]) == 1) {
->>                   s->N1_rx = s->N1_bytes;
->>               }
->>           }
->> @@ -328,8 +296,7 @@ static void calculate_N1(PnvSpi *s, uint8_t opcode)
->>        * cap the size at a max of 64 bits or 72 bits and set the sequencer FSM
->>        * error bit.
->>        */
->> -    uint8_t ecc_control = GETFIELD(SPI_CLK_CFG_ECC_CTRL,
->> -                                   s->regs[SPI_CLK_CFG_REG]);
->> +    uint8_t ecc_control = GETFIELD(SPI_CLK_CFG_ECC_CTRL, s->regs[SPI_CLK_CFG_REG]);
->>       if (ecc_control == 0 || ecc_control == 2) {
->>           if (s->N1_bytes > (PNV_SPI_REG_SIZE + 1)) {
->>               qemu_log_mask(LOG_GUEST_ERROR, "Unsupported N1 shift size when "
->> @@ -340,8 +307,7 @@ static void calculate_N1(PnvSpi *s, uint8_t opcode)
->>           }
->>       } else if (s->N1_bytes > PNV_SPI_REG_SIZE) {
->>           qemu_log_mask(LOG_GUEST_ERROR, "Unsupported N1 shift size, "
->> -                      "bytes = 0x%x, bits = 0x%x\n",
->> -                      s->N1_bytes, s->N1_bits);
->> +                      "bytes = 0x%x, bits = 0x%x\n", s->N1_bytes, s->N1_bits);
->>           s->N1_bytes = PNV_SPI_REG_SIZE;
->>           s->N1_bits = s->N1_bytes * 8;
->>       }
->> @@ -350,19 +316,10 @@ static void calculate_N1(PnvSpi *s, uint8_t opcode)
->>   /*
->>    * Shift_N1 operation handler method
->>    */
->> -static bool operation_shiftn1(PnvSpi *s, uint8_t opcode,
->> -                       PnvXferBuffer **payload, bool send_n1_alone)
->> +static bool operation_shiftn1(PnvSpi *s, uint8_t opcode, bool send_n1_alone)
->>   {
->>       uint8_t n1_count;
->>       bool stop = false;
->> -
->> -    /*
->> -     * If there isn't a current payload left over from a stopped sequence
->> -     * create a new one.
->> -     */
->> -    if (*payload == NULL) {
->> -        *payload = pnv_spi_xfer_buffer_new();
->> -    }
->>       /*
->>        * Use a combination of N1 counters to build the N1 portion of the
->>        * transmit payload.
->> @@ -413,9 +370,10 @@ static bool operation_shiftn1(PnvSpi *s, uint8_t opcode,
->>                    */
->>                   uint8_t n1_byte = 0x00;
->>                   n1_byte = get_from_offset(s, n1_count);
->> -                trace_pnv_spi_tx_append("n1_byte", n1_byte, n1_count);
->> -                *(pnv_spi_xfer_buffer_write_ptr(*payload, (*payload)->len, 1)) =
->> -                        n1_byte;
->> +                if (!fifo8_is_full(&s->tx_fifo)) {
->> +                    trace_pnv_spi_tx_append("n1_byte", n1_byte, n1_count);
->> +                    fifo8_push(&s->tx_fifo, n1_byte);
->> +                }
->>               } else {
->>                   /*
->>                    * We hit a shift_n1 opcode TX but the TDR is empty, tell the
->> @@ -436,16 +394,14 @@ static bool operation_shiftn1(PnvSpi *s, uint8_t opcode,
->>                * - we are receiving and the RDR is empty so we allow the operation
->>                *   to proceed.
->>                */
->> -            if ((s->N1_rx != 0) && (GETFIELD(SPI_STS_RDR_FULL,
->> -                                           s->status) == 1)) {
->> +            if ((s->N1_rx != 0) && (GETFIELD(SPI_STS_RDR_FULL, s->status) == 1)) {
->>                   trace_pnv_spi_sequencer_stop_requested("shift N1"
->>                                   "set for receive but RDR is full");
->>                   stop = true;
->>                   break;
->> -            } else {
->> +            } else if (!fifo8_is_full(&s->tx_fifo)) {
->>                   trace_pnv_spi_tx_append_FF("n1_byte");
->> -                *(pnv_spi_xfer_buffer_write_ptr(*payload, (*payload)->len, 1))
->> -                        = 0xff;
->> +                fifo8_push(&s->tx_fifo, 0xff);
->>               }
-> Is there any problem or overrun that needs to be logged if the
-> fifo is full in the above two places?
-Will add a error log upon hitting the overflow. Thank You.
->>           }
->>           n1_count++;
->> @@ -486,15 +442,13 @@ static bool operation_shiftn1(PnvSpi *s, uint8_t opcode,
->>        */
->>       if (send_n1_alone && !stop) {
->>           /* We have a TX and a full TDR or an RX and an empty RDR */
->> -        trace_pnv_spi_tx_request("Shifting N1 frame", (*payload)->len);
->> -        transfer(s, *payload);
->> +        trace_pnv_spi_tx_request("Shifting N1 frame", fifo8_num_used(&s->tx_fifo));
->> +        transfer(s);
->>           /* The N1 frame shift is complete so reset the N1 counters */
->>           s->N2_bits = 0;
->>           s->N2_bytes = 0;
->>           s->N2_tx = 0;
->>           s->N2_rx = 0;
->> -        pnv_spi_xfer_buffer_free(*payload);
->> -        *payload = NULL;
->>       }
->>       return stop;
->>   } /* end of operation_shiftn1() */
->> @@ -552,13 +506,11 @@ static void calculate_N2(PnvSpi *s, uint8_t opcode)
->>                * If Forced Implicit mode and count control doesn't
->>                * indicate a receive then reset the rx count to 0
->>                */
->> -            if (GETFIELD(SPI_CTR_CFG_N2_CTRL_B3,
->> -                                    s->regs[SPI_CTR_CFG_REG]) == 0) {
->> +            if (GETFIELD(SPI_CTR_CFG_N2_CTRL_B3, s->regs[SPI_CTR_CFG_REG]) == 0) {
->>                   s->N2_rx = 0;
->>               }
->>               /* If tx count control for N2 is set, load the tx value */
->> -            if (GETFIELD(SPI_CTR_CFG_N2_CTRL_B2,
->> -                                    s->regs[SPI_CTR_CFG_REG]) == 1) {
->> +            if (GETFIELD(SPI_CTR_CFG_N2_CTRL_B2, s->regs[SPI_CTR_CFG_REG]) == 1) {
->>                   s->N2_tx = s->N2_bytes;
->>               }
->>           }
->> @@ -571,8 +523,7 @@ static void calculate_N2(PnvSpi *s, uint8_t opcode)
->>        * cap the size at a max of 64 bits or 72 bits and set the sequencer FSM
->>        * error bit.
->>        */
->> -    uint8_t ecc_control = GETFIELD(SPI_CLK_CFG_ECC_CTRL,
->> -                    s->regs[SPI_CLK_CFG_REG]);
->> +    uint8_t ecc_control = GETFIELD(SPI_CLK_CFG_ECC_CTRL, s->regs[SPI_CLK_CFG_REG]);
->>       if (ecc_control == 0 || ecc_control == 2) {
->>           if (s->N2_bytes > (PNV_SPI_REG_SIZE + 1)) {
->>               /* Unsupported N2 shift size when ECC enabled */
->> @@ -590,19 +541,10 @@ static void calculate_N2(PnvSpi *s, uint8_t opcode)
->>    * Shift_N2 operation handler method
->>    */
->>   
->> -static bool operation_shiftn2(PnvSpi *s, uint8_t opcode,
->> -                       PnvXferBuffer **payload)
->> +static bool operation_shiftn2(PnvSpi *s, uint8_t opcode)
->>   {
->>       uint8_t n2_count;
->>       bool stop = false;
->> -
->> -    /*
->> -     * If there isn't a current payload left over from a stopped sequence
->> -     * create a new one.
->> -     */
->> -    if (*payload == NULL) {
->> -        *payload = pnv_spi_xfer_buffer_new();
->> -    }
->>       /*
->>        * Use a combination of N2 counters to build the N2 portion of the
->>        * transmit payload.
->> @@ -629,44 +571,41 @@ static bool operation_shiftn2(PnvSpi *s, uint8_t opcode,
->>            * code continue will end up building the payload twice in the same
->>            * buffer since RDR full causes a sequence stop and restart.
->>            */
->> -        if ((s->N2_rx != 0) &&
->> -            (GETFIELD(SPI_STS_RDR_FULL, s->status) == 1)) {
->> +        if ((s->N2_rx != 0) && (GETFIELD(SPI_STS_RDR_FULL, s->status) == 1)) {
->>               trace_pnv_spi_sequencer_stop_requested("shift N2 set"
->>                               "for receive but RDR is full");
->>               stop = true;
->>               break;
->>           }
->> -        if ((s->N2_tx != 0) && ((s->N1_tx + n2_count) <
->> -                                PNV_SPI_REG_SIZE)) {
->> +        if ((s->N2_tx != 0) && ((s->N1_tx + n2_count) < PNV_SPI_REG_SIZE)) {
->>               /* Always append data for the N2 segment if it is set for TX */
->>               uint8_t n2_byte = 0x00;
->>               n2_byte = get_from_offset(s, (s->N1_tx + n2_count));
->> -            trace_pnv_spi_tx_append("n2_byte", n2_byte, (s->N1_tx + n2_count));
->> -            *(pnv_spi_xfer_buffer_write_ptr(*payload, (*payload)->len, 1))
->> -                    = n2_byte;
->> -        } else {
->> +            if (!fifo8_is_full(&s->tx_fifo)) {
->> +                trace_pnv_spi_tx_append("n2_byte", n2_byte, (s->N1_tx + n2_count));
->> +                fifo8_push(&s->tx_fifo, n2_byte);
->> +            }
->> +        } else if (!fifo8_is_full(&s->tx_fifo)) {
->>               /*
->>                * Regardless of whether or not N2 is set for TX or RX, we need
->>                * the number of bytes in the payload to match the overall length
->>                * of the operation.
->>                */
->>               trace_pnv_spi_tx_append_FF("n2_byte");
->> -            *(pnv_spi_xfer_buffer_write_ptr(*payload, (*payload)->len, 1))
->> -                    = 0xff;
->> +            fifo8_push(&s->tx_fifo, 0xff);
->>           }
->>           n2_count++;
->>       } /* end of while */
->>       if (!stop) {
->>           /* We have a TX and a full TDR or an RX and an empty RDR */
->> -        trace_pnv_spi_tx_request("Shifting N2 frame", (*payload)->len);
->> -        transfer(s, *payload);
->> +        trace_pnv_spi_tx_request("Shifting N2 frame", fifo8_num_used(&s->tx_fifo));
->> +        transfer(s);
->>           /*
->>            * If we are doing an N2 TX and the TDR is full we need to clear the
->>            * TDR_full status. Do this here instead of up in the loop above so we
->>            * don't log the message in every loop iteration.
->>            */
->> -        if ((s->N2_tx != 0) &&
->> -            (GETFIELD(SPI_STS_TDR_FULL, s->status) == 1)) {
->> +        if ((s->N2_tx != 0) && (GETFIELD(SPI_STS_TDR_FULL, s->status) == 1)) {
->>               s->status = SETFIELD(SPI_STS_TDR_FULL, s->status, 0);
->>           }
->>           /*
->> @@ -682,8 +621,6 @@ static bool operation_shiftn2(PnvSpi *s, uint8_t opcode,
->>           s->N1_bytes = 0;
->>           s->N1_tx = 0;
->>           s->N1_rx = 0;
->> -        pnv_spi_xfer_buffer_free(*payload);
->> -        *payload = NULL;
->>       }
->>       return stop;
->>   } /*  end of operation_shiftn2()*/
->> @@ -701,19 +638,6 @@ static void operation_sequencer(PnvSpi *s)
->>       uint8_t opcode = 0;
->>       uint8_t masked_opcode = 0;
->>   
->> -    /*
->> -     * PnvXferBuffer for containing the payload of the SPI frame.
->> -     * This is a static because there are cases where a sequence has to stop
->> -     * and wait for the target application to unload the RDR.  If this occurs
->> -     * during a sequence where N1 is not sent alone and instead combined with
->> -     * N2 since the N1 tx length + the N2 tx length is less than the size of
->> -     * the TDR.
->> -     */
->> -    static PnvXferBuffer *payload;
->> -
->> -    if (payload == NULL) {
->> -        payload = pnv_spi_xfer_buffer_new();
->> -    }
->>       /*
->>        * Clear the sequencer FSM error bit - general_SPI_status[3]
->>        * before starting a sequence.
->> @@ -775,10 +699,8 @@ static void operation_sequencer(PnvSpi *s)
->>                   s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_DONE);
->>               } else if (s->responder_select != 1) {
->>                   qemu_log_mask(LOG_GUEST_ERROR, "Slave selection other than 1 "
->> -                              "not supported, select = 0x%x\n",
->> -                               s->responder_select);
->> -                trace_pnv_spi_sequencer_stop_requested("invalid "
->> -                                "responder select");
->> +                              "not supported, select = 0x%x\n", s->responder_select);
->> +                trace_pnv_spi_sequencer_stop_requested("invalid responder select");
->>                   s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_IDLE);
->>                   stop = true;
->>               } else {
->> @@ -840,9 +762,8 @@ static void operation_sequencer(PnvSpi *s)
->>                                   == SEQ_OP_SHIFT_N2) {
->>                       send_n1_alone = false;
->>                   }
->> -                s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status,
->> -                                FSM_SHIFT_N1);
->> -                stop = operation_shiftn1(s, opcode, &payload, send_n1_alone);
->> +                s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_SHIFT_N1);
->> +                stop = operation_shiftn1(s, opcode, send_n1_alone);
->>                   if (stop) {
->>                       /*
->>                        *  The operation code says to stop, this can occur if:
->> @@ -858,7 +779,7 @@ static void operation_sequencer(PnvSpi *s)
->>                       if (GETFIELD(SPI_STS_TDR_UNDERRUN, s->status)) {
->>                           s->shift_n1_done = true;
->>                           s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status,
->> -                                                  FSM_SHIFT_N2);
->> +                                        FSM_SHIFT_N2);
->>                           s->status = SETFIELD(SPI_STS_SEQ_INDEX, s->status,
->>                                           (get_seq_index(s) + 1));
->>                       } else {
->> @@ -866,8 +787,7 @@ static void operation_sequencer(PnvSpi *s)
->>                            * This is case (1) or (2) so the sequencer needs to
->>                            * wait and NOT go to the next sequence yet.
->>                            */
->> -                        s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status,
->> -                                        FSM_WAIT);
->> +                        s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_WAIT);
->>                       }
->>                   } else {
->>                       /* Ok to move on to the next index */
->> @@ -890,21 +810,18 @@ static void operation_sequencer(PnvSpi *s)
->>                    * error bit 3 (general_SPI_status[3]) in status reg.
->>                    */
->>                   s->status = SETFIELD(SPI_STS_GEN_STATUS_B3, s->status, 1);
->> -                trace_pnv_spi_sequencer_stop_requested("shift_n2 "
->> -                                    "w/no shift_n1 done");
->> +                trace_pnv_spi_sequencer_stop_requested("shift_n2 w/no shift_n1 done");
->>                   stop = true;
->>               } else {
->>                   /* Ok to do a Shift_N2 */
->> -                s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status,
->> -                                FSM_SHIFT_N2);
->> -                stop = operation_shiftn2(s, opcode, &payload);
->> +                s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_SHIFT_N2);
->> +                stop = operation_shiftn2(s, opcode);
->>                   /*
->>                    * If the operation code says to stop set the shifter state to
->>                    * wait and stop
->>                    */
->>                   if (stop) {
->> -                    s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status,
->> -                                    FSM_WAIT);
->> +                    s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_WAIT);
->>                   } else {
->>                       /* Ok to move on to the next index */
->>                       next_sequencer_fsm(s);
->> @@ -988,8 +905,7 @@ static void operation_sequencer(PnvSpi *s)
->>           case SEQ_OP_BRANCH_IFNEQ_INC_2:
->>               s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_EXECUTE);
->>               trace_pnv_spi_sequencer_op("BRANCH_IFNEQ_INC_2", get_seq_index(s));
->> -            uint8_t condition2 = GETFIELD(SPI_CTR_CFG_CMP2,
->> -                              s->regs[SPI_CTR_CFG_REG]);
->> +            uint8_t condition2 = GETFIELD(SPI_CTR_CFG_CMP2, s->regs[SPI_CTR_CFG_REG]);
->>               /*
->>                * The spec says the loop should execute count compare + 1 times.
->>                * However we learned from engineering that we really only loop
->> @@ -1209,6 +1125,9 @@ static void pnv_spi_realize(DeviceState *dev, Error **errp)
->>       s->cs_line = g_new0(qemu_irq, 1);
->>       qdev_init_gpio_out_named(DEVICE(s), s->cs_line, "cs", 1);
->>   
->> +    fifo8_create(&s->tx_fifo, PNV_SPI_FIFO_SIZE);
->> +    fifo8_create(&s->rx_fifo, PNV_SPI_FIFO_SIZE);
->> +
->>       /* spi scoms */
->>       pnv_xscom_region_init(&s->xscom_spic_regs, OBJECT(s), &pnv_spi_xscom_ops,
->>                             s, "xscom-spi", PNV10_XSCOM_PIB_SPIC_SIZE);
-> Aside from those small nits, it looks like a good cleanup and
-> improvement with more error logging.
->
-> Thanks,
-> Nick
---------------D0K9h9bmFtkI0bqtZIMy0CpB
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Hello Nick,</p>
-    <p>Thank You for reviewing this series.  <br>
-    </p>
-    <div class="moz-cite-prefix">On 27-02-2025 07:09, Nicholas Piggin
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:D82UFOB22C3K.31271R5VWD0LU@gmail.com">
-      <pre wrap="" class="moz-quote-pre">On Sat Jan 4, 2025 at 2:18 AM AEST, Chalapathi V wrote:
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">In PnvXferBuffer dynamically allocating and freeing is a
-process overhead. Hence used an existing Fifo8 buffer with
-capacity of 16 bytes.
-
-Signed-off-by: Chalapathi V <a class="moz-txt-link-rfc2396E" href="mailto:chalapathi.v@linux.ibm.com">&lt;chalapathi.v@linux.ibm.com&gt;</a>
+Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- include/hw/ssi/pnv_spi.h |   3 +
- hw/ssi/pnv_spi.c         | 237 +++++++++++++--------------------------
- 2 files changed, 81 insertions(+), 159 deletions(-)
+ target/i386/sev.c | 160 ++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 141 insertions(+), 19 deletions(-)
 
-diff --git a/include/hw/ssi/pnv_spi.h b/include/hw/ssi/pnv_spi.h
-index 8815f67d45..9878d9a25f 100644
---- a/include/hw/ssi/pnv_spi.h
-+++ b/include/hw/ssi/pnv_spi.h
-@@ -23,6 +23,7 @@
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index fa9b4bcad6..ef25e64b14 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -117,6 +117,8 @@ struct SevCommonState {
+     uint32_t cbitpos;
+     uint32_t reduced_phys_bits;
+     bool kernel_hashes;
++    uint64_t sev_features;
++    uint64_t supported_sev_features;
  
- #include "hw/ssi/ssi.h"
- #include "hw/sysbus.h"
-+#include "qemu/fifo8.h"
- 
- #define TYPE_PNV_SPI "pnv-spi"
- OBJECT_DECLARE_SIMPLE_TYPE(PnvSpi, PNV_SPI)
-@@ -37,6 +38,8 @@ typedef struct PnvSpi {
-     SSIBus *ssi_bus;
-     qemu_irq *cs_line;
-     MemoryRegion    xscom_spic_regs;
-+    Fifo8 tx_fifo;
-+    Fifo8 rx_fifo;
-     /* SPI object number */
-     uint32_t        spic_num;
-     uint8_t         transfer_len;
-diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-index 15e25bd1be..63d298980d 100644
---- a/hw/ssi/pnv_spi.c
-+++ b/hw/ssi/pnv_spi.c
-@@ -19,6 +19,7 @@
- 
- #define PNV_SPI_OPCODE_LO_NIBBLE(x) (x &amp; 0x0F)
- #define PNV_SPI_MASKED_OPCODE(x) (x &amp; 0xF0)
-+#define PNV_SPI_FIFO_SIZE 16
- 
- /*
-  * Macro from include/hw/ppc/fdt.h
-@@ -35,48 +36,14 @@
-         }                                                          \
-     } while (0)
- 
--/* PnvXferBuffer */
--typedef struct PnvXferBuffer {
--
--    uint32_t    len;
--    uint8_t    *data;
--
--} PnvXferBuffer;
--
--/* pnv_spi_xfer_buffer_methods */
--static PnvXferBuffer *pnv_spi_xfer_buffer_new(void)
--{
--    PnvXferBuffer *payload = g_malloc0(sizeof(*payload));
--
--    return payload;
--}
--
--static void pnv_spi_xfer_buffer_free(PnvXferBuffer *payload)
--{
--    g_free(payload-&gt;data);
--    g_free(payload);
--}
--
--static uint8_t *pnv_spi_xfer_buffer_write_ptr(PnvXferBuffer *payload,
--                uint32_t offset, uint32_t length)
--{
--    if (payload-&gt;len &lt; (offset + length)) {
--        payload-&gt;len = offset + length;
--        payload-&gt;data = g_realloc(payload-&gt;data, payload-&gt;len);
--    }
--    return &amp;payload-&gt;data[offset];
--}
--
- static bool does_rdr_match(PnvSpi *s)
- {
-     /*
-      * According to spec, the mask bits that are 0 are compared and the
-      * bits that are 1 are ignored.
-      */
--    uint16_t rdr_match_mask = GETFIELD(SPI_MM_RDR_MATCH_MASK,
--                                        s-&gt;regs[SPI_MM_REG]);
--    uint16_t rdr_match_val = GETFIELD(SPI_MM_RDR_MATCH_VAL,
--                                        s-&gt;regs[SPI_MM_REG]);
-+    uint16_t rdr_match_mask = GETFIELD(SPI_MM_RDR_MATCH_MASK, s-&gt;regs[SPI_MM_REG]);
-+    uint16_t rdr_match_val = GETFIELD(SPI_MM_RDR_MATCH_VAL, s-&gt;regs[SPI_MM_REG]);
- 
-     if ((~rdr_match_mask &amp; rdr_match_val) == ((~rdr_match_mask) &amp;
-             GETFIELD(PPC_BITMASK(48, 63), s-&gt;regs[SPI_RCV_DATA_REG]))) {
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Usually try to avoid unrelated / cleanup in the same patch that acually
-changes things. In this case it's quite minor but it helps with review
-and rebasing to avoid.
-
-If it's on the same line or very close line to your change, or
-occasional ones I don't mind so much, but you have quite a few
-more further down the patch.
-</pre>
-    </blockquote>
-    Sorry about that!. Should I create a new patch in v6 or keep it as
-    is for now?<br>
-    <p>Going forward will create new patches for distinct changes.</p>
-    <p>Thank You.<br>
-    </p>
-    <blockquote type="cite"
-      cite="mid:D82UFOB22C3K.31271R5VWD0LU@gmail.com">
-      <pre wrap="" class="moz-quote-pre">
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">@@ -107,8 +74,8 @@ static uint8_t get_from_offset(PnvSpi *s, uint8_t offset)
-     return byte;
+     /* runtime state */
+     uint8_t api_major;
+@@ -492,7 +494,40 @@ static void sev_apply_cpu_context(CPUState *cpu)
+     }
  }
  
--static uint8_t read_from_frame(PnvSpi *s, uint8_t *read_buf, uint8_t nr_bytes,
--                uint8_t ecc_count, uint8_t shift_in_count)
-+static uint8_t read_from_frame(PnvSpi *s, uint8_t nr_bytes, uint8_t ecc_count,
-+                uint8_t shift_in_count)
- {
-     uint8_t byte;
-     int count = 0;
-@@ -118,20 +85,23 @@ static uint8_t read_from_frame(PnvSpi *s, uint8_t *read_buf, uint8_t nr_bytes,
-         if ((ecc_count != 0) &amp;&amp;
-             (shift_in_count == (PNV_SPI_REG_SIZE + ecc_count))) {
-             shift_in_count = 0;
--        } else {
--            byte = read_buf[count];
-+        } else if (!fifo8_is_empty(&amp;s-&gt;rx_fifo)) {
-+            byte = fifo8_pop(&amp;s-&gt;rx_fifo);
-             trace_pnv_spi_shift_rx(byte, count);
-             s-&gt;regs[SPI_RCV_DATA_REG] = (s-&gt;regs[SPI_RCV_DATA_REG] &lt;&lt; 8) | byte;
-+        } else {
-+            qemu_log_mask(LOG_GUEST_ERROR, "pnv_spi: Reading empty RX_FIFO\n");
-         }
-         count++;
-     } /* end of while */
-     return shift_in_count;
- }
- 
--static void spi_response(PnvSpi *s, int bits, PnvXferBuffer *rsp_payload)
-+static void spi_response(PnvSpi *s)
- {
-     uint8_t ecc_count;
-     uint8_t shift_in_count;
-+    uint32_t rx_len;
- 
-     /*
-      * Processing here must handle:
-@@ -144,13 +114,14 @@ static void spi_response(PnvSpi *s, int bits, PnvXferBuffer *rsp_payload)
-      * First check that the response payload is the exact same
-      * number of bytes as the request payload was
-      */
--    if (rsp_payload-&gt;len != (s-&gt;N1_bytes + s-&gt;N2_bytes)) {
-+    rx_len = fifo8_num_used(&amp;s-&gt;rx_fifo);
-+    if (rx_len != (s-&gt;N1_bytes + s-&gt;N2_bytes)) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Invalid response payload size in "
-                        "bytes, expected %d, got %d\n",
--                       (s-&gt;N1_bytes + s-&gt;N2_bytes), rsp_payload-&gt;len);
-+                       (s-&gt;N1_bytes + s-&gt;N2_bytes), rx_len);
-     } else {
-         uint8_t ecc_control;
--        trace_pnv_spi_rx_received(rsp_payload-&gt;len);
-+        trace_pnv_spi_rx_received(rx_len);
-         trace_pnv_spi_log_Ncounts(s-&gt;N1_bits, s-&gt;N1_bytes, s-&gt;N1_tx,
-                         s-&gt;N1_rx, s-&gt;N2_bits, s-&gt;N2_bytes, s-&gt;N2_tx, s-&gt;N2_rx);
-         /*
-@@ -175,15 +146,12 @@ static void spi_response(PnvSpi *s, int bits, PnvXferBuffer *rsp_payload)
-         /* Handle the N1 portion of the frame first */
-         if (s-&gt;N1_rx != 0) {
-             trace_pnv_spi_rx_read_N1frame();
--            shift_in_count = read_from_frame(s, &amp;rsp_payload-&gt;data[0],
--                            s-&gt;N1_bytes, ecc_count, shift_in_count);
-+            shift_in_count = read_from_frame(s, s-&gt;N1_bytes, ecc_count, shift_in_count);
-         }
-         /* Handle the N2 portion of the frame */
-         if (s-&gt;N2_rx != 0) {
-             trace_pnv_spi_rx_read_N2frame();
--            shift_in_count = read_from_frame(s,
--                            &amp;rsp_payload-&gt;data[s-&gt;N1_bytes], s-&gt;N2_bytes,
--                            ecc_count, shift_in_count);
-+            shift_in_count = read_from_frame(s, s-&gt;N2_bytes, ecc_count, shift_in_count);
-         }
-         if ((s-&gt;N1_rx + s-&gt;N2_rx) &gt; 0) {
-             /*
-@@ -210,36 +178,38 @@ static void spi_response(PnvSpi *s, int bits, PnvXferBuffer *rsp_payload)
-     } /* end of else */
- } /* end of spi_response() */
- 
--static void transfer(PnvSpi *s, PnvXferBuffer *payload)
-+static void transfer(PnvSpi *s)
- {
--    uint32_t tx;
--    uint32_t rx;
--    PnvXferBuffer *rsp_payload = NULL;
-+    uint32_t tx, rx, payload_len;
-+    uint8_t rx_byte;
- 
--    rsp_payload = pnv_spi_xfer_buffer_new();
--    if (!rsp_payload) {
--        return;
--    }
--    for (int offset = 0; offset &lt; payload-&gt;len; offset += s-&gt;transfer_len) {
-+    payload_len = fifo8_num_used(&amp;s-&gt;tx_fifo);
-+    for (int offset = 0; offset &lt; payload_len; offset += s-&gt;transfer_len) {
-         tx = 0;
-         for (int i = 0; i &lt; s-&gt;transfer_len; i++) {
--            if ((offset + i) &gt;= payload-&gt;len) {
-+            if ((offset + i) &gt;= payload_len) {
-                 tx &lt;&lt;= 8;
-+            } else if (!fifo8_is_empty(&amp;s-&gt;tx_fifo)) {
-+                tx = (tx &lt;&lt; 8) | fifo8_pop(&amp;s-&gt;tx_fifo);
-             } else {
--                tx = (tx &lt;&lt; 8) | payload-&gt;data[offset + i];
-+                qemu_log_mask(LOG_GUEST_ERROR, "pnv_spi: TX_FIFO underflow\n");
-             }
-         }
-         rx = ssi_transfer(s-&gt;ssi_bus, tx);
-         for (int i = 0; i &lt; s-&gt;transfer_len; i++) {
--            if ((offset + i) &gt;= payload-&gt;len) {
-+            if (((offset + i) &gt;= payload_len) || fifo8_is_full(&amp;s-&gt;rx_fifo)) {
-                 break;
-             }
--            *(pnv_spi_xfer_buffer_write_ptr(rsp_payload, rsp_payload-&gt;len, 1)) =
--                    (rx &gt;&gt; (8 * (s-&gt;transfer_len - 1) - i * 8)) &amp; 0xFF;
-+            rx_byte = (rx &gt;&gt; (8 * (s-&gt;transfer_len - 1) - i * 8)) &amp; 0xFF;
-+            if (!fifo8_is_full(&amp;s-&gt;rx_fifo)) {
-+                fifo8_push(&amp;s-&gt;rx_fifo, rx_byte);
-+            }
-         }
-     }
--    spi_response(s, s-&gt;N1_bits, rsp_payload);
--    pnv_spi_xfer_buffer_free(rsp_payload);
-+    spi_response(s);
-+    /* Reset fifo for next frame */
-+    fifo8_reset(&amp;s-&gt;tx_fifo);
-+    fifo8_reset(&amp;s-&gt;rx_fifo);
- }
- 
- static inline uint8_t get_seq_index(PnvSpi *s)
-@@ -310,13 +280,11 @@ static void calculate_N1(PnvSpi *s, uint8_t opcode)
-              * If Forced Implicit mode and count control doesn't
-              * indicate transmit then reset the tx count to 0
-              */
--            if (GETFIELD(SPI_CTR_CFG_N1_CTRL_B2,
--                                    s-&gt;regs[SPI_CTR_CFG_REG]) == 0) {
-+            if (GETFIELD(SPI_CTR_CFG_N1_CTRL_B2, s-&gt;regs[SPI_CTR_CFG_REG]) == 0) {
-                 s-&gt;N1_tx = 0;
-             }
-             /* If rx count control for N1 is set, load the rx value */
--            if (GETFIELD(SPI_CTR_CFG_N1_CTRL_B3,
--                                    s-&gt;regs[SPI_CTR_CFG_REG]) == 1) {
-+            if (GETFIELD(SPI_CTR_CFG_N1_CTRL_B3, s-&gt;regs[SPI_CTR_CFG_REG]) == 1) {
-                 s-&gt;N1_rx = s-&gt;N1_bytes;
-             }
-         }
-@@ -328,8 +296,7 @@ static void calculate_N1(PnvSpi *s, uint8_t opcode)
-      * cap the size at a max of 64 bits or 72 bits and set the sequencer FSM
-      * error bit.
-      */
--    uint8_t ecc_control = GETFIELD(SPI_CLK_CFG_ECC_CTRL,
--                                   s-&gt;regs[SPI_CLK_CFG_REG]);
-+    uint8_t ecc_control = GETFIELD(SPI_CLK_CFG_ECC_CTRL, s-&gt;regs[SPI_CLK_CFG_REG]);
-     if (ecc_control == 0 || ecc_control == 2) {
-         if (s-&gt;N1_bytes &gt; (PNV_SPI_REG_SIZE + 1)) {
-             qemu_log_mask(LOG_GUEST_ERROR, "Unsupported N1 shift size when "
-@@ -340,8 +307,7 @@ static void calculate_N1(PnvSpi *s, uint8_t opcode)
-         }
-     } else if (s-&gt;N1_bytes &gt; PNV_SPI_REG_SIZE) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Unsupported N1 shift size, "
--                      "bytes = 0x%x, bits = 0x%x\n",
--                      s-&gt;N1_bytes, s-&gt;N1_bits);
-+                      "bytes = 0x%x, bits = 0x%x\n", s-&gt;N1_bytes, s-&gt;N1_bits);
-         s-&gt;N1_bytes = PNV_SPI_REG_SIZE;
-         s-&gt;N1_bits = s-&gt;N1_bytes * 8;
-     }
-@@ -350,19 +316,10 @@ static void calculate_N1(PnvSpi *s, uint8_t opcode)
- /*
-  * Shift_N1 operation handler method
-  */
--static bool operation_shiftn1(PnvSpi *s, uint8_t opcode,
--                       PnvXferBuffer **payload, bool send_n1_alone)
-+static bool operation_shiftn1(PnvSpi *s, uint8_t opcode, bool send_n1_alone)
- {
-     uint8_t n1_count;
-     bool stop = false;
--
--    /*
--     * If there isn't a current payload left over from a stopped sequence
--     * create a new one.
--     */
--    if (*payload == NULL) {
--        *payload = pnv_spi_xfer_buffer_new();
--    }
-     /*
-      * Use a combination of N1 counters to build the N1 portion of the
-      * transmit payload.
-@@ -413,9 +370,10 @@ static bool operation_shiftn1(PnvSpi *s, uint8_t opcode,
-                  */
-                 uint8_t n1_byte = 0x00;
-                 n1_byte = get_from_offset(s, n1_count);
--                trace_pnv_spi_tx_append("n1_byte", n1_byte, n1_count);
--                *(pnv_spi_xfer_buffer_write_ptr(*payload, (*payload)-&gt;len, 1)) =
--                        n1_byte;
-+                if (!fifo8_is_full(&amp;s-&gt;tx_fifo)) {
-+                    trace_pnv_spi_tx_append("n1_byte", n1_byte, n1_count);
-+                    fifo8_push(&amp;s-&gt;tx_fifo, n1_byte);
-+                }
-             } else {
-                 /*
-                  * We hit a shift_n1 opcode TX but the TDR is empty, tell the
-@@ -436,16 +394,14 @@ static bool operation_shiftn1(PnvSpi *s, uint8_t opcode,
-              * - we are receiving and the RDR is empty so we allow the operation
-              *   to proceed.
-              */
--            if ((s-&gt;N1_rx != 0) &amp;&amp; (GETFIELD(SPI_STS_RDR_FULL,
--                                           s-&gt;status) == 1)) {
-+            if ((s-&gt;N1_rx != 0) &amp;&amp; (GETFIELD(SPI_STS_RDR_FULL, s-&gt;status) == 1)) {
-                 trace_pnv_spi_sequencer_stop_requested("shift N1"
-                                 "set for receive but RDR is full");
-                 stop = true;
-                 break;
--            } else {
-+            } else if (!fifo8_is_full(&amp;s-&gt;tx_fifo)) {
-                 trace_pnv_spi_tx_append_FF("n1_byte");
--                *(pnv_spi_xfer_buffer_write_ptr(*payload, (*payload)-&gt;len, 1))
--                        = 0xff;
-+                fifo8_push(&amp;s-&gt;tx_fifo, 0xff);
-             }
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Is there any problem or overrun that needs to be logged if the
-fifo is full in the above two places?
-</pre>
-    </blockquote>
-    Will add a error log upon hitting the overflow. Thank You.<span
-    style="white-space: pre-wrap">
-</span>
-    <blockquote type="cite"
-      cite="mid:D82UFOB22C3K.31271R5VWD0LU@gmail.com">
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">         }
-         n1_count++;
-@@ -486,15 +442,13 @@ static bool operation_shiftn1(PnvSpi *s, uint8_t opcode,
-      */
-     if (send_n1_alone &amp;&amp; !stop) {
-         /* We have a TX and a full TDR or an RX and an empty RDR */
--        trace_pnv_spi_tx_request("Shifting N1 frame", (*payload)-&gt;len);
--        transfer(s, *payload);
-+        trace_pnv_spi_tx_request("Shifting N1 frame", fifo8_num_used(&amp;s-&gt;tx_fifo));
-+        transfer(s);
-         /* The N1 frame shift is complete so reset the N1 counters */
-         s-&gt;N2_bits = 0;
-         s-&gt;N2_bytes = 0;
-         s-&gt;N2_tx = 0;
-         s-&gt;N2_rx = 0;
--        pnv_spi_xfer_buffer_free(*payload);
--        *payload = NULL;
-     }
-     return stop;
- } /* end of operation_shiftn1() */
-@@ -552,13 +506,11 @@ static void calculate_N2(PnvSpi *s, uint8_t opcode)
-              * If Forced Implicit mode and count control doesn't
-              * indicate a receive then reset the rx count to 0
-              */
--            if (GETFIELD(SPI_CTR_CFG_N2_CTRL_B3,
--                                    s-&gt;regs[SPI_CTR_CFG_REG]) == 0) {
-+            if (GETFIELD(SPI_CTR_CFG_N2_CTRL_B3, s-&gt;regs[SPI_CTR_CFG_REG]) == 0) {
-                 s-&gt;N2_rx = 0;
-             }
-             /* If tx count control for N2 is set, load the tx value */
--            if (GETFIELD(SPI_CTR_CFG_N2_CTRL_B2,
--                                    s-&gt;regs[SPI_CTR_CFG_REG]) == 1) {
-+            if (GETFIELD(SPI_CTR_CFG_N2_CTRL_B2, s-&gt;regs[SPI_CTR_CFG_REG]) == 1) {
-                 s-&gt;N2_tx = s-&gt;N2_bytes;
-             }
-         }
-@@ -571,8 +523,7 @@ static void calculate_N2(PnvSpi *s, uint8_t opcode)
-      * cap the size at a max of 64 bits or 72 bits and set the sequencer FSM
-      * error bit.
-      */
--    uint8_t ecc_control = GETFIELD(SPI_CLK_CFG_ECC_CTRL,
--                    s-&gt;regs[SPI_CLK_CFG_REG]);
-+    uint8_t ecc_control = GETFIELD(SPI_CLK_CFG_ECC_CTRL, s-&gt;regs[SPI_CLK_CFG_REG]);
-     if (ecc_control == 0 || ecc_control == 2) {
-         if (s-&gt;N2_bytes &gt; (PNV_SPI_REG_SIZE + 1)) {
-             /* Unsupported N2 shift size when ECC enabled */
-@@ -590,19 +541,10 @@ static void calculate_N2(PnvSpi *s, uint8_t opcode)
-  * Shift_N2 operation handler method
-  */
- 
--static bool operation_shiftn2(PnvSpi *s, uint8_t opcode,
--                       PnvXferBuffer **payload)
-+static bool operation_shiftn2(PnvSpi *s, uint8_t opcode)
- {
-     uint8_t n2_count;
-     bool stop = false;
--
--    /*
--     * If there isn't a current payload left over from a stopped sequence
--     * create a new one.
--     */
--    if (*payload == NULL) {
--        *payload = pnv_spi_xfer_buffer_new();
--    }
-     /*
-      * Use a combination of N2 counters to build the N2 portion of the
-      * transmit payload.
-@@ -629,44 +571,41 @@ static bool operation_shiftn2(PnvSpi *s, uint8_t opcode,
-          * code continue will end up building the payload twice in the same
-          * buffer since RDR full causes a sequence stop and restart.
-          */
--        if ((s-&gt;N2_rx != 0) &amp;&amp;
--            (GETFIELD(SPI_STS_RDR_FULL, s-&gt;status) == 1)) {
-+        if ((s-&gt;N2_rx != 0) &amp;&amp; (GETFIELD(SPI_STS_RDR_FULL, s-&gt;status) == 1)) {
-             trace_pnv_spi_sequencer_stop_requested("shift N2 set"
-                             "for receive but RDR is full");
-             stop = true;
-             break;
-         }
--        if ((s-&gt;N2_tx != 0) &amp;&amp; ((s-&gt;N1_tx + n2_count) &lt;
--                                PNV_SPI_REG_SIZE)) {
-+        if ((s-&gt;N2_tx != 0) &amp;&amp; ((s-&gt;N1_tx + n2_count) &lt; PNV_SPI_REG_SIZE)) {
-             /* Always append data for the N2 segment if it is set for TX */
-             uint8_t n2_byte = 0x00;
-             n2_byte = get_from_offset(s, (s-&gt;N1_tx + n2_count));
--            trace_pnv_spi_tx_append("n2_byte", n2_byte, (s-&gt;N1_tx + n2_count));
--            *(pnv_spi_xfer_buffer_write_ptr(*payload, (*payload)-&gt;len, 1))
--                    = n2_byte;
--        } else {
-+            if (!fifo8_is_full(&amp;s-&gt;tx_fifo)) {
-+                trace_pnv_spi_tx_append("n2_byte", n2_byte, (s-&gt;N1_tx + n2_count));
-+                fifo8_push(&amp;s-&gt;tx_fifo, n2_byte);
-+            }
-+        } else if (!fifo8_is_full(&amp;s-&gt;tx_fifo)) {
-             /*
-              * Regardless of whether or not N2 is set for TX or RX, we need
-              * the number of bytes in the payload to match the overall length
-              * of the operation.
-              */
-             trace_pnv_spi_tx_append_FF("n2_byte");
--            *(pnv_spi_xfer_buffer_write_ptr(*payload, (*payload)-&gt;len, 1))
--                    = 0xff;
-+            fifo8_push(&amp;s-&gt;tx_fifo, 0xff);
-         }
-         n2_count++;
-     } /* end of while */
-     if (!stop) {
-         /* We have a TX and a full TDR or an RX and an empty RDR */
--        trace_pnv_spi_tx_request("Shifting N2 frame", (*payload)-&gt;len);
--        transfer(s, *payload);
-+        trace_pnv_spi_tx_request("Shifting N2 frame", fifo8_num_used(&amp;s-&gt;tx_fifo));
-+        transfer(s);
-         /*
-          * If we are doing an N2 TX and the TDR is full we need to clear the
-          * TDR_full status. Do this here instead of up in the loop above so we
-          * don't log the message in every loop iteration.
-          */
--        if ((s-&gt;N2_tx != 0) &amp;&amp;
--            (GETFIELD(SPI_STS_TDR_FULL, s-&gt;status) == 1)) {
-+        if ((s-&gt;N2_tx != 0) &amp;&amp; (GETFIELD(SPI_STS_TDR_FULL, s-&gt;status) == 1)) {
-             s-&gt;status = SETFIELD(SPI_STS_TDR_FULL, s-&gt;status, 0);
-         }
-         /*
-@@ -682,8 +621,6 @@ static bool operation_shiftn2(PnvSpi *s, uint8_t opcode,
-         s-&gt;N1_bytes = 0;
-         s-&gt;N1_tx = 0;
-         s-&gt;N1_rx = 0;
--        pnv_spi_xfer_buffer_free(*payload);
--        *payload = NULL;
-     }
-     return stop;
- } /*  end of operation_shiftn2()*/
-@@ -701,19 +638,6 @@ static void operation_sequencer(PnvSpi *s)
-     uint8_t opcode = 0;
-     uint8_t masked_opcode = 0;
- 
--    /*
--     * PnvXferBuffer for containing the payload of the SPI frame.
--     * This is a static because there are cases where a sequence has to stop
--     * and wait for the target application to unload the RDR.  If this occurs
--     * during a sequence where N1 is not sent alone and instead combined with
--     * N2 since the N1 tx length + the N2 tx length is less than the size of
--     * the TDR.
--     */
--    static PnvXferBuffer *payload;
--
--    if (payload == NULL) {
--        payload = pnv_spi_xfer_buffer_new();
--    }
-     /*
-      * Clear the sequencer FSM error bit - general_SPI_status[3]
-      * before starting a sequence.
-@@ -775,10 +699,8 @@ static void operation_sequencer(PnvSpi *s)
-                 s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status, FSM_DONE);
-             } else if (s-&gt;responder_select != 1) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "Slave selection other than 1 "
--                              "not supported, select = 0x%x\n",
--                               s-&gt;responder_select);
--                trace_pnv_spi_sequencer_stop_requested("invalid "
--                                "responder select");
-+                              "not supported, select = 0x%x\n", s-&gt;responder_select);
-+                trace_pnv_spi_sequencer_stop_requested("invalid responder select");
-                 s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status, FSM_IDLE);
-                 stop = true;
-             } else {
-@@ -840,9 +762,8 @@ static void operation_sequencer(PnvSpi *s)
-                                 == SEQ_OP_SHIFT_N2) {
-                     send_n1_alone = false;
-                 }
--                s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status,
--                                FSM_SHIFT_N1);
--                stop = operation_shiftn1(s, opcode, &amp;payload, send_n1_alone);
-+                s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status, FSM_SHIFT_N1);
-+                stop = operation_shiftn1(s, opcode, send_n1_alone);
-                 if (stop) {
-                     /*
-                      *  The operation code says to stop, this can occur if:
-@@ -858,7 +779,7 @@ static void operation_sequencer(PnvSpi *s)
-                     if (GETFIELD(SPI_STS_TDR_UNDERRUN, s-&gt;status)) {
-                         s-&gt;shift_n1_done = true;
-                         s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status,
--                                                  FSM_SHIFT_N2);
-+                                        FSM_SHIFT_N2);
-                         s-&gt;status = SETFIELD(SPI_STS_SEQ_INDEX, s-&gt;status,
-                                         (get_seq_index(s) + 1));
-                     } else {
-@@ -866,8 +787,7 @@ static void operation_sequencer(PnvSpi *s)
-                          * This is case (1) or (2) so the sequencer needs to
-                          * wait and NOT go to the next sequence yet.
-                          */
--                        s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status,
--                                        FSM_WAIT);
-+                        s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status, FSM_WAIT);
-                     }
-                 } else {
-                     /* Ok to move on to the next index */
-@@ -890,21 +810,18 @@ static void operation_sequencer(PnvSpi *s)
-                  * error bit 3 (general_SPI_status[3]) in status reg.
-                  */
-                 s-&gt;status = SETFIELD(SPI_STS_GEN_STATUS_B3, s-&gt;status, 1);
--                trace_pnv_spi_sequencer_stop_requested("shift_n2 "
--                                    "w/no shift_n1 done");
-+                trace_pnv_spi_sequencer_stop_requested("shift_n2 w/no shift_n1 done");
-                 stop = true;
-             } else {
-                 /* Ok to do a Shift_N2 */
--                s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status,
--                                FSM_SHIFT_N2);
--                stop = operation_shiftn2(s, opcode, &amp;payload);
-+                s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status, FSM_SHIFT_N2);
-+                stop = operation_shiftn2(s, opcode);
-                 /*
-                  * If the operation code says to stop set the shifter state to
-                  * wait and stop
-                  */
-                 if (stop) {
--                    s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status,
--                                    FSM_WAIT);
-+                    s-&gt;status = SETFIELD(SPI_STS_SHIFTER_FSM, s-&gt;status, FSM_WAIT);
-                 } else {
-                     /* Ok to move on to the next index */
-                     next_sequencer_fsm(s);
-@@ -988,8 +905,7 @@ static void operation_sequencer(PnvSpi *s)
-         case SEQ_OP_BRANCH_IFNEQ_INC_2:
-             s-&gt;status = SETFIELD(SPI_STS_SEQ_FSM, s-&gt;status, SEQ_STATE_EXECUTE);
-             trace_pnv_spi_sequencer_op("BRANCH_IFNEQ_INC_2", get_seq_index(s));
--            uint8_t condition2 = GETFIELD(SPI_CTR_CFG_CMP2,
--                              s-&gt;regs[SPI_CTR_CFG_REG]);
-+            uint8_t condition2 = GETFIELD(SPI_CTR_CFG_CMP2, s-&gt;regs[SPI_CTR_CFG_REG]);
-             /*
-              * The spec says the loop should execute count compare + 1 times.
-              * However we learned from engineering that we really only loop
-@@ -1209,6 +1125,9 @@ static void pnv_spi_realize(DeviceState *dev, Error **errp)
-     s-&gt;cs_line = g_new0(qemu_irq, 1);
-     qdev_init_gpio_out_named(DEVICE(s), s-&gt;cs_line, "cs", 1);
- 
-+    fifo8_create(&amp;s-&gt;tx_fifo, PNV_SPI_FIFO_SIZE);
-+    fifo8_create(&amp;s-&gt;rx_fifo, PNV_SPI_FIFO_SIZE);
+-static int check_vmsa_supported(hwaddr gpa, const struct sev_es_save_area *vmsa,
++static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
++                              Error **errp)
++{
++    /*
++     * Ensure SEV_FEATURES is configured for correct SEV hardware and that
++     * the requested features are supported. If SEV-SNP is enabled then
++     * that feature must be enabled, otherwise it must be cleared.
++     */
++    if (sev_snp_enabled() && !(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
++        error_setg(
++            errp,
++            "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
++            __func__);
++        return -1;
++    } else if (!sev_snp_enabled() &&
++               (sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
++        error_setg(
++            errp,
++            "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
++            __func__);
++        return -1;
++    }
++    if (sev_features & ~sev_common->supported_sev_features) {
++        error_setg(errp,
++                   "%s: VMSA contains unsupported sev_features: %lX, "
++                   "supported features: %lX",
++                   __func__, sev_features, sev_common->supported_sev_features);
++        return -1;
++    }
++    return 0;
++}
 +
-     /* spi scoms */
-     pnv_xscom_region_init(&amp;s-&gt;xscom_spic_regs, OBJECT(s), &amp;pnv_spi_xscom_ops,
-                           s, "xscom-spi", PNV10_XSCOM_PIB_SPIC_SIZE);
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Aside from those small nits, it looks like a good cleanup and
-improvement with more error logging.
-
-Thanks,
-Nick
-</pre>
-    </blockquote>
-  </body>
-</html>
-
---------------D0K9h9bmFtkI0bqtZIMy0CpB--
++static int check_vmsa_supported(SevCommonState *sev_common, hwaddr gpa,
++                                const struct sev_es_save_area *vmsa,
+                                 Error **errp)
+ {
+     struct sev_es_save_area vmsa_check;
+@@ -558,24 +593,10 @@ static int check_vmsa_supported(hwaddr gpa, const struct sev_es_save_area *vmsa,
+     vmsa_check.x87_fcw = 0;
+     vmsa_check.mxcsr = 0;
+ 
+-    if (sev_snp_enabled()) {
+-        if (vmsa_check.sev_features != SVM_SEV_FEAT_SNP_ACTIVE) {
+-            error_setg(errp,
+-                       "%s: sev_features in the VMSA contains an unsupported "
+-                       "value. For SEV-SNP, sev_features must be set to %x.",
+-                       __func__, SVM_SEV_FEAT_SNP_ACTIVE);
+-            return -1;
+-        }
+-        vmsa_check.sev_features = 0;
+-    } else {
+-        if (vmsa_check.sev_features != 0) {
+-            error_setg(errp,
+-                       "%s: sev_features in the VMSA contains an unsupported "
+-                       "value. For SEV-ES and SEV, sev_features must be "
+-                       "set to 0.", __func__);
+-            return -1;
+-        }
++    if (check_sev_features(sev_common, vmsa_check.sev_features, errp) < 0) {
++        return -1;
+     }
++    vmsa_check.sev_features = 0;
+ 
+     if (!buffer_is_zero(&vmsa_check, sizeof(vmsa_check))) {
+         error_setg(errp,
+@@ -1729,6 +1750,39 @@ static int sev_snp_kvm_type(X86ConfidentialGuest *cg)
+     return KVM_X86_SNP_VM;
+ }
+ 
++static int sev_init_supported_features(ConfidentialGuestSupport *cgs,
++                                       SevCommonState *sev_common, Error **errp)
++{
++    X86ConfidentialGuestClass *x86_klass =
++                               X86_CONFIDENTIAL_GUEST_GET_CLASS(cgs);
++    /*
++     * Older kernels do not support query or setting of sev_features. In this
++     * case the set of supported features must be zero to match the settings
++     * in the kernel.
++     */
++    if (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common)) ==
++        KVM_X86_DEFAULT_VM) {
++        sev_common->supported_sev_features = 0;
++        return 0;
++    }
++
++    /* Query KVM for the supported set of sev_features */
++    struct kvm_device_attr attr = {
++        .group = KVM_X86_GRP_SEV,
++        .attr = KVM_X86_SEV_VMSA_FEATURES,
++        .addr = (unsigned long)&sev_common->supported_sev_features,
++    };
++    if (kvm_ioctl(kvm_state, KVM_GET_DEVICE_ATTR, &attr) < 0) {
++        error_setg(errp, "%s: failed to query supported sev_features",
++                   __func__);
++        return -1;
++    }
++    if (sev_snp_enabled()) {
++        sev_common->supported_sev_features |= SVM_SEV_FEAT_SNP_ACTIVE;
++    }
++    return 0;
++}
++
+ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ {
+     char *devname;
+@@ -1809,6 +1863,10 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+         }
+     }
+ 
++    if (sev_init_supported_features(cgs, sev_common, errp) < 0) {
++        return -1;
++    }
++
+     trace_kvm_sev_init();
+     switch (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common))) {
+     case KVM_X86_DEFAULT_VM:
+@@ -1820,6 +1878,39 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+     case KVM_X86_SEV_ES_VM:
+     case KVM_X86_SNP_VM: {
+         struct kvm_sev_init args = { 0 };
++        MachineState *machine = MACHINE(qdev_get_machine());
++        X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
++
++        /*
++         * If configuration is provided via an IGVM file then the IGVM file
++         * might contain configuration of the initial vcpu context. For SEV
++         * the vcpu context includes the sev_features which should be applied
++         * to the vcpu.
++         *
++         * KVM does not synchronize sev_features from CPU state. Instead it
++         * requires sev_features to be provided as part of this initialization
++         * call which is subsequently automatically applied to the VMSA of
++         * each vcpu.
++         *
++         * The IGVM file is normally processed after initialization. Therefore
++         * we need to pre-process it here to extract sev_features in order to
++         * provide it to KVM_SEV_INIT2. Each cgs_* function that is called by
++         * the IGVM processor detects this pre-process by observing the state
++         * as SEV_STATE_UNINIT.
++         */
++        if (x86machine->igvm) {
++            if (IGVM_CFG_GET_CLASS(x86machine->igvm)
++                    ->process(x86machine->igvm, machine->cgs, errp) == -1) {
++                return -1;
++            }
++            /*
++             * KVM maintains a bitmask of allowed sev_features. This does not
++             * include SVM_SEV_FEAT_SNP_ACTIVE which is set accordingly by KVM
++             * itself. Therefore we need to clear this flag.
++             */
++            args.vmsa_features = sev_common->sev_features &
++                                 ~SVM_SEV_FEAT_SNP_ACTIVE;
++        }
+ 
+         ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
+         break;
+@@ -2424,6 +2515,24 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
+     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+     SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(sev_common);
+ 
++    if (sev_common->state == SEV_STATE_UNINIT) {
++        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
++        if ((cpu_index == 0) && (memory_type == CGS_PAGE_TYPE_VMSA)) {
++            const struct sev_es_save_area *sa =
++                (const struct sev_es_save_area *)ptr;
++            if (len < sizeof(*sa)) {
++                error_setg(errp, "%s: invalid VMSA length encountered",
++                           __func__);
++                return -1;
++            }
++            if (check_sev_features(sev_common, sa->sev_features, errp) < 0) {
++                return -1;
++            }
++            sev_common->sev_features = sa->sev_features;
++        }
++        return 0;
++    }
++
+     if (!sev_enabled()) {
+         error_setg(errp, "%s: attempt to configure guest memory, but SEV "
+                      "is not enabled", __func__);
+@@ -2443,7 +2552,8 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
+                        __func__);
+             return -1;
+         }
+-        if (check_vmsa_supported(gpa, (const struct sev_es_save_area *)ptr,
++        if (check_vmsa_supported(sev_common, gpa,
++                                 (const struct sev_es_save_area *)ptr,
+                                  errp) < 0) {
+             return -1;
+         }
+@@ -2500,6 +2610,12 @@ static int cgs_get_mem_map_entry(int index,
+     struct e820_entry *table;
+     int num_entries;
+ 
++    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
++    if (sev_common->state == SEV_STATE_UNINIT) {
++        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
++        return 1;
++    }
++
+     num_entries = e820_get_table(&table);
+     if ((index < 0) || (index >= num_entries)) {
+         return 1;
+@@ -2531,6 +2647,12 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
+                                 uint32_t policy_data1_size, void *policy_data2,
+                                 uint32_t policy_data2_size, Error **errp)
+ {
++    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
++    if (sev_common->state == SEV_STATE_UNINIT) {
++        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
++        return 0;
++    }
++
+     if (policy_type != GUEST_POLICY_SEV) {
+         error_setg(errp, "%s: Invalid guest policy type provided for SEV: %d",
+         __func__, policy_type);
+-- 
+2.43.0
 
 
