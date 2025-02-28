@@ -4,57 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4477C19776
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 05:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B18FC19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 06:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tntKr-0004OO-3B; Fri, 28 Feb 2025 00:54:57 -0500
+	id 1tntQ0-0000jL-Sq; Fri, 28 Feb 2025 01:00:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1tntKn-0004K6-Im; Fri, 28 Feb 2025 00:54:53 -0500
-Received: from pi.codeconstruct.com.au ([203.29.241.158]
- helo=codeconstruct.com.au)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1tntKk-00016A-49; Fri, 28 Feb 2025 00:54:53 -0500
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tntPz-0000gJ-3T; Fri, 28 Feb 2025 01:00:15 -0500
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tntPx-0001kh-EO; Fri, 28 Feb 2025 01:00:14 -0500
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-5209f22ecfeso782795e0c.1; 
+ Thu, 27 Feb 2025 22:00:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=codeconstruct.com.au; s=2022a; t=1740722081;
- bh=xpduKm2nv+BgraP+yHh2zp7BXHZ0LEneJBstQyufPjs=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=FeO6H/qD4zPUZSUEslLVj3qb1hZKYk1Y2sfbzyWhqca28lBNx4ti9rhv2AOfMryEv
- rqVa4dLyTCYjKb+s9cjrk0QuR5wQiHqER7NAfeAB4LP+9Bpn27LpQlAxb8Hko1eBi2
- W9NqH0Rtl8PdZINwLHLIldjEAI9a+lmsgaMge/IwHCFMCGScG9RHNwUaMD15PQz6i6
- r8WBKNPfKSVK/Zy2NAv5gniEwqhHCpfB/sB7VYTNyHt3ihxQvlerB8XqhsBlFbfibQ
- n+Is8AhWQAzfZbs0I8k6hsjpsHrwOJDAXLOC2/aH8bIgTjj2ulauAFiq8UsKTy3O7O
- PjwrnVj2k6CvQ==
-Received: from [192.168.68.112] (58-7-146-131.dyn.iinet.net.au [58.7.146.131])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 23FEF77DAB;
- Fri, 28 Feb 2025 13:54:39 +0800 (AWST)
-Message-ID: <b300117fa0fc207eadccb663cdb043663ca79025.camel@codeconstruct.com.au>
-Subject: Re: [PATCH] hw/net: ftgmac100: copy eth_hdr for alignment
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Patrick Venture <venture@google.com>, peter.maydell@linaro.org, 
- clg@kaod.org, steven_lee@aspeedtech.com, leetroy@gmail.com, 
- jamin_lin@aspeedtech.com, joel@jms.id.au
-Cc: jasowang@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Date: Fri, 28 Feb 2025 16:24:38 +1030
-In-Reply-To: <20250227154253.1653236-1-venture@google.com>
-References: <20250227154253.1653236-1-venture@google.com>
+ d=gmail.com; s=20230601; t=1740722411; x=1741327211; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M2cyC8PDX8j+2ueryZfmhOSHFyPq7pyYoq3HJ2Xy2pY=;
+ b=FdCEGc0xTVdQOQ0TMYiY9RIiaHXRDSBiiai2jLR5rFebKAFe4LCbMLqBQh4oDjS6oe
+ btALPBQUxbTeYjC2p56D+T/D39+OFJ/UoJK7gqmyuNxw1YaB4s9DsJgMaZLc/f+VGpo5
+ JxVWMgHMuhZ6Svn4ZSR0m2KF7Ykx+A5ZvyGVKL/s751vTUQzztjk7oVPXtBCTtbWbfbd
+ LCq8tzMCPnL5jcDM0JBlCp+3Byn0QK2qp/taZ2jQt28cPlaGr82mq4Oe/M378LN30aXu
+ X1ZpfyBc3mJlP75gojzfashIjHQwHypouw3lfqtsntYHJkxL8coxTt5aPHPQipP+7uga
+ ospA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740722411; x=1741327211;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=M2cyC8PDX8j+2ueryZfmhOSHFyPq7pyYoq3HJ2Xy2pY=;
+ b=L35NTpKqmjfXtMpKArmSTcfuUk9RgFMqooPieqDq/A4nG3ROoTifd23MAU/k6ar+nc
+ CQy3NAWbhuz7ZK7o+zkCOCcVQalRXGtndqaF37ajdq+JedwPogT0Lg8RZ5znaCpNnPAQ
+ +sNo5rdejba3wYP4yYc/EG047gdA0d0QAXySMCyzaoimCXbQQSb/SSLzmYRXrbFIY4X5
+ 8X2SlDTWAvptXSKOWWhSTc1K5LN1NC/vyXFF1fI0yHCiNhwNZFkQCIeGOSw9UckTy+e3
+ KRXfbRMUJMaTL6U+7xCXCYuVQBSfdCbh6ToqkCYie6570ju00fVph1w7J69k1aqb2OLd
+ h01Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrp4Gzn0VeJq8Ca0k4ZbjrONg6uFlB2gjaoml3ELwI4RBOsTFIb3Le95WlT2A2kHWqlWjd+iVb0I5m@nongnu.org
+X-Gm-Message-State: AOJu0YxUYnIoXb7DJAsWO2JN/AR/WgiGdT2GiIRn0HkjU9j34W7vnY4+
+ Zh7MkJYRKKqpzhW2iK8/ToMTx9obWTTnpfTH9R36HkFIPn93Jls1V/o59X0CJJ7gAQi9lYragBq
+ VtKU8INYHZLdELXD3jbNoMVbqS4k=
+X-Gm-Gg: ASbGnctHB8XgtoeTs1tYW+esy62zHun4rtttfg+kc/CvLBHIfT8W+guSbvbAjw08hcv
+ ZUkV8HnoI7b5W+YBTb7HoRJTjiJCYUDebCqzDLbjxF9oxACl/kOQf9dYaXCCFv1t7frz8/wWn7t
+ uA+Xi78YttP98hW27lVfAlCwhxjLIj4UuKuD/t
+X-Google-Smtp-Source: AGHT+IHJtH/zI6a6j6y8aXvV80ZsPaOY7riPuW+myAVvYZf64+Ycd/Opyrrp7FGuBNm+rIVsws9snA52GDzUdrRDanc=
+X-Received: by 2002:a05:6122:3c51:b0:519:fcf2:ef51 with SMTP id
+ 71dfb90a1353d-5235b797b95mr983719e0c.5.1740722411282; Thu, 27 Feb 2025
+ 22:00:11 -0800 (PST)
+MIME-Version: 1.0
+References: <20250122083617.3940240-1-ethan84@andestech.com>
+ <20250122084630.3965707-1-ethan84@andestech.com>
+In-Reply-To: <20250122084630.3965707-1-ethan84@andestech.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 28 Feb 2025 15:59:45 +1000
+X-Gm-Features: AQ5f1JolcWETvuz44cANEudMwh4VzMX-TwnHa_LRGH2f30SZ6XS-9vo7OtkqCLA
+Message-ID: <CAKmqyKMH_aSRRfznFp4fDc4L8RNbMoZfMNUm-GXKpKN5TcH0Fg@mail.gmail.com>
+Subject: Re: [PATCH v10 5/8] hw/misc/riscv_iopmp_txn_info: Add struct for
+ transaction infomation
+To: Ethan Chen <ethan84@andestech.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
-MIME-Version: 1.0
-Received-SPF: pass client-ip=203.29.241.158;
- envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,91 +99,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Patrick,
-
-On Thu, 2025-02-27 at 15:42 +0000, Patrick Venture wrote:
-> eth_hdr requires 2 byte alignment
->=20
-> Signed-off-by: Patrick Venture <venture@google.com>
+On Wed, Jan 22, 2025 at 6:49=E2=80=AFPM Ethan Chen via <qemu-devel@nongnu.o=
+rg> wrote:
+>
+> The entire valid transaction must fit within a single IOPMP entry.
+> However, during IOMMU translation, the transaction size is not
+> available. This structure defines the transaction information required
+> by the IOPMP.
+>
+> Signed-off-by: Ethan Chen <ethan84@andestech.com>
 > ---
-> =C2=A0hw/net/ftgmac100.c | 15 ++++++++++++---
-> =C2=A01 file changed, 12 insertions(+), 3 deletions(-)
->=20
-> diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-> index 1f524d7a01..a33aaa01ee 100644
-> --- a/hw/net/ftgmac100.c
-> +++ b/hw/net/ftgmac100.c
-> @@ -989,12 +989,16 @@ static void ftgmac100_high_write(void *opaque, hwad=
-dr addr,
-> =C2=A0static int ftgmac100_filter(FTGMAC100State *s, const uint8_t *buf, =
-size_t len)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 unsigned mcast_idx;
-> +=C2=A0=C2=A0=C2=A0 struct eth_header eth_hdr =3D {};
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 if (s->maccr & FTGMAC100_MACCR_RX_ALL) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 1;
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 switch (get_eth_packet_type(PKT_GET_ETH_HDR(buf))) {
-> +=C2=A0=C2=A0=C2=A0 memcpy(&eth_hdr, PKT_GET_ETH_HDR(buf),
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (sizeof(eth=
-_hdr) > len) ? len : sizeof(eth_hdr));
+>  include/hw/misc/riscv_iopmp_txn_info.h | 38 ++++++++++++++++++++++++++
+>  1 file changed, 38 insertions(+)
+>  create mode 100644 include/hw/misc/riscv_iopmp_txn_info.h
+>
+> diff --git a/include/hw/misc/riscv_iopmp_txn_info.h b/include/hw/misc/ris=
+cv_iopmp_txn_info.h
+> new file mode 100644
+> index 0000000000..98bd26b68b
+> --- /dev/null
+> +++ b/include/hw/misc/riscv_iopmp_txn_info.h
+> @@ -0,0 +1,38 @@
+> +/*
+> + * QEMU RISC-V IOPMP transaction information
+> + *
+> + * The transaction information structure provides the complete transacti=
+on
+> + * length to the IOPMP device
+> + *
+> + * Copyright (c) 2023-2025 Andes Tech. Corp.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#ifndef RISCV_IOPMP_TXN_INFO_H
+> +#define RISCV_IOPMP_TXN_INFO_H
+> +
+> +typedef struct {
+> +    /* The id of requestor */
+> +    uint32_t rrid:16;
+> +    /* The start address of transaction */
+> +    uint64_t start_addr;
+> +    /* The end address of transaction */
+> +    uint64_t end_addr;
+> +    /* The stage of cascading IOPMP */
+> +    uint32_t stage;
+> +} riscv_iopmp_txn_info;
 
-I don't think truncating the memcpy() in this way is what we want? The
-switched value may not be meaningful for small values of len.
+Whoops, this should be CamelCase.
 
-Perhaps return an error?
+Checkpatch should catch these type of errors, make sure you run it if you d=
+idn't
+
+Alistair
 
 > +
-> +=C2=A0=C2=A0=C2=A0 switch (get_eth_packet_type(&eth_hdr)) {
-> =C2=A0=C2=A0=C2=A0=C2=A0 case ETH_PKT_BCAST:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!(s->maccr & FTGMAC1=
-00_MACCR_RX_BROADPKT)) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-return 0;
-> @@ -1028,6 +1032,7 @@ static ssize_t ftgmac100_receive(NetClientState *nc=
-, const uint8_t *buf,
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 FTGMAC100State *s =3D FTGMAC100(qemu_get_nic_opa=
-que(nc));
-> =C2=A0=C2=A0=C2=A0=C2=A0 FTGMAC100Desc bd;
-> +=C2=A0=C2=A0=C2=A0 struct eth_header eth_hdr =3D {};
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t flags =3D 0;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint64_t addr;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t crc;
-> @@ -1036,7 +1041,11 @@ static ssize_t ftgmac100_receive(NetClientState *n=
-c, const uint8_t *buf,
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t buf_len;
-> =C2=A0=C2=A0=C2=A0=C2=A0 size_t size =3D len;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t first =3D FTGMAC100_RXDES0_FRS;
-> -=C2=A0=C2=A0=C2=A0 uint16_t proto =3D be16_to_cpu(PKT_GET_ETH_HDR(buf)->=
-h_proto);
-> +=C2=A0=C2=A0=C2=A0 uint16_t proto;
-> +
-> +=C2=A0=C2=A0=C2=A0 memcpy(&eth_hdr, PKT_GET_ETH_HDR(buf),
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (sizeof(eth=
-_hdr) > len) ? len : sizeof(eth_hdr));
-
-Again here.
-
-> +=C2=A0=C2=A0=C2=A0 proto =3D be16_to_cpu(eth_hdr.h_proto);
-> =C2=A0=C2=A0=C2=A0=C2=A0 int max_frame_size =3D ftgmac100_max_frame_size(=
-s, proto);
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 if ((s->maccr & (FTGMAC100_MACCR_RXDMA_EN | FTGM=
-AC100_MACCR_RXMAC_EN))
-> @@ -1061,7 +1070,7 @@ static ssize_t ftgmac100_receive(NetClientState *nc=
-, const uint8_t *buf,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 flags |=3D FTGMAC100_RXD=
-ES0_FTL;
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 switch (get_eth_packet_type(PKT_GET_ETH_HDR(buf))) {
-> +=C2=A0=C2=A0=C2=A0 switch (get_eth_packet_type(&eth_hdr)) {
-> =C2=A0=C2=A0=C2=A0=C2=A0 case ETH_PKT_BCAST:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 flags |=3D FTGMAC100_RXD=
-ES0_BROADCAST;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-
+> +#endif
+> --
+> 2.34.1
+>
+>
 
