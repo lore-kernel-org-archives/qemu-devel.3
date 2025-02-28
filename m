@@ -4,89 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F3AC282D0
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 17:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB43C282C6
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 18:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to4Zb-0005SI-9A; Fri, 28 Feb 2025 12:54:55 -0500
+	id 1to4lv-0005bT-6D; Fri, 28 Feb 2025 13:07:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1to4ZZ-0005No-Gt
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 12:54:53 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1to4ZX-0006iM-8M
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 12:54:53 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4397dff185fso21795005e9.2
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 09:54:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740765289; x=1741370089; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jtvMelRpMHPT9gIgF1y4kKqGNE8vJVEvR/SuEBPumP4=;
- b=zC+UbZvSxGiLqrwyVReJbbT76AqmTZf+G3YAbpr1Z/7+LeEoYB9gekFAKPBSCKxanU
- eXyXTa36DOrvki1Prirldp+j+d10zKmMrAVvi9+eJ328ZR228hU4Xa/kK/b/1ukFYbUz
- aOqERCWVUMHChhGRslZq+nSwcypKnDgrchchgXjB/3+V35fKnGm+WphkBmze7gkBrfEM
- Yz+jeNqgICbCct0SmX0vQPem+IXuCvhtv3Tcb0smGFZLefg6grFU3HEG1XYt7/X5D+UB
- K94sf95syhJQcCp7E3xbZ/ouDJ2XhVwyQYsoc3RDLxhIj+ViKWqur8ayi147BD0bmFnK
- uMrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740765289; x=1741370089;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jtvMelRpMHPT9gIgF1y4kKqGNE8vJVEvR/SuEBPumP4=;
- b=mHfUxIG//MoQshUXrjF0hplgx1msAFPJv/E79y3viL1pyznmWAoqO9Culvn6svsbhZ
- S9E8kMYzIQKm8Ogw1jumvIv7mCkTyOjSYyK7lXujKBaulxMhQOdRsjxUefQ6pixppt79
- tSfgc2fzDK3kbmiB1A+02xbtsT3mKMq4BRlrl4trs76bOhi0EIsMKiyL+RBU1OsA0wnO
- FcS3FHTZsglIkdzuro6LocLVQzBbFGy97KXjD9Ua7BtUJPCo95AWgYrVmha5U0TtysdV
- LJPfD+e4ib/jH4c7xz9bvgkJeEgRvynl1v4Is+BMgqeVMX007CQX9iRTMpBApY5j7AP9
- pGoA==
-X-Gm-Message-State: AOJu0YxT2nkCVCKdYwVUmaO1dJBPip8fjUc06vuR5loeozqBeSyVCuTw
- URrSfaiyN77orggwPdeHs1L7xbVc3g1Zzaq0sFtYdj3KO9j78XZf2EqtjxkBH2M=
-X-Gm-Gg: ASbGncvHme0hDYJ/GOfIB4ZkVV1QoDjgz5qiFs6tbwt0fR0kUULhcV+9qGpOLI93tct
- DXlPvGoHpMhpMYn7fLjRTvMNmcO11/gtghbxhQ1iBCvQTPJnZvUIM6ruorXqlrky7CzgYsPo+ek
- lJQdG3+jgQnLkq4iAUydpTCznBMphgGrrVzMArsjoHGhmYmXaB9EgbktUreaUOsKNh7iiZDiRES
- epAOJcfRrqltoXMtMa6RHvJ0CQcS9U+axAQ7AKLehci1SoRRJlFFyvjhQw3PFd4ZGOPesAQ6G0I
- HV01aHKLQdivsDakjQsrCN8QAD83
-X-Google-Smtp-Source: AGHT+IEEUmZW/ghjkQdLqnqP8A/kZ0JNuvsioQ6f+TTIDp2YbRs//2RhmU2AjUQyqVEfH5hhsYKJKA==
-X-Received: by 2002:a05:600c:1c8e:b0:43a:b0ac:b10c with SMTP id
- 5b1f17b1804b1-43ba6744a10mr29506175e9.26.1740765288904; 
- Fri, 28 Feb 2025 09:54:48 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43b73717230sm62409275e9.19.2025.02.28.09.54.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Feb 2025 09:54:48 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 95B615F7DE;
- Fri, 28 Feb 2025 17:54:47 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [RFC PATCH] gitlab: add a new build_unit job to track build size
-Date: Fri, 28 Feb 2025 17:54:41 +0000
-Message-Id: <20250228175441.674384-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1to4ln-0005Yb-NU
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 13:07:32 -0500
+Received: from mail-mw2nam12on20603.outbound.protection.outlook.com
+ ([2a01:111:f403:200a::603]
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1to4ll-0002OL-CY
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 13:07:31 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZkLi4u+7k7FLBhehrr7Y/7Lk3+VHCrZ3GIjLFrevVashLBvDhTcQyTWlMkjeBi0J+OGAV/XOQc5QJ6UJ1yZhaLtdsIY4wrynSCZQlKvuIUvw6sZvpxQP+1ZEhdBCDvZkw+VL9q5ueBAsmAthTwyVKA7RFdavk61yZzK9KosNUbJKrws4YBNekTmE2zzUgFjoi8/aGPMnK9VnUKTDkwx6hsUq06zwKopooANVp9JaZpA3BbW7RoghL4tAqu3sdjAPa3q6A277xAFnKOZXORJCBFIa9ueLriS2Yf93oCkcyCZj2zIk5XbO4TlLHX90i1fjCe/JemYtTbvHRBf9tDeQrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aWn12FJGh/GHZYdIwhvqHLwqDpV8jfI8J1LlIkT28s0=;
+ b=CHwn94C+AA36KwuMI9dUROj3skPtLoDViyeKuIBcnIfHDpHp3Zf+wYHfrTWWcvjDECre+Vgs3/k5Clw3WyjZduZbsHP3RD1l+QCWbTNoeuKYmNpWs1rpdH1VGSMWoWKorkey9XOvaEPx9LY1Awhqi6sNJRs1Q0Ibd64D/3AOLtXivZV7+KJjCK0N1nH5ldBkj8tzLFw7UEGZkTGD3Vh382Jv7wPErBK6rG8hcs7uhGbIbn5fxypmHZc0Uf5x9PnPdl9QP7Uszk48iA24SOSU5gi3j13ZUv44NJoLmUwFMULrf66De8g6NRahlfFFedcLe4o5apzQpCxNcg04xnWhQg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aWn12FJGh/GHZYdIwhvqHLwqDpV8jfI8J1LlIkT28s0=;
+ b=V9XzMuHjw+AYC1uZWx/ubLTqvNHBJQRRM3dLZ4aP5Y2pxw34JZAMhrrLAO3BnqhrzSZacuBmY9r4/i55bsPv0Vo3wWNgWtBkfwn0IAxX/P5UGls7CaSCnwLrSsP5BzU5Lz88+wSftUFKip8o9kmZVA69Wr7JyyaHUZ9POnh7aX0=
+Received: from CYXPR03CA0034.namprd03.prod.outlook.com (2603:10b6:930:d2::9)
+ by DM4PR12MB6471.namprd12.prod.outlook.com (2603:10b6:8:ba::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.19; Fri, 28 Feb
+ 2025 18:07:21 +0000
+Received: from CY4PEPF0000EE3D.namprd03.prod.outlook.com
+ (2603:10b6:930:d2:cafe::6c) by CYXPR03CA0034.outlook.office365.com
+ (2603:10b6:930:d2::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8489.18 via Frontend Transport; Fri,
+ 28 Feb 2025 18:07:21 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CY4PEPF0000EE3D.mail.protection.outlook.com (10.167.242.15) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8489.16 via Frontend Transport; Fri, 28 Feb 2025 18:07:21 +0000
+Received: from bmoger-ubuntu.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 28 Feb
+ 2025 12:07:20 -0600
+From: Babu Moger <babu.moger@amd.com>
+To: <pbonzini@redhat.com>
+CC: <zhao1.liu@intel.com>, <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
+ <davydov-max@yandex-team.ru>
+Subject: [PATCH v6 1/6] target/i386: Update EPYC CPU model for Cache property,
+ RAS, SVM feature bits
+Date: Fri, 28 Feb 2025 12:07:01 -0600
+Message-ID: <8ecfd8751d58811b18fd918a6d13e859217156d4.1740766026.git.babu.moger@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <cover.1740766026.git.babu.moger@amd.com>
+References: <cover.1740766026.git.babu.moger@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE3D:EE_|DM4PR12MB6471:EE_
+X-MS-Office365-Filtering-Correlation-Id: cc1e641c-a97f-4c3f-9689-08dd5822bf2c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|82310400026|1800799024|376014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?rjbpuf/LTvXdQbaoP/hNPrW4ctJMcv//7aa/f8/rz9Y0bIvUZhP2CsdIvy/+?=
+ =?us-ascii?Q?Fh7zjGg5sf0ggMkUtqILZftSPMXjiVF+5BiHmDpI70jCUH+kRL7rQmPKjAsx?=
+ =?us-ascii?Q?0pYf59rN0gE4arJ3Cq4A3vV2BQVQNBRhUMMiQb+VTmO+/OpmHwckwkfQcTHO?=
+ =?us-ascii?Q?9B8D5GZ1fRl2LauJxFBAcEevkVgxzRL5wjhFTnS1jAzpDyog07u6PwQ/8Y8c?=
+ =?us-ascii?Q?6WoFyOS4KVJkkcr/CnpCo4jSRL+fD2AhiIkHsSEWJarBGW8GXX90Dhn8LwG/?=
+ =?us-ascii?Q?uDPpQ/+UCoObMMy+9c5D5sNKZPpvG6vsYn4464HDvdlkn1gUe2upxSSmXFpU?=
+ =?us-ascii?Q?LfrT+/+0JQi6aG3Y0SpCJsH6AxCQ0QpLsBQP6KPyecJ/9o38ZQ/wceVo7AJD?=
+ =?us-ascii?Q?0nF2VGvfEJpy6czArMJSG42plWamYBPKXoFEnmnQvDYByuQSmKo1buPIYBhA?=
+ =?us-ascii?Q?MKfUM7H5Mvk9/V/UNRlYJpCcIs+d/ZuAcEEN/4P7DCJt1xbeCOf6/qa+OO2A?=
+ =?us-ascii?Q?cIeHKBjtap8Nhf6XfAxkL+eaikM/vAUWE4WboFpDOS33llroO1ZSRkWxb65T?=
+ =?us-ascii?Q?sTgO6rOY2j5ySpCDM6Gp271uSYsy032jryehEtyYZNOgZN20ElgleyLGcb9R?=
+ =?us-ascii?Q?zB5bcNwCaYNjHlt3JRdbChJAaXtNsWjnRUwweewtCmn4HF80ORzz9LqGsw9X?=
+ =?us-ascii?Q?DD0PYiquF6a+HoczUt+5ICByvYF47L5Fjs2pzHnVGnLh4bcIrMiFubgXewyJ?=
+ =?us-ascii?Q?Lh1zdFxrLXlZzvRJNNheyS5HzKCAYh/ZI5CFpcMzTGBEV8bQp/sm2bOBTS7h?=
+ =?us-ascii?Q?Qqz38W+DfcnFPF1HhEQMMjOw+MIQuxZYExeETFBlfJBzmDfmjhY1ZATHKK8/?=
+ =?us-ascii?Q?j0rg1rIHwICcEiqi+VxixD60KurzMLaoNWFLSwMF/72oRsSWmZ7br/qZKRhS?=
+ =?us-ascii?Q?o9Q7p/xG21q0ys9Zj1DPE5NQMJZB9ZpbY/eujnk2SDtBi8FVUDYp0KEgOhuk?=
+ =?us-ascii?Q?fHv6DfNcDlF6cThbvxK/7/XwYoxji9g7LKna6tK09f5T+0GjxdA4rrZq7oIc?=
+ =?us-ascii?Q?UlvW/0oFXQ399kHUuHAPwTWSGkCU5nO2cjD8F5MiTTmO5oHZHELpmrX6Gs7A?=
+ =?us-ascii?Q?U1xeK6+amOsF6vBZsL2WhIyFAPq8R3rMFXGeelznebKS0q9+NSEhDdbOawmz?=
+ =?us-ascii?Q?niqZvl2TjTpUqU/bBnw2orJ2Yo0TsxiNKBvzo52E5NhYvA7U4PoW2yoesz09?=
+ =?us-ascii?Q?z5a+DDvr3LCT5LpJp2xMyYu9HQBL99Rd8bd7vlzpKH+Qe/cZJYq7fW2U7FFs?=
+ =?us-ascii?Q?6R3tDgJLRm0caB0BJa0LyjZcf63a7Qw/4h2TjL/vLt+AhZonRbcdBoD2TDyW?=
+ =?us-ascii?Q?s8Glhbbj5ChufHX11rxKW934S4g5YLoi0eAs6HqCQMGJQx1UcL3FWeHxyFG2?=
+ =?us-ascii?Q?+T0raE5HBu3Bpsxej8UGPcVBw3/Epyhrt5iSQBCq3LDilDIzxf53ivi7zAj3?=
+ =?us-ascii?Q?oMVGlXgoMyDmQV8=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(82310400026)(1800799024)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2025 18:07:21.4418 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc1e641c-a97f-4c3f-9689-08dd5822bf2c
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE3D.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6471
+Received-SPF: permerror client-ip=2a01:111:f403:200a::603;
+ envelope-from=Babu.Moger@amd.com;
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,152 +150,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to reduce the total number of build units in the system to get
-on our way to a single binary. It will help to have some numbers so
-lets add a job to gitlab to track our progress.
+Found that some of the cache properties are not set correctly for EPYC models.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>
+l1d_cache.no_invd_sharing should not be true.
+l1i_cache.no_invd_sharing should not be true.
+
+L2.self_init should be true.
+L2.inclusive should be true.
+
+L3.inclusive should not be true.
+L3.no_invd_sharing should be true.
+
+Fix the cache properties.
+
+Also add the missing RAS and SVM features bits on AMD
+EPYC CPU models. The SVM feature bits are used in nested guests.
+
+succor		: Software uncorrectable error containment and recovery capability.
+overflow-recov	: MCA overflow recovery support.
+lbrv		: LBR virtualization
+tsc-scale	: MSR based TSC rate control
+vmcb-clean	: VMCB clean bits
+flushbyasid	: Flush by ASID
+pause-filter	: Pause intercept filter
+pfthreshold	: PAUSE filter threshold
+v-vmsave-vmload	: Virtualized VMLOAD and VMSAVE
+vgif		: Virtualized GIF
+
+Signed-off-by: Babu Moger <babu.moger@amd.com>
+Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- .gitlab-ci.d/check-units.py    | 95 ++++++++++++++++++++++++++++++++++
- .gitlab-ci.d/static_checks.yml | 22 ++++++++
- 2 files changed, 117 insertions(+)
- create mode 100755 .gitlab-ci.d/check-units.py
+ target/i386/cpu.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
 
-diff --git a/.gitlab-ci.d/check-units.py b/.gitlab-ci.d/check-units.py
-new file mode 100755
-index 0000000000..aca63bd481
---- /dev/null
-+++ b/.gitlab-ci.d/check-units.py
-@@ -0,0 +1,95 @@
-+#!/usr/bin/env python3
-+#
-+# check-units.py: check the number of compilation units and identify
-+#                 those that are rebuilt multiple times
-+#
-+# Copyright (C) 2025 Linaro Ltd.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 72ab147e85..7908b90b77 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -2180,6 +2180,60 @@ static CPUCaches epyc_v4_cache_info = {
+     },
+ };
+ 
++static CPUCaches epyc_v5_cache_info = {
++    .l1d_cache = &(CPUCacheInfo) {
++        .type = DATA_CACHE,
++        .level = 1,
++        .size = 32 * KiB,
++        .line_size = 64,
++        .associativity = 8,
++        .partitions = 1,
++        .sets = 64,
++        .lines_per_tag = 1,
++        .self_init = true,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l1i_cache = &(CPUCacheInfo) {
++        .type = INSTRUCTION_CACHE,
++        .level = 1,
++        .size = 64 * KiB,
++        .line_size = 64,
++        .associativity = 4,
++        .partitions = 1,
++        .sets = 256,
++        .lines_per_tag = 1,
++        .self_init = true,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l2_cache = &(CPUCacheInfo) {
++        .type = UNIFIED_CACHE,
++        .level = 2,
++        .size = 512 * KiB,
++        .line_size = 64,
++        .associativity = 8,
++        .partitions = 1,
++        .sets = 1024,
++        .lines_per_tag = 1,
++        .self_init = true,
++        .inclusive = true,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l3_cache = &(CPUCacheInfo) {
++        .type = UNIFIED_CACHE,
++        .level = 3,
++        .size = 8 * MiB,
++        .line_size = 64,
++        .associativity = 16,
++        .partitions = 1,
++        .sets = 8192,
++        .lines_per_tag = 1,
++        .self_init = true,
++        .no_invd_sharing = true,
++        .complex_indexing = false,
++        .share_level = CPU_TOPOLOGY_LEVEL_DIE,
++    },
++};
 +
-+from os import access, R_OK, path
-+from subprocess import check_output, CalledProcessError
-+from sys import argv, exit
-+import re
-+
-+
-+def extract_build_units(cc_path):
-+    """
-+    Extract the build units and their counds from compile_commands.json file.
-+
-+    Returns:
-+        Hash table of ["unit"] = count
-+    """
-+
-+    # Make jq/shell do the heavy lifting
-+    cmd = f"jq < {cc_path} '.[] | .file' | sort | uniq -c | sort -rn"
-+
-+    try:
-+        # Execute the shell command and capture the output
-+        result = check_output(cmd, shell=True)
-+    except CalledProcessError as exp:
-+        print(f"Error executing {cmd}: {exp}")
-+        exit(1)
-+
-+    lines = result.decode().strip().split('\n')
-+
-+    # Create a dictionary to store the build unit frequencies
-+    build_units = {}
-+
-+    # extract from string of form: ' 65 "../../fpu/softfloat.c"'
-+    ext_pat = re.compile(r'^\s*(\d+)\s+"([^"]+)"')
-+
-+    # strip leading ../
-+    norm_pat = re.compile(r'^((\.\./)+|/+)')
-+
-+    # Process each line of the output
-+    for line in lines:
-+        match = re.match(ext_pat, line)
-+        if match:
-+            count = int(match.group(1))
-+            unit_path = re.sub(norm_pat, '', match.group(2))
-+
-+            # Store the count in the dictionary
-+            build_units[unit_path] = count
-+        else:
-+            print(f"couldn't process {line}")
-+
-+    return build_units
-+
-+
-+def analyse_units(build_units):
-+    """
-+    Analyse the build units and report stats and the top 10 rebuilds
-+    """
-+
-+    print(f"Total source files: {len(build_units.keys())}")
-+    print(f"Total build units: {sum(units.values())}")
-+
-+    # Create a sorted list by number of rebuilds
-+    sorted_build_units = sorted(build_units.items(),
-+                                key=lambda item: item[1],
-+                                reverse=True)
-+
-+    print("Most rebuilt units:")
-+    for unit, count in sorted_build_units[:10]:
-+        print(f"  {unit} built {count} times")
-+
-+    print("Least rebuilt units:")
-+    for unit, count in sorted_build_units[-10:]:
-+        print(f"  {unit} built {count} times")
-+
-+
-+if __name__ == "__main__":
-+    if len(argv) != 2:
-+        script_name = path.basename(argv[0])
-+        print(f"Usage: {script_name} <path_to_compile_commands.json>")
-+        exit(1)
-+
-+    cc_path = argv[1]
-+    if path.isfile(cc_path) and access(cc_path, R_OK):
-+        units = extract_build_units(cc_path)
-+        analyse_units(units)
-+        exit(0)
-+    else:
-+        print(f"{cc_path} doesn't exist or isn't readable")
-+        exit(1)
-diff --git a/.gitlab-ci.d/static_checks.yml b/.gitlab-ci.d/static_checks.yml
-index c0ba453382..c3ed6de453 100644
---- a/.gitlab-ci.d/static_checks.yml
-+++ b/.gitlab-ci.d/static_checks.yml
-@@ -70,3 +70,25 @@ check-rust-tools-nightly:
-     expire_in: 2 days
-     paths:
-       - rust/target/doc
-+
-+check-build-units:
-+  extends: .base_job_template
-+  stage: build
-+  image: $CI_REGISTRY_IMAGE/qemu/debian:$QEMU_CI_CONTAINER_TAG
-+  needs:
-+    job: amd64-debian-container
-+  before_script:
-+    - source scripts/ci/gitlab-ci-section
-+    - section_start setup "Install Tools"
-+    - apt install --assume-yes --no-install-recommends jq
-+    - section_end setup
-+  script:
-+    - mkdir build
-+    - cd build
-+    - section_start configure "Running configure"
-+    - ../configure
-+    - cd ..
-+    - section_end configure
-+    - section_start analyse "Analyse"
-+    - .gitlab-ci.d/check-units.py build/compile_commands.json
-+    - section_end analyse
+ static const CPUCaches epyc_rome_cache_info = {
+     .l1d_cache = &(CPUCacheInfo) {
+         .type = DATA_CACHE,
+@@ -5207,6 +5261,25 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+                 },
+                 .cache_info = &epyc_v4_cache_info
+             },
++            {
++                .version = 5,
++                .props = (PropValue[]) {
++                    { "overflow-recov", "on" },
++                    { "succor", "on" },
++                    { "lbrv", "on" },
++                    { "tsc-scale", "on" },
++                    { "vmcb-clean", "on" },
++                    { "flushbyasid", "on" },
++                    { "pause-filter", "on" },
++                    { "pfthreshold", "on" },
++                    { "v-vmsave-vmload", "on" },
++                    { "vgif", "on" },
++                    { "model-id",
++                      "AMD EPYC-v5 Processor" },
++                    { /* end of list */ }
++                },
++                .cache_info = &epyc_v5_cache_info
++            },
+             { /* end of list */ }
+         }
+     },
 -- 
-2.39.5
+2.34.1
 
 
