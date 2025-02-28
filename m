@@ -4,79 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3183CC282CD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 10:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2DE1C282C5
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 10:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnxc9-0003MG-6v; Fri, 28 Feb 2025 05:29:05 -0500
+	id 1tnxc8-0003IA-UD; Fri, 28 Feb 2025 05:29:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tnxbV-0002Sj-3u
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:28:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tnxbt-0002lV-8L
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:28:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tnxbR-00030F-Nu
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:28:24 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tnxbd-000322-H0
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:28:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740738501;
+ s=mimecast20190719; t=1740738513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Yb4WY/5IB8gz3F/Rm6+VWpUS7ShwNSVIkDps2t795I8=;
- b=NXBLppy3Iq1KdOjznJxwZ5TGtylp5S1y8jJ4syrICnB/gUtBbkgFe7TwXOHtzrCoH3zHuC
- 6l4LcdnYkLcVZXtp2e+9r7p0ZiL7p9QRlal29iN5u/UjS+LBHAsuBK7iCJpfOqJa/4xdIe
- 0YUSucAb5CHvKm/UYQaK+IKiK89iRro=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-OFOb4SlWMxqsxGwewYEeig-1; Fri,
- 28 Feb 2025 05:28:17 -0500
-X-MC-Unique: OFOb4SlWMxqsxGwewYEeig-1
-X-Mimecast-MFC-AGG-ID: OFOb4SlWMxqsxGwewYEeig_1740738495
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2824180036F; Fri, 28 Feb 2025 10:28:14 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.45])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0AB4D1800359; Fri, 28 Feb 2025 10:28:10 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ bh=iep8pZGiDzI7IY07IUsRT9A7+I13meiftaMonL8dD9Q=;
+ b=cfX9yMpCFlTDZodoO8O5Whp02Usmw/Nb1raKCSL32+nk6MET9TrY/v6X4D/QtJ29iXeR8+
+ 6Ynvv1jQqZ1pldwwVKiXYYHVduURChCzeuXQG2RdIgwrwnEbX2wcfBWEZGQ4l6X/qL3Jh0
+ NXxDcwifc2KdzVCDZ+AUnPHxEh4M6bI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-190-YhlD5xSgM0uIufruDGx6qg-1; Fri, 28 Feb 2025 05:28:31 -0500
+X-MC-Unique: YhlD5xSgM0uIufruDGx6qg-1
+X-Mimecast-MFC-AGG-ID: YhlD5xSgM0uIufruDGx6qg_1740738510
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43ab456333aso19069335e9.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 02:28:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740738509; x=1741343309;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iep8pZGiDzI7IY07IUsRT9A7+I13meiftaMonL8dD9Q=;
+ b=c1nWOQrOLOjVM/7cwNbZlfGvk+R7Yu8ES+wDDF/aLEjlazAtBPxp7NQiWfc0AddkrT
+ VjG9vBOf3uhm4TUYfybtGJUgb7EWOEDMNjo+IUqhNMQr9DReMUL7hTsGyoCF8RKaGxuN
+ ToYKb6MiviL04ojb9vRoLfRU7Jqo3Eifpnvsl8i0RvrrImwhrgcHN65F2IneUyirdo71
+ nFokSbgrY5Dtpmu6Wdro7nNtoeH/pYbNORDCpY1OrByTA1wPxMqYpmdk6nGaxhHJaXyO
+ 2tenQkKQgWUiOOBpYplLubxTV2HU3SaCUnL0B+DucX1nL2ENc2kT5eFEsPzn0fw11OfD
+ E5RQ==
+X-Gm-Message-State: AOJu0YzHARPPsi7+eLhbo21uC7Z0Qd23fqmOMSJaoQlzpsdg0zjNp6wS
+ MCN7NILylu6i4wJ+Ney9L7PgEpEI83GTejqY2YEWL1oShelt0j8BNPEjeT5JfF1kYFiz1WyeBF7
+ 8T0YtQSrp7Sb1A2xA7mwqUSM2jA/Dps1FJthdBjRKKzszSi9KKIDSe4ZanREuht28/QzvIXkuHN
+ yJo1QlA1dtxt6zcO66El0wzUsAM+uzfWun0InAqTQ=
+X-Gm-Gg: ASbGncuRRu/rooIoYRyWLnHVhx+5rLRqyqDalSlftknnr6r56y6s8ulOFyAIhgRh3fD
+ IzD7tZU/IwiRK1PeNSM6Qlm9NWwXkoKMW3CUrxFVcb4EHU7O6mRxdDens8LGbNTYktkwyKPj6GF
+ q7HQoApdraQ4t6awsbe7C+frbO0FRRY+TI5HKXykHbJ3VkzcguwlbOEJKgF7xwUPJX3dyqdQ8Qn
+ 3sEcZJ+X3XuES5Nbtd/cXss0UOKCBKZ0qyhEeDMVs+DevSqUAGYe6HFHzRbg23+P0DrPvF00scy
+ WPRIl1c/WtWtfMF/Y2w1
+X-Received: by 2002:a05:600c:5014:b0:439:89d1:30dc with SMTP id
+ 5b1f17b1804b1-43ba730d5b6mr23207145e9.10.1740738509308; 
+ Fri, 28 Feb 2025 02:28:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG0GQqi59HJ9fjy4gcPVmh44+gEekIwFyQcURJVa/aPff8jGhP82V5YIMcfLo1MrpyxByYcJw==
+X-Received: by 2002:a05:600c:5014:b0:439:89d1:30dc with SMTP id
+ 5b1f17b1804b1-43ba730d5b6mr23206885e9.10.1740738508924; 
+ Fri, 28 Feb 2025 02:28:28 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.152.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e485d8e4sm4660228f8f.85.2025.02.28.02.28.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Feb 2025 02:28:27 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-ppc@nongnu.org
-Subject: [PATCH v2 7/7] tests/functional: stop output from zstd command when
- uncompressing
-Date: Fri, 28 Feb 2025 10:27:38 +0000
-Message-ID: <20250228102738.3064045-8-berrange@redhat.com>
-In-Reply-To: <20250228102738.3064045-1-berrange@redhat.com>
-References: <20250228102738.3064045-1-berrange@redhat.com>
+Cc: alistair.francis@wdc.com
+Subject: [PATCH 18/22] target/riscv: convert TT C906 to RISCVCPUDef
+Date: Fri, 28 Feb 2025 11:27:42 +0100
+Message-ID: <20250228102747.867770-19-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250228102747.867770-1-pbonzini@redhat.com>
+References: <20250228102747.867770-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,43 +108,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The zstd command will print incremental decompression progress to stderr
-when running. Fortunately it is not on stdout as that would confuse the
-TAP parsing, but we should still not have this printed. By switching
-from 'check_call' to 'run' with the check=True and capture_output=True
-we'll get the desired silence on success, and on failure the raised
-exception will automatically include stdout/stderr data for diagnosis
-purposes.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- tests/functional/qemu_test/uncompress.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/riscv/cpu.c | 61 +++++++++++++++++++++-------------------------
+ 1 file changed, 28 insertions(+), 33 deletions(-)
 
-diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
-index 76dcf22385..ce79da1b68 100644
---- a/tests/functional/qemu_test/uncompress.py
-+++ b/tests/functional/qemu_test/uncompress.py
-@@ -13,7 +13,7 @@
- import stat
- import shutil
- from urllib.parse import urlparse
--from subprocess import check_call, CalledProcessError
-+from subprocess import run, CalledProcessError, DEVNULL
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 4d6756a97ce..a249e48da6c 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -497,38 +497,6 @@ static void riscv_register_custom_csrs(RISCVCPU *cpu, const RISCVCSR *csr_list)
+ #endif
  
- from .asset import Asset
+ #if defined(TARGET_RISCV64)
+-static void rv64_thead_c906_cpu_init(Object *obj)
+-{
+-    CPURISCVState *env = &RISCV_CPU(obj)->env;
+-    RISCVCPU *cpu = RISCV_CPU(obj);
+-
+-    riscv_cpu_set_misa_ext(env, RVG | RVC | RVS | RVU);
+-    env->priv_ver = PRIV_VERSION_1_11_0;
+-
+-    cpu->cfg.ext_zfa = true;
+-    cpu->cfg.ext_zfh = true;
+-    cpu->cfg.mmu = true;
+-    cpu->cfg.ext_xtheadba = true;
+-    cpu->cfg.ext_xtheadbb = true;
+-    cpu->cfg.ext_xtheadbs = true;
+-    cpu->cfg.ext_xtheadcmo = true;
+-    cpu->cfg.ext_xtheadcondmov = true;
+-    cpu->cfg.ext_xtheadfmemidx = true;
+-    cpu->cfg.ext_xtheadmac = true;
+-    cpu->cfg.ext_xtheadmemidx = true;
+-    cpu->cfg.ext_xtheadmempair = true;
+-    cpu->cfg.ext_xtheadsync = true;
+-
+-    cpu->cfg.mvendorid = THEAD_VENDOR_ID;
+-#ifndef CONFIG_USER_ONLY
+-    set_satp_mode_max_supported(cpu, VM_1_10_SV39);
+-    riscv_register_custom_csrs(cpu, th_csr_list);
+-#endif
+-
+-    /* inherited from parent obj via riscv_cpu_init() */
+-    cpu->cfg.pmp = true;
+-}
+-
+ static void rv64_veyron_v1_cpu_init(Object *obj)
+ {
+     CPURISCVState *env = &RISCV_CPU(obj)->env;
+@@ -3098,7 +3066,34 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .misa_mxl_max = MXL_RV64,
+     ),
  
-@@ -46,8 +46,8 @@ def zstd_uncompress(zstd_path, output_path):
-         return
- 
-     try:
--        check_call(['zstd', "-f", "-d", zstd_path,
--                    "-o", output_path])
-+        run(['zstd', "-f", "-d", zstd_path,
-+             "-o", output_path], capture_output=True, check=True)
-     except CalledProcessError as e:
-         os.remove(output_path)
-         raise Exception(
+-    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_THEAD_C906, MXL_RV64,  rv64_thead_c906_cpu_init),
++    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C906, TYPE_RISCV_VENDOR_CPU,
++        .misa_mxl_max = MXL_RV64,
++        .misa_ext = RVG | RVC | RVS | RVU,
++        .priv_spec = PRIV_VERSION_1_11_0,
++
++        .cfg.ext_zfa = true,
++        .cfg.ext_zfh = true,
++        .cfg.mmu = true,
++        .cfg.ext_xtheadba = true,
++        .cfg.ext_xtheadbb = true,
++        .cfg.ext_xtheadbs = true,
++        .cfg.ext_xtheadcmo = true,
++        .cfg.ext_xtheadcondmov = true,
++        .cfg.ext_xtheadfmemidx = true,
++        .cfg.ext_xtheadmac = true,
++        .cfg.ext_xtheadmemidx = true,
++        .cfg.ext_xtheadmempair = true,
++        .cfg.ext_xtheadsync = true,
++        .cfg.pmp = true,
++
++        .cfg.mvendorid = THEAD_VENDOR_ID,
++
++        .cfg.max_satp_mode = VM_1_10_SV39,
++#ifndef CONFIG_USER_ONLY
++        .custom_csrs = th_csr_list,
++#endif
++    ),
++
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_TT_ASCALON, MXL_RV64,  rv64_tt_ascalon_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_v1_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU,
 -- 
 2.48.1
 
