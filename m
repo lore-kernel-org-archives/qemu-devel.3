@@ -4,59 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605C8C19776
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 13:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5508DC19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 13:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to0em-0004CX-5i; Fri, 28 Feb 2025 08:44:00 -0500
+	id 1to0fs-0005OH-Ty; Fri, 28 Feb 2025 08:45:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1to0eY-00049W-Qm
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 08:43:49 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1to0fq-0005Mr-Ix
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 08:45:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1to0eW-0004dj-FD
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 08:43:46 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1to0fo-0004lj-R4
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 08:45:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740750223;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=3t4wWRsTdcDh/6oP1JOHE53eENmtJW9iD8oy/7lCkko=;
- b=dIKw3+GdTYVL0f3/rQOuwledKjDLuVK+LhqRqoj9CazFzqE094kqnIoW9hrGXgi0bgTdSy
- NrB9lbIBfusSCFqkto8ThSqjqx2geYeGvGwCY4WmGAtu4Gp9XtBDLhH+JscTGHYp0WU2kY
- w81VzFnQeewaWgOV86mGyLnic2TtoPM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1740750303;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bMP3O0x4FuM4vcm7lZ7rhl/27bRjvSEvc/qzAherw0w=;
+ b=Oj/0tm9iekSZhT1Z26iktMl9PwAOYOHiaWg093CjnLYJ8sN44r6EH6I8anhockebCQPPAF
+ dK6nfU7X+vfUlSeo4HCZ4X2cWpfvoCvfNNT6BFLlrf0hv0LA98/05J8WsRtrCmUHx0EdAj
+ xCxtvr84z+x6raNptz6ByqkaKc9+wBI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-x4Dz9dd6MoGwUrTSIV0CiA-1; Fri,
- 28 Feb 2025 08:43:39 -0500
-X-MC-Unique: x4Dz9dd6MoGwUrTSIV0CiA-1
-X-Mimecast-MFC-AGG-ID: x4Dz9dd6MoGwUrTSIV0CiA_1740750219
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-Uj_vwos1NqCzRAhNFleQQw-1; Fri,
+ 28 Feb 2025 08:45:00 -0500
+X-MC-Unique: Uj_vwos1NqCzRAhNFleQQw-1
+X-Mimecast-MFC-AGG-ID: Uj_vwos1NqCzRAhNFleQQw_1740750299
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EDF46180087A; Fri, 28 Feb 2025 13:43:38 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 94D44300019E; Fri, 28 Feb 2025 13:43:37 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 18F7721E675E; Fri, 28 Feb 2025 14:43:35 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: michael.roth@amd.com,
-	berrange@redhat.com
-Subject: [PATCH] docs/devel/qapi-code-gen: Discourage use of 'prefix'
-Date: Fri, 28 Feb 2025 14:43:35 +0100
-Message-ID: <20250228134335.132278-1-armbru@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CDA381801A1A; Fri, 28 Feb 2025 13:44:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.45])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 72156180035F; Fri, 28 Feb 2025 13:44:57 +0000 (UTC)
+Date: Fri, 28 Feb 2025 13:44:53 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, michael.roth@amd.com
+Subject: Re: [PATCH] docs/devel/qapi-code-gen: Discourage use of 'prefix'
+Message-ID: <Z8G91WiFbHR9dJvc@redhat.com>
+References: <20250228134335.132278-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+In-Reply-To: <20250228134335.132278-1-armbru@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -78,34 +84,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QAPI's 'prefix' feature can make the connection between enumeration
-type and its constants less than obvious.  It's best used with
-restraint.  Commit 7bbadc60b5..64f5e9db77 eliminated most uses.
-Discourage new ones.
+On Fri, Feb 28, 2025 at 02:43:35PM +0100, Markus Armbruster wrote:
+> QAPI's 'prefix' feature can make the connection between enumeration
+> type and its constants less than obvious.  It's best used with
+> restraint.  Commit 7bbadc60b5..64f5e9db77 eliminated most uses.
+> Discourage new ones.
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  docs/devel/qapi-code-gen.rst | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- docs/devel/qapi-code-gen.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-index 9fa94251b0..f9cfe8721f 100644
---- a/docs/devel/qapi-code-gen.rst
-+++ b/docs/devel/qapi-code-gen.rst
-@@ -229,7 +229,8 @@ These are of the form PREFIX_NAME, where PREFIX is derived from the
- enumeration type's name, and NAME from the value's name.  For the
- example above, the generator maps 'MyEnum' to MY_ENUM and 'value1' to
- VALUE1, resulting in the enumeration constant MY_ENUM_VALUE1.  The
--optional 'prefix' member overrides PREFIX.
-+optional 'prefix' member overrides PREFIX.  This is rarely necessary,
-+and should be used with restraint.
- 
- The generated C enumeration constants have values 0, 1, ..., N-1 (in
- QAPI schema order), where N is the number of values.  There is an
+
+With regards,
+Daniel
 -- 
-2.48.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
