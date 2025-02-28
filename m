@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 446B3C282CD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 414E3C282C6
 	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 20:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to7H0-0002AH-O3; Fri, 28 Feb 2025 15:47:54 -0500
+	id 1to7Gh-00028I-FR; Fri, 28 Feb 2025 15:47:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1to7Gr-000299-2F
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:47:45 -0500
+ id 1to7Gd-000287-IJ
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:47:32 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1to7Gp-0005Uj-CE
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:47:44 -0500
+ id 1to7Gb-0005UC-CE
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:47:31 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1to7Gk-00000000ALf-2NCp; Fri, 28 Feb 2025 21:47:38 +0100
-Message-ID: <9efbf9a9-6a97-4ced-8292-550c6cfbcf5a@maciej.szmigiero.name>
-Date: Fri, 28 Feb 2025 21:47:33 +0100
+ id 1to7GU-00000000ALV-1aGi; Fri, 28 Feb 2025 21:47:22 +0100
+Message-ID: <71749651-ecc4-4fe3-878d-25040ef17bd4@maciej.szmigiero.name>
+Date: Fri, 28 Feb 2025 21:47:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 32/36] vfio/migration: Make
- x-migration-multifd-transfer VFIO property mutable
+Subject: Re: [PATCH v5 26/36] vfio/migration: Multifd device state transfer
+ support - received buffers queuing
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <f558685fa2b2d82220d65120fb4bd9c77e28e2d4.1739994627.git.maciej.szmigiero@oracle.com>
- <4d8d1101-f0f4-4e9d-97dc-fe4e5a4b8f58@redhat.com>
- <62c96ca5-c3c5-491f-8b5d-b87cf7df1230@maciej.szmigiero.name>
- <a44145e8-b272-4b59-8b4e-f1b353a667b0@redhat.com>
+ <4de9762ebf7e7857103eb276d1a26a092aee325d.1739994627.git.maciej.szmigiero@oracle.com>
+ <6ad969cd-e522-4c8b-9d95-05b4df3be002@redhat.com>
+ <e91b1d67-1ddc-4d63-9c7f-cde1b13f3673@maciej.szmigiero.name>
+ <0a2cb938-7c2c-46aa-bb5e-19a425b18de5@redhat.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -85,7 +85,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <a44145e8-b272-4b59-8b4e-f1b353a667b0@redhat.com>
+In-Reply-To: <0a2cb938-7c2c-46aa-bb5e-19a425b18de5@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -112,75 +112,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.02.2025 09:44, Cédric Le Goater wrote:
-> On 2/26/25 22:05, Maciej S. Szmigiero wrote:
->> On 26.02.2025 18:59, Cédric Le Goater wrote:
+On 28.02.2025 09:09, Cédric Le Goater wrote:
+> On 2/26/25 22:04, Maciej S. Szmigiero wrote:
+>> On 26.02.2025 11:43, Cédric Le Goater wrote:
 >>> On 2/19/25 21:34, Maciej S. Szmigiero wrote:
 >>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>>>
->>>> DEFINE_PROP_ON_OFF_AUTO() property isn't runtime-mutable so using it
->>>> would mean that the source VM would need to decide upfront at startup
->>>> time whether it wants to do a multifd device state transfer at some
->>>> point.
+>>>> The multifd received data needs to be reassembled since device state
+>>>> packets sent via different multifd channels can arrive out-of-order.
 >>>>
->>>> Source VM can run for a long time before being migrated so it is
->>>> desirable to have a fallback mechanism to the old way of transferring
->>>> VFIO device state if it turns to be necessary.
+>>>> Therefore, each VFIO device state packet carries a header indicating its
+>>>> position in the stream.
+>>>> The raw device state data is saved into a VFIOStateBuffer for later
+>>>> in-order loading into the device.
 >>>>
->>>> This brings this property to the same mutability level as ordinary
->>>> migration parameters, which too can be adjusted at the run time.
+>>>> The last such VFIO device state packet should have
+>>>> VFIO_DEVICE_STATE_CONFIG_STATE flag set and carry the device config state.
 >>>>
 >>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 >>>> ---
->>>>   hw/vfio/pci.c | 12 +++++++++---
->>>>   1 file changed, 9 insertions(+), 3 deletions(-)
+>>>>   hw/vfio/migration-multifd.c | 103 ++++++++++++++++++++++++++++++++++++
+>>>>   hw/vfio/migration-multifd.h |   3 ++
+>>>>   hw/vfio/migration.c         |   1 +
+>>>>   hw/vfio/trace-events        |   1 +
+>>>>   4 files changed, 108 insertions(+)
 >>>>
->>>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>>> index 184ff882f9d1..9111805ae06c 100644
->>>> --- a/hw/vfio/pci.c
->>>> +++ b/hw/vfio/pci.c
->>>> @@ -3353,6 +3353,8 @@ static void vfio_instance_init(Object *obj)
->>>>       pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+>>>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+>>>> index c2defc0efef0..5d5ee1393674 100644
+>>>> --- a/hw/vfio/migration-multifd.c
+>>>> +++ b/hw/vfio/migration-multifd.c
+>>>> @@ -42,6 +42,11 @@ typedef struct VFIOStateBuffer {
+>>>>   } VFIOStateBuffer;
+>>>>   typedef struct VFIOMultifd {
+>>>> +    VFIOStateBuffers load_bufs;
+>>>> +    QemuCond load_bufs_buffer_ready_cond;
+>>>> +    QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
+>>>> +    uint32_t load_buf_idx;
+>>>> +    uint32_t load_buf_idx_last;
+>>>>   } VFIOMultifd;
+>>>>   static void vfio_state_buffer_clear(gpointer data)
+>>>> @@ -87,15 +92,113 @@ static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs, guint idx)
+>>>>       return &g_array_index(bufs->array, VFIOStateBuffer, idx);
 >>>>   }
->>>> +static PropertyInfo qdev_prop_on_off_auto_mutable;
 >>>
->>> please use another name, like vfio_pci_migration_multifd_transfer_prop.
+>>> this routine expects load_bufs_mutex to be locked ? May be say so.
 >>
->> Done.
+>> I guess the comment above pertains to the vfio_load_state_buffer_insert()
+>> below.
 >>
->>> I wish we could define the property info all at once.
->>
->> I'm not sure what you mean here, could you please elaborate a bit more?
+>> Do you mean it should have a comment that it expects to be called
+>> under load_bufs_mutex?
 > 
-> I meant :
+> Just a one liner like :
 > 
->      static const PropertyInfo vfio_pci_migration_multifd_transfer_prop = {
->          .name = "OnOffAuto",
->          .description = "on/off/auto",
->          .enum_table = &OnOffAuto_lookup,
->          .get = qdev_propinfo_get_enum,
->          .set = qdev_propinfo_set_enum,
->          .set_default_value = qdev_propinfo_set_default_value_enum,
->          .realized_set_allowed = true,
->      };
+> /* called with load_bufs_mutex locked */
 > 
-> which requires including "hw/core/qdev-prop-internal.h".
+> ?
 > 
-> I think your method is preferable. Please add a little comment
-> before :
-> 
->      qdev_prop_on_off_auto_mutable = qdev_prop_on_off_auto;
->      qdev_prop_on_off_auto_mutable.realized_set_allowed = true;
+> It's good to have for the future generations.
 
-Added a comment above these code lines describing why custom
-property type is justified in this case.
+Okay, done.
 
+>>
+>>>> +static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
+>>>
+>>> could you pass VFIOMultifd* instead  ?
+>>
+>> No, it needs vbasedev->migration_max_queued_buffers too (introduced
+>> in later patch).
+>> > Also, most of VFIO routines (besides very small helpers/wrappers)
+>> take VFIODevice *.
+> 
+> OK. It's minor but I prefer when parameters are limited to the minimum.
+> Having 'VFIODevice *' opens doors to a lot of state.
+> 
+> 
 > Thanks,
 > 
 > C.
 > 
 
-Thanks,
+Thanks.
 Maciej
 
 
