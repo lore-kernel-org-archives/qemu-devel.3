@@ -4,87 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADAABC282C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 19:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ABE5C282D0
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 19:22:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to5r3-000643-P4; Fri, 28 Feb 2025 14:17:01 -0500
+	id 1to5wG-0000YM-Gd; Fri, 28 Feb 2025 14:22:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1to5r1-000639-Bn
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 14:16:59 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1to5wF-0000UB-4t
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 14:22:23 -0500
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1to5qz-0003RH-0R
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 14:16:59 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-439a331d981so22941355e9.3
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 11:16:56 -0800 (PST)
+ id 1to5wD-00041v-5M
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 14:22:22 -0500
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-e60c4e83cd3so211384276.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 11:22:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740770214; x=1741375014; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fjU1scoyfl5EIaSm+J9opU/tuOBrWqDEPnsrPZdjWm0=;
- b=EJXbjtBQh2mLY5ncNR986r9+bL3awggca5Ucl9ZAK3NOmyCM8wZ2uCkL8/onTtqN4Q
- UbWnzgFmltDVkHxl4EZL9rRClbOxWHymGS1H/CDCFOp41ZsrPXT0tvwmvuZsNcE00xiS
- aHqPGhWue0Q2hJtAozdJgDCQNlreZwSuFxGjogDZYCrumX63sOSuk/RHY8fbVyQlaSq/
- O1jzvP8zgAhBqy59GweyiCkhoFPw3jAiara6QG3L4NP6hZX6QlyjUZ2yWUGBt6YtZmfR
- IecJc7Ke7ZTh0V50//Mut1+r+bpVvdzdfqXXk+VBnvx+IbRHDohwmJTzbQV0yf6KM5b9
- Q8bQ==
+ d=linaro.org; s=google; t=1740770539; x=1741375339; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=CGo1UVYt0ObEV9vcbF/d+aMoY5qsaz8RtqPlWaCXiWA=;
+ b=b9XbiCWRrmDHKolCxsy4A6RjOFs5Uu1CowY1yHD+eNsMFYX17Pzc3XplTdMK58Q0MY
+ lOPmFdTPC5xQuX6kWMtYelm1rgH6fHpWo68jBBH7PEjKJq93LYxlKzBUjznhHXZK2oMg
+ pU0WXVlytHaJs3donv3K4oZOMOog11XIdPm8lL405pYZECAgo/vSDLNz9aoIy8+feDph
+ 3GdzF44PznPeRbLK4m61qIhx3D0xtOyZE9IocmVHnL001okkWMYilTrM2qDQkfwM126t
+ HPzSXhcBOsH0uiO/pWlKhv8cCUOYb8G64HTBT1GZNDdKvMbblxrQBFTyf3Xm9u64W0xM
+ /tEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740770214; x=1741375014;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1740770539; x=1741375339;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fjU1scoyfl5EIaSm+J9opU/tuOBrWqDEPnsrPZdjWm0=;
- b=CadsTa8xrOED3r987cPgzWeDu09mqgz/o48L6QR2SGhq7+O4Xrs/AjP6qp5z6drs2y
- qLW/6eXDPo1Qo/xgBFoNCRKQ4xsCrLbRdrPkKemC5XcqgZMkXbLWf6R1/qx+wjeBYLWF
- JWKLQWD2Fp5xEjwUdflwpN0tU8mXMZuAX6OrJbqcPBOqOXJ/yxv8vjOVk63YSfhELKLe
- clfGMBwXN/eEM3XjuQgs5ivM8gk3Qvgyp624Sz4bmBJnQjdpxBmzUKoBo4icI2G7Pgaj
- fl3DRlLjRzaae1SBDW06xigo5CWdDG7OMIndpZqi4FIzyvxjnxJH1MZqbHFaTKvqPrzT
- niRA==
+ bh=CGo1UVYt0ObEV9vcbF/d+aMoY5qsaz8RtqPlWaCXiWA=;
+ b=vIHS6SaL4V3ICCeh/pnmioVoeG/dp0DKGbubTZRTh++J9c7dxExqUGQZmb/PmMZQOU
+ 78yeUNAwdk4vsRo1NQvo9WqU58k/eXeyEe9l7wy1OIUjQ4c+ctAPK+9kJXMPlVHpr9hf
+ EInGXcXibVBhOkQIAn4bRTFLTGtE6tlE76RgNFzWE94eYaGsllfvH8prCiiDStaC0fPA
+ vGGU+OjQU05Ub9LzdorTTLiA6jvfxsSLJ2pKqYkOPvHuaRjRvGUwnZNYkMDGgwb1fccX
+ Q+xo7zQESFQn1Gaj5dnukkeubKT5soeVLJuyCH59mpwxXBoWYDNiN3QKPd8mr2aQ1s5N
+ Bvsw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEEiXzIs4n/QlKxFd3r8sSxo2So7H0uVt9yNpyjEkd+XL1biFJOvTg5njvYtalOdu7seanovCRiEVw@nongnu.org
-X-Gm-Message-State: AOJu0YwWPZH+VR9CvXa0zJg14ETqahzJzkcfgqcMVFtLPcI3H6GdtBfp
- dcdIV0tzOOJeZ/uJw5skRBVsnkyN//FThn63Wt1E6Jfa5JIN3HxXbg05+B56PazhAyfD0T/SkpZ
- F
-X-Gm-Gg: ASbGncv2PomVAEF7ERCoivQvCKq2et9gULOPasq1ybGs60/AsGiCDiyYoMhwnSkuHei
- px50eTIGZWEj8dc1hwPAirLVpommnaXxbUwXp4W9W+v3X7/VPLia4suyOhMUHX7wSqiYXywL5th
- R6tWYEiM416LuZn4NIusNUPzaQur5q5e9QX2atJlwpBcnrB6qLcAeTkeSdzT2pLTAWC6RSoytHD
- UwLDXjptSUklh6u1eC2YeTgREJoxLmrj7tiLAQW4VraoeoZWulCz0cvA6T+XcAApcMFmvWMyVlM
- F9VlG6ti6u3SKteU4XXGTy4G1iI9Qfi7
-X-Google-Smtp-Source: AGHT+IFszYyExaDmdsRHgeNQQjVU+0bMC3pl7E06OZJJ0pA5IrOuZNbTuOOkyPtJSAig1LdHgQ28cA==
-X-Received: by 2002:a05:6000:2cd:b0:38f:2a32:abbb with SMTP id
- ffacd0b85a97d-390ec7cd373mr3282103f8f.4.1740770214273; 
- Fri, 28 Feb 2025 11:16:54 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e485d6cdsm5980928f8f.84.2025.02.28.11.16.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Feb 2025 11:16:53 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH] hw/net/smc91c111: Don't allow data register access to overrun
- buffer
-Date: Fri, 28 Feb 2025 19:16:51 +0000
-Message-ID: <20250228191652.1957208-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ AJvYcCU66OHdollPL7RI9yog5fbn9sp6HxXQIJ19KgmrxemdfzBjToIw3pmtla4PAci/tth4q5/bp+n9vYok@nongnu.org
+X-Gm-Message-State: AOJu0YzAvI28+WwIZKS2g0dlEAI3BshTKePbb/CSUfTuu3cHV1W6YcE2
+ QRpI7vuhHwWNRQixWDcwFzsHZPR25m9K6293w/dGZUTXTlLZ32SoosHUMZL8g6HvapL5QLAvO32
+ quymiBS4mVhF5Tp/gODg286QNqCiKosvqq7EwRA==
+X-Gm-Gg: ASbGncvsRIKWXpx81imRSWkdo7iUGoFyQ9BNDR8NsLso4c7h9Gt0winQY5ym/d0QeiP
+ N2F5gZOQIKD0nPmHpC6oBOap0ztvJ0TMKI5+aSSppxdOA9hXWdbFrA8l5AUUd9qF5fmk97K4/gL
+ we6/UYooMK
+X-Google-Smtp-Source: AGHT+IFilOlDZ+Sha/ej83+c/9iqyCTBoAw8jj22TsBZ/X9LLbdkaJSoLEAG0pnDag0KQxRr9zBTfWNJtvR2AjmEUGY=
+X-Received: by 2002:a05:6902:1502:b0:e57:4db7:6d51 with SMTP id
+ 3f1490d57ef6-e60b2f04369mr5333020276.32.1740770539618; Fri, 28 Feb 2025
+ 11:22:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+References: <20250228174802.1945417-1-peter.maydell@linaro.org>
+In-Reply-To: <20250228174802.1945417-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 28 Feb 2025 19:22:07 +0000
+X-Gm-Features: AQ5f1Jo8sJTi94Zbulz0ZSHaEDQ0Jd4nUWmOUKFHAh4khB4q_CiFyy-Y8oTkW3U
+Message-ID: <CAFEAcA9RPnZdf5zqFwu255-LdJ5inFbjtCA8SJ4o89aiUuabpA@mail.gmail.com>
+Subject: Re: [PATCH 0/3] hw/net/smc91c111: Fix potential array overflows
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,157 +93,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For accesses to the 91c111 data register, the address within the
-packet's data frame is determined by a combination of the pointer
-register and the offset used to access the data register, so that you
-can access data at effectively wider than byte width.  The pointer
-register's pointer field is 11 bits wide, which is exactly the size
-to index a 2048-byte data frame.
+On Fri, 28 Feb 2025 at 17:48, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> This patchset fixes some potential array overflows in the
+> smc91c111 ethernet device model, including the one found in
+> https://gitlab.com/qemu-project/qemu/-/issues/2742
+>
+> There are two classes of bugs:
+>  * we accept packet numbers from the guest, but we were not
+>    validating that they were in range before using them as an
+>    index into the data[][] array
+>  * we didn't sanitize the length field read from the data
+>    frame on tx before using it as an index to find the
+>    control byte at the end of the frame, so we could read off
+>    the end of the buffer
+>
+> This patchset fixes both of these. The datasheet is sadly
+> silent on the h/w behaviour for these errors, so I opted to
+> LOG_GUEST_ERROR and silently ignore the invalid operations.
+>
+> Patch 3 tidies up the existing code to use a constant defined
+> in patch 2; I put it last so we can cc the first two patches
+> to stable without having to also backport that patch.
 
-We weren't quite getting the logic right for ensuring that we end up
-with a pointer value to use in the s->data[][] array that isn't out
-of bounds:
+See also the other smc91c111 fuzzer fix patch:
+https://patchew.org/QEMU/20250228191652.1957208-1-peter.maydell@linaro.org/
 
- * we correctly mask when getting the initial pointer value
- * for the "autoincrement the pointer register" case, we
-   correctly mask after adding 1 so that the pointer register
-   wraps back around at the 2048 byte mark
- * but for the non-autoincrement case where we have to add the
-   low 2 bits of the data register offset, we don't account
-   for the possibility that the pointer register is 0x7ff
-   and the addition should wrap
+(if I need to do a v2 of this series I'll put that one in too)
 
-Fix this bug by factoring out the "get the p value to use as an array
-index" into a function, making it use FIELD macro names rather than
-hard-coded constants, and having a utility function that does "add a
-value and wrap it" that we can use both for the "autoincrement" and
-"add the offset bits" codepaths.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2758
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-Based-on: 20250228174802.1945417-1-peter.maydell@linaro.org
-("hw/net/smc91c111: Fix potential array overflows")
-
-I'd only just sent the other smc91c111 patchset when I found
-another fuzzer bug for it in the bug tracker :-)
-
-The "modernisation" of the code seemed clearer to me than
-doing a minimal in-place fix (which would look something
-like "p = (p + (offset & 3) & 0x7ff;" in both read and write
-functions). But it does make the actual bugfix a little less
-obvious.
-
----
- hw/net/smc91c111.c | 65 +++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 53 insertions(+), 12 deletions(-)
-
-diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index 4a8f867d96e..f8012cb3681 100644
---- a/hw/net/smc91c111.c
-+++ b/hw/net/smc91c111.c
-@@ -13,6 +13,7 @@
- #include "net/net.h"
- #include "hw/irq.h"
- #include "hw/net/smc91c111.h"
-+#include "hw/registerfields.h"
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
-@@ -126,6 +127,13 @@ static const VMStateDescription vmstate_smc91c111 = {
- #define RS_TOOSHORT     0x0400
- #define RS_MULTICAST    0x0001
- 
-+FIELD(PTR, PTR, 0, 11)
-+FIELD(PTR, NOT_EMPTY, 11, 1)
-+FIELD(PTR, RESERVED, 12, 1)
-+FIELD(PTR, READ, 13, 1)
-+FIELD(PTR, AUTOINCR, 14, 1)
-+FIELD(PTR, RCV, 15, 1)
-+
- static inline bool packetnum_valid(int packet_num)
- {
-     return packet_num >= 0 && packet_num < NUM_PACKETS;
-@@ -372,6 +380,49 @@ static void smc91c111_reset(DeviceState *dev)
- #define SET_LOW(name, val) s->name = (s->name & 0xff00) | val
- #define SET_HIGH(name, val) s->name = (s->name & 0xff) | (val << 8)
- 
-+/*
-+ * The pointer register's pointer is an 11 bit value (so it exactly
-+ * indexes a 2048-byte data frame). Add the specified offset to it,
-+ * wrapping around at the 2048 byte mark, and return the resulting
-+ * wrapped value. There are flag bits in the top part of the register,
-+ * but we can ignore them here as the mask will mask them out.
-+ */
-+static int ptr_reg_add(smc91c111_state *s, int offset)
-+{
-+    return (s->ptr + offset) & R_PTR_PTR_MASK;
-+}
-+
-+/*
-+ * For an access to the Data Register at @offset, return the
-+ * required offset into the packet's data frame. This will
-+ * perform the pointer register autoincrement if required, and
-+ * guarantees to return an in-bounds offset.
-+ */
-+static int data_reg_ptr(smc91c111_state *s, int offset)
-+{
-+    int p;
-+
-+    if (s->ptr & R_PTR_AUTOINCR_MASK) {
-+        /*
-+         * Autoincrement: use the current pointer value, and
-+         * increment the pointer register's pointer field.
-+         */
-+        p = FIELD_EX32(s->ptr, PTR, PTR);
-+        s->ptr = FIELD_DP32(s->ptr, PTR, PTR, ptr_reg_add(s, 1));
-+    } else {
-+        /*
-+         * No autoincrement: register offset determines which
-+         * byte we're addressing. Setting the pointer to the top
-+         * of the data buffer and then using the pointer wrapping
-+         * to read the bottom byte of the buffer is not something
-+         * sensible guest software will do, but the datasheet
-+         * doesn't say what the behaviour is, so we don't forbid it.
-+         */
-+        p = ptr_reg_add(s, offset & 3);
-+    }
-+    return p;
-+}
-+
- static void smc91c111_writeb(void *opaque, hwaddr offset,
-                              uint32_t value)
- {
-@@ -518,12 +569,7 @@ static void smc91c111_writeb(void *opaque, hwaddr offset,
-                                   n);
-                     return;
-                 }
--                p = s->ptr & 0x07ff;
--                if (s->ptr & 0x4000) {
--                    s->ptr = (s->ptr & 0xf800) | ((s->ptr + 1) & 0x7ff);
--                } else {
--                    p += (offset & 3);
--                }
-+                p = data_reg_ptr(s, offset);
-                 s->data[n][p] = value;
-             }
-             return;
-@@ -673,12 +719,7 @@ static uint32_t smc91c111_readb(void *opaque, hwaddr offset)
-                                   n);
-                     return 0;
-                 }
--                p = s->ptr & 0x07ff;
--                if (s->ptr & 0x4000) {
--                    s->ptr = (s->ptr & 0xf800) | ((s->ptr + 1) & 0x07ff);
--                } else {
--                    p += (offset & 3);
--                }
-+                p = data_reg_ptr(s, offset);
-                 return s->data[n][p];
-             }
-         case 12: /* Interrupt status.  */
--- 
-2.43.0
-
+-- PMM
 
