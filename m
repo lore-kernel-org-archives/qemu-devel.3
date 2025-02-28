@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF9EC19776
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 04:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0286AC19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 05:14:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tns4L-0007pW-V6; Thu, 27 Feb 2025 23:33:49 -0500
+	id 1tnsgf-0002xl-Ek; Fri, 28 Feb 2025 00:13:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tns4I-0007pH-TZ
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 23:33:46 -0500
-Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1tnsXF-0008L4-30
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 00:03:43 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tns4H-00005g-8b
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 23:33:46 -0500
-Received: by mail-vk1-xa2b.google.com with SMTP id
- 71dfb90a1353d-51e902b58c0so1322370e0c.0
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 20:33:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1tnsXB-0003g8-G3
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 00:03:39 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2feb867849fso1411879a91.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 21:03:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740717224; x=1741322024; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1740719014; x=1741323814; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:to:references:subject:from
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v+4hfEZ7oyRQwnR4N4n5f/VaD5dsfpvw9io43m+St5g=;
- b=AKrq0r3HhZpG6EoecV/S07WFBvjm1iBNHLGFpS4HXmiGf2WTTPs6exVnkjpSbjp/4J
- C9B6gzt7VNq9sa5LTgmII5rMF9mIX6H/bl5OSHAs8dT2iN9U5DW0jsoc1uZvpG11tgWo
- ntnLj7TQZgPijZ6vDVii2XMxfrIw+fqsXEwmu/TDjoqqKBgopGN/8McZmlYeAP5g3AEk
- YRJ2WJ5N/46xISlvPgrZi5QUBq6XJqxStNuwOCFvkmGyJCbKGAWFIZGi4qG4PVoI/LXO
- D6Fl/YT6WCntP2mVegPbOfQIvS5dCn3tfFVDtVrd6pKosQ4R8t9rhaI+nvpXDlfecIc7
- Jn5g==
+ bh=0sCuL1Z28Y3V6+IfwtxZ4kgJUz5bCHywRY3uphPqrW8=;
+ b=TqNxRZb2YXM5NfE7PAy6NsuwZANnSOH5FRw1jl8wNRaIEPXQ0lQsAT3kbaOMxjoNOp
+ loBjKZIJQsdPbJhlXtfmZpVR2YDN31xQaFhxhW6gsPpiKhJW/fPh4oqniLfOr7+Zpo/U
+ qWlqAk6d5fr7qOyb0AmoFrAYZtjRDCHN3jw6YwcA0M5z5Y2o8bLlWAVGHTkN/4cQLCs8
+ CvTw7gSt67PDAnTBwxlKiyNd41NmhQ6NnHMqXInVKUFRCRR4oyzr4ns7+78UJNBbIcyj
+ 2YEB5DV/5YXKPoE1pnEWKdWDmNuN78RBqz7MVA8T+EvjK0qGJtd1QbP3gVplRl0pNwpd
+ /Hvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740717224; x=1741322024;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=v+4hfEZ7oyRQwnR4N4n5f/VaD5dsfpvw9io43m+St5g=;
- b=an8fw9U7V4FDQ0BPtKbl/RcHRR89VwSM+8nv+b52VjLanuAKEAzTA7facdaqssJLFq
- E31SAHLHIsFdR4xKJHfZxlIJbVI/N9UPzPBe27nhzSgqisyqxZD1Ic9Lq/aK77VMPgJD
- Fup5yiZzaiS0EPzb5Rd+LJ9ShV4ZiARedoYgYElLdoOscw0Z5jGGo++F9o2lX/bbjwwD
- kyrp0lD9y5ukdYRoGCq4DPJeUF/JSf4ogqSQhmbZIyrnPjBILxZl3UCUyfCx+gj+0Lrk
- SQ3SoQOEkgXhJFsNe99o8t2TMzjhlRxyiJG9bncXD4M8L6xk7sDJbQEh2/Gkp5eea6yt
- 8PUw==
-X-Gm-Message-State: AOJu0Yxl5IVVXZuvPsHa75g6sjr3kmIaQsEXEt0jeVNPYPHqSX66Ikef
- zKg5kweDpm7qSOnATTE+78P4QvUUV9xApGoiuUsUNB1kUZNqGhGbznM0D73+vmWLjUz4XOF7qnf
- Gl7pZgNbSbH5gb3/wbJft/U5hLDcYvJq0jjE=
-X-Gm-Gg: ASbGncuoRSWDMQTfM3P6RRuX+lt16pDvpm+doIa43eLS4Q0u0cPyz//JJAQxD1fIVTN
- sHzFeaZbkycW7VEUOqEDQtprA78RdSQz48H6VsamzJs/CaTSFn9/sgEkoCgEg0yu4MSBp/TRTKI
- H/uoT8JhjbEfuj6dMuaWdA1vXVUzqbx9sypk1C
-X-Google-Smtp-Source: AGHT+IGmApyc+bCRfGM6MMjG0oTFngw/ohX6WinmOtkVR4/moK/yszfb/SwFtG3zicIb2L6ZBpot64aiX7lSE0X9tGM=
-X-Received: by 2002:a05:6122:3908:b0:51f:3eee:89e7 with SMTP id
- 71dfb90a1353d-5235bd672a7mr1079432e0c.11.1740717224179; Thu, 27 Feb 2025
- 20:33:44 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740719014; x=1741323814;
+ h=content-transfer-encoding:in-reply-to:cc:to:references:subject:from
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=0sCuL1Z28Y3V6+IfwtxZ4kgJUz5bCHywRY3uphPqrW8=;
+ b=SLpFq2szYCbIa0AYERf5XdJkmKjXyP0DdMEAiaL2gegF18VNTvYaZ6YTWaBeraYnVI
+ NLPl96Aal1mi1dspp1sBqHUbRQsulFJTi1HSbEQI5XorDP2hmVRdDJVtZ5YgDQFpumTg
+ aVBxWQmSoXILEopCdUQoSvdK1TTuz5qPiwSKA29zcTWx3QX4bwRdYmHJUNba20lbUZAr
+ /Ihqx+7lZDvkQtg2Kc6IPf9EewINDdx1wAYq6LhnGzMI31tJLweiDsMnorUVi+yWoKRR
+ +cMiQKNWuUhkXJlhkvH2EoHCAc/qwm17axSqVnxQdKD1ALiIm2lsgFqV2h/xotG2EIG7
+ BfqA==
+X-Gm-Message-State: AOJu0Yz3fFzI9rsuDWIsr5jNlduL4UjTlcwPeZQYs7PUz2mtKjidDsZD
+ TDPEDahI/oh+ipLnpf41dIu3251mBC5zG+tRxyJEeLxxQ7IrFOqt
+X-Gm-Gg: ASbGncuqnSCyFgX0GIlplx6EL0i2havCXLhom5chDflpq8cWb639X+mb9XnLGk1pucP
+ EJGRN5DdJYHTKV32uKT+4qo+IDsz1eMHSLtNooCpVO+I+Ck4kVTIkDZFBYeBJpQkWlba7GeC4b5
+ mCgS+ONN0pGCsMb+Fy+JTWwqOofHMfLOZEeS/+xiVg9qJHQtQx/ZZBZQQNrRcBTxvIqK5lY46h9
+ A8RGYhR1EHi1sLGED06UXTruL3HWD9aHske3V9nxrtKl6+Hh/AxrHqr0ViNF7tGuEk39oTsTVw0
+ vTHEJ+HzjOyQ6hA6Ee4yFKjJRLkGlSCgLCJwzCs=
+X-Google-Smtp-Source: AGHT+IG+83XxcFfI5rP/w9wNyqqnS4FrDT0rkc1bUTlQ5LFnmWZvJO9CFha2PRggXg1VFcI7cldKUA==
+X-Received: by 2002:a17:90b:4f49:b0:2ea:3f34:f18f with SMTP id
+ 98e67ed59e1d1-2febab78d6fmr3032865a91.19.1740719013931; 
+ Thu, 27 Feb 2025 21:03:33 -0800 (PST)
+Received: from [101.5.21.88] ([101.5.21.88]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2fea696e37asm2997088a91.35.2025.02.27.21.03.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Feb 2025 21:03:33 -0800 (PST)
+Message-ID: <69cb6f19-d87a-4ddf-9fca-612b30828679@gmail.com>
+Date: Fri, 28 Feb 2025 13:03:27 +0800
 MIME-Version: 1.0
-References: <20250127182924.103510-1-abologna@redhat.com>
-In-Reply-To: <20250127182924.103510-1-abologna@redhat.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 28 Feb 2025 14:33:18 +1000
-X-Gm-Features: AQ5f1Jo54A-8xteorpDmLD8QCmz4hcYXF8LdltgPgTh_pbUHsQBFmd67WYxQOoM
-Message-ID: <CAKmqyKO29B2sJBFpqfZwTRYdkDSevCnDhBha48u8t4hczmjU1Q@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] binfmt: Add --ignore-family option
-To: Andrea Bolognani <abologna@redhat.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- David Abdurachmanov <davidlt@rivosinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
+User-Agent: Mozilla Thunderbird
+From: Zheng Huang <hz1624917200@gmail.com>
+Subject: [PATCH] virtio-pci: fix memory leak from device realization failure
+References: <7702b335-6e92-47c7-baf9-a384f75a0db3@gmail.com>
+To: mst@redhat.com
+Cc: qemu-devel@nongnu.org, hz1624917200@gmail.com
+In-Reply-To: <7702b335-6e92-47c7-baf9-a384f75a0db3@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=hz1624917200@gmail.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -82,6 +85,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 28 Feb 2025 00:13:24 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,31 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 28, 2025 at 4:29=E2=80=AFAM Andrea Bolognani <abologna@redhat.c=
-om> wrote:
->
-> Changes from [v1]:
->
->   * adopt a completely different, more general approach.
->
-> [v1] https://mail.gnu.org/archive/html/qemu-devel/2024-12/msg00459.html
->
-> Andrea Bolognani (3):
->   binfmt: Shuffle things around
->   binfmt: Normalize host CPU architecture
->   binfmt: Add --ignore-family option
+This commit adds failback routine for `virtio_pci_realize` to 
+fix the memory leak of an address space and the virtio-net device object.
+If the realization of the device failed, the address space should be 
+destroyed too.
 
-Thanks!
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2845
 
-Applied to riscv-to-apply.next
+Signed-off-by: Zheng Huang <hz1624917200@outlook.com>
 
-Alistair
+---
+ hw/virtio/virtio-pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
->
->  scripts/qemu-binfmt-conf.sh | 78 ++++++++++++++++++++++++-------------
->  1 file changed, 50 insertions(+), 28 deletions(-)
->
-> --
-> 2.48.1
->
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index c773a9130c..4b0d8cd90a 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2266,6 +2266,9 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+     virtio_pci_bus_new(&proxy->bus, sizeof(proxy->bus), proxy);
+     if (k->realize) {
+         k->realize(proxy, errp);
++        if (*errp) {
++            address_space_destroy(&proxy->modern_cfg_mem_as);
++        }
+     }
+ }
+ 
+-- 
+2.34.1
+
+
 
