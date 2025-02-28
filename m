@@ -4,75 +4,195 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38FE9C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 02:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCEAC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 02:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnpfY-0007by-Ge; Thu, 27 Feb 2025 21:00:04 -0500
+	id 1tnq61-0004Y9-0v; Thu, 27 Feb 2025 21:27:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <4c7159ed.AWwAAGWzWYQAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwRib@a3031119.bnc3.mailjet.com>)
- id 1tnpfW-0007b9-Fq
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 21:00:02 -0500
-Received: from o12.p25.mailjet.com ([185.189.236.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <4c7159ed.AWwAAGWzWYQAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwRib@a3031119.bnc3.mailjet.com>)
- id 1tnpfU-0007PD-1C
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 21:00:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; q=dns/txt;
- d=randomman.co.uk; i=roy.hopkins@randomman.co.uk; s=mailjet; x=1740715195;
- h=message-id:mime-version:from:from:to:to:subject:subject:date:date:list-unsubscribe:list-unsubscribe-post:
- cc:feedback-id:in-reply-to:references:x-csa-complaints:x-mj-mid:x-mj-smtpguid:
- x-report-abuse-to:content-transfer-encoding;
- bh=GXWbG44eui7Mwpp5Xz2SyJS+nkh+OwE/jSi4x/FzpTE=;
- b=QfMlE35Rl0uX3WorDby9N0WHilfSfNpZa2W4H+VEyFV+QX0R7k9D0j19u
- TOimsbzaHxpBFZTOrvg/SP8YOmDvkW3lZDzSASuqs0H8viFwqzyroRFVUMcC
- v4vdtDj+DT5fWa5j7DLg9O6uoIQj2hE49vlog92pPwQMBSS7ic5k1Evk9tYW
- FNKS5gQi68IZu7mo0WBOmeiTRl8RFrV372HMQGzYxst4ESFNVzIdUNUYYpXC
- P474HKf7Ek2KMFNl/y7AXnJ/QqzvRl+1H5KAqlV5EKjVJBy82qANfF76eBF9
- zJqlBnVK/VK9n41pK8xtw1Hm+RGV/uxAsZXScOnY8ZiKQ==
-Message-Id: <4c7159ed.AWwAAGWzWYQAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwRib@mailjet.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1tnq5z-0004Xw-19
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 21:27:23 -0500
+Received: from mgamail.intel.com ([198.175.65.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1tnq5w-00029h-FN
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 21:27:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1740709640; x=1772245640;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=BLygFqSRG7iyYRpuDuM0a13H+x83hmVZKNaCKMscpTE=;
+ b=F5aSzYY2xW837kaaszhlr+JAPGUT+NKqWPt3PWUrR+8fk9SkUVwZ0R09
+ MupA74zC1x/4Xcfe3NHwTzgqKF7Q1S8A83FVVc4V6B5WBbNsbZF1j8zPg
+ bNLMg1RXDXHGvLxNBLF+1p4NzOTCm7slpCiA1e73bONuw08I1d4lUGF1E
+ PoyYCWsHtBboCo3GR/fXMwYPTBmrM5CPnGfh6CTUZGN12MPZMPiffwJ+2
+ Whi5ZgT7WnyW9I2CDJDEmvEkV2fvkKaL2KQh1BOH1/NKQDfpHHWXm2ZXG
+ HbRkD878Qi317dhAa+63fvxQAHvq5nab3wycsOJ05Oj3IGInBADv4g9H9 w==;
+X-CSE-ConnectionGUID: AT+FrDDjRw6MeSLtvPCkng==
+X-CSE-MsgGUID: L/nVSReQRuShfVx1u1mUlw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11358"; a="41656883"
+X-IronPort-AV: E=Sophos;i="6.13,321,1732608000"; d="scan'208";a="41656883"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Feb 2025 18:27:15 -0800
+X-CSE-ConnectionGUID: RSelmn44SQiRxeRWgQuV/Q==
+X-CSE-MsgGUID: ylobKoXfTOCYYlIjS3uquA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,321,1732608000"; d="scan'208";a="121806242"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Feb 2025 18:27:15 -0800
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Thu, 27 Feb 2025 18:27:14 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Thu, 27 Feb 2025 18:27:14 -0800
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (104.47.56.49) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Thu, 27 Feb 2025 18:27:12 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gWht5SOGOLk5QI4vrGmyx8wt39cjZ7z3nM+WgNG/CcmkfhY/UaOs2DH7hD/m++QLDMB/t4UzmyQJT6vJVb4y+29h0TzzJdhSi47vrer+B+TTEl7ZGfzwSYwFJ5lIzdmrr0GIGnxgnsTutggHiniFOyF/Efbc6rejJhe6Bd4EQ5e2Jq9qFgeIqNWTZtQV4hxwVr4tfaD/hzRNLaYNXmWWadSuwLcCbgKAl9KFUu0d19/qLoyb3RJhrjQVfA43VXOldtrfRQAVuOuU5lY6GSxj+qDQm7xAjHd7bDHy7IR88wrzYZjjAFwz+LicYngpBsORnwIXLbmmGrjYYSwe8DN6zQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=STcC10hF+CU8anI8VOGSTyK7v3pauD8ZfA1uorQrXmw=;
+ b=sj9yK8+GlWOnk80oUDKoudQfmEFeXzIYotP5Ie6fVdOrbvibRPGv1/jdUY+YRjDlR6p64MOTwsHg4bXixJTpUcc3uV6aBb9qNzToQ0/TIgzFbXnNxtzN678qSCpzJSoBJ12qH/9tGOBfh+9NPjPkXy5NLwcfxVdMBwD/1Rb45zvNPEiN6r/Adw0HDiXKpGmzM+4scJ4dO9eOC8Jfun38qwVPIl/J4N5NXuuN2bKPhAFOm2+SRF1dHxoQvfRotQ+y17gQlxF2kbLD41cgUVKlvLOZZzVECK6lSX3ucB3KobgEBpqaNOnSFDp1WRTqIrfHSjY3cmb3mpbrV5+9tgtG0Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by DS0PR11MB6495.namprd11.prod.outlook.com (2603:10b6:8:c1::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.18; Fri, 28 Feb
+ 2025 02:26:43 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%6]) with mapi id 15.20.8489.021; Fri, 28 Feb 2025
+ 02:26:43 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
+Subject: RE: [PATCH rfcv2 01/20] backends/iommufd: Add helpers for
+ invalidating user-managed HWPT
+Thread-Topic: [PATCH rfcv2 01/20] backends/iommufd: Add helpers for
+ invalidating user-managed HWPT
+Thread-Index: AQHbgqf2du4TDl7Tuku7EhsMkpByw7NQaNMAgAqAHTA=
+Date: Fri, 28 Feb 2025 02:26:42 +0000
+Message-ID: <SJ0PR11MB67447179E30A69F5CED4183492CC2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
+ <20250219082228.3303163-2-zhenzhong.duan@intel.com>
+ <61f66ea9-7636-42d7-9098-bd911b2829ab@redhat.com>
+In-Reply-To: <61f66ea9-7636-42d7-9098-bd911b2829ab@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DS0PR11MB6495:EE_
+x-ms-office365-filtering-correlation-id: e20c70da-aecc-4fa5-652c-08dd579f572b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|366016|1800799024|376014|38070700018; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?Dmovb7V0I5shW37QF1uR5bCblhcLrmVHXQDMNEeCT+J0VA2D6UyK4rXKT2zi?=
+ =?us-ascii?Q?24aj633H1untG0ODmQ4KEqCGvctTEi/aPmzCLIT3TYCi2EssXifM+HQ/0xST?=
+ =?us-ascii?Q?JcQs6y4/284+DGvEG1mwG35URCb4Hk5now2jZuwiZw4PdJEW9grzHCWnRxvL?=
+ =?us-ascii?Q?QGmzmHH7D3WnMLBTN3cUvzv1LHlXiKBS1WNbOpkZ9mwKsJb1UPUJ7dCWa4qF?=
+ =?us-ascii?Q?T0wMAGEuELHQyzal40gKiYBpQwkb3S/urvqyVlBxOUHvGipwkhhd3ACnN6m/?=
+ =?us-ascii?Q?LtUukXCH/LvXSkqH7uUB22D9POlOHjK0/FDl9vKntxyvyUcBo8IgQl8u9vz2?=
+ =?us-ascii?Q?gwcAlpct1IMCr9m5QPYKUanfZO5RdQArZQdseOIaLl7OW9Sq8XIrvMDec6vi?=
+ =?us-ascii?Q?SmjQo/qQf8hM6yM6UJAHyeAdtbOmyVOlceiqaW/h8OZZ1knApP1AAwatxmCq?=
+ =?us-ascii?Q?8nxMIf5cnqzd1n4wWpjVK9vdRXF4S5hP3mgJexOryD4oBUuz6Y5Rtf/Fhl3j?=
+ =?us-ascii?Q?tcuUsxT7mxL61o7EK9uxkZhkzN41rtykzFU0BCwP0VYe3oZ0UQczhB5bR5lL?=
+ =?us-ascii?Q?oYobHSMnmjchmhvfg0aoYOKBnGsOe8C2SZVSWIndv/33nC2UAPqkJb7W2St6?=
+ =?us-ascii?Q?tGyG2zVHkjg40G+ZODEsj+q8t2msFmCyV2x+F1sOL18MwiHyQe//dv5FvyVn?=
+ =?us-ascii?Q?LgkDK4DRX/A1wKZalJ88GwQSwriBAa6H8b74cy3txoaI1SsKxiPb0g5wZacn?=
+ =?us-ascii?Q?PbAl0GRtdWo/PW+7FLYNRoPiRN8nw/qS5wvCc/kNP0zIZ0m5tgmv6DCGkUgY?=
+ =?us-ascii?Q?D8SgTkCHdjNt5KynfzEJJSr+2Jxrmvt27oPZmKOJ0hYmJwjOEiSlR7gquu/g?=
+ =?us-ascii?Q?IMcqBOP4FtIjN9/NfxJE3Xp+JVdwS5ValwuWLRc3eE0JObheHGxT+yXASTBH?=
+ =?us-ascii?Q?zpC2ZOErKJaj8eyKNtSkGKWHaJJDjZyMLSjRY9pUxUPUpyG9F6vamBx4JIlX?=
+ =?us-ascii?Q?/SwPKvfe0vAG631qAVOHJHGketqKyeJhoemvIkdunANbs3tA0mXGsPChLj8G?=
+ =?us-ascii?Q?kDQ+stcz+OjE2+p1Hvsa77DOiMHe1CbS/XBN+fu84dqep3HtiT5W2RLyqQIW?=
+ =?us-ascii?Q?Ht3xrJtDhr6qpjta9A4JQ4AKRJyw6UFGtg+aNGdwRTkYEy/NIGymaO8zO+Ws?=
+ =?us-ascii?Q?eC8MQqaa9r4Vh1WRKeAgleUvCJ3E7DTJ21YdhFfbbC4lCWKILLSgpeWeVFcW?=
+ =?us-ascii?Q?iDJ7uUGyz8ygsUDEegmewydHe4iCQ3yG0r125Uxb4KjRUKsHqoq/gyXv//mC?=
+ =?us-ascii?Q?C+xmqqzgXE90a4XABGgMqjJVYQJIavSBeg+Fn95gailRSAdq5DwsLSgmcyta?=
+ =?us-ascii?Q?Jhvss6GslE/bIwK1Ugi0Pn2taSmJo+NZPChBeUzsPAo7lpTP8pgr0amsYZ9m?=
+ =?us-ascii?Q?QXPfq6t8L5rf09MAAspTfu6ddinQvEZQ?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(366016)(1800799024)(376014)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ardJvAbv+fnmzJIMqndcNrMFGDDsGWu0+ZupVRTSbJWzEqefuTfLf7GsQL1P?=
+ =?us-ascii?Q?vGSOT75gW183tMO6R5QEnXyac8UtIX9ucpBl8eNW/vUPO4Hc6FH8S2FFymMy?=
+ =?us-ascii?Q?esSIr3Prmau/FFVm6SDZy5DgNG0J0u3REE78DoVcfy4HCJ6IhG2ecOB59eb4?=
+ =?us-ascii?Q?NLcBpGNutt4QeKGAZwb3g0LcXVMCydbKEhwFWNwJrZZaSvpisoqAVYlOHpU0?=
+ =?us-ascii?Q?dPlQZV74bcGSda08iw4wVLA1XfsMJ81EB7YFeOhYKm2Ox/LzYMo9T2dbGaTb?=
+ =?us-ascii?Q?bryAYTLavt7WFF9PJ2KuyWOTcZoqq9lZxBXBZxEspA9iNdc3zqTNGyKzssa9?=
+ =?us-ascii?Q?Mm5KUvGarzBvjgJ0KcPp1L1sbY4AddaWQxR76RAqI/dBzxD9qykpd37ddjyo?=
+ =?us-ascii?Q?tULTqiwlnr59O3AhbY8e09hAkup3ymEmo4jslfvE2UvjU/Qgcm0KH1xnghpZ?=
+ =?us-ascii?Q?rr29xrEg4yTbdilmEDsYb9KA8HmMouTyEZYmCgzDGkLP9C/gOXmEV2TpmczX?=
+ =?us-ascii?Q?c6jxmMCSh+U46XnOvfyPsa/fLwghf4t1PTbD5GU9oju1O14d7CfaqP19LPE7?=
+ =?us-ascii?Q?AdFdNd4Q1LgbZ6K+JxzACt0dmeJG5LGhR5lDzo4hE0lCColxoAbLPLiBvukX?=
+ =?us-ascii?Q?uJmaZhK93FwA+VHqKOWmre4z/iIiOTBBN3jvLXYUMOE4V+IvNjy25vMWAJVK?=
+ =?us-ascii?Q?gXH6+1+PHtehbA2DxJqfjGVaonYNENzCMx5DhiX7U7vFqd/12Fxr6/k9EFvX?=
+ =?us-ascii?Q?aD96QzAzalgt0+kWlO969jPsmaogzwMGwljXxuLUzUD/UzoWEJEnNjms+ihJ?=
+ =?us-ascii?Q?Vt8nRq/f11SWUeDs8AQLtRyEYh9c3CX+jEaz+PXX9h0RDpVC6VwrgF/c7skY?=
+ =?us-ascii?Q?NOcPSYAUMEKjGFb1WIR07mGKHd8TjLcpLlsZQkUCcfAd+DGRNtF7QMWx8tQb?=
+ =?us-ascii?Q?pxExyS7jie0H8I3Jo9BPS2ZuPh8OAMc1a5ykhi+q9IDAdgNG2/j2kWSJq8me?=
+ =?us-ascii?Q?I6NRkWzl2O0Jf36UODo3mlRpOHlrXTosoHwTK58KnTzM+HjTyAdHXB6WKfU1?=
+ =?us-ascii?Q?+golDUGNzhcso8Web5CwBLGAXhRyOLCJyx2WupEiwuv6uwBifIjUWkAzquzv?=
+ =?us-ascii?Q?bxevQRT7dPhtuyim07Nm4XJzwJXOuMvQ+zdM1OvES4/KfqSGZb73zZsSLdii?=
+ =?us-ascii?Q?lB3UQRMiWZ75bWEFnP/SB9vevs5b0JfjVjCzDRzCkEGYiRSAgszXBXGDYD1T?=
+ =?us-ascii?Q?T5UBZMSpGZ3Zzi3YgM8421F/Hjvn0l1ji9SA6PlFkG7KSfYyx1z/vfTkuUI2?=
+ =?us-ascii?Q?Yh31sfmHW/+BnEfGbNcj1tujfLwK9U0fT+3ONBufLA6T+W54ofePHdog6oyE?=
+ =?us-ascii?Q?BOrVFxGHzpIe5ixiw1/0/HtgqR6dFEeDpK9HJWezonE5yMuN3W/25R/ixZn9?=
+ =?us-ascii?Q?9q1uhhTwVhm1khulVEy+/jHXReYclNvN1fj4btqdZGwPYK9305fYZztFzAoB?=
+ =?us-ascii?Q?TJhV+gW7VnqdGrgQi0yxCXBJ3ZzrxvmfMC6B5sZkzgF/gj2pmxLNcGC9xwKW?=
+ =?us-ascii?Q?ruiIeT8hz7UKdLyD3E/fNcFqqh6bEpNAbVqinNBn?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v7 16/16] sev: Provide sev_features flags from IGVM VMSA to
- KVM_SEV_INIT2
-Date: Thu, 27 Feb 2025 14:29:34 +0000
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>, Paolo Bonzini
- <pbonzini@redhat.com>, "Daniel P . Berrange" <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Sergio Lopez <slp@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Alistair Francis
- <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>, David Hildenbrand
- <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Tom Lendacky
- <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, Ani Sinha
- <anisinha@redhat.com>, Joerg Roedel <jroedel@suse.com>
-Feedback-Id: 42.3031119.2785883:MJ
-In-Reply-To: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
-References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
-X-CSA-Complaints: csa-complaints@eco.de
-X-MJ-Mid: AWwAAGWzWYQAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwRibwQ-T-AXiRTKgcZEht5cGTAAqgls
-X-MJ-SMTPGUID: 718a7d47-8b5b-4438-b1dc-96456ee847b9
-X-REPORT-ABUSE-TO: Message sent by Mailjet please report to
- abuse@mailjet.com with a copy of the message
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.189.236.12;
- envelope-from=4c7159ed.AWwAAGWzWYQAAAAAAAAAA9cBm3sAAYKJZwAAAAAAAC5ATwBnwRib@a3031119.bnc3.mailjet.com;
- helo=o12.p25.mailjet.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e20c70da-aecc-4fa5-652c-08dd579f572b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Feb 2025 02:26:42.9982 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vC+Fk5y40oVNuVkzqXm8U2ZPrQOwlmYydviYuhXKqM3AGyzWOE5GLUrUHZTIN/9cWdrp/3Hy8WuvuCXKVB9eDrIlZQcRuzoE/SjgDJzup8Y=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB6495
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.17;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,265 +208,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IGVM files can contain an initial VMSA that should be applied to each
-vcpu as part of the initial guest state. The sev_features flags are
-provided as part of the VMSA structure. However, KVM only allows
-sev_features to be set during initialization and not as the guest is
-being prepared for launch.
+Hi Eric,
 
-This patch queries KVM for the supported set of sev_features flags and
-processes the IGVM file during kvm_init to determine any sev_features
-flags set in the IGVM file. These are then provided in the call to
-KVM_SEV_INIT2 to ensure the guest state matches that specified in the
-IGVM file.
+>-----Original Message-----
+>From: Eric Auger <eric.auger@redhat.com>
+>Subject: Re: [PATCH rfcv2 01/20] backends/iommufd: Add helpers for invalid=
+ating
+>user-managed HWPT
+>
+>Hi Zhenzhong,
+>
+>
+>On 2/19/25 9:22 AM, Zhenzhong Duan wrote:
+>> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>in the title, there is only a single helper here. a small commit msg may
+>help the reader
 
-This does cause the IGVM file to be processed twice. Firstly to extract
-the sev_features then secondly to actually configure the guest. However,
-the first pass is largely ignored meaning the overhead is minimal.
+Sure, will do.
 
-Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
----
- target/i386/sev.c | 160 ++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 141 insertions(+), 19 deletions(-)
+>> ---
+>>  include/system/iommufd.h |  3 +++
+>>  backends/iommufd.c       | 30 ++++++++++++++++++++++++++++++
+>>  backends/trace-events    |  1 +
+>>  3 files changed, 34 insertions(+)
+>>
+>> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+>> index cbab75bfbf..5d02e9d148 100644
+>> --- a/include/system/iommufd.h
+>> +++ b/include/system/iommufd.h
+>> @@ -61,6 +61,9 @@ bool
+>iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+>>                                        uint64_t iova, ram_addr_t size,
+>>                                        uint64_t page_size, uint64_t *dat=
+a,
+>>                                        Error **errp);
+>> +int iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t
+>hwpt_id,
+>> +                                     uint32_t data_type, uint32_t entry=
+_len,
+>> +                                     uint32_t *entry_num, void *data_pt=
+r);
+>>
+>>  #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD
+>TYPE_HOST_IOMMU_DEVICE "-iommufd"
+>>  #endif
+>> diff --git a/backends/iommufd.c b/backends/iommufd.c
+>> index d57da44755..fc32aad5cb 100644
+>> --- a/backends/iommufd.c
+>> +++ b/backends/iommufd.c
+>> @@ -311,6 +311,36 @@ bool
+>iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>>      return true;
+>>  }
+>>
+>> +int iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t
+>hwpt_id,
+>> +                                     uint32_t data_type, uint32_t entry=
+_len,
+>> +                                     uint32_t *entry_num, void *data_pt=
+r)
+>> +{
+>> +    int ret, fd =3D be->fd;
+>> +    struct iommu_hwpt_invalidate cache =3D {
+>> +        .size =3D sizeof(cache),
+>> +        .hwpt_id =3D hwpt_id,
+>> +        .data_type =3D data_type,
+>> +        .entry_len =3D entry_len,
+>> +        .entry_num =3D *entry_num,
+>> +        .data_uptr =3D (uintptr_t)data_ptr,
+>> +    };
+>> +
+>> +    ret =3D ioctl(fd, IOMMU_HWPT_INVALIDATE, &cache);
+>> +
+>> +    trace_iommufd_backend_invalidate_cache(fd, hwpt_id, data_type,
+>entry_len,
+>> +                                           *entry_num, cache.entry_num,
+>> +                                           (uintptr_t)data_ptr, ret);
+>> +    if (ret) {
+>> +        *entry_num =3D cache.entry_num;
+>> +        error_report("IOMMU_HWPT_INVALIDATE failed: %s", strerror(errno=
+));
+>nit: you may report *entry_num also.
+>Wouldn't it be useful to have an Error *errp passed to the function
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index fa9b4bcad6..ef25e64b14 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -117,6 +117,8 @@ struct SevCommonState {
-     uint32_t cbitpos;
-     uint32_t reduced_phys_bits;
-     bool kernel_hashes;
-+    uint64_t sev_features;
-+    uint64_t supported_sev_features;
- 
-     /* runtime state */
-     uint8_t api_major;
-@@ -492,7 +494,40 @@ static void sev_apply_cpu_context(CPUState *cpu)
-     }
- }
- 
--static int check_vmsa_supported(hwaddr gpa, const struct sev_es_save_area *vmsa,
-+static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-+                              Error **errp)
-+{
-+    /*
-+     * Ensure SEV_FEATURES is configured for correct SEV hardware and that
-+     * the requested features are supported. If SEV-SNP is enabled then
-+     * that feature must be enabled, otherwise it must be cleared.
-+     */
-+    if (sev_snp_enabled() && !(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
-+        error_setg(
-+            errp,
-+            "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
-+            __func__);
-+        return -1;
-+    } else if (!sev_snp_enabled() &&
-+               (sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
-+        error_setg(
-+            errp,
-+            "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
-+            __func__);
-+        return -1;
-+    }
-+    if (sev_features & ~sev_common->supported_sev_features) {
-+        error_setg(errp,
-+                   "%s: VMSA contains unsupported sev_features: %lX, "
-+                   "supported features: %lX",
-+                   __func__, sev_features, sev_common->supported_sev_features);
-+        return -1;
-+    }
-+    return 0;
-+}
-+
-+static int check_vmsa_supported(SevCommonState *sev_common, hwaddr gpa,
-+                                const struct sev_es_save_area *vmsa,
-                                 Error **errp)
- {
-     struct sev_es_save_area vmsa_check;
-@@ -558,24 +593,10 @@ static int check_vmsa_supported(hwaddr gpa, const struct sev_es_save_area *vmsa,
-     vmsa_check.x87_fcw = 0;
-     vmsa_check.mxcsr = 0;
- 
--    if (sev_snp_enabled()) {
--        if (vmsa_check.sev_features != SVM_SEV_FEAT_SNP_ACTIVE) {
--            error_setg(errp,
--                       "%s: sev_features in the VMSA contains an unsupported "
--                       "value. For SEV-SNP, sev_features must be set to %x.",
--                       __func__, SVM_SEV_FEAT_SNP_ACTIVE);
--            return -1;
--        }
--        vmsa_check.sev_features = 0;
--    } else {
--        if (vmsa_check.sev_features != 0) {
--            error_setg(errp,
--                       "%s: sev_features in the VMSA contains an unsupported "
--                       "value. For SEV-ES and SEV, sev_features must be "
--                       "set to 0.", __func__);
--            return -1;
--        }
-+    if (check_sev_features(sev_common, vmsa_check.sev_features, errp) < 0) {
-+        return -1;
-     }
-+    vmsa_check.sev_features = 0;
- 
-     if (!buffer_is_zero(&vmsa_check, sizeof(vmsa_check))) {
-         error_setg(errp,
-@@ -1729,6 +1750,39 @@ static int sev_snp_kvm_type(X86ConfidentialGuest *cg)
-     return KVM_X86_SNP_VM;
- }
- 
-+static int sev_init_supported_features(ConfidentialGuestSupport *cgs,
-+                                       SevCommonState *sev_common, Error **errp)
-+{
-+    X86ConfidentialGuestClass *x86_klass =
-+                               X86_CONFIDENTIAL_GUEST_GET_CLASS(cgs);
-+    /*
-+     * Older kernels do not support query or setting of sev_features. In this
-+     * case the set of supported features must be zero to match the settings
-+     * in the kernel.
-+     */
-+    if (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common)) ==
-+        KVM_X86_DEFAULT_VM) {
-+        sev_common->supported_sev_features = 0;
-+        return 0;
-+    }
-+
-+    /* Query KVM for the supported set of sev_features */
-+    struct kvm_device_attr attr = {
-+        .group = KVM_X86_GRP_SEV,
-+        .attr = KVM_X86_SEV_VMSA_FEATURES,
-+        .addr = (unsigned long)&sev_common->supported_sev_features,
-+    };
-+    if (kvm_ioctl(kvm_state, KVM_GET_DEVICE_ATTR, &attr) < 0) {
-+        error_setg(errp, "%s: failed to query supported sev_features",
-+                   __func__);
-+        return -1;
-+    }
-+    if (sev_snp_enabled()) {
-+        sev_common->supported_sev_features |= SVM_SEV_FEAT_SNP_ACTIVE;
-+    }
-+    return 0;
-+}
-+
- static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- {
-     char *devname;
-@@ -1809,6 +1863,10 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         }
-     }
- 
-+    if (sev_init_supported_features(cgs, sev_common, errp) < 0) {
-+        return -1;
-+    }
-+
-     trace_kvm_sev_init();
-     switch (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common))) {
-     case KVM_X86_DEFAULT_VM:
-@@ -1820,6 +1878,39 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-     case KVM_X86_SEV_ES_VM:
-     case KVM_X86_SNP_VM: {
-         struct kvm_sev_init args = { 0 };
-+        MachineState *machine = MACHINE(qdev_get_machine());
-+        X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
-+
-+        /*
-+         * If configuration is provided via an IGVM file then the IGVM file
-+         * might contain configuration of the initial vcpu context. For SEV
-+         * the vcpu context includes the sev_features which should be applied
-+         * to the vcpu.
-+         *
-+         * KVM does not synchronize sev_features from CPU state. Instead it
-+         * requires sev_features to be provided as part of this initialization
-+         * call which is subsequently automatically applied to the VMSA of
-+         * each vcpu.
-+         *
-+         * The IGVM file is normally processed after initialization. Therefore
-+         * we need to pre-process it here to extract sev_features in order to
-+         * provide it to KVM_SEV_INIT2. Each cgs_* function that is called by
-+         * the IGVM processor detects this pre-process by observing the state
-+         * as SEV_STATE_UNINIT.
-+         */
-+        if (x86machine->igvm) {
-+            if (IGVM_CFG_GET_CLASS(x86machine->igvm)
-+                    ->process(x86machine->igvm, machine->cgs, errp) == -1) {
-+                return -1;
-+            }
-+            /*
-+             * KVM maintains a bitmask of allowed sev_features. This does not
-+             * include SVM_SEV_FEAT_SNP_ACTIVE which is set accordingly by KVM
-+             * itself. Therefore we need to clear this flag.
-+             */
-+            args.vmsa_features = sev_common->sev_features &
-+                                 ~SVM_SEV_FEAT_SNP_ACTIVE;
-+        }
- 
-         ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
-         break;
-@@ -2424,6 +2515,24 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-     SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(sev_common);
- 
-+    if (sev_common->state == SEV_STATE_UNINIT) {
-+        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
-+        if ((cpu_index == 0) && (memory_type == CGS_PAGE_TYPE_VMSA)) {
-+            const struct sev_es_save_area *sa =
-+                (const struct sev_es_save_area *)ptr;
-+            if (len < sizeof(*sa)) {
-+                error_setg(errp, "%s: invalid VMSA length encountered",
-+                           __func__);
-+                return -1;
-+            }
-+            if (check_sev_features(sev_common, sa->sev_features, errp) < 0) {
-+                return -1;
-+            }
-+            sev_common->sev_features = sa->sev_features;
-+        }
-+        return 0;
-+    }
-+
-     if (!sev_enabled()) {
-         error_setg(errp, "%s: attempt to configure guest memory, but SEV "
-                      "is not enabled", __func__);
-@@ -2443,7 +2552,8 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-                        __func__);
-             return -1;
-         }
--        if (check_vmsa_supported(gpa, (const struct sev_es_save_area *)ptr,
-+        if (check_vmsa_supported(sev_common, gpa,
-+                                 (const struct sev_es_save_area *)ptr,
-                                  errp) < 0) {
-             return -1;
-         }
-@@ -2500,6 +2610,12 @@ static int cgs_get_mem_map_entry(int index,
-     struct e820_entry *table;
-     int num_entries;
- 
-+    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    if (sev_common->state == SEV_STATE_UNINIT) {
-+        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
-+        return 1;
-+    }
-+
-     num_entries = e820_get_table(&table);
-     if ((index < 0) || (index >= num_entries)) {
-         return 1;
-@@ -2531,6 +2647,12 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
-                                 uint32_t policy_data1_size, void *policy_data2,
-                                 uint32_t policy_data2_size, Error **errp)
- {
-+    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    if (sev_common->state == SEV_STATE_UNINIT) {
-+        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
-+        return 0;
-+    }
-+
-     if (policy_type != GUEST_POLICY_SEV) {
-         error_setg(errp, "%s: Invalid guest policy type provided for SEV: %d",
-         __func__, policy_type);
--- 
-2.43.0
+Will do.
+
+Thanks
+Zhenzhong
+
+>> +        ret =3D -errno;
+>> +    } else {
+>> +        g_assert(*entry_num =3D=3D cache.entry_num);
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>> +
+>>  static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error
+>**errp)
+>>  {
+>>      HostIOMMUDeviceCaps *caps =3D &hiod->caps;
+>> diff --git a/backends/trace-events b/backends/trace-events
+>> index 40811a3162..5a23db6c8a 100644
+>> --- a/backends/trace-events
+>> +++ b/backends/trace-events
+>> @@ -18,3 +18,4 @@ iommufd_backend_alloc_hwpt(int iommufd, uint32_t
+>dev_id, uint32_t pt_id, uint32_
+>>  iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=3D=
+%d
+>id=3D%d (%d)"
+>>  iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, in=
+t ret)
+>" iommufd=3D%d hwpt=3D%u enable=3D%d (%d)"
+>>  iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_=
+t
+>iova, uint64_t size, uint64_t page_size, int ret) " iommufd=3D%d hwpt=3D%u
+>iova=3D0x%"PRIx64" size=3D0x%"PRIx64" page_size=3D0x%"PRIx64" (%d)"
+>> +iommufd_backend_invalidate_cache(int iommufd, uint32_t hwpt_id, uint32_=
+t
+>data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint=
+64_t
+>data_ptr, int ret) " iommufd=3D%d hwpt_id=3D%u data_type=3D%u entry_len=3D=
+%u
+>entry_num=3D%u done_num=3D%u data_ptr=3D0x%"PRIx64" (%d)"
+>Eric
 
 
