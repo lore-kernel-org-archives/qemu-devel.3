@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F3EC19776
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 10:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC937C282CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 10:33:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnxg4-00071N-Hh; Fri, 28 Feb 2025 05:33:09 -0500
+	id 1tnxcM-0004US-Mq; Fri, 28 Feb 2025 05:29:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnxfS-0006gT-1g
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:32:33 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnxfP-0003rE-Om
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:32:29 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-439a4fc2d65so19950095e9.3
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 02:32:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740738745; x=1741343545; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BVzkFSgjMBDDzRoiVaiSW3Wxe54Mxry7NDIS4okWF2g=;
- b=XSPjy0RDOrZIW3cd7fkkyucFGSHgvt8mTMbCh9UZlXHZGfi0CM+KKOJrPIcw4h+m/r
- 3k2L67tEI0EXMP+8tA7hoyqOWF0JT6cZ3CXUymvxLbYILXeaUrLvGpDMYZa8byEHuyO9
- HWMwmUjoJWJw+b/1vP72uJqm35i3nfPuR7giq5s8ccEsIN3bX3SE0VELjNNH6cfqwyiB
- 4KEBh8JUNrjH9Bs2Nbx8clUr32TcGAd5wYOimp7GlnvmNJbD8qxJE/uEt3xnuuYAdj8l
- u47h0wSyqjvqv7G2tG6qia474JtXG4XTAUsMLmhPXI+tsTeilPXr8Y1a78vzhS7+OejL
- enag==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tnxbw-0002oz-Vu
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:28:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tnxbt-00032P-13
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:28:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740738519;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=y4NKtcUwg29ndmjYQHYEfuuJNcDoHzb/t4zzP2CEGHw=;
+ b=FDN/woTSiqVoY2jbMoieeMAwJaiqTI7hdlDDO3qkIi+ForbdRCm6AAMWopJezvqsdqccHF
+ 4FEIIhJ7AcX3ri5PniwG+N99JX0ABcw5wCEDnEVUfbIDuqHioUBSxfqLJpobWVl0wo4l7h
+ eMc757gt8+PzitsKKMW5genOMYfmNMs=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-619-6Akzwd15MWy1nw4fl4M3IA-1; Fri, 28 Feb 2025 05:28:36 -0500
+X-MC-Unique: 6Akzwd15MWy1nw4fl4M3IA-1
+X-Mimecast-MFC-AGG-ID: 6Akzwd15MWy1nw4fl4M3IA_1740738515
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-390ddebcbd1so1142127f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 02:28:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740738745; x=1741343545;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BVzkFSgjMBDDzRoiVaiSW3Wxe54Mxry7NDIS4okWF2g=;
- b=aGg3J/TU/e9acAW/ijCs5vJ55fstXOhDEnaNfmI1oKZEykG6XeXnnIoGIcnABCsyS7
- woy42KoIKBL4noy3iUZf7dSttZK1v4t8fYBru/uxEUsNxq8onPXhjCWW4VsIktuhuq00
- uRxaescF7H8InZOd8pt2xbrmS2d0Lbz4a4TjEG8h5FAx0R3IZa6mAvjsOxZCaEUaPjJI
- DdEZhvmRmQLIv/9D4t7Cd0LWvIULkq73K3M08h4fhqpD0bjXPiAnmQHMrBFBfXK4gVRC
- 3Va2MkZCv7oauSBLpc8HHbguEq6vOOjNM+JEiAGjvUPczltg1IFhXWOBLReMPN6GZgSS
- GtzQ==
-X-Gm-Message-State: AOJu0YzGSiOhq3zuPYSlDzydiGK6AXT4ppPkyVhGp8JR83VjyvjjcYi9
- ItcjH/LAdkZcH3N4sGVmbkrtL0ROuEgyzFWvFF47jRsv+5uS2dj46Cg4Hm/1zeFgLiImQw9Qsbj
- S
-X-Gm-Gg: ASbGnctK9QA4aUtAxffOWGiV2T3OQA7ah7NcpCmeiQ5MYChe1SNa8RK4TQ4yoH9v3qz
- uaVDhA1UIySDirX543V75s6vbBBfWGYA3Zrq5pW6tVnRR5dxBSTZsiDLWnN0xdELVutcp9a0sV1
- c5W5WhLYzX4greNN8JyNA5M6JCer4fiD2mCCPg8Q0neVvdYY0++bpMYUyWFegzoVDbscpHbnMt6
- wZLzJ/Y8B+qvGOvg15KK3lWk5p9QAEOiuS0SV+X1UlWE+nb/ctrhoha/PWvkGZVzJXM2Dhzdx77
- I3EKulW9bje6oMy18n0EfwfSwSFNxNvl
-X-Google-Smtp-Source: AGHT+IE8yAjUsqAq1BECHtRd05mlAH33ccdInlpaTtEA71fCkeHzzlOChtJFQVudymVWJPt16bdf9g==
-X-Received: by 2002:a05:600c:3ca8:b0:439:9424:1b70 with SMTP id
- 5b1f17b1804b1-43ba675caafmr27924355e9.30.1740738744709; 
- Fri, 28 Feb 2025 02:32:24 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1740738514; x=1741343314;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=y4NKtcUwg29ndmjYQHYEfuuJNcDoHzb/t4zzP2CEGHw=;
+ b=BJZ9fA9GRE4bUXKXybyktnZQ4ZI++JEE+kZMjyZMexR2uxuuXfFUcyyJwWbMxFWNBH
+ PwG8058kY3P/qwZt2rx/AsJ5Ur0vJXLpp3zDsc8uuSfmEnfwKVeYRzuZwZMROciUXOoE
+ LZ28O6oD/kvsjFVr3JUnRrCloNqAHJ1/wviylGKSw/xNgIDPMAhPXOTNn4gBIx6/T2Bq
+ v5gCSPMECuw4Sub5VFeCWRsLPCPdEQoVele356/rskVkwPP6XC3+79SzOwDT/ed+xf/Z
+ vDMe5jULbh3tMu6K1P4jEcZKHeq7+tSDlCRjv9SF5f9QCLiN55X7q2f5RhiMDW+uA897
+ j5DA==
+X-Gm-Message-State: AOJu0YwH3reYoUN5hi6Bzvg00cEgHjniISWt4FoUP76MxIbiHkDYN8zP
+ y14hfNo8j6xgunr/0Pp+lXDskU7PDvpRDM80AMKDnqly5yR09oY9fD0kCQoUnguKow8M6fMW52w
+ MY65IHhgoZglh0dzJOs2zxHfiEe2SutznjGW5CHejtGwHs7KtB0CBIO1G7GUOAZjL0YFaLweFO3
+ gh/rZ3sR6hTN/usg0IJaHppfSqU8X+j7Hx/Cqdokc=
+X-Gm-Gg: ASbGncvzzkU1uTpgfI9cDzjzfJWt8Q1CibCEpGP97ajt2Hj0QeUq1bQg9YNtCnqWGnQ
+ UwVNho+Xmqs2V8IKtPdzxZch8hI4sqbWJwYsfEpJDU8QFmik6MhAGUBhQlENzeA0LNuJCxmy1CJ
+ fzu7UwIPrDcvtexoDFlXXWa81L7ozBhLLhwCBQJpHnfMlIfShrW9+vzs2AFVDSEaaceaXXfnBaV
+ CgeR6rUbNrImJEbXxMEbPuF8mmCNRSfN8TCrJWltiv9wn1btulfR6ieKDuLqRaqVQw4ZCK7Zv9z
+ eAhoc9ULKyIruWq/qh/S
+X-Received: by 2002:a05:6000:1868:b0:38b:d7c3:3768 with SMTP id
+ ffacd0b85a97d-390ec7cc8damr1887347f8f.12.1740738514012; 
+ Fri, 28 Feb 2025 02:28:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFo7QsdJ5mxECXJHKxpsTC8sn5nIQBccUxgpcICBjaHd8oM5efAF0a2F8lY5VH82j8ULxlTzQ==
+X-Received: by 2002:a05:6000:1868:b0:38b:d7c3:3768 with SMTP id
+ ffacd0b85a97d-390ec7cc8damr1887329f8f.12.1740738513602; 
+ Fri, 28 Feb 2025 02:28:33 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.152.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba571274sm83514305e9.31.2025.02.28.02.32.23
+ 5b1f17b1804b1-43aba58717esm82552175e9.33.2025.02.28.02.28.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Feb 2025 02:32:23 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Fri, 28 Feb 2025 02:28:32 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] include/exec/memop.h: Expand comment for MO_ATOM_SUBALIGN
-Date: Fri, 28 Feb 2025 10:32:22 +0000
-Message-ID: <20250228103222.1838913-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+Cc: alistair.francis@wdc.com
+Subject: [PATCH 20/22] target/riscv: convert Ventana V1 to RISCVCPUDef
+Date: Fri, 28 Feb 2025 11:27:44 +0100
+Message-ID: <20250228102747.867770-21-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250228102747.867770-1-pbonzini@redhat.com>
+References: <20250228102747.867770-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,34 +108,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expand the example in the comment documenting MO_ATOM_SUBALIGN,
-to be clearer about the atomicity guarantees it represents.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/exec/memop.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ target/riscv/cpu.c | 75 ++++++++++++++++++++++------------------------
+ 1 file changed, 35 insertions(+), 40 deletions(-)
 
-diff --git a/include/exec/memop.h b/include/exec/memop.h
-index acdb40a9b3b..407a47d82c7 100644
---- a/include/exec/memop.h
-+++ b/include/exec/memop.h
-@@ -91,8 +91,12 @@ typedef enum MemOp {
-      *    Depending on alignment, one or both will be single-copy atomic.
-      *    This is the atomicity e.g. of Arm FEAT_LSE2 LDP.
-      * MO_ATOM_SUBALIGN: the operation is single-copy atomic by parts
--     *    by the alignment.  E.g. if the address is 0 mod 4, then each
--     *    4-byte subobject is single-copy atomic.
-+     *    by the alignment.  E.g. if an 8-byte value is accessed at an
-+     *    address which is 0 mod 8, then the whole 8-byte access is
-+     *    single-copy atomic; otherwise, if it is accessed at 0 mod 4
-+     *    then each 4-byte subobject is single-copy atomic; otherwise
-+     *    if it is accessed at 0 mod 2 then the four 2-byte subobjects
-+     *    are single-copy atomic.
-      *    This is the atomicity e.g. of IBM Power.
-      * MO_ATOM_NONE: the operation has no atomicity requirements.
-      *
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 52e33905d21..a6c97a43799 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -497,45 +497,6 @@ static void riscv_register_custom_csrs(RISCVCPU *cpu, const RISCVCSR *csr_list)
+ #endif
+ 
+ #if defined(TARGET_RISCV64)
+-static void rv64_veyron_v1_cpu_init(Object *obj)
+-{
+-    CPURISCVState *env = &RISCV_CPU(obj)->env;
+-    RISCVCPU *cpu = RISCV_CPU(obj);
+-
+-    riscv_cpu_set_misa_ext(env, RVG | RVC | RVS | RVU | RVH);
+-    env->priv_ver = PRIV_VERSION_1_12_0;
+-
+-    /* Enable ISA extensions */
+-    cpu->cfg.mmu = true;
+-    cpu->cfg.ext_zifencei = true;
+-    cpu->cfg.ext_zicsr = true;
+-    cpu->cfg.pmp = true;
+-    cpu->cfg.ext_zicbom = true;
+-    cpu->cfg.cbom_blocksize = 64;
+-    cpu->cfg.cboz_blocksize = 64;
+-    cpu->cfg.ext_zicboz = true;
+-    cpu->cfg.ext_smaia = true;
+-    cpu->cfg.ext_ssaia = true;
+-    cpu->cfg.ext_sscofpmf = true;
+-    cpu->cfg.ext_sstc = true;
+-    cpu->cfg.ext_svinval = true;
+-    cpu->cfg.ext_svnapot = true;
+-    cpu->cfg.ext_svpbmt = true;
+-    cpu->cfg.ext_smstateen = true;
+-    cpu->cfg.ext_zba = true;
+-    cpu->cfg.ext_zbb = true;
+-    cpu->cfg.ext_zbc = true;
+-    cpu->cfg.ext_zbs = true;
+-    cpu->cfg.ext_XVentanaCondOps = true;
+-
+-    cpu->cfg.mvendorid = VEYRON_V1_MVENDORID;
+-    cpu->cfg.marchid = VEYRON_V1_MARCHID;
+-    cpu->cfg.mimpid = VEYRON_V1_MIMPID;
+-
+-#ifndef CONFIG_USER_ONLY
+-    set_satp_mode_max_supported(cpu, VM_1_10_SV48);
+-#endif
+-}
+ 
+ static void rv64_xiangshan_nanhu_cpu_init(Object *obj)
+ {
+@@ -3088,7 +3049,41 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.max_satp_mode = VM_1_10_SV57,
+     ),
+ 
+-    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_v1_cpu_init),
++    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_VEYRON_V1, TYPE_RISCV_VENDOR_CPU,
++        .misa_mxl_max = MXL_RV64,
++        .misa_ext = RVG | RVC | RVS | RVU | RVH,
++        .priv_spec = PRIV_VERSION_1_12_0,
++
++        /* ISA extensions */
++        .cfg.mmu = true,
++        .cfg.ext_zifencei = true,
++        .cfg.ext_zicsr = true,
++        .cfg.pmp = true,
++        .cfg.ext_zicbom = true,
++        .cfg.cbom_blocksize = 64,
++        .cfg.cboz_blocksize = 64,
++        .cfg.ext_zicboz = true,
++        .cfg.ext_smaia = true,
++        .cfg.ext_ssaia = true,
++        .cfg.ext_sscofpmf = true,
++        .cfg.ext_sstc = true,
++        .cfg.ext_svinval = true,
++        .cfg.ext_svnapot = true,
++        .cfg.ext_svpbmt = true,
++        .cfg.ext_smstateen = true,
++        .cfg.ext_zba = true,
++        .cfg.ext_zbb = true,
++        .cfg.ext_zbc = true,
++        .cfg.ext_zbs = true,
++        .cfg.ext_XVentanaCondOps = true,
++
++        .cfg.mvendorid = VEYRON_V1_MVENDORID,
++        .cfg.marchid = VEYRON_V1_MARCHID,
++        .cfg.mimpid = VEYRON_V1_MIMPID,
++
++        .cfg.max_satp_mode = VM_1_10_SV48,
++    ),
++
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU,
+                                                  MXL_RV64, rv64_xiangshan_nanhu_cpu_init),
+ #ifdef CONFIG_TCG
 -- 
-2.43.0
+2.48.1
 
 
