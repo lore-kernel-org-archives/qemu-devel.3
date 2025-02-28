@@ -4,79 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2AE9C282C5
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 09:51:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CCF5C19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 10:05:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnx1b-0003mG-P1; Fri, 28 Feb 2025 04:51:19 -0500
+	id 1tnxEc-0001qV-B1; Fri, 28 Feb 2025 05:04:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tnx1T-0003kr-Qj
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 04:51:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Vasant.Hegde@amd.com>)
+ id 1tnxEa-0001pH-Ro; Fri, 28 Feb 2025 05:04:44 -0500
+Received: from mail-bn1nam02on2062e.outbound.protection.outlook.com
+ ([2a01:111:f403:2407::62e]
+ helo=NAM02-BN1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tnx1P-0006rQ-Km
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 04:51:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740736265;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dWxh5CDNOodxI7bBIyc167ogFwP8R+dZZQuc8tUXzQs=;
- b=IYEO5ecmJXTjfisuzfYJZSAsQBqNM8MRSFilPQFpAKCj9A2wGiVZqSsu7BR9VVwP55T3jQ
- woe9i/KBEY/GVwlGHPsB1iIVIEg9r+viSiQJJru1FPAssYfKoUJcYgBhfVcyTg7P/Az9HB
- rAI90KMnpW9QUmvJZdEH2RA8j+8JSVg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-369-tl6TZSvWMoWy1CK-x2IKcA-1; Fri,
- 28 Feb 2025 04:51:00 -0500
-X-MC-Unique: tl6TZSvWMoWy1CK-x2IKcA-1
-X-Mimecast-MFC-AGG-ID: tl6TZSvWMoWy1CK-x2IKcA_1740736259
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED97D1801A10; Fri, 28 Feb 2025 09:50:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.45])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C5AEB1800359; Fri, 28 Feb 2025 09:50:56 +0000 (UTC)
-Date: Fri, 28 Feb 2025 09:50:53 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/5] tests/functional: skip test if QEMU_TEST_QEMU_BINARY
- is not set
-Message-ID: <Z8GG_dcCqo8_X4RR@redhat.com>
-References: <20250205155946.2811296-1-berrange@redhat.com>
- <20250205155946.2811296-2-berrange@redhat.com>
- <a90b4f1f-8581-4647-9145-e52fc14ac604@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <Vasant.Hegde@amd.com>)
+ id 1tnxET-0008Mk-UM; Fri, 28 Feb 2025 05:04:44 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LU44vQ4UVnahIdO5SNjQxhYEO4oFdnfk/6f3XamPoyne+gCaMltqmLfF0nAqxScEYtvGvnooSvimeDlRLIyAg7IVMJE2HDFWAXik4eEO6F3JgBRLEhrny0wSGAFZnUPaTiprRbrrnyEgi8YO48fMFmPjNgweHuJrDq88zyrqkeycKbI0jxtYG1A2sSyDqvNcix8CUnCA/9F2uNBjMCWnbzPrBzWokRCIBOdyBTpbRp67ZIZOgdRud0m5CJNlr0iwWuwtBSbh3FZugeHOUIzPQniK/gsFVEFx7CGWbfwcuMHFYGgsyP5/0mZ5ojmLjDnJV0nvZmGXw8R82UgdRU/h7Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jxo9YIpUGteaeQSjX5nkYQF6Z9bcAy7RaNY/44PCKfE=;
+ b=REh3UK+6KHoNPd9R3OSR4W5Q4Bo4Llxh7MN+t0JDLGp57YQhAaececR02pxdWle/Mh5250zk9Ejdid4SAdcgyPdg0H+uABFG6/a61udlAkiT6X4YDcrr2I9Nc/UmcIbunp9On/j6ORNIR8Z7FxKhHGD1n+DurBHngxDLafbnKxF2qg/CDg8NfUdxMLaXsRKMavEcqFKFZ9Yz1NiwHVmB4UWS0dhX58ihuEUNq2Tnb0dGctyBiXQlzrTa+TEcRv4kVOmB+5HfDQFvd29irx1AsDgR5rJ+V8tQFi+R0zL/NIZfYJuiYBKgmjWQGNbce3gn7rK+3jHX0pxKVbS2B7Rrtg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jxo9YIpUGteaeQSjX5nkYQF6Z9bcAy7RaNY/44PCKfE=;
+ b=0j3M9WPNBI8VyMJP2bzo2bT1NPFFAMC7XUym/YBrM2VKG1mTyANKiPQknbCIBAPYKIaRqFv4i5t792fms+Ewu+NHOlGdBZr4oX4aUnWdXZ2QjZb/ZawwNzlggGqVi6gWJYhlbu3QQCCVKuw+zu6hlrPVNH5MCAQH9nu0ZZ54IYA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com (2603:10b6:8:9f::5) by
+ PH8PR12MB7376.namprd12.prod.outlook.com (2603:10b6:510:214::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.19; Fri, 28 Feb
+ 2025 10:04:27 +0000
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5]) by DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5%6]) with mapi id 15.20.8489.018; Fri, 28 Feb 2025
+ 10:04:27 +0000
+Message-ID: <185d064b-6a2d-4ae6-926c-0f847e15cd61@amd.com>
+Date: Fri, 28 Feb 2025 15:34:20 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] Emulated AMD IOMMU cleanup and fixes
+To: Michael Tokarev <mjt@tls.msk.ru>, Sairaj Kodilkar <sarunkod@amd.com>,
+ qemu-devel@nongnu.org
+Cc: mst@redhat.com, suravee.suthikulpanit@amd.com,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250207045354.27329-1-sarunkod@amd.com>
+ <985611f9-e7f9-44d0-a8c0-95fb48370591@tls.msk.ru>
+ <75adbcf1-0acd-40e7-b1ef-c699c07bf2fc@amd.com>
+ <e021e4d9-fe04-4832-bdde-c394473283ca@tls.msk.ru>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <e021e4d9-fe04-4832-bdde-c394473283ca@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a90b4f1f-8581-4647-9145-e52fc14ac604@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-ClientProxiedBy: PN3PR01CA0089.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:9a::7) To DS7PR12MB6048.namprd12.prod.outlook.com
+ (2603:10b6:8:9f::5)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB6048:EE_|PH8PR12MB7376:EE_
+X-MS-Office365-Filtering-Correlation-Id: 58f8dc5e-e178-46df-aa61-08dd57df4931
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TlVGMCtFNHhZdUM3bmVGcEFFUUVXZDExc3pOU3pQYmRTTjlXZUp6Qi9BdCts?=
+ =?utf-8?B?V2xWYjhhZXJLaHphWTdwcFdHWEtpK2hJWjI2ZG0zc0lid3JvTGNtaGpYUFJL?=
+ =?utf-8?B?dDFZd2pQeUZMTldEVmdvV000UjJLbThTTmhaTTFKTFl0Sng5V3oxS3lxZkFw?=
+ =?utf-8?B?QUFlQ1ZIeUxWcTdmdFRYMU96L2xOeXpvekcvNGpzMk5aT20xYVZJZzROMVg4?=
+ =?utf-8?B?eDdyUjd3M0laQk95azRDdXJPclB3ejd1aUc2d3piVVBOQWgxQm1hYWQ3dmFj?=
+ =?utf-8?B?QUg3MHNLTDJ5d0hwV2dIQmZwdDhXblR1WXdOTStEYytITDhCeTNYWDZPVnJt?=
+ =?utf-8?B?QUVUWEs3c1ZYd1pZaGx3amVOTWRNNjRmWnNNcVhXc01UOWhmU3VTMm5lUHJy?=
+ =?utf-8?B?eWpoNUxiQ3MvVU9qMS8zMngwd3daU3pZRG9ZTG55U2xGL1k4N2RpUGE0K28z?=
+ =?utf-8?B?Rk1RakxQcVhGTGY3ZmF3S042NW00dGtSVG42N21ITGRENzc1cnlUWkx5N25T?=
+ =?utf-8?B?ditFZVR2RmhCTHYwZWRtTytwTXZtQThYQndrWkdEU0x4MFpuVWVHQWFRKzlQ?=
+ =?utf-8?B?cTV4MkJnRVA4RE1FNHhGZzJ3RGRLOExDdjlFQVdHQTlURkwxaGVOQ0ZQN0pV?=
+ =?utf-8?B?bExOUkRSVE5QeGpkT3BxSmJvQzZhVXQ1d21JTUZoL2lGY0g3ZUFUVUdVOVp5?=
+ =?utf-8?B?Tmo1QW9JMkpBbFl4VnVweGRNNEgyblVOT2NNaE81cWlRei93ckVqOTdTN2xV?=
+ =?utf-8?B?VUdlL2swdU9YK2ZKMkJuLy9rQnhLWEtBUUpBUDZPdUFoaFpPdWdsa0FlSHVp?=
+ =?utf-8?B?RjIvMmFLMHhlcmxFT2tWSzRERHZOTEtzekFCSjQvL05aam9GL2h2bFFQWXNz?=
+ =?utf-8?B?RHBEZGFVbnF1OUo3UDR1R3JtL1hubWNHQ2dtRjN6NjVrdzZJLzNBNERtWTV0?=
+ =?utf-8?B?TS8vd2t5VXhKVC9GeWJTbmY3bytERXRwYUJGRFMxNUVkVW5CdHc4T1h4aGNH?=
+ =?utf-8?B?a0RzRWVJY0NCNXBFelgrK0J6Y3lHZ0JxdzdaSFJCK2ZUanp3OC9sbVNUMVVy?=
+ =?utf-8?B?bElkVlloT0V3NEFzcnBkcFVueVFvbnBXYVRmTzRXVXUrbFdwVG5IeGdLeDht?=
+ =?utf-8?B?Z3l1cjFXWGc4SEpqa3JvRFFJL2Q5YnE3Kzg0aTRkdGZDQ05VaFBJdlpnUHF1?=
+ =?utf-8?B?VWRvQ0Fmc1RBK2ZzNERLaEVjY1MvR3pqL045YmFxVHFvc3hheHFZSXNFanVE?=
+ =?utf-8?B?TEJPWXpkcGNmT2Y4L25CZDl4ZysrTkRhRkhZbWw0TjdwTlk3M0RFbEZXT0JD?=
+ =?utf-8?B?WGt6QWxnUjF1R2dGTVI0dS8zU0pYQ2NON21wenVnZTJQVUJhSkVGZGtsU3ZU?=
+ =?utf-8?B?ZTlldW9pd3BNMkJVdUVnTnh1OFg4YVY3Vm5oaDd0bTN2cHBLRW5LZ1lNTUJq?=
+ =?utf-8?B?WkhtM2E1ckxjRlJYWG1wZkdpdmxvcHVlTklxSmhDT0h1VWdXTXYwYm1aTFpw?=
+ =?utf-8?B?VGhvQ2IyU3YzVUJrcEhzK3lMVStvK0R4T3kvWHNNNytYSHBHRlNCK3U3dFh4?=
+ =?utf-8?B?WVRyNnZTQ0MzQ2dxN0t6dVpRU0NLZjZlNytwRGV3MURkNjI0OEZSTytpNTdt?=
+ =?utf-8?B?akNBNjZvNUxTWlE3SFZCdjVMNWxsbllxWHNuNEQ4cjlCT3pVRGJaUlVmdm5p?=
+ =?utf-8?B?b3gybUJLVk5aYytKOEdESWlDRjF1QWpjZXhkLzIweWtyVThlWFJZaW9nTkph?=
+ =?utf-8?B?dUxnWmFwOFBCdC9NNXZROEErMnd3VVRzVHYwYkQ1ZThZVFpleTZaaCtXTEF3?=
+ =?utf-8?B?dWx1Mmo5dXBLYkRvMlY1bzh1NE1DcDdBNUU0K1lmTFYyRFMwajZvbkUvQTV4?=
+ =?utf-8?Q?shQvNpPaBUjVG?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR12MB6048.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MTF1THk1aGRPaDBxdDRNb3ZoWmJzOXdOWDFSb3h5MHMwYlB3ZHZGM2JwUk03?=
+ =?utf-8?B?NHJyaW1HOVBVRit3bW15MHRIbjNMMU1iRkFmNkdIVU55VjlsN3pKOTZsenNz?=
+ =?utf-8?B?cHZTZ0Y1R0hJTlJwWlBBbE16VkdoZTR0Z2hZV29NV1hROVZad01IdWN5MGFp?=
+ =?utf-8?B?YTk1dEMvM210cVlWbE5MMzk1S2hTcDVRd3BHRVhLM1g0V0xJbTR1dDUwYzF5?=
+ =?utf-8?B?N3BnK1R5bUdlcDBITGVyR09kU0hpUHZqUEpHM21xWkdLWEZZelZMeXdPOXJW?=
+ =?utf-8?B?dEJmYnpOa2J1ekdMSEJqd3l2QWRoYlBZbVR2NVFqeTBIeVUwZDFVTi9US0o3?=
+ =?utf-8?B?NUhyeERGR3BBRENIajNDbmhva1lHaGExZU1qQVZ2eFpuT1lkQXV3dGV5aHR6?=
+ =?utf-8?B?TDBsYUlnMTNsYSs1MWRGWGhJKzcxRWt6SFYrRHI2V1dubGQ0OHp5d1NNNitF?=
+ =?utf-8?B?WjdUamM4TGVKOVNHV1JnOThqUWFZQnV3VkYzR2plRU1vdXZTTnI5VnNTODl3?=
+ =?utf-8?B?aVgxM0Q0emVrSVhVK25URWVkOHg4eU5STnNBQ3FMb0t4UXc4eFhUdWI2cVJI?=
+ =?utf-8?B?aVM5SmtjVlZ6VVRvalM3S0Zzci9JL2gvZW9tTmVtSVRNUnk0Ym5WbFo1amg3?=
+ =?utf-8?B?OSt0bmEvRUxHS3JBdFJPZlpyNmYza0xoQmRYRVFHQUxTVEt6R1ZGRlUwcEtU?=
+ =?utf-8?B?UjFpSGFyeFFsazIvUGhDYTF3NVp6ZFFUa1dIRkV5MU5jcm1HNVJCR0RTWjlP?=
+ =?utf-8?B?NHh1Y2xERCt0MVJvRm5sTWV3d0g1Tyt0VzRObDltaHI1TkUyM3R6QVBvKy9h?=
+ =?utf-8?B?NThVeXF2bU16NnppRGFnTlJaSjJlVTVzQmVMSjFhNXVIZythSkV2QytOZTdC?=
+ =?utf-8?B?eTNTaEl2YVphYU5wUmdFYU1Xd2dCSGNLblhZOVowc0MvQlRwaVVPbU52VnN1?=
+ =?utf-8?B?OXJocWlEZGhhU2RsanVGc2U4ZXU5My93V015RURKTTVQczZ0L0pEdHFWMEJy?=
+ =?utf-8?B?VVNnMmsrWjdQYjFCckZCVUlDaEJtQitGTVRmVENEbEt4THBRTXZtVTE1Y0VM?=
+ =?utf-8?B?bnpORnVkbktKdk1qQlJUd1BwVXJYcjNjQ0FVTFVWYWl3d3BTWWUxK3JXRDNQ?=
+ =?utf-8?B?VGxjMVlXSkFpMk1MelFmVW4ySnhMMy9zNHhTUmpnbU1JdGluZ0l3MnBxUldM?=
+ =?utf-8?B?V2c5bitQbmt1TDFVQmxBaVlEa2hRKzVEWkd5SUMwMlhLbm14RFJ3ZEUxVk9M?=
+ =?utf-8?B?UlJ3UmhTR2VDMUNUV085eGpOQ3M5NC9HS2Jtazg5bHJCMkV0UDhwYUNCM2kr?=
+ =?utf-8?B?RWl0NHdYZHlLMytoZTlaem0wc3lYRkZoVmdtTm15bms1Z3dvNDVRS25FMmhE?=
+ =?utf-8?B?RkE1T2lTZzJTYy93SnovSHhESGxZNVlvWVIwWXFSZlRrRGNDWXF6MmVXaUJT?=
+ =?utf-8?B?ci9jdW5taVhsbWh3Q1BoK3ZNWWhacWtJQ2w5M3d0Uk1lMTRsSFJWUXlqQi9o?=
+ =?utf-8?B?L3hNK09vRStCNHNRYUFSYU9vK2JMZTZINXV1ZXE4QVgyS3lXcERndTB2NTVU?=
+ =?utf-8?B?VTBFczh2WmpuY2RuNTBNVll1K3ZjSW1odERIbzNMTHdwcURmY1c1KzRySUdZ?=
+ =?utf-8?B?QW4rQWlXSjh3WXNsTEEzdjh5NS84dUhHeHY2RVBPODUyTnp0dlBMNTdQaVZi?=
+ =?utf-8?B?YWFrT2ljYUtrTUZ5U0t4aUltZHNkTVVzbFh5b3ltRnhkQWVBSGwzcWFER0tQ?=
+ =?utf-8?B?UEhqaFFCRXpCNE1UdzY2WnNTTGRIaGpOM3pndzMxUWpHWHB4a0pMZ1lUYXpm?=
+ =?utf-8?B?WmNRamJKOVAzS3NRVVFFcVNwMTZ2VGthNTlWQWJEMks5ZFNhYXFaTmRaSEty?=
+ =?utf-8?B?cjFCV1ZqTWI1ektkcGcxNzlWekJLRnpYUmFSQ0xUVFk1am9HYk9sQXBmYjJR?=
+ =?utf-8?B?RUlhVzI0QldPUTU1QWN2NnhDOUI5cE9ZRThkbGhkamcyZ2JkVjE5K1VNaVhh?=
+ =?utf-8?B?ckFwV2tZQVh6cmpHSmFDUlc5dXZsU1E0NXJUMC90K2xVTjd1Z2JVMTUvbVBP?=
+ =?utf-8?B?bE9MdGV5eUhaY2lrMGhEM21sc2tDUlNLL1duYVhCZ1BzVjNUajNTV0ZhZlc1?=
+ =?utf-8?Q?njXL06VmLpc+P/HbdnDueyd0B?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 58f8dc5e-e178-46df-aa61-08dd57df4931
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6048.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2025 10:04:27.7111 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: HO37Atj6uybFRpFLX81oktslgWCjZlFyYaYyIOfcbQTFIWOeESMvbUlqg/zOYsI/jtU/fzUEbOWxBps5JEm2rA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7376
+Received-SPF: permerror client-ip=2a01:111:f403:2407::62e;
+ envelope-from=Vasant.Hegde@amd.com;
+ helo=NAM02-BN1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,60 +175,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 06, 2025 at 10:01:45AM +0100, Thomas Huth wrote:
-> On 05/02/2025 16.59, Daniel P. Berrangé wrote:
-> > If QEMU_TEST_QEMU_BINARY is not set we currently assert in the setUp
-> > function, resulting in a big traceback:
-> > 
-> >      TAP version 13
-> >      Traceback (most recent call last):
-> >        File "/var/home/berrange/src/virt/qemu/tests/functional/qemu_test/testcase.py", line 280, in setUp
-> >          super().setUp('qemu-system-')
-> >          ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
-> >        File "/var/home/berrange/src/virt/qemu/tests/functional/qemu_test/testcase.py", line 196, in setUp
-> >          self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
-> >          ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> >      AssertionError: unexpectedly None : QEMU_TEST_QEMU_BINARY must be set
-> > 
-> >      not ok 1 test_ppc_405.Ppc405Machine.test_ppc_ref405ep
-> >      1..1
-> > 
-> > For every other test pre-requisite that's missing we will mark the test
-> > as skipped. This does the same for missing QEMU_TEST_QEMU_BINARY, such
-> > that we get
-> > 
-> >      TAP version 13
-> >      ok 1 test_x86_64_kvm_xen.KVMXenGuest.test_kvm_xen_guest # SKIP QEMU_TEST_QEMU_BINARY env variable is not set
-> >      ok 2 test_x86_64_kvm_xen.KVMXenGuest.test_kvm_xen_guest_noapic_nomsi # SKIP QEMU_TEST_QEMU_BINARY env variable is not set
-> >      ok 3 test_x86_64_kvm_xen.KVMXenGuest.test_kvm_xen_guest_nomsi # SKIP QEMU_TEST_QEMU_BINARY env variable is not set
-> >      ok 4 test_x86_64_kvm_xen.KVMXenGuest.test_kvm_xen_guest_novector # SKIP QEMU_TEST_QEMU_BINARY env variable is not set
-> >      ok 5 test_x86_64_kvm_xen.KVMXenGuest.test_kvm_xen_guest_novector_noapic # SKIP QEMU_TEST_QEMU_BINARY env variable is not set
-> >      ok 6 test_x86_64_kvm_xen.KVMXenGuest.test_kvm_xen_guest_novector_nomsi # SKIP QEMU_TEST_QEMU_BINARY env variable is not set
-> >      ok 7 test_x86_64_kvm_xen.KVMXenGuest.test_kvm_xen_guest_vapic # SKIP QEMU_TEST_QEMU_BINARY env variable is not set
-> >      1..7
-> 
-> Not sure whether this is the right approach, since a missing
-> QEMU_TEST_QEMU_BINARY is a real error, and if we just skip, then the problem
-> might go unnoticed if the user does not look closely.
-> 
-> But to ease the situation: We could maybe add some auto-detection logic that
-> tries to guess the right qemu-system-$TARGET by looking at the file name of
-> the test and/or the test function name? We already encode the target
-> architecture in most of these... WDYT?
+Hi,
 
-When the user provides a binary, a single binary applies to all tests,
-so tests that don't match the binary get skipped. I think it would be
-a bit wierd to auto-select a different binary per test.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+On 2/26/2025 8:52 PM, Michael Tokarev wrote:
+> 26.02.2025 15:53, Vasant Hegde wrote:
+>> Hi Michael,
+> 
+> Hi!
+> 
+>> On 2/25/2025 2:17 PM, Michael Tokarev wrote:
+> ...>> Is this qemu-stable material (current series: 7.2, 8.2, 9.2)?
+>>
+>> Linux kernel doesn't use these changes. So its fine. But I believe we care for
+>> other OS as well? if yes then better to backport.
+> 
+> Yes, we definitely care about other OSes.  There are numerous possible
+> other questions though.  For example, how relevant these changes are
+> for older 7.2.x series, where AMD IOMMU is in less current state (missing
+> all further development) so might not be as relevant anymore.
+> 
+>>> 3684717b74 "amd_iommu: Use correct bitmask to set capability BAR" does
+>>> not apply to 7.2, since v8.0.0-10-g6291a28645 "hw/i386/amd_iommu: Explicit
+>>> use of AMDVI_BASE_ADDR in amdvi_init" in not in 7.2, but the change can be
+>>> adjusted for 7.2 easily, or 6291a28645 can be picked up too.
+>>
+>> How is this works? You will pick it up -OR- you want us to backport and send it
+>> to stable mailing list?
+> 
+> This is just a data point, nothing more.  Indicating that for 7.2, it needs some
+> more work.  I picked it up for 7.2 already: https://gitlab.com/mjt0k/qemu/-/
+> tree/staging-7.2
+
+Thanks. Looks good.
+
+> But this is more mechanical way, maybe you, who know this area much better than
+> me, prefer other way, like picking up already mentioned commit 6291a28645.
+> Or maybe it isn't worth the effort for 7.2 anyway, provided the issue isn't
+> that important and it needs any additional work to back-port.
+> 
+> If you especially care about some older stable releases and think one or
+> another change really needs to be there *and* needs some backporting work,
+> you might do a backport yourself or give some notes for me to do that.
+> 
+> It's always a trade-off between "importance" of the change, age of the
+> stable series, the amount of work needed for backporting, and possibility
+> of breakage.  For less-important or less-used stuff, even thinking about
+> this tradeoff is already too much work ;)
+
+:-)
+
+Thanks for detailed explanation. Next time, if its not applying cleanly we can
+backport it and give it to you.
+
+-Vasant
 
 
