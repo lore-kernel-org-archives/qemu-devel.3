@@ -4,83 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8046C282C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 16:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D946C282C6
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 16:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to3AC-0001XB-18; Fri, 28 Feb 2025 11:24:36 -0500
+	id 1to3DE-0003zF-A0; Fri, 28 Feb 2025 11:27:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1to3A8-0001TS-51
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 11:24:33 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1to3A6-0002W2-1B
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 11:24:31 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43aac0390e8so15617625e9.2
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 08:24:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740759868; x=1741364668; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=hv5zzt4u5f4vowmmRU23adl9qYXTG9rnBzhDNQshj7Y=;
- b=t6TN8gg9oGezx94XbIyX6WkQnPZgrF9Yc2ttBzCcIv62VHvTF3HO+3iJqUGshY/bNh
- Kn4VdZVHSU+BF6B+qnm8iTsM7WS9ShNOil0ofPeuDTgm4aF5fDLnuohwshpcUlXZ8Wew
- ystdZGEJ5sPIetX8HDihLa+jdeS023WLc0H7UeTjkjKcHw2OY5aHU1Dj953Ol6JkgiTx
- Qr6zzG+UPm1LhGzZfvG48JseczN3B1jYEAhN1Jzbn1aAYg5UmEBlvCDYec6fTF/0LPS0
- +E26L5GKR2RyZcjm3ZRIsmMb4NlDNxX5KjeuZqCRxp7dj2eB1oSxVgjDPBzddOzOXSME
- edhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740759868; x=1741364668;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hv5zzt4u5f4vowmmRU23adl9qYXTG9rnBzhDNQshj7Y=;
- b=WvA6P8H2ldZsNK5XZvdAYCYS0c3S8ArFyPR80eFeYGPAJM7I92bAapHeVTVzBQn8iy
- I7e9y61ns5CAqL9MX/Y4U6cJV9QW2ylGJhsUTcIMAKpLgWo1sN8JbrnlwP4jWm3moSZL
- NTckR8ShwcpfcILeX5cpeVnO2QeDekp4o2agAS/3GZjkCYDXjtIz3/PTvLPshWPuM48M
- zy7YNORE1QrE6/t59WKKYgxFgvNMxkm48ZxVRkDAEBuFJaOl/KDlavw14lIpqJiKrqXC
- 7zBJGRsBbqsRD1iGtT/YuFtbt/ZK3eRZKQOBTUg+JDFLbZgFBy9THXPXxRNsDSg+n/0i
- Zz8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPYa2nnYdhUraKF+QAQfMf7AE2M66HpsEHZH4fuLFuGby/sO8mJothmi/cgk/KeYi/L3hwM89p8jG+@nongnu.org
-X-Gm-Message-State: AOJu0Yw8KbyRvuf3MpREre4icoPc2HJLVwePaZtLnGgEiBeg3buAwZRO
- ggSVkSqzGuhI8QevBjR8qJH0LLkLTI5zR43PBIrlSamqGIP75R3s9RMfoRIbNpk6FgY0u9F8ag3
- Z
-X-Gm-Gg: ASbGncuGf55NYmFNI7OEghE36hwcAAbfJvbzcKdY6CVTO7jzWVL7BQZe/BmAgBmV+y0
- OqRrZ4fJrwh3PpVE3RjmM5+1S+lT5yX2eZe/m6a3C2ExOtFpTQ/YkCjg9wSCByMcS1h9GuLJ0Nu
- oyf54JtatN65ykIBFUldPcfICom5JK8V+mFgAuAipR8FkxyArUpbNpNG2CBdaHcCxCOTSh+Taxr
- L4gQOdEXsfz4DfuDHl77gRKxhoc/hDmAyG0gQuBEXbkgTIyaCzV8/ioUxhwM3HYUJcbQtsnfYh2
- 86T6AMUpQ2+ObFWGgO+zkxiig1T20IdJ
-X-Google-Smtp-Source: AGHT+IEmA5kxpcMdxa0hZ3znu8BaoAaj4PVcH/23SZzvSDW22+feJY5dxekVgw4E9orAuDOR+2BYOQ==
-X-Received: by 2002:a05:600c:3ba5:b0:439:942c:c1b5 with SMTP id
- 5b1f17b1804b1-43ba66e6fdamr38823255e9.11.1740759866781; 
- Fri, 28 Feb 2025 08:24:26 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43b73704228sm63460415e9.15.2025.02.28.08.24.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Feb 2025 08:24:26 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH] target/arm: Make dummy debug registers RAZ, not NOP
-Date: Fri, 28 Feb 2025 16:24:24 +0000
-Message-ID: <20250228162424.1917269-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
+ id 1to3DA-0003vq-3F; Fri, 28 Feb 2025 11:27:40 -0500
+Received: from mail.xenproject.org ([104.130.215.37])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
+ id 1to3D8-0002sI-4v; Fri, 28 Feb 2025 11:27:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=xenproject.org; s=20200302mail; h=In-Reply-To:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date;
+ bh=R3BRUdvvvJJZ604ru3RAMycqp9+G4p0pWnPRAV5PYjo=; b=txCtdH2JyyEdRz0+PyfXC0m3/T
+ 9sPg8ZBYpWv/MFZPb5TtTDP/0nEKHF48AmSHMZwSMH+5q3HG10Qd3CKtXRtMqALEQUDDBq3x8LIkt
+ 97SL6OcvHXxexL7rdHciZx0nEzl4d0mC9e+44VIhV3RJiNSTa2TjjvCZ3PX7l+aL8hKY=;
+Received: from xenbits.xenproject.org ([104.239.192.120])
+ by mail.xenproject.org with esmtp (Exim 4.96)
+ (envelope-from <anthony@xenproject.org>) id 1to3D2-00ANbI-03;
+ Fri, 28 Feb 2025 16:27:31 +0000
+Received: from [2a01:e0a:1da:8420:b77:bd5:6e45:7633] (helo=l14)
+ by xenbits.xenproject.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <anthony@xenproject.org>) id 1to3D1-00FSXm-1N;
+ Fri, 28 Feb 2025 16:27:31 +0000
+Date: Fri, 28 Feb 2025 17:27:28 +0100
+From: Anthony PERARD <anthony@xenproject.org>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ xen-devel@lists.xenproject.org, qemu-arm@nongnu.org,
+ Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
+ Andrew Cooper <andrew.cooper3@citrix.com>, Juergen Gross <jgross@suse.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Thomas Huth <thuth@redhat.com>, Jan Beulich <jbeulich@suse.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH 8/8] meson: Remove support for Xen on 32-bit ARM hosts
+Message-ID: <Z8Hj8Lm5SqkjLqiM@l14>
+References: <20250218162618.46167-1-philmd@linaro.org>
+ <20250218162618.46167-9-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+In-Reply-To: <20250218162618.46167-9-philmd@linaro.org>
+Received-SPF: pass client-ip=104.130.215.37;
+ envelope-from=anthony@xenproject.org; helo=mail.xenproject.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,71 +85,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In debug_helper.c we provide a few dummy versions of
-debug registers:
- * DBGVCR (AArch32 only): enable bits for vector-catch
-   debug events
- * MDCCINT_EL1: interrupt enable bits for the DCC
-   debug communications channel
- * DBGVCR32_EL2: the AArch64 accessor for the state in
-   DBGVCR
+On Tue, Feb 18, 2025 at 05:26:18PM +0100, Philippe Mathieu-Daudé wrote:
+> Per Stefano:
+> 
+>   For ARM 32-bit, I do not think we ever had many deployments,
+>   as most are 64-bit. Even when there are deployments, they do
+>   not typically use QEMU, as QEMU is less important for Xen on
+>   ARM compared to x86.
+> 
+> The QEMU project only test to cross-build Xen on Aarch64 hosts
+> (see 84eda110792 ("gitlab-ci: Add Xen cross-build jobs").
+> Since 32-bit host aren't tested, simply remove the support there.
+> 
+> [*] https://lore.kernel.org/qemu-devel/alpine.DEB.2.22.394.2502031438170.11632@ubuntu-linux-20-04-desktop/
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> While apparently running Xen on 32-bit hosts isn't straighforward
+> anymore (see [x]), we don't need to remove it ASAP, it is already
+> in the deprecation queue since commit 6d701c9bac1 ("meson:
+> Deprecate 32-bit host support").
+> 
+> [x] https://lore.kernel.org/qemu-devel/173d18bf-f68c-4bd5-b822-abb1c1f0c51b@suse.com/
+> ---
+>  docs/about/removed-features.rst | 5 +++++
+>  meson.build                     | 3 ---
+>  2 files changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index c6616ce05e5..f6ea53acc8b 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -969,6 +969,11 @@ MIPS "Trap-and-Emulate" KVM support (removed in 8.0)
+>  The MIPS "Trap-and-Emulate" KVM host and guest support was removed
+>  from Linux in 2021, and is not supported anymore by QEMU either.
+>  
+> +Xen on 32-bit ARM hosts (removed in 10.0)
+> +'''''''''''''''''''''''''''''''''''''''''
+> +
+> +Untested for more than 4 years.
 
-We implemented these only to stop Linux crashing on startup,
-but we chose to implement them as ARM_CP_NOP. This worked
-for Linux where it only cares about trying to write to these
-registers, but is very confusing behaviour for anything that
-wants to read the registers (perhaps for context state switches),
-because the destination register will be left with whatever
-random value it happened to have before the read.
+Well, not quite, we used to have some test of Xen on armhf hosts
+(one of arndale or cubietrunk, I don't remember which one we had to stop
+and never start testing again) until last year, and that included tests
+with qcow2 disk, so using QEMU.
 
-Model these registers instead as RAZ.
+But that testing infra is gone so the patch is fine:
+Reviewed-by: Anthony PERARD <anthony.perard@vates.tech>
 
-Fixes: 5e8b12ffbb8c68 ("target-arm: Implement minimal DBGVCR, OSDLR_EL1, MDCCSR_EL0")
-Fixes: 5dbdc4342f479d ("target-arm: Implement dummy MDCCINT_EL1")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2708
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-This is a very old bug (a decade old or so), and Linux doesn't
-hit it, so I didn't think it was worth adding a cc:stable; though
-it's not a very risky patch so there's no particular problem
-with backporting it either.
+Cheers,
 
- target/arm/debug_helper.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index 36bffde74e9..a9a619ba6b1 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -1037,7 +1037,7 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
-     { .name = "DBGVCR",
-       .cp = 14, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 0,
-       .access = PL1_RW, .accessfn = access_tda,
--      .type = ARM_CP_NOP },
-+      .type = ARM_CP_CONST, .resetvalue = 0 },
-     /*
-      * Dummy MDCCINT_EL1, since we don't implement the Debug Communications
-      * Channel but Linux may try to access this register. The 32-bit
-@@ -1046,7 +1046,7 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
-     { .name = "MDCCINT_EL1", .state = ARM_CP_STATE_BOTH,
-       .cp = 14, .opc0 = 2, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 0,
-       .access = PL1_RW, .accessfn = access_tdcc,
--      .type = ARM_CP_NOP },
-+      .type = ARM_CP_CONST, .resetvalue = 0 },
-     /*
-      * Dummy DBGCLAIM registers.
-      * "The architecture does not define any functionality for the CLAIM tag bits.",
-@@ -1075,7 +1075,8 @@ static const ARMCPRegInfo debug_aa32_el1_reginfo[] = {
-     { .name = "DBGVCR32_EL2", .state = ARM_CP_STATE_AA64,
-       .opc0 = 2, .opc1 = 4, .crn = 0, .crm = 7, .opc2 = 0,
-       .access = PL2_RW, .accessfn = access_dbgvcr32,
--      .type = ARM_CP_NOP | ARM_CP_EL3_NO_EL2_KEEP },
-+      .type = ARM_CP_CONST | ARM_CP_EL3_NO_EL2_KEEP,
-+      .resetvalue = 0 },
- };
- 
- static const ARMCPRegInfo debug_lpae_cp_reginfo[] = {
 -- 
-2.43.0
-
+Anthony PERARD
 
