@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00660C19776
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 13:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 137EAC19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 13:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnzy9-0005Lz-CY; Fri, 28 Feb 2025 07:59:57 -0500
+	id 1to02u-00006t-JH; Fri, 28 Feb 2025 08:04:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tnzy6-0005J0-G4
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 07:59:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1to02r-0008VC-Bo
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 08:04:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tnzy4-0006Jj-KN
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 07:59:54 -0500
+ id 1to02p-00070V-7s
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 08:04:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740747591;
+ s=mimecast20190719; t=1740747884;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=c83XVy6ozclMfOWx6ksvJRIp+J3X+fmuC/ka4FyOnOE=;
- b=J+T58mQrISVMClWI3vv6AVTayFUYLEBJw0lNDups01s0gKdNI+sEu0rs57FAziioPU2KCA
- mcTf7TEYSVj3vcwcE6JuUobmhQ/BOEj4EcwZN7NWzBXNvBMhCyuI/WiLQ6/bA2fVvdW8HC
- jsqF2mjg+2qP/dzNT3tKk5R1u41sCX4=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mu9FPPsmEvEks/3/xAxXVst93bcV5zsiog/7waQuz+E=;
+ b=ga2k4XPZt44/JI0tWar35q9S9a+zWZiMaJ0Z8m8CxsFMt9lvtknEmXOHMgW/zpHOwds8du
+ rlFkP4Ju3xGCPp0vwo0rDasV3PuV+vIz2WPYgWPG5xzEuAFeq0+W5VWRTNVq1bI844sxz8
+ 8A8jDVRcTkBtVa1K6hRFe0AH3eMY/Ws=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-412-idtNM3jmPrab-SJ-7HLcGg-1; Fri, 28 Feb 2025 07:59:49 -0500
-X-MC-Unique: idtNM3jmPrab-SJ-7HLcGg-1
-X-Mimecast-MFC-AGG-ID: idtNM3jmPrab-SJ-7HLcGg_1740747589
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-390f000e962so308989f8f.2
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 04:59:49 -0800 (PST)
+ us-mta-631-_kr_GfVZPKGDKG0ZFmkYWg-1; Fri, 28 Feb 2025 08:04:43 -0500
+X-MC-Unique: _kr_GfVZPKGDKG0ZFmkYWg-1
+X-Mimecast-MFC-AGG-ID: _kr_GfVZPKGDKG0ZFmkYWg_1740747882
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4394c0a58e7so13584985e9.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 05:04:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740747588; x=1741352388;
+ d=1e100.net; s=20230601; t=1740747882; x=1741352682;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=c83XVy6ozclMfOWx6ksvJRIp+J3X+fmuC/ka4FyOnOE=;
- b=t1C4jYjs5AFlCW2qFbAqCFgvV0yKv6xB/hd6DLXkje0caqVC2uCkB4ssVZcamEipOf
- L4uLQREVwNZt1tM59378eAX6e7iJOttRdSS9xd7KdJ705LEdaGMx+aRcmfMf3JBw3GMj
- YEkSe8Gb3GRHy9aeyUW3UdsOIx916VDlh1JVmijEOxBWcIlapdO3wLoYGxwl3Hyq3+u8
- kcNF+6/Azhd5bDXfXpQcoueodmER/cy0frq8t+DyshgZnQD4yhyuIEkaH43x/2S1nkP2
- yVEA6bioId0Dfb5Waw1OAvJBOBK862PFmqv7wkJbiirL4qLUPssUGpQG0S/mSWxDKUbM
- zvDQ==
+ bh=mu9FPPsmEvEks/3/xAxXVst93bcV5zsiog/7waQuz+E=;
+ b=ADQZjyQWzNH7pVWddVxHT8huhSfy95GjNviYm2fPaCBZ04W4FbMa134fe/On04o74q
+ 4ttVMKQUYiQa3hj7d0JZcZCC4NFZzlEJ1GHau96oROX6v62D7NbBJVmPUJnxUrU3oVBj
+ G2L7hMu5G10C/0oCE4ffECBH+1B4LLQWOXffXKVdVJ1ouKeE97s9apl967c3wmMwUvu8
+ WuoAx2PyICTkI3y6dgQR0hdCOTteFQe/28Zu47SNiPy0A0HZcGZdGm9lgUIqNlxRjVXJ
+ MLAeBetwbOb9n9cr690m3Ig5+dx3BHsqYLyInH4GvhfLNyuLZSzbGKowRdF6OtT9NhNC
+ /u4A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUJTpCT/zOz5u9UxWiomq6qN1GG1lt7I7nrHVDWckuA7+e79nGmzq22GLwMhkDTylx1H4f8b8LhK4Go@nongnu.org
-X-Gm-Message-State: AOJu0YzHkgKNVtrHl74VrYssmq52ZES1U2/FBPyWG8yZm3reBrSieUYc
- lMXGd2MAUZNVYMo4svabHHdovcR61TJwZYlslNPzT5Epv882s16aIWlsLP0lA4dm/uPUawd/riZ
- 1011Ftnw3/4ZLtJzECofi7qWy8U+PbyTFoKXu+aeE8wtLMsnkp3EU
-X-Gm-Gg: ASbGncsIRcPuY1qC9MUVdMxV1XcErSjCLcIRneib+cKHKFvKh74OXZtOLhNF519ZdTu
- 3Jpxng+igSqL0pXajcVKd/b2NOcl0Z6e7e2N95/HmVBJAWic2mIxBjXM0aTA55J3RUVkaN/i7fR
- yM/ieVaUMbVar5RcBwp0AbfRaIt3wqMcAUWS5cFRD/7rvspc3wrMYZ/KTctsokCCZmyUZeo+zux
- Ujy26/22ItU8HNOATsy8Y80N8D6jSHFcuPCFnF8qpqeZoyb8m2pLD7FVLAsLimiKDBjaFNwo0cF
- PH66IY41R0+em1pRWn9mJFQfgt5krnxc705A7IYdVsOJjIdhAVeI4buZhsGR6RI=
-X-Received: by 2002:a05:6000:1f8b:b0:38d:e092:3ced with SMTP id
- ffacd0b85a97d-390ec7c6c4amr2643361f8f.7.1740747588686; 
- Fri, 28 Feb 2025 04:59:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF39024ECeki2qeJ7m1bCe/xYOH62Iyh1CEl4EZF/iAAejb6b6Z9XQvhcS5PKHFcbRdN7SHDw==
-X-Received: by 2002:a05:6000:1f8b:b0:38d:e092:3ced with SMTP id
- ffacd0b85a97d-390ec7c6c4amr2643343f8f.7.1740747588359; 
- Fri, 28 Feb 2025 04:59:48 -0800 (PST)
+ AJvYcCX1tjbDtRNk/Il8kWbvKpIOjqtFXt6VyVU5FN/apbvweKZUmbrNw3Zo4EzBYBzM+MeFSIT+9LjBxdN2@nongnu.org
+X-Gm-Message-State: AOJu0YwCQFymS+XcF/iWNDjr2Y+TD+2J4dGT3Ik8n3RNg3AObanigjVQ
+ HGuUirRUjH7nKXTEQZiHkGLeZKqL2fdw+htwekplya6OzOmq0NIrXEvUp8W/jg4NOC4OYpnSUgQ
+ pMjdNepgL6j/68Ga6PYv7+32HbRqLcCE+S4KWVasVZXrRicnr91JE
+X-Gm-Gg: ASbGncsU04NZwfQJTgecWu3iU8pTGFI5mkJ49Ib81Fd8oA/dOtTOxvB658OxP0JHVxM
+ H/hm9HjzXwkUh1lFv/elDAYfp3OHY/E+a8nfi9knWpzr5U6G5qRKwT6b/BWa//sA3Dz1eQ62034
+ RsjLeMcOZ1oqzxAa+IO+M4ytT/ZFj8lcIylRYApeD2nOSinffFy5rgE5GNpFLerNR/ce5xSTMIG
+ r53HIHdKeqqlOd2sEYqLQ7jjqsaeW0BldtG6FaUhnV3AEwyOa1ScX6jtHbpOZtXA1EUtJy8+FcG
+ dN1giP5Xcp1NUM1Hsg0c7rYzli3Bu8VpfauPKyvvaDhYfl67PyUcXRMzTXoM92A=
+X-Received: by 2002:a05:600c:1912:b0:439:a1b8:a246 with SMTP id
+ 5b1f17b1804b1-43ba66f9643mr29722525e9.8.1740747881722; 
+ Fri, 28 Feb 2025 05:04:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHBiKjFTEf6xyVhifkY1bhOUt08H/FdpNbBvHTlAFX/nNPPBfQlbA3XEVmZ4B4eeXi37peB0A==
+X-Received: by 2002:a05:600c:1912:b0:439:a1b8:a246 with SMTP id
+ 5b1f17b1804b1-43ba66f9643mr29721915e9.8.1740747881242; 
+ Fri, 28 Feb 2025 05:04:41 -0800 (PST)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47a6739sm5110782f8f.22.2025.02.28.04.59.47
+ 5b1f17b1804b1-43aba5710f6sm91962555e9.29.2025.02.28.05.04.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Feb 2025 04:59:47 -0800 (PST)
-Date: Fri, 28 Feb 2025 13:59:47 +0100
+ Fri, 28 Feb 2025 05:04:40 -0800 (PST)
+Date: Fri, 28 Feb 2025 14:04:39 +0100
 From: Igor Mammedov <imammedo@redhat.com>
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 16/19] acpi/generic_event_device.c: enable
- use_hest_addr for QEMU 10.x
-Message-ID: <20250228135947.15504734@imammedo.users.ipa.redhat.com>
-In-Reply-To: <797c0199ef713241db145baf3860d32e0eb1d03a.1740671863.git.mchehab+huawei@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Ani Sinha
+ <anisinha@redhat.com>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v6 17/19] tests/acpi: virt: update HEST and DSDT tables
+Message-ID: <20250228140439.450611bd@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250228104400.5ac2f7b1@foz.lan>
 References: <cover.1740671863.git.mchehab+huawei@kernel.org>
- <797c0199ef713241db145baf3860d32e0eb1d03a.1740671863.git.mchehab+huawei@kernel.org>
+ <7a6a1a1ba78f7dac2be6b7335280c1d0b380a175.1740671863.git.mchehab+huawei@kernel.org>
+ <20250228173318.00000f9d@huawei.com>
+ <20250228104400.5ac2f7b1@foz.lan>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -115,32 +116,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Feb 2025 17:00:54 +0100
+On Fri, 28 Feb 2025 10:44:22 +0100
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> Now that we have everything in place, enable using HEST GPA
-> instead of etc/hardware_errors GPA.
+> Em Fri, 28 Feb 2025 17:33:18 +0800
+> Jonathan Cameron <Jonathan.Cameron@huawei.com> escreveu:
 > 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> ---
->  hw/acpi/generic_event_device.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> > On Thu, 27 Feb 2025 17:00:55 +0100
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> >   
+> > > - The HEST table now accept two sources;
+> > > - The DSDT tables now have a GED error device.
+> > > 
+> > > @@ -1,39 +1,39 @@
+> > >  /*
+> > >   * Intel ACPI Component Architecture
+> > >   * AML/ASL+ Disassembler version 20240322 (64-bit version)
+> > >   * Copyright (c) 2000 - 2023 Intel Corporation
+> > >   *
+> > > - * Disassembly of tests/data/acpi/aarch64/virt/HEST
+> > > + * Disassembly of /tmp/aml-DMPE22    
+> > This is an artifact of where you happened to get file
+> > from so if we are being really fussy drop the change 
+> > diff in the patch description for it.  I don't really care though.  
+> > >   *    
 > 
-> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> index f029753ab709..9fe70b74bd42 100644
-> --- a/hw/acpi/generic_event_device.c
-> +++ b/hw/acpi/generic_event_device.c
-> @@ -332,7 +332,7 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
->  static const Property acpi_ged_properties[] = {
->      DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
->      DEFINE_PROP_BOOL("x-has-hest-addr", AcpiGedState,
-> -                     ghes_state.use_hest_addr, false),
-> +                     ghes_state.use_hest_addr, true),
->  };
->  
->  static const VMStateDescription vmstate_memhp_state = {
+> True, but on the other hand, this is the only place at the diff
+> saying what table the diff is against (HEST, in this case), as I had to
+> remove the information before @@, as it was causing troubles when Igor
+> were trying to apply the patch (plus on checkpatch).
+> 
+> That' why I opted to keep this hunk.
+
+I'd drop this up to '* ACPI Data Table [HEST]' line.
+But doesn't really matter, as long as reader can get what 's going on.
+(there were precedents just putting snippets of diff)
+
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+
+> 
+> Regards,
+> Mauro
+> 
+> 
+> Thanks,
+> Mauro
+> 
 
 
