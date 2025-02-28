@@ -4,150 +4,212 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04170C19776
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 08:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F5EFC19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 08:17:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnvRR-0002rS-DF; Fri, 28 Feb 2025 03:09:53 -0500
+	id 1tnvYa-0007op-Ot; Fri, 28 Feb 2025 03:17:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnvRQ-0002rD-5Q
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:09:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1tnvYY-0007oA-QV
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:17:15 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnvRN-00009M-TZ
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:09:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740730187;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ChwMbL4Izz+HB6bXLWF0S7F7M6cNu2aGB3Fa52pOT4o=;
- b=DNtSJY3UDfi7tfpgH5Z2WOL7w7jJg6eCcTMYFhsje2HaHNp0fYnZt2nQzjrF0ZJGXqDdv+
- aERM9q2MZPk5E4kiJ/5AlZinpKZ2MT8FNZy8kWThNTxoljjJ4HX6gRao6swEY6JG+prgJe
- tmYPB/iCDOwq/bC2NTurxwWDpKWpZ3Y=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-85-OvR39veXN_aJVqLWUfiszw-1; Fri, 28 Feb 2025 03:09:45 -0500
-X-MC-Unique: OvR39veXN_aJVqLWUfiszw-1
-X-Mimecast-MFC-AGG-ID: OvR39veXN_aJVqLWUfiszw_1740730184
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38f455a8fcaso1138065f8f.2
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 00:09:45 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740730184; x=1741334984;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ChwMbL4Izz+HB6bXLWF0S7F7M6cNu2aGB3Fa52pOT4o=;
- b=fFxchu5xoe7kUBYQdtS+6H+Fb176JmjiOD4BwP0hpzyf1NiiS8fr8MIXijnKWwmKSw
- y7C3JbzRqPXqAeEIibzB+Stptq9QOs9jQaK/6qPWxed4fv3n9U4yjGKAByisL8qQlcHp
- OAXoMJN9eMZDbZ46pwehQRoMQVkRj37Qbx/QznR+ClVgobymBamGkzGjy+CGpYQRH21D
- wtyerMtfg+PYNyC6rvnRXpX7RKUBj//rRCBh2plGxihhEU/GMBGI8wFjJOfHLb4RN81l
- aACmu8wDZ0d1uAJpIvj0bHt+wtHACzVtdYxiZStEr/iDD3EfRAK2Zw0XvBJoBU7GjK+W
- IH8w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtmdTNshDQJsqbxdQPsbLPvAbfGWClUiDfvgRrYT/J99isZErYko1BBkMBxrqkfaCOm4n8ZjAeT3w3@nongnu.org
-X-Gm-Message-State: AOJu0Yx5OgJeDf3y+PxYXOiRsuzwdLvyd4LDuDFAYSCf6n/GeFtzO66k
- 7+XXuJTy5SKt7awshUganOyUIHM2KecRC3LT0ObmsT95Q9ujV80g1PrbGK+WPdFtqDXOI/GqTyS
- Rn5wzG0Ozr2eovQrZ0kHihp84FXrGc9zFqYmnyIm/MrKW/SKPVa3p
-X-Gm-Gg: ASbGncvSbSfZdr/GFR1weL7S3btBODxE7k2M+2IONJ+6/H9k25h/rBQmgUMA3vA6Fzn
- gDkaeZcaVHrYadrJ/QsdKS4D29tLpGo8FfDdnP95XfCTHja+6kiGGpL7zCNy6QRnTVsjU/d+sp7
- ccWj5PTGIU/KJKcW1XZBvedAklfbrMJVnw0ckPLU2CyL9INoE3bjz+g/2s7AKlcX73aU5knwywN
- GRG7weZ227P4r+Co7WbTlBaiZ1svkE7X/0+w6fBv4y4XYrpwW7CQRdKIN8lTucapntcV4z+k4KM
- Qyn8seoZxYE32apkrBf4Tpk5Ika/n7p5p17Ur376UGShg79NWyRe0tnbeU0=
-X-Received: by 2002:a05:6000:1f8c:b0:38f:4fa6:bb24 with SMTP id
- ffacd0b85a97d-390eca530a8mr1654752f8f.39.1740730184115; 
- Fri, 28 Feb 2025 00:09:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG6GIxxm4Bu7APHi1QdBwDNmgGaj4tDPg1TL3R6UZFA+kSLFvAeHfK9uEln02n0oS5n14Fa1w==
-X-Received: by 2002:a05:6000:1f8c:b0:38f:4fa6:bb24 with SMTP id
- ffacd0b85a97d-390eca530a8mr1654724f8f.39.1740730183725; 
- Fri, 28 Feb 2025 00:09:43 -0800 (PST)
-Received: from ?IPV6:2a01:cb19:9004:d500:837f:93fd:c85e:5b97?
- ([2a01:cb19:9004:d500:837f:93fd:c85e:5b97])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47b7c4fsm4439491f8f.52.2025.02.28.00.09.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Feb 2025 00:09:42 -0800 (PST)
-Message-ID: <0a2cb938-7c2c-46aa-bb5e-19a425b18de5@redhat.com>
-Date: Fri, 28 Feb 2025 09:09:40 +0100
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1tnvYW-0000zi-Kt
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:17:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1740730632; x=1772266632;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=Dn8L53ewYiUEyqPXQ1K4juFNnJukK+pROIReILy7HjA=;
+ b=IKfdqaUB7yKjpLYYJm6HqcwFdw/Mmqd4DoNY2JJg5ax9ezwCLq3c+CfQ
+ cDW7nz70kfj08kwEFWu1oUY2tCOjD6Vn6ZN8ntqMSadk1ZQ4feW4D4j2Y
+ +Co0syv4SBwlrBjn2KmNfw/XgCGL+bh3b4wbPMyfuSqiP/DXMHTGdaS5Z
+ 1LXbI2rClN7QAE0rUOC0KpNib+plqLQOO35S9ohBAgdXcqxibMoltxXy6
+ oxiBmHLk2ftYeffEPRfCcMz6bUL4SuyNcHK13DLTQwXTpC54OzJNxMlw2
+ EhJwk8DTA0E80X6z+h9SSMbOrQFwneT7gTzmHhB+7bKjRKTIfPCXtpc/S g==;
+X-CSE-ConnectionGUID: mmFa1wYMQ/+pWG2Juf61kg==
+X-CSE-MsgGUID: Z89zCZSESf2vA8i0NwjUSg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11358"; a="41569776"
+X-IronPort-AV: E=Sophos;i="6.13,321,1732608000"; d="scan'208";a="41569776"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Feb 2025 00:17:07 -0800
+X-CSE-ConnectionGUID: gJED52mZRqyrvHIh//yAOg==
+X-CSE-MsgGUID: 0mMoxQ+PQFisRKoXyihyjQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,321,1732608000"; d="scan'208";a="148088111"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+ by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 28 Feb 2025 00:17:03 -0800
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Fri, 28 Feb 2025 00:17:02 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Fri, 28 Feb 2025 00:17:02 -0800
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.173)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Fri, 28 Feb 2025 00:17:01 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PBM41lQIVEHuIlTFX9qeJ04GWRDMQUtr2S2xARO1MVmku+nXLtaLxhg9ZLyckna+3eFm7go9EbDAYTDNkyZez3eiqeeclz57eVFNatw7zqjcmfwgQh/KWyr1O0SbWdBlQkWBoptFLIGNdbmU0GyjyJ4ahRnTHPelRJqfkBgTu/ZPKq5g4EnXS7bx36kJkWCsRFeOaIBkFF1VfFYpjiH3VnPI8w8nA7pU6BK8Rq87Wox4kjrLbsCTe+PoYTmQh5daPAn2ERvns3XM/s2bfW+RXol0chmNwD48tc09s08sGyZ1HKmXPl9vB4MnWRCzYbhnkJKzD6Z5K1tvxh+ZqqN5Pw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Dn8L53ewYiUEyqPXQ1K4juFNnJukK+pROIReILy7HjA=;
+ b=jPzEFBK2iSPuHK+6qbrZkNwr59A/htqSjk90dgQXYoysfyLEx3DdRsgCJVWYyBUpNe/UQdnfk2ktvlp0htVYO4z6eYGRcR1CPJlcuLXvi9Z12UEbphEmx6FKw3ubPK3k7RiE9puXsvs6PDn69ULUoy0Xy4uyG2so37fZSaMRzIc5wGgC6ytCpvlj8cD7Lh7n6IAaSFZmIolpVS8V3KgEzFOw5riJA/93RLrR3hMAr+Hvarr98gUQd9dldT9O9ruVOHokLbXuEZnPLWnSxHtTETra39ihNbNM5sesjr3iHq9Xh1ugjGsvPbZA5zBt+vl74dcX6cy9awrCZC8UwCSykQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by MW4PR11MB7055.namprd11.prod.outlook.com (2603:10b6:303:22b::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.22; Fri, 28 Feb
+ 2025 08:16:17 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%6]) with mapi id 15.20.8489.021; Fri, 28 Feb 2025
+ 08:16:17 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
+Subject: RE: [PATCH rfcv2 03/20] HostIOMMUDevice: Introduce realize_late
+ callback
+Thread-Topic: [PATCH rfcv2 03/20] HostIOMMUDevice: Introduce realize_late
+ callback
+Thread-Index: AQHbgqf4kW3myVfhUUy5lTRf0uUHeLNQeeoAgAp0YqA=
+Date: Fri, 28 Feb 2025 08:16:17 +0000
+Message-ID: <SJ0PR11MB6744096111D47692257CD1B392CC2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
+ <20250219082228.3303163-4-zhenzhong.duan@intel.com>
+ <5322a196-017e-46c1-98d9-bf2f30d148e9@redhat.com>
+In-Reply-To: <5322a196-017e-46c1-98d9-bf2f30d148e9@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|MW4PR11MB7055:EE_
+x-ms-office365-filtering-correlation-id: e4ab9524-857d-4acb-c1fe-08dd57d02d18
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|7416014|366016|1800799024|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?MWE3TTJzZFFQTW40N0NpeTlQamcveXFRVTA1OTJwcExxd0pTbzBLS3d3eVAx?=
+ =?utf-8?B?MnoxRHFnMEF3Q1Q2OHlyWTc0ZWxyOVJMOG5NY3dOSU1wUTFHbzNjbEErQTIw?=
+ =?utf-8?B?WjNDZjNBVHF6Q1d6c2tDNi9WT0x6L0N4d2lldWx0bzNvL0pIMEIzSjlDeEo4?=
+ =?utf-8?B?UEp1d1VIY1p5ZHQrWlNlZnpIc0dBakJ0bXlmdURyd01DelRjZ24wdDd3ZDhO?=
+ =?utf-8?B?b2tOU0IzK2tsMm9wM1dsbDJKK0NVZVE1YnZVNFNackt0TzdOc05PMHNLN2tI?=
+ =?utf-8?B?UTQvbTVvKzdQQkVPL2hqUGg3U1R3Zm5hUERsT3hPUVBKdWVDUlJwNGJuWGVT?=
+ =?utf-8?B?V3VvOUdZTy94bDdjS0pBTTd4bmVDOW12RysyeWl6d1NEdlBLR2V4Y2RITE55?=
+ =?utf-8?B?aW1STlp3S1VYdlBPeXgrc29YUlZYcUNQTnBBSlhsWEFjaitWUXRSQWhVYzgw?=
+ =?utf-8?B?VEZOeWZqQUFnamZXNFhBVHRydC90MFgzZDR2Tm5penZuc0ZFME9JWXpXci9H?=
+ =?utf-8?B?b21XNjdzOGNrWVlxaHdYdFdrYml0aXVMaTJISUZEMW9KWkJFSi9MUDVZajJY?=
+ =?utf-8?B?ZDhKSGxWeGZNKzhyYjc1b2c0cWk3VENGdHY0KzhETU4vMjVJaHZHU2lOZ3o1?=
+ =?utf-8?B?K0tZUkY3Y0FCdlNGTG5XTXExbXJqNlBTZXNCdXhGdUtKbzlwNEZMbkQwMHBT?=
+ =?utf-8?B?a3h6SjB3SGpmZXNBODArTi9CUmw3K005K1liUWltY2Ywd3ViMXJDS29TRDNT?=
+ =?utf-8?B?K3YyUitRR3FDSlVLamJWWFJyTTBvbSs4TWRVVDl5WmtNcGRnSFg4NlI5Qlhz?=
+ =?utf-8?B?K3JlbHA3eTYzTWpySEVCRzh2VU03S1NISlB0Q29oSTV6eHEyVXRFbXhqUWRr?=
+ =?utf-8?B?OG1tWGVzV29ZMGNYcTdCTnJKQzF4OHpYYkMwZnZCMllrZ2tWelZWZEI5UE8w?=
+ =?utf-8?B?aHh2c2RNZndQdC8wNGZDMFc1UU5BM1l2YzUyang0UkxqYWVjdkMxYmF2WmNX?=
+ =?utf-8?B?RUl5Z2I2aFhpTkdSd0N6b0V3M1kzUEllZnRsMjgrOGZ5RXFCM1JNLzN6WEE5?=
+ =?utf-8?B?cjJ2a3dmNEY4YmcwOUp6czZ4OUtUODRySlNLdWhLQnBXYk1OUFdKbTZXL242?=
+ =?utf-8?B?ajJtejhDOFBJWnBUNldJbDA0YldpYWZTSENIR2lUaGJGRVFzbFNGSTNUYVpV?=
+ =?utf-8?B?SURpbXpoa0xKam03c3NwNGxSNW8wZFBocnRNR3J0WHMva2N2UW9KUU41Q3J5?=
+ =?utf-8?B?WlNHUVlGanJwQ1ZaVEh0eEI5NnpQelB2eWNmYklXUS9YZWp3U2tpeVhEdGU2?=
+ =?utf-8?B?eXRtUWhxTThkR3ZwZnpCTFF5TDMwM2VQSEVmenVyZ3h1TmFYUmZ1cDF3bkVN?=
+ =?utf-8?B?eTY5cVlUeVdpdWpIQStHTGgzNWI0ZlNhWG1rNHJKcmJhOTk4K2NFV2M5Wjhu?=
+ =?utf-8?B?dWxjRkJ0azhLUEFWR1Y2T1BDbFB3Q0kxdzIzWEhBb1RnVy82UlJNRXBXMEMw?=
+ =?utf-8?B?aWZQZVNvdndlSlhlcFNHOWY1eFZiUEMvUUFPaWFyR1JvWEVKYjJ2SzJXREdV?=
+ =?utf-8?B?ZWx4RVdYN3k0ZStLQUp2enQ1aXd4WGZUMkw0b0pJQTdZM3FDWHVCTHpQQ09m?=
+ =?utf-8?B?M2g4VnpIRERwZFhLa1JtdXgvWHJnNjA4STBBZDN0bWcxNzEvQUNtMXEyVVo5?=
+ =?utf-8?B?ZHRxZmltdWxndXd0ZWF3THU5NHdZalp3eHVibjNEVk54S1Y3UU45SWpZNG5E?=
+ =?utf-8?B?N3VZaFBZeGpPdm9jc2N6bGVZZ3RSczA1RzE1YnBSb0E1VGxVcFZ5aTVjM0Fw?=
+ =?utf-8?B?NjlkL0ZldXI0N3U3WkUyTWpXaHRySlg1S0Q4RDUrekQ4Lzd2S2FSRVNoZ0pi?=
+ =?utf-8?B?dGpqbjlValRlVVRINkIwbFBHbG1RTGVicjF1QU5tdXN5M1NSNDgyU1RvSlQy?=
+ =?utf-8?Q?bxczPgvxkoB2ubUjr7RtfYC+wH+xypdW?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VTFkcG9OZCtZdUpwckkvNWR4TGNPVm5hbGVQNnNDd3RtUTZWRVcxQ3J5ZGZi?=
+ =?utf-8?B?MVUxWFJaRHNjS0xJeWMwckJTVUdweEgyWmFOc0p2ODlmZWlhM0psR2JHR0l3?=
+ =?utf-8?B?cDFzczlDSFBKUmtKcmkxM25wd2kzUms3S0lxUnhyNUNzYjlNbERQYlFrdFY3?=
+ =?utf-8?B?d21hcGJRRUc4cFZVdDRYQitYODlXZXhpTzJxVHhOSTBGSzAwNDZrOVZoenZF?=
+ =?utf-8?B?UzdiWVVRSk40MnNKSk9qSXcrY1VUZzU4Ri9oQjZ1a01YclpyZFpVY2dZZ3Zn?=
+ =?utf-8?B?aVNtb0pKMW1NajRpM0xMYkVOcHNNR0hxVkN5SFV0U1NWejNTZnpsbVVzaVp6?=
+ =?utf-8?B?TnBjQW9hRDA3ckdWR0svOXNxSGhXZHhhTE4rNEIvYWVNK2ZHWnB4dzJJQ1Ru?=
+ =?utf-8?B?YzNhdkRJODlOV0xSTllYSFVnckp2UlBLamFtOWtKejlQQVhlQVhCakVqdUtX?=
+ =?utf-8?B?Nk9PWUJVdWNyL2hhTkNzbUdQeG1TNmZxUXpwRnJVZ25LZWlQakxVbnJOWXRG?=
+ =?utf-8?B?d29iUHZqWjNCZzZ4aEQ2eFBBbzgxQWNIM3M5RE1BLzBwS1YrOVF1bmZaZWtG?=
+ =?utf-8?B?M0NvN0RNMGk5cGF0OEh6dnF1VHg5aGswa05YNVB6SHZ0c2xhMWpQRGE0K2lC?=
+ =?utf-8?B?T0tXb1JRU25CUGZIdWNrbzA4Sy9oMHRwSktsS29TSEFHWEJEVEF1VzNYS0NY?=
+ =?utf-8?B?NVhRYWhMOW1IV1UzSDBXN2cveG5NR3VsNGhZczFNclNRZStuc1VXUDE1Qm84?=
+ =?utf-8?B?U2VSUGtZcTJFWlFqcU93QTgvRWpPa2JNTTJNc3o1TzdXUTVjdjBGSDloK2N3?=
+ =?utf-8?B?WTd1L04xcUZCTFdzSGYwMS9TdHpQNHc3OTZzUVAydUlJSXNlN2NUZnlIVzk0?=
+ =?utf-8?B?Vzc3eU90MVFCUThwdTJ0SDNaS2NrQTVtbXdZNEpQbHYxY3EzOEFXcG5Tam5k?=
+ =?utf-8?B?RU1kTTc5UlBybjlvRE9hdEdTdSt4NDNwTytoaVhaZzNhZXh0U21sVlFPZGht?=
+ =?utf-8?B?SWhuM3g0VU9JRG5FVlJKVXFDdi92Q1BvQWo2elQrUWFPUEtoSkVPM0RSRFhG?=
+ =?utf-8?B?ajBXWkFPWWFadW44akJWMGwyUUdxWjlUTzlWTGZtKzl1YlprK2loZTIwdWtk?=
+ =?utf-8?B?Skp6OXZUeUlVS3BsV2tWYkRkSjRZNVVmc2d5ZFREY3k5TDZMbUJ5cG1rWkZ3?=
+ =?utf-8?B?aVF2eGN6S2RMaFBobjd3R2FDSCtnUDhhUFpFOG0va2J3OXJJZkdEdkJJRzVx?=
+ =?utf-8?B?cENtV3VNWVFQcUdzcUxBRldBOUdFaDV6dkhGV2hmMTUram8yb0kwYmI2UzBr?=
+ =?utf-8?B?U2w3K3ViWG5qL25oSDJSeG5NUmRnTzYyREd3WUFnTGZpenlzdHdiQWdNTCs5?=
+ =?utf-8?B?OFExckdYRmh6eFlwNEE0bEFJUmVQS0V6cmc1S09QcGRoS1ZlRWRTSVhjQWZv?=
+ =?utf-8?B?Z3NmK0JtditOckdWUFE5K2szUVh5dW5FY1hZQmdseGl3MVE3Q1FEbU14bDFI?=
+ =?utf-8?B?TS9WdDlEUkNhZXFhUkZKNHB0bnFMVEc1dUc2dlFkMENnTXg2ZkU2VEptb0lE?=
+ =?utf-8?B?YnY1VThUOGVQNUJQdVFqM1N2QUhDVk9MTnRHakE4cEZvSDZzcjNRbWplWE45?=
+ =?utf-8?B?N29CR0dTS3pOclNBWjNGdi9lYlkrcjIwd2xEWkN3SDZRblVIT1pmaS9zdFcx?=
+ =?utf-8?B?d3BDNTVrc3RkeElaUFMzeU1EKzFjZzFMK0NiOW9vdEQwV1FBMzhlalVKMUFo?=
+ =?utf-8?B?cWIrU3VtcHQ1eFpPbFZuVlZQc1p2TS9vOURDT2JSL1VpMlRuWXJIT1gzTENJ?=
+ =?utf-8?B?QzlJTi9PQitpSDJ4WHh0cURtMCtObEYrSStOY3BGTmJ3cHRRemZCbzZzS3RO?=
+ =?utf-8?B?ZUZ5MjRIbFdQN0hneWtTY0IwR00rZEhBQXZRQlVHVm9sanFNaHI2eEx2MGsw?=
+ =?utf-8?B?RCt1aGx2SG9uNEJzMUI2c2tRN0thNnE0UXkxRHlxWDVCdlN4RUlVamhQdE9U?=
+ =?utf-8?B?QXFBL3E4bDRwNHUzaE14aXJKSGpQcUVSZGN3V2M2SmhEbGt2MFg3em5vWDZS?=
+ =?utf-8?B?a0lMVGVkVUVpZmVNbmRlY0VNK3VaVVdQRGs2RVdocmRGQVp5VC9UZWZwOFVY?=
+ =?utf-8?Q?OSruMfkgZYMVWGqhVIEC7retj?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 26/36] vfio/migration: Multifd device state transfer
- support - received buffers queuing
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <4de9762ebf7e7857103eb276d1a26a092aee325d.1739994627.git.maciej.szmigiero@oracle.com>
- <6ad969cd-e522-4c8b-9d95-05b4df3be002@redhat.com>
- <e91b1d67-1ddc-4d63-9c7f-cde1b13f3673@maciej.szmigiero.name>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <e91b1d67-1ddc-4d63-9c7f-cde1b13f3673@maciej.szmigiero.name>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e4ab9524-857d-4acb-c1fe-08dd57d02d18
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Feb 2025 08:16:17.7576 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: +QkJP/VGPHa5gXQ4B9qE5rUa1cjsuhT7uK7hu4DMmoO072jWF1AZGvhuisgpPUqMEP+NuAdv+62gqp552JgTDbnTYcgon0nSZljPSJYOaF8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB7055
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.21;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,183 +225,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/26/25 22:04, Maciej S. Szmigiero wrote:
-> On 26.02.2025 11:43, Cédric Le Goater wrote:
->> On 2/19/25 21:34, Maciej S. Szmigiero wrote:
->>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>
->>> The multifd received data needs to be reassembled since device state
->>> packets sent via different multifd channels can arrive out-of-order.
->>>
->>> Therefore, each VFIO device state packet carries a header indicating its
->>> position in the stream.
->>> The raw device state data is saved into a VFIOStateBuffer for later
->>> in-order loading into the device.
->>>
->>> The last such VFIO device state packet should have
->>> VFIO_DEVICE_STATE_CONFIG_STATE flag set and carry the device config state.
->>>
->>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>> ---
->>>   hw/vfio/migration-multifd.c | 103 ++++++++++++++++++++++++++++++++++++
->>>   hw/vfio/migration-multifd.h |   3 ++
->>>   hw/vfio/migration.c         |   1 +
->>>   hw/vfio/trace-events        |   1 +
->>>   4 files changed, 108 insertions(+)
->>>
->>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
->>> index c2defc0efef0..5d5ee1393674 100644
->>> --- a/hw/vfio/migration-multifd.c
->>> +++ b/hw/vfio/migration-multifd.c
->>> @@ -42,6 +42,11 @@ typedef struct VFIOStateBuffer {
->>>   } VFIOStateBuffer;
->>>   typedef struct VFIOMultifd {
->>> +    VFIOStateBuffers load_bufs;
->>> +    QemuCond load_bufs_buffer_ready_cond;
->>> +    QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
->>> +    uint32_t load_buf_idx;
->>> +    uint32_t load_buf_idx_last;
->>>   } VFIOMultifd;
->>>   static void vfio_state_buffer_clear(gpointer data)
->>> @@ -87,15 +92,113 @@ static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs, guint idx)
->>>       return &g_array_index(bufs->array, VFIOStateBuffer, idx);
->>>   }
->>
->> this routine expects load_bufs_mutex to be locked ? May be say so.
-> 
-> I guess the comment above pertains to the vfio_load_state_buffer_insert()
-> below.
-> 
-> Do you mean it should have a comment that it expects to be called
-> under load_bufs_mutex?
-
-Just a one liner like :
-
-/* called with load_bufs_mutex locked */
-
-?
-
-It's good to have for the future generations.
-
-> 
->>> +static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
->>
->> could you pass VFIOMultifd* instead  ?
-> 
-> No, it needs vbasedev->migration_max_queued_buffers too (introduced
-> in later patch).
-> > Also, most of VFIO routines (besides very small helpers/wrappers)
-> take VFIODevice *.
-
-OK. It's minor but I prefer when parameters are limited to the minimum.
-Having 'VFIODevice *' opens doors to a lot of state.
-
-
-Thanks,
-
-C.
-
-
-
-> 
->>> +                                          VFIODeviceStatePacket *packet,
->>> +                                          size_t packet_total_size,
->>> +                                          Error **errp)
->>> +{
->>> +    VFIOMigration *migration = vbasedev->migration;
->>> +    VFIOMultifd *multifd = migration->multifd;
->>> +    VFIOStateBuffer *lb;
->>> +
->>> +    vfio_state_buffers_assert_init(&multifd->load_bufs);
->>> +    if (packet->idx >= vfio_state_buffers_size_get(&multifd->load_bufs)) {
->>> +        vfio_state_buffers_size_set(&multifd->load_bufs, packet->idx + 1);
->>> +    }
->>> +
->>> +    lb = vfio_state_buffers_at(&multifd->load_bufs, packet->idx);
->>> +    if (lb->is_present) {
->>> +        error_setg(errp, "state buffer %" PRIu32 " already filled",
->>> +                   packet->idx);
->>> +        return false;
->>> +    }
->>> +
->>> +    assert(packet->idx >= multifd->load_buf_idx);
->>> +
->>> +    lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
->>> +    lb->len = packet_total_size - sizeof(*packet);
->>> +    lb->is_present = true;
->>> +
->>> +    return true;
->>> +}
->>> +
->>> +bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
->>> +                            Error **errp)
->>
->>
->> AFAICS, the only users of the .load_state_buffer() handlers is
->> multifd_device_state_recv().
->>
->> Please rename to vfio_multifd_load_state_buffer().
-> 
-> Renamed it accordingly.
-> 
->>> +{
->>> +    VFIODevice *vbasedev = opaque;
->>> +    VFIOMigration *migration = vbasedev->migration;
->>> +    VFIOMultifd *multifd = migration->multifd;
->>> +    VFIODeviceStatePacket *packet = (VFIODeviceStatePacket *)data;
->>> +
->>> +    /*
->>> +     * Holding BQL here would violate the lock order and can cause
->>> +     * a deadlock once we attempt to lock load_bufs_mutex below.
->>> +     */
->>> +    assert(!bql_locked());
->>> +
->>> +    if (!vfio_multifd_transfer_enabled(vbasedev)) {
->>> +        error_setg(errp,
->>> +                   "got device state packet but not doing multifd transfer");
->>> +        return false;
->>> +    }
->>> +
->>> +    assert(multifd);
->>> +
->>> +    if (data_size < sizeof(*packet)) {
->>> +        error_setg(errp, "packet too short at %zu (min is %zu)",
->>> +                   data_size, sizeof(*packet));
->>> +        return false;
->>> +    }
->>> +
->>> +    if (packet->version != VFIO_DEVICE_STATE_PACKET_VER_CURRENT) {
->>> +        error_setg(errp, "packet has unknown version %" PRIu32,
->>> +                   packet->version);
->>> +        return false;
->>> +    }
->>> +
->>> +    if (packet->idx == UINT32_MAX) {
->>> +        error_setg(errp, "packet has too high idx");
->>
->> or "packet index is invalid" ?
-> 
-> Changed the error message.
-> 
->>> +        return false;
->>> +    }
->>> +
->>> +    trace_vfio_load_state_device_buffer_incoming(vbasedev->name, packet->idx);
->>> +
->>> +    QEMU_LOCK_GUARD(&multifd->load_bufs_mutex);
->>
->> Using WITH_QEMU_LOCK_GUARD() would be cleaner I think.
-> 
-> Changed into a WITH_QEMU_LOCK_GUARD() block.
-> 
->>
->>
->> Thanks,
->>
->> C.
-> 
-> Thanks,
-> Maciej
-> 
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEVyaWMgQXVnZXIgPGVyaWMu
+YXVnZXJAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBSZTogW1BBVENIIHJmY3YyIDAzLzIwXSBIb3N0
+SU9NTVVEZXZpY2U6IEludHJvZHVjZSByZWFsaXplX2xhdGUNCj5jYWxsYmFjaw0KPg0KPg0KPg0K
+Pg0KPk9uIDIvMTkvMjUgOToyMiBBTSwgWmhlbnpob25nIER1YW4gd3JvdGU6DQo+PiBDdXJyZW50
+bHkgd2UgaGF2ZSByZWFsaXplKCkgY2FsbGJhY2sgd2hpY2ggaXMgY2FsbGVkIGJlZm9yZSBhdHRh
+Y2htZW50Lg0KPj4gQnV0IHRoZXJlIGFyZSBzdGlsbCBzb21lIGVsZW1lbnRzIGUuZy4sIGh3cHRf
+aWQgaXMgbm90IHJlYWR5IGJlZm9yZQ0KPj4gYXR0YWNobWVudC4gU28gd2UgbmVlZCBhIHJlYWxp
+emVfbGF0ZSgpIGNhbGxiYWNrIHRvIGZ1cnRoZXIgaW5pdGlhbGl6ZQ0KPj4gdGhlbS4NCj5mcm9t
+IHRoZSBkZXNjcmlwdGlvbiBpdCBpcyBub3Qgb2J2aW91cyB3aHkgdGhlIHJlYWxpemUoKSBjb3Vs
+ZCBub3QgaGF2ZQ0KPmJlZW4gY2FsbGVkIGFmdGVyIHRoZSBhdHRhY2guIENvdWxkIHlvdSByZW1p
+bmQgdGhlIHJlYWRlciB3aGF0IGlzIHRoZQ0KPnJlYXNvbj8NCg0KU3VyZSwgd2lsbCByZXBocmFz
+ZSBhcyBiZWxvdzoNCg0KIiBIb3N0SU9NTVVEZXZpY2UgcHJvdmlkZXMgc29tZSBlbGVtZW50cyB0
+byB2SU9NTVUsIGJ1dCB0aGVyZSBhcmUgc29tZSB3aGljaA0KYXJlIHJlYWR5IGFmdGVyIGF0dGFj
+aG1lbnQsIGUuZy4sIGh3cHRfaWQuDQoNCkJlZm9yZSBjcmVhdGUgYW5kIGF0dGFjaCB0byBhIG5l
+dyBod3B0IHdpdGggSU9NTVUgZGlydHkgdHJhY2tpbmcgY2FwYWJpbGl0eSwNCndlIGhhdmUgdG8g
+Y2FsbCByZWFsaXplKCkgdG8gZ2V0IGlmIGhhcmR3YXJlIElPTU1VIHN1cHBvcnRzIGRpcnR5IHRy
+YWNraW5nDQpjYXBhYmlsaXR5Lg0KDQpTbyBtb3ZpbmcgcmVhbGl6ZSgpIGFmdGVyIGF0dGFjaCgp
+IHdpbGwgbm90IHdvcmsgaGVyZSwgd2UgbmVlZCBhIG5ldyBjYWxsYmFjaw0KcmVhbGl6ZV9sYXRl
+KCkgdG8gZnVydGhlciBpbml0aWFsaXplIHRob3NlIGVsZW1lbnRzLg0KDQpDdXJyZW50bHksIHRo
+aXMgY2FsbGJhY2sgaXMgb25seSB1c2VmdWwgZm9yIGlvbW11ZmQgYmFja2VuZC4gRm9yIGxlZ2Fj
+eQ0KYmFja2VuZCBub3RoaW5nIG5lZWRzIHRvIGJlIGluaXRpYWxpemVkIGFmdGVyIGF0dGFjaG1l
+bnQuICINCg0KVGhhbmtzDQpaaGVuemhvbmcNCg0K
 
