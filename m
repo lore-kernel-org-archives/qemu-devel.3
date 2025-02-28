@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F02C19776
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 09:17:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC4DC19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 09:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnwUl-0000nG-Bx; Fri, 28 Feb 2025 04:17:23 -0500
+	id 1tnwVs-0001bf-0S; Fri, 28 Feb 2025 04:18:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tnwUj-0000mO-0o; Fri, 28 Feb 2025 04:17:21 -0500
+ id 1tnwVi-0001X1-96; Fri, 28 Feb 2025 04:18:22 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tnwUh-0008Cv-AU; Fri, 28 Feb 2025 04:17:20 -0500
+ id 1tnwVg-0008Hr-Jr; Fri, 28 Feb 2025 04:18:22 -0500
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Z42c25s4mz6K9MM;
- Fri, 28 Feb 2025 17:15:14 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Z42b81klbz6L597;
+ Fri, 28 Feb 2025 17:14:28 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id AFB991400D9;
- Fri, 28 Feb 2025 17:17:15 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id B3A0E140E01;
+ Fri, 28 Feb 2025 17:18:18 +0800 (CST)
 Received: from localhost (10.96.237.92) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 28 Feb
- 2025 10:17:13 +0100
-Date: Fri, 28 Feb 2025 17:17:08 +0800
+ 2025 10:18:16 +0100
+Date: Fri, 28 Feb 2025 17:18:11 +0800
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 CC: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin"
  <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>, <qemu-arm@nongnu.org>,
  <qemu-devel@nongnu.org>, Ani Sinha <anisinha@redhat.com>,
  <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v6 02/19] tests/qtest/bios-tables-test: extend to also
- check HEST table
-Message-ID: <20250228171708.00006ef4@huawei.com>
-In-Reply-To: <b7d89527bb3efc48fa1035beca28ee7f414d95ac.1740671863.git.mchehab+huawei@kernel.org>
+Subject: Re: [PATCH v6 03/19] tests/acpi: virt: update HEST file with its
+ current data
+Message-ID: <20250228171811.000017d4@huawei.com>
+In-Reply-To: <342f2cbf20eee9cafbee834adc66ae81aa4df37b.1740671863.git.mchehab+huawei@kernel.org>
 References: <cover.1740671863.git.mchehab+huawei@kernel.org>
- <b7d89527bb3efc48fa1035beca28ee7f414d95ac.1740671863.git.mchehab+huawei@kernel.org>
+ <342f2cbf20eee9cafbee834adc66ae81aa4df37b.1740671863.git.mchehab+huawei@kernel.org>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -73,34 +73,40 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Feb 2025 17:00:40 +0100
+On Thu, 27 Feb 2025 17:00:41 +0100
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> Currently, aarch64 can generate a HEST table when loaded with
-> -machine ras=on. Add support for it.
+> Now that HEST table is checked for aarch64, add the current
+> firmware file.
 > 
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Good to have and should always have been there...
+> Acked-by: Igor Mammedov <imammedo@redhat.com>
+
+Mostly for completeness rather than because there is any actual
+review we can do on 'this is what the file is'.
 
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
 > ---
->  tests/qtest/bios-tables-test.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  tests/data/acpi/aarch64/virt/HEST           | Bin 0 -> 132 bytes
+>  tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+>  2 files changed, 1 deletion(-)
 > 
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> index 0a333ec43536..8d41601cc9e9 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -2122,7 +2122,7 @@ static void test_acpi_aarch64_virt_tcg(void)
->  
->      data.smbios_cpu_max_speed = 2900;
->      data.smbios_cpu_curr_speed = 2700;
-> -    test_acpi_one("-cpu cortex-a57 "
-> +    test_acpi_one("-cpu cortex-a57 -machine ras=on "
->                    "-smbios type=4,max-speed=2900,current-speed=2700", &data);
->      free_test_data(&data);
->  }
+> diff --git a/tests/data/acpi/aarch64/virt/HEST b/tests/data/acpi/aarch64/virt/HEST
+> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4c5d8c5b5da5b3241f93cd0839e94272bf6b1486 100644
+> GIT binary patch
+> literal 132
+> zcmeZp4Gw8xU|?W;<mB({5v<@85#X$#prF9Wz`y`vgJ=-uVqjqS|DS;o#%Ew*U|?_n
+> dk++-~7#J8hWI!Yi09DHYRr~Kh1c1x}0RY>66afGL
+> 
+> literal 0
+> HcmV?d00001
+> 
+> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+> index 39901c58d647..dfb8523c8bf4 100644
+> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> @@ -1,2 +1 @@
+>  /* List of comma-separated changed AML files to ignore */
+> -"tests/data/acpi/aarch64/virt/HEST",
 
 
