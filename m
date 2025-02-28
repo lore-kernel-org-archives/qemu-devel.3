@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D56C282C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 16:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 190ADC282C6
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 16:54:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to3Ni-0008IA-Bw; Fri, 28 Feb 2025 11:38:34 -0500
+	id 1to3bn-00030E-CV; Fri, 28 Feb 2025 11:53:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1to3NU-0008BY-FF
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 11:38:22 -0500
+ id 1to3bl-0002zw-RA
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 11:53:05 -0500
 Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1to3NS-0004L7-AS
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 11:38:20 -0500
+ id 1to3bk-0006QF-27
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 11:53:05 -0500
 Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2234e5347e2so50042935ad.1
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 08:38:17 -0800 (PST)
+ d9443c01a7336-222e8d07dc6so44776665ad.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 08:53:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740760696; x=1741365496; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740761582; x=1741366382; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DExi79Azjhm9bvFLDhPuql9Yt+hDKIkvIuDN/oAdjBs=;
- b=RRprocQ9y4U5N1wn18M272iqUWnzzKAU8cwYQEoHyheUy7Fb4eJjkeEKSaqTlh5Ozr
- Sn/g0Xp2hNLH1Ikxm1k3Ls2ycTcAh4Drm1Kwa6gdo6WHcuv/okmKwvrSrNgtb0DbAmlZ
- df3IkxWAekIiCJGKP6wcBA6rf6J/oCWSQQMXHeKpCLXLwODr5xqhoM5qI71DojrcDP++
- DG4VeDsf4OdqtZ1rs4AR62H3BsSSuW8otTpNTs4hrUYPOYbH2gmwSQXRTS1p9/KHdMOc
- YWEK78vBu8SP0QhDAdhJktSXuSiiyyeGqDqAREJFieNjSHpMSM7hXN3mekvm5l3TMPEy
- TL/Q==
+ bh=JX0K85PF7mfnzphIaFxF9IcHmq43uPN7l4xpfxMbqWE=;
+ b=D7Id4gC3vwX9XpVxXh+lc99Wfs1XbokKAolT+Za48/MCnIZ1GlhjoCUyTI5dTNeuXZ
+ v1fKBjE0nQRdrN5zvywNYnNtiGaCyODR1NU5/6VUCk/hv/MF7P0JDPaP+OAaZvayb23A
+ TWd9AN6RGAOJu2Z0mCWoup19jBNivfXRMCCcQQ1snajHnrOJFFMbvmzoesCnwvrg17GH
+ lvusAq40vJXpnCjVxTCHlg/GOv+S7JAAymzVWVIrCbDPKFSzVxOsljoGmzFOZ67meK4U
+ CSySLodC2/ZZBpjIEOAM9Ls2XFOZMNLauSAV7+t2EmQqUgpcjDlWMKHevpd7zACFnfS6
+ sU+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740760696; x=1741365496;
+ d=1e100.net; s=20230601; t=1740761582; x=1741366382;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DExi79Azjhm9bvFLDhPuql9Yt+hDKIkvIuDN/oAdjBs=;
- b=crOU8C/0GXPH0OenrLdfIur0EszDEUiNp98W1MbpTnhntBXfXgTo7qvoCm+0pbVnqa
- yXqKowAkmYIvRxEfPnfVj8dZgc3mZRWMSUNqk6O62saBEHIapgNHd0ojA8FQ+4YiQOm4
- spdcl3KDUkO9yKyON/2ttoWr+hV8ehYO5IxIjw+GZf3rqSFBThlED0xY4A4I0AYZ02ZN
- nwONhkpYwmjYPhnS1WjbmwaCyNDdQgTI00XPS82Dtdxv0VnI3mJpYSE37ioG4Bp+nv5X
- Y2N31CoykRAkt0KNZR+f9gUP4DpDZYfO/T5kue5XMQ9wAB2+B+34IEtOeaMdR887F0eD
- A01A==
-X-Gm-Message-State: AOJu0YwyljMBJtFBDaac3QkMK/wVDZo3GpbIklgJgbyLp1KqETu3r5pL
- 5mFkxrKqCC/AkJLighVi3js4MPebxjdSbEhI4gaD1iJ5Ha+J7GJV8kstSgI3HqcIZUz88tGdNKk
- r
-X-Gm-Gg: ASbGncuFW1V6eBuXa1zhZL+UZ8lZIvr6zIEC/kF+ZWI5eNcZfs5YAqJonErxeUBywol
- UWzCfjQd7wJWFzZe2kRCUP9BvOTgIk9FtaFukvyVNwpGDBVh+9zdhCR3Z44jWtNd7dKU1XmSt2W
- mbvDxkm/6gekkZMh2+JSajQFGFjtvEQ0L2zzlak2lZnu8Fo0cUq8l7+/gCJmpiFLTOlPkBSm8ct
- 5uy3t/m8kFk2IE3SEd49aVtAoAS9z/jZFaddw9CmOnQe8TElyLSDFIaE06aDYYxVEc7i0E6tVse
- s9wAU0TppV1eU+zQN4xXzfhi7AUI4rItcyCKk91zPzbbDT5zV9W77LOYLLlMtp5TKHeEWM/yxNn
- BQQtE4nQ=
-X-Google-Smtp-Source: AGHT+IHvYfTbqI8l0rT+fx4OuSjuoM6Z4kS26FIwNKEECKLF4N8577E/p1krjT5671XLNDv+oBADcw==
-X-Received: by 2002:a05:6a00:3d4a:b0:734:a25a:304e with SMTP id
- d2e1a72fcca58-734ac419cf9mr6106470b3a.18.1740760695918; 
- Fri, 28 Feb 2025 08:38:15 -0800 (PST)
+ bh=JX0K85PF7mfnzphIaFxF9IcHmq43uPN7l4xpfxMbqWE=;
+ b=dQFwu1afQaK7zu4Hbu6p1YFjz/3/Oog24FfxVGNaZIy+T47pSYwAMEVe6BlhS6/I79
+ bh4NzBnwHzNLZt41Hhy1I41qEuBjHjldj6PAaahyPsKHH1Bx/6ij42ce7QInXtGR23gC
+ +dqmg6C4rxBtOI8w10SggCLbrLCcIJ8kjrBnv31fE9IoDvkM+UGdZbGAqzxbXprLjIch
+ AkAxM6o2oY8IB2wKcIK99XcDLPlIg+D3a7r0fNZqNL8nab/LRKbdUsaC9Gr+diPbB2/S
+ NXIcdBaGzAztZSoUo9+O839ZpHrobW8HsQALEWrpBxSFKrAb26MNkw3U1cmVGYsGBR/v
+ cmKg==
+X-Gm-Message-State: AOJu0YzB55P1xoVw8JYIpJCRIBBk4RNTDuNmf7fgOVpNbWpQouQqKk12
+ jw+ZxUySewtShCDiqWFgXeSe4MRpaYDzjOCXVZvzIJwNYi6C15HXEKTZtiLlbn6JKbI/KC8IQdQ
+ C
+X-Gm-Gg: ASbGncv5WEZPAHlRUA9l4McaZ843VtjWrCxEWa8HLoJt6POajoE8I4NXP3o+L7egH+X
+ L4OBvXSLDZelhE7C/2tHI7X6WDEwd8sUND+idyRnmkKdumUzibeGA6ikkX+o4CcmOEQwjYPGcc0
+ PSxgGANxWPsV5LNu8T8HkUxjEzam9WudZi7acvoeajuQ00s4ywcTPrIupEIooT7AHif8MII8Ds4
+ 8Xch6D+S8xiYfsczFD1pXTxZRZPCNjbeNxw8VkKFPoPHV+6AP5sbOHt6YOJAz/iE/29VH2ol2Yg
+ DrPcdroLloM30ZEVU3OwgiaPUTnIvlaQoAYjWZL2RB/foZUVzViIMa91F+BFxXtJIgJQGhht9t8
+ NNQQuESc=
+X-Google-Smtp-Source: AGHT+IH08+NBAp4vXofEsbWvUkyN/3vNClOmU/Hjv1ONNgjvyEgVwC6TViIAAyOgNH/iWkSr5Qz7SA==
+X-Received: by 2002:a17:903:2986:b0:21f:6546:9adc with SMTP id
+ d9443c01a7336-2234a38cd53mr133316915ad.13.1740761582088; 
+ Fri, 28 Feb 2025 08:53:02 -0800 (PST)
 Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
  [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-aee7ddf2476sm3674773a12.14.2025.02.28.08.38.14
+ d2e1a72fcca58-734a0024ba3sm4059741b3a.99.2025.02.28.08.53.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Feb 2025 08:38:15 -0800 (PST)
-Message-ID: <e38db4c6-39cb-42de-9efe-8b5360cfbcbf@linaro.org>
-Date: Fri, 28 Feb 2025 08:38:12 -0800
+ Fri, 28 Feb 2025 08:53:01 -0800 (PST)
+Message-ID: <b07a78e9-f4e1-4763-a3c3-ed28da0a9758@linaro.org>
+Date: Fri, 28 Feb 2025 08:52:59 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Make dummy debug registers RAZ, not NOP
+Subject: Re: [PATCH v2 1/7] tests/functional: remove unused 'bin_prefix'
+ variable
 To: qemu-devel@nongnu.org
-References: <20250228162424.1917269-1-peter.maydell@linaro.org>
+References: <20250228102738.3064045-1-berrange@redhat.com>
+ <20250228102738.3064045-2-berrange@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250228162424.1917269-1-peter.maydell@linaro.org>
+In-Reply-To: <20250228102738.3064045-2-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
  envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
@@ -102,38 +104,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/28/25 08:24, Peter Maydell wrote:
-> In debug_helper.c we provide a few dummy versions of
-> debug registers:
->   * DBGVCR (AArch32 only): enable bits for vector-catch
->     debug events
->   * MDCCINT_EL1: interrupt enable bits for the DCC
->     debug communications channel
->   * DBGVCR32_EL2: the AArch64 accessor for the state in
->     DBGVCR
+On 2/28/25 02:27, Daniel P. Berrangé wrote:
+> This was copied over from avocado but has not been used in the new
+> functional tests.
 > 
-> We implemented these only to stop Linux crashing on startup,
-> but we chose to implement them as ARM_CP_NOP. This worked
-> for Linux where it only cares about trying to write to these
-> registers, but is very confusing behaviour for anything that
-> wants to read the registers (perhaps for context state switches),
-> because the destination register will be left with whatever
-> random value it happened to have before the read.
-> 
-> Model these registers instead as RAZ.
-> 
-> Fixes: 5e8b12ffbb8c68 ("target-arm: Implement minimal DBGVCR, OSDLR_EL1, MDCCSR_EL0")
-> Fixes: 5dbdc4342f479d ("target-arm: Implement dummy MDCCINT_EL1")
-> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2708
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> Reviewed-by: Thomas Huth<thuth@redhat.com>
+> Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
 > ---
-> This is a very old bug (a decade old or so), and Linux doesn't
-> hit it, so I didn't think it was worth adding acc:stable; though
-> it's not a very risky patch so there's no particular problem
-> with backporting it either.
-> 
->   target/arm/debug_helper.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
+>   tests/functional/qemu_test/testcase.py | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
