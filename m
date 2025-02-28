@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE81C282C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 20:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77143C282C6
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 20:49:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to7Hu-0003FA-Da; Fri, 28 Feb 2025 15:48:50 -0500
+	id 1to7I3-0003LF-8e; Fri, 28 Feb 2025 15:48:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1to7Hr-0003Ci-L0
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:48:47 -0500
+ id 1to7I1-0003Jt-Ai
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:48:57 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1to7Hp-0005XV-Dd
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:48:47 -0500
+ id 1to7Hz-0005YA-Fu
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:48:56 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1to7Hj-00000000ALp-3trj; Fri, 28 Feb 2025 21:48:39 +0100
-Message-ID: <4e198591-5d76-41b9-9eb5-1264bf66164d@maciej.szmigiero.name>
-Date: Fri, 28 Feb 2025 21:48:34 +0100
+ id 1to7Hv-00000000ALy-1q5E; Fri, 28 Feb 2025 21:48:51 +0100
+Message-ID: <9c123d2f-beb2-4991-9ab5-6b3f1c458b29@maciej.szmigiero.name>
+Date: Fri, 28 Feb 2025 21:48:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 34/36] vfio/migration: Max in-flight VFIO device state
- buffer count limit
+Subject: Re: [PATCH v5 27/36] vfio/migration: Multifd device state transfer
+ support - load thread
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <719b309bb7bc13542d14e6ce0026cb9bb67e9f31.1739994627.git.maciej.szmigiero@oracle.com>
- <11ecf7fb-55f6-4606-b635-e53dbcc71dbc@redhat.com>
- <cb56e530-9d34-4f17-bee6-0cf28af06215@maciej.szmigiero.name>
- <800e20f0-8568-40f0-ba40-0026f14f5467@redhat.com>
+ <9be8882ea2189c1a827bdf09835d6c65488d2ca6.1739994627.git.maciej.szmigiero@oracle.com>
+ <573fab5e-4c0f-416c-bbd0-4786ad25e18f@redhat.com>
+ <438ee2cb-d29a-4975-806e-2e2f2dff1a44@maciej.szmigiero.name>
+ <9659a377-0132-4449-8592-1c8ef8b2d8d0@redhat.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -85,7 +85,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <800e20f0-8568-40f0-ba40-0026f14f5467@redhat.com>
+In-Reply-To: <9659a377-0132-4449-8592-1c8ef8b2d8d0@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -112,140 +112,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.02.2025 09:53, Cédric Le Goater wrote:
-> On 2/27/25 23:01, Maciej S. Szmigiero wrote:
->> On 27.02.2025 07:48, Cédric Le Goater wrote:
+On 28.02.2025 10:11, Cédric Le Goater wrote:
+> On 2/26/25 22:05, Maciej S. Szmigiero wrote:
+>> On 26.02.2025 14:49, Cédric Le Goater wrote:
 >>> On 2/19/25 21:34, Maciej S. Szmigiero wrote:
 >>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>>>
->>>> Allow capping the maximum count of in-flight VFIO device state buffers
->>>> queued at the destination, otherwise a malicious QEMU source could
->>>> theoretically cause the target QEMU to allocate unlimited amounts of memory
->>>> for buffers-in-flight.
+>>>> Since it's important to finish loading device state transferred via the
+>>>> main migration channel (via save_live_iterate SaveVMHandler) before
+>>>> starting loading the data asynchronously transferred via multifd the thread
+>>>> doing the actual loading of the multifd transferred data is only started
+>>>> from switchover_start SaveVMHandler.
 >>>>
->>>> Since this is not expected to be a realistic threat in most of VFIO live
->>>> migration use cases and the right value depends on the particular setup
->>>> disable the limit by default by setting it to UINT64_MAX.
+>>>> switchover_start handler is called when MIG_CMD_SWITCHOVER_START
+>>>> sub-command of QEMU_VM_COMMAND is received via the main migration channel.
+>>>>
+>>>> This sub-command is only sent after all save_live_iterate data have already
+>>>> been posted so it is safe to commence loading of the multifd-transferred
+>>>> device state upon receiving it - loading of save_live_iterate data happens
+>>>> synchronously in the main migration thread (much like the processing of
+>>>> MIG_CMD_SWITCHOVER_START) so by the time MIG_CMD_SWITCHOVER_START is
+>>>> processed all the proceeding data must have already been loaded.
 >>>>
 >>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 >>>> ---
->>>>   hw/vfio/migration-multifd.c   | 14 ++++++++++++++
->>>>   hw/vfio/pci.c                 |  2 ++
->>>>   include/hw/vfio/vfio-common.h |  1 +
->>>>   3 files changed, 17 insertions(+)
+>>>>   hw/vfio/migration-multifd.c | 225 ++++++++++++++++++++++++++++++++++++
+>>>>   hw/vfio/migration-multifd.h |   2 +
+>>>>   hw/vfio/migration.c         |  12 ++
+>>>>   hw/vfio/trace-events        |   5 +
+>>>>   4 files changed, 244 insertions(+)
 >>>>
 >>>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
->>>> index 18a5ff964a37..04aa3f4a6596 100644
+>>>> index 5d5ee1393674..b3a88c062769 100644
 >>>> --- a/hw/vfio/migration-multifd.c
 >>>> +++ b/hw/vfio/migration-multifd.c
->>>> @@ -53,6 +53,7 @@ typedef struct VFIOMultifd {
->>>>       QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
->>>>       uint32_t load_buf_idx;
->>>>       uint32_t load_buf_idx_last;
->>>> +    uint32_t load_buf_queued_pending_buffers;
->>>>   } VFIOMultifd;
->>>>   static void vfio_state_buffer_clear(gpointer data)
->>>> @@ -121,6 +122,15 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
->>>>       assert(packet->idx >= multifd->load_buf_idx);
->>>> +    multifd->load_buf_queued_pending_buffers++;
->>>> +    if (multifd->load_buf_queued_pending_buffers >
->>>> +        vbasedev->migration_max_queued_buffers) {
->>>> +        error_setg(errp,
->>>> +                   "queuing state buffer %" PRIu32 " would exceed the max of %" PRIu64,
->>>> +                   packet->idx, vbasedev->migration_max_queued_buffers);
->>>> +        return false;
+(..)
+>>>> +    while (true) {
+>>>> +        VFIOStateBuffer *lb;
+>>>> +
+>>>> +        /*
+>>>> +         * Always check cancellation first after the buffer_ready wait below in
+>>>> +         * case that cond was signalled by vfio_load_cleanup_load_bufs_thread().
+>>>> +         */
+>>>> +        if (vfio_load_bufs_thread_want_exit(multifd, should_quit)) {
+>>>> +            error_setg(errp, "operation cancelled");
+>>>> +            ret = false;
+>>>> +            goto ret_signal;
+>>>
+>>> goto thread_exit ?
+>>
+>> I'm not sure that I fully understand this comment.
+>> Do you mean to rename ret_signal label to thread_exit?
+> 
+> 
+> Yes. I find label 'thread_exit' more meaning full. This is minor since
+> there is only one 'exit' label.
+> 
+
+Renamed ret_signal to thread_exit then.
+
+(..)
+>>>> +    config_ret = vfio_load_bufs_thread_load_config(vbasedev);
+>>>> +    if (config_ret) {
+>>>> +        error_setg(errp, "load config state failed: %d", config_ret);
+>>>> +        ret = false;
 >>>> +    }
->>>> +
->>>>       lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
->>>>       lb->len = packet_total_size - sizeof(*packet);
->>>>       lb->is_present = true;
->>>> @@ -374,6 +384,9 @@ static bool vfio_load_bufs_thread(void *opaque, bool *should_quit, Error **errp)
->>>>               goto ret_signal;
->>>>           }
->>>> +        assert(multifd->load_buf_queued_pending_buffers > 0);
->>>> +        multifd->load_buf_queued_pending_buffers--;
->>>> +
->>>>           if (multifd->load_buf_idx == multifd->load_buf_idx_last - 1) {
->>>>               trace_vfio_load_state_device_buffer_end(vbasedev->name);
->>>>           }
->>>> @@ -408,6 +421,7 @@ VFIOMultifd *vfio_multifd_new(void)
->>>>       multifd->load_buf_idx = 0;
->>>>       multifd->load_buf_idx_last = UINT32_MAX;
->>>> +    multifd->load_buf_queued_pending_buffers = 0;
->>>>       qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
->>>>       multifd->load_bufs_thread_running = false;
->>>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>>> index 9111805ae06c..247418f0fce2 100644
->>>> --- a/hw/vfio/pci.c
->>>> +++ b/hw/vfio/pci.c
->>>> @@ -3383,6 +3383,8 @@ static const Property vfio_pci_dev_properties[] = {
->>>>                   vbasedev.migration_multifd_transfer,
->>>>                   qdev_prop_on_off_auto_mutable, OnOffAuto,
->>>>                   .set_default = true, .defval.i = ON_OFF_AUTO_AUTO),
->>>> +    DEFINE_PROP_UINT64("x-migration-max-queued-buffers", VFIOPCIDevice,
->>>> +                       vbasedev.migration_max_queued_buffers, UINT64_MAX),
 >>>
->>> UINT64_MAX doesn't make sense to me. What would be a reasonable value ?
->>
->> It's the value that effectively disables this limit.
->>
->>> Have you monitored the max ? Should we collect some statistics on this
->>> value and raise a warning if a high water mark is reached ? I think
->>> this would more useful.
->>
->> It's an additional mechanism, which is not expected to be necessary
->> in most of real-world setups, hence it's disabled by default:
->>> Since this is not expected to be a realistic threat in most of VFIO live
->>> migration use cases and the right value depends on the particular setup
->>> disable the limit by default by setting it to UINT64_MAX.
->>
->> The minimum value that works with particular setup depends on number of
->> multifd channels, probably also the number of NIC queues, etc. so it's
->> not something we should propose hard default to - unless it's a very
->> high default like 100 buffers, but then why have it set by default?.
->>
->> IMHO setting it to UINT64_MAX clearly shows that it is disabled by
->> default since it obviously couldn't be set higher.
-> 
-> This doesn't convince me that we should take this patch in QEMU 10.0.
-> Please keep for now. We will decide in v6.
-
-Okay, let's decide at the v6 time then.
-
->>>>       DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
->>>>                        vbasedev.migration_events, false),
->>>>       DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
->>>
->>>
->>> Please add property documentation in vfio_pci_dev_class_init()
+>>> please move to next patch. This is adding nothing to this patch
+>>> since it's returning -EINVAL.
 >>>
 >>
->> I'm not sure what you mean by that, vfio_pci_dev_class_init() doesn't
->> contain any documentation or even references to either
->> x-migration-max-queued-buffers or x-migration-multifd-transfer:
+>> That's the whole point - if someone were to accidentally enable this
+>> (for example by forgetting to apply the next patch when backporting
+>> the series) it would fail safely with EINVAL instead of having a
+>> half-broken implementation.
 > 
-> Indeed :/ I am trying to fix documentation here :
+> OK. Let's keep it that way.
 > 
->    https://lore.kernel.org/qemu-devel/20250217173455.449983-1-clg@redhat.com/
 > 
-> Please do something similar. I will polish the edges when merging
-> if necessary.
-
-Ahh, I see now - that patch set of yours isn't merged upstream yet so
-that's why I did not know what you had on mind.
-
-> Overall, we should improve VFIO documentation, migration is one sub-feature
-> among many.
-
-Sure - I've now added object_class_property_set_description() description
-for all 3 newly added parameters:
-x-migration-multifd-transfer, x-migration-load-config-after-iter and
-x-migration-max-queued-buffers.
-
 > Thanks,
 > 
 > C.
-> 
 
 Thanks,
 Maciej
