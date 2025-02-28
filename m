@@ -4,81 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F60CC19776
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 09:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B7DC19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 09:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnwoN-0006aI-1H; Fri, 28 Feb 2025 04:37:39 -0500
+	id 1tnwvM-0001UX-W8; Fri, 28 Feb 2025 04:44:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnwoM-0006X7-4B
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 04:37:38 -0500
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tnwoK-0004CE-9A
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 04:37:37 -0500
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e5ad75ca787so1509978276.0
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 01:37:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740735454; x=1741340254; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0TV/2iQgifIb/lu9qz6E8/WAtyAooa0OGlZSWZw3FZ4=;
- b=tovjtMUyqrnxOT0vYJzl0HFKUF8RBk/5Wrj0muNt3lEBagenWik5wHn2F0OpQJJE5Z
- Mf1s5ZwkUzEpJy02K+QLO2OcY3geyBPes4RF/N4/NmTFzHpBGtITEBlqdbZpKK7OlT+O
- ycNdUVxxIn/AjD51yzGgUovPJpC8QkR2nz2RcqSQzg0+ym0XcxWrvPZttD58WHlEPjvH
- a1l/VuIF2i0x0/0KvOxeJCkF4FRU3dFkPiKtA62un3Csqbm49tk+xRjvCcPelJMxfcTl
- mX/B34J7aH7B9yUDBCzeAZIXa/7qLxtCQC/j1kAACZu9MuUQtQ4F4gqFJwCLwbR6zIsM
- O5OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740735454; x=1741340254;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0TV/2iQgifIb/lu9qz6E8/WAtyAooa0OGlZSWZw3FZ4=;
- b=vtfesCX6rzmvGm4qAK+YgaMijLc2AGGhc94uCOoH6itgL7Crz0pp0C6pCir05NxLX6
- UTaORevpUlH8VBuZOUTj5Yli4JVLi+yCw/h2DUQyRodPOuTpT+Vzh0udNnEsI3DTyqnM
- 4O74h5j5aZ92SVC9xHULrfYDQC8A90G0XBXFRskA4nKM/ZyPMqlcMmEi/IB5gs6PNWgs
- 21W0l09t1fPIna7MHPBBvZV0G2gns3VaEIAf4YN++1SV92CWtDJB1RzRm8PO+o2VYz/s
- DZOosL1vG+X7cuZqBWBb6z1W2z9TpizwXTfwuGk47VLQbl6C7nS4ZrlMOh8zE6DRyVNk
- agQA==
-X-Gm-Message-State: AOJu0YyrmfqI9wHusx8eKb0MmjTjwjvgVLiFGwF/F2Cda48MLRiDFkcH
- 8tW1usvYUtCHCVGYgJCVViQoAFx6dZVyX/ZFO7zzPE9FnmyW6wkv53SevyLdoaX+sKMcrDi+bog
- pPEWHGfJ8uGGgKhCgP6ZIN1YhO2X2AxIuulRMu3w6iJPGpxVk
-X-Gm-Gg: ASbGncvObi1YCqdsivZyxl9RSv3vtR8gcU9ORQaCC2aUqaqvrb60qjm0h67GFmqfBaG
- Xknh75W6Jnyh4BKJbfMa3usVMtIs2L+V68Avle3zWyXXxANnOo0TvIcJoKmTJ4CkJYNW/aPHFjb
- keHMMm6hGb
-X-Google-Smtp-Source: AGHT+IEkCiSXwbwsfaOWkLBbn0CRXni+Cd6/uFDlLTi7k2GlDuBxNENLdhcaShfieqsAlTHiSTe0lckemkfh7Cp/ynw=
-X-Received: by 2002:a05:6902:158e:b0:e58:32b4:487d with SMTP id
- 3f1490d57ef6-e60b23f79aemr3144148276.18.1740735454580; Fri, 28 Feb 2025
- 01:37:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tnwv8-0001QR-W3; Fri, 28 Feb 2025 04:44:39 -0500
+Received: from tor.source.kernel.org ([2600:3c04::f03c:95ff:fe5e:7468])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tnwv6-0005cd-VP; Fri, 28 Feb 2025 04:44:38 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 426A461F45;
+ Fri, 28 Feb 2025 09:44:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE332C4CED6;
+ Fri, 28 Feb 2025 09:44:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1740735872;
+ bh=JH6UA1mw+4atmhJk6yRKhgzgsoNCKH5UZqtfwPXNeG4=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=H5pY+nBrl24ANrQjC3Qdl/ZqOs8EPOSyEJNqtCeLIuNO/E6Y53/ct9fzpKLqFemD6
+ BDDHbf5rZmszdCEbQ60RXwIqvVIHGT8ELfIsyudYnuonDbR8ovqJrRk747zmIWOxkY
+ eTy4CwWGRlLUwjmuvBvO7dy7QTvF4wRks4qghUGEbb/dOzMKm215PWWKZ3+fCKes57
+ QCYxndRTOPSRTf+R3z8DNmB+Sa6z9wLhkxjMFNaRuXnufxyHaTD90UuHM4cDJpL166
+ x+VNHnkxHuwo9jD7SYx5JPJ+C0DN64gYDi+0RRH8Ew/2IIrNoe6UuY06/GHmeHnaRY
+ 3EhYOtONOidoA==
+Date: Fri, 28 Feb 2025 10:44:22 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Ani Sinha
+ <anisinha@redhat.com>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v6 17/19] tests/acpi: virt: update HEST and DSDT tables
+Message-ID: <20250228104400.5ac2f7b1@foz.lan>
+In-Reply-To: <20250228173318.00000f9d@huawei.com>
+References: <cover.1740671863.git.mchehab+huawei@kernel.org>
+ <7a6a1a1ba78f7dac2be6b7335280c1d0b380a175.1740671863.git.mchehab+huawei@kernel.org>
+ <20250228173318.00000f9d@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20250227142746.1698904-1-peter.maydell@linaro.org>
- <20250227142746.1698904-2-peter.maydell@linaro.org>
- <69ae459d-90ff-441d-a039-ae3ee15c919e@linaro.org>
- <CAFEAcA8=P0hJz45RFEBQX7QySR6+RiDqFA8BS8HF_k-m9BdZDw@mail.gmail.com>
- <05633317-0484-4595-94e5-c7fddbb2d283@linaro.org>
-In-Reply-To: <05633317-0484-4595-94e5-c7fddbb2d283@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 28 Feb 2025 09:37:23 +0000
-X-Gm-Features: AQ5f1JrskvVFRAs43Skfrd-WYQLK2RpXDE8LyzIGEdcbTrvrecd0GssLAY546mw
-Message-ID: <CAFEAcA9=rjjjV0qXhPoQktE_qa48MAEedU6kjc_t_ngnp_o42Q@mail.gmail.com>
-Subject: Re: [PATCH 1/3] target/arm: Correct LDRD atomicity and fault behaviour
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c04::f03c:95ff:fe5e:7468;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_XBL=0.375, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,86 +74,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 28 Feb 2025 at 00:18, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 2/27/25 09:58, Peter Maydell wrote:
-> > On Thu, 27 Feb 2025 at 17:41, Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> >>
-> >> On 2/27/25 06:27, Peter Maydell wrote:
-> >>> +static void do_ldrd_load(DisasContext *s, TCGv_i32 addr, int rt, int rt2)
-> >>> +{
-> >>> +    /*
-> >>> +     * LDRD is required to be an atomic 64-bit access if the
-> >>> +     * address is 8-aligned, two atomic 32-bit accesses if
-> >>> +     * it's only 4-aligned, and to give an alignemnt fault
-> >>> +     * if it's not 4-aligned.
-> >>> +     * Rt is always the word from the lower address, and Rt2 the
-> >>> +     * data from the higher address, regardless of endianness.
-> >>> +     * So (like gen_load_exclusive) we avoid gen_aa32_ld_i64()
-> >>> +     * so we don't get its SCTLR_B check, and instead do a 64-bit access
-> >>> +     * using MO_BE if appropriate and then split the two halves.
-> >>> +     *
-> >>> +     * This also gives us the correct behaviour of not updating
-> >>> +     * rt if the load of rt2 faults; this is required for cases
-> >>> +     * like "ldrd r2, r3, [r2]" where rt is also the base register.
-> >>> +     */
-> >>> +    int mem_idx = get_mem_index(s);
-> >>> +    MemOp opc = MO_64 | MO_ALIGN_4 | MO_ATOM_SUBALIGN | s->be_data;
-> >>
-> >> The 64-bit atomicity begins with armv7 + LPAE, and not present for any m-profile.
-> >> Worth checking ARM_FEATURE_LPAE, or at least adding to the comment?
-> >>
-> >> Getting 2 x 4-byte atomicity, but not require 8-byte atomicity, would use
-> >> MO_ATOM_IFALIGN_PAIR.
-> >
-> > Definitely worth a comment at minimum. Do we generate better
-> > code for MO_ATOM_IFALIGN_PAIR ? (If not, then providing higher
-> > atomicity than the architecture mandates seems harmless.)
->
-> We could, but currently do not, generate better code for IFALIGN_PAIR for MO_64.
-> Currently the only place we take special care is for MO_128.
+Em Fri, 28 Feb 2025 17:33:18 +0800
+Jonathan Cameron <Jonathan.Cameron@huawei.com> escreveu:
 
-OK, in that case I'll just add to the comment:
+> On Thu, 27 Feb 2025 17:00:55 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > - The HEST table now accept two sources;
+> > - The DSDT tables now have a GED error device.
+> > 
+> > @@ -1,39 +1,39 @@
+> >  /*
+> >   * Intel ACPI Component Architecture
+> >   * AML/ASL+ Disassembler version 20240322 (64-bit version)
+> >   * Copyright (c) 2000 - 2023 Intel Corporation
+> >   *
+> > - * Disassembly of tests/data/acpi/aarch64/virt/HEST
+> > + * Disassembly of /tmp/aml-DMPE22  
+> This is an artifact of where you happened to get file
+> from so if we are being really fussy drop the change 
+> diff in the patch description for it.  I don't really care though.
+> >   *  
 
-   * For M-profile, and for A-profile before LPAE, the 64-bit
-   * atomicity is not required. We could model that using
-   * the looser MO_ATOM_IFALIGN_PAIR, but providing a higher
-   * level of atomicity than required is harmless (we would not
-   * currently generate better code for IFALIGN_PAIR here).
+True, but on the other hand, this is the only place at the diff
+saying what table the diff is against (HEST, in this case), as I had to
+remove the information before @@, as it was causing troubles when Igor
+were trying to apply the patch (plus on checkpatch).
 
-> > For the comment in memop.h that currently reads
-> >       * MO_ATOM_SUBALIGN: the operation is single-copy atomic by parts
-> >       *    by the alignment.  E.g. if the address is 0 mod 4, then each
-> >       *    4-byte subobject is single-copy atomic.
-> >       *    This is the atomicity e.g. of IBM Power.
-> >
-> > maybe we could expand the e.g:
-> >
-> >    E.g if an 8-byte value is accessed at an address which is 0 mod 8,
-> >    then the whole 8-byte access is single-copy atomic; otherwise,
-> >    if it is accessed at 0 mod 4 then each 4-byte subobject is
-> >    single-copy atomic; otherwise if it is accessed at 0 mod 2
-> >    then the four 2-byte subobjects are single-copy atomic.
-> >
-> > ?
->
-> Yes, that's correct.
->
-> > I wasn't sure when reading what we currently have whether
-> > it provided the 8-byte-aligned guarantee, rather than merely
-> > the 4-byte-aligned one.
->
-> I was trying to highlight the difference between SUBALIGN and IFALIGN, and perhaps didn't
-> do adequate job of it.
+That' why I opted to keep this hunk.
 
-I reviewed the comment patch, and presumably wasn't confused
-at the time because I'd just read through the corresponding
-code changes :-)
+Regards,
+Mauro
 
-I'll send in a patch adjusting the comment to expand the example.
 
-thanks
--- PMM
+Thanks,
+Mauro
 
