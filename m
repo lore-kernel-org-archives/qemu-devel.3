@@ -4,84 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39A97C282C1
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 04:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4411CC19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 04:31:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnrwG-000124-Kt; Thu, 27 Feb 2025 23:25:28 -0500
+	id 1tns1p-0005ZB-Bp; Thu, 27 Feb 2025 23:31:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tnrwB-000100-Mr
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 23:25:25 -0500
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tnrw8-0007au-92
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 23:25:23 -0500
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-51e902b58c0so1317169e0c.0
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 20:25:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740716718; x=1741321518; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=c6iiqjs0b9zJ1D0jUaumhiJH40zl2+2yrOGKXJ7sNx0=;
- b=RrBT03+SOE+N/N1N7y+4Fh7/jBpeKSFm/VW0CqNvmJf4lINwvoBtt66z4fYETZ2fl8
- IwJCKrwy3x4clowc4ld5upyn7p5oA6o36JTFVYQ0R7OJOX7polKBqqj7FhZzaWAEfn8i
- vCcKF62yQlycEw8HDamhcrigG7eDn19JC5pe+S6dwC7Jv2vOvjWuFvqrvYrK6k6dTiTE
- hMLE0Uh9X7XsUBI9llPy3wBz0drZWRgQ/TUMy6t9g3J04IocuwA0OxVtoyp+IlO5aPOy
- Op3XoiIt5nfvP5Oup61CBPFZcn3g2LiMRUie5x0hDukxDnC18blaHj5adlCuYnNDkjTc
- W5Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740716718; x=1741321518;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=c6iiqjs0b9zJ1D0jUaumhiJH40zl2+2yrOGKXJ7sNx0=;
- b=biQSJCq2Li/uEyPncTbpXtYre018cDJCFspllGwYBEeVuqJGxHTyDWwXioluF90PYR
- uZHHwpE8w4KnhgmwKwFLFbu54iZKfYHzM8mIYACCCs70awdTefKuguCBr9B48+hTveYW
- vRmkdCz3Pjva0EUtz9Eno4N5t3ge0jG6Od6SPTl/mLEMR0xzQ2gNsBlQ3CtiwUJJLQPg
- IBZBh/is3Y3EvF5rMx1uPU0FBgNT4/W4ToA0aM7ohd7d6l+DbiKJU/oxbOWIkNtxrOXQ
- uzHshPn6EqqSiSvs2K1PAJlvFcKfoDjyfiGEnqZfXH8FzniIRZhQKvgG6DhisLs1FX2b
- sR6w==
-X-Gm-Message-State: AOJu0YzJsYejNSWfONHv2t/nI8yNtiuLD3/ifswh+grajpr1wiUNpajK
- c/cckonZ4lgbPDKuGJqFvMrczoZfye+VrQmUBjfDFrMv9UF+f0gpasSOQxJVMygs8sGoiBwiez8
- OHCdYbZNF0js9YGuqcxy80xPmEdE=
-X-Gm-Gg: ASbGnctfkrs+QjBzU+DmhIvo2iLplTG+UGaEAMz42BUcabJksxPCKY9Bjey5vkn6tcd
- qyr4234cRWyEnGWIIkWU+O0H1RS9u9rNn2cJX+YGDNtik/YM3OUFZUjKpb28cIptx0nNTGnNBGh
- FqPMcpz6ecXokN+L4H9bU66bBQMOKlTQ3awtlt
-X-Google-Smtp-Source: AGHT+IHHxZNoPLK0WQrBdCrYitZc4/LpWMIJbBKoM2HucHyABAUtiN8sOyBpu7ZiEHWnta2iihDdN/fnmE8FFwhGN50=
-X-Received: by 2002:a05:6122:3908:b0:51f:3eee:89e7 with SMTP id
- 71dfb90a1353d-5235bd672a7mr1074074e0c.11.1740716718535; Thu, 27 Feb 2025
- 20:25:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jansef.jian@hj-micro.com>)
+ id 1tns1d-0005RQ-TA
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 23:31:08 -0500
+Received: from mail-m49218.qiye.163.com ([45.254.49.218])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jansef.jian@hj-micro.com>)
+ id 1tns1a-0008Q7-8l
+ for qemu-devel@nongnu.org; Thu, 27 Feb 2025 23:31:01 -0500
+Received: from localhost.localdomain (unknown [219.146.33.230])
+ by smtp.qiye.163.com (Hmail) with ESMTP id c761fdbd;
+ Fri, 28 Feb 2025 11:15:10 +0800 (GMT+08:00)
+From: JianChunfu <jansef.jian@hj-micro.com>
+To: eric.auger@redhat.com,
+	peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ JianChunfu <jansef.jian@hj-micro.com>
+Subject: [PATCH v3] hw/arm/smmu: Introduce smmu_configs_inv_sid_range() helper
+Date: Fri, 28 Feb 2025 11:14:38 +0800
+Message-ID: <20250228031438.3916-1-jansef.jian@hj-micro.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-References: <20250127182924.103510-1-abologna@redhat.com>
- <20250127182924.103510-4-abologna@redhat.com>
-In-Reply-To: <20250127182924.103510-4-abologna@redhat.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 28 Feb 2025 14:24:52 +1000
-X-Gm-Features: AQ5f1Jr1oppNTYg85YRL_4i-UDcF-QPiYSVUv68ACfoRDKL3a49T8uYQAyIn-vg
-Message-ID: <CAKmqyKN7HtWpihKAyAzzXGiB6-DBe-HExCY130YaVAV6Wpu+4w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] binfmt: Add --ignore-family option
-To: Andrea Bolognani <abologna@redhat.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- David Abdurachmanov <davidlt@rivosinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+ tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaTE8YVkhISEpDQxoaTBpCSlYVFAkWGhdVEwETFh
+ oSFyQUDg9ZV1kYEgtZQVlJSkJVSk9NVUhIVUlIS1lXWRYaDxIVHRRZQVlLVUtVS1VLWQY+
+X-HM-Tid: 0a954a8d061a09d2kunmc761fdbd
+X-HM-MType: 1
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6OSI6Fhw5SzIQDQw5KyMeATYL
+ SD4KCipVSlVKTE9LTEpJTkpJSUJIVTMWGhIXVREaFQgeHVUREhoVOxMRVhYSGAkUVRgUFkVZV1kS
+ C1lBWUlKQlVKT01VSEhVSUhLWVdZCAFZQU1OTUo3Bg++
+Received-SPF: pass client-ip=45.254.49.218;
+ envelope-from=jansef.jian@hj-micro.com; helo=mail-m49218.qiye.163.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,107 +65,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 28, 2025 at 4:29=E2=80=AFAM Andrea Bolognani <abologna@redhat.c=
-om> wrote:
->
-> Until now, the script has worked under the assumption that a
-> host CPU can run binaries targeting any CPU in the same family.
-> That's a fair enough assumption when it comes to running i386
-> binaries on x86_64, but it doesn't quite apply in the general
-> case.
->
-> For example, while riscv64 CPUs could theoretically run riscv32
-> applications natively, in practice there exist few (if any?)
-> CPUs that implement the necessary silicon; moreover, even if you
-> had one such CPU, your host OS would most likely not have
-> enabled the necessary kernel bits.
->
-> This new option gives distro packagers the ability to opt out of
-> the assumption, likely on a per-architecture basis, and make
-> things work out of the box for a larger fraction of their user
-> base.
->
-> As an interesting side effect, this makes it possible to enable
-> execution of 64-bit binaries on 32-bit CPUs of the same family,
-> which is a perfectly valid use case that apparently hadn't been
-> considered until now.
->
-> Link: https://src.fedoraproject.org/rpms/qemu/pull-request/72
-> Thanks: David Abdurachmanov <davidlt@rivosinc.com>
-> Thanks: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
+Use a similar terminology smmu_hash_remove_by_sid_range() as the one
+being used for other hash table matching functions since
+smmuv3_invalidate_ste() name is not self explanatory, and introduce a
+helper that invokes the g_hash_table_foreach_remove.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+No functional change intended.
 
-Alistair
+Signed-off-by: JianChunfu <jansef.jian@hj-micro.com>
+---
+v3: - Modify the commit msg
+    - Rename the trace funtion
+v2: - move smmuv3_invalidate_ste() to smmu_hash_remove_by_sid_range()
+    - add function smmu_configs_inv_sid_range()
+v1: - Rename smmuv3_invalidate_ste to smmuv3_hash_remove_by_sid_range
+---
+ hw/arm/smmu-common.c         | 21 +++++++++++++++++++++
+ hw/arm/smmu-internal.h       |  5 -----
+ hw/arm/smmuv3.c              | 19 ++-----------------
+ hw/arm/trace-events          |  3 ++-
+ include/hw/arm/smmu-common.h |  6 ++++++
+ 5 files changed, 31 insertions(+), 23 deletions(-)
 
-> ---
->  scripts/qemu-binfmt-conf.sh | 19 ++++++++++++++++---
->  1 file changed, 16 insertions(+), 3 deletions(-)
->
-> diff --git a/scripts/qemu-binfmt-conf.sh b/scripts/qemu-binfmt-conf.sh
-> index 8d9136a29f..5fd462b1d1 100755
-> --- a/scripts/qemu-binfmt-conf.sh
-> +++ b/scripts/qemu-binfmt-conf.sh
-> @@ -205,6 +205,9 @@ Usage: qemu-binfmt-conf.sh [--qemu-path PATH][--debia=
-n][--systemd CPU]
->         --persistent:    if yes, the interpreter is loaded when binfmt is
->                          configured and remains in memory. All future use=
-s
->                          are cloned from the open file.
-> +       --ignore-family: if yes, it is assumed that the host CPU (e.g. ri=
-scv64)
-> +                        can't natively run programs targeting a CPU that=
- is
-> +                        part of the same family (e.g. riscv32).
->         --preserve-argv0 preserve argv[0]
->
->      To import templates with update-binfmts, use :
-> @@ -337,7 +340,12 @@ qemu_set_binfmts() {
->          fi
->
->          if [ "$host_family" =3D "$family" ] ; then
-> -            continue
-> +            # When --ignore-family is used, we have to generate rules ev=
-en
-> +            # for targets that are in the same family as the host CPU. T=
-he
-> +            # only exception is of course when the CPU types exactly mat=
-ch
-> +            if [ "$target" =3D "$host_cpu" ] || [ "$IGNORE_FAMILY" =3D "=
-no" ] ; then
-> +                continue
-> +            fi
->          fi
->
->          $BINFMT_SET
-> @@ -355,10 +363,11 @@ CREDENTIAL=3Dno
->  PERSISTENT=3Dno
->  PRESERVE_ARG0=3Dno
->  QEMU_SUFFIX=3D""
-> +IGNORE_FAMILY=3Dno
->
->  _longopts=3D"debian,systemd:,qemu-path:,qemu-suffix:,exportdir:,help,cre=
-dential:,\
-> -persistent:,preserve-argv0:"
-> -options=3D$(getopt -o ds:Q:S:e:hc:p:g:F: -l ${_longopts} -- "$@")
-> +persistent:,preserve-argv0:,ignore-family:"
-> +options=3D$(getopt -o ds:Q:S:e:hc:p:g:F:i: -l ${_longopts} -- "$@")
->  eval set -- "$options"
->
->  while true ; do
-> @@ -418,6 +427,10 @@ while true ; do
->          shift
->          PRESERVE_ARG0=3D"$1"
->          ;;
-> +    -i|--ignore-family)
-> +        shift
-> +        IGNORE_FAMILY=3D"$1"
-> +        ;;
->      *)
->          break
->          ;;
-> --
-> 2.48.1
->
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index 3f8272875..bad3b3b0b 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -225,6 +225,27 @@ static gboolean smmu_hash_remove_by_vmid_ipa(gpointer key, gpointer value,
+            ((entry->iova & ~info->mask) == info->iova);
+ }
+ 
++static gboolean
++smmu_hash_remove_by_sid_range(gpointer key, gpointer value, gpointer user_data)
++{
++    SMMUDevice *sdev = (SMMUDevice *)key;
++    uint32_t sid = smmu_get_sid(sdev);
++    SMMUSIDRange *sid_range = (SMMUSIDRange *)user_data;
++
++    if (sid < sid_range->start || sid > sid_range->end) {
++        return false;
++    }
++    trace_smmu_config_cache_inv(sid);
++    return true;
++}
++
++void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range)
++{
++    trace_smmu_configs_inv_sid_range(sid_range.start, sid_range.end);
++    g_hash_table_foreach_remove(s->configs, smmu_hash_remove_by_sid_range,
++                                &sid_range);
++}
++
+ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
+                          uint8_t tg, uint64_t num_pages, uint8_t ttl)
+ {
+diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
+index 843bebb18..d143d296f 100644
+--- a/hw/arm/smmu-internal.h
++++ b/hw/arm/smmu-internal.h
+@@ -141,9 +141,4 @@ typedef struct SMMUIOTLBPageInvInfo {
+     uint64_t mask;
+ } SMMUIOTLBPageInvInfo;
+ 
+-typedef struct SMMUSIDRange {
+-    uint32_t start;
+-    uint32_t end;
+-} SMMUSIDRange;
+-
+ #endif
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 4c49b5a88..1c55bc56d 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -903,7 +903,7 @@ static void smmuv3_flush_config(SMMUDevice *sdev)
+     SMMUv3State *s = sdev->smmu;
+     SMMUState *bc = &s->smmu_state;
+ 
+-    trace_smmuv3_config_cache_inv(smmu_get_sid(sdev));
++    trace_smmu_config_cache_inv(smmu_get_sid(sdev));
+     g_hash_table_remove(bc->configs, sdev);
+ }
+ 
+@@ -1277,20 +1277,6 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
+     }
+ }
+ 
+-static gboolean
+-smmuv3_invalidate_ste(gpointer key, gpointer value, gpointer user_data)
+-{
+-    SMMUDevice *sdev = (SMMUDevice *)key;
+-    uint32_t sid = smmu_get_sid(sdev);
+-    SMMUSIDRange *sid_range = (SMMUSIDRange *)user_data;
+-
+-    if (sid < sid_range->start || sid > sid_range->end) {
+-        return false;
+-    }
+-    trace_smmuv3_config_cache_inv(sid);
+-    return true;
+-}
+-
+ static int smmuv3_cmdq_consume(SMMUv3State *s)
+ {
+     SMMUState *bs = ARM_SMMU(s);
+@@ -1373,8 +1359,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+             sid_range.end = sid_range.start + mask;
+ 
+             trace_smmuv3_cmdq_cfgi_ste_range(sid_range.start, sid_range.end);
+-            g_hash_table_foreach_remove(bs->configs, smmuv3_invalidate_ste,
+-                                        &sid_range);
++            smmu_configs_inv_sid_range(bs, sid_range);
+             break;
+         }
+         case SMMU_CMD_CFGI_CD:
+diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+index c64ad344b..e96f9ae47 100644
+--- a/hw/arm/trace-events
++++ b/hw/arm/trace-events
+@@ -15,6 +15,8 @@ smmu_iotlb_inv_asid_vmid(int asid, int vmid) "IOTLB invalidate asid=%d vmid=%d"
+ smmu_iotlb_inv_vmid(int vmid) "IOTLB invalidate vmid=%d"
+ smmu_iotlb_inv_vmid_s1(int vmid) "IOTLB invalidate vmid=%d"
+ smmu_iotlb_inv_iova(int asid, uint64_t addr) "IOTLB invalidate asid=%d addr=0x%"PRIx64
++smmu_configs_inv_sid_range(uint32_t start, uint32_t end) "Config cache INV SID range from 0x%x to 0x%x"
++smmu_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
+ smmu_inv_notifiers_mr(const char *name) "iommu mr=%s"
+ smmu_iotlb_lookup_hit(int asid, int vmid, uint64_t addr, uint32_t hit, uint32_t miss, uint32_t p) "IOTLB cache HIT asid=%d vmid=%d addr=0x%"PRIx64" hit=%d miss=%d hit rate=%d"
+ smmu_iotlb_lookup_miss(int asid, int vmid, uint64_t addr, uint32_t hit, uint32_t miss, uint32_t p) "IOTLB cache MISS asid=%d vmid=%d addr=0x%"PRIx64" hit=%d miss=%d hit rate=%d"
+@@ -52,7 +54,6 @@ smmuv3_cmdq_tlbi_nh(int vmid) "vmid=%d"
+ smmuv3_cmdq_tlbi_nsnh(void) ""
+ smmuv3_cmdq_tlbi_nh_asid(int asid) "asid=%d"
+ smmuv3_cmdq_tlbi_s12_vmid(int vmid) "vmid=%d"
+-smmuv3_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
+ smmuv3_notify_flag_add(const char *iommu) "ADD SMMUNotifier node for iommu mr=%s"
+ smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s"
+ smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index e5ad55bba..e5e2d0929 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -142,6 +142,11 @@ typedef struct SMMUIOTLBKey {
+     uint8_t level;
+ } SMMUIOTLBKey;
+ 
++typedef struct SMMUSIDRange {
++    uint32_t start;
++    uint32_t end;
++} SMMUSIDRange;
++
+ struct SMMUState {
+     /* <private> */
+     SysBusDevice  dev;
+@@ -219,6 +224,7 @@ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
+                          uint8_t tg, uint64_t num_pages, uint8_t ttl);
+ void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
+                         uint64_t num_pages, uint8_t ttl);
++void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range);
+ /* Unmap the range of all the notifiers registered to any IOMMU mr */
+ void smmu_inv_notifiers_all(SMMUState *s);
+ 
+-- 
+2.47.1
+
 
