@@ -4,61 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A524C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 01:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2983AC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 01:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnpbd-0004t5-QE; Thu, 27 Feb 2025 20:56:01 -0500
+	id 1tnpdV-00066q-QY; Thu, 27 Feb 2025 20:57:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tnpbb-0004sY-Dz; Thu, 27 Feb 2025 20:55:59 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tnpbY-0007C6-U1; Thu, 27 Feb 2025 20:55:59 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Z3rpV44Lsz6K9Kv;
- Fri, 28 Feb 2025 09:53:38 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 662F2140134;
- Fri, 28 Feb 2025 09:55:38 +0800 (CST)
-Received: from localhost (10.96.237.92) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 28 Feb
- 2025 02:55:34 +0100
-Date: Fri, 28 Feb 2025 09:55:29 +0800
-To: Gavin Shan <gshan@redhat.com>
-CC: Igor Mammedov <imammedo@redhat.com>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>, <mst@redhat.com>, <anisinha@redhat.com>,
- <gengdongjiu1@gmail.com>, <peter.maydell@linaro.org>, <pbonzini@redhat.com>,
- <shan.gavin@gmail.com>, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: Re: [PATCH 4/4] target/arm: Retry pushing CPER error if necessary
-Message-ID: <20250228095529.00007890@huawei.com>
-In-Reply-To: <dafa471d-c5bb-4f6b-8483-17741e0caab1@redhat.com>
-References: <20250214041635.608012-1-gshan@redhat.com>
- <20250214041635.608012-5-gshan@redhat.com>
- <20250219185518.767a48d9@imammedo.users.ipa.redhat.com>
- <7caa54df-abe1-4833-bb59-cb83f8241962@redhat.com>
- <20250221110435.00004a3b@huawei.com>
- <20250225121939.7e0e2304@imammedo.users.ipa.redhat.com>
- <dafa471d-c5bb-4f6b-8483-17741e0caab1@redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tnpdU-00066J-DW; Thu, 27 Feb 2025 20:57:56 -0500
+Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tnpdR-0007KZ-Tl; Thu, 27 Feb 2025 20:57:55 -0500
+Received: by mail-ua1-x934.google.com with SMTP id
+ a1e0cc1a2514c-86b3bd4d0faso574572241.3; 
+ Thu, 27 Feb 2025 17:57:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740707872; x=1741312672; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AYuodx1Y4Z8M0NM15BpoCRYlbvhA1hyOL6BysQeMvKM=;
+ b=hJIc3DEhjIBgmk47k44cPv1EyA4B4envXhJMnaX7c7qSI+WTfTTMKvU3YsfNbQGzFw
+ BLbOxaKWM1eduTtcYz/20SUecgwYF1AytFcAKvG3H4vo4c1gLCTOm7XnmB5ymFIZ7f4f
+ s8jqhbJ72x+K4dxEZqdf1jcrlo2pbUl6zp8jdRtDTbkv2lHNmnN8PIij6xNLF4m6n88G
+ V0G77lJwdUUYiweHzLblEC2Q5MoDlw2T4tl1nYX0MCLyRGvtpETiH8rqLl18W+e3SvzC
+ nxdoaTzu0VtiUhx8WX04XhYwiNEzzcBWw20HTauaAZHs/ynxoHVvJjr2p0rQqZFr9xDc
+ Xyew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740707872; x=1741312672;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AYuodx1Y4Z8M0NM15BpoCRYlbvhA1hyOL6BysQeMvKM=;
+ b=jcwqWgML/seWpqseBiFsNzyfjOhGgf7Au5eo5R45dtuI2mKBQhWraD5LQ8As56EfBp
+ 6qQlu04XXVICm97j22MzcO5DA5VEsrG0uXFHCeuLPxHIa5RPlm4ZgVKkM0OE+UMBpeRO
+ JpCptZNLW184qkx+57q1C0hns7xrC6j7RKnIlQBUyy/T9OT3AN3iVMJwRj4iC4D8gq3u
+ 2406+SrLIS6kFNkCRnXC5ntZkMxet2GOGyANsXAnNmlwa7XqDl0TCvuko4Q9TYVKGcD1
+ GAQcyjgnM9aq3l2aAl6Sr7j7+cYHggzCtgLrzTDAf9azvVhG8F7kIY3u1ZvaDxyc7zNH
+ AW0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUxH+AsSuC2X4NeT0bY7Q3OJXqeXBpomYLgeLqD7+5mNa9SubQpog2geGltln3pdwW5VGX0plo5r5WR@nongnu.org
+X-Gm-Message-State: AOJu0Yzr5Kz8k+Bm+d/Of0H5ixu/i+NMYpTmVzJb9+nf4PgRHcp6DjFT
+ k2AC+tS1Tk48OWEc059nFi0RcQ6AglNkSSHW/NwpvWMF41zWvM4l6FPF5beEZNZPOo9ec+qhpTH
+ 4f2UzHqlSJOZgllvFFI/M4Anzowg=
+X-Gm-Gg: ASbGncv9cuGpUBORsTlza4v1snHksNID/cqJI2DHaoam3xnt14pSaKP3leZRtW2+IOt
+ jeSNbaCvaVKtXN4MNyrFSFIZyHH39c/MBxFombYQUZ1IBk//o8iX/J+q3UFrV3cuZwoW8qsWgc3
+ dbRbpwkTxkkmj7iXWOyzzOSaRDwtK91nbUF1lN
+X-Google-Smtp-Source: AGHT+IFI7pAykRCtTYxIqH4nUO6bj6d5ctbd0eXHh8Q2VjFS6e9TV9Ck1d00kAw9Gc3lolc1DgtpwAb9cKLUR5d6H8w=
+X-Received: by 2002:a05:6102:570b:b0:4b2:adfb:4f91 with SMTP id
+ ada2fe7eead31-4c044d30f60mr1539170137.21.1740707872188; Thu, 27 Feb 2025
+ 17:57:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.96.237.92]
-X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250122083617.3940240-1-ethan84@andestech.com>
+ <20250122084630.3965707-1-ethan84@andestech.com>
+In-Reply-To: <20250122084630.3965707-1-ethan84@andestech.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 28 Feb 2025 11:57:25 +1000
+X-Gm-Features: AQ5f1JrfeiwKbjm0dtQYqOOKYL-LcgYMGWFq7MQTLELks30ABEJx2erDl0b_5eo
+Message-ID: <CAKmqyKNu3NDom_8Yp1fcX+douovDCPD_VQejxOr43M3cp49-dA@mail.gmail.com>
+Subject: Re: [PATCH v10 5/8] hw/misc/riscv_iopmp_txn_info: Add struct for
+ transaction infomation
+To: Ethan Chen <ethan84@andestech.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x934.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,87 +96,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 26 Feb 2025 14:58:46 +1000
-Gavin Shan <gshan@redhat.com> wrote:
+On Wed, Jan 22, 2025 at 6:49=E2=80=AFPM Ethan Chen via <qemu-devel@nongnu.o=
+rg> wrote:
+>
+> The entire valid transaction must fit within a single IOPMP entry.
+> However, during IOMMU translation, the transaction size is not
+> available. This structure defines the transaction information required
+> by the IOPMP.
+>
+> Signed-off-by: Ethan Chen <ethan84@andestech.com>
 
-> On 2/25/25 9:19 PM, Igor Mammedov wrote:
-> > On Fri, 21 Feb 2025 11:04:35 +0000
-> > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:  
-> >>
-> >> Ideally I'd like whatever we choose to look like what a bare metal machine
-> >> does - mostly because we are less likely to hit untested OS paths.  
-> > 
-> > Ack for that but,
-> > that would need someone from hw/firmware side since error status block
-> > handling is done by firmware.
-> > 
-> > right now we are just making things up based on spec interpretation.
-> >   
-> 
-> It's a good point. I think it's worthwhile to understand how the RAS event
-> is processed and turned to CPER by firmware.
-> 
-> I didn't figure out how CPER is generated by edk2 after looking into tf-a (trust
-> firmware ARM) and edk2 for a while. I will consult to EDK2 developers to seek
-> their helps. However, there is a note in tf-a that briefly explaining how RAS
-> event is handled.
-> 
->    From tf-a/plat/arm/board/fvp/aarch64/fvp_lsp_ras_sp.c:
->    (git@github.com:ARM-software/arm-trusted-firmware.git)
-> 
->    /*
->     * Note: Typical RAS error handling flow with Firmware First Handling
->     *
->     * Step 1: Exception resulting from a RAS error in the normal world is routed to
->     *         EL3.
->     * Step 2: This exception is typically signaled as either a synchronous external
->     *         abort or SError or interrupt. TF-A (EL3 firmware) delegates the
->     *         control to platform specific handler built on top of the RAS helper
->     *         utilities.
->     * Step 3: With the help of a Logical Secure Partition, TF-A sends a direct
->     *         message to dedicated S-EL0 (or S-EL1) RAS Partition managed by SPMC.
->     *         TF-A also populates a shared buffer with a data structure containing
->     *         enough information (such as system registers) to identify and triage
->     *         the RAS error.
->     * Step 4: RAS SP generates the Common Platform Error Record (CPER) and shares
->     *         it with normal world firmware and/or OS kernel through a reserved
->     *         buffer memory.
->     * Step 5: RAS SP responds to the direct message with information necessary for
->     *         TF-A to notify the OS kernel.
->     * Step 6: Consequently, TF-A dispatches an SDEI event to notify the OS kernel
->     *         about the CPER records for further logging.
->     */
-> 
-> According to the note, RAS SP (Secure Partition) is the black box where the RAS
-> event raised by tf-a is turned to CPER. Unfortunately, I didn't find the source
-> code to understand the details yet.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-This is very much 'a flow' rather than 'the flow'.  TFA may not even be
-involved in many systems, nor SDEI, nor EDK2 beyond passing through some
-config.   One option, as I understand it, is to offload the firmware handing
-and building of the record to a management processor and stick to SEA
-for the signalling.
+Alistair
 
-I'd be rather surprised if you can find anything beyond binary blobs
-for those firmware (if that!).  Maybe all we can get from publicish sources
-is what the HEST tables look like.  I've asked our firmware folk if they
-can share more on how we do it but might take a while.
-
-I have confirmed we only have one GHESv2 SEA entry on at least the one random
-board I looked at (and various interrupt ones).  That board may not be
-representative but seems pushing everything through one structure is an option.
-
-Jonathan
-
-> 
-> Thanks,
-> Gavin
-> 
-> 
-
+> ---
+>  include/hw/misc/riscv_iopmp_txn_info.h | 38 ++++++++++++++++++++++++++
+>  1 file changed, 38 insertions(+)
+>  create mode 100644 include/hw/misc/riscv_iopmp_txn_info.h
+>
+> diff --git a/include/hw/misc/riscv_iopmp_txn_info.h b/include/hw/misc/ris=
+cv_iopmp_txn_info.h
+> new file mode 100644
+> index 0000000000..98bd26b68b
+> --- /dev/null
+> +++ b/include/hw/misc/riscv_iopmp_txn_info.h
+> @@ -0,0 +1,38 @@
+> +/*
+> + * QEMU RISC-V IOPMP transaction information
+> + *
+> + * The transaction information structure provides the complete transacti=
+on
+> + * length to the IOPMP device
+> + *
+> + * Copyright (c) 2023-2025 Andes Tech. Corp.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#ifndef RISCV_IOPMP_TXN_INFO_H
+> +#define RISCV_IOPMP_TXN_INFO_H
+> +
+> +typedef struct {
+> +    /* The id of requestor */
+> +    uint32_t rrid:16;
+> +    /* The start address of transaction */
+> +    uint64_t start_addr;
+> +    /* The end address of transaction */
+> +    uint64_t end_addr;
+> +    /* The stage of cascading IOPMP */
+> +    uint32_t stage;
+> +} riscv_iopmp_txn_info;
+> +
+> +#endif
+> --
+> 2.34.1
+>
+>
 
