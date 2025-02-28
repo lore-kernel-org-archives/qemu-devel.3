@@ -4,165 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F4CC282C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 17:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A0A2C282D1
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 17:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to4RE-0005SM-9V; Fri, 28 Feb 2025 12:46:16 -0500
+	id 1to4TB-0007VI-B8; Fri, 28 Feb 2025 12:48:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1to4RB-0005RD-3I
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 12:46:13 -0500
-Received: from mail-am0eur02on2121.outbound.protection.outlook.com
- ([40.107.247.121] helo=EUR02-AM0-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1to4R6-0005CS-A3
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 12:46:10 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fWdSu88NtpsPpSKAVCZ6uZp0jqMbDk0HPsD8mY+Gv4VxKLAlxFZtTINtxkzQiKzdkUQFv7dbfnZpHS/26zTy2DeWDk11u90rJ8AoHm7Lyx5EBPw6OLPaHU0Gy8hJzbosMHBFk/mH1muvwFn9VRPdXe9IRAaKtIwiilgUODzb9QFMkaDs5ZMG/qgMUSvDjgD4e5+mk/YpGiZqTXUl8j+BBZOHtG4aiXqd1LGhCuh7599DEJ64qLngvSBMEN3sYWfWz3lWJS1Qtah/1484Qu1fKN5B1wBbBHiNvmy9TV/uw/Ybdl/aptczCrO1uNc3RJvb2L7BbNffz3S6DGNaul24CA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ERprXTcW8GeO4lgmiXvknYcp0XEaslkiFmMVObXWCPY=;
- b=KyvetGETKeCyU+KACRN0sGIK4Bwt5BP/V+sw2C8R/p+ogCYlrc9HKBLaXJsXUYu3Q+Y+VsQ1+m0B0WSn5m7C2g76yQfnMdrLUM7HLWEzjCtNjxZiEHUM4MoGbaJENMGCq7bxVDD9aL6qr6lxTr+PsW/XohRwPFNe7hk2Kh4SZ0PsBW4HcUAuvTN+OCFWfPDSA+6HUIjKenIrK10xsGFZsqc1y/rJQQnHb6XnNSXBDY4b7bbF+SRmcFAE4g9yOkj1msDzmlwryDPFLRj/yAOgG0MLvG5OTYxH0iwWbUIfCCJRHj1redMKJwfi8812pRk+k6864LqzUDi+bfsc3DO9xw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ERprXTcW8GeO4lgmiXvknYcp0XEaslkiFmMVObXWCPY=;
- b=g4W/bu0o48lybajkxKd9iEaW6POwaCq72tuARV/8HWZxyc8YhQFCymMpE+2FQLRrqMfUTRYIPE4RFitzvulGjs1C9i40kD0Y3Yd0DalSTZI+Vx3WoTwRAEDqcwmImLCb65VcpwxPbeylcoxyZiWQKMUHpu2Mc1wnC4b/Mps2hNq/++F1iPEcFhTWGq3s5gnCQFKgr0pBL6MqRnAD67hfnsWXLU1Q1eF9+vwthzOfLr7E1ki+WvWZoP84ZEj5214zFNr7VKvwmHb5orLmSml+8lN8dU0jej8iorQiCK0d2KMCrTQz3KqmOypCPlsN6n4nvzC6uJSt98p+wDfpS67ZOw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by AS2PR08MB9667.eurprd08.prod.outlook.com
- (2603:10a6:20b:605::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.20; Fri, 28 Feb
- 2025 17:40:58 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::7f30:b6c:9887:74a7]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::7f30:b6c:9887:74a7%6]) with mapi id 15.20.8489.019; Fri, 28 Feb 2025
- 17:40:57 +0000
-Message-ID: <78309320-f19e-4a06-acfa-bc66cbc81bd7@virtuozzo.com>
-Date: Fri, 28 Feb 2025 19:39:57 +0200
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Steve Sistare <steven.sistare@oracle.com>,
- William Roche <william.roche@oracle.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- "Denis V. Lunev" <den@virtuozzo.com>, andrey.drobyshev@virtuozzo.com
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [BUG, RFC] cpr-transfer: qxl guest driver crashes after migration
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MI0P293CA0012.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::20) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1to4T3-0007JL-40
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 12:48:13 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1to4T0-0005MA-NW
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 12:48:08 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43996e95114so17171925e9.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 09:48:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740764885; x=1741369685; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=I40sF1i9jFqYAyQf3qwE84BFM4SpyXkD56Y42KHQEPA=;
+ b=SksizvwqlRoRwCX8PRqUlKl/Jr52kAaUnd4MGP/w7BGs4m8lQmHKuGK5uSOIxKiBDt
+ Km3u3BB5YeRhg9moub0Heiluehg0zMpJ+ct9nvV9WAfEhIGfB7qImF/VxJ/MOXI4NKdH
+ NqLIvExsJl2DPNxjbnBsCDsPZMLPLA9jZRVKR8BcNphxGQll+EGy6SyViplkOT39SCRx
+ lProSni4Ann0R46dgFijyVmegtEnS8Woy8LHsrJnedFNO15GEmImvdSHhhlWJsYw6Ft7
+ nD65hvCgwROd6UkNipzkN4Me/eijuQVrYcYPdhlXBxTOoDi5r4+Eff/MVUm3v4ojSmB9
+ JdHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740764885; x=1741369685;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=I40sF1i9jFqYAyQf3qwE84BFM4SpyXkD56Y42KHQEPA=;
+ b=gculOVGnuQxwWUYT7aIKn6aeOWAV0iBq/q9A6ea3C4DZZlnsA6lRHnfIjshKKvmX5p
+ A0uQOSBjY3nXGvUgCxt9utEVp+0bMc/BV4VLFSPb4VbLXoT1LnEdX0CTpi58gmC4fc1i
+ 8+u6ASw1nuTUXHFclSrEJxPj13DOZGhVmJ1Oc1oHA6lE0VmWudM0bmQfgdu8zbTXwbi5
+ XyOIJO1sk6knqgB0Fad4QRH3HbttHmG4Q5MHLr1xNNrz1UV1GFpWajF8QMIIICaTUEl3
+ eLtcJZuVkriLjmyuIiBMr6n3qWhit3rr4H0BAaMgQmSnVEtoQ8TgahGAKkJ/7B4GFPmX
+ rHeg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGkf0aKMpZQH+SMs0MF5tkfyf2cmZWWn0fz0LvtaIRBMOa8DZwcJDnHanehSBSWSi7dppzlDRnb91D@nongnu.org
+X-Gm-Message-State: AOJu0YxEUT9KWMYdQbXMEAHoxwM+aJ7oXJ4bs/mG3IOxnu/vmaV2tAKU
+ fSTguHypetaodhaZACuk541JfRLe5eLDmKK0biT+/G7hPTmbjmrTAZS+hlh7hEA=
+X-Gm-Gg: ASbGncvZgAj/vDlEXxymRxahvc/tUy6cIXdoWJg9jeLyika1Cx4PLayMo5VH3Rg7vKX
+ dmKLeN8ek0ijOgiOt12zaJFURB9TSfL8UVIxF2XkK5b/iVYRpBi6RFYayqJn3ar6Al4CU1d8GjW
+ MwK2bkPvayIcgBx20gp9t+DAb9biLI9/WZ689YYeDX+i4AB7RY7FJOQI722EmTBbxUuDgZKTk49
+ NWjyM6F0mkz/1ePT0nQW05jpDxSwaB2aax1cVkPzJDdr2LhpCDL+qZqoLc/HnOpQT7jbhFVX0eK
+ 4H/9XrDo0jQSa9ZwB7i7t5ady2xWUKeY
+X-Google-Smtp-Source: AGHT+IGZn+6aMBeY3H7i3KP/BqADJlQ+4TA2TrEyEWeq7n9EdewanyRXHEDqk9dtTdRwLSQtJkJfBQ==
+X-Received: by 2002:a05:6000:1447:b0:390:e904:63de with SMTP id
+ ffacd0b85a97d-390ec7cda50mr3633989f8f.20.1740764884491; 
+ Fri, 28 Feb 2025 09:48:04 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e4795da5sm5979556f8f.15.2025.02.28.09.48.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Feb 2025 09:48:03 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Jason Wang <jasowang@redhat.com>
+Subject: [PATCH 0/3] hw/net/smc91c111: Fix potential array overflows
+Date: Fri, 28 Feb 2025 17:47:58 +0000
+Message-ID: <20250228174802.1945417-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS2PR08MB9667:EE_
-X-MS-Office365-Filtering-Correlation-Id: c377b6eb-9808-442f-1b27-08dd581f0eda
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VTRscy8wQVFvRVJja2lUcy9JVU1tQ3NOcmg3SjNnaTJJYmN1TmxWTDU0Nkg1?=
- =?utf-8?B?NVVDUER2QUwwMVBLYlRwMHYzZVZxeTVZaDk2UFpTWTEzWHkxZ2R0UlREOGln?=
- =?utf-8?B?T0RVbTFqeExOUm5ORGljeEVTelBKQjkwWHg3cUlrSWxSR3lna0cvdHFuUjVy?=
- =?utf-8?B?M29mcnRaRU9tR1ltcnF1d3NnSzlzRmVSUjloOXZaNVoxVWwrUURZcEhvYktk?=
- =?utf-8?B?VGdwYk1mQ2lmclRSM1orNmNxNkl6WHdEZjNGRGNuVVl4bmdyUHJsdnFnTUwy?=
- =?utf-8?B?czFBR2pqZDlvRzRzdzhSb1djYTd6VmdUK3cxdTlYd3hia0pIOFN5V01Xc3Vy?=
- =?utf-8?B?b0NLaEhGOFFQV2tnd0RLVzJhbWlzSGtjZS9lS1h6YStqZnQwM2dpUnNzK1k1?=
- =?utf-8?B?RzdXaE5FWW15UFR2SzgyRkZsckduTHcwV0NaVTk3SUZKWTVzdStET0lDaTkr?=
- =?utf-8?B?alE4aTlycU9QMUlOYjhZTXc1RzJtLzdEdm5SNmtjMWJDWGI0MWgybkJQWnpX?=
- =?utf-8?B?T3I3MUd3N2N0Qk81OWovdjRlbHlEUkxTdWtuOTV2dHVqa2V3eTliVXRSdXFW?=
- =?utf-8?B?QVRZMW9xR1RodWt6M1NabVJGVVluTDlDcSsya0VGbENTU2hyTnVwVHdzQnJo?=
- =?utf-8?B?NlE4QmltZ2grNGNrMzBrc0xoemRrMWMwcnFEdU1abTgyUlhrZk5CeVg3cHo0?=
- =?utf-8?B?NitWV2FSNGtzc0tXWFZuUEpxN0xlaENBbndiNC85Z1pKc3NiMmdNUGl2ZnVr?=
- =?utf-8?B?VGVGWnlSSkdNVUd4czNDbVVQc1ZXMlhGNXdoM3k0RFBydUhyVmlXOXRSKzEw?=
- =?utf-8?B?WXkyZjR1WlFjWXFyV2NpZUc2TVovOEczQWtERnNobnlGMmEwMGoxbVhuSGhp?=
- =?utf-8?B?bHUzMy9Xc2U3T0E3UXRoZFVhVTAxN1B6VU4zTUd2YTVLQW56ZnFPeHNNRG1N?=
- =?utf-8?B?YU9WMzVuTFBuRmhDSlBIcStlV3M2NUJJbStWTGdmV21zNDBxWHJmbjBVUEI2?=
- =?utf-8?B?TExnYkxIVGtZK2RjQ0VSZ3JhVk9hbjVDQjVDZWJGdDROdEt5V0JMSnpRZFdM?=
- =?utf-8?B?cDEvdm9PQTkyTHhlOWRaL3BCUStsbmRLRkoramc0cS83Z2ZYMDZsL25Cd3l6?=
- =?utf-8?B?RU1kb2VaMkpOOHM0ZTluRG9DQVdyaWtWaXgwWlhaOEdYQ3QrSFduRkRXYjho?=
- =?utf-8?B?eU51elFGVTllN3N6WW83VW0wZ2pEVE1GalcwcDN5N3Z6eWZVcGtzWUw4Y29M?=
- =?utf-8?B?VjErRllXeGlmQlNpYzYyemJRSTBkb3g1QW5ZQmxFZFpERzExZFJjcURTaTFP?=
- =?utf-8?B?WWZ4WXlpdXdtNzNFbzN5MFBHZlU2OS9LUkhaK1dmN0ZpN2F6S1pSeWoxY3lM?=
- =?utf-8?B?TDd4cFBOL3NaUk5IUVNsWFlhZnh3QnkzMGdzakoxOXNrcDFuc3lCeDJHL3ha?=
- =?utf-8?B?ZmoxbnlMeURpKzh2cGFiYW52TFVQWklZT1N6eEtrVGU2QVppU3RZUWhnNFZR?=
- =?utf-8?B?Vno5NUh4QWxSYnpjNml3WERvZDdiYzdpdVNQM3J0RVVLa1BiSU03ZEN1NE42?=
- =?utf-8?B?eFZNaG5tQnJISUx6WHFxMS95amtVOUZkdXh3QXhJVVczY1Byb1kyZ2JVOWZs?=
- =?utf-8?B?R1dEeFB5K1cwUkdqNVVZYTY4OVZ1Wi81V2s0K0tGbGRDZ3pOUGZndnlaenBS?=
- =?utf-8?B?dlJUd0JzYUpHaVR1WlhsOXAwNWxvbUVXcUJ1SlFSaGxmMlhEemp2KzNPM2Nz?=
- =?utf-8?B?cmxKRkFPWEVnUm5UcVBXVW80c3hRRHlKQVVyM1Vqc3B3c2xqL1BkNjdYU0tS?=
- =?utf-8?B?ZUdKcC9ndEE4QkUrQU9DZz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a2NsUXB5ZUh6anYzSWVOUlBtZlZ1UmNiZGZKd3I5QTdFS204RURZNGdrbjJz?=
- =?utf-8?B?L3ZqRUlWak0yeWRvaExjTGpBTkF5Rk51dmhKWEpuODFmWWVUeVZUWUlqcFE5?=
- =?utf-8?B?RmJSYXNXSUFsRm9PY0RiM2VqdEloL3hDcmNiYmVBRDNSNCt4NGNwSUlycWRO?=
- =?utf-8?B?TDZCOHJRdFF3T3R0QlFrMG9yclJyelpTaG1kZGNSbWdra1d5TTFRcUllY0JZ?=
- =?utf-8?B?YlNmMHZTVkdBMDVlRjBJalRSWk4ramxoeFF4ZHJrdzFFWXV5alJ2SWtnaE91?=
- =?utf-8?B?N2pVK3dSTE5NM2twRkVTQWs5cHcweGZESHJ2RlErSHpyL3JxZDlGZ2xUUGps?=
- =?utf-8?B?Mk4vWXluV1ZBMjVGR0xTZDFCdkEwSm4zUXo5V2ZEYVhrWGVabXFlVHMzbmNW?=
- =?utf-8?B?dS9lUVNvSFh0aHNSWlE5TTFpRkp5QkRRZGllMGdMdTArYXVzWFlRMEVVZlY0?=
- =?utf-8?B?U0luU1VPNXNhdlBiWENxaWJoakoyKy9nWUQwdXZmaFo5a1N0SkdnVmRSNTFs?=
- =?utf-8?B?eEMyQzFFR0tHZGg5UUJvNlk1eURKS0t3TEZXelZKa3o0T3ZuWUNYTmdEUnRJ?=
- =?utf-8?B?NWFIa05EN0UwTFpjQnJFakk4bUx5QlRrU2JiZXZpdkxBNW04UmM3MHR3SWFR?=
- =?utf-8?B?RzJBRC8wSHY5TFZFVE9ORGdacGVqd0U4amprMm5WQldLTjd2UlBSZ3I4cjdQ?=
- =?utf-8?B?OTFMWUw4WUZnWmNjb2VWK0tQOGhiNE5SbElLL1VUWnhDd3MvajhZNW00YVZl?=
- =?utf-8?B?ZnpxZ3ZoNEM5OFZSeEppc3NkVlJGbVZDdjdpYXFBb0ltczdNSEdyV1hhdDky?=
- =?utf-8?B?UkRqZVI0Rm5LOEk3SmluMFY4Mkt3aEN4MWlRSmNuSmxOVXFMczZ0amV5RHJC?=
- =?utf-8?B?WXNhN3hDQ1hNcXc4SXRsTGhFSnJYdy9uSU56Q3NwSWFSVFVQU2NBZThLN1VJ?=
- =?utf-8?B?K0dDa1U2MWpNcElFSmlPazBIdXB1d1AzV2JWeWFlZGd6b0wrNVB0UnVSZVFl?=
- =?utf-8?B?MFArSnQ5aFAyb0tnOFI1MVdVbjN6a1ZheFpPeWZUQnlySmhhUU5HT0VyZlJ2?=
- =?utf-8?B?OWZUd2VMbnhzVUdodVBzV3F3VjBIODBGOVhrVnFuQ0hNQ01ueDE0eHhjbEsr?=
- =?utf-8?B?YWZwdndZbC9ma09mYVZkQUtIMzJ1QjEwdmtTeFBYa3lFdkZjdmp0Q2x0NXhF?=
- =?utf-8?B?SW5TTjVSdVJNeUJsR3c4bFd0RzlwNmt1UWoxT213YVdPSGxZQlNKc0toSGpG?=
- =?utf-8?B?NXpkMUNtbGN5UlI0TG9mS3VwTjN4cndIeUxqYU5RcnJLZStLdEMvR1F1dHlk?=
- =?utf-8?B?SFZHbitLQzViVlF2eUllckthTmpza01URDk0TFcybjVIWkdDeXEvaDg0cnNO?=
- =?utf-8?B?U1VEMzhjbTY5N1VOdHRxNWF0UVdQcSt5d1g5aVF0NWxhMk9vMGVCaDlrTFl0?=
- =?utf-8?B?S1FxQnhSMk1QN042QktCc2VYcXZUc2FiT05QalRiZ2dSWGFDU0x5NG41VExv?=
- =?utf-8?B?V056d1pqTEJLeVNvSmdrRURFSlpwckNPZk4vbVAwSFF0MVYyKzVLY1JlcjFs?=
- =?utf-8?B?Z0xKYmU2bGk1a21jSkJ5cFJCY05FMXdvVU9kZHRSb2F6TVFVVjFmbjUvYWtP?=
- =?utf-8?B?R21EcGgzK0wwSzNCdkg0ZVhBemJmdnVWZU9iYXZoYlhjOHR5NjJzZWRMYktK?=
- =?utf-8?B?dTF1aVNzODZKOUlMWURleStTZUE2U1k3cDJFZkJDWGovTE1iekNULzFzRXRi?=
- =?utf-8?B?VTFNaE9xYjFic2NGSEhPczBSbzBtdllsNTBENlhxMzMrNks4QmNYYlNXdDJW?=
- =?utf-8?B?eWJXdHMwbnJSSXRDclAxaVZtc1pELzNtYmRHUUdITEVLV0hENlZlcDc4aVdY?=
- =?utf-8?B?NnFodzNlbmo1MTBTcmtuY0N0QWJVRGt1VEJXSDh3THhlMWhFNy9Ja3JlWWhY?=
- =?utf-8?B?SW9DVGZpTGtzT2hRcE0wUVhscFBUWi9hMkZsWmNrZXUwL1NEVVlrOGpxenVG?=
- =?utf-8?B?UldwNWtHRVJzR2VvdVJmTzdJQTgrTGJVN2hhWVE5eUlpU1VFN2p1L1BXVjN2?=
- =?utf-8?B?dzBYSnVWTnF6VWZtb05NRHliRGxWbUdzeE9VTG5HeGF6TldtZnlMZEM1dDl5?=
- =?utf-8?B?ZExEU3BIU0toVnoyNzQzZkxQdCtEOFFETndHUmZOWmN2bDhaaXJKY3NxK3V3?=
- =?utf-8?B?N1E9PQ==?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c377b6eb-9808-442f-1b27-08dd581f0eda
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2025 17:40:57.5006 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: r/LyIxt/NSg5oZTQ3Zr9klup5MjB9RDKJHkgb9cGVTiYydgUsjRQcdzsrZRP0p8xKSehEX6BUZRMOse+/eyqjc2qzoJtGzIfs/HxAFQG8/g=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR08MB9667
-Received-SPF: pass client-ip=40.107.247.121;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=EUR02-AM0-obe.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,100 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+This patchset fixes some potential array overflows in the
+smc91c111 ethernet device model, including the one found in
+https://gitlab.com/qemu-project/qemu/-/issues/2742
 
-We've been experimenting with cpr-transfer migration mode recently and
-have discovered the following issue with the guest QXL driver:
+There are two classes of bugs:
+ * we accept packet numbers from the guest, but we were not
+   validating that they were in range before using them as an
+   index into the data[][] array
+ * we didn't sanitize the length field read from the data
+   frame on tx before using it as an index to find the
+   control byte at the end of the frame, so we could read off
+   the end of the buffer
 
-Run migration source:
-> EMULATOR=/path/to/emulator
-> ROOTFS=/path/to/image
-> QMPSOCK=/var/run/alma8qmp-src.sock
->
-> $EMULATOR -enable-kvm \
->     -machine q35 \
->     -cpu host -smp 2 -m 2G \
->     -object memory-backend-file,id=ram0,size=2G,mem-path=/dev/shm/ram0,share=on\
->     -machine memory-backend=ram0 \
->     -machine aux-ram-share=on \
->     -drive file=$ROOTFS,media=disk,if=virtio \
->     -qmp unix:$QMPSOCK,server=on,wait=off \
->     -nographic \
->     -device qxl-vga
+This patchset fixes both of these. The datasheet is sadly
+silent on the h/w behaviour for these errors, so I opted to
+LOG_GUEST_ERROR and silently ignore the invalid operations.
 
-Run migration target:
-> EMULATOR=/path/to/emulator
-> ROOTFS=/path/to/image
-> QMPSOCK=/var/run/alma8qmp-dst.sock                                                 
->                                                                                    
-> $EMULATOR -enable-kvm \
->     -machine q35 \
->     -cpu host -smp 2 -m 2G \
->     -object memory-backend-file,id=ram0,size=2G,mem-path=/dev/shm/ram0,share=on\
->     -machine memory-backend=ram0 \
->     -machine aux-ram-share=on \
->     -drive file=$ROOTFS,media=disk,if=virtio \
->     -qmp unix:$QMPSOCK,server=on,wait=off \
->     -nographic \
->     -device qxl-vga \
->     -incoming tcp:0:44444 \
->     -incoming '{"channel-type": "cpr", "addr": { "transport": "socket", "type": "unix", "path": "/var/run/alma8cpr-dst.sock"}}'
+Patch 3 tidies up the existing code to use a constant defined
+in patch 2; I put it last so we can cc the first two patches
+to stable without having to also backport that patch.
 
+thanks
+-- PMM
 
-Launch the migration:
-> QMPSHELL=/root/src/qemu/master/scripts/qmp/qmp-shell
-> QMPSOCK=/var/run/alma8qmp-src.sock
->
-> $QMPSHELL -p $QMPSOCK <<EOF
->     migrate-set-parameters mode=cpr-transfer
->     migrate channels=[{"channel-type":"main","addr":{"transport":"socket","type":"inet","host":"0","port":"44444"}},{"channel-type":"cpr","addr":{"transport":"socket","type":"unix","path":"/var/run/alma8cpr-dst.sock"}}]
-> EOF
+Peter Maydell (3):
+  hw/net/smc91c111: Sanitize packet numbers
+  hw/net/smc91c111: Sanitize packet length on tx
+  hw/net/smc91c111: Use MAX_PACKET_SIZE instead of magic numbers
 
-Then, after a while, QXL guest driver on target crashes spewing the
-following messages:
-> [   73.962002] [TTM] Buffer eviction failed
-> [   73.962072] qxl 0000:00:02.0: object_init failed for (3149824, 0x00000001)
-> [   73.962081] [drm:qxl_alloc_bo_reserved [qxl]] *ERROR* failed to allocate VRAM BO
+ hw/net/smc91c111.c | 87 +++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 79 insertions(+), 8 deletions(-)
 
-That seems to be a known kernel QXL driver bug:
-
-https://lore.kernel.org/all/20220907094423.93581-1-min_halo@163.com/T/
-https://lore.kernel.org/lkml/ZTgydqRlK6WX_b29@eldamar.lan/
-
-(the latter discussion contains that reproduce script which speeds up
-the crash in the guest):
-> #!/bin/bash
-> 
-> chvt 3
-> 
-> for j in $(seq 80); do
->         echo "$(date) starting round $j"
->         if [ "$(journalctl --boot | grep "failed to allocate VRAM BO")" != "" ]; then
->                 echo "bug was reproduced after $j tries"
->                 exit 1
->         fi
->         for i in $(seq 100); do
->                 dmesg > /dev/tty3
->         done
-> done
-> 
-> echo "bug could not be reproduced"
-> exit 0
-
-The bug itself seems to remain unfixed, as I was able to reproduce that
-with Fedora 41 guest, as well as AlmaLinux 8 guest. However our
-cpr-transfer code also seems to be buggy as it triggers the crash -
-without the cpr-transfer migration the above reproduce doesn't lead to
-crash on the source VM.
-
-I suspect that, as cpr-transfer doesn't migrate the guest memory, but
-rather passes it through the memory backend object, our code might
-somehow corrupt the VRAM.  However, I wasn't able to trace the
-corruption so far.
-
-Could somebody help the investigation and take a look into this?  Any
-suggestions would be appreciated.  Thanks!
-
-Andrey
+-- 
+2.43.0
 
 
