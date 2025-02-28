@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CB93C282C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 20:06:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F64C282C6
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 20:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to6c3-0005WZ-C4; Fri, 28 Feb 2025 15:05:35 -0500
+	id 1to6bz-0005NK-DF; Fri, 28 Feb 2025 15:05:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <38RbCZwgKCmwgROXNbSUQYYQVO.MYWaOWe-NOfOVXYXQXe.YbQ@flex--whendrik.bounces.google.com>)
- id 1to6bk-00059m-R8
+ <39BbCZwgKCm8jURaQeVXTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--whendrik.bounces.google.com>)
+ id 1to6bi-000580-Tg
  for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:05:19 -0500
-Received: from mail-wm1-x34a.google.com ([2a00:1450:4864:20::34a])
+Received: from mail-wm1-x349.google.com ([2a00:1450:4864:20::349])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <38RbCZwgKCmwgROXNbSUQYYQVO.MYWaOWe-NOfOVXYXQXe.YbQ@flex--whendrik.bounces.google.com>)
- id 1to6bd-00019a-7N
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:05:15 -0500
-Received: by mail-wm1-x34a.google.com with SMTP id
- 5b1f17b1804b1-439a5c4dfb2so12425955e9.1
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 12:05:06 -0800 (PST)
+ <39BbCZwgKCm8jURaQeVXTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--whendrik.bounces.google.com>)
+ id 1to6bh-0001AC-7d
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 15:05:14 -0500
+Received: by mail-wm1-x349.google.com with SMTP id
+ 5b1f17b1804b1-43ab5baf62cso18738865e9.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 12:05:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1740773105; x=1741377905; darn=nongnu.org;
+ d=google.com; s=20230601; t=1740773109; x=1741377909; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=f+N70W1h/Xmy4CplrtdSn+OiQuPC9AQ4ibAdCjh6RWE=;
- b=oaa8E2C3OytYVvsHm+SBwwTIoqBjnsETdhVk8j5/qVhv2At9NfgT6nI03r43Lx+PWZ
- yeoCYfR+U4a65NQOL4elpB6Dyt//Y0auXdbF40iu3gl3QMp/kenX+cPmLjqlcvcOVF+L
- gKQ3O05iKIUKSg3qEQyEL8+ELuTsIvQydnz6IPROm6Tla6kUug4Zfe8TE6SkXWkkujp9
- aYxc1M+fT3c6DmIt5LkRSWvgcthd8KnyUeMjKxlFDSIwmqT22xaJ5exHxCTPjmdPWNKP
- hIrX3kJapg34OxIZ1KEokZuz55jdGvymMjSMD99V62T8gZEW0agcwwsEb7bYJBAZ52HL
- PFjg==
+ bh=kmLVEYOHqmSuKqtrlHj7xi68jyrF2grY357sctURLPY=;
+ b=n79mVFztausugPlMC8wNXlE61uyMOuNv3nAb96W0doBJj+OTBIJmSStnpzjiTEqIjW
+ pTmHiP4V7G7864vEcHhDn1JOW0yTKosMbIZPqqNdU8+mG7XAkNwFSSe1w2h+HaO/jIku
+ 6gqUYMQJg/oPSwNZq0mRJZt+yTlhxmpm3Q7vRo1eUn1ieR+flTy7NtOHb1VXyTvOmT9d
+ QeExA0FUd6R9I7hbbXxKg6H2DpMuoA0ttlQJ0bocHqs6qDGbjf+tJ2EBY18W/g3XZB3O
+ 6RDnMskDzzR4Gy+niWN+uAcv0ZWRHIFsMTEnAvs9UoDU4B2TlGSJO3IaBPiowa55WOdc
+ E6gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740773105; x=1741377905;
+ d=1e100.net; s=20230601; t=1740773109; x=1741377909;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f+N70W1h/Xmy4CplrtdSn+OiQuPC9AQ4ibAdCjh6RWE=;
- b=PXov8hDPLyjWLqrPe8PP3Om8ShOYtAxN8nX9gIYaXgt+3dM5mXt4k1fF4a8otqah+M
- FJfRyqnNh1EeX5humHhB8ty/tMWwqulgETUpdchAJiEGrlIxUHXvaHdXrSy3yz/qD5AY
- cqDboMqjKoxzo0Qx3YSsaPfZ7Egf0NOInsGp3qVHtIXVIlLMvKs0kQNBd/DOsHwd23yh
- ug60rgbVduX0nLjesrtU/rkFGNPejkIP1Ozt5CjScozu8isE2wyzwmr1Q4xezshOLviz
- VcLmUa1HFW8m8HrPm/dZIYrC4FLrR7uC4a1mazmQzYeSo5vbCNmg634r9pOKiMQ8kPsR
- BWjQ==
-X-Gm-Message-State: AOJu0Yza1TW6C/7u5dzcnavM+cl++I53gl1LDfV5vIvxj2pvdJVxQ5sJ
- FwlWwcteAmFLs/yErojNMwCKdU5M1I189FrSCLajEetCIyFxaFoXgqkrY24DydDqFOdlsAcxIjP
- 6gqhSwCaOg8V7MFuaBBr0EzbRiXekimKYcGmLimUTGjsSuyaq/zEaTjDiXp1R28CJDC8AZrHrRf
- FNSArRjqr/+uWrh9+CGgQmSt6mcX86mH3WkcqrH+AiXA==
-X-Google-Smtp-Source: AGHT+IEURBPBL9vfA5d4yzQspkEy1o3DNgfzPWOPavDLy+TO2pL5ibEL3KoF00/JlrhhwpKv+5lhTYI5jlJ/Dw==
-X-Received: from wmbfk6.prod.google.com ([2002:a05:600c:cc6:b0:439:94f1:365e])
+ bh=kmLVEYOHqmSuKqtrlHj7xi68jyrF2grY357sctURLPY=;
+ b=RgdDhsvUpZEDk/ADkgnQojEmelj5dnE0jST+2/GC4I3WerdEyXhO60RDrbTk6YHPbq
+ yvcpTDHFHNsmiQ9kZTx1xVQNs5mha+Q4N7eINgWMgHwtTonOmdWX9vpdAE88El2lgCMi
+ RsFlmI+TtUGCkNVRXVKP8WrmkzPOKKKl5NcistpesxBsZF0LW0VTQTKLijnxnULmAq3t
+ V7Q5ZQc9OtBpsSJYIbAmTEoX1pfVZ+/ztDVawAwsz0LZRQMiXLecuDM/vXECEAHnO2uD
+ LSFO05UUm319GSNSClTfKvsLp/pRwjbK2AeswMTILGI4cWz6icVtwWNu9FRDeIM7Y9ir
+ ovRg==
+X-Gm-Message-State: AOJu0YzEtwXAYIb7RzRucwMlSLjTip5Rx9G6fChoClrJeZG3DpSndJrb
+ nsqoU3sGo3aJ4FDs7Y2IoevMVQnE/EVydEzEO9Pb123xyejemgyUI+TgQ+XM+91V0KTaTFE7x7K
+ a5zrHd5Lj3ogAX1Jq2fLILgmVej0rlDAlpFcQdpR5olMAF3du/mqTk8ZtMM5JVD+aDgKqkxD9gR
+ CObDbG0SUUNCOw1GaHFC2xAjX8Cb8VUeiprUpXv3O68w==
+X-Google-Smtp-Source: AGHT+IEXDnmtHdvCU6FYxqx7SwZPQUpPbr18UkYC5JLrNcO3k2UfFjffj812/9T2Ik/o7OjQ3e5tDnnKh17anA==
+X-Received: from wmbfm10.prod.google.com ([2002:a05:600c:c0a:b0:439:81e4:9ca6])
  (user=whendrik job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:511e:b0:439:6017:6689 with SMTP id
- 5b1f17b1804b1-43ba66e0bf5mr40423805e9.9.1740773105262; 
- Fri, 28 Feb 2025 12:05:05 -0800 (PST)
-Date: Fri, 28 Feb 2025 20:04:49 +0000
+ 2002:a05:600c:1392:b0:439:6ab6:5d45 with SMTP id
+ 5b1f17b1804b1-43ba6747775mr34648115e9.28.1740773108969; 
+ Fri, 28 Feb 2025 12:05:08 -0800 (PST)
+Date: Fri, 28 Feb 2025 20:04:51 +0000
 In-Reply-To: <20250228200453.45173-1-whendrik@google.com>
 Mime-Version: 1.0
 References: <20250228200453.45173-1-whendrik@google.com>
 X-Mailer: git-send-email 2.48.1.711.g2feabab25a-goog
-Message-ID: <20250228200453.45173-4-whendrik@google.com>
-Subject: [PATCH v6 4/8] i386: Add RDT device interface through MSRs
+Message-ID: <20250228200453.45173-6-whendrik@google.com>
+Subject: [PATCH v6 6/8] i386: Add RDT feature flags.
 From: Hendrik Wuethrich <whendrik@google.com>
 To: qemu-devel@nongnu.org, eduardo@habkost.net, richard.henderson@linaro.org, 
  marcel.apfelbaum@gmail.com, mst@redhat.com, pbonzini@redhat.com, 
@@ -71,9 +71,9 @@ To: qemu-devel@nongnu.org, eduardo@habkost.net, richard.henderson@linaro.org,
  v6-0000-cover-letter.patch@google.com
 Cc: peternewman@google.com, Hendrik Wuethrich <whendrik@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::34a;
- envelope-from=38RbCZwgKCmwgROXNbSUQYYQVO.MYWaOWe-NOfOVXYXQXe.YbQ@flex--whendrik.bounces.google.com;
- helo=mail-wm1-x34a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::349;
+ envelope-from=39BbCZwgKCm8jURaQeVXTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--whendrik.bounces.google.com;
+ helo=mail-wm1-x349.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,182 +96,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement rdmsr and wrmsr for the following MSRs:
-* MSR_IA32_PQR_ASSOC
-* MSR_IA32_QM_EVTSEL
-* MSR_IA32_QM_CTR
-* IA32_L3_QOS_Mask_n
-* IA32_L2_QOS_Mask_n
-* IA32_L2_QoS_Ext_BW_Thrtl_n
-
-This allows for the guest to call RDT-internal functions to
-associate an RMID with a CLOSID / set an active RMID for
-monitoring, read monitoring data, and set classes of service.
+Add RDT features to feature word / TCG.
 
 Signed-off-by: Hendrik Wuethrich <whendrik@google.com>
 ---
- include/hw/i386/rdt.h                |  4 ++
- target/i386/cpu.h                    | 14 +++++
- target/i386/tcg/system/misc_helper.c | 85 ++++++++++++++++++++++++++++
- 3 files changed, 103 insertions(+)
+ target/i386/cpu.c | 33 +++++++++++++++++++++++++++++++--
+ target/i386/cpu.h |  2 ++
+ 2 files changed, 33 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/i386/rdt.h b/include/hw/i386/rdt.h
-index d087627499..b63b433eef 100644
---- a/include/hw/i386/rdt.h
-+++ b/include/hw/i386/rdt.h
-@@ -29,6 +29,10 @@
- #define RDT_MAX_L2_MASK_COUNT      63
- #define RDT_MAX_MBA_THRTL_COUNT    63
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index cd06744451..6262665294 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -868,7 +868,8 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+           CPUID_7_0_EBX_CLFLUSHOPT |            \
+           CPUID_7_0_EBX_CLWB | CPUID_7_0_EBX_MPX | CPUID_7_0_EBX_FSGSBASE | \
+           CPUID_7_0_EBX_ERMS | CPUID_7_0_EBX_AVX2 | CPUID_7_0_EBX_RDSEED | \
+-          CPUID_7_0_EBX_SHA_NI | CPUID_7_0_EBX_KERNEL_FEATURES)
++          CPUID_7_0_EBX_SHA_NI | CPUID_7_0_EBX_KERNEL_FEATURES | \
++          CPUID_7_0_EBX_PQM | CPUID_7_0_EBX_PQE)
+           /* missing:
+           CPUID_7_0_EBX_HLE
+           CPUID_7_0_EBX_INVPCID, CPUID_7_0_EBX_RTM */
+@@ -905,6 +906,9 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+ #define TCG_SGX_12_0_EBX_FEATURES 0
+ #define TCG_SGX_12_1_EAX_FEATURES 0
+ #define TCG_24_0_EBX_FEATURES 0
++#define TCG_RDT_F_0_EDX_FEATURES CPUID_F_0_EDX_L3
++#define TCG_RDT_10_0_EDX_FEATURES (CPUID_10_0_EBX_L3_CAT | \
++          CPUID_10_0_EBX_L2_CAT | CPUID_10_0_EBX_MBA)
  
-+#define CPUID_10_1_EDX_COS_MAX          RDT_MAX_L3_MASK_COUNT
-+#define CPUID_10_2_EDX_COS_MAX          RDT_MAX_L2_MASK_COUNT
-+#define CPUID_10_3_EDX_COS_MAX          RDT_MAX_MBA_THRTL_COUNT
+ #if defined CONFIG_USER_ONLY
+ #define CPUID_8000_0008_EBX_KERNEL_FEATURES (CPUID_8000_0008_EBX_IBPB | \
+@@ -1062,7 +1066,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             "fsgsbase", "tsc-adjust", "sgx", "bmi1",
+             "hle", "avx2", "fdp-excptn-only", "smep",
+             "bmi2", "erms", "invpcid", "rtm",
+-            NULL, "zero-fcs-fds", "mpx", NULL,
++            "rdt-m", "zero-fcs-fds", "mpx", "rdt-a",
+             "avx512f", "avx512dq", "rdseed", "adx",
+             "smap", "avx512ifma", "pcommit", "clflushopt",
+             "clwb", "intel-pt", "avx512pf", "avx512er",
+@@ -1650,6 +1654,31 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         },
+         .tcg_features = TCG_SGX_12_1_EAX_FEATURES,
+     },
 +
- typedef struct RDTState RDTState;
- typedef struct RDTStatePerL3Cache RDTStatePerL3Cache;
- typedef struct RDTStatePerCore RDTStatePerCore;
++    [FEAT_RDT_10_0_EBX] = {
++        .type = CPUID_FEATURE_WORD,
++        .feat_names = {
++            NULL, "l3-cat", "l2-cat", "mba"
++        },
++        .cpuid = {
++            .eax = 0x10,
++            .needs_ecx = true, .ecx = 0,
++            .reg = R_EBX,
++        },
++        .tcg_features = TCG_RDT_10_0_EDX_FEATURES,
++    },
++    [FEAT_RDT_F_0_EDX] = {
++        .type = CPUID_FEATURE_WORD,
++        .feat_names = {
++            [1] = "l3-cmt"
++        },
++        .cpuid = {
++            .eax = 0xf,
++            .needs_ecx = true, .ecx = 0,
++            .reg = R_EDX,
++        },
++        .tcg_features = TCG_RDT_F_0_EDX_FEATURES,
++    },
+ };
+ 
+ typedef struct FeatureMask {
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 2cbcc8fe4e..08089ce6c2 100644
+index 6f5a3ecbd4..488126378d 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -577,6 +577,17 @@ typedef enum X86Seg {
- #define MSR_IA32_VMX_TRUE_ENTRY_CTLS     0x00000490
- #define MSR_IA32_VMX_VMFUNC             0x00000491
+@@ -679,7 +679,9 @@ typedef enum FeatureWord {
+     FEAT_7_1_EDX,       /* CPUID[EAX=7,ECX=1].EDX */
+     FEAT_7_2_EDX,       /* CPUID[EAX=7,ECX=2].EDX */
+     FEAT_24_0_EBX,      /* CPUID[EAX=0x24,ECX=0].EBX */
++    FEAT_RDT_F_0_EBX,  /* CPUID[EAX=0xf,ECX=0].EBX (RDT CMT/MBM) */
+     FEAT_RDT_F_0_EDX,  /* CPUID[EAX=0xf,ECX=0].EDX (RDT CMT/MBM) */
++    FEAT_RDT_10_0_EBX,  /* CPUID[EAX=0x10,ECX=0].EBX (RDT CAT/MBA) */
+     FEATURE_WORDS,
+ } FeatureWord;
  
-+#define MSR_IA32_QM_EVTSEL                  0x0c8d
-+#define MSR_IA32_QM_CTR                     0x0c8e
-+#define MSR_IA32_PQR_ASSOC                  0x0c8f
-+
-+#define MSR_IA32_L3_CBM_BASE                0x0c90
-+#define MSR_IA32_L3_MASKS_END               0x0d0f
-+#define MSR_IA32_L2_CBM_BASE                0x0d10
-+#define MSR_IA32_L2_CBM_END                 0x0d4f
-+#define MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE   0xd50
-+#define MSR_IA32_L2_QOS_Ext_BW_Thrtl_END    0xd8f
-+
- #define MSR_APIC_START                  0x00000800
- #define MSR_APIC_END                    0x000008ff
- 
-@@ -1883,6 +1894,9 @@ typedef struct CPUArchState {
-     uint64_t msr_ia32_feature_control;
-     uint64_t msr_ia32_sgxlepubkeyhash[4];
- 
-+    uint64_t msr_ia32_qm_evtsel;
-+    uint64_t msr_ia32_pqr_assoc;
-+
-     uint64_t msr_fixed_ctr_ctrl;
-     uint64_t msr_global_ctrl;
-     uint64_t msr_global_status;
-diff --git a/target/i386/tcg/system/misc_helper.c b/target/i386/tcg/system/misc_helper.c
-index c9c4d42f84..7027f7228c 100644
---- a/target/i386/tcg/system/misc_helper.c
-+++ b/target/i386/tcg/system/misc_helper.c
-@@ -25,6 +25,7 @@
- #include "exec/address-spaces.h"
- #include "exec/exec-all.h"
- #include "tcg/helper-tcg.h"
-+#include "hw/i386/rdt.h"
- #include "hw/i386/apic.h"
- 
- void helper_outb(CPUX86State *env, uint32_t port, uint32_t data)
-@@ -293,6 +294,47 @@ void helper_wrmsr(CPUX86State *env)
-         env->msr_bndcfgs = val;
-         cpu_sync_bndcs_hflags(env);
-         break;
-+#ifdef CONFIG_RDT
-+    case MSR_IA32_QM_EVTSEL:
-+        env->msr_ia32_qm_evtsel = val;
-+        break;
-+    case MSR_IA32_PQR_ASSOC:
-+        env->msr_ia32_pqr_assoc = val;
-+
-+        if (!rdt_associate_rmid_cos(val))
-+            goto error;
-+        break;
-+    case MSR_IA32_L3_CBM_BASE ... MSR_IA32_L3_MASKS_END:
-+    {
-+        uint32_t pos = (uint32_t)env->regs[R_ECX] - MSR_IA32_L3_CBM_BASE;
-+
-+        if (pos > CPUID_10_1_EDX_COS_MAX) {
-+            goto error;
-+        }
-+        rdt_write_msr_l3_mask(pos, val);
-+        break;
-+    }
-+    case MSR_IA32_L2_CBM_BASE ... MSR_IA32_L2_CBM_END:
-+    {
-+        uint32_t pos = (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_CBM_BASE;
-+
-+        if (pos > CPUID_10_2_EDX_COS_MAX) {
-+            goto error;
-+        }
-+        rdt_write_msr_l2_mask(pos, val);
-+        break;
-+    }
-+    case MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE ... MSR_IA32_L2_QOS_Ext_BW_Thrtl_END:
-+    {
-+        uint32_t pos = (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE;
-+
-+        if (pos > CPUID_10_3_EDX_COS_MAX) {
-+            goto error;
-+        }
-+        rdt_write_mba_thrtl(pos, val);
-+        break;
-+    }
-+#endif
-     case MSR_APIC_START ... MSR_APIC_END: {
-         int ret;
-         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
-@@ -471,6 +513,49 @@ void helper_rdmsr(CPUX86State *env)
-         val = cpu_x86_get_msr_core_thread_count(x86_cpu);
-         break;
-     }
-+#ifdef CONFIG_RDT
-+    case MSR_IA32_QM_CTR:
-+        val = rdt_read_event_count(x86_cpu->rdtPerNode,
-+                                   (env->msr_ia32_qm_evtsel >> 32) & 0xff,
-+                                   env->msr_ia32_qm_evtsel & 0xff);
-+        break;
-+    case MSR_IA32_QM_EVTSEL:
-+        val = env->msr_ia32_qm_evtsel;
-+        break;
-+    case MSR_IA32_PQR_ASSOC:
-+        val = env->msr_ia32_pqr_assoc;
-+        break;
-+    case MSR_IA32_L3_CBM_BASE ... MSR_IA32_L3_MASKS_END:
-+    {
-+        uint32_t pos = (uint32_t)env->regs[R_ECX] - MSR_IA32_L3_CBM_BASE;
-+
-+        if (pos >= CPUID_10_1_EDX_COS_MAX) {
-+            raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-+        }
-+        val = rdt_read_l3_mask(pos);
-+        break;
-+    }
-+    case MSR_IA32_L2_CBM_BASE ... MSR_IA32_L2_CBM_END:
-+    {
-+        uint32_t pos = (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_CBM_BASE;
-+
-+        if (pos >= CPUID_10_2_EDX_COS_MAX) {
-+            raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-+        }
-+        val = rdt_read_l2_mask(pos);
-+        break;
-+    }
-+    case MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE ... MSR_IA32_L2_QOS_Ext_BW_Thrtl_END:
-+    {
-+        uint32_t pos = (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE;
-+
-+        if (pos >= CPUID_10_3_EDX_COS_MAX) {
-+            raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-+        }
-+        val = rdt_read_mba_thrtl(pos);
-+        break;
-+    }
-+#endif
-     case MSR_APIC_START ... MSR_APIC_END: {
-         int ret;
-         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
 -- 
 2.48.1.711.g2feabab25a-goog
 
