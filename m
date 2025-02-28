@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAFB1C282D0
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 18:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D50C282C6
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 18:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to5Dg-0005Js-Rm; Fri, 28 Feb 2025 13:36:22 -0500
+	id 1to5FK-000648-BN; Fri, 28 Feb 2025 13:38:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1to5DX-0005JM-17
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 13:36:12 -0500
-Received: from mail-am6eur05on20720.outbound.protection.outlook.com
- ([2a01:111:f403:2612::720]
- helo=EUR05-AM6-obe.outbound.protection.outlook.com)
+ id 1to5FI-00063l-R6
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 13:38:00 -0500
+Received: from mail-vi1eur05on20722.outbound.protection.outlook.com
+ ([2a01:111:f403:2613::722]
+ helo=EUR05-VI1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1to5DQ-000793-7s
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 13:36:10 -0500
+ id 1to5FG-0007GR-I3
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 13:38:00 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=G4lIqzuw6IrcWhYtgAT53LH3CN4f5NTejcduSXkOjtiXM3u2FuQejTq/JgrAwFT/5jxKAyPaT3NFBHhMKMPxPD699zMxNF8F+jOxE/bDi81zuRBPqMKrlUYYCscgV4iWcjMg5biUNQDDdkyj/AwZbGZmSTwRY0dGEMnEpTP8LNIg6maHnFAb+KSedVLcXZOENhGlfa14DwZl32vRebPj/XJpKxN2aahuIfPZMg0U9E4XjxfRyHSLe7O+GfRGJ1b1L/TTdM0DNJaug+BJTgWV1Ngh3d7o4hoghtvTMw60x5AT/aWQSFBmO4xer9HdZKqja379+QZdD0yjSf1kRTkBdQ==
+ b=RDI8Vt6392hPAH4nWCEv0fygxo8k8GrQxFfFEGo0BWNKS4IcT171EQY74T6gQhQEP8cyvspLvzO5nGe8f7/rQagYm1UQOju9rHtld28ZGA94Jv5eF/QBuQpKeTBSXiOnPyEoFB5k30mQ+nYNA14IGE+i2U/xN+b4oGdkK2sr83Nh1XU+7WqT9q3cuJVcS6B545WDF64DBu79LFxcdvip9FYL9C7yni77w7PuU75gjVPEj0xw6hzuAKI51B+M7ohWKBXlEWrQNdqCxB5Z0mkBB2laASH2WdrJYQGFIe8tKGNLiXGqGN35WZeb8CyOYLxbkj3X+OjmcXXihol5ZIr3+w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+uyTottWW2edn0ZM2+dsYZ9wY/KgGKcxjLFy4+nOzV4=;
- b=vmWKyYDKa1oUUYEWys0CjMgaevlDlkDmizDu4uEa5s37SbQs7jIrS3M8yNR7ywtL+iN6PAVzUHjAD5BlHOHRreNaEsQIYT7SFt+2WBo5pHWSSinytMzOpljFruyEtnj7jYD7amDRiB4tDjQdSyw46S0dFaxhiBHbxQRpcZ43er9EACa4seq/tgX/tkepOs5ZOF/5U5D4daR0X5zRZXZzqrTdd4woRMYZAQiiGYqzVkOuLpKZG+9UIPMAROGLyRxP72z3AXLS0ppLn4kPyrxO+4jENOR+bO6a7laJn60E0PVVOgK+0jozZPzOa6wFJ8MZGxIK9urAwgAO8R2I3XC80g==
+ bh=5CHZXiZ6IK6yUmYKOKV3PNS75boLWahbtgvt8Qc4sGs=;
+ b=wZWJ38C8voHc/wKDihrgWMUfS+lyUf9aqRzj+DMTJZ4direlB8kLie8d8uG5Hbw4+yFN9o0lK0xqODPPRni303r8OKM8uBsjxAMtP5pwF3fTtTKhPCxXJqfGNcCiI8b/1HKSoqadzQS1/rEv9iyMVRO8bL1MvwluCVHlgD7Y7FW14C1t9wHgSIwmdaFHdWlgjEwQbTIFbrSLhvARhg2dNdvKLvKqrsU5zUC2IvOcXLnlzgpZNT+SGxVjeOpjZ5WOCrGlqwtF2CY5LFvkkdluWvkdWV8qOQeH83b/m7G0Zp4Ylva90lQXRB1yWNbo7VEFRXXnJSFrYI4LLH/P7VT7uQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+uyTottWW2edn0ZM2+dsYZ9wY/KgGKcxjLFy4+nOzV4=;
- b=REpgZCQwth5W/OnkFQzSkgX8wiK+XxG1EOfLHWMxp6GJKDnaQQXUPEZXOKYK0k9/sPH/NmcKIxBKlgl95vI1j3ODXVoWZIC/InB5HHivayC+GzJATQBZ4vpMKz/ulFKTraUbpo/5/m0eq/aTELHKUjhSmI9MqFJExBZ508JR91SdMT9QvLuHNT25cKqXSp8ncP8qmrQ1Olp/58qvWXaz0+hai8ece5l+kRQrPYFykXEhJH4mqJhKGQXt+elClVTteixomSkmnYgfDxPytSkoczS2GA8e6aft39v5GoE8vdmmwoC9EavlyE38657mpmh0ORjTebGGWdvY1SsRMYnQVg==
+ bh=5CHZXiZ6IK6yUmYKOKV3PNS75boLWahbtgvt8Qc4sGs=;
+ b=nxXK1s2SsGNkEXjJuf0E/DThpP8QfekjBwNv77mi65QZUh58FKTt12rX/kAo8chV6bhKiuiYKq+ZxvRmodW/MxZkV8Psa4W+h6boTH9U2d3ZjUoy4IrZfK9T0EF9g95eGPJ4k7LDyHYAG8+s58NWktxeEUqYC+EDo/swmf+uil+q+E2cEvcSAJnPjJc3XP6C3Rko17hIzuYp2zdFL+RBWKDjUwfwmhb6lTXO+YZDwp5sBcoEQksxAGVL6l/9JQw95rAiJKvlQp2cDzp2XM+ttxypP48+VQvjNcdnjXAxHShlOaE7SoKoEcW/GlBa29JKPWWJUpMshO3DAEs0/jMisw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12) by DU0PR08MB8253.eurprd08.prod.outlook.com
  (2603:10a6:10:413::22) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.23; Fri, 28 Feb
- 2025 18:35:57 +0000
+ 2025 18:37:54 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::7f30:b6c:9887:74a7]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::7f30:b6c:9887:74a7%6]) with mapi id 15.20.8489.019; Fri, 28 Feb 2025
- 18:35:57 +0000
-Message-ID: <4a74201e-7394-40a5-910e-36c4255ed9fc@virtuozzo.com>
-Date: Fri, 28 Feb 2025 20:35:05 +0200
+ 18:37:54 +0000
+Message-ID: <d03329c3-a55a-4818-8d41-7efb2e6af1c7@virtuozzo.com>
+Date: Fri, 28 Feb 2025 20:37:03 +0200
 User-Agent: Mozilla Thunderbird
 Subject: Re: [BUG, RFC] cpr-transfer: qxl guest driver crashes after migration
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: William Roche <william.roche@oracle.com>,
  Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
@@ -59,106 +60,106 @@ Cc: William Roche <william.roche@oracle.com>,
 References: <78309320-f19e-4a06-acfa-bc66cbc81bd7@virtuozzo.com>
  <6fd87c40-92dd-4290-9fa9-abd014ddf248@oracle.com>
  <8c79212c-4b0b-426b-8563-3e7d478ef24f@oracle.com>
+ <4a74201e-7394-40a5-910e-36c4255ed9fc@virtuozzo.com>
 Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <8c79212c-4b0b-426b-8563-3e7d478ef24f@oracle.com>
+In-Reply-To: <4a74201e-7394-40a5-910e-36c4255ed9fc@virtuozzo.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR3P281CA0181.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:a4::14) To VI0PR08MB10656.eurprd08.prod.outlook.com
+X-ClientProxiedBy: FR3P281CA0186.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a4::13) To VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DU0PR08MB8253:EE_
-X-MS-Office365-Filtering-Correlation-Id: d36e6670-5eb7-4625-7434-08dd5826bdb5
+X-MS-Office365-Filtering-Correlation-Id: 6c136c25-4a4e-4985-0b4e-08dd58270381
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?eHRxeCtzNzkyTTJWWGFBZmJGS1BGV1ZXMlNOMjd4VGgvRjlVYVE0SFJmYkhH?=
- =?utf-8?B?ck5UMUc1Z3crVWZtZGlKcFhHOSs1MG5Ialhhbm8vQWlhYVVKbXZIWFVLKzBv?=
- =?utf-8?B?UExtb01EbThkOGlNekxkSlR4bWZwT1paS3JDT1NwNVZadmpmMUZQSUl3RnhV?=
- =?utf-8?B?RnZGazR0eVR3SmxyT3o3TGhvcW9TNHhaSzJZSnBCcTNTbkZQeGl3c2RMT2tn?=
- =?utf-8?B?U1hMaExlNFRyUmV5cjRSK3RERE5zc2g4ZWxCYTVxMGRJVE1uNHpmVFZRdzJr?=
- =?utf-8?B?SHVUL0x5QTZlem9IYXBmaTdkMmF4ZnRBV2dUR0twdUlleHdvajIxdHpSOWhk?=
- =?utf-8?B?RmZpZEs2Q2M5SlpCTzRFd1dYMUpoMmpqWTZsVTJBaFBvTnYzZlRRV0Q4S2di?=
- =?utf-8?B?Qkh6MHlldGtpWmJycTR1aENBUlZMODFiVFFpM2I4UWl0WlFLVllFbTJZKy9l?=
- =?utf-8?B?VmNsT3REajZWRktlWkpGcWduTEVBMEF1MS83TG5xV05PR2ZJR0N3QkJTbEpE?=
- =?utf-8?B?OW1sRldFWnNrZ3lqVUlKU3NiTkdSaW1PQ1N2L2ZQcUJTMVo4anF4ZFFCazNE?=
- =?utf-8?B?dEwzTkcvRExNbG51dEgreG9WOHZWQldyaktBb0JZaEFZaDQrdHNiN3NqT1do?=
- =?utf-8?B?WUl0MkFFTGEySEtNT21nazBOZzRTdDAzczVHNmI2N05lUUNNVTNRQmdCTGpB?=
- =?utf-8?B?V3dXV3lQSHQxZzMySlB2YUpjdkVCdElVSjgyUWVpWW91Z09OTnFwT1BEcEh1?=
- =?utf-8?B?LzZDaHpGVUFmcFFjaXZvS3lFQzZIcUlKaHRqbnY5ZWRYNnBRMWFZUXIxSTVm?=
- =?utf-8?B?UzRLZUMxWXNGQ2ZrWVc0ZExGdUxjL3NjVTBTY0VNY295SUFXLzdXNmc5Zm5G?=
- =?utf-8?B?cktCdTl3Q1JsMVlFTXJ1TWlSbWhyNG1pNGpWOHVhbHJ3Vy9zQzlIMWVocE5X?=
- =?utf-8?B?c1kra3c2VDdSa2ladjg1Nm1CRjZVMUpidlhuN0IxZU9VWTJneTZHdHROcUtz?=
- =?utf-8?B?SGVYTFBUQzBEVWpNWithVlp3MHNFcTYwemQzUmUwZnF2WnFaNjIzWm05Wi9v?=
- =?utf-8?B?NWcwdWsvWlBsTmZHdTJ0eVAwaEZLdThWb3dVY25qRk96bUpsTmFFQ0owWkhE?=
- =?utf-8?B?cHVBeS90L0laSWFnMWhRWEhYeGliTERYOTFmdGNUK1VJQnA4UHhLSUEzbXpI?=
- =?utf-8?B?blEzeGhycVJSR3crR0xhTnJ6UWw0Ym9sU09IWE02T2lIK0dnc1VJN0Q0K2RU?=
- =?utf-8?B?QitRUUNVOGttaTRjeDlEQXV3bmZ4dGVUdlFicTl2cWZudGFrT2Iyc01HdlVI?=
- =?utf-8?B?SUx1Sk5YaUpaRWx0M3lVRzlKUWNzZmZtMHZCOHl4Um5oV2pjUFI4WU8wYWZF?=
- =?utf-8?B?WE9hS3hlRjNjS1R0VC90eGRvZlNIZkYwZThvTmdSSjJaVGUybmhwK2ljYzFG?=
- =?utf-8?B?ZnpOWlN6ZnN1akcyNHNLLzhBZTljRHNvRnVnTFY1VFVUZk1zYk94WWh2UEtm?=
- =?utf-8?B?WDBxSjVrbndtenhJdEgweVlINWhmeUlKSmg0S0FXSlJoUzJndE9iVDZZNUpo?=
- =?utf-8?B?NCtKNTlQdWlKc295eEpLYjZYVWFxaGN2RENUM0R2TWp6NitGeDYzTHJaVC9n?=
- =?utf-8?B?M21YNkFQbzJDNHJMSEhPakplZnl4Zm1VeWtkUmV6ZzZNZHNHVUZaSVlPNlIz?=
- =?utf-8?B?SW5QZ2oxajdqM2ZWUWxuVFJzUWpCNzhjOU1LUHY1NStyVWJTMzFxS3hLd2ds?=
- =?utf-8?B?dW5HalA3UVlNRm9xdHUyMkxMNHozZGtlS2JYSms5NDBWaGtDcnJ3RTJ1Qmtj?=
- =?utf-8?B?aHAxckw3YmNXNEo0dll5QT09?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?aU9yVkEvRGZOeDd1TWwwNGFOaWZsaWJQV2VLOGdLd3JvOWdXMVZhUERJZnl3?=
+ =?utf-8?B?S3NxT1pFRlNwdnBiQkRxZXlTZy8wZi9tWjVPNGVCamh2d09iYlhyelVlZm1T?=
+ =?utf-8?B?RW4vd1QzdCt0L1lxZ0hjVWFnVGM3ZDZmdjNybTl4ZTZhOTVDWWkzN1MrdWd0?=
+ =?utf-8?B?Z3dxRUU5Z1c3YUJxdFB1VzlveEdGK2pJK1ZFZE9EQ24wYkN5NWN3K3FwR0Na?=
+ =?utf-8?B?WHQzTTJIUXdES2JhNytmbHhEOG9ieWdOb0xHcWk3ZERuOFZxaWJlSkxvQkhD?=
+ =?utf-8?B?VEYvZ25nZE9LczlaU1Bwa2Z1NVp2UWQyQllwMTVUZFZNbVJPUExrbmRWQnRZ?=
+ =?utf-8?B?RTJXallGeFR2SUVaeU5GQ3FicU51SEt6dlJaM0JsVGgzazJ3aWx3YnNNT1R6?=
+ =?utf-8?B?YS9Vd1Z2MERGOXNPcncwalc4MEdYaWc0R2ZiVW5EeWlYME5XaTdRNDBLa2dB?=
+ =?utf-8?B?UXFUV1Fhbm84SVVCWm81Q0lHbHptRzJEM1hWSVdhV0diMHNEaG9NWVp3Wksw?=
+ =?utf-8?B?cW5hNmVHZlhDdjNTOHVEWlVsQXVPd0JNNTNVOXFDMGlOQmRlRk53QXRhQ3pJ?=
+ =?utf-8?B?UkEwTjJGOHBlSWxHYThRd08wQTNhWlMxMFRhS2ZKQXA4a09LNXFzakhiNXV1?=
+ =?utf-8?B?VFJ1anU4VjRwZDQwV1o0YlZ6V0J4Rlg5SGFNQXpEUjVmcC91WXZQaEozNlVJ?=
+ =?utf-8?B?Zk9VdCtXNGc4Vjllc3RVT3NUN29RK00wN2cxY1FjR3o5a3M1TThvVU9VT3hZ?=
+ =?utf-8?B?Y0p0bDFvcUVad3ZXWHRzWXRDdkI3Z2lIRndEMXVWTmFJWkhvVld4RkFmT09X?=
+ =?utf-8?B?eUppa3NVb3pGZUtGMkw5YnRrV3luSzdFTDZ6K2FwOGpZVEdmaHFjM3VDVkdz?=
+ =?utf-8?B?a25EdDlTcmdsRnBGeW45cFFDR0xpUkx6dE5DVzg0MTlCbjJsbFJNYWlkSnVU?=
+ =?utf-8?B?dHVyMjRuTC9qazlwZFpZbUhUeHAxQUxETm1IMkFrWm8zTFNPdmxodlVPKzR4?=
+ =?utf-8?B?Mms1NjdWRzR4UHBIbmYwRWdFcmNaR0Q1dWZUektHNWlYRnMvOTVRL0ZJMEx3?=
+ =?utf-8?B?Qk9lWWJqV1VjaG5WUWRtOVR3WFBCK0dqK2t2ODJxVEo4WHRkNFBZME1lVFFI?=
+ =?utf-8?B?a1Evbm82WnNFZllSS0tqMTNpY1FHQ3RsY0FmUERucnZzeE16SGdndTNHZFhL?=
+ =?utf-8?B?cU9rTGsybTRYSFduUE1uNStYWmtSQlVXYTVJTGgzRmN5ZXFZMTFQN1p1SnBV?=
+ =?utf-8?B?ZUJoYktkNmRES044Wm5ZN0ZDa0R2Q2RqUFZ5UGtqcDc2Kzlua01QQll5Wk0y?=
+ =?utf-8?B?OFROUitEQllWbWFtZm1vTzdEZjBsZStQVmxnZkl1MXFXalFBdDRWVWVsNG96?=
+ =?utf-8?B?Um1uR2dkQWVtOFRIK25sRkNnRFg5UkNFSFo2bjhoVHkrOHUvbWZEU2htMTBR?=
+ =?utf-8?B?R1V4cU9aVXVhOGJac3BFMTdjd1MyV291K3BJUEZqZm00M1JUZGc5S1RYUFYz?=
+ =?utf-8?B?Y3ZraWI3ZU9UdDdqeVc2MU1TMVVaRlFieXFpMUFXTnhiZG9MajkyV3o1L3VL?=
+ =?utf-8?B?UkptTXo5SXRsa25QQ25ZK29rd2d5ZFhnL3A4bDdxcDN4RnRXUit5RWp3Y2Js?=
+ =?utf-8?B?dDhIbzZ0bmZpSUxzMCtFc2JXSXZqMjlob3VLaVl0ZldnTk5yVmVFYmR6SnN4?=
+ =?utf-8?B?RmZnLzhROGQrQnJxbE8wQjJsK3l6TERVeDBYSXIwU2o1L3d4WWxrWkVTZFdR?=
+ =?utf-8?B?aUlUYXBBTkVnWlozSWNjbzRqOWFwd1lyRG9qL2ZJcTBJa3NzVWtObEVZM2VJ?=
+ =?utf-8?B?OWNsb3hGSExrY1Zpc3l4Zz09?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TEYwQ2Z3bnhIL0FrSE9xd3Q3N2R6WXZ1WGhIN052Ni9XZy91djBObG1VL2lm?=
- =?utf-8?B?THZGbkpJR0ttWXh2MkhJSVRVS254NEs4K3lHKzlBM1FReEpLbTYvVkNIdGNz?=
- =?utf-8?B?QjJiZ1Z1NWxMSW9ObWIwQ00xay9TTHg4b2FpSEd0NmthSnQzTG9KQlVoeFdj?=
- =?utf-8?B?cHlJWVdPZkRKVW15NVI4S0IxVzBNaUQvZlM5NFFVd0RjcVBBQ3RuN3h1MTJr?=
- =?utf-8?B?NjBWb1p3M3VkNE9WM1VCd3FPVjdHeWRJRTQwcVdoWG5SL1NINHhQN25MR1Zh?=
- =?utf-8?B?YUFFenBVNld1MHZXZDRXeHIzVERnMitlSXFzSnZBcnBLcUJTS2xVeWJtVm9Y?=
- =?utf-8?B?Y2JzY0ZmcDJBbm52M2lyZ1o0b0YzSGxhUUZNMGl3RUkrd1VuV3p2a0ErMlVO?=
- =?utf-8?B?Q2dYa2toTmh0c3VUZVBVNjVjM05DazBQWVlra095NTRsRjBvajNzMUNSTUJz?=
- =?utf-8?B?UWY5OThiTmtsMllVejlMWmVVMXlHd0p0WG80ZlRLMWhmQmRsL2o1QXRxcTlt?=
- =?utf-8?B?blFwRWV5d3FaaStxWTJFTFBkVFNnQ3E4NWl6N3l3cVBreG5XN0hVTjdsTDNK?=
- =?utf-8?B?SHhHcGs1U3Zma2pMZW9MWi9rOTYyVlJhMFU1cFNFT3A0dWZ0Ly9tQW11MFhX?=
- =?utf-8?B?a3VjVUhIVTRJL2FseUtCOFcxWlJHYzU3TVpzWmhKcWtRc09zVlU4a3VBbGUx?=
- =?utf-8?B?TlJtM1RjUEN0WGNRelBsUEVJM1JkSDFxQTY5OW9NTnllZVpEUGRtYXg2Z052?=
- =?utf-8?B?QXdMQTFjUEtmc1ljdVJNLzFTZGQ1N3U3VXRmbkI4R2R1aERzbnphMGxSUFZK?=
- =?utf-8?B?d05ibVBZeC9NaUpZWmdaVUNaM3YydmVCZERuQ0NOZ2g4UGhzei9jd09MQU13?=
- =?utf-8?B?ZHFOL1NUUHZQSlozSjZ1eG1kZ1dBYU1mVlYySVVSeE5vdDRmbnN6OWFjUDMz?=
- =?utf-8?B?bm5VdG56bFB1ZXJGcUxiMGJqSmJQME5EOGsxNnJRcWFSeUpUVnZXK2I0c1k0?=
- =?utf-8?B?NXltTVFoVDd4cCtPZzNmOUFodWxEVU5tNXFVTXNuQWRPSVNzb0w5eWtIcFFY?=
- =?utf-8?B?V2JwS2NwVDJVZFZpNFNIU3ZMNWRKL0hTNi9XU3pjbkl1NkcxSWQ2ZUEwaUcv?=
- =?utf-8?B?a2NEb1YweW93UEhPcVAycWJyVE1IbEFLMkJkdFkwK2M3eWJPN0R5eUF4Qzhv?=
- =?utf-8?B?NUUzT3daeEVJYU44Y1dpb29DTUU2ZkY0WHUzSENGZ0swMkREM1M2NHdSaDg2?=
- =?utf-8?B?UkJnRVZuRFQ2U3Q5QjYxOGNqQWZPSjFJeTZTVms0bVdGUTV4b3RHZkJhUXVk?=
- =?utf-8?B?ZTNadEFxbmRUMTNZYUptc2VBTFoxN0p1UHZCMDZ1MHNMbkVxSmVIUHpiNVhX?=
- =?utf-8?B?aUVtRDFjeEpMU1FPdEkvZ0cyTFN0a2diYXBtcldLTDRoNVQ3Qy8vbDR2TUZw?=
- =?utf-8?B?NVFURWN5WlJJejAxV1pvWFI0b24yMnhOYklLM0tEMWN0U2huUVY4WUdZVTIy?=
- =?utf-8?B?VitLMStKY28zc0xNYkpUYngrNlpMVkd5QVo1MVhHQVRRaE5yemlNb1RiWmF2?=
- =?utf-8?B?anZmSWplUHU3TWFBTkc3ek9hbUY5SHFVekpsR29zY2YraGpJcm5iRVVwZ1JI?=
- =?utf-8?B?bGxFU2RWNENBRVdML1JDc0daYXMzY1VvZHB5NWErUmRUNmdZTmpzbWJmVStY?=
- =?utf-8?B?a2NzcmZ5aTFWdWV2elIvNU1ydUJpME1yWDl6SW4rWXhKUzU4bEFadUdIZU1G?=
- =?utf-8?B?c2FyTm1wK0ZER2EyT3dCcEUzMklLNGFFaVdLc1hTeUd6K01sVlRvazA3R2hj?=
- =?utf-8?B?MEdieHhzOGdjRUJ6MGg1dGNkZjBiNEFGVWFEM2liOUFRQ1V1LzBpR1gxcWFz?=
- =?utf-8?B?VmpqYlNpQzdYUEx6cFBqQW9jbE5jMXprQXN0bzR2ZldVclQrRHJkV3ZIcGJV?=
- =?utf-8?B?emFEd3ZkeFZ0Y2FoZWV1eWU0eVJTV3o4Z1JzdFlWSFlDSG9qQ21mMEQzWExY?=
- =?utf-8?B?a1RqRGdObGs3UUFhTVZGbXpJOTAzN0Zja2lNYUhHdDVUbytjNUJUSlU4bFdw?=
- =?utf-8?B?Z1luQUZsRUtDQkhmZmdHZllITU81QkxaWEd1aEVpd2tHLy9TZEwzckpxTDhG?=
- =?utf-8?B?SVo5M2pYcWFxMWlSeGVBQXYrL0I1OUJXcnNXWDhjb203UmNjdnJmZWJzNzZW?=
- =?utf-8?B?TlE9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YzNzZ1YxSDkzWWh1cjIyMnVYd21kODB3eklCNmpPNXVVWEcrWldtN0h0cGtB?=
+ =?utf-8?B?U2g3Vk0vQy9jYlRESXgrM1ZyY3V5R0ZDeU1vSWN1ZkpmVVZSN1ZacFNReFRO?=
+ =?utf-8?B?RkJPZDVOQkE0YjhMVmtSY1RwY1dNT2JSazNjVXg4Z3k1Q2pleFYvbGlDNFRQ?=
+ =?utf-8?B?SmFGUlVVdXBtOGJUT3Y3QWg0M0UvZUpHRkNHbkRNcUlsNUZOMzFjeUNHc0R4?=
+ =?utf-8?B?M2dIZ0E5YW1LNnZMVnppNTRTZ1ZVbEFETUVuTW1rNHBxL2xSUmdDRzNJU0t3?=
+ =?utf-8?B?NjJWU3lNUTg3TzcwK3JJdnZzdW9lK1RVM05RQUJVSHl3WFMvZmZNT2gwZS9O?=
+ =?utf-8?B?akJhR1NoZnVFTEJCRGFKUU55Y3hDSEhoVnh4dTNhbVkrQUlhVWhlN1FMNjEv?=
+ =?utf-8?B?S01jQVdhMWwzdFZZMkdkelNJU1B3Y0ZuUEZLK0dWbHVqT20xYzhOU3RrTno0?=
+ =?utf-8?B?eVZIb01ldnlCNUJlYVBMVEcwaWx1MGh3Y3ZNNGRKeWpYbWNiajFvSEhOZjRm?=
+ =?utf-8?B?ckNESVJJQ2FJNDVYdTg1SHFDQnd0M0hsNFN3WTBmWW42SENERWRIdTRyQUlp?=
+ =?utf-8?B?ZEM0UFJ0ejA1OUZBQ1J3RVVXSDNwR29UMzRlcFF3Y2VTSHV3ZTdCRUwybGU0?=
+ =?utf-8?B?SCtDU002ekxNa1d1eUM2NUtERXN5aXdvOFp2eWo5cGM3RGtLVjVycTlibmJr?=
+ =?utf-8?B?VlIrSWpIZ2hsQnRPWkxSQlZFTFcxVjVqYzd2amhGUCt3bTB2cDRXWkMrTmh2?=
+ =?utf-8?B?MHl1Yko1N0I4WWRTYlBESmR6UXgzUWVKSHdrVUFwZ000WE13ZksreFNReHBB?=
+ =?utf-8?B?c1VzKytjVmZobDgrSTRsWlBvV0RUVW9wVGh1eXdXNnRURUk2a3AraUFpV3Bj?=
+ =?utf-8?B?aDVVSDFVOVRGRjgwODBjWE00NXlLRzFxVW5HRVpFZUFUc1ZLMjNya3U1aDdB?=
+ =?utf-8?B?OW9STWgvU09HSU9YMEYxL01ySHN6WnZHK2RMWTczR0hqRTNnVndVSGZtNVZu?=
+ =?utf-8?B?UWplUHIydEpEWDI5eXZZeWdib1IyYzNyU0ZDb094azZ6WTR6b2JUU3gwczBv?=
+ =?utf-8?B?RUFOL2pNN3dEM2N2dDF0azczQUk4Njgya1BIM21LZ2Q3ZVVEMHYrVDFsSlVK?=
+ =?utf-8?B?Y3BWQ0JDUjJvMXJueFpBSVFBR0VnZzYwaGQ1SWNlWmJHZlhGZGVQVjRVZkZ6?=
+ =?utf-8?B?dDA4dGxITkZ3TXZXODA0NkROcGdBWTdlQ21ZUHcrMC9aQ0Q5UDVJeFBuZzEy?=
+ =?utf-8?B?eWtxZTZiV1locjUyYm9pcFRzOTB5bnlPRDR6Z0x3amtZdXlCSHFUc0RUbHVp?=
+ =?utf-8?B?bTZZeWEybE9SRnpGQU9JTDJvS2FMbDFCaHBZK1dCNXQ3MzRPSGFGenFuZWM0?=
+ =?utf-8?B?V1hsR3JEaDNSVVE4dTAwYis4VklwRnFEWFdRQWNhMnd6aGNlZVUrR0tBajdJ?=
+ =?utf-8?B?cmxoWXFvQjRKc2tJZXM3dFdZdEl3Q1pQSjRUemFpRU91TzRlVXNnMzVOZVJV?=
+ =?utf-8?B?WEx6dDZWVGdNVnU4MGJHdlNwd2cxTFFSLy9nSC9FNHhqd2VhL3A3ck05aHN3?=
+ =?utf-8?B?ZDI1MytSQTUxL1BZZGdsbW5IbGZRSjJYaW1BUHNYZ01aN2duNCs0VDRRejJ1?=
+ =?utf-8?B?cHlSd1Ixc01raGJ3c0pGRGlTUi9hUDY2RTNGa3dkWVdKSHpUYXJGdmxnUDEw?=
+ =?utf-8?B?V2xkZHhBamFadWdGYkVYVjduZGphNzhabktiVlI2L0drWC9la3c4RVorV1Z3?=
+ =?utf-8?B?SnFxOE40WTV0RlQyUTJkLyt0ck1FeEZLM3lLYlQzNS8xMTVVR1NyNzN1K1Iv?=
+ =?utf-8?B?MnpzbVdkaG1RVXEwdlV0M0JkdHFSaFFoRWJ3VGdETGZrbzdmTktrYnZSRGpp?=
+ =?utf-8?B?UlV2TzcvcXpqM280a1JpNk5rL2FmSlBWNDNjWDluTFEvRit4cWlPc0FrVDYw?=
+ =?utf-8?B?cHFURlArWnZTeWZPaE1rMURwS3dLUnFyNlFwVWNxY3lYSVdBMFFmSW1xZm0r?=
+ =?utf-8?B?a2d5S00ycFFYTFh1M1RiSC9RYkRGM0NWcDNoNUVxQmo4MjE1eldWYUFCOWVO?=
+ =?utf-8?B?aGtVckdVSXBLVjBlMVFObDNyRldWYkNRWmF2TzBpVlVlUWkrV0h1clRsN1VX?=
+ =?utf-8?B?b2szV0ZJYkhHaXFUWjh2N3RjY20vOVNTcitZRTRzV3QySmxMeHVVWGFzTlZs?=
+ =?utf-8?B?Y1E9PQ==?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d36e6670-5eb7-4625-7434-08dd5826bdb5
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6c136c25-4a4e-4985-0b4e-08dd58270381
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2025 18:35:57.2798 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2025 18:37:54.3397 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yYXAcPwx8K8BQ0nuCt0vOXAp0r6Q97SqBReETI94UHSR7mDb7gcXez44NFn9yFjZlqA8DfBErnqAEEw1cUFMGGuAh521Fd8KgF0emoOt3kI=
+X-MS-Exchange-CrossTenant-UserPrincipalName: z9zkk13cW+bAAxApa3aIiKaMLqsCakNW9JUd01Gn8nVq5uY9xQ+SqZamnRXFnB2neG+TmAyN2uOKO+JwRryHmgnkSWYnKa9Eh17klOjo77g=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR08MB8253
-Received-SPF: pass client-ip=2a01:111:f403:2612::720;
+Received-SPF: pass client-ip=2a01:111:f403:2613::722;
  envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=EUR05-AM6-obe.outbound.protection.outlook.com
+ helo=EUR05-VI1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -181,190 +182,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/28/25 8:20 PM, Steven Sistare wrote:
-> On 2/28/2025 1:13 PM, Steven Sistare wrote:
->> On 2/28/2025 12:39 PM, Andrey Drobyshev wrote:
->>> Hi all,
->>>
->>> We've been experimenting with cpr-transfer migration mode recently and
->>> have discovered the following issue with the guest QXL driver:
->>>
->>> Run migration source:
->>>> EMULATOR=/path/to/emulator
->>>> ROOTFS=/path/to/image
->>>> QMPSOCK=/var/run/alma8qmp-src.sock
+On 2/28/25 8:35 PM, Andrey Drobyshev wrote:
+> On 2/28/25 8:20 PM, Steven Sistare wrote:
+>> On 2/28/2025 1:13 PM, Steven Sistare wrote:
+>>> On 2/28/2025 12:39 PM, Andrey Drobyshev wrote:
+>>>> Hi all,
 >>>>
->>>> $EMULATOR -enable-kvm \
->>>>      -machine q35 \
->>>>      -cpu host -smp 2 -m 2G \
->>>>      -object memory-backend-file,id=ram0,size=2G,mem-path=/dev/shm/
->>>> ram0,share=on\
->>>>      -machine memory-backend=ram0 \
->>>>      -machine aux-ram-share=on \
->>>>      -drive file=$ROOTFS,media=disk,if=virtio \
->>>>      -qmp unix:$QMPSOCK,server=on,wait=off \
->>>>      -nographic \
->>>>      -device qxl-vga
->>>
->>> Run migration target:
->>>> EMULATOR=/path/to/emulator
->>>> ROOTFS=/path/to/image
->>>> QMPSOCK=/var/run/alma8qmp-dst.sock
->>>> $EMULATOR -enable-kvm \
->>>>      -machine q35 \
->>>>      -cpu host -smp 2 -m 2G \
->>>>      -object memory-backend-file,id=ram0,size=2G,mem-path=/dev/shm/
->>>> ram0,share=on\
->>>>      -machine memory-backend=ram0 \
->>>>      -machine aux-ram-share=on \
->>>>      -drive file=$ROOTFS,media=disk,if=virtio \
->>>>      -qmp unix:$QMPSOCK,server=on,wait=off \
->>>>      -nographic \
->>>>      -device qxl-vga \
->>>>      -incoming tcp:0:44444 \
->>>>      -incoming '{"channel-type": "cpr", "addr": { "transport":
->>>> "socket", "type": "unix", "path": "/var/run/alma8cpr-dst.sock"}}'
->>>
->>>
->>> Launch the migration:
->>>> QMPSHELL=/root/src/qemu/master/scripts/qmp/qmp-shell
->>>> QMPSOCK=/var/run/alma8qmp-src.sock
+>>>> We've been experimenting with cpr-transfer migration mode recently and
+>>>> have discovered the following issue with the guest QXL driver:
 >>>>
->>>> $QMPSHELL -p $QMPSOCK <<EOF
->>>>      migrate-set-parameters mode=cpr-transfer
->>>>      migrate channels=[{"channel-type":"main","addr":
->>>> {"transport":"socket","type":"inet","host":"0","port":"44444"}},
->>>> {"channel-type":"cpr","addr":
->>>> {"transport":"socket","type":"unix","path":"/var/run/alma8cpr-
->>>> dst.sock"}}]
->>>> EOF
->>>
->>> Then, after a while, QXL guest driver on target crashes spewing the
->>> following messages:
->>>> [   73.962002] [TTM] Buffer eviction failed
->>>> [   73.962072] qxl 0000:00:02.0: object_init failed for (3149824,
->>>> 0x00000001)
->>>> [   73.962081] [drm:qxl_alloc_bo_reserved [qxl]] *ERROR* failed to
->>>> allocate VRAM BO
->>>
->>> That seems to be a known kernel QXL driver bug:
->>>
->>> https://lore.kernel.org/all/20220907094423.93581-1-min_halo@163.com/T/
->>> https://lore.kernel.org/lkml/ZTgydqRlK6WX_b29@eldamar.lan/
->>>
->>> (the latter discussion contains that reproduce script which speeds up
->>> the crash in the guest):
->>>> #!/bin/bash
+>>>> Run migration source:
+>>>>> EMULATOR=/path/to/emulator
+>>>>> ROOTFS=/path/to/image
+>>>>> QMPSOCK=/var/run/alma8qmp-src.sock
+>>>>>
+>>>>> $EMULATOR -enable-kvm \
+>>>>>      -machine q35 \
+>>>>>      -cpu host -smp 2 -m 2G \
+>>>>>      -object memory-backend-file,id=ram0,size=2G,mem-path=/dev/shm/
+>>>>> ram0,share=on\
+>>>>>      -machine memory-backend=ram0 \
+>>>>>      -machine aux-ram-share=on \
+>>>>>      -drive file=$ROOTFS,media=disk,if=virtio \
+>>>>>      -qmp unix:$QMPSOCK,server=on,wait=off \
+>>>>>      -nographic \
+>>>>>      -device qxl-vga
 >>>>
->>>> chvt 3
+>>>> Run migration target:
+>>>>> EMULATOR=/path/to/emulator
+>>>>> ROOTFS=/path/to/image
+>>>>> QMPSOCK=/var/run/alma8qmp-dst.sock
+>>>>> $EMULATOR -enable-kvm \
+>>>>>      -machine q35 \
+>>>>>      -cpu host -smp 2 -m 2G \
+>>>>>      -object memory-backend-file,id=ram0,size=2G,mem-path=/dev/shm/
+>>>>> ram0,share=on\
+>>>>>      -machine memory-backend=ram0 \
+>>>>>      -machine aux-ram-share=on \
+>>>>>      -drive file=$ROOTFS,media=disk,if=virtio \
+>>>>>      -qmp unix:$QMPSOCK,server=on,wait=off \
+>>>>>      -nographic \
+>>>>>      -device qxl-vga \
+>>>>>      -incoming tcp:0:44444 \
+>>>>>      -incoming '{"channel-type": "cpr", "addr": { "transport":
+>>>>> "socket", "type": "unix", "path": "/var/run/alma8cpr-dst.sock"}}'
 >>>>
->>>> for j in $(seq 80); do
->>>>          echo "$(date) starting round $j"
->>>>          if [ "$(journalctl --boot | grep "failed to allocate VRAM
->>>> BO")" != "" ]; then
->>>>                  echo "bug was reproduced after $j tries"
->>>>                  exit 1
->>>>          fi
->>>>          for i in $(seq 100); do
->>>>                  dmesg > /dev/tty3
->>>>          done
->>>> done
 >>>>
->>>> echo "bug could not be reproduced"
->>>> exit 0
+>>>> Launch the migration:
+>>>>> QMPSHELL=/root/src/qemu/master/scripts/qmp/qmp-shell
+>>>>> QMPSOCK=/var/run/alma8qmp-src.sock
+>>>>>
+>>>>> $QMPSHELL -p $QMPSOCK <<EOF
+>>>>>      migrate-set-parameters mode=cpr-transfer
+>>>>>      migrate channels=[{"channel-type":"main","addr":
+>>>>> {"transport":"socket","type":"inet","host":"0","port":"44444"}},
+>>>>> {"channel-type":"cpr","addr":
+>>>>> {"transport":"socket","type":"unix","path":"/var/run/alma8cpr-
+>>>>> dst.sock"}}]
+>>>>> EOF
+>>>>
+>>>> Then, after a while, QXL guest driver on target crashes spewing the
+>>>> following messages:
+>>>>> [   73.962002] [TTM] Buffer eviction failed
+>>>>> [   73.962072] qxl 0000:00:02.0: object_init failed for (3149824,
+>>>>> 0x00000001)
+>>>>> [   73.962081] [drm:qxl_alloc_bo_reserved [qxl]] *ERROR* failed to
+>>>>> allocate VRAM BO
+>>>>
+>>>> That seems to be a known kernel QXL driver bug:
+>>>>
+>>>> https://lore.kernel.org/all/20220907094423.93581-1-min_halo@163.com/T/
+>>>> https://lore.kernel.org/lkml/ZTgydqRlK6WX_b29@eldamar.lan/
+>>>>
+>>>> (the latter discussion contains that reproduce script which speeds up
+>>>> the crash in the guest):
+>>>>> #!/bin/bash
+>>>>>
+>>>>> chvt 3
+>>>>>
+>>>>> for j in $(seq 80); do
+>>>>>          echo "$(date) starting round $j"
+>>>>>          if [ "$(journalctl --boot | grep "failed to allocate VRAM
+>>>>> BO")" != "" ]; then
+>>>>>                  echo "bug was reproduced after $j tries"
+>>>>>                  exit 1
+>>>>>          fi
+>>>>>          for i in $(seq 100); do
+>>>>>                  dmesg > /dev/tty3
+>>>>>          done
+>>>>> done
+>>>>>
+>>>>> echo "bug could not be reproduced"
+>>>>> exit 0
+>>>>
+>>>> The bug itself seems to remain unfixed, as I was able to reproduce that
+>>>> with Fedora 41 guest, as well as AlmaLinux 8 guest. However our
+>>>> cpr-transfer code also seems to be buggy as it triggers the crash -
+>>>> without the cpr-transfer migration the above reproduce doesn't lead to
+>>>> crash on the source VM.
+>>>>
+>>>> I suspect that, as cpr-transfer doesn't migrate the guest memory, but
+>>>> rather passes it through the memory backend object, our code might
+>>>> somehow corrupt the VRAM.  However, I wasn't able to trace the
+>>>> corruption so far.
+>>>>
+>>>> Could somebody help the investigation and take a look into this?  Any
+>>>> suggestions would be appreciated.  Thanks!
 >>>
->>> The bug itself seems to remain unfixed, as I was able to reproduce that
->>> with Fedora 41 guest, as well as AlmaLinux 8 guest. However our
->>> cpr-transfer code also seems to be buggy as it triggers the crash -
->>> without the cpr-transfer migration the above reproduce doesn't lead to
->>> crash on the source VM.
+>>> Possibly some memory region created by qxl is not being preserved.
+>>> Try adding these traces to see what is preserved:
 >>>
->>> I suspect that, as cpr-transfer doesn't migrate the guest memory, but
->>> rather passes it through the memory backend object, our code might
->>> somehow corrupt the VRAM.  However, I wasn't able to trace the
->>> corruption so far.
->>>
->>> Could somebody help the investigation and take a look into this?  Any
->>> suggestions would be appreciated.  Thanks!
+>>> -trace enable='*cpr*'
+>>> -trace enable='*ram_alloc*'
 >>
->> Possibly some memory region created by qxl is not being preserved.
->> Try adding these traces to see what is preserved:
+>> Also try adding this patch to see if it flags any ram blocks as not
+>> compatible with cpr.  A message is printed at migration start time.
+>>   https://lore.kernel.org/qemu-devel/1740667681-257312-1-git-send-email-
+>> steven.sistare@oracle.com/
 >>
->> -trace enable='*cpr*'
->> -trace enable='*ram_alloc*'
+>> - Steve
+>>
 > 
-> Also try adding this patch to see if it flags any ram blocks as not
-> compatible with cpr.  A message is printed at migration start time.
->   https://lore.kernel.org/qemu-devel/1740667681-257312-1-git-send-email-
-> steven.sistare@oracle.com/
+> With the traces enabled + the "migration: ram block cpr blockers" patch
+> applied:
 > 
-> - Steve
+> Source:
+>> cpr_find_fd pc.bios, id 0 returns -1
+>> cpr_save_fd pc.bios, id 0, fd 22
+>> qemu_ram_alloc_shared pc.bios size 262144 max_size 262144 fd 22 host 0x7fec18e00000
+>> cpr_find_fd pc.rom, id 0 returns -1
+>> cpr_save_fd pc.rom, id 0, fd 23
+>> qemu_ram_alloc_shared pc.rom size 131072 max_size 131072 fd 23 host 0x7fec18c00000
+>> cpr_find_fd 0000:00:01.0/e1000e.rom, id 0 returns -1
+>> cpr_save_fd 0000:00:01.0/e1000e.rom, id 0, fd 24
+>> qemu_ram_alloc_shared 0000:00:01.0/e1000e.rom size 262144 max_size 262144 fd 24 host 0x7fec18a00000
+>> cpr_find_fd 0000:00:02.0/vga.vram, id 0 returns -1
+>> cpr_save_fd 0000:00:02.0/vga.vram, id 0, fd 25
+>> qemu_ram_alloc_shared 0000:00:02.0/vga.vram size 67108864 max_size 67108864 fd 25 host 0x7feb77e00000
+>> cpr_find_fd 0000:00:02.0/qxl.vrom, id 0 returns -1
+>> cpr_save_fd 0000:00:02.0/qxl.vrom, id 0, fd 27
+>> qemu_ram_alloc_shared 0000:00:02.0/qxl.vrom size 8192 max_size 8192 fd 27 host 0x7fec18800000
+>> cpr_find_fd 0000:00:02.0/qxl.vram, id 0 returns -1
+>> cpr_save_fd 0000:00:02.0/qxl.vram, id 0, fd 28
+>> qemu_ram_alloc_shared 0000:00:02.0/qxl.vram size 67108864 max_size 67108864 fd 28 host 0x7feb73c00000
+>> cpr_find_fd 0000:00:02.0/qxl.rom, id 0 returns -1
+>> cpr_save_fd 0000:00:02.0/qxl.rom, id 0, fd 34
+>> qemu_ram_alloc_shared 0000:00:02.0/qxl.rom size 65536 max_size 65536 fd 34 host 0x7fec18600000
+>> cpr_find_fd /rom@etc/acpi/tables, id 0 returns -1
+>> cpr_save_fd /rom@etc/acpi/tables, id 0, fd 35
+>> qemu_ram_alloc_shared /rom@etc/acpi/tables size 131072 max_size 2097152 fd 35 host 0x7fec18200000
+>> cpr_find_fd /rom@etc/table-loader, id 0 returns -1
+>> cpr_save_fd /rom@etc/table-loader, id 0, fd 36
+>> qemu_ram_alloc_shared /rom@etc/table-loader size 4096 max_size 65536 fd 36 host 0x7feb8b600000
+>> cpr_find_fd /rom@etc/acpi/rsdp, id 0 returns -1
+>> cpr_save_fd /rom@etc/acpi/rsdp, id 0, fd 37
+>> qemu_ram_alloc_shared /rom@etc/acpi/rsdp size 4096 max_size 4096 fd 37 host 0x7feb8b400000
+>>
+>> cpr_state_save cpr-transfer mode
+>> cpr_transfer_output /var/run/alma8cpr-dst.sock
+> 
+> Target:
+>> cpr_transfer_input /var/run/alma8cpr-dst.sock
+>> cpr_state_load cpr-transfer mode
+>> cpr_find_fd pc.bios, id 0 returns 20
+>> qemu_ram_alloc_shared pc.bios size 262144 max_size 262144 fd 20 host 0x7fcdc9800000
+>> cpr_find_fd pc.rom, id 0 returns 19
+>> qemu_ram_alloc_shared pc.rom size 131072 max_size 131072 fd 19 host 0x7fcdc9600000
+>> cpr_find_fd 0000:00:01.0/e1000e.rom, id 0 returns 18
+>> qemu_ram_alloc_shared 0000:00:01.0/e1000e.rom size 262144 max_size 262144 fd 18 host 0x7fcdc9400000
+>> cpr_find_fd 0000:00:02.0/vga.vram, id 0 returns 17
+>> qemu_ram_alloc_shared 0000:00:02.0/vga.vram size 67108864 max_size 67108864 fd 17 host 0x7fcd27e00000
+>> cpr_find_fd 0000:00:02.0/qxl.vrom, id 0 returns 16
+>> qemu_ram_alloc_shared 0000:00:02.0/qxl.vrom size 8192 max_size 8192 fd 16 host 0x7fcdc9200000
+>> cpr_find_fd 0000:00:02.0/qxl.vram, id 0 returns 15
+>> qemu_ram_alloc_shared 0000:00:02.0/qxl.vram size 67108864 max_size 67108864 fd 15 host 0x7fcd23c00000
+>> cpr_find_fd 0000:00:02.0/qxl.rom, id 0 returns 14
+>> qemu_ram_alloc_shared 0000:00:02.0/qxl.rom size 65536 max_size 65536 fd 14 host 0x7fcdc8800000
+>> cpr_find_fd /rom@etc/acpi/tables, id 0 returns 13
+>> qemu_ram_alloc_shared /rom@etc/acpi/tables size 131072 max_size 2097152 fd 13 host 0x7fcdc8400000
+>> cpr_find_fd /rom@etc/table-loader, id 0 returns 11
+>> qemu_ram_alloc_shared /rom@etc/table-loader size 4096 max_size 65536 fd 11 host 0x7fcdc8200000
+>> cpr_find_fd /rom@etc/acpi/rsdp, id 0 returns 10
+>> qemu_ram_alloc_shared /rom@etc/acpi/rsdp size 4096 max_size 4096 fd 10 host 0x7fcd3be00000
+> 
+> Looks like both vga.vram and qxl.vram are being preserved (with the same
+> addresses), and no incompatible ram blocks are found during migration.
 > 
 
-With the traces enabled + the "migration: ram block cpr blockers" patch
-applied:
+Sorry, addressed are not the same, of course.  However corresponding ram
+blocks do seem to be preserved and initialized.
 
-Source:
-> cpr_find_fd pc.bios, id 0 returns -1
-> cpr_save_fd pc.bios, id 0, fd 22
-> qemu_ram_alloc_shared pc.bios size 262144 max_size 262144 fd 22 host 0x7fec18e00000
-> cpr_find_fd pc.rom, id 0 returns -1
-> cpr_save_fd pc.rom, id 0, fd 23
-> qemu_ram_alloc_shared pc.rom size 131072 max_size 131072 fd 23 host 0x7fec18c00000
-> cpr_find_fd 0000:00:01.0/e1000e.rom, id 0 returns -1
-> cpr_save_fd 0000:00:01.0/e1000e.rom, id 0, fd 24
-> qemu_ram_alloc_shared 0000:00:01.0/e1000e.rom size 262144 max_size 262144 fd 24 host 0x7fec18a00000
-> cpr_find_fd 0000:00:02.0/vga.vram, id 0 returns -1
-> cpr_save_fd 0000:00:02.0/vga.vram, id 0, fd 25
-> qemu_ram_alloc_shared 0000:00:02.0/vga.vram size 67108864 max_size 67108864 fd 25 host 0x7feb77e00000
-> cpr_find_fd 0000:00:02.0/qxl.vrom, id 0 returns -1
-> cpr_save_fd 0000:00:02.0/qxl.vrom, id 0, fd 27
-> qemu_ram_alloc_shared 0000:00:02.0/qxl.vrom size 8192 max_size 8192 fd 27 host 0x7fec18800000
-> cpr_find_fd 0000:00:02.0/qxl.vram, id 0 returns -1
-> cpr_save_fd 0000:00:02.0/qxl.vram, id 0, fd 28
-> qemu_ram_alloc_shared 0000:00:02.0/qxl.vram size 67108864 max_size 67108864 fd 28 host 0x7feb73c00000
-> cpr_find_fd 0000:00:02.0/qxl.rom, id 0 returns -1
-> cpr_save_fd 0000:00:02.0/qxl.rom, id 0, fd 34
-> qemu_ram_alloc_shared 0000:00:02.0/qxl.rom size 65536 max_size 65536 fd 34 host 0x7fec18600000
-> cpr_find_fd /rom@etc/acpi/tables, id 0 returns -1
-> cpr_save_fd /rom@etc/acpi/tables, id 0, fd 35
-> qemu_ram_alloc_shared /rom@etc/acpi/tables size 131072 max_size 2097152 fd 35 host 0x7fec18200000
-> cpr_find_fd /rom@etc/table-loader, id 0 returns -1
-> cpr_save_fd /rom@etc/table-loader, id 0, fd 36
-> qemu_ram_alloc_shared /rom@etc/table-loader size 4096 max_size 65536 fd 36 host 0x7feb8b600000
-> cpr_find_fd /rom@etc/acpi/rsdp, id 0 returns -1
-> cpr_save_fd /rom@etc/acpi/rsdp, id 0, fd 37
-> qemu_ram_alloc_shared /rom@etc/acpi/rsdp size 4096 max_size 4096 fd 37 host 0x7feb8b400000
-> 
-> cpr_state_save cpr-transfer mode
-> cpr_transfer_output /var/run/alma8cpr-dst.sock
-
-Target:
-> cpr_transfer_input /var/run/alma8cpr-dst.sock
-> cpr_state_load cpr-transfer mode
-> cpr_find_fd pc.bios, id 0 returns 20
-> qemu_ram_alloc_shared pc.bios size 262144 max_size 262144 fd 20 host 0x7fcdc9800000
-> cpr_find_fd pc.rom, id 0 returns 19
-> qemu_ram_alloc_shared pc.rom size 131072 max_size 131072 fd 19 host 0x7fcdc9600000
-> cpr_find_fd 0000:00:01.0/e1000e.rom, id 0 returns 18
-> qemu_ram_alloc_shared 0000:00:01.0/e1000e.rom size 262144 max_size 262144 fd 18 host 0x7fcdc9400000
-> cpr_find_fd 0000:00:02.0/vga.vram, id 0 returns 17
-> qemu_ram_alloc_shared 0000:00:02.0/vga.vram size 67108864 max_size 67108864 fd 17 host 0x7fcd27e00000
-> cpr_find_fd 0000:00:02.0/qxl.vrom, id 0 returns 16
-> qemu_ram_alloc_shared 0000:00:02.0/qxl.vrom size 8192 max_size 8192 fd 16 host 0x7fcdc9200000
-> cpr_find_fd 0000:00:02.0/qxl.vram, id 0 returns 15
-> qemu_ram_alloc_shared 0000:00:02.0/qxl.vram size 67108864 max_size 67108864 fd 15 host 0x7fcd23c00000
-> cpr_find_fd 0000:00:02.0/qxl.rom, id 0 returns 14
-> qemu_ram_alloc_shared 0000:00:02.0/qxl.rom size 65536 max_size 65536 fd 14 host 0x7fcdc8800000
-> cpr_find_fd /rom@etc/acpi/tables, id 0 returns 13
-> qemu_ram_alloc_shared /rom@etc/acpi/tables size 131072 max_size 2097152 fd 13 host 0x7fcdc8400000
-> cpr_find_fd /rom@etc/table-loader, id 0 returns 11
-> qemu_ram_alloc_shared /rom@etc/table-loader size 4096 max_size 65536 fd 11 host 0x7fcdc8200000
-> cpr_find_fd /rom@etc/acpi/rsdp, id 0 returns 10
-> qemu_ram_alloc_shared /rom@etc/acpi/rsdp size 4096 max_size 4096 fd 10 host 0x7fcd3be00000
-
-Looks like both vga.vram and qxl.vram are being preserved (with the same
-addresses), and no incompatible ram blocks are found during migration.
-
-Andrey
 
