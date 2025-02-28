@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B6DC282CD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 09:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AECDDC19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 09:28:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnwek-0000Vh-OT; Fri, 28 Feb 2025 04:27:43 -0500
+	id 1tnwek-0000Ve-PM; Fri, 28 Feb 2025 04:27:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tnweg-0000Us-SU
+ id 1tnweh-0000V8-Cu
  for qemu-devel@nongnu.org; Fri, 28 Feb 2025 04:27:39 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tnwee-0001Ci-3o
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 04:27:38 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tnwed-0001Cs-Gq
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 04:27:39 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxHHKBgcFnXtOFAA--.33119S3;
- Fri, 28 Feb 2025 17:27:29 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxHHKCgcFnZNOFAA--.33123S3;
+ Fri, 28 Feb 2025 17:27:30 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBxLseBgcFnU5YtAA--.40659S2;
+ by front1 (Coremail) with SMTP id qMiowMBxLseBgcFnU5YtAA--.40659S3;
  Fri, 28 Feb 2025 17:27:29 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
@@ -33,13 +33,15 @@ To: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH 0/6] Add bios-tables-test for LoongArch64 system
-Date: Fri, 28 Feb 2025 17:27:23 +0800
-Message-Id: <20250228092729.543097-1-maobibo@loongson.cn>
+Subject: [PATCH 1/6] uefi-test-tools:: Add LoongArch64 support
+Date: Fri, 28 Feb 2025 17:27:24 +0800
+Message-Id: <20250228092729.543097-2-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250228092729.543097-1-maobibo@loongson.cn>
+References: <20250228092729.543097-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxLseBgcFnU5YtAA--.40659S2
+X-CM-TRANSID: qMiowMBxLseBgcFnU5YtAA--.40659S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,62 +69,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset add bios-tables-test for LoongArch64 virt machine
-system. It works with UEFI bios, with uefi-test-tools LoongArch64
-support is added to build bios-tables-test.loongarch64.iso.
+Add support to build bios-tables-test iso image for LoongArch system.
 
-Also with test case bios-tables-test, LoongArch64 support is added
-and some basic ACPI tables is added here. It passes with command
-make check-qtest-loongarch64 with the result:
- qtest-loongarch64/bios-tables-test OK 29.52s 4 subtests passed
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ tests/uefi-test-tools/Makefile                         |  5 +++--
+ .../UefiTestToolsPkg/UefiTestToolsPkg.dsc              |  6 +++++-
+ tests/uefi-test-tools/uefi-test-build.config           | 10 ++++++++++
+ 3 files changed, 18 insertions(+), 3 deletions(-)
 
-Bibo Mao (6):
-  uefi-test-tools:: Add LoongArch64 support
-  tests/data/uefi-boot-images: Add ISO image for LoongArch system
-  tests/qtest/bios-tables-test: Add basic testing for LoongArch64
-  tests/acpi: Add empty ACPI data files for LoongArch64
-  tests/acpi: Fill acpi table data for LoongArch
-  tests/qtest: Enable bios-tables-test for LoongArch
-
- tests/data/acpi/loongarch64/virt/APIC         | Bin 0 -> 108 bytes
- .../data/acpi/loongarch64/virt/APIC.topology  | Bin 0 -> 213 bytes
- tests/data/acpi/loongarch64/virt/DSDT         | Bin 0 -> 3614 bytes
- tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 0 -> 4951 bytes
- tests/data/acpi/loongarch64/virt/FACP         | Bin 0 -> 268 bytes
- tests/data/acpi/loongarch64/virt/MCFG         | Bin 0 -> 60 bytes
- tests/data/acpi/loongarch64/virt/PPTT         | Bin 0 -> 76 bytes
- .../data/acpi/loongarch64/virt/PPTT.topology  | Bin 0 -> 296 bytes
- tests/data/acpi/loongarch64/virt/SLIT         |   0
- tests/data/acpi/loongarch64/virt/SLIT.memhp   | Bin 0 -> 48 bytes
- tests/data/acpi/loongarch64/virt/SPCR         | Bin 0 -> 80 bytes
- tests/data/acpi/loongarch64/virt/SRAT         | Bin 0 -> 104 bytes
- tests/data/acpi/loongarch64/virt/SRAT.memhp   | Bin 0 -> 184 bytes
- .../data/acpi/loongarch64/virt/SRAT.topology  | Bin 0 -> 216 bytes
- .../bios-tables-test.loongarch64.iso.qcow2    | Bin 0 -> 12800 bytes
- tests/qtest/bios-tables-test.c                |  62 ++++++++++++++++++
- tests/qtest/meson.build                       |   3 +-
- tests/uefi-test-tools/Makefile                |   5 +-
- .../UefiTestToolsPkg/UefiTestToolsPkg.dsc     |   6 +-
- tests/uefi-test-tools/uefi-test-build.config  |  10 +++
- 20 files changed, 82 insertions(+), 4 deletions(-)
- create mode 100644 tests/data/acpi/loongarch64/virt/APIC
- create mode 100644 tests/data/acpi/loongarch64/virt/APIC.topology
- create mode 100644 tests/data/acpi/loongarch64/virt/DSDT
- create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.memhp
- create mode 100644 tests/data/acpi/loongarch64/virt/FACP
- create mode 100644 tests/data/acpi/loongarch64/virt/MCFG
- create mode 100644 tests/data/acpi/loongarch64/virt/PPTT
- create mode 100644 tests/data/acpi/loongarch64/virt/PPTT.topology
- create mode 100644 tests/data/acpi/loongarch64/virt/SLIT
- create mode 100644 tests/data/acpi/loongarch64/virt/SLIT.memhp
- create mode 100644 tests/data/acpi/loongarch64/virt/SPCR
- create mode 100644 tests/data/acpi/loongarch64/virt/SRAT
- create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.memhp
- create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.topology
- create mode 100644 tests/data/uefi-boot-images/bios-tables-test.loongarch64.iso.qcow2
-
-
-base-commit: b69801dd6b1eb4d107f7c2f643adf0a4e3ec9124
+diff --git a/tests/uefi-test-tools/Makefile b/tests/uefi-test-tools/Makefile
+index f4eaebd8ff..8ee6fb3571 100644
+--- a/tests/uefi-test-tools/Makefile
++++ b/tests/uefi-test-tools/Makefile
+@@ -12,7 +12,7 @@
+ 
+ edk2_dir              := ../../roms/edk2
+ images_dir            := ../data/uefi-boot-images
+-emulation_targets     := arm aarch64 i386 x86_64 riscv64
++emulation_targets     := arm aarch64 i386 x86_64 riscv64 loongarch64
+ uefi_binaries         := bios-tables-test
+ intermediate_suffixes := .efi .fat .iso.raw
+ 
+@@ -56,7 +56,8 @@ Build/%.iso.raw: Build/%.fat
+ # stripped from, the argument.
+ map_arm_to_uefi     = $(subst arm,ARM,$(1))
+ map_aarch64_to_uefi = $(subst aarch64,AA64,$(call map_arm_to_uefi,$(1)))
+-map_riscv64_to_uefi = $(subst riscv64,RISCV64,$(call map_aarch64_to_uefi,$(1)))
++map_loongarch64_to_uefi = $(subst loongarch64,LOONGARCH64,$(call map_aarch64_to_uefi,$(1)))
++map_riscv64_to_uefi = $(subst riscv64,RISCV64,$(call map_loongarch64_to_uefi,$(1)))
+ map_i386_to_uefi    = $(subst i386,IA32,$(call map_riscv64_to_uefi,$(1)))
+ map_x86_64_to_uefi  = $(subst x86_64,X64,$(call map_i386_to_uefi,$(1)))
+ map_to_uefi         = $(subst .,,$(call map_x86_64_to_uefi,$(1)))
+diff --git a/tests/uefi-test-tools/UefiTestToolsPkg/UefiTestToolsPkg.dsc b/tests/uefi-test-tools/UefiTestToolsPkg/UefiTestToolsPkg.dsc
+index 0902fd3c73..facf8df1fa 100644
+--- a/tests/uefi-test-tools/UefiTestToolsPkg/UefiTestToolsPkg.dsc
++++ b/tests/uefi-test-tools/UefiTestToolsPkg/UefiTestToolsPkg.dsc
+@@ -19,7 +19,7 @@
+   PLATFORM_VERSION        = 0.1
+   PLATFORM_NAME           = UefiTestTools
+   SKUID_IDENTIFIER        = DEFAULT
+-  SUPPORTED_ARCHITECTURES = ARM|AARCH64|IA32|X64|RISCV64
++  SUPPORTED_ARCHITECTURES = ARM|AARCH64|IA32|X64|RISCV64|LOONGARCH64
+   BUILD_TARGETS           = DEBUG
+ 
+ [BuildOptions.IA32]
+@@ -65,6 +65,10 @@
+ [LibraryClasses.RISCV64]
+   BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
+ 
++[LibraryClasses.LOONGARCH64]
++  BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
++  StackCheckLib|MdePkg/Library/StackCheckLibNull/StackCheckLibNull.inf
++
+ [PcdsFixedAtBuild]
+   gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x8040004F
+   gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x2F
+diff --git a/tests/uefi-test-tools/uefi-test-build.config b/tests/uefi-test-tools/uefi-test-build.config
+index a4c61fc97a..8bf4826634 100644
+--- a/tests/uefi-test-tools/uefi-test-build.config
++++ b/tests/uefi-test-tools/uefi-test-build.config
+@@ -21,6 +21,16 @@ dest = ./Build
+ arch = AARCH64
+ cpy1 = AARCH64/BiosTablesTest.efi  bios-tables-test.aarch64.efi
+ 
++####################################################################################
++# loongarch64
++
++[build.loongarch64]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = LOONGARCH64
++cpy1 = LOONGARCH64/BiosTablesTest.efi  bios-tables-test.loongarch64.efi
++
+ ####################################################################################
+ # riscv64
+ 
 -- 
 2.39.3
 
