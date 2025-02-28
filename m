@@ -4,196 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7555C282CD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 08:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B55CC282C5
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 08:54:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnw1o-0005pg-Dc; Fri, 28 Feb 2025 03:47:28 -0500
+	id 1tnw7W-00013I-VI; Fri, 28 Feb 2025 03:53:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tnw1l-0005nn-Dy
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:47:25 -0500
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnw7V-000110-0y
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:53:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tnw1j-0004jU-DD
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:47:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740732444; x=1772268444;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=uWplX08+dD6RD8/7GZoeI+wEsjmOuBSOXeI21u1Y4i8=;
- b=ARyDu+3JPuauPD3+NHpjNaTgUzbVj/8t6VmiLHrfWdE9mU0WDZIdqqrG
- 7GBF9nUS0gzt4pI5zeu19UPIgfyJKs44QuvEt+g0w95Np4x4UimiSHsUA
- HpHhvJy8SS1NtKCDj2qqb0t1WHEW60SUkEnE3t/MQOFpe3XypfQNIBB41
- Muzwrt1cTXP4I2ZimNaw9c4rNXFHMnlvBSgRMrCFXpgCAXMoUnA5RyQB3
- XsgIqSh/56XNJY9QHgYlliLN+GAuY7gv7dqf/ZUp7Bp+QEcB/4o5H6yws
- b3DTqcD1SqzqVl9+OS/L+WlQ9yBr3ECt5Jms12UgI463pKQ8qOv/MgGr+ w==;
-X-CSE-ConnectionGUID: ZLbNZfJaR2mOqnmavjFg6w==
-X-CSE-MsgGUID: q1EH9oJQS5692/eM+36Wfw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11358"; a="59065363"
-X-IronPort-AV: E=Sophos;i="6.13,321,1732608000"; d="scan'208";a="59065363"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2025 00:47:16 -0800
-X-CSE-ConnectionGUID: 3UtxRPqpSCqfnprSi7fz5w==
-X-CSE-MsgGUID: JCrvEWZTTGaMx3kuZboIeA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,321,1732608000"; d="scan'208";a="122224133"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
- by orviesa003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 28 Feb 2025 00:47:16 -0800
-Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Fri, 28 Feb 2025 00:47:15 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44 via Frontend Transport; Fri, 28 Feb 2025 00:47:15 -0800
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (104.47.74.44) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Fri, 28 Feb 2025 00:47:14 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kP3fj4imvpz8lzOVYm3H9ePlsMrQ8JL+74zTch0nldq+dDreIEg4wKscJRv7w5Q1FCHvKCGAkb3Vh3c0zXGAuwWP3pq9L32SJvun1BAToOQylz8TmwrWZDRll38/dPB4Rv8GvLUUfWNw6lotOzXj4AJ/+XTwqxNTZgt+1wtoMRhUID3tg/Y2n5IEzYo/zefmKzscvXnWwWHFr0waMqNm5MRXL58O/Lo4y34I9BV9hm+D3SDe7jtmqQsSQcS+aFGqULJPFq7nchQ+oGvQyvjvdFgLcenLu6GIXkrYtwU9udSYlXdUJMe282I95hA0FUj74CMpVwBlypD1GeRsRJhThw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uWplX08+dD6RD8/7GZoeI+wEsjmOuBSOXeI21u1Y4i8=;
- b=hjxcd4XxoDSd2bdLaruGvW2a6Iw8dmYdz+A6pv1D3s437YJpb9AGMLfDuYLF2H5vlv624KUFEV1hgIOE8xnkZ/VWaktPYbmdXLVlb2ikiCQicY6wxR6IRZ38tHAUI1TKeTrDny/KkMw5bbB7YUKZysRX9yJVtpgaqqFVQrmCX42Dsp5XDG6b8tzod5YWJgaGFfVIPqD0Srtnsr/n6ldV3MmPYzzlgXUSU47MaT62ku9lEBMIgOgj9egcwQUjhKYA+7bd4IVOod359fJmp3ynl12l6Buqusbwo9CKetBhumX9ExXkGkOkp06Hvt1SCAczFiyyGl8GANNIwba5NN5nfw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by PH0PR11MB4872.namprd11.prod.outlook.com (2603:10b6:510:32::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.15; Fri, 28 Feb
- 2025 08:47:12 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%6]) with mapi id 15.20.8489.021; Fri, 28 Feb 2025
- 08:47:12 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: RE: [PATCH rfcv2 09/20] intel_iommu: Rename
- vtd_ce_get_rid2pasid_entry to vtd_ce_get_pasid_entry
-Thread-Topic: [PATCH rfcv2 09/20] intel_iommu: Rename
- vtd_ce_get_rid2pasid_entry to vtd_ce_get_pasid_entry
-Thread-Index: AQHbgqgQjVOfyga/6kKBS0dgegEC+rNRjMOAgAlumSA=
-Date: Fri, 28 Feb 2025 08:47:11 +0000
-Message-ID: <SJ0PR11MB67443B607AABB0BCFA5D57B092CC2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
- <20250219082228.3303163-10-zhenzhong.duan@intel.com>
- <950f4531-7614-4327-856f-45a2a2f9cd21@redhat.com>
-In-Reply-To: <950f4531-7614-4327-856f-45a2a2f9cd21@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|PH0PR11MB4872:EE_
-x-ms-office365-filtering-correlation-id: aeb0713c-7d75-4943-eefb-08dd57d47e3e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|1800799024|38070700018; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?dJkP6dWsZN3bUyCMsxruDAhMMMKhiM7dxhDchIYNyicAMBq6i+9xwNmwIGzo?=
- =?us-ascii?Q?q6WVu/pTb1nyDdGjow+JIMBg/NVTH2xevLI7bzRe6DU3EewcNzCkyB9kRIgG?=
- =?us-ascii?Q?WnJ1DXccxT5ttLwDCUC3mitZzoWAUIfMKahrbsBJAcvkJs7pp2LrxNBV6ki/?=
- =?us-ascii?Q?+iAEDApD+eTAkHH8GVej1jxmnL4oEvNfbmWIsUJfxKDICdIPLHL/FUMxBBsj?=
- =?us-ascii?Q?eKW5o1Dw7q6/z9agpu2ULVk5/CGRXocFLaB52Ow+oGwhoYxL1sSyUOMXsk7x?=
- =?us-ascii?Q?Zsy7x61PMA6ZAGgbfeoPgqfeISS99JQrOvCQ2tTKHgJH3riPkEQ2XIU9lvie?=
- =?us-ascii?Q?KtdhDdpJkw5/uPcE2sZUh2qWWXLxbxHvjms0X+ZVQXsxlfCRW3FwSkrp4jJQ?=
- =?us-ascii?Q?geSe157itshn8KxLkL81uMno8N8ecbvYml8/ikt8JU+oUnTVuPPnRwgV5CJ9?=
- =?us-ascii?Q?hoQA8rmND9jM/pnmgGaEV0hx4Bu9vXD5+7MDnn3RNpI6aiz7qCTsHbxAow9D?=
- =?us-ascii?Q?JmQ+1SD2PLbRc5OpHtycMSy0E+yrdqLIM4dhyRAZbHT+nE9zkW1/Ybc4z+pZ?=
- =?us-ascii?Q?TeCbGr6aJrbbPZXiy/HxyNs5zSncNDwiyhc6Op4e3T0zNCmnBaTU4Ld3tASZ?=
- =?us-ascii?Q?4rcMR+LsgMynWfn1O2ze2sGej4uQV6VrLtYs6V25KJIYczA5NLwVXW4BlHCd?=
- =?us-ascii?Q?lun3fCdrbEghs9CC/qiCqqzkInGP2l0Ez/0VSsbkUvk80sSTltXxQYfbV2b/?=
- =?us-ascii?Q?cv/urtwX9suIPPS8iTDTIn/02irRa/y1y+/Pj9lKuJVg2TQuNJw7akOEteqJ?=
- =?us-ascii?Q?ewrUtiH6AyQSc6PNLPMDgD9kkv0dIj95NQ75cfJDG3w2k77wU1khprD8M+A/?=
- =?us-ascii?Q?KV0BwRpbJSBTgFuZruOUG3kdXeSul+pHRT7uZFyXxf0ncxP6AazNea+6bWLO?=
- =?us-ascii?Q?lgQUxZFAoNrd+p/7IWxWXDBV5lvf3Z4AuqDcJ5a+blBwnvIN/N8wAuhPqn1i?=
- =?us-ascii?Q?hF+BuJsMH1cTltxdb7u0wK1IjMrcyKVUwFuEs+sijhgPzADHsZ2VZFGwgoZN?=
- =?us-ascii?Q?Y2v6p2XIhEunQvFgrMrRywVtGc0f2UlVzrBhbsjnSV5squrQ5yQNc2DSdpJt?=
- =?us-ascii?Q?hJthhtZe6fv94ekzQIH0PbpIrGMOYLQT4Mx6IMtYQ2FnlUoYC7u+mMuoprGZ?=
- =?us-ascii?Q?NpExKfkJxOWH7QkklqPSvifbozYvzTw/tk0wrDBSSdPjb9j7TWo49cjlfzf2?=
- =?us-ascii?Q?eJ0n6hWP2YAGS4n+bh1vfA5O95YwVnKZWaoyq3YM7wNv+UOAQYbuXng92jAO?=
- =?us-ascii?Q?hnNTTAWqEfDXYSzl6lDLyej1u+ClO48SAK6skH2Lp27yBJ19C/c5X1U2Cf6o?=
- =?us-ascii?Q?RQAckCHHwdpuotzRxABoL+uISKJUYxE1CeGbZNpQ0mnmRoMFc98Ra7IG3xXM?=
- =?us-ascii?Q?Odj0VXxUbEz2XKvb3eWDn/94ZbPDFSuY?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?hoB7mt/lwu996HBbxCHRMWajSzm4DzauyQSIHgEKhOj8WhNQkoVBBnuolOo1?=
- =?us-ascii?Q?tbHTYnyn95jfJW7kHscjnTXqIaePh7mxjKX3DfAyqq2WySXx9xeIu1jMBAhe?=
- =?us-ascii?Q?Akl3YRAdIMTTenLizmOzKPe5EAT5WKMQWJ8QfomTnU8C+ySBGmr/pLXTQFBB?=
- =?us-ascii?Q?1OKGp6wSSeVEhLBTp482+xLzFMRndz7QY2dKuUvZqAk7h8m4Y/SJhfNN4JwS?=
- =?us-ascii?Q?HJSnV/15VzVZLkaH4tqzhGUTbVWWYPbpYFYPsbW6GfEoJKrllSp09bTnw0bO?=
- =?us-ascii?Q?TncZtzY9jtyBLGvbwz6bFYqBraebD4ZdDlMuWoNV+LyB+eoa+7UBK01kjB+F?=
- =?us-ascii?Q?12o36zuRDZLYo03JOG6wPlbmgKXBfQyAgL2aVTLpam7SULe/3MnPYn1YDrYX?=
- =?us-ascii?Q?z6Q2hl/jOO8SO4TO0a1AIesDMrf3ZluoSVFznWoXctpyRecyNrvl15d1EaZI?=
- =?us-ascii?Q?vZo4/KwaocvuAWgKK8XEMkmxxjfkyYFpc18dvGl8tEbv/bQsQsFjG0c8C9Ma?=
- =?us-ascii?Q?Qo9Cq+HeQ4InAfL73sKcc81Nrcjq2fha4zxsCIyB8z+G5u8rjN/HCkRqOBmh?=
- =?us-ascii?Q?LCYLgN5/D4g05NH97jw0Lo6qE++rQS4Nz/erqV15CYafgN9quI6vxk8JaOAr?=
- =?us-ascii?Q?1R7IqGZkcxgDgJPSwoaLxhSFwKctlu1n2fmov0xRQX9K1Vjpr7+cAlqPWYiv?=
- =?us-ascii?Q?FwGTqE01XBSwSLBqgu/iZr7di2JSofQrMxKTTR+SHhZpHK2azE8+4/73k3O3?=
- =?us-ascii?Q?wnBemi03xl+zt9KhjVbtZbuaAa0v4BiTrRAvJLU/tCKgShy+tz074yOZ/opD?=
- =?us-ascii?Q?G96y2fTdCpJcOL0W6fn/QMScGjjGia89+2lqVpwYOvDYNN1iEOOAWrVX81UO?=
- =?us-ascii?Q?OJXqTTnls2Ied6Yqge0U3u8FmoIrh3NGuf21uhJ0Cl1T+/OznZ3vt42JYzlK?=
- =?us-ascii?Q?LnSJAbAct/FkOImshrMY+zg/+4mNCUQwQTJwpxBwu8HEH6QVyXUf7V2zL4aC?=
- =?us-ascii?Q?/cWc9DqUes1iMlughQNvNu1xRqRvngWeajLP6TUggPW+XBuBIslSP/RVtROb?=
- =?us-ascii?Q?vi2WNbeyBaE8db20hb2ddaARF27CaB5QfrcHrk9H7PEyq3qG4TGoXne9t+DI?=
- =?us-ascii?Q?PMKmjMvTeZL3sI121TegYKTwa3d+F0uYQi8Fc0ewn528TVE8VXEif/QL+DEE?=
- =?us-ascii?Q?gDyoTnNLpZb7Te+pwcCyp6adoobGHB4bJN9hR/HtSlrY2sKqtT8DsXDnpD4T?=
- =?us-ascii?Q?hWiIxlgfNoNyRxgbrQsgd820POFmdsifTfFOlVZJjf+MSBPSRM2PyDsEDC5m?=
- =?us-ascii?Q?nkqAHXfSJoRd+fTA2tkVyhqaEhWe7MQWQlOdO1fAv1IVLT0yW3H5Ug14Cgvt?=
- =?us-ascii?Q?+VfkrB5GScGOqW4Mbd4OlNGq+WiB1LRfkw6KNfRPpXv1d6xbnvMI1xj82dQm?=
- =?us-ascii?Q?z9wr54j4y5grTujYQho6oMekDk7hOo5acnlqoSnyPCuArwDQcIlz8J+qL4Ly?=
- =?us-ascii?Q?LNn+7kI4Ytc5gwhFvg2WA9N4hK7l8XYeae6SRl0zaRB29HMiiHTlncyz1TgK?=
- =?us-ascii?Q?r0zwM+Z7Xn2nOPMFAvSsEozATeau7jJff8OZBerE?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tnw7S-0005Fe-Tc
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:53:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740732797;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9J/gtywfnDHJ24rvIsMfmykDPDv7NZ2xooKphbq8fhY=;
+ b=cG6JS1AuGyXnMANgz6j8nkNmZPe04yJ+5htD01VUsats3FCkvXjZHhnta9wOuJmikvZPC7
+ i+Z2zGRHCnO4Xe+DhhDbAhhN9TKpxtv45qIRtygTZ0tvtdvED8zicClYAcIRA9ZAFqzTXa
+ KfoCmkj5N8EyGplSbGbCEVnbgJokwTI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-593-k6KqubRPNOO4XZ2KCIOoFw-1; Fri, 28 Feb 2025 03:53:16 -0500
+X-MC-Unique: k6KqubRPNOO4XZ2KCIOoFw-1
+X-Mimecast-MFC-AGG-ID: k6KqubRPNOO4XZ2KCIOoFw_1740732795
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43ba50406fcso7529655e9.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 00:53:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740732794; x=1741337594;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9J/gtywfnDHJ24rvIsMfmykDPDv7NZ2xooKphbq8fhY=;
+ b=WcH/ZzUuoUFxFP/5d84QBPLkFyojgCabb7Pk+6hYB9fwxMjnpYcWqbOQrIl0+EYuFN
+ ahCnvunGg3RnLvkKNZiGbBXAeMlotAXem0Wo9uCNzCk207L1q0ll9OSD48UGzsoTnM4g
+ xEHDuQFKlGmbfWusHG27aVnMPzCw6xU16EYQVFgW+0mAado8uCQop22p0iUkwQv1P9qy
+ 9UrWjexxXo27yxBdbWBXiuuZIP0IPpvSNZ0Rkxg0jGjKjwCpUer22wsQ26AP+nU3d16Q
+ HRYKYnNslBokMSc7jgqaYfnWIlo9YGbluoKRR8kqIBCFy4fSBD5vzj+LpS1uwD93iARI
+ +c3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgrJ3hFsXre0UYZiuyT2pNLDD0shmZNL5Ek6BgOaX9S1gr+FRVrV072GLFr0xkro6LpSwAllPw0L3J@nongnu.org
+X-Gm-Message-State: AOJu0YzCAdenh7BP2giyj7Jy+1AeSBxbeyRgZ2q5G7Kl0hApoXk2adHj
+ P5x12yH5pXKT3bXwIVO7YBFfDV18U5tzfr/MLNWOnGSOLP2oVZvY6xD4rzRlK91JUMEUJJ/2Naj
+ 4nbiKiSpkwqRD7uzF8/B+uyP8VjbMGLJuBQgft+95kJRKn1Y6Y1C8Spz7SYohgfc=
+X-Gm-Gg: ASbGncsPjugTAPPXzJND2vtrRILcNcZD1406/xKo/TPlYNMal5HjAB8PTE6BgRMYJAH
+ 8G+177XS5p0U3WdRUxrPwrqpBEegjZKF3WxK1ZBs78U9oEMrOVVL4XgBrvMPdKK6kifmXl1Uhy2
+ 55Xzkx8p3XsDlrNm4yFw5bkPxdkK4jSHu7W04SdswbAyy8LfJA0GfKbjPZHPRT75daFb6zwVhwz
+ 365iOmVmeY8rFGgyVoFXt8iW6GERCUdJR8s2pNp0nTvxw1O+OurEiJ74db3QBza9AAVBGYgKfjh
+ cnvw4M8ay/KRVAsmvARQvQUAl5ZoWIJxZldeW8HFFPD9gSkGvp7JSAihn5k=
+X-Received: by 2002:a05:6000:4008:b0:38f:4f07:fab7 with SMTP id
+ ffacd0b85a97d-390ec7cda71mr2092401f8f.8.1740732794140; 
+ Fri, 28 Feb 2025 00:53:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEqKVJ/a585KfbGX2rVhhWs38y+ORXDtdIBN6WShEGI+vaYqMjrxvZ5eud0mfUTAN5D+XebnQ==
+X-Received: by 2002:a05:6000:4008:b0:38f:4f07:fab7 with SMTP id
+ ffacd0b85a97d-390ec7cda71mr2092385f8f.8.1740732793717; 
+ Fri, 28 Feb 2025 00:53:13 -0800 (PST)
+Received: from ?IPV6:2a01:cb19:9004:d500:837f:93fd:c85e:5b97?
+ ([2a01:cb19:9004:d500:837f:93fd:c85e:5b97])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e485d773sm4495663f8f.81.2025.02.28.00.53.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Feb 2025 00:53:13 -0800 (PST)
+Message-ID: <800e20f0-8568-40f0-ba40-0026f14f5467@redhat.com>
+Date: Fri, 28 Feb 2025 09:53:12 +0100
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: aeb0713c-7d75-4943-eefb-08dd57d47e3e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Feb 2025 08:47:11.9158 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KP7+VKvQAFpO+HSihbfKMQ1EJMC8Rpow6H+e5gJjh/Tg8LV9X3g4EtQrHuth9/yRuJf9owwupkym4YQQH1YWLLukoZRp3nzc3bjm9ozxp60=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4872
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.10;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 34/36] vfio/migration: Max in-flight VFIO device state
+ buffer count limit
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
+ <719b309bb7bc13542d14e6ce0026cb9bb67e9f31.1739994627.git.maciej.szmigiero@oracle.com>
+ <11ecf7fb-55f6-4606-b635-e53dbcc71dbc@redhat.com>
+ <cb56e530-9d34-4f17-bee6-0cf28af06215@maciej.szmigiero.name>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <cb56e530-9d34-4f17-bee6-0cf28af06215@maciej.szmigiero.name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -211,45 +163,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On 2/27/25 23:01, Maciej S. Szmigiero wrote:
+> On 27.02.2025 07:48, Cédric Le Goater wrote:
+>> On 2/19/25 21:34, Maciej S. Szmigiero wrote:
+>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>
+>>> Allow capping the maximum count of in-flight VFIO device state buffers
+>>> queued at the destination, otherwise a malicious QEMU source could
+>>> theoretically cause the target QEMU to allocate unlimited amounts of memory
+>>> for buffers-in-flight.
+>>>
+>>> Since this is not expected to be a realistic threat in most of VFIO live
+>>> migration use cases and the right value depends on the particular setup
+>>> disable the limit by default by setting it to UINT64_MAX.
+>>>
+>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>> ---
+>>>   hw/vfio/migration-multifd.c   | 14 ++++++++++++++
+>>>   hw/vfio/pci.c                 |  2 ++
+>>>   include/hw/vfio/vfio-common.h |  1 +
+>>>   3 files changed, 17 insertions(+)
+>>>
+>>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+>>> index 18a5ff964a37..04aa3f4a6596 100644
+>>> --- a/hw/vfio/migration-multifd.c
+>>> +++ b/hw/vfio/migration-multifd.c
+>>> @@ -53,6 +53,7 @@ typedef struct VFIOMultifd {
+>>>       QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
+>>>       uint32_t load_buf_idx;
+>>>       uint32_t load_buf_idx_last;
+>>> +    uint32_t load_buf_queued_pending_buffers;
+>>>   } VFIOMultifd;
+>>>   static void vfio_state_buffer_clear(gpointer data)
+>>> @@ -121,6 +122,15 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
+>>>       assert(packet->idx >= multifd->load_buf_idx);
+>>> +    multifd->load_buf_queued_pending_buffers++;
+>>> +    if (multifd->load_buf_queued_pending_buffers >
+>>> +        vbasedev->migration_max_queued_buffers) {
+>>> +        error_setg(errp,
+>>> +                   "queuing state buffer %" PRIu32 " would exceed the max of %" PRIu64,
+>>> +                   packet->idx, vbasedev->migration_max_queued_buffers);
+>>> +        return false;
+>>> +    }
+>>> +
+>>>       lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
+>>>       lb->len = packet_total_size - sizeof(*packet);
+>>>       lb->is_present = true;
+>>> @@ -374,6 +384,9 @@ static bool vfio_load_bufs_thread(void *opaque, bool *should_quit, Error **errp)
+>>>               goto ret_signal;
+>>>           }
+>>> +        assert(multifd->load_buf_queued_pending_buffers > 0);
+>>> +        multifd->load_buf_queued_pending_buffers--;
+>>> +
+>>>           if (multifd->load_buf_idx == multifd->load_buf_idx_last - 1) {
+>>>               trace_vfio_load_state_device_buffer_end(vbasedev->name);
+>>>           }
+>>> @@ -408,6 +421,7 @@ VFIOMultifd *vfio_multifd_new(void)
+>>>       multifd->load_buf_idx = 0;
+>>>       multifd->load_buf_idx_last = UINT32_MAX;
+>>> +    multifd->load_buf_queued_pending_buffers = 0;
+>>>       qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
+>>>       multifd->load_bufs_thread_running = false;
+>>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>>> index 9111805ae06c..247418f0fce2 100644
+>>> --- a/hw/vfio/pci.c
+>>> +++ b/hw/vfio/pci.c
+>>> @@ -3383,6 +3383,8 @@ static const Property vfio_pci_dev_properties[] = {
+>>>                   vbasedev.migration_multifd_transfer,
+>>>                   qdev_prop_on_off_auto_mutable, OnOffAuto,
+>>>                   .set_default = true, .defval.i = ON_OFF_AUTO_AUTO),
+>>> +    DEFINE_PROP_UINT64("x-migration-max-queued-buffers", VFIOPCIDevice,
+>>> +                       vbasedev.migration_max_queued_buffers, UINT64_MAX),
+>>
+>> UINT64_MAX doesn't make sense to me. What would be a reasonable value ?
+> 
+> It's the value that effectively disables this limit.
+> 
+>> Have you monitored the max ? Should we collect some statistics on this
+>> value and raise a warning if a high water mark is reached ? I think
+>> this would more useful.
+> 
+> It's an additional mechanism, which is not expected to be necessary
+> in most of real-world setups, hence it's disabled by default:
+>> Since this is not expected to be a realistic threat in most of VFIO live
+>> migration use cases and the right value depends on the particular setup
+>> disable the limit by default by setting it to UINT64_MAX.
+> 
+> The minimum value that works with particular setup depends on number of
+> multifd channels, probably also the number of NIC queues, etc. so it's
+> not something we should propose hard default to - unless it's a very
+> high default like 100 buffers, but then why have it set by default?.
+> 
+> IMHO setting it to UINT64_MAX clearly shows that it is disabled by
+> default since it obviously couldn't be set higher.
 
->-----Original Message-----
->From: Eric Auger <eric.auger@redhat.com>
->Subject: Re: [PATCH rfcv2 09/20] intel_iommu: Rename
->vtd_ce_get_rid2pasid_entry to vtd_ce_get_pasid_entry
->
->Hi Zhenzhong,
->
->
->On 2/19/25 9:22 AM, Zhenzhong Duan wrote:
->> In early days vtd_ce_get_rid2pasid_entry() is used to get pasid entry of
->is/was
+This doesn't convince me that we should take this patch in QEMU 10.0.
+Please keep for now. We will decide in v6.
+  
+>>>       DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
+>>>                        vbasedev.migration_events, false),
+>>>       DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
+>>
+>>
+>> Please add property documentation in vfio_pci_dev_class_init()
+>>
+> 
+> I'm not sure what you mean by that, vfio_pci_dev_class_init() doesn't
+> contain any documentation or even references to either
+> x-migration-max-queued-buffers or x-migration-multifd-transfer:
 
-Will do.
+Indeed :/ I am trying to fix documentation here :
 
->> rid2pasid, then extend to any pasid. So a new name vtd_ce_get_pasid_entr=
-y
->then it was extended to get any pasid entry?
+   https://lore.kernel.org/qemu-devel/20250217173455.449983-1-clg@redhat.com/
 
-Will do.
+Please do something similar. I will polish the edges when merging
+if necessary.
 
->> is better to match its functions.
->to match what it actually does?
+Overall, we should improve VFIO documentation, migration is one sub-feature
+among many.
 
-Yes, will do.=20
->
->I do not know the vtd spec very well so I searched for rid2pasid and I
->did not find any reference. I think I understand what is the pasid entry
->from the pasid table though so the renaming does make sense to me.
+Thanks,
 
-In spec it's named RID_PASID, copied some desc:
+C.
 
-"Requests-without-PASID processed through this scalable-mode
-context entry are treated as Requests-with-PASID with PASID value
-specified in this field. ExecuteRequested field is treated as 0 for
-such requests."
 
-Thanks
-Zhenzhong
+
+>> static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
+>> {
+>>     DeviceClass *dc = DEVICE_CLASS(klass);
+>>     PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
+>>
+>>     device_class_set_legacy_reset(dc, vfio_pci_reset);
+>>     device_class_set_props(dc, vfio_pci_dev_properties);
+>> #ifdef CONFIG_IOMMUFD
+>>     object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
+>> #endif
+>>     dc->desc = "VFIO-based PCI device assignment";
+>>     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>>     pdc->realize = vfio_realize;
+>>     pdc->exit = vfio_exitfn;
+>>     pdc->config_read = vfio_pci_read_config;
+>>     pdc->config_write = vfio_pci_write_config;
+>> }
+> 
+> 
+>> Thanks,
+>>
+>> C.
+> 
+> Thanks,
+> Maciej
+> 
 
 
