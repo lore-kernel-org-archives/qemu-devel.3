@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD984C282C5
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 10:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E08B8C19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 10:33:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnxcH-0003w5-Ro; Fri, 28 Feb 2025 05:29:14 -0500
+	id 1tnxbM-00028T-RK; Fri, 28 Feb 2025 05:28:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnxbw-0002ox-Vb
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:28:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tnxbK-00024b-Fp
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:28:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tnxbu-00032X-2c
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:28:51 -0500
+ id 1tnxbI-0002x9-8C
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 05:28:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740738520;
+ s=mimecast20190719; t=1740738486;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7yfjbR9oGuTI5/RRen+n0jUAT9k7ki6hdfIxD7kuYKU=;
- b=bUBKepry/I4pZsgi9szJyFct7UDz0AXvoB6fA0SPVI4sG0VNBPtSBOCZ9Tc2sV5mA9liSb
- wn24Ly0iGYQB44l5n2oM815dWG4lwMq0J5RdrWv3J1Pu7DeCHtxwefvfPrkmvEqf3ZTq4E
- ni63g58HGetFAxD9GsZQdJ+RlIxIF3c=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Qx7Lq3xHAf7InS1JgG6i0vQ23VrZebSr8iunloPoV2A=;
+ b=U6yloRd2tLaKZj6lkrUkc1Mt21Xd/QpAH5C7eIg9VCKlnw0/I+qZt+kLJN2epWFMJJ+8Q8
+ o+Kmlvyl7PD1F5+axU+6YyNTeblE4pzyoaGWN5E/frAI+barYi42Fhw53j1xyuQIZTOLse
+ io6HTzS04Y924p9I7btcxdOQZJR3tmU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-APcKyIdaOcCJfU0p1-UiuA-1; Fri, 28 Feb 2025 05:28:39 -0500
-X-MC-Unique: APcKyIdaOcCJfU0p1-UiuA-1
-X-Mimecast-MFC-AGG-ID: APcKyIdaOcCJfU0p1-UiuA_1740738518
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43947979ce8so8375165e9.0
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 02:28:38 -0800 (PST)
+ us-mta-689-44QqqDkHMSeQAsNToLwgmA-1; Fri, 28 Feb 2025 05:28:04 -0500
+X-MC-Unique: 44QqqDkHMSeQAsNToLwgmA-1
+X-Mimecast-MFC-AGG-ID: 44QqqDkHMSeQAsNToLwgmA_1740738483
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38f28a4647eso868799f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 02:28:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740738516; x=1741343316;
+ d=1e100.net; s=20230601; t=1740738482; x=1741343282;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7yfjbR9oGuTI5/RRen+n0jUAT9k7ki6hdfIxD7kuYKU=;
- b=OscJ798Ge7OjhHS+CJNHLs80hmLylw9Ba7p2NbbM6beoufGeGJpQmgyWelxZImpya2
- NcT2ubQdWkiB6F6rrSDzXNJ5QPjxi9/c5WQBLiOxsVtXS8vgnYZXxWUrA/e8jVAKRUK+
- oNsAewjgyqhD0bTK6Q4T73iOfidwc98Am88wRUBrJcZ6Nkp3dvJmqcQ1V/yWDkKgRMjI
- SoIX6EHJTYIBYIoFttUvTAg59q/423GtozroOMt8xpXtx3ePiinRZX3AYU0H+knw0pcV
- SxsjVKJdNdzGEuJLrT+kw7E/+DxBSt5Ytd1mh55lGIXUE60PNOL32rzWzbijxPWhyuIE
- A/Gw==
-X-Gm-Message-State: AOJu0Yyp2EBwlhUiW5Sqz4iqqCrD0V3m4D8UKGuxcCKixQNNo3j4lDxg
- ZxgVo9kOv7jG+zpp+yeKxd9FV+PrZNKT3rB6cKXl23kYWdWLQw409/2q6grYmMvDRTbCQK+S/F5
- 7kGdT93+H7D1VGIvMltuWjRKmKe9a+NAKet/bOvIFeu80p8/xiwoqTYhvdmKg2BGIOZsLeUUMce
- Mc97nEl4raizwBPBzwpsr7xO5TsRnDsesMSo/q37g=
-X-Gm-Gg: ASbGnctCgRlwnNuAmEzRbuNrCeTwIoGsihMzzhG3gGAdOeDpeSBLC4fI2Tyx11id+IJ
- gnd18DabRH5D0YaPNq41Vnwov9sWYjJBeWleMRRVV2dVbuyt8MqUN/OGvFY/C9OzJ4QbpjI+4Kf
- F/w/LgSgCUJ4tm6KrsGkRTh8mrACVxOq9LNLiu2DTf8IHjMXeDs8Y52CeZUR6XCxxvBx/DiaOEU
- k/dnnrO0f1Xhzhp3ORPdgjKAa+RoyOo1QOktXtNLwxPLEOd/8PsUC/zGcPaLi3JsLUbFMNKmGyX
- msirtWK9IpTfkGjVnEO1
-X-Received: by 2002:a05:600c:3c9c:b0:439:9d75:9e7d with SMTP id
- 5b1f17b1804b1-43ba6758319mr19501105e9.22.1740738516631; 
- Fri, 28 Feb 2025 02:28:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHLhgZnGQ7VEp0QjZy863iMHWHP4HcEC5aCXJYiHUHM289FUwD+IYxkmlmBuI+wHq9JWAb1fw==
-X-Received: by 2002:a05:600c:3c9c:b0:439:9d75:9e7d with SMTP id
- 5b1f17b1804b1-43ba6758319mr19500875e9.22.1740738516171; 
- Fri, 28 Feb 2025 02:28:36 -0800 (PST)
+ bh=Qx7Lq3xHAf7InS1JgG6i0vQ23VrZebSr8iunloPoV2A=;
+ b=WOHutfXb6A99fGwaciODF4lsEc3kOWfXvZ/RuH3mxG+3niIZwKVbGsQkczJXSpMfpx
+ XIFcDzsIN+o7TVfMYBfuG3dKMk3uY/DVLgQTM8JH9KMSiEbUPfN4i1unOZfLnBNSvjso
+ csm2aY/0s6nNZdo6ptilsI5a2f0ftZWi2KDsU/v+0igHwTvAeIVD/DdqhEzGHT2PVulC
+ bLykSA1hWbh3GsoTqui4Mhxj+36SusRGg2uVsy5hbFiGKISZmK+Io8pjPY+dfRtyyJrp
+ jd7aQeknWZq386o21FUhiAyol8FLX+J68Ic8db5VjTJFZLuZ8nX4Cu/M7stLusET9BmB
+ 72kg==
+X-Gm-Message-State: AOJu0Yx0jYojlybvHQke5BtNdJKmSV+A7vomPSJwWKQVIzhoEV4BWyf+
+ QTiH+MBXaSQLLBkcT3OFjBuzfnN9rIVKzlY6GsHiVrBzKmOOAjKS4gRNvYsNz5vZJIhVOlbRA9k
+ hYlwDgS5lKc5kX+RqieamxtWqZXLMEaxL/rSdGPGk2voXnzaNI5pgvUDwlgyO5chEj9l1ShfdsH
+ SzmR7kxGRVVueyxz5oBTLbMVL/MHV8BJg5Ne5h8Bs=
+X-Gm-Gg: ASbGncu2vIaBGt5+JMFnbpETXO6LKYOt+A0WMK+X/Q961fn0RZ2c0GsC4lHX9Tpu5HF
+ PiAB8v6ZZUs5BfCTjW1P/UCEgqPSi4BM1v7UlgXOiDS5AlPxUFpFARR7yp/rIHh23sXPQxiID5m
+ XAMvvedVhz+gI/ey1yKmioyeO5zB+h+zi1CXxCyntNgxwtKpcqjqDEnQD9Fza83rCM3Rn/fQXWI
+ /Y7Md5vbeHLwoCjWhh57k5+UYbwTrJFr7sma2HewnNxaeIhBpX8qQmckJ2BeNgolO9pWC776SkU
+ GtmHknjYBIpCT0vwt47w
+X-Received: by 2002:a05:6000:1868:b0:390:eacd:7009 with SMTP id
+ ffacd0b85a97d-390eca34b15mr2018565f8f.42.1740738482455; 
+ Fri, 28 Feb 2025 02:28:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFSzIdlrQbrPv2jYWB8Uh04aEr2enR5qv+ekA11JUqLqa149kvGsG22i0hBGnTIHyIZy7AwBw==
+X-Received: by 2002:a05:6000:1868:b0:390:eacd:7009 with SMTP id
+ ffacd0b85a97d-390eca34b15mr2018547f8f.42.1740738482077; 
+ Fri, 28 Feb 2025 02:28:02 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.152.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4844514sm4801433f8f.76.2025.02.28.02.28.34
+ 5b1f17b1804b1-43b736f839asm51754665e9.2.2025.02.28.02.27.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Feb 2025 02:28:34 -0800 (PST)
+ Fri, 28 Feb 2025 02:27:59 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: alistair.francis@wdc.com
-Subject: [PATCH 21/22] target/riscv: convert Xiangshan Nanhu to RISCVCPUDef
-Date: Fri, 28 Feb 2025 11:27:45 +0100
-Message-ID: <20250228102747.867770-22-pbonzini@redhat.com>
+Subject: [PATCH 06/22] target/riscv: move RISCVCPUConfig fields to a header
+ file
+Date: Fri, 28 Feb 2025 11:27:30 +0100
+Message-ID: <20250228102747.867770-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250228102747.867770-1-pbonzini@redhat.com>
 References: <20250228102747.867770-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,120 +109,362 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+To support merging a subclass's RISCVCPUDef into the superclass, a list
+of all the CPU features is needed.  Put them into a header file that
+can be included multiple times, expanding the macros BOOL_FIELD and
+TYPE_FIELD to different operations.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/riscv/cpu.c | 77 ++++++++++++++--------------------------------
- 1 file changed, 23 insertions(+), 54 deletions(-)
+ target/riscv/cpu_cfg.h            | 160 +---------------------------
+ target/riscv/cpu_cfg_fields.h.inc | 167 ++++++++++++++++++++++++++++++
+ 2 files changed, 170 insertions(+), 157 deletions(-)
+ create mode 100644 target/riscv/cpu_cfg_fields.h.inc
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a6c97a43799..ceda1a6e630 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -438,16 +438,6 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit)
-     g_assert_not_reached();
- }
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index 7b7067d5bee..e9bf75730a6 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -22,163 +22,9 @@
+ #define RISCV_CPU_CFG_H
  
--static void set_satp_mode_max_supported(RISCVCPU *cpu,
--                                        int satp_mode)
--{
--    bool rv32 = riscv_cpu_mxl(&cpu->env) == MXL_RV32;
--    const bool *valid_vm = rv32 ? valid_vm_1_10_32 : valid_vm_1_10_64;
+ struct RISCVCPUConfig {
+-    bool ext_zba;
+-    bool ext_zbb;
+-    bool ext_zbc;
+-    bool ext_zbkb;
+-    bool ext_zbkc;
+-    bool ext_zbkx;
+-    bool ext_zbs;
+-    bool ext_zca;
+-    bool ext_zcb;
+-    bool ext_zcd;
+-    bool ext_zce;
+-    bool ext_zcf;
+-    bool ext_zcmp;
+-    bool ext_zcmt;
+-    bool ext_zk;
+-    bool ext_zkn;
+-    bool ext_zknd;
+-    bool ext_zkne;
+-    bool ext_zknh;
+-    bool ext_zkr;
+-    bool ext_zks;
+-    bool ext_zksed;
+-    bool ext_zksh;
+-    bool ext_zkt;
+-    bool ext_zifencei;
+-    bool ext_zicntr;
+-    bool ext_zicsr;
+-    bool ext_zicbom;
+-    bool ext_zicbop;
+-    bool ext_zicboz;
+-    bool ext_zicfilp;
+-    bool ext_zicfiss;
+-    bool ext_zicond;
+-    bool ext_zihintntl;
+-    bool ext_zihintpause;
+-    bool ext_zihpm;
+-    bool ext_zimop;
+-    bool ext_zcmop;
+-    bool ext_ztso;
+-    bool ext_smstateen;
+-    bool ext_sstc;
+-    bool ext_smcdeleg;
+-    bool ext_ssccfg;
+-    bool ext_smcntrpmf;
+-    bool ext_smcsrind;
+-    bool ext_sscsrind;
+-    bool ext_ssdbltrp;
+-    bool ext_smdbltrp;
+-    bool ext_svadu;
+-    bool ext_svinval;
+-    bool ext_svnapot;
+-    bool ext_svpbmt;
+-    bool ext_svvptc;
+-    bool ext_svukte;
+-    bool ext_zdinx;
+-    bool ext_zaamo;
+-    bool ext_zacas;
+-    bool ext_zama16b;
+-    bool ext_zabha;
+-    bool ext_zalrsc;
+-    bool ext_zawrs;
+-    bool ext_zfa;
+-    bool ext_zfbfmin;
+-    bool ext_zfh;
+-    bool ext_zfhmin;
+-    bool ext_zfinx;
+-    bool ext_zhinx;
+-    bool ext_zhinxmin;
+-    bool ext_zve32f;
+-    bool ext_zve32x;
+-    bool ext_zve64f;
+-    bool ext_zve64d;
+-    bool ext_zve64x;
+-    bool ext_zvbb;
+-    bool ext_zvbc;
+-    bool ext_zvkb;
+-    bool ext_zvkg;
+-    bool ext_zvkned;
+-    bool ext_zvknha;
+-    bool ext_zvknhb;
+-    bool ext_zvksed;
+-    bool ext_zvksh;
+-    bool ext_zvkt;
+-    bool ext_zvkn;
+-    bool ext_zvknc;
+-    bool ext_zvkng;
+-    bool ext_zvks;
+-    bool ext_zvksc;
+-    bool ext_zvksg;
+-    bool ext_zmmul;
+-    bool ext_zvfbfmin;
+-    bool ext_zvfbfwma;
+-    bool ext_zvfh;
+-    bool ext_zvfhmin;
+-    bool ext_smaia;
+-    bool ext_ssaia;
+-    bool ext_sscofpmf;
+-    bool ext_smepmp;
+-    bool ext_smrnmi;
+-    bool ext_ssnpm;
+-    bool ext_smnpm;
+-    bool ext_smmpm;
+-    bool ext_sspm;
+-    bool ext_supm;
+-    bool rvv_ta_all_1s;
+-    bool rvv_ma_all_1s;
+-    bool rvv_vl_half_avl;
 -
--    assert(valid_vm[satp_mode]);
--    cpu->cfg.max_satp_mode = satp_mode;
--}
+-    uint32_t mvendorid;
+-    uint64_t marchid;
+-    uint64_t mimpid;
 -
- static bool get_satp_mode_supported(RISCVCPU *cpu, uint16_t *supported)
- {
-     bool rv32 = riscv_cpu_is_32bit(cpu);
-@@ -496,38 +486,6 @@ static void riscv_register_custom_csrs(RISCVCPU *cpu, const RISCVCSR *csr_list)
- }
- #endif
- 
--#if defined(TARGET_RISCV64)
+-    /* Named features  */
+-    bool ext_svade;
+-    bool ext_zic64b;
+-    bool ext_ssstateen;
+-    bool ext_sha;
 -
--static void rv64_xiangshan_nanhu_cpu_init(Object *obj)
--{
--    CPURISCVState *env = &RISCV_CPU(obj)->env;
--    RISCVCPU *cpu = RISCV_CPU(obj);
+-    /*
+-     * Always 'true' booleans for named features
+-     * TCG always implement/can't be user disabled,
+-     * based on spec version.
+-     */
+-    bool has_priv_1_13;
+-    bool has_priv_1_12;
+-    bool has_priv_1_11;
 -
--    riscv_cpu_set_misa_ext(env, RVG | RVC | RVB | RVS | RVU);
--    env->priv_ver = PRIV_VERSION_1_12_0;
+-    /* Vendor-specific custom extensions */
+-    bool ext_xtheadba;
+-    bool ext_xtheadbb;
+-    bool ext_xtheadbs;
+-    bool ext_xtheadcmo;
+-    bool ext_xtheadcondmov;
+-    bool ext_xtheadfmemidx;
+-    bool ext_xtheadfmv;
+-    bool ext_xtheadmac;
+-    bool ext_xtheadmemidx;
+-    bool ext_xtheadmempair;
+-    bool ext_xtheadsync;
+-    bool ext_XVentanaCondOps;
 -
--    /* Enable ISA extensions */
--    cpu->cfg.ext_zbc = true;
--    cpu->cfg.ext_zbkb = true;
--    cpu->cfg.ext_zbkc = true;
--    cpu->cfg.ext_zbkx = true;
--    cpu->cfg.ext_zknd = true;
--    cpu->cfg.ext_zkne = true;
--    cpu->cfg.ext_zknh = true;
--    cpu->cfg.ext_zksed = true;
--    cpu->cfg.ext_zksh = true;
--    cpu->cfg.ext_svinval = true;
+-    uint32_t pmu_mask;
+-    uint16_t vlenb;
+-    uint16_t elen;
+-    uint16_t cbom_blocksize;
+-    uint16_t cbop_blocksize;
+-    uint16_t cboz_blocksize;
+-    bool mmu;
+-    bool pmp;
+-    bool debug;
+-    bool misa_w;
 -
--    cpu->cfg.mmu = true;
--    cpu->cfg.pmp = true;
+-    bool short_isa_string;
 -
 -#ifndef CONFIG_USER_ONLY
--    set_satp_mode_max_supported(cpu, VM_1_10_SV39);
+-    int8_t max_satp_mode;
 -#endif
--}
--
--#endif /* !TARGET_RISCV64 */
--
- static ObjectClass *riscv_cpu_class_by_name(const char *cpu_model)
- {
-     ObjectClass *oc;
-@@ -2777,16 +2735,6 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
- }
- #endif
++#define BOOL_FIELD(x) bool x;
++#define TYPED_FIELD(type, x) type x;
++#include "cpu_cfg_fields.h.inc"
+ };
  
--#define DEFINE_VENDOR_CPU(type_name, misa_mxl_max_, initfn) \
--    {                                                       \
--        .name = (type_name),                                \
--        .parent = TYPE_RISCV_VENDOR_CPU,                    \
--        .instance_init = (initfn),                          \
--        .class_data = (void*) &((const RISCVCPUDef) {       \
--             .misa_mxl_max = (misa_mxl_max_),               \
--        }),                                                 \
--    }
--
- #define DEFINE_ABSTRACT_RISCV_CPU(type_name, parent_type_name, ...) \
-     {                                                       \
-         .name = (type_name),                                \
-@@ -3084,8 +3032,29 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.max_satp_mode = VM_1_10_SV48,
-     ),
- 
--    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU,
--                                                 MXL_RV64, rv64_xiangshan_nanhu_cpu_init),
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU, TYPE_RISCV_VENDOR_CPU,
-+        .misa_mxl_max = MXL_RV64,
-+        .misa_ext = RVG | RVC | RVB | RVS | RVU,
-+        .priv_spec = PRIV_VERSION_1_12_0,
+ typedef struct RISCVCPUConfig RISCVCPUConfig;
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+new file mode 100644
+index 00000000000..a42f298017f
+--- /dev/null
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -0,0 +1,167 @@
++/*
++ * Required definitions before including this file:
++ *
++ * #define BOOL_FIELD(x)
++ * #define TYPED_FIELD(type, x)
++ */
 +
-+        /* ISA extensions */
-+        .cfg.ext_zbc = true,
-+        .cfg.ext_zbkb = true,
-+        .cfg.ext_zbkc = true,
-+        .cfg.ext_zbkx = true,
-+        .cfg.ext_zknd = true,
-+        .cfg.ext_zkne = true,
-+        .cfg.ext_zknh = true,
-+        .cfg.ext_zksed = true,
-+        .cfg.ext_zksh = true,
-+        .cfg.ext_svinval = true,
++BOOL_FIELD(ext_zba)
++BOOL_FIELD(ext_zbb)
++BOOL_FIELD(ext_zbc)
++BOOL_FIELD(ext_zbkb)
++BOOL_FIELD(ext_zbkc)
++BOOL_FIELD(ext_zbkx)
++BOOL_FIELD(ext_zbs)
++BOOL_FIELD(ext_zca)
++BOOL_FIELD(ext_zcb)
++BOOL_FIELD(ext_zcd)
++BOOL_FIELD(ext_zce)
++BOOL_FIELD(ext_zcf)
++BOOL_FIELD(ext_zcmp)
++BOOL_FIELD(ext_zcmt)
++BOOL_FIELD(ext_zk)
++BOOL_FIELD(ext_zkn)
++BOOL_FIELD(ext_zknd)
++BOOL_FIELD(ext_zkne)
++BOOL_FIELD(ext_zknh)
++BOOL_FIELD(ext_zkr)
++BOOL_FIELD(ext_zks)
++BOOL_FIELD(ext_zksed)
++BOOL_FIELD(ext_zksh)
++BOOL_FIELD(ext_zkt)
++BOOL_FIELD(ext_zifencei)
++BOOL_FIELD(ext_zicntr)
++BOOL_FIELD(ext_zicsr)
++BOOL_FIELD(ext_zicbom)
++BOOL_FIELD(ext_zicbop)
++BOOL_FIELD(ext_zicboz)
++BOOL_FIELD(ext_zicfilp)
++BOOL_FIELD(ext_zicfiss)
++BOOL_FIELD(ext_zicond)
++BOOL_FIELD(ext_zihintntl)
++BOOL_FIELD(ext_zihintpause)
++BOOL_FIELD(ext_zihpm)
++BOOL_FIELD(ext_zimop)
++BOOL_FIELD(ext_zcmop)
++BOOL_FIELD(ext_ztso)
++BOOL_FIELD(ext_smstateen)
++BOOL_FIELD(ext_sstc)
++BOOL_FIELD(ext_smcdeleg)
++BOOL_FIELD(ext_ssccfg)
++BOOL_FIELD(ext_smcntrpmf)
++BOOL_FIELD(ext_smcsrind)
++BOOL_FIELD(ext_sscsrind)
++BOOL_FIELD(ext_ssdbltrp)
++BOOL_FIELD(ext_smdbltrp)
++BOOL_FIELD(ext_svadu)
++BOOL_FIELD(ext_svinval)
++BOOL_FIELD(ext_svnapot)
++BOOL_FIELD(ext_svpbmt)
++BOOL_FIELD(ext_svvptc)
++BOOL_FIELD(ext_svukte)
++BOOL_FIELD(ext_zdinx)
++BOOL_FIELD(ext_zaamo)
++BOOL_FIELD(ext_zacas)
++BOOL_FIELD(ext_zama16b)
++BOOL_FIELD(ext_zabha)
++BOOL_FIELD(ext_zalrsc)
++BOOL_FIELD(ext_zawrs)
++BOOL_FIELD(ext_zfa)
++BOOL_FIELD(ext_zfbfmin)
++BOOL_FIELD(ext_zfh)
++BOOL_FIELD(ext_zfhmin)
++BOOL_FIELD(ext_zfinx)
++BOOL_FIELD(ext_zhinx)
++BOOL_FIELD(ext_zhinxmin)
++BOOL_FIELD(ext_zve32f)
++BOOL_FIELD(ext_zve32x)
++BOOL_FIELD(ext_zve64f)
++BOOL_FIELD(ext_zve64d)
++BOOL_FIELD(ext_zve64x)
++BOOL_FIELD(ext_zvbb)
++BOOL_FIELD(ext_zvbc)
++BOOL_FIELD(ext_zvkb)
++BOOL_FIELD(ext_zvkg)
++BOOL_FIELD(ext_zvkned)
++BOOL_FIELD(ext_zvknha)
++BOOL_FIELD(ext_zvknhb)
++BOOL_FIELD(ext_zvksed)
++BOOL_FIELD(ext_zvksh)
++BOOL_FIELD(ext_zvkt)
++BOOL_FIELD(ext_zvkn)
++BOOL_FIELD(ext_zvknc)
++BOOL_FIELD(ext_zvkng)
++BOOL_FIELD(ext_zvks)
++BOOL_FIELD(ext_zvksc)
++BOOL_FIELD(ext_zvksg)
++BOOL_FIELD(ext_zmmul)
++BOOL_FIELD(ext_zvfbfmin)
++BOOL_FIELD(ext_zvfbfwma)
++BOOL_FIELD(ext_zvfh)
++BOOL_FIELD(ext_zvfhmin)
++BOOL_FIELD(ext_smaia)
++BOOL_FIELD(ext_ssaia)
++BOOL_FIELD(ext_sscofpmf)
++BOOL_FIELD(ext_smepmp)
++BOOL_FIELD(ext_smrnmi)
++BOOL_FIELD(ext_ssnpm)
++BOOL_FIELD(ext_smnpm)
++BOOL_FIELD(ext_smmpm)
++BOOL_FIELD(ext_sspm)
++BOOL_FIELD(ext_supm)
++BOOL_FIELD(rvv_ta_all_1s)
++BOOL_FIELD(rvv_ma_all_1s)
++BOOL_FIELD(rvv_vl_half_avl)
++/* Named features  */
++BOOL_FIELD(ext_svade)
++BOOL_FIELD(ext_zic64b)
++BOOL_FIELD(ext_ssstateen)
++BOOL_FIELD(ext_sha)
 +
-+        .cfg.mmu = true,
-+        .cfg.pmp = true,
++/*
++ * Always 'true' booleans for named features
++ * TCG always implement/can't be user disabled,
++ * based on spec version.
++ */
++BOOL_FIELD(has_priv_1_13)
++BOOL_FIELD(has_priv_1_12)
++BOOL_FIELD(has_priv_1_11)
 +
-+        .cfg.max_satp_mode = VM_1_10_SV39,
-+    ),
++/* Vendor-specific custom extensions */
++BOOL_FIELD(ext_xtheadba)
++BOOL_FIELD(ext_xtheadbb)
++BOOL_FIELD(ext_xtheadbs)
++BOOL_FIELD(ext_xtheadcmo)
++BOOL_FIELD(ext_xtheadcondmov)
++BOOL_FIELD(ext_xtheadfmemidx)
++BOOL_FIELD(ext_xtheadfmv)
++BOOL_FIELD(ext_xtheadmac)
++BOOL_FIELD(ext_xtheadmemidx)
++BOOL_FIELD(ext_xtheadmempair)
++BOOL_FIELD(ext_xtheadsync)
++BOOL_FIELD(ext_XVentanaCondOps)
 +
- #ifdef CONFIG_TCG
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
-         .cfg.max_satp_mode = VM_1_10_SV57,
++BOOL_FIELD(mmu)
++BOOL_FIELD(pmp)
++BOOL_FIELD(debug)
++BOOL_FIELD(misa_w)
++
++BOOL_FIELD(short_isa_string)
++
++TYPED_FIELD(uint32_t, mvendorid)
++TYPED_FIELD(uint64_t, marchid)
++TYPED_FIELD(uint64_t, mimpid)
++
++TYPED_FIELD(uint32_t, pmu_mask)
++TYPED_FIELD(uint16_t, vlenb)
++TYPED_FIELD(uint16_t, elen)
++TYPED_FIELD(uint16_t, cbom_blocksize)
++TYPED_FIELD(uint16_t, cbop_blocksize)
++TYPED_FIELD(uint16_t, cboz_blocksize)
++
++#ifndef CONFIG_USER_ONLY
++TYPED_FIELD(int8_t, max_satp_mode)
++#endif
++
++#undef BOOL_FIELD
++#undef TYPED_FIELD
 -- 
 2.48.1
 
