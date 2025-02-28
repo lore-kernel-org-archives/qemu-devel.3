@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19948C282D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 16:54:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF44C282C1
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 16:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to3cQ-0003II-Rs; Fri, 28 Feb 2025 11:53:48 -0500
+	id 1to3cj-0003ln-Af; Fri, 28 Feb 2025 11:54:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1to3cI-00036B-6N
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 11:53:39 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1to3ch-0003az-1d
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 11:54:03 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1to3cD-0006VN-RF
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 11:53:37 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-223480ea43aso61093805ad.1
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 08:53:33 -0800 (PST)
+ id 1to3cf-0006bk-H0
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 11:54:02 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2234e4b079cso46603625ad.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 08:54:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740761612; x=1741366412; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740761640; x=1741366440; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=BdTxu/Fbc8V+uuokoy561N/92tzo7vuSN7ONms8a4r0=;
- b=Ee/QP59Ub2HmkODRfnBd1ssG13zqbvmflrE4ZbJoha2lhgxanaoDtKbkF20tob+ZDa
- XMQJs+brdj3NX2nO0NLA5VBq47aFEDEKxv0JlwdmTZlD+r0AqZd8PsqtMwW+lT3Wyqns
- RoXnuIl2D1d76AroJIocxBXHkEf4kZ9FbG5GLET978gP9pzbOYvYEg2634+h3jZFF3Gu
- 9qHbvNYkbQO2SjgLRc7vQRGjh7jj388TMBm3E2QOsqEXzR4EkBUUlMsY2EgB1YC8jCDH
- HP1YlePRdg54YdRgzhG6UHOlC7xcKLiN3bFnGzAB1RtnfIYfQmh0EofzyA6eehOObhMU
- NrmQ==
+ bh=IYVucpfXxNhO3Sw0ZjefQ7DTOCWo8nPo1hJR78ZWBhI=;
+ b=jcWCSqu7/VV/U8b9uVc+P40Rck4guF3IPbUPgrAS+lab21H3ojiOvj9JT9Ux0hxKJe
+ 43c4znQ7vjjaDBNAaD0CDeGjjWzscPTBsx06UV1gvmGduoGiudnAitpZ2u4Ma22E3p3t
+ 0CAaWgRSjQfkBaAoO0e3TkadfLAIDqalH14ta2ueU6eAAnW8UGw9pRttbsF2LC560EOY
+ GoApwV6PCNU2FP6Z1VWnt86Ba+8Szq1TBJ78cmrLZChZJGHgz/6A05b0X5feG93Iarw+
+ v9ZwZH7lWcC1pV+LUzLtH0ywFIADCh4ybKQZ6QaXcdNQ7Jd9Hy30OkarqixV5LJ0L9Bk
+ fJ1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740761612; x=1741366412;
+ d=1e100.net; s=20230601; t=1740761640; x=1741366440;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BdTxu/Fbc8V+uuokoy561N/92tzo7vuSN7ONms8a4r0=;
- b=El2pw8ITOIgZ0FIleYjpKRBkQh+saLylgIDkYzJngn6Dqq10OcwsKHJK1OBDij6QaZ
- rvnUu47oulNarvbQKK12WzueZuh04Gomv6YUV5fwESTi/wwvi+yqY+Cp7pi5XPKf0V3J
- wHt/xy935+wHTdaKAnpFm8OCShm1U3oST86tDSwLdKo7AUzmcGeZ6n6k4yiHyrBWmQzg
- eaG6Q6fZAhaw8Uq5tlXChQM14LlMbwNP/zXSUnFIXr3ONdDtU4xRviRZsFlnbn2FVPEW
- 1YAwWbezPUjLoFAlYHxZLGjL8oykOISfi9CiCcsUBasdp2jq8mZ/5pNzITGsPGNSgywX
- pM4A==
-X-Gm-Message-State: AOJu0Yx0jASWYd1qiX2KOyzcXUOlRLZw6awMr7Ie7QIm1nT9fRpc5pvY
- CJs5caGiw2DLir9hCFPYyFsbb2Hz7jr29h8MZm9U68GQutUUYep40jPXMG+1LxPd7pVIYl57Vjq
- J
-X-Gm-Gg: ASbGncuAAIlBmKl5grghKjG1OJOzHYVittJUVy006F3S2rYq5jTSuJptfziqTAeWxA3
- rOt1g2r7nT6LCKTq8XLkmSBw2jzUpU84IgbJOEpBJ7QcD/j//UQPE6RSUs3s79jo/VxTSS8tHw5
- ziv2k8kEDS2tHb+BbvQIhGUpboxkIOHbS5GBaii2iKHY9FH964sX/ktc8p2NqzVIxl1ZJzIT/HS
- 39cc4Zc7EGdSvLotWdyx6cnFcYXzoTY4Vwb/EvgFArYnRc8XsXXxzBkKF9zzBYVJmiCqoXFzZ0w
- rGjuqAwb+kkh0QQ9/NcYgA0tD0XjqKw0iROUFcBuDMl6LkPX4IMagZoBdSi6AttLhc12nuBg7zf
- 7lLb+Caw=
-X-Google-Smtp-Source: AGHT+IHsa0TN3CsRmpqtWPWs2QKn2n+zu71qcBBy3BkoJZ3DYmIGhdZJ2GXkzdXu0MVsw5V+p/2PZg==
-X-Received: by 2002:a05:6a00:228d:b0:72d:9b11:1ebb with SMTP id
- d2e1a72fcca58-734ac34ca79mr7434663b3a.8.1740761611685; 
- Fri, 28 Feb 2025 08:53:31 -0800 (PST)
+ bh=IYVucpfXxNhO3Sw0ZjefQ7DTOCWo8nPo1hJR78ZWBhI=;
+ b=E2NX7veaozLGn+7LF+n9tfYvyDKFsnmXf1NdUYgLtp17hLJKF9ioh4bh1W74RoHt9O
+ MwKTLCtWk7qS9Oe1Y6JzEoaosL46NRxZi38FyAsrxnzzznpyDz4OC47sGF0MrE29XaQj
+ M6J922AynYt6Ie+xkULgx9bQfS/zyGENoEVXuc4EpPYxglLlhu5Vg1JCv3mNy6ugW6aZ
+ CnrGntbaudWBPS8rClp/a2fxXycG+2v722TAweklw4UvcWc8X2L48ApKbVLsVNeStGZI
+ TA3VYjC7QB2jZ+WPbXLfVgQtVS8cIwU6VcUpcjVpxmtk0EqRU+lSvXAs6muFu1M6hNCN
+ e+tA==
+X-Gm-Message-State: AOJu0YzmKHKFqZBm5KblBnB85XAwol1M7h3B1Bu4wxX5QqtaCuFhfFaH
+ 3FWexK74k1UphxfyN10lZL2QsjYhKsNOvYv0dIFcBoNFG+l0n9gb2xODPfmdmy6dXxlNpEavEW+
+ j
+X-Gm-Gg: ASbGncsiJ3BE/tC1MG6F35QEtJxQ8thHdpuTP2VclRaTcxDxdjHaOYZ5JqW42rljsiY
+ 6Dew1vSjyLeMJ7FFAZfR+C47yajF1kKfemxOYk8zgUd5pe4cEl86TBAykz8eInUIj1p5xtVWqnP
+ Hj6yhaG22VXLP2oTVG3HzipjMyMgpUNPkAHgT/jf6EEVMedJ50TRtI6swK0t1LNdfDHh4mKf43i
+ kXLjYzuDEWzNHAjcqdnxLwKe1OOJwkQ8/dpvItAxomeWjFXfzHZaA32Jr9ZSbwnyv4SY0OTy3p1
+ dzeusunXoVtXO5cfIdJ8LbJHcLZVKA2uA8G3H/axPQcy4ouKP4zLC+NyLrOGS65tE/UzXelUD4x
+ AtYD+L51cKOrwLHzzRmV39uKNGw==
+X-Google-Smtp-Source: AGHT+IHKaBiJ51yIk2UNePMBrwOaimbIbWp8Q1QvfPEbWy/9KkCcrZsi42gwgZZGj3jzZA56wcvP4Q==
+X-Received: by 2002:a05:6a00:178a:b0:734:b8f:a425 with SMTP id
+ d2e1a72fcca58-734ac45c624mr5607327b3a.23.1740761640017; 
+ Fri, 28 Feb 2025 08:54:00 -0800 (PST)
 Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
  [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7349fe2a640sm4111166b3a.16.2025.02.28.08.53.31
+ d2e1a72fcca58-736290957f1sm1213495b3a.67.2025.02.28.08.53.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Feb 2025 08:53:31 -0800 (PST)
-Message-ID: <d9eebcc6-7f3e-4b14-8d4d-b99c789b4950@linaro.org>
-Date: Fri, 28 Feb 2025 08:53:29 -0800
+ Fri, 28 Feb 2025 08:53:59 -0800 (PST)
+Message-ID: <c8a10180-dccf-4779-a0d6-3b96da6f9b0b@linaro.org>
+Date: Fri, 28 Feb 2025 08:53:57 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/7] tests/functional: set 'qemu_bin' as an object
- level field
+Subject: Re: [PATCH v2 3/7] tests/functional: remove all class level fields
 To: qemu-devel@nongnu.org
 References: <20250228102738.3064045-1-berrange@redhat.com>
- <20250228102738.3064045-3-berrange@redhat.com>
+ <20250228102738.3064045-4-berrange@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250228102738.3064045-3-berrange@redhat.com>
+In-Reply-To: <20250228102738.3064045-4-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,18 +104,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/28/25 02:27, Daniel P. Berrangé wrote:
-> The 'qemu_bin' field is currently set on the class, despite being
-> accessed as if it were an object instance field with 'self.qemu_bin'.
-> 
-> This is no obvious need to have it as a class field, so move it into
-> the object instance.
+> A number of fields are set at the class level on QemuBaseTest, even
+> though the exact same named field is then set at the object level
+> later in most cases.
 > 
 > Reviewed-by: Thomas Huth<thuth@redhat.com>
 > Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
 > ---
->   docs/devel/testing/functional.rst      | 2 +-
->   tests/functional/qemu_test/testcase.py | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+>   tests/functional/qemu_test/testcase.py | 6 ------
+>   1 file changed, 6 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
