@@ -4,103 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E95CC19776
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 13:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 068A3C282C5
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 13:10:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to06Q-0002Mc-CX; Fri, 28 Feb 2025 08:08:30 -0500
+	id 1to08T-0003kd-0v; Fri, 28 Feb 2025 08:10:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1to06O-0002MS-Sh
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 08:08:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1to06L-0007bl-Qv
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 08:08:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740748104;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jivrn7Vdp6x4GL1b5ZxyJQKIN05Kj60F1xupGwdydvs=;
- b=ONtAW8x6SytFOAP7iYDc65MzHhZdEQ+Jr57bqx1GLWw7df0IMZ6ZQstHi5+eg2xdEGx5/+
- bDvjlvu3iHTQLya4oOQP2oE3orKgzuafVAHTYQLCE5XieIgaMbS+s8aPLGJb/slF8N+zmc
- f45p1OXTYPemp2xR8r05/yKzbrXAnqQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-529-stR2WRM3Ml6uxenbIb5h9w-1; Fri, 28 Feb 2025 08:08:22 -0500
-X-MC-Unique: stR2WRM3Ml6uxenbIb5h9w-1
-X-Mimecast-MFC-AGG-ID: stR2WRM3Ml6uxenbIb5h9w_1740748101
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-439a0e28cfaso12309995e9.2
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 05:08:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1to08Q-0003g1-DC
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 08:10:34 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1to08O-00081M-Ai
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 08:10:34 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-439a4dec9d5so22105015e9.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 05:10:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1740748230; x=1741353030; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=E2QnH5o6lgPeJQHV/ipzaYZh1DWE+6vrm6rUOmZoVvQ=;
+ b=WjK5iUQGPfuAtuUFRDZCn2YR58c2FHlqFfb3BLqQRpxicbk7tTDOjeMTLA1PV5wY0N
+ GcQz+7cFozFtoBJn6Xsl1UEWNH0XBWU6jdYlg+dsmIi9DBoY+p64Uuv6OvT46vtvbfRM
+ 2gEDbi35Hv9H0XGxYWgLDFKgS8kFfgMGf+GEnuhxSHoE25Hs4Rk0uOn5CAxmlCPceFjU
+ GZYQW54xEJXiqjwoykvsyHTE2Wix0heBvAZuo1j9tLCtxpjZ75bL16VcLgvbIXoBK5Sr
+ DW2d9PiSm/pgWKr8MYBgPlsLhCeKainlunf/yAIDTLrAtwqmdcFshdSVhIppDW4IDaSb
+ oiMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740748101; x=1741352901;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jivrn7Vdp6x4GL1b5ZxyJQKIN05Kj60F1xupGwdydvs=;
- b=Qx4mBzpE1qmZdLmGey6eIudop4rcWV4QJ8oQvOuGHvmwofdtoJOZPlmM/PuzLkRD2b
- G6BLip+mBszX1EmBPN77Aepeuz8KW5RgDjkDQZ5cGBqwg4D+H/vQ8VynUKg56loW3E9V
- OQ6+zxc0EpQuEU+22YnBKQt9ABA6Y6PffsMcONaUB2NkcwYPXlWmk5lwmOZGdJvHNIUn
- NISSy2GlbxR6ilkP96NnSwxzAA1X/sUm9y/iCgYlesWX+wCyZsVuSrMI/lBxOMMPQO3q
- BSMqGmOAm04PJkMMcdyR6jklyuBLIktzPi679gPRvKpZN4sDm7TOuLBcF1npVm2vSdNT
- U2CA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXR9Ru+iqRf5v3u5xjXPhRvVxdRHqE0Vu5hV2dpAdgGm/VWCsHo7+TqaNv7IouLWNpABivDoPxLIdcE@nongnu.org
-X-Gm-Message-State: AOJu0Yw99nwHUV+XboxYNnC0o3V9S85UQmznajjK1LWS6yPr+mTKw/T/
- 3w3dah5zWIIwQohyH2WqWaOihnJ37OSCVgpUJM0qweS9N3RIJ4kM7hMQ+GHNuKq46MCKojEloei
- GjCcSQeN0Fs+rWdOK482LFuzJGcGxgzMJI8mK5zkp9R6VYxbA6TICsiN6rHxk
-X-Gm-Gg: ASbGncvEmh7RhkrDmV63Upg1CxlOVnhtrkJRTvXlY7NHLeHOvlpLu2KP5pzkiNjGbjw
- CcLQ6tbet3F0yit13CUKNLp8CwNebYdIRhvJYwoD5fvAz6EVJrH6rThcNdH9Fw4c9GZEHDZ29Ce
- 3bgcBYyMbJ+Un+vWt6pBd/2+qN+wk5VCZ+i9zGD/LHWaYRC+cRD0oZS3R1Wf1Nv6UhRD2Hp1knt
- iJBArHFpnVg2XNRYxC9VSJ0zArDndwdkbAv/2pFrLshhO32WXmH+j/ZRU8Ud+peNoTzu0rEiYVn
- KnXjK2ppZRiXA4jY8uxRuSXFmRJVgP6g+3tgt6ioMq7drOrnu58UwLmuxHwsVs4=
-X-Received: by 2002:a05:600c:1c93:b0:439:a1ef:c238 with SMTP id
- 5b1f17b1804b1-43ba6704511mr27965355e9.13.1740748100809; 
- Fri, 28 Feb 2025 05:08:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFdeugB0DYaeSGn2VbFG9q+ru+bR1PmY2MFJJnKraycPUMTshNrf3BW7rb+d9fMMTMfeMuzcA==
-X-Received: by 2002:a05:600c:1c93:b0:439:a1ef:c238 with SMTP id
- 5b1f17b1804b1-43ba6704511mr27964775e9.13.1740748100341; 
- Fri, 28 Feb 2025 05:08:20 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47b7ddesm5239888f8f.57.2025.02.28.05.08.19
+ d=1e100.net; s=20230601; t=1740748230; x=1741353030;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E2QnH5o6lgPeJQHV/ipzaYZh1DWE+6vrm6rUOmZoVvQ=;
+ b=UbYRfw0t49ezBtwXTKQiqlCg7tPJ9E0cWISF3MDHsRCSwmz109AAtExoShVfTeZwEp
+ yRLCzSAmPnf++Cly3IkRlGptIsAslHekBGBw0AwjlQKqEg+T/4LIhCaBx3SQtsM7WHVd
+ ULeQc0Zyb7bfkx8U1N4Uv4r8EMhA20whCcuPme2Re7v3Yyeve16LLll0kq08hADsd4ir
+ j/9n0okTPZj83Jj+JdPc/SaNbKiaBTSgHE06A/IROgWjOrJrBkuRO1vxuj9n1+I5Akls
+ Gb0MGHjI9QUgKezP9R3M2pZObNDBgE2VxxqRe9YlSO3kNkC8WiKNUXaywMFQBKAbhGGj
+ 23XQ==
+X-Gm-Message-State: AOJu0Yz0Jjw5xeydcdAkP81c7d5nIVmWjLykHhPbeRaHP/vAUmcNUh0A
+ cTi0eJCzJMpiVJQOYhXUL3Eggdd/NXxSFdUwvS5Z4wnuf0DDD1oGuOsljD/sg0U=
+X-Gm-Gg: ASbGncvTfSpZv5wFGwPDWVcLDZ1NZp353NNylrOTtJx8ZaAVHNqE9XPUtrhKPs7FTFV
+ chskKmtaq9Wt9u7hVU/Cp8z4CVbm9pb7m/uX6pQmClajodjxmvTNrmz5eOn+zkbdzbp+VlPXf9u
+ iqecOqQZUy6OhCK6FB9OyYoPyZwDc3Ax0oLGEX7BGkkspt2+wraA49krLm5EslnwXR7Jo4c/knI
+ mvjrWHL9SG7ViIdyt7O/kySnDa5jvw/PiBi6HYG8/f8ka6GlWXSGXToNZpta/4B1hRk4Z4/mhex
+ bIlyIvL8pixQlA==
+X-Google-Smtp-Source: AGHT+IF95Az6f4ptfo+FiMlcd9ZLDE2Ef1Fkt6JH8PWeC9du+yU4jsFB8pH4O8zaBMhy/JewpiIb+w==
+X-Received: by 2002:a05:600c:190d:b0:439:8b05:66a6 with SMTP id
+ 5b1f17b1804b1-43ba674c9a2mr30283245e9.22.1740748230302; 
+ Fri, 28 Feb 2025 05:10:30 -0800 (PST)
+Received: from localhost ([2a02:8308:a00c:e200::688c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43b73717ac0sm55102405e9.20.2025.02.28.05.10.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Feb 2025 05:08:19 -0800 (PST)
-Date: Fri, 28 Feb 2025 14:08:19 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, "Michael S . Tsirkin"
- <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v6 18/19] docs: hest: add new "etc/acpi_table_hest_addr"
- and update workflow
-Message-ID: <20250228140819.322e6390@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250228173608.0000779c@huawei.com>
-References: <cover.1740671863.git.mchehab+huawei@kernel.org>
- <445f7d41b01ffc5bd79d6fd83bc7c4c621bcbc85.1740671863.git.mchehab+huawei@kernel.org>
- <20250228173608.0000779c@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Fri, 28 Feb 2025 05:10:29 -0800 (PST)
+Date: Fri, 28 Feb 2025 14:10:29 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
+ vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 1/8] target/riscv/kvm: rewrite get/set for
+ KVM_REG_RISCV_CSR
+Message-ID: <20250228-0947621811d6951e12ae55ab@orel>
+References: <20250224082417.31382-1-yongxuan.wang@sifive.com>
+ <20250224082417.31382-2-yongxuan.wang@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250224082417.31382-2-yongxuan.wang@sifive.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,82 +106,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 28 Feb 2025 17:36:08 +0800
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-
-> On Thu, 27 Feb 2025 17:00:56 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On Mon, Feb 24, 2025 at 04:24:08PM +0800, Yong-Xuan Wang wrote:
+> As KVM_REG_RISCV_CSR includes several subtypes of CSR, rewrite the
+> related macros and functions to prepare for other subtypes.
 > 
-> > While the HEST layout didn't change, there are some internal
-> > changes related to how offsets are calculated and how memory error
-> > events are triggered.
-> > 
-> > Update specs to reflect such changes.
-> > 
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>  
-> One minor editorial suggestion. With that or similar tidy up,
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-with nit below fixed,
-
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
+> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 70 +++++++++++++++++++++++---------------
+>  1 file changed, 43 insertions(+), 27 deletions(-)
 > 
-> > ---
-> >  docs/specs/acpi_hest_ghes.rst | 28 +++++++++++++++++-----------
-> >  1 file changed, 17 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
-> > index c3e9f8d9a702..4311a9536b21 100644
-> > --- a/docs/specs/acpi_hest_ghes.rst
-> > +++ b/docs/specs/acpi_hest_ghes.rst
-> > @@ -89,12 +89,21 @@ Design Details
-> >      addresses in the "error_block_address" fields with a pointer to the
-> >      respective "Error Status Data Block" in the "etc/hardware_errors" blob.
-> >  
-> > -(8) QEMU defines a third and write-only fw_cfg blob which is called
-> > -    "etc/hardware_errors_addr". Through that blob, the firmware can send back
-> > -    the guest-side allocation addresses to QEMU. The "etc/hardware_errors_addr"
-> > -    blob contains a 8-byte entry. QEMU generates a single WRITE_POINTER command
-> > -    for the firmware. The firmware will write back the start address of
-> > -    "etc/hardware_errors" blob to the fw_cfg file "etc/hardware_errors_addr".
-> > +(8) QEMU defines a third and write-only fw_cfg blob to store the location
-> > +    where the error block offsets, read ack registers and CPER records are
-> > +    stored.
-> > +
-> > +    Up to QEMU 9.2, the location was at "etc/hardware_errors_addr", and
-> > +    contains a GPA for the beginning of "etc/hardware_errors".
-> > +
-> > +    Newer versions place the location at "etc/acpi_table_hest_addr",
-> > +    pointing to the GPA of the HEST table.
-> > +
-> > +    Through that such GPA values, the firmware can send back the guest-side  
-> This confuses me.
->  Via those GPA values...? (maybe?)
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 471fd554b369..ff1211d2fe39 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -111,9 +111,8 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
+>      kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CORE, \
+>                             KVM_REG_RISCV_CORE_REG(name))
+>  
+> -#define RISCV_CSR_REG(env, name) \
+> -    kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CSR, \
+> -                           KVM_REG_RISCV_CSR_REG(name))
+> +#define RISCV_CSR_REG(env, idx) \
+> +    kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CSR, idx)
+>  
+>  #define RISCV_CONFIG_REG(env, name) \
+>      kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG, \
+> @@ -130,17 +129,20 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
+>      kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_VECTOR, \
+>                             KVM_REG_RISCV_VECTOR_CSR_REG(name))
+>  
+> -#define KVM_RISCV_GET_CSR(cs, env, csr, reg) \
+> +#define RISCV_GENERAL_CSR_REG(name) \
+> +    (KVM_REG_RISCV_CSR_GENERAL | KVM_REG_RISCV_CSR_REG(name))
+> +
+> +#define KVM_RISCV_GET_CSR(cs, env, idx, reg) \
+>      do { \
+> -        int _ret = kvm_get_one_reg(cs, RISCV_CSR_REG(env, csr), &reg); \
+> +        int _ret = kvm_get_one_reg(cs, RISCV_CSR_REG(env, idx), &reg); \
+>          if (_ret) { \
+>              return _ret; \
+>          } \
+>      } while (0)
+>  
+> -#define KVM_RISCV_SET_CSR(cs, env, csr, reg) \
+> +#define KVM_RISCV_SET_CSR(cs, env, idx, reg) \
+>      do { \
+> -        int _ret = kvm_set_one_reg(cs, RISCV_CSR_REG(env, csr), &reg); \
+> +        int _ret = kvm_set_one_reg(cs, RISCV_CSR_REG(env, idx), &reg); \
+>          if (_ret) { \
+>              return _ret; \
+>          } \
+> @@ -608,36 +610,50 @@ static int kvm_riscv_put_regs_core(CPUState *cs)
+>      return ret;
+>  }
+>  
+> -static int kvm_riscv_get_regs_csr(CPUState *cs)
+> +static int kvm_riscv_get_regs_general_csr(CPUState *cs)
+>  {
+>      CPURISCVState *env = &RISCV_CPU(cs)->env;
+>  
+> -    KVM_RISCV_GET_CSR(cs, env, sstatus, env->mstatus);
+> -    KVM_RISCV_GET_CSR(cs, env, sie, env->mie);
+> -    KVM_RISCV_GET_CSR(cs, env, stvec, env->stvec);
+> -    KVM_RISCV_GET_CSR(cs, env, sscratch, env->sscratch);
+> -    KVM_RISCV_GET_CSR(cs, env, sepc, env->sepc);
+> -    KVM_RISCV_GET_CSR(cs, env, scause, env->scause);
+> -    KVM_RISCV_GET_CSR(cs, env, stval, env->stval);
+> -    KVM_RISCV_GET_CSR(cs, env, sip, env->mip);
+> -    KVM_RISCV_GET_CSR(cs, env, satp, env->satp);
+> +    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sstatus), env->mstatus);
+> +    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sie), env->mie);
+> +    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(stvec), env->stvec);
+> +    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sscratch), env->sscratch);
+> +    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sepc), env->sepc);
+> +    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(scause), env->scause);
+> +    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(stval), env->stval);
+> +    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sip), env->mip);
+> +    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(satp), env->satp);
+>  
+>      return 0;
+>  }
+>  
+> -static int kvm_riscv_put_regs_csr(CPUState *cs)
+> +static int kvm_riscv_put_regs_general_csr(CPUState *cs)
+>  {
+>      CPURISCVState *env = &RISCV_CPU(cs)->env;
+>  
+> -    KVM_RISCV_SET_CSR(cs, env, sstatus, env->mstatus);
+> -    KVM_RISCV_SET_CSR(cs, env, sie, env->mie);
+> -    KVM_RISCV_SET_CSR(cs, env, stvec, env->stvec);
+> -    KVM_RISCV_SET_CSR(cs, env, sscratch, env->sscratch);
+> -    KVM_RISCV_SET_CSR(cs, env, sepc, env->sepc);
+> -    KVM_RISCV_SET_CSR(cs, env, scause, env->scause);
+> -    KVM_RISCV_SET_CSR(cs, env, stval, env->stval);
+> -    KVM_RISCV_SET_CSR(cs, env, sip, env->mip);
+> -    KVM_RISCV_SET_CSR(cs, env, satp, env->satp);
+> +    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sstatus), env->mstatus);
+> +    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sie), env->mie);
+> +    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(stvec), env->stvec);
+> +    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sscratch), env->sscratch);
+> +    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sepc), env->sepc);
+> +    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(scause), env->scause);
+> +    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(stval), env->stval);
+> +    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sip), env->mip);
+> +    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(satp), env->satp);
+> +
+> +    return 0;
+> +}
+> +
+> +static int kvm_riscv_get_regs_csr(CPUState *cs)
+> +{
+> +    kvm_riscv_get_regs_general_csr(cs);
 
-it's not GPA here, it should be fwcfg.
-Maybe something like this
- "Using above mentioned 'fwcfg' files,"
+KVM_RISCV_GET/SET_CSR() can return errors so the return value should be
+checked here and below (just kvm_arch_get/put_registers() checks the
+returns values of kvm_riscv_get/put_regs_csr()).
 
+Otherwise,
+
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+
+> +
+> +    return 0;
+> +}
+> +
+> +static int kvm_riscv_put_regs_csr(CPUState *cs)
+> +{
+> +    kvm_riscv_put_regs_general_csr(cs);
+>  
+>      return 0;
+>  }
+> -- 
+> 2.17.1
 > 
-> > +    allocation addresses to QEMU. They contain a 8-byte entry. QEMU generates
-> > +    a single WRITE_POINTER command for the firmware. The firmware will write
-> > +    back the start address of either "etc/hardware_errors" or HEST table at
-> > +    the corresponding fw_cfg file.
-> >  
-> >  (9) When QEMU gets a SIGBUS from the kernel, QEMU writes CPER into corresponding
-> >      "Error Status Data Block", guest memory, and then injects platform specific
-> > @@ -105,8 +114,5 @@ Design Details
-> >       kernel, on receiving notification, guest APEI driver could read the CPER error
-> >       and take appropriate action.
-> >  
-> > -(11) kvm_arch_on_sigbus_vcpu() uses source_id as index in "etc/hardware_errors" to
-> > -     find out "Error Status Data Block" entry corresponding to error source. So supported
-> > -     source_id values should be assigned here and not be changed afterwards to make sure
-> > -     that guest will write error into expected "Error Status Data Block" even if guest was
-> > -     migrated to a newer QEMU.
-> > +(11) kvm_arch_on_sigbus_vcpu() report RAS errors via a SEA notifications,
-> > +     when a SIGBUS event is triggered.  
-> 
-
 
