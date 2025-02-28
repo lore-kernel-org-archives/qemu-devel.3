@@ -4,198 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8373EC19776
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 08:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C010FC19776
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 08:41:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tnvq5-00025B-QA; Fri, 28 Feb 2025 03:35:22 -0500
+	id 1tnvvK-0001Xj-1n; Fri, 28 Feb 2025 03:40:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tnvpz-00023M-U2
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:35:16 -0500
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tnvpy-00038K-4Q
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:35:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740731714; x=1772267714;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=Srhfkt4M+QIjrqfGov02OSgHMp7iZMGIPr0MWgLDW/w=;
- b=TQ0bdd+eGVsEwNIQlfOogpN3XjGSQ+AxdGxbXUx7wg1/0G139I7hVy8N
- 1Ovaz/d3J4WkfwJ3myCJkJtL9gL+fb5vOuGtEdGFOBESoE+IXa67nPjE5
- il8PkSpLCodRkrhOnXcSsnHbqofYDtV8N8oC6vYSSlh1/H9d1zvJVCO0S
- kIcb306Yk08W2W2EPpcfsD1sBqwBoG7YyLKgvMz8SyPY5NvBY+VNB7xte
- QXf4uBwbCTF4TbjKkuOrGPXqpm9DtnJb31BaGBKuJO+vmEjz3WjRLecGw
- 9BBF/GCg+8m8cQqFfrWdjzUq6ogHVYAex7iALyLkharTGeVOjBbejfalC A==;
-X-CSE-ConnectionGUID: AK8lZzCSRkSCN9fQRfsbXQ==
-X-CSE-MsgGUID: cBDnQiEsQ4y7lzpI/+l7Ag==
-X-IronPort-AV: E=McAfee;i="6700,10204,11358"; a="52297050"
-X-IronPort-AV: E=Sophos;i="6.13,321,1732608000"; d="scan'208";a="52297050"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2025 00:35:12 -0800
-X-CSE-ConnectionGUID: 0aQ8FYjsQ+q0D3xsLUzGng==
-X-CSE-MsgGUID: O8daSztOTbOfC+gUXPVQvQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,321,1732608000"; d="scan'208";a="117780190"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2025 00:35:12 -0800
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Fri, 28 Feb 2025 00:35:11 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Fri, 28 Feb 2025 00:35:11 -0800
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.177)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Fri, 28 Feb 2025 00:35:10 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=f8MkXiC/e20lueQhSiJVS7G4f3YxAS/+/FRuAtw1MiBdKdkWB1fp8iTh61YUXIOgVU+kJWwiP/BEysGv7SxaR3pfOnRqsmNaYB0ILCyzj8MibctO9OoEO2BLO62BsE+WoNbzPzRFgZ4kyl4SJyQuRdGGtxbiETkTPp5cRFFxYk50sXm/eqk7B+mpkqswTVbZlNhZM7yArGHPNqwurALuuSF38kb2/S7AGa7HlXRN1BKly8qgwLPLuGKhMp6KQS2raKYPoRFgwaeEDpXl8t+bJXfL6HwqEth8nBrdPU+PnoailtEcPNaxX8LX649r+SeI1JWdw6SfQnQ+GZWoXJ/TOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Srhfkt4M+QIjrqfGov02OSgHMp7iZMGIPr0MWgLDW/w=;
- b=rrrfr9aEQCn+GvjzRHaJA9f8hk3rCeznBdYd5HAF5fakibqOfQ652nu3MwROoccBWwxrKIx6CD9QBgrHL3Rd2NbuWnyNlUZEphBHHA3+zaLGe+cEcoKQWv/xKqQb53JzfjPntuu3fzyV4BcVVG6T2bijfqnreOWmRPR7mEM211ZtLu3g25K6qL727eqh/NFWEIzec+RDRxTI1MRbewSchoBAZLTvTcZFuPU8fzp3I77kZgCwVQ17bDU8Nd9I2b9YCm+a03JOZyL6oDcGXMzeaCMYctEi2KWKTJrLHjQ7qCSFQd8D1uq+3wC2smX0ZPX7YTSSGPVrGCUdmHQlHrgrjg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by PH0PR11MB5062.namprd11.prod.outlook.com (2603:10b6:510:3e::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.22; Fri, 28 Feb
- 2025 08:34:54 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%6]) with mapi id 15.20.8489.021; Fri, 28 Feb 2025
- 08:34:54 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: RE: [PATCH rfcv2 10/20] intel_iommu: Optimize context entry cache
- utilization
-Thread-Topic: [PATCH rfcv2 10/20] intel_iommu: Optimize context entry cache
- utilization
-Thread-Index: AQHbgqgRrCVskaHBqUSses+ZflJWprNRiXKAgAlxMQA=
-Date: Fri, 28 Feb 2025 08:34:54 +0000
-Message-ID: <SJ0PR11MB67445127F26929645DFD145A92CC2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
- <20250219082228.3303163-11-zhenzhong.duan@intel.com>
- <35c93407-b8ab-4286-a254-c62d39222272@redhat.com>
-In-Reply-To: <35c93407-b8ab-4286-a254-c62d39222272@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|PH0PR11MB5062:EE_
-x-ms-office365-filtering-correlation-id: 4bed8935-cda9-479c-fe6f-08dd57d2c690
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|38070700018; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?fUkrK33FGdCc8GQ/ty8i4UCMzIS1kmGA497b7ueibL7ryvT0pdbydGcKwX/n?=
- =?us-ascii?Q?/MwEHoGxXFhGBoIiZS27uB+TFY9JDQDDBQk7PzCXrSVfIvHBKsb+7KnEZAU3?=
- =?us-ascii?Q?zOpAkzFrBWXCyGAhZUxubcJ57zC4Xs+UnoVzluBH8Vr/EJp4JZcD/w7EG5HS?=
- =?us-ascii?Q?YS+9qTWyN0PVs3Eq2jYbTzUoYL91Exni06ImUQTp85fhDkkh63TZW4ZHQerW?=
- =?us-ascii?Q?nkVx6gezlRSagBVPtyFltNWE3/qHJmnbrU6ZB+G22FSMnkBKKj6PGf6IPWF3?=
- =?us-ascii?Q?L8pU0QNPgerNhoQ+HOOTkjTP9EAks/JHSLK74r/eNIWo3sxE6a+5QGr/irhA?=
- =?us-ascii?Q?EcKkaPodrbs8bLHKx0Eqyz0KQA/VBPNjVNZoKZOnHgy/a8keOyr6/HklN79L?=
- =?us-ascii?Q?nMZWZPa6Ss/B2l3kxu7kzUorB2wvkAHothB1ZstF8qBSUIAv6GPnRSTEvQxh?=
- =?us-ascii?Q?IwWbqzI+Yyc82pKjMCXVUeZoucNr4YypJbNS/iqAABx7mGh1H0+Jk1gw7WY+?=
- =?us-ascii?Q?Zxx83sdax6VX2JNa9sjZ8XY25aqtSpozTJZOzkQtmKt4tay42mC3GGaGXc2r?=
- =?us-ascii?Q?ZfcR8h6ZqjpSndGIceyZ3Za4fUsedppmv1l/y8VppszCCTXzTyW6F/98hAfw?=
- =?us-ascii?Q?jVYcAL/ZNQPf066SNhkH7a1Wxf7E0kIsjeXir2He/R/rfj8a6VMRHcDsuvYt?=
- =?us-ascii?Q?qgp+yzHwCe/zuq7q9At2EOlOOg3ieh+EmqvT43EQ9uEuvIU4C4UPRc7aDQL6?=
- =?us-ascii?Q?RNaHcBljFph0gPDtbqv+pMPe3oEgsrWXz34a2kxYQ9G1fThGYzSXjrWDzhwz?=
- =?us-ascii?Q?jYFQcuc7TrrAviNl/8XWEuII5nE3At6ZtGEiDVWJvwLHFpV9Y4R60fprLWOD?=
- =?us-ascii?Q?y57rYrJkpgN619Su93N+86EFWX9dcZ3T+16Z1PBt31zewu2TO4/ZqQBqZ0Ua?=
- =?us-ascii?Q?0OScL0SnNLv1oTaI9lVjoEarnieuPLnLECloeQu7xDZHnR3LA2zUTXysHixx?=
- =?us-ascii?Q?Cz8Pi2L+Uu5TgODih5EXLZnzuauxJh5eu/b35hVkzlnm8RivOZiK/S4pbUwq?=
- =?us-ascii?Q?hsVyivnl25TQRxJqBKm5IMwJ5FPOZFzd6OUiDop/3TttwAIb9Q8VJ3vjiQFX?=
- =?us-ascii?Q?8k24A4KwDCC0OfogSERmtvA7szTmcdU7mX29njpHwXaeGw2+qAnLI5ClF3cp?=
- =?us-ascii?Q?HNbOFmATq5DWMTq5WHaQWAwBzR2flR91nreuhRAjbNzRtUFlXPSSgZYZrsyg?=
- =?us-ascii?Q?DYMhNPN0GM6HWTGwW8KKHWm+Aesx/CFL2fnGxatXs5dvt4K99gcWc3/BxrfI?=
- =?us-ascii?Q?vh6+Po6Dslt/AUvg2ROKWEXJPkpr+NV8HCzJdfTjv0ZX2SD4S/W3Gqm0fOa5?=
- =?us-ascii?Q?3zOhCL0z73w2pZUVc8p/Oy9aWT/T6u+85ThAyyNCYvXCY3il5/V5qv9Qt98H?=
- =?us-ascii?Q?C8LhAAkWi5EKb57ksTzRg2au/4LXw3eg?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ZfOxNCNR2N5uf1TAbR/tQn+GSwX6OBNkAEZ7oxtDrPIwq2R6lMn3Vz0rIhcz?=
- =?us-ascii?Q?Ao3HEluTiIJNPp3g30Q0+klqzPsyDT0xBm8JXYaAeu6nWAsWHm8nhxWUZFrc?=
- =?us-ascii?Q?XnnPHsWd1+PSpUb9oYNW547+mQcfRC6kHwGnYaZlDO17qizDK4s09L2MvuZG?=
- =?us-ascii?Q?NJsSJrIXx8ThK5em2ymQOw7MsZS1ix/5rH/OOrhr5HmBWeyQNNS/WAOTfyXT?=
- =?us-ascii?Q?CFXh/Jlt7skMgVAjSzfSTQw3udWhe7SKxIHuGot+NmcvKJku2jZC4RPCJU1s?=
- =?us-ascii?Q?FLuRdEfppW40WJTKS8k+RKNmwLRo/iqrju9M8Q8xllbHcc14DLkL4a7J1DgK?=
- =?us-ascii?Q?y0Q0slNqFd8WS5uq4I4gQK1mbgb1poRPyW4f5OcPqcCZdQjYbY/OScIpo4vJ?=
- =?us-ascii?Q?Ue1xzOqGjuULvDe7FCwz/Y+qEZRLXnE6Qz1f3jtrystzwEuXq7WTsSYmLOjB?=
- =?us-ascii?Q?D6ZHHBWF4AIjDpd7C5+ZR5mhTuMji7LQPZgwOIjUjBt5DGWkm5yK7TejMv1i?=
- =?us-ascii?Q?lINDvV4V5NQir8HL5xtq+tA3w51wPp2PgQld9cKkwXNveWmVOmkbeGGn9Apf?=
- =?us-ascii?Q?pKqfJ1kwHBI0yqv0Wg53pMaUEiXa+5HX6NXy6zD7hpGDZ2Y+bbOGRfgw1F5F?=
- =?us-ascii?Q?HHveSN5Jht4IcU6VV2nQ1giYz3dPSfK7gn7Rzl5cnhuDe5O6t3yvxYBdYuQJ?=
- =?us-ascii?Q?x1dHBJHJOIGlnIv4knTx7sjpv6OLixStQSTZxoal662SLca8BOR2HstLVjrY?=
- =?us-ascii?Q?TlKMBQ5zRZOp/dN2Mv7Q+vSKev3zDMxcnWFqCt0frK37Njiq76w2mm0IjeP0?=
- =?us-ascii?Q?PY+ya4/1jeF4HH5jcLVkJpD0J62KkKCSY0GhbzAFXi+kcbrbhxJlxJs/SZvh?=
- =?us-ascii?Q?cxMxbqyV3uwAvFM5MNawD6cJuAWqB9cthHngjzpi1XXbE6d8omxeChrYPSUE?=
- =?us-ascii?Q?7ZDAhuJAfe2mBx91Wg9Wftr5/DZDv2gHIatzWEzSDOlRIaN4S3lTHWoqEL5Z?=
- =?us-ascii?Q?IbhQRoURiWCfR+KXelqM9L0ThcTA9nFMy2/BDqZ1GeUdmEEeNI6rtxZq+LtH?=
- =?us-ascii?Q?ozrT/AoALHhhOrl5rRZmmeTg2K6yYwugB8QpOAfxDLS/lmkb9FJgdaU3x1xF?=
- =?us-ascii?Q?3rh2mGWKpxCiqGzuUMQQw++DIWpkMnvob9/wFIf5viEMcODX+Hu5kKm/t3Pl?=
- =?us-ascii?Q?Tti/yR5a8dZx1+JIAfBtl502L7E3jb8CiMTCuwZOFcaKgUkmgG0wMbeoeooM?=
- =?us-ascii?Q?xKl2lO10zFXgNirN2C9SUxFrY6pGseohxRZ+vG1/JYpkXJqi5b1zoqvBLIhe?=
- =?us-ascii?Q?YLH04wUZxNA+oe4hNrrF2SpzKeTQ4eJc72ha28CTbJ7DOVdOsGpEOTWz+QJ2?=
- =?us-ascii?Q?a3V0H7zirNGRTyxbRFGY9fkhbRW4RIQ4vVQdURsjvCn33QcAa+5GdqYadYCf?=
- =?us-ascii?Q?98nkQiYWsUgpS7ZUmXdnPgojf0yoAZFimY0uXu7640Yq7ITQNE4aHOL/RCsA?=
- =?us-ascii?Q?2Cwth5/xwhSVSuxfhd0G/YOZ3BTKHwufmAImdF2VVTWD6pU/EYu3lYV/lU5k?=
- =?us-ascii?Q?BjnRbUrx6I8DU7vTgT30kxH2h8WEqobPY2fki3SD?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <whendrik@google.com>)
+ id 1tnvvF-0001X8-45
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:40:41 -0500
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <whendrik@google.com>)
+ id 1tnvvC-0004Gt-SN
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 03:40:40 -0500
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-54843052b67so5034e87.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 00:40:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1740732033; x=1741336833; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dD28A57sVjiWC6X48OlhUkb/GIydYN9wgk75ukfUROU=;
+ b=QUYayVNx1XLAT/NxpSBnSMN8KbpfNM+7f5ISvyxPZGFmancgtAGrKd9AoWGwbLu+/+
+ 7ilBQLjhhnEsOxTdzHUIJ2A1opKu5R4xCfsbIrBeZjGNcRrr+s0JKrTPP/ebdqooNrRW
+ 1OW1yCRynE3yQ2eppJ93yc1sj1urWxtq0FiQ4VIhRzI0rHR3HdUbQcSoRMHTB9XBNHGk
+ EVyXB5VeFfi0DNOGvLbCmO8EMj4gl18G174qGuEStVRVbqBzhUJ11aRfq8kezZnEki9q
+ o3SpbeAhOQ62LVSDi4OAOX70oK1eRtPHZT8L4hBQktqkJHI1dtEPunRQk+WEL8snI2Ld
+ eM/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740732033; x=1741336833;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dD28A57sVjiWC6X48OlhUkb/GIydYN9wgk75ukfUROU=;
+ b=PDCmXN9ChDCI//qlfF6NTCra1nxxCx/R2xzHydnk65UrXt3MnOcHpq35mrYT3NXbVf
+ h4XqYw5zlRZKspZzhnNBmKeBT0cq3RDmgpxpXLPqP1d03c+n/vj2nmMyPnkZAxWJKirK
+ xTRSSxVFwUVoVbvdPIt3kb9tibSS/aYhGHSd+kJpWwAS1+ugNqgnSEiSifZ64oMmXsJm
+ a2Fk69CLibEN01/7xk1pbQxEKukHWvjOF+LDp17dqvZ+OIrzWmcr2CUTMnREXAZpYoWH
+ SoD2Gtp2erthVy5NHNgusYcdnKqrXknV+wJIxQ3zOUi8/fcoll4CxYXGubJ/Q9bk9fkp
+ znOg==
+X-Gm-Message-State: AOJu0YyibiDx43n1ZC8RhYZ209sKHqqbZy89nyMFLoH+AE0ZkkQOFK2M
+ XwFyP8yS0wLoyktZTDsA50RRCgzN/DZavNcSblXhsI6/z4SF1b7AuNvg0S81oIBd8BgAJ0jxwlO
+ yBSFQrSnaewAUm1dJkljfBkChgxc4siuC98qB
+X-Gm-Gg: ASbGncv/0YooFjuv5ByscjtBByZCITHIE4R2FS/E6ZuWXkUvJEXab+zp5c9eq5zILnm
+ QGs/7Zed67PZrpWNQ7y7o/G7WfztwepwQOEq2EOCvBXZinNRgc7eVS8HRvp9JZMqOqSfzX3Cq9g
+ t5tQC7ZdGhVW60nYmItVjaZoxEDe/VYhWCFTqfRg==
+X-Google-Smtp-Source: AGHT+IF5aWrQ5iua4NPryDgBXdqdZH+ZNEsPWPPRjgyZZLNMDwoPwegq66Juv1c++LkBpPidsNUXeg9DRpgbiCcwft0=
+X-Received: by 2002:a05:6512:3d22:b0:543:cf0c:ed14 with SMTP id
+ 2adb3069b0e04-5494f233497mr99906e87.5.1740732032430; Fri, 28 Feb 2025
+ 00:40:32 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4bed8935-cda9-479c-fe6f-08dd57d2c690
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Feb 2025 08:34:54.2566 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: W/bP6WFGsqmmbpeRJg7GUuNg389pKQK5cGfszfJtie24RVX8yYBu4c6C0jAWxqY1rru6s+aaLIoqlQsQd368rWjstlwZf7n7/bdhmBUjx8Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5062
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.11;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+References: <20241213172645.2751696-1-whendrik@google.com>
+ <20241213172645.2751696-2-whendrik@google.com>
+ <20250220154125.00007a08@huawei.com>
+In-Reply-To: <20250220154125.00007a08@huawei.com>
+From: =?UTF-8?Q?Hendrik_W=C3=BCthrich?= <whendrik@google.com>
+Date: Fri, 28 Feb 2025 09:40:20 +0100
+X-Gm-Features: AQ5f1Jqoa3pAbYj0GPVJnrnbNC4Kx0sJZoqBwOvA5_5Zo2o2zoq6RvRJ3BYLy6U
+Message-ID: <CAEX-0WuNQcH4-eNT9KRFOnb1Gubi8=ioaNfCZb0idQZwF_iYEg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/8] i386: Add Intel RDT device and State to config.
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, eduardo@habkost.net, richard.henderson@linaro.org, 
+ marcel.apfelbaum@gmail.com, mst@redhat.com, pbonzini@redhat.com, 
+ zhao1.liu@intel.com, xiaoyao.li@intel.com, peternewman@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=whendrik@google.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -211,32 +98,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
-
->-----Original Message-----
->From: Eric Auger <eric.auger@redhat.com>
->Subject: Re: [PATCH rfcv2 10/20] intel_iommu: Optimize context entry cache
->utilization
+On Thu, Feb 20, 2025 at 4:41=E2=80=AFPM Jonathan Cameron
+<Jonathan.Cameron@huawei.com> wrote:
 >
->Hi Zhenzhong,
+> On Fri, 13 Dec 2024 17:26:38 +0000
+> Hendrik Wuethrich <whendrik@google.com> wrote:
 >
->On 2/19/25 9:22 AM, Zhenzhong Duan wrote:
->> There are many call sites referencing context entry by calling
->> vtd_as_to_context_entry() which will traverse the DMAR table.
->didn't you mean vtd_dev_to_context_entry? Instead
+> > From: =E2=80=AAHendrik W=C3=BCthrich <whendrik@google.com>
+> >
+> > Change config to show RDT, add minimal code to the rdt.c module to make
+> > sure things still compile.
+> >
+> > Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
+> Hi,
+>
+> A few drive by comments.
+>
+> > ---
+> >  hw/i386/Kconfig       |  4 ++
+> >  hw/i386/meson.build   |  1 +
+> >  hw/i386/rdt.c         | 99 +++++++++++++++++++++++++++++++++++++++++++
+> >  include/hw/i386/rdt.h | 25 +++++++++++
+> >  target/i386/cpu.h     |  3 ++
+> >  5 files changed, 132 insertions(+)
+> >  create mode 100644 hw/i386/rdt.c
+> >  create mode 100644 include/hw/i386/rdt.h
+>
+> > diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
+> > new file mode 100644
+> > index 0000000000..b2203197e3
+> > --- /dev/null
+> > +++ b/hw/i386/rdt.c
+> > @@ -0,0 +1,99 @@
+> > +/*
+> > + * Intel Resource Director Technology (RDT).
+> > + *
+> > + * Copyright 2024 Google LLC
+> > + *
+> > + * This program is free software; you can redistribute it and/or modif=
+y it
+> > + * under the terms of the GNU General Public License as published by t=
+he
+> > + * Free Software Foundation; either version 2 of the License, or
+> > + * (at your option) any later version.
+> > + *
+> > + * This program is distributed in the hope that it will be useful, but=
+ WITHOUT
+> > + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY =
+or
+> > + * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public Licens=
+e
+> > + * for more details.
+> > + */
+> > +
+> > +#include "hw/i386/rdt.h"
+> > +#include "qemu/osdep.h" /* Needs to be included before isa.h */
+> > +#include "hw/isa/isa.h"
+> > +#include "hw/qdev-properties.h"
+> > +#include "qom/object.h"
+> > +
+> > +/* Max counts for allocation masks or CBMs. In other words, the size o=
+f
+> > + * respective MSRs.
+> > + * L3_MASK and L3_mask are architectural limitations. THRTL_COUNT is j=
+ust
+> > + * the space left until the next MSR.
+> > + * */
+>
+>
+> Should match multiline comment style in qemu style guide.
+>
+> > +
+> > +/*One instance of RDT-internal state to be shared by all cores*/
+> > +struct RDTState {
+> > +    ISADevice parent;
+> > +
+> > +    /*Max amount of RMIDs*/
+>
+> Spaces typically after * and before * I think are most common
+> syntax for comments in qEMU
+>
+> > +    uint32_t rmids;
+> > +
+> > +    /*Per core state*/
+> > +    RDTStatePerCore *rdtInstances;
+> > +    RDTAllocation *allocations;
+> > +
+> > +    /*RDT Allocation bitmask MSRs*/
+> > +    uint32_t msr_L3_ia32_mask_n[RDT_MAX_L3_MASK_COUNT];
+> > +    uint32_t msr_L2_ia32_mask_n[RDT_MAX_L2_MASK_COUNT];
+> > +    uint32_t ia32_L2_qos_ext_bw_thrtl_n[RDT_MAX_MBA_THRTL_COUNT];
+> > +};
+> > +
+> > +struct RDTStateClass {
+> > +};
+> > +
+> > +OBJECT_DEFINE_TYPE(RDTState, rdt, RDT, ISA_DEVICE);
+> > +
+> > +static Property rdt_properties[] =3D {
+> > +    DEFINE_PROP_UINT32(RDT_NUM_RMID_PROP, RDTState, rmids, 256),
+> > +    DEFINE_PROP_END_OF_LIST(),
+>
+> You'll see this in a rebase but this terminator is no longer needed
+> (or defined I think)
+> > +};
+> > +
+> > +static void rdt_init(Object *obj)
+> > +{
+> > +}
+> > +
+> > +static void rdt_finalize(Object *obj)
+> > +{
+> > +}
+>
+> Why introduce this pair as empty and as far as I can see not called?
+> init is called in patch 2 so bring it in there.  I'm struggling to
+> spot finalize being called.
 
-Good catch, will fix.
-
->>
->> In most cases we can use cached context entry in vtd_as->context_cache_e=
-ntry
->> except it's stale. Currently only global and domain context invalidation
->> stales it.
->s/states/stale
-
-Will fix.
-
-Thanks
-Zhenzhong
-
+Because the init and finalize functions are needed by the macros
+representing the RDT device, and the patch does not compile
+if they are removed.
+>
+>
+> > +
+> > +static void rdt_class_init(ObjectClass *klass, void *data)
+> > +{
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +
+> > +    dc->hotpluggable =3D false;
+> > +    dc->desc =3D "RDT";
+> > +    dc->user_creatable =3D true;
+> > +
+> > +    device_class_set_props(dc, rdt_properties);
+> > +}
+>
+> >      int32_t node_id; /* NUMA node this CPU belongs to */
+>
 
