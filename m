@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52872C197BF
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 00:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD3BC282C1
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 01:20:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tno5j-0007xu-4f; Thu, 27 Feb 2025 19:18:59 -0500
+	id 1tnp2X-0006Vb-EV; Thu, 27 Feb 2025 20:19:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tno5g-0007wf-By
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 19:18:56 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tnp2P-0006Sd-8r; Thu, 27 Feb 2025 20:19:38 -0500
+Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tno5d-0003sw-Ql
- for qemu-devel@nongnu.org; Thu, 27 Feb 2025 19:18:55 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2211cd4463cso30330535ad.2
- for <qemu-devel@nongnu.org>; Thu, 27 Feb 2025 16:18:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tnp2N-0002oR-8j; Thu, 27 Feb 2025 20:19:37 -0500
+Received: by mail-vk1-xa2c.google.com with SMTP id
+ 71dfb90a1353d-521c478d433so743887e0c.0; 
+ Thu, 27 Feb 2025 17:19:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740701931; x=1741306731; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+IgIJgHuUK+F2p+uThMoUAk2YCMJpN74jZllake+BnI=;
- b=sxkIHsu6uON7qaZ8iD2mCgfRG3g2Fqzkf1ilEaOoqowatw+N8Xq4V7V93/6XizDu6j
- yWrYcYTJJ9CgtT5/WPwr0EMGUkCuj8QqQZhobxZASqYAXlFQGY4fc2Xm7llJqAlWA501
- w+frOQua2tRM8GSffgCZ9CXW6L+WrMLrBB0suwKYroJH+U4GrFDEVeTt5ZAYAWyibcB3
- 2jl/hMAk7FmSboBiy+p6WHsTquG8dYf/O3IfsJX36sZ2GwmmYxB+2SOLPLSt1bCA/cPL
- vD95yzEl/BNl3YocPZ8sxPg2zLF+T0D85olqZUzJoASoAPqXqkvkz1dAE5VKblORLR//
- 2xHA==
+ d=gmail.com; s=20230601; t=1740705573; x=1741310373; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1jlK16RNducbvQEuAHjldApuBirP4j8l8j9PAI4j0Xg=;
+ b=ZZkd3DghvIY0KBCmL8UBOkZmAIlpgithjc71WhLhgEhYyfQTPWseb18fMGbGd1gix/
+ dZQ/rDWRg3BYHxozF8rjxWBi/XuUue55X7/raw9dYSIt87iax6UV2QS5YLwyJ3sH0C1f
+ 4d0eIHr7skLYW39wh0cvTEfICgo3uEPUiot3fFdFkhnUCK5daJTM41Z2Cs4mg9Kf1W92
+ 56kORCwA3Ji0DQKwmkyzkHaMrdOzhkBEB6h27wfzmD8P/IOQ+50OIyD0Y7op5LU6OXI3
+ 0yfa8BvG8ZlLrKTuZ58IlLcI/S2rD9q3d63GjoFNCsrxCI4Y6l4DPaQRtFZTFvmT3Vi6
+ hUmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740701931; x=1741306731;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+IgIJgHuUK+F2p+uThMoUAk2YCMJpN74jZllake+BnI=;
- b=S9YGJ0/O3jIedYJX7GfgnmDUwP7lvgcBigiex+LSeY4Bts24fGf0UYRp7aGTzVZp+X
- V6GvMk7nsmBJTbMTfkGgHqz9SbOZvkruf4AYJVoUoh23BmHLlVax5U/787JI3KUGy8CQ
- H4Q0dGprLHPVM4fIJLmYWyjoitjLgUgALkFgWDdsyKCKQLUD0yQMC/0bMRQyGYLkb65M
- cPqEnsoXQKLHX+DIHiy/462GwM7vnjxr1bqjXyF7fNFpOAPm4qq0hiK7Op9E36LUVknV
- Yh911VJI/4JzQy9Wc2KpKaT+z+nNVvrv2uFow3XrB2pD5ks2sZMyV3baOWspHCVOstxR
- w1hQ==
-X-Gm-Message-State: AOJu0YzndnJ6OaxTG7p3G6d9iTV1sBZitwWlqkyYuReZj+RAOkQ4VQDe
- 7QZ60+51eMO71unU0lOXUQLIL+ZqaLjOyKrWMKBA+O6sIgAwlx8OZAP3btx39AU=
-X-Gm-Gg: ASbGncsvLMqPHThedoM3/Uf85pSFoE3ElozGcmwWeYtcqwEqEXb9CU5dNPufFhPJoLb
- 6ccYXsgjcQU86Y1Ve7wNYJQmiXWbkz1X/hg0FXcuTkZBmzLjgs4fLYLFr7l7QRWeih1tc5M27Tc
- 29Hg80E6pZFpJtMP5XBmOw8zZe5+DgA3keXX7gUjDguV1D4MKYd6XdPQa1wgIICTpURS13Atjmn
- 7tbFK0VSacDPIC3kMUap9VR6eOpqSs3dxzpeLKJhe2jEoSpej8LN+YxzCcZNT1A9XYmuxmknTbx
- 1avgVH0zwLtRzyzm1U71yFg1XFF1ht10WjTL/a6Glnl4U/JNCKWmTNydW0kR5bV3kSyOWNg6v+1
- 3/LEz3b4=
-X-Google-Smtp-Source: AGHT+IE+oCx4fMmNrdpiOjUd7czQ9aaPNmrbpkqqbBB4Q0cRX6kfHXiUeoSPEAP6ZSv6/JV1clFjmw==
-X-Received: by 2002:a05:6a00:1914:b0:730:8f67:2dbb with SMTP id
- d2e1a72fcca58-734ac3832fcmr2292315b3a.13.1740701931315; 
- Thu, 27 Feb 2025 16:18:51 -0800 (PST)
-Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
- [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-734a0024d4bsm2452535b3a.104.2025.02.27.16.18.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Feb 2025 16:18:50 -0800 (PST)
-Message-ID: <05633317-0484-4595-94e5-c7fddbb2d283@linaro.org>
-Date: Thu, 27 Feb 2025 16:18:47 -0800
+ d=1e100.net; s=20230601; t=1740705573; x=1741310373;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1jlK16RNducbvQEuAHjldApuBirP4j8l8j9PAI4j0Xg=;
+ b=eDVIQHOvRUBlsvIHnH2NjV9PCtmpwLzhjif1AMtU6iPDPu6+x2dCQsjmpQPwa46rAN
+ lSg3c/Gh2Sqi7WFk30cnZcEwvVLTBcp1b+fBvCtsT/EvzlhMn4RPEouPLzIN2EEt0Oa4
+ ofIHBPnVYUxT+df31UCbhoizcd5el80tPvu16tyHPd8AEpVQS/DoNnFZ+2SpmlwPYxlL
+ DV55UPHGx2qiwclPNQl+kaQ60h7sZf8FnteP4TowosNBRcQyyM58gvlqNRnlbkCKkrhe
+ 0MLaZFBpf2rQNyY1uWkjamLKWXE8BTdR36RnP5It2cHaxrnw1TaKiiM1BlXHTWDOv3JJ
+ ewmg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXNxLHBkh6VGDBk7mPqJpIMqja1NMybOD462K+ZpbFH5/xWm7LNqbPL+mofLR+vXuoIMIqI89rffinZ@nongnu.org
+X-Gm-Message-State: AOJu0YyHmbNX31XFBTDGxm5G/WOUG356b62zXOH3dHQTF4giWGhOyDC5
+ 47CYv6V/6mANcbvCIL/Rh6Uf2W0QMsPTqIBXA4kcARrw4MQf7Jh279IHjP8HN5mbajo0mocg77v
+ +Aupu2k1KbRqwBVhOzrqzjZw3puQ=
+X-Gm-Gg: ASbGncurmvWUlSvte8SlTU8EhGgMgCPYk7d9TEw3sF6kDGfPBWXiXcXLkYi5wQ32Jzx
+ OrDJwOyuWG9E1K1i6360Ojjukk5H5WGuxJBD9LeVxCSiox2LsssKQczT/IKrCLz8Dm6VIXxlTM8
+ wsqs0YIrCvlmgvCxv9OD43cpD86vVMZp8Atmvz
+X-Google-Smtp-Source: AGHT+IHQDB3esgrs6vxN97UuZohLEKgDOa0nZ/JD8cesdOyf1xwBTZPy5QUdovA4PEmuVdAG8wGbYX3vuXQawdb8kbU=
+X-Received: by 2002:a05:6102:3910:b0:4bb:d062:43e with SMTP id
+ ada2fe7eead31-4c044528389mr1619854137.0.1740705573090; Thu, 27 Feb 2025
+ 17:19:33 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/arm: Correct LDRD atomicity and fault behaviour
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20250227142746.1698904-1-peter.maydell@linaro.org>
- <20250227142746.1698904-2-peter.maydell@linaro.org>
- <69ae459d-90ff-441d-a039-ae3ee15c919e@linaro.org>
- <CAFEAcA8=P0hJz45RFEBQX7QySR6+RiDqFA8BS8HF_k-m9BdZDw@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAFEAcA8=P0hJz45RFEBQX7QySR6+RiDqFA8BS8HF_k-m9BdZDw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250122083617.3940240-1-ethan84@andestech.com>
+ <20250122083617.3940240-3-ethan84@andestech.com>
+In-Reply-To: <20250122083617.3940240-3-ethan84@andestech.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 28 Feb 2025 11:19:06 +1000
+X-Gm-Features: AQ5f1Jo8etBIkHbZrP0bZUwKIvsNqfSkOSFZKCkFWZcM0gkB0ezDBGA4ULr38Y0
+Message-ID: <CAKmqyKPQWL=o3FohvdK=re5rwmrN=znZna2=QCB3z9rk_uZWVw@mail.gmail.com>
+Subject: Re: [PATCH v10 2/8] memory: Introduce memory region fetch operation
+To: Ethan Chen <ethan84@andestech.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,68 +98,279 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/25 09:58, Peter Maydell wrote:
-> On Thu, 27 Feb 2025 at 17:41, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> On 2/27/25 06:27, Peter Maydell wrote:
->>> +static void do_ldrd_load(DisasContext *s, TCGv_i32 addr, int rt, int rt2)
->>> +{
->>> +    /*
->>> +     * LDRD is required to be an atomic 64-bit access if the
->>> +     * address is 8-aligned, two atomic 32-bit accesses if
->>> +     * it's only 4-aligned, and to give an alignemnt fault
->>> +     * if it's not 4-aligned.
->>> +     * Rt is always the word from the lower address, and Rt2 the
->>> +     * data from the higher address, regardless of endianness.
->>> +     * So (like gen_load_exclusive) we avoid gen_aa32_ld_i64()
->>> +     * so we don't get its SCTLR_B check, and instead do a 64-bit access
->>> +     * using MO_BE if appropriate and then split the two halves.
->>> +     *
->>> +     * This also gives us the correct behaviour of not updating
->>> +     * rt if the load of rt2 faults; this is required for cases
->>> +     * like "ldrd r2, r3, [r2]" where rt is also the base register.
->>> +     */
->>> +    int mem_idx = get_mem_index(s);
->>> +    MemOp opc = MO_64 | MO_ALIGN_4 | MO_ATOM_SUBALIGN | s->be_data;
->>
->> The 64-bit atomicity begins with armv7 + LPAE, and not present for any m-profile.
->> Worth checking ARM_FEATURE_LPAE, or at least adding to the comment?
->>
->> Getting 2 x 4-byte atomicity, but not require 8-byte atomicity, would use
->> MO_ATOM_IFALIGN_PAIR.
-> 
-> Definitely worth a comment at minimum. Do we generate better
-> code for MO_ATOM_IFALIGN_PAIR ? (If not, then providing higher
-> atomicity than the architecture mandates seems harmless.)
+On Wed, Jan 22, 2025 at 6:39=E2=80=AFPM Ethan Chen via <qemu-devel@nongnu.o=
+rg> wrote:
+>
+> Allow memory regions to have different behaviors for read and fetch
+> operations.
+>
+> For example, the RISC-V IOPMP could raise an interrupt when the CPU
+> tries to fetch from a non-executable region.
+>
+> If the fetch operation for a memory region is not implemented, the read
+> operation will still be used for fetch operations.
+>
+> Signed-off-by: Ethan Chen <ethan84@andestech.com>
 
-We could, but currently do not, generate better code for IFALIGN_PAIR for MO_64. 
-Currently the only place we take special care is for MO_128.
+This looks ok to me, but I would like someone who knows this better to
+review it as well
 
-> For the comment in memop.h that currently reads
->       * MO_ATOM_SUBALIGN: the operation is single-copy atomic by parts
->       *    by the alignment.  E.g. if the address is 0 mod 4, then each
->       *    4-byte subobject is single-copy atomic.
->       *    This is the atomicity e.g. of IBM Power.
-> 
-> maybe we could expand the e.g:
-> 
->    E.g if an 8-byte value is accessed at an address which is 0 mod 8,
->    then the whole 8-byte access is single-copy atomic; otherwise,
->    if it is accessed at 0 mod 4 then each 4-byte subobject is
->    single-copy atomic; otherwise if it is accessed at 0 mod 2
->    then the four 2-byte subobjects are single-copy atomic.
-> 
-> ?
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Yes, that's correct.
+Alistair
 
-> I wasn't sure when reading what we currently have whether
-> it provided the 8-byte-aligned guarantee, rather than merely
-> the 4-byte-aligned one.
-
-I was trying to highlight the difference between SUBALIGN and IFALIGN, and perhaps didn't 
-do adequate job of it.
-
-r~
+> ---
+>  accel/tcg/cputlb.c    |   9 +++-
+>  include/exec/memory.h |  27 +++++++++++
+>  system/memory.c       | 104 ++++++++++++++++++++++++++++++++++++++++++
+>  system/trace-events   |   2 +
+>  4 files changed, 140 insertions(+), 2 deletions(-)
+>
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index b4ccf0cdcb..71c16a1ac1 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -1947,8 +1947,13 @@ static uint64_t int_ld_mmio_beN(CPUState *cpu, CPU=
+TLBEntryFull *full,
+>          this_size =3D 1 << this_mop;
+>          this_mop |=3D MO_BE;
+>
+> -        r =3D memory_region_dispatch_read(mr, mr_offset, &val,
+> -                                        this_mop, full->attrs);
+> +        if (type =3D=3D MMU_INST_FETCH) {
+> +            r =3D memory_region_dispatch_fetch(mr, mr_offset, &val,
+> +                                             this_mop, full->attrs);
+> +        } else {
+> +            r =3D memory_region_dispatch_read(mr, mr_offset, &val,
+> +                                            this_mop, full->attrs);
+> +        }
+>          if (unlikely(r !=3D MEMTX_OK)) {
+>              io_failed(cpu, full, addr, this_size, type, mmu_idx, r, ra);
+>          }
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index 3ee1901b52..6166d697d9 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -273,6 +273,11 @@ struct MemoryRegionOps {
+>                    hwaddr addr,
+>                    uint64_t data,
+>                    unsigned size);
+> +    /* Fetch from the memory region. @addr is relative to @mr; @size is
+> +     * in bytes. */
+> +    uint64_t (*fetch)(void *opaque,
+> +                      hwaddr addr,
+> +                      unsigned size);
+>
+>      MemTxResult (*read_with_attrs)(void *opaque,
+>                                     hwaddr addr,
+> @@ -284,6 +289,11 @@ struct MemoryRegionOps {
+>                                      uint64_t data,
+>                                      unsigned size,
+>                                      MemTxAttrs attrs);
+> +    MemTxResult (*fetch_with_attrs)(void *opaque,
+> +                                    hwaddr addr,
+> +                                    uint64_t *data,
+> +                                    unsigned size,
+> +                                    MemTxAttrs attrs);
+>
+>      enum device_endian endianness;
+>      /* Guest-visible constraints: */
+> @@ -2604,6 +2614,23 @@ MemTxResult memory_region_dispatch_write(MemoryReg=
+ion *mr,
+>                                           MemOp op,
+>                                           MemTxAttrs attrs);
+>
+> +
+> +/**
+> + * memory_region_dispatch_fetch: perform a fetch directly to the specifi=
+ed
+> + * MemoryRegion.
+> + *
+> + * @mr: #MemoryRegion to access
+> + * @addr: address within that region
+> + * @pval: pointer to uint64_t which the data is written to
+> + * @op: size, sign, and endianness of the memory operation
+> + * @attrs: memory transaction attributes to use for the access
+> + */
+> +MemTxResult memory_region_dispatch_fetch(MemoryRegion *mr,
+> +                                         hwaddr addr,
+> +                                         uint64_t *pval,
+> +                                         MemOp op,
+> +                                         MemTxAttrs attrs);
+> +
+>  /**
+>   * address_space_init: initializes an address space
+>   *
+> diff --git a/system/memory.c b/system/memory.c
+> index b17b5538ff..7f26f681f9 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -477,6 +477,51 @@ static MemTxResult memory_region_read_with_attrs_acc=
+essor(MemoryRegion *mr,
+>      return r;
+>  }
+>
+> +static MemTxResult memory_region_fetch_accessor(MemoryRegion *mr,
+> +                                                hwaddr addr,
+> +                                                uint64_t *value,
+> +                                                unsigned size,
+> +                                                signed shift,
+> +                                                uint64_t mask,
+> +                                                MemTxAttrs attrs)
+> +{
+> +    uint64_t tmp;
+> +
+> +    tmp =3D mr->ops->fetch(mr->opaque, addr, size);
+> +    if (mr->subpage) {
+> +        trace_memory_region_subpage_fetch(get_cpu_index(), mr, addr, tmp=
+, size);
+> +    } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_FE=
+TCH)) {
+> +        hwaddr abs_addr =3D memory_region_to_absolute_addr(mr, addr);
+> +        trace_memory_region_ops_fetch(get_cpu_index(), mr, abs_addr, tmp=
+, size,
+> +                                     memory_region_name(mr));
+> +    }
+> +    memory_region_shift_read_access(value, shift, mask, tmp);
+> +    return MEMTX_OK;
+> +}
+> +
+> +static MemTxResult memory_region_fetch_with_attrs_accessor(MemoryRegion =
+*mr,
+> +                                                          hwaddr addr,
+> +                                                          uint64_t *valu=
+e,
+> +                                                          unsigned size,
+> +                                                          signed shift,
+> +                                                          uint64_t mask,
+> +                                                          MemTxAttrs att=
+rs)
+> +{
+> +    uint64_t tmp =3D 0;
+> +    MemTxResult r;
+> +
+> +    r =3D mr->ops->fetch_with_attrs(mr->opaque, addr, &tmp, size, attrs)=
+;
+> +    if (mr->subpage) {
+> +        trace_memory_region_subpage_fetch(get_cpu_index(), mr, addr, tmp=
+, size);
+> +    } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_FE=
+TCH)) {
+> +        hwaddr abs_addr =3D memory_region_to_absolute_addr(mr, addr);
+> +        trace_memory_region_ops_fetch(get_cpu_index(), mr, abs_addr, tmp=
+, size,
+> +                                      memory_region_name(mr));
+> +    }
+> +    memory_region_shift_read_access(value, shift, mask, tmp);
+> +    return r;
+> +}
+> +
+>  static MemTxResult memory_region_write_accessor(MemoryRegion *mr,
+>                                                  hwaddr addr,
+>                                                  uint64_t *value,
+> @@ -1493,6 +1538,65 @@ MemTxResult memory_region_dispatch_read(MemoryRegi=
+on *mr,
+>      return r;
+>  }
+>
+> +static MemTxResult memory_region_dispatch_fetch1(MemoryRegion *mr,
+> +                                                hwaddr addr,
+> +                                                uint64_t *pval,
+> +                                                unsigned size,
+> +                                                MemTxAttrs attrs)
+> +{
+> +    *pval =3D 0;
+> +
+> +    if (mr->ops->fetch) {
+> +        return access_with_adjusted_size(addr, pval, size,
+> +                                         mr->ops->impl.min_access_size,
+> +                                         mr->ops->impl.max_access_size,
+> +                                         memory_region_fetch_accessor,
+> +                                         mr, attrs);
+> +    } else if (mr->ops->fetch_with_attrs) {
+> +        return access_with_adjusted_size(addr, pval, size,
+> +            mr->ops->impl.min_access_size,
+> +            mr->ops->impl.max_access_size,
+> +            memory_region_fetch_with_attrs_accessor,
+> +            mr, attrs);
+> +    } else if (mr->ops->read) {
+> +        return access_with_adjusted_size(addr, pval, size,
+> +                                         mr->ops->impl.min_access_size,
+> +                                         mr->ops->impl.max_access_size,
+> +                                         memory_region_read_accessor,
+> +                                         mr, attrs);
+> +    } else {
+> +        return access_with_adjusted_size(addr, pval, size,
+> +                                         mr->ops->impl.min_access_size,
+> +                                         mr->ops->impl.max_access_size,
+> +                                         memory_region_read_with_attrs_a=
+ccessor,
+> +                                         mr, attrs);
+> +    }
+> +}
+> +
+> +MemTxResult memory_region_dispatch_fetch(MemoryRegion *mr,
+> +                                        hwaddr addr,
+> +                                        uint64_t *pval,
+> +                                        MemOp op,
+> +                                        MemTxAttrs attrs)
+> +{
+> +    unsigned size =3D memop_size(op);
+> +    MemTxResult r;
+> +
+> +    if (mr->alias) {
+> +        return memory_region_dispatch_fetch(mr->alias,
+> +                                           mr->alias_offset + addr,
+> +                                           pval, op, attrs);
+> +    }
+> +    if (!memory_region_access_valid(mr, addr, size, false, attrs)) {
+> +        *pval =3D unassigned_mem_read(mr, addr, size);
+> +        return MEMTX_DECODE_ERROR;
+> +    }
+> +
+> +    r =3D memory_region_dispatch_fetch1(mr, addr, pval, size, attrs);
+> +    adjust_endianness(mr, pval, op);
+> +    return r;
+> +}
+> +
+>  /* Return true if an eventfd was signalled */
+>  static bool memory_region_dispatch_write_eventfds(MemoryRegion *mr,
+>                                                      hwaddr addr,
+> diff --git a/system/trace-events b/system/trace-events
+> index 5bbc3fbffa..4e78bb515b 100644
+> --- a/system/trace-events
+> +++ b/system/trace-events
+> @@ -18,8 +18,10 @@ cpu_out(unsigned int addr, char size, unsigned int val=
+) "addr 0x%x(%c) value %u"
+>  # memory.c
+>  memory_region_ops_read(int cpu_index, void *mr, uint64_t addr, uint64_t =
+value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" valu=
+e 0x%"PRIx64" size %u name '%s'"
+>  memory_region_ops_write(int cpu_index, void *mr, uint64_t addr, uint64_t=
+ value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" val=
+ue 0x%"PRIx64" size %u name '%s'"
+> +memory_region_ops_fetch(int cpu_index, void *mr, uint64_t addr, uint64_t=
+ value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" val=
+ue 0x%"PRIx64" size %u name '%s'"
+>  memory_region_subpage_read(int cpu_index, void *mr, uint64_t offset, uin=
+t64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx=
+64" size %u"
+>  memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, ui=
+nt64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRI=
+x64" size %u"
+> +memory_region_subpage_fetch(int cpu_index, void *mr, uint64_t offset, ui=
+nt64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRI=
+x64" size %u"
+>  memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, ui=
+nt64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx6=
+4" size %u"
+>  memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, u=
+int64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx=
+64" size %u"
+>  memory_region_sync_dirty(const char *mr, const char *listener, int globa=
+l) "mr '%s' listener '%s' synced (global=3D%d)"
+> --
+> 2.34.1
+>
+>
 
