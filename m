@@ -4,84 +4,203 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21BC2C282C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 18:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23381C282C6
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 18:21:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to4wY-0002zL-9A; Fri, 28 Feb 2025 13:18:38 -0500
+	id 1to4yb-0005d2-IL; Fri, 28 Feb 2025 13:20:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <venture@google.com>)
- id 1to4wO-0002mI-8k
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 13:18:29 -0500
-Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <venture@google.com>)
- id 1to4wJ-0004Bq-C4
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 13:18:26 -0500
-Received: by mail-vk1-xa36.google.com with SMTP id
- 71dfb90a1353d-51eb1818d4fso2284850e0c.1
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 10:18:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1to4yZ-0005bN-NU
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 13:20:43 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1to4yW-0004e8-Tc
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 13:20:43 -0500
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51SEGaEV023496;
+ Fri, 28 Feb 2025 18:20:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=YkfqCLCy23oVnrxxN7pTVSWmJ3uNsRui+echOMOcMPU=; b=
+ fWRAnSVpc/Kyin2or9FNVFVaUgZGNuRfR555DxTpFGO0dL0nwxFyBv350loeDky7
+ Ttb92uO5Bn50T/uDboLYEDu8QOaPqE0zY7TwXzSWTIWjZ6N8jF5+gkVrqCWk9JMx
+ ze3wtwEHXd0Cl9OE8OnCYCr6Dd1uggdpw/CspmtPufuWgBHdE+6hfodieM7wOvRl
+ b94kpmDyI1fwYh9xiAkC36YtzQ5+estQogS7fJoiu57xXZxiGJPmMHPtydXm3oHt
+ G92PzfdH9gOqjXg8lv494Qbszzq7m0HxWMHqMmFcqJqujWFBc07lLQhcZ6Op0elQ
+ iB1a9gQgpxrkOsdGKYMUCQ==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 451psee4qq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 28 Feb 2025 18:20:37 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 51SHQxCC007532; Fri, 28 Feb 2025 18:20:36 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10lp2043.outbound.protection.outlook.com [104.47.58.43])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 44y51m1xja-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 28 Feb 2025 18:20:36 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uADpL//Le+hHmlvjQieKtrmgVR2qK6TRvaI6weUkHWsuu/idE0ZbrxQOp9Lmko0lY/0IvpHMVTl+xpE20h1mwoXDFZTOU8YLtp/bzuYDrNaYZI00znqF3nX/sx+BWs6AhM9nNuhQFTUth0e1ITg5H8oJR/aylOO7jUmT63d+3/WTnW5CNJSM3X5mTZPxDVnhlIQYsFq9couolKS8888k+0UunxbbRem912IXQBY1Z1+GK9+VzCkJOPbznCJ1z7tRN50wduw4pDsa0aFGAl82DqHWM61O6s1wcapea1suvYdF72oF1c3vqEWqJf4vPPlIFhco4FnFs7FgtTps7BppoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YkfqCLCy23oVnrxxN7pTVSWmJ3uNsRui+echOMOcMPU=;
+ b=J8+KfWSXyiPwc73uMoWXoAvRdPlGjDA4ZCk0oinkssIzjmEzyZ/E1iin2TnqO0xlgU9gPes2NiKoYWFKkjWuCj0/S2h01p710X0XfoQgUjRDOyWVRteZcY7SRUcl+f8Se5OBxU52LpDdXzMZw51EzamcboaEd51x8GQ1eU6toL6FfOy7HxFfeiTQWQdm3HkKCUCWybVmHUt0YuVITn/kSsZBj7qb4OZqeQHcMgOY1DIfMxi9T++ntZPOjgKnrPhjW1HQj4ZFOgHNbELQLhpztL8BPKdLzP28SG+wFJ1ujeGuqt2CQvpuPUmhJy0/mEtVE7ruZMEGgoymRVbyTyojfw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1740766698; x=1741371498; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=srTJO2lNzFZqSDvzVH7guSxSjqkeUYfInuYUGuu8/Qs=;
- b=sPHqYl71sqmTOShFXtw7cSqCyHFxWK7J9oe4Ss5EVSa/5u9JqEZy86zIh0OX7jfmsM
- 0jKQRiu55X3Kl5VxtSgZp3uuXkVcITPNLmOiJqSFtxHgDCa214wLnWbP0S2QzlrbNnqe
- exGGVLYn4EpJx2qDV3tzzL2SvVi3pVymbf+UXumD2Sd4sKJi76fgTBH0DpoaxNFcY+lJ
- zFcSJ3FAj9UI9Ao1MLSxhWYCJEGj/2AQhkp3bhPH4pvO5HOJtqkaTsWNqwiuv3WxdlC/
- OqWKalmfooqG58mX+DTe+w2O5ErcW4JSt8z3OvP2vs3ZA+dTX0nS9d2cvqhKqnzdICbI
- OHFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740766698; x=1741371498;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=srTJO2lNzFZqSDvzVH7guSxSjqkeUYfInuYUGuu8/Qs=;
- b=wTcXxybedZQocbOOGvjZM3pGr8GIbzI4A1XCsS70FA1UCBuNlCHpXTD5HVZ2pgszpI
- e68uQVVHcd5ky49+2bVLbBzRLTNI6n+Ge/hjk0PGhS/uuhhNo4ErgZuQPNxvl3TYwU19
- ak+9c7VK9n0gwzY99xnSNY27hpju+hr+eg1abm88UOxh4Z3hvRmHdTH1izR8UOF88zX+
- tz8czavL8fia6amaTHZMrid2JqXZxNgoeNORLqm3KFunWt2JEpHbDO4QawXkRieVPIq5
- jAbCZu9jcDxN23NfJfI6Ij5vk8OqSfGhKatqCp9UKYTkxhoebUhosrsxX4eYzc+Dmk6G
- DmPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOOgtNJDJuZoL3DngxdLXIm3LzWE0sXH5mI14cD6OHY5JZjxW9rcef3SYfc+FLYgYxXa63/E3ZHIYB@nongnu.org
-X-Gm-Message-State: AOJu0YzpdY+caHtZyqFqUpe8wi/XuobMwCu7JmGbxpwABdklJuzV1VDy
- cFILavCWmIepn4ujD27T+zKczutiPHoAsO5NX3GZxUg8oJUDwdrugBkM36cqKtXMbM8w7iAbpc4
- aNCUYma0f/fYdgDmjxIHRsr+y3eA95heQf7lV
-X-Gm-Gg: ASbGncsVtl4TM+I57D/rLFyj1Qs0e97/PuwnVX8vxYjPKXawBtDa7jwdFrZMadmGS9A
- tIZdXoFcCDWOYdzq8Re7Sp8GIBFu6vO5hN7S0RE2NnDxkHnZne8R9U4MhshD4IJC3ryv/wCsc+I
- GvgUepncKMYLzCYmVMUB0P81YgSbx8dggDZPHRAncMQg==
-X-Google-Smtp-Source: AGHT+IG27hWGzW1LzN/eNXKtlJHqEQkTe1guHAmzSogCDgTEata0ycmPM3RW1EMrPvg/w07cHMJ8YoOYNn5lIfohzm8=
-X-Received: by 2002:a05:6122:da2:b0:520:98ec:b25c with SMTP id
- 71dfb90a1353d-5235b63ff89mr2661022e0c.1.1740766698058; Fri, 28 Feb 2025
- 10:18:18 -0800 (PST)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YkfqCLCy23oVnrxxN7pTVSWmJ3uNsRui+echOMOcMPU=;
+ b=oeQix4jxf9Cnh2vZP3AYIY6L2e2JJUWK8UyJgnRqMpZHqL1KS12fhJmnRB4Ase1ybYfLQ7F8/iF47e8Y4GpNa2s6panInpgTWPA+p9m0Lz+tctc6b3N5Z9HSz/nXCt0Q6zC1zJo+GuJZefoKCidQTQ1Ugwz7OwR6cjemOK8gLJ0=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by BY5PR10MB4306.namprd10.prod.outlook.com (2603:10b6:a03:211::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.23; Fri, 28 Feb
+ 2025 18:20:33 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.8489.021; Fri, 28 Feb 2025
+ 18:20:33 +0000
+Message-ID: <8c79212c-4b0b-426b-8563-3e7d478ef24f@oracle.com>
+Date: Fri, 28 Feb 2025 13:20:28 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [BUG, RFC] cpr-transfer: qxl guest driver crashes after migration
+From: Steven Sistare <steven.sistare@oracle.com>
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: William Roche <william.roche@oracle.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, "Denis V. Lunev" <den@virtuozzo.com>
+References: <78309320-f19e-4a06-acfa-bc66cbc81bd7@virtuozzo.com>
+ <6fd87c40-92dd-4290-9fa9-abd014ddf248@oracle.com>
+Content-Language: en-US
+In-Reply-To: <6fd87c40-92dd-4290-9fa9-abd014ddf248@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BYAPR06CA0008.namprd06.prod.outlook.com
+ (2603:10b6:a03:d4::21) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-References: <20250227154253.1653236-1-venture@google.com>
- <b300117fa0fc207eadccb663cdb043663ca79025.camel@codeconstruct.com.au>
-In-Reply-To: <b300117fa0fc207eadccb663cdb043663ca79025.camel@codeconstruct.com.au>
-From: Patrick Venture <venture@google.com>
-Date: Fri, 28 Feb 2025 10:18:03 -0800
-X-Gm-Features: AQ5f1Jou_OjKXf2GmIoJdtyUqqs1yiR9ECeQUL6tBl0URcVDVT-e7Vq8GYQREN0
-Message-ID: <CAO=notw30NKaFtXSookieod-GQb_NeXiSU3MfT1BjYryPmSMew@mail.gmail.com>
-Subject: Re: [PATCH] hw/net: ftgmac100: copy eth_hdr for alignment
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Cc: peter.maydell@linaro.org, clg@kaod.org, steven_lee@aspeedtech.com, 
- leetroy@gmail.com, jamin_lin@aspeedtech.com, joel@jms.id.au, 
- jasowang@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000ad302c062f37d4eb"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
- envelope-from=venture@google.com; helo=mail-vk1-xa36.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|BY5PR10MB4306:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7d351e31-8ec4-49f1-395a-08dd582496e7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?MlpSaVo5WEZRbkNaSnF6NjArNHF5WUJDR3NocmhhZlhHM0x4ekNzeTU0TzZ4?=
+ =?utf-8?B?TFNjRWEzUUdKM1ZMb0J0RzBkd3dUTURVMGlaMTNmRFFITlZGczdYRzJXbXhr?=
+ =?utf-8?B?N2VPZCs3V3pGVXBXbmZ0S1JPdFhKbTdwQjJpcUZEdVo0cEVRdXNnNUJvOGw2?=
+ =?utf-8?B?QVF0eTZqKzVGQUdDYXA2UUtLU3doU2dneDhpMDFrbGdDckJUZjl0SVhLSzVS?=
+ =?utf-8?B?SC9mQWllaVhOeEFBQVZqM1VEUXkwb1hNSjR0UWdmNVFUVkdVZ21OazNQblhN?=
+ =?utf-8?B?SEd6S0E0VmZaLzNLSlRBUzVQM0g3cHNxbGcvMm1yWHhIUXdJUkcraHhxbHc1?=
+ =?utf-8?B?SWVqMFZaaWZHVlBOVEVsK0dLMzlqbDNsdWpmMTJGMjZwekUxT1E2REtjMi93?=
+ =?utf-8?B?cXBKYkIwZHl4bGF4K3FhUHNvS05jYXNkdUEzWVU5VVlqSEQzdWMwMWM5VWpZ?=
+ =?utf-8?B?SUFPUVJ1K3poL3JFRklZb1R2SkxQUmtyM1Z6SitVV0k2c3ZLWUZKTlZBbzA3?=
+ =?utf-8?B?L0IrOFJYcVZPUEEyc20rYmhtS2swczJKTGlzRzdLdkw0M1BVZm55RDR3Ukhx?=
+ =?utf-8?B?dlNnTTVYQmFyY3QwUXV5Vmh4Q0IvSWlFem41THl6Z3c1eTJzUlgwYmh5YjJt?=
+ =?utf-8?B?WHZ5b29MdFJNM1FEVFFmeGpScmRjQkpzVmh0bHM5L0s3TnhUYmVoZmoyaGd3?=
+ =?utf-8?B?dFRVWjF3bHVRaDdZOVZkWXVPb2tId25menkwdWoxb0V5T1R6RjFpa0tWcEUy?=
+ =?utf-8?B?KzFjbGxTWUVqeE5sR2JxbVlYZFBwcGFFWlBKMlZhVTNzWUFmajF2cW9PTUdK?=
+ =?utf-8?B?WXNwaVhKZFdUcyt2NUtscmh3QXRsaWg4VThQeFNXZEtpS1ZPMzRwUnZ0azd2?=
+ =?utf-8?B?Z043dDVYbSt6TGNtTWc3N2hGRk9VUjJ0WkFYN1h0MHppa3dZMFB0V3BqODJa?=
+ =?utf-8?B?QnNIQjJYK2tMRkxkOHdUVHpGK05ZV1I4ZW9IUGJBU0Y2SndLV21ZSmV6N3FO?=
+ =?utf-8?B?NVdXOEh0Wnd0bEpnVlpEcUplRWIrdzVmV2RGaDBQTjI2MG9ERjg1NlA0VGZU?=
+ =?utf-8?B?SHA2U3JyZFFCaHdxb3dSVHBQK1F1enZBZkt0TGdYbUxxeDV1Rkh3TzY3QUY0?=
+ =?utf-8?B?MGVMeDB6bkVCWUdLOEFiQ25LUmJSRzlHQU1SaHBIWVliMzBPeVAyV3JrL2o3?=
+ =?utf-8?B?dEZTVlVSK0FsbFgrelhEeEwrZVpGUDZ5a3JDZXhOT2pvOVArS1Zkd1E3UUZ3?=
+ =?utf-8?B?TXdKWXBpSC9FVVZDYnltSWFFWXg5MzRKc0l1MnFaWDhPK1B1Z1B5K1ZiQkZQ?=
+ =?utf-8?B?YjZ5VC94MzRmSmdsZk5lcVQ4cmd2Q01KMHlVcUF2a1h6MVZKd2VHbU9QTGV4?=
+ =?utf-8?B?SWpKRU9OSEZaZ0xmM2s4UENBbHd3cTlOSG1aYjUzbHZXRmZQSnc1cHpWcERP?=
+ =?utf-8?B?QmxrbUtuZ0pLVStGMFR3ckZPc2lYKy9pWDd6TThrY1BHQ052OWl0YjJqOGw0?=
+ =?utf-8?B?cnd1RDlzaEs3YldBUlRKVVgvdjZXV1RyODhKMisxUTEwZHVDYitzajJZenJx?=
+ =?utf-8?B?MktORXZKbE9aSW92bDRrQXBpa25weGlJcnF6eS9PdE14TmZ2QkIrQlJBeDVu?=
+ =?utf-8?B?U1Y0WnE4Zkc0MzZydGd1L0NXbkRDL2RZTWJIK0J2a3dDZ0xLMjJGUFl6aU94?=
+ =?utf-8?B?QlhQdzNwRWUwS1l1TFNZOWtLeWdMQ3lhR1UyRElIdHBNWStLTGUxdzRuWjRv?=
+ =?utf-8?B?ejNyaktQNC9wS0UyZFdGVnRRTW1aSS83NTNFN1ZUMlYvZWZvV0NsMUpwNVFT?=
+ =?utf-8?B?QkVJcmJmTEM1Q1F2RmUrdz09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZTFKTC9OeXk4S2luOFhkL2JHeDZxOTcvQ1RXNlpQUTEzNXNPdHgrT3QrL0hH?=
+ =?utf-8?B?d21NSW9Yd1FoM0ZqamR2ZGhRMjk1QndmcDYrM1FLb3NTd0RRWnQ4Skx5Y1Jt?=
+ =?utf-8?B?cUtwQ2huSXVTaThudEFRS3lGd2JrTVlEL216RHZWTXpSTUc4ZzZkU2w4Nlhl?=
+ =?utf-8?B?amxBMzI1M3podlhtV2ZnaWZWQW1xbmZETHJmUllqaGxLSXEvekhNUFNibWtF?=
+ =?utf-8?B?S09FQzFsVVk3WWFzY2tuK0xRWDloc3hBT1ZXb3FJUHNCb293OU5Hcnl4KzY4?=
+ =?utf-8?B?NUM4NnkzMVZUV2JNNEFJR1MwM25ZMjdEYjdDTmZwaUdtdnlKTlRGQ0pKUWgz?=
+ =?utf-8?B?b3hIZjcrekZtaDg0TWZmWGFBbXJZS2JkalBrSWRVSlNYbjJnOFpETmN2ZUVs?=
+ =?utf-8?B?SzFRM2NQc3pHSzdrZ2VJTTJ3ZUlSMUgwU3pWUjUxVGpYd3lmZDJBQjRzZjln?=
+ =?utf-8?B?ZGRvUkFibzM3NHhNWGI0dGtvNFJJTE53VExRcVNGUzcxTXRibGYvdHNwU2w2?=
+ =?utf-8?B?ME52d1VwcEtLWlg0QnA0dkVxMDkydm8vR3UrdGdlTnlPQklaenk0S09UMmtB?=
+ =?utf-8?B?L1BlSWtha0hlWjQvQzNETHBWSWlDdnFnUWRCMmVWd1F2ejNRaDBpbXJTVUdG?=
+ =?utf-8?B?V0RablUrSjZ3UzlOTjdQcUdudVYwZTBPYjRJT2w3N1llVzhYTldxTXlLbmZ2?=
+ =?utf-8?B?T2FRcTdmUFhwVUxJZVRrdTlqRmQ1aWR3dGwrNEZHU3hleksvLzA3QVNSRGZ1?=
+ =?utf-8?B?enR6T1RJd0lRdmwybDdyZUVlN1FJYW5jQXEyN0RndkJ6ejlJekdqYjdVSVRq?=
+ =?utf-8?B?WWZNNFg5bldOZnIyTWJjOWtZSFNML3R2a1FUSUVXL1lZNWc3WlB0L2ZaUXlQ?=
+ =?utf-8?B?ZnFQRnRTa1ZlckY5WEFNYWpzY2FUc2JqckR6OG5GRzFwejNKNzRnOXJNTUhh?=
+ =?utf-8?B?dTdqeHZoSjR6bE4zNGkxNG9oRXUvV3dhUmVoY3oyaWIvWUxhWXdkWFZKK3J6?=
+ =?utf-8?B?RWl1U2ZRRzBmSlJub0ZCeEdVd3g2WGY2bDZEdEZ4VmhnR0pFNStaeDJRclJM?=
+ =?utf-8?B?MTRPMnBXOGJSeVRvVFIxZlNZS2QyMEtRcjBGRGpvekV2eHZQVEsybWxSd1NK?=
+ =?utf-8?B?cVZzUnE2Kzd2VzdXampGdy9mWnlxM3dNc29lZWJDNWwzWmw0VlRrRzFqVkFq?=
+ =?utf-8?B?aFYvUnRFZW93N1IwR2gvRkp5NTZhcDFMdGpuMlBUODg5dHhLU21BaEQ4SjA4?=
+ =?utf-8?B?YVlwUGx5RmQvT1YwTlhTS1BsSGsrK3NUS0xJVE5UY3p6Q2pSVFJTTjFFM1p1?=
+ =?utf-8?B?NmhSVGRiRG1pTkJMY2tRSXdsQThUcHlUU2IzWGs5NlVxbEVKVzlidzVGL3k0?=
+ =?utf-8?B?dGVlNHg2VHBtcFU3amprTTUrcEE0TEtBQ0xKbHNPbTA5dUhoUStmREtob1NQ?=
+ =?utf-8?B?SVpKUmd3QndwekJaUFZOZ0VPOUkxSkZmdXBiY0F4L0lId0l5K0dudnVWRHZ1?=
+ =?utf-8?B?QVlQQXRlWE5uR0dFUklQa0hDa2xTTFdPSEdaQ3k4dmg0TFl0dDJrbzZqN1lX?=
+ =?utf-8?B?WWNFYzRINzg2eFo0cGIzM2ZaMzQ4MkRHTHp4d3hxRGdkVWZQbU10L1B6RHdH?=
+ =?utf-8?B?Nk5oMU5tU2lQK2JJdkgyNE5VQS9NSGwvQnFoSGcxOVpMR2dSZXZKNmhSUlMz?=
+ =?utf-8?B?cGJYYUlZWE9ZQmtnZDUwQUZrYU1QekRkdHFJZ2ZCaG95QWlyTUlsUzlTR1Mw?=
+ =?utf-8?B?cXB0L0pBZjVhc2VLWUw0a0JxSXBhTFBCSS93MjQwVzA3bkNzTHVDVHNyS2NP?=
+ =?utf-8?B?a21ieS9TQ25ibVhFYlVTd3I2NkpCQW55N240a2VmQXhiVlBhZHdUckFXMHNQ?=
+ =?utf-8?B?Nk53MjlzWnl4dHpWRkVONzcveW9FaUJIZUloeGl5Q0lzK0xQOWlEVjRWYzZl?=
+ =?utf-8?B?STB1UFluQ3dtcDdQRnRHcUlPdG5Kc0xONVBqc3VjUkk4QUhtVGNVekZ4ZHZV?=
+ =?utf-8?B?VjBKWStRRnVxb1NrYU9rSnlDSDVCUjNockpQNzhvQnFuTm53TjZFb0tycXBa?=
+ =?utf-8?B?SUpRUitPVUJwY2V4R2dVYWVBK1E2UGN4UjZCUGZEb29GWHBIb3RqeTA5MURX?=
+ =?utf-8?B?eVIwT1FCbCswWGduMUJrYXVDelhCVnZZc2c5NmsxUDFHOGxZbzdNdHVOcmNr?=
+ =?utf-8?B?OGc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 8FZl2mS5Rtk1WUiT7OIMcn/Dqj7y62DWNZd0egkvUduG4s5pzYc5pJFLuimc+5E8Rn+Q4YX+MmJCn2X2VlfCbnh/6StwqcB7eIQ6T3cABQk9QFmABK8DFK6LYHyOUzXA3SNKA/MK5utArzpokXlQl2e2FsP18msbWcsZUSg/9uXVE1+8OTh+bRmi1Kh91/sgr+o55ZF157VwT6jQoeG5SGhwXBTeOiqHp5xmcjWKGag5UIAQkCCpo3ShSov3JD/kfHP3NTuHp2enfLLGgoj8E9UCANF7zv7h7fMVYvlOtibWch+2rgS9uSlI69UFqGFqPiItXCO5+sMNzi5+4uwYmn2G/NzguGdPT4yN+Poy9MzrrgvwcB2gNm/1E/ALG9QRpdtvQ/MSnrFnYGIoNDA0U9QyvN/aiRrZrncdKoj2xzlkxJCk3rsJBKYGkWQTFBT8xrs5Tv8UjleSh2Q4Yi5zNME+UcOsDLhW21PWBIj9Ecytv1JT5nCrHdUORCxs8TRjhSnwRjvKwVnxJrhGj6V9SFfvn0MtKJpqh2CSxAZnOIRiHudN44Knoy6vb48OZStdO4W1R/npMVo3b6q8Ibq1HORJUvRSw2ey8Mdg49l35Fc=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7d351e31-8ec4-49f1-395a-08dd582496e7
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2025 18:20:33.2248 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zTtijhm77eQe/PwL/qrh1LtVVgovDiH1ljMgtXtJbGkDoC5I4ZRqpjMI2JNozkuBzLgSJpaeb5HWucwAOtBrN7b2h+quk+wwuEvhON60lMk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR10MB4306
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-28_05,2025-02-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ mlxlogscore=999
+ suspectscore=0 adultscore=0 phishscore=0 bulkscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2502100000 definitions=main-2502280134
+X-Proofpoint-GUID: vyQMEwn9BOgSsu66x_vY6psZ4VPe-3Yh
+X-Proofpoint-ORIG-GUID: vyQMEwn9BOgSsu66x_vY6psZ4VPe-3Yh
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,199 +216,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ad302c062f37d4eb
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2/28/2025 1:13 PM, Steven Sistare wrote:
+> On 2/28/2025 12:39 PM, Andrey Drobyshev wrote:
+>> Hi all,
+>>
+>> We've been experimenting with cpr-transfer migration mode recently and
+>> have discovered the following issue with the guest QXL driver:
+>>
+>> Run migration source:
+>>> EMULATOR=/path/to/emulator
+>>> ROOTFS=/path/to/image
+>>> QMPSOCK=/var/run/alma8qmp-src.sock
+>>>
+>>> $EMULATOR -enable-kvm \
+>>>      -machine q35 \
+>>>      -cpu host -smp 2 -m 2G \
+>>>      -object memory-backend-file,id=ram0,size=2G,mem-path=/dev/shm/ram0,share=on\
+>>>      -machine memory-backend=ram0 \
+>>>      -machine aux-ram-share=on \
+>>>      -drive file=$ROOTFS,media=disk,if=virtio \
+>>>      -qmp unix:$QMPSOCK,server=on,wait=off \
+>>>      -nographic \
+>>>      -device qxl-vga
+>>
+>> Run migration target:
+>>> EMULATOR=/path/to/emulator
+>>> ROOTFS=/path/to/image
+>>> QMPSOCK=/var/run/alma8qmp-dst.sock
+>>> $EMULATOR -enable-kvm \
+>>>      -machine q35 \
+>>>      -cpu host -smp 2 -m 2G \
+>>>      -object memory-backend-file,id=ram0,size=2G,mem-path=/dev/shm/ram0,share=on\
+>>>      -machine memory-backend=ram0 \
+>>>      -machine aux-ram-share=on \
+>>>      -drive file=$ROOTFS,media=disk,if=virtio \
+>>>      -qmp unix:$QMPSOCK,server=on,wait=off \
+>>>      -nographic \
+>>>      -device qxl-vga \
+>>>      -incoming tcp:0:44444 \
+>>>      -incoming '{"channel-type": "cpr", "addr": { "transport": "socket", "type": "unix", "path": "/var/run/alma8cpr-dst.sock"}}'
+>>
+>>
+>> Launch the migration:
+>>> QMPSHELL=/root/src/qemu/master/scripts/qmp/qmp-shell
+>>> QMPSOCK=/var/run/alma8qmp-src.sock
+>>>
+>>> $QMPSHELL -p $QMPSOCK <<EOF
+>>>      migrate-set-parameters mode=cpr-transfer
+>>>      migrate channels=[{"channel-type":"main","addr":{"transport":"socket","type":"inet","host":"0","port":"44444"}},{"channel-type":"cpr","addr":{"transport":"socket","type":"unix","path":"/var/run/alma8cpr-dst.sock"}}]
+>>> EOF
+>>
+>> Then, after a while, QXL guest driver on target crashes spewing the
+>> following messages:
+>>> [   73.962002] [TTM] Buffer eviction failed
+>>> [   73.962072] qxl 0000:00:02.0: object_init failed for (3149824, 0x00000001)
+>>> [   73.962081] [drm:qxl_alloc_bo_reserved [qxl]] *ERROR* failed to allocate VRAM BO
+>>
+>> That seems to be a known kernel QXL driver bug:
+>>
+>> https://lore.kernel.org/all/20220907094423.93581-1-min_halo@163.com/T/
+>> https://lore.kernel.org/lkml/ZTgydqRlK6WX_b29@eldamar.lan/
+>>
+>> (the latter discussion contains that reproduce script which speeds up
+>> the crash in the guest):
+>>> #!/bin/bash
+>>>
+>>> chvt 3
+>>>
+>>> for j in $(seq 80); do
+>>>          echo "$(date) starting round $j"
+>>>          if [ "$(journalctl --boot | grep "failed to allocate VRAM BO")" != "" ]; then
+>>>                  echo "bug was reproduced after $j tries"
+>>>                  exit 1
+>>>          fi
+>>>          for i in $(seq 100); do
+>>>                  dmesg > /dev/tty3
+>>>          done
+>>> done
+>>>
+>>> echo "bug could not be reproduced"
+>>> exit 0
+>>
+>> The bug itself seems to remain unfixed, as I was able to reproduce that
+>> with Fedora 41 guest, as well as AlmaLinux 8 guest. However our
+>> cpr-transfer code also seems to be buggy as it triggers the crash -
+>> without the cpr-transfer migration the above reproduce doesn't lead to
+>> crash on the source VM.
+>>
+>> I suspect that, as cpr-transfer doesn't migrate the guest memory, but
+>> rather passes it through the memory backend object, our code might
+>> somehow corrupt the VRAM.  However, I wasn't able to trace the
+>> corruption so far.
+>>
+>> Could somebody help the investigation and take a look into this?  Any
+>> suggestions would be appreciated.  Thanks!
+> 
+> Possibly some memory region created by qxl is not being preserved.
+> Try adding these traces to see what is preserved:
+> 
+> -trace enable='*cpr*'
+> -trace enable='*ram_alloc*'
 
-On Thu, Feb 27, 2025 at 9:54=E2=80=AFPM Andrew Jeffery <andrew@codeconstruc=
-t.com.au>
-wrote:
+Also try adding this patch to see if it flags any ram blocks as not
+compatible with cpr.  A message is printed at migration start time.
+   https://lore.kernel.org/qemu-devel/1740667681-257312-1-git-send-email-steven.sistare@oracle.com/
 
-> Hi Patrick,
->
-> On Thu, 2025-02-27 at 15:42 +0000, Patrick Venture wrote:
-> > eth_hdr requires 2 byte alignment
-> >
-> > Signed-off-by: Patrick Venture <venture@google.com>
-> > ---
-> >  hw/net/ftgmac100.c | 15 ++++++++++++---
-> >  1 file changed, 12 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-> > index 1f524d7a01..a33aaa01ee 100644
-> > --- a/hw/net/ftgmac100.c
-> > +++ b/hw/net/ftgmac100.c
-> > @@ -989,12 +989,16 @@ static void ftgmac100_high_write(void *opaque,
-> hwaddr addr,
-> >  static int ftgmac100_filter(FTGMAC100State *s, const uint8_t *buf,
-> size_t len)
-> >  {
-> >      unsigned mcast_idx;
-> > +    struct eth_header eth_hdr =3D {};
-> >
-> >      if (s->maccr & FTGMAC100_MACCR_RX_ALL) {
-> >          return 1;
-> >      }
-> >
-> > -    switch (get_eth_packet_type(PKT_GET_ETH_HDR(buf))) {
-> > +    memcpy(&eth_hdr, PKT_GET_ETH_HDR(buf),
-> > +           (sizeof(eth_hdr) > len) ? len : sizeof(eth_hdr));
->
-> I don't think truncating the memcpy() in this way is what we want? The
-> switched value may not be meaningful for small values of len.
->
-> Perhaps return an error?
->
-> > +
-> > +    switch (get_eth_packet_type(&eth_hdr)) {
-> >      case ETH_PKT_BCAST:
-> >          if (!(s->maccr & FTGMAC100_MACCR_RX_BROADPKT)) {
-> >              return 0;
-> > @@ -1028,6 +1032,7 @@ static ssize_t ftgmac100_receive(NetClientState
-> *nc, const uint8_t *buf,
-> >  {
-> >      FTGMAC100State *s =3D FTGMAC100(qemu_get_nic_opaque(nc));
-> >      FTGMAC100Desc bd;
-> > +    struct eth_header eth_hdr =3D {};
-> >      uint32_t flags =3D 0;
-> >      uint64_t addr;
-> >      uint32_t crc;
-> > @@ -1036,7 +1041,11 @@ static ssize_t ftgmac100_receive(NetClientState
-> *nc, const uint8_t *buf,
-> >      uint32_t buf_len;
-> >      size_t size =3D len;
-> >      uint32_t first =3D FTGMAC100_RXDES0_FRS;
-> > -    uint16_t proto =3D be16_to_cpu(PKT_GET_ETH_HDR(buf)->h_proto);
-> > +    uint16_t proto;
-> > +
-> > +    memcpy(&eth_hdr, PKT_GET_ETH_HDR(buf),
-> > +           (sizeof(eth_hdr) > len) ? len : sizeof(eth_hdr));
->
-> Again here.
->
-> > +    proto =3D be16_to_cpu(eth_hdr.h_proto);
-> >      int max_frame_size =3D ftgmac100_max_frame_size(s, proto);
-> >
-> >      if ((s->maccr & (FTGMAC100_MACCR_RXDMA_EN |
-> FTGMAC100_MACCR_RXMAC_EN))
-> > @@ -1061,7 +1070,7 @@ static ssize_t ftgmac100_receive(NetClientState
-> *nc, const uint8_t *buf,
-> >          flags |=3D FTGMAC100_RXDES0_FTL;
-> >      }
-> >
-> > -    switch (get_eth_packet_type(PKT_GET_ETH_HDR(buf))) {
-> > +    switch (get_eth_packet_type(&eth_hdr)) {
-> >      case ETH_PKT_BCAST:
-> >          flags |=3D FTGMAC100_RXDES0_BROADCAST;
-> >          break;
->
->
-Thanks, I've been asked to fix eth_header to be correctly packed instead
-and I'm still fixing the implications of that.
+- Steve
 
---000000000000ad302c062f37d4eb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 27,=
- 2025 at 9:54=E2=80=AFPM Andrew Jeffery &lt;<a href=3D"mailto:andrew@codeco=
-nstruct.com.au">andrew@codeconstruct.com.au</a>&gt; wrote:<br></div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">Hi Patrick,<br>
-<br>
-On Thu, 2025-02-27 at 15:42 +0000, Patrick Venture wrote:<br>
-&gt; eth_hdr requires 2 byte alignment<br>
-&gt; <br>
-&gt; Signed-off-by: Patrick Venture &lt;<a href=3D"mailto:venture@google.co=
-m" target=3D"_blank">venture@google.com</a>&gt;<br>
-&gt; ---<br>
-&gt; =C2=A0hw/net/ftgmac100.c | 15 ++++++++++++---<br>
-&gt; =C2=A01 file changed, 12 insertions(+), 3 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c<br>
-&gt; index 1f524d7a01..a33aaa01ee 100644<br>
-&gt; --- a/hw/net/ftgmac100.c<br>
-&gt; +++ b/hw/net/ftgmac100.c<br>
-&gt; @@ -989,12 +989,16 @@ static void ftgmac100_high_write(void *opaque, h=
-waddr addr,<br>
-&gt; =C2=A0static int ftgmac100_filter(FTGMAC100State *s, const uint8_t *bu=
-f, size_t len)<br>
-&gt; =C2=A0{<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 unsigned mcast_idx;<br>
-&gt; +=C2=A0=C2=A0=C2=A0 struct eth_header eth_hdr =3D {};<br>
-&gt; =C2=A0<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 if (s-&gt;maccr &amp; FTGMAC100_MACCR_RX_ALL)=
- {<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 1;<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 }<br>
-&gt; =C2=A0<br>
-&gt; -=C2=A0=C2=A0=C2=A0 switch (get_eth_packet_type(PKT_GET_ETH_HDR(buf)))=
- {<br>
-&gt; +=C2=A0=C2=A0=C2=A0 memcpy(&amp;eth_hdr, PKT_GET_ETH_HDR(buf),<br>
-&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (sizeof(=
-eth_hdr) &gt; len) ? len : sizeof(eth_hdr));<br>
-<br>
-I don&#39;t think truncating the memcpy() in this way is what we want? The<=
-br>
-switched value may not be meaningful for small values of len.<br>
-<br>
-Perhaps return an error?<br>
-<br>
-&gt; +<br>
-&gt; +=C2=A0=C2=A0=C2=A0 switch (get_eth_packet_type(&amp;eth_hdr)) {<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 case ETH_PKT_BCAST:<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!(s-&gt;maccr &am=
-p; FTGMAC100_MACCR_RX_BROADPKT)) {<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 return 0;<br>
-&gt; @@ -1028,6 +1032,7 @@ static ssize_t ftgmac100_receive(NetClientState =
-*nc, const uint8_t *buf,<br>
-&gt; =C2=A0{<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 FTGMAC100State *s =3D FTGMAC100(qemu_get_nic_=
-opaque(nc));<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 FTGMAC100Desc bd;<br>
-&gt; +=C2=A0=C2=A0=C2=A0 struct eth_header eth_hdr =3D {};<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t flags =3D 0;<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 uint64_t addr;<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t crc;<br>
-&gt; @@ -1036,7 +1041,11 @@ static ssize_t ftgmac100_receive(NetClientState=
- *nc, const uint8_t *buf,<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t buf_len;<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 size_t size =3D len;<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t first =3D FTGMAC100_RXDES0_FRS;<br>
-&gt; -=C2=A0=C2=A0=C2=A0 uint16_t proto =3D be16_to_cpu(PKT_GET_ETH_HDR(buf=
-)-&gt;h_proto);<br>
-&gt; +=C2=A0=C2=A0=C2=A0 uint16_t proto;<br>
-&gt; +<br>
-&gt; +=C2=A0=C2=A0=C2=A0 memcpy(&amp;eth_hdr, PKT_GET_ETH_HDR(buf),<br>
-&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (sizeof(=
-eth_hdr) &gt; len) ? len : sizeof(eth_hdr));<br>
-<br>
-Again here.<br>
-<br>
-&gt; +=C2=A0=C2=A0=C2=A0 proto =3D be16_to_cpu(eth_hdr.h_proto);<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 int max_frame_size =3D ftgmac100_max_frame_si=
-ze(s, proto);<br>
-&gt; =C2=A0<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 if ((s-&gt;maccr &amp; (FTGMAC100_MACCR_RXDMA=
-_EN | FTGMAC100_MACCR_RXMAC_EN))<br>
-&gt; @@ -1061,7 +1070,7 @@ static ssize_t ftgmac100_receive(NetClientState =
-*nc, const uint8_t *buf,<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 flags |=3D FTGMAC100_=
-RXDES0_FTL;<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 }<br>
-&gt; =C2=A0<br>
-&gt; -=C2=A0=C2=A0=C2=A0 switch (get_eth_packet_type(PKT_GET_ETH_HDR(buf)))=
- {<br>
-&gt; +=C2=A0=C2=A0=C2=A0 switch (get_eth_packet_type(&amp;eth_hdr)) {<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0 case ETH_PKT_BCAST:<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 flags |=3D FTGMAC100_=
-RXDES0_BROADCAST;<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;<br>
-<br></blockquote><div><br></div><div>Thanks, I&#39;ve been asked to fix eth=
-_header to be correctly packed instead and I&#39;m still fixing the implica=
-tions of that.</div><div>=C2=A0</div></div></div>
-
---000000000000ad302c062f37d4eb--
 
