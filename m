@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F90C282C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 17:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F3AC282D0
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Feb 2025 17:55:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1to4TX-0007q0-3A; Fri, 28 Feb 2025 12:48:39 -0500
+	id 1to4Zb-0005SI-9A; Fri, 28 Feb 2025 12:54:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1to4TB-0007VQ-7t
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 12:48:17 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1to4ZZ-0005No-Gt
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 12:54:53 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1to4T8-0005NE-7Q
- for qemu-devel@nongnu.org; Fri, 28 Feb 2025 12:48:16 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-439a4dec9d5so26072755e9.0
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 09:48:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1to4ZX-0006iM-8M
+ for qemu-devel@nongnu.org; Fri, 28 Feb 2025 12:54:53 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4397dff185fso21795005e9.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 09:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740764888; x=1741369688; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bK4QMP2l/mN25359h/sPhHBhlHOYz8CuG9/oUAWNxfg=;
- b=sw+Ks4yzndvavcUuaKIA8jcek9EtBFjwE2jeOYr9w0MdiwDFDExBkbGT++Ye1wsrRJ
- 1x5TJSpyHZITrR6HX4ymq2qSxdcCOb9AXsIChXUKb3am99FCBzO8eO+rvflDrt31rl0d
- Lszhx3ytxBde4DZqXZ8MlRATkwL1gFrUaMtylIFO8GDV8YdCDF17RbVmxeEbDjVQFZdN
- MIaUZgqctt9FXQNOJd5M0MI2F+7UVf/5p0dsK1GX5W6UhLIE3C2QRkqnPqQ4q9nI1YR3
- q9lGTlnsW/zVutDosijHjMh9ohDmVXS4sHCeI1qHm0f/V4Shujnv77CXpSbkSdUTBjei
- m3wQ==
+ d=linaro.org; s=google; t=1740765289; x=1741370089; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jtvMelRpMHPT9gIgF1y4kKqGNE8vJVEvR/SuEBPumP4=;
+ b=zC+UbZvSxGiLqrwyVReJbbT76AqmTZf+G3YAbpr1Z/7+LeEoYB9gekFAKPBSCKxanU
+ eXyXTa36DOrvki1Prirldp+j+d10zKmMrAVvi9+eJ328ZR228hU4Xa/kK/b/1ukFYbUz
+ aOqERCWVUMHChhGRslZq+nSwcypKnDgrchchgXjB/3+V35fKnGm+WphkBmze7gkBrfEM
+ Yz+jeNqgICbCct0SmX0vQPem+IXuCvhtv3Tcb0smGFZLefg6grFU3HEG1XYt7/X5D+UB
+ K94sf95syhJQcCp7E3xbZ/ouDJ2XhVwyQYsoc3RDLxhIj+ViKWqur8ayi147BD0bmFnK
+ uMrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740764888; x=1741369688;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bK4QMP2l/mN25359h/sPhHBhlHOYz8CuG9/oUAWNxfg=;
- b=bGBkFR8ajNVHkCo0COv+gjnLl38sS8//aQpfabTJEK8n9vrjpGBIU7g+2pLj8kA0qg
- iQ9SgULCQ5Ff/XiR99ntn030eP7JuHOlxT05zL3lW11oCf125jM69Wd7PVSE/GkNLqtx
- SKgOiNykBTcEehnaqK5nWebaSQwEMVwH0P2qWeyFs141BD84xb+vAm/rQXK1HA2liS7M
- MsLWZ82zII6SSqhquVRB6gO1KhEOSbSAKfGQpa8BXPx64O3pC6ep7wcLu2XOOYzJ7MpE
- YG2Mn3ydPnQZAGs2zPolDKIv5tQ6v93QQhe6Ik5Yld9718YNSDn63gBGdrlqKZavl82n
- sW2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUooZXYCLBp8bc6dte1g+PDEn8eELDyL483UhF3fcaPoCIF4DxQK0vsZEvYdDaPT93ahJZL1ExJlAE1@nongnu.org
-X-Gm-Message-State: AOJu0YwO4TOE1GihLeqJicdNQaR6Z8syRVGszY0H4bZWCnJcKs+1evbR
- 3EY6ixaUQ3Ly8qcYPnCuIEusH+mhsGvmvHS24jsKvFo/atSNCSqhF9FrMRSAC5M=
-X-Gm-Gg: ASbGnctFxxu1tvazD6YoQPTfWpKZHLkYPaOgbuCJfT+7FtKySADuhrI8OORLx8Wp9Qt
- Yu3YitwymaZ6pvLK9Z2OljDVccsn0Dd2023RCJtOV83/2tN8GuRoQf8AUpc/W/KWcM40Ne1uyyx
- Wn40oM0ImNnBI08Om8kJ6vBqa4Gd6Zug2t1fmptDQ5x6Hhk8Viuqz4i0kQOEegqOmpw3ravbhGy
- hxbL3k9f15R6IbhQAFkf+9QKiLfOuupu/cDu5flkOCDgBKO7eU3jfF+mLHxDQVzBALkTsL3ysR/
- Z4Y/LkUK/8k0A5wjOTgpfu0Vc0fP2AQ9
-X-Google-Smtp-Source: AGHT+IHq1JW4MN/qaVK8h6N8qk620ISXiqPkvDbAUfOkHkNVDvxLHznfCNMZDGcqjK/3rSvC3iNncw==
-X-Received: by 2002:a05:600c:1c1f:b0:439:9eba:93bb with SMTP id
- 5b1f17b1804b1-43ba67049b8mr48330735e9.18.1740764887948; 
- Fri, 28 Feb 2025 09:48:07 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4795da5sm5979556f8f.15.2025.02.28.09.48.05
+ d=1e100.net; s=20230601; t=1740765289; x=1741370089;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jtvMelRpMHPT9gIgF1y4kKqGNE8vJVEvR/SuEBPumP4=;
+ b=mHfUxIG//MoQshUXrjF0hplgx1msAFPJv/E79y3viL1pyznmWAoqO9Culvn6svsbhZ
+ S9E8kMYzIQKm8Ogw1jumvIv7mCkTyOjSYyK7lXujKBaulxMhQOdRsjxUefQ6pixppt79
+ tSfgc2fzDK3kbmiB1A+02xbtsT3mKMq4BRlrl4trs76bOhi0EIsMKiyL+RBU1OsA0wnO
+ FcS3FHTZsglIkdzuro6LocLVQzBbFGy97KXjD9Ua7BtUJPCo95AWgYrVmha5U0TtysdV
+ LJPfD+e4ib/jH4c7xz9bvgkJeEgRvynl1v4Is+BMgqeVMX007CQX9iRTMpBApY5j7AP9
+ pGoA==
+X-Gm-Message-State: AOJu0YxT2nkCVCKdYwVUmaO1dJBPip8fjUc06vuR5loeozqBeSyVCuTw
+ URrSfaiyN77orggwPdeHs1L7xbVc3g1Zzaq0sFtYdj3KO9j78XZf2EqtjxkBH2M=
+X-Gm-Gg: ASbGncvHme0hDYJ/GOfIB4ZkVV1QoDjgz5qiFs6tbwt0fR0kUULhcV+9qGpOLI93tct
+ DXlPvGoHpMhpMYn7fLjRTvMNmcO11/gtghbxhQ1iBCvQTPJnZvUIM6ruorXqlrky7CzgYsPo+ek
+ lJQdG3+jgQnLkq4iAUydpTCznBMphgGrrVzMArsjoHGhmYmXaB9EgbktUreaUOsKNh7iiZDiRES
+ epAOJcfRrqltoXMtMa6RHvJ0CQcS9U+axAQ7AKLehci1SoRRJlFFyvjhQw3PFd4ZGOPesAQ6G0I
+ HV01aHKLQdivsDakjQsrCN8QAD83
+X-Google-Smtp-Source: AGHT+IEEUmZW/ghjkQdLqnqP8A/kZ0JNuvsioQ6f+TTIDp2YbRs//2RhmU2AjUQyqVEfH5hhsYKJKA==
+X-Received: by 2002:a05:600c:1c8e:b0:43a:b0ac:b10c with SMTP id
+ 5b1f17b1804b1-43ba6744a10mr29506175e9.26.1740765288904; 
+ Fri, 28 Feb 2025 09:54:48 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43b73717230sm62409275e9.19.2025.02.28.09.54.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Feb 2025 09:48:06 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 2/3] hw/net/smc91c111: Sanitize packet length on tx
-Date: Fri, 28 Feb 2025 17:48:00 +0000
-Message-ID: <20250228174802.1945417-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250228174802.1945417-1-peter.maydell@linaro.org>
-References: <20250228174802.1945417-1-peter.maydell@linaro.org>
+ Fri, 28 Feb 2025 09:54:48 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 95B615F7DE;
+ Fri, 28 Feb 2025 17:54:47 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [RFC PATCH] gitlab: add a new build_unit job to track build size
+Date: Fri, 28 Feb 2025 17:54:41 +0000
+Message-Id: <20250228175441.674384-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,95 +102,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the smc91c111 transmits a packet, it must read a control byte
-which is at the end of the data area and CRC.  However, we don't
-sanitize the length field in the packet buffer, so if the guest sets
-the length field to something large we will try to read past the end
-of the packet data buffer when we access the control byte.
+We want to reduce the total number of build units in the system to get
+on our way to a single binary. It will help to have some numbers so
+lets add a job to gitlab to track our progress.
 
-As usual, the datasheet says nothing about the behaviour of the
-hardware if the guest misprograms it in this way.  It says only that
-the maximum valid length is 2048 bytes.  We choose to log the guest
-error and silently drop the packet.
-
-This requires us to factor out the "mark the tx packet as complete"
-logic, so we can call it for this "drop packet" case as well as at
-the end of the loop when we send a valid packet.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2742
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/net/smc91c111.c | 34 +++++++++++++++++++++++++++++-----
- 1 file changed, 29 insertions(+), 5 deletions(-)
+ .gitlab-ci.d/check-units.py    | 95 ++++++++++++++++++++++++++++++++++
+ .gitlab-ci.d/static_checks.yml | 22 ++++++++
+ 2 files changed, 117 insertions(+)
+ create mode 100755 .gitlab-ci.d/check-units.py
 
-diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index 2295c6acf25..23ca99f926a 100644
---- a/hw/net/smc91c111.c
-+++ b/hw/net/smc91c111.c
-@@ -22,6 +22,13 @@
- 
- /* Number of 2k memory pages available.  */
- #define NUM_PACKETS 4
-+/*
-+ * Maximum size of a data frame, including the leading status word
-+ * and byte count fields and the trailing CRC, last data byte
-+ * and control byte (per figure 8-1 in the Microchip Technology
-+ * LAN91C111 datasheet).
-+ */
-+#define MAX_PACKET_SIZE 2048
- 
- #define TYPE_SMC91C111 "smc91c111"
- OBJECT_DECLARE_SIMPLE_TYPE(smc91c111_state, SMC91C111)
-@@ -240,6 +247,16 @@ static void smc91c111_release_packet(smc91c111_state *s, int packet)
-     smc91c111_flush_queued_packets(s);
- }
- 
-+static void smc91c111_complete_tx_packet(smc91c111_state *s, int packetnum)
-+{
-+    if (s->ctr & CTR_AUTO_RELEASE) {
-+        /* Race?  */
-+        smc91c111_release_packet(s, packetnum);
-+    } else if (s->tx_fifo_done_len < NUM_PACKETS) {
-+        s->tx_fifo_done[s->tx_fifo_done_len++] = packetnum;
-+    }
-+}
+diff --git a/.gitlab-ci.d/check-units.py b/.gitlab-ci.d/check-units.py
+new file mode 100755
+index 0000000000..aca63bd481
+--- /dev/null
++++ b/.gitlab-ci.d/check-units.py
+@@ -0,0 +1,95 @@
++#!/usr/bin/env python3
++#
++# check-units.py: check the number of compilation units and identify
++#                 those that are rebuilt multiple times
++#
++# Copyright (C) 2025 Linaro Ltd.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
- /* Flush the TX FIFO.  */
- static void smc91c111_do_tx(smc91c111_state *s)
- {
-@@ -263,6 +280,17 @@ static void smc91c111_do_tx(smc91c111_state *s)
-         *(p++) = 0x40;
-         len = *(p++);
-         len |= ((int)*(p++)) << 8;
-+        if (len >= MAX_PACKET_SIZE) {
-+            /*
-+             * Datasheet doesn't say what to do here, and there is no
-+             * relevant tx error condition listed. Log, and drop the packet.
-+             */
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "smc91c111: tx packet with bad length %d, dropping\n",
-+                          len);
-+            smc91c111_complete_tx_packet(s, packetnum);
-+            continue;
-+        }
-         len -= 6;
-         control = p[len + 1];
-         if (control & 0x20)
-@@ -291,11 +319,7 @@ static void smc91c111_do_tx(smc91c111_state *s)
-             }
-         }
- #endif
--        if (s->ctr & CTR_AUTO_RELEASE)
--            /* Race?  */
--            smc91c111_release_packet(s, packetnum);
--        else if (s->tx_fifo_done_len < NUM_PACKETS)
--            s->tx_fifo_done[s->tx_fifo_done_len++] = packetnum;
-+        smc91c111_complete_tx_packet(s, packetnum);
-         qemu_send_packet(qemu_get_queue(s->nic), p, len);
-     }
-     s->tx_fifo_len = 0;
++from os import access, R_OK, path
++from subprocess import check_output, CalledProcessError
++from sys import argv, exit
++import re
++
++
++def extract_build_units(cc_path):
++    """
++    Extract the build units and their counds from compile_commands.json file.
++
++    Returns:
++        Hash table of ["unit"] = count
++    """
++
++    # Make jq/shell do the heavy lifting
++    cmd = f"jq < {cc_path} '.[] | .file' | sort | uniq -c | sort -rn"
++
++    try:
++        # Execute the shell command and capture the output
++        result = check_output(cmd, shell=True)
++    except CalledProcessError as exp:
++        print(f"Error executing {cmd}: {exp}")
++        exit(1)
++
++    lines = result.decode().strip().split('\n')
++
++    # Create a dictionary to store the build unit frequencies
++    build_units = {}
++
++    # extract from string of form: ' 65 "../../fpu/softfloat.c"'
++    ext_pat = re.compile(r'^\s*(\d+)\s+"([^"]+)"')
++
++    # strip leading ../
++    norm_pat = re.compile(r'^((\.\./)+|/+)')
++
++    # Process each line of the output
++    for line in lines:
++        match = re.match(ext_pat, line)
++        if match:
++            count = int(match.group(1))
++            unit_path = re.sub(norm_pat, '', match.group(2))
++
++            # Store the count in the dictionary
++            build_units[unit_path] = count
++        else:
++            print(f"couldn't process {line}")
++
++    return build_units
++
++
++def analyse_units(build_units):
++    """
++    Analyse the build units and report stats and the top 10 rebuilds
++    """
++
++    print(f"Total source files: {len(build_units.keys())}")
++    print(f"Total build units: {sum(units.values())}")
++
++    # Create a sorted list by number of rebuilds
++    sorted_build_units = sorted(build_units.items(),
++                                key=lambda item: item[1],
++                                reverse=True)
++
++    print("Most rebuilt units:")
++    for unit, count in sorted_build_units[:10]:
++        print(f"  {unit} built {count} times")
++
++    print("Least rebuilt units:")
++    for unit, count in sorted_build_units[-10:]:
++        print(f"  {unit} built {count} times")
++
++
++if __name__ == "__main__":
++    if len(argv) != 2:
++        script_name = path.basename(argv[0])
++        print(f"Usage: {script_name} <path_to_compile_commands.json>")
++        exit(1)
++
++    cc_path = argv[1]
++    if path.isfile(cc_path) and access(cc_path, R_OK):
++        units = extract_build_units(cc_path)
++        analyse_units(units)
++        exit(0)
++    else:
++        print(f"{cc_path} doesn't exist or isn't readable")
++        exit(1)
+diff --git a/.gitlab-ci.d/static_checks.yml b/.gitlab-ci.d/static_checks.yml
+index c0ba453382..c3ed6de453 100644
+--- a/.gitlab-ci.d/static_checks.yml
++++ b/.gitlab-ci.d/static_checks.yml
+@@ -70,3 +70,25 @@ check-rust-tools-nightly:
+     expire_in: 2 days
+     paths:
+       - rust/target/doc
++
++check-build-units:
++  extends: .base_job_template
++  stage: build
++  image: $CI_REGISTRY_IMAGE/qemu/debian:$QEMU_CI_CONTAINER_TAG
++  needs:
++    job: amd64-debian-container
++  before_script:
++    - source scripts/ci/gitlab-ci-section
++    - section_start setup "Install Tools"
++    - apt install --assume-yes --no-install-recommends jq
++    - section_end setup
++  script:
++    - mkdir build
++    - cd build
++    - section_start configure "Running configure"
++    - ../configure
++    - cd ..
++    - section_end configure
++    - section_start analyse "Analyse"
++    - .gitlab-ci.d/check-units.py build/compile_commands.json
++    - section_end analyse
 -- 
-2.43.0
+2.39.5
 
 
