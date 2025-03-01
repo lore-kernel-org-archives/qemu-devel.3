@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C372C021B8
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 16:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB71CC021B8
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 16:11:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toPJg-0004aD-7M; Sat, 01 Mar 2025 11:03:52 -0500
+	id 1toPQL-00025Y-36; Sat, 01 Mar 2025 11:10:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1toPJe-0004Zn-4a; Sat, 01 Mar 2025 11:03:50 -0500
+ id 1toPQI-000251-Pc; Sat, 01 Mar 2025 11:10:42 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1toPJc-0005kp-Ia; Sat, 01 Mar 2025 11:03:49 -0500
+ id 1toPQF-0006ih-TI; Sat, 01 Mar 2025 11:10:42 -0500
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 10CBB4E6069;
- Sat, 01 Mar 2025 17:03:47 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2B22B4E60F7;
+ Sat, 01 Mar 2025 17:10:37 +0100 (CET)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id nGia2JhuWlel; Sat,  1 Mar 2025 17:03:45 +0100 (CET)
+ with ESMTP id O7D769hbvTK1; Sat,  1 Mar 2025 17:10:35 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 286034E603E; Sat, 01 Mar 2025 17:03:45 +0100 (CET)
+ id 48D894E603E; Sat, 01 Mar 2025 17:10:35 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 26F5B74577C;
- Sat, 01 Mar 2025 17:03:45 +0100 (CET)
-Date: Sat, 1 Mar 2025 17:03:45 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 46ED774577C;
+ Sat, 01 Mar 2025 17:10:35 +0100 (CET)
+Date: Sat, 1 Mar 2025 17:10:35 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-cc: philmd@linaro.org
-Subject: Re: [PATCH] hw/net/fsl_etsec: Set eTSEC device description and
- category
-In-Reply-To: <20250218155407.838774E600E@zero.eik.bme.hu>
-Message-ID: <141ff667-042b-f7a7-605e-bf4bfd654ecc@eik.bme.hu>
-References: <20250218155407.838774E600E@zero.eik.bme.hu>
+cc: Bernhard Beschow <shentey@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH] hw/ppc/e500: Partial implementation of local access
+ window registers
+In-Reply-To: <20250115211544.307124E602F@zero.eik.bme.hu>
+Message-ID: <aabb2da4-3eaa-2a5f-b461-01727c380372@eik.bme.hu>
+References: <20250115211544.307124E602F@zero.eik.bme.hu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Type: text/plain; format=flowed; charset=US-ASCII
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -64,31 +64,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Feb 2025, BALATON Zoltan wrote:
-> Add description and set category for eTSEC device so it shows up
-> better in -device help.
+On Wed, 15 Jan 2025, BALATON Zoltan wrote:
+> This allows guests to set the CCSR base address. Also store and return
+> values of the local access window registers but their functionality
+> isn't implemented.
 
-Ping?
+Bernhard,
+
+If you have no alternative patch you plan to submit for next release 
+should we merge this for now? This helps running u-boot binaries even if 
+it's not enough alone but would be one patch less in my local tree. Or do 
+you know about a problem with this patch why this should not be merged?
+
+Regards,
+BALATON Zoltan
 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
-> hw/net/fsl_etsec/etsec.c | 2 ++
-> 1 file changed, 2 insertions(+)
+> hw/ppc/e500-ccsr.h |  4 +++
+> hw/ppc/e500.c      | 79 ++++++++++++++++++++++++++++++++++++++++++++--
+> 2 files changed, 80 insertions(+), 3 deletions(-)
 >
-> diff --git a/hw/net/fsl_etsec/etsec.c b/hw/net/fsl_etsec/etsec.c
-> index 3ce4fa2662..adde644892 100644
-> --- a/hw/net/fsl_etsec/etsec.c
-> +++ b/hw/net/fsl_etsec/etsec.c
-> @@ -423,8 +423,10 @@ static void etsec_class_init(ObjectClass *klass, void *data)
->     DeviceClass *dc = DEVICE_CLASS(klass);
+> diff --git a/hw/ppc/e500-ccsr.h b/hw/ppc/e500-ccsr.h
+> index 249c17be3b..cfbf96e181 100644
+> --- a/hw/ppc/e500-ccsr.h
+> +++ b/hw/ppc/e500-ccsr.h
+> @@ -4,12 +4,16 @@
+> #include "hw/sysbus.h"
+> #include "qom/object.h"
 >
->     dc->realize = etsec_realize;
-> +    dc->desc = "Freescale Enhanced Three-Speed Ethernet Controller";
->     device_class_set_legacy_reset(dc, etsec_reset);
->     device_class_set_props(dc, etsec_properties);
-> +    set_bit(DEVICE_CATEGORY_NETWORK, dc->categories);
+> +#define NR_LAWS 12
+> +
+> struct PPCE500CCSRState {
+>     /*< private >*/
+>     SysBusDevice parent;
+>     /*< public >*/
+>
+>     MemoryRegion ccsr_space;
+> +
+> +    uint32_t law_regs[NR_LAWS * 2];
+> };
+>
+> #define TYPE_CCSR "e500-ccsr"
+> diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+> index 64f8c766b4..376cb4cb37 100644
+> --- a/hw/ppc/e500.c
+> +++ b/hw/ppc/e500.c
+> @@ -43,6 +43,7 @@
+> #include "qemu/host-utils.h"
+> #include "qemu/option.h"
+> #include "hw/pci-host/ppce500.h"
+> +#include "qemu/log.h"
+> #include "qemu/error-report.h"
+> #include "hw/platform-bus.h"
+> #include "hw/net/fsl_etsec/etsec.h"
+> @@ -1331,11 +1332,83 @@ void ppce500_init(MachineState *machine)
+>     boot_info->dt_size = dt_size;
 > }
 >
-> static const TypeInfo etsec_types[] = {
+> +static int law_idx(hwaddr addr)
+> +{
+> +    int idx;
+> +
+> +    addr -= 0xc08;
+> +    idx = 2 * ((addr >> 5) & 0xf);
+> +    if (addr & 8) {
+> +        idx++;
+> +    }
+> +    assert(idx < 2 * NR_LAWS);
+> +    return idx;
+> +}
+> +
+> +static uint64_t law_read(void *opaque, hwaddr addr, unsigned size)
+> +{
+> +    PPCE500CCSRState *s = opaque;
+> +    uint64_t val = 0;
+> +
+> +    switch (addr) {
+> +    case 0:
+> +        val = s->ccsr_space.addr >> 12;
+> +        break;
+> +    case 0xc08 ... 0xd70:
+> +        val = s->law_regs[law_idx(addr)];
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR, "Invalid local access register read"
+> +                      "0x%" HWADDR_PRIx "\n", addr);
+> +    }
+> +    return val;
+> +}
+> +
+> +static void law_write(void *opaque, hwaddr addr, uint64_t val, unsigned size)
+> +{
+> +    PPCE500CCSRState *s = opaque;
+> +
+> +    switch (addr) {
+> +    case 0:
+> +        val &= 0xffff00;
+> +        memory_region_set_address(&s->ccsr_space, val << 12);
+> +        break;
+> +    case 0xc08 ... 0xd70:
+> +    {
+> +        int idx = law_idx(addr);
+> +
+> +        qemu_log_mask(LOG_UNIMP, "Unimplemented local access register write"
+> +                      "0x%" HWADDR_PRIx " <- 0x%" PRIx64 "\n", addr, val);
+> +        val &= (idx & 1) ? 0x80f0003f : 0xffffff;
+> +        s->law_regs[idx] = val;
+> +        break;
+> +    }
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR, "Invalid local access register write"
+> +                      "0x%" HWADDR_PRIx "\n", addr);
+> +    }
+> +}
+> +
+> +static const MemoryRegionOps law_ops = {
+> +    .read = law_read,
+> +    .write = law_write,
+> +    .endianness = DEVICE_BIG_ENDIAN,
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 4,
+> +    },
+> +};
+> +
+> static void e500_ccsr_initfn(Object *obj)
+> {
+> -    PPCE500CCSRState *ccsr = CCSR(obj);
+> -    memory_region_init(&ccsr->ccsr_space, obj, "e500-ccsr",
+> -                       MPC8544_CCSRBAR_SIZE);
+> +    PPCE500CCSRState *s = CCSR(obj);
+> +    MemoryRegion *mr;
+> +
+> +    memory_region_init(&s->ccsr_space, obj, "e500-ccsr", MPC8544_CCSRBAR_SIZE);
+> +
+> +    mr = g_new(MemoryRegion, 1);
+> +    memory_region_init_io(mr, obj, &law_ops, s, "local-access", 4096);
+> +    memory_region_add_subregion(&s->ccsr_space, 0, mr);
+> }
+>
+> static const TypeInfo e500_ccsr_info = {
 >
 
