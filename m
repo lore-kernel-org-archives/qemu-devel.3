@@ -4,46 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ECB4C021B8
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 14:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34B76C021B8
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 15:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toNx6-0001Qz-4S; Sat, 01 Mar 2025 09:36:28 -0500
+	id 1toOrC-0000Us-2o; Sat, 01 Mar 2025 10:34:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1toNwL-00019l-Ch
- for qemu-devel@nongnu.org; Sat, 01 Mar 2025 09:35:42 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1toOr7-0000SJ-B4
+ for qemu-devel@nongnu.org; Sat, 01 Mar 2025 10:34:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1toNwI-00017s-EN
- for qemu-devel@nongnu.org; Sat, 01 Mar 2025 09:35:41 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 486554E6108;
- Sat, 01 Mar 2025 15:35:36 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id RFM_Qwe8OYCF; Sat,  1 Mar 2025 15:35:34 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 47DEA4E60F6; Sat, 01 Mar 2025 15:35:34 +0100 (CET)
-Message-Id: <637b92984795a385b648a84208f093947cc261e4.1740839457.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1740839457.git.balaton@eik.bme.hu>
-References: <cover.1740839457.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 2/4] hw/nvram/eeprom_at24c: Remove ERR macro that calls
- fprintf to stderr
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-Date: Sat, 01 Mar 2025 15:35:34 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1toOr5-0002jv-Fm
+ for qemu-devel@nongnu.org; Sat, 01 Mar 2025 10:34:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740843257;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5y9cK7VneKio4mMbPh/RAMMXESA392aXIB6glLBvXNg=;
+ b=QOEfye+4ZfC3Sj9xQ7iuOy+6Bq6ElNnBj4BYjOvr77xzMu5qTdnWI/0JMeEjl4CIIJ/hxD
+ Hhaa0CQtEj0vMGIFpbJ6sg8eP4oOF/s1rJCOXr9jmpkzWwzzJ/2GqEgY/6Xh2yEjwXTpr4
+ VBYImgQjpnpqFBFwWIBeLA6n6kn2JTo=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-108-Pfy-r8aEOnivNcwGF15slQ-1; Sat, 01 Mar 2025 10:34:16 -0500
+X-MC-Unique: Pfy-r8aEOnivNcwGF15slQ-1
+X-Mimecast-MFC-AGG-ID: Pfy-r8aEOnivNcwGF15slQ_1740843255
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-abbba16956bso378589866b.2
+ for <qemu-devel@nongnu.org>; Sat, 01 Mar 2025 07:34:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740843255; x=1741448055;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5y9cK7VneKio4mMbPh/RAMMXESA392aXIB6glLBvXNg=;
+ b=G2JCd6v7YJzVEKeCHvjxx9H+fo0Rq+saxHic2Y80UKlGAu0to1gHHMg7UJlHrBonCl
+ Yz8NcrN9jvMr1QZts563N7a7XoVxf3bjiXRxYNBSauRnLO6mcPXf/myF8MDjvkZzNodz
+ hL2ysHjY83dEFNAnuI//xrWxj2HNr7Y2HF+hOOHzk0ApvvODZ7vZVDsw+bFkrMOQ1aSQ
+ iVuYfIMRzq6Jh8OX6YUkRkBCW+FbgBxrke/+Jz6S8Z9Me2lJ2qHQZROLTip6jnMa2LCC
+ gauiS/y2QTRKXN+GNBLOfBfH3Kv0MHgD2CTCU5ODx8+gnDJ7UcJCClQw7oDFYlw9ixxb
+ fp2A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXmBn5SqH+x2blcn4IpaOiFc6rmw/jK3A8PttONlliKnoC09NzSlgBf1HTT9dQ3pg4VRP9FPrYcQwa@nongnu.org
+X-Gm-Message-State: AOJu0Yzbl0r5Gxrq03QA1V/IMOpHA72AHuUAVSaI8ysTd1iOOSKo6qkL
+ wxKKKlb2dd8bkvRmV3lj54jQlAxCNQ+70+CRp3CLiW8FQfjv0dN/oXfNu/Hc3MSk5sPwxJ8VYGY
+ wpKkxtT3muepxCMZX3Znkupg738aBgXB8YozTzowe+dy/t+xAPwlRY+tYtHF6Is4BgfJGgff8AY
+ 2WsAYXBbi4bijm46rXdi8I5AiHcZI=
+X-Gm-Gg: ASbGncvV1n34ZwLx2P1ki/CNMH7139yuKEtfHr4D41JcdP/5ohuOhJ76AEFVge6KwCW
+ cRZxJdpCQwXngMYh/pvPzyevoUuRIQx1I3bdXZUzXYUnnXJebh4w723a3cUJiMeL70o8mgMJa
+X-Received: by 2002:a17:907:97d1:b0:abb:eec3:3941 with SMTP id
+ a640c23a62f3a-abf268225cdmr817044566b.45.1740843254748; 
+ Sat, 01 Mar 2025 07:34:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHGRSPr2S7ZEYmqYOFbz/qVnLpouthLO9PrIBRiDCjphzY3xtRIJd87m46t4KKeslQPRX90tXW0aPXSdsRkusU=
+X-Received: by 2002:a17:907:97d1:b0:abb:eec3:3941 with SMTP id
+ a640c23a62f3a-abf268225cdmr817040766b.45.1740843254384; Sat, 01 Mar 2025
+ 07:34:14 -0800 (PST)
+MIME-Version: 1.0
+References: <20250220065326.312596-1-anisinha@redhat.com>
+ <Z7bZBsqO6MxhFKVp@intel.com>
+In-Reply-To: <Z7bZBsqO6MxhFKVp@intel.com>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Sat, 1 Mar 2025 21:04:03 +0530
+X-Gm-Features: AQ5f1JqG9FyWblCwaF2xVHWtso_Yy1pTRGIVJghpM3c3q00UjitmYUy5zu6I8mw
+Message-ID: <CAK3XEhM505AFFND17_SOOJnTPB+u2+hKXDdo01oyza9T1=H2ww@mail.gmail.com>
+Subject: Re: [PATCH v2] microvm: do not use the lastest cpu version
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, imammedo@redhat.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.441,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -61,60 +109,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the realize method error_setg can be used like other places there
-already do. The other usage can be replaced with error_report which is
-the preferred way instead of directly printing to stderr.
+On Thu, Feb 20, 2025 at 12:36=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wro=
+te:
+>
+> On Thu, Feb 20, 2025 at 12:23:26PM +0530, Ani Sinha wrote:
+> > Date: Thu, 20 Feb 2025 12:23:26 +0530
+> > From: Ani Sinha <anisinha@redhat.com>
+> > Subject: [PATCH v2] microvm: do not use the lastest cpu version
+> > X-Mailer: git-send-email 2.45.2
+> >
+> > commit 0788a56bd1ae3 ("i386: Make unversioned CPU models be aliases")
+> > introduced 'default_cpu_version' for PCMachineClass. This created three
+> > categories of CPU models:
+> >  - Most unversioned CPU models would use version 1 by default.
+> >  - For machines 4.0.1 and older that do not support cpu model aliases, =
+a
+> >    special default_cpu_version value of CPU_VERSION_LEGACY is used.
+> >  - It was thought that future machines would use the latest value of cp=
+u
+> >    versions corresponding to default_cpu_version value of
+> >    CPU_VERSION_LATEST [1].
+> >
+> > All pc machines still use the default cpu version of 1 for
+> > unversioned cpu models. CPU_VERSION_LATEST is a moving target and
+> > changes with time. Therefore, if machines use CPU_VERSION_LATEST, it wo=
+uld
+> > mean that over a period of time, for the same versioned machine type,
+> > the cpu version would be different depending on what the latest was at =
+that
+> > time. This would break guests even when they use a constant specific
+> > versioned machine type.
+> > Additionally, microvm machines are not versioned anyway and therefore
+> > there is no requirement to use the latest cpu model by default.
+> > Let microvms use the non-versioned cpu model and remove all references
+> > to CPU_VERSION_LATEST as there are no other users (nor we anticipate
+> > future consumers of CPU_VERSION_LATEST).
+> >
+> > Those users who need spefific cpu versions can use explicit version in
+> > the QEMU command line to select the specific cpu version desired.
+> >
+> > CI pipline does not break with this change.
+> >
+> > 1) See commit dcafd1ef0af227 ("i386: Register versioned CPU models")
+> >
+> > CC: imammedo@redhat.com
+> > CC: zhao1.liu@intel.com
+> > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+> > Reviewed-by: Sergio Lopez <slp@redhat.com>
+> > Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> > ---
+> >  hw/i386/microvm.c |  2 +-
+> >  target/i386/cpu.c | 15 ---------------
+> >  target/i386/cpu.h |  4 ----
+> >  3 files changed, 1 insertion(+), 20 deletions(-)
+> >
+> > changelog:
+> > v2: tags added, more explanation in the commit log.
+>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+>
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/nvram/eeprom_at24c.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
-
-diff --git a/hw/nvram/eeprom_at24c.c b/hw/nvram/eeprom_at24c.c
-index 2ae03935d4..9f606842eb 100644
---- a/hw/nvram/eeprom_at24c.c
-+++ b/hw/nvram/eeprom_at24c.c
-@@ -10,6 +10,7 @@
- #include "qemu/osdep.h"
- 
- #include "qapi/error.h"
-+#include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "hw/i2c/i2c.h"
- #include "hw/nvram/eeprom_at24c.h"
-@@ -26,9 +27,6 @@
- #define DPRINTK(FMT, ...) do {} while (0)
- #endif
- 
--#define ERR(FMT, ...) fprintf(stderr, TYPE_AT24C_EE " : " FMT, \
--                            ## __VA_ARGS__)
--
- #define TYPE_AT24C_EE "at24c-eeprom"
- OBJECT_DECLARE_SIMPLE_TYPE(EEPROMState, AT24C_EE)
- 
-@@ -75,8 +73,7 @@ int at24c_eeprom_event(I2CSlave *s, enum i2c_event event)
-         if (ee->blk && ee->changed) {
-             int ret = blk_pwrite(ee->blk, 0, ee->rsize, ee->mem, 0);
-             if (ret < 0) {
--                ERR(TYPE_AT24C_EE
--                        " : failed to write backing file\n");
-+                error_report("%s: failed to write backing file", __func__);
-             }
-             DPRINTK("Wrote to backing file\n");
-         }
-@@ -203,8 +200,9 @@ static void at24c_eeprom_realize(DeviceState *dev, Error **errp)
-         int ret = blk_pread(ee->blk, 0, ee->rsize, ee->mem, 0);
- 
-         if (ret < 0) {
--            ERR(TYPE_AT24C_EE
--                    " : Failed initial sync with backing file\n");
-+            error_setg(errp, "%s: Failed initial sync with backing file",
-+                       TYPE_AT24C_EE);
-+            return;
-         }
-         DPRINTK("Reset read backing file\n");
-     }
--- 
-2.30.9
+Who is picking this up?
 
 
