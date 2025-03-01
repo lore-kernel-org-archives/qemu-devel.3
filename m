@@ -4,72 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D88BC021B8
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 07:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B63C021B8
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 07:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toHBi-0002IN-Ql; Sat, 01 Mar 2025 02:23:06 -0500
+	id 1toHGD-0003Q5-T2; Sat, 01 Mar 2025 02:27:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1toHBf-0002IA-63
- for qemu-devel@nongnu.org; Sat, 01 Mar 2025 02:23:03 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1toHBc-0003Fn-4E
- for qemu-devel@nongnu.org; Sat, 01 Mar 2025 02:23:02 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxCGrHtcJnG+KGAA--.34355S3;
- Sat, 01 Mar 2025 15:22:47 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxb8fDtcJnbDsvAA--.44969S3;
- Sat, 01 Mar 2025 15:22:45 +0800 (CST)
-Subject: Re: [PATCH v5 1/2] target/loongarch: fix 'make check-functional'
- failed
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org
-Cc: richard.henderson@linaro.org, yangxiaojuan@loongson.cn,
- wangliupu@loongson.cn
-References: <20250228090659.2434568-1-gaosong@loongson.cn>
- <20250228090659.2434568-2-gaosong@loongson.cn>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <79020097-f5b3-9299-002b-69ff43479bae@loongson.cn>
-Date: Sat, 1 Mar 2025 15:22:07 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1toHG1-0003I8-58
+ for qemu-devel@nongnu.org; Sat, 01 Mar 2025 02:27:33 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1toHFw-0003kH-D9
+ for qemu-devel@nongnu.org; Sat, 01 Mar 2025 02:27:31 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-abbac134a19so433286266b.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 23:27:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740814046; x=1741418846; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kznBvEZS8TAhjlcspBRTuZNGp+f6wNiPImDFbVcPVM8=;
+ b=DSURpBhSBuSoPuIafxlmU7opG563F7Ce+Ytn7ZqAIjJr+IHHksCZ05dtlyJ/84/xUi
+ h1D9dgD0piPeFxlWguiqToI9SfUcM1CokWoBmln4HA6BsPa0GxrPo69ra5Fzy9xE+3eC
+ g7yvI7MCmKB9UStzpKXOdVPbiB2Og/9fJvQXjUokui2cUYqYrAkCgihp/MkmcwTp5uJl
+ LpetBxclOuAvdRWH9lPRj4pesg9k342j2AdRYUWeay6B9Lo+tNbQPaI94gbhxo+Gcfhx
+ Saq0xpuh1xSoyS736FCwl5LvY9B05ZWP2e0OROAagmzFaEKUJdBlu3+SiMydZw/uNIyY
+ v8HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740814046; x=1741418846;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kznBvEZS8TAhjlcspBRTuZNGp+f6wNiPImDFbVcPVM8=;
+ b=W8Spjfy28G9KhBqbjeOEZAhyP/EV6qW9NifiLeWvWVjfivema8v2n6U1zTI+f+95GS
+ 5988n7GG5rrOKAWlyRIUP/wV0LIPg9+VZn8c/wLNokshV5OOh0a2lLHVP3dM5d+UEkPr
+ uAZFfqrUFK58gn57h8z3pCEHdVYbz3GR+SnF/upbfE+lDbgGpFFQWl0PqeRuXdLysIua
+ UqGT+SMSQVWxzk2LFsIk5px/gglheqgP9I4aJejQr6g4D+K7jKyXzXBrtq34eu6OgNiJ
+ cYRrejsY6PQ+jq9yhDnziex/Oa4+m+OTf5/kGa2frjiULKwXB2nyNcQJX89TKD2V6k47
+ 4+1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV/oqBqqKrxTuQgyUhUe89XoRaPQmpq5jNxJUC/S6lppvConHGmIeoXzZXFA6KxqCUIIw4h0z5kJ+iv@nongnu.org
+X-Gm-Message-State: AOJu0YxjQm5sRMZ1E5RK28k3gwly2H+PDZmkvJ/mqVCZb6mAt2vAzK8U
+ fyzk8qcNNQMc4y2nTQBkMo+6wFBySmH920XqMVq7GR34p0AOt5vuyq+Pg3J5wnDLvtRnLOdFlcE
+ 2Ly07Koqbzyqj+CHJ/YbLaPL/xBo=
+X-Gm-Gg: ASbGncttE8Y6VL2IgvZh5ZdoP4cI7gx4vZkNKk0QJ20GH16JyFypR50TIhtaDEgf8lV
+ 3HKYHxZmSWCQa37yqB4QjXNFBR9M+GHwgW5w40gi+GKOBpoMSt2ZDa3wqTdeyWv/XTHf6xSlbWr
+ mXTc0hH7dl/AP4JoOB98TOVH7n4w==
+X-Google-Smtp-Source: AGHT+IE1+cpunXLK8q4VPVUHGhdySGKY8m9IstniT9kqAagY16NSRA7cyHLa7L4k8cKqlkvYOpbj2p8u4IKANAVM1pA=
+X-Received: by 2002:a17:907:6d16:b0:ab7:6c4a:6a74 with SMTP id
+ a640c23a62f3a-abf25fb8399mr702772166b.16.1740814046176; Fri, 28 Feb 2025
+ 23:27:26 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20250228090659.2434568-2-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8fDtcJnbDsvAA--.44969S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tw4rKFy8XF4kJFWUCF1kCrX_yoW8Xr4xpr
- y3Cwn8KFnrKrZ5AF13K3yDtr17Z3ykAw4kXrn7tryrJrs3Jr1v9FWvgwsIkr48Aw47AF42
- vF1v9ryUua43ZFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.651,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CAJSP0QUk77GViTBgBpfYH-AbAmQ5aUwi0K6UTH9iv=1mVb0Wbw@mail.gmail.com>
+ <803732f6-6ab1-4298-a956-660496664f67@redhat.com>
+In-Reply-To: <803732f6-6ab1-4298-a956-660496664f67@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Sat, 1 Mar 2025 15:27:14 +0800
+X-Gm-Features: AQ5f1JpZZZYqPw_wifX5HUapdmxckoBCTwxU6rOVRbOKmaPy_sjPov1yJNeRU9g
+Message-ID: <CAJSP0QW+uthupzD9_d5pav6WsB50MTH+MUgBaRYE9LfbORA-ug@mail.gmail.com>
+Subject: Re: Kubernetes gitlab-runner jobs cannot be scheduled
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Camilla Conte <cconte@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,45 +97,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/2/28 下午5:06, Song Gao wrote:
->   some tlb instructions get  the tlb_ps from tlb->misc but the
->   value may has been initialized to 0,just check the tlb_ps skip
->   the function and write a log.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/tcg/tlb_helper.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-> index a323606e5a..1c603b2903 100644
-> --- a/target/loongarch/tcg/tlb_helper.c
-> +++ b/target/loongarch/tcg/tlb_helper.c
-> @@ -427,7 +427,11 @@ void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
->           uint16_t tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
->           uint64_t vpn, tlb_vppn;
->           uint8_t tlb_ps, compare_shift;
-> +        uint8_t tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
->   
-> +        if (!tlb_e){
-> +            continue;
-> +        }
->           if (i >= LOONGARCH_STLB) {
->               tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
->           } else {
-> @@ -456,7 +460,11 @@ void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
->           uint16_t tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
->           uint64_t vpn, tlb_vppn;
->           uint8_t tlb_ps, compare_shift;
-> +        uint8_t tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
->   
-> +        if (!tlb_e){
-> +            continue;
-> +        }
->           if (i >= LOONGARCH_STLB) {
->               tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
->           } else {
-> 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+On Sat, Mar 1, 2025 at 2:36=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
+>
+> On 3/1/25 07:19, Stefan Hajnoczi wrote:
+> > Hi,
+> > On February 26th GitLab CI started failing many jobs because they
+> > could not be scheduled. I've been unable to merge pull requests
+> > because the CI is not working.
+> >
+> > Here is an example failed job:
+> > https://gitlab.com/qemu-project/qemu/-/jobs/9281757413
+>
+> Hi Stefan,
+>
+> until February 26th the Digital Ocean runners were not enabled; I tried
+> enabling them (which is what caused the issue) to start gauging how much
+> credit we would need to be able to move from Azure to DO for CI.  I
+> posted a note on IRC, I'm sorry if you missed that.
+>
+> > The cache PVC appears to be a manual addition made to the running
+> > cluster but not committed to qemu.git. I don't understand why the
+> > problems only started surfacing now. Maybe a recent .gitlab-ci.d/
+> > change changed how the timeout behaves or maybe the gitlab-runner
+> > configuration that enables the cache PVC simply wasn't picked up by
+> > the gitlab-runner Pod until February 26th?
+>
+> Almost: the cache is not used on Azure, which is why it works.
+>
+> > In the short term I made a manual edit to the ConfigMap removing
+> > gitlab-cache-pvc (but I didn't delete the PVC resource itself). Jobs
+> > are at least running now, although they may take longer due to the
+> > lack of cache.
+>
+> Ok, thanks for debugging that.  I think what you did is right, and the
+> caching setup should be tested more on a secondary cluster.
 
+Glad the change is acceptable and didn't break things more.
+
+> (As to the DO credits numbers, the cost of the k8s cluster is about
+> $75/month, and since we were granted $2000 in credits we have only
+> $1100/year to spend on the actual jobs.  The plan is to check on the
+> credits left at the end of March and bring our estimates to DO's open
+> source program manager).
+
+This reminds me I received an email asking for feedback regarding
+QEMU's Amazon credits. Just wanted to mention they are there if we
+need them.
+
+Stefan
 
