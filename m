@@ -4,91 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82902C021B8
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 07:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31BA5C021B8
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 07:41:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toHRI-0000PI-P3; Sat, 01 Mar 2025 02:39:13 -0500
+	id 1toHT6-0001CZ-4M; Sat, 01 Mar 2025 02:41:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1toHRG-0000P1-No; Sat, 01 Mar 2025 02:39:10 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1toHRE-0005IM-QW; Sat, 01 Mar 2025 02:39:10 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 48C73F4E20;
- Sat, 01 Mar 2025 10:38:24 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 05DC31C19CD;
- Sat,  1 Mar 2025 10:38:56 +0300 (MSK)
-Message-ID: <dd78c7ed-bacc-4af0-ba70-031329546353@tls.msk.ru>
-Date: Sat, 1 Mar 2025 10:38:55 +0300
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1toHT2-0001CN-9E
+ for qemu-devel@nongnu.org; Sat, 01 Mar 2025 02:41:00 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1toHSx-0005lg-RP
+ for qemu-devel@nongnu.org; Sat, 01 Mar 2025 02:40:59 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxNHABusJnnOSGAA--.34194S3;
+ Sat, 01 Mar 2025 15:40:49 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAxzMT+ucJnykEvAA--.42630S3;
+ Sat, 01 Mar 2025 15:40:48 +0800 (CST)
+Subject: Re: [PATCH v5 2/2] target/loongarch: check tlb_ps
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org
+Cc: richard.henderson@linaro.org, yangxiaojuan@loongson.cn,
+ wangliupu@loongson.cn
+References: <20250228090659.2434568-1-gaosong@loongson.cn>
+ <20250228090659.2434568-3-gaosong@loongson.cn>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <f47a50ad-3635-3b61-1401-d9791a06594c@loongson.cn>
+Date: Sat, 1 Mar 2025 15:40:10 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Some regression due to "ui/gtk: Fix mouse/motion event scaling
- issue with GTK display backend"
-To: "Kim, Dongwon" <dongwon.kim@intel.com>, hikalium <hikalium@hikalium.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <PH8PR11MB6879500CDBB703E22EC3D6F0FAC32@PH8PR11MB6879.namprd11.prod.outlook.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <PH8PR11MB6879500CDBB703E22EC3D6F0FAC32@PH8PR11MB6879.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+In-Reply-To: <20250228090659.2434568-3-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMAxzMT+ucJnykEvAA--.42630S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3KFyxAw47Xr1DZrWUKF48AFc_yoWDZr13pF
+ W7CrZFkFWUGrWkA3Wft3WYkw1DZw48Gws2va1fK34FkrsxXr97XFWvg3sF9F1kJw45CF4x
+ ZF1qvryUZFW3XFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.651,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,23 +84,307 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-25.02.2025 21:03, Kim, Dongwon wrote:
-> Hi hikalium,
-> 
-> This commit actually breaks one of our use cases with Ubuntu host when the display scaling factor is
-> set to 200%. It seems like gtk_widget_get_scale_factor is only way to get that DPI scaling factor
-> and without this, mouse movement on the guest wouldn't be able to go across certain boundary
-> as the coordinate will be halved (in case DPI scaling factor is 200%).
-> 
-> commit 37e91415018db3656b46cdea8f9e4d47b3ff130d
-> Author: hikalium <hikalium@hikalium.com>
-> Date:   Sun May 12 20:14:35 2024 +0900
-> 
->      ui/gtk: Fix mouse/motion event scaling issue with GTK display backend
 
-Cc'ing qemu-stable@ since this commit has been picked up for stable releases.
 
-Thanks,
+On 2025/2/28 下午5:06, Song Gao wrote:
+> For LoongArch th min tlb_ps is 12(4KB), for TLB code,
+> the tlb_ps may be 0,this may case UndefinedBehavior
+> Add a check-tlb_ps fuction to check tlb_ps,
+> to make sure the tlb_ps is avalablie. we check tlb_ps
+> when get the tlb_ps from tlb->misc or CSR bits.
+> 1. cpu reset
+>     set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits a default value
+>     from CSR_PRCFG2;
+> 2. tlb instructions.
+>     some tlb instructions get  the tlb_ps from tlb->misc but the
+>     value may  has been initialized to 0. we need just check the tlb_ps
+>     skip the function and write a guest log.
+> 3. csrwr instructions.
+>     to make sure CSR_PWCL.PTBASE and CSR_STLBPS.PS bits are avalable,
+>     cheke theses bits and set a default value from CSR_PRCFG2.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   target/loongarch/cpu.c                        | 10 ++--
+>   target/loongarch/cpu_helper.c                 |  8 +++-
+>   target/loongarch/helper.h                     |  1 +
+>   target/loongarch/internals.h                  |  2 +
+>   target/loongarch/tcg/csr_helper.c             | 30 +++++++++++-
+>   .../tcg/insn_trans/trans_privileged.c.inc     |  1 +
+>   target/loongarch/tcg/tlb_helper.c             | 46 ++++++++++++++++++-
+>   7 files changed, 90 insertions(+), 8 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index e91f4a5239..162a227d52 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -585,13 +585,17 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>        */
+>       env->CSR_PGDH = 0;
+>       env->CSR_PGDL = 0;
+> -    env->CSR_PWCL = 0;
+>       env->CSR_PWCH = 0;
+> -    env->CSR_STLBPS = 0;
+>       env->CSR_EENTRY = 0;
+>       env->CSR_TLBRENTRY = 0;
+>       env->CSR_MERRENTRY = 0;
+> -
+> +    /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
+> +    if (env->CSR_PRCFG2 == 0) {
+> +        env->CSR_PRCFG2 =0x3fffff000;
+> +    }
+> +    int tlb_ps = clz32(env->CSR_PRCFG2);
+Could you please put variable declaration "int tlb_ps" to header of 
+function?
 
-/mjt
+> +    env->CSR_STLBPS = FIELD_DP64(env->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
+> +    env->CSR_PWCL = FIELD_DP64(env->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
+>       for (n = 0; n < 4; n++) {
+>           env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV0, 0);
+>           env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV1, 0);
+> diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+> index 930466ca48..a81a610a1d 100644
+> --- a/target/loongarch/cpu_helper.c
+> +++ b/target/loongarch/cpu_helper.c
+> @@ -117,7 +117,9 @@ bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
+>                   *index = i * 256 + stlb_idx;
+>                   return true;
+>               }
+> -        }
+> +        } else {
+> +	    continue;
+> +	}
+There is tab key in the line.
+It it unnecessary to add else sentence, since it is the end of loop already.
+>       }
+>   
+>       /* Search MTLB */
+> @@ -136,7 +138,9 @@ bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
+>                   *index = i;
+>                   return true;
+>               }
+> -        }
+> +        } else {
+> +	    continue;
+> +	}
+Ditto
+>       }
+>       return false;
+>   }
+> diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
+> index 943517b5f2..1d5cb0198c 100644
+> --- a/target/loongarch/helper.h
+> +++ b/target/loongarch/helper.h
+> @@ -100,6 +100,7 @@ DEF_HELPER_1(rdtime_d, i64, env)
+>   DEF_HELPER_1(csrrd_pgd, i64, env)
+>   DEF_HELPER_1(csrrd_cpuid, i64, env)
+>   DEF_HELPER_1(csrrd_tval, i64, env)
+> +DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+>   DEF_HELPER_2(csrwr_estat, i64, env, tl)
+>   DEF_HELPER_2(csrwr_asid, i64, env, tl)
+>   DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+> index 7b254c5f49..1cd959a766 100644
+> --- a/target/loongarch/internals.h
+> +++ b/target/loongarch/internals.h
+> @@ -43,6 +43,8 @@ enum {
+>       TLBRET_PE = 7,
+>   };
+>   
+> +bool check_ps(CPULoongArchState *ent, int ps);
+> +
+>   extern const VMStateDescription vmstate_loongarch_cpu;
+>   
+>   void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+> index 6c95be9910..1c8a234b16 100644
+> --- a/target/loongarch/tcg/csr_helper.c
+> +++ b/target/loongarch/tcg/csr_helper.c
+> @@ -17,6 +17,27 @@
+>   #include "hw/irq.h"
+>   #include "cpu-csr.h"
+>   
+> +
+> +
+> +target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+> +{
+> +    int64_t old_v = env->CSR_STLBPS;
+> +    uint8_t default_ps = ctz32(env->CSR_PRCFG2);
+> +
+> +    /*
+> +     * The real hardware only supports the min tlb_ps is 12
+> +     * tlb_ps=0 may cause undefined-behavior.
+> +     */
+> +    uint8_t tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+> +    if (!check_ps(env, tlb_ps)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "Attempted set ps %d\n",tlb_ps);
+> +        val = FIELD_DP64(val, CSR_STLBPS, PS, default_ps);
+> +    }
+> +    env->CSR_STLBPS = val;
+> +    return old_v;
+> +}
+> +
+>   target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+>   {
+>       int64_t v;
+> @@ -99,19 +120,26 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+>   
+>   target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+>   {
+> -    int shift;
+> +    int shift, ptbase;
+>       int64_t old_v = env->CSR_PWCL;
+> +    uint8_t default_ps = ctz32(env->CSR_PRCFG2);
+>   
+>       /*
+>        * The real hardware only supports 64bit PTE width now, 128bit or others
+>        * treated as illegal.
+>        */
+>       shift = FIELD_EX64(val, CSR_PWCL, PTEWIDTH);
+> +    ptbase = FIELD_EX64(val, CSR_PWCL, PTBASE);
+>       if (shift) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                         "Attempted set pte width with %d bit\n", 64 << shift);
+>           val = FIELD_DP64(val, CSR_PWCL, PTEWIDTH, 0);
+>       }
+> +    if (!check_ps(env, ptbase)) {
+> +         qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "Attrmpted set ptbase 2^%d\n", ptbase);
+> +         val = FIELD_DP64(val, CSR_PWCL, PTBASE, default_ps);
+> +    }
+>   
+>       env->CSR_PWCL = val;
+>       return old_v;
+> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> index 3afa23af79..ecbfe23b63 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> @@ -74,6 +74,7 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+>   
+>   void loongarch_csr_translate_init(void)
+>   {
+> +    SET_CSR_FUNC(STLBPS, NULL, gen_helper_csrwr_stlbps);
+>       SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
+>       SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
+>       SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index 1c603b2903..27f0653a5a 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -18,6 +18,14 @@
+>   #include "exec/log.h"
+>   #include "cpu-csr.h"
+>   
+> +bool check_ps(CPULoongArchState *env, int tlb_ps)
+> +{
+> +     if(tlb_ps > 64){
+Space key is missing here.
+> +         return false;
+> +     }
+> +     return BIT_ULL(tlb_ps) && (env->CSR_PRCFG2);
+Is it BIT_ULL(tlb_ps) & (env->CSR_PRCFG2) rather than && ?
+> +}
+> +
+>   void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+>                                  uint64_t *dir_width, target_ulong level)
+>   {
+> @@ -123,12 +131,21 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
+>       uint8_t tlb_v0 = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, V);
+>       uint8_t tlb_v1 = FIELD_EX64(tlb->tlb_entry1, TLBENTRY, V);
+>       uint64_t tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+> +    uint8_t tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+> +
+> +    if (!tlb_e){
+> +        return;
+> +    }
+>   
+>       if (index >= LOONGARCH_STLB) {
+>           tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+>       } else {
+>           tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+>       }
+> +    if (!check_ps(env,tlb_ps)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "tlb_ps %d is illegal\n", tlb_ps);
+> +        return;
+> +    }
+>       pagesize = MAKE_64BIT_MASK(tlb_ps, 1);
+>       mask = MAKE_64BIT_MASK(0, tlb_ps + 1);
+>   
+> @@ -187,8 +204,10 @@ static void fill_tlb_entry(CPULoongArchState *env, int index)
+>           lo1 = env->CSR_TLBELO1;
+>       }
+>   
+> -    if (csr_ps == 0) {
+> -        qemu_log_mask(CPU_LOG_MMU, "page size is 0\n");
+> +    /*check csr_ps */
+> +    if (!check_ps(env, csr_ps)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "csr_ps %d is illegal\n", csr_ps);
+> +        return;
+>       }
+>   
+>       /* Only MTLB has the ps fields */
+> @@ -249,6 +268,10 @@ void helper_tlbrd(CPULoongArchState *env)
+>       }
+>       tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+>   
+> +    if (!check_ps(env, tlb_ps)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "tlb_ps %d is illegal\n", tlb_ps);
+> +        return;
+> +    }
+Why add check_ps() here? I think it should be added only in TLB adding, 
+not necessary in tlb invalid and search funciton.
+
+>       if (!tlb_e) {
+>           /* Invalid TLB entry */
+>           env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
+> @@ -298,7 +321,16 @@ void helper_tlbfill(CPULoongArchState *env)
+>           pagesize = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
+>       }
+>   
+> +    if (!check_ps(env, pagesize)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "pagesize %d is illegal\n", pagesize);
+> +        return;
+> +    }
+> +
+>       stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+> +    if (!check_ps(env, stlb_ps)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "stlb_ps %d is illegal\n", stlb_ps);
+> +        return;
+> +    }
+>   
+>       if (pagesize == stlb_ps) {
+>           /* Only write into STLB bits [47:13] */
+> @@ -437,6 +469,10 @@ void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
+>           } else {
+>               tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+>           }
+> +        if (!check_ps(env, tlb_ps)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "tlb_ps %d is illegal\n", tlb_ps);
+> +            return;
+> +        }
+Do we need adding check_ps() in function helper_invtlb_page_asid()?
+Since CSR_STLBPS cannot be changed dynamically when mmu is on.
+
+Regards
+Bibo Mao
+
+>           tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+>           vpn = (addr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
+>           compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+> @@ -470,6 +506,12 @@ void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
+>           } else {
+>               tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+>           }
+> +        if (!check_ps(env, tlb_ps)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "tlb_ps %d is illegal\n", tlb_ps);
+> +            return;
+> +        }
+> +
+> +
+>           tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+>           vpn = (addr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
+>           compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+> 
+
 
