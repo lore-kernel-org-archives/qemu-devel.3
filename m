@@ -4,84 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B63C021B8
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 07:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82902C021B8
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 07:39:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toHGD-0003Q5-T2; Sat, 01 Mar 2025 02:27:46 -0500
+	id 1toHRI-0000PI-P3; Sat, 01 Mar 2025 02:39:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1toHG1-0003I8-58
- for qemu-devel@nongnu.org; Sat, 01 Mar 2025 02:27:33 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1toHFw-0003kH-D9
- for qemu-devel@nongnu.org; Sat, 01 Mar 2025 02:27:31 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-abbac134a19so433286266b.0
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 23:27:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740814046; x=1741418846; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kznBvEZS8TAhjlcspBRTuZNGp+f6wNiPImDFbVcPVM8=;
- b=DSURpBhSBuSoPuIafxlmU7opG563F7Ce+Ytn7ZqAIjJr+IHHksCZ05dtlyJ/84/xUi
- h1D9dgD0piPeFxlWguiqToI9SfUcM1CokWoBmln4HA6BsPa0GxrPo69ra5Fzy9xE+3eC
- g7yvI7MCmKB9UStzpKXOdVPbiB2Og/9fJvQXjUokui2cUYqYrAkCgihp/MkmcwTp5uJl
- LpetBxclOuAvdRWH9lPRj4pesg9k342j2AdRYUWeay6B9Lo+tNbQPaI94gbhxo+Gcfhx
- Saq0xpuh1xSoyS736FCwl5LvY9B05ZWP2e0OROAagmzFaEKUJdBlu3+SiMydZw/uNIyY
- v8HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740814046; x=1741418846;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kznBvEZS8TAhjlcspBRTuZNGp+f6wNiPImDFbVcPVM8=;
- b=W8Spjfy28G9KhBqbjeOEZAhyP/EV6qW9NifiLeWvWVjfivema8v2n6U1zTI+f+95GS
- 5988n7GG5rrOKAWlyRIUP/wV0LIPg9+VZn8c/wLNokshV5OOh0a2lLHVP3dM5d+UEkPr
- uAZFfqrUFK58gn57h8z3pCEHdVYbz3GR+SnF/upbfE+lDbgGpFFQWl0PqeRuXdLysIua
- UqGT+SMSQVWxzk2LFsIk5px/gglheqgP9I4aJejQr6g4D+K7jKyXzXBrtq34eu6OgNiJ
- cYRrejsY6PQ+jq9yhDnziex/Oa4+m+OTf5/kGa2frjiULKwXB2nyNcQJX89TKD2V6k47
- 4+1Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/oqBqqKrxTuQgyUhUe89XoRaPQmpq5jNxJUC/S6lppvConHGmIeoXzZXFA6KxqCUIIw4h0z5kJ+iv@nongnu.org
-X-Gm-Message-State: AOJu0YxjQm5sRMZ1E5RK28k3gwly2H+PDZmkvJ/mqVCZb6mAt2vAzK8U
- fyzk8qcNNQMc4y2nTQBkMo+6wFBySmH920XqMVq7GR34p0AOt5vuyq+Pg3J5wnDLvtRnLOdFlcE
- 2Ly07Koqbzyqj+CHJ/YbLaPL/xBo=
-X-Gm-Gg: ASbGncttE8Y6VL2IgvZh5ZdoP4cI7gx4vZkNKk0QJ20GH16JyFypR50TIhtaDEgf8lV
- 3HKYHxZmSWCQa37yqB4QjXNFBR9M+GHwgW5w40gi+GKOBpoMSt2ZDa3wqTdeyWv/XTHf6xSlbWr
- mXTc0hH7dl/AP4JoOB98TOVH7n4w==
-X-Google-Smtp-Source: AGHT+IE1+cpunXLK8q4VPVUHGhdySGKY8m9IstniT9kqAagY16NSRA7cyHLa7L4k8cKqlkvYOpbj2p8u4IKANAVM1pA=
-X-Received: by 2002:a17:907:6d16:b0:ab7:6c4a:6a74 with SMTP id
- a640c23a62f3a-abf25fb8399mr702772166b.16.1740814046176; Fri, 28 Feb 2025
- 23:27:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1toHRG-0000P1-No; Sat, 01 Mar 2025 02:39:10 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1toHRE-0005IM-QW; Sat, 01 Mar 2025 02:39:10 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 48C73F4E20;
+ Sat, 01 Mar 2025 10:38:24 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 05DC31C19CD;
+ Sat,  1 Mar 2025 10:38:56 +0300 (MSK)
+Message-ID: <dd78c7ed-bacc-4af0-ba70-031329546353@tls.msk.ru>
+Date: Sat, 1 Mar 2025 10:38:55 +0300
 MIME-Version: 1.0
-References: <CAJSP0QUk77GViTBgBpfYH-AbAmQ5aUwi0K6UTH9iv=1mVb0Wbw@mail.gmail.com>
- <803732f6-6ab1-4298-a956-660496664f67@redhat.com>
-In-Reply-To: <803732f6-6ab1-4298-a956-660496664f67@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Sat, 1 Mar 2025 15:27:14 +0800
-X-Gm-Features: AQ5f1JpZZZYqPw_wifX5HUapdmxckoBCTwxU6rOVRbOKmaPy_sjPov1yJNeRU9g
-Message-ID: <CAJSP0QW+uthupzD9_d5pav6WsB50MTH+MUgBaRYE9LfbORA-ug@mail.gmail.com>
-Subject: Re: Kubernetes gitlab-runner jobs cannot be scheduled
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Camilla Conte <cconte@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Some regression due to "ui/gtk: Fix mouse/motion event scaling
+ issue with GTK display backend"
+To: "Kim, Dongwon" <dongwon.kim@intel.com>, hikalium <hikalium@hikalium.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <PH8PR11MB6879500CDBB703E22EC3D6F0FAC32@PH8PR11MB6879.namprd11.prod.outlook.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <PH8PR11MB6879500CDBB703E22EC3D6F0FAC32@PH8PR11MB6879.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,53 +106,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 1, 2025 at 2:36=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
->
-> On 3/1/25 07:19, Stefan Hajnoczi wrote:
-> > Hi,
-> > On February 26th GitLab CI started failing many jobs because they
-> > could not be scheduled. I've been unable to merge pull requests
-> > because the CI is not working.
-> >
-> > Here is an example failed job:
-> > https://gitlab.com/qemu-project/qemu/-/jobs/9281757413
->
-> Hi Stefan,
->
-> until February 26th the Digital Ocean runners were not enabled; I tried
-> enabling them (which is what caused the issue) to start gauging how much
-> credit we would need to be able to move from Azure to DO for CI.  I
-> posted a note on IRC, I'm sorry if you missed that.
->
-> > The cache PVC appears to be a manual addition made to the running
-> > cluster but not committed to qemu.git. I don't understand why the
-> > problems only started surfacing now. Maybe a recent .gitlab-ci.d/
-> > change changed how the timeout behaves or maybe the gitlab-runner
-> > configuration that enables the cache PVC simply wasn't picked up by
-> > the gitlab-runner Pod until February 26th?
->
-> Almost: the cache is not used on Azure, which is why it works.
->
-> > In the short term I made a manual edit to the ConfigMap removing
-> > gitlab-cache-pvc (but I didn't delete the PVC resource itself). Jobs
-> > are at least running now, although they may take longer due to the
-> > lack of cache.
->
-> Ok, thanks for debugging that.  I think what you did is right, and the
-> caching setup should be tested more on a secondary cluster.
+25.02.2025 21:03, Kim, Dongwon wrote:
+> Hi hikalium,
+> 
+> This commit actually breaks one of our use cases with Ubuntu host when the display scaling factor is
+> set to 200%. It seems like gtk_widget_get_scale_factor is only way to get that DPI scaling factor
+> and without this, mouse movement on the guest wouldn't be able to go across certain boundary
+> as the coordinate will be halved (in case DPI scaling factor is 200%).
+> 
+> commit 37e91415018db3656b46cdea8f9e4d47b3ff130d
+> Author: hikalium <hikalium@hikalium.com>
+> Date:   Sun May 12 20:14:35 2024 +0900
+> 
+>      ui/gtk: Fix mouse/motion event scaling issue with GTK display backend
 
-Glad the change is acceptable and didn't break things more.
+Cc'ing qemu-stable@ since this commit has been picked up for stable releases.
 
-> (As to the DO credits numbers, the cost of the k8s cluster is about
-> $75/month, and since we were granted $2000 in credits we have only
-> $1100/year to spend on the actual jobs.  The plan is to check on the
-> credits left at the end of March and bring our estimates to DO's open
-> source program manager).
+Thanks,
 
-This reminds me I received an email asking for feedback regarding
-QEMU's Amazon credits. Just wanted to mention they are there if we
-need them.
-
-Stefan
+/mjt
 
