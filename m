@@ -4,71 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31BA5C021B8
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 07:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 177ECC021B8
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 14:11:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toHT6-0001CZ-4M; Sat, 01 Mar 2025 02:41:04 -0500
+	id 1toNXU-0002Bb-4z; Sat, 01 Mar 2025 09:10:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1toHT2-0001CN-9E
- for qemu-devel@nongnu.org; Sat, 01 Mar 2025 02:41:00 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1toHSx-0005lg-RP
- for qemu-devel@nongnu.org; Sat, 01 Mar 2025 02:40:59 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxNHABusJnnOSGAA--.34194S3;
- Sat, 01 Mar 2025 15:40:49 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMAxzMT+ucJnykEvAA--.42630S3;
- Sat, 01 Mar 2025 15:40:48 +0800 (CST)
-Subject: Re: [PATCH v5 2/2] target/loongarch: check tlb_ps
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org
-Cc: richard.henderson@linaro.org, yangxiaojuan@loongson.cn,
- wangliupu@loongson.cn
-References: <20250228090659.2434568-1-gaosong@loongson.cn>
- <20250228090659.2434568-3-gaosong@loongson.cn>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <f47a50ad-3635-3b61-1401-d9791a06594c@loongson.cn>
-Date: Sat, 1 Mar 2025 15:40:10 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1toNXM-00028v-EW
+ for qemu-devel@nongnu.org; Sat, 01 Mar 2025 09:09:53 -0500
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1toNXK-000559-4a
+ for qemu-devel@nongnu.org; Sat, 01 Mar 2025 09:09:51 -0500
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-6f6ae4846c7so26976307b3.1
+ for <qemu-devel@nongnu.org>; Sat, 01 Mar 2025 06:09:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740838186; x=1741442986; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Bx7bBRXdx0hUs/MZzB6t4WM5W6m0Sm32LK9sY2qItNg=;
+ b=pfJHXqHRySE1qKBe/O4r/vry9P2Bq1PSWJb4loxAFeLJ6MCS3B8z+LTMbHktpE5T47
+ Z+Q1p/dNgBoL8J+1emp9sGGnaNWbl1eK0Rd1Tz7vm2V2WjX5sQHW6upubrpTG/tCgkY6
+ Uab1W4VzrFcHHzQhY+h7TjjqD+S6j21eKhqsmSJznSWO0r0dwRifCJmWJbDrcn3NTVcr
+ DNT29I67rut4bm3O3F4+F+NJIlCMtSn1oqhlD35K6YIhcpFeBPLue/newsH5UAkhsoEH
+ xdmvqN4BfiFBFWoKCqQkPFcs8PuOPuhG5ZDhsNL/dsWxrC6NsGU4UMRGr0Zrmf3VpeNP
+ pWzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740838186; x=1741442986;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Bx7bBRXdx0hUs/MZzB6t4WM5W6m0Sm32LK9sY2qItNg=;
+ b=Ih01U3YcQ/aQdEMV1dtDoYiLR0MRq59gfpHj1buWzJKq2ehnPDgQXzYScuMtp9/RKS
+ VfbcR6jWzsug6MAgYfX8wAqVVcbsl0l61Ns6ijMvdhrgT1aKu6wuqenDSmMu5ILE16X3
+ H7OB18UjpiN7sSYoqV4VSlVFdjjPOY57nN+zzERhx7ek/T3yvfJSBk29vaEdjE+5z9oD
+ LdXlCmKvpivxYWFjWLoheEaCtT8D8Im2+n+Y77I/kTluRWbhHakFcZ1nL7ul7m0fhy26
+ J6P8FmG6NKB/7fZebFg4FZ40OyxworSWvnPrBY2ilAHvU4Gq7u6xZbu8+Slr9BWDFKab
+ Eg0w==
+X-Gm-Message-State: AOJu0YwP1UJeX+/6Vo/RYw1zcHt4QFAbSphegn8BAGrxHBYMy37uhigu
+ 0XIZg7n14yL8AiSq8X6Ln0eZZqeg3EyP/Z8PGAI5BIXTUbRApIqOCm+U+VUINXk9o3CCs3hWEnB
+ cCgfYxHq6yqFlOC5Ueaxm0lkuCyy1Laz0pYPk2Q==
+X-Gm-Gg: ASbGnct83l9SLw4MeUMWgtmCcB2rV60fSjbG9uBataMmffxm/vX3yzfL8Up9Qs3NGE5
+ 3Svhb2I/TJBTPDzmOGSlbgbYfV+gO+EeuXp27yxedwljYG5vEgRFSUI8W2e7yWCFwXvudAwZxYp
+ f0edUdLm8/rPVJHBQp2k9SK9MMnyk=
+X-Google-Smtp-Source: AGHT+IHlSpiz+yTbYnfjgDw407MXuAwDUVDFRMlE4mREaEPkPTICA+i9ElfEV+/RKSahmZKhBb0w8na0KuBCo5tTtLQ=
+X-Received: by 2002:a05:690c:6186:b0:6ef:8dd0:fff9 with SMTP id
+ 00721157ae682-6fd4a0382f2mr94713517b3.8.1740838186513; Sat, 01 Mar 2025
+ 06:09:46 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20250228090659.2434568-3-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxzMT+ucJnykEvAA--.42630S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3KFyxAw47Xr1DZrWUKF48AFc_yoWDZr13pF
- W7CrZFkFWUGrWkA3Wft3WYkw1DZw48Gws2va1fK34FkrsxXr97XFWvg3sF9F1kJw45CF4x
- ZF1qvryUZFW3XFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.651,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <3cca4eb3-09d1-4467-81fd-27a5bfe19a3e@csclub.uwaterloo.ca>
+ <CAFEAcA9kED+fB1repp2+r-zMfZ_5ZeAkZq2ChyxjSUo1j5gAFQ@mail.gmail.com>
+ <aef79501-b99f-4e84-b6fe-14dec1e030e6@csclub.uwaterloo.ca>
+ <CAFEAcA9ht=T_XqKaKB-PaNK9joQFYgks37JHjqUO-qkaNe7YUQ@mail.gmail.com>
+ <d714a7c2-2291-4a85-abcc-81648da1ef57@csclub.uwaterloo.ca>
+In-Reply-To: <d714a7c2-2291-4a85-abcc-81648da1ef57@csclub.uwaterloo.ca>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 1 Mar 2025 14:09:35 +0000
+X-Gm-Features: AQ5f1Jq2WNFqXs4m631xVIIJMU6x3mnJfPaNzbHfjjos46HhJ4C17ONHW1GFajg
+Message-ID: <CAFEAcA-9Nj9KrcPwoBBT88wK=NUPsorT71XbBbyLJYOemmkojQ@mail.gmail.com>
+Subject: Re: [PATCH] bcm2838: Add GIC-400 timer interupt connections
+To: Sourojeet Adhikari <s23adhik@csclub.uwaterloo.ca>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,307 +97,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sat, 1 Mar 2025 at 01:47, Sourojeet Adhikari
+<s23adhik@csclub.uwaterloo.ca> wrote:
+>
+> On 2025-02-27 10:17, Peter Maydell wrote:
+>
+> On Thu, 27 Feb 2025 at 09:15, Sourojeet Adhikari
+> <s23adhik@csclub.uwaterloo.ca> wrote:
+>
+> The systmr INTERRUPT_TIMER0..3 sysbus IRQ outputs are already
+> being wired up in the function bcm_soc_peripherals_common_realize()
+> in hw/arm/bcm2835_peripherals.c (to the TYPE_BCM2835_IC
+> interrupt controller), and it isn't valid to wire one input
+> directly to multiple outputs.
+>
+> In fact it looks like we are currently getting this wrong for
+> all of the interrupts that need to be wired to both the
+> "legacy interrupt controller" and the GIC. I think at the moment
+> what happens is that the wiring to the GIC will happen last
+> and this overrides the earlier wiring to the legacy interrupt
+> controller, so code using the latter won't work correctly.
+>
+> I'll try reading through the relevant sections and send an
+> updated patch later next week. From what I can tell it falls
+> under the bcm2835_pheripherals.c file, right?
+>
+> Yes. To expand a bit, QEMU's qemu_irq abstraction must
+> always be wired exactly 1-to-1, from a single output to
+> a single input. Wiring either one input to multiple outputs
+> or one output to multiple inputs will not behave correctly
+> (and unfortunately we don't have an easy way to assert()
+> if code in QEMU gets this wrong).
+>
+> So for cases where you want the one-to-many behaviour you need
+> to create an object of TYPE_SPLIT_IRQ. This has one input and
+> multiple outputs, so you can connect your wire from device A's
+> output to the splitter's input, and then connect outputs
+> from the splitter to devices B, C, etc. (In this case A
+> would be the timer, and B, C the two interrupt controllers.)
+> Searching the source code for TYPE_SPLIT_IRQ will give some
+> places where it's used. (Ignore the qdev_new(TYPE_SPLIT_IRQ)
+> ones, those are a code pattern we use in board models, not
+> in SoC device models.)
+>
+> In this specific bcm2838 case, it's a little more awkward,
+> because one of the two interrupt controllers is created inside
+> bcm2835_peripherals.c and one of them is created outside it.
+> Since bcm2838 is already reaching inside the bcm2835_peripherals
+> object I guess the simplest thing is:
+>  * create a splitter object in bcm2835_peripherals.c for
+>    every IRQ line that needs to be connected to both
+>    interrupt controllers (probably easiest to have an array
+>    of splitter objects, irq_splitter[])
+>  * in bcm2835_peripherals.c, connect the device's outbound
+>    IRQ to the input of the appropriate splitter, and
+>    connect output 0 of that splitter to the BCM2835_IC
+>    correct interrupt controller input
+>  * in bcm2838.c, connect output 0 of ps_base->irq_splitter[n]
+>    to the correct GIC input
+>
+> (This is kind of breaking the abstraction layer that ideally
+> exists where the code that creates and uses a device doesn't
+> try to look "inside" it at any subparts it might have. We
+> could, for instance, instead make the bcm2835_peripherals
+> object expose its own qemu_irq outputs which were the second
+> outputs of the splitters, so that the bcm2838.c code wasn't
+> looking inside and finding the splitters directly. But I
+> think that's more awkward than it's worth. It's also possible
+> that we have the split between the main SoC and the
+> peripheral object wrong and either both interrupt controllers
+> or neither should be inside the peripheral object; but
+> reshuffling things like that would be a lot of work too.)
+>
+> This weekend I'll try my best to mess around, and get the solution
+> you proposed working. From what I can tell, I (personally) think , the no=
+t-reshuffling things approach might be a bit better here. Since otherwise i=
+t'd turn into a somewhat sizeable patch pretty quick, and is a lot of work,=
+ for something that's not *too* big of an issue. I do have access to a rasp=
+berry pi if you think I should do any kind of testing before doing the resh=
+uffling.
 
+Yeah, to be clear, what I'm suggesting is that we should
+not do that reshuffling, exactly because it is a lot of
+work and it's not that important. Better to just fix the bug.
 
-On 2025/2/28 下午5:06, Song Gao wrote:
-> For LoongArch th min tlb_ps is 12(4KB), for TLB code,
-> the tlb_ps may be 0,this may case UndefinedBehavior
-> Add a check-tlb_ps fuction to check tlb_ps,
-> to make sure the tlb_ps is avalablie. we check tlb_ps
-> when get the tlb_ps from tlb->misc or CSR bits.
-> 1. cpu reset
->     set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits a default value
->     from CSR_PRCFG2;
-> 2. tlb instructions.
->     some tlb instructions get  the tlb_ps from tlb->misc but the
->     value may  has been initialized to 0. we need just check the tlb_ps
->     skip the function and write a guest log.
-> 3. csrwr instructions.
->     to make sure CSR_PWCL.PTBASE and CSR_STLBPS.PS bits are avalable,
->     cheke theses bits and set a default value from CSR_PRCFG2.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/cpu.c                        | 10 ++--
->   target/loongarch/cpu_helper.c                 |  8 +++-
->   target/loongarch/helper.h                     |  1 +
->   target/loongarch/internals.h                  |  2 +
->   target/loongarch/tcg/csr_helper.c             | 30 +++++++++++-
->   .../tcg/insn_trans/trans_privileged.c.inc     |  1 +
->   target/loongarch/tcg/tlb_helper.c             | 46 ++++++++++++++++++-
->   7 files changed, 90 insertions(+), 8 deletions(-)
-> 
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index e91f4a5239..162a227d52 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -585,13 +585,17 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->        */
->       env->CSR_PGDH = 0;
->       env->CSR_PGDL = 0;
-> -    env->CSR_PWCL = 0;
->       env->CSR_PWCH = 0;
-> -    env->CSR_STLBPS = 0;
->       env->CSR_EENTRY = 0;
->       env->CSR_TLBRENTRY = 0;
->       env->CSR_MERRENTRY = 0;
-> -
-> +    /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
-> +    if (env->CSR_PRCFG2 == 0) {
-> +        env->CSR_PRCFG2 =0x3fffff000;
-> +    }
-> +    int tlb_ps = clz32(env->CSR_PRCFG2);
-Could you please put variable declaration "int tlb_ps" to header of 
-function?
+> On another note, do you think it's reasonable to add what you said
+> here into the development documentation (paraphrased, and if not
+> already documented). If I do write a patch to the documentation,
+> can/should I cc you on it?
 
-> +    env->CSR_STLBPS = FIELD_DP64(env->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
-> +    env->CSR_PWCL = FIELD_DP64(env->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
->       for (n = 0; n < 4; n++) {
->           env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV0, 0);
->           env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV1, 0);
-> diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-> index 930466ca48..a81a610a1d 100644
-> --- a/target/loongarch/cpu_helper.c
-> +++ b/target/loongarch/cpu_helper.c
-> @@ -117,7 +117,9 @@ bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
->                   *index = i * 256 + stlb_idx;
->                   return true;
->               }
-> -        }
-> +        } else {
-> +	    continue;
-> +	}
-There is tab key in the line.
-It it unnecessary to add else sentence, since it is the end of loop already.
->       }
->   
->       /* Search MTLB */
-> @@ -136,7 +138,9 @@ bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
->                   *index = i;
->                   return true;
->               }
-> -        }
-> +        } else {
-> +	    continue;
-> +	}
-Ditto
->       }
->       return false;
->   }
-> diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
-> index 943517b5f2..1d5cb0198c 100644
-> --- a/target/loongarch/helper.h
-> +++ b/target/loongarch/helper.h
-> @@ -100,6 +100,7 @@ DEF_HELPER_1(rdtime_d, i64, env)
->   DEF_HELPER_1(csrrd_pgd, i64, env)
->   DEF_HELPER_1(csrrd_cpuid, i64, env)
->   DEF_HELPER_1(csrrd_tval, i64, env)
-> +DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
->   DEF_HELPER_2(csrwr_estat, i64, env, tl)
->   DEF_HELPER_2(csrwr_asid, i64, env, tl)
->   DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
-> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-> index 7b254c5f49..1cd959a766 100644
-> --- a/target/loongarch/internals.h
-> +++ b/target/loongarch/internals.h
-> @@ -43,6 +43,8 @@ enum {
->       TLBRET_PE = 7,
->   };
->   
-> +bool check_ps(CPULoongArchState *ent, int ps);
-> +
->   extern const VMStateDescription vmstate_loongarch_cpu;
->   
->   void loongarch_cpu_set_irq(void *opaque, int irq, int level);
-> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-> index 6c95be9910..1c8a234b16 100644
-> --- a/target/loongarch/tcg/csr_helper.c
-> +++ b/target/loongarch/tcg/csr_helper.c
-> @@ -17,6 +17,27 @@
->   #include "hw/irq.h"
->   #include "cpu-csr.h"
->   
-> +
-> +
-> +target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
-> +{
-> +    int64_t old_v = env->CSR_STLBPS;
-> +    uint8_t default_ps = ctz32(env->CSR_PRCFG2);
-> +
-> +    /*
-> +     * The real hardware only supports the min tlb_ps is 12
-> +     * tlb_ps=0 may cause undefined-behavior.
-> +     */
-> +    uint8_t tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
-> +    if (!check_ps(env, tlb_ps)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "Attempted set ps %d\n",tlb_ps);
-> +        val = FIELD_DP64(val, CSR_STLBPS, PS, default_ps);
-> +    }
-> +    env->CSR_STLBPS = val;
-> +    return old_v;
-> +}
-> +
->   target_ulong helper_csrrd_pgd(CPULoongArchState *env)
->   {
->       int64_t v;
-> @@ -99,19 +120,26 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
->   
->   target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
->   {
-> -    int shift;
-> +    int shift, ptbase;
->       int64_t old_v = env->CSR_PWCL;
-> +    uint8_t default_ps = ctz32(env->CSR_PRCFG2);
->   
->       /*
->        * The real hardware only supports 64bit PTE width now, 128bit or others
->        * treated as illegal.
->        */
->       shift = FIELD_EX64(val, CSR_PWCL, PTEWIDTH);
-> +    ptbase = FIELD_EX64(val, CSR_PWCL, PTBASE);
->       if (shift) {
->           qemu_log_mask(LOG_GUEST_ERROR,
->                         "Attempted set pte width with %d bit\n", 64 << shift);
->           val = FIELD_DP64(val, CSR_PWCL, PTEWIDTH, 0);
->       }
-> +    if (!check_ps(env, ptbase)) {
-> +         qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "Attrmpted set ptbase 2^%d\n", ptbase);
-> +         val = FIELD_DP64(val, CSR_PWCL, PTBASE, default_ps);
-> +    }
->   
->       env->CSR_PWCL = val;
->       return old_v;
-> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-> index 3afa23af79..ecbfe23b63 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-> @@ -74,6 +74,7 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
->   
->   void loongarch_csr_translate_init(void)
->   {
-> +    SET_CSR_FUNC(STLBPS, NULL, gen_helper_csrwr_stlbps);
->       SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
->       SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
->       SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
-> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-> index 1c603b2903..27f0653a5a 100644
-> --- a/target/loongarch/tcg/tlb_helper.c
-> +++ b/target/loongarch/tcg/tlb_helper.c
-> @@ -18,6 +18,14 @@
->   #include "exec/log.h"
->   #include "cpu-csr.h"
->   
-> +bool check_ps(CPULoongArchState *env, int tlb_ps)
-> +{
-> +     if(tlb_ps > 64){
-Space key is missing here.
-> +         return false;
-> +     }
-> +     return BIT_ULL(tlb_ps) && (env->CSR_PRCFG2);
-Is it BIT_ULL(tlb_ps) & (env->CSR_PRCFG2) rather than && ?
-> +}
-> +
->   void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
->                                  uint64_t *dir_width, target_ulong level)
->   {
-> @@ -123,12 +131,21 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
->       uint8_t tlb_v0 = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, V);
->       uint8_t tlb_v1 = FIELD_EX64(tlb->tlb_entry1, TLBENTRY, V);
->       uint64_t tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
-> +    uint8_t tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
-> +
-> +    if (!tlb_e){
-> +        return;
-> +    }
->   
->       if (index >= LOONGARCH_STLB) {
->           tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
->       } else {
->           tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
->       }
-> +    if (!check_ps(env,tlb_ps)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "tlb_ps %d is illegal\n", tlb_ps);
-> +        return;
-> +    }
->       pagesize = MAKE_64BIT_MASK(tlb_ps, 1);
->       mask = MAKE_64BIT_MASK(0, tlb_ps + 1);
->   
-> @@ -187,8 +204,10 @@ static void fill_tlb_entry(CPULoongArchState *env, int index)
->           lo1 = env->CSR_TLBELO1;
->       }
->   
-> -    if (csr_ps == 0) {
-> -        qemu_log_mask(CPU_LOG_MMU, "page size is 0\n");
-> +    /*check csr_ps */
-> +    if (!check_ps(env, csr_ps)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "csr_ps %d is illegal\n", csr_ps);
-> +        return;
->       }
->   
->       /* Only MTLB has the ps fields */
-> @@ -249,6 +268,10 @@ void helper_tlbrd(CPULoongArchState *env)
->       }
->       tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
->   
-> +    if (!check_ps(env, tlb_ps)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "tlb_ps %d is illegal\n", tlb_ps);
-> +        return;
-> +    }
-Why add check_ps() here? I think it should be added only in TLB adding, 
-not necessary in tlb invalid and search funciton.
+In general, yes, we should at least document this kind of
+beartrap. The difficulty is finding some good place to do it
+(there are two broad locations: in a doc comment on the
+function(s) for "connect a qemu_irq", and in some more
+general "how to do device/board stuff" place in docs/devel/).
+Feel free to cc me on any patch you send about that.
 
->       if (!tlb_e) {
->           /* Invalid TLB entry */
->           env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
-> @@ -298,7 +321,16 @@ void helper_tlbfill(CPULoongArchState *env)
->           pagesize = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
->       }
->   
-> +    if (!check_ps(env, pagesize)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "pagesize %d is illegal\n", pagesize);
-> +        return;
-> +    }
-> +
->       stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
-> +    if (!check_ps(env, stlb_ps)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "stlb_ps %d is illegal\n", stlb_ps);
-> +        return;
-> +    }
->   
->       if (pagesize == stlb_ps) {
->           /* Only write into STLB bits [47:13] */
-> @@ -437,6 +469,10 @@ void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
->           } else {
->               tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
->           }
-> +        if (!check_ps(env, tlb_ps)) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "tlb_ps %d is illegal\n", tlb_ps);
-> +            return;
-> +        }
-Do we need adding check_ps() in function helper_invtlb_page_asid()?
-Since CSR_STLBPS cannot be changed dynamically when mmu is on.
+> (PS: for the other "not 1:1" case, where you want to connect
+> many qemu_irqs outputs together into one input, the usual semantics
+> you want is to logically-OR the interrupt lines together, and
+> so you use TYPE_OR_IRQ for that.)
+>
+> (oh oki, I'll make sure to do that on the upcoming patch then,
+> thank you!)
 
-Regards
-Bibo Mao
+I think you won't need the OR gate part -- I mentioned it just
+for completeness.
 
->           tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
->           vpn = (addr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
->           compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
-> @@ -470,6 +506,12 @@ void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
->           } else {
->               tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
->           }
-> +        if (!check_ps(env, tlb_ps)) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "tlb_ps %d is illegal\n", tlb_ps);
-> +            return;
-> +        }
-> +
-> +
->           tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
->           vpn = (addr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
->           compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
-> 
+> (P.S the patch probably won't be coming till next week since I
+> have quite a bit of work outside of my programming stuff to do.
+> Should hopfully be done by Wednesday next week though?)
 
+That's fine -- since this is a bug fix we don't have to worry
+about getting it in before softfreeze.
+
+-- PMM
 
