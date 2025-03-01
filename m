@@ -4,84 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4908BC282C5
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 01:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF5EC282C6
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 01:48:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toBFU-0001Ru-Q6; Fri, 28 Feb 2025 20:02:36 -0500
+	id 1toBxG-0001Yx-RN; Fri, 28 Feb 2025 20:47:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kuqin12@gmail.com>)
- id 1toBFS-0001RC-G3; Fri, 28 Feb 2025 20:02:34 -0500
-Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
+ (Exim 4.90_1) (envelope-from <s23adhik@csclub.uwaterloo.ca>)
+ id 1toBx3-0001Tr-GR; Fri, 28 Feb 2025 20:47:40 -0500
+Received: from mail.csclub.uwaterloo.ca ([129.97.134.52])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <kuqin12@gmail.com>)
- id 1toBFQ-0002Np-E6; Fri, 28 Feb 2025 20:02:34 -0500
-Received: by mail-qv1-xf34.google.com with SMTP id
- 6a1803df08f44-6e8992f9a45so16874186d6.0; 
- Fri, 28 Feb 2025 17:02:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740790949; x=1741395749; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=SQlSNoHmWACKiW0B8FvbEITjcLevPe4EgEizJSu8Ex0=;
- b=h/F20yOHRSL/x+Q2/TwJmJERPjmO7CsyEgZU+GB6FCzqj1A/InaHfCj620uk6Np6S2
- jfLUxntNTJXBQ8Q9nvMV7G9TdRF6r2H16zMPreW3GLpa0GWCMArmr6MWO5ANrsZBsPW6
- DOpLx8ywLhm4M4/utS+adaBFrDaSRdTAZKtq8Oejezykv4cDwN0OhUhzr+4cleZGYjaQ
- 55OtnkxrgLrg4Q/Zmfsi3C+b0+2mgpEz/Rt4nYthNjdy1FSTPx4EWmEIqNpe5M08qHQS
- Sx14gIbG1Rnfbvgi/xCK62+RodOd5q14KIR9MhnCPwfiRMmLsOK/iRVLaw5M7E/Z9V6e
- GjKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740790949; x=1741395749;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SQlSNoHmWACKiW0B8FvbEITjcLevPe4EgEizJSu8Ex0=;
- b=RQNON7I5sNTCrbw84js7/XVAz/EcEP/ivkGlCr0LlaO1bKe03CjwwJTcXeOQpe0qQL
- uzVpOwYTyh72Woq56YQh4gP5r43Pmvs7Scjcfe0ngNCsu2IehPVaMdPh9C9zv4l2oY21
- +j2hSRYPdgL9ehpFB7gZH882Es4y99+CTZ0VqVQ5fjleyo1BOxPRKwKGz1QjaCabgVJH
- Mmlm+upW36d9WMDTNFXxW6RgjgXeu3/jalKQJRI7vkMJZKO5eL8iE9lnDoI6ItVEnVZM
- YhL+9KBo3TWT6syHfHje7FTfgEWkQ9eb1MV9a6iDzAuTjHlcWpUylQmd6hAu3/hvG2CK
- ifdA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVBh52AZepecbO/bw/93ifNXfHFN48kbA53V0RlIQxyphlpWfI2Fy8as9CJ5l84QvZss3MRq/TQGw==@nongnu.org
-X-Gm-Message-State: AOJu0YwI+YV0UXEQCtotUbp2/8/r9jPH3EIB+98mAcVVYqa/P+H5Juqw
- AkORu4uKYPdr1lkZq8vTxGvl7UvgITEUSw1TpllPOiccrojedytQ9+v/K44knFCG5QiaGaL9iss
- iX3xFTlfxDyJDib4MLxjRuVJw0us=
-X-Gm-Gg: ASbGncv/12H52gY5g3fBB/bSKS2JvkzZjruXiMP0eD6DKZuwInONbfMnU93nwHOAYfV
- VPBIlxBrLJQhYBeFdLUGnXa60ZP4rq6ccBY2fabolY6UfU8qOw2/xjzbNCPhh1wK+TwCLuNyHnB
- hleTsZouF/MG2wtkawwHB6AXZ5YOdbAyqHErgXqB9rUfh9yzVCuf9TURI=
-X-Google-Smtp-Source: AGHT+IEYwENjJxwmSNbBCuLIEPt795yjneYsfoO7cSfPY3E/RYl7J5JrKMVQ8ChUUNHWUODO+1KD11gaYXt745WqJIA=
-X-Received: by 2002:ad4:5ba3:0:b0:6e4:4274:aaf8 with SMTP id
- 6a1803df08f44-6e8a0d01c27mr84585336d6.17.1740790948794; Fri, 28 Feb 2025
- 17:02:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <s23adhik@csclub.uwaterloo.ca>)
+ id 1toBx1-00078L-0e; Fri, 28 Feb 2025 20:47:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=csclub.uwaterloo.ca;
+ s=csc; t=1740793651;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DMQU+hwf/6FXpGH8QjvHBZ5Uf4cfHzZgiKwQI3ENW2A=;
+ b=QW3AetzMfn73VdZqe/RrTWxdwuKQtnUEk7iFApG/OqeFDIcen6KnMeWa3HmyKAqUphRpNB
+ /aEFQ0Bug1cdKbbE8ePjY/N4jY96Jw5YUEabNEaB4GohBKLBfk6dnT4qWB0EA+CTh3OfDo
+ RcPi7imSXNP3pAOq11Xoharra895ZCU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=csclub.uwaterloo.ca;
+ s=202502e; t=1740793651;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DMQU+hwf/6FXpGH8QjvHBZ5Uf4cfHzZgiKwQI3ENW2A=;
+ b=3pxsCk8SE+Xxk8Yd7lFr4QEcwh8uUZKi1U0uGDPc6GmABSrMIVuOQ/uIwfgvRWc9kBPjfD
+ fPUyLtwGBVf1MrDg==
+Content-Type: multipart/alternative;
+ boundary="------------iOMpxdDDldQXtDQ0AfPpaIqr"
+Message-ID: <d714a7c2-2291-4a85-abcc-81648da1ef57@csclub.uwaterloo.ca>
+Date: Fri, 28 Feb 2025 20:47:31 -0500
 MIME-Version: 1.0
-References: <20250225074133.6827-1-kuqin12@gmail.com>
- <20250225074133.6827-2-kuqin12@gmail.com>
- <f9400b1e-e36d-486c-bea7-115a742befd4@xora.org.uk>
-In-Reply-To: <f9400b1e-e36d-486c-bea7-115a742befd4@xora.org.uk>
-From: Kun Qin <kuqin12@gmail.com>
-Date: Fri, 28 Feb 2025 17:02:18 -0800
-X-Gm-Features: AQ5f1JqtxKaMBG7_Pq0Mi83aeI5dJwWzfKv_RatWiITqQd3YR2Q--s_6MQFw1dc
-Message-ID: <CABhrWrSwD8b-CapYsogwKkab08NDoDZc8t6HoxMROCK6uWPLUg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] hw/arm/sbsa-ref: Adding TPM support for ARM SBSA-Ref
- machine
-To: Graeme Gregory <graeme@xora.org.uk>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- Radoslaw Biernacki <rad@semihalf.com>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org, 
- Kun Qin <kuqin@microsoft.com>
-Content-Type: multipart/alternative; boundary="000000000000219af1062f3d7a5c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
- envelope-from=kuqin12@gmail.com; helo=mail-qv1-xf34.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Subject: Re: [PATCH] bcm2838: Add GIC-400 timer interupt connections
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-arm@nongnu.org
+References: <3cca4eb3-09d1-4467-81fd-27a5bfe19a3e@csclub.uwaterloo.ca>
+ <CAFEAcA9kED+fB1repp2+r-zMfZ_5ZeAkZq2ChyxjSUo1j5gAFQ@mail.gmail.com>
+ <aef79501-b99f-4e84-b6fe-14dec1e030e6@csclub.uwaterloo.ca>
+ <CAFEAcA9ht=T_XqKaKB-PaNK9joQFYgks37JHjqUO-qkaNe7YUQ@mail.gmail.com>
+Content-Language: en-US
+From: Sourojeet Adhikari <s23adhik@csclub.uwaterloo.ca>
+In-Reply-To: <CAFEAcA9ht=T_XqKaKB-PaNK9joQFYgks37JHjqUO-qkaNe7YUQ@mail.gmail.com>
+Received-SPF: pass client-ip=129.97.134.52;
+ envelope-from=s23adhik@csclub.uwaterloo.ca; helo=mail.csclub.uwaterloo.ca
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,237 +75,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000219af1062f3d7a5c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This is a multi-part message in MIME format.
+--------------iOMpxdDDldQXtDQ0AfPpaIqr
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Graeme,
+On 2025-02-27 10:17, Peter Maydell wrote:
 
-Thank you for your review. Could you please let me know if there is
-anything else I need to do or wait on before merging the change?
-
-Any input is appreciated.
-
-Regards,
-Kun
-
-
-
-On Thu, Feb 27, 2025 at 7:16=E2=80=AFAM Graeme Gregory <graeme@xora.org.uk>=
- wrote:
-
+> On Thu, 27 Feb 2025 at 09:15, Sourojeet Adhikari
+> <s23adhik@csclub.uwaterloo.ca> wrote:
+>>> The systmr INTERRUPT_TIMER0..3 sysbus IRQ outputs are already
+>>> being wired up in the function bcm_soc_peripherals_common_realize()
+>>> in hw/arm/bcm2835_peripherals.c (to the TYPE_BCM2835_IC
+>>> interrupt controller), and it isn't valid to wire one input
+>>> directly to multiple outputs.
+>>>
+>>> In fact it looks like we are currently getting this wrong for
+>>> all of the interrupts that need to be wired to both the
+>>> "legacy interrupt controller" and the GIC. I think at the moment
+>>> what happens is that the wiring to the GIC will happen last
+>>> and this overrides the earlier wiring to the legacy interrupt
+>>> controller, so code using the latter won't work correctly.
+>> I'll try reading through the relevant sections and send an
+>> updated patch later next week. From what I can tell it falls
+>> under the bcm2835_pheripherals.c file, right?
+> Yes. To expand a bit, QEMU's qemu_irq abstraction must
+> always be wired exactly 1-to-1, from a single output to
+> a single input. Wiring either one input to multiple outputs
+> or one output to multiple inputs will not behave correctly
+> (and unfortunately we don't have an easy way to assert()
+> if code in QEMU gets this wrong).
 >
-> On 25/02/2025 07:41, Kun Qin wrote:
-> > From: Kun Qin <kuqin@microsoft.com>
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2625
-> >
-> > This change aims to add a TPM device for SBSA ref machine.
-> >
-> > The implementation adds a TPM create routine during machine
-> > initialization.
-> >
-> > The backend can be the same as the rest of TPM support, by using swtpm.
+> So for cases where you want the one-to-many behaviour you need
+> to create an object of TYPE_SPLIT_IRQ. This has one input and
+> multiple outputs, so you can connect your wire from device A's
+> output to the splitter's input, and then connect outputs
+> from the splitter to devices B, C, etc. (In this case A
+> would be the timer, and B, C the two interrupt controllers.)
+> Searching the source code for TYPE_SPLIT_IRQ will give some
+> places where it's used. (Ignore the qdev_new(TYPE_SPLIT_IRQ)
+> ones, those are a code pattern we use in board models, not
+> in SoC device models.)
 >
-> This looks sensible to me.
+> In this specific bcm2838 case, it's a little more awkward,
+> because one of the two interrupt controllers is created inside
+> bcm2835_peripherals.c and one of them is created outside it.
+> Since bcm2838 is already reaching inside the bcm2835_peripherals
+> object I guess the simplest thing is:
+>   * create a splitter object in bcm2835_peripherals.c for
+>     every IRQ line that needs to be connected to both
+>     interrupt controllers (probably easiest to have an array
+>     of splitter objects, irq_splitter[])
+>   * in bcm2835_peripherals.c, connect the device's outbound
+>     IRQ to the input of the appropriate splitter, and
+>     connect output 0 of that splitter to the BCM2835_IC
+>     correct interrupt controller input
+>   * in bcm2838.c, connect output 0 of ps_base->irq_splitter[n]
+>     to the correct GIC input
 >
-> Reviewed-by: Graeme Gregory <graeme@xora.org.uk>
->
-> > Signed-off-by: Kun Qin <kuqin12@gmail.com>
-> > ---
-> >   hw/arm/sbsa-ref.c | 24 ++++++++++++++++++++++++
-> >   1 file changed, 24 insertions(+)
-> >
-> > diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-> > index e720de306419..93eb3d1e363b 100644
-> > --- a/hw/arm/sbsa-ref.c
-> > +++ b/hw/arm/sbsa-ref.c
-> > @@ -28,6 +28,8 @@
-> >   #include "system/numa.h"
-> >   #include "system/runstate.h"
-> >   #include "system/system.h"
-> > +#include "system/tpm.h"
-> > +#include "system/tpm_backend.h"
-> >   #include "exec/hwaddr.h"
-> >   #include "kvm_arm.h"
-> >   #include "hw/arm/boot.h"
-> > @@ -94,6 +96,7 @@ enum {
-> >       SBSA_SECURE_MEM,
-> >       SBSA_AHCI,
-> >       SBSA_XHCI,
-> > +    SBSA_TPM,
-> >   };
-> >
-> >   struct SBSAMachineState {
-> > @@ -132,6 +135,7 @@ static const MemMapEntry sbsa_ref_memmap[] =3D {
-> >       /* Space here reserved for more SMMUs */
-> >       [SBSA_AHCI] =3D               { 0x60100000, 0x00010000 },
-> >       [SBSA_XHCI] =3D               { 0x60110000, 0x00010000 },
-> > +    [SBSA_TPM] =3D                { 0x60120000, 0x00010000 },
-> >       /* Space here reserved for other devices */
-> >       [SBSA_PCIE_PIO] =3D           { 0x7fff0000, 0x00010000 },
-> >       /* 32-bit address PCIE MMIO space */
-> > @@ -629,6 +633,24 @@ static void create_smmu(const SBSAMachineState
-> *sms, PCIBus *bus)
-> >       }
-> >   }
-> >
-> > +static void create_tpm(SBSAMachineState *sbsa, PCIBus *bus)
-> > +{
-> > +    Error *errp =3D NULL;
-> > +    DeviceState *dev;
-> > +
-> > +    TPMBackend *be =3D qemu_find_tpm_be("tpm0");
-> > +    if (be =3D=3D NULL) {
-> > +        error_report("Couldn't find tmp0 backend");
-> > +        return;
-> > +    }
-> > +
-> > +    dev =3D qdev_new(TYPE_TPM_TIS_SYSBUS);
-> > +    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp)=
-;
-> > +    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
-> > +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> > +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0,
-> sbsa_ref_memmap[SBSA_TPM].base);
-> > +}
-> > +
-> >   static void create_pcie(SBSAMachineState *sms)
-> >   {
-> >       hwaddr base_ecam =3D sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
-> > @@ -686,6 +708,8 @@ static void create_pcie(SBSAMachineState *sms)
-> >       pci_create_simple(pci->bus, -1, "bochs-display");
-> >
-> >       create_smmu(sms, pci->bus);
-> > +
-> > +    create_tpm(sms, pci->bus);
-> >   }
-> >
-> >   static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int
-> *fdt_size)
->
+> (This is kind of breaking the abstraction layer that ideally
+> exists where the code that creates and uses a device doesn't
+> try to look "inside" it at any subparts it might have. We
+> could, for instance, instead make the bcm2835_peripherals
+> object expose its own qemu_irq outputs which were the second
+> outputs of the splitters, so that the bcm2838.c code wasn't
+> looking inside and finding the splitters directly. But I
+> think that's more awkward than it's worth. It's also possible
+> that we have the split between the main SoC and the
+> peripheral object wrong and either both interrupt controllers
+> or neither should be inside the peripheral object; but
+> reshuffling things like that would be a lot of work too.)
 
---000000000000219af1062f3d7a5c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This weekend I'll try my best to mess around, and get the solution
+you proposed working. From what I can tell, I (personally) think , the not-reshuffling things approach might be a bit better here. Since otherwise it'd turn into a somewhat sizeable patch pretty quick, and is a lot of work, for something that's not *too* big of an issue. I do have access to a raspberry pi if you think I should do any kind of testing before doing the reshuffling.
 
-<div dir=3D"ltr">Hi=C2=A0Graeme,<div><br></div><div>Thank you for=C2=A0your=
- review. Could you please let me know if there=C2=A0is anything else I need=
- to do or wait on before merging the change?</div><div><br></div><div>Any i=
-nput is=C2=A0appreciated.</div><div><br></div><div>Regards,</div><div>Kun<b=
-r><div><br></div><div><br></div></div></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 27,=
- 2025 at 7:16=E2=80=AFAM Graeme Gregory &lt;<a href=3D"mailto:graeme@xora.o=
-rg.uk">graeme@xora.org.uk</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex"><br>
-On 25/02/2025 07:41, Kun Qin wrote:<br>
-&gt; From: Kun Qin &lt;<a href=3D"mailto:kuqin@microsoft.com" target=3D"_bl=
-ank">kuqin@microsoft.com</a>&gt;<br>
-&gt;<br>
-&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/262=
-5" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qem=
-u/-/issues/2625</a><br>
-&gt;<br>
-&gt; This change aims to add a TPM device for SBSA ref machine.<br>
-&gt;<br>
-&gt; The implementation adds a TPM create routine during machine<br>
-&gt; initialization.<br>
-&gt;<br>
-&gt; The backend can be the same as the rest of TPM support, by using swtpm=
-.<br>
-<br>
-This looks sensible to me.<br>
-<br>
-Reviewed-by: Graeme Gregory &lt;<a href=3D"mailto:graeme@xora.org.uk" targe=
-t=3D"_blank">graeme@xora.org.uk</a>&gt;<br>
-<br>
-&gt; Signed-off-by: Kun Qin &lt;<a href=3D"mailto:kuqin12@gmail.com" target=
-=3D"_blank">kuqin12@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0hw/arm/sbsa-ref.c | 24 ++++++++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 24 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c<br>
-&gt; index e720de306419..93eb3d1e363b 100644<br>
-&gt; --- a/hw/arm/sbsa-ref.c<br>
-&gt; +++ b/hw/arm/sbsa-ref.c<br>
-&gt; @@ -28,6 +28,8 @@<br>
-&gt;=C2=A0 =C2=A0#include &quot;system/numa.h&quot;<br>
-&gt;=C2=A0 =C2=A0#include &quot;system/runstate.h&quot;<br>
-&gt;=C2=A0 =C2=A0#include &quot;system/system.h&quot;<br>
-&gt; +#include &quot;system/tpm.h&quot;<br>
-&gt; +#include &quot;system/tpm_backend.h&quot;<br>
-&gt;=C2=A0 =C2=A0#include &quot;exec/hwaddr.h&quot;<br>
-&gt;=C2=A0 =C2=A0#include &quot;kvm_arm.h&quot;<br>
-&gt;=C2=A0 =C2=A0#include &quot;hw/arm/boot.h&quot;<br>
-&gt; @@ -94,6 +96,7 @@ enum {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0SBSA_SECURE_MEM,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0SBSA_AHCI,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0SBSA_XHCI,<br>
-&gt; +=C2=A0 =C2=A0 SBSA_TPM,<br>
-&gt;=C2=A0 =C2=A0};<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0struct SBSAMachineState {<br>
-&gt; @@ -132,6 +135,7 @@ static const MemMapEntry sbsa_ref_memmap[] =3D {<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0/* Space here reserved for more SMMUs */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0[SBSA_AHCI] =3D=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0{ 0x60100000, 0x00010000 },<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0[SBSA_XHCI] =3D=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0{ 0x60110000, 0x00010000 },<br>
-&gt; +=C2=A0 =C2=A0 [SBSA_TPM] =3D=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 { 0x60120000, 0x00010000 },<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0/* Space here reserved for other devices */<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0[SBSA_PCIE_PIO] =3D=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0{ 0x7fff0000, 0x00010000 },<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0/* 32-bit address PCIE MMIO space */<br>
-&gt; @@ -629,6 +633,24 @@ static void create_smmu(const SBSAMachineState *s=
-ms, PCIBus *bus)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +static void create_tpm(SBSAMachineState *sbsa, PCIBus *bus)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 Error *errp =3D NULL;<br>
-&gt; +=C2=A0 =C2=A0 DeviceState *dev;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 TPMBackend *be =3D qemu_find_tpm_be(&quot;tpm0&quot;);<=
-br>
-&gt; +=C2=A0 =C2=A0 if (be =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;Couldn&#39;t find tmp0=
- backend&quot;);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 dev =3D qdev_new(TYPE_TPM_TIS_SYSBUS);<br>
-&gt; +=C2=A0 =C2=A0 object_property_set_link(OBJECT(dev), &quot;tpmdev&quot=
-;, OBJECT(be), &amp;errp);<br>
-&gt; +=C2=A0 =C2=A0 object_property_set_str(OBJECT(dev), &quot;tpmdev&quot;=
-, be-&gt;id, &amp;errp);<br>
-&gt; +=C2=A0 =C2=A0 sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &amp;erro=
-r_fatal);<br>
-&gt; +=C2=A0 =C2=A0 sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, sbsa_ref_memmap=
-[SBSA_TPM].base);<br>
-&gt; +}<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0static void create_pcie(SBSAMachineState *sms)<br>
-&gt;=C2=A0 =C2=A0{<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0hwaddr base_ecam =3D sbsa_ref_memmap[SBSA_PC=
-IE_ECAM].base;<br>
-&gt; @@ -686,6 +708,8 @@ static void create_pcie(SBSAMachineState *sms)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0pci_create_simple(pci-&gt;bus, -1, &quot;boc=
-hs-display&quot;);<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0create_smmu(sms, pci-&gt;bus);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 create_tpm(sms, pci-&gt;bus);<br>
-&gt;=C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0static void *sbsa_ref_dtb(const struct arm_boot_info *binf=
-o, int *fdt_size)<br>
-</blockquote></div>
+On another note, do you think it's reasonable to add what you said here into the development documentation (paraphrased, and if not already documented). If I do write a patch to the documentation, can/should I cc you on it?
 
---000000000000219af1062f3d7a5c--
+> (PS: for the other "not 1:1" case, where you want to connect
+> many qemu_irqs outputs together into one input, the usual semantics
+> you want is to logically-OR the interrupt lines together, and
+> so you use TYPE_OR_IRQ for that.)
+
+(oh oki, I'll make sure to do that on the upcoming patch then,
+thank you!)
+
+(P.S the patch probably won't be coming till next week since I have quite a bit of work outside of my programming stuff to do. Should hopfully be done by Wednesday next week though?)
+
+--------------iOMpxdDDldQXtDQ0AfPpaIqr
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><font face="monospace">On 2025-02-27 10:17, Peter Maydell wrote:</font></p>
+    <blockquote type="cite"
+cite="mid:CAFEAcA9ht=T_XqKaKB-PaNK9joQFYgks37JHjqUO-qkaNe7YUQ@mail.gmail.com">
+      <pre wrap="" class="moz-quote-pre">On Thu, 27 Feb 2025 at 09:15, Sourojeet Adhikari
+<a class="moz-txt-link-rfc2396E" href="mailto:s23adhik@csclub.uwaterloo.ca">&lt;s23adhik@csclub.uwaterloo.ca&gt;</a> wrote:
+</pre>
+      <blockquote type="cite">
+        <blockquote type="cite">
+          <pre wrap="" class="moz-quote-pre">The systmr INTERRUPT_TIMER0..3 sysbus IRQ outputs are already
+being wired up in the function bcm_soc_peripherals_common_realize()
+in hw/arm/bcm2835_peripherals.c (to the TYPE_BCM2835_IC
+interrupt controller), and it isn't valid to wire one input
+directly to multiple outputs.
+
+In fact it looks like we are currently getting this wrong for
+all of the interrupts that need to be wired to both the
+"legacy interrupt controller" and the GIC. I think at the moment
+what happens is that the wiring to the GIC will happen last
+and this overrides the earlier wiring to the legacy interrupt
+controller, so code using the latter won't work correctly.
+</pre>
+        </blockquote>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">I'll try reading through the relevant sections and send an
+updated patch later next week. From what I can tell it falls
+under the bcm2835_pheripherals.c file, right?
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+Yes. To expand a bit, QEMU's qemu_irq abstraction must
+always be wired exactly 1-to-1, from a single output to
+a single input. Wiring either one input to multiple outputs
+or one output to multiple inputs will not behave correctly
+(and unfortunately we don't have an easy way to assert()
+if code in QEMU gets this wrong).
+
+So for cases where you want the one-to-many behaviour you need
+to create an object of TYPE_SPLIT_IRQ. This has one input and
+multiple outputs, so you can connect your wire from device A's
+output to the splitter's input, and then connect outputs
+from the splitter to devices B, C, etc. (In this case A
+would be the timer, and B, C the two interrupt controllers.)
+Searching the source code for TYPE_SPLIT_IRQ will give some
+places where it's used. (Ignore the qdev_new(TYPE_SPLIT_IRQ)
+ones, those are a code pattern we use in board models, not
+in SoC device models.)
+
+In this specific bcm2838 case, it's a little more awkward,
+because one of the two interrupt controllers is created inside
+bcm2835_peripherals.c and one of them is created outside it.
+Since bcm2838 is already reaching inside the bcm2835_peripherals
+object I guess the simplest thing is:
+ * create a splitter object in bcm2835_peripherals.c for
+   every IRQ line that needs to be connected to both
+   interrupt controllers (probably easiest to have an array
+   of splitter objects, irq_splitter[])
+ * in bcm2835_peripherals.c, connect the device's outbound
+   IRQ to the input of the appropriate splitter, and
+   connect output 0 of that splitter to the BCM2835_IC
+   correct interrupt controller input
+ * in bcm2838.c, connect output 0 of ps_base-&gt;irq_splitter[n]
+   to the correct GIC input
+
+(This is kind of breaking the abstraction layer that ideally
+exists where the code that creates and uses a device doesn't
+try to look "inside" it at any subparts it might have. We
+could, for instance, instead make the bcm2835_peripherals
+object expose its own qemu_irq outputs which were the second
+outputs of the splitters, so that the bcm2838.c code wasn't
+looking inside and finding the splitters directly. But I
+think that's more awkward than it's worth. It's also possible
+that we have the split between the main SoC and the
+peripheral object wrong and either both interrupt controllers
+or neither should be inside the peripheral object; but
+reshuffling things like that would be a lot of work too.)
+</pre>
+    </blockquote>
+    <p><font face="monospace">This weekend I'll try my best to mess
+        around, and get the solution<br>
+        you proposed working<span style="white-space: pre-wrap">. From what I can tell, I (personally) think
+, the not-reshuffling things approach might be a bit better here.
+Since otherwise it'd turn into a somewhat sizeable patch pretty
+quick, and is a lot of work, for something that's not *too* big
+of an issue.
+I do have access to a raspberry pi if you think I should do any
+kind of testing before doing the reshuffling. </span></font></p>
+    <p><font face="monospace"><span style="white-space: pre-wrap">On another note, do you think it's reasonable to add what you said
+here into the development documentation (paraphrased, and if not 
+already documented). If I do write a patch to the documentation,
+can/should I cc you on it?
+</span></font></p>
+    <blockquote type="cite"
+cite="mid:CAFEAcA9ht=T_XqKaKB-PaNK9joQFYgks37JHjqUO-qkaNe7YUQ@mail.gmail.com">
+      <pre wrap="" class="moz-quote-pre">(PS: for the other "not 1:1" case, where you want to connect
+many qemu_irqs outputs together into one input, the usual semantics
+you want is to logically-OR the interrupt lines together, and
+so you use TYPE_OR_IRQ for that.)</pre>
+    </blockquote>
+    <p><font face="monospace">(oh oki, I'll make sure to do that on the
+        upcoming patch then, <br>
+        thank you!)</font></p>
+    <p><span style="white-space: pre-wrap"><font face="monospace">(P.S the patch probably won't be coming till next week since I have 
+quite a bit of work outside of my programming stuff to do.
+Should hopfully be done by Wednesday next week though?)
+</font></span></p>
+  </body>
+</html>
+
+--------------iOMpxdDDldQXtDQ0AfPpaIqr--
 
