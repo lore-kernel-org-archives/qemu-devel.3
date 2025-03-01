@@ -4,134 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE9D4C021B8
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 06:37:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A5FC021B8
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Mar 2025 06:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toGSu-0002Cs-De; Sat, 01 Mar 2025 01:36:48 -0500
+	id 1toGYV-0004py-Re; Sat, 01 Mar 2025 01:42:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1toGSs-0002CG-Kl
- for qemu-devel@nongnu.org; Sat, 01 Mar 2025 01:36:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1toGSq-0001eW-DT
- for qemu-devel@nongnu.org; Sat, 01 Mar 2025 01:36:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740811003;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rjEO7MUHkNuv68oWi+2czUvA7et1su7XX+1jMHziWJ8=;
- b=bBpHyFTEPD6YiA0ThTGOJ7FSBoarD0PBcEmLy0SwgDZUcmhyotjf0oEtpLgKDVBck9r4Pc
- UEuDwaXSNlbnKs9D/MqgLMWj9Z03JxZ3pAGrB5gtBzO/RzS9wt2plTY4qrsuwyw/LOFBFa
- PwVMFr9Giqd+OvKOeS8L6/Qy3E7BqUs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-317-xf3Mf53wM3mxarCSzAvIOQ-1; Sat, 01 Mar 2025 01:36:18 -0500
-X-MC-Unique: xf3Mf53wM3mxarCSzAvIOQ-1
-X-Mimecast-MFC-AGG-ID: xf3Mf53wM3mxarCSzAvIOQ_1740810978
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-390f9d00750so162275f8f.3
- for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 22:36:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <hikalium@hikalium.com>)
+ id 1toGYU-0004pm-4S
+ for qemu-devel@nongnu.org; Sat, 01 Mar 2025 01:42:34 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hikalium@hikalium.com>)
+ id 1toGYS-0004Ct-Em
+ for qemu-devel@nongnu.org; Sat, 01 Mar 2025 01:42:33 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2f42992f608so4477028a91.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Feb 2025 22:42:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=hikalium-com.20230601.gappssmtp.com; s=20230601; t=1740811350; x=1741416150;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wOhsnhWcp/oB0H9OkHn8hUNSLjLyQJMmKpGtcq3Zsjo=;
+ b=BcmtlOavrPiofoynlZomEf27GbJiDPAmc6YepMgArs/aiSXu8V4fSG7P1K3ML/5kat
+ WgybSSIdJC5eMD3OvpsEG2hm6Aau3HTV4OXJfK9YRTNIdRzeEB8p3tzoqaxMa8thaUz9
+ 7JN18qQVk2D9bMcILzKb9GNcfwOEeg0ROlGlN14QlsJeuRm6Z9+K/HG1MzNL9Pu9NZ2Z
+ xpsW/7e8ZXltzk9ztL/CFq+yY0mZHP3NKYfRh7J0U9/KOnq7Y6f8dKupKXCYiFzKCv76
+ IFUgZF8H2rE9dRppa2s2cX++fE8wHZH5yCX1EpKr557MDMta3oVycdljppCPEz8+hp34
+ sujA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740810977; x=1741415777;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1740811350; x=1741416150;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rjEO7MUHkNuv68oWi+2czUvA7et1su7XX+1jMHziWJ8=;
- b=nHegargW2RGEhrNtrvzY2om/ZYYU9mMKSvQaztCJsWG82aP1NPR8S1IaurbdoDMHzs
- pFGkSj/mj12VZ6AZ4K6nRpC0j9LW+fYhEcjQwNAV8U10xCddERbJUMBkfeHegNTndGba
- ZQvppm2laLeW/NatrUoECxrs4On/ZKinlYpGBf6vUqwawPyZwL2YyOYisv4Rlmf739F2
- m0SHs+GRGLRAg8UZt+cNQ5bxgCwdFxpOhx2pColcLqv6cxb2Tiza6v+0+jMC4Lkd5aNN
- bElqQOswDTVu8VP0CRLloflt7/VanbJswm7kT/dZEJCz9yyBViPh+ZVfLQyUdAEu389v
- woYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXlHjbSDzt0aqqacCoRUS803ygACHFaa497Lr3eYCixtIU65cMhVDHM10Ql5AzyIIG9VtDCgzbiF4x@nongnu.org
-X-Gm-Message-State: AOJu0YybaKEACjtkpE+qRg+iSk7IIRMCWOpK8pS2hTIvvFAPXzfdEppC
- wy+2mhJK1o3kjVbymEiZTY6fbiDD6UzTLkupSquuDfQjJQT3AvnPuQsXwIVoLcdXN2ZPL7X8RFV
- ohxFDMbI57o5wPjF8DnUTbOLqSYbnjRsUnI3eclQLALYf0Sx8RqdA
-X-Gm-Gg: ASbGnctNGPykl0Ff5GjUpHWTpWZKouF84j38b4OLddQytjrDvD0FWguEKjQv7lNPOuf
- J1oNT0tMsIsHvHVYHVZx36Vdsv3RmX8OxJGOYiKPz7zk6n/70Vf43mWI0508shsCxZ0n7W0CvCf
- 8Xh0wm8BVFAY11+lk6kMNKM4xDCRGCTZt/iJYau7CBfLaSZLX1z7BKZ/DAy5fdluZK/cFFWoNXa
- 6TvmqYe1Wpz2nreu4ScEo1ExGbzW95zT8JhYWJgksv3tSrRa48LdO0RTlc0D3zBj+XzZDIBACbU
- aVducNHsZdPIZX/edtRJ
-X-Received: by 2002:a05:6000:1f86:b0:390:f6aa:4e80 with SMTP id
- ffacd0b85a97d-390f6aa5102mr2247870f8f.53.1740810977670; 
- Fri, 28 Feb 2025 22:36:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHbi972NcrdT9BlqlPh1XMpLOIhwTnYxA1u7EpWUIlt3uV6tma8L4DqY7MVft38w555MdBW3w==
-X-Received: by 2002:a05:6000:1f86:b0:390:f6aa:4e80 with SMTP id
- ffacd0b85a97d-390f6aa5102mr2247859f8f.53.1740810977291; 
- Fri, 28 Feb 2025 22:36:17 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.152.199])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-390e47b6cd8sm7276316f8f.44.2025.02.28.22.36.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Feb 2025 22:36:16 -0800 (PST)
-Message-ID: <803732f6-6ab1-4298-a956-660496664f67@redhat.com>
-Date: Sat, 1 Mar 2025 07:36:15 +0100
+ bh=wOhsnhWcp/oB0H9OkHn8hUNSLjLyQJMmKpGtcq3Zsjo=;
+ b=YYCqwBclNtWG8Gd+iuvf1Q4Fzuy4QsMUk5tgwq7NaKlv0ndp2XLh2UxNsNaLCwzIke
+ Lntjk4OuLt1CSJbPnkTFyrpR8iW8sE4yI+FCnKQAhtxsUaoP8TNr0NPRiyJFB3WeCzw4
+ sz+AnduF14TxNN9hLgHuEQeroSeakHSFw3w846Mwd5/UjDkT8kSqaDAs0IgTB0+XAFCi
+ szE6xICWSf7ETf0YyuXaysliRXx+cwdtTvvpGmEm2mmSKjUwDmNxbxjFsjZ4Ij5TkGZq
+ vwNitWHXK9Taegxa/XxzD1W3z1Zy1enZsXZBC/PP0jJpEcJOv0pXsrSegX3aVeFFg1Pv
+ ZbbA==
+X-Gm-Message-State: AOJu0YzWHOAJx//8Zw+Oh2XjqTkfstZt6r5V85EmuHT+Wnb5CwTVTtZZ
+ 91rvZw0Q0dpsXrpQC/IHrR5954y6C8mG/bSwvJ5kQzaBraYsAB8Mv5FJQSKC0d8RSFpMF+gnz92
+ olWBsIdOYaQxlC6rJqc8YAg/APcwl9U2mcuVLpA==
+X-Gm-Gg: ASbGncsDDSBjheP0Prpkhw8pv/y+SpGOovBM/LK83KvPDsOnKj4Z3RXXlnIsVYN4lYt
+ BDi8VQEa04MUVWsKbfXbrSX+EjJSjrXMynVQ2ugmkmpewJ+tKm2zDfQ0zM9EyFWATxi38CASrKy
+ nkL6fDDz+IGSoJEyPeOyX4y89j
+X-Google-Smtp-Source: AGHT+IFj9clJ9enWaypjJfq0qCtwdcIlMKurJ8OTbcC1QFZSWKRlheBZgibF0WLg5olsIUwA/nMj+CBEH+3r1kO/CG8=
+X-Received: by 2002:a17:90b:3fcb:b0:2fe:9581:fbea with SMTP id
+ 98e67ed59e1d1-2febabf414amr10217407a91.29.1740811350252; Fri, 28 Feb 2025
+ 22:42:30 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Kubernetes gitlab-runner jobs cannot be scheduled
-To: Stefan Hajnoczi <stefanha@gmail.com>, Camilla Conte <cconte@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-References: <CAJSP0QUk77GViTBgBpfYH-AbAmQ5aUwi0K6UTH9iv=1mVb0Wbw@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <CAJSP0QUk77GViTBgBpfYH-AbAmQ5aUwi0K6UTH9iv=1mVb0Wbw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <PH8PR11MB6879500CDBB703E22EC3D6F0FAC32@PH8PR11MB6879.namprd11.prod.outlook.com>
+In-Reply-To: <PH8PR11MB6879500CDBB703E22EC3D6F0FAC32@PH8PR11MB6879.namprd11.prod.outlook.com>
+From: hikalium <hikalium@hikalium.com>
+Date: Sat, 1 Mar 2025 15:42:17 +0900
+X-Gm-Features: AQ5f1JpAhgUg5rQb38CRMYGH4zbtjB7gC1BzKTTyaq8V-3cbBn_j5COC9-5O16U
+Message-ID: <CAB7+XXqH9efN-bG4mAt51jM7ucnH4QcdRHhDnsNjWz8s9A=mqw@mail.gmail.com>
+Subject: Re: Some regression due to "ui/gtk: Fix mouse/motion event scaling
+ issue with GTK display backend"
+To: "Kim, Dongwon" <dongwon.kim@intel.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000273ef9062f423a3b"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=hikalium@hikalium.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,58 +93,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/1/25 07:19, Stefan Hajnoczi wrote:
-> Hi,
-> On February 26th GitLab CI started failing many jobs because they
-> could not be scheduled. I've been unable to merge pull requests
-> because the CI is not working.
-> 
-> Here is an example failed job:
-> https://gitlab.com/qemu-project/qemu/-/jobs/9281757413
+--000000000000273ef9062f423a3b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Stefan,
+Hi Kim,
 
-until February 26th the Digital Ocean runners were not enabled; I tried 
-enabling them (which is what caused the issue) to start gauging how much 
-credit we would need to be able to move from Azure to DO for CI.  I 
-posted a note on IRC, I'm sorry if you missed that.
+Thanks for the report!
+Could you give me detailed steps to reproduce the issue so that we can work
+on a proper fix?
 
-> The cache PVC appears to be a manual addition made to the running
-> cluster but not committed to qemu.git. I don't understand why the
-> problems only started surfacing now. Maybe a recent .gitlab-ci.d/
-> change changed how the timeout behaves or maybe the gitlab-runner
-> configuration that enables the cache PVC simply wasn't picked up by
-> the gitlab-runner Pod until February 26th?
+Thank you,
+--
+hikalium
 
-Almost: the cache is not used on Azure, which is why it works.
 
-> In the short term I made a manual edit to the ConfigMap removing
-> gitlab-cache-pvc (but I didn't delete the PVC resource itself). Jobs
-> are at least running now, although they may take longer due to the
-> lack of cache.
+2025=E5=B9=B42=E6=9C=8826=E6=97=A5(=E6=B0=B4) 3:03 Kim, Dongwon <dongwon.ki=
+m@intel.com>:
 
-Ok, thanks for debugging that.  I think what you did is right, and the 
-caching setup should be tested more on a secondary cluster.
+> Hi hikalium,
+>
+> This commit actually breaks one of our use cases with Ubuntu host when th=
+e
+> display scaling factor is
+> set to 200%. It seems like gtk_widget_get_scale_factor is only way to get
+> that DPI scaling factor
+> and without this, mouse movement on the guest wouldn't be able to go
+> across certain boundary
+> as the coordinate will be halved (in case DPI scaling factor is 200%).
+>
+> commit 37e91415018db3656b46cdea8f9e4d47b3ff130d
+> Author: hikalium <hikalium@hikalium.com>
+> Date:   Sun May 12 20:14:35 2024 +0900
+>
+>     ui/gtk: Fix mouse/motion event scaling issue with GTK display backend
+>
+>
 
-(As to the DO credits numbers, the cost of the k8s cluster is about 
-$75/month, and since we were granted $2000 in credits we have only 
-$1100/year to spend on the actual jobs.  The plan is to check on the 
-credits left at the end of March and bring our estimates to DO's open 
-source program manager).
+--000000000000273ef9062f423a3b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Paolo
+<div dir=3D"ltr"><div>Hi Kim,</div><div><br></div><div>Thanks for the repor=
+t!</div><div>Could you give me detailed steps to reproduce the issue so tha=
+t we can work on a proper fix?=C2=A0</div><div><br></div><div>Thank you,</d=
+iv><div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_=
+signature"><div dir=3D"ltr"><div>--</div>hikalium</div></div></div><br></di=
+v><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" cla=
+ss=3D"gmail_attr">2025=E5=B9=B42=E6=9C=8826=E6=97=A5(=E6=B0=B4) 3:03 Kim, D=
+ongwon &lt;<a href=3D"mailto:dongwon.kim@intel.com">dongwon.kim@intel.com</=
+a>&gt;:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi hikal=
+ium,<br>
+<br>
+This commit actually breaks one of our use cases with Ubuntu host when the =
+display scaling factor is<br>
+set to 200%. It seems like gtk_widget_get_scale_factor is only way to get t=
+hat DPI scaling factor<br>
+and without this, mouse movement on the guest wouldn&#39;t be able to go ac=
+ross certain boundary<br>
+as the coordinate will be halved (in case DPI scaling factor is 200%).<br>
+<br>
+commit 37e91415018db3656b46cdea8f9e4d47b3ff130d<br>
+Author: hikalium &lt;<a href=3D"mailto:hikalium@hikalium.com" target=3D"_bl=
+ank">hikalium@hikalium.com</a>&gt;<br>
+Date:=C2=A0 =C2=A0Sun May 12 20:14:35 2024 +0900<br>
+<br>
+=C2=A0 =C2=A0 ui/gtk: Fix mouse/motion event scaling issue with GTK display=
+ backend<br>
+<br>
+</blockquote></div>
 
-> In the long term maybe we should deploy minio
-> (https://github.com/minio/minio) or another Kubernetes S3-like service
-> so gitlab-runner can properly use a global cache without ReadWriteOnce
-> limitations?
-> 
-> Since I don't know the details of how the Digital Ocean Kubernetes
-> cluster was configured for gitlab-runner I don't want to make too many
-> changes without your input. Please let me know what you think.
-> 
-> Stefan
-> 
-> 
-
+--000000000000273ef9062f423a3b--
 
