@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA6DC282C6
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Mar 2025 14:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8CD0C19F32
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Mar 2025 14:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tokcS-0008NK-2T; Sun, 02 Mar 2025 09:48:40 -0500
+	id 1tokgw-0001s0-00; Sun, 02 Mar 2025 09:53:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tokcP-0008Mo-A0
- for qemu-devel@nongnu.org; Sun, 02 Mar 2025 09:48:37 -0500
-Received: from mail-bn7nam10on20609.outbound.protection.outlook.com
- ([2a01:111:f403:2009::609]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ id 1tokgu-0001q6-Tb
+ for qemu-devel@nongnu.org; Sun, 02 Mar 2025 09:53:16 -0500
+Received: from mail-dm6nam11on20605.outbound.protection.outlook.com
+ ([2a01:111:f403:2415::605]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tokcL-0003ue-QI
- for qemu-devel@nongnu.org; Sun, 02 Mar 2025 09:48:35 -0500
+ id 1tokgs-0004Oy-Qz
+ for qemu-devel@nongnu.org; Sun, 02 Mar 2025 09:53:16 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JDayV1bRlgG0cENqld/5RE0gGx3ybDdYzzRpSrAzUd+1ImnG1wXrIA4IsWckb/UQyt8aeNqSIhP2oN5gx1tsALUdp7pba9ee+00Drmy+GpAVx4YPAgKnqAmYOXUzkAWDA6ztzA0q0/QbYOF7WXaPfFU6XWIaRB9A/Wk+lp3tRUuQB5l5v+BBjgPw6S2l90svqcvPgGmvjFDqnmcuQuxkgJVfp8WNoJO0gaGfmPClrWBFws1NYYG9V9+/DqYBSdN7wMk0jed2eAvWIkoDtdN4bAYsyCgasC4Esp5Ynz04Fspx4L7/aYN1crA3iNA8QLKuZ+D8qdyUdONaey9UKN+yHw==
+ b=TMXlPTISn5bNKvC7zC6NyxWVNDo+C8KTnnCyoywUvVjeUc2V8tiyPO+B032x+e09atDjCtKG6w56d8gUV8Inwj3z9Nine/YpapH4RTiPdQ+QcTCiSsadfZWCh1x/gWRt+SlDfAZnY4DJJVisrB0lnu/DP6fMkxOTOzEMErl1ZsnVcgWFB9iB+4FbNZMouzxfuShFA6vmPgjkpti1wdbqo5H4T5z/vnDoMuGJ772cJM+NPx2sbsBw7NGWVaoeRXeBKr7pWYEHWV45nOE8+tO1U6vWA/E0jxQJKVMyhCFgmFkUN4apmoma0LUih7zhesmeO0Gt1U3XejwTjsq5N+lMMw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MzLD/HkA/a8D+opUluNsnJmLTSTZm/14KHKSu7FL/dc=;
- b=OuhJ6fP5KR3KC5HeVeT5eSeP9AlwQ3vnSzCBcZ3mgFBsnajtyUZaqGJkN9eVex+y11yINp/oy2XKjDXpHOXLmVliVTGYSb8lKDiSvnDuNPqKctZu5k4gwpVoaT15WIN9iQLpxZCHOjdrgg5SO6tRkt1T18C1L2utcqX9dKcdHRCLE4kt2N99ELnzyzb+EZlHfDppTF8hDiqGW3TXoK4Isaux/Xz9OwYWoNVgIT8JIcjeYuGCFoDx5Hudwpn6pCQkxmEjrMGH2OXvbykWfGvDIu7lN9HZcpkWb6QIp99DxXkLHeB9JO819vX22PGL1aBQfTwtO00nkz1OYeY4TQPrGg==
+ bh=pdnrYKcyLqMouonJl7sl2kc1yedVgYZQSWmNDH/o5tA=;
+ b=oGcIM6RZ+0gZVzY96xC/MqQx8nsDoYe1n/4PBHRzGwQR5CNz+BV7+8PJ8Ubj93snpG5vHDNnzw2Pdy0N9kVwUu6FggHBaBQ0UTLL7Wbkd0vkQhvb8B8t/qcSmmTizUYM0rjkf06rSJZuae+eI9bNYdCcFsSN5l6Ge2Xd1/R4PB6gXf+HsjEsKPnAaJYikKG/1u0pP+JMZwmB4at2D5x9BUt+Z3iAihKcrBgo0voHojmY21qP7OVf2vopiTY/HyDE9RVBFCGbFB87QvHxDXGCrwrwtVUJRij5l1EJQ+7jaUe+QaFTM3pGCcBDe1YuR8+HvdsewPUlO7GfRu0KIyjiMw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MzLD/HkA/a8D+opUluNsnJmLTSTZm/14KHKSu7FL/dc=;
- b=kBMz1ZPsOaRS1AzqtW5CmxtYPUCf3RtwkpoL3+CzJgM+Z0TypHyr+q1d5blGekkMxITmReWpBtufSV3uzWSz7f7D247L+gEJpZPJWmrxssDLS9HOSvxib+ijn8ELvVFxRPsNt1Gf7Y5jFncdn/YD2+fG2580bgX/SdTuC3VVYws2ORvQhnMBAHMEHEMKlBLFsh2q/kvDLwKa4F9G2eUgcm3NS4X9ZgrvoicDDzR9euhcdHyfv87hf2VY92JKEYoYBoddB7EC7j8/UflPlcevFiuNa7lpwFNQJXyIFaPaGaeBGCFQHE791Yest1jXojT8bt9HpNiDJ+T+m5QULkF+nw==
+ bh=pdnrYKcyLqMouonJl7sl2kc1yedVgYZQSWmNDH/o5tA=;
+ b=WjSFbtX98QhZ/VoY0fAed6/rPyao9UbAosKD8mghz0Kb2KaqkNz7DfHrpTkOrvj7Of09G9PhPMGBWytaFRYwUX2YrLT87SrvE+SEkMEmDP+Kp2JW+6TfoqFY3ASX++lSluajDdwBAIJJrghAfFUdXtW+oJ+EdBlwFp20KDwiyY9qmI7osjDG6cL0yBGKmnw6xUGud0D0MVxtGJdSjWlI28AY8mjCj4jW0Z3jPl+UqVQ6UeLWE62Y27yR46H44RE+nfgpDMrurfIf13XV77bM0v2yl8I8ZadLrL2+3ZZpdIEFbm4y/JNC2i9B9nDn/L/xa6TQUJugBiuXg7mnTgE1ZQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by PH0PR12MB7959.namprd12.prod.outlook.com (2603:10b6:510:282::22) with
+ by PH7PR12MB7139.namprd12.prod.outlook.com (2603:10b6:510:1ef::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.19; Sun, 2 Mar
- 2025 14:48:29 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.20; Sun, 2 Mar
+ 2025 14:53:08 +0000
 Received: from DM6PR12MB5549.namprd12.prod.outlook.com
  ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
  ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.8489.025; Sun, 2 Mar 2025
- 14:48:28 +0000
-Message-ID: <f462d899-7cba-4673-b8bf-f6a3b25d25b3@nvidia.com>
-Date: Sun, 2 Mar 2025 16:48:22 +0200
+ 14:53:08 +0000
+Message-ID: <d7a7c7ee-5529-4091-a241-6cdde9943a25@nvidia.com>
+Date: Sun, 2 Mar 2025 16:53:01 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 31/36] vfio/migration: Add x-migration-multifd-transfer
- VFIO property
+Subject: Re: [PATCH v5 34/36] vfio/migration: Max in-flight VFIO device state
+ buffer count limit
 To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -61,107 +61,107 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <8f38087567dfc898fb0f1688be0689dd1dacfa22.1739994627.git.maciej.szmigiero@oracle.com>
+ <719b309bb7bc13542d14e6ce0026cb9bb67e9f31.1739994627.git.maciej.szmigiero@oracle.com>
 Content-Language: en-US
 From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <8f38087567dfc898fb0f1688be0689dd1dacfa22.1739994627.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <719b309bb7bc13542d14e6ce0026cb9bb67e9f31.1739994627.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR2P281CA0078.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:9a::20) To DM6PR12MB5549.namprd12.prod.outlook.com
+X-ClientProxiedBy: LO4P123CA0461.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:1aa::16) To DM6PR12MB5549.namprd12.prod.outlook.com
  (2603:10b6:5:209::13)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|PH0PR12MB7959:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5ed4d8d0-6f2a-4d8f-c38c-08dd59994b41
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|PH7PR12MB7139:EE_
+X-MS-Office365-Filtering-Correlation-Id: 20fa8c4b-27ae-4338-8448-08dd5999f1e1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?R0Y0Und0NU05ZWdNaTYvZm1KMEdNOWN2TVk1d0xhbEx3NmdPd2pJYnFkSnRW?=
- =?utf-8?B?Yk9ZT2piRWxXNmU1NzgvWGl2d2dDajNsNzUzSm9VNWpIV2xpVEV1R3JIdkJ0?=
- =?utf-8?B?cXBVVW9Xc0U0bjhLZmFsZ3hSWmxOcXEyOHZ0bUZtLzNFdXUwdEYzRlY5SUl1?=
- =?utf-8?B?OWtrcTlIYmZmME1ha0I2clRKcnZQTUMwWE55aUJ5a0M3cU9KdkNFZEppWWlt?=
- =?utf-8?B?ZlJLb3BrR3hEdlp6cHQwM0V5c1ZheG14OTNCY0NCNVloMWxOanJ4dUZDOFhM?=
- =?utf-8?B?ZUxHNjFFWHlLWEJwYldaQ1d5WEFRcFJsODFCQ1FxVWorSlplZVRhTDN6K29y?=
- =?utf-8?B?WlhVUTNzODY2RUdLT09FL2FraVJYV1lhNDQ3S3ZKSFFkdnlydmNBQTRZUEVq?=
- =?utf-8?B?OXJmRjU0ZGxjaVp3cHpvak51ckpmYWFEK3NCQWZFV2NHYjh5NC9MUHREbVZY?=
- =?utf-8?B?eEJUTGViSm5WbXpqbFRyS0NtVnBQR0tXMVpjU1h0ZFY4NjVOOGMzYmdYdm5r?=
- =?utf-8?B?eTVDZzFJSXhEMDlpOEJVUmtEZkhnZVBQeWI2VDhsTDhHZFJiUVQ1dkV3Zzg5?=
- =?utf-8?B?c3JWTjN6aG02c0NMdWFCTVMxL3VHT3lmYVowNnpzQ2pEZE1UNCtndTVTUXFp?=
- =?utf-8?B?TXQ4OEcwbUFwaGRlaSt4SWFGVURYbzRkRjZQdXdmbzAzblcyZ3FIT1BjblRM?=
- =?utf-8?B?N3ZoOWMwOS9UN29sd0NGMnQ1anRCYzVZZm84eHVGaDRNeDVRTDk4eFUxaGxG?=
- =?utf-8?B?b0RSOEFqQmcvOVZpN2thb3NNRDBxTDJTWEw4WG1tZlBzNlRkSzZGazNzdkow?=
- =?utf-8?B?VkZCT04zVk1LTXJvWjdaUVM4WEs3VCt5L3ZpdDJiRVlGN1RUa0FPOXhOVkR1?=
- =?utf-8?B?T2tOc0d5SHZwd3YyazdRZ0VmU1IwVzBkdFpaSnBnVHpkOU11WmtLMzR0YXFZ?=
- =?utf-8?B?T1F1bXYzWTlvUGtXT00vOEFSNUpxNXdZMDBGb2VxcFpXa01NbWIyVzBYc1Vx?=
- =?utf-8?B?UVQyT1BaZ2lpK2t0YkZqUFhsL0ZjU1Q3ZU9ZMitPMzNPQzFKT3ZCaS95Rzd2?=
- =?utf-8?B?TGJvVlljY3dUZm9iVkcrUXVJeUt0TDEwTklUWE9JU1N6elRWblhCejR1RWVJ?=
- =?utf-8?B?dGVnUHVuWk9iRnltcWhtZjdYamo2M1BjZTdiZng0WTZ2VVZGc2RLTlcwZTRw?=
- =?utf-8?B?OGVqd0Q2Y2dZb0V5d3BGYmhtWTRIRTF0MmRqUTAxMXY0SXhvV1ZXMGttSjVX?=
- =?utf-8?B?MWVwZ2hZbEs4NnY5T2cvNWdhQlIvci9uZkNlam1hbGtreVNCRW01N0RtYUdK?=
- =?utf-8?B?N2U2NStLL1JPMXN0bDlnelVXMGdtVEwwb2NmaGhpNUJoSHJ3L0ZWRDZWUHhJ?=
- =?utf-8?B?Z0hVeE5kRkt2d1VDZXdIazVQZ1lHaEltZGF4d1lQZ1NicHdRT0lndFc1K0tt?=
- =?utf-8?B?akM4Q3U1dXdmQ2p0U0NWZFNCRCt3NDNGREI3YjdBeWxkS1ZDR3N0UXAxcXBt?=
- =?utf-8?B?MWV5WlhZcHpwbDl6dGhjTXhjRUVCOWw0STdEYVJzRUpKa0pxRTZMWkZWYkFh?=
- =?utf-8?B?Ryt1Q1AzeXU2QTlIazNDc1htWENxY1J4YnNMRXZnNWdJdkhGNDl1VzFJYXM5?=
- =?utf-8?B?VGI5UGVDRXR6cHNtT3VRUEpIdm5mSVE5NWhvT3NoWVkwSzcxTW1VZmI1VFVu?=
- =?utf-8?B?NkthaTlJZ25NMU5HZXV5QlA1Um9sRkVkWXVlNHk4RjJtaStjTmZGTDhzVEhn?=
- =?utf-8?B?Sy8yM2tYQjZZcHBncVdiRXRYV3R1YUFVYmdYNzhidUN0WkpPakp4L3hoc1R4?=
- =?utf-8?B?dEpYK1orNXRTQTdqVmV4b2oxU01QYUgyWGFKSGtiL2dHZmJ2YVcyMEV4UzFC?=
- =?utf-8?Q?OJJje9NvAKKF8?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TDJqSnEwakI5Vnk1MWtMR1lhQWRUS2k5d1pnK1BPK3h5U0wwS05zRHNrN0Zz?=
+ =?utf-8?B?VkY2WS9IR010VGZZeU9FM2hQdDliZG50NFNsTjFZTDFHcVNNczFna3FwTkJy?=
+ =?utf-8?B?bW5sNjJiWS9EVWlKU29IelBGS1ppS0xXY080d1VoUkk4QXZaTko1b0VNMjB4?=
+ =?utf-8?B?UjFPSFdsZFlGOTN5TkpBQUhjZkY4TDY3M3lXbWxZdTIxUzhuN0JBc1pyd3Nj?=
+ =?utf-8?B?b1ZqUThQdzdYbjJCOTZoQmRZWUNsK1dCeXc3RUpTemVqajFEemw0Vko3QXpZ?=
+ =?utf-8?B?c1U2eGdJQ3dxeVJUSTFDNzR5SzQ3TWxzSjF1TkhTeXpiNVFxdTlxWXFUZ1Z4?=
+ =?utf-8?B?WEZVeGlxZXp6aHFWT1NZWmlwNXhwZHNaQWtKaTNtRFNQSHJtZWRpVlBmMEMy?=
+ =?utf-8?B?eU9SVEJQV25XZTQ2S1daMGx5cmdQSDlSUGVUU25id2k3bXVUcnkwVEt4Y3F5?=
+ =?utf-8?B?MDJ0RUFDa3lENVdFOVJHZEIyZDNiNlE4bUUwMG00czJKVCs3dU90aTFRTlJQ?=
+ =?utf-8?B?Ykx5RUQ0YTJ4SVBWc3FnempWRXZGKzhaaHZWc3FLV2orRzNJY3c5QzJrL2Nh?=
+ =?utf-8?B?MlRNbkRsVGlianVYNTlQN2lWRVVNQ3VEb0swYTErb2crSTNlQXRObFNIdERu?=
+ =?utf-8?B?YXgyRmpDL3RQSDYwMVpPNFBWTWJXODlndmlmd280MnVEVjVJbnNJczlpUXl1?=
+ =?utf-8?B?WlMyZHFST2N6T1Y3a1dMMGI1N2ZpbVpUdnBQUFkwU2NNekhxRnFhMms1MnRv?=
+ =?utf-8?B?T05EbytMZjNJa3pZUzlncklSVkkzY3E3RVBISnNDZTM4SVhRcUl1RjRvc0ty?=
+ =?utf-8?B?OXpVM094QU5kQTJaQWNGWU1lTENZV1I1SUdacTVObVFkb0pFeFBSZmRwRHJS?=
+ =?utf-8?B?UENwTjlIbnlnaWtMbnh4Zk5lbkhKV1JWQlduTXV4eUc5Q3hpcllIK1A3RVhN?=
+ =?utf-8?B?SXozdnFNQmphemZoWWtidUlPRHU1enlhVmdMVUt2dldnMmMzeUo1OFFJZkNF?=
+ =?utf-8?B?ODI3TU9kbjhjaGhBK3pTdkZZTnB4aXBIWVd1NHdTWGdXZ0cyUkhyc1pUa3oz?=
+ =?utf-8?B?SVRRbm5CWHBZcUJVNUo1MFBDdmpKWWJveVZmRlpveGRSY2xqN01iV2N6b3d0?=
+ =?utf-8?B?Q1hGMUlQUmg2RDZ1cW53T28ySEtFQm1oSi9VekhzUVBTa2xMY25KY3Uyd0Zj?=
+ =?utf-8?B?YlMxdVZ2azN1UDFZYy9FRXFyYm5LOHJmUE5IaVdScnBscFpidWo5THpndG8x?=
+ =?utf-8?B?YkttS2FHVnFubytmL28vblVob1ZBK2JjRjBPM1BsKzRVcHJZckQxcTBxb1dh?=
+ =?utf-8?B?eUlnYWdscVZtQ1JnMFdUd29BcDdnVUNwR0ZSUU1nVzlLckpmK2lRWkgrRWQ0?=
+ =?utf-8?B?ckpmSnIzTUpjWVRUV0VkL1NCU3ozdE9mMDh5VXBjSGVKZEpZaHY2ZUttM1Vq?=
+ =?utf-8?B?bXFPeC9OWWtSdUEweDlKamhzY29FYzdDbVBQeWhPR00yOVBubWxwNGlLenR3?=
+ =?utf-8?B?TW00VUtrRUhFMXlmQzI0cnJaUk9lczdMWnpwa1NWNTJTQWF4cHJ2bFM3SklI?=
+ =?utf-8?B?MDlhZDF1c0hva1k3VGlCbHRhZFdCaUVEejF6TXJicHREb3hmb3drWWx0MDFX?=
+ =?utf-8?B?NVRjVmhwWjlqWkJqQkM5NTUzRE5CQ28vWXZCQWlkcTl4S3BqZ0RYYnVmR1Rw?=
+ =?utf-8?B?M3Y2d0JwQmNxQzZGSitEYzZjQWJWL0tLNWEvMGs4VXRhQVRTNXBsK01zVFN2?=
+ =?utf-8?B?bXNGaG5wc241Ym0xdTNkNlphcS9hQ1NsY3BlM1hQckt0UnZ4dkNSSUZwT0RE?=
+ =?utf-8?B?anBnOG03WlFiU2doS2RDNFF1YjllcVhrczNjMnpHZGNZRWd6Yjh5WUtqZ2lv?=
+ =?utf-8?Q?5L1rcIaZT0PJe?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?d3hHa2FFZFJnek9yTGNoSSs1TlJ6ZG5sMmRHVHpHMTFMbDRST1ZMd0hVVzN4?=
- =?utf-8?B?bXNoK3FtWHFOaTJJenNuUzh4R21tSjJHYmlPdDNoQVNDNDdReC9rR2hUZHh3?=
- =?utf-8?B?RjJKTlZBaHFFT2NQY0pubW5TdlRYdEhHeFBmSDgxMFlubFRna1ZEa2pUV2VS?=
- =?utf-8?B?bEpZaG1aQkRXNkpFRGhCRXFpd1NNMnBrZmJBQWQ3OUx3ZFBXWlkxcnhNaWVm?=
- =?utf-8?B?dDNLYjVacGtXTWtTalFEN3VndHN5bUM2eUhvYmVUL0NEcUh2ZFhibi9MWkRv?=
- =?utf-8?B?QXdZbFVlSUxWYnZ6dU5TTktpWjhMcVBsd0l2bWNtK3VENXZ3QUxjVE9qTzgy?=
- =?utf-8?B?WElSU0Jta3E2ZEVMd3RFcWlGNG9GbVhhUmg1eWw2VUxzQmNSSWRaUUxjQ0Zs?=
- =?utf-8?B?a21laDVya1pldERzZUF6OWlnRUlhZUhxRXBTcFZKRHllcFgvSVFEeGlvQzcx?=
- =?utf-8?B?VnpWV0tmNTNlN1FwK3JHV0lUM0JYdDR5dUtENkRlZFVHRVFDUXNhcXhVYklH?=
- =?utf-8?B?SnZxR1ltenF3R3RCZThZWkkxUG56U1UxbmZPQlRYWXc5UmIvaVQxTDFkb29s?=
- =?utf-8?B?ekswd1ZkVWZ5aXgrNk1NRkc0allnek11L2Z0UDU2V3VXVVhYQ0JHMjY4NVdR?=
- =?utf-8?B?WjlucFhFY1Bjbk9wdGIyemVrZEF5bHhMQnRtVTNnUE4zLzVMRmk5S1J1QlJV?=
- =?utf-8?B?VEdiUFl4eCtiSFlpQjNnVk5qY0tGeVZCUTF5TTR3b2JRMjYwZTJXWXJBRGVD?=
- =?utf-8?B?eVRaa0VFTk5yZXZvSkIyVHd3TFFkN09UUGxIcFRZOUxSREFPZVZCczVhZXRE?=
- =?utf-8?B?MDQyVVYyZGdRS2tRRitIRGdYcGIvVXJncjY3T2U0UXZxTUpOWUpBeGhjVnQ3?=
- =?utf-8?B?OE5Gd0RFVnVnaTBpM29UL2sxRTVVTDNCdnRTUkJ3cWVhTnlSb01iMlkrNWY4?=
- =?utf-8?B?ejByYzB3NnBOdk5US2tBOUI3R1VGRkNTRW03cS9XdXBCbXVidnZqbmZMQ09n?=
- =?utf-8?B?cVRQcDJtc2VuTjJlTCtuS2c0TFdDanVwc3c1V1NTb01EQmNUMHpuTFlGZVB0?=
- =?utf-8?B?ZGRkeTVFYS8rS0Y2LytneXp0eVF0dThjc0lMZitUSnVRKzJXM3pibUpIbDBX?=
- =?utf-8?B?V0VmQlJLS2ErVkFJR2hoWkhVdkpMUjJqNlVEZ241TFBuOXdBcGpUUTFGNnhY?=
- =?utf-8?B?RExBK2FEZ0ErUGNWSlVEMlNZZW9sM3NreWdSLzV0Q3ZQZWExdkRHL2U4dlNN?=
- =?utf-8?B?cExWT2Y4SWM3cDhWdFVWS2VJM292aXF4SituUVJzRElGLzBOTStQaUZjU21y?=
- =?utf-8?B?UDVFWXoxMEd5RlBFN0JoYnZBSVU4TDZNM09SNmFhWWhTOFVGSDR1eTVWc0sv?=
- =?utf-8?B?N3lyMmNyVTNaNkFGRk9Wdjg1MGU4ZGVxWUE4aURzK2p3VVBxR2xLMm9mVVNB?=
- =?utf-8?B?TjMwNStWOFpJZ3ptbmpMTGpMbFlxa3daMThuQ3I4dXBXWEdwZnp6Y3JmZG12?=
- =?utf-8?B?bUx4Z3hwMGZZVEh3ZDlpemJ3UmcwU1ExNkpsdVVLYTFzN2poOGt0ZnVMOFg5?=
- =?utf-8?B?ZlFkaHEyTTF3ZU1IVkM2Z2xxWFA3SVNQQ0gxTGk2aEs5SVhsRmUxYkdSalEr?=
- =?utf-8?B?UXpsVjc0OGRqYkh0VnZxd0RGTWNnemM0cmZBNllYZEx0NURRWHNNckV3U1Ez?=
- =?utf-8?B?bU91UEl5NEU0NjhLeDlTVCs0dHUzdzh2dERyKys0alZHdjlPNnRsaWpOSTNG?=
- =?utf-8?B?blJlcXM4MDd6ZE9RalUweTRLL05XS3pVSUNGUkdEWXJ6VzVxaUgrdTFoT2xl?=
- =?utf-8?B?VzRDLzdyNnpYTkVUNXRKR1FGbFhTekJNYmJxYi9yMDViMEx2RXk1Y3NBYlND?=
- =?utf-8?B?VjV4all0c3lUSUlnRTd3QWZ4NURJM3ovSTZ3NkNsYVUxQlptYkxyR21na2Ex?=
- =?utf-8?B?T2ZYNDVOamJvN0FDUWw3MlNETFBDZnlQd3F2Zk1GYXNMUU5TdWlHR1pxV0x4?=
- =?utf-8?B?azhVVjFYanRkcEt4T1VyREloQVJYcnF2dldUREYxdnNDeGNRZXhyb2tQRXMw?=
- =?utf-8?B?cytQTG1HUVZ5akZsdEhXYnlnd0EzQmZRTkc4eHhEbFI2K2pZYzR3T2d1Q2ZB?=
- =?utf-8?Q?82y1kGcONMbTlA0UdVxmL6JFY?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cFJDQmhHNjR6a2xIaHRaQ3FyYU8vd2s2aHo1Y2VFRmRJajBxcGpaakNwMXFT?=
+ =?utf-8?B?UFNjcms2akxGWVNBOHcybmN5WFBKNnExNVFma0R5WjFiL1JoZERKdzlPRUti?=
+ =?utf-8?B?QUp5MHpLeDFlb2xkYk8wcE8yZGk1dUdLTWt0RkJQNkJVU0c3bDJFZGs2Uk1Z?=
+ =?utf-8?B?SlJ3Nnk5YjU4cWhuZmtPWmwvZUZKOU0wRFNlUUthSWNEWEgzdjVZOWJyaVps?=
+ =?utf-8?B?VFJMMmRDZDczNjRMeWlmMG9BOXo5c0s2MDBsMWZGTG1VbCtOcmR3dW9yN2c0?=
+ =?utf-8?B?NHFyM3FwSC9zVkM3bG8zTktIQWpFL01uZkY5N2piNGJrRFd5WTcrWmtub0JZ?=
+ =?utf-8?B?VTVkN3ovQjdMY0Q4aS9ZVVdEZWoxWW05dmRTVkJydDhvVW4zMk5yWWZQQ0Q2?=
+ =?utf-8?B?VDFQOVBTVFZqVEtzd2JYcUxPNlhPaXV2aWdFalFCQ1NEL3JwZVJJRUVFclUx?=
+ =?utf-8?B?VGJHTDNKWTBqbXQxVVNqZHVUVjE5VG90SEFBdXJZbUthZTlYSEFsLzUvZmlS?=
+ =?utf-8?B?UytoUlhPd1JMMHJjM25sUyt0QmNkekYvS3gwQ3B3ZkszQ0plNnlzSDNOeGdw?=
+ =?utf-8?B?SG1JWFprUHRjL0l6TCtGclEvRk5zWURiV2UrOW1oK3lnM2J3RXBUekJPQ2Z3?=
+ =?utf-8?B?dTN5ZWxyU2lnL25id0tsQjlOQVl0ZXZZK1kyQ0ljc296YktRbkplUG9ndHZu?=
+ =?utf-8?B?REQzSlBxbGZwTTFCSFpCZVR2MjJLVUgwTDRSYlNEOHduWDhvUzExd1Ewbkxj?=
+ =?utf-8?B?eDU4NzE2OFNkdlIyL1dxc0tYK2Jqb1NxeTlYYlp5Yi9zVjVrSjhreGV6akVs?=
+ =?utf-8?B?ZUJwQjk4ajEzcFVVYnJVZjRBWWtPcjJPUi95NVBRVkRDQWxSWlQ0UWU4Q1p3?=
+ =?utf-8?B?eUI4ME5wM1RpalEzMCtiVjY2S3k4MkRhdTFYM3NVc2ZnUktkMk5OSkxPQ0Yz?=
+ =?utf-8?B?ZGFtdUYxT1FPTzZic0tYWHZ1K2NwN3RUTFBucXRyT3RoQVBNRjEvNHBqdzdW?=
+ =?utf-8?B?aWRZc2F5dEdQRFJGL0pRMjlDK0N3N2t0OTcvVGZLKzRCVWI4ZlZGWGpBMGN0?=
+ =?utf-8?B?VnQxNC9NSEw4ZkJsUWFxbE5udTQ1MXRoWlhlQm1yRzJ0YS9MNTl4QjRuMHhN?=
+ =?utf-8?B?cVZUcWwzN2NjU3VDUnloelJweGswaTlZSlJjUzV1TjNzOU9UOFNkOFF0aHow?=
+ =?utf-8?B?WEJMNkxhZnN1eHFGWEpFUHA4QTc4SkZpV29tajl3RFkxN20xYkNtVlcyQ3hZ?=
+ =?utf-8?B?NUhHVjgwTXJ0SDBUVXh4U1dZVEwzNzRYT2c3V0dsSTFreVZITklzT3lRdy9w?=
+ =?utf-8?B?ZjZnVk02QTZVNS9SMUkya0UzWE5YMzlqNG5TdGc3YzBQYnEzN3RqRVhpbEwx?=
+ =?utf-8?B?MnZGVERTZEJmbHIySmd6QllzQVRaVHBWdEllRkRrNXdEd1VtZUlrZnppRWZ1?=
+ =?utf-8?B?NWpoMlYrVWxWQkVkZE9TT3A3ZDR1K3d1WHAyZ1FJM2krNEloSlhPM1hDczMv?=
+ =?utf-8?B?WkV5RHZUMlR6Z283QnpLWlBtUGRvT1dXYWxqNERLMEJvVGhJV1MzbVJsdmZG?=
+ =?utf-8?B?YzRtdExFZFh6YWlUZnMxVVhGemx5RFJtbkZVSDVhT1hBMk95Um5UY2FEaXRS?=
+ =?utf-8?B?a2VGbkxxRU01MDlWb0N1VWVGWXN1cCsraUo4alJDeVBoMVV4TndUWk9KUE54?=
+ =?utf-8?B?Zzhtdm9PUEYxSytCeXdNQmJwVG1YSktnODF6MUl6RC9pMjBlb3BBSmdWZGw4?=
+ =?utf-8?B?UTY3V2g0aFFzRUlIdEVLVjJpZnlWM1dIS2V6VnhwZ3RpLzJLenBRZ2VvdDh5?=
+ =?utf-8?B?d0gzWUFrNUVVQ29qVnI0OW0ybGxsZloxVkhoRFI0Q2V0b1JMbzdKanRtZlZm?=
+ =?utf-8?B?S0hFQkgwZUhnVzNCRkNIamVWZ2RWbDVrTEJTZUlJd0FISHJRbUlmRWlSUnAz?=
+ =?utf-8?B?SFoyUG5tdTc3eVlaME1nUUtwbHdZeGprdUpyT2M4WTNpbHAvVXp3Wnd2T2RG?=
+ =?utf-8?B?V29UaFFWQksrTG0xRGNIMFYxRWE3eGlKVUtBcndEZnNiODNlWUlWaDVKNVNx?=
+ =?utf-8?B?Y1FZc2JaT0RkRnprMW9zR1U5TzYrbDRuVFgyS0ovS2lvZkl3ZzJxeGFRbGRJ?=
+ =?utf-8?Q?UGqaIseosvlgRuP14L58la8EK?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5ed4d8d0-6f2a-4d8f-c38c-08dd59994b41
+X-MS-Exchange-CrossTenant-Network-Message-Id: 20fa8c4b-27ae-4338-8448-08dd5999f1e1
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2025 14:48:28.6179 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2025 14:53:08.1897 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2EPBQb1y78/f42xK9LOH1CKj6j6zzCSP6WpIgJKDM/+69ua7z0zdkFLbrd1393HpBEYaLxsP02boQFk9LbAqYQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7959
-Received-SPF: softfail client-ip=2a01:111:f403:2009::609;
+X-MS-Exchange-CrossTenant-UserPrincipalName: N9+H0F8MqM/GozRuCbZfYfGVyq0zTxCc+JEcIs260kV7piVeUG+mGSp3QrSAjDCOiWQ41XP/Epmv7k7AsgDt1A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7139
+Received-SPF: softfail client-ip=2a01:111:f403:2415::605;
  envelope-from=avihaih@nvidia.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -190,93 +190,107 @@ On 19/02/2025 22:34, Maciej S. Szmigiero wrote:
 >
 > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >
-> This property allows configuring at runtime whether to transfer the
+> Allow capping the maximum count of in-flight VFIO device state buffers
+> queued at the destination, otherwise a malicious QEMU source could
+> theoretically cause the target QEMU to allocate unlimited amounts of memory
+> for buffers-in-flight.
 
-IIUC, in this patch it's not configurable at runtime, so let's drop "at 
-runtime".
+I still think it's better to limit the number of bytes rather than 
+number of buffers:
+1. To the average user the number of buffers doesn't really mean 
+anything. They have to open the code and see what is the size of a 
+single buffer and then choose their value.
+2. Currently VFIO migration buffer size is 1MB. If later it's changed to 
+2MB for example, users will have to adjust their configuration 
+accordingly. With number of bytes, the configuration remains the same no 
+matter what is the VFIO migration buffer size.
 
-> particular device state via multifd channels when live migrating that
-> device.
 >
-> It defaults to AUTO, which means that VFIO device state transfer via
-> multifd channels is attempted in configurations that otherwise support it.
+> Since this is not expected to be a realistic threat in most of VFIO live
+> migration use cases and the right value depends on the particular setup
+> disable the limit by default by setting it to UINT64_MAX.
 >
 > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 > ---
->   hw/vfio/migration-multifd.c   | 17 ++++++++++++++++-
->   hw/vfio/pci.c                 |  3 +++
->   include/hw/vfio/vfio-common.h |  2 ++
->   3 files changed, 21 insertions(+), 1 deletion(-)
+>   hw/vfio/migration-multifd.c   | 14 ++++++++++++++
+>   hw/vfio/pci.c                 |  2 ++
+>   include/hw/vfio/vfio-common.h |  1 +
+>   3 files changed, 17 insertions(+)
 >
 > diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-> index 0cfa9d31732a..18a5ff964a37 100644
+> index 18a5ff964a37..04aa3f4a6596 100644
 > --- a/hw/vfio/migration-multifd.c
 > +++ b/hw/vfio/migration-multifd.c
-> @@ -460,11 +460,26 @@ bool vfio_multifd_transfer_supported(void)
+> @@ -53,6 +53,7 @@ typedef struct VFIOMultifd {
+>       QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
+>       uint32_t load_buf_idx;
+>       uint32_t load_buf_idx_last;
+> +    uint32_t load_buf_queued_pending_buffers;
+>   } VFIOMultifd;
 >
->   bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev)
->   {
-> -    return false;
-> +    VFIOMigration *migration = vbasedev->migration;
-> +
-> +    return migration->multifd_transfer;
->   }
+>   static void vfio_state_buffer_clear(gpointer data)
+> @@ -121,6 +122,15 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
 >
->   bool vfio_multifd_transfer_setup(VFIODevice *vbasedev, Error **errp)
->   {
-> +    VFIOMigration *migration = vbasedev->migration;
-> +
-> +    /*
-> +     * Make a copy of this setting at the start in case it is changed
-> +     * mid-migration.
-> +     */
-> +    if (vbasedev->migration_multifd_transfer == ON_OFF_AUTO_AUTO) {
-> +        migration->multifd_transfer = vfio_multifd_transfer_supported();
-> +    } else {
-> +        migration->multifd_transfer =
-> +            vbasedev->migration_multifd_transfer == ON_OFF_AUTO_ON;
-> +    }
+>       assert(packet->idx >= multifd->load_buf_idx);
+>
+> +    multifd->load_buf_queued_pending_buffers++;
+> +    if (multifd->load_buf_queued_pending_buffers >
+> +        vbasedev->migration_max_queued_buffers) {
+> +        error_setg(errp,
+> +                   "queuing state buffer %" PRIu32 " would exceed the max of %" PRIu64,
+> +                   packet->idx, vbasedev->migration_max_queued_buffers);
 
-Making a copy of this value is only relevant for the next patch where 
-it's turned mutable, so let's move this code to patch #32.
+Let's add vbasedev->name to the error message so we know which device 
+caused the error.
 
 Thanks.
 
+> +        return false;
+> +    }
 > +
->       if (vfio_multifd_transfer_enabled(vbasedev) &&
->           !vfio_multifd_transfer_supported()) {
->           error_setg(errp,
+>       lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
+>       lb->len = packet_total_size - sizeof(*packet);
+>       lb->is_present = true;
+> @@ -374,6 +384,9 @@ static bool vfio_load_bufs_thread(void *opaque, bool *should_quit, Error **errp)
+>               goto ret_signal;
+>           }
+>
+> +        assert(multifd->load_buf_queued_pending_buffers > 0);
+> +        multifd->load_buf_queued_pending_buffers--;
+> +
+>           if (multifd->load_buf_idx == multifd->load_buf_idx_last - 1) {
+>               trace_vfio_load_state_device_buffer_end(vbasedev->name);
+>           }
+> @@ -408,6 +421,7 @@ VFIOMultifd *vfio_multifd_new(void)
+>
+>       multifd->load_buf_idx = 0;
+>       multifd->load_buf_idx_last = UINT32_MAX;
+> +    multifd->load_buf_queued_pending_buffers = 0;
+>       qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
+>
+>       multifd->load_bufs_thread_running = false;
 > diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 89d900e9cf0c..184ff882f9d1 100644
+> index 9111805ae06c..247418f0fce2 100644
 > --- a/hw/vfio/pci.c
 > +++ b/hw/vfio/pci.c
-> @@ -3377,6 +3377,9 @@ static const Property vfio_pci_dev_properties[] = {
->                       VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
->       DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
->                               vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
-> +    DEFINE_PROP_ON_OFF_AUTO("x-migration-multifd-transfer", VFIOPCIDevice,
-> +                            vbasedev.migration_multifd_transfer,
-> +                            ON_OFF_AUTO_AUTO),
+> @@ -3383,6 +3383,8 @@ static const Property vfio_pci_dev_properties[] = {
+>                   vbasedev.migration_multifd_transfer,
+>                   qdev_prop_on_off_auto_mutable, OnOffAuto,
+>                   .set_default = true, .defval.i = ON_OFF_AUTO_AUTO),
+> +    DEFINE_PROP_UINT64("x-migration-max-queued-buffers", VFIOPCIDevice,
+> +                       vbasedev.migration_max_queued_buffers, UINT64_MAX),
 >       DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
 >                        vbasedev.migration_events, false),
 >       DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
 > diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index ba851917f9fc..3006931accf6 100644
+> index 3006931accf6..30a5bb9af61b 100644
 > --- a/include/hw/vfio/vfio-common.h
 > +++ b/include/hw/vfio/vfio-common.h
-> @@ -91,6 +91,7 @@ typedef struct VFIOMigration {
->       uint64_t mig_flags;
->       uint64_t precopy_init_size;
->       uint64_t precopy_dirty_size;
-> +    bool multifd_transfer;
->       VFIOMultifd *multifd;
->       bool initial_data_sent;
->
-> @@ -153,6 +154,7 @@ typedef struct VFIODevice {
->       bool no_mmap;
+> @@ -155,6 +155,7 @@ typedef struct VFIODevice {
 >       bool ram_block_discard_allowed;
 >       OnOffAuto enable_migration;
-> +    OnOffAuto migration_multifd_transfer;
+>       OnOffAuto migration_multifd_transfer;
+> +    uint64_t migration_max_queued_buffers;
 >       bool migration_events;
 >       VFIODeviceOps *ops;
 >       unsigned int num_irqs;
