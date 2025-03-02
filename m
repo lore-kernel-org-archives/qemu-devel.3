@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBF93C19F32
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Mar 2025 22:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB658C19F32
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Mar 2025 22:31:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1torQ7-0004U5-0u; Sun, 02 Mar 2025 17:04:23 -0500
+	id 1torpL-0005Du-KC; Sun, 02 Mar 2025 17:30:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1torQ1-0004Sh-Sl
- for qemu-devel@nongnu.org; Sun, 02 Mar 2025 17:04:19 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1torPy-0001at-KP
- for qemu-devel@nongnu.org; Sun, 02 Mar 2025 17:04:17 -0500
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 522GSGvk028599;
- Sun, 2 Mar 2025 22:03:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2023-11-20; bh=I8NYK
- 4T9yFniWGIt9bnTkOhNwFp/46Xz29dVFOJrqTY=; b=U1FE8dhF1Ie18PIxucLdw
- 9VGV8ICZkFH+wvHsFQyv0dtyE5mBqSmgrLM6eN45ur8+MsIl3ouSEMO3MXKf3ly6
- zhiMElAM8exwZlaVY9DiOC+IRMeJhoLqZvUZZbL11/fSJJmxVXyCAik8C6jg/jrX
- u/AjcCijbu/wQQ3Ecw6PM/wq1PVcQxR2oK+OOhwRHP6Hq6DFK72I6Z3iRYZeaeiA
- bhQi2PA8yKQd5DaKjbzmXXjYU6MW895Rt0o/nDTcvobl03+gJ2bJ3dMkBJ/uo0/a
- uJ2qetvyhuwp6QFslcoGoZosKn9DUuviqOQlx64V47iFjbe1KvwX19fwKh+3Ctxl
- A==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 453u8whkm8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 02 Mar 2025 22:03:30 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 522GTG0Q015691; Sun, 2 Mar 2025 22:03:29 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 453rp803cd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 02 Mar 2025 22:03:29 +0000
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 522M3QoV040088;
- Sun, 2 Mar 2025 22:03:29 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 453rp80353-4; Sun, 02 Mar 2025 22:03:29 +0000
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org
-Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
- sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
- like.xu.linux@gmail.com, zhenyuw@linux.intel.com, groug@kaod.org,
- khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
- den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com
-Subject: [PATCH v2 03/10] [DO NOT MERGE] kvm: Introduce
- kvm_arch_pre_create_vcpu()
-Date: Sun,  2 Mar 2025 14:00:11 -0800
-Message-ID: <20250302220112.17653-4-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20250302220112.17653-1-dongli.zhang@oracle.com>
-References: <20250302220112.17653-1-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1torp3-0005AC-8h; Sun, 02 Mar 2025 17:30:09 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1torp0-0004m9-Vw; Sun, 02 Mar 2025 17:30:09 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5e4cbade42aso5537131a12.1; 
+ Sun, 02 Mar 2025 14:30:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740954605; x=1741559405; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4PUpPoQTvVdjjXZT/CGrhL09uXSqJSo3bX+RYt0RG/0=;
+ b=a2Qqh7VNR0Q7cRPXQwAA3DIQmUevZn6RGLbBpeaYUSI7BkKY2i4RsIcw5fbwzr7qQg
+ 0CzRq0XkDdCGY8/QvzirAsb2QLolg5xeltf5ytI8cQEcJ6Wh20d7TMa3x9Ro8hl0b71V
+ KF/ed6mZYNKjs3Q2JRvr9xhOTV6MIXF3JfX3Lys447JbkUQtsNIU4YfeID0nOHkbXIr/
+ UtGXQYjMHB+xPGC3uFIR4BhbgYCGls1GqhvSa7yjkJYNrAlvwyi/+2fq6QpRxIYtkST6
+ AMIlqcHBCkRt9NAeO9RM05XUcu0YGEdMPHE0j9dI8T+ctTkzxBNQQ2kbrhnUm2rq8JRX
+ ICpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740954605; x=1741559405;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4PUpPoQTvVdjjXZT/CGrhL09uXSqJSo3bX+RYt0RG/0=;
+ b=pvMLfJBhf+OY18F+WDiIgJb/JBLcay17tSH5cr2P5OALoBJ+ewR5IA07BYvG6JDmzD
+ AjC6GrSXEpy9PnDWt1Gizz1CNKIc5xT/rKpL65PHAwVhwqVbgeCzwKO3c0BSK7tZxaxp
+ AJDnY9/2wqqkfCZKpPnO/7jtyP8U97qRw98KLhBjhy0S1chKTWbQgIZV1IDu1quJsJmu
+ L1gJJ7Hwon7IWPneLeb4q5+KiEP6Pg4EB9u0piSV4/bkaIM+CZnbGWnzuC4cPcI0Ailg
+ m8q1JE5BngnX/GHpQHdCaRUfaiXiWmbiH80KEDYQuHD7EXYYASAVf8TFGt9KW+YDgsmJ
+ GW5g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCCwdMX0UqC6oxVwaOs4j7Fp/7WoF7tDKN2OEzbcf7fFqSRHOOpI1mw40zB1HaYOvymPHz5T5GH3YF@nongnu.org,
+ AJvYcCUOyzt1swuT4RMB/LVdldV6b58GPJoM5AVVi0ubedLfiuNGrtGZ9fNQge0SWCWh9OzuuNMhnIOswu8=@nongnu.org
+X-Gm-Message-State: AOJu0Yww7qNKC67Yo4g4GAA8NhCZIprwJeNxdVU8yOQ3gkCEtEYcyeqH
+ tqWwXrXTc7div9l+XJPmSCKgak0g6DK6ldTyY+ts9b9nGe1RqI3O
+X-Gm-Gg: ASbGnct4G66bB7F356O90jYwS0W1BdEG/PEk8giYcvoVkurBp5a1lAAf2buBhnKsmnr
+ N/27BBnyNC8eS10nCh4dntXgYVeObLqzeBeiA9vC0MQPnW7n8u0JErPw+7hwWEAQGNT8Sel3Kl8
+ ra/0tlVLJlA9RMIWkveJtyjN8qOeRlHhQE6gNJEgcuAg7JAr4hzvUzrjN1mUXya+yqoR0TzFYq4
+ p7Yg8WHjAR4jKzrNlD3EzLP8KrqjtnpQWYb9X7ww02ccnoqrgqmJDlKZijwndrSVCYEoljS8v+0
+ ow2RUzHaSKXCmcUNMflSZmSi9uIcISe+8bjCxxVCRqsupOSthsYeNUBvPIFa1FHiro+fRMFRRdW
+ HTvpCHWAUoEs0ZXKNkeSR8axobCxEIyAjPZB5/Drl4iZl6fIODXHl
+X-Google-Smtp-Source: AGHT+IGEKe0nmEy2saPMk1McyBLjKF6VERW7S7odocwWmUksXni0W0LHAiW4TuFQmfLAVjMgI3Purg==
+X-Received: by 2002:a17:906:dc92:b0:abf:6d6e:7728 with SMTP id
+ a640c23a62f3a-abf6d6e78c8mr384376966b.19.1740954604535; 
+ Sun, 02 Mar 2025 14:30:04 -0800 (PST)
+Received: from ?IPv6:::1?
+ (dynamic-2a02-3100-2f94-9100-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
+ [2a02:3100:2f94:9100:69d2:56f6:a5af:50a8])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-abf76f450f6sm113773366b.114.2025.03.02.14.30.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 02 Mar 2025 14:30:03 -0800 (PST)
+Date: Sun, 02 Mar 2025 22:30:02 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+CC: Nicholas Piggin <npiggin@gmail.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_hw/ppc/e500=3A_Partial_impleme?=
+ =?US-ASCII?Q?ntation_of_local_access_window_registers?=
+In-Reply-To: <aabb2da4-3eaa-2a5f-b461-01727c380372@eik.bme.hu>
+References: <20250115211544.307124E602F@zero.eik.bme.hu>
+ <aabb2da4-3eaa-2a5f-b461-01727c380372@eik.bme.hu>
+Message-ID: <24E72FE6-E2AE-4BF4-9273-1B915908EE2E@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-02_06,2025-02-28_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- suspectscore=0 phishscore=0
- adultscore=0 mlxlogscore=999 malwarescore=0 spamscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502100000
- definitions=main-2503020180
-X-Proofpoint-ORIG-GUID: HR5R4V33VI4KXAa3yr_JJx9o93vqv5U5
-X-Proofpoint-GUID: HR5R4V33VI4KXAa3yr_JJx9o93vqv5U5
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,175 +106,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Introduce kvm_arch_pre_create_vcpu(), to perform arch-dependent
-work prior to create any vcpu. This is for i386 TDX because it needs
-call TDX_INIT_VM before creating any vcpu.
 
-The specific implemnet of i386 will be added in the future patch.
+Am 1=2E M=C3=A4rz 2025 16:10:35 UTC schrieb BALATON Zoltan <balaton@eik=2E=
+bme=2Ehu>:
+>On Wed, 15 Jan 2025, BALATON Zoltan wrote:
+>> This allows guests to set the CCSR base address=2E Also store and retur=
+n
+>> values of the local access window registers but their functionality
+>> isn't implemented=2E
+>
+>Bernhard,
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
----
-I used to send a version:
-https://lore.kernel.org/all/20221119122901.2469-2-dongli.zhang@oracle.com/
-Just pick the one from Xiaoyao's patchset as Dapeng may use this version
-as well.
-https://lore.kernel.org/all/20250124132048.3229049-8-xiaoyao.li@intel.com/
+Hi Zoltan,
 
- accel/kvm/kvm-all.c        | 5 +++++
- include/system/kvm.h       | 1 +
- target/arm/kvm.c           | 5 +++++
- target/i386/kvm/kvm.c      | 5 +++++
- target/loongarch/kvm/kvm.c | 5 +++++
- target/mips/kvm.c          | 5 +++++
- target/ppc/kvm.c           | 5 +++++
- target/riscv/kvm/kvm-cpu.c | 5 +++++
- target/s390x/kvm/kvm.c     | 5 +++++
- 9 files changed, 41 insertions(+)
+>
+>If you have no alternative patch you plan to submit for next release shou=
+ld we merge this for now? This helps running u-boot binaries even if it's n=
+ot enough alone but would be one patch less in my local tree=2E Or do you k=
+now about a problem with this patch why this should not be merged?
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index f89568bfa3..df9840e53a 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -540,6 +540,11 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
- 
-     trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
- 
-+    ret = kvm_arch_pre_create_vcpu(cpu, errp);
-+    if (ret < 0) {
-+        goto err;
-+    }
-+
-     ret = kvm_create_vcpu(cpu);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret,
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index ab17c09a55..d7dfa25493 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -374,6 +374,7 @@ int kvm_arch_get_default_type(MachineState *ms);
- 
- int kvm_arch_init(MachineState *ms, KVMState *s);
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp);
- int kvm_arch_init_vcpu(CPUState *cpu);
- int kvm_arch_destroy_vcpu(CPUState *cpu);
- 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index da30bdbb23..93f1a7245b 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1874,6 +1874,11 @@ static int kvm_arm_sve_set_vls(ARMCPU *cpu)
- 
- #define ARM_CPU_ID_MPIDR       3, 0, 0, 0, 5
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     int ret;
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 6c749d4ee8..f41e190fb8 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2051,6 +2051,11 @@ full:
-     abort();
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     struct {
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index a3f55155b0..91c3c67cdb 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -973,6 +973,11 @@ static int kvm_cpu_check_pmu(CPUState *cs, Error **errp)
-     return 0;
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     uint64_t val;
-diff --git a/target/mips/kvm.c b/target/mips/kvm.c
-index d67b7c1a8e..ec53acb51a 100644
---- a/target/mips/kvm.c
-+++ b/target/mips/kvm.c
-@@ -61,6 +61,11 @@ int kvm_arch_irqchip_create(KVMState *s)
-     return 0;
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     CPUMIPSState *env = cpu_env(cs);
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 966c2c6572..758298d565 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -477,6 +477,11 @@ static void kvmppc_hw_debug_points_init(CPUPPCState *cenv)
-     }
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 23ce779359..55be7542e7 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1362,6 +1362,11 @@ static int kvm_vcpu_enable_sbi_dbcn(RISCVCPU *cpu, CPUState *cs)
-     return kvm_set_one_reg(cs, kvm_sbi_dbcn.kvm_reg_id, &reg);
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     int ret = 0;
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 4d56e653dd..1f592733f4 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -404,6 +404,11 @@ unsigned long kvm_arch_vcpu_id(CPUState *cpu)
-     return cpu->cpu_index;
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     unsigned int max_cpus = MACHINE(qdev_get_machine())->smp.max_cpus;
--- 
-2.43.5
+QEMU sets a machine-specific CCSR base address (pmc->ccsrbar_base) which d=
+iffers from the real chip's default=2E The default is checked by U-Boot whi=
+ch enters an infinite loop on mismatch: <https://source=2Edenx=2Ede/u-boot/=
+u-boot/-/blob/v2024=2E07/arch/powerpc/cpu/mpc85xx/start=2ES#L614>=2E How do=
+es this work for you?
 
+In addition, when moving the CCSR region, `env->mpic_iack` should be updat=
+ed as well: <https://gitlab=2Ecom/qemu-project/qemu/-/blob/v9=2E2=2E2/hw/pp=
+c/e500=2Ec?ref_type=3Dtags#L969>
+
+I'm happy to submit an implementation on top of my e500 cleanup series <ht=
+tps://patchew=2Eorg/QEMU/20241103133412=2E73536-1-shentey@gmail=2Ecom/> whi=
+ch needs agreement on some open discussions=2E
+
+Best regards,
+Bernhard
+
+>
+>Regards,
+>BALATON Zoltan
+>
+>> Signed-off-by: BALATON Zoltan <balaton@eik=2Ebme=2Ehu>
+>> ---
+>> hw/ppc/e500-ccsr=2Eh |  4 +++
+>> hw/ppc/e500=2Ec      | 79 ++++++++++++++++++++++++++++++++++++++++++++-=
+-
+>> 2 files changed, 80 insertions(+), 3 deletions(-)
+>>=20
+>> diff --git a/hw/ppc/e500-ccsr=2Eh b/hw/ppc/e500-ccsr=2Eh
+>> index 249c17be3b=2E=2Ecfbf96e181 100644
+>> --- a/hw/ppc/e500-ccsr=2Eh
+>> +++ b/hw/ppc/e500-ccsr=2Eh
+>> @@ -4,12 +4,16 @@
+>> #include "hw/sysbus=2Eh"
+>> #include "qom/object=2Eh"
+>>=20
+>> +#define NR_LAWS 12
+>> +
+>> struct PPCE500CCSRState {
+>>     /*< private >*/
+>>     SysBusDevice parent;
+>>     /*< public >*/
+>>=20
+>>     MemoryRegion ccsr_space;
+>> +
+>> +    uint32_t law_regs[NR_LAWS * 2];
+>> };
+>>=20
+>> #define TYPE_CCSR "e500-ccsr"
+>> diff --git a/hw/ppc/e500=2Ec b/hw/ppc/e500=2Ec
+>> index 64f8c766b4=2E=2E376cb4cb37 100644
+>> --- a/hw/ppc/e500=2Ec
+>> +++ b/hw/ppc/e500=2Ec
+>> @@ -43,6 +43,7 @@
+>> #include "qemu/host-utils=2Eh"
+>> #include "qemu/option=2Eh"
+>> #include "hw/pci-host/ppce500=2Eh"
+>> +#include "qemu/log=2Eh"
+>> #include "qemu/error-report=2Eh"
+>> #include "hw/platform-bus=2Eh"
+>> #include "hw/net/fsl_etsec/etsec=2Eh"
+>> @@ -1331,11 +1332,83 @@ void ppce500_init(MachineState *machine)
+>>     boot_info->dt_size =3D dt_size;
+>> }
+>>=20
+>> +static int law_idx(hwaddr addr)
+>> +{
+>> +    int idx;
+>> +
+>> +    addr -=3D 0xc08;
+>> +    idx =3D 2 * ((addr >> 5) & 0xf);
+>> +    if (addr & 8) {
+>> +        idx++;
+>> +    }
+>> +    assert(idx < 2 * NR_LAWS);
+>> +    return idx;
+>> +}
+>> +
+>> +static uint64_t law_read(void *opaque, hwaddr addr, unsigned size)
+>> +{
+>> +    PPCE500CCSRState *s =3D opaque;
+>> +    uint64_t val =3D 0;
+>> +
+>> +    switch (addr) {
+>> +    case 0:
+>> +        val =3D s->ccsr_space=2Eaddr >> 12;
+>> +        break;
+>> +    case 0xc08 =2E=2E=2E 0xd70:
+>> +        val =3D s->law_regs[law_idx(addr)];
+>> +        break;
+>> +    default:
+>> +        qemu_log_mask(LOG_GUEST_ERROR, "Invalid local access register =
+read"
+>> +                      "0x%" HWADDR_PRIx "\n", addr);
+>> +    }
+>> +    return val;
+>> +}
+>> +
+>> +static void law_write(void *opaque, hwaddr addr, uint64_t val, unsigne=
+d size)
+>> +{
+>> +    PPCE500CCSRState *s =3D opaque;
+>> +
+>> +    switch (addr) {
+>> +    case 0:
+>> +        val &=3D 0xffff00;
+>> +        memory_region_set_address(&s->ccsr_space, val << 12);
+>> +        break;
+>> +    case 0xc08 =2E=2E=2E 0xd70:
+>> +    {
+>> +        int idx =3D law_idx(addr);
+>> +
+>> +        qemu_log_mask(LOG_UNIMP, "Unimplemented local access register =
+write"
+>> +                      "0x%" HWADDR_PRIx " <- 0x%" PRIx64 "\n", addr, v=
+al);
+>> +        val &=3D (idx & 1) ? 0x80f0003f : 0xffffff;
+>> +        s->law_regs[idx] =3D val;
+>> +        break;
+>> +    }
+>> +    default:
+>> +        qemu_log_mask(LOG_GUEST_ERROR, "Invalid local access register =
+write"
+>> +                      "0x%" HWADDR_PRIx "\n", addr);
+>> +    }
+>> +}
+>> +
+>> +static const MemoryRegionOps law_ops =3D {
+>> +    =2Eread =3D law_read,
+>> +    =2Ewrite =3D law_write,
+>> +    =2Eendianness =3D DEVICE_BIG_ENDIAN,
+>> +    =2Evalid =3D {
+>> +        =2Emin_access_size =3D 4,
+>> +        =2Emax_access_size =3D 4,
+>> +    },
+>> +};
+>> +
+>> static void e500_ccsr_initfn(Object *obj)
+>> {
+>> -    PPCE500CCSRState *ccsr =3D CCSR(obj);
+>> -    memory_region_init(&ccsr->ccsr_space, obj, "e500-ccsr",
+>> -                       MPC8544_CCSRBAR_SIZE);
+>> +    PPCE500CCSRState *s =3D CCSR(obj);
+>> +    MemoryRegion *mr;
+>> +
+>> +    memory_region_init(&s->ccsr_space, obj, "e500-ccsr", MPC8544_CCSRB=
+AR_SIZE);
+>> +
+>> +    mr =3D g_new(MemoryRegion, 1);
+>> +    memory_region_init_io(mr, obj, &law_ops, s, "local-access", 4096);
+>> +    memory_region_add_subregion(&s->ccsr_space, 0, mr);
+>> }
+>>=20
+>> static const TypeInfo e500_ccsr_info =3D {
+>>=20
 
