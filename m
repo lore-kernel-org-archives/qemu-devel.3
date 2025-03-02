@@ -4,33 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0CBC19F32
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Mar 2025 15:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07762C19F32
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Mar 2025 15:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toknk-0005GX-9C; Sun, 02 Mar 2025 10:00:22 -0500
+	id 1tol1y-0002aQ-Og; Sun, 02 Mar 2025 10:15:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1toknc-0005Dr-Sl
- for qemu-devel@nongnu.org; Sun, 02 Mar 2025 10:00:14 -0500
+ id 1tol1p-0002Zj-4u
+ for qemu-devel@nongnu.org; Sun, 02 Mar 2025 10:14:54 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tokna-000543-Mh
- for qemu-devel@nongnu.org; Sun, 02 Mar 2025 10:00:12 -0500
+ id 1tol1m-00069a-Os
+ for qemu-devel@nongnu.org; Sun, 02 Mar 2025 10:14:52 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1toknU-00000000EWv-2OYi; Sun, 02 Mar 2025 16:00:04 +0100
-Message-ID: <605f8813-f57c-439d-8bd0-93c286464f8d@maciej.szmigiero.name>
-Date: Sun, 2 Mar 2025 15:59:59 +0100
+ id 1tol1f-00000000EYN-3Lpu; Sun, 02 Mar 2025 16:14:43 +0100
+Message-ID: <75475d94-5403-471b-9d75-57df8f2d993f@maciej.szmigiero.name>
+Date: Sun, 2 Mar 2025 16:14:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 34/36] vfio/migration: Max in-flight VFIO device state
- buffer count limit
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH v5 23/36] vfio/migration: Multifd device state transfer
+ support - VFIOStateBuffer(s)
 To: Avihai Horon <avihaih@nvidia.com>
 Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
  <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -39,10 +38,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <719b309bb7bc13542d14e6ce0026cb9bb67e9f31.1739994627.git.maciej.szmigiero@oracle.com>
- <d7a7c7ee-5529-4091-a241-6cdde9943a25@nvidia.com>
- <15742ad0-a5d6-4d1d-82f6-b3bdbc53746f@maciej.szmigiero.name>
+ <96303daed289e9c7a3261590027d18e425ea07c2.1739994627.git.maciej.szmigiero@oracle.com>
+ <9bc9f288-6db5-4229-9a16-7e8842604c55@nvidia.com>
 Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xsFNBFpGusUBEADXUMM2t7y9sHhI79+2QUnDdpauIBjZDukPZArwD+sDlx5P+jxaZ13XjUQc
  6oJdk+jpvKiyzlbKqlDtw/Y2Ob24tg1g/zvkHn8AVUwX+ZWWewSZ0vcwp7u/LvA+w2nJbIL1
@@ -84,9 +83,9 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <15742ad0-a5d6-4d1d-82f6-b3bdbc53746f@maciej.szmigiero.name>
+In-Reply-To: <9bc9f288-6db5-4229-9a16-7e8842604c55@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
  envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
 X-Spam_score_int: -18
@@ -111,31 +110,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2.03.2025 15:54, Maciej S. Szmigiero wrote:
-> On 2.03.2025 15:53, Avihai Horon wrote:
->>
->> On 19/02/2025 22:34, Maciej S. Szmigiero wrote:
->>> External email: Use caution opening links or attachments
->>>
->>>
->>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>
->>> Allow capping the maximum count of in-flight VFIO device state buffers
->>> queued at the destination, otherwise a malicious QEMU source could
->>> theoretically cause the target QEMU to allocate unlimited amounts of memory
->>> for buffers-in-flight.
->>
->> I still think it's better to limit the number of bytes rather than number of buffers:
->> 1. To the average user the number of buffers doesn't really mean anything. They have to open the code and see what is the size of a single buffer and then choose their value.
->> 2. Currently VFIO migration buffer size is 1MB. If later it's changed to 2MB for example, users will have to adjust their configuration accordingly. With number of bytes, the configuration remains the same no matter what is the VFIO migration buffer size.
+On 2.03.2025 14:00, Avihai Horon wrote:
 > 
-> Sorry Avihai, but we're a little more than week from code freeze
-> so it's really not a time for more than cosmetic changes.
+> On 19/02/2025 22:34, Maciej S. Szmigiero wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>
+>> Add VFIOStateBuffer(s) types and the associated methods.
+>>
+>> These store received device state buffers and config state waiting to get
+>> loaded into the device.
+>>
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   hw/vfio/migration-multifd.c | 54 +++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 54 insertions(+)
+>>
+>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+>> index 0c3185a26242..760b110a39b9 100644
+>> --- a/hw/vfio/migration-multifd.c
+>> +++ b/hw/vfio/migration-multifd.c
+>> @@ -29,3 +29,57 @@ typedef struct VFIODeviceStatePacket {
+>>       uint32_t flags;
+>>       uint8_t data[0];
+>>   } QEMU_PACKED VFIODeviceStatePacket;
+>> +
+>> +/* type safety */
+>> +typedef struct VFIOStateBuffers {
+>> +    GArray *array;
+>> +} VFIOStateBuffers;
+>> +
+>> +typedef struct VFIOStateBuffer {
+>> +    bool is_present;
+>> +    char *data;
+>> +    size_t len;
+>> +} VFIOStateBuffer;
+>> +
+>> +static void vfio_state_buffer_clear(gpointer data)
+>> +{
+>> +    VFIOStateBuffer *lb = data;
+>> +
+>> +    if (!lb->is_present) {
+>> +        return;
+>> +    }
+>> +
+>> +    g_clear_pointer(&lb->data, g_free);
+>> +    lb->is_present = false;
+>> +}
+>> +
+>> +static void vfio_state_buffers_init(VFIOStateBuffers *bufs)
+>> +{
+>> +    bufs->array = g_array_new(FALSE, TRUE, sizeof(VFIOStateBuffer));
+>> +    g_array_set_clear_func(bufs->array, vfio_state_buffer_clear);
+>> +}
+>> +
+>> +static void vfio_state_buffers_destroy(VFIOStateBuffers *bufs)
+>> +{
+>> +    g_clear_pointer(&bufs->array, g_array_unref);
+>> +}
+>> +
+>> +static void vfio_state_buffers_assert_init(VFIOStateBuffers *bufs)
+>> +{
+>> +    assert(bufs->array);
+>> +}
+>> +
+>> +static guint vfio_state_buffers_size_get(VFIOStateBuffers *bufs)
+>> +{
+>> +    return bufs->array->len;
+>> +}
+>> +
+>> +static void vfio_state_buffers_size_set(VFIOStateBuffers *bufs, guint size)
+>> +{
+>> +    g_array_set_size(bufs->array, size);
+>> +}
+>> +
+>> +static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs, guint idx)
+>> +{
+>> +    return &g_array_index(bufs->array, VFIOStateBuffer, idx);
+>> +}
+> 
+> This patch breaks compilation as non of the functions are used, e.g.: error: ‘vfio_state_buffers_init’ defined but not used I can think of three options to solve it: 1. Move these functions to their own file and export them, e.g., hw/vfio/state-buffer.{c,h}. But this seems like an overkill for such a small API. 2. Add __attribute__((unused)) tags and remove them in patch #26 where the functions are actually used. A bit ugly. 3. Squash this patch into patch #26. I prefer option 3 as this is a small API closely related to patch #26 (and patch #26 will still remain rather small).
 
-And if you really, really want to have queued buffers size limit
-that's something could be added later as additional
-x-migration-max-queued-buffers-size or something property
-since these limits aren't exclusive.
+Looks like some build configs use -Werror, as unused functions aren't normally
+an error.
+
+Will have look at this tomorrow.
+
+> Thanks.
+> 
 
 Thanks,
 Maciej
