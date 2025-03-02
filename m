@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55655C19F32
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Mar 2025 12:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC174C19F32
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Mar 2025 12:48:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toij8-000142-GV; Sun, 02 Mar 2025 07:47:27 -0500
+	id 1toijy-0001Zs-O4; Sun, 02 Mar 2025 07:48:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1toij2-00012n-Tl
- for qemu-devel@nongnu.org; Sun, 02 Mar 2025 07:47:21 -0500
-Received: from mail-bn8nam11on20625.outbound.protection.outlook.com
- ([2a01:111:f403:2414::625]
- helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ id 1toijg-0001TE-H7
+ for qemu-devel@nongnu.org; Sun, 02 Mar 2025 07:48:09 -0500
+Received: from mail-dm6nam11on2063.outbound.protection.outlook.com
+ ([40.107.223.63] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1toiiz-0001C4-TP
- for qemu-devel@nongnu.org; Sun, 02 Mar 2025 07:47:20 -0500
+ id 1toijd-0001FE-Pc
+ for qemu-devel@nongnu.org; Sun, 02 Mar 2025 07:48:00 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GFbw2hFxo83ORt4HoQ+bzQYJguzNyTDnWyNgY+amPeXs7kjYu5Jy6ltZ7f4WlTT/Hji2D95dISvAxpzA1589etJa5xtKbYgB1jZfla8IqDSwshEcSAQ+CsI7pFwH8ID8Jw2P0ID35lhNqKrwWejUkRMIZ+bECzvtDAIU6qFYa2SKDXxM/3P5vcQo1t6e4Xa0lscv/qpbePEvXw3kRKr6y2+fBwYGgOi3Pg/OJwwHMWvjVF+ikZxpK10t/LP4hB/C7I0vgMWu0ktpm9oSDIVlIY0Qfheshifq0BLGQfqSiI90DS7IEp6aUfTiFeygiYH3gRCiljCdts0XerR1kcDRKg==
+ b=QOdgmc7cWc18+y7rh1j7v38F9wDFNmX+iSzs9s2ZBj1XWCuSewQgb5Knqu7SZHu0Z/ESZN95Kab8838AXgYELQhFlYT6ChaT1UyJTyMVa9UOpDyqMWZRPHtw4D7Rx9ZoZlIPJ36NWrHnJDHgKcNmI9Uv63n0f1xufMutxI/vPwjfekyGyySa4pb7JQ5CthOQMZZxptMPXIUpyFfBL7E/hmyJTXrmOxFdoCw5Zb9/IsCbI/MwnnI4bkPXHs/yMtbg/niaBnR2jMuaQX/wEETZ/6u15uGH6sY4xN/CopO8I/F71BP6IQCuzjVJoxU20c13S0IgGB73RsltdeY74knpgw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BrzQ9ft5iddhJZCnmTe2xtTpimu0E7b/E9BCBwBEz7Y=;
- b=xiYw1hq9Rb235OzaIHKroUt5rjigTflSQGJZz93UxMEDJsI82S9CMB7t93XQLmx+n3ZRzQW5FNRelRE8cX4EUpJyyI41Yj3RxSrtK5gQDaHywoviicrO5xBq51T2LiZfB7gHKHglhAWW/n6QBlJEG4mYSNM1uKMy9dEL5WPPMrwYGE8FfYu7gchhC0dKfiQRirFzMtbLiMQgmQRfeQqkHEy+2O/JPZrbsoHA+VOA8+2kBVnfc+qEip5nO0Ck3wl0E0SdnFqAZgOMghw4ezdY6MMHtoC6bvdqAXIX48/Td3ZQLg0SA3115rX4UX9GRLxPl9v4JLnQ1zxCOqj01tcBBw==
+ bh=XkxVNnxSxoUZH33+vGZLPI7m73h2sJLq9THqIg33aCU=;
+ b=uhnj5rUPlxyDxVKeHpfeDffxcIVBv+X9+bwuR/qrqeR8ee14O75Z/etk4OnbZPAJkahLBuVROl89uPRRv2cGsWGabf0nTFkssRnN8QUNndTThZNy5M7REOBnfTFIx6G6L0f1yC1JER3v3p9XeG8wdkbIlLR8l2oQSUrzcReeyr/DtQukzLFfSlc5bnxkgKopJGqYibVImf8jW/kirMaQwDNoYFano1x4SEo89LyZAIe+b66UwTFO1dVKV568pvi/TKuZg/ia4g86DoKmBoOA/VslgYbnibbitKSIVaUkxEIoG45K5lconXWTbG0l6TvKL+ky6Abtaf5trs1yxJu7iQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BrzQ9ft5iddhJZCnmTe2xtTpimu0E7b/E9BCBwBEz7Y=;
- b=EK9UfFHxfdXNYtTDF0DCnahbh2IEh03leAFBdkGEyfPnsX6HZRpGuG2+I3dC0KZ7lezrmxxMQ8wiZCr84RjlWTmrz9PefNwLz08sInkpMD9om7ea0nR0kT48Qzs9p6GiS6B4FlJXBNhvv66MZ6KY7w9iQ8zog9g/hhb/RmvoNxKGKfG/AScOc2iKl4jbOY7e4OUPBnv6M69MzUxlv9Kzo4QXXFFj7xEwZBFRZE790LXf5paG+G/L0pZsNd2er4IB/CESUQKWTLcOZk3LpGcm/NA/JvNrFuupdRZV98PUhwn0+6KwE+Ib2u78sSEPNXlHr4lupvdqvpbHS27awSQW7w==
+ bh=XkxVNnxSxoUZH33+vGZLPI7m73h2sJLq9THqIg33aCU=;
+ b=iCjvLVsN99wEbHL8rmWl1WzNClD3v3AL7zd+mBol5BHRLAoWu1iqvkfWiyCkP66ju4Et1ZQ+tPoLjbZfwP5XPd36BjOWZvxMRsRpxgCF1ePgK9DXe7t2Rwwq6ekZ93+5JNzU1kz2MltD1FayQxZ4oLlCx0ldcIyWQ3vgmB4S5P8yj18hTxb9s46xjyIW0gyl7UTRRK+lziDXfe8YxqNk3dLFzc1RvLUt+E79Z/hoEbOVWuBU9rHvcuydMxRzR1ed9V2hj77b97CRAK6aLfiiNLgnusSOqG826aPMA6vKVNWQDiO7Xifwn6z4eMC3xgJnLyANPCbSPhIgm9Tgioyoug==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
  by IA1PR12MB7662.namprd12.prod.outlook.com (2603:10b6:208:425::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.21; Sun, 2 Mar
- 2025 12:46:41 +0000
+ 2025 12:42:50 +0000
 Received: from DM6PR12MB5549.namprd12.prod.outlook.com
  ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
  ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.8489.025; Sun, 2 Mar 2025
- 12:46:41 +0000
-Message-ID: <d446584d-b22b-43f0-99c6-dd6a2fb58670@nvidia.com>
-Date: Sun, 2 Mar 2025 14:46:35 +0200
+ 12:42:50 +0000
+Message-ID: <a55c5f70-04ad-486d-96fa-5b3b75e0a5c6@nvidia.com>
+Date: Sun, 2 Mar 2025 14:42:44 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 14/36] migration/multifd: Device state transfer support
- - send side
+Subject: Re: [PATCH v5 11/36] migration/multifd: Device state transfer support
+ - receive side
 To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -61,113 +60,115 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <b7ab14bee598eef62940a8833455126e62a91c0c.1739994627.git.maciej.szmigiero@oracle.com>
+ <8857884d14e5e854629a32dfb96011b43945088f.1739994627.git.maciej.szmigiero@oracle.com>
 Content-Language: en-US
 From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <b7ab14bee598eef62940a8833455126e62a91c0c.1739994627.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <8857884d14e5e854629a32dfb96011b43945088f.1739994627.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0413.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:d0::14) To DM6PR12MB5549.namprd12.prod.outlook.com
+X-ClientProxiedBy: LO4P265CA0124.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:2c6::14) To DM6PR12MB5549.namprd12.prod.outlook.com
  (2603:10b6:5:209::13)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|IA1PR12MB7662:EE_
-X-MS-Office365-Filtering-Correlation-Id: de7db5b8-a0f8-4462-7a99-08dd5988478b
+X-MS-Office365-Filtering-Correlation-Id: 95716c52-0ddf-448f-f974-08dd5987bdf5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?TVRmai81Zm1qMk9vWUNPRC9hWCtBcG4yWC9BcDlTQ1g1TnNvbGs1RWEyOUJh?=
- =?utf-8?B?bDNCOHNDZklGNkgvYVRkanRIWjAxZ0I4cEVvZ1czT2c3ajc3YXUyUW9EMFBl?=
- =?utf-8?B?Q0lLL29kY2F6bDE2OFc4bnJUOVp2U2F1eWlqdjhDd09Wb1VjbFp5T0hER2tN?=
- =?utf-8?B?TUFiSHZBcVdPQXhIZlVMT054WkY3ZFByVituTkxWOGtNbTlJWlFRQWRHS1NW?=
- =?utf-8?B?QzBPVHpiVW5mMndoOUg3MEV0TUxLalp1ZlJtanNwWjgzQ3pGNWRCTGdrUmZs?=
- =?utf-8?B?UXQ4SHJzcnRvWVJpWDRydVZycVhvclZGTDZwTThZaDNJSVdwMVdsQWRZSi9i?=
- =?utf-8?B?Zk82YzNGcU43TStFMmVWcnZjKy95dW56WGJJV2g3SFZydFpzTHhiYnErZ054?=
- =?utf-8?B?NTljVWRQZDVqVGM2Q0ZVU0gxRnR4SWppRVRNSjJhcTlsb1crT0grM0FPajU0?=
- =?utf-8?B?bjVQMFNoT2tjTG1XWXhRbUVIS2NBS1pTQkp0aHF1OU0rMzIxVUlzT0MyTE5Q?=
- =?utf-8?B?NlQvVmFFaHdEa2l3cS9uUE9lcDc5SVBXQkRtejdJZXZwNVpMSTM3SVIxQjc0?=
- =?utf-8?B?R1Q2ejl3WjdmdGVOVEFNLzF1Zmc3MnF4QmZlWjJvSmNWM1h3Q1BnVW5Dc1V3?=
- =?utf-8?B?WUJ1VUg3Ym96RWljdVpPOEpYL1ppUnFrNnV4WlNlNmlvd1lON0s0SkRha1lF?=
- =?utf-8?B?K2E1YjIvbnIvZTdORDJXRERxTW9oUVQxMjViQVJtNGZxSjhEdkMzT1dCbWpn?=
- =?utf-8?B?UTRKaWlFaDMyZDFJa3BXZ3RralRRalAvd1djcGRRM3JBTVhuV2VUS0E3SE9k?=
- =?utf-8?B?L1ZhZysxcHZybVV0V3FOYWFjeUYxM1JCU2dDaXpvVnc0Z3UrZndYd29LZE5S?=
- =?utf-8?B?UFkySWZCNjRxOWF3cERLL2xVdUxjU250eUdDN0d4dGF0emlHS2VqRUFUVG82?=
- =?utf-8?B?V3VwcWNiSGtQRWgrSkgzU1QzcFZIUTJZQUVMbGZ6Y2VEOUM0aXZQMnFKMXp6?=
- =?utf-8?B?aWhqUUV4d0htaDAzOW1XSHJwWHBwbzhId3BiRFFWcUlhVkxLVEl4WDlxWW9y?=
- =?utf-8?B?NVJZWUpWajY2WXdZMEJuOUNkcUttTFFlbzNSbm9QL1IxMWw1aGNjNmRJb3Ax?=
- =?utf-8?B?bkdmMEJqdTgyUU1NUHJwL0MwMmNUZERUbVpaNTRZdXgzL0xtYitJUjFSaVo1?=
- =?utf-8?B?MndoMW80WjNudDlFdVVnK3BkNTVOZXFXdGR0SnlBd0J4WUtPL3o1Z1J4dHZy?=
- =?utf-8?B?blpyS3JtMnh5TG02cUsrQXlQbFpJQk1HOW04blZHaWlCWWVWbE96Z2FaU0FN?=
- =?utf-8?B?dzF6dUppbDJ3bVRVMFprWURndnlCMWF6bm5odWlMQjM1aHREck1uK3FISXB6?=
- =?utf-8?B?WDVXZC8rZFZ2U1RZSVlsUGZES21HTDJVSWF3MWQrdlBmVm1ycUl1ZWw0OS9l?=
- =?utf-8?B?ZXZ5dnJ5MElDa2VhNmIvTGVPMC9DWTMrcUxDVmovTkYwQWhLZ2tWckloWkh2?=
- =?utf-8?B?T1pmVXZBV0ROZUdLWFAyZXVYcU1FU3c3cVdjZWhqMlRqUDF4YnQ5ajlUSkov?=
- =?utf-8?B?ZFNuazlCanFZeFBiK3o0dDJqRFV6RHl0cWZXRlp1WVREZWlxUkIxdVg4c1pF?=
- =?utf-8?B?N1JnTGdQVzVJKzRFQkdEeU1jblJGSFZTWXUzZUdGVUh5Wkx3RTl5bHAva1pL?=
- =?utf-8?B?eldTM0VyeHJCRVAxbDJWMi84eHdaRXZFVDZSVjNTUTlDeHljVUs5TUVtbjdl?=
- =?utf-8?B?NEcrL1lZWitGVW0ydGxXN2ZnOFM0L1BadUZvVUVwTTR3enV3RVNOa0Vkd1Ay?=
- =?utf-8?B?REZsemQwa0dZMDFCVXo3RGNwck41aVJTdFdLYlhTNGt1NWJVeFFiLzZ1VGNU?=
- =?utf-8?Q?xrcQXI9sVXJtn?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?RkVDZjB3NExFOXRvck5WMm1qdXVZVmd4cmd6MHgvcll5dTdaazY5SkRaN1BP?=
+ =?utf-8?B?Q01Pajhpbzd4SThMVy9nZDEveXplWStFaFNOWDdXSUdyd2wwd0dTdWVVU1ZZ?=
+ =?utf-8?B?azMrTHkvVFphOTE0Y2hVYjBSeXJNQVY2aUhtNURRM2ZlV3gvbGNsTktRKyt3?=
+ =?utf-8?B?aXRPdUgrRlorK1dUWHdhSWFJdHZRMnhsS0xwV01aNUlSTkRFdVpkUGQ1L2ZC?=
+ =?utf-8?B?ME1LWFY2dWpiYWZaRXdXWnAwTjZMTkJuZFlRdS82V2lwNlNhV050V0N0MlBt?=
+ =?utf-8?B?R2RzTU1sYTZ6akk0dDZJeDlmVVczcy82MDcxVERSODNQUUxTTkg4ejA5NFBU?=
+ =?utf-8?B?Z3haL1djWnh5VEw4cGNUQk9TWjNJbDlncklMbDBwQlNiR2l1SmJVWERPdzNn?=
+ =?utf-8?B?eFIxSHdKbGdnN1M1a3FjYzY5UG5kcmxxYmx1NksrZy9OOVNucjdYNXNqSTNU?=
+ =?utf-8?B?SEwzQ3JuNGRrTUlnTUt4NFlwN29DRUhCY05CL1NZOUtWQk1FUWNxcFFONmlN?=
+ =?utf-8?B?STA4WVFnNyt1QkQzNVpyL0FuY1c0bDh1amthUGVLR1F5NExKN2JoblhQVTE4?=
+ =?utf-8?B?VEdWVEY3WExtRTFuWUN3dmlST1QrdVpEUGtEK2pJbEdzTHBLRDliZExaektJ?=
+ =?utf-8?B?U0pJbUp4MFlnK1B5d1VEcWVCN1dGN1BxMjJIOHBJVDRDYmpkRldobmxtQzdW?=
+ =?utf-8?B?ZElUdUJUV0RjQXpINFN6UWY4a3FvUytXelVZY0ZKUkNhOThjYmw5SXJrWlNh?=
+ =?utf-8?B?a05weGkwRWttdEJWOE1IZnEwYmxuS2k1RkdSUFUyZGpITDNZbWZFcGNpek9N?=
+ =?utf-8?B?clVtWXoyaUFKS0p4YXZhSkt0VE1na1ZtMFBPMVhVd211Q1VCTFhjQjVSL0Zv?=
+ =?utf-8?B?d1FHbnhKWTBwNkxxVms2djA4UjdSSUFsMkNCRnNneXBIcFlVY1JSUmc4NEJU?=
+ =?utf-8?B?UVZoQ2VIMHlVS25neFFCbXViOXdxTTdQYS8zWUtqTCs1SlkySDZSNnRVRm56?=
+ =?utf-8?B?MEF2UHcxcXFBc3lGMFVieiszTy9iNmV0czljUGxveW1TUWNGTkw0Kzd0eFdy?=
+ =?utf-8?B?bXBPQ1g0RW1NNUVEVlZ3Vk1XK0VmS0pUOHRWOEZQT2ZoblE4cUVjNlRuUW5X?=
+ =?utf-8?B?cnlHT2MzWjRualJwbDV4RENvRHRJN1B0OUQxRUZWeFljc2MrbHNWS3hTQ01s?=
+ =?utf-8?B?akVJRGFxc1liUVgySGVidlZMTXc4TkpEd1RVQVBLT1FFSFBvekdOK2xZSXRW?=
+ =?utf-8?B?a09sVlR4WHc4cW9QbHJMeDRucTRJckluRGdVcHVXV1VaeXBCQ2RYNFNNV1BW?=
+ =?utf-8?B?b2RRYm5LR3ZxZFdxV1FxWFM5TWd0MmM4RWdadVEzb1d5aEg4TlEwbHZ4eEVS?=
+ =?utf-8?B?c2RqWno0bTh5NXprRlZyUTVUV09oU1htbDRCY3hMOWFpdzVMdDJ2V0RtVWM3?=
+ =?utf-8?B?bHBMcUVuSExUWmJVSTBGSEh0Tk9MQUVjY1hyVkMyeUxOWFA1L1E3Q1VnWHJB?=
+ =?utf-8?B?UldCZzA1Y3UzNFZ6K2VqMmpwdVNCdkVwWWcydkJ3ZGNIcHNldkc3MEZiUklF?=
+ =?utf-8?B?VnFCUWU1eTkwS0ZRUTdmQUtRZDAxY3pCbTBMd2hsbWpSS05qcDBNOFg3ZHRk?=
+ =?utf-8?B?ZnBVWWJOTU1YSWtnWHBySTgvMC95QjhiTURvOTR6UWhZT3NrTS9jN3pHM3Nl?=
+ =?utf-8?B?MVFtSDlQT3BUdDNFV1AzanZ2VlFaRll4Q0hOVGNqUi9CWHNqZmFNWmM2aHUy?=
+ =?utf-8?B?aE44S3AvSVFLSU5RUjg5ZWhzK2NSMXBCTms4SmlCT0ZqRkEzTjB3NjNtSXZ1?=
+ =?utf-8?B?TmM2aFU5NTY0VllDUzRHdlhyNTd1dzZlRXB0TVlWLzcrWWs5Yk9NMy9JMUht?=
+ =?utf-8?Q?Aub3tdLsjee73?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(1800799024)(7416014)(376014); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?K0ZFczZCUGhsRjJYdlFrSllGQm1ESGlZVTgxNzFKaEt6NXBaZFV1L05JRmxu?=
- =?utf-8?B?ekN4bFhVUWdzK1lzZ3RZVkY3YWp3SUV4bE5pME1uMHJKOWxMMTVNSmhxZUY4?=
- =?utf-8?B?YVFvaTlhdDhPNzNWdnNCdHFYU3VtWmRoUmp3ck5kOXZMY09vWHZiaWF0cFpz?=
- =?utf-8?B?dUdUWU0wdUxkdjZjR25lZDFBVFdZR3F2UDl2dGdvMVNFM1h1VEpHTHBlTzBG?=
- =?utf-8?B?a0pJdjZYQmxYWG5kL0R5WlR0M2ZKWGgva056Qk9LcWpsalU1OVlEWS92R293?=
- =?utf-8?B?VUVRNnEzWDJMYTMwWEM1VDBMKzZCdEp3OWNvUWNsT2tnQjBhbGYzS0dIK0Np?=
- =?utf-8?B?ellvOEtETkwrR3NyRVlLTVQ2bzlrUStiaTg0Y3ZZWXBaRGdjbnJTeDlpd2g0?=
- =?utf-8?B?MTRCUHIzT2dNMnp4S25SVVc3ZXB4ZzI3WkF5L3ZqNnJOZHQyb296QXpOQklr?=
- =?utf-8?B?MTV5L1pqb2xMOU1GeVh3Y2xBQnRPanJQcTJzLzY5SnZlbG5VeVVrSVZPVDV6?=
- =?utf-8?B?a1lrbjdrY2laZzk4RHBrYVJ6UThIWk1IQlB4Z21OT21RTlJEaXJub3FoUURY?=
- =?utf-8?B?UTExQ2NsazFTM3RaL2pKRGQxQ01oZEZTdjYreE52VTMzMUE4S245ZTBJYXdK?=
- =?utf-8?B?SGxWSEFnbm11bnV6U2I5aks3aXArM3RjTUFaUk42bTdESTEwOXBsNFdOL3BX?=
- =?utf-8?B?UERXWjhuNWNZNzNVWDByaU5sRTVzR050cFRqM2U3SUxXdmVlOGwzbWV5Y1hs?=
- =?utf-8?B?ek1MNU1QeHpGd0IwakphU0hXZzZKSTNGaEQ2Rit6NTNab0ZzQlZXTW1xVzdE?=
- =?utf-8?B?aVgwVU9XREhXcFRYcFBKbGRGOG0xVmw0eFExVXlaZVNHVGJ4OXUvdmZtMTAy?=
- =?utf-8?B?eG9FYVBWa2xqeUlPaVA3bzV5ZHJwbUtkUTNvc0NieGhhQXVVWmFBa1JRbjJU?=
- =?utf-8?B?Q2xwNmxxYzZZeE82S095RFR1UXFpR1c5TkpFdWNJWCtYeDVrQ2dhaTFGQjE1?=
- =?utf-8?B?b1RqVFVOTGpkcVdLS1FHRGJidGNaVjBsOGZHbHREUmZHYmVydjRzVkZiVnJQ?=
- =?utf-8?B?VTZkeDVSbVhiMktPd0FPWTNuMlI2Sjk1MXAzVGExbnhPc01xVVYwa1NvT1Nr?=
- =?utf-8?B?cHVaL3BVQXlBZUVvNHdxalVpbUxMS1FUd3h0UjNTYnF1bGtPaGpudzhWcDM4?=
- =?utf-8?B?NDRoVWhBMmpSV1dLRWFzekQzcmN0NXNUQWtzMHo5ZmJHNmFvelAwZHU1Tnpx?=
- =?utf-8?B?djgzeVFMUjJqSXdyZHlHUTBabHBRNmtNZDBIRjJIN2dFZWREejRqVTZESXBT?=
- =?utf-8?B?ZHhaSGtjMGZjTzc5S2tCcXByVGRhTzdrMDI2YmtsbFZZMUs4NU1JeTN2RjFN?=
- =?utf-8?B?RVNGVEhkSmdubjhSc0R2MzBiUkIwVWV5OU93RlhNNno5eExqeHJ6UnlRc3VN?=
- =?utf-8?B?YXVMbmFUdUtxWmpDdytHSmtyQjNjN2U4b2NRSVE5WGJ6Znc0eWtQWmIyM0xI?=
- =?utf-8?B?YkVFa0NFN1BEbVpRNzcxN1lmNEdQVEZkRlU1bXBYVURYZWg5N1QzcFJ5OTNT?=
- =?utf-8?B?c2NMZjlia3o2OU83dk5LM01YOE9CbC9LYTc2a1VrbmRJVTVvV2NpcEJDUG0x?=
- =?utf-8?B?SlFjQ1NGLzVjcG5wZlk1T2Y2WFB6NEdnTzdlMUIyMjN5S09EVmtuQ1RDc05M?=
- =?utf-8?B?eit2bC9LUm1TT3NNQzVXMTlXdmRJd24xMm0zdjlDaWhXSEdPTlBVZnQwdVBF?=
- =?utf-8?B?VHNDb0lXek1vVHB1UVM1bmFKVEIwbmlZTUNOT2I1RXdRSEIvUzY2RFpyV2c4?=
- =?utf-8?B?bFdxdlpuRmkzT2VsRW5aSXIybEFRSjU1S1UzZ0dZRUUwZWxzR1hCWGNGeXpa?=
- =?utf-8?B?Njk2ZmMzNkNQeUd2SGtCSjNoVlZmd0RWWnRNTFRCeTgwM2hrTVJHbGg1QVpW?=
- =?utf-8?B?ODBxK2VjYjhwRVAxeGhWZmJmZkllRkVsZTA3MEE2MFVtWFpJVVJKeG4wNGlt?=
- =?utf-8?B?WFFLK0dkcjhBb0VHQnJGL1RHSWVsWkswZzhQUXI0cytkOERQcW82MDYwOG1w?=
- =?utf-8?B?dEk2WjZTVzZEVjNqVEhOMWlXRVJJNnBmYVBPcDdpR1hWQkNML09tMmRFT1Rm?=
- =?utf-8?Q?WcuCgidFCvbSytdjBEQRMq3X4?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a3c0N1VqUitBWStIRGRja3V5UC9QWWZaNGZVM0RyKzBvYmtaZTJtQWNBZlpn?=
+ =?utf-8?B?S0NYTjIxV1RrRyttd0NrbitzcE14Zm84eTBOYm9KV0IvVFl6djRWbGwvdjRP?=
+ =?utf-8?B?bDZPVzlYU3o3b2JoV05EN2k3ZVBqRmZ6enpXdklXWWp3ZWdlNlE5STVGMGs1?=
+ =?utf-8?B?TTBzME1CandQeVZlTFJtL1JjTVU1SVAzc2FKcEhkMVdVUi9xc2RlVGoxaVg1?=
+ =?utf-8?B?WXpVYkNtQkZLV0J6aWFJcVVSek1ISEpUUm0yUENQZGM0RkRSUXpWb0RpL0xv?=
+ =?utf-8?B?QVpKbk9EYlgyVG0yTE1vMmorTE9pYW1kNE9hODBhK1NVVnRGNWNENWVGYzIy?=
+ =?utf-8?B?UWZIUnFLQ1YvUjRpRnQ2ZTYrMEJVczlrbG5nTG9oZjF6cVdFT0pLUEtFSUNs?=
+ =?utf-8?B?MkhEeWpxWHpCMmwvSzNQMnRGMmlUUmp5NmxzMG1WRkswNmVEL2I2amVadmVB?=
+ =?utf-8?B?WkVUR3NwQ01QanFLeGM3UVNNM1g5blFOczRld2kzQ0pYcS9YbytHdGZrRXg2?=
+ =?utf-8?B?aVI1RGRWSTJkM3ovREpqcDFtYzBDM00ySzNSYldnZEdRUGNXZDQxL3FUU1hO?=
+ =?utf-8?B?eml4Uk5lVm9GVVJlNUozR1MxZzUzaHVDYkE1dTZqZmtIQjJWVENZMnJVUFRx?=
+ =?utf-8?B?UXBMb2NwKzRyR2JDSWFPTThGaThYNXlhVDJySkJMZnJycnlQUlVKc3RZNnNL?=
+ =?utf-8?B?ZGNORlU0TG02K2gycFd5eTBjS2hrbS82KzlYcjIwbzBUTzRIUlNvWlF0WkNk?=
+ =?utf-8?B?T3diL2htM1g0TUJERHk5VERtekhFcTNsbktxMlcrUENabmU1V1VCOWxwQ0Nl?=
+ =?utf-8?B?RXc2SzVXYlQ3cFBOMjBNMXRrWUJrTnRpWVV3SGdsQytNYllvbWtLUGlVa2Js?=
+ =?utf-8?B?VzN2RWR2ZjMxaytDR2R6UWtRbnQyRExGK3Z5T2RtNWIxZ3YrOElyWU8yZ2tK?=
+ =?utf-8?B?NXBYcHloWUY4WGtOL3JYNS8vS0xQaU1QV1Ivd0UxV3UyTmN3S3RxOU56MzhW?=
+ =?utf-8?B?VDk3K21vRlVuZ3M5NU1NZmtkQ3NKT2dvQkkrRmJScGMvQnBra0xYZ0ZzNmUz?=
+ =?utf-8?B?YUtTMTNHbU5vazBOVG91Q3dNNTVxb1g3dng3WjdpMHJXRktEV0lQaHN2bzRK?=
+ =?utf-8?B?eXAzaEo5eWVCaFZOMGVQQWVDNGNzNzJKQk9XMVFJcHFGeVNIY0s0R3lYWFRW?=
+ =?utf-8?B?Z29EWFJuemNpWnAzNEkyRU5ZQjk5YjlRcFNFZFUxL3JWbDBwOXJiR3NYa3Z2?=
+ =?utf-8?B?M0lkYXRxSk5TRVpEVGlXYVU4cGVrcTFBUjJWTFUycVdHbkZlNWo4Q0FKY25M?=
+ =?utf-8?B?MWhOanJQQkluRXhKNWJyNEgzYyt2WW5ubnh6MTU0ZktrVnVDdFhUN1JmblY1?=
+ =?utf-8?B?NnBrOU03cFVhOVdxM3hiZnJmVjJBcFI1WlNyY0hsZTFBejIxcEM5amVMRUsr?=
+ =?utf-8?B?dVE5SHYzRk1VdXhwenYyeDZFQmFNRmVYVFBQWGQ4WlpSQStkdDdkTzFtTDMw?=
+ =?utf-8?B?a01DWTZkSUxvK1NWRzRCdUhlQUZhdm5Bd0ZheVVXRTZtd1pzS1kvODgwVVEv?=
+ =?utf-8?B?VGdudDdJSWlhdHBvQWRNVzg1MFNIT0FWY3ZvQ1VvMkhvR1ovdmxnd1BjamhR?=
+ =?utf-8?B?QThIK2FYZjUxQ3lyWWc3dVk4RDlzd052cGxzNi9XbFBqVVhJcU1tQjg2UzYx?=
+ =?utf-8?B?RVJNWlJyM0ozaW90UG1NQUNuQWhxWTVLS3hPQ1JteTJLRkpYN3ZBTE5WZ1BZ?=
+ =?utf-8?B?MzZSbm53TXNINHpQNkJKT3NwTFBtRzdZR2JVQmxCclkwRmt2VmJyVEtvSVpN?=
+ =?utf-8?B?L0tJbkxxYlIydWpseDVCWnRTN00vYVQrVDNNT3lUOUtESWJvem5pOEhnK25I?=
+ =?utf-8?B?Y0ZLKzN1d1hHVTFEMHJoaEs1VklZcTh3MEFVOVZTU1JZbis2SGx4OWV3a29r?=
+ =?utf-8?B?R1BHT3hWKzhwOEtkbXNtL0w0SjU1ZzNuRjJmMGZ5K2tQbXMrOEpYOXB5WnY0?=
+ =?utf-8?B?M01QVTFGSTI4OE9hczRFdUlZT2pPVkhXNjVxa1JIOHhrYU8xaU51YWs4WjRN?=
+ =?utf-8?B?bG9zeXlySCt0RERXaHczZ25TSXRoTWpZc2IwQWRiMkNwME1hTndXNzBuY3Zq?=
+ =?utf-8?Q?a8IiGuJfmsF1Te6aTLEOb+/hO?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: de7db5b8-a0f8-4462-7a99-08dd5988478b
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95716c52-0ddf-448f-f974-08dd5987bdf5
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2025 12:46:40.9535 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2025 12:42:50.1187 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Y+TOXyKyhs2CfGMzHfMv9+kwFnwnBWo5xdBjWi8n8LTzvSznJt182TuNhMsbdf71b2KtCa0V8KXMpjOiyUMKtA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: HHVltxhhzW8ty/41t/1IyuMEnIg/04LV2XxtsShvVdejv5MEaAH+IeIN9vED+iMVEX8bdc+FPT1A8IJE14eJpQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7662
-Received-SPF: softfail client-ip=2a01:111:f403:2414::625;
+Received-SPF: softfail client-ip=40.107.223.63;
  envelope-from=avihaih@nvidia.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -183,6 +184,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Maciej,
+
+Sorry for the long delay, I have been busy with other tasks.
+I got some small comments for the series.
 
 On 19/02/2025 22:33, Maciej S. Szmigiero wrote:
 > External email: Use caution opening links or attachments
@@ -190,428 +195,272 @@ On 19/02/2025 22:33, Maciej S. Szmigiero wrote:
 >
 > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >
-> A new function multifd_queue_device_state() is provided for device to queue
-> its state for transmission via a multifd channel.
+> Add a basic support for receiving device state via multifd channels -
+> channels that are shared with RAM transfers.
+>
+> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
+> packet header either device state (MultiFDPacketDeviceState_t) or RAM
+> data (existing MultiFDPacket_t) is read.
+>
+> The received device state data is provided to
+> qemu_loadvm_load_state_buffer() function for processing in the
+> device's load_state_buffer handler.
 >
 > Reviewed-by: Peter Xu <peterx@redhat.com>
 > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 > ---
->   include/migration/misc.h         |   4 ++
->   migration/meson.build            |   1 +
->   migration/multifd-device-state.c | 115 +++++++++++++++++++++++++++++++
->   migration/multifd-nocomp.c       |  14 +++-
->   migration/multifd.c              |  42 +++++++++--
->   migration/multifd.h              |  27 +++++---
->   6 files changed, 187 insertions(+), 16 deletions(-)
->   create mode 100644 migration/multifd-device-state.c
+>   migration/multifd.c | 99 ++++++++++++++++++++++++++++++++++++++++-----
+>   migration/multifd.h | 26 +++++++++++-
+>   2 files changed, 113 insertions(+), 12 deletions(-)
 >
-> diff --git a/include/migration/misc.h b/include/migration/misc.h
-> index 4c171f4e897e..bd3b725fa0b7 100644
-> --- a/include/migration/misc.h
-> +++ b/include/migration/misc.h
-> @@ -118,4 +118,8 @@ bool migrate_is_uri(const char *uri);
->   bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
->                          Error **errp);
->
-> +/* migration/multifd-device-state.c */
-> +bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
-> +                                char *data, size_t len);
-> +
->   #endif
-> diff --git a/migration/meson.build b/migration/meson.build
-> index d3bfe84d6204..9aa48b290e2a 100644
-> --- a/migration/meson.build
-> +++ b/migration/meson.build
-> @@ -25,6 +25,7 @@ system_ss.add(files(
->     'migration-hmp-cmds.c',
->     'migration.c',
->     'multifd.c',
-> +  'multifd-device-state.c',
->     'multifd-nocomp.c',
->     'multifd-zlib.c',
->     'multifd-zero-page.c',
-> diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
-> new file mode 100644
-> index 000000000000..ab83773e2d62
-> --- /dev/null
-> +++ b/migration/multifd-device-state.c
-> @@ -0,0 +1,115 @@
-> +/*
-> + * Multifd device state migration
-> + *
-> + * Copyright (C) 2024,2025 Oracle and/or its affiliates.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/lockable.h"
-> +#include "migration/misc.h"
-> +#include "multifd.h"
-> +
-> +static struct {
-> +    QemuMutex queue_job_mutex;
-> +
-> +    MultiFDSendData *send_data;
-> +} *multifd_send_device_state;
-> +
-> +size_t multifd_device_state_payload_size(void)
-> +{
-> +    return sizeof(MultiFDDeviceState_t);
-> +}
-> +
-> +void multifd_device_state_send_setup(void)
-> +{
-> +    assert(!multifd_send_device_state);
-> +    multifd_send_device_state = g_malloc(sizeof(*multifd_send_device_state));
-> +
-> +    qemu_mutex_init(&multifd_send_device_state->queue_job_mutex);
-> +
-> +    multifd_send_device_state->send_data = multifd_send_data_alloc();
-> +}
-> +
-> +void multifd_device_state_send_cleanup(void)
-> +{
-> +    g_clear_pointer(&multifd_send_device_state->send_data,
-> +                    multifd_send_data_free);
-> +
-> +    qemu_mutex_destroy(&multifd_send_device_state->queue_job_mutex);
-> +
-> +    g_clear_pointer(&multifd_send_device_state, g_free);
-> +}
-> +
-> +void multifd_send_data_clear_device_state(MultiFDDeviceState_t *device_state)
-> +{
-> +    g_clear_pointer(&device_state->idstr, g_free);
-> +    g_clear_pointer(&device_state->buf, g_free);
-> +}
-> +
-> +static void multifd_device_state_fill_packet(MultiFDSendParams *p)
-> +{
-> +    MultiFDDeviceState_t *device_state = &p->data->u.device_state;
-> +    MultiFDPacketDeviceState_t *packet = p->packet_device_state;
-> +
-> +    packet->hdr.flags = cpu_to_be32(p->flags);
-> +    strncpy(packet->idstr, device_state->idstr, sizeof(packet->idstr));
-
-(I think we talked about this in v2):
-Looking at idstr creation code, idstr is always NULL terminated. It's 
-also treated everywhere as a NULL terminated string.
-For consistency and to avoid confusion, I'd treat it as a NULL 
-terminated string here too (use strcpy, remove the QEMU_NONSTRING from 
-its definition, etc.).
-This will also avoid strncpy() unnecessary zeroing of the extra bytes.
-
-Thanks.
-
-> +    packet->instance_id = cpu_to_be32(device_state->instance_id);
-> +    packet->next_packet_size = cpu_to_be32(p->next_packet_size);
-> +}
-> +
-> +static void multifd_prepare_header_device_state(MultiFDSendParams *p)
-> +{
-> +    p->iov[0].iov_len = sizeof(*p->packet_device_state);
-> +    p->iov[0].iov_base = p->packet_device_state;
-> +    p->iovs_num++;
-> +}
-> +
-> +void multifd_device_state_send_prepare(MultiFDSendParams *p)
-> +{
-> +    MultiFDDeviceState_t *device_state = &p->data->u.device_state;
-> +
-> +    assert(multifd_payload_device_state(p->data));
-> +
-> +    multifd_prepare_header_device_state(p);
-> +
-> +    assert(!(p->flags & MULTIFD_FLAG_SYNC));
-> +
-> +    p->next_packet_size = device_state->buf_len;
-> +    if (p->next_packet_size > 0) {
-> +        p->iov[p->iovs_num].iov_base = device_state->buf;
-> +        p->iov[p->iovs_num].iov_len = p->next_packet_size;
-> +        p->iovs_num++;
-> +    }
-> +
-> +    p->flags |= MULTIFD_FLAG_NOCOMP | MULTIFD_FLAG_DEVICE_STATE;
-> +
-> +    multifd_device_state_fill_packet(p);
-> +}
-> +
-> +bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
-> +                                char *data, size_t len)
-> +{
-> +    /* Device state submissions can come from multiple threads */
-> +    QEMU_LOCK_GUARD(&multifd_send_device_state->queue_job_mutex);
-> +    MultiFDDeviceState_t *device_state;
-> +
-> +    assert(multifd_payload_empty(multifd_send_device_state->send_data));
-> +
-> +    multifd_set_payload_type(multifd_send_device_state->send_data,
-> +                             MULTIFD_PAYLOAD_DEVICE_STATE);
-> +    device_state = &multifd_send_device_state->send_data->u.device_state;
-> +    device_state->idstr = g_strdup(idstr);
-> +    device_state->instance_id = instance_id;
-> +    device_state->buf = g_memdup2(data, len);
-> +    device_state->buf_len = len;
-> +
-> +    if (!multifd_send(&multifd_send_device_state->send_data)) {
-> +        multifd_send_data_clear(multifd_send_device_state->send_data);
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-> index e46e79d8b272..c00804652383 100644
-> --- a/migration/multifd-nocomp.c
-> +++ b/migration/multifd-nocomp.c
-> @@ -14,6 +14,7 @@
->   #include "exec/ramblock.h"
->   #include "exec/target_page.h"
->   #include "file.h"
-> +#include "migration-stats.h"
->   #include "multifd.h"
->   #include "options.h"
->   #include "qapi/error.h"
-> @@ -85,6 +86,13 @@ static void multifd_nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
->       return;
->   }
->
-> +static void multifd_ram_prepare_header(MultiFDSendParams *p)
-> +{
-> +    p->iov[0].iov_len = p->packet_len;
-> +    p->iov[0].iov_base = p->packet;
-> +    p->iovs_num++;
-> +}
-> +
->   static void multifd_send_prepare_iovs(MultiFDSendParams *p)
->   {
->       MultiFDPages_t *pages = &p->data->u.ram;
-> @@ -118,7 +126,7 @@ static int multifd_nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
->            * Only !zerocopy needs the header in IOV; zerocopy will
->            * send it separately.
->            */
-> -        multifd_send_prepare_header(p);
-> +        multifd_ram_prepare_header(p);
->       }
->
->       multifd_send_prepare_iovs(p);
-> @@ -133,6 +141,8 @@ static int multifd_nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
->           if (ret != 0) {
->               return -1;
->           }
-> +
-> +        stat64_add(&mig_stats.multifd_bytes, p->packet_len);
->       }
->
->       return 0;
-> @@ -431,7 +441,7 @@ int multifd_ram_flush_and_sync(QEMUFile *f)
->   bool multifd_send_prepare_common(MultiFDSendParams *p)
->   {
->       MultiFDPages_t *pages = &p->data->u.ram;
-> -    multifd_send_prepare_header(p);
-> +    multifd_ram_prepare_header(p);
->       multifd_send_zero_page_detect(p);
->
->       if (!pages->normal_num) {
 > diff --git a/migration/multifd.c b/migration/multifd.c
-> index 0092547a4f97..3394c2ae12fd 100644
+> index 3b47e63c2c4a..700a385447c7 100644
 > --- a/migration/multifd.c
 > +++ b/migration/multifd.c
-> @@ -12,6 +12,7 @@
->
->   #include "qemu/osdep.h"
->   #include "qemu/cutils.h"
-> +#include "qemu/iov.h"
->   #include "qemu/rcu.h"
->   #include "exec/target_page.h"
->   #include "system/system.h"
-> @@ -19,6 +20,7 @@
->   #include "qemu/error-report.h"
->   #include "qapi/error.h"
+> @@ -21,6 +21,7 @@
 >   #include "file.h"
-> +#include "migration/misc.h"
 >   #include "migration.h"
 >   #include "migration-stats.h"
->   #include "savevm.h"
-> @@ -111,7 +113,9 @@ MultiFDSendData *multifd_send_data_alloc(void)
->        * added to the union in the future are larger than
->        * (MultiFDPages_t + flex array).
->        */
-> -    max_payload_size = MAX(multifd_ram_payload_size(), sizeof(MultiFDPayload));
-> +    max_payload_size = MAX(multifd_ram_payload_size(),
-> +                           multifd_device_state_payload_size());
-> +    max_payload_size = MAX(max_payload_size, sizeof(MultiFDPayload));
->
->       /*
->        * Account for any holes the compiler might insert. We can't pack
-> @@ -130,6 +134,9 @@ void multifd_send_data_clear(MultiFDSendData *data)
->       }
->
->       switch (data->type) {
-> +    case MULTIFD_PAYLOAD_DEVICE_STATE:
-> +        multifd_send_data_clear_device_state(&data->u.device_state);
-> +        break;
->       default:
->           /* Nothing to do */
->           break;
-> @@ -232,6 +239,7 @@ static int multifd_recv_initial_packet(QIOChannel *c, Error **errp)
->       return msg.id;
+> +#include "savevm.h"
+>   #include "socket.h"
+>   #include "tls.h"
+>   #include "qemu-file.h"
+> @@ -252,14 +253,24 @@ static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
+>       return 0;
 >   }
 >
-> +/* Fills a RAM multifd packet */
->   void multifd_send_fill_packet(MultiFDSendParams *p)
+> -static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+> +static int multifd_recv_unfill_packet_device_state(MultiFDRecvParams *p,
+> +                                                   Error **errp)
+> +{
+> +    MultiFDPacketDeviceState_t *packet = p->packet_dev_state;
+> +
+> +    packet->instance_id = be32_to_cpu(packet->instance_id);
+> +    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+> +
+> +    return 0;
+> +}
+> +
+> +static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
 >   {
->       MultiFDPacket_t *packet = p->packet;
-> @@ -524,6 +532,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
->       p->name = NULL;
->       g_clear_pointer(&p->data, multifd_send_data_free);
+>       const MultiFDPacket_t *packet = p->packet;
+>       int ret = 0;
+>
+>       p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+>       p->packet_num = be64_to_cpu(packet->packet_num);
+> -    p->packets_recved++;
+>
+>       /* Always unfill, old QEMUs (<9.0) send data along with SYNC */
+>       ret = multifd_ram_unfill_packet(p, errp);
+> @@ -270,6 +281,17 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+>       return ret;
+>   }
+>
+> +static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    p->packets_recved++;
+> +
+> +    if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
+> +        return multifd_recv_unfill_packet_device_state(p, errp);
+> +    }
+> +
+> +    return multifd_recv_unfill_packet_ram(p, errp);
+> +}
+> +
+>   static bool multifd_send_should_exit(void)
+>   {
+>       return qatomic_read(&multifd_send_state->exiting);
+> @@ -1057,6 +1079,7 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
 >       p->packet_len = 0;
-> +    g_clear_pointer(&p->packet_device_state, g_free);
 >       g_free(p->packet);
 >       p->packet = NULL;
->       multifd_send_state->ops->send_cleanup(p, errp);
-> @@ -536,6 +545,7 @@ static void multifd_send_cleanup_state(void)
+> +    g_clear_pointer(&p->packet_dev_state, g_free);
+>       g_free(p->normal);
+>       p->normal = NULL;
+>       g_free(p->zero);
+> @@ -1158,6 +1181,32 @@ void multifd_recv_sync_main(void)
+>       trace_multifd_recv_sync_main(multifd_recv_state->packet_num);
+>   }
+>
+> +static int multifd_device_state_recv(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    g_autofree char *idstr = NULL;
+> +    g_autofree char *dev_state_buf = NULL;
+> +    int ret;
+> +
+> +    dev_state_buf = g_malloc(p->next_packet_size);
+> +
+> +    ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, errp);
+> +    if (ret != 0) {
+> +        return ret;
+> +    }
+> +
+> +    idstr = g_strndup(p->packet_dev_state->idstr,
+> +                      sizeof(p->packet_dev_state->idstr));
+> +
+> +    if (!qemu_loadvm_load_state_buffer(idstr,
+> +                                       p->packet_dev_state->instance_id,
+> +                                       dev_state_buf, p->next_packet_size,
+> +                                       errp)) {
+> +        ret = -1;
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>   static void *multifd_recv_thread(void *opaque)
 >   {
->       file_cleanup_outgoing_migration();
->       socket_cleanup_outgoing_migration();
-> +    multifd_device_state_send_cleanup();
->       qemu_sem_destroy(&multifd_send_state->channels_created);
->       qemu_sem_destroy(&multifd_send_state->channels_ready);
->       qemu_mutex_destroy(&multifd_send_state->multifd_send_mutex);
-> @@ -694,16 +704,32 @@ static void *multifd_send_thread(void *opaque)
->            * qatomic_store_release() in multifd_send().
->            */
->           if (qatomic_load_acquire(&p->pending_job)) {
-> +            bool is_device_state = multifd_payload_device_state(p->data);
-> +            size_t total_size;
-> +
->               p->flags = 0;
->               p->iovs_num = 0;
->               assert(!multifd_payload_empty(p->data));
->
-> -            ret = multifd_send_state->ops->send_prepare(p, &local_err);
-> -            if (ret != 0) {
-> -                break;
-> +            if (is_device_state) {
-> +                multifd_device_state_send_prepare(p);
-> +            } else {
-> +                ret = multifd_send_state->ops->send_prepare(p, &local_err);
-> +                if (ret != 0) {
-> +                    break;
-> +                }
->               }
->
-> +            /*
-> +             * The packet header in the zerocopy RAM case is accounted for
-> +             * in multifd_nocomp_send_prepare() - where it is actually
-> +             * being sent.
-> +             */
-> +            total_size = iov_size(p->iov, p->iovs_num);
-> +
->               if (migrate_mapped_ram()) {
-> +                assert(!is_device_state);
-> +
->                   ret = file_write_ramblock_iov(p->c, p->iov, p->iovs_num,
->                                                 &p->data->u.ram, &local_err);
->               } else {
-> @@ -716,8 +742,7 @@ static void *multifd_send_thread(void *opaque)
+>       MigrationState *s = migrate_get_current();
+> @@ -1176,6 +1225,7 @@ static void *multifd_recv_thread(void *opaque)
+>       while (true) {
+>           MultiFDPacketHdr_t hdr;
+>           uint32_t flags = 0;
+> +        bool is_device_state = false;
+>           bool has_data = false;
+>           uint8_t *pkt_buf;
+>           size_t pkt_len;
+> @@ -1209,8 +1259,14 @@ static void *multifd_recv_thread(void *opaque)
 >                   break;
 >               }
 >
-> -            stat64_add(&mig_stats.multifd_bytes,
-> -                       (uint64_t)p->next_packet_size + p->packet_len);
-> +            stat64_add(&mig_stats.multifd_bytes, total_size);
+> -            pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
+> -            pkt_len = p->packet_len - sizeof(hdr);
+> +            is_device_state = p->flags & MULTIFD_FLAG_DEVICE_STATE;
+> +            if (is_device_state) {
+> +                pkt_buf = (uint8_t *)p->packet_dev_state + sizeof(hdr);
+> +                pkt_len = sizeof(*p->packet_dev_state) - sizeof(hdr);
+> +            } else {
+> +                pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
+> +                pkt_len = p->packet_len - sizeof(hdr);
+> +            }
 >
->               p->next_packet_size = 0;
->               multifd_send_data_clear(p->data);
-> @@ -938,6 +963,9 @@ bool multifd_send_setup(void)
->               p->packet_len = sizeof(MultiFDPacket_t)
->                             + sizeof(uint64_t) * page_count;
->               p->packet = g_malloc0(p->packet_len);
-> +            p->packet_device_state = g_malloc0(sizeof(*p->packet_device_state));
-> +            p->packet_device_state->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
-> +            p->packet_device_state->hdr.version = cpu_to_be32(MULTIFD_VERSION);
->           }
->           p->name = g_strdup_printf(MIGRATION_THREAD_SRC_MULTIFD, i);
->           p->write_flags = 0;
-> @@ -973,6 +1001,8 @@ bool multifd_send_setup(void)
->           assert(p->iov);
->       }
+>               ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
+>                                              &local_err);
+> @@ -1235,12 +1291,17 @@ static void *multifd_recv_thread(void *opaque)
+>               /* recv methods don't know how to handle the SYNC flag */
+>               p->flags &= ~MULTIFD_FLAG_SYNC;
 >
-> +    multifd_device_state_send_setup();
+> -            /*
+> -             * Even if it's a SYNC packet, this needs to be set
+> -             * because older QEMUs (<9.0) still send data along with
+> -             * the SYNC packet.
+> -             */
+> -            has_data = p->normal_num || p->zero_num;
+> +            if (is_device_state) {
+> +                has_data = p->next_packet_size > 0;
+> +            } else {
+> +                /*
+> +                 * Even if it's a SYNC packet, this needs to be set
+> +                 * because older QEMUs (<9.0) still send data along with
+> +                 * the SYNC packet.
+> +                 */
+> +                has_data = p->normal_num || p->zero_num;
+> +            }
 > +
->       return true;
+>               qemu_mutex_unlock(&p->mutex);
+>           } else {
+>               /*
+> @@ -1269,14 +1330,29 @@ static void *multifd_recv_thread(void *opaque)
+>           }
 >
->   err:
+>           if (has_data) {
+> -            ret = multifd_recv_state->ops->recv(p, &local_err);
+> +            if (is_device_state) {
+> +                assert(use_packets);
+> +                ret = multifd_device_state_recv(p, &local_err);
+> +            } else {
+> +                ret = multifd_recv_state->ops->recv(p, &local_err);
+> +            }
+>               if (ret != 0) {
+>                   break;
+>               }
+> +        } else if (is_device_state) {
+> +            error_setg(&local_err,
+> +                       "multifd: received empty device state packet");
+> +            break;
+>           }
+>
+>           if (use_packets) {
+>               if (flags & MULTIFD_FLAG_SYNC) {
+> +                if (is_device_state) {
+> +                    error_setg(&local_err,
+> +                               "multifd: received SYNC device state packet");
+> +                    break;
+> +                }
+> +
+>                   qemu_sem_post(&multifd_recv_state->sem_sync);
+>                   qemu_sem_wait(&p->sem_sync);
+>               }
+> @@ -1345,6 +1421,7 @@ int multifd_recv_setup(Error **errp)
+>               p->packet_len = sizeof(MultiFDPacket_t)
+>                   + sizeof(uint64_t) * page_count;
+>               p->packet = g_malloc0(p->packet_len);
+> +            p->packet_dev_state = g_malloc0(sizeof(*p->packet_dev_state));
+>           }
+>           p->name = g_strdup_printf(MIGRATION_THREAD_DST_MULTIFD, i);
+>           p->normal = g_new0(ram_addr_t, page_count);
 > diff --git a/migration/multifd.h b/migration/multifd.h
-> index 20a4bba58ef4..883a43c1d79e 100644
+> index f7156f66c0f6..c2ebef2d319e 100644
 > --- a/migration/multifd.h
 > +++ b/migration/multifd.h
-> @@ -137,10 +137,12 @@ typedef struct {
+> @@ -62,6 +62,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
+>   #define MULTIFD_FLAG_UADK (8 << 1)
+>   #define MULTIFD_FLAG_QATZIP (16 << 1)
+>
+> +/*
+> + * If set it means that this packet contains device state
+> + * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
+> + */
+> +#define MULTIFD_FLAG_DEVICE_STATE (32 << 1)
+> +
+>   /* This value needs to be a multiple of qemu_target_page_size() */
+>   #define MULTIFD_PACKET_SIZE (512 * 1024)
+>
+> @@ -94,6 +100,16 @@ typedef struct {
+>       uint64_t offset[];
+>   } __attribute__((packed)) MultiFDPacket_t;
+>
+> +typedef struct {
+> +    MultiFDPacketHdr_t hdr;
+> +
+> +    char idstr[256] QEMU_NONSTRING;
+> +    uint32_t instance_id;
+> +
+> +    /* size of the next packet that contains the actual data */
+> +    uint32_t next_packet_size;
+> +} __attribute__((packed)) MultiFDPacketDeviceState_t;
+> +
+>   typedef struct {
+>       /* number of used pages */
+>       uint32_t num;
+> @@ -111,6 +127,13 @@ struct MultiFDRecvData {
+>       off_t file_offset;
+>   };
+>
+> +typedef struct {
+> +    char *idstr;
+> +    uint32_t instance_id;
+> +    char *buf;
+> +    size_t buf_len;
+> +} MultiFDDeviceState_t;
+
+This is only used in patch #14. Maybe move it there?
+
+Thanks.
+
+> +
 >   typedef enum {
 >       MULTIFD_PAYLOAD_NONE,
 >       MULTIFD_PAYLOAD_RAM,
-> +    MULTIFD_PAYLOAD_DEVICE_STATE,
->   } MultiFDPayloadType;
->
->   typedef union MultiFDPayload {
->       MultiFDPages_t ram;
-> +    MultiFDDeviceState_t device_state;
->   } MultiFDPayload;
->
->   struct MultiFDSendData {
-> @@ -153,6 +155,11 @@ static inline bool multifd_payload_empty(MultiFDSendData *data)
->       return data->type == MULTIFD_PAYLOAD_NONE;
->   }
->
-> +static inline bool multifd_payload_device_state(MultiFDSendData *data)
-> +{
-> +    return data->type == MULTIFD_PAYLOAD_DEVICE_STATE;
-> +}
-> +
->   static inline void multifd_set_payload_type(MultiFDSendData *data,
->                                               MultiFDPayloadType type)
->   {
-> @@ -205,8 +212,9 @@ typedef struct {
+> @@ -227,8 +250,9 @@ typedef struct {
 >
 >       /* thread local variables. No locking required */
 >
 > -    /* pointer to the packet */
 > +    /* pointers to the possible packet types */
 >       MultiFDPacket_t *packet;
-> +    MultiFDPacketDeviceState_t *packet_device_state;
+> +    MultiFDPacketDeviceState_t *packet_dev_state;
 >       /* size of the next packet that contains pages */
 >       uint32_t next_packet_size;
->       /* packets sent through this channel */
-> @@ -365,13 +373,6 @@ bool multifd_send_prepare_common(MultiFDSendParams *p);
->   void multifd_send_zero_page_detect(MultiFDSendParams *p);
->   void multifd_recv_zero_page_process(MultiFDRecvParams *p);
->
-> -static inline void multifd_send_prepare_header(MultiFDSendParams *p)
-> -{
-> -    p->iov[0].iov_len = p->packet_len;
-> -    p->iov[0].iov_base = p->packet;
-> -    p->iovs_num++;
-> -}
-> -
->   void multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc);
->   bool multifd_send(MultiFDSendData **send_data);
->   MultiFDSendData *multifd_send_data_alloc(void);
-> @@ -396,4 +397,14 @@ bool multifd_ram_sync_per_section(void);
->   size_t multifd_ram_payload_size(void);
->   void multifd_ram_fill_packet(MultiFDSendParams *p);
->   int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
-> +
-> +size_t multifd_device_state_payload_size(void);
-> +
-> +void multifd_send_data_clear_device_state(MultiFDDeviceState_t *device_state);
-> +
-> +void multifd_device_state_send_setup(void);
-> +void multifd_device_state_send_cleanup(void);
-> +
-> +void multifd_device_state_send_prepare(MultiFDSendParams *p);
-> +
->   #endif
+>       /* packets received through this channel */
 
