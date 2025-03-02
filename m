@@ -4,32 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61382C19F32
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Mar 2025 14:55:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0CBC19F32
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Mar 2025 15:00:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tokiS-0002vv-AF; Sun, 02 Mar 2025 09:54:52 -0500
+	id 1toknk-0005GX-9C; Sun, 02 Mar 2025 10:00:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tokiL-0002uP-LO
- for qemu-devel@nongnu.org; Sun, 02 Mar 2025 09:54:47 -0500
+ id 1toknc-0005Dr-Sl
+ for qemu-devel@nongnu.org; Sun, 02 Mar 2025 10:00:14 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tokiJ-0004SC-Dj
- for qemu-devel@nongnu.org; Sun, 02 Mar 2025 09:54:45 -0500
+ id 1tokna-000543-Mh
+ for qemu-devel@nongnu.org; Sun, 02 Mar 2025 10:00:12 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1toki3-00000000EW3-31HH; Sun, 02 Mar 2025 15:54:27 +0100
-Message-ID: <15742ad0-a5d6-4d1d-82f6-b3bdbc53746f@maciej.szmigiero.name>
-Date: Sun, 2 Mar 2025 15:54:22 +0100
+ id 1toknU-00000000EWv-2OYi; Sun, 02 Mar 2025 16:00:04 +0100
+Message-ID: <605f8813-f57c-439d-8bd0-93c286464f8d@maciej.szmigiero.name>
+Date: Sun, 2 Mar 2025 15:59:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 34/36] vfio/migration: Max in-flight VFIO device state
  buffer count limit
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Avihai Horon <avihaih@nvidia.com>
 Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
  <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -40,8 +41,8 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
  <719b309bb7bc13542d14e6ce0026cb9bb67e9f31.1739994627.git.maciej.szmigiero@oracle.com>
  <d7a7c7ee-5529-4091-a241-6cdde9943a25@nvidia.com>
+ <15742ad0-a5d6-4d1d-82f6-b3bdbc53746f@maciej.szmigiero.name>
 Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xsFNBFpGusUBEADXUMM2t7y9sHhI79+2QUnDdpauIBjZDukPZArwD+sDlx5P+jxaZ13XjUQc
  6oJdk+jpvKiyzlbKqlDtw/Y2Ob24tg1g/zvkHn8AVUwX+ZWWewSZ0vcwp7u/LvA+w2nJbIL1
@@ -83,7 +84,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <d7a7c7ee-5529-4091-a241-6cdde9943a25@nvidia.com>
+In-Reply-To: <15742ad0-a5d6-4d1d-82f6-b3bdbc53746f@maciej.szmigiero.name>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -110,25 +111,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2.03.2025 15:53, Avihai Horon wrote:
+On 2.03.2025 15:54, Maciej S. Szmigiero wrote:
+> On 2.03.2025 15:53, Avihai Horon wrote:
+>>
+>> On 19/02/2025 22:34, Maciej S. Szmigiero wrote:
+>>> External email: Use caution opening links or attachments
+>>>
+>>>
+>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>
+>>> Allow capping the maximum count of in-flight VFIO device state buffers
+>>> queued at the destination, otherwise a malicious QEMU source could
+>>> theoretically cause the target QEMU to allocate unlimited amounts of memory
+>>> for buffers-in-flight.
+>>
+>> I still think it's better to limit the number of bytes rather than number of buffers:
+>> 1. To the average user the number of buffers doesn't really mean anything. They have to open the code and see what is the size of a single buffer and then choose their value.
+>> 2. Currently VFIO migration buffer size is 1MB. If later it's changed to 2MB for example, users will have to adjust their configuration accordingly. With number of bytes, the configuration remains the same no matter what is the VFIO migration buffer size.
 > 
-> On 19/02/2025 22:34, Maciej S. Szmigiero wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> Allow capping the maximum count of in-flight VFIO device state buffers
->> queued at the destination, otherwise a malicious QEMU source could
->> theoretically cause the target QEMU to allocate unlimited amounts of memory
->> for buffers-in-flight.
-> 
-> I still think it's better to limit the number of bytes rather than number of buffers:
-> 1. To the average user the number of buffers doesn't really mean anything. They have to open the code and see what is the size of a single buffer and then choose their value.
-> 2. Currently VFIO migration buffer size is 1MB. If later it's changed to 2MB for example, users will have to adjust their configuration accordingly. With number of bytes, the configuration remains the same no matter what is the VFIO migration buffer size.
+> Sorry Avihai, but we're a little more than week from code freeze
+> so it's really not a time for more than cosmetic changes.
 
-Sorry Avihai, but we're a little more than week from code freeze
-so it's really not a time for more than cosmetic changes.
+And if you really, really want to have queued buffers size limit
+that's something could be added later as additional
+x-migration-max-queued-buffers-size or something property
+since these limits aren't exclusive.
 
 Thanks,
 Maciej
