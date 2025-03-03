@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D869BC282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 12:41:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B813FC282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 12:42:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp56B-0007ip-Ky; Mon, 03 Mar 2025 07:40:43 -0500
+	id 1tp57n-0008JA-Pw; Mon, 03 Mar 2025 07:42:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp54T-0007WN-Dc
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 07:39:04 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp56A-0007o3-5N
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 07:40:43 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp54R-0001AP-53
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 07:38:56 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43bbc8b7c65so10830045e9.0
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 04:38:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp566-0001Yf-EZ
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 07:40:40 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-390dc0a7605so2367021f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 04:40:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741005531; x=1741610331; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741005637; x=1741610437; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=F4UYeXdqwyctSY62KBMASteRGUXei+yMQov4/X3UKu0=;
- b=HpwJLdmtjy6gw4c8vje48GE2K+QUllPdirGz02ahWW1jYJpaLk3WtuF7ImzyGoBNJT
- oqeQzVRcSq6QRKkWUcfcaCo2cbWa243yXMLZyAvjzaagz9Iym8UpkziUo40DNNeoBuwY
- tNvNvtm/FjqzmbKnUNlaDSs3WtRFFQvUUVDN6WVTFKBP2G2xjKMp7J84ZsZgdABEtRU4
- Eg3cBoHZ+labZfdH95YcjJszMZs/ha5bQ6/+jGsxEAkakkNBn3Wy96EtZ7WVQdtTBc9x
- VgSHwNexm4mjZPi1QQdretS4VZ0i0KwIEORJjqLcgmnmn4SM6dJnCgC8WRM5T9tD4G+t
- UOOg==
+ bh=enPtnQyubkCLZfBRJeg8fqrmBvpEcC2NxZxZPkLba00=;
+ b=hwNLpD5BMYHui4RhOqUUqzx6vpCcaM69Oxi5YAGNy2HVmQhQDDwuZDUkYPchR/Zzn9
+ D/Xf/jRSpdAg8klzC6fOsKehUbNqbLfMI4+HvLFIiM+M4V6T/aWgBvp7+DjFU7KUtbdg
+ RXs3cPNhOzDB+iqCKbYVFPsLT18hLJGL/9F2euKPJ53WxwYZEHWATGfPkGNXSWYMkZHD
+ DqfFvYQzlR28pllv/P0TvzAgQm+8s1zbnYi+1xnWy9THDXVMRd7Db1toyjBq9BT2CrO7
+ Wk8xlkoCu8MzQw5JQa4OVPlv8XsZUZeOaV+PW/u1WUFJNb/Q2ww98cfBG/TgnQ6MXPaP
+ GRsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741005531; x=1741610331;
+ d=1e100.net; s=20230601; t=1741005637; x=1741610437;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F4UYeXdqwyctSY62KBMASteRGUXei+yMQov4/X3UKu0=;
- b=GWoXFTITZpWqM08KsClDzPV2Ogk3VIFj8pxOLSBGuNwuVPgpAUxL1IxalDu/+UwRZI
- 86kvdUtiHUPRxQOGcnKt/hAh6atXqMWEePjGhpq4PU82e7bQw6ACh+vCgCdGrIszx2bb
- sa3SAIuCDuGsjm4m1Y1Ebm7x3Krd8ngrWbE4zPSJEMFVEjJLmGVgMaLbxFmC+RzuK+lE
- /ODzpD+RB7pVEv/NyNjeKoptuTeOL8FxD9VTE3mgrvKrMnYjxH/Sb23WzG1IFM7rPk6E
- 5tEgwA0N4o4zfeVG17As3dJyfSzHK+p9eqoFBDXEDbH01RC/xwXg142FU0opNeLBrFD8
- /NLA==
-X-Gm-Message-State: AOJu0YwpxHbgcjYDUhCVmP+l+PEjCIhUUvRUSdJT/dRC+ZDuyO7jswiH
- dsVN2eccL6UQ79cLyzwGoBxIfmtptkxeM8LaLg8FsJvRPZdfCRNwPVC64mvNeQaTl3D/Mf9Paak
- feZjfLA==
-X-Gm-Gg: ASbGncsd0UjhfQEdHftTO9XXGqatbUwuDOf0NFE/dVg/F/LdTaplmJOBVVU8p+ar6Oe
- bL/YdQQ641GiW7RN1xPsqqKWQNhh4HtgJ9UdPXuEl9nBqtFTvNOeI4wc7Jh+GdiCM+mCKIvYouQ
- s66Cbx3+GNvtw4rXCxkNdsECmkoX5ZilkpiEYPdSl7XdMkCoz50iZlgZ+DDLUpsQ4ahtOf9Es7k
- maishhP94b8kMkvEwubQyeoHFA+2ANQ8llAAD7lpWmkpVKLomi8R4+ZAZAXl2+kl5GVnquv7YoM
- FGRv7/Z2TkWtoXlwTFxa+m9KKNOLY7l2DANa96ZFPaL1xspHySR/k+OJoQnzkMl3apvRe6DAXzH
- 2bN+qlE7ysho4
-X-Google-Smtp-Source: AGHT+IHUHlQ/5XUXQcB00VdgvQQSxddXSD+g+DDVekgzd6TlgCOMDZ+5L/jn01FUyxiFpvTfKOf+tw==
-X-Received: by 2002:a05:600c:444d:b0:439:96aa:e502 with SMTP id
- 5b1f17b1804b1-43ba66e6317mr137315605e9.12.1741005531415; 
- Mon, 03 Mar 2025 04:38:51 -0800 (PST)
+ bh=enPtnQyubkCLZfBRJeg8fqrmBvpEcC2NxZxZPkLba00=;
+ b=xUnqUVxuMMWh7OWtQ89L7SBIsKw63tK7rOJMjrTit3F+pd55PChEDdklViShBYcLV6
+ EHaJPz0s7l+EdFh02TjtQC1vu4fBsFKLCUdNVviepGvl9p18VHHjL6bP7ClCm1zoBWlP
+ Fr18O3GjPOMCAvHzNdAWqFNy7VD5RE6zi+IWMWyXGG+mK1Rd7BD4/XnBtc99ArQst3XV
+ 1LU1aeMFXtql4Ri5A4rjKnmN6E0C5ki/8Xo1ivzE/FGEahcTjYbhfEZuXqs1Xy9WlLnK
+ FIM8XgTnx1i4XwX0O3Zio8rNcnKvTK+EMQglZ/HcFW3hzeHFRErbZDi8jWlIvjNEg3xr
+ qzRQ==
+X-Gm-Message-State: AOJu0YxYi4FC5CVctiGdp+grvUoTmyruQJ15kHSsPBX3iLIQ+gmB69ap
+ xAZytF7a7lJLrcDscynEFbtCS3FaJCC7HnuXynNsMswQIVPLMUYp2aUFrebZLsgsSwGN8tN4hSM
+ tWndILQ==
+X-Gm-Gg: ASbGncu0ZOInFrL46PfCFCK+eW5nsT7j6S3/b/tK3zplmaenxdQCTSxe8keYIdC9/w9
+ 7+oadV6cbXs0HQ+sIXtbJPjHFzJKIMKZOkeMyBl6CS+eXxdW3FW16XhJVKSYK1t68fmZFPiuKbB
+ eS9FeEOwdP/RQ5eZbMAgaVOowvorXk86iT+u+V+4Gs8QJ2KhAQGADC4Sb+Vy+EvpjQk0PtxHWw1
+ b8ZIHL3KkY706QrBLuxeIqzWurjYfdbLI0opAwuIve4HGX5TjoqTAXAHkkBkbjLCXVcyb1uXLOf
+ aMe3r8Xia8/Sp1Gjk0lmoJ8H7QlgjQZQdDyY436Ca5IfRkB1OjbeyKZIs6HJSgY+Zfw/0LIDGI0
+ cWsRED+wj0Nsk
+X-Google-Smtp-Source: AGHT+IHLv9mbfrY4vuXGTU0CmSyEb6eKoTrpd9gf2ZteD0VEqnaVwvxbqh0bhb82BBTSksZsoVOEQQ==
+X-Received: by 2002:a05:6000:2c6:b0:390:fc60:b6d0 with SMTP id
+ ffacd0b85a97d-390fc60bbeemr7304452f8f.16.1741005636704; 
+ Mon, 03 Mar 2025 04:40:36 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4844a2dsm14434172f8f.72.2025.03.03.04.38.50
+ 5b1f17b1804b1-43b736f74e8sm165336545e9.7.2025.03.03.04.40.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 04:38:50 -0800 (PST)
-Message-ID: <f6c0ba30-ee78-40f0-ae11-dc7c6abf30f9@linaro.org>
-Date: Mon, 3 Mar 2025 13:38:49 +0100
+ Mon, 03 Mar 2025 04:40:36 -0800 (PST)
+Message-ID: <f71b59c9-13ab-4f58-96f8-78fee88e8319@linaro.org>
+Date: Mon, 3 Mar 2025 13:40:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/9] hw/char: Improve RX FIFO depth uses
-To: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Magnus Damm <magnus.damm@gmail.com>, Thomas Huth <huth@tuxfamily.org>,
- Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
- Rayhan Faizel <rayhan.faizel@gmail.com>, qemu-arm@nongnu.org,
- Evgeny Iakovlev <eiakovlev@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Luc Michel <luc.michel@amd.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>
-References: <20250220092903.3726-1-philmd@linaro.org>
+Subject: Re: [PATCH 4/4] hw/nvram/eeprom_at24c: Reorganise init to avoid
+ overwriting values
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org
+References: <cover.1740839457.git.balaton@eik.bme.hu>
+ <fd8e0478febd60d5f48c58bc77c60e043d1c3cdc.1740839457.git.balaton@eik.bme.hu>
+ <feff5b7e-0d56-4776-bec4-ffb745ae5120@linaro.org>
+ <5c7d100e-858f-52c3-e172-309529783663@eik.bme.hu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250220092903.3726-1-philmd@linaro.org>
+In-Reply-To: <5c7d100e-858f-52c3-e172-309529783663@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,17 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/2/25 10:28, Philippe Mathieu-Daudé wrote:
+On 3/3/25 13:32, BALATON Zoltan wrote:
+> On Mon, 3 Mar 2025, Philippe Mathieu-Daudé wrote:
+>> On 1/3/25 15:35, BALATON Zoltan wrote:
+>>> The init_rom can write values to the beginning of the memory but these
+>>> are overwritten by values from a backing file that covers the whole
+>>> memory. Do the init_rom handling only if it would not be overwritten.
+>>>
+>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>> ---
+>>>   hw/nvram/eeprom_at24c.c | 6 ++----
+>>>   1 file changed, 2 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/hw/nvram/eeprom_at24c.c b/hw/nvram/eeprom_at24c.c
+>>> index 78c81bea77..ff7a21eee7 100644
+>>> --- a/hw/nvram/eeprom_at24c.c
+>>> +++ b/hw/nvram/eeprom_at24c.c
+>>> @@ -191,10 +191,6 @@ static void at24c_eeprom_realize(DeviceState 
+>>> *dev, Error **errp)
+>>>         ee->mem = g_malloc0(ee->rsize);
+>>>   -    if (ee->init_rom) {
+>>> -        memcpy(ee->mem, ee->init_rom, MIN(ee->init_rom_size, ee- 
+>>> >rsize));
+>>> -    }
+>>> -
+>>>       if (ee->blk) {
+>>>           int ret = blk_pread(ee->blk, 0, ee->rsize, ee->mem, 0);
+>>>   @@ -204,6 +200,8 @@ static void at24c_eeprom_realize(DeviceState 
+>>> *dev, Error **errp)
+>>>               return;
+>>>           }
+>>>           DPRINTK("Reset read backing file\n");
+>>> +    } else if (ee->init_rom) {
+>>
+>> Don't you want to keep overwritting the init_rom[] buffer?
+>>
+>> IOW why not s/else//?
+> 
+> I've tried to explain that in the commit message. Current behaviour is 
+> to use backing file content overwriting init_rom content. Removing else 
+> here would change that and init_rom would overwrite data read from 
+> backing file. I think normally 
 
->    hw/char/pl011: Warn when using disabled receiver
->    hw/char/pl011: Simplify a bit pl011_can_receive()
->    hw/char/pl011: Improve RX flow tracing events
->    hw/char/pl011: Really use RX FIFO depth
->    hw/char/bcm2835_aux: Really use RX FIFO depth
->    hw/char/imx_serial: Really use RX FIFO depth
->    hw/char/mcf_uart: Use FIFO_DEPTH definition instead of magic values
->    hw/char/mcf_uart: Really use RX FIFO depth
->    hw/char/sh_serial: Return correct number of empty RX FIFO elements
+OK, I'll amend in description:
 
-Series queued, thanks!
+---
+> init_rom is used only if there's no 
+> backing file (provides default content) but should not overwrite backing 
+> file content (especially leaving the file unchanged and only change it 
+> in memory).
+---
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> So I don't see why would that be useful.
+> 
+> Regards,
+> BALATON Zoltan
+> 
+>>> +        memcpy(ee->mem, ee->init_rom, MIN(ee->init_rom_size, ee- 
+>>> >rsize));
+>>>       }
+>>>         /*
+>>
+>>
+
 
