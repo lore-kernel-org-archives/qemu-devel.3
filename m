@@ -4,45 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A4FC282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 22:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06037C282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 22:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpE3m-0007dD-Gc; Mon, 03 Mar 2025 17:14:51 -0500
+	id 1tpE44-0007ha-On; Mon, 03 Mar 2025 17:15:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE3g-0007cv-Hz
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:14:45 -0500
+ id 1tpE40-0007gi-NF
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:15:04 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE3d-0005x6-N0
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:14:44 -0500
+ id 1tpE3y-00063x-CE
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:15:04 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE3P-00000000IDj-1AHv; Mon, 03 Mar 2025 23:14:27 +0100
-Message-ID: <f89e7206-679d-40f7-9674-eaea9852699d@maciej.szmigiero.name>
-Date: Mon, 3 Mar 2025 23:14:22 +0100
+ id 1tpE3u-00000000IEC-2I3n; Mon, 03 Mar 2025 23:14:58 +0100
+Message-ID: <ef1ac370-b368-47aa-aaa4-7f16c7c22cba@maciej.szmigiero.name>
+Date: Mon, 3 Mar 2025 23:14:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 36/36] vfio/migration: Update VFIO migration
- documentation
-To: Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v5 11/36] migration/multifd: Device state transfer support
+ - receive side
+To: Avihai Horon <avihaih@nvidia.com>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <2031790b755aa95b61470b286fa787b78be08107.1739994627.git.maciej.szmigiero@oracle.com>
- <cbebee68-f891-4946-885d-01a8ed24e6c1@redhat.com>
- <7c41add3-72ad-4aec-bd74-3c9715fda5c7@maciej.szmigiero.name>
- <a7f66c0f-1355-43e6-b20d-eddaef6fb1d1@redhat.com> <87frjxvdvm.fsf@suse.de>
+ <8857884d14e5e854629a32dfb96011b43945088f.1739994627.git.maciej.szmigiero@oracle.com>
+ <a55c5f70-04ad-486d-96fa-5b3b75e0a5c6@nvidia.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -86,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <87frjxvdvm.fsf@suse.de>
+In-Reply-To: <a55c5f70-04ad-486d-96fa-5b3b75e0a5c6@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -113,107 +110,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1.03.2025 00:38, Fabiano Rosas wrote:
-> Cédric Le Goater <clg@redhat.com> writes:
+On 2.03.2025 13:42, Avihai Horon wrote:
+> Hi Maciej,
 > 
->> On 2/27/25 23:01, Maciej S. Szmigiero wrote:
->>> On 27.02.2025 07:59, Cédric Le Goater wrote:
->>>> On 2/19/25 21:34, Maciej S. Szmigiero wrote:
->>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>>
->>>>> Update the VFIO documentation at docs/devel/migration describing the
->>>>> changes brought by the multifd device state transfer.
->>>>>
->>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>>>> ---
->>>>>    docs/devel/migration/vfio.rst | 80 +++++++++++++++++++++++++++++++----
->>>>>    1 file changed, 71 insertions(+), 9 deletions(-)
->>>>>
->>>>> diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
->>>>> index c49482eab66d..d9b169d29921 100644
->>>>> --- a/docs/devel/migration/vfio.rst
->>>>> +++ b/docs/devel/migration/vfio.rst
->>>>> @@ -16,6 +16,37 @@ helps to reduce the total downtime of the VM. VFIO devices opt-in to pre-copy
->>>>>    support by reporting the VFIO_MIGRATION_PRE_COPY flag in the
->>>>>    VFIO_DEVICE_FEATURE_MIGRATION ioctl.
->>>>
->>>> Please add a new "multifd" documentation subsection at the end of the file
->>>> with this part :
->>>>
->>>>> +Starting from QEMU version 10.0 there's a possibility to transfer VFIO device
->>>>> +_STOP_COPY state via multifd channels. This helps reduce downtime - especially
->>>>> +with multiple VFIO devices or with devices having a large migration state.
->>>>> +As an additional benefit, setting the VFIO device to _STOP_COPY state and
->>>>> +saving its config space is also parallelized (run in a separate thread) in
->>>>> +such migration mode.
->>>>> +
->>>>> +The multifd VFIO device state transfer is controlled by
->>>>> +"x-migration-multifd-transfer" VFIO device property. This property defaults to
->>>>> +AUTO, which means that VFIO device state transfer via multifd channels is
->>>>> +attempted in configurations that otherwise support it.
->>>>> +
->>>
->>> Done - I also moved the parts about x-migration-max-queued-buffers
->>> and x-migration-load-config-after-iter description there since
->>> obviously they wouldn't make sense being left alone in the top section.
->>>
->>>> I was expecting a much more detailed explanation on the design too  :
->>>>
->>>>    * in the cover letter
->>>>    * in the hw/vfio/migration-multifd.c
->>>>    * in some new file under docs/devel/migration/
->>
->> I forgot to add  :
->>
->>        * guide on how to use this new feature from QEMU and libvirt.
->>          something we can refer to for tests. That's a must have.
->>        * usage scenarios
->>          There are some benefits but it is not obvious a user would
->>          like to use multiple VFs in one VM, please explain.
->>          This is a major addition which needs justification anyhow
->>        * pros and cons
->>
->>> I'm not sure what descriptions you exactly want in these places,
->>
->> Looking from the VFIO subsystem, the way this series works is very opaque.
->> There are a couple of a new migration handlers, new threads, new channels,
->> etc. It has been discussed several times with migration folks, please provide
->> a summary for a new reader as ignorant as everyone would be when looking at
->> a new file.
->>
->>
->>> but since
->>> that's just documentation (not code) it could be added after the code freeze...
->>
->> That's the risk of not getting any ! and the initial proposal should be
->> discussed before code freeze.
->>
->> For the general framework, I was expecting an extension of a "multifd"
->> subsection under :
->>
->>     https://qemu.readthedocs.io/en/v9.2.0/devel/migration/features.html
->>
->> but it doesn't exist :/
+> Sorry for the long delay, I have been busy with other tasks.
+> I got some small comments for the series.
 > 
-> Hi, see if this helps. Let me know what can be improved and if something
-> needs to be more detailed. Please ignore the formatting, I'll send a
-> proper patch after the carnaval.
-> 
-> @Maciej, it's probably better if you keep your docs separate anyway so
-> we don't add another dependency. I can merge them later.
-
-That's a very good idea, thanks for writing this multifd doc Fabiano!
-
-> multifd.rst:
-> 
-> Multifd
-> =======
-> 
-> Multifd is the name given for the migration capability that enables
-> data transfer using multiple threads. Multifd supports all the
-> transport types currently in use with migration (inet, unix, vsock,
-> fd, file).
+> On 19/02/2025 22:33, Maciej S. Szmigiero wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>
+>> Add a basic support for receiving device state via multifd channels -
+>> channels that are shared with RAM transfers.
+>>
+>> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
+>> packet header either device state (MultiFDPacketDeviceState_t) or RAM
+>> data (existing MultiFDPacket_t) is read.
+>>
+>> The received device state data is provided to
+>> qemu_loadvm_load_state_buffer() function for processing in the
+>> device's load_state_buffer handler.
+>>
+>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   migration/multifd.c | 99 ++++++++++++++++++++++++++++++++++++++++-----
+>>   migration/multifd.h | 26 +++++++++++-
+>>   2 files changed, 113 insertions(+), 12 deletions(-)
+>>
 (..)
+>> index f7156f66c0f6..c2ebef2d319e 100644
+>> --- a/migration/multifd.h
+>> +++ b/migration/multifd.h
+>> @@ -62,6 +62,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
+>>   #define MULTIFD_FLAG_UADK (8 << 1)
+>>   #define MULTIFD_FLAG_QATZIP (16 << 1)
+>>
+>> +/*
+>> + * If set it means that this packet contains device state
+>> + * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
+>> + */
+>> +#define MULTIFD_FLAG_DEVICE_STATE (32 << 1)
+>> +
+>>   /* This value needs to be a multiple of qemu_target_page_size() */
+>>   #define MULTIFD_PACKET_SIZE (512 * 1024)
+>>
+>> @@ -94,6 +100,16 @@ typedef struct {
+>>       uint64_t offset[];
+>>   } __attribute__((packed)) MultiFDPacket_t;
+>>
+>> +typedef struct {
+>> +    MultiFDPacketHdr_t hdr;
+>> +
+>> +    char idstr[256] QEMU_NONSTRING;
+>> +    uint32_t instance_id;
+>> +
+>> +    /* size of the next packet that contains the actual data */
+>> +    uint32_t next_packet_size;
+>> +} __attribute__((packed)) MultiFDPacketDeviceState_t;
+>> +
+>>   typedef struct {
+>>       /* number of used pages */
+>>       uint32_t num;
+>> @@ -111,6 +127,13 @@ struct MultiFDRecvData {
+>>       off_t file_offset;
+>>   };
+>>
+>> +typedef struct {
+>> +    char *idstr;
+>> +    uint32_t instance_id;
+>> +    char *buf;
+>> +    size_t buf_len;
+>> +} MultiFDDeviceState_t;
+> 
+> This is only used in patch #14. Maybe move it there?
+
+Moved it to "send side" patch.
+
+> Thanks.
+> 
 
 Thanks,
 Maciej
