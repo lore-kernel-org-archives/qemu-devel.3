@@ -4,89 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10299C282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 09:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 003ECC282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 09:18:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp1lZ-0000v3-0k; Mon, 03 Mar 2025 04:07:14 -0500
+	id 1tp1vt-0005Pi-Nx; Mon, 03 Mar 2025 04:17:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tp1kY-0000ac-4s
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 04:06:11 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tp1kW-0003zq-7B
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 04:06:09 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-22337bc9ac3so77377095ad.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 01:06:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1740992765; x=1741597565; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hcPiAQzFxXv4DupwJqAsuQhM6RsdGjMAZXwk/2lMBvc=;
- b=HdjDo2kTfiH3QdMMO9SHb7MB9M3GkBySJUqlc0KUNcTgkeuYZDyFgDNfXzgGmm0k4g
- yK1WIqJITqDI05fyr9XsTmFd0w8rgfhrOdhrXegRqpx6YIUaoNDZQNVYUy00ujS6FmyD
- W/o6r2t5tuf9PjD2IS79ATPcv6p/g1hKeor2EYj2xkhkFetJVIli/rGpPZwmC6YGHkMw
- I+TW0Vq4bdVN3BjVlOTtnV9wQqfeY3WUIEnAQKxwk8ux3wfNIk/Uyp/6S8EXCIJaeA0o
- qvKNzYFiHSQL1pUymSmzDxVrwyubSZQDimc+ksvo0C5Ad0yQCQDTGqc0T3d7fExtpZrm
- bjMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740992765; x=1741597565;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hcPiAQzFxXv4DupwJqAsuQhM6RsdGjMAZXwk/2lMBvc=;
- b=K6CKS/tbqqqf6kuZOPcwSgzelEpfCzpWoMpkgQ32i5EuSocOnA1D+B6Ky/aOZC9Azp
- aSvxw3QAsdodJEqPdk0VB0YbNX8hEHPAxDQNr6Nb5bo//KSEdjd/3yQGHiptYxLhpEbo
- 2qSCMgFpToEiwJl4EndtwxNo/fxOQdTibt6y4EGvB56OIF6bTtqJpnv9cmvyShKhJgKT
- 2WRK+p9XCPwTzLVPU2n4bixIl0dLUhxNzUsu79Yj5NjJ0HCTcCBAKVYkubxjoB/oioug
- n5aTa86w7vJEwV4kHUCY4qHMgSgwl5h0NBWqxaPM13oyP1EHB0+Y8J1NBM9+qqS8E9n9
- o1yg==
-X-Gm-Message-State: AOJu0YyoLkAyjrBEBOfXxPPoz7nwBoZDYIcesIUStmFdCVdIntYxDN3/
- JA73rLdoI/R5TqMyxZNv4L9EkYT9uoUQsEMHXQZTaBXQCzp5Lu8h1VBPIJq7LF0=
-X-Gm-Gg: ASbGnctpeDzkVZ/u0ebYnIjpo/m+UTtZ4tMKWmeoZO5SazFFzKYOm3x2X1q26aYywBp
- f9EgxjfOospTJ5RL+W3G8gn0NDdXtFZw0b6kYIvIYNJMHwBkcagi5pE/FXBwx9rbx9oG63YKcE6
- iHCHLWY3NHpncXx04ixBA2J5/xeIqwYGNK/7JO9bTFL9GM9mvy2qK2C8l0OOJks0qMoVp3WdlrV
- G7mTnZ3FnhYOFshJBvmjxhhiU2EGReREx97jwse7RlQw0vvCWvzpti5X5KL3WTelPijNIYpn4bY
- QQrEn4OUjgyQfyZcoV2gcfe+iSPLkI7Iqq52cmf94Dz+JU+EdBETp4XF7171
-X-Google-Smtp-Source: AGHT+IEF77+vspI+aMaXXUnpm2YngwGA5mFvkOMBXHHQLYVQrOfEH7vjMCygk5EwCuY6mh+J34XYnQ==
-X-Received: by 2002:a17:902:f693:b0:216:31c2:3db8 with SMTP id
- d9443c01a7336-22369213455mr208301345ad.37.1740992765480; 
- Mon, 03 Mar 2025 01:06:05 -0800 (PST)
-Received: from [192.168.68.110] ([177.170.227.219])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223501fb004sm73133895ad.64.2025.03.03.01.06.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 01:06:05 -0800 (PST)
-Message-ID: <e92eb3e5-05f2-4c10-83fd-f5e6a9dc1628@ventanamicro.com>
-Date: Mon, 3 Mar 2025 06:06:00 -0300
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tp1uN-0005Jf-Mx
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 04:16:20 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tp1uJ-0005zx-Uh
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 04:16:19 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxWXFLc8VnwAmJAA--.37833S3;
+ Mon, 03 Mar 2025 17:15:56 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxb8dFc8VnZ4IzAA--.60160S3;
+ Mon, 03 Mar 2025 17:15:53 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: Adjust the cpu reset action to a proper
+ position
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+References: <20250303063043.3237264-1-lixianglai@loongson.cn>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <cae24c94-62bf-6876-2f80-1eb91646cd8a@loongson.cn>
+Date: Mon, 3 Mar 2025 17:15:13 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/char: sifive_uart: Free fifo on unrealize
-To: Alistair Francis <alistair23@gmail.com>, palmer@dabbelt.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org,
- philmd@linaro.org, chigot@adacore.com
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-References: <20250303023120.157221-1-alistair.francis@wdc.com>
+In-Reply-To: <20250303063043.3237264-1-lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250303023120.157221-1-alistair.francis@wdc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxb8dFc8VnZ4IzAA--.60160S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7WFyxJw4UXrWDKFyftw1rXwc_yoW8XF1Upr
+ ZrZwn8Gr48GF9Fy397J34UWF1DX3s7GrZ7ZF4xKry0kws8W3Zavr1vka1qgF9ru3WrGF10
+ qF15KF1YvanFy3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UE-erU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.589,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,98 +81,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Xianglai,
+
+There is a similar modification already, just wait a moment :)
+  https://lists.nongnu.org/archive/html/qemu-devel/2025-02/msg01537.html
 
 
-On 3/2/25 11:31 PM, Alistair Francis wrote:
-> We previously allocate the fifo on reset and never free it, which means
-> we are leaking memory.
+Regards
+Bibo Mao
+
+On 2025/3/3 下午2:30, Xianglai Li wrote:
+> The commit 5a99a10da6cf ("target/loongarch: fix vcpu reset command word issue")
+> fixes the error in the cpu reset ioctl command word delivery process,
+> so that the command word can be delivered correctly, and adds the judgment
+> and processing of the error return value, which exposes another problem that
+> under loongarch, the cpu reset action is earlier than the creation of vcpu.
+> An error occurs when the cpu reset command is sent.
 > 
-> Instead let's allocate on realize and free on unrealize.
+> Now adjust the order of cpu reset and vcpu create actions to fix this problem
 > 
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 > ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   hw/char/sifive_uart.c | 44 +++++++++++++++++++++++++++----------------
->   1 file changed, 28 insertions(+), 16 deletions(-)
+> Bibo Mao <maobibo@loongson.cn>
+> Huacai Chen <chenhuacai@loongson.cn>
+> Song Gao <gaosong@loongson.cn>
+> Xianglai Li <lixianglai@loongson.cn>
 > 
-> diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-> index 4bc5767284..b45e6c098c 100644
-> --- a/hw/char/sifive_uart.c
-> +++ b/hw/char/sifive_uart.c
-> @@ -251,6 +251,23 @@ static int sifive_uart_be_change(void *opaque)
->       return 0;
+>   target/loongarch/cpu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 3788f895c1..67aa7875b6 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -640,8 +640,8 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
+>   
+>       loongarch_cpu_register_gdb_regs_for_features(cs);
+>   
+> -    cpu_reset(cs);
+>       qemu_init_vcpu(cs);
+> +    cpu_reset(cs);
+>   
+>       lacc->parent_realize(dev, errp);
 >   }
->   
-> +static void sifive_uart_reset_enter(Object *obj, ResetType type)
-> +{
-> +    SiFiveUARTState *s = SIFIVE_UART(obj);
-> +
-> +    s->txfifo = 0;
-> +    s->ie = 0;
-> +    s->ip = 0;
-> +    s->txctrl = 0;
-> +    s->rxctrl = 0;
-> +    s->div = 0;
-> +
-> +    s->rx_fifo_len = 0;
-> +
-> +    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
-> +    fifo8_reset(&s->tx_fifo);
-> +}
-> +
->   static const Property sifive_uart_properties[] = {
->       DEFINE_PROP_CHR("chardev", SiFiveUARTState, chr),
->   };
-> @@ -270,30 +287,24 @@ static void sifive_uart_realize(DeviceState *dev, Error **errp)
->   {
->       SiFiveUARTState *s = SIFIVE_UART(dev);
->   
-> +    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
-> +
->       s->fifo_trigger_handle = timer_new_ns(QEMU_CLOCK_VIRTUAL,
->                                             fifo_trigger_update, s);
->   
-> -    qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart_rx,
-> -                             sifive_uart_event, sifive_uart_be_change, s,
-> -                             NULL, true);
-> +    if (qemu_chr_fe_backend_connected(&s->chr)) {
-> +        qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart_rx,
-> +                                 sifive_uart_event, sifive_uart_be_change, s,
-> +                                 NULL, true);
-> +    }
->   
->   }
->   
-> -static void sifive_uart_reset_enter(Object *obj, ResetType type)
-> +static void sifive_uart_unrealize(DeviceState *dev)
->   {
-> -    SiFiveUARTState *s = SIFIVE_UART(obj);
-> -
-> -    s->txfifo = 0;
-> -    s->ie = 0;
-> -    s->ip = 0;
-> -    s->txctrl = 0;
-> -    s->rxctrl = 0;
-> -    s->div = 0;
-> -
-> -    s->rx_fifo_len = 0;
-> +    SiFiveUARTState *s = SIFIVE_UART(dev);
->   
-> -    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
-> -    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
-> +    fifo8_destroy(&s->tx_fifo);
->   }
->   
->   static void sifive_uart_reset_hold(Object *obj, ResetType type)
-> @@ -329,6 +340,7 @@ static void sifive_uart_class_init(ObjectClass *oc, void *data)
->       ResettableClass *rc = RESETTABLE_CLASS(oc);
->   
->       dc->realize = sifive_uart_realize;
-> +    dc->unrealize = sifive_uart_unrealize;
->       dc->vmsd = &vmstate_sifive_uart;
->       rc->phases.enter = sifive_uart_reset_enter;
->       rc->phases.hold  = sifive_uart_reset_hold;
+> 
 
 
