@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C28C282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 07:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06391C282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 07:37:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp0M5-00018U-3R; Mon, 03 Mar 2025 02:36:49 -0500
+	id 1tp0LI-0000lv-Go; Mon, 03 Mar 2025 02:36:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp0LK-0000mY-PN; Mon, 03 Mar 2025 02:36:02 -0500
+ id 1tp0LG-0000ky-4s; Mon, 03 Mar 2025 02:35:58 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp0LJ-0001xL-7k; Mon, 03 Mar 2025 02:36:02 -0500
+ id 1tp0LD-0001xL-P9; Mon, 03 Mar 2025 02:35:57 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 3 Mar
@@ -31,13 +31,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v4 2/6] hw/misc/aspeed_scu: Fix the revision ID cannot be set
- in the SOC layer for AST2700
-Date: Mon, 3 Mar 2025 15:35:42 +0800
-Message-ID: <20250303073547.1145080-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v4 0/6] Fix hw-strap for AST2700
+Date: Mon, 3 Mar 2025 15:35:40 +0800
+Message-ID: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
-References: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -66,58 +63,27 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the design of the AST2600, it has a Silicon Revision ID Register,
-specifically SCU004 and SCU014, to set the Revision ID for the AST2600.
-For the AST2600 A3, SCU004 is set to 0x05030303 and SCU014 is set to 0x05030303.
-In the "aspeed_ast2600_scu_reset" function, the hardcoded value
-"AST2600_A3_SILICON_REV" is set in SCU004, and "s->silicon_rev" is set in
-SCU014. The value of "s->silicon_rev" is set by the SOC layer via the
-"silicon-rev" property.
+v1: This patch series is from https://patchwork.kernel.org/project/qemu-devel/cover/20250213033531.3367697-1-jamin_lin@aspeedtech.com/.
+   To expedite the review process, I have separated the SCU fix patches
+   
+a. Fix the hw-strap and revision ID for SCU and SCUIO
+b. ix boot issue for AST2700
 
-However, the design of the AST2700 is different. There are two SCU controllers:
-SCU0 (CPU Die) and SCU1 (IO Die). In the AST2700, the firmware reads the
-SCU Silicon Revision ID register (SCU0_000) and the SCUIO Silicon Revision ID
-register (SCU1_000) and combines them into a 64-bit value.
-The combined value of SCU0_000[23:16] and SCU1_000[23:16] represents the silicon
-revision. For example, the AST2700-A1 revision is "0x0601010306010103", where
-SCU0_000 should be 06010103 and SCU1_000 should be 06010103.
+Jamin Lin (6):
+  hw/misc/aspeed_scu: Skipping dram_init in u-boot
+  hw/misc/aspeed_scu: Fix the revision ID cannot be set in the SOC layer
+    for AST2700
+  hw/arm/aspeed Update HW Strap Default Values for AST2700
+  hw/misc/aspeed_scu: Fix the hw-strap1 cannot be set in the SOC layer
+    for AST2700
+  hw/arm/aspeed_ast27x0.c Separate HW Strap Registers for SCU and SCUIO
+  hw/arm/aspeed_ast27x0.c Fix boot issue for AST2700
 
-Reference:
-https://github.com/AspeedTech-BMC/u-boot/blob/aspeed-master-v2023.10/arch/arm/mach-aspeed/ast2700/cpu-info.c
+ hw/arm/aspeed.c         |  6 ++++--
+ hw/arm/aspeed_ast27x0.c | 13 ++++++++++---
+ hw/misc/aspeed_scu.c    |  8 ++++----
+ 3 files changed, 18 insertions(+), 9 deletions(-)
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- hw/misc/aspeed_scu.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index 50f74fbabd..545d004749 100644
---- a/hw/misc/aspeed_scu.c
-+++ b/hw/misc/aspeed_scu.c
-@@ -910,7 +910,6 @@ static const MemoryRegionOps aspeed_ast2700_scu_ops = {
- };
- 
- static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
--    [AST2700_SILICON_REV]           = AST2700_A0_SILICON_REV,
-     [AST2700_HW_STRAP1]             = 0x00000800,
-     [AST2700_HW_STRAP1_CLR]         = 0xFFF0FFF0,
-     [AST2700_HW_STRAP1_LOCK]        = 0x00000FFF,
-@@ -940,6 +939,7 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
-     AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(dev);
- 
-     memcpy(s->regs, asc->resets, asc->nr_regs * 4);
-+    s->regs[AST2700_SILICON_REV] = s->silicon_rev;
- }
- 
- static void aspeed_2700_scu_class_init(ObjectClass *klass, void *data)
-@@ -1032,7 +1032,6 @@ static const MemoryRegionOps aspeed_ast2700_scuio_ops = {
- };
- 
- static const uint32_t ast2700_a0_resets_io[ASPEED_AST2700_SCU_NR_REGS] = {
--    [AST2700_SILICON_REV]               = 0x06000003,
-     [AST2700_HW_STRAP1]                 = 0x00000504,
-     [AST2700_HW_STRAP1_CLR]             = 0xFFF0FFF0,
-     [AST2700_HW_STRAP1_LOCK]            = 0x00000FFF,
 -- 
 2.34.1
 
