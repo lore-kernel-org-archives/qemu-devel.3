@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0EB0C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 13:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2775DC282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 13:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp5jh-0007z6-Jo; Mon, 03 Mar 2025 08:21:33 -0500
+	id 1tp5oE-0001dr-JC; Mon, 03 Mar 2025 08:26:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tp5jb-0007sa-K5
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 08:21:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=Robu=VW=kaod.org=clg@ozlabs.org>)
+ id 1tp5nm-0001aU-4A; Mon, 03 Mar 2025 08:25:54 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tp5jY-0006u3-LA
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 08:21:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741008083;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vstHstZZZ/vycyPcE/Pirc2m5zQ29pAeKebEDZUKeik=;
- b=G7f7xGeRPqxdkZIy3UyMGyfWJNGetJfAWntStOZzhJ1tLFjJuLsnSORB8KQkgg6FviJIEp
- SvtX1D12MtSH3Hnwe5Kwaq9pFWv7OBRymHHCzKtnIdbuF/LedZSLzqVaYCctefFAMufsjv
- 3tJ2TGTRztov+jzmfohEqBYP9CtQPfk=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-171-wMMwyI80PzScoyVfTxWmMQ-1; Mon, 03 Mar 2025 08:21:21 -0500
-X-MC-Unique: wMMwyI80PzScoyVfTxWmMQ-1
-X-Mimecast-MFC-AGG-ID: wMMwyI80PzScoyVfTxWmMQ_1741008081
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-abb8e0944bfso452860466b.0
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 05:21:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741008080; x=1741612880;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vstHstZZZ/vycyPcE/Pirc2m5zQ29pAeKebEDZUKeik=;
- b=REcCovnrNlVQSMtG2uqhgDsARmyx3mAe8e3Y8Ueqej7R8KlPlGOw7wPJ3cid7jod+j
- Mz+nl7eVf6rfo1ZLdz2HMiXYvikJCkhbXB5xENjK98Jw5I3v4mYmQkOus64R//ovwwWQ
- te9Q1/k8+An56eMECZ42aw40haLTx7bEKEq5CTaPRnNkQXC60mcEGa26bnhY8C8RCXOc
- X+NM6fChj19fMfSGuo/DrxEf5Q9FktKP5P1mtmoibQ1odtZNHMRd+SkqI0YY4sHeJVNk
- CFS4J0D2G5I8167dexxeVdvwTqPaoUpdb/u2+LcdGjWZxgB5yp9Y1eyLfZxvax5doWfH
- 8NQg==
-X-Gm-Message-State: AOJu0YwQyYTgXTuOpyKSuKK58hGekOBsNiYo7e+Z8T/QFsSkOW2jN7kr
- /DcQUMAVrDrXUtwZjtVE8dlmJti1Kph4+dAR0vAp6Wc5n6F09hLVfqFyglqCoI6sB0WTIEZlWFc
- V5MMyopN2TlB4mzBl1uZYqHv0PyfhPQDtAkQICjCn9J+2S82bClAuUtS4qRfm8MUa82jPEckp1E
- 1XbAj9mw+xe4+ZKuSliBYqKP8h4peQ2WaIXNNs
-X-Gm-Gg: ASbGncsqu5g6Lbdyqo0ElffmQXEnep5NlcgXTd1RZ0Bol5uppo+EJ1dkUOoCfbGrieu
- qwWqmB5VQ/ETi7nyAqJ5xzl7IFK95UlE8ouazSKpbFuk8z361NxOuM1Vg/jYSszVDZTPP/BD9zs
- HBh9FOQ5yJr5g8Uj+HC6NZfpAjOGW83TZcIZYbUsyi0o8yTQi6KS0XhRB8aaX5ZuuzJmbcXNNNr
- YF571BiyaKwEGtMDSfSNm7j1K/rF3Jb4sKzp21abC7jpr40orwUXVSyQUz4Qx2lsCAs3MdoImlG
- 8I/k40BqdZyOAdMVZeO6H2eS09qe9BXyRr+Txwb0w/m1FKu2jYhJr20IyWCCr0c=
-X-Received: by 2002:a17:907:c29:b0:ac1:ea5c:8711 with SMTP id
- a640c23a62f3a-ac1ea5c94d3mr41629466b.1.1741008080189; 
- Mon, 03 Mar 2025 05:21:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE+Vkb4h3rKw2S03bMlqtfpt7AbuvTq2vr4NxS72y33li64vdQsAKH9vrcPHbbQ9u/mxDHjfQ==
-X-Received: by 2002:a17:907:c29:b0:ac1:ea5c:8711 with SMTP id
- a640c23a62f3a-ac1ea5c94d3mr41626666b.1.1741008079667; 
- Mon, 03 Mar 2025 05:21:19 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf0c6ed7d7sm794252066b.87.2025.03.03.05.21.19
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Mar 2025 05:21:19 -0800 (PST)
-Date: Mon, 3 Mar 2025 14:21:18 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: Re: [PATCH] target/loongarch: Adjust the cpu reset action to a
- proper position
-Message-ID: <20250303142118.7f558c8e@imammedo.users.ipa.redhat.com>
-In-Reply-To: <cae24c94-62bf-6876-2f80-1eb91646cd8a@loongson.cn>
-References: <20250303063043.3237264-1-lixianglai@loongson.cn>
- <cae24c94-62bf-6876-2f80-1eb91646cd8a@loongson.cn>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <SRS0=Robu=VW=kaod.org=clg@ozlabs.org>)
+ id 1tp5nj-0007eW-5i; Mon, 03 Mar 2025 08:25:45 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z601X6nfVz4wvb;
+ Tue,  4 Mar 2025 00:25:36 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z601T4pRGz4wd0;
+ Tue,  4 Mar 2025 00:25:33 +1100 (AEDT)
+Message-ID: <e5d26865-2ee7-40a5-b79b-c63067d894ee@kaod.org>
+Date: Mon, 3 Mar 2025 14:25:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/6] hw/misc/aspeed_scu: Fix the revision ID cannot be
+ set in the SOC layer for AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
+ <20250303073547.1145080-3-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250303073547.1145080-3-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=Robu=VW=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,70 +112,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 3 Mar 2025 17:15:13 +0800
-bibo mao <maobibo@loongson.cn> wrote:
+On 3/3/25 08:35, Jamin Lin wrote:
+> According to the design of the AST2600, it has a Silicon Revision ID Register,
+> specifically SCU004 and SCU014, to set the Revision ID for the AST2600.
+> For the AST2600 A3, SCU004 is set to 0x05030303 and SCU014 is set to 0x05030303.
+> In the "aspeed_ast2600_scu_reset" function, the hardcoded value
+> "AST2600_A3_SILICON_REV" is set in SCU004, and "s->silicon_rev" is set in
+> SCU014. The value of "s->silicon_rev" is set by the SOC layer via the
+> "silicon-rev" property.
+> 
+> However, the design of the AST2700 is different. There are two SCU controllers:
+> SCU0 (CPU Die) and SCU1 (IO Die). In the AST2700, the firmware reads the
+> SCU Silicon Revision ID register (SCU0_000) and the SCUIO Silicon Revision ID
+> register (SCU1_000) and combines them into a 64-bit value.
+> The combined value of SCU0_000[23:16] and SCU1_000[23:16] represents the silicon
 
-> Xianglai,
->=20
-> There is a similar modification already, just wait a moment :)
->   https://lists.nongnu.org/archive/html/qemu-devel/2025-02/msg01537.html
+Why are you mentioning bitfield [23:16] of both registers ? I thought
+the silicon revision ID was 64-bit value.
 
-Please ignore my patch (commit message gives good enough justification
-for refactoring but that's it).
-
-this patch commit message however points to the concrete issue
-wrong reset ordering causes, hence I think it's better to merge
-this variant.
-
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-=20
->=20
->=20
-> Regards
-> Bibo Mao
->=20
-> On 2025/3/3 =E4=B8=8B=E5=8D=882:30, Xianglai Li wrote:
-> > The commit 5a99a10da6cf ("target/loongarch: fix vcpu reset command word=
- issue")
-> > fixes the error in the cpu reset ioctl command word delivery process,
-> > so that the command word can be delivered correctly, and adds the judgm=
-ent
-> > and processing of the error return value, which exposes another problem=
- that
-> > under loongarch, the cpu reset action is earlier than the creation of v=
-cpu.
-> > An error occurs when the cpu reset command is sent.
-> >=20
-> > Now adjust the order of cpu reset and vcpu create actions to fix this p=
-roblem
-> >=20
-> > Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> > ---
-> > Bibo Mao <maobibo@loongson.cn>
-> > Huacai Chen <chenhuacai@loongson.cn>
-> > Song Gao <gaosong@loongson.cn>
-> > Xianglai Li <lixianglai@loongson.cn>
-> >=20
-> >   target/loongarch/cpu.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> > index 3788f895c1..67aa7875b6 100644
-> > --- a/target/loongarch/cpu.c
-> > +++ b/target/loongarch/cpu.c
-> > @@ -640,8 +640,8 @@ static void loongarch_cpu_realizefn(DeviceState *de=
-v, Error **errp)
-> >  =20
-> >       loongarch_cpu_register_gdb_regs_for_features(cs);
-> >  =20
-> > -    cpu_reset(cs);
-> >       qemu_init_vcpu(cs);
-> > +    cpu_reset(cs);
-> >  =20
-> >       lacc->parent_realize(dev, errp);
-> >   }
-> >  =20
->=20
->=20
+> revision. For example, the AST2700-A1 revision is "0x0601010306010103", where
+> SCU0_000 should be 06010103 and SCU1_000 should be 06010103.
+> 
+> Reference:
+> https://github.com/AspeedTech-BMC/u-boot/blob/aspeed-master-v2023.10/arch/arm/mach-aspeed/ast2700/cpu-info.c
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> --->   hw/misc/aspeed_scu.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+> index 50f74fbabd..545d004749 100644
+> --- a/hw/misc/aspeed_scu.c
+> +++ b/hw/misc/aspeed_scu.c
+> @@ -910,7 +910,6 @@ static const MemoryRegionOps aspeed_ast2700_scu_ops = {
+>   };
+>   
+>   static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
+> -    [AST2700_SILICON_REV]           = AST2700_A0_SILICON_REV,
+>       [AST2700_HW_STRAP1]             = 0x00000800,
+>       [AST2700_HW_STRAP1_CLR]         = 0xFFF0FFF0,
+>       [AST2700_HW_STRAP1_LOCK]        = 0x00000FFF,
+> @@ -940,6 +939,7 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
+>       AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(dev);
+>   
+>       memcpy(s->regs, asc->resets, asc->nr_regs * 4);
+> +    s->regs[AST2700_SILICON_REV] = s->silicon_rev;
+>   }
+>   
+>   static void aspeed_2700_scu_class_init(ObjectClass *klass, void *data)
+> @@ -1032,7 +1032,6 @@ static const MemoryRegionOps aspeed_ast2700_scuio_ops = {
+>   };
+>   
+>   static const uint32_t ast2700_a0_resets_io[ASPEED_AST2700_SCU_NR_REGS] = {
+> -    [AST2700_SILICON_REV]               = 0x06000003,
+>       [AST2700_HW_STRAP1]                 = 0x00000504,
+>       [AST2700_HW_STRAP1_CLR]             = 0xFFF0FFF0,
+>       [AST2700_HW_STRAP1_LOCK]            = 0x00000FFF,
 
 
