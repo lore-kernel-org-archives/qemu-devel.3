@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61280C282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 09:27:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14ACC282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 09:35:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp242-0006nh-TS; Mon, 03 Mar 2025 04:26:18 -0500
+	id 1tp2Bt-0000VR-C3; Mon, 03 Mar 2025 04:34:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tp23q-0006mc-HY
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 04:26:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tp2B9-0000SO-6p
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 04:33:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tp23o-0007Xi-KN
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 04:26:06 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tp2B7-0008As-AS
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 04:33:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740993962;
+ s=mimecast20190719; t=1740994405;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=165J/AJKUbd//A+p3/hEg+MGwR/Oh1N1lx4XQoUj4HM=;
- b=PyiuV9v44PPu32qDwBcimr8cctdJ+2PtiwIVjLoG26wkGZwHxbT07xbB647S6MtyDcCw3P
- fz/sYDhlOfNPVARbkZqHT0GyAgN4BabuQo3JCV3oPjy/OmguVdX8ciKSEDcMjVCm8jgrrC
- O/tjnZo8smMyDBMkrgp0sYn7lBGemPs=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=f0HVYT6CIPpKz4cCcQ80eg/9rgHlY2VoG2hnAxNBX+I=;
+ b=bsPBv/Qz31bsmo9VKWJao4hHQMaSh3V08aYov0W1Zp5s21mo9uY5VrE/AsAmLOfrmbKJZ1
+ 3xyTB7OMtKizNeJsC/H6vJpWmCkp17C/aharoaXGnJYmh0N0MKZVVrwNvEVFnYqlrA3dot
+ Hg/9ZVcS5fiEWCk7jcjMtrGfr0dBBmI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-107-ZBmIrDFdPPi0tP3rismujw-1; Mon, 03 Mar 2025 04:26:00 -0500
-X-MC-Unique: ZBmIrDFdPPi0tP3rismujw-1
-X-Mimecast-MFC-AGG-ID: ZBmIrDFdPPi0tP3rismujw_1740993960
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-390e003c1easo1875797f8f.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 01:26:00 -0800 (PST)
+ us-mta-438-0zJ8PQ9NOC-wLlEQzRFpwQ-1; Mon, 03 Mar 2025 04:33:22 -0500
+X-MC-Unique: 0zJ8PQ9NOC-wLlEQzRFpwQ-1
+X-Mimecast-MFC-AGG-ID: 0zJ8PQ9NOC-wLlEQzRFpwQ_1740994401
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4399d2a1331so20320235e9.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 01:33:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740993959; x=1741598759;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=165J/AJKUbd//A+p3/hEg+MGwR/Oh1N1lx4XQoUj4HM=;
- b=rf1W/eDGCYQGMGTD1V8AXIqorjJhWVwRm2m/L3m6EeWEpxR5GJKmd2KFrlrn/86xXp
- L6pKL0CHEDlF5ktMyUxMUuh2O3Z5HWVUUStt97f9FKri1j/GpqaVgoBn364QP48PSJz6
- JaHxyC9tg62/ux4aorM2GXDUHZs0Buj8DETpKDvMPc6bJqiO4eB9xMHY1ihlUDj1BOOJ
- dPPWIc4KgWO4Vzff7j2Jw8scVuX3ktPapj29U1bbIMVtJ0Oi9xXuCCOcfxl63gQswsZo
- 3VaS0Bx6rEC6fJIHYmL+gckVRrrAJ297+V/+xaqXQgtdP0NbFuUnon5Eix7yfCiM3d4D
- oZ1g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNwKqSpR5U7/cQ+PHUoUjwHdmd5h/TLKE5/gyna7a9gfcYFcIpj7BJHaVpopJVMP709bL4QC4p5Lqx@nongnu.org
-X-Gm-Message-State: AOJu0Ywhvhtv2hmDLuYeBwDGC8UbBh+RU/dyUONJJDReYQG8r+cWF6sf
- G3zpTErv0KD76qSYgew8etGTFOH6J+rYlW8c92VdBDEdvPWERJKBL9y9mgxHuz86voiCIcMyfn3
- vkykHLjsHIXwVcqag+ZTxI4WFclLhgoMgtzyO8qhzdNIay4/2eU0jf1E/fwokUw/5rmD9oTEruL
- MURraw2RtnfsGgLWxHccHOw0ARO+w=
-X-Gm-Gg: ASbGncuVe/KqdyRVR09DGMo2pONMtyhX6OBja7ajA9u32jjNznGIxek7wh0NKXqU9qm
- 8+EpDWTAnZaQn6NNVTzfpgT17gdqms1aT4WBZe6dgeJDEKQxa38GQKpvQgvGC9VT47pjsrvW6
-X-Received: by 2002:a5d:64cf:0:b0:390:ec6e:43ea with SMTP id
- ffacd0b85a97d-390ec6e45e3mr10090415f8f.15.1740993959557; 
- Mon, 03 Mar 2025 01:25:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFLx+OS36++1k8zJ2mlSzoiZi73ZyBslrQAuLa4k+QynfivrJGhxymvfTZHFnK3waw/I8HSz7owyCnwzkcXc8M=
-X-Received: by 2002:a5d:64cf:0:b0:390:ec6e:43ea with SMTP id
- ffacd0b85a97d-390ec6e45e3mr10090397f8f.15.1740993959268; Mon, 03 Mar 2025
- 01:25:59 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740994400; x=1741599200;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=f0HVYT6CIPpKz4cCcQ80eg/9rgHlY2VoG2hnAxNBX+I=;
+ b=W/NhGkZe16ylyynIiOAsKWwAYsEme8t+2n3uZyQ7QiP2uT0cW/teaVGMyN0zxB1dxu
+ EaMHRSnGqoGxb9x/+8zlI5tmAsVJJ9M4o1//DwGn3+HS8FcvYnMq9WblZPkeaonkd3dq
+ zp5Rhw4Rtf7x0detNkIbcHYk9iMEuVnN++2lGKlHbW+HVfQ0mHjlAGSDi8prCG12B+e3
+ vIfTJjKQ3yXqcWmDZOMYcNWOkUkZO0cUnlKWnrV3KJj4x1JP3Twy90a59CjX+J7o8NoZ
+ pMj8UyvDubiDVFQ4Awv7MCt2kOYmt01OX1b3mnue7V0PUfkekS6AtflvqWpbdGmQXolv
+ kuog==
+X-Gm-Message-State: AOJu0YyTrrPVaCT5VHg2nZpUP6LVonhxS5yYxt+kMPJ/A8qoGC/9Puo+
+ OUVIdpHl94akpceI0Pz1TFLqw2hVXrbZtj66Vzq5VU52SAI7aq0jGZhAkNQfso41aSn74aZZ+XJ
+ XAbMUDBSC2zBjh5glLpOzR787aQWMBnA1f4cJs56pkTxxDqYtSkc2q+JhWegeWKv2iAD2QaHLaL
+ gHBgEXbitiaOHcnoRI7f8G3XyiptKIQjX+x7U=
+X-Gm-Gg: ASbGncto0gjuYuA2ZRhVUsXtqLtxokG01O0AzO4Tj1/2CFBFgX9PQudAE6cTBH+ZS2v
+ 9PjhHd8qP5v6aB2jFArlMxp8b+OYfT/xRY6k5iUv/z+JBdk0IvcefxLPqhgdyLPruErs+wqDJVL
+ I=
+X-Received: by 2002:a05:600c:6010:b0:43b:c824:97fa with SMTP id
+ 5b1f17b1804b1-43bc8249a06mr5023915e9.14.1740994400125; 
+ Mon, 03 Mar 2025 01:33:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG8hBuhFQnELDd7xXl5iy0RXpQxR49j+6MvGxRm4SDswofix5aq3tlgiO16k8JUBs/6K9xWi/qH1s8bPy+YXts=
+X-Received: by 2002:a05:600c:6010:b0:43b:c824:97fa with SMTP id
+ 5b1f17b1804b1-43bc8249a06mr5023635e9.14.1740994399836; Mon, 03 Mar 2025
+ 01:33:19 -0800 (PST)
 MIME-Version: 1.0
-References: <CAJSP0QUk77GViTBgBpfYH-AbAmQ5aUwi0K6UTH9iv=1mVb0Wbw@mail.gmail.com>
- <803732f6-6ab1-4298-a956-660496664f67@redhat.com>
- <CAJSP0QUN_tCSZ=WOk+C9kR3TMqkTaZMNF7qaAsFPiauzN0r_QA@mail.gmail.com>
-In-Reply-To: <CAJSP0QUN_tCSZ=WOk+C9kR3TMqkTaZMNF7qaAsFPiauzN0r_QA@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 3 Mar 2025 10:25:47 +0100
-X-Gm-Features: AQ5f1JqSAO2sknHP0Kxzt5KtAb_w2GurXh3v3jp3cYXnh7orjn5gJMVScg_2xng
-Message-ID: <CABgObfYJTPu=sTK5UG2d28tTYrACRaiqU6Wzh_0NhwdnQmg74A@mail.gmail.com>
-Subject: Re: Kubernetes gitlab-runner jobs cannot be scheduled
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Camilla Conte <cconte@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>
+References: <20250228121749.553184-1-ppandit@redhat.com>
+ <20250228121749.553184-5-ppandit@redhat.com>
+ <87cyf22jf1.fsf@suse.de>
+In-Reply-To: <87cyf22jf1.fsf@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Mon, 3 Mar 2025 15:03:02 +0530
+X-Gm-Features: AQ5f1Jr-NzQINyyxz7CN3ipqeZMEHxwKD8tIzF7u_JVyvKSrLM9D1IAhnrGShT8
+Message-ID: <CAE8KmOwRufeksJWZdde6NLRa0EqKkWFGku2sui9cQ77G_xLs9w@mail.gmail.com>
+Subject: Re: [PATCH v7 4/5] tests/qtest/migration: add postcopy tests with
+ multifd
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
+ Prasad Pandit <pjp@fedoraproject.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,25 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 3, 2025 at 8:35=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.com>=
- wrote:
-> GitLab says:
-> "There has been a timeout failure or the job got stuck. Check your
-> timeout limits or try again"
+On Fri, 28 Feb 2025 at 20:41, Fabiano Rosas <farosas@suse.de> wrote:
+> > +static void test_multifd_postcopy_tcp_tls_psk_match(void)
+> > +{
+> > +    MigrateCommon args = {
+> > +        .start = {
+> > +            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
 >
-> Duration: 77 minutes 13 seconds
-> Timeout: 1h (from project)
->
-> It ran 17 minutes longer than the job timeout.
+> Missing POSTCOPY_RAM here, no?
 
-The job only seems to have run for roughly 15-20 minutes.
+Yes, will fix it.
 
-I am not sure what's going on, but I have opened a ticket with DO to
-request both larger droplets (16 vCPU / 32 GB) and a higher limit (25
-droplets). This matches roughly what was available on Azure.
-
-Let me know if you prefer to go back to Azure for the time being.
-
-Paolo
+Thank you.
+---
+  - Prasad
 
 
