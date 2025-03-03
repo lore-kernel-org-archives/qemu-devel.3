@@ -4,95 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5758C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 14:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94025C282D1
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 15:00:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp7Ap-0003Zt-4m; Mon, 03 Mar 2025 09:53:39 -0500
+	id 1tp7GS-00061e-VX; Mon, 03 Mar 2025 09:59:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp7Al-0003YD-3I
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:53:35 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp7Ai-0006pV-HG
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:53:34 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-390e88caa4dso2033837f8f.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 06:53:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741013610; x=1741618410; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oYtkfweF/0z3z7jSYdFaM98btDld44kvHKxV5PacVoQ=;
- b=REFW36/jvI6KxIwPQO469zphRboMdiDy5PVW+Eae58GSX1av7/tJ2QjpBTqLhKO0NO
- Z+2pCueHnTVfJcLT4d7HI/g8f5b3riI8BKVRdHV4k5jBCmoDXL5C8LE4bKLVhtOAqfMk
- Z55GMtYT1Pid8wgO36YDD65pw+pxRO/3SWuzvdP2Bz2+2Xp1IHLQ4awRH8hjbXanWU0C
- WDr7LeAtyMezcntJVkeHifeDO4WDH9cnJsYyLTRE7WpdqdyI34bhzvshUqczZNSeMiz5
- +tTxxcf3jbN6mlLFTXxMeNutuh3COTRHbAxSulmDhkxTo3t5S0W0n2aeFASzp9Hm4BEc
- X3AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741013610; x=1741618410;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oYtkfweF/0z3z7jSYdFaM98btDld44kvHKxV5PacVoQ=;
- b=wl3kE6oh2LXY/TtWcBmp9/HE+El/e9xCVDmHPCz7FbnYgj7VpfkgxqlFyZ/lN104OF
- VvcevopC4oN2EhZROSXS+8Y0LyTKmy+t0rlkDIIoqnDHii+EUH/UioT4zxSbuHIIZEIP
- 5bnzvMF2T6n9lk/9R3FiF9zkClzHNFrGpzn5HzfUbNP57OWjC3pD4IL+Y798tySE12l2
- MaiLV7fWiiTY5BxtrNt+HogDGj6/5UAKoODfoxCcNNYHSkTuGGbrHR8bNE8wCT2xTIZV
- LClKkwhYLhUWVAJzg+EIWf+/v3iE9ocwUQ0JkS3nJAudjULYLnO6S9i2EiuxUqgC8Qqa
- Oo8A==
-X-Gm-Message-State: AOJu0YyCwuOpamaNI8MeX9f6gJcJMyojZNiRsMl+miZ5chwcgjWGi/Ir
- zdhk6akVrijA70IGnkS8GL8R7yCUkvDy9FaF/NBlvx749lj3B/pWcdko5m34MAQ=
-X-Gm-Gg: ASbGncszf3qo+0XAx6ak8ADhWsTDfTXQg829XnCWczsxrYq9J3KmQrMYyZ0jZNvUy+6
- i4jy6IrXsGo3DGHA+09LSmF4FxDX0DKsNKRVeGOCZheoHprjTGFkFZl+CdikWlv+coLmk6y/Y+I
- OQoZ6qTXQUeMDnEqsbeyr31X6vrZYBkDYsW4QEuQ53IV03xCq1lUmVOk9vC5wNe49ZKTmMRnO1e
- O2/dLfVtJ5ZmNk7GoESgOf445KdDbH02dZ0111PZz2xQ+mZiiS66lRPbz8Ulj6eFKZEqpmEuVPM
- 9Z/J76pwgyiRIAIbIpdvQaTneXO32obVVOKNwfXN4faS1chpo4lFf4G3TghcQQhvrl/kRRhwkfs
- vJHQB6089O2a7
-X-Google-Smtp-Source: AGHT+IGKHZuANKzhEsUwd9x4Zfg08YDVpvqc/6+yErOnI8oBaBzxIkpBxnB3wiCypGU5d9bYWL8IJA==
-X-Received: by 2002:a05:6000:1f86:b0:390:f6aa:4e80 with SMTP id
- ffacd0b85a97d-390f6aa5102mr9155965f8f.53.1741013610645; 
- Mon, 03 Mar 2025 06:53:30 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e484452asm14852963f8f.61.2025.03.03.06.53.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 06:53:30 -0800 (PST)
-Message-ID: <a19520bf-9e0a-4a63-bc31-06b63e23c3d3@linaro.org>
-Date: Mon, 3 Mar 2025 15:53:29 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tp7GQ-000617-28; Mon, 03 Mar 2025 09:59:26 -0500
+Received: from mgamail.intel.com ([198.175.65.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tp7GM-0007qd-Lo; Mon, 03 Mar 2025 09:59:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1741013962; x=1772549962;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=HRPVbfho+LLuUuzc8CR6Jb5tPbOh4MIqnxIb1XWx0mg=;
+ b=CsgzjrjhBt9G6n39xB46jCtAd7bmPzJmgdn0o7Gh84NvsukxzNpc6S1j
+ zGPD1oF/k4CirVX6TqliPukd84GyAemSuPG10bRFVz5GT34AIjH3c0qKB
+ zWubkBeNV8e4eO4Cpp2TKGxPT6ayfqBBdlWp6xehvxORdAPscxa7bjQT8
+ X6LRtNxz+PjMua0gjz7kMjSbKehII5wudoXqcGe4uU4Y9e1A2+fzWECK4
+ ataS77LbMEaUdVI3zU6I8oobmaHfbUDUz6eL8ajH21pnJnswN3i37Hig2
+ s3LjaGgj7rwJMNyi6Y5cF4KyBofdWxpIKVLHsNkPNVEs0PtH9pydhZB8c Q==;
+X-CSE-ConnectionGUID: AEspLUrbSXuQmMqQw0K90g==
+X-CSE-MsgGUID: 2yvS0l0LTPasGt9V1vyMrQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11362"; a="53284418"
+X-IronPort-AV: E=Sophos;i="6.13,330,1732608000"; d="scan'208";a="53284418"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2025 06:59:19 -0800
+X-CSE-ConnectionGUID: nKMNwBAzTz2aalV3eMeTrw==
+X-CSE-MsgGUID: y3QenLH4QEicO9dc+/Eg0g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,330,1732608000"; d="scan'208";a="148850079"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa002.jf.intel.com with ESMTP; 03 Mar 2025 06:59:19 -0800
+Date: Mon, 3 Mar 2025 23:19:25 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 09/12] rust: sysbus: wrap SysBusDevice with Opaque<>
+Message-ID: <Z8XIfZ6L6I4jKaBJ@intel.com>
+References: <20250227142219.812270-1-pbonzini@redhat.com>
+ <20250227142219.812270-10-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio: Make vfio-pci available on 64-bit host
- platforms only
-To: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Eric Auger <eric.auger@redhat.com>
-References: <20250226084721.232703-1-clg@redhat.com>
- <20250226084721.232703-2-clg@redhat.com>
- <a39e97c2-c6fd-34e4-f91b-b3491185b789@eik.bme.hu>
- <c60b7780-5b3f-43a0-a7f1-30820d4e6fb8@redhat.com>
- <7982159d-710f-4948-830f-ab61b100a5d6@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <7982159d-710f-4948-830f-ab61b100a5d6@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250227142219.812270-10-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,77 +81,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 15:43, Paolo Bonzini wrote:
-> On 2/26/25 17:26, Cédric Le Goater wrote:
->> On 2/26/25 15:12, BALATON Zoltan wrote:
->>> On Wed, 26 Feb 2025, Cédric Le Goater wrote:
->>>> VFIO PCI never worked on PPC32 nor ARM, S390x is 64-bit, it might have
->>>> worked on i386 long ago but we have no plans to further support VFIO
->>>> on any 32-bit host platforms. Restrict to 64-bit host platforms.
->>>>
->>>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
->>>> Cc: Tony Krowiak <akrowiak@linux.ibm.com>
->>>> Cc: Eric Farman <farman@linux.ibm.com>
->>>> Cc: Eric Auger <eric.auger@redhat.com>
->>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>>> ---
->>>> hw/vfio/Kconfig | 2 +-
->>>> 1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/hw/vfio/Kconfig b/hw/vfio/Kconfig
->>>> index 
->>>> 7cdba0560aa821c88d3420b36f86020575834202..6ed825429a9151fcdff33e95d1a310210689b258 100644
->>>> --- a/hw/vfio/Kconfig
->>>> +++ b/hw/vfio/Kconfig
->>>> @@ -7,7 +7,7 @@ config VFIO_PCI
->>>>     default y
->>>>     select VFIO
->>>>     select EDID
->>>> -    depends on LINUX && PCI
->>>> +    depends on LINUX && PCI && (AARCH64 || PPC64 || X86_64 || S390X)
->>>
->>> Are these defined for the host or target? 
->>
->> host.
+On Thu, Feb 27, 2025 at 03:22:16PM +0100, Paolo Bonzini wrote:
+> Date: Thu, 27 Feb 2025 15:22:16 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 09/12] rust: sysbus: wrap SysBusDevice with Opaque<>
+> X-Mailer: git-send-email 2.48.1
 > 
-> No, Zoltan is correct.  They are defined for the target,
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/qemu-api/src/bindings.rs |  3 ---
+>  rust/qemu-api/src/sysbus.rs   | 29 +++++++++++++++++++++--------
+>  2 files changed, 21 insertions(+), 11 deletions(-)
 
-Oops indeed, not my day.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-> so if you build 
-> for 32-bit ARM you'd still get things with "depends on AARCH64" in qemu- 
-> system-aarch64.  You can check that you have
-> 
-> config SBSA_REF
->      bool
->      default y
->      depends on TCG && AARCH64
-> 
-> but on x86-64:
-> 
-> $ qemu-system-aarch64 -M help|grep sbsa
-> sbsa-ref             QEMU 'SBSA Reference' ARM Virtual Machine
-> 
-> 
->> As per commit 6d701c9bac1d3571e9ad511e01b27df7237f0b13 "meson: Deprecate
->> 32-bit host support", support will be fully removed in 2 releases and
->> it doesn't need to be addressed by VFIO.
-> 
-> Note that a deprecation *allows* full removal in 2 releases.  We have a 
-> lot of things that are deprecated but have not been removed.  For example
-> 
->     Short-form boolean options (since 6.0)
->     ''''''''''''''''''''''''''''''''''''''
-> 
->     Boolean options such as ``share=on``/``share=off`` could be written
->     in short form as ``share`` and ``noshare``.  This is now deprecated
->     and will cause a warning.
-> 
-> is deprecated to *allow* switching command-line options from the "qemu- 
-> options" parser to the "keyval" parser that doesn't support short-form 
-> boolean options, but it's unlikely that qemu-options will drop support 
-> for short-form boolean options.
-
-In another thread Daniel said deprecated options shall be removed, the
-only justification for delay being man power, IIRC.
 
