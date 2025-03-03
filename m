@@ -4,132 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E78FC282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 15:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 634A0C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 16:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp8CO-0004RF-Kf; Mon, 03 Mar 2025 10:59:20 -0500
+	id 1tp8HC-0005j1-Uz; Mon, 03 Mar 2025 11:04:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tp8CL-0004Py-Pd
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 10:59:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tp8HA-0005iP-Jk
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 11:04:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tp8CH-0001Kn-Sq
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 10:59:17 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tp8H8-0002Bl-QF
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 11:04:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741017552;
+ s=mimecast20190719; t=1741017852;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0giVfc+ZNnv7QJz1p/HeTF37RkNRtkcZUpFCbkrpntc=;
- b=bDYMlhTc3xbeMDN8P61knXOI0HR4AXCgU/Q4gRaPh7t6bqJV/8JcoDdF9PBIql9BSrcuOh
- PEikKDmHP+vR35AZGVNcjlSFXLQRPgnWhL+tqmKNzqDJj+s6DURSRC9hWQjuMEV5b/B6pL
- xerEmTgPlYevljOp5emgwUJ2mzkBHOU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=T4ax79lrVmUFx52jI+hAC7doaUD0zpnihUVPye6lCyM=;
+ b=hNrlOT6svWQ8bbxasNxr4cy1XIgQSkTMkw+pDjQSkdSuFNXndmhr60R3/fyhHG2TnoV2oV
+ xb8peta6xjn+2JCUxxvHSnw9uqovE0oGUF/myRMhmrNOM7IMiZWpSK6Y1bJ1kb2HlKJf4t
+ 3az55BwHG1wE/zMlGmx+4hXUCs6T/lE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-_ZgLtEVRML21lYFp5oaI6Q-1; Mon, 03 Mar 2025 10:59:01 -0500
-X-MC-Unique: _ZgLtEVRML21lYFp5oaI6Q-1
-X-Mimecast-MFC-AGG-ID: _ZgLtEVRML21lYFp5oaI6Q_1741017540
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43bca561111so725085e9.3
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 07:59:01 -0800 (PST)
+ us-mta-166-u3AUXwzUPp-umS1JB2tZzg-1; Mon, 03 Mar 2025 11:04:09 -0500
+X-MC-Unique: u3AUXwzUPp-umS1JB2tZzg-1
+X-Mimecast-MFC-AGG-ID: u3AUXwzUPp-umS1JB2tZzg_1741017848
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43ba50406fbso33523525e9.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 08:04:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741017540; x=1741622340;
+ d=1e100.net; s=20230601; t=1741017848; x=1741622648;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0giVfc+ZNnv7QJz1p/HeTF37RkNRtkcZUpFCbkrpntc=;
- b=gT664MzulxPZSBM1g88EZr2iLO5VETUMfBckyk3KQxdpULWuwMF5ae80Z6CVMQikbA
- Wl1bnD1lY0St5YCL/LnOA2QxiIQkLxwItdnv8O7px+tHUsGrqHaj6XWlztysuqO5SBzj
- 2kuMUdYr7zT2Ff5fR9Cm1bsXvfMwkBxIT2RvY9e4KumkoiDgzekzbxgi6cO+apt8xvLC
- vqkcOwVT12cHFZgavv/jSiCIP0yDE7tOvEX0XoHzS43hshTNOvhtsXypTC8t72oVxO3S
- aB+q5z+3x79q0I5gL27fdqGz9+WKIWTtWoZ3Oy63j6Q4xMuZrdhYRL4TZRcm5zc8IolD
- NPYQ==
-X-Gm-Message-State: AOJu0Ywx94XGf/PvB1uPHAc650iOgEVZGFOLY106jXI7dwgXctRl7qYy
- WXZuHd2WuSUpOZM/xMk4iG2WbqovfRXM3lvojPtCEY7CDl/Hccz7O8NgsZOFwuEDhxaqyUSSdni
- gAuQMt+0NSFxmcL7OJTQ6bWc7WLrY5xvcb1HQROs0UVWKqlqGpFoKfgJMW9Chmr8=
-X-Gm-Gg: ASbGncvp/G2pBqqIEHirzFMeGtQIcKskn8L1RROpP8R3rchUXHxdrchAahIAiGGpnqH
- yUT0x3YTvb2qimcSd/CD85tnPe1AxCiyG6Q2ZEFeBjUqu+87X0Rt6xmFdypYpVpFMz+h1QjIs8u
- pv+91SOCXmiNSxlanMwLK1J3dfWexM9YqpJJOA93yqJU4zXHZIlisn6MaeuNu9x4D+bu1JYAPEq
- 4ZXAvzlWkQUsivIYOGrtrMlAZ3Wiq3RyMzL8r2GSHihA8jdnPk8dEqKHQkN5Ou4iH0OBNYGNvzL
- +oRXSEU1lYplPubej1o=
-X-Received: by 2002:a05:600c:4706:b0:43b:c878:144c with SMTP id
- 5b1f17b1804b1-43bc87815d8mr18899135e9.12.1741017539659; 
- Mon, 03 Mar 2025 07:58:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGOm20lvmKU3oPR5zZ5npqqcdGR9mfFaZbsa/W6AqBWV1uDiPGVcFZWnyfXgcFJC3KQjUM50w==
-X-Received: by 2002:a05:600c:4706:b0:43b:c878:144c with SMTP id
- 5b1f17b1804b1-43bc87815d8mr18898495e9.12.1741017538282; 
- Mon, 03 Mar 2025 07:58:58 -0800 (PST)
-Received: from [192.168.10.27] ([151.95.119.44])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-43b8d6bc3fcsm132944215e9.0.2025.03.03.07.58.57
+ bh=T4ax79lrVmUFx52jI+hAC7doaUD0zpnihUVPye6lCyM=;
+ b=sWFwgl+r7qCabNklG5eDWTnVwjT27U/fA6h8z73ewKLr7aUp5vd0HxZ+F02+EvSFzS
+ MJwwb7cSUemPxxJqOGc/MPeVm0SK2zVf2ijWIBu+M0xy4s78z34sfC7As+J+WGlSqZYw
+ ljOHUpyL6uMZgwsT6+mNzzzN8LC8E1X/8bgfHPdOX1at7n8Qmbkpghm24uR9guFDHmA7
+ xAq0WdiT6UQTRiXEKw/dkMCND1Yamxe0BS29leTq4r3NmRbfV1oxVMz2L4WMyDSXhUw6
+ ftZ6HNmN6FXMfAc4a8TljHiL/G/sbNVEaFmKt/7OmDmhuZN+rPhbes7cT43Vmd5TqoKH
+ LStw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUieKp2puOAtE0vYF0gnJTnKqpB9Yr79vfNG9DBU0PZSP8H/k8MaF6cH7IL/KlE35r3RnRAk7yXVJ3z@nongnu.org
+X-Gm-Message-State: AOJu0YzqjgY2eDheycDQ92OGnlegl7BKvdhW0djdSm+ugSRWATzMijLT
+ JA2nhG4abwxwCUFLaKy0Xw8g6Q1TmbeRmO3ZV6W5+C7oAmKmKFDQvzexe3vIHqRoe16CvDH8Evx
+ P230xu7w0f6wQ6NVY+B+LMGbA5gcphR2AaDT//WCAg3wdwMTJcUa6
+X-Gm-Gg: ASbGncsxeZ/Vs5mtpdUrlBiuRil8GQXhqBRMPp27b88AHrymVmr1L3Ta8bi9le6VsPp
+ Ulh2+G+RCShTqbxBIm2Gi2RCf6OCADymUMhodL+qxD4kCpfUszoI1dEpMI/UGcmt4QYboN9HyAz
+ Fx3X9WBhzslkZfTkWBZ7mtCvQnkKEGkrGdLO+8PDhKvUceS4R82BPIjC7wHRPceGyuPtBqQ+fN9
+ oa8bogVU6byySUDtIPE9Zvyxhk+1QEfJjyJNBID+lnmoVnL3j0iKeE9r9JeHQj38C7ct55RjSMd
+ vDM89+FkWxOjPv+j1S333HEEwZOYa5m2S8/VbtgJKgoXiTSwBmtsoQ==
+X-Received: by 2002:a05:600c:a03:b0:43b:a397:345f with SMTP id
+ 5b1f17b1804b1-43bad820605mr124895895e9.11.1741017848330; 
+ Mon, 03 Mar 2025 08:04:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEnuRBoo4KcPVk1Gg+4yxu0t6rB5mfQoJPNw8RsfStZOZyy5+zlVt9i8CIxfFDu/pDZXVz35w==
+X-Received: by 2002:a05:600c:a03:b0:43b:a397:345f with SMTP id
+ 5b1f17b1804b1-43bad820605mr124894575e9.11.1741017847554; 
+ Mon, 03 Mar 2025 08:04:07 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43aba53943asm192636185e9.19.2025.03.03.08.04.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 07:58:57 -0800 (PST)
-Message-ID: <7b09b4e3-3c1f-4c94-ad3a-054eaf74f24c@redhat.com>
-Date: Mon, 3 Mar 2025 16:58:57 +0100
+ Mon, 03 Mar 2025 08:04:06 -0800 (PST)
+Message-ID: <9806cbc5-5587-4175-b7ae-ad5a8b0963dc@redhat.com>
+Date: Mon, 3 Mar 2025 17:04:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/12] rust: timer: wrap QEMUTimer with Opaque<> and
- express pinning requirements
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20250227142219.812270-1-pbonzini@redhat.com>
- <20250227142219.812270-5-pbonzini@redhat.com> <Z8WzRyPbt6d7CHWM@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
- UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
- 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
- jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
- VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
- CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
- SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
- AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
- AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
- nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
- bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
- KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
- m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
- tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
- dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
- JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
- sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
- OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
- GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
- Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
- usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
- xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
- JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
- dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
- b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <Z8WzRyPbt6d7CHWM@intel.com>
+Subject: Re: [PATCH 1/2] vfio: Make vfio-pci available on 64-bit host
+ platforms only
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Eric Auger <eric.auger@redhat.com>
+References: <20250226084721.232703-1-clg@redhat.com>
+ <20250226084721.232703-2-clg@redhat.com>
+ <a39e97c2-c6fd-34e4-f91b-b3491185b789@eik.bme.hu>
+ <c60b7780-5b3f-43a0-a7f1-30820d4e6fb8@redhat.com>
+ <bb7c2adf-f146-50c7-7716-c1ee7b606b01@eik.bme.hu>
+ <aa01f3dd-e3ac-4ee5-87b4-8133103bd000@linaro.org>
+ <270cc189-e3b2-4bf4-b32b-8655be51bcb4@redhat.com>
+ <b2075e91-79ca-4d5f-b13b-151f2a59181d@redhat.com>
+ <8e3a5810-accf-1f77-8692-4e077c3ce327@eik.bme.hu>
+ <b0b56480-0b5a-4f32-af27-13394795b58e@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <b0b56480-0b5a-4f32-af27-13394795b58e@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -147,357 +169,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 14:48, Zhao Liu wrote:
->> @@ -156,7 +157,7 @@ pub struct HPETTimer {
->>       /// timer N index within the timer block (`HPETState`)
->>       #[doc(alias = "tn")]
->>       index: usize,
->> -    qemu_timer: Option<Box<Timer>>,
->> +    qemu_timer: Option<Pin<Box<Timer>>>,
+On 3/3/25 16:48, Cédric Le Goater wrote:
+> On 3/3/25 16:26, BALATON Zoltan wrote:
+>> On Mon, 3 Mar 2025, Cédric Le Goater wrote:
+>>> On 3/3/25 15:46, Paolo Bonzini wrote:
+>>>> On 3/3/25 15:30, Philippe Mathieu-Daudé wrote:
+>>>>>>>> I see PPC is defined in target/ppc/Kconfig so I think these mark the target not the host. Vfio-pci works with qemu-system-ppc 
+>>>>>>
+>>>>>> I've seen people do this on x86_64 host
+>>>>>
+>>>>> Since this patch does:
+>>>>>
+>>>>>    LINUX && PCI && (...  X86_64 ...)
+>>>>>
+>>>>> these users won't see any change.
+>>>>
+>>>> This is wrong---clearly this patch was never tested on the 32-bit platforms where it was supposed to have an effect.
+>>>
+>>> euh it was.
+>>>
+>>> With this patch, on 32-bit and 64-bit host systems :
+>>>
+>>>  # build/qemu-system-i386 -device vfio-pci,?
+>>>  # qemu-system-i386: -device vfio-pci,?: Device 'vfio-pci' not found
+>>>
+>>> Same for qemu-system-ppc and qemu-system-arm
+>>>
+>>> What I am doing wrong ?
+>>
+>> These QEMU targets aren't deprecated, compiling QEMU on 32 bit hosts is. But you can still use qemu-system-i386 and qemu-system-ppc on 64 bit hosts and vfio-pci works with these so it should not be disabled when building these QEMU targets. I think you meant to do something else not what this patch does.
 > 
-> I'm removing this Option<> wrapper in migration series. This is because
-> Option<> can't be treated as pointer as you mentioned in [*].
+> I meant to remove all VFIO devices on 32-bit host platforms (which
+> is not needed anymore since 32-bit host platforms are dying anyway).
 > 
-> So for this reason, does this mean that VMStateField cannot accept
-> Option<>? I realize that all the current VMStateFlags don't seem
-> compatible with Option<> unless a new flag is introduced.
-> 
-> [*]: https://lore.kernel.org/qemu-devel/9a0389fa-765c-443b-ac2f-7c99ed862982@redhat.com/
+> The patch is actually doing more, as it is removing VFIO devices for
+> 32-bit targets too. That said, I doubt this config is tested at all
+> on i386. Something to add on the TODO list.
 
-Ok, so let's get rid of the option.  I didn't really like it anyway...
+So,
 
-If the Timer is embedded in the HPETTimer, there needs to be some
-"unsafe" in order to make sure that the pinning is observed, and also
-because an uninitialized Timer is bad and can cause a NULL pointer
-dereference in modify()... i.e. Timer shouldn't have implemented
-Default!
+     root@vm15:~# uname -a
+     Linux vm15 6.10.12-686-pae #1 SMP PREEMPT_DYNAMIC Debian 6.10.12-1 (2024-10-01) i686 GNU/Linux
+     root@vm15:~# lspci -s 0000:01:00.0 -v
+     01:00.0 Ethernet controller: Intel Corporation Ethernet Virtual Function 700 Series (rev 02)
+     	Subsystem: Intel Corporation Device 0000
+     	Physical Slot: 0
+     	Flags: bus master, fast devsel, latency 0
+     	Memory at fba00000 (64-bit, prefetchable) [size=64K]
+     	Memory at fba10000 (64-bit, prefetchable) [size=16K]
+     	Capabilities: [70] MSI-X: Enable+ Count=5 Masked-
+     	Capabilities: [a0] Express Endpoint, IntMsgNum 0
+     	Capabilities: [100] Advanced Error Reporting
+     	Capabilities: [1a0] Transaction Processing Hints
+     	Capabilities: [1d0] Access Control Services
+     	Kernel driver in use: iavf
+     	Kernel modules: iavf
+     root@vm15:~# ip link show dev enp1s0
+     3: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+         link/ether 06:0a:3d:59:01:11 brd ff:ff:ff:ff:ff:ff
+         altname enx060a3d590111
+     
+It works well. I will make sure it continues to work.
 
-However, the lifetime checks in init_full() are preserved, so overall
-this is better---at least for now.  Linux also had unsafe initialization
-for quite some time, so I'm okay with it.
+Thanks,
 
-The replacements for this patch are below.
-
-Paolo
-
-
-
- From 2d74bdf176b2fbeb6205396d0021f68a9e72bde1 Mon Sep 17 00:00:00 2001
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 3 Mar 2025 16:27:08 +0100
-Subject: [PATCH 1/2] rust: hpet: embed Timer without the Option and Box
-  indirection
-
-This simplifies things for migration, since Option<Box<QEMUTimer>> does not
-implement VMState.
-
-This also shows a soundness issue because Timer::new() will leave a NULL
-timer list pointer, which can then be dereferenced by Timer::modify().  It
-will be fixed shortly.
-
-Suggested-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
-  rust/hw/timer/hpet/src/hpet.rs | 59 ++++++++++++++++------------------
-  1 file changed, 28 insertions(+), 31 deletions(-)
-
-diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index be27eb0eff4..02c81ae048f 100644
---- a/rust/hw/timer/hpet/src/hpet.rs
-+++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -151,14 +151,14 @@ fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
-  
-  /// HPET Timer Abstraction
-  #[repr(C)]
--#[derive(Debug, Default, qemu_api_macros::offsets)]
-+#[derive(Debug, qemu_api_macros::offsets)]
-  pub struct HPETTimer {
-      /// timer N index within the timer block (`HPETState`)
-      #[doc(alias = "tn")]
-      index: usize,
--    qemu_timer: Option<Box<Timer>>,
-+    qemu_timer: Timer,
-      /// timer block abstraction containing this timer
--    state: Option<NonNull<HPETState>>,
-+    state: NonNull<HPETState>,
-  
-      // Memory-mapped, software visible timer registers
-      /// Timer N Configuration and Capability Register
-@@ -181,32 +181,34 @@ pub struct HPETTimer {
-  }
-  
-  impl HPETTimer {
--    fn init(&mut self, index: usize, state_ptr: *mut HPETState) -> &mut Self {
--        *self = HPETTimer::default();
--        self.index = index;
--        self.state = NonNull::new(state_ptr);
--        self
--    }
-+    fn init(&mut self, index: usize, state: &HPETState) {
-+        *self = HPETTimer {
-+            index,
-+            qemu_timer: Timer::new(),
-+            state: NonNull::new(state as *const _ as *mut _).unwrap(),
-+            config: 0,
-+            cmp: 0,
-+            fsb: 0,
-+            cmp64: 0,
-+            period: 0,
-+            wrap_flag: 0,
-+            last: 0,
-+        };
-  
--    fn init_timer_with_state(&mut self) {
--        self.qemu_timer = Some(Box::new({
--            let mut t = Timer::new();
--            t.init_full(
--                None,
--                CLOCK_VIRTUAL,
--                Timer::NS,
--                0,
--                timer_handler,
--                &self.get_state().timers[self.index],
--            );
--            t
--        }));
-+        self.qemu_timer.init_full(
-+            None,
-+            CLOCK_VIRTUAL,
-+            Timer::NS,
-+            0,
-+            timer_handler,
-+            &state.timers[self.index],
-+        )
-      }
-  
-      fn get_state(&self) -> &HPETState {
-          // SAFETY:
-          // the pointer is convertible to a reference
--        unsafe { self.state.unwrap().as_ref() }
-+        unsafe { self.state.as_ref() }
-      }
-  
-      fn is_int_active(&self) -> bool {
-@@ -330,7 +332,7 @@ fn arm_timer(&mut self, tick: u64) {
-          }
-  
-          self.last = ns;
--        self.qemu_timer.as_ref().unwrap().modify(self.last);
-+        self.qemu_timer.modify(self.last);
-      }
-  
-      fn set_timer(&mut self) {
-@@ -353,7 +355,7 @@ fn set_timer(&mut self) {
-      fn del_timer(&mut self) {
-          // Just remove the timer from the timer_list without destroying
-          // this timer instance.
--        self.qemu_timer.as_ref().unwrap().delete();
-+        self.qemu_timer.delete();
-  
-          if self.is_int_active() {
-              // For level-triggered interrupt, this leaves interrupt status
-@@ -581,13 +583,8 @@ fn handle_legacy_irq(&self, irq: u32, level: u32) {
-      }
-  
-      fn init_timer(&self) {
--        let raw_ptr: *mut HPETState = self as *const HPETState as *mut HPETState;
--
-          for (index, timer) in self.timers.iter().enumerate() {
--            timer
--                .borrow_mut()
--                .init(index, raw_ptr)
--                .init_timer_with_state();
-+            timer.borrow_mut().init(index, self);
-          }
-      }
-  
--- 
-2.48.1
-
-
- From 276020645786b6537c50bb37795f281b5d630f27 Mon Sep 17 00:00:00 2001
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 14 Feb 2025 12:06:13 +0100
-Subject: [PATCH 2/2] rust: timer: wrap QEMUTimer with Opaque<> and express
-  pinning requirements
-
-Timers must be pinned in memory, because modify() stores a pointer to them
-in the TimerList.  To express this requirement, change init_full() to take
-a pinned reference.  Because the only way to obtain a Timer is through
-Timer::new(), which is unsafe, modify() can assume that the timer it got
-was later initialized; and because the initialization takes a Pin<&mut
-Timer> modify() can assume that the timer is pinned.  In the future the
-pinning requirement will be expressed through the pin_init crate instead.
-
-Note that Timer is a bit different from other users of Opaque, in that
-it is created in Rust code rather than C code.  This is why it has to
-use the unsafe constructors provided by Opaque; and in fact Timer::new()
-is also unsafe, because it leaves it to the caller to invoke init_full()
-before modify().  Without a call to init_full(), modify() will cause a
-NULL pointer dereference.
-
-An alternative could be to combine new() + init_full() by returning a
-pinned box; however, using a reference makes it easier to express
-the requirement that the opaque outlives the timer.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
-  meson.build                    |  7 -----
-  rust/hw/timer/hpet/src/hpet.rs | 10 ++++++--
-  rust/qemu-api/src/timer.rs     | 47 ++++++++++++++++++++++++++--------
-  3 files changed, 44 insertions(+), 20 deletions(-)
-
-diff --git a/meson.build b/meson.build
-index 9b1c0ba6346..4e8f0a6c00d 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4098,13 +4098,6 @@ if have_rust
-    foreach enum : c_bitfields
-      bindgen_args += ['--bitfield-enum', enum]
-    endforeach
--  c_nocopy = [
--    'QEMUTimer',
--  ]
--  # Used to customize Drop trait
--  foreach struct : c_nocopy
--    bindgen_args += ['--no-copy', struct]
--  endforeach
-  
-    # TODO: Remove this comment when the clang/libclang mismatch issue is solved.
-    #
-diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index 02c81ae048f..3d3d6ef8eec 100644
---- a/rust/hw/timer/hpet/src/hpet.rs
-+++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -4,6 +4,7 @@
-  
-  use std::{
-      ffi::CStr,
-+    pin::Pin,
-      ptr::{addr_of_mut, null_mut, NonNull},
-      slice::from_ref,
-  };
-@@ -184,7 +185,9 @@ impl HPETTimer {
-      fn init(&mut self, index: usize, state: &HPETState) {
-          *self = HPETTimer {
-              index,
--            qemu_timer: Timer::new(),
-+            // SAFETY: the HPETTimer will only be used after the timer
-+            // is initialized below.
-+            qemu_timer: unsafe { Timer::new() },
-              state: NonNull::new(state as *const _ as *mut _).unwrap(),
-              config: 0,
-              cmp: 0,
-@@ -195,7 +198,10 @@ fn init(&mut self, index: usize, state: &HPETState) {
-              last: 0,
-          };
-  
--        self.qemu_timer.init_full(
-+        // SAFETY: HPETTimer is only used as part of HPETState, which is
-+        // always pinned.
-+        let qemu_timer = unsafe { Pin::new_unchecked(&mut self.qemu_timer) };
-+        qemu_timer.init_full(
-              None,
-              CLOCK_VIRTUAL,
-              Timer::NS,
-diff --git a/rust/qemu-api/src/timer.rs b/rust/qemu-api/src/timer.rs
-index a593538917a..f0b04ef95d7 100644
---- a/rust/qemu-api/src/timer.rs
-+++ b/rust/qemu-api/src/timer.rs
-@@ -2,31 +2,51 @@
-  // Author(s): Zhao Liu <zhai1.liu@intel.com>
-  // SPDX-License-Identifier: GPL-2.0-or-later
-  
--use std::os::raw::{c_int, c_void};
-+use std::{
-+    os::raw::{c_int, c_void},
-+    pin::Pin,
-+};
-  
-  use crate::{
-      bindings::{self, qemu_clock_get_ns, timer_del, timer_init_full, timer_mod, QEMUClockType},
-      callbacks::FnCall,
-+    cell::Opaque,
-  };
-  
--pub type Timer = bindings::QEMUTimer;
--pub type TimerListGroup = bindings::QEMUTimerListGroup;
-+/// A safe wrapper around [`bindings::QEMUTimer`].
-+#[repr(transparent)]
-+#[derive(Debug, qemu_api_macros::Wrapper)]
-+pub struct Timer(Opaque<bindings::QEMUTimer>);
-+
-+unsafe impl Send for Timer {}
-+unsafe impl Sync for Timer {}
-+
-+#[repr(transparent)]
-+#[derive(qemu_api_macros::Wrapper)]
-+pub struct TimerListGroup(Opaque<bindings::QEMUTimerListGroup>);
-+
-+unsafe impl Send for TimerListGroup {}
-+unsafe impl Sync for TimerListGroup {}
-  
-  impl Timer {
-      pub const MS: u32 = bindings::SCALE_MS;
-      pub const US: u32 = bindings::SCALE_US;
-      pub const NS: u32 = bindings::SCALE_NS;
-  
--    pub fn new() -> Self {
--        Default::default()
--    }
--
--    const fn as_mut_ptr(&self) -> *mut Self {
--        self as *const Timer as *mut _
-+    /// Create a `Timer` struct without initializing it.
-+    ///
-+    /// # Safety
-+    ///
-+    /// The timer must be initialized before it is armed with
-+    /// [`modify`](Self::modify).
-+    pub unsafe fn new() -> Self {
-+        // SAFETY: requirements relayed to callers of Timer::new
-+        Self(unsafe { Opaque::zeroed() })
-      }
-  
-+    /// Create a new timer with the given attributes.
-      pub fn init_full<'timer, 'opaque: 'timer, T, F>(
--        &'timer mut self,
-+        self: Pin<&'timer mut Self>,
-          timer_list_group: Option<&TimerListGroup>,
-          clk_type: ClockType,
-          scale: u32,
-@@ -51,7 +71,7 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
-          // SAFETY: the opaque outlives the timer
-          unsafe {
-              timer_init_full(
--                self,
-+                self.as_mut_ptr(),
-                  if let Some(g) = timer_list_group {
-                      g as *const TimerListGroup as *mut _
-                  } else {
-@@ -67,14 +87,19 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
-      }
-  
-      pub fn modify(&self, expire_time: u64) {
-+        // SAFETY: the only way to obtain a Timer safely is via methods that
-+        // take a Pin<&mut Self>, therefore the timer is pinned
-          unsafe { timer_mod(self.as_mut_ptr(), expire_time as i64) }
-      }
-  
-      pub fn delete(&self) {
-+        // SAFETY: the only way to obtain a Timer safely is via methods that
-+        // take a Pin<&mut Self>, therefore the timer is pinned
-          unsafe { timer_del(self.as_mut_ptr()) }
-      }
-  }
-  
-+// FIXME: use something like PinnedDrop from the pinned_init crate
-  impl Drop for Timer {
-      fn drop(&mut self) {
-          self.delete()
--- 
-2.48.1
-
+C.
 
 
 
