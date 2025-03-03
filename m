@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0870DC282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 11:20:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8342BC282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 11:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp3qB-0008Ai-8I; Mon, 03 Mar 2025 06:20:07 -0500
+	id 1tp3qk-0000WY-S9; Mon, 03 Mar 2025 06:20:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp3q9-00088J-Ju
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 06:20:05 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp3qb-0000KE-MF
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 06:20:37 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp3q7-0006JF-Vm
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 06:20:05 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43bc4b1603fso3577015e9.0
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 03:20:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp3qZ-0006b4-P1
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 06:20:33 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43bbd711eedso8584185e9.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 03:20:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741000801; x=1741605601; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741000829; x=1741605629; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LBUoJBSZnbbEmEvXE/hYOYl726+G0RGb1hwITSUspqc=;
- b=ODbQ5HLU7FQPRjPDzA7yTaaEOOozsHEduxYL8wiB/gXvz1eTp4Nu9+3f1VqpOKEgsG
- 1qYVw7keoscF4E/50/YwNIQXHk/mj6nTqwiT7BC8g7mxZTmbSXQnBxYbI+TWag7jY8y1
- ZCphWHRIyTMFVYhu3r+JrqFcSED6g6lzt078mg2YLZqqd0Bdt/W0n776Rw5Z98CqqHSB
- TihwlpGdn9NGTTtVej9rMpVhJCYvwKqkQP0goIW2LqJmlhf+ZfJc4k6NE4UUhBrfa3qo
- pjUA8UXewUk6sKdm9ys9M2MS9x22Ltjlv5/sY9MvIpKJ2Z1I28fguCEwmG+g2v2hRGhA
- /AQw==
+ bh=GCBhr7Rs84KJs9aNppVTQJy1q0Is9M04/EMErGDumZ4=;
+ b=XHJR09rMJePkbmnCNlUTFlC9aZQ4dJH0w/PE+WAsY2BFAbzSRwEz3vDSIAfVpjfYjp
+ Ns+V2zEwIL/JcoznyC1+x7AHf+omh5QPmQ6hSRDMdoLkUol8b18eywkIfwanqZR9hAUW
+ wKg0Z1F5/P3e6E4NFfMuoLsuK7cv4BhPbdM6D8hq57Sjuevvaa34Kh+B7wfT+tURFGoz
+ C0ystTM5NjD8MYKgzs6uyQDWWct+XiqGnjck8AKpdXnXrWr/L5VtLiYTR4tQLugBomtj
+ 3MoT+8rwBRCx3KHPofBzSCnOGWdxu74VJ4ycIVbW5hYl1YEEd+LF2shMkh1xzJKvP1p3
+ LNeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741000801; x=1741605601;
+ d=1e100.net; s=20230601; t=1741000829; x=1741605629;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LBUoJBSZnbbEmEvXE/hYOYl726+G0RGb1hwITSUspqc=;
- b=bUcdY+BM8r9WK9rGJu1XH98OEIwSGtQIUD6mXOVhMSaZ9UbRz8AkG0QQCRtIGRT/Y3
- 9ipFkHWHs6A5VM/Flv3F2JiYBCS0QDw/r1yArklSQhXghjIyXqN93FuLwAZ2cqr7vAV7
- EzqT4OjveCdHkvqUr64ZmdTD+Z0OTxvYIV+zB2mW5PeVdebeHoKlw4u8dYpN1LUCM0d4
- eBL/bUmLs+SRiz9sSMyBS63ijGVFvyVgFo2ImyIbYS2VbMR/8IImrAY8eLKzltyHzWIY
- 2zouh7Kfb5khQW3VRs4kct+VIPqyfUeDCyePYIW82mUv9x2q/RwpSMqisT9Wrl0bub+u
- YBrw==
+ bh=GCBhr7Rs84KJs9aNppVTQJy1q0Is9M04/EMErGDumZ4=;
+ b=AkXK1SEsKOTRP92hoV1nubn3iPIXfe1m8oviyF/XIV6NCeZX7SoK5HZ8AUuMe+jPpD
+ /pUEVXjnjpXax0S4WE37VC2Johx0hYT6h439Z9ST3gGQk4K0w7CNTIietGOjMZkjHIwh
+ ro3XexGoKq0iXEyvasyw77QYBVQ0Ghk3QBLB/w9bdV31ULTjccPRVehMpaqoi7+nKN3J
+ uU9bp7KPuUN5Cb1RHKJtMxz7k+/Yawz9b/iGq+VInubp68OHzqG6sb1WTZ2VwTf1lCPX
+ x4z/+mMWw1qKzp6FJhXaymY69CB+pNPFnK3X7DB6qNB+Devvsa8w/VeoX3pXKFBXHD8u
+ XWIg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5eJ1NK0zwo0eTK6SrBrv4yRzClTNMcCEIXLNqgvATN86H+jAJwAFAjmryTEraEwNsUIkSuYgEU9FP@nongnu.org
-X-Gm-Message-State: AOJu0YyNA04OQveBjq3MkfC066VmTXz9UW1saIEOaXTSj9a5ZBGemsdz
- 9o8YqV9xPmZjhsupo61czHY24hmH3zq0jJ5WR5qYTDGT+dK1I8WnHYDXNByGcnQBFExJetY3ico
- OaBzmuQ==
-X-Gm-Gg: ASbGnct7tScF5IfitXhIAFDY8O9PSoKBUdIVeK0UD5UhnUKloCXWt5vX720Ax+96HZL
- Mrpr3DJ1l7nK5RJUHOwc3H4wkdhKbwJWevKbKj1Tc8fKHYsW8/m/8wJ4caYac1Q9UJpHmy4eQ7o
- /oC4xtxlQ9rSerwA8Pi6dmu6nlH0oTCPJy4tWQPREyNzeiT87Ib3lL4Y7VxFUluuRLGx1pHRQuA
- 2bHCC1UQOHXjPx38z8mdnHu86+fnsKao5+LoD+kc4HlWJ8ruiJfY2WYux1VraojkY18U/4Hw0PA
- 1aVkBdm4howZAZS8hFzgXTNx+BKU7UZBuVZ1KJzIRvTxHvv0wS6CuBEAIq18MMIU6Hdn6bnJOs8
- XTutQocITyMGk
-X-Google-Smtp-Source: AGHT+IEd5sTJ4uKbbmDrRGQy5sV9zXhrkEBlIDSq3/aA7Zb7dXGocXx6toDV7yymYdG53mmjD4398Q==
-X-Received: by 2002:a05:600c:190a:b0:434:a4b3:5ebe with SMTP id
- 5b1f17b1804b1-43ba675830emr84092625e9.24.1741000800717; 
- Mon, 03 Mar 2025 03:20:00 -0800 (PST)
+ AJvYcCXIfOeOK2M76SLP4sqoviyMzCUXYhpVgKMQ0DkQZWNtcuvy4UTSIEFq/yMGqA5C68QBqqJWVsE414k6@nongnu.org
+X-Gm-Message-State: AOJu0YwaB/Cs/j/PxikIWkuZu2k3u2OwQyIuKgftTKsODVkMEwQH6BT9
+ ctoIkd9oqKpCFZKiRltg5KybG3sESis9WDZDL8lZK3I/UDUc/nw7uMzprfUvA+cjrzIEIQTUj0F
+ MXaJNsQ==
+X-Gm-Gg: ASbGnctYB83tDrr6hz9h9ymJkqi1NzTiaREr+g3ysPsuqwJMRsnnyWuKGqOcRtNfp6X
+ BfKxApKYipuH5M3WHnvHCWFIb3yAZzsgchSIOgV/uvWsiQdvEvn5yBaWTWvZyqXZRXONs78q6lQ
+ 30Ev2wrQ7tP6nvYnxTZItfcaFvhrEDz/M25mUQJe2waH/NJcou7LGsu5J8XDLRUhatoY+/jM5kL
+ 4sVvZCF2LfhC7wUt2MHWUviisdjIs1NSpN/BGV2iMcIJ3zM+e9x4Qx4fVzwkIlPXePLWUm022nJ
+ cU5zN8+2U11ALNpQXRo3dtW45OjkFRotA22kA/+nBosTepvKVraAXJ+zkwbbq+XVCuLPhMRxa2O
+ 5vbqps3MK7jED
+X-Google-Smtp-Source: AGHT+IG4IA0EfgqevCU62fvz298RVfjH0GIP+oXuS7Q9/9bqgWeGwB+36gbsWcnsK+MHSssjPe14Yw==
+X-Received: by 2002:a05:600c:3549:b0:439:91dd:cfaf with SMTP id
+ 5b1f17b1804b1-43ba66f9dc4mr108812895e9.18.1741000828761; 
+ Mon, 03 Mar 2025 03:20:28 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43aba5711fcsm192388125e9.28.2025.03.03.03.19.59
+ 5b1f17b1804b1-43bc6a8ff01sm16230505e9.39.2025.03.03.03.20.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 03:19:59 -0800 (PST)
-Message-ID: <a7bd33be-c492-42b2-ae38-380a36115611@linaro.org>
-Date: Mon, 3 Mar 2025 12:19:59 +0100
+ Mon, 03 Mar 2025 03:20:28 -0800 (PST)
+Message-ID: <b2049037-4324-4e8e-8c86-059b25995740@linaro.org>
+Date: Mon, 3 Mar 2025 12:20:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hw/nvram/eeprom_at24c: Use OBJECT_DECLARE_SIMPLE_TYPE
+Subject: Re: [PATCH 3/4] hw/nvram/eeprom_at24c: Remove memset after g_malloc0
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
 References: <cover.1740839457.git.balaton@eik.bme.hu>
- <08d9900af04789ede485942c8072eaa58bf52f80.1740839457.git.balaton@eik.bme.hu>
+ <ff281851e6d824ecd01b8b5cd955328dae1515a0.1740839457.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <08d9900af04789ede485942c8072eaa58bf52f80.1740839457.git.balaton@eik.bme.hu>
+In-Reply-To: <ff281851e6d824ecd01b8b5cd955328dae1515a0.1740839457.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,12 +103,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/3/25 15:35, BALATON Zoltan wrote:
-> No need to open code it so use the simple object type declaration.
+> Calling memset to zero memory is not needed after g_malloc0 which
+> already clears memory. These used to be in separate functions but
+> after some patches the memset ended up after g_malloc0 and thus can be
+> dropped.
 > 
+> Fixes: 4f2c6448c3 (hw/nvram/eeprom_at24c: Make reset behavior more like hardware)
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/nvram/eeprom_at24c.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
+>   hw/nvram/eeprom_at24c.c | 1 -
+>   1 file changed, 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
