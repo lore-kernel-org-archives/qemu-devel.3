@@ -4,64 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EDD9C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 15:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B87C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 15:36:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp7gX-0006hI-L4; Mon, 03 Mar 2025 10:26:26 -0500
+	id 1tp7p8-0002N4-Jf; Mon, 03 Mar 2025 10:35:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tp7gU-0006gd-T2
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 10:26:23 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tp7gS-00058I-65
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 10:26:22 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BFDBE4E601D;
- Mon, 03 Mar 2025 16:26:14 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id VlpIhAGIx-sm; Mon,  3 Mar 2025 16:26:12 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C4C5D4E6010; Mon, 03 Mar 2025 16:26:12 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C201C74577C;
- Mon, 03 Mar 2025 16:26:12 +0100 (CET)
-Date: Mon, 3 Mar 2025 16:26:12 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-cc: Paolo Bonzini <pbonzini@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
- Eric Auger <eric.auger@redhat.com>
-Subject: Re: [PATCH 1/2] vfio: Make vfio-pci available on 64-bit host platforms
- only
-In-Reply-To: <b2075e91-79ca-4d5f-b13b-151f2a59181d@redhat.com>
-Message-ID: <8e3a5810-accf-1f77-8692-4e077c3ce327@eik.bme.hu>
-References: <20250226084721.232703-1-clg@redhat.com>
- <20250226084721.232703-2-clg@redhat.com>
- <a39e97c2-c6fd-34e4-f91b-b3491185b789@eik.bme.hu>
- <c60b7780-5b3f-43a0-a7f1-30820d4e6fb8@redhat.com>
- <bb7c2adf-f146-50c7-7716-c1ee7b606b01@eik.bme.hu>
- <aa01f3dd-e3ac-4ee5-87b4-8133103bd000@linaro.org>
- <270cc189-e3b2-4bf4-b32b-8655be51bcb4@redhat.com>
- <b2075e91-79ca-4d5f-b13b-151f2a59181d@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp7o6-0002CZ-S2
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 10:34:25 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp7o5-00066I-5L
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 10:34:14 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43bc38bb6baso6378755e9.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 07:34:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741016050; x=1741620850; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zIOZk3wDIbg6mQhTEtf61Fb6ROhIRArMbpF/7UU5I28=;
+ b=o5yy5hr4nOshFrhvGex5uGKMOBfYDrHo/4FXS7PwTzuAy9OFX6+/kWrtyw0/TGsVSk
+ MJtc91f+soas4gSLRFtJ4T4lDMNN4MZMvzFT0o3f1WaKiZLSPH+gSbLWY+UOFORDGe3g
+ lOFLDjd2skL6vvbLUet+bL+mhqoHsZieYq9AjTMsl6YF5TSNQfMTRtFazEiWjjisNXYp
+ bHdtR+pXGKUuQa5rIQNqs1GIC15+4WaMXsfqmLdBuLO9QqsK5pSpnYixb8uOHt9tD+Zv
+ uZtOLVp5lyKPJ92+zRu0601LxqIrCefmeYXDDNA68M+8bSqCPJgRFTG0SnNfy91nyz+z
+ VpPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741016050; x=1741620850;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zIOZk3wDIbg6mQhTEtf61Fb6ROhIRArMbpF/7UU5I28=;
+ b=AY+cUtLQT/YzZvemswf/YmqG1/6nYYXqt5sCyx0pKgEYrhcL9oITUWEoh8B0ehZu6k
+ lUkNhRELN3uykuo/Kxkx6lvOYUN5etc87R4WTE2eLOB7gzi3T0slaUAjJmvPhYwThxhZ
+ bwBBhGCrjOUZCyVcVb91mD5VRGmyjBn3nb3A+vvIoYSoMmfAtxOdGe5SFezvJTZ39h+x
+ quuv1lBONDZZ4TLkRCTJVzyIcNhJGN2i52PikisuKWA7GicZpDUfG1pu3bHgXnd+NokG
+ PDCT+WtABw5gPOiUcJOy9SbIFiPdZqteQuU/e23fyrCrwfmjkVsNqnLIM+VaqKj82kz2
+ soJQ==
+X-Gm-Message-State: AOJu0Yyvu9AndZbZR2AB9IaLe3oezwxRe2c0NAE0fyj0a20Zca0Edpk+
+ QB98TEjc4sRElnC/7a2ORdYsNmmyjFveKuuCkM+nWN2po9ycrb2eAEwT0LVQXorKmOswx8bzj5g
+ C8Lt+iw==
+X-Gm-Gg: ASbGnct6z4jAWqUeF/cHHBUbb3wnqAW5FdKYy9JP9+2x08NcuFEciVtdVw0/i/61PPY
+ DJZZ448gZ9A3N3kV7ida/VXzEqHW1tpntp7bkf3zgcR3LkARs3V5ezVJQXoGLTWI5eYhMyQ2OUb
+ qOfrmWw+CO/nE/Hd4EN3c/GRCTCDatJYt4whAHkEifjsr2Xk7pvazbCNK9PENHCLLb+QAiMq51L
+ toydIuwceatKNCz13nNlzSBynxfOHOucsNUeGq4Wno8azZ8wxeITrog6ucTG00d3bIk6G/2y4xi
+ D5sePHxmQNlDFbbX3TzGJcVrNN9YWX9JxB6s/mBe49DKeVpCV4F7zEOAWNQNsJRmtpDR+K+DhdA
+ IH0VuMZnCji2+
+X-Google-Smtp-Source: AGHT+IGIR4uFD3kJXG9qeNIcwlO3sZp/Z8NufdaV2V3nrAzFuU+YN1ieeMP+R8wLcCfThUEVlooqfA==
+X-Received: by 2002:a05:600c:3516:b0:43b:c528:d0b8 with SMTP id
+ 5b1f17b1804b1-43bc528d48bmr27284525e9.5.1741016050644; 
+ Mon, 03 Mar 2025 07:34:10 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bc63877desm17074825e9.1.2025.03.03.07.34.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Mar 2025 07:34:09 -0800 (PST)
+Message-ID: <f6b74258-1dd5-4d50-92f5-bcc8d7f015b1@linaro.org>
+Date: Mon, 3 Mar 2025 16:34:09 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1909933127-1741015572=:78201"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] hw/intc: Select generic ARM_GICV3 when KVM is not
+ available
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-arm@nongnu.org
+References: <20241227202435.48055-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241227202435.48055-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,48 +103,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---3866299591-1909933127-1741015572=:78201
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+On 27/12/24 21:24, Philippe Mathieu-Daudé wrote:
+> ARM_GICV3 is not restricted to TCG and can be used on HVF.
+> 
+> Philippe Mathieu-Daudé (2):
+>    hw/intc: Remove TCG dependency on ARM_GICV3
 
-On Mon, 3 Mar 2025, Cédric Le Goater wrote:
-> On 3/3/25 15:46, Paolo Bonzini wrote:
->> On 3/3/25 15:30, Philippe Mathieu-Daudé wrote:
->>>>>> I see PPC is defined in target/ppc/Kconfig so I think these mark the 
->>>>>> target not the host. Vfio-pci works with qemu-system-ppc 
->>>> 
->>>> I've seen people do this on x86_64 host
->>> 
->>> Since this patch does:
->>> 
->>>    LINUX && PCI && (...  X86_64 ...)
->>> 
->>> these users won't see any change.
->> 
->> This is wrong---clearly this patch was never tested on the 32-bit platforms 
->> where it was supposed to have an effect.
->
-> euh it was.
->
-> With this patch, on 32-bit and 64-bit host systems :
->
->  # build/qemu-system-i386 -device vfio-pci,?
->  # qemu-system-i386: -device vfio-pci,?: Device 'vfio-pci' not found
->
-> Same for qemu-system-ppc and qemu-system-arm
->
-> What I am doing wrong ?
+First reviewed/tested patch queued via hw-misc tree.
 
-These QEMU targets aren't deprecated, compiling QEMU on 32 bit hosts is. 
-But you can still use qemu-system-i386 and qemu-system-ppc on 64 bit 
-hosts and vfio-pci works with these so it should not be disabled when 
-building these QEMU targets. I think you meant to do something else not 
-what this patch does.
+Thanks,
 
-Regards,
-BALATON Zoltan
---3866299591-1909933127-1741015572=:78201--
+Phil.
 
