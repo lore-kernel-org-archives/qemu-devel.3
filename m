@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF543C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 496A3C282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp37p-000894-L6; Mon, 03 Mar 2025 05:34:18 -0500
+	id 1tp388-0008LK-CQ; Mon, 03 Mar 2025 05:34:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tp37n-00088L-Gu; Mon, 03 Mar 2025 05:34:15 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1tp37r-00089K-Ln; Mon, 03 Mar 2025 05:34:20 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tp37l-00075Z-1f; Mon, 03 Mar 2025 05:34:14 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2febaaf175fso4664952a91.3; 
- Mon, 03 Mar 2025 02:34:12 -0800 (PST)
+ id 1tp37q-00076u-70; Mon, 03 Mar 2025 05:34:19 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2239aa5da08so18127015ad.3; 
+ Mon, 03 Mar 2025 02:34:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740998051; x=1741602851; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740998056; x=1741602856; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=B4S8rnC1+5w/GBtgcoACwXWBW/0V0OGHaa1l5WT+ryk=;
- b=i9nBfi1jPQN5L4kRba0Id5QpIuMAhiktf1FgtJbhcGBgLiFhRy+uzW8PyOU2O3EiMu
- Q81GR9OQ/oGh0J3wkn8lB4DIqCRCZKvMhKP44RKoIJo66H1uEjaYB2/MGcQyfAR53sY9
- T+QTPOFYkxqqmp82X5hOcVN8HPc85mQDM20V0BRTTf2k3UjUYeZX3RmvPalDMuPWTKxN
- AoRdwjcLLeO9oMvt3URWbixLdy/oKJ8zYqBejXn24e3i4Un99Ev0hZDkOhwW0T9ePx39
- TgJM6vwFSCffAi3wVn0ho10r9AK11F+A47ZQxaYIAm0em+k6mv20drVA3eqU2DTJmqQ3
- wQ7g==
+ bh=cDU1zpgxw5NQE1GZ4VMSDId7tdssn+1yod5XCqVYjkE=;
+ b=NXX0ZYFxvVq4DQtG7rSN9khmtcJp5A6WbqtGrn9Qf4ENyaBLUse+fMu3BpQ1/0J+iG
+ ItRZfV81lwKHclj2bfRaocQKQeqXyfUbdDX4DVBkm/2MnnrynNePeiVdfpDs6M50QAfP
+ J/IKOAwkvinNvl6jb6jNfJSdEGGkBIiAp7SFxzMD6ZwaXa0HixPSJ8GFsO9OQbtBS9bx
+ n0GWVKyUdoTSVhzxG9ra0QS9UHvi0UizAwOASxP6JqvWhwT5nR8p/4+tLgiCgvoNalKE
+ VGB2syU55bTymAfKcb6epaTj1rEjl76XORvUe43biijWjxG2ODzdnwf4ssZzeNT2JMzj
+ 9c9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740998051; x=1741602851;
+ d=1e100.net; s=20230601; t=1740998056; x=1741602856;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=B4S8rnC1+5w/GBtgcoACwXWBW/0V0OGHaa1l5WT+ryk=;
- b=WMb3hU+NYlRJyiA90dz/qxIx8cmJA63QnD+ZrNDI6MnTdSBdfcWRGREBHntbx+XSLi
- 5nQgC0NRWUX0rihYQvxKZ5z8nZwZ/nQ33fLtsuFNOKvZD/okjuDCoST6pb9RB8fpZn/Q
- pNn0MCFHGNh4I5G0+8miZe8pKopMYTx3809KEcKs4yo9DVlI2Aoqa9cZShKduZD41rqj
- gpcQ2vbGuXIk2R7j1So4Y8ZftCgKeF7z43cefDfS/1Gb8/oRWeOXg28T0E117WYfXupF
- BmgC/mKWgK6MXmqUqSv/IzPqNOJcuMCUB0EcnoLTEEG0WqQXjTgYdE37AzaM0p+j3Unv
- NlDQ==
+ bh=cDU1zpgxw5NQE1GZ4VMSDId7tdssn+1yod5XCqVYjkE=;
+ b=fSv4S/vWglKI85XI6HREXLd+nDF6Kg6Jgeaxb4Cv7NUkf+Nje9FWmkUahRMtKF0s1p
+ xDJFLBazBeAo/7y0lYZsThjCOjYmnlQQbAE0P3Vhi7tl2UsmC4OHJhqw76f9SsrtYFWH
+ HW13YAlnp6COyxRqwvFcy5INU+BLkv2aFGqxmUdT2mtLw7t/A5HFMvXEeqRvGAbjrAOo
+ YdNNcFQw1JrnNcAWTPgrzKzIdpPGiU6vnmSe426y8uCHcQSf62wX3teXsJJnMX3h3ZTw
+ 4Bn+iyDPkpoh6boqa/xLHZ8rx7HC7aZZF4doNHKDjotCcmZqsJ8fpdrEcawhLU77XYey
+ 1j8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBtHx1xeBmmWtRlMSB6eYsrGuYfHf79ciNOqDM1ytS4+mAD/UVzJ03cscU3k+KiOuEc/lQQiNc36p3@nongnu.org
-X-Gm-Message-State: AOJu0YzOziNcQE5POXLiKDr46PA6+b8YK1wfIL4PjaILc0Tv5wUUQXgg
- BjCgB98/xQqYpqGhzKRs085Ni/JeE/PxP1hnuWfeyEWgPX+juX2/PDtyvQ==
-X-Gm-Gg: ASbGncuH8DB3ZvEnU4jvZGuePmhIgqbKwxTZIoIwTjdU9xpztpm9FzYUx2KtC0IcbPl
- s/XO3jXSFAhMZoRPHucZa3OGW78wEiC0mtPmuVl4IocWd9fX/v/Rqhh3KvHO/EtdZQV/2ofPhTj
- OVTphwsCleP1erxqQATcArPps6iiAaFaQKUbQenfIB/vWXg4a1G5TbZQCP71nGOgPX19Ywvo+PQ
- rKQz5JuEa0H7L1WmWQ1+Xa9FlHOxYyV9A6kJOPkYJb/5hj//Z7DMM0dxxBBbQgeA3f3GxTTNiw/
- rmDI4QTpgY/cZz9dtYuLmqZa2Xk3lefbZH8UtquWHWujn4oNPFE=
-X-Google-Smtp-Source: AGHT+IFc2XpWV98sBhBCa6lldyccM07gpkyTrkYT9q4H2R0bAzOno8c313I63gjPmjypxuPROtMiFA==
-X-Received: by 2002:a17:90b:4988:b0:2ee:a76a:830 with SMTP id
- 98e67ed59e1d1-2febabcb0c7mr21432915a91.24.1740998050784; 
- Mon, 03 Mar 2025 02:34:10 -0800 (PST)
+ AJvYcCWw/Ar+JP3llorILz9Q7DGn55199llmHUYaqmp5KoByeJe3NvsbxHpvAGbYyq3pWbcMwS7IUuofMGHs@nongnu.org
+X-Gm-Message-State: AOJu0Yxy3El8EewnRZ5vCIHVAiElRcjQfsDMgloFBrOM9kiLxhM2cvF3
+ eDi4m3ATAtkw/Y3EyUJPMHBTpMNOmxytLFzSqosA98WjDcE/h0KZL7RK7g==
+X-Gm-Gg: ASbGncsxG+nQInRVk7/Fmqcxw+Zh3IrO6CdiCykjJjSfjCZHesJzGNa0PPU04dZjUX9
+ 0km/NS0p2Xjjv6DbzA54a/vqY/UVm7DWQnfnir4ixBJuzZDRN+4tXsrKVFBu7+MRet/g3m9eLaU
+ hIVsCMYMdbH2iXV4nftCe9dRqDq6aS33YCK3ertidCF+gmGrSMAow8UZipUv5EIhhYs64IrBBo5
+ qNfCCwTtuPu70MbA5J8xbjDe7ukW+7+cEd9hc/kHRbjhonVDpZGkDm03DGhl6m6hm77KrHKP5rC
+ e3+UFaKbbqcnV+BgOGKA81GD44jK52aCGHl6jnsuAdKktEZPR1Q=
+X-Google-Smtp-Source: AGHT+IH6xRcFBwzh+Ic9nr2PTYlxIhI7c+ELjGK17IVu1+3Iju6NnB12UDW/hG936QyK5y+5qG/WqA==
+X-Received: by 2002:a17:90b:3fcb:b0:2fe:9581:fbea with SMTP id
+ 98e67ed59e1d1-2febabf414amr20026398a91.29.1740998056129; 
+ Mon, 03 Mar 2025 02:34:16 -0800 (PST)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fea698f309sm8594558a91.42.2025.03.03.02.34.08
+ 98e67ed59e1d1-2fea698f309sm8594558a91.42.2025.03.03.02.34.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Mar 2025 02:34:10 -0800 (PST)
+ Mon, 03 Mar 2025 02:34:15 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH 2/6] ppc/pnv: raise no-response errors if an LPC transaction
- fails
-Date: Mon,  3 Mar 2025 20:33:53 +1000
-Message-ID: <20250303103359.578994-3-npiggin@gmail.com>
+Subject: [PATCH 4/6] ppc/pnv: Move PNOR to offset 0 in the ISA FW space
+Date: Mon,  3 Mar 2025 20:33:55 +1000
+Message-ID: <20250303103359.578994-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250303103359.578994-1-npiggin@gmail.com>
 References: <20250303103359.578994-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,60 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If nothing responds to an LPC access, the LPC host controller should
-set an IRQSTAT error. Model this behaviour.
+skiboot has a bug that does not handle ISA FW access correctly for IDSEL
+devices > 0, and the current PNOR default address and size puts 64MB in
+device 0 and 64MB in device 1, which causes skiboot to hit this bug and
+breaks PNOR accesses.
 
-skiboot uses this error to "probe" LPC accesses, among other things to
-determine if a SuperIO chip is present. After this change it recognizes
-there is no SuperIO present and does not keep trying to access it.
+Move the PNOR address down to 0 for now, so a 256MB PNOR can be accessed
+via device 0.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv_lpc.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/hw/ppc/pnv_pnor.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
-index d0fccc165d9..0e02ce6e940 100644
---- a/hw/ppc/pnv_lpc.c
-+++ b/hw/ppc/pnv_lpc.c
-@@ -353,6 +353,8 @@ static const MemoryRegionOps pnv_lpc_xscom_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
+diff --git a/include/hw/ppc/pnv_pnor.h b/include/hw/ppc/pnv_pnor.h
+index 2e37ac88bf1..19c2d642e82 100644
+--- a/include/hw/ppc/pnv_pnor.h
++++ b/include/hw/ppc/pnv_pnor.h
+@@ -13,9 +13,11 @@
+ #include "hw/sysbus.h"
  
-+static void pnv_lpc_opb_noresponse(PnvLpcController *lpc);
-+
- static uint64_t pnv_lpc_mmio_read(void *opaque, hwaddr addr, unsigned size)
- {
-     PnvLpcController *lpc = PNV_LPC(opaque);
-@@ -376,6 +378,7 @@ static uint64_t pnv_lpc_mmio_read(void *opaque, hwaddr addr, unsigned size)
-     }
+ /*
+- * PNOR offset on the LPC FW address space
++ * PNOR offset on the LPC FW address space. For now this should be 0 because
++ * skiboot 7.1 has a bug where IDSEL > 0 (LPC FW address > 256MB) access is
++ * not performed correctly.
+  */
+-#define PNOR_SPI_OFFSET         0x0c000000UL
++#define PNOR_SPI_OFFSET         0x00000000UL
  
-     if (result != MEMTX_OK) {
-+        pnv_lpc_opb_noresponse(lpc);
-         qemu_log_mask(LOG_GUEST_ERROR, "OPB read failed at @0x%"
-                       HWADDR_PRIx "\n", addr);
-     }
-@@ -406,6 +409,7 @@ static void pnv_lpc_mmio_write(void *opaque, hwaddr addr,
-     }
- 
-     if (result != MEMTX_OK) {
-+        pnv_lpc_opb_noresponse(lpc);
-         qemu_log_mask(LOG_GUEST_ERROR, "OPB write failed at @0x%"
-                       HWADDR_PRIx "\n", addr);
-     }
-@@ -511,6 +515,12 @@ static void pnv_lpc_eval_irqs(PnvLpcController *lpc)
-     qemu_set_irq(lpc->psi_irq_lpchc, lpc->opb_irq_stat != 0);
- }
- 
-+static void pnv_lpc_opb_noresponse(PnvLpcController *lpc)
-+{
-+    lpc->lpc_hc_irqstat |= LPC_HC_IRQ_SYNC_NORESP_ERR;
-+    pnv_lpc_eval_irqs(lpc);
-+}
-+
- static uint64_t lpc_hc_read(void *opaque, hwaddr addr, unsigned size)
- {
-     PnvLpcController *lpc = opaque;
+ #define TYPE_PNV_PNOR  "pnv-pnor"
+ OBJECT_DECLARE_SIMPLE_TYPE(PnvPnor, PNV_PNOR)
 -- 
 2.47.1
 
