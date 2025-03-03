@@ -4,76 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD59C282D0
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 19:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08437C282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 19:58:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpBdq-0001Wn-FG; Mon, 03 Mar 2025 14:39:54 -0500
+	id 1tpBuh-0006f5-AY; Mon, 03 Mar 2025 14:57:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tpBdk-0001Vt-Tx
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:39:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tpBdg-000854-Cv
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:39:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741030775;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LW0FAYiX35mfGCYALTAhPBtlmhtOHKLfz0gUh5zifew=;
- b=epPWbtUZziyjgVkwMSWNc+QLGK5UNHSQK32Eb7klLX/XTBoMcykMnIB9VrX+9EtAM7KC50
- q1fiuUUul35m+UE1psCKPR2xeBP8UJedu2tMscjiDzDJ2L03d+vft6Qyks72RFuHOt1xvH
- gDxyT/1WdeDYEG3uThWVx1lA0YLQJhg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-104-XzpVuNqHMiq1_45cbAHEcg-1; Mon,
- 03 Mar 2025 14:39:22 -0500
-X-MC-Unique: XzpVuNqHMiq1_45cbAHEcg-1
-X-Mimecast-MFC-AGG-ID: XzpVuNqHMiq1_45cbAHEcg_1741030761
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 63CFB1954B20; Mon,  3 Mar 2025 19:39:20 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F08E11800361; Mon,  3 Mar 2025 19:39:18 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7184021E675F; Mon, 03 Mar 2025 20:39:16 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH] scripts/checkpatch: Fix a typo
-In-Reply-To: <114e31e0-2085-4843-9ef2-3539d53eefd5@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 3 Mar 2025 18:35:06
- +0100")
-References: <20250303172508.93234-1-philmd@linaro.org>
- <114e31e0-2085-4843-9ef2-3539d53eefd5@linaro.org>
-Date: Mon, 03 Mar 2025 20:39:16 +0100
-Message-ID: <8734ft3nvf.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tpBuK-0006YC-53
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:56:59 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tpBuG-0002cy-Ls
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:56:55 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4398e3dfc66so43920445e9.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 11:56:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741031809; x=1741636609; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fd0Pge+LQMofC6BhAVzK4AO8A0rGptnTNZXMGBhg59U=;
+ b=dbsusJaOqL/G0O9GlQBGYWAtGTcymHjtSPWIErpvTxxNR+ouI4vY5RaAEEePGvOXOO
+ MT2GYKDzjIcP8ZhLPy7p8JFEPd9LOn9irZVRSNv+0UgavUSIdHWoB4afcXoX0/PECayc
+ hzpTqHKozz2IhWcGi//TFmvS2NIykfW/45lYlSaOuF2B18YcPkFlTa1kmwKQ0uLXbdfZ
+ xJIMG21s41CBxI56OlyiXbDHjT/cy9yk+2Hj7sBjVPT2fJiPqJkWjN2wgFpdda4vLY5y
+ ukQMHFcq1bJUCQ+hFPouBhPAJl9FYuRaVKMJP78RmTNFb4x8MmiyK1VVsVgax+lCI/bA
+ 7cnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741031809; x=1741636609;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fd0Pge+LQMofC6BhAVzK4AO8A0rGptnTNZXMGBhg59U=;
+ b=vOAr05pTX/r1qNJe04RZxZuJRNDHc20RDwl/l0XclmuUWufhJDKzSqDgOA0LQGaZyU
+ 7ubhgbP6VUlSYMey112JEgQkGyaMm53w+3alCDBBJg6F82/mpHsD3XNHl9dJY/NNp02p
+ NtjaQhg8/gGhGgeHQCAGYVaAfQkZn9TPXo6Fvm3lfntxjbqCfKMoy3wUwnfQZJqumrZ3
+ uy9ALLtebG8BUzaIsuKEDgp1m9VZf9AxkX7BXjlGG9KF8J4+RoUsZR7ueXWiWeLaVssO
+ AYmwi9dhZ1NB/F2BoOtzOQO6w/RniQ3eQQJjDeo9GAV2opHP2YXZmkESaYlUkwg+7gn9
+ Q8iw==
+X-Gm-Message-State: AOJu0YwhyMZPKehrCksoB2tdlIWyG9S2B03NEqsVCTev6kJMWPHyZ7E0
+ 8j+6bMEPs+VIJjtC1up22/4D92EcT+er20RLEv6Kcdl7TRQlWSYk/9QTmuoB1DE=
+X-Gm-Gg: ASbGncvJ3gatiW6eo9Al6kfg9SZYpz1m715tLImPQWMGL/arIOgBBFYvq4hDj/Ih4P7
+ jpngw64HeD2E4UKnmpzqZBnU+NMeZGpQJ/tOaHidUQmBaEiT39JTakIquZU2aem/tUAyePVumIF
+ W+9enTt1JA6BdQaN/hxlHiP5h7OpzwG1oNXUtgJydlC2axHRsxRfVPeIJUiKgist+EYC/ipJPwd
+ QQvZnLVCZ6R5hff4/LhS0jLSZivGYIXgrCNMHt070d+d/o3BFodArh1DUnThaNK8ja8gGjI+2LW
+ DCVqElbIrAq+WCCfHBl8p61KZCm8rAryyirithngNIyiiGw=
+X-Google-Smtp-Source: AGHT+IHxKPdL8pEHpP4/K0dvs5DWLOSULhGxByHRsxDJk1swJ3rL6qY+1wuE9e1gLFIar5BbQKuOPQ==
+X-Received: by 2002:a05:600c:4f86:b0:43b:ca39:a9ca with SMTP id
+ 5b1f17b1804b1-43bca39ac88mr14950285e9.16.1741031808919; 
+ Mon, 03 Mar 2025 11:56:48 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bc63bcaafsm30626415e9.28.2025.03.03.11.56.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Mar 2025 11:56:48 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 857CF5F938;
+ Mon,  3 Mar 2025 19:56:47 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  Troy Lee <leetroy@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  qemu-arm@nongnu.org,  =?utf-8?Q?C?=
+ =?utf-8?Q?=C3=A9dric?= Le
+ Goater <clg@kaod.org>,  Steven Lee <steven_lee@aspeedtech.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  Niek Linnenbank
+ <nieklinnenbank@gmail.com>,  Alistair Francis <alistair@alistair23.me>,
+ Joel Stanley <joel@jms.id.au>,  Andrew Jeffery
+ <andrew@codeconstruct.com.au>,  Jamin Lin <jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH] tests/functional: add boot error detection for RME tests
+In-Reply-To: <20250303185745.2504842-1-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 3 Mar 2025 10:57:45 -0800")
+References: <20250303185745.2504842-1-pierrick.bouvier@linaro.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Mon, 03 Mar 2025 19:56:47 +0000
+Message-ID: <875xkp7urk.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,42 +110,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> On 3/3/25 18:25, Philippe Mathieu-Daud=C3=A9 wrote:
->> When running checkpatch.pl on a commit adding a file without
->> SPDX tag we get:
->>    Undefined subroutine &main::WARNING called at ./scripts/checkpatch.pl=
- line 1694.
->> The WARNING level is reported by the WARN() method. Fix the typo.
->> Fixes: fa4d79c64da ("scripts: mandate that new files have SPDX-License-I=
-dentifier")
->> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->> ---
->> Possible candidate to apply on /master as buildfix
+> It was identified that those tests randomly fail with a synchronous
+> exception at boot (reported by EDK2).
+> While we solve this problem, report failure immediately so tests don't
+> timeout in CI.
 >
-> buildfix: because otherwise everybody running checkpatch and adding
-> new file without SPDX tag will have to debug checkpatch.pl.
->
->> ---
->>   scripts/checkpatch.pl | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
->> index 83b59fb4436..6ae9d7febee 100755
->> --- a/scripts/checkpatch.pl
->> +++ b/scripts/checkpatch.pl
->> @@ -1691,8 +1691,8 @@ sub process {
->>   				  "'SPDX-License-Identifer'");
->>   			} else {
->>   			    # Other files MAY have SPDX license if appropriate
->> -			    WARNING("Does new file '$expect_spdx_file' need " .
->> -				    "'SPDX-License-Identifer'?");
->> +			    WARN("Does new file '$expect_spdx_file' need " .
->> +				 "'SPDX-License-Identifer'?");
->>   			}
->>   		    }
->>   		    $expect_spdx =3D 1;
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Queued to maintainer/for-10.0-softfreeze, thanks.
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
