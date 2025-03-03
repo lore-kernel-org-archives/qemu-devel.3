@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C460C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87FDAC282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp9zK-0002ie-9b; Mon, 03 Mar 2025 12:53:58 -0500
+	id 1tp9zK-0002op-VU; Mon, 03 Mar 2025 12:53:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tp9y9-0001aA-MV
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:51 -0500
-Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
+ id 1tp9y5-0001Yg-NO
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:45 -0500
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tp9y7-0000K7-EC
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:45 -0500
-Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-2234bec7192so71439275ad.2
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 09:52:42 -0800 (PST)
+ id 1tp9y3-0000J9-B5
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:41 -0500
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-223959039f4so37462555ad.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 09:52:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741024362; x=1741629162; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741024355; x=1741629155; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ypBKTzocjelNd1zk+Kq7I1Qv1eqMSc9ppcbAV4fLn6U=;
- b=AI4zCAw85SNSV7bNJ6UX3RP4F887rOwjXg34wb+UYT7oou7rMUJRjqO4Nb3SUx7pzC
- v/iFDZhAb5aGyZPrKIAhvMOCyK50USRD0xcFeMI9j0+jiCc3TkeILAlPB3NR3mM3W7Du
- 6AmmJffy1EJCfQJ5nx7iPbgYx0uTJt2hzpSoDGp6Wcc4GZB0BDSsVDS7EchmBQzGLHUZ
- nerofosU4AgV9yjaRT+MprUEDY/EBGizoZ62+N5yuI/4wp3QTVlkphZsbV8qe1OxWq3b
- jrx9enKtK/psoz92lgMjlp0Jw1gIisdmK6t4sjvzphfmVmxZMQmNkt23o7n6g8cD3wV1
- 0njQ==
+ bh=Mvd2byRBLj1EWurRow3kwEAQYrHkAuspw1kE35aVtA8=;
+ b=VDAmKuNOpzN/vJn2ayzVCQ88IcFj2JcXtGGr4INrMZCQdmrHfHw+pheAJx7mW8/Ulb
+ du8io2ChfASk0xDX9xynewaQNa9LqwGCYzLbb8t/MH5HZf5/Udn6QGYDWEmc867eWctZ
+ FTzsVKzZ036FKNpkWmR8BI9P0HltW8j6XnpluWhmzOkDmk5Fi0q0kMHxNGpMtRoJcbyd
+ QpUzV5JhXs2GS32aWstqlIesL6WNdC/jBXZrhC5LiczP6v5cODyfQ71COrf9JdV0b549
+ NwXq9k3GF1FIm3rlpmyqYu+HCwjBjL6/vUQ1TEfOomm3J0yaPqpIbZHYHoajd98L/1t/
+ V5/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741024362; x=1741629162;
+ d=1e100.net; s=20230601; t=1741024355; x=1741629155;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ypBKTzocjelNd1zk+Kq7I1Qv1eqMSc9ppcbAV4fLn6U=;
- b=NxV+ucydVn83Nq6tmzgYscspy0o2xzIAjTYBYD8SMOK5/CgULdnZ3FNEJqYO9ETbfp
- yERBCodUm5cCJCq9QWRrKG/80ckeU5FK7jmtdqa32yM1+bvdhMWMyOk4pCUtELMi2jS6
- d/AEZiFpqsTWXFaVAYawVg4KqarShrx8al0aKjO3YUnSvSDVSltwCpxMZ2h8LtBngAdA
- NFrJb1a0O8yi3jMlnN5NkI3VMlCVOLsJpxtEKAkLWAzN5AoCdu44q4VjRdgty0U1HpRm
- tFh58PtHYm76/5pH/ifFwNnAVzd+sq12l+96UThRrvVei8DftKw6zww+cRV6zp10xxlH
- zx5w==
-X-Gm-Message-State: AOJu0YyTOI3nKEMOPlDglYo3nF70aoVcdVCw3a/HwcJARFM9n2V5lTht
- qH1VyXLRDeGRjjFx6acuuaMRE6xfcva7Ja0graLaf0lIabn/feQ=
-X-Gm-Gg: ASbGncuTdBdJbk+ZBWVYvLgL6yALM0d8ZnU/KkT+/Kd9BrC2Cu3gZU2iYyN2n7CECHi
- eGOP7vpBS2xLVCNWAI7BJiEV9XIgUfA184I7sfV4Sx/IzAEQLB+xl4tE7/sphWchBjqroYXqYIw
- ZGWXds6eSKLUwkoY4fIpcwRigUeDtRRimVTZJ2cq86mqfYpPkO8XarzOaOXmLamqZVAf8pwp74G
- UbDBa3si1Lld8O/N7xUx042CMTiCvQfpVOFiU9ij7qzCLn3zydC1v3KA19fC6YT020OaE5bWNIv
- j5qvEjx0YgHPtsLlC4ZKIGDdYVkG0bmMQS/iF4SwyVCFZOqulFbm4CAz+w==
-X-Google-Smtp-Source: AGHT+IHdB2eTDWixMyLLdhk2WhA3vX//+QRGtGh632k+IoYI7+y5yfrJVP5H1fxLJQcAoekVQU7i5g==
-X-Received: by 2002:a17:903:1252:b0:223:26da:4b6f with SMTP id
- d9443c01a7336-22368f74891mr234558535ad.14.1741024361980; 
- Mon, 03 Mar 2025 09:52:41 -0800 (PST)
+ bh=Mvd2byRBLj1EWurRow3kwEAQYrHkAuspw1kE35aVtA8=;
+ b=EQ+V96d5LJvgf6hlrjkfbqppDierW2q1X8C1nl7Q39BOd31D1kbtFzTAq22Sliiv/4
+ K47powPK88JdMpwkIkpZR/IxMlw3jQchHjEOAMgIUNFt5IaLSG7qIlVQwBqxpJn8mDUs
+ Ybm+GljoRncPDssw75qFe6P/wM4Bf1IpXX3OIur6iGysh/eKu6knzv15aNKm0bTuf+P4
+ aGhgNx9cpx9Cz4slxIpclE0LUf7QFH5Gpxi4IaBOU3A/CB6TIbk3RcAaOrtkv2LUvpsc
+ dCeVeYuwEx2T/VS9QuVD2uJdNEzHzgAQwEPZs6SoR2hqkd73zOMuzdCfSY9EVGAOffL3
+ wpUw==
+X-Gm-Message-State: AOJu0Yx2dspGfq9CmtlsFruiS+YQJsbmWFOVNi5VRf3IxFOcHdIIFA32
+ gV2H76A9/8VeU51Wc+97W4PrN+mtiTmAcz5gTfBcC/0SxSQ2IrAfmutsit6ylA==
+X-Gm-Gg: ASbGncuwUAq5N2o6fGP09DKkcsGaGoeKvCgMBp1mCGyubNcaOAWJLH0hUbpB4RJaDTr
+ MdekuWQjmJD64jd0BtuI5N5so7e/UN8JQ2U+r6VdK+HkLUb8A7APxvFC9dbcCb7boAzRjrj+86v
+ RQH4OZ9eNPcK5U6R5nO4H4fVRIlj0lWIZD4oSbFXxpHPvdF60DFwFvbFmka0NY7nQb/Z3u0zkx0
+ AjnDlSI3rXa0UkxQXIkti+ziPfO+PFlHEcALaBTB2R1v9EBMdvoAOLgigzyVben2qg6dA/c3JWM
+ IHQsb56pu/C/OSwBUnIak+XMHCnz0lWH04xfqS20uPXgrhs/tfAKMwRHiw==
+X-Google-Smtp-Source: AGHT+IHzJS1tsyugZrX3KjEkCdkosAbjgjnSWifoNETh+SRLwxEZa6eyhUAm66s4d1YAjuq7ABk6NA==
+X-Received: by 2002:a17:902:c951:b0:21c:1140:136c with SMTP id
+ d9443c01a7336-22368f6a15cmr200767725ad.3.1741024355016; 
+ Mon, 03 Mar 2025 09:52:35 -0800 (PST)
 Received: from localhost.localdomain ([58.37.175.138])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2235052beaasm80625535ad.233.2025.03.03.09.52.40
+ d9443c01a7336-2235052beaasm80625535ad.233.2025.03.03.09.52.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Mar 2025 09:52:41 -0800 (PST)
+ Mon, 03 Mar 2025 09:52:34 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>,
  Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v2 7/9] vfio/igd: Decouple common quirks from legacy mode
-Date: Tue,  4 Mar 2025 01:52:17 +0800
-Message-ID: <20250303175220.74917-8-tomitamoeko@gmail.com>
+Subject: [PATCH v2 4/9] vfio/igd: Move LPC bridge initialization to a separate
+ function
+Date: Tue,  4 Mar 2025 01:52:14 +0800
+Message-ID: <20250303175220.74917-5-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250303175220.74917-1-tomitamoeko@gmail.com>
 References: <20250303175220.74917-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,218 +102,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far, IGD-specific quirks all require enabling legacy mode, which is
-toggled by assigning IGD to 00:02.0. However, some quirks, like the BDSM
-and GGC register quirks, should be applied to all supported IGD devices.
-A new feature bit, VFIO_FEATURE_ENABLE_IGD_LEGACY_MODE, is introduced to
-control the legacy mode only quirks.
-
-To maintain backward compatibilty, this bit is set by default, but
-legacy mode is only enabled when:
-- Machine type is i440fx
-- IGD device is at guest BDF 00:02.0
-- Not manually disabled by x-igd-legacy-mode=off
-
-Note that QEMU will now fail immediately if any error occurs when
-setting up legacy mode, instead of simply continues like before. If
-legacy mode is unwanted, it can be explicitly disabled by
-x-igd-legacy-mode=off.
-
-Additionally, the hotplug check in legacy mode is removed as it will be
-checked when enabling the OpRegion quirk.
+A new option will soon be introduced to decouple the LPC bridge/Host
+bridge ID quirk from legacy mode. To prepare for this, move the LPC
+bridge initialization into a separate function.
 
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 ---
- hw/vfio/igd.c | 108 +++++++++++++++++++++++++-------------------------
- hw/vfio/pci.c |   2 +
- hw/vfio/pci.h |   3 ++
- 3 files changed, 59 insertions(+), 54 deletions(-)
+ hw/vfio/igd.c | 122 +++++++++++++++++++++++++++++---------------------
+ 1 file changed, 70 insertions(+), 52 deletions(-)
 
 diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index f5e19f1241..40f5803be9 100644
+index 50e4007abe..9d2b761d1d 100644
 --- a/hw/vfio/igd.c
 +++ b/hw/vfio/igd.c
-@@ -15,6 +15,7 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qapi/qmp/qerror.h"
-+#include "hw/boards.h"
- #include "hw/hw.h"
- #include "hw/nvram/fw_cfg.h"
- #include "pci.h"
-@@ -432,9 +433,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-      * bus address.
-      */
-     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
--        !vfio_is_vga(vdev) || nr != 0 ||
--        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
--                                       0, PCI_DEVFN(0x2, 0))) {
-+        !vfio_is_vga(vdev) || nr != 0) {
-         return;
-     }
- 
-@@ -482,15 +481,12 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
+@@ -351,6 +351,72 @@ static int vfio_pci_igd_lpc_init(VFIOPCIDevice *vdev,
+     return ret;
  }
  
--bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
--                                 Error **errp G_GNUC_UNUSED)
-+bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
++static bool vfio_pci_igd_setup_lpc_bridge(VFIOPCIDevice *vdev, Error **errp)
++{
++    g_autofree struct vfio_region_info *host = NULL;
++    g_autofree struct vfio_region_info *lpc = NULL;
++    PCIDevice *lpc_bridge;
++    int ret;
++
++    /*
++     * Copying IDs or creating new devices are not supported on hotplug
++     */
++    if (vdev->pdev.qdev.hotplugged) {
++        error_setg(errp, "IGD LPC is not supported on hotplugged device");
++        return false;
++    }
++
++    /*
++     * We need to create an LPC/ISA bridge at PCI bus address 00:1f.0 that we
++     * can stuff host values into, so if there's already one there and it's not
++     * one we can hack on, this quirk is no-go.  Sorry Q35.
++     */
++    lpc_bridge = pci_find_device(pci_device_root_bus(&vdev->pdev),
++                                 0, PCI_DEVFN(0x1f, 0));
++    if (lpc_bridge && !object_dynamic_cast(OBJECT(lpc_bridge),
++                                           "vfio-pci-igd-lpc-bridge")) {
++        error_setg(errp,
++                   "Cannot create LPC bridge due to existing device at 1f.0");
++        return false;
++    }
++
++    /*
++     * Check whether we have all the vfio device specific regions to
++     * support LPC quirk (added in Linux v4.6).
++     */
++    ret = vfio_get_dev_region_info(&vdev->vbasedev,
++                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
++                        VFIO_REGION_SUBTYPE_INTEL_IGD_LPC_CFG, &lpc);
++    if (ret) {
++        error_setg(errp, "IGD LPC bridge access is not supported by kernel");
++        return false;
++    }
++
++    ret = vfio_get_dev_region_info(&vdev->vbasedev,
++                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
++                        VFIO_REGION_SUBTYPE_INTEL_IGD_HOST_CFG, &host);
++    if (ret) {
++        error_setg(errp, "IGD host bridge access is not supported by kernel");
++        return false;
++    }
++
++    /* Create/modify LPC bridge */
++    ret = vfio_pci_igd_lpc_init(vdev, lpc);
++    if (ret) {
++        error_setg(errp, "Failed to create/modify LPC bridge for IGD");
++        return false;
++    }
++
++    /* Stuff some host values into the VM PCI host bridge */
++    ret = vfio_pci_igd_host_init(vdev, host);
++    if (ret) {
++        error_setg(errp, "Failed to modify host bridge for IGD");
++        return false;
++    }
++
++    return true;
++}
++
+ #define IGD_GGC_MMIO_OFFSET     0x108040
+ #define IGD_BDSM_MMIO_OFFSET    0x1080C0
+ 
+@@ -419,9 +485,6 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
  {
--    g_autofree struct vfio_region_info *rom = NULL;
+     g_autofree struct vfio_region_info *rom = NULL;
+-    g_autofree struct vfio_region_info *host = NULL;
+-    g_autofree struct vfio_region_info *lpc = NULL;
+-    PCIDevice *lpc_bridge;
      int ret, gen;
      uint64_t gms_size;
      uint64_t *bdsm_size;
-     uint32_t gmch;
--    Error *err = NULL;
- 
-     /*
-      * This must be an Intel VGA device at address 00:02.0 for us to even
-@@ -498,9 +494,7 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
-      * PCI bus address.
-      */
-     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
--        !vfio_is_vga(vdev) ||
--        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
--                                       0, PCI_DEVFN(0x2, 0))) {
-+        !vfio_is_vga(vdev)) {
-         return true;
-     }
- 
-@@ -516,56 +510,62 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
-         return true;
+@@ -440,20 +503,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         return;
      }
  
 -    /*
--     * Most of what we're doing here is to enable the ROM to run, so if
--     * there's no ROM, there's no point in setting up this quirk.
--     * NB. We only seem to get BIOS ROMs, so a UEFI VM would need CSM support.
+-     * We need to create an LPC/ISA bridge at PCI bus address 00:1f.0 that we
+-     * can stuff host values into, so if there's already one there and it's not
+-     * one we can hack on, legacy mode is no-go.  Sorry Q35.
 -     */
--    ret = vfio_get_region_info(&vdev->vbasedev,
--                               VFIO_PCI_ROM_REGION_INDEX, &rom);
--    if ((ret || !rom->size) && !vdev->pdev.romfile) {
--        error_report("IGD device %s has no ROM, legacy mode disabled",
--                     vdev->vbasedev.name);
--        return true;
+-    lpc_bridge = pci_find_device(pci_device_root_bus(&vdev->pdev),
+-                                 0, PCI_DEVFN(0x1f, 0));
+-    if (lpc_bridge && !object_dynamic_cast(OBJECT(lpc_bridge),
+-                                           "vfio-pci-igd-lpc-bridge")) {
+-        error_report("IGD device %s cannot support legacy mode due to existing "
+-                     "devices at address 1f.0", vdev->vbasedev.name);
+-        return;
 -    }
 -
+     /*
+      * IGD is not a standard, they like to change their specs often.  We
+      * only attempt to support back to SandBridge and we hope that newer
+@@ -490,28 +539,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         return;
+     }
+ 
 -    /*
--     * Ignore the hotplug corner case, mark the ROM failed, we can't
--     * create the devices we need for legacy mode in the hotplug scenario.
+-     * Check whether we have all the vfio device specific regions to
+-     * support legacy mode (added in Linux v4.6).  If not, bail.
 -     */
--    if (vdev->pdev.qdev.hotplugged) {
--        error_report("IGD device %s hotplugged, ROM disabled, "
+-    ret = vfio_get_dev_region_info(&vdev->vbasedev,
+-                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+-                        VFIO_REGION_SUBTYPE_INTEL_IGD_HOST_CFG, &host);
+-    if (ret) {
+-        error_report("IGD device %s does not support host bridge access,"
 -                     "legacy mode disabled", vdev->vbasedev.name);
--        vdev->rom_read_failed = true;
--        return true;
+-        return;
+-    }
+-
+-    ret = vfio_get_dev_region_info(&vdev->vbasedev,
+-                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+-                        VFIO_REGION_SUBTYPE_INTEL_IGD_LPC_CFG, &lpc);
+-    if (ret) {
+-        error_report("IGD device %s does not support LPC bridge access,"
+-                     "legacy mode disabled", vdev->vbasedev.name);
+-        return;
 -    }
 -
      gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, 4);
  
      /*
--     * If IGD VGA Disable is clear (expected) and VGA is not already enabled,
--     * try to enable it.  Probably shouldn't be using legacy mode without VGA,
--     * but also no point in us enabling VGA if disabled in hardware.
-+     * For backward compatibilty, enable legacy mode when
-+     * - Machine type is i440fx (pc_piix)
-+     * - IGD device is at guest BDF 00:02.0
-+     * - Not manually disabled by x-igd-legacy-mode=off
-      */
--    if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, &err)) {
--        error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
--        error_report("IGD device %s failed to enable VGA access, "
--                     "legacy mode disabled", vdev->vbasedev.name);
--        return true;
--    }
-+    if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_LEGACY_MODE) &&
-+        !strcmp(MACHINE_GET_CLASS(qdev_get_machine())->family, "pc_piix") &&
-+        (&vdev->pdev == pci_find_device(pci_device_root_bus(&vdev->pdev),
-+        0, PCI_DEVFN(0x2, 0)))) {
-+        /*
-+         * IGD legacy mode requires:
-+         * - VBIOS in ROM BAR or file
-+         * - VGA IO/MMIO ranges are claimed by IGD
-+         * - OpRegion
-+         * - Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
-+         */
-+        g_autofree struct vfio_region_info *rom = NULL;
-+
-+        warn_report("IGD legacy mode enabled, "
-+                    "use x-igd-legacy-mode=off to disable it if unwanted.");
-+
-+        /*
-+         * Most of what we're doing here is to enable the ROM to run, so if
-+         * there's no ROM, there's no point in setting up this quirk.
-+         * NB. We only seem to get BIOS ROMs, so UEFI VM would need CSM support.
-+         */
-+        ret = vfio_get_region_info(&vdev->vbasedev,
-+                                   VFIO_PCI_ROM_REGION_INDEX, &rom);
-+        if ((ret || !rom->size) && !vdev->pdev.romfile) {
-+            error_setg(errp, "Device has no ROM");
-+            return false;
-+        }
- 
--    /* Setup OpRegion access */
--    if (!vfio_pci_igd_setup_opregion(vdev, &err)) {
--        error_append_hint(&err, "IGD legacy mode disabled\n");
--        error_report_err(err);
--        return true;
--    }
-+        /*
-+         * If IGD VGA Disable is clear (expected) and VGA is not already
-+         * enabled, try to enable it. Probably shouldn't be using legacy mode
-+         * without VGA, but also no point in us enabling VGA if disabled in
-+         * hardware.
-+         */
-+        if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, errp)) {
-+            error_setg(errp, "Unable to enable VGA access");
-+            return false;
-+        }
- 
--    /* Setup LPC bridge / Host bridge PCI IDs */
--    if (!vfio_pci_igd_setup_lpc_bridge(vdev, &err)) {
--        error_append_hint(&err, "IGD legacy mode disabled\n");
--        error_report_err(err);
--        return true;
-+        /* Setup OpRegion access */
-+        if (!vfio_pci_igd_setup_opregion(vdev, errp)) {
-+            return false;
-+        }
-+
-+        /* Setup LPC bridge / Host bridge PCI IDs */
-+        if (!vfio_pci_igd_setup_lpc_bridge(vdev, errp)) {
-+            return false;
-+        }
+@@ -533,19 +560,10 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         return;
      }
  
-     /*
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index a58d555934..b0620a0ae8 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3363,6 +3363,8 @@ static const Property vfio_pci_dev_properties[] = {
-                     VFIO_FEATURE_ENABLE_REQ_BIT, true),
-     DEFINE_PROP_BIT("x-igd-opregion", VFIOPCIDevice, features,
-                     VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
-+    DEFINE_PROP_BIT("x-igd-legacy-mode", VFIOPCIDevice, features,
-+                    VFIO_FEATURE_ENABLE_IGD_LEGACY_MODE_BIT, true),
-     DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
-                             vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 2e81f9eb19..b7b07644a8 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -154,6 +154,9 @@ struct VFIOPCIDevice {
- #define VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT 2
- #define VFIO_FEATURE_ENABLE_IGD_OPREGION \
-                                 (1 << VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT)
-+#define VFIO_FEATURE_ENABLE_IGD_LEGACY_MODE_BIT 4
-+#define VFIO_FEATURE_ENABLE_IGD_LEGACY_MODE \
-+                                (1 << VFIO_FEATURE_ENABLE_IGD_LEGACY_MODE_BIT)
-     OnOffAuto display;
-     uint32_t display_xres;
-     uint32_t display_yres;
+-    /* Create our LPC/ISA bridge */
+-    ret = vfio_pci_igd_lpc_init(vdev, lpc);
+-    if (ret) {
+-        error_report("IGD device %s failed to create LPC bridge, "
+-                     "legacy mode disabled", vdev->vbasedev.name);
+-        return;
+-    }
+-
+-    /* Stuff some host values into the VM PCI host bridge */
+-    ret = vfio_pci_igd_host_init(vdev, host);
+-    if (ret) {
+-        error_report("IGD device %s failed to modify host bridge, "
+-                     "legacy mode disabled", vdev->vbasedev.name);
++    /* Setup LPC bridge / Host bridge PCI IDs */
++    if (!vfio_pci_igd_setup_lpc_bridge(vdev, &err)) {
++        error_append_hint(&err, "IGD legacy mode disabled\n");
++        error_report_err(err);
+         return;
+     }
+ 
 -- 
 2.47.2
 
