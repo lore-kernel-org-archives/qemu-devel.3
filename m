@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85DBCC282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 03:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D15C282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 05:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1towm4-0005lT-FQ; Sun, 02 Mar 2025 22:47:24 -0500
+	id 1toyFe-0003i6-Co; Mon, 03 Mar 2025 00:22:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1towm2-0005lB-Lp; Sun, 02 Mar 2025 22:47:22 -0500
-Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
+ id 1toyFY-0003hS-Dq; Mon, 03 Mar 2025 00:21:57 -0500
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1towm0-0001Lf-OV; Sun, 02 Mar 2025 22:47:21 -0500
-Received: by mail-vk1-xa33.google.com with SMTP id
- 71dfb90a1353d-5238b366e2aso670205e0c.2; 
- Sun, 02 Mar 2025 19:47:20 -0800 (PST)
+ id 1toyFW-0004yg-Re; Mon, 03 Mar 2025 00:21:56 -0500
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-86b3bd4d0faso1408579241.3; 
+ Sun, 02 Mar 2025 21:21:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740973639; x=1741578439; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740979313; x=1741584113; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bnc45QwpSiCOIZucKqCSWUjL1Y/kGJU2Ns9Qg4GV0wc=;
- b=Ov673oGFpwgaqTXmegHXoSvmgqCBjlgFJJDju2VZmpjxYcrIhVwvSMLVbSmc4kBrDE
- Elb4ve7i+AVhFuQpvk3/jz6me67I6fUjMQyoaqBCDQP2kIaiBc9kjbGpO8FmarEK0Uxs
- 6FgXoEKcSvttJZdS/i2CoPe3paS5YGGFYs5Yy/an9fnlATJoh3RAZ7TEjzmJqr/F+rC+
- I90evGrkGyy9fw0YUaZwmcHpcNVNn9BrL6wkU3lsjumoQ7aVP95lnX7OJdMAVu9YHRhd
- F0GFugpb95aREMAvWWT8HJGi4aTAOQy/7Yh49XkKp3064+K5nUj3QMu7JYaU2L3u0EPK
- C3og==
+ bh=OgpiujYnj9Kxi0GIjb5Vxf0uSrOTMAMZGpoKopQYj8c=;
+ b=Ks7K8vwv9Q7h+Id6GAxsAKCvNhXzXuTLaWZMgsDGbiJJPD3Hc6eRWfxqDGmd7vNj/C
+ 3OALykbAp67izopzNIp8eflaWuYwhln4JlOxAdSgNCffDmx3Wp8GlwHu1kf6N7oFhioG
+ iEikZIzCI7UPYFqH9QXsrzVWt9vN6ywFSS8mCfylKvSay3AytPj6HNdBv/mxR4dqi/Ti
+ 5EruQW8NAoVWQome0G9eEiF4kfoLEmq0PmaoeUpDl5ApEyb+f1y2hpuUfvxcLPnB4kSt
+ JYP7XHehjePn4vAl/mcbt++UIi9bXarBY5PzaEyV5F/lM3LwZnpprBYohZEw7x5HHc1j
+ V/zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740973639; x=1741578439;
+ d=1e100.net; s=20230601; t=1740979313; x=1741584113;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bnc45QwpSiCOIZucKqCSWUjL1Y/kGJU2Ns9Qg4GV0wc=;
- b=hQ60S1TJ5L+HqUd3c6B6ELm+rAPVZWYfCFIOtd2yjAXtCj+dILSYwOILRWewKdtFPl
- +xGUTaeaPNiM3UqNDPFVq6y5OoEwr1hM5wgO6vJ6AtJIoVgde5D7CK0x6QLC2HlKnn37
- qa8eYTrZgBmyz2Z7yz9fcy3MCNvfSPkIUtO2x5mpjdxgV9Vfnt+wgEi5z9EEoJEU1SNO
- pYwGQaiRt0OCSXRle7xnmjOsT8VrwRE0UCRcUSGR+nGlZWIoOyljMkxPdaH7wtgY1ZqC
- hITj3AJWBK1Mz6QNXUOEmvby0WAwe2+50oaN+9UBCkNUxYx01t0AJMguYyGyIZjIUj7V
- 8LfQ==
+ bh=OgpiujYnj9Kxi0GIjb5Vxf0uSrOTMAMZGpoKopQYj8c=;
+ b=NQ0sFNfy5fGJjDGzQRuYlH/NeAuFLaVhPk9SPmhAdjjYUdycVWNjNu2NuDcKLkyYhd
+ EviMqvLIfNS2AkMoc7PBiKZueNhseeMTEQru3c8XjGv3neqdfB0SawZ4KK3YResXOfLV
+ Il+CEZg2SWXog+D3AUNoeLkDugKQtd2WPkNKgwNw/+5AEbTZdENlFLJEC1GrClZ4FAiI
+ PLl0g1KopJB7FbAPRZYSmp5PI0mnzx4NxV7Af15h7PSRwjEdMTzUdGF/1bP1L8w1/gL+
+ yE+v0bUXWA0W21DMhFJDKV/1YMPkJPhGp9I3/gihK0NMpHnnM1AEP+PGS4lSYziXzDuP
+ UOVA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2MlDu0o7TDPoOcSG8HA1NkIk4ncfgamUkCLCpNJo6CkKTZO8zhKcmmt7kPLSi27u6CjUdR5Je/vYy@nongnu.org
-X-Gm-Message-State: AOJu0YyOF22fwgaJ6qFxPR6la1NnA1qoAaFFir5dcS0ZJ/nE/VnbFaVy
- 0M7KfD57l7omaE/WaIWVNbC4IN6i3DXo5vBooi4PaQT1gTar7Q3RlFjnaqq057Pixjm616LLVyG
- VIL5gteiYX2aZY2LmbkCJapYGPFI=
-X-Gm-Gg: ASbGncvCOgvhyFjgQcp4YCY3U1wh4UDPW9Y9hDRCTuxbe5FVRH0s24DYbLQWssqSRwZ
- /zey4aOiPp6ECD/4ZVIIhEdLWwcK/Li+nys1nWTBBONx5JG8vvSiG4svG32jSfKxPTzvxb/bClh
- vaq7rCnI+FL3cLQGy2HWdK0rSKPUn5+RgcPI5R2Irk0ATck+fQLVKJky/1
-X-Google-Smtp-Source: AGHT+IGzgPOdt2ru7FPUmv16YDJtbfQY0WKOq1pMzzxmg+mjsE16QxDZWndGW04+d8ATeGzJ+X6vRm7XnvGgy1vQYlQ=
-X-Received: by 2002:a05:6102:5789:b0:4bb:c24b:b61a with SMTP id
- ada2fe7eead31-4c044d5c5edmr7758875137.19.1740973639285; Sun, 02 Mar 2025
- 19:47:19 -0800 (PST)
+ AJvYcCV4fu9cNJYOM7EPOOqFU3zWkNryH7wm3yhbC0gzNZT00/iApR1lTiUlHQCDKmoB2Y21NEQeTOXjjzqI@nongnu.org
+X-Gm-Message-State: AOJu0Yy7ditxi1lFEOidIlHOckW0swBbPXXycnuAiFl69JviZlNRGG3N
+ uZ3DqardtBmladybxq/qliCWjENP3txaPqDeucVutGph8eegNDsD16Zax7dBpv1+GSHmCW/5ns/
+ 6rSJJoTXxWv2jlcA+4JoWFtZA0ZU=
+X-Gm-Gg: ASbGncskKjoVJJrdIzr/98JI7yIHqDXyYmRRWg3HubSHOuEVj2Rvi+HOwBZ4vuv8tLX
+ IAx3KrsbUGM77zqP8SgXZJPKO0TMSBxKtR1SU8pnxPijDOjuxcfr4LC1/UpBiq421HVitOIXSc+
+ dAai/8iCUICYj3W6Yw8KjsJLK+3fT28tbtNthis48lF9WOetE6mh5QMECy
+X-Google-Smtp-Source: AGHT+IGL2vw9FzVv5erbVv79qj0eo7a7cV2Zhu1mCXf7hYR/ZV577h8GnJsFXbW8/cUs/NLHfDcb9ZvmcvhGQW+/npc=
+X-Received: by 2002:a05:6102:14a3:b0:4bb:d062:438 with SMTP id
+ ada2fe7eead31-4c044858c74mr7404050137.1.1740979313127; Sun, 02 Mar 2025
+ 21:21:53 -0800 (PST)
 MIME-Version: 1.0
 References: <20250224123120.1644186-1-dbarboza@ventanamicro.com>
- <20250224123120.1644186-4-dbarboza@ventanamicro.com>
-In-Reply-To: <20250224123120.1644186-4-dbarboza@ventanamicro.com>
+In-Reply-To: <20250224123120.1644186-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 3 Mar 2025 13:46:53 +1000
-X-Gm-Features: AQ5f1JrZnkb0KHxLx7c22nSdCTwkqu_MqOTIlEnUp81mRAjDxIQcPfurQoYLetU
-Message-ID: <CAKmqyKNmpRA8kphbWnA-AqTSUSGf+koSbCmuk6VgZEWde2NFBw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] target/riscv/kvm: add missing KVM CSRs
+Date: Mon, 3 Mar 2025 15:21:26 +1000
+X-Gm-Features: AQ5f1Jpl5yVIfPIdpmvvd6cCtVO_jLs0YxkFrsjdvyQGwAP5zwzCV7MeIYw6Hw8
+Message-ID: <CAKmqyKPiC2T8ajWXMX_OJJrMmQsmN9MJ_Xv+XMfb4YpdNTCQcA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] target/riscv/kvm: reset time changes
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com, ajones@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,52 +99,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, Feb 24, 2025 at 10:32=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> We're missing scounteren and senvcfg CSRs, both already present in the
-> KVM UAPI.
+> Hi,
 >
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+> In this version I rolled back on the riscv_cpu_reset_hold() changes made
+> in patch 1. Peter made an argument about keeping the design the same
+> across architectures and I agreed. Patches 2 and 3 are already taking
+> care of everything that KVM needs during reset, thus this doesn't incur
+> in any functional changes.
+>
+> Drew said it was ok to keep his ack on patch 1 so his ack is kept.
+>
+> Patches based on alistair/riscv-to-apply.next. All patches acked.
+>
+> Changes from v2:
+> - patch 1:
+>   - do not do an early exit in riscv_cpu_reset_hold() if kvm_enabled()
+> - v2 link: https://lore.kernel.org/qemu-riscv/20250221122623.495188-1-dba=
+rboza@ventanamicro.com/
+>
+>
+> Daniel Henrique Barboza (3):
+>   target/riscv/cpu: remove unneeded !kvm_enabled() check
+>   target/riscv/kvm: add kvm_riscv_reset_regs_csr()
+>   target/riscv/kvm: add missing KVM CSRs
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
->  target/riscv/kvm/kvm-cpu.c | 6 ++++++
->  1 file changed, 6 insertions(+)
 >
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index cabc34b6a2..e8c31a32d4 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -619,6 +619,8 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *e=
-nv)
->      env->stval =3D 0;
->      env->mip =3D 0;
->      env->satp =3D 0;
-> +    env->scounteren =3D 0;
-> +    env->senvcfg =3D 0;
->  }
+>  target/riscv/kvm/kvm-cpu.c | 32 +++++++++++++++++++++-----------
+>  1 file changed, 21 insertions(+), 11 deletions(-)
 >
->  static int kvm_riscv_get_regs_csr(CPUState *cs)
-> @@ -634,6 +636,8 @@ static int kvm_riscv_get_regs_csr(CPUState *cs)
->      KVM_RISCV_GET_CSR(cs, env, stval, env->stval);
->      KVM_RISCV_GET_CSR(cs, env, sip, env->mip);
->      KVM_RISCV_GET_CSR(cs, env, satp, env->satp);
-> +    KVM_RISCV_GET_CSR(cs, env, scounteren, env->scounteren);
-> +    KVM_RISCV_GET_CSR(cs, env, senvcfg, env->senvcfg);
->
->      return 0;
->  }
-> @@ -651,6 +655,8 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
->      KVM_RISCV_SET_CSR(cs, env, stval, env->stval);
->      KVM_RISCV_SET_CSR(cs, env, sip, env->mip);
->      KVM_RISCV_SET_CSR(cs, env, satp, env->satp);
-> +    KVM_RISCV_SET_CSR(cs, env, scounteren, env->scounteren);
-> +    KVM_RISCV_SET_CSR(cs, env, senvcfg, env->senvcfg);
->
->      return 0;
->  }
 > --
 > 2.48.1
 >
