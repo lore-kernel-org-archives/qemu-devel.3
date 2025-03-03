@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC09C282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31348C282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:16:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp2kV-0002qG-HF; Mon, 03 Mar 2025 05:10:13 -0500
+	id 1tp2px-00068w-2T; Mon, 03 Mar 2025 05:15:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1tp2k0-0002W0-NR
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:09:44 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tp2pq-000679-Qe; Mon, 03 Mar 2025 05:15:43 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1tp2jy-0003Mr-II
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:09:40 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-390ec7c2d40so2650224f8f.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 02:09:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tp2po-0004D1-4z; Mon, 03 Mar 2025 05:15:42 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-22356471820so64445105ad.0; 
+ Mon, 03 Mar 2025 02:15:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=vrull.eu; s=google; t=1740996575; x=1741601375; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740996938; x=1741601738; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VB4EA+GoraG4SscM9ds2AMb9vPcxtM1/M9OFPAdl16Q=;
- b=Mr9I+pm9XDWYlVum8rqbss3fTUAWSKD0x/vGwRX5rpZV3E5SqT7GPc0a+aO8vu4HeU
- pOSq+5e5SqmUT4vwVNCZMRjCdM2R3QEVaYi7LRPL9cCXFE71CoiAf0GQh9aKKyjhs+cZ
- gCihLFU63vlI9dG0oC8SQxPxXykqFXnOW+I+oTEpXIqBjysFX8c9MwtraJV4ZzISkIW8
- hq3IIt4gTBCDdbcKgNg4bmSu3vZfhcMBxgVD+9WcJOnFFa2VxMvlXiE+2Tui0FFRNo9g
- jBQ0uCHDMaSxKZ76e473BJ9ajMNNY+pApJd2lz/wGboZXwwcNXIOh1CgCmjjXFtIOp8m
- sCdw==
+ bh=YhHDXTMj4mBPvRzRPZdvjBQsq5i/QpxHZ825A0GYM2I=;
+ b=P5431ToiczDkD2g9X1SIUPiYzBXzD1YmdIykPilNtC4+ia8CHi7XhAgLawNn1+pTHA
+ RtJ1fKmkBO/mWcBISIxIs8ULB0tkGY/iisgSudJnVdy+BTnwR6iiMUZJ0WTXQzpGpWZL
+ QxnShLg6Kl/FKCl3GnKHGfxGQ3neHxK7QjlEBV9qo22vMYwg7GQR5PWp4vcOocbUS4zz
+ wCQAcntn35BfSC00LZ560R6LTYGrabUtADvDi3IylewbNYj3MXkTeUVxIlAWwVLBP7Jl
+ XRsaVnAESnUu/hldIiTYdyqwaFd/xkF+DZrmpEORbnkYISD/TWCYPkaIyhvphLR+k+lm
+ Ss8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740996575; x=1741601375;
+ d=1e100.net; s=20230601; t=1740996938; x=1741601738;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=VB4EA+GoraG4SscM9ds2AMb9vPcxtM1/M9OFPAdl16Q=;
- b=K4/ZJZLwV7a+VfblAXgcWoT1+CA44559vEyWO+7GUWSPTTmq2mjPpVz01whE30reqB
- Pp3pybzHnw3j37ni3RlLvnshwtaopJZQGBWNUVFNmumTSHLCYOt87+NtwKZ4N2rY+z1s
- MG/lAcBDKERXnsZ9VAbTlOyyUt38DTVQvMMOI2n52EtnOLKLewE76BowMeySBj3wLTQB
- USFZhWaJIT5XOYMUMVaEFMRexyZCl5vabyxxAKoMMVYTvCgQ3vrFQIFzeyixsfSRsZCr
- 7UipE+bVjE9V3YPorCaJrx2KWn3U5KPu1qZVbIOwLA+hpuhxWZHCzQZ1TBJypKXQFeV7
- 3B3g==
-X-Gm-Message-State: AOJu0YxZRq8NGvKa5gBmyl2tvZ/KfNoQ9oczqGcs3FUmwM95cG36w9de
- taeh7rQBKrZEhRDBqJM2xnOGQma1LmZNg9tDcUygLiL59lFEzbvWjQeFEmPSedSCv3gGn+QmfXl
- C
-X-Gm-Gg: ASbGncvAsQiK4Y0MxQORpBdsQXjKV4gHrv97dVXW2KgZf0OIux9Yr5rFHxy6EP/CWCK
- Gl4fcNDZ8qisqCGgjYY5xBYkrT9kU3HxUFFdWq/41E9qb/3VEf8+zTHN5yTivT38U2VuETDYuUY
- Wazm8QK9wghWy9P6J/QP5qpiKSQku2oC+L8ubWR77vb7AFVs0Mbtktn9rHe75WcMnPjrNsYphkv
- dD7uFGM8Bffo/Zz2rmIhcf0yyBOrkDhlTTdJQUNWPhmMKnhI9U0q7sMwlPxIjVdpUWTfARfvJCu
- PBaF2RdM9YTdsCk/knxrkU9+x6SSjwQ9rFjklBkv2QvHr3qf/pSWUwmOSzVodIS47aTa1Y9Qcim
- 1m0TKfGKlwHkNzuvC8qCgqlfSrVHP0g==
-X-Google-Smtp-Source: AGHT+IFYIjbu4uFelcFuT7RF0uWDEWga7nmqfjSVbcs6aD4VhPzqARjsMDPCJRp7jymSV8EEa/EuEA==
-X-Received: by 2002:a05:6000:156d:b0:390:e8e4:7e3e with SMTP id
- ffacd0b85a97d-390ec7c6065mr10196249f8f.6.1740996574862; 
- Mon, 03 Mar 2025 02:09:34 -0800 (PST)
-Received: from antares.fritz.box (62-178-148-172.cable.dynamic.surfer.at.
- [62.178.148.172]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47b7ddesm14130464f8f.57.2025.03.03.02.09.34
+ bh=YhHDXTMj4mBPvRzRPZdvjBQsq5i/QpxHZ825A0GYM2I=;
+ b=jRl1EkgZXXQlXUFLwFGlx9m8k1ztcj3yDMKpTUWRA0SjRvbKEa4Jy/nsZCW5ZVzjxz
+ I7ndUvNIublM0+rP4c4mICpg8hyki/8i1D/DBSgl86oQq0lPlzxkEOyNm1lmnqV+hUdK
+ f7DgkLz2RcVwV8892rTPP3/AzM3lGZjEXVn1Ux5smazaEQA443gODS2k1MEi7/wPyM0f
+ 51q5jGk6Zc3rnlAumgtdnohyWZn1tOKfKzfcRJViXKqehkCNpqQFIjgLrdpJ0d6K5iPW
+ k/3w2aSITBkNq3eEyRY24WLfPjKD/fKmQ7zwQDidy7mEDAobtslhRbGNIyRwYXeABZkT
+ 2WcA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWHTJT+cCyvfZucMqjO+tBSCD6WI/nhyVqFdmQYPbrKFX8RKh2LGTYI9TPGTGDafn4ZsZI3seLTsEdP@nongnu.org
+X-Gm-Message-State: AOJu0Yz/N4I/+oN70qQkchpDbtbH4rdNWl1k1G6vb9uZ0N91S01h9O0Z
+ yM4PbktBRjZA6o7FF/zf0H+KqtCAIDCx5cd7/vXIn3/4E6Fts55xPRqgiQ==
+X-Gm-Gg: ASbGncuXAdReamGbJC2S/avajVQdppFMOoczEa7F65gDeF5ocFT2lBokVgjtZaz9sGA
+ 8o6jgvKNfb85L3s8CN9ZzAdjeFPyQoCQfdo30nQZnTypyFQ9qIE5GkBIqsZ4+fWpvCc0L6YJjZF
+ /MOghlf0pGhzG+ZLDg0tGwcauebWSRHJ4u6Eehz6bqkDyTgpeYyUNk1JrM5ob4JecwZpljD0WYE
+ vu9stiAzQPYx0h+p7qqHdPxeaanCSNl6uEQ00p33rMTB3AcRijlVP39sSHazap5Fcp2vkBg0x0u
+ UFkOFvMyqtVmEQTb95uRtGXbfgl2+OMW9yh5WsTWCU7D5wgltKk=
+X-Google-Smtp-Source: AGHT+IELID7Vd8zuCP1zgLUvZGiX7HMezDX5+ahHI2JLTWm376BeFRqIrMYylXlFJ3oFUzqLBMO4Ug==
+X-Received: by 2002:a05:6a20:a10c:b0:1f0:e368:adff with SMTP id
+ adf61e73a8af0-1f2f4e01a1amr16517955637.39.1740996937856; 
+ Mon, 03 Mar 2025 02:15:37 -0800 (PST)
+Received: from wheely.local0.net ([118.208.151.101])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-aee7de19c14sm7846801a12.20.2025.03.03.02.15.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Mar 2025 02:09:34 -0800 (PST)
-From: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>
-To: qemu-devel@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Wang Pengcheng <wangpengcheng.pp@bytedance.com>,
- =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>
-Subject: [PATCH] contrib/plugins: Install plugins to moddir
-Date: Mon,  3 Mar 2025 11:09:27 +0100
-Message-ID: <20250303100927.3443321-1-christoph.muellner@vrull.eu>
+ Mon, 03 Mar 2025 02:15:37 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
+Subject: [PATCH] target/ppc: Add Power9/10 power management SPRs
+Date: Mon,  3 Mar 2025 20:15:30 +1000
+Message-ID: <20250303101531.577569-1-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=christoph.muellner@vrull.eu; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,37 +96,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the built plugins can only be found in the build directory.
-This patch lists them as installable objects, which will be copied
-into qemu_moddir with `make install`.
+Linux power management code accesses these registers for pstate
+management. Wire up a very simple implementation.
 
-Signed-off-by: Christoph Müllner <christoph.muellner@vrull.eu>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- contrib/plugins/meson.build | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+After OCC fixes in QEMU pnv model and skiboot (since they have suffered
+some bitrot), Linux will start performing PM SPR accesses. This is a
+very simple implementation that makes it a bit happier.
 
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index 82c97ca0f5..c25a1871b7 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -14,11 +14,15 @@ if get_option('plugins')
-                         include_directories: '../../include/qemu',
-                         link_depends: [win32_qemu_plugin_api_lib],
-                         link_args: win32_qemu_plugin_api_link_flags,
--                        dependencies: glib)
-+                        dependencies: glib,
-+                        install: true,
-+                        install_dir: qemu_moddir)
-     else
-       t += shared_module(i, files(i + '.c'),
-                         include_directories: '../../include/qemu',
--                        dependencies: glib)
-+                        dependencies: glib,
-+                        install: true,
-+                        install_dir: qemu_moddir)
-     endif
-   endforeach
- endif
+Thanks,
+Nick
+---
+ target/ppc/cpu.h         |  2 ++
+ target/ppc/helper.h      |  2 ++
+ target/ppc/spr_common.h  |  2 ++
+ target/ppc/cpu_init.c    | 11 +++++++++
+ target/ppc/misc_helper.c | 53 ++++++++++++++++++++++++++++++++++++++++
+ target/ppc/translate.c   | 16 ++++++++++++
+ 6 files changed, 86 insertions(+)
+
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index ff527e49b73..4ce812613e2 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -2092,6 +2092,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
+ #define SPR_VTB               (0x351)
+ #define SPR_LDBAR             (0x352)
+ #define SPR_MMCRC             (0x353)
++#define SPR_PMSR              (0x355)
+ #define SPR_PSSCR             (0x357)
+ #define SPR_440_INV0          (0x370)
+ #define SPR_440_INV1          (0x371)
+@@ -2099,6 +2100,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
+ #define SPR_440_INV2          (0x372)
+ #define SPR_TRIG2             (0x372)
+ #define SPR_440_INV3          (0x373)
++#define SPR_PMCR              (0x374)
+ #define SPR_440_ITV0          (0x374)
+ #define SPR_440_ITV1          (0x375)
+ #define SPR_440_ITV2          (0x376)
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index e8de4f95581..4d25fa216b8 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -736,6 +736,8 @@ DEF_HELPER_2(store_tfmr, void, env, tl)
+ DEF_HELPER_FLAGS_2(store_sprc, TCG_CALL_NO_RWG, void, env, tl)
+ DEF_HELPER_FLAGS_1(load_sprd, TCG_CALL_NO_RWG_SE, tl, env)
+ DEF_HELPER_FLAGS_2(store_sprd, TCG_CALL_NO_RWG, void, env, tl)
++DEF_HELPER_FLAGS_1(load_pmsr, TCG_CALL_NO_RWG_SE, tl, env)
++DEF_HELPER_FLAGS_2(store_pmcr, TCG_CALL_NO_RWG, void, env, tl)
+ #endif
+ DEF_HELPER_2(store_sdr1, void, env, tl)
+ DEF_HELPER_2(store_pidr, void, env, tl)
+diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
+index 8cac82b2dac..cfe725a5292 100644
+--- a/target/ppc/spr_common.h
++++ b/target/ppc/spr_common.h
+@@ -205,6 +205,8 @@ void spr_write_hmer(DisasContext *ctx, int sprn, int gprn);
+ void spr_read_tfmr(DisasContext *ctx, int gprn, int sprn);
+ void spr_write_tfmr(DisasContext *ctx, int sprn, int gprn);
+ void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn);
++void spr_read_pmsr(DisasContext *ctx, int gprn, int sprn);
++void spr_write_pmcr(DisasContext *ctx, int sprn, int gprn);
+ void spr_read_dexcr_ureg(DisasContext *ctx, int gprn, int sprn);
+ void spr_read_ppr32(DisasContext *ctx, int sprn, int gprn);
+ void spr_write_ppr32(DisasContext *ctx, int sprn, int gprn);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 7d4aad505d7..91c1ca4f9d9 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6468,6 +6468,17 @@ static void register_power9_common_sprs(CPUPPCState *env)
+                         spr_read_generic, spr_write_generic,
+                         KVM_REG_PPC_PSSCR, 0);
+ 
++    spr_register_hv(env, SPR_PMSR, "PMSR",
++                    SPR_NOACCESS, SPR_NOACCESS,
++                    SPR_NOACCESS, SPR_NOACCESS,
++                    &spr_read_pmsr, SPR_NOACCESS,
++                    0);
++    spr_register_hv(env, SPR_PMCR, "PMCR",
++                    SPR_NOACCESS, SPR_NOACCESS,
++                    SPR_NOACCESS, SPR_NOACCESS,
++                    &spr_read_generic, &spr_write_pmcr,
++                    PPC_BIT(63)); /* Version 1 (POWER9/10) */
++
+ }
+ 
+ static void init_proc_POWER9(CPUPPCState *env)
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index 397bae12fe3..80177143170 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -459,6 +459,59 @@ void helper_store_sprd(CPUPPCState *env, target_ulong val)
+         break;
+     }
+ }
++
++target_ulong helper_load_pmsr(CPUPPCState *env)
++{
++    target_ulong lowerps = extract64(env->spr[SPR_PMCR], PPC_BIT_NR(15), 8);
++    target_ulong val = 0;
++
++    val |= PPC_BIT(63); /* verion 0x1 (POWER9/10) */
++    /* Pmin = 0 */
++    /* XXX: POWER9 should be 3 */
++    val |= 4ULL << PPC_BIT_NR(31); /* Pmax */
++    val |= lowerps << PPC_BIT_NR(15); /* Local actual Pstate */
++    val |= lowerps << PPC_BIT_NR(7); /* Global actual Pstate */
++
++    return val;
++}
++
++static void ppc_set_pmcr(PowerPCCPU *cpu, target_ulong val)
++{
++    cpu->env.spr[SPR_PMCR] = val;
++}
++
++void helper_store_pmcr(CPUPPCState *env, target_ulong val)
++{
++    PowerPCCPU *cpu = env_archcpu(env);
++    CPUState *cs = env_cpu(env);
++    CPUState *ccs;
++
++    /* Leave version field unchanged (0x1) */
++    val &= ~PPC_BITMASK(60, 63);
++    val |= PPC_BIT(63);
++
++    val &= ~PPC_BITMASK(0, 7); /* UpperPS ignored */
++    if (val & PPC_BITMASK(16, 59)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "Non-zero PMCR reserved bits "
++                      TARGET_FMT_lx"\n", val);
++        val &= ~PPC_BITMASK(16, 59);
++    }
++
++    /* DPDES behaves as 1-thread in LPAR-per-thread mode */
++    if (ppc_cpu_lpar_single_threaded(cs)) {
++        ppc_set_pmcr(cpu, val);
++        return;
++    }
++
++    /* Does iothread need to be locked for walking CPU list? */
++    bql_lock();
++    THREAD_SIBLING_FOREACH(cs, ccs) {
++        PowerPCCPU *ccpu = POWERPC_CPU(ccs);
++        ppc_set_pmcr(ccpu, val);
++    }
++    bql_unlock();
++}
++
+ #endif /* defined(TARGET_PPC64) */
+ 
+ void helper_store_pidr(CPUPPCState *env, target_ulong val)
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index c5fe3de64e9..a73afe600de 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -1288,6 +1288,22 @@ void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn)
+     translator_io_start(&ctx->base);
+     gen_helper_store_lpcr(tcg_env, cpu_gpr[gprn]);
+ }
++
++void spr_read_pmsr(DisasContext *ctx, int gprn, int sprn)
++{
++    translator_io_start(&ctx->base);
++    gen_helper_load_pmsr(cpu_gpr[gprn], tcg_env);
++}
++
++void spr_write_pmcr(DisasContext *ctx, int sprn, int gprn)
++{
++    if (!gen_serialize_core_lpar(ctx)) {
++        return;
++    }
++    translator_io_start(&ctx->base);
++    gen_helper_store_pmcr(tcg_env, cpu_gpr[gprn]);
++}
++
+ #endif /* !defined(CONFIG_USER_ONLY) */
+ 
+ void spr_read_tar(DisasContext *ctx, int gprn, int sprn)
 -- 
 2.47.1
 
