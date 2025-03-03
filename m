@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80C40C282D1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E8A7C282D3
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 14:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp6Xe-00022Z-VL; Mon, 03 Mar 2025 09:13:11 -0500
+	id 1tp6XL-0000ya-5G; Mon, 03 Mar 2025 09:12:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tp6Xc-0001vu-3k
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:13:08 -0500
-Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
+ id 1tp6Wf-0000pT-Hw
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:12:12 -0500
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tp6XZ-0006Od-U3
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:13:07 -0500
-Received: by mail-yb1-xb36.google.com with SMTP id
- 3f1490d57ef6-e60b81c29c5so1899198276.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 06:13:05 -0800 (PST)
+ id 1tp6Wc-0006Ez-IZ
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:12:07 -0500
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-6fbaf4cf2b5so29786097b3.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 06:12:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741011184; x=1741615984; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741011124; x=1741615924; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=CQ5LNDtrTVZtscB38FVZhs83Lafd0D7KGFLr5lI3DEI=;
- b=rCwvgQRX2saM3bXHViW3S1FTJZhVxWUWrMuXnjkcZgC7kEoy9MigBs7UkffQ8rulIO
- VuIf4AdvsskEwAuD3xCYeI9tue2xUU1zAirXQocOmqzFVbh24V6ASJtnk0reg8Ga4arp
- Waw0Q/09yP11mItRMEPlgvmoQ5CB8Tr7hphrFK9S+cdneiYrGcBNxuyShkM4ZG+dR9Lc
- hU5fKq/XwBgcqGynxqHu+Eaa8G1xPaHfx3tlNHDmUMNlgINEQeQ6U+ZwICELOClXsisG
- rGSjoe4OwTUa0OXjfODPFLWH2kvum/lMDe2xtXZpho4yWluVRqPUp8KfcRFAhZMylUtf
- hG/Q==
+ bh=c4se0JcUUSt1l0DsIdUpVzlZalM69sHmE0kyAvEGe5k=;
+ b=aQNDrgHyqLjD2q0MGMGwpRSbV1wCftuZb1zswvDYKGIYf4rKw0eu6lPDr7ZD3tax0i
+ rCBC2QGEgLAPHuWKRMaeSVrXpABZ/kLXD8lLiT8/Q7qK370jz9aCxBUxVpkSLFLogsdb
+ YqdHANvJbwWoznxWVlKWlylz4A0A9LEFZjzEEV7isI6IXLtFe3F0ou4Xz7oiSTESJa9h
+ Cc9w7mOfAl4wRek+KMiwXCBw0uZX1aliYjWYm3DFAabqWOrGfWcO8OGNjAYlKEDLROcs
+ dCGRatJ0SvDUZ12PsZWvVhrft1eA87eDlNJkpopkOAkymTz0W8kbnYOC6IIRSCMf0zp6
+ IIqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741011184; x=1741615984;
+ d=1e100.net; s=20230601; t=1741011124; x=1741615924;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CQ5LNDtrTVZtscB38FVZhs83Lafd0D7KGFLr5lI3DEI=;
- b=YvmgosqOuTbKY7qpOPed110d3VEaBTE4rSRdgqGmdRGLtcLkl2Ye6EdUsh4djDScJQ
- 2JT38thqIUZX3wTaTp/rxGwAxUKknInCCMm6b4lUNN41GML72CZZblMzx4Y3iULqqtBm
- DVMlhOCQ8kqp4BAdPfPWCrtfQuRJtDdRtMOH6iqK4W6GKaEeKrESJMziRep4JTQ354Ic
- 8CnrHtJxicnqY1neCbcpquwoyw9cB/lCCsVFko043QemETdIxT1HZ7diyZc01GzcyCLJ
- XoOKhyECz8wcrQrrj7JQ7zBr4iamyzkX65MgTBcNahYPu5B1RzMM2nlHLI1PoFvtDwHA
- ctWw==
-X-Gm-Message-State: AOJu0YxHNftOsT4CkPeJ6Jq4PoVQBracxZyOqwJCP0vHHRjOqeaI2Eqd
- S+bfDoXDiTDBQkrY0S6x4Y/2acu9p6w58iRICziPFyfY5PDW1UEaDZhJCE27rgDuxKJNmKfhOL9
- uCvYzqovh4bFMJgGZZtmBZs6L+MeUAtp+nUOyIQBxArKOVGFC
-X-Gm-Gg: ASbGncuTkeNPG+LkND+6SOct4dF7/DjMGfNGqTOEs8jLAGJqQY6LFnn5jZSdAqCJZRD
- 9kU6NVtHfuRYT8SSilt5MaYVF7c02GpKbFL5OoYlMssnq7sRREcSPyGvaVwNm/1i74Qs/omzI5N
- XNgRdC1lk+d50J+h+paTkEQWkVAP4=
-X-Google-Smtp-Source: AGHT+IF7uGXVYNaC/CdTiF3T15tEeJI5qzs9HDEMWWTPtoHPD7QEPazpaveO30JQ/LvwArsFXvpoq19Wd8HK++Soj2w=
-X-Received: by 2002:a05:690c:3505:b0:6fb:b38e:2076 with SMTP id
- 00721157ae682-6fd395b5f8cmr261300127b3.11.1741011184434; Mon, 03 Mar 2025
- 06:13:04 -0800 (PST)
+ bh=c4se0JcUUSt1l0DsIdUpVzlZalM69sHmE0kyAvEGe5k=;
+ b=KLsNcz1dl24LNzyOSaT5UtC+LBpHxDzG+Ye8BR9ePvN52g2JtyKLjEeBweF9ENCuSn
+ HJgv0QNLqb+Tt0RUwVr5N6a3Avo1CcMFMVFak5IB8E+cdNjXEn/vCmlvkwTXv06a0GMT
+ TsaYoYxFSw8VBYZNoV+u8DDaiFGVGH3RhuHX/tCoWjG4P6GyqV2LClvxSjt2boznUEXB
+ TjyLFDO3yLAeijh84ifRYtV0QPLU0xJbPBUOfIZhs6Ne8f2VqGpBCWqIzJIDw95MaAYV
+ UzxUBncimOlI8AFYdLD7WI0U/LsvOlqT60q+tecd5gqaHgxRqH5IhMLL/0D1aolSCZko
+ c/3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcADZrpc1LNGICjgIYE9A6KwwU469OXVgBoJuYV/BLNqfOUUZKXpay0xzoPEC2vOBwntCzHlo/b6Sj@nongnu.org
+X-Gm-Message-State: AOJu0Yw4msEl6/h0mcYYkE72C9cgRMkDxhYLLxIjxTi8y0t+QpATx1+e
+ s+cqMjxcGT9CbjeByyvCieSeKhV9lZ1HrarnEypYnEzfmBLiXCzSLSow93Gn2uDQMPmjyiCzL07
+ 5VE6g+g1mX8r7lAM8aQdiy5ozjSSOelEtwI9klQ==
+X-Gm-Gg: ASbGncvsXehUiWfHEernxml2WMZSoZ1UYAwWYgjI9XO2r899GB4CloNaJ6amxE7topc
+ 7wu6FXuoNuIMd0+MFm+txRWafG16lnul/+LRSBcTd73ZtmJEIJ+dbKMa/y+xdfh/A8pjvD8ZxYX
+ mRqwHEVOJHx+VdeUU7bGvvyf+tlEs=
+X-Google-Smtp-Source: AGHT+IHMfxk3TICpE4yNWklnb/xRBKhb4tvCYFEG/nxo7gIdOIHyfnQK0R15/uSePe8LHKLuD1UiVUfQd0mWFWaU56k=
+X-Received: by 2002:a05:690c:4493:b0:6fb:b8a1:d3bb with SMTP id
+ 00721157ae682-6fd4a02387cmr164796637b3.17.1741011124254; Mon, 03 Mar 2025
+ 06:12:04 -0800 (PST)
 MIME-Version: 1.0
-References: <20250226104833.1176253-1-thuth@redhat.com>
-In-Reply-To: <20250226104833.1176253-1-thuth@redhat.com>
+References: <20250226024603.493148-1-venture@google.com>
+In-Reply-To: <20250226024603.493148-1-venture@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 3 Mar 2025 14:12:52 +0000
-X-Gm-Features: AQ5f1Jre2SoyWwFZ_Xe_pA30D8nA68q6UJ7ETPltEmbXGw5cATHZcXzBTdqG04Q
-Message-ID: <CAFEAcA8A7FGPbw6sJF1qG1Hk3eWLtSLRY85gAWPJMqfjoq0J1g@mail.gmail.com>
-Subject: Re: [PATCH] tests/functional/test_arm_sx1: Check whether the serial
- console is working
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Date: Mon, 3 Mar 2025 14:11:52 +0000
+X-Gm-Features: AQ5f1JpzfHXwMG4-5NoLwQ7JEqGektmvxs4fJTBxL0SxP2ogXNLlo6dNN7jJM9s
+Message-ID: <CAFEAcA-jOcycjqDiqKPJi+WMK6OBBp_8vwx1ASpd2jr3HnqE0w@mail.gmail.com>
+Subject: Re: [PATCH] hw/gpio: npcm7xx: fixup out-of-bounds access
+To: Patrick Venture <venture@google.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
+ wuhaotsh@google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,23 +94,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 26 Feb 2025 at 10:48, Thomas Huth <thuth@redhat.com> wrote:
+On Wed, 26 Feb 2025 at 02:46, Patrick Venture <venture@google.com> wrote:
 >
-> The kernel that is used in the sx1 test prints the usual Linux log
-> onto the serial console, but this test currently ignores it. To
-> make sure that the serial device is working properly, let's check
-> for some strings in the output here.
+> The reg isn't validated to be a possible register before
+> it's dereferenced for one case.  The mmio space registered
+> for the gpio device is 4KiB but there aren't that many
+> registers in the struct.
 >
-> While we're at it, also add the test to the corresponding section
-> in the MAINTAINERS file.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  Based-on: <20250221140640.786341-1-peter.maydell@linaro.org>
+> Google-Bug-Id: 397469048
+> Change-Id: I2fb8d0d3d41422baab22e8fc7e9fadd0f2ee7068
+> Signed-off-by: Patrick Venture <venture@google.com>
 
-Applied to target-arm.next, thanks. (If you'd rather take
-this via your own test tree let me know and I'll drop it
-on my end.)
+Applied to target-arm.next (with commit message tweaks
+as per Philippe's email), thanks.
 
 -- PMM
 
