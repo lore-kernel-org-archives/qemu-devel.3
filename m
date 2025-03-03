@@ -4,94 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B748C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11178C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 18:08:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp9zv-0004KF-9u; Mon, 03 Mar 2025 12:54:35 -0500
+	id 1tpAD3-0005U5-4L; Mon, 03 Mar 2025 13:08:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp9zq-00045W-Jq
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:54:31 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp9zl-0000Rz-G2
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:54:30 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4399ee18a57so30013755e9.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 09:54:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741024461; x=1741629261; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ig1O+P684D2zxZDZEH1iwaJLNZ3uO/yV94Srxs0Fy5c=;
- b=IaxQHXRLlfDIvx0bDIEifkyqqokGVEXrGmFgw2Htth4qDgPtLNCuoogqwafRwwCeXk
- pqLErCjtQENLTbkD9jj+zYKLO4OIbxPFsOuRrVPfiiqH2GmDg3H0t34PiXOIU5uQzT9V
- mYrO4uDmtHFqPEaH+tjbbd6oS7l6/JX2mcQCzeeO5wtt+G93CyL0mOV400g7E1LaSOBE
- 9wgy5oCe0NYXTkMfzHYVZIeR6353LODMF1H74UP/U+F3D/5/64W0X5cMbHix5XyYbJGf
- YSlNkFeHsasX67O9gVEI6UmRTWsqMaifVer2sJQ7HJls+OB7GDiGBshgd41WRHBq/Qwi
- qkYA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tpACs-0005SH-SB
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 13:08:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tpACp-0002Wl-UH
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 13:07:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741025272;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rBLGARsSGkigOBi6cELIuVucqv4iup6isxmDe0b/drk=;
+ b=AsTkEEWHhjYTbM0iDQdvHCguyaCCO+Kd6qZ5cM5BTz9k4p05REoXXUko4xJzwInEdCWVZT
+ LZjDc7E7c+OnoNKD2IlRNTMIbZ6SnxhudOku8c5+K8Vp2vtbhM4rNdPAdw0nItQu7E1I/5
+ fQLe2AtJo/al8juNbh2+KCWiVsrnXls=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-122-f398Oz9hNT2zjEBuqs2d_w-1; Mon, 03 Mar 2025 13:07:46 -0500
+X-MC-Unique: f398Oz9hNT2zjEBuqs2d_w-1
+X-Mimecast-MFC-AGG-ID: f398Oz9hNT2zjEBuqs2d_w_1741025265
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-390e271517fso2775667f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 10:07:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741024461; x=1741629261;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ig1O+P684D2zxZDZEH1iwaJLNZ3uO/yV94Srxs0Fy5c=;
- b=Pi5DpIV2z0R4rLBtTjDBtzZEgoOiIlx6p9KdwkgqugvYQxnatvroUAAMFC6G5616h/
- s/p2z6RiOM2nHMNShcs/Dh8/KOxHpi30mhQB5f+X9iaNc5W1G+4vRpwLI/LhbOjgKZcO
- 5AvglFL40WT04M4SkGFkuJrMON8YMi5azhd0bKH0ZBbfs9Xj9myrcKvg8eE3s2EWashY
- wjqmV9zvI7p5Dr69mE4w1Uxaf+AoezRNxqlTjdz4uMwJv3bVzsaxZJOz3bxROabx0F3i
- ZtebLNhw/om+Y9XS8w+jDEwjABvpHtlgw/rDJ4M6Wb5UETCsufY7YCcPMASBLTTc7MTm
- i0gA==
+ d=1e100.net; s=20230601; t=1741025259; x=1741630059;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rBLGARsSGkigOBi6cELIuVucqv4iup6isxmDe0b/drk=;
+ b=NTH9U5VUnR4UNVx6HBrbCzkQq+ZyJHLUwNLZJzqWc0ZLs7CvOfKZ9ibxnbEUgRC8ip
+ 9iOChwHJ+xgpR4ooGQX1AiApoqEBDwsfCVok4uND6QJNwo1vPwlJpfykvi4n1ZLWRFMh
+ JdV849NP3bTqOYVWVvHrGMu91YDnM550R+7XWLUGft0AGYn9+5AQQ+nS1vU/ss7Si/Al
+ ISKuS9m8+VGG9x7EkqJQe4tKkfp6CacXbsIE0wbuzEkHHAAz44DGvD7ZK8p9aANFjsg0
+ vMzZed5QwzfIa9SFk4N2vvTNQTRNutW+P/FAt5thgzlvyNlcXHtWCoIL3xqMrWxRzCCS
+ tm+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWl67mx/iDNTnga612BLVs+oYQxngsvgCjMtCbKGq739XBTnw0RyKDNeJhQNVrIbNm6OQAzlKJ+pfy5@nongnu.org
-X-Gm-Message-State: AOJu0YzNnG3KY8dQ0QxLOdNZ1hkK7qsZuCEA+991QOfXvbr3aUxHP4yi
- +L0oypZyTb3PqXm+jrxbl7YG91hO3Fngx0r0wb3YhFyeZ87TP3ZQ6h9b2RCSsUA=
-X-Gm-Gg: ASbGncuA1MU5jQ0dmegnZdDdORcGXS8BoIq1trAav7aqEQriXK9JuFTqowBqRYvgjDx
- wQsEomSw7UIwLstG80bSEcok61yhwzyU/+IH2egXb7GKwKZM0PMLE3m7MeTbVtAdrX1zHZ3o3VD
- QfqZOYrgndw+hOtcG0FH37CX1JFFVCLG8J9J7CmZza+NRY4UbsnGpnSm4AKv6+Qs+sMOdkKIbB2
- xTeAlwIXyw6qCtlGyzZzOAlncl9gd0NaUeavf7v6kheuC8I+zZyouJFtvQUz7YPgm1qwl17xlLo
- 5x9bMT3YSl7vVJiATTprg12BKwC5SYEADL7cQtfTtweRqOkglB3QJuJ999R4t+A0+SZJ50+5VRA
- T35oeI034OuU2
-X-Google-Smtp-Source: AGHT+IEVstF0P4bQY4ARwaYs70KvMfUdl2n5C4C0g3Wfep2QqgvzIqJFj/x+vUGRRtuSsT/w3yNXEQ==
-X-Received: by 2002:a05:600c:a403:b0:43b:bfa7:c7d with SMTP id
- 5b1f17b1804b1-43bcae04e3cmr1971915e9.2.1741024461181; 
- Mon, 03 Mar 2025 09:54:21 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bc2d76c9esm39334795e9.26.2025.03.03.09.54.19
+ AJvYcCVyUufJUsfm0lJ4l8+nL4H0nE63pnlqMIaH1ex3UjUXZdwLV/oZ+ZyHKVprApo7rm1f3IKDEckNjSSB@nongnu.org
+X-Gm-Message-State: AOJu0YxwZrQnIAH8krSRjwp3m6QWL5rLZd0upVvO/t7C1m7/9cOe4i8f
+ Vk8Qs57ja8fOv2yRCj+i0sEeeHGRxa9YfQgSVQYKmtI+0OoIX9QghKjhX3LbT2+Ln5pOqBGJd+L
+ 5XnW2ddxkQov02L0xQkrIGiFYUR8B302Ld1kWotvj6xE+T0jeHfLe
+X-Gm-Gg: ASbGnctubl6LTEPx0L1t9h4gVl9Xq11g8kOYjuSrRedg/TLPUY3vPVbefcBtboTGW3l
+ syvrijn2mJcfdsF9GFPEVaGvOlgSZqydjSY0gy9q5s3qt2v+BvQ5m/+l552XlfWxj17cq+tWHx2
+ ZR/xV6ZeOrnmSCcOMDiV64XnzIrf2HKEkkUfITiYw6rGiiVG4S7srQKAM+IeQGb0/8vzN0CMyct
+ 2EPBjmdSa8J+BRy5tfhN874EYqzWjU9HPTCSSjWg9oGlgrLufPkmJU4fI7QfWLW3QxKaZw0mL+i
+ WN4LRFNYZk7SDewuB6NlOkewOdhkZAQFka9ugx3sqXOwYLQ8Pyq0piCXnFXmy6E=
+X-Received: by 2002:a05:6000:1562:b0:390:e535:8770 with SMTP id
+ ffacd0b85a97d-390ec7cc8f6mr12151801f8f.14.1741025259441; 
+ Mon, 03 Mar 2025 10:07:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFtUCJbTNewDTEEw0joVa/RrWBx1t/of6zRX4LKLmBPd941MbDM4FAIswFNXc8ewh6rxHllng==
+X-Received: by 2002:a05:6000:1562:b0:390:e535:8770 with SMTP id
+ ffacd0b85a97d-390ec7cc8f6mr12151785f8f.14.1741025259097; 
+ Mon, 03 Mar 2025 10:07:39 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47b6cd8sm14961183f8f.44.2025.03.03.10.07.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 09:54:20 -0800 (PST)
-Message-ID: <54399bc5-2dc8-4494-a501-ddfbabf4699b@linaro.org>
-Date: Mon, 3 Mar 2025 18:54:19 +0100
+ Mon, 03 Mar 2025 10:07:37 -0800 (PST)
+Message-ID: <25f360d5-d89f-4d21-a80d-21699bc14da1@redhat.com>
+Date: Mon, 3 Mar 2025 19:07:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 04/11] hw/misc/pvpanic: Add MMIO interface
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
- mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- berrange@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com,
- qemu-block@nongnu.org, qemu-arm@nongnu.org, Alexander Graf
- <graf@amazon.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20250112210056.16658-1-phil@philjordan.eu>
- <20250112210056.16658-5-phil@philjordan.eu>
+Subject: Re: [PATCH 2/2] vfio: Make vfio-platform available on Aarch64
+ platforms only
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250112210056.16658-5-phil@philjordan.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, Will Deacon <will@kernel.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Marc Zyngier <maz@kernel.org>
+References: <20250226084721.232703-1-clg@redhat.com>
+ <20250226084721.232703-3-clg@redhat.com>
+ <291bf12d-18bc-444f-b09d-3fb80e0f144a@redhat.com>
+ <20250227102737.197ab32b.alex.williamson@redhat.com>
+ <d069fea1-3e3d-4fff-8548-8cba491fcdc0@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <d069fea1-3e3d-4fff-8548-8cba491fcdc0@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,44 +119,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/1/25 22:00, Phil Dennis-Jordan wrote:
-> From: Alexander Graf <graf@amazon.com>
-> 
-> In addition to the ISA and PCI variants of pvpanic, let's add an MMIO
-> platform device that we can use in embedded arm environments.
-> 
-> Signed-off-by: Alexander Graf <graf@amazon.com>
+Hi,
+
+
+On 3/3/25 3:32 PM, Philippe Mathieu-Daudé wrote:
+> On 27/2/25 18:27, Alex Williamson wrote:
+>> On Thu, 27 Feb 2025 09:32:46 +0100
+>> Eric Auger <eric.auger@redhat.com> wrote:
+>>
+>>> Hi Cédric,
+>>>
+>>> On 2/26/25 9:47 AM, Cédric Le Goater wrote:
+>>>> VFIO Platforms was designed for Aarch64. Restrict availability to
+>>>> 64-bit host platforms.
+>>>>
+>>>> Cc: Eric Auger <eric.auger@redhat.com>
+>>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+>
 > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> 
-> v3:
->   * Rebased on upstream, updated a header path
-> 
-> v15:
->   * Constified the property table.
-> 
-> v16:
->   * Removed the DEFINE_PROP_END_OF_LIST marker to match recent upstream
->     changes.
-> 
->   hw/misc/Kconfig           |  4 +++
->   hw/misc/meson.build       |  1 +
->   hw/misc/pvpanic-mmio.c    | 60 +++++++++++++++++++++++++++++++++++++++
+>
+>>> As an outcome from last KVM forum, next step may be to simply remove
+>>> VFIO_PLATFORM from the qemu tree.
+>>>
+>>> We also need to make a decision wrt linux vfio platform driver. As I
+>>> can't test it anymore without hacks (my last tegra234 mgbe works are
+>>> unlikely to land on qemu side and lack traction on kernel side too),
+>>> either someone who can test it volunteers to take over the kernel
+>>> maintainership or we remove it from kernel too.
+>>
+>> I think it's more than just a kernel maintainer stepping up to test,
+>> there really needs to be some in-kernel justification for the
+>> vfio-platform driver itself.  If it's only enabling out of tree use
+>> cases and there's nothing in-tree that's actually independently
+>> worthwhile, I don't really see why we shouldn't remove it and just let
+>> those out of tree use cases provide their own out of tree versions of
+>> vfio-platform.  Thanks,
+>
+> Now (1 week before freeze for release) is a good time to post a patch
+> deprecating it :)
+Yes I will do that tomorrow
 
-Missing MAINTAINERS update, who is going to maintain this file?
-
-I could add it within the vmapple section in the next patch, but I'd
-rather pvpanic have its own entry covering all variants.
-
->   include/hw/misc/pvpanic.h |  1 +
->   4 files changed, 66 insertions(+)
->   create mode 100644 hw/misc/pvpanic-mmio.c
+Eric
 
 
