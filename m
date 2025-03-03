@@ -4,69 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC9CC282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 14:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C13AFC282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 14:11:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp6TW-0007wI-Tj; Mon, 03 Mar 2025 09:09:00 -0500
+	id 1tp6VO-00009J-E1; Mon, 03 Mar 2025 09:10:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tp6T3-0007v8-Oj; Mon, 03 Mar 2025 09:08:27 -0500
-Received: from mgamail.intel.com ([198.175.65.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tp6T0-0005ow-64; Mon, 03 Mar 2025 09:08:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741010902; x=1772546902;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=cYg9gQJivnvnrJ5GVOpdMXeSeKglr3leGd4UVFX0/mQ=;
- b=L2pxpmssqVZIKU+aQs8/zOEg43MYy6Kv81XxlA/LLFiWuBgKC3A37wbz
- 7/He/jgZDbItzgaZcnw65j7TN3H4Q5Rn1Tx9oAaTniaXJQHaegUPHvBq6
- IXw76l4PwZpA37CP/sXA9LTiw9eeGntcaoVqm1lLynL76Y5gF4XrWByfZ
- sME4wI4ez9ZCwn2f4h/oVyErb1Gb999vZJOslWYbcoaUVOGk2vkTO6IlO
- fq2LCsU2ZMtLIZ3osAPmhDgvf1NLg2/g6lDVJxslgjP8GDLn3IbARIEbk
- egxyeGqO2dMVvXEFNocYKEsGZdhppiPXpOsVQJciLf3Bnyn/Kz/QIicw5 A==;
-X-CSE-ConnectionGUID: OoM5o7hPSLmDXpr83t/bgg==
-X-CSE-MsgGUID: fc/+qCM7QmaT+IhtIvejAw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11362"; a="53279050"
-X-IronPort-AV: E=Sophos;i="6.13,329,1732608000"; d="scan'208";a="53279050"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2025 06:08:17 -0800
-X-CSE-ConnectionGUID: 46kBIb++S+Op3qO5hdy/eA==
-X-CSE-MsgGUID: l/3MIYIVRQeZHTYcmXUkjA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="155203497"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 03 Mar 2025 06:08:16 -0800
-Date: Mon, 3 Mar 2025 22:28:23 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 04/12] rust: timer: wrap QEMUTimer with Opaque<> and
- express pinning requirements
-Message-ID: <Z8W8hzFO9HU3IujQ@intel.com>
-References: <20250227142219.812270-1-pbonzini@redhat.com>
- <20250227142219.812270-5-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tp6UV-0008DY-D4
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:10:01 -0500
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tp6UR-0005zP-35
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:09:53 -0500
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-6f6ae4846c7so38572777b3.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 06:09:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741010989; x=1741615789; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=cIgyhJ5i2vtj1OWVRMetShaA8mHEg/S5UKs6I4/1BJg=;
+ b=N9hrX3QgW2h69LdOiu8tvkPW/4nZuV28Mw68KdXp4NLJRW5T5BQQZWZH5UIZeirZJ+
+ IrbQ3GFewRqWb2dJnqeuAvwSGtk8F2ttPS0AIi+mzabLQOMOQepx3XZkCS0fQEe6gQDA
+ 4n+BryR2S/5rpDhifTy7l/ZGi0OM8ERIoEYqIna6GCUiTy1tTqgz4WIfRbNz4le7j0ZX
+ H5aJ0/FXMouZpV8tdLoWZiWptyrU5U1bVMBTKakdjUS3q7RczkLtao63J4YkGdRkLrwb
+ mZwzG2xm6BCnl4pF1Z2vkJogoFDt2sYpb/PMbHx95M6qQ/sQK8aM0T2rgkZV+SZwCbfa
+ oR3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741010989; x=1741615789;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cIgyhJ5i2vtj1OWVRMetShaA8mHEg/S5UKs6I4/1BJg=;
+ b=NppM8XTj+QEue3WDD/Us4b0YQiBIBoi2tzYzAuttoODaJzoZRv68nvce6alZoyEISg
+ B7rtqLDB25cl9Vp2BHBfXp6vQxYKXReOK6ny0oPlFnzic7VjG+wRAHhkrh4SWZm/nhJE
+ Ly5dQJgdNlU4R1IKSLQOwWM0X5AQCrm2zZVdrd14Rcxfcll+JTpu07jiuib9RLrnMqTQ
+ e1WmitWqWEAeWMnvYzi0EbQkapm8VNiZ7fY1arWuZ3YwOiMZ9AUnLBVnXvLg2PuVMSqA
+ 7oeVSVn+zm0PxlDCHGe75JBwMJPBWRTFNZPiYlWjeYvjtudrqb8HFRKFSvDTi+G8JBWE
+ 4s6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8fhALWMqmBu9OSW1DdsJAfsmewADi8M2PA2veAFfNKPvhN0lbNDKm92iXa60UraWCIN1rZHFlTuEu@nongnu.org
+X-Gm-Message-State: AOJu0YwnpANMwAAGHpVYY8/CXXgHZNd0qvRynZU8BeTxvQNtwCI/wq/i
+ OJt+CTZWlQpLk1cFU3BmRlKm9TOYCMUuUqBI/iQQBv5tk5VRUMBsfOENqzeVBIMGi9cK7gq7Ca/
+ frYBw18Pd+7B7Jb3CtTNhTcR5ggGuu9g6biSUfQ==
+X-Gm-Gg: ASbGnct0LBd1HOGW/jQdWrsj/7Zi/WUStD+CZ2ERVQd7sesHZF5Vpunzvqta1Cr0tDy
+ 8bDrL9xOg4J42TMvhkr4frVLnoyeZW6IWayafM0d47O6CZFAXW1KeqAgy7mDltCtTx/IR4FUld5
+ kI98WyOvHFvGqYqIzfu3hGSBOL/vA=
+X-Google-Smtp-Source: AGHT+IHn/Qj9KR57Jb94/zF0FQLukje61TZ0Qeij5hYeWt04dchmnP5FxsFTQmZ1DLABnaLuj/4+Vkii1m7EmWsP/tU=
+X-Received: by 2002:a05:690c:4c12:b0:6ef:7d1e:bffd with SMTP id
+ 00721157ae682-6fd4a17166bmr162906027b3.37.1741010988574; Mon, 03 Mar 2025
+ 06:09:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250227142219.812270-5-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250221031034.69822-1-jansef.jian@hj-micro.com>
+In-Reply-To: <20250221031034.69822-1-jansef.jian@hj-micro.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 3 Mar 2025 14:09:37 +0000
+X-Gm-Features: AQ5f1JqKGoga6YGxJGBZ1VmYHzV9G6tZXuEQEi2Vs2kLxZRYgambW39F-vcC05g
+Message-ID: <CAFEAcA_tmXzG4-P-VtZZqFkrcra0t33OEm3OTCkExNFDu7LBPg@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/smmu-common: Remove the repeated ttb field
+To: JianChunfu <jansef.jian@hj-micro.com>
+Cc: eric.auger@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,28 +93,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> -    pub fn init_full<'timer, 'opaque: 'timer, T, F>(
-> -        &'timer mut self,
-> +    pub fn new_full<'opaque, T, F>(
->          timer_list_group: Option<&TimerListGroup>,
->          clk_type: ClockType,
->          scale: u32,
->          attributes: u32,
->          _cb: F,
->          opaque: &'opaque T,
-> -    ) where
-> +    ) -> Pin<Box<Self>>
->          F: for<'a> FnCall<(&'a T,)>,
->      {
+On Fri, 21 Feb 2025 at 03:10, JianChunfu <jansef.jian@hj-micro.com> wrote:
+>
+> SMMUTransCfg->ttb is never used in QEMU, TT base address
+> can be accessed by SMMUTransCfg->tt[i]->ttb.
+>
+> Signed-off-by: JianChunfu <jansef.jian@hj-micro.com>
+> ---
+>  include/hw/arm/smmu-common.h | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+> index d1a4a6455..e5ad55bba 100644
+> --- a/include/hw/arm/smmu-common.h
+> +++ b/include/hw/arm/smmu-common.h
+> @@ -110,7 +110,6 @@ typedef struct SMMUTransCfg {
+>      /* Used by stage-1 only. */
+>      bool aa64;                 /* arch64 or aarch32 translation table */
+>      bool record_faults;        /* record fault events */
+> -    uint64_t ttb;              /* TT base address */
+>      uint8_t oas;               /* output address width */
+>      uint8_t tbi;               /* Top Byte Ignore */
+>      int asid;
+> --
 
-Ah, the lifetime here isn't effectively bound... However, I also
-referred to your latest code [1] :), and it seems that this issue
-has already been fixed. (Nit: The code still has a complaint from
-`cargo fmt`)
 
-[1]: https://gitlab.com/bonzini/qemu/-/commit/ccb9f6dc738f503a696d8d50f1b5e4576ee80bc6
 
-Regards,
-Zhao
+Applied to target-arm.next, thanks.
 
+-- PMM
 
