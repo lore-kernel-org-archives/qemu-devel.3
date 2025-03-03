@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32ED1C282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C7FC282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:01:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp2Xx-0003Kg-F1; Mon, 03 Mar 2025 04:57:13 -0500
+	id 1tp2XA-00009g-Gn; Mon, 03 Mar 2025 04:56:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp2W5-0007s9-K9; Mon, 03 Mar 2025 04:55:17 -0500
+ id 1tp2Wg-00082B-PA; Mon, 03 Mar 2025 04:55:57 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp2W4-0001s3-2O; Mon, 03 Mar 2025 04:55:17 -0500
+ id 1tp2We-0001vN-Sm; Mon, 03 Mar 2025 04:55:54 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 3 Mar
- 2025 17:55:00 +0800
+ 2025 17:55:02 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 3 Mar 2025 17:55:00 +0800
+ Transport; Mon, 3 Mar 2025 17:55:02 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v4 06/23] hw/arm/aspeed: Rename IRQ table and machine name for
- AST2700 A0
-Date: Mon, 3 Mar 2025 17:54:34 +0800
-Message-ID: <20250303095457.2337631-7-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v4 13/23] hw/intc/aspeed: Introduce IRQ handler function to
+ reduce code duplication
+Date: Mon, 3 Mar 2025 17:54:41 +0800
+Message-ID: <20250303095457.2337631-14-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
 References: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -66,91 +67,97 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, AST2700 SoC only supports A0. To support AST2700 A1, rename its IRQ
-table and machine name.
-
-To follow the machine deprecation rule, the initial machine "ast2700-evb" is
-aliased to "ast2700a0-evb." In the future, we will alias "ast2700-evb" to new
-SoCs, such as "ast2700a1-evb."
+The behavior of the INTC set IRQ is almost identical between INTC and INTCIO.
+To reduce duplicated code, introduce the "aspeed_intc_set_irq_handler" function
+to handle both INTC and INTCIO IRQ behavior. No functional change.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c         | 9 +++++----
- hw/arm/aspeed_ast27x0.c | 8 ++++----
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ hw/intc/aspeed_intc.c | 62 ++++++++++++++++++++++++-------------------
+ 1 file changed, 34 insertions(+), 28 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index c6c18596d6..2482f05154 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1673,12 +1673,13 @@ static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
-                             TYPE_TMP105, 0x4d);
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 5730a7604d..99077ec72d 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -86,11 +86,40 @@ static void aspeed_intc_update(AspeedINTCState *s, int inpin_idx,
+     qemu_set_irq(s->output_pins[outpin_idx], level);
  }
  
--static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
-+static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
++static void aspeed_intc_set_irq_handler(AspeedINTCState *s,
++                                        const AspeedINTCIRQ *intc_irq,
++                                        uint32_t select)
++{
++    const char *name = object_get_typename(OBJECT(s));
++
++    if (s->mask[intc_irq->inpin_idx] || s->regs[intc_irq->status_addr]) {
++        /*
++         * a. mask is not 0 means in ISR mode
++         * sources interrupt routine are executing.
++         * b. status register value is not 0 means previous
++         * source interrupt does not be executed, yet.
++         *
++         * save source interrupt to pending variable.
++         */
++        s->pending[intc_irq->inpin_idx] |= select;
++        trace_aspeed_intc_pending_irq(name, intc_irq->inpin_idx,
++                                      s->pending[intc_irq->inpin_idx]);
++    } else {
++        /*
++         * notify firmware which source interrupt are coming
++         * by setting status register
++         */
++        s->regs[intc_irq->status_addr] = select;
++        trace_aspeed_intc_trigger_irq(name, intc_irq->inpin_idx,
++                                      intc_irq->outpin_idx,
++                                      s->regs[intc_irq->status_addr]);
++        aspeed_intc_update(s, intc_irq->inpin_idx, intc_irq->outpin_idx, 1);
++    }
++}
++
+ /*
+- * The address of GICINT128 to GICINT136 are from 0x1000 to 0x1804.
+- * Utilize "address & 0x0f00" to get the irq and irq output pin index
+- * The value of irq should be 0 to num_inpins.
+- * The irq 0 indicates GICINT128, irq 1 indicates GICINT129 and so on.
++ * GICINT128 to GICINT136 map 1:1 to input and output IRQs 0 to 8.
++ * The value of input IRQ should be between 0 and the number of inputs.
+  */
+ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
  {
-     MachineClass *mc = MACHINE_CLASS(oc);
-     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+@@ -129,30 +158,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+     }
  
--    mc->desc = "Aspeed AST2700 EVB (Cortex-A35)";
-+    mc->desc = "Aspeed AST2700 A0 EVB (Cortex-A35)";
-+    mc->alias = "ast2700-evb";
-     amc->soc_name  = "ast2700-a0";
-     amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
-     amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
-@@ -1817,9 +1818,9 @@ static const TypeInfo aspeed_machine_types[] = {
-         .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
- #ifdef TARGET_AARCH64
-     }, {
--        .name          = MACHINE_TYPE_NAME("ast2700-evb"),
-+        .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
-         .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_ast2700_evb_class_init,
-+        .class_init    = aspeed_machine_ast2700a0_evb_class_init,
- #endif
-     }, {
-         .name          = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 527a5f8245..f1beea7ece 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -73,7 +73,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
- #define AST2700_MAX_IRQ 256
- 
- /* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
--static const int aspeed_soc_ast2700_irqmap[] = {
-+static const int aspeed_soc_ast2700a0_irqmap[] = {
-     [ASPEED_DEV_UART0]     = 132,
-     [ASPEED_DEV_UART1]     = 132,
-     [ASPEED_DEV_UART2]     = 132,
-@@ -762,7 +762,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     create_unimplemented_device("ast2700.io", 0x0, 0x4000000);
+     trace_aspeed_intc_select(name, select);
+-
+-    if (s->mask[intc_irq->inpin_idx] || s->regs[intc_irq->status_addr]) {
+-        /*
+-         * a. mask is not 0 means in ISR mode
+-         * sources interrupt routine are executing.
+-         * b. status register value is not 0 means previous
+-         * source interrupt does not be executed, yet.
+-         *
+-         * save source interrupt to pending variable.
+-         */
+-        s->pending[intc_irq->inpin_idx] |= select;
+-        trace_aspeed_intc_pending_irq(name, intc_irq->inpin_idx,
+-                                      s->pending[intc_irq->inpin_idx]);
+-    } else {
+-        /*
+-         * notify firmware which source interrupt are coming
+-         * by setting status register
+-         */
+-        s->regs[intc_irq->status_addr] = select;
+-        trace_aspeed_intc_trigger_irq(name, intc_irq->inpin_idx,
+-                                      intc_irq->outpin_idx,
+-                                      s->regs[intc_irq->status_addr]);
+-        aspeed_intc_update(s, intc_irq->inpin_idx, intc_irq->outpin_idx, 1);
+-    }
++    aspeed_intc_set_irq_handler(s, intc_irq, select);
  }
  
--static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
-+static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
- {
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-a35"),
-@@ -785,7 +785,7 @@ static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
-     sc->uarts_num    = 13;
-     sc->num_cpus     = 4;
-     sc->uarts_base   = ASPEED_DEV_UART0;
--    sc->irqmap       = aspeed_soc_ast2700_irqmap;
-+    sc->irqmap       = aspeed_soc_ast2700a0_irqmap;
-     sc->memmap       = aspeed_soc_ast2700_memmap;
-     sc->get_irq      = aspeed_soc_ast2700_get_irq;
- }
-@@ -800,7 +800,7 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
-         .name           = "ast2700-a0",
-         .parent         = TYPE_ASPEED27X0_SOC,
-         .instance_init  = aspeed_soc_ast2700_init,
--        .class_init     = aspeed_soc_ast2700_class_init,
-+        .class_init     = aspeed_soc_ast2700a0_class_init,
-     },
- };
- 
+ static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
 -- 
 2.34.1
 
