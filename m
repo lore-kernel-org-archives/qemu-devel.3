@@ -4,93 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74570C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 20:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0262C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 20:45:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpCaR-0002h2-PN; Mon, 03 Mar 2025 15:40:27 -0500
+	id 1tpCef-0003kJ-0y; Mon, 03 Mar 2025 15:44:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tpCaO-0002gV-0Q
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 15:40:24 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tpCaK-0002ws-EO
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 15:40:23 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2feb1d7a68fso8491931a91.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 12:40:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741034418; x=1741639218; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WSVpbeBC0M7td4s9rrRuDbmzSs+yKYeFHWOute9mMo4=;
- b=o0GPImlnUdlw4t/mX3UecL94nSdT1PvNRGU5DJ8Glp6oZClIe2u5ZxeLxh18qb9n+z
- QU4B6pHnr4jzEjPQcXngvR5T1TI3wbjXDNoRhRjUXmY5JpG3rBWFgTQEFbq4XRwXhZWe
- fjzvvCj5/MjPJE2UYQgm6gYGBjmPnMZ4x2YtoCpIAyRDhqAKBWkwaU162QZxw6/j2RKv
- mHI7c7HXN1dB9Bu31mKvrWHp5xmhq7uXsB1xFv8tt1OBs9cglRmnOxsxDQBv6a/O3pDH
- w/pK+YQdHCKtwzvtwkJOE/aq+t0fLBbWA1ReqgNr8qRhQzBP5eJKv8UVhQkmx/5X5ZsT
- 5hJg==
+ (Exim 4.90_1) (envelope-from <leif.lindholm@oss.qualcomm.com>)
+ id 1tpCeX-0003in-1E
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 15:44:43 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leif.lindholm@oss.qualcomm.com>)
+ id 1tpCeU-0003Gz-JA
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 15:44:40 -0500
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523AFMvQ025122
+ for <qemu-devel@nongnu.org>; Mon, 3 Mar 2025 20:44:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=Eb+8IeIfgwFwqfNpEBukyROO
+ FzwPNkiWo0719T+6Xmw=; b=apsaAYvs1LyKR+r3+4lXq0jPoVqB221iNEfDi+qq
+ SxJFLFdfSqCpVV87wHvFoDqX6lMTb1NA2KNNJHTS6pKjMQBQAWlotIJDhDjUePEL
+ PH2M+slnxJNmRR5VPGlAPVZtz/KS6odtxTYBnJGp3xJa/nqRtrJup02l0psWz/Tu
+ ePRd7Xc1D9TvrRq7RDtNO4jxbXAeKConF9nkJTd6wLqFos5UXM7YhQZspt4vhGA9
+ exRJwgjClS3jS2Yf2UJPSttq5F2x7M3ynU4JTyXGyScnGi5XN08bLs+b7GzheX7Q
+ ldBRVDYb3sfcFNf6W8bJOzNd0e4CDl6VqnpFb8oOy7Eebw==
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453tase46n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 20:44:34 +0000 (GMT)
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-6f2bdb560ecso68701237b3.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 12:44:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741034418; x=1741639218;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WSVpbeBC0M7td4s9rrRuDbmzSs+yKYeFHWOute9mMo4=;
- b=B+tjDZMkUsu9oy2Fn/bXOyeIZBdzU0GRxVPzfGD0m+PLWZIMo9smOKwhG9J5k5qBNK
- mtYB/FrnxmDcl4f48OpclrgtloBaTtiIbjTIJaClEMeadaGCUNQdI8ya3e5b22b2d5I/
- zSE6WJW8atd/HcrplESi5Xczaalp7VZwGS9YBJpX0c6n6Tjqj5KgKn2MUbUu/3Wc8qpL
- p/48pyWYO0Ytuu5UCvNlmk14YgVd3tzaJh8EfR7ZKmCmyzwpH3hQN6M7HBnQjjJxRMAv
- iAb8Lh/LTxqvfgRAp6NLwalQrgKYKvFiOHsUjBd2zW+cfUdrfC2zgZmyJbF6eQidrR+z
- TWLg==
+ d=1e100.net; s=20230601; t=1741034674; x=1741639474;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Eb+8IeIfgwFwqfNpEBukyROOFzwPNkiWo0719T+6Xmw=;
+ b=oNcCoa5DCp8wQlkWq1k5KrxqTBLMzP4OZcDOV/BHy5C3Os+QKS7PnDoISREreRqUBH
+ cVRXtWXAqkctd16zUaLoUneBVmfHW2Swfs5vXp9wfJ9PXZO9Pv8Fw7/vGuijS/h60dfp
+ 4EG+PsskRXcbRBhmdm9wsKl60dnF/+IVEzESv+skOsJ+uvfaSJkvtpXyZGSAoDy9OIf9
+ XkyhjIIXmS00AUqVttrWSo9Qwg/F+ZZtaKtrox+eHv1/1a6plyMByoSjTk38do8cu/nW
+ jFx6sD2eZU1ggbBVn7pVDQhf13ulMuajQVfiODcfxOreNU+rM42wH9EEOqGagL3l3Cl+
+ JtmA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXfNiLL3zMjkCPEGtwTz/Wg5KP5kZs5r0mQdCVQ8Uwk1zjFgxC0QX/MmRpbiZiJ1qWU65N3KgdmDITa@nongnu.org
-X-Gm-Message-State: AOJu0YxSiVLknVOdg0pMZ9Sj3iKpCilQml8x4GHauRfpxWk+5Y37LDhp
- eySLO9NEdnTo4vbH4EcSFQIWxK0fIl0opu8HrfBuazqeLnBpTs/Bv4+i0jTdXXo=
-X-Gm-Gg: ASbGncuTTSuYuOHcAlIKKvFdVSZEP8bCZaT3vbgYOGBgG9togp8Y1ReE8ipMVAasaSI
- nyhkHr9UD/+FFCx9P1F8qe4+YMygGVSyWaHv+2XzYDIbFBRvxYyi8Gzsd9tz+bSwDKYKZaWFue+
- 4k4r2yo3/gQ2/GNZik68Ed/rXjhSEbMaev+kE45rwCLsa77spc2tHdpSRz9w21ZIlbIp2EH8XNd
- FM9sThnvM9/jq06q5OCpdgnFKMphfyJxRuULENKpXvzEa3vpU7Oa9Drht0zULpL7W9nqhxxLCig
- 9ZyR6swNSuNTJmL9sdNi7r7GIjQCf483BRrN06QedojlSl3ioi4AzGiK7mFAeDiC8XiZAwWJwH4
- bnkoqZ7gH
-X-Google-Smtp-Source: AGHT+IHUsR+Q439cJbXFpvkOjo6adVPXFG0qm1IbBELjSC6nt0pMUaY2eWrG2aGknyrrNRSScXUacQ==
-X-Received: by 2002:a17:90b:2792:b0:2fa:137f:5c61 with SMTP id
- 98e67ed59e1d1-2febab50e88mr28125160a91.12.1741034416867; 
- Mon, 03 Mar 2025 12:40:16 -0800 (PST)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fea67a5dc8sm9390129a91.23.2025.03.03.12.40.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 12:40:16 -0800 (PST)
-Message-ID: <34beaac3-405b-47bb-b12a-91a0dd3e9f5b@linaro.org>
-Date: Mon, 3 Mar 2025 12:40:14 -0800
+ AJvYcCVWFxUDIVbeF1u3pKmLOnPVi6zN9lubciS0DueN0LI5NyZ4zisk+xt+l84cwdsh+dISstlEjM1FLqDe@nongnu.org
+X-Gm-Message-State: AOJu0Yy1qeZw+LffqqTLyABogBt++XiinJL/uY2sa5SG8KauFCzSe2eL
+ awLtZCy2w6mWYAdbhmY1+jUDs/ibg5JcgWy2WEQxaZh/3ShZseMgTBrsLj0BYNMRxko/A7d2YY/
+ M/nQta9oX1m2t3pqD9wuf+ZG+a/Bj+SpQEZzozcFmsA5TPG+m44NqP484D05MnD2GxJLLLd69kP
+ MLkJZcA5Fh6ClnPq8viUNPj69LlMaB
+X-Gm-Gg: ASbGncstJ0RhsVr6IW8a+++jB13mHh4+mVjzDjyWTK4s/l2QwyD+a05xYPoxA7KSG0M
+ p5iJdD02lBh0a3fgqD2vQW9QHmD7vMK/Lz0R9RNsq5BjexekQpdHhP+hYwGRGQDgQQkYea0U4zz
+ 23qeiOyWldBX/uRHvYm3rZOZoVKRMGSw==
+X-Received: by 2002:a05:690c:74c9:b0:6fd:369c:635e with SMTP id
+ 00721157ae682-6fd4a0fba64mr221123817b3.16.1741034673738; 
+ Mon, 03 Mar 2025 12:44:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEpenhb6bjNCr5KKNHJuPuPek1JIJ6CNDQiTnccoi8xin5L1JEDmPvdjhbDYHOtW1sRpnaLHfe3SomLlY6UEws=
+X-Received: by 2002:a05:690c:74c9:b0:6fd:369c:635e with SMTP id
+ 00721157ae682-6fd4a0fba64mr221123567b3.16.1741034673406; Mon, 03 Mar 2025
+ 12:44:33 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 24/24] target/m68k: Implement FPIAR
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: laurent@vivier.eu
-References: <20250224171444.440135-1-richard.henderson@linaro.org>
- <20250224171444.440135-25-richard.henderson@linaro.org>
- <81d01563-8a5d-4002-81e0-1b34108bfce3@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <81d01563-8a5d-4002-81e0-1b34108bfce3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20250225074133.6827-1-kuqin12@gmail.com>
+ <20250225074133.6827-2-kuqin12@gmail.com>
+ <CAD=n3R2kuvUzyE7nKPmpyELozdo_+eAKVr_CxA5HQ_jLL25stw@mail.gmail.com>
+In-Reply-To: <CAD=n3R2kuvUzyE7nKPmpyELozdo_+eAKVr_CxA5HQ_jLL25stw@mail.gmail.com>
+From: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
+Date: Mon, 3 Mar 2025 20:44:21 +0000
+X-Gm-Features: AQ5f1JprlG5Sgu7UcZuHcTwErsEB0-U0S3xSc2buB1mmfQIoDfpU4ZFqvaFi8rU
+Message-ID: <CAD=n3R0ntWYNN9LxJWVXApY3s_LRddx4YVQPYRzRojXcL-BDug@mail.gmail.com>
+Subject: Re: [PATCH 1/1] hw/arm/sbsa-ref: Adding TPM support for ARM SBSA-Ref
+ machine
+To: Kun Qin <kuqin12@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Graeme Gregory <graeme@xora.org.uk>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-GUID: jmZCq9Ut_wbF1Mvzyx_zbgMLa8tl4mcZ
+X-Proofpoint-ORIG-GUID: jmZCq9Ut_wbF1Mvzyx_zbgMLa8tl4mcZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-03_10,2025-03-03_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ mlxlogscore=999 spamscore=0 phishscore=0 mlxscore=0 priorityscore=1501
+ bulkscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503030159
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=leif.lindholm@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,50 +119,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 10:39, Philippe Mathieu-Daudé wrote:
-> Hi Richard,
-> 
-> On 24/2/25 18:14, Richard Henderson wrote:
->> So far, this is only read-as-written.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2497
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/m68k/cpu.h       |  1 +
->>   target/m68k/cpu.c       | 23 ++++++++++++++++++++++-
->>   target/m68k/helper.c    | 14 ++++++++------
->>   target/m68k/translate.c |  3 ++-
->>   4 files changed, 33 insertions(+), 8 deletions(-)
-> 
-> 
->> diff --git a/target/m68k/helper.c b/target/m68k/helper.c
->> index 6e3bb96762..bc787cbf05 100644
->> --- a/target/m68k/helper.c
->> +++ b/target/m68k/helper.c
->> @@ -45,8 +45,8 @@ static int cf_fpu_gdb_get_reg(CPUState *cs, GByteArray *mem_buf, int n)
->>           return gdb_get_reg32(mem_buf, env->fpcr);
->>       case 9: /* fpstatus */
->>           return gdb_get_reg32(mem_buf, env->fpsr);
->> -    case 10: /* fpiar, not implemented */
->> -        return gdb_get_reg32(mem_buf, 0);
->> +    case 10: /* fpiar */
->> +        return gdb_get_reg32(mem_buf, env->fpiar);
->>       }
->>       return 0;
->>   }
->> @@ -69,7 +69,8 @@ static int cf_fpu_gdb_set_reg(CPUState *cs, uint8_t *mem_buf, int n)
->>       case 9: /* fpstatus */
->>           env->fpsr = ldl_be_p(mem_buf);
->>           return 4;
->> -    case 10: /* fpiar, not implemented */
->> +    case 10: /* fpiar */
->> +        env->fpiar = ldl_p(mem_buf);
-> 
-> Should we consider target endianness?
+Doh! Add the lists back in. (No idea how I dropped them off.)
 
-I am.  Are you suggesting that the TARGET_BIG_ENDIAN shorthand be eliminated entirely, 
-even from target-specific code?
-
-
-r~
+On Mon, 3 Mar 2025 at 17:02, Leif Lindholm
+<leif.lindholm@oss.qualcomm.com> wrote:
+>
+> Hi Kun,
+>
+> Apologies for delay in responding - I was out last week.
+> I agree with this addition, since a TPM is a requirement for servers.
+>
+> However, to help simplify review, could you add some detail in the
+> commit message
+> as to which SystemReady requirements this resolves and whether this
+> implementation
+> fulfills all requirements across BSA/SBSA/BBSA?
+>
+> I agree with Peter that since this is a non-discoverable component, it
+> would make sense
+> to step the machine minor version number. A major version bump would
+> not be required
+> since simply adding this component will not break any existing
+> firmware (which will have
+> no way of knowing it even exists).
+>
+> Regards,
+>
+> Leif
+>
+> On Tue, 25 Feb 2025 at 07:41, Kun Qin <kuqin12@gmail.com> wrote:
+> >
+> > From: Kun Qin <kuqin@microsoft.com>
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2625
+> >
+> > This change aims to add a TPM device for SBSA ref machine.
+> >
+> > The implementation adds a TPM create routine during machine
+> > initialization.
+> >
+> > The backend can be the same as the rest of TPM support, by using swtpm.
+> >
+> > Signed-off-by: Kun Qin <kuqin12@gmail.com>
+> > ---
+> >  hw/arm/sbsa-ref.c | 24 ++++++++++++++++++++++++
+> >  1 file changed, 24 insertions(+)
+> >
+> > diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+> > index e720de306419..93eb3d1e363b 100644
+> > --- a/hw/arm/sbsa-ref.c
+> > +++ b/hw/arm/sbsa-ref.c
+> > @@ -28,6 +28,8 @@
+> >  #include "system/numa.h"
+> >  #include "system/runstate.h"
+> >  #include "system/system.h"
+> > +#include "system/tpm.h"
+> > +#include "system/tpm_backend.h"
+> >  #include "exec/hwaddr.h"
+> >  #include "kvm_arm.h"
+> >  #include "hw/arm/boot.h"
+> > @@ -94,6 +96,7 @@ enum {
+> >      SBSA_SECURE_MEM,
+> >      SBSA_AHCI,
+> >      SBSA_XHCI,
+> > +    SBSA_TPM,
+> >  };
+> >
+> >  struct SBSAMachineState {
+> > @@ -132,6 +135,7 @@ static const MemMapEntry sbsa_ref_memmap[] = {
+> >      /* Space here reserved for more SMMUs */
+> >      [SBSA_AHCI] =               { 0x60100000, 0x00010000 },
+> >      [SBSA_XHCI] =               { 0x60110000, 0x00010000 },
+> > +    [SBSA_TPM] =                { 0x60120000, 0x00010000 },
+> >      /* Space here reserved for other devices */
+> >      [SBSA_PCIE_PIO] =           { 0x7fff0000, 0x00010000 },
+> >      /* 32-bit address PCIE MMIO space */
+> > @@ -629,6 +633,24 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
+> >      }
+> >  }
+> >
+> > +static void create_tpm(SBSAMachineState *sbsa, PCIBus *bus)
+> > +{
+> > +    Error *errp = NULL;
+> > +    DeviceState *dev;
+> > +
+> > +    TPMBackend *be = qemu_find_tpm_be("tpm0");
+> > +    if (be == NULL) {
+> > +        error_report("Couldn't find tmp0 backend");
+> > +        return;
+> > +    }
+> > +
+> > +    dev = qdev_new(TYPE_TPM_TIS_SYSBUS);
+> > +    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp);
+> > +    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
+> > +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> > +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, sbsa_ref_memmap[SBSA_TPM].base);
+> > +}
+> > +
+> >  static void create_pcie(SBSAMachineState *sms)
+> >  {
+> >      hwaddr base_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
+> > @@ -686,6 +708,8 @@ static void create_pcie(SBSAMachineState *sms)
+> >      pci_create_simple(pci->bus, -1, "bochs-display");
+> >
+> >      create_smmu(sms, pci->bus);
+> > +
+> > +    create_tpm(sms, pci->bus);
+> >  }
+> >
+> >  static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_size)
+> > --
+> > 2.43.0
+> >
 
