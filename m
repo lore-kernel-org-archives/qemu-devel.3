@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4FE7C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 09:59:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04EACC282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:00:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp2Y0-0003bx-Aj; Mon, 03 Mar 2025 04:57:16 -0500
+	id 1tp2Xm-0002iJ-E9; Mon, 03 Mar 2025 04:57:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp2WA-0007tY-GY; Mon, 03 Mar 2025 04:55:25 -0500
+ id 1tp2XZ-0001PC-GH; Mon, 03 Mar 2025 04:56:49 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp2W8-0001s3-Vi; Mon, 03 Mar 2025 04:55:22 -0500
+ id 1tp2XX-0001zJ-Qk; Mon, 03 Mar 2025 04:56:49 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 3 Mar
- 2025 17:55:01 +0800
+ 2025 17:55:05 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 3 Mar 2025 17:55:01 +0800
+ Transport; Mon, 3 Mar 2025 17:55:05 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 10/23] hw/intc/aspeed: Add support for multiple output pins
- in INTC
-Date: Mon, 3 Mar 2025 17:54:38 +0800
-Message-ID: <20250303095457.2337631-11-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v4 21/23] tests/functional/aspeed: Update test ASPEED SDK
+ v09.05
+Date: Mon, 3 Mar 2025 17:54:49 +0800
+Message-ID: <20250303095457.2337631-22-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
 References: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -67,96 +66,43 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added support for multiple output pins in the INTC controller to
-accommodate the AST2700 A1.
-
-Introduced "num_outpins" to represent the number of output pins. Updated the
-IRQ handling logic to initialize and connect output pins separately from input
-pins. Modified the "aspeed_soc_ast2700_realize" function to connect source
-orgates to INTC and INTC to GIC128 - GIC136. Updated the "aspeed_intc_realize"
-function to initialize output pins.
-
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/intc/aspeed_intc.h | 5 +++--
- hw/arm/aspeed_ast27x0.c       | 6 +++++-
- hw/intc/aspeed_intc.c         | 4 ++++
- 3 files changed, 12 insertions(+), 3 deletions(-)
+ tests/functional/test_aarch64_aspeed.py | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-index 4a0512c688..f9a0273f78 100644
---- a/include/hw/intc/aspeed_intc.h
-+++ b/include/hw/intc/aspeed_intc.h
-@@ -17,8 +17,8 @@
- OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+index 07b0c7c1fd..8df6a97a28 100755
+--- a/tests/functional/test_aarch64_aspeed.py
++++ b/tests/functional/test_aarch64_aspeed.py
+@@ -27,9 +27,9 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+         wait_for_console_pattern(self, '## Loading kernel from FIT Image')
+         wait_for_console_pattern(self, 'Starting kernel ...')
  
- #define ASPEED_INTC_NR_REGS (0x808 >> 2)
--#define ASPEED_INTC_NR_INTS 9
- #define ASPEED_INTC_MAX_INPINS 9
-+#define ASPEED_INTC_MAX_OUTPINS 9
+-    ASSET_SDK_V903_AST2700 = Asset(
+-            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.03/ast2700-default-obmc.tar.gz',
+-            '91225f50d255e2905ba8d8e0c80b71b9d157c3609770c7a740cd786370d85a77')
++    ASSET_SDK_V905_AST2700 = Asset(
++            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz',
++            'cfbbd1cce72f2a3b73b9080c41eecdadebb7077fba4f7806d72ac99f3e84b74a')
  
- struct AspeedINTCState {
-     /*< private >*/
-@@ -30,7 +30,7 @@ struct AspeedINTCState {
+     def start_ast2700_test(self, name):
+         num_cpu = 4
+@@ -89,11 +89,11 @@ def start_ast2700_test(self, name):
+         exec_command_and_wait_for_pattern(self,
+             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
  
-     uint32_t regs[ASPEED_INTC_NR_REGS];
-     OrIRQState orgates[ASPEED_INTC_MAX_INPINS];
--    qemu_irq output_pins[ASPEED_INTC_NR_INTS];
-+    qemu_irq output_pins[ASPEED_INTC_MAX_OUTPINS];
+-    def test_aarch64_ast2700_evb_sdk_v09_03(self):
++    def test_aarch64_ast2700_evb_sdk_v09_05(self):
+         self.set_machine('ast2700-evb')
  
-     uint32_t enable[ASPEED_INTC_MAX_INPINS];
-     uint32_t mask[ASPEED_INTC_MAX_INPINS];
-@@ -42,6 +42,7 @@ struct AspeedINTCClass {
+-        self.archive_extract(self.ASSET_SDK_V903_AST2700)
+-        self.start_ast2700_test('ast2700-default')
++        self.archive_extract(self.ASSET_SDK_V905_AST2700)
++        self.start_ast2700_test('ast2700-a0-default')
  
-     uint32_t num_lines;
-     uint32_t num_inpins;
-+    uint32_t num_outpins;
-     uint64_t mem_size;
-     uint64_t reg_size;
-     uint64_t reg_offset;
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 9aea06fb76..09aad69e3c 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -530,10 +530,14 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc), 0,
-                     sc->memmap[ASPEED_DEV_INTC]);
  
--    /* GICINT orgates -> INTC -> GIC */
-+    /* source orgates -> INTC */
-     for (i = 0; i < ic->num_inpins; i++) {
-         qdev_connect_gpio_out(DEVICE(&a->intc.orgates[i]), 0,
-                                 qdev_get_gpio_in(DEVICE(&a->intc), i));
-+    }
-+
-+    /* INTC -> GIC128 - GIC136 */
-+    for (i = 0; i < ic->num_outpins; i++) {
-         sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), i,
-                            qdev_get_gpio_in(DEVICE(&a->gic),
-                                 aspeed_soc_ast2700_gic_intcmap[i].irq));
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index f9f30c957e..d558b3824c 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -361,6 +361,9 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
-         if (!qdev_realize(DEVICE(&s->orgates[i]), NULL, errp)) {
-             return;
-         }
-+    }
-+
-+    for (i = 0; i < aic->num_outpins; i++) {
-         sysbus_init_irq(sbd, &s->output_pins[i]);
-     }
- }
-@@ -396,6 +399,7 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
-     dc->desc = "ASPEED 2700 INTC Controller";
-     aic->num_lines = 32;
-     aic->num_inpins = 9;
-+    aic->num_outpins = 9;
-     aic->mem_size = 0x4000;
-     aic->reg_size = 0x808;
-     aic->reg_offset = 0x1000;
+ if __name__ == '__main__':
 -- 
 2.34.1
 
