@@ -4,94 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0175FC282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:52:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A25C282D1
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp9xf-0001RU-2s; Mon, 03 Mar 2025 12:52:15 -0500
+	id 1tp9xz-0001XD-Jm; Mon, 03 Mar 2025 12:52:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp9xa-0001Pq-7w
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:11 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tp9xw-0001Ws-LG
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:32 -0500
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp9xX-00007V-1u
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:09 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-390edaee0cfso2429240f8f.2
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 09:52:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tp9xu-0000FP-7s
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:32 -0500
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-22113560c57so90796815ad.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 09:52:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741024323; x=1741629123; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KicCcYq2UjveTCard+1fZS3y1dRe4jB0t9s67fyte/A=;
- b=ciPZivczLbHN4nYeJyPHgb33oNZtBkwKFJ4hW3GqMlHQXAEN9PzV48W7lNhw4UmQYJ
- KaNtbhZ+rEwAGsOVheDjpt+U477I8FYbBR5wBkY8ebxxnQ26TPxL6476qDjVTm32OVj6
- 9/GoCT6K2R/1slwcCmj/9Sj+I4kQWvcscvU9qLEbVZPmny/MtEDNL7pCFdTSrGT9vTDt
- nprp11FX72H/qy5ubk59biMPUdRPG5/tdRLN2HjCtIUGaPUOc4y6418ERCa+DSZpM6ss
- uBQD5EpY2EwRdFaAHUA+UmOC3tGEoUVi+HbwLlkqJeY48+nG/tHQ3y+4L9kG6HWk89vR
- p4fQ==
+ d=gmail.com; s=20230601; t=1741024346; x=1741629146; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QZCVkfMaXSFARuIy09spko2Jqzd2Dt5tJP9e/xb2Itc=;
+ b=bD9EtZvePk8JUe3Q7usKP8c9fc1L6jJ3n/mpiiOvLntKSj1irE2H0nMiGnn/BAAb+/
+ 3bOrQDe46kDfQPk08KTH19DEqYz/gIQCSfy5FG1wCGBNDKHy6U5xvVecOGUu9C7RR6Ts
+ pARC4NthugGs5TYQmrjq2PTSkTusab5YTSxcM+sRP+uhIEAU7Eqz0Z2PKo1+QY1F9PnM
+ 90xE+nMzszkafTTUhmiXDO+P+DxsmEYbFlAd7+X+6m8VZACgNNcbVctjfF9p8yBua4w6
+ LP2aj/aYSS9YEny5fUmoIv89LPlpnSCpXNkqOQEX+RkMAaqyzpk4w4TM5pV0EM4DICK3
+ +ynQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741024323; x=1741629123;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KicCcYq2UjveTCard+1fZS3y1dRe4jB0t9s67fyte/A=;
- b=MeAaS+wDAkKa29Yz+yF4Ifys22WUveXptWk07bPlwwPNRljfWeNliPJGq25+JIJWS6
- n6cORqFaJJoFNuTx1Abdh/ONqir1E1NdfQBcf+pCQvpBGx5weYiBUuJhmHUKLc5fPvWr
- RYHDpqKwSWPd/c+uWZGdg+w+6soiIqIkeAm0tqgkMTNYK+YnQmqulP1tf1z1jzqBpRN1
- TLPbOSBufv+ZSplHGW2LxBfSisFb3igyRwIVESAMisxCXr+hF2e+kKNhyk6pr3QTqgCz
- WzDhbzuRxbOcNdCckvg/HDXLhY1oZkLg7hmJRNg1u3AHZXgsTHXRmJdcAP7Mk5mQVLdj
- fLKQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3vyVSF8ew1zMT+4rkPaTiD3f+wESS8BdWUP0hxY/XkgyGJrpbPH3jxU4z1qe3lQMr/Wu8IrKWfivG@nongnu.org
-X-Gm-Message-State: AOJu0YyNkh/r42rd28Qbt6z/V8lGAzCSXZZc0oC6I8FGrEdiiJ1JO/DA
- RvL867X+bC8GEewAO1MxvEq/1NSWhy7Pd/+mV3+7/veC2Ct6finh8XdKcz75XYQ=
-X-Gm-Gg: ASbGnctaZUeicFtk0GbQkLuqtqqA2Yi8CFQGec+CnI0WQCNsDP/jG1/Y2GAre9eQCe+
- BZKjNLuGxntArDHORksTi7Unofcdxwc6DzFv5mSSDYD+5hOuyUfKoqDNItNIE5XdyHD7Rapuhy7
- TKVgtn2ohw703doBLiPNErvpGJS4ZEtWaC7ebyFsgtESFATQzK2u5fZ87e51XMpIOaIYMT3hkrJ
- NamItJOjhfzDRksVnDFJ4WwFPVxsv/ir57Klcn3T/HwC2dR6GseCCHzZ0cxLErB9h/PD9e8/0Pw
- +aWm+h1kNe75P8OKlVz79PjNjPmlGd3Kt6Wn7hf4WnWMcITFBKUQOkejAQfw4b7kNvsLKiOkEs8
- oKs8zunOS85ri
-X-Google-Smtp-Source: AGHT+IGjQ1gyNntzN2iQrVia3p09h+QbF/mZqrbbEIF8zSdRw+mmhv0R8876CvtApbAx6w5bFWCDCg==
-X-Received: by 2002:a05:6000:401f:b0:38d:d664:67d8 with SMTP id
- ffacd0b85a97d-390ec7c6738mr13564263f8f.11.1741024323384; 
- Mon, 03 Mar 2025 09:52:03 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43b73703f83sm169668265e9.13.2025.03.03.09.52.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 09:52:02 -0800 (PST)
-Message-ID: <d97172e5-b8ae-4852-ae2b-b430cca53288@linaro.org>
-Date: Mon, 3 Mar 2025 18:52:01 +0100
+ d=1e100.net; s=20230601; t=1741024346; x=1741629146;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QZCVkfMaXSFARuIy09spko2Jqzd2Dt5tJP9e/xb2Itc=;
+ b=nIeSlZaZO3vNBugulq8V3uplbO/mNwYkNx0ipjtT+Sw9cZM47We+nWgUnQ2WzUS1jQ
+ lhXItFwZ7/Eadi3USrm0s464f7dv+tTx8QN4OtvyWpF5J9sjma7DVUPgg5IFtBKdqEOb
+ JEZw0ZPLeNYLywxoB7pSgyJXZBRsfFdQjuQjWY1L/ZnAf0k/Z6KxVegnjK3GxBfKF0+5
+ sZvokBZ0fwlAwVRTE7lQRc7CswgHZEMWP7uYK/sFOzX9pp42tv6ifa8Uou2Fa1ZcvFXk
+ 0a/sjFdDWUs/J1Rct2XM4WNBCamyC/NPWcnqNwH59Tib53CYHdK4xl5VjEhYpkxDdifz
+ J8Pg==
+X-Gm-Message-State: AOJu0YxwPk+Nlzc9e7Odpyhd3VLZ4P4spgj1QkqJIovG2oJmkwdCMW6V
+ XM9VmQdcAQNth7RP+mXc5464WLbaUnhIrf/eShpcencIgftpzQ4=
+X-Gm-Gg: ASbGncv/ZZfqlYHtsT15QBn1Dtaid6BEfQPh5ENXUQ6gNPFfWQtDtWlvzF7ui8xMA7K
+ ovLy66ppDNdhnAAXANSRo1+YxxZOz9EippuIAlZxjA8iBYNAtOGJa/BWld3MfRX3iX7Mnp65tDv
+ sndwa54igQRS8fNqYF+O9xB/439nVks+sR6N/7YMp/Vq5qDiGuKvuIFL5NrJdTtF48fCZOusu+8
+ eKUA5YwOW0o9uChfcEPDL9x9Mx8f1pbncHuWN7rqbeaZz10F4ieNa6rv7LGTdcpV/xE2sKC1SBw
+ qwyZn+i3CiJo/e+R7OTZQ+gZO8m6jvVBfL/mvcEqcZhJhKb9DO8Bl+6BzQ==
+X-Google-Smtp-Source: AGHT+IFNAvMuI/OCcyBMg5Xzee6nRNDWZTMTS323B3rKU36yl0JoPFFHsp6tBw7weFtXGWkG+ZtZjg==
+X-Received: by 2002:a17:903:41d2:b0:21f:35fd:1b6c with SMTP id
+ d9443c01a7336-223692596b4mr213439295ad.45.1741024346186; 
+ Mon, 03 Mar 2025 09:52:26 -0800 (PST)
+Received: from localhost.localdomain ([58.37.175.138])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2235052beaasm80625535ad.233.2025.03.03.09.52.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Mar 2025 09:52:25 -0800 (PST)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>
+Subject: [PATCH v2 0/9] vfio/igd: Decoupling quirks with legacy mode
+Date: Tue,  4 Mar 2025 01:52:10 +0800
+Message-ID: <20250303175220.74917-1-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 03/11] hw: Add vmapple subdir
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
- mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- berrange@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com,
- qemu-block@nongnu.org, qemu-arm@nongnu.org, Alexander Graf
- <graf@amazon.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20250112210056.16658-1-phil@philjordan.eu>
- <20250112210056.16658-4-phil@philjordan.eu>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250112210056.16658-4-phil@philjordan.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,103 +98,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/1/25 22:00, Phil Dennis-Jordan wrote:
-> From: Alexander Graf <graf@amazon.com>
-> 
-> We will introduce a number of devices that are specific to the vmapple
-> target machine. To keep them all tidily together, let's put them into
-> a single target directory.
-> 
-> Signed-off-by: Alexander Graf <graf@amazon.com>
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->   MAINTAINERS             | 7 +++++++
->   hw/Kconfig              | 1 +
->   hw/meson.build          | 1 +
->   hw/vmapple/Kconfig      | 1 +
->   hw/vmapple/meson.build  | 0
->   hw/vmapple/trace-events | 2 ++
->   hw/vmapple/trace.h      | 1 +
->   meson.build             | 1 +
->   8 files changed, 14 insertions(+)
->   create mode 100644 hw/vmapple/Kconfig
->   create mode 100644 hw/vmapple/meson.build
->   create mode 100644 hw/vmapple/trace-events
->   create mode 100644 hw/vmapple/trace.h
+This patchset intends to decouple existing quirks from legacy mode.
+Currently all quirks depends on legacy mode (except x-igd-opregion),
+which includes following conditions:
+* Machine type is i440fx
+* IGD device is at guest BDF 00:02.0
+* VBIOS in ROM BAR or file
+* VGA IO/MMIO ranges are claimed by IGD
+* OpRegion
+* Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
+
+If one of the condition is not met, the quirks will not be applied.
+However, for recent generations, espcially Gen 11+ devices that removed
+VBIOS support, not all the conditions are required. For example, on EFI-
+based systems, VBIOS ROM is unnecessary, and VGA ranges are not used.
+
+To have better support on newer UEFI-based VMs, this patchset makes the
+quirks independent of legacy mode. The BDSM and GGC register quirks are
+applied to all supported IGD devices, new x-igd-lpc option for the LPC
+bridge / Host bridge ID quirk is introduced for possible Q35 support.
+It also prepares for supporting IGD passthrough when it is not primary
+display later (kernel change will be merged in 6.15).
+
+To maintain backward compatbility with exising configuration, legacy
+mode will automatically be enabled when:
+* Machine type is i440fx
+* IGD device is at guest BDF 00:02.0
+If the legacy mode behavior is unwanted, option x-igd-legacy-mode=off
+is provided for users to disable it.
+
+Note that a major difference is that instead of simply continues, legacy
+mode will now fail immediately on error, this may break functionality,
+but the impact should be low as IGD passthrough is not working, and
+there would be no display output if it fails halfway.
+
+The first 2 patches of this patchset was taken from a previous one,
+details can be found at:
+https://lore.kernel.org/all/20250124191245.12464-1-tomitamoeko@gmail.com/
+
+This patchest was mainly tested on Alder Lake UHD770, with Debian 12
+(kernel 6.1), Windows 11 (driver 32.0.101.6458) and Intel GOP driver
+17.0.1081.
+
+Btw, documentation change would be added after everyone considers the
+proposed change is okay.
 
 
-> diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
-> new file mode 100644
-> index 0000000000..8b13789179
-> --- /dev/null
-> +++ b/hw/vmapple/Kconfig
-> @@ -0,0 +1 @@
-> +
-> diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
-> new file mode 100644
-> index 0000000000..e69de29bb2
-> diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
-> new file mode 100644
-> index 0000000000..9ccc579048
-> --- /dev/null
-> +++ b/hw/vmapple/trace-events
-> @@ -0,0 +1,2 @@
-> +# See docs/devel/tracing.rst for syntax documentation.
-> +
-> diff --git a/hw/vmapple/trace.h b/hw/vmapple/trace.h
-> new file mode 100644
-> index 0000000000..572adbefe0
-> --- /dev/null
-> +++ b/hw/vmapple/trace.h
-> @@ -0,0 +1 @@
-> +#include "trace/trace-hw_vmapple.h"
-> diff --git a/meson.build b/meson.build
-> index d06f59095c..812ef33550 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3588,6 +3588,7 @@ if have_system
->       'hw/usb',
->       'hw/vfio',
->       'hw/virtio',
-> +    'hw/vmapple',
->       'hw/watchdog',
->       'hw/xen',
->       'hw/gpio',
+Changelog:
+v2:
+* Keep legacy mode for compatbility
+* Renamed from "vfio/igd: Remove legacy mode"
+Link: https://lore.kernel.org/all/20250224182927.31519-1-tomitamoeko@gmail.com/
 
-Alex, Phil, we now mandate a SPDX tag. Due to the license used in
-vmapple.c in this patch, are you OK with me squashing here:
 
--- >8 --
-diff --git a/hw/vmapple/trace.h b/hw/vmapple/trace.h
-index 572adbefe04..d099d5ecd9e 100644
---- a/hw/vmapple/trace.h
-+++ b/hw/vmapple/trace.h
-@@ -0,0 +1 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
-index 8b137891791..315c06b689c 100644
---- a/hw/vmapple/Kconfig
-+++ b/hw/vmapple/Kconfig
-@@ -1 +1 @@
--
-+# SPDX-License-Identifier: GPL-2.0-or-later
-diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
-index e69de29bb2d..315c06b689c 100644
---- a/hw/vmapple/meson.build
-+++ b/hw/vmapple/meson.build
-@@ -0,0 +1 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
-index 9ccc5790487..21125794121 100644
---- a/hw/vmapple/trace-events
-+++ b/hw/vmapple/trace-events
-@@ -2 +2 @@
--
-+# SPDX-License-Identifier: GPL-2.0-or-later
----
+Tomita Moeko (9):
+  vfio/igd: Remove GTT write quirk in IO BAR 4
+  vfio/igd: Do not include GTT stolen size in etc/igd-bdsm-size
+  vfio/igd: Consolidate OpRegion initialization into a single function
+  vfio/igd: Move LPC bridge initialization to a separate function
+  vfio/pci: Add placeholder for device-specific config space quirks
+  vfio/igd: Refactor vfio_probe_igd_bar4_quirk into pci config quirk
+  vfio/igd: Decouple common quirks from legacy mode
+  vfio/igd: Handle x-igd-opregion option in config quirk
+  vfio/igd: Introduce x-igd-lpc option for LPC bridge ID quirk
 
-?
+ hw/vfio/igd.c        | 503 +++++++++++++++++--------------------------
+ hw/vfio/pci-quirks.c |  51 +----
+ hw/vfio/pci.c        |  33 +--
+ hw/vfio/pci.h        |  13 +-
+ 4 files changed, 214 insertions(+), 386 deletions(-)
+
+-- 
+2.47.2
 
 
