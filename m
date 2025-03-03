@@ -4,134 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ADB3C282D1
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 14:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5758C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 14:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp78w-0002LB-2N; Mon, 03 Mar 2025 09:51:42 -0500
+	id 1tp7Ap-0003Zt-4m; Mon, 03 Mar 2025 09:53:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tp78r-0002BY-Bb
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:51:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tp78n-0006WX-Gs
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:51:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741013492;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=r6kKs2VKcDYFe9P1iLTQMG3USZ1cNcl9KptsP8PUt2M=;
- b=eVAdPDhOdeqMfn+ZfGwFvRPwZjsktXaRYcM90r3rA+OpBXwR0MwCNLfbcZmmRTZlpR2Pi+
- wDW8yUhqjAV9KtEtlCZNR4pqu9TTRBsnKwMqFMtFReOSDeNrKAVbRmcJ8254bB7NccFpin
- KDBtchy9BqghZym7up97lySfFNEW4S0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-306-J9llKStCNVSBvIVP7NKW2Q-1; Mon, 03 Mar 2025 09:51:29 -0500
-X-MC-Unique: J9llKStCNVSBvIVP7NKW2Q-1
-X-Mimecast-MFC-AGG-ID: J9llKStCNVSBvIVP7NKW2Q_1741013488
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4399a5afc72so20150305e9.3
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 06:51:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp7Al-0003YD-3I
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:53:35 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp7Ai-0006pV-HG
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:53:34 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-390e88caa4dso2033837f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 06:53:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741013610; x=1741618410; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oYtkfweF/0z3z7jSYdFaM98btDld44kvHKxV5PacVoQ=;
+ b=REFW36/jvI6KxIwPQO469zphRboMdiDy5PVW+Eae58GSX1av7/tJ2QjpBTqLhKO0NO
+ Z+2pCueHnTVfJcLT4d7HI/g8f5b3riI8BKVRdHV4k5jBCmoDXL5C8LE4bKLVhtOAqfMk
+ Z55GMtYT1Pid8wgO36YDD65pw+pxRO/3SWuzvdP2Bz2+2Xp1IHLQ4awRH8hjbXanWU0C
+ WDr7LeAtyMezcntJVkeHifeDO4WDH9cnJsYyLTRE7WpdqdyI34bhzvshUqczZNSeMiz5
+ +tTxxcf3jbN6mlLFTXxMeNutuh3COTRHbAxSulmDhkxTo3t5S0W0n2aeFASzp9Hm4BEc
+ X3AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741013487; x=1741618287;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r6kKs2VKcDYFe9P1iLTQMG3USZ1cNcl9KptsP8PUt2M=;
- b=d0rs4hTAzW5NtJx46m9lljfeYmF+W0FvpR4VUhHidAO6Ewz8NUdsxIp4HFRb5o1ikB
- b0LbWNIc1vS3GtlXDptFA4q/jywPBZ7Trr1Fdec7OyklXjMwhOgtGqVLCxk6iZn9N8Rj
- KGtpWGG7dzU3wr6jIAy8WWMJFKV/OYsQ9WkWnOzz0QhYrmJCuBKttlli3/2qf+m/Ka92
- QHqzXlF0FC8kRF9TsSfc+acNlly0deZYW5AtWr+U2gjXELkrhARZT88Wa3B4KfN0ox2a
- Rin/axNMi2nBJeLn8ovBxgvCtbq2T/hDqN6PLd/G7NpotBFTfe2xEkE/3L29UtXxHnoj
- o1ug==
-X-Gm-Message-State: AOJu0YyfC2MufkaWN0nS0lvdBivYlY7OjhWPQORXcVOQDHPo0HWh15Wi
- C/0aqhyyEPT+ylxb3oR1EvvMMyYeeIDe5wI5YxW7J27EGMdt4a5c6aCEeAv/kBpBWGm8v70C2fB
- KmSR3pK+eyPLIR2g3ozPTXt8NC/FpX17VJE6W7j8501rqqF8v6IlAcmZQW/lU6vA=
-X-Gm-Gg: ASbGncvS6y0CBOmBZFyw/6JcniW/wRQrBw7AA1ryqxiEautC+Ofm7B66ahhvKu/2oiG
- g0C861RGYZDQeuI60NJSQhvjfJNoDDhKvryzg1mXGhbfO1AZyt3rQl4NQazv+gtmmdTqur/4JOM
- zDNit5CcAmodKOEsoUsztqfW/rqKv9NZKjfuPaz0fzVdN9gJuMumEq0P3aepNzaerzOPj3A6+89
- a5VET0ksAC6W44Lqnh5BKKwwLeQCwUpY4Ql/mX+SCtb/kbpmsPhfR+UaKdbtW6v1Dhee5DXLWvk
- 15ODvYBSE0AvY1NC/e8=
-X-Received: by 2002:a05:600c:5106:b0:439:9496:181c with SMTP id
- 5b1f17b1804b1-43ba67745d4mr119272335e9.29.1741013487354; 
- Mon, 03 Mar 2025 06:51:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGxdtsjk6QfcKCQkHQfYfAEU0CNTLvHVwGilXAEvzW3gI6oKxES549fTdESaN7XHRnU8cRGvA==
-X-Received: by 2002:a05:600c:5106:b0:439:9496:181c with SMTP id
- 5b1f17b1804b1-43ba67745d4mr119272165e9.29.1741013487072; 
- Mon, 03 Mar 2025 06:51:27 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.119.44])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-43bbed8b26asm52305425e9.22.2025.03.03.06.51.25
+ d=1e100.net; s=20230601; t=1741013610; x=1741618410;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oYtkfweF/0z3z7jSYdFaM98btDld44kvHKxV5PacVoQ=;
+ b=wl3kE6oh2LXY/TtWcBmp9/HE+El/e9xCVDmHPCz7FbnYgj7VpfkgxqlFyZ/lN104OF
+ VvcevopC4oN2EhZROSXS+8Y0LyTKmy+t0rlkDIIoqnDHii+EUH/UioT4zxSbuHIIZEIP
+ 5bnzvMF2T6n9lk/9R3FiF9zkClzHNFrGpzn5HzfUbNP57OWjC3pD4IL+Y798tySE12l2
+ MaiLV7fWiiTY5BxtrNt+HogDGj6/5UAKoODfoxCcNNYHSkTuGGbrHR8bNE8wCT2xTIZV
+ LClKkwhYLhUWVAJzg+EIWf+/v3iE9ocwUQ0JkS3nJAudjULYLnO6S9i2EiuxUqgC8Qqa
+ Oo8A==
+X-Gm-Message-State: AOJu0YyCwuOpamaNI8MeX9f6gJcJMyojZNiRsMl+miZ5chwcgjWGi/Ir
+ zdhk6akVrijA70IGnkS8GL8R7yCUkvDy9FaF/NBlvx749lj3B/pWcdko5m34MAQ=
+X-Gm-Gg: ASbGncszf3qo+0XAx6ak8ADhWsTDfTXQg829XnCWczsxrYq9J3KmQrMYyZ0jZNvUy+6
+ i4jy6IrXsGo3DGHA+09LSmF4FxDX0DKsNKRVeGOCZheoHprjTGFkFZl+CdikWlv+coLmk6y/Y+I
+ OQoZ6qTXQUeMDnEqsbeyr31X6vrZYBkDYsW4QEuQ53IV03xCq1lUmVOk9vC5wNe49ZKTmMRnO1e
+ O2/dLfVtJ5ZmNk7GoESgOf445KdDbH02dZ0111PZz2xQ+mZiiS66lRPbz8Ulj6eFKZEqpmEuVPM
+ 9Z/J76pwgyiRIAIbIpdvQaTneXO32obVVOKNwfXN4faS1chpo4lFf4G3TghcQQhvrl/kRRhwkfs
+ vJHQB6089O2a7
+X-Google-Smtp-Source: AGHT+IGKHZuANKzhEsUwd9x4Zfg08YDVpvqc/6+yErOnI8oBaBzxIkpBxnB3wiCypGU5d9bYWL8IJA==
+X-Received: by 2002:a05:6000:1f86:b0:390:f6aa:4e80 with SMTP id
+ ffacd0b85a97d-390f6aa5102mr9155965f8f.53.1741013610645; 
+ Mon, 03 Mar 2025 06:53:30 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e484452asm14852963f8f.61.2025.03.03.06.53.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 06:51:25 -0800 (PST)
-Message-ID: <4b4ca8d8-662f-409c-96dd-11c5075252e2@redhat.com>
-Date: Mon, 3 Mar 2025 15:51:25 +0100
+ Mon, 03 Mar 2025 06:53:30 -0800 (PST)
+Message-ID: <a19520bf-9e0a-4a63-bc31-06b63e23c3d3@linaro.org>
+Date: Mon, 3 Mar 2025 15:53:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/12] rust: timer: wrap QEMUTimer with Opaque<> and
- express pinning requirements
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20250227142219.812270-1-pbonzini@redhat.com>
- <20250227142219.812270-5-pbonzini@redhat.com> <Z8W8hzFO9HU3IujQ@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 1/2] vfio: Make vfio-pci available on 64-bit host
+ platforms only
+To: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Eric Auger <eric.auger@redhat.com>
+References: <20250226084721.232703-1-clg@redhat.com>
+ <20250226084721.232703-2-clg@redhat.com>
+ <a39e97c2-c6fd-34e4-f91b-b3491185b789@eik.bme.hu>
+ <c60b7780-5b3f-43a0-a7f1-30820d4e6fb8@redhat.com>
+ <7982159d-710f-4948-830f-ab61b100a5d6@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
- UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
- 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
- jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
- VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
- CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
- SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
- AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
- AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
- nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
- bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
- KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
- m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
- tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
- dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
- JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
- sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
- OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
- GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
- Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
- usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
- xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
- JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
- dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
- b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <Z8W8hzFO9HU3IujQ@intel.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <7982159d-710f-4948-830f-ab61b100a5d6@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,34 +109,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 15:28, Zhao Liu wrote:
->> -    pub fn init_full<'timer, 'opaque: 'timer, T, F>(
->> -        &'timer mut self,
->> +    pub fn new_full<'opaque, T, F>(
->>           timer_list_group: Option<&TimerListGroup>,
->>           clk_type: ClockType,
->>           scale: u32,
->>           attributes: u32,
->>           _cb: F,
->>           opaque: &'opaque T,
->> -    ) where
->> +    ) -> Pin<Box<Self>>
->>           F: for<'a> FnCall<(&'a T,)>,
->>       {
+On 3/3/25 15:43, Paolo Bonzini wrote:
+> On 2/26/25 17:26, Cédric Le Goater wrote:
+>> On 2/26/25 15:12, BALATON Zoltan wrote:
+>>> On Wed, 26 Feb 2025, Cédric Le Goater wrote:
+>>>> VFIO PCI never worked on PPC32 nor ARM, S390x is 64-bit, it might have
+>>>> worked on i386 long ago but we have no plans to further support VFIO
+>>>> on any 32-bit host platforms. Restrict to 64-bit host platforms.
+>>>>
+>>>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>>> Cc: Tony Krowiak <akrowiak@linux.ibm.com>
+>>>> Cc: Eric Farman <farman@linux.ibm.com>
+>>>> Cc: Eric Auger <eric.auger@redhat.com>
+>>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>>> ---
+>>>> hw/vfio/Kconfig | 2 +-
+>>>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/hw/vfio/Kconfig b/hw/vfio/Kconfig
+>>>> index 
+>>>> 7cdba0560aa821c88d3420b36f86020575834202..6ed825429a9151fcdff33e95d1a310210689b258 100644
+>>>> --- a/hw/vfio/Kconfig
+>>>> +++ b/hw/vfio/Kconfig
+>>>> @@ -7,7 +7,7 @@ config VFIO_PCI
+>>>>     default y
+>>>>     select VFIO
+>>>>     select EDID
+>>>> -    depends on LINUX && PCI
+>>>> +    depends on LINUX && PCI && (AARCH64 || PPC64 || X86_64 || S390X)
+>>>
+>>> Are these defined for the host or target? 
+>>
+>> host.
 > 
-> Ah, the lifetime here isn't effectively bound... However, I also
-> referred to your latest code [1] :), and it seems that this issue
-> has already been fixed. (Nit: The code still has a complaint from
-> `cargo fmt`)
+> No, Zoltan is correct.  They are defined for the target,
 
-I am not sure if the change I have in that commit actually does 
-anything, unfortunately... :( which is why I wanted to use init_full 
-instead of new_full.
+Oops indeed, not my day.
 
-It's easiest to marked new_full() unsafe for now.
+> so if you build 
+> for 32-bit ARM you'd still get things with "depends on AARCH64" in qemu- 
+> system-aarch64.  You can check that you have
+> 
+> config SBSA_REF
+>      bool
+>      default y
+>      depends on TCG && AARCH64
+> 
+> but on x86-64:
+> 
+> $ qemu-system-aarch64 -M help|grep sbsa
+> sbsa-ref             QEMU 'SBSA Reference' ARM Virtual Machine
+> 
+> 
+>> As per commit 6d701c9bac1d3571e9ad511e01b27df7237f0b13 "meson: Deprecate
+>> 32-bit host support", support will be fully removed in 2 releases and
+>> it doesn't need to be addressed by VFIO.
+> 
+> Note that a deprecation *allows* full removal in 2 releases.  We have a 
+> lot of things that are deprecated but have not been removed.  For example
+> 
+>     Short-form boolean options (since 6.0)
+>     ''''''''''''''''''''''''''''''''''''''
+> 
+>     Boolean options such as ``share=on``/``share=off`` could be written
+>     in short form as ``share`` and ``noshare``.  This is now deprecated
+>     and will cause a warning.
+> 
+> is deprecated to *allow* switching command-line options from the "qemu- 
+> options" parser to the "keyval" parser that doesn't support short-form 
+> boolean options, but it's unlikely that qemu-options will drop support 
+> for short-form boolean options.
 
-Paolo
-
-> [1]: https://gitlab.com/bonzini/qemu/-/commit/ccb9f6dc738f503a696d8d50f1b5e4576ee80bc6
-
+In another thread Daniel said deprecated options shall be removed, the
+only justification for delay being man power, IIRC.
 
