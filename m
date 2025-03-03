@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC8B0C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 22:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20F4C282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 22:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpE5T-0000ra-PD; Mon, 03 Mar 2025 17:16:36 -0500
+	id 1tpE5w-0001mc-UB; Mon, 03 Mar 2025 17:17:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE4t-0000Tw-1W
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:16:06 -0500
+ id 1tpE5t-0001a9-Rt
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:17:02 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE4p-0006S6-Q5
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:15:57 -0500
+ id 1tpE5r-0006nC-OV
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:17:01 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE4l-00000000IEf-0Etq; Mon, 03 Mar 2025 23:15:51 +0100
-Message-ID: <c64a71ba-09bd-4cfa-8b41-e6cfeaeb0878@maciej.szmigiero.name>
-Date: Mon, 3 Mar 2025 23:15:45 +0100
+ id 1tpE5m-00000000IFC-1qrS; Mon, 03 Mar 2025 23:16:54 +0100
+Message-ID: <a14a4aa5-b8c1-4cbd-8bd0-7310580d3d22@maciej.szmigiero.name>
+Date: Mon, 3 Mar 2025 23:16:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 26/36] vfio/migration: Multifd device state transfer
- support - received buffers queuing
+Subject: Re: [PATCH v5 27/36] vfio/migration: Multifd device state transfer
+ support - load thread
 To: Avihai Horon <avihaih@nvidia.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <4de9762ebf7e7857103eb276d1a26a092aee325d.1739994627.git.maciej.szmigiero@oracle.com>
- <a2134c3e-0dc8-4f74-9e82-ecd2abe1a390@nvidia.com>
+ <9be8882ea2189c1a827bdf09835d6c65488d2ca6.1739994627.git.maciej.szmigiero@oracle.com>
+ <573fab5e-4c0f-416c-bbd0-4786ad25e18f@redhat.com>
+ <4d6d6a25-74c3-427c-983a-c3c1579fdbb6@nvidia.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +84,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <a2134c3e-0dc8-4f74-9e82-ecd2abe1a390@nvidia.com>
+In-Reply-To: <4d6d6a25-74c3-427c-983a-c3c1579fdbb6@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -110,197 +111,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2.03.2025 14:12, Avihai Horon wrote:
+On 2.03.2025 15:19, Avihai Horon wrote:
 > 
-> On 19/02/2025 22:34, Maciej S. Szmigiero wrote:
+> On 26/02/2025 15:49, Cédric Le Goater wrote:
 >> External email: Use caution opening links or attachments
 >>
 >>
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>> On 2/19/25 21:34, Maciej S. Szmigiero wrote:
+>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>
+>>> Since it's important to finish loading device state transferred via the
+>>> main migration channel (via save_live_iterate SaveVMHandler) before
+>>> starting loading the data asynchronously transferred via multifd the thread
+>>> doing the actual loading of the multifd transferred data is only started
+>>> from switchover_start SaveVMHandler.
+>>>
+>>> switchover_start handler is called when MIG_CMD_SWITCHOVER_START
+>>> sub-command of QEMU_VM_COMMAND is received via the main migration channel.
+>>>
+>>> This sub-command is only sent after all save_live_iterate data have already
+>>> been posted so it is safe to commence loading of the multifd-transferred
+>>> device state upon receiving it - loading of save_live_iterate data happens
+>>> synchronously in the main migration thread (much like the processing of
+>>> MIG_CMD_SWITCHOVER_START) so by the time MIG_CMD_SWITCHOVER_START is
+>>> processed all the proceeding data must have already been loaded.
+>>>
+>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>> ---
+>>>   hw/vfio/migration-multifd.c | 225 ++++++++++++++++++++++++++++++++++++
+>>>   hw/vfio/migration-multifd.h |   2 +
+>>>   hw/vfio/migration.c         |  12 ++
+>>>   hw/vfio/trace-events        |   5 +
+>>>   4 files changed, 244 insertions(+)
+>>>
+>>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+>>> index 5d5ee1393674..b3a88c062769 100644
+>>> --- a/hw/vfio/migration-multifd.c
+>>> +++ b/hw/vfio/migration-multifd.c
+>>> @@ -42,8 +42,13 @@ typedef struct VFIOStateBuffer {
+>>>   } VFIOStateBuffer;
+>>>
+>>>   typedef struct VFIOMultifd {
+>>> +    QemuThread load_bufs_thread;
+>>> +    bool load_bufs_thread_running;
+>>> +    bool load_bufs_thread_want_exit;
+>>> +
+>>>       VFIOStateBuffers load_bufs;
+>>>       QemuCond load_bufs_buffer_ready_cond;
+>>> +    QemuCond load_bufs_thread_finished_cond;
+>>>       QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
+>>>       uint32_t load_buf_idx;
+>>>       uint32_t load_buf_idx_last;
+>>> @@ -179,6 +184,175 @@ bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
+>>>       return true;
+>>>   }
+>>>
+>>> +static int vfio_load_bufs_thread_load_config(VFIODevice *vbasedev)
+>>> +{
+>>> +    return -EINVAL;
+>>> +}
 >>
->> The multifd received data needs to be reassembled since device state
->> packets sent via different multifd channels can arrive out-of-order.
 >>
->> Therefore, each VFIO device state packet carries a header indicating its
->> position in the stream.
->> The raw device state data is saved into a VFIOStateBuffer for later
->> in-order loading into the device.
+>> please move to next patch.
 >>
->> The last such VFIO device state packet should have
->> VFIO_DEVICE_STATE_CONFIG_STATE flag set and carry the device config state.
+>>> +static VFIOStateBuffer *vfio_load_state_buffer_get(VFIOMultifd *multifd)
+>>> +{
+>>> +    VFIOStateBuffer *lb;
+>>> +    guint bufs_len;
 >>
->> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->> ---
->>   hw/vfio/migration-multifd.c | 103 ++++++++++++++++++++++++++++++++++++
->>   hw/vfio/migration-multifd.h |   3 ++
->>   hw/vfio/migration.c         |   1 +
->>   hw/vfio/trace-events        |   1 +
->>   4 files changed, 108 insertions(+)
->>
->> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
->> index c2defc0efef0..5d5ee1393674 100644
->> --- a/hw/vfio/migration-multifd.c
->> +++ b/hw/vfio/migration-multifd.c
->> @@ -42,6 +42,11 @@ typedef struct VFIOStateBuffer {
->>   } VFIOStateBuffer;
->>
->>   typedef struct VFIOMultifd {
->> +    VFIOStateBuffers load_bufs;
->> +    QemuCond load_bufs_buffer_ready_cond;
->> +    QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
->> +    uint32_t load_buf_idx;
->> +    uint32_t load_buf_idx_last;
->>   } VFIOMultifd;
->>
->>   static void vfio_state_buffer_clear(gpointer data)
->> @@ -87,15 +92,113 @@ static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs, guint idx)
->>       return &g_array_index(bufs->array, VFIOStateBuffer, idx);
->>   }
->>
->> +static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
->> +                                          VFIODeviceStatePacket *packet,
->> +                                          size_t packet_total_size,
->> +                                          Error **errp)
->> +{
->> +    VFIOMigration *migration = vbasedev->migration;
->> +    VFIOMultifd *multifd = migration->multifd;
->> +    VFIOStateBuffer *lb;
->> +
->> +    vfio_state_buffers_assert_init(&multifd->load_bufs);
->> +    if (packet->idx >= vfio_state_buffers_size_get(&multifd->load_bufs)) {
->> +        vfio_state_buffers_size_set(&multifd->load_bufs, packet->idx + 1);
->> +    }
->> +
->> +    lb = vfio_state_buffers_at(&multifd->load_bufs, packet->idx);
->> +    if (lb->is_present) {
->> +        error_setg(errp, "state buffer %" PRIu32 " already filled",
->> +                   packet->idx);
+>> guint:  I guess it's ok to use here. It is not common practice in VFIO.
 > 
-> Let's add vbasedev->name to the error message so we know which device caused the error.
+> Glib documentation says that in new code unsigned int is preferred over guint [1].
 
-Done.
-
->> +        return false;
->> +    }
->> +
->> +    assert(packet->idx >= multifd->load_buf_idx);
->> +
->> +    lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
->> +    lb->len = packet_total_size - sizeof(*packet);
->> +    lb->is_present = true;
->> +
->> +    return true;
->> +}
->> +
->> +bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
->> +                            Error **errp)
->> +{
->> +    VFIODevice *vbasedev = opaque;
->> +    VFIOMigration *migration = vbasedev->migration;
->> +    VFIOMultifd *multifd = migration->multifd;
->> +    VFIODeviceStatePacket *packet = (VFIODeviceStatePacket *)data;
->> +
->> +    /*
->> +     * Holding BQL here would violate the lock order and can cause
->> +     * a deadlock once we attempt to lock load_bufs_mutex below.
->> +     */
->> +    assert(!bql_locked());
-> 
-> To be clearer, I'd move the assert down to be just above "QEMU_LOCK_GUARD(&multifd->load_bufs_mutex);".
-
-Moved there.
+I turned guints into unsigned ints where I spotted them in this patch set.
   
->> +
->> +    if (!vfio_multifd_transfer_enabled(vbasedev)) {
->> +        error_setg(errp,
->> +                   "got device state packet but not doing multifd transfer");
-> 
-> Let's add vbasedev->name to the error message so we know which device caused the error.
-
-Done.
-
->> +        return false;
->> +    }
->> +
->> +    assert(multifd);
->> +
->> +    if (data_size < sizeof(*packet)) {
->> +        error_setg(errp, "packet too short at %zu (min is %zu)",
->> +                   data_size, sizeof(*packet));
-> 
-> Ditto.
-
-Done.
-
->> +        return false;
->> +    }
->> +
->> +    if (packet->version != VFIO_DEVICE_STATE_PACKET_VER_CURRENT) {
->> +        error_setg(errp, "packet has unknown version %" PRIu32,
->> +                   packet->version);
-> 
-> Ditto.
-
-Done.
-
->> +        return false;
->> +    }
->> +
->> +    if (packet->idx == UINT32_MAX) {
->> +        error_setg(errp, "packet has too high idx");
-> 
-> Ditto.
-
-Done.
-
->> +        return false;
->> +    }
->> +
->> +    trace_vfio_load_state_device_buffer_incoming(vbasedev->name, packet->idx);
->> +
->> +    QEMU_LOCK_GUARD(&multifd->load_bufs_mutex);
->> +
->> +    /* config state packet should be the last one in the stream */
->> +    if (packet->flags & VFIO_DEVICE_STATE_CONFIG_STATE) {
->> +        multifd->load_buf_idx_last = packet->idx;
->> +    }
->> +
->> +    if (!vfio_load_state_buffer_insert(vbasedev, packet, data_size, errp)) {
->> +        return false;
->> +    }
->> +
->> +    qemu_cond_signal(&multifd->load_bufs_buffer_ready_cond);
->> +
->> +    return true;
->> +}
->> +
->>   VFIOMultifd *vfio_multifd_new(void)
->>   {
->>       VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
->>
->> +    vfio_state_buffers_init(&multifd->load_bufs);
->> +
->> +    qemu_mutex_init(&multifd->load_bufs_mutex);
-> 
-> Nit: move qemu_mutex_init() just above qemu_cond_init()?
-
-It's in a separate "block" because it is common for all 3
-conditions in the ultimate form of code (and most of the
-later variables too), rather just this single condition.
-
-  > Thanks.
+> Thanks.
 
 Thanks,
 Maciej
 
->> +
->> +    multifd->load_buf_idx = 0;
->> +    multifd->load_buf_idx_last = UINT32_MAX;
->> +    qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
->> +
->>       return multifd;
->>   }
->>
-
+> [1] https://docs.gtk.org/glib/types.html#guint
+> 
 
 
