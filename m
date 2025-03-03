@@ -4,96 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B73C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 22:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA7BC282D0
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 22:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpE0M-0006UE-L1; Mon, 03 Mar 2025 17:11:18 -0500
+	id 1tpE3q-0007f8-RT; Mon, 03 Mar 2025 17:14:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpE0K-0006Tl-0g
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:11:16 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpE0F-0005DW-Ul
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:11:15 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43bc6a6aaf7so9807345e9.2
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 14:11:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741039863; x=1741644663; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QXfRL2pEQ2VY0ApLfWiY8JKsViq47NIBx28EgH8l5Nw=;
- b=p5odp2eiUNfcg4UTQQczOMhJ9Ez1Q6ugpS43I/HWzJ95VkQNfgABEGVUm3qulrlewC
- sfSQldzbKMiNSTO5UvezjFGDv4gvf70dzPK6h9T5xcA6OnnZBvj6XuJitoqh9WUeBmYs
- 0VGLPZJRKH+NgDClbVCkj3kUBBMtD78z3vyDN3fknV2qQKjWM0yRzAwNlLawpUQXZLL8
- 9qLt2vxsl9ybhhC15J+f2fSzjeTd0cCghT2GkcP/tR1dJ9ry63/djMP6eMw31gF0s3X6
- Z2naP89dbe9sh6/6cmxhY2gxGfr9SMdZar/sYjBAiIWg8kX2NyKXowPTSwIBCjmS9+lQ
- gDAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741039863; x=1741644663;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QXfRL2pEQ2VY0ApLfWiY8JKsViq47NIBx28EgH8l5Nw=;
- b=WDnI8keU70fGhUrhn1B28Af9DaD3NXMgRPfjka9yY/Kc8CNEMWVzkYGr/VnyOrBJiT
- 6GptLHNqMykvNNmIZXp3qowiHBzoDKShfNLyfOh6cKmVjyPI77zhJSXPARtIbFZ0VgEh
- aTBkViH3nJo9STJZkHt9yAN8PwUZ70wX4DPKXZ0Zss+IdNIPdZcIF4c4HRywuOm9fA9B
- WIsY75AX+DgdqER9/v7Lakub8vD2He5SzdruT5HhNH+UvoID8SVgZfdhBDEGeJbo7Ekn
- tKbjBePG1+S9LjffqKfl5Klihq3eTSU2U0bBmxGMwnoTt0xr1Xcg02B8jsXhF/IUxiwN
- 6m3A==
-X-Gm-Message-State: AOJu0Yxza3GkNj8hsdm14SaVJE8Mx0mwa3m6De61MlhzJfToa59BeL+/
- 7CCHiOObbI9984/r6pR/yoDBNNokKexhV++ZPs4IWioTn4vdLc8PZ0tVGUJ1O+c=
-X-Gm-Gg: ASbGncv0vAsHkjBfToUWeh14L8oISEJeFs+Y5exgwIJBRbd/Bqq5+gJffDAok3nen49
- 2Jy3GCURf5gWLCEth0Fe0HUbN3GxcBZ6QMpma7sR+V4EtaRdNN1Wt2l/Q2NxF4kq9UwtOtyVT6B
- 2Aai6D1sjpt95VmqdJmyqfLzO3ZN4lSAfszFHlMLfElEGmlnEnI6XJqkrjqWz7wd+d4c54sFaLE
- gTbct/8WF5yNQ96NAoZ+XsQmFh8IJVGxOBnb0HmMV/qeyt/2EMfeLsQLdMlF7SGMIVQhAagw6EU
- UR3jzL87zkf+YCj92YLXXh3XJWiGEHejfZYkrwxlIZr9XJGMyomZvnYD3FBsulyAVX9OleBiCFT
- EtayhaYz7W+/O
-X-Google-Smtp-Source: AGHT+IEI2ibIdegW4oZozMGAhG1Hz97py8jxsQz+tvtUCJJ/wjJDLyux4Z9xE/MhMw/xzftIpB2f7w==
-X-Received: by 2002:a05:600c:1392:b0:439:6ab6:5d45 with SMTP id
- 5b1f17b1804b1-43ba6747775mr106759585e9.28.1741039862862; 
- Mon, 03 Mar 2025 14:11:02 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bbbff18b3sm65292105e9.24.2025.03.03.14.11.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 14:11:02 -0800 (PST)
-Message-ID: <81390b0b-bae7-43bc-84d4-7447805a1a83@linaro.org>
-Date: Mon, 3 Mar 2025 23:11:01 +0100
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tpE3o-0007em-M6
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:14:52 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tpE3m-00060M-FL
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:14:52 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tpE3h-00000000IE2-2Bn5; Mon, 03 Mar 2025 23:14:45 +0100
+Message-ID: <ecccb4c5-5d02-4d41-a7be-f01cee278510@maciej.szmigiero.name>
+Date: Mon, 3 Mar 2025 23:14:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 11/11] hw/vmapple/vmapple: Add vmapple machine type
-To: Phil Dennis-Jordan <phil@philjordan.eu>, peter.maydell@linaro.org,
- berrange@redhat.com, pbonzini@redhat.com, John Snow <jsnow@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, mst@redhat.com,
- stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com,
- qemu-block@nongnu.org, qemu-arm@nongnu.org, Alexander Graf
- <graf@amazon.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20250112210056.16658-1-phil@philjordan.eu>
- <20250112210056.16658-12-phil@philjordan.eu>
- <2a4229cf-c789-41ed-ab46-0f0fd9efd19a@linaro.org>
- <CAAibmn0tV_YLwJwcgfy5sZiPyeaBWE_FPOPEEE_0aZ7mMANFig@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAAibmn0tV_YLwJwcgfy5sZiPyeaBWE_FPOPEEE_0aZ7mMANFig@mail.gmail.com>
+Subject: Re: [PATCH v5 23/36] vfio/migration: Multifd device state transfer
+ support - VFIOStateBuffer(s)
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
+ <96303daed289e9c7a3261590027d18e425ea07c2.1739994627.git.maciej.szmigiero@oracle.com>
+ <9bc9f288-6db5-4229-9a16-7e8842604c55@nvidia.com>
+ <b64bc541-e23c-4a41-aaf5-bdd1ab16c69d@redhat.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <b64bc541-e23c-4a41-aaf5-bdd1ab16c69d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,175 +111,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 21:36, Phil Dennis-Jordan wrote:
+On 3.03.2025 07:42, Cédric Le Goater wrote:
+> On 3/2/25 14:00, Avihai Horon wrote:
+>>
+>> On 19/02/2025 22:34, Maciej S. Szmigiero wrote:
+>>> External email: Use caution opening links or attachments
+>>>
+>>>
+>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>
+>>> Add VFIOStateBuffer(s) types and the associated methods.
+>>>
+>>> These store received device state buffers and config state waiting to get
+>>> loaded into the device.
+>>>
+>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>> ---
+>>>   hw/vfio/migration-multifd.c | 54 +++++++++++++++++++++++++++++++++++++
+>>>   1 file changed, 54 insertions(+)
+>>>
+>>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+>>> index 0c3185a26242..760b110a39b9 100644
+>>> --- a/hw/vfio/migration-multifd.c
+>>> +++ b/hw/vfio/migration-multifd.c
+>>> @@ -29,3 +29,57 @@ typedef struct VFIODeviceStatePacket {
+>>>       uint32_t flags;
+>>>       uint8_t data[0];
+>>>   } QEMU_PACKED VFIODeviceStatePacket;
+>>> +
+>>> +/* type safety */
+>>> +typedef struct VFIOStateBuffers {
+>>> +    GArray *array;
+>>> +} VFIOStateBuffers;
+>>> +
+>>> +typedef struct VFIOStateBuffer {
+>>> +    bool is_present;
+>>> +    char *data;
+>>> +    size_t len;
+>>> +} VFIOStateBuffer;
+>>> +
+>>> +static void vfio_state_buffer_clear(gpointer data)
+>>> +{
+>>> +    VFIOStateBuffer *lb = data;
+>>> +
+>>> +    if (!lb->is_present) {
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    g_clear_pointer(&lb->data, g_free);
+>>> +    lb->is_present = false;
+>>> +}
+>>> +
+>>> +static void vfio_state_buffers_init(VFIOStateBuffers *bufs)
+>>> +{
+>>> +    bufs->array = g_array_new(FALSE, TRUE, sizeof(VFIOStateBuffer));
+>>> +    g_array_set_clear_func(bufs->array, vfio_state_buffer_clear);
+>>> +}
+>>> +
+>>> +static void vfio_state_buffers_destroy(VFIOStateBuffers *bufs)
+>>> +{
+>>> +    g_clear_pointer(&bufs->array, g_array_unref);
+>>> +}
+>>> +
+>>> +static void vfio_state_buffers_assert_init(VFIOStateBuffers *bufs)
+>>> +{
+>>> +    assert(bufs->array);
+>>> +}
+>>> +
+>>> +static guint vfio_state_buffers_size_get(VFIOStateBuffers *bufs)
+>>> +{
+>>> +    return bufs->array->len;
+>>> +}
+>>> +
+>>> +static void vfio_state_buffers_size_set(VFIOStateBuffers *bufs, guint size)
+>>> +{
+>>> +    g_array_set_size(bufs->array, size);
+>>> +}
+>>> +
+>>> +static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs, guint idx)
+>>> +{
+>>> +    return &g_array_index(bufs->array, VFIOStateBuffer, idx);
+>>> +}
+>>
+>> This patch breaks compilation as non of the functions are used, e.g.: error: ‘vfio_state_buffers_init’ defined but not used I can think of three options to solve it: 1. Move these functions to their own file and export them, e.g., hw/vfio/state-buffer.{c,h}. But this seems like an overkill for such a small API. 2. Add __attribute__((unused)) tags and remove them in patch #26 where the functions are actually used. A bit ugly. 
 > 
+>>
+>> 3. Squash this patch into patch #26. I prefer option 3 as this is a small API closely related to patch #26 (and patch #26 will still remain rather small).
 > 
-> On Mon, 3 Mar 2025 at 19:20, Philippe Mathieu-Daudé <philmd@linaro.org 
-> <mailto:philmd@linaro.org>> wrote:
-> 
->     On 12/1/25 22:00, Phil Dennis-Jordan wrote:
->      > From: Alexander Graf <graf@amazon.com <mailto:graf@amazon.com>>
->      >
->      > Apple defines a new "vmapple" machine type as part of its proprietary
->      > macOS Virtualization.Framework vmm. This machine type is similar
->     to the
->      > virt one, but with subtle differences in base devices, a few special
->      > vmapple device additions and a vastly different boot chain.
->      >
->      > This patch reimplements this machine type in QEMU. To use it, you
->      > have to have a readily installed version of macOS for VMApple,
->      > run on macOS with -accel hvf, pass the Virtualization.Framework
->      > boot rom (AVPBooter) in via -bios, pass the aux and root volume
->     as pflash
->      > and pass aux and root volume as virtio drives. In addition, you also
->      > need to find the machine UUID and pass that as -M vmapple,uuid=
->     parameter:
->      >
->      > $ qemu-system-aarch64 -accel hvf -M vmapple,uuid=0x1234 -m 4G \
->      >      -bios /System/Library/Frameworks/Virtualization.framework/
->     Versions/A/Resources/AVPBooter.vmapple2.bin
->      >      -drive file=aux,if=pflash,format=raw \
->      >      -drive file=root,if=pflash,format=raw \
->      >      -drive file=aux,if=none,id=aux,format=raw \
->      >      -device vmapple-virtio-blk-pci,variant=aux,drive=aux \
->      >      -drive file=root,if=none,id=root,format=raw \
->      >      -device vmapple-virtio-blk-pci,variant=root,drive=root
->      >
->      > With all these in place, you should be able to see macOS booting
->      > successfully.
->      >
->      > Known issues:
->      >   - Currently only macOS 12 guests are supported. The boot
->     process for
->      >     13+ will need further investigation and adjustment.
->      >
->      > Signed-off-by: Alexander Graf <graf@amazon.com
->     <mailto:graf@amazon.com>>
->      > Co-authored-by: Phil Dennis-Jordan <phil@philjordan.eu
->     <mailto:phil@philjordan.eu>>
->      > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu
->     <mailto:phil@philjordan.eu>>
->      > Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com
->     <mailto:akihiko.odaki@daynix.com>>
->      > ---
-> 
-> 
->      >   MAINTAINERS                 |   1 +
->      >   contrib/vmapple/uuid.sh     |   9 +
->      >   docs/system/arm/vmapple.rst |  63 ++++
->      >   docs/system/target-arm.rst  |   1 +
->      >   hw/vmapple/Kconfig          |  20 ++
->      >   hw/vmapple/meson.build      |   1 +
->      >   hw/vmapple/vmapple.c        | 618 +++++++++++++++++++++++++++++
->     +++++++
->      >   7 files changed, 713 insertions(+)
->      >   create mode 100755 contrib/vmapple/uuid.sh
->      >   create mode 100644 docs/system/arm/vmapple.rst
->      >   create mode 100644 hw/vmapple/vmapple.c
->      >
->      > diff --git a/MAINTAINERS b/MAINTAINERS
->      > index e220744abf..3a3d9e19f4 100644
->      > --- a/MAINTAINERS
->      > +++ b/MAINTAINERS
->      > @@ -2791,6 +2791,7 @@ M: Phil Dennis-Jordan <phil@philjordan.eu
->     <mailto:phil@philjordan.eu>>
->      >   S: Maintained
->      >   F: hw/vmapple/*
->      >   F: include/hw/vmapple/*
->      > +F: docs/system/arm/vmapple.rst
->      >
->      >   Subsystems
->      >   ----------
->      > diff --git a/contrib/vmapple/uuid.sh b/contrib/vmapple/uuid.sh
->      > new file mode 100755
->      > index 0000000000..956e8c3afe
->      > --- /dev/null
->      > +++ b/contrib/vmapple/uuid.sh
->      > @@ -0,0 +1,9 @@
->      > +#!/bin/sh
->      > +# Used for converting a guest provisioned using
->     Virtualization.framework
->      > +# for use with the QEMU 'vmapple' aarch64 machine type.
->      > +#
->      > +# Extracts the Machine UUID from Virtualization.framework VM
->     JSON file.
->      > +# (as produced by 'macosvm', passed as command line argument)
->      > +
->      > +plutil -extract machineId raw "$1" | base64 -d | plutil -extract
->     ECID raw -
->      > +
->      > diff --git a/docs/system/arm/vmapple.rst b/docs/system/arm/
->     vmapple.rst
->      > new file mode 100644
->      > index 0000000000..5090a8997c
->      > --- /dev/null
->      > +++ b/docs/system/arm/vmapple.rst
->      > @@ -0,0 +1,63 @@
-> 
->     Alex, Phil, we now mandate a SPDX tag. Due to the license used in
->     vmapple.c in this patch, are you OK with me squashing here:
-> 
-> 
-> Sorry about that, I forgot all about the SPDX tags in scripts and docs - 
-> yes, please add that SPDX on uuid.sh. The vmapple.rst is Alex's creation 
-> (I think I tweaked a few lines max) - but if that's the usual license we 
-> use for documentation as well then it seems a reasonable assumption to 
-> use GPL2+ there too if we don't hear from him.
+> I vote for option 3 too.
 
-TBH IDK and IANAL :) "GPL-2.0-or-later" is about *program*, is it
-relevant for documentation? This is the single license used with SPDX
-in docs/:
+Merged this patch into the "received buffers queuing" one (#26) now.
 
-$ git grep SPDX docs
-docs/system/devices/igb.rst:1:.. SPDX-License-Identifier: GPL-2.0-or-later
-docs/system/devices/virtio-gpu.rst:2:   SPDX-License-Identifier: 
-GPL-2.0-or-later
+> vfio_state_buffers_init is only called once, it's 2 lines,
+> it could be merged in vfio_multifd_new() too.
 
-Note we also use the FreeBSD-DOC in bitmaps.rst (not as SPDX tag):
+Most of these helpers are even shorter (1 line), but the whole
+point of them is to abstract the GArray rather than open-code
+these accesses.
 
-docs/interop/bitmaps.rst:5:   This file is licensed via The FreeBSD 
-Documentation License, the full
+This was discussed two versions ago:
+https://lore.kernel.org/qemu-devel/9106d15e-3ff5-4d42-880d-0de70a4caa1c@maciej.szmigiero.name/
 
-Per commit 2b96c1a4931 ("scripts: validate SPDX license choices"):
-
-+    my $prefer = "GPL-2.0-or-later";
-+    my @valid = qw(
-+       GPL-2.0-only
-+       LGPL-2.1-only
-+       LGPL-2.1-or-later
-+       BSD-2-Clause
-+       BSD-3-Clause
-+       MIT
-+       );
-
-GPL: "program"
-LGPL: "library"
-BSD/MIT: "software"
-
-In doubt I'll stick with $prefer except if someone has a better clue /
-suggestion.
-
-> Thanks for the doc syntax fix as well.
 > 
->     -- >8 --
->     diff --git a/docs/system/arm/vmapple.rst b/docs/system/arm/vmapple.rst
->     index 5090a8997c3..c5b1bcf45ea 100644
->     --- a/docs/system/arm/vmapple.rst
->     +++ b/docs/system/arm/vmapple.rst
->     @@ -0,0 +1,2 @@
->     +.. SPDX-License-Identifier: GPL-2.0-or-later
->     +
->     diff --git a/contrib/vmapple/uuid.sh b/contrib/vmapple/uuid.sh
->     index 956e8c3afed..f5637221d23 100755
->     --- a/contrib/vmapple/uuid.sh
->     +++ b/contrib/vmapple/uuid.sh
->     @@ -1,0 +2 @@
->     +#
->     @@ -6,0 +8,2 @@
->     +#
->     +# SPDX-License-Identifier: GPL-2.0-or-later
->     ---
+> Thanks,
 > 
->     ?
+> C.
+> 
+
+Thanks,
+Maciej
 
 
