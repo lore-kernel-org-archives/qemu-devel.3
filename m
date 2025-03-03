@@ -4,42 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38DE1C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:02:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D650EC282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:02:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp2Y3-0003q4-JU; Mon, 03 Mar 2025 04:57:19 -0500
+	id 1tp2X3-0008Nw-8j; Mon, 03 Mar 2025 04:56:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp2Xe-0001wP-M3; Mon, 03 Mar 2025 04:56:55 -0500
+ id 1tp2WA-0007tX-14; Mon, 03 Mar 2025 04:55:25 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp2Xc-0001zJ-Pc; Mon, 03 Mar 2025 04:56:54 -0500
+ id 1tp2W8-0001gH-91; Mon, 03 Mar 2025 04:55:21 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 3 Mar
- 2025 17:55:06 +0800
+ 2025 17:55:01 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 3 Mar 2025 17:55:06 +0800
+ Transport; Mon, 3 Mar 2025 17:55:01 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v4 23/23] docs/specs: Add aspeed-intc
-Date: Mon, 3 Mar 2025 17:54:51 +0800
-Message-ID: <20250303095457.2337631-24-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v4 09/23] hw/intc/aspeed: Rename num_ints to num_inpins for
+ clarity
+Date: Mon, 3 Mar 2025 17:54:37 +0800
+Message-ID: <20250303095457.2337631-10-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
 References: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -65,166 +67,160 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add AST2700 INTC design guidance and its block diagram.
+To support AST2700 A1, some registers of the INTC(CPU Die) support one input
+pin to multiple output pins. Renamed "num_ints" to "num_inpins" in the INTC
+controller code for better clarity and consistency in naming conventions.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/specs/aspeed-intc.rst | 136 +++++++++++++++++++++++++++++++++++++
- docs/specs/index.rst       |   1 +
- 2 files changed, 137 insertions(+)
- create mode 100644 docs/specs/aspeed-intc.rst
+ include/hw/intc/aspeed_intc.h | 11 ++++++-----
+ hw/arm/aspeed_ast27x0.c       |  2 +-
+ hw/intc/aspeed_intc.c         | 31 +++++++++++++++++--------------
+ 3 files changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/docs/specs/aspeed-intc.rst b/docs/specs/aspeed-intc.rst
-new file mode 100644
-index 0000000000..9cefd7f37f
---- /dev/null
-+++ b/docs/specs/aspeed-intc.rst
-@@ -0,0 +1,136 @@
-+===========================
-+ASPEED Interrupt Controller
-+===========================
-+
-+AST2700
-+-------
-+There are a total of 480 interrupt sources in AST2700. Due to the limitation of
-+interrupt numbers of processors, the interrupts are merged every 32 sources for
-+interrupt numbers greater than 127.
-+
-+There are two levels of interrupt controllers, INTC (CPU Die) and INTCIO
-+(I/O Die).
-+
-+Interrupt Mapping
-+-----------------
-+- INTC: Handles interrupt sources 0 - 127 and integrates signals from INTCIO.
-+- INTCIO: Handles interrupt sources 128 - 319 independently.
-+
-+QEMU Support
-+------------
-+Currently, only GIC 192 to 201 are supported, and their source interrupts are
-+from INTCIO and connected to INTC at input pin 0 and output pins 0 to 9 for
-+GIC 192-201.
-+
-+Design for GICINT 196
-+---------------------
-+The orgate has interrupt sources ranging from 0 to 31, with its output pin
-+connected to INTCIO "T0 GICINT_196". The output pin is then connected to INTC
-+"GIC_192_201" at bit 4, and its bit 4 output pin is connected to GIC 196.
-+
-+INTC GIC_192_201 Output Pin Mapping
-+-----------------------------------
-+The design of INTC GIC_192_201 have 10 output pins, mapped as following:
-+
-+====  ====
-+Bit   GIC
-+====  ====
-+0     192
-+1     193
-+2     194
-+3     195
-+4     196
-+5     197
-+6     198
-+7     199
-+8     200
-+9     201
-+====  ====
-+
-+AST2700 A0
-+----------
-+It has only one INTC controller, and currently, only GIC 128-136 is supported.
-+To support both AST2700 A1 and AST2700 A0, there are 10 OR gates in the INTC,
-+with gates 1 to 9 supporting GIC 128-136.
-+
-+Design for GICINT 132
-+---------------------
-+The orgate has interrupt sources ranging from 0 to 31, with its output pin
-+connected to INTC. The output pin is then connected to GIC 132.
-+
-+Block Diagram of GICINT 196 for AST2700 A1 and GICINT 132 for AST2700 A0
-+------------------------------------------------------------------------
-+
-+.. code-block::
-+
-+   |-------------------------------------------------------------------------------------------------------|
-+   |                                                   AST2700 A1 Design                                   |
-+   |           To GICINT196                                                                                |
-+   |                                                                                                       |
-+   |   ETH1    |-----------|                    |--------------------------|        |--------------|       |
-+   |  -------->|0          |                    |         INTCIO           |        |  orgates[0]  |       |
-+   |   ETH2    |          4|   orgates[0]------>|inpin[0]-------->outpin[0]|------->| 0            |       |
-+   |  -------->|1         5|   orgates[1]------>|inpin[1]-------->outpin[1]|------->| 1            |       |
-+   |   ETH3    |          6|   orgates[2]------>|inpin[2]-------->outpin[2]|------->| 2            |       |
-+   |  -------->|2        19|   orgates[3]------>|inpin[3]-------->outpin[3]|------->| 3  OR[0:9]   |-----| |
-+   |   UART0   |         20|-->orgates[4]------>|inpin[4]-------->outpin[4]|------->| 4            |     | |
-+   |  -------->|7        21|   orgates[5]------>|inpin[5]-------->outpin[5]|------->| 5            |     | |
-+   |   UART1   |         22|   orgates[6]------>|inpin[6]-------->outpin[6]|------->| 6            |     | |
-+   |  -------->|8        23|   orgates[7]------>|inpin[7]-------->outpin[7]|------->| 7            |     | |
-+   |   UART2   |         24|   orgates[8]------>|inpin[8]-------->outpin[8]|------->| 8            |     | |
-+   |  -------->|9        25|   orgates[9]------>|inpin[9]-------->outpin[9]|------->| 9            |     | |
-+   |   UART3   |         26|                    |--------------------------|        |--------------|     | |
-+   |  ---------|10       27|                                                                             | |
-+   |   UART5   |         28|                                                                             | |
-+   |  -------->|11       29|                                                                             | |
-+   |   UART6   |           |                                                                             | |
-+   |  -------->|12       30|     |-----------------------------------------------------------------------| |
-+   |   UART7   |         31|     |                                                                         |
-+   |  -------->|13         |     |                                                                         |
-+   |   UART8   |  OR[0:31] |     |                |------------------------------|           |----------|  |
-+   |  -------->|14         |     |                |            INTC              |           |     GIC  |  |
-+   |   UART9   |           |     |                |inpin[0:0]--------->outpin[0] |---------->|192       |  |
-+   |  -------->|15         |     |                |inpin[0:1]--------->outpin[1] |---------->|193       |  |
-+   |   UART10  |           |     |                |inpin[0:2]--------->outpin[2] |---------->|194       |  |
-+   |  -------->|16         |     |                |inpin[0:3]--------->outpin[3] |---------->|195       |  |
-+   |   UART11  |           |     |--------------> |inpin[0:4]--------->outpin[4] |---------->|196       |  |
-+   |  -------->|17         |                      |inpin[0:5]--------->outpin[5] |---------->|197       |  |
-+   |   UART12  |           |                      |inpin[0:6]--------->outpin[6] |---------->|198       |  |
-+   |  -------->|18         |                      |inpin[0:7]--------->outpin[7] |---------->|199       |  |
-+   |           |-----------|                      |inpin[0:8]--------->outpin[8] |---------->|200       |  |
-+   |                                              |inpin[0:9]--------->outpin[9] |---------->|201       |  |
-+   |-------------------------------------------------------------------------------------------------------|
-+   |-------------------------------------------------------------------------------------------------------|
-+   |  ETH1    |-----------|     orgates[1]------->|inpin[1]----------->outpin[10]|---------->|128       |  |
-+   | -------->|0          |     orgates[2]------->|inpin[2]----------->outpin[11]|---------->|129       |  |
-+   |  ETH2    |          4|     orgates[3]------->|inpin[3]----------->outpin[12]|---------->|130       |  |
-+   | -------->|1         5|     orgates[4]------->|inpin[4]----------->outpin[13]|---------->|131       |  |
-+   |  ETH3    |          6|---->orgates[5]------->|inpin[5]----------->outpin[14]|---------->|132       |  |
-+   | -------->|2        19|     orgates[6]------->|inpin[6]----------->outpin[15]|---------->|133       |  |
-+   |  UART0   |         20|     orgates[7]------->|inpin[7]----------->outpin[16]|---------->|134       |  |
-+   | -------->|7        21|     orgates[8]------->|inpin[8]----------->outpin[17]|---------->|135       |  |
-+   |  UART1   |         22|     orgates[9]------->|inpin[9]----------->outpin[18]|---------->|136       |  |
-+   | -------->|8        23|                       |------------------------------|           |----------|  |
-+   |  UART2   |         24|                                                                                |
-+   | -------->|9        25|                       AST2700 A0 Design                                        |
-+   |  UART3   |         26|                                                                                |
-+   | -------->|10       27|                                                                                |
-+   |  UART5   |         28|                                                                                |
-+   | -------->|11       29| GICINT132                                                                      |
-+   |  UART6   |           |                                                                                |
-+   | -------->|12       30|                                                                                |
-+   |  UART7   |         31|                                                                                |
-+   | -------->|13         |                                                                                |
-+   |  UART8   |  OR[0:31] |                                                                                |
-+   | -------->|14         |                                                                                |
-+   |  UART9   |           |                                                                                |
-+   | -------->|15         |                                                                                |
-+   |  UART10  |           |                                                                                |
-+   | -------->|16         |                                                                                |
-+   |  UART11  |           |                                                                                |
-+   | -------->|17         |                                                                                |
-+   |  UART12  |           |                                                                                |
-+   | -------->|18         |                                                                                |
-+   |          |-----------|                                                                                |
-+   |                                                                                                       |
-+   |-------------------------------------------------------------------------------------------------------|
-diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index d7675cebc2..f19d73c9f6 100644
---- a/docs/specs/index.rst
-+++ b/docs/specs/index.rst
-@@ -38,3 +38,4 @@ guest hardware that is specific to QEMU.
-    rocker
-    riscv-iommu
-    riscv-aia
-+   aspeed-intc
+diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+index c1fe2dd15a..4a0512c688 100644
+--- a/include/hw/intc/aspeed_intc.h
++++ b/include/hw/intc/aspeed_intc.h
+@@ -18,6 +18,7 @@ OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+ 
+ #define ASPEED_INTC_NR_REGS (0x808 >> 2)
+ #define ASPEED_INTC_NR_INTS 9
++#define ASPEED_INTC_MAX_INPINS 9
+ 
+ struct AspeedINTCState {
+     /*< private >*/
+@@ -28,19 +29,19 @@ struct AspeedINTCState {
+     MemoryRegion iomem_container;
+ 
+     uint32_t regs[ASPEED_INTC_NR_REGS];
+-    OrIRQState orgates[ASPEED_INTC_NR_INTS];
++    OrIRQState orgates[ASPEED_INTC_MAX_INPINS];
+     qemu_irq output_pins[ASPEED_INTC_NR_INTS];
+ 
+-    uint32_t enable[ASPEED_INTC_NR_INTS];
+-    uint32_t mask[ASPEED_INTC_NR_INTS];
+-    uint32_t pending[ASPEED_INTC_NR_INTS];
++    uint32_t enable[ASPEED_INTC_MAX_INPINS];
++    uint32_t mask[ASPEED_INTC_MAX_INPINS];
++    uint32_t pending[ASPEED_INTC_MAX_INPINS];
+ };
+ 
+ struct AspeedINTCClass {
+     SysBusDeviceClass parent_class;
+ 
+     uint32_t num_lines;
+-    uint32_t num_ints;
++    uint32_t num_inpins;
+     uint64_t mem_size;
+     uint64_t reg_size;
+     uint64_t reg_offset;
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index b44d23b5ae..9aea06fb76 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -531,7 +531,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+                     sc->memmap[ASPEED_DEV_INTC]);
+ 
+     /* GICINT orgates -> INTC -> GIC */
+-    for (i = 0; i < ic->num_ints; i++) {
++    for (i = 0; i < ic->num_inpins; i++) {
+         qdev_connect_gpio_out(DEVICE(&a->intc.orgates[i]), 0,
+                                 qdev_get_gpio_in(DEVICE(&a->intc), i));
+         sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), i,
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 90658ffb59..f9f30c957e 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -47,8 +47,9 @@ static void aspeed_intc_update(AspeedINTCState *s, int irq, int level)
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+     const char *name = object_get_typename(OBJECT(s));
+ 
+-    if (irq >= aic->num_ints) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
++    if (irq >= aic->num_inpins) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Invalid input pin index: %d\n",
+                       __func__, irq);
+         return;
+     }
+@@ -60,7 +61,7 @@ static void aspeed_intc_update(AspeedINTCState *s, int irq, int level)
+ /*
+  * The address of GICINT128 to GICINT136 are from 0x1000 to 0x1804.
+  * Utilize "address & 0x0f00" to get the irq and irq output pin index
+- * The value of irq should be 0 to num_ints.
++ * The value of irq should be 0 to num_inpins.
+  * The irq 0 indicates GICINT128, irq 1 indicates GICINT129 and so on.
+  */
+ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+@@ -73,8 +74,8 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+     uint32_t enable;
+     int i;
+ 
+-    if (irq >= aic->num_ints) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
++    if (irq >= aic->num_inpins) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid input pin index: %d\n",
+                       __func__, irq);
+         return;
+     }
+@@ -134,8 +135,9 @@ static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
+ 
+     irq = (offset & 0x0f00) >> 8;
+ 
+-    if (irq >= aic->num_ints) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
++    if (irq >= aic->num_inpins) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Invalid input pin index: %d\n",
+                       __func__, irq);
+         return;
+     }
+@@ -190,8 +192,9 @@ static void aspeed_intc_status_handler(AspeedINTCState *s, hwaddr offset,
+ 
+     irq = (offset & 0x0f00) >> 8;
+ 
+-    if (irq >= aic->num_ints) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
++    if (irq >= aic->num_inpins) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Invalid input pin index: %d\n",
+                       __func__, irq);
+         return;
+     }
+@@ -315,8 +318,8 @@ static void aspeed_intc_instance_init(Object *obj)
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+     int i;
+ 
+-    assert(aic->num_ints <= ASPEED_INTC_NR_INTS);
+-    for (i = 0; i < aic->num_ints; i++) {
++    assert(aic->num_inpins <= ASPEED_INTC_MAX_INPINS);
++    for (i = 0; i < aic->num_inpins; i++) {
+         object_initialize_child(obj, "intc-orgates[*]", &s->orgates[i],
+                                 TYPE_OR_IRQ);
+         object_property_set_int(OBJECT(&s->orgates[i]), "num-lines",
+@@ -352,9 +355,9 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(&s->iomem_container, aic->reg_offset,
+                                 &s->iomem);
+ 
+-    qdev_init_gpio_in(dev, aspeed_intc_set_irq, aic->num_ints);
++    qdev_init_gpio_in(dev, aspeed_intc_set_irq, aic->num_inpins);
+ 
+-    for (i = 0; i < aic->num_ints; i++) {
++    for (i = 0; i < aic->num_inpins; i++) {
+         if (!qdev_realize(DEVICE(&s->orgates[i]), NULL, errp)) {
+             return;
+         }
+@@ -392,7 +395,7 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+ 
+     dc->desc = "ASPEED 2700 INTC Controller";
+     aic->num_lines = 32;
+-    aic->num_ints = 9;
++    aic->num_inpins = 9;
+     aic->mem_size = 0x4000;
+     aic->reg_size = 0x808;
+     aic->reg_offset = 0x1000;
 -- 
 2.34.1
 
