@@ -4,89 +4,210 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15027C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 18:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD5B4C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 18:46:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpAhG-0008CK-N1; Mon, 03 Mar 2025 13:39:24 -0500
+	id 1tpAnQ-0002UJ-Km; Mon, 03 Mar 2025 13:45:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpAhB-0008B3-ED
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 13:39:17 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpAh7-0002dA-TG
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 13:39:16 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4394345e4d5so33104795e9.0
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 10:39:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1tpAnI-0002Rw-HQ
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 13:45:39 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1tpAnD-0004P0-UL
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 13:45:34 -0500
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523IfeAu012052;
+ Mon, 3 Mar 2025 18:45:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=pL/Yqec7K7NVxswFD+Wfad85NGWyIilob2iDhg0aNOc=; b=
+ TEuOjx70O1ChVHainWFSimjni+sBwxyqsXMWmKnNK43YBBj/um2TPBbFbdRx8kgV
+ i9LKl2dZh5r2AUR9pc0bkBHvdr4fVPGpSacedhCfAyuUetXsWZW+qAvQg6Xm3r+K
+ zLjaPJoHkvAKOPmBtlL/qG+AVuS1HMehAmzm+c+38zzjjKZTsRYF2JhyB8Jl73V9
+ lYMtmUylCl5ncPfDVynfVa/BOYXrlgWrYNW6CtWYZogZQup97yKtmsQR9hHlUk6z
+ Lq27AEhFJCsb75NQo0WsRW9H2bUEQwqMLUW6kWFJuUKvWRMiQUiNRi95q4n2osqG
+ TG1OOnboCMukxhZbxODMTA==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 453u9qbcua-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 03 Mar 2025 18:45:15 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 523I5bYB015695; Mon, 3 Mar 2025 18:45:15 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10lp2043.outbound.protection.outlook.com [104.47.58.43])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 453rp94m6j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 03 Mar 2025 18:45:15 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=A41GYHiumTCdGJxwa7wiYmo4k3FelJLresdAnAqJg8ZFBSsg2fDhMcn/PuWEY37YtLCZI0zYzYv8tmk/5rWyoLKqH3iwCvvy3BsaDWKeFWFbL8+IEEqfbeUoiY+ZUaxTbVquZnDNRLGWVcdilZIWnZzIXQgQZdbO6yU8b625Bf11vYPk3XXfsXW8rfLLoe+3mhTgS58iTGtj9dQSOupasQe55Jdsfo+8TBPGCkIcFfnjwA4CzTtBVJkpsmH6AVwITGEVOH+srnVMgy6P9R8ZHgg4G9umrc5lF9l4bXbZhHO7K8ur7cVgJMJ8MmsePB9X4J/hptGBR1OyiXAEWY0H7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pL/Yqec7K7NVxswFD+Wfad85NGWyIilob2iDhg0aNOc=;
+ b=vN3128laWv6ZW0qyJ3robQobXawCq9q9i3VNAi6Bfb4qoI1c4r1MLSW1PEDi4WEMMt13FJ5t9BdbGlv4sd4HDFLu6ZaEJOW8dloiQByGaC++uYfkHs3RGwMGnijhU+THwFFpnM2ie3ZaZPkfGcFGM9/MNtGYzMt2d1pE0Fnv9SfuhQk/ws2aFYMZew0p1mfxP+r4QkYRNfggp9P1MnRmqYK67CsJSn9Zk4PAunLvRrwel9kFpvFziDTdORQwDa7a9Jii5Hne8ODxUXKOupwnru2ZEK6ZlRahjR1cu7T/XJoXKUQ7+EaTgSe2AiTmeZb+FDVbrW/ZUhDYklIYGeqadA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741027149; x=1741631949; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w32dCrkcvDLe4oi32yZecHDC2js3vcYPvpgqDZV+MO0=;
- b=Zp3+ACqiU1wIvjsqZk3vEaNdNH1hAmpEgXX2hOs/YUCGKNID5WItoRao3Ky7c6MygB
- +yYjrzjEwBAwFHw8NMMoN2i/f/l31uOO3xsT/B5Id5pgQFlrWx0uYtfOVac7uNgbejrC
- j+v9Fy4/uK/mIAqnrW446AEliKve6hSN40YAg4qhFtGmCINyV/kxAx0nq/JpcjEhnb7y
- La4Ez/lpCL2ebdA9Za5Di8AIv0l3bsJ0jSE66Gqp/1KdVBKyKRHXTTbJXPok4yrlXKey
- y0BNW3Hx0wbv2Ot7WMSjWap3aFb1asiqKFMtknp/7LnBYdF8dmmOtXlkxJGHAuma44cx
- koQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741027149; x=1741631949;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w32dCrkcvDLe4oi32yZecHDC2js3vcYPvpgqDZV+MO0=;
- b=oAXeDMMzsoRDDeCw/T95HKBdx7xtATT5BzSMqPMrky5ffLbXunEtDgwzum8ZPPRrrp
- QgeT2rprYY4D6T2XrqMQP2TmOFlqnSUvLxi+0ljApPp6tY0A3TklTXTbGi5gyVk4cs5K
- 365jBHwRNbsfB24X6Eme1MhcV473q5yEHau6Ds4yniq0QSwzfW+uTMsW/NoPIxVTe2sd
- NOgqOX8YTHLIFP8+EMrXAB3d36Qur28oJI7vJm/Sb4UBlqkOxS2eB1QbpisnM3rCwYcc
- CvLIuDT4qU54kRIUly4CSylnaHkYtRNRkLUjV+s9bUB0RqFQOOGLPgoLpYgueLpi2kKB
- JR8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXoN7geG4SUz1HJHB2lMol97xiAiFrBfp3vcZU6Z7ZdiP03edKxBa2QN/O8cIZV/FC0LUdjd/RzZiL@nongnu.org
-X-Gm-Message-State: AOJu0YzCqESZlOcoTxtNk3HpojgE1K7Q/CYLcPOv/rDxV+KzErPt/gMB
- rosow0+lgvy/yWjLl+cyOEERbdqaLsSF+diDN+LLY+Xu8TuHRUmYdZZCZ1bt1T8=
-X-Gm-Gg: ASbGncteX0e/VVbc7czaV3FNFiy+/UweDMlqEykbsD+JL2zPbsoyuo8RdHn1LOyjWC9
- B/xV7OCwXOkrjEOW/LbFqYYuAFAowywCJPgVwPVooE7RwFwHmaC4IKXWpCZRTz1oVspbAdzA3H7
- JI1X2PizBD33P8AjhGwYNf4JKEMLL6UkVFNvZXpz9xQbp26EVoVdoC6zscQrnVcdXGHmQTv1uIx
- 4VJtwQM9MD/945nUt7GRSe5+aqMQwlTJHfmD5OiQncy3gVvK8GieFI9CT2lNfOq4gNxBECqPC9V
- HPwKoyxvEu3qMAO8Mp9GRW5W/B1Al1BM5+WU15QQYVpBlTwm+2uISoK+wXSqkA2dXIwONlbNf/S
- p80/lCJn9S3r5
-X-Google-Smtp-Source: AGHT+IF/Qu7i4/oxJS928om4YsKC7Dq4AjcW0AlWl4z1cz4AT1f8D6gkqjElUwSNxRKbbHGn340tRg==
-X-Received: by 2002:a5d:64cf:0:b0:38f:2ffc:1e99 with SMTP id
- ffacd0b85a97d-390eca268f9mr11377734f8f.49.1741027149468; 
- Mon, 03 Mar 2025 10:39:09 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bbf2edf84sm55232375e9.40.2025.03.03.10.39.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 10:39:09 -0800 (PST)
-Message-ID: <81d01563-8a5d-4002-81e0-1b34108bfce3@linaro.org>
-Date: Mon, 3 Mar 2025 19:39:08 +0100
-MIME-Version: 1.0
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pL/Yqec7K7NVxswFD+Wfad85NGWyIilob2iDhg0aNOc=;
+ b=I1YSJ8X9EALSjhf2CtLmtNpY7c30YnbPjktarJNVSUnGakhIh9fqDD/H3m+AdXg5rbVnaLd8unpkA+/jZRsopB21HRvOdzS3Vm1DxdT3H3v7KzZZf3E6QvqjSXm92KoQ86QYhShetwl58gy+gyE8Vkhn1Jy0XhFj5GadSm96f/E=
+Received: from BN6PR1001MB2068.namprd10.prod.outlook.com
+ (2603:10b6:405:2b::35) by CO1PR10MB4708.namprd10.prod.outlook.com
+ (2603:10b6:303:90::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.28; Mon, 3 Mar
+ 2025 18:45:11 +0000
+Received: from BN6PR1001MB2068.namprd10.prod.outlook.com
+ ([fe80::c9b4:7351:3a7d:942f]) by BN6PR1001MB2068.namprd10.prod.outlook.com
+ ([fe80::c9b4:7351:3a7d:942f%4]) with mapi id 15.20.8489.025; Mon, 3 Mar 2025
+ 18:45:11 +0000
+Message-ID: <0dcdd9c1-35e5-4cee-be0b-59113e01e73c@oracle.com>
+Date: Mon, 3 Mar 2025 10:45:08 -0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 24/24] target/m68k: Implement FPIAR
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: laurent@vivier.eu
-References: <20250224171444.440135-1-richard.henderson@linaro.org>
- <20250224171444.440135-25-richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 02/10] target/i386: disable PERFCORE when "-pmu" is
+ configured
+To: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
+ like.xu.linux@gmail.com, zhenyuw@linux.intel.com, groug@kaod.org,
+ khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, davydov-max@yandex-team.ru,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com
+References: <20250302220112.17653-1-dongli.zhang@oracle.com>
+ <20250302220112.17653-3-dongli.zhang@oracle.com>
+ <99810e4f-f41d-4905-ae6d-1080b14fc8fd@intel.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250224171444.440135-25-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: dongli.zhang@oracle.com
+In-Reply-To: <99810e4f-f41d-4905-ae6d-1080b14fc8fd@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BY5PR03CA0021.namprd03.prod.outlook.com
+ (2603:10b6:a03:1e0::31) To BN6PR1001MB2068.namprd10.prod.outlook.com
+ (2603:10b6:405:2b::35)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN6PR1001MB2068:EE_|CO1PR10MB4708:EE_
+X-MS-Office365-Filtering-Correlation-Id: a7d810b5-9ee8-484d-bb92-08dd5a83872b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YWVNajlSZTdSVzJ2WHdib0s1cmZpNHV6Q0tSWXhxMnZaVHBsMXN1cmhEaFVW?=
+ =?utf-8?B?YSt0d1ZSeG54V2J5Tm41TVNuT3NmSFBUZDNMMWpYYmJ5S3NlRUE0NE5pcGpS?=
+ =?utf-8?B?aWhFMlVIRlZOOS9LV1EzSldPcDZmanM1NDNyQ1ZpK1VQeVNTSHVCN0RhOVpJ?=
+ =?utf-8?B?dHUvNVdJem1IdnR6ODF1aFZrcGJBQjd5VzhMZHFFdTFhZTYvREovMmJjTFdq?=
+ =?utf-8?B?RzdndG16UzhscnVNNEFtT1hxNWRPaWhBNCtXcjZiaWpQUkduMTEwQ0ZBWEsw?=
+ =?utf-8?B?clp1SUtDRVo0aGRFdVAzQlkvNUQ2czZkOFJQakl3bDlSQm0yWFVaWi9PNGV0?=
+ =?utf-8?B?TDRvRzI3ckpURWlxeDFkK1RmdWk5eDB4OElUcFcvVEVqNk1QVUtJV3kwN2gr?=
+ =?utf-8?B?QlcwRnEvbVI2cEtNdEZvbS90WVhGOFEvV0M2elpSZlEwVWVkQUlUQkg0N25E?=
+ =?utf-8?B?eHQyNFEwUDFScFBxNEFKeGd1R0ZzcVh2NmVpcUhrdVNVaVhVYStxZXRlMUV6?=
+ =?utf-8?B?UllsMVVlU2tVVlZVL0lCV0FiUUZkcWZxd3dENW9WYXVrRjYwaGdQbGV5L2ZS?=
+ =?utf-8?B?STl0d05MaWFNUTllT2NpQzkxVmRwam1WYUNjWk5YQndhS1ZqWDIrTEtQV2lK?=
+ =?utf-8?B?UTFielNYZVJWWXZVZWlUaDNBZ29QcnY0RVlydWcwdmZTSFlVR29WV0thWWxF?=
+ =?utf-8?B?TGh6VTQ3YzJ6TCtSaDZtcCtuR3VPRUhNYUtxS2t1UldMaTM5MXpVa1l3U2px?=
+ =?utf-8?B?cDJEQmI1OE9IVHpKNW50cEdTOFh2RFFtR0lYdEZrbFlBREtLYy9ZcEF1NEg2?=
+ =?utf-8?B?WUxRT1ZuQTF0S21Rd1ZpSzJmN3lEeUlpQlNLUHlwZDNmQnR2emJjdkF2bGNL?=
+ =?utf-8?B?Q1FEbUhMRVFXL0I5eFgyTFQveGRBdVNoVTlWNGpISVZNeGF2ZnB1cGdlSW5s?=
+ =?utf-8?B?alY0R0draXI1WVU4RFgyL1Y2MWE4QVkwS3NsR3VmT3UyK0VVWDZiWUdzSHJa?=
+ =?utf-8?B?YVFqS21DZ0NWOEl6YStnbi9YS3I0RXhlUVZJS1EwZzYzSS9RczlkL3hwWksy?=
+ =?utf-8?B?Zmc0YlFQRWZPUUJxN0M3U1U4MzlGRTRYMHVscytGZ0prRit0Y0ZwMndNbU5m?=
+ =?utf-8?B?VVNsN0lPRUwrZHd4NFlja3hPSVJ1Zm1aUDJreEpBR1d6NS9ZWWVYLytzaHJS?=
+ =?utf-8?B?R2p3bU5xYUdnRk12a2RHVHR4SkJoaG16ZHlMUkpWQUI2Vmc0TFc1SnpqTCtj?=
+ =?utf-8?B?SGhTU3VEWkZOWFREb0o3REMvTlY4NlQyL2ZJK0dEQzNZd1llVDVKNnFpWG5U?=
+ =?utf-8?B?U0xSR2Rra0ROZkZRVFFYQXVFS1FXWVlPd09HT3oxM2RQb3kyWmNIbEM5bW8r?=
+ =?utf-8?B?VTgyUjdVZWlkRTYwMHlwOWdFeUhLUmttMW9HaGhaUlF1RkVFMXdPOUdXN2dO?=
+ =?utf-8?B?N085aDRLZDFaVHBMMlFEcjNDZ1ZPUjNiVmtJa3F1WXRuRi8rd2tFN1ZCaXpZ?=
+ =?utf-8?B?Mnc2YzBkM0dFeU1ucVVKN1pEemh1ZmRWSlM3QmR2cTZ3dHVsUkZOTXAxdmtR?=
+ =?utf-8?B?VzNMWDlkdWFHQlVwLzNHdmVOcUZUVmY4L1dmNmtXbk5pZkhLcjhFYm9PNzMy?=
+ =?utf-8?B?TS9jdzVJbEpSVTd0aXpRRDJEU1hnMC9YR2lkWVg0U25iUlg3ZEN6YS9ubE9t?=
+ =?utf-8?B?VDFucm9vcmZyU25GbGtMRUFjNnhma2U4MitGL0FuSVVqMU9yK3pOZ0ZjWVRB?=
+ =?utf-8?B?L1duU0NYUjFOb3JhRk9kRnczbFVISktDUjF0QStYa1dCWjBtS0EvV3lyaWRY?=
+ =?utf-8?B?SytIekZheUxMcWU5UE9UNTVFdU8wSGNpY0F4bzhZV2oyTktidVE4bGN2Wm1s?=
+ =?utf-8?Q?ZXH2ahl3XnUV5?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BN6PR1001MB2068.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OGVnM1lCOVMxSTdKOEJkc1B5S0Q1OEEwbWY4eE8xeHdzQ1BOakRLTDVWdTdS?=
+ =?utf-8?B?bkxuRnJ6TW1GTk5BZWZhZ1VTSVJRK2JUckxYemRzQnArQ3pTekJYbTJsZW9u?=
+ =?utf-8?B?UU9LdkFmRnNNUzBnR25MNk1lbHhheTVnSmJabWsyd1Z2cjJvRTRHQmVUOHMw?=
+ =?utf-8?B?dnJzRW11emJQTE01Snh4ZE5vN3VXMW5ZaWhhQkt2SldPOXcxVjI0bzdNWDFN?=
+ =?utf-8?B?eHVYZG1TY0pqWlY4MGNOMTduZGxod0FNeEE3anpqSVZpbTdmVCtFWjVMeTNT?=
+ =?utf-8?B?L3dmWEJOblpROGNocndNd3JqRTVrS04rZXBFWW1waVd3eFBwVEw1dDRUZEhK?=
+ =?utf-8?B?ODUyRzFXN2JReWNCZ3BLTWVxRTNhOUZTYzZHU1BHaTZDK0tpZkxhQVJLMi9C?=
+ =?utf-8?B?T2NnUkVTZ1dpYWJqQklBVXdFOS8zNzMxSmFibFExdUhHOFdvV0pGcysrRTZr?=
+ =?utf-8?B?ZHlNZ1pSZkRwdzIxV2NuVU1pNk1Bd1h5RXlMTGdwR05rejVISWk0dks3NDg4?=
+ =?utf-8?B?SWIveUkvalptaFZLMjh6cXNvZk1NYmFJZHNHbHpEKzVsRXFKeXFuUmhLYjhG?=
+ =?utf-8?B?b3FjRGJKR3BJdEhmb21nM3VNSGJoOWJ6bStuQTc4M1FFUy9vOWtkanJRSlkr?=
+ =?utf-8?B?bDk4Qm1oSm9VZTlQVzduR3prdnJ6YmZXUDBua050RC9rUmorTjREend0OGFB?=
+ =?utf-8?B?bE9SRHllZXI5dkgwYWtGUEZlVE1hbCtnU0dmRCt0djFtQnpRdm9PNCs5Qnov?=
+ =?utf-8?B?OVZPOEVmc3NtRTRPUE1GQUVJRWt0TFJOTE91V05IbXVZdFBka0pPdjRYQ25s?=
+ =?utf-8?B?SVZnRitqR3A4aWo1KzIxNlJoTVowQ1lKVmVoR1dWZ0tjSmtzOVdCemU4aGFq?=
+ =?utf-8?B?RzlISndxbjlpTjFkZitYbWJPM0J5QkxacmdQMnl2MUR0WFAxQzUraWoyUjlL?=
+ =?utf-8?B?ZmxTM3RkMUVqRC80S29od0JSYWJSRjFQM01wSTI3N0tzUGZpVkVDZDdNdC8x?=
+ =?utf-8?B?REV3Z1dHclkvdFZnWW5lSzRXMU1GenJkNEF1T3N3QkUrSHNOVk05NjZrN0hx?=
+ =?utf-8?B?RW1JMk5ZSFliUHRQd205enVBVjFuT0d6SitraVhEV05jSVFlL3Ura2x1cXEv?=
+ =?utf-8?B?VjVEYjg4NzlQOEZTVzM1cjIyNk5lQy9PQUR5R0N5VlFHWlNuR216TzVmUitu?=
+ =?utf-8?B?SlNYR0QwN0srUUJrR0ExcTB0c2RacjZNaE0rZGpXQ3JEM294YkxnNm43TGRT?=
+ =?utf-8?B?cjN3dmpZa2FaTldNcUZvZnRzSjdIVGtGYk04d1FkV29sWnZ1bUdub2JWMzFt?=
+ =?utf-8?B?TmRJU2FQRExKYXcxSmdvY2ZxLzB1YloyTWRwL3NCbjRodjBNS01XMmVRK09s?=
+ =?utf-8?B?OU1UclpCRml2b210UllhSy96OGpaVjFTaEIyV0ZUcVdCQ0t3WFg0YnA1Mk5D?=
+ =?utf-8?B?WXJrVWFzc1JtN25GOHdnQ0VraWtBOEV2blVnU1hYK1hZS2J4bzRGSS9JNEVH?=
+ =?utf-8?B?N0N2SHk2bGZpdHJMRFlvTmEwTTVUZ2xNQWM1OUllWjMrVVFPNmt3MURGdklT?=
+ =?utf-8?B?SEJLTUhsNmFJekY3ejFnamFUd3pvWVRqb3BkQkttamVQaDZycEdHVm9ubnhs?=
+ =?utf-8?B?VzAzS2kwbFlyTXA5UXNUODFnMWVoY2tvdnpZRGlMMHpVaTVRKzNidWZZemRV?=
+ =?utf-8?B?bFJBbnNMRDE5eWxURGhZRTB4R2xRVExheGtQc09PN0h4L2xUR0dRbXNzM3lM?=
+ =?utf-8?B?dkE4TGdBdDVxbTdTU1lQMFBzdVlHRVFjSGpyNDVhcytlZ1FiZWlRdE5xZjJY?=
+ =?utf-8?B?a3VnV1c5NmJJWUh5Yzh0dGgrS1JyeFBzYkVyeVBKdnF6OFpOVWl4ZzZrRmk5?=
+ =?utf-8?B?OTNSRmlONmlId0NhY1B2bHBteTByT3MremNjNnB1UlZhcUpleFAvWm9IcDl6?=
+ =?utf-8?B?MjgrUkFneUF5aHlpMWNIQzVuMWtIaU0xeUg0NmNlUUN2Q3RrVHBsM3VueUly?=
+ =?utf-8?B?SHVGZHFPbWNlT0ZuQkVzYjdRMmo5ZnBkL3NxZ2E2elRiWjZSU3k5UHoxb3A0?=
+ =?utf-8?B?VCtDN2xmMmgyOU93ZERWd05qNVdHbHpORWYwUUlDWlFBcHhoVjJHREtSdjQ2?=
+ =?utf-8?B?ZzUzaTVpTWNEb1BqNitnYVloc25JOGJINDYwUVBGYVN2Qy9Ib1BtcHVBTHlj?=
+ =?utf-8?B?Smc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: rMrXP+xABp1Tkx1MyuJ9Moq+xSMgzmBtTZmH6k+4D+G3fOKM1lAKuQu0ci7UMH0BKuaCnla3ijVvMekxE7GP9K1tFVeS2K03ssTVIoZxU18aRWBnnOji5WoexAnOuFxg/UxB9xFdh9kY4DuT7ZzAhmX1qbM8+nDW0x+AEBZNTzOH7p7GAuNJCstGBYh4H4Gn8J0FInR8fTrqMxwgSJKYvhuZ/9p5FtsMMUpM6f4i8rxvhEgua6uLYBmb6oatwHTmJ2L/MELpoKwdKmwe4ZMrIWELkOP3GBtyt+9xHUSR2MZ9QgUp8f2H8ig21/XxPE+4uzqC+lU0NqULQy3F/wY/T/GONGtSB4y33exz4qeqbykQOEHlpcKlyK5HrdBM5t2mM9dmHeAgzXSPUWxjRta0d/YP17a2abuWPFcdty9vn2cYeQHDh5SVvXLRR0QN8iNHSEtVQBc4WhIXDYTkHD8L7YN5B29JvsXAhUiHpnSqIxliXR8PYfZq7CwTNklVofx4lgZTtTkRc+dyThMqFpiy0BKAKayEYRz7fR7KOEi81VkcyUSLgbq7VL14AVm3aecsrgPS3yoNMY1FCut40YVhoh6JWnlGAY5Or2sB5CXm4+U=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a7d810b5-9ee8-484d-bb92-08dd5a83872b
+X-MS-Exchange-CrossTenant-AuthSource: BN6PR1001MB2068.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Mar 2025 18:45:11.4187 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: J8cGYin/Vj1HfYVQzZOvshh4hFPEjIsJNmlXgD8dtd4uH5d3tLGTDb/I5tm/BpjqWLXMRz1o2Z3xK5gDdzTs3g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR10MB4708
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-03_09,2025-03-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ suspectscore=0 phishscore=0
+ adultscore=0 mlxlogscore=999 malwarescore=0 spamscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502100000
+ definitions=main-2503030143
+X-Proofpoint-ORIG-GUID: mQ5MR29aNogQeX6UlAETCqSmxQymxXz9
+X-Proofpoint-GUID: mQ5MR29aNogQeX6UlAETCqSmxQymxXz9
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,72 +223,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+Hi Xiaoyao,
 
-On 24/2/25 18:14, Richard Henderson wrote:
-> So far, this is only read-as-written.
+On 3/2/25 5:59 PM, Xiaoyao Li wrote:
+> On 3/3/2025 6:00 AM, Dongli Zhang wrote:
+>> Currently, AMD PMU support isn't determined based on CPUID, that is, the
+>> "-pmu" option does not fully disable KVM AMD PMU virtualization.
+>>
+>> To minimize AMD PMU features, remove PERFCORE when "-pmu" is configured.
+>>
+>> To completely disable AMD PMU virtualization will be implemented via
+>> KVM_CAP_PMU_CAPABILITY in upcoming patches.
+>>
+>> As a reminder, neither CPUID_EXT3_PERFCORE nor
+>> CPUID_8000_0022_EAX_PERFMON_V2 is removed from env->features[] when "-pmu"
+>> is configured. Developers should query whether they are supported via
+>> cpu_x86_cpuid() rather than relying on env->features[] in future patches.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2497
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/m68k/cpu.h       |  1 +
->   target/m68k/cpu.c       | 23 ++++++++++++++++++++++-
->   target/m68k/helper.c    | 14 ++++++++------
->   target/m68k/translate.c |  3 ++-
->   4 files changed, 33 insertions(+), 8 deletions(-)
+> I don't think it is the correct direction to go.
+> 
+> env->features[] should be finalized before cpu_x86_cpuid() and env-
+>>features[] needs to be able to be exposed to guest directly. This ensures
+> guest and QEMU have the same view of CPUIDs and it simplifies things.
+> 
+> We can adjust env->features[] by filtering all PMU related CPUIDs based on
+> cpu->enable_pmu in x86_cpu_realizefn().
+
+Thank you very much for suggestion.
+
+I see  code like below in x86_cpu_realizefn() to edit env->features[].
+
+7982     /* On AMD CPUs, some CPUID[8000_0001].EDX bits must match the bits on
+7983      * CPUID[1].EDX.
+7984      */
+7985     if (IS_AMD_CPU(env)) {
+7986         env->features[FEAT_8000_0001_EDX] &= ~CPUID_EXT2_AMD_ALIASES;
+7987         env->features[FEAT_8000_0001_EDX] |= (env->features[FEAT_1_EDX]
+7988            & CPUID_EXT2_AMD_ALIASES);
+7989     }
+
+I may do something similar to them for CPUID_EXT3_PERFCORE and
+CPUID_8000_0022_EAX_PERFMON_V2.
+
+Dongli Zhang
 
 
-> diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-> index 6e3bb96762..bc787cbf05 100644
-> --- a/target/m68k/helper.c
-> +++ b/target/m68k/helper.c
-> @@ -45,8 +45,8 @@ static int cf_fpu_gdb_get_reg(CPUState *cs, GByteArray *mem_buf, int n)
->           return gdb_get_reg32(mem_buf, env->fpcr);
->       case 9: /* fpstatus */
->           return gdb_get_reg32(mem_buf, env->fpsr);
-> -    case 10: /* fpiar, not implemented */
-> -        return gdb_get_reg32(mem_buf, 0);
-> +    case 10: /* fpiar */
-> +        return gdb_get_reg32(mem_buf, env->fpiar);
->       }
->       return 0;
->   }
-> @@ -69,7 +69,8 @@ static int cf_fpu_gdb_set_reg(CPUState *cs, uint8_t *mem_buf, int n)
->       case 9: /* fpstatus */
->           env->fpsr = ldl_be_p(mem_buf);
->           return 4;
-> -    case 10: /* fpiar, not implemented */
-> +    case 10: /* fpiar */
-> +        env->fpiar = ldl_p(mem_buf);
 
-Should we consider target endianness?
-
->           return 4;
->       }
->       return 0;
-> @@ -91,8 +92,8 @@ static int m68k_fpu_gdb_get_reg(CPUState *cs, GByteArray *mem_buf, int n)
->           return gdb_get_reg32(mem_buf, env->fpcr);
->       case 9: /* fpstatus */
->           return gdb_get_reg32(mem_buf, env->fpsr);
-> -    case 10: /* fpiar, not implemented */
-> -        return gdb_get_reg32(mem_buf, 0);
-> +    case 10: /* fpiar */
-> +        return gdb_get_reg32(mem_buf, env->fpiar);
->       }
->       return 0;
->   }
-> @@ -114,7 +115,8 @@ static int m68k_fpu_gdb_set_reg(CPUState *cs, uint8_t *mem_buf, int n)
->       case 9: /* fpstatus */
->           env->fpsr = ldl_be_p(mem_buf);
->           return 4;
-> -    case 10: /* fpiar, not implemented */
-> +    case 10: /* fpiar */
-> +        env->fpiar = ldl_p(mem_buf);
-
-(ditto)
-
->           return 4;
->       }
->       return 0;
+> 
+>> Suggested-by: Zhao Liu <zhao1.liu@intel.com>
+>> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+>> ---
+>>   target/i386/cpu.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>> index b6d6167910..61a671028a 100644
+>> --- a/target/i386/cpu.c
+>> +++ b/target/i386/cpu.c
+>> @@ -7115,6 +7115,10 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t
+>> index, uint32_t count,
+>>               !(env->hflags & HF_LMA_MASK)) {
+>>               *edx &= ~CPUID_EXT2_SYSCALL;
+>>           }
+>> +
+>> +        if (kvm_enabled() && IS_AMD_CPU(env) && !cpu->enable_pmu) {
+>> +            *ecx &= ~CPUID_EXT3_PERFCORE;
+>> +        }
+>>           break;
+>>       case 0x80000002:
+>>       case 0x80000003:
+> 
 
 
