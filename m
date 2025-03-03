@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00949C282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 11:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EAE3C282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 11:18:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp3iD-0003ab-3n; Mon, 03 Mar 2025 06:11:53 -0500
+	id 1tp3no-0005z5-4c; Mon, 03 Mar 2025 06:17:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp3iB-0003Zl-Ij
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 06:11:51 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp3nm-0005yE-75
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 06:17:38 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp3iA-00050Q-3U
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 06:11:51 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43bc638686eso2701585e9.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 03:11:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp3nk-0005zm-El
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 06:17:37 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-390eebcc371so1454776f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 03:17:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741000308; x=1741605108; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741000654; x=1741605454; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TXePp6d66/7K7zoMgGcEq1LiVC+8JxroBjUksCe1hiA=;
- b=cP94Z2RHOq7d4N+wUjTC/ygnIezx8WzMca8hKNviXXtsuEblhL5Hb1BRMC+Be7jMAS
- qLQZHH1umSBtlw0VFOhNa5B/Hw5RTZHB9u8NGE7nDTt3xxqLrYEv07GLgmLnAusoiXv+
- LoJyds9PFL025LY1Ad3wbesd3ewjabkJ37Ykf1u8kiEuknA5DBTOgEC+GHERRpi5Hj4O
- KyWIfvanFp1PnxbLw2WEIB3UhBGVBdG+fZxZk8+Gd3bd7+Rzkiqlfds4dmEdh4zB7EFo
- l0SIoVQairvSKFd6vtUXxIGML3eIHawU9Ti0nUaToYe3JzttyHxUUDGTM13+D+5BlNJp
- KDeg==
+ bh=ksoU/1VaaUZoU4mlJMyeK7SgX3TqGsl9Aloetr5IUqE=;
+ b=CFmX87EdCKf4fzqJRH5wWeOMua3JCSlhTjdp8mTpKXmfrB1po8B8uEiVzC0w935UhR
+ qM0zJcGyM+b9aN4qvgyRmlaqLnNbue1ZUQVIuntGjEsPnY/dXfbz2j9MrxvGpUzMvPTV
+ nJVkVKX8L/CP4WAVKWKiVt3zR82c65/en6b4KOmQE2rtPT/tOGe9yKuXpzdlgvr+pvXd
+ HZD6mYz7QDCAIm2FvJDNp2Wbxn4iOMOgqODpGx39LjR7q3/5vGzq4knQcgiy2FNnb9r7
+ oAHFyH5qZHw4RFHLBJvCRI2ccdMA1cAdvknls5h9DlkjG+Ti2NN1YAYk+tTRxktIL7hI
+ mexw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741000308; x=1741605108;
+ d=1e100.net; s=20230601; t=1741000654; x=1741605454;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TXePp6d66/7K7zoMgGcEq1LiVC+8JxroBjUksCe1hiA=;
- b=cqpVg5MKAi1/RBlkK4W1oTCWSvh8ANoamLLuTdmHF08XxJATXMZ46eL794SDaNfOD7
- /ScKtZ+chsaiZQmhJMH6Cg1eYclYkPbl34lvvoQ5Z9K1ATBf3bBlB7vXDiVaN2flfMx5
- NQhXjDDnbsf5NLt9LXOrKud3Na2NpZEIJJIm1uahyfi/xIQs7+aSz8zHvAo/Pxwc4gwA
- Imt6IfUv0YQAtjeTW8wJaDUTC6oQvwYAWlniaZCdWKyrdsSieftYC1TZOOu8b9ZmHWx7
- mpzdBdyCcR5Dc9l3ySFen8MGYziRkID7O1QE/3A/McmwDlaHgmVmnEIR5tkDr3tLI2of
- xhDw==
-X-Gm-Message-State: AOJu0YwtiQLyOJLJ+KED317L6/WKavGRW5XQFZkR+zuv92fXhZxD54MQ
- YxINMD+1mNDR+7ecsXXuJ1hHipIqKvkqF+1bX1++VvC8n4LJVleHU4oeyCYy6E9ALRCFIn32Nfv
- mkGcWpQ==
-X-Gm-Gg: ASbGnctZPHfx64GFiCa+Wi3/vEXen3SG34f960zJLPpCLQBV6x1JDfyxPnreSnWo1y2
- iG9I3T//LUmwhykpB3j39I5RwoXGyJXxZ6ZK+Wgkhc/OAabp7ikZjJ1E/okWXlvBh2mGFUeMefo
- mJYcRVh8YRJyH/C8XZKqbvMCbTIuOZLxKnXuHmibcaZwn2nVBOKADe9RS66mkOWiNb/VUObDej8
- uLD6oLxOzM0UGw6z183rMAk1JG1p3ZF44JtK/KhIGoLTB4T18S9aqGKcviPmId99scz+OQbfr1c
- KdRsPIasWovj02SRHX7hwgu6jrVF0rff28MheJTHbCyATZW2ZMcuJox04i0+IyBVxP336Y+V6TF
- nzRf4WhUrHGbF
-X-Google-Smtp-Source: AGHT+IGm6SS0Tx3aVo8Pdxgek5Qs1D2aBRLNyFmmaDPbcCk+FIV0Ui7BeXW1FUaE9y+wPzMb01+N2A==
-X-Received: by 2002:a05:600c:548b:b0:439:9737:675b with SMTP id
- 5b1f17b1804b1-43ba6256610mr102706775e9.7.1741000308067; 
- Mon, 03 Mar 2025 03:11:48 -0800 (PST)
+ bh=ksoU/1VaaUZoU4mlJMyeK7SgX3TqGsl9Aloetr5IUqE=;
+ b=Wwqj5JwzDLl8uWzWJjoXmYL8GHwmh73GiTykzyQjfWVTlDoJL9QPsQs8tZ5a6f7+2I
+ CKaxXR1s5ve8VEe6zwSROuLhQeskCuY/2NEJSI4HFfcx//70I3h1iZYdMZr6zgb6Ooqf
+ DMkvvDfgG3HFEJh30SCrexNXTR99b/C+jP94gTX2EKPpO7KEccVW7ssuDZSOgdavqq9o
+ 23x28JYAeq2jiE4RDSLmafLNllB/A6NFEgBtSlwfGnPWo//hn8SsOWm1zVADE3mMGD//
+ 8IP75FbqZ3Jy5S8myTt6FkgLzmqn5c7KmEeBoLvsBq25zkq5gzWEgAaQCVcA71Kr5YDL
+ 3dKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUqSnnWQLywinnQC5HYLRZgJ+kA4RwTyaghnd0gMlmvjPwh+/x7voE/YTakmurkuQFcT175pJBSIKH5@nongnu.org
+X-Gm-Message-State: AOJu0YxsvcQnMT0bKn8ZwRrRmzspFMzgh2QbNec8JUs18dRNFyHh6UKS
+ f3S8KZzmd3yiKOisZg8Ej+wptA+0hPpsmltL81S7QmNz5RCHx2S/fCowvO9jDwk=
+X-Gm-Gg: ASbGncu7XbMeZCt4uOxbn1DCF6OSpLyzNvVd0XFiaZ+EkK8jgX+rZMdy4NrajD3G4u9
+ dwR1GaNnJOfsggB5kq2jGqZANtWkTg6ilml0YcyyNBHkd9J/WAxDHikOQZ7HHqquwHzFulyp2Jx
+ I96cV5UK9+CrWZBYPoW7XoO9bVgY6ILtWsIadfTwN183eFIXdOUf/taLEJyzTBgn5xD0kLNkp56
+ 4e1jJaM1hG9Tk2mQ1heCMixzC9BdN31+uhRb6dvEJIANxOYWl+gRbcv7UpWYYPHDio1Q1+sm1/S
+ VS40ACZ9EW0ipXcu9VVBteeiFpMrj6LYFiWeNg9yxLB7ZS5gm0qq6HltaY3lzD0CSD1ZJ3wjM4U
+ YL/WN6GQssFFO
+X-Google-Smtp-Source: AGHT+IE7ngIsRlx5L3hN66wpGqu3+tbDy7pNvGI1MOyasUFWWTsKqEGeJsTvbrNvVpffBG3tvl0OKw==
+X-Received: by 2002:a05:6000:1864:b0:390:f2f1:2a17 with SMTP id
+ ffacd0b85a97d-390f2f12bd3mr11302562f8f.53.1741000654333; 
+ Mon, 03 Mar 2025 03:17:34 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bbf2ed24asm42494365e9.23.2025.03.03.03.11.46
+ ffacd0b85a97d-390e47b6d31sm13949369f8f.42.2025.03.03.03.17.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 03:11:47 -0800 (PST)
-Message-ID: <6fca1ca3-5746-4ca4-b8f3-c96cfe93a9e9@linaro.org>
-Date: Mon, 3 Mar 2025 12:11:46 +0100
+ Mon, 03 Mar 2025 03:17:33 -0800 (PST)
+Message-ID: <0256b5de-12f9-4c13-bbff-e7fcf593f542@linaro.org>
+Date: Mon, 3 Mar 2025 12:17:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] xen: Build fixes and dust removal
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- xen-devel@lists.xenproject.org, qemu-arm@nongnu.org,
- Anthony PERARD <anthony@xenproject.org>,
- Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
- Andrew Cooper <andrew.cooper3@citrix.com>, Juergen Gross <jgross@suse.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin"
- <mst@redhat.com>, David Woodhouse <dwmw2@infradead.org>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>, Thomas Huth
- <thuth@redhat.com>, Jan Beulich <jbeulich@suse.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20250218162618.46167-1-philmd@linaro.org>
+Subject: Re: [PATCH] hw/net: ftgmac100: copy eth_hdr for alignment
+To: Patrick Venture <venture@google.com>, peter.maydell@linaro.org,
+ clg@kaod.org, steven_lee@aspeedtech.com, leetroy@gmail.com,
+ jamin_lin@aspeedtech.com, andrew@codeconstruct.com.au, joel@jms.id.au
+Cc: jasowang@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20250227154253.1653236-1-venture@google.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250218162618.46167-1-philmd@linaro.org>
+In-Reply-To: <20250227154253.1653236-1-venture@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,16 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/2/25 17:26, Philippe Mathieu-Daudé wrote:
+Hi Patrick,
 
->    accel/Kconfig: Link XenPVH with GPEX PCIe bridge
->    hw/arm: Do not expose the virt machine on Xen-only binary
->    hw/arm/xen-pvh: Do not allow specifying any CPU type
->    hw/xen/xen-pvh: Reduce included headers
->    hw/xen/xen-hvm: Reduce included headers
->    hw/xen/xen-bus: Reduce included headers
->    hw/xen/xen-legacy-backend: Remove unused 'net/net.h' header
->    meson: Remove support for Xen on 32-bit ARM hosts
+On 27/2/25 16:42, Patrick Venture wrote:
+> eth_hdr requires 2 byte alignment
+> 
+> Signed-off-by: Patrick Venture <venture@google.com>
+> ---
+>   hw/net/ftgmac100.c | 15 ++++++++++++---
+>   1 file changed, 12 insertions(+), 3 deletions(-)
 
-Queuing 1-2, 4-7 as I understand #8 needs rewording, thanks.
+
+> @@ -1028,6 +1032,7 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
+>   {
+>       FTGMAC100State *s = FTGMAC100(qemu_get_nic_opaque(nc));
+>       FTGMAC100Desc bd;
+> +    struct eth_header eth_hdr = {};
+>       uint32_t flags = 0;
+>       uint64_t addr;
+>       uint32_t crc;
+> @@ -1036,7 +1041,11 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
+>       uint32_t buf_len;
+>       size_t size = len;
+>       uint32_t first = FTGMAC100_RXDES0_FRS;
+> -    uint16_t proto = be16_to_cpu(PKT_GET_ETH_HDR(buf)->h_proto);
+
+The LD/ST API deals with unaligned fields, would that help?
+
+     uint16_t proto = lduw_be_p(&PKT_GET_ETH_HDR(buf)->h_proto);
+
+> +    uint16_t proto;
+> +
+> +    memcpy(&eth_hdr, PKT_GET_ETH_HDR(buf),
+> +           (sizeof(eth_hdr) > len) ? len : sizeof(eth_hdr));
+> +    proto = be16_to_cpu(eth_hdr.h_proto);
+>       int max_frame_size = ftgmac100_max_frame_size(s, proto);
+
 
