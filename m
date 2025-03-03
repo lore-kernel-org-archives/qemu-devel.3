@@ -4,87 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3D6C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 13:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A7B8C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 13:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp5Uu-00005j-OH; Mon, 03 Mar 2025 08:06:16 -0500
+	id 1tp5WM-0000gw-17; Mon, 03 Mar 2025 08:07:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp5Uf-0008SK-H2
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 08:06:03 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp5Uc-0004Se-FM
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 08:06:00 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43bc30adad5so5168635e9.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 05:05:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741007156; x=1741611956; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RyLZCqNSpgnRk0wvUnEiBPuTTrec3Ig7km3xSg0ZUgY=;
- b=JMsDlF8ktTJx6MKvaId6tgcZq44L4zSUR7+DZxQuaRcyUtf/SP6+dKu/BRkp5ufZho
- sHnmgJT4kNsrzpwXL9Xs7QndkV5ApDqiKZh6HRvpPeK5Ejc9W4Tse9PkaokdslxdJO+R
- jXVpcHpVzfNKu2pJeGmtrkd7kS0SgsP8sMWRBmpDCXyRgKKPBdsijt5ZI+bWMS3GU791
- hVf7hP/9iFPGBpaGei3GBUdmGoGgWRWPrXBj0UGmoz2tqM14BwoDIQeRUt5p0x3O/gJN
- 8GSEUjXymGpLL90pRLzCi42So5+f8gtMFT4r0E69yJPc6ZQ21DwBjATRmH3gNB476zqa
- FBHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741007156; x=1741611956;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RyLZCqNSpgnRk0wvUnEiBPuTTrec3Ig7km3xSg0ZUgY=;
- b=CCxF8Iao/BR8UEZYDvgHO5kzRpj7m4vpAY8f6Ae56hqkRcrldorqRDcrsdyMYvpAfA
- xAYcNevO9ukdFNc9MRU69KVLXm1iihmBJNPpuqXObFZhEl9QwG1C+KIzV49rHWvjsz7R
- loa93rOdZevafA2Yf/b4AlsP8L+3qtNt1k6sXentevojgNSZmZaW1Q98oAC3CY5mblW/
- 65r3SnFs/6I3KiLQvVMRuqRbgVhPKpyws61J+wOGDOkMg0JmgOfm3jhc+3hGNlTvHSHQ
- 6mU6HQppvC5OE90/8luIxRD2MU0erqAUf6BRxqSUENe18CwQKpCKYLqbiBQSf3olyYhr
- +9IQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrKuOLWkTrw5azjBHZ2L4SfiKOd0CTvcGcjq3TdMMrTrcG+oFZVgGzHLuNvnxQWY/umU+p0vh6WI7X@nongnu.org
-X-Gm-Message-State: AOJu0YzKJ8er2kkmrbE22rVL6t/MX6IXwGgh/P+CqoOi/SXl1fOf1Y/i
- bpsq/oWJ/CdQt4EsRD6674s9cR1lJehQfNKYBoXApDsdJ4T+bluta+WiSjyJj90=
-X-Gm-Gg: ASbGncu70C3k2r2aivcl6Vp8v8IUUJ3V9hrc5GFSF+7J29D/wDpptTTB6wSwVilkiOg
- x0yaIG9+72zeul60qIhzXBECdtvposou1a7q/d1ptwQromCIyF4fvijJCD7nSHGGl+AJgzS9GxS
- j4qDjQN+zSwi0jZxgQw9aBEELkh1xx3QJX+KnqsNo2O4waDqNxWtdPJEoLPawZv3xgMFHFmu45C
- J1myP30gMevS/fzi6hLOwc4D6K3b5y7nN0wt9wfVr9YaUtmnqwCuTWrdXGDpcFnyIJ5RBl/9XGJ
- kQUBawNbnPvXaOfKdGDQAhgk81sgXjwpgfxG1LYiqnGPVLtAFCelF6rS3yqtRiI3T8fu8rXNwwC
- qFFsUhnAW/2Tk
-X-Google-Smtp-Source: AGHT+IEEHpv+77IO6inZvBd33f4TLjVp15C/XpDTzCheLcMQZ69jSZ/j2bJ+5IfL4HjuOBpPyypezQ==
-X-Received: by 2002:a05:6000:2b04:b0:390:df7f:c20a with SMTP id
- ffacd0b85a97d-390ec9c19a2mr8384507f8f.33.1741007155871; 
- Mon, 03 Mar 2025 05:05:55 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e484489esm14771600f8f.68.2025.03.03.05.05.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 05:05:55 -0800 (PST)
-Message-ID: <46c17165-35c7-4e21-968a-40968c4d50d5@linaro.org>
-Date: Mon, 3 Mar 2025 14:05:54 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tp5Vv-0000Vu-P5
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 08:07:23 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tp5Vr-0004Zs-6K
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 08:07:17 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EA05C4E6010;
+ Mon, 03 Mar 2025 14:07:12 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id VJDE4UOPcpPW; Mon,  3 Mar 2025 14:07:10 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id AF9094E600E; Mon, 03 Mar 2025 14:07:10 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id AE1DF74577C;
+ Mon, 03 Mar 2025 14:07:10 +0100 (CET)
+Date: Mon, 3 Mar 2025 14:07:10 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Paolo Bonzini <pbonzini@redhat.com>
+cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Fam Zheng <fam@euphon.net>, 
+ qemu-devel@nongnu.org, devel@daynix.com
+Subject: Re: [PATCH] usb-storage: Allow manually adding SCSI device
+In-Reply-To: <0128cd62-b5d7-4aa1-b169-2a7717d33113@redhat.com>
+Message-ID: <7ddd1ca2-7055-d3cc-0442-8e866cc6e8d7@eik.bme.hu>
+References: <20250303-usb-v1-1-70f700a181fd@daynix.com>
+ <0128cd62-b5d7-4aa1-b169-2a7717d33113@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] hw/arm: Remove printf() calls
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250227170117.1726895-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250227170117.1726895-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,20 +66,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/2/25 18:01, Peter Maydell wrote:
+On Mon, 3 Mar 2025, Paolo Bonzini wrote:
+> On 3/3/25 11:28, Akihiko Odaki wrote:
+>> usb-storage automatically adds a SCSI device, but it limits
+>> configurability of the added SCSI device and causes usability
+>> problems as observed in:
+>> https://gitlab.com/libvirt/libvirt/-/issues/368
+>> 
+>> Allow manually adding SCSI device when the drive option is not
+>> specified.
+>
+> I might be misunderstanding what you're doing, but can't you do that already 
+> with usb-bot?
 
-> Peter Maydell (5):
->    hw/arm/omap1: Convert raw printfs to qemu_log_mask()
->    hw/arm/omap1: Drop ALMDEBUG ifdeffed out code
->    hw/arm/omap1: Convert information printfs to tracepoints
->    hw/arm/omap_sx1.c: Remove ifdeffed out debug printf
->    hw/arm/versatilepb: Convert printfs to LOG_GUEST_ERROR
-
-Thanks, series queued to hw-misc (with the suggested trace event
-name changes in patch 3).
+That's quite an obscure device I haven't heard of yet. Could it be 
+possible to make -drive media=cdrom,if=usb,file=some.iso do the right 
+thing whatever is that for users' convenience?
 
 Regards,
-
-Phil.
-
+BALATON Zoltan
 
