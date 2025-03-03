@@ -4,99 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E25AC282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:43:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0175FC282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp9nd-0004hQ-Ef; Mon, 03 Mar 2025 12:41:53 -0500
+	id 1tp9xf-0001RU-2s; Mon, 03 Mar 2025 12:52:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Robu=VW=kaod.org=clg@ozlabs.org>)
- id 1tp9nU-0004g8-Mv; Mon, 03 Mar 2025 12:41:46 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Robu=VW=kaod.org=clg@ozlabs.org>)
- id 1tp9nP-0006Nb-2L; Mon, 03 Mar 2025 12:41:42 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z65hp1dNRz4x21;
- Tue,  4 Mar 2025 04:41:30 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z65hk73kzz4wcm;
- Tue,  4 Mar 2025 04:41:25 +1100 (AEDT)
-Message-ID: <956587b4-ca97-4a84-98ab-6308fa1243f9@kaod.org>
-Date: Mon, 3 Mar 2025 18:41:23 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp9xa-0001Pq-7w
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:11 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp9xX-00007V-1u
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:09 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-390edaee0cfso2429240f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 09:52:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741024323; x=1741629123; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KicCcYq2UjveTCard+1fZS3y1dRe4jB0t9s67fyte/A=;
+ b=ciPZivczLbHN4nYeJyPHgb33oNZtBkwKFJ4hW3GqMlHQXAEN9PzV48W7lNhw4UmQYJ
+ KaNtbhZ+rEwAGsOVheDjpt+U477I8FYbBR5wBkY8ebxxnQ26TPxL6476qDjVTm32OVj6
+ 9/GoCT6K2R/1slwcCmj/9Sj+I4kQWvcscvU9qLEbVZPmny/MtEDNL7pCFdTSrGT9vTDt
+ nprp11FX72H/qy5ubk59biMPUdRPG5/tdRLN2HjCtIUGaPUOc4y6418ERCa+DSZpM6ss
+ uBQD5EpY2EwRdFaAHUA+UmOC3tGEoUVi+HbwLlkqJeY48+nG/tHQ3y+4L9kG6HWk89vR
+ p4fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741024323; x=1741629123;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KicCcYq2UjveTCard+1fZS3y1dRe4jB0t9s67fyte/A=;
+ b=MeAaS+wDAkKa29Yz+yF4Ifys22WUveXptWk07bPlwwPNRljfWeNliPJGq25+JIJWS6
+ n6cORqFaJJoFNuTx1Abdh/ONqir1E1NdfQBcf+pCQvpBGx5weYiBUuJhmHUKLc5fPvWr
+ RYHDpqKwSWPd/c+uWZGdg+w+6soiIqIkeAm0tqgkMTNYK+YnQmqulP1tf1z1jzqBpRN1
+ TLPbOSBufv+ZSplHGW2LxBfSisFb3igyRwIVESAMisxCXr+hF2e+kKNhyk6pr3QTqgCz
+ WzDhbzuRxbOcNdCckvg/HDXLhY1oZkLg7hmJRNg1u3AHZXgsTHXRmJdcAP7Mk5mQVLdj
+ fLKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3vyVSF8ew1zMT+4rkPaTiD3f+wESS8BdWUP0hxY/XkgyGJrpbPH3jxU4z1qe3lQMr/Wu8IrKWfivG@nongnu.org
+X-Gm-Message-State: AOJu0YyNkh/r42rd28Qbt6z/V8lGAzCSXZZc0oC6I8FGrEdiiJ1JO/DA
+ RvL867X+bC8GEewAO1MxvEq/1NSWhy7Pd/+mV3+7/veC2Ct6finh8XdKcz75XYQ=
+X-Gm-Gg: ASbGnctaZUeicFtk0GbQkLuqtqqA2Yi8CFQGec+CnI0WQCNsDP/jG1/Y2GAre9eQCe+
+ BZKjNLuGxntArDHORksTi7Unofcdxwc6DzFv5mSSDYD+5hOuyUfKoqDNItNIE5XdyHD7Rapuhy7
+ TKVgtn2ohw703doBLiPNErvpGJS4ZEtWaC7ebyFsgtESFATQzK2u5fZ87e51XMpIOaIYMT3hkrJ
+ NamItJOjhfzDRksVnDFJ4WwFPVxsv/ir57Klcn3T/HwC2dR6GseCCHzZ0cxLErB9h/PD9e8/0Pw
+ +aWm+h1kNe75P8OKlVz79PjNjPmlGd3Kt6Wn7hf4WnWMcITFBKUQOkejAQfw4b7kNvsLKiOkEs8
+ oKs8zunOS85ri
+X-Google-Smtp-Source: AGHT+IGjQ1gyNntzN2iQrVia3p09h+QbF/mZqrbbEIF8zSdRw+mmhv0R8876CvtApbAx6w5bFWCDCg==
+X-Received: by 2002:a05:6000:401f:b0:38d:d664:67d8 with SMTP id
+ ffacd0b85a97d-390ec7c6738mr13564263f8f.11.1741024323384; 
+ Mon, 03 Mar 2025 09:52:03 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43b73703f83sm169668265e9.13.2025.03.03.09.52.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Mar 2025 09:52:02 -0800 (PST)
+Message-ID: <d97172e5-b8ae-4852-ae2b-b430cca53288@linaro.org>
+Date: Mon, 3 Mar 2025 18:52:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 19/23] hw/arm/aspeed: Add SoC and Machine Support for
- AST2700 A1
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
- <20250303095457.2337631-20-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250303095457.2337631-20-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH v17 03/11] hw: Add vmapple subdir
+To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
+ mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, Alexander Graf
+ <graf@amazon.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20250112210056.16658-1-phil@philjordan.eu>
+ <20250112210056.16658-4-phil@philjordan.eu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250112210056.16658-4-phil@philjordan.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=Robu=VW=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,176 +107,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 10:54, Jamin Lin wrote:
-> The memory map for AST2700 A1 remains compatible with AST2700 A0. However, the
-> IRQ mapping has been updated for AST2700 A1, with GIC interrupts now ranging
-> from 192 to 201. Add a new IRQ map table for AST2700 A1.
-> Add "aspeed_soc_ast2700a1_class_init" to initialize the AST2700 A1 SoC.
-> Introduce "aspeed_machine_ast2700a1_evb_class_init" to initialize the
-> AST2700 A1 EVB.
-
-This could have been 2 patches.  Minor.
-  
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   hw/arm/aspeed.c         | 24 +++++++++++++
->   hw/arm/aspeed_ast27x0.c | 80 +++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 104 insertions(+)
+On 12/1/25 22:00, Phil Dennis-Jordan wrote:
+> From: Alexander Graf <graf@amazon.com>
 > 
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index 2482f05154..aaf63022ff 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -1693,6 +1693,26 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
->       mc->default_ram_size = 1 * GiB;
->       aspeed_machine_class_init_cpus_defaults(mc);
->   }
+> We will introduce a number of devices that are specific to the vmapple
+> target machine. To keep them all tidily together, let's put them into
+> a single target directory.
+> 
+> Signed-off-by: Alexander Graf <graf@amazon.com>
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>   MAINTAINERS             | 7 +++++++
+>   hw/Kconfig              | 1 +
+>   hw/meson.build          | 1 +
+>   hw/vmapple/Kconfig      | 1 +
+>   hw/vmapple/meson.build  | 0
+>   hw/vmapple/trace-events | 2 ++
+>   hw/vmapple/trace.h      | 1 +
+>   meson.build             | 1 +
+>   8 files changed, 14 insertions(+)
+>   create mode 100644 hw/vmapple/Kconfig
+>   create mode 100644 hw/vmapple/meson.build
+>   create mode 100644 hw/vmapple/trace-events
+>   create mode 100644 hw/vmapple/trace.h
+
+
+> diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
+> new file mode 100644
+> index 0000000000..8b13789179
+> --- /dev/null
+> +++ b/hw/vmapple/Kconfig
+> @@ -0,0 +1 @@
 > +
-> +static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc, void *data)
-> +{
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+> diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
+> new file mode 100644
+> index 0000000000..e69de29bb2
+> diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
+> new file mode 100644
+> index 0000000000..9ccc579048
+> --- /dev/null
+> +++ b/hw/vmapple/trace-events
+> @@ -0,0 +1,2 @@
+> +# See docs/devel/tracing.rst for syntax documentation.
 > +
-> +    mc->desc = "Aspeed AST2700 A1 EVB (Cortex-A35)";
-> +    amc->soc_name  = "ast2700-a1";
-> +    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
-> +    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
-> +    amc->fmc_model = "w25q01jvq";
-> +    amc->spi_model = "w25q512jv";
-> +    amc->num_cs    = 2;
-> +    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-> +    amc->uart_default = ASPEED_DEV_UART12;
-> +    amc->i2c_init  = ast2700_evb_i2c_init;
-> +    mc->auto_create_sdcard = true;
-> +    mc->default_ram_size = 1 * GiB;
-> +    aspeed_machine_class_init_cpus_defaults(mc);
-> +}
->   #endif
->   
->   static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-> @@ -1821,6 +1841,10 @@ static const TypeInfo aspeed_machine_types[] = {
->           .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
->           .parent        = TYPE_ASPEED_MACHINE,
->           .class_init    = aspeed_machine_ast2700a0_evb_class_init,
-> +        }, {
-> +        .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
-> +        .parent        = TYPE_ASPEED_MACHINE,
-> +        .class_init    = aspeed_machine_ast2700a1_evb_class_init,
->   #endif
->       }, {
->           .name          = TYPE_ASPEED_MACHINE,
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 028bf08d0e..6d80b54470 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -120,6 +120,52 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
->       [ASPEED_DEV_SDHCI]     = 133,
->   };
->   
-> +static const int aspeed_soc_ast2700a1_irqmap[] = {
-> +    [ASPEED_DEV_SDMC]      = 0,
-> +    [ASPEED_DEV_HACE]      = 4,
-> +    [ASPEED_DEV_XDMA]      = 5,
-> +    [ASPEED_DEV_UART4]     = 8,
-> +    [ASPEED_DEV_SCU]       = 12,
-> +    [ASPEED_DEV_RTC]       = 13,
-> +    [ASPEED_DEV_EMMC]      = 15,
-> +    [ASPEED_DEV_TIMER1]    = 16,
-> +    [ASPEED_DEV_TIMER2]    = 17,
-> +    [ASPEED_DEV_TIMER3]    = 18,
-> +    [ASPEED_DEV_TIMER4]    = 19,
-> +    [ASPEED_DEV_TIMER5]    = 20,
-> +    [ASPEED_DEV_TIMER6]    = 21,
-> +    [ASPEED_DEV_TIMER7]    = 22,
-> +    [ASPEED_DEV_TIMER8]    = 23,
-> +    [ASPEED_DEV_DP]        = 28,
-> +    [ASPEED_DEV_LPC]       = 192,
-> +    [ASPEED_DEV_IBT]       = 192,
-> +    [ASPEED_DEV_KCS]       = 192,
-> +    [ASPEED_DEV_I2C]       = 194,
-> +    [ASPEED_DEV_ADC]       = 194,
-> +    [ASPEED_DEV_GPIO]      = 194,
-> +    [ASPEED_DEV_FMC]       = 195,
-> +    [ASPEED_DEV_WDT]       = 195,
-> +    [ASPEED_DEV_PWM]       = 195,
-> +    [ASPEED_DEV_I3C]       = 195,
-> +    [ASPEED_DEV_UART0]     = 196,
-> +    [ASPEED_DEV_UART1]     = 196,
-> +    [ASPEED_DEV_UART2]     = 196,
-> +    [ASPEED_DEV_UART3]     = 196,
-> +    [ASPEED_DEV_UART5]     = 196,
-> +    [ASPEED_DEV_UART6]     = 196,
-> +    [ASPEED_DEV_UART7]     = 196,
-> +    [ASPEED_DEV_UART8]     = 196,
-> +    [ASPEED_DEV_UART9]     = 196,
-> +    [ASPEED_DEV_UART10]    = 196,
-> +    [ASPEED_DEV_UART11]    = 196,
-> +    [ASPEED_DEV_UART12]    = 196,
-> +    [ASPEED_DEV_ETH1]      = 196,
-> +    [ASPEED_DEV_ETH2]      = 196,
-> +    [ASPEED_DEV_ETH3]      = 196,
-> +    [ASPEED_DEV_PECI]      = 197,
-> +    [ASPEED_DEV_SDHCI]     = 197,
-> +};
-> +
->   /* GICINT 128 */
->   /* GICINT 192 */
->   static const int ast2700_gic128_gic192_intcmap[] = {
-> @@ -860,6 +906,34 @@ static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
->       sc->get_irq      = aspeed_soc_ast2700_get_irq;
->   }
->   
-> +static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, void *data)
-> +{
-> +    static const char * const valid_cpu_types[] = {
-> +        ARM_CPU_TYPE_NAME("cortex-a35"),
-> +        NULL
-> +    };
-> +    DeviceClass *dc = DEVICE_CLASS(oc);
-> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
-> +
-> +    /* Reason: The Aspeed SoC can only be instantiated from a board */
-> +    dc->user_creatable = false;
-> +    dc->realize      = aspeed_soc_ast2700_realize;
-> +
-> +    sc->name         = "ast2700-a1";
-> +    sc->valid_cpu_types = valid_cpu_types;
-> +    sc->silicon_rev  = AST2700_A1_SILICON_REV;
-> +    sc->sram_size    = 0x20000;
-> +    sc->spis_num     = 3;
-> +    sc->wdts_num     = 8;
-> +    sc->macs_num     = 3;
-> +    sc->uarts_num    = 13;
-> +    sc->num_cpus     = 4;
-> +    sc->uarts_base   = ASPEED_DEV_UART0;
-> +    sc->irqmap       = aspeed_soc_ast2700a1_irqmap;
-> +    sc->memmap       = aspeed_soc_ast2700_memmap;
-> +    sc->get_irq      = aspeed_soc_ast2700_get_irq;
-> +}
-> +
->   static const TypeInfo aspeed_soc_ast27x0_types[] = {
->       {
->           .name           = TYPE_ASPEED27X0_SOC,
-> @@ -872,6 +946,12 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
->           .instance_init  = aspeed_soc_ast2700_init,
->           .class_init     = aspeed_soc_ast2700a0_class_init,
->       },
-> +    {
-> +        .name           = "ast2700-a1",
-> +        .parent         = TYPE_ASPEED27X0_SOC,
-> +        .instance_init  = aspeed_soc_ast2700_init,
-> +        .class_init     = aspeed_soc_ast2700a1_class_init,
-> +    },
->   };
->   
->   DEFINE_TYPES(aspeed_soc_ast27x0_types)
+> diff --git a/hw/vmapple/trace.h b/hw/vmapple/trace.h
+> new file mode 100644
+> index 0000000000..572adbefe0
+> --- /dev/null
+> +++ b/hw/vmapple/trace.h
+> @@ -0,0 +1 @@
+> +#include "trace/trace-hw_vmapple.h"
+> diff --git a/meson.build b/meson.build
+> index d06f59095c..812ef33550 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3588,6 +3588,7 @@ if have_system
+>       'hw/usb',
+>       'hw/vfio',
+>       'hw/virtio',
+> +    'hw/vmapple',
+>       'hw/watchdog',
+>       'hw/xen',
+>       'hw/gpio',
+
+Alex, Phil, we now mandate a SPDX tag. Due to the license used in
+vmapple.c in this patch, are you OK with me squashing here:
+
+-- >8 --
+diff --git a/hw/vmapple/trace.h b/hw/vmapple/trace.h
+index 572adbefe04..d099d5ecd9e 100644
+--- a/hw/vmapple/trace.h
++++ b/hw/vmapple/trace.h
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
+index 8b137891791..315c06b689c 100644
+--- a/hw/vmapple/Kconfig
++++ b/hw/vmapple/Kconfig
+@@ -1 +1 @@
+-
++# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
+index e69de29bb2d..315c06b689c 100644
+--- a/hw/vmapple/meson.build
++++ b/hw/vmapple/meson.build
+@@ -0,0 +1 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
+index 9ccc5790487..21125794121 100644
+--- a/hw/vmapple/trace-events
++++ b/hw/vmapple/trace-events
+@@ -2 +2 @@
+-
++# SPDX-License-Identifier: GPL-2.0-or-later
+---
+
+?
 
 
