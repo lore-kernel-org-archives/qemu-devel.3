@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33C2DC282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0A86C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp9y7-0001YM-BP; Mon, 03 Mar 2025 12:52:45 -0500
+	id 1tp9yP-0001c9-C7; Mon, 03 Mar 2025 12:53:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tp9xy-0001XF-Bw
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:35 -0500
-Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
+ id 1tp9xy-0001XE-0h
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:34 -0500
+Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tp9xw-0000GK-CR
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:34 -0500
-Received: by mail-pl1-x642.google.com with SMTP id
- d9443c01a7336-2239c066347so32359345ad.2
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 09:52:31 -0800 (PST)
+ id 1tp9xu-0000Fn-EO
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:33 -0500
+Received: by mail-pl1-x643.google.com with SMTP id
+ d9443c01a7336-22349dc31bcso83160835ad.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 09:52:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741024350; x=1741629150; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741024349; x=1741629149; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tAilGogcJ69e+gk+U7AAsM5atW/gLI/r88D/oQ3BuBI=;
- b=KXWyWSWbstX4BDEogXLQAUo8x582HzkrIWuWYvz0zsH9E7XBqnNazeumGHGM0iwZYU
- O78VMEpSMPZR3uP5GRAD1Sz0GPOlTToHtS9fIzLxj/XwNuGG6aF+CosnpltRXYcc3zU+
- eg315rnRRLkfx0ZkPV/l3ThxX8wAdjXtNXzBnG3NKI694E9dTxCl/bL3DoZ2MNPPSBrR
- OGeZ1jvzaS/S7Zx7Y0xlnI/BqqTsFsakLtwLTMaMYicRMQgNUWw3S7Kyy0AgURWRTAoi
- Yy0+UOmluMjYuhDsyQEIU93InzSsrQzbBoPL9tOCvum/zcCtbwIv8aJwdfC186j3ZVI6
- 8u6A==
+ bh=pXjnzMdFRw8UN/BnZINokoDYNlgpPuyWmsHQdzmGGak=;
+ b=NgFvlMJ6LuUQJ5HwSX2ZS9mufxTs6s7P2o1ia93TPQ2fqRTe1bt1BaAgj5vyKDtCMd
+ awsotk98ySEqwcFqOVFbt4Wp5IerlXPKIOidbCvw/LEwklBx1yoRMOKgdmj8ZTiyvLQt
+ CS+AYB4ucqkIWmbsq6YcHoSvIyNyOfcR36qSCLtoMNJYZC1guusOPttvb9/QXoGe3RGl
+ dykDs2Dc2ftAGBmjPUn+LgrTP9Z0cVnNgowjChvnO6GWbb2TlYZ/S7bBuL422SOwMXzC
+ ub1cGCQyyCa9fvbRxBOJLYyttS7fqjKSDHTP+lqbB1dWS0pBHtfSr8MSFYSphbIdklnc
+ rEUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741024350; x=1741629150;
+ d=1e100.net; s=20230601; t=1741024349; x=1741629149;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tAilGogcJ69e+gk+U7AAsM5atW/gLI/r88D/oQ3BuBI=;
- b=BdOdFsxpQhJIuAtR4fnGRko4YO8K7JqK0qn3r0dWtdgo/3zEs3U+lEDhLrXg1O4GUl
- 6bjaqJ9+DHTSwaZAARgyJiX8WywalpsG6rziMASRZTjgT8YCTKNf8winY4ZDUP7PD4/k
- qeHYHQBMWLJan3ZYAFYxJmUleskvoT+rmt5h/yIijgLxlPBeXS3oWfDrhsV72MZZ19Jl
- 74xLDU/83NRoA5oG6g5b77sQ90UBBXZ1fRQCHOTvW21RH2VCKA6dWO/qwXW/nohxAte+
- f9yR9876Ew3d9oFRq3rUzJr30rZoNR+scW2fP47CQHFSQxHJ3LA3lprqcq3auQh3ZiPu
- frlA==
-X-Gm-Message-State: AOJu0YwmINn08rH2AjcqOiLDSZPU6OWIqiuiDRBZ+ynSGY0/fZaMYSjE
- 76DymJ/gJkYXc9uIwYRAC2A8huPqrJZPrCRS6Q5bM/bTTnTOZt8=
-X-Gm-Gg: ASbGncs2Iv2O6CsNvu/v9O6fbFcGKX/Xj08iSODBRY5T+t+Gb3EIj/yh91E+Nm6lgVW
- lVc1HKpvQ77UYB/4FajUA4CDxSbI71Ygj60ZmseD7yLTEubWgTP726WXrj9TAzmvO3wEoE17Z4W
- PGIyZ5fBPi6jra+WLitsDia63rhoNU9ym+3ydB7E0Jf2cxSYsE2ehKshpwXS30aQ1Ngj+BuKeOF
- U9xGlMYcWLAjhE4KDNYdUgXcugh9kk+FgD1BBRmuQJPzUhoYiDkMnmXQLt3E1uOboel+T2LbGG6
- zTczj5VOrel0LvjHgIipoy9Sm46rylWhwRV6tfkmXw4Y6dSmftTkVsD7Zw==
-X-Google-Smtp-Source: AGHT+IGQZlUVzjR0TL2Y57P3Bh2O/3804iFF32DUopsZT6Ot8yQnpLZ91aEJ5mClDd+9bASOSxAyKw==
-X-Received: by 2002:a17:902:fc45:b0:21f:5638:2d8 with SMTP id
- d9443c01a7336-22369267243mr239876645ad.53.1741024350637; 
- Mon, 03 Mar 2025 09:52:30 -0800 (PST)
+ bh=pXjnzMdFRw8UN/BnZINokoDYNlgpPuyWmsHQdzmGGak=;
+ b=hyDyEfwp69e4AKtgjq37uV8+B5iVsbB3drvBG/FMI3iiwWl9AO02eB7QTQDLNLfJiL
+ 5gQnWdmmwj827yjKLOnK+/GWoJVrUjRJXKWE+xKjz2G5TzD89bCeqbJ1BY1R9rx2GQpc
+ WrdSdVVRI4Hz0t7PRlGPnMCBYPSsyUNoFZFYeBSzGppY4lPNIvSOTwfp2uTJMOEMPFbD
+ IAIhGp2nyjbnT2hM5jrmxOjm7LhTm9hLYN1smfTTOKakjWgDynDnxAjW0YfeQMozkfpL
+ V4WR6lgdnLAt/QZKipiTmIeVNmfkSo/PW4iqC5dTTZrnkCI5L39PYZF2V6h+c/Kd55Kx
+ ks+g==
+X-Gm-Message-State: AOJu0Yyq1QcOkOvs5V4IxguK0bUfjG1ROJpwmVcw/Bvl0wY/SGc8Zen8
+ biZzsry74GyYJAYHPMJOBT7I3y2qES/GqsEQ+0FIXo0FceBkg8L/J1xpheTwaw==
+X-Gm-Gg: ASbGncu9+U9G3AapadOqwdi2xtAGe+sffjUr1UtHnbisaz6EzvYZpTjA6RfXhe/bySF
+ QZWoLvqPqk4GI8Zx+t6wzq8jdbYMG6dPj1W0GthIRpyNfo0H1uSCNIc09YuXZShx+pge18oFxYm
+ STNf6Y4Q9+xW1koiGknlQuNQ1o9DaET6HGxObn+6bmZs3eAMw3HmbzyurvfdUONjSThsyDZLRFW
+ pW9yr4vjKoxO6eSjsIkVes2mbsffVOltVE94UvCQY753L99MS5RYjHXreNVRgoGrA7eeiYr2ViE
+ 04KO7LAQmOoHYKwaTsdl7yeRun/WJMAeArfNsmQBIbgj7nQF2vocMYTlYA==
+X-Google-Smtp-Source: AGHT+IG6b74gWBuO9Sfau4/2npqudg3LNyonzc+EjX5ifkJ/9xK41WA/l7POvGgXTkaAALpXdGfCtQ==
+X-Received: by 2002:a17:903:3b83:b0:21f:4c8b:c511 with SMTP id
+ d9443c01a7336-22369213d7cmr179930055ad.33.1741024348375; 
+ Mon, 03 Mar 2025 09:52:28 -0800 (PST)
 Received: from localhost.localdomain ([58.37.175.138])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2235052beaasm80625535ad.233.2025.03.03.09.52.28
+ d9443c01a7336-2235052beaasm80625535ad.233.2025.03.03.09.52.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Mar 2025 09:52:30 -0800 (PST)
+ Mon, 03 Mar 2025 09:52:27 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>,
  Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v2 2/9] vfio/igd: Do not include GTT stolen size in
- etc/igd-bdsm-size
-Date: Tue,  4 Mar 2025 01:52:12 +0800
-Message-ID: <20250303175220.74917-3-tomitamoeko@gmail.com>
+Subject: [PATCH v2 1/9] vfio/igd: Remove GTT write quirk in IO BAR 4
+Date: Tue,  4 Mar 2025 01:52:11 +0800
+Message-ID: <20250303175220.74917-2-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250303175220.74917-1-tomitamoeko@gmail.com>
 References: <20250303175220.74917-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x642.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x643.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,88 +101,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Though GTT Stolen Memory (GSM) is right below Data Stolen Memory (DSM)
-in host address space, direct access to GSM is prohibited, and it is
-not mapped to guest address space. Both host and guest accesses GSM
-indirectly through the second half of MMIO BAR0 (GTTMMADR).
+The IO BAR4 of IGD devices contains a pair of 32-bit address/data
+registers, MMIO_Index (0x0) and MMIO_Data (0x4), which provide access
+to the MMIO BAR0 (GTTMMADR) from IO space. These registers are probably
+only used by the VBIOS, and are not documented by intel. The observed
+layout of MMIO_Index register is:
+ 31                                                   2   1      0
++-------------------------------------------------------------------+
+|                        Offset                        | Rsvd | Sel |
++-------------------------------------------------------------------+
+- Offset: Byte offset in specified region, 4-byte aligned.
+- Sel: Region selector
+       0: MMIO register region (first half of MMIO BAR0)
+       1: GTT region (second half of MMIO BAR0). Pre Gen11 only.
 
-Guest firmware only need to reserve a memory region for DSM and program
-the BDSM register with the base address of that region, that's actually
-what both SeaBIOS[1] and OVMF does now.
+Currently, QEMU implements a quirk that adjusts the guest Data Stolen
+Memory (DSM) region address to be (addr - host BDSM + guest BDSM) when
+programming GTT entries via IO BAR4, assuming guest still programs GTT
+with host DSM address, which is not the case. Guest's BDSM register is
+emulated and initialized to 0 at startup by QEMU, then SeaBIOS programs
+its value[1]. As result, the address programmed to GTT entries by VBIOS
+running in guest are valid GPA, and this unnecessary adjustment brings
+inconsistency.
 
 [1] https://gitlab.com/qemu-project/seabios/-/blob/1.12-stable/src/fw/pciinit.c#L319-332
 
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 ---
- hw/vfio/igd.c | 28 +++-------------------------
- 1 file changed, 3 insertions(+), 25 deletions(-)
+ hw/vfio/igd.c | 191 +-------------------------------------------------
+ 1 file changed, 1 insertion(+), 190 deletions(-)
 
 diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index ca3a32f4f2..dda4c7bb5d 100644
+index b1a237edd6..ca3a32f4f2 100644
 --- a/hw/vfio/igd.c
 +++ b/hw/vfio/igd.c
-@@ -112,28 +112,8 @@ static int igd_gen(VFIOPCIDevice *vdev)
+@@ -106,12 +106,6 @@ static int igd_gen(VFIOPCIDevice *vdev)
+     return -1;
+ }
  
- #define IGD_GMCH_GEN6_GMS_SHIFT     3       /* SNB_GMCH in i915 */
- #define IGD_GMCH_GEN6_GMS_MASK      0x1f
--#define IGD_GMCH_GEN6_GGMS_SHIFT    8
--#define IGD_GMCH_GEN6_GGMS_MASK     0x3
- #define IGD_GMCH_GEN8_GMS_SHIFT     8       /* BDW_GMCH in i915 */
- #define IGD_GMCH_GEN8_GMS_MASK      0xff
--#define IGD_GMCH_GEN8_GGMS_SHIFT    6
--#define IGD_GMCH_GEN8_GGMS_MASK     0x3
+-typedef struct VFIOIGDQuirk {
+-    struct VFIOPCIDevice *vdev;
+-    uint32_t index;
+-    uint64_t bdsm;
+-} VFIOIGDQuirk;
 -
--static uint64_t igd_gtt_memory_size(int gen, uint16_t gmch)
+ #define IGD_GMCH 0x50 /* Graphics Control Register */
+ #define IGD_BDSM 0x5c /* Base Data of Stolen Memory */
+ #define IGD_BDSM_GEN11 0xc0 /* Base Data of Stolen Memory of gen 11 and later */
+@@ -300,129 +294,6 @@ static int vfio_pci_igd_lpc_init(VFIOPCIDevice *vdev,
+     return ret;
+ }
+ 
+-/*
+- * IGD Gen8 and newer support up to 8MB for the GTT and use a 64bit PTE
+- * entry, older IGDs use 2MB and 32bit.  Each PTE maps a 4k page.  Therefore
+- * we either have 2M/4k * 4 = 2k or 8M/4k * 8 = 16k as the maximum iobar index
+- * for programming the GTT.
+- *
+- * See linux:include/drm/i915_drm.h for shift and mask values.
+- */
+-static int vfio_igd_gtt_max(VFIOPCIDevice *vdev)
 -{
--    uint64_t ggms;
+-    uint32_t gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, sizeof(gmch));
+-    int gen = igd_gen(vdev);
+-    uint64_t ggms_size = igd_gtt_memory_size(gen, gmch);
 -
--    if (gen < 8) {
--        ggms = (gmch >> IGD_GMCH_GEN6_GGMS_SHIFT) & IGD_GMCH_GEN6_GGMS_MASK;
--    } else {
--        ggms = (gmch >> IGD_GMCH_GEN8_GGMS_SHIFT) & IGD_GMCH_GEN8_GGMS_MASK;
--        if (ggms != 0) {
--            ggms = 1ULL << ggms;
+-    return (ggms_size / (4 * KiB)) * (gen < 8 ? 4 : 8);
+-}
+-
+-/*
+- * The IGD ROM will make use of stolen memory (GGMS) for support of VESA modes.
+- * Somehow the host stolen memory range is used for this, but how the ROM gets
+- * it is a mystery, perhaps it's hardcoded into the ROM.  Thankfully though, it
+- * reprograms the GTT through the IOBAR where we can trap it and transpose the
+- * programming to the VM allocated buffer.  That buffer gets reserved by the VM
+- * firmware via the fw_cfg entry added below.  Here we're just monitoring the
+- * IOBAR address and data registers to detect a write sequence targeting the
+- * GTTADR.  This code is developed by observed behavior and doesn't have a
+- * direct spec reference, unfortunately.
+- */
+-static uint64_t vfio_igd_quirk_data_read(void *opaque,
+-                                         hwaddr addr, unsigned size)
+-{
+-    VFIOIGDQuirk *igd = opaque;
+-    VFIOPCIDevice *vdev = igd->vdev;
+-
+-    igd->index = ~0;
+-
+-    return vfio_region_read(&vdev->bars[4].region, addr + 4, size);
+-}
+-
+-static void vfio_igd_quirk_data_write(void *opaque, hwaddr addr,
+-                                      uint64_t data, unsigned size)
+-{
+-    VFIOIGDQuirk *igd = opaque;
+-    VFIOPCIDevice *vdev = igd->vdev;
+-    uint64_t val = data;
+-    int gen = igd_gen(vdev);
+-
+-    /*
+-     * Programming the GGMS starts at index 0x1 and uses every 4th index (ie.
+-     * 0x1, 0x5, 0x9, 0xd,...).  For pre-Gen8 each 4-byte write is a whole PTE
+-     * entry, with 0th bit enable set.  For Gen8 and up, PTEs are 64bit, so
+-     * entries 0x5 & 0xd are the high dword, in our case zero.  Each PTE points
+-     * to a 4k page, which we translate to a page from the VM allocated region,
+-     * pointed to by the BDSM register.  If this is not set, we fail.
+-     *
+-     * We trap writes to the full configured GTT size, but we typically only
+-     * see the vBIOS writing up to (nearly) the 1MB barrier.  In fact it often
+-     * seems to miss the last entry for an even 1MB GTT.  Doing a gratuitous
+-     * write of that last entry does work, but is hopefully unnecessary since
+-     * we clear the previous GTT on initialization.
+-     */
+-    if ((igd->index % 4 == 1) && igd->index < vfio_igd_gtt_max(vdev)) {
+-        if (gen < 8 || (igd->index % 8 == 1)) {
+-            uint64_t base;
+-
+-            if (gen < 11) {
+-                base = pci_get_long(vdev->pdev.config + IGD_BDSM);
+-            } else {
+-                base = pci_get_quad(vdev->pdev.config + IGD_BDSM_GEN11);
+-            }
+-            if (!base) {
+-                hw_error("vfio-igd: Guest attempted to program IGD GTT before "
+-                         "BIOS reserved stolen memory.  Unsupported BIOS?");
+-            }
+-
+-            val = data - igd->bdsm + base;
+-        } else {
+-            val = 0; /* upper 32bits of pte, we only enable below 4G PTEs */
 -        }
+-
+-        trace_vfio_pci_igd_bar4_write(vdev->vbasedev.name,
+-                                      igd->index, data, val);
 -    }
 -
--    return ggms * MiB;
+-    vfio_region_write(&vdev->bars[4].region, addr + 4, val, size);
+-
+-    igd->index = ~0;
 -}
+-
+-static const MemoryRegionOps vfio_igd_data_quirk = {
+-    .read = vfio_igd_quirk_data_read,
+-    .write = vfio_igd_quirk_data_write,
+-    .endianness = DEVICE_LITTLE_ENDIAN,
+-};
+-
+-static uint64_t vfio_igd_quirk_index_read(void *opaque,
+-                                          hwaddr addr, unsigned size)
+-{
+-    VFIOIGDQuirk *igd = opaque;
+-    VFIOPCIDevice *vdev = igd->vdev;
+-
+-    igd->index = ~0;
+-
+-    return vfio_region_read(&vdev->bars[4].region, addr, size);
+-}
+-
+-static void vfio_igd_quirk_index_write(void *opaque, hwaddr addr,
+-                                       uint64_t data, unsigned size)
+-{
+-    VFIOIGDQuirk *igd = opaque;
+-    VFIOPCIDevice *vdev = igd->vdev;
+-
+-    igd->index = data;
+-
+-    vfio_region_write(&vdev->bars[4].region, addr, data, size);
+-}
+-
+-static const MemoryRegionOps vfio_igd_index_quirk = {
+-    .read = vfio_igd_quirk_index_read,
+-    .write = vfio_igd_quirk_index_write,
+-    .endianness = DEVICE_LITTLE_ENDIAN,
+-};
+-
+ #define IGD_GGC_MMIO_OFFSET     0x108040
+ #define IGD_BDSM_MMIO_OFFSET    0x1080C0
  
- static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
- {
-@@ -367,7 +347,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+@@ -494,14 +365,11 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+     g_autofree struct vfio_region_info *opregion = NULL;
+     g_autofree struct vfio_region_info *host = NULL;
      g_autofree struct vfio_region_info *lpc = NULL;
+-    VFIOQuirk *quirk;
+-    VFIOIGDQuirk *igd;
      PCIDevice *lpc_bridge;
-     int ret, gen;
--    uint64_t ggms_size, gms_size;
-+    uint64_t gms_size;
+-    int i, ret, gen;
++    int ret, gen;
+     uint64_t ggms_size, gms_size;
      uint64_t *bdsm_size;
      uint32_t gmch;
+-    uint16_t cmd_orig, cmd;
      Error *err = NULL;
-@@ -527,7 +507,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
-         }
-     }
- 
--    ggms_size = igd_gtt_memory_size(gen, gmch);
-     gms_size = igd_stolen_memory_size(gen, gmch);
  
      /*
-@@ -539,7 +518,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
-      * config offset 0x5C.
-      */
-     bdsm_size = g_malloc(sizeof(*bdsm_size));
--    *bdsm_size = cpu_to_le64(ggms_size + gms_size);
-+    *bdsm_size = cpu_to_le64(gms_size);
-     fw_cfg_add_file(fw_cfg_find(), "etc/igd-bdsm-size",
-                     bdsm_size, sizeof(*bdsm_size));
+@@ -634,32 +502,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         return;
+     }
  
-@@ -559,6 +538,5 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+-    /* Setup our quirk to munge GTT addresses to the VM allocated buffer */
+-    quirk = vfio_quirk_alloc(2);
+-    igd = quirk->data = g_malloc0(sizeof(*igd));
+-    igd->vdev = vdev;
+-    igd->index = ~0;
+-    if (gen < 11) {
+-        igd->bdsm = vfio_pci_read_config(&vdev->pdev, IGD_BDSM, 4);
+-    } else {
+-        igd->bdsm = vfio_pci_read_config(&vdev->pdev, IGD_BDSM_GEN11, 4);
+-        igd->bdsm |=
+-            (uint64_t)vfio_pci_read_config(&vdev->pdev, IGD_BDSM_GEN11 + 4, 4) << 32;
+-    }
+-    igd->bdsm &= ~((1 * MiB) - 1); /* 1MB aligned */
+-
+-    memory_region_init_io(&quirk->mem[0], OBJECT(vdev), &vfio_igd_index_quirk,
+-                          igd, "vfio-igd-index-quirk", 4);
+-    memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
+-                                        0, &quirk->mem[0], 1);
+-
+-    memory_region_init_io(&quirk->mem[1], OBJECT(vdev), &vfio_igd_data_quirk,
+-                          igd, "vfio-igd-data-quirk", 4);
+-    memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
+-                                        4, &quirk->mem[1], 1);
+-
+-    QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
+-
+     /*
+      * Allow user to override dsm size using x-igd-gms option, in multiples of
+      * 32MiB. This option should only be used when the desired size cannot be
+@@ -717,37 +559,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
          pci_set_quad(vdev->emulated_config_bits + IGD_BDSM_GEN11, ~0);
      }
  
--    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name,
--                                    (ggms_size + gms_size) / MiB);
-+    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, (gms_size / MiB));
+-    /*
+-     * This IOBAR gives us access to GTTADR, which allows us to write to
+-     * the GTT itself.  So let's go ahead and write zero to all the GTT
+-     * entries to avoid spurious DMA faults.  Be sure I/O access is enabled
+-     * before talking to the device.
+-     */
+-    if (pread(vdev->vbasedev.fd, &cmd_orig, sizeof(cmd_orig),
+-              vdev->config_offset + PCI_COMMAND) != sizeof(cmd_orig)) {
+-        error_report("IGD device %s - failed to read PCI command register",
+-                     vdev->vbasedev.name);
+-    }
+-
+-    cmd = cmd_orig | PCI_COMMAND_IO;
+-
+-    if (pwrite(vdev->vbasedev.fd, &cmd, sizeof(cmd),
+-               vdev->config_offset + PCI_COMMAND) != sizeof(cmd)) {
+-        error_report("IGD device %s - failed to write PCI command register",
+-                     vdev->vbasedev.name);
+-    }
+-
+-    for (i = 1; i < vfio_igd_gtt_max(vdev); i += 4) {
+-        vfio_region_write(&vdev->bars[4].region, 0, i, 4);
+-        vfio_region_write(&vdev->bars[4].region, 4, 0, 4);
+-    }
+-
+-    if (pwrite(vdev->vbasedev.fd, &cmd_orig, sizeof(cmd_orig),
+-               vdev->config_offset + PCI_COMMAND) != sizeof(cmd_orig)) {
+-        error_report("IGD device %s - failed to restore PCI command register",
+-                     vdev->vbasedev.name);
+-    }
+-
+     trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name,
+                                     (ggms_size + gms_size) / MiB);
  }
 -- 
 2.47.2
