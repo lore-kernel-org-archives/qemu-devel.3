@@ -4,83 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D15C282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 05:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AC13C282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 06:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1toyFe-0003i6-Co; Mon, 03 Mar 2025 00:22:02 -0500
+	id 1toz95-00013c-ME; Mon, 03 Mar 2025 01:19:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1toyFY-0003hS-Dq; Mon, 03 Mar 2025 00:21:57 -0500
-Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1toyFW-0004yg-Re; Mon, 03 Mar 2025 00:21:56 -0500
-Received: by mail-ua1-x935.google.com with SMTP id
- a1e0cc1a2514c-86b3bd4d0faso1408579241.3; 
- Sun, 02 Mar 2025 21:21:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740979313; x=1741584113; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OgpiujYnj9Kxi0GIjb5Vxf0uSrOTMAMZGpoKopQYj8c=;
- b=Ks7K8vwv9Q7h+Id6GAxsAKCvNhXzXuTLaWZMgsDGbiJJPD3Hc6eRWfxqDGmd7vNj/C
- 3OALykbAp67izopzNIp8eflaWuYwhln4JlOxAdSgNCffDmx3Wp8GlwHu1kf6N7oFhioG
- iEikZIzCI7UPYFqH9QXsrzVWt9vN6ywFSS8mCfylKvSay3AytPj6HNdBv/mxR4dqi/Ti
- 5EruQW8NAoVWQome0G9eEiF4kfoLEmq0PmaoeUpDl5ApEyb+f1y2hpuUfvxcLPnB4kSt
- JYP7XHehjePn4vAl/mcbt++UIi9bXarBY5PzaEyV5F/lM3LwZnpprBYohZEw7x5HHc1j
- V/zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740979313; x=1741584113;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OgpiujYnj9Kxi0GIjb5Vxf0uSrOTMAMZGpoKopQYj8c=;
- b=NQ0sFNfy5fGJjDGzQRuYlH/NeAuFLaVhPk9SPmhAdjjYUdycVWNjNu2NuDcKLkyYhd
- EviMqvLIfNS2AkMoc7PBiKZueNhseeMTEQru3c8XjGv3neqdfB0SawZ4KK3YResXOfLV
- Il+CEZg2SWXog+D3AUNoeLkDugKQtd2WPkNKgwNw/+5AEbTZdENlFLJEC1GrClZ4FAiI
- PLl0g1KopJB7FbAPRZYSmp5PI0mnzx4NxV7Af15h7PSRwjEdMTzUdGF/1bP1L8w1/gL+
- yE+v0bUXWA0W21DMhFJDKV/1YMPkJPhGp9I3/gihK0NMpHnnM1AEP+PGS4lSYziXzDuP
- UOVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4fu9cNJYOM7EPOOqFU3zWkNryH7wm3yhbC0gzNZT00/iApR1lTiUlHQCDKmoB2Y21NEQeTOXjjzqI@nongnu.org
-X-Gm-Message-State: AOJu0Yy7ditxi1lFEOidIlHOckW0swBbPXXycnuAiFl69JviZlNRGG3N
- uZ3DqardtBmladybxq/qliCWjENP3txaPqDeucVutGph8eegNDsD16Zax7dBpv1+GSHmCW/5ns/
- 6rSJJoTXxWv2jlcA+4JoWFtZA0ZU=
-X-Gm-Gg: ASbGncskKjoVJJrdIzr/98JI7yIHqDXyYmRRWg3HubSHOuEVj2Rvi+HOwBZ4vuv8tLX
- IAx3KrsbUGM77zqP8SgXZJPKO0TMSBxKtR1SU8pnxPijDOjuxcfr4LC1/UpBiq421HVitOIXSc+
- dAai/8iCUICYj3W6Yw8KjsJLK+3fT28tbtNthis48lF9WOetE6mh5QMECy
-X-Google-Smtp-Source: AGHT+IGL2vw9FzVv5erbVv79qj0eo7a7cV2Zhu1mCXf7hYR/ZV577h8GnJsFXbW8/cUs/NLHfDcb9ZvmcvhGQW+/npc=
-X-Received: by 2002:a05:6102:14a3:b0:4bb:d062:438 with SMTP id
- ada2fe7eead31-4c044858c74mr7404050137.1.1740979313127; Sun, 02 Mar 2025
- 21:21:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1toz8q-00012Z-27
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 01:19:04 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1toz8m-0002Vk-G3
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 01:19:03 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8AxbeLLScVnLOuIAA--.64630S3;
+ Mon, 03 Mar 2025 14:18:51 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMDxu8TJScVnNEMzAA--.56344S2;
+ Mon, 03 Mar 2025 14:18:49 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org,
+	maobibo@loongson.cn
+Cc: richard.henderson@linaro.org, yangxiaojuan@loongson.cn,
+ wangliupu@loongson.cn
+Subject: [PATCH v6 0/2] target/loongarch: fix 'make check-functional' failed
+Date: Mon,  3 Mar 2025 13:57:19 +0800
+Message-Id: <20250303055721.3236502-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-References: <20250224123120.1644186-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20250224123120.1644186-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 3 Mar 2025 15:21:26 +1000
-X-Gm-Features: AQ5f1Jpl5yVIfPIdpmvvd6cCtVO_jLs0YxkFrsjdvyQGwAP5zwzCV7MeIYw6Hw8
-Message-ID: <CAKmqyKPiC2T8ajWXMX_OJJrMmQsmN9MJ_Xv+XMfb4YpdNTCQcA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] target/riscv/kvm: reset time changes
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMDxu8TJScVnNEMzAA--.56344S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,45 +65,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 24, 2025 at 10:32=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Hi,
->
-> In this version I rolled back on the riscv_cpu_reset_hold() changes made
-> in patch 1. Peter made an argument about keeping the design the same
-> across architectures and I agreed. Patches 2 and 3 are already taking
-> care of everything that KVM needs during reset, thus this doesn't incur
-> in any functional changes.
->
-> Drew said it was ok to keep his ack on patch 1 so his ack is kept.
->
-> Patches based on alistair/riscv-to-apply.next. All patches acked.
->
-> Changes from v2:
-> - patch 1:
->   - do not do an early exit in riscv_cpu_reset_hold() if kvm_enabled()
-> - v2 link: https://lore.kernel.org/qemu-riscv/20250221122623.495188-1-dba=
-rboza@ventanamicro.com/
->
->
-> Daniel Henrique Barboza (3):
->   target/riscv/cpu: remove unneeded !kvm_enabled() check
->   target/riscv/kvm: add kvm_riscv_reset_regs_csr()
->   target/riscv/kvm: add missing KVM CSRs
+ Some tlb instructions get the tlb_ps from tlb->misc but the
+ value may has been initialized to 0,just check the tlb_e skip
+ the function and check_tlb_ps write a log.
 
-Thanks!
+For LoongArch th min tlb_ps is 12(4KB), for TLB code,
+the tlb_ps may be 0,this may case UndefinedBehavior
+Add a check-tlb_ps fuction to check tlb_ps,
+to make sure the tlb_ps is avalablie. we check tlb_ps
+when get the tlb_ps from tlb->misc or CSR bits.
+1. cpu reset.
+   set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits a default value
+   from CSR_PRCFG2;
+2. tlb instructions.
+   some tlb instructions get  the tlb_ps from tlb->misc but the
+   value may  has been initialized to 0. we need just check the tlb_e
+   skip the function and check tlb_ps write a guest log.
+3. csrwr instructions.
+   to make sure CSR_PWCL.PTBASE and CSR_STLBPS.PS bits are avalable,
+   cheke theses bits and set a default value from CSR_PRCFG2.
 
-Applied to riscv-to-apply.next
 
-Alistair
+v6:
+  1 clean code. fix code style.
+  2 rebase and R-b.
 
->
->  target/riscv/kvm/kvm-cpu.c | 32 +++++++++++++++++++++-----------
->  1 file changed, 21 insertions(+), 11 deletions(-)
->
-> --
-> 2.48.1
->
->
+V5:
+  1 Add add chek_ps() function to check tlb_ps with CSR_PRCFG2;
+  2 Some tlb instuctions, just check tlb_ps, do't rewrite the tlb_ps
+  bits  just write a guest log;
+  3 remove csrwr crmd helper function and crmd check PWCL and check CSR_STLBPS.just
+chcek PWCL and STLBPS when csrwr CSR_PWCL and CSR_STLBPS;
+  4 set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits a default value
+   from CSR_PRCFG2 when cpu reset.
+V4:
+1.Get the default tlb_ps value from env->CSR_PRCFG2.
+2.Some tlb  instrucions check the tlb_ps such as tlbfill/tlbwr/invtlb.
+3.check_tlb_ps()just check CSR_PWCL.PTBASE bits and CSR_STLBPS.PS bits.
+don't check all tlb->misc.
+
+v3:
+remove some tlb instruction chek MMU on PG model, because on DA model
+also can use tlb instructions.
+
+v2:
+check-tlb_ps when write CSR_PWCL and CSR_STLBPS;
+some tlb instructions check CRMD PG model when clear/read/write the tlb.
+link to patch: https://patchew.org/QEMU/20250220012226.2182174-1-gaosong@loongson.cn/
+
+Thanks.
+Song Gao
+
+Song Gao (2):
+  target/loongarch: fix 'make check-functional' failed
+  target/loongarch: check tlb_ps
+
+ target/loongarch/cpu.c                        | 10 +++-
+ target/loongarch/cpu_helper.c                 |  8 ++-
+ target/loongarch/helper.h                     |  1 +
+ target/loongarch/internals.h                  |  2 +
+ target/loongarch/tcg/csr_helper.c             | 30 +++++++++-
+ .../tcg/insn_trans/trans_privileged.c.inc     |  1 +
+ target/loongarch/tcg/tlb_helper.c             | 55 ++++++++++++++++++-
+ 7 files changed, 99 insertions(+), 8 deletions(-)
+
+-- 
+2.34.1
+
 
