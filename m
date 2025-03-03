@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA7BC282D0
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 22:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A4FC282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 22:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpE3q-0007f8-RT; Mon, 03 Mar 2025 17:14:55 -0500
+	id 1tpE3m-0007dD-Gc; Mon, 03 Mar 2025 17:14:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE3o-0007em-M6
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:14:52 -0500
+ id 1tpE3g-0007cv-Hz
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:14:45 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE3m-00060M-FL
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:14:52 -0500
+ id 1tpE3d-0005x6-N0
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:14:44 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE3h-00000000IE2-2Bn5; Mon, 03 Mar 2025 23:14:45 +0100
-Message-ID: <ecccb4c5-5d02-4d41-a7be-f01cee278510@maciej.szmigiero.name>
-Date: Mon, 3 Mar 2025 23:14:40 +0100
+ id 1tpE3P-00000000IDj-1AHv; Mon, 03 Mar 2025 23:14:27 +0100
+Message-ID: <f89e7206-679d-40f7-9674-eaea9852699d@maciej.szmigiero.name>
+Date: Mon, 3 Mar 2025 23:14:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 23/36] vfio/migration: Multifd device state transfer
- support - VFIOStateBuffer(s)
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>
+Subject: Re: [PATCH v5 36/36] vfio/migration: Update VFIO migration
+ documentation
+To: Fabiano Rosas <farosas@suse.de>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <96303daed289e9c7a3261590027d18e425ea07c2.1739994627.git.maciej.szmigiero@oracle.com>
- <9bc9f288-6db5-4229-9a16-7e8842604c55@nvidia.com>
- <b64bc541-e23c-4a41-aaf5-bdd1ab16c69d@redhat.com>
+ <2031790b755aa95b61470b286fa787b78be08107.1739994627.git.maciej.szmigiero@oracle.com>
+ <cbebee68-f891-4946-885d-01a8ed24e6c1@redhat.com>
+ <7c41add3-72ad-4aec-bd74-3c9715fda5c7@maciej.szmigiero.name>
+ <a7f66c0f-1355-43e6-b20d-eddaef6fb1d1@redhat.com> <87frjxvdvm.fsf@suse.de>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -84,7 +86,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <b64bc541-e23c-4a41-aaf5-bdd1ab16c69d@redhat.com>
+In-Reply-To: <87frjxvdvm.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -111,112 +113,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.03.2025 07:42, Cédric Le Goater wrote:
-> On 3/2/25 14:00, Avihai Horon wrote:
+On 1.03.2025 00:38, Fabiano Rosas wrote:
+> Cédric Le Goater <clg@redhat.com> writes:
+> 
+>> On 2/27/25 23:01, Maciej S. Szmigiero wrote:
+>>> On 27.02.2025 07:59, Cédric Le Goater wrote:
+>>>> On 2/19/25 21:34, Maciej S. Szmigiero wrote:
+>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>>
+>>>>> Update the VFIO documentation at docs/devel/migration describing the
+>>>>> changes brought by the multifd device state transfer.
+>>>>>
+>>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>>>> ---
+>>>>>    docs/devel/migration/vfio.rst | 80 +++++++++++++++++++++++++++++++----
+>>>>>    1 file changed, 71 insertions(+), 9 deletions(-)
+>>>>>
+>>>>> diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
+>>>>> index c49482eab66d..d9b169d29921 100644
+>>>>> --- a/docs/devel/migration/vfio.rst
+>>>>> +++ b/docs/devel/migration/vfio.rst
+>>>>> @@ -16,6 +16,37 @@ helps to reduce the total downtime of the VM. VFIO devices opt-in to pre-copy
+>>>>>    support by reporting the VFIO_MIGRATION_PRE_COPY flag in the
+>>>>>    VFIO_DEVICE_FEATURE_MIGRATION ioctl.
+>>>>
+>>>> Please add a new "multifd" documentation subsection at the end of the file
+>>>> with this part :
+>>>>
+>>>>> +Starting from QEMU version 10.0 there's a possibility to transfer VFIO device
+>>>>> +_STOP_COPY state via multifd channels. This helps reduce downtime - especially
+>>>>> +with multiple VFIO devices or with devices having a large migration state.
+>>>>> +As an additional benefit, setting the VFIO device to _STOP_COPY state and
+>>>>> +saving its config space is also parallelized (run in a separate thread) in
+>>>>> +such migration mode.
+>>>>> +
+>>>>> +The multifd VFIO device state transfer is controlled by
+>>>>> +"x-migration-multifd-transfer" VFIO device property. This property defaults to
+>>>>> +AUTO, which means that VFIO device state transfer via multifd channels is
+>>>>> +attempted in configurations that otherwise support it.
+>>>>> +
+>>>
+>>> Done - I also moved the parts about x-migration-max-queued-buffers
+>>> and x-migration-load-config-after-iter description there since
+>>> obviously they wouldn't make sense being left alone in the top section.
+>>>
+>>>> I was expecting a much more detailed explanation on the design too  :
+>>>>
+>>>>    * in the cover letter
+>>>>    * in the hw/vfio/migration-multifd.c
+>>>>    * in some new file under docs/devel/migration/
 >>
->> On 19/02/2025 22:34, Maciej S. Szmigiero wrote:
->>> External email: Use caution opening links or attachments
->>>
->>>
->>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>
->>> Add VFIOStateBuffer(s) types and the associated methods.
->>>
->>> These store received device state buffers and config state waiting to get
->>> loaded into the device.
->>>
->>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>> ---
->>>   hw/vfio/migration-multifd.c | 54 +++++++++++++++++++++++++++++++++++++
->>>   1 file changed, 54 insertions(+)
->>>
->>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
->>> index 0c3185a26242..760b110a39b9 100644
->>> --- a/hw/vfio/migration-multifd.c
->>> +++ b/hw/vfio/migration-multifd.c
->>> @@ -29,3 +29,57 @@ typedef struct VFIODeviceStatePacket {
->>>       uint32_t flags;
->>>       uint8_t data[0];
->>>   } QEMU_PACKED VFIODeviceStatePacket;
->>> +
->>> +/* type safety */
->>> +typedef struct VFIOStateBuffers {
->>> +    GArray *array;
->>> +} VFIOStateBuffers;
->>> +
->>> +typedef struct VFIOStateBuffer {
->>> +    bool is_present;
->>> +    char *data;
->>> +    size_t len;
->>> +} VFIOStateBuffer;
->>> +
->>> +static void vfio_state_buffer_clear(gpointer data)
->>> +{
->>> +    VFIOStateBuffer *lb = data;
->>> +
->>> +    if (!lb->is_present) {
->>> +        return;
->>> +    }
->>> +
->>> +    g_clear_pointer(&lb->data, g_free);
->>> +    lb->is_present = false;
->>> +}
->>> +
->>> +static void vfio_state_buffers_init(VFIOStateBuffers *bufs)
->>> +{
->>> +    bufs->array = g_array_new(FALSE, TRUE, sizeof(VFIOStateBuffer));
->>> +    g_array_set_clear_func(bufs->array, vfio_state_buffer_clear);
->>> +}
->>> +
->>> +static void vfio_state_buffers_destroy(VFIOStateBuffers *bufs)
->>> +{
->>> +    g_clear_pointer(&bufs->array, g_array_unref);
->>> +}
->>> +
->>> +static void vfio_state_buffers_assert_init(VFIOStateBuffers *bufs)
->>> +{
->>> +    assert(bufs->array);
->>> +}
->>> +
->>> +static guint vfio_state_buffers_size_get(VFIOStateBuffers *bufs)
->>> +{
->>> +    return bufs->array->len;
->>> +}
->>> +
->>> +static void vfio_state_buffers_size_set(VFIOStateBuffers *bufs, guint size)
->>> +{
->>> +    g_array_set_size(bufs->array, size);
->>> +}
->>> +
->>> +static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs, guint idx)
->>> +{
->>> +    return &g_array_index(bufs->array, VFIOStateBuffer, idx);
->>> +}
+>> I forgot to add  :
 >>
->> This patch breaks compilation as non of the functions are used, e.g.: error: ‘vfio_state_buffers_init’ defined but not used I can think of three options to solve it: 1. Move these functions to their own file and export them, e.g., hw/vfio/state-buffer.{c,h}. But this seems like an overkill for such a small API. 2. Add __attribute__((unused)) tags and remove them in patch #26 where the functions are actually used. A bit ugly. 
-> 
+>>        * guide on how to use this new feature from QEMU and libvirt.
+>>          something we can refer to for tests. That's a must have.
+>>        * usage scenarios
+>>          There are some benefits but it is not obvious a user would
+>>          like to use multiple VFs in one VM, please explain.
+>>          This is a major addition which needs justification anyhow
+>>        * pros and cons
 >>
->> 3. Squash this patch into patch #26. I prefer option 3 as this is a small API closely related to patch #26 (and patch #26 will still remain rather small).
+>>> I'm not sure what descriptions you exactly want in these places,
+>>
+>> Looking from the VFIO subsystem, the way this series works is very opaque.
+>> There are a couple of a new migration handlers, new threads, new channels,
+>> etc. It has been discussed several times with migration folks, please provide
+>> a summary for a new reader as ignorant as everyone would be when looking at
+>> a new file.
+>>
+>>
+>>> but since
+>>> that's just documentation (not code) it could be added after the code freeze...
+>>
+>> That's the risk of not getting any ! and the initial proposal should be
+>> discussed before code freeze.
+>>
+>> For the general framework, I was expecting an extension of a "multifd"
+>> subsection under :
+>>
+>>     https://qemu.readthedocs.io/en/v9.2.0/devel/migration/features.html
+>>
+>> but it doesn't exist :/
 > 
-> I vote for option 3 too.
-
-Merged this patch into the "received buffers queuing" one (#26) now.
-
-> vfio_state_buffers_init is only called once, it's 2 lines,
-> it could be merged in vfio_multifd_new() too.
-
-Most of these helpers are even shorter (1 line), but the whole
-point of them is to abstract the GArray rather than open-code
-these accesses.
-
-This was discussed two versions ago:
-https://lore.kernel.org/qemu-devel/9106d15e-3ff5-4d42-880d-0de70a4caa1c@maciej.szmigiero.name/
-
+> Hi, see if this helps. Let me know what can be improved and if something
+> needs to be more detailed. Please ignore the formatting, I'll send a
+> proper patch after the carnaval.
 > 
-> Thanks,
+> @Maciej, it's probably better if you keep your docs separate anyway so
+> we don't add another dependency. I can merge them later.
+
+That's a very good idea, thanks for writing this multifd doc Fabiano!
+
+> multifd.rst:
 > 
-> C.
+> Multifd
+> =======
 > 
+> Multifd is the name given for the migration capability that enables
+> data transfer using multiple threads. Multifd supports all the
+> transport types currently in use with migration (inet, unix, vsock,
+> fd, file).
+(..)
 
 Thanks,
 Maciej
