@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F945C282D1
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 16:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86797C282D1
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 16:35:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp8jI-0007FN-5F; Mon, 03 Mar 2025 11:33:20 -0500
+	id 1tp8ks-00083W-SX; Mon, 03 Mar 2025 11:35:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pefoley@google.com>)
- id 1tp8is-0006ru-0s
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 11:32:56 -0500
-Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
+ id 1tp8kl-0007z5-Ih
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 11:34:53 -0500
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pefoley@google.com>)
- id 1tp8il-0007yL-SG
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 11:32:52 -0500
-Received: by mail-oa1-x2f.google.com with SMTP id
- 586e51a60fabf-2c11ddc865eso1109760fac.3
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 08:32:44 -0800 (PST)
+ id 1tp8ki-0008D8-PX
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 11:34:50 -0500
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-2c11ddc865eso1110699fac.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 08:34:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1741019563; x=1741624363; darn=nongnu.org;
+ d=google.com; s=20230601; t=1741019687; x=1741624487; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=A2xcNRNJae2FH3uMsH3kGbGXwUWLrPgf/nnan00/M88=;
- b=VggGX9fgnsB0kE8Y+gwiaj53yPBp70RMhFsqD8TWiENWlYmD0pZ+JUbHWe2/xDw5rz
- Y7jHmXkg19vGmvuh3V5ITU9VZ4YQzL0jTinTjEjg16nq0JDAd8jrwS66wWiV0xMeoScf
- ptQn75IwOpKBj2hPPOIpv05MVXHUSDn1fEtbqPyq/Zi+2UYW28npcKPxQmZ34sXRBqqz
- /98jWkwSnKlIOINoicA0doH9aTvKZmRzw8O0WfmZiWcaGKfq2HFHAUetbvN7ZPV/ZoL4
- VJmhtDnDgTRlAe0qVPjZXfni/E/+6WlFJ7k3DNgl2Z0pGwz7FUSDDYrClsFJr7q8Od7P
- 4fyQ==
+ bh=Xz+fubSb9FwPazyiSyyizDm71YzJT6JANhv6cjxUCoE=;
+ b=FFnpNUOhtgExz6IkYShht+qJgXCMaxtEjIbb3OSX5pqukzG/gHvzmP8zcRZiyY62TN
+ kDL2Fu6Xt2j9XOJ680ShBms37DbT91j3htUwr3IYa7RtUs0pRK16jkxMA0rNTapMlSkN
+ FTlFrxQVoPQMH9qziPrUqBljJhO/SIDutcGnHBo+ZHD7mhQzdOav+GOx6koGO4uB32pj
+ Yv3Tp9cqgpH8vJB1wkxIyW9aqwnBGvKBup+ZpaeqeV29OqViz4fzMyUTQwoMpr0zQu0s
+ +QBoV+RuhmD8y1jbxMr6Xw1r9Oxr4mw0huKa7NRqlXZqtnwUDwCBOO/3ua0sc3OT704n
+ 54HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741019563; x=1741624363;
+ d=1e100.net; s=20230601; t=1741019687; x=1741624487;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=A2xcNRNJae2FH3uMsH3kGbGXwUWLrPgf/nnan00/M88=;
- b=S71Rn41XKh2u417LAWbwPSovBt6xoxtnHA6P6Tm0dE7/F3U9ZSKsAp5/IMbG8sw/GY
- MHzaLKlCHGBDhgmgq+j8txdQBj2F5QxFD+4tWcCUEU+DwzlBCvQLFwovIx+7zor2FF6o
- 0TuV/AI45moT4ya/x4Meb+E6ZkexNhKooaFTodnSUfS5D8RMV4a1wIzR0xIqPxbudjwO
- hQVZO1I4bM5WXha361cWO/Xk0p/p/P7O9+Xr4mwUln5zUPcZZJFC9Nsd8suFFrc0Us7C
- 5KoL0Ic0lSZBU8AhpkAHXmkwD1RP4gipwfzfBTGaG7jg+M8vU037hVRWeY8RpOX83X5f
- F1FQ==
+ bh=Xz+fubSb9FwPazyiSyyizDm71YzJT6JANhv6cjxUCoE=;
+ b=p0FNq8rpZhLNJFYMoTMTXB8H861KCi99tFD2UHFExt9vI9LXz4B8Nfs5s0aOtiltM3
+ t5bWhcs3qTRfUzGp814lT39LtKI0sm4qk5nj7bYbbh0vooaZ3tdIBp6bvLoEgBm8ZMwS
+ tpbPoosOuRFVc0vzr6Ek3s4wipL0LQu1Ho624aKICH9skjvyFKhoVWbvikP5VtLNF29o
+ aLPul2HmsTLTTxYR7xdFQGDMVBnRMwAtiYPqZyYrsTmuwg9Zyw0jFtll+kjObtWJ6xZe
+ bgMyl9eSn/M/c5otM8zlSZA1PyesjxZckvqrgwoPlaArNgF5BlSecmGFZzAotD5SAhDp
+ okvg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0bAoNe/NR0+lkgXCymnFJIPRyOWNYwsLSU8c8O3DFwu2q0C3szKSTrr0GEKK8SanKfftisbQg5KrV@nongnu.org
-X-Gm-Message-State: AOJu0YwIlaWqBMDOlvV/doAwUTkF+V94UTH4N/FeoIbnOZZYsw+cqXdR
- 3k9cDqyNXeuIUgOoBn1kPhAELkkAmIzs8bAIbRlrUtxVElCJyHVPDVJS5OlspzaPsyKZ2VFc0hS
- fNGYXsOEtYbM7uszoJz34sgEy2OuccwqoE4gm
-X-Gm-Gg: ASbGnctwpaXQCCLLw+YiJvtWzNdGDm1c2a6SpmG3TcIu6TX+6809nWFbQOxK6hhqjqr
- uY1TKtu2HH/tRxaDCx2YVtxQf6RUONn71ihs17sOOwzgaIhHBgIrKTPqdy1028ysiOPyMI3uhma
- i0Hbe1+xpttwjafj/1lhwdEACl/I125f3LOaZj2B7ixkjMujDdRgSyM4w=
-X-Google-Smtp-Source: AGHT+IG6Vi9YpNkCB3aSPfIzPfI38FpwkWeL6dTzcWJEG4z1/HBeOYdPHfHmk3Cepkr8NbphAymBnskHK91hCRFAlQ8=
-X-Received: by 2002:a05:6870:44cb:b0:2c1:9a53:83c4 with SMTP id
- 586e51a60fabf-2c19a53b8a9mr5457042fac.26.1741019562688; Mon, 03 Mar 2025
- 08:32:42 -0800 (PST)
+ AJvYcCXbpTv7U0Md+YaF+5+OLZaWoLbtEikoYAkzgBORP5d0f6f4LJPU+o6uXIF2KS1mnxvMCRmmU2pbnZn8@nongnu.org
+X-Gm-Message-State: AOJu0Yx+i0xP/P+o0E+8osUd3XyCUQ5Oxj3WAow7dZk5T9E9QS3HzhDT
+ rZZtrHrt+dPNXI1fNd5xQjYQlY1SOeWARggMDGmn9zVT6G0IvYrbMLfxYYlhV3pwP5NQxxyc+Cq
+ 3lGRk8eQXQ/7oECCdrF73KVk9Nwf4P0EdD9QvqxBXgVnoC8jfDAH1
+X-Gm-Gg: ASbGncsRoIOiBzQbN4qCuqC8ZmeqqKhYy7GLFHHmKb8opQtqeYSMoK/ivLJMDU2LBwL
+ U5b8IANfePs5m6745EKxnuPdq3hNCmV8Fum6O1wULY73yvkGuG0aPHf/r6YNRulWiAR2WBTzJp3
+ rjCy7H8j6QvSemqkDfCPJ964d6Gz6eRyH+SYWpe7yXHxq8GSh5vxVzIKA=
+X-Google-Smtp-Source: AGHT+IG66u4PWAocT1w+fa3TIl3EpvHigJwUZ68xo9evSPIuLaYC/pvxGXUVqGtC+jUfGToitMxa/OqkmgNGmgNCm2A=
+X-Received: by 2002:a05:6871:410a:b0:29e:7a13:1341 with SMTP id
+ 586e51a60fabf-2c1783cd5bfmr7701631fac.8.1741019686688; Mon, 03 Mar 2025
+ 08:34:46 -0800 (PST)
 MIME-Version: 1.0
-References: <20250228212039.1768614-1-venture@google.com>
- <fc1f2750-f4c7-419f-b667-301fb0bb2edf@redhat.com>
- <87frjxcjea.fsf@pond.sub.org>
-In-Reply-To: <87frjxcjea.fsf@pond.sub.org>
+References: <20250228212329.1775669-1-venture@google.com>
+ <7771abbe-ab3f-43d8-9ac6-9ea0bc63b243@linaro.org>
+ <CAO=notwzQsC7oJZxY_Jby9znX0ov62AVXsTENb7tagEBR2DcWQ@mail.gmail.com>
+In-Reply-To: <CAO=notwzQsC7oJZxY_Jby9znX0ov62AVXsTENb7tagEBR2DcWQ@mail.gmail.com>
 From: Peter Foley <pefoley@google.com>
-Date: Mon, 3 Mar 2025 11:32:31 -0500
-X-Gm-Features: AQ5f1JoYbxKZH2TIl8fEQQQZuZgpHHNFkgPP-RzcqPYRSvH35zIrgn-Lxc5LI2Q
-Message-ID: <CAAAKUPOmAHht=HgNzKvLPinfXJbWjqp=AnmQDwBEbcNFUaOetg@mail.gmail.com>
-Subject: Re: [PATCH] util/keyval: fix msan findings
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Patrick Venture <venture@google.com>,
- peter.maydell@linaro.org, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000953fed062f72b40c"
-Received-SPF: pass client-ip=2001:4860:4864:20::2f;
- envelope-from=pefoley@google.com; helo=mail-oa1-x2f.google.com
+Date: Mon, 3 Mar 2025 11:34:35 -0500
+X-Gm-Features: AQ5f1JoyRQK2iqwGL8XjMqQzrEWUaMi9ZXWOJuc9jV2UDASn33GqFC1kqq8ZsaE
+Message-ID: <CAAAKUPP_mK2VApyCOf2N3twYfn_fe5P5Y_OMhmCSqP1HrhZSDQ@mail.gmail.com>
+Subject: Re: [PATCH] accel/tcg: fix msan findings in translate-all
+To: Patrick Venture <venture@google.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, peter.maydell@linaro.org,
+ pbonzini@redhat.com, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f9494f062f72bb5d"
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=pefoley@google.com; helo=mail-oa1-x33.google.com
 X-Spam_score_int: -175
 X-Spam_score: -17.6
 X-Spam_bar: -----------------
@@ -97,186 +97,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000953fed062f72b40c
+--000000000000f9494f062f72bb5d
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Mar 1, 2025 at 2:14=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
+For reference, the full output from msan looks like:
 
-> Paolo Bonzini <pbonzini@redhat.com> writes:
->
-> > On 2/28/25 22:20, Patrick Venture wrote:
-> >> From: Peter Foley <pefoley@google.com>
-> >> e.g.
-> >> qemu: Uninitialized value was created by an allocation of
-> 'key_in_cur.i' in the stack frame
-> >> qemu: #0 0xaaaac49f489c in keyval_parse_one
-> third_party/qemu/util/keyval.c:190:5
-> >> Signed-off-by: Peter Foley <pefoley@google.com>
-> >> Signed-off-by: Patrick Venture <venture@google.com>
-> >
-> > This is not a fix, since there's no bug to fix.  It's just the tool
-> complaining about something it can't reason on.
-> >
-> > Paolo
->
-> The code is designed to read @keyval_in_cur only in non-first iterations
-> of the loop.  The previous iteration assigned to it then.
->
-> The two lines you quoted don't make sense to me.  Is this the full
-> report you got?  If not, show us the full report, please.  Ideally with
-> a reproducer.
->
-
-The full output looks like:
-
-Uninitialized bytes in strlen at offset 0 inside [0xffffd1958110, 5)
-=3D=3D9780=3D=3DWARNING: MemorySanitizer: use-of-uninitialized-value
-    #0 0xaaaac1c4b170 in tdb_hash third_party/qemu/qobject/qdict.c:46:31
-    #1 0xaaaac1c4b4a4 in qdict_get third_party/qemu/qobject/qdict.c:164:36
-    #2 0xaaaac1c78468 in keyval_parse_put third_party/qemu/util/keyval.c:15=
-2:11
-    #3 0xaaaac1c77740 in keyval_parse_one third_party/qemu/util/keyval.c:29=
-5:10
-    #4 0xaaaac1c77740 in keyval_parse_into third_party/qemu/util/keyval.c:5=
-30:13
-    #5 0xaaaaba2f9524 in qemu_init third_party/qemu/system/vl.c:3322:21
-    #6 0xaaaab9641c2c in main third_party/qemu/system/main.c:54:5
-    #7 0xffffba320000 in __libc_start_main
-(/usr/grte/v5/lib64/libc.so.6+0x61000) (BuildId:
+=3D=3D4872=3D=3DWARNING: MemorySanitizer: use-of-uninitialized-value
+    #0 0xaaaac681ef98 in tb_gen_code
+third_party/qemu/accel/tcg/translate-all.c:358:21
+    #1 0xaaaac67f2520 in cpu_exec_loop
+third_party/qemu/accel/tcg/cpu-exec.c:993:22
+    #2 0xaaaac67f154c in cpu_exec_setjmp
+third_party/qemu/accel/tcg/cpu-exec.c:1039:12
+    #3 0xaaaac67f1240 in cpu_exec third_party/qemu/accel/tcg/cpu-exec.c:106=
+5:11
+    #4 0xaaaac681022c in tcg_cpu_exec
+third_party/qemu/accel/tcg/tcg-accel-ops.c:79:11
+    #5 0xaaaac680ede4 in mttcg_cpu_thread_fn
+third_party/qemu/accel/tcg/tcg-accel-ops-mttcg.c:95:17
+    #6 0xaaaacf096698 in qemu_thread_start
+third_party/qemu/util/qemu-thread-posix.c:541:9
+    #7 0xffffa9242cec in start_thread
+(/usr/grte/v5/lib64/libpthread.so.0+0xbcec) (BuildId:
+0bdac2117d4465a78d3de57b307368b4)
+    #8 0xffffa912ec98 in thread_start
+(/usr/grte/v5/lib64/libc.so.6+0x116c98) (BuildId:
 613d20d3b812b4c87fe9ebf8c4caae83)
-    #8 0xaaaab934bd10 in _start
-/usr/grte/v5/debug-src/src/csu/../sysdeps/aarch64/start.S:92
 
-  Uninitialized value was created by an allocation of 'key_in_cur.i'
-in the stack frame
-    #0 0xaaaac1c7708c in keyval_parse_one third_party/qemu/util/keyval.c:19=
-0:5
-    #1 0xaaaac1c7708c in keyval_parse_into third_party/qemu/util/keyval.c:5=
-30:13
+  Uninitialized value was stored to memory at
+    #0 0xaaaac681ef94 in tb_gen_code
+third_party/qemu/accel/tcg/translate-all.c:358:50
+    #1 0xaaaac67f2520 in cpu_exec_loop
+third_party/qemu/accel/tcg/cpu-exec.c:993:22
+    #2 0xaaaac67f154c in cpu_exec_setjmp
+third_party/qemu/accel/tcg/cpu-exec.c:1039:12
+    #3 0xaaaac67f1240 in cpu_exec third_party/qemu/accel/tcg/cpu-exec.c:106=
+5:11
+    #4 0xaaaac681022c in tcg_cpu_exec
+third_party/qemu/accel/tcg/tcg-accel-ops.c:79:11
+    #5 0xaaaac680ede4 in mttcg_cpu_thread_fn
+third_party/qemu/accel/tcg/tcg-accel-ops-mttcg.c:95:17
+    #6 0xaaaacf096698 in qemu_thread_start
+third_party/qemu/util/qemu-thread-posix.c:541:9
+    #7 0xffffa9242cec in start_thread
+(/usr/grte/v5/lib64/libpthread.so.0+0xbcec) (BuildId:
+0bdac2117d4465a78d3de57b307368b4)
+    #8 0xffffa912ec98 in thread_start
+(/usr/grte/v5/lib64/libc.so.6+0x116c98) (BuildId:
+613d20d3b812b4c87fe9ebf8c4caae83)
+
+  Uninitialized value was created by an allocation of 'host_pc' in the
+stack frame
+    #0 0xaaaac681d8ac in tb_gen_code
+third_party/qemu/accel/tcg/translate-all.c:297:5
 
 SUMMARY: MemorySanitizer: use-of-uninitialized-value
-third_party/qemu/qobject/qdict.c:46:31 in tdb_hash
+third_party/qemu/accel/tcg/translate-all.c:358:21 in tb_gen_code
 Exiting
 
 
-I don't have an easily shareable reproducer, but it's probably possible to
-whip one up.
-
-
+On Fri, Feb 28, 2025 at 5:26=E2=80=AFPM Patrick Venture <venture@google.com=
+> wrote:
 
 >
-> >> ---
-> >>  util/keyval.c | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >> diff --git a/util/keyval.c b/util/keyval.c
-> >> index a70629a481..f33c64079d 100644
-> >> --- a/util/keyval.c
-> >> +++ b/util/keyval.c
-> >> @@ -187,7 +187,7 @@ static const char *keyval_parse_one(QDict *qdict,
-> const char *params,
-> >>  {
-> >>      const char *key, *key_end, *val_end, *s, *end;
-> >>      size_t len;
-> >> -    char key_in_cur[128];
-> >> +    char key_in_cur[128] =3D {};
 >
-> Suspect overkill.  Would "" do?
+> On Fri, Feb 28, 2025 at 1:38=E2=80=AFPM Richard Henderson <
+> richard.henderson@linaro.org> wrote:
+>
+>> On 2/28/25 13:23, Patrick Venture wrote:
+>> > From: Peter Foley <pefoley@google.com>
+>> >
+>> > e.g.
+>> >    Uninitialized value was created by an allocation of 'host_pc' in th=
+e
+>> stack frame
+>> >    #0 0xaaaac07df87c in tb_gen_code
+>> third_party/qemu/accel/tcg/translate-all.c:297:5
+>> >
+>> > Signed-off-by: Peter Foley <pefoley@google.com>
+>> > Signed-off-by: Patrick Venture <venture@google.com>
+>> > ---
+>> >   accel/tcg/translate-all.c | 2 +-
+>> >   1 file changed, 1 insertion(+), 1 deletion(-)
+>> >
+>> > diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+>> > index d4189c7386..f584055a15 100644
+>> > --- a/accel/tcg/translate-all.c
+>> > +++ b/accel/tcg/translate-all.c
+>> > @@ -298,7 +298,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
+>> >       tcg_insn_unit *gen_code_buf;
+>> >       int gen_code_size, search_size, max_insns;
+>> >       int64_t ti;
+>> > -    void *host_pc;
+>> > +    void *host_pc =3D NULL;
+>> >
+>> >       assert_memory_lock();
+>> >       qemu_thread_jit_write();
+>>
+>> False positive, because the error return exits without using the
+>> uninitialized value.
+>> But if we do want to "fix" this, do it at the beginning of
+>> get_page_addr_code_hostp.
+>>
+>
+> Acknowledged.  Gotta hate false positives, although better aggressive tha=
+n
+> not. Thanks!
+>
+>
+>>
+>> r~
+>>
 >
 
-It appears to resolve the complaint, yes.
-
---000000000000953fed062f72b40c
+--000000000000f9494f062f72bb5d
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">On Sat, Mar 1, 2025 at 2:14=E2=80=AFAM Ma=
-rkus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com<=
-/a>&gt; wrote:</div><div class=3D"gmail_quote gmail_quote_container"><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex">Paolo Bonzini &lt;<a href=3D"ma=
-ilto:pbonzini@redhat.com" target=3D"_blank">pbonzini@redhat.com</a>&gt; wri=
-tes:<br>
-<br>
-&gt; On 2/28/25 22:20, Patrick Venture wrote:<br>
-&gt;&gt; From: Peter Foley &lt;<a href=3D"mailto:pefoley@google.com" target=
-=3D"_blank">pefoley@google.com</a>&gt;<br>
-&gt;&gt; e.g.<br>
-&gt;&gt; qemu: Uninitialized value was created by an allocation of &#39;key=
-_in_cur.i&#39; in the stack frame<br>
-&gt;&gt; qemu: #0 0xaaaac49f489c in keyval_parse_one third_party/qemu/util/=
-keyval.c:190:5<br>
-&gt;&gt; Signed-off-by: Peter Foley &lt;<a href=3D"mailto:pefoley@google.co=
-m" target=3D"_blank">pefoley@google.com</a>&gt;<br>
-&gt;&gt; Signed-off-by: Patrick Venture &lt;<a href=3D"mailto:venture@googl=
-e.com" target=3D"_blank">venture@google.com</a>&gt;<br>
-&gt;<br>
-&gt; This is not a fix, since there&#39;s no bug to fix.=C2=A0 It&#39;s jus=
-t the tool complaining about something it can&#39;t reason on.<br>
-&gt;<br>
-&gt; Paolo<br>
-<br>
-The code is designed to read @keyval_in_cur only in non-first iterations<br=
->
-of the loop.=C2=A0 The previous iteration assigned to it then.<br>
-<br>
-The two lines you quoted don&#39;t make sense to me.=C2=A0 Is this the full=
-<br>
-report you got?=C2=A0 If not, show us the full report, please.=C2=A0 Ideall=
-y with<br>
-a reproducer.<br></blockquote><div><br></div><div>The full output looks lik=
-e:<div><pre style=3D"color:rgb(0,0,0)">Uninitialized bytes in strlen at off=
-set 0 inside [0xffffd1958110, 5)
-=3D=3D9780=3D=3DWARNING: MemorySanitizer: use-of-uninitialized-value
-    #0 0xaaaac1c4b170 in tdb_hash third_party/qemu/qobject/qdict.c:46:31
-    #1 0xaaaac1c4b4a4 in qdict_get third_party/qemu/qobject/qdict.c:164:36
-    #2 0xaaaac1c78468 in keyval_parse_put third_party/qemu/util/keyval.c:15=
-2:11
-    #3 0xaaaac1c77740 in keyval_parse_one third_party/qemu/util/keyval.c:29=
-5:10
-    #4 0xaaaac1c77740 in keyval_parse_into third_party/qemu/util/keyval.c:5=
-30:13
-    #5 0xaaaaba2f9524 in qemu_init third_party/qemu/system/vl.c:3322:21
-    #6 0xaaaab9641c2c in main third_party/qemu/system/main.c:54:5
-    #7 0xffffba320000 in __libc_start_main (/usr/grte/v5/lib64/libc.so.6+0x=
-61000) (BuildId: 613d20d3b812b4c87fe9ebf8c4caae83)
-    #8 0xaaaab934bd10 in _start /usr/grte/v5/debug-src/src/csu/../sysdeps/a=
-arch64/start.S:92
+<div dir=3D"ltr">For reference, the full output from msan looks like:<div><=
+pre style=3D"color:rgb(0,0,0)">=3D=3D4872=3D=3DWARNING: MemorySanitizer: us=
+e-of-uninitialized-value
+    #0 0xaaaac681ef98 in tb_gen_code third_party/qemu/accel/tcg/translate-a=
+ll.c:358:21
+    #1 0xaaaac67f2520 in cpu_exec_loop third_party/qemu/accel/tcg/cpu-exec.=
+c:993:22
+    #2 0xaaaac67f154c in cpu_exec_setjmp third_party/qemu/accel/tcg/cpu-exe=
+c.c:1039:12
+    #3 0xaaaac67f1240 in cpu_exec third_party/qemu/accel/tcg/cpu-exec.c:106=
+5:11
+    #4 0xaaaac681022c in tcg_cpu_exec third_party/qemu/accel/tcg/tcg-accel-=
+ops.c:79:11
+    #5 0xaaaac680ede4 in mttcg_cpu_thread_fn third_party/qemu/accel/tcg/tcg=
+-accel-ops-mttcg.c:95:17
+    #6 0xaaaacf096698 in qemu_thread_start third_party/qemu/util/qemu-threa=
+d-posix.c:541:9
+    #7 0xffffa9242cec in start_thread (/usr/grte/v5/lib64/libpthread.so.0+0=
+xbcec) (BuildId: 0bdac2117d4465a78d3de57b307368b4)
+    #8 0xffffa912ec98 in thread_start (/usr/grte/v5/lib64/libc.so.6+0x116c9=
+8) (BuildId: 613d20d3b812b4c87fe9ebf8c4caae83)
 
-  Uninitialized value was created by an allocation of &#39;key_in_cur.i&#39=
-; in the stack frame
-    #0 0xaaaac1c7708c in keyval_parse_one third_party/qemu/util/keyval.c:19=
-0:5
-    #1 0xaaaac1c7708c in keyval_parse_into third_party/qemu/util/keyval.c:5=
-30:13
+  Uninitialized value was stored to memory at
+    #0 0xaaaac681ef94 in tb_gen_code third_party/qemu/accel/tcg/translate-a=
+ll.c:358:50
+    #1 0xaaaac67f2520 in cpu_exec_loop third_party/qemu/accel/tcg/cpu-exec.=
+c:993:22
+    #2 0xaaaac67f154c in cpu_exec_setjmp third_party/qemu/accel/tcg/cpu-exe=
+c.c:1039:12
+    #3 0xaaaac67f1240 in cpu_exec third_party/qemu/accel/tcg/cpu-exec.c:106=
+5:11
+    #4 0xaaaac681022c in tcg_cpu_exec third_party/qemu/accel/tcg/tcg-accel-=
+ops.c:79:11
+    #5 0xaaaac680ede4 in mttcg_cpu_thread_fn third_party/qemu/accel/tcg/tcg=
+-accel-ops-mttcg.c:95:17
+    #6 0xaaaacf096698 in qemu_thread_start third_party/qemu/util/qemu-threa=
+d-posix.c:541:9
+    #7 0xffffa9242cec in start_thread (/usr/grte/v5/lib64/libpthread.so.0+0=
+xbcec) (BuildId: 0bdac2117d4465a78d3de57b307368b4)
+    #8 0xffffa912ec98 in thread_start (/usr/grte/v5/lib64/libc.so.6+0x116c9=
+8) (BuildId: 613d20d3b812b4c87fe9ebf8c4caae83)
 
-SUMMARY: MemorySanitizer: use-of-uninitialized-value third_party/qemu/qobje=
-ct/qdict.c:46:31 in tdb_hash
-Exiting</pre></div></div><div><br></div><div>I don&#39;t have an easily sha=
-reable reproducer, but it&#39;s probably=C2=A0possible to whip one up.</div=
-><div><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex">
-<br>
-&gt;&gt; ---<br>
-&gt;&gt;=C2=A0 util/keyval.c | 2 +-<br>
-&gt;&gt;=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>
-&gt;&gt; diff --git a/util/keyval.c b/util/keyval.c<br>
-&gt;&gt; index a70629a481..f33c64079d 100644<br>
-&gt;&gt; --- a/util/keyval.c<br>
-&gt;&gt; +++ b/util/keyval.c<br>
-&gt;&gt; @@ -187,7 +187,7 @@ static const char *keyval_parse_one(QDict *qdi=
-ct, const char *params,<br>
-&gt;&gt;=C2=A0 {<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 const char *key, *key_end, *val_end, *s, *end;=
-<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 size_t len;<br>
-&gt;&gt; -=C2=A0 =C2=A0 char key_in_cur[128];<br>
-&gt;&gt; +=C2=A0 =C2=A0 char key_in_cur[128] =3D {};<br>
-<br>
-Suspect overkill.=C2=A0 Would &quot;&quot; do?<br></blockquote><div><br></d=
-iv><div>It appears to resolve the complaint, yes.=C2=A0</div></div></div>
+  Uninitialized value was created by an allocation of &#39;host_pc&#39; in =
+the stack frame
+    #0 0xaaaac681d8ac in tb_gen_code third_party/qemu/accel/tcg/translate-a=
+ll.c:297:5
 
---000000000000953fed062f72b40c--
+SUMMARY: MemorySanitizer: use-of-uninitialized-value third_party/qemu/accel=
+/tcg/translate-all.c:358:21 in tb_gen_code
+Exiting</pre></div></div><br><div class=3D"gmail_quote gmail_quote_containe=
+r"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Feb 28, 2025 at 5:26=E2=80=
+=AFPM Patrick Venture &lt;<a href=3D"mailto:venture@google.com">venture@goo=
+gle.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
+margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
+t:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_=
+quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Feb 28, 2025 at 1:38=
+=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linar=
+o.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt; wrote:<br></d=
+iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex">On 2/28/25 13:23, Patr=
+ick Venture wrote:<br>
+&gt; From: Peter Foley &lt;<a href=3D"mailto:pefoley@google.com" target=3D"=
+_blank">pefoley@google.com</a>&gt;<br>
+&gt; <br>
+&gt; e.g.<br>
+&gt;=C2=A0 =C2=A0 Uninitialized value was created by an allocation of &#39;=
+host_pc&#39; in the stack frame<br>
+&gt;=C2=A0 =C2=A0 #0 0xaaaac07df87c in tb_gen_code third_party/qemu/accel/t=
+cg/translate-all.c:297:5<br>
+&gt; <br>
+&gt; Signed-off-by: Peter Foley &lt;<a href=3D"mailto:pefoley@google.com" t=
+arget=3D"_blank">pefoley@google.com</a>&gt;<br>
+&gt; Signed-off-by: Patrick Venture &lt;<a href=3D"mailto:venture@google.co=
+m" target=3D"_blank">venture@google.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0accel/tcg/translate-all.c | 2 +-<br>
+&gt;=C2=A0 =C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+&gt; <br>
+&gt; diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c<br>
+&gt; index d4189c7386..f584055a15 100644<br>
+&gt; --- a/accel/tcg/translate-all.c<br>
+&gt; +++ b/accel/tcg/translate-all.c<br>
+&gt; @@ -298,7 +298,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0tcg_insn_unit *gen_code_buf;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int gen_code_size, search_size, max_insns;<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int64_t ti;<br>
+&gt; -=C2=A0 =C2=A0 void *host_pc;<br>
+&gt; +=C2=A0 =C2=A0 void *host_pc =3D NULL;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0assert_memory_lock();<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_thread_jit_write();<br>
+<br>
+False positive, because the error return exits without using the uninitiali=
+zed value.<br>
+But if we do want to &quot;fix&quot; this, do it at the beginning of get_pa=
+ge_addr_code_hostp.<br></blockquote><div><br></div><div>Acknowledged.=C2=A0=
+ Gotta hate false positives, although better aggressive than not. Thanks!</=
+div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+r~<br>
+</blockquote></div></div>
+</blockquote></div>
+
+--000000000000f9494f062f72bb5d--
 
