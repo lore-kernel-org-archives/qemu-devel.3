@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C84C282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B6E9C282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:48:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp3BO-0004Vs-OZ; Mon, 03 Mar 2025 05:37:58 -0500
+	id 1tp3LH-0006b4-7x; Mon, 03 Mar 2025 05:48:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1tp3BK-0004VP-VU
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:37:54 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tp3LB-0006Zg-Mn; Mon, 03 Mar 2025 05:48:05 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1tp3BG-0007fn-7a
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:37:54 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5dca468c5e4so7528264a12.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 02:37:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tp3LA-0000Lk-4f; Mon, 03 Mar 2025 05:48:05 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-22339936bbfso60967865ad.1; 
+ Mon, 03 Mar 2025 02:48:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=vrull.eu; s=google; t=1740998268; x=1741603068; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IWsvP4Est0D00X1+iHeKuTEp0GBJk+uTvXqR44SSYzw=;
- b=sjjm3gCShZQ2Y3KmnKiylhOF/2x+U6eY0qiGhuop2E7IYqrFtyxFkX9mtN/MSIjGTT
- 9A4bz74xbb4tRqcmUZupqskra2l+wIS7TdcAO3lH3w76UHpN+yNl0lynFS+5VKjCMB0Y
- AGDRqw3ty0PeIJKojYtpuLBYdJmKaRn+4FASlocYNz3bfDdedBNeBa6+SBhu94fwZJkf
- 4DuvC3aHpuSNbRFMqoS8nOypFMUAOAelmqiN6ItCnlqtAZrasfjTiC6ofp8x+SNnmppz
- 4s3w3L0rVYjpzYvmOMpicwhOjBFvbYufzy7cbqYnNJjNJlk4Zl8cf2PDzSUjzOeeWbbm
- aH2g==
+ d=gmail.com; s=20230601; t=1740998882; x=1741603682; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=c+Ldo9P2mRH1rFYjnFnNgEjHpXt8fQDaXwALkQh1iqw=;
+ b=k7Q9M3BZsBFMz1pJvLwImhsCE+Ip4q1VK2OPR+7yU72NeMEumhXps/0nagmR5iPw/F
+ ZkNyB6CHjz9QjmOG6Y0a2rCPbHSxzvVxY5OvMIvtq9n9gfp9tOAUhEKaX2dq1qw8Dlm9
+ XDcP6CLeJDtaMWJV0bCWAcQgLBr/AW8wXmykHmqStXTSuLb/ji5nfBbhlYLtUaIneKdh
+ 1jBw0rfFWej6+QNf0F1x46gY8usUlY35cc7ZgnlwRvnc+sfyFmiaAiQVpr1vmHMDMV1w
+ 1Va4Xkmp79/4EMS/3q78DR7WhPhWJ8se4uI5M1c2BhJ9Q8d3gfoD37Daz7CF2VNYoDJT
+ UCFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740998268; x=1741603068;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IWsvP4Est0D00X1+iHeKuTEp0GBJk+uTvXqR44SSYzw=;
- b=m9UVEri2Led+9oD1naey6HNveCRs/NDtocIQA+Mn/POhjuDj6hqPSM2F81ZQEF5ArH
- btsczOgtB4BVN2z5X0mTOPcd7C5f5bEsbze2/lbuDZKLyKc9Zu5rC8hcevg1yaeO0gQp
- SDnPDdvqEzeef5mSeMEhgvuEw7GJsaMkNLzNN1LcuDEofu/9pZeQ5LsnPhsks7AGrICA
- g9gpuTwQSt/8pZ3wmtpz5gAO2eB59xlK7fQK9gdKOLghhiktdPF2id1VulRbBWUZOri+
- AWeogz9nzHItfcZjqT42K/4ov2ejjia289fIWRNR096G9uomMoqRgXcQEkIigsiVVUkS
- m1zw==
-X-Gm-Message-State: AOJu0YxEwZNWksmlZv6K2Khrj+G3/kVpW7HJRn5Crc/0r3UVGb7xAmOL
- XhUlH5+D3wpEgmMKRrz2qN+oUQgIs3iSk6jKES6asyBDPhehH09/aquP+d4qr/Vrv2nHZVi/fCA
- /VSzQ44lXLUsiAIyLWDh38tc8eCwEQcRXWprYFg==
-X-Gm-Gg: ASbGncuFD21ByRu9YGTH8RDBro0DlX7IkJKAfEm2aaKmTdInvrT+2Wr5SC7M8wDN1cW
- r24M6QqJ9pIlgUFL1JKUbzt9cxoNE32ZhR40wAoqzLaKDLuZmAhxStdXkn8DB/I1p8dBq7NLYj9
- 78sLw+K3sThfWB63BNfxL2ogTLtLA=
-X-Google-Smtp-Source: AGHT+IE+HwDQ65bo90jmzgdRBNthRqYlWzC2CGVqjoLZ0RQfKal78AO4TFnOY8ElajtCcUyHmLFDj7STiquAxZrfxSo=
-X-Received: by 2002:a05:6402:2711:b0:5d0:aa2d:6eee with SMTP id
- 4fb4d7f45d1cf-5e4d6b6fcf1mr13907321a12.26.1740998267830; Mon, 03 Mar 2025
- 02:37:47 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740998882; x=1741603682;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=c+Ldo9P2mRH1rFYjnFnNgEjHpXt8fQDaXwALkQh1iqw=;
+ b=s4OPgDjTrLsSTXkWLhC5q0E8G+5wIQ8nWDjcg8mPykJUeJZ7yjt5Q74akXd2MGMkEl
+ 89s3kez4Hj8jKv1w/HAFGl6jn7RUyrWkOPCz8K4DQOpQdBtiucriZo/Q32uv5kRItHa7
+ zmaIFiudno2FgGYRaFpGKyihQYzkPnuvvQ6iXkZkC+MEdzFZnpL9RVSl054OslKJe5WK
+ +9h6T1Rknj5vYfT5yMdI+LoAwlODISw5VRD83yxu438b4lH66NesxDWqxqk1P+40pIlA
+ MCtGntvypoqOajd3zcpvbMxBpnL0LfDJvjZCIDWIXSAh083/HTiOYYuevGfsFbrVnfEP
+ aWHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXwWZX1ClHCfDNBHnYwgQQIcbhdh+YIJgYSLsMynVzhZBHTUzE7+CRXOprwYfH8qyXyulElsCUugU8L@nongnu.org
+X-Gm-Message-State: AOJu0YzwBLDPMydERZy0hscFX0ump7fZpBCaFReAH9iKILP8hYW3wVTO
+ PQ+xIy1z5IzHQAKe+BhWyI9Lz5ypAuEg4lNJ4IsakjQNkgrFGOJoWkjzmA==
+X-Gm-Gg: ASbGncvK8WXaibjXP24zra6Y51ymiJdUcL1nEKOAeX+0EFlaRjZ7do8s9kJMIjKCT5L
+ MlkZh4EO5jcXrA6bGhYthcaDZRDCMTISm2CehLgEZn6doGzTzcW4mr8wE1+F9uYUCilRng6hbOw
+ JDor+aMm9SaRM9U+J4ON7Gh7cOG18bpQsjb6Ua2xGtBHDYP6tm8KD4kvWuRWxoo8feCn9XMKiOC
+ POiVLIelDzykUtZYHkBUOsN8oI50fuYDhpK1qUa6LFsUNEja6iwCdPq0e0IUXM/NxwzePXPtdKh
+ xfZblOPu7+UB4wEEsakj/1/3237mFIEXQmktTnGvfG/uHa+S8eo=
+X-Google-Smtp-Source: AGHT+IHjf1V/kuZwdK5vXjlZ5RWbMmfU44h9j43EH8imzDjik9ghk+q26R70CCCoUq50IF1xm0rt7g==
+X-Received: by 2002:a05:6a21:3d94:b0:1f3:26e5:55bc with SMTP id
+ adf61e73a8af0-1f326e560e4mr4218957637.42.1740998881703; 
+ Mon, 03 Mar 2025 02:48:01 -0800 (PST)
+Received: from wheely.local0.net ([118.208.151.101])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-aee7dec3ce0sm6753837a12.47.2025.03.03.02.47.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Mar 2025 02:48:01 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-devel@nongnu.org
+Subject: [RFC PATCH] target/ppc: Do not set HPTE R/C bits on !guest_visible
+ xlate
+Date: Mon,  3 Mar 2025 20:47:55 +1000
+Message-ID: <20250303104755.584897-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-References: <20250303100927.3443321-1-christoph.muellner@vrull.eu>
- <CAHtqR7WAa09mwhO1QeQb9b7NR==ajLnuDC=L=NzYHNSS-6kjZQ@mail.gmail.com>
-In-Reply-To: <CAHtqR7WAa09mwhO1QeQb9b7NR==ajLnuDC=L=NzYHNSS-6kjZQ@mail.gmail.com>
-From: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
-Date: Mon, 3 Mar 2025 11:37:37 +0100
-X-Gm-Features: AQ5f1Jqq5EUbs-jVu5Ma4c-O7Xiqkv9niW-76ZTDsORok2mdSk7tr_HL8gAcgzw
-Message-ID: <CAEg0e7gHD+=YipqOrv_TBuMuZ3zxwtmERHVt0g8ZfiuwUK6mUQ@mail.gmail.com>
-Subject: Re: [PATCH] contrib/plugins: Install plugins to moddir
-To: =?UTF-8?B?5rGq6bmP56iL?= <wangpengcheng.pp@bytedance.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=christoph.muellner@vrull.eu; helo=mail-ed1-x532.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,57 +97,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 3, 2025 at 11:24=E2=80=AFAM =E6=B1=AA=E9=B9=8F=E7=A8=8B <wangpe=
-ngcheng.pp@bytedance.com> wrote:
->
-> What about plugins under `tests/tcg/plugins/`?
+Perform !guest_visible memory accesses without modifying R/C bits.
 
-It feels a bit odd to install something from the tests directory.
-If certain plugins in tests/tcg/plugins are of general use (not just
-for testing) then it might be
-reasonable to move them to contrib/plugins.
+It's arguable whether !guest_visible memory accesses should modify
+R/C bits. i386 seems to set accessed/dirty bit updates for "probe"
+accesses, but ppc with radix MMU does not. Follow the ppc/radix
+lead and perform the accesses without updating R/C bits.
 
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/ppc/mmu-hash32.c | 27 ++++++++++++++-------------
+ target/ppc/mmu-hash64.c | 27 ++++++++++++++-------------
+ 2 files changed, 28 insertions(+), 26 deletions(-)
 
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index 1f791a7f2f7..b8d7f87507b 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -410,19 +410,20 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+     qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
+ 
+     /* 8. Update PTE referenced and changed bits if necessary */
+-
+-    if (!(pte.pte1 & HPTE32_R_R)) {
+-        ppc_hash32_set_r(cpu, pte_offset, pte.pte1);
+-    }
+-    if (!(pte.pte1 & HPTE32_R_C)) {
+-        if (access_type == MMU_DATA_STORE) {
+-            ppc_hash32_set_c(cpu, pte_offset, pte.pte1);
+-        } else {
+-            /*
+-             * Treat the page as read-only for now, so that a later write
+-             * will pass through this function again to set the C bit
+-             */
+-            prot &= ~PAGE_WRITE;
++    if (guest_visible) {
++        if (!(pte.pte1 & HPTE32_R_R)) {
++            ppc_hash32_set_r(cpu, pte_offset, pte.pte1);
++        }
++        if (!(pte.pte1 & HPTE32_R_C)) {
++            if (access_type == MMU_DATA_STORE) {
++                ppc_hash32_set_c(cpu, pte_offset, pte.pte1);
++            } else {
++                /*
++                 * Treat the page as read-only for now, so that a later write
++                 * will pass through this function again to set the C bit
++                 */
++                prot &= ~PAGE_WRITE;
++            }
+         }
+     }
+     *protp = prot;
+diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
+index 5ca4faee2ab..de5eb5fb221 100644
+--- a/target/ppc/mmu-hash64.c
++++ b/target/ppc/mmu-hash64.c
+@@ -1183,19 +1183,20 @@ bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+     qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
+ 
+     /* 6. Update PTE referenced and changed bits if necessary */
+-
+-    if (!(pte.pte1 & HPTE64_R_R)) {
+-        ppc_hash64_set_r(cpu, ptex, pte.pte1);
+-    }
+-    if (!(pte.pte1 & HPTE64_R_C)) {
+-        if (access_type == MMU_DATA_STORE) {
+-            ppc_hash64_set_c(cpu, ptex, pte.pte1);
+-        } else {
+-            /*
+-             * Treat the page as read-only for now, so that a later write
+-             * will pass through this function again to set the C bit
+-             */
+-            prot &= ~PAGE_WRITE;
++    if (guest_visible) {
++        if (!(pte.pte1 & HPTE64_R_R)) {
++            ppc_hash64_set_r(cpu, ptex, pte.pte1);
++        }
++        if (!(pte.pte1 & HPTE64_R_C)) {
++            if (access_type == MMU_DATA_STORE) {
++                ppc_hash64_set_c(cpu, ptex, pte.pte1);
++            } else {
++                /*
++                 * Treat the page as read-only for now, so that a later write
++                 * will pass through this function again to set the C bit
++                 */
++                prot &= ~PAGE_WRITE;
++            }
+         }
+     }
+ 
+-- 
+2.47.1
 
-> From: "Christoph M=C3=BCllner"<christoph.muellner@vrull.eu>
-> Date: Mon, Mar 3, 2025, 18:09
-> Subject: [External] [PATCH] contrib/plugins: Install plugins to moddir
-> To: <qemu-devel@nongnu.org>, "Alex Benn=C3=A9e"<alex.bennee@linaro.org>, =
-"Alexandre Iooss"<erdnaxe@crans.org>, "Mahmoud Mandour"<ma.mandourr@gmail.c=
-om>, "Pierrick Bouvier"<pierrick.bouvier@linaro.org>
-> Cc: "Wang Pengcheng"<wangpengcheng.pp@bytedance.com>, "Christoph M=C3=BCl=
-lner"<christoph.muellner@vrull.eu>
-> Currently the built plugins can only be found in the build directory.
-> This patch lists them as installable objects, which will be copied
-> into qemu_moddir with `make install`.
->
-> Signed-off-by: Christoph M=C3=BCllner <christoph.muellner@vrull.eu>
-> ---
->  contrib/plugins/meson.build | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-> index 82c97ca0f5..c25a1871b7 100644
-> --- a/contrib/plugins/meson.build
-> +++ b/contrib/plugins/meson.build
-> @@ -14,11 +14,15 @@ if get_option('plugins')
->                          include_directories: '../../include/qemu',
->                          link_depends: [win32_qemu_plugin_api_lib],
->                          link_args: win32_qemu_plugin_api_link_flags,
-> -                        dependencies: glib)
-> +                        dependencies: glib,
-> +                        install: true,
-> +                        install_dir: qemu_moddir)
->      else
->        t +=3D shared_module(i, files(i + '.c'),
->                          include_directories: '../../include/qemu',
-> -                        dependencies: glib)
-> +                        dependencies: glib,
-> +                        install: true,
-> +                        install_dir: qemu_moddir)
->      endif
->    endforeach
->  endif
-> --
-> 2.47.1
 
