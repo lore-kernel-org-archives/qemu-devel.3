@@ -4,85 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C6FBC282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 14:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ADB3C282D1
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 14:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp78G-0001nb-P5; Mon, 03 Mar 2025 09:51:00 -0500
+	id 1tp78w-0002LB-2N; Mon, 03 Mar 2025 09:51:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tp77h-0001K5-BD
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:50:29 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tp78r-0002BY-Bb
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:51:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tp77c-00066S-6P
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:50:24 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tp78n-0006WX-Gs
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 09:51:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741013416;
+ s=mimecast20190719; t=1741013492;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3Epy205p7t/wZxXA23eqh+oB1II3M+2NGIg2+dviLgM=;
- b=LhrV5Ftt83FA8k8mvmkoiHlEwh9p2ZKyM2tuLiOFds5LDwnWuJNlfM+Y/BiBUlrg1tMZOg
- fCTmPqW6/5tdCb4iK7E2xK2tX/fn1gDfIsF+F5OkwvoZxq2gcAcdKYf7e+G+nXnQmjwTK5
- pSRTXn8EuPYUmUvpxVfyIBqY4QAiMxg=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=r6kKs2VKcDYFe9P1iLTQMG3USZ1cNcl9KptsP8PUt2M=;
+ b=eVAdPDhOdeqMfn+ZfGwFvRPwZjsktXaRYcM90r3rA+OpBXwR0MwCNLfbcZmmRTZlpR2Pi+
+ wDW8yUhqjAV9KtEtlCZNR4pqu9TTRBsnKwMqFMtFReOSDeNrKAVbRmcJ8254bB7NccFpin
+ KDBtchy9BqghZym7up97lySfFNEW4S0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-340-vpcvZGKCOHa61rV6Gk736A-1; Mon, 03 Mar 2025 09:50:14 -0500
-X-MC-Unique: vpcvZGKCOHa61rV6Gk736A-1
-X-Mimecast-MFC-AGG-ID: vpcvZGKCOHa61rV6Gk736A_1741013414
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6e8c2ace94cso42511856d6.2
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 06:50:14 -0800 (PST)
+ us-mta-306-J9llKStCNVSBvIVP7NKW2Q-1; Mon, 03 Mar 2025 09:51:29 -0500
+X-MC-Unique: J9llKStCNVSBvIVP7NKW2Q-1
+X-Mimecast-MFC-AGG-ID: J9llKStCNVSBvIVP7NKW2Q_1741013488
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4399a5afc72so20150305e9.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 06:51:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741013414; x=1741618214;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3Epy205p7t/wZxXA23eqh+oB1II3M+2NGIg2+dviLgM=;
- b=UPSTagiYlNh4ZONXZZKimuKA67yvSsbgnX51h3pqlWqYtoZ6F27HILi4Rv5n7SDPIl
- 8Tb7Q9a4zUG0NB7mFH0Sow0Tp2tqp9XivYSwz5MfaxHxmS6yk/ddElRcv6lETFlTeYEr
- aEUkbHsYyoNG4LUdisoJ6z29FaFObiJSv2B5lep5nx8ttJSF+hS4A2Ohc5CFROxObkPB
- w/PPRdQzP952LQQ5bjKIxUppv0BOg5of5FlkLh84Tv0e9OAMEOv9TJvBiaVBVH7fQLYp
- ftN6cvPLie7W6/y8hWAWDq2Teo5EfIFaitnfOEBxcjTJuLLYTfCBJboRfVRc1gP1URuk
- eTzA==
-X-Gm-Message-State: AOJu0YwiyYeBCnDrGZBe2pm6f/3pk/kkWnxSMyQNKRZl7kYFl2DaUqNZ
- mexivL8tuBql6oO0KBVlZ3OL4Fso6qocjOqfzeG5avBjEwyZE8PMr1o3gKlbInkFmGc7MS1H7dw
- peApexofzvLCIM6UUwh4GbmP/orYRlAQhNLPf80+WEm+hfWeoNAUl
-X-Gm-Gg: ASbGncuQz848UlCzwtWQDv74hbFVY7zuF1lcwBFO9jPdaC6n1nIYY/vZXAaogSWl7XL
- 7YjNUoDy+zOk1FyhCS0K+LbTUHXweHPpN/+sc/hrHEqBlBzY1gilXjMjYM8Bxay7ncGzrgPmvsC
- syOPy90QkHZC4cbDdYp43yWDK6sZy3j5zagFcSilqy19W4HKCMESu+Cfznp1I2ZgvWPZFQRQB8V
- RbAvQEgMZiaXB4uKRkNys4UEdOBRy54DFnqo0P2vKvkZO0QYhd839VIVCFiNm5vpSeEeBKE3jLi
- UMs+dv8=
-X-Received: by 2002:a05:620a:600b:b0:7c3:c1df:149a with SMTP id
- af79cd13be357-7c3c1df1716mr328790485a.46.1741013414135; 
- Mon, 03 Mar 2025 06:50:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHppRYSR5vaUv4PXAod8Ym9ytktl8S87G4RD/Dh8ySbAROo/cPqSN3D7RNHNUAZOgbImuS88w==
-X-Received: by 2002:a05:620a:600b:b0:7c3:c1df:149a with SMTP id
- af79cd13be357-7c3c1df1716mr328785985a.46.1741013413632; 
- Mon, 03 Mar 2025 06:50:13 -0800 (PST)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c3c267c0dbsm83378985a.63.2025.03.03.06.50.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Mar 2025 06:50:13 -0800 (PST)
-Date: Mon, 3 Mar 2025 09:50:11 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH v7 5/5] migration: add MULTIFD_RECV_SYNC migration command
-Message-ID: <Z8XBowkG72G-l3L4@x1.local>
-References: <20250228121749.553184-1-ppandit@redhat.com>
- <20250228121749.553184-6-ppandit@redhat.com>
- <Z8G9Wj3DWSgdLkNQ@x1.local>
- <CAE8KmOxenqyqOxEFozgP1gBZPtneEqcbop9F_f+VW3ukPfw37A@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1741013487; x=1741618287;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=r6kKs2VKcDYFe9P1iLTQMG3USZ1cNcl9KptsP8PUt2M=;
+ b=d0rs4hTAzW5NtJx46m9lljfeYmF+W0FvpR4VUhHidAO6Ewz8NUdsxIp4HFRb5o1ikB
+ b0LbWNIc1vS3GtlXDptFA4q/jywPBZ7Trr1Fdec7OyklXjMwhOgtGqVLCxk6iZn9N8Rj
+ KGtpWGG7dzU3wr6jIAy8WWMJFKV/OYsQ9WkWnOzz0QhYrmJCuBKttlli3/2qf+m/Ka92
+ QHqzXlF0FC8kRF9TsSfc+acNlly0deZYW5AtWr+U2gjXELkrhARZT88Wa3B4KfN0ox2a
+ Rin/axNMi2nBJeLn8ovBxgvCtbq2T/hDqN6PLd/G7NpotBFTfe2xEkE/3L29UtXxHnoj
+ o1ug==
+X-Gm-Message-State: AOJu0YyfC2MufkaWN0nS0lvdBivYlY7OjhWPQORXcVOQDHPo0HWh15Wi
+ C/0aqhyyEPT+ylxb3oR1EvvMMyYeeIDe5wI5YxW7J27EGMdt4a5c6aCEeAv/kBpBWGm8v70C2fB
+ KmSR3pK+eyPLIR2g3ozPTXt8NC/FpX17VJE6W7j8501rqqF8v6IlAcmZQW/lU6vA=
+X-Gm-Gg: ASbGncvS6y0CBOmBZFyw/6JcniW/wRQrBw7AA1ryqxiEautC+Ofm7B66ahhvKu/2oiG
+ g0C861RGYZDQeuI60NJSQhvjfJNoDDhKvryzg1mXGhbfO1AZyt3rQl4NQazv+gtmmdTqur/4JOM
+ zDNit5CcAmodKOEsoUsztqfW/rqKv9NZKjfuPaz0fzVdN9gJuMumEq0P3aepNzaerzOPj3A6+89
+ a5VET0ksAC6W44Lqnh5BKKwwLeQCwUpY4Ql/mX+SCtb/kbpmsPhfR+UaKdbtW6v1Dhee5DXLWvk
+ 15ODvYBSE0AvY1NC/e8=
+X-Received: by 2002:a05:600c:5106:b0:439:9496:181c with SMTP id
+ 5b1f17b1804b1-43ba67745d4mr119272335e9.29.1741013487354; 
+ Mon, 03 Mar 2025 06:51:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGxdtsjk6QfcKCQkHQfYfAEU0CNTLvHVwGilXAEvzW3gI6oKxES549fTdESaN7XHRnU8cRGvA==
+X-Received: by 2002:a05:600c:5106:b0:439:9496:181c with SMTP id
+ 5b1f17b1804b1-43ba67745d4mr119272165e9.29.1741013487072; 
+ Mon, 03 Mar 2025 06:51:27 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.119.44])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-43bbed8b26asm52305425e9.22.2025.03.03.06.51.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Mar 2025 06:51:25 -0800 (PST)
+Message-ID: <4b4ca8d8-662f-409c-96dd-11c5075252e2@redhat.com>
+Date: Mon, 3 Mar 2025 15:51:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOxenqyqOxEFozgP1gBZPtneEqcbop9F_f+VW3ukPfw37A@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/12] rust: timer: wrap QEMUTimer with Opaque<> and
+ express pinning requirements
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20250227142219.812270-1-pbonzini@redhat.com>
+ <20250227142219.812270-5-pbonzini@redhat.com> <Z8W8hzFO9HU3IujQ@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <Z8W8hzFO9HU3IujQ@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -107,122 +147,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 03, 2025 at 05:13:56PM +0530, Prasad Pandit wrote:
-> Hello Peter,
+On 3/3/25 15:28, Zhao Liu wrote:
+>> -    pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+>> -        &'timer mut self,
+>> +    pub fn new_full<'opaque, T, F>(
+>>           timer_list_group: Option<&TimerListGroup>,
+>>           clk_type: ClockType,
+>>           scale: u32,
+>>           attributes: u32,
+>>           _cb: F,
+>>           opaque: &'opaque T,
+>> -    ) where
+>> +    ) -> Pin<Box<Self>>
+>>           F: for<'a> FnCall<(&'a T,)>,
+>>       {
 > 
-> On Fri, 28 Feb 2025 at 19:13, Peter Xu <peterx@redhat.com> wrote:
-> > We should be able to do multifd's flush and sync before VM
-> > stopped in postcopy_start()..
-> >
-> > What I actually think the easiest is to do flush and sync once in
-> > postcopy_start() as mentioned above.  I think that'll serialize with
-> > postcopy messages later on the main channel, making sure all channels are
-> > flushed before moving to postcopy work.
-> 
-> * Is there some specific benefit to calling
-> 'multifd_ram_flush_and_sync()' from OR before postcopy_start()? Maybe
-> that is missing on me.
-> 
-> * I'll try to explain why adding a migration command makes sense:
-> 
->    - I did call 'multifd_ram_flush_and_sync()' before calling
-> postcopy_start() in migration_iteration_run(). After flushing the
-> 'multifd_send' queue, all it does is send
-> 'RAM_SAVE_FLAG_MULTIFD_FLUSH' flag on the main channel. On the
-> destination side the 'qemu_loadvm_state_main()' function does not
-> understand that message, because it looks for 'section_type'; And when
-> it is not able to identify the section, it leads to an error.
-> 
->           "Expected vmdescription section, but got %d", section_type(=0)"
-> 
->    - ie. multifd_ram_flush_and_sync() is not reusable by itself. To
-> make it work, we need to add a (RAM) section header to the message.
-> Because then it'll go to ram_load_precopy() and call ->
-> multifd_recv_sync_main().
-> 
->    - But sending a lone RAM section header from
-> migration_iteration_run() OR even in postcopy_start() does not seem
-> right. That is out-of-place, because both migration_iteration_run()
-> and postcopy_start() have nothing to do with RAM sections.
-> 
->    - I think  'flush' and 'sync' ought to be small individual
-> functions/operations that are section agnostic. We should be able to
-> call 'flush' and 'sync' from anywhere in the code without
-> side-effects. So tying 'flush' and 'sync' with RAM sections does not
-> seem right, because we need to be able to call 'flush' and 'sync' from
-> other parts too, like before calling postcopy_start() OR maybe some
-> other code parts.
+> Ah, the lifetime here isn't effectively bound... However, I also
+> referred to your latest code [1] :), and it seems that this issue
+> has already been fixed. (Nit: The code still has a complaint from
+> `cargo fmt`)
 
-We need the header.  Maybe the easiest as of now is one more hook like
-qemu_savevm_state_complete_precopy_prepare(), and only use it in RAM as of
-now.
+I am not sure if the change I have in that commit actually does 
+anything, unfortunately... :( which is why I wanted to use init_full 
+instead of new_full.
 
-> 
->    - Another observation is: when multifd and postcopy are enabled
-> together and the guest VM is writing to its RAM,
-> multifd_ram_flush_and_sync() is called only during setup, not after
-> that.
-> =====
-> 2025-03-02 18:13:26.425+0000: initiating migration
-> 2025-03-02T18:13:26.508809Z qemu-system-x86_64:
-> multifd_ram_flush_and_sync: called
-> 2025-03-02 18:15:20.070+0000: shutting down, reason=migrated
-> 
-> 2025-03-03 11:26:41.340+0000: initiating migration
-> 2025-03-03T11:26:41.415625Z qemu-system-x86_64: info:
-> multifd_ram_flush_and_sync: called
-> 2025-03-03 11:30:22.766+0000: shutting down, reason=migrated
-> =====
-> 
->    - If we untie the 'flush and sync' from RAM sections and make it a
-> general migration command, we shall be able to call it from anywhere
-> else.
-> 
-> > If you want to stick with shutdown channels, I'm OK.  But then we at least
-> > need one message to say "the recv side finished joining all recv threads".
-> > That needs to be an ACK sent from dest to src, not src to dest.
-> 
-> * But earlier we discussed 'flush and sync' is enough for that, no?
+It's easiest to marked new_full() unsafe for now.
 
-Yes it's ok I think, but this patch didn't do that.
+Paolo
 
-+            multifd_send_flush();
-+            multifd_send_sync_main(MULTIFD_SYNC_LOCAL);
-+            qemu_savevm_send_multifd_recv_sync(s->to_dst_file);
-
-I don't think it sent RAM_SAVE_FLAG_MULTIFD_FLUSH.  IIUC you need the
-complete multifd_ram_flush_and_sync(), and the new message not needed.
-
-> Because 'multifd_ram_flush_and_sync' only notifies the destination to
-> sync multifd_recv threads. It does not receive any acknowledgement
-> back.
-
-If my understanding is correct, we don't need ACK.  It will make sure when
-postcopy starts all pages flushed and consumed on dest.
-
-Instead of I prepare the patch and whole commit message, please take your
-time and think about it, justify it, and if you also think it works put
-explanation into commit message and then we can go with it.
-
-> 
-> * And multifd_recv_sync_main() function on the destination blocks the
-> 'main' thread until all multfd_recv_threads (mig/dst/recv_x) have
-> exited, only then it proceeds to accept the incoming new postcopy
-> connection.
-
-I don't think it makes sure threads have exited, AFAIU it does not join the
-threads, but sync with threads on the per-thread sync messages.
-
-Thanks,
-
-> 
-> 
-> Thank you.
-> ---
->   - Prasad
-> 
-
--- 
-Peter Xu
+> [1]: https://gitlab.com/bonzini/qemu/-/commit/ccb9f6dc738f503a696d8d50f1b5e4576ee80bc6
 
 
