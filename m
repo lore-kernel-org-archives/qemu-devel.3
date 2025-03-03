@@ -4,97 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C10C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 19:03:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B27F4C282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 19:21:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpB4O-00082E-1p; Mon, 03 Mar 2025 14:03:16 -0500
+	id 1tpBKx-0003WD-MN; Mon, 03 Mar 2025 14:20:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpB4M-0007y3-1I
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:03:14 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpB4K-0000Of-Db
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:03:13 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43aac0390e8so30854865e9.2
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 11:03:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741028590; x=1741633390; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HpNCDMqr9ofV4zMIvFBgpuAzQ6AQt2EVqCFH295cKBU=;
- b=Nm0H6T03c8ABGAeHxlvQWklTI2V3ujHddL7xNbzEGHF/82DwInJih3bi6Te4G4YGJx
- u8vGZeQIQEwKwjZMAbjdygh50rI/v4/dde7kndS8Qe1zEQhdFk5ZnJwm1+JaG9uXCOqP
- rC34rZEbQLcKmZHvYNAuytATTXLJ4PoZSqRUiHq57xk6rxcmPETdw2WqzraYDdTGEei+
- 5N1P1/GU3BO6NySPG+b4fdKimK0qiCP7XOWdn7lnTcrwpHCkThYxt8aQnaPgaqFqrSVt
- 75ZJ/zqzxnY+JhsCQwe6Mt4/ZbDQaXnLCr6u0zyAkAIGe/AvbbGzeFqnqEzp5+mKYBCe
- sOLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741028590; x=1741633390;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HpNCDMqr9ofV4zMIvFBgpuAzQ6AQt2EVqCFH295cKBU=;
- b=a4n+RM3Fpyp+a4wIRCqxRFe6Ua++ufZf5orDfMdfGB/OlHvrurGZ0+zYJC6slNed3k
- LSQdZLY1Enkzm+DbubmGbMKInd35P1rxzdy6f4bKZ6hlNalkxEgiZmpkI4TIrauZpO5y
- dHuDlynf7XYLz9P/zlXEDuozpYn9xW+e76/qFIB5iRPTqeZZLmmqHc7TZ9oUzrUHaAry
- oUGNhlznS6XjjKwbPTzLzpQNLBeQlcu1kgsaYP7COZ28G/pPsyZuWaAox1dZebRsVcbt
- OULNBVdvIq8rJZFyfYk8befsiUOiRTRwYsBadtcL/9zFVv59SQeKTFe7Qk6ENCxKblIU
- qskw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFFwJ/9TPR/YVmhvm3R5g+SpXxLPTxuUca3EXO7UV0oOh7SvUmrXwlQfxzSGNOdfMjQtx6x+GILj65@nongnu.org
-X-Gm-Message-State: AOJu0Yx763Pc5FbHZNAoYm5FGvEoz6FVbgnhPVJQPgh2F3wrRgT/B38q
- HsygpFPytcnub2NvPsTHM6WrsTTYx7jkDlRWSvm9qt+0qfe+79ceB/TS+mbsoWo=
-X-Gm-Gg: ASbGncuCgdg33HEAFraL2ajYJuo1wkYSETIeyR6bIeoKi4Gl2YVh5wqVNaNtZSOOCJA
- 6DofEd5br4yVd9wtqErhwgF9UB1xp51qceUY/qyCRCFUdfRs1jBQf7acZuTvqUakNAd44Kr+uFF
- gqOQDZ5e+fARRjZ7Zp1h4KMboruHOmY1UX/f5aEh9TQM/WAp+IJtvegVEzC/jpO+hZi5DZ1FzJ2
- WVvKVn2dRkupfWoC5H/reEWXQaYmC0z4F2U+nraH/B2eSCjcCdnNVzVPA+kdk+Pr4VJdnoErxsn
- gWPhWw0NgHeIr5etLceWgoUkTNzaxXnmsVRvkgFHxFp7I67B1meEljTjbEKtNYLOdfpe4y2XF7B
- 80+MNXDGmel2w
-X-Google-Smtp-Source: AGHT+IEgpXDh5bbA1oMbYFshI1H7iWJ2ylywogCfKe4O1oeGdDHJAOiIwMNy5OxfkSLs+hOJgapgtQ==
-X-Received: by 2002:a05:600c:6545:b0:43b:c0fa:f9dd with SMTP id
- 5b1f17b1804b1-43bc0fafe4cmr34625185e9.25.1741028589706; 
- Mon, 03 Mar 2025 11:03:09 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bc63877desm20482495e9.1.2025.03.03.11.03.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 11:03:09 -0800 (PST)
-Message-ID: <afeba573-188d-4101-ba45-22cb0fd79a72@linaro.org>
-Date: Mon, 3 Mar 2025 20:03:08 +0100
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1tpBKX-0003O2-0B
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:19:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1tpBKR-0003Gu-Ij
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:19:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741029587;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ew8cLbviQXGRSsXKjXB+/SyYXVC0dlfqrmPZgpUh6lg=;
+ b=D8xSD+BOFfcx/vq6DezduPZuYfP2+MOD87whq4hfBINNJ5rsjVMkDDv9mUOUP4RHb9lQXo
+ 0l/63HPZfMX0uJU/nQyOWp91RNrVvoTRmIE/yTBtj4eE444vVC4b3GUtu8qfbXBuhJ8zL4
+ LC3PoNWlCUMb6FF5ZuVrm4KU0a6QeJ4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-X3wY6VqJOq2gGFoTobeCTA-1; Mon,
+ 03 Mar 2025 14:19:37 -0500
+X-MC-Unique: X3wY6VqJOq2gGFoTobeCTA-1
+X-Mimecast-MFC-AGG-ID: X3wY6VqJOq2gGFoTobeCTA_1741029576
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DBE6E1800874; Mon,  3 Mar 2025 19:19:35 +0000 (UTC)
+Received: from gezellig (unknown [10.45.224.57])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3F831180035F; Mon,  3 Mar 2025 19:19:30 +0000 (UTC)
+Date: Tue, 4 Mar 2025 00:49:26 +0530
+From: Kashyap Chamarthy <kchamart@redhat.com>
+To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com,
+ vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com
+Subject: Re: [PATCH v2 0/8] riscv: AIA: kernel-irqchip=off support
+Message-ID: <Z8YAvmO4OMEeyL3U@gezellig>
+References: <20250224082417.31382-1-yongxuan.wang@sifive.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: add boot error detection for RME tests
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- alex.bennee@linaro.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Niek Linnenbank <nieklinnenbank@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>
-References: <20250303185745.2504842-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250303185745.2504842-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+In-Reply-To: <20250224082417.31382-1-yongxuan.wang@sifive.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kchamart@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,18 +86,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 19:57, Pierrick Bouvier wrote:
-> It was identified that those tests randomly fail with a synchronous
-> exception at boot (reported by EDK2).
-> While we solve this problem, report failure immediately so tests don't
-> timeout in CI.
+On Mon, Feb 24, 2025 at 04:24:07PM +0800, Yong-Xuan Wang wrote:
+> This series introduces the user-space AIA MSI emulation when using KVM
+> acceleration.
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   tests/functional/test_aarch64_rme_sbsaref.py | 3 ++-
->   tests/functional/test_aarch64_rme_virt.py    | 3 ++-
->   2 files changed, 4 insertions(+), 2 deletions(-)
+> After this series, RISC-V QEMU virt machine with KVM acceleration has
+> 3 parameters to control the type of irqchip and its emulation method:
+> - Machine prop "aia" controls the type of irqchip
+>   - none: use PLIC and emulated in user-space
+>   - aplic: use AIA wired and emulated in user-space
+>   - aplic-imsic: use AIA MSI, emulation mode is determined by
+>     "kernel-irqchip" and "riscv-aia". This can only be used
+>     when the host machine support the AIA extension.
+> - Accel prop "kernel-irqchip", effective with AIA MSI
+>   - on: in-kernel APLIC and in-kernel IMSIC
+>   - off: user-space APLIC and user-space IMSIC
+>   - split: user-space APLIC and in-kernel IMSIC
+> - Accel prop "riscv-aia", effective with in-kernel IMSIC
+>   - emul: use MRIF as in-kernel IMSIC
+>   - hw: use hardware guest IMSIC file as in-kernel IMSIC
+>   - auto: use the hardware guest IMSICs whenever available otherwise
+>     fallback to MRIF
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[...]
+
+> Yong-Xuan Wang (8):
+>   target/riscv/kvm: rewrite get/set for KVM_REG_RISCV_CSR
+>   target/riscv/kvm: add KVM_REG_RISCV_CSR_AIA
+>   target/riscv/kvm: add KVM_REG_RISCV_CSR_SMSTATEEN
+>   target/riscv: add helper to get CSR name
+>   target/riscv/kvm: rewrite kvm_riscv_handle_csr
+>   target/riscv/kvm: add CSR_SIREG and CSR_STOPEI emulation
+>   docs: update the description about RISC-V AIA
+>   hw/intc/imsic: prevent to use IMSIC when host doesn't support AIA
+>     extension
+> 
+>  docs/specs/riscv-aia.rst   |  24 +++-
+>  docs/system/riscv/virt.rst |  10 +-
+>  hw/intc/riscv_imsic.c      |  17 ++-
+>  target/riscv/cpu.h         |  10 +-
+>  target/riscv/csr.c         |  30 ++---
+>  target/riscv/kvm/kvm-cpu.c | 235 +++++++++++++++++++++++++++++++------
+>  6 files changed, 254 insertions(+), 72 deletions(-)
+
+
+I don't pretend to grok all the details here, and I couldn't test the
+KVM-acceleration path ("-accel kvm,kernel-irqchip=split"), as I don't
+yet have hardware to test.  I was able to test the TCG part:
+
+I'm at:
+
+    $> git describe
+    v9.2.0-1976-g68d58113df
+
+My QEMU command-line is here[1].  I tried out these two variataions:
+
+    ... -machine virt,accel=tcg,aia=aplic,kernel-irqchip=split ...
+
+    ... -machine virt,accel=tcg,aia=aplic-imsic,kernel-irqchip=split ...
+
+And booted a Fedora-41 RISC-V host-generic guest image from here:
+
+    https://dl.fedoraproject.org/pub/alt/risc-v/release/41/Server/riscv64/images/
+
+As near as I see, nothing exploded :)
+
+I see that:
+
+  - From the docs: “aia=aplic” selects APLIC (advanced platform level
+    interrupt controller) to handle wired interrupts whereas the
+    “aia=aplic-imsic” selects APLIC and IMSIC (incoming message signaled
+    interrupt controller) to handle both wired interrupts and MSIs
+
+  - There's no user-visible change here, but only a developer-visible
+    change: in terms of what's being emulated in userspace vs. in-kernel
+    irqchip.)
+
+So, if it's still not too late:
+
+    Tested-by: Kashyap Chamarthy <kchamart@redhat.com>
+
+        * * *
+
+[1] QEMU command-line:
+------------------------------------------------------------------------
+$ ./qemu-system-riscv64
+-display none
+-cpu max
+-no-user-config
+-nodefaults
+-serial stdio
+-smp 4,sockets=4,cores=1,threads=1
+-machine virt,accel=tcg,aia=aplic,kernel-irqchip=split
+-blockdev node-name=node-Base1,driver=raw,file.driver=file,file.filename=./base1.raw,file.node-name=node-Base1-file
+-device virtio-blk,drive=node-Base1,id=virtio0
+-device virtio-net-device,netdev=net \
+-netdev user,id=net,hostfwd=tcp::2222-:22 \
+-blockdev '{"driver":"file","filename":"/usr/share/edk2/riscv/RISCV_VIRT_CODE.qcow2","node-name":"pflash0-storage","auto-read-only":true,"discard":"unmap"}' \
+-blockdev '{"node-name":"pflash0-format","read-only":true,"driver":"qcow2","file":"pflash0-storage"}' \
+-blockdev '{"driver":"file","filename":"/var/lib/libvirt/qemu/nvram/base1_VARS.qcow2","node-name":"pflash1-storage","auto-read-only":true,"discard":"unmap"}' \
+-blockdev '{"node-name":"pflash1-format","read-only":false,"driver":"qcow2","file":"pflash1-storage"}' \
+-machine virt,usb=off,dump-guest-core=off,memory-backend=riscv_virt_board.ram,pflash0=pflash0-format,pflash1=pflash1-format,acpi=off \
+-m size=4194304k \
+-object '{"qom-type":"memory-backend-ram","id":"riscv_virt_board.ram","size":4294967296}' \
+-object rng-random,filename=/dev/urandom,id=rng \
+-device virtio-rng-device,rng=rng 
+------------------------------------------------------------------------
+
+-- 
+/kashyap
 
 
