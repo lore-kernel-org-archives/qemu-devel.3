@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C21C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 068EDC282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:53:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp3LU-0006cW-Sn; Mon, 03 Mar 2025 05:48:24 -0500
+	id 1tp3Pj-0000lz-W6; Mon, 03 Mar 2025 05:52:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tp3LQ-0006bq-AQ
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:48:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tp3LM-0000OF-FQ
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:48:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740998894;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tULCGMejepMp3HVhQsarMoHA0/BH17DGeAYuLBBG8os=;
- b=hGT3z6M4W3V3aEkMPmRhI8h/Rb7fyQbqMSkr8YhhitaUD23gFle9txkc959FOEUbC94Oc4
- LNTMSvCqHn17N4jWq2rjtc+UCvI3Nn7/XkXLcQ4+VAnNI5fcoGSZG4JDhWGqiUSLk3t1wS
- gmLod50krbBqh+18hi8jwRYpAsK14UA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-GudBPiZrPwqlL5qmYXFxOA-1; Mon, 03 Mar 2025 05:48:13 -0500
-X-MC-Unique: GudBPiZrPwqlL5qmYXFxOA-1
-X-Mimecast-MFC-AGG-ID: GudBPiZrPwqlL5qmYXFxOA_1740998892
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-438da39bb69so30829415e9.0
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 02:48:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp3PY-0000l9-L5
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:52:40 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp3PL-0001Un-G7
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:52:25 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-438a39e659cso28864205e9.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 02:52:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740999141; x=1741603941; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WV8i2n1dINUi3naKDRxscUGWR2GsvMFaJaNzsmC0+fc=;
+ b=F2WpxomGhcDDEZUX9H/IGhY9lFwsfw2dNyfSpuRzSss6AqLnG+lF8IaYgXgKgGQqmc
+ lM7xowYoY8FLCpW9XdG+0epXsi8Xv2YQg363CcpLJps5FAtz420YOaKP9OkfYSad3M25
+ ukevAX0hoMr3/IXozCSIreGphnhokbX/4GUlu675DxLoBfimqwzT0+j+L/aKPrhOuvQU
+ JCWUTgfSrMNXiO3HhC+Ihk3Ilw8bjvsbSVe16NR429iQkqi0hxCO0akFyeXu+pgQSAAn
+ xzQP4QI8Wv5HBgxqEqKlkSJ7AZ8JBwUTATaCgzaPfDqDEW/eDP87DSFV93EMNOdIs4NN
+ jIRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740998891; x=1741603691;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tULCGMejepMp3HVhQsarMoHA0/BH17DGeAYuLBBG8os=;
- b=mYHKCzhIVTRdOmFdF+ENNR6/mCIgPGP2HKsM4OvQgqD/fEX1L4swX2CwHPayVsxwsY
- +rIPdQuVla9n0neTQ6vZr7XZO5zCOE66UWmKE99+n+0jF3j1DhSPXFy297lf5+FCjTLG
- D5cofD+oUvr83w1/y41J8N3u04lly4ERyYUdH7Kulsv9eEPUqZT7wc8Qkh6lacqAdNcS
- 1hh6FPHmZ2VrsmRJdVUDZJ/BsYU91BAiS5Fr2ZQVLeoHANHcSg+CCgXQOMHoyRd/WrI8
- 7ObySMV0vt4MAI8EWCyDkeQ9IIOjFli4Hu+E8Azak3Fnw1+VpsQzi1q+K4qeD69d2CiX
- XMmA==
-X-Gm-Message-State: AOJu0YwlV1bMhwyMP9xn7yUNE+YuKrJtdNj5hCW0Ux+unaB4G0WR5XZ1
- hMVv4wV2uVc8n1owasBx7ImcUvmDZc0aPfgN0r0E1oY+tJ0wz3bTUA57UuKYuLbd8Xlnc0xOXOt
- obwFQ+eFkQSc04SmlyAbgRpPS6BohMDLuo6Oi1Q4h7QoB0kL68646iTDlYNiMwKQ+LQNsekD/nR
- ywRa9v/6WDfGnKBJHoYEaYOkk0Llh0ORDHQxZkxw==
-X-Gm-Gg: ASbGncvM7Qc6CIQcaDybvqa3Wcn9hLAESAoaRlhsnAdN1xYtg7Tu9UzK/KWNyMsrsBr
- 9jbFR1BLrid+09XytPw2Qva6he/LfC4JFbTZ7EzT51g0V5yU/Hqd7xkl18cJYYJjN6X6TBB3DDN
- 0=
-X-Received: by 2002:a05:600c:3543:b0:439:5541:53cc with SMTP id
- 5b1f17b1804b1-43ba6a84832mr109987475e9.29.1740998890908; 
- Mon, 03 Mar 2025 02:48:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IErpXiC22B0CnZjHMOx8lLWZ/RYj1uUWVeFLA8ydqCGG1zN0MHcaZJTJIwpYUhIf9+t3IHcCDdJ/2gEbnO4ZiM=
-X-Received: by 2002:a05:600c:3543:b0:439:5541:53cc with SMTP id
- 5b1f17b1804b1-43ba6a84832mr109987055e9.29.1740998890207; Mon, 03 Mar 2025
- 02:48:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740999141; x=1741603941;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WV8i2n1dINUi3naKDRxscUGWR2GsvMFaJaNzsmC0+fc=;
+ b=VZF0BlP2D7a2flXC6iryBssOKtJPY+0pnqBsgpH0iRBdTRHIvPyl/EgO9tcJPNQuON
+ 8mbrCuFnakPoFIPQFugDN8QvkG1f4g6j2Fok+Z8QvO1SvVHFC/p1Z3jDwAzSL7tfjE8g
+ CDDP5nVnoDa0LJidwwpht1dQW0BKoX1gdFGJ5OeK9w7iUO3p8xIjiGYK4Oxxdat2GyiA
+ CkXR0SiC3UwQw4GKbGvt0H08+pjwOJv/6oJhikkAxAG7ayVNClmVJzzrKxnCoktfA4ve
+ caZhn+cCetZjtWrTkgdqssI5zQQ4I6TWo4Huq1R4hTRqXonFtAKA46/zPpiw2n09t8gT
+ LoBQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWMyfFL2DmnCFi5Os5CfJM/3J97dSXNCSNJqFLxjpxBdzwnvQkdlk/CSQKEC6f9djw6+j/Akc2UWpMG@nongnu.org
+X-Gm-Message-State: AOJu0YwGcAsKteb3dV3DsueIv+W5EiTyTOdQTkf+QjqtIq4EwP74Hm9K
+ AkgkUWOkMr6+gR7SL257dw89oWgMtgE1yBhepQ51RsP2ZfYZmW4xERJHaCQsZkNyKqdprFV7WZl
+ InzcPmg==
+X-Gm-Gg: ASbGncvI1u1h1Ca2N8Rhh1KKiP/5aZ5qEQ26Gku40VzSVzkzXj2wzkedDiyZxIPZcnv
+ ktvLentA1AuaBkkQjzjwNcWh1CrFujby0kM3qYYJESbC5yi8I31WaCSqnFQU53K8G7sqL6c6qRW
+ nCHTGDPPWbEs7zEOnPeevF5A3YJNwv/YXLFU3kH3JOtcYgwKHUQShPjXKQdGmkomcjFdxIMXIDa
+ Z+w49E4y/sH6OrrQ0CCQncuaDasC6xJPkVy6pARjZG52i2Ed/8v+aJNwKAQ/8HXvBRhxT+eY+6h
+ oAHMAKL3T5feBGCUUB6isLdqyPXy3o9V7ySWtDSjp3W/ahCQC62w5gKmNBzinPkJkDkYiYSLCZX
+ hrmGRuHT3uckt
+X-Google-Smtp-Source: AGHT+IHKY6ajHv9wgXclo927FismvpXJbL5KmUSry9XhpYggyJnc4fKbZHIXNpgFYiA3354yE3/GZw==
+X-Received: by 2002:a05:600c:474a:b0:439:8c80:6afd with SMTP id
+ 5b1f17b1804b1-43ba6773c5emr83970975e9.26.1740999141527; 
+ Mon, 03 Mar 2025 02:52:21 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47b7d12sm14366111f8f.58.2025.03.03.02.52.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Mar 2025 02:52:20 -0800 (PST)
+Message-ID: <ff6c9a3b-a1dd-4f86-b3f6-80c787a6fea4@linaro.org>
+Date: Mon, 3 Mar 2025 11:52:20 +0100
 MIME-Version: 1.0
-References: <20250228121749.553184-1-ppandit@redhat.com>
- <87frjy2k8z.fsf@suse.de>
-In-Reply-To: <87frjy2k8z.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 3 Mar 2025 16:17:53 +0530
-X-Gm-Features: AQ5f1Jqf42box0Hz3-n8jFW9UKMqtrpzNDv8lL4ReOonAe3nxPhqIRxu9In7p10
-Message-ID: <CAE8KmOwVoGJ2frVCY76W7UxSr90wAL2EMj5Nmtcrdc+BE1e9=g@mail.gmail.com>
-Subject: Re: [PATCH v7 0/5] Allow to enable multifd and postcopy migration
- together
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 036/162] tcg: Convert muluh to TCGOutOpBinary
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250216231012.2808572-1-richard.henderson@linaro.org>
+ <20250216231012.2808572-37-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250216231012.2808572-37-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,93 +102,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Fabiano,
+Hi Richard,
 
-On Fri, 28 Feb 2025 at 20:23, Fabiano Rosas <farosas@suse.de> wrote:
-> You forgot to split patch 2. We cannot have a commit that revamps the
-> channel discovery logic and enables a new feature at the same
-> time. Changing the channel discovery affects all the migration
-> use-cases, that change cannot be smuggled along with multifd+postcopy
-> enablement.
+On 17/2/25 00:08, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/aarch64/tcg-target-has.h     |  2 --
+>   tcg/arm/tcg-target-has.h         |  1 -
+>   tcg/i386/tcg-target-has.h        |  2 --
+>   tcg/loongarch64/tcg-target-has.h |  2 --
+>   tcg/mips/tcg-target-has.h        |  2 --
+>   tcg/ppc/tcg-target-has.h         |  2 --
+>   tcg/riscv/tcg-target-has.h       |  2 --
+>   tcg/s390x/tcg-target-has.h       |  2 --
+>   tcg/sparc64/tcg-target-has.h     |  2 --
+>   tcg/tcg-has.h                    |  1 -
+>   tcg/tci/tcg-target-has.h         |  2 --
+>   tcg/tcg-op.c                     |  7 +++---
+>   tcg/tcg.c                        | 16 ++++++--------
+>   tcg/aarch64/tcg-target.c.inc     | 21 ++++++++++++++----
+>   tcg/arm/tcg-target.c.inc         |  4 ++++
+>   tcg/i386/tcg-target.c.inc        |  4 ++++
+>   tcg/loongarch64/tcg-target.c.inc | 24 +++++++++++++--------
+>   tcg/mips/tcg-target.c.inc        | 37 ++++++++++++++++++--------------
+>   tcg/ppc/tcg-target.c.inc         | 20 ++++++++++-------
+>   tcg/riscv/tcg-target.c.inc       | 24 +++++++++++++++------
+>   tcg/s390x/tcg-target.c.inc       |  4 ++++
+>   tcg/sparc64/tcg-target.c.inc     | 23 +++++++++++++++-----
+>   tcg/tci/tcg-target.c.inc         |  4 ++++
+>   23 files changed, 126 insertions(+), 82 deletions(-)
 
-===
->> Continue with this patch and fix the stuff I mentioned. You can ignore
->> the first two paragraphs of that reply.
->>
->> https://lore.kernel.org/r/87y0y4tf5q.fsf@suse.de
->>
->> I still think we need to test that preempt + multifd scenario, but it
->> should be easy to write a test for that once the series is in more of a
->> final shape.
-===
 
-* I thought that major overhaul of the channel discovery part by
-moving it to channel.c was to be done subsequently, no? As we
-discussed, we need to touch the channel discovery parts in
-'migration_ioc_process_incoming' because, we need to identify the
-Postcopy channel when its connection comes in. So the Patch-2 does
-minimal changes that are _required_ to enable the two (multifd &
-postcopy) features together.
+> diff --git a/tcg/tcg.c b/tcg/tcg.c
+> index ec64a235d0..2741048353 100644
+> --- a/tcg/tcg.c
+> +++ b/tcg/tcg.c
+> @@ -1022,6 +1022,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+>       OUTOP(INDEX_op_andc, TCGOutOpBinary, outop_andc),
+>       OUTOP(INDEX_op_eqv, TCGOutOpBinary, outop_eqv),
+>       OUTOP(INDEX_op_mul, TCGOutOpBinary, outop_mul),
+> +    OUTOP(INDEX_op_muluh_i32, TCGOutOpBinary, outop_muluh),
+> +    OUTOP(INDEX_op_muluh_i64, TCGOutOpBinary, outop_muluh),
+>       OUTOP(INDEX_op_nand, TCGOutOpBinary, outop_nand),
+>       OUTOP(INDEX_op_neg, TCGOutOpUnary, outop_neg),
+>       OUTOP(INDEX_op_nor, TCGOutOpBinary, outop_nor),
+> @@ -2280,8 +2282,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+>           return TCG_TARGET_HAS_mulu2_i32;
+>       case INDEX_op_muls2_i32:
+>           return TCG_TARGET_HAS_muls2_i32;
+> -    case INDEX_op_muluh_i32:
+> -        return TCG_TARGET_HAS_muluh_i32;
+>       case INDEX_op_mulsh_i32:
+>           return TCG_TARGET_HAS_mulsh_i32;
+>       case INDEX_op_bswap16_i32:
+> @@ -2362,8 +2362,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+>           return TCG_TARGET_HAS_mulu2_i64;
+>       case INDEX_op_muls2_i64:
+>           return TCG_TARGET_HAS_muls2_i64;
+> -    case INDEX_op_muluh_i64:
+> -        return TCG_TARGET_HAS_muluh_i64;
+>       case INDEX_op_mulsh_i64:
+>           return TCG_TARGET_HAS_mulsh_i64;
+>   
+> @@ -3876,7 +3874,6 @@ liveness_pass_1(TCGContext *s)
+>       QTAILQ_FOREACH_REVERSE_SAFE(op, &s->ops, link, op_prev) {
+>           int nb_iargs, nb_oargs;
+>           TCGOpcode opc_new, opc_new2;
+> -        bool have_opc_new2;
+>           TCGLifeData arg_life = 0;
+>           TCGTemp *ts;
+>           TCGOpcode opc = op->opc;
+> @@ -4036,22 +4033,18 @@ liveness_pass_1(TCGContext *s)
+>           case INDEX_op_mulu2_i32:
+>               opc_new = INDEX_op_mul;
+>               opc_new2 = INDEX_op_muluh_i32;
+> -            have_opc_new2 = TCG_TARGET_HAS_muluh_i32;
 
-* Whereas, moving channel discovery parts out to connections.c could
-be done separately with its own reasoning that - we are moving it
-outside to connection.c because it fits better there.
+Maybe cleaner to use 'have_opc_new2 = true', checking for
+have_opc_new2 && tcg_op_supported(), then remove have_opc_new2
+in 2 commits in "Convert mulsh to TCGOutOpBinary"; otherwise
+maybe mention that this commit is tied to mulsh conversion?
 
-> Similarly, the multifd+postcopy enablement is a new feature that needs
-> to be tested and reasoned upon in isolation, it cannot bring along a
-> bunch of previously existing code that was shuffled around. We need to
-> be able to understand clearly what is done _in preparation for_ the
-> feature and what is done _as part of_ the feature.
-...
-> Not to mention bisect and backporting. Many people will be looking at
-> this code in the future without any knowledge of migration, but as part
-> of a bisect section or when searching for missing backports in the
-> distros.
+>               goto do_mul2;
+>           case INDEX_op_muls2_i32:
+>               opc_new = INDEX_op_mul;
+>               opc_new2 = INDEX_op_mulsh_i32;
+> -            have_opc_new2 = TCG_TARGET_HAS_mulsh_i32;
+>               goto do_mul2;
+>           case INDEX_op_mulu2_i64:
+>               opc_new = INDEX_op_mul;
+>               opc_new2 = INDEX_op_muluh_i64;
+> -            have_opc_new2 = TCG_TARGET_HAS_muluh_i64;
+>               goto do_mul2;
+>           case INDEX_op_muls2_i64:
+>               opc_new = INDEX_op_mul;
+>               opc_new2 = INDEX_op_mulsh_i64;
+> -            have_opc_new2 = TCG_TARGET_HAS_mulsh_i64;
+>               goto do_mul2;
+>           do_mul2:
+>               nb_iargs = 2;
+> @@ -4065,7 +4058,8 @@ liveness_pass_1(TCGContext *s)
+>                   op->opc = opc = opc_new;
+>                   op->args[1] = op->args[2];
+>                   op->args[2] = op->args[3];
+> -            } else if (arg_temp(op->args[0])->state == TS_DEAD && have_opc_new2) {
+> +            } else if (arg_temp(op->args[0])->state == TS_DEAD &&
+> +                       tcg_op_supported(opc_new2, TCGOP_TYPE(op), 0)) {
+>                   /* The low part of the operation is dead; generate the high. */
+>                   op->opc = opc = opc_new2;
+>                   op->args[0] = op->args[1];
 
-* I think we (you, me, Peter) are all looking at things differently.
-    - In my view Patch-2 is the minimal change _required_  to enable
-multifd & postcopy. In your view we are _revamping_ channel discovery
-parts while _sneaking_ in a feature of enabling multifd & postcopy
-together.
-    - In my view Patch-5 in this series is an isolated change because
-it adds a new migration command to allow multifd threads sync from
-source side. But Peter thinks without that 'flush and sync' Patch-2 is
-incomplete, so we should merge it back there.
 
-* I've also shared my view about not trying to do everything in this
-one series. I don't know how do we move forward from here. I'm also
-not sure what the final _acceptable_ patch-set should look like. I
-thought a tested working patch-set is a good start. At this point I
-think I'll just follow your lead.
+> diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
+> index 95c2645226..ad62d877c7 100644
+> --- a/tcg/mips/tcg-target.c.inc
+> +++ b/tcg/mips/tcg-target.c.inc
+> @@ -1743,6 +1743,27 @@ static const TCGOutOpBinary outop_mul = {
+>       .out_rrr = tgen_mul,
+>   };
+>   
+> +static void tgen_muluh(TCGContext *s, TCGType type,
+> +                       TCGReg a0, TCGReg a1, TCGReg a2)
+> +{
+> +    if (use_mips32r6_instructions) {
 
-> I also suggested to move that logic into channel.c. The code is now
-> well-contained enough that we don't need to be reading it every time
-> someone is going over the migration flow, it becomes just a helper
-> function.
+Similarly for style:
 
-* How exactly do we want to divide patch-2 to move channel discovery
-parts to channel.c?
-===
-     if (!migration_has_main_and_multifd_channels()) {
-     }
-     ...
-     } else {
-        channel = CH_MAIN;
-    }
-===
-Do we move this entire if - else - else block to channel.c from
-migration_ioc_process_incoming() ?
+            insn = type == TCG_TYPE_I32 ? OPC_MUHU : OPC_DMUHU;
 
-> > ===
-> > 67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             147.84s   81 subtests passed
->
-> I see postcopy/multifd/plain hanging from time to time. Probably due to
-> the changes in patch 5. Please take a look.
+> +        if (type == TCG_TYPE_I32) {
+> +            tcg_out_opc_reg(s, OPC_MUHU, a0, a1, a2);
+> +        } else {
+> +            tcg_out_opc_reg(s, OPC_DMUHU, a0, a1, a2);
+> +        }
+> +    } else {
+> +        MIPSInsn insn = type == TCG_TYPE_I32 ? OPC_MULTU : OPC_DMULTU;
+> +        tcg_out_opc_reg(s, insn, 0, a1, a2);
+> +        tcg_out_opc_reg(s, OPC_MFHI, a0, 0, 0);
+> +    }
+> +}
 
-* Okay. Does it hang indefinitely or for brief moments?
 
-Thank you.
----
-  - Prasad
+> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+> index ff685037d7..65246cc450 100644
+> --- a/tcg/riscv/tcg-target.c.inc
+> +++ b/tcg/riscv/tcg-target.c.inc
+> @@ -2021,6 +2021,23 @@ static const TCGOutOpBinary outop_mul = {
+>       .out_rrr = tgen_mul,
+>   };
+>   
+> +static TCGConstraintSetIndex cset_mulh(TCGType type, unsigned flags)
+> +{
+> +    return type == TCG_TYPE_I32 ? C_NotImplemented : C_O1_I2(r, r, r);
+> +}
+> +
+
+
+> @@ -2379,11 +2396,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+>           tcg_out_opc_reg(s, OPC_MULH, a0, a1, a2);
+>           break;
+>   
+> -    case INDEX_op_muluh_i32:
+> -    case INDEX_op_muluh_i64:
+> -        tcg_out_opc_reg(s, OPC_MULHU, a0, a1, a2);
+> -        break;
+> -
+>       case INDEX_op_mb:
+>           tcg_out_mb(s, a0);
+>           break;
+
+Please mention we remove the unreachable mulsh_i32 leftover from
+commit aeb6326ec5e ("tcg/riscv: Require TCG_TARGET_REG_BITS == 64").
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
