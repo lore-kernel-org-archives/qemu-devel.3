@@ -4,84 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8FE3C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 07:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C28C282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 07:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp0LC-0000kO-DA; Mon, 03 Mar 2025 02:35:54 -0500
+	id 1tp0M5-00018U-3R; Mon, 03 Mar 2025 02:36:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tp0LA-0000jy-J8
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 02:35:52 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tp0L8-0001xR-NX
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 02:35:52 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5e5491eb37dso1203722a12.0
- for <qemu-devel@nongnu.org>; Sun, 02 Mar 2025 23:35:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740987349; x=1741592149; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=p2RilEHcR8+9/PvFTn64OzknuBBMJY6yz4dKNbK2z4g=;
- b=LlK4xM/7e8e6dAwLIdCNgz7AmwfcN8PAKbttcJbh/gYuAmwEh8KBrdln5/iTxfWlK7
- 9HPUnHx7pvF5wUh4xpOcKDOfvaDuBY3CP37JeOsCM0SxskgroJ97R9F3pQ4qOsYRiatJ
- SMhWKecTJJQEtB1VU4RU8P0BdwoAf5IASwHhGvRHNI0iFMLDXhlG6VWK5aklQBGW3Mf9
- jYCXOZM9/6R1Yth+ufuz7lXlvZ39881H2C2Q3fU5XKjQfNmhnpjvWydcyC4DGnq3DiVm
- pb+5lK8ABLNIdjz42PLnRDPazmdHd8MNT8hGvyn9ouC44kTb9dgmvueqYxu4w4uJmNLO
- QYyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740987349; x=1741592149;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=p2RilEHcR8+9/PvFTn64OzknuBBMJY6yz4dKNbK2z4g=;
- b=dOvyevNi3b7RDOyUYABPzzSe9ZGg5zE2mkr7xZvXalHPQDbLlpxqadwUjhDpZLWDmk
- 1ewhL5ihJLsCe9xahijUb78m657JiNgl2dkR4B8dAOzP4rzmpMzL8afUK0F6BSrZvr0X
- g82I1Wirv630uz0jnXheGnr/1W4dZFgiIYkpwsmfrTCiiGZEmZPC7F+uOCbxTGKxWTiQ
- 1z7zJtYUfMSvrQV6Wpe9YTX+D4tsOkeQ75QorvVFb5y4BaAd30fDQHcaFqRtwckTf//P
- ajp8yZbSQyY5aBovDMhWiilO34EW3EzwmqknnMFi3RQ1hWRh0yrJn4CfgusAf/y8y9Gy
- uLMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUeVaebJS/FAp5xxIuiClatClvZuIKHZGvO0bdkntLdvU/Ns+1nGt8nJbADVZ/hEiuyuJgtE3hyaXCB@nongnu.org
-X-Gm-Message-State: AOJu0YxFQiUovAXEFTE+ssDP54qi3obTTyM7wTtPsmGzTFlkJGpb3iEI
- TkB8Mdj8CJTw0r1JtyTn+hiiyVUBAPHI4hgQ5BN0Lxu61fuu8N9iloe2b0ujiks11qm+Yi53l5s
- q32QkloCtRnM+Kjm7GaOG6LeROSw=
-X-Gm-Gg: ASbGncvrFnYI8NDgGsl/US0SuBqi8qO+l9g2zW1L9qog3j/GbiW7MeNvV2b+vMxvgvS
- cqNQ9d0+rZ1ZJLC8caQ+6PJRdk1pGRTImkWF9fAt6hBxVsm5qcr/YvEdYLHgDi6GvwBVnbY+9Gi
- 6jR1Rv4awXzEmKjuHc/TFGpSY3nw==
-X-Google-Smtp-Source: AGHT+IGIOZ90Y+RtfUg60xFZv4hxYS+qnWh4qZim7Vo6Gjy3ugiAUoa3e2XX4ThgjjoP9CRasxC6em7MKn0LBDimx90=
-X-Received: by 2002:a05:6402:3221:b0:5e5:49af:411d with SMTP id
- 4fb4d7f45d1cf-5e549af47f8mr3208887a12.17.1740987348894; Sun, 02 Mar 2025
- 23:35:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tp0LK-0000mY-PN; Mon, 03 Mar 2025 02:36:02 -0500
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tp0LJ-0001xL-7k; Mon, 03 Mar 2025 02:36:02 -0500
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 3 Mar
+ 2025 15:35:47 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Mon, 3 Mar 2025 15:35:47 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v4 2/6] hw/misc/aspeed_scu: Fix the revision ID cannot be set
+ in the SOC layer for AST2700
+Date: Mon, 3 Mar 2025 15:35:42 +0800
+Message-ID: <20250303073547.1145080-3-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
+References: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-References: <CAJSP0QUk77GViTBgBpfYH-AbAmQ5aUwi0K6UTH9iv=1mVb0Wbw@mail.gmail.com>
- <803732f6-6ab1-4298-a956-660496664f67@redhat.com>
-In-Reply-To: <803732f6-6ab1-4298-a956-660496664f67@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 3 Mar 2025 15:35:36 +0800
-X-Gm-Features: AQ5f1JoyudKm91henuN7YkbcZtqcO5U4HuDEOXET3vDSkFiaWr_tAKUKi6upnkY
-Message-ID: <CAJSP0QUN_tCSZ=WOk+C9kR3TMqkTaZMNF7qaAsFPiauzN0r_QA@mail.gmail.com>
-Subject: Re: Kubernetes gitlab-runner jobs cannot be scheduled
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Camilla Conte <cconte@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,41 +61,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 1, 2025 at 2:36=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
->
-> On 3/1/25 07:19, Stefan Hajnoczi wrote:
-> > Hi,
-> > On February 26th GitLab CI started failing many jobs because they
-> > could not be scheduled. I've been unable to merge pull requests
-> > because the CI is not working.
-> >
-> > Here is an example failed job:
-> > https://gitlab.com/qemu-project/qemu/-/jobs/9281757413
->
-> Hi Stefan,
->
-> until February 26th the Digital Ocean runners were not enabled; I tried
-> enabling them (which is what caused the issue) to start gauging how much
-> credit we would need to be able to move from Azure to DO for CI.  I
-> posted a note on IRC, I'm sorry if you missed that.
+According to the design of the AST2600, it has a Silicon Revision ID Register,
+specifically SCU004 and SCU014, to set the Revision ID for the AST2600.
+For the AST2600 A3, SCU004 is set to 0x05030303 and SCU014 is set to 0x05030303.
+In the "aspeed_ast2600_scu_reset" function, the hardcoded value
+"AST2600_A3_SILICON_REV" is set in SCU004, and "s->silicon_rev" is set in
+SCU014. The value of "s->silicon_rev" is set by the SOC layer via the
+"silicon-rev" property.
 
-There is a new type of timeout failure:
-https://gitlab.com/qemu-project/qemu/-/jobs/9288349332
+However, the design of the AST2700 is different. There are two SCU controllers:
+SCU0 (CPU Die) and SCU1 (IO Die). In the AST2700, the firmware reads the
+SCU Silicon Revision ID register (SCU0_000) and the SCUIO Silicon Revision ID
+register (SCU1_000) and combines them into a 64-bit value.
+The combined value of SCU0_000[23:16] and SCU1_000[23:16] represents the silicon
+revision. For example, the AST2700-A1 revision is "0x0601010306010103", where
+SCU0_000 should be 06010103 and SCU1_000 should be 06010103.
 
-GitLab says:
-"There has been a timeout failure or the job got stuck. Check your
-timeout limits or try again"
+Reference:
+https://github.com/AspeedTech-BMC/u-boot/blob/aspeed-master-v2023.10/arch/arm/mach-aspeed/ast2700/cpu-info.c
 
-Duration: 77 minutes 13 seconds
-Timeout: 1h (from project)
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/misc/aspeed_scu.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-It ran 17 minutes longer than the job timeout.
+diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+index 50f74fbabd..545d004749 100644
+--- a/hw/misc/aspeed_scu.c
++++ b/hw/misc/aspeed_scu.c
+@@ -910,7 +910,6 @@ static const MemoryRegionOps aspeed_ast2700_scu_ops = {
+ };
+ 
+ static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
+-    [AST2700_SILICON_REV]           = AST2700_A0_SILICON_REV,
+     [AST2700_HW_STRAP1]             = 0x00000800,
+     [AST2700_HW_STRAP1_CLR]         = 0xFFF0FFF0,
+     [AST2700_HW_STRAP1_LOCK]        = 0x00000FFF,
+@@ -940,6 +939,7 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
+     AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(dev);
+ 
+     memcpy(s->regs, asc->resets, asc->nr_regs * 4);
++    s->regs[AST2700_SILICON_REV] = s->silicon_rev;
+ }
+ 
+ static void aspeed_2700_scu_class_init(ObjectClass *klass, void *data)
+@@ -1032,7 +1032,6 @@ static const MemoryRegionOps aspeed_ast2700_scuio_ops = {
+ };
+ 
+ static const uint32_t ast2700_a0_resets_io[ASPEED_AST2700_SCU_NR_REGS] = {
+-    [AST2700_SILICON_REV]               = 0x06000003,
+     [AST2700_HW_STRAP1]                 = 0x00000504,
+     [AST2700_HW_STRAP1_CLR]             = 0xFFF0FFF0,
+     [AST2700_HW_STRAP1_LOCK]            = 0x00000FFF,
+-- 
+2.34.1
 
-Any idea?
-
-Stefan
 
