@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8137C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 07:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF11C282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 07:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp0Lj-0000p9-Uc; Mon, 03 Mar 2025 02:36:28 -0500
+	id 1tp0Lm-0000rx-UA; Mon, 03 Mar 2025 02:36:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp0LN-0000mv-JF; Mon, 03 Mar 2025 02:36:05 -0500
+ id 1tp0Lb-0000oI-G7; Mon, 03 Mar 2025 02:36:20 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp0LM-0001xL-19; Mon, 03 Mar 2025 02:36:05 -0500
+ id 1tp0LZ-0001xL-UJ; Mon, 03 Mar 2025 02:36:19 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 3 Mar
@@ -31,10 +31,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v4 3/6] hw/arm/aspeed Update HW Strap Default Values for
- AST2700
-Date: Mon, 3 Mar 2025 15:35:43 +0800
-Message-ID: <20250303073547.1145080-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v4 6/6] hw/arm/aspeed_ast27x0.c Fix boot issue for AST2700
+Date: Mon, 3 Mar 2025 15:35:46 +0800
+Message-ID: <20250303073547.1145080-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
 References: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
@@ -66,34 +65,34 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Separate HW Strap Registers for SCU and SCUIO.
-AST2700_EVB_HW_STRAP1 is used for the SCU (CPU Die) hw-strap1.
-AST2700_EVB_HW_STRAP2 is used for the SCUIO (IO Die) hw-strap1.
+Currently, ASPEED_DEV_SPI_BOOT is set to "0x400000000", which is the DRAM start
+address, and the QEMU loader is used to load the U-Boot binary into this address.
 
-Additionally, both default values are updated based on the dump from the EVB.
+However, if users want to install FMC flash contents as a boot ROM, the DRAM
+address 0x400000000 would be overwritten with Boot ROM data. This causes the
+AST2700 to fail to boot because the U-Boot data becomes incorrect.
+
+To fix this, change the ASPEED_DEV_SPI_BOOT address to "0x100000000", which is
+the FMC0 memory-mapped start address in the AST2700.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 98bf071139..c6c18596d6 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -181,8 +181,10 @@ struct AspeedMachineState {
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 8c225d4f90..527a5f8245 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -24,7 +24,7 @@
+ #include "qemu/log.h"
  
- #ifdef TARGET_AARCH64
- /* AST2700 evb hardware value */
--#define AST2700_EVB_HW_STRAP1 0x000000C0
--#define AST2700_EVB_HW_STRAP2 0x00000003
-+/* SCU HW Strap1 */
-+#define AST2700_EVB_HW_STRAP1 0x00000800
-+/* SCUIO HW Strap1 */
-+#define AST2700_EVB_HW_STRAP2 0x00000700
- #endif
- 
- /* Rainier hardware value: (QEMU prototype) */
+ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+-    [ASPEED_DEV_SPI_BOOT]  =  0x400000000,
++    [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
+     [ASPEED_DEV_SRAM]      =  0x10000000,
+     [ASPEED_DEV_SDMC]      =  0x12C00000,
+     [ASPEED_DEV_SCU]       =  0x12C02000,
 -- 
 2.34.1
 
