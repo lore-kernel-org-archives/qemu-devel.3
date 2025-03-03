@@ -4,82 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38D4EC19F32
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 00:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3115C19F32
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 00:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1totYE-0007bE-H5; Sun, 02 Mar 2025 19:20:54 -0500
+	id 1totky-0006da-KQ; Sun, 02 Mar 2025 19:34:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1totYA-0007Vr-0H; Sun, 02 Mar 2025 19:20:50 -0500
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1totY7-0003Wm-El; Sun, 02 Mar 2025 19:20:49 -0500
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-5236d34a37fso595835e0c.3; 
- Sun, 02 Mar 2025 16:20:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740961244; x=1741566044; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KPwCWdcoMhh3y5danql1RTaIbOlgclZJ9bSTtKH/Pb4=;
- b=M0ux6ftgIifzaGoqAZn1dnLb2NOs0fnTK89ShP0zG1PpQkXNKqbxuRr3wfR8Q5imWI
- tS9C3t8Dje47smTCP4DEVA5DOWJMnLyhuNJSfdt9XjMNa6LYGlbHFPR1lmxZO8pXYI/d
- vg/9ZPrnb/PKOFywdpcm0uFR71/7g6sGqnTC/ox0JBK8GWviSwBL2actlnHB50vbMbR9
- qf7nfNWA98k+FK3yC9KGSo7b1iPHMTKCpcleSySZTQtGzCENEW0QUW6Qf4LGy7CQ3goa
- O1JGFDSSJtOSPv1cYoBz5xATBuRWxGuH0Mj9/m8HtXqupgoENfMBontC6njv4jPxdM+N
- lkTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740961244; x=1741566044;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KPwCWdcoMhh3y5danql1RTaIbOlgclZJ9bSTtKH/Pb4=;
- b=CE78C8lgmkXfTlg0Uz6JFItooH4hthckcFmYUd1su618w1KqgFi54oumQvSuHtC83i
- Ikmr87MRyZA7+go/1Lmg20ZeOzDE1Bf9q0WTiKDxxvi2HUJ/anZwyETqC+dsQyNYKP0h
- 3Be8cvlGHRZ5LB8f/fMS8h9Omk6qgwbOZt+4t9E08WoAL14qZfX0DHz/qjHBvpIrRTAl
- dPK31CrGzwvb0fPbAcq0DNw5i4hdQP5m9Fsu8y8OSx8LBF5QYa7quynbZunqVEVIUNI0
- 7NPchFpRNKxeLQk1hKTkaRo3oi22ZeMFBNmIwQ/FgZTG9aJztutQGDmH0N7DBCsdZQ7a
- vdgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFHfQpbfvC19uKOE1OUZ8fnz/PET35HMS9NRMKrPtG9cysw0MlUqSIcYOxBRKgzPhWZxydyiiuyp35@nongnu.org
-X-Gm-Message-State: AOJu0YyfHs7V+RcsVb1EQ/OwrUlbT5OhBrx6wlpyhLPU3t/kKYWJjq9m
- L5KvHkGY0ofj7O5eQyyNw0/1xfjpUcDombo5/7T7E+jCQXkq2ohqT08MW0+jbjnHWkA0QBx/HZd
- lBSKUaD2OpJgFLVDYoByYGj0WVdk=
-X-Gm-Gg: ASbGncsjH6ubBk5ZF6ILyllH8/50s+TYDCXJgER9kLW7/Dqfb0NEnUcMVs4lcOJCSfO
- /XlbrGRgPC1Cc5gYq/18OxAvjYYwRGd3YH4/q9fqDEKQYS7xCjD7ijRjhwpulUEFHdfKpFNxlqZ
- WZ1uNu53kKBgB97FGW0hPwTEmqcJumQxUXflSd7lt3D6jRoQXMMIdAbOIV
-X-Google-Smtp-Source: AGHT+IGsptj714yteR5swNprcpFr886k+nknQaCQBcvnOMgZXlW+NiuVqDOZ1EGU2qwyDyKoZ/bNrewWRMGGHQ41HLI=
-X-Received: by 2002:a05:6122:3382:b0:51f:3e67:75df with SMTP id
- 71dfb90a1353d-5235b8cc4d0mr6843744e0c.10.1740961244645; Sun, 02 Mar 2025
- 16:20:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1totkw-0006dD-C1; Sun, 02 Mar 2025 19:34:02 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1totkr-0005Iu-Hk; Sun, 02 Mar 2025 19:33:59 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5FDC14E6162;
+ Mon, 03 Mar 2025 01:33:51 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id wrONbx0xW5Ne; Mon,  3 Mar 2025 01:33:49 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 165DE4E6010; Mon, 03 Mar 2025 01:33:49 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1451274577C;
+ Mon, 03 Mar 2025 01:33:49 +0100 (CET)
+Date: Mon, 3 Mar 2025 01:33:49 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Bernhard Beschow <shentey@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH] hw/ppc/e500: Partial implementation of local access
+ window registers
+In-Reply-To: <24E72FE6-E2AE-4BF4-9273-1B915908EE2E@gmail.com>
+Message-ID: <7a21d5d7-01f7-daab-a94f-28b32344df6b@eik.bme.hu>
+References: <20250115211544.307124E602F@zero.eik.bme.hu>
+ <aabb2da4-3eaa-2a5f-b461-01727c380372@eik.bme.hu>
+ <24E72FE6-E2AE-4BF4-9273-1B915908EE2E@gmail.com>
 MIME-Version: 1.0
-References: <20250302130618.25688-2-hemanshu.khilari.foss@gmail.com>
-In-Reply-To: <20250302130618.25688-2-hemanshu.khilari.foss@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 3 Mar 2025 10:20:18 +1000
-X-Gm-Features: AQ5f1Jp_PT7CTlAGk9rMaurQOwjteouGJyKBqiF4armMBq8b3zH2SAgOQz60O40
-Message-ID: <CAKmqyKPyTRNTb92D7GLsWmYdkapo4ev88u3k_xtH9XALRZi-8A@mail.gmail.com>
-Subject: Re: [PATCH v2] docs/specs/riscv-iommu: Fixed broken link to external
- risv iommu document
-To: "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>
-Cc: qemu-devel@nongnu.org, Alistair.Francis@wdc.com, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: multipart/mixed;
+ boundary="3866299591-1929920270-1740962029=:7747"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,54 +68,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 2, 2025 at 11:07=E2=80=AFPM hemanshu.khilari.foss
-<hemanshu.khilari.foss@gmail.com> wrote:
->
-> The link to riscv iommu specification document is incorrect. This patch
-> updates the said link to point to correct location.
->
-> Cc: qemu-riscv@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2808
-> Signed-off-by: hemanshu.khilari.foss <hemanshu.khilari.foss@gmail.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+--3866299591-1929920270-1740962029=:7747
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Alistair
+On Sun, 2 Mar 2025, Bernhard Beschow wrote:
+> Am 1. März 2025 16:10:35 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
+>> On Wed, 15 Jan 2025, BALATON Zoltan wrote:
+>>> This allows guests to set the CCSR base address. Also store and return
+>>> values of the local access window registers but their functionality
+>>> isn't implemented.
+>>
+>> Bernhard,
+>
+> Hi Zoltan,
+>
+>>
+>> If you have no alternative patch you plan to submit for next release 
+>> should we merge this for now? This helps running u-boot binaries even 
+>> if it's not enough alone but would be one patch less in my local tree. 
+>> Or do you know about a problem with this patch why this should not be 
+>> merged?
+>
+> QEMU sets a machine-specific CCSR base address (pmc->ccsrbar_base) which 
+> differs from the real chip's default. The default is checked by U-Boot 
+> which enters an infinite loop on mismatch: 
+> <https://source.denx.de/u-boot/u-boot/-/blob/v2024.07/arch/powerpc/cpu/mpc85xx/start.S#L614>. 
+> How does this work for you?
 
-> ---
->  docs/specs/riscv-iommu.rst | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/docs/specs/riscv-iommu.rst b/docs/specs/riscv-iommu.rst
-> index b1538c9ead..772145e8d7 100644
-> --- a/docs/specs/riscv-iommu.rst
-> +++ b/docs/specs/riscv-iommu.rst
-> @@ -4,7 +4,7 @@ RISC-V IOMMU support for RISC-V machines
->  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->  QEMU implements a RISC-V IOMMU emulation based on the RISC-V IOMMU spec
-> -version 1.0 `iommu1.0`_.
-> +version 1.0 `iommu1.0.0`_.
->
->  The emulation includes a PCI reference device (riscv-iommu-pci) and a pl=
-atform
->  bus device (riscv-iommu-sys) that QEMU RISC-V boards can use.  The 'virt=
-'
-> @@ -107,7 +107,7 @@ riscv-iommu options:
->  - "s-stage": enabled
->  - "g-stage": enabled
->
-> -.. _iommu1.0: https://github.com/riscv-non-isa/riscv-iommu/releases/down=
-load/v1.0/riscv-iommu.pdf
-> +.. _iommu1.0.0: https://github.com/riscv-non-isa/riscv-iommu/releases/do=
-wnload/v1.0.0/riscv-iommu.pdf
->
->  .. _linux-v8: https://lore.kernel.org/linux-riscv/cover.1718388908.git.t=
-jeznach@rivosinc.com/
->
-> --
-> 2.42.0
->
->
+The U-Boot version I've tested (or something else, I don't remember) 
+wanted to set the CCSRBAR to the value it expects which is different from 
+where it looks for it at reset and that works with this patch. I don't 
+know which code path that corresponds to in start.S.
+
+> In addition, when moving the CCSR region, `env->mpic_iack` should be 
+> updated as well: 
+> <https://gitlab.com/qemu-project/qemu/-/blob/v9.2.2/hw/ppc/e500.c?ref_type=tags#L969>
+
+I did not notice that. Maybe it's only relevant with KVM and I've only 
+tested with TCG or could be I did not get to the part yet when this would 
+cause problems. I don't see an easy way to update this as these are in 
+separate places and also don't know how this mpic_iack is handled with 
+multiple cores. So in case this patch breaks this then it's OK to drop it 
+for now. I can carry it locally until fixed upstream.
+
+> I'm happy to submit an implementation on top of my e500 cleanup series 
+> <https://patchew.org/QEMU/20241103133412.73536-1-shentey@gmail.com/> 
+> which needs agreement on some open discussions.
+
+Some of that series was already merged. What are the outstanding patches 
+and discussions? I don't remember seeing an updated version of that series 
+with only the outstanding patches.
+
+Regards,
+BALATON Zoltan
+--3866299591-1929920270-1740962029=:7747--
 
