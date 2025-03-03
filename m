@@ -4,73 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B27F4C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 19:21:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65A9EC282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 19:24:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpBKx-0003WD-MN; Mon, 03 Mar 2025 14:20:24 -0500
+	id 1tpBOW-0005h3-F9; Mon, 03 Mar 2025 14:24:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1tpBKX-0003O2-0B
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:19:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1tpBKR-0003Gu-Ij
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:19:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741029587;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ew8cLbviQXGRSsXKjXB+/SyYXVC0dlfqrmPZgpUh6lg=;
- b=D8xSD+BOFfcx/vq6DezduPZuYfP2+MOD87whq4hfBINNJ5rsjVMkDDv9mUOUP4RHb9lQXo
- 0l/63HPZfMX0uJU/nQyOWp91RNrVvoTRmIE/yTBtj4eE444vVC4b3GUtu8qfbXBuhJ8zL4
- LC3PoNWlCUMb6FF5ZuVrm4KU0a6QeJ4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-X3wY6VqJOq2gGFoTobeCTA-1; Mon,
- 03 Mar 2025 14:19:37 -0500
-X-MC-Unique: X3wY6VqJOq2gGFoTobeCTA-1
-X-Mimecast-MFC-AGG-ID: X3wY6VqJOq2gGFoTobeCTA_1741029576
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DBE6E1800874; Mon,  3 Mar 2025 19:19:35 +0000 (UTC)
-Received: from gezellig (unknown [10.45.224.57])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F831180035F; Mon,  3 Mar 2025 19:19:30 +0000 (UTC)
-Date: Tue, 4 Mar 2025 00:49:26 +0530
-From: Kashyap Chamarthy <kchamart@redhat.com>
-To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com,
- vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com
-Subject: Re: [PATCH v2 0/8] riscv: AIA: kernel-irqchip=off support
-Message-ID: <Z8YAvmO4OMEeyL3U@gezellig>
-References: <20250224082417.31382-1-yongxuan.wang@sifive.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpBOM-0005eB-Lt
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:23:57 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpBOB-0003vD-0u
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:23:53 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-390e6ac844fso4213199f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 11:23:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741029817; x=1741634617; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Bl5On9k/V9AzXz5wfiLyRv7wQgqEYXE2HlwhsnKy1sk=;
+ b=qAnlaAfwM5tWfZ6l2C4ySBGaf3AdJD4IOZU6C2RxTFnYpObQTtTDyypSVJfB89cKfI
+ PAEdDgucqPJbJcLMCbxDnhxbGEmaDrwYIM3K6YGmjUeRwrvMIV+ITOUfN5XlNnywG2Oi
+ iAy+icq1rf8nE0XWk62NJKDHSx4hzycy2PeV2SH2Q1+1foYro/mY66KveeFsxH7yMc7V
+ 4fEXL90j5bNM+PLTQ0Q9Ig5/Ui5sX1voOhc03ENvXNh4NS0EcDnmUHPlAh4rBWa9E0nL
+ P/+0PF4DGWOaDzRhmSEe4Dwg6KeqbuVL0vEdkGjnSriVq/E+Om+4Bxmb6XmlsSPmdiYE
+ VLOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741029817; x=1741634617;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bl5On9k/V9AzXz5wfiLyRv7wQgqEYXE2HlwhsnKy1sk=;
+ b=Qt8iohwZR/+ShB1a5t+wIpag7csJyqoSVT1o4lGCMlhi64jZltqEXeQg5SJQm83mL5
+ dHxffhDqRytlAa9ugao1x0/NwV3eihZBh9RWKLuJd5PZbXJw0/8gefH0zyNiFbNxgt3L
+ fmuKqx5rzPDfxggzoeS2Ju3R2UBzXQ9x/oB8auB3XpXKbbgOj5dbEMfgbTx/K82vV+mJ
+ oFMmA7E40Bsgphs2L9eJS2KhIUwkzhVWprn8Mz11G7gJct9amfpE01xckVMNmGO4Abjr
+ J+mtLlVjKev5QaLt0yDz99K1L+mUZrDAYJv3A5uOyq1517+yoxfg8zSu3GwVyeMJb/0a
+ C74g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZ7BryWoPxKP0w9t9pvfXQLk5s/ataZeTNi8p9ZxDdFIz0fIuv+IpQRy6SuwybhmPtpzJkQrBFA5H2@nongnu.org
+X-Gm-Message-State: AOJu0YyyiPjDDReZgIE7+xPZ8+qIrX5Q9Rhdd2JiRSu4b6kLW1LJZihV
+ O9bYgz/Ty1NY+PZqavUxCD9luKAY4GQYF4QQdUJ1BNd/3TNH+TIH2gnk7CUT9Bw=
+X-Gm-Gg: ASbGncu0WAh3SKM/86I0JMnPbad/Q4MXn+Ta54HfdaBoT/jyNQgvS1UA0BnXxnQDOVx
+ eBoknpL4X0AzvyzcxqqIcRBA+TeGiFkW8blM9kDupIOSJQFg5lEBoHmTRLtaL/u75cmomntqau3
+ uikVi0u3/q+s/9RgNAxQpnM+isvJE5Cw7B3LYgJhEWvnQ7vic7H1X+4B7TFKGrmUo0nC/3jeRka
+ yXTkHpPg1h2oXkiJ8nAL3F+axAjze8rciqYhipE+yHlk7jVJ2KSkDMMxfivv+80o2t1eZnwIRrQ
+ iQO3YroeYkVn5rRfrD1Ju5rxq3EiFgDwKS3j8PaKUKsqXU797/lwIaYanEcu1yyDf8l87pj3xdh
+ Ow4/DKXZdUVgm
+X-Google-Smtp-Source: AGHT+IGBTv1hO3ddAudZvFWQ+Sp3hhlnCcuqo7eZjuvFgEkZHcQf8rOibCcFUScrvV798Hj9fme6Ew==
+X-Received: by 2002:a5d:64af:0:b0:390:f738:2467 with SMTP id
+ ffacd0b85a97d-390f7382999mr9655552f8f.33.1741029816706; 
+ Mon, 03 Mar 2025 11:23:36 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e4796084sm15584542f8f.19.2025.03.03.11.23.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Mar 2025 11:23:36 -0800 (PST)
+Message-ID: <1f53a845-1680-41c5-82c2-606492098b80@linaro.org>
+Date: Mon, 3 Mar 2025 20:23:34 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v17 11/11] hw/vmapple/vmapple: Add vmapple machine type
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
+ mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, Alexander Graf
+ <graf@amazon.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20250112210056.16658-1-phil@philjordan.eu>
+ <20250112210056.16658-12-phil@philjordan.eu>
+ <2a4229cf-c789-41ed-ab46-0f0fd9efd19a@linaro.org>
+Content-Language: en-US
+In-Reply-To: <2a4229cf-c789-41ed-ab46-0f0fd9efd19a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250224082417.31382-1-yongxuan.wang@sifive.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kchamart@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,114 +108,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 24, 2025 at 04:24:07PM +0800, Yong-Xuan Wang wrote:
-> This series introduces the user-space AIA MSI emulation when using KVM
-> acceleration.
+On 3/3/25 19:20, Philippe Mathieu-Daudé wrote:
+> On 12/1/25 22:00, Phil Dennis-Jordan wrote:
+>> From: Alexander Graf <graf@amazon.com>
+>>
+>> Apple defines a new "vmapple" machine type as part of its proprietary
+>> macOS Virtualization.Framework vmm. This machine type is similar to the
+>> virt one, but with subtle differences in base devices, a few special
+>> vmapple device additions and a vastly different boot chain.
+>>
+>> This patch reimplements this machine type in QEMU. To use it, you
+>> have to have a readily installed version of macOS for VMApple,
+>> run on macOS with -accel hvf, pass the Virtualization.Framework
+>> boot rom (AVPBooter) in via -bios, pass the aux and root volume as pflash
+>> and pass aux and root volume as virtio drives. In addition, you also
+>> need to find the machine UUID and pass that as -M vmapple,uuid= 
+>> parameter:
+>>
+>> $ qemu-system-aarch64 -accel hvf -M vmapple,uuid=0x1234 -m 4G \
+>>      -bios /System/Library/Frameworks/Virtualization.framework/ 
+>> Versions/A/Resources/AVPBooter.vmapple2.bin
+>>      -drive file=aux,if=pflash,format=raw \
+>>      -drive file=root,if=pflash,format=raw \
+>>      -drive file=aux,if=none,id=aux,format=raw \
+>>      -device vmapple-virtio-blk-pci,variant=aux,drive=aux \
+>>      -drive file=root,if=none,id=root,format=raw \
+>>      -device vmapple-virtio-blk-pci,variant=root,drive=root
+>>
+>> With all these in place, you should be able to see macOS booting
+>> successfully.
+>>
+>> Known issues:
+>>   - Currently only macOS 12 guests are supported. The boot process for
+>>     13+ will need further investigation and adjustment.
+>>
+>> Signed-off-by: Alexander Graf <graf@amazon.com>
+>> Co-authored-by: Phil Dennis-Jordan <phil@philjordan.eu>
+>> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+>> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
 > 
-> After this series, RISC-V QEMU virt machine with KVM acceleration has
-> 3 parameters to control the type of irqchip and its emulation method:
-> - Machine prop "aia" controls the type of irqchip
->   - none: use PLIC and emulated in user-space
->   - aplic: use AIA wired and emulated in user-space
->   - aplic-imsic: use AIA MSI, emulation mode is determined by
->     "kernel-irqchip" and "riscv-aia". This can only be used
->     when the host machine support the AIA extension.
-> - Accel prop "kernel-irqchip", effective with AIA MSI
->   - on: in-kernel APLIC and in-kernel IMSIC
->   - off: user-space APLIC and user-space IMSIC
->   - split: user-space APLIC and in-kernel IMSIC
-> - Accel prop "riscv-aia", effective with in-kernel IMSIC
->   - emul: use MRIF as in-kernel IMSIC
->   - hw: use hardware guest IMSIC file as in-kernel IMSIC
->   - auto: use the hardware guest IMSICs whenever available otherwise
->     fallback to MRIF
-
-[...]
-
-> Yong-Xuan Wang (8):
->   target/riscv/kvm: rewrite get/set for KVM_REG_RISCV_CSR
->   target/riscv/kvm: add KVM_REG_RISCV_CSR_AIA
->   target/riscv/kvm: add KVM_REG_RISCV_CSR_SMSTATEEN
->   target/riscv: add helper to get CSR name
->   target/riscv/kvm: rewrite kvm_riscv_handle_csr
->   target/riscv/kvm: add CSR_SIREG and CSR_STOPEI emulation
->   docs: update the description about RISC-V AIA
->   hw/intc/imsic: prevent to use IMSIC when host doesn't support AIA
->     extension
 > 
->  docs/specs/riscv-aia.rst   |  24 +++-
->  docs/system/riscv/virt.rst |  10 +-
->  hw/intc/riscv_imsic.c      |  17 ++-
->  target/riscv/cpu.h         |  10 +-
->  target/riscv/csr.c         |  30 ++---
->  target/riscv/kvm/kvm-cpu.c | 235 +++++++++++++++++++++++++++++++------
->  6 files changed, 254 insertions(+), 72 deletions(-)
+>>   MAINTAINERS                 |   1 +
+>>   contrib/vmapple/uuid.sh     |   9 +
+>>   docs/system/arm/vmapple.rst |  63 ++++
+>>   docs/system/target-arm.rst  |   1 +
+>>   hw/vmapple/Kconfig          |  20 ++
+>>   hw/vmapple/meson.build      |   1 +
+>>   hw/vmapple/vmapple.c        | 618 ++++++++++++++++++++++++++++++++++++
+>>   7 files changed, 713 insertions(+)
+>>   create mode 100755 contrib/vmapple/uuid.sh
+>>   create mode 100644 docs/system/arm/vmapple.rst
+>>   create mode 100644 hw/vmapple/vmapple.c
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index e220744abf..3a3d9e19f4 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -2791,6 +2791,7 @@ M: Phil Dennis-Jordan <phil@philjordan.eu>
+>>   S: Maintained
+>>   F: hw/vmapple/*
+>>   F: include/hw/vmapple/*
+>> +F: docs/system/arm/vmapple.rst
+>>   Subsystems
+>>   ----------
+>> diff --git a/contrib/vmapple/uuid.sh b/contrib/vmapple/uuid.sh
+>> new file mode 100755
+>> index 0000000000..956e8c3afe
+>> --- /dev/null
+>> +++ b/contrib/vmapple/uuid.sh
+>> @@ -0,0 +1,9 @@
+>> +#!/bin/sh
+>> +# Used for converting a guest provisioned using Virtualization.framework
+>> +# for use with the QEMU 'vmapple' aarch64 machine type.
+>> +#
+>> +# Extracts the Machine UUID from Virtualization.framework VM JSON file.
+>> +# (as produced by 'macosvm', passed as command line argument)
+>> +
+>> +plutil -extract machineId raw "$1" | base64 -d | plutil -extract ECID 
+>> raw -
+>> +
+>> diff --git a/docs/system/arm/vmapple.rst b/docs/system/arm/vmapple.rst
+>> new file mode 100644
+>> index 0000000000..5090a8997c
+>> --- /dev/null
+>> +++ b/docs/system/arm/vmapple.rst
+>> @@ -0,0 +1,63 @@
+> 
+> Alex, Phil, we now mandate a SPDX tag. Due to the license used in
+> vmapple.c in this patch, are you OK with me squashing here:
+> 
+> -- >8 --
+> diff --git a/docs/system/arm/vmapple.rst b/docs/system/arm/vmapple.rst
+> index 5090a8997c3..c5b1bcf45ea 100644
+> --- a/docs/system/arm/vmapple.rst
+> +++ b/docs/system/arm/vmapple.rst
+> @@ -0,0 +1,2 @@
+> +.. SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> diff --git a/contrib/vmapple/uuid.sh b/contrib/vmapple/uuid.sh
+> index 956e8c3afed..f5637221d23 100755
+> --- a/contrib/vmapple/uuid.sh
+> +++ b/contrib/vmapple/uuid.sh
+> @@ -1,0 +2 @@
+> +#
+> @@ -6,0 +8,2 @@
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> ---
+> 
+> ?
+> 
+>> +VMApple machine emulation
+>> +========================================================================================
+>> +
+>> +VMApple is the device model that the macOS built-in hypervisor called 
+>> "Virtualization.framework"
+>> +exposes to Apple Silicon macOS guests. The "vmapple" machine model in 
+>> QEMU implements the same
+>> +device model, but does not use any code from Virtualization.Framework.
+>> +
+>> +Prerequisites
+>> +-------------
+>> +
+>> +To run the vmapple machine model, you need to
+>> +
+>> + * Run on Apple Silicon
+>> + * Run on macOS 12.0 or above
+>> + * Have an already installed copy of a Virtualization.Framework macOS 
+>> 12 virtual
+>> +   machine. Note that newer versions than 12.x are currently NOT 
+>> supported on
+>> +   the guest side. I will assume that you installed it using the
+>> +   `macosvm <https://github.com/s-u/macosvm>` CLI.
 
+I'm also squashing here:
 
-I don't pretend to grok all the details here, and I couldn't test the
-KVM-acceleration path ("-accel kvm,kernel-irqchip=split"), as I don't
-yet have hardware to test.  I was able to test the TCG part:
+-- >8 --
+diff --git a/docs/system/arm/vmapple.rst b/docs/system/arm/vmapple.rst
+index c5b1bcf45e..35c329ea5a 100644
+--- a/docs/system/arm/vmapple.rst
++++ b/docs/system/arm/vmapple.rst
+@@ -19,3 +19,3 @@ To run the vmapple machine model, you need to
+     the guest side. I will assume that you installed it using the
+-   `macosvm <https://github.com/s-u/macosvm>` CLI.
++   `macosvm <https://github.com/s-u/macosvm>`__ CLI.
 
-I'm at:
+---
 
-    $> git describe
-    v9.2.0-1976-g68d58113df
+to avoid when building the documentation:
 
-My QEMU command-line is here[1].  I tried out these two variataions:
-
-    ... -machine virt,accel=tcg,aia=aplic,kernel-irqchip=split ...
-
-    ... -machine virt,accel=tcg,aia=aplic-imsic,kernel-irqchip=split ...
-
-And booted a Fedora-41 RISC-V host-generic guest image from here:
-
-    https://dl.fedoraproject.org/pub/alt/risc-v/release/41/Server/riscv64/images/
-
-As near as I see, nothing exploded :)
-
-I see that:
-
-  - From the docs: “aia=aplic” selects APLIC (advanced platform level
-    interrupt controller) to handle wired interrupts whereas the
-    “aia=aplic-imsic” selects APLIC and IMSIC (incoming message signaled
-    interrupt controller) to handle both wired interrupts and MSIs
-
-  - There's no user-visible change here, but only a developer-visible
-    change: in terms of what's being emulated in userspace vs. in-kernel
-    irqchip.)
-
-So, if it's still not too late:
-
-    Tested-by: Kashyap Chamarthy <kchamart@redhat.com>
-
-        * * *
-
-[1] QEMU command-line:
-------------------------------------------------------------------------
-$ ./qemu-system-riscv64
--display none
--cpu max
--no-user-config
--nodefaults
--serial stdio
--smp 4,sockets=4,cores=1,threads=1
--machine virt,accel=tcg,aia=aplic,kernel-irqchip=split
--blockdev node-name=node-Base1,driver=raw,file.driver=file,file.filename=./base1.raw,file.node-name=node-Base1-file
--device virtio-blk,drive=node-Base1,id=virtio0
--device virtio-net-device,netdev=net \
--netdev user,id=net,hostfwd=tcp::2222-:22 \
--blockdev '{"driver":"file","filename":"/usr/share/edk2/riscv/RISCV_VIRT_CODE.qcow2","node-name":"pflash0-storage","auto-read-only":true,"discard":"unmap"}' \
--blockdev '{"node-name":"pflash0-format","read-only":true,"driver":"qcow2","file":"pflash0-storage"}' \
--blockdev '{"driver":"file","filename":"/var/lib/libvirt/qemu/nvram/base1_VARS.qcow2","node-name":"pflash1-storage","auto-read-only":true,"discard":"unmap"}' \
--blockdev '{"node-name":"pflash1-format","read-only":false,"driver":"qcow2","file":"pflash1-storage"}' \
--machine virt,usb=off,dump-guest-core=off,memory-backend=riscv_virt_board.ram,pflash0=pflash0-format,pflash1=pflash1-format,acpi=off \
--m size=4194304k \
--object '{"qom-type":"memory-backend-ram","id":"riscv_virt_board.ram","size":4294967296}' \
--object rng-random,filename=/dev/urandom,id=rng \
--device virtio-rng-device,rng=rng 
-------------------------------------------------------------------------
-
--- 
-/kashyap
-
+docs/system/arm/vmapple.rst:17:'any' reference target not found: 
+https://github.com/s-u/macosvm
+ninja: build stopped: subcommand failed.
 
