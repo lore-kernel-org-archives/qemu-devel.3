@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B09EC282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:35:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C84C282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp387-0008Hb-9P; Mon, 03 Mar 2025 05:34:35 -0500
+	id 1tp3BO-0004Vs-OZ; Mon, 03 Mar 2025 05:37:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tp37p-000896-ML; Mon, 03 Mar 2025 05:34:18 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
+ id 1tp3BK-0004VP-VU
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:37:54 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tp37n-00076L-NA; Mon, 03 Mar 2025 05:34:17 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2fee05829edso2995843a91.3; 
- Mon, 03 Mar 2025 02:34:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
+ id 1tp3BG-0007fn-7a
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:37:54 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5dca468c5e4so7528264a12.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 02:37:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740998053; x=1741602853; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=vrull.eu; s=google; t=1740998268; x=1741603068; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vCrkW5/SSBdsD828jdLH1Sz2kRQnvu37ag8EUtNq8pY=;
- b=jSXvhUgKmmoY1PMzFRPlp2HGcWID2IqsTf3OmfGO+vtc527e5fYoH1NTpQFqVtYv1u
- D5UfxJIsGpN2dAMOvK/82Dd7iEfctsh86pPsFh6+rO+XcypUwf+PxDSwNY1ebdyr9WhH
- vrBMBO2tnusgKJNqB4NQIdqabZwzZpZ2kMn60SRborabCK28KL+KC8XHo2ntPIjXtoW8
- MkQbnpuw4eqdIR221ZrWcUo87OWpoC+yqFlLUdh5Pka2h+l6ZWl8l6JlQyrfSmsMpA3K
- zlQFZ4TculjgJXqpY1VraN/q1XWDcZK3YmDvgEPMBMtKX8PbtUk8d5HiwigjH31p+BgE
- vyCw==
+ bh=IWsvP4Est0D00X1+iHeKuTEp0GBJk+uTvXqR44SSYzw=;
+ b=sjjm3gCShZQ2Y3KmnKiylhOF/2x+U6eY0qiGhuop2E7IYqrFtyxFkX9mtN/MSIjGTT
+ 9A4bz74xbb4tRqcmUZupqskra2l+wIS7TdcAO3lH3w76UHpN+yNl0lynFS+5VKjCMB0Y
+ AGDRqw3ty0PeIJKojYtpuLBYdJmKaRn+4FASlocYNz3bfDdedBNeBa6+SBhu94fwZJkf
+ 4DuvC3aHpuSNbRFMqoS8nOypFMUAOAelmqiN6ItCnlqtAZrasfjTiC6ofp8x+SNnmppz
+ 4s3w3L0rVYjpzYvmOMpicwhOjBFvbYufzy7cbqYnNJjNJlk4Zl8cf2PDzSUjzOeeWbbm
+ aH2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740998053; x=1741602853;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1740998268; x=1741603068;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vCrkW5/SSBdsD828jdLH1Sz2kRQnvu37ag8EUtNq8pY=;
- b=EQV4KxpxEzJVFpfziAX36Org2kss/IkZIzePk08qi5rKWpjLTNjQeaOfzKDSAvmdNM
- Rlsgc0GgXdE10uRmtOom0IxcHCBPwlkK68XEOCZfFbWU1URHiBNUire1N08FcEMLFKLl
- skjDb093nTPQkch0V/F1K73FxkwKADsEFrxmI3IAiyEuGvTkWEO7kj4TFMkVevR7eIkV
- GcUNpnIDYCdGdKL1gTWy5uhKL6XKRsgUkQHTcVGhuo+ozyk66c5/U+lu2b7l/yWH9P/M
- ABgOO4mdWt0RX92KZyzr9CGq0Xqu7LwJp3XSbN/0/K0BfAnSRJO0THHCXrji4DD3B5LI
- wrAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvnh350xGLsmDzkkHSP29QZ7Rlt2TaUROiHRhHirC1I6lcC+7F0FD1X1eDTNi2rraprIbquC9BvS+O@nongnu.org
-X-Gm-Message-State: AOJu0YxXnGfnPO7Tzyh2pGWYhAaMvENL8Z+hTvuKprll0OrjBd9pbram
- lH9904SXgnCQ0zPEAMy/bH9S4kupM4B8AjmCkDpJcOOLZhWNejeZL10ptA==
-X-Gm-Gg: ASbGncuu6jeP4aFhFbolAZLWfbjR/68A8MR1cKSiWghzrAjLLpBHX5cfo7DybPbBzvZ
- 1BeaqgRu3XZlXwtIciKJpAOeVudD/DOuGZdvIt2kmyxZ0BefgZ4U/ZA7UHKlzSemlgXmSnX7R4U
- 7jt1u7f5aHvR23R5nDtpIOf1ygRXUeGTQmPBS4a2TTsv5PgiPXaEUOr05C7WF8VeJ0x3/deAKbF
- 33C8mmapRE2/lUizdqmHmmJZYjy0+TtxfSeBMXy9/RU2W1R8FJqUqRYX0Jdpubl1G43EcQAcRJ8
- KBSyheA7VkGzTlf3FrGNHj9Rful5DnuhPVwtY6J/ydtjT3wsz8c=
-X-Google-Smtp-Source: AGHT+IEHkFKtI48I+/GXUIy7f4c4vGhNHtTfUQ3bN5Bg7PiHfFmTOt97JgCumVg5LKlGkhBeX0qkWg==
-X-Received: by 2002:a17:90a:e7c6:b0:2ee:53b3:3f1c with SMTP id
- 98e67ed59e1d1-2febab2ed89mr18729852a91.5.1740998053467; 
- Mon, 03 Mar 2025 02:34:13 -0800 (PST)
-Received: from wheely.local0.net ([118.208.151.101])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fea698f309sm8594558a91.42.2025.03.03.02.34.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Mar 2025 02:34:13 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH 3/6] ppc/pnv: Implement LPC FW address space IDSEL
-Date: Mon,  3 Mar 2025 20:33:54 +1000
-Message-ID: <20250303103359.578994-4-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250303103359.578994-1-npiggin@gmail.com>
-References: <20250303103359.578994-1-npiggin@gmail.com>
+ bh=IWsvP4Est0D00X1+iHeKuTEp0GBJk+uTvXqR44SSYzw=;
+ b=m9UVEri2Led+9oD1naey6HNveCRs/NDtocIQA+Mn/POhjuDj6hqPSM2F81ZQEF5ArH
+ btsczOgtB4BVN2z5X0mTOPcd7C5f5bEsbze2/lbuDZKLyKc9Zu5rC8hcevg1yaeO0gQp
+ SDnPDdvqEzeef5mSeMEhgvuEw7GJsaMkNLzNN1LcuDEofu/9pZeQ5LsnPhsks7AGrICA
+ g9gpuTwQSt/8pZ3wmtpz5gAO2eB59xlK7fQK9gdKOLghhiktdPF2id1VulRbBWUZOri+
+ AWeogz9nzHItfcZjqT42K/4ov2ejjia289fIWRNR096G9uomMoqRgXcQEkIigsiVVUkS
+ m1zw==
+X-Gm-Message-State: AOJu0YxEwZNWksmlZv6K2Khrj+G3/kVpW7HJRn5Crc/0r3UVGb7xAmOL
+ XhUlH5+D3wpEgmMKRrz2qN+oUQgIs3iSk6jKES6asyBDPhehH09/aquP+d4qr/Vrv2nHZVi/fCA
+ /VSzQ44lXLUsiAIyLWDh38tc8eCwEQcRXWprYFg==
+X-Gm-Gg: ASbGncuFD21ByRu9YGTH8RDBro0DlX7IkJKAfEm2aaKmTdInvrT+2Wr5SC7M8wDN1cW
+ r24M6QqJ9pIlgUFL1JKUbzt9cxoNE32ZhR40wAoqzLaKDLuZmAhxStdXkn8DB/I1p8dBq7NLYj9
+ 78sLw+K3sThfWB63BNfxL2ogTLtLA=
+X-Google-Smtp-Source: AGHT+IE+HwDQ65bo90jmzgdRBNthRqYlWzC2CGVqjoLZ0RQfKal78AO4TFnOY8ElajtCcUyHmLFDj7STiquAxZrfxSo=
+X-Received: by 2002:a05:6402:2711:b0:5d0:aa2d:6eee with SMTP id
+ 4fb4d7f45d1cf-5e4d6b6fcf1mr13907321a12.26.1740998267830; Mon, 03 Mar 2025
+ 02:37:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1036.google.com
+References: <20250303100927.3443321-1-christoph.muellner@vrull.eu>
+ <CAHtqR7WAa09mwhO1QeQb9b7NR==ajLnuDC=L=NzYHNSS-6kjZQ@mail.gmail.com>
+In-Reply-To: <CAHtqR7WAa09mwhO1QeQb9b7NR==ajLnuDC=L=NzYHNSS-6kjZQ@mail.gmail.com>
+From: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
+Date: Mon, 3 Mar 2025 11:37:37 +0100
+X-Gm-Features: AQ5f1Jqq5EUbs-jVu5Ma4c-O7Xiqkv9niW-76ZTDsORok2mdSk7tr_HL8gAcgzw
+Message-ID: <CAEg0e7gHD+=YipqOrv_TBuMuZ3zxwtmERHVt0g8ZfiuwUK6mUQ@mail.gmail.com>
+Subject: Re: [PATCH] contrib/plugins: Install plugins to moddir
+To: =?UTF-8?B?5rGq6bmP56iL?= <wangpengcheng.pp@bytedance.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=christoph.muellner@vrull.eu; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,59 +97,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LPC FW address space is a 256MB (28-bit) region to one of 16-devices
-that are selected with the IDSEL register. Implement this by making
-the ISA FW address space 4GB, and move the 256MB OPB alias within
-that space according to IDSEL.
+On Mon, Mar 3, 2025 at 11:24=E2=80=AFAM =E6=B1=AA=E9=B9=8F=E7=A8=8B <wangpe=
+ngcheng.pp@bytedance.com> wrote:
+>
+> What about plugins under `tests/tcg/plugins/`?
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- hw/ppc/pnv_lpc.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+It feels a bit odd to install something from the tests directory.
+If certain plugins in tests/tcg/plugins are of general use (not just
+for testing) then it might be
+reasonable to move them to contrib/plugins.
 
-diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
-index 0e02ce6e940..d812dc82681 100644
---- a/hw/ppc/pnv_lpc.c
-+++ b/hw/ppc/pnv_lpc.c
-@@ -85,7 +85,7 @@ enum {
- 
- #define ISA_IO_SIZE             0x00010000
- #define ISA_MEM_SIZE            0x10000000
--#define ISA_FW_SIZE             0x10000000
-+#define ISA_FW_SIZE             0x100000000
- #define LPC_IO_OPB_ADDR         0xd0010000
- #define LPC_IO_OPB_SIZE         0x00010000
- #define LPC_MEM_OPB_ADDR        0xe0000000
-@@ -561,10 +561,13 @@ static void lpc_hc_write(void *opaque, hwaddr addr, uint64_t val,
- 
-     switch (addr) {
-     case LPC_HC_FW_SEG_IDSEL:
--        /* XXX Actually figure out how that works as this impact
--         * memory regions/aliases
-+        /*
-+         * ISA FW "devices" are modeled as 16x256MB windows into a
-+         * 4GB LPC FW address space.
-          */
-+        val &= 0xf; /* Selects device 0-15 */
-         lpc->lpc_hc_fw_seg_idsel = val;
-+        memory_region_set_alias_offset(&lpc->opb_isa_fw, val * LPC_FW_OPB_SIZE);
-         break;
-     case LPC_HC_FW_RD_ACC_SIZE:
-         lpc->lpc_hc_fw_rd_acc_size = val;
-@@ -798,9 +801,9 @@ static void pnv_lpc_realize(DeviceState *dev, Error **errp)
-     memory_region_init(&lpc->opb_mr, OBJECT(dev), "lpc-opb", 0x100000000ull);
-     address_space_init(&lpc->opb_as, &lpc->opb_mr, "lpc-opb");
- 
--    /* Create ISA IO and Mem space regions which are the root of
--     * the ISA bus (ie, ISA address spaces). We don't create a
--     * separate one for FW which we alias to memory.
-+    /*
-+     * Create ISA IO, Mem, and FW space regions which are the root of
-+     * the ISA bus (ie, ISA address spaces).
-      */
-     memory_region_init(&lpc->isa_io, OBJECT(dev), "isa-io", ISA_IO_SIZE);
-     memory_region_init(&lpc->isa_mem, OBJECT(dev), "isa-mem", ISA_MEM_SIZE);
--- 
-2.47.1
 
+
+> From: "Christoph M=C3=BCllner"<christoph.muellner@vrull.eu>
+> Date: Mon, Mar 3, 2025, 18:09
+> Subject: [External] [PATCH] contrib/plugins: Install plugins to moddir
+> To: <qemu-devel@nongnu.org>, "Alex Benn=C3=A9e"<alex.bennee@linaro.org>, =
+"Alexandre Iooss"<erdnaxe@crans.org>, "Mahmoud Mandour"<ma.mandourr@gmail.c=
+om>, "Pierrick Bouvier"<pierrick.bouvier@linaro.org>
+> Cc: "Wang Pengcheng"<wangpengcheng.pp@bytedance.com>, "Christoph M=C3=BCl=
+lner"<christoph.muellner@vrull.eu>
+> Currently the built plugins can only be found in the build directory.
+> This patch lists them as installable objects, which will be copied
+> into qemu_moddir with `make install`.
+>
+> Signed-off-by: Christoph M=C3=BCllner <christoph.muellner@vrull.eu>
+> ---
+>  contrib/plugins/meson.build | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+> index 82c97ca0f5..c25a1871b7 100644
+> --- a/contrib/plugins/meson.build
+> +++ b/contrib/plugins/meson.build
+> @@ -14,11 +14,15 @@ if get_option('plugins')
+>                          include_directories: '../../include/qemu',
+>                          link_depends: [win32_qemu_plugin_api_lib],
+>                          link_args: win32_qemu_plugin_api_link_flags,
+> -                        dependencies: glib)
+> +                        dependencies: glib,
+> +                        install: true,
+> +                        install_dir: qemu_moddir)
+>      else
+>        t +=3D shared_module(i, files(i + '.c'),
+>                          include_directories: '../../include/qemu',
+> -                        dependencies: glib)
+> +                        dependencies: glib,
+> +                        install: true,
+> +                        install_dir: qemu_moddir)
+>      endif
+>    endforeach
+>  endif
+> --
+> 2.47.1
 
