@@ -4,53 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60D88C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 18:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F09C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 18:21:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpAHM-0006jG-9r; Mon, 03 Mar 2025 13:12:37 -0500
+	id 1tpAPL-0000SZ-Eh; Mon, 03 Mar 2025 13:20:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuanmh12@chinatelecom.cn>)
- id 1tpAGy-0006bL-CN
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 13:12:12 -0500
-Received: from smtpnm6-08.21cn.com ([182.42.159.130] helo=chinatelecom.cn)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <yuanmh12@chinatelecom.cn>) id 1tpAGv-00047I-12
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 13:12:12 -0500
-HMM_SOURCE_IP: 192.168.137.232:0.491197274
-HMM_ATTACHE_NUM: 0000
-HMM_SOURCE_TYPE: SMTP
-Received: from clientip-125.69.36.133 (unknown [192.168.137.232])
- by chinatelecom.cn (HERMES) with SMTP id 98A589063223;
- Tue,  4 Mar 2025 02:02:33 +0800 (CST)
-X-189-SAVE-TO-SEND: yuanmh12@chinatelecom.cn
-Received: from  ([125.69.36.133])
- by gateway-ssl-dep-84dfd8c7d7-bsrdr with ESMTP id
- 65809addb1854f7eb06a0c0470c52420 for imammedo@redhat.com; 
- Tue, 04 Mar 2025 02:02:36 CST
-X-Transaction-ID: 65809addb1854f7eb06a0c0470c52420
-X-Real-From: yuanmh12@chinatelecom.cn
-X-Receive-IP: 125.69.36.133
-X-MEDUSA-Status: 0
-From: yuanminghao <yuanmh12@chinatelecom.cn>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: [PATCH 1/1] vhost: do not reset used_memslots when destroying
- vhost dev
-Date: Mon,  3 Mar 2025 13:02:17 -0500
-Message-Id: <1741024937-37164-1-git-send-email-yuanmh12@chinatelecom.cn>
-X-Mailer: git-send-email 1.8.3.1
-Received-SPF: pass client-ip=182.42.159.130;
- envelope-from=yuanmh12@chinatelecom.cn; helo=chinatelecom.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpAP9-0000QW-Fk
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 13:20:40 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpAP4-0007LP-I7
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 13:20:39 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-439846bc7eeso30689475e9.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 10:20:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741026031; x=1741630831; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0YoHIuFSEeK7MKuSnvIBX2jv7utQoX9b++yL0jPdWzI=;
+ b=wMoRW3ZFLUlZDw1zZQkrUba12Xi5MUw5CVC7dg/cIQ+Ds8tWmmMahCwB1Y1aj0zDSb
+ cwVQmH9sy6DEMthZe5T8RdC8yUfONfNuxZjkqMyTvJQTYVDlK8HHWD9FDGcrDiarPchB
+ osUZ3l/nFRkxMYci6x+q3XpUftG2JGE5T1qqzEEOwhHnuKKTYNgY8yubIfkE5lA2JPV/
+ p43eqyE3/si9kOrQkvEHX93pe8HQjfWgZaT7IQdzEPWVgC9Pz/7uNyRF9yHTP3r+E0qs
+ 8D685wgmV0PSY/+0ENMUAeaE2cmuNOhEqljLjoQMJ1kYKf3yGQhCjuUTLJzCpHj3WGZ3
+ V10w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741026031; x=1741630831;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0YoHIuFSEeK7MKuSnvIBX2jv7utQoX9b++yL0jPdWzI=;
+ b=UY7hWGY0TZ5iplHfEtT7JrXQfCK0Q9xCidbIvaGOvyBwskMhkOTgn+6KQ2IHgYkV+G
+ hMQshOvjRtQfPyRV82TAcE7r7y3RJjK84k/k1xcbUfrnjBaRHQL58yDTB62z2hDvYu0o
+ F8cBbKGjNfHVmLcleFndjGTDRxHrtQyzSGHtpkSSOcPF6A4f8i5hsExxfqKCJWC6KtjI
+ lwgnD8PxydCo2FoGo4oEMiyEpBL7ScOZarIIdH7mhyV8O9D7B/yTZLU4C1wcwaro7ZYF
+ RQrDBvIIp86anYDNzHhtKH9JerjIaVHkpNoUvlvBmT1pb4PiQ76hidkPg+PScsSXIOJm
+ ksJQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWsXYCjR3rl+HaXrwHgxZnVsGiLRlDq1LsI9z/5uChVWnGijPLzn1dBo/Phr3RC5+Rtq/h0i5yYtcWI@nongnu.org
+X-Gm-Message-State: AOJu0YzsAcUYkhphiH2YATBtAw8iJP+40G76Tan+6Ixe6WLzenqn7fhh
+ Zo6mQar3ob5a1sxFj57lhprM1CD9u+pDEsxlszoUkdrBYegWdf+vCChj/6nSvntqP2aCsH6cGUS
+ 423o=
+X-Gm-Gg: ASbGncvkYyy26N35N+qZnHHavzbZ1nx4FXlp5FN/HyrIOmdT6+UOKraiXF2awEa+uNl
+ jXDjl6D7OzKQqvJMa5FTIRlZwf3lSOJkBV02Cp/Lwy86ES/vQEkv8CvUtXUZv3WWsyD6BdymEzP
+ VzDM9cV1q9VqFpzePgnHaaWjT0aSXZbcwIFy+GEXKX3ZfeJW9XsbEStlCQ7+HdA4pID8jvXhdTw
+ yd2ewh4OU398vY7yzyt1jyyh6ShjC0jNAarhr1ZdX6G2SzYRyU3zYGl0IOerhiuXtw4H5WwO+O2
+ zI7i/G83pBf4xLNZrmaymjP0hF2YsSpXCkb84MaWI7eYEt7L9O9eo0qjTFCOiTq54ftNUmU4XqA
+ M2LDzdPXE6hB6
+X-Google-Smtp-Source: AGHT+IHYpQJiw6D332lVy4EcKWWuN4LOWdPsUvliKRIMjFhzqLnuhqEqsDiMM8QyWshwujZvs5a/Pw==
+X-Received: by 2002:a05:600c:3b18:b0:43b:caac:5934 with SMTP id
+ 5b1f17b1804b1-43bcaac5c6emr5374455e9.10.1741026030801; 
+ Mon, 03 Mar 2025 10:20:30 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43aba5871f4sm203944225e9.39.2025.03.03.10.20.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Mar 2025 10:20:29 -0800 (PST)
+Message-ID: <2a4229cf-c789-41ed-ab46-0f0fd9efd19a@linaro.org>
+Date: Mon, 3 Mar 2025 19:20:28 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v17 11/11] hw/vmapple/vmapple: Add vmapple machine type
+To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
+ mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, Alexander Graf
+ <graf@amazon.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20250112210056.16658-1-phil@philjordan.eu>
+ <20250112210056.16658-12-phil@philjordan.eu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250112210056.16658-12-phil@philjordan.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,115 +108,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > Global used_memslots or used_shared_memslots is updated to 0 unexpectly
+On 12/1/25 22:00, Phil Dennis-Jordan wrote:
+> From: Alexander Graf <graf@amazon.com>
 > 
-> it shouldn't be 0 in practice, as it comes from number of RAM regions VM has.
-> It's likely a bug somewhere else.
+> Apple defines a new "vmapple" machine type as part of its proprietary
+> macOS Virtualization.Framework vmm. This machine type is similar to the
+> virt one, but with subtle differences in base devices, a few special
+> vmapple device additions and a vastly different boot chain.
 > 
-> Please describe a way to reproduce the issue.
+> This patch reimplements this machine type in QEMU. To use it, you
+> have to have a readily installed version of macOS for VMApple,
+> run on macOS with -accel hvf, pass the Virtualization.Framework
+> boot rom (AVPBooter) in via -bios, pass the aux and root volume as pflash
+> and pass aux and root volume as virtio drives. In addition, you also
+> need to find the machine UUID and pass that as -M vmapple,uuid= parameter:
 > 
-Hi, Igor Mammedov,
-  Sorry for the late response, here are the steps to reproduce the issue:
+> $ qemu-system-aarch64 -accel hvf -M vmapple,uuid=0x1234 -m 4G \
+>      -bios /System/Library/Frameworks/Virtualization.framework/Versions/A/Resources/AVPBooter.vmapple2.bin
+>      -drive file=aux,if=pflash,format=raw \
+>      -drive file=root,if=pflash,format=raw \
+>      -drive file=aux,if=none,id=aux,format=raw \
+>      -device vmapple-virtio-blk-pci,variant=aux,drive=aux \
+>      -drive file=root,if=none,id=root,format=raw \
+>      -device vmapple-virtio-blk-pci,variant=root,drive=root
+> 
+> With all these in place, you should be able to see macOS booting
+> successfully.
+> 
+> Known issues:
+>   - Currently only macOS 12 guests are supported. The boot process for
+>     13+ will need further investigation and adjustment.
+> 
+> Signed-off-by: Alexander Graf <graf@amazon.com>
+> Co-authored-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
 
-  1.start a domain with 1Core 1GiB memory, no network interface.
-  2.print used_memslots with gdb
-    gdb -p ${qemupid} <<< "p used_memslots"
-    $1 = 0
-  3.attach a network interface net1
-  cat>/tmp/net1.xml <<EOF
-  <interface type='network'>
-    <mac address='52:54:00:12:34:56'/>
-    <source network='default'/>
-    <model type='virtio'/>
-  </interface>
-  EOF
-  virsh attach-device dom /tmp/net1.xml --live
-  4.print current used_memslots with gdb
-    gdb -p ${qemupid} <<< "p used_memslots"
-    $1 = 2
-  5.attach another network interface net2
-  cat>/tmp/net2.xml <<EOF
-  <interface type='network'>
-    <mac address='52:54:00:12:34:78'/>
-    <source network='default'/>
-    <model type='virtio'/>
-  </interface>
-  EOF
-  virsh attach-device dom /tmp/net2.xml --live
-  6.print current used_memslots with gdb
-    gdb -p ${qemupid} <<< "p used_memslots"
-    $1 = 2
-  7.detach network interface net2
-  virsh detach-device dom /tmp/net2.xml --live
-  8.print current used_memslots with gdb
-    gdb -p ${qemupid} <<< "p used_memslots"
-    $1 = 0
-After detaching net2, the used_memslots was reseted to 0, which was expected to be 2.
 
-> > when a vhost device destroyed. This can occur during scenarios such as live
-> > detaching a vhost device or restarting a vhost-user net backend (e.g., OVS-DPDK):
-> >  #0  vhost_commit(listener) at hw/virtio/vhost.c:439
-> >  #1  listener_del_address_space(as, listener) at memory.c:2777
-> >  #2  memory_listener_unregister(listener) at memory.c:2823
-> >  #3  vhost_dev_cleanup(hdev) at hw/virtio/vhost.c:1406
-> >  #4  vhost_net_cleanup(net) at hw/net/vhost_net.c:402
-> >  #5  vhost_user_start(be, ncs, queues) at net/vhost-user.c:113
-> >  #6  net_vhost_user_event(opaque, event) at net/vhost-user.c:281
-> >  #7  tcp_chr_new_client(chr, sioc) at chardev/char-socket.c:924
-> >  #8  tcp_chr_accept(listener, cioc, opaque) at chardev/char-socket.c:961
-> >
-> > So we skip the update of used_memslots and used_shared_memslots when destroying
-> > vhost devices, and it should work event if all vhost devices are removed.
-> >
-> > Signed-off-by: yuanminghao <yuanmh12@chinatelecom.cn>
-> > ---
-> >  hw/virtio/vhost.c         | 14 +++++++++-----
-> >  include/hw/virtio/vhost.h |  1 +
-> >  2 files changed, 10 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> > index 6aa72fd434..2258a12066 100644
-> > --- a/hw/virtio/vhost.c
-> > +++ b/hw/virtio/vhost.c
-> > @@ -666,11 +666,13 @@ static void vhost_commit(MemoryListener *listener)
-> >      dev->mem = g_realloc(dev->mem, regions_size);
-> >      dev->mem->nregions = dev->n_mem_sections;
-> > 
-> > -    if (dev->vhost_ops->vhost_backend_no_private_memslots &&
-> > -        dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
-> > -        used_shared_memslots = dev->mem->nregions;
-> > -    } else {
-> > -        used_memslots = dev->mem->nregions;
-> > +    if (!dev->listener_removing) {
-> > +        if (dev->vhost_ops->vhost_backend_no_private_memslots &&
-> > +            dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
-> > +            used_shared_memslots = dev->mem->nregions;
-> > +        } else {
-> > +            used_memslots = dev->mem->nregions;
-> > +        }
-> >      }
-> > 
-> >      for (i = 0; i < dev->n_mem_sections; i++) {
-> > @@ -1668,7 +1670,9 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
-> >      }
-> >      if (hdev->mem) {
-> >          /* those are only safe after successful init */
-> > +        hdev->listener_removing = true;
-> >          memory_listener_unregister(&hdev->memory_listener);
-> > +        hdev->listener_removing = false;
-> >          QLIST_REMOVE(hdev, entry);
-> >      }
-> >      migrate_del_blocker(&hdev->migration_blocker);
-> > diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> > index a9469d50bc..037f85b642 100644
-> > --- a/include/hw/virtio/vhost.h
-> > +++ b/include/hw/virtio/vhost.h
-> > @@ -133,6 +133,7 @@ struct vhost_dev {
-> >      QLIST_HEAD(, vhost_iommu) iommu_list;
-> >      IOMMUNotifier n;
-> >      const VhostDevConfigOps *config_ops;
-> > +    bool listener_removing;
-> >  };
-> > 
-> >  extern const VhostOps kernel_ops;
+>   MAINTAINERS                 |   1 +
+>   contrib/vmapple/uuid.sh     |   9 +
+>   docs/system/arm/vmapple.rst |  63 ++++
+>   docs/system/target-arm.rst  |   1 +
+>   hw/vmapple/Kconfig          |  20 ++
+>   hw/vmapple/meson.build      |   1 +
+>   hw/vmapple/vmapple.c        | 618 ++++++++++++++++++++++++++++++++++++
+>   7 files changed, 713 insertions(+)
+>   create mode 100755 contrib/vmapple/uuid.sh
+>   create mode 100644 docs/system/arm/vmapple.rst
+>   create mode 100644 hw/vmapple/vmapple.c
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index e220744abf..3a3d9e19f4 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2791,6 +2791,7 @@ M: Phil Dennis-Jordan <phil@philjordan.eu>
+>   S: Maintained
+>   F: hw/vmapple/*
+>   F: include/hw/vmapple/*
+> +F: docs/system/arm/vmapple.rst
+>   
+>   Subsystems
+>   ----------
+> diff --git a/contrib/vmapple/uuid.sh b/contrib/vmapple/uuid.sh
+> new file mode 100755
+> index 0000000000..956e8c3afe
+> --- /dev/null
+> +++ b/contrib/vmapple/uuid.sh
+> @@ -0,0 +1,9 @@
+> +#!/bin/sh
+> +# Used for converting a guest provisioned using Virtualization.framework
+> +# for use with the QEMU 'vmapple' aarch64 machine type.
+> +#
+> +# Extracts the Machine UUID from Virtualization.framework VM JSON file.
+> +# (as produced by 'macosvm', passed as command line argument)
+> +
+> +plutil -extract machineId raw "$1" | base64 -d | plutil -extract ECID raw -
+> +
+> diff --git a/docs/system/arm/vmapple.rst b/docs/system/arm/vmapple.rst
+> new file mode 100644
+> index 0000000000..5090a8997c
+> --- /dev/null
+> +++ b/docs/system/arm/vmapple.rst
+> @@ -0,0 +1,63 @@
+
+Alex, Phil, we now mandate a SPDX tag. Due to the license used in
+vmapple.c in this patch, are you OK with me squashing here:
+
+-- >8 --
+diff --git a/docs/system/arm/vmapple.rst b/docs/system/arm/vmapple.rst
+index 5090a8997c3..c5b1bcf45ea 100644
+--- a/docs/system/arm/vmapple.rst
++++ b/docs/system/arm/vmapple.rst
+@@ -0,0 +1,2 @@
++.. SPDX-License-Identifier: GPL-2.0-or-later
++
+diff --git a/contrib/vmapple/uuid.sh b/contrib/vmapple/uuid.sh
+index 956e8c3afed..f5637221d23 100755
+--- a/contrib/vmapple/uuid.sh
++++ b/contrib/vmapple/uuid.sh
+@@ -1,0 +2 @@
++#
+@@ -6,0 +8,2 @@
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
+---
+
+?
+
+> +VMApple machine emulation
+> +========================================================================================
+> +
+> +VMApple is the device model that the macOS built-in hypervisor called "Virtualization.framework"
+> +exposes to Apple Silicon macOS guests. The "vmapple" machine model in QEMU implements the same
+> +device model, but does not use any code from Virtualization.Framework.
+> +
+> +Prerequisites
+> +-------------
+> +
+> +To run the vmapple machine model, you need to
+> +
+> + * Run on Apple Silicon
+> + * Run on macOS 12.0 or above
+> + * Have an already installed copy of a Virtualization.Framework macOS 12 virtual
+> +   machine. Note that newer versions than 12.x are currently NOT supported on
+> +   the guest side. I will assume that you installed it using the
+> +   `macosvm <https://github.com/s-u/macosvm>` CLI.
+> +
+> +First, we need to extract the UUID from the virtual machine that you installed. You can do this
+> +by running the shell script in contrib/vmapple/uuid.sh on the macosvm.json file.
+> +
+> +.. code-block:: bash
+> +  :caption: uuid.sh script to extract the UUID from a macosvm.json file
+> +
+> +  $ contrib/vmapple/uuid.sh "path/to/macosvm.json"
+> +
+> +Now we also need to trim the aux partition. It contains metadata that we can just discard:
+> +
+> +.. code-block:: bash
+> +  :caption: Command to trim the aux file
+> +
+> +  $ dd if="aux.img" of="aux.img.trimmed" bs=$(( 0x4000 )) skip=1
+> +
+> +How to run
+> +----------
+> +
+> +Then, we can launch QEMU with the Virtualization.Framework pre-boot environment and the readily
+> +installed target disk images. I recommend to port forward the VM's ssh and vnc ports to the host
+> +to get better interactive access into the target system:
+> +
+> +.. code-block:: bash
+> +  :caption: Example execution command line
+> +
+> +  $ UUID="$(contrib/vmapple/uuid.sh 'macosvm.json')"
+> +  $ AVPBOOTER="/System/Library/Frameworks/Virtualization.framework/Resources/AVPBooter.vmapple2.bin"
+> +  $ AUX="aux.img.trimmed"
+> +  $ DISK="disk.img"
+> +  $ qemu-system-aarch64 \
+> +       -serial mon:stdio \
+> +       -m 4G \
+> +       -accel hvf \
+> +       -M vmapple,uuid="$UUID" \
+> +       -bios "$AVPBOOTER" \
+> +       -drive file="$AUX",if=pflash,format=raw \
+> +       -drive file="$DISK",if=pflash,format=raw \
+> +       -drive file="$AUX",if=none,id=aux,format=raw \
+> +       -drive file="$DISK",if=none,id=root,format=raw \
+> +       -device vmapple-virtio-blk-pci,variant=aux,drive=aux \
+> +       -device vmapple-virtio-blk-pci,variant=root,drive=root \
+> +       -netdev user,id=net0,ipv6=off,hostfwd=tcp::2222-:22,hostfwd=tcp::5901-:5900 \
+> +       -device virtio-net-pci,netdev=net0
+> +
 
