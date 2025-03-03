@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06037C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 22:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA9BC282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 22:16:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpE44-0007ha-On; Mon, 03 Mar 2025 17:15:08 -0500
+	id 1tpE4V-0008Ll-86; Mon, 03 Mar 2025 17:15:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE40-0007gi-NF
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:15:04 -0500
+ id 1tpE4R-0008Hp-Qj
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:15:31 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE3y-00063x-CE
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:15:04 -0500
+ id 1tpE4P-0006KS-3Q
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 17:15:31 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpE3u-00000000IEC-2I3n; Mon, 03 Mar 2025 23:14:58 +0100
-Message-ID: <ef1ac370-b368-47aa-aaa4-7f16c7c22cba@maciej.szmigiero.name>
-Date: Mon, 3 Mar 2025 23:14:53 +0100
+ id 1tpE4J-00000000IEO-1ldn; Mon, 03 Mar 2025 23:15:23 +0100
+Message-ID: <1bd9b372-26fa-4023-9198-1052e566c615@maciej.szmigiero.name>
+Date: Mon, 3 Mar 2025 23:15:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/36] migration/multifd: Device state transfer support
- - receive side
+Subject: Re: [PATCH v5 14/36] migration/multifd: Device state transfer support
+ - send side
 To: Avihai Horon <avihaih@nvidia.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <8857884d14e5e854629a32dfb96011b43945088f.1739994627.git.maciej.szmigiero@oracle.com>
- <a55c5f70-04ad-486d-96fa-5b3b75e0a5c6@nvidia.com>
+ <b7ab14bee598eef62940a8833455126e62a91c0c.1739994627.git.maciej.szmigiero@oracle.com>
+ <d446584d-b22b-43f0-99c6-dd6a2fb58670@nvidia.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <a55c5f70-04ad-486d-96fa-5b3b75e0a5c6@nvidia.com>
+In-Reply-To: <d446584d-b22b-43f0-99c6-dd6a2fb58670@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -110,11 +110,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2.03.2025 13:42, Avihai Horon wrote:
-> Hi Maciej,
-> 
-> Sorry for the long delay, I have been busy with other tasks.
-> I got some small comments for the series.
+On 2.03.2025 13:46, Avihai Horon wrote:
 > 
 > On 19/02/2025 22:33, Maciej S. Szmigiero wrote:
 >> External email: Use caution opening links or attachments
@@ -122,73 +118,124 @@ On 2.03.2025 13:42, Avihai Horon wrote:
 >>
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> Add a basic support for receiving device state via multifd channels -
->> channels that are shared with RAM transfers.
->>
->> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
->> packet header either device state (MultiFDPacketDeviceState_t) or RAM
->> data (existing MultiFDPacket_t) is read.
->>
->> The received device state data is provided to
->> qemu_loadvm_load_state_buffer() function for processing in the
->> device's load_state_buffer handler.
+>> A new function multifd_queue_device_state() is provided for device to queue
+>> its state for transmission via a multifd channel.
 >>
 >> Reviewed-by: Peter Xu <peterx@redhat.com>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 >> ---
->>   migration/multifd.c | 99 ++++++++++++++++++++++++++++++++++++++++-----
->>   migration/multifd.h | 26 +++++++++++-
->>   2 files changed, 113 insertions(+), 12 deletions(-)
+>>   include/migration/misc.h         |   4 ++
+>>   migration/meson.build            |   1 +
+>>   migration/multifd-device-state.c | 115 +++++++++++++++++++++++++++++++
+>>   migration/multifd-nocomp.c       |  14 +++-
+>>   migration/multifd.c              |  42 +++++++++--
+>>   migration/multifd.h              |  27 +++++---
+>>   6 files changed, 187 insertions(+), 16 deletions(-)
+>>   create mode 100644 migration/multifd-device-state.c
 >>
-(..)
->> index f7156f66c0f6..c2ebef2d319e 100644
->> --- a/migration/multifd.h
->> +++ b/migration/multifd.h
->> @@ -62,6 +62,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
->>   #define MULTIFD_FLAG_UADK (8 << 1)
->>   #define MULTIFD_FLAG_QATZIP (16 << 1)
+>> diff --git a/include/migration/misc.h b/include/migration/misc.h
+>> index 4c171f4e897e..bd3b725fa0b7 100644
+>> --- a/include/migration/misc.h
+>> +++ b/include/migration/misc.h
+>> @@ -118,4 +118,8 @@ bool migrate_is_uri(const char *uri);
+>>   bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
+>>                          Error **errp);
 >>
+>> +/* migration/multifd-device-state.c */
+>> +bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
+>> +                                char *data, size_t len);
+>> +
+>>   #endif
+>> diff --git a/migration/meson.build b/migration/meson.build
+>> index d3bfe84d6204..9aa48b290e2a 100644
+>> --- a/migration/meson.build
+>> +++ b/migration/meson.build
+>> @@ -25,6 +25,7 @@ system_ss.add(files(
+>>     'migration-hmp-cmds.c',
+>>     'migration.c',
+>>     'multifd.c',
+>> +  'multifd-device-state.c',
+>>     'multifd-nocomp.c',
+>>     'multifd-zlib.c',
+>>     'multifd-zero-page.c',
+>> diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
+>> new file mode 100644
+>> index 000000000000..ab83773e2d62
+>> --- /dev/null
+>> +++ b/migration/multifd-device-state.c
+>> @@ -0,0 +1,115 @@
 >> +/*
->> + * If set it means that this packet contains device state
->> + * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
+>> + * Multifd device state migration
+>> + *
+>> + * Copyright (C) 2024,2025 Oracle and/or its affiliates.
+>> + *
+>> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+>> + * See the COPYING file in the top-level directory.
 >> + */
->> +#define MULTIFD_FLAG_DEVICE_STATE (32 << 1)
 >> +
->>   /* This value needs to be a multiple of qemu_target_page_size() */
->>   #define MULTIFD_PACKET_SIZE (512 * 1024)
->>
->> @@ -94,6 +100,16 @@ typedef struct {
->>       uint64_t offset[];
->>   } __attribute__((packed)) MultiFDPacket_t;
->>
->> +typedef struct {
->> +    MultiFDPacketHdr_t hdr;
+>> +#include "qemu/osdep.h"
+>> +#include "qemu/lockable.h"
+>> +#include "migration/misc.h"
+>> +#include "multifd.h"
 >> +
->> +    char idstr[256] QEMU_NONSTRING;
->> +    uint32_t instance_id;
+>> +static struct {
+>> +    QemuMutex queue_job_mutex;
 >> +
->> +    /* size of the next packet that contains the actual data */
->> +    uint32_t next_packet_size;
->> +} __attribute__((packed)) MultiFDPacketDeviceState_t;
+>> +    MultiFDSendData *send_data;
+>> +} *multifd_send_device_state;
 >> +
->>   typedef struct {
->>       /* number of used pages */
->>       uint32_t num;
->> @@ -111,6 +127,13 @@ struct MultiFDRecvData {
->>       off_t file_offset;
->>   };
->>
->> +typedef struct {
->> +    char *idstr;
->> +    uint32_t instance_id;
->> +    char *buf;
->> +    size_t buf_len;
->> +} MultiFDDeviceState_t;
+>> +size_t multifd_device_state_payload_size(void)
+>> +{
+>> +    return sizeof(MultiFDDeviceState_t);
+>> +}
+>> +
+>> +void multifd_device_state_send_setup(void)
+>> +{
+>> +    assert(!multifd_send_device_state);
+>> +    multifd_send_device_state = g_malloc(sizeof(*multifd_send_device_state));
+>> +
+>> +    qemu_mutex_init(&multifd_send_device_state->queue_job_mutex);
+>> +
+>> +    multifd_send_device_state->send_data = multifd_send_data_alloc();
+>> +}
+>> +
+>> +void multifd_device_state_send_cleanup(void)
+>> +{
+>> +    g_clear_pointer(&multifd_send_device_state->send_data,
+>> +                    multifd_send_data_free);
+>> +
+>> +    qemu_mutex_destroy(&multifd_send_device_state->queue_job_mutex);
+>> +
+>> +    g_clear_pointer(&multifd_send_device_state, g_free);
+>> +}
+>> +
+>> +void multifd_send_data_clear_device_state(MultiFDDeviceState_t *device_state)
+>> +{
+>> +    g_clear_pointer(&device_state->idstr, g_free);
+>> +    g_clear_pointer(&device_state->buf, g_free);
+>> +}
+>> +
+>> +static void multifd_device_state_fill_packet(MultiFDSendParams *p)
+>> +{
+>> +    MultiFDDeviceState_t *device_state = &p->data->u.device_state;
+>> +    MultiFDPacketDeviceState_t *packet = p->packet_device_state;
+>> +
+>> +    packet->hdr.flags = cpu_to_be32(p->flags);
+>> +    strncpy(packet->idstr, device_state->idstr, sizeof(packet->idstr));
 > 
-> This is only used in patch #14. Maybe move it there?
+> (I think we talked about this in v2):
+> Looking at idstr creation code, idstr is always NULL terminated. It's also treated everywhere as a NULL terminated string.
+> For consistency and to avoid confusion, I'd treat it as a NULL terminated string here too (use strcpy, remove the QEMU_NONSTRING from its definition, etc.).
 
-Moved it to "send side" patch.
+Changed to NULL-terminated since AFAIK RAM idstr was also changed to such
+in the meantime.
 
+> This will also avoid strncpy() unnecessary zeroing of the extra bytes.
+
+Zeroing of remaining space is still necessary since it's a wire packet
+data structure that's re-used between packets so it still can contain
+remainder of previous longer idstr.
+  
 > Thanks.
 > 
 
