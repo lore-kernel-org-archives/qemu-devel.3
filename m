@@ -4,102 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A825C282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 16:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD34C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 16:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp906-0004eU-RS; Mon, 03 Mar 2025 11:50:44 -0500
+	id 1tp90x-00050U-Q2; Mon, 03 Mar 2025 11:51:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tp904-0004eI-Jo
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 11:50:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=Robu=VW=kaod.org=clg@ozlabs.org>)
+ id 1tp90e-0004qH-BK; Mon, 03 Mar 2025 11:51:18 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tp901-00034E-TJ
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 11:50:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741020629;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tgJADLqh85I7Ie74lMyM0bOFSMJIbVF1rQTeApsbqe8=;
- b=TzoV4bdMgWez4v4IMiBJDJl+VvnPEN4l+SoM6mCxX5gE2z+RZlKojRZT6q+BSh0gzm+wSS
- HtKluPJJdDX2BQCLGK/q0yuNr5ycv103AIxXvJz/vV/7Q+b9vzUvKaZYUM4JzKJ5pYQ+02
- mbl2qgMCBPn2pGF/9IujVVmXf8BZd8s=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-oGxzFxOCMKqBbW3GkeDviA-1; Mon, 03 Mar 2025 11:50:26 -0500
-X-MC-Unique: oGxzFxOCMKqBbW3GkeDviA-1
-X-Mimecast-MFC-AGG-ID: oGxzFxOCMKqBbW3GkeDviA_1741020625
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2236b6fb4a6so111027335ad.2
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 08:50:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741020625; x=1741625425;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tgJADLqh85I7Ie74lMyM0bOFSMJIbVF1rQTeApsbqe8=;
- b=HMXj8JivmVGcxC+IoZvCPWDsR5ZIF2Vvk9Ak4Ed/smFihdFAdczuIRly1FrdtqAK+b
- Df2KtpaL2JBmDUTRaSD31nYuS4wLDHN2gafF0SzBIo7cn6UMTEEmkJ5CR9IHztschU6C
- q4aThi6W8Ci1nxVy+BekQxNJBR9Hm9gz0kig5zegG+Twnuo4/kdI+xj5+dYHw3YjJRnM
- imxswrd1K/lDR4lHXsFVOob0+tao/0IMwTd/FjZcSveB3Talne57oYBEHarlc25CGRmE
- LGOonPO3T9//Z6uRrzk0cQZpxSChWSCgiFu8y4Iv0/cE5Wq0+hoTt1NYc9fqtpgNH8Wf
- vWlw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUKHLxV2/nQFRCaSSusQiY9uugGpc4NWdTnj4EGMw89SKKSWNvUfigWYz+46gg0YQkYDklyGc/sGV+o@nongnu.org
-X-Gm-Message-State: AOJu0YwLXm8gj2oaiXPGhakcZAOmH/H2VXE3P3XWZUN9aF5qIix7br/C
- DvCpW1Ax5fyhdDK3XUIcmM5mGhErVPFSGdPUfU/Wxttkx+EgQ2MvDYCHf0gneGVZ1BZ+2aVY4sA
- 3P4l6J7AiT1xMv49pvtxGvQFillmFNCZZe8ruVUoUWhL3qQQanWpj3M6ZE7Sxht6lvDBucfl3wB
- 4WkuC6RaIH3wXMVLBaHG/ouiPU6sw=
-X-Gm-Gg: ASbGncsbBHcAvoOexlcCEnIWyyKCeAwW9mn1w4CvXe2pTyLmw8Np7q7Bl29/0VNwdoL
- SVIl2DyDiusLGWKtrT0T/FzYclSKVDhiR1tkNdY90XnER/ZVHOqD7LX7KM2XGTYedhZtkmCih
-X-Received: by 2002:a05:6a00:2e05:b0:734:b33:d8ec with SMTP id
- d2e1a72fcca58-734ac32e963mr20637727b3a.1.1741020625121; 
- Mon, 03 Mar 2025 08:50:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH4StgDLNGBBjKUu8i36uKhexYPEsnBVbc0givmd/nkQeU/ZPjO+Ymj4UJH0XD7VCMQtz6+CgxzgXCp4AhfxQ8=
-X-Received: by 2002:a05:6a00:2e05:b0:734:b33:d8ec with SMTP id
- d2e1a72fcca58-734ac32e963mr20637695b3a.1.1741020624818; Mon, 03 Mar 2025
- 08:50:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <SRS0=Robu=VW=kaod.org=clg@ozlabs.org>)
+ id 1tp90V-0003Oe-En; Mon, 03 Mar 2025 11:51:12 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z64ZP4qhcz4x21;
+ Tue,  4 Mar 2025 03:50:53 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z64ZL2DHYz4wcr;
+ Tue,  4 Mar 2025 03:50:49 +1100 (AEDT)
+Message-ID: <fe5a2bbd-789c-4add-b256-700d98f6a107@kaod.org>
+Date: Mon, 3 Mar 2025 17:50:47 +0100
 MIME-Version: 1.0
-References: <20250226084721.232703-1-clg@redhat.com>
- <20250226084721.232703-2-clg@redhat.com>
- <a39e97c2-c6fd-34e4-f91b-b3491185b789@eik.bme.hu>
- <c60b7780-5b3f-43a0-a7f1-30820d4e6fb8@redhat.com>
- <bb7c2adf-f146-50c7-7716-c1ee7b606b01@eik.bme.hu>
- <aa01f3dd-e3ac-4ee5-87b4-8133103bd000@linaro.org>
- <270cc189-e3b2-4bf4-b32b-8655be51bcb4@redhat.com>
- <b2075e91-79ca-4d5f-b13b-151f2a59181d@redhat.com>
-In-Reply-To: <b2075e91-79ca-4d5f-b13b-151f2a59181d@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 3 Mar 2025 17:50:10 +0100
-X-Gm-Features: AQ5f1JpKgfxBP9BBoc7sRuIlyo7jBQAskFijEz8rBw3jkWuohOBjULh18j_r24M
-Message-ID: <CABgObfZ4-qKX5SCp+3fD2a54SVUZ3+fA--gq6=tf1idjQYVTrw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] vfio: Make vfio-pci available on 64-bit host
- platforms only
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel <qemu-devel@nongnu.org>, 
- Alex Williamson <alex.williamson@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
- Eric Auger <eric.auger@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000e3b2ae062f72f30c"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 21/23] tests/functional/aspeed: Update test ASPEED SDK
+ v09.05
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
+ <20250303095457.2337631-22-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250303095457.2337631-22-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=Robu=VW=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,131 +113,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e3b2ae062f72f30c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+May be add a little comment about the new ast2700-a0-default OpenBMC
+build in v09.05.
 
-Il lun 3 mar 2025, 16:05 C=C3=A9dric Le Goater <clg@redhat.com> ha scritto:
-
-> On 3/3/25 15:46, Paolo Bonzini wrote:
-> > On 3/3/25 15:30, Philippe Mathieu-Daud=C3=A9 wrote:
-> >>>>> I see PPC is defined in target/ppc/Kconfig so I think these mark th=
-e
-> target not the host. Vfio-pci works with qemu-system-ppc
-> >>>
-> >>> I've seen people do this on x86_64 host
-> >>
-> >> Since this patch does:
-> >>
-> >>    LINUX && PCI && (...  X86_64 ...)
-> >>
-> >> these users won't see any change.
-> >
-> > This is wrong---clearly this patch was never tested on the 32-bit
-> platforms where it was supposed to have an effect.
->
-> euh it was.
->
-
-Uff=E2=80=94I should have said was *only* tested on the 32-bit platforms wh=
-ere it
-was supposed to have an effect! The problem is with the 64-bit hosts...
-
-With this patch, on 32-bit and 64-bit host systems :
->
->    # build/qemu-system-i386 -device vfio-pci,?
->    # qemu-system-i386: -device vfio-pci,?: Device 'vfio-pci' not found
->
-> Same for qemu-system-ppc and qemu-system-arm
->
-> What I am doing wrong ?
+On 3/3/25 10:54, Jamin Lin wrote:
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
 
-... Where you were testing the wrong target. :) qemu-system-i386 should
-still support VFIO if compiled on a 64-bit host, according to the subject.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Paolo
+Thanks,
+
+C.
 
 
->
-> > For VFIO_PLATFORM, no objections to deprecating this.
->
-> Good let's do that !
->
->
-> Thanks,
->
-> C.
->
->
->
->
-
---000000000000e3b2ae062f72f30c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il lun 3 mar 2025, 16:05 C=C3=A9=
-dric Le Goater &lt;<a href=3D"mailto:clg@redhat.com">clg@redhat.com</a>&gt;=
- ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On =
-3/3/25 15:46, Paolo Bonzini wrote:<br>
-&gt; On 3/3/25 15:30, Philippe Mathieu-Daud=C3=A9 wrote:<br>
-&gt;&gt;&gt;&gt;&gt; I see PPC is defined in target/ppc/Kconfig so I think =
-these mark the target not the host. Vfio-pci works with qemu-system-ppc <br=
->
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; I&#39;ve seen people do this on x86_64 host<br>
-&gt;&gt;<br>
-&gt;&gt; Since this patch does:<br>
-&gt;&gt;<br>
-&gt;&gt; =C2=A0=C2=A0 LINUX &amp;&amp; PCI &amp;&amp; (...=C2=A0 X86_64 ...=
-)<br>
-&gt;&gt;<br>
-&gt;&gt; these users won&#39;t see any change.<br>
-&gt; <br>
-&gt; This is wrong---clearly this patch was never tested on the 32-bit plat=
-forms where it was supposed to have an effect.<br>
-<br>
-euh it was.<br></blockquote></div></div><div dir=3D"auto"><br></div><div di=
-r=3D"auto">Uff=E2=80=94I should have said was *only* tested on the 32-bit p=
-latforms where it was supposed to have an effect! The problem is with the 6=
-4-bit hosts...</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div clas=
-s=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
-ding-left:1ex">
-With this patch, on 32-bit and 64-bit host systems :<br>
-<br>
-=C2=A0 =C2=A0# build/qemu-system-i386 -device vfio-pci,?<br>
-=C2=A0 =C2=A0# qemu-system-i386: -device vfio-pci,?: Device &#39;vfio-pci&#=
-39; not found<br>
-<br>
-Same for qemu-system-ppc and qemu-system-arm<br>
-<br>
-What I am doing wrong ?</blockquote></div></div><div dir=3D"auto"><br></div=
-><div dir=3D"auto">... Where you were testing the wrong target. :) qemu-sys=
-tem-i386 should still support VFIO if compiled on a 64-bit host, according =
-to the subject.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</d=
-iv><div dir=3D"auto"><br></div><div dir=3D"auto"></div><div dir=3D"auto"><d=
-iv class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">
-<br>
-<br>
-&gt; For VFIO_PLATFORM, no objections to deprecating this.<br>
-<br>
-Good let&#39;s do that !<br>
-<br>
-<br>
-Thanks,<br>
-<br>
-C.<br>
-<br>
-<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000e3b2ae062f72f30c--
+> ---
+>   tests/functional/test_aarch64_aspeed.py | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+> index 07b0c7c1fd..8df6a97a28 100755
+> --- a/tests/functional/test_aarch64_aspeed.py
+> +++ b/tests/functional/test_aarch64_aspeed.py
+> @@ -27,9 +27,9 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+>           wait_for_console_pattern(self, '## Loading kernel from FIT Image')
+>           wait_for_console_pattern(self, 'Starting kernel ...')
+>   
+> -    ASSET_SDK_V903_AST2700 = Asset(
+> -            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.03/ast2700-default-obmc.tar.gz',
+> -            '91225f50d255e2905ba8d8e0c80b71b9d157c3609770c7a740cd786370d85a77')
+> +    ASSET_SDK_V905_AST2700 = Asset(
+> +            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz',
+> +            'cfbbd1cce72f2a3b73b9080c41eecdadebb7077fba4f7806d72ac99f3e84b74a')
+>   
+>       def start_ast2700_test(self, name):
+>           num_cpu = 4
+> @@ -89,11 +89,11 @@ def start_ast2700_test(self, name):
+>           exec_command_and_wait_for_pattern(self,
+>               'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
+>   
+> -    def test_aarch64_ast2700_evb_sdk_v09_03(self):
+> +    def test_aarch64_ast2700_evb_sdk_v09_05(self):
+>           self.set_machine('ast2700-evb')
+>   
+> -        self.archive_extract(self.ASSET_SDK_V903_AST2700)
+> -        self.start_ast2700_test('ast2700-default')
+> +        self.archive_extract(self.ASSET_SDK_V905_AST2700)
+> +        self.start_ast2700_test('ast2700-a0-default')
+>   
+>   
+>   if __name__ == '__main__':
 
 
