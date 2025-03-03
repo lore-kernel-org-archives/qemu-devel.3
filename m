@@ -4,51 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4718AC282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E26C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp35s-00074w-OU; Mon, 03 Mar 2025 05:32:16 -0500
+	id 1tp389-0008OA-BZ; Mon, 03 Mar 2025 05:34:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tp35j-00071j-Tk; Mon, 03 Mar 2025 05:32:08 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tp35g-0006s0-Pn; Mon, 03 Mar 2025 05:32:07 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1990B4E600E;
- Mon, 03 Mar 2025 11:32:01 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id EyvLymahYP9X; Mon,  3 Mar 2025 11:31:59 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 2E8504E6010; Mon, 03 Mar 2025 11:31:59 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2BF8974577C;
- Mon, 03 Mar 2025 11:31:59 +0100 (CET)
-Date: Mon, 3 Mar 2025 11:31:59 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, philmd@linaro.org
-Subject: Re: [PATCH v2] hw/sd/sdhci: Set reset value of interrupt registers
-In-Reply-To: <E24C0545-5B8D-4AE8-8B1A-BEF3A408248B@gmail.com>
-Message-ID: <b289c1e7-6812-d530-f593-f48abad93eb0@eik.bme.hu>
-References: <20250210160329.DDA7F4E600E@zero.eik.bme.hu>
- <0ead70ac-f2a6-cf7d-e6cb-533b0f30f8c2@eik.bme.hu>
- <E24C0545-5B8D-4AE8-8B1A-BEF3A408248B@gmail.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tp37w-00089w-UQ; Mon, 03 Mar 2025 05:34:25 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tp37s-00077Q-Qm; Mon, 03 Mar 2025 05:34:22 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-223959039f4so24118795ad.3; 
+ Mon, 03 Mar 2025 02:34:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740998059; x=1741602859; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Y3AZuJ9knP2vix0loLxAZpy1PVhtWN6trVm/NXU34mY=;
+ b=ZX9B/Nbws+ktMfA0GyxgBEn/NIbzYZBnFCPSRpuBkYpaxTAUQE5UZ+aefCRUtw7/vc
+ N5g4cerEt+kEZe+xH6cFRxo5e9wdPT1n6mYHqemDjEZDl4pUc7IqFXz/uAkwaMNKWs25
+ 6RP0TLsc1SNhYcNeHXNsVLOkAeCex5muSfNOmS1HADjqWJXNBfaoiL4xtkp3s4empSVu
+ KDBFVgE0GnC7O4h5Q1ElAcSap1r0JMAz33gBcc6SlXtB3/genmmHjX75b0lh6DuKZhpi
+ IiAOoDLZtO3ncC5IK3AEIf4bS80LoFWJgOeKr27rM7oZ/N+/rYaU0ZDi4LeQeJwkv3tX
+ lVuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740998059; x=1741602859;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Y3AZuJ9knP2vix0loLxAZpy1PVhtWN6trVm/NXU34mY=;
+ b=XVUxGnCP6PXiL8L4WKwMYzfLDuVIp/CD87E1OSzyBOfBZhFcnw8Pd+PeeGUolLjwW2
+ rnYBecz6OFPJmChRLiUuTPVAAmhykyEPdkdGv9aVSinTOBYO4qXnK4FBfYFWa/BhC8JO
+ CfoUeCW3K/q8F8UY33E/R7YUUfFkkr4FMK2iT39H++xk3a+0a0kD47DNpyM8gDSiI0rh
+ nl6fVwE3d7DuE/TxMefyMpWYNAl9CMAT50jE0+7Pr1RMQgFiUb4HhnSK0CMlTtMUQOo3
+ DD7Ner6Ew/aXL30XS3h7vZXEhbKXMTGp4DsZOilCRNH/Ghrv3UCXcklMhdusyR3xVuM4
+ 2cRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUB8grCJK0iYgRuDhKQ6wDIOTeuEABtwRAhQ1ORzlrcQKdrXeB8w40CmJxledhTio4NRgCM6YQN0nyP@nongnu.org
+X-Gm-Message-State: AOJu0Yx6Inb9oq0TQEwHtsGmHhkpKkJm9MW9yWlLD8A7g4SBrhxQXU+i
+ lL0SV+v/UN/CfyI4b09K0oJKZDvN/PGsTyqV60WtGJepGpWMtngkeNawcg==
+X-Gm-Gg: ASbGnctW5mP6XIFp/Yd8qlb6gNJIM8qTNQCiEU6qz+a/XkmTlPzJKfCh+H68hthxMy0
+ GQBB18mBrmw3YzwPyQgiNJc1X2kEdlqAb8GQZwSwh1xOUqvW/5h+V+z80oQgfsmAy+rEY10NTQg
+ ZbMp1DzzzsqvyL4lh7+E2/iv/DS9irrWBzY/ylgpcq3RAMKxcVhtHlXD5B/fnM/aL/OWV4vK23G
+ v4bl27ZbCcs2FAPGCJrko9M5uLbnrDo/2CGx3ggtfcwnhq4wmQJZ33nl/Jr7/XyHrD4yaoaJy0n
+ QGQAWgNmLiLkaE2xUx9/BNgRuPKGnQ0e4FzF3XGRN5wzIycTRU0=
+X-Google-Smtp-Source: AGHT+IFYfDkXOZ6/TmyN+hewIjyrM1BZuEFUPLC9YGgbYePDgBf5RFILKWDqj7tNoxmQe25qr6Zm6Q==
+X-Received: by 2002:a17:90b:4c4d:b0:2fa:e9b:33ab with SMTP id
+ 98e67ed59e1d1-2febab7878bmr22055491a91.16.1740998058905; 
+ Mon, 03 Mar 2025 02:34:18 -0800 (PST)
+Received: from wheely.local0.net ([118.208.151.101])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2fea698f309sm8594558a91.42.2025.03.03.02.34.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Mar 2025 02:34:18 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH 5/6] ppc/pnv: Add a PNOR address and size sanity checks
+Date: Mon,  3 Mar 2025 20:33:56 +1000
+Message-ID: <20250303103359.578994-6-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250303103359.578994-1-npiggin@gmail.com>
+References: <20250303103359.578994-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1223122299-1740997919=:88220"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,83 +100,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The BMC HIOMAP PNOR access protocol has certain limits on PNOR addresses
+and sizes. Add some sanity checks for these so we don't get strange
+behaviour.
 
---3866299591-1223122299-1740997919=:88220
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/ppc/pnv_bmc.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-On Mon, 3 Mar 2025, Bernhard Beschow wrote:
-> Am 1. März 2025 16:02:05 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
->> On Mon, 10 Feb 2025, BALATON Zoltan wrote:
->>> The interrupt enable registers are not reset to 0 on Freescale eSDHC
->>> but some bits are enabled on reset. At least some U-Boot versions seem
->>> to expect this and not initialise these registers before expecting
->>> interrupts. Use existing vendor property for Freescale eSDHC and set
->>> the reset value of the interrupt registers to match Freescale
->>> documentation.
->>
->> Ping?
->>
->>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>> ---
->>> v2: Restrict to e500. Adding a reset method in a subclass does not
->>> work because the common reset function is called directly on register
->>> write from the guest but there's already provision for vendor specific
->>> behaviour which can be used to restrict this to Freescale SoCs.
->>>
->>> hw/ppc/e500.c         | 1 +
->>> hw/sd/sdhci.c         | 4 ++++
->>> include/hw/sd/sdhci.h | 1 +
->>> 3 files changed, 6 insertions(+)
->>>
->>> diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
->>> index 26933e0457..560eb42a12 100644
->>> --- a/hw/ppc/e500.c
->>> +++ b/hw/ppc/e500.c
->>> @@ -1044,6 +1044,7 @@ void ppce500_init(MachineState *machine)
->>>         dev = qdev_new(TYPE_SYSBUS_SDHCI);
->>>         qdev_prop_set_uint8(dev, "sd-spec-version", 2);
->>>         qdev_prop_set_uint8(dev, "endianness", DEVICE_BIG_ENDIAN);
->>> +        qdev_prop_set_uint8(dev, "vendor", SDHCI_VENDOR_FSL);
->>>         s = SYS_BUS_DEVICE(dev);
->>>         sysbus_realize_and_unref(s, &error_fatal);
->>>         sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, MPC85XX_ESDHC_IRQ));
->>> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
->>> index 99dd4a4e95..afa3c6d448 100644
->>> --- a/hw/sd/sdhci.c
->>> +++ b/hw/sd/sdhci.c
->>> @@ -307,6 +307,10 @@ static void sdhci_reset(SDHCIState *s)
->>>     s->data_count = 0;
->>>     s->stopped_state = sdhc_not_stopped;
->>>     s->pending_insert_state = false;
->>> +    if (s->vendor == SDHCI_VENDOR_FSL) {
->>> +        s->norintstsen = 0x013f;
->>> +        s->errintstsen = 0x117f;
->>> +    }
->>> }
->>>
->>> static void sdhci_poweron_reset(DeviceState *dev)
->>> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
->>> index 38c08e2859..f722d8eb1c 100644
->>> --- a/include/hw/sd/sdhci.h
->>> +++ b/include/hw/sd/sdhci.h
->>> @@ -110,6 +110,7 @@ typedef struct SDHCIState SDHCIState;
->>>
->>> #define SDHCI_VENDOR_NONE       0
->>> #define SDHCI_VENDOR_IMX        1
->>> +#define SDHCI_VENDOR_FSL        2
->
-> From an i.MX point of view the sole "FSL" postfix seems confusing since 
-> these SoCs are from the same vendor. What about "FSL_ESDHC"?
+diff --git a/hw/ppc/pnv_bmc.c b/hw/ppc/pnv_bmc.c
+index 0c1274df21a..811ba3d7a49 100644
+--- a/hw/ppc/pnv_bmc.c
++++ b/hw/ppc/pnv_bmc.c
+@@ -251,10 +251,38 @@ static const IPMINetfn hiomap_netfn = {
+ 
+ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor)
+ {
++    uint32_t pnor_size = pnor->size;
++    uint32_t pnor_addr = PNOR_SPI_OFFSET;
++
+     if (!pnv_bmc_is_simulator(bmc)) {
+         return;
+     }
+ 
++    /*
++     * The HIOMAP protocol uses block units and 16-bit addressing.
++     * Prevent overflow or misalign.
++     */
++    if (pnor_addr >= 1U << (BLOCK_SHIFT + 16)) {
++        warn_report("PNOR address is larger than 2^%d, disabling PNOR",
++                    BLOCK_SHIFT + 16);
++        return;
++    }
++    if (pnor_addr & ((1U << BLOCK_SHIFT) - 1)) {
++        warn_report("PNOR address is not aligned to 2^%d, disabling PNOR",
++                    BLOCK_SHIFT);
++        return;
++    }
++    if (pnor_size > 1U << (BLOCK_SHIFT + 16)) {
++        warn_report("PNOR size is larger than 2^%d, disabling PNOR",
++                    BLOCK_SHIFT + 16);
++        return;
++    }
++    if (pnor_size & ((1U << BLOCK_SHIFT) - 1)) {
++        warn_report("PNOR size is not aligned to 2^%d, disabling PNOR",
++                    BLOCK_SHIFT);
++        return;
++    }
++
+     object_ref(OBJECT(pnor));
+     object_property_add_const_link(OBJECT(bmc), "pnor", OBJECT(pnor));
+ 
+-- 
+2.47.1
 
-That's too long and not a vendor. How about FSL_IMX instead? But maybe 
-it's not really a problem as IMX is already a separate define and other 
-devices use the FSL prefix so maybe it's not that confusing to worth 
-changing.
-
-Regards,
-BALATON Zoltan
---3866299591-1223122299-1740997919=:88220--
 
