@@ -4,97 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08437C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 19:58:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35337C282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 20:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpBuh-0006f5-AY; Mon, 03 Mar 2025 14:57:19 -0500
+	id 1tpCAY-00038b-PK; Mon, 03 Mar 2025 15:13:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpBuK-0006YC-53
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:56:59 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tpCAT-00038E-5L
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 15:13:37 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpBuG-0002cy-Ls
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 14:56:55 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4398e3dfc66so43920445e9.0
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 11:56:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tpCAK-0005DF-Qw
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 15:13:36 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-22398e09e39so33556135ad.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 12:13:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741031809; x=1741636609; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fd0Pge+LQMofC6BhAVzK4AO8A0rGptnTNZXMGBhg59U=;
- b=dbsusJaOqL/G0O9GlQBGYWAtGTcymHjtSPWIErpvTxxNR+ouI4vY5RaAEEePGvOXOO
- MT2GYKDzjIcP8ZhLPy7p8JFEPd9LOn9irZVRSNv+0UgavUSIdHWoB4afcXoX0/PECayc
- hzpTqHKozz2IhWcGi//TFmvS2NIykfW/45lYlSaOuF2B18YcPkFlTa1kmwKQ0uLXbdfZ
- xJIMG21s41CBxI56OlyiXbDHjT/cy9yk+2Hj7sBjVPT2fJiPqJkWjN2wgFpdda4vLY5y
- ukQMHFcq1bJUCQ+hFPouBhPAJl9FYuRaVKMJP78RmTNFb4x8MmiyK1VVsVgax+lCI/bA
- 7cnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741031809; x=1741636609;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ d=linaro.org; s=google; t=1741032804; x=1741637604; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fd0Pge+LQMofC6BhAVzK4AO8A0rGptnTNZXMGBhg59U=;
- b=vOAr05pTX/r1qNJe04RZxZuJRNDHc20RDwl/l0XclmuUWufhJDKzSqDgOA0LQGaZyU
- 7ubhgbP6VUlSYMey112JEgQkGyaMm53w+3alCDBBJg6F82/mpHsD3XNHl9dJY/NNp02p
- NtjaQhg8/gGhGgeHQCAGYVaAfQkZn9TPXo6Fvm3lfntxjbqCfKMoy3wUwnfQZJqumrZ3
- uy9ALLtebG8BUzaIsuKEDgp1m9VZf9AxkX7BXjlGG9KF8J4+RoUsZR7ueXWiWeLaVssO
- AYmwi9dhZ1NB/F2BoOtzOQO6w/RniQ3eQQJjDeo9GAV2opHP2YXZmkESaYlUkwg+7gn9
- Q8iw==
-X-Gm-Message-State: AOJu0YwhyMZPKehrCksoB2tdlIWyG9S2B03NEqsVCTev6kJMWPHyZ7E0
- 8j+6bMEPs+VIJjtC1up22/4D92EcT+er20RLEv6Kcdl7TRQlWSYk/9QTmuoB1DE=
-X-Gm-Gg: ASbGncvJ3gatiW6eo9Al6kfg9SZYpz1m715tLImPQWMGL/arIOgBBFYvq4hDj/Ih4P7
- jpngw64HeD2E4UKnmpzqZBnU+NMeZGpQJ/tOaHidUQmBaEiT39JTakIquZU2aem/tUAyePVumIF
- W+9enTt1JA6BdQaN/hxlHiP5h7OpzwG1oNXUtgJydlC2axHRsxRfVPeIJUiKgist+EYC/ipJPwd
- QQvZnLVCZ6R5hff4/LhS0jLSZivGYIXgrCNMHt070d+d/o3BFodArh1DUnThaNK8ja8gGjI+2LW
- DCVqElbIrAq+WCCfHBl8p61KZCm8rAryyirithngNIyiiGw=
-X-Google-Smtp-Source: AGHT+IHxKPdL8pEHpP4/K0dvs5DWLOSULhGxByHRsxDJk1swJ3rL6qY+1wuE9e1gLFIar5BbQKuOPQ==
-X-Received: by 2002:a05:600c:4f86:b0:43b:ca39:a9ca with SMTP id
- 5b1f17b1804b1-43bca39ac88mr14950285e9.16.1741031808919; 
- Mon, 03 Mar 2025 11:56:48 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bc63bcaafsm30626415e9.28.2025.03.03.11.56.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Mar 2025 11:56:48 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 857CF5F938;
- Mon,  3 Mar 2025 19:56:47 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,  Troy Lee <leetroy@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  qemu-arm@nongnu.org,  =?utf-8?Q?C?=
- =?utf-8?Q?=C3=A9dric?= Le
- Goater <clg@kaod.org>,  Steven Lee <steven_lee@aspeedtech.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Niek Linnenbank
- <nieklinnenbank@gmail.com>,  Alistair Francis <alistair@alistair23.me>,
- Joel Stanley <joel@jms.id.au>,  Andrew Jeffery
- <andrew@codeconstruct.com.au>,  Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: Re: [PATCH] tests/functional: add boot error detection for RME tests
-In-Reply-To: <20250303185745.2504842-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Mon, 3 Mar 2025 10:57:45 -0800")
-References: <20250303185745.2504842-1-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Mon, 03 Mar 2025 19:56:47 +0000
-Message-ID: <875xkp7urk.fsf@draig.linaro.org>
+ bh=l3GbTY3/BwOMk24TaUfbVu+j5nCE2gkgHvi7ap7PvLI=;
+ b=FmO8IGgsdrfaGG30kF4xjaN415xEK5F2658jbQ2zpsMJinuPAIUUCL2uLR2+a7B9er
+ y+KVp+4egCSxVglwJhm50Snbr+qkZWLnMez2yGI+4VHPw2xZoWx6KITNdfZUhUKBWS1F
+ AAcopFTZWT9SejFCfp5Xs+lT3OapkFlMm+k4NqWCYlaqkR5NOmbSnEzgAIFvsEO6ZHaB
+ 0fkD8bCJMfJKHPj371AUZAt4OHxsOHyKAFclmbE6HB6sHqP2vgTxMKMsErrgLMQ1tEQB
+ V+tNNVQCq5Lalj1WUG/dAGemtlAgftUSNaMLxv1YbZe2c7LjJQD9KILtxXXrhBSDvchM
+ hB8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741032804; x=1741637604;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l3GbTY3/BwOMk24TaUfbVu+j5nCE2gkgHvi7ap7PvLI=;
+ b=R1BghC6vQuf+vvXgTcBwZoSe8OFBg6hPF04XMxLq4IoquZPP5ISbECP2f1h24vTfd9
+ Wc1PA9F8vscj9vTl49maq9wQLNDN65ftMqBmV9lLHvNmn8+6LF6+R5WwDzLVXWmAETyU
+ SFxuvb/fDQ/hB2r+Wq7HlPncko2UyuAr390U0wBuamFyEpezL+V927urY+AuVUxNN+Mh
+ Lxg1DfgFZA36ZI0CLrW5UUDJBsdjuqjV3vCufbOO7gIzXxEJ43OIX4kYgVaV0YnazsfY
+ PrpU1rwdgMxxPBYoLYksjm26BfxPP3BCKCSYq2Y4BvSpXUftquf+wCzADVhLXKK4H5yY
+ Nprg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWI4A8eGDEYvAH08lxynVjmuXJKrLuAkmRNTqroRIcrS7l1FaSpvHG3cgMbOzJ0RGutuNH7z/5fQXLQ@nongnu.org
+X-Gm-Message-State: AOJu0YzEVEZv0LPcMvP1eNwegz4mENHL2yz91en7CYwN0oDLzpj0qr0E
+ R032EmOd5XJj+RZW6cwpLPYvlygtbWkFDF1NkI7sklqIx+xrvd1o6jfQ9tXJeJztPZ+lBS25Fbc
+ 1
+X-Gm-Gg: ASbGncskrT9EhPcEFGEyIimdD4CUqrQOBE/GqFzdPkKilSGhSmEJcUbQrmgFTMdj8ko
+ h/ghLfu0KIKJo+ayWQNxArlx6sci7QiYxuFDerd7FkW534HFaGNQ+1twhjzdZnlsAhJTK3acfs1
+ 10hXKTEwKli5GEu3ydsIoMb62Xi5DJuZBdDkC8maMprO8ljT+xU70jEd+3+483+j0wmofTUHl38
+ Btu9q4Yi5AvqfCY9ceutcWs3On/PDNFPRGN4rt+SK8wswPfGQKP6qnA0MQljjyg0LRxvBSaxgLZ
+ LxdRKa+jb5RgWviMmwJKGtjjOvlzKzUdJD4SuTMKltUuDhVK2Fk7G1XteSbQ8XE6Guy62Qt9htk
+ cjS4Q7Y3a
+X-Google-Smtp-Source: AGHT+IFdbK8OURrfI+ZpHyOpX5SeprGT1YSnx9sZVWXaSS3giOXjBluDz/bmyPdHOqKFhU1LFE/6dw==
+X-Received: by 2002:a17:902:e844:b0:223:432b:593d with SMTP id
+ d9443c01a7336-2236924e182mr222907745ad.42.1741032804454; 
+ Mon, 03 Mar 2025 12:13:24 -0800 (PST)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-223501fd2d1sm82168015ad.103.2025.03.03.12.13.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Mar 2025 12:13:23 -0800 (PST)
+Message-ID: <5cd6ee6a-122a-484b-b02c-1e577f571090@linaro.org>
+Date: Mon, 3 Mar 2025 12:13:21 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 036/162] tcg: Convert muluh to TCGOutOpBinary
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20250216231012.2808572-1-richard.henderson@linaro.org>
+ <20250216231012.2808572-37-richard.henderson@linaro.org>
+ <ff6c9a3b-a1dd-4f86-b3f6-80c787a6fea4@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <ff6c9a3b-a1dd-4f86-b3f6-80c787a6fea4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,18 +106,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 3/3/25 02:52, Philippe Mathieu-Daudé wrote:
+> Hi Richard,
+> 
+> On 17/2/25 00:08, Richard Henderson wrote:
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   tcg/aarch64/tcg-target-has.h     |  2 --
+>>   tcg/arm/tcg-target-has.h         |  1 -
+>>   tcg/i386/tcg-target-has.h        |  2 --
+>>   tcg/loongarch64/tcg-target-has.h |  2 --
+>>   tcg/mips/tcg-target-has.h        |  2 --
+>>   tcg/ppc/tcg-target-has.h         |  2 --
+>>   tcg/riscv/tcg-target-has.h       |  2 --
+>>   tcg/s390x/tcg-target-has.h       |  2 --
+>>   tcg/sparc64/tcg-target-has.h     |  2 --
+>>   tcg/tcg-has.h                    |  1 -
+>>   tcg/tci/tcg-target-has.h         |  2 --
+>>   tcg/tcg-op.c                     |  7 +++---
+>>   tcg/tcg.c                        | 16 ++++++--------
+>>   tcg/aarch64/tcg-target.c.inc     | 21 ++++++++++++++----
+>>   tcg/arm/tcg-target.c.inc         |  4 ++++
+>>   tcg/i386/tcg-target.c.inc        |  4 ++++
+>>   tcg/loongarch64/tcg-target.c.inc | 24 +++++++++++++--------
+>>   tcg/mips/tcg-target.c.inc        | 37 ++++++++++++++++++--------------
+>>   tcg/ppc/tcg-target.c.inc         | 20 ++++++++++-------
+>>   tcg/riscv/tcg-target.c.inc       | 24 +++++++++++++++------
+>>   tcg/s390x/tcg-target.c.inc       |  4 ++++
+>>   tcg/sparc64/tcg-target.c.inc     | 23 +++++++++++++++-----
+>>   tcg/tci/tcg-target.c.inc         |  4 ++++
+>>   23 files changed, 126 insertions(+), 82 deletions(-)
+> 
+> 
+>> diff --git a/tcg/tcg.c b/tcg/tcg.c
+>> index ec64a235d0..2741048353 100644
+>> --- a/tcg/tcg.c
+>> +++ b/tcg/tcg.c
+>> @@ -1022,6 +1022,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+>>       OUTOP(INDEX_op_andc, TCGOutOpBinary, outop_andc),
+>>       OUTOP(INDEX_op_eqv, TCGOutOpBinary, outop_eqv),
+>>       OUTOP(INDEX_op_mul, TCGOutOpBinary, outop_mul),
+>> +    OUTOP(INDEX_op_muluh_i32, TCGOutOpBinary, outop_muluh),
+>> +    OUTOP(INDEX_op_muluh_i64, TCGOutOpBinary, outop_muluh),
+>>       OUTOP(INDEX_op_nand, TCGOutOpBinary, outop_nand),
+>>       OUTOP(INDEX_op_neg, TCGOutOpUnary, outop_neg),
+>>       OUTOP(INDEX_op_nor, TCGOutOpBinary, outop_nor),
+>> @@ -2280,8 +2282,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+>>           return TCG_TARGET_HAS_mulu2_i32;
+>>       case INDEX_op_muls2_i32:
+>>           return TCG_TARGET_HAS_muls2_i32;
+>> -    case INDEX_op_muluh_i32:
+>> -        return TCG_TARGET_HAS_muluh_i32;
+>>       case INDEX_op_mulsh_i32:
+>>           return TCG_TARGET_HAS_mulsh_i32;
+>>       case INDEX_op_bswap16_i32:
+>> @@ -2362,8 +2362,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+>>           return TCG_TARGET_HAS_mulu2_i64;
+>>       case INDEX_op_muls2_i64:
+>>           return TCG_TARGET_HAS_muls2_i64;
+>> -    case INDEX_op_muluh_i64:
+>> -        return TCG_TARGET_HAS_muluh_i64;
+>>       case INDEX_op_mulsh_i64:
+>>           return TCG_TARGET_HAS_mulsh_i64;
+>> @@ -3876,7 +3874,6 @@ liveness_pass_1(TCGContext *s)
+>>       QTAILQ_FOREACH_REVERSE_SAFE(op, &s->ops, link, op_prev) {
+>>           int nb_iargs, nb_oargs;
+>>           TCGOpcode opc_new, opc_new2;
+>> -        bool have_opc_new2;
+>>           TCGLifeData arg_life = 0;
+>>           TCGTemp *ts;
+>>           TCGOpcode opc = op->opc;
+>> @@ -4036,22 +4033,18 @@ liveness_pass_1(TCGContext *s)
+>>           case INDEX_op_mulu2_i32:
+>>               opc_new = INDEX_op_mul;
+>>               opc_new2 = INDEX_op_muluh_i32;
+>> -            have_opc_new2 = TCG_TARGET_HAS_muluh_i32;
+> 
+> Maybe cleaner to use 'have_opc_new2 = true', checking for
+> have_opc_new2 && tcg_op_supported(), then remove have_opc_new2
+> in 2 commits in "Convert mulsh to TCGOutOpBinary"; otherwise
+> maybe mention that this commit is tied to mulsh conversion?
 
-> It was identified that those tests randomly fail with a synchronous
-> exception at boot (reported by EDK2).
-> While we solve this problem, report failure immediately so tests don't
-> timeout in CI.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+No.  It would be have_opc_new2 = tcg_op_supported(...).
 
-Queued to maintainer/for-10.0-softfreeze, thanks.
+>> @@ -4065,7 +4058,8 @@ liveness_pass_1(TCGContext *s)
+>>                   op->opc = opc = opc_new;
+>>                   op->args[1] = op->args[2];
+>>                   op->args[2] = op->args[3];
+>> -            } else if (arg_temp(op->args[0])->state == TS_DEAD && have_opc_new2) {
+>> +            } else if (arg_temp(op->args[0])->state == TS_DEAD &&
+>> +                       tcg_op_supported(opc_new2, TCGOP_TYPE(op), 0)) {
+>>                   /* The low part of the operation is dead; generate the high. */
+>>                   op->opc = opc = opc_new2;
+>>                   op->args[0] = op->args[1];
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I think it's cleaner to go ahead and make this change now,
+since it works with both muluh and mulsh.
+
+>> +++ b/tcg/mips/tcg-target.c.inc
+>> @@ -1743,6 +1743,27 @@ static const TCGOutOpBinary outop_mul = {
+>>       .out_rrr = tgen_mul,
+>>   };
+>> +static void tgen_muluh(TCGContext *s, TCGType type,
+>> +                       TCGReg a0, TCGReg a1, TCGReg a2)
+>> +{
+>> +    if (use_mips32r6_instructions) {
+> 
+> Similarly for style:
+> 
+>             insn = type == TCG_TYPE_I32 ? OPC_MUHU : OPC_DMUHU;
+
+Ok.
+
+>> @@ -2379,11 +2396,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+>>           tcg_out_opc_reg(s, OPC_MULH, a0, a1, a2);
+>>           break;
+>> -    case INDEX_op_muluh_i32:
+>> -    case INDEX_op_muluh_i64:
+>> -        tcg_out_opc_reg(s, OPC_MULHU, a0, a1, a2);
+>> -        break;
+>> -
+>>       case INDEX_op_mb:
+>>           tcg_out_mb(s, a0);
+>>           break;
+> 
+> Please mention we remove the unreachable mulsh_i32 leftover from
+> commit aeb6326ec5e ("tcg/riscv: Require TCG_TARGET_REG_BITS == 64").
+
+Ok.
+
+r~
+
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+
 
