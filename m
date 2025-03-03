@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5980DC282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 21:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE99C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 21:52:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpD7n-0005AM-Jz; Mon, 03 Mar 2025 16:14:55 -0500
+	id 1tpDh3-0003EL-Bh; Mon, 03 Mar 2025 16:51:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tpD7l-00059o-WC
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 16:14:54 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpDh1-0003Do-JN
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 16:51:19 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tpD7j-0001Dt-QY
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 16:14:53 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2238e884f72so36474035ad.3
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 13:14:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpDgz-0007v5-Ev
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 16:51:19 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-38f406e9f80so3748494f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 13:51:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741036481; x=1741641281; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741038675; x=1741643475; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FoZh8kij63L7ZWUeVXuxEfukohfNTDG1Eqnv6ZUsiXg=;
- b=AzQs7ZtzzUVTSGbbWmQRtGfkrgZtsK3BcjhmGXvryzs4ZmpHGy7CUYrDA9EuNxNVOq
- xd4k6IA3xPLEUF+O6skICkqAOrr3maG3/x4Jrt/+b+EZrmVPbRxw8vQXCXk8lQzGYkU2
- MgBKXBv68KNNNRYVnnBb7I6pgW9on6hPQ+iH1bHN6L9YwFeBjyjI44zoUFUtumGd7ap5
- /awvLtDLlsI1EO7GLuIHZv3xIBAaq+OmDppOIa46Td1K1STjxvYEQgz3ecTfT2USANnL
- miLM9Nyb1uSbWP62j5RERYle8O1oVwAqaDc8haFIE3b3seL2iRh5eeholOF0oVtIHR4k
- JtQA==
+ bh=OEYnAufkvHwQxZqdjsRxCZVyQP4M9G6zKwjU8KHtHSk=;
+ b=jAU3iKBPw51INxzrS6Jr3+IOCp/yiViV+2GV9eUH9Ksa4feUBx5ic7EqlOGEgIYzl0
+ T+FJy/dravZgUtkfBhNUfWBDMmGmYkT6XVCIDUjOyep/aCfxYY3aMScr4Z+s6P7DJbZh
+ 7F2ebY1dg3H3UTvlrWKVvKx94udqkMzNmLsFA0mvi7MRn5PKnZK5W4OLmLHchwuW+Tr4
+ BmRP7Fx+YT0QN24bIOKIh0uHOMvN5IBPw0xbOWaVaZttQYQfB/f+jIVGsP66PapqL+i0
+ zSyWLta1zW4APIilHLxsaZ+PP91ZyMDSvGaNV1Xxn+XARtHNCEK0wRw+NlJZngTOXHep
+ EVIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741036481; x=1741641281;
+ d=1e100.net; s=20230601; t=1741038675; x=1741643475;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FoZh8kij63L7ZWUeVXuxEfukohfNTDG1Eqnv6ZUsiXg=;
- b=LNj6hK0Fs19iYNjhsLbCxHzhc/yl7wJ+R//LSrgDit3Jx6ea8HOaRp9d2Zv1MUV2ZK
- IyZToc+UL3A5EHaBtqlWZzePDeyA1ABOVqok8foxanJF388CAWbXuwDPjR+tgrN+lI2A
- e3fnR7BxBs1RyILGFo7qqcBvGT4ycgmWd4fKosvEGgCDK/idrvdOaPO3oolfbMk4bFP7
- 9rNcG+EbUysCogFgYydAe5tCW2VDQc8W7CPMKHk5Oy57REPbx001JMHM4dPID6OJPW2J
- hW3kVsqCIDCHwjgliyRSO2Wj74HL9jhlXe+2m5iYjIrh959pFV8hdv1Mn/jCpFeKfpUm
- /Png==
+ bh=OEYnAufkvHwQxZqdjsRxCZVyQP4M9G6zKwjU8KHtHSk=;
+ b=W9RJ45Tcurd546L5fxjtSnt/AroTIFgnguqVhziETwRy0U1o5GkaQ+Td4y6HAyte6H
+ pvEj7WW9+RZ8RfaRhe37v1DGk8MQnKEJlgnCJb5MZjxoHhPpKCzBfgmQj1YNpPv8KSoi
+ VWJibuAZyLql7BI2eSw4Klte7aTtPpSG9ip9qjKlfN65PqGvqbX+FwGwZT7prXbEf4q/
+ AGCtrKnmCXouiOzVRbmyS87ADUIjwo9l/iyo+1RatdAd0gGKfo2uw/v9Z+Kj+JEuMPy4
+ nQY55b0jMxtpSOaBuJv72YnA2f8T5iBd1gUqHbeodvnjK8CYBhhGbWVRpUrJPwulAckG
+ R2JA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWr1NdsAiAZOzxYnQ2W/WljetWeMS5Tm0Awl7pfOI5pLNQc5xcfqLk4v+ijpIfEk/3LyQEOkXKihF1p@nongnu.org
-X-Gm-Message-State: AOJu0YwUOmzpRCgXux41fTBnQr+pHxes4NmGXIWG/oJ7TxrRCxO4DJWY
- VPx4/Fvg0ZidYQD2oaSWFTl/pNRptq/UPti6DuJBcXNuAt2wwKuCxmNBchFk9vI=
-X-Gm-Gg: ASbGnct1aGLJgEAZpqRz/7PA1blWxU+Hghbgr2NgYD/bP+NpZU0bRiL8Es5JVo4ZFpX
- NuRAg+UlEQ6nsg/wCYPXdaissabnGJnM/948mhl0jyhlR6D2WVb3McasDvWcYLZOk7Vqc2yMKVq
- 6XlYGvMJQ5TYTXlLrDBcWbxFzi3FyXW/Fucvegtzy+FArXAxDTbmqeJkN8/FCmA5b0iOXhk2prf
- C6+k7OBn1sTTys6+IB20bc+myIorelm8Aydh0Ch5R/FEZcbnQyF0YaDFYb4+RfNSDJZUlrUO4xu
- +zCbEjaYRH96dpIjIoWwfOSAwCrdiNsi4h2bCHZQPUQiTV7Ib6M6LGuEvo9dY/yuj7L5b8UFQCU
- 6i/e7LkaW
-X-Google-Smtp-Source: AGHT+IFVefc98/ZzTj9ySy/gnW+tHnG0UZLiqT6Id3TLGY8/XbxU9MI2kqJRINJ3Tlz1exedbDJkHA==
-X-Received: by 2002:a17:90b:3952:b0:2ee:e518:c1d8 with SMTP id
- 98e67ed59e1d1-2febabe2603mr22527470a91.30.1741036481272; 
- Mon, 03 Mar 2025 13:14:41 -0800 (PST)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fea676b133sm9422819a91.13.2025.03.03.13.14.40
+ AJvYcCVT9q2Whe4lUd1gnQQfeXCofIxZDAbgGUpC39r2vnag252UZyfoKIGR2WaWoYsYb90ffggXD+yk3I9d@nongnu.org
+X-Gm-Message-State: AOJu0YxYJKorNbpNxMp1/3LcIXocRJmQ4Xqtpl2xMvuyQ1+k8q5q7E7a
+ UxcKmdaocDFdA438KSUUIiKodIWhAzxpqonPAuBok2NRAlgnb87DE8yz4HyFpnY=
+X-Gm-Gg: ASbGncvW3YEDZOhnJ4LXQhkkED+yOSMlFqJxaEvzkFEO/Zsan6BKLIXzOKgX1lTFgfC
+ 2ix4ksW7Of+CdG+iQ3V/cxnGPmPoHwlrkTU668LpRpiOzWEwU/+LXhdUAfFAj+LAOVnrgkHwwzw
+ wrJjHlqtoBJwlAHHafrrulOOHAyJSc4oriZ7DJbfhcPPJsphoqU9BRkrtZf1nBLYiEUkB8xYtMf
+ k0EKfUXdwF6F4lFeS/F53pN5LA7WyLb/ZxpDCSwZSYZlPboCTgSN2IE2U64/6a84R6tZs6disdE
+ hACHCs7qgx/o6zjpnIKorR7Eqe7gyNkTmbX6pQbf5oDqnjn+BrzJloXvJJOpTJBP5b7Q6r8CLdW
+ W4YF9lVFtQq6a
+X-Google-Smtp-Source: AGHT+IFJT1TctdzILcirl44GQ4bgb+k/kNkixbnPWgZKDH7BHtQM+tZPcFTccThUz3XFLpF4v82jMA==
+X-Received: by 2002:a05:6000:154a:b0:390:f9f9:3e9c with SMTP id
+ ffacd0b85a97d-390f9f93fc2mr6453506f8f.25.1741038675224; 
+ Mon, 03 Mar 2025 13:51:15 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47a66bcsm15466605f8f.21.2025.03.03.13.51.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 13:14:40 -0800 (PST)
-Message-ID: <72621646-1c18-4986-ae8d-66ec2a2147d3@linaro.org>
-Date: Mon, 3 Mar 2025 13:14:39 -0800
+ Mon, 03 Mar 2025 13:51:13 -0800 (PST)
+Message-ID: <2f5820d0-9cd1-42ee-aa74-c4c9c4bb2a46@linaro.org>
+Date: Mon, 3 Mar 2025 22:51:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: fix msan findings in translate-all
-To: Peter Foley <pefoley@google.com>, Patrick Venture <venture@google.com>
-Cc: peter.maydell@linaro.org, pbonzini@redhat.com, qemu-devel@nongnu.org
-References: <20250228212329.1775669-1-venture@google.com>
- <7771abbe-ab3f-43d8-9ac6-9ea0bc63b243@linaro.org>
- <CAO=notwzQsC7oJZxY_Jby9znX0ov62AVXsTENb7tagEBR2DcWQ@mail.gmail.com>
- <CAAAKUPP_mK2VApyCOf2N3twYfn_fe5P5Y_OMhmCSqP1HrhZSDQ@mail.gmail.com>
- <CAAAKUPN2AJAuNuzoHn5dOf3R3WY0VZzmT3mff0ATZF2-6SHsqQ@mail.gmail.com>
+Subject: Re: [PATCH v17 11/11] hw/vmapple/vmapple: Add vmapple machine type
+To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
+ mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, Alexander Graf
+ <graf@amazon.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20250112210056.16658-1-phil@philjordan.eu>
+ <20250112210056.16658-12-phil@philjordan.eu>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAAAKUPN2AJAuNuzoHn5dOf3R3WY0VZzmT3mff0ATZF2-6SHsqQ@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250112210056.16658-12-phil@philjordan.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,33 +107,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 08:40, Peter Foley wrote:
-> And interestingly enough, it appears that execution continues even with early return from 
-> get_page_addr_code_hostp:
-> https://gitlab.com/qemu-project/qemu/-/blob/master/accel/tcg/translate-all.c? 
-> ref_type=heads#L308 <https://gitlab.com/qemu-project/qemu/-/blob/master/accel/tcg/ 
-> translate-all.c?ref_type=heads#L308>
-
-Yes, but without using the hostp value.
-
+On 12/1/25 22:00, Phil Dennis-Jordan wrote:
+> From: Alexander Graf <graf@amazon.com>
 > 
-> Which implies that we could still have an uninitialized value here:
-> https://gitlab.com/qemu-project/qemu/-/blob/master/accel/tcg/translate-all.c? 
-> ref_type=heads#L362 <https://gitlab.com/qemu-project/qemu/-/blob/master/accel/tcg/ 
-> translate-all.c?ref_type=heads#L362>
+> Apple defines a new "vmapple" machine type as part of its proprietary
+> macOS Virtualization.Framework vmm. This machine type is similar to the
+> virt one, but with subtle differences in base devices, a few special
+> vmapple device additions and a vastly different boot chain.
+> 
+> This patch reimplements this machine type in QEMU. To use it, you
+> have to have a readily installed version of macOS for VMApple,
+> run on macOS with -accel hvf, pass the Virtualization.Framework
+> boot rom (AVPBooter) in via -bios, pass the aux and root volume as pflash
+> and pass aux and root volume as virtio drives. In addition, you also
+> need to find the machine UUID and pass that as -M vmapple,uuid= parameter:
+> 
+> $ qemu-system-aarch64 -accel hvf -M vmapple,uuid=0x1234 -m 4G \
+>      -bios /System/Library/Frameworks/Virtualization.framework/Versions/A/Resources/AVPBooter.vmapple2.bin
+>      -drive file=aux,if=pflash,format=raw \
+>      -drive file=root,if=pflash,format=raw \
+>      -drive file=aux,if=none,id=aux,format=raw \
+>      -device vmapple-virtio-blk-pci,variant=aux,drive=aux \
+>      -drive file=root,if=none,id=root,format=raw \
+>      -device vmapple-virtio-blk-pci,variant=root,drive=root
+> 
+> With all these in place, you should be able to see macOS booting
+> successfully.
+> 
+> Known issues:
+>   - Currently only macOS 12 guests are supported. The boot process for
+>     13+ will need further investigation and adjustment.
+> 
+> Signed-off-by: Alexander Graf <graf@amazon.com>
+> Co-authored-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
 
-Passed through several layers of functions, but still unused.
 
-Eventually, we reach
+>   MAINTAINERS                 |   1 +
+>   contrib/vmapple/uuid.sh     |   9 +
+>   docs/system/arm/vmapple.rst |  63 ++++
+>   docs/system/target-arm.rst  |   1 +
+>   hw/vmapple/Kconfig          |  20 ++
+>   hw/vmapple/meson.build      |   1 +
+>   hw/vmapple/vmapple.c        | 618 ++++++++++++++++++++++++++++++++++++
+>   7 files changed, 713 insertions(+)
+>   create mode 100755 contrib/vmapple/uuid.sh
+>   create mode 100644 docs/system/arm/vmapple.rst
+>   create mode 100644 hw/vmapple/vmapple.c
 
-https://gitlab.com/qemu-project/qemu/-/blob/master/accel/tcg/translator.c#L257
 
-which again checks the -1 error return, skips the use of the cached host_pc (now named 
-host_addr).
+> diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
+> new file mode 100644
+> index 0000000000..ec0896dd32
+> --- /dev/null
+> +++ b/hw/vmapple/vmapple.c
+> @@ -0,0 +1,618 @@
+> +/*
+> + * VMApple machine emulation
+> + *
+> + * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * VMApple is the device model that the macOS built-in hypervisor called
+> + * "Virtualization.framework" exposes to Apple Silicon macOS guests. The
+> + * machine model in this file implements the same device model in QEMU, but
+> + * does not use any code from Virtualization.Framework.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/bitops.h"
+> +#include "qemu/datadir.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/guest-random.h"
+> +#include "qemu/help-texts.h"
+> +#include "qemu/log.h"
+> +#include "qemu/module.h"
+> +#include "qemu/option.h"
+> +#include "qemu/units.h"
+> +#include "monitor/qdev.h"
+> +#include "hw/boards.h"
+> +#include "hw/irq.h"
+> +#include "hw/loader.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/sysbus.h"
+> +#include "hw/usb.h"
+> +#include "hw/arm/boot.h"
+> +#include "hw/arm/primecell.h"
+> +#include "hw/char/pl011.h"
+> +#include "hw/intc/arm_gic.h"
+> +#include "hw/intc/arm_gicv3_common.h"
+> +#include "hw/misc/pvpanic.h"
+> +#include "hw/pci-host/gpex.h"
+> +#include "hw/usb/hcd-xhci-pci.h"
+> +#include "hw/virtio/virtio-pci.h"
+> +#include "hw/vmapple/vmapple.h"
+> +#include "net/net.h"
+> +#include "qapi/error.h"
+> +#include "qapi/qmp/qlist.h"
 
-Again, I'm open to unconditional initialized value, but doing so in 
-get_page_addr_code_hostp, not tb_gen_code.
+FYI I replaced "qapi/qmp/qlist.h" by "qobject/qlist.h" due to commit
+407bc4bf902 ("qapi: Move include/qapi/qmp/ to include/qobject/").
 
+> +#include "qapi/visitor.h"
+> +#include "qapi/qapi-visit-common.h"
+> +#include "standard-headers/linux/input.h"
+> +#include "system/hvf.h"
+> +#include "system/reset.h"
+> +#include "system/runstate.h"
+> +#include "system/system.h"
 
-r~
 
