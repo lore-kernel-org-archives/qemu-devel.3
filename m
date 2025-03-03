@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A77C3C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 09:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5FBC282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 09:58:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp2XY-0001H1-Nq; Mon, 03 Mar 2025 04:56:49 -0500
+	id 1tp2Xb-0001Zx-1s; Mon, 03 Mar 2025 04:56:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp2Wq-00084I-CE; Mon, 03 Mar 2025 04:56:04 -0500
+ id 1tp2XW-00016D-Vh; Mon, 03 Mar 2025 04:56:47 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp2Wp-0001vN-1K; Mon, 03 Mar 2025 04:56:04 -0500
+ id 1tp2XV-0001zJ-0P; Mon, 03 Mar 2025 04:56:46 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 3 Mar
- 2025 17:55:04 +0800
+ 2025 17:55:05 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 3 Mar 2025 17:55:04 +0800
+ Transport; Mon, 3 Mar 2025 17:55:05 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 16/23] hw/misc/aspeed_scu: Add Support for AST2700/AST2750
- A1 Silicon Revisions
-Date: Mon, 3 Mar 2025 17:54:44 +0800
-Message-ID: <20250303095457.2337631-17-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v4 20/23] tests/functional/aspeed: Introduce
+ start_ast2700_test API and update hwmon path
+Date: Mon, 3 Mar 2025 17:54:48 +0800
+Message-ID: <20250303095457.2337631-21-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
 References: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -67,42 +66,97 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added new definitions for AST2700_A1_SILICON_REV and AST2750_A1_SILICON_REV to
-identify the A1 silicon revisions.
+Added a new method "start_ast2700_test" to the "AST2x00MachineSDK" class and
+this method centralizes the logic for starting the AST2700 test, making it
+reusable for different test cases.
+
+Modified the hwmon path to use a wildcard to handle different SDK versions:
+"cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input".
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/misc/aspeed_scu.h | 2 ++
- hw/misc/aspeed_scu.c         | 2 ++
- 2 files changed, 4 insertions(+)
+ tests/functional/test_aarch64_aspeed.py | 33 +++++++++++++------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
-index 356be95e45..684b48b722 100644
---- a/include/hw/misc/aspeed_scu.h
-+++ b/include/hw/misc/aspeed_scu.h
-@@ -54,6 +54,8 @@ struct AspeedSCUState {
- #define AST2700_A0_SILICON_REV   0x06000103U
- #define AST2720_A0_SILICON_REV   0x06000203U
- #define AST2750_A0_SILICON_REV   0x06000003U
-+#define AST2700_A1_SILICON_REV   0x06010103U
-+#define AST2750_A1_SILICON_REV   0x06010003U
+diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+index 9595498ace..07b0c7c1fd 100755
+--- a/tests/functional/test_aarch64_aspeed.py
++++ b/tests/functional/test_aarch64_aspeed.py
+@@ -31,33 +31,29 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.03/ast2700-default-obmc.tar.gz',
+             '91225f50d255e2905ba8d8e0c80b71b9d157c3609770c7a740cd786370d85a77')
  
- #define ASPEED_IS_AST2500(si_rev)     ((((si_rev) >> 24) & 0xff) == 0x04)
+-    def test_aarch64_ast2700_evb_sdk_v09_03(self):
+-        self.set_machine('ast2700-evb')
+-
+-        self.archive_extract(self.ASSET_SDK_V903_AST2700)
+-
++    def start_ast2700_test(self, name):
+         num_cpu = 4
+-        uboot_size = os.path.getsize(self.scratch_file('ast2700-default',
++        uboot_size = os.path.getsize(self.scratch_file(name,
+                                                        'u-boot-nodtb.bin'))
+         uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
  
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index 0581c744f1..76cfd91671 100644
---- a/hw/misc/aspeed_scu.c
-+++ b/hw/misc/aspeed_scu.c
-@@ -560,6 +560,8 @@ static uint32_t aspeed_silicon_revs[] = {
-     AST2700_A0_SILICON_REV,
-     AST2720_A0_SILICON_REV,
-     AST2750_A0_SILICON_REV,
-+    AST2700_A1_SILICON_REV,
-+    AST2750_A1_SILICON_REV,
- };
+         load_images_list = [
+             {
+                 'addr': '0x400000000',
+-                'file': self.scratch_file('ast2700-default',
++                'file': self.scratch_file(name,
+                                           'u-boot-nodtb.bin')
+             },
+             {
+                 'addr': str(uboot_dtb_load_addr),
+-                'file': self.scratch_file('ast2700-default', 'u-boot.dtb')
++                'file': self.scratch_file(name, 'u-boot.dtb')
+             },
+             {
+                 'addr': '0x430000000',
+-                'file': self.scratch_file('ast2700-default', 'bl31.bin')
++                'file': self.scratch_file(name, 'bl31.bin')
+             },
+             {
+                 'addr': '0x430080000',
+-                'file': self.scratch_file('ast2700-default', 'optee',
++                'file': self.scratch_file(name, 'optee',
+                                           'tee-raw.bin')
+             }
+         ]
+@@ -76,23 +72,28 @@ def test_aarch64_ast2700_evb_sdk_v09_03(self):
+         self.vm.add_args('-device',
+                          'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
+         self.do_test_aarch64_aspeed_sdk_start(
+-            self.scratch_file('ast2700-default', 'image-bmc'))
++            self.scratch_file(name, 'image-bmc'))
  
- bool is_supported_silicon_rev(uint32_t silicon_rev)
+-        wait_for_console_pattern(self, 'ast2700-default login:')
++        wait_for_console_pattern(self, f'{name} login:')
+ 
+         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+-        exec_command_and_wait_for_pattern(self,
+-            '0penBmc', 'root@ast2700-default:~#')
++        exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+ 
+         exec_command_and_wait_for_pattern(self,
+             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
+             'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
+         exec_command_and_wait_for_pattern(self,
+-            'cat /sys/class/hwmon/hwmon20/temp1_input', '0')
++            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
+         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+                     property='temperature', value=18000)
+         exec_command_and_wait_for_pattern(self,
+-            'cat /sys/class/hwmon/hwmon20/temp1_input', '18000')
++            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
++
++    def test_aarch64_ast2700_evb_sdk_v09_03(self):
++        self.set_machine('ast2700-evb')
++
++        self.archive_extract(self.ASSET_SDK_V903_AST2700)
++        self.start_ast2700_test('ast2700-default')
+ 
+ 
+ if __name__ == '__main__':
 -- 
 2.34.1
 
