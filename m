@@ -4,85 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A011FC282CD
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 16:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E277C282D1
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 16:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp8r3-0001lH-RV; Mon, 03 Mar 2025 11:41:21 -0500
+	id 1tp8xD-0003iB-Li; Mon, 03 Mar 2025 11:47:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pefoley@google.com>)
- id 1tp8qU-0001fG-Gu
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 11:41:00 -0500
-Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pefoley@google.com>)
- id 1tp8qO-00010Y-Iv
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 11:40:42 -0500
-Received: by mail-oa1-x2f.google.com with SMTP id
- 586e51a60fabf-2bd2218ba4fso1231467fac.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 08:40:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1741020038; x=1741624838; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+3OypkSyzT2PdHTpeVbM1xfI1GBgSPTl2hSdyNzg6hk=;
- b=bLz+6LclnAvX4EkF/jUOuqkEXzsxpH/TxvFLY7hiP+u+kAzGR/ChWKOxA1jL+W5+Hy
- gcpV17szBbbxaRs7bBzKoCk8i9T46cZZyl/on5j0ttpnFsSCVsWISojEOcj9zH0bYmzr
- b4LkCvTp5IrQ80qKadCivh1dMoNzo4pCFrOz7ANCiliuPQ4v8Mj/UrQLARbejjSnDvj5
- a+JBLvcZQ7ydnWev0bXaI9yjVK8gZ9quJayC8g6K5eGS9MhghbxEpBp3nlK66ufd0Kid
- rvMMedMGpzkFvJ/9OmxIEXaD+7XU+c7bc7WP5FGDbvWCbt0oGk5szOREkuVO0UTRMhZv
- ii6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741020038; x=1741624838;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+3OypkSyzT2PdHTpeVbM1xfI1GBgSPTl2hSdyNzg6hk=;
- b=oJVtI7dh2mhtayvQLCKFPiW1nxpHFHI80mJTlipFRyOjMEJFUKHzDDgDvhhVbRzI4h
- 0c2qusMN36mm0AEN2U52LNY40UmEq/JQqwIkMDIaX+w6d1uQBr9h7F+/comA6s+sBHVl
- u7R+ruNcCikU5tibhZuWSTfBFh0b7cGq/906pkqNqlVU4Qt1ahb+XuBEN8i42567SwKu
- hL7yujxi4EjnLt8dSEHALZIFnE8Mjjk0xI/YrSUrESL6ORqg53KIQpPeoYfRSTaB43nw
- rdGTcBry3kqixLz07yeU6Jc4zR+9X0Jw6Pr9qjRg5ZHtORN95xc//fgMcNuIXCr9LwPV
- 2KrA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8umrGD3S0i2ymuonhXCw8T6Ra7y3As+Wt9prEL5lCGHCaL5sXr53tfWUU44lJSjweRHTLHa7ow12x@nongnu.org
-X-Gm-Message-State: AOJu0YzbD9H+a/vU6qMTWvuevX/pS3tfVeifEfU+dr7P3aLmxePImqXz
- U7xuxtfWY9CereqquVdaQ8kBGohm2PcELBp1R65H7W3s85bMqP8FofCvLicbCsbcDkOFYXgMXOT
- qeGzkEkhWVvK15xMXYuj8YNthebPsA+CG1YBXQIyxsKiHuvuEF9eY
-X-Gm-Gg: ASbGncs9oRhEU6vR3hbYjlrqiAa8LcEK1HfIOSacngAN1CgQ5XlxfxjSjk+O0+7WOBV
- x0NA06LhgysOu1SRLC/aKWVG6HNxdrWlX52Q4rcAMYHii0mEAu97oOK0n5nlpXpGU+Kd5bNNv+3
- hIgrrMm+8HxL5iQxTyL+CGMLCZorvmWIwmt8oeVsv2gpGQ+0FgUq6lqes=
-X-Google-Smtp-Source: AGHT+IGm3z8mtRn+h+4P1cNExypezaTBVZqeg0XqnJAbGZoXk6sfOeguZHyS90lz9LfSHU4wPy4h7i4GA9c0cFAvZzE=
-X-Received: by 2002:a05:6870:8199:b0:2c1:5b95:5f1b with SMTP id
- 586e51a60fabf-2c17844e046mr7958915fac.23.1741020037661; Mon, 03 Mar 2025
- 08:40:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <SRS0=Robu=VW=kaod.org=clg@ozlabs.org>)
+ id 1tp8wv-0003gQ-1W; Mon, 03 Mar 2025 11:47:25 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=Robu=VW=kaod.org=clg@ozlabs.org>)
+ id 1tp8ws-0001xf-6f; Mon, 03 Mar 2025 11:47:24 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z64VC0qNlz4x3d;
+ Tue,  4 Mar 2025 03:47:15 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z64V74kvNz4wcy;
+ Tue,  4 Mar 2025 03:47:10 +1100 (AEDT)
+Message-ID: <20cb2466-4f61-4544-b8b2-c92c51bcc8a9@kaod.org>
+Date: Mon, 3 Mar 2025 17:47:07 +0100
 MIME-Version: 1.0
-References: <20250228212329.1775669-1-venture@google.com>
- <7771abbe-ab3f-43d8-9ac6-9ea0bc63b243@linaro.org>
- <CAO=notwzQsC7oJZxY_Jby9znX0ov62AVXsTENb7tagEBR2DcWQ@mail.gmail.com>
- <CAAAKUPP_mK2VApyCOf2N3twYfn_fe5P5Y_OMhmCSqP1HrhZSDQ@mail.gmail.com>
-In-Reply-To: <CAAAKUPP_mK2VApyCOf2N3twYfn_fe5P5Y_OMhmCSqP1HrhZSDQ@mail.gmail.com>
-From: Peter Foley <pefoley@google.com>
-Date: Mon, 3 Mar 2025 11:40:26 -0500
-X-Gm-Features: AQ5f1JqxIHIC4FwFm2yZjFviNk_TAqybaln3odiChGApNURb-mgPdmQKCBEDfiA
-Message-ID: <CAAAKUPN2AJAuNuzoHn5dOf3R3WY0VZzmT3mff0ATZF2-6SHsqQ@mail.gmail.com>
-Subject: Re: [PATCH] accel/tcg: fix msan findings in translate-all
-To: Patrick Venture <venture@google.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, peter.maydell@linaro.org,
- pbonzini@redhat.com, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000e4d34b062f72d088"
-Received-SPF: pass client-ip=2001:4860:4864:20::2f;
- envelope-from=pefoley@google.com; helo=mail-oa1-x2f.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 20/23] tests/functional/aspeed: Introduce
+ start_ast2700_test API and update hwmon path
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
+ <20250303095457.2337631-21-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250303095457.2337631-21-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=Robu=VW=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,250 +112,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e4d34b062f72d088
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 3/3/25 10:54, Jamin Lin wrote:
+> Added a new method "start_ast2700_test" to the "AST2x00MachineSDK" class and
+> this method centralizes the logic for starting the AST2700 test, making it
+> reusable for different test cases.
+> 
+> Modified the hwmon path to use a wildcard to handle different SDK versions:
+> "cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input".
 
-And interestingly enough, it appears that execution continues even with
-early return from get_page_addr_code_hostp:
-https://gitlab.com/qemu-project/qemu/-/blob/master/accel/tcg/translate-all.=
-c?ref_type=3Dheads#L308
+Please split in two patches.
 
-Which implies that we could still have an uninitialized value here:
-https://gitlab.com/qemu-project/qemu/-/blob/master/accel/tcg/translate-all.=
-c?ref_type=3Dheads#L362
 
-On Mon, Mar 3, 2025 at 11:34=E2=80=AFAM Peter Foley <pefoley@google.com> wr=
-ote:
+Thanks,
 
-> For reference, the full output from msan looks like:
->
-> =3D=3D4872=3D=3DWARNING: MemorySanitizer: use-of-uninitialized-value
->     #0 0xaaaac681ef98 in tb_gen_code third_party/qemu/accel/tcg/translate=
--all.c:358:21
->     #1 0xaaaac67f2520 in cpu_exec_loop third_party/qemu/accel/tcg/cpu-exe=
-c.c:993:22
->     #2 0xaaaac67f154c in cpu_exec_setjmp third_party/qemu/accel/tcg/cpu-e=
-xec.c:1039:12
->     #3 0xaaaac67f1240 in cpu_exec third_party/qemu/accel/tcg/cpu-exec.c:1=
-065:11
->     #4 0xaaaac681022c in tcg_cpu_exec third_party/qemu/accel/tcg/tcg-acce=
-l-ops.c:79:11
->     #5 0xaaaac680ede4 in mttcg_cpu_thread_fn third_party/qemu/accel/tcg/t=
-cg-accel-ops-mttcg.c:95:17
->     #6 0xaaaacf096698 in qemu_thread_start third_party/qemu/util/qemu-thr=
-ead-posix.c:541:9
->     #7 0xffffa9242cec in start_thread (/usr/grte/v5/lib64/libpthread.so.0=
-+0xbcec) (BuildId: 0bdac2117d4465a78d3de57b307368b4)
->     #8 0xffffa912ec98 in thread_start (/usr/grte/v5/lib64/libc.so.6+0x116=
-c98) (BuildId: 613d20d3b812b4c87fe9ebf8c4caae83)
->
->   Uninitialized value was stored to memory at
->     #0 0xaaaac681ef94 in tb_gen_code third_party/qemu/accel/tcg/translate=
--all.c:358:50
->     #1 0xaaaac67f2520 in cpu_exec_loop third_party/qemu/accel/tcg/cpu-exe=
-c.c:993:22
->     #2 0xaaaac67f154c in cpu_exec_setjmp third_party/qemu/accel/tcg/cpu-e=
-xec.c:1039:12
->     #3 0xaaaac67f1240 in cpu_exec third_party/qemu/accel/tcg/cpu-exec.c:1=
-065:11
->     #4 0xaaaac681022c in tcg_cpu_exec third_party/qemu/accel/tcg/tcg-acce=
-l-ops.c:79:11
->     #5 0xaaaac680ede4 in mttcg_cpu_thread_fn third_party/qemu/accel/tcg/t=
-cg-accel-ops-mttcg.c:95:17
->     #6 0xaaaacf096698 in qemu_thread_start third_party/qemu/util/qemu-thr=
-ead-posix.c:541:9
->     #7 0xffffa9242cec in start_thread (/usr/grte/v5/lib64/libpthread.so.0=
-+0xbcec) (BuildId: 0bdac2117d4465a78d3de57b307368b4)
->     #8 0xffffa912ec98 in thread_start (/usr/grte/v5/lib64/libc.so.6+0x116=
-c98) (BuildId: 613d20d3b812b4c87fe9ebf8c4caae83)
->
->   Uninitialized value was created by an allocation of 'host_pc' in the st=
-ack frame
->     #0 0xaaaac681d8ac in tb_gen_code third_party/qemu/accel/tcg/translate=
--all.c:297:5
->
-> SUMMARY: MemorySanitizer: use-of-uninitialized-value third_party/qemu/acc=
-el/tcg/translate-all.c:358:21 in tb_gen_code
-> Exiting
->
->
-> On Fri, Feb 28, 2025 at 5:26=E2=80=AFPM Patrick Venture <venture@google.c=
-om>
-> wrote:
->
->>
->>
->> On Fri, Feb 28, 2025 at 1:38=E2=80=AFPM Richard Henderson <
->> richard.henderson@linaro.org> wrote:
->>
->>> On 2/28/25 13:23, Patrick Venture wrote:
->>> > From: Peter Foley <pefoley@google.com>
->>> >
->>> > e.g.
->>> >    Uninitialized value was created by an allocation of 'host_pc' in
->>> the stack frame
->>> >    #0 0xaaaac07df87c in tb_gen_code
->>> third_party/qemu/accel/tcg/translate-all.c:297:5
->>> >
->>> > Signed-off-by: Peter Foley <pefoley@google.com>
->>> > Signed-off-by: Patrick Venture <venture@google.com>
->>> > ---
->>> >   accel/tcg/translate-all.c | 2 +-
->>> >   1 file changed, 1 insertion(+), 1 deletion(-)
->>> >
->>> > diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
->>> > index d4189c7386..f584055a15 100644
->>> > --- a/accel/tcg/translate-all.c
->>> > +++ b/accel/tcg/translate-all.c
->>> > @@ -298,7 +298,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
->>> >       tcg_insn_unit *gen_code_buf;
->>> >       int gen_code_size, search_size, max_insns;
->>> >       int64_t ti;
->>> > -    void *host_pc;
->>> > +    void *host_pc =3D NULL;
->>> >
->>> >       assert_memory_lock();
->>> >       qemu_thread_jit_write();
->>>
->>> False positive, because the error return exits without using the
->>> uninitialized value.
->>> But if we do want to "fix" this, do it at the beginning of
->>> get_page_addr_code_hostp.
->>>
->>
->> Acknowledged.  Gotta hate false positives, although better aggressive
->> than not. Thanks!
->>
->>
->>>
->>> r~
->>>
->>
+C.
 
---000000000000e4d34b062f72d088
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">And interestingly enough, it appears that execution contin=
-ues even with early return from get_page_addr_code_hostp:<div><a href=3D"ht=
-tps://gitlab.com/qemu-project/qemu/-/blob/master/accel/tcg/translate-all.c?=
-ref_type=3Dheads#L308">https://gitlab.com/qemu-project/qemu/-/blob/master/a=
-ccel/tcg/translate-all.c?ref_type=3Dheads#L308</a></div><div><br></div><div=
->Which implies that we could still have an uninitialized=C2=A0value here:</=
-div><div><a href=3D"https://gitlab.com/qemu-project/qemu/-/blob/master/acce=
-l/tcg/translate-all.c?ref_type=3Dheads#L362">https://gitlab.com/qemu-projec=
-t/qemu/-/blob/master/accel/tcg/translate-all.c?ref_type=3Dheads#L362</a></d=
-iv></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"l=
-tr" class=3D"gmail_attr">On Mon, Mar 3, 2025 at 11:34=E2=80=AFAM Peter Fole=
-y &lt;<a href=3D"mailto:pefoley@google.com">pefoley@google.com</a>&gt; wrot=
-e:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"l=
-tr">For reference, the full output from msan looks like:<div><pre style=3D"=
-color:rgb(0,0,0)">=3D=3D4872=3D=3DWARNING: MemorySanitizer: use-of-uninitia=
-lized-value
-    #0 0xaaaac681ef98 in tb_gen_code third_party/qemu/accel/tcg/translate-a=
-ll.c:358:21
-    #1 0xaaaac67f2520 in cpu_exec_loop third_party/qemu/accel/tcg/cpu-exec.=
-c:993:22
-    #2 0xaaaac67f154c in cpu_exec_setjmp third_party/qemu/accel/tcg/cpu-exe=
-c.c:1039:12
-    #3 0xaaaac67f1240 in cpu_exec third_party/qemu/accel/tcg/cpu-exec.c:106=
-5:11
-    #4 0xaaaac681022c in tcg_cpu_exec third_party/qemu/accel/tcg/tcg-accel-=
-ops.c:79:11
-    #5 0xaaaac680ede4 in mttcg_cpu_thread_fn third_party/qemu/accel/tcg/tcg=
--accel-ops-mttcg.c:95:17
-    #6 0xaaaacf096698 in qemu_thread_start third_party/qemu/util/qemu-threa=
-d-posix.c:541:9
-    #7 0xffffa9242cec in start_thread (/usr/grte/v5/lib64/libpthread.so.0+0=
-xbcec) (BuildId: 0bdac2117d4465a78d3de57b307368b4)
-    #8 0xffffa912ec98 in thread_start (/usr/grte/v5/lib64/libc.so.6+0x116c9=
-8) (BuildId: 613d20d3b812b4c87fe9ebf8c4caae83)
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   tests/functional/test_aarch64_aspeed.py | 33 +++++++++++++------------
+>   1 file changed, 17 insertions(+), 16 deletions(-)
+> 
+> diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+> index 9595498ace..07b0c7c1fd 100755
+> --- a/tests/functional/test_aarch64_aspeed.py
+> +++ b/tests/functional/test_aarch64_aspeed.py
+> @@ -31,33 +31,29 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+>               'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.03/ast2700-default-obmc.tar.gz',
+>               '91225f50d255e2905ba8d8e0c80b71b9d157c3609770c7a740cd786370d85a77')
+>   
+> -    def test_aarch64_ast2700_evb_sdk_v09_03(self):
+> -        self.set_machine('ast2700-evb')
+> -
+> -        self.archive_extract(self.ASSET_SDK_V903_AST2700)
+> -
+> +    def start_ast2700_test(self, name):
+>           num_cpu = 4
+> -        uboot_size = os.path.getsize(self.scratch_file('ast2700-default',
+> +        uboot_size = os.path.getsize(self.scratch_file(name,
+>                                                          'u-boot-nodtb.bin'))
+>           uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
+>   
+>           load_images_list = [
+>               {
+>                   'addr': '0x400000000',
+> -                'file': self.scratch_file('ast2700-default',
+> +                'file': self.scratch_file(name,
+>                                             'u-boot-nodtb.bin')
+>               },
+>               {
+>                   'addr': str(uboot_dtb_load_addr),
+> -                'file': self.scratch_file('ast2700-default', 'u-boot.dtb')
+> +                'file': self.scratch_file(name, 'u-boot.dtb')
+>               },
+>               {
+>                   'addr': '0x430000000',
+> -                'file': self.scratch_file('ast2700-default', 'bl31.bin')
+> +                'file': self.scratch_file(name, 'bl31.bin')
+>               },
+>               {
+>                   'addr': '0x430080000',
+> -                'file': self.scratch_file('ast2700-default', 'optee',
+> +                'file': self.scratch_file(name, 'optee',
+>                                             'tee-raw.bin')
+>               }
+>           ]
+> @@ -76,23 +72,28 @@ def test_aarch64_ast2700_evb_sdk_v09_03(self):
+>           self.vm.add_args('-device',
+>                            'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
+>           self.do_test_aarch64_aspeed_sdk_start(
+> -            self.scratch_file('ast2700-default', 'image-bmc'))
+> +            self.scratch_file(name, 'image-bmc'))
+>   
+> -        wait_for_console_pattern(self, 'ast2700-default login:')
+> +        wait_for_console_pattern(self, f'{name} login:')
+>   
+>           exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+> -        exec_command_and_wait_for_pattern(self,
+> -            '0penBmc', 'root@ast2700-default:~#')
+> +        exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+>   
+>           exec_command_and_wait_for_pattern(self,
+>               'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
+>               'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
+>           exec_command_and_wait_for_pattern(self,
+> -            'cat /sys/class/hwmon/hwmon20/temp1_input', '0')
+> +            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
+>           self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+>                       property='temperature', value=18000)
+>           exec_command_and_wait_for_pattern(self,
+> -            'cat /sys/class/hwmon/hwmon20/temp1_input', '18000')
+> +            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
+> +
+> +    def test_aarch64_ast2700_evb_sdk_v09_03(self):
+> +        self.set_machine('ast2700-evb')
+> +
+> +        self.archive_extract(self.ASSET_SDK_V903_AST2700)
+> +        self.start_ast2700_test('ast2700-default')
+>   
+>   
+>   if __name__ == '__main__':
 
-  Uninitialized value was stored to memory at
-    #0 0xaaaac681ef94 in tb_gen_code third_party/qemu/accel/tcg/translate-a=
-ll.c:358:50
-    #1 0xaaaac67f2520 in cpu_exec_loop third_party/qemu/accel/tcg/cpu-exec.=
-c:993:22
-    #2 0xaaaac67f154c in cpu_exec_setjmp third_party/qemu/accel/tcg/cpu-exe=
-c.c:1039:12
-    #3 0xaaaac67f1240 in cpu_exec third_party/qemu/accel/tcg/cpu-exec.c:106=
-5:11
-    #4 0xaaaac681022c in tcg_cpu_exec third_party/qemu/accel/tcg/tcg-accel-=
-ops.c:79:11
-    #5 0xaaaac680ede4 in mttcg_cpu_thread_fn third_party/qemu/accel/tcg/tcg=
--accel-ops-mttcg.c:95:17
-    #6 0xaaaacf096698 in qemu_thread_start third_party/qemu/util/qemu-threa=
-d-posix.c:541:9
-    #7 0xffffa9242cec in start_thread (/usr/grte/v5/lib64/libpthread.so.0+0=
-xbcec) (BuildId: 0bdac2117d4465a78d3de57b307368b4)
-    #8 0xffffa912ec98 in thread_start (/usr/grte/v5/lib64/libc.so.6+0x116c9=
-8) (BuildId: 613d20d3b812b4c87fe9ebf8c4caae83)
-
-  Uninitialized value was created by an allocation of &#39;host_pc&#39; in =
-the stack frame
-    #0 0xaaaac681d8ac in tb_gen_code third_party/qemu/accel/tcg/translate-a=
-ll.c:297:5
-
-SUMMARY: MemorySanitizer: use-of-uninitialized-value third_party/qemu/accel=
-/tcg/translate-all.c:358:21 in tb_gen_code
-Exiting</pre></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cl=
-ass=3D"gmail_attr">On Fri, Feb 28, 2025 at 5:26=E2=80=AFPM Patrick Venture =
-&lt;<a href=3D"mailto:venture@google.com" target=3D"_blank">venture@google.=
-com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quot=
-e"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Feb 28, 2025 at 1:38=E2=80=
-=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org"=
- target=3D"_blank">richard.henderson@linaro.org</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">On 2/28/25 13:23, Patrick Ve=
-nture wrote:<br>
-&gt; From: Peter Foley &lt;<a href=3D"mailto:pefoley@google.com" target=3D"=
-_blank">pefoley@google.com</a>&gt;<br>
-&gt; <br>
-&gt; e.g.<br>
-&gt;=C2=A0 =C2=A0 Uninitialized value was created by an allocation of &#39;=
-host_pc&#39; in the stack frame<br>
-&gt;=C2=A0 =C2=A0 #0 0xaaaac07df87c in tb_gen_code third_party/qemu/accel/t=
-cg/translate-all.c:297:5<br>
-&gt; <br>
-&gt; Signed-off-by: Peter Foley &lt;<a href=3D"mailto:pefoley@google.com" t=
-arget=3D"_blank">pefoley@google.com</a>&gt;<br>
-&gt; Signed-off-by: Patrick Venture &lt;<a href=3D"mailto:venture@google.co=
-m" target=3D"_blank">venture@google.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0accel/tcg/translate-all.c | 2 +-<br>
-&gt;=C2=A0 =C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
-&gt; <br>
-&gt; diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c<br>
-&gt; index d4189c7386..f584055a15 100644<br>
-&gt; --- a/accel/tcg/translate-all.c<br>
-&gt; +++ b/accel/tcg/translate-all.c<br>
-&gt; @@ -298,7 +298,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0tcg_insn_unit *gen_code_buf;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int gen_code_size, search_size, max_insns;<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int64_t ti;<br>
-&gt; -=C2=A0 =C2=A0 void *host_pc;<br>
-&gt; +=C2=A0 =C2=A0 void *host_pc =3D NULL;<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0assert_memory_lock();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_thread_jit_write();<br>
-<br>
-False positive, because the error return exits without using the uninitiali=
-zed value.<br>
-But if we do want to &quot;fix&quot; this, do it at the beginning of get_pa=
-ge_addr_code_hostp.<br></blockquote><div><br></div><div>Acknowledged.=C2=A0=
- Gotta hate false positives, although better aggressive than not. Thanks!</=
-div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-r~<br>
-</blockquote></div></div>
-</blockquote></div>
-</blockquote></div>
-
---000000000000e4d34b062f72d088--
 
