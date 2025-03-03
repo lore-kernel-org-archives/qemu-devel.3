@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E530C282C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 07:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA098C282C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 07:37:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp0Lr-0000sB-Tl; Mon, 03 Mar 2025 02:36:35 -0500
+	id 1tp0MC-0001Yv-Q0; Mon, 03 Mar 2025 02:36:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp0LI-0000lt-By; Mon, 03 Mar 2025 02:36:00 -0500
+ id 1tp0LZ-0000o5-37; Mon, 03 Mar 2025 02:36:20 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tp0LG-0001xL-UM; Mon, 03 Mar 2025 02:36:00 -0500
+ id 1tp0LU-0001xL-79; Mon, 03 Mar 2025 02:36:14 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 3 Mar
- 2025 15:35:47 +0800
+ 2025 15:35:48 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 3 Mar 2025 15:35:47 +0800
+ Transport; Mon, 3 Mar 2025 15:35:48 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v4 1/6] hw/misc/aspeed_scu: Skipping dram_init in u-boot
-Date: Mon, 3 Mar 2025 15:35:41 +0800
-Message-ID: <20250303073547.1145080-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v4 5/6] hw/arm/aspeed_ast27x0.c Separate HW Strap Registers
+ for SCU and SCUIO
+Date: Mon, 3 Mar 2025 15:35:45 +0800
+Message-ID: <20250303073547.1145080-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
 References: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
@@ -65,35 +66,47 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Setting BIT6 in VGA0 SCRATCH register will indicate that the ddr traning
-is done, therefore skipping the u-boot-spl dram_init() process.
+There is one hw-strap1 register in the SCU (CPU DIE) and another hw-strap1
+register in the SCUIO (IO DIE). The values of these two registers should not be
+the same. To reuse the current design of hw-strap, hw-strap1 is assigned to the
+SCU and sets the value in the SCU hw-strap1 register, while hw-strap2 is
+assigned to the SCUIO and sets the value in the SCUIO hw-strap1 register.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 ---
- hw/misc/aspeed_scu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/arm/aspeed_ast27x0.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index bac1441b06..50f74fbabd 100644
---- a/hw/misc/aspeed_scu.c
-+++ b/hw/misc/aspeed_scu.c
-@@ -157,6 +157,7 @@
- #define AST2700_SCU_FREQ_CNTR       TO_REG(0x3b0)
- #define AST2700_SCU_CPU_SCRATCH_0   TO_REG(0x780)
- #define AST2700_SCU_CPU_SCRATCH_1   TO_REG(0x784)
-+#define AST2700_SCU_VGA_SCRATCH_0   TO_REG(0x900)
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index a48f47b74e..8c225d4f90 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -331,16 +331,23 @@ static void aspeed_soc_ast2700_init(Object *obj)
+     object_initialize_child(obj, "scu", &s->scu, TYPE_ASPEED_2700_SCU);
+     qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev",
+                          sc->silicon_rev);
++    /*
++     * There is one hw-strap1 register in the SCU (CPU DIE) and another
++     * hw-strap1 register in the SCUIO (IO DIE). To reuse the current design
++     * of hw-strap, hw-strap1 is assigned to the SCU and sets the value in the
++     * SCU hw-strap1 register, while hw-strap2 is assigned to the SCUIO and
++     * sets the value in the SCUIO hw-strap1 register.
++     */
+     object_property_add_alias(obj, "hw-strap1", OBJECT(&s->scu),
+                               "hw-strap1");
+-    object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scu),
+-                              "hw-strap2");
+     object_property_add_alias(obj, "hw-prot-key", OBJECT(&s->scu),
+                               "hw-prot-key");
  
- #define AST2700_SCUIO_CLK_STOP_CTL_1    TO_REG(0x240)
- #define AST2700_SCUIO_CLK_STOP_CLR_1    TO_REG(0x244)
-@@ -930,6 +931,7 @@ static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
-     [AST2700_SCU_FREQ_CNTR]         = 0x000375eb,
-     [AST2700_SCU_CPU_SCRATCH_0]     = 0x00000000,
-     [AST2700_SCU_CPU_SCRATCH_1]     = 0x00000004,
-+    [AST2700_SCU_VGA_SCRATCH_0]     = 0x00000040,
- };
+     object_initialize_child(obj, "scuio", &s->scuio, TYPE_ASPEED_2700_SCUIO);
+     qdev_prop_set_uint32(DEVICE(&s->scuio), "silicon-rev",
+                          sc->silicon_rev);
++    object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scuio),
++                                  "hw-strap1");
  
- static void aspeed_ast2700_scu_reset(DeviceState *dev)
+     snprintf(typename, sizeof(typename), "aspeed.fmc-%s", socname);
+     object_initialize_child(obj, "fmc", &s->fmc, typename);
 -- 
 2.34.1
 
