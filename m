@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5054C282C5
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E9ADC282C5
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 10:31:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp32n-0004bP-KQ; Mon, 03 Mar 2025 05:29:05 -0500
+	id 1tp34h-00063r-Q2; Mon, 03 Mar 2025 05:31:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tp32l-0004b6-3j
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:29:03 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp34d-000631-SV
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:31:00 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tp32i-0006LJ-Te
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:29:02 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2235c5818a3so39283095ad.1
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 02:29:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp34b-0006n8-E0
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 05:30:59 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-390dd3403fdso3710927f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 02:30:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1740997739; x=1741602539;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0OLmglrFG7lDGpzE5FypLOYIGLn7DdcrlFVoprwPaCI=;
- b=n89GiOIYVmjt2Y/iePMuY4LRM7cJiXJIVo6dOvR3KAFgbDcMEb82pzFm4alP6bUuN4
- hXYrcPEk/eLlSV3rlRjJaMg0WW6w59K98ON2plOC183YyFwM8NXkJj8SzTwnCZj02bvM
- ie/1Rq1zE92tgHeRpDw/CSci7uuqV9u6L31K/bd6bgjgs1VA0seeStlwzzBM+BwJyVoT
- tgGRpVzAOKDQDCIMxoSVn/FtzwqFvEKjidR8zSyCN7F6vgwt0RpFk1URkmzYOXrFjiPY
- pN0XqE6ro48RdyAtkaCMgYMGMnfe3pLWOHbRiHhSfCwXbbVpNtmPRT660STnCeag/+Rl
- BOdQ==
+ d=linaro.org; s=google; t=1740997855; x=1741602655; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XV1RybOtjxLxbZTmijCMzJ8W1tdjocf8fQljGYEqavs=;
+ b=gfokitjTlfR/Jwabni0Yb9+6B+22zXA3OoZlILKUGfsz3UmSU4yEJezfpPFP0LcH22
+ eajsTffqbNDpRNX3EzMIx4ACyFA7AEOay97Po7Ro3yY36j6D2BjVQ7qMbYuaq9+7+VJt
+ /fwkMrcPlFNRrGAdldyMa83QnkRN7ExnX11inbT/sCOf62wSgqosdLoDWPIO3OsMIzcm
+ ltBTpw+OTKRwl7SAt4kn895xg4+ofTPEVtNymVLkO7BKGQEoQWO5sDPCdoPiCTWPgns6
+ B70GravicuumrfcfCNTyrcOgKo5aHfQiS5nTPG19V3nV/9dTCy87u7BTmkomd75FcIQ6
+ aNWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740997739; x=1741602539;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0OLmglrFG7lDGpzE5FypLOYIGLn7DdcrlFVoprwPaCI=;
- b=LckT8XSJWuz3gzpeeL63E0O2jBt35JINddA2gRgwwWngop6+TkMts4WTzNhOX6dPA6
- SI3Jch+sBBaG9OoWVoCjxj8YLEAPOnPdiQqaaHM5wruT21KJAXyGG3EVWIJndwRfD2YP
- jA++mKsV8ZkIDzzoa8aPiFBInHYOZ1xpRf/M0MCTjFQKX6XrbF8aYD4OT93bQBLi/02X
- DfSVBgMcCN4Y89ykxxcYRoYdf86206fSWIo/f47PVHICrSSX8fFjZeRaIO78YAOIocB6
- nYxVwOmbdcP+wRIpt0CalBMEDWSdEn3yAf4u0oIpdOvsn6/kHy2LdcstaVGd8mVliXBB
- q5jA==
+ d=1e100.net; s=20230601; t=1740997855; x=1741602655;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XV1RybOtjxLxbZTmijCMzJ8W1tdjocf8fQljGYEqavs=;
+ b=Vp2kJy86RzhqZ9XlFG4kSM2ewgNYM3LBqj6FjrAyg/Lt0D09nU/PWNHzTTHgMhMlrN
+ gvS81//fKyKS9KD50TId9V0WHXQEUIA5p7TCo5aXbqqFyg6esLJymElhWsQVK4ByiiVz
+ BgLkhkfrR0DpV1ehSeDz/sIdJKgrzK8vpyzG7OSkIBsySxL7YLgs/0C/eLZ3cSF8gUlJ
+ KBlQsHBKAVt8Y29xFrhK9ZFg/11dcDWGXn7GhDV9cVySGuBtYSheRepYDmQMtAVcPpvN
+ OE3CIyGptSFnaj04ra2FO+jozvn90AG3ReE5cCBawEV/EwyrdS47kL8Prs+1u9bEDGRD
+ 2MnQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFHQAzbnIl8goZaIrOROZlUfs/3wlUlSCAH8ifiUfcgFot9cIyXbeVH7u3wBRYOGSehfGhv/nyYRwM@nongnu.org
-X-Gm-Message-State: AOJu0YyRteI4y/vZGzW9JwPQFLHRm8fNdL/GHM0Uq84Eo5NAh2yYOMT7
- W12TfkQAULdUb5U7qzvHilG9jllWi8vcrKVkKZ8dK7rsnTAyDpvSSWmHjzYC7VQ=
-X-Gm-Gg: ASbGncsuz73z7JLLfKO6n2MGUkr6tvRuM4PYOYc+ZGK41bdnRTWhDn9l/nsoMJeujLn
- JAsnVwnSP6P5j+ZYvmtghS6Z0pwa9U7AKjLOudlSk0DE2gr4lVJvhCt1ThX8CsZ1k/7hjNqc6uD
- Eh7sfudWC0cR2qVjxBSMGX8VRp/Fx8ttCoYjpTbO/9XfoMf21OblWa7cANHbEQCLYHaHWDNAZ4R
- ozvFUEXnjWZm6kXuCSKn5o7LHMGiFPJKLFkwboi2uoTCn67SOZNZ+GP7e2vHn6awJMpp1+6Jz0A
- PWGIkztL2snA1nI70SKb8Z/stntu6vevF4VRGmAZgaBfEe8t24s=
-X-Google-Smtp-Source: AGHT+IFsOoWw8L2o7MJPKPgSqzIYTbB+Wxnwc/xh+0VXw8+K4sMtopqvaPzg8tsekxU2Y2w1DX3Wgg==
-X-Received: by 2002:a17:902:e84a:b0:220:c143:90a0 with SMTP id
- d9443c01a7336-223690e0257mr209972895ad.24.1740997738834; 
- Mon, 03 Mar 2025 02:28:58 -0800 (PST)
-Received: from localhost ([2400:4050:b783:b00:4952:3c52:120a:27e9])
- by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-7364374b320sm2889887b3a.31.2025.03.03.02.28.57
+ AJvYcCVC8RHPaf5GJrSSaPwnIqjOsUeZDcapmqjY5yb9sQyCwidMfWqZ6RvcaMxuHG1zRHoI0qFsgLPLW2Q6@nongnu.org
+X-Gm-Message-State: AOJu0YwjYf+SR++sUxCrmJFEpUiyix/5gbVeDVbKio7sY8gHUY5ZXeAd
+ DZlQuPHyDIS0gjj0WAbKqbNQ6bPMpzAz0MrXUzIkOO0d+PtXeuVwJkYOC76VsqTIL0A/xrI4RVj
+ AcSYiyw==
+X-Gm-Gg: ASbGncs/SgqHEbpkp1dHNtjbGXt0BReHAp0n+nHbH2BzJL++bqpTdVWRO32ovGQMWL6
+ 7W/NN3+ehmOzZtXPwfwBNYmZkK7DO4zsSrNS0RYLtCanNwZhFqG4k+6rfVTQhSC4OPMr+6IHbCM
+ dvIegiHgOQD+j0AMtbelR6uvfoRQA5BPZL9ou+yaT01AFh6flqsb902stQqaOTx58/BAuyosf4G
+ C2/KKK+hLJG+1c/NomMkSAPlEPhzwQ4QDl9tdlxOpqo9nQjVz8+exwA2yvzoyD0Jp3kn0/xQi+G
+ zgSmIrB2D56VMa7aZO3nAZNUVdep7+rajaNxQJrkiowQMruKFXaz4J9YknVtivuRqT5jfxg9YAb
+ EBgxN7BhFFiQi
+X-Google-Smtp-Source: AGHT+IFfwUKF5Vyur2NrIN9PNDhGStSqdbz002BTrH9OCfn4SpIxHe34Z4wPeWcH0c01r8kWqBrEIg==
+X-Received: by 2002:a5d:6d0d:0:b0:38f:4f64:8a22 with SMTP id
+ ffacd0b85a97d-390eca807b3mr10672841f8f.52.1740997855124; 
+ Mon, 03 Mar 2025 02:30:55 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47b6f22sm13784651f8f.47.2025.03.03.02.30.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Mar 2025 02:28:58 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 03 Mar 2025 19:28:48 +0900
-Subject: [PATCH] usb-storage: Allow manually adding SCSI device
+ Mon, 03 Mar 2025 02:30:54 -0800 (PST)
+Message-ID: <d8e06d97-a65a-4278-aebc-360d4332a7ea@linaro.org>
+Date: Mon, 3 Mar 2025 11:30:53 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250303-usb-v1-1-70f700a181fd@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAF+ExWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDYwND3dLiJF3TlJRUk6TkJEMTM3MloMqCotS0zAqwKdGxtbUASwani1U
- AAAA=
-X-Change-ID: 20250301-usb-5dde4bcb1467
-To: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- qemu-devel@nongnu.org
-Cc: devel@daynix.com, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 038/162] tcg: Convert mulsh to TCGOutOpBinary
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250216231012.2808572-1-richard.henderson@linaro.org>
+ <20250216231012.2808572-39-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250216231012.2808572-39-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,81 +102,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-usb-storage automatically adds a SCSI device, but it limits
-configurability of the added SCSI device and causes usability
-problems as observed in:
-https://gitlab.com/libvirt/libvirt/-/issues/368
+On 17/2/25 00:08, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/aarch64/tcg-target-has.h     |  2 --
+>   tcg/arm/tcg-target-has.h         |  1 -
+>   tcg/i386/tcg-target-has.h        |  2 --
+>   tcg/loongarch64/tcg-target-has.h |  2 --
+>   tcg/mips/tcg-target-has.h        |  2 --
+>   tcg/ppc/tcg-target-has.h         |  2 --
+>   tcg/riscv/tcg-target-has.h       |  2 --
+>   tcg/s390x/tcg-target-has.h       |  2 --
+>   tcg/sparc64/tcg-target-has.h     |  2 --
+>   tcg/tcg-has.h                    |  1 -
+>   tcg/tci/tcg-target-has.h         |  2 --
+>   tcg/tcg-op.c                     |  4 ++--
+>   tcg/tcg.c                        |  8 +++----
+>   tcg/aarch64/tcg-target.c.inc     | 17 ++++++++++-----
+>   tcg/arm/tcg-target.c.inc         |  4 ++++
+>   tcg/i386/tcg-target.c.inc        |  4 ++++
+>   tcg/loongarch64/tcg-target.c.inc | 24 +++++++++++++--------
+>   tcg/mips/tcg-target.c.inc        | 37 ++++++++++++++++++--------------
+>   tcg/ppc/tcg-target.c.inc         | 21 ++++++++++--------
+>   tcg/riscv/tcg-target.c.inc       | 19 ++++++++++------
+>   tcg/s390x/tcg-target.c.inc       |  4 ++++
+>   tcg/sparc64/tcg-target.c.inc     |  4 ++++
+>   tcg/tci/tcg-target.c.inc         |  4 ++++
+>   23 files changed, 98 insertions(+), 72 deletions(-)
 
-Allow manually adding SCSI device when the drive option is not
-specified.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- hw/usb/dev-storage-classic.c | 33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
+> diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
+> index ad62d877c7..08d98f49f7 100644
+> --- a/tcg/mips/tcg-target.c.inc
+> +++ b/tcg/mips/tcg-target.c.inc
+> @@ -1743,6 +1743,27 @@ static const TCGOutOpBinary outop_mul = {
+>       .out_rrr = tgen_mul,
+>   };
+>   
+> +static void tgen_mulsh(TCGContext *s, TCGType type,
+> +                       TCGReg a0, TCGReg a1, TCGReg a2)
+> +{
 
-diff --git a/hw/usb/dev-storage-classic.c b/hw/usb/dev-storage-classic.c
-index 56ef39da2e634d1639a07ac4636cdaa000989f5f..33e5a7cfc8bdf3f92b18014e885771aee6d32f5e 100644
---- a/hw/usb/dev-storage-classic.c
-+++ b/hw/usb/dev-storage-classic.c
-@@ -33,10 +33,9 @@ static void usb_msd_storage_realize(USBDevice *dev, Error **errp)
-     BlockBackend *blk = s->conf.blk;
-     SCSIDevice *scsi_dev;
- 
--    if (!blk) {
--        error_setg(errp, "drive property not set");
--        return;
--    }
-+    usb_desc_create_serial(dev);
-+    scsi_bus_init(&s->bus, sizeof(s->bus), DEVICE(dev),
-+                 &usb_msd_scsi_info_storage);
- 
-     /*
-      * Hack alert: this pretends to be a block device, but it's really
-@@ -48,23 +47,23 @@ static void usb_msd_storage_realize(USBDevice *dev, Error **errp)
-      *
-      * The hack is probably a bad idea.
-      */
--    blk_ref(blk);
--    blk_detach_dev(blk, DEVICE(s));
--    s->conf.blk = NULL;
-+    if (blk) {
-+        blk_ref(blk);
-+        blk_detach_dev(blk, DEVICE(s));
-+        s->conf.blk = NULL;
-+
-+        scsi_dev = scsi_bus_legacy_add_drive(&s->bus, blk, 0, !!s->removable,
-+                                             &s->conf, dev->serial, errp);
-+        blk_unref(blk);
-+        if (!scsi_dev) {
-+            return;
-+        }
-+        s->scsi_dev = scsi_dev;
-+    }
- 
--    usb_desc_create_serial(dev);
-     usb_desc_init(dev);
-     dev->flags |= (1 << USB_DEV_FLAG_IS_SCSI_STORAGE);
--    scsi_bus_init(&s->bus, sizeof(s->bus), DEVICE(dev),
--                 &usb_msd_scsi_info_storage);
--    scsi_dev = scsi_bus_legacy_add_drive(&s->bus, blk, 0, !!s->removable,
--                                         &s->conf, dev->serial, errp);
--    blk_unref(blk);
--    if (!scsi_dev) {
--        return;
--    }
-     usb_msd_handle_reset(dev);
--    s->scsi_dev = scsi_dev;
- }
- 
- static const Property msd_properties[] = {
+Maybe for style consistency:
 
----
-base-commit: b69801dd6b1eb4d107f7c2f643adf0a4e3ec9124
-change-id: 20250301-usb-5dde4bcb1467
+        MIPSInsn insn;
 
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+> +    if (use_mips32r6_instructions) {
+
+            insn = type == TCG_TYPE_I32 ? OPC_MUH : OPC_DMUH;
+
+> +        if (type == TCG_TYPE_I32) {
+> +            tcg_out_opc_reg(s, OPC_MUH, a0, a1, a2);
+> +        } else {
+> +            tcg_out_opc_reg(s, OPC_DMUH, a0, a1, a2);
+> +        }
+> +    } else {
+> +        MIPSInsn insn = type == TCG_TYPE_I32 ? OPC_MULT : OPC_DMULT;
+> +        tcg_out_opc_reg(s, insn, 0, a1, a2);
+> +        tcg_out_opc_reg(s, OPC_MFHI, a0, 0, 0);
+> +    }
+> +}
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
