@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96144C282D1
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB62C282CD
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 17:54:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp9zN-00034y-GM; Mon, 03 Mar 2025 12:54:01 -0500
+	id 1tp9yn-0001rB-0O; Mon, 03 Mar 2025 12:53:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tp9yE-0001cK-6I
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:55 -0500
+ id 1tp9y7-0001Yw-Ml
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:45 -0500
 Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tp9yB-0000Ke-Fn
- for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:49 -0500
+ id 1tp9y5-0000Je-IA
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 12:52:43 -0500
 Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-2234bec7192so71441215ad.2
- for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 09:52:47 -0800 (PST)
+ d9443c01a7336-219f8263ae0so88091815ad.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 09:52:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741024366; x=1741629166; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741024360; x=1741629160; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dVDCsa3yLXvuTG05pS6r6MokNR6jdPXP7E/1Cp/7QYA=;
- b=ZPbx7AIex2YCF8g2CPkKzpqYMoGIpAIOI5dfl+wSsg2MYBSaLVHIPnZsV9HjqTenIu
- f2cOY87EyI/Ys23I70M1jv49XOcYDZrFRCTwCsAnVaWHa4cGgSEajavneMLcKE0FCSTx
- BhLHrGf8pKoD87SrGoiKfx700vl1UFD/0hxL14/5TZU99w6yjNthnxYH2SGGmXJikRY+
- DEIHP0of/5m2a39bITuGhkg1XK0y9ZxhZK91b4zNWU72myJrdPL64SBf05V7ua11K6dj
- jXpHysYvFSbg6Oz8zmnx/8PL/k40iV7yFIc9aB8nBszgijq4BL5StjecZadc5UQ9A3HM
- P5ig==
+ bh=vFnj8MBzKLQ8mFbTFO8nM18EwA6rKViM/nHJPBpmhqc=;
+ b=HuEeNi1ZSZ9Faz2M+RD74ZdW6TPZngZEA7uoKEvwk9mModyA80jKkzRSPOxo5Wm44S
+ iKDr78kFCP1vylrOnHEIXXLCemhnRntXbbAA3T262Qkm1uAwjcVi+axmUlO9Qr/TACP+
+ tQMGz1+qT6azM7CBSjuhHizC/tC2SAwVzxOcLT2B5qkU9cygBTzcAXVfv83BusQ0ZSHg
+ Otc2byusev7IG6H2DBIxfdjge3vhScp1dxlqwoc+ZN+e26u8PkhWzCZjtOcCYXa2FG/w
+ AI56DTLH91BgQoFUwoK97fvxz0p7YyoP88iwqJ+iXG2AvtJvdkYGqAwazdqNR9O1Qk/5
+ 9sZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741024366; x=1741629166;
+ d=1e100.net; s=20230601; t=1741024360; x=1741629160;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dVDCsa3yLXvuTG05pS6r6MokNR6jdPXP7E/1Cp/7QYA=;
- b=KdZWiayMOqmmYpY18WRm3I6cLYS5CXJykb7jb4KxT8L2e3JoQoP3g70Temsbe5R2eX
- kRuIo5h9gaZrJ4Yc5F/VorNre0DaZ1sVDznXTWndJY7glsIjUhnpt9jWMv6dsSxfAQaD
- /a11rAPK5EOE5euVdr5FE5TSCXyJvtuVYPx3O0rNSg8adfLcMQKxe7EiF4APP8cCABZ5
- OGhWXGI4VmSMRhoQP1PHpDSqntizqcK4N8NrEUn3lonF3X6GUfGFjd6I+p0PtvbuWBTB
- +vx3ILxqMDOq0xsvWjyWYnjSrI6QwVd9xMWN2BQIwXkTFi1T9D5w25Tw2LLhAdqGZD5x
- c8vQ==
-X-Gm-Message-State: AOJu0YwIGTADQ5Ju7L/hG++PykUKBZvytT1ktX/oi4LRXhdlDbVABnIQ
- 7X97Kxlq9CTpOD1hx8Fhd2+O6TbdsKUUGUL2IZEQCn63vjhjdTA=
-X-Gm-Gg: ASbGncuJQgw3irbpqXm4BTRcX/GmgJ6y12HgJxI57y5P1jfXQ8JOPv6vPDVrB/l4ITz
- CldqV8/EO7Ypyj69496vgiGcMfELtW+KlQrVO7R+Ms5QmlyPUvWByDfLZc3yNJs3p7+8npsOtcX
- jXIKeJD8bsF+Ta8n8V9YEfhHvRZ2v74IfYt9cG3sKDIlc4pTYbZjcYo7sbIjAFNrRB121w5zX3S
- 27/kmgvQUZCb2MtI66OBLAgZ41BHQ8aC05IfiC+at/fLrXJYF1j3awRkyqWAz1d9Gy1nhguLQ5s
- 6B2pXPwdmwTLBL2oMMNAFcc0smrV2RJluqJ1Ty3tAfWvIN97yJCKPtNhAg==
-X-Google-Smtp-Source: AGHT+IHv4QhhKLMP9Jj0T7VVKihohftTgmUaAYoISXjn9gP0chCyaCrRuLyrzblOtXNcFuwmoN/9Dw==
-X-Received: by 2002:a17:902:d511:b0:223:28a8:6101 with SMTP id
- d9443c01a7336-22368fa6da1mr213448025ad.29.1741024366244; 
- Mon, 03 Mar 2025 09:52:46 -0800 (PST)
+ bh=vFnj8MBzKLQ8mFbTFO8nM18EwA6rKViM/nHJPBpmhqc=;
+ b=UJjmlyUsFPpkzbrLcAwqtJBes5lA/vcF9qJXWJ9LOu8rfbsg97kSFUvJiRMFiea60A
+ 4BqEiDUr0cdDOKkwv1ge0l7cxCzhkvk+3tJ3m42O5WGAUlORfu6yumCvjhUJJa0usveB
+ Of9P7VOd+6KNpGi+n7VVkjtUbAtDaQRAy1QBMDkSlAuBPxZ8qFdRtCooxjs9vMO0vtjK
+ miW24APE4xXlMFhWQyJdHG38yKENC6udW72kYx4nRTfv9Ofzaz9DC1kFzFqS2xlsISUl
+ gGkh5BMWAdz2vx0xfC8/qkuBJ2g+jINSonRSAYoVlyW1U0ZEtU/wBkr5D0eWPSB0S/Nl
+ EOIw==
+X-Gm-Message-State: AOJu0Yy1MOkiSF4kISNLoYI2u1ueMQCa6VI1h00U++Ih8Om9V3ZSgVjK
+ Qm9yX1mkIxvYt1d6HmN2b9vmG6MJqTezw9u3dI/D82VzJgMZm78j16RSmUdHXg==
+X-Gm-Gg: ASbGnctEO5xj8cX2OhpyeZMVWwzg3X1ExMTo5+3OhPhYVAgvlntFwh+N/vdN+GnZvRs
+ BSydpNjyGEsvJ85tizzAQNrahZ39+Gx545J7NNLfG4yx/CAmdzzDzXfgHvrf6CRTxS9Xt4AMb2a
+ GjLuj89sgsYkTJwAje8M8Ct2Y1sIEGyG6TgHva8nXZ/DNyVJv6MuTsZFBo1EfitUrpg8u5trSkD
+ ofdCboAFPOC5dKc391MeeNERrJ9nLDPx3e0nSrFdy4j7M5zjLCZFP9eP0Qy6n23ZP72yhPFsSvt
+ lxIvvZoPOk9HnGJUNWXb7Jbc22yd+jxZfjLmHJslryWOejvxEAeOhaZ5UQ==
+X-Google-Smtp-Source: AGHT+IEq3+gQX8xDaHuG0rjLnBsDZnZW99VU+sJe2NR5Jl85DurYY+iQxfdUaOT/uUkQds+sHHjXiA==
+X-Received: by 2002:a17:902:ecd0:b0:223:3396:15e8 with SMTP id
+ d9443c01a7336-22368f95a5cmr242810205ad.22.1741024359871; 
+ Mon, 03 Mar 2025 09:52:39 -0800 (PST)
 Received: from localhost.localdomain ([58.37.175.138])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2235052beaasm80625535ad.233.2025.03.03.09.52.44
+ d9443c01a7336-2235052beaasm80625535ad.233.2025.03.03.09.52.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Mar 2025 09:52:45 -0800 (PST)
+ Mon, 03 Mar 2025 09:52:39 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>,
  Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v2 9/9] vfio/igd: Introduce x-igd-lpc option for LPC bridge ID
- quirk
-Date: Tue,  4 Mar 2025 01:52:19 +0800
-Message-ID: <20250303175220.74917-10-tomitamoeko@gmail.com>
+Subject: [PATCH v2 6/9] vfio/igd: Refactor vfio_probe_igd_bar4_quirk into pci
+ config quirk
+Date: Tue,  4 Mar 2025 01:52:16 +0800
+Message-ID: <20250303175220.74917-7-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250303175220.74917-1-tomitamoeko@gmail.com>
 References: <20250303175220.74917-1-tomitamoeko@gmail.com>
@@ -102,78 +102,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The LPC bridge/Host bridge IDs quirk is also not dependent on legacy
-mode. Recent Windows driver no longer depends on these IDs, as well as
-Linux i915 driver, while UEFI GOP seems still needs them. Make it an
-option to allow users enabling and disabling it as needed.
+The actual IO BAR4 write quirk in vfio_probe_igd_bar4_quirk was removed
+in previous change, leaving the function not matching its name, so move
+it into the newly introduced vfio_config_quirk_setup. There is no
+functional change in this commit.
+
+For now, to align with current legacy mode behavior, it returns and
+proceeds on error. Later it will fail on error after decoupling the
+quirks from legacy mode.
 
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 ---
- hw/vfio/igd.c | 14 ++++++++------
- hw/vfio/pci.c |  2 ++
- hw/vfio/pci.h |  3 +++
- 3 files changed, 13 insertions(+), 6 deletions(-)
+ hw/vfio/igd.c        | 21 ++++++++++++---------
+ hw/vfio/pci-quirks.c |  6 +++++-
+ hw/vfio/pci.h        |  2 +-
+ 3 files changed, 18 insertions(+), 11 deletions(-)
 
 diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 9bfaa24c24..d3ebbebe4e 100644
+index 9d2b761d1d..f5e19f1241 100644
 --- a/hw/vfio/igd.c
 +++ b/hw/vfio/igd.c
-@@ -557,13 +557,9 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-             return false;
-         }
+@@ -482,7 +482,8 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
+ }
  
--        /* Enable OpRegion quirk */
-+        /* Enable OpRegion and LPC brige quirk */
-         vdev->features |= VFIO_FEATURE_ENABLE_IGD_OPREGION;
--
--        /* Setup LPC bridge / Host bridge PCI IDs */
--        if (!vfio_pci_igd_setup_lpc_bridge(vdev, errp)) {
--            return false;
--        }
-+        vdev->features |= VFIO_FEATURE_ENABLE_IGD_LPC;
+-void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
++bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
++                                 Error **errp G_GNUC_UNUSED)
+ {
+     g_autofree struct vfio_region_info *rom = NULL;
+     int ret, gen;
+@@ -497,10 +498,10 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+      * PCI bus address.
+      */
+     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+-        !vfio_is_vga(vdev) || nr != 4 ||
++        !vfio_is_vga(vdev) ||
+         &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
+                                        0, PCI_DEVFN(0x2, 0))) {
+-        return;
++        return true;
+     }
+ 
+     /*
+@@ -512,7 +513,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+     if (gen == -1) {
+         error_report("IGD device %s is unsupported in legacy mode, "
+                      "try SandyBridge or newer", vdev->vbasedev.name);
+-        return;
++        return true;
+     }
+ 
+     /*
+@@ -525,7 +526,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+     if ((ret || !rom->size) && !vdev->pdev.romfile) {
+         error_report("IGD device %s has no ROM, legacy mode disabled",
+                      vdev->vbasedev.name);
+-        return;
++        return true;
+     }
+ 
+     /*
+@@ -536,7 +537,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         error_report("IGD device %s hotplugged, ROM disabled, "
+                      "legacy mode disabled", vdev->vbasedev.name);
+         vdev->rom_read_failed = true;
+-        return;
++        return true;
+     }
+ 
+     gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, 4);
+@@ -550,21 +551,21 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+         error_report("IGD device %s failed to enable VGA access, "
+                      "legacy mode disabled", vdev->vbasedev.name);
+-        return;
++        return true;
      }
  
      /* Setup OpRegion access */
-@@ -572,6 +568,12 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-         return false;
+     if (!vfio_pci_igd_setup_opregion(vdev, &err)) {
+         error_append_hint(&err, "IGD legacy mode disabled\n");
+         error_report_err(err);
+-        return;
++        return true;
      }
  
-+    /* Setup LPC bridge / Host bridge PCI IDs */
-+    if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_LPC) &&
-+        !vfio_pci_igd_setup_lpc_bridge(vdev, errp)) {
-+        return false;
-+     }
-+
+     /* Setup LPC bridge / Host bridge PCI IDs */
+     if (!vfio_pci_igd_setup_lpc_bridge(vdev, &err)) {
+         error_append_hint(&err, "IGD legacy mode disabled\n");
+         error_report_err(err);
+-        return;
++        return true;
+     }
+ 
      /*
-      * Allow user to override dsm size using x-igd-gms option, in multiples of
-      * 32MiB. This option should only be used when the desired size cannot be
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 8fb415cf45..1e49c4b58b 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3354,6 +3354,8 @@ static const Property vfio_pci_dev_properties[] = {
-                     VFIO_FEATURE_ENABLE_REQ_BIT, true),
-     DEFINE_PROP_BIT("x-igd-opregion", VFIOPCIDevice, features,
-                     VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
-+    DEFINE_PROP_BIT("x-igd-lpc", VFIOPCIDevice, features,
-+                    VFIO_FEATURE_ENABLE_IGD_LPC_BIT, false),
-     DEFINE_PROP_BIT("x-igd-legacy-mode", VFIOPCIDevice, features,
-                     VFIO_FEATURE_ENABLE_IGD_LEGACY_MODE_BIT, true),
-     DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
+@@ -624,4 +625,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+     }
+ 
+     trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, (gms_size / MiB));
++
++    return true;
+ }
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index 8a81c60400..f2b37910f0 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -1119,6 +1119,11 @@ static void vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
+  */
+ bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp)
+ {
++#ifdef CONFIG_VFIO_IGD
++    if (!vfio_probe_igd_config_quirk(vdev, errp)) {
++        return false;
++    }
++#endif
+     return true;
+ }
+ 
+@@ -1170,7 +1175,6 @@ void vfio_bar_quirk_setup(VFIOPCIDevice *vdev, int nr)
+     vfio_probe_rtl8168_bar2_quirk(vdev, nr);
+ #ifdef CONFIG_VFIO_IGD
+     vfio_probe_igd_bar0_quirk(vdev, nr);
+-    vfio_probe_igd_bar4_quirk(vdev, nr);
+ #endif
+ }
+ 
 diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 4bddfb80f8..dd645a5465 100644
+index d54e43764b..2e81f9eb19 100644
 --- a/hw/vfio/pci.h
 +++ b/hw/vfio/pci.h
-@@ -154,6 +154,9 @@ struct VFIOPCIDevice {
- #define VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT 2
- #define VFIO_FEATURE_ENABLE_IGD_OPREGION \
-                                 (1 << VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT)
-+#define VFIO_FEATURE_ENABLE_IGD_LPC_BIT 3
-+#define VFIO_FEATURE_ENABLE_IGD_LPC \
-+                                (1 << VFIO_FEATURE_ENABLE_IGD_LPC_BIT)
- #define VFIO_FEATURE_ENABLE_IGD_LEGACY_MODE_BIT 4
- #define VFIO_FEATURE_ENABLE_IGD_LEGACY_MODE \
-                                 (1 << VFIO_FEATURE_ENABLE_IGD_LEGACY_MODE_BIT)
+@@ -217,7 +217,7 @@ bool vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp);
+ void vfio_quirk_reset(VFIOPCIDevice *vdev);
+ VFIOQuirk *vfio_quirk_alloc(int nr_mem);
+ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr);
+-void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr);
++bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp);
+ 
+ extern const PropertyInfo qdev_prop_nv_gpudirect_clique;
+ 
 -- 
 2.47.2
 
