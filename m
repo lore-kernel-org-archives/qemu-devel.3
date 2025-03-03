@@ -4,99 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF9A2C282C6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC4D8C282C5
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Mar 2025 12:28:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tp4tP-0000fl-QS; Mon, 03 Mar 2025 07:27:31 -0500
+	id 1tp4sx-0000Xd-R3; Mon, 03 Mar 2025 07:27:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Robu=VW=kaod.org=clg@ozlabs.org>)
- id 1tp4tK-0000cI-0K; Mon, 03 Mar 2025 07:27:26 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Robu=VW=kaod.org=clg@ozlabs.org>)
- id 1tp4tE-0007R6-Qq; Mon, 03 Mar 2025 07:27:24 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z5yk92wn6z4x21;
- Mon,  3 Mar 2025 23:27:13 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z5yk52dFhz4x1w;
- Mon,  3 Mar 2025 23:27:06 +1100 (AEDT)
-Message-ID: <d9a98e5c-f574-44a2-83e2-3ee1b5e2262c@kaod.org>
-Date: Mon, 3 Mar 2025 13:27:03 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp4sU-0000UX-D6
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 07:26:36 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tp4sQ-0007Go-Vo
+ for qemu-devel@nongnu.org; Mon, 03 Mar 2025 07:26:33 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-390f5f48eafso1076506f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 04:26:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741004789; x=1741609589; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wCNDAMKzWSCOn/BVS1TBOQlzVKtJ0BwoGBeM0Dv+Fg4=;
+ b=cWzIpY9r2rNdiwOP3+ik+R3KtHokF1yySgrMePh6H/fcinHmM+nbwm+GWpOMuhADrM
+ YmcdGhrcIs8e9U0hTMgvhzAqzRbvUHx54nUV2UmE2dJdtGKoYxtt3hHVCOkfBEIuAr0S
+ JvEpNleo1KGDe1+urLoGZ1s/JKpf7d0VhIMtSeQw8+7U64OG2Ajcrnzacv87kSQsU2uv
+ gGdR4da/5T10Y4a8HLsixr+E35DayLtbbKlgBhJVABorkiEewpXxpBAkHw7FkKKa1e/J
+ Hfus6Pm3oZkd2qQzac+8qXq7h94/y2zWuAi4nvl1D41QBw0y6WU5BSWO4/C2ZNHtGtfv
+ hnYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741004789; x=1741609589;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wCNDAMKzWSCOn/BVS1TBOQlzVKtJ0BwoGBeM0Dv+Fg4=;
+ b=wviRvN+Jy3p9hFJjveTZ5EkWg2ftQ+MBr8orX0wzeJNtJfiMwbFjO1mAAvDuVWQ3k5
+ X9Z2+1aoVGL9Q5V10UniPVwsk12ZmuCzdm1MdPf/xwXtABNxAvmDO0kG1fTXIIsesbzK
+ B5QuuoytrOBWGyTOjtR6UhTEXjKcasTRRWvGUON+K1/vtm+2PArc5QqxKHSYBLkr1/9c
+ gjF3vnA4uTP+5LZ/RGvpvhChhVwhgYIHxcjFXa1GPreQGEVaWeE7vXGB8c3uWAKaZaPf
+ pRtgku8Z/faaIt+5/gj4k3Q3US9xFTXyacmDGVmvki2s2pXsbOd49acnsy5MNGLLQtGl
+ 1s/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVaRUcyUbrP6GaBFytVWgA9QjcmRj/f8PuWmMT6TvOpaHqFyyrwdBmeLMC9azkIjJ1WR5H6wVr/Gb9p@nongnu.org
+X-Gm-Message-State: AOJu0Yz8XvPPc0UN/QncqNupW4M54qRa9wIKNm7i88kmQcQLLFZQSEhW
+ FiEJHnfUIHn3rZjB4JrDdJJThXnSWQci1REIE91zW4OMM+ojtX8gtx99hzsH8Co8xhoRDdNLNQu
+ 23W0kEg==
+X-Gm-Gg: ASbGncvKLpCKus0y2Omtt2dI/CRlZXjPcCBZV6OhZW4qucSn3acXPbesmNZHDe7CHq0
+ LtoldBgGQ2/9EGdx8jtpI2eXpSGjxc58Uksg2IZsmnTbvTWlGn8H4e8aTLuB5d+HdWfoFmeTmCi
+ hY5tVfJK7zKWc4Jpf38D8u4Z48wUdZ+sW3F5LBMNmhSRWwEMKIvoHPCBIC7KcToDyp0UZMQtKq1
+ qL8DWB4xEwOTmEIH+shdcbR+92lb/zGQvE6JugBmWe0htUIFiSMZl9pg341Dc0uio6QYty3WQS3
+ BKivP6VN/ycIFGtyRWGGCWFZEq5mRv5JQzWKPcWRH7DdaYVem4/EgFQ+9/vIwy02X4JSyQxvCFu
+ b0mra3BmX9SMi
+X-Google-Smtp-Source: AGHT+IEjZdK0X1TrH2QKbGt1lYS5zhUHB7SLTiKQf7Ivmgep0MyvgfzIcHRERjNMWCTxNOJo0ym/Ag==
+X-Received: by 2002:a05:6000:184e:b0:38d:e6f4:5a88 with SMTP id
+ ffacd0b85a97d-390ec7cd17cmr10718889f8f.12.1741004788630; 
+ Mon, 03 Mar 2025 04:26:28 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bc48f6d6bsm23561095e9.36.2025.03.03.04.26.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Mar 2025 04:26:27 -0800 (PST)
+Message-ID: <3029782c-8d16-4428-9d6b-1c2fa8a7e755@linaro.org>
+Date: Mon, 3 Mar 2025 13:26:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] hw/misc/aspeed_scu: Skipping dram_init in u-boot
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
- <20250303073547.1145080-2-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250303073547.1145080-2-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH 1/8] hw/intc: Add l2vic interrupt controller
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, quic_mathbern@quicinc.com, ale@rev.ng,
+ anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
+ Damien Hedde <damien.hedde@dahe.fr>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250301172045.1295412-1-brian.cain@oss.qualcomm.com>
+ <20250301172045.1295412-2-brian.cain@oss.qualcomm.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250301172045.1295412-2-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=Robu=VW=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,44 +106,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 08:35, Jamin Lin wrote:
-> Setting BIT6 in VGA0 SCRATCH register will indicate that the ddr traning
-> is done, therefore skipping the u-boot-spl dram_init() process.
+Hi Brian and Sid,
+
+On 1/3/25 18:20, Brian Cain wrote:
+> From: Sid Manning <sidneym@quicinc.com>
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+> Co-authored-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+> Co-authored-by: Damien Hedde <damien.hedde@dahe.fr>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   hw/misc/aspeed_scu.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-> index bac1441b06..50f74fbabd 100644
-> --- a/hw/misc/aspeed_scu.c
-> +++ b/hw/misc/aspeed_scu.c
-> @@ -157,6 +157,7 @@
->   #define AST2700_SCU_FREQ_CNTR       TO_REG(0x3b0)
->   #define AST2700_SCU_CPU_SCRATCH_0   TO_REG(0x780)
->   #define AST2700_SCU_CPU_SCRATCH_1   TO_REG(0x784)
-> +#define AST2700_SCU_VGA_SCRATCH_0   TO_REG(0x900)
->   
->   #define AST2700_SCUIO_CLK_STOP_CTL_1    TO_REG(0x240)
->   #define AST2700_SCUIO_CLK_STOP_CLR_1    TO_REG(0x244)
-> @@ -930,6 +931,7 @@ static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
->       [AST2700_SCU_FREQ_CNTR]         = 0x000375eb,
->       [AST2700_SCU_CPU_SCRATCH_0]     = 0x00000000,
->       [AST2700_SCU_CPU_SCRATCH_1]     = 0x00000004,
-> +    [AST2700_SCU_VGA_SCRATCH_0]     = 0x00000040,
->   };
->   
->   static void aspeed_ast2700_scu_reset(DeviceState *dev)
+>   MAINTAINERS                    |   2 +
+>   docs/devel/hexagon-l2vic.rst   |  59 +++++
+>   docs/devel/index-internals.rst |   1 +
+>   include/hw/intc/l2vic.h        |  37 +++
+>   hw/intc/l2vic.c                | 417 +++++++++++++++++++++++++++++++++
+>   hw/intc/Kconfig                |   3 +
+>   hw/intc/meson.build            |   2 +
+>   hw/intc/trace-events           |   4 +
+>   8 files changed, 525 insertions(+)
+>   create mode 100644 docs/devel/hexagon-l2vic.rst
+>   create mode 100644 include/hw/intc/l2vic.h
+>   create mode 100644 hw/intc/l2vic.c
+
+
+> diff --git a/hw/intc/l2vic.c b/hw/intc/l2vic.c
+> new file mode 100644
+> index 0000000000..9df6575214
+> --- /dev/null
+> +++ b/hw/intc/l2vic.c
+> @@ -0,0 +1,417 @@
+> +/*
+> + * QEMU L2VIC Interrupt Controller
+> + *
+> + * Arm PrimeCell PL190 Vector Interrupt Controller was used as a reference.
+> + * Copyright(c) 2020-2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/irq.h"
+> +#include "hw/sysbus.h"
+> +#include "migration/vmstate.h"
+> +#include "qemu/log.h"
+> +#include "qemu/module.h"
+> +#include "hw/intc/l2vic.h"
+> +#include "trace.h"
+> +
+> +#define L2VICA(s, n) (s[(n) >> 2])
+> +
+> +#define TYPE_L2VIC "l2vic"
+> +#define L2VIC(obj) OBJECT_CHECK(L2VICState, (obj), TYPE_L2VIC)
+
+Why not use OBJECT_DECLARE_SIMPLE_TYPE()?
+
+> +
+> +#define SLICE_MAX (L2VIC_INTERRUPT_MAX / 32)
+> +
+> +typedef struct L2VICState {
+> +    SysBusDevice parent_obj;
+> +
+> +    QemuMutex active;
+> +    MemoryRegion iomem;
+> +    MemoryRegion fast_iomem;
+> +    uint32_t level;
+> +    /*
+> +     * offset 0:vid group 0 etc, 10 bits in each group
+> +     * are used:
+> +     */
+> +    uint32_t vid_group[4];
+> +    uint32_t vid0;
+> +    /* Clear Status of Active Edge interrupt, not used: */
+> +    uint32_t int_clear[SLICE_MAX] QEMU_ALIGNED(16);
+> +    /* Enable interrupt source */
+> +    uint32_t int_enable[SLICE_MAX] QEMU_ALIGNED(16);
+> +    /* Clear (set to 0) corresponding bit in int_enable */
+> +    uint32_t int_enable_clear;
+> +    /* Set (to 1) corresponding bit in int_enable */
+> +    uint32_t int_enable_set;
+> +    /* Present for debugging, not used */
+> +    uint32_t int_pending[SLICE_MAX] QEMU_ALIGNED(16);
+> +    /* Generate an interrupt */
+> +    uint32_t int_soft;
+> +    /* Which enabled interrupt is active */
+> +    uint32_t int_status[SLICE_MAX] QEMU_ALIGNED(16);
+> +    /* Edge or Level interrupt */
+> +    uint32_t int_type[SLICE_MAX] QEMU_ALIGNED(16);
+> +    /* L2 interrupt group 0-3 0x600-0x7FF */
+> +    uint32_t int_group_n0[SLICE_MAX] QEMU_ALIGNED(16);
+> +    uint32_t int_group_n1[SLICE_MAX] QEMU_ALIGNED(16);
+> +    uint32_t int_group_n2[SLICE_MAX] QEMU_ALIGNED(16);
+> +    uint32_t int_group_n3[SLICE_MAX] QEMU_ALIGNED(16);
+> +    qemu_irq irq[8];
+> +} L2VICState;
+
+OBJECT_DECLARE_SIMPLE_TYPE(L2VICState, L2VIC)
+
+
+> +static inline bool vid_active(L2VICState *s)
+> +
+> +{
+> +    /* scan all 1024 bits in int_status arrary */
+> +    const int size = sizeof(s->int_status) * CHAR_BIT;
+> +    const int active_irq = find_first_bit((unsigned long *)s->int_status, size);
+
+Maybe this file could leverage the 32-bit bitops.h API:
+
+$ git grep bit32\( include/qemu/bitops.h
+include/qemu/bitops.h:38: * - Bits stored in an array of 'uint32_t': 
+set_bit32(), clear_bit32(), etc
+include/qemu/bitops.h:270:static inline void set_bit32(long nr, uint32_t 
+*addr)
+include/qemu/bitops.h:296:static inline void clear_bit32(long nr, 
+uint32_t *addr)
+include/qemu/bitops.h:322:static inline void change_bit32(long nr, 
+uint32_t *addr)
+include/qemu/bitops.h:335:static inline int test_and_set_bit32(long nr, 
+uint32_t *addr)
+include/qemu/bitops.h:350:static inline int test_and_clear_bit32(long 
+nr, uint32_t *addr)
+include/qemu/bitops.h:365:static inline int test_and_change_bit32(long 
+nr, uint32_t *addr)
+include/qemu/bitops.h:380:static inline int test_bit32(long nr, const 
+uint32_t *addr)
+
+> +    return ((active_irq != size)) ? true : false;
+> +}
+> +
+> +static bool l2vic_update(L2VICState *s, int irq)
+> +{
+> +    if (vid_active(s)) {
+> +        return true;
+> +    }
+> +
+> +    bool pending = test_bit(irq, (unsigned long *)s->int_pending);
+> +    bool enable = test_bit(irq, (unsigned long *)s->int_enable);
+> +    if (pending && enable) {
+> +        int vid = get_vid(s, irq);
+> +        set_bit(irq, (unsigned long *)s->int_status);
+> +        clear_bit(irq, (unsigned long *)s->int_pending);
+> +        clear_bit(irq, (unsigned long *)s->int_enable);
+> +        /* ensure the irq line goes low after going high */
+> +        s->vid0 = irq;
+> +        s->vid_group[get_vid(s, irq)] = irq;
+> +
+> +        /* already low: now call pulse */
+> +        /*     pulse: calls qemu_upper() and then qemu_lower()) */
+> +        qemu_irq_pulse(s->irq[vid + 2]);
+> +        trace_l2vic_delivered(irq, vid);
+> +        return true;
+> +    }
+> +    return false;
+> +}
 
 
