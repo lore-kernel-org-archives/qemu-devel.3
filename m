@@ -4,100 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23887C282D0
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 07:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB21C282D3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 07:18:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpMX7-0001oJ-VD; Tue, 04 Mar 2025 02:17:43 -0500
+	id 1tpMXG-0001sZ-63; Tue, 04 Mar 2025 02:17:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=B2sr=VX=kaod.org=clg@ozlabs.org>)
- id 1tpMWu-0001gD-2T; Tue, 04 Mar 2025 02:17:29 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=B2sr=VX=kaod.org=clg@ozlabs.org>)
- id 1tpMWp-0004yq-SJ; Tue, 04 Mar 2025 02:17:26 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z6Rp612h0z4x8P;
- Tue,  4 Mar 2025 18:17:18 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z6Rp234zsz4wcy;
- Tue,  4 Mar 2025 18:17:14 +1100 (AEDT)
-Message-ID: <fe3204a9-9df7-46dc-a42b-a39b4b5dd945@kaod.org>
-Date: Tue, 4 Mar 2025 08:17:11 +0100
+ (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
+ id 1tpMXC-0001rS-Nu
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 02:17:46 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
+ id 1tpMX5-00052G-0N
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 02:17:45 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-390e88caa4dso2454018f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Mar 2025 23:17:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741072656; x=1741677456; darn=nongnu.org;
+ h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
+ :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=Hv9FQg1pr3JObiucW1oYEE0A4HPO8B+IKoNtb7njX3o=;
+ b=cft7NLHhfpPc3EW7NLR3vjtshA9xD6kqkVPAqUCLtEb2QnN+hrdWJ3mGz6FVK/WGyo
+ S1Kcag95slPq1Ghv07beISHJ5VQNErcEH+Nngm7Mba0qFjFSbFOx/ThWxMwjD5029yNw
+ aGAdg3LjR6fTd6ClxJxFRQiGucWdKBr10ceJQoqkg/H6IKUjxt9T0+IKOAAPziZSyxqV
+ 518OdPqK/d406ZjEFSvcQWWjV9yCUIxnS/HRNoXB31w2/szlvK9ekntoQtfsZi21rP0X
+ pkOTGOqRX/w6LpfCY5OfA5gR9ORsbxGBCAt6cEOMtF6uUYAJSW7MdSqZV84dVrbMSz9d
+ 4aDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741072656; x=1741677456;
+ h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
+ :from:subject:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hv9FQg1pr3JObiucW1oYEE0A4HPO8B+IKoNtb7njX3o=;
+ b=ZLzP0PP4l+Oe2Xi5E3lDUhwFBwgqq7/Mky8f0eBDWqC5RPoPjmsAceybc8nwSCvsxJ
+ xL6z7FqEQIIFoc0cpNCkemMfNCgbWejsLbE7ON3x/sPvwP2v1r0n2ZwuNaWa9IiD+vBP
+ uUV4/tp2QFicsknt0UKKT8NnLzOLIT7CXwCb8kWnFY9oYafro9NiQTQwFieUTNV6PtEP
+ 3wlUutBKsmUvT5NYv1mAZ8K+yFwxzXN+qZLoKBXuCzPkXk/onkPrqcRKjfsjOyTM2sJQ
+ Vif9W0fOnZqf6fqhyE3NncmYD5UooSSDE3+QfrJ/uEfoYZcrsg/Mjn1YSepVzuxyt9u4
+ A8Nw==
+X-Gm-Message-State: AOJu0YzFVC9DVmwPbs0htxJ17B/HhRxLx0+xF4AbOnRZ8pwOA3qfNB8m
+ Z9IqXRgt9jkz75mUP1NASS6v9tSq/CiGU08OfAwO7U5ClqzxBxdo
+X-Gm-Gg: ASbGnctxRvwVEu9vNvvCt9uWPa7cl31MgIpwXOuLEJXU4BDUAfCZBGaFelrZhJPI2MI
+ P/Nxo3tAs66tu6byDpWVjYgLWp3enaApnxsV7KjZwy3CNag9Krbo03OFVtNP7BFMVJ2tiD8znid
+ /VWBBrvg+XVzwFzEF1fKaOJLEOBy1kwNPOhKw4xSkU+WhLNsQDn4olLqnwpRPm3oBci5yf8Ldck
+ rFSPz6hy0U5gokGpTGkKlTlQpejSWHfM3wX/PjEF0ORBNBV4tPOyq56ry0e4RRVPzUq89lDEKGM
+ E/Dc7SkFM93Vshny/AqMo4hqphl2gNbc1V3WV+Sea8EhrzLRJ1/T3sxwNg==
+X-Google-Smtp-Source: AGHT+IFFXgyZBh57ufbjs+1+G2n5ZNiPS2skRHD9+KbtjfzXwv4FQCzB+xQH8NUWMkXLq7Hg2ZKkNg==
+X-Received: by 2002:a5d:6da3:0:b0:390:e9ea:59a with SMTP id
+ ffacd0b85a97d-390ec7c8eb6mr13469849f8f.5.1741072655906; 
+ Mon, 03 Mar 2025 23:17:35 -0800 (PST)
+Received: from [172.21.179.157] ([195.226.174.194])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e485e61csm16976351f8f.98.2025.03.03.23.17.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Mar 2025 23:17:35 -0800 (PST)
+Message-ID: <e8a2be911535f345e8008b0dfccf8cd7a989578f.camel@gmail.com>
+Subject: Re: [PATCH v2 2/9] vfio/igd: Do not include GTT stolen size in
+ etc/igd-bdsm-size
+From: Corvin =?ISO-8859-1?Q?K=F6hne?= <corvin.koehne@gmail.com>
+To: Tomita Moeko <tomitamoeko@gmail.com>, Alex Williamson
+ <alex.williamson@redhat.com>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
+ <clg@redhat.com>
+Cc: qemu-devel@nongnu.org
+Date: Tue, 04 Mar 2025 08:17:34 +0100
+In-Reply-To: <20250303175220.74917-3-tomitamoeko@gmail.com>
+References: <20250303175220.74917-1-tomitamoeko@gmail.com>
+ <20250303175220.74917-3-tomitamoeko@gmail.com>
+Autocrypt: addr=corvin.koehne@gmail.com; prefer-encrypt=mutual;
+ keydata=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
+ LwksVmgc9s79+9pSpeP5DbIeMzhrIK
+Content-Type: multipart/signed; micalg="pgp-sha256";
+ protocol="application/pgp-signature"; boundary="=-KH8VXGOijFC5ezhed916"
+User-Agent: Evolution 3.54.3 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 18/23] hw/arm/aspeed_ast27x0: Support two levels of
- INTC controllers for AST2700 A1
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
- <20250303095457.2337631-19-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250303095457.2337631-19-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=B2sr=VX=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,306 +146,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 10:54, Jamin Lin wrote:
-> The design of INTC controllers has significantly changed in AST2700 A1.
-> 
-> There are a total of 480 interrupt sources in AST2700 A1. For interrupt numbers
-> from 0 to 127, they can route directly to PSP, SSP, and TSP. Due to the
-> limitation of interrupt numbers of processors, the interrupts are merged every
-> 32 sources for interrupt numbers greater than 127.
-> 
-> There are two levels of interrupt controllers, INTC(CPUD Die) and INTCIO
-> (IO Die). The interrupt sources of INTC are the interrupt numbers from INTC_0 to
-> INTC_127 and interrupts from INTCIO. The interrupt sources of INTCIO are the
-> interrupt numbers greater than INTC_127. INTC_IO controls the interrupts
-> INTC_128 to INTC_319 only.
-> 
-> Currently, only GIC 192 to 201 are supported, and their source interrupts are
-> from INTCIO and connected to INTC at input pin 0 and output pins 0 to 9 for
-> GIC 192-201.
-> 
-> The design of the orgates for GICINT 196 is as follows:
-> It has interrupt sources ranging from 0 to 31, with its output pin connected to
-> INTCIO "T0 GICINT_196". The output pin is then connected to INTC "GIC_192_201"
-> at bit 4, and its bit 4 output should be connected to GIC 196.
-> The design of INTC GIC_192_201 have 10 output pins, mapped as following:
-> Bit 0 -> GIC 192
-> Bit 1 -> GIC 193
-> Bit 2 -> GIC 194
-> Bit 3 -> GIC 195
-> Bit 4 -> GIC 196
-> 
-> To support both AST2700 A1 and A0, INTC input pins 1 to 9 and output pins
-> 10 to 18 remain to support GIC 128-136, which source interrupts from INTC.
-> These will be removed if we decide not to support AST2700 A0 in the future.
-> 
-> |-------------------------------------------------------------------------------------------------------|
-> |                                                   AST2700 A1 Design                                   |
-> |           To GICINT196                                                                                |
-> |                                                                                                       |
-> |   ETH1    |-----------|                    |--------------------------|        |--------------|       |
-> |  -------->|0          |                    |         INTCIO           |        |  orgates[0]  |       |
-> |   ETH2    |          4|   orgates[0]------>|inpin[0]-------->outpin[0]|------->| 0            |       |
-> |  -------->|1         5|   orgates[1]------>|inpin[1]-------->outpin[1]|------->| 1            |       |
-> |   ETH3    |          6|   orgates[2]------>|inpin[2]-------->outpin[2]|------->| 2            |       |
-> |  -------->|2        19|   orgates[3]------>|inpin[3]-------->outpin[3]|------->| 3  OR[0:9]   |-----| |
-> |   UART0   |         20|-->orgates[4]------>|inpin[4]-------->outpin[4]|------->| 4            |     | |
-> |  -------->|7        21|   orgates[5]------>|inpin[5]-------->outpin[5]|------->| 5            |     | |
-> |   UART1   |         22|   orgates[6]------>|inpin[6]-------->outpin[6]|------->| 6            |     | |
-> |  -------->|8        23|   orgates[7]------>|inpin[7]-------->outpin[7]|------->| 7            |     | |
-> |   UART2   |         24|   orgates[8]------>|inpin[8]-------->outpin[8]|------->| 8            |     | |
-> |  -------->|9        25|   orgates[9]------>|inpin[9]-------->outpin[9]|------->| 9            |     | |
-> |   UART3   |         26|                    |--------------------------|        |--------------|     | |
-> |  ---------|10       27|                                                                             | |
-> |   UART5   |         28|                                                                             | |
-> |  -------->|11       29|                                                                             | |
-> |   UART6   |           |                                                                             | |
-> |  -------->|12       30|     |-----------------------------------------------------------------------| |
-> |   UART7   |         31|     |                                                                         |
-> |  -------->|13         |     |                                                                         |
-> |   UART8   |  OR[0:31] |     |                |------------------------------|           |----------|  |
-> |  -------->|14         |     |                |            INTC              |           |     GIC  |  |
-> |   UART9   |           |     |                |inpin[0:0]--------->outpin[0] |---------->|192       |  |
-> |  -------->|15         |     |                |inpin[0:1]--------->outpin[1] |---------->|193       |  |
-> |   UART10  |           |     |                |inpin[0:2]--------->outpin[2] |---------->|194       |  |
-> |  -------->|16         |     |                |inpin[0:3]--------->outpin[3] |---------->|195       |  |
-> |   UART11  |           |     |--------------> |inpin[0:4]--------->outpin[4] |---------->|196       |  |
-> |  -------->|17         |                      |inpin[0:5]--------->outpin[5] |---------->|197       |  |
-> |   UART12  |           |                      |inpin[0:6]--------->outpin[6] |---------->|198       |  |
-> |  -------->|18         |                      |inpin[0:7]--------->outpin[7] |---------->|199       |  |
-> |           |-----------|                      |inpin[0:8]--------->outpin[8] |---------->|200       |  |
-> |                                              |inpin[0:9]--------->outpin[9] |---------->|201       |  |
-> |-------------------------------------------------------------------------------------------------------|
-> |-------------------------------------------------------------------------------------------------------|
-> |  ETH1    |-----------|     orgates[1]------->|inpin[1]----------->outpin[10]|---------->|128       |  |
-> | -------->|0          |     orgates[2]------->|inpin[2]----------->outpin[11]|---------->|129       |  |
-> |  ETH2    |          4|     orgates[3]------->|inpin[3]----------->outpin[12]|---------->|130       |  |
-> | -------->|1         5|     orgates[4]------->|inpin[4]----------->outpin[13]|---------->|131       |  |
-> |  ETH3    |          6|---->orgates[5]------->|inpin[5]----------->outpin[14]|---------->|132       |  |
-> | -------->|2        19|     orgates[6]------->|inpin[6]----------->outpin[15]|---------->|133       |  |
-> |  UART0   |         20|     orgates[7]------->|inpin[7]----------->outpin[16]|---------->|134       |  |
-> | -------->|7        21|     orgates[8]------->|inpin[8]----------->outpin[17]|---------->|135       |  |
-> |  UART1   |         22|     orgates[9]------->|inpin[9]----------->outpin[18]|---------->|136       |  |
-> | -------->|8        23|                       |------------------------------|           |----------|  |
-> |  UART2   |         24|                                                                                |
-> | -------->|9        25|                       AST2700 A0 Design                                        |
-> |  UART3   |         26|                                                                                |
-> | -------->|10       27|                                                                                |
-> |  UART5   |         28|                                                                                |
-> | -------->|11       29| GICINT132                                                                      |
-> |  UART6   |           |                                                                                |
-> | -------->|12       30|                                                                                |
-> |  UART7   |         31|                                                                                |
-> | -------->|13         |                                                                                |
-> |  UART8   |  OR[0:31] |                                                                                |
-> | -------->|14         |                                                                                |
-> |  UART9   |           |                                                                                |
-> | -------->|15         |                                                                                |
-> |  UART10  |           |                                                                                |
-> | -------->|16         |                                                                                |
-> |  UART11  |           |                                                                                |
-> | -------->|17         |                                                                                |
-> |  UART12  |           |                                                                                |
-> | -------->|18         |                                                                                |
-> |          |-----------|                                                                                |
-> |                                                                                                       |
-> |-------------------------------------------------------------------------------------------------------|
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+
+--=-KH8VXGOijFC5ezhed916
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, 2025-03-04 at 01:52 +0800, Tomita Moeko wrote:
+> Though GTT Stolen Memory (GSM) is right below Data Stolen Memory (DSM)
+> in host address space, direct access to GSM is prohibited, and it is
+> not mapped to guest address space. Both host and guest accesses GSM
+> indirectly through the second half of MMIO BAR0 (GTTMMADR).
+>=20
+> Guest firmware only need to reserve a memory region for DSM and program
+> the BDSM register with the base address of that region, that's actually
+> what both SeaBIOS[1] and OVMF does now.
+>=20
+
+When was this merged to OVMF?
+
+> [1]
+> https://gitlab.com/qemu-project/seabios/-/blob/1.12-stable/src/fw/pciinit=
+.c#L319-332
+>=20
+> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 > ---
->   include/hw/arm/aspeed_soc.h |  3 +-
->   hw/arm/aspeed_ast27x0.c     | 84 ++++++++++++++++++++++++++++---------
->   2 files changed, 66 insertions(+), 21 deletions(-)
-> 
-> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-> index 689f52dae8..62f75c33dc 100644
-> --- a/include/hw/arm/aspeed_soc.h
-> +++ b/include/hw/arm/aspeed_soc.h
-> @@ -128,7 +128,7 @@ struct Aspeed27x0SoCState {
->       AspeedSoCState parent;
->   
->       ARMCPU cpu[ASPEED_CPUS_NUM];
-> -    AspeedINTCState intc;
-> +    AspeedINTCState intc[2];
+> =C2=A0hw/vfio/igd.c | 28 +++-------------------------
+> =C2=A01 file changed, 3 insertions(+), 25 deletions(-)
+>=20
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index ca3a32f4f2..dda4c7bb5d 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -112,28 +112,8 @@ static int igd_gen(VFIOPCIDevice *vdev)
+> =C2=A0
+> =C2=A0#define IGD_GMCH_GEN6_GMS_SHIFT=C2=A0=C2=A0=C2=A0=C2=A0 3=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* SNB_GMCH in i915 */
+> =C2=A0#define IGD_GMCH_GEN6_GMS_MASK=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x1f
+> -#define IGD_GMCH_GEN6_GGMS_SHIFT=C2=A0=C2=A0=C2=A0 8
+> -#define IGD_GMCH_GEN6_GGMS_MASK=C2=A0=C2=A0=C2=A0=C2=A0 0x3
+> =C2=A0#define IGD_GMCH_GEN8_GMS_SHIFT=C2=A0=C2=A0=C2=A0=C2=A0 8=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* BDW_GMCH in i915 */
+> =C2=A0#define IGD_GMCH_GEN8_GMS_MASK=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0xff
+> -#define IGD_GMCH_GEN8_GGMS_SHIFT=C2=A0=C2=A0=C2=A0 6
+> -#define IGD_GMCH_GEN8_GGMS_MASK=C2=A0=C2=A0=C2=A0=C2=A0 0x3
+> -
+> -static uint64_t igd_gtt_memory_size(int gen, uint16_t gmch)
+> -{
+> -=C2=A0=C2=A0=C2=A0 uint64_t ggms;
+> -
+> -=C2=A0=C2=A0=C2=A0 if (gen < 8) {
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ggms =3D (gmch >> IGD_GMCH_GE=
+N6_GGMS_SHIFT) & IGD_GMCH_GEN6_GGMS_MASK;
+> -=C2=A0=C2=A0=C2=A0 } else {
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ggms =3D (gmch >> IGD_GMCH_GE=
+N8_GGMS_SHIFT) & IGD_GMCH_GEN8_GGMS_MASK;
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (ggms !=3D 0) {
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ggms =
+=3D 1ULL << ggms;
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> -=C2=A0=C2=A0=C2=A0 }
+> -
+> -=C2=A0=C2=A0=C2=A0 return ggms * MiB;
+> -}
+> =C2=A0
+> =C2=A0static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
+> =C2=A0{
+> @@ -367,7 +347,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, i=
+nt
+> nr)
+> =C2=A0=C2=A0=C2=A0=C2=A0 g_autofree struct vfio_region_info *lpc =3D NULL=
+;
+> =C2=A0=C2=A0=C2=A0=C2=A0 PCIDevice *lpc_bridge;
+> =C2=A0=C2=A0=C2=A0=C2=A0 int ret, gen;
+> -=C2=A0=C2=A0=C2=A0 uint64_t ggms_size, gms_size;
+> +=C2=A0=C2=A0=C2=A0 uint64_t gms_size;
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint64_t *bdsm_size;
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t gmch;
+> =C2=A0=C2=A0=C2=A0=C2=A0 Error *err =3D NULL;
+> @@ -527,7 +507,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, i=
+nt
+> nr)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0 ggms_size =3D igd_gtt_memory_size(gen, gmch);
+> =C2=A0=C2=A0=C2=A0=C2=A0 gms_size =3D igd_stolen_memory_size(gen, gmch);
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 /*
+> @@ -539,7 +518,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, i=
+nt
+> nr)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * config offset 0x5C.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
+> =C2=A0=C2=A0=C2=A0=C2=A0 bdsm_size =3D g_malloc(sizeof(*bdsm_size));
+> -=C2=A0=C2=A0=C2=A0 *bdsm_size =3D cpu_to_le64(ggms_size + gms_size);
+> +=C2=A0=C2=A0=C2=A0 *bdsm_size =3D cpu_to_le64(gms_size);
+> =C2=A0=C2=A0=C2=A0=C2=A0 fw_cfg_add_file(fw_cfg_find(), "etc/igd-bdsm-siz=
+e",
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bdsm_size, sizeof(*bdsm_si=
+ze));
+> =C2=A0
+> @@ -559,6 +538,5 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, i=
+nt
+> nr)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pci_set_quad(vdev->emula=
+ted_config_bits + IGD_BDSM_GEN11, ~0);
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0 trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name,
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (ggms_size =
++ gms_size) / MiB);
+> +=C2=A0=C2=A0=C2=A0 trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, =
+(gms_size / MiB));
+> =C2=A0}
 
-I would separate the ast2700_gic_intcmap changes from the introduction of the
-extra AspeedINTCState.
 
->       GICv3State gic;
->       MemoryRegion dram_empty;
->   };
-> @@ -195,6 +195,7 @@ enum {
->       ASPEED_DEV_EHCI2,
->       ASPEED_DEV_VIC,
->       ASPEED_DEV_INTC,
-> +    ASPEED_DEV_INTCIO,
->       ASPEED_DEV_SDMC,
->       ASPEED_DEV_SCU,
->       ASPEED_DEV_ADC,
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index eab9674b6c..028bf08d0e 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -57,6 +57,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
->       [ASPEED_DEV_ETH3]      =  0x14070000,
->       [ASPEED_DEV_EMMC]      =  0x12090000,
->       [ASPEED_DEV_INTC]      =  0x12100000,
-> +    [ASPEED_DEV_INTCIO]    =  0x14C18000,
->       [ASPEED_DEV_SLI]       =  0x12C17000,
->       [ASPEED_DEV_SLIIO]     =  0x14C1E000,
->       [ASPEED_GIC_DIST]      =  0x12200000,
+--=-KH8VXGOijFC5ezhed916
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-one day, we should reorder the memmap arrays by mapping address.
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmfGqQ4ACgkQ2FTaVjFe
+Amr1Dw/7BPiAV/Z1wt1PXdvIh6EFnwC4b1A56zfe7J1Y4VGMDgPKhIRaQ6BS6kVE
+JkK6/nMZM7fXemIMNZTwD0b1PjcK+sXjoxXM6J+VeA4FIEV15qG8ZHtEfo9YhFni
+RVrbzSYyZQnI4+a5x7QWV0pjGealfCYP9PjZK03b624cDjhMEVkyKOIlKHCkH/co
+9MN2GNEDmeXD72VPmUchf07bBSra/5HL3n6Sk2eA711d9HPsWAjeOyvt+5BGEGls
+DgIvUwl/0/MSM+MKmbyIE30+TWkivtPzOz6V9Mk3gm8H7GFsPBcIw9l1SJFqEUyk
+cY26jZci/97LGkfEyqZmVGhTX4cRRhtJZwEtRMudRy7KIw8T/oVUOtsakv74yw+o
+ZeWVHlOzdK1F2JG1d8nkWvEpWKPiN0v52gBbs3lWQMAq1k4bFNJgN/+585ojKwLz
+OQjve7bLoQBwhCeHZ3zbLIiwLxXr/JLX8vjD5UVbjsSHDnHWSCEk6DORUnbER2pG
+Gq0YnbOAlCfIFw4hZXPm9WGu49OUfOtttHaRv/iTQb2uZxitNDeJ/8dsOSMvmagr
+i/3VyWHMs+hqDOMFUX/8k6TDxfSiuvsr2QnZubj/MN03cAbnuuNhfKJ0oQZPALB/
+ibmAk6FMo8Xu/sVUQ1IgA/5p8jBfjwqLXERHI0J/3lk7vwtSk4E=
+=X1yA
+-----END PGP SIGNATURE-----
 
-Thanks,
-
-C.
-
-
-
-> @@ -178,32 +179,48 @@ static const int ast2700_gic133_gic197_intcmap[] = {
->   /* GICINT 192 ~ 201 */
->   struct gic_intc_irq_info {
->       int irq;
-> +    int intc_idx;
-> +    int orgate_idx;
->       const int *ptr;
->   };
->   
->   static const struct gic_intc_irq_info ast2700_gic_intcmap[] = {
-> -    {128,  ast2700_gic128_gic192_intcmap},
-> -    {129,  NULL},
-> -    {130,  ast2700_gic130_gic194_intcmap},
-> -    {131,  ast2700_gic131_gic195_intcmap},
-> -    {132,  ast2700_gic132_gic196_intcmap},
-> -    {133,  ast2700_gic133_gic197_intcmap},
-> -    {134,  NULL},
-> -    {135,  NULL},
-> -    {136,  NULL},
-> +    {192, 1, 0, ast2700_gic128_gic192_intcmap},
-> +    {193, 1, 1, NULL},
-> +    {194, 1, 2, ast2700_gic130_gic194_intcmap},
-> +    {195, 1, 3, ast2700_gic131_gic195_intcmap},
-> +    {196, 1, 4, ast2700_gic132_gic196_intcmap},
-> +    {197, 1, 5, ast2700_gic133_gic197_intcmap},
-> +    {198, 1, 6, NULL},
-> +    {199, 1, 7, NULL},
-> +    {200, 1, 8, NULL},
-> +    {201, 1, 9, NULL},
-> +    {128, 0, 1, ast2700_gic128_gic192_intcmap},
-> +    {129, 0, 2, NULL},
-> +    {130, 0, 3, ast2700_gic130_gic194_intcmap},
-> +    {131, 0, 4, ast2700_gic131_gic195_intcmap},
-> +    {132, 0, 5, ast2700_gic132_gic196_intcmap},
-> +    {133, 0, 6, ast2700_gic133_gic197_intcmap},
-> +    {134, 0, 7, NULL},
-> +    {135, 0, 8, NULL},
-> +    {136, 0, 9, NULL},
->   };
->   static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)>   {
->       Aspeed27x0SoCState *a = ASPEED27X0_SOC(s);
->       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-> +    int or_idx;
-> +    int idx;
->       int i;
->   
->       for (i = 0; i < ARRAY_SIZE(ast2700_gic_intcmap); i++) {
->           if (sc->irqmap[dev] == ast2700_gic_intcmap[i].irq) {
->               assert(ast2700_gic_intcmap[i].ptr);
-> -            return qdev_get_gpio_in(DEVICE(&a->intc.orgates[i]),
-> -                ast2700_gic_intcmap[i].ptr[dev]);
-> +            or_idx = ast2700_gic_intcmap[i].orgate_idx;
-> +            idx = ast2700_gic_intcmap[i].intc_idx;
-> +            return qdev_get_gpio_in(DEVICE(&a->intc[idx].orgates[or_idx]),
-> +                                    ast2700_gic_intcmap[i].ptr[dev]);
->           }
->       }
->   
-> @@ -215,12 +232,16 @@ static qemu_irq aspeed_soc_ast2700_get_irq_index(AspeedSoCState *s, int dev,
->   {
->       Aspeed27x0SoCState *a = ASPEED27X0_SOC(s);
->       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-> +    int or_idx;
-> +    int idx;
->       int i;
->   
->       for (i = 0; i < ARRAY_SIZE(ast2700_gic_intcmap); i++) {
->           if (sc->irqmap[dev] == ast2700_gic_intcmap[i].irq) {
->               assert(ast2700_gic_intcmap[i].ptr);
-> -            return qdev_get_gpio_in(DEVICE(&a->intc.orgates[i]),
-> +            or_idx = ast2700_gic_intcmap[i].orgate_idx;
-> +            idx = ast2700_gic_intcmap[i].intc_idx;
-> +            return qdev_get_gpio_in(DEVICE(&a->intc[idx].orgates[or_idx]),
->                                       ast2700_gic_intcmap[i].ptr[dev] + index);
->           }
->       }
-> @@ -390,7 +411,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
->   
->       object_initialize_child(obj, "sli", &s->sli, TYPE_ASPEED_2700_SLI);
->       object_initialize_child(obj, "sliio", &s->sliio, TYPE_ASPEED_2700_SLIIO);
-> -    object_initialize_child(obj, "intc", &a->intc, TYPE_ASPEED_2700_INTC);
-> +    object_initialize_child(obj, "intc", &a->intc[0], TYPE_ASPEED_2700_INTC);
-> +    object_initialize_child(obj, "intcio", &a->intc[1],
-> +                            TYPE_ASPEED_2700_INTCIO);
->   
->       snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);
->       object_initialize_child(obj, "adc", &s->adc, typename);
-> @@ -532,27 +555,48 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
->       }
->   
->       /* INTC */
-> -    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc), errp)) {
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
->           return;
->       }
->   
-> -    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc), 0,
-> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[0]), 0,
->                       sc->memmap[ASPEED_DEV_INTC]);
->   
-> +    /* INTCIO */
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[1]), errp)) {
-> +        return;
-> +    }
-> +
-> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[1]), 0,
-> +                    sc->memmap[ASPEED_DEV_INTCIO]);
-> +
->       /* irq sources -> orgates -> INTC */
-> -    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc)->num_inpins; i++) {
-> -        qdev_connect_gpio_out(DEVICE(&a->intc.orgates[i]), 0,
-> -                              qdev_get_gpio_in(DEVICE(&a->intc), i));
-> +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[0])->num_inpins; i++) {
-> +        qdev_connect_gpio_out(DEVICE(&a->intc[0].orgates[i]), 0,
-> +                              qdev_get_gpio_in(DEVICE(&a->intc[0]), i));
->       }
->   
->       /* INTC -> GIC192 - GIC201 */
->       /* INTC -> GIC128 - GIC136 */
-> -    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc)->num_outpins; i++) {
-> -        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), i,
-> +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[0])->num_outpins; i++) {
-> +        assert(i < ARRAY_SIZE(ast2700_gic_intcmap));
-> +        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[0]), i,
->                              qdev_get_gpio_in(DEVICE(&a->gic),
->                                               ast2700_gic_intcmap[i].irq));
->       }
->   
-> +    /* irq source -> orgates -> INTCIO */
-> +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[1])->num_inpins; i++) {
-> +        qdev_connect_gpio_out(DEVICE(&a->intc[1].orgates[i]), 0,
-> +                              qdev_get_gpio_in(DEVICE(&a->intc[1]), i));
-> +    }
-> +
-> +    /* INTCIO -> INTC */
-> +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[1])->num_outpins; i++) {
-> +        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[1]), i,
-> +                           qdev_get_gpio_in(DEVICE(&a->intc[0].orgates[0]), i));
-> +    }
-> +
->       /* SRAM */
->       sram_name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
->       if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size,
-
+--=-KH8VXGOijFC5ezhed916--
 
