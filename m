@@ -4,77 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF8CDC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 14:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE232C282D2
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 14:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpTRR-0008MH-5L; Tue, 04 Mar 2025 09:40:17 -0500
+	id 1tpTUr-0000wm-Ky; Tue, 04 Mar 2025 09:43:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tpTRP-0008Lr-8Y
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 09:40:15 -0500
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tpTU4-0000sw-T3
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 09:43:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tpTRL-0002Vy-53
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 09:40:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741099211; x=1772635211;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=BkcukU1BDLk2mTwIOUdDKSgw1hKEbvTZjuCIFTQz47c=;
- b=PTIWo/vDDixUHNQrSG4323sdKYWCFT0U8o76tP67Xlj2cPSSj9LHlRdu
- ul/ThLKnlwtlZg7Yx2MKgCcRpzrWZ3WJIGu+Q251SHIg5t5ACy42auZca
- pmnj3PQWsLUNkZBeDCbsCgiJHYuE3Ovl/k4IKsIbnm3zjerZ4LEOYdGmE
- VMeBSvYfB6TKnr88Q1ZJaGj2a27s4Rx4kBaAJdDdPkz1Lp1XF1FpJIEA/
- 08ycA10+FqOJ7C8efJiF6YkqjvZ92vn/FAh8z9aqU/sffc6fcoairJqey
- R4s7GQjShbTc1ySTEW8HQLVxT2MQgSMyj0/xCi60PicOTAk4m/WzwdFUW g==;
-X-CSE-ConnectionGUID: dagAn8KrTYeSy6XimftHuQ==
-X-CSE-MsgGUID: RzFkys1eRLm/XzNv5aBIeQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="52657720"
-X-IronPort-AV: E=Sophos;i="6.14,220,1736841600"; d="scan'208";a="52657720"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2025 06:40:08 -0800
-X-CSE-ConnectionGUID: 92loLUt3Qwyag4Zc3g121g==
-X-CSE-MsgGUID: nw1HtKbyQ8eArmS7eVlySg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,220,1736841600"; d="scan'208";a="141614002"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2025 06:40:03 -0800
-Message-ID: <46cd2769-aad6-4b99-aea9-426968a9d7cb@intel.com>
-Date: Tue, 4 Mar 2025 22:40:00 +0800
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tpTU2-00038z-B0
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 09:43:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741099376;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=R8iZpaCwxXotYP8YTMoUA9S/jCSwJk1WCcYVP6YSSVE=;
+ b=AEvCJ29fPoRfBRTstu5+Sx3jEFoTybOULHFPtGpRW6EEo2Hnei5c+FrKpwqGXjVkxjeRU/
+ Aqypi7+Q/oXoeBx5LV/qx3RiquzGfzoZ/12zn55JSH6qpoAgESnrhJbh7QSpnMj7S75vxV
+ eYzNB4AhyOKNuuMJoFYnm/QdkWYNxtw=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-511-tETKAEi0Ne-4DNG-RNXMBA-1; Tue, 04 Mar 2025 09:42:45 -0500
+X-MC-Unique: tETKAEi0Ne-4DNG-RNXMBA-1
+X-Mimecast-MFC-AGG-ID: tETKAEi0Ne-4DNG-RNXMBA_1741099365
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-6fd4cfafeb0so36483287b3.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 06:42:45 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741099365; x=1741704165;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R8iZpaCwxXotYP8YTMoUA9S/jCSwJk1WCcYVP6YSSVE=;
+ b=qq+4GdNyJvGi7RhQMgvSfpesjcJtttfybsP6EoLMQM556N0JhwWOHcH3RQCCCJVkYV
+ 3kut9Z0FmiazbOmbW5gNwk46dM7laPo+uu/hLjH6Hgb1SlQJzYWlDTIZVMJsiuBi3Vqw
+ 3dB/jF6VJTg7LIF9Yjn6CRBfSoJJ+DPOFVEI4RxeiS8Us0jeOXfQVRM+C41i+GikW9OH
+ YeO2wspsEwHxcgmRiu2c45IJf2cQiJ++OFRfgzCUFMDI646x4KKL9QObvLaplxBpVRTT
+ GT4qHSQfZ5gj/tgFaBC3hpd4GOzYaI+Dg6KfOGZhoIrgKFB7tg0ylqVD12aWZJggzA7T
+ bw/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXqXc/Qiv4uWzHQIhg9UZP1dMIghhLx0KnBpK75s7YMAPlFeL4Gk3JWTYzxaTslbmcjAOpXlHhHsT/L@nongnu.org
+X-Gm-Message-State: AOJu0Yzai7sMskPcuRNEbxsqV/BHHp0QYBY5un4IGpGcDhv5cyJ3kC2C
+ b9vLZHzFfYL219yWj+zmKAWYb6fMei/7LaKUM5hUHXLi/u3bHyIbp5MA7xe289x/qszVpLe25Vs
+ DrEOQZGwGCO5Vo7AHCdjwMA5Ea3MgjZe+aH+gfCvSE8Xvwn7yl0Mg
+X-Gm-Gg: ASbGnct3SKunvdoJnsjJBywqeowX4whFowG5x0U3hpg4fbFxlKsw8ginchKOjAUEXaq
+ XU7YGl/U4fjPIbsxEr6ate84ArxQphFril+1glIwsYcFfFqZKQleNXzwhFxammcpCeApbx1iH9i
+ MnlnxAovX0F4JWttUAOd8fBpBCgo4nO42f8FnnnLfqJy3LoBNuCR/LW06KvOy5GYWvbwzz9h6ko
+ WC3hp2t2sEkbu6GHvLkNYx9yrCIz0lOGb6odEJR1pR1Qv/zNHhapxSZ6f7BYYj0DfzyEQ3yk5IN
+ EeryrGs=
+X-Received: by 2002:a05:690c:7482:b0:6f9:3e3d:3f2e with SMTP id
+ 00721157ae682-6fd4a1003famr231597257b3.33.1741099364898; 
+ Tue, 04 Mar 2025 06:42:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH7Gp6KcHG5Wgse8Nmb0I+jo9stwoZRM8m+4upXgsDjQEUd6q4d5OCk/GG72HbtpZb/oROSZA==
+X-Received: by 2002:a05:690c:7482:b0:6f9:3e3d:3f2e with SMTP id
+ 00721157ae682-6fd4a1003famr231596987b3.33.1741099364583; 
+ Tue, 04 Mar 2025 06:42:44 -0800 (PST)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-6fd5f0be55dsm16897607b3.114.2025.03.04.06.42.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Mar 2025 06:42:43 -0800 (PST)
+Date: Tue, 4 Mar 2025 09:42:40 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v7 0/5] Allow to enable multifd and postcopy migration
+ together
+Message-ID: <Z8cRYO1Kacl7vl-I@x1.local>
+References: <20250228121749.553184-1-ppandit@redhat.com>
+ <87frjy2k8z.fsf@suse.de>
+ <CAE8KmOwVoGJ2frVCY76W7UxSr90wAL2EMj5Nmtcrdc+BE1e9=g@mail.gmail.com>
+ <Z8W4xVOLLAD1wXjC@x1.local>
+ <CAE8KmOzkVpG5iUqwShWWMF4+96-cbNm1AU8b=s3187EyWXXT4g@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/10] target/i386: disable PerfMonV2 when PERFCORE
- unavailable
-To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
- sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
- like.xu.linux@gmail.com, zhenyuw@linux.intel.com, groug@kaod.org,
- khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
- davydov-max@yandex-team.ru, dapeng1.mi@linux.intel.com, joe.jin@oracle.com
-References: <20250302220112.17653-1-dongli.zhang@oracle.com>
- <20250302220112.17653-2-dongli.zhang@oracle.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250302220112.17653-2-dongli.zhang@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOzkVpG5iUqwShWWMF4+96-cbNm1AU8b=s3187EyWXXT4g@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,60 +111,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/2025 6:00 AM, Dongli Zhang wrote:
-> When the PERFCORE is disabled with "-cpu host,-perfctr-core", it is
-> reflected in in guest dmesg.
+On Tue, Mar 04, 2025 at 03:17:14PM +0530, Prasad Pandit wrote:
+> Hi,
 > 
-> [    0.285136] Performance Events: AMD PMU driver.
-
-I'm a little confused. wWhen no perfctr-core, AMD PMU driver can still 
-be probed? (forgive me if I ask a silly question)
-
-> However, the guest CPUID indicates the PerfMonV2 is still available.
+> On Mon, 3 Mar 2025 at 19:42, Peter Xu <peterx@redhat.com> wrote:
+> > On Mon, Mar 03, 2025 at 04:17:53PM +0530, Prasad Pandit wrote:
+> > > * I think we (you, me, Peter) are all looking at things differently.
+> > >     - In my view Patch-2 is the minimal change _required_  to enable
+> > > multifd & postcopy. In your view we are _revamping_ channel discovery
+> > > parts while _sneaking_ in a feature of enabling multifd & postcopy
+> > > together.
+> > >     - In my view Patch-5 in this series is an isolated change because
+> > > it adds a new migration command to allow multifd threads sync from
+> > > source side. But Peter thinks without that 'flush and sync' Patch-2 is
+> > > incomplete, so we should merge it back there.
+> >
+> > Just to mention, my suggestion does not conflict with splitting patch 2, as
+> > long as you keep every patch complete on its own.
+> >
+> > Patch 5 needs to be squashed to either patch 2 or a split patch out of
+> > patch 2, because current patch 2 (or any possible way to split it into
+> > smaller ones, then one of them which enables the feature) is buggy.
 > 
-> CPU:
->     Extended Performance Monitoring and Debugging (0x80000022):
->        AMD performance monitoring V2         = true
->        AMD LBR V2                            = false
->        AMD LBR stack & PMC freezing          = false
->        number of core perf ctrs              = 0x6 (6)
->        number of LBR stack entries           = 0x0 (0)
->        number of avail Northbridge perf ctrs = 0x0 (0)
->        number of available UMC PMCs          = 0x0 (0)
->        active UMCs bitmask                   = 0x0
+> * I'll try to segregate different parts, then we can discuss how to
+> split them across patches:
 > 
-> Disable PerfMonV2 in CPUID when PERFCORE is disabled.
+> Terminology:
+>     _requires_  => is without which migration shall not work at all.
+>     _essential_ => is without which there may be issues.
 > 
-> Suggested-by: Zhao Liu <zhao1.liu@intel.com>
+> 1. Enable Multifd and Postcopy together
+>     - It _requires_ removal of the Multifd capability check in
+> migration/options.c
+>     - It _requires_ identification of the CH_POSTCOPY connection when it arrives
+>         - so enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY } is defined
+>         - To identify channels, related changes are made to the
+> channel discovery part (if .. else conditionals) in
+> migration_ioc_process_incoming() function.
+>         - These changes help to establish all channel connections.
+> After that, the migration proceeds as usual until it's time to start
+> the Postcopy phase.
+>     - When time comes to start Postcopy phase, we shutdown multifd channels.
+>         - it _requires_ calling multifd_send_shutdown()
+>         - It _requires_ moving
+> file_cleanup_outgoing/socket_cleanup_outgoing calls to
+> migration_cleanup() function.
+>     - When Postcopy phase starts, we don't want ram_save_target
+> _page() function to call ram_save_multifd_page() function, because
+> migrate_multifd() is still true.
+>         - It _requires_ adding the !migration_in_postcopy() checks.
 
-Though I have above confusion of the description, the change itself 
-looks good to me. So
+IIUC Fabiano is not asking you to drop them, but split them.  Split still
+"requires" them to be present, as long as before the enablement patch.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+For example, if you want you can put the channel changes into a separate
+patch, but without enabling the feature.  That single patch (after applied)
+should keep migration working as before.
 
-> Fixes: 209b0ac12074 ("target/i386: Add PerfMonV2 feature bit")
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> 
+> * Above changes are minimal _required_ to enable multifd and postcopy
+> together, while also ensuring that migration continues to work when
+> those options are not enabled together. With these changes, guest
+> migration across two machines works without any observed failures.
+> 
+> 2. The multifd_ram_flush_and_sync() call/command and the
+> assert(!migration_in_postcopy()) call in multifd_recv_thread()
+>     - These calls help to ensure that no multifd data is left behind
+> when the Postcopy phase starts.
+>     - And that multifd_recv threads shall not be active when the
+> Postcopy is running.
+>     - They protect the guests from potential state corruption.
+> 
+> * It is up to us to decide whether (2) is _required_ OR _essential_
+> for the feature. Individual opinions can vary here.
+> 
+> 3. Revamp of the channel discovery parts by moving those bits to
+> connection.c or other places.
+>     - This entails moving the channel discovery parts from
+> migration_ioc_process_incoming() function to somewhere else because it
+> makes more sense to move it there and maybe it reduces complexity and
+> makes the sources easier to understand.*
+> 
+> * It is up to us to decide whether (3) is _required_  OR  _essential_
+> for the feature. Individual opinions can vary here.
+> 
+> * IMHO (1) is _required_,  (2) is _essential_,  and (3) is neither
+> _required_ nor _essential_ for the - Enable multifd and postcopy
+> together - feature. (3) is a completely unrelated change to this
+> feature.
+> 
+> Since it is an individual opinion, we all can think differently here
+> and that is perfectly fine. Once we have some consensus, we can decide
+> how to split or merge patches and move forward.
+> 
+> Hope it helps. Thank you.
 > ---
-> Changed since v1:
->    - Use feature_dependencies (suggested by Zhao Liu).
+>   - Prasad
 > 
->   target/i386/cpu.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 72ab147e85..b6d6167910 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -1805,6 +1805,10 @@ static FeatureDep feature_dependencies[] = {
->           .from = { FEAT_7_1_EDX,             CPUID_7_1_EDX_AVX10 },
->           .to = { FEAT_24_0_EBX,              ~0ull },
->       },
-> +    {
-> +        .from = { FEAT_8000_0001_ECX,       CPUID_EXT3_PERFCORE },
-> +        .to = { FEAT_8000_0022_EAX,         CPUID_8000_0022_EAX_PERFMON_V2 },
-> +    },
->   };
->   
->   typedef struct X86RegisterInfo32 {
+
+-- 
+Peter Xu
 
 
