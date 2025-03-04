@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D5EC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 21:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8936CC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 21:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpaA5-0004JI-DI; Tue, 04 Mar 2025 16:50:49 -0500
+	id 1tpaA3-0004Ij-DM; Tue, 04 Mar 2025 16:50:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaA3-0004Ik-2R
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 16:50:47 -0500
+ id 1tpaA1-0004IY-Ks
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 16:50:45 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaA0-0004ha-CY
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 16:50:45 -0500
+ id 1tpa9y-0004fW-D1
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 16:50:44 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpa9v-00000000LUA-1ENh; Tue, 04 Mar 2025 22:50:39 +0100
-Message-ID: <5c140829-3b31-4b57-92ac-688bd59c4320@maciej.szmigiero.name>
-Date: Tue, 4 Mar 2025 22:50:39 +0100
+ id 1tpa9q-00000000LUA-3EEu; Tue, 04 Mar 2025 22:50:34 +0100
+Message-ID: <bf254e83-d7fb-481b-929b-189a2436c21c@maciej.szmigiero.name>
+Date: Tue, 4 Mar 2025 22:50:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 28/36] vfio/migration: Multifd device state transfer
- support - config loading support
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+Subject: Re: [PATCH v5 17/36] migration: Add save_live_complete_precopy_thread
+ handler
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <47be7bf2f46923e2a9d2b75b1d35c6b2915c20c8.1739994627.git.maciej.szmigiero@oracle.com>
- <b9284c9a-149a-4965-a4fa-ec092e3fb7d0@nvidia.com>
- <d1bb2200-1ccf-4e52-8d34-09d95f4863b4@maciej.szmigiero.name>
- <6888be59-09f3-472c-b993-fad0630e416d@redhat.com>
+ <910a9d0950b609943e414ec557bebee85a4804a5.1739994627.git.maciej.szmigiero@oracle.com>
+ <Z79EyapCxc2HMHPQ@x1.local>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -85,9 +84,9 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <6888be59-09f3-472c-b993-fad0630e416d@redhat.com>
+In-Reply-To: <Z79EyapCxc2HMHPQ@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
  envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
 X-Spam_score_int: -18
@@ -112,31 +111,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4.03.2025 08:41, Cédric Le Goater wrote:
->>>> @@ -728,6 +728,12 @@ static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
->>>>           switch (data) {
->>>>           case VFIO_MIG_FLAG_DEV_CONFIG_STATE:
->>>>           {
->>>> +            if (vfio_multifd_transfer_enabled(vbasedev)) {
->>>> +                error_report("%s: got DEV_CONFIG_STATE but doing multifd transfer",
->>>> +                             vbasedev->name);
->>>
->>> To make clearer, maybe change to:
->>> "%s: got DEV_CONFIG_STATE in main migration channel but doing multifd transfer"
+On 26.02.2025 17:43, Peter Xu wrote:
+> On Wed, Feb 19, 2025 at 09:33:59PM +0100, Maciej S. Szmigiero wrote:
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> That normally would be good idea, however we are already at 83 characters in this
->> line here and will not fit that many more words to this string.
+>> This SaveVMHandler helps device provide its own asynchronous transmission
+>> of the remaining data at the end of a precopy phase via multifd channels,
+>> in parallel with the transfer done by save_live_complete_precopy handlers.
+>>
+>> These threads are launched only when multifd device state transfer is
+>> supported.
+>>
+>> Management of these threads in done in the multifd migration code,
+>> wrapping them in the generic thread pool.
+>>
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   include/migration/misc.h         | 17 +++++++
+>>   include/migration/register.h     | 19 +++++++
+>>   include/qemu/typedefs.h          |  3 ++
+>>   migration/multifd-device-state.c | 85 ++++++++++++++++++++++++++++++++
+>>   migration/savevm.c               | 35 ++++++++++++-
+>>   5 files changed, 158 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/include/migration/misc.h b/include/migration/misc.h
+>> index 273ebfca6256..8fd36eba1da7 100644
+>> --- a/include/migration/misc.h
+>> +++ b/include/migration/misc.h
+>> @@ -119,8 +119,25 @@ bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
+>>                          Error **errp);
+>>   
+>>   /* migration/multifd-device-state.c */
+>> +typedef struct SaveLiveCompletePrecopyThreadData {
+>> +    SaveLiveCompletePrecopyThreadHandler hdlr;
+>> +    char *idstr;
+>> +    uint32_t instance_id;
+>> +    void *handler_opaque;
+>> +} SaveLiveCompletePrecopyThreadData;
+>> +
+>>   bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
+>>                                   char *data, size_t len);
+>>   bool multifd_device_state_supported(void);
+>>   
+>> +void
+>> +multifd_spawn_device_state_save_thread(SaveLiveCompletePrecopyThreadHandler hdlr,
+>> +                                       char *idstr, uint32_t instance_id,
+>> +                                       void *opaque);
+>> +
+>> +bool multifd_device_state_save_thread_should_exit(void);
+>> +
+>> +void multifd_abort_device_state_save_threads(void);
+>> +bool multifd_join_device_state_save_threads(void);
+>> +
+>>   #endif
+>> diff --git a/include/migration/register.h b/include/migration/register.h
+>> index 58891aa54b76..c041ce32f2fc 100644
+>> --- a/include/migration/register.h
+>> +++ b/include/migration/register.h
+>> @@ -105,6 +105,25 @@ typedef struct SaveVMHandlers {
+>>        */
+>>       int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
+>>   
+>> +    /**
+>> +     * @save_live_complete_precopy_thread (invoked in a separate thread)
+>> +     *
+>> +     * Called at the end of a precopy phase from a separate worker thread
+>> +     * in configurations where multifd device state transfer is supported
+>> +     * in order to perform asynchronous transmission of the remaining data in
+>> +     * parallel with @save_live_complete_precopy handlers.
+>> +     * When postcopy is enabled, devices that support postcopy will skip this
+>> +     * step.
+>> +     *
+>> +     * @d: a #SaveLiveCompletePrecopyThreadData containing parameters that the
+>> +     * handler may need, including this device section idstr and instance_id,
+>> +     * and opaque data pointer passed to register_savevm_live().
+>> +     * @errp: pointer to Error*, to store an error if it happens.
+>> +     *
+>> +     * Returns true to indicate success and false for errors.
+>> +     */
+>> +    SaveLiveCompletePrecopyThreadHandler save_live_complete_precopy_thread;
+>> +
+>>       /* This runs both outside and inside the BQL.  */
+>>   
+>>       /**
+>> diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+>> index fd23ff7771b1..42ed4e6be150 100644
+>> --- a/include/qemu/typedefs.h
+>> +++ b/include/qemu/typedefs.h
+>> @@ -108,6 +108,7 @@ typedef struct QString QString;
+>>   typedef struct RAMBlock RAMBlock;
+>>   typedef struct Range Range;
+>>   typedef struct ReservedRegion ReservedRegion;
+>> +typedef struct SaveLiveCompletePrecopyThreadData SaveLiveCompletePrecopyThreadData;
+>>   typedef struct SHPCDevice SHPCDevice;
+>>   typedef struct SSIBus SSIBus;
+>>   typedef struct TCGCPUOps TCGCPUOps;
+>> @@ -133,5 +134,7 @@ typedef struct IRQState *qemu_irq;
+>>   typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
+>>   typedef bool (*MigrationLoadThread)(void *opaque, bool *should_quit,
+>>                                       Error **errp);
+>> +typedef bool (*SaveLiveCompletePrecopyThreadHandler)(SaveLiveCompletePrecopyThreadData *d,
+>> +                                                     Error **errp);
+>>   
+>>   #endif /* QEMU_TYPEDEFS_H */
+>> diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
+>> index 5de3cf27d6e8..63f021fb8dad 100644
+>> --- a/migration/multifd-device-state.c
+>> +++ b/migration/multifd-device-state.c
+>> @@ -8,7 +8,10 @@
+>>    */
+>>   
+>>   #include "qemu/osdep.h"
+>> +#include "qapi/error.h"
+>>   #include "qemu/lockable.h"
+>> +#include "block/thread-pool.h"
+>> +#include "migration.h"
+>>   #include "migration/misc.h"
+>>   #include "multifd.h"
+>>   #include "options.h"
+>> @@ -17,6 +20,9 @@ static struct {
+>>       QemuMutex queue_job_mutex;
+>>   
+>>       MultiFDSendData *send_data;
+>> +
+>> +    ThreadPool *threads;
+>> +    bool threads_abort;
+>>   } *multifd_send_device_state;
+>>   
+>>   void multifd_device_state_send_setup(void)
+>> @@ -27,10 +33,14 @@ void multifd_device_state_send_setup(void)
+>>       qemu_mutex_init(&multifd_send_device_state->queue_job_mutex);
+>>   
+>>       multifd_send_device_state->send_data = multifd_send_data_alloc();
+>> +
+>> +    multifd_send_device_state->threads = thread_pool_new();
+>> +    multifd_send_device_state->threads_abort = false;
+>>   }
+>>   
+>>   void multifd_device_state_send_cleanup(void)
+>>   {
+>> +    g_clear_pointer(&multifd_send_device_state->threads, thread_pool_free);
+>>       g_clear_pointer(&multifd_send_device_state->send_data,
+>>                       multifd_send_data_free);
+>>   
+>> @@ -115,3 +125,78 @@ bool multifd_device_state_supported(void)
+>>       return migrate_multifd() && !migrate_mapped_ram() &&
+>>           migrate_multifd_compression() == MULTIFD_COMPRESSION_NONE;
+>>   }
+>> +
+>> +static void multifd_device_state_save_thread_data_free(void *opaque)
+>> +{
+>> +    SaveLiveCompletePrecopyThreadData *data = opaque;
+>> +
+>> +    g_clear_pointer(&data->idstr, g_free);
+>> +    g_free(data);
+>> +}
+>> +
+>> +static int multifd_device_state_save_thread(void *opaque)
+>> +{
+>> +    SaveLiveCompletePrecopyThreadData *data = opaque;
+>> +    g_autoptr(Error) local_err = NULL;
+>> +
+>> +    if (!data->hdlr(data, &local_err)) {
+>> +        MigrationState *s = migrate_get_current();
+>> +
+>> +        assert(local_err);
+>> +
+>> +        /*
+>> +         * In case of multiple save threads failing which thread error
+>> +         * return we end setting is purely arbitrary.
+>> +         */
+>> +        migrate_set_error(s, local_err);
 > 
-> The 80 characters "rule" is not strict. A clear error report is
-> always good to have !
+> Where did you kick off all the threads when one hit error?  I wonder if
+> migrate_set_error() should just set quit flag for everything, but for this
+> series it might be easier to use multifd_abort_device_state_save_threads().
 
-Changed the message to the suggested by splitting that string into two to avoid going
-above 100 characters per line.
+I've now added call to multifd_abort_device_state_save_threads() if a migration
+error is already set to avoid needlessly waiting for the remaining threads to
+do all of their work.
 
-> Thanks,
-> 
-> C.
-> 
+> Other than that, looks good to me, thanks.
 > 
 
 Thanks,
