@@ -4,102 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47E2DC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 10:44:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86086C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 11:18:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpPkm-00054c-62; Tue, 04 Mar 2025 05:44:02 -0500
+	id 1tpQHi-0002WX-19; Tue, 04 Mar 2025 06:18:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=B2sr=VX=kaod.org=clg@ozlabs.org>)
- id 1tpPka-00053n-81; Tue, 04 Mar 2025 05:43:48 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=B2sr=VX=kaod.org=clg@ozlabs.org>)
- id 1tpPkX-0006vD-06; Tue, 04 Mar 2025 05:43:47 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z6XNB4pMhz4x7G;
- Tue,  4 Mar 2025 21:43:38 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z6XN62pYNz4wcQ;
- Tue,  4 Mar 2025 21:43:34 +1100 (AEDT)
-Message-ID: <516dea89-7090-4f62-bafc-6bfd1b54ab9f@kaod.org>
-Date: Tue, 4 Mar 2025 11:43:30 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tpQHX-0002Vw-Lw
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 06:17:52 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tpQHT-00020k-JO
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 06:17:50 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxYa9R4cZnCAqKAA--.63243S3;
+ Tue, 04 Mar 2025 19:17:37 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCxbsVM4cZnwn81AA--.2529S3;
+ Tue, 04 Mar 2025 19:17:34 +0800 (CST)
+Subject: Re: [PATCH v6 2/2] target/loongarch: check tlb_ps
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org
+Cc: richard.henderson@linaro.org, yangxiaojuan@loongson.cn,
+ wangliupu@loongson.cn
+References: <20250303055721.3236502-1-gaosong@loongson.cn>
+ <20250303055721.3236502-3-gaosong@loongson.cn>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <ea3f275e-0ffa-e88d-f55a-034b34ea78a5@loongson.cn>
+Date: Tue, 4 Mar 2025 19:16:56 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/23] hw/intc/aspeed: Support setting different
- register sizes
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
- <20250303095457.2337631-3-jamin_lin@aspeedtech.com>
- <91f57db1-515c-4594-84a6-cdfd776ef2c9@kaod.org>
- <SI2PR06MB50418330F56FE29AC5C87781FCC82@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <SI2PR06MB50418330F56FE29AC5C87781FCC82@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=B2sr=VX=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+In-Reply-To: <20250303055721.3236502-3-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMCxbsVM4cZnwn81AA--.2529S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxtFW3tFWUuw4xWw4UXF4xGrX_yoW3tFWxpF
+ W7CrZFkrW8KFZrA3Z3t3WYkw1DZr4xGw4Iva1fK34FkwsxWryxXrWvg3sF9F1xJw15uF4I
+ vF1vyry8uFW7XFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -44
+X-Spam_score: -4.5
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.589,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,131 +84,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/25 11:03, Jamin Lin wrote:
-> Hi Cedric,
-> 
->> Subject: Re: [PATCH v4 02/23] hw/intc/aspeed: Support setting different
->> register sizes
->>
->> On 3/3/25 10:54, Jamin Lin wrote:
->>> Currently, the size of the regs array is 0x2000, which is too large.
->>> So far, it only use GICINT128 - GICINT134, and the offsets from 0 to 0x1000
->> are unused.
->>> To save code size, introduce a new class attribute "reg_size" to set
->>> the different register sizes for the INTC models in AST2700 and add a
->>> regs sub-region in the memory container.
->>>
->>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
->>> ---
->>>    include/hw/intc/aspeed_intc.h | 1 +
->>>    hw/intc/aspeed_intc.c         | 8 +++++---
->>>    2 files changed, 6 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/include/hw/intc/aspeed_intc.h
->>> b/include/hw/intc/aspeed_intc.h index 03324f05ab..ecaeb15aea 100644
->>> --- a/include/hw/intc/aspeed_intc.h
->>> +++ b/include/hw/intc/aspeed_intc.h
->>> @@ -42,6 +42,7 @@ struct AspeedINTCClass {
->>>        uint32_t num_lines;
->>>        uint32_t num_ints;
->>>        uint64_t mem_size;
->>> +    uint64_t reg_size;
->>>    };
->>>
->>>    #endif /* ASPEED_INTC_H */
->>> diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c index
->>> 033b574c1e..316885a27a 100644
->>> --- a/hw/intc/aspeed_intc.c
->>> +++ b/hw/intc/aspeed_intc.c
->>> @@ -117,10 +117,11 @@ static void aspeed_intc_set_irq(void *opaque, int
->> irq, int level)
->>>    static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned
->> int size)
->>>    {
->>>        AspeedINTCState *s = ASPEED_INTC(opaque);
->>> +    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
->>>        uint32_t addr = offset >> 2;
->>
->> 'addr' is a confusing name. As it is used as a register index, I think 'reg' would
->> be more appropriate.
-> 
-> Will fix it.
->>
->>>        uint32_t value = 0;
->>>
->>> -    if (addr >= ASPEED_INTC_NR_REGS) {
->>> +    if (offset >= aic->reg_size) {
->>
->> This is a useless test since the memory region 's->iomem' is initialized below
->> with size 'aic->reg_size'.
->>
-> Sorry, I lost to remove it.
-> 
->>>            qemu_log_mask(LOG_GUEST_ERROR,
->>>                          "%s: Out-of-bounds read at offset 0x%"
->> HWADDR_PRIx "\n",
->>>                          __func__, offset); @@ -143,7 +144,7 @@
->> static
->>> void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
->>>        uint32_t change;
->>>        uint32_t irq;
->>>
->>> -    if (addr >= ASPEED_INTC_NR_REGS) {
->>> +    if (offset >= aic->reg_size) {
->>>            qemu_log_mask(LOG_GUEST_ERROR,
->>>                          "%s: Out-of-bounds write at offset 0x%"
->> HWADDR_PRIx "\n",
->>>                          __func__, offset); @@ -308,7 +309,7 @@
->> static
->>> void aspeed_intc_realize(DeviceState *dev, Error **errp)
->>>        sysbus_init_mmio(sbd, &s->iomem_container);
->>>
->>>        memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops,
->> s,
->>> -                          TYPE_ASPEED_INTC ".regs",
->> ASPEED_INTC_NR_REGS << 2);
->>> +                          TYPE_ASPEED_INTC ".regs", aic->reg_size);>
->>>        memory_region_add_subregion(&s->iomem_container, 0x0,
->>> &s->iomem);
->>>
->>> @@ -351,6 +352,7 @@ static void aspeed_2700_intc_class_init(ObjectClass
->> *klass, void *data)
->>>        aic->num_lines = 32;
->>>        aic->num_ints = 9;
->>>        aic->mem_size = 0x4000;
->>> +    aic->reg_size = 0x2000;
->>
->> the model still uses ASPEED_INTC_NR_REGS in :
->>
->>       struct AspeedINTCState {
->>           ...
->>           uint32_t regs[ASPEED_INTC_NR_REGS];
->>           ...
->>
->> which is redundant and error prone IMO.
->>
-> 
-> Do you mean using "g_malloc" instead of the static regs array?
-> If I understand your question correctly, I will make the following changes.
-> 
-> 1. uint32_t regs[ASPEED_INTC_NR_REGS]; --> uint32_t *regs;
-> 2. aspeed_2700_intc_class_init() {
->        regs = g_malloc(aic->reg_size);
->    }
-> 3. static void aspeed_intc_realize(DeviceState *dev, Error **errp) {>     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
->                            TYPE_ASPEED_INTC ".regs", aic->reg_size);
->   }
+Song,
 
-yes.
+This version is much better than before, some small nits as follows.
 
-> I have a question: where should I free the dynamically allocated memory for regs?
+On 2025/3/3 下午1:57, Song Gao wrote:
+> For LoongArch th min tlb_ps is 12(4KB), for TLB code,
+> the tlb_ps may be 0,this may case UndefinedBehavior
+> Add a check-tlb_ps fuction to check tlb_ps,
+> to make sure the tlb_ps is avalablie. we check tlb_ps
+> when get the tlb_ps from tlb->misc or CSR bits.
+> 1. cpu reset
+>     set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits a default value
+>     from CSR_PRCFG2;
+> 2. tlb instructions.
+>     some tlb instructions get  the tlb_ps from tlb->misc but the
+>     value may  has been initialized to 0. we need just check the tlb_ps
+>     skip the function and write a guest log.
+> 3. csrwr instructions.
+>     to make sure CSR_PWCL.PTBASE and CSR_STLBPS.PS bits are avalable,
+>     cheke theses bits and set a default value from CSR_PRCFG2.
 > 
-> Could you please give me any suggestion?
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   target/loongarch/cpu.c                        | 11 +++++--
+>   target/loongarch/helper.h                     |  1 +
+>   target/loongarch/internals.h                  |  2 ++
+>   target/loongarch/tcg/csr_helper.c             | 30 ++++++++++++++++++-
+>   .../tcg/insn_trans/trans_privileged.c.inc     |  1 +
+>   target/loongarch/tcg/tlb_helper.c             | 28 +++++++++++++++--
+>   6 files changed, 67 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index e91f4a5239..4d81dcc746 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -537,6 +537,7 @@ static void loongarch_max_initfn(Object *obj)
+>   
+>   static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>   {
+> +    uint8_t tlb_ps;
+>       CPUState *cs = CPU(obj);
+>       LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(obj);
+>       CPULoongArchState *env = cpu_env(cs);
+> @@ -585,13 +586,17 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>        */
+>       env->CSR_PGDH = 0;
+>       env->CSR_PGDL = 0;
+> -    env->CSR_PWCL = 0;
+>       env->CSR_PWCH = 0;
+> -    env->CSR_STLBPS = 0;
+>       env->CSR_EENTRY = 0;
+>       env->CSR_TLBRENTRY = 0;
+>       env->CSR_MERRENTRY = 0;
+> -
+> +    /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
+> +    if (env->CSR_PRCFG2 == 0) {
+> +        env->CSR_PRCFG2 = 0x3fffff000;
+> +    }
+> +    tlb_ps = clz32(env->CSR_PRCFG2);
+> +    env->CSR_STLBPS = FIELD_DP64(env->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
+> +    env->CSR_PWCL = FIELD_DP64(env->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
+>       for (n = 0; n < 4; n++) {
+>           env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV0, 0);
+>           env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV1, 0);
+> diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
+> index 943517b5f2..1d5cb0198c 100644
+> --- a/target/loongarch/helper.h
+> +++ b/target/loongarch/helper.h
+> @@ -100,6 +100,7 @@ DEF_HELPER_1(rdtime_d, i64, env)
+>   DEF_HELPER_1(csrrd_pgd, i64, env)
+>   DEF_HELPER_1(csrrd_cpuid, i64, env)
+>   DEF_HELPER_1(csrrd_tval, i64, env)
+> +DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+>   DEF_HELPER_2(csrwr_estat, i64, env, tl)
+>   DEF_HELPER_2(csrwr_asid, i64, env, tl)
+>   DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+> index 7b254c5f49..1cd959a766 100644
+> --- a/target/loongarch/internals.h
+> +++ b/target/loongarch/internals.h
+> @@ -43,6 +43,8 @@ enum {
+>       TLBRET_PE = 7,
+>   };
+>   
+> +bool check_ps(CPULoongArchState *ent, int ps);
+> +
+>   extern const VMStateDescription vmstate_loongarch_cpu;
+>   
+>   void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+> index 6c95be9910..2ede9eaf79 100644
+> --- a/target/loongarch/tcg/csr_helper.c
+> +++ b/target/loongarch/tcg/csr_helper.c
+> @@ -17,6 +17,27 @@
+>   #include "hw/irq.h"
+>   #include "cpu-csr.h"
+>   
+> +
+> +
+It is not necessary to add two empty lines here.
 
-It would be in an unrealize() handler.
+> +target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+> +{
+> +    int64_t old_v = env->CSR_STLBPS;
+> +    uint8_t default_ps = ctz32(env->CSR_PRCFG2);
+> +
+> +    /*
+> +     * The real hardware only supports the min tlb_ps is 12
+> +     * tlb_ps=0 may cause undefined-behavior.
+> +     */
+> +    uint8_t tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+> +    if (!check_ps(env, tlb_ps)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "Attempted set ps %d\n", tlb_ps);
+> +        val = FIELD_DP64(val, CSR_STLBPS, PS, default_ps);
+If there is problem with check_ps(). Is it better to set it with 
+default_ps or do nothing and return directly?
 
+> +    }
+> +    env->CSR_STLBPS = val;
+> +    return old_v;
+> +}
+> +
+>   target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+>   {
+>       int64_t v;
+> @@ -99,19 +120,26 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+>   
+>   target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+>   {
+> -    int shift;
+> +    int shift, ptbase;
+>       int64_t old_v = env->CSR_PWCL;
+> +    uint8_t default_ps = ctz32(env->CSR_PRCFG2);
+>   
+>       /*
+>        * The real hardware only supports 64bit PTE width now, 128bit or others
+>        * treated as illegal.
+>        */
+>       shift = FIELD_EX64(val, CSR_PWCL, PTEWIDTH);
+> +    ptbase = FIELD_EX64(val, CSR_PWCL, PTBASE);
+>       if (shift) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                         "Attempted set pte width with %d bit\n", 64 << shift);
+>           val = FIELD_DP64(val, CSR_PWCL, PTEWIDTH, 0);
+>       }
+> +    if (!check_ps(env, ptbase)) {
+> +         qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "Attrmpted set ptbase 2^%d\n", ptbase);
+Ditto, maybe it is better to return directly.
+> +         val = FIELD_DP64(val, CSR_PWCL, PTBASE, default_ps);
+> +    }
+>   
+>       env->CSR_PWCL = val;
+>       return old_v;
+> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> index 3afa23af79..ecbfe23b63 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> @@ -74,6 +74,7 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+>   
+>   void loongarch_csr_translate_init(void)
+>   {
+> +    SET_CSR_FUNC(STLBPS, NULL, gen_helper_csrwr_stlbps);
+>       SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
+>       SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
+>       SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index 112556301f..44ee13d5af 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -18,6 +18,14 @@
+>   #include "exec/log.h"
+>   #include "cpu-csr.h"
+>   
+> +bool check_ps(CPULoongArchState *env, int tlb_ps)
+> +{
+> +     if (tlb_ps > 64) {
+> +         return false;
+> +     }
+> +     return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
+> +}
+> +
+>   void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+>                                  uint64_t *dir_width, target_ulong level)
+>   {
+> @@ -123,6 +131,11 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
+>       uint8_t tlb_v0 = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, V);
+>       uint8_t tlb_v1 = FIELD_EX64(tlb->tlb_entry1, TLBENTRY, V);
+>       uint64_t tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+> +    uint8_t tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+> +
+> +    if (!tlb_e) {
+> +        return;
+> +    }
+This piece of modification can move to patch 1.
 
-Thanks,
+Regards
+Bibo Mao
+>   
+>       if (index >= LOONGARCH_STLB) {
+>           tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+> @@ -187,8 +200,10 @@ static void fill_tlb_entry(CPULoongArchState *env, int index)
+>           lo1 = env->CSR_TLBELO1;
+>       }
+>   
+> -    if (csr_ps == 0) {
+> -        qemu_log_mask(CPU_LOG_MMU, "page size is 0\n");
+> +    /*check csr_ps */
+> +    if (!check_ps(env, csr_ps)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "csr_ps %d is illegal\n", csr_ps);
+> +        return;
+>       }
+>   
+>       /* Only MTLB has the ps fields */
+> @@ -298,7 +313,16 @@ void helper_tlbfill(CPULoongArchState *env)
+>           pagesize = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
+>       }
+>   
+> +    if (!check_ps(env, pagesize)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "pagesize %d is illegal\n", pagesize);
+> +        return;
+> +    }
+> +
+>       stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+> +    if (!check_ps(env, stlb_ps)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "stlb_ps %d is illegal\n", stlb_ps);
+> +        return;
+> +    }
+>   
+>       if (pagesize == stlb_ps) {
+>           /* Only write into STLB bits [47:13] */
+> 
 
-C.
 
