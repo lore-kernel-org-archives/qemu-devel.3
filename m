@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297E9C282D9
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 12:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28904C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 12:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpRkr-0001lD-7D; Tue, 04 Mar 2025 07:52:14 -0500
+	id 1tpRkh-0001HS-6T; Tue, 04 Mar 2025 07:52:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tpRi4-00053v-8R
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 07:49:36 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tpRhu-0004wn-Fp
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 07:49:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tpRhy-0007Zg-Vv
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 07:49:16 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tpRhr-0007Xg-BI
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 07:49:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741092553;
+ s=mimecast20190719; t=1741092546;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mqi3DdaTu4ALCTwdK1EdsuKOZviWGVA8D/zmVKVPbIw=;
- b=ZeLCxxIiA1tOjlf+oL4/jubAFKw+PG3G6ZVUMxG3ss3Z0T4vJr7x2aIx++2b/Ao/M0KOzh
- ZuHwdy9tEQsLRcYit6nwQ2lc1grxE6qISA7oWU2AlI/bJ5vFI7XTWIv1+RAHnkJTnUuCy3
- Wq0gdlVpCR1L0Kfgle3IGe1wUQ2e8Qk=
+ bh=zVp+0VC3CI/pTYGir7lOjrfKbLyjEB7fzi9n2GPzZtg=;
+ b=dlI1qf0XChgLEIyiqcoHSccqY0P4CDED3kazId5aIiq2ArDX7koWjGh6EbUxCKogoxvTsC
+ GLP8NXIfI+MTtcssU42K0j5m9yFrGwyK4ozWvLNmayryMkmyRSqmtlDCJhOkFr4ES/0BuR
+ nc5nijX3WAnrm2x90IP4lP7/zyhsuts=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-8GWymiyVPIK-4F02zqkAhQ-1; Tue,
- 04 Mar 2025 07:49:05 -0500
-X-MC-Unique: 8GWymiyVPIK-4F02zqkAhQ-1
-X-Mimecast-MFC-AGG-ID: 8GWymiyVPIK-4F02zqkAhQ_1741092544
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-ctaTKCBmOt2smEoWQJqxOw-1; Tue,
+ 04 Mar 2025 07:49:02 -0500
+X-MC-Unique: ctaTKCBmOt2smEoWQJqxOw-1
+X-Mimecast-MFC-AGG-ID: ctaTKCBmOt2smEoWQJqxOw_1741092541
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0ADBE1800877; Tue,  4 Mar 2025 12:49:04 +0000 (UTC)
+ id 17EE7180087B; Tue,  4 Mar 2025 12:49:01 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.122])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75E89180087C; Tue,  4 Mar 2025 12:49:03 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFA7719560A3; Tue,  4 Mar 2025 12:48:59 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id D4A5D1800616; Tue, 04 Mar 2025 13:48:16 +0100 (CET)
+ id B22A31800610; Tue, 04 Mar 2025 13:48:16 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -59,14 +59,14 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 24/24] docs: add uefi variable service documentation
-Date: Tue,  4 Mar 2025 13:48:12 +0100
-Message-ID: <20250304124815.591749-25-kraxel@redhat.com>
+Subject: [PULL 22/24] hw/uefi-vars-sysbus: allow for pc and q35
+Date: Tue,  4 Mar 2025 13:48:10 +0100
+Message-ID: <20250304124815.591749-23-kraxel@redhat.com>
 In-Reply-To: <20250304124815.591749-1-kraxel@redhat.com>
 References: <20250304124815.591749-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -92,115 +92,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20250225163031.1409078-25-kraxel@redhat.com>
----
- docs/devel/index-internals.rst |  1 +
- docs/devel/uefi-vars.rst       | 68 ++++++++++++++++++++++++++++++++++
- hw/uefi/LIMITATIONS.md         |  7 ++++
- 3 files changed, 76 insertions(+)
- create mode 100644 docs/devel/uefi-vars.rst
- create mode 100644 hw/uefi/LIMITATIONS.md
+Allow the device being added to x86_64 pc and q35 VMs.
 
-diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
-index bca597c65895..7a0678cbdd3a 100644
---- a/docs/devel/index-internals.rst
-+++ b/docs/devel/index-internals.rst
-@@ -20,6 +20,7 @@ Details about QEMU's various subsystems including how to add features to them.
-    s390-cpu-topology
-    s390-dasd-ipl
-    tracing
-+   uefi-vars
-    vfio-iommufd
-    writing-monitor-commands
-    virtio-backends
-diff --git a/docs/devel/uefi-vars.rst b/docs/devel/uefi-vars.rst
-new file mode 100644
-index 000000000000..0151a26a0a6f
---- /dev/null
-+++ b/docs/devel/uefi-vars.rst
-@@ -0,0 +1,68 @@
-+==============
-+UEFI variables
-+==============
-+
-+Guest UEFI variable management
-+==============================
-+
-+The traditional approach for UEFI Variable storage in qemu guests is
-+to work as close as possible to physical hardware.  That means
-+providing pflash as storage and leaving the management of variables
-+and flash to the guest.
-+
-+Secure boot support comes with the requirement that the UEFI variable
-+storage must be protected against direct access by the OS.  All update
-+requests must pass the sanity checks.  (Parts of) the firmware must
-+run with a higher privilege level than the OS so this can be enforced
-+by the firmware.  On x86 this has been implemented using System
-+Management Mode (SMM) in qemu and kvm, which again is the same
-+approach taken by physical hardware.  Only privileged code running in
-+SMM mode is allowed to access flash storage.
-+
-+Communication with the firmware code running in SMM mode works by
-+serializing the requests to a shared buffer, then trapping into SMM
-+mode via SMI.  The SMM code processes the request, stores the reply in
-+the same buffer and returns.
-+
-+Host UEFI variable service
-+==========================
-+
-+Instead of running the privileged code inside the guest we can run it
-+on the host.  The serialization protocol can be reused.  The
-+communication with the host uses a virtual device, which essentially
-+configures the shared buffer location and size, and traps to the host
-+to process the requests.
-+
-+The ``uefi-vars`` device implements the UEFI virtual device.  It comes
-+in ``uefi-vars-x86`` and ``uefi-vars-sysbus`` flavours.  The device
-+reimplements the handlers needed, specifically
-+``EfiSmmVariableProtocol`` and ``VarCheckPolicyLibMmiHandler``.  It
-+also consumes events (``EfiEndOfDxeEventGroup``,
-+``EfiEventReadyToBoot`` and ``EfiEventExitBootServices``).
-+
-+The advantage of the approach is that we do not need a special
-+privilege level for the firmware to protect itself, i.e. it does not
-+depend on SMM emulation on x64, which allows the removal of a bunch of
-+complex code for SMM emulation from the linux kernel
-+(CONFIG_KVM_SMM=n).  It also allows support for secure boot on arm
-+without implementing secure world (el3) emulation in kvm.
-+
-+Of course there are also downsides.  The added device increases the
-+attack surface of the host, and we are adding some code duplication
-+because we have to reimplement some edk2 functionality in qemu.
-+
-+usage on x86_64
-+---------------
-+
-+.. code::
-+
-+   qemu-system-x86_64 \
-+      -device uefi-vars-x86,jsonfile=/path/to/vars.json
-+
-+usage on aarch64
-+----------------
-+
-+.. code::
-+
-+   qemu-system-aarch64 -M virt \
-+      -device uefi-vars-sysbus,jsonfile=/path/to/vars.json
-diff --git a/hw/uefi/LIMITATIONS.md b/hw/uefi/LIMITATIONS.md
-new file mode 100644
-index 000000000000..29308bd587aa
---- /dev/null
-+++ b/hw/uefi/LIMITATIONS.md
-@@ -0,0 +1,7 @@
-+known issues and limitations
-+----------------------------
-+
-+* works only on little endian hosts
-+  - accessing structs in guest ram is done without endian conversion.
-+* works only for 64-bit guests
-+  - UINTN is mapped to uint64_t, for 32-bit guests that would be uint32_t
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20250225163031.1409078-23-kraxel@redhat.com>
+---
+ hw/i386/pc_piix.c | 2 ++
+ hw/i386/pc_q35.c  | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 04d2957adcd7..6c91e2d29298 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -65,6 +65,7 @@
+ #include "system/numa.h"
+ #include "hw/hyperv/vmbus-bridge.h"
+ #include "hw/mem/nvdimm.h"
++#include "hw/uefi/var-service-api.h"
+ #include "hw/i386/acpi-build.h"
+ #include "target/i386/cpu.h"
+ 
+@@ -468,6 +469,7 @@ static void pc_i440fx_machine_options(MachineClass *m)
+     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_RAMFB_DEVICE);
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_VMBUS_BRIDGE);
++    machine_class_allow_dynamic_sysbus_dev(m, TYPE_UEFI_VARS_X64);
+ 
+     object_class_property_add_enum(oc, "x-south-bridge", "PCSouthBridgeOption",
+                                    &PCSouthBridgeOption_lookup,
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 77536dd697f5..fd96d0345c7d 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -58,6 +58,7 @@
+ #include "system/numa.h"
+ #include "hw/hyperv/vmbus-bridge.h"
+ #include "hw/mem/nvdimm.h"
++#include "hw/uefi/var-service-api.h"
+ #include "hw/i386/acpi-build.h"
+ #include "target/i386/cpu.h"
+ 
+@@ -355,6 +356,7 @@ static void pc_q35_machine_options(MachineClass *m)
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_INTEL_IOMMU_DEVICE);
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_RAMFB_DEVICE);
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_VMBUS_BRIDGE);
++    machine_class_allow_dynamic_sysbus_dev(m, TYPE_UEFI_VARS_X64);
+     compat_props_add(m->compat_props,
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+ }
 -- 
 2.48.1
 
