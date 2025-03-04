@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB7BC282D2
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 17:15:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4039C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 17:15:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpVqk-0002fL-R9; Tue, 04 Mar 2025 12:14:34 -0500
+	id 1tpVql-0002g9-Ps; Tue, 04 Mar 2025 12:14:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tpVqV-0002dy-5s
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 12:14:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=B2sr=VX=kaod.org=clg@ozlabs.org>)
+ id 1tpVqR-0002df-Pr; Tue, 04 Mar 2025 12:14:15 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tpVqN-0000pU-OF
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 12:14:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741108449;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8UBOcm5K8gpjphkyzRxon8w0pKIphh10DRxSFhLg+W4=;
- b=SCVKqgWdvTIrbhpWzhg1EzF8aASu9wmus1nY+DP4eXrJyxNMpPGqGDYuoFY42BZs3c0VnL
- zB9Lp3B5Ve+YHON6h26j6LRgJZfqgGvEU2MLG0U75vyLG/C50SIO7jzq+mUti0QKYMpnRO
- Ne7xoPI9NcDN3oDhOHu8IyuYjOqp6oc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-228-QxU0W7WKPw2cenh3cPWWeg-1; Tue, 04 Mar 2025 12:14:07 -0500
-X-MC-Unique: QxU0W7WKPw2cenh3cPWWeg-1
-X-Mimecast-MFC-AGG-ID: QxU0W7WKPw2cenh3cPWWeg_1741108446
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-39104223bb5so1262632f8f.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 09:14:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741108446; x=1741713246;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8UBOcm5K8gpjphkyzRxon8w0pKIphh10DRxSFhLg+W4=;
- b=JYkX0ry0gnzmtCV77UojKuDkNWQit9o8doE4UBFqxlK2raouk7PxMBN9CmAQFMHoCD
- 9pPFJKy0ZAP6hmkhDStST/bpuYfcQN4mQisRFGwH1nDfdW22ldDIerNmknAVyxwYjxrq
- eJcmamQQKAIaCEIbXlHDOn79nUGiwBKcV9tHiZKm2iya99p7TlOuzUYIXwdHkAtcyMcT
- fHhUvd+P08+CFNYRhwYWdXiyO13tx5O2KGzUxXv1VT1e6kU4mienfYE/gYn4LldLRUpt
- lFhPSvyFBSalfrnyYYDM9b2I0dHuXbfR4KK4IZRW0+TS0dmGMC1yymRXWaln47sTbYDn
- e53g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXgOGCFlJ6bx3gblIfuSVvZhYYywh6JVVfXoL0uwumdmzMce9jOHlseOhjwd9uWwd8E6RI5d37iy2mA@nongnu.org
-X-Gm-Message-State: AOJu0YwCmDlT8jLiyAYw3RmvhvY15c04+MyB1GePhfpnC9v3YsK9Twsw
- JkVIaKfNntOfpZ+m30UYic1VFzKwPP3L/+ftz5t2R1l5PwYc9iSHucoJ75T523+vQoOql3V8RPY
- W2FFcEjGiuaOwBtYapaxEbAkOHTbgGrm1hoBiukrz99LY8rhmaT8p
-X-Gm-Gg: ASbGncsxSswNlx2XTjHDbr1U3pbONClTYLwLuBD8U+TOojtW7E5iv7Ep+hN9BRDE6ep
- 4hvncbUSGcZc9CltPX1q1k7c53t7m6DJuP5XlmBN74iM3P1PoJzVW19qsTrMdWC3uJJCa+njk9w
- 8kg8x2p2/3Nuf0z9i7Np7Fmfmgp9YbSvVhRAR6xuucnf57Zj0duvYA6dG3SQ1fSxBf8v5O9y9iq
- 1Hto8gRnMLAS3SSq1emzhWtVSHTCl/CQm/jiMxr+haRX9Vd0qT5dN+vCyroEVvSRk3w8JsIndID
- zzbs7z9vgg==
-X-Received: by 2002:a5d:6d89:0:b0:390:f815:78ca with SMTP id
- ffacd0b85a97d-390f8157bf2mr10248923f8f.30.1741108445871; 
- Tue, 04 Mar 2025 09:14:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFtE9EVmfNW5vaG+RTfslL22E5ZPBPmpoqKrdXPOedERedtC1CxTTbq/dnEHyYuAQJHDOsLaQ==
-X-Received: by 2002:a5d:6d89:0:b0:390:f815:78ca with SMTP id
- ffacd0b85a97d-390f8157bf2mr10248898f8f.30.1741108445461; 
- Tue, 04 Mar 2025 09:14:05 -0800 (PST)
-Received: from redhat.com ([2a0d:6fc0:1514:ea00:6409:9e94:fe6f:3eb6])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bbb15841dsm99258155e9.1.2025.03.04.09.14.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 09:14:04 -0800 (PST)
-Date: Tue, 4 Mar 2025 12:14:02 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org,
- eric.auger.pro@gmail.com, eric.auger@redhat.com,
- zhenzhong.duan@intel.com, marcel.apfelbaum@gmail.com
-Subject: Re: [PATCH v2 0/5] PCI: Implement basic PCI PM capability backing
-Message-ID: <20250304121346-mutt-send-email-mst@kernel.org>
-References: <20250225215237.3314011-1-alex.williamson@redhat.com>
- <df7cdd6f-0d12-4903-9614-8f74e76416f7@redhat.com>
+ (Exim 4.90_1) (envelope-from <SRS0=B2sr=VX=kaod.org=clg@ozlabs.org>)
+ id 1tpVqO-0000pL-76; Tue, 04 Mar 2025 12:14:15 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z6j2k5xsRz4whq;
+ Wed,  5 Mar 2025 04:14:06 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z6j2j0sLXz4wcw;
+ Wed,  5 Mar 2025 04:14:04 +1100 (AEDT)
+Message-ID: <aebdc88c-77f4-417f-87ef-57930db63262@kaod.org>
+Date: Tue, 4 Mar 2025 18:14:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional/test_arm_sx1: Check whether the serial
+ console is working
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org
+References: <20250226104833.1176253-1-thuth@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
+ BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
+ M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
+ 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
+ jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
+ TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
+ neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
+ VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
+ QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
+ ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
+ WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
+ wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
+ SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
+ cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
+ S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
+ 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
+ hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
+ tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
+ t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
+ OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
+ KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
+ o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
+ ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
+ IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
+ d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
+ +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
+ HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
+ l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
+ 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
+ ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
+ KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250226104833.1176253-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <df7cdd6f-0d12-4903-9614-8f74e76416f7@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=B2sr=VX=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,116 +108,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 04, 2025 at 01:18:45PM +0100, C�dric Le Goater wrote:
-> Hello Michael,
+On 2/26/25 11:48, Thomas Huth wrote:
+> The kernel that is used in the sx1 test prints the usual Linux log
+> onto the serial console, but this test currently ignores it. To
+> make sure that the serial device is working properly, let's check
+> for some strings in the output here.
 > 
-> Could you please re-ack (or not) v2 ?
+> While we're at it, also add the test to the corresponding section
+> in the MAINTAINERS file.
 > 
-> Thanks
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+
+
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   Based-on: <20250221140640.786341-1-peter.maydell@linaro.org>
 > 
-> C.
-
-
-pci things:
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-
-> On 2/25/25 22:52, Alex Williamson wrote:
-> > v2:
-> > 
-> > Eric noted in v1 that one of the drivers had a redundant wmask setting
-> > since pci_pm_init() enabled writes to the power state field.  This was
-> > added because vfio-pci was not setting wmask for this capability but
-> > is allowing writes to the PM state field through to the device.  For
-> > vfio-pci, QEMU emulated config space is rather secondary to the config
-> > space through vfio.
-> > 
-> > It turns out therefore, that vfio-pci is nearly unique in not already
-> > managing the wmask of the PM capability state and if we embrace that
-> > it's the pci_pm_init() caller's responsibility to manage the remaining
-> > contents and write-access of the capability, then I think we also
-> > solve the question of migration compatibility.  The new infrastructure
-> > here is not changing whether any fields were previously writable, it's
-> > only effecting a mapping change based on the value found there.
-> > 
-> > This requires only a slight change to patch 1/, removing setting of
-> > the wmask, but commit log is also updated and comments added.  I also
-> > made the bad transition trace a little more obvious given Eric's
-> > comments.  Patch 2/ is also updated so that vfio-pci effects the wmask
-> > change locally.  The couple drivers that don't currently update wmask
-> > simply don't get this new BAR unmapped when not in D0 behavior.
-> > 
-> > Incorporated reviews for the unmodified patches.  Please re-review and
-> > report any noted issues.  Thanks,
-> > 
-> > Alex
-> > 
-> > v1:
-> > 
-> > https://lore.kernel.org/all/20250220224918.2520417-1-alex.williamson@redhat.com/
-> > 
-> > Eric recently identified an issue[1] where during graceful shutdown
-> > of a VM in a vIOMMU configuration, the guest driver places the device
-> > into the D3 power state, the vIOMMU is then disabled, triggering an
-> > AddressSpace update.  The device BARs are still mapped into the AS,
-> > but the vfio host driver refuses to DMA map the MMIO space due to the
-> > device power state.
-> > 
-> > The proposed solution in [1] was to skip mappings based on the
-> > device power state.  Here we take a different approach.  The PCI spec
-> > defines that devices in D1/2/3 power state should respond only to
-> > configuration and message requests and all other requests should be
-> > handled as an Unsupported Request.  In other words, the memory and
-> > IO BARs are not accessible except when the device is in the D0 power
-> > state.
-> > 
-> > To emulate this behavior, we can factor the device power state into
-> > the mapping state of the device BARs.  Therefore the BAR is marked
-> > as unmapped if either the respective command register enable bit is
-> > clear or the device is not in the D0 power state.
-> > 
-> > In order to implement this, the PowerState field of the PMCSR
-> > register becomes writable, which allows the device to appear in
-> > lower power states.  This also therefore implements D3 support
-> > (insofar as the BAR behavior) for all devices implementing the PM
-> > capability.  The PCI spec requires D3 support.
-> > 
-> > An aspect that needs attention here is whether this change in the
-> > wmask and PMCSR bits becomes a problem for migration, and how we
-> > might solve it.  For a guest migrating old->new, the device would
-> > always be in the D0 power state, but the register becomes writable.
-> > In the opposite direction, is it possible that a device could
-> > migrate in a low power state and be stuck there since the bits are
-> > read-only in old QEMU?  Do we need an option for this behavior and a
-> > machine state bump, or are there alternatives?
-> > 
-> > Thanks,
-> > Alex
-> > 
-> > [1]https://lore.kernel.org/all/20250219175941.135390-1-eric.auger@redhat.com/
-> > 
-> > 
-> > Alex Williamson (5):
-> >    hw/pci: Basic support for PCI power management
-> >    pci: Use PCI PM capability initializer
-> >    vfio/pci: Delete local pm_cap
-> >    pcie, virtio: Remove redundant pm_cap
-> >    hw/vfio/pci: Re-order pre-reset
-> > 
-> >   hw/net/e1000e.c                 |  3 +-
-> >   hw/net/eepro100.c               |  4 +-
-> >   hw/net/igb.c                    |  3 +-
-> >   hw/nvme/ctrl.c                  |  3 +-
-> >   hw/pci-bridge/pcie_pci_bridge.c |  3 +-
-> >   hw/pci/pci.c                    | 93 ++++++++++++++++++++++++++++++++-
-> >   hw/pci/trace-events             |  2 +
-> >   hw/vfio/pci.c                   | 34 ++++++------
-> >   hw/vfio/pci.h                   |  1 -
-> >   hw/virtio/virtio-pci.c          | 11 ++--
-> >   include/hw/pci/pci.h            |  3 ++
-> >   include/hw/pci/pci_device.h     |  3 ++
-> >   include/hw/pci/pcie.h           |  2 -
-> >   13 files changed, 127 insertions(+), 38 deletions(-)
-> > 
+>   MAINTAINERS                      | 1 +
+>   tests/functional/test_arm_sx1.py | 7 ++++---
+>   2 files changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 05ec99adfd0..098daea6f24 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2000,6 +2000,7 @@ S: Maintained
+>   F: hw/*/omap*
+>   F: include/hw/arm/omap.h
+>   F: docs/system/arm/sx1.rst
+> +F: tests/functional/test_arm_sx1.py
+>   
+>   IPack
+>   M: Alberto Garcia <berto@igalia.com>
+> diff --git a/tests/functional/test_arm_sx1.py b/tests/functional/test_arm_sx1.py
+> index 4dd1e1859fa..25800b388c9 100755
+> --- a/tests/functional/test_arm_sx1.py
+> +++ b/tests/functional/test_arm_sx1.py
+> @@ -43,7 +43,8 @@ def test_arm_sx1_initrd(self):
+>           self.vm.add_args('-append', f'kunit.enable=0 rdinit=/sbin/init {self.CONSOLE_ARGS}')
+>           self.vm.add_args('-no-reboot')
+>           self.launch_kernel(zimage_path,
+> -                           initrd=initrd_path)
+> +                           initrd=initrd_path,
+> +                           wait_for='Boot successful')
+>           self.vm.wait(timeout=120)
+>   
+>       def test_arm_sx1_sd(self):
+> @@ -54,7 +55,7 @@ def test_arm_sx1_sd(self):
+>           self.vm.add_args('-no-reboot')
+>           self.vm.add_args('-snapshot')
+>           self.vm.add_args('-drive', f'format=raw,if=sd,file={sd_fs_path}')
+> -        self.launch_kernel(zimage_path)
+> +        self.launch_kernel(zimage_path, wait_for='Boot successful')
+>           self.vm.wait(timeout=120)
+>   
+>       def test_arm_sx1_flash(self):
+> @@ -65,7 +66,7 @@ def test_arm_sx1_flash(self):
+>           self.vm.add_args('-no-reboot')
+>           self.vm.add_args('-snapshot')
+>           self.vm.add_args('-drive', f'format=raw,if=pflash,file={flash_path}')
+> -        self.launch_kernel(zimage_path)
+> +        self.launch_kernel(zimage_path, wait_for='Boot successful')
+>           self.vm.wait(timeout=120)
+>   
+>   if __name__ == '__main__':
 
 
