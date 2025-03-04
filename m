@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D8ACC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D3ECC282D3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:28:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpahO-0005aP-N6; Tue, 04 Mar 2025 17:25:14 -0500
+	id 1tpaia-0007eL-Ig; Tue, 04 Mar 2025 17:26:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpah0-0005O5-L8
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:50 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1tpahF-0005T2-5N
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:25:09 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpagy-0006Ui-1G
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:49 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5e4bed34bccso8662200a12.3
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:47 -0800 (PST)
+ id 1tpahA-0006ZQ-Fi
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:25:03 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-abf3cf3d142so560528966b.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741127086; x=1741731886; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741127095; x=1741731895; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TAUG1VLjHRc42q2vET8iAizrXLG97QnhMiOAEe3585Y=;
- b=OjOI5fMerQKo76eKSRNyrI/xT3v7jvdtUJT3zI/DTMgp01ZHQX+HcMWLYLmLZWgtt9
- Jy/X7VO8t90pnBPnAbHxw5MN9eYTrCxns4Lddn+Ft2QNoN+ufU6nYuBJy3rdff9HVmmJ
- pXE4Ik4BRNjEeguu6v/iabX3lA9SL+V6iqyPpw4xgXd86i00Q6puC16LiCgpqMtMtim3
- 4Ijp0OOcYxNxCUkEZyQngIafUDJBCayn3j1g+HIBNLAnUEu/1pxglzm2HaolXhbT/gLP
- zmGZQ2TikKVXzPM9zYFORA/a8LUMrH4hTvHuzZzNXUnCnnkwbnzhxGwcLTVPo4efKYqg
- 1jDw==
+ bh=j3uOOlAeKCJac1lfZ8pMilX54y2FsqgRLkG3Q0WCNcI=;
+ b=VfY4TaqosyYOcfSNOqmnNoQ6Jl0SoUx3AM9LAnYw4F2oKaTIL0J09AbKBnp/IRHDSg
+ BXvT6HYpEaKZwxfqDDKazlxEATVGK2VrFTGvydyZGvh1W5tNuaoa7K9iJfp1Of1vlePm
+ 99ujkARQBmFIyQbjFFFMehCmHnxiWvPsRREv8C2i4q5l+XD3GdPikJzWBiHTfnhD7HjQ
+ GKm7q2fbGq6YujxYIMTiATHQX7qYHlPgqXM22vHZhn46MLgJQju5iBPl5y3WgaLPeJ/r
+ h9fR+N/gHv5Q5TL3Dw7ufISYqzp4BRBy791ikEszidJkxvKsoog0r6td68D1yQR4ci2b
+ dDCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741127086; x=1741731886;
+ d=1e100.net; s=20230601; t=1741127095; x=1741731895;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TAUG1VLjHRc42q2vET8iAizrXLG97QnhMiOAEe3585Y=;
- b=G7xnTSeO29+6w2pfFz/yMA3RtGOP7P2dc7XrtcYCSrDiSHju8Z2+GuF2Doo2hliPNm
- TdehdHiYDejiPReC1lzkLQMCGa8Ff9jGOCpZw7V/VqYNO6PVJr95+w/5vXU48xsg09lk
- /pKis/TOb2s20SdSqeqJMHzgl4NUmwzbCQr/0XXUDLrydDlhkusZBJqvg+t6cPGAXAKT
- tnHerxslSUhMg75pkjado8cjKAGJ+xMhCFYnWUZYZiiB3zzjGjFSU6XKQhsLmz7g+7Pz
- x8ItOu4CsD8asnnhpynb5VXNElsBwxCSuxmI5ZFPQqyQZEmZd8CTeyB2iBEZcl+dPhh1
- pr1Q==
-X-Gm-Message-State: AOJu0YxWfdAJ39JUN5srszG9zPclF56bCnQtcWeX4kVEG/rNWQ59vM5E
- G2nWumQYOwlOjPZRNWjPqaPYRwK1Qm6KuXs08J4c9LP9Hb2wWXTUMrf9h6JGhF4=
-X-Gm-Gg: ASbGncvz+V9SMNj536Ko4W/adCLrO1/50AEAVcbyPajjri8incNW5ixkCkx2RHJVi8F
- GJgqlCioc1t2CELJbRFPXqQZZHlp6A5fh6VtUscdrfA8oI10i24nIrWp+h1sTt0eyUtdrPg0jK/
- 4FXzcnAaOI4Fd2EhRlqgaEWAD5I3i7MRNhwBhXsvUQL/ps0tgGwr4tC7jNm4ScJqATeiKV5532U
- mZWmeZU0dB+h76qAmRKZ3PnjalKhm+lnhZxi9UIKrTAnOkZJysb0De3O5dJ1+jJUcWa3LJ9njq/
- 7KHNfSoUyr/ZDYuBDHgQqp34je0bvi6mJE/ysRpc0mhZDbk=
-X-Google-Smtp-Source: AGHT+IE+0nDw/amky+R2fftOjcXsLsMMARO45PGlgqIFvJNAUxxj4jGTs/n4AXe4mvF1ud6R8mk/CQ==
-X-Received: by 2002:a17:907:7d93:b0:abf:6cc9:7ef5 with SMTP id
- a640c23a62f3a-ac20db05bc9mr102150066b.47.1741127085711; 
- Tue, 04 Mar 2025 14:24:45 -0800 (PST)
+ bh=j3uOOlAeKCJac1lfZ8pMilX54y2FsqgRLkG3Q0WCNcI=;
+ b=eJ8CGMkxD5IB8iOksUjhkVoLImKsEHayeMX+rqxw7rhKdh7JaMXkxwsmAkEHAWBTjD
+ mEG3xB4HJn8V9/qW8ahYERaBkJXd35I4GK2pXp6avS6TkjFXZKUoyYBEZm8YGi+/Gby8
+ lj0P8MWPL2V2Fb/JPpdqRmpSzaeYo9pkgc1e2F3xrfqvyo3RR3ghFJUJQz1K8amTZKfX
+ kzM4ImOAx96JbAROXrkZimH2AsGCHC/GRVXpRhl5sZoIeXFDJ7epg9lwIO72f/NAZWHg
+ 0/IJmwbt00PWmzj2JVhElF8rRYBq+PbwzVHmRni11Q2v/C10X2ebNu8DZFOxVeLcYQK6
+ FtAg==
+X-Gm-Message-State: AOJu0YybaqrbJUwZ4AfzanTG9iZ8G24OKtARIhi48noXqSfqNwvSlXWW
+ YfxZcP86THUjfhwQ/r8I6tjncrBDFpW62Nr7lKOJd2HJOSoQTUVRJy3dhz7wT/U=
+X-Gm-Gg: ASbGnct+Zr7U/5IdteXDVHo2o3MqeIKJhfzEdNe4XXRFHlnOBzHnRconOKsQoS6QSml
+ Mye1IHIBCW7bxSVbVWvAVacNahCRw1tI1QvWDj+6/lywVrgY4SmDhjBu6taxejPhKpYm6bYeqRj
+ 4XePkcysBMiGhFJS388fOp61vKnzGKo4752Jehq+9Sx0/ECbj5TGVHlvJyh6z8FlNmYsbUrjPst
+ axU1jOYiuw7S7FO8JCmhkIwi1Ko6WH1t+uF3U/+TMVID6flmykGJGeRllZfTuQ/a+bTlmw45/k7
+ yrbO3abbeQvej5hr3mDx5hh2nfvlpOotfzo8Rqovnag02cs=
+X-Google-Smtp-Source: AGHT+IGaadTtLa+efPVTRVGNMcZ9/hVpc+7WylVY+IrrVajvic6aMQWZRncktVfBbR2ONsLp91l5pg==
+X-Received: by 2002:a05:6402:2114:b0:5de:a6a8:5ec6 with SMTP id
+ 4fb4d7f45d1cf-5e59f3d3780mr1642524a12.10.1741127094677; 
+ Tue, 04 Mar 2025 14:24:54 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf5453f468sm663503566b.51.2025.03.04.14.24.41
+ a640c23a62f3a-abf6166d3f7sm583129566b.57.2025.03.04.14.24.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 14:24:41 -0800 (PST)
+ Tue, 04 Mar 2025 14:24:52 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id ECB705FCF6;
- Tue,  4 Mar 2025 22:24:39 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 3E0AC625E2;
+ Tue,  4 Mar 2025 22:24:42 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -82,17 +82,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 06/32] tests/functional: expand tests to cover virgl
-Date: Tue,  4 Mar 2025 22:24:13 +0000
-Message-Id: <20250304222439.2035603-7-alex.bennee@linaro.org>
+Subject: [PATCH v2 28/32] plugins/api: split out time control helpers
+Date: Tue,  4 Mar 2025 22:24:35 +0000
+Message-Id: <20250304222439.2035603-29-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250304222439.2035603-1-alex.bennee@linaro.org>
 References: <20250304222439.2035603-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,60 +115,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add two more test modes using glmark2-wayland to exercise the OpenGL
-pass-through modes with virgl. Virgl can run with or without the
-hostmem blob support. To avoid repeating ourselves too much we make
-the initial pass a simple --validate pass.
+These are only usable in system mode where we control the timer. For
+user-mode make them NOPs.
 
-We might want to eventually add more directed tests and individual
-features later on but the glmark/vkmark tests are a good general
-smoke test for accelerated 3D.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20250226140343.3907080-5-alex.bennee@linaro.org>
-
+Message-Id: <20250225110844.3296991-10-alex.bennee@linaro.org>
 ---
-v2
-  - re-base with re-factor and don't run whole suite of glmark on both
-  virgl builds
----
- tests/functional/test_aarch64_virt_gpu.py | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ plugins/api-system.c | 34 ++++++++++++++++++++++++++++++++++
+ plugins/api-user.c   | 17 +++++++++++++++++
+ plugins/api.c        | 41 -----------------------------------------
+ 3 files changed, 51 insertions(+), 41 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-index 55957dae0a..3fdb31f034 100755
---- a/tests/functional/test_aarch64_virt_gpu.py
-+++ b/tests/functional/test_aarch64_virt_gpu.py
-@@ -92,6 +92,28 @@ def _run_virt_weston_test(self, cmd, fail = None):
-         full_cmd = f"weston -B headless --renderer gl --shell kiosk -- {cmd}"
-         ec_and_wait(self, full_cmd, OK_CMD, fail)
+diff --git a/plugins/api-system.c b/plugins/api-system.c
+index 38560de342..cc190b167e 100644
+--- a/plugins/api-system.c
++++ b/plugins/api-system.c
+@@ -95,3 +95,37 @@ const char *qemu_plugin_hwaddr_device_name(const struct qemu_plugin_hwaddr *h)
+         return g_intern_static_string("RAM");
+     }
+ }
++
++/*
++ * Time control
++ */
++static bool has_control;
++static Error *migration_blocker;
++
++const void *qemu_plugin_request_time_control(void)
++{
++    if (!has_control) {
++        has_control = true;
++        error_setg(&migration_blocker,
++                   "TCG plugin time control does not support migration");
++        migrate_add_blocker(&migration_blocker, NULL);
++        return &has_control;
++    }
++    return NULL;
++}
++
++static void advance_virtual_time__async(CPUState *cpu, run_on_cpu_data data)
++{
++    int64_t new_time = data.host_ulong;
++    qemu_clock_advance_virtual_time(new_time);
++}
++
++void qemu_plugin_update_ns(const void *handle, int64_t new_time)
++{
++    if (handle == &has_control) {
++        /* Need to execute out of cpu_exec, so bql can be locked. */
++        async_run_on_cpu(current_cpu,
++                         advance_virtual_time__async,
++                         RUN_ON_CPU_HOST_ULONG(new_time));
++    }
++}
+diff --git a/plugins/api-user.c b/plugins/api-user.c
+index 867b420339..28704a89e8 100644
+--- a/plugins/api-user.c
++++ b/plugins/api-user.c
+@@ -12,6 +12,7 @@
  
-+    @skipIfMissingCommands('zstd')
-+    def test_aarch64_virt_with_virgl_gpu(self):
-+
-+        self.require_device('virtio-gpu-gl-pci')
-+
-+        self._launch_virt_gpu("virtio-gpu-gl-pci")
-+
-+        # subset of the glmark tests
-+        tests = " ".join([f"-b {test}" for test in
-+                          ["build", "texture", "shading",
-+                           "bump", "desktop", "buffer"]])
-+
-+        self._run_virt_weston_test("glmark2-wayland --validate " + tests)
-+
-+    @skipIfMissingCommands('zstd')
-+    def test_aarch64_virt_with_virgl_blobs_gpu(self):
-+
-+        self.require_device('virtio-gpu-gl-pci')
-+
-+        self._launch_virt_gpu("virtio-gpu-gl-pci,hostmem=4G,blob=on")
-+        self._run_virt_weston_test("glmark2-wayland -b:duration=1.0")
-+
-     @skipIfMissingCommands('zstd')
-     def test_aarch64_virt_with_vulkan_gpu(self):
+ #include "qemu/osdep.h"
+ #include "qemu/plugin.h"
++#include "exec/log.h"
  
+ /*
+  * Virtual Memory queries - these are all NOPs for user-mode which
+@@ -38,3 +39,19 @@ const char *qemu_plugin_hwaddr_device_name(const struct qemu_plugin_hwaddr *h)
+ {
+     return g_intern_static_string("Invalid");
+ }
++
++/*
++ * Time control - for user mode the only real time is wall clock time
++ * so realistically all you can do in user mode is slow down execution
++ * which doesn't require the ability to mess with the clock.
++ */
++
++const void *qemu_plugin_request_time_control(void)
++{
++    return NULL;
++}
++
++void qemu_plugin_update_ns(const void *handle, int64_t new_time)
++{
++    qemu_log_mask(LOG_UNIMP, "user-mode can't control time");
++}
+diff --git a/plugins/api.c b/plugins/api.c
+index 82241699a5..832bf6ee5e 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -526,44 +526,3 @@ uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
+     return total;
+ }
+ 
+-/*
+- * Time control
+- */
+-static bool has_control;
+-#ifdef CONFIG_SOFTMMU
+-static Error *migration_blocker;
+-#endif
+-
+-const void *qemu_plugin_request_time_control(void)
+-{
+-    if (!has_control) {
+-        has_control = true;
+-#ifdef CONFIG_SOFTMMU
+-        error_setg(&migration_blocker,
+-                   "TCG plugin time control does not support migration");
+-        migrate_add_blocker(&migration_blocker, NULL);
+-#endif
+-        return &has_control;
+-    }
+-    return NULL;
+-}
+-
+-#ifdef CONFIG_SOFTMMU
+-static void advance_virtual_time__async(CPUState *cpu, run_on_cpu_data data)
+-{
+-    int64_t new_time = data.host_ulong;
+-    qemu_clock_advance_virtual_time(new_time);
+-}
+-#endif
+-
+-void qemu_plugin_update_ns(const void *handle, int64_t new_time)
+-{
+-#ifdef CONFIG_SOFTMMU
+-    if (handle == &has_control) {
+-        /* Need to execute out of cpu_exec, so bql can be locked. */
+-        async_run_on_cpu(current_cpu,
+-                         advance_virtual_time__async,
+-                         RUN_ON_CPU_HOST_ULONG(new_time));
+-    }
+-#endif
+-}
 -- 
 2.39.5
 
