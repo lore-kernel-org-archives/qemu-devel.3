@@ -4,89 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F899C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 19:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F195C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 19:46:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpY8f-00056G-TQ; Tue, 04 Mar 2025 14:41:14 -0500
+	id 1tpYCu-0006r8-4i; Tue, 04 Mar 2025 14:45:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1tpY8T-00055c-D6
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 14:41:01 -0500
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tpYCY-0006oc-Tr
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 14:45:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1tpY8Q-0002v6-6L
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 14:41:01 -0500
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id A160540A50
- for <qemu-devel@nongnu.org>; Tue,  4 Mar 2025 19:40:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1741117254;
- bh=g3jpRk6hwk6xWw7G0I9Vw19Xifgl+9BCAvUzveCOKmI=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=FULtRQcjmv5fInbKv1jb9wetvi7B4/kcbAwBro9JjXWzG2bDlDKVsQSRjt0xqi46E
- 8AgidTLer+5NiUBG9EWBRRimzQrf7xt+JYg980bVuRdAdib5E8Hi9TCDYgimGgh9mk
- 1AAyV6+GblFar5HeccOxrFVTIw6CG5agdPmLcfRhC4mGTiezxRvbWguKo94RAVxXdT
- UaFOKftidUmcfMJKSe/b0O33EfB22jXD/Hh9FqqbOZaOTYBfGC5tp1WeqImszYXn/j
- e/lemQVgmaYKD8GD5La0hrHQZ7JQU79OwqWTMaIzi5anwKoX2/qnsh/K+834z4dleh
- iTyfL3ch+FmYA==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 854F87E1EF
- for <qemu-devel@nongnu.org>; Tue,  4 Mar 2025 19:40:54 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tpYCV-0003s5-3p
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 14:45:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741117507;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tmIv44zPtxIDvzjpq4iHerVOxcgBtfTsXACjwPGsLuI=;
+ b=GOztyWHfhSAkHfeZilulY2VyiPYrdsGAch1WZ0mhUrw03O/1ANWHy0WWObCxj0q66MUY3G
+ FFJmX8eagyzavoMD2W47JvesdDPN0qqPGlX/10RnnclXeNHNkuANjZOIKbHlXCfcJxsP7J
+ ycuyTk1Sq3Vbi4keebSORSKymHi4B4Y=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-507-dTJHF8cbPAaBFK5vgdLEgA-1; Tue, 04 Mar 2025 14:44:56 -0500
+X-MC-Unique: dTJHF8cbPAaBFK5vgdLEgA-1
+X-Mimecast-MFC-AGG-ID: dTJHF8cbPAaBFK5vgdLEgA_1741117495
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-390e003c1easo47128f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 11:44:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741117495; x=1741722295;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tmIv44zPtxIDvzjpq4iHerVOxcgBtfTsXACjwPGsLuI=;
+ b=fUl79hhS3gbGhbfDrg5EhKWxxnQcpIoFc652IuM8UqV1vWOC1r3e3buyqy3MN5S6hE
+ /YK0TQ69uiEd+7uXOG1dR4gf6HL0JDA1Fqxyf/eG/yTOaxpt5L2UQVfj9bacCFKeq5Ed
+ qCKByqmvI5acUrbXZom5mzDeok7i9jgRvK8FdfG11uVG5VY9ow6nUm+P9WSzZwy9SDfO
+ myvfCBiB4uonA8NV/KCpNc+CKzd++nlHKr09EhM6/1hByaYbphPhv1wnvIYwid14BtgI
+ 835hBPw2knI8yd/izR/OuOqPc6z0npncJBcU/+LQIUcLBjESAshVuOIPbsNxKBQWze2m
+ 1htQ==
+X-Gm-Message-State: AOJu0Yyu+dYzpbQRIPmWGVER1vpxDDkss6AqhLsav6OBXa4bLXhMn2JG
+ Gj9UGlBfe1DsHrCZh3LxGbIlFY1F8Qa7rfEQ+idXDGLvIhH1NbIkA/zWnjdi6qI0A807VxJMFgm
+ 2KGoS8z/VFLGYLdDzX5BCFThSnbcMPThkQH/IuS9EULXuemtwtXyI
+X-Gm-Gg: ASbGncsKSaXADUfBNVCEPIcMd1fAEs8l+Uz8SFjlWiNeaB/ahQ8JO8+mujeP4oUShRT
+ 3DfZEcK+Z7PekxHjT5TLqr54K45WRpFrwMsFlImd4536w+8hR8BJ9MwGvP8PNA0qHWGaeRfkONE
+ RTi8AmazrNXepidFDdNajm+0O8O7QCQ5W/7lxc9sqbMLMUB95MbqpP9n8wIFbC6kfYoPuoWoB6b
+ Pv2JoBW2lLSuhzThY6hbgmSqVyjcdqkTzu7KV4MV9O+uM+KbUh+iAEakEKe3Gl1fLxZmhUAgGvw
+ h8h/kQNxwZl60deDDn4=
+X-Received: by 2002:a05:6000:154e:b0:390:fe2d:3172 with SMTP id
+ ffacd0b85a97d-391155fa457mr3482371f8f.3.1741117495346; 
+ Tue, 04 Mar 2025 11:44:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHsBhwPJdfZObhvsd8Hhufx6ErDTMJRDFhCDgfxLLjoSulUTK7jZ/QnOeidw+RjwlaZVHxAaQ==
+X-Received: by 2002:a05:6000:154e:b0:390:fe2d:3172 with SMTP id
+ ffacd0b85a97d-391155fa457mr3482354f8f.3.1741117494931; 
+ Tue, 04 Mar 2025 11:44:54 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.119.44])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-390e47a66bcsm18408519f8f.21.2025.03.04.11.44.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Mar 2025 11:44:54 -0800 (PST)
+Message-ID: <79ca1c7b-6196-41f8-a25e-154b13fc70cb@redhat.com>
+Date: Tue, 4 Mar 2025 20:44:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 04 Mar 2025 19:33:37 -0000
-From: =?utf-8?q?Micha=C5=82_Fita?= <2072564@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- status=Fix Released; importance=Undecided;
- assignee=lukas.maerdian@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; status=Triaged; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=oracular; sourcepackage=qemu;
- component=main; status=Triaged; importance=Undecided; assignee=None; 
-X-Launchpad-Bug-Tags: patch
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: crichton dimitry.unified-streaming.com janitor
- michal.fita paelzer sergiodj thir820
-X-Launchpad-Bug-Reporter: Dimitry Andric (dimitry.unified-streaming.com)
-X-Launchpad-Bug-Modifier: =?utf-8?q?Micha=C5=82_Fita_=28michal=2Efita=29?=
-References: <172053137048.3332067.13534832802726064667.malonedeb@juju-98d295-prod-launchpad-7>
-Message-Id: <174111681772.688971.7224963076382933167.malone@juju-98d295-prod-launchpad-3>
-Subject: [Bug 2072564] Re: qemu-aarch64-static segfaults running ldconfig.real
- (amd64 host)
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="aa29ae0fff49e4e804b39147c9f259d2fb023199";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: 8798913738d475c34f124e88e4d621dbe3db96f1
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] rust: cell: add full example of declaring a SysBusDevice
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20250228085506.846381-1-pbonzini@redhat.com>
+ <Z8cyhSfdeTufVzaj@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <Z8cyhSfdeTufVzaj@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -95,133 +143,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2072564 <2072564@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-That's 1.9.x line - is it going to be backported to Noble? That's LTS we
-plan to use for next couple of years and this qemu problem is hitting us
-hard.
+On 3/4/25 18:04, Zhao Liu wrote:
+>> +//! struct PL061Device {
+> 
+> Maybe PL061State?
+> 
+>> +//!     parent_obj: ParentField<SysBusDevice>,
+>> +//!
+>> +//!     // Configuration is read-only after initialization
+>> +//!     pullups: u32,
+>> +//!     pulldowns: u32,
+>> +//!
+>> +//!     // Same for sub-objects of the device
+>> +//!     out: [Owned<IRQState>; N_GPIOS],
+> 
+> Should this be InterruptSource type?
+> 
+> Just have a quick look at pl061.c:
+> 
+> qdev_init_gpio_out(dev, s->out, N_GPIOS);
+> 
+> So in Rust side, `out` would be initialized by
+> DeviceMethods::init_gpio_out().
+> 
+> 
+> Others are fine for me ~ with above nits fixed,
+> 
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Yes, all good points.  Looks like we're set for 10.0 soft freeze. :)
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2072564
-
-Title:
-  qemu-aarch64-static segfaults running ldconfig.real (amd64 host)
-
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Fix Released
-Status in qemu source package in Noble:
-  Triaged
-Status in qemu source package in Oracular:
-  Triaged
-
-Bug description:
-  [ Impact ]
-
-   * QEMU crashes when running (emulating) ldconfig in a Ubuntu 22.04
-  arm64 guest
-
-   * This affects the qemu-user-static 1:8.2.2+ds-0ubuntu1 package on
-  Ubuntu 24.04+, running on a amd64 host.
-
-   * When running docker containers with Ubuntu 22.04 in them, emulating
-  arm64 with qemu-aarch64-static, invocations of ldconfig (actually
-  ldconfig.real) segfault, leading to problems when loading shared
-  libraries.
-
-  [ Test Plan ]
-
-   * Reproducer is very easy:
-
-  $ sudo snap install docker
-  docker 27.5.1 from Canonical** installed
-  $ docker run -ti --platform linux/arm64/v8 ubuntu:22.04
-  Unable to find image 'ubuntu:22.04' locally
-  22.04: Pulling from library/ubuntu
-  0d1c17d4e593: Pull complete=20
-  Digest: sha256:ed1544e454989078f5dec1bfdabd8c5cc9c48e0705d07b678ab6ae3fb6=
-1952d2
-  Status: Downloaded newer image for ubuntu:22.04
-
-  # Execute ldconfig.real inside the arm64 guest.
-  # This should not crash after the fix!
-  root@ad80af5378dc:/# /sbin/ldconfig.real
-  qemu: uncaught target signal 11 (Segmentation fault) - core dumped
-  Segmentation fault (core dumped)
-
-  [ Where problems could occur ]
-
-   * This changes the alignment of sections in the ELF binary via QEMUs
-  elfloader, if something goes wrong with this change, it could lead to
-  all kind of crashes (segfault) of any emulated binaries.
-
-  [ Other Info ]
-
-   * Upstream bug: https://gitlab.com/qemu-project/qemu/-/issues/1913
-   * Upstream fix: https://gitlab.com/qemu-project/qemu/-/commit/4b7b20a3
-     - Fix dependency (needed for QEMU < 9.20): https://gitlab.com/qemu-pro=
-ject/qemu/-/commit/c81d1faf
-
-  --- original bug report ---
-
- =20
-  This affects the qemu-user-static 1:8.2.2+ds-0ubuntu1 package on Ubuntu 2=
-4.04, running on a amd64 host.
-
-  When running docker containers with Ubuntu 22.04 in them, emulating
-  arm64 with qemu-aarch64-static, invocations of ldconfig (actually
-  ldconfig.real) segfault. For example:
-
-  $ docker run -ti --platform linux/arm64/v8 ubuntu:22.04
-  root@8861ff640a1c:/# /sbin/ldconfig.real
-  Segmentation fault
-
-  If you copy the ldconfig.real binary to the host, and run it directly
-  via qemu-aarch64-static:
-
-  $ gdb --args qemu-aarch64-static ./ldconfig.real
-  GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
-  Copyright (C) 2024 Free Software Foundation, Inc.
-  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.h=
-tml>
-  This is free software: you are free to change and redistribute it.
-  There is NO WARRANTY, to the extent permitted by law.
-  Type "show copying" and "show warranty" for details.
-  This GDB was configured as "x86_64-linux-gnu".
-  Type "show configuration" for configuration details.
-  For bug reporting instructions, please see:
-  <https://www.gnu.org/software/gdb/bugs/>.
-  Find the GDB manual and other documentation resources online at:
-  =C2=A0=C2=A0=C2=A0=C2=A0<http://www.gnu.org/software/gdb/documentation/>.
-
-  For help, type "help".
-  Type "apropos word" to search for commands related to "word"...
-  Reading symbols from qemu-aarch64-static...
-  Reading symbols from /home/dim/.cache/debuginfod_client/86579812b213be096=
-4189499f62f176bea817bf2/debuginfo...
-  (gdb) r
-  Starting program: /usr/bin/qemu-aarch64-static ./ldconfig.real
-  [Thread debugging using libthread_db enabled]
-  Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-  [New Thread 0x7ffff76006c0 (LWP 28378)]
-
-  Thread 1 "qemu-aarch64-st" received signal SIGSEGV, Segmentation fault.
-  0x00007fffe801645b in ?? ()
-  (gdb) disassemble
-  No function contains program counter for selected frame.
-
-  It looks like this is a known qemu regression after v8.1.1:
-  https://gitlab.com/qemu-project/qemu/-/issues/1913
-
-  Downgrading the package to qemu-user-
-  static_8.0.4+dfsg-1ubuntu3_amd64.deb fixes the segfault.
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2072564/+subscriptions
+Paolo
 
 
