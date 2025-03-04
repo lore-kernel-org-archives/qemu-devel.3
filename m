@@ -4,53 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE5FC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 06:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6908AC282C6
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 06:24:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpLa4-00017w-GL; Tue, 04 Mar 2025 01:16:40 -0500
+	id 1tpLgh-00028j-DQ; Tue, 04 Mar 2025 01:23:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1tpLZu-00017U-6F
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 01:16:31 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ id 1tpLgG-00026s-OU
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 01:23:09 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1tpLZp-0006qw-Ni
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 01:16:29 -0500
+ (envelope-from <wangyuquan1236@phytium.com.cn>) id 1tpLgC-0000oP-14
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 01:23:02 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwAnLGismsZnHXJOBg--.4484S2;
- Tue, 04 Mar 2025 14:16:12 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwC3vYmrmsZnV9M4AA--.519S3;
- Tue, 04 Mar 2025 14:16:11 +0800 (CST)
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: mst@redhat.com
-Cc: Jonathan.Cameron@huawei.com, qemu-devel@nongnu.org,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Subject: [PATCH] docs/cxl: Add serial number for persistent-memdev
-Date: Tue,  4 Mar 2025 14:15:50 +0800
-Message-Id: <20250304061550.11015-1-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwCHFcg9nMZn4NpOBg--.13291S2;
+ Tue, 04 Mar 2025 14:22:53 +0800 (CST)
+Received: from wangyuquan1236$phytium.com.cn ( [218.76.62.144] ) by
+ ajax-webmail-mail (Coremail) ; Tue, 4 Mar 2025 14:22:48 +0800 (GMT+08:00)
+X-Originating-IP: [218.76.62.144]
+Date: Tue, 4 Mar 2025 14:22:48 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: "Yuquan Wang" <wangyuquan1236@phytium.com.cn>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: "Jonathan Cameron" <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] docs/cxl: Add serial number for persistent-memdev
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.1-cmXT6 build
+ 20240812(cfb32469) Copyright (c) 2002-2025 www.mailtech.cn
+ mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
+In-Reply-To: <20250221065509-mutt-send-email-mst@kernel.org>
+References: <20250217112039.138650-1-wangyuquan1236@phytium.com.cn>
+ <20250220161213.000049a9@huawei.com>
+ <20250221065509-mutt-send-email-mst@kernel.org>
+Content-Transfer-Encoding: base64
+X-CM-CTRLDATA: uYBmK2Zvb3Rlcl90eHQ9NDc2MTozODM=
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwC3vYmrmsZnV9M4AA--.519S3
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAPAWfAxLQKbgBJs1
+Message-ID: <17b91a9f.2847.1955fd23d78.Coremail.wangyuquan1236@phytium.com.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: AQAAfwBna4c6nMZnNtU4AA--.5119W
+X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAPAWfAxLQKb
+	gBMsw
 Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=wangyuquan
  1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxXFW7ZryDZr18Gr4Dtr18Krg_yoWrAFWrpF
- n2qayxWryfWw17u3Z7Xaykt3W5WFySya15J34UCw1Igry8Xw43J3yUC34Ykw1jgrWxtFy7
- CF93tFn7Wa4Dtr7anT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWfJr1UKrWDZw4rtr1xAw1DZFb_yoWkur43p3
+ WfAa48Aw1UKw17G3yftr1xAryrG3yUWr47Jw1Iqr90y347Jrs0gFnxGrW7J3Wjga45Zr4D
+ Kr1DZrs8tw1jywUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
+Received-SPF: pass client-ip=129.150.39.64;
  envelope-from=wangyuquan1236@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+ helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -68,63 +80,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add serial number parameter in the cxl persistent examples.
-
-Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
----
- docs/system/devices/cxl.rst | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
-index 882b036f5e..e307caf3f8 100644
---- a/docs/system/devices/cxl.rst
-+++ b/docs/system/devices/cxl.rst
-@@ -308,7 +308,7 @@ A very simple setup with just one directly attached CXL Type 3 Persistent Memory
-   -object memory-backend-file,id=cxl-lsa1,share=on,mem-path=/tmp/lsa.raw,size=256M \
-   -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-   -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
--  -device cxl-type3,bus=root_port13,persistent-memdev=cxl-mem1,lsa=cxl-lsa1,id=cxl-pmem0 \
-+  -device cxl-type3,bus=root_port13,persistent-memdev=cxl-mem1,lsa=cxl-lsa1,id=cxl-pmem0,sn=0x1 \
-   -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
- 
- A very simple setup with just one directly attached CXL Type 3 Volatile Memory device::
-@@ -349,13 +349,13 @@ the CXL Type3 device directly attached (no switches).::
-   -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-   -device pxb-cxl,bus_nr=222,bus=pcie.0,id=cxl.2 \
-   -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
--  -device cxl-type3,bus=root_port13,persistent-memdev=cxl-mem1,lsa=cxl-lsa1,id=cxl-pmem0 \
-+  -device cxl-type3,bus=root_port13,persistent-memdev=cxl-mem1,lsa=cxl-lsa1,id=cxl-pmem0,sn=0x1 \
-   -device cxl-rp,port=1,bus=cxl.1,id=root_port14,chassis=0,slot=3 \
--  -device cxl-type3,bus=root_port14,persistent-memdev=cxl-mem2,lsa=cxl-lsa2,id=cxl-pmem1 \
-+  -device cxl-type3,bus=root_port14,persistent-memdev=cxl-mem2,lsa=cxl-lsa2,id=cxl-pmem1,sn=0x2 \
-   -device cxl-rp,port=0,bus=cxl.2,id=root_port15,chassis=0,slot=5 \
--  -device cxl-type3,bus=root_port15,persistent-memdev=cxl-mem3,lsa=cxl-lsa3,id=cxl-pmem2 \
-+  -device cxl-type3,bus=root_port15,persistent-memdev=cxl-mem3,lsa=cxl-lsa3,id=cxl-pmem2,sn=0x3 \
-   -device cxl-rp,port=1,bus=cxl.2,id=root_port16,chassis=0,slot=6 \
--  -device cxl-type3,bus=root_port16,persistent-memdev=cxl-mem4,lsa=cxl-lsa4,id=cxl-pmem3 \
-+  -device cxl-type3,bus=root_port16,persistent-memdev=cxl-mem4,lsa=cxl-lsa4,id=cxl-pmem3,sn=0x4 \
-   -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.targets.1=cxl.2,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=8k
- 
- An example of 4 devices below a switch suitable for 1, 2 or 4 way interleave::
-@@ -375,13 +375,13 @@ An example of 4 devices below a switch suitable for 1, 2 or 4 way interleave::
-   -device cxl-rp,port=1,bus=cxl.1,id=root_port1,chassis=0,slot=1 \
-   -device cxl-upstream,bus=root_port0,id=us0 \
-   -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
--  -device cxl-type3,bus=swport0,persistent-memdev=cxl-mem0,lsa=cxl-lsa0,id=cxl-pmem0 \
-+  -device cxl-type3,bus=swport0,persistent-memdev=cxl-mem0,lsa=cxl-lsa0,id=cxl-pmem0,sn=0x1 \
-   -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
--  -device cxl-type3,bus=swport1,persistent-memdev=cxl-mem1,lsa=cxl-lsa1,id=cxl-pmem1 \
-+  -device cxl-type3,bus=swport1,persistent-memdev=cxl-mem1,lsa=cxl-lsa1,id=cxl-pmem1,sn=0x2 \
-   -device cxl-downstream,port=2,bus=us0,id=swport2,chassis=0,slot=6 \
--  -device cxl-type3,bus=swport2,persistent-memdev=cxl-mem2,lsa=cxl-lsa2,id=cxl-pmem2 \
-+  -device cxl-type3,bus=swport2,persistent-memdev=cxl-mem2,lsa=cxl-lsa2,id=cxl-pmem2,sn=0x3 \
-   -device cxl-downstream,port=3,bus=us0,id=swport3,chassis=0,slot=7 \
--  -device cxl-type3,bus=swport3,persistent-memdev=cxl-mem3,lsa=cxl-lsa3,id=cxl-pmem3 \
-+  -device cxl-type3,bus=swport3,persistent-memdev=cxl-mem3,lsa=cxl-lsa3,id=cxl-pmem3,sn=0x4 \
-   -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
- 
- Deprecations
--- 
-2.34.1
+Cj4gCj4gT24gVGh1LCBGZWIgMjAsIDIwMjUgYXQgMDQ6MTI6MTNQTSArMDAwMCwgSm9uYXRoYW4g
+Q2FtZXJvbiB3cm90ZToKPiA+IE9uIE1vbiwgMTcgRmViIDIwMjUgMTk6MjA6MzkgKzA4MDAKPiA+
+IFl1cXVhbiBXYW5nIDx3YW5neXVxdWFuMTIzNkBwaHl0aXVtLmNvbS5jbj4gd3JvdGU6Cj4gPiAK
+PiA+ID4gQWRkIHNlcmlhbCBudW1iZXIgcGFyYW1ldGVyIGluIHRoZSBjeGwgcGVyc2lzdGVudCBl
+eGFtcGxlcy4KPiA+ID4gCj4gPiA+IFNpZ25lZC1vZmYtYnk6IFl1cXVhbiBXYW5nIDx3YW5neXVx
+dWFuMTIzNkBwaHl0aXVtLmNvbS5jbj4KPiA+IExvb2tzIGdvb2QuICBJJ3ZlIHF1ZXVlZCBpdCB1
+cCBvbiBteSBnaXRsYWIgc3RhZ2luZyB0cmVlLCBidXQKPiA+IE1pY2hhZWwgaWYgeW91IHdhbnQg
+dG8gcGljayB0aGlzIG9uZSBkaXJlY3RseSB0aGF0J3MgZmluZSBhcyB3ZWxsLgo+IAo+IFNlZSBu
+byByZWFzb24gdG8sIEkgd2FzIG5vdCBldmVuIENDJ2QuCgpIaSwgTWljaGFlbAoKSSdtIHNvcnJ5
+LCB0aGlzIGlzIG15IGZhdWx0LiBJIHVzZWQgImdldF9tYWludGFpbmVyLnBsIiB0byBjaGVjayB0
+aGlzCnBhdGNoJ3MgbWFpbnRhaW5lcnMgYnV0IGl0IHNob3dzICJObyBtYWludGFpbmVycyBmb3Vu
+ZCwgcHJpbnRpbmcgcmVjZW50CmNvbnRyaWJ1dG9ycyIuIAoKWXVxdWFuCgo+IAo+ID4gSSBzaG91
+bGQgYmUgcHVzaGluZyBvdXQgbXkgZ2l0bGFiIHRyZWUgc2hvcnRseSAoYml0IG9mIG5ldHdvcmtp
+bmcKPiA+IGZ1biB0byBkZWFsIHdpdGgpLgo+ID4gCj4gPiA+IC0tLQo+ID4gPiAgZG9jcy9zeXN0
+ZW0vZGV2aWNlcy9jeGwucnN0IHwgMTggKysrKysrKysrLS0tLS0tLS0tCj4gPiA+ICAxIGZpbGUg
+Y2hhbmdlZCwgOSBpbnNlcnRpb25zKCspLCA5IGRlbGV0aW9ucygtKQo+ID4gPiAKPiA+ID4gZGlm
+ZiAtLWdpdCBhL2RvY3Mvc3lzdGVtL2RldmljZXMvY3hsLnJzdCBiL2RvY3Mvc3lzdGVtL2Rldmlj
+ZXMvY3hsLnJzdAo+ID4gPiBpbmRleCA4ODJiMDM2ZjVlLi5lMzA3Y2FmM2Y4IDEwMDY0NAo+ID4g
+PiAtLS0gYS9kb2NzL3N5c3RlbS9kZXZpY2VzL2N4bC5yc3QKPiA+ID4gKysrIGIvZG9jcy9zeXN0
+ZW0vZGV2aWNlcy9jeGwucnN0Cj4gPiA+IEBAIC0zMDgsNyArMzA4LDcgQEAgQSB2ZXJ5IHNpbXBs
+ZSBzZXR1cCB3aXRoIGp1c3Qgb25lIGRpcmVjdGx5IGF0dGFjaGVkIENYTCBUeXBlIDMgUGVyc2lz
+dGVudCBNZW1vcnkKPiA+ID4gICAgLW9iamVjdCBtZW1vcnktYmFja2VuZC1maWxlLGlkPWN4bC1s
+c2ExLHNoYXJlPW9uLG1lbS1wYXRoPS90bXAvbHNhLnJhdyxzaXplPTI1Nk0gXAo+ID4gPiAgICAt
+ZGV2aWNlIHB4Yi1jeGwsYnVzX25yPTEyLGJ1cz1wY2llLjAsaWQ9Y3hsLjEgXAo+ID4gPiAgICAt
+ZGV2aWNlIGN4bC1ycCxwb3J0PTAsYnVzPWN4bC4xLGlkPXJvb3RfcG9ydDEzLGNoYXNzaXM9MCxz
+bG90PTIgXAo+ID4gPiAtICAtZGV2aWNlIGN4bC10eXBlMyxidXM9cm9vdF9wb3J0MTMscGVyc2lz
+dGVudC1tZW1kZXY9Y3hsLW1lbTEsbHNhPWN4bC1sc2ExLGlkPWN4bC1wbWVtMCBcCj4gPiA+ICsg
+IC1kZXZpY2UgY3hsLXR5cGUzLGJ1cz1yb290X3BvcnQxMyxwZXJzaXN0ZW50LW1lbWRldj1jeGwt
+bWVtMSxsc2E9Y3hsLWxzYTEsaWQ9Y3hsLXBtZW0wLHNuPTB4MSBcCj4gPiA+ICAgIC1NIGN4bC1m
+bXcuMC50YXJnZXRzLjA9Y3hsLjEsY3hsLWZtdy4wLnNpemU9NEcKPiA+ID4gIAo+ID4gPiAgQSB2
+ZXJ5IHNpbXBsZSBzZXR1cCB3aXRoIGp1c3Qgb25lIGRpcmVjdGx5IGF0dGFjaGVkIENYTCBUeXBl
+IDMgVm9sYXRpbGUgTWVtb3J5IGRldmljZTo6Cj4gPiA+IEBAIC0zNDksMTMgKzM0OSwxMyBAQCB0
+aGUgQ1hMIFR5cGUzIGRldmljZSBkaXJlY3RseSBhdHRhY2hlZCAobm8gc3dpdGNoZXMpLjo6Cj4g
+PiA+ICAgIC1kZXZpY2UgcHhiLWN4bCxidXNfbnI9MTIsYnVzPXBjaWUuMCxpZD1jeGwuMSBcCj4g
+PiA+ICAgIC1kZXZpY2UgcHhiLWN4bCxidXNfbnI9MjIyLGJ1cz1wY2llLjAsaWQ9Y3hsLjIgXAo+
+ID4gPiAgICAtZGV2aWNlIGN4bC1ycCxwb3J0PTAsYnVzPWN4bC4xLGlkPXJvb3RfcG9ydDEzLGNo
+YXNzaXM9MCxzbG90PTIgXAo+ID4gPiAtICAtZGV2aWNlIGN4bC10eXBlMyxidXM9cm9vdF9wb3J0
+MTMscGVyc2lzdGVudC1tZW1kZXY9Y3hsLW1lbTEsbHNhPWN4bC1sc2ExLGlkPWN4bC1wbWVtMCBc
+Cj4gPiA+ICsgIC1kZXZpY2UgY3hsLXR5cGUzLGJ1cz1yb290X3BvcnQxMyxwZXJzaXN0ZW50LW1l
+bWRldj1jeGwtbWVtMSxsc2E9Y3hsLWxzYTEsaWQ9Y3hsLXBtZW0wLHNuPTB4MSBcCj4gPiA+ICAg
+IC1kZXZpY2UgY3hsLXJwLHBvcnQ9MSxidXM9Y3hsLjEsaWQ9cm9vdF9wb3J0MTQsY2hhc3Npcz0w
+LHNsb3Q9MyBcCj4gPiA+IC0gIC1kZXZpY2UgY3hsLXR5cGUzLGJ1cz1yb290X3BvcnQxNCxwZXJz
+aXN0ZW50LW1lbWRldj1jeGwtbWVtMixsc2E9Y3hsLWxzYTIsaWQ9Y3hsLXBtZW0xIFwKPiA+ID4g
+KyAgLWRldmljZSBjeGwtdHlwZTMsYnVzPXJvb3RfcG9ydDE0LHBlcnNpc3RlbnQtbWVtZGV2PWN4
+bC1tZW0yLGxzYT1jeGwtbHNhMixpZD1jeGwtcG1lbTEsc249MHgyIFwKPiA+ID4gICAgLWRldmlj
+ZSBjeGwtcnAscG9ydD0wLGJ1cz1jeGwuMixpZD1yb290X3BvcnQxNSxjaGFzc2lzPTAsc2xvdD01
+IFwKPiA+ID4gLSAgLWRldmljZSBjeGwtdHlwZTMsYnVzPXJvb3RfcG9ydDE1LHBlcnNpc3RlbnQt
+bWVtZGV2PWN4bC1tZW0zLGxzYT1jeGwtbHNhMyxpZD1jeGwtcG1lbTIgXAo+ID4gPiArICAtZGV2
+aWNlIGN4bC10eXBlMyxidXM9cm9vdF9wb3J0MTUscGVyc2lzdGVudC1tZW1kZXY9Y3hsLW1lbTMs
+bHNhPWN4bC1sc2EzLGlkPWN4bC1wbWVtMixzbj0weDMgXAo+ID4gPiAgICAtZGV2aWNlIGN4bC1y
+cCxwb3J0PTEsYnVzPWN4bC4yLGlkPXJvb3RfcG9ydDE2LGNoYXNzaXM9MCxzbG90PTYgXAo+ID4g
+PiAtICAtZGV2aWNlIGN4bC10eXBlMyxidXM9cm9vdF9wb3J0MTYscGVyc2lzdGVudC1tZW1kZXY9
+Y3hsLW1lbTQsbHNhPWN4bC1sc2E0LGlkPWN4bC1wbWVtMyBcCj4gPiA+ICsgIC1kZXZpY2UgY3hs
+LXR5cGUzLGJ1cz1yb290X3BvcnQxNixwZXJzaXN0ZW50LW1lbWRldj1jeGwtbWVtNCxsc2E9Y3hs
+LWxzYTQsaWQ9Y3hsLXBtZW0zLHNuPTB4NCBcCj4gPiA+ICAgIC1NIGN4bC1mbXcuMC50YXJnZXRz
+LjA9Y3hsLjEsY3hsLWZtdy4wLnRhcmdldHMuMT1jeGwuMixjeGwtZm13LjAuc2l6ZT00RyxjeGwt
+Zm13LjAuaW50ZXJsZWF2ZS1ncmFudWxhcml0eT04awo+ID4gPiAgCj4gPiA+ICBBbiBleGFtcGxl
+IG9mIDQgZGV2aWNlcyBiZWxvdyBhIHN3aXRjaCBzdWl0YWJsZSBmb3IgMSwgMiBvciA0IHdheSBp
+bnRlcmxlYXZlOjoKPiA+ID4gQEAgLTM3NSwxMyArMzc1LDEzIEBAIEFuIGV4YW1wbGUgb2YgNCBk
+ZXZpY2VzIGJlbG93IGEgc3dpdGNoIHN1aXRhYmxlIGZvciAxLCAyIG9yIDQgd2F5IGludGVybGVh
+dmU6Ogo+ID4gPiAgICAtZGV2aWNlIGN4bC1ycCxwb3J0PTEsYnVzPWN4bC4xLGlkPXJvb3RfcG9y
+dDEsY2hhc3Npcz0wLHNsb3Q9MSBcCj4gPiA+ICAgIC1kZXZpY2UgY3hsLXVwc3RyZWFtLGJ1cz1y
+b290X3BvcnQwLGlkPXVzMCBcCj4gPiA+ICAgIC1kZXZpY2UgY3hsLWRvd25zdHJlYW0scG9ydD0w
+LGJ1cz11czAsaWQ9c3dwb3J0MCxjaGFzc2lzPTAsc2xvdD00IFwKPiA+ID4gLSAgLWRldmljZSBj
+eGwtdHlwZTMsYnVzPXN3cG9ydDAscGVyc2lzdGVudC1tZW1kZXY9Y3hsLW1lbTAsbHNhPWN4bC1s
+c2EwLGlkPWN4bC1wbWVtMCBcCj4gPiA+ICsgIC1kZXZpY2UgY3hsLXR5cGUzLGJ1cz1zd3BvcnQw
+LHBlcnNpc3RlbnQtbWVtZGV2PWN4bC1tZW0wLGxzYT1jeGwtbHNhMCxpZD1jeGwtcG1lbTAsc249
+MHgxIFwKPiA+ID4gICAgLWRldmljZSBjeGwtZG93bnN0cmVhbSxwb3J0PTEsYnVzPXVzMCxpZD1z
+d3BvcnQxLGNoYXNzaXM9MCxzbG90PTUgXAo+ID4gPiAtICAtZGV2aWNlIGN4bC10eXBlMyxidXM9
+c3dwb3J0MSxwZXJzaXN0ZW50LW1lbWRldj1jeGwtbWVtMSxsc2E9Y3hsLWxzYTEsaWQ9Y3hsLXBt
+ZW0xIFwKPiA+ID4gKyAgLWRldmljZSBjeGwtdHlwZTMsYnVzPXN3cG9ydDEscGVyc2lzdGVudC1t
+ZW1kZXY9Y3hsLW1lbTEsbHNhPWN4bC1sc2ExLGlkPWN4bC1wbWVtMSxzbj0weDIgXAo+ID4gPiAg
+ICAtZGV2aWNlIGN4bC1kb3duc3RyZWFtLHBvcnQ9MixidXM9dXMwLGlkPXN3cG9ydDIsY2hhc3Np
+cz0wLHNsb3Q9NiBcCj4gPiA+IC0gIC1kZXZpY2UgY3hsLXR5cGUzLGJ1cz1zd3BvcnQyLHBlcnNp
+c3RlbnQtbWVtZGV2PWN4bC1tZW0yLGxzYT1jeGwtbHNhMixpZD1jeGwtcG1lbTIgXAo+ID4gPiAr
+ICAtZGV2aWNlIGN4bC10eXBlMyxidXM9c3dwb3J0MixwZXJzaXN0ZW50LW1lbWRldj1jeGwtbWVt
+Mixsc2E9Y3hsLWxzYTIsaWQ9Y3hsLXBtZW0yLHNuPTB4MyBcCj4gPiA+ICAgIC1kZXZpY2UgY3hs
+LWRvd25zdHJlYW0scG9ydD0zLGJ1cz11czAsaWQ9c3dwb3J0MyxjaGFzc2lzPTAsc2xvdD03IFwK
+PiA+ID4gLSAgLWRldmljZSBjeGwtdHlwZTMsYnVzPXN3cG9ydDMscGVyc2lzdGVudC1tZW1kZXY9
+Y3hsLW1lbTMsbHNhPWN4bC1sc2EzLGlkPWN4bC1wbWVtMyBcCj4gPiA+ICsgIC1kZXZpY2UgY3hs
+LXR5cGUzLGJ1cz1zd3BvcnQzLHBlcnNpc3RlbnQtbWVtZGV2PWN4bC1tZW0zLGxzYT1jeGwtbHNh
+MyxpZD1jeGwtcG1lbTMsc249MHg0IFwKPiA+ID4gICAgLU0gY3hsLWZtdy4wLnRhcmdldHMuMD1j
+eGwuMSxjeGwtZm13LjAuc2l6ZT00RyxjeGwtZm13LjAuaW50ZXJsZWF2ZS1ncmFudWxhcml0eT00
+awo+ID4gPiAgCj4gPiA+ICBEZXByZWNhdGlvbnMKDQoNCuS/oeaBr+WuieWFqOWjsOaYju+8muac
+rOmCruS7tuWMheWQq+S/oeaBr+W9kuWPkeS7tuS6uuaJgOWcqOe7hOe7h+aJgOaciSzlj5Hku7bk
+urrmiYDlnKjnu4Tnu4flr7nor6Xpgq7ku7bmi6XmnInmiYDmnInmnYPliKnjgILor7fmjqXmlLbo
+gIXms6jmhI/kv53lr4Ys5pyq57uP5Y+R5Lu25Lq65Lmm6Z2i6K645Y+vLOS4jeW+l+WQkeS7u+S9
+leesrOS4ieaWuee7hOe7h+WSjOS4quS6uumAj+mcsuacrOmCruS7tuaJgOWQq+S/oeaBr+OAgg0K
+SW5mb3JtYXRpb24gU2VjdXJpdHkgTm90aWNlOiBUaGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGlu
+IHRoaXMgbWFpbCBpcyBzb2xlbHkgcHJvcGVydHkgb2YgdGhlIHNlbmRlcidzIG9yZ2FuaXphdGlv
+bi5UaGlzIG1haWwgY29tbXVuaWNhdGlvbiBpcyBjb25maWRlbnRpYWwuUmVjaXBpZW50cyBuYW1l
+ZCBhYm92ZSBhcmUgb2JsaWdhdGVkIHRvIG1haW50YWluIHNlY3JlY3kgYW5kIGFyZSBub3QgcGVy
+bWl0dGVkIHRvIGRpc2Nsb3NlIHRoZSBjb250ZW50cyBvZiB0aGlzIGNvbW11bmljYXRpb24gdG8g
+b3RoZXJzLg==
 
 
