@@ -4,79 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E39DAC282D3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 09:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCADC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 09:48:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpOcG-00079w-GN; Tue, 04 Mar 2025 04:31:08 -0500
+	id 1tpOsR-0002vi-Gd; Tue, 04 Mar 2025 04:47:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tpOcA-00078X-AN; Tue, 04 Mar 2025 04:31:02 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tpOsG-0002uK-OZ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 04:47:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tpOc6-0003EG-95; Tue, 04 Mar 2025 04:31:02 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Z6Vjf4JXgz6D91G;
- Tue,  4 Mar 2025 17:28:38 +0800 (CST)
-Received: from frapeml500006.china.huawei.com (unknown [7.182.85.219])
- by mail.maildlp.com (Postfix) with ESMTPS id 6874E140A79;
- Tue,  4 Mar 2025 17:30:50 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500006.china.huawei.com (7.182.85.219) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 4 Mar 2025 10:30:50 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Tue, 4 Mar 2025 10:30:50 +0100
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: Eric Auger <eric.auger@redhat.com>, "ddutile@redhat.com"
- <ddutile@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, "Jason
- Gunthorpe" <jgg@nvidia.com>, =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?=
- <berrange@redhat.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Linuxarm
- <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Thread-Topic: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Thread-Index: AQHbMeB0+Q5BEZc9JkeH/U6Jz+dF4rLkOMCAgAAM2QCAAAz2gIAEhqeggCVVAYCAI176AIAE12cAgAGBGYCAAGn5AIACTjRQgAB/1ACAJxm5oIAAEMeAgAEfbGA=
-Date: Tue, 4 Mar 2025 09:30:49 +0000
-Message-ID: <db59c28747834acf9c1a5cc80d30df81@huawei.com>
-References: <CAFEAcA8TW2RKyFnh-TZRpfaKfZipHD5TZy_hymUr41GJ4rs4xA@mail.gmail.com>
- <329445b2f68a47269292aefb34584375@huawei.com>
- <Z39Ugx2M+FRFVVpB@Asurada-Nvidia>
- <f4e64a3a-5c1d-49f2-ac72-b84ecd353c9d@redhat.com>
- <Z6EQENkHJy7TrkYy@Asurada-Nvidia>
- <77f736f6-9ef9-462b-916e-c8cfff279044@redhat.com>
- <Z6KsAE9wnjWU0xMs@Asurada-Nvidia>
- <8224c38797344d1a9c0f453774925db3@huawei.com>
- <Z6UGVP3olKvakHUh@Asurada-Nvidia>
- <48e3ac70f9fb4867a9ef835c22d4fda8@huawei.com>
- <Z8XhKyxHwsZo2eBK@Asurada-Nvidia>
-In-Reply-To: <Z8XhKyxHwsZo2eBK@Asurada-Nvidia>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tpOsC-0001v9-R5
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 04:47:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741081654;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ggbFt0jU8eEzLwKzJTv1bmj6YmWWiTmIpJewmQ4uF1w=;
+ b=bLRCzoU3lGFo/Nh85D0Wg68GV4w6FzT3yeOW1jSPyUglSANItcI2j8AFn32yy3G8rHB0ZM
+ D9sALnw+nYQ+ifuzXbzbJ8cewbjX7ee/7W83xJS/0rwaawH6Ct1WSOoQjr8E4X445wSYyZ
+ 6ZtZBPI/TjyAZDclEFCISBsagrsaPmY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-685-p3oi9K3qPWC113ffvoSSOA-1; Tue, 04 Mar 2025 04:47:32 -0500
+X-MC-Unique: p3oi9K3qPWC113ffvoSSOA-1
+X-Mimecast-MFC-AGG-ID: p3oi9K3qPWC113ffvoSSOA_1741081651
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4399a5afc72so24752775e9.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 01:47:32 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741081651; x=1741686451;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ggbFt0jU8eEzLwKzJTv1bmj6YmWWiTmIpJewmQ4uF1w=;
+ b=Ep8d1tPcD97bjQWPCfTzlhcPTPFQz4wvlzlkWlbgpopYXzqCQNXqULQ7Ck7SDVGYhP
+ FnhKOdnSBK6hTvRbx2wbJ8b/lgv56ulOyMjJFcEFdo5YyZlNeu/zozOIHaUCKn5oog0a
+ ql4klFMD42lbYqrGs7FqpvIlv+LL3eluNoUJ4yjlJf9u6MY1hxmEAvYsSaG0tdl/BGUY
+ cIp1LXBDKIqJLyYUPvr0gg7TR8QxOsXpfxWt3KoX7K1sf6qEIKywNajVOcWnktUN9mHU
+ G06I0zFt36snyopSI8ubZsr/n7smgWGMj5PKOlWv6Uck79zbqJXQyRhaqfQnQBt3JNN0
+ 7vHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUwL4UliXdexI4Sm2d1E9tvLVsKD1AqRx7M47+pxshzUK2mx/k7wICccJc0ZyzGn0w2ndvp6WxDdUYh@nongnu.org
+X-Gm-Message-State: AOJu0YwajzVfs3UVbQ7jC+2ncwHGWiqc1kFCYfF55ZZ0Jxr/mAbQua4x
+ /FtXujMs4uHnLYTCBTxloXAK9fCxnQSdLRCv4KhhDXNaNN1pExasmdw1Ph3n2fE5gYQyoeN5bLy
+ pJfvKzfWFNK8j96VvdY7S5tX0D6WWBPCbXtdl4243mvjrhz6xOVfvVUqPqZ2JzoxPlVLZqzQeVW
+ 5ahtwKS/0TqhrTdQErqRRKHSanVzY=
+X-Gm-Gg: ASbGncuJ0Z1VG2NRo1KNvF33+THpcrdRGLDsBp4u9tFgEjGGgJt7I27f8hlMnux6dmz
+ Ivx/bomIkrkl4Mm0xNlewViPsDtpntztmT6craiRK4kVCTsNS3rf1sqNvmn9G6ZvLN2RSoHnuqz
+ c=
+X-Received: by 2002:a05:600c:1d0b:b0:43b:c5a3:2e1a with SMTP id
+ 5b1f17b1804b1-43bc5a32fd2mr42537895e9.2.1741081651029; 
+ Tue, 04 Mar 2025 01:47:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGFxxkKyTgcRZ1DjpIrsg7/vWRV7hcire72bF8DFWf8ovrS9iDUByrkM7I6ngXMasKosOy5NVPjieI7BCGoZTo=
+X-Received: by 2002:a05:600c:1d0b:b0:43b:c5a3:2e1a with SMTP id
+ 5b1f17b1804b1-43bc5a32fd2mr42537605e9.2.1741081650560; Tue, 04 Mar 2025
+ 01:47:30 -0800 (PST)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250228121749.553184-1-ppandit@redhat.com>
+ <87frjy2k8z.fsf@suse.de>
+ <CAE8KmOwVoGJ2frVCY76W7UxSr90wAL2EMj5Nmtcrdc+BE1e9=g@mail.gmail.com>
+ <Z8W4xVOLLAD1wXjC@x1.local>
+In-Reply-To: <Z8W4xVOLLAD1wXjC@x1.local>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 4 Mar 2025 15:17:14 +0530
+X-Gm-Features: AQ5f1JpNyVXerixjYjh6NQrZL22ohgvqFgluJm5N91qJBXI1dn9A73pexazwwkQ
+Message-ID: <CAE8KmOzkVpG5iUqwShWWMF4+96-cbNm1AU8b=s3187EyWXXT4g@mail.gmail.com>
+Subject: Re: [PATCH v7 0/5] Allow to enable multifd and postcopy migration
+ together
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,63 +104,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogTmljb2xpbiBDaGVuIDxu
-aWNvbGluY0BudmlkaWEuY29tPg0KPiBTZW50OiBNb25kYXksIE1hcmNoIDMsIDIwMjUgNTowNSBQ
-TQ0KPiBUbzogU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaSA8c2hhbWVlcmFsaS5rb2xvdGh1bS50
-aG9kaUBodWF3ZWkuY29tPg0KPiBDYzogRXJpYyBBdWdlciA8ZXJpYy5hdWdlckByZWRoYXQuY29t
-PjsgZGR1dGlsZUByZWRoYXQuY29tOyBQZXRlcg0KPiBNYXlkZWxsIDxwZXRlci5tYXlkZWxsQGxp
-bmFyby5vcmc+OyBKYXNvbiBHdW50aG9ycGUgPGpnZ0BudmlkaWEuY29tPjsNCj4gRGFuaWVsIFAu
-IEJlcnJhbmfDqSA8YmVycmFuZ2VAcmVkaGF0LmNvbT47IHFlbXUtYXJtQG5vbmdudS5vcmc7DQo+
-IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZzsgTGludXhhcm0gPGxpbnV4YXJtQGh1YXdlaS5jb20+OyBX
-YW5nemhvdQ0KPiAoQikgPHdhbmd6aG91MUBoaXNpbGljb24uY29tPjsgamlhbmdrdW5rdW4gPGpp
-YW5na3Vua3VuQGh1YXdlaS5jb20+Ow0KPiBKb25hdGhhbiBDYW1lcm9uIDxqb25hdGhhbi5jYW1l
-cm9uQGh1YXdlaS5jb20+Ow0KPiB6aGFuZ2ZlaS5nYW9AbGluYXJvLm9yZw0KPiBTdWJqZWN0OiBS
-ZTogW1JGQyBQQVRDSCAwLzVdIGh3L2FybS92aXJ0OiBBZGQgc3VwcG9ydCBmb3IgdXNlci1jcmVh
-dGFibGUNCj4gbmVzdGVkIFNNTVV2Mw0KPiANCj4gT24gTW9uLCBNYXIgMDMsIDIwMjUgYXQgMDM6
-MjE6NTdQTSArMDAwMCwgU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaQ0KPiB3cm90ZToNCj4gPiBJ
-IGFtIHdvcmtpbmcgb24gdGhlIGFib3ZlIG5vdyBhbmQgaGF2ZSBxdWljayBxdWVzdGlvbiB0byB5
-b3Xwn5iKLg0KPiA+DQo+ID4gTG9va2luZyBhdCB0aGUgc21tdV9kZXZfYXR0YWNoX3Zpb21tdSgp
-IGZuIGhlcmVbMF0sDQo+ID4gaXQgYXBwZWFycyB0byBkbyB0aGUgZm9sbG93aW5nOg0KPiA+DQo+
-ID4gMS4gQWxsb2MgYSBzMl9od3B0IGlmIG5vdCBhbGxvY2F0ZWQgYWxyZWFkeSBhbmQgYXR0YWNo
-IGl0Lg0KPiA+IDIuIEFsbG9jYXRlIGFib3J0IGFuZCBieXBhc3MgaHdwdA0KPiA+IDMuIEF0dGFj
-aCBieXBhc3MgaHdwdC4NCj4gPg0KPiA+IEkgZGlkbid0IGdldCB3aHkgd2UgYXJlIGRvaW5nIHRo
-ZSBzdGVwIDMgaGVyZS4gVG8gbWUgaXQgbG9va3MgbGlrZSwNCj4gPiB3aGVuIHdlIGF0dGFjaCB0
-aGUgczJfaHdwdChpZSwgdGhlIG5lc3RlZCBwYXJlbnQgZG9tYWluIGF0dGFjaCksDQo+ID4gdGhl
-IGtlcm5lbCB3aWxsIGRvLA0KPiA+DQo+ID4gYXJtX3NtbXVfYXR0YWNoX2RldigpDQo+ID4gICBh
-cm1fc21tdV9tYWtlX3MyX2RvbWFpbl9zdGUoKQ0KPiA+DQo+ID4gSXQgYXBwZWFycyB0aHJvdWdo
-IHN0ZXAgMywgd2UgYWNoaWV2ZSB0aGUgc2FtZSB0aGluZyBhZ2Fpbi4NCj4gPg0KPiA+IE9yIGl0
-IGlzIHBvc3NpYmxlIEkgbWlzc2VkIHNvbWV0aGluZyBvYnZpb3VzIGhlcmUuDQo+IA0KPiBCZWNh
-dXNlIGEgZGV2aWNlIGNhbm5vdCBhdHRhY2ggdG8gYSB2SU9NTVUgb2JqZWN0IGRpcmVjdGx5LCBi
-dXQNCj4gb25seSB2aWEgYSBwcm94eSBod3B0X25lc3RlZC4gU28sIHRoaXMgYnlwYXNzIGh3cHQg
-Z2l2ZXMgdXMgdGhlDQo+IHBvcnQgdG8gYXNzb2NpYXRlIHRoZSBkZXZpY2UgdG8gdGhlIHZJT01N
-VSwgYmVmb3JlIGEgdkRFVklDRSBvcg0KPiBhICJ0cmFuc2xhdGUiIGh3cHRfbmVzdGVkIGlzIGFs
-bG9jYXRlZC4NCj4gDQo+IEN1cnJlbnRseSBpdCdzIHRoZSBzYW1lIGJlY2F1c2UgYW4gUzIgcGFy
-ZW50IGh3cHQgaG9sZHMgYSBWTUlELA0KPiBzbyB3ZSBjb3VsZCBqdXN0IGF0dGFjaCB0aGUgZGV2
-aWNlIHRvIHRoZSBTMiBod3B0IGZvciB0aGUgc2FtZQ0KPiBTVEUgY29uZmlndXJhdGlvbiBhcyBh
-dHRhY2hpbmcgdGhlIGRldmljZSB0byB0aGUgcHJveHkgYnlwYXNzDQo+IGh3cHQuIFlldCwgdGhp
-cyB3aWxsIGNoYW5nZSBpbiB0aGUgZnV0dXJlIGFmdGVyIGxldHRpbmcgdklPTU1VDQo+IG9iamVj
-dHMgaG9sZCB0aGVpciBvd24gVk1JRHMgdG8gc2hhcmUgYSBjb21tb24gUzIgcGFyZW50IGh3cHQN
-Cj4gdGhhdCB3b24ndCBoYXZlIGEgVk1JRCwgaS5lLiBhcm1fc21tdV9tYWtlX3MyX2RvbWFpbl9z
-dGUoKSB3aWxsDQo+IG5lZWQgdGhlIHZJT01NVSBvYmplY3QgdG8gZ2V0IHRoZSBWTUlEIGZvciBT
-VEUuDQo+IA0KPiBJIHNob3VsZCBoYXZlIGFkZGVkIGEgZmV3IGxpbmVzIG9mIGNvbW1lbnRzIHRo
-ZXJlIDopDQoNCk9rLiBUaGFua3MgZm9yIHRoZSBleHBsYW5hdGlvbi4gSSB3aWxsIGtlZXAgaXQg
-dGhlbiBhbmQgYWRkIGZldyBjb21tZW50cw0KdG8gbWFrZSBpdCBjbGVhci4NCg0KRG8geW91IGhh
-dmUgYW4gaW5pdGlhbCBpbXBsZW1lbnRhdGlvbiBvZiB0aGUgYWJvdmUgd2l0aCB2SU9NTVUgb2Jq
-ZWN0DQpob2xkaW5nIHRoZSBWTUlEcyB0byBzaGFyZT8gQWN0dWFsbHkgSSBkbyBoYXZlIGEgZGVw
-ZW5kZW5jeSBvbiB0aGF0IGZvcg0KbXkgS1ZNIHBpbm5lZCBWTUlEIHNlcmllc1swXSB3aGVyZSBp
-dCB3YXMgc3VnZ2VzdGVkIHRoYXQgdGhlIFZNSUQNCnNob3VsZCBhc3NvY2lhdGVkIHdpdGggYSB2
-SU9NTVUgb2JqZWN0IHJhdGhlciB0aGFuIHRoZSBJT01NVUZEDQpjb250ZXh0IEkgdXNlZCBpbiB0
-aGVyZS4NCg0KQW5kIEphc29uIG1lbnRpb25lZCBhYm91dCB0aGUgd29yayBpbnZvbHZlZCB0byBk
-byB0aGF0IGhlcmVbMV0uIEFwcHJlY2lhdGUNCmlmIHlvdSBjb3VsZCBzaGFyZSBpZiBhbnkgcHJv
-Z3Jlc3MgaXMgbWFkZSBvbiB0aGF0IHNvIHRoYXQgSSBjYW4gdHJ5IHRvIHJlYmFzZQ0KdGhhdCBL
-Vk0gIFBpbm5lZCBzZXJpZXMgb24gdG9wIG9mIHRoYXQgYW5kIGdpdmUgaXQgYSB0cnkuDQoNClRo
-YW5rcywNClNoYW1lZXINClswXSBodHRwczovL2xvcmUua2VybmVsLm9yZy9saW51eC1pb21tdS8y
-MDI0MDIwODE1MTgzNy4zNTA2OC0xLXNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVhd2VpLmNv
-bS8NClsxXSBodHRwczovL2xvcmUua2VybmVsLm9yZy9saW51eC1hcm0ta2VybmVsLzIwMjQxMTI5
-MTUwNjI4LkdHMTI1MzM4OEBudmlkaWEuY29tLw0KDQoNCg0KDQoNCg==
+Hi,
+
+On Mon, 3 Mar 2025 at 19:42, Peter Xu <peterx@redhat.com> wrote:
+> On Mon, Mar 03, 2025 at 04:17:53PM +0530, Prasad Pandit wrote:
+> > * I think we (you, me, Peter) are all looking at things differently.
+> >     - In my view Patch-2 is the minimal change _required_  to enable
+> > multifd & postcopy. In your view we are _revamping_ channel discovery
+> > parts while _sneaking_ in a feature of enabling multifd & postcopy
+> > together.
+> >     - In my view Patch-5 in this series is an isolated change because
+> > it adds a new migration command to allow multifd threads sync from
+> > source side. But Peter thinks without that 'flush and sync' Patch-2 is
+> > incomplete, so we should merge it back there.
+>
+> Just to mention, my suggestion does not conflict with splitting patch 2, as
+> long as you keep every patch complete on its own.
+>
+> Patch 5 needs to be squashed to either patch 2 or a split patch out of
+> patch 2, because current patch 2 (or any possible way to split it into
+> smaller ones, then one of them which enables the feature) is buggy.
+
+* I'll try to segregate different parts, then we can discuss how to
+split them across patches:
+
+Terminology:
+    _requires_  => is without which migration shall not work at all.
+    _essential_ => is without which there may be issues.
+
+1. Enable Multifd and Postcopy together
+    - It _requires_ removal of the Multifd capability check in
+migration/options.c
+    - It _requires_ identification of the CH_POSTCOPY connection when it arrives
+        - so enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY } is defined
+        - To identify channels, related changes are made to the
+channel discovery part (if .. else conditionals) in
+migration_ioc_process_incoming() function.
+        - These changes help to establish all channel connections.
+After that, the migration proceeds as usual until it's time to start
+the Postcopy phase.
+    - When time comes to start Postcopy phase, we shutdown multifd channels.
+        - it _requires_ calling multifd_send_shutdown()
+        - It _requires_ moving
+file_cleanup_outgoing/socket_cleanup_outgoing calls to
+migration_cleanup() function.
+    - When Postcopy phase starts, we don't want ram_save_target
+_page() function to call ram_save_multifd_page() function, because
+migrate_multifd() is still true.
+        - It _requires_ adding the !migration_in_postcopy() checks.
+
+* Above changes are minimal _required_ to enable multifd and postcopy
+together, while also ensuring that migration continues to work when
+those options are not enabled together. With these changes, guest
+migration across two machines works without any observed failures.
+
+2. The multifd_ram_flush_and_sync() call/command and the
+assert(!migration_in_postcopy()) call in multifd_recv_thread()
+    - These calls help to ensure that no multifd data is left behind
+when the Postcopy phase starts.
+    - And that multifd_recv threads shall not be active when the
+Postcopy is running.
+    - They protect the guests from potential state corruption.
+
+* It is up to us to decide whether (2) is _required_ OR _essential_
+for the feature. Individual opinions can vary here.
+
+3. Revamp of the channel discovery parts by moving those bits to
+connection.c or other places.
+    - This entails moving the channel discovery parts from
+migration_ioc_process_incoming() function to somewhere else because it
+makes more sense to move it there and maybe it reduces complexity and
+makes the sources easier to understand.*
+
+* It is up to us to decide whether (3) is _required_  OR  _essential_
+for the feature. Individual opinions can vary here.
+
+* IMHO (1) is _required_,  (2) is _essential_,  and (3) is neither
+_required_ nor _essential_ for the - Enable multifd and postcopy
+together - feature. (3) is a completely unrelated change to this
+feature.
+
+Since it is an individual opinion, we all can think differently here
+and that is perfectly fine. Once we have some consensus, we can decide
+how to split or merge patches and move forward.
+
+Hope it helps. Thank you.
+---
+  - Prasad
+
 
