@@ -4,85 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 085FCC282D6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297E9C282D9
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 12:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpRnD-0005Ak-1F; Tue, 04 Mar 2025 07:54:39 -0500
+	id 1tpRkr-0001lD-7D; Tue, 04 Mar 2025 07:52:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tpRkT-00017l-RH
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 07:51:55 -0500
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tpRkR-00087t-HH
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 07:51:49 -0500
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-6fb2a0e4125so36726127b3.1
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 04:51:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741092706; x=1741697506; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uxGGuaI68JKtynFFjWwLnLjsUcyuO6IkGZ9JrNoj9Hk=;
- b=Qp7VukeVolGztW7WROcl+ms1eTileftKRf4hgtnQKXwK3LoJUbk/kpVYP7gJM2OO7L
- L1Jx8mfv39mD4q+PxbMtDEG5pcD1Ku1gEHnY9qywDnKQQgVG7nNfd3YpYzRAw/bOV94k
- wc+k3B+NHQe/HzZro2K5kSiK2e1Xu2j7E8Ze3A49IKHNXy6vOrXcs5Bu+AwLWA/W0xXy
- GHLWWvpaX6SV+HNphEARTcga4Zykt+L9a5rG6Apu7RurDJYxPAdEtc/aQkNbtHp1TDLa
- LzhGgnKDQPllWdnCOMmmte8W0V7EF3MESVrPWNSB0uVgcsdkWJqCTU2PInbMH4gRqH+2
- wnhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741092706; x=1741697506;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uxGGuaI68JKtynFFjWwLnLjsUcyuO6IkGZ9JrNoj9Hk=;
- b=pSax8+pbWVFa4MYfuvfDwaeozSN8SDGP1qZVp4yV2M4ELKHYW2tdhXI4B02SyPBD7k
- KytQzbtKVsRcB57kTANp2l1AflQe/OQyjXAxCpnsxfO2No1FnLLyAHDBc/3yAGdzHB4K
- I2EpzwqRuSjGM3U/Ye1nJ8LSo0u1SDFT0qsUp6DML1zjc2MBv4CvxrKjtzNoHLfRkzEp
- 1dcWzuvoD/OLn9zDK7mS2ArnbZ4JBLiI5CgzGrD+bkvOMf0rDjt6Mso7I4GbZzADvlDp
- 0e8ns6jVIzti1kSBTOxXfoUCOlPxFp90xuqFnafjsz669ZOaRNmfXX8pxI+nBAg615Ps
- eojQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4rxiZdIIGzH/WcBrIN8ur4xq8gxI1lswoHbMHMpE4lbSeCxOyXIiXVQUrRnZ7qtOICUTI2VTsl6VL@nongnu.org
-X-Gm-Message-State: AOJu0YwhRNVhgHdPd1UDFJvPcwar5tbU95hIarnQrFfrs2wXnAUsww4g
- qmpI/BgojkNGNSZ9U22c5kuxqLAS54wSfTubLPJDZZ076+6XWzh5BLTtRVqULbu1zu7aMMw3ggB
- jA2SgXGgZzDzwCJTCt2FkNHnkoEcQqSiDluFARA==
-X-Gm-Gg: ASbGnct27vzMfNVI7wtyDR3dKsxkHpstoZDN74RhS4jD3GZZwDtlDqyrmmtv4IMsMXi
- yS2gthuBCCoDtmKga16BcQjjdfdGeM7RQs9uIhzG7uTBYNCOWD0qKZc74Uwogrw6TqQJ9cep4/d
- P8XlfSN6t2EV57ML4NOBjB9E/Nb2M=
-X-Google-Smtp-Source: AGHT+IFrMaw5WXbhjojnTuWjafeg9jqYR5kLnuDJEsEs2jRm4DP5ngCjEjC1wDmiwD29KO9B96YcLpmxsqAClMk3SoA=
-X-Received: by 2002:a05:690c:600a:b0:6ef:761e:cfc with SMTP id
- 00721157ae682-6fd4a1405a8mr223122747b3.25.1741092705838; Tue, 04 Mar 2025
- 04:51:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tpRi4-00053v-8R
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 07:49:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tpRhy-0007Zg-Vv
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 07:49:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741092553;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mqi3DdaTu4ALCTwdK1EdsuKOZviWGVA8D/zmVKVPbIw=;
+ b=ZeLCxxIiA1tOjlf+oL4/jubAFKw+PG3G6ZVUMxG3ss3Z0T4vJr7x2aIx++2b/Ao/M0KOzh
+ ZuHwdy9tEQsLRcYit6nwQ2lc1grxE6qISA7oWU2AlI/bJ5vFI7XTWIv1+RAHnkJTnUuCy3
+ Wq0gdlVpCR1L0Kfgle3IGe1wUQ2e8Qk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-8GWymiyVPIK-4F02zqkAhQ-1; Tue,
+ 04 Mar 2025 07:49:05 -0500
+X-MC-Unique: 8GWymiyVPIK-4F02zqkAhQ-1
+X-Mimecast-MFC-AGG-ID: 8GWymiyVPIK-4F02zqkAhQ_1741092544
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0ADBE1800877; Tue,  4 Mar 2025 12:49:04 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.122])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 75E89180087C; Tue,  4 Mar 2025 12:49:03 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id D4A5D1800616; Tue, 04 Mar 2025 13:48:16 +0100 (CET)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 24/24] docs: add uefi variable service documentation
+Date: Tue,  4 Mar 2025 13:48:12 +0100
+Message-ID: <20250304124815.591749-25-kraxel@redhat.com>
+In-Reply-To: <20250304124815.591749-1-kraxel@redhat.com>
+References: <20250304124815.591749-1-kraxel@redhat.com>
 MIME-Version: 1.0
-References: <20250227141343.1675415-1-peter.maydell@linaro.org>
- <87o6yh57r2.fsf@draig.linaro.org>
-In-Reply-To: <87o6yh57r2.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 4 Mar 2025 12:51:34 +0000
-X-Gm-Features: AQ5f1JqdU7-x-zWWBzJjlhTFs9_xhTkqxqg-1afm2BT6H0-52lc3IttwZY4Klew
-Message-ID: <CAFEAcA9VDtWKoQ09dOt+ZxJ2MhdRTFY_X1ON58pEjYTM_NtZ-A@mail.gmail.com>
-Subject: Re: [PATCH] tests/tcg: Suppress compiler false-positive warning on
- sha1.c
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Brian Cain <brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,79 +92,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 4 Mar 2025 at 11:56, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
-> > +# GCC versions 12/13/14/15 at least incorrectly complain about
-> > +# "'SHA1Transform' reading 64 bytes from a region of size 0"; see the =
-gcc bug
-> > +# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D106709
-> > +# Since this is just a standard piece of library code we've borrowed f=
-or a
-> > +# TCG test case, suppress the warning rather than trying to modify the
-> > +# code to work around the compiler.
-> > +sha1: CFLAGS+=3D-Wno-stringop-overread
-> > +
->
-> Sadly this breaks the hexagon compiler:
->
->   error: unknown warning option '-Wno-stringop-overread' [-Werror,-Wunkno=
-wn-warning-option]
->   Traceback (most recent call last):
->     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 683, in =
-<module>
->       sys.exit(main())
->                ^^^^^^
->     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 679, in =
-main
->       return args.cmdobj.run(args, argv)
->              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
->     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 657, in =
-run
->       return Docker().run(cmd, False, quiet=3Dargs.quiet,
->              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 370, in =
-run
->       ret =3D self._do_check(["run", "--rm", "--label",
->             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 247, in =
-_do_check
->       return subprocess.check_call(self._command + cmd, **kwargs)
->              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->     File "/usr/lib/python3.11/subprocess.py", line 413, in check_call
->       raise CalledProcessError(retcode, cmd)
->   subprocess.CalledProcessError: Command '['podman', 'run', '--rm', '--la=
-bel', 'com.qemu.instance.uuid=3D5bbb7b6ed2ea4377b9b6d646859ec4ea', '--usern=
-s=3Dkeep-id', '-u', '1000', '-w', '/home/alex/lsrc/qemu.git/builds/all/test=
-s/tcg/hexagon-linux-user', '-v', '/home/alex/lsrc/qemu.git/builds/all/tests=
-/tcg/hexagon-linux-user:/home/alex/lsrc/qemu.git/builds/all/tests/tcg/hexag=
-on-linux-user:rw', '-v', '/home/alex/lsrc/qemu.git:/home/alex/lsrc/qemu.git=
-:ro,z', 'qemu/debian-hexagon-cross', 'hexagon-unknown-linux-musl-clang', '-=
-Wno-incompatible-pointer-types', '-Wno-undefined-internal', '-fno-unroll-lo=
-ops', '-fno-stack-protector', '-Wall', '-Werror', '-O0', '-g', '-fno-strict=
--aliasing', '-Wno-stringop-overread', '-mv73', '-O2', '-static', '/home/ale=
-x/lsrc/qemu.git/tests/tcg/multiarch/sha1.c', '-o', 'sha1', '-static']' retu=
-rned non-zero exit status 1.
->   filter=3D--filter=3Dlabel=3Dcom.qemu.instance.uuid=3D5bbb7b6ed2ea4377b9=
-b6d646859ec4ea
->   make[1]: *** [Makefile:122: sha1] Error 1
->   make: *** [/home/alex/lsrc/qemu.git/tests/Makefile.include:52: build-tc=
-g-tests-hexagon-linux-user] Error 2
->
-> Is it that new an option?
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20250225163031.1409078-25-kraxel@redhat.com>
+---
+ docs/devel/index-internals.rst |  1 +
+ docs/devel/uefi-vars.rst       | 68 ++++++++++++++++++++++++++++++++++
+ hw/uefi/LIMITATIONS.md         |  7 ++++
+ 3 files changed, 76 insertions(+)
+ create mode 100644 docs/devel/uefi-vars.rst
+ create mode 100644 hw/uefi/LIMITATIONS.md
 
-I think it's new-ish (gcc 11?). On the other hand
--Wno-unknown-warning-option is quite old, and would suppress
-this error. If we do
- CFLAGS+=3D-Wno-unknown-warning-option -Wno-stringop-overread
+diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
+index bca597c65895..7a0678cbdd3a 100644
+--- a/docs/devel/index-internals.rst
++++ b/docs/devel/index-internals.rst
+@@ -20,6 +20,7 @@ Details about QEMU's various subsystems including how to add features to them.
+    s390-cpu-topology
+    s390-dasd-ipl
+    tracing
++   uefi-vars
+    vfio-iommufd
+    writing-monitor-commands
+    virtio-backends
+diff --git a/docs/devel/uefi-vars.rst b/docs/devel/uefi-vars.rst
+new file mode 100644
+index 000000000000..0151a26a0a6f
+--- /dev/null
++++ b/docs/devel/uefi-vars.rst
+@@ -0,0 +1,68 @@
++==============
++UEFI variables
++==============
++
++Guest UEFI variable management
++==============================
++
++The traditional approach for UEFI Variable storage in qemu guests is
++to work as close as possible to physical hardware.  That means
++providing pflash as storage and leaving the management of variables
++and flash to the guest.
++
++Secure boot support comes with the requirement that the UEFI variable
++storage must be protected against direct access by the OS.  All update
++requests must pass the sanity checks.  (Parts of) the firmware must
++run with a higher privilege level than the OS so this can be enforced
++by the firmware.  On x86 this has been implemented using System
++Management Mode (SMM) in qemu and kvm, which again is the same
++approach taken by physical hardware.  Only privileged code running in
++SMM mode is allowed to access flash storage.
++
++Communication with the firmware code running in SMM mode works by
++serializing the requests to a shared buffer, then trapping into SMM
++mode via SMI.  The SMM code processes the request, stores the reply in
++the same buffer and returns.
++
++Host UEFI variable service
++==========================
++
++Instead of running the privileged code inside the guest we can run it
++on the host.  The serialization protocol can be reused.  The
++communication with the host uses a virtual device, which essentially
++configures the shared buffer location and size, and traps to the host
++to process the requests.
++
++The ``uefi-vars`` device implements the UEFI virtual device.  It comes
++in ``uefi-vars-x86`` and ``uefi-vars-sysbus`` flavours.  The device
++reimplements the handlers needed, specifically
++``EfiSmmVariableProtocol`` and ``VarCheckPolicyLibMmiHandler``.  It
++also consumes events (``EfiEndOfDxeEventGroup``,
++``EfiEventReadyToBoot`` and ``EfiEventExitBootServices``).
++
++The advantage of the approach is that we do not need a special
++privilege level for the firmware to protect itself, i.e. it does not
++depend on SMM emulation on x64, which allows the removal of a bunch of
++complex code for SMM emulation from the linux kernel
++(CONFIG_KVM_SMM=n).  It also allows support for secure boot on arm
++without implementing secure world (el3) emulation in kvm.
++
++Of course there are also downsides.  The added device increases the
++attack surface of the host, and we are adding some code duplication
++because we have to reimplement some edk2 functionality in qemu.
++
++usage on x86_64
++---------------
++
++.. code::
++
++   qemu-system-x86_64 \
++      -device uefi-vars-x86,jsonfile=/path/to/vars.json
++
++usage on aarch64
++----------------
++
++.. code::
++
++   qemu-system-aarch64 -M virt \
++      -device uefi-vars-sysbus,jsonfile=/path/to/vars.json
+diff --git a/hw/uefi/LIMITATIONS.md b/hw/uefi/LIMITATIONS.md
+new file mode 100644
+index 000000000000..29308bd587aa
+--- /dev/null
++++ b/hw/uefi/LIMITATIONS.md
+@@ -0,0 +1,7 @@
++known issues and limitations
++----------------------------
++
++* works only on little endian hosts
++  - accessing structs in guest ram is done without endian conversion.
++* works only for 64-bit guests
++  - UINTN is mapped to uint64_t, for 32-bit guests that would be uint32_t
+-- 
+2.48.1
 
-does that work?
-
-(Meson has cc.get_supported_arguments() that we can use to
-filter out -Wfoo/-Wno-foo options that the compiler doesn't
-support, but since this is built via a makefile rather than
-by meson that's not conveniently accessible.)
-
--- PMM
 
