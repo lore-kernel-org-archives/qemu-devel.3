@@ -4,85 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCADC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 09:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86EC9C282D0
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 09:49:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpOsR-0002vi-Gd; Tue, 04 Mar 2025 04:47:51 -0500
+	id 1tpOtc-0003Ti-CW; Tue, 04 Mar 2025 04:49:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tpOsG-0002uK-OZ
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 04:47:44 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tpOta-0003SE-Dq
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 04:49:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tpOsC-0001v9-R5
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 04:47:39 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tpOtY-00025J-Fp
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 04:49:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741081654;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1741081739;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ggbFt0jU8eEzLwKzJTv1bmj6YmWWiTmIpJewmQ4uF1w=;
- b=bLRCzoU3lGFo/Nh85D0Wg68GV4w6FzT3yeOW1jSPyUglSANItcI2j8AFn32yy3G8rHB0ZM
- D9sALnw+nYQ+ifuzXbzbJ8cewbjX7ee/7W83xJS/0rwaawH6Ct1WSOoQjr8E4X445wSYyZ
- 6ZtZBPI/TjyAZDclEFCISBsagrsaPmY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-p3oi9K3qPWC113ffvoSSOA-1; Tue, 04 Mar 2025 04:47:32 -0500
-X-MC-Unique: p3oi9K3qPWC113ffvoSSOA-1
-X-Mimecast-MFC-AGG-ID: p3oi9K3qPWC113ffvoSSOA_1741081651
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4399a5afc72so24752775e9.3
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 01:47:32 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741081651; x=1741686451;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ggbFt0jU8eEzLwKzJTv1bmj6YmWWiTmIpJewmQ4uF1w=;
- b=Ep8d1tPcD97bjQWPCfTzlhcPTPFQz4wvlzlkWlbgpopYXzqCQNXqULQ7Ck7SDVGYhP
- FnhKOdnSBK6hTvRbx2wbJ8b/lgv56ulOyMjJFcEFdo5YyZlNeu/zozOIHaUCKn5oog0a
- ql4klFMD42lbYqrGs7FqpvIlv+LL3eluNoUJ4yjlJf9u6MY1hxmEAvYsSaG0tdl/BGUY
- cIp1LXBDKIqJLyYUPvr0gg7TR8QxOsXpfxWt3KoX7K1sf6qEIKywNajVOcWnktUN9mHU
- G06I0zFt36snyopSI8ubZsr/n7smgWGMj5PKOlWv6Uck79zbqJXQyRhaqfQnQBt3JNN0
- 7vHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUwL4UliXdexI4Sm2d1E9tvLVsKD1AqRx7M47+pxshzUK2mx/k7wICccJc0ZyzGn0w2ndvp6WxDdUYh@nongnu.org
-X-Gm-Message-State: AOJu0YwajzVfs3UVbQ7jC+2ncwHGWiqc1kFCYfF55ZZ0Jxr/mAbQua4x
- /FtXujMs4uHnLYTCBTxloXAK9fCxnQSdLRCv4KhhDXNaNN1pExasmdw1Ph3n2fE5gYQyoeN5bLy
- pJfvKzfWFNK8j96VvdY7S5tX0D6WWBPCbXtdl4243mvjrhz6xOVfvVUqPqZ2JzoxPlVLZqzQeVW
- 5ahtwKS/0TqhrTdQErqRRKHSanVzY=
-X-Gm-Gg: ASbGncuJ0Z1VG2NRo1KNvF33+THpcrdRGLDsBp4u9tFgEjGGgJt7I27f8hlMnux6dmz
- Ivx/bomIkrkl4Mm0xNlewViPsDtpntztmT6craiRK4kVCTsNS3rf1sqNvmn9G6ZvLN2RSoHnuqz
- c=
-X-Received: by 2002:a05:600c:1d0b:b0:43b:c5a3:2e1a with SMTP id
- 5b1f17b1804b1-43bc5a32fd2mr42537895e9.2.1741081651029; 
- Tue, 04 Mar 2025 01:47:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGFxxkKyTgcRZ1DjpIrsg7/vWRV7hcire72bF8DFWf8ovrS9iDUByrkM7I6ngXMasKosOy5NVPjieI7BCGoZTo=
-X-Received: by 2002:a05:600c:1d0b:b0:43b:c5a3:2e1a with SMTP id
- 5b1f17b1804b1-43bc5a32fd2mr42537605e9.2.1741081650560; Tue, 04 Mar 2025
- 01:47:30 -0800 (PST)
+ bh=6KGgSBcKw/ORrecChmPUqIwizr5y5vMFqUrqsyH1QYQ=;
+ b=gk6jw9QAug6E89pNOtJ5DjAdHxLNmwOpbdmFH6OrFJT60Z5i4MniY5mn5ctBYRrEn3sU/n
+ WHdKsEXpu8hHfXHy+N8v50HSPJU34WdrORv37CbQrNI0doPsTkFiFiqv55eRUFWjHxf6dw
+ 22MAPMrLlwIsQ5gYQ5Xup5pykBCUOL4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-Nns0qJp9OXyighTirEvyTw-1; Tue,
+ 04 Mar 2025 04:48:57 -0500
+X-MC-Unique: Nns0qJp9OXyighTirEvyTw-1
+X-Mimecast-MFC-AGG-ID: Nns0qJp9OXyighTirEvyTw_1741081736
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A24261800268; Tue,  4 Mar 2025 09:48:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.109])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB61B1800366; Tue,  4 Mar 2025 09:48:53 +0000 (UTC)
+Date: Tue, 4 Mar 2025 09:48:50 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH] scripts/checkpatch: Fix a typo
+Message-ID: <Z8bMgmWWtML2F9S9@redhat.com>
+References: <20250303172508.93234-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20250228121749.553184-1-ppandit@redhat.com>
- <87frjy2k8z.fsf@suse.de>
- <CAE8KmOwVoGJ2frVCY76W7UxSr90wAL2EMj5Nmtcrdc+BE1e9=g@mail.gmail.com>
- <Z8W4xVOLLAD1wXjC@x1.local>
-In-Reply-To: <Z8W4xVOLLAD1wXjC@x1.local>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 4 Mar 2025 15:17:14 +0530
-X-Gm-Features: AQ5f1JpNyVXerixjYjh6NQrZL22ohgvqFgluJm5N91qJBXI1dn9A73pexazwwkQ
-Message-ID: <CAE8KmOzkVpG5iUqwShWWMF4+96-cbNm1AU8b=s3187EyWXXT4g@mail.gmail.com>
-Subject: Re: [PATCH v7 0/5] Allow to enable multifd and postcopy migration
- together
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, berrange@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250303172508.93234-1-philmd@linaro.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -104,95 +84,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Mon, Mar 03, 2025 at 06:25:08PM +0100, Philippe Mathieu-Daudé wrote:
+> When running checkpatch.pl on a commit adding a file without
+> SPDX tag we get:
+> 
+>   Undefined subroutine &main::WARNING called at ./scripts/checkpatch.pl line 1694.
+> 
+> The WARNING level is reported by the WARN() method. Fix the typo.
+> 
+> Fixes: fa4d79c64da ("scripts: mandate that new files have SPDX-License-Identifier")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> Possible candidate to apply on /master as buildfix
+> ---
+>  scripts/checkpatch.pl | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-On Mon, 3 Mar 2025 at 19:42, Peter Xu <peterx@redhat.com> wrote:
-> On Mon, Mar 03, 2025 at 04:17:53PM +0530, Prasad Pandit wrote:
-> > * I think we (you, me, Peter) are all looking at things differently.
-> >     - In my view Patch-2 is the minimal change _required_  to enable
-> > multifd & postcopy. In your view we are _revamping_ channel discovery
-> > parts while _sneaking_ in a feature of enabling multifd & postcopy
-> > together.
-> >     - In my view Patch-5 in this series is an isolated change because
-> > it adds a new migration command to allow multifd threads sync from
-> > source side. But Peter thinks without that 'flush and sync' Patch-2 is
-> > incomplete, so we should merge it back there.
->
-> Just to mention, my suggestion does not conflict with splitting patch 2, as
-> long as you keep every patch complete on its own.
->
-> Patch 5 needs to be squashed to either patch 2 or a split patch out of
-> patch 2, because current patch 2 (or any possible way to split it into
-> smaller ones, then one of them which enables the feature) is buggy.
+Urgh, sorry about that, thanks for fixing my messup.
 
-* I'll try to segregate different parts, then we can discuss how to
-split them across patches:
+> 
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index 83b59fb4436..6ae9d7febee 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -1691,8 +1691,8 @@ sub process {
+>  				  "'SPDX-License-Identifer'");
+>  			} else {
+>  			    # Other files MAY have SPDX license if appropriate
+> -			    WARNING("Does new file '$expect_spdx_file' need " .
+> -				    "'SPDX-License-Identifer'?");
+> +			    WARN("Does new file '$expect_spdx_file' need " .
+> +				 "'SPDX-License-Identifer'?");
+>  			}
+>  		    }
+>  		    $expect_spdx = 1;
+> -- 
+> 2.47.1
+> 
 
-Terminology:
-    _requires_  => is without which migration shall not work at all.
-    _essential_ => is without which there may be issues.
-
-1. Enable Multifd and Postcopy together
-    - It _requires_ removal of the Multifd capability check in
-migration/options.c
-    - It _requires_ identification of the CH_POSTCOPY connection when it arrives
-        - so enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY } is defined
-        - To identify channels, related changes are made to the
-channel discovery part (if .. else conditionals) in
-migration_ioc_process_incoming() function.
-        - These changes help to establish all channel connections.
-After that, the migration proceeds as usual until it's time to start
-the Postcopy phase.
-    - When time comes to start Postcopy phase, we shutdown multifd channels.
-        - it _requires_ calling multifd_send_shutdown()
-        - It _requires_ moving
-file_cleanup_outgoing/socket_cleanup_outgoing calls to
-migration_cleanup() function.
-    - When Postcopy phase starts, we don't want ram_save_target
-_page() function to call ram_save_multifd_page() function, because
-migrate_multifd() is still true.
-        - It _requires_ adding the !migration_in_postcopy() checks.
-
-* Above changes are minimal _required_ to enable multifd and postcopy
-together, while also ensuring that migration continues to work when
-those options are not enabled together. With these changes, guest
-migration across two machines works without any observed failures.
-
-2. The multifd_ram_flush_and_sync() call/command and the
-assert(!migration_in_postcopy()) call in multifd_recv_thread()
-    - These calls help to ensure that no multifd data is left behind
-when the Postcopy phase starts.
-    - And that multifd_recv threads shall not be active when the
-Postcopy is running.
-    - They protect the guests from potential state corruption.
-
-* It is up to us to decide whether (2) is _required_ OR _essential_
-for the feature. Individual opinions can vary here.
-
-3. Revamp of the channel discovery parts by moving those bits to
-connection.c or other places.
-    - This entails moving the channel discovery parts from
-migration_ioc_process_incoming() function to somewhere else because it
-makes more sense to move it there and maybe it reduces complexity and
-makes the sources easier to understand.*
-
-* It is up to us to decide whether (3) is _required_  OR  _essential_
-for the feature. Individual opinions can vary here.
-
-* IMHO (1) is _required_,  (2) is _essential_,  and (3) is neither
-_required_ nor _essential_ for the - Enable multifd and postcopy
-together - feature. (3) is a completely unrelated change to this
-feature.
-
-Since it is an individual opinion, we all can think differently here
-and that is perfectly fine. Once we have some consensus, we can decide
-how to split or merge patches and move forward.
-
-Hope it helps. Thank you.
----
-  - Prasad
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
