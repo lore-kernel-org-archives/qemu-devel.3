@@ -4,99 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5235C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 21:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B9AC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpaA8-0004Jv-Vb; Tue, 04 Mar 2025 16:50:53 -0500
+	id 1tpaN5-0007eB-GI; Tue, 04 Mar 2025 17:04:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaA5-0004Jf-M9
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 16:50:49 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tpaN2-0007dn-EO
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:04:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaA4-0004lA-0F
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 16:50:49 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaA0-00000000LUA-1eUA; Tue, 04 Mar 2025 22:50:44 +0100
-Message-ID: <bb4682c0-d485-4465-96cf-ff5acf8c0180@maciej.szmigiero.name>
-Date: Tue, 4 Mar 2025 22:50:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 31/36] vfio/migration: Add x-migration-multifd-transfer
- VFIO property
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tpaMz-0008It-HR
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:04:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741125847;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zyWuUT9sVnwLvRJzvPYhS3UM/SkW/bbK0rne4vfaS+c=;
+ b=d84/jcNDbxgyIIBMRocK+L1M9XrMlXw/8HsFLUansAsZObPVql/5oRFH47d8inFGAwwsEE
+ w6xamJSiwsinbRJ9k00Ki+iSst9A79Cdj5tezFfd++mrA8LbjXOB/sXkhz3GQxptzZbdl6
+ 2e7yAodve2tW3OjDpz5QprCBHJ9R8e0=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-517-ybwp0jPVNg2gBEmWi4wxSA-1; Tue, 04 Mar 2025 17:03:50 -0500
+X-MC-Unique: ybwp0jPVNg2gBEmWi4wxSA-1
+X-Mimecast-MFC-AGG-ID: ybwp0jPVNg2gBEmWi4wxSA_1741125830
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6e89808749eso143156356d6.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:03:50 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741125830; x=1741730630;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zyWuUT9sVnwLvRJzvPYhS3UM/SkW/bbK0rne4vfaS+c=;
+ b=AYtlydb6FJqxHfTBvVnlPTo4bEI+OFTAnmL1GDGDa0fZGuCR1CjEsxF/QUVt8SX3K2
+ a1z0el767HxqIFKApxpGbU2DqczuO8gT4rv0BljQQ23lrAGLa377PvIFxzHcosKeCjSb
+ QSG4yHIGOzWq44ClZt/UQ5uY+iBLwwRB9GJNH+VDPPpIpVtUICloWUiG2cMISEg7y4Av
+ uhRCX3YUeY/FX0qmf1YqVbkVJyUd3TRQKG7wfyQ5iIBsr49C+nvdUc8Mwkk2Lpv4/EGu
+ /xw8frjpr6/GL7LXsnE05t73JMCOgkO9ZdIeMgaDZplNEl/1KXk6rD9IsAQJ9O+lwFvx
+ MxLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrxSANsJNJvWfFt+v33xDav2S3hkg+aQ3/Ehp4PHQSIRlrd1MrPueVm+M1c0MSj0U6eTMEDY4cbE+W@nongnu.org
+X-Gm-Message-State: AOJu0Yxrw2qlyYnTbWWFowTQgc3P4SPAPxBU5ENCGyExMtpMFpYk1Sre
+ 3JyLh+qLJ/DTjOJG6gCLUDzUXmJavzJ3youbsY/7fhe0HszLauyNe7kkfB2V3ldjdr5ceaKdShL
+ O1n4I4HKRyLu/EjAmTEzyZXkfBWT+lTh5Tsg7KkaGygxcAvqDLgO1
+X-Gm-Gg: ASbGncsmHsL1yNRF0ktQ+swh2bssC0GlAE/L6H5mDyooX6Yv01UX74emgCFVb06q4xG
+ LhSHNc47O7pfb3B9KxDphQreYLfZk7Ygj9mRbJipRxrlo1usRhlxVdMAoNz6M5f+6ssX+vYCkV0
+ SUHK2lkhWbsmPMONROf3uSKUeRlBtFhtNmBVkS6mTWOVuibtaePynA+x4/W26NuRZs8Eeu5Jvld
+ LownaXtUdGCNH2KhaxMF6+NYvxZhL8mXRp+uf0DcfHA/MRW8mLCN5PUkOWzHXROFG9AZOLHVYYd
+ iAx4rv8=
+X-Received: by 2002:ad4:5cc4:0:b0:6e6:61a5:aa4c with SMTP id
+ 6a1803df08f44-6e8e6dd1937mr15762776d6.31.1741125829816; 
+ Tue, 04 Mar 2025 14:03:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGvwuJNI902YM/EgJMH+ACk5C6U9Un4XS38BQGBBcPTzL+lwPWcKvCKACyE3m20yhQY0pFQqg==
+X-Received: by 2002:ad4:5cc4:0:b0:6e6:61a5:aa4c with SMTP id
+ 6a1803df08f44-6e8e6dd1937mr15762236d6.31.1741125829429; 
+ Tue, 04 Mar 2025 14:03:49 -0800 (PST)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e89766176dsm71223666d6.66.2025.03.04.14.03.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Mar 2025 14:03:48 -0800 (PST)
+Date: Tue, 4 Mar 2025 17:03:46 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 17/36] migration: Add
+ save_live_complete_precopy_thread handler
+Message-ID: <Z8d4wiV6C3jiBsMS@x1.local>
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
- <8f38087567dfc898fb0f1688be0689dd1dacfa22.1739994627.git.maciej.szmigiero@oracle.com>
- <f462d899-7cba-4673-b8bf-f6a3b25d25b3@nvidia.com>
- <0e982175-efab-4dce-b183-3ce53f17c522@maciej.szmigiero.name>
- <64ef5268-a951-4a03-9728-e6daacf7d56f@nvidia.com>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <64ef5268-a951-4a03-9728-e6daacf7d56f@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <910a9d0950b609943e414ec557bebee85a4804a5.1739994627.git.maciej.szmigiero@oracle.com>
+ <Z79EyapCxc2HMHPQ@x1.local>
+ <bf254e83-d7fb-481b-929b-189a2436c21c@maciej.szmigiero.name>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <bf254e83-d7fb-481b-929b-189a2436c21c@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,84 +115,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4.03.2025 12:29, Avihai Horon wrote:
+On Tue, Mar 04, 2025 at 10:50:29PM +0100, Maciej S. Szmigiero wrote:
+> On 26.02.2025 17:43, Peter Xu wrote:
+> > On Wed, Feb 19, 2025 at 09:33:59PM +0100, Maciej S. Szmigiero wrote:
+> > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > 
+> > > This SaveVMHandler helps device provide its own asynchronous transmission
+> > > of the remaining data at the end of a precopy phase via multifd channels,
+> > > in parallel with the transfer done by save_live_complete_precopy handlers.
+> > > 
+> > > These threads are launched only when multifd device state transfer is
+> > > supported.
+> > > 
+> > > Management of these threads in done in the multifd migration code,
+> > > wrapping them in the generic thread pool.
+> > > 
+> > > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> > > ---
+> > >   include/migration/misc.h         | 17 +++++++
+> > >   include/migration/register.h     | 19 +++++++
+> > >   include/qemu/typedefs.h          |  3 ++
+> > >   migration/multifd-device-state.c | 85 ++++++++++++++++++++++++++++++++
+> > >   migration/savevm.c               | 35 ++++++++++++-
+> > >   5 files changed, 158 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/include/migration/misc.h b/include/migration/misc.h
+> > > index 273ebfca6256..8fd36eba1da7 100644
+> > > --- a/include/migration/misc.h
+> > > +++ b/include/migration/misc.h
+> > > @@ -119,8 +119,25 @@ bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
+> > >                          Error **errp);
+> > >   /* migration/multifd-device-state.c */
+> > > +typedef struct SaveLiveCompletePrecopyThreadData {
+> > > +    SaveLiveCompletePrecopyThreadHandler hdlr;
+> > > +    char *idstr;
+> > > +    uint32_t instance_id;
+> > > +    void *handler_opaque;
+> > > +} SaveLiveCompletePrecopyThreadData;
+> > > +
+> > >   bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
+> > >                                   char *data, size_t len);
+> > >   bool multifd_device_state_supported(void);
+> > > +void
+> > > +multifd_spawn_device_state_save_thread(SaveLiveCompletePrecopyThreadHandler hdlr,
+> > > +                                       char *idstr, uint32_t instance_id,
+> > > +                                       void *opaque);
+> > > +
+> > > +bool multifd_device_state_save_thread_should_exit(void);
+> > > +
+> > > +void multifd_abort_device_state_save_threads(void);
+> > > +bool multifd_join_device_state_save_threads(void);
+> > > +
+> > >   #endif
+> > > diff --git a/include/migration/register.h b/include/migration/register.h
+> > > index 58891aa54b76..c041ce32f2fc 100644
+> > > --- a/include/migration/register.h
+> > > +++ b/include/migration/register.h
+> > > @@ -105,6 +105,25 @@ typedef struct SaveVMHandlers {
+> > >        */
+> > >       int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
+> > > +    /**
+> > > +     * @save_live_complete_precopy_thread (invoked in a separate thread)
+> > > +     *
+> > > +     * Called at the end of a precopy phase from a separate worker thread
+> > > +     * in configurations where multifd device state transfer is supported
+> > > +     * in order to perform asynchronous transmission of the remaining data in
+> > > +     * parallel with @save_live_complete_precopy handlers.
+> > > +     * When postcopy is enabled, devices that support postcopy will skip this
+> > > +     * step.
+> > > +     *
+> > > +     * @d: a #SaveLiveCompletePrecopyThreadData containing parameters that the
+> > > +     * handler may need, including this device section idstr and instance_id,
+> > > +     * and opaque data pointer passed to register_savevm_live().
+> > > +     * @errp: pointer to Error*, to store an error if it happens.
+> > > +     *
+> > > +     * Returns true to indicate success and false for errors.
+> > > +     */
+> > > +    SaveLiveCompletePrecopyThreadHandler save_live_complete_precopy_thread;
+> > > +
+> > >       /* This runs both outside and inside the BQL.  */
+> > >       /**
+> > > diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+> > > index fd23ff7771b1..42ed4e6be150 100644
+> > > --- a/include/qemu/typedefs.h
+> > > +++ b/include/qemu/typedefs.h
+> > > @@ -108,6 +108,7 @@ typedef struct QString QString;
+> > >   typedef struct RAMBlock RAMBlock;
+> > >   typedef struct Range Range;
+> > >   typedef struct ReservedRegion ReservedRegion;
+> > > +typedef struct SaveLiveCompletePrecopyThreadData SaveLiveCompletePrecopyThreadData;
+> > >   typedef struct SHPCDevice SHPCDevice;
+> > >   typedef struct SSIBus SSIBus;
+> > >   typedef struct TCGCPUOps TCGCPUOps;
+> > > @@ -133,5 +134,7 @@ typedef struct IRQState *qemu_irq;
+> > >   typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
+> > >   typedef bool (*MigrationLoadThread)(void *opaque, bool *should_quit,
+> > >                                       Error **errp);
+> > > +typedef bool (*SaveLiveCompletePrecopyThreadHandler)(SaveLiveCompletePrecopyThreadData *d,
+> > > +                                                     Error **errp);
+> > >   #endif /* QEMU_TYPEDEFS_H */
+> > > diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
+> > > index 5de3cf27d6e8..63f021fb8dad 100644
+> > > --- a/migration/multifd-device-state.c
+> > > +++ b/migration/multifd-device-state.c
+> > > @@ -8,7 +8,10 @@
+> > >    */
+> > >   #include "qemu/osdep.h"
+> > > +#include "qapi/error.h"
+> > >   #include "qemu/lockable.h"
+> > > +#include "block/thread-pool.h"
+> > > +#include "migration.h"
+> > >   #include "migration/misc.h"
+> > >   #include "multifd.h"
+> > >   #include "options.h"
+> > > @@ -17,6 +20,9 @@ static struct {
+> > >       QemuMutex queue_job_mutex;
+> > >       MultiFDSendData *send_data;
+> > > +
+> > > +    ThreadPool *threads;
+> > > +    bool threads_abort;
+> > >   } *multifd_send_device_state;
+> > >   void multifd_device_state_send_setup(void)
+> > > @@ -27,10 +33,14 @@ void multifd_device_state_send_setup(void)
+> > >       qemu_mutex_init(&multifd_send_device_state->queue_job_mutex);
+> > >       multifd_send_device_state->send_data = multifd_send_data_alloc();
+> > > +
+> > > +    multifd_send_device_state->threads = thread_pool_new();
+> > > +    multifd_send_device_state->threads_abort = false;
+> > >   }
+> > >   void multifd_device_state_send_cleanup(void)
+> > >   {
+> > > +    g_clear_pointer(&multifd_send_device_state->threads, thread_pool_free);
+> > >       g_clear_pointer(&multifd_send_device_state->send_data,
+> > >                       multifd_send_data_free);
+> > > @@ -115,3 +125,78 @@ bool multifd_device_state_supported(void)
+> > >       return migrate_multifd() && !migrate_mapped_ram() &&
+> > >           migrate_multifd_compression() == MULTIFD_COMPRESSION_NONE;
+> > >   }
+> > > +
+> > > +static void multifd_device_state_save_thread_data_free(void *opaque)
+> > > +{
+> > > +    SaveLiveCompletePrecopyThreadData *data = opaque;
+> > > +
+> > > +    g_clear_pointer(&data->idstr, g_free);
+> > > +    g_free(data);
+> > > +}
+> > > +
+> > > +static int multifd_device_state_save_thread(void *opaque)
+> > > +{
+> > > +    SaveLiveCompletePrecopyThreadData *data = opaque;
+> > > +    g_autoptr(Error) local_err = NULL;
+> > > +
+> > > +    if (!data->hdlr(data, &local_err)) {
+> > > +        MigrationState *s = migrate_get_current();
+> > > +
+> > > +        assert(local_err);
+> > > +
+> > > +        /*
+> > > +         * In case of multiple save threads failing which thread error
+> > > +         * return we end setting is purely arbitrary.
+> > > +         */
+> > > +        migrate_set_error(s, local_err);
+> > 
+> > Where did you kick off all the threads when one hit error?  I wonder if
+> > migrate_set_error() should just set quit flag for everything, but for this
+> > series it might be easier to use multifd_abort_device_state_save_threads().
 > 
-> On 04/03/2025 0:17, Maciej S. Szmigiero wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> On 2.03.2025 15:48, Avihai Horon wrote:
->>>
->>> On 19/02/2025 22:34, Maciej S. Szmigiero wrote:
->>>> External email: Use caution opening links or attachments
->>>>
->>>>
->>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>
->>>> This property allows configuring at runtime whether to transfer the
->>>
->>> IIUC, in this patch it's not configurable at runtime, so let's drop "at runtime".
->>
->> Dropped this expression from this patch description.
->>
->>>> particular device state via multifd channels when live migrating that
->>>> device.
->>>>
->>>> It defaults to AUTO, which means that VFIO device state transfer via
->>>> multifd channels is attempted in configurations that otherwise support it.
->>>>
->>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>>> ---
->>>>   hw/vfio/migration-multifd.c   | 17 ++++++++++++++++-
->>>>   hw/vfio/pci.c                 |  3 +++
->>>>   include/hw/vfio/vfio-common.h |  2 ++
->>>>   3 files changed, 21 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
->>>> index 0cfa9d31732a..18a5ff964a37 100644
->>>> --- a/hw/vfio/migration-multifd.c
->>>> +++ b/hw/vfio/migration-multifd.c
->>>> @@ -460,11 +460,26 @@ bool vfio_multifd_transfer_supported(void)
->>>>
->>>>   bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev)
->>>>   {
->>>> -    return false;
->>>> +    VFIOMigration *migration = vbasedev->migration;
->>>> +
->>>> +    return migration->multifd_transfer;
->>>>   }
->>>>
->>>>   bool vfio_multifd_transfer_setup(VFIODevice *vbasedev, Error **errp)
->>>>   {
->>>> +    VFIOMigration *migration = vbasedev->migration;
->>>> +
->>>> +    /*
->>>> +     * Make a copy of this setting at the start in case it is changed
->>>> +     * mid-migration.
->>>> +     */
->>>> +    if (vbasedev->migration_multifd_transfer == ON_OFF_AUTO_AUTO) {
->>>> +        migration->multifd_transfer = vfio_multifd_transfer_supported();
->>>> +    } else {
->>>> +        migration->multifd_transfer =
->>>> +            vbasedev->migration_multifd_transfer == ON_OFF_AUTO_ON;
->>>> +    }
->>>
->>> Making a copy of this value is only relevant for the next patch where it's turned mutable, so let's move this code to patch #32.
->>
->> But we still need to handle the "AUTO" condition so it would need
->> very similar code just to get reworked into the above in the next
->> patch.
->> I think that's just not worth code churn between patches.
-> 
-> Ah, I understand.
-> In that case, we can move only the comment "Make a copy of this setting ..." to patch #32.
+> I've now added call to multifd_abort_device_state_save_threads() if a migration
+> error is already set to avoid needlessly waiting for the remaining threads to
+> do all of their work.
 
-All right, comment moved.
+With that, feel free to take:
 
-> Thanks.
-> 
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Thanks,
-Maciej
+-- 
+Peter Xu
 
 
