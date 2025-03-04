@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F856C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 16:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82DF1C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 16:16:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpUol-0003HK-GY; Tue, 04 Mar 2025 11:08:27 -0500
+	id 1tpUvP-0005UH-K0; Tue, 04 Mar 2025 11:15:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tpUoS-00038v-QK
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 11:08:14 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1tpUvK-0005U2-Gq
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 11:15:15 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tpUoO-0000GF-M4
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 11:08:07 -0500
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524A088P015969
- for <qemu-devel@nongnu.org>; Tue, 4 Mar 2025 16:08:00 GMT
+ id 1tpUvG-0001a3-Ej
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 11:15:14 -0500
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5249rdn1006166
+ for <qemu-devel@nongnu.org>; Tue, 4 Mar 2025 16:15:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- dT/OKDUb8BEdF3KZi7hnLN5ziaHbIdc0H7Y2B4qlni4=; b=hx2OAYVtCrxpK8zG
- 98Xr82osg/v8w+/vJgMItWndxgZ5cDHHn7IU3ELH+suXj/AJ4KwsKmJuRhkFaEqd
- N7wG8IQZkXnkCf3W45KmTaQwmj4qasIocEmCHa7AlAChoxPq6og0mIOSQWp4hZEU
- cFXWAtTJwQwp/NeUmh3jbgfdJ9+AmtaQnUGMSGYEJV9vLzW4MY0+QcpVA+4OXQ3a
- /vBAThmvIhAqY+WTpTK6+vH1LUf0AfCfHdGOvymtQ74U0kjm9QyuenZPKzwnfw0C
- LjJj1tnTSrgpHpRFw4yncyhVwMY0wXD0nRHLkLq+SkuZ2XlIThkHEhCiaQ4dNJTY
- qz/3fQ==
+ //+PSdaJNeEnFisNk8tLPsymsCA9raZcSKexI8UKtQ0=; b=D3lxjGHPqwH6B+2x
+ 2pgNz2qe0Xi5nqWlzqgLTrtGp5YUULGF/tif6BzEF9qKugHq4Pb9a5H+CI7txJ6c
+ pp/je/Hxd82jU/HV8krMeDbX6g/ZRwM53SfOYmCV0dtHQpji9Xcbj70bK7eG3v29
+ MYr5oltA3q4EREIG+/Rnl8UKN1l8/iKWJjqx8w9fmLfWFWQ69WefF0hXYKekTu7K
+ ogrBWmF4RS+btPamRCFqOG5lUKQcw7Oo8DZ+9UdGdV2Vf7/7u2IflOhDzce5LEEJ
+ Y2UiEGQrQknJB2Sd7KOrKgo+qA/I3/ign6sf4J8B7IGpQ241P4DzlT/lY8gXD1Dz
+ BocWDA==
 Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
  [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6tje5p-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6tjdvm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 16:07:59 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 16:15:07 +0000 (GMT)
 Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6e8c68dae82so51504436d6.1
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 08:07:59 -0800 (PST)
+ 6a1803df08f44-6e89808749eso136878566d6.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 08:15:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741104478; x=1741709278;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1741104907; x=1741709707;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dT/OKDUb8BEdF3KZi7hnLN5ziaHbIdc0H7Y2B4qlni4=;
- b=kygaNHpslHHpgOAAINcoV4XaxG5cRGme8b8r1yM2IycveLj2SHbau8njRRiF07RwrT
- rGLllZ8SetOrip3QYya2A4TYjPb+sOAio4pYgEiwmcA7ON5joWX1sWDW/n9LYxQ/BPtD
- 66rJMe9mm5DtUrhm+tjclvddJdNLfDyE1W9OyLYsrY3IsINheR97ADQ8OZ5G4nNKSoR3
- bRts+jR74SXRkeGo5XR/jbco0VpSynR2y0OQluFDiuCClamV84WnkGci7HeO0vUKOTVl
- qUoz0ZkJdxaC3HiTqeaWUt/Eo8zBiEAC7qTAfsEUuiDDTGJvHtXB2I46YmMAMdyF+/7v
- YR4A==
+ bh=//+PSdaJNeEnFisNk8tLPsymsCA9raZcSKexI8UKtQ0=;
+ b=H5HHH7+Vig5Nh7W//Ll3bkg+vfnOmhvGS/JdDA31Z3MTnT/HPv0HpB1xPJfwOm40L1
+ fwW1aawf2CzK0UmXEkbTW++rrS13SAnTitfgD2wbMx/vFHbusYTOf0rzVrbbpyTRJEyA
+ dWEkWTxyrTvcL52/+4yHvZ17mvM2/2EjDbHnHIh5YmJStICNLMINRxPsarLOYE1XyKIT
+ iVlJ7gqqJ9QJovwNKzi3QvRCsdi/QDqf5B6R/OteFAoUWoiMFFxHE/fLcDpRDyXvWH7w
+ J3aN8No7O0XOm7XHfaDr7y6LKyKNRC9lbMe3/bbYyW6Q4UU4zjq2OHa9ttMP/jvUrEPz
+ HMWg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW4AN3tGGSequf979nmvgRgHFqPC5ceASWZPGklmxOMdTbsQCiW5QeWKLWqZa6Ocj+TSQ0SEfpFpoZd@nongnu.org
-X-Gm-Message-State: AOJu0Yx9cyC0ZfQfKkp8mbTgpQOoWhJSJHDs893T8vsfAZlZ/c4thMCF
- WpBu3r7EksC/oxUcnRQdxcQDokJs3eJ25Vd/Jzz+MRfQvaVwbwMouTrMENjKs/HYCwzvtTc8zLS
- mBl3IxMptSJCSYvW0eH0NkunHHyNrydlIdXeYypC1xrJmf3lJqqrsBQ==
-X-Gm-Gg: ASbGncuG1muJze8Yhkw1mjnnfak8d2Yxi5xzyT3AzT1IdAhxrFMZn7kYp8Ov0uWLaj1
- gRjWD4XJhc2+GpW4UmOJPArniY585qDiph6MdCJx1eiWwSTyw159XBxQy0QyvUSAVuyH3Cn91jV
- POSXOp0HiOnKjz+DNxzP4DHOCalqne77i/UtJtpgmYE5Fc5xdJu2XefpNNHnaes26XxWhR4byiH
- 5T4rWwnZPv7agSbMNXpjoW55KwRZ8stJAeiGe2QnyxKrCEPaiIKA67niyGUTdn4OsawZPOV0VOc
- 9+pxQyZYhKBSA9oewYo1GbZaKYLSd8FpQ+OMu4Yw9rWcB+rpbSykoTW2UanH/NwUTiwdefGCmXD
- /PLdXb02Qpqra2/lS
-X-Received: by 2002:a05:6214:20aa:b0:6e8:8b11:b6cd with SMTP id
- 6a1803df08f44-6e8a0d95eaamr272133616d6.35.1741104478518; 
- Tue, 04 Mar 2025 08:07:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGr7NqH7kZPBX30+e5W62nu+1DQG447qJaW8Osy7DYui7H9FLK+knsoasPurZv7AM2ss8Fo8w==
-X-Received: by 2002:a05:6214:20aa:b0:6e8:8b11:b6cd with SMTP id
- 6a1803df08f44-6e8a0d95eaamr272132676d6.35.1741104477494; 
- Tue, 04 Mar 2025 08:07:57 -0800 (PST)
+ AJvYcCVqBqhK9xhY6lza2FxBdQFgyqjjIwGofvZEZN+eOCI3iVOWRrgg93rqbhgCOQ9x+fA5j9s0eS6QVRNW@nongnu.org
+X-Gm-Message-State: AOJu0YzdQkIdbnlhMFWv/frbUBuolgeRQqSRPSe9JHg4PV/Q9VV3PKkT
+ epXfMHgnJ3vGFW/GRK9GLalbSGDtrzCgXCH67ZXBk2UOsPQHh2iazxLR3MuZqjE4564LiQUNAnM
+ l5jXGVzErItaXSXvklYhaKxwugoIcNsWp6hnNxbqj1higKOtfBEuaVQ==
+X-Gm-Gg: ASbGncvX3x68JzzWTEr9GakhoqX+Goa54q003n6yNVAeqrHtFVyMGliAKKVNbwGcfc6
+ fbcNCR2190Jz8lL4bjjb3kEwxB7CNEpK/zH4mDd8iCDA6NFjoZytRC+L41x0zz9Y4MDAGJVPhU+
+ IGQ/ufJ5dapibcWVhdtKTrI+kpU8WnKeovykHz+P0ZQ4jlEfabCvvjy73WO1WJHGjQTdfFQL91s
+ 1BSHtp3PqZjNHHR/NAXmNqbrtrQsxygwaldmy3dXMCAZlxo5Liy+A2mvNutAH00zQ9LQfqyrYcI
+ Lf07ul05GSnBu522MX/gYqzUOJkLiEWvGeRkUKByT1HaHwfL84yF+C8keIElx0Ooty27lT+um/z
+ DWbVVLAJVyDizfd8e
+X-Received: by 2002:a05:6214:226b:b0:6e6:61f1:457f with SMTP id
+ 6a1803df08f44-6e8a0d00641mr290942366d6.18.1741104906987; 
+ Tue, 04 Mar 2025 08:15:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFT18/9hakWc0L5Vw5fa4scLLbnHDCMrs0h8h3fGNSRAunHv1K5iB698Ay/V5capDUNs+Y3ew==
+X-Received: by 2002:a05:6214:226b:b0:6e6:61f1:457f with SMTP id
+ 6a1803df08f44-6e8a0d00641mr290941846d6.18.1741104906572; 
+ Tue, 04 Mar 2025 08:15:06 -0800 (PST)
 Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
  [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e8976da260sm67932026d6.106.2025.03.04.08.07.56
+ 6a1803df08f44-6e8976347acsm68078636d6.4.2025.03.04.08.15.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 08:07:57 -0800 (PST)
-Message-ID: <afaf3629-2ac6-42e0-ad60-91033c676bc7@oss.qualcomm.com>
-Date: Tue, 4 Mar 2025 10:07:55 -0600
+ Tue, 04 Mar 2025 08:15:06 -0800 (PST)
+Message-ID: <c58840a3-fe99-43f4-8221-410e416914c7@oss.qualcomm.com>
+Date: Tue, 4 Mar 2025 10:15:04 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 Subject: Re: [PATCH 8/8] tests/functional: Add a hexagon minivm test
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -91,30 +92,29 @@ References: <20250301172045.1295412-1-brian.cain@oss.qualcomm.com>
  <20250301172045.1295412-9-brian.cain@oss.qualcomm.com>
  <38afa09a-6b3f-4f4f-a9a3-78bab25f0e3a@linaro.org>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
 In-Reply-To: <38afa09a-6b3f-4f4f-a9a3-78bab25f0e3a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=PMb1+eqC c=1 sm=1 tr=0 ts=67c7255f cx=c_pps
+X-Authority-Analysis: v=2.4 cv=HZbuTjE8 c=1 sm=1 tr=0 ts=67c7270b cx=c_pps
  a=oc9J++0uMp73DTRD5QyR2A==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
  a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=NEAV23lmAAAA:8 a=qC_FGOx9AAAA:8
  a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
  a=qxR4naJY7gb3rGwDWEMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
  a=iYH6xdkBrDN1Jqds4HTS:22 a=fsdK_YakeE02zTmptMdW:22 a=TjNXssC_j7lpFel5tvFf:22
  a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: uDmQbGa0Q0zXkAeHfN3ibsBvbKCPSIdM
-X-Proofpoint-GUID: uDmQbGa0Q0zXkAeHfN3ibsBvbKCPSIdM
+X-Proofpoint-GUID: dGj3GiTc0ozyqWP29C4AgBvOrgpfRmX2
+X-Proofpoint-ORIG-GUID: dGj3GiTc0ozyqWP29C4AgBvOrgpfRmX2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-04_07,2025-03-03_04,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxlogscore=999
- phishscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
- mlxscore=0 adultscore=0 spamscore=0 suspectscore=0 impostorscore=0
- clxscore=1015 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503040131
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ lowpriorityscore=0
+ adultscore=0 mlxscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=999 classifier=spam authscore=0 adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2502100000 definitions=main-2503040131
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -316,8 +316,7 @@ still under review, I've omitted that from these initial series.
 How about we revise the minivm tests to emit some debug output and we 
 can also use that kind of thing to verify correctness?  But would it 
 suffice to land the test design as-is and follow up after semihosting 
-lands?  Or would you prefer to see semihosting be included here before 
-this test is enabled?
+lands?  Or would you prefer to see semihosting be included
 
 >> +
 >> +if __name__ == '__main__':
