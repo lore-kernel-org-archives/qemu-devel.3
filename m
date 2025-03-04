@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46151C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68AE4C282D0
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpah3-0005PS-BU; Tue, 04 Mar 2025 17:24:53 -0500
+	id 1tpaiP-0006nm-Pn; Tue, 04 Mar 2025 17:26:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpagx-0005LM-GD
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:48 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1tpah2-0005PL-ES
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:52 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpagv-0006Tb-9D
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:47 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-abf615d5f31so622722966b.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:44 -0800 (PST)
+ id 1tpah0-0006Vu-AP
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:52 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5dee07e51aaso11482476a12.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741127083; x=1741731883; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741127088; x=1741731888; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Onp89pSroQtMObXGq9VTrbTAFH+9BfAPDxoO68vbwOU=;
- b=zsN/zYzm/xTyGUT5QEsRcbhx/5NCsXvuZXhvlrPBpn0pD7lWKdcuWi+BBgC5FYTJEG
- 3UabGvVaB5zFh6/PuPYDvqxDXxpqtX23Kqqp6yQ7yehszXUKxE7TkIm3+mcrsIzyR5tE
- E1id52tjeyvT8EaxnEYzrmlPnIzQoZ/49ZnLmLnL5VjQUZRsgCdaQs1Oei87FcqJi64T
- NccJhKCDyvbE/HN1ZE/UqHL+nHrLX2IwJJ4LKqEbX4ljZLnQnYudzdbSdTuZxxx/bKVs
- DR77eV+ihMGP1AMJeMt1vlpOwb4ZaOiQGti7CGzKiZzdhi3rDjs1kAIeq/5wp4T9trSU
- M2qw==
+ bh=g9yH45YV1KCpKu1ZOSaE/nQIrSLBn5v2U2clJ5yvvVg=;
+ b=ULLKoIRzcNgiJp8IEqlVPn/vrTJSEfecY9pAKeP0eEDGh+c2ndkR7qUK5v7vp8K1eb
+ +LPmfPSobez0G3SbkUlvM7B30sswjqlwuWn6QmOJP3BpEht6j0CpJS1I9F+/tqqdQn4O
+ grrZ8MhoHVc3d3JmW8GuJrRKVOlwE4G7xq+yUtr6uLgkt+g46CRw3ZWhES05tiRwTid/
+ VrZvWRpsSiDTEhAoeeZCCgEpRamdA7G9tH4UeyGufqJG4E7ASYJmzwBxRM6o5syhPRjj
+ vpRFuyl6CuwnFWPA+QFWXm8W8rClqIXr5ZT6IwyjcTDUyVNQMEsricCoc6qMgwpa9aqc
+ M33w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741127083; x=1741731883;
+ d=1e100.net; s=20230601; t=1741127088; x=1741731888;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Onp89pSroQtMObXGq9VTrbTAFH+9BfAPDxoO68vbwOU=;
- b=KrSY4GLjUCLBdy1eEDU2jGwtswqeO6UtsCNQ93cDJyOWJWpINr+/2ES+kSvz8YnmNE
- FB8EMi2HisFxXvfCqtI2D4XIpupidqjbRPjVyAnJb5w+UEG/CF/LzCATz3ZL4nOWZiSI
- RgA6XtXTnucGmPqaTb+Zmf7l7K93Dac2pO1BKDFEwkbag76NNeq2L85fac8bvWOhsgUP
- +WTAyeIUd0I/RFYhtApbjb3hNQoKAqkoH4sx3gOnjHxrvkTArrwoxePBBStjHnGipr97
- ReKR9RzLQfkPTSYBUSy3xsvetj5Zh/WI2fG15L665u1aYUcf8hiplX0FSTPuxIIBPR9Q
- vERA==
-X-Gm-Message-State: AOJu0YxGNKGUEq1evja78uoA7OyThBTgXmKca+88R5fO9ST7CONW5ZEq
- x8GINV5z61maxvn+e89ZT3fXDAuZEAmJ7VR86PE8SfxAv4hqK4pvcHnSmogjicY=
-X-Gm-Gg: ASbGncv/lWoV9DrL3yFgSUs5aKonLw+pAqvz+Cl1kkGZjknZIFigml5mk9ulXTEqNS+
- Fg7qyaTtnW6ZZ1N9vLZsHJN/wbSWULF3BRNr4uiTG7h/lBSuYVvQc3xHFUEm38K+3L4Smbx/N3I
- ViIgpadCGX9xzu60fu7XRWGmsNO+ffNKUIsZVoATRrKg4NVBIX6G5hsHWhYmBVzCwfhV+BKna1+
- Hsp+sKcUufGxXRTpGvIzNqEq8k5Ms6snDcbMPlGSvX0PnsugY5oMsMsavUcXUuYkaVd5TyFGxnU
- LOZVaABnq8Pli9ZakY1B52V2IrtfWzSxy44MGoyQMD/5McA=
-X-Google-Smtp-Source: AGHT+IFgc+Hyu8uqFyojDJgkb9CqycIFloG9vwRl0TkOsweIUpLR0PtM7/YubMdKtiq0mS/UddWPqg==
-X-Received: by 2002:a17:907:2d12:b0:abf:5aea:a584 with SMTP id
- a640c23a62f3a-ac20dade8dbmr83852866b.38.1741127083223; 
- Tue, 04 Mar 2025 14:24:43 -0800 (PST)
+ bh=g9yH45YV1KCpKu1ZOSaE/nQIrSLBn5v2U2clJ5yvvVg=;
+ b=dYKzvr6uyVgtGWL3vujbIQTrIjc+sVIOOu5RdwDowlBTvmR1pb1Frf5jAn7mfXHlLr
+ uJ1pEhPJ4jm2WUYmB8ytZek7Ud1YcdEFvFCUYTdrL9lmcaCXFtqP0bkb2zVyBNGx0kJu
+ TpNSY1lOquJb3+gRCSF6TY0Sw4dTgBnlPFAuzeXjrEnqB/HXE2Pz7q5ThLBLDjrU1hex
+ JgGg9+u2K6GwLXk04DEQDiAS2bwvQeLXxLTKosK6dudz4ZZxeFwa7ijm7SOFRO5Jld8t
+ 5JaHLWNhTjoOWXy70BgoLppAQE1BYICqlfVw/l5CQVxPJw8oq9SN1W6U8ygVHiI6sN6W
+ 0dAw==
+X-Gm-Message-State: AOJu0YzzRTiasIbayRKXM26/muDhVr09qTv1bUi1QzD+83lXUocJQQqN
+ SXvttuKIbou3wb8EYVuOAyKmwZFzoK3lMfXJZUvBwNbUEyImQ6uVtqZ1REC8lq0=
+X-Gm-Gg: ASbGncv+HreKYhr3sbTsQo7a6I/xQk4SSFMpwYCuyP+8BAB+zwCpHUFpE8+JE3HREcH
+ 1Xq506FM9t7LMdg8BYdjPdpzJJ9NBIqP0eMuIK25G0m9Laz5Qr++iHq66u/Fb+nhj+NZUOpYJAq
+ 5DsYa5gGshHuw36C6GDcEbrwa95zxwH+rf57sWyClKIk7siGPUMndcmT6RdPgQ9/PAddagLjDzS
+ wQ/mcCS39nMrAmHRHJvTyNSn3aIIG9KI7MbmcH4IKeNYQH+Do/DdZ0YgAEXSsufHj0NOM6Cvc8Q
+ HmpV/VmK7f/zsqVkjsLfa6OUwgu1eZK9eoOjcRzjf1Uf1jo=
+X-Google-Smtp-Source: AGHT+IHfK1wp/l86i7JC/HiWl9IP+umiIE/xWOvQp8Qdjg+npnU2ItuiZhAPvpEOgc7Mk7cRjHTTwQ==
+X-Received: by 2002:a17:907:7f29:b0:abf:7a26:c485 with SMTP id
+ a640c23a62f3a-ac20e1dce23mr79596566b.50.1741127088452; 
+ Tue, 04 Mar 2025 14:24:48 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac1e7fa6246sm252666366b.167.2025.03.04.14.24.41
+ a640c23a62f3a-abf0c6ee654sm1017650566b.118.2025.03.04.14.24.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 14:24:41 -0800 (PST)
+ Tue, 04 Mar 2025 14:24:45 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 29E675FD17;
+ by draig.lan (Postfix) with ESMTP id 413395FD22;
  Tue,  4 Mar 2025 22:24:40 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -82,17 +82,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 08/32] plugins: add explicit dependency in functional tests
-Date: Tue,  4 Mar 2025 22:24:15 +0000
-Message-Id: <20250304222439.2035603-9-alex.bennee@linaro.org>
+Subject: [PATCH v2 09/32] tests/functional: Introduce the dso_suffix() helper
+Date: Tue,  4 Mar 2025 22:24:16 +0000
+Message-Id: <20250304222439.2035603-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250304222439.2035603-1-alex.bennee@linaro.org>
 References: <20250304222439.2035603-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,73 +115,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-./tests/functional/test_aarch64_tcg_plugins.py needs to have plugin
-libinsn built. However, it's not listed as a dependency, so meson can't
-know it needs to be built.
+Introduce a helper to get the default shared library
+suffix used on the host.
 
-Thus, we keep track of all plugins, and add them as an explicit
-dependency.
-
-Fixes: 4c134d07b9e ("tests: add a new set of tests to exercise plugins")
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250220080215.49165-2-philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20250226140343.3907080-7-alex.bennee@linaro.org>
+Message-Id: <20250220080215.49165-3-philmd@linaro.org>
+[AJB: dropped whitespace cmd.py damage]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- meson.build                   | 1 +
- contrib/plugins/meson.build   | 2 ++
- tests/functional/meson.build  | 2 +-
- tests/tcg/plugins/meson.build | 2 ++
- 4 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 0a2c61d2bf..8d0abe7f12 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3662,6 +3662,7 @@ qtest_module_ss = ss.source_set()
+---
+v2
+  - use simple if ladder for test
+---
+ tests/functional/qemu_test/__init__.py |  2 +-
+ tests/functional/qemu_test/config.py   | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
+index 5c972843a6..45f7befa37 100644
+--- a/tests/functional/qemu_test/__init__.py
++++ b/tests/functional/qemu_test/__init__.py
+@@ -7,7 +7,7 @@
  
- modules = {}
- target_modules = {}
-+plugin_modules = []
- hw_arch = {}
- target_arch = {}
- target_system_arch = {}
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index 484b9a808c..fa8a426c8b 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -26,3 +26,5 @@ if t.length() > 0
- else
-   run_target('contrib-plugins', command: find_program('true'))
- endif
+ 
+ from .asset import Asset
+-from .config import BUILD_DIR
++from .config import BUILD_DIR, dso_suffix
+ from .cmd import is_readable_executable_file, \
+     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
+     exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
+diff --git a/tests/functional/qemu_test/config.py b/tests/functional/qemu_test/config.py
+index edd75b7fd0..6d4c9c3ce1 100644
+--- a/tests/functional/qemu_test/config.py
++++ b/tests/functional/qemu_test/config.py
+@@ -13,6 +13,7 @@
+ 
+ import os
+ from pathlib import Path
++import platform
+ 
+ 
+ def _source_dir():
+@@ -34,3 +35,14 @@ def _build_dir():
+     raise Exception("Cannot identify build dir, set QEMU_BUILD_ROOT")
+ 
+ BUILD_DIR = _build_dir()
 +
-+plugin_modules += t
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 4b492135e0..008d72aed8 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -380,7 +380,7 @@ foreach speed : ['quick', 'thorough']
-       # 'run_target' logic below & in Makefile.include
-       test('func-' + testname,
-            python,
--           depends: [test_deps, test_emulator, emulator_modules],
-+           depends: [test_deps, test_emulator, emulator_modules, plugin_modules],
-            env: test_env,
-            args: [testpath],
-            protocol: 'tap',
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index 87a17d67bd..c8cb0626a6 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -19,3 +19,5 @@ if t.length() > 0
- else
-   run_target('test-plugins', command: find_program('true'))
- endif
++def dso_suffix():
++    '''Return the dynamic libraries suffix for the current platform'''
 +
-+plugin_modules += t
++    if platform.system() == "Darwin":
++        return "dylib"
++
++    if platform.system() == "Windows":
++        return "dll"
++
++    return "so"
 -- 
 2.39.5
 
