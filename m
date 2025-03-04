@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B98C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5202AC282D3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:26:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpaiJ-0006K5-Ax; Tue, 04 Mar 2025 17:26:11 -0500
+	id 1tpaiP-0006nj-QM; Tue, 04 Mar 2025 17:26:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpagz-0005Mk-6N
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:49 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1tpah3-0005Q7-Tq
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:25:07 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpagw-0006Tw-AQ
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:48 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5e56b229d60so442625a12.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:45 -0800 (PST)
+ id 1tpah1-0006X5-Ij
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:53 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-abf518748cbso663495466b.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741127084; x=1741731884; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jB70xwESzZMcF2byQH3dMmxVnsR0wVMNkKLR27tW5lE=;
- b=sWZSevqqojNOCiZ8Zfho0izJRy1g7+CkbHAGTS7OEJWRTUmRNZjbyL1+3vgKmNphBd
- 20xTXjBGmpXzBIrgIE8FM9+7NjMvMctXj4qHvfQITwrdtazrAY10aQBlXVKWYxGM92eh
- V/zs/17Wdi4Rcq4cmZaUSElaZgw6+1IxGtyyA/wB/6CcYh2lepuVnDKOSh79cqvquTBT
- Rpmv6Uii5B8NjXi+NwRDsjp4QjzYHNorfSp6JgGHgMzQ+18JFjG8vwWDrzPGjRcyx61R
- NhsKmzhea5btiU3AT/oWUf1VyX5zvWBKnGgz0K1UHuLWiR1hfCLri1vqpxFgvH8akDvr
- XgJA==
+ d=linaro.org; s=google; t=1741127090; x=1741731890; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5/Y4yehusRukFayx+a1eFqwCyDGI+iEwXMcbyZW6EPw=;
+ b=FdorH+aX7GYFGAvnrpiJFFdMmUljgRlmL25MdzCgQghUy6/oxOCCCrCkzuA1S67uU6
+ 7e8uaWa31QLIkGGY5+VGuHT5A87kdn2+UwvvZN3xxEKcQIjTMPunFWclMcc0V0S5Bn71
+ DpNec8gjTLFrZR1ptDMbjfescdZXYkhvRdUr/EPES6saNVVaYhC1JgP3LIS5B/MZvBx/
+ 6nk5lsXvcVJ79o/UtHFrW7/8JSo+19NMeSwN73DBf5mocqPhqO5vAYgGO7PsGG8+EfdL
+ 47UYDLMOC7XfFWjKnMt8TbJFgOkkaENF+Rw2pEYJKF5x6SEQ1vRNHgHbwUR381mbr1Mg
+ Qkrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741127084; x=1741731884;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jB70xwESzZMcF2byQH3dMmxVnsR0wVMNkKLR27tW5lE=;
- b=UNIsMtl21BoViefhBL+VwZ3VlGbA5UCtIQhzN4a0Ni5G8nIfqISMQ6HeZhevpfurZ6
- N9W5BgwuzO9QDJOT/ML9GAjZADtrE6fgZILqBV8Lc8jN6w9+UwIucpiroSO2LhGy3ssw
- 0XJpG43Aez1CQpznkPbHwARIxomjb2x1jeqU8RVqk31Hbtl2i5amcUpcw813mz4+ufGt
- 9O2lmsKptSSYM7qHUMXiXLMPsganEqWEEZFHuujQARyGDaejxoyf1QJPMqWlnXWrlX15
- 17XL+w29MWjgNR5c3RM1C/HMU1w1S2WEhVhuu6CyAPvM3OdGGqXKZVVTc55t84Wgvx6r
- jObw==
-X-Gm-Message-State: AOJu0Yx3NkViPoVmJNLdukTczrQAJtYEXxBy77P9iz8t9KBJo7KLlL8G
- QgVNCATs1YJkLL4bvFeNH9DsVBDjKke/+gOD1l//H8tA/E9lpt/yHz0GGXARyT4=
-X-Gm-Gg: ASbGnctGlpxIRa8WjbhPHp3tWemzwbDv520kbLBOyBHzAbA8NgLU6WYuUKwnx9cGagf
- MOM67u1krcyxSrJR2wKu88Qq+Tr4rG/wrwUVT3q0o1qfbrsgi7rVb7pU6fCk42nXg57dXTzsWbE
- 7iJEWPUiSLTrQn6VaBqB/+Q3zRb61JHJT4vzLHm/Sp+n9oPkXsNYVgR2FD9/sDpWXfqRxgpxM0T
- 5ZiswaceRdAAUncEPdhoKAOFlwYWUkAgS75cOXmNQOhFUtQttydzhBjuHTims5F+NMQQs/tCbnc
- 0GmTMgWsYLH++ubV7UmBsCGoX/qSM8yEkhGZzLAjfiOx1c4=
-X-Google-Smtp-Source: AGHT+IHUW2AM3YcL2E1/BkSH0wBoF7iv5vkOX+M0DE69d0tf05QvZWc+8xc34fu30xcc3KPqZKDbyQ==
-X-Received: by 2002:a17:907:8689:b0:abf:7776:7e17 with SMTP id
- a640c23a62f3a-ac20ef7d0ddmr75997866b.19.1741127083909; 
- Tue, 04 Mar 2025 14:24:43 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741127090; x=1741731890;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5/Y4yehusRukFayx+a1eFqwCyDGI+iEwXMcbyZW6EPw=;
+ b=Pz8gjemIpmBFsKKVfELWI+DM8oF6FwveB46p3eo0zm74TSSW43eOjtKPskfKc9w9LS
+ ylEjUHl+dsnEcKXTdlVO0yhZoFS64UmqSYf44XTjch0ibQUVrj/vaWwZOuVrVj9JZBAX
+ oMPNrHgf46fd8z4Q2UnLQdQa1KJCvaHVuB2YhTFQu161IPyyZahI8FFTbCUv2rxXeCKh
+ F7pn4KdNpzcD1CMAiI27zM1hwrc1sOSAx1zQliNRpPt1XxI7SVWrNpk/L6Qqa9a8l1nZ
+ AB5/MhQ8kds2abbyQWQ8c4KoaBUicuxim51v58P9nKO2i2XD/dqCpoZMqmL79mGfqh11
+ mk1A==
+X-Gm-Message-State: AOJu0Yy1j5jyj84K2QipQHqm6HdKEV3EUtXZMP2iDoxX34tHfIMFcpbf
+ AUCpMtSXaliKi7XumnheOa3VnQTn53UO+cDkQfPWmgKrYZT4NMrYXDn/zARPvOI=
+X-Gm-Gg: ASbGncttSvzXBAQw25NRmM+Xx742Gbs8tNNyYOV1/7XPd3/8WLvKyIfiWRM+a/zqfCR
+ vxaiLTFpFFEc2wweO3MmpUZKYQTKdY5nyeicC5Bdnos8goHs6O9wZtzI9UoQhsjt/kEFzSDGEPl
+ k1+HHrbALAz9chDNexZIYHJxICOFuL0HgGu54N0bt+AOSd8SWU08UUg0GuQveg2F+pQBbiukO6l
+ ZUddlzU5ozANGS6iY62SvlQWXBRUK6M95mcpy7lV74ilZGeveWJ68P73Wtaov4U+ZBY2Oer/tWh
+ 7J5lLZS10n/JEL5k0u9VaDuJlsiESrKuJgW/BWLLH6WpNNw=
+X-Google-Smtp-Source: AGHT+IFJH+oXjZER0OdQDGOTUu5QcqUX4PtQepP1REbDTCTZvjiLLs/P1T9XoEMsQXjsSASgB0n4og==
+X-Received: by 2002:a17:907:940d:b0:ac1:e7a2:f5e8 with SMTP id
+ a640c23a62f3a-ac20da87bb6mr97751266b.35.1741127090017; 
+ Tue, 04 Mar 2025 14:24:50 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac1e77dff28sm254369066b.24.2025.03.04.14.24.40
+ a640c23a62f3a-ac1e46949aasm275752566b.145.2025.03.04.14.24.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 14:24:41 -0800 (PST)
+ Tue, 04 Mar 2025 14:24:45 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 664F65F932;
+ by draig.lan (Postfix) with ESMTP id D40AF5FCD8;
  Tue,  4 Mar 2025 22:24:39 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,17 +81,19 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 00/32] maintainer updates for 10.0 softfreeze (gpu/tcg
- tests, plugins, MAINTAINERS) pre-PR
-Date: Tue,  4 Mar 2025 22:24:07 +0000
-Message-Id: <20250304222439.2035603-1-alex.bennee@linaro.org>
+ Thomas Huth <thuth@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH v2 05/32] tests/functional: skip vulkan tests with nVidia
+Date: Tue,  4 Mar 2025 22:24:12 +0000
+Message-Id: <20250304222439.2035603-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250304222439.2035603-1-alex.bennee@linaro.org>
+References: <20250304222439.2035603-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -113,177 +116,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As we rapidly approach softfreeze (due March 11th) its time to collect
-together what I'm planning to merge for this release.
+While running the new GPU tests it was noted that the proprietary
+nVidia driver barfed when run under the sanitiser:
 
-Testing
+  2025-02-20 11:13:08,226: [11:13:07.782] Output 'headless' attempts
+  EOTF mode SDR and colorimetry mode default.
+  2025-02-20 11:13:08,227: [11:13:07.784] Output 'headless' using color
+  profile: stock sRGB color profile
 
-  - expand the aarch64 GPU tests
-  - bump libvirt-ci for vulkan-tools
-  - some fixes for clang compile of tcg
+  and that's the last thing it outputs.
 
-I've dropped the host-gpu patch in favour of just skipping the test in
-python when we detect nVidia drivers.
+  The sanitizer reports that when the framework sends the SIGTERM
+  because of the timeout we get a write to a NULL pointer (but
+  interesting not this time in an atexit callback):
 
-The clang fixes are part way to removing the skip we have in
-configure:
+  UndefinedBehaviorSanitizer:DEADLYSIGNAL
+  ==471863==ERROR: UndefinedBehaviorSanitizer: SEGV on unknown address
+  0x000000000000 (pc 0x7a18ceaafe80 bp 0x000000000000 sp 0x7ffe8e3ff6d0
+  T471863)
+  ==471863==The signal is caused by a WRITE memory access.
+  ==471863==Hint: address points to the zero page.
+      #0 0x7a18ceaafe80
+  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x16afe80)
+  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+      #1 0x7a18ce9e72c0
+  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15e72c0)
+  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+      #2 0x7a18ce9f11bb
+  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15f11bb)
+  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+      #3 0x7a18ce6dc9d1
+  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x12dc9d1)
+  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+      #4 0x7a18e7d15326 in vrend_renderer_create_fence
+  /usr/src/virglrenderer-1.0.0-1ubuntu2/obj-x86_64-linux-gnu/../src/vrend_renderer.c:10883:26
+      #5 0x55bfb6621871 in virtio_gpu_virgl_process_cmd
 
-      case $target_arch in
-        i386|x86_64)
-          if $target_cc --version | grep -qi "clang"; then
-            continue
-          fi
-          ;;
-      esac
+The #dri-devel channel confirmed:
 
-So that we can build tcg tests on the BSDs (at least for native
-guests) and widen the testing. The work is unfinished but anyone wants
-to tackle it just patch out the above bit in configure and try and
-build and run check-tcg.
+  <digetx> stsquad: nv driver is known to not work with venus, don't use
+      it for testing
 
-Plugins
+So lets skip running the test to avoid known failures.
 
-  - reduce the total number of compilation units
-  - I have added a gitlab script to track the total number of build units
+Message-Id: <20250226140343.3907080-9-alex.bennee@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Misc
+---
+v2
+  - implement block at the test level
+---
+ tests/functional/test_aarch64_virt_gpu.py | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-  - MAINTAINERS updates due to sanctions
-  - meson.build split debug change
-
-I should send out the pre-PR sometime next week, hopefully getting my
-10.0 PR submitted with time to spare ;-)
-
-The following still need review:
-
-  meson.build: default to -gsplit-dwarf for debug info
-  plugins/core: make a single build unit
-  gitlab: add a new build_unit job to track build size
-  tests/tcg: fix constraints in test-i386-adcox
-  tests/functional: update the aarch64_virg_gpu images
-  tests/functional: bail early if vkmark hangs
-  tests/functional: factor out common code in gpu test
-  tests/functional: move aarch64 GPU test into own file
-
-Alex.
-
-Alex Bennée (27):
-  tests/functional: move aarch64 GPU test into own file
-  tests/functional: factor out common code in gpu test
-  tests/functional: ensure we have a GPU device for tests
-  tests/functional: bail early if vkmark hangs
-  tests/functional: skip vulkan tests with nVidia
-  tests/functional: expand tests to cover virgl
-  tests/functional: update the aarch64_virg_gpu images
-  libvirt-ci: bump to latest for vulkan-tools
-  tests/vm: bump timeout for shutdown
-  tests/tcg: mark test-vma as a linux-only test
-  tests/tcg: add message to _Static_assert in test-avx
-  tests/tcg: fix constraints in test-i386-adcox
-  tests/tcg: enable -fwrapv for test-i386-bmi
-  gitlab: add a new build_unit job to track build size
-  plugins/api: use qemu_target_page_mask() to get value
-  plugins/loader: populate target_name with target_name()
-  include/qemu: plugin-memory.h doesn't need cpu-defs.h
-  plugins/api: clean-up the includes
-  plugins/plugin.h: include queue.h
-  plugins/loader: compile loader only once
-  plugins/api: split out binary path/start/end/entry code
-  plugins/api: split out the vaddr/hwaddr helpers
-  plugins/api: split out time control helpers
-  plugins/api: build only once
-  plugins/core: make a single build unit
-  MAINTAINERS: remove widely sanctioned entities
-  meson.build: default to -gsplit-dwarf for debug info
-
-Peter Maydell (1):
-  tests/tcg: Suppress compiler false-positive warning on sha1.c
-
-Philippe Mathieu-Daudé (2):
-  tests/functional: Introduce the dso_suffix() helper
-  tests/functional: Allow running TCG plugins tests on non-Linux/BSD
-    hosts
-
-Pierrick Bouvier (2):
-  plugins: add explicit dependency in functional tests
-  tests/functional: add boot error detection for RME tests
-
- MAINTAINERS                                   |   7 +-
- meson.build                                   |   8 +-
- include/qemu/plugin-memory.h                  |   1 -
- plugins/plugin.h                              |   7 +
- bsd-user/plugin-api.c                         |  15 ++
- linux-user/plugin-api.c                       |  15 ++
- plugins/api-system.c                          | 131 ++++++++++++++
- plugins/api-user.c                            |  57 ++++++
- plugins/api.c                                 | 171 +-----------------
- plugins/core.c                                |  10 +-
- plugins/loader.c                              |  15 +-
- plugins/system.c                              |  24 +++
- plugins/user.c                                |  19 ++
- tests/tcg/i386/test-avx.c                     |   2 +-
- tests/tcg/i386/test-i386-adcox.c              |   4 +-
- tests/tcg/multiarch/{ => linux}/test-vma.c    |   0
- common-user/plugin-api.c.inc                  |  43 +++++
- .gitlab-ci.d/check-units.py                   |  66 +++++++
- .gitlab-ci.d/cirrus/freebsd-14.vars           |   2 +-
- .gitlab-ci.d/cirrus/macos-14.vars             |   2 +-
- .gitlab-ci.d/static_checks.yml                |  22 +++
- bsd-user/meson.build                          |   1 +
- contrib/plugins/meson.build                   |   2 +
- linux-user/meson.build                        |   1 +
- meson_options.txt                             |   2 +
- plugins/meson.build                           |  11 +-
- .../ci/setup/ubuntu/ubuntu-2204-aarch64.yaml  |   1 +
- .../ci/setup/ubuntu/ubuntu-2204-s390x.yaml    |   1 +
- scripts/meson-buildoptions.sh                 |   2 +
- tests/docker/dockerfiles/alpine.docker        |   5 +-
- tests/docker/dockerfiles/centos9.docker       |   1 +
- .../dockerfiles/debian-amd64-cross.docker     |   3 +-
- .../dockerfiles/debian-arm64-cross.docker     |   3 +-
- .../dockerfiles/debian-armhf-cross.docker     |   3 +-
- .../dockerfiles/debian-i686-cross.docker      |   3 +-
- .../dockerfiles/debian-mips64el-cross.docker  |   3 +-
- .../dockerfiles/debian-mipsel-cross.docker    |   3 +-
- .../dockerfiles/debian-ppc64el-cross.docker   |   3 +-
- .../dockerfiles/debian-s390x-cross.docker     |   3 +-
- tests/docker/dockerfiles/debian.docker        |   3 +-
- .../dockerfiles/fedora-rust-nightly.docker    |   1 +
- .../dockerfiles/fedora-win64-cross.docker     |   1 +
- tests/docker/dockerfiles/fedora.docker        |   1 +
- tests/docker/dockerfiles/opensuse-leap.docker |   1 +
- tests/docker/dockerfiles/ubuntu2204.docker    |   1 +
- tests/functional/meson.build                  |   6 +-
- tests/functional/qemu_test/__init__.py        |   2 +-
- tests/functional/qemu_test/config.py          |  12 ++
- tests/functional/qemu_test/testcase.py        |  12 +-
- tests/functional/test_aarch64_rme_sbsaref.py  |   3 +-
- tests/functional/test_aarch64_rme_virt.py     |   3 +-
- tests/functional/test_aarch64_tcg_plugins.py  |   5 +-
- tests/functional/test_aarch64_virt.py         |  71 --------
- tests/functional/test_aarch64_virt_gpu.py     | 133 ++++++++++++++
- tests/lcitool/libvirt-ci                      |   2 +-
- tests/lcitool/projects/qemu.yml               |   1 +
- tests/lcitool/refresh                         |   2 +-
- tests/tcg/aarch64/Makefile.target             |   3 +-
- tests/tcg/arm/Makefile.target                 |   3 +-
- tests/tcg/i386/Makefile.target                |   2 +-
- tests/tcg/multiarch/Makefile.target           |   8 +
- tests/tcg/plugins/meson.build                 |   2 +
- tests/vm/basevm.py                            |   2 +-
- tests/vm/generated/freebsd.json               |   1 +
- 64 files changed, 650 insertions(+), 303 deletions(-)
- create mode 100644 bsd-user/plugin-api.c
- create mode 100644 linux-user/plugin-api.c
- create mode 100644 plugins/api-system.c
- create mode 100644 plugins/api-user.c
- create mode 100644 plugins/system.c
- create mode 100644 plugins/user.c
- rename tests/tcg/multiarch/{ => linux}/test-vma.c (100%)
- create mode 100644 common-user/plugin-api.c.inc
- create mode 100755 .gitlab-ci.d/check-units.py
- create mode 100755 tests/functional/test_aarch64_virt_gpu.py
-
+diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
+index 7d7749e243..55957dae0a 100755
+--- a/tests/functional/test_aarch64_virt_gpu.py
++++ b/tests/functional/test_aarch64_virt_gpu.py
+@@ -17,6 +17,9 @@
+ 
+ from qemu_test.linuxkernel import LinuxKernelTest
+ 
++from re import search
++from subprocess import check_output
++
+ class Aarch64VirtGPUMachine(LinuxKernelTest):
+ 
+     ASSET_VIRT_GPU_KERNEL = Asset(
+@@ -94,6 +97,11 @@ def test_aarch64_virt_with_vulkan_gpu(self):
+ 
+         self.require_device('virtio-gpu-gl-pci')
+ 
++        vk_info = check_output(["vulkaninfo", "--summary"], encoding="utf-8")
++
++        if search(r"driverID\s+=\s+DRIVER_ID_NVIDIA_PROPRIETARY", vk_info):
++            self.skipTest("Test skipped on NVIDIA proprietary driver")
++
+         self._launch_virt_gpu("virtio-gpu-gl-pci,hostmem=4G,blob=on,venus=on")
+         self._run_virt_weston_test("vkmark -b:duration=1.0",
+                                    "debug: stuck in fence wait with iter at")
 -- 
 2.39.5
 
