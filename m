@@ -4,67 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6908AC282C6
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 06:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86114C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 06:28:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpLgh-00028j-DQ; Tue, 04 Mar 2025 01:23:31 -0500
+	id 1tpLkb-00031z-40; Tue, 04 Mar 2025 01:27:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1tpLgG-00026s-OU
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 01:23:09 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1tpLgC-0000oP-14
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 01:23:02 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwCHFcg9nMZn4NpOBg--.13291S2;
- Tue, 04 Mar 2025 14:22:53 +0800 (CST)
-Received: from wangyuquan1236$phytium.com.cn ( [218.76.62.144] ) by
- ajax-webmail-mail (Coremail) ; Tue, 4 Mar 2025 14:22:48 +0800 (GMT+08:00)
-X-Originating-IP: [218.76.62.144]
-Date: Tue, 4 Mar 2025 14:22:48 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Yuquan Wang" <wangyuquan1236@phytium.com.cn>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: "Jonathan Cameron" <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] docs/cxl: Add serial number for persistent-memdev
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.1-cmXT6 build
- 20240812(cfb32469) Copyright (c) 2002-2025 www.mailtech.cn
- mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
-In-Reply-To: <20250221065509-mutt-send-email-mst@kernel.org>
-References: <20250217112039.138650-1-wangyuquan1236@phytium.com.cn>
- <20250220161213.000049a9@huawei.com>
- <20250221065509-mutt-send-email-mst@kernel.org>
-Content-Transfer-Encoding: base64
-X-CM-CTRLDATA: uYBmK2Zvb3Rlcl90eHQ9NDc2MTozODM=
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <SRS0=B2sr=VX=kaod.org=clg@ozlabs.org>)
+ id 1tpLk1-000301-Pa; Tue, 04 Mar 2025 01:26:57 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=B2sr=VX=kaod.org=clg@ozlabs.org>)
+ id 1tpLjy-0002cm-IE; Tue, 04 Mar 2025 01:26:57 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z6Qgm385qz4x8P;
+ Tue,  4 Mar 2025 17:26:44 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z6Qgj1GLmz4x2g;
+ Tue,  4 Mar 2025 17:26:40 +1100 (AEDT)
+Message-ID: <53a6cf7b-97d9-4dbf-acfe-5ae2c1717da2@kaod.org>
+Date: Tue, 4 Mar 2025 07:26:37 +0100
 MIME-Version: 1.0
-Message-ID: <17b91a9f.2847.1955fd23d78.Coremail.wangyuquan1236@phytium.com.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: AQAAfwBna4c6nMZnNtU4AA--.5119W
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAPAWfAxLQKb
-	gBMsw
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWfJr1UKrWDZw4rtr1xAw1DZFb_yoWkur43p3
- WfAa48Aw1UKw17G3yftr1xAryrG3yUWr47Jw1Iqr90y347Jrs0gFnxGrW7J3Wjga45Zr4D
- Kr1DZrs8tw1jywUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/6] hw/misc/aspeed_scu: Fix the revision ID cannot be
+ set in the SOC layer for AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20250303073547.1145080-1-jamin_lin@aspeedtech.com>
+ <20250303073547.1145080-3-jamin_lin@aspeedtech.com>
+ <e5d26865-2ee7-40a5-b79b-c63067d894ee@kaod.org>
+ <SI2PR06MB50415725A1F2CE3346FB0425FCC82@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI2PR06MB50415725A1F2CE3346FB0425FCC82@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=B2sr=VX=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,99 +115,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cj4gCj4gT24gVGh1LCBGZWIgMjAsIDIwMjUgYXQgMDQ6MTI6MTNQTSArMDAwMCwgSm9uYXRoYW4g
-Q2FtZXJvbiB3cm90ZToKPiA+IE9uIE1vbiwgMTcgRmViIDIwMjUgMTk6MjA6MzkgKzA4MDAKPiA+
-IFl1cXVhbiBXYW5nIDx3YW5neXVxdWFuMTIzNkBwaHl0aXVtLmNvbS5jbj4gd3JvdGU6Cj4gPiAK
-PiA+ID4gQWRkIHNlcmlhbCBudW1iZXIgcGFyYW1ldGVyIGluIHRoZSBjeGwgcGVyc2lzdGVudCBl
-eGFtcGxlcy4KPiA+ID4gCj4gPiA+IFNpZ25lZC1vZmYtYnk6IFl1cXVhbiBXYW5nIDx3YW5neXVx
-dWFuMTIzNkBwaHl0aXVtLmNvbS5jbj4KPiA+IExvb2tzIGdvb2QuICBJJ3ZlIHF1ZXVlZCBpdCB1
-cCBvbiBteSBnaXRsYWIgc3RhZ2luZyB0cmVlLCBidXQKPiA+IE1pY2hhZWwgaWYgeW91IHdhbnQg
-dG8gcGljayB0aGlzIG9uZSBkaXJlY3RseSB0aGF0J3MgZmluZSBhcyB3ZWxsLgo+IAo+IFNlZSBu
-byByZWFzb24gdG8sIEkgd2FzIG5vdCBldmVuIENDJ2QuCgpIaSwgTWljaGFlbAoKSSdtIHNvcnJ5
-LCB0aGlzIGlzIG15IGZhdWx0LiBJIHVzZWQgImdldF9tYWludGFpbmVyLnBsIiB0byBjaGVjayB0
-aGlzCnBhdGNoJ3MgbWFpbnRhaW5lcnMgYnV0IGl0IHNob3dzICJObyBtYWludGFpbmVycyBmb3Vu
-ZCwgcHJpbnRpbmcgcmVjZW50CmNvbnRyaWJ1dG9ycyIuIAoKWXVxdWFuCgo+IAo+ID4gSSBzaG91
-bGQgYmUgcHVzaGluZyBvdXQgbXkgZ2l0bGFiIHRyZWUgc2hvcnRseSAoYml0IG9mIG5ldHdvcmtp
-bmcKPiA+IGZ1biB0byBkZWFsIHdpdGgpLgo+ID4gCj4gPiA+IC0tLQo+ID4gPiAgZG9jcy9zeXN0
-ZW0vZGV2aWNlcy9jeGwucnN0IHwgMTggKysrKysrKysrLS0tLS0tLS0tCj4gPiA+ICAxIGZpbGUg
-Y2hhbmdlZCwgOSBpbnNlcnRpb25zKCspLCA5IGRlbGV0aW9ucygtKQo+ID4gPiAKPiA+ID4gZGlm
-ZiAtLWdpdCBhL2RvY3Mvc3lzdGVtL2RldmljZXMvY3hsLnJzdCBiL2RvY3Mvc3lzdGVtL2Rldmlj
-ZXMvY3hsLnJzdAo+ID4gPiBpbmRleCA4ODJiMDM2ZjVlLi5lMzA3Y2FmM2Y4IDEwMDY0NAo+ID4g
-PiAtLS0gYS9kb2NzL3N5c3RlbS9kZXZpY2VzL2N4bC5yc3QKPiA+ID4gKysrIGIvZG9jcy9zeXN0
-ZW0vZGV2aWNlcy9jeGwucnN0Cj4gPiA+IEBAIC0zMDgsNyArMzA4LDcgQEAgQSB2ZXJ5IHNpbXBs
-ZSBzZXR1cCB3aXRoIGp1c3Qgb25lIGRpcmVjdGx5IGF0dGFjaGVkIENYTCBUeXBlIDMgUGVyc2lz
-dGVudCBNZW1vcnkKPiA+ID4gICAgLW9iamVjdCBtZW1vcnktYmFja2VuZC1maWxlLGlkPWN4bC1s
-c2ExLHNoYXJlPW9uLG1lbS1wYXRoPS90bXAvbHNhLnJhdyxzaXplPTI1Nk0gXAo+ID4gPiAgICAt
-ZGV2aWNlIHB4Yi1jeGwsYnVzX25yPTEyLGJ1cz1wY2llLjAsaWQ9Y3hsLjEgXAo+ID4gPiAgICAt
-ZGV2aWNlIGN4bC1ycCxwb3J0PTAsYnVzPWN4bC4xLGlkPXJvb3RfcG9ydDEzLGNoYXNzaXM9MCxz
-bG90PTIgXAo+ID4gPiAtICAtZGV2aWNlIGN4bC10eXBlMyxidXM9cm9vdF9wb3J0MTMscGVyc2lz
-dGVudC1tZW1kZXY9Y3hsLW1lbTEsbHNhPWN4bC1sc2ExLGlkPWN4bC1wbWVtMCBcCj4gPiA+ICsg
-IC1kZXZpY2UgY3hsLXR5cGUzLGJ1cz1yb290X3BvcnQxMyxwZXJzaXN0ZW50LW1lbWRldj1jeGwt
-bWVtMSxsc2E9Y3hsLWxzYTEsaWQ9Y3hsLXBtZW0wLHNuPTB4MSBcCj4gPiA+ICAgIC1NIGN4bC1m
-bXcuMC50YXJnZXRzLjA9Y3hsLjEsY3hsLWZtdy4wLnNpemU9NEcKPiA+ID4gIAo+ID4gPiAgQSB2
-ZXJ5IHNpbXBsZSBzZXR1cCB3aXRoIGp1c3Qgb25lIGRpcmVjdGx5IGF0dGFjaGVkIENYTCBUeXBl
-IDMgVm9sYXRpbGUgTWVtb3J5IGRldmljZTo6Cj4gPiA+IEBAIC0zNDksMTMgKzM0OSwxMyBAQCB0
-aGUgQ1hMIFR5cGUzIGRldmljZSBkaXJlY3RseSBhdHRhY2hlZCAobm8gc3dpdGNoZXMpLjo6Cj4g
-PiA+ICAgIC1kZXZpY2UgcHhiLWN4bCxidXNfbnI9MTIsYnVzPXBjaWUuMCxpZD1jeGwuMSBcCj4g
-PiA+ICAgIC1kZXZpY2UgcHhiLWN4bCxidXNfbnI9MjIyLGJ1cz1wY2llLjAsaWQ9Y3hsLjIgXAo+
-ID4gPiAgICAtZGV2aWNlIGN4bC1ycCxwb3J0PTAsYnVzPWN4bC4xLGlkPXJvb3RfcG9ydDEzLGNo
-YXNzaXM9MCxzbG90PTIgXAo+ID4gPiAtICAtZGV2aWNlIGN4bC10eXBlMyxidXM9cm9vdF9wb3J0
-MTMscGVyc2lzdGVudC1tZW1kZXY9Y3hsLW1lbTEsbHNhPWN4bC1sc2ExLGlkPWN4bC1wbWVtMCBc
-Cj4gPiA+ICsgIC1kZXZpY2UgY3hsLXR5cGUzLGJ1cz1yb290X3BvcnQxMyxwZXJzaXN0ZW50LW1l
-bWRldj1jeGwtbWVtMSxsc2E9Y3hsLWxzYTEsaWQ9Y3hsLXBtZW0wLHNuPTB4MSBcCj4gPiA+ICAg
-IC1kZXZpY2UgY3hsLXJwLHBvcnQ9MSxidXM9Y3hsLjEsaWQ9cm9vdF9wb3J0MTQsY2hhc3Npcz0w
-LHNsb3Q9MyBcCj4gPiA+IC0gIC1kZXZpY2UgY3hsLXR5cGUzLGJ1cz1yb290X3BvcnQxNCxwZXJz
-aXN0ZW50LW1lbWRldj1jeGwtbWVtMixsc2E9Y3hsLWxzYTIsaWQ9Y3hsLXBtZW0xIFwKPiA+ID4g
-KyAgLWRldmljZSBjeGwtdHlwZTMsYnVzPXJvb3RfcG9ydDE0LHBlcnNpc3RlbnQtbWVtZGV2PWN4
-bC1tZW0yLGxzYT1jeGwtbHNhMixpZD1jeGwtcG1lbTEsc249MHgyIFwKPiA+ID4gICAgLWRldmlj
-ZSBjeGwtcnAscG9ydD0wLGJ1cz1jeGwuMixpZD1yb290X3BvcnQxNSxjaGFzc2lzPTAsc2xvdD01
-IFwKPiA+ID4gLSAgLWRldmljZSBjeGwtdHlwZTMsYnVzPXJvb3RfcG9ydDE1LHBlcnNpc3RlbnQt
-bWVtZGV2PWN4bC1tZW0zLGxzYT1jeGwtbHNhMyxpZD1jeGwtcG1lbTIgXAo+ID4gPiArICAtZGV2
-aWNlIGN4bC10eXBlMyxidXM9cm9vdF9wb3J0MTUscGVyc2lzdGVudC1tZW1kZXY9Y3hsLW1lbTMs
-bHNhPWN4bC1sc2EzLGlkPWN4bC1wbWVtMixzbj0weDMgXAo+ID4gPiAgICAtZGV2aWNlIGN4bC1y
-cCxwb3J0PTEsYnVzPWN4bC4yLGlkPXJvb3RfcG9ydDE2LGNoYXNzaXM9MCxzbG90PTYgXAo+ID4g
-PiAtICAtZGV2aWNlIGN4bC10eXBlMyxidXM9cm9vdF9wb3J0MTYscGVyc2lzdGVudC1tZW1kZXY9
-Y3hsLW1lbTQsbHNhPWN4bC1sc2E0LGlkPWN4bC1wbWVtMyBcCj4gPiA+ICsgIC1kZXZpY2UgY3hs
-LXR5cGUzLGJ1cz1yb290X3BvcnQxNixwZXJzaXN0ZW50LW1lbWRldj1jeGwtbWVtNCxsc2E9Y3hs
-LWxzYTQsaWQ9Y3hsLXBtZW0zLHNuPTB4NCBcCj4gPiA+ICAgIC1NIGN4bC1mbXcuMC50YXJnZXRz
-LjA9Y3hsLjEsY3hsLWZtdy4wLnRhcmdldHMuMT1jeGwuMixjeGwtZm13LjAuc2l6ZT00RyxjeGwt
-Zm13LjAuaW50ZXJsZWF2ZS1ncmFudWxhcml0eT04awo+ID4gPiAgCj4gPiA+ICBBbiBleGFtcGxl
-IG9mIDQgZGV2aWNlcyBiZWxvdyBhIHN3aXRjaCBzdWl0YWJsZSBmb3IgMSwgMiBvciA0IHdheSBp
-bnRlcmxlYXZlOjoKPiA+ID4gQEAgLTM3NSwxMyArMzc1LDEzIEBAIEFuIGV4YW1wbGUgb2YgNCBk
-ZXZpY2VzIGJlbG93IGEgc3dpdGNoIHN1aXRhYmxlIGZvciAxLCAyIG9yIDQgd2F5IGludGVybGVh
-dmU6Ogo+ID4gPiAgICAtZGV2aWNlIGN4bC1ycCxwb3J0PTEsYnVzPWN4bC4xLGlkPXJvb3RfcG9y
-dDEsY2hhc3Npcz0wLHNsb3Q9MSBcCj4gPiA+ICAgIC1kZXZpY2UgY3hsLXVwc3RyZWFtLGJ1cz1y
-b290X3BvcnQwLGlkPXVzMCBcCj4gPiA+ICAgIC1kZXZpY2UgY3hsLWRvd25zdHJlYW0scG9ydD0w
-LGJ1cz11czAsaWQ9c3dwb3J0MCxjaGFzc2lzPTAsc2xvdD00IFwKPiA+ID4gLSAgLWRldmljZSBj
-eGwtdHlwZTMsYnVzPXN3cG9ydDAscGVyc2lzdGVudC1tZW1kZXY9Y3hsLW1lbTAsbHNhPWN4bC1s
-c2EwLGlkPWN4bC1wbWVtMCBcCj4gPiA+ICsgIC1kZXZpY2UgY3hsLXR5cGUzLGJ1cz1zd3BvcnQw
-LHBlcnNpc3RlbnQtbWVtZGV2PWN4bC1tZW0wLGxzYT1jeGwtbHNhMCxpZD1jeGwtcG1lbTAsc249
-MHgxIFwKPiA+ID4gICAgLWRldmljZSBjeGwtZG93bnN0cmVhbSxwb3J0PTEsYnVzPXVzMCxpZD1z
-d3BvcnQxLGNoYXNzaXM9MCxzbG90PTUgXAo+ID4gPiAtICAtZGV2aWNlIGN4bC10eXBlMyxidXM9
-c3dwb3J0MSxwZXJzaXN0ZW50LW1lbWRldj1jeGwtbWVtMSxsc2E9Y3hsLWxzYTEsaWQ9Y3hsLXBt
-ZW0xIFwKPiA+ID4gKyAgLWRldmljZSBjeGwtdHlwZTMsYnVzPXN3cG9ydDEscGVyc2lzdGVudC1t
-ZW1kZXY9Y3hsLW1lbTEsbHNhPWN4bC1sc2ExLGlkPWN4bC1wbWVtMSxzbj0weDIgXAo+ID4gPiAg
-ICAtZGV2aWNlIGN4bC1kb3duc3RyZWFtLHBvcnQ9MixidXM9dXMwLGlkPXN3cG9ydDIsY2hhc3Np
-cz0wLHNsb3Q9NiBcCj4gPiA+IC0gIC1kZXZpY2UgY3hsLXR5cGUzLGJ1cz1zd3BvcnQyLHBlcnNp
-c3RlbnQtbWVtZGV2PWN4bC1tZW0yLGxzYT1jeGwtbHNhMixpZD1jeGwtcG1lbTIgXAo+ID4gPiAr
-ICAtZGV2aWNlIGN4bC10eXBlMyxidXM9c3dwb3J0MixwZXJzaXN0ZW50LW1lbWRldj1jeGwtbWVt
-Mixsc2E9Y3hsLWxzYTIsaWQ9Y3hsLXBtZW0yLHNuPTB4MyBcCj4gPiA+ICAgIC1kZXZpY2UgY3hs
-LWRvd25zdHJlYW0scG9ydD0zLGJ1cz11czAsaWQ9c3dwb3J0MyxjaGFzc2lzPTAsc2xvdD03IFwK
-PiA+ID4gLSAgLWRldmljZSBjeGwtdHlwZTMsYnVzPXN3cG9ydDMscGVyc2lzdGVudC1tZW1kZXY9
-Y3hsLW1lbTMsbHNhPWN4bC1sc2EzLGlkPWN4bC1wbWVtMyBcCj4gPiA+ICsgIC1kZXZpY2UgY3hs
-LXR5cGUzLGJ1cz1zd3BvcnQzLHBlcnNpc3RlbnQtbWVtZGV2PWN4bC1tZW0zLGxzYT1jeGwtbHNh
-MyxpZD1jeGwtcG1lbTMsc249MHg0IFwKPiA+ID4gICAgLU0gY3hsLWZtdy4wLnRhcmdldHMuMD1j
-eGwuMSxjeGwtZm13LjAuc2l6ZT00RyxjeGwtZm13LjAuaW50ZXJsZWF2ZS1ncmFudWxhcml0eT00
-awo+ID4gPiAgCj4gPiA+ICBEZXByZWNhdGlvbnMKDQoNCuS/oeaBr+WuieWFqOWjsOaYju+8muac
-rOmCruS7tuWMheWQq+S/oeaBr+W9kuWPkeS7tuS6uuaJgOWcqOe7hOe7h+aJgOaciSzlj5Hku7bk
-urrmiYDlnKjnu4Tnu4flr7nor6Xpgq7ku7bmi6XmnInmiYDmnInmnYPliKnjgILor7fmjqXmlLbo
-gIXms6jmhI/kv53lr4Ys5pyq57uP5Y+R5Lu25Lq65Lmm6Z2i6K645Y+vLOS4jeW+l+WQkeS7u+S9
-leesrOS4ieaWuee7hOe7h+WSjOS4quS6uumAj+mcsuacrOmCruS7tuaJgOWQq+S/oeaBr+OAgg0K
-SW5mb3JtYXRpb24gU2VjdXJpdHkgTm90aWNlOiBUaGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGlu
-IHRoaXMgbWFpbCBpcyBzb2xlbHkgcHJvcGVydHkgb2YgdGhlIHNlbmRlcidzIG9yZ2FuaXphdGlv
-bi5UaGlzIG1haWwgY29tbXVuaWNhdGlvbiBpcyBjb25maWRlbnRpYWwuUmVjaXBpZW50cyBuYW1l
-ZCBhYm92ZSBhcmUgb2JsaWdhdGVkIHRvIG1haW50YWluIHNlY3JlY3kgYW5kIGFyZSBub3QgcGVy
-bWl0dGVkIHRvIGRpc2Nsb3NlIHRoZSBjb250ZW50cyBvZiB0aGlzIGNvbW11bmljYXRpb24gdG8g
-b3RoZXJzLg==
+On 3/4/25 03:11, Jamin Lin wrote:
+> Hi Cedric,
+> 
+>> Subject: Re: [PATCH v4 2/6] hw/misc/aspeed_scu: Fix the revision ID cannot be
+>> set in the SOC layer for AST2700
+>>
+>> On 3/3/25 08:35, Jamin Lin wrote:
+>>> According to the design of the AST2600, it has a Silicon Revision ID
+>>> Register, specifically SCU004 and SCU014, to set the Revision ID for the
+>> AST2600.
+>>> For the AST2600 A3, SCU004 is set to 0x05030303 and SCU014 is set to
+>> 0x05030303.
+>>> In the "aspeed_ast2600_scu_reset" function, the hardcoded value
+>>> "AST2600_A3_SILICON_REV" is set in SCU004, and "s->silicon_rev" is set
+>>> in SCU014. The value of "s->silicon_rev" is set by the SOC layer via
+>>> the "silicon-rev" property.
+>>>
+>>> However, the design of the AST2700 is different. There are two SCU
+>> controllers:
+>>> SCU0 (CPU Die) and SCU1 (IO Die). In the AST2700, the firmware reads
+>>> the SCU Silicon Revision ID register (SCU0_000) and the SCUIO Silicon
+>>> Revision ID register (SCU1_000) and combines them into a 64-bit value.
+>>> The combined value of SCU0_000[23:16] and SCU1_000[23:16] represents
+>>> the silicon
+>>
+>> Why are you mentioning bitfield [23:16] of both registers ? I thought the silicon
+>> revision ID was 64-bit value.
+>>
+> Yes, the silicon revision ID was 64-bit value. I will update commit log as following. What do you think?
+
+Looks good to me.
+
+
+Thanks,
+
+C.
+
+
+> 
+> In the AST2700, the firmware reads the SCU Silicon Revision ID register
+> (SCU0_000) and the SCUIO Silicon Revision ID register (SCU1_000),
+> combining them into a single 64-bit value.
+> 
+> The upper 32 bits represent the SCUIO, while the lower 32 bits correspond to the
+> SCU. For example, the AST2700-A1 revision is represented as 0x0601010306010103.
+> SCUIO_000 occupies bits [63:32] with a value of 0x06010103 and SCU_000 occupies
+> bits [31:0] with a value of 0x06010103.
+> 
+> Thanks-Jamin
+> 
+>>> revision. For example, the AST2700-A1 revision is
+>>> "0x0601010306010103", where
+>>> SCU0_000 should be 06010103 and SCU1_000 should be 06010103.
+>>>
+>>> Reference:
+>>>
+>> https://github.com/AspeedTech-BMC/u-boot/blob/aspeed-master-v2023.10/a
+>>> rch/arm/mach-aspeed/ast2700/cpu-info.c
+>>>
+>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>> --->   hw/misc/aspeed_scu.c | 3 +--
+>>>    1 file changed, 1 insertion(+), 2 deletions(-)
+>>>
+>>> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c index
+>>> 50f74fbabd..545d004749 100644
+>>> --- a/hw/misc/aspeed_scu.c
+>>> +++ b/hw/misc/aspeed_scu.c
+>>> @@ -910,7 +910,6 @@ static const MemoryRegionOps
+>> aspeed_ast2700_scu_ops = {
+>>>    };
+>>>
+>>>    static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS]
+>> = {
+>>> -    [AST2700_SILICON_REV]           = AST2700_A0_SILICON_REV,
+>>>        [AST2700_HW_STRAP1]             = 0x00000800,
+>>>        [AST2700_HW_STRAP1_CLR]         = 0xFFF0FFF0,
+>>>        [AST2700_HW_STRAP1_LOCK]        = 0x00000FFF,
+>>> @@ -940,6 +939,7 @@ static void aspeed_ast2700_scu_reset(DeviceState
+>> *dev)
+>>>        AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(dev);
+>>>
+>>>        memcpy(s->regs, asc->resets, asc->nr_regs * 4);
+>>> +    s->regs[AST2700_SILICON_REV] = s->silicon_rev;
+>>>    }
+>>>
+>>>    static void aspeed_2700_scu_class_init(ObjectClass *klass, void
+>>> *data) @@ -1032,7 +1032,6 @@ static const MemoryRegionOps
+>> aspeed_ast2700_scuio_ops = {
+>>>    };
+>>>
+>>>    static const uint32_t
+>> ast2700_a0_resets_io[ASPEED_AST2700_SCU_NR_REGS] = {
+>>> -    [AST2700_SILICON_REV]               = 0x06000003,
+>>>        [AST2700_HW_STRAP1]                 = 0x00000504,
+>>>        [AST2700_HW_STRAP1_CLR]             = 0xFFF0FFF0,
+>>>        [AST2700_HW_STRAP1_LOCK]            = 0x00000FFF,
+> 
 
 
