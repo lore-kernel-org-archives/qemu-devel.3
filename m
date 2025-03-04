@@ -4,43 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17894C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 21:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D5EC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 21:51:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpZMb-00034K-If; Tue, 04 Mar 2025 15:59:41 -0500
+	id 1tpaA5-0004JI-DI; Tue, 04 Mar 2025 16:50:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tpZMV-00032q-Sy; Tue, 04 Mar 2025 15:59:36 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tpaA3-0004Ik-2R
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 16:50:47 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tpZMT-0005Kx-3F; Tue, 04 Mar 2025 15:59:35 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 666CC4E6014;
- Tue, 04 Mar 2025 21:59:28 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 2vG4Ajb8QqhL; Tue,  4 Mar 2025 21:59:26 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 87E364E6010; Tue, 04 Mar 2025 21:59:26 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH] docs/system/ppc/amigang.rst: Update for NVRAM emulation
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Message-Id: <20250304205926.87E364E6010@zero.eik.bme.hu>
-Date: Tue, 04 Mar 2025 21:59:26 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tpaA0-0004ha-CY
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 16:50:45 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tpa9v-00000000LUA-1ENh; Tue, 04 Mar 2025 22:50:39 +0100
+Message-ID: <5c140829-3b31-4b57-92ac-688bd59c4320@maciej.szmigiero.name>
+Date: Tue, 4 Mar 2025 22:50:39 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 28/36] vfio/migration: Multifd device state transfer
+ support - config loading support
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
+ <47be7bf2f46923e2a9d2b75b1d35c6b2915c20c8.1739994627.git.maciej.szmigiero@oracle.com>
+ <b9284c9a-149a-4965-a4fa-ec092e3fb7d0@nvidia.com>
+ <d1bb2200-1ccf-4e52-8d34-09d95f4863b4@maciej.szmigiero.name>
+ <6888be59-09f3-472c-b993-fad0630e416d@redhat.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <6888be59-09f3-472c-b993-fad0630e416d@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, PP_MIME_FAKE_ASCII_TEXT=0.234,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -56,53 +112,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add NVRAM and hint on how to make it persistent. Also update Linux
-boot section which should now boot automatically with the new NVRAM
-defaults so manual settings in menu may not be needed normally.
+On 4.03.2025 08:41, Cédric Le Goater wrote:
+>>>> @@ -728,6 +728,12 @@ static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
+>>>>           switch (data) {
+>>>>           case VFIO_MIG_FLAG_DEV_CONFIG_STATE:
+>>>>           {
+>>>> +            if (vfio_multifd_transfer_enabled(vbasedev)) {
+>>>> +                error_report("%s: got DEV_CONFIG_STATE but doing multifd transfer",
+>>>> +                             vbasedev->name);
+>>>
+>>> To make clearer, maybe change to:
+>>> "%s: got DEV_CONFIG_STATE in main migration channel but doing multifd transfer"
+>>
+>> That normally would be good idea, however we are already at 83 characters in this
+>> line here and will not fit that many more words to this string.
+> 
+> The 80 characters "rule" is not strict. A clear error report is
+> always good to have !
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
-Based-on: <cover.1740673173.git.balaton@eik.bme.hu>
+Changed the message to the suggested by splitting that string into two to avoid going
+above 100 characters per line.
 
- docs/system/ppc/amigang.rst | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+> Thanks,
+> 
+> C.
+> 
+> 
 
-diff --git a/docs/system/ppc/amigang.rst b/docs/system/ppc/amigang.rst
-index e2c9cb74b7..21bb14ed09 100644
---- a/docs/system/ppc/amigang.rst
-+++ b/docs/system/ppc/amigang.rst
-@@ -21,6 +21,7 @@ Emulated devices
-  * VIA VT82C686B south bridge
-  * PCI VGA compatible card (guests may need other card instead)
-  * PS/2 keyboard and mouse
-+ * 4 KiB NVRAM (use ``-drive if=mtd,format=raw,file=nvram.bin`` to keep contents persistent)
- 
- Firmware
- --------
-@@ -54,14 +55,14 @@ To boot the system run:
-                     -cdrom "A1 Linux Net Installer.iso" \
-                     -device ati-vga,model=rv100,romfile=VGABIOS-lgpl-latest.bin
- 
--From the firmware menu that appears select ``Boot sequence`` →
--``Amiga Multiboot Options`` and set ``Boot device 1`` to
--``Onboard VIA IDE CDROM``. Then hit escape until the main screen appears again,
--hit escape once more and from the exit menu that appears select either
--``Save settings and exit`` or ``Use settings for this session only``. It may
--take a long time loading the kernel into memory but eventually it boots and the
--installer becomes visible. The ``ati-vga`` RV100 emulation is not
--complete yet so only frame buffer works, DRM and 3D is not available.
-+If a firmware menu appears, select ``Boot sequence`` → ``Amiga Multiboot Options``
-+and set ``Boot device 1`` to ``Onboard VIA IDE CDROM``. Then hit escape until
-+the main screen appears again, hit escape once more and from the exit menu that
-+appears select either ``Save settings and exit`` or ``Use settings for this
-+session only``. It may take a long time loading the kernel into memory but
-+eventually it boots and the installer becomes visible. The ``ati-vga`` RV100
-+emulation is not complete yet so only frame buffer works, DRM and 3D is not
-+available.
- 
- Genesi/bPlan Pegasos II (``pegasos2``)
- ======================================
--- 
-2.30.9
+Thanks,
+Maciej
 
 
