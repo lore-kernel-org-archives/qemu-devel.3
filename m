@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85987C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 08:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81703C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 08:00:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpNCL-0000Q4-NL; Tue, 04 Mar 2025 03:00:21 -0500
+	id 1tpNCo-0000um-RQ; Tue, 04 Mar 2025 03:00:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tpNBm-0000Bn-G8
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 02:59:45 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tpNBh-0003IP-VU
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tpNBk-0000Au-37
  for qemu-devel@nongnu.org; Tue, 04 Mar 2025 02:59:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741075178; x=1772611178;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=fStzAgDO0dDP/vwo04uzV8D13FdB8wbm/NHcgdjt3ZQ=;
- b=gNyaAOjnwcTK8QKpsS2ZkE2Eut2TRdHhJD4DK5joliiL2+oycDq192kx
- kMNB9/n8h7bkrsnXJEZY91eIdwQd72gE0lgCwdUWgPzpqiY1USaMH0iAW
- bJFErzijDpg2WEWGGP0JFkE51nlDvKmQLDEPRykl7OdNUAibTCFPYiJXl
- 7CFG83cLnHvbf9xXn8zj2014JmRV0jzo+3V4d9gqp8hn9YcQ4gxKnQnty
- 3DSFbH1KXUhDn280oUCoF74bmxepFr5z9EdLwNr2f8oMlTklGi9k2gcpo
- oHjmpqhwJxdti0b7Jt+REtQzmmBk4TKs2hxP1L7Bj0l6xf+beSFIQVHau w==;
-X-CSE-ConnectionGUID: 4VApCfSxSDC5ARdRGs2g5g==
-X-CSE-MsgGUID: rsPv72FHQ46Jes89MfHCBQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11362"; a="41888634"
-X-IronPort-AV: E=Sophos;i="6.13,331,1732608000"; d="scan'208";a="41888634"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2025 23:59:34 -0800
-X-CSE-ConnectionGUID: L6ZQuwHCQYydl+Zxmm56sA==
-X-CSE-MsgGUID: kmL3LGcoQi+OvI0u7sXtwg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,331,1732608000"; d="scan'208";a="118087272"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2025 23:59:29 -0800
-Message-ID: <76da2b4a-2dc4-417c-91bc-ad29e08c8ba0@intel.com>
-Date: Tue, 4 Mar 2025 15:59:27 +0800
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tpNBi-0003ID-8F
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 02:59:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741075173;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=J63+xeMvDp8oP/T4oQACy9QBFnsjVacP1Jp692/Nx7o=;
+ b=Cih/DxIrhgoyJ/z1JKzQfYh0Y4AUZyztomd4VlSoDYvY0s0ExwM5/LnRXYlRHK8wETAm5d
+ 6Yun/+idVRkee5XrWlyuVUGvdP8uphinAqA+SOKiKNzitXTR+OgVzCQxnE+GcjOI0Hna5w
+ +DALhg2g9AHY8G1sDmrvXoTQvfv1h88=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-1nQYJtACNzugwREfrZBhYQ-1; Tue,
+ 04 Mar 2025 02:59:22 -0500
+X-MC-Unique: 1nQYJtACNzugwREfrZBhYQ-1
+X-Mimecast-MFC-AGG-ID: 1nQYJtACNzugwREfrZBhYQ_1741075161
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 030201944CD1
+ for <qemu-devel@nongnu.org>; Tue,  4 Mar 2025 07:59:21 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ACC1619560B9
+ for <qemu-devel@nongnu.org>; Tue,  4 Mar 2025 07:59:19 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4C13321E66BC; Tue, 04 Mar 2025 08:59:17 +0100 (CET)
+Resent-To: qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Tue, 04 Mar 2025 08:59:17 +0100
+Resent-Message-ID: <87zfi1usyy.fsf@pond.sub.org>
+X-From-Line: armbru@redhat.com Tue Mar  4 08:43:50 2025
+Received: from imap.gmail.com ([2a00:1450:4025:402::6d]:993) by
+ dusky.pond.sub.org with IMAP4-SSL getmail6 msgid:11/315752; 04 Mar 2025
+ 07:43:50 -0000
+Received: from blackfin.pond.sub.org
+ (p200300d36f33fd00dda5bc774eb05696.dip0.t-ipconnect.de.
+ [2003:d3:6f33:fd00:dda5:bc77:4eb0:5696])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43aba538b9fsm221445785e9.17.2025.03.03.23.21.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Mar 2025 23:21:18 -0800 (PST)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5DA2F21E66BC; Tue, 04 Mar 2025 08:21:17 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com,
+	John Snow <jsnow@redhat.com>
+Subject: [PULL v2 4/5] docs/qapidoc: remove example section support
+Date: Tue,  4 Mar 2025 08:21:16 +0100
+Message-ID: <20250304072117.894134-5-armbru@redhat.com>
+In-Reply-To: <20250304072117.894134-1-armbru@redhat.com>
+References: <20250304072117.894134-1-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/10] target/i386/kvm: set KVM_PMU_CAP_DISABLE if
- "-pmu" is configured
-To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
- sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
- like.xu.linux@gmail.com, zhenyuw@linux.intel.com, groug@kaod.org,
- khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
- davydov-max@yandex-team.ru, dapeng1.mi@linux.intel.com, joe.jin@oracle.com
-References: <20250302220112.17653-1-dongli.zhang@oracle.com>
- <20250302220112.17653-5-dongli.zhang@oracle.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250302220112.17653-5-dongli.zhang@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
+Content-Transfer-Encoding: 8bit
+X-getmail-retrieved-from-mailbox: [Gmail]/All Mail
+X-GMAIL-LABELS: "\\Sent"
+X-GMAIL-THRID: 1825647235709655260
+X-GMAIL-MSGID: 1825647235709655260
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
 X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,108 +107,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/2025 6:00 AM, Dongli Zhang wrote:
-> Although AMD PERFCORE and PerfMonV2 are removed when "-pmu" is configured,
-> there is no way to fully disable KVM AMD PMU virtualization. Neither
-> "-cpu host,-pmu" nor "-cpu EPYC" achieves this.
+From: John Snow <jsnow@redhat.com>
 
-This looks like a KVM bug.
+Since commit 3c5f6114 (qapi: remove "Example" doc section), Example
+sections no longer exist, so this support in qapidoc is now dead code.
 
-Anyway, since QEMU can achieve its goal with KVM_PMU_CAP_DISABLE with 
-current KVM, I'm fine with it.
+Signed-off-by: John Snow <jsnow@redhat.com>
+Message-ID: <20250224033741.222749-7-jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ docs/sphinx/qapidoc.py | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-I have one nit below, otherwise
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index 5a4d7388b2..61997fd21a 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -254,10 +254,6 @@ def _nodes_for_features(self, doc):
+         section += dlnode
+         return [section]
+ 
+-    def _nodes_for_example(self, exampletext):
+-        """Return list of doctree nodes for a code example snippet"""
+-        return [nodes.literal_block(exampletext, exampletext)]
+-
+     def _nodes_for_sections(self, doc):
+         """Return list of doctree nodes for additional sections"""
+         nodelist = []
+@@ -275,10 +271,7 @@ def _nodes_for_sections(self, doc):
+                 continue
+ 
+             snode = self._make_section(section.tag)
+-            if section.tag.startswith('Example'):
+-                snode += self._nodes_for_example(dedent(section.text))
+-            else:
+-                self._parse_text_into_node(dedent(section.text), snode)
++            self._parse_text_into_node(dedent(section.text), snode)
+             nodelist.append(snode)
+         return nodelist
+ 
+-- 
+2.48.1
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-
-> As a result, the following message still appears in the VM dmesg:
-> 
-> [    0.263615] Performance Events: AMD PMU driver.
-> 
-> However, the expected output should be:
-> 
-> [    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
-> [    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
-> 
-> This occurs because AMD does not use any CPUID bit to indicate PMU
-> availability.
-> 
-> To address this, KVM_CAP_PMU_CAPABILITY is used to set KVM_PMU_CAP_DISABLE
-> when "-pmu" is configured.
-> 
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-> ---
-> Changed since v1:
->    - Switch back to the initial implementation with "-pmu".
-> https://lore.kernel.org/all/20221119122901.2469-3-dongli.zhang@oracle.com
->    - Mention that "KVM_PMU_CAP_DISABLE doesn't change the PMU behavior on
->      Intel platform because current "pmu" property works as expected."
-> 
->   target/i386/kvm/kvm.c | 31 +++++++++++++++++++++++++++++++
->   1 file changed, 31 insertions(+)
-> 
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index f41e190fb8..5c8a852dbd 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -176,6 +176,8 @@ static int has_triple_fault_event;
->   
->   static bool has_msr_mcg_ext_ctl;
->   
-> +static int has_pmu_cap;
-> +
->   static struct kvm_cpuid2 *cpuid_cache;
->   static struct kvm_cpuid2 *hv_cpuid_cache;
->   static struct kvm_msr_list *kvm_feature_msrs;
-> @@ -2053,6 +2055,33 @@ full:
->   
->   int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
->   {
-> +    static bool first = true;
-> +    int ret;
-> +
-> +    if (first) {
-> +        first = false;
-> +
-> +        /*
-> +         * Since Linux v5.18, KVM provides a VM-level capability to easily
-> +         * disable PMUs; however, QEMU has been providing PMU property per
-> +         * CPU since v1.6. In order to accommodate both, have to configure
-> +         * the VM-level capability here.
-> +         *
-> +         * KVM_PMU_CAP_DISABLE doesn't change the PMU
-> +         * behavior on Intel platform because current "pmu" property works
-> +         * as expected.
-> +         */
-> +        if (has_pmu_cap && !X86_CPU(cpu)->enable_pmu) {
-
-One nit, it's safer to use
-
-	(has_pmu_cap & KVM_PMU_CAP_DISABLE) && !X86_CPU(cpu)->enable_pmu
-
-Maybe we can rename has_pmu_cap to pmu_cap as well.
-
-> +            ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
-> +                                    KVM_PMU_CAP_DISABLE);
-> +            if (ret < 0) {
-> +                error_setg_errno(errp, -ret,
-> +                                 "Failed to set KVM_PMU_CAP_DISABLE");
-> +                return ret;
-> +            }
-> +        }
-> +    }
-> +
->       return 0;
->   }
->   
-> @@ -3351,6 +3380,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->           }
->       }
->   
-> +    has_pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
-> +
->       return 0;
->   }
->   
 
 
