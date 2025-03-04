@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A9BC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 259CEC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:21:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpaaP-0006bR-QY; Tue, 04 Mar 2025 17:18:03 -0500
+	id 1tpaao-0007PP-Ud; Tue, 04 Mar 2025 17:18:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaYH-00046S-78
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:15:51 -0500
+ id 1tpaYO-0004Hp-Ij
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:15:56 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaX7-0001SP-UU
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:15:48 -0500
+ id 1tpaY4-0001Om-GD
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:15:56 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaQA-00000000LbW-0kqQ; Tue, 04 Mar 2025 23:07:26 +0100
+ id 1tpaPQ-00000000La1-0EaM; Tue, 04 Mar 2025 23:06:40 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v6 31/36] vfio/migration: Add x-migration-multifd-transfer
- VFIO property
-Date: Tue,  4 Mar 2025 23:03:58 +0100
-Message-ID: <d6dbb326e3d53c7104d62c96c9e3dd64e1c7b940.1741124640.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v6 22/36] vfio/migration: Multifd device state transfer
+ support - basic types
+Date: Tue,  4 Mar 2025 23:03:49 +0100
+Message-ID: <4eedd529e6617f80f3d6a66d7268a0db2bc173fa.1741124640.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1741124640.git.maciej.szmigiero@oracle.com>
 References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
@@ -68,103 +68,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-This property allows configuring whether to transfer the particular device
-state via multifd channels when live migrating that device.
+Add basic types and flags used by VFIO multifd device state transfer
+support.
 
-It defaults to AUTO, which means that VFIO device state transfer via
-multifd channels is attempted in configurations that otherwise support it.
+Since we'll be introducing a lot of multifd transfer specific code,
+add a new file migration-multifd.c to home it, wired into main VFIO
+migration code (migration.c) via migration-multifd.h header file.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/vfio/migration-multifd.c   | 18 +++++++++++++++++-
- hw/vfio/pci.c                 |  8 ++++++++
- include/hw/vfio/vfio-common.h |  2 ++
- 3 files changed, 27 insertions(+), 1 deletion(-)
+ hw/vfio/meson.build         |  1 +
+ hw/vfio/migration-multifd.c | 33 +++++++++++++++++++++++++++++++++
+ hw/vfio/migration-multifd.h | 17 +++++++++++++++++
+ hw/vfio/migration.c         |  1 +
+ 4 files changed, 52 insertions(+)
+ create mode 100644 hw/vfio/migration-multifd.c
+ create mode 100644 hw/vfio/migration-multifd.h
 
+diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+index bba776f75cc7..260d65febd6b 100644
+--- a/hw/vfio/meson.build
++++ b/hw/vfio/meson.build
+@@ -5,6 +5,7 @@ vfio_ss.add(files(
+   'container-base.c',
+   'container.c',
+   'migration.c',
++  'migration-multifd.c',
+   'cpr.c',
+ ))
+ vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
 diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-index bfb9a72fa450..aacddc503bb8 100644
---- a/hw/vfio/migration-multifd.c
+new file mode 100644
+index 000000000000..fa594b33fdd1
+--- /dev/null
 +++ b/hw/vfio/migration-multifd.c
-@@ -476,18 +476,34 @@ bool vfio_multifd_transfer_supported(void)
- 
- bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev)
- {
--    return false;
-+    VFIOMigration *migration = vbasedev->migration;
+@@ -0,0 +1,33 @@
++/*
++ * Multifd VFIO migration
++ *
++ * Copyright (C) 2024,2025 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+    return migration->multifd_transfer;
- }
- 
- bool vfio_multifd_setup(VFIODevice *vbasedev, bool alloc_multifd, Error **errp)
- {
-     VFIOMigration *migration = vbasedev->migration;
- 
-+    if (vbasedev->migration_multifd_transfer == ON_OFF_AUTO_AUTO) {
-+        migration->multifd_transfer = vfio_multifd_transfer_supported();
-+    } else {
-+        migration->multifd_transfer =
-+            vbasedev->migration_multifd_transfer == ON_OFF_AUTO_ON;
-+    }
++#include "qemu/osdep.h"
++#include "hw/vfio/vfio-common.h"
++#include "migration/misc.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qemu/lockable.h"
++#include "qemu/main-loop.h"
++#include "qemu/thread.h"
++#include "migration/qemu-file.h"
++#include "migration-multifd.h"
++#include "trace.h"
 +
-     if (!vfio_multifd_transfer_enabled(vbasedev)) {
-         /* Nothing further to check or do */
-         return true;
-     }
- 
-+    if (!vfio_multifd_transfer_supported()) {
-+        error_setg(errp,
-+                   "%s: Multifd device transfer requested but unsupported in the current config",
-+                   vbasedev->name);
-+        return false;
-+    }
++#define VFIO_DEVICE_STATE_CONFIG_STATE (1)
 +
-     if (alloc_multifd) {
-         assert(!migration->multifd);
-         migration->multifd = vfio_multifd_new();
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 89d900e9cf0c..6d6f889f59c5 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3377,6 +3377,9 @@ static const Property vfio_pci_dev_properties[] = {
-                     VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
-     DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
-                             vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
-+    DEFINE_PROP_ON_OFF_AUTO("x-migration-multifd-transfer", VFIOPCIDevice,
-+                            vbasedev.migration_multifd_transfer,
-+                            ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
-                      vbasedev.migration_events, false),
-     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
-@@ -3433,6 +3436,11 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
-     pdc->exit = vfio_exitfn;
-     pdc->config_read = vfio_pci_read_config;
-     pdc->config_write = vfio_pci_write_config;
++#define VFIO_DEVICE_STATE_PACKET_VER_CURRENT (0)
 +
-+    object_class_property_set_description(klass, /* 10.0 */
-+                                          "x-migration-multifd-transfer",
-+                                          "Transfer this device state via "
-+                                          "multifd channels when live migrating it");
- }
- 
- static const TypeInfo vfio_pci_dev_info = {
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 961931d9f457..04b123a6c929 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -91,6 +91,7 @@ typedef struct VFIOMigration {
-     uint64_t mig_flags;
-     uint64_t precopy_init_size;
-     uint64_t precopy_dirty_size;
-+    bool multifd_transfer;
-     VFIOMultifd *multifd;
-     bool initial_data_sent;
- 
-@@ -153,6 +154,7 @@ typedef struct VFIODevice {
-     bool no_mmap;
-     bool ram_block_discard_allowed;
-     OnOffAuto enable_migration;
-+    OnOffAuto migration_multifd_transfer;
-     bool migration_events;
-     VFIODeviceOps *ops;
-     unsigned int num_irqs;
++typedef struct VFIODeviceStatePacket {
++    uint32_t version;
++    uint32_t idx;
++    uint32_t flags;
++    uint8_t data[0];
++} QEMU_PACKED VFIODeviceStatePacket;
+diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
+new file mode 100644
+index 000000000000..5b221c6e16b0
+--- /dev/null
++++ b/hw/vfio/migration-multifd.h
+@@ -0,0 +1,17 @@
++/*
++ * Multifd VFIO migration
++ *
++ * Copyright (C) 2024,2025 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_VFIO_MIGRATION_MULTIFD_H
++#define HW_VFIO_MIGRATION_MULTIFD_H
++
++#include "hw/vfio/vfio-common.h"
++
++#endif
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index a9b0970604aa..dc1fe4e717a4 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -23,6 +23,7 @@
+ #include "migration/qemu-file.h"
+ #include "migration/register.h"
+ #include "migration/blocker.h"
++#include "migration-multifd.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-events-vfio.h"
+ #include "exec/ramlist.h"
 
