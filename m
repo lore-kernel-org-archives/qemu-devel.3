@@ -4,90 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 959C4C282D2
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 14:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA698C282D2
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 15:26:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpTiw-0003pf-T8; Tue, 04 Mar 2025 09:58:24 -0500
+	id 1tpU9k-0001uZ-9t; Tue, 04 Mar 2025 10:26:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpTii-0003lS-7F
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 09:58:11 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpTig-00008T-9P
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 09:58:07 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43bbc8b7c65so26470565e9.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 06:58:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741100284; x=1741705084; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qrQ4Tubmr97IIFk7uuXTlrc2UQCvR3jWexkewFvyPaQ=;
- b=hj/2Wo/Cy8w7MOwVl17/u1lqUpXXim87CznhCFzCM/8kivuk4uA1/UZ1C2qZoUzmMx
- Ccn/yo29wq8QLCpKFMLn9W2AsCq5MWHtrbeY4wyz05nmg2DvuihzbuFcXhVN1mvSxHk/
- 9QS3Zl9wyuRJQR0CES0X2P/IGB0mA/xdMO29rdBh/cx38VcatLdeUQgGHxk4a/u807wN
- B7yDGBaaTn79VGWFD+M7aRO+CWChHGCTyO4Gxxn4NFV3s66WT0j2csp/c1nbTyapcg/Z
- qhLbClEqBQ1vdTJbO6BzvtVBZrx0SPCT4jRjvZW46jP0/aYhc+37F/hJma/M1myoJFGM
- BTLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741100284; x=1741705084;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qrQ4Tubmr97IIFk7uuXTlrc2UQCvR3jWexkewFvyPaQ=;
- b=CPw0KyovMF85kDpbh3FqEJEvTVeay8pY0ihR2HTj9wKh7Sj9JmH4sWtf+4PIImilwv
- e6VFiwDdtthGBQTbhadWVvFBE1MBywq5txUz47fafZrJ8OazUAtdll9rvr9oDyRn0QtV
- e1XckTTWXtwbrsg8eWLUWaR+I3ee0R0IjLob9QGlGegvhBFd5tPTvxl+KioGEAcSfA1g
- 3ugUJI0wXnemr41uilJ4AP57S+xuGtCAk/sbvzkEqI4RiGmqzvg36GKUEDDsUWuBxjnC
- rEGaLDqonB0q7tL+eGVykPhJn0hVD4T63PFwIf7Qd1/kGLxybxj16gZFdLaZ9JN0AvM6
- 2NRA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjCoPQI9pHMwqS1ualQFjdUBlBBe7NwGj5OPU8XWB1CEOZdsASnxvxIZeqcyKWOD4pYbyloY8ICFAb@nongnu.org
-X-Gm-Message-State: AOJu0Yy0EJRJ8WojXf7weOUa1tjITbCn1+6/q9Jw24TSZlM3j/JQ+OfW
- mmXudtPzzN42WLr8almiFLrwTm/G2D4BJcYOTh6emFRSUCfzcZA58Chh4ep+DTA=
-X-Gm-Gg: ASbGncvEencBafvfg37LHeWzhec3dGwewY7y/QXts7uHEp270iAlY2eZ6Ep8EX1VCB2
- 3Va+DwiICLtOkyRRgZ+YXwOZuJZNFzLYU0ZlmFZj2j6KOPHXubGQEdjX72FAkzb7YzukosKCO69
- zUqXV0Gwm8yjj9yU0jQyQha+OTT4dFlaozpXXyfwTZXs7GmK7J/KY2n+3d00PCyUYFP3nhkPany
- UuITqk7O+K5E/hJNlXGGcHcCJHTDDhLxD2n1celhH4LfNP3MimakpOorOO2THg1ITjQQiD73kzi
- eGIfSMX2Wbcdfk8/CRm/3VR3IkG2wIjEIKUYVJq2SCEJ4drOoa6OB4l5ErwntNldNLlqzKccXtK
- fKcCHtYiBdIfZ
-X-Google-Smtp-Source: AGHT+IGbxSRjEVR+T3OfLQwdseH4MPQ6Rv9Q71Wo3ED9lZFyvctZQyUP70sL+95HBXt4tDvTpTck1g==
-X-Received: by 2002:a05:600c:1c8c:b0:439:9f97:7d5b with SMTP id
- 5b1f17b1804b1-43ba674cb46mr167898515e9.23.1741100283958; 
- Tue, 04 Mar 2025 06:58:03 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bcc280e55sm10129335e9.3.2025.03.04.06.58.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 06:58:03 -0800 (PST)
-Message-ID: <7e98d6b9-c17c-48e0-9513-e8c45b29a52e@linaro.org>
-Date: Tue, 4 Mar 2025 15:58:02 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/4] ufs queue
-To: stefanha@redhat.com
-Cc: pbonzini@redhat.com, qemu-block@nongnu.org, jeuk20.kim@samsung.com,
- j-young.choi@samsung.com, farosas@suse.de, lvivier@redhat.com,
- Jeuk Kim <jeuk20.kim@gmail.com>, qemu-devel@nongnu.org
-References: <cover.1739784105.git.jeuk20.kim@samsung.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <cover.1739784105.git.jeuk20.kim@samsung.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+ (Exim 4.90_1)
+ (envelope-from <35b3e1bc74c4f2825acb98252398d2f8805fc99f@kylie.crudebyte.com>)
+ id 1tpU9S-0001rh-FP
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 10:25:50 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <35b3e1bc74c4f2825acb98252398d2f8805fc99f@kylie.crudebyte.com>)
+ id 1tpU9O-0006ub-MJ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 10:25:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=qs3hdQFdbF+iWTUVIJhD79rAzTaqIH0Vi558ltmbvFs=; b=cMbs7
+ r64DZioGb9vW1HMoKlftk3HoT4xKpegbLxewRjt6vGzlZqwK9czdjwM94oDfiHdowzBDf7PA5e/wC
+ bWXIkf6XEns/OFV4NzzhNLzxXLptiQKEWSwD6rJ1nYjDlcODJDVBdNokqvWXUZ23IN3AkzzM8DD+r
+ cShWV0xGgUgfK7AeIBDsp8mV20O3FMyQiocjXg04KNdUm2nEw9lYHdJTK7ks4F92BDUwNyAhArHDe
+ UA3LQ8aXrHfquHkvENLGKZ/SFYN/Hh1IGsNUZ6Tb06hzVReC3lRF1FxRFpR9wqoS/vDS6EEEuZgRK
+ +iarH+z0MNAJYC2eXwqkT2kZIwMQzXcp4vrWQ5xfvbA83XxXnZbg+qrSv0eWp72iOVCgRLeN/8vYe
+ HTGmAG2d46YfblMYcW1e91P0DBoi3w1ZQp2JacWjlgubpH+qmnJOFB3DXp2mqJQ5Hsf91b+4y06ix
+ SnGfqhmYPEaDGU9qxT6RVm8tFh2n1lDl3MnqH1TsGylNhnJLDb5zTqYg9ILS9kpYXivEWiNIEO2Iu
+ /S2YvuMEsBeKifAart/qWl1BCBXOXAD0eShLcbU9vS8XJ1A8IkKcfyC4JsPaHK0uAQVmWdfixnKak
+ uDqsT8zV4wW5S3zAIkOYcutc28wzgpuGjTGSYVT3hi40m8HYAPcGpfoyMtl9Aw=;
+Message-Id: <35b3e1bc74c4f2825acb98252398d2f8805fc99f.1741101468.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1741101468.git.qemu_oss@crudebyte.com>
+References: <cover.1741101468.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Tue, 4 Mar 2025 16:16:05 +0100
+Subject: [PATCH 2/2] 9pfs: reduce latency of v9fs_reclaim_fd()
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=35b3e1bc74c4f2825acb98252398d2f8805fc99f@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,43 +68,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Stefan,
+This function calls v9fs_co_close() and v9fs_co_closedir() in a loop. Each
+one of the calls adds two thread hops (between main thread and a fs driver
+background thread). Each thread hop adds latency, which sums up in
+function's loop to a significant duration.
 
-On 17/2/25 10:27, Jeuk Kim wrote:
-> From: Jeuk Kim <jeuk20.kim@samsung.com>
-> 
-> The following changes since commit db7aa99ef894e88fc5eedf02ca2579b8c344b2ec:
-> 
->    Merge tag 'hw-misc-20250216' of https://github.com/philmd/qemu into staging (2025-02-16 20:48:06 -0500)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20250217
-> 
-> for you to fetch changes up to a54596a96006096798b172a368ae952a231f9f72:
-> 
->    tests/qtest/ufs-test: Add test code for MCQ functionality (2025-02-17 18:20:53 +0900)
-> 
-> ----------------------------------------------------------------
-> ufs updates for MCQ testing
-> 
-> - Remove unused task management request code
-> - Implement bitmap-based command descriptor slot allocation for MCQ
-> - Add test cases for MCQ initialization and basic read/write operations
-> - Fix LSDBS value for legacy single doorbell mode
-> 
-> ----------------------------------------------------------------
-> Jeuk Kim (4):
->        hw/ufs: Fix legacy single doorbell support bit
->        tests/qtest/ufs-test: Cleanup unused code
->        tests/qtest/ufs-test: Prepare for MCQ test
->        tests/qtest/ufs-test: Add test code for MCQ functionality
+Reduce overall latency by open coding what v9fs_co_close() and
+v9fs_co_closedir() do, executing those and the loop itself altogether in
+only one background thread block, hence reducing the total amount of
+thread hops to only two.
 
-Just wondering if this PR is on your list or there is a problem
-with it...
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ hw/9pfs/9p.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-Regards,
-
-Phil.
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 4f9c2dde9c..4b52b1a22a 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -434,6 +434,7 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+     V9fsFidState *f;
+     GHashTableIter iter;
+     gpointer fid;
++    int err;
+ 
+     /* prevent multiple coroutines running this function simultaniously */
+     if (s->reclaiming) {
+@@ -446,10 +447,10 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+     QSLIST_HEAD(, V9fsFidState) reclaim_list =
+         QSLIST_HEAD_INITIALIZER(reclaim_list);
+ 
++    /* Pick FIDs to be closed, collect them on reclaim_list. */
+     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &f)) {
+         /*
+-         * Unlink fids cannot be reclaimed. Check
+-         * for them and skip them. Also skip fids
++         * Unlinked fids cannot be reclaimed, skip those, and also skip fids
+          * currently being operated on.
+          */
+         if (f->ref || f->flags & FID_NON_RECLAIMABLE) {
+@@ -499,17 +500,24 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+         }
+     }
+     /*
+-     * Now close the fid in reclaim list. Free them if they
+-     * are already clunked.
++     * Close the picked FIDs altogether on a background I/O driver thread. Do
++     * this all at once to keep latency (i.e. amount of thread hops between main
++     * thread <-> fs driver background thread) as low as possible.
+      */
++    v9fs_co_run_in_worker({
++        QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
++            err = (f->fid_type == P9_FID_DIR) ?
++                s->ops->closedir(&s->ctx, &f->fs_reclaim) :
++                s->ops->close(&s->ctx, &f->fs_reclaim);
++            if (!err) {
++                total_open_fd--;
++            }
++        }
++    });
++    /* Free the closed FIDs. */
+     while (!QSLIST_EMPTY(&reclaim_list)) {
+         f = QSLIST_FIRST(&reclaim_list);
+         QSLIST_REMOVE(&reclaim_list, f, V9fsFidState, reclaim_next);
+-        if (f->fid_type == P9_FID_FILE) {
+-            v9fs_co_close(pdu, &f->fs_reclaim);
+-        } else if (f->fid_type == P9_FID_DIR) {
+-            v9fs_co_closedir(pdu, &f->fs_reclaim);
+-        }
+         /*
+          * Now drop the fid reference, free it
+          * if clunked.
+-- 
+2.39.5
 
 
