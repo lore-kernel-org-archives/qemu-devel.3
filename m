@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E0D5C282D3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C2C4C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpaiW-0007KJ-Hc; Tue, 04 Mar 2025 17:26:24 -0500
+	id 1tpaiS-00073L-QU; Tue, 04 Mar 2025 17:26:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpahC-0005Sn-3B
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:25:09 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1tpah3-0005Q6-MZ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:59 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpah9-0006Zx-45
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:25:01 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5e4ad1d67bdso9753734a12.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:56 -0800 (PST)
+ id 1tpah1-0006Wn-Hz
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:53 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-aaec111762bso1130210066b.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741127096; x=1741731896; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741127090; x=1741731890; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Jk0L9tiR8Pw91LWiTI1Z3wlxkKLipHgTcC6b1a+5kwk=;
- b=K4QqxobgGpnRBGZ6VZ1TXgp6BHR/9DGr6hbOX50/vYHJoAZqOFpqMFYWfGPlgOn+z/
- 389RiJmV42o0f5wZCtEwkAK3kPBPPRer3fwnm8zDMZK/A3VNxzZJZVFbrwgaxEL06riS
- 7QfAmIG8MsH/nILMqSnggeZNx9cdOrF3SK78Rk6M8Xm42kGYoDJw6F7o7Sz6nwbV1ZUj
- BlJ/EyAjxlgxysrf/HINEjnVeeHQtu2peWk16fPTqZNk9Kyyc1ZBoTlf4VVc5h4xlDUo
- xtoX69ybUq1bMcVr5ax8nOJRdYQNaTyEx3DTjsFaew5F16aa0BLh0Y1g38tmjMWrFPxX
- VaZQ==
+ bh=1m7U5T2uale0lc0uqyyH6LsGapDRMZw5OtaQwPrcJTg=;
+ b=jt0/O/CJKSS1ZPibu2DkN1vh4YyEXnJyv/ceyw3/aaFW4f/SEGXCzjZv3s/+G9RkDW
+ ZcmK6KmYGzo7P7V/kGZ0vA9LVoJF9eBC3uZL5Dd7PlxdlMEMqjUsALOgqZkFQX/NOHpw
+ ZruesjTGuBN/gF3ReQMcjjw14qacXeQTuczdp5g7bipF9ZMBNOXHYB9Kp6RvHGyeQdM7
+ JeSFEJl/DoJNAUNJVzbpmRLX1tRIiHLMGcaX4rtmvyo/oi3ykHaUnDFosHzJkAHlwG4c
+ B6dntzOgxGKk/SEumK3z9u5UfryQQZKpWmAVjLV/avhFiC2FveSJApHpmCl3h80c39/P
+ 8tGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741127096; x=1741731896;
+ d=1e100.net; s=20230601; t=1741127090; x=1741731890;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Jk0L9tiR8Pw91LWiTI1Z3wlxkKLipHgTcC6b1a+5kwk=;
- b=WFG3FjyIL73g3abYu4VzPJq5KYD5QMFaN7fZHqOyc84ibutHIJGYa6MHWOMoyQBECk
- Wc7naV2iqEg5Rm+ZeH8mWQxjonLgBw9Imf76RhBVziivwax7R42FJFZR6b7Gv/XXxzIK
- wiYgA8WNW+7rjPZHu/4isiJjlnZBdGQb0m/W0ENcS0AIUKnKZE6WoKAuoWybBXCb/N0y
- z/OrNAtcJnt6qhNX0xAOtNZoMuMoB6dVaifzBjiG2boTWreXfEcIaqJzoNEDziK3d3Nw
- BkHtVUXhhuHbt9wLcpidGAym/U23U6FyhG7uhRgthjrj+6mEHVqikKVlZKGGhquiVvU8
- NBPg==
-X-Gm-Message-State: AOJu0YxUYRin4x4cIOJfIGVNQHcNHtOcwxzWXvoPpgLmATwHIR+kmkB5
- NknK13SWs/nXnl9I/T3dUw6xdceXunckpMMmGuCOS5frHZRMX+7GSbvw6Ljs1ZU=
-X-Gm-Gg: ASbGnctOtAtKvT8sD1QwZLwcSbMZTABPuklHi2y5UegTov6JLlvLfqEJTe3kbD4Mrcv
- UWZEmwkIOIlyhiRE2fCC41jE93cRUw3kHl6FCyzm3Aug5/mMAcJ+TAY73XD3wNybrwXJmZzugyV
- mmW3YApCkHg3VMHi4+/yjI26eTR25DEKlWOgVevBZD8b6rkUd+5hXekr+d5ghqDL0AGMhZYiFlx
- MhP5HZcEj3a1mm3KCKXtM/USn21weTu3FMVu1/smcLgOfwcKreP8vKRTKG7UlFhI3gGwCb1x9K9
- /R7/9+qTQgdp++LS12CHKZlfT/DVXdpkc+DMgp0zFLrtl3A=
-X-Google-Smtp-Source: AGHT+IGzd4q6ld9rSt6nyxUB3LQc/TZ9sahtNbY0Td0uifmVydb/pAO8djsz0D6JUVFlW4mE+bMxcw==
-X-Received: by 2002:a17:907:7d93:b0:abf:6cc9:7ef5 with SMTP id
- a640c23a62f3a-ac20db05bc9mr102181266b.47.1741127095791; 
- Tue, 04 Mar 2025 14:24:55 -0800 (PST)
+ bh=1m7U5T2uale0lc0uqyyH6LsGapDRMZw5OtaQwPrcJTg=;
+ b=CvE51kTAsnBX52U/ugl5N6vEu3nqX2EvdtKn65FZs8TN+Yi+mb1Y4bpGU+2AV3U3AB
+ nIUcsYG4sKGBaRplhxTn+0xXD8SyEz0/gEY1Rd+j14KYxz0vh7wWA0A8tZgadaAEBKsP
+ Q41rgPjDg0D9LBVUZnPcO91I66TTzDCyUELPyv8FnZsi/FMfCWq5H0OX84RqoqLv3djn
+ bzb+Z4Yyxhv+3hY6K+xSL06XLAgKulI+kT3qnO3+xdtK1bupZpHoTAYK9CKQETErYFPj
+ IIPlRCbU2wnbDNjR432f2EEb17iGHIHB3muIFT9knGr9MweRoq0Bqtb/8hL7pbD/s9E9
+ 6g/g==
+X-Gm-Message-State: AOJu0YzsRJfqXxIUPib/RVUqvJ++iINODxAa0gxoMCkqeA3IRGbZfCnG
+ 7trqK/Q5gKDZUZfmawAnUzXnYsgWjnaqu8uxTxEY0OPOV5A1oDtyY1CvGracQXM=
+X-Gm-Gg: ASbGnctM39iS765xD1WoDp/6R0FO1eNOjOKbdfWVkCNePshdNegTgebklkxYng+20b7
+ SetfhNMq1gmQ7dFWiXoptbYg1J/7sZKUSoWCCGdiTCr+VmgXc3gHFDCgVidHVdo5Gm4gEWzR0N0
+ 9Sr/Ck5bv8ftGdiBVubnjSW+/N76l75cXr0qFGAWRgdcA4ovsnw2hs9/U7pbBzWcSlI9rlhM31A
+ I8m2nohFj7raGrJPZG8PayqTDzolgzrTqnyWGQ5gF+j6cY/rZ/0nVdtxpkCySFzNc4XoMAUxgLw
+ y1VZUczwum06E1KTvbhoBTNqKhgMdVAaAg237tW94fKVFPE=
+X-Google-Smtp-Source: AGHT+IEuMR7Wd7JAxrWkuqD1t6ByZlhYjg78nYqXd4BXh0YARSLQVx4IS0+QDcAy4mScCVqyWNahJg==
+X-Received: by 2002:a17:907:7f8e:b0:abf:6a53:2cd5 with SMTP id
+ a640c23a62f3a-ac20dafc718mr72673666b.48.1741127089633; 
+ Tue, 04 Mar 2025 14:24:49 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac1f6a3769bsm164672266b.14.2025.03.04.14.24.49
+ a640c23a62f3a-ac165223834sm342885866b.165.2025.03.04.14.24.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 14:24:52 -0800 (PST)
+ Tue, 04 Mar 2025 14:24:45 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 561CF625E8;
- Tue,  4 Mar 2025 22:24:42 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 5873F5FD7E;
+ Tue,  4 Mar 2025 22:24:40 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -82,17 +82,18 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 29/32] plugins/api: build only once
-Date: Tue,  4 Mar 2025 22:24:36 +0000
-Message-Id: <20250304222439.2035603-30-alex.bennee@linaro.org>
+Subject: [PATCH v2 10/32] tests/functional: Allow running TCG plugins tests on
+ non-Linux/BSD hosts
+Date: Tue,  4 Mar 2025 22:24:17 +0000
+Message-Id: <20250304222439.2035603-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250304222439.2035603-1-alex.bennee@linaro.org>
 References: <20250304222439.2035603-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,54 +116,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now all the softmmu/user-mode stuff has been split out we can build
-this compilation unit only once.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Not all platforms use the '.so' suffix for shared libraries,
+which is how plugins are built. Use the recently introduced
+dso_suffix() helper to get the proper host suffix.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2804
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20250220080215.49165-4-philmd@linaro.org>
+[AJB: moved plugin_file into testcase.py]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250225110844.3296991-11-alex.bennee@linaro.org>
----
- plugins/api.c       | 11 -----------
- plugins/meson.build |  3 +--
- 2 files changed, 1 insertion(+), 13 deletions(-)
 
-diff --git a/plugins/api.c b/plugins/api.c
-index 832bf6ee5e..604ce06802 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -46,17 +46,6 @@
- #include "exec/translator.h"
- #include "disas/disas.h"
- #include "plugin.h"
--#ifndef CONFIG_USER_ONLY
--#include "qapi/error.h"
--#include "migration/blocker.h"
--#include "qemu/plugin-memory.h"
--#include "hw/boards.h"
--#else
--#include "qemu.h"
--#ifdef CONFIG_LINUX
--#include "loader.h"
--#endif
--#endif
+---
+v2
+  - move the plugin_file helper to testcase.py with the other path helpers
+---
+ tests/functional/qemu_test/testcase.py       | 12 +++++++++++-
+ tests/functional/test_aarch64_tcg_plugins.py |  5 +++--
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 869f3949fe..9e1839586b 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -27,7 +27,7 @@
  
- /* Uninstall and Reset handlers */
+ from .archive import archive_extract
+ from .asset import Asset
+-from .config import BUILD_DIR
++from .config import BUILD_DIR, dso_suffix
+ from .uncompress import uncompress
  
-diff --git a/plugins/meson.build b/plugins/meson.build
-index 942b59e904..d27220d5ff 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -61,9 +61,8 @@ endif
- user_ss.add(files('user.c', 'api-user.c'))
- system_ss.add(files('system.c', 'api-system.c'))
  
--common_ss.add(files('loader.c'))
-+common_ss.add(files('loader.c', 'api.c'))
+@@ -184,6 +184,16 @@ def scratch_file(self, *args):
+     def log_file(self, *args):
+         return str(Path(self.outputdir, *args))
  
- specific_ss.add(files(
-   'core.c',
--  'api.c',
- ))
++    '''
++    @params plugin name
++
++    Return the full path to the plugin taking into account any host OS
++    specific suffixes.
++    '''
++    def plugin_file(self, plugin_name):
++        sfx = dso_suffix()
++        return os.path.join('tests', 'tcg', 'plugins', f'{plugin_name}.{sfx}')
++
+     def assets_available(self):
+         for name, asset in vars(self.__class__).items():
+             if name.startswith("ASSET_") and type(asset) == Asset:
+diff --git a/tests/functional/test_aarch64_tcg_plugins.py b/tests/functional/test_aarch64_tcg_plugins.py
+index 7e8beacc83..4ea71f5f88 100755
+--- a/tests/functional/test_aarch64_tcg_plugins.py
++++ b/tests/functional/test_aarch64_tcg_plugins.py
+@@ -13,6 +13,7 @@
+ 
+ import tempfile
+ import mmap
++import os
+ import re
+ 
+ from qemu.machine.machine import VMLaunchFailure
+@@ -74,7 +75,7 @@ def test_aarch64_virt_insn(self):
+                                                  suffix=".log")
+ 
+         self.run_vm(kernel_path, kernel_command_line,
+-                    "tests/tcg/plugins/libinsn.so", plugin_log.name,
++                    self.plugin_file('libinsn'), plugin_log.name,
+                     console_pattern)
+ 
+         with plugin_log as lf, \
+@@ -100,7 +101,7 @@ def test_aarch64_virt_insn_icount(self):
+                                                  suffix=".log")
+ 
+         self.run_vm(kernel_path, kernel_command_line,
+-                    "tests/tcg/plugins/libinsn.so", plugin_log.name,
++                    self.plugin_file('libinsn'), plugin_log.name,
+                     console_pattern,
+                     args=('-icount', 'shift=1'))
+ 
 -- 
 2.39.5
 
