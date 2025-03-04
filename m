@@ -4,71 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44078C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 18:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A15C282D9
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 18:39:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpX5j-0000Nf-Rs; Tue, 04 Mar 2025 13:34:07 -0500
+	id 1tpXAL-0002ii-TU; Tue, 04 Mar 2025 13:38:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tpX5g-0000NI-K1
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 13:34:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Suravee.Suthikulpanit@amd.com>)
+ id 1tpX9w-0002as-Su
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 13:38:30 -0500
+Received: from mail-dm6nam04on20617.outbound.protection.outlook.com
+ ([2a01:111:f403:2409::617]
+ helo=NAM04-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tpX5Z-00067M-F6
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 13:34:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741113235;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=n4vTbKf2vdFcmVDPvSoh00VMSdksej4ULlmUMPYXUuU=;
- b=a288hyZ9Zo1xX3oHJWoCi1OsZslkVYrBlhM1gCEs7l76bwLi7MvMMuT0qbSqr2IJ+QEcPh
- 597GXDhPTmR3e4claM8VfJMe4t/VmjxVrV9xbTifIHXVgOu7RYIqNblWqV64MeW34P8zER
- 3+u6AOG53YBXVs297sUhbXRBBHlBWKs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-I-Y84ZQaPT-bAwwQ22oSgA-1; Tue,
- 04 Mar 2025 13:33:47 -0500
-X-MC-Unique: I-Y84ZQaPT-bAwwQ22oSgA-1
-X-Mimecast-MFC-AGG-ID: I-Y84ZQaPT-bAwwQ22oSgA_1741113226
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 963091800987
- for <qemu-devel@nongnu.org>; Tue,  4 Mar 2025 18:33:44 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.210])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B37511800352; Tue,  4 Mar 2025 18:33:41 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] tests/functional: fix race in virtio balloon test
-Date: Tue,  4 Mar 2025 18:33:40 +0000
-Message-ID: <20250304183340.3749797-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <Suravee.Suthikulpanit@amd.com>)
+ id 1tpX9n-0000Q5-HJ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 13:38:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FYddqTQd3oTmLkpNPnhi/z5aDJIFRTELJSAhT/ybKoO04yNDy64C7OOXp186aWf//A47UAf3Q9J3dVdw2PWbsf519COA99Ii9Dq4vsJFCkqMc+IZF4q1Ykx3yUlLpY8ZiDGUGNw6Y5qwlv4soqSJCT3Rmgqe/ABMKD5aSRgJid3e+ttwE/DDl3v4RcHSRAUth2cm23nP5JoeXsHBYFjl9QN8MTllHU/nDvSwCEu1AmEswSULMw0v50Lq7V4WJRTQd7ao6iY9Yf+Rsec0KNNikUR9YyM7Pk0At18SfCVmcnJuGu8oeiPs0m4QMcz242ql4cyt8QulcIxJVW7muS3hlg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=v8FPjlOvctqWp2thzZOfbJuMReZNdoWR7m43bCEADIM=;
+ b=fyIqzMnlF+m7j5IGnV2VDjZ5BRR2WcpNFdx0m2HUKX3vaHCXVjKxhj5zQxRHnZumueqc33Nst5Uuh8Y+v2EOoMQKN/KheRo68eSjVr2E/3ZIW4tik7ADTzz2XvCY/KMVHqCHP2UXIo4RRzKwIkkN0rc0vo5MoSTvOR4NOhjQbIzNxbYbyYIHY4LzzRoSKDODalFfE9tsUI53E1VRjDBJ801BCCTRUGShi/fWTeH/o7vdDAx07x3yoBkSLac5r21Dk6dr9KwqeWKwvqmTi6EiwXJPob4g7ZsIdOzwnNXZUrnHf4mLHCrFHqjZfClx5esmWXA/verFx/8oklY5Kd96Bw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=v8FPjlOvctqWp2thzZOfbJuMReZNdoWR7m43bCEADIM=;
+ b=xoKjyCNPi6vwEypm2PdfDc4EndlMsCkaMv7Tinx7U8m6AvcxlRbA9ix4o5WS28ugjZoAhA4MgY7uBxuNghdL2cNNBLwrNDD1ZSdnTHRpcNp39gLqiK6n2tuM/TyvTlR0Gh39e4OABtgawCOq9tgiK3S6bzFv5p39Arowt1aMpoE=
+Received: from BL1PR13CA0025.namprd13.prod.outlook.com (2603:10b6:208:256::30)
+ by CY5PR12MB6369.namprd12.prod.outlook.com (2603:10b6:930:21::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.17; Tue, 4 Mar
+ 2025 18:38:06 +0000
+Received: from BN2PEPF000055E1.namprd21.prod.outlook.com
+ (2603:10b6:208:256:cafe::3) by BL1PR13CA0025.outlook.office365.com
+ (2603:10b6:208:256::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8511.15 via Frontend Transport; Tue,
+ 4 Mar 2025 18:38:06 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN2PEPF000055E1.mail.protection.outlook.com (10.167.245.11) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8534.4 via Frontend Transport; Tue, 4 Mar 2025 18:38:06 +0000
+Received: from purico-ed03host.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 4 Mar
+ 2025 12:38:00 -0600
+From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <mst@redhat.com>,
+ <marcel.apfelbaum@gmail.com>, <jon.grimm@amd.com>, <santosh.shukla@amd.com>,
+ <vasant.hegde@amd.com>, <Wei.Huang2@amd.com>, <kraxel@redhat.com>,
+ <bsd@redhat.com>, <berrange@redhat.com>, <ddutile@redhat.com>, "Suravee
+ Suthikulpanit" <suravee.suthikulpanit@amd.com>
+Subject: [PATCH] pci-ids.rst: Add Red Hat pci-id for AMD IOMMU device
+Date: Tue, 4 Mar 2025 18:37:47 +0000
+Message-ID: <20250304183747.639382-1-suravee.suthikulpanit@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000055E1:EE_|CY5PR12MB6369:EE_
+X-MS-Office365-Filtering-Correlation-Id: ba2eb8c4-0d57-470b-9b36-08dd5b4bb471
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|376014|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?snhuEbSPrKJBzswiwsYSNZLfl6/nHpBl+HeAN9KwxYx2AlY7vgpfJpOC/sX2?=
+ =?us-ascii?Q?YpQsKwIN75AhtQZdemTqoLmLfqoc4c8uidA4M0Un4pqx1uYi4/alWlal0XmZ?=
+ =?us-ascii?Q?Xvmye2dER7AclGmuNA+t+YTaOaeZeET846Sc/gMPvbM6rqS0TESpkJhwPKmi?=
+ =?us-ascii?Q?5uaUHQ8LLNrW3Q00iTJdtZRKEpgfUX+Ly73mcFnYDzawIXdeguyYBkfbCUzT?=
+ =?us-ascii?Q?8MpxGsLwu/U55pumXwqFRXZI1mTiHE+UPvQZs5fYBK5pl5d133Mu+h2sDW2h?=
+ =?us-ascii?Q?ZUh2Boic/WtcD/JJXouLT98r4IoE6K9tN/x+CQe4IRBRopNTgZjNSicHhsMq?=
+ =?us-ascii?Q?FJ1lNUh6MJ090orYt4skWQ23df16RFkTpObics4Hdjs1YK+ykvueMGWofY5b?=
+ =?us-ascii?Q?v9ARNQZ6y6QIcMhNVgySsNkt5GOU/VlNRsIqf/byV4UOX6CPWzwRwfCiAnOB?=
+ =?us-ascii?Q?Ec69VAfjs5G8PuZzuTxHPt3qRZeoaXbKh1PMJnqsPalg2psVeYu7qljBQssc?=
+ =?us-ascii?Q?6/Sr9Wl21QyxyDh2P0a5F4b+kym6HAUQS+ja79pdzyi9q2m2MJApAaWFclK0?=
+ =?us-ascii?Q?zdYKOVWnNA75QpnKyIC6MyPnqLclyENDFbPKXOMLgwYTaEAnbjqMjoQy09xz?=
+ =?us-ascii?Q?IN0uIWpGW783wDCqh7wevDIsPcnMsBzYCjpg9nIgeJWAHXuUk8NKE8sVdQA3?=
+ =?us-ascii?Q?74yg4PGWqp+N0ZIK8cD1P5Al8Y9bUz3ckQEzqYsbzsunapHdCTxWX4m71zp6?=
+ =?us-ascii?Q?ri3Td/uYNynZrYG0mL/1ElG2ufhlkcR+TgJ2X64nSmKs7t9WPLAoAfYWg3L9?=
+ =?us-ascii?Q?0MYczupQx+zX0xCwQwIV7HrRR1IDCdrIFXug2guqlzC6spKLbPERkXq3RSYR?=
+ =?us-ascii?Q?/k0UPRGmr2ggkBdsgYkTA5iMLekyHTz2sKMXOj9CB5yIoIoqNud5w4Slz/AP?=
+ =?us-ascii?Q?ekqXsyRzJUFOni1y1Pn8APECni30vXabnhhS9nz3+CMmPBOW2Vn/oxlENbly?=
+ =?us-ascii?Q?cPejVz+fmZOPm/tnBhMQXpm4W1Y9v9kTS7VKp9wP39wPmx5/AA+VTpB3aXD0?=
+ =?us-ascii?Q?1ac2bvCAxs6VZ9IMvb1HGs7riwXlaqy8GoI3uJNu/2/0Sh+IwYpxhqwFhLgF?=
+ =?us-ascii?Q?QFiGCgO44DQzoC5ZN3sF9GxHYNwO0SITLaPuMkFh7T9KSuCdDSb3S0u87rTL?=
+ =?us-ascii?Q?qVe3PGnMOcbrFnANEfO+kHRhpNDbLW3OGfvVgXnYikmSuwIGldI2roGidxFj?=
+ =?us-ascii?Q?QaRmvgbq9kd6VOCBOZ8S1+xg1YEvUN/mU1GIm0ML7td/i54Pgk3wDn5xtQGc?=
+ =?us-ascii?Q?1XfW4Uuv11SBdKcxiRzsQjb1q80Mphc1sQMjfnQl3FiWZU6l88dQra1Im6k7?=
+ =?us-ascii?Q?dtc4ZUca/fKPZyK5ehQo4+DtNGCRUtQmFHrNLtMZyPphTEFDDJGapIWvoFEc?=
+ =?us-ascii?Q?4v3Y1jHb4z/GXHU2lmcfK2+VAVD3UVO2kOkx6MLRqe+4Dx9/YEkcSK47q4HW?=
+ =?us-ascii?Q?jDIhf+41vuXa+A8=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(376014)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2025 18:38:06.4028 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ba2eb8c4-0d57-470b-9b36-08dd5b4bb471
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000055E1.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6369
+Received-SPF: permerror client-ip=2a01:111:f403:2409::617;
+ envelope-from=Suravee.Suthikulpanit@amd.com;
+ helo=NAM04-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,75 +150,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are two race conditions in the recently added virtio balloon
-test
+The QEMU-emulated AMD IOMMU PCI device is implemented based on the AMD I/O
+Virtualization Technology (IOMMU) Specification [1]. The PCI id for this
+device is platform-specific.
 
- * The /dev/vda device node is not ready
- * The virtio-balloon driver has not issued the first stats refresh
+Currently, the QEMU-emulated AMD IOMMU device is using AMD vendor id and
+undefined device id.
 
-To fix the former, monitor dmesg for a line about 'vda'.
+Therefore, change the vendor id to Red Hat and request a new QEMU-specific
+device id.
 
-To fix the latter, retry the stats query until seeing fresh data.
+[1] https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/specifications/48882_IOMMU.pdf
 
-Adding 'quiet' to the kernel command line reduces serial output
-which otherwise slows boot, making it less likely to hit the former
-race too.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 ---
- tests/functional/test_virtio_balloon.py | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ docs/specs/pci-ids.rst | 2 ++
+ hw/i386/amd_iommu.c    | 3 ++-
+ include/hw/pci/pci.h   | 1 +
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/test_virtio_balloon.py b/tests/functional/test_virtio_balloon.py
-index 67b48e1b4e..308d197eb3 100755
---- a/tests/functional/test_virtio_balloon.py
-+++ b/tests/functional/test_virtio_balloon.py
-@@ -32,7 +32,7 @@ class VirtioBalloonx86(QemuSystemTest):
-         'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
+diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+index 261b0f359f..2416a70a2d 100644
+--- a/docs/specs/pci-ids.rst
++++ b/docs/specs/pci-ids.rst
+@@ -100,6 +100,8 @@ PCI devices (other than virtio):
+   PCI UFS device (``-device ufs``)
+ 1b36:0014
+   PCI RISC-V IOMMU device
++1b36:0015
++  PCI AMD IOMMU device (``-device amd-iommu``)
  
-     DEFAULT_KERNEL_PARAMS = ('root=/dev/vda1 console=ttyS0 net.ifnames=0 '
--                             'rd.rescue')
-+                             'rd.rescue quiet')
+ All these devices are documented in :doc:`index`.
  
-     def wait_for_console_pattern(self, success_message, vm=None):
-         wait_for_console_pattern(
-@@ -47,6 +47,9 @@ def mount_root(self):
-         prompt = '# '
-         self.wait_for_console_pattern(prompt)
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index dda1a5781f..4d8564249c 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1766,7 +1766,8 @@ static void amdvi_pci_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
  
-+        # Synchronize on virtio-block driver creating the root device
-+        exec_command_and_wait_for_pattern(self, "while ! (dmesg -c | grep vda:) ; do sleep 1 ; done", "vda1")
-+
-         exec_command_and_wait_for_pattern(self, 'mount /dev/vda1 /sysroot',
-                                           prompt)
-         exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
-@@ -65,10 +68,21 @@ def assert_initial_stats(self):
-             assert val == UNSET_STATS_VALUE
+-    k->vendor_id = PCI_VENDOR_ID_AMD;
++    k->vendor_id = PCI_VENDOR_ID_REDHAT;
++    k->device_id = PCI_DEVICE_ID_REDHAT_AMD_IOMMU;
+     k->class_id = 0x0806;
+     k->realize = amdvi_pci_realize;
  
-     def assert_running_stats(self, then):
--        ret = self.vm.qmp('qom-get',
--                          {'path': '/machine/peripheral/balloon',
--                           'property': 'guest-stats'})['return']
--        when = ret.get('last-update')
-+        # We told the QEMU to refresh stats every 100ms, but
-+        # there can be a delay between virtio-ballon driver
-+        # being modprobed and seeing the first stats refresh
-+        # Retry a few times for robustness under heavy load
-+        retries = 10
-+        when = 0
-+        while when == 0 and retries:
-+            ret = self.vm.qmp('qom-get',
-+                              {'path': '/machine/peripheral/balloon',
-+                               'property': 'guest-stats'})['return']
-+            when = ret.get('last-update')
-+            if when == 0:
-+                retries = retries - 1
-+                time.sleep(0.5)
-+
-         now = time.time()
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index 4002bbeebd..da44e6673d 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -117,6 +117,7 @@ extern bool pci_available;
+ #define PCI_DEVICE_ID_REDHAT_ACPI_ERST   0x0012
+ #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
+ #define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
++#define PCI_DEVICE_ID_REDHAT_AMD_IOMMU   0x0015
+ #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
  
-         assert when > then and when < now
+ #define FMT_PCIBUS                      PRIx64
 -- 
-2.48.1
+2.34.1
 
 
