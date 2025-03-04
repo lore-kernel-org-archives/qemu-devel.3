@@ -4,70 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02316C282D0
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 07:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A27D2C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 07:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpNB0-000876-4l; Tue, 04 Mar 2025 02:58:55 -0500
+	id 1tpNBq-0000Bf-VK; Tue, 04 Mar 2025 02:59:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tpNAu-00084i-57
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 02:58:49 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tpNBW-00006g-Me
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 02:59:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tpNAs-0003Cj-Mc
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 02:58:47 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tpNBU-0003H1-Bt
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 02:59:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741075124;
+ s=mimecast20190719; t=1741075162;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:resent-to:
  resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
- bh=Guy+SrAar50GsTDhtN33W1HN2BojiNb1pusQcZQ4+wg=;
- b=IaTc5C5WXeQwNsq1lHdo448WbhnWgj1S8HbnCsICwdDRWZ5aFVZvFZg8tDhxPVSm//rHQf
- Y2PbHMVV5c1HdPZ/k2LJSi5Xw9mstRL+5L2+o0RelXo0bBxHewf+yEQECxoXdeYCF8x599
- IJ+tKC22Jmi9y32KQTkTUJcNopQF5ak=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=SG8udyNgcXPK4khZdpXuLvQKpbrngN6G82L4C6A6YgM=;
+ b=IilfKwp6feg4B2VBhOFJ5+LXJWQrvLeh62m464phvVCOBk39T6ncRnnmB8Bbt5NtkfbIud
+ p5V95c71k5ZIL/QRKwBB+Zex15GaC3t/fnDX0SEexfr1szJTnBFp5DdNWJmLYujcYaqJjU
+ HPzhABHsnd2ZD0Ng0usk38NIkKS7L2g=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-STr0ivBiNwGjNEEqUrsQfA-1; Tue,
- 04 Mar 2025 02:58:43 -0500
-X-MC-Unique: STr0ivBiNwGjNEEqUrsQfA-1
-X-Mimecast-MFC-AGG-ID: STr0ivBiNwGjNEEqUrsQfA_1741075122
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-DuNRvjDbOl2XvWHBoVRN6A-1; Tue,
+ 04 Mar 2025 02:59:21 -0500
+X-MC-Unique: DuNRvjDbOl2XvWHBoVRN6A-1
+X-Mimecast-MFC-AGG-ID: DuNRvjDbOl2XvWHBoVRN6A_1741075160
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9927F180087E; Tue,  4 Mar 2025 07:58:42 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1828619137AE
+ for <qemu-devel@nongnu.org>; Tue,  4 Mar 2025 07:59:20 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E9631954B00; Tue,  4 Mar 2025 07:58:42 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C2EBF180087B
+ for <qemu-devel@nongnu.org>; Tue,  4 Mar 2025 07:59:19 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B209121E66C2; Tue, 04 Mar 2025 08:58:39 +0100 (CET)
-Resent-To: michael.roth@amd.com, qemu-devel@nongnu.org
+ id 3DF6B21E66AB; Tue, 04 Mar 2025 08:59:17 +0100 (CET)
+Resent-To: qemu-devel@nongnu.org
 Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Tue, 04 Mar 2025 08:58:39 +0100
-Resent-Message-ID: <87ldtlw7kg.fsf@pond.sub.org>
+Resent-Date: Tue, 04 Mar 2025 08:59:17 +0100
+Resent-Message-ID: <878qplw7je.fsf@pond.sub.org>
+X-From-Line: armbru@redhat.com Tue Mar  4 08:43:47 2025
+Received: from imap.gmail.com ([2a00:1450:4025:402::6d]:993) by
+ dusky.pond.sub.org with IMAP4-SSL getmail6 msgid:11/315749; 04 Mar 2025
+ 07:43:47 -0000
+Received: from blackfin.pond.sub.org
+ (p200300d36f33fd00dda5bc774eb05696.dip0.t-ipconnect.de.
+ [2003:d3:6f33:fd00:dda5:bc77:4eb0:5696])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47a7a2asm16895541f8f.37.2025.03.03.23.21.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Mar 2025 23:21:17 -0800 (PST)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 560BE21E66AB; Tue, 04 Mar 2025 08:21:17 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Victor Toso <victortoso@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,  John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v2] qapi: pluggable backend code generators
-In-Reply-To: <87msea9pdv.fsf@pond.sub.org> (Markus Armbruster's message of
- "Tue, 25 Feb 2025 13:31:56 +0100")
-References: <20250224182030.2089959-1-berrange@redhat.com>
- <87msea9pdv.fsf@pond.sub.org>
-Date: Tue, 04 Mar 2025 08:18:16 +0100
-Message-ID: <874j09z2kn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com,
+	John Snow <jsnow@redhat.com>
+Subject: [PULL v2 2/5] qapi: update pylintrc config
+Date: Tue,  4 Mar 2025 08:21:14 +0100
+Message-ID: <20250304072117.894134-3-armbru@redhat.com>
+In-Reply-To: <20250304072117.894134-1-armbru@redhat.com>
+References: <20250304072117.894134-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Content-Transfer-Encoding: 8bit
+X-getmail-retrieved-from-mailbox: [Gmail]/All Mail
+X-GMAIL-LABELS: "\\Sent"
+X-GMAIL-THRID: 1825647234672510546
+X-GMAIL-MSGID: 1825647234672510546
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -93,87 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+From: John Snow <jsnow@redhat.com>
 
-> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->
->> The 'qapi.backend.QAPIBackend' class defines an API contract for code
->> generators. The current generator is put into a new class
->> 'qapi.backend.QAPICBackend' and made to be the default impl.
->>
->> A custom generator can be requested using the '-k' arg which takes a
->
-> Missed an instance of -k.  Can fix this myself.
->
->> fully qualified python class name
->>
->>    qapi-gen.py -B the.python.module.QAPIMyBackend
->>
->> This allows out of tree code to use the QAPI generator infrastructure
->> to create new language bindings for QAPI schemas. This has the caveat
->> that the QAPI generator APIs are not guaranteed stable, so consumers
->> of this feature may have to update their code to be compatible with
->> future QEMU releases.
->>
->> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+If you've got a newer pylint, it'll whine about positional arguments
+separately from the regular ones. Update the configuration to ignore
+both categories of warning.
 
-[...]
+Signed-off-by: John Snow <jsnow@redhat.com>
+Message-ID: <20250224033741.222749-2-jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ scripts/qapi/pylintrc | 1 +
+ 1 file changed, 1 insertion(+)
 
->> diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
->> index 324081b9fc..8a8b1e0121 100644
->> --- a/scripts/qapi/main.py
->> +++ b/scripts/qapi/main.py
+diff --git a/scripts/qapi/pylintrc b/scripts/qapi/pylintrc
+index c028a1f9f5..d24eece741 100644
+--- a/scripts/qapi/pylintrc
++++ b/scripts/qapi/pylintrc
+@@ -17,6 +17,7 @@ disable=consider-using-f-string,
+         too-many-arguments,
+         too-many-branches,
+         too-many-instance-attributes,
++        too-many-positional-arguments,
+         too-many-statements,
+         useless-option-value,
+ 
+-- 
+2.48.1
 
-[...]
-
->> @@ -29,32 +25,37 @@ def invalid_prefix_char(prefix: str) -> Optional[str=
-]:
->>      return None
->>=20=20
->>=20=20
->> -def generate(schema_file: str,
->> -             output_dir: str,
->> -             prefix: str,
->> -             unmask: bool =3D False,
->> -             builtins: bool =3D False,
->> -             gen_tracing: bool =3D False) -> None:
->> -    """
->> -    Generate C code for the given schema into the target directory.
->> +def create_backend(path: str) -> QAPIBackend:
->> +    if path is None:
->> +        return QAPICBackend()
->>=20=20
->> -    :param schema_file: The primary QAPI schema file.
->> -    :param output_dir: The output directory to store generated code.
->> -    :param prefix: Optional C-code prefix for symbol names.
->> -    :param unmask: Expose non-ABI names through introspection?
->> -    :param builtins: Generate code for built-in types?
->> +    if "." not in path:
->> +        print(f"Missing qualified module path in '{path}'", file=3Dsys.=
-stderr)
->> +        sys.exit(1)
->>=20=20
->> -    :raise QAPIError: On failures.
->> -    """
->> -    assert invalid_prefix_char(prefix) is None
->> +    module_path, _, class_name =3D path.rpartition('.')
->
-> I'd like to tweak this to
->
->        module_path, dot, class_name =3D path.rpartition('.')
->        if not dot:
->            print(f"argument of -B must be of the form MODULE.CLASS",
->                  file=3Dsys.stderr)
-
-This bothers flake8:
-
-    scripts/qapi/main.py:34:15: F541 f-string is missing placeholders
-
-I'll make it a plain string instead.
-
->            sys.exit(1)
->
-
-[...]
 
 
