@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68AE4C282D0
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38FF7C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:27:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpaiP-0006nm-Pn; Tue, 04 Mar 2025 17:26:17 -0500
+	id 1tpaiN-0006dD-Bs; Tue, 04 Mar 2025 17:26:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpah2-0005PL-ES
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:52 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1tpah9-0005SV-Fn
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:25:07 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpah0-0006Vu-AP
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:52 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5dee07e51aaso11482476a12.3
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:49 -0800 (PST)
+ id 1tpah3-0006Y8-IP
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:55 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-abf3cf3d142so560515166b.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741127088; x=1741731888; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741127092; x=1741731892; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g9yH45YV1KCpKu1ZOSaE/nQIrSLBn5v2U2clJ5yvvVg=;
- b=ULLKoIRzcNgiJp8IEqlVPn/vrTJSEfecY9pAKeP0eEDGh+c2ndkR7qUK5v7vp8K1eb
- +LPmfPSobez0G3SbkUlvM7B30sswjqlwuWn6QmOJP3BpEht6j0CpJS1I9F+/tqqdQn4O
- grrZ8MhoHVc3d3JmW8GuJrRKVOlwE4G7xq+yUtr6uLgkt+g46CRw3ZWhES05tiRwTid/
- VrZvWRpsSiDTEhAoeeZCCgEpRamdA7G9tH4UeyGufqJG4E7ASYJmzwBxRM6o5syhPRjj
- vpRFuyl6CuwnFWPA+QFWXm8W8rClqIXr5ZT6IwyjcTDUyVNQMEsricCoc6qMgwpa9aqc
- M33w==
+ bh=nuyU4RtfkAy5FahNVVdqaLuFf5A6JqdgckTnQGTYpas=;
+ b=iScA6Wu3v6BkZNKj3kuwjituD0sCmEm8SpnGQz0fwETsT3RqvNBV9bdCEcLrBf9CVr
+ oVxmJ8FzoWdpZs05lGER3dMwH6LtUgHaD/Ec+t7wNjNeP8IIbIQyJ3EliQzT/5fJLK6S
+ KShn76e+He03svR1Sxp9kd8sKn9FyS1s5zxeucxHSX8unnaOmxTLt4KS3OKsnkOd07w8
+ BLlhILoZsyCpQ9XGEzgzdw33JYhIKctuVtyzrErybOdFmo9lthTxZQX3bt+waX0TPmZ9
+ JT6pMl82DOSUZ5iwu/iOvbzqhXNPT1pHgZtvw+hHvH1TIUWTymOR5Lpq2cAQYr1KmxDC
+ lJXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741127088; x=1741731888;
+ d=1e100.net; s=20230601; t=1741127092; x=1741731892;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=g9yH45YV1KCpKu1ZOSaE/nQIrSLBn5v2U2clJ5yvvVg=;
- b=dYKzvr6uyVgtGWL3vujbIQTrIjc+sVIOOu5RdwDowlBTvmR1pb1Frf5jAn7mfXHlLr
- uJ1pEhPJ4jm2WUYmB8ytZek7Ud1YcdEFvFCUYTdrL9lmcaCXFtqP0bkb2zVyBNGx0kJu
- TpNSY1lOquJb3+gRCSF6TY0Sw4dTgBnlPFAuzeXjrEnqB/HXE2Pz7q5ThLBLDjrU1hex
- JgGg9+u2K6GwLXk04DEQDiAS2bwvQeLXxLTKosK6dudz4ZZxeFwa7ijm7SOFRO5Jld8t
- 5JaHLWNhTjoOWXy70BgoLppAQE1BYICqlfVw/l5CQVxPJw8oq9SN1W6U8ygVHiI6sN6W
- 0dAw==
-X-Gm-Message-State: AOJu0YzzRTiasIbayRKXM26/muDhVr09qTv1bUi1QzD+83lXUocJQQqN
- SXvttuKIbou3wb8EYVuOAyKmwZFzoK3lMfXJZUvBwNbUEyImQ6uVtqZ1REC8lq0=
-X-Gm-Gg: ASbGncv+HreKYhr3sbTsQo7a6I/xQk4SSFMpwYCuyP+8BAB+zwCpHUFpE8+JE3HREcH
- 1Xq506FM9t7LMdg8BYdjPdpzJJ9NBIqP0eMuIK25G0m9Laz5Qr++iHq66u/Fb+nhj+NZUOpYJAq
- 5DsYa5gGshHuw36C6GDcEbrwa95zxwH+rf57sWyClKIk7siGPUMndcmT6RdPgQ9/PAddagLjDzS
- wQ/mcCS39nMrAmHRHJvTyNSn3aIIG9KI7MbmcH4IKeNYQH+Do/DdZ0YgAEXSsufHj0NOM6Cvc8Q
- HmpV/VmK7f/zsqVkjsLfa6OUwgu1eZK9eoOjcRzjf1Uf1jo=
-X-Google-Smtp-Source: AGHT+IHfK1wp/l86i7JC/HiWl9IP+umiIE/xWOvQp8Qdjg+npnU2ItuiZhAPvpEOgc7Mk7cRjHTTwQ==
-X-Received: by 2002:a17:907:7f29:b0:abf:7a26:c485 with SMTP id
- a640c23a62f3a-ac20e1dce23mr79596566b.50.1741127088452; 
- Tue, 04 Mar 2025 14:24:48 -0800 (PST)
+ bh=nuyU4RtfkAy5FahNVVdqaLuFf5A6JqdgckTnQGTYpas=;
+ b=deCZ5igRqYM1LkNMD/2IAGLtFVA+A+2jZNV2XRAXYjcerAUgAulbJdxn1i5+ymwN6J
+ AxYsopd1j/sacxu2TG9uneB6eRAvYx9n7mAiCSTMXOvQJOtXz4PqJI1FmW7grLB2iDL4
+ I6e0aQf/VGPeBzJLifpulAapRU6HIFKIAp8n7Jiey8f78K+sR+Fv4dH/vpaBgfK0Ew+h
+ crEfj+NBrTfJ0deJSzrGuGmkTolCFg4x33nr+eckiIiKym+mNy6bDt3Jvy+4Dc23XHci
+ bguCGm95/5oOEbT9bk6XCo/x7oolg/JprtuihY3reXiINYb/r7I7sLtvbMm112cQNM1z
+ B0xw==
+X-Gm-Message-State: AOJu0YxCDp0YERvedVkBWEIOtRQzEEue3i4E69t6SDifs35f6y7kObor
+ kcmIFd2SXyzGuwOE5boclRPkSQlciZlPmmVGsociBnmjwMsYzu/YvYSPiBOQK3U=
+X-Gm-Gg: ASbGncscrINrIwpbam08YmYPMVUnPtEr2DyEKnJOaC2mQ1guWPvtsMtGzpYHSpG9xfq
+ ZVUa0rYqP1Zj3ig1ah0tZnQIHFcC9nmqFD1RhShPCRwv3pWzHl4NW2rVDIfO4XUWaYeZ7kunsdR
+ UExLJSk+rtHZfDtAWoiv4G8DTdIuioezyIirgBDvfM4ZM5LyNpfKDu7JntN/AfEH9HjivhcWmSn
+ 9ClGsQEeGPQ9pdXe7N6qVdVMDgoMwMGT4qZXWQS6jvf+W5FY7kipO1JvlJcJ9ZnXLf0qwqjnphj
+ cbC08irqWROWhYdUkIV7gIprAQeTpy0c9uphXLzdEE0IB0w=
+X-Google-Smtp-Source: AGHT+IEVLCEN/rLy4cpvUeLBVb/6bdRMFtZpvRF2Uc9DK8BNd2cq3G13uMTgXXkEs1Qed2XBBtl3ew==
+X-Received: by 2002:a05:6402:1e91:b0:5dc:a44e:7644 with SMTP id
+ 4fb4d7f45d1cf-5e59f39d009mr1618069a12.2.1741127091776; 
+ Tue, 04 Mar 2025 14:24:51 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf0c6ee654sm1017650566b.118.2025.03.04.14.24.43
+ a640c23a62f3a-ac1ea7dd823sm234374866b.109.2025.03.04.14.24.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 04 Mar 2025 14:24:45 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 413395FD22;
+ by draig.lan (Postfix) with ESMTP id B70BB5FE31;
  Tue,  4 Mar 2025 22:24:40 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -82,17 +82,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 09/32] tests/functional: Introduce the dso_suffix() helper
-Date: Tue,  4 Mar 2025 22:24:16 +0000
-Message-Id: <20250304222439.2035603-10-alex.bennee@linaro.org>
+Subject: [PATCH v2 13/32] tests/tcg: mark test-vma as a linux-only test
+Date: Tue,  4 Mar 2025 22:24:20 +0000
+Message-Id: <20250304222439.2035603-14-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250304222439.2035603-1-alex.bennee@linaro.org>
 References: <20250304222439.2035603-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,68 +115,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+The main multiarch tests should compile for any POSIX system, however
+test-vma's usage of MAP_NORESERVE makes it a linux-only test. Simply
+moving the source file is enough for the build logic to skip on BSD's.
 
-Introduce a helper to get the default shared library
-suffix used on the host.
-
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20250226140343.3907080-12-alex.bennee@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20250226140343.3907080-7-alex.bennee@linaro.org>
-Message-Id: <20250220080215.49165-3-philmd@linaro.org>
-[AJB: dropped whitespace cmd.py damage]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v2
-  - use simple if ladder for test
----
- tests/functional/qemu_test/__init__.py |  2 +-
- tests/functional/qemu_test/config.py   | 12 ++++++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ tests/tcg/multiarch/{ => linux}/test-vma.c | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename tests/tcg/multiarch/{ => linux}/test-vma.c (100%)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 5c972843a6..45f7befa37 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -7,7 +7,7 @@
- 
- 
- from .asset import Asset
--from .config import BUILD_DIR
-+from .config import BUILD_DIR, dso_suffix
- from .cmd import is_readable_executable_file, \
-     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
-     exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
-diff --git a/tests/functional/qemu_test/config.py b/tests/functional/qemu_test/config.py
-index edd75b7fd0..6d4c9c3ce1 100644
---- a/tests/functional/qemu_test/config.py
-+++ b/tests/functional/qemu_test/config.py
-@@ -13,6 +13,7 @@
- 
- import os
- from pathlib import Path
-+import platform
- 
- 
- def _source_dir():
-@@ -34,3 +35,14 @@ def _build_dir():
-     raise Exception("Cannot identify build dir, set QEMU_BUILD_ROOT")
- 
- BUILD_DIR = _build_dir()
-+
-+def dso_suffix():
-+    '''Return the dynamic libraries suffix for the current platform'''
-+
-+    if platform.system() == "Darwin":
-+        return "dylib"
-+
-+    if platform.system() == "Windows":
-+        return "dll"
-+
-+    return "so"
+diff --git a/tests/tcg/multiarch/test-vma.c b/tests/tcg/multiarch/linux/test-vma.c
+similarity index 100%
+rename from tests/tcg/multiarch/test-vma.c
+rename to tests/tcg/multiarch/linux/test-vma.c
 -- 
 2.39.5
 
