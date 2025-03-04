@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B95C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C45C282D0
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpaPD-00022c-AO; Tue, 04 Mar 2025 17:06:27 -0500
+	id 1tpaY5-0003dM-CO; Tue, 04 Mar 2025 17:15:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaPB-0001uI-3T
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:06:25 -0500
+ id 1tpaPP-000327-8l
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:06:39 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaP9-0001Jm-DI
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:06:24 -0500
+ id 1tpaPN-0001NQ-KV
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:06:38 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaP5-00000000LZK-2Mwn; Tue, 04 Mar 2025 23:06:19 +0100
+ id 1tpaPF-00000000LZh-3PES; Tue, 04 Mar 2025 23:06:29 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,15 +33,13 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v6 18/36] vfio/migration: Add load_device_config_state_start
- trace event
-Date: Tue,  4 Mar 2025 23:03:45 +0100
-Message-ID: <1b6c5a2097e64c272eb7e53f9e4cca4b79581b38.1741124640.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v6 20/36] vfio/migration: Add vfio_add_bytes_transferred()
+Date: Tue,  4 Mar 2025 23:03:47 +0100
+Message-ID: <d1fbc27ac2417b49892f354ba20f6c6b3f7209f8.1741124640.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1741124640.git.maciej.szmigiero@oracle.com>
 References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
  envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
@@ -69,54 +67,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-And rename existing load_device_config_state trace event to
-load_device_config_state_end for consistency since it is triggered at the
-end of loading of the VFIO device config state.
+This way bytes_transferred can also be incremented in other translation
+units than migration.c.
 
-This way both the start and end points of particular device config
-loading operation (a long, BQL-serialized operation) are known.
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/vfio/migration.c  | 4 +++-
- hw/vfio/trace-events | 3 ++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ hw/vfio/migration.c           | 7 ++++++-
+ include/hw/vfio/vfio-common.h | 1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index adfa752db527..03890eaa48a9 100644
+index 5532787be63b..51c056e152aa 100644
 --- a/hw/vfio/migration.c
 +++ b/hw/vfio/migration.c
-@@ -285,6 +285,8 @@ static int vfio_load_device_config_state(QEMUFile *f, void *opaque)
-     VFIODevice *vbasedev = opaque;
-     uint64_t data;
+@@ -391,7 +391,7 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+     qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
+     qemu_put_be64(f, data_size);
+     qemu_put_buffer(f, migration->data_buffer, data_size);
+-    qatomic_add(&bytes_transferred, data_size);
++    vfio_mig_add_bytes_transferred(data_size);
  
-+    trace_vfio_load_device_config_state_start(vbasedev->name);
-+
-     if (vbasedev->ops && vbasedev->ops->vfio_load_config) {
-         int ret;
+     trace_vfio_save_block(migration->vbasedev->name, data_size);
  
-@@ -303,7 +305,7 @@ static int vfio_load_device_config_state(QEMUFile *f, void *opaque)
-         return -EINVAL;
-     }
- 
--    trace_vfio_load_device_config_state(vbasedev->name);
-+    trace_vfio_load_device_config_state_end(vbasedev->name);
-     return qemu_file_get_error(f);
+@@ -1021,6 +1021,11 @@ void vfio_reset_bytes_transferred(void)
+     qatomic_set(&bytes_transferred, 0);
  }
  
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index c5385e1a4f98..a02c668f28a4 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -150,7 +150,8 @@ vfio_display_edid_write_error(void) ""
++void vfio_mig_add_bytes_transferred(unsigned long val)
++{
++    qatomic_add(&bytes_transferred, val);
++}
++
+ /*
+  * Return true when either migration initialized or blocker registered.
+  * Currently only return false when adding blocker fails which will
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index ac35136a1105..5c84ebb00298 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -274,6 +274,7 @@ void vfio_unblock_multiple_devices_migration(void);
+ bool vfio_viommu_preset(VFIODevice *vbasedev);
+ int64_t vfio_mig_bytes_transferred(void);
+ void vfio_reset_bytes_transferred(void);
++void vfio_mig_add_bytes_transferred(unsigned long val);
+ bool vfio_device_state_is_running(VFIODevice *vbasedev);
+ bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
  
- # migration.c
- vfio_load_cleanup(const char *name) " (%s)"
--vfio_load_device_config_state(const char *name) " (%s)"
-+vfio_load_device_config_state_start(const char *name) " (%s)"
-+vfio_load_device_config_state_end(const char *name) " (%s)"
- vfio_load_state(const char *name, uint64_t data) " (%s) data 0x%"PRIx64
- vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size %"PRIu64" ret %d"
- vfio_migration_realize(const char *name) " (%s)"
 
