@@ -4,53 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35D5C282D0
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 23:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46501C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 23:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpbEP-0002u1-TT; Tue, 04 Mar 2025 17:59:22 -0500
+	id 1tpbJF-0003kW-2R; Tue, 04 Mar 2025 18:04:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpbEM-0002t9-TL
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:59:19 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1tpbIa-0003XV-Ea
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 18:03:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpbEK-00074U-R7
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:59:18 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tpaPk-00000000Lah-2Jmd; Tue, 04 Mar 2025 23:07:00 +0100
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: Peter Xu <peterx@redhat.com>,
-	Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v6 26/36] vfio/migration: Multifd device state transfer
- support - received buffers queuing
-Date: Tue,  4 Mar 2025 23:03:53 +0100
-Message-ID: <e3bff515a8d61c582b94b409eb12a45b1a143a69.1741124640.git.maciej.szmigiero@oracle.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <cover.1741124640.git.maciej.szmigiero@oracle.com>
-References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1tpbIW-0000fg-Kb
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 18:03:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741129413;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4ECG3CILomG/zrcnKloSA50DArlI2u38sRYKoeRp/QU=;
+ b=AES7OARgzK9PL/AZwxFMZiohPiYavYVox8m0slC+ZXfdOmETAswsz3pwy2sN2ZHy6tB44A
+ Ww2Iez/KDNXY/fvGRrA3pI5KB/mPjpaqdh3ET2h3a91spKdGG3KTS1pFSHopeb79o8XRrG
+ ZJQMn242ZBJjbtrSvYybC0Y/gpyxB7c=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-510-LgoB8y4rPa-UYyfM7rBBRA-1; Tue, 04 Mar 2025 18:02:21 -0500
+X-MC-Unique: LgoB8y4rPa-UYyfM7rBBRA-1
+X-Mimecast-MFC-AGG-ID: LgoB8y4rPa-UYyfM7rBBRA_1741129341
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6e8e171fd66so23481426d6.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 15:02:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741129341; x=1741734141;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4ECG3CILomG/zrcnKloSA50DArlI2u38sRYKoeRp/QU=;
+ b=ESLaNaBAURcPLjpCPLr2ysq7ib6g0S3h/SUH/EvxMh2sWvyhUwQN4h1pykuefYHijQ
+ 0IPGtRCapmY37U/NzpHGfyH3PmXPet1X39H+6sfJxf07/i3ArIMpmGnX4Ee/rMg8uTZm
+ SqbbH9I6b4nuF3N+tpbIUN9WMLdcFMtFclS/g2WGO9iGRDYPY84IuRtCY31hD9KLlaVo
+ lCP8y+cTern6RHq9g1nxu657e4oixSMiHAah2jg8V/oB85zGvP9YvSMvUn1X5PlJL4kc
+ VvuvaCudndVPqm3B5Mgi3RXcxqp65Ixk7wWibeOynzUX9U6IuUAtptas4MrjRmoeCrvc
+ jbmg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDtSso7VYmQLjdb5AaOTLOGVZXmKX43vJPMoE2JqZqtTZ1NrmxNy0MeomZGZgbhYWIfTP/njg7mbFi@nongnu.org
+X-Gm-Message-State: AOJu0Yxsa8tYM+en24z2GhyYzq9FSRGyO/fOPzyAf9gNncegRSv/VXYQ
+ ZJIAK8059JnB2+S4spBo+E+30vKj+vqRwvH+zO/ek1itKVunbqCgEP7FAtOgNZKEjG49gEgxHvE
+ kYGGlxInelj07/n7TQR+pvpy1uzrEj26S1q1euFtvEJrFlbOfbb/N
+X-Gm-Gg: ASbGncvEeo5SLfEbwB4k9qL4YXXXukCHdApMDFrfCAeObc9cfCwtcjuqXyAbHU33ZVj
+ j265YFszcyGuAOf+A0XzA6VcIwNuAco8QWqg4hCyEV+eIzmzxM6GBLLDE6WCZ1HocVG6R8HMVCR
+ ArFp16l6G7RgVgGXItk+8k/STnlIByqXE/q+UF6D9pVRm2vLmw3J1wcaXZYIwqrMCvLxzpPy13Q
+ cUVCkBUkKkTxQVxXvdH+s/yHgtE/8z71VEeDRWJRjUfErxm0omlbIjqsrSbqs7xzuDrVkDPX3Kt
+ ZZ0Rsqs637EpsL5k
+X-Received: by 2002:ad4:5aa9:0:b0:6e8:9ba6:597d with SMTP id
+ 6a1803df08f44-6e8e6d500e8mr15437726d6.38.1741129341008; 
+ Tue, 04 Mar 2025 15:02:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHIAtRd1tuZyb+JZ+7ftew0BSBHxYZNUEoZEhUa18Y0uG5zp63X3iDjrhO3j1uUUl0F4i8qoA==
+X-Received: by 2002:ad4:5aa9:0:b0:6e8:9ba6:597d with SMTP id
+ 6a1803df08f44-6e8e6d500e8mr15437496d6.38.1741129340703; 
+ Tue, 04 Mar 2025 15:02:20 -0800 (PST)
+Received: from [192.168.40.164] ([70.105.235.240])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e8976d9fe1sm71935946d6.102.2025.03.04.15.02.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Mar 2025 15:02:20 -0800 (PST)
+Message-ID: <c8adb591-c4e5-4658-9b87-cb11d75c143f@redhat.com>
+Date: Tue, 4 Mar 2025 18:02:18 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pci-ids.rst: Add Red Hat pci-id for AMD IOMMU device
+Content-Language: en-US
+To: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, jon.grimm@amd.com, santosh.shukla@amd.com,
+ vasant.hegde@amd.com, Wei.Huang2@amd.com, kraxel@redhat.com, bsd@redhat.com,
+ berrange@redhat.com
+References: <20250304183747.639382-1-suravee.suthikulpanit@amd.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <20250304183747.639382-1-suravee.suthikulpanit@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,247 +115,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+Hi Suravee!
 
-The multifd received data needs to be reassembled since device state
-packets sent via different multifd channels can arrive out-of-order.
+Not your issue, but wondering if others know:
 
-Therefore, each VFIO device state packet carries a header indicating its
-position in the stream.
-The raw device state data is saved into a VFIOStateBuffer for later
-in-order loading into the device.
+Why isn't this an issue for Intel-vtd-iommu & ARM-SMMUV3 ?
+Are they instantiated as non-PCI-id (platform) devices, but AMD puts their IOMMU in PCI space?
 
-The last such VFIO device state packet should have
-VFIO_DEVICE_STATE_CONFIG_STATE flag set and carry the device config state.
+Adv. thanks for the info.
 
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
----
- hw/vfio/migration-multifd.c | 163 ++++++++++++++++++++++++++++++++++++
- hw/vfio/migration-multifd.h |   3 +
- hw/vfio/migration.c         |   1 +
- hw/vfio/trace-events        |   1 +
- 4 files changed, 168 insertions(+)
+- Don
 
-diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-index 091dc43210ad..79df11b7baa9 100644
---- a/hw/vfio/migration-multifd.c
-+++ b/hw/vfio/migration-multifd.c
-@@ -32,18 +32,181 @@ typedef struct VFIODeviceStatePacket {
-     uint8_t data[0];
- } QEMU_PACKED VFIODeviceStatePacket;
- 
-+/* type safety */
-+typedef struct VFIOStateBuffers {
-+    GArray *array;
-+} VFIOStateBuffers;
-+
-+typedef struct VFIOStateBuffer {
-+    bool is_present;
-+    char *data;
-+    size_t len;
-+} VFIOStateBuffer;
-+
- typedef struct VFIOMultifd {
-+    VFIOStateBuffers load_bufs;
-+    QemuCond load_bufs_buffer_ready_cond;
-+    QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
-+    uint32_t load_buf_idx;
-+    uint32_t load_buf_idx_last;
- } VFIOMultifd;
- 
-+static void vfio_state_buffer_clear(gpointer data)
-+{
-+    VFIOStateBuffer *lb = data;
-+
-+    if (!lb->is_present) {
-+        return;
-+    }
-+
-+    g_clear_pointer(&lb->data, g_free);
-+    lb->is_present = false;
-+}
-+
-+static void vfio_state_buffers_init(VFIOStateBuffers *bufs)
-+{
-+    bufs->array = g_array_new(FALSE, TRUE, sizeof(VFIOStateBuffer));
-+    g_array_set_clear_func(bufs->array, vfio_state_buffer_clear);
-+}
-+
-+static void vfio_state_buffers_destroy(VFIOStateBuffers *bufs)
-+{
-+    g_clear_pointer(&bufs->array, g_array_unref);
-+}
-+
-+static void vfio_state_buffers_assert_init(VFIOStateBuffers *bufs)
-+{
-+    assert(bufs->array);
-+}
-+
-+static unsigned int vfio_state_buffers_size_get(VFIOStateBuffers *bufs)
-+{
-+    return bufs->array->len;
-+}
-+
-+static void vfio_state_buffers_size_set(VFIOStateBuffers *bufs,
-+                                        unsigned int size)
-+{
-+    g_array_set_size(bufs->array, size);
-+}
-+
-+static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs,
-+                                              unsigned int idx)
-+{
-+    return &g_array_index(bufs->array, VFIOStateBuffer, idx);
-+}
-+
-+/* called with load_bufs_mutex locked */
-+static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
-+                                          VFIODeviceStatePacket *packet,
-+                                          size_t packet_total_size,
-+                                          Error **errp)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+    VFIOMultifd *multifd = migration->multifd;
-+    VFIOStateBuffer *lb;
-+
-+    vfio_state_buffers_assert_init(&multifd->load_bufs);
-+    if (packet->idx >= vfio_state_buffers_size_get(&multifd->load_bufs)) {
-+        vfio_state_buffers_size_set(&multifd->load_bufs, packet->idx + 1);
-+    }
-+
-+    lb = vfio_state_buffers_at(&multifd->load_bufs, packet->idx);
-+    if (lb->is_present) {
-+        error_setg(errp, "%s: state buffer %" PRIu32 " already filled",
-+                   vbasedev->name, packet->idx);
-+        return false;
-+    }
-+
-+    assert(packet->idx >= multifd->load_buf_idx);
-+
-+    lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
-+    lb->len = packet_total_size - sizeof(*packet);
-+    lb->is_present = true;
-+
-+    return true;
-+}
-+
-+bool vfio_multifd_load_state_buffer(void *opaque, char *data, size_t data_size,
-+                                    Error **errp)
-+{
-+    VFIODevice *vbasedev = opaque;
-+    VFIOMigration *migration = vbasedev->migration;
-+    VFIOMultifd *multifd = migration->multifd;
-+    VFIODeviceStatePacket *packet = (VFIODeviceStatePacket *)data;
-+
-+    if (!vfio_multifd_transfer_enabled(vbasedev)) {
-+        error_setg(errp,
-+                   "%s: got device state packet but not doing multifd transfer",
-+                   vbasedev->name);
-+        return false;
-+    }
-+
-+    assert(multifd);
-+
-+    if (data_size < sizeof(*packet)) {
-+        error_setg(errp, "%s: packet too short at %zu (min is %zu)",
-+                   vbasedev->name, data_size, sizeof(*packet));
-+        return false;
-+    }
-+
-+    if (packet->version != VFIO_DEVICE_STATE_PACKET_VER_CURRENT) {
-+        error_setg(errp, "%s: packet has unknown version %" PRIu32,
-+                   vbasedev->name, packet->version);
-+        return false;
-+    }
-+
-+    if (packet->idx == UINT32_MAX) {
-+        error_setg(errp, "%s: packet index is invalid", vbasedev->name);
-+        return false;
-+    }
-+
-+    trace_vfio_load_state_device_buffer_incoming(vbasedev->name, packet->idx);
-+
-+    /*
-+     * Holding BQL here would violate the lock order and can cause
-+     * a deadlock once we attempt to lock load_bufs_mutex below.
-+     */
-+    assert(!bql_locked());
-+
-+    WITH_QEMU_LOCK_GUARD(&multifd->load_bufs_mutex) {
-+        /* config state packet should be the last one in the stream */
-+        if (packet->flags & VFIO_DEVICE_STATE_CONFIG_STATE) {
-+            multifd->load_buf_idx_last = packet->idx;
-+        }
-+
-+        if (!vfio_load_state_buffer_insert(vbasedev, packet, data_size,
-+                                           errp)) {
-+            return false;
-+        }
-+
-+        qemu_cond_signal(&multifd->load_bufs_buffer_ready_cond);
-+    }
-+
-+    return true;
-+}
-+
- static VFIOMultifd *vfio_multifd_new(void)
- {
-     VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
- 
-+    vfio_state_buffers_init(&multifd->load_bufs);
-+
-+    qemu_mutex_init(&multifd->load_bufs_mutex);
-+
-+    multifd->load_buf_idx = 0;
-+    multifd->load_buf_idx_last = UINT32_MAX;
-+    qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
-+
-     return multifd;
- }
- 
- static void vfio_multifd_free(VFIOMultifd *multifd)
- {
-+    vfio_state_buffers_destroy(&multifd->load_bufs);
-+    qemu_cond_destroy(&multifd->load_bufs_buffer_ready_cond);
-+    qemu_mutex_destroy(&multifd->load_bufs_mutex);
-+
-     g_free(multifd);
- }
- 
-diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
-index 2a7a76164f29..8c6320fcb484 100644
---- a/hw/vfio/migration-multifd.h
-+++ b/hw/vfio/migration-multifd.h
-@@ -20,4 +20,7 @@ void vfio_multifd_cleanup(VFIODevice *vbasedev);
- bool vfio_multifd_transfer_supported(void);
- bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev);
- 
-+bool vfio_multifd_load_state_buffer(void *opaque, char *data, size_t data_size,
-+                                    Error **errp);
-+
- #endif
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 3c8286ae6230..ecc4ee940567 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -801,6 +801,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
-     .load_setup = vfio_load_setup,
-     .load_cleanup = vfio_load_cleanup,
-     .load_state = vfio_load_state,
-+    .load_state_buffer = vfio_multifd_load_state_buffer,
-     .switchover_ack_needed = vfio_switchover_ack_needed,
- };
- 
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index a02c668f28a4..404ea079b25c 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -154,6 +154,7 @@ vfio_load_device_config_state_start(const char *name) " (%s)"
- vfio_load_device_config_state_end(const char *name) " (%s)"
- vfio_load_state(const char *name, uint64_t data) " (%s) data 0x%"PRIx64
- vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size %"PRIu64" ret %d"
-+vfio_load_state_device_buffer_incoming(const char *name, uint32_t idx) " (%s) idx %"PRIu32
- vfio_migration_realize(const char *name) " (%s)"
- vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
- vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
+
+On 3/4/25 1:37 PM, Suravee Suthikulpanit wrote:
+> The QEMU-emulated AMD IOMMU PCI device is implemented based on the AMD I/O
+> Virtualization Technology (IOMMU) Specification [1]. The PCI id for this
+> device is platform-specific.
+> 
+> Currently, the QEMU-emulated AMD IOMMU device is using AMD vendor id and
+> undefined device id.
+> 
+> Therefore, change the vendor id to Red Hat and request a new QEMU-specific
+> device id.
+> 
+> [1] https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/specifications/48882_IOMMU.pdf
+> 
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+> ---
+>   docs/specs/pci-ids.rst | 2 ++
+>   hw/i386/amd_iommu.c    | 3 ++-
+>   include/hw/pci/pci.h   | 1 +
+>   3 files changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+> index 261b0f359f..2416a70a2d 100644
+> --- a/docs/specs/pci-ids.rst
+> +++ b/docs/specs/pci-ids.rst
+> @@ -100,6 +100,8 @@ PCI devices (other than virtio):
+>     PCI UFS device (``-device ufs``)
+>   1b36:0014
+>     PCI RISC-V IOMMU device
+> +1b36:0015
+> +  PCI AMD IOMMU device (``-device amd-iommu``)
+>   
+>   All these devices are documented in :doc:`index`.
+>   
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index dda1a5781f..4d8564249c 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -1766,7 +1766,8 @@ static void amdvi_pci_class_init(ObjectClass *klass, void *data)
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+>   
+> -    k->vendor_id = PCI_VENDOR_ID_AMD;
+> +    k->vendor_id = PCI_VENDOR_ID_REDHAT;
+> +    k->device_id = PCI_DEVICE_ID_REDHAT_AMD_IOMMU;
+>       k->class_id = 0x0806;
+>       k->realize = amdvi_pci_realize;
+>   
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index 4002bbeebd..da44e6673d 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -117,6 +117,7 @@ extern bool pci_available;
+>   #define PCI_DEVICE_ID_REDHAT_ACPI_ERST   0x0012
+>   #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
+>   #define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
+> +#define PCI_DEVICE_ID_REDHAT_AMD_IOMMU   0x0015
+>   #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
+>   
+>   #define FMT_PCIBUS                      PRIx64
+
 
