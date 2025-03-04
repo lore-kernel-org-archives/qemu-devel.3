@@ -4,101 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08001C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 23:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE7CC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 23:21:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpbOn-0006zZ-6x; Tue, 04 Mar 2025 18:10:05 -0500
+	id 1tpbYX-0002H8-L8; Tue, 04 Mar 2025 18:20:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tpbOg-0006xZ-SK
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 18:10:00 -0500
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpbYV-0002GR-4C
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 18:20:07 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tpbOe-0003Rj-Jg
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 18:09:58 -0500
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-7c3b63dfee1so313732585a.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 15:09:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpbYR-0005on-2E
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 18:20:05 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-38f403edb4eso3718720f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 15:20:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741129795; x=1741734595; darn=nongnu.org;
- h=thread-index:content-language:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=+XSagkrtLIWWUgQ7VWsJ/ZzaGqlQpej4VwkzfrXlF0Y=;
- b=SAyBG3ob0Td/oY7r/kHg1vbjKR5VCxqxaPx8hnYP/I2u+K9cDoTmGGgz891jS3V3Ha
- LQUGaREtGDqUNO8JOczK5mweTpFNunYVvjfvy7j64x6QF1vYIDXWdr2KMvvkNEp4g4y8
- ftY4e/0ke885X6Vj+f7X0fqDXP0s3ZsyMnO2fTQJtd9t+TZr06fw7KXE+Mn8Rj+hPjvl
- 4gSBeD4CRUU67dT8KDlN6grwKBS2BbQc/eMCPitpyYGQmH6UlSddCMkPWtTBwKkl7Nb0
- micAdtq1mvzafEjpFX3mYKwuTXTLzdqYqtmSv6T+yAqL50jHX3yLWia5mjr+k1efwBiY
- cyag==
+ d=linaro.org; s=google; t=1741130399; x=1741735199; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=cDmsLECyh1lWtnAcqmQINo04yHjsZIx/j//AFNZo4aE=;
+ b=DvShwWMkHdLnLOzMiXK5kmOI8+CouqNz8G4M2cqd2Wbcsd/Chd+rVR1IgP8jquhJeB
+ jF7nZj//r34w5HZPOfJXHWLWYzysYWWQBRD1CF1RmkfJaaszaUHVKk+s1s52z7FpXspv
+ LV/reYb/AiixSRfsfdlhb89ux68AyYWlNztCij5I5XaDFa/ya2NY+ILyTKNdRykH1mCX
+ sEN9JXuLjY8ir2oEYqGe3k5aOtAbqSQQe6Mv7rmf89mCZe4EqnX7+lRLbPL38MFvr/0K
+ f3FpHnQiukSxzOWkYayCvjnG73iCwSxf8BgxQe54fRSZ+qFVcaXGdfstjIhWz0DgJ2Si
+ lGNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741129795; x=1741734595;
- h=thread-index:content-language:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+XSagkrtLIWWUgQ7VWsJ/ZzaGqlQpej4VwkzfrXlF0Y=;
- b=Wms3oMFCWz3myyV7vqqFik2KWoQbxGmg8FWdy63pbU550n/oILkOOSsK8L9c1jPV9u
- DN8TaT7yh4XYdjaKM4TPOKSLzVYUbk4g1R86qBv/O4nuD9M8alCrM8IV2X2GaoqUShA2
- RtICLBcuj0X0kO5eug6OAvZGIl+RuUarOFKtbdhs0SnMw7kA61psp0D2987MqRhhY30W
- 6hOuqsGcY7NRjLLWTLqY+ARyCj2gLMO/eRn8+OJg8euTJPVZBP6e1OsonjxymXVqSWnE
- JXA0DXxdIacX8duhxyJGMaFPA/tJcWzr4fky0sWRyB0moNp9dCQE4IC9X3CIDECwyDgz
- ClkQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV54rC5U1OHzodtoEomL8Oj4TWFy1g8NR1zKRgY3wpHqqAvrkvSHNwdZC5+YVY1oc6pnhtmT00hfEha@nongnu.org
-X-Gm-Message-State: AOJu0Yw/v2qlNDhkuoAk2wpeD0RmS/AvI+qtr5JmZFXVFh+aSpsmcnNO
- 5Ba+c1Q7N9dH4AwdIbo2ZTE5JFzTvPGMn/Vgnq7RLgBz75y2VnZW
-X-Gm-Gg: ASbGncuLstK9PW16Kk/GwrBvpLX+KNql5IgFDhz5eHkWr1aipZ+++LTy9Ip77SXChxL
- jBDMwYr9ELFTMR0gp05E/cIGfUcGqXaxcG7Wdo+qB2P+HpwMDsQu1cW6GMK2JmsZk5XH+Ypn27u
- Lm7/iZhQkhPj2kt1zERXHJCvgKriqceabdJAjW4kwpiJ/Rb8r149bL9RU0qJqSuOemSXS4hMoie
- yoD3MyszNwytSevGUt52o4TY57Yp3Y90KvNMGBOjobiv+V6UdRbMielbwjTSr9JATSV8h11Rwaj
- 2FagBXV7LIgiUZEEQMmTRfhyRnuuuupvCyCCaPvTf7TayKJXMwLJ3rSulrhVlQCfDMij2lmP6co
- WcU0NE/g=
-X-Google-Smtp-Source: AGHT+IGBZj8S74FApcP94/DLdVU4DoeznXNw5G6M7gFS7haBaVrgY26gt+VRZM9XOBoXfjtVCnr8zw==
-X-Received: by 2002:a05:6214:230a:b0:6d8:f0ba:ea92 with SMTP id
- 6a1803df08f44-6e8e6d5ed83mr17629286d6.21.1741129794743; 
- Tue, 04 Mar 2025 15:09:54 -0800 (PST)
-Received: from DESKTOPUU50BPD (syn-174-097-131-055.res.spectrum.com.
- [174.97.131.55]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e897634c3dsm71939996d6.1.2025.03.04.15.09.52
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 04 Mar 2025 15:09:54 -0800 (PST)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
-	<qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
- "'Brian Cain'" <bcain@quicinc.com>
-References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
- <20250301052845.1012069-35-brian.cain@oss.qualcomm.com>
- <3329ec67-3bf3-425d-b15c-ba77cd8bcd30@oss.qualcomm.com>
-In-Reply-To: <3329ec67-3bf3-425d-b15c-ba77cd8bcd30@oss.qualcomm.com>
-Subject: RE: [PATCH 34/39] target/hexagon: Add TLB, k0 {un,}lock
-Date: Tue, 4 Mar 2025 17:09:50 -0600
-Message-ID: <014701db8d5a$8a1ad930$9e508b90$@gmail.com>
+ d=1e100.net; s=20230601; t=1741130399; x=1741735199;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cDmsLECyh1lWtnAcqmQINo04yHjsZIx/j//AFNZo4aE=;
+ b=rE2ebo5saEW+mKXDERoQgqHUwkuPp3748IrzAdUKp9IfC9U4BVtohQWXnGR4Rf7nLI
+ TmCO7tJv1gsH1V2FrvB3oa4LALftpwm/5mzeD8m0zvo5WS5ot4+WJ9+MGB0RbBWiXmrb
+ 0XtFfSDcDpII2Zdsl5ToPsd6TJ+fqzR3v3UDwnIGuzXa1SgrQ7Qddx2gJILjvRSeIWgX
+ WHUELMo1rWsVAasPUBuaaNO8ARE84oDpwNjYFUsoIYdYHNlsS+A0znolTHh7lws++ZJw
+ RUgqNisk7jW6zb27eUI3M/gCky2H3FxU3hfGSJu7l/1J0nbkPzrXbfMbdT4h8VunehhY
+ zMig==
+X-Gm-Message-State: AOJu0Yzp3lLbXIdYfXNXMteM17TFl0Mn/Hb2ifDcrB9U7mHMcpV7RacI
+ gIPKE8KW9mKrzpjHziMqDBMDv7+KOlPHnAuGCFjWpkw3JnYZ57y2PcDkMM2bGzoBZPiBIGn0ECq
+ 3HFg=
+X-Gm-Gg: ASbGncuChsDs7KvIZC21S7AuHv7JeQsAnSvl2nq0KG4TLpg+xSZf3KLZRb7tI2KPNjP
+ LjVMT9eRTyJ0GrUiMaX9pvnKChkbuCHCQNsF4uDaRm8lhzvRmX2wui+zN9hLJix+M0t/2gC7CKL
+ KpV7ap2tqIcnO9Soa5pRVsQzKvrE6Re/pxVYSgvzAqenExYvIizRrfgYU4ddfGMuj2rq9HTJ/fl
+ 4SRJP4JV9aE3yciRnfwn2wlVEHs4pXWvABqU7sNg2jaUcpjJtLUarJYz8NkSJT+zwTieGM51Mv8
+ uW1/g2DaTJ3LqYtUzjpTDhXu+AHR6TvvYfEaon3yBp6tQzeUOTftiO+qXawT6jzf3Fh+njcre3s
+ BOvkg3gqrUJo4q/NnV0E=
+X-Google-Smtp-Source: AGHT+IGjgXkehsg2ZYkMcZ/jfreXBKgemzzI56u1y0hIUSZi/BLhlEv4GJ+zMIL0KfdUKl8qM10+xg==
+X-Received: by 2002:a5d:6487:0:b0:38f:3b9b:6f91 with SMTP id
+ ffacd0b85a97d-3911f74009fmr421470f8f.12.1741130398771; 
+ Tue, 04 Mar 2025 15:19:58 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bbf2edf84sm99190215e9.40.2025.03.04.15.19.57
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 04 Mar 2025 15:19:57 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-riscv@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] hw/riscv/riscv-iommu: Get target page info using runtime
+ helpers
+Date: Wed,  5 Mar 2025 00:19:56 +0100
+Message-ID: <20250304231956.34396-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-us
-Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQLrtTt/AcPvtViyyI+gUA==
-X-Antivirus: Norton (VPS 250304-10, 3/4/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x732.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,210 +103,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Prefer runtime helpers to get target page size / mask / bits
+rather than compile time definitions. This will help to build
+these files once for all RISC-V binaries.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/riscv/riscv-iommu-pci.c |  4 +++-
+ hw/riscv/riscv-iommu.c     | 29 +++++++++++++++--------------
+ 2 files changed, 18 insertions(+), 15 deletions(-)
 
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Monday, March 3, 2025 10:24 AM
-> To: qemu-devel@nongnu.org
-> Cc: richard.henderson@linaro.org; philmd@linaro.org;
-> quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
-> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: Re: [PATCH 34/39] target/hexagon: Add TLB, k0 {un,}lock
->=20
->=20
-> On 2/28/2025 11:28 PM, Brian Cain wrote:
-> > From: Brian Cain <bcain@quicinc.com>
-> >
-> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> > ---
-> >   target/hexagon/sys_macros.h |   8 +--
-> >   target/hexagon/op_helper.c  | 104
-> ++++++++++++++++++++++++++++++++++++
-> >   2 files changed, 108 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/target/hexagon/sys_macros.h =
-b/target/hexagon/sys_macros.h
-> > index 3c4c3c7aa5..e5dc1ce0ab 100644
-> > --- a/target/hexagon/sys_macros.h
-> > +++ b/target/hexagon/sys_macros.h
-> > @@ -143,11 +143,11 @@
-> >   #define fDCINVIDX(REG)
-> >   #define fDCINVA(REG) do { REG =3D REG; } while (0) /* Nothing to =
-do in
-> > qemu */
-> >
-> > -#define fSET_TLB_LOCK()       g_assert_not_reached()
-> > -#define fCLEAR_TLB_LOCK()     g_assert_not_reached()
-> > +#define fSET_TLB_LOCK()       hex_tlb_lock(env);
-> > +#define fCLEAR_TLB_LOCK()     hex_tlb_unlock(env);
-> >
-> > -#define fSET_K0_LOCK()        g_assert_not_reached()
-> > -#define fCLEAR_K0_LOCK()      g_assert_not_reached()
-> > +#define fSET_K0_LOCK()        hex_k0_lock(env);
-> > +#define fCLEAR_K0_LOCK()      hex_k0_unlock(env);
-> >
-> >   #define fTLB_IDXMASK(INDEX) \
-> >       ((INDEX) & (fPOW2_ROUNDUP(fCAST4u(env_archcpu(env)-
-> >num_tlbs)) -
-> > 1)) diff --git a/target/hexagon/op_helper.c
-> > b/target/hexagon/op_helper.c index 702c3dd3c6..f3b14fbf58 100644
-> > --- a/target/hexagon/op_helper.c
-> > +++ b/target/hexagon/op_helper.c
-> > @@ -1184,6 +1184,110 @@ void HELPER(modify_ssr)(CPUHexagonState
-> *env, uint32_t new, uint32_t old)
-> >       BQL_LOCK_GUARD();
-> >       hexagon_modify_ssr(env, new, old);
-> >   }
-> > +
-> > +static void hex_k0_lock(CPUHexagonState *env) {
-> > +    BQL_LOCK_GUARD();
-> > +    g_assert((env->k0_lock_count =3D=3D 0) || (env->k0_lock_count =
-=3D=3D 1));
-> > +
-> > +    uint32_t syscfg =3D arch_get_system_reg(env, HEX_SREG_SYSCFG);
-
-Minor nit - registers should be target_ulong type.
-
-> > +    if (GET_SYSCFG_FIELD(SYSCFG_K0LOCK, syscfg)) {
-> > +        if (env->k0_lock_state =3D=3D HEX_LOCK_QUEUED) {
-
-Are HEX_LOCK_* defined in an earlier patch in this series.  Can we move =
-the definitions here?
-
-> > +            env->next_PC +=3D 4;
-> > +            env->k0_lock_count++;
-> > +            env->k0_lock_state =3D HEX_LOCK_OWNER;
-> > +            SET_SYSCFG_FIELD(env, SYSCFG_K0LOCK, 1);
-> > +            return;
-> > +        }
-> > +        if (env->k0_lock_state =3D=3D HEX_LOCK_OWNER) {
-> > +            qemu_log_mask(LOG_GUEST_ERROR,
-> > +                          "Double k0lock at PC: 0x%x, thread may =
-hang\n",
-> > +                          env->next_PC);
-> > +            env->next_PC +=3D 4;
-> > +            CPUState *cs =3D env_cpu(env);
-> > +            cpu_interrupt(cs, CPU_INTERRUPT_HALT);
-> > +            return;
-> > +        }
-> > +        env->k0_lock_state =3D HEX_LOCK_WAITING;
-> > +        CPUState *cs =3D env_cpu(env);
-> > +        cpu_interrupt(cs, CPU_INTERRUPT_HALT);
-> > +    } else {
-> > +        env->next_PC +=3D 4;
-> > +        env->k0_lock_count++;
-> > +        env->k0_lock_state =3D HEX_LOCK_OWNER;
-> > +        SET_SYSCFG_FIELD(env, SYSCFG_K0LOCK, 1);
-> > +    }
-> > +
-> > +}
->=20
-> This was discussed previously at
-> https://lore.kernel.org/qemu-
-> devel/CH3PR02MB102479550F96F09E0C9D50BA7B87B2@CH3PR02MB10247.n
-> amprd02.prod.outlook.com/
->=20
-> We have taken some but not all of the suggestions from then.  One of =
-our
-> concerns is regarding an architectural requirement for "fairness" with =
-regards
-> to picking the hardware thread to be selected to pass the lock to.  If =
-we
-> unleash the thundering herd, does this just mean that the fairness is
-> dependent on the host scheduler design / configuration?
->=20
-> Also - I note that we didn't take the suggestions regarding =
-cpu_loop_exit /
-> cpu_loop_exit_restore.  That was an oversight, the next revision will =
-include
-> that update.
->=20
-> > +
-> > +static void hex_k0_unlock(CPUHexagonState *env) {
-> > +    BQL_LOCK_GUARD();
-> > +    g_assert((env->k0_lock_count =3D=3D 0) || (env->k0_lock_count =
-=3D=3D 1));
-> > +
-> > +    /* Nothing to do if the k0 isn't locked by this thread */
-> > +    uint32_t syscfg =3D arch_get_system_reg(env, HEX_SREG_SYSCFG);
-
-target_ulong
-
-> > +    if ((GET_SYSCFG_FIELD(SYSCFG_K0LOCK, syscfg) =3D=3D 0) ||
-> > +        (env->k0_lock_state !=3D HEX_LOCK_OWNER)) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR,
-> > +                      "thread %d attempted to unlock k0 without =
-having the "
-> > +                      "lock, k0_lock state =3D %d, syscfg:k0 =3D =
-%d\n",
-> > +                      env->threadId, env->k0_lock_state,
-> > +                      GET_SYSCFG_FIELD(SYSCFG_K0LOCK, syscfg));
-> > +        g_assert(env->k0_lock_state !=3D HEX_LOCK_WAITING);
-> > +        return;
-> > +    }
-> > +
-> > +    env->k0_lock_count--;
-> > +    env->k0_lock_state =3D HEX_LOCK_UNLOCKED;
-> > +    SET_SYSCFG_FIELD(env, SYSCFG_K0LOCK, 0);
-> > +
-> > +    /* Look for a thread to unlock */
-> > +    unsigned int this_threadId =3D env->threadId;
-> > +    CPUHexagonState *unlock_thread =3D NULL;
-> > +    CPUState *cs;
-> > +    CPU_FOREACH(cs) {
-> > +        CPUHexagonState *thread =3D cpu_env(cs);
-> > +
-> > +        /*
-> > +         * The hardware implements round-robin fairness, so we look =
-for
-> threads
-> > +         * starting at env->threadId + 1 and incrementing modulo =
-the number
-> of
-> > +         * threads.
-> > +         *
-> > +         * To implement this, we check if thread is a earlier in =
-the modulo
-> > +         * sequence than unlock_thread.
-> > +         *     if unlock thread is higher than this thread
-> > +         *         thread must be between this thread and =
-unlock_thread
-> > +         *     else
-> > +         *         thread higher than this thread is ahead of =
-unlock_thread
-> > +         *         thread must be lower then unlock thread
-> > +         */
-> > +        if (thread->k0_lock_state =3D=3D HEX_LOCK_WAITING) {
-> > +            if (!unlock_thread) {
-> > +                unlock_thread =3D thread;
-> > +            } else if (unlock_thread->threadId > this_threadId) {
-> > +                if (this_threadId < thread->threadId &&
-> > +                    thread->threadId < unlock_thread->threadId) {
-> > +                    unlock_thread =3D thread;
-> > +                }
-> > +            } else {
-> > +                if (thread->threadId > this_threadId) {
-> > +                    unlock_thread =3D thread;
-> > +                }
-> > +                if (thread->threadId < unlock_thread->threadId) {
-> > +                    unlock_thread =3D thread;
-> > +                }
-> > +            }
-> > +        }
-> > +    }
-> > +    if (unlock_thread) {
-> > +        cs =3D env_cpu(unlock_thread);
-> > +        unlock_thread->k0_lock_state =3D HEX_LOCK_QUEUED;
-> > +        SET_SYSCFG_FIELD(unlock_thread, SYSCFG_K0LOCK, 1);
-> > +        cpu_interrupt(cs, CPU_INTERRUPT_K0_UNLOCK);
-> > +    }
-> > +
-> > +}
-> >   #endif
-> >
-> >
+diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+index 12451869e41..e2b893c5898 100644
+--- a/hw/riscv/riscv-iommu-pci.c
++++ b/hw/riscv/riscv-iommu-pci.c
+@@ -23,6 +23,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/riscv/riscv_hart.h"
+ #include "migration/vmstate.h"
++#include "exec/target_page.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "qemu/host-utils.h"
+@@ -102,7 +103,8 @@ static void riscv_iommu_pci_realize(PCIDevice *dev, Error **errp)
+     qdev_realize(DEVICE(iommu), NULL, errp);
+ 
+     memory_region_init(&s->bar0, OBJECT(s), "riscv-iommu-bar0",
+-        QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr), TARGET_PAGE_SIZE));
++                       QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr),
++                                     qemu_target_page_size()));
+     memory_region_add_subregion(&s->bar0, 0, &iommu->regs_mr);
+ 
+     pcie_endpoint_cap_init(dev, 0);
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index e7568ca227a..8bbb33b8b53 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -23,6 +23,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/riscv/riscv_hart.h"
+ #include "migration/vmstate.h"
++#include "exec/target_page.h"
+ #include "qapi/error.h"
+ #include "qemu/timer.h"
+ 
+@@ -300,14 +301,14 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
+         iotlb->target_as = &s->trap_as;
+         iotlb->translated_addr = iotlb->iova;
+-        iotlb->addr_mask = ~TARGET_PAGE_MASK;
++        iotlb->addr_mask = ~qemu_target_page_mask();
+         return 0;
+     }
+ 
+     /* Exit early for pass-through mode. */
+     if (!(en_s || en_g)) {
+         iotlb->translated_addr = iotlb->iova;
+-        iotlb->addr_mask = ~TARGET_PAGE_MASK;
++        iotlb->addr_mask = ~qemu_target_page_mask();
+         /* Allow R/W in pass-through mode */
+         iotlb->perm = IOMMU_RW;
+         return 0;
+@@ -390,7 +391,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     do {
+         const unsigned widened = (pass && !sc[pass].step) ? 2 : 0;
+         const unsigned va_bits = widened + sc[pass].ptidxbits;
+-        const unsigned va_skip = TARGET_PAGE_BITS + sc[pass].ptidxbits *
++        const unsigned va_skip = qemu_target_page_bits() + sc[pass].ptidxbits *
+                                  (sc[pass].levels - 1 - sc[pass].step);
+         const unsigned idx = (addr >> va_skip) & ((1 << va_bits) - 1);
+         const dma_addr_t pte_addr = base + idx * sc[pass].ptesize;
+@@ -448,7 +449,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             break;                /* Reserved leaf PTE flags: PTE_W */
+         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == (PTE_W | PTE_X)) {
+             break;                /* Reserved leaf PTE flags: PTE_W + PTE_X */
+-        } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
++        } else if (ppn & ((1ULL << (va_skip - qemu_target_page_bits())) - 1)) {
+             break;                /* Misaligned PPN */
+         } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
+             break;                /* Read access check failed */
+@@ -480,7 +481,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+                 riscv_iommu_msi_check(s, ctx, base)) {
+                 /* Trap MSI writes and return GPA address. */
+                 iotlb->target_as = &s->trap_as;
+-                iotlb->addr_mask = ~TARGET_PAGE_MASK;
++                iotlb->addr_mask = ~qemu_target_page_mask();
+                 return 0;
+             }
+ 
+@@ -950,7 +951,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+          *   device index: [23:16][15:7][6:0]
+          */
+         const int split = depth * 9 + 6 + dc_fmt;
+-        addr |= ((ctx->devid >> split) << 3) & ~TARGET_PAGE_MASK;
++        addr |= ((ctx->devid >> split) << 3) & ~qemu_target_page_mask();
+         if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
+                             MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+             return RISCV_IOMMU_FQ_CAUSE_DDT_LOAD_FAULT;
+@@ -968,7 +969,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+     }
+ 
+     /* index into device context entry page */
+-    addr |= (ctx->devid * dc_len) & ~TARGET_PAGE_MASK;
++    addr |= (ctx->devid * dc_len) & ~qemu_target_page_mask();
+ 
+     memset(&dc, 0, sizeof(dc));
+     if (dma_memory_read(s->target_as, addr, &dc, dc_len,
+@@ -1037,7 +1038,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+          * level. See IOMMU Specification, 2.2. Process-Directory-Table.
+          */
+         const int split = depth * 9 + 8;
+-        addr |= ((ctx->process_id >> split) << 3) & ~TARGET_PAGE_MASK;
++        addr |= ((ctx->process_id >> split) << 3) & ~qemu_target_page_mask();
+         if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
+                             MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+             return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+@@ -1050,7 +1051,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+     }
+ 
+     /* Leaf entry in PDT */
+-    addr |= (ctx->process_id << 4) & ~TARGET_PAGE_MASK;
++    addr |= (ctx->process_id << 4) & ~qemu_target_page_mask();
+     if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2,
+                         MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+         return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+@@ -1440,7 +1441,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     perm = iot ? iot->perm : IOMMU_NONE;
+     if (perm != IOMMU_NONE) {
+         iotlb->translated_addr = PPN_PHYS(iot->phys);
+-        iotlb->addr_mask = ~TARGET_PAGE_MASK;
++        iotlb->addr_mask = ~qemu_target_page_mask();
+         iotlb->perm = perm;
+         fault = 0;
+         goto done;
+@@ -1481,7 +1482,7 @@ done:
+                                RISCV_IOMMU_PREQ_HDR_PID, ctx->process_id);
+         }
+         pr.hdr = set_field(pr.hdr, RISCV_IOMMU_PREQ_HDR_DID, ctx->devid);
+-        pr.payload = (iotlb->iova & TARGET_PAGE_MASK) |
++        pr.payload = (iotlb->iova & qemu_target_page_mask()) |
+                      RISCV_IOMMU_PREQ_PAYLOAD_M;
+         riscv_iommu_pri(s, &pr);
+         return fault;
+@@ -1683,7 +1684,7 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+                                        RISCV_IOMMU_CMD_IOTINVAL_GSCID);
+             uint32_t pscid = get_field(cmd.dword0,
+                                        RISCV_IOMMU_CMD_IOTINVAL_PSCID);
+-            hwaddr iova = (cmd.dword1 << 2) & TARGET_PAGE_MASK;
++            hwaddr iova = (cmd.dword1 << 2) & qemu_target_page_mask();
+ 
+             if (pscv) {
+                 /* illegal command arguments IOTINVAL.GVMA & PSCV == 1 */
+@@ -1715,7 +1716,7 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+                                        RISCV_IOMMU_CMD_IOTINVAL_GSCID);
+             uint32_t pscid = get_field(cmd.dword0,
+                                        RISCV_IOMMU_CMD_IOTINVAL_PSCID);
+-            hwaddr iova = (cmd.dword1 << 2) & TARGET_PAGE_MASK;
++            hwaddr iova = (cmd.dword1 << 2) & qemu_target_page_mask();
+             RISCVIOMMUTransTag transtag;
+ 
+             if (gv) {
+@@ -1928,7 +1929,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState *s)
+             iova = RISCV_IOMMU_TR_RESPONSE_FAULT | (((uint64_t) fault) << 10);
+         } else {
+             iova = iotlb.translated_addr & ~iotlb.addr_mask;
+-            iova >>= TARGET_PAGE_BITS;
++            iova >>= qemu_target_page_bits();
+             iova &= RISCV_IOMMU_TR_RESPONSE_PPN;
+ 
+             /* We do not support superpages (> 4kbs) for now */
+-- 
+2.47.1
 
 
