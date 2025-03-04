@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39A7C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 13:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB594C282D6
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 13:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpSZs-0005QH-7w; Tue, 04 Mar 2025 08:44:56 -0500
+	id 1tpScZ-00079j-2g; Tue, 04 Mar 2025 08:47:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpSZr-0005PU-E6
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 08:44:55 -0500
+ id 1tpScX-00079X-0y
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 08:47:41 -0500
 Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpSZl-000054-B0
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 08:44:52 -0500
+ id 1tpScV-0001ts-9W
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 08:47:40 -0500
 Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43bccfa7b89so4954315e9.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 05:44:48 -0800 (PST)
+ 5b1f17b1804b1-4393dc02b78so36684465e9.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 05:47:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741095887; x=1741700687; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741096058; x=1741700858; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HY/KyjOO93Qk38Sc+AJ7gPTFlAmrB03aC1xjm86gcH8=;
- b=gL6agW+UhR4rE9HV9/EvDr5BnY73SyjZEz+Ryhazo70z/OAC+Qe+ao4WIOARhTXoqt
- Y+QYSPu/I76yY/hqr+75NsLIg3GjWkfHlVY9992E0wdX8jgT/eXonbNUaxoCIwI0ApvF
- nwiQP3hLCWHCYNld/p1jYv/W5eihPFA6skowUUg0zTw5pnZ65hUc2NVCfByihJ701TDV
- 93WOmpM+fs/Sd2WMwUDW2QX4vzkkWE5145VJMjj4XlpnJp0umPkfgqJuzpK5DpbrSx1r
- Z+mSUWPi7nZgRh8UVuao8PC6cVeUT8ywYC8bZSR2hyUHcJ5MFPKgbgBzFrUkv2gD4KvR
- Zmiw==
+ bh=WwdOWvSasRTLmCbAeRIjsJSqJ02k3qKHagbpmUPzVqo=;
+ b=eM6vHfg174KtqI5kznVtqLt7sB2nNLsxiMRXyRpvEmVoJusKEmIujfq+nqBny48x/h
+ WgLYW7+18/A9chsuRPG+fv1WK/nOvyaJt07EsEVZ3bK+QxAlYSLLpQQj8qfJjNdSURSX
+ 0boydfGRPdqVhBlcAV0luZ7wXRqZckcLOdCKZt4KSjQxIypc79pHOAlfvZkJvr2yMdf+
+ BBw4ix/u5GQNDt7IduLkMZEb3v1MLJpoHMz51rKSIeARXtUByEfhGITjc5REdY8FiZr1
+ p893kApslzaY50egXAzV/nhJVAGKy+ZP145TfRsKR1KzUOCFz+dQA6ruebAh0E/ixDi5
+ LjhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741095887; x=1741700687;
+ d=1e100.net; s=20230601; t=1741096058; x=1741700858;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HY/KyjOO93Qk38Sc+AJ7gPTFlAmrB03aC1xjm86gcH8=;
- b=Snn8JelQqqlxFsYfVYgcHVNB+5UmI1/36DADjypINyxwQtlXDc0bwLO+YgmsObDyK/
- shKkTju76mcmbfsyjCklP+p1F5CA8U0nDitw/3p9NfGHY8v5PadBdnpoUEOebKH7Bj2p
- Wr/r38L4q1goMQ1s0527fYTkaf/NyoN7MfsugDkiNhAbOZV5egcjnixbCgMBqgqzsMqA
- aWV4837C4vqPDBUOudVyxfejusmTyKNPfvkN9Yw4PyCemRsBV64gomTt+tDOjCw8EoDB
- 5VrfE0a0+pYqsqk3ymloaiWtB+Jd8JsBSasa8olZ9eWmM3LJqz4vQcsrfgDoc9rqOpEl
- MnXw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVcMwUYH6fYF40L3581EDoNBi/vflWNI1swloZUoN1p/CCiGEfkUSbw3qdDDGuMeeQykjLI1PMWAKCG@nongnu.org
-X-Gm-Message-State: AOJu0YzQayogb3XKNVwKH2wSFbAG0nNNo4O4+ocVOEDsXl7asoSuNp8l
- 8f/yOE+yA/cjoSPhl4HN7FiR2ePF78WqncsAv80HlnQGzIPydyqniQrGZuML4BWyllNtK3bxiGF
- 4BDU=
-X-Gm-Gg: ASbGnctK3mGVQpsfo7nrmGLn3PuFg8auV1BiRuIiEXdlt2GI812eT3scCGYK/FasmyA
- BxkUe67arSHR4TaD1OOKtY6cO/xZwh/fmTB6+tiIJgbSbPUej4ZUUqLob71s82JKf0h0wOZLUc8
- YKQH0SrmUUBJ6xiHdh6u1WV6kmAESJylzT3NulqjtqGDomWRtp0z+X6CHfNFfwOJXn//878W6/n
- /RlVoLz8rOyRnx0BtLPlmloLP9Ow/X2BS6LbekJ0Ifl3avB64hKhxE0MaUpT41kMuB1N7UvFA37
- ZVJQJGTyuAzCXZu0y2OH9Y5AnqbKsouSGeukXQvGgQk+f54=
-X-Google-Smtp-Source: AGHT+IHIfDgPP+pk8tg5K+lbmHXf9+im4SrXVYKoe95GoIVm9L69KclYLpkSqS1GEzv4K6V2icRd0g==
-X-Received: by 2002:a05:600c:3583:b0:43b:cb92:8c52 with SMTP id
- 5b1f17b1804b1-43bcb928e75mr25192015e9.12.1741095887483; 
- Tue, 04 Mar 2025 05:44:47 -0800 (PST)
+ bh=WwdOWvSasRTLmCbAeRIjsJSqJ02k3qKHagbpmUPzVqo=;
+ b=UuouSpq21DRalGBA6IE2HCuTjPZSABrB205L0Ze3UM/wlEF2sC4wrKQaOBJcQzW5Pa
+ hENCf9h2jNV+aewRbO2pDuBQYwJAgwBWaUFbUPhdqprgm2v9zF1+AH0vpRGSIZ2nVI0S
+ bLSgsJgZYAAmOGwG8GtmR79iMszr49SRmzVQHxzTrd5XjdIw5D+HJbt1e966Tbx4cmRM
+ mB4enVw/CgywKT8boUdKwEOWDDiJbJrfpOsPfFr+96+wgbPS5wXwAREWQ1SpSr/uIN2b
+ 08netNPMwQ4LRyMT+rtr9mmMyJGflt5u5TcWNbxI/SmOmfno1LixQqSeR8wJv8WUKesK
+ lscA==
+X-Gm-Message-State: AOJu0YwZajJVk0YTd7GRtgh0RJrDWRDRca4UliP3K2FA65mJMfviTapl
+ hmAEcDRj4mxVvWOAISpSsLt5xGEoKikKmDnunTEygnlG1faq9K5GZCEZFyFH/QKjvbbcIpuBgHq
+ XyEc=
+X-Gm-Gg: ASbGncvlLOF7+7S2E9NiYTUytDwsICOKHKRDz5NeESUTWFz/LBnubxAux6gKqwigBC4
+ zhtmVjv35wRQ0nhb13dpiq6g373pdbRkUqcXnQPrbhhEXwW1emnhxwXo33QGXBhgwnjoz31Trnm
+ pXtRWXbws17MsvSoKGb+AgL7KsFbYSI5gL1bl9eFHh5EyibgpjLw+QRkclZjnkPRluRpNl9nljf
+ QfoGt1DRUVYA87XpbE2aTGI8K5xFa6eQ7RB1QbY5EcF4iaKj84/LI5aEwXERQ4t+fs/ECb9iCMo
+ NB2Wmh0479xsDWNEGBTHBh+JljwlMc7VRcB1iEz3jUpTjWY=
+X-Google-Smtp-Source: AGHT+IHYjDxqH0+rf0J4dpK7Zt4GhrPXEEV2uY8gt7PaLzbMNXjEMSxKzkK2xgdGWZdg8emol9MHUw==
+X-Received: by 2002:a5d:5f84:0:b0:38f:28dc:db58 with SMTP id
+ ffacd0b85a97d-390ec7c70fcmr15767050f8f.10.1741096057664; 
+ Tue, 04 Mar 2025 05:47:37 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bbb15841dsm93424975e9.1.2025.03.04.05.44.46
+ ffacd0b85a97d-390e484489esm18100370f8f.68.2025.03.04.05.47.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 05:44:46 -0800 (PST)
+ Tue, 04 Mar 2025 05:47:37 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5E6555F93C;
- Tue,  4 Mar 2025 13:44:45 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 4A79D5F93C;
+ Tue,  4 Mar 2025 13:47:36 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  Brian Cain
- <brian.cain@oss.qualcomm.com>
-Subject: Re: [PATCH] tests/tcg: Suppress compiler false-positive warning on
- sha1.c
-In-Reply-To: <CAFEAcA9VDtWKoQ09dOt+ZxJ2MhdRTFY_X1ON58pEjYTM_NtZ-A@mail.gmail.com>
- (Peter Maydell's message of "Tue, 4 Mar 2025 12:51:34 +0000")
-References: <20250227141343.1675415-1-peter.maydell@linaro.org>
- <87o6yh57r2.fsf@draig.linaro.org>
- <CAFEAcA9VDtWKoQ09dOt+ZxJ2MhdRTFY_X1ON58pEjYTM_NtZ-A@mail.gmail.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>
+Subject: Re: [RFC PATCH] meson.build: add -gsplit-dwarf to default cflags
+In-Reply-To: <Z8b96wVB2f88csSN@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Tue, 4 Mar 2025 13:20:01 +0000")
+References: <20250303221703.1291078-1-alex.bennee@linaro.org>
+ <Z8bTy54Jgaddg6V3@redhat.com> <87tt8958tj.fsf@draig.linaro.org>
+ <Z8bt7ajRVwdabG7p@redhat.com> <Z8b96wVB2f88csSN@redhat.com>
 User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Tue, 04 Mar 2025 13:44:45 +0000
-Message-ID: <87ikoo6hbm.fsf@draig.linaro.org>
+Date: Tue, 04 Mar 2025 13:47:36 +0000
+Message-ID: <87cyew6h6v.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -109,97 +109,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On Tue, 4 Mar 2025 at 11:56, Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
-ote:
->>
->> Peter Maydell <peter.maydell@linaro.org> writes:
->> > +# GCC versions 12/13/14/15 at least incorrectly complain about
->> > +# "'SHA1Transform' reading 64 bytes from a region of size 0"; see the=
- gcc bug
->> > +# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D106709
->> > +# Since this is just a standard piece of library code we've borrowed =
-for a
->> > +# TCG test case, suppress the warning rather than trying to modify the
->> > +# code to work around the compiler.
->> > +sha1: CFLAGS+=3D-Wno-stringop-overread
->> > +
->>
->> Sadly this breaks the hexagon compiler:
->>
->>   error: unknown warning option '-Wno-stringop-overread' [-Werror,-Wunkn=
-own-warning-option]
->>   Traceback (most recent call last):
->>     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 683, in=
- <module>
->>       sys.exit(main())
->>                ^^^^^^
->>     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 679, in=
- main
->>       return args.cmdobj.run(args, argv)
->>              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 657, in=
- run
->>       return Docker().run(cmd, False, quiet=3Dargs.quiet,
->>              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 370, in=
- run
->>       ret =3D self._do_check(["run", "--rm", "--label",
->>             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 247, in=
- _do_check
->>       return subprocess.check_call(self._command + cmd, **kwargs)
->>              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>     File "/usr/lib/python3.11/subprocess.py", line 413, in check_call
->>       raise CalledProcessError(retcode, cmd)
->>   subprocess.CalledProcessError: Command '['podman', 'run', '--rm', '--l=
-abel', 'com.qemu.instance.uuid=3D5bbb7b6ed2ea4377b9b6d646859ec4ea', '--user=
-ns=3Dkeep-id', '-u', '1000', '-w', '/home/alex/lsrc/qemu.git/builds/all/tes=
-ts/tcg/hexagon-linux-user', '-v', '/home/alex/lsrc/qemu.git/builds/all/test=
-s/tcg/hexagon-linux-user:/home/alex/lsrc/qemu.git/builds/all/tests/tcg/hexa=
-gon-linux-user:rw', '-v', '/home/alex/lsrc/qemu.git:/home/alex/lsrc/qemu.gi=
-t:ro,z', 'qemu/debian-hexagon-cross', 'hexagon-unknown-linux-musl-clang', '=
--Wno-incompatible-pointer-types', '-Wno-undefined-internal', '-fno-unroll-l=
-oops', '-fno-stack-protector', '-Wall', '-Werror', '-O0', '-g', '-fno-stric=
-t-aliasing', '-Wno-stringop-overread', '-mv73', '-O2', '-static', '/home/al=
-ex/lsrc/qemu.git/tests/tcg/multiarch/sha1.c', '-o', 'sha1', '-static']' ret=
-urned non-zero exit status 1.
->>   filter=3D--filter=3Dlabel=3Dcom.qemu.instance.uuid=3D5bbb7b6ed2ea4377b=
-9b6d646859ec4ea
->>   make[1]: *** [Makefile:122: sha1] Error 1
->>   make: *** [/home/alex/lsrc/qemu.git/tests/Makefile.include:52: build-t=
-cg-tests-hexagon-linux-user] Error 2
->>
->> Is it that new an option?
+> On Tue, Mar 04, 2025 at 12:11:25PM +0000, Daniel P. Berrang=C3=A9 wrote:
+>> On Tue, Mar 04, 2025 at 11:33:44AM +0000, Alex Benn=C3=A9e wrote:
+>> > Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>> >=20
+>> > > On Mon, Mar 03, 2025 at 10:17:03PM +0000, Alex Benn=C3=A9e wrote:
+>> > >> This option is supported by both gcc (since 4.7) and clang (since
+>> > >> 7.0). Not only does this make the linkers job easier by reducing the
+>> > >> amount of ELF it needs to parse it also reduces the total build size
+>> > >> quite considerably. In my case a default build went from 5.8G to 3.=
+9G.
+>> > >
+>> > > I've not come across this option before, but the docs say
+>> > >
+>> > >   =E2=80=98-gsplit-dwarf=E2=80=99
+>> > >      If DWARF debugging information is enabled, separate as much
+>> > >      debugging information as possible into a separate output file w=
+ith
+>> > >      the extension =E2=80=98.dwo=E2=80=99.  This option allows the b=
+uild system to avoid
+>> > >      linking files with debug information.  To be useful, this option
+>> > >      requires a debugger capable of reading =E2=80=98.dwo=E2=80=99 f=
+iles.
+>> > >
+>> > > In Fedora and RHEL we build QEMU will full debug enabled, and then a=
+ feature
+>> > > of the distro RPM build config will post-process all ELF files to ex=
+tract
+>> > > the debug info into files that we store under /usr/lib/debug. eg for
+>> > > /usr/bin/qemu-system-x86_64, we get a separate
+>> > > /usr/lib/debug/bin/qemu-system-x86_64-9.1.3-1.fc41.x86_64.debug, and
+>> > > tools like GDB, etc know to look for these separate files.
+>> >=20
+>> > A modern gdb can certainly handle fetching the debug out of the .dwo
+>> > files when debugging.
+>>=20
+>> See this response from one of the upstream GCC maintainers pretty much
+>> recommending against (on by default) use of -gsplit-dwarf:
+>>=20
+>>   https://lists.fedoraproject.org/archives/list/devel@lists.fedoraprojec=
+t.org/thread/RXA55BTO62NWWHCTUFYGEVHJKZPL5EKE/
 >
-> I think it's new-ish (gcc 11?). On the other hand
-> -Wno-unknown-warning-option is quite old, and would suppress
-> this error. If we do
->  CFLAGS+=3D-Wno-unknown-warning-option -Wno-stringop-overread
+> Since lists.fp.o is being rather unreliable today...
 >
-> does that work?
+> [quote]
+> On Tue, Mar 04, 2025 at 11:44:18AM +0000, Daniel P. Berrang=C3=A9 wrote:
+>> The QEMU community is discussing possible use of -gsplit-dwarf as a defa=
+ult
+>> option for QEMU's build system:
+>>
+>>  https://lists.nongnu.org/archive/html/qemu-devel/2025-03/msg00424.html
+>>
+>> This option causes debug symbols to be written to separate .dwo files
+>> instead of the .o files or final executables.
+>
+> Don't.
+> -gsplit-dwarf is something to get faster link times at the expense of slo=
+wer
+> debugging and more files around.
+> So, it can be useful for fast modify/rebuild/test cycles during developme=
+nt,
+> but is something that is really undesirable for the distro builds.
+> There you don't mind slightly longer link times, that is done once per
+> build, but having to ship larger debug info and especially when it is spl=
+it
+> into hundreds or thousands of small files is then a price everybody who
+> downloads the package debuginfo pays.
+> debugedit can't deal with it, dwz can't either, in order to ship something
+> reasonable one would need to dwp the separate debug info back into the
+> normal debug info.
 
-Yes, I did:
+Is this not feasible? I large part of the saving is not having the same
+set of symbols defined in multiple object files as stuff gets merged
+during the build.
 
-modified   tests/tcg/hexagon/Makefile.target
-@@ -18,7 +18,7 @@
- # Hexagon doesn't support gdb, so skip the EXTRA_RUNS
- EXTRA_RUNS =3D
-=20
--CFLAGS +=3D -Wno-incompatible-pointer-types -Wno-undefined-internal
-+CFLAGS +=3D -Wno-incompatible-pointer-types -Wno-undefined-internal -Wno-u=
-nknown-warning-option
- CFLAGS +=3D -fno-unroll-loops -fno-stack-protector
-
+Maybe we need a simple --debug-type which defaults to split but can be
+selected as unified for the distro builds?
 
 >
-> (Meson has cc.get_supported_arguments() that we can use to
-> filter out -Wfoo/-Wno-foo options that the compiler doesn't
-> support, but since this is built via a makefile rather than
-> by meson that's not conveniently accessible.)
+>         Jakub
+> [/quote]
 >
-> -- PMM
+> With regards,
+> Daniel
 
 --=20
 Alex Benn=C3=A9e
