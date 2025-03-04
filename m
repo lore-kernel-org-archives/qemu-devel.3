@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B86BC282D6
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 14:29:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28EFCC282D2
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 14:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpTGi-0003Rq-MO; Tue, 04 Mar 2025 09:29:12 -0500
+	id 1tpTMn-0005aw-4G; Tue, 04 Mar 2025 09:35:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpTGg-0003RE-GW
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 09:29:11 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpTGe-0007rF-Oh
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 09:29:10 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-439ac3216dcso39166665e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 06:29:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741098546; x=1741703346; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=elP41wlHNqCAVJg4NGIsWGEULwjwXGqzZz/fGSmPX44=;
- b=H5PtduZkAWvWKNCyQw4rSAmesyZ428YoKsC5Y7WgbOJSflUk8oiKD2C+a32OtoE2D8
- feZibySraZ7Vtjl/O/ryt2QAI2Km1aOpBdUJ4OCU+/PJKSaXtyLrpAuMCNjQe+e8NFrQ
- odz6MzKo6IiBChXXzD7cDasz3EXE7EdQRE1iy5QPLXpvGaKYrnnBCxssrZ8pmm63RZfi
- id+VlIlp/z7BMWg0RSCBZxa2BZ2nnlID1pwdrJ0WOF0PhRCzoICFdht9W28dj2XdhwVH
- qggmuWkFADMNCroHWnj5JEIELZpn1jIGrxjIw3+OzIdyYIj8FuUnWvca6Afu+tLmUL1l
- t+jA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tpTMj-0005ZN-Cj
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 09:35:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tpTMg-0001Ax-5x
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 09:35:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741098918;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1MNGAJ7UzKxHTmZF4u8ge6AlyfFgB3ZGC0mIW7ZoIrU=;
+ b=QpaKogHORUgxkAvUIRCR9EQIi3rQrsUgNN7EhOEK/n9AZCpUwe3Ce2SR+FVliPLJedEL5x
+ 6/d/xHBuVsKryeWZ5WFG+DTBkK581vraL36GxOISSuIsl4GA/ZOQJJl+1Atp/QzZk0xzfN
+ ekCO19tm3//QyjUuMYpel+i8b3UeWZE=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-648-7_T8VAdqPPekQDZ2oc7A-g-1; Tue, 04 Mar 2025 09:35:16 -0500
+X-MC-Unique: 7_T8VAdqPPekQDZ2oc7A-g-1
+X-Mimecast-MFC-AGG-ID: 7_T8VAdqPPekQDZ2oc7A-g_1741098916
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6e8ab341f0eso106399236d6.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 06:35:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741098546; x=1741703346;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=elP41wlHNqCAVJg4NGIsWGEULwjwXGqzZz/fGSmPX44=;
- b=HuAF8cWQUfZGuJSTszyGzajGlZpguIwkixQ3uGRDXqkrNOOEWhm6molfWzSQ2TO+vZ
- NcGZIOqQQmELzxvr1vVwPari8WqY3LYLquuHth450BHJ3nPGG993W6l8HvnsG39GSLM5
- OgHfs4THNB8fJWF7LY1CEC76rrBN9dVQUxRAL3coQc2mYrTgblz+jAe++lTaRykkLv62
- frEUjovLNoBx//6m7K7UqKbiRYR/rECDV6/JzOxdtmuvVNcZJ5iu7DuN6+ijlXleZScf
- Zwh7kvR1jc067Ju+6Gc1ZAqaVmj4HMED3wQwvAw+wUhxRrMF63ijuDx2WyynDrCO/+IC
- 0Xtg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWrnzRqKpAkYkqycV8N3oElV+/x4rfBVS9/qI9ipr+Ox6hGN/3esaDrGrLe0LC6BXmi0wARqJlsRDp9@nongnu.org
-X-Gm-Message-State: AOJu0Yxm6qKzueviQ8aKufbLeBG6jprW2xXKvFvpQWQQHfYJTauPSgFY
- MUqUyxlwAAdbExGU8LthSPd7iNCq+woWItbDZCTPSRlMFbhmlm8s0JwBtTajY9k=
-X-Gm-Gg: ASbGnct1Q6PAZsfHLZGYH5y+qXdYF+WIhJVq3tt/tiImPBUFfdmxKDA/KUBSp9hZ/C/
- AKgE2lt6ocYzr7NDUxTVr6a/hTSYArc34h5WNYiVaOx+tO6iaVF05W4JpJOkaq/KtV/b1MQ0VYB
- LLFQRm6CIB2HKE1J6pFDo55VtJgoSJ5P6JAj005VqchFTLb3de/kBaOwLZqF0lhsMgSQnYld5Yi
- KJFcU4u66HCWM4VdiqtqLQcsp3XNDik+qI5SY7RI+yYmjcXTqc0LdzggBXmTu56CRmJRDxj2fg8
- d6c6q52DCQ/MO5YThMmV0hNHmmgTH7M0zKu+G9plRQT4VHI=
-X-Google-Smtp-Source: AGHT+IFu34qyCxNmfkGN+Oyqn9DySJehxukiAx8Ssq1WFhaGandz3paomX14N/FfEuOHW1VB4kJNJw==
-X-Received: by 2002:a7b:cd96:0:b0:43b:bf6f:6ef8 with SMTP id
- 5b1f17b1804b1-43bbf6f70c3mr77126225e9.0.1741098545795; 
- Tue, 04 Mar 2025 06:29:05 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e484452asm18015310f8f.61.2025.03.04.06.29.05
+ d=1e100.net; s=20230601; t=1741098916; x=1741703716;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1MNGAJ7UzKxHTmZF4u8ge6AlyfFgB3ZGC0mIW7ZoIrU=;
+ b=shGfVTnUJpjkkcfAU5mgKtOzeGoADBR2+d7GWVNKSmaLXernYyd048vKMMITAA6SNh
+ Jm/avnj64QO3OFds5WSyUlJi22lIRsgLl3YhRpKFi0w+s5W2wxC7fVTUhc0hDuN4L4bG
+ cbXYpp3wjZrr7MurwxnrJOfzKPKTs2BKSc53DsqDPWqWnJNf69FOY+A22lWbXVxIR0Dp
+ UD7K+xbBWtmwbc/Dhsrscb4yeLQUNqwsjG+IiYj6+YbU1NnpO5nnkUGeDMmZWaTEkXUC
+ HKCLNWnomQSMXCrOcbWurmqEzC7B0/j7foIDDBBP96gVC3/r9AfMMBEz/z6+L2hQx2fw
+ PhCw==
+X-Gm-Message-State: AOJu0YxsF/2DhLjD/QUby3YS9V1o82/Ht8hMe8rfFXzXQC1VKvjHMj7l
+ QSKJ9zN01aaNkDEw7Lk96xZ+zvYS7nU2Tryqjex8B1EUU7Ekz72R6xga16ITboZMfTbqbgQkWaE
+ tw3kC6x7oWPFoMh+XrZu0gF779Uqn127nXDgvHcaFplz3IitoziD1
+X-Gm-Gg: ASbGncuxXAL6P99O42y5qg1XBtBYgE34ytVd5stYW/psQT8QcIiw7Ui2QslUKRIwps8
+ axBCR1BLk9P9eK3zOJjNxJ6FuiUCxncJ2/UThYLMJi5K5NJei2wnX04V1xbLr5wAZv3iHkzqo3i
+ wi7a/lPk/fbVGj8MjvgnMoX3xZ+N1HwC7WdKFnoC7qhhniilBW2l/RhebLZ47gNMjz6AdNMglW0
+ cdSsl6Cpee62Ib6wVQrlLZNR5SpO2qb8vmIxT68WBjsNoCSDWjNHCUJp/oxJuercPjxSBnHkKuu
+ bCd7WfM=
+X-Received: by 2002:ad4:5c66:0:b0:6e8:9535:b00 with SMTP id
+ 6a1803df08f44-6e8a0cbfaedmr259666746d6.12.1741098915809; 
+ Tue, 04 Mar 2025 06:35:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGOjhjecLnBAcVeXPYdkqIxqB0KJ7usZrm5/LqWYkW0P5s5FC6MYuXjo7C7fk+ETJXkTqA+JQ==
+X-Received: by 2002:ad4:5c66:0:b0:6e8:9535:b00 with SMTP id
+ 6a1803df08f44-6e8a0cbfaedmr259666396d6.12.1741098915483; 
+ Tue, 04 Mar 2025 06:35:15 -0800 (PST)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e8976da260sm66989906d6.106.2025.03.04.06.35.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 06:29:05 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 48E735F93C;
- Tue,  4 Mar 2025 14:29:04 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  Brian Cain
- <brian.cain@oss.qualcomm.com>
-Subject: Re: [PATCH] tests/tcg: Suppress compiler false-positive warning on
- sha1.c
-In-Reply-To: <CAFEAcA9mFHo=U=F+7on-9m+VWh_b2rQXtEJovU3fuj3MZxHTyw@mail.gmail.com>
- (Peter Maydell's message of "Tue, 4 Mar 2025 13:53:28 +0000")
-References: <20250227141343.1675415-1-peter.maydell@linaro.org>
- <87o6yh57r2.fsf@draig.linaro.org>
- <CAFEAcA9VDtWKoQ09dOt+ZxJ2MhdRTFY_X1ON58pEjYTM_NtZ-A@mail.gmail.com>
- <87ikoo6hbm.fsf@draig.linaro.org>
- <CAFEAcA9mFHo=U=F+7on-9m+VWh_b2rQXtEJovU3fuj3MZxHTyw@mail.gmail.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Tue, 04 Mar 2025 14:29:04 +0000
-Message-ID: <877c546f9r.fsf@draig.linaro.org>
+ Tue, 04 Mar 2025 06:35:14 -0800 (PST)
+Date: Tue, 4 Mar 2025 09:35:11 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v7 5/5] migration: add MULTIFD_RECV_SYNC migration command
+Message-ID: <Z8cPnxqOvp1hFpx8@x1.local>
+References: <20250228121749.553184-1-ppandit@redhat.com>
+ <20250228121749.553184-6-ppandit@redhat.com>
+ <Z8G9Wj3DWSgdLkNQ@x1.local>
+ <CAE8KmOxenqyqOxEFozgP1gBZPtneEqcbop9F_f+VW3ukPfw37A@mail.gmail.com>
+ <Z8XBowkG72G-l3L4@x1.local>
+ <CAE8KmOyssf_2RYBw2LLpxP2Z5bmtyU==Qs+4HWp=mOVb9o82-g@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOyssf_2RYBw2LLpxP2Z5bmtyU==Qs+4HWp=mOVb9o82-g@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,45 +109,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Tue, Mar 04, 2025 at 01:40:02PM +0530, Prasad Pandit wrote:
+> Hello Peter,
+> 
+> On Mon, 3 Mar 2025 at 20:20, Peter Xu <peterx@redhat.com> wrote:
+> > We need the header.
+> 
+> * We need a section type, which is sent by qemu_savevm_command_send()
+> as 'QEMU_VM_COMMAND'.
 
-> On Tue, 4 Mar 2025 at 13:44, Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
-ote:
->>
->> Peter Maydell <peter.maydell@linaro.org> writes:
->> > I think it's new-ish (gcc 11?). On the other hand
->> > -Wno-unknown-warning-option is quite old, and would suppress
->> > this error. If we do
->> >  CFLAGS+=3D-Wno-unknown-warning-option -Wno-stringop-overread
->> >
->> > does that work?
->>
->> Yes, I did:
->>
->> modified   tests/tcg/hexagon/Makefile.target
->> @@ -18,7 +18,7 @@
->>  # Hexagon doesn't support gdb, so skip the EXTRA_RUNS
->>  EXTRA_RUNS =3D
->>
->> -CFLAGS +=3D -Wno-incompatible-pointer-types -Wno-undefined-internal
->> +CFLAGS +=3D -Wno-incompatible-pointer-types -Wno-undefined-internal -Wn=
-o-unknown-warning-option
->>  CFLAGS +=3D -fno-unroll-loops -fno-stack-protector
->
-> I think we should do this where we add -Wno-stringop-overread,
-> not just for the hexagon tests -- or are the tcg tests
-> guaranteed to be run with a fixed compiler from a container
-> regardless of the local dev environment?
+I think we need the header, the ram is a module.
 
-I can move it, but hexagon is unusual in being clang based. However the
-oldest compilers we use are 10.2 in the qemu/debian-legacy-test-cross
-container.
+> 
+> >  Maybe the easiest as of now is one more hook like
+> > qemu_savevm_state_complete_precopy_prepare(), and only use it in RAM as of
+> > now.
+> 
+> * What will this helper do?
 
+Do similarly like qemu_savevm_state_complete_precopy_iterable() but do
+whatever a vmstate hander wants, so it'll be with a header.
 
->
-> -- PMm
+> 
+> > > * But earlier we discussed 'flush and sync' is enough for that, no?
+> >
+> > Yes it's ok I think, but this patch didn't do that.
+> >
+> > +            multifd_send_flush();
+> > +            multifd_send_sync_main(MULTIFD_SYNC_LOCAL);
+> > +            qemu_savevm_send_multifd_recv_sync(s->to_dst_file);
+> >
+> > I don't think it sent RAM_SAVE_FLAG_MULTIFD_FLUSH.  IIUC you need the
+> > complete multifd_ram_flush_and_sync(), and the new message not needed.
+> 
+> * If we look at multifd_ram_flush_and_sync(), it does:
+>      1. multifd_send()                       <= this patch does it via
+> multifd_send_flush()
+>      2. multifd_send_sync_main()    <= this patch also calls it above
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+MULTIFD_SYNC_LOCAL will not invoke MULTIFD_FLAG_SYNC, which we need.
+
+>      3. send RAM_SAVE_FLAG_MULTIFD_FLUSH  <= this patch sends
+> MIG_CMD_MULTIFD_RECV_SYNC
+
+IMO we shouldn't make a global cmd for multifd.
+
+> 
+> * What is missing?
+> 
+> > Instead of I prepare the patch and whole commit message, please take your
+> > time and think about it, justify it, and if you also think it works put
+> > explanation into commit message and then we can go with it.
+> 
+> * The commit message does explain about flush and sync and how the
+> migration command helps. What else do we need to add?
+
+Please consider adding details like "we need message AAA on BBB channel to
+serialize with CCC" and details.  Not asking that as required to merge, but
+my understanding is that that's what is missing and that's why none of yet
+versions can make sure of it in code.  Maybe that'll help you to understand
+how that was serialized.
+
+> 
+> > > * And multifd_recv_sync_main() function on the destination blocks the
+> > > 'main' thread until all multfd_recv_threads (mig/dst/recv_x) have
+> > > exited, only then it proceeds to accept the incoming new postcopy
+> > > connection.
+> >
+> > I don't think it makes sure threads have exited,
+> 
+> * 'multifd_recv_sync_main()' blocks the main thread on
+> 'multifd_recv_state->sem_sync' semaphore. It is increased when
+> multifd_recv threads exit due to the shutdown message. ie. the 'main'
+> thread unblocks when all 'mig/dst/recv_x' threads have exited.
+
+So is it your intention to not send MULTIFD_FLAG_SYNC above?
+
+In all cases, I still think that's not the right way to do.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
