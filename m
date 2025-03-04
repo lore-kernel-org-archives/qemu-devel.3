@@ -4,72 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC4EC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CFAC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:46:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpayX-0004DL-K1; Tue, 04 Mar 2025 17:42:57 -0500
+	id 1tpb1c-0005jf-9o; Tue, 04 Mar 2025 17:46:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tpayW-0004D9-Qn
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:42:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tpayV-0003I7-9d
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:42:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741128174;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Hmfv2urCxfVN1SsqlCP2ejn6LkzlSE19snyDrHkw9lU=;
- b=atZQblW0jLjaEzMQxGeCbSQy4u4mGS6u+q3Bx2gO9zh3yxkHl+f3GSxa8beEyUNyVsh3Gl
- WKqpjeME//+NAhWD0wyZGZx+Q9mfF7nd/ICYnlIZ0ekdiHvQRPF23aErVUczRejRW/VuFn
- KEAnX8d4ZBjqzhw511C2cQ39A8/Aec0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-PwniXGY7O6WtAloCuTDeHA-1; Tue,
- 04 Mar 2025 17:42:43 -0500
-X-MC-Unique: PwniXGY7O6WtAloCuTDeHA-1
-X-Mimecast-MFC-AGG-ID: PwniXGY7O6WtAloCuTDeHA_1741128162
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2BFD81954B1A; Tue,  4 Mar 2025 22:42:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.46])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B2F0F180094C; Tue,  4 Mar 2025 22:42:40 +0000 (UTC)
-Date: Tue, 4 Mar 2025 16:42:37 -0600
-From: Eric Blake <eblake@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, 
- Hanna Reitz <hreitz@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] iotests: Stop NBD server in test 162 before starting the
- next one
-Message-ID: <fjcumhsohdegemog2fns2hzeszw2gq5zdhqis2sjpkfd6t2rq3@qilj2cmkqc5w>
-References: <20250225070650.387638-1-thuth@redhat.com>
- <ivu664vsymtwjgan2nsidcxhejmamycnc2pxf7goafcwpbahiv@dxilv6q6366o>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tpb1Z-0005jG-SG
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:46:06 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tpb1V-0003rV-HO
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:46:05 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2239f8646f6so62473515ad.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:45:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741128358; x=1741733158; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1/k9h+yCavWavbcD0RTVfSpDouu9fS3l5eQs0LDAiBw=;
+ b=WIHX/RymUUyCmgxS7WVgMOYzzp6tGANDNUoL1EaEyWwVebllf6ltk4tP8zso99y+9p
+ KYOZ+pi5jYrKsmFXwBSNB+vHTvu9li7xzEWAyJVI6fJ9ii3PHYgTn4SMaySDNohnCCLJ
+ Qn5gj0UCkolZy/16A3FawOfjvoxuCnlZiILVfxTbazQSG9MVx/KLAk5Xk9OBKnTJwSaK
+ H9Ip3soqq0BV9R4cLfMzLzymstjyvwlaSkKcQ9T6ujhSp2qy2iTHUEbAxBgzduf5BvDH
+ JUpcPUxClNTJE0/dkjSslWP2FBxGbyTjUnZiwHcyXJD2SJv19R568RKBl4LfkEVfFDHq
+ pqjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741128358; x=1741733158;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1/k9h+yCavWavbcD0RTVfSpDouu9fS3l5eQs0LDAiBw=;
+ b=emgkuZNTvD/XlGZmep2iy3tDmxqBhZIhu9163E68Q7aAmksapqECiMu+j1/GwIxOvc
+ SSd+A/BLsvbWFI+zyVvHvGHe0yjKIjMtjXNylffOpHEpV8J8ojvJumbe4AXtvedxIHez
+ yP8dFpGhYzevukDT+01t9UwkSPhJdYzasbDZUgAHmuhXukd7AnMJJxfPRk03B0G4z0U5
+ p158Dy4Eu9XOPi3GnrNGKWNzpgp+JKmIs2AzqCDFJUBXJfmNdR5Va4ZkFJ0i+mLGDNyS
+ KeOaHUmUp2qjhEsuWH8lRKLBpP0Ep22+IJj43nAP6ZJ3j1dAbwVVp/gFuks6uZ/P2fSz
+ GnRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVHgELTYArHqFsZXz4UtrvWAGPm/nckyufbt4e44ZPYNVCgooUq/0MUPbf0eJB0kcbPVdCTByUUA4cw@nongnu.org
+X-Gm-Message-State: AOJu0Yx5cJjRj1fMVjupriIVufkiRTqp3FqA/wyNlXjRIQFnvkCwXjzG
+ 5HCxtuV9EteMHvAjPNE+LLi5pVXU97aHlQOFZ+uupWi0g3hQs14goCET3I8AVOdjpFj15qJFq5Y
+ 3
+X-Gm-Gg: ASbGncvIzYOuCY3y8bKsulllAt1LIJyHHc9CLJdD9nB3hkFnTAOHZwA6GGUwUtzZM+I
+ 9VQeFJGEWi0mnNasP6mUjffs3KlNcYkTDlgdQPhwyEirEwpkbk/CJxpvfG1nD76lOandDZGHShB
+ T3/BbSPvEYpyLBaoFxAUmMz6CUGIPUvs9Pk55TnF8b0RWvor8BS5LJgyQR8qtlNqzzCFDxjEwmF
+ lBgNOV82CZulJ6Ju/tbWUq/jGoD6Xayjw5kHKuFP58uXJdZgHmQeAn3vJe6Ui58dL0Pd+GHVPCu
+ 63CYgfzPPXeCteWaLoLk8yf3NCIlOpaFxxtqoxNcNsYPv9k3jtkMhky7WzPFRetUDQx0RoZe/0e
+ u/O4Hzn6/
+X-Google-Smtp-Source: AGHT+IE8TuuMCVlp3MAABMc50Q4jAzq9RXvyEwgtrbaFlm/RgNvITfrbO+LC3XSrDwGC9kPmdo/S8w==
+X-Received: by 2002:a17:903:22d1:b0:223:4bd6:3863 with SMTP id
+ d9443c01a7336-223f1c644f0mr16333205ad.10.1741128358496; 
+ Tue, 04 Mar 2025 14:45:58 -0800 (PST)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-223504dc93csm100938865ad.167.2025.03.04.14.45.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Mar 2025 14:45:58 -0800 (PST)
+Message-ID: <ac986fa1-00ae-4870-a78b-208834a555a3@linaro.org>
+Date: Tue, 4 Mar 2025 14:45:56 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ivu664vsymtwjgan2nsidcxhejmamycnc2pxf7goafcwpbahiv@dxilv6q6366o>
-User-Agent: NeoMutt/20250113
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 15/32] tests/tcg: fix constraints in test-i386-adcox
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20250304222439.2035603-1-alex.bennee@linaro.org>
+ <20250304222439.2035603-16-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250304222439.2035603-16-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,32 +105,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 27, 2025 at 01:14:12PM -0600, Eric Blake wrote:
-> On Tue, Feb 25, 2025 at 08:06:50AM +0100, Thomas Huth wrote:
-> > Test 162 recently started failing for me for no obvious reasons (I
-> > did not spot any suspicious commits in this area), but looking in
-> > the 162.out.bad log file, there was a suspicious message at the end:
-> > 
-> >  qemu-nbd: Cannot lock pid file: Resource temporarily unavailable
-> > 
-> > And indeed, the test starts the NBD server two times, without stopping
-> > the first server before running the second one, so the second one can
-> > indeed fail to lock the PID file. Thus let's make sure to stop the
-> > first server before the test continues with the second one. With this
-> > change, the test works fine for me again.
-> > 
-> > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > ---
-> >  tests/qemu-iotests/162 | 1 +
-> >  1 file changed, 1 insertion(+)
+On 3/4/25 14:24, Alex Bennée wrote:
+> Clang complains:
 > 
-> Reviewed-by: Eric Blake <eblake@redhat.com>
+>    clang -O2 -m64 -mcx16 /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c -o test-i386-adcox -static
+>    /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c:32:26: error: invalid input constraint '0' in asm
+>            : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
+>                             ^
+>    /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c:57:26: error: invalid input constraint '0' in asm
+>            : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
+>                             ^
+>    2 errors generated.
+> 
+> Pointing out a numbered input constraint can't point to a read/write
+> output [1]. Convert to a read-only input constraint to allow this.
+> 
+> [1] https://lists.llvm.org/pipermail/cfe-commits/Week-of-Mon-20101101/036036.html
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Added to my NBD queue.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+r~
+
+> 
+> ---
+> v2
+>    - followed rth's suggestion and removed additional matches.
+> ---
+>   tests/tcg/i386/test-i386-adcox.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/tests/tcg/i386/test-i386-adcox.c b/tests/tcg/i386/test-i386-adcox.c
+> index 16169efff8..d653fa86a7 100644
+> --- a/tests/tcg/i386/test-i386-adcox.c
+> +++ b/tests/tcg/i386/test-i386-adcox.c
+> @@ -53,8 +53,8 @@ void test_adcx_adox(uint32_t in_c, uint32_t in_o, REG adcx_operand, REG adox_ope
+>           "adcx %3, %1;"
+>           "adox %3, %2;"
+>           "pushf; pop %0"
+> -        : "+r" (flags), "+r" (out_adcx), "+r" (out_adox)
+> -        : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
+> +        : "+r"(flags), "+r"(out_adcx), "+r"(out_adox)
+> +        : "r" ((REG)-1));
+>   
+>       assert(out_adcx == in_c + adcx_operand - 1);
+>       assert(out_adox == in_o + adox_operand - 1);
 
 
