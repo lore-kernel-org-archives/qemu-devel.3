@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1090BC282D0
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B98C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 22:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpahN-0005Tz-S1; Tue, 04 Mar 2025 17:25:13 -0500
+	id 1tpaiJ-0006K5-Ax; Tue, 04 Mar 2025 17:26:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpagx-0005LK-5c
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:48 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1tpagz-0005Mk-6N
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:49 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpagu-0006TV-He
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:46 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-ac202264f9cso144153866b.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:44 -0800 (PST)
+ id 1tpagw-0006Tw-AQ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 17:24:48 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5e56b229d60so442625a12.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 14:24:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741127083; x=1741731883; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KnSHjGtDRpaEDbyYC8kppAAfhPC7ZbGjHbQwEVFXiqQ=;
- b=FjzdPsQVs0FEx5CrD6hhu4BB5yiRKHblofXS3IK6gweEDFF6SG2XacuHtfKoEhqMgc
- iiTpk6sajjb+uWCa/B6DIXCW3CXaqUBk8FUnkhR54KjtstcZ1/9EReP4mPPZWTBIKoyG
- r7FtLY+ijKi43ZDEtAUQymkTJbZzocBoEBIrY3nsh7v5TjGFc6AP9HziVmaS5xFCttv8
- B9OvKXJwkHkox/O7yepQfEOiM4ruzSXmiVDq35ITZJmxDbl8ox97Eo3AIuQLReArrG4x
- YSZTF3uh1qX4Cjylrw67/J69jSK5sLgsWnrpCxlsVn8l+uBUu0ah3Q9uUQzW+ueA9WaY
- vUrw==
+ d=linaro.org; s=google; t=1741127084; x=1741731884; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jB70xwESzZMcF2byQH3dMmxVnsR0wVMNkKLR27tW5lE=;
+ b=sWZSevqqojNOCiZ8Zfho0izJRy1g7+CkbHAGTS7OEJWRTUmRNZjbyL1+3vgKmNphBd
+ 20xTXjBGmpXzBIrgIE8FM9+7NjMvMctXj4qHvfQITwrdtazrAY10aQBlXVKWYxGM92eh
+ V/zs/17Wdi4Rcq4cmZaUSElaZgw6+1IxGtyyA/wB/6CcYh2lepuVnDKOSh79cqvquTBT
+ Rpmv6Uii5B8NjXi+NwRDsjp4QjzYHNorfSp6JgGHgMzQ+18JFjG8vwWDrzPGjRcyx61R
+ NhsKmzhea5btiU3AT/oWUf1VyX5zvWBKnGgz0K1UHuLWiR1hfCLri1vqpxFgvH8akDvr
+ XgJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741127083; x=1741731883;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KnSHjGtDRpaEDbyYC8kppAAfhPC7ZbGjHbQwEVFXiqQ=;
- b=JQtyG7piXePn0WPgYogNDINqybNvjFOkPASmAAO+QvXYjXouo02vDrVWWq+kWbolnE
- ZO91CmvviINst8YlljPAgnankw6YurhCh/+/9zt1GrSRU31PURcu8/YMqprkrwD3Qyd6
- lLNe6SovJz7ezrf/GxbQoTNFKYDy9ri+VfmB/NAlxG5S8WDH+fhl2zYKNPUZLLbx2LmJ
- sbMl7VYG/1XXFY7cknk38XnwPIYauIVwJFa3bvQnrRSyINnhv0EF88DK6865YZJCaqd7
- VFbTFacos0ZbJUqfiNxy4hi11Ru6o05pVTJ7J8hyqWwIjYhDrV8Qx2gD0uoous86+ddO
- VTWg==
-X-Gm-Message-State: AOJu0YypN2PRJlptNwD7koSd47LHy3j1ieONpRstN8APmFD2Pis32yq4
- mks+YuzC0QsQHYRzTYjS2RKHm61YhqFCqnYdRzDwfBHwDYPL1Gls/dGSNOf9udg=
-X-Gm-Gg: ASbGncuAcw9qBuV/8rZorPjERS/AQhqSG+6W8d1gxRtd7k/0k8pxwvEWQKwcw6Z62kQ
- KpgyOhB5QyQfikZPj/HP6pctfeUPE2x9xF4cpXs3bt8TPkrJ5FhVClEyDwEW5NvhDbGjPvD2XzX
- cvtO65wRiguLM1kVwtC7Id1vcwFbc6smlh+kisAdWJIF8N9XUdDI5CIVJGF9wN4J9cvoSl8e/dp
- 6t3EG8z1gL8NLY4Wd6OP6/jH+f0ogo5ya+A3b0u91CJ774TOKVe1pve3hXg5j1P5bKNeY6jPb8F
- 0IG6WUMZ/fI1HZTqUjFD5sxAhF7x8H8r7tVxBcMG874is84=
-X-Google-Smtp-Source: AGHT+IH+ZShXvgauKpsbJcXwNAXI3McoiVdTBaDlrpYFgc/AJjvqME6T4opPDW4J2nYEVNMf62fdZw==
-X-Received: by 2002:a17:907:7247:b0:ac1:de14:6d6d with SMTP id
- a640c23a62f3a-ac20db37f95mr73021066b.28.1741127082771; 
- Tue, 04 Mar 2025 14:24:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741127084; x=1741731884;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jB70xwESzZMcF2byQH3dMmxVnsR0wVMNkKLR27tW5lE=;
+ b=UNIsMtl21BoViefhBL+VwZ3VlGbA5UCtIQhzN4a0Ni5G8nIfqISMQ6HeZhevpfurZ6
+ N9W5BgwuzO9QDJOT/ML9GAjZADtrE6fgZILqBV8Lc8jN6w9+UwIucpiroSO2LhGy3ssw
+ 0XJpG43Aez1CQpznkPbHwARIxomjb2x1jeqU8RVqk31Hbtl2i5amcUpcw813mz4+ufGt
+ 9O2lmsKptSSYM7qHUMXiXLMPsganEqWEEZFHuujQARyGDaejxoyf1QJPMqWlnXWrlX15
+ 17XL+w29MWjgNR5c3RM1C/HMU1w1S2WEhVhuu6CyAPvM3OdGGqXKZVVTc55t84Wgvx6r
+ jObw==
+X-Gm-Message-State: AOJu0Yx3NkViPoVmJNLdukTczrQAJtYEXxBy77P9iz8t9KBJo7KLlL8G
+ QgVNCATs1YJkLL4bvFeNH9DsVBDjKke/+gOD1l//H8tA/E9lpt/yHz0GGXARyT4=
+X-Gm-Gg: ASbGnctGlpxIRa8WjbhPHp3tWemzwbDv520kbLBOyBHzAbA8NgLU6WYuUKwnx9cGagf
+ MOM67u1krcyxSrJR2wKu88Qq+Tr4rG/wrwUVT3q0o1qfbrsgi7rVb7pU6fCk42nXg57dXTzsWbE
+ 7iJEWPUiSLTrQn6VaBqB/+Q3zRb61JHJT4vzLHm/Sp+n9oPkXsNYVgR2FD9/sDpWXfqRxgpxM0T
+ 5ZiswaceRdAAUncEPdhoKAOFlwYWUkAgS75cOXmNQOhFUtQttydzhBjuHTims5F+NMQQs/tCbnc
+ 0GmTMgWsYLH++ubV7UmBsCGoX/qSM8yEkhGZzLAjfiOx1c4=
+X-Google-Smtp-Source: AGHT+IHUW2AM3YcL2E1/BkSH0wBoF7iv5vkOX+M0DE69d0tf05QvZWc+8xc34fu30xcc3KPqZKDbyQ==
+X-Received: by 2002:a17:907:8689:b0:abf:7776:7e17 with SMTP id
+ a640c23a62f3a-ac20ef7d0ddmr75997866b.19.1741127083909; 
+ Tue, 04 Mar 2025 14:24:43 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf4f8a2035sm692348266b.107.2025.03.04.14.24.41
+ a640c23a62f3a-ac1e77dff28sm254369066b.24.2025.03.04.14.24.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 04 Mar 2025 14:24:41 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0DE725FD05;
- Tue,  4 Mar 2025 22:24:40 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 664F65F932;
+ Tue,  4 Mar 2025 22:24:39 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -82,17 +81,16 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 07/32] tests/functional: update the aarch64_virg_gpu images
-Date: Tue,  4 Mar 2025 22:24:14 +0000
-Message-Id: <20250304222439.2035603-8-alex.bennee@linaro.org>
+Subject: [PATCH v2 00/32] maintainer updates for 10.0 softfreeze (gpu/tcg
+ tests, plugins, MAINTAINERS) pre-PR
+Date: Tue,  4 Mar 2025 22:24:07 +0000
+Message-Id: <20250304222439.2035603-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250304222439.2035603-1-alex.bennee@linaro.org>
-References: <20250304222439.2035603-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,54 +113,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update to the most recent aarch64_virt_gpu image. The principle
-differences are:
+As we rapidly approach softfreeze (due March 11th) its time to collect
+together what I'm planning to merge for this release.
 
-  - target a v8.0 baseline CPU
-  - latest vkmark (2025.1)
-  - actually uses the rootfs (previously was initrd)
-  - rootfs includes more testing tools for interactive use
+Testing
 
-See README.md in https://fileserver.linaro.org/s/ce5jXBFinPxtEdx for
-details about the image creation and the buildroot config.
+  - expand the aarch64 GPU tests
+  - bump libvirt-ci for vulkan-tools
+  - some fixes for clang compile of tcg
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/functional/test_aarch64_virt_gpu.py | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+I've dropped the host-gpu patch in favour of just skipping the test in
+python when we detect nVidia drivers.
 
-diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-index 3fdb31f034..e417ca9beb 100755
---- a/tests/functional/test_aarch64_virt_gpu.py
-+++ b/tests/functional/test_aarch64_virt_gpu.py
-@@ -25,14 +25,14 @@ class Aarch64VirtGPUMachine(LinuxKernelTest):
-     ASSET_VIRT_GPU_KERNEL = Asset(
-         'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
-         'download?path=%2F&files='
--        'Image',
--        '89e5099d26166204cc5ca4bb6d1a11b92c217e1f82ec67e3ba363d09157462f6')
-+        'Image.6.12.16.aarch64',
-+        '7888c51c55d37e86bbbdeb5acea9f08c34e6b0f03c1f5b2463285f6a6f6eec8b')
- 
-     ASSET_VIRT_GPU_ROOTFS = Asset(
-         'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
-         'download?path=%2F&files='
--        'rootfs.ext4.zstd',
--        '792da7573f5dc2913ddb7c638151d4a6b2d028a4cb2afb38add513c1924bdad4')
-+        'rootfs.aarch64.ext2.zstd',
-+        'd45118c899420b7e673f1539a37a35480134b3e36e3a59e2cb69b1781cbb14ef')
- 
-     def _launch_virt_gpu(self, gpu_device):
- 
-@@ -47,7 +47,7 @@ def _launch_virt_gpu(self, gpu_device):
-                                'console=ttyAMA0 root=/dev/vda')
- 
-         self.vm.add_args("-accel", "tcg")
--        self.vm.add_args("-cpu", "neoverse-v1,pauth-impdef=on")
-+        self.vm.add_args("-cpu", "cortex-a72")
-         self.vm.add_args("-machine", "virt,gic-version=max",
-                          '-kernel', kernel_path,
-                          '-append', kernel_command_line)
+The clang fixes are part way to removing the skip we have in
+configure:
+
+      case $target_arch in
+        i386|x86_64)
+          if $target_cc --version | grep -qi "clang"; then
+            continue
+          fi
+          ;;
+      esac
+
+So that we can build tcg tests on the BSDs (at least for native
+guests) and widen the testing. The work is unfinished but anyone wants
+to tackle it just patch out the above bit in configure and try and
+build and run check-tcg.
+
+Plugins
+
+  - reduce the total number of compilation units
+  - I have added a gitlab script to track the total number of build units
+
+Misc
+
+  - MAINTAINERS updates due to sanctions
+  - meson.build split debug change
+
+I should send out the pre-PR sometime next week, hopefully getting my
+10.0 PR submitted with time to spare ;-)
+
+The following still need review:
+
+  meson.build: default to -gsplit-dwarf for debug info
+  plugins/core: make a single build unit
+  gitlab: add a new build_unit job to track build size
+  tests/tcg: fix constraints in test-i386-adcox
+  tests/functional: update the aarch64_virg_gpu images
+  tests/functional: bail early if vkmark hangs
+  tests/functional: factor out common code in gpu test
+  tests/functional: move aarch64 GPU test into own file
+
+Alex.
+
+Alex Bennée (27):
+  tests/functional: move aarch64 GPU test into own file
+  tests/functional: factor out common code in gpu test
+  tests/functional: ensure we have a GPU device for tests
+  tests/functional: bail early if vkmark hangs
+  tests/functional: skip vulkan tests with nVidia
+  tests/functional: expand tests to cover virgl
+  tests/functional: update the aarch64_virg_gpu images
+  libvirt-ci: bump to latest for vulkan-tools
+  tests/vm: bump timeout for shutdown
+  tests/tcg: mark test-vma as a linux-only test
+  tests/tcg: add message to _Static_assert in test-avx
+  tests/tcg: fix constraints in test-i386-adcox
+  tests/tcg: enable -fwrapv for test-i386-bmi
+  gitlab: add a new build_unit job to track build size
+  plugins/api: use qemu_target_page_mask() to get value
+  plugins/loader: populate target_name with target_name()
+  include/qemu: plugin-memory.h doesn't need cpu-defs.h
+  plugins/api: clean-up the includes
+  plugins/plugin.h: include queue.h
+  plugins/loader: compile loader only once
+  plugins/api: split out binary path/start/end/entry code
+  plugins/api: split out the vaddr/hwaddr helpers
+  plugins/api: split out time control helpers
+  plugins/api: build only once
+  plugins/core: make a single build unit
+  MAINTAINERS: remove widely sanctioned entities
+  meson.build: default to -gsplit-dwarf for debug info
+
+Peter Maydell (1):
+  tests/tcg: Suppress compiler false-positive warning on sha1.c
+
+Philippe Mathieu-Daudé (2):
+  tests/functional: Introduce the dso_suffix() helper
+  tests/functional: Allow running TCG plugins tests on non-Linux/BSD
+    hosts
+
+Pierrick Bouvier (2):
+  plugins: add explicit dependency in functional tests
+  tests/functional: add boot error detection for RME tests
+
+ MAINTAINERS                                   |   7 +-
+ meson.build                                   |   8 +-
+ include/qemu/plugin-memory.h                  |   1 -
+ plugins/plugin.h                              |   7 +
+ bsd-user/plugin-api.c                         |  15 ++
+ linux-user/plugin-api.c                       |  15 ++
+ plugins/api-system.c                          | 131 ++++++++++++++
+ plugins/api-user.c                            |  57 ++++++
+ plugins/api.c                                 | 171 +-----------------
+ plugins/core.c                                |  10 +-
+ plugins/loader.c                              |  15 +-
+ plugins/system.c                              |  24 +++
+ plugins/user.c                                |  19 ++
+ tests/tcg/i386/test-avx.c                     |   2 +-
+ tests/tcg/i386/test-i386-adcox.c              |   4 +-
+ tests/tcg/multiarch/{ => linux}/test-vma.c    |   0
+ common-user/plugin-api.c.inc                  |  43 +++++
+ .gitlab-ci.d/check-units.py                   |  66 +++++++
+ .gitlab-ci.d/cirrus/freebsd-14.vars           |   2 +-
+ .gitlab-ci.d/cirrus/macos-14.vars             |   2 +-
+ .gitlab-ci.d/static_checks.yml                |  22 +++
+ bsd-user/meson.build                          |   1 +
+ contrib/plugins/meson.build                   |   2 +
+ linux-user/meson.build                        |   1 +
+ meson_options.txt                             |   2 +
+ plugins/meson.build                           |  11 +-
+ .../ci/setup/ubuntu/ubuntu-2204-aarch64.yaml  |   1 +
+ .../ci/setup/ubuntu/ubuntu-2204-s390x.yaml    |   1 +
+ scripts/meson-buildoptions.sh                 |   2 +
+ tests/docker/dockerfiles/alpine.docker        |   5 +-
+ tests/docker/dockerfiles/centos9.docker       |   1 +
+ .../dockerfiles/debian-amd64-cross.docker     |   3 +-
+ .../dockerfiles/debian-arm64-cross.docker     |   3 +-
+ .../dockerfiles/debian-armhf-cross.docker     |   3 +-
+ .../dockerfiles/debian-i686-cross.docker      |   3 +-
+ .../dockerfiles/debian-mips64el-cross.docker  |   3 +-
+ .../dockerfiles/debian-mipsel-cross.docker    |   3 +-
+ .../dockerfiles/debian-ppc64el-cross.docker   |   3 +-
+ .../dockerfiles/debian-s390x-cross.docker     |   3 +-
+ tests/docker/dockerfiles/debian.docker        |   3 +-
+ .../dockerfiles/fedora-rust-nightly.docker    |   1 +
+ .../dockerfiles/fedora-win64-cross.docker     |   1 +
+ tests/docker/dockerfiles/fedora.docker        |   1 +
+ tests/docker/dockerfiles/opensuse-leap.docker |   1 +
+ tests/docker/dockerfiles/ubuntu2204.docker    |   1 +
+ tests/functional/meson.build                  |   6 +-
+ tests/functional/qemu_test/__init__.py        |   2 +-
+ tests/functional/qemu_test/config.py          |  12 ++
+ tests/functional/qemu_test/testcase.py        |  12 +-
+ tests/functional/test_aarch64_rme_sbsaref.py  |   3 +-
+ tests/functional/test_aarch64_rme_virt.py     |   3 +-
+ tests/functional/test_aarch64_tcg_plugins.py  |   5 +-
+ tests/functional/test_aarch64_virt.py         |  71 --------
+ tests/functional/test_aarch64_virt_gpu.py     | 133 ++++++++++++++
+ tests/lcitool/libvirt-ci                      |   2 +-
+ tests/lcitool/projects/qemu.yml               |   1 +
+ tests/lcitool/refresh                         |   2 +-
+ tests/tcg/aarch64/Makefile.target             |   3 +-
+ tests/tcg/arm/Makefile.target                 |   3 +-
+ tests/tcg/i386/Makefile.target                |   2 +-
+ tests/tcg/multiarch/Makefile.target           |   8 +
+ tests/tcg/plugins/meson.build                 |   2 +
+ tests/vm/basevm.py                            |   2 +-
+ tests/vm/generated/freebsd.json               |   1 +
+ 64 files changed, 650 insertions(+), 303 deletions(-)
+ create mode 100644 bsd-user/plugin-api.c
+ create mode 100644 linux-user/plugin-api.c
+ create mode 100644 plugins/api-system.c
+ create mode 100644 plugins/api-user.c
+ create mode 100644 plugins/system.c
+ create mode 100644 plugins/user.c
+ rename tests/tcg/multiarch/{ => linux}/test-vma.c (100%)
+ create mode 100644 common-user/plugin-api.c.inc
+ create mode 100755 .gitlab-ci.d/check-units.py
+ create mode 100755 tests/functional/test_aarch64_virt_gpu.py
+
 -- 
 2.39.5
 
