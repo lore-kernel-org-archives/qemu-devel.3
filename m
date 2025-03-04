@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9960AC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 06:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 654EFC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 06:50:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpM4S-0006c5-7y; Tue, 04 Mar 2025 01:48:04 -0500
+	id 1tpM4N-0006aX-5P; Tue, 04 Mar 2025 01:47:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tpM4O-0006b2-KP; Tue, 04 Mar 2025 01:48:00 -0500
+ id 1tpM4I-0006ZJ-89; Tue, 04 Mar 2025 01:47:54 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tpM4N-0003IK-16; Tue, 04 Mar 2025 01:48:00 -0500
+ id 1tpM4G-0003IK-Sn; Tue, 04 Mar 2025 01:47:53 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 4 Mar
- 2025 14:47:11 +0800
+ 2025 14:47:10 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 4 Mar 2025 14:47:11 +0800
+ Transport; Tue, 4 Mar 2025 14:47:10 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v5 5/6] hw/arm/aspeed_ast27x0.c Separate HW Strap Registers
- for SCU and SCUIO
-Date: Tue, 4 Mar 2025 14:47:07 +0800
-Message-ID: <20250304064710.2128993-6-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v5 3/6] hw/arm/aspeed Update HW Strap Default Values for
+ AST2700
+Date: Tue, 4 Mar 2025 14:47:05 +0800
+Message-ID: <20250304064710.2128993-4-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250304064710.2128993-1-jamin_lin@aspeedtech.com>
 References: <20250304064710.2128993-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -66,45 +67,35 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is one hw-strap1 register in the SCU (CPU DIE) and another hw-strap1
-register in the SCUIO (IO DIE). The values of these two registers should not be
-the same. To reuse the current design of hw-strap, hw-strap1 is assigned to the
-SCU and sets the value in the SCU hw-strap1 register, while hw-strap2 is
-assigned to the SCUIO and sets the value in the SCUIO hw-strap1 register.
+Separate HW Strap Registers for SCU and SCUIO.
+AST2700_EVB_HW_STRAP1 is used for the SCU (CPU Die) hw-strap1.
+AST2700_EVB_HW_STRAP2 is used for the SCUIO (IO Die) hw-strap1.
+
+Additionally, both default values are updated based on the dump from the EVB.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ hw/arm/aspeed.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index a48f47b74e..92487bf229 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -333,14 +333,21 @@ static void aspeed_soc_ast2700_init(Object *obj)
-                          sc->silicon_rev);
-     object_property_add_alias(obj, "hw-strap1", OBJECT(&s->scu),
-                               "hw-strap1");
--    object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scu),
--                              "hw-strap2");
-     object_property_add_alias(obj, "hw-prot-key", OBJECT(&s->scu),
-                               "hw-prot-key");
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 98bf071139..c6c18596d6 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -181,8 +181,10 @@ struct AspeedMachineState {
  
-     object_initialize_child(obj, "scuio", &s->scuio, TYPE_ASPEED_2700_SCUIO);
-     qdev_prop_set_uint32(DEVICE(&s->scuio), "silicon-rev",
-                          sc->silicon_rev);
-+    /*
-+     * There is one hw-strap1 register in the SCU (CPU DIE) and another
-+     * hw-strap1 register in the SCUIO (IO DIE). To reuse the current design
-+     * of hw-strap, hw-strap1 is assigned to the SCU and sets the value in the
-+     * SCU hw-strap1 register, while hw-strap2 is assigned to the SCUIO and
-+     * sets the value in the SCUIO hw-strap1 register.
-+     */
-+    object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scuio),
-+                                  "hw-strap1");
+ #ifdef TARGET_AARCH64
+ /* AST2700 evb hardware value */
+-#define AST2700_EVB_HW_STRAP1 0x000000C0
+-#define AST2700_EVB_HW_STRAP2 0x00000003
++/* SCU HW Strap1 */
++#define AST2700_EVB_HW_STRAP1 0x00000800
++/* SCUIO HW Strap1 */
++#define AST2700_EVB_HW_STRAP2 0x00000700
+ #endif
  
-     snprintf(typename, sizeof(typename), "aspeed.fmc-%s", socname);
-     object_initialize_child(obj, "fmc", &s->fmc, typename);
+ /* Rainier hardware value: (QEMU prototype) */
 -- 
 2.34.1
 
