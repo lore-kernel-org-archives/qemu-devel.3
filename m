@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E99C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 06:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9960AC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 06:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpM4J-0006ZF-6y; Tue, 04 Mar 2025 01:47:55 -0500
+	id 1tpM4S-0006c5-7y; Tue, 04 Mar 2025 01:48:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tpM4G-0006Yb-0h; Tue, 04 Mar 2025 01:47:52 -0500
+ id 1tpM4O-0006b2-KP; Tue, 04 Mar 2025 01:48:00 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tpM4E-0003IK-82; Tue, 04 Mar 2025 01:47:51 -0500
+ id 1tpM4N-0003IK-16; Tue, 04 Mar 2025 01:48:00 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 4 Mar
- 2025 14:47:10 +0800
+ 2025 14:47:11 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 4 Mar 2025 14:47:10 +0800
+ Transport; Tue, 4 Mar 2025 14:47:11 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v5 2/6] hw/misc/aspeed_scu: Fix the revision ID cannot be set
- in the SOC layer for AST2700
-Date: Tue, 4 Mar 2025 14:47:04 +0800
-Message-ID: <20250304064710.2128993-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v5 5/6] hw/arm/aspeed_ast27x0.c Separate HW Strap Registers
+ for SCU and SCUIO
+Date: Tue, 4 Mar 2025 14:47:07 +0800
+Message-ID: <20250304064710.2128993-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250304064710.2128993-1-jamin_lin@aspeedtech.com>
 References: <20250304064710.2128993-1-jamin_lin@aspeedtech.com>
@@ -66,60 +66,45 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the design of the AST2600, it has a Silicon Revision ID Register,
-specifically SCU004 and SCU014, to set the Revision ID for the AST2600.
-For the AST2600 A3, SCU004 is set to 0x05030303 and SCU014 is set to 0x05030303.
-In the "aspeed_ast2600_scu_reset" function, the hardcoded value
-"AST2600_A3_SILICON_REV" is set in SCU004, and "s->silicon_rev" is set in
-SCU014. The value of "s->silicon_rev" is set by the SOC layer via the
-"silicon-rev" property.
-
-However, the design of the AST2700 is different. There are two SCU controllers:
-SCU0 (CPU Die) and SCU1 (IO Die). In the AST2700, the firmware reads the SCU
-Silicon Revision ID register (SCU0_000) and the SCUIO Silicon Revision ID
-register (SCU1_000), combining them into a single 64-bit value.
-
-The upper 32 bits represent the SCUIO, while the lower 32 bits correspond to the
-SCU. For example, the AST2700-A1 revision is represented as 0x0601010306010103.
-SCUIO_000 occupies bits [63:32] with a value of 0x06010103 and SCU_000 occupies
-bits [31:0] with a value of 0x06010103.
-
-Reference:
-https://github.com/AspeedTech-BMC/u-boot/blob/aspeed-master-v2023.10/arch/arm/mach-aspeed/ast2700/cpu-info.c
+There is one hw-strap1 register in the SCU (CPU DIE) and another hw-strap1
+register in the SCUIO (IO DIE). The values of these two registers should not be
+the same. To reuse the current design of hw-strap, hw-strap1 is assigned to the
+SCU and sets the value in the SCU hw-strap1 register, while hw-strap2 is
+assigned to the SCUIO and sets the value in the SCUIO hw-strap1 register.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/misc/aspeed_scu.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index 50f74fbabd..545d004749 100644
---- a/hw/misc/aspeed_scu.c
-+++ b/hw/misc/aspeed_scu.c
-@@ -910,7 +910,6 @@ static const MemoryRegionOps aspeed_ast2700_scu_ops = {
- };
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index a48f47b74e..92487bf229 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -333,14 +333,21 @@ static void aspeed_soc_ast2700_init(Object *obj)
+                          sc->silicon_rev);
+     object_property_add_alias(obj, "hw-strap1", OBJECT(&s->scu),
+                               "hw-strap1");
+-    object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scu),
+-                              "hw-strap2");
+     object_property_add_alias(obj, "hw-prot-key", OBJECT(&s->scu),
+                               "hw-prot-key");
  
- static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
--    [AST2700_SILICON_REV]           = AST2700_A0_SILICON_REV,
-     [AST2700_HW_STRAP1]             = 0x00000800,
-     [AST2700_HW_STRAP1_CLR]         = 0xFFF0FFF0,
-     [AST2700_HW_STRAP1_LOCK]        = 0x00000FFF,
-@@ -940,6 +939,7 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
-     AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(dev);
+     object_initialize_child(obj, "scuio", &s->scuio, TYPE_ASPEED_2700_SCUIO);
+     qdev_prop_set_uint32(DEVICE(&s->scuio), "silicon-rev",
+                          sc->silicon_rev);
++    /*
++     * There is one hw-strap1 register in the SCU (CPU DIE) and another
++     * hw-strap1 register in the SCUIO (IO DIE). To reuse the current design
++     * of hw-strap, hw-strap1 is assigned to the SCU and sets the value in the
++     * SCU hw-strap1 register, while hw-strap2 is assigned to the SCUIO and
++     * sets the value in the SCUIO hw-strap1 register.
++     */
++    object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scuio),
++                                  "hw-strap1");
  
-     memcpy(s->regs, asc->resets, asc->nr_regs * 4);
-+    s->regs[AST2700_SILICON_REV] = s->silicon_rev;
- }
- 
- static void aspeed_2700_scu_class_init(ObjectClass *klass, void *data)
-@@ -1032,7 +1032,6 @@ static const MemoryRegionOps aspeed_ast2700_scuio_ops = {
- };
- 
- static const uint32_t ast2700_a0_resets_io[ASPEED_AST2700_SCU_NR_REGS] = {
--    [AST2700_SILICON_REV]               = 0x06000003,
-     [AST2700_HW_STRAP1]                 = 0x00000504,
-     [AST2700_HW_STRAP1_CLR]             = 0xFFF0FFF0,
-     [AST2700_HW_STRAP1_LOCK]            = 0x00000FFF,
+     snprintf(typename, sizeof(typename), "aspeed.fmc-%s", socname);
+     object_initialize_child(obj, "fmc", &s->fmc, typename);
 -- 
 2.34.1
 
