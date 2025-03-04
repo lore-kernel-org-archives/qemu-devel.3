@@ -4,79 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FF6C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 13:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39A7C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 13:45:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpSZ7-0005C8-24; Tue, 04 Mar 2025 08:44:09 -0500
+	id 1tpSZs-0005QH-7w; Tue, 04 Mar 2025 08:44:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tpSYw-0005BQ-Jd
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 08:44:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tpSYs-0008PS-KA
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 08:43:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741095832;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BCTGo1CTqjZK1Bf3A6KHZZWoW1Zu+888yicwVodMVL8=;
- b=a9FezROulNT+K84e7K/TjTn6OLopyjYUeeGHzK1fgAaab9WaUTMckOl0A8AGovwnZ0gaBL
- ZkPm2RjcX1mVJnYo4GOqKwr298HST2KX8FIGU18xjPYf/jrqVy6Wte6K5U2pveWT2u0c6Y
- uEZAWcdyWShBg6wJMWBmx3Mm9FTXrN4=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-475-RXxuUOH4NoeHIQyJoFKsWQ-1; Tue,
- 04 Mar 2025 08:43:43 -0500
-X-MC-Unique: RXxuUOH4NoeHIQyJoFKsWQ-1
-X-Mimecast-MFC-AGG-ID: RXxuUOH4NoeHIQyJoFKsWQ_1741095822
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C8F8219373D7; Tue,  4 Mar 2025 13:43:41 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.210])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 86E161955E93; Tue,  4 Mar 2025 13:43:39 +0000 (UTC)
-Date: Tue, 4 Mar 2025 13:43:36 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [RFC PATCH] meson.build: add -gsplit-dwarf to default cflags
-Message-ID: <Z8cDiOjYdViD6XQH@redhat.com>
-References: <20250303221703.1291078-1-alex.bennee@linaro.org>
- <Z8bTy54Jgaddg6V3@redhat.com> <87tt8958tj.fsf@draig.linaro.org>
- <Z8bt7ajRVwdabG7p@redhat.com>
- <902997f5-a2c8-4585-a834-5cde5aee98a1@linaro.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tpSZr-0005PU-E6
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 08:44:55 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tpSZl-000054-B0
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 08:44:52 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43bccfa7b89so4954315e9.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 05:44:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741095887; x=1741700687; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HY/KyjOO93Qk38Sc+AJ7gPTFlAmrB03aC1xjm86gcH8=;
+ b=gL6agW+UhR4rE9HV9/EvDr5BnY73SyjZEz+Ryhazo70z/OAC+Qe+ao4WIOARhTXoqt
+ Y+QYSPu/I76yY/hqr+75NsLIg3GjWkfHlVY9992E0wdX8jgT/eXonbNUaxoCIwI0ApvF
+ nwiQP3hLCWHCYNld/p1jYv/W5eihPFA6skowUUg0zTw5pnZ65hUc2NVCfByihJ701TDV
+ 93WOmpM+fs/Sd2WMwUDW2QX4vzkkWE5145VJMjj4XlpnJp0umPkfgqJuzpK5DpbrSx1r
+ Z+mSUWPi7nZgRh8UVuao8PC6cVeUT8ywYC8bZSR2hyUHcJ5MFPKgbgBzFrUkv2gD4KvR
+ Zmiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741095887; x=1741700687;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HY/KyjOO93Qk38Sc+AJ7gPTFlAmrB03aC1xjm86gcH8=;
+ b=Snn8JelQqqlxFsYfVYgcHVNB+5UmI1/36DADjypINyxwQtlXDc0bwLO+YgmsObDyK/
+ shKkTju76mcmbfsyjCklP+p1F5CA8U0nDitw/3p9NfGHY8v5PadBdnpoUEOebKH7Bj2p
+ Wr/r38L4q1goMQ1s0527fYTkaf/NyoN7MfsugDkiNhAbOZV5egcjnixbCgMBqgqzsMqA
+ aWV4837C4vqPDBUOudVyxfejusmTyKNPfvkN9Yw4PyCemRsBV64gomTt+tDOjCw8EoDB
+ 5VrfE0a0+pYqsqk3ymloaiWtB+Jd8JsBSasa8olZ9eWmM3LJqz4vQcsrfgDoc9rqOpEl
+ MnXw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcMwUYH6fYF40L3581EDoNBi/vflWNI1swloZUoN1p/CCiGEfkUSbw3qdDDGuMeeQykjLI1PMWAKCG@nongnu.org
+X-Gm-Message-State: AOJu0YzQayogb3XKNVwKH2wSFbAG0nNNo4O4+ocVOEDsXl7asoSuNp8l
+ 8f/yOE+yA/cjoSPhl4HN7FiR2ePF78WqncsAv80HlnQGzIPydyqniQrGZuML4BWyllNtK3bxiGF
+ 4BDU=
+X-Gm-Gg: ASbGnctK3mGVQpsfo7nrmGLn3PuFg8auV1BiRuIiEXdlt2GI812eT3scCGYK/FasmyA
+ BxkUe67arSHR4TaD1OOKtY6cO/xZwh/fmTB6+tiIJgbSbPUej4ZUUqLob71s82JKf0h0wOZLUc8
+ YKQH0SrmUUBJ6xiHdh6u1WV6kmAESJylzT3NulqjtqGDomWRtp0z+X6CHfNFfwOJXn//878W6/n
+ /RlVoLz8rOyRnx0BtLPlmloLP9Ow/X2BS6LbekJ0Ifl3avB64hKhxE0MaUpT41kMuB1N7UvFA37
+ ZVJQJGTyuAzCXZu0y2OH9Y5AnqbKsouSGeukXQvGgQk+f54=
+X-Google-Smtp-Source: AGHT+IHIfDgPP+pk8tg5K+lbmHXf9+im4SrXVYKoe95GoIVm9L69KclYLpkSqS1GEzv4K6V2icRd0g==
+X-Received: by 2002:a05:600c:3583:b0:43b:cb92:8c52 with SMTP id
+ 5b1f17b1804b1-43bcb928e75mr25192015e9.12.1741095887483; 
+ Tue, 04 Mar 2025 05:44:47 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bbb15841dsm93424975e9.1.2025.03.04.05.44.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Mar 2025 05:44:46 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 5E6555F93C;
+ Tue,  4 Mar 2025 13:44:45 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  Brian Cain
+ <brian.cain@oss.qualcomm.com>
+Subject: Re: [PATCH] tests/tcg: Suppress compiler false-positive warning on
+ sha1.c
+In-Reply-To: <CAFEAcA9VDtWKoQ09dOt+ZxJ2MhdRTFY_X1ON58pEjYTM_NtZ-A@mail.gmail.com>
+ (Peter Maydell's message of "Tue, 4 Mar 2025 12:51:34 +0000")
+References: <20250227141343.1675415-1-peter.maydell@linaro.org>
+ <87o6yh57r2.fsf@draig.linaro.org>
+ <CAFEAcA9VDtWKoQ09dOt+ZxJ2MhdRTFY_X1ON58pEjYTM_NtZ-A@mail.gmail.com>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Tue, 04 Mar 2025 13:44:45 +0000
+Message-ID: <87ikoo6hbm.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <902997f5-a2c8-4585-a834-5cde5aee98a1@linaro.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,63 +106,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 04, 2025 at 02:40:31PM +0100, Philippe Mathieu-Daudé wrote:
-> On 4/3/25 13:11, Daniel P. Berrangé wrote:
-> > On Tue, Mar 04, 2025 at 11:33:44AM +0000, Alex Bennée wrote:
-> > > Daniel P. Berrangé <berrange@redhat.com> writes:
-> > > 
-> > > > On Mon, Mar 03, 2025 at 10:17:03PM +0000, Alex Bennée wrote:
-> > > > > This option is supported by both gcc (since 4.7) and clang (since
-> > > > > 7.0). Not only does this make the linkers job easier by reducing the
-> > > > > amount of ELF it needs to parse it also reduces the total build size
-> > > > > quite considerably. In my case a default build went from 5.8G to 3.9G.
-> > > > 
-> > > > I've not come across this option before, but the docs say
-> > > > 
-> > > >    ‘-gsplit-dwarf’
-> > > >       If DWARF debugging information is enabled, separate as much
-> > > >       debugging information as possible into a separate output file with
-> > > >       the extension ‘.dwo’.  This option allows the build system to avoid
-> > > >       linking files with debug information.  To be useful, this option
-> > > >       requires a debugger capable of reading ‘.dwo’ files.
-> > > > 
-> > > > In Fedora and RHEL we build QEMU will full debug enabled, and then a feature
-> > > > of the distro RPM build config will post-process all ELF files to extract
-> > > > the debug info into files that we store under /usr/lib/debug. eg for
-> > > > /usr/bin/qemu-system-x86_64, we get a separate
-> > > > /usr/lib/debug/bin/qemu-system-x86_64-9.1.3-1.fc41.x86_64.debug, and
-> > > > tools like GDB, etc know to look for these separate files.
-> > > 
-> > > A modern gdb can certainly handle fetching the debug out of the .dwo
-> > > files when debugging.
-> > 
-> > See this response from one of the upstream GCC maintainers pretty much
-> > recommending against (on by default) use of -gsplit-dwarf:
-> > 
-> >    https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/RXA55BTO62NWWHCTUFYGEVHJKZPL5EKE/
-> 
-> Jakub said:
-> 
->  "it can be useful for fast modify/rebuild/test cycles during
->   development, but is something that is really undesirable for
->   the distro builds."
-> 
-> Do distro use --enable-debug by default? Otherwise it might be
-> useful to add it for developers.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-We don't have --enable-debug in Fedora/RHEL, and I doubt other distros
-would enable it given it turns off all optimization as well as introducing
-other static debug overheads.
+> On Tue, 4 Mar 2025 at 11:56, Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
+ote:
+>>
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>> > +# GCC versions 12/13/14/15 at least incorrectly complain about
+>> > +# "'SHA1Transform' reading 64 bytes from a region of size 0"; see the=
+ gcc bug
+>> > +# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D106709
+>> > +# Since this is just a standard piece of library code we've borrowed =
+for a
+>> > +# TCG test case, suppress the warning rather than trying to modify the
+>> > +# code to work around the compiler.
+>> > +sha1: CFLAGS+=3D-Wno-stringop-overread
+>> > +
+>>
+>> Sadly this breaks the hexagon compiler:
+>>
+>>   error: unknown warning option '-Wno-stringop-overread' [-Werror,-Wunkn=
+own-warning-option]
+>>   Traceback (most recent call last):
+>>     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 683, in=
+ <module>
+>>       sys.exit(main())
+>>                ^^^^^^
+>>     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 679, in=
+ main
+>>       return args.cmdobj.run(args, argv)
+>>              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 657, in=
+ run
+>>       return Docker().run(cmd, False, quiet=3Dargs.quiet,
+>>              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 370, in=
+ run
+>>       ret =3D self._do_check(["run", "--rm", "--label",
+>>             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>     File "/home/alex/lsrc/qemu.git/tests/docker/docker.py", line 247, in=
+ _do_check
+>>       return subprocess.check_call(self._command + cmd, **kwargs)
+>>              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>     File "/usr/lib/python3.11/subprocess.py", line 413, in check_call
+>>       raise CalledProcessError(retcode, cmd)
+>>   subprocess.CalledProcessError: Command '['podman', 'run', '--rm', '--l=
+abel', 'com.qemu.instance.uuid=3D5bbb7b6ed2ea4377b9b6d646859ec4ea', '--user=
+ns=3Dkeep-id', '-u', '1000', '-w', '/home/alex/lsrc/qemu.git/builds/all/tes=
+ts/tcg/hexagon-linux-user', '-v', '/home/alex/lsrc/qemu.git/builds/all/test=
+s/tcg/hexagon-linux-user:/home/alex/lsrc/qemu.git/builds/all/tests/tcg/hexa=
+gon-linux-user:rw', '-v', '/home/alex/lsrc/qemu.git:/home/alex/lsrc/qemu.gi=
+t:ro,z', 'qemu/debian-hexagon-cross', 'hexagon-unknown-linux-musl-clang', '=
+-Wno-incompatible-pointer-types', '-Wno-undefined-internal', '-fno-unroll-l=
+oops', '-fno-stack-protector', '-Wall', '-Werror', '-O0', '-g', '-fno-stric=
+t-aliasing', '-Wno-stringop-overread', '-mv73', '-O2', '-static', '/home/al=
+ex/lsrc/qemu.git/tests/tcg/multiarch/sha1.c', '-o', 'sha1', '-static']' ret=
+urned non-zero exit status 1.
+>>   filter=3D--filter=3Dlabel=3Dcom.qemu.instance.uuid=3D5bbb7b6ed2ea4377b=
+9b6d646859ec4ea
+>>   make[1]: *** [Makefile:122: sha1] Error 1
+>>   make: *** [/home/alex/lsrc/qemu.git/tests/Makefile.include:52: build-t=
+cg-tests-hexagon-linux-user] Error 2
+>>
+>> Is it that new an option?
+>
+> I think it's new-ish (gcc 11?). On the other hand
+> -Wno-unknown-warning-option is quite old, and would suppress
+> this error. If we do
+>  CFLAGS+=3D-Wno-unknown-warning-option -Wno-stringop-overread
+>
+> does that work?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Yes, I did:
 
+modified   tests/tcg/hexagon/Makefile.target
+@@ -18,7 +18,7 @@
+ # Hexagon doesn't support gdb, so skip the EXTRA_RUNS
+ EXTRA_RUNS =3D
+=20
+-CFLAGS +=3D -Wno-incompatible-pointer-types -Wno-undefined-internal
++CFLAGS +=3D -Wno-incompatible-pointer-types -Wno-undefined-internal -Wno-u=
+nknown-warning-option
+ CFLAGS +=3D -fno-unroll-loops -fno-stack-protector
+
+
+>
+> (Meson has cc.get_supported_arguments() that we can use to
+> filter out -Wfoo/-Wno-foo options that the compiler doesn't
+> support, but since this is built via a makefile rather than
+> by meson that's not conveniently accessible.)
+>
+> -- PMM
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
