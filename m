@@ -4,83 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E129C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 08:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D772C021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 08:53:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpNxz-00053d-VZ; Tue, 04 Mar 2025 03:49:33 -0500
+	id 1tpO1s-00061h-87; Tue, 04 Mar 2025 03:53:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tpNxa-0004zr-M4
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 03:49:08 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tpNxX-0004X7-Af
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 03:49:05 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-548430564d9so5703639e87.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 00:49:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741078138; x=1741682938; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7OfRFYMo//K94xaEfKhA3McqQupcqgzohEIkPVRQuvI=;
- b=IJBXyM89Kjjqof83z97Fiu3UkUWIWd1QPkukHT3R/eXShpuccuLZjA3l2MnGoi1bBk
- seTdfQqYYGO0Cc+PO24hflCJrRpYnBhLs05qtaHcmYtg4o2YMKVFSa4KLnOlLN79NwHN
- j5N4l4FQPhqW+64E/qIY3nNYX0XsC0XFUdgVIJBNzYYOr5gicokbKesL4VDEM/7G3deq
- fZSr6lCS3blN0auSMWEKNPdKujAflEX2NND1OqQ1u9818WjTfqvYla4VIpR0ukMzd5jY
- i1UMDb9D/LqrTd+WfXM3LykTf3+A++CpJAAexfezsy7WVo10pshar0Mfg1KhBrnIlOaF
- 7W0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741078138; x=1741682938;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7OfRFYMo//K94xaEfKhA3McqQupcqgzohEIkPVRQuvI=;
- b=wPTeguiYEkQ6ONvA2rGoagM+72PiNk2lp8kMarRPlvjaLWUxDbxyttyFGDgWsRsz6e
- Qofa4rM0M/qrx1lyZX3GF4a2qgE4wMgfejTXPTQecdIJmkf5AHNAQXYy6+WthtMFceFz
- Tjvr82zivHdH8X84s1VY9FQZv18UMdw+XdemDDxvIiY6SCorozflRVK3XIz3nMY5m1a8
- HsuMgJ2IxAx6BxuVecG7YXaqCGZFGOB0C8L903THjULwm7NWbaz/kthYwyeSg6IWOEdi
- u3ey7TXZTc4MawV/tv6gyBqyyIPwOJlx72bKKC6dy7nF7hRGO2hyB8HG0YOTMXEKdBbj
- IDuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUI4Dk1BBZwyxtqwcXLgcnpOVNwCT99nmxU2WlYis1XLcfmcj5n2qNHRW6T1gFMtrVsINiMv07/NRuv@nongnu.org
-X-Gm-Message-State: AOJu0YyIjXzoGaplOcT9JAtNHwySqT+oTArIQFFj3DfwJagQVqowQEgb
- KyFrkVwQcKK2966j6VeeVUlEtC/kwdYmSe2tMxczrbw6m3Jbb/hYO0izeu9DcCVjj6TJAPtS4Ih
- O2N/bFuuxhPcYFO0mnZCRE8VG5h0=
-X-Gm-Gg: ASbGncvLtWwVfCb4iUjxr1q+473AOs8t+wHqWstCMgwvWcbommPG8fKX6sbbOtU8/Wx
- 1KAkXEWha1G7464cSIFI1Pwj369t0QiZBPl3LQUEM43ZB5MH9/CHkTQ1UDtTOqPUVTA5Ohs+35S
- aGYB90d9Opu0zzbuFTVDlZTPELig==
-X-Google-Smtp-Source: AGHT+IFHqQ2dKJRRao6t3biwtd+Rrdo7SFWzMmh2jeoSWs3IX+/GO8eOiiF7V6ekwyAIcw3E/ixGLt8h7Qqc8gXXj3o=
-X-Received: by 2002:a05:6512:3d1b:b0:545:bf4:4bcb with SMTP id
- 2adb3069b0e04-5494c38ac59mr6062667e87.49.1741078138040; Tue, 04 Mar 2025
- 00:48:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tpO1o-00061U-LY; Tue, 04 Mar 2025 03:53:29 -0500
+Received: from mgamail.intel.com ([198.175.65.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tpO1l-0005dW-4N; Tue, 04 Mar 2025 03:53:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1741078406; x=1772614406;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=DD49mn5QPTgW6QPY2uCSYg7OQGI8uI8Cu0Gz/Ynm4gw=;
+ b=E7SVNs9Bifo51fWh1BlvHNXpXKmxPwyCQktTWUX5Iy7GJpbjnSO1DYlW
+ J4odx03Lwi6OrpAfpcuQ+LC0ypiHhxwsCNFmDpnakbZDSDXuiR9VRGfRT
+ 000vvMdoV36kZa8Ny4LPWDPxO2kIUICOBpU4c1OLANNJRU/n7IAZBYLOE
+ jTJQB18RRaLczulq52Mf8cySkXWQa+FWcg/RQrp8SJDT7LTuvpWY0HE+x
+ Unwcqu5ql4/X3T0UTRaDlVcMtyeAG2lZzdBPO6QHbmNUP0vVMVn6mGH1g
+ uDqdq9bnVBVPyf99FR3ibSpfppKLCKuglW2NtRgEraANwq0n+1qNSkHER A==;
+X-CSE-ConnectionGUID: ukduHEtSQ8KFAUliQfZCXg==
+X-CSE-MsgGUID: +G6hsJWCQ+SsEnQAwqiAZw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11362"; a="53380107"
+X-IronPort-AV: E=Sophos;i="6.13,331,1732608000"; d="scan'208";a="53380107"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2025 00:53:22 -0800
+X-CSE-ConnectionGUID: bBGm1DP2QYqwvaX1NRAGeA==
+X-CSE-MsgGUID: TjFVd6ErQ8mKdi6wjY4vEA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,331,1732608000"; d="scan'208";a="123434460"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa004.fm.intel.com with ESMTP; 04 Mar 2025 00:53:19 -0800
+Date: Tue, 4 Mar 2025 17:13:27 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 04/12] rust: timer: wrap QEMUTimer with Opaque<> and
+ express pinning requirements
+Message-ID: <Z8bEN0HFbfMJ5rmm@intel.com>
+References: <20250227142219.812270-1-pbonzini@redhat.com>
+ <20250227142219.812270-5-pbonzini@redhat.com>
+ <Z8WzRyPbt6d7CHWM@intel.com>
+ <7b09b4e3-3c1f-4c94-ad3a-054eaf74f24c@redhat.com>
 MIME-Version: 1.0
-References: <20250226075913.353676-1-r.peniaev@gmail.com>
- <CAMxuvawEAXpTtUUHsdi-jX6pMRTD=LD5UTu0iN_7-nqf4F09Uw@mail.gmail.com>
-In-Reply-To: <CAMxuvawEAXpTtUUHsdi-jX6pMRTD=LD5UTu0iN_7-nqf4F09Uw@mail.gmail.com>
-From: Roman Penyaev <r.peniaev@gmail.com>
-Date: Tue, 4 Mar 2025 09:48:46 +0100
-X-Gm-Features: AQ5f1JrcU2ZzywVydl2TKQZXv8JAwUvnCDzt_q0ft0Cj0W8bbfvrGPvPckFludo
-Message-ID: <CACZ9PQWAeBoK-X62o+nS-TCu0gpoONv7NaWeMDwXgbbzrdEs-A@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] ui/console-vc: various fixes and improvements
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, "Daniel P . Berrange" <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=r.peniaev@gmail.com; helo=mail-lf1-x131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7b09b4e3-3c1f-4c94-ad3a-054eaf74f24c@redhat.com>
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,88 +84,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Marc-Andr=C3=A9,
+On Mon, Mar 03, 2025 at 04:58:57PM +0100, Paolo Bonzini wrote:
+> Date: Mon, 3 Mar 2025 16:58:57 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 04/12] rust: timer: wrap QEMUTimer with Opaque<> and
+>  express pinning requirements
+> 
+> On 3/3/25 14:48, Zhao Liu wrote:
+> > > @@ -156,7 +157,7 @@ pub struct HPETTimer {
+> > >       /// timer N index within the timer block (`HPETState`)
+> > >       #[doc(alias = "tn")]
+> > >       index: usize,
+> > > -    qemu_timer: Option<Box<Timer>>,
+> > > +    qemu_timer: Option<Pin<Box<Timer>>>,
+> > 
+> > I'm removing this Option<> wrapper in migration series. This is because
+> > Option<> can't be treated as pointer as you mentioned in [*].
+> > 
+> > So for this reason, does this mean that VMStateField cannot accept
+> > Option<>? I realize that all the current VMStateFlags don't seem
+> > compatible with Option<> unless a new flag is introduced.
+> > 
+> > [*]: https://lore.kernel.org/qemu-devel/9a0389fa-765c-443b-ac2f-7c99ed862982@redhat.com/
+> 
+> Ok, so let's get rid of the option.  I didn't really like it anyway...
+> 
+> If the Timer is embedded in the HPETTimer, there needs to be some
+> "unsafe" in order to make sure that the pinning is observed, and also
+> because an uninitialized Timer is bad and can cause a NULL pointer
+> dereference in modify()... i.e. Timer shouldn't have implemented
+> Default!
 
-Do you want me to resend the series with the review
-tag incorporated? Or are you fine to pull as-is if there
-is nothing left to address from my side?
+Yes! Good point.
 
---
-Roman
+> However, the lifetime checks in init_full() are preserved, so overall
+> this is better---at least for now.  Linux also had unsafe initialization
+> for quite some time, so I'm okay with it.
 
+The overall design is okay for me too.
 
+> The replacements for this patch are below.
 
-On Wed, Feb 26, 2025 at 11:06=E2=80=AFAM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> Hi,
->
-> On Wed, Feb 26, 2025 at 11:59=E2=80=AFAM Roman Penyaev <r.peniaev@gmail.c=
-om> wrote:
-> >
-> > This patch series brings several fixes and improvements to the QEMU
-> > virtual console (VC), making it more usable and aligning it better
-> > with VT100 spec. The updates include support for inserting and
-> > deleting characters, better cursor handling and correct position
-> > reporting. Without these changes, the console is hardly usable.
-> >
-> > 1. Support for DCH (delete) and ICH (insert) commands
-> >   * Properly handles character deletion and insertion as per VT100
-> >     specs.
-> >
-> > 2. Add support for cursor save/restore (ESC 7 and ESC 8)
-> >   * Implements legacy DEC sequences for compatibility.
-> >   * Ensures cursor attributes are also saved and restored.
-> >
-> > 3. Fix cursor position reporting
-> >   * Reports cursor position relative to the screen instead of the
-> >     scroll buffer.
-> >   * Fixes issues with tools that rely on accurate cursor placement.
-> >
-> > 4. Ensure DSR (Device Status Report) responses go to applications
-> >   * Stops terminal from rendering responses to the screen but instead
-> >     send reports back to applications.
-> >
-> > 5. Handle `ESC ( <ch>` character set sequences
-> >   * Makes `top` output look clean by handling the character set
-> >     commands.
-> >
-> > These changes improve the virtual console's compatibility with
-> > terminal-based apps. Without them, the console is quite frustrating to
-> > use.
-> >
-> > v1 .. v2:
-> >
-> > * The VT spec and ECMA-48 standard are somewhat vague about exactly
-> >   what attributes should be set for the ICH (insert character),
-> >   but various terminal implementations reset the character to the
-> >   default state. Instead of inserting a "space" with the current
-> >   attribute, call `vc_clear_xy()` for the inserted character.
-> >
-> > Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-> > Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
-> > Cc: Kevin Wolf <kwolf@redhat.com>
-> > Cc: Daniel P. Berrange <berrange@redhat.com>
-> > Cc: qemu-devel@nongnu.org
->
-> lgtm,
->
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> >
-> > Roman Penyaev (5):
-> >   ui/console-vc: introduce parsing of the 'ESC ( <ch>' sequence
-> >   ui/console-vc: report to the application instead of screen rendering
-> >   ui/console-vc: report cursor position in the screen not in the scroll
-> >     buffer
-> >   ui/console-vc: add support for cursor DECSC and DECRC commands
-> >   ui/console-vc: implement DCH (delete) and ICH (insert) commands
-> >
-> >  ui/console-vc.c | 154 ++++++++++++++++++++++++++++++++++++++++++++----
-> >  1 file changed, 142 insertions(+), 12 deletions(-)
-> >
-> > --
-> > 2.43.0
-> >
->
+I have comments about current Opaque<> implemation below...
+  
+> From 2d74bdf176b2fbeb6205396d0021f68a9e72bde1 Mon Sep 17 00:00:00 2001
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Date: Mon, 3 Mar 2025 16:27:08 +0100
+> Subject: [PATCH 1/2] rust: hpet: embed Timer without the Option and Box
+>  indirection
+> 
+> This simplifies things for migration, since Option<Box<QEMUTimer>> does not
+> implement VMState.
+> 
+> This also shows a soundness issue because Timer::new() will leave a NULL
+> timer list pointer, which can then be dereferenced by Timer::modify().  It
+> will be fixed shortly.
+
+Good catch!
+
+> Suggested-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/hw/timer/hpet/src/hpet.rs | 59 ++++++++++++++++------------------
+>  1 file changed, 28 insertions(+), 31 deletions(-)
+
+Thanks. This cleanup is fine for me!
+
+...
+
+> From 276020645786b6537c50bb37795f281b5d630f27 Mon Sep 17 00:00:00 2001
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Date: Fri, 14 Feb 2025 12:06:13 +0100
+> Subject: [PATCH 2/2] rust: timer: wrap QEMUTimer with Opaque<> and express
+>  pinning requirements
+> 
+> Timers must be pinned in memory, because modify() stores a pointer to them
+> in the TimerList.  To express this requirement, change init_full() to take
+> a pinned reference.  Because the only way to obtain a Timer is through
+> Timer::new(), which is unsafe, modify() can assume that the timer it got
+> was later initialized; and because the initialization takes a Pin<&mut
+> Timer> modify() can assume that the timer is pinned.  In the future the
+> pinning requirement will be expressed through the pin_init crate instead.
+> 
+> Note that Timer is a bit different from other users of Opaque, in that
+> it is created in Rust code rather than C code.  This is why it has to
+> use the unsafe constructors provided by Opaque; and in fact Timer::new()
+> is also unsafe, because it leaves it to the caller to invoke init_full()
+> before modify().  Without a call to init_full(), modify() will cause a
+> NULL pointer dereference.
+> 
+> An alternative could be to combine new() + init_full() by returning a
+> pinned box; however, using a reference makes it easier to express
+> the requirement that the opaque outlives the timer.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  meson.build                    |  7 -----
+>  rust/hw/timer/hpet/src/hpet.rs | 10 ++++++--
+>  rust/qemu-api/src/timer.rs     | 47 ++++++++++++++++++++++++++--------
+>  3 files changed, 44 insertions(+), 20 deletions(-)
+
+...
+
+>  impl Timer {
+>      pub const MS: u32 = bindings::SCALE_MS;
+>      pub const US: u32 = bindings::SCALE_US;
+>      pub const NS: u32 = bindings::SCALE_NS;
+> -    pub fn new() -> Self {
+> -        Default::default()
+> -    }
+> -
+> -    const fn as_mut_ptr(&self) -> *mut Self {
+> -        self as *const Timer as *mut _
+> +    /// Create a `Timer` struct without initializing it.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// The timer must be initialized before it is armed with
+> +    /// [`modify`](Self::modify).
+> +    pub unsafe fn new() -> Self {
+> +        // SAFETY: requirements relayed to callers of Timer::new
+> +        Self(unsafe { Opaque::zeroed() })
+
+We should use Opaque::uninit()? Because MaybeUninit::<bindings::QEMUTimer>::zeroed()
+marks the timer as initialized, which disables MaybeUninit's ability to check for
+initialization. e.g.,
+
+// No compiling error or runtime panic
+let t: MaybeUninit<bindings::QEMUTimer> = MaybeUninit::zeroed();
+let _t = unsafe { t.assume_init() };
+
+Further more, I spent some time trying to figure out if MaybeUninit in
+Opaque<> could help identify UB caused by uninitialized Timer, but I found
+it doesn't work. :-(
+
+There're 2 cases:
+
+// No compiling error or runtime panic
+let mut v: UnsafeCell<MaybeUninit<bindings::QEMUTimer>> = UnsafeCell::new(MaybeUninit::uninit());
+let _v = unsafe { v.get_mut().assume_init() };
+
+// Runtime panic: Illegal instruction
+let t: MaybeUninit<bindings::QEMUTimer> = MaybeUninit::uninit();
+let _t = unsafe { t.assume_init() };
+
+I understand that the outer UnsafeCell wrapper makes MaybeUninit's
+checks not work.
+
+But when I adjust MaybeUninit as the outer wrapper, the UB check can
+work:
+
+// Runtime panic: Illegal instruction
+let v: MaybeUninit<UnsafeCell<bindings::QEMUTimer>> = MaybeUninit::uninit();
+let _v = unsafe { v.assume_init() };
+
+And there's another example:
+
+https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html#method.raw_get
+
+Compared with linux's Opaque, it also puts MaybeUninit on the outermost
+layer.
+
+Emm, I guess now we have UnsafeCell<MaybeUninit<>> because interior
+mutability is expected... but this layout breaks MaybeUninit's functionality.
+
+> +    /// Create a new timer with the given attributes.
+>      pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+> -        &'timer mut self,
+> +        self: Pin<&'timer mut Self>,
+>          timer_list_group: Option<&TimerListGroup>,
+>          clk_type: ClockType,
+>          scale: u32,
+> @@ -51,7 +71,7 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+>          // SAFETY: the opaque outlives the timer
+>          unsafe {
+>              timer_init_full(
+> -                self,
+> +                self.as_mut_ptr(),
+>                  if let Some(g) = timer_list_group {
+>                      g as *const TimerListGroup as *mut _
+>                  } else {
+> @@ -67,14 +87,19 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+>      }
+>      pub fn modify(&self, expire_time: u64) {
+> +        // SAFETY: the only way to obtain a Timer safely is via methods that
+> +        // take a Pin<&mut Self>, therefore the timer is pinned
+
+The SAFETY should also be ensured by MaybeUninit, I think. But I haven't
+verified if MaybeUninit<UnsafeCell<>> can work on FFI case...
+
+>          unsafe { timer_mod(self.as_mut_ptr(), expire_time as i64) }
+>      }
+>      pub fn delete(&self) {
+> +        // SAFETY: the only way to obtain a Timer safely is via methods that
+> +        // take a Pin<&mut Self>, therefore the timer is pinned
+>          unsafe { timer_del(self.as_mut_ptr()) }
+>      }
+>  }
+> +// FIXME: use something like PinnedDrop from the pinned_init crate
+>  impl Drop for Timer {
+>      fn drop(&mut self) {
+>          self.delete()
+> -- 
+> 2.48.1
+> 
+> 
+> 
 
