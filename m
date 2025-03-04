@@ -4,66 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA2BEC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 16:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B0BC282D6
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 16:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpVQH-0003nq-W8; Tue, 04 Mar 2025 11:47:14 -0500
+	id 1tpVVv-0005C1-8B; Tue, 04 Mar 2025 11:53:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tpVQ8-0003jP-CE; Tue, 04 Mar 2025 11:47:08 -0500
-Received: from mgamail.intel.com ([198.175.65.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tpVQ4-0002zR-QJ; Tue, 04 Mar 2025 11:47:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741106821; x=1772642821;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=jmaem5cQC4XHhY3/BP0OvobTtroTuo7hud9bFRaDzYo=;
- b=S47mZCFRjxUtqIVkLcwnskti0MDZUDWm+ux40EpMQ5DSy97Lu4HPCEFk
- SNtvFaNe5WQ2x/jBMsJcKIUL+0uhv4l9pwaqOG1J1ff9TXo7EAjxg37Fh
- VCTjGPfbmDSCr/NRNjQVZhBI+Svs3+NhpZG0I9w0ZXTlREnqtoJDjoYDi
- kWVn6hdPcl8dC5qMDGTr7BW+F9y6SbdpEdFt7RcdDdCxugTEJ0yka1+YH
- 5bZmg/J9kQsZsI9L+eAAlO4BJWijeT3HkEFs/nJz8kN5tLJ9queiTsXRq
- SLkX04IyokGMu0+WciKx7aB+KjsgXM5oOC895v29jRg5FSZVC9vkGU4cM A==;
-X-CSE-ConnectionGUID: rw/dCJgNQHSUvdURqnp3Uw==
-X-CSE-MsgGUID: Jj2RGTX2RpGcKwEUtkqVeA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="45685625"
-X-IronPort-AV: E=Sophos;i="6.14,220,1736841600"; d="scan'208";a="45685625"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2025 08:46:58 -0800
-X-CSE-ConnectionGUID: fbJBhUCkQuO5m29jKgZUEA==
-X-CSE-MsgGUID: nJDXc8RgTE6afNAlKDx93A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="118314908"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa010.jf.intel.com with ESMTP; 04 Mar 2025 08:46:57 -0800
-Date: Wed, 5 Mar 2025 01:07:04 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH] rust: qom: remove operations on &mut
-Message-ID: <Z8czOELqP69Yk/qG@intel.com>
-References: <20250228085831.847265-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1tpVVs-0005Bl-SQ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 11:53:00 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1tpVVq-0004nW-OL
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 11:53:00 -0500
+Received: from hawking.nue2.suse.org (unknown [10.168.4.11])
+ by smtp-out2.suse.de (Postfix) with ESMTP id 47EC81F441;
+ Tue,  4 Mar 2025 16:52:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741107172; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=n5mpIw+zydjJcUnLTOyBRRdB1kJAS2opwH3W7uf10gE=;
+ b=Qu4JNA2Yv6GTk2tU8KB0Em3+j7okybmY2miTnnErujJ9hSfkoLUItseiM97LFyC/iItHf0
+ M4Gv7j4H5Jg/+1L5qiwWan5bOp4kr21Dzh/M871XOLEPdoU73bW0IlpHq4aPNtkHh2XpLc
+ dQGteJM5xPY5xJEbS6ivVXa025UtMIw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741107172;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=n5mpIw+zydjJcUnLTOyBRRdB1kJAS2opwH3W7uf10gE=;
+ b=pXz+izjE0Gc2N4lMFdRgDzfw+f9byssmvPFjyMh7yg3kk5udNuO52TVwsTbmHrFmpnlri+
+ X7yZZ9JbqDg5zkAA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741107172; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=n5mpIw+zydjJcUnLTOyBRRdB1kJAS2opwH3W7uf10gE=;
+ b=Qu4JNA2Yv6GTk2tU8KB0Em3+j7okybmY2miTnnErujJ9hSfkoLUItseiM97LFyC/iItHf0
+ M4Gv7j4H5Jg/+1L5qiwWan5bOp4kr21Dzh/M871XOLEPdoU73bW0IlpHq4aPNtkHh2XpLc
+ dQGteJM5xPY5xJEbS6ivVXa025UtMIw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741107172;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=n5mpIw+zydjJcUnLTOyBRRdB1kJAS2opwH3W7uf10gE=;
+ b=pXz+izjE0Gc2N4lMFdRgDzfw+f9byssmvPFjyMh7yg3kk5udNuO52TVwsTbmHrFmpnlri+
+ X7yZZ9JbqDg5zkAA==
+Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
+ id 3694D4A056D; Tue,  4 Mar 2025 17:52:52 +0100 (CET)
+From: Andreas Schwab <schwab@suse.de>
+To: Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH] linux-user: fix handling of cpu mask in riscv_hwprobe syscall
+CC: Palmer Dabbelt <palmer@rivosinc.com>, Robbin Ehn <rehn@rivosinc.com>,
+ Alistair Francis <alistair.francis@wdc.com>, qemu-devel@nongnu.org
+Date: Tue, 04 Mar 2025 17:52:52 +0100
+Message-ID: <mvmo6yglouz.fsf@suse.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250228085831.847265-1-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.19 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.19)[-0.973]; RCVD_NO_TLS_LAST(0.10)[];
+ MIME_GOOD(-0.10)[text/plain]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_COUNT_ONE(0.00)[1];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=schwab@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,27 +98,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 28, 2025 at 09:58:31AM +0100, Paolo Bonzini wrote:
-> Date: Fri, 28 Feb 2025 09:58:31 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH] rust: qom: remove operations on &mut
-> X-Mailer: git-send-email 2.48.1
-> 
-> The dubious casts of mutable references to objects are not used
-> anymore: the wrappers for qdev_init_clock_in and for IRQ and MMIO
-> initialization can be called directly on the subclasses, without
-> casts, plus they take a shared reference so they can just use
-> "upcast()" instead of "upcast_mut()".  Remove them.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/qemu-api/src/prelude.rs |  1 -
->  rust/qemu-api/src/qom.rs     | 83 ------------------------------------
->  rust/qemu-api/tests/tests.rs | 34 +--------------
->  3 files changed, 2 insertions(+), 116 deletions(-)
+The third argument of the riscv_hwprobe syscall contains the size of the
+cpu mask in bytes, not bits.
 
-Simplification is always a good thing,
+Signed-off-by: Andreas Schwab <schwab@suse.de>
+---
+ linux-user/syscall.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index a22a5df8cc..4cc1a31d0d 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -9120,16 +9120,16 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
+ 
+ static int cpu_set_valid(abi_long arg3, abi_long arg4)
+ {
+-    int ret, i, tmp;
++    int ret, i;
+     size_t host_mask_size, target_mask_size;
+     unsigned long *host_mask;
+ 
+     /*
+      * cpu_set_t represent CPU masks as bit masks of type unsigned long *.
+-     * arg3 contains the cpu count.
++     * arg3 contains the size of the cpu mask.
+      */
+-    tmp = (8 * sizeof(abi_ulong));
+-    target_mask_size = ((arg3 + tmp - 1) / tmp) * sizeof(abi_ulong);
++    target_mask_size = (arg3 + (sizeof(abi_ulong) - 1)) &
++                       ~(sizeof(abi_ulong) - 1);
+     host_mask_size = (target_mask_size + (sizeof(*host_mask) - 1)) &
+                      ~(sizeof(*host_mask) - 1);
+ 
+-- 
+2.48.1
 
+
+-- 
+Andreas Schwab, SUSE Labs, schwab@suse.de
+GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
+"And now for something completely different."
 
