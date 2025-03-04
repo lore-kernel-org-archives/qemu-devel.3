@@ -4,89 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36377C282D3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 09:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 195BDC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Mar 2025 09:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpOOo-0002wZ-WB; Tue, 04 Mar 2025 04:17:15 -0500
+	id 1tpOTW-00058z-Vg; Tue, 04 Mar 2025 04:22:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <raman.dzehtsiar@gmail.com>)
- id 1tpOOm-0002wE-Sq; Tue, 04 Mar 2025 04:17:13 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <raman.dzehtsiar@gmail.com>)
- id 1tpOOh-0006MP-VL; Tue, 04 Mar 2025 04:17:09 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-388cae9eb9fso2799029f8f.3; 
- Tue, 04 Mar 2025 01:17:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741079825; x=1741684625; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=4C/8pbm9T5oXRkdca4gSEac7EXi6xynKIRzYnRYB2bg=;
- b=D8JVCXx0a7zJ4vvL5z2iZhaWgdN8SrM/EPf7TB3z/4s+r7Rv/JheNKR12umu1ij0fh
- l6TWiBID2ntXxEw4nAV7ihkLGdyrQD65UkLy+nqdAItY6skBlQFQ9chHfxsBtvzUa2ZF
- wZRJV+99cqAsIvGlyn7xvSLehq6kMeY8S4ObelGSqkUrP+l0cSJDzWlfBLnezP7Pjp+c
- foe4erJspYXyKrC7VUmJwB/4mABNmEStQ1+IIzWLKWsZrJV7Bpr9dWY1wF1sAMO9BEUR
- 9JowLmyxWpsF+OefKcQP/bN/OX/Siv4SH3dC9ILjshZRUAwiQfSYTvJQxkqh7pZ5SDNq
- jq6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741079825; x=1741684625;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4C/8pbm9T5oXRkdca4gSEac7EXi6xynKIRzYnRYB2bg=;
- b=fzl4sEildGOR+A4fEQksORfE6ezGTwJIA74fveyYPCCnMCMPaCqnpuQAwZUOvOT05+
- QCGuY3RCYhpBj12sI3aCDUSMUGuvZnbd/UA1VqZ8r9UrXqqpcloOl+5UGMsTh+zrgxSB
- A257BP8ne1QniSlfuhW9eidXSyN9DbUUvaEcIhk8tQ8apgy3zYXPkxYGKb8Gis4QW89V
- 3RoWbWmreQ4wDcA8jigFcXLYy2pI3Ihmdu4BNTALZPmuD2dTqFEhjpWzA81zYZG9QNgk
- KZRMwEbrLnRmgmsamQBQhIa0Vomj85f1mSnWJJOO0v1cGBC+fImS3BMXDEZpSweyhJsC
- 7Gsw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX3hZwAz+oTl4bAreIjLE+dWy6N2fMv3V97o0uygoNGemJBIg6pjdLZSRsQKLmNsDCmwGGBelM295qH@nongnu.org
-X-Gm-Message-State: AOJu0Yz7EtHRLc6Lo9vAn0lqvQzR2e4D9IOFZSoKVhPZWRwLFLNBRlzq
- bUxivfm4rh1P8zIWJmJIhrxPYABw6bhoy3oivytlT0snwtvue8saxVjtWJ6l
-X-Gm-Gg: ASbGncscFp2lMyZyLPC7QyLeidJNkR+WHmROri3r2PlAxZt+8g76mgP8hc276sQLnY+
- 6AhqiEOueTdjbtuAxo40EpVMrBL3mwOrD0t3qrPXGxL3zsUAylHtAPTYcjeZPnbSaFBAW5LUc+Y
- aIDt8+sTqbXVb3MEUZzO2jxBNEBdf1bR7LnlDYFSyqMKU4cPjIJhZ+Lc6eiZJOHBiJj1tA+hCRt
- eZuQPVn5DBWJqfVmGwCa8LcSzfzWwxbqkmnj1YNO05fyb5ttyMV8l/HsOFdA82v6QXJiYW8yF56
- O/djDbNn8UD91Sqgcrnmd8jfm2peOg3ddHxuCRYXF6v2MjdWQ9k6Jh3EEpe3tYCkG6skr1lo1KJ
- DlYgGb4TcmAp48fgicRdt4Q==
-X-Google-Smtp-Source: AGHT+IGAU8zUrUgGBPysnDZUbwVG7t4Zt7LAFLukH+j3zu3nJRnRfLbLxGv9jXficnTYL+Ba4XONWA==
-X-Received: by 2002:a05:6000:4404:b0:390:ded5:ce1d with SMTP id
- ffacd0b85a97d-390ec9cc0b7mr9038685f8f.33.1741079825326; 
- Tue, 04 Mar 2025 01:17:05 -0800 (PST)
-Received: from localhost.localdomain (ip-86-49-227-248.bb.vodafone.cz.
- [86.49.227.248]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e484451fsm17387473f8f.63.2025.03.04.01.17.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 01:17:05 -0800 (PST)
-From: Raman Dzehtsiar <raman.dzehtsiar@gmail.com>
-X-Google-Original-From: Raman Dzehtsiar <Raman.Dzehtsiar@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Wen Congyang <wencongyang2@huawei.com>,
- Markus Armbruster <armbru@redhat.com>,
- Xie Changlong <xiechanglong.d@gmail.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org, Raman Dzehtsiar <Raman.Dzehtsiar@gmail.com>
-Subject: [PATCH v2] blockdev-backup: Add error handling option for
- copy-before-write jobs
-Date: Tue,  4 Mar 2025 10:17:03 +0100
-Message-ID: <20250304091703.462342-1-Raman.Dzehtsiar@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tpOTQ-00057u-0M; Tue, 04 Mar 2025 04:22:00 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tpOTC-00012p-NX; Tue, 04 Mar 2025 04:21:58 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5243jkrV021572;
+ Tue, 4 Mar 2025 09:21:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=R+q1ML
+ majr9kgzmjYWM0Fm/ZnNIJsXiep+W0AQBsYYk=; b=hMfEL+/8XgJUUsg8ObkpQN
+ qmwrD2bR5ENNC7zGH6OHKjzTIOfWVrMBoSwiADpxZB98BejvqBDcUdGWKxiFDiPo
+ t3NSbuOGDGIIrR696QuRuz8vce56vQUShTbqLbP8QTaFgeXJEHeuLak3eWOJm8a3
+ nPu/h2tMiVoQBJNG8flLJz0KYJ+Em6vjULEz/x8JzQw3iaEY1g+0H7GPFtBus1UD
+ EmCPRC/YJlTVrkUEaR08GScfgJwWr31Dl6bNVxNXaMgzZ3PyVkarrJQ2+PvyBdrD
+ BHseAO/SHeY7iJri7AgnA6d8ZDMmoGPDpgrj+C6JIUQ6wF9c2rF3z1aNC82iD65A
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 455sw7hfts-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 04 Mar 2025 09:21:43 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 5249DuAQ017919;
+ Tue, 4 Mar 2025 09:21:42 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 455sw7hftn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 04 Mar 2025 09:21:42 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52480rYl013805;
+ Tue, 4 Mar 2025 09:21:41 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 454e2kmhyk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 04 Mar 2025 09:21:41 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5249LetG26149368
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 4 Mar 2025 09:21:40 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9FCCC58052;
+ Tue,  4 Mar 2025 09:21:40 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 609BE5805A;
+ Tue,  4 Mar 2025 09:21:38 +0000 (GMT)
+Received: from [9.109.242.165] (unknown [9.109.242.165])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  4 Mar 2025 09:21:38 +0000 (GMT)
+Message-ID: <93a44d0c-1712-4535-a7d0-e4c285e0255f@linux.ibm.com>
+Date: Tue, 4 Mar 2025 14:51:37 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] hw/ppc: Trigger Fadump boot if fadump is registered
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250217071711.83735-1-adityag@linux.ibm.com>
+ <20250217071711.83735-3-adityag@linux.ibm.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20250217071711.83735-3-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=raman.dzehtsiar@gmail.com; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: t9CPVLqOwePFZaqQaKLzM5x8k-UAJySX
+X-Proofpoint-GUID: 1V0-UaeTjYQuOvrcfbG8wBvsaM1CVKDu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-04_04,2025-03-03_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ phishscore=0 mlxlogscore=999 mlxscore=0 adultscore=0 bulkscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503040075
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,177 +120,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch extends the blockdev-backup QMP command to allow users to specify
-how to behave when IO errors occur during copy-before-write operations.
-Previously, the behavior was fixed and could not be controlled by the user.
 
-The new 'on-cbw-error' option can be set to one of two values:
-- 'break-guest-write': Forwards the IO error to the guest and triggers
-  the on-source-error policy. This preserves snapshot integrity at the
-  expense of guest IO operations.
-- 'break-snapshot': Allows the guest OS to continue running normally,
-  but invalidates the snapshot and aborts related jobs. This prioritizes
-  guest operation over backup consistency.
 
-This enhancement provides more flexibility for backup operations in different
-environments where requirements for guest availability versus backup
-consistency may vary.
+On 2/17/25 12:47, Aditya Gupta wrote:
+> According to PAPR:
+> 
+>      R1–7.3.30–3. When the platform receives an ibm,os-term RTAS call, or
+>      on a system reset without an ibm,nmi-interlock RTAS call, if the
+>      platform has a dump structure registered through the
+>      ibm,configure-kernel-dump call, the platform must process each
+>      registered kernel dump section as required and, when available,
+>      present the dump structure information to the operating system
+>      through the “ibm,kernel-dump” property, updated with status for each
+>      dump section, until the dump has been invalidated through the
+>      ibm,configure-kernel-dump RTAS call.
+> 
+> If Fadump has been registered, trigger an Fadump boot (memory preserving
+> boot), if QEMU recieves a 'ibm,os-term' rtas call.
+> 
+> Implementing the fadump boot as:
+>      * pause all vcpus (will save registers later)
+>      * preserve memory regions specified by fadump
 
-The default behavior remains unchanged to maintain backward compatibility.
+Although mentioned later, but needs to call out here as not implemented
+in this patch. Ideally, all the prep work patches should be introduced
+earlier before enabling the trigger.
 
-Signed-off-by: Raman Dzehtsiar <Raman.Dzehtsiar@gmail.com>
----
- block/backup.c                         | 3 ++-
- block/copy-before-write.c              | 2 ++
- block/copy-before-write.h              | 1 +
- block/replication.c                    | 4 +++-
- blockdev.c                             | 6 ++++++
- include/block/block_int-global-state.h | 2 ++
- qapi/block-core.json                   | 4 ++++
- 7 files changed, 20 insertions(+), 2 deletions(-)
+>      * do a memory preserving reboot (GUEST_RESET in QEMU doesn't clear
+>        the memory)
+> 
+> Memory regions registered by fadump will be handled in a later patch.
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   hw/ppc/spapr_rtas.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 42 insertions(+)
+> 
+> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
+> index eebdf13b1552..01c82375f03d 100644
+> --- a/hw/ppc/spapr_rtas.c
+> +++ b/hw/ppc/spapr_rtas.c
+> @@ -342,6 +342,43 @@ static void rtas_ibm_set_system_parameter(PowerPCCPU *cpu,
+>   }
+>   
+>   struct fadump_metadata fadump_metadata;
+> +bool is_next_boot_fadump;
+> +
+> +static void trigger_fadump_boot(target_ulong spapr_retcode)
+> +{
+> +    /*
+> +     * In PowerNV, SBE stops all clocks for cores, do similar to it
+> +     * QEMU's nearest equivalent is 'pause_all_vcpus'
+> +     * See 'stopClocksS0' in SBE source code for more info on SBE part
+> +     */
+> +    pause_all_vcpus();
+> +
+> +    if (true /* TODO: Preserve memory registered for fadump */) {
+> +        /* Failed to preserve the registered memory regions */
 
-diff --git a/block/backup.c b/block/backup.c
-index 79652bf57b..0151e84395 100644
---- a/block/backup.c
-+++ b/block/backup.c
-@@ -361,6 +361,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
-                   BackupPerf *perf,
-                   BlockdevOnError on_source_error,
-                   BlockdevOnError on_target_error,
-+                  OnCbwError on_cbw_error,
-                   int creation_flags,
-                   BlockCompletionFunc *cb, void *opaque,
-                   JobTxn *txn, Error **errp)
-@@ -458,7 +459,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
-     }
- 
-     cbw = bdrv_cbw_append(bs, target, filter_node_name, discard_source,
--                          perf->min_cluster_size, &bcs, errp);
-+                          perf->min_cluster_size, &bcs, on_cbw_error, errp);
-     if (!cbw) {
-         goto error;
-     }
-diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-index fd470f5f92..00af0b18ac 100644
---- a/block/copy-before-write.c
-+++ b/block/copy-before-write.c
-@@ -551,6 +551,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
-                                   bool discard_source,
-                                   uint64_t min_cluster_size,
-                                   BlockCopyState **bcs,
-+                                  OnCbwError on_cbw_error,
-                                   Error **errp)
- {
-     BDRVCopyBeforeWriteState *state;
-@@ -568,6 +569,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
-     }
-     qdict_put_str(opts, "file", bdrv_get_node_name(source));
-     qdict_put_str(opts, "target", bdrv_get_node_name(target));
-+    qdict_put_str(opts, "on-cbw-error", OnCbwError_str(on_cbw_error));
- 
-     if (min_cluster_size > INT64_MAX) {
-         error_setg(errp, "min-cluster-size too large: %" PRIu64 " > %" PRIi64,
-diff --git a/block/copy-before-write.h b/block/copy-before-write.h
-index 2a5d4ba693..eb93364e85 100644
---- a/block/copy-before-write.h
-+++ b/block/copy-before-write.h
-@@ -42,6 +42,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
-                                   bool discard_source,
-                                   uint64_t min_cluster_size,
-                                   BlockCopyState **bcs,
-+                                  OnCbwError on_cbw_error,
-                                   Error **errp);
- void bdrv_cbw_drop(BlockDriverState *bs);
- 
-diff --git a/block/replication.c b/block/replication.c
-index 0020f33843..748cf648ec 100644
---- a/block/replication.c
-+++ b/block/replication.c
-@@ -584,7 +584,9 @@ static void replication_start(ReplicationState *rs, ReplicationMode mode,
-                                 0, MIRROR_SYNC_MODE_NONE, NULL, 0, false, false,
-                                 NULL, &perf,
-                                 BLOCKDEV_ON_ERROR_REPORT,
--                                BLOCKDEV_ON_ERROR_REPORT, JOB_INTERNAL,
-+                                BLOCKDEV_ON_ERROR_REPORT,
-+                                ON_CBW_ERROR_BREAK_GUEST_WRITE,
-+                                JOB_INTERNAL,
-                                 backup_job_completed, bs, NULL, &local_err);
-         if (local_err) {
-             error_propagate(errp, local_err);
-diff --git a/blockdev.c b/blockdev.c
-index 1d1f27cfff..818ec42511 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -2641,6 +2641,7 @@ static BlockJob *do_backup_common(BackupCommon *backup,
-     BdrvDirtyBitmap *bmap = NULL;
-     BackupPerf perf = { .max_workers = 64 };
-     int job_flags = JOB_DEFAULT;
-+    OnCbwError on_cbw_error = ON_CBW_ERROR_BREAK_GUEST_WRITE;
- 
-     if (!backup->has_speed) {
-         backup->speed = 0;
-@@ -2745,6 +2746,10 @@ static BlockJob *do_backup_common(BackupCommon *backup,
-         job_flags |= JOB_MANUAL_DISMISS;
-     }
- 
-+    if (backup->has_on_cbw_error) {
-+        on_cbw_error = backup->on_cbw_error;
-+    }
-+
-     job = backup_job_create(backup->job_id, bs, target_bs, backup->speed,
-                             backup->sync, bmap, backup->bitmap_mode,
-                             backup->compress, backup->discard_source,
-@@ -2752,6 +2757,7 @@ static BlockJob *do_backup_common(BackupCommon *backup,
-                             &perf,
-                             backup->on_source_error,
-                             backup->on_target_error,
-+                            on_cbw_error,
-                             job_flags, NULL, NULL, txn, errp);
-     return job;
- }
-diff --git a/include/block/block_int-global-state.h b/include/block/block_int-global-state.h
-index eb2d92a226..0d93783763 100644
---- a/include/block/block_int-global-state.h
-+++ b/include/block/block_int-global-state.h
-@@ -179,6 +179,7 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
-  *        all ".has_*" fields are ignored.
-  * @on_source_error: The action to take upon error reading from the source.
-  * @on_target_error: The action to take upon error writing to the target.
-+ * @on_cbw_error: The action to take upon error in copy-before-write operations.
-  * @creation_flags: Flags that control the behavior of the Job lifetime.
-  *                  See @BlockJobCreateFlags
-  * @cb: Completion function for the job.
-@@ -198,6 +199,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
-                             BackupPerf *perf,
-                             BlockdevOnError on_source_error,
-                             BlockdevOnError on_target_error,
-+                            OnCbwError on_cbw_error,
-                             int creation_flags,
-                             BlockCompletionFunc *cb, void *opaque,
-                             JobTxn *txn, Error **errp);
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index ee6eccc68c..3a7cf82b57 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -1622,6 +1622,9 @@
- # @discard-source: Discard blocks on source which have already been
- #     copied to the target.  (Since 9.1)
- #
-+# @on-cbw-error: optional policy defining behavior on I/O errors in
-+#     copy-before-write jobs; defaults to break-guest-write.  (Since 10.0)
-+#
- # @x-perf: Performance options.  (Since 6.0)
- #
- # Features:
-@@ -1641,6 +1644,7 @@
-             '*compress': 'bool',
-             '*on-source-error': 'BlockdevOnError',
-             '*on-target-error': 'BlockdevOnError',
-+            '*on-cbw-error': 'OnCbwError',
-             '*auto-finalize': 'bool', '*auto-dismiss': 'bool',
-             '*filter-node-name': 'str',
-             '*discard-source': 'bool',
--- 
-2.43.0
+Instead of this, it is better to introduce the dummy stub here now which 
+can be populated in a later patch. That also helps in avoiding code 
+changes in this hunk in future patch.
 
+For eg:
+
+static bool fadump_preserved_mem(void)
+{
+     return false; /* TBD */
+}
+
+...
+
+if (!fadump_preserve_mem()) {
+  ...
+}
+
+> +        rtas_st(spapr_retcode, 0, RTAS_OUT_HW_ERROR);
+> +
+> +        /* Cause a reboot */
+> +        qemu_system_guest_panicked(NULL);
+> +        return;
+> +    }
+> +
+> +    /* Mark next boot as fadump boot */
+> +    is_next_boot_fadump = true;
+> +
+> +    /* Reset fadump_registered for next boot */
+> +    fadump_metadata.fadump_registered = false;
+> +    fadump_metadata.fadump_dump_active = true;
+> +
+> +    /* Then do a guest reset */
+> +    /*
+> +     * Requirement:
+> +     * This guest reset should not clear the memory (which is
+> +     * the case when this is merged)
+> +     */
+> +    qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+> +
+> +    rtas_st(spapr_retcode, 0, RTAS_OUT_SUCCESS);
+> +}
+>   
+>   /* Papr Section 7.4.9 ibm,configure-kernel-dump RTAS call */
+>   static __attribute((unused)) void rtas_configure_kernel_dump(PowerPCCPU *cpu,
+> @@ -449,6 +486,11 @@ static void rtas_ibm_os_term(PowerPCCPU *cpu,
+>       target_ulong msgaddr = rtas_ld(args, 0);
+>       char msg[512];
+>   
+> +    if (fadump_metadata.fadump_registered) {
+> +        /* If fadump boot works, control won't come back here */
+> +        return trigger_fadump_boot(rets);
+> +    }
+> +
+>       cpu_physical_memory_read(msgaddr, msg, sizeof(msg) - 1);
+>       msg[sizeof(msg) - 1] = 0;
+>   
 
