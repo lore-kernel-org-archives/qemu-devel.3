@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A7AC282DE
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 19:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4DA5C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 19:37:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpuRY-0001CJ-J9; Wed, 05 Mar 2025 14:30:12 -0500
+	id 1tpuXO-0002sg-I8; Wed, 05 Mar 2025 14:36:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tpuRW-0001Ba-4q
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 14:30:10 -0500
-Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ id 1tpuXI-0002sE-I2
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 14:36:08 -0500
+Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tpuRR-0006IB-6B
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 14:30:08 -0500
-Received: by mail-qt1-x82e.google.com with SMTP id
- d75a77b69052e-47208e35f9cso82832691cf.3
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 11:30:04 -0800 (PST)
+ id 1tpuXG-0007qH-KO
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 14:36:08 -0500
+Received: by mail-qk1-x735.google.com with SMTP id
+ af79cd13be357-7c3c4ff7d31so393813685a.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 11:36:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741203003; x=1741807803; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741203365; x=1741808165; darn=nongnu.org;
  h=thread-index:content-language:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=zHH2O1TInz9VrI/SztIfijTfhVxlGFaMbW2AqIdIofQ=;
- b=J8LyMl3nkExqarQSzANkd7hPfpxP0I/2FbHwbnUo1K3L1WMHLWFu6eMmu6eqBa0Dcs
- Z5/4K6ZenMhrInH031mj6pz3Ykc1AuLAS+seIYyKbuWXd8bNlaGAir8Mmmpm31Mw+Mzb
- olkkqdzOgvs+9GwX8q1TjEtYVXryRb8IKTFvF6uqZeFik5rCsSj02r+VRGKReBne8N/0
- x5YthYNaSWLcPTWuntlZmqkdpa8E1pccRTGbaKVjb2S8OGeikhBrJA2okSDijQHkszWZ
- 5f2xItQYxLyX22puQL+JpuRzdfO0iiTupVDH24/X0jVL6pFnhXASlPTq8mi3Jop+023F
- j7EA==
+ bh=ruh8SPCuaW4VBOJ9AghCuy3ig6sXE8zMcTJOGnbfxnc=;
+ b=VHKnsDkmPiod+6rjtqqAHIMNiQnxMSVuFSsp9kQUQfG80Xf/O0mAeH5HQ1psrjK1IF
+ hTDqAFqbp4kTD+Mg8tgp1jL21cRboFZZ5TEhFxhrQNc50xpHHLEVb7HH42VMP6XyVAC0
+ MN4le0Ml8X/LKGxy49yucafQU6Oh0mTrdDep0vSYEH8hRRocpy926lrkqKdeUeWcChnE
+ hZC/5ygn/TEtWQ/zp0eVBV5TgtfI3WY0WH2BvhVCkVCg3nSdnJYZJV5tfZfr15MzNCY1
+ TgP8vZk/Pi1iGf54mXixmq6YyjHVP7W0epyIsS/RHFZSIOhL7jSnphNyrgkpO7cvztDY
+ f7qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741203003; x=1741807803;
+ d=1e100.net; s=20230601; t=1741203365; x=1741808165;
  h=thread-index:content-language:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zHH2O1TInz9VrI/SztIfijTfhVxlGFaMbW2AqIdIofQ=;
- b=Ky5cm+3rRQdlcdBfUME2aEy+3pTmUBd1wSK7m7POaxoJnZUB6022hue2O60nqFfqZE
- leTQH1amHpDe1OXAgKCr/4DcVsKRtH4bkl1zVhE8NTVzhHq1fmKE+mQ9PBmTtX4SwUOw
- z1Ufzzn1yR6ejSwsfKsE7TwHFfQCt8liJKL0JB1YIAjb808ILqT2tt304leAH/ddP3Dr
- Sink7hCi+5w8pODOHxGfPkQgJMEvc293vopMzxeYf+DEq3alGfFTsXrCtqwP9RB80dtK
- 8eejK1nqfzoX//Xj+s2TjezJQdCeQzL1B3efnwLBSbG8hiT6qkOAyKpfEBf8kB6sRO5D
- hCIw==
+ bh=ruh8SPCuaW4VBOJ9AghCuy3ig6sXE8zMcTJOGnbfxnc=;
+ b=TeBi/mqZyUrRUfsv4MWlKEHcXU47rXLBj1OtREXYJjorNhlpySIRyNkSzTOkZUnfIW
+ 79huPLTDITV2Ls+0P5/xNhbd3jNGNBsF7wM3zFK5HBgVaKwfO/a+sfNYdIvkoXqxwsxN
+ Qik7zwRH45hh4v56atI+/Ygg6hi+jRQ9EJ25DJ4C11dOJupowYY99KQuX57OYRu9Pi6Q
+ o0uyyCo+Kye2qVd9Usz09lykeSP5GEss1r9u+xc9wmYaD109/hdHaltTvtXLWSIe8R3t
+ nwR6z0VOzYBL0eYE/OUSWGNMR1Atm7d9HvPbU0yTjoymXF/I2SxOS9+uqDojJbgGdNLF
+ g4xg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0TTTBF7MB0kGOAcVl6vNenI1cyU/jTNfXP3QG+gBnkDm6L4fWVda8yp64nRJbkU7BkS1ltHff22Mk@nongnu.org
-X-Gm-Message-State: AOJu0YyOz7Sq61Bc/wtTdCyynpF0FklBL/XmFSvRHc6lnCk/Tg8gbZEz
- RInK9Co1YzNx+5b4fzFH7Z34T26YxyZcbHF1pRK1jCmx0XmGRNPd
-X-Gm-Gg: ASbGnctyJeYh+3ZCkigWU/UFu5UV14PbjR7ydhgSV5ZeUyl0tBzR9iCHHrYpOJ5d8qq
- oZ/uyaOEerO8woMcfmNGhPZRjx9jwvb5ptb2R4mrXbZ2UUw5xYY8JX255flNyyVJOejBiUCFhBV
- VaDtwsRHK9EMJ/qIij8y4hMdgsqGPDldPi46OQqEpFaHunCGyAnpvP29jF+IiUpebEfIREdOCd5
- NUKtEe71qBdSEP/zhdNojXd0MdrneTUXlWZQtY+0RqkckLTlOX7ypbv3yvXLk8SKmq8mCmcTnPJ
- v3OrvORBlV356+bMR89blhkk5Vw/Tfg3notJcoJF1EKnPpgHonykGvomgonY/I6F4FK5sJP4Ad4
- L0aeOUL0=
-X-Google-Smtp-Source: AGHT+IGNMmmGtRvvb27aHQZDl5ygdCXtVYq5WMN1t6a/wsTzNddMzJB9QTbLMpT+syF0ZLbcaVLBvg==
-X-Received: by 2002:a05:6214:b65:b0:6e8:f1b6:a120 with SMTP id
- 6a1803df08f44-6e8f1b6a2a9mr25145606d6.5.1741203003561; 
- Wed, 05 Mar 2025 11:30:03 -0800 (PST)
+ AJvYcCXp7CNGSZWzu7vrF4tRLFFecxQV9u1jyQ5A8JLTexYsnmhKVm9zB98c+RLqHPO7+YTmUcCUQqoMzlvM@nongnu.org
+X-Gm-Message-State: AOJu0YwZ3zxOFKe8nyTtvxfDEp7dEVvUrgKSPa0w0ENP+HHEJo13oyzg
+ vP+h/snFg2RHKAxwnogR8qm318/BF/kWsUMKBvDuaeBGRkzLkNRe
+X-Gm-Gg: ASbGncvBE9/Cg3vwPiEy1HI1DxxRExEbyzYy0ZYpFbQCHlYHVOkLNCSpxBtqwaFhxoo
+ uy44beThyF1molIofhD+5f8hbxg0JW2/mU86xf1lM2mpoTR58bYFF+pNvuwkEzWrICDEMtBvDK6
+ I+cLMCjfZ00jJo6WhQaTyyMvFXoyYlBmKbVRhjM72Hv2cAwMw7pX0naMpIvEhaj9kaCfZMf13Tn
+ tDA2GbBEozfoHc8T985FY44SfTONSLmGo0TutT3DZcJLW8DvVvvmiDICC2rr87ACr0hHl+Qets6
+ Rm3+2IPH0RVUgkKlJn+dfBsphPrfjsHAA4fSVPae4nLtP6sgA0R89Yxha1dLVBzomE4wg8v0MTb
+ ECOGnvH0=
+X-Google-Smtp-Source: AGHT+IGMOE1f74lX0nkDSyomGG1bCGB3WAIaCpJwNFkkx/FyZCQWU/XWBcr6yyfjki6iP25vGmpoSA==
+X-Received: by 2002:a05:620a:27d5:b0:7c0:a70e:b936 with SMTP id
+ af79cd13be357-7c3d8e25b1dmr728301685a.8.1741203365504; 
+ Wed, 05 Mar 2025 11:36:05 -0800 (PST)
 Received: from DESKTOPUU50BPD (syn-174-097-131-055.res.spectrum.com.
  [174.97.131.55]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e8976cc74asm82257596d6.76.2025.03.05.11.30.01
+ d75a77b69052e-474e0f1e0c1sm49555311cf.47.2025.03.05.11.36.03
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 05 Mar 2025 11:30:03 -0800 (PST)
+ Wed, 05 Mar 2025 11:36:05 -0800 (PST)
 From: <ltaylorsimpson@gmail.com>
 To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
 	<qemu-devel@nongnu.org>
@@ -75,22 +75,22 @@ Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
  <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
  "'Brian Cain'" <bcain@quicinc.com>
 References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-2-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052628.1011210-2-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 01/38] docs: Add hexagon sysemu docs
-Date: Wed, 5 Mar 2025 13:29:59 -0600
-Message-ID: <01a901db8e04$fde0c0a0$f9a241e0$@gmail.com>
+ <20250301052628.1011210-3-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052628.1011210-3-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 02/38] docs/system: Add hexagon CPU emulation
+Date: Wed, 5 Mar 2025 13:36:02 -0600
+Message-ID: <01aa01db8e05$d5abd330$81037990$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-us
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgFSIBaptO634iA=
+Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgD3FrldtPGRyZA=
 X-Antivirus: Norton (VPS 250305-8, 3/5/2025), Outbound message
 X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qt1-x82e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x735.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,41 +124,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
 > alex.bennee@linaro.org; quic_mburton@quicinc.com;
 > sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 01/38] docs: Add hexagon sysemu docs
-> 
+> Subject: [PATCH 02/38] docs/system: Add hexagon CPU emulation
+>=20
 > From: Brian Cain <bcain@quicinc.com>
-> 
+>=20
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  MAINTAINERS                    |   2 +
->  docs/devel/hexagon-sys.rst     | 106
-> +++++++++++++++++++++++++++++++++
->  docs/devel/index-internals.rst |   1 +
->  docs/system/hexagon/cdsp.rst   |  10 ++++
->  docs/system/target-hexagon.rst | 100
-> +++++++++++++++++++++++++++++++
->  docs/system/targets.rst        |   1 +
->  6 files changed, 220 insertions(+)
->  create mode 100644 docs/devel/hexagon-sys.rst  create mode 100644
-> docs/system/hexagon/cdsp.rst  create mode 100644 docs/system/target-
-> hexagon.rst
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 1911949526..804c07bcd5 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -240,6 +240,8 @@ F: disas/hexagon.c
->  F: configs/targets/hexagon-linux-user/default.mak
->  F: docker/dockerfiles/debian-hexagon-cross.docker
->  F: gdb-xml/hexagon*.xml
-> +F: docs/system/target-hexagon.rst
-> +F: docs/devel/hexagon-sys.rst
+>  docs/system/hexagon/emulation.rst | 16 ++++++++++++++++
+>  docs/system/target-hexagon.rst    |  1 +
+>  2 files changed, 17 insertions(+)
+>  create mode 100644 docs/system/hexagon/emulation.rst
 
-Don't forget this file
-docs/system/hexagon/cdsp.rst
+Add to MAINTAINERS?
+
+>=20
+> diff --git a/docs/system/hexagon/emulation.rst
+> b/docs/system/hexagon/emulation.rst
+> new file mode 100644
+> index 0000000000..03a6092a12
+> --- /dev/null
+> +++ b/docs/system/hexagon/emulation.rst
+> @@ -0,0 +1,16 @@
+> +.. _Hexagon Emulation:
+> +
+> +Hexagon CPU architecture support
+> =
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+> +
+> +QEMU's TCG emulation includes support for v65, v66, v67, v68, v69, =
+v71,
+> v73.
+> +It also has support for the following architecture extensions:
+> +
+> +- HVX (Hexagon Vector eXtensions)
+> +
+> +For information on the specifics of the HVX extension, please refer =
+to
+> +the `Qualcomm Hexagon V69 HVX Programmer's Reference Manual
+> +<https://docs.qualcomm.com/bundle/publicresource/80-N2040-
+> 49_REV_AA_Qualcomm_Hexagon_V69_HVX_ProgrammerS_Reference_Ma
+> nual.pdf>`_.
+
+The target/hexagon/README file gives a link to the v73 version of the =
+HVX PRM.  These should be consistent.
+
+It would also be good to mention the README file in one of the files in =
+docs as well as mentioning these files in the README.  Or is there a =
+standard way the community handles this sort of thing?
+
 
 Otherwise
 Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-
 
 
