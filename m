@@ -4,107 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2095C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 07:24:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB3FC19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 07:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpj6j-00049r-2W; Wed, 05 Mar 2025 02:23:57 -0500
+	id 1tpjFv-0006lB-DO; Wed, 05 Mar 2025 02:33:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tpj6U-00041i-VM; Wed, 05 Mar 2025 02:23:44 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1tpjFs-0006kq-0o
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 02:33:24 -0500
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tpj6P-0001py-9P; Wed, 05 Mar 2025 02:23:41 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524Mu6AX018948;
- Wed, 5 Mar 2025 07:23:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=7wBl82
- JN8lCx0WdVytiZZHSdDhQgweYkbRic/gXt+hU=; b=qt4s1d1XFr482GF3zIzLvh
- tNdptH6lduKTgvYXhCZHqIP9RnZLuTG5d+68LoDm9CDfcq1xRc9Og7buVslnDV4T
- 5jvozbHMSNTwoSozvfmMQfMUFcyunaawYz0P5gFNBI+WRqzJ4lS48yNLmh1EU+4m
- fS3gzV+txcmKXIsGf3dXcp/RDRChcZfOboQCCmcrutdR16f5sJVQcFB16JvIVS8x
- NkFDiakGfBNP6a9SnEXlGJ9lSaiGQ31iA8apwepUDPRjGf9lJpNmMQHYgd6Gs0z4
- Biy37hxk9OIEs08xIvSznyp29a34C0uYfTq+hB5RzzyGOEYq6bP2jK4SdkIRNtmA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4562xpm13p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Mar 2025 07:23:33 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 5257Lr50012357;
- Wed, 5 Mar 2025 07:23:33 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4562xpm13k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Mar 2025 07:23:33 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5253fGuN013772;
- Wed, 5 Mar 2025 07:23:31 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 454e2ksgp8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Mar 2025 07:23:31 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5257NUdQ15467048
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 5 Mar 2025 07:23:30 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4BD5358053;
- Wed,  5 Mar 2025 07:23:30 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 291B85805D;
- Wed,  5 Mar 2025 07:23:27 +0000 (GMT)
-Received: from [9.39.18.13] (unknown [9.39.18.13])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  5 Mar 2025 07:23:26 +0000 (GMT)
-Message-ID: <33bb8b6e-5a48-4242-9a52-598aff99fbbe@linux.ibm.com>
-Date: Wed, 5 Mar 2025 12:53:25 +0530
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1tpjFp-00056G-A6
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 02:33:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1741160001; x=1772696001;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=KeOlT8gHm5Ta6pFCUJc5qwT0LHx0Q/LUtX/54yZDZdc=;
+ b=UmpvEbEmRuCVG0SrPR/RSSw21Y5CiaW9rJgpykcT5ct8ylBTvEi1+H1V
+ qBVpNTnvlhKC4lC3mXb4bz1shid1NFAGQDbjxigNAJ45P8jmTmJKjUt0u
+ Yyo2RV6n4tJbyMM8r7Im7VZyjsiJUqY5gg4WC9kX2zNytXoPKNmCkQNAN
+ 4d+MBxIPD/EywxRmBcL+KcXqmecck//qwYcAgF8aRNNdC2sApr44P4M0+
+ cMmZOozByfPxPXCCFxJaLL7nGujamil6WQQ1M9mbDgB1QqZAQr9PoJIJe
+ HeyBw/UnM1e0H7sS1aFNFzKM9UWsb/LuR575pe7RlKBjopKtVy49X8MdL Q==;
+X-CSE-ConnectionGUID: 7qNMnEnfSqabI7dzwKwhaw==
+X-CSE-MsgGUID: 7BTa+S8pSPiPG6aW/kHXnA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="52746497"
+X-IronPort-AV: E=Sophos;i="6.14,222,1736841600"; d="scan'208";a="52746497"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2025 23:33:18 -0800
+X-CSE-ConnectionGUID: icbHFNd+RhO/Be2+TyGJ5A==
+X-CSE-MsgGUID: JpHkFnC7QwmhTQV+61aGOQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="149568964"
+Received: from unknown (HELO [10.238.2.135]) ([10.238.2.135])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2025 23:33:15 -0800
+Message-ID: <7aed3b14-d81c-441b-a092-d9be9f81c90c@linux.intel.com>
+Date: Wed, 5 Mar 2025 15:33:12 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] hw/ppc: Implement saving CPU state in Fadump
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-References: <20250217071711.83735-1-adityag@linux.ibm.com>
- <20250217071711.83735-5-adityag@linux.ibm.com>
+Subject: Re: [PATCH v2 08/10] target/i386/kvm: reset AMD PMU registers during
+ VM reset
+To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
+ like.xu.linux@gmail.com, zhenyuw@linux.intel.com, groug@kaod.org,
+ khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ davydov-max@yandex-team.ru, xiaoyao.li@intel.com, joe.jin@oracle.com
+References: <20250302220112.17653-1-dongli.zhang@oracle.com>
+ <20250302220112.17653-9-dongli.zhang@oracle.com>
 Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20250217071711.83735-5-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20250302220112.17653-9-dongli.zhang@oracle.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: skNW-OFJtJiu0vf1S7_kfyf4UfSPUdoZ
-X-Proofpoint-GUID: _ciEXMadOLTSdj7dgmRyvrY9JWICneS0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-05_03,2025-03-04_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0
- mlxlogscore=999 spamscore=0 bulkscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 phishscore=0 mlxscore=0 impostorscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503050049
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=192.198.163.11;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,399 +91,309 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-
-On 2/17/25 12:47, Aditya Gupta wrote:
-> Kernel expects CPU states/register states in the format mentioned in
-> "Register Save Area" in PAPR.
-> 
-> The platform (in our case, QEMU) saves each CPU register in the form of
-> an array of "register entries", the start and end of this array is
-> signified by "CPUSTRT" and "CPUEND" register entries respectively.
-> 
-> The CPUSTRT and CPUEND register entry also has 4-byte logical CPU ID,
-> thus storing the CPU ID corresponding to the array of register entries.
-> 
-> Each register, and CPUSTRT, CPUEND has a predefined identifier.
-> Implement calculating identifier for a given register in
-> 'fadump_str_to_u64', which has been taken from the linux kernel
-> 
-> Similarly GPRs also have predefined identifiers, and a corresponding
-> 64-bit resiter value (split into two 32-bit cells). Implement
-> calculation of GPR identifiers with 'fadump_gpr_id_to_u64'
-> 
-> PAPR has restrictions on particular order of few registers, and is
-> free to be in any order for other registers.
-> Some registers mentioned in PAPR have not been exported as they are not
-> implemented in QEMU / don't make sense in QEMU.
-> 
-> Implement saving of CPU state according to the PAPR document
-> 
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+On 3/3/2025 6:00 AM, Dongli Zhang wrote:
+> QEMU uses the kvm_get_msrs() function to save Intel PMU registers from KVM
+> and kvm_put_msrs() to restore them to KVM. However, there is no support for
+> AMD PMU registers. Currently, has_pmu_version and num_pmu_gp_counters are
+> initialized based on cpuid(0xa), which does not apply to AMD processors.
+> For AMD CPUs, prior to PerfMonV2, the number of general-purpose registers
+> is determined based on the CPU version.
+>
+> To address this issue, we need to add support for AMD PMU registers.
+> Without this support, the following problems can arise:
+>
+> 1. If the VM is reset (e.g., via QEMU system_reset or VM kdump/kexec) while
+> running "perf top", the PMU registers are not disabled properly.
+>
+> 2. Despite x86_cpu_reset() resetting many registers to zero, kvm_put_msrs()
+> does not handle AMD PMU registers, causing some PMU events to remain
+> enabled in KVM.
+>
+> 3. The KVM kvm_pmc_speculative_in_use() function consistently returns true,
+> preventing the reclamation of these events. Consequently, the
+> kvm_pmc->perf_event remains active.
+>
+> 4. After a reboot, the VM kernel may report the following error:
+>
+> [    0.092011] Performance Events: Fam17h+ core perfctr, Broken BIOS detected, complain to your hardware vendor.
+> [    0.092023] [Firmware Bug]: the BIOS has corrupted hw-PMU resources (MSR c0010200 is 530076)
+>
+> 5. In the worst case, the active kvm_pmc->perf_event may inject unknown
+> NMIs randomly into the VM kernel:
+>
+> [...] Uhhuh. NMI received for unknown reason 30 on CPU 0.
+>
+> To resolve these issues, we propose resetting AMD PMU registers during the
+> VM reset process.
+>
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 > ---
->   hw/ppc/spapr_rtas.c    | 200 ++++++++++++++++++++++++++++++++++++++++-
->   include/hw/ppc/spapr.h |  83 +++++++++++++++++
->   2 files changed, 281 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
-> index 9b29cadab2c9..0aca4270aee8 100644
-> --- a/hw/ppc/spapr_rtas.c
-> +++ b/hw/ppc/spapr_rtas.c
-> @@ -348,9 +348,12 @@ bool is_next_boot_fadump;
->   static bool fadump_preserve_mem(void)
->   {
->       struct rtas_fadump_mem_struct *fdm = &fadump_metadata.registered_fdm;
-> +    struct rtas_fadump_section *cpu_state_region;
->       uint64_t next_section_addr;
->       int dump_num_sections, data_type;
->       uint64_t src_addr, src_len, dest_addr;
-> +    uint64_t cpu_state_addr, cpu_state_len = 0;
-> +    void *cpu_state_buffer;
->       void *copy_buffer;
->   
->       assert(fadump_metadata.fadump_registered);
-> @@ -413,9 +416,174 @@ static bool fadump_preserve_mem(void)
->           }
->   
->           switch (data_type) {
-> -        case FADUMP_CPU_STATE_DATA:
-> -            /* TODO: Add CPU state data */
-> +        case FADUMP_CPU_STATE_DATA: {
-> +            struct rtas_fadump_reg_save_area_header reg_save_hdr;
-> +            struct rtas_fadump_reg_entry **reg_entries;
-> +            struct rtas_fadump_reg_entry *curr_reg_entry;
+> Changed since v1:
+>   - Modify "MSR_K7_EVNTSEL0 + 3" and "MSR_K7_PERFCTR0 + 3" by using
+>     AMD64_NUM_COUNTERS (suggested by Sandipan Das).
+>   - Use "AMD64_NUM_COUNTERS_CORE * 2 - 1", not "MSR_F15H_PERF_CTL0 + 0xb".
+>     (suggested by Sandipan Das).
+>   - Switch back to "-pmu" instead of using a global "pmu-cap-disabled".
+>   - Don't initialize PMU info if kvm.enable_pmu=N.
+>
+>  target/i386/cpu.h     |   8 ++
+>  target/i386/kvm/kvm.c | 173 +++++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 177 insertions(+), 4 deletions(-)
+>
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index c67b42d34f..319600672b 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -490,6 +490,14 @@ typedef enum X86Seg {
+>  #define MSR_CORE_PERF_GLOBAL_CTRL       0x38f
+>  #define MSR_CORE_PERF_GLOBAL_OVF_CTRL   0x390
+>  
+> +#define MSR_K7_EVNTSEL0                 0xc0010000
+> +#define MSR_K7_PERFCTR0                 0xc0010004
+> +#define MSR_F15H_PERF_CTL0              0xc0010200
+> +#define MSR_F15H_PERF_CTR0              0xc0010201
 > +
-> +            uint32_t fadump_reg_entries_size;
-> +            __be32 num_cpus = 0;
-> +            uint32_t num_regs_per_cpu = 0;
-> +            CPUState *cpu;
-> +            CPUPPCState *env;
-> +            PowerPCCPU *ppc_cpu;
+> +#define AMD64_NUM_COUNTERS              4
+> +#define AMD64_NUM_COUNTERS_CORE         6
 > +
-> +            CPU_FOREACH(cpu) {
-> +                ++num_cpus;
-> +            }
+>  #define MSR_MC0_CTL                     0x400
+>  #define MSR_MC0_STATUS                  0x401
+>  #define MSR_MC0_ADDR                    0x402
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index efba3ae7a4..d4be8a0d2e 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -2069,7 +2069,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+>      return 0;
+>  }
+>  
+> -static void kvm_init_pmu_info(CPUX86State *env)
+> +static void kvm_init_pmu_info_intel(CPUX86State *env)
+>  {
+>      uint32_t eax, edx;
+>      uint32_t unused;
+> @@ -2106,6 +2106,94 @@ static void kvm_init_pmu_info(CPUX86State *env)
+>      }
+>  }
+>  
+> +static void kvm_init_pmu_info_amd(CPUX86State *env)
+> +{
+> +    uint32_t unused;
+> +    int64_t family;
+> +    uint32_t ecx;
 > +
-> +            reg_save_hdr.version = cpu_to_be32(1);
-
-PAPR spec mentions version value as 0. Do we need to update ?
-
-> +            reg_save_hdr.magic_number =
-> +                cpu_to_be64(fadump_str_to_u64("REGSAVE"));
+> +    has_pmu_version = 0;
 > +
-> +            /* Reg save area header is immediately followed by num cpus */
-> +            reg_save_hdr.num_cpu_offset =
-> +                cpu_to_be32(sizeof(struct rtas_fadump_reg_save_area_header));
+> +    /*
+> +     * To determine the CPU family, the following code is derived from
+> +     * x86_cpuid_version_get_family().
+> +     */
+> +    family = (env->cpuid_version >> 8) & 0xf;
+> +    if (family == 0xf) {
+> +        family += (env->cpuid_version >> 20) & 0xff;
+> +    }
 > +
-
-Above inits could go into a helper 
-fadump_init_reg_save_header(&reg_save_hdr);
-BTW, the PAPR spec also mentions about padding followed by 
-num_cpus_offset, see another comment later below.
-
-
-> +            fadump_reg_entries_size = num_cpus *
-> +                                      FADUMP_NUM_PER_CPU_REGS *
-> +                                      sizeof(struct rtas_fadump_reg_entry);
+> +    /*
+> +     * Performance-monitoring supported from K7 and later.
+> +     */
+> +    if (family < 6) {
+> +        return;
+> +    }
 > +
-> +            reg_entries = malloc(fadump_reg_entries_size);
-
-This was declared as double pointer, but being used as a pointer.
-
-> +            curr_reg_entry = (struct rtas_fadump_reg_entry *)reg_entries;
+> +    has_pmu_version = 1;
 > +
-> +            /* This must loop num_cpus time */
-> +            CPU_FOREACH(cpu) {
-> +                ppc_cpu = POWERPC_CPU(cpu);
-> +                env = cpu_env(cpu);
-> +                num_regs_per_cpu = 0;
+> +    cpu_x86_cpuid(env, 0x80000001, 0, &unused, &unused, &ecx, &unused);
 > +
-> +                curr_reg_entry->reg_id =
-> +                    cpu_to_be64(fadump_str_to_u64("CPUSTRT"));
-> +                curr_reg_entry->reg_value = ppc_cpu->vcpu_id;
-> +                ++curr_reg_entry;
+> +    if (!(ecx & CPUID_EXT3_PERFCORE)) {
+> +        num_pmu_gp_counters = AMD64_NUM_COUNTERS;
+> +        return;
+> +    }
 > +
-> +#define REG_ENTRY(id, val)                                     \
-> +                do {                                           \
-> +                    curr_reg_entry->reg_id =                   \
-> +                        cpu_to_be64(fadump_str_to_u64(#id));   \
-> +                    curr_reg_entry->reg_value = val;           \
-> +                    ++curr_reg_entry;                          \
-> +                    ++num_regs_per_cpu;                        \
-> +                } while (0)
+> +    num_pmu_gp_counters = AMD64_NUM_COUNTERS_CORE;
+> +}
 > +
-> +                REG_ENTRY(ACOP, env->spr[SPR_ACOP]);
-> +                REG_ENTRY(AMR, env->spr[SPR_AMR]);
-> +                REG_ENTRY(BESCR, env->spr[SPR_BESCR]);
-> +                REG_ENTRY(CFAR, env->spr[SPR_CFAR]);
-> +                REG_ENTRY(CIABR, env->spr[SPR_CIABR]);
+> +static bool is_same_vendor(CPUX86State *env)
+> +{
+> +    static uint32_t host_cpuid_vendor1;
+> +    static uint32_t host_cpuid_vendor2;
+> +    static uint32_t host_cpuid_vendor3;
 > +
-> +                /* Save the condition register */
-> +                uint64_t cr = 0;
-> +                cr |= (env->crf[0] & 0xf);
-> +                cr |= (env->crf[1] & 0xf) << 1;
-> +                cr |= (env->crf[2] & 0xf) << 2;
-> +                cr |= (env->crf[3] & 0xf) << 3;
-> +                cr |= (env->crf[4] & 0xf) << 4;
-> +                cr |= (env->crf[5] & 0xf) << 5;
-> +                cr |= (env->crf[6] & 0xf) << 6;
-> +                cr |= (env->crf[7] & 0xf) << 7;
-> +                REG_ENTRY(CR, cr);
-
-ppc_get_cr ?
-
+> +    host_cpuid(0x0, 0, NULL, &host_cpuid_vendor1, &host_cpuid_vendor3,
+> +               &host_cpuid_vendor2);
 > +
-> +                REG_ENTRY(CTR, env->spr[SPR_CTR]);
-> +                REG_ENTRY(CTRL, env->spr[SPR_CTRL]);
-> +                REG_ENTRY(DABR, env->spr[SPR_DABR]);
-> +                REG_ENTRY(DABRX, env->spr[SPR_DABRX]);
-> +                REG_ENTRY(DAR, env->spr[SPR_DAR]);
-> +                REG_ENTRY(DAWR0, env->spr[SPR_DAWR0]);
-> +                REG_ENTRY(DAWR1, env->spr[SPR_DAWR1]);
-> +                REG_ENTRY(DAWRX0, env->spr[SPR_DAWRX0]);
-> +                REG_ENTRY(DAWRX1, env->spr[SPR_DAWRX1]);
-> +                REG_ENTRY(DPDES, env->spr[SPR_DPDES]);
-> +                REG_ENTRY(DSCR, env->spr[SPR_DSCR]);
-> +                REG_ENTRY(DSISR, env->spr[SPR_DSISR]);
-> +                REG_ENTRY(EBBHR, env->spr[SPR_EBBHR]);
-> +                REG_ENTRY(EBBRR, env->spr[SPR_EBBRR]);
+> +    return env->cpuid_vendor1 == host_cpuid_vendor1 &&
+> +           env->cpuid_vendor2 == host_cpuid_vendor2 &&
+> +           env->cpuid_vendor3 == host_cpuid_vendor3;
+> +}
 > +
-> +                REG_ENTRY(FPSCR, env->fpscr);
-> +                REG_ENTRY(FSCR, env->spr[SPR_FSCR]);
+> +static void kvm_init_pmu_info(CPUState *cs)
+> +{
+> +    X86CPU *cpu = X86_CPU(cs);
+> +    CPUX86State *env = &cpu->env;
 > +
-> +                /* Save the GPRs */
-> +                for (int gpr_id = 0; gpr_id < 32; ++gpr_id) {
-> +                    curr_reg_entry->reg_id =
-> +                        cpu_to_be64(fadump_gpr_id_to_u64(gpr_id));
-> +                    curr_reg_entry->reg_value = env->gpr[i];
-> +                    ++curr_reg_entry;
-> +                    ++num_regs_per_cpu;
-> +                }
+> +    /*
+> +     * The PMU virtualization is disabled by kvm.enable_pmu=N.
+> +     */
+> +    if (kvm_pmu_disabled) {
+> +        return;
+> +    }
 > +
-> +                REG_ENTRY(IAMR, env->spr[SPR_IAMR]);
-> +                REG_ENTRY(IC, env->spr[SPR_IC]);
-> +                REG_ENTRY(LR, env->spr[SPR_LR]);
+> +    /*
+> +     * It is not supported to virtualize AMD PMU registers on Intel
+> +     * processors, nor to virtualize Intel PMU registers on AMD processors.
+> +     */
+> +    if (!is_same_vendor(env)) {
+> +        return;
+> +    }
 > +
-> +                REG_ENTRY(MSR, env->msr);
-> +                REG_ENTRY(NIA, env->nip);   /* NIA */
-> +                REG_ENTRY(PIR, env->spr[SPR_PIR]);
-> +                REG_ENTRY(PSPB, env->spr[SPR_PSPB]);
-> +                REG_ENTRY(PVR, env->spr[SPR_PVR]);
-> +                REG_ENTRY(RPR, env->spr[SPR_RPR]);
-> +                REG_ENTRY(SPURR, env->spr[SPR_SPURR]);
-> +                REG_ENTRY(SRR0, env->spr[SPR_SRR0]);
-> +                REG_ENTRY(SRR1, env->spr[SPR_SRR1]);
-> +                REG_ENTRY(TAR, env->spr[SPR_TAR]);
-> +                REG_ENTRY(TEXASR, env->spr[SPR_TEXASR]);
-> +                REG_ENTRY(TFHAR, env->spr[SPR_TFHAR]);
-> +                REG_ENTRY(TFIAR, env->spr[SPR_TFIAR]);
-> +                REG_ENTRY(TIR, env->spr[SPR_TIR]);
-> +                REG_ENTRY(UAMOR, env->spr[SPR_UAMOR]);
-> +                REG_ENTRY(VRSAVE, env->spr[SPR_VRSAVE]);
-> +                REG_ENTRY(VSCR, env->vscr);
-> +                REG_ENTRY(VTB, env->spr[SPR_VTB]);
-> +                REG_ENTRY(WORT, env->spr[SPR_WORT]);
-> +                REG_ENTRY(XER, env->spr[SPR_XER]);
+> +    /*
+> +     * If KVM_CAP_PMU_CAPABILITY is not supported, there is no way to
+> +     * disable the AMD pmu virtualization.
+> +     *
+> +     * If KVM_CAP_PMU_CAPABILITY is supported !cpu->enable_pmu
+> +     * indicates the KVM has already disabled the PMU virtualization.
+> +     */
+> +    if (has_pmu_cap && !cpu->enable_pmu) {
+> +        return;
+> +    }
 > +
-> +                /*
-> +                 * Ignoring transaction checkpoint and few other registers
-> +                 * mentioned in PAPR as not supported in QEMU
-> +                 */
-> +#undef REG_ENTRY
+> +    if (IS_INTEL_CPU(env)) {
+> +        kvm_init_pmu_info_intel(env);
+> +    } else if (IS_AMD_CPU(env)) {
+> +        kvm_init_pmu_info_amd(env);
+> +    }
+> +}
 > +
-> +                /* End the registers for this CPU with "CPUEND" reg entry */
-> +                curr_reg_entry->reg_id =
-> +                    cpu_to_be64(fadump_str_to_u64("CPUEND"));
+>  int kvm_arch_init_vcpu(CPUState *cs)
+>  {
+>      struct {
+> @@ -2288,7 +2376,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>      cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+>      cpuid_data.cpuid.nent = cpuid_i;
+>  
+> -    kvm_init_pmu_info(env);
+> +    kvm_init_pmu_info(cs);
+>  
+>      if (((env->cpuid_version >> 8)&0xF) >= 6
+>          && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
+> @@ -4064,7 +4152,7 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+>              kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
+>          }
+>  
+> -        if (has_pmu_version > 0) {
+> +        if (IS_INTEL_CPU(env) && has_pmu_version > 0) {
+>              if (has_pmu_version > 1) {
+>                  /* Stop the counter.  */
+>                  kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+> @@ -4095,6 +4183,38 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+>                                    env->msr_global_ctrl);
+>              }
+>          }
 > +
-> +                /* Ensure the number of registers match (+2 for STRT & END) */
-> +                assert(FADUMP_NUM_PER_CPU_REGS == num_regs_per_cpu + 2);
-> +
-> +                ++curr_reg_entry;
-> +            }
-> +
-> +            cpu_state_len = 0;
-> +            cpu_state_len += sizeof(reg_save_hdr);     /* reg save header */
-> +            cpu_state_len += sizeof(__be32);           /* num_cpus */
-> +            cpu_state_len += fadump_reg_entries_size;  /* reg entries */
-> +
-
-above 4 inits could be a single line init.
-
-> +            cpu_state_region = &fdm->rgn[i];
-> +            cpu_state_addr = dest_addr;
-> +            cpu_state_buffer = g_malloc(cpu_state_len);
-> +
-> +            uint64_t offset = 0;
-> +            memcpy(cpu_state_buffer + offset,
-> +                    &reg_save_hdr, sizeof(reg_save_hdr));
-> +            offset += sizeof(reg_save_hdr);
-> +
-> +            /* Write num_cpus */
-> +            num_cpus = cpu_to_be32(num_cpus);
-> +            memcpy(cpu_state_buffer + offset, &num_cpus, sizeof(__be32));
-> +            offset += sizeof(__be32);
-
-As per PAPR spec, NumCpusOffset is followed by a padding of 0xC bytes
-initialized to 0. Any reasons for skipping that here ?
-
-> +
-> +            /* Write the register entries */
-> +            memcpy(cpu_state_buffer + offset,
-> +                    reg_entries, fadump_reg_entries_size);
-> +            offset += fadump_reg_entries_size;
+> +        if (IS_AMD_CPU(env) && has_pmu_version > 0) {
+> +            uint32_t sel_base = MSR_K7_EVNTSEL0;
+> +            uint32_t ctr_base = MSR_K7_PERFCTR0;
+> +            /*
+> +             * The address of the next selector or counter register is
+> +             * obtained by incrementing the address of the current selector
+> +             * or counter register by one.
+> +             */
+> +            uint32_t step = 1;
 > +
 > +            /*
-> +             * We will write the cpu state data later, as otherwise it
-> +             * might get overwritten by other fadump regions
+> +             * When PERFCORE is enabled, AMD PMU uses a separate set of
+> +             * addresses for the selector and counter registers.
+> +             * Additionally, the address of the next selector or counter
+> +             * register is determined by incrementing the address of the
+> +             * current register by two.
 > +             */
+> +            if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE) {
+> +                sel_base = MSR_F15H_PERF_CTL0;
+> +                ctr_base = MSR_F15H_PERF_CTR0;
+> +                step = 2;
+> +            }
 > +
-
-Better to have a separate routine fadump_preserve_cpu_state_data() when 
-the switch case logic grows this large, applies wherever applicable.
-
->               break;
+> +            for (i = 0; i < num_pmu_gp_counters; i++) {
+> +                kvm_msr_entry_add(cpu, ctr_base + i * step,
+> +                                  env->msr_gp_counters[i]);
+> +                kvm_msr_entry_add(cpu, sel_base + i * step,
+> +                                  env->msr_gp_evtsel[i]);
+> +            }
 > +        }
->           case FADUMP_HPTE_REGION:
->               /* TODO: Add hpte state data */
->               break;
-> @@ -455,6 +623,34 @@ static bool fadump_preserve_mem(void)
->           }
->       }
->   
-> +    /*
-> +     * Write the Register Save Area
-> +     *
-> +     * CPU State/Register Save Area should be written after dumping the
-> +     * memory to prevent overwritting while saving other memory regions
-> +     *
-> +     * eg. If boot memory region is 1G, then both the first 1GB memory, and
-> +     * the Register Save Area needs to be saved at 1GB.
-> +     * And as the CPU_STATE_DATA region comes first than the
-> +     * REAL_MODE_REGION region to be copied, the CPU_STATE_DATA will get
-> +     * overwritten if saved before the 0GB - 1GB region is copied after
-> +     * saving CPU state data
-> +     */
-> +    cpu_physical_memory_write(cpu_state_addr, cpu_state_buffer, cpu_state_len);
-> +    g_free(cpu_state_buffer);
 > +
-> +    /*
-> +     * Set bytes_dumped in cpu state region, so kernel knows platform have
-> +     * exported it
-> +     */
-> +    cpu_state_region->bytes_dumped = cpu_to_be64(cpu_state_len);
+>          /*
+>           * Hyper-V partition-wide MSRs: to avoid clearing them on cpu hot-add,
+>           * only sync them to KVM on the first cpu
+> @@ -4542,7 +4662,8 @@ static int kvm_get_msrs(X86CPU *cpu)
+>      if (env->features[FEAT_KVM] & CPUID_KVM_POLL_CONTROL) {
+>          kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
+>      }
+> -    if (has_pmu_version > 0) {
 > +
-> +    if (cpu_state_region->source_len != cpu_state_region->bytes_dumped) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                "CPU State region's length passed by kernel, doesn't match"
-> +                " with CPU State region length exported by QEMU");
+> +    if (IS_INTEL_CPU(env) && has_pmu_version > 0) {
+>          if (has_pmu_version > 1) {
+>              kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+>              kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
+> @@ -4558,6 +4679,35 @@ static int kvm_get_msrs(X86CPU *cpu)
+>          }
+>      }
+>  
+> +    if (IS_AMD_CPU(env) && has_pmu_version > 0) {
+> +        uint32_t sel_base = MSR_K7_EVNTSEL0;
+> +        uint32_t ctr_base = MSR_K7_PERFCTR0;
+> +        /*
+> +         * The address of the next selector or counter register is
+> +         * obtained by incrementing the address of the current selector
+> +         * or counter register by one.
+> +         */
+> +        uint32_t step = 1;
+> +
+> +        /*
+> +         * When PERFCORE is enabled, AMD PMU uses a separate set of
+> +         * addresses for the selector and counter registers.
+> +         * Additionally, the address of the next selector or counter
+> +         * register is determined by incrementing the address of the
+> +         * current register by two.
+> +         */
+> +        if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE) {
+> +            sel_base = MSR_F15H_PERF_CTL0;
+> +            ctr_base = MSR_F15H_PERF_CTR0;
+> +            step = 2;
+> +        }
+> +
+> +        for (i = 0; i < num_pmu_gp_counters; i++) {
+> +            kvm_msr_entry_add(cpu, ctr_base + i * step, 0);
+> +            kvm_msr_entry_add(cpu, sel_base + i * step, 0);
+> +        }
+> +    }
+> +
+>      if (env->mcg_cap) {
+>          kvm_msr_entry_add(cpu, MSR_MCG_STATUS, 0);
+>          kvm_msr_entry_add(cpu, MSR_MCG_CTL, 0);
+> @@ -4869,6 +5019,21 @@ static int kvm_get_msrs(X86CPU *cpu)
+>          case MSR_P6_EVNTSEL0 ... MSR_P6_EVNTSEL0 + MAX_GP_COUNTERS - 1:
+>              env->msr_gp_evtsel[index - MSR_P6_EVNTSEL0] = msrs[i].data;
+>              break;
+> +        case MSR_K7_EVNTSEL0 ... MSR_K7_EVNTSEL0 + AMD64_NUM_COUNTERS - 1:
+> +            env->msr_gp_evtsel[index - MSR_K7_EVNTSEL0] = msrs[i].data;
+> +            break;
+> +        case MSR_K7_PERFCTR0 ... MSR_K7_PERFCTR0 + AMD64_NUM_COUNTERS - 1:
+> +            env->msr_gp_counters[index - MSR_K7_PERFCTR0] = msrs[i].data;
+> +            break;
+> +        case MSR_F15H_PERF_CTL0 ...
+> +             MSR_F15H_PERF_CTL0 + AMD64_NUM_COUNTERS_CORE * 2 - 1:
+> +            index = index - MSR_F15H_PERF_CTL0;
+> +            if (index & 0x1) {
+> +                env->msr_gp_counters[index] = msrs[i].data;
+> +            } else {
+> +                env->msr_gp_evtsel[index] = msrs[i].data;
+> +            }
+> +            break;
+>          case HV_X64_MSR_HYPERCALL:
+>              env->msr_hv_hypercall = msrs[i].data;
+>              break;
 
-           return error ?
+LGTM, but leave it to AMD PMU expert to review.
 
-Thanks
-Harsh
-> +    }
-> +
->       return true;
->   }
->   
-> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-> index a80704187583..0e8002bad9e0 100644
-> --- a/include/hw/ppc/spapr.h
-> +++ b/include/hw/ppc/spapr.h
-> @@ -792,6 +792,9 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
->   #define FADUMP_HPTE_REGION      0x0002
->   #define FADUMP_REAL_MODE_REGION 0x0011
->   
-> +/* Number of registers stored per cpu */
-> +#define FADUMP_NUM_PER_CPU_REGS (32 /*GPR*/ + 45 /*others*/ + 2 /*STRT & END*/)
-> +
->   /* OS defined sections */
->   #define FADUMP_PARAM_AREA       0x0100
->   
-> @@ -845,6 +848,86 @@ struct rtas_fadump_mem_struct {
->       struct rtas_fadump_section        rgn[FADUMP_MAX_SECTIONS];
->   };
->   
-> +/*
-> + * The firmware-assisted dump format.
-> + *
-> + * The register save area is an area in the partition's memory used to preserve
-> + * the register contents (CPU state data) for the active CPUs during a firmware
-> + * assisted dump. The dump format contains register save area header followed
-> + * by register entries. Each list of registers for a CPU starts with "CPUSTRT"
-> + * and ends with "CPUEND".
-> + */
-> +
-> +/* Register save area header. */
-> +struct rtas_fadump_reg_save_area_header {
-> +    __be64    magic_number;
-> +    __be32    version;
-> +    __be32    num_cpu_offset;
-> +};
-> +
-> +/* Register entry. */
-> +struct rtas_fadump_reg_entry {
-> +    __be64    reg_id;
-> +    __be64    reg_value;
-> +};
-> +
-> +/*
-> + * Copy the ascii values for first 8 characters from a string into u64
-> + * variable at their respective indexes.
-> + * e.g.
-> + *  The string "FADMPINF" will be converted into 0x4641444d50494e46
-> + */
-> +static inline uint64_t fadump_str_to_u64(const char *str)
-> +{
-> +    uint64_t val = 0;
-> +    int i;
-> +
-> +    for (i = 0; i < sizeof(val); i++) {
-> +        val = (*str) ? (val << 8) | *str++ : val << 8;
-> +    }
-> +    return val;
-> +}
-> +
-> +/**
-> + * Get the identifier id for register entries of GPRs
-> + *
-> + * It gives the same id as 'fadump_str_to_u64' when the complete string id
-> + * of the GPR is given, ie.
-> + *
-> + *   fadump_str_to_u64("GPR05") == fadump_gpr_id_to_u64(5);
-> + *   fadump_str_to_u64("GPR12") == fadump_gpr_id_to_u64(12);
-> + *
-> + * And so on. Hence this can be implemented by creating a dynamic
-> + * string for each GPR, such as "GPR00", "GPR01", ... "GPR31"
-> + * Instead of allocating a string, an observation from the math of
-> + * 'fadump_str_to_u64' or from PAPR tells us that there's a pattern
-> + * in the identifier IDs, such that the first 8 bytes are affected only by
-> + * whether it is GPR0*, GPR1*, GPR2*, GPR3*. 9th byte is always 0x3. And
-> + * the the 10th byte is the index of the GPR modulo 10.
-> + */
-> +static inline uint64_t fadump_gpr_id_to_u64(uint32_t gpr_id)
-> +{
-> +    uint64_t val = 0;
-> +
-> +    /* Valid range of GPR id is only GPR0 to GPR31 */
-> +    assert(gpr_id < 32);
-> +
-> +    if (gpr_id <= 9) {
-> +        val = fadump_str_to_u64("GPR0");
-> +    } else if (gpr_id <= 19) {
-> +        val = fadump_str_to_u64("GPR1");
-> +    } else if (gpr_id <= 29) {
-> +        val = fadump_str_to_u64("GPR2");
-> +    } else {
-> +        val = fadump_str_to_u64("GPR3");
-> +    }
-> +
-> +    val |= 0x30000000;
-> +    val |= ((gpr_id % 10) << 12);
-> +
-> +    return val;
-> +}
-> +
->   struct fadump_metadata {
->       bool fadump_registered;
->       bool fadump_dump_active;
+
 
