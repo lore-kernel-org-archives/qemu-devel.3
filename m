@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98F36C282D3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58116C282D0
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdbh-0006Xy-Sc; Tue, 04 Mar 2025 20:31:34 -0500
+	id 1tpdWr-0006VR-5u; Tue, 04 Mar 2025 20:26:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdbc-0006MD-Bn
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:31:28 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVi-0004bw-8y
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:25:28 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdba-0001aB-4X
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:31:28 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-390fb1b987fso4270276f8f.1
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:31:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVg-0007Yh-KD
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:25:22 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-439a4fc2d65so66721705e9.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:25:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741138284; x=1741743084; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gev7S8y3fn3jwjmRo39QfUqXmJdiqV/PUszHcBWZL2A=;
- b=FtoLZE10We/nCQhCQRd28AfpzL94FDHsxcIDhMzOHuhJinfrRaZOxWkr+mor7/0Siz
- D2pT5gBkVJNh+NSGz4N37+ib0/ppujvL0AcQxPosM6gho+ENt3dXPSTbnCh27avWiLpI
- qWk0+pVLoeZMCnYfxWioOkB4m2YlyQvqBbiPgbSeNnxWZe8kdBxOuuFwZlg0NAu/0VeU
- N9N7wqiohorvN+wWrBgKGHqIX2ri/FVTOT3rMNV9Kqy/zpLTfWFRMLeGo3rBrqMbm1DR
- C/Pa/1CJ96eDgGFggHF2C+fOD54Xd4RSTF8iSEmtWwk4w8hcLQbjHrO7wXpkqKExQPqS
- QSaQ==
+ d=linaro.org; s=google; t=1741137919; x=1741742719; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JT3mCpufvIuWr8BVM5sYDayVdvf5uoSCrbbGB14l/A8=;
+ b=pZaCGHpCED2gvXOOGqzKab5OS8z+/vtjFTiEY/QBWcAn+zECcXovbLu1V7ANK9Y1+A
+ ZZQ3sNqU4/aQrqzZm5r3fQS794yo/Wa+v66vbfGN1U1BQo9fmIwf68A9aiHzCJSUXWgf
+ Sj3Tj0jsuBepcuMK808aismpA8FNwl3xt58YLh67qW98BjgZlk3+Qabw+Q2Zmw+SnyS/
+ 1RYCNJdLY1rrUs/gVnA5yvFmaArCy6Lempr8xtBLHLVVVxAv7zO9k8NeV9rstWL5ous2
+ axCYKnp0/lh1EXL1RZogQ1/RZEZFkNsE7GtlHA6uFsoot0FcKmwGXlHAWQ3Llt2rjRQH
+ 8kPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741138284; x=1741743084;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gev7S8y3fn3jwjmRo39QfUqXmJdiqV/PUszHcBWZL2A=;
- b=cpBNk0v++KbxfkURxXsPqqVZxAaKJNI6LDWKbMr5Fh3w3kdTqlk2fkUeOR1P4JOZY6
- z5bVOmMIH+ubcBfkbofEC1y9YzGkcUztIStLBiAxSYL5++y1SOlGWfqhZJzg6DoosDbq
- NewAjSplp0BJEGE8pFNfytPt40I0HjLJA8+hrzcIlQ+w8dHc4cZY7XomlcppF2CZrrTi
- mfy5I/Qz/uXvSZXnfwEPMXJOLwKQdvOW7kaHvEA2RavlizrbjdluuG2n5HpwYidnBd9O
- rY4jp2tXTtU92+iaOVoeiBhredzKD+mx07OdIvzktAJSWILa0F5Tt4Syhff+udaLPCA0
- ImRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV8qfP4/tDQbqrzcSq39oeEV/6XjFlkBO2o1WRTbg3L2j1rRJGIwXIebbfoO6uFcnbQgu8mAAOKxkqU@nongnu.org
-X-Gm-Message-State: AOJu0Yy+Ah7mbtY6sBHYRK+F1a7i6xCXM4J3CEMggFLre97v4Rw3YMsM
- 6ynTwkpksYoGg9h952MjrcoyJ2ua43ouFlkx2AHa3BwtjKTJqQWnE7Sl7pzGa0c=
-X-Gm-Gg: ASbGnctvmNNA5cQUHodAND/eRuEj5EuDH0Rb8Zy3pdhYj5IgFQpjGgjg810yluQxLN2
- UcsE1EiwpmqmO/0eAfujh+s18A16knxQAqKVvVu1QcNDIQ2xOBQ+AERDr2YwbhXGnxVf85tEN3o
- u65HYoIenHow5L2gncRYcqMuQwWAuGpJPdnVG9cQS6GM9/nyt2g2T2XCJeu5X2VHDF6kM/S3sqj
- S3Gj5jZ8NWDrdQnI3UQ8nR5olulu0QklpDPhxaL+fc3U04aTsk8pdZEVe9lWG7FyyPD0aim+7ue
- xYubizop7ituyXqob6VYkYGyJxMH1jt3/dJPmBgNYX2nOrP1rtbG7mb699Abt/SDsuuGJkRlKU0
- 4IPNvF2qG+kt1
-X-Google-Smtp-Source: AGHT+IHB+0todBndY1PqXDVVGWl+1Tsi7hVuzzQcP/U6YdWt8Jr2p/OQBrnWPcQ3QBTEervemBgWaw==
-X-Received: by 2002:a05:6000:400e:b0:38b:d7d2:12f6 with SMTP id
- ffacd0b85a97d-3911f726f14mr736157f8f.2.1741138284188; 
- Tue, 04 Mar 2025 17:31:24 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1741137919; x=1741742719;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JT3mCpufvIuWr8BVM5sYDayVdvf5uoSCrbbGB14l/A8=;
+ b=hnqhiM9U1YnZIjkoKf/D+NRdGEklnzjQPZG2UY+E/vvTpf+Txnzbq9AYoKNr1tyER9
+ LzdDzO+iKl1QkHHbWzhFtY6b6eOyjdtfR9bO164ZrQ2ACP7FMzHvd1jx7o+Vbx1lUqXH
+ 4BWHwXZk1bQbAVJXwu6RQ0Qk0uwvecLftlLtTD+fEwTnpFQibg7JP4o0NCxSaEa3/x6P
+ BmHBKcIqV48e58G8D5MG0zMtFRybIgCks2t8day4MMF6lYT3cK8JXs6KZKycYiCzv/MC
+ YcA8paRFpPaEOtfSv0ZcqNS576kk1JAjk5mm6n080IcbXWeVCD49epMOhM3Ufl2Lc3m8
+ f4RA==
+X-Gm-Message-State: AOJu0Yyz7PXESq0gmZ4yLkswQJuMTvaKzpEIQTVLoaOcVEygF4N91U0i
+ ZIT4/dN5lcbTDp70PMEfCLxSHGFIGsOXJCpX+CmC/jE3zNhu901F2Ud3xSDdqPquWkr23pW5Jn9
+ zP+8=
+X-Gm-Gg: ASbGncswmWwK5KsNSQKFh5VC2c23ogAa6cO+dV5TCVSMlHksFtDGsFgV7iXhN1qZRgs
+ GSy7dC+7NFhu4IlkVC4jGr/CCqFMR3OLJm4r8pn2q2QC++/ShFCT8sBJH6m9RlcX3pbTsNSuQNx
+ B1hz/ivq4YJTxTTG5e1Xc2s2+36wv8jhuRyBmkkMnA7piF7fuhc9CMRA95uo3RbJ9eOKbaF+9rn
+ lHCyAZ49XwZc03KHYCntx7ksr/ebc4DiXpl3wdg80aiL34oQkCa11BjfDGhOzKz9Gx7t9ARW35Q
+ TWd6CKVQiuzWnAe9Vk/SV5fkyCZmwawnEywsjKemawSsB/SkCd5en7P42mwswMsmASShWeAS/5Q
+ I9UTuN2o6a1LxweJqiac=
+X-Google-Smtp-Source: AGHT+IEbSpdl7IDdjNfclOU3aa8iGxhBPbwTaibTF4bgxSFgtVp3aMl5+aMrUYQhClS+Y4Mg+tLHUA==
+X-Received: by 2002:a05:600c:35ca:b0:43b:ce86:b31a with SMTP id
+ 5b1f17b1804b1-43bd29bd205mr5545765e9.22.1741137918695; 
+ Tue, 04 Mar 2025 17:25:18 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e485df5asm19521631f8f.96.2025.03.04.17.31.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 17:31:23 -0800 (PST)
-Message-ID: <4229013f-8601-4e8a-912a-d641bdf8a105@linaro.org>
-Date: Wed, 5 Mar 2025 02:31:21 +0100
+ 5b1f17b1804b1-43bd429375fsm2018015e9.10.2025.03.04.17.25.16
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 04 Mar 2025 17:25:17 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 41/41] hw/nvram/eeprom_at24c: Reorganise init to avoid
+ overwriting values
+Date: Wed,  5 Mar 2025 02:21:56 +0100
+Message-ID: <20250305012157.96463-42-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
+References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/11] system: Introduce QemuArchBit enum
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Markus Armbruster <armbru@redhat.com>
-References: <20250305005225.95051-1-philmd@linaro.org>
- <20250305005225.95051-4-philmd@linaro.org>
- <1951b0b1-ccea-429e-9e72-e8df7a7a8599@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1951b0b1-ccea-429e-9e72-e8df7a7a8599@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,139 +101,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/3/25 02:23, Pierrick Bouvier wrote:
-> On 3/4/25 16:52, Philippe Mathieu-Daudé wrote:
->> Declare QEMU_ARCH_BIT_$target as QemuArchBit enum.
->> Use them to declare QEMU_ARCH_$target bitmasks.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   meson.build                |  4 +--
->>   include/system/arch_init.h | 65 +++++++++++++++++++++++++-------------
->>   system/arch_init.c         |  2 +-
->>   3 files changed, 46 insertions(+), 25 deletions(-)
->>
->> diff --git a/meson.build b/meson.build
->> index 0a2c61d2bfa..1ab02a5d48d 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -3357,8 +3357,8 @@ foreach target : target_dirs
->>         config_target_data.set(k, v)
->>       endif
->>     endforeach
->> -  config_target_data.set('QEMU_ARCH',
->> -                         'QEMU_ARCH_' + 
->> config_target['TARGET_BASE_ARCH'].to_upper())
->> +  config_target_data.set('QEMU_ARCH_BIT',
->> +                         'QEMU_ARCH_BIT_' + 
->> config_target['TARGET_BASE_ARCH'].to_upper())
->>     config_target_h += {target: configure_file(output: target + '- 
->> config-target.h',
->>                                                  configuration: 
->> config_target_data)}
->> diff --git a/include/system/arch_init.h b/include/system/arch_init.h
->> index d8b77440487..06e5527ec88 100644
->> --- a/include/system/arch_init.h
->> +++ b/include/system/arch_init.h
->> @@ -1,29 +1,50 @@
->>   #ifndef QEMU_ARCH_INIT_H
->>   #define QEMU_ARCH_INIT_H
->> +#include "qemu/bitops.h"
->> -enum {
->> -    QEMU_ARCH_ALL = -1,
->> -    QEMU_ARCH_ALPHA = (1 << 0),
->> -    QEMU_ARCH_ARM = (1 << 1),
->> -    QEMU_ARCH_I386 = (1 << 3),
->> -    QEMU_ARCH_M68K = (1 << 4),
->> -    QEMU_ARCH_MICROBLAZE = (1 << 6),
->> -    QEMU_ARCH_MIPS = (1 << 7),
->> -    QEMU_ARCH_PPC = (1 << 8),
->> -    QEMU_ARCH_S390X = (1 << 9),
->> -    QEMU_ARCH_SH4 = (1 << 10),
->> -    QEMU_ARCH_SPARC = (1 << 11),
->> -    QEMU_ARCH_XTENSA = (1 << 12),
->> -    QEMU_ARCH_OPENRISC = (1 << 13),
->> -    QEMU_ARCH_TRICORE = (1 << 16),
->> -    QEMU_ARCH_HPPA = (1 << 18),
->> -    QEMU_ARCH_RISCV = (1 << 19),
->> -    QEMU_ARCH_RX = (1 << 20),
->> -    QEMU_ARCH_AVR = (1 << 21),
->> -    QEMU_ARCH_HEXAGON = (1 << 22),
->> -    QEMU_ARCH_LOONGARCH = (1 << 23),
->> -};
->> +typedef enum QemuArchBit {
->> +    QEMU_ARCH_BIT_ALPHA         = 0,
->> +    QEMU_ARCH_BIT_ARM           = 1,
->> +    QEMU_ARCH_BIT_I386          = 3,
->> +    QEMU_ARCH_BIT_M68K          = 4,
->> +    QEMU_ARCH_BIT_MICROBLAZE    = 6,
->> +    QEMU_ARCH_BIT_MIPS          = 7,
->> +    QEMU_ARCH_BIT_PPC           = 8,
->> +    QEMU_ARCH_BIT_S390X         = 9,
->> +    QEMU_ARCH_BIT_SH4           = 10,
->> +    QEMU_ARCH_BIT_SPARC         = 11,
->> +    QEMU_ARCH_BIT_XTENSA        = 12,
->> +    QEMU_ARCH_BIT_OPENRISC      = 13,
->> +    QEMU_ARCH_BIT_TRICORE       = 16,
->> +    QEMU_ARCH_BIT_HPPA          = 18,
->> +    QEMU_ARCH_BIT_RISCV         = 19,
->> +    QEMU_ARCH_BIT_RX            = 20,
->> +    QEMU_ARCH_BIT_AVR           = 21,
->> +    QEMU_ARCH_BIT_HEXAGON       = 22,
->> +    QEMU_ARCH_BIT_LOONGARCH     = 23,
->> +} QemuArchBit;
->> +
->> +#define QEMU_ARCH_ALPHA         BIT(QEMU_ARCH_BIT_ALPHA)
->> +#define QEMU_ARCH_ARM           BIT(QEMU_ARCH_BIT_ARM)
->> +#define QEMU_ARCH_I386          BIT(QEMU_ARCH_BIT_I386)
->> +#define QEMU_ARCH_M68K          BIT(QEMU_ARCH_BIT_M68K)
->> +#define QEMU_ARCH_MICROBLAZE    BIT(QEMU_ARCH_BIT_MICROBLAZE)
->> +#define QEMU_ARCH_MIPS          BIT(QEMU_ARCH_BIT_MIPS)
->> +#define QEMU_ARCH_PPC           BIT(QEMU_ARCH_BIT_PPC)
->> +#define QEMU_ARCH_S390X         BIT(QEMU_ARCH_BIT_S390X)
->> +#define QEMU_ARCH_SH4           BIT(QEMU_ARCH_BIT_SH4)
->> +#define QEMU_ARCH_SPARC         BIT(QEMU_ARCH_BIT_SPARC)
->> +#define QEMU_ARCH_XTENSA        BIT(QEMU_ARCH_BIT_XTENSA)
->> +#define QEMU_ARCH_OPENRISC      BIT(QEMU_ARCH_BIT_OPENRISC)
->> +#define QEMU_ARCH_TRICORE       BIT(QEMU_ARCH_BIT_TRICORE)
->> +#define QEMU_ARCH_HPPA          BIT(QEMU_ARCH_BIT_HPPA)
->> +#define QEMU_ARCH_RISCV         BIT(QEMU_ARCH_BIT_RISCV)
->> +#define QEMU_ARCH_RX            BIT(QEMU_ARCH_BIT_RX)
->> +#define QEMU_ARCH_AVR           BIT(QEMU_ARCH_BIT_AVR)
->> +#define QEMU_ARCH_HEXAGON       BIT(QEMU_ARCH_BIT_HEXAGON)
->> +#define QEMU_ARCH_LOONGARCH     BIT(QEMU_ARCH_BIT_LOONGARCH)
->> +#define QEMU_ARCH_ALL           -1
->>   extern const uint32_t arch_type;
-> 
-> What are we gaining by having a "bit" oriented enum, vs simple values 
-> that can be compared too?
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-I'm not sure what you are asking here, these definitions are heavily
-used in qemu-options.hx, and I don't plan to change them anytime soon.
+The init_rom[] can write values to the beginning of the memory but
+these are overwritten by values from a backing file that covers the
+whole memory.
 
-For the single binary I'll try to keep the command line interface with
-no change. For heterogeneous binary I plan to start with no CLI so I'm
-not really considering them.
+init_rom[] is used only if there's no backing file (provides default
+content) but should not overwrite backing file content (especially
+leaving the file unchanged and only change it in memory).
+Do the init_rom[] handling only if it would not be overwritten.
 
-> As well, it would make sense to add subvariants (aarch64, x86_64, little 
-> and big endian variants for some arch), so all of them are present and 
-> can be queried easily.
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <fd8e0478febd60d5f48c58bc77c60e043d1c3cdc.1740839457.git.balaton@eik.bme.hu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/nvram/eeprom_at24c.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-IIUC what you are referring, this is planned for another interface, but
-not this series which is focused on introducing qemu_arch_name() and
-removing TARGET_NAME. While you don't see any improvement in duplicated
-target files as of this series, some reduction should happen in the next
-step which remove TARGET_BIG_ENDIAN uses in hw/.
-
->> diff --git a/system/arch_init.c b/system/arch_init.c
->> index b9147af93cb..fedbb18e2cc 100644
->> --- a/system/arch_init.c
->> +++ b/system/arch_init.c
->> @@ -24,4 +24,4 @@
->>   #include "qemu/osdep.h"
->>   #include "system/arch_init.h"
->> -const uint32_t arch_type = QEMU_ARCH;
->> +const uint32_t arch_type = BIT(QEMU_ARCH_BIT);
-> 
+diff --git a/hw/nvram/eeprom_at24c.c b/hw/nvram/eeprom_at24c.c
+index 78c81bea77f..ff7a21eee7f 100644
+--- a/hw/nvram/eeprom_at24c.c
++++ b/hw/nvram/eeprom_at24c.c
+@@ -191,10 +191,6 @@ static void at24c_eeprom_realize(DeviceState *dev, Error **errp)
+ 
+     ee->mem = g_malloc0(ee->rsize);
+ 
+-    if (ee->init_rom) {
+-        memcpy(ee->mem, ee->init_rom, MIN(ee->init_rom_size, ee->rsize));
+-    }
+-
+     if (ee->blk) {
+         int ret = blk_pread(ee->blk, 0, ee->rsize, ee->mem, 0);
+ 
+@@ -204,6 +200,8 @@ static void at24c_eeprom_realize(DeviceState *dev, Error **errp)
+             return;
+         }
+         DPRINTK("Reset read backing file\n");
++    } else if (ee->init_rom) {
++        memcpy(ee->mem, ee->init_rom, MIN(ee->init_rom_size, ee->rsize));
+     }
+ 
+     /*
+-- 
+2.47.1
 
 
