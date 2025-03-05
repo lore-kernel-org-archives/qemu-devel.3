@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1BEDC282D3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA953C19F32
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:14:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpi0D-0000qi-OI; Wed, 05 Mar 2025 01:13:09 -0500
+	id 1tpi09-0000o3-7A; Wed, 05 Mar 2025 01:13:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tpi0B-0000pa-LS
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:07 -0500
+ id 1tpi06-0000ms-Ug
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:02 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tpi05-0004Gy-Sc
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:07 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tpi01-0004Fi-UM
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:02 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Cxqmpr68dnzN+KAA--.41221S3;
- Wed, 05 Mar 2025 14:12:59 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxrnJl68dnut+KAA--.40854S3;
+ Wed, 05 Mar 2025 14:12:53 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBx3MRi68dnfRQ3AA--.5679S11;
- Wed, 05 Mar 2025 14:12:59 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBx3MRi68dnfRQ3AA--.5679S4;
+ Wed, 05 Mar 2025 14:12:52 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Xianglai Li <lixianglai@loongson.cn>
-Subject: [PULL 09/15] hw/loongarch/virt: Add topo properties on CPU object
-Date: Wed,  5 Mar 2025 14:12:44 +0800
-Message-Id: <20250305061250.1908444-10-maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org,
+	Song Gao <gaosong@loongson.cn>
+Subject: [PULL 02/15] hw/intc/loongarch_ipi: Implment cpu hotplug interface
+Date: Wed,  5 Mar 2025 14:12:37 +0800
+Message-Id: <20250305061250.1908444-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250305061250.1908444-1-maobibo@loongson.cn>
 References: <20250305061250.1908444-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBx3MRi68dnfRQ3AA--.5679S11
+X-CM-TRANSID: qMiowMBx3MRi68dnfRQ3AA--.5679S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,65 +65,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add some properties such as socket_id, core_id, thread_id and node_id
-on LoongArch CPU object.
+Add logic cpu allocation and cpu mapping with cpu hotplug interface.
+When cpu is added, connect ipi gpio irq to CPU IRQ_IPI irq pin.
 
-Co-developed-by: Xianglai Li <lixianglai@loongson.cn>
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu.c | 9 +++++++++
- target/loongarch/cpu.h | 4 ++++
- 2 files changed, 13 insertions(+)
+ hw/intc/loongarch_ipi.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 3788f895c1..df76ab66d5 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -14,6 +14,7 @@
- #include "system/tcg.h"
- #include "system/kvm.h"
- #include "kvm/kvm_loongarch.h"
-+#include "hw/qdev-properties.h"
- #include "exec/exec-all.h"
- #include "exec/translation-block.h"
- #include "cpu.h"
-@@ -879,6 +880,13 @@ static int64_t loongarch_cpu_get_arch_id(CPUState *cs)
+diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
+index 90bbb7ac6e..b10641dd03 100644
+--- a/hw/intc/loongarch_ipi.c
++++ b/hw/intc/loongarch_ipi.c
+@@ -49,6 +49,22 @@ static int loongarch_cpu_by_arch_id(LoongsonIPICommonState *lics,
+     return MEMTX_ERROR;
  }
- #endif
  
-+static const Property loongarch_cpu_properties[] = {
-+    DEFINE_PROP_INT32("socket-id", LoongArchCPU, socket_id, 0),
-+    DEFINE_PROP_INT32("core-id", LoongArchCPU, core_id, 0),
-+    DEFINE_PROP_INT32("thread-id", LoongArchCPU, thread_id, 0),
-+    DEFINE_PROP_INT32("node-id", LoongArchCPU, node_id, CPU_UNSET_NUMA_NODE_ID),
-+};
++static IPICore *loongarch_ipi_get_cpu(LoongsonIPICommonState *lics,
++                                      DeviceState *dev)
++{
++    CPUClass *k = CPU_GET_CLASS(dev);
++    uint64_t arch_id = k->get_arch_id(CPU(dev));
++    int i;
 +
- static void loongarch_cpu_class_init(ObjectClass *c, void *data)
++    for (i = 0; i < lics->num_cpu; i++) {
++        if (lics->cpu[i].arch_id == arch_id) {
++            return &lics->cpu[i];
++        }
++    }
++
++    return NULL;
++}
++
+ static void loongarch_ipi_realize(DeviceState *dev, Error **errp)
  {
-     LoongArchCPUClass *lacc = LOONGARCH_CPU_CLASS(c);
-@@ -886,6 +894,7 @@ static void loongarch_cpu_class_init(ObjectClass *c, void *data)
-     DeviceClass *dc = DEVICE_CLASS(c);
-     ResettableClass *rc = RESETTABLE_CLASS(c);
+     LoongsonIPICommonState *lics = LOONGSON_IPI_COMMON(dev);
+@@ -80,25 +96,48 @@ static void loongarch_ipi_realize(DeviceState *dev, Error **errp)
+ static void loongarch_ipi_cpu_plug(HotplugHandler *hotplug_dev,
+                                    DeviceState *dev, Error **errp)
+ {
++    LoongsonIPICommonState *lics = LOONGSON_IPI_COMMON(hotplug_dev);
+     Object *obj = OBJECT(dev);
++    IPICore *core;
++    int index;
  
-+    device_class_set_props(dc, loongarch_cpu_properties);
-     device_class_set_parent_realize(dc, loongarch_cpu_realizefn,
-                                     &lacc->parent_realize);
-     resettable_class_set_parent_phases(rc, NULL, loongarch_cpu_reset_hold, NULL,
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 9dc71fa7f1..677100bd42 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -417,6 +417,10 @@ struct ArchCPU {
-     OnOffAuto lasx;
-     OnOffAuto kvm_pv_ipi;
-     OnOffAuto kvm_steal_time;
-+    int32_t socket_id;  /* socket-id of this CPU */
-+    int32_t core_id;    /* core-id of this CPU */
-+    int32_t thread_id;  /* thread-id of this CPU */
-+    int32_t node_id;    /* NUMA node of this CPU */
+     if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
+         warn_report("LoongArch extioi: Invalid %s device type",
+                                        object_get_typename(obj));
+         return;
+     }
++
++    core = loongarch_ipi_get_cpu(lics, dev);
++    if (!core) {
++        return;
++    }
++
++    core->cpu = CPU(dev);
++    index = core - lics->cpu;
++
++    /* connect ipi irq to cpu irq */
++    qdev_connect_gpio_out(DEVICE(lics), index, qdev_get_gpio_in(dev, IRQ_IPI));
+ }
  
-     /* 'compatible' string for this CPU for Linux device trees */
-     const char *dtb_compatible;
+ static void loongarch_ipi_cpu_unplug(HotplugHandler *hotplug_dev,
+                                      DeviceState *dev, Error **errp)
+ {
++    LoongsonIPICommonState *lics = LOONGSON_IPI_COMMON(hotplug_dev);
+     Object *obj = OBJECT(dev);
++    IPICore *core;
+ 
+     if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
+         warn_report("LoongArch extioi: Invalid %s device type",
+                                        object_get_typename(obj));
+         return;
+     }
++
++    core = loongarch_ipi_get_cpu(lics, dev);
++    if (!core) {
++        return;
++    }
++
++    core->cpu = NULL;
+ }
+ 
+ static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
 -- 
 2.43.5
 
