@@ -4,94 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED4FFC282DE
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 15:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DBBAC282DE
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 15:57:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpr1A-00052a-QF; Wed, 05 Mar 2025 10:50:44 -0500
+	id 1tpr7B-0007Fq-DX; Wed, 05 Mar 2025 10:56:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tpr18-00052A-5o; Wed, 05 Mar 2025 10:50:42 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpr79-0007Fa-S5
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 10:56:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tpr15-0004CA-PG; Wed, 05 Mar 2025 10:50:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=4mh+0ykTD/iNdoCIrvBMb/N3ggMQ+6PSgMzxpFz3Kws=; b=v2DmFWB1WPHVZ6UE+KVAU/9b/C
- 2GCO57f3KAutA7mPa8OOI54MYaGPZx66GV3OAusS0xUrXF6yL94CPRHe2ShKFx8o1nptPm8P7CVV4
- bmInDN9epyGre9BLmY891OxS2bBHloBJPuFpyox/1TCF0ugpBpxKYjKDM9TGJlMzhqkAjofHGl/73
- Do94P4N2+N/vj+fpp+vFIKMVlzpoSQr2Y4eHm2Fe/uly6/7dOYpqWtGDhT2EQFoSfzo4zy7C6eOc7
- MDGUueAZs9XukWcheLjPgqrOXqhcLR50kId1kYre0fJKSUc6JWO0hj+u7lhr8f0P8uek+2B/iTGkw
- fwCk9lHITOD22Dy/aR9FWdQTv2iL86R7FPAftPEM93BV1LORkvO5RGxqc5VzU9sTRi1Y4NQunHrN+
- YMASIEX8h8zlUj9Jw0vlht9M5usX1AabdvPc/4O4mkD53WocfFB1O5jk2rKHaYELdEmeKxg5FCRew
- RjFXoIFpkMDTL3dvepT5xPQH52g7o8CGR6zuPfdecAsZogwMB3EftEB5996vKTp/+bgb/j17LcxWc
- HP04ZbM0CjJOSU2YEiIq/+IZ7utPbJf0cVECrpE/Pz4SDXktL14TqroNcTvr6AkAQFr7OMnJrFj+I
- ybiqChfDcQ+Ik+T3zh+VwQoMlFBllc60cv3LgGrXY=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tpqzy-0002Ro-TM; Wed, 05 Mar 2025 15:49:34 +0000
-Message-ID: <8957f2ce-5679-467a-ad91-7b96c9d7e11c@ilande.co.uk>
-Date: Wed, 5 Mar 2025 15:50:26 +0000
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpr77-0005Le-RD
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 10:56:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741190211;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=GfIKL+pGtHkECjYsaUL0ofqXC8SEg9z4KNBSJJ5LoRk=;
+ b=IFmjQP0eITW8zdQHlpwgQINUJXIB57x7KDCU3Mbw9X4ffJYzphmsrvvZW99RU0SaaiPmrm
+ R5tNSnl1UBUxo4Po6CWmk+LRirlMD9Au3XpgcM6Viv59Wk0ZCeAUr17Yn82Ggb8CBrkbkT
+ rPNTMskE1nlFBf8yK5MQO5dCJlzOii4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-659-LyAAJOfTPJqVoHRsPwrtmg-1; Wed, 05 Mar 2025 10:56:48 -0500
+X-MC-Unique: LyAAJOfTPJqVoHRsPwrtmg-1
+X-Mimecast-MFC-AGG-ID: LyAAJOfTPJqVoHRsPwrtmg_1741190207
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3910b93cb1eso1638145f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 07:56:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741190207; x=1741795007;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GfIKL+pGtHkECjYsaUL0ofqXC8SEg9z4KNBSJJ5LoRk=;
+ b=QGzJOWgIpO3OqyCivnYYHnE4/4M00KxO11LHmZtG+c3AhFEx4r3CuAXhz2pg2h63Ty
+ sc8ZVhdJJ8PlWABLNFiGxo23Vv1F6rZwVnrAtMq/K4Sa+fR1TNKKjh4vYfftB/jnwOSQ
+ Kl1lPSe5Sg1pZsB1d64O7GLkAPohvVq7uSOdudH1xgSOkgqfic4qetz4Aq7IMT59dvDq
+ wmiuDGOEN2saetPjZEWwiSBw2sss+VQoKra515ldLLyfMuq+q1tpaIObb6RcymmTEP9x
+ sjuujqv/Ec79tEoeoJLEoswmULZWaVtnGL0YxtfQEdW/k+rXAtdhv3qnLnTsL3F/I/Lq
+ ZlHg==
+X-Gm-Message-State: AOJu0YwksTSrm2ETBCXAGsg8wviORJRW2lciim1MdxBJMVD2UbB9on7G
+ LaImSvP7fF91QJIUqEewzY46pjGPyb9nwryc9y/jlhi/koQMo6XUz3vU5wXo/E4hJTRMC/GA+al
+ t8L5f8t+N3LDvAf1a3f5ZKWQl6RPRDlfOppuk/wV0pD6fBEfI/mCG
+X-Gm-Gg: ASbGncvV65J1MjcL/4RUKMsxyMFTxQFKnw0RuN7/qF/v1fDh1vCjwQWqpZVARIBmHi9
+ H6dfdCVp+lGjKqCWt3k0fsKJO0/DOfBGlusylSf/aQTS+c6s/mn8ffpUfnm0yQ7egfC7mUjoFhu
+ hDdMGfBDyBWV1uZWfwGqn0GX5aR8X/E7foGTW/4uRyF9P9xt1OQGpvhfEvGsOTjoBU5ag6lB9kI
+ 6tuLfxllT2sL2iznixwO+q6LIT7N5VniV9xcAHlqORMivxsKjSC0tSK3I4mJqLARnvlRyI2NfuR
+ KLzuk+GhgvlkWQRHk1/G52nFoYWNipQt7grRmOrA6iBynMg=
+X-Received: by 2002:a5d:6da5:0:b0:391:80f:8051 with SMTP id
+ ffacd0b85a97d-3911f755903mr3893532f8f.21.1741190207126; 
+ Wed, 05 Mar 2025 07:56:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEqp3rY8KPOoYuS84YjxRhmR8dG+tvoE6cAr48PltoXw74TzQCpoIKUmczfJAZrI2SPWvV/Sw==
+X-Received: by 2002:a5d:6da5:0:b0:391:80f:8051 with SMTP id
+ ffacd0b85a97d-3911f755903mr3893510f8f.21.1741190206722; 
+ Wed, 05 Mar 2025 07:56:46 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
+ [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e485d785sm21298906f8f.83.2025.03.05.07.56.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Mar 2025 07:56:46 -0800 (PST)
+Message-ID: <48caabe7-c112-4454-96a8-742d154c77ee@redhat.com>
+Date: Wed, 5 Mar 2025 16:56:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Hab Gallagher <hab.gallagher@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Gerd Hoffmann <kraxel@redhat.com>
-Cc: Howard Spoelstra <hsp.cat7@gmail.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-References: <CANDMsCp3wH3xhEvHz_DvnPbv7NLCdGb2LDaECOG=yJqfKObLkA@mail.gmail.com>
- <0f927835-62e6-a2a8-7de0-262657edb638@eik.bme.hu>
- <CABLmASFQby0KpR646Vp=7JGsw40_2cvW-gFa49f2G3iMCAz14A@mail.gmail.com>
- <85e1dcb9-f0d7-6ed2-6370-30cd8f31a604@eik.bme.hu>
- <CANDMsCpVVsXihocUmKNQr4VFmjk57MjHh=_rx0Hbfny1wZ74aQ@mail.gmail.com>
+Subject: Re: [PATCH qemu v2 1/3] hw/s390x: add CPI identifiers to QOM
+To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
+ qemu-s390x mailing list <qemu-s390x@nongnu.org>
+Cc: qemu-devel mailing list <qemu-devel@nongnu.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>
+References: <20250224120449.1764114-1-shalini@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CANDMsCpVVsXihocUmKNQr4VFmjk57MjHh=_rx0Hbfny1wZ74aQ@mail.gmail.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250224120449.1764114-1-shalini@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: Adding gamma support to QemuMacDrivers
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,98 +153,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/03/2025 17:52, Hab Gallagher wrote:
+On 24/02/2025 13.04, Shalini Chellathurai Saroja wrote:
+> Add Control-Program Identification (CPI) to the QEMU Object
+> Model (QOM). The CPI identifiers provide information about
+> the guest operating system. The CPI identifiers are:
+> system type, system name, system level and sysplex name.
+> 
+> The system type provides the OS type of the guest (e.g. LINUX).
+> The system name provides the name of the guest (e.g. TESTVM).
+> The system level provides the distribution and kernel version
+> of the guest OS (e.g. 0x50e00).
+> The sysplex name provides the sysplex name of the guest
+> (e.g. SYSPLEX).
+> 
+> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+> ---
+>   hw/s390x/s390-virtio-ccw.c         | 29 +++++++++++++++++++++++++++++
+>   include/hw/s390x/s390-virtio-ccw.h |  8 ++++++++
+>   qapi/machine.json                  | 24 ++++++++++++++++++++++++
+>   3 files changed, 61 insertions(+)
+> 
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 51ae0c133d..13ea8db1b0 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -50,6 +50,7 @@
+>   #include "hw/s390x/virtio-ccw-md.h"
+>   #include "system/replay.h"
+>   #include CONFIG_DEVICES
+> +#include "qapi/qapi-visit-machine.h"
+>   
+>   static Error *pv_mig_blocker;
+>   
+> @@ -803,6 +804,26 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
+>       s390_ipl_fmt_loadparm(ms->loadparm, val, errp);
+>   }
+>   
+> +static void machine_get_control_program_id(Object *obj, Visitor *v,
+> +                                           const char *name, void *opaque,
+> +                                           Error **errp)
+> +{
+> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+> +    S390ControlProgramId *cpi;
+> +    cpi = &(S390ControlProgramId){
+> +        .system_type = g_strndup((char *) ms->cpi.system_type,
+> +                       sizeof(ms->cpi.system_type)),
+> +        .system_name = g_strndup((char *) ms->cpi.system_name,
+> +                       sizeof(ms->cpi.system_name)),
+> +        .system_level = g_strdup_printf("0x%lx", ms->cpi.system_level),
+> +        .sysplex_name = g_strndup((char *) ms->cpi.sysplex_name,
+> +                        sizeof(ms->cpi.sysplex_name)),
+> +        .timestamp = ms->cpi.timestamp
+> +    };
 
-(added Gerd on CC)
+Could you please indend the sizeof() lines with the "(" after the g_strndup 
+in the previous line?
 
->     That driver is for a VGA device which I think does not support gamma in
->     hardware. QEMU emulates the hardware so if it does not support gamma then
->     there's no place to add it in QEMU. Therefore if you want to emulate gamma
->     on VGA this should be done within the guest driver but that may be slower.
->     How does this work on real hardware? What graphics device is used there
->     and does that support gamma in hardware? Maybe that graphics device needs
->     to be emulated instead?
-> 
-> 
-> For understanding the MacOS side of things, I have been consulting https:// 
-> developer.apple.com/library/archive/documentation/Hardware/DeviceManagers/pci_srvcs/ 
-> pci_cards_drivers/Designing_PCI_Cards_Drivers.pdf <https://developer.apple.com/ 
-> library/archive/documentation/Hardware/DeviceManagers/pci_srvcs/pci_cards_drivers/ 
-> Designing_PCI_Cards_Drivers.pdf>
-> 
->     To reduce visible flashes resulting from color table changes, the SetGamma
->     routine works in conjunction with the SetEntries control routine on indexed
->     devices. The SetGamma routine first loads new gamma correction data into the
->     driver’s private storage; the next SetEntries control call applies the gamma
->     correction as it changes the CLUT. SetGamma calls are always followed by
->     SetEntries control calls on indexed devices.
-> 
->     For direct devices, the SetGamma routine first sets up the gamma correction data
->     table. Next, it synthesizes a black-to-white linear ramp color table. Finally, it
->     applies the new gamma correction to the color table and sets the data directly in
->     the hardware.
-> 
-> 
-> As far as I can tell, the documentation is implying that somewhere between the driver 
-> and the physical hardware, *something* must keep track of the gamma table (even if 
-> indirectly by subsequently applying it to the palette table) to map the raw 
-> framebuffer data to gamma-corrected colors.
-> 
->     Perhaps this is also of interest: https://github.com/SolraBizna/mac_qfb_driver
->     <https://github.com/SolraBizna/mac_qfb_driver>The nubus declaration rom supports
->     gamma correction.
-> 
-> 
-> This is very much of interest! Thank you. I am hoping to continue to use the mac99 
-> machine type, but this code is a useful reference.
-> 
-> The most basic support requires cscGetGamma and cscSetGamma to at least return 
-> success: https://github.com/cebix/macemu/ 
-> commit/2676e1bd134703d888788c682fb56e07b5cf56a9 <https://github.com/cebix/macemu/ 
-> commit/2676e1bd134703d888788c682fb56e07b5cf56a9>
-> The patch to SheepShaver was small because most of the functionality was already 
-> present, albeit dead code.
-> 
-> Surprisingly, github can't deal with CR line endings, so I can't (easily) link to 
-> some of the code to cite it: https://github.com/ozbenh/QemuMacDrivers/blob/master/ 
-> shared/MacDriverUtils.c <https://github.com/ozbenh/QemuMacDrivers/blob/master/shared/ 
-> MacDriverUtils.c>
-> 
-> Once the gamma table is saved, it's "applied" by cscSetEntries to combine a color 
-> palette and gamma table into the "real" color. QemuMacDrivers does not seem to keep 
-> track of the palette at all, sending it upstream to the driver by calling this 
-> function in a loop:
-> 
-> OSStatus QemuVga_SetColorEntry(UInt32 index, RGBColor *color)
-> {
-> VgaWriteB(0x3c8, index);
-> VgaWriteB(0x3c9, color->red >> 8);
-> VgaWriteB(0x3c9, color->green >> 8);
-> VgaWriteB(0x3c9, color->blue >> 8);
-> return noErr;
-> }
-> 
-> VgaWriteB seems to be doing MMIO to write those values upstream.
-> 
-> Similarly, mac_qfb_driver seems to use MMIO to write back both the palette table and 
-> the gamma table to the driver, saving neither one in emulated driver state: https:// 
-> github.com/SolraBizna/mac_qfb_driver/blob/e78ba4ccd08d254a10bad7c13d90810b17dbfd87/ 
-> src/control.cc#L48-L62 <https://github.com/SolraBizna/mac_qfb_driver/blob/ 
-> e78ba4ccd08d254a10bad7c13d90810b17dbfd87/src/control.cc#L48-L62>
+> +
+> +    visit_type_S390ControlProgramId(v, name, &cpi, &error_abort);
+> +}
+> +
+>   static void ccw_machine_class_init(ObjectClass *oc, void *data)
+>   {
+>       MachineClass *mc = MACHINE_CLASS(oc);
+> @@ -854,6 +875,14 @@ static void ccw_machine_class_init(ObjectClass *oc, void *data)
+>               "Up to 8 chars in set of [A-Za-z0-9. ] (lower case chars converted"
+>               " to upper case) to pass to machine loader, boot manager,"
+>               " and guest kernel");
+> +    object_class_property_add(oc, "s390-control-program-id",
 
-Implementing the registers to store the gamma table is trivial: the tricky part is 
-updating the VGA framebuffer code to apply the gamma as it is rendered. Have a look 
-at 
-https://gitlab.com/qemu-project/qemu/-/blob/master/hw/display/vga.c?ref_type=heads#L1478 
-(vga_draw_graphic) and 
-https://gitlab.com/qemu-project/qemu/-/blob/master/hw/display/vga.c?ref_type=heads#L1194 
-(vga_draw_text) to see how this is handled.
+I think I'd rather drop the "s390-" prefix here. The property is already 
+part of the s390-virtio-ccw machine, so it should be obvious that this is 
+related to s390.
 
-Gerd: what do you think would be the best way to apply a gamma to the VGA device?
+> +                              "S390ControlProgramId",
+> +                              machine_get_control_program_id,
+> +                              NULL, NULL, NULL);
+> +    object_class_property_set_description(oc, "s390-control-program-id",
+> +        "Control-progam identifiers provide data about the guest "
+
+s/progam/program/
+
+> +        "operating system");
+> +
+>   }
+>   
+>   static inline void s390_machine_initfn(Object *obj)
+> diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
+> index 686d9497d2..6872f7a176 100644
+> --- a/include/hw/s390x/s390-virtio-ccw.h
+> +++ b/include/hw/s390x/s390-virtio-ccw.h
+> @@ -19,6 +19,13 @@
+>   
+>   OBJECT_DECLARE_TYPE(S390CcwMachineState, S390CcwMachineClass, S390_CCW_MACHINE)
+>   
+> +typedef struct ControlProgramId {
+> +    uint8_t system_type[8];
+> +    uint8_t system_name[8];
+> +    uint64_t system_level;
+> +    uint8_t sysplex_name[8];
+> +    uint64_t timestamp;
+> +} QEMU_PACKED ControlProgramId;
+>   
+>   struct S390CcwMachineState {
+>       /*< private >*/
+> @@ -33,6 +40,7 @@ struct S390CcwMachineState {
+>       uint64_t max_pagesize;
+>   
+>       SCLPDevice *sclp;
+> +    ControlProgramId cpi;
+>   };
+>   
+>   static inline uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms)
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index a6b8795b09..c6cbad87e1 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1898,3 +1898,27 @@
+>   { 'command': 'x-query-interrupt-controllers',
+>     'returns': 'HumanReadableText',
+>     'features': [ 'unstable' ]}
+> +
+> +##
+> +# @S390ControlProgramId:
+> +#
+> +# Control-program identifiers provide data about Linux instance.
+
+If I understood correctly, this could also theoretically be used by other 
+guest operating systems? If so, please replace "Linux instance" with "guest 
+operating system".
+
+> +#
+> +# @system-type: operating system of Linux instance
+
+Replace with:
+
+  @system-type: operating system (e.g. "LINUX")
+
+?
+
+> +#
+> +# @system-name: system name of Linux instance
+
+Name of the VM instance ?
+
+> +# @system-level: distribution and kernel version of Linux instance
+> +#
+> +# @sysplex-name: sysplex name of Linux instance
+> +#
+> +# @timestamp: latest update of CPI data
+> +#
+> +# Since: 9.2
+
+9.2 has already been released, so this should be 10.0.
+
+> +##
+> +{ 'struct': 'S390ControlProgramId', 'data': {
+> +     'system-type': 'str',
+> +     'system-name': 'str',
+> +     'system-level': 'str',
+
+Not sure, but would it make sense to use a number for the system-level 
+instead? At least it's a number in ControlProgramId, not a string.
+
+  Thomas
 
 
-ATB,
-
-Mark.
+> +     'sysplex-name': 'str',
+> +     'timestamp': 'uint64' } }
 
 
