@@ -4,149 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C075C282DE
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 17:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A263C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 17:46:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpsoS-0005eL-22; Wed, 05 Mar 2025 12:45:44 -0500
+	id 1tpsoT-0005eg-Id; Wed, 05 Mar 2025 12:45:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tpso9-0005ce-Ld
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 12:45:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tpso8-0000Gl-6k
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 12:45:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741196723;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jbF/2D3x7fFzoU+Jr0qZvkfnmMKBdQi1+8U0uhbXJyE=;
- b=YpMsicbewE2R8Ync3HHWUaGBPpOcPDZK8Jvvr2fgrGBIV0sEXniuHnJiaLXMD4u6ObcnCk
- qSQwegoZ6/hMM+svATD9rIp54ZOqRWfzhQfoe7NA6RV8Qi0X3JP+ajh7NaPgnBzAmKueHv
- Qz3VHYCmyWUpQIgRndtYPWUjbYAetpg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-42UhdTowMA2rK7n8ATa1vw-1; Wed, 05 Mar 2025 12:45:22 -0500
-X-MC-Unique: 42UhdTowMA2rK7n8ATa1vw-1
-X-Mimecast-MFC-AGG-ID: 42UhdTowMA2rK7n8ATa1vw_1741196721
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-390f6aa50c5so3352850f8f.2
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 09:45:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <momivolz@gmail.com>)
+ id 1tprgj-00035m-JQ
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:33:41 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <momivolz@gmail.com>)
+ id 1tprgh-0002rs-U9
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:33:41 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43bc4b1603fso23020235e9.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:33:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741192418; x=1741797218; darn=nongnu.org;
+ h=in-reply-to:from:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=0mt8Svw7pqZ1y4z22Z/9HvJDbLgs1AV9GY+HXe3KyRo=;
+ b=PqgUX/Dgr4d0gzXyo6MOHplwrr2qFa8TZB2OrM8N9C5qdJjMPE0SOGgehOTdapgxLz
+ WzYiWA9AD79yuIjb9eArdqSNnXL+lyKytnPmG/iOcCN/zfM/IXxEU6eENGU21Y7ROFJK
+ vxEqii03kNtDll1diyqjj2i9yX7YUb0/uIm0MGU8SCJdOkvwIM3W36o8i+OCB4+efLys
+ AV5v/M8Cyxl6H6ZC2/I/AGQFDFn27mNFgxypY/jIqee98F+wJ88UpKab7XeeYHVJHKQ/
+ sBQEYY6a+YQflEUlIXYJwglVoEXL39ATshisLGhBKD5Djsqy3zMz8gzZak+VecPs829i
+ BI8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741196721; x=1741801521;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jbF/2D3x7fFzoU+Jr0qZvkfnmMKBdQi1+8U0uhbXJyE=;
- b=VbmrgxHV2CflK3GvDbKjF93k7wKHwgkplUAiAK3c1/Mn8msUfVE1LYJPa/anhLVx9w
- TZsOzL4Ca6KqFfPvUvjTdDFblds9Ajq8yqZAv3EgvWtZoJSHiFGgLlya2EAV71K3yXmK
- OvZS1g2nvST+5yVDoxOmE1xwqgpWznQn5XvrwYekBf4EXKNVDXhYTPka8XwX1hgCmalM
- zrfwVuTWHDYJfmRmXqvsFpqj44iPr2ztrhh1+ZViVaHzC+4El8Bc655vKuHoV9ryd9iY
- eFlOq0cAnkPVJ+iCaqkyBVIAdMUWMpzYj/YI6R9fbNmhW1zcd+FvlkvUw/Jo7SI/YXYl
- e7MQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrMEu/yUub2Mifc+tnDzJmuCA+P0wVYBXWIdhvd50A4NxupYB9heA5bgy4fZRH9wTY/hlAcuaaz4gc@nongnu.org
-X-Gm-Message-State: AOJu0Yze623jrWAt6GExZjj6ztyrZzvrR0xSnmo6JDQt/O4XoVHcaOUU
- HoXS24gCnbVpILeFmsUHEdp5jte42e206LwBzZ68YJi3Zq4b/Y9dl7Ex+DZD0nP2RECBrfqDsDk
- sLWVCmdAMbVMSHgCg0ELFRBOfCJdO2fD0StDcf4Y6bNukgwv8EXJa
-X-Gm-Gg: ASbGncuMpivFGlkPh2N0JIxEXcgCkbevtyT3kIwJhUHGH8KI62w2PchwsWIp/DmEjbe
- Q/VvfuKSNx1P9KvL1xq9rqFspo5oSzjKBe4TUre0lWGnLBWsJaIZjOVmJRormqQnCg8lviFlhry
- URU6akv4fYXR2auy40kcDS3ry06rZ37PBYSYn5/0OJQgIHjdc5wChO6BPvvEOe9d2sruMVjcgG0
- /ddTCtzdfScGXMIDYBR4pQ/mcVFf+8vuQwkLMU1fwe24EYXX/IFGAivz9J+EIA1p+tTMsSgJfNA
- Vtws57M+6syQ0YPFRnvueVp1m8kMNVWv9t0aj/D1R57j1uJibvFtDA==
-X-Received: by 2002:a5d:6c6f:0:b0:391:13ef:1af5 with SMTP id
- ffacd0b85a97d-3911f7bd5ffmr4405098f8f.48.1741196720740; 
- Wed, 05 Mar 2025 09:45:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF2T0AiFvN4HO3H+kykNMSX5B0LZBnkucL4GEmBXbiIVkUZqstqzCb4zox2Y+BO/IscfEx6WQ==
-X-Received: by 2002:a5d:6c6f:0:b0:391:13ef:1af5 with SMTP id
- ffacd0b85a97d-3911f7bd5ffmr4405061f8f.48.1741196720398; 
- Wed, 05 Mar 2025 09:45:20 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e484489esm22131455f8f.68.2025.03.05.09.45.19
+ d=1e100.net; s=20230601; t=1741192418; x=1741797218;
+ h=in-reply-to:from:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0mt8Svw7pqZ1y4z22Z/9HvJDbLgs1AV9GY+HXe3KyRo=;
+ b=W7l0dPtZZUGWFQLwC5errzhWkADkhJJcTvg4nScF8W3/18tcowDC8RRU3DrLv0tWtp
+ WP0suuIJXTa/iMpEHR9H9DYWuYkY/mxfB5lJYiqTLRy5iuT2JuLOmAZswOWwZF+eVTtE
+ kpMaAPo8e+nBc9+lq/RGctL/OqgzAAR7UWiiJyFXtbb0tfI9o8EreVvOq6ReXDvWY1PR
+ S2ciyYQHkky4RgbG/QHwJRMKNMiXS6uyz7clCteEP6l6toa6E/VEuBl+6ta5/CJORsRm
+ xfTZGvdJIUzlNmhlzfycCNhp4NirzLmTjX9LGz/ItfHIlVQnrO88kfTF0yj7ieOWsDny
+ ZcQw==
+X-Gm-Message-State: AOJu0YwMf3j9JDrd0knVkavmvSl1SObEb4zq2xeU3WyMP0G+2FuSZYPV
+ Y5WW672tRDcUZ9EVrMoCw+n55a7BVxs04K8r6LvyaebJlggKwEDV
+X-Gm-Gg: ASbGncteI+3bfklwymcFJ20nMXYuiOukHWS5jLUqcYpikfocAcpoqf5D5aToIDb0drC
+ YDCWl7XY80Qa4A3r8bsPHwrhtMKnkT4e/b4zrMeN6lZYd7KVsJ3r8lw+WPVjjCJgGHwIRY0DEnL
+ 8CI8CW2rwCi9R/apvlSojvxVxz8O5Vq2wyO/xZElZF1AG9UpRU8qhn1b9YuEyb42KaXGLh3yooh
+ AKOXiSwgFwo6wQi2in9G+Sl28HBGCJf2rRW4gDA219K/upfICMW3aun5O4Z2DPzkjTD2WyxesN5
+ M9saWQwhHFnRA382X4yVxZ8TD006Pwb4kmXNummSHRx55kW+JllGDxJLaT04evEvnTMy
+X-Google-Smtp-Source: AGHT+IFfObi+H2akbJXgoZC/1gdAt8QenHp2LhGvVAeazEQPogRzd3szOTnRaAn1fUkrpVdw49/Alg==
+X-Received: by 2002:a5d:6c64:0:b0:391:1218:d5ea with SMTP id
+ ffacd0b85a97d-3911f75505emr4056337f8f.23.1741192416059; 
+ Wed, 05 Mar 2025 08:33:36 -0800 (PST)
+Received: from ?IPV6:2001:db8:11:1:c17a:2bf5:a230:8edd?
+ ([2a01:599:304:ca55::1ea]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47a7a2asm21696276f8f.37.2025.03.05.08.33.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 09:45:19 -0800 (PST)
-Message-ID: <ec8bd66a-ae3a-49c0-aed5-06a83e892491@redhat.com>
-Date: Wed, 5 Mar 2025 18:45:19 +0100
+ Wed, 05 Mar 2025 08:33:35 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary="------------gc50ISQk0k5zG28bmnGPsspT"
+Message-ID: <ab652f95-5cff-4bdf-b5dd-32f26553ba9b@gmail.com>
+Date: Wed, 5 Mar 2025 17:33:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v6_00/36=5D_Multifd_=F0=9F=94=80_device_st?=
- =?UTF-8?Q?ate_transfer_support_with_VFIO_consumer?=
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
- <4ea12608-ec9d-4eed-a20c-75f3ac6a5d0d@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <4ea12608-ec9d-4eed-a20c-75f3ac6a5d0d@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH] linux-user/main: Allow setting tb-size
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240730215532.1442-1-iii@linux.ibm.com>
+From: Moritz Volz <momivolz@gmail.com>
+In-Reply-To: <20240730215532.1442-1-iii@linux.ibm.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=momivolz@gmail.com; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 05 Mar 2025 12:45:42 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -161,40 +100,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/25 10:29, Cédric Le Goater wrote:
-> Hello,
-> 
-> On 3/4/25 23:03, Maciej S. Szmigiero wrote:
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> This is an updated v6 patch series of the v5 series located here:
->> https://lore.kernel.org/qemu-devel/cover.1739994627.git.maciej.szmigiero@oracle.com/
->>
->> What this patch set is about?
->> Current live migration device state transfer is done via the main (single)
->> migration channel, which reduces performance and severally impacts the
->> migration downtime for VMs having large device state that needs to be
->> transferred during the switchover phase.
->>
->> Example devices that have such large switchover phase device state are some
->> types of VFIO SmartNICs and GPUs.
->>
->> This patch set allows parallelizing this transfer by using multifd channels
->> for it.
->> It also introduces new load and save threads per VFIO device for decoupling
->> these operations from the main migration thread.
->> These threads run on newly introduced generic (non-AIO) thread pools,
->> instantiated by the core migration core.
-> 
-> I think we are ready to apply 1-33. Avihai, please take a look !
+This is a multi-part message in MIME format.
+--------------gc50ISQk0k5zG28bmnGPsspT
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Applied to vfio-next with changes for documentation.
+On 30.07.2024 23:54 Ilya Leoshkevich wrote:
+> While qemu-system can set tb-size using -accel tcg,tb-size=n, there
+> is no similar knob for qemu-user. Add one in a way similar to how
+> one-insn-per-tb is already handled.
+>
+> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> ---
+>   linux-user/main.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+Right now (commit 661c2e1a) it looks like this change never made it to 
+linux-user/main.c in the master branch.
 
-Avihai, I will wait for your input before sending a PR.
+Interestingly enough the changes for bsd-user/main.c were merged in 
+early November.
 
-Thanks,
+Did this patch just get lost, or is there a reason it was appied to 
+bsd-user but not linux-user (despite the initial effort to maintain 
+feature parity)? It looks like a useful feature to have and compiling 
+from source for a 12 line patch is not very convenient.
 
-C.
+--------------gc50ISQk0k5zG28bmnGPsspT
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">On 30.07.2024 23:54 Ilya Leoshkevich
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20240730215532.1442-1-iii@linux.ibm.com">
+      <pre wrap="" class="moz-quote-pre">While qemu-system can set tb-size using -accel tcg,tb-size=n, there
+is no similar knob for qemu-user. Add one in a way similar to how
+one-insn-per-tb is already handled.
 
+Signed-off-by: Ilya Leoshkevich <a class="moz-txt-link-rfc2396E" href="mailto:iii@linux.ibm.com">&lt;iii@linux.ibm.com&gt;</a>
+---
+ linux-user/main.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)</pre>
+    </blockquote>
+    Right now (commit <span size="md"
+      data-testid="last-commit-id-label"
+class="gl-font-monospace dark:!gl-bg-strong gl-button btn btn-label btn-md"><span
+        class="gl-button-text">661c2e1a</span></span><span
+      class="fgColor-default">) i</span><span
+    style="white-space: pre-wrap">t looks like this change never made it to linux-user/main.c in the master branch.</span><br>
+    <p><span style="white-space: pre-wrap">Interestingly enough the changes for bsd-user/main.c were merged in early November.</span></p>
+    <p><span style="white-space: pre-wrap">Did this patch just get lost, or is there a reason it was appied to bsd-user but not linux-user (despite the initial effort to maintain feature parity)? It looks like a useful feature to have and compiling from source for a 12 line patch is not very convenient.</span></p>
+    <p><span style="white-space: pre-wrap">
+</span></p>
+  </body>
+</html>
+
+--------------gc50ISQk0k5zG28bmnGPsspT--
 
