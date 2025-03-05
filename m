@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12186C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39A00C282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdWZ-0005aJ-Vo; Tue, 04 Mar 2025 20:26:19 -0500
+	id 1tpdWS-0005NL-6T; Tue, 04 Mar 2025 20:26:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tpdU3-0001He-OF
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:40 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUw-0003TG-NE
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:35 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tpdU1-00076v-Ne
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:39 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2235189adaeso6227735ad.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:23:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUu-0007Fr-9c
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:34 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43bcc85ba13so10408015e9.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:24:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137815; x=1741742615; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=P/l2v9NbYNrFTmHZ24VrD2fnkFSRFdaCiyS3m4xy7CU=;
- b=QlrisZKGl1HlJtNEYwbREDvp2MZAdxiBxbc5OIXBbsQ7uB1UMHf0uJpNQ4NCiU1oAm
- TjXHm2WNXSZMNNxRZctrQ7dudLZl/PFfkU5o1paLr7UEMh9Mvvk2l3XM/p2PLaoweGXN
- 8CG2SihFSDusklQIVQFeXZGKA7rvdjiTpd+x6CrmWcpCx0zivZgZ+qfFXqVTmqLADERX
- PcIZ7WTNiuUul8O4Ujoaie5ooRK7mGitPnYqj1Y2HEtGbQBAvEgHjnJsEVXPP9zj6VK2
- UT8Tz0r2N9QMcFxns/Y5Cw0HhzevBzFyN8DUTmAXcSyxnt32mXre1bqHHwdSAymlgxwQ
- NkuQ==
+ d=linaro.org; s=google; t=1741137870; x=1741742670; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RY0hKsg/QJVynR94vVsgSjWfjxRvhr7eQQRJ6wX8nKY=;
+ b=Se5v9sxm2fB+xC8zyeWd8ccDBxBKzeBSqF8eW/MWWmis0T64YmzhPAf+LTvBleRZS+
+ WXhlw88rZytSja8kYkvf6NgTv8V7Il7B0BbRQYWtRITP0xj1vUUlWCX3eaurAzsWWwfJ
+ JWl+ovaBHWrqgiE7BrRAH0AxKcmN+2IE/2NTJSZmib8Xl5cog/BIWnuX1N84hYn9WW8d
+ zX197G/PHLr0G/nWZZKXH15K3Mtm4wnRCn4HxCStWle2sUapCnbD9bv6vilLWfNsho16
+ bHgcj2N0fQ3vIjqOPGQ7lFNpga2oPOLzormisWDb3Mmdi+gKj3i6i0wuwPM5uCQR8S0a
+ K7vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137815; x=1741742615;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P/l2v9NbYNrFTmHZ24VrD2fnkFSRFdaCiyS3m4xy7CU=;
- b=PazqbjAZgHEm77CdlHAwWSzNwKUCTa6LKmx7ljho6tDS2OUXywJrjZHRYDMEXMOnPE
- Wcx5Kvs7BCmM1L1ZAIq97cX+C9pMdeIyzI+gd+Se3tIixrfjvLwO9q6ZW6rLSS6x/eU7
- isRrzc48283X63krEbh/RgA+cTi4nLvYgXgsCQpO0HOftxVL5uGVHUxrLcTHSkWyyK3p
- 8ySr6UA4nuMfAN9lwEePJr6iXHaHBMLAu+SnaM3+nkpCxvCG0CEgdcU5oqLoXzZqpWwW
- YeDR2q9WpmWPEknr16D/okYn6dNvOxLar78hIHaw7hLuW4W8lXY093Fm++4kUUQ3zLob
- M9Qw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDvUGeUGZRHS0YBn4Zrwft+T8E7OzUH+dmXYVtXiOk/JN23Fob826ASkrXPKIb6dOKO5GmsrNxNjSP@nongnu.org
-X-Gm-Message-State: AOJu0YwJmw/sw1JKXephaH5K75y5HC/9DeHi1ulC5g6WE3/DS5u9KSDY
- RigBZxcu7Yh6ryTOsaS/eWpThKVObRDsiaRT6rDR6UkduWOmHr1vWK/0jnu0ABQ=
-X-Gm-Gg: ASbGncu1DQaJeWvfwtGFzdxnpmAjAOUyZ2mzRsn9YR8w0SU+BHb8Yat3gWQaDvTtx7u
- pYaGb67juv2IpzZJVF/Q0s4hEs421MuEj2DAUeOR+Dl2iBvN9q8bJbj5iookpUyl5JVDFK2HOAV
- cqV4APDkMRR2Eda2lTErc6nczEpuhseuMuZNoImtu+FCzpdeF1+18YrukEg5o/R1AmX24dTZjuE
- r+/eY7RkTrlTHow24reKpp62fMlCNfQ1AoaIyjHSCDcMdBbp5SM5mZ5UiYQLKj9alRzQUCYPwTn
- YXdF9vcqfFgFFxKY2LyKXD5KXn7bLJ/MqEx//sxypvuknrYrVIR34bNu3w==
-X-Google-Smtp-Source: AGHT+IFXIwvuO3djKdV6NsnFryti5ZEPQTMdBEZBOY7n+lrNlLtMEjkRpF/oXV5FUIe0AT/ZJnGDgg==
-X-Received: by 2002:a17:903:22c4:b0:215:58be:334e with SMTP id
- d9443c01a7336-223f1d3eb5amr20980165ad.10.1741137815484; 
- Tue, 04 Mar 2025 17:23:35 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223501f9d63sm101358805ad.78.2025.03.04.17.23.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 17:23:35 -0800 (PST)
-Message-ID: <1951b0b1-ccea-429e-9e72-e8df7a7a8599@linaro.org>
-Date: Tue, 4 Mar 2025 17:23:34 -0800
+ d=1e100.net; s=20230601; t=1741137870; x=1741742670;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RY0hKsg/QJVynR94vVsgSjWfjxRvhr7eQQRJ6wX8nKY=;
+ b=XHX/d69MtbSHXierSiTeVEqA8V6LxhIzb7ZZT9UpwmsaQS+HLSeC3iM6SRN55hksG3
+ DU/af6HGdgxEntJNPh3zG0jPRYkxGLc5OmWP91z5HtruzKnNoaXDxW0ePmqkCqjtuPmr
+ mWcbDKh83dbRut4ZMNChvDSQPHnPOtc/aROEF4lu1SPJLOTBrxbMe1wSnGlcUzRnkR8Y
+ iBkIVoN07WVuiQM8aXM4N8QE+nah/jK/5wqJN3nd0DtjXO9lP8l7SXuoAWogmgx5VyOX
+ iC0Zu0faNfNlfNHu+kf7M2OTb4uS3F9kdslw5Bbw8Xe2k1M359klOZJ2s65tjDcR4O79
+ AdIw==
+X-Gm-Message-State: AOJu0YxvxgqlVzOmpowjHAA+HFSgsFnpq5ED2eeMnHv1L6QKO2tlGSGm
+ P2anrXZogD+MpI/GOJfaSAd0CFHX3Skbxji0tKFmA6g244s7napSmAM/LG+BG9TfjVK6oXSqz25
+ GigQ=
+X-Gm-Gg: ASbGnctcMVVyeRMU3ZZGqXL42ATR76NbyTtGcx9x56MiUxgpL7m/BmA7PfWLP6i8ydo
+ XhKBRQJyA/7h2oyXwEYeCYtbZKLt7iNJQuymF/aK9lQtoRV3kd6wrSWsHlxaXQqIrxGZYPnAGks
+ r3/x1fgzLT62My4MJ65J+AwTo4CwbzTtRySCoSbcUntpDlrAbG6vYMYWk0Rn2y8LTpiQzMEa8R8
+ PFnxbQIqN1VLb3ynXoH4Wvvl4hWYFLNvjGgqp3khg6Dg0oh8aAiEGa9jDWvbIhzUeI3S17K+ieZ
+ YXH+ZZGY7a9kZs6B3O2pqnBk7mSNoce4K3D0zy2VK1B+PeEqT4zf+gswyaTSknt9+vRFRb281UP
+ MCfl+IUNOOaAwn90NHNg=
+X-Google-Smtp-Source: AGHT+IG4TPGTMCx/Fk1AvYnjkfUvZoq89/xbPfL5mXFuC9oLsoJTGArVHEE4IhXlUzCy53wyArbb1Q==
+X-Received: by 2002:a5d:6da3:0:b0:391:1d5f:4c31 with SMTP id
+ ffacd0b85a97d-3911f757c07mr781615f8f.23.1741137870037; 
+ Tue, 04 Mar 2025 17:24:30 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bd4292f0bsm2017765e9.15.2025.03.04.17.24.29
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 04 Mar 2025 17:24:29 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Keoseong Park <keosung.park@samsung.com>,
+ Jeuk Kim <jeuk20.kim@samsung.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 31/41] hw/ufs: Add temperature event notification support
+Date: Wed,  5 Mar 2025 02:21:46 +0100
+Message-ID: <20250305012157.96463-32-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
+References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/11] system: Introduce QemuArchBit enum
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20250305005225.95051-1-philmd@linaro.org>
- <20250305005225.95051-4-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250305005225.95051-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,95 +101,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy80LzI1IDE2OjUyLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gRGVj
-bGFyZSBRRU1VX0FSQ0hfQklUXyR0YXJnZXQgYXMgUWVtdUFyY2hCaXQgZW51bS4NCj4gVXNl
-IHRoZW0gdG8gZGVjbGFyZSBRRU1VX0FSQ0hfJHRhcmdldCBiaXRtYXNrcy4NCj4gDQo+IFNp
-Z25lZC1vZmYtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9y
-Zz4NCj4gLS0tDQo+ICAgbWVzb24uYnVpbGQgICAgICAgICAgICAgICAgfCAgNCArLS0NCj4g
-ICBpbmNsdWRlL3N5c3RlbS9hcmNoX2luaXQuaCB8IDY1ICsrKysrKysrKysrKysrKysrKysr
-KysrKystLS0tLS0tLS0tLS0tDQo+ICAgc3lzdGVtL2FyY2hfaW5pdC5jICAgICAgICAgfCAg
-MiArLQ0KPiAgIDMgZmlsZXMgY2hhbmdlZCwgNDYgaW5zZXJ0aW9ucygrKSwgMjUgZGVsZXRp
-b25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvbWVzb24uYnVpbGQgYi9tZXNvbi5idWlsZA0K
-PiBpbmRleCAwYTJjNjFkMmJmYS4uMWFiMDJhNWQ0OGQgMTAwNjQ0DQo+IC0tLSBhL21lc29u
-LmJ1aWxkDQo+ICsrKyBiL21lc29uLmJ1aWxkDQo+IEBAIC0zMzU3LDggKzMzNTcsOCBAQCBm
-b3JlYWNoIHRhcmdldCA6IHRhcmdldF9kaXJzDQo+ICAgICAgICAgY29uZmlnX3RhcmdldF9k
-YXRhLnNldChrLCB2KQ0KPiAgICAgICBlbmRpZg0KPiAgICAgZW5kZm9yZWFjaA0KPiAtICBj
-b25maWdfdGFyZ2V0X2RhdGEuc2V0KCdRRU1VX0FSQ0gnLA0KPiAtICAgICAgICAgICAgICAg
-ICAgICAgICAgICdRRU1VX0FSQ0hfJyArIGNvbmZpZ190YXJnZXRbJ1RBUkdFVF9CQVNFX0FS
-Q0gnXS50b191cHBlcigpKQ0KPiArICBjb25maWdfdGFyZ2V0X2RhdGEuc2V0KCdRRU1VX0FS
-Q0hfQklUJywNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAnUUVNVV9BUkNIX0JJVF8n
-ICsgY29uZmlnX3RhcmdldFsnVEFSR0VUX0JBU0VfQVJDSCddLnRvX3VwcGVyKCkpDQo+ICAg
-ICBjb25maWdfdGFyZ2V0X2ggKz0ge3RhcmdldDogY29uZmlndXJlX2ZpbGUob3V0cHV0OiB0
-YXJnZXQgKyAnLWNvbmZpZy10YXJnZXQuaCcsDQo+ICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICBjb25maWd1cmF0aW9uOiBjb25maWdfdGFyZ2V0
-X2RhdGEpfQ0KPiAgIA0KPiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9zeXN0ZW0vYXJjaF9pbml0
-LmggYi9pbmNsdWRlL3N5c3RlbS9hcmNoX2luaXQuaA0KPiBpbmRleCBkOGI3NzQ0MDQ4Ny4u
-MDZlNTUyN2VjODggMTAwNjQ0DQo+IC0tLSBhL2luY2x1ZGUvc3lzdGVtL2FyY2hfaW5pdC5o
-DQo+ICsrKyBiL2luY2x1ZGUvc3lzdGVtL2FyY2hfaW5pdC5oDQo+IEBAIC0xLDI5ICsxLDUw
-IEBADQo+ICAgI2lmbmRlZiBRRU1VX0FSQ0hfSU5JVF9IDQo+ICAgI2RlZmluZSBRRU1VX0FS
-Q0hfSU5JVF9IDQo+ICAgDQo+ICsjaW5jbHVkZSAicWVtdS9iaXRvcHMuaCINCj4gICANCj4g
-LWVudW0gew0KPiAtICAgIFFFTVVfQVJDSF9BTEwgPSAtMSwNCj4gLSAgICBRRU1VX0FSQ0hf
-QUxQSEEgPSAoMSA8PCAwKSwNCj4gLSAgICBRRU1VX0FSQ0hfQVJNID0gKDEgPDwgMSksDQo+
-IC0gICAgUUVNVV9BUkNIX0kzODYgPSAoMSA8PCAzKSwNCj4gLSAgICBRRU1VX0FSQ0hfTTY4
-SyA9ICgxIDw8IDQpLA0KPiAtICAgIFFFTVVfQVJDSF9NSUNST0JMQVpFID0gKDEgPDwgNiks
-DQo+IC0gICAgUUVNVV9BUkNIX01JUFMgPSAoMSA8PCA3KSwNCj4gLSAgICBRRU1VX0FSQ0hf
-UFBDID0gKDEgPDwgOCksDQo+IC0gICAgUUVNVV9BUkNIX1MzOTBYID0gKDEgPDwgOSksDQo+
-IC0gICAgUUVNVV9BUkNIX1NINCA9ICgxIDw8IDEwKSwNCj4gLSAgICBRRU1VX0FSQ0hfU1BB
-UkMgPSAoMSA8PCAxMSksDQo+IC0gICAgUUVNVV9BUkNIX1hURU5TQSA9ICgxIDw8IDEyKSwN
-Cj4gLSAgICBRRU1VX0FSQ0hfT1BFTlJJU0MgPSAoMSA8PCAxMyksDQo+IC0gICAgUUVNVV9B
-UkNIX1RSSUNPUkUgPSAoMSA8PCAxNiksDQo+IC0gICAgUUVNVV9BUkNIX0hQUEEgPSAoMSA8
-PCAxOCksDQo+IC0gICAgUUVNVV9BUkNIX1JJU0NWID0gKDEgPDwgMTkpLA0KPiAtICAgIFFF
-TVVfQVJDSF9SWCA9ICgxIDw8IDIwKSwNCj4gLSAgICBRRU1VX0FSQ0hfQVZSID0gKDEgPDwg
-MjEpLA0KPiAtICAgIFFFTVVfQVJDSF9IRVhBR09OID0gKDEgPDwgMjIpLA0KPiAtICAgIFFF
-TVVfQVJDSF9MT09OR0FSQ0ggPSAoMSA8PCAyMyksDQo+IC19Ow0KPiArdHlwZWRlZiBlbnVt
-IFFlbXVBcmNoQml0IHsNCj4gKyAgICBRRU1VX0FSQ0hfQklUX0FMUEhBICAgICAgICAgPSAw
-LA0KPiArICAgIFFFTVVfQVJDSF9CSVRfQVJNICAgICAgICAgICA9IDEsDQo+ICsgICAgUUVN
-VV9BUkNIX0JJVF9JMzg2ICAgICAgICAgID0gMywNCj4gKyAgICBRRU1VX0FSQ0hfQklUX002
-OEsgICAgICAgICAgPSA0LA0KPiArICAgIFFFTVVfQVJDSF9CSVRfTUlDUk9CTEFaRSAgICA9
-IDYsDQo+ICsgICAgUUVNVV9BUkNIX0JJVF9NSVBTICAgICAgICAgID0gNywNCj4gKyAgICBR
-RU1VX0FSQ0hfQklUX1BQQyAgICAgICAgICAgPSA4LA0KPiArICAgIFFFTVVfQVJDSF9CSVRf
-UzM5MFggICAgICAgICA9IDksDQo+ICsgICAgUUVNVV9BUkNIX0JJVF9TSDQgICAgICAgICAg
-ID0gMTAsDQo+ICsgICAgUUVNVV9BUkNIX0JJVF9TUEFSQyAgICAgICAgID0gMTEsDQo+ICsg
-ICAgUUVNVV9BUkNIX0JJVF9YVEVOU0EgICAgICAgID0gMTIsDQo+ICsgICAgUUVNVV9BUkNI
-X0JJVF9PUEVOUklTQyAgICAgID0gMTMsDQo+ICsgICAgUUVNVV9BUkNIX0JJVF9UUklDT1JF
-ICAgICAgID0gMTYsDQo+ICsgICAgUUVNVV9BUkNIX0JJVF9IUFBBICAgICAgICAgID0gMTgs
-DQo+ICsgICAgUUVNVV9BUkNIX0JJVF9SSVNDViAgICAgICAgID0gMTksDQo+ICsgICAgUUVN
-VV9BUkNIX0JJVF9SWCAgICAgICAgICAgID0gMjAsDQo+ICsgICAgUUVNVV9BUkNIX0JJVF9B
-VlIgICAgICAgICAgID0gMjEsDQo+ICsgICAgUUVNVV9BUkNIX0JJVF9IRVhBR09OICAgICAg
-ID0gMjIsDQo+ICsgICAgUUVNVV9BUkNIX0JJVF9MT09OR0FSQ0ggICAgID0gMjMsDQo+ICt9
-IFFlbXVBcmNoQml0Ow0KPiArDQo+ICsjZGVmaW5lIFFFTVVfQVJDSF9BTFBIQSAgICAgICAg
-IEJJVChRRU1VX0FSQ0hfQklUX0FMUEhBKQ0KPiArI2RlZmluZSBRRU1VX0FSQ0hfQVJNICAg
-ICAgICAgICBCSVQoUUVNVV9BUkNIX0JJVF9BUk0pDQo+ICsjZGVmaW5lIFFFTVVfQVJDSF9J
-Mzg2ICAgICAgICAgIEJJVChRRU1VX0FSQ0hfQklUX0kzODYpDQo+ICsjZGVmaW5lIFFFTVVf
-QVJDSF9NNjhLICAgICAgICAgIEJJVChRRU1VX0FSQ0hfQklUX002OEspDQo+ICsjZGVmaW5l
-IFFFTVVfQVJDSF9NSUNST0JMQVpFICAgIEJJVChRRU1VX0FSQ0hfQklUX01JQ1JPQkxBWkUp
-DQo+ICsjZGVmaW5lIFFFTVVfQVJDSF9NSVBTICAgICAgICAgIEJJVChRRU1VX0FSQ0hfQklU
-X01JUFMpDQo+ICsjZGVmaW5lIFFFTVVfQVJDSF9QUEMgICAgICAgICAgIEJJVChRRU1VX0FS
-Q0hfQklUX1BQQykNCj4gKyNkZWZpbmUgUUVNVV9BUkNIX1MzOTBYICAgICAgICAgQklUKFFF
-TVVfQVJDSF9CSVRfUzM5MFgpDQo+ICsjZGVmaW5lIFFFTVVfQVJDSF9TSDQgICAgICAgICAg
-IEJJVChRRU1VX0FSQ0hfQklUX1NINCkNCj4gKyNkZWZpbmUgUUVNVV9BUkNIX1NQQVJDICAg
-ICAgICAgQklUKFFFTVVfQVJDSF9CSVRfU1BBUkMpDQo+ICsjZGVmaW5lIFFFTVVfQVJDSF9Y
-VEVOU0EgICAgICAgIEJJVChRRU1VX0FSQ0hfQklUX1hURU5TQSkNCj4gKyNkZWZpbmUgUUVN
-VV9BUkNIX09QRU5SSVNDICAgICAgQklUKFFFTVVfQVJDSF9CSVRfT1BFTlJJU0MpDQo+ICsj
-ZGVmaW5lIFFFTVVfQVJDSF9UUklDT1JFICAgICAgIEJJVChRRU1VX0FSQ0hfQklUX1RSSUNP
-UkUpDQo+ICsjZGVmaW5lIFFFTVVfQVJDSF9IUFBBICAgICAgICAgIEJJVChRRU1VX0FSQ0hf
-QklUX0hQUEEpDQo+ICsjZGVmaW5lIFFFTVVfQVJDSF9SSVNDViAgICAgICAgIEJJVChRRU1V
-X0FSQ0hfQklUX1JJU0NWKQ0KPiArI2RlZmluZSBRRU1VX0FSQ0hfUlggICAgICAgICAgICBC
-SVQoUUVNVV9BUkNIX0JJVF9SWCkNCj4gKyNkZWZpbmUgUUVNVV9BUkNIX0FWUiAgICAgICAg
-ICAgQklUKFFFTVVfQVJDSF9CSVRfQVZSKQ0KPiArI2RlZmluZSBRRU1VX0FSQ0hfSEVYQUdP
-TiAgICAgICBCSVQoUUVNVV9BUkNIX0JJVF9IRVhBR09OKQ0KPiArI2RlZmluZSBRRU1VX0FS
-Q0hfTE9PTkdBUkNIICAgICBCSVQoUUVNVV9BUkNIX0JJVF9MT09OR0FSQ0gpDQo+ICsjZGVm
-aW5lIFFFTVVfQVJDSF9BTEwgICAgICAgICAgIC0xDQo+ICAgDQo+ICAgZXh0ZXJuIGNvbnN0
-IHVpbnQzMl90IGFyY2hfdHlwZTsNCj4gICANCg0KV2hhdCBhcmUgd2UgZ2FpbmluZyBieSBo
-YXZpbmcgYSAiYml0IiBvcmllbnRlZCBlbnVtLCB2cyBzaW1wbGUgdmFsdWVzIA0KdGhhdCBj
-YW4gYmUgY29tcGFyZWQgdG9vPw0KQXMgd2VsbCwgaXQgd291bGQgbWFrZSBzZW5zZSB0byBh
-ZGQgc3VidmFyaWFudHMgKGFhcmNoNjQsIHg4Nl82NCwgbGl0dGxlIA0KYW5kIGJpZyBlbmRp
-YW4gdmFyaWFudHMgZm9yIHNvbWUgYXJjaCksIHNvIGFsbCBvZiB0aGVtIGFyZSBwcmVzZW50
-IGFuZCANCmNhbiBiZSBxdWVyaWVkIGVhc2lseS4NCg0KPiBkaWZmIC0tZ2l0IGEvc3lzdGVt
-L2FyY2hfaW5pdC5jIGIvc3lzdGVtL2FyY2hfaW5pdC5jDQo+IGluZGV4IGI5MTQ3YWY5M2Ni
-Li5mZWRiYjE4ZTJjYyAxMDA2NDQNCj4gLS0tIGEvc3lzdGVtL2FyY2hfaW5pdC5jDQo+ICsr
-KyBiL3N5c3RlbS9hcmNoX2luaXQuYw0KPiBAQCAtMjQsNCArMjQsNCBAQA0KPiAgICNpbmNs
-dWRlICJxZW11L29zZGVwLmgiDQo+ICAgI2luY2x1ZGUgInN5c3RlbS9hcmNoX2luaXQuaCIN
-Cj4gICANCj4gLWNvbnN0IHVpbnQzMl90IGFyY2hfdHlwZSA9IFFFTVVfQVJDSDsNCj4gK2Nv
-bnN0IHVpbnQzMl90IGFyY2hfdHlwZSA9IEJJVChRRU1VX0FSQ0hfQklUKTsNCg0K
+From: Keoseong Park <keosung.park@samsung.com>
+
+This patch introduces temperature event notification support to the UFS
+emulation. It enables the emulated UFS device to generate
+temperature-related events, including high and low temperature
+notifications, in compliance with the UFS specification.
+
+With this feature, UFS drivers can now handle temperature exception events
+during testing and development within the emulated environment.
+This enhances validation and debugging capabilities for thermal event
+handling in UFS implementations.
+
+Signed-off-by: Keoseong Park <keosung.park@samsung.com>
+Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
+Message-ID: <20250225064146epcms2p50889cb0066e2d4734f2386de325bcdf6@epcms2p5>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/ufs/ufs.h        |  2 ++
+ include/block/ufs.h | 13 +++++++-
+ hw/ufs/ufs.c        | 78 ++++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 91 insertions(+), 2 deletions(-)
+
+diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
+index 4bcc41f53a0..3799d97f30d 100644
+--- a/hw/ufs/ufs.h
++++ b/hw/ufs/ufs.h
+@@ -146,6 +146,8 @@ typedef struct UfsHc {
+     /* MCQ properties */
+     UfsSq *sq[UFS_MAX_MCQ_QNUM];
+     UfsCq *cq[UFS_MAX_MCQ_QNUM];
++
++    uint8_t temperature;
+ } UfsHc;
+ 
+ static inline uint32_t ufs_mcq_sq_tail(UfsHc *u, uint32_t qid)
+diff --git a/include/block/ufs.h b/include/block/ufs.h
+index 57f5ea3500c..a3ee62b027a 100644
+--- a/include/block/ufs.h
++++ b/include/block/ufs.h
+@@ -461,7 +461,7 @@ typedef struct Attributes {
+     uint8_t psa_state;
+     uint32_t psa_data_size;
+     uint8_t ref_clk_gating_wait_time;
+-    uint8_t device_case_rough_temperaure;
++    uint8_t device_case_rough_temperature;
+     uint8_t device_too_high_temp_boundary;
+     uint8_t device_too_low_temp_boundary;
+     uint8_t throttling_status;
+@@ -1073,6 +1073,11 @@ enum health_desc_param {
+     UFS_HEALTH_DESC_PARAM_LIFE_TIME_EST_B = 0x4,
+ };
+ 
++enum {
++    UFS_DEV_HIGH_TEMP_NOTIF = BIT(4),
++    UFS_DEV_LOW_TEMP_NOTIF = BIT(5),
++};
++
+ /* WriteBooster buffer mode */
+ enum {
+     UFS_WB_BUF_MODE_LU_DEDICATED = 0x0,
+@@ -1091,6 +1096,12 @@ enum ufs_lu_wp_type {
+     UFS_LU_PERM_WP = 0x02,
+ };
+ 
++/* Exception event mask values */
++enum {
++    MASK_EE_TOO_HIGH_TEMP = BIT(3),
++    MASK_EE_TOO_LOW_TEMP = BIT(4),
++};
++
+ /* UTP QUERY Transaction Specific Fields OpCode */
+ enum query_opcode {
+     UFS_UPIU_QUERY_OPCODE_NOP = 0x0,
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 1ccd6f88b69..857de6e9c2c 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -34,6 +34,11 @@
+ #define UFS_MAX_NUTMRS 8
+ #define UFS_MCQ_QCFGPTR 2
+ 
++/* Each value represents the temperature in celsius as (value - 80) */
++#define UFS_TEMPERATURE 120
++#define UFS_TOO_HIGH_TEMP_BOUNDARY 160
++#define UFS_TOO_LOW_TEMP_BOUNDARY 60
++
+ static void ufs_exec_req(UfsRequest *req);
+ static void ufs_clear_req(UfsRequest *req);
+ 
+@@ -838,6 +843,42 @@ static const MemoryRegionOps ufs_mmio_ops = {
+     },
+ };
+ 
++static void ufs_update_ee_status(UfsHc *u)
++{
++    uint16_t ee_status = be16_to_cpu(u->attributes.exception_event_status);
++    uint8_t high_temp_thresh = u->attributes.device_too_high_temp_boundary;
++    uint8_t low_temp_thresh = u->attributes.device_too_low_temp_boundary;
++
++    if (u->temperature >= high_temp_thresh) {
++        ee_status |= MASK_EE_TOO_HIGH_TEMP;
++    } else {
++        ee_status &= ~MASK_EE_TOO_HIGH_TEMP;
++    }
++
++    if (u->temperature <= low_temp_thresh) {
++        ee_status |= MASK_EE_TOO_LOW_TEMP;
++    } else {
++        ee_status &= ~MASK_EE_TOO_LOW_TEMP;
++    }
++
++    u->attributes.exception_event_status = cpu_to_be16(ee_status);
++}
++
++static bool ufs_check_exception_event_alert(UfsHc *u, uint8_t trans_type)
++{
++    uint16_t ee_control = be16_to_cpu(u->attributes.exception_event_control);
++    uint16_t ee_status;
++
++    if (trans_type != UFS_UPIU_TRANSACTION_RESPONSE) {
++        return false;
++    }
++
++    ufs_update_ee_status(u);
++
++    ee_status = be16_to_cpu(u->attributes.exception_event_status);
++
++    return ee_control & ee_status;
++}
+ 
+ void ufs_build_upiu_header(UfsRequest *req, uint8_t trans_type, uint8_t flags,
+                            uint8_t response, uint8_t scsi_status,
+@@ -848,6 +889,8 @@ void ufs_build_upiu_header(UfsRequest *req, uint8_t trans_type, uint8_t flags,
+     req->rsp_upiu.header.flags = flags;
+     req->rsp_upiu.header.response = response;
+     req->rsp_upiu.header.scsi_status = scsi_status;
++    req->rsp_upiu.header.device_inf =
++        ufs_check_exception_event_alert(req->hc, trans_type);
+     req->rsp_upiu.header.data_segment_length = cpu_to_be16(data_segment_length);
+ }
+ 
+@@ -1042,6 +1085,25 @@ static QueryRespCode ufs_exec_query_flag(UfsRequest *req, int op)
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
+ 
++static inline uint8_t ufs_read_device_temp(UfsHc *u)
++{
++    uint8_t feat_sup = u->device_desc.ufs_features_support;
++    bool high_temp_sup, low_temp_sup, high_temp_en, low_temp_en;
++    uint16_t ee_control = be16_to_cpu(u->attributes.exception_event_control);
++
++    high_temp_sup = feat_sup & UFS_DEV_HIGH_TEMP_NOTIF;
++    low_temp_sup = feat_sup & UFS_DEV_LOW_TEMP_NOTIF;
++    high_temp_en = ee_control & MASK_EE_TOO_HIGH_TEMP;
++    low_temp_en = ee_control & MASK_EE_TOO_LOW_TEMP;
++
++    if ((high_temp_sup && high_temp_en) ||
++        (low_temp_sup && low_temp_en)) {
++        return u->temperature;
++    }
++
++    return 0;
++}
++
+ static uint32_t ufs_read_attr_value(UfsHc *u, uint8_t idn)
+ {
+     switch (idn) {
+@@ -1072,6 +1134,7 @@ static uint32_t ufs_read_attr_value(UfsHc *u, uint8_t idn)
+     case UFS_QUERY_ATTR_IDN_EE_CONTROL:
+         return be16_to_cpu(u->attributes.exception_event_control);
+     case UFS_QUERY_ATTR_IDN_EE_STATUS:
++        ufs_update_ee_status(u);
+         return be16_to_cpu(u->attributes.exception_event_status);
+     case UFS_QUERY_ATTR_IDN_SECONDS_PASSED:
+         return be32_to_cpu(u->attributes.seconds_passed);
+@@ -1086,7 +1149,8 @@ static uint32_t ufs_read_attr_value(UfsHc *u, uint8_t idn)
+     case UFS_QUERY_ATTR_IDN_REF_CLK_GATING_WAIT_TIME:
+         return u->attributes.ref_clk_gating_wait_time;
+     case UFS_QUERY_ATTR_IDN_CASE_ROUGH_TEMP:
+-        return u->attributes.device_case_rough_temperaure;
++        u->attributes.device_case_rough_temperature = ufs_read_device_temp(u);
++        return u->attributes.device_case_rough_temperature;
+     case UFS_QUERY_ATTR_IDN_HIGH_TEMP_BOUND:
+         return u->attributes.device_too_high_temp_boundary;
+     case UFS_QUERY_ATTR_IDN_LOW_TEMP_BOUND:
+@@ -1677,8 +1741,12 @@ static void ufs_init_hc(UfsHc *u)
+     u->device_desc.ud_0_base_offset = 0x16;
+     u->device_desc.ud_config_p_length = 0x1A;
+     u->device_desc.device_rtt_cap = 0x02;
++    u->device_desc.ufs_features_support = UFS_DEV_HIGH_TEMP_NOTIF |
++        UFS_DEV_LOW_TEMP_NOTIF;
+     u->device_desc.queue_depth = u->params.nutrs;
+     u->device_desc.product_revision_level = 0x04;
++    u->device_desc.extended_ufs_features_support =
++        cpu_to_be32(UFS_DEV_HIGH_TEMP_NOTIF | UFS_DEV_LOW_TEMP_NOTIF);
+ 
+     memset(&u->geometry_desc, 0, sizeof(GeometryDescriptor));
+     u->geometry_desc.length = sizeof(GeometryDescriptor);
+@@ -1702,9 +1770,17 @@ static void ufs_init_hc(UfsHc *u)
+     /* configure descriptor is not supported */
+     u->attributes.config_descr_lock = 0x01;
+     u->attributes.max_num_of_rtt = 0x02;
++    u->attributes.device_too_high_temp_boundary = UFS_TOO_HIGH_TEMP_BOUNDARY;
++    u->attributes.device_too_low_temp_boundary = UFS_TOO_LOW_TEMP_BOUNDARY;
+ 
+     memset(&u->flags, 0, sizeof(u->flags));
+     u->flags.permanently_disable_fw_update = 1;
++
++    /*
++     * The temperature value is fixed to UFS_TEMPERATURE and does not change
++     * dynamically
++     */
++    u->temperature = UFS_TEMPERATURE;
+ }
+ 
+ static void ufs_realize(PCIDevice *pci_dev, Error **errp)
+-- 
+2.47.1
+
 
