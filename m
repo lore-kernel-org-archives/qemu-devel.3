@@ -4,91 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790A8C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 11:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE366C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 11:47:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpnC2-0005Qx-R1; Wed, 05 Mar 2025 06:45:43 -0500
+	id 1tpnCd-0005XL-Bm; Wed, 05 Mar 2025 06:46:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpnBX-0005Kt-P1
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 06:45:18 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpnBW-0001Nw-1A
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 06:45:11 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-390ec7c2d40so4938023f8f.1
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 03:45:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741175107; x=1741779907; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UTggNXUww+YWPwGoUMFtXQUJkNqFzaaGF4Xq6al+Z3s=;
- b=b+P7GEw9FW7MzexRbZ6AWSXbKEi6hkfpit3562rQHo0+A3/Z7nMouULFwTr9NrIgpL
- 8YiX9tQI2Sw9++tWGc64zpemsy+bFIhdiiwm8JrXtGDUZUmUsAFRLG7rimkH8iaQuahM
- R+Q2xIWoXsF0qQBqsQOLS5c0FpyzThH88P1fkV97CGHMDX6c9jEKHPNVGP+cgY5Y1cx/
- DTVzTUD3Zx9ud4ZNf17ihUCV53FT06Nn9B94WjX85EP5HSxgGjofMshwle6mH8dHFUWk
- WxmaXTocD0jabnpndhD6j66MxSOsQ8WfsG6g9f2REkozhDk015l5nGk3PUMz9RxcyVfd
- QX0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741175107; x=1741779907;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UTggNXUww+YWPwGoUMFtXQUJkNqFzaaGF4Xq6al+Z3s=;
- b=N7TDcPwQ97iXObpFwKiSkGP2jovG3wGn68JgtE4hY+zCrh4GWAxkoSnutUS4roCUlO
- Bf6OSrqanqckZlFBu6g1mkBBmhxkXARRTucl8W3H9ruhrr9qnJD9eiFa5QnDwVHrto5o
- cfc8+y8RH08kQKUhsWzK1tznOCPs93/iCYtomjYO91TsLRHhXZFurZER8E0NbPLzfrDq
- yU87+D8iHV2GvNjDPwAvzmjrZf6XWdDPqkR6spH7d5zHPgi2dFd/tlRhhpqv/hu2CCQx
- KcbJ1ccrTTvOw2mDeZ9dLFj+v9ibtihTUGaAh9L/n6K6xZ39gdYRtTboe/CHf5lAUCqt
- 5Gjw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWfRJ7yMr45p62q2WFTCsmzNrjE36QwQK1VIGLdTean3b2aBj0mMulQEHc0xPzyhOYSsWQfM8AVsUek@nongnu.org
-X-Gm-Message-State: AOJu0YwF/n8IBg9fn4dkWPRML22UB8wwvQQWcftGtMpfLICl+dzM21QE
- Wd/9e0obNsk8Pyo6iiCfIJVA2B8HzC7e98h0f/nEtVguYUb47LagRSTJ+erYjLo=
-X-Gm-Gg: ASbGncvIs9wNIKniOU7g9whJzhLW6u6KHJPF7M/pekBPTog/BXIQvIOyflnO6UjOOXC
- fbH0WxlliBIhQOS5+Uw+pzCTwLJHyVMbH9+vNAgTHJDgHM75VTpfNFBJbeVlLxkGgWT1HFbq+cB
- LA1yVEuCAQ1teQLi02Bi6PSVGPKHx42liccFhokTzys31hjOrajYyNSsFjcHGcO3gWuXsmYV0x9
- jgC4zBVf1aiGxIHe/ItYaRUeNu3YDFXaxrIDIqTitsx0XwnwOHiW1AusQpQ2lsHEyykRV8RMfEB
- 63qzHDa7vecLGmb57+yrV1GtXxtZP1MGLe7NyY1IkwW0qDTIh82l1P7Gh+ojKa3tBUnmlJirIYV
- ub0lrCL1bfWwY
-X-Google-Smtp-Source: AGHT+IFi3JoerRyGFg+LhxTb7W6DySL2DSTk4nQPyHgzSdr+ZQvAyEMjflQoSLoAdAB06XfwoQGsbg==
-X-Received: by 2002:a5d:5f45:0:b0:390:e9ea:59b with SMTP id
- ffacd0b85a97d-3911f73589emr2097976f8f.18.1741175106890; 
- Wed, 05 Mar 2025 03:45:06 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47b6ccdsm20786072f8f.46.2025.03.05.03.45.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 03:45:06 -0800 (PST)
-Message-ID: <66093554-5d13-44fb-8c80-3c042f0c12c4@linaro.org>
-Date: Wed, 5 Mar 2025 12:45:04 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tpnCV-0005WL-Qk
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 06:46:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tpnCR-0001Sb-EH
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 06:46:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741175164;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uHi2wvXGbxe/mdEckKmg/kXgkTQnmsGZ2Erxtq9Uz3c=;
+ b=A1/E7rFirWiDnNYTd7yOEkJBMS5cylZDocbbs3qeA511Qg5ymYO4ixgxZbDifIIS1fEVXv
+ FD2WELNtvZtrRmKVUuzZQQ9QjBWFMNww6GRcNC+l5FlH78Z8F8cVcwX3rRJ5/Ixt0VniCU
+ myfUkeSANzroeSd1J7lvW/FlRO6ey30=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-i0FU8fENPtiRNb1YLNJaHA-1; Wed,
+ 05 Mar 2025 06:45:50 -0500
+X-MC-Unique: i0FU8fENPtiRNb1YLNJaHA-1
+X-Mimecast-MFC-AGG-ID: i0FU8fENPtiRNb1YLNJaHA_1741175149
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 203C61955D80; Wed,  5 Mar 2025 11:45:49 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.44])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4BBDA3000708; Wed,  5 Mar 2025 11:45:42 +0000 (UTC)
+Date: Wed, 5 Mar 2025 11:45:36 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v2 5/7] tests/functional: skip memaddr tests on 32-bit
+ builds
+Message-ID: <Z8g5YC6_zkQXBv_z@redhat.com>
+References: <20250228102738.3064045-1-berrange@redhat.com>
+ <20250228102738.3064045-6-berrange@redhat.com>
+ <a6f68dd5-379b-4868-959a-5b4b9a7e97ba@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio-platform: Deprecate all forms of vfio-platform
- devices
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.williamson@redhat.com,
- peter.maydell@linaro.org, clg@redhat.com
-Cc: zhenzhong.duan@intel.com, will@kernel.org, maz@kernel.org
-References: <20250305105800.949153-1-eric.auger@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250305105800.949153-1-eric.auger@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a6f68dd5-379b-4868-959a-5b4b9a7e97ba@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,64 +92,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
-
-On 5/3/25 11:58, Eric Auger wrote:
-> As an outcome of KVM forum 2024 "vfio-platform: live and let die?"
-> talk, let's deprecate vfio-platform devices.
+On Wed, Mar 05, 2025 at 12:32:31PM +0100, Thomas Huth wrote:
+> On 28/02/2025 11.27, Daniel P. Berrangé wrote:
+> > If the QEMU binary was built for a 32-bit ELF target we cannot run the
+> > memory address space tests as they all require ability to address more
+> > RAM that can be represented on 32-bit.
+> > 
+> > We can't use a decorator to skip the tests as we need setUp() to run to
+> > pick the QEMU binary, thus we must call a method at the start of each
+> > test to check and skip it. The functional result is effectively the
+> > same as using a decorator, just less pretty. This code will go away when
+> > 32-bit hosts are full dropped from QEMU.
+> > 
+> > The code allows any non-ELF target since all macOS versions supported
+> > at 64-bit only and we already dropped support for 32-bit Windows.
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >   tests/functional/test_mem_addr_space.py | 34 +++++++++++++++++++++++++
+> >   1 file changed, 34 insertions(+)
+> > 
+> > diff --git a/tests/functional/test_mem_addr_space.py b/tests/functional/test_mem_addr_space.py
+> > index bb0cf062ca..c8bde77e51 100755
+> > --- a/tests/functional/test_mem_addr_space.py
+> > +++ b/tests/functional/test_mem_addr_space.py
+> > @@ -20,6 +20,25 @@ class MemAddrCheck(QemuSystemTest):
+> >       # this reason.
+> >       DELAY_Q35_BOOT_SEQUENCE = 1
+> > +    # This helper can go away when the 32-bit host deprecation
+> > +    # turns into full & final removal of support.
+> > +    def ensure_64bit_binary(self):
+> > +        with open(self.qemu_bin, "rb") as fh:
+> > +            ident = fh.read(4)
+> > +
+> > +            # "\x7fELF"
+> > +            if ident != bytes([0x7f, 0x45, 0x4C, 0x46]):
+> > +                # Non-ELF file implies macOS or Windows which
+> > +                # we already assume to be 64-bit only
+> > +                return
+> > +
+> > +            # bits == 1 -> 32-bit; bits == 2 -> 64-bit
+> > +            bits = int.from_bytes(fh.read(1))
 > 
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> ---
->   docs/about/deprecated.rst | 25 +++++++++++++++++++++++++
->   hw/vfio/amd-xgbe.c        |  2 ++
->   hw/vfio/calxeda-xgmac.c   |  2 ++
->   hw/vfio/platform.c        |  1 +
->   4 files changed, 30 insertions(+)
+> This unfortunately fails in the Centos CI job (so I guess there's something
+> different with Python 3.8):
 > 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index abadf8de27..d11a7004df 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -434,6 +434,31 @@ Stream ``reconnect`` (since 9.2)
->   The ``reconnect`` option only allows specifiying second granularity timeouts,
->   which is not enough for all types of use cases, use ``reconnect-ms`` instead.
->   
-> +VFIO device options
-> +''''''''''''''''''
-> +
-> +``-device vfio-calxeda-xgmac`` (since v2.4)
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  https://gitlab.com/thuth/qemu/-/jobs/9316861212#L131
+> 
+> Looking at the test log:
+> 
+> Traceback (most recent call last):
+>   File "/builds/thuth/qemu/tests/functional/test_mem_addr_space.py", line
+> 335, in test_phybits_ok_tcg_q35_intel_cxl
+>     self.ensure_64bit_binary()
+>   File "/builds/thuth/qemu/tests/functional/test_mem_addr_space.py", line
+> 36, in ensure_64bit_binary
+>     bits = int.from_bytes(fh.read(1))
+> TypeError: from_bytes() missing required argument 'byteorder' (pos 2)
+> 
+> Could you please have a look?
 
-"since" in this file means "since when the option is deprecated",
-so it should be "since 10.0".
+It will want
 
-> +The vfio-calxeda-xgmac device allows to assign a host Calxeda Highbank
-> +10Gb XGMAC Ethernet controller device ("calxeda,hb-xgmac" compatibility
-> +string) to a guest. Calxeda HW has been ewasted now and there is no point
-> +keeping that device.
-> +
-> +``-device vfio-amd-xgbe`` (since v2.6)
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     bits = int.from_bytes(fh.read(1), byteorder='little')
 
-Ditto.
+From the docs
 
-> +The vfio-amd-xgbe devices allows to assign a host AMD 10GbE controller
-> +to a guest ("amd,xgbe-seattle-v1a" compatibility string). AMD "Seattle"
-> +is not supported anymore and there is no point keeping that device.
-> +
-> +``-device vfio-platform`` (since v3.1)
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  https://docs.python.org/3/library/stdtypes.html#int.from_bytes
 
-Ditto.
+'byteorder' gained  default value only in py 3.11, so that explains the
+cnetos failure with 3.8
 
-> +The vfio-platform device allows to assign a host platform device
-> +to a guest in a generic manner. Integrating a new device into
-> +the vfio-platform infrastructure requires some adaptation at
-> +both kernel and qemu level. No such attempt has been done for years
-> +and the conclusion is that vfio-platform has not got any traction.
-> +PCIe passthrough shall be the mainline solution.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
