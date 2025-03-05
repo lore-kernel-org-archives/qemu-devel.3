@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E62C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 11:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790A8C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 11:46:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpn3S-0003te-Sd; Wed, 05 Mar 2025 06:36:50 -0500
+	id 1tpnC2-0005Qx-R1; Wed, 05 Mar 2025 06:45:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpn3Q-0003tM-Qb
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 06:36:48 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpnBX-0005Kt-P1
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 06:45:18 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpn3O-0000AK-PZ
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 06:36:48 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-390e702d481so3126207f8f.1
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 03:36:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpnBW-0001Nw-1A
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 06:45:11 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-390ec7c2d40so4938023f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 03:45:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741174604; x=1741779404; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741175107; x=1741779907; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ytYA27Q3s5BIPQaX3M7QzuY4tIcbxkYiXbP3wMfjwa0=;
- b=tTFKPWf+8VqlkhZTLUEWHNT+Dlho1oTmBta9MR9CdXKVbcea6256RzccNqH4m/eAAd
- cfYHijmUR+GwnQ2ff4GLKQ9UyVuewPXKDIfxXphVwvRJaNC6EbXNE6U3oEhuVY4/XDFb
- 4UX9DAOlJbwKIvkFcvGl78q2EtcJS1f98Q1+nSGx08vlsi+I4xzXzpEORwwQzobmPoTr
- J6TH/dnqtyV9IMDocBgXxlbMzaucl4Bvaybe4gwfOuRWpk8wX/TXMBWrONMZTnsa6gAk
- R8WNlrU+l2X+m3Qpe/T7vSwQGmkRCHHMz8JNN4OFMU63D6zCndfAKZ1jmD23ti0U5cXw
- 0/Tg==
+ bh=UTggNXUww+YWPwGoUMFtXQUJkNqFzaaGF4Xq6al+Z3s=;
+ b=b+P7GEw9FW7MzexRbZ6AWSXbKEi6hkfpit3562rQHo0+A3/Z7nMouULFwTr9NrIgpL
+ 8YiX9tQI2Sw9++tWGc64zpemsy+bFIhdiiwm8JrXtGDUZUmUsAFRLG7rimkH8iaQuahM
+ R+Q2xIWoXsF0qQBqsQOLS5c0FpyzThH88P1fkV97CGHMDX6c9jEKHPNVGP+cgY5Y1cx/
+ DTVzTUD3Zx9ud4ZNf17ihUCV53FT06Nn9B94WjX85EP5HSxgGjofMshwle6mH8dHFUWk
+ WxmaXTocD0jabnpndhD6j66MxSOsQ8WfsG6g9f2REkozhDk015l5nGk3PUMz9RxcyVfd
+ QX0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741174604; x=1741779404;
+ d=1e100.net; s=20230601; t=1741175107; x=1741779907;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ytYA27Q3s5BIPQaX3M7QzuY4tIcbxkYiXbP3wMfjwa0=;
- b=PlEiyNTji1PEEK+/RIrXCMW24i/CrXfC/kClCNQbyhwJTytwGEvxavEJ65CAQeHBg4
- TwHNjOzV9VOE3CRMuEJWB8gRSEb37EkHpJp7Jir0eYxqlzo+qvt5FQyvWG5I+ksgbDs7
- QDQtOL56TOfz5KGFR8IaaQ4txxChz32l7Ku+oG+/FNRbDEODvLytCbJsJqElYV/Om2X1
- qEVSDgd2rUUeZNfsTreZtgdv1J5wVIHfr+iM3Eh8jDtG74WUE/nbZaEo3r/SR92DFxcX
- h1eN0axgvSkGNPf1jS8605xzY4fEAILD6BjIFoztMn88bofpfzGIG96Y3EZph3CkoJts
- f1nA==
-X-Gm-Message-State: AOJu0Yw6n0j56QcxY7DEBSQGj+PYMuQ28FmDabmrqAIgKfgDRZp2NXd9
- 4Ns1TUxBG3waMtUQ0jHpomTUZxe9m/ELFkIUv+FoDXuGyWXI1q8IEsaUTQWukvg=
-X-Gm-Gg: ASbGncsqA/Oa52O1h+83XuRP2T0DLkMyYHAuaImtXb6uEnXHk1Psj7hY/4kNq+r2BpB
- 8lCWvFS/qVeAtxYm3JuJIPL1rzsodLecs/FHWV/cZsKfYwZUxsJXbmgON4iqBJ6jGVriLUImh2D
- A//JG4Ex7CdpktYtVUWJrK3SXvno1luFUV4pbbTkJdv5U2oqEmjsXCBsrv8J7DSELOXdi+dl+2F
- pUMoU7sPuHgEsNdv7BKxmMqvZk3RVyMEir8w4N2EHZDRZe8LUeo0DNpn0odt6lOo5D+NQVY6h5R
- CLB5zvHRsQnKvHullfodhGyUj5GAGMn9NgCSu3D86CwpdLoQ1KVJwhfBuAtlEu41IPjzRLpB031
- zaaVYkNFfOPbO
-X-Google-Smtp-Source: AGHT+IHS7ox2raWPac2OCgOsENuCnOaLuTc68kOatvk52CTF4CGabjxFi4zOceeDr8v1AgNdlgThrw==
-X-Received: by 2002:a05:6000:381:b0:38f:2f0e:980c with SMTP id
- ffacd0b85a97d-3911f7d2fc9mr1894786f8f.47.1741174604570; 
- Wed, 05 Mar 2025 03:36:44 -0800 (PST)
+ bh=UTggNXUww+YWPwGoUMFtXQUJkNqFzaaGF4Xq6al+Z3s=;
+ b=N7TDcPwQ97iXObpFwKiSkGP2jovG3wGn68JgtE4hY+zCrh4GWAxkoSnutUS4roCUlO
+ Bf6OSrqanqckZlFBu6g1mkBBmhxkXARRTucl8W3H9ruhrr9qnJD9eiFa5QnDwVHrto5o
+ cfc8+y8RH08kQKUhsWzK1tznOCPs93/iCYtomjYO91TsLRHhXZFurZER8E0NbPLzfrDq
+ yU87+D8iHV2GvNjDPwAvzmjrZf6XWdDPqkR6spH7d5zHPgi2dFd/tlRhhpqv/hu2CCQx
+ KcbJ1ccrTTvOw2mDeZ9dLFj+v9ibtihTUGaAh9L/n6K6xZ39gdYRtTboe/CHf5lAUCqt
+ 5Gjw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWfRJ7yMr45p62q2WFTCsmzNrjE36QwQK1VIGLdTean3b2aBj0mMulQEHc0xPzyhOYSsWQfM8AVsUek@nongnu.org
+X-Gm-Message-State: AOJu0YwF/n8IBg9fn4dkWPRML22UB8wwvQQWcftGtMpfLICl+dzM21QE
+ Wd/9e0obNsk8Pyo6iiCfIJVA2B8HzC7e98h0f/nEtVguYUb47LagRSTJ+erYjLo=
+X-Gm-Gg: ASbGncvIs9wNIKniOU7g9whJzhLW6u6KHJPF7M/pekBPTog/BXIQvIOyflnO6UjOOXC
+ fbH0WxlliBIhQOS5+Uw+pzCTwLJHyVMbH9+vNAgTHJDgHM75VTpfNFBJbeVlLxkGgWT1HFbq+cB
+ LA1yVEuCAQ1teQLi02Bi6PSVGPKHx42liccFhokTzys31hjOrajYyNSsFjcHGcO3gWuXsmYV0x9
+ jgC4zBVf1aiGxIHe/ItYaRUeNu3YDFXaxrIDIqTitsx0XwnwOHiW1AusQpQ2lsHEyykRV8RMfEB
+ 63qzHDa7vecLGmb57+yrV1GtXxtZP1MGLe7NyY1IkwW0qDTIh82l1P7Gh+ojKa3tBUnmlJirIYV
+ ub0lrCL1bfWwY
+X-Google-Smtp-Source: AGHT+IFi3JoerRyGFg+LhxTb7W6DySL2DSTk4nQPyHgzSdr+ZQvAyEMjflQoSLoAdAB06XfwoQGsbg==
+X-Received: by 2002:a5d:5f45:0:b0:390:e9ea:59b with SMTP id
+ ffacd0b85a97d-3911f73589emr2097976f8f.18.1741175106890; 
+ Wed, 05 Mar 2025 03:45:06 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39123939bbdsm1095415f8f.3.2025.03.05.03.36.43
+ ffacd0b85a97d-390e47b6ccdsm20786072f8f.46.2025.03.05.03.45.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 03:36:43 -0800 (PST)
-Message-ID: <a0982117-5602-49ee-9e0c-ef2f7c716e7b@linaro.org>
-Date: Wed, 5 Mar 2025 12:36:42 +0100
+ Wed, 05 Mar 2025 03:45:06 -0800 (PST)
+Message-ID: <66093554-5d13-44fb-8c80-3c042f0c12c4@linaro.org>
+Date: Wed, 5 Mar 2025 12:45:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v5 09/11] hw/arm: introduce xenpvh machine
-To: Stefano Stabellini <sstabellini@kernel.org>, peter.maydell@linaro.org,
- richard.henderson@linaro.org
-Cc: qemu-devel@nongnu.org, vikram.garhwal@amd.com,
- Stefano Stabellini <stefano.stabellini@amd.com>
-References: <alpine.DEB.2.22.394.2306151649350.897208@ubuntu-linux-20-04-desktop>
- <20230615235254.1366267-9-sstabellini@kernel.org>
+Subject: Re: [PATCH] vfio-platform: Deprecate all forms of vfio-platform
+ devices
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.williamson@redhat.com,
+ peter.maydell@linaro.org, clg@redhat.com
+Cc: zhenzhong.duan@intel.com, will@kernel.org, maz@kernel.org
+References: <20250305105800.949153-1-eric.auger@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20230615235254.1366267-9-sstabellini@kernel.org>
+In-Reply-To: <20250305105800.949153-1-eric.auger@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,58 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/6/23 01:52, Stefano Stabellini wrote:
-> From: Vikram Garhwal <vikram.garhwal@amd.com>
+Hi Eric,
+
+On 5/3/25 11:58, Eric Auger wrote:
+> As an outcome of KVM forum 2024 "vfio-platform: live and let die?"
+> talk, let's deprecate vfio-platform devices.
 > 
-> Add a new machine xenpvh which creates a IOREQ server to register/connect with
-> Xen Hypervisor.
-> 
-> Optional: When CONFIG_TPM is enabled, it also creates a tpm-tis-device, adds a
-> TPM emulator and connects to swtpm running on host machine via chardev socket
-> and support TPM functionalities for a guest domain.
-> 
-> Extra command line for aarch64 xenpvh QEMU to connect to swtpm:
->      -chardev socket,id=chrtpm,path=/tmp/myvtpm2/swtpm-sock \
->      -tpmdev emulator,id=tpm0,chardev=chrtpm \
->      -machine tpm-base-addr=0x0c000000 \
-> 
-> swtpm implements a TPM software emulator(TPM 1.2 & TPM 2) built on libtpms and
-> provides access to TPM functionality over socket, chardev and CUSE interface.
-> Github repo: https://github.com/stefanberger/swtpm
-> Example for starting swtpm on host machine:
->      mkdir /tmp/vtpm2
->      swtpm socket --tpmstate dir=/tmp/vtpm2 \
->      --ctrl type=unixio,path=/tmp/vtpm2/swtpm-sock &
-> 
-> Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
-> Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
-> Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 > ---
->   docs/system/arm/xenpvh.rst    |  34 +++++++
->   docs/system/target-arm.rst    |   1 +
->   hw/arm/meson.build            |   2 +
->   hw/arm/xen_arm.c              | 181 ++++++++++++++++++++++++++++++++++
->   include/hw/arm/xen_arch_hvm.h |   9 ++
->   include/hw/xen/arch_hvm.h     |   2 +
->   6 files changed, 229 insertions(+)
->   create mode 100644 docs/system/arm/xenpvh.rst
->   create mode 100644 hw/arm/xen_arm.c
->   create mode 100644 include/hw/arm/xen_arch_hvm.h
+>   docs/about/deprecated.rst | 25 +++++++++++++++++++++++++
+>   hw/vfio/amd-xgbe.c        |  2 ++
+>   hw/vfio/calxeda-xgmac.c   |  2 ++
+>   hw/vfio/platform.c        |  1 +
+>   4 files changed, 30 insertions(+)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index abadf8de27..d11a7004df 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -434,6 +434,31 @@ Stream ``reconnect`` (since 9.2)
+>   The ``reconnect`` option only allows specifiying second granularity timeouts,
+>   which is not enough for all types of use cases, use ``reconnect-ms`` instead.
+>   
+> +VFIO device options
+> +''''''''''''''''''
+> +
+> +``-device vfio-calxeda-xgmac`` (since v2.4)
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+"since" in this file means "since when the option is deprecated",
+so it should be "since 10.0".
 
-> diff --git a/include/hw/xen/arch_hvm.h b/include/hw/xen/arch_hvm.h
-> index 26674648d8..c7c515220d 100644
-> --- a/include/hw/xen/arch_hvm.h
-> +++ b/include/hw/xen/arch_hvm.h
-> @@ -1,3 +1,5 @@
->   #if defined(TARGET_I386) || defined(TARGET_X86_64)
->   #include "hw/i386/xen_arch_hvm.h"
-> +#elif defined(TARGET_ARM) || defined(TARGET_ARM_64)
+> +The vfio-calxeda-xgmac device allows to assign a host Calxeda Highbank
+> +10Gb XGMAC Ethernet controller device ("calxeda,hb-xgmac" compatibility
+> +string) to a guest. Calxeda HW has been ewasted now and there is no point
+> +keeping that device.
+> +
+> +``-device vfio-amd-xgbe`` (since v2.6)
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-I suppose this is a typo and you meant TARGET_AARCH64 :)
-Luckily TARGET_AARCH64 defines TARGET_ARM.
+Ditto.
 
-> +#include "hw/arm/xen_arch_hvm.h"
->   #endif
+> +The vfio-amd-xgbe devices allows to assign a host AMD 10GbE controller
+> +to a guest ("amd,xgbe-seattle-v1a" compatibility string). AMD "Seattle"
+> +is not supported anymore and there is no point keeping that device.
+> +
+> +``-device vfio-platform`` (since v3.1)
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ditto.
+
+> +The vfio-platform device allows to assign a host platform device
+> +to a guest in a generic manner. Integrating a new device into
+> +the vfio-platform infrastructure requires some adaptation at
+> +both kernel and qemu level. No such attempt has been done for years
+> +and the conclusion is that vfio-platform has not got any traction.
+> +PCIe passthrough shall be the mainline solution.
 
 
