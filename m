@@ -4,77 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA2FFC19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 10:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81280C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 10:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tplo8-0001DN-Nm; Wed, 05 Mar 2025 05:16:56 -0500
+	id 1tplsv-00027B-Di; Wed, 05 Mar 2025 05:21:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tplo7-0001D0-D6
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 05:16:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tplo4-0002Yp-7D
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 05:16:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741169810;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RVZ/V2nS66ondr4f/2o1iLaWvIsqL/VbzPOxn8db17g=;
- b=U426GS56F+e79WRIXh0Gi35hgyfE6ZC7o+ZzGzdHDiFl9GKU3M6Mupak229mncdJgZQqI8
- 78TZAJnbqAp+EfU/3Ax7RoKgme3FxmgiayDesoM80llI5pu6wN+Rx4ihL8+qUNK4aIW2gN
- 5t7OZrXC+C0J3ZD6miR5xJS9VMg0Dm4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-IRB8oB8FOUqV5t_6iapHqg-1; Wed,
- 05 Mar 2025 05:16:41 -0500
-X-MC-Unique: IRB8oB8FOUqV5t_6iapHqg-1
-X-Mimecast-MFC-AGG-ID: IRB8oB8FOUqV5t_6iapHqg_1741169799
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A739A1956050; Wed,  5 Mar 2025 10:16:34 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C93B9195608F; Wed,  5 Mar 2025 10:16:33 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5ABAB21E675E; Wed, 05 Mar 2025 11:16:31 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
- =?utf-8?Q?hieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
- Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH 31/57] qapi: expand tags to all doc sections
-In-Reply-To: <20250305034610.960147-32-jsnow@redhat.com> (John Snow's message
- of "Tue, 4 Mar 2025 22:45:40 -0500")
-References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-32-jsnow@redhat.com>
-Date: Wed, 05 Mar 2025 11:16:31 +0100
-Message-ID: <875xknok8w.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tplsh-00025i-HV; Wed, 05 Mar 2025 05:21:40 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tplse-0003AA-QQ; Wed, 05 Mar 2025 05:21:39 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2234daaf269so2971785ad.3; 
+ Wed, 05 Mar 2025 02:21:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741170094; x=1741774894; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tcDQ2T0cv/bbB9tmgB3SnrYT9IdlUeolPBJwxjP1W2w=;
+ b=KjWHxlnjvUCPPFL578HodqzUKExIE0nlKXFcLTRNdrtfMTN6VTTQeZU6z8GlueRTf1
+ uU1vmJtDm0h7eOTaHo0z38Rsfs9VJibFK4RPosAiKGjfIP8ol1eaXRENoI6gE0P5CIkj
+ leXcw76HX/jTEP2O73bUonzZ6ogTiKSK11O+djvGXAgM3AS7DF8dIejgfWzQveve3IsM
+ cGdcyVtPGQU48P0is9/+f5Z2paDkd54K/e2oLdZFT1rcgh/uOh/f6TqJ+vxdxlFtWkaY
+ 3w1GpRuZUa9Efz7lOKP+tyLCLqxExdp07x2RDtxc4IcwBSTI2bYWRzWjmmpfCExZC0tj
+ NM8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741170094; x=1741774894;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tcDQ2T0cv/bbB9tmgB3SnrYT9IdlUeolPBJwxjP1W2w=;
+ b=h/QBbW77Wmn5HYilyygBcIX1e5foUqQjWX6jCeDh/KIqt7E5dEpvRlhozdPnXMWzZJ
+ OWGPL/y/9VvxbdiR6wIY7kw89qkDJvw6+5kkO2HXjfIFemjIcpTzpHPALmt9/8SVwKO/
+ r0ej37OM6UzLZN2Zf9aH4+H1SQbXYyJPD5yhhCerSiv+AEkYPOhwVN53G3gKgdfC3cDp
+ +qbOxT2YqaJr0phg3XNJ50RxXSvS2jJ1cmgmrDXzXhXlL8m1HwFSC/SOV4MIpaLHJzGN
+ R6+Iuu8CwIZcihkVRHutfO3pNeFDVLrb+icZGfr+UaiYzaDHLcKuZQtCKqmy+8rUvtnq
+ 7c0A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQ5l6P/rBlwfUCnd9w7wBgqOeGlONlFkCpLMljYOTCb0RSQa/VT4Tecy3yoqoU+/ngmeIJ+8SzalYV@nongnu.org,
+ AJvYcCX51JQ4zDPwMg/PMeHdFZrdkoaez1LxYpbdezRsFY79024+xsoBKKN0GHe20bnh6TxyRtFHNbIdNolJ@nongnu.org
+X-Gm-Message-State: AOJu0YxGQEYCJ7R8XTEoapmbawPZOhmLmKae+sP02ll5lx1TqAPpWFRU
+ aMii6E2Cl5gx7YJKTFL/IdDgVc6thNx0tJk+4aO9GR7uEoDnAKTJ
+X-Gm-Gg: ASbGnctI5L9WLjr1zf8JsrBLJ18SY4LqWlbIM0AJ/rmC69euWftBSpKgyljlOD8vcZx
+ LGi35MuyFebP4L2NIuARmTsF7xM29bbcfwFIOD9PRERVDMen7DSGqa2DUb6vMh6PZudOoqTI0f3
+ q6GJFeIcMQfO8sISnKfpcFZYkwqYR5HQIQ12ENvMMcKPIu1+Ri7o4WXM2Z4TW3y20UqRajwIrve
+ iTEOtr2OmyFQ5VeNahkaVCSqPcXzuqexZGoxrMXlUhnuxsimV4fcENEBqi8RUSNP+OVBs+o5lQV
+ 4ZGhcGcDejv3cfpGMVXEKwBWLZgIgg732h2ObK+HzE2b+Bqpv27OeK6XYSq90EI=
+X-Google-Smtp-Source: AGHT+IF2RdBfzZCMhEv5RSJ+3gaqjyhW6VDCloqRSo+em99I+YJmsSZyA6nV5RQE9dMH05uS+6RCdg==
+X-Received: by 2002:a05:6a20:918b:b0:1f3:40d3:67d4 with SMTP id
+ adf61e73a8af0-1f349574fb6mr5728334637.30.1741170092222; 
+ Wed, 05 Mar 2025 02:21:32 -0800 (PST)
+Received: from localhost (n11648126014.netvigator.com. [116.48.126.14])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-aee7dee0b96sm11604263a12.75.2025.03.05.02.21.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Mar 2025 02:21:31 -0800 (PST)
+From: Stefan Hajnoczi <stefanha@gmail.com>
+X-Google-Original-From: Stefan Hajnoczi <stefanha@fedora>
+Date: Wed, 5 Mar 2025 18:21:27 +0800
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, pbonzini@redhat.com,
+ manos.pitsidianakis@linaro.org, philmd@linaro.org,
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH v2 10/11] bochs-rs: Add bochs block driver
+ reimplementation in Rust
+Message-ID: <20250305102127.GE247800@fedora>
+References: <20250218182019.111467-1-kwolf@redhat.com>
+ <20250218182019.111467-11-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="xL/OQ0NIyIsfQo4q"
+Content-Disposition: inline
+In-Reply-To: <20250218182019.111467-11-kwolf@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=stefanha@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,417 +104,436 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replaying review of a previous posting for your convenience...
 
-John Snow <jsnow@redhat.com> writes:
+--xL/OQ0NIyIsfQo4q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> This patch adds an explicit section "kind" to all QAPIDoc
-> sections. Members/Features are now explicitly marked as such, with the
-> name now being stored in a dedicated "name" field (which qapidoc.py was
-> not actually using anyway.)
-
-I'm not sure what the parenthesis is trying to convey.
-
-Before the patch, we have:
-
-              type        tag
-    untagged  Section     None
-    @foo:     ArgSection  'foo'
-    Returns:  Section     'Returns'
-    Errors:   Section     'Errors'
-    Since:    Section     'Since'
-    TODO:     Section     'TODO'
-
-Afterwards, I believe:
-
-              type         kind     name
-    untagged  Section      PLAIN
-    @foo:     ArgSection   MEMBER   'foo'   if member or argument
-              ArgSection   FEATURE  'foo'   if feature
-    Returns:  Section      RETURNS
-    Errors:   Section      ERRORS
-    Since:    Section      SINCE
-    TODO:     Section      TODO
-
-So, .tag is replaced by .kind and .name, member vs. feature vs. other
-tags is now obvious from .kind alone, i.e. there's no need to account
-for context or type.
-
-Fine print: why do we need to account for type before the patch?
-Consider @Since: ...
-
-> The qapi-schema tests are updated to account for the new section names;
-> mostly "TODO" becomes "Todo" and `None` becomes "Plain".
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+On Tue, Feb 18, 2025 at 07:20:18PM +0100, Kevin Wolf wrote:
+> This adds a separate block driver for the bochs image format called
+> 'bochs-rs' so that for the moment both the C implementation and the Rust
+> implementation can be present in the same build. The intention is to
+> remove the C implementation eventually and rename this one into 'bochs'.
+> This can only happen once Rust can be a hard build dependency for QEMU.
+>=20
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 > ---
->  docs/sphinx/qapidoc.py         |   7 ++-
->  scripts/qapi/parser.py         | 109 ++++++++++++++++++++++++---------
->  tests/qapi-schema/doc-good.out |  10 +--
->  tests/qapi-schema/test-qapi.py |   2 +-
->  4 files changed, 90 insertions(+), 38 deletions(-)
->
-> diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-> index 61997fd21af..d622398f1da 100644
-> --- a/docs/sphinx/qapidoc.py
-> +++ b/docs/sphinx/qapidoc.py
-> @@ -35,6 +35,7 @@
->  from docutils.statemachine import ViewList
->  from qapi.error import QAPIError, QAPISemError
->  from qapi.gen import QAPISchemaVisitor
-> +from qapi.parser import QAPIDoc
->  from qapi.schema import QAPISchema
->  
->  from sphinx import addnodes
-> @@ -258,11 +259,11 @@ def _nodes_for_sections(self, doc):
->          """Return list of doctree nodes for additional sections"""
->          nodelist = []
->          for section in doc.sections:
-> -            if section.tag and section.tag == 'TODO':
-> +            if section.kind == QAPIDoc.Kind.TODO:
->                  # Hide TODO: sections
->                  continue
->  
-> -            if not section.tag:
-> +            if section.kind == QAPIDoc.Kind.PLAIN:
->                  # Sphinx cannot handle sectionless titles;
->                  # Instead, just append the results to the prior section.
->                  container = nodes.container()
-> @@ -270,7 +271,7 @@ def _nodes_for_sections(self, doc):
->                  nodelist += container.children
->                  continue
->  
-> -            snode = self._make_section(section.tag)
-> +            snode = self._make_section(section.kind.name.title())
->              self._parse_text_into_node(dedent(section.text), snode)
->              nodelist.append(snode)
->          return nodelist
-> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> index 36cb64a677a..c3004aa70c6 100644
-> --- a/scripts/qapi/parser.py
-> +++ b/scripts/qapi/parser.py
-> @@ -15,6 +15,7 @@
->  # See the COPYING file in the top-level directory.
->  
->  from collections import OrderedDict
-> +import enum
->  import os
->  import re
->  from typing import (
-> @@ -575,7 +576,10 @@ def get_doc(self) -> 'QAPIDoc':
->                          )
->                          raise QAPIParseError(self, emsg)
->  
-> -                    doc.new_tagged_section(self.info, match.group(1))
-> +                    doc.new_tagged_section(
-> +                        self.info,
-> +                        QAPIDoc.Kind.from_string(match.group(1))
-> +                    )
->                      text = line[match.end():]
->                      if text:
->                          doc.append_line(text)
-> @@ -586,7 +590,7 @@ def get_doc(self) -> 'QAPIDoc':
->                          self,
->                          "unexpected '=' markup in definition documentation")
->                  else:
-> -                    # tag-less paragraph
-> +                    # plain paragraph(s)
-
-We're parsing a single pargraph here.  The plain section we add it to
-may have any number of paragraphs.  But for me, the comment is about
-what's being parsed.  Mind to drop (s)?
-
->                      doc.ensure_untagged_section(self.info)
->                      doc.append_line(line)
->                      line = self.get_doc_paragraph(doc)
-> @@ -635,14 +639,37 @@ class QAPIDoc:
->      Free-form documentation blocks consist only of a body section.
->      """
->  
-> +    class Kind(enum.Enum):
-> +        PLAIN = 0
-> +        MEMBER = 1
-> +        FEATURE = 2
-> +        RETURNS = 3
-> +        ERRORS = 4
-> +        SINCE = 5
-> +        TODO = 6
+>  rust/block/Cargo.toml    |   2 +-
+>  rust/block/src/bochs.rs  | 297 +++++++++++++++++++++++++++++++++++++++
+>  rust/block/src/driver.rs |   5 -
+>  rust/block/src/lib.rs    |   1 +
+>  4 files changed, 299 insertions(+), 6 deletions(-)
+>  create mode 100644 rust/block/src/bochs.rs
+>=20
+> diff --git a/rust/block/Cargo.toml b/rust/block/Cargo.toml
+> index fbc2f2d6ef..b91483aed1 100644
+> --- a/rust/block/Cargo.toml
+> +++ b/rust/block/Cargo.toml
+> @@ -3,7 +3,7 @@ name =3D "block"
+>  version =3D "0.1.0"
+>  edition =3D "2021"
+>  authors =3D ["Kevin Wolf <kwolf@redhat.com>"]
+> -license =3D "GPL-2.0-or-later"
+> +license =3D "GPL-2.0-or-later AND MIT"
+>  readme =3D "README.md"
+>  description =3D "Block backends for QEMU"
+>  repository =3D "https://gitlab.com/qemu-project/qemu/"
+> diff --git a/rust/block/src/bochs.rs b/rust/block/src/bochs.rs
+> new file mode 100644
+> index 0000000000..9dd84446e1
+> --- /dev/null
+> +++ b/rust/block/src/bochs.rs
+> @@ -0,0 +1,297 @@
+> +// SPDX-License-Identifier: MIT
+> +/*
+> + * Block driver for the various disk image formats used by Bochs
+> + * Currently only for "growing" type in read-only mode
+> + *
+> + * Copyright (c) 2005 Alex Beregszaszi
+> + * Copyright (c) 2024 Red Hat
+> + *
+> + * Authors:
+> + *   Alex Beregszaszi
+> + *   Kevin Wolf <kwolf@redhat.com>
+> + *
+> + * Permission is hereby granted, free of charge, to any person obtaining=
+ a copy
+> + * of this software and associated documentation files (the "Software"),=
+ to deal
+> + * in the Software without restriction, including without limitation the=
+ rights
+> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or =
+sell
+> + * copies of the Software, and to permit persons to whom the Software is
+> + * furnished to do so, subject to the following conditions:
+> + *
+> + * The above copyright notice and this permission notice shall be includ=
+ed in
+> + * all copies or substantial portions of the Software.
+> + *
+> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRE=
+SS OR
+> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILI=
+TY,
+> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHA=
+LL
+> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR =
+OTHER
+> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISI=
+NG FROM,
+> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALING=
+S IN
+> + * THE SOFTWARE.
+> + */
 > +
-> +        @staticmethod
-> +        def from_string(kind: str) -> 'QAPIDoc.Kind':
-
-Remind me, why do we need to quote the type here?
-
-> +            return QAPIDoc.Kind[kind.upper()]
+> +use crate::driver::{block_driver, BdrvChild, BlockDriver, Mapping, Mappi=
+ngTarget, Request};
+> +use crate::SizedIoBuffer;
+> +use qemu_api::bindings;
+> +use qemu_api::errno::Errno;
+> +use qemu_api::futures::qemu_run_future;
+> +use std::cmp::min;
+> +use std::io::{self, Error, ErrorKind};
+> +use std::mem::MaybeUninit;
+> +use std::ptr;
+> +use std::sync::Arc;
 > +
-> +        def text_required(self) -> bool:
-> +            # Only "plain" sections can be empty
-> +            return self.value not in (0,)
+> +const BDRV_SECTOR_SIZE: u64 =3D 512;
+> +
+> +const HEADER_MAGIC: [u8; 32] =3D *b"Bochs Virtual HD Image\0\0\0\0\0\0\0=
+\0\0\0";
+> +const HEADER_VERSION: u32 =3D 0x00020000;
+> +const HEADER_V1: u32 =3D 0x00010000;
+> +const HEADER_SIZE: usize =3D 512;
+> +
+> +const HEADER_TYPE_REDOLOG: [u8; 16] =3D *b"Redolog\0\0\0\0\0\0\0\0\0";
+> +const HEADER_SUBTYPE_GROWING: [u8; 16] =3D *b"Growing\0\0\0\0\0\0\0\0\0";
+> +
+> +// TODO Use u64.div_ceil() when MSRV is updated to at least 1.73.0
+> +fn div_ceil(a: u64, b: u64) -> u64 {
+> +    (a + b - 1) / b
+> +}
+> +
+> +// TODO Use little endian enforcing type for integers
 
-Rather roundabout way to check for PLAIN, isn't it?
-
-There's just one caller (see below).  I doubt the method is worth its
-keep.
+I just wanted to check if anyone knows whether the Rust standard library
+has an endian enforcing type? It seems like an omission of a basic
+standard library primitive. I've seen crates re-inventing this again and
+again because the standard library only supports endianness conversion
+but not a type that enforces safe conversion. Would be awesome if Rust
+had this in the standard library and I may have missed recent
+developments.
 
 > +
-> +        def __str__(self) -> str:
-> +            return self.name.title()
+> +#[repr(C, packed)]
+> +struct BochsHeader {
+> +    pub magic: [u8; 32],
+> +    pub imgtype: [u8; 16],
+> +    pub subtype: [u8; 16],
+> +    pub version: u32,
+> +    pub header_size: u32,
+> +    pub catalog_entries: u32,
+> +    pub bitmap_size: u32,
+> +    pub extent_size: u32,
+> +    pub extra: BochsHeaderExtra,
+> +}
+> +unsafe impl SizedIoBuffer for BochsHeader {}
 > +
+> +#[repr(C, packed)]
+> +union BochsHeaderExtra {
+> +    v2: BochsHeaderExtraRedolog,
+> +    v1: BochsHeaderExtraRedologV1,
+> +    padding: [u8; HEADER_SIZE - 84],
 
-I wonder whether a simple StrEnum without methods would do.  Oh, StrEnum
-is new in 3.11.  Nevermind.
+A compile-time check that BochsHeader =3D=3D HEADER_SIZE would be nice. It
+feels a little unsafe to have HEADER_SIZE and this explicit padding size
+calculation without a check. And to be honest it took me a few moments
+to verify the it's correct while reading the patch :).
 
-Hmm.
-
-    >>> Kind = Enum('Kind', [('PLAIN', 'Plain'), ('TODO, 'TODO)])
-    >>> kind=Kind('Plain')
-    >>> kind.value
-    'Plain'
-
-What do you think?
-
->      class Section:
->          # pylint: disable=too-few-public-methods
-> -        def __init__(self, info: QAPISourceInfo,
-> -                     tag: Optional[str] = None):
-> +        def __init__(
-> +            self,
-> +            info: QAPISourceInfo,
-> +            kind: 'QAPIDoc.Kind',
-> +        ):
->              # section source info, i.e. where it begins
->              self.info = info
-> -            # section tag, if any ('Returns', '@name', ...)
-> -            self.tag = tag
-> +            # section kind
-> +            self.kind = kind
->              # section text without tag
->              self.text = ''
->  
-> @@ -650,8 +677,14 @@ def append_line(self, line: str) -> None:
->              self.text += line + '\n'
->  
->      class ArgSection(Section):
-> -        def __init__(self, info: QAPISourceInfo, tag: str):
-> -            super().__init__(info, tag)
-> +        def __init__(
-> +            self,
-> +            info: QAPISourceInfo,
-> +            kind: 'QAPIDoc.Kind',
-> +            name: str
-> +        ):
-> +            super().__init__(info, kind)
-> +            self.name = name
->              self.member: Optional['QAPISchemaMember'] = None
-
-Before the patch, use of a separate type for members, arguments and
-features was necessary to distinguish between '@TAG:' and 'TAG:' for the
-various TAGs.  This is no longer the case.  Fold ArgSection into
-Section?  Not sure.  If yes, separate patch to keep this one as
-mechanical as possible.
-
->  
->          def connect(self, member: 'QAPISchemaMember') -> None:
-> @@ -663,7 +696,9 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
->          # definition doc's symbol, None for free-form doc
->          self.symbol: Optional[str] = symbol
->          # the sections in textual order
-> -        self.all_sections: List[QAPIDoc.Section] = [QAPIDoc.Section(info)]
-> +        self.all_sections: List[QAPIDoc.Section] = [
-> +            QAPIDoc.Section(info, QAPIDoc.Kind.PLAIN)
-> +        ]
->          # the body section
->          self.body: Optional[QAPIDoc.Section] = self.all_sections[0]
->          # dicts mapping parameter/feature names to their description
-> @@ -680,12 +715,17 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
->      def end(self) -> None:
->          for section in self.all_sections:
->              section.text = section.text.strip('\n')
-> -            if section.tag is not None and section.text == '':
-> +            if section.kind.text_required() and section.text == '':
-
-This is the only use of .text_required().  I believe checking for PLAIN
-would be clearer.
-
->                  raise QAPISemError(
-> -                    section.info, "text required after '%s:'" % section.tag)
-> +                    section.info, "text required after '%s:'" % section.kind)
->  
-> -    def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
-> -        if self.all_sections and not self.all_sections[-1].tag:
-> +    def ensure_untagged_section(
-> +        self,
-> +        info: QAPISourceInfo,
-> +    ) -> None:
-
-Accidental line breaking?
-
-> +        kind = QAPIDoc.Kind.PLAIN
+> +}
 > +
-> +        if self.all_sections and self.all_sections[-1].kind == kind:
-
-I'd prefer not to hide PLAIN behind a variable, but I'd also prefer
-the condition to fit on a line.  Hmm.
-
->              # extend current section
->              section = self.all_sections[-1]
->              if not section.text:
-
-Maybe
-
-           section = self.all_sections[-1] if self.all_sections else None
-
-           if second and section.kind = QAPIDoc.Kind.Plain:
-               # extend current section
-               if not section.text:
-
-> @@ -693,46 +733,56 @@ def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
->                  section.info = info
->              section.text += '\n'
->              return
+> +#[repr(C, packed)]
+> +#[derive(Clone, Copy)]
+> +struct BochsHeaderExtraRedolog {
+> +    pub timestamp: u32,
+> +    pub disk_size: u64,
+> +}
 > +
->          # start new section
-> -        section = self.Section(info)
-> +        section = self.Section(info, kind)
->          self.sections.append(section)
->          self.all_sections.append(section)
->  
-> -    def new_tagged_section(self, info: QAPISourceInfo, tag: str) -> None:
-> -        section = self.Section(info, tag)
-> -        if tag == 'Returns':
-> +    def new_tagged_section(
-> +        self,
-> +        info: QAPISourceInfo,
-> +        kind: 'QAPIDoc.Kind',
-> +    ) -> None:
-> +        section = self.Section(info, kind)
-> +        if kind == QAPIDoc.Kind.RETURNS:
->              if self.returns:
->                  raise QAPISemError(
-> -                    info, "duplicated '%s' section" % tag)
-> +                    info, "duplicated '%s' section" % kind)
->              self.returns = section
-> -        elif tag == 'Errors':
-> +        elif kind == QAPIDoc.Kind.ERRORS:
->              if self.errors:
->                  raise QAPISemError(
-> -                    info, "duplicated '%s' section" % tag)
-> +                    info, "duplicated '%s' section" % kind)
->              self.errors = section
-> -        elif tag == 'Since':
-> +        elif kind == QAPIDoc.Kind.SINCE:
->              if self.since:
->                  raise QAPISemError(
-> -                    info, "duplicated '%s' section" % tag)
-> +                    info, "duplicated '%s' section" % kind)
->              self.since = section
->          self.sections.append(section)
->          self.all_sections.append(section)
->  
-> -    def _new_description(self, info: QAPISourceInfo, name: str,
-> -                         desc: Dict[str, ArgSection]) -> None:
-> +    def _new_description(
-> +        self,
-> +        info: QAPISourceInfo,
-> +        name: str,
-> +        kind: 'QAPIDoc.Kind',
-> +        desc: Dict[str, ArgSection]
-> +    ) -> None:
->          if not name:
->              raise QAPISemError(info, "invalid parameter name")
->          if name in desc:
->              raise QAPISemError(info, "'%s' parameter name duplicated" % name)
-> -        section = self.ArgSection(info, '@' + name)
-> +        section = self.ArgSection(info, kind, name)
->          self.all_sections.append(section)
->          desc[name] = section
->  
->      def new_argument(self, info: QAPISourceInfo, name: str) -> None:
-> -        self._new_description(info, name, self.args)
-> +        self._new_description(info, name, QAPIDoc.Kind.MEMBER, self.args)
->  
->      def new_feature(self, info: QAPISourceInfo, name: str) -> None:
-> -        self._new_description(info, name, self.features)
-> +        self._new_description(info, name, QAPIDoc.Kind.FEATURE, self.features)
+> +#[repr(C, packed)]
+> +#[derive(Clone, Copy)]
+> +struct BochsHeaderExtraRedologV1 {
+> +    pub disk_size: u64,
+> +}
+> +
+> +pub struct BochsImage {
+> +    file: Arc<BdrvChild>,
+> +    size: u64,
+> +    data_offset: u64,
+> +    bitmap_blocks: u64,
+> +    extent_size: u64,
+> +    extent_blocks: u64,
+> +    catalog_bitmap: Vec<u32>, // TODO Rename
+> +}
+> +
+> +impl BochsImage {
+> +    pub async fn new(file: BdrvChild) -> io::Result<Self> {
+> +        let header =3D file
+> +            .read_uninit(0, Box::new(MaybeUninit::<BochsHeader>::uninit(=
+)))
+> +            .await?;
+> +
+> +        if header.magic !=3D HEADER_MAGIC
+> +            || header.imgtype !=3D HEADER_TYPE_REDOLOG
+> +            || header.subtype !=3D HEADER_SUBTYPE_GROWING
+> +        {
+> +            return Err(Error::new(
+> +                ErrorKind::InvalidInput,
+> +                "Image not in Bochs format",
+> +            ));
+> +        }
+> +
+> +        let size =3D match u32::from_le(header.version) {
+> +            HEADER_VERSION =3D> unsafe { header.extra.v2.disk_size.to_le=
+() },
+> +            HEADER_V1 =3D> unsafe { header.extra.v1.disk_size.to_le() },
 
-QAPIDoc.Kind.FOO is a mouthful, and it tends to result in long lines,
-like here.  Can't see an easy and clean way to reduce the verbosity.
+I don't understand why the names are HEADER_VERSION vs HEADER_V1. Does
+it make sense to rename them to HEADER_V1 and HEADER_V2?
 
->  
->      def append_line(self, line: str) -> None:
->          self.all_sections[-1].append_line(line)
-> @@ -744,8 +794,9 @@ def connect_member(self, member: 'QAPISchemaMember') -> None:
->                  raise QAPISemError(member.info,
->                                     "%s '%s' lacks documentation"
->                                     % (member.role, member.name))
-> -            self.args[member.name] = QAPIDoc.ArgSection(
-> -                self.info, '@' + member.name)
-> +            section = QAPIDoc.ArgSection(
-> +                self.info, QAPIDoc.Kind.MEMBER, member.name)
-> +            self.args[member.name] = section
+> +            _ =3D> return Err(Error::new(ErrorKind::InvalidInput, "Versi=
+on not supported")),
+> +        };
+> +
+> +        let header_size: u64 =3D header.header_size.to_le().into();
+> +        let extent_size: u64 =3D header.extent_size.to_le().into();
+> +
+> +        if extent_size < BDRV_SECTOR_SIZE {
+> +            // bximage actually never creates extents smaller than 4k
+> +            return Err(Error::new(
+> +                ErrorKind::InvalidInput,
+> +                "Extent size must be at least 512",
+> +            ));
+> +        } else if !extent_size.is_power_of_two() {
+> +            return Err(Error::new(
+> +                ErrorKind::InvalidInput,
+> +                format!("Extent size {extent_size} is not a power of two=
+"),
+> +            ));
+> +        } else if extent_size > 0x800000 {
+> +            return Err(Error::new(
+> +                ErrorKind::InvalidInput,
+> +                format!("Extent size {extent_size} is too large"),
+> +            ));
+> +        }
+> +
+> +        // Limit to 1M entries to avoid unbounded allocation. This is wh=
+at is
+> +        // needed for the largest image that bximage can create (~8 TB).
+> +        let catalog_entries: usize =3D header
+> +            .catalog_entries
+> +            .to_le()
+> +            .try_into()
+> +            .map_err(|e| Error::new(ErrorKind::InvalidInput, e))?;
+> +        if catalog_entries > 0x100000 {
+> +            return Err(Error::new(ErrorKind::Other, "Catalog size is too=
+ large"));
+> +        } else if (catalog_entries as u64) < div_ceil(size, extent_size)=
+ {
+> +            return Err(Error::new(
+> +                ErrorKind::InvalidInput,
+> +                "Catalog size is too small for this disk size",
+> +            ));
+> +        }
+> +
+> +        // FIXME This was g_try_malloc() in C
+> +        let mut catalog_bitmap =3D vec![0u32; catalog_entries];
+> +        file.read(header_size, catalog_bitmap.as_mut_slice())
+> +            .await?;
+> +
+> +        for entry in &mut catalog_bitmap {
+> +            *entry =3D entry.to_le();
+> +        }
+> +
+> +        let data_offset =3D header_size + (catalog_entries as u64 * 4);
+> +        let bitmap_blocks =3D (1 + (header.bitmap_size.to_le() - 1) / 51=
+2).into();
+> +        let extent_blocks =3D 1 + (extent_size - 1) / 512;
+> +
+> +        Ok(Self {
+> +            file: Arc::new(file),
+> +            size,
+> +            data_offset,
+> +            bitmap_blocks,
+> +            extent_size,
+> +            extent_blocks,
+> +            catalog_bitmap,
+> +        })
+> +    }
+> +}
+> +
+> +impl BlockDriver for BochsImage {
+> +    type Options =3D bindings::BlockdevOptionsGenericFormat;
+> +
+> +    unsafe fn parse_options(
+> +        v: &mut bindings::Visitor,
+> +        opts: &mut *mut Self::Options,
+> +        errp: *mut *mut bindings::Error,
+> +    ) {
+> +        unsafe {
+> +            bindings::visit_type_BlockdevOptionsGenericFormat(v, ptr::nu=
+ll(), opts as *mut _, errp);
+> +        }
+> +    }
+> +
+> +    unsafe fn free_options(opts: *mut Self::Options) {
+> +        unsafe {
+> +            bindings::qapi_free_BlockdevOptionsGenericFormat(opts);
+> +        }
+> +    }
+> +
+> +    unsafe fn open(
+> +        bs: *mut bindings::BlockDriverState,
+> +        opts: &Self::Options,
+> +        errp: *mut *mut bindings::Error,
+> +    ) -> std::os::raw::c_int {
+> +        let file_child;
+> +        unsafe {
+> +            /* No write support yet */
+> +            bindings::bdrv_graph_rdlock_main_loop();
+> +            let ret =3D bindings::bdrv_apply_auto_read_only(bs, ptr::nul=
+l(), errp);
+> +            bindings::bdrv_graph_rdunlock_main_loop();
+> +            if ret < 0 {
+> +                return ret;
+> +            }
+> +
+> +            file_child =3D match BdrvChild::new(bs, opts.file, errp) {
+> +                Some(c) =3D> c,
+> +                None =3D> return -libc::EINVAL,
+> +            };
+> +        }
+> +
+> +        qemu_run_future(async {
+> +            match BochsImage::new(file_child).await {
+> +                Ok(bdrv) =3D> unsafe {
+> +                    (*bs).total_sectors =3D
+> +                        div_ceil(bdrv.size(), BDRV_SECTOR_SIZE).try_into=
+().unwrap();
+> +                    let state =3D (*bs).opaque as *mut BochsImage;
+> +                    state.write(bdrv);
+> +                    0
+> +                },
+> +                Err(e) =3D> -i32::from(Errno::from(e).0),
+> +            }
+> +        })
+> +    }
+> +
+> +    fn size(&self) -> u64 {
+> +        self.size
+> +    }
+> +
+> +    async fn map(&self, req: &Request) -> io::Result<Mapping> {
+> +        let (offset, len) =3D match *req {
+> +            Request::Read { offset, len } =3D> (offset, len),
+> +        };
+> +
+> +        let extent_index: usize =3D (offset / self.extent_size).try_into=
+().unwrap();
+> +        let extent_offset =3D (offset % self.extent_size) / 512;
+> +
+> +        if self.catalog_bitmap[extent_index] =3D=3D 0xffffffff {
+> +            return Ok(Mapping {
+> +                offset: (extent_index as u64) * self.extent_size,
+> +                len: self.extent_size,
+> +                target: MappingTarget::Unmapped,
+> +            });
+> +        }
+> +
+> +        let bitmap_offset =3D self.data_offset
+> +            + (512
+> +                * (self.catalog_bitmap[extent_index] as u64)
+> +                * (self.extent_blocks + self.bitmap_blocks));
+> +
+> +        // Read in bitmap for current extent
+> +        // TODO This should be cached
+> +        let mut bitmap_entry =3D 0x8;
 
-Why the extra variable?
+Why is bitmap_entry initialized to 0x8?
 
->          self.args[member.name].connect(member)
->  
->      def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
-> diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-> index 0a9da3efdeb..5773f1dd6d6 100644
-> --- a/tests/qapi-schema/doc-good.out
-> +++ b/tests/qapi-schema/doc-good.out
-> @@ -113,7 +113,7 @@ The _one_ {and only}, description on the same line
->  Also _one_ {and only}
->      feature=enum-member-feat
->  a member feature
-> -    section=None
-> +    section=Plain
->  @two is undocumented
->  doc symbol=Base
->      body=
-> @@ -171,15 +171,15 @@ description starts on the same line
->  a feature
->      feature=cmd-feat2
->  another feature
-> -    section=None
-> +    section=Plain
->  .. note:: @arg3 is undocumented
->      section=Returns
->  @Object
->      section=Errors
->  some
-> -    section=TODO
-> +    section=Todo
+> +        self.file
+> +            .read(bitmap_offset + (extent_offset / 8), &mut bitmap_entry)
+> +            .await?;
+> +
+> +        // We checked only a single sector
+> +        let offset =3D offset & !511;
+> +        let len =3D min(len, 512);
+> +
+> +        if (bitmap_entry >> (extent_offset % 8)) & 1 =3D=3D 0 {
+> +            return Ok(Mapping {
+> +                offset,
+> +                len,
+> +                target: MappingTarget::Unmapped,
+> +            });
+> +        }
+> +
+> +        Ok(Mapping {
+> +            offset,
+> +            len,
+> +            target: MappingTarget::Data {
+> +                node: self.file.clone(),
+> +                offset: bitmap_offset + (512 * (self.bitmap_blocks + ext=
+ent_offset)),
+> +            },
+> +        })
+> +    }
+> +}
+> +
+> +block_driver!("bochs-rs", BochsImage);
+> diff --git a/rust/block/src/driver.rs b/rust/block/src/driver.rs
+> index 022d50ffbc..baeaf47eda 100644
+> --- a/rust/block/src/driver.rs
+> +++ b/rust/block/src/driver.rs
+> @@ -2,11 +2,6 @@
+>  // Author(s): Kevin Wolf <kwolf@redhat.com>
+>  // SPDX-License-Identifier: GPL-2.0-or-later
+> =20
+> -// All of this is unused until the first block driver is added
+> -#![allow(dead_code)]
+> -#![allow(unused_macros)]
+> -#![allow(unused_imports)]
+> -
+>  use crate::{IoBuffer, SizedIoBuffer};
+>  use qemu_api::bindings;
+>  use qemu_api::errno::Errno;
+> diff --git a/rust/block/src/lib.rs b/rust/block/src/lib.rs
+> index 54ebd480ec..ff528609bc 100644
+> --- a/rust/block/src/lib.rs
+> +++ b/rust/block/src/lib.rs
+> @@ -1,3 +1,4 @@
+> +mod bochs;
+>  mod driver;
+>  mod iobuffer;
+> =20
+> --=20
+> 2.48.1
+>=20
+>=20
 
-With the method-less Enum I suggested, this hunk would go away.  Not
-that it matters :)
+--xL/OQ0NIyIsfQo4q
+Content-Type: application/pgp-signature; name="signature.asc"
 
->  frobnicate
-> -    section=None
-> +    section=Plain
->  .. admonition:: Notes
->  
->   - Lorem ipsum dolor sit amet
-> @@ -212,7 +212,7 @@ If you're bored enough to read this, go see a video of boxed cats
->  a feature
->      feature=cmd-feat2
->  another feature
-> -    section=None
-> +    section=Plain
->  .. qmp-example::
->  
->     -> "this example"
-> diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi.py
-> index 7e3f9f4aa1f..bca924309be 100755
-> --- a/tests/qapi-schema/test-qapi.py
-> +++ b/tests/qapi-schema/test-qapi.py
-> @@ -131,7 +131,7 @@ def test_frontend(fname):
->          for feat, section in doc.features.items():
->              print('    feature=%s\n%s' % (feat, section.text))
->          for section in doc.sections:
-> -            print('    section=%s\n%s' % (section.tag, section.text))
-> +            print('    section=%s\n%s' % (section.kind, section.text))
->  
->  
->  def open_test_result(dir_name, file_name, update):
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfIJacACgkQnKSrs4Gr
+c8i5hwf9HLGgFZQMjNk/ofmzwJS9ziqRaxKbC/ZSx8850iwyq23mQh6fFYDIxhhk
+6kbhvy4Cl3TmUDYxIpcIwrbAdihw56VRkea5tofjOrBeXCRoPwt/iF0ONnM5av2C
+cK9WfrfrKZ5g0rv5RmyEcZRJW4t1I24FaOCZPLF7ITEGOJY3XgEM9g4BtX7Nha2K
+EntQKzFPfEIaS4zAR67tkFDA1W6yaJ6hzbuvhAa66CSe+8BBsPbnwZsIMYFdD28K
+ZifNYvxNQLXaEFnK0o/5QadMx6QKobmpAJIrCv+KzX0uzlSa72YLarTJP3q/oT79
+C/LMR589kfKOJzpP2Pikepf6+Lzjnw==
+=nXJL
+-----END PGP SIGNATURE-----
+
+--xL/OQ0NIyIsfQo4q--
 
