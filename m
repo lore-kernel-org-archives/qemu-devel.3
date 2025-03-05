@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8141C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59FEFC282D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:15:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpi0A-0000oS-II; Wed, 05 Mar 2025 01:13:06 -0500
+	id 1tpi0K-0000rJ-KL; Wed, 05 Mar 2025 01:13:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tpi07-0000mx-00
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:03 -0500
+ id 1tpi0J-0000r7-3r
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:15 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tpi02-0004Fh-9v
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:02 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tpi0H-0004HW-3Z
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:14 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Bxlmlk68dnt9+KAA--.40813S3;
- Wed, 05 Mar 2025 14:12:52 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxNHBt68dn0N+KAA--.40572S3;
+ Wed, 05 Mar 2025 14:13:01 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBx3MRi68dnfRQ3AA--.5679S3;
- Wed, 05 Mar 2025 14:12:52 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBx3MRi68dnfRQ3AA--.5679S13;
+ Wed, 05 Mar 2025 14:13:00 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org,
-	Song Gao <gaosong@loongson.cn>
-Subject: [PULL 01/15] hw/intc/loongarch_ipi: Add basic hotplug framework
-Date: Wed,  5 Mar 2025 14:12:36 +0800
-Message-Id: <20250305061250.1908444-2-maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ Xianglai Li <lixianglai@loongson.cn>
+Subject: [PULL 11/15] hw/loongarch/virt: Implement cpu unplug interface
+Date: Wed,  5 Mar 2025 14:12:46 +0800
+Message-Id: <20250305061250.1908444-12-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250305061250.1908444-1-maobibo@loongson.cn>
 References: <20250305061250.1908444-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBx3MRi68dnfRQ3AA--.5679S3
+X-CM-TRANSID: qMiowMBx3MRi68dnfRQ3AA--.5679S13
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,85 +65,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LoongArch ipi can send interrupt to multiple CPUs, interrupt routing
-to CPU comes from destination physical cpu id. Here hotplug interface
-is added for IPI object, so that parent irq line can be connected, and
-routing table can be added for new created cpu.
+Implement cpu unplug interfaces including virt_cpu_unplug_request()
+and virt_cpu_unplug().
 
-Here only basic hotplug framework is added, it is stub function.
-
+Co-developed-by: Xianglai Li <lixianglai@loongson.cn>
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/intc/loongarch_ipi.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ hw/loongarch/virt.c | 58 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-index 5376f1e084..90bbb7ac6e 100644
---- a/hw/intc/loongarch_ipi.c
-+++ b/hw/intc/loongarch_ipi.c
-@@ -6,6 +6,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "hw/boards.h"
- #include "qapi/error.h"
- #include "hw/intc/loongarch_ipi.h"
-@@ -76,9 +77,34 @@ static void loongarch_ipi_realize(DeviceState *dev, Error **errp)
-     }
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 2b4b60f718..297f71dc00 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -816,6 +816,19 @@ static int virt_get_arch_id_from_topo(MachineState *ms, LoongArchCPUTopo *topo)
+     return arch_id;
  }
  
-+static void loongarch_ipi_cpu_plug(HotplugHandler *hotplug_dev,
-+                                   DeviceState *dev, Error **errp)
++/* Find cpu slot in machine->possible_cpus by arch_id */
++static CPUArchId *virt_find_cpu_slot(MachineState *ms, int arch_id)
 +{
-+    Object *obj = OBJECT(dev);
-+
-+    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
-+        warn_report("LoongArch extioi: Invalid %s device type",
-+                                       object_get_typename(obj));
-+        return;
++    int n;
++    for (n = 0; n < ms->possible_cpus->len; n++) {
++        if (ms->possible_cpus->cpus[n].arch_id == arch_id) {
++            return &ms->possible_cpus->cpus[n];
++        }
 +    }
++
++    return NULL;
 +}
 +
-+static void loongarch_ipi_cpu_unplug(HotplugHandler *hotplug_dev,
-+                                     DeviceState *dev, Error **errp)
-+{
-+    Object *obj = OBJECT(dev);
-+
-+    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
-+        warn_report("LoongArch extioi: Invalid %s device type",
-+                                       object_get_typename(obj));
-+        return;
-+    }
-+}
-+
- static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
+ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
+                               DeviceState *dev, Error **errp)
  {
-     LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_CLASS(klass);
-+    HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
-     LoongarchIPIClass *lic = LOONGARCH_IPI_CLASS(klass);
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-@@ -86,6 +112,8 @@ static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
-                                     &lic->parent_realize);
-     licc->get_iocsr_as = get_iocsr_as;
-     licc->cpu_by_arch_id = loongarch_cpu_by_arch_id;
-+    hc->plug = loongarch_ipi_cpu_plug;
-+    hc->unplug = loongarch_ipi_cpu_unplug;
+@@ -824,11 +837,56 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
+ static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
+                                     DeviceState *dev, Error **errp)
+ {
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
++    Error *err = NULL;
++    LoongArchCPU *cpu = LOONGARCH_CPU(dev);
++    CPUState *cs = CPU(dev);
++
++    if (cs->cpu_index == 0) {
++        error_setg(&err, "hot-unplug of boot cpu(id%d=%d:%d:%d) not supported",
++                   cs->cpu_index, cpu->socket_id,
++                   cpu->core_id, cpu->thread_id);
++        error_propagate(errp, err);
++        return;
++    }
++
++    hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
++    if (err) {
++        error_propagate(errp, err);
++    }
  }
  
- static const TypeInfo loongarch_ipi_types[] = {
-@@ -95,6 +123,10 @@ static const TypeInfo loongarch_ipi_types[] = {
-         .instance_size      = sizeof(LoongarchIPIState),
-         .class_size         = sizeof(LoongarchIPIClass),
-         .class_init         = loongarch_ipi_class_init,
-+        .interfaces         = (InterfaceInfo[]) {
-+            { TYPE_HOTPLUG_HANDLER },
-+            { }
-+        },
-     }
- };
+ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
+                             DeviceState *dev, Error **errp)
+ {
++    CPUArchId *cpu_slot;
++    Error *err = NULL;
++    LoongArchCPU *cpu = LOONGARCH_CPU(dev);
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
++
++    /* Notify ipi and extioi irqchip to remove interrupt routing to CPU */
++    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, &err);
++    if (err) {
++        error_propagate(errp, err);
++        return;
++    }
++
++    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
++    if (err) {
++        error_propagate(errp, err);
++        return;
++    }
++
++    /* Notify acpi ged CPU removed */
++    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
++    if (err) {
++        error_propagate(errp, err);
++        return;
++    }
++
++    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
++    cpu_slot->cpu = NULL;
++    return;
+ }
  
+ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
 -- 
 2.43.5
 
