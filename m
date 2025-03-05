@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4395AC19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 18:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D434C282DE
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 18:06:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpt6s-0001T6-7t; Wed, 05 Mar 2025 13:04:46 -0500
+	id 1tpt7w-00025r-8S; Wed, 05 Mar 2025 13:05:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpt6q-0001SX-F7
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 13:04:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpt7v-00025Z-8k
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 13:05:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpt6o-0003uw-Fl
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 13:04:44 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpt7t-0004PT-O3
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 13:05:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741197880;
+ s=mimecast20190719; t=1741197949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QJuZgcMocYwCu9vqN4Wz33eUnHRUI1MA8noBhjtICko=;
- b=axUCNDmMp63RRRBIeH1C+4zDnso9TUQf9JL3l7n3IyakoSTo3LVAgP6eFdQ/kRblu0Kcwl
- HYsxk6adOZoz7FLlrZzw2rm/mj6lKtXjWr2hNtdnlhF13B50kWhBHIJi/CxuABfXqaWjvl
- tvAA5L4SPqnZ7eh88S0FVgpyNd1oAC0=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2hun2UzUIwQgMAOmZNLNMZW1zSbDTeXQqgjll1Ersc0=;
+ b=g+hjSzBwpzyxelsmZeYvhZSriBGhx3nGBL40krqAlPEqjZu1UEk1ZpwWRLsyuAKcRV+F4B
+ E6KYt+es5lL1S5xrnQZHbIhvpF6UcqYXoGKOUyoc+hhsXYQkCwdC1o2Os2CwMGriju+fqY
+ iw8rmswNRdyd+h1+CfxVib37OikXNYk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-KNA8ZqswNvWWbgKGDd1rfw-1; Wed, 05 Mar 2025 13:04:22 -0500
-X-MC-Unique: KNA8ZqswNvWWbgKGDd1rfw-1
-X-Mimecast-MFC-AGG-ID: KNA8ZqswNvWWbgKGDd1rfw_1741197861
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3910b93cb1eso1706932f8f.1
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 10:04:22 -0800 (PST)
+ us-mta-608-V3qrva3vMjy_32T0MbW3pg-1; Wed, 05 Mar 2025 13:05:46 -0500
+X-MC-Unique: V3qrva3vMjy_32T0MbW3pg-1
+X-Mimecast-MFC-AGG-ID: V3qrva3vMjy_32T0MbW3pg_1741197945
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-390f7db84faso3761586f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 10:05:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741197861; x=1741802661;
+ d=1e100.net; s=20230601; t=1741197945; x=1741802745;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=QJuZgcMocYwCu9vqN4Wz33eUnHRUI1MA8noBhjtICko=;
- b=G1SUfzn5+acHubF3WzMh97cA0UftQkhrNzMz6H8UdMHX+5tsGYUnwbnBw/BC0fdmZd
- Df3A/RSE6lbGca2eLPCtZVifWoZSAuTrP/jYEq6wz1AUixSNUqdkGyTT3dC0QTCQ99zZ
- bLHnsoOHvOJHTGK6tig0Xvx5QYvGYGPVdf5kHJKQIFQJ07KvGhQkRMvNpy3Vfzjy4IPJ
- awq9a1fiXMvfut4s8959P3NofLznwy6o7k7tZ2joXbBzXzoZ4b+JPsqaIhsoWn7zZNjL
- cM0qkmHnSd3J/Ro7gC79BLPT52AVIg5Jb/3hEqoURM5Xpo1afqzUD4brxudw36Wvdn12
- 7UlQ==
-X-Gm-Message-State: AOJu0Yw0wLnDpkHxBUULBtPD2dOZtMz+IZUTxhDZliHaL3p8ARG7Q5Ex
- C36VCZgYirUb5JeBvvhCXdCxLPabSkhODGlrQ/zQv2Q2CIjVvUg/E7XzygKYPG21XZPLE6fRgGE
- v7O5xIkZi6f+UnXUC90cKIkAeFBVQjfNQ8eC8lpFhLLM8Rbzen5ct
-X-Gm-Gg: ASbGnctNypRsy8X1wWdy5bAc8ypeo2IOm51UWTmApwFxsjv1Yom/t3aijluFcIYrpoE
- lRCbYWSld946qL3UMiH9ArWLncAvURJlWMbL6kAkfmuOEXSbLDGwug9xbvn8/l0T8UVZoRjQztN
- CA45MpCsvSHx2888l9waEuM/cw/FF0LgDoVMU1QdntqoIOSW+lAIGbUdWjh0aLyizxvH62ZGplc
- 7C7CPXeW5b0A9JdLrr0i1DpdNLfSw6jpGP0U/LvQsTWlPmxV5cb2D+OqTtkPPDnEnOzf9u37Do0
- y/Mh07rvx/MPugvTr29AKTSzFdrVhsv38904AqSDCTGJgYA=
-X-Received: by 2002:a05:6000:4007:b0:390:f45e:c84a with SMTP id
- ffacd0b85a97d-3911f7cb10fmr4554013f8f.48.1741197861152; 
- Wed, 05 Mar 2025 10:04:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQUCcP3cBYXp0qFqQsKTVbFFYOG2iUfZF+VsYkbypt5D+3B14cX5M8p4Z31Xu4+9K5zG4zFQ==
-X-Received: by 2002:a05:6000:4007:b0:390:f45e:c84a with SMTP id
- ffacd0b85a97d-3911f7cb10fmr4553940f8f.48.1741197860600; 
- Wed, 05 Mar 2025 10:04:20 -0800 (PST)
+ bh=2hun2UzUIwQgMAOmZNLNMZW1zSbDTeXQqgjll1Ersc0=;
+ b=WGT711/rz9wUeib3Ym6w6XCuFDLKG8YQItOoUbiaH/CLcVziHuZ2FTVRDOA+6TUk+t
+ jrGh+1ZOJWO87zcOUOmhS130PbwgKT/NhPZ+qW/ElCdRc5JANL3YkdYdxpWhjLmdCJaS
+ +e8DQvANBcnH2+WybYoSjYI11klzjmPzEGl8zzl3kEdickLK3BCMwIC1y7XTXeJvckc3
+ hg4vsYzRkLywUn3N1M4TQJziT9+oVV/duRkYgxH2qjHk4VDUfoVGmWh9+O5zIIJxF2Lx
+ 7g+coOnWUWdyO5r2nBjpUd0sn9YGPQrEgqb1GxZBvu6bWO0oljcgfJDJ8pbMYdkO9K5w
+ mwXA==
+X-Gm-Message-State: AOJu0Yxd1uTpG8JvzpQUrb/i7q2SV4rr3aJCnYLlXNDG50WB3sbzIrHj
+ /31NVbw1vSeRr2XtQsw6kZmXW9vSLvAe3K9jO55JVRGRi6q6bipYXrHnlUlfiYAl70SUz7rEKq5
+ IWnyuDSjLaoHIervXt70MGKGwlpC9Bq/0fsvMd5BFO5zUYMmfUFnU
+X-Gm-Gg: ASbGncvMOga/vTOqyjwbkGjxtkc5mWWZYnosVEAfTFzPKx/yPfmlsMph5EQ1aEhfLpE
+ 7I8KnMCPMly9JnGMA+eDt+A0zHgzXXe4dLx4jziyd1JeCUSqJ3H1KL4go8daNLQDyXSmMdiW5iG
+ /mbL+jRw1kBvoP4cF0T90zQY8JqIQ8UCuOs2kbt+G1HcArGDXV9bfL2z5mjHXcdwmQZnZAn4ODc
+ ADptuY3+qQ0N3IKOGlhxolyOgNzaIoXtYZLFiUu2KGjBRlSPirEBvciuxS0KIBJJgMTyBaOr6+1
+ 4F1xDxy5bk5LmkRwSk8+TJztxVwggU6/emQwWlSYk4EeWlM=
+X-Received: by 2002:a5d:6da7:0:b0:391:952:c730 with SMTP id
+ ffacd0b85a97d-3911f724d03mr4550463f8f.11.1741197945428; 
+ Wed, 05 Mar 2025 10:05:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE+WPYjlw6hoT2hfsjyCB4zEOjEbcuRCGIJXxIvWCJftW0DdTbLYtU72EamGGzNq2KImuClUQ==
+X-Received: by 2002:a5d:6da7:0:b0:391:952:c730 with SMTP id
+ ffacd0b85a97d-3911f724d03mr4550406f8f.11.1741197945040; 
+ Wed, 05 Mar 2025 10:05:45 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
  [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4796084sm22097263f8f.19.2025.03.05.10.04.19
+ ffacd0b85a97d-390e4795da5sm22087456f8f.15.2025.03.05.10.05.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 10:04:20 -0800 (PST)
-Message-ID: <01508dbb-7ee5-4c5b-87c9-667bc296fdbf@redhat.com>
-Date: Wed, 5 Mar 2025 19:04:18 +0100
+ Wed, 05 Mar 2025 10:05:43 -0800 (PST)
+Message-ID: <6ddfe2ac-9d1f-446c-8ab4-9c14fdb46411@redhat.com>
+Date: Wed, 5 Mar 2025 19:05:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH qemu v2 2/3] hw/s390x: add SCLP event type CPI
+Subject: Re: [PATCH qemu v2 1/3] hw/s390x: add CPI identifiers to QOM
 To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
  qemu-s390x mailing list <qemu-s390x@nongnu.org>
 Cc: qemu-devel mailing list <qemu-devel@nongnu.org>,
  Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
  Hendrik Brueckner <brueckner@linux.ibm.com>
 References: <20250224120449.1764114-1-shalini@linux.ibm.com>
- <20250224120449.1764114-2-shalini@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -126,17 +125,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250224120449.1764114-2-shalini@linux.ibm.com>
+In-Reply-To: <20250224120449.1764114-1-shalini@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,176 +154,63 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 24/02/2025 13.04, Shalini Chellathurai Saroja wrote:
-> Implement the SCLP event type Control-Program Identification
-> (CPI) in QEMU. This event is used to send CPI identifiers,
-> which provide information about the guest OS to the host.
+> Add Control-Program Identification (CPI) to the QEMU Object
+> Model (QOM). The CPI identifiers provide information about
+> the guest operating system. The CPI identifiers are:
+> system type, system name, system level and sysplex name.
 > 
-> Save the information obtained from the SCLP CPI event to the
-> QOM along with the timestamp in which the data was received.
-> 
-> Example:
-> virsh # qemu-monitor-command vm --pretty '{
-> "execute":"qom-get","arguments": {
-> "path": "/machine", "property": "s390-control-program_id"}}'
-
-I guess it should be a "-" instead of a "_" between "program" and "id"?
-
-> {
->    "return": {
->      "timestamp": 1711620874948254000,
->      "system-level": "0x50e00",
->      "sysplex-name": "SYSPLEX ",
->      "system-name": "TESTVM  ",
->      "system-type": "LINUX   "
->    },
->    "id": "libvirt-15"
-> }
+> The system type provides the OS type of the guest (e.g. LINUX).
+> The system name provides the name of the guest (e.g. TESTVM).
+> The system level provides the distribution and kernel version
+> of the guest OS (e.g. 0x50e00).
+> The sysplex name provides the sysplex name of the guest
+> (e.g. SYSPLEX).
 > 
 > Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-> Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 > ---
->   hw/s390x/event-facility.c         |  12 +++-
->   hw/s390x/meson.build              |   1 +
->   hw/s390x/sclpcpi.c                | 105 ++++++++++++++++++++++++++++++
->   include/hw/s390x/event-facility.h |   3 +
->   4 files changed, 120 insertions(+), 1 deletion(-)
->   create mode 100644 hw/s390x/sclpcpi.c
+>   hw/s390x/s390-virtio-ccw.c         | 29 +++++++++++++++++++++++++++++
+>   include/hw/s390x/s390-virtio-ccw.h |  8 ++++++++
+>   qapi/machine.json                  | 24 ++++++++++++++++++++++++
+>   3 files changed, 61 insertions(+)
 > 
-> diff --git a/hw/s390x/event-facility.c b/hw/s390x/event-facility.c
-> index 2b0332c20e..c0fb6e098c 100644
-> --- a/hw/s390x/event-facility.c
-> +++ b/hw/s390x/event-facility.c
-> @@ -39,7 +39,7 @@ typedef struct SCLPEventsBus {
->   struct SCLPEventFacility {
->       SysBusDevice parent_obj;
->       SCLPEventsBus sbus;
-> -    SCLPEvent quiesce, cpu_hotplug;
-> +    SCLPEvent quiesce, cpu_hotplug, cpi;
->       /* guest's receive mask */
->       union {
->           uint32_t receive_mask_pieces[2];
-> @@ -436,6 +436,10 @@ static void init_event_facility(Object *obj)
->       object_initialize_child(obj, TYPE_SCLP_CPU_HOTPLUG,
->                               &event_facility->cpu_hotplug,
->                               TYPE_SCLP_CPU_HOTPLUG);
-> +
-> +    object_initialize_child(obj, TYPE_SCLP_CPI,
-> +                            &event_facility->cpi,
-> +                            TYPE_SCLP_CPI);
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 51ae0c133d..13ea8db1b0 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -50,6 +50,7 @@
+>   #include "hw/s390x/virtio-ccw-md.h"
+>   #include "system/replay.h"
+>   #include CONFIG_DEVICES
+> +#include "qapi/qapi-visit-machine.h"
+>   
+>   static Error *pv_mig_blocker;
+>   
+> @@ -803,6 +804,26 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
+>       s390_ipl_fmt_loadparm(ms->loadparm, val, errp);
 >   }
 >   
->   static void realize_event_facility(DeviceState *dev, Error **errp)
-> @@ -451,6 +455,12 @@ static void realize_event_facility(DeviceState *dev, Error **errp)
->           qdev_unrealize(DEVICE(&event_facility->quiesce));
->           return;
->       }
-> +    if (!qdev_realize(DEVICE(&event_facility->cpi),
-> +                      BUS(&event_facility->sbus), errp)) {
-> +        qdev_unrealize(DEVICE(&event_facility->quiesce));
-> +        qdev_unrealize(DEVICE(&event_facility->cpu_hotplug));
-> +        return;
-> +    }
->   }
->   
->   static void reset_event_facility(DeviceState *dev)
-> diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-> index 3bbebfd817..eb7950489c 100644
-> --- a/hw/s390x/meson.build
-> +++ b/hw/s390x/meson.build
-> @@ -13,6 +13,7 @@ s390x_ss.add(files(
->     's390-skeys.c',
->     's390-stattrib.c',
->     'sclp.c',
-> +  'sclpcpi.c',
->     'sclpcpu.c',
->     'sclpquiesce.c',
->     'tod.c',
-> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
-> new file mode 100644
-> index 0000000000..f2830d2d57
-> --- /dev/null
-> +++ b/hw/s390x/sclpcpi.c
-> @@ -0,0 +1,105 @@
-> +/*
-
-scripts/checkpatch.pl recently learnt a new check to mandate SPDX license 
-tags now for new files ... so please add one here now!
-
-> + * SCLP event type 11 - Control-Program Identification(CPI):
-> + *    CPI is used to send program identifiers from the control-program to the
-> + *    SCLP. The program identifiers provide data about the guest instance. It
-> + *    is not sent by the SCLP.
-> + *
-> + *    The program identifiers are system type, system name, sysplex name and
-> + *    system level. The system type, system name, and sysplex name use EBCDIC
-> + *    ucharacters from this set: capital A-Z, 0-9, $, @, #, and blank. The
-> + *    system level is a hex value.
-> + *
-> + * Copyright IBM, Corp. 2024
-> + *
-> + * Authors:
-> + *  Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or (at your
-> + * option) any later version.  See the COPYING file in the top-level directory.
-> + *
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/timer.h"
-> +#include "hw/s390x/sclp.h"
-> +#include "hw/s390x/event-facility.h"
-> +#include "hw/s390x/ebcdic.h"
-> +#include "hw/s390x/s390-virtio-ccw.h"
-> +
-> +typedef struct Data {
-> +    uint8_t id_format;
-> +    uint8_t reserved0;
-> +    uint8_t system_type[8];
-> +    uint64_t reserved1;
-> +    uint8_t system_name[8];
-> +    uint64_t reserved2;
-> +    uint64_t system_level;
-> +    uint64_t reserved3;
-> +    uint8_t sysplex_name[8];
-> +    uint8_t reserved4[16];
-> +} QEMU_PACKED Data;
-> +
-> +typedef struct ControlProgramIdMsg {
-> +    EventBufferHeader ebh;
-> +    Data data;
-> +} QEMU_PACKED ControlProgramIdMsg;
-> +
-> +static bool can_handle_event(uint8_t type)
+> +static void machine_get_control_program_id(Object *obj, Visitor *v,
+> +                                           const char *name, void *opaque,
+> +                                           Error **errp)
 > +{
-> +    return type == SCLP_EVENT_CPI;
-> +}
+> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+> +    S390ControlProgramId *cpi;
+> +    cpi = &(S390ControlProgramId){
+> +        .system_type = g_strndup((char *) ms->cpi.system_type,
+> +                       sizeof(ms->cpi.system_type)),
+> +        .system_name = g_strndup((char *) ms->cpi.system_name,
+> +                       sizeof(ms->cpi.system_name)),
+> +        .system_level = g_strdup_printf("0x%lx", ms->cpi.system_level),
+> +        .sysplex_name = g_strndup((char *) ms->cpi.sysplex_name,
+> +                        sizeof(ms->cpi.sysplex_name)),
+> +        .timestamp = ms->cpi.timestamp
+> +    };
 > +
-> +static sccb_mask_t send_mask(void)
-> +{
-> +    return 0;
-> +}
-> +
-> +/* Enable SCLP to accept buffers of event type CPI from the control-program. */
-> +static sccb_mask_t receive_mask(void)
-> +{
-> +    return SCLP_EVENT_MASK_CPI;
-> +}
-> +
-> +static int write_event_data(SCLPEvent *event, EventBufferHeader *evt_buf_hdr)
-> +{
-> +    ControlProgramIdMsg *cpi = container_of(evt_buf_hdr, ControlProgramIdMsg,
-> +                                            ebh);
-> +    S390CcwMachineState *ms = S390_CCW_MACHINE(qdev_get_machine());
-> +
-> +    ascii_put(ms->cpi.system_type, (char *)cpi->data.system_type, 8);
-> +    ascii_put(ms->cpi.system_name, (char *)cpi->data.system_name, 8);
-> +    ascii_put(ms->cpi.sysplex_name, (char *)cpi->data.sysplex_name, 8);
-> +    ms->cpi.system_level = be64_to_cpu(cpi->data.system_level);
+> +    visit_type_S390ControlProgramId(v, name, &cpi, &error_abort);
 
-Can we be confident that system_level is always properly aligned?
-Otherwise it's maybe better to use ldq_be_p() instead?
+Forgot to say: Please use errp here instead -----------^
 
-  Thomas
+  Thanks!
+   Thomas
 
 
