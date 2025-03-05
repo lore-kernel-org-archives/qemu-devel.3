@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4498C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD459C282D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdwu-0001N7-TL; Tue, 04 Mar 2025 20:53:29 -0500
+	id 1tpdxA-0001ZW-It; Tue, 04 Mar 2025 20:53:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdwt-0001ME-5W
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:53:27 -0500
+ id 1tpdx8-0001WH-Aw
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:53:42 -0500
 Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdwq-0008Kv-GL
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:53:26 -0500
+ id 1tpdx6-0008NF-79
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:53:41 -0500
 Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-22334203781so6637115ad.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:53:24 -0800 (PST)
+ d9443c01a7336-223959039f4so69718165ad.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:53:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741139603; x=1741744403; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741139617; x=1741744417; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cF4A8Jz90TPUKD7OCkZaaprdbgwWpIvnZLmu+i5+8P8=;
- b=Q8Y4sw9I+YIqWrFDnm2LImWTKaonY/lExw9J8lR5hRabLuLibBEZ8Z1bSoboEiECaE
- VQEdVtr2+hZGjVIec+ITrH5UuJAHm3bZzJqx2BCJ0kPCK9cF98t+8x0JoT2cGJCeDlm1
- yJfw3ybmWwRrNXwpg/cf1+Lxq3pR1gcqaTVZqu3sQDUhq2SnCWkaVhoCLru17CzsI5tT
- 4x/IOzoDydWnOt2LEIITds+01Iv/09zb/8Aryf+G6KzNubmEW9lU3Keq9VesbeaG0N3c
- 7UMqUI77PlN5xpLvb5X6L1BirsmO1NGpvqA9jsw96/D8XaeeaKI/l/uDu39+YcibU3oy
- XFPw==
+ bh=6dkc5ddvWfoQOqT3KthD041K6FqhmDenBClaITSYqFo=;
+ b=AwcjmHB92PBXj9JqSCsblOKwnaxAG0R+MyubUs9M6lWJhhlkxySiKzRNpcu2s80i7M
+ +6BDKiRGniBBpG5BArIVP5jXW3V/10Y4HGzkZu7WHee7k7gwMydkeW0tJm3uN3OkVFAN
+ NzRBcmnBeHPJDfss7p/5biDKAkVNWgeOLtOX98QxRf7yagjmu78KbNaFzj4mqRxWYs53
+ v4VB4geUbm44kebHcKFaLneUaGbiT6pxKOTa6wFFwEDdcHtHy7awh3huODUKL/4xW0cX
+ WAFydWOUE4LuxP2G/go+iZasdv0Kr60Pu8IPzYPH7bhGJ/oMNsfH6nFdSKDGoEMSTHyI
+ z6Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741139603; x=1741744403;
+ d=1e100.net; s=20230601; t=1741139617; x=1741744417;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cF4A8Jz90TPUKD7OCkZaaprdbgwWpIvnZLmu+i5+8P8=;
- b=I4rqpGJyS7bvfDDHQUgM8KamQh8ODUF1Re8OMnsRyby5Za95uEH15DZBRnYE5gkepe
- m770StKnHhewGXv9WcqergKmbm1KvDTBUvjw13PXfg6KtiKcnbdg0l2GEg5tZW4tOJmi
- F/jHz2ZemXwdknDWIF+PgfUdqP8yTZGVk38sOUDye1AG5lBvOhnVxWbOuYpibVv78nO5
- z2ZkNwuAyoaif7H/Nn/4KF0nHuAVmPpC+EeMblCqJ54slqKRuwOhK/cPo19a1vT/yh+4
- 8KuLCfisCiCEBf8lHacitEBj4AbXRNxmmY7HjRS2EzdCDND0R1TvtXbqVe0tmHoZ+cml
- 8ZBw==
-X-Gm-Message-State: AOJu0YymmC+8ygWMJnmUI/X7gKrxppD6BtxyTB/aTuT5WY6XigyLmE5W
- hjdjJvRuNcuo83fK8VyUel1/euDXT38o/PKa0sFE7i0/6gj7duWyVUqPdOqlwr8=
-X-Gm-Gg: ASbGncuHti95XWxjYpgj5BzSI6wX8WMVYU6K1F818U49On+6cSD4JRlBYf1TuSXRKh2
- Mkvwa2oXRaci8vzv8cP8mbUKse+IZBznZ9PeLXLY8uYi/9CnvthCuvHdkG7s9lBKzVSM91gUl/z
- cSgJ8cybxQOeUCspwvlk7hESb//kn0jvhieWBXe90L2IZ+kGSfQNr1p6xtuqWolKKrPR9JWl1TK
- 6A+zFzQ18ZeM9GTYbvYWgr1NvpLL9UMc+X5Hv7gPxXxnq5dcstzx1CV3+fTswf7PiUrJc752Ng6
- wKoyjHquH4bMKhY9L8sC6YX8GpyE6zZP5aT6Gv3+4AG/Zji0VWRfZ4VCcPqz+u0cU2YbtkeOqgu
- Qp5XdMUNASd5rW4iAIYlgCVHKn31vgjBnTSqENh4WxFBwB0t2xxY=
-X-Google-Smtp-Source: AGHT+IGVO+ELndxDC3hlihg42Zyg8BDVrRqR3hMth6Z+5sIr+tXbwmOI/Ss7zHoHmXwz1y6XoJH3GQ==
-X-Received: by 2002:a17:902:e751:b0:21f:6d63:6f4f with SMTP id
- d9443c01a7336-223d91343a5mr87788015ad.2.1741139602683; 
- Tue, 04 Mar 2025 17:53:22 -0800 (PST)
+ bh=6dkc5ddvWfoQOqT3KthD041K6FqhmDenBClaITSYqFo=;
+ b=e4XsvLjjositOOnQLeTdwlXBLhJMbMxe2ridgJL7Z6JRNMfkeaiVIA+LgirfBxD/KG
+ mncxTjB7N1TDoiQElzpJ2pt909kG0vw/XV8zrfMk8VB8NAfQp59PWv6HD3cH4TVUtF+i
+ KkkBJYWXJ6ycoocl2TewreLRPNbHrU/HcBex2D7zDL51HKxmxE8/tYwHPeQg8CvYSTBS
+ HNnHLP09oYVxb2tYQLs+noBvDeHDHAmFDBbKn4F19Z8crVkIeMCls2bWPZiOhf8BxSqr
+ K5JiGZDfrikjtVZWTJz1bMF1wqTA11MXMIKwyexQ04qiNgc7h5c2CvsheVDqsUVdfnT9
+ D19g==
+X-Gm-Message-State: AOJu0YwlxMJ60p5kDsjUcsehdtgQZxpWVP5th1ZWGCbEqb/38NcIagsX
+ gLwFn50GbjECjRVE+/CMvmLqTVQGnyhzR5fB4u/gPXrO6HJjbKr95ZxF0+JIbFg=
+X-Gm-Gg: ASbGnctOHry9gBV7belN2payMoAIBoDShyw3Evbf66T3ILFKyZp7EsbHbP4ZKOzWzY+
+ PYzGyELlZq/dYvHC91g1VMFKkzh4Mw6Z0uzIVBKVCKwoXFymRWH9Ccu3ona+FjCzjEmbnRhMxk7
+ U5HH5oDcd3t4ZfevZ7QmRPkdER/+7WzwkoKmu0u1KTxlal0n4RZEto816p339v9Tqt8g60hEfWu
+ E/q5kf5lU6E48Q7jYXwaG+DUL2VWHA0quwD/xUq2NiqSsN4z/00eEilDWGmeDl/+VdnysGh0LSi
+ b1Qn/Fh7GZSpr6Ej1+q2O/aDxgQd8DPvto4OG1ERf+qjuobnSDVBViMkPCtkTOdBXbnn2hEPS5O
+ wi/MxtDo3Isgjt5JRNULOs6uK1FO3FRL0TBEk2LIoIfgJSJ+R2eA=
+X-Google-Smtp-Source: AGHT+IGAc5XTNgg4SdVSTWLU9g+8Oqr+s2/3gYgzYQbZ/SE0QyUq8nW7NBPhTb0zGJYKlhY3PyqZ1Q==
+X-Received: by 2002:a17:902:cf09:b0:223:5e54:c521 with SMTP id
+ d9443c01a7336-223f1b85fabmr18290445ad.0.1741139617125; 
+ Tue, 04 Mar 2025 17:53:37 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.53.20
+ d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.53.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 17:53:22 -0800 (PST)
+ Tue, 04 Mar 2025 17:53:36 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 03/59] target/riscv/csr.c: fix deadcode in rmw_xiregi()
-Date: Wed,  5 Mar 2025 11:52:11 +1000
-Message-ID: <20250305015307.1463560-4-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 08/59] target/riscv/debug.c: use wp size = 4 for 32-bit CPUs
+Date: Wed,  5 Mar 2025 11:52:16 +1000
+Message-ID: <20250305015307.1463560-9-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305015307.1463560-1-alistair.francis@wdc.com>
 References: <20250305015307.1463560-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
  envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
@@ -106,78 +108,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Coverity found a DEADCODE issue in rmw_xiregi() claiming that we can't
-reach 'RISCV_EXCP_VIRT_INSTRUCTION_FAULT' at the 'done' label:
+The mcontrol select bit (19) is always zero, meaning our triggers will
+always match virtual addresses. In this condition, if the user does not
+specify a size for the trigger, the access size defaults to XLEN.
 
- > 2652     done:
- >>>>      CID 1590357:  Control flow issues  (DEADCODE)
- >>>>      Execution cannot reach the expression "RISCV_EXCP_VIRT_INSTRUCTION_FAULT"
-     inside this statement: "return (env->virt_enabled &...".
- > 2653         return (env->virt_enabled && virt) ?
- > 2654                 RISCV_EXCP_VIRT_INSTRUCTION_FAULT : RISCV_EXCP_ILLEGAL_INST;
+At this moment we're using def_size = 8 regardless of CPU XLEN. Use
+def_size = 4 in case we're running 32 bits.
 
-This happens because 'virt' is being set to 'false' and it will remain
-as 'false' in any code path where 'done' will be called. The label can
-be safely reduced to:
-
-done:
-     return RISCV_EXCP_ILLEGAL_INST;
-
-And that will leave us with the following usage of a 'goto' skipping a
-single 'return' to do another single 'return':
-
-     } else {
-        goto done;
-     }
-
-     return rmw_xireg_csrind(env, csrno, isel, val, new_val, wr_mask);
-
-done:
-     return RISCV_EXCP_ILLEGAL_INST;
-
-Which we will eliminate it and just do 'return RISCV_EXCP_ILLEGAL_INST'
-instead.
-
-Resolves: Coverity CID 1590357
-Fixes: 5e33a20827 ("target/riscv: Support generic CSR indirect access")
+Fixes: 95799e36c1 ("target/riscv: Add initial support for the Sdtrig extension")
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250121184847.2109128-4-dbarboza@ventanamicro.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250121170626.1992570-2-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ target/riscv/debug.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 0e83c3b045..75f21ccabb 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2621,7 +2621,6 @@ static int rmw_xireg_csrind(CPURISCVState *env, int csrno,
- static int rmw_xiregi(CPURISCVState *env, int csrno, target_ulong *val,
-                       target_ulong new_val, target_ulong wr_mask)
- {
--    bool virt = false;
-     int ret = -EINVAL;
-     target_ulong isel;
+diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+index f6241a80be..9db4048523 100644
+--- a/target/riscv/debug.c
++++ b/target/riscv/debug.c
+@@ -478,7 +478,7 @@ static void type2_breakpoint_insert(CPURISCVState *env, target_ulong index)
+     bool enabled = type2_breakpoint_enabled(ctrl);
+     CPUState *cs = env_cpu(env);
+     int flags = BP_CPU | BP_STOP_BEFORE_ACCESS;
+-    uint32_t size;
++    uint32_t size, def_size;
  
-@@ -2642,16 +2641,11 @@ static int rmw_xiregi(CPURISCVState *env, int csrno, target_ulong *val,
-     } else if (CSR_VSIREG <= csrno && csrno <= CSR_VSIREG6 &&
-                csrno != CSR_VSIREG4 - 1) {
-         isel = env->vsiselect;
--        virt = true;
-     } else {
--        goto done;
-+        return RISCV_EXCP_ILLEGAL_INST;
+     if (!enabled) {
+         return;
+@@ -501,7 +501,9 @@ static void type2_breakpoint_insert(CPURISCVState *env, target_ulong index)
+             cpu_watchpoint_insert(cs, addr, size, flags,
+                                   &env->cpu_watchpoint[index]);
+         } else {
+-            cpu_watchpoint_insert(cs, addr, 8, flags,
++            def_size = riscv_cpu_mxl(env) == MXL_RV64 ? 8 : 4;
++
++            cpu_watchpoint_insert(cs, addr, def_size, flags,
+                                   &env->cpu_watchpoint[index]);
+         }
      }
- 
-     return rmw_xireg_csrind(env, csrno, isel, val, new_val, wr_mask);
--
--done:
--    return (env->virt_enabled && virt) ?
--            RISCV_EXCP_VIRT_INSTRUCTION_FAULT : RISCV_EXCP_ILLEGAL_INST;
- }
- 
- static RISCVException rmw_xireg(CPURISCVState *env, int csrno,
 -- 
 2.48.1
 
