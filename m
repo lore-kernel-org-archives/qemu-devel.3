@@ -4,139 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A93FC19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 08:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D54C282D9
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 08:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpjj1-0001zn-QA; Wed, 05 Mar 2025 03:03:31 -0500
+	id 1tpjl5-0002sy-I3; Wed, 05 Mar 2025 03:05:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tpjiz-0001zC-QD
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:03:29 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpjky-0002rX-Ol
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:05:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tpjix-0001bE-BR
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:03:29 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpjkv-0002Ad-Nf
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:05:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741161805;
+ s=mimecast20190719; t=1741161928;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Tiqajl8YrEsRZNofLkPxgRiu6e9IyXEU30+HPtH1A7k=;
- b=LAb+EQsN2DFlVucI7whdW4LZIEqODRtac/uIsJI7wyVuIWdc8v8YNYItAAr1bqwU+BQUN3
- oCyXTpJA2yKzpLpSvBpaaugfZ70Xrs4lUId+MfIss1u7M+2G1YxheGeeBAFTvxcmkjvENL
- OHtevdAYQM0QP7DOp0AynHojVDFsb5w=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TgtXNv37KC11iqpz/KpgUdjymsW+fqIB1TIp/6sgMGM=;
+ b=AQZPNcqlvffq9JGIZ/JuZB12SHEkNvGc9fOyMXnBnAFLZxBNif+/wFm3B6/U/IXrlkDMhd
+ yQWK5vob1ZQl+yst/f2xnkgw8K20T8ENuPX4MajOWCHCMNNtyOk0mMATgH4JwZD1iI+Vh0
+ dPNNxXDHIPgyS3CJXL4mrWwLrXqm4AM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-0VZuk5iNO4eqPmd0BPdPTA-1; Wed, 05 Mar 2025 03:03:24 -0500
-X-MC-Unique: 0VZuk5iNO4eqPmd0BPdPTA-1
-X-Mimecast-MFC-AGG-ID: 0VZuk5iNO4eqPmd0BPdPTA_1741161803
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-390fc428a45so1560827f8f.0
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 00:03:24 -0800 (PST)
+ us-mta-680-iRtnDJxfPWOL-DGYHMRs2Q-1; Wed, 05 Mar 2025 03:05:26 -0500
+X-MC-Unique: iRtnDJxfPWOL-DGYHMRs2Q-1
+X-Mimecast-MFC-AGG-ID: iRtnDJxfPWOL-DGYHMRs2Q_1741161925
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-39104a3b8e3so2515574f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 00:05:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741161803; x=1741766603;
+ d=1e100.net; s=20230601; t=1741161925; x=1741766725;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Tiqajl8YrEsRZNofLkPxgRiu6e9IyXEU30+HPtH1A7k=;
- b=AL6FqQu6PP+0k/pHWhUHIXKMi//uxu/CLYAxNR9U83bj2DsoxPYuqV8IQ9AQnharoF
- RDS2zLk4wFB44Fk9J7l5ewvunFPuNlREBnBn1idLYK5V2pw2V9IUwD9UkEb+j6VdPgdj
- H6mat88zgnQ5/uKRbota3FVvpyI9o2TqE4ZSty90UIrEQOBj231jNaKMpNBMNuR9EGFr
- pSz79FDQRssuF23wd9dZI6cG09RznNAIuYj5NKVCQwzCdEnJ+s1H2qfnk5Zchq/4Nrrb
- 4RnkP9SU/fkoknhuw1JLIKkJp5WXZVPay0O6Ko/zbkPudoZfe6zKAo8sxM5iHED9/tqE
- LFKQ==
+ bh=TgtXNv37KC11iqpz/KpgUdjymsW+fqIB1TIp/6sgMGM=;
+ b=fN6xfroQTvAg9vJnyMGEKdGK7SEMloGxjTqt/TDacJZaVGhJReEYVmp4dbjzQlwNBn
+ 9hT52vRxmDLtswr1o4U+uVHho6wGUQu6ujrP7oGNp4Ap+YpOSNspKlCFaLqReiX6kjtV
+ OUHC6kFVTwaEptPy2LQXSGtK7bQYG8cKL/8eZeUL8WkHeYitD9Eqs2RSIhe8LPnOkaSB
+ FESM2o+Fdj6mdQ5KIzF7SOnfpRNBT+4PT0ElEil2pfRimDqeqli3TWGydDfLm9De4hHa
+ rfclaqR39na9swlgXXnKjCAgw8dYocBhISVOjFNGWt6WEWITzRFVgPlW9Un0b9qo7Ctf
+ lrZg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUcB7AU3PnN8ADb2unjxr5h78epzp5WsE0h+Cj/+pe6x4eyfG3f1UFS83bNM1YMD5k1+Rp+Vh3CDb9R@nongnu.org
-X-Gm-Message-State: AOJu0YztoeZdxCXS80D1WUVptmNG0J8JcVZZ1FnoWULinf/98zMQ1cwN
- ldS2P+OZnn1N2q6ICGanVOK9UrMTCkeTuXN57Vv5q5xx4YOXQzSjJwphhScHYXeInPLB3+Jms6X
- m+DwPanl62TpxJq+NH4/2oVt7XSc8p4MKa+dnyXiGD/xmNjqmlxgn
-X-Gm-Gg: ASbGncvVqQ3Ljoiuh5IldPupihzDdvaiFvpOfeAX6CP4ltpjpH4B0JWWOYTIXyxaq2Q
- ewMH9FVBBigOxQDfsIxzVm+chkkIuokmaCt7cKhE+454XszbWI5fcr4oAml2VbnVkeu9UgBzxZN
- 6hsviOPaKCkdv1qeyWdP3KspNntNmWda/YQe5gzn48Ic0Y1NEcQl+6Zeoa9BxEIscz9NtUz4r45
- kLEXExkPpR5OfRCGjUfHbNuSI3T5kV2KIS7gI8fYTqedyE80SuCd8K39wEyD6hMn5kYlYUmvVJi
- sX36QzwO2uyg0+P8WL9li64kDWy41IWAIhaukSU1ql5QZBL5mFuEIw==
-X-Received: by 2002:a05:6000:156f:b0:390:f734:13b1 with SMTP id
- ffacd0b85a97d-3911f756fdfmr1451835f8f.23.1741161801624; 
- Wed, 05 Mar 2025 00:03:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEE/1Nw6iZtpKfJgJZTMBa3nMOFVCKBWlgT/9yOd5GR4azas2k0lp8ndp4qk8nlv5P6xgpeAA==
-X-Received: by 2002:a05:6000:156f:b0:390:f734:13b1 with SMTP id
- ffacd0b85a97d-3911f756fdfmr1451800f8f.23.1741161801273; 
- Wed, 05 Mar 2025 00:03:21 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e485e045sm20390612f8f.99.2025.03.05.00.03.20
+ AJvYcCVVwhycW3xpRtyqxBrrYSQsj5d0sQQ4iseht8Rb4GoKLGRyuiPKMX9zGEYMeeHmkF3a9cCScdDlJQhP@nongnu.org
+X-Gm-Message-State: AOJu0YwLpeZzznuIImrR0u6Uz6UgUSHLnWsQHnA9nUWx/KSuZTYU6dWN
+ xmH91m9odDNKibDZ4lRD9bDg2IPYVyYaXLASU2p84u5EX8sYh4KZDL87hga50rMahx5BGdxYCwi
+ msw6vKSjkd4gDM0OD7PnMydR6qMpkIRKF2XIPP0AWKqaMT+C/iKF1
+X-Gm-Gg: ASbGncuSNv5j6b6+Z7lXgssYUU6anX1xK5nmaoArHgf+oFzUu/agclV8JHrkLgZZnF6
+ L3mezDcinJZt/kr4VlRXo8OcRUFqtChdlcpmGwfdAipifG2g5aCmRXQKDGB5IHv6IBF0UfCHDBF
+ jokD5BlO44EMKFysKxRlkuV0UBJtJXsTg1QPfxch3CGQ8fBy49T/1WnZJe20hEKqVdClsTaf4Cl
+ CtEQx/BUH10sfummszwDhICVl5YF718RFd7wICuaLHIahuau4Ozhwk1fskMvcMMqidvBhpMiGxp
+ Ueq1qPrU0dCuWYp2Jn/eGG/l3KG48NK7X9GPqNXG++jG7a4=
+X-Received: by 2002:a5d:5f4d:0:b0:390:f55b:ba91 with SMTP id
+ ffacd0b85a97d-3911f727cf9mr1329327f8f.14.1741161925255; 
+ Wed, 05 Mar 2025 00:05:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEMJuSjZaUGzKMDPEmSumYD4nI7mkK/djEpTqri+1Own+LfHn/a1a/2LDkOtIKgSYLseVfHZg==
+X-Received: by 2002:a5d:5f4d:0:b0:390:f55b:ba91 with SMTP id
+ ffacd0b85a97d-3911f727cf9mr1329297f8f.14.1741161924879; 
+ Wed, 05 Mar 2025 00:05:24 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
+ [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e485dba4sm20520622f8f.92.2025.03.05.00.05.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 00:03:20 -0800 (PST)
-Message-ID: <ab68c2e7-b44b-484a-959c-45d430664032@redhat.com>
-Date: Wed, 5 Mar 2025 09:03:20 +0100
+ Wed, 05 Mar 2025 00:05:24 -0800 (PST)
+Message-ID: <3e35f453-926b-4eb6-a5ce-72f89c4f8375@redhat.com>
+Date: Wed, 5 Mar 2025 09:05:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 24/36] vfio/migration: Multifd setup/cleanup functions
- and associated VFIOMultifd
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
- <c0520523053b1087787152ddf2163257d3030be0.1741124640.git.maciej.szmigiero@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <c0520523053b1087787152ddf2163257d3030be0.1741124640.git.maciej.szmigiero@oracle.com>
+Subject: Re: [PATCH 8/8] tests/functional: Add a hexagon minivm test
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, quic_mathbern@quicinc.com, ale@rev.ng,
+ anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
+ Brian Cain <bcain@quicinc.com>, "Daniel P. Berrange" <berrange@redhat.com>
+References: <20250301172045.1295412-1-brian.cain@oss.qualcomm.com>
+ <20250301172045.1295412-9-brian.cain@oss.qualcomm.com>
+ <38afa09a-6b3f-4f4f-a9a3-78bab25f0e3a@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <38afa09a-6b3f-4f4f-a9a3-78bab25f0e3a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -161,122 +158,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/25 23:03, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On 04/03/2025 16.46, Philippe Mathieu-Daudé wrote:
+> Hi Brian,
 > 
-> Add multifd setup/cleanup functions and an associated VFIOMultifd data
-> structure that will contain most of the receive-side data together
-> with its init/cleanup methods.
+> On 1/3/25 18:20, Brian Cain wrote:
+>> From: Brian Cain <bcain@quicinc.com>
 > 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   hw/vfio/migration-multifd.c   | 44 +++++++++++++++++++++++++++++++++++
->   hw/vfio/migration-multifd.h   |  4 ++++
->   include/hw/vfio/vfio-common.h |  3 +++
->   3 files changed, 51 insertions(+)
+> A bit opaque...
 > 
-> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-> index 79fae0b6296f..091dc43210ad 100644
-> --- a/hw/vfio/migration-multifd.c
-> +++ b/hw/vfio/migration-multifd.c
-> @@ -32,8 +32,52 @@ typedef struct VFIODeviceStatePacket {
->       uint8_t data[0];
->   } QEMU_PACKED VFIODeviceStatePacket;
->   
-> +typedef struct VFIOMultifd {
-> +} VFIOMultifd;
-> +
-> +static VFIOMultifd *vfio_multifd_new(void)
-> +{
-> +    VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
-> +
-> +    return multifd;
-> +}
-> +
-> +static void vfio_multifd_free(VFIOMultifd *multifd)
-> +{
-> +    g_free(multifd);
-> +}
-> +
-> +void vfio_multifd_cleanup(VFIODevice *vbasedev)
-> +{
-> +    VFIOMigration *migration = vbasedev->migration;
-> +
-> +    g_clear_pointer(&migration->multifd, vfio_multifd_free);
-> +}
-> +
->   bool vfio_multifd_transfer_supported(void)
->   {
->       return multifd_device_state_supported() &&
->           migrate_send_switchover_start();
->   }
-> +
-> +bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev)
-> +{
-> +    return false;
-> +}
-> +
-> +bool vfio_multifd_setup(VFIODevice *vbasedev, bool alloc_multifd, Error **errp)
-> +{
-> +    VFIOMigration *migration = vbasedev->migration;
-> +
-> +    if (!vfio_multifd_transfer_enabled(vbasedev)) {
-> +        /* Nothing further to check or do */
-> +        return true;
-> +    }
-> +
-> +    if (alloc_multifd) {
-> +        assert(!migration->multifd);
-> +        migration->multifd = vfio_multifd_new();
-> +    }
-> +
-> +    return true;
-> +}
-> diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
-> index 1b60d5f67a1c..2a7a76164f29 100644
-> --- a/hw/vfio/migration-multifd.h
-> +++ b/hw/vfio/migration-multifd.h
-> @@ -14,6 +14,10 @@
->   
->   #include "hw/vfio/vfio-common.h"
->   
-> +bool vfio_multifd_setup(VFIODevice *vbasedev, bool alloc_multifd, Error **errp);
-> +void vfio_multifd_cleanup(VFIODevice *vbasedev);
-> +
->   bool vfio_multifd_transfer_supported(void);
-> +bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev);
->   
->   #endif
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index bf5d52087129..40382390692d 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -78,6 +78,8 @@ typedef struct VFIORegion {
->       uint8_t nr; /* cache the region number for debug */
->   } VFIORegion;
->   
-> +typedef struct VFIOMultifd VFIOMultifd;
-> +
->   typedef struct VFIOMigration {
->       struct VFIODevice *vbasedev;
->       VMChangeStateEntry *vm_state;
-> @@ -89,6 +91,7 @@ typedef struct VFIOMigration {
->       uint64_t mig_flags;
->       uint64_t precopy_init_size;
->       uint64_t precopy_dirty_size;
-> +    VFIOMultifd *multifd;
->       bool initial_data_sent;
->   
->       bool event_save_iterate_started;
-> 
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   MAINTAINERS                             |  1 +
+>>   tests/functional/meson.build            |  8 +++++
+>>   tests/functional/test_hexagon_minivm.py | 42 +++++++++++++++++++++++++
+>>   3 files changed, 51 insertions(+)
+>>   create mode 100755 tests/functional/test_hexagon_minivm.py
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index deeb7878c8..48a5e7c005 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -247,6 +247,7 @@ F: gdb-xml/hexagon*.xml
+>>   F: docs/system/target-hexagon.rst
+>>   F: docs/devel/hexagon-sys.rst
+>>   F: docs/devel/hexagon-l2vic.rst
+>> +F: tests/functional/test_hexagon_minivm.py
+>>   T: git https://github.com/quic/qemu.git hex-next
+>>   Hexagon idef-parser
+>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+>> index 111d8bab26..78b42e58f9 100644
+>> --- a/tests/functional/meson.build
+>> +++ b/tests/functional/meson.build
+>> @@ -135,6 +135,14 @@ tests_i386_system_quick = [
+>>     'migration',
+>>   ]
+>> +test_timeouts += {
+>> +  'hexagon_minivm': 180,
+>> +}
+>> +
+>> +tests_hexagon_system_quick = [
+>> +  'hexagon_minivm',
+>> +]
+>> +
+>>   tests_i386_system_thorough = [
+>>     'i386_tuxrun',
+>>   ]
+>> diff --git a/tests/functional/test_hexagon_minivm.py b/tests/functional/ 
+>> test_hexagon_minivm.py
+>> new file mode 100755
+>> index 0000000000..2ba92bcce3
+>> --- /dev/null
+>> +++ b/tests/functional/test_hexagon_minivm.py
+>> @@ -0,0 +1,42 @@
+>> +#!/usr/bin/env python3
+>> +#
+>> +# Copyright(c) 2024-2025 Qualcomm Innovation Center, Inc. All Rights 
+>> Reserved.
+>> +#
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +import os
+>> +from glob import glob
+>> +from qemu_test import QemuSystemTest, Asset
+>> +from qemu_test import wait_for_console_pattern
+>> +
+>> +class MiniVMTest(QemuSystemTest):
+>> +
+>> +    timeout = 180
+>> +    GUEST_ENTRY = 0xc0000000
+>> +
+>> +    REPO = 'https://artifacts.codelinaro.org/artifactory'
+>> +    ASSET_TARBALL = \
+>> +        Asset(f'{REPO}/codelinaro-toolchain-for-hexagon/'
+>> +               '19.1.5/hexagon_minivm_2024_Dec_15.tar.gz',
+>> +        'd7920b5ff14bed5a10b23ada7d4eb927ede08635281f25067e0d5711feee2c2a')
+
+Tests that download assets should go into the "thorough" category, not into 
+the quick one, so please replace tests_hexagon_system_quick with 
+tests_hexagon_system_thorough in the meson.build file.
+
+(yes, I know, it's a little bit confusing that tests that finish quickly 
+should still go into the thorough category instead ... but we needed a way 
+to distinguish the tests that download assets and the ones that can run 
+without downloads, see also the description in 
+docs/devel/testing/functional.rst)
+
+  Thomas
 
 
