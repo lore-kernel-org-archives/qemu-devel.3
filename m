@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D04C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC04C282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:18:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpeIr-0004Oj-Sr; Tue, 04 Mar 2025 21:16:10 -0500
+	id 1tpeKh-0005UM-7r; Tue, 04 Mar 2025 21:18:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tpeIO-0004M4-L0; Tue, 04 Mar 2025 21:15:42 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tpeKd-0005TF-2S
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 21:17:59 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tpeIL-0005Dj-Kf; Tue, 04 Mar 2025 21:15:40 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2fe848040b1so12929627a91.3; 
- Tue, 04 Mar 2025 18:15:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tpeKa-0006w5-Ng
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 21:17:58 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-223a7065ff8so77713575ad.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 18:17:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741140935; x=1741745735; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=l1qeFEEjOAAigLBXucqEKGRjvpQU2PXzgTPoFxOqU9Q=;
- b=QK52i6/m3E/ohKVd/V0PiWywzRHDc50iMfhoGieQwcYXoI7dYjhQblQTBAuE8ySEAP
- yS4hX35Ym4goIrPTfQdQVg3uSvlvhAuysJY6ICCW/HeLLz6RYl2VQYuoM9ORMM8MjEOv
- DfIYB2koaXcfdSx0lkWG9aHK2jR/FMHwlRvJ0ncq3FS2qomxSNBrwzVORxUsjQ0BgrPK
- afNleL4q7EhAd9mjFy8wn3zu7SFHddzk2/FcT8oAzDYyvlYygaKgzy8l9JwcfXSaBefm
- Xopzu1k4Gpoj+piR4gnZxTy+9LfuejfgZq+4gVmbmLZbztMdSphl3hqC/55MZ8n64K4F
- dczg==
+ d=linaro.org; s=google; t=1741141075; x=1741745875; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dh/ppfZQ2n85UgvRvqji0SXJ1cFfGWr1nkH5f1Vp5u4=;
+ b=GoWz6IR1KcnsP3snIvqb2F2Mp6E92riArf1hSLmz2q5hHZ104QxcRDc77laPMjHw9a
+ 1P7W9Kmsn4+2XViyA2tBSuRVICSegpC/Icy8YehB/KsG27NmrfzYPwR72IdfKo7FB+Pg
+ Mk5UgxCB7OpgwRUCmglY1dNASjq8eZr0rI1BTtXZ4XdrsE1LE/BY1aWcY/3UCQFc3gAt
+ WptRJXx9YTavsA78+D+3gdXYjICu/vaTiI3AhL2wIMyrap+oI0Zvp0ZhNUepoTt1Rj5k
+ ScWXMsDajnnNIvv6y1n0SpEyImVJTB5ioVgEMsfTENtx4Nn/2i5aF3xV14Pv/WCk1lCW
+ nqng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741140935; x=1741745735;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=l1qeFEEjOAAigLBXucqEKGRjvpQU2PXzgTPoFxOqU9Q=;
- b=BTq/kooCDdkcTklSbNzFx067lGxc6GyGmnpAlJ9C9mbAZ0h2adcQe4mII9g+M6lc7U
- L8SNRYwlBb3qkeHLjj2SB89rlyqBnMovb4oZOEPs9KvuY9lE1L6GLIEPs/gKS1rIUTP3
- 0Tms0hRUj+b8r0/aVu5bGmBXO1MD6nR3OBnh9llfIWksx4HW0S8z5xIPT63kNYNraAWC
- DO74EjBctBnKvr3v0j2m9Y+seVCEEvrytzVgtMqijBV//87SVqkSU8SqvzJtpNvTmNSq
- RkFLyg16qXEK1vj4uqmei9wRygLT4QScirIEngCTnecZzsk8Il5fWgnYEMAyBj6de9ov
- nk2g==
+ d=1e100.net; s=20230601; t=1741141075; x=1741745875;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dh/ppfZQ2n85UgvRvqji0SXJ1cFfGWr1nkH5f1Vp5u4=;
+ b=o5UKq2KL/5D+rW0TcnG4Lpg7H/B/tQ4n+dlkCBkbtXyM8Sp9JvELT0gKEK57J2ICcK
+ 9SDkHG6ydhQlvOw8C8/RlwAFOnEwfGmCm2epG0IW3zw3Wxhrix7fCs0Yrb45W1C4qAGX
+ E4PkWZLxS0o+GsEz0rCLxLIKU7KLtEbyJuaw14rwWXNTpeBTgDht2Ofb+X7+I33WrrNx
+ Es2VfXhAxX1F/2Kxf2ny7AGuyOvbAnDbR9PPO5Yp5qwkjBsAdaXkTBm17aQHoH7POE8S
+ an/1q/xJxgtHE7oDQCRNw5ZKrFietSe4GBzvaKq+uqLMalPw5ZescZx5HM+g3YXr47NQ
+ oYuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUAg3t26NoD/caY2lIUkPq1gB3H6LqggC2Oy23sUSmK2fTflQDMBDKN99hEsP7gT9HKQmMXqjLOWoe@nongnu.org,
- AJvYcCXfA+WHx2tIxQkJsUeoMiaJwZOcnQx/xr7u9QgH6EzvGqmi9Is1WYEBa2OvMDVjoov1Wpgo5Mb/wPMk@nongnu.org
-X-Gm-Message-State: AOJu0YxEwjDMN6e2yGIwDuM6MalqgdneMmz+KLqUr1BNQeZM7v69R8/h
- 6srZW0Xf+4NTZ30AyPNKiUJ9+Wg6tC0TGc79xL/Fmf0+phBhG74MbK6xuAP1
-X-Gm-Gg: ASbGncsBWHdxzfcy8yLjfZUWzE7tcjsAl6N8PKyFr15QZnRbqhEA7YlXFANSP73IX48
- c7VgxdE1uxiNHlMOc5sFi0x2tUTTr+uUIo3jQxXbdODOc0tbXTMV5cayu+Fop3ZzHFkXEpqISnZ
- d6d3RHlNBhOJuRFq1HCsQeMS7FeMHQOFzJqr7aCS+2fnRmGcxIybMrsJMH6UMmIIEWWFrSjElKn
- O4nN3txpsSWeMXtR0ZGFl5UacgpGnYDW5cR7vwpEudPgQNC0NmAGl2ybjgGYor+GDLKyF+3MeTC
- 4zJNtoiceTMlln1OYrMpAEIS+DU7UE6v+q5j/JlAsknNg/cPdawEn1pV8Eo26cM=
-X-Google-Smtp-Source: AGHT+IEDc4V5klj+zeXy4maEhDvbfCB6WdKK4y01cVkF/mYcK2VnI4YHbh0qThxsLuu+BoPqyUSGZQ==
-X-Received: by 2002:a17:90b:6cb:b0:2fa:17dd:6afa with SMTP id
- 98e67ed59e1d1-2ff49753458mr3003710a91.17.1741140935332; 
- Tue, 04 Mar 2025 18:15:35 -0800 (PST)
-Received: from localhost (n11648126014.netvigator.com. [116.48.126.14])
+ AJvYcCVGHiuhFq7Wh3VnOekhGLFyHzbQ7kud7Dwu+XOzPM2c6/YqZMW8Dd5bIZzA3bX394CbDaBTvV9512Lj@nongnu.org
+X-Gm-Message-State: AOJu0YyGSnRLq1D/vFqkTO8KoN/9TAXPd1poyyeBuET2TE4vbyzFqvD5
+ 0j+4zN5KQBuRd48796ffmbmm4LeN1n7sV4x6anmm6FWYvHjb7S9zzYncZTCIw9s=
+X-Gm-Gg: ASbGncsfXgdI47vHjpEsQB8n6t79aVln0xcg9iA+9EdQ/GaH2j6dop3EXjRNLbApfPi
+ 67XWws1+Xm9Er+0MrTbu46X8VjGzih9Vy2zIlXs5iGTb8KPvgYawSFZ5CgO7ijltsy+OSF3Xwee
+ WhLMnNY283daB4d+coCz8gkBCoK9rkR2RVjxatEb385Uwv4Z1XxpOSjc9aaN0v6gAfVH++ugMNM
+ 4Fyt+Mb90k7CGwV6nkZpWAskvF4QZdu+skCUPBpeIYacI0otiwftPZ/tiK3oMN0sAcg31wgfYo1
+ 3rZ66WJJm+1E19ngB+Y5k92Rjha4xHlBfUdkVVo5vnn04i3ezq54uvrDgQ==
+X-Google-Smtp-Source: AGHT+IGLgIyP1l+QxWj/EpwL63S8EfgftFNjgA2H7oATURsZuDV9goUfqOwZS4HOjrfkMaIdGxvlBQ==
+X-Received: by 2002:a17:903:2341:b0:21f:f3d:d533 with SMTP id
+ d9443c01a7336-223f1c79b92mr24131965ad.2.1741141074956; 
+ Tue, 04 Mar 2025 18:17:54 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e7a2c3bsm151013a91.39.2025.03.04.18.15.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 18:15:34 -0800 (PST)
-From: Stefan Hajnoczi <stefanha@gmail.com>
-X-Google-Original-From: Stefan Hajnoczi <stefanha@fedora>
-Date: Wed, 5 Mar 2025 10:15:30 +0800
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, pbonzini@redhat.com,
- manos.pitsidianakis@linaro.org, philmd@linaro.org,
- qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH v2 04/11] rust/qemu-api: Add wrappers to run futures in
- QEMU
-Message-ID: <20250305021530.GA247800@fedora>
-References: <20250218182019.111467-1-kwolf@redhat.com>
- <20250218182019.111467-5-kwolf@redhat.com>
+ d9443c01a7336-223f2e29f52sm3313455ad.256.2025.03.04.18.17.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Mar 2025 18:17:54 -0800 (PST)
+Message-ID: <543809b8-3d4d-4229-91df-a9a1ad83c62f@linaro.org>
+Date: Tue, 4 Mar 2025 18:17:53 -0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="h5u3hztMFs09Paiw"
-Content-Disposition: inline
-In-Reply-To: <20250218182019.111467-5-kwolf@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=stefanha@gmail.com; helo=mail-pj1-x102b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: Get target page info using runtime
+ helpers
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ qemu-riscv@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>
+References: <20250304231956.34396-1-philmd@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250304231956.34396-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,312 +107,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---h5u3hztMFs09Paiw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Feb 18, 2025 at 07:20:12PM +0100, Kevin Wolf wrote:
-> This adds helper functions that allow running Rust futures to completion
-> using QEMU's event loops.
-
-This commit is a cliff-hanger. I'm intrigued to find out how timer, fd,
-etc event loop integration will work :).
-
->=20
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->  include/qemu/coroutine-rust.h | 24 +++++++++++
->  rust/wrapper.h                |  1 +
->  util/qemu-co-rust-async.c     | 55 +++++++++++++++++++++++++
->  rust/qemu-api/meson.build     |  1 +
->  rust/qemu-api/src/futures.rs  | 77 +++++++++++++++++++++++++++++++++++
->  rust/qemu-api/src/lib.rs      |  1 +
->  util/meson.build              |  3 ++
->  7 files changed, 162 insertions(+)
->  create mode 100644 include/qemu/coroutine-rust.h
->  create mode 100644 util/qemu-co-rust-async.c
->  create mode 100644 rust/qemu-api/src/futures.rs
->=20
-> diff --git a/include/qemu/coroutine-rust.h b/include/qemu/coroutine-rust.h
-> new file mode 100644
-> index 0000000000..0c5cf42a6b
-> --- /dev/null
-> +++ b/include/qemu/coroutine-rust.h
-> @@ -0,0 +1,24 @@
-> +/* SPDX-License-Identifier: LGPL-2.1-or-later */
-> +/*
-> + * Helpers to run Rust futures using QEMU coroutines
-> + *
-> + * Copyright Red Hat
-> + *
-> + * Author:
-> + *   Kevin Wolf <kwolf@redhat.com>
-> + *
-> + * This work is licensed under the terms of the GNU LGPL, version 2.1 or=
- later.
-> + * See the COPYING.LIB file in the top-level directory.
-> + */
-> +
-> +#ifndef QEMU_COROUTINE_RUST_H
-> +#define QEMU_COROUTINE_RUST_H
-> +
-> +typedef struct RustBoxedFuture RustBoxedFuture;
-> +typedef void coroutine_fn RunFuture(RustBoxedFuture *future, void *opaqu=
-e);
-> +
-> +void no_coroutine_fn rust_run_future(RustBoxedFuture *future,
-> +                                     RunFuture *entry,
-> +                                     void *opaque);
-
-This adds a blocking (aio_poll()-style) API. The more blocking APIs we
-add, the more points are created where QEMU hangs when the async
-operation doesn't complete in a reasonable amount of time. It would be
-best to avoid introducing new blocking APIs, but sometimes it is
-unavoidable.
-
-rust_run_future() is very generic and I think the downsides should be
-pointed out to discourage people from using it when not absolutely
-necessary. Can you document when it's appropriate to use this API?
-
-> +
-> +#endif
-> diff --git a/rust/wrapper.h b/rust/wrapper.h
-> index 303d7bba7f..3dc385e256 100644
-> --- a/rust/wrapper.h
-> +++ b/rust/wrapper.h
-> @@ -58,3 +58,4 @@ typedef enum memory_order {
->  #include "block/block_int.h"
->  #include "block/qdict.h"
->  #include "qapi/qapi-visit-block-core.h"
-> +#include "qemu/coroutine-rust.h"
-> diff --git a/util/qemu-co-rust-async.c b/util/qemu-co-rust-async.c
-> new file mode 100644
-> index 0000000000..d893dfb7bd
-> --- /dev/null
-> +++ b/util/qemu-co-rust-async.c
-> @@ -0,0 +1,55 @@
-> +/* SPDX-License-Identifier: LGPL-2.1-or-later */
-> +/*
-> + * Helpers to run Rust futures using QEMU coroutines
-> + *
-> + * Copyright Red Hat
-> + *
-> + * Author:
-> + *   Kevin Wolf <kwolf@redhat.com>
-> + *
-> + * This work is licensed under the terms of the GNU LGPL, version 2.1 or=
- later.
-> + * See the COPYING.LIB file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +
-> +#include "block/aio-wait.h"
-> +#include "qemu/coroutine.h"
-> +#include "qemu/coroutine-rust.h"
-> +#include "qemu/main-loop.h"
-> +
-> +typedef struct FutureCo {
-> +    RustBoxedFuture *future;
-> +    RunFuture *entry;
-> +    void *opaque;
-> +    bool done;
-> +} FutureCo;
-> +
-> +static void coroutine_fn rust_co_run_future_entry(void *opaque)
-> +{
-> +    FutureCo *data =3D opaque;
-> +
-> +    data->entry(data->future, data->opaque);
-> +    data->done =3D true;
-> +    aio_wait_kick();
-> +}
-> +
-> +void no_coroutine_fn rust_run_future(RustBoxedFuture *future,
-> +                                     RunFuture *entry,
-> +                                     void *opaque)
-> +{
-> +    AioContext *ctx =3D qemu_get_current_aio_context();
-> +    Coroutine *co;
-> +    FutureCo data =3D {
-> +        .future =3D future,
-> +        .entry =3D entry,
-> +        .opaque =3D opaque,
-> +        .done =3D false,
-> +    };
-> +
-> +    GLOBAL_STATE_CODE();
-> +
-> +    co =3D qemu_coroutine_create(rust_co_run_future_entry, &data);
-> +    aio_co_enter(ctx, co);
-> +    AIO_WAIT_WHILE(ctx, !data.done);
-> +}
-> diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-> index e0a3052c79..44fd34e193 100644
-> --- a/rust/qemu-api/meson.build
-> +++ b/rust/qemu-api/meson.build
-> @@ -22,6 +22,7 @@ sources_core =3D [
->    'src/chardev.rs',
->    'src/c_str.rs',
->    'src/errno.rs',
-> +  'src/futures.rs',
->    'src/module.rs',
->    'src/offset_of.rs',
->    'src/prelude.rs',
-> diff --git a/rust/qemu-api/src/futures.rs b/rust/qemu-api/src/futures.rs
-> new file mode 100644
-> index 0000000000..cd307a1d62
-> --- /dev/null
-> +++ b/rust/qemu-api/src/futures.rs
-> @@ -0,0 +1,77 @@
-> +use crate::bindings;
-> +use std::ffi::c_void;
-> +use std::future::Future;
-> +use std::mem::MaybeUninit;
-> +use std::sync::Arc;
-> +use std::task::{Context, Poll, Wake, Waker};
-> +
-> +struct RunFutureWaker {
-> +    co: *mut bindings::Coroutine,
-> +}
-> +unsafe impl Send for RunFutureWaker {}
-> +unsafe impl Sync for RunFutureWaker {}
-> +
-> +impl Wake for RunFutureWaker {
-> +    fn wake(self: Arc<Self>) {
-> +        unsafe {
-> +            bindings::aio_co_wake(self.co);
-> +        }
-> +    }
-> +}
-> +
-> +/// Use QEMU's event loops to run a Rust [`Future`] to completion and re=
-turn its result.
-> +///
-> +/// This function must be called in coroutine context. If the future isn=
-'t ready yet, it yields.
-> +pub fn qemu_co_run_future<F: Future>(future: F) -> F::Output {
-> +    let waker =3D Waker::from(Arc::new(RunFutureWaker {
-> +        co: unsafe { bindings::qemu_coroutine_self() },
-> +    }));
-> +    let mut cx =3D Context::from_waker(&waker);
-> +
-> +    let mut pinned_future =3D std::pin::pin!(future);
-> +    loop {
-> +        match pinned_future.as_mut().poll(&mut cx) {
-> +            Poll::Ready(res) =3D> return res,
-> +            Poll::Pending =3D> unsafe {
-> +                bindings::qemu_coroutine_yield();
-> +            },
-> +        }
-> +    }
-> +}
-> +
-> +/// Wrapper around [`qemu_co_run_future`] that can be called from C.
-> +///
-> +/// # Safety
-> +///
-> +/// `future` must be a valid pointer to an owned `F` (it will be freed i=
-n this function).  `output`
-> +/// must be a valid pointer representing a mutable reference to an `F::O=
-utput` where the result can
-> +/// be stored.
-> +unsafe extern "C" fn rust_co_run_future<F: Future>(
-> +    future: *mut bindings::RustBoxedFuture,
-> +    output: *mut c_void,
-> +) {
-> +    let future =3D unsafe { Box::from_raw(future.cast::<F>()) };
-> +    let output =3D output.cast::<F::Output>();
-> +    let ret =3D qemu_co_run_future(*future);
-> +    unsafe {
-> +        output.write(ret);
-> +    }
-> +}
-> +
-> +/// Use QEMU's event loops to run a Rust [`Future`] to completion and re=
-turn its result.
-> +///
-> +/// This function must be called outside of coroutine context to avoid d=
-eadlocks. It blocks and
-
-rust_run_future() has GLOBAL_STATE_CODE() so qemu_run_future() needs to
-run not just outside coroutine context, but also under the BQL. Should
-this be mentioned?
-
-> +/// runs a nested even loop until the future is ready and returns a resu=
-lt.
-> +pub fn qemu_run_future<F: Future>(future: F) -> F::Output {
-> +    let future_ptr =3D Box::into_raw(Box::new(future));
-> +    let mut output =3D MaybeUninit::<F::Output>::uninit();
-> +    unsafe {
-> +        bindings::rust_run_future(
-> +            future_ptr.cast::<bindings::RustBoxedFuture>(),
-> +            #[allow(clippy::as_underscore)]
-> +            Some(rust_co_run_future::<F> as _),
-
-This line is hard to follow. I think it's casting to the C equivalent
-type:
-
- void coroutine_fn (*)(RustBoxedFuture *future, void *opaque)
-
-I wonder if there's a clearer way of writing this. Maybe being explicit
-rather than implicit here would be helpful.
-
-If not, it's not a big deal, but I spent some time trying to figure out
-what this does and others might too.
-
-> +            output.as_mut_ptr().cast::<c_void>(),
-> +        );
-> +        output.assume_init()
-> +    }
-> +}
-> diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-> index 825443abde..84928905f1 100644
-> --- a/rust/qemu-api/src/lib.rs
-> +++ b/rust/qemu-api/src/lib.rs
-> @@ -20,6 +20,7 @@
->  pub mod cell;
->  pub mod chardev;
->  pub mod errno;
-> +pub mod futures;
->  #[cfg(feature =3D "system")]
->  pub mod irq;
->  #[cfg(feature =3D "system")]
-> diff --git a/util/meson.build b/util/meson.build
-> index 780b5977a8..14a2ae17fd 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -101,6 +101,9 @@ if have_block
->    util_ss.add(files('qemu-coroutine-sleep.c'))
->    util_ss.add(files('qemu-co-shared-resource.c'))
->    util_ss.add(files('qemu-co-timeout.c'))
-> +  if have_rust
-> +    util_ss.add(files('qemu-co-rust-async.c'))
-> +  endif
->    util_ss.add(files('readline.c'))
->    util_ss.add(files('throttle.c'))
->    util_ss.add(files('timed-average.c'))
-> --=20
-> 2.48.1
->=20
->=20
-
---h5u3hztMFs09Paiw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfHs8IACgkQnKSrs4Gr
-c8hGiAf+NOviB8GIuCttSMS6JgpN2D8+11emqUAroVsKv5AjCGjjQidIuvEOgjOY
-XYpYlyIvLfSi3PBzuXujaJweZjnpNtzGlxoxERhRTw5fMpsSeIHPjV/MdUGeQ4x7
-E5qU9NcVHJVeP50PskmGzvguXRJmnDbiaDaVJ/LAgsrWp/ZyOTlZCeCBYHQg/JXI
-IhIbo8TtHsEKEo2nq89SmAQXgh9uZ9UgKalHJB8/n8/UQWK8aMHvKTusLReZeMsJ
-52vMrKYhRNfNxPv3V/21tBSz/7gyM4dC3viYnVCrTKoKsutX5ZNFKZ92/MEv7g+y
-pzKG90KabceSsPrIJgEEVqOlMYsHxQ==
-=r8ZW
------END PGP SIGNATURE-----
-
---h5u3hztMFs09Paiw--
+T24gMy80LzI1IDE1OjE5LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gUHJl
+ZmVyIHJ1bnRpbWUgaGVscGVycyB0byBnZXQgdGFyZ2V0IHBhZ2Ugc2l6ZSAvIG1hc2sgLyBi
+aXRzDQo+IHJhdGhlciB0aGFuIGNvbXBpbGUgdGltZSBkZWZpbml0aW9ucy4gVGhpcyB3aWxs
+IGhlbHAgdG8gYnVpbGQNCj4gdGhlc2UgZmlsZXMgb25jZSBmb3IgYWxsIFJJU0MtViBiaW5h
+cmllcy4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxw
+aGlsbWRAbGluYXJvLm9yZz4NCj4gLS0tDQo+ICAgaHcvcmlzY3YvcmlzY3YtaW9tbXUtcGNp
+LmMgfCAgNCArKystDQo+ICAgaHcvcmlzY3YvcmlzY3YtaW9tbXUuYyAgICAgfCAyOSArKysr
+KysrKysrKysrKystLS0tLS0tLS0tLS0tLQ0KPiAgIDIgZmlsZXMgY2hhbmdlZCwgMTggaW5z
+ZXJ0aW9ucygrKSwgMTUgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvaHcvcmlz
+Y3YvcmlzY3YtaW9tbXUtcGNpLmMgYi9ody9yaXNjdi9yaXNjdi1pb21tdS1wY2kuYw0KPiBp
+bmRleCAxMjQ1MTg2OWU0MS4uZTJiODkzYzU4OTggMTAwNjQ0DQo+IC0tLSBhL2h3L3Jpc2N2
+L3Jpc2N2LWlvbW11LXBjaS5jDQo+ICsrKyBiL2h3L3Jpc2N2L3Jpc2N2LWlvbW11LXBjaS5j
+DQo+IEBAIC0yMyw2ICsyMyw3IEBADQo+ICAgI2luY2x1ZGUgImh3L3FkZXYtcHJvcGVydGll
+cy5oIg0KPiAgICNpbmNsdWRlICJody9yaXNjdi9yaXNjdl9oYXJ0LmgiDQo+ICAgI2luY2x1
+ZGUgIm1pZ3JhdGlvbi92bXN0YXRlLmgiDQo+ICsjaW5jbHVkZSAiZXhlYy90YXJnZXRfcGFn
+ZS5oIg0KPiAgICNpbmNsdWRlICJxYXBpL2Vycm9yLmgiDQo+ICAgI2luY2x1ZGUgInFlbXUv
+ZXJyb3ItcmVwb3J0LmgiDQo+ICAgI2luY2x1ZGUgInFlbXUvaG9zdC11dGlscy5oIg0KPiBA
+QCAtMTAyLDcgKzEwMyw4IEBAIHN0YXRpYyB2b2lkIHJpc2N2X2lvbW11X3BjaV9yZWFsaXpl
+KFBDSURldmljZSAqZGV2LCBFcnJvciAqKmVycnApDQo+ICAgICAgIHFkZXZfcmVhbGl6ZShE
+RVZJQ0UoaW9tbXUpLCBOVUxMLCBlcnJwKTsNCj4gICANCj4gICAgICAgbWVtb3J5X3JlZ2lv
+bl9pbml0KCZzLT5iYXIwLCBPQkpFQ1QocyksICJyaXNjdi1pb21tdS1iYXIwIiwNCj4gLSAg
+ICAgICAgUUVNVV9BTElHTl9VUChtZW1vcnlfcmVnaW9uX3NpemUoJmlvbW11LT5yZWdzX21y
+KSwgVEFSR0VUX1BBR0VfU0laRSkpOw0KPiArICAgICAgICAgICAgICAgICAgICAgICBRRU1V
+X0FMSUdOX1VQKG1lbW9yeV9yZWdpb25fc2l6ZSgmaW9tbXUtPnJlZ3NfbXIpLA0KPiArICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHFlbXVfdGFyZ2V0X3BhZ2Vfc2l6
+ZSgpKSk7DQo+ICAgICAgIG1lbW9yeV9yZWdpb25fYWRkX3N1YnJlZ2lvbigmcy0+YmFyMCwg
+MCwgJmlvbW11LT5yZWdzX21yKTsNCj4gICANCj4gICAgICAgcGNpZV9lbmRwb2ludF9jYXBf
+aW5pdChkZXYsIDApOw0KPiBkaWZmIC0tZ2l0IGEvaHcvcmlzY3YvcmlzY3YtaW9tbXUuYyBi
+L2h3L3Jpc2N2L3Jpc2N2LWlvbW11LmMNCj4gaW5kZXggZTc1NjhjYTIyN2EuLjhiYmIzM2I4
+YjUzIDEwMDY0NA0KPiAtLS0gYS9ody9yaXNjdi9yaXNjdi1pb21tdS5jDQo+ICsrKyBiL2h3
+L3Jpc2N2L3Jpc2N2LWlvbW11LmMNCj4gQEAgLTIzLDYgKzIzLDcgQEANCj4gICAjaW5jbHVk
+ZSAiaHcvcWRldi1wcm9wZXJ0aWVzLmgiDQo+ICAgI2luY2x1ZGUgImh3L3Jpc2N2L3Jpc2N2
+X2hhcnQuaCINCj4gICAjaW5jbHVkZSAibWlncmF0aW9uL3Ztc3RhdGUuaCINCj4gKyNpbmNs
+dWRlICJleGVjL3RhcmdldF9wYWdlLmgiDQo+ICAgI2luY2x1ZGUgInFhcGkvZXJyb3IuaCIN
+Cj4gICAjaW5jbHVkZSAicWVtdS90aW1lci5oIg0KPiAgIA0KPiBAQCAtMzAwLDE0ICszMDEs
+MTQgQEAgc3RhdGljIGludCByaXNjdl9pb21tdV9zcGFfZmV0Y2goUklTQ1ZJT01NVVN0YXRl
+ICpzLCBSSVNDVklPTU1VQ29udGV4dCAqY3R4LA0KPiAgICAgICAgICAgcmlzY3ZfaW9tbXVf
+bXNpX2NoZWNrKHMsIGN0eCwgaW90bGItPmlvdmEpKSB7DQo+ICAgICAgICAgICBpb3RsYi0+
+dGFyZ2V0X2FzID0gJnMtPnRyYXBfYXM7DQo+ICAgICAgICAgICBpb3RsYi0+dHJhbnNsYXRl
+ZF9hZGRyID0gaW90bGItPmlvdmE7DQo+IC0gICAgICAgIGlvdGxiLT5hZGRyX21hc2sgPSB+
+VEFSR0VUX1BBR0VfTUFTSzsNCj4gKyAgICAgICAgaW90bGItPmFkZHJfbWFzayA9IH5xZW11
+X3RhcmdldF9wYWdlX21hc2soKTsNCj4gICAgICAgICAgIHJldHVybiAwOw0KPiAgICAgICB9
+DQo+ICAgDQo+ICAgICAgIC8qIEV4aXQgZWFybHkgZm9yIHBhc3MtdGhyb3VnaCBtb2RlLiAq
+Lw0KPiAgICAgICBpZiAoIShlbl9zIHx8IGVuX2cpKSB7DQo+ICAgICAgICAgICBpb3RsYi0+
+dHJhbnNsYXRlZF9hZGRyID0gaW90bGItPmlvdmE7DQo+IC0gICAgICAgIGlvdGxiLT5hZGRy
+X21hc2sgPSB+VEFSR0VUX1BBR0VfTUFTSzsNCj4gKyAgICAgICAgaW90bGItPmFkZHJfbWFz
+ayA9IH5xZW11X3RhcmdldF9wYWdlX21hc2soKTsNCj4gICAgICAgICAgIC8qIEFsbG93IFIv
+VyBpbiBwYXNzLXRocm91Z2ggbW9kZSAqLw0KPiAgICAgICAgICAgaW90bGItPnBlcm0gPSBJ
+T01NVV9SVzsNCj4gICAgICAgICAgIHJldHVybiAwOw0KPiBAQCAtMzkwLDcgKzM5MSw3IEBA
+IHN0YXRpYyBpbnQgcmlzY3ZfaW9tbXVfc3BhX2ZldGNoKFJJU0NWSU9NTVVTdGF0ZSAqcywg
+UklTQ1ZJT01NVUNvbnRleHQgKmN0eCwNCj4gICAgICAgZG8gew0KPiAgICAgICAgICAgY29u
+c3QgdW5zaWduZWQgd2lkZW5lZCA9IChwYXNzICYmICFzY1twYXNzXS5zdGVwKSA/IDIgOiAw
+Ow0KPiAgICAgICAgICAgY29uc3QgdW5zaWduZWQgdmFfYml0cyA9IHdpZGVuZWQgKyBzY1tw
+YXNzXS5wdGlkeGJpdHM7DQo+IC0gICAgICAgIGNvbnN0IHVuc2lnbmVkIHZhX3NraXAgPSBU
+QVJHRVRfUEFHRV9CSVRTICsgc2NbcGFzc10ucHRpZHhiaXRzICoNCj4gKyAgICAgICAgY29u
+c3QgdW5zaWduZWQgdmFfc2tpcCA9IHFlbXVfdGFyZ2V0X3BhZ2VfYml0cygpICsgc2NbcGFz
+c10ucHRpZHhiaXRzICoNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAo
+c2NbcGFzc10ubGV2ZWxzIC0gMSAtIHNjW3Bhc3NdLnN0ZXApOw0KPiAgICAgICAgICAgY29u
+c3QgdW5zaWduZWQgaWR4ID0gKGFkZHIgPj4gdmFfc2tpcCkgJiAoKDEgPDwgdmFfYml0cykg
+LSAxKTsNCj4gICAgICAgICAgIGNvbnN0IGRtYV9hZGRyX3QgcHRlX2FkZHIgPSBiYXNlICsg
+aWR4ICogc2NbcGFzc10ucHRlc2l6ZTsNCj4gQEAgLTQ0OCw3ICs0NDksNyBAQCBzdGF0aWMg
+aW50IHJpc2N2X2lvbW11X3NwYV9mZXRjaChSSVNDVklPTU1VU3RhdGUgKnMsIFJJU0NWSU9N
+TVVDb250ZXh0ICpjdHgsDQo+ICAgICAgICAgICAgICAgYnJlYWs7ICAgICAgICAgICAgICAg
+IC8qIFJlc2VydmVkIGxlYWYgUFRFIGZsYWdzOiBQVEVfVyAqLw0KPiAgICAgICAgICAgfSBl
+bHNlIGlmICgocHRlICYgKFBURV9SIHwgUFRFX1cgfCBQVEVfWCkpID09IChQVEVfVyB8IFBU
+RV9YKSkgew0KPiAgICAgICAgICAgICAgIGJyZWFrOyAgICAgICAgICAgICAgICAvKiBSZXNl
+cnZlZCBsZWFmIFBURSBmbGFnczogUFRFX1cgKyBQVEVfWCAqLw0KPiAtICAgICAgICB9IGVs
+c2UgaWYgKHBwbiAmICgoMVVMTCA8PCAodmFfc2tpcCAtIFRBUkdFVF9QQUdFX0JJVFMpKSAt
+IDEpKSB7DQo+ICsgICAgICAgIH0gZWxzZSBpZiAocHBuICYgKCgxVUxMIDw8ICh2YV9za2lw
+IC0gcWVtdV90YXJnZXRfcGFnZV9iaXRzKCkpKSAtIDEpKSB7DQo+ICAgICAgICAgICAgICAg
+YnJlYWs7ICAgICAgICAgICAgICAgIC8qIE1pc2FsaWduZWQgUFBOICovDQo+ICAgICAgICAg
+ICB9IGVsc2UgaWYgKChpb3RsYi0+cGVybSAmIElPTU1VX1JPKSAmJiAhKHB0ZSAmIFBURV9S
+KSkgew0KPiAgICAgICAgICAgICAgIGJyZWFrOyAgICAgICAgICAgICAgICAvKiBSZWFkIGFj
+Y2VzcyBjaGVjayBmYWlsZWQgKi8NCj4gQEAgLTQ4MCw3ICs0ODEsNyBAQCBzdGF0aWMgaW50
+IHJpc2N2X2lvbW11X3NwYV9mZXRjaChSSVNDVklPTU1VU3RhdGUgKnMsIFJJU0NWSU9NTVVD
+b250ZXh0ICpjdHgsDQo+ICAgICAgICAgICAgICAgICAgIHJpc2N2X2lvbW11X21zaV9jaGVj
+ayhzLCBjdHgsIGJhc2UpKSB7DQo+ICAgICAgICAgICAgICAgICAgIC8qIFRyYXAgTVNJIHdy
+aXRlcyBhbmQgcmV0dXJuIEdQQSBhZGRyZXNzLiAqLw0KPiAgICAgICAgICAgICAgICAgICBp
+b3RsYi0+dGFyZ2V0X2FzID0gJnMtPnRyYXBfYXM7DQo+IC0gICAgICAgICAgICAgICAgaW90
+bGItPmFkZHJfbWFzayA9IH5UQVJHRVRfUEFHRV9NQVNLOw0KPiArICAgICAgICAgICAgICAg
+IGlvdGxiLT5hZGRyX21hc2sgPSB+cWVtdV90YXJnZXRfcGFnZV9tYXNrKCk7DQo+ICAgICAg
+ICAgICAgICAgICAgIHJldHVybiAwOw0KPiAgICAgICAgICAgICAgIH0NCj4gICANCj4gQEAg
+LTk1MCw3ICs5NTEsNyBAQCBzdGF0aWMgaW50IHJpc2N2X2lvbW11X2N0eF9mZXRjaChSSVND
+VklPTU1VU3RhdGUgKnMsIFJJU0NWSU9NTVVDb250ZXh0ICpjdHgpDQo+ICAgICAgICAgICAg
+KiAgIGRldmljZSBpbmRleDogWzIzOjE2XVsxNTo3XVs2OjBdDQo+ICAgICAgICAgICAgKi8N
+Cj4gICAgICAgICAgIGNvbnN0IGludCBzcGxpdCA9IGRlcHRoICogOSArIDYgKyBkY19mbXQ7
+DQo+IC0gICAgICAgIGFkZHIgfD0gKChjdHgtPmRldmlkID4+IHNwbGl0KSA8PCAzKSAmIH5U
+QVJHRVRfUEFHRV9NQVNLOw0KPiArICAgICAgICBhZGRyIHw9ICgoY3R4LT5kZXZpZCA+PiBz
+cGxpdCkgPDwgMykgJiB+cWVtdV90YXJnZXRfcGFnZV9tYXNrKCk7DQo+ICAgICAgICAgICBp
+ZiAoZG1hX21lbW9yeV9yZWFkKHMtPnRhcmdldF9hcywgYWRkciwgJmRlLCBzaXplb2YoZGUp
+LA0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBNRU1UWEFUVFJTX1VOU1BFQ0lG
+SUVEKSAhPSBNRU1UWF9PSykgew0KPiAgICAgICAgICAgICAgIHJldHVybiBSSVNDVl9JT01N
+VV9GUV9DQVVTRV9ERFRfTE9BRF9GQVVMVDsNCj4gQEAgLTk2OCw3ICs5NjksNyBAQCBzdGF0
+aWMgaW50IHJpc2N2X2lvbW11X2N0eF9mZXRjaChSSVNDVklPTU1VU3RhdGUgKnMsIFJJU0NW
+SU9NTVVDb250ZXh0ICpjdHgpDQo+ICAgICAgIH0NCj4gICANCj4gICAgICAgLyogaW5kZXgg
+aW50byBkZXZpY2UgY29udGV4dCBlbnRyeSBwYWdlICovDQo+IC0gICAgYWRkciB8PSAoY3R4
+LT5kZXZpZCAqIGRjX2xlbikgJiB+VEFSR0VUX1BBR0VfTUFTSzsNCj4gKyAgICBhZGRyIHw9
+IChjdHgtPmRldmlkICogZGNfbGVuKSAmIH5xZW11X3RhcmdldF9wYWdlX21hc2soKTsNCj4g
+ICANCj4gICAgICAgbWVtc2V0KCZkYywgMCwgc2l6ZW9mKGRjKSk7DQo+ICAgICAgIGlmIChk
+bWFfbWVtb3J5X3JlYWQocy0+dGFyZ2V0X2FzLCBhZGRyLCAmZGMsIGRjX2xlbiwNCj4gQEAg
+LTEwMzcsNyArMTAzOCw3IEBAIHN0YXRpYyBpbnQgcmlzY3ZfaW9tbXVfY3R4X2ZldGNoKFJJ
+U0NWSU9NTVVTdGF0ZSAqcywgUklTQ1ZJT01NVUNvbnRleHQgKmN0eCkNCj4gICAgICAgICAg
+ICAqIGxldmVsLiBTZWUgSU9NTVUgU3BlY2lmaWNhdGlvbiwgMi4yLiBQcm9jZXNzLURpcmVj
+dG9yeS1UYWJsZS4NCj4gICAgICAgICAgICAqLw0KPiAgICAgICAgICAgY29uc3QgaW50IHNw
+bGl0ID0gZGVwdGggKiA5ICsgODsNCj4gLSAgICAgICAgYWRkciB8PSAoKGN0eC0+cHJvY2Vz
+c19pZCA+PiBzcGxpdCkgPDwgMykgJiB+VEFSR0VUX1BBR0VfTUFTSzsNCj4gKyAgICAgICAg
+YWRkciB8PSAoKGN0eC0+cHJvY2Vzc19pZCA+PiBzcGxpdCkgPDwgMykgJiB+cWVtdV90YXJn
+ZXRfcGFnZV9tYXNrKCk7DQo+ICAgICAgICAgICBpZiAoZG1hX21lbW9yeV9yZWFkKHMtPnRh
+cmdldF9hcywgYWRkciwgJmRlLCBzaXplb2YoZGUpLA0KPiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBNRU1UWEFUVFJTX1VOU1BFQ0lGSUVEKSAhPSBNRU1UWF9PSykgew0KPiAg
+ICAgICAgICAgICAgIHJldHVybiBSSVNDVl9JT01NVV9GUV9DQVVTRV9QRFRfTE9BRF9GQVVM
+VDsNCj4gQEAgLTEwNTAsNyArMTA1MSw3IEBAIHN0YXRpYyBpbnQgcmlzY3ZfaW9tbXVfY3R4
+X2ZldGNoKFJJU0NWSU9NTVVTdGF0ZSAqcywgUklTQ1ZJT01NVUNvbnRleHQgKmN0eCkNCj4g
+ICAgICAgfQ0KPiAgIA0KPiAgICAgICAvKiBMZWFmIGVudHJ5IGluIFBEVCAqLw0KPiAtICAg
+IGFkZHIgfD0gKGN0eC0+cHJvY2Vzc19pZCA8PCA0KSAmIH5UQVJHRVRfUEFHRV9NQVNLOw0K
+PiArICAgIGFkZHIgfD0gKGN0eC0+cHJvY2Vzc19pZCA8PCA0KSAmIH5xZW11X3RhcmdldF9w
+YWdlX21hc2soKTsNCj4gICAgICAgaWYgKGRtYV9tZW1vcnlfcmVhZChzLT50YXJnZXRfYXMs
+IGFkZHIsICZkYy50YSwgc2l6ZW9mKHVpbnQ2NF90KSAqIDIsDQo+ICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgTUVNVFhBVFRSU19VTlNQRUNJRklFRCkgIT0gTUVNVFhfT0spIHsNCj4g
+ICAgICAgICAgIHJldHVybiBSSVNDVl9JT01NVV9GUV9DQVVTRV9QRFRfTE9BRF9GQVVMVDsN
+Cj4gQEAgLTE0NDAsNyArMTQ0MSw3IEBAIHN0YXRpYyBpbnQgcmlzY3ZfaW9tbXVfdHJhbnNs
+YXRlKFJJU0NWSU9NTVVTdGF0ZSAqcywgUklTQ1ZJT01NVUNvbnRleHQgKmN0eCwNCj4gICAg
+ICAgcGVybSA9IGlvdCA/IGlvdC0+cGVybSA6IElPTU1VX05PTkU7DQo+ICAgICAgIGlmIChw
+ZXJtICE9IElPTU1VX05PTkUpIHsNCj4gICAgICAgICAgIGlvdGxiLT50cmFuc2xhdGVkX2Fk
+ZHIgPSBQUE5fUEhZUyhpb3QtPnBoeXMpOw0KPiAtICAgICAgICBpb3RsYi0+YWRkcl9tYXNr
+ID0gflRBUkdFVF9QQUdFX01BU0s7DQo+ICsgICAgICAgIGlvdGxiLT5hZGRyX21hc2sgPSB+
+cWVtdV90YXJnZXRfcGFnZV9tYXNrKCk7DQo+ICAgICAgICAgICBpb3RsYi0+cGVybSA9IHBl
+cm07DQo+ICAgICAgICAgICBmYXVsdCA9IDA7DQo+ICAgICAgICAgICBnb3RvIGRvbmU7DQo+
+IEBAIC0xNDgxLDcgKzE0ODIsNyBAQCBkb25lOg0KPiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBSSVNDVl9JT01NVV9QUkVRX0hEUl9QSUQsIGN0eC0+cHJvY2Vzc19pZCk7
+DQo+ICAgICAgICAgICB9DQo+ICAgICAgICAgICBwci5oZHIgPSBzZXRfZmllbGQocHIuaGRy
+LCBSSVNDVl9JT01NVV9QUkVRX0hEUl9ESUQsIGN0eC0+ZGV2aWQpOw0KPiAtICAgICAgICBw
+ci5wYXlsb2FkID0gKGlvdGxiLT5pb3ZhICYgVEFSR0VUX1BBR0VfTUFTSykgfA0KPiArICAg
+ICAgICBwci5wYXlsb2FkID0gKGlvdGxiLT5pb3ZhICYgcWVtdV90YXJnZXRfcGFnZV9tYXNr
+KCkpIHwNCj4gICAgICAgICAgICAgICAgICAgICAgICBSSVNDVl9JT01NVV9QUkVRX1BBWUxP
+QURfTTsNCj4gICAgICAgICAgIHJpc2N2X2lvbW11X3ByaShzLCAmcHIpOw0KPiAgICAgICAg
+ICAgcmV0dXJuIGZhdWx0Ow0KPiBAQCAtMTY4Myw3ICsxNjg0LDcgQEAgc3RhdGljIHZvaWQg
+cmlzY3ZfaW9tbXVfcHJvY2Vzc19jcV90YWlsKFJJU0NWSU9NTVVTdGF0ZSAqcykNCj4gICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBSSVNDVl9JT01NVV9DTURf
+SU9USU5WQUxfR1NDSUQpOw0KPiAgICAgICAgICAgICAgIHVpbnQzMl90IHBzY2lkID0gZ2V0
+X2ZpZWxkKGNtZC5kd29yZDAsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgUklTQ1ZfSU9NTVVfQ01EX0lPVElOVkFMX1BTQ0lEKTsNCj4gLSAgICAgICAg
+ICAgIGh3YWRkciBpb3ZhID0gKGNtZC5kd29yZDEgPDwgMikgJiBUQVJHRVRfUEFHRV9NQVNL
+Ow0KPiArICAgICAgICAgICAgaHdhZGRyIGlvdmEgPSAoY21kLmR3b3JkMSA8PCAyKSAmIHFl
+bXVfdGFyZ2V0X3BhZ2VfbWFzaygpOw0KPiAgIA0KPiAgICAgICAgICAgICAgIGlmIChwc2N2
+KSB7DQo+ICAgICAgICAgICAgICAgICAgIC8qIGlsbGVnYWwgY29tbWFuZCBhcmd1bWVudHMg
+SU9USU5WQUwuR1ZNQSAmIFBTQ1YgPT0gMSAqLw0KPiBAQCAtMTcxNSw3ICsxNzE2LDcgQEAg
+c3RhdGljIHZvaWQgcmlzY3ZfaW9tbXVfcHJvY2Vzc19jcV90YWlsKFJJU0NWSU9NTVVTdGF0
+ZSAqcykNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBSSVND
+Vl9JT01NVV9DTURfSU9USU5WQUxfR1NDSUQpOw0KPiAgICAgICAgICAgICAgIHVpbnQzMl90
+IHBzY2lkID0gZ2V0X2ZpZWxkKGNtZC5kd29yZDAsDQo+ICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgUklTQ1ZfSU9NTVVfQ01EX0lPVElOVkFMX1BTQ0lEKTsN
+Cj4gLSAgICAgICAgICAgIGh3YWRkciBpb3ZhID0gKGNtZC5kd29yZDEgPDwgMikgJiBUQVJH
+RVRfUEFHRV9NQVNLOw0KPiArICAgICAgICAgICAgaHdhZGRyIGlvdmEgPSAoY21kLmR3b3Jk
+MSA8PCAyKSAmIHFlbXVfdGFyZ2V0X3BhZ2VfbWFzaygpOw0KPiAgICAgICAgICAgICAgIFJJ
+U0NWSU9NTVVUcmFuc1RhZyB0cmFuc3RhZzsNCj4gICANCj4gICAgICAgICAgICAgICBpZiAo
+Z3YpIHsNCj4gQEAgLTE5MjgsNyArMTkyOSw3IEBAIHN0YXRpYyB2b2lkIHJpc2N2X2lvbW11
+X3Byb2Nlc3NfZGJnKFJJU0NWSU9NTVVTdGF0ZSAqcykNCj4gICAgICAgICAgICAgICBpb3Zh
+ID0gUklTQ1ZfSU9NTVVfVFJfUkVTUE9OU0VfRkFVTFQgfCAoKCh1aW50NjRfdCkgZmF1bHQp
+IDw8IDEwKTsNCj4gICAgICAgICAgIH0gZWxzZSB7DQo+ICAgICAgICAgICAgICAgaW92YSA9
+IGlvdGxiLnRyYW5zbGF0ZWRfYWRkciAmIH5pb3RsYi5hZGRyX21hc2s7DQo+IC0gICAgICAg
+ICAgICBpb3ZhID4+PSBUQVJHRVRfUEFHRV9CSVRTOw0KPiArICAgICAgICAgICAgaW92YSA+
+Pj0gcWVtdV90YXJnZXRfcGFnZV9iaXRzKCk7DQo+ICAgICAgICAgICAgICAgaW92YSAmPSBS
+SVNDVl9JT01NVV9UUl9SRVNQT05TRV9QUE47DQo+ICAgDQo+ICAgICAgICAgICAgICAgLyog
+V2UgZG8gbm90IHN1cHBvcnQgc3VwZXJwYWdlcyAoPiA0a2JzKSBmb3Igbm93ICovDQoNCkdy
+ZWF0IGFuZCBzaW1wbGUgY2xlYW51cC4NClJldmlld2VkLWJ5OiBQaWVycmljayBCb3V2aWVy
+IDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo=
 
