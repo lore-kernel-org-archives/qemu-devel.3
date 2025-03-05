@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE7A0C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 714E4C282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:03:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdxW-0002RA-Jk; Tue, 04 Mar 2025 20:54:06 -0500
+	id 1tpdxU-0002Hh-Ad; Tue, 04 Mar 2025 20:54:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdxU-0002JA-NA
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:54:04 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tpdxS-0002C3-3j
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:54:02 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdxS-0008Ri-UN
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:54:04 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-22382657540so72560605ad.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:54:02 -0800 (PST)
+ id 1tpdxQ-0008R4-85
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:54:01 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2238d965199so61658345ad.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:53:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741139641; x=1741744441; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741139638; x=1741744438; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3gwT/mHctmBjF+WNI/x5iyqj1CcCUESDeIppQlEyHlo=;
- b=BYkejdQKYEXOd/RkYb1VlVNSsjS0MOQUdZbI4LOe3dces3phgvtqqyHtBnW1YoSLXG
- 2WoqZqO7O+aNvrWYND2detg6P2k29MLJJ+4DL6NvBOodZJdeAMN8arifsA/kLVt1PGKr
- 74NhOLwRQhGBcU+ESNIdG8oV/oqmBb4ws90+gPsqYNtfCDwhDV7gwvpXrqZ9Aq1rmGx9
- q1nH+VwFeDHvDekV6MbvoPNfEeWVpfEP9s2TMBw9TsdkFnCYfyrCZviDZy3E5/uG/INI
- idNX2S7OH/4uhxtO+bhJs1jBhqZf+R7qd3ECmAkxP64ubbDmZ3FvA+omsmiaf/KNTlKN
- Q19g==
+ bh=S3RPKYD/bhhgWxhDcoNiZL6fbw8dpzm/Vt1b7Obkvv0=;
+ b=bKHvtPomEdEyHsERNfm6gbIG5GwcIPB8ZMR60XeJ0prmC6qwBJVXkPi2s3jcKrJMJv
+ l2tvab1EVlcHhC1mxydaKz8xAau+upFOAcSIEgx7nfRbpze/lugtubVAVs+BaOOBEsPU
+ 3mK2D+Px1fMvaqKIMCqoUF0KOs7KJ5XqQaeOVZgfVZeb1yE/4CG9u4/GATNVUTWkMINA
+ Q+Y+o+Ny944JtRLC/uKdBySC7ecZGOAbuCHkOx1e2/gjqukBlQYveg/RBIrThoxl50Sg
+ eHUhR+gA96rDYYZIs8Yy3ozAUTjKAOYUJg5CG4hjF/qMYpb1ro80Kcvt7a6+cHhBae7Z
+ bYEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741139641; x=1741744441;
+ d=1e100.net; s=20230601; t=1741139638; x=1741744438;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3gwT/mHctmBjF+WNI/x5iyqj1CcCUESDeIppQlEyHlo=;
- b=KeIqT0kaqgubZOQqfQ1eRni6z/4ZmB/ov6JzMlZnKivI9OvTFko2GCTE9IucuTFKUl
- vcXfO4Eu2revgW1rmizWtT5rJ1ryaVtWn4b4+mW2DS+dtAOqyeKmFjV7zjzBLzIxi2bP
- kN1cwwF2V8nWJFP4qrV3oG4C9P/S8iRoNZChH0H5zrP6BIiQW47e+unM8nKylSKlKRoB
- GUA2f4dNZjNfnAB39hJmxcb6XOd/UGa5GucFxCaxFVzxHQzwAR+gtFTmu+GcEyccaow9
- rFlWeVO1dK/uOWz1r1UgGvIGXYrnFY2VRh7wc0i4DZfK10bC7EICvKjga9eTl43W1+X4
- hb6g==
-X-Gm-Message-State: AOJu0YxRc474lC5kXH+wRdCtbIZIfv9Ht23KWo18wpC7yAGuELUgIe5V
- cJtDEaz3Rgfkr4iejeaAWA4A//3ycSGHUR6n6xMdWdYm7Zq+IJUMCf+orYJVSLU=
-X-Gm-Gg: ASbGncv84lxVvua5Q4Hrb1LukjUfq4a65xk+NDn7S14ruhwPajyENOsSk+buk9A2igk
- MvOzXGzBpEB/HcfZGLRTpmCqWgxlDqehF84Tp6hF8ZpyPzb/8q0e59Unu/T/bVOPjZDAOzIShLN
- XLxHNTPNpeWj1P+hw6Hc9KFKniobyyuTcrw1BbK5LpXY1bSrl1ahnOApwTFxX37qMfh3HqNFpZF
- jPSFU1ipmBh6xOBZm39HcZNfbGImmVGt1d9YdQO8oxav+30kcz3mPowXVys0qrf2J7YOYO7/X3n
- su7jVq2aOAgxMvqpuxhzc6nViO+ae6/nOS1RfEDZ0qJvAVbpAxd62xDFZXxBBAX2+y7T/kJ2rsV
- 6XoGvBz6DYSLJtT5h7m1me0M2o4rmzWe7vMyHcy8YoKKctkaYuBk=
-X-Google-Smtp-Source: AGHT+IEnol7siEUTSQki6ybi0P6NZ4StvYPYYiQTCXiiG44Hiqv4NM0qDZAOffNbQ66TbSsHAEsXuw==
-X-Received: by 2002:a17:902:da88:b0:220:d532:834e with SMTP id
- d9443c01a7336-223f1c829ffmr17552245ad.19.1741139641375; 
- Tue, 04 Mar 2025 17:54:01 -0800 (PST)
+ bh=S3RPKYD/bhhgWxhDcoNiZL6fbw8dpzm/Vt1b7Obkvv0=;
+ b=Sj6lsNjLopWgKYmGWECMWo6qc2Ah9YZ5a8Ck9pTHwV1uHy5xBA+XawKsa28+edR5Ow
+ OS71lvSLOPOuVBEvjmwMjweGVIvPmSiNmEQ3dzWKfplIGMPZ4y3kxXVsTTxy3D0BPyPn
+ GHPZoARAeT2CEgHZqnswQlzW3pQAs/AOMLJts/l9pe3Nc6dYZ7wwBZlO1X0txgt3BAQa
+ +BL4KDgIAzYTRqReoFI/xLOXBBsfxYIzJxaFHptHGJlmJz6qvHw8c/IGhnQ8L4fYpQsP
+ XyMtPUYEiyQEUALLKnU8+2c4Q/XtzkvXgs5t+pOynyqy9wczSo09ogpCNOsldhW2bLdO
+ uKJA==
+X-Gm-Message-State: AOJu0Ywuv7lhtKpVA5eZmqE+NdNZNTtweN8dIpoQRxT5YmkzDJDRrgJz
+ JCDFvu6W2/ooiL0aS+v9Cb8bXS8R8tLB0obW/cIXI9eK2pqdOsmo72gCbW1qaoc=
+X-Gm-Gg: ASbGncuKRp49oNp6G2AKIvgiDInFCk/pl3rUkwc77KlmabYXTKjMKI31iuJ6oyu5oPe
+ blo1yopRHeH/2LL8ftS5XmxvPEkm3aQ5sOTiPQ69/cz2KGNCMQf1HCgYX8MGN5pO2j3EjGXuXGt
+ Y81n8UtUJjpoPG0ENubH8JKfVEBvoT1sFEwJ7RDEtY0n9b0ASbbo8GTsxqikL8Mwhx6Pr1oCpg2
+ rzQWZ8zO1PUTuyNd9j0bRChIRxAgd/XQ7KKvezkgb+qZdfKIw+Ur91fPmNEc38d8JM6U9QNqXw7
+ dhiZB+c+J22SMPUm1Z7qBsyHBntW+1NMnToAdnbrUQIVb1mP5Jo16/7vWVoZPT3rJKJy9ws/rqg
+ BuMDWarN/+f/PkVzX15YMy15M8DOvU0feWxvMqFfTRuifneAqNlY=
+X-Google-Smtp-Source: AGHT+IHKLoM6GGtDAx1ojq6dEoqAJikdzBbs4s+XjsvO2h97ktXR6mYBka9wXaGfmDoQXgxnfL1Uzg==
+X-Received: by 2002:a17:903:244d:b0:223:67e1:401f with SMTP id
+ d9443c01a7336-223f1d34f8amr22625705ad.48.1741139638374; 
+ Tue, 04 Mar 2025 17:53:58 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.53.58
+ d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.53.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 17:54:00 -0800 (PST)
+ Tue, 04 Mar 2025 17:53:57 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Andrew Jones <ajones@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 16/59] target/riscv: add RVA23S64 profile
-Date: Wed,  5 Mar 2025 11:52:24 +1000
-Message-ID: <20250305015307.1463560-17-alistair.francis@wdc.com>
+Subject: [PULL 15/59] target/riscv: add RVA23U64 profile
+Date: Wed,  5 Mar 2025 11:52:23 +1000
+Message-ID: <20250305015307.1463560-16-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305015307.1463560-1-alistair.francis@wdc.com>
 References: <20250305015307.1463560-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,77 +107,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Add RVA23S64 as described in [1]. This profile inherits all mandatory
-extensions of RVA23U64 and RVA22S64, making it a child of both profiles.
+Add RVA23U64 as described in [1]. Add it as a child of RVA22U64 since
+all RVA22U64 mandatory extensions are also present in RVA23U64. What's
+left then is to list the mandatory extensions that are RVA23 only.
 
-A new "rva23s64" profile CPU is also added. This is the generated
-riscv,isa for it (taken via -M dumpdtb):
-
-rv64imafdcbvh_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_
-ziccrse_zicond_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zimop_
-zmmul_za64rs_zaamo_zalrsc_zawrs_zfa_zfhmin_zca_zcb_zcd_zcmop_zba_zbb_zbs_
-zkt_zvbb_zve32f_zve32x_zve64f_zve64d_zve64x_zvfhmin_zvkb_zvkt_shcounterenw_
-sha_shgatpa_shtvala_shvsatpa_shvstvala_shvstvecd_smnpm_smstateen_ssccptr_
-sscofpmf_sscounterenw_ssnpm_ssstateen_sstc_sstvala_sstvecd_ssu64xl_
-supm_svade_svinval_svnapot_svpbmt
+A new "rva23u64" CPU is also added.
 
 [1] https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250115184316.2344583-7-dbarboza@ventanamicro.com>
+Message-ID: <20250115184316.2344583-6-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
  target/riscv/cpu-qom.h |  1 +
- target/riscv/cpu.c     | 39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+ target/riscv/cpu.c     | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
 diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 53ead481a9..4cfdb74891 100644
+index d56b067bf2..53ead481a9 100644
 --- a/target/riscv/cpu-qom.h
 +++ b/target/riscv/cpu-qom.h
-@@ -41,6 +41,7 @@
+@@ -40,6 +40,7 @@
+ #define TYPE_RISCV_CPU_RV64E            RISCV_CPU_TYPE_NAME("rv64e")
  #define TYPE_RISCV_CPU_RVA22U64         RISCV_CPU_TYPE_NAME("rva22u64")
  #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
- #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
-+#define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
++#define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
  #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
  #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
  #define TYPE_RISCV_CPU_SIFIVE_E31       RISCV_CPU_TYPE_NAME("sifive-e31")
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 511ed1df0e..3624ffb6d9 100644
+index 7b708bd010..511ed1df0e 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -2415,10 +2415,41 @@ static RISCVCPUProfile RVA23U64 = {
+@@ -2391,9 +2391,34 @@ static RISCVCPUProfile RVA22S64 = {
      }
  };
  
 +/*
-+ * As with RVA23U64, RVA23S64 also defines 'named features'.
-+ *
-+ * Cache related features that we consider enabled since we don't
-+ * implement cache: Ssccptr
-+ *
-+ * Other named features that we already implement: Sstvecd, Sstvala,
-+ * Sscounterenw, Ssu64xl
-+ *
-+ * The remaining features/extensions comes from RVA23S64.
++ * All mandatory extensions from RVA22U64 are present
++ * in RVA23U64 so set RVA22 as a parent. We need to
++ * declare just the newly added mandatory extensions.
 + */
-+static RISCVCPUProfile RVA23S64 = {
-+    .u_parent = &RVA23U64,
-+    .s_parent = &RVA22S64,
-+    .name = "rva23s64",
-+    .misa_ext = RVS,
-+    .priv_spec = PRIV_VERSION_1_13_0,
-+    .satp_mode = VM_1_10_SV39,
++static RISCVCPUProfile RVA23U64 = {
++    .u_parent = &RVA22U64,
++    .s_parent = NULL,
++    .name = "rva23u64",
++    .misa_ext = RVV,
++    .priv_spec = RISCV_PROFILE_ATTR_UNUSED,
++    .satp_mode = RISCV_PROFILE_ATTR_UNUSED,
 +    .ext_offsets = {
-+        /* New in RVA23S64 */
-+        CPU_CFG_OFFSET(ext_svnapot), CPU_CFG_OFFSET(ext_sstc),
-+        CPU_CFG_OFFSET(ext_sscofpmf), CPU_CFG_OFFSET(ext_ssnpm),
-+
-+        /* Named features: Sha */
-+        CPU_CFG_OFFSET(ext_sha),
++        CPU_CFG_OFFSET(ext_zvfhmin), CPU_CFG_OFFSET(ext_zvbb),
++        CPU_CFG_OFFSET(ext_zvkt), CPU_CFG_OFFSET(ext_zihintntl),
++        CPU_CFG_OFFSET(ext_zicond), CPU_CFG_OFFSET(ext_zimop),
++        CPU_CFG_OFFSET(ext_zcmop), CPU_CFG_OFFSET(ext_zcb),
++        CPU_CFG_OFFSET(ext_zfa), CPU_CFG_OFFSET(ext_zawrs),
++        CPU_CFG_OFFSET(ext_supm),
 +
 +        RISCV_PROFILE_EXT_LIST_END
 +    }
@@ -186,30 +172,29 @@ index 511ed1df0e..3624ffb6d9 100644
  RISCVCPUProfile *riscv_profiles[] = {
      &RVA22U64,
      &RVA22S64,
-     &RVA23U64,
-+    &RVA23S64,
++    &RVA23U64,
      NULL,
  };
  
-@@ -2912,6 +2943,13 @@ static void rva23u64_profile_cpu_init(Object *obj)
+@@ -2880,6 +2905,13 @@ static void rva22s64_profile_cpu_init(Object *obj)
  
-     RVA23U64.enabled = true;
+     RVA22S64.enabled = true;
  }
 +
-+static void rva23s64_profile_cpu_init(Object *obj)
++static void rva23u64_profile_cpu_init(Object *obj)
 +{
 +    rv64i_bare_cpu_init(obj);
 +
-+    RVA23S64.enabled = true;
++    RVA23U64.enabled = true;
 +}
  #endif
  
  static const gchar *riscv_gdb_arch_name(CPUState *cs)
-@@ -3183,6 +3221,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+@@ -3150,6 +3182,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+     DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV64E,        MXL_RV64,  rv64e_bare_cpu_init),
      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22U64,  MXL_RV64,  rva22u64_profile_cpu_init),
      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22S64,  MXL_RV64,  rva22s64_profile_cpu_init),
-     DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23U64,  MXL_RV64,  rva23u64_profile_cpu_init),
-+    DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23S64,  MXL_RV64,  rva23s64_profile_cpu_init),
++    DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23U64,  MXL_RV64,  rva23u64_profile_cpu_init),
  #endif /* TARGET_RISCV64 */
  };
  
