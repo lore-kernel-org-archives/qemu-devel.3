@@ -4,58 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF3BAC282DE
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:50:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0802C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tprx9-0005X9-3e; Wed, 05 Mar 2025 11:50:39 -0500
+	id 1tprxX-0006Q0-4S; Wed, 05 Mar 2025 11:51:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liuwe@linux.microsoft.com>)
- id 1tprx5-0005S7-Je
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:50:36 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <liuwe@linux.microsoft.com>) id 1tprx3-0005cf-Kl
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:50:35 -0500
-Received: by linux.microsoft.com (Postfix, from userid 1031)
- id E1BDF210EAE4; Wed,  5 Mar 2025 08:50:29 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E1BDF210EAE4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1741193429;
- bh=HD2Q2eqBSr1Bd7VFPhpDWcZaGl1xY563UZIDx59DpZU=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=iA1sMgSOsEjeosxmcwM89UNmvxzGIJ1xSfVUJNDZriQ5HAeUJhqkyGijBAfAojElG
- 40T+cO0psT0pqVrX3fz/rK2w0CJ9zBd49FDfbBiUizqxmnvPcmkcACmAubf35ot+V/
- LyejZRtqghxaRPQ3AH81kWKOHX2NvXIP4XzLtNuQ=
-Date: Wed, 5 Mar 2025 08:50:29 -0800
-From: Wei Liu <liuwe@linux.microsoft.com>
-To: qemu-devel@nongnu.org, dirty@apple.com, rbolshakov@ddn.com,
- phil@philjordan.eu
-Cc: wei.liu@kernel.org, dirty@apple.com, rbolshakov@ddn.com,
- phil@philjordan.eu, jinankjain@linux.microsoft.com,
- liuwe@microsoft.com, muislam@microsoft.com,
- ziqiaozhou@microsoft.com, mukeshrathor@microsoft.com,
- magnuskulke@microsoft.com, prapal@microsoft.com,
- jpiotrowski@microsoft.com, deviv@microsoft.com,
- Wei Liu <liuwe@linux.microsoft.com>
-Subject: Re: [RFC PATCH v1 00/19] Factor out HVF's instruction emulator
-Message-ID: <20250305165029.GA23337@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <1740126987-8483-1-git-send-email-liuwe@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tprxV-0006Ol-2W
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:51:01 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tprxT-0005gM-7Y
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:51:00 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2ff087762bbso5868824a91.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:50:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741193457; x=1741798257; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xeT3l/cI6dYhk6CCWxAR99Ty24erewOyRJArRv3oOMI=;
+ b=JBr3XNVPFbbnVy/K+CZZ8NVmFJUGS8lvu/rY+HnxaPkI4ux9oU7OP3t1xAfv2aXPdG
+ VRkyZkAnQ/QXniAaYAIrBJ2SUurQGUd1PNUlLYySxjvc0U3eTLLoOrJmbt0Y/p+MGjQi
+ mdmMKC38s9jtnahSwPYBqEcA6XZ3vcL47WeOSaIj/LQ7P/MnB30X8TpYiGBkSh+skGAW
+ ZdMAZyE7x74QFaHV+S5ZKzTDFr9sQcf0wFvOB5uUlK+NLQTJd+SGm3qG0h2pm2OTgopP
+ uNiBmLICZ2njNwd8hRD65gmE0sSnOyzOTW0YzlcVWlxAuVr9DsHGJV2GGJKvjUHXjZFJ
+ 1N0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741193457; x=1741798257;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xeT3l/cI6dYhk6CCWxAR99Ty24erewOyRJArRv3oOMI=;
+ b=iPj4YSgSfqm70OD63kWBWSfntB8baC079er1BrV+VBCQTXaxCzQOJbllaeqiAT+g+O
+ akJ4EXrtiN/r3nRDszvwkDYwmJZZqmBYHmHpqpI1iKBzDlzTAEOpgd7UFwnNSqvA/lW+
+ sV+s2LfbuyLMSi5RwXg3zTnAFvnqcePy8/CWy9mNCCe+0UB+Z+ntS2EBNwRDAUYgqeKJ
+ 5IFW6RR0ol4MbacCupSWbyDuEWTqjcqUxfrIGQ9xL0lrjZkxbYqeqiaJmIcaICKTbRox
+ PzTfddK4c5OOpp4NZRHb5L5ay0S7qc8jo7hoqZXRG8cgfxXwtimSLVTNPNIbzqc2SlQi
+ hBMg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzi9hTRwkCqacEiTL16VFbIaoT5v2wfEaJONMUBwk2JFWabdOeMQwXI05RRQAIObRWnN3+qiDRDLsF@nongnu.org
+X-Gm-Message-State: AOJu0YwvCh2n2pGYSipZ5VFDA/ervzlsHXC6WBJlZvHDD/Wn4BEeOwN9
+ wgyAbVIzbsvMzszo53PPynvEJ5K/XZ9jyh/G6Rzi14fWDSbQ+3dvrcgrZJy7M6I=
+X-Gm-Gg: ASbGncue4lxbofSeeI6YHe+C1Slhw8kq5C2vCh4/bIL6AERWV4wG8zykwekBUsXZQP8
+ YV07t02IqUAwZaAF53WCJGzl3BqxDYtgoYORgDNL9SWz2vcu1TP+HZMTPUz7hOwEoUUBLxw3Fk0
+ kbmVBRxxzIxajk9Wcr4/xP9roeRYiBhsXWTmK1sSwovx2klADxoFOVxboPzMA5kk6AW89pVBArC
+ tc/mFTLI16dSXHdIrWUAEl74+4DRx+i7lu8W8MMThRTL5dYbqHQiyGsrnRrixHgYuGif3LXX8Aq
+ Lz6xq7pVgLlZXYHd2ECVsY5DFlPkgRO3T2PSqkuIJLPQNkmjK6RjSnMvlw==
+X-Google-Smtp-Source: AGHT+IGRuXzFQV5pln0jUWmCxuqDp+LEAu9oAFQQ+G/hbWQPwQvqx2wLBnx8nePa/B8GokbSf9yaCg==
+X-Received: by 2002:a17:90b:390f:b0:2fe:b016:a6a1 with SMTP id
+ 98e67ed59e1d1-2ff497fec8fmr6416674a91.29.1741193457592; 
+ Wed, 05 Mar 2025 08:50:57 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ff4e773dddsm1570256a91.12.2025.03.05.08.50.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Mar 2025 08:50:57 -0800 (PST)
+Message-ID: <391c4a7d-8dae-497b-b5f4-975d41b3252a@linaro.org>
+Date: Wed, 5 Mar 2025 08:50:56 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1740126987-8483-1-git-send-email-liuwe@linux.microsoft.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=liuwe@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/4] hw/arm/raspi: Replace TARGET_AARCH64 by
+ legacy_binary_is_64bit()
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20250305161248.54901-1-philmd@linaro.org>
+ <20250305161248.54901-3-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250305161248.54901-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,54 +109,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cameron, Roman and Phil,
-
-On Fri, Feb 21, 2025 at 12:36:08AM -0800, Wei Liu wrote:
-> Hi,
-> 
-> Microsoft's Linux Systems Group developed a Linux driver for the Microsoft
-> Hypervisor (MSHV for short). The driver is being upstreamed. The first
-> supported VMM is Cloud Hypervisor. QEMU will be the second supported
-> VMM.
-> 
-> The plan is to write an mshv accelerator in QEMU. The accelerator is still in
-> the works.
-> 
-> MSHV doesn't emulate instructions. VMMs are supposed to bring their own
-> instruction emulator. The path we've chosen is to reuse what's already in QEMU.
-> The instruction emulator in HVF looks good for what we need.
-> 
-> This patch series attempts to make the instruction emulator in HVF a common
-> component for the i386 target. It removes HVF specific code by either using a
-> set of hooks or moving it to better locations. The new incoming MSHV
-> accelerator will implement the hooks, and where necessary, enhance the emulator
-> and / or add new hooks.
-> 
-> This patch series is in RFC state. The patches have been lightly tested by
-> running a Linux VM on an Intel-based Mac.  We hope to get some feedback on the
-> overall approach, and let the community bikeshed a bit about names and
-> location.
-> 
-> First two patches fix issues in the existing code. They can be applied
-> regardless of the discussion around the overall approach.
-> 
-> The checkpatch script complains about a few things. Some are from the original
-> code I didn't touch. For the code I changed or moved, it complains that some
-> lines are long (>80). Seeing that the rule was not followed strictly in the old
-> code base, I held off fixing that class of issues. The other thing it complains
-> is there is no entry for the new directory in MAINTAINERS. We can fix these
-> issues if they are deemed important.
-> 
-> Please let us know what you think. The alternative is to duplicate the
-> instruction emulator code in the mshv accelerator. That looks to be a worse
-> option.
-> 
-
-As the maintainers of this code, do you have any comments on this?
-
-I have addressed the comments from Paolo. I'm wondering if I should wait
-for your input or just post another version.
-
-Thanks,
-Wei.
+T24gMy81LzI1IDA4OjEyLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gRm9y
+IGxlZ2FjeSBBUk0gYmluYXJpZXMsIGxlZ2FjeV9iaW5hcnlfaXNfNjRiaXQoKSBpcw0KPiBl
+cXVpdmFsZW50IG9mIHRoZSBjb21waWxlIHRpbWUgVEFSR0VUX0FBUkNINjQgZGVmaW5pdGlv
+bi4NCj4gDQoNCkknbSBub3Qgc3VyZSB3aGVyZSB0aGlzIGZ1bmN0aW9uIGNvbWVzIGZyb20u
+DQoNCkFueXdheSwgdG8gY29tcGxldGVseSByZXBsYWNlIFRBUkdFVF9BQVJDSDY0LCB3aGF0
+IHdlIHdhbnQgaXMgc29tZXRoaW5nIA0KbGlrZTogdGFyZ2V0X2lzX2FhcmNoNjQoKSwgYmVj
+YXVzZSBhbGwgdGhlIG9iamVjdHMgaW4gdGhpcyBmaWxlIHNob3VsZCANCm5vdCBiZSBlbmFi
+bGVkIGZvciA2NCBiaXRzIHRhcmdldHMgd2hvIGFyZSBub3QgYXJtIGJhc2VkLg0KDQpTbyBp
+dCdzIG1vcmUgZWFzeSB0byBpbnRyb2R1Y2UgYSBzcGVjaWZpYyBmdW5jdGlvbiAqcGVyKiB0
+YXJnZXQsIGFuZCANCmVuYWJsZSBvYmplY3RzIG9uIGEgcGVyIG5lZWQgYmFzaXMuIFNvbWUg
+d2lsbCBiZSBlbmFibGVkIGZvciBhbGwgDQp0YXJnZXRzLCBzb21lIGZvciBvbmx5IG9uZSwg
+c29tZSBmb3IgYSBzcGVjaWZpYyBzZWxlY3Rpb24uDQoNCj4gVXNlIGl0IGFzIFR5cGVJbmZv
+OjpyZWdpc3RlcmFibGUoKSBjYWxsYmFjayB0byBkeW5hbWljYWxseQ0KPiBhZGQgQWFyY2g2
+NCBzcGVjaWZpYyB0eXBlcyBpbiBxZW11LXN5c3RlbS1hYXJjaDY0IGJpbmFyeSwNCj4gcmVt
+b3ZpbmcgdGhlIG5lZWQgb2YgVEFSR0VUX0FBUkNINjQgI2lmZGVmJ3J5Lg0KPiANCj4gU2ln
+bmVkLW9mZi1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3Jn
+Pg0KPiAtLS0NCj4gICBody9hcm0vYmNtMjgzNi5jIHwgNiArKy0tLS0NCj4gICBody9hcm0v
+cmFzcGkuYyAgIHwgNyArKystLS0tDQo+ICAgMiBmaWxlcyBjaGFuZ2VkLCA1IGluc2VydGlv
+bnMoKyksIDggZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvaHcvYXJtL2JjbTI4
+MzYuYyBiL2h3L2FybS9iY20yODM2LmMNCj4gaW5kZXggOTVlMTY4MDZmYTEuLjg4YTMyZTVm
+YzIwIDEwMDY0NA0KPiAtLS0gYS9ody9hcm0vYmNtMjgzNi5jDQo+ICsrKyBiL2h3L2FybS9i
+Y20yODM2LmMNCj4gQEAgLTEyLDYgKzEyLDcgQEANCj4gICAjaW5jbHVkZSAicWVtdS9vc2Rl
+cC5oIg0KPiAgICNpbmNsdWRlICJxYXBpL2Vycm9yLmgiDQo+ICAgI2luY2x1ZGUgInFlbXUv
+bW9kdWxlLmgiDQo+ICsjaW5jbHVkZSAicWVtdS9sZWdhY3lfYmluYXJ5X2luZm8uaCINCj4g
+ICAjaW5jbHVkZSAiaHcvYXJtL2JjbTI4MzYuaCINCj4gICAjaW5jbHVkZSAiaHcvYXJtL3Jh
+c3BpX3BsYXRmb3JtLmgiDQo+ICAgI2luY2x1ZGUgImh3L3N5c2J1cy5oIg0KPiBAQCAtMTk1
+LDcgKzE5Niw2IEBAIHN0YXRpYyB2b2lkIGJjbTI4MzZfY2xhc3NfaW5pdChPYmplY3RDbGFz
+cyAqb2MsIHZvaWQgKmRhdGEpDQo+ICAgICAgIGRjLT5yZWFsaXplID0gYmNtMjgzNl9yZWFs
+aXplOw0KPiAgIH07DQo+ICAgDQo+IC0jaWZkZWYgVEFSR0VUX0FBUkNINjQNCj4gICBzdGF0
+aWMgdm9pZCBiY20yODM3X2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MgKm9jLCB2b2lkICpkYXRh
+KQ0KPiAgIHsNCj4gICAgICAgRGV2aWNlQ2xhc3MgKmRjID0gREVWSUNFX0NMQVNTKG9jKTsN
+Cj4gQEAgLTIwOCw3ICsyMDgsNiBAQCBzdGF0aWMgdm9pZCBiY20yODM3X2NsYXNzX2luaXQo
+T2JqZWN0Q2xhc3MgKm9jLCB2b2lkICpkYXRhKQ0KPiAgICAgICBiYy0+Y2x1c3RlcmlkID0g
+MHgwOw0KPiAgICAgICBkYy0+cmVhbGl6ZSA9IGJjbTI4MzZfcmVhbGl6ZTsNCj4gICB9Ow0K
+PiAtI2VuZGlmDQo+ICAgDQo+ICAgc3RhdGljIGNvbnN0IFR5cGVJbmZvIGJjbTI4M3hfdHlw
+ZXNbXSA9IHsNCj4gICAgICAgew0KPiBAQCAtMjE5LDEyICsyMTgsMTEgQEAgc3RhdGljIGNv
+bnN0IFR5cGVJbmZvIGJjbTI4M3hfdHlwZXNbXSA9IHsNCj4gICAgICAgICAgIC5uYW1lICAg
+ICAgICAgICA9IFRZUEVfQkNNMjgzNiwNCj4gICAgICAgICAgIC5wYXJlbnQgICAgICAgICA9
+IFRZUEVfQkNNMjgzWCwNCj4gICAgICAgICAgIC5jbGFzc19pbml0ICAgICA9IGJjbTI4MzZf
+Y2xhc3NfaW5pdCwNCj4gLSNpZmRlZiBUQVJHRVRfQUFSQ0g2NA0KPiAgICAgICB9LCB7DQo+
+ICAgICAgICAgICAubmFtZSAgICAgICAgICAgPSBUWVBFX0JDTTI4MzcsDQo+ICAgICAgICAg
+ICAucGFyZW50ICAgICAgICAgPSBUWVBFX0JDTTI4M1gsDQo+ICsgICAgICAgIC5yZWdpc3Rl
+cmFibGUgICA9IGxlZ2FjeV9iaW5hcnlfaXNfNjRiaXQsDQo+ICAgICAgICAgICAuY2xhc3Nf
+aW5pdCAgICAgPSBiY20yODM3X2NsYXNzX2luaXQsDQo+IC0jZW5kaWYNCj4gICAgICAgfSwg
+ew0KPiAgICAgICAgICAgLm5hbWUgICAgICAgICAgID0gVFlQRV9CQ00yODNYLA0KPiAgICAg
+ICAgICAgLnBhcmVudCAgICAgICAgID0gVFlQRV9CQ00yODNYX0JBU0UsDQo+IGRpZmYgLS1n
+aXQgYS9ody9hcm0vcmFzcGkuYyBiL2h3L2FybS9yYXNwaS5jDQo+IGluZGV4IGRjZTM1Y2Ex
+MWFhLi5mN2U2NDdhOWNiZiAxMDA2NDQNCj4gLS0tIGEvaHcvYXJtL3Jhc3BpLmMNCj4gKysr
+IGIvaHcvYXJtL3Jhc3BpLmMNCj4gQEAgLTE1LDYgKzE1LDcgQEANCj4gICAjaW5jbHVkZSAi
+cWVtdS9vc2RlcC5oIg0KPiAgICNpbmNsdWRlICJxZW11L3VuaXRzLmgiDQo+ICAgI2luY2x1
+ZGUgInFlbXUvY3V0aWxzLmgiDQo+ICsjaW5jbHVkZSAicWVtdS9sZWdhY3lfYmluYXJ5X2lu
+Zm8uaCINCj4gICAjaW5jbHVkZSAicWFwaS9lcnJvci5oIg0KPiAgICNpbmNsdWRlICJody9h
+cm0vYm9vdC5oIg0KPiAgICNpbmNsdWRlICJody9hcm0vYmNtMjgzNi5oIg0KPiBAQCAtMzY3
+LDcgKzM2OCw2IEBAIHN0YXRpYyB2b2lkIHJhc3BpMmJfbWFjaGluZV9jbGFzc19pbml0KE9i
+amVjdENsYXNzICpvYywgdm9pZCAqZGF0YSkNCj4gICAgICAgcmFzcGlfbWFjaGluZV9jbGFz
+c19pbml0KG1jLCBybWMtPmJvYXJkX3Jldik7DQo+ICAgfTsNCj4gICANCj4gLSNpZmRlZiBU
+QVJHRVRfQUFSQ0g2NA0KPiAgIHN0YXRpYyB2b2lkIHJhc3BpM2FwX21hY2hpbmVfY2xhc3Nf
+aW5pdChPYmplY3RDbGFzcyAqb2MsIHZvaWQgKmRhdGEpDQo+ICAgew0KPiAgICAgICBNYWNo
+aW5lQ2xhc3MgKm1jID0gTUFDSElORV9DTEFTUyhvYyk7DQo+IEBAIC0zODcsNyArMzg3LDYg
+QEAgc3RhdGljIHZvaWQgcmFzcGkzYl9tYWNoaW5lX2NsYXNzX2luaXQoT2JqZWN0Q2xhc3Mg
+Km9jLCB2b2lkICpkYXRhKQ0KPiAgICAgICBybWMtPmJvYXJkX3JldiA9IDB4YTAyMDgyOw0K
+PiAgICAgICByYXNwaV9tYWNoaW5lX2NsYXNzX2luaXQobWMsIHJtYy0+Ym9hcmRfcmV2KTsN
+Cj4gICB9Ow0KPiAtI2VuZGlmIC8qIFRBUkdFVF9BQVJDSDY0ICovDQo+ICAgDQo+ICAgc3Rh
+dGljIGNvbnN0IFR5cGVJbmZvIHJhc3BpX21hY2hpbmVfdHlwZXNbXSA9IHsNCj4gICAgICAg
+ew0KPiBAQCAtNDAyLDE2ICs0MDEsMTYgQEAgc3RhdGljIGNvbnN0IFR5cGVJbmZvIHJhc3Bp
+X21hY2hpbmVfdHlwZXNbXSA9IHsNCj4gICAgICAgICAgIC5uYW1lICAgICAgICAgICA9IE1B
+Q0hJTkVfVFlQRV9OQU1FKCJyYXNwaTJiIiksDQo+ICAgICAgICAgICAucGFyZW50ICAgICAg
+ICAgPSBUWVBFX1JBU1BJX01BQ0hJTkUsDQo+ICAgICAgICAgICAuY2xhc3NfaW5pdCAgICAg
+PSByYXNwaTJiX21hY2hpbmVfY2xhc3NfaW5pdCwNCj4gLSNpZmRlZiBUQVJHRVRfQUFSQ0g2
+NA0KPiAgICAgICB9LCB7DQo+ICAgICAgICAgICAubmFtZSAgICAgICAgICAgPSBNQUNISU5F
+X1RZUEVfTkFNRSgicmFzcGkzYXAiKSwNCj4gICAgICAgICAgIC5wYXJlbnQgICAgICAgICA9
+IFRZUEVfUkFTUElfTUFDSElORSwNCj4gKyAgICAgICAgLnJlZ2lzdGVyYWJsZSAgID0gbGVn
+YWN5X2JpbmFyeV9pc182NGJpdCwNCj4gICAgICAgICAgIC5jbGFzc19pbml0ICAgICA9IHJh
+c3BpM2FwX21hY2hpbmVfY2xhc3NfaW5pdCwNCj4gICAgICAgfSwgew0KPiAgICAgICAgICAg
+Lm5hbWUgICAgICAgICAgID0gTUFDSElORV9UWVBFX05BTUUoInJhc3BpM2IiKSwNCj4gICAg
+ICAgICAgIC5wYXJlbnQgICAgICAgICA9IFRZUEVfUkFTUElfTUFDSElORSwNCj4gKyAgICAg
+ICAgLnJlZ2lzdGVyYWJsZSAgID0gbGVnYWN5X2JpbmFyeV9pc182NGJpdCwNCj4gICAgICAg
+ICAgIC5jbGFzc19pbml0ICAgICA9IHJhc3BpM2JfbWFjaGluZV9jbGFzc19pbml0LA0KPiAt
+I2VuZGlmDQo+ICAgICAgIH0sIHsNCj4gICAgICAgICAgIC5uYW1lICAgICAgICAgICA9IFRZ
+UEVfUkFTUElfTUFDSElORSwNCj4gICAgICAgICAgIC5wYXJlbnQgICAgICAgICA9IFRZUEVf
+UkFTUElfQkFTRV9NQUNISU5FLA0KDQo=
 
