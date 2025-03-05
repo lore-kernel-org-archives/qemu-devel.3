@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA935C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 775CEC282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:44:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpejF-0006fS-M3; Tue, 04 Mar 2025 21:43:25 -0500
+	id 1tpek0-0006zP-WE; Tue, 04 Mar 2025 21:44:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tpejD-0006eF-Nu
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 21:43:23 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tpejw-0006t2-IK
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 21:44:10 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tpejB-0005Np-CC
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 21:43:22 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-22382657540so73060455ad.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 18:43:20 -0800 (PST)
+ id 1tpejt-0005Sr-77
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 21:44:07 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2feaca4e99cso9306544a91.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 18:44:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741142599; x=1741747399; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741142643; x=1741747443; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SUEuJdK4JXBGfbHkdk6cCjwrE9S0Iadxua/QAQa0NKQ=;
- b=zKzvCcGEJ30CizKyQ1xyoD0QZB0IJiAxcSQ+yRWO4D89RJt0wteWEkrioIpm715+bO
- UFQh5OnwLU6UAYDwSoyikTkDzoZjNdh4bM19UW8XhOCIeOA4O1f/ta63D2MADCUueWbT
- OS7f2OtKuc0x9UhLXwWKGcoTTqF57ZcaMkmkPT3mYbPQ513vekHtwQ+Fp9UjIQEO7S5F
- oD6xiIScdk/WOfIXAZP5m0iWcpqGvsueN/0EiakkEy93yoCfc79yDDfp+Yuqz8PZMmim
- 8XMZvQG7IYy9UGWHK9fXLRXQVKA0pF2q1zHg55fTGxyqpDYCUoRyg7NmqBszaX4WcSPJ
- WICQ==
+ bh=o2Ug3tUV9IwrQJl5zjSG50mMrTM6oxZUpEBTlcmtjE4=;
+ b=iaRAvU24e5KMjUhk0O19pKZNWWGUnepH95edYzmOSJRroQNavKNoyMoaps1O8ymqhS
+ cZ/YRpk2QDgaYZ8wAEr6ZfsTLYYK3Z/D8ErDPG42PMnTdGOGG+g8d4ziyv6oCBhYlnbz
+ uyBVYduqXnbSc42+s6pWIK+08CjtOQLjt73CvDv9bYmBKKia4h10pXehFKcKN5kYFiYQ
+ uIP3w0jVfJiNu/AZ8b3DyFyIUPMxeXggT7JKwpXQtI6ofSJAXaRF2l5r14ALmePjyYO6
+ l3ChNj0oR5x1GluToSRqzswom0VGTkkMWJ+lPwt3k784IfW39CLDuQViP7zSMJU1mfiW
+ SRfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741142599; x=1741747399;
+ d=1e100.net; s=20230601; t=1741142643; x=1741747443;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SUEuJdK4JXBGfbHkdk6cCjwrE9S0Iadxua/QAQa0NKQ=;
- b=ADCuM90x65UTq3tEGrUcpYJ77Ckb2RnnH4sVZ5koqNMi4CnlKqAaDKBhrXsj2Kmb4/
- E7Jg6uCWvDdqYXVE2Mi4vhODIEgnHeCZJw09SVTmWyO05hL/hLdPLRJPe/eCa2ZS1aGs
- tOrjkonQkY6Ae7cz4VZWAPGvt4XNdLvMwLv6hiBCaG497Torx46Es5/w6/x3nBGiZbB3
- ve6yzWyzX/9qyrEHSAfqxPkQLhsoBcKb7MZfGwr5qOEXHxHtQP9A9h4QAFPLrI0V/29L
- 9yGmCWsf/VfIQYydTnGv+i3JmwFRRsNq/QFIEdDvQgWDUzqkPnUHFaJcIGXjoBC/ttLd
- 1XrA==
+ bh=o2Ug3tUV9IwrQJl5zjSG50mMrTM6oxZUpEBTlcmtjE4=;
+ b=ckZ+zHKXdk4ZtRWf5hbCrR27t0A621sFkN+t2x9qWRbFvk5B69C1J8jHZb24rOypR4
+ XTFBpjVqLyZm6U/3JU82Qqlfb5Iijf3qo9kXry5i+1e5FADUkqZJZHxhm3UyoPy7gcQ9
+ 5Hkx+DCWhVdnkRXG51SKnutNSpl1EVcsp3hng23hA8TimY1WvGigQ6fq5m+YHeALIVCj
+ ZqhYs+/RKKFvrwGIqbYSn3ILrMUk00Ic+Aa1PabuAkquWv4qfotCzl8nJzZrAL1i8kJI
+ SNTNhjogzcyl799xKH9XqnBDqv7n3KoTRANFqWq1Zk75B3Tfi1Lp8JSZoGFx3gyEOcGB
+ 7xWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8+gaFl5CT+vs18vaJukIekpjRVZrmBem6Tjq6v+tqfT7x8UkfpGC75rNMOSFf7yQX/frl5i2ayIbp@nongnu.org
-X-Gm-Message-State: AOJu0Yw37roT85hcfBsAHJNUBgP1Ha3+6OVpxEOeepIYTXx2fXT3YFMX
- wOnOqJ0625x/UEl7cWMv6J7kIxn8EDGXmltwlI7jAE2GY85qY+9YepdJYk+nV2g=
-X-Gm-Gg: ASbGncuLYAPljKx2TORB456R1GiwTVV59z3a+7znjvQ/RW3V+f4728fC1e64g0w4rcY
- 2d0rKE3eZOwESQ90b2GXBZw56K5CoIauZ06U4UF7ClLyTiTpRabbEPTXNMtpb4OmJoOICub3V0b
- tdjjUqRGxLZcgjpG3cfPkG+B5mRsgnZCYdB1F8W8xSyxSv6NwTpjzMOeERHk8QgJQrnJqKa+J85
- 15z8cCPTLZssO1pmrzGp3ZqnqnSLjxU4tDH835lOo9JpfL/OwiANrrxkkTz6JxbNOBOwSNP7ZHT
- jVGTt27LomQxqNCnw1Rif919kkHFGnuYmlTnuwLGFHwel/K8n21SlToSmepdkXV+Cfp8xsq5Pd5
- MjIrTcSXF
-X-Google-Smtp-Source: AGHT+IFIPU3+l11NONZRrt9drybQJShkCQrTH7Ja+WQ5q18LnMBnKicW5QAap2ued/x/0eP2RSVxMg==
-X-Received: by 2002:a05:6a00:2e92:b0:736:5753:12f7 with SMTP id
- d2e1a72fcca58-73682b6c1b8mr2233261b3a.3.1741142599365; 
- Tue, 04 Mar 2025 18:43:19 -0800 (PST)
+ AJvYcCWUxrFx7PKcsp6Htn69PfxaNeNn/IyCWTBwbTotnhaqvGsG4ENoA+ZHbVZjxVYS/BZtttZFIC+a+zry@nongnu.org
+X-Gm-Message-State: AOJu0YyYLPj1znGZNSAUW2dvl0zl9ZRO1CuoJtPcLHWUjcKzvTqoQi8Y
+ B9d+nPOXzXE9qwIAfjjkSt+htdmvbdEhlAlNCuLDbAEv1K+Yd94FJy4mIHCSCjo=
+X-Gm-Gg: ASbGncu+ckO/jYI0IuuH/f0cf313qNjkdHE3Sge4KKYZaNT7fmJlfh6B1qw6HK+2B04
+ Wkd7PhaUQKnpH2Ni4nzV6TkdJhEO7f6QWcddDBrsx4LFRJeoNjejbe+4nbEcv3eapT/TgyFyZSW
+ hNvNrDBYb1a7xK1Ce/bALSuzGtz0G4o04pK68fpvf5wX68LIwoV8ddFrqjow03v7fY7O3eBetPW
+ GwBP3VeqnrZ6Os94Buf5QIdjOKmb6XSAsKiHiJeMFy7dPa4AvGHnFff+9J1bIM6ImoKMPlmoml/
+ xlhbw7kHtxSY6M/ZPFhd8WGvHFFjPKzBwPFf+G9THCk1hPef2WP+DzdH8KfD8B50Xidbsw1t5bD
+ 5jRMhpBam
+X-Google-Smtp-Source: AGHT+IH3niQR5zhnBqFOI5bAzBUpvRDTk6GG3Ytk7gndj/F5+2LsagwV1b+Dq28TJsukkBHWWnqz8g==
+X-Received: by 2002:a17:90b:2703:b0:2fa:f8d:65de with SMTP id
+ 98e67ed59e1d1-2ff497a0022mr2296092a91.22.1741142643583; 
+ Tue, 04 Mar 2025 18:44:03 -0800 (PST)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-aee7de3ad9esm9151581a12.39.2025.03.04.18.43.18
+ 98e67ed59e1d1-2ff4e78a9b6sm179084a91.21.2025.03.04.18.44.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 18:43:19 -0800 (PST)
-Message-ID: <332b2988-93b2-4811-8626-37fa18cd2444@linaro.org>
-Date: Tue, 4 Mar 2025 18:43:17 -0800
+ Tue, 04 Mar 2025 18:44:03 -0800 (PST)
+Message-ID: <32bb3c05-b7c5-4ab1-bcf9-8a7b9e35fd8b@linaro.org>
+Date: Tue, 4 Mar 2025 18:44:01 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 05/11] include: Expose QemuArchBit enum to user
- emulation
+Subject: Re: [RFC PATCH 06/11] include: Declare target_name() in common
+ "qemu/arch_info.h"
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -80,14 +80,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>
 References: <20250305005225.95051-1-philmd@linaro.org>
- <20250305005225.95051-6-philmd@linaro.org>
+ <20250305005225.95051-7-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250305005225.95051-6-philmd@linaro.org>
+In-Reply-To: <20250305005225.95051-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,28 +111,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/4/25 16:52, Philippe Mathieu-Daudé wrote:
-> QemuArchBit isn't really specific to system emulation,
-> move the "system/arch_init.h" header to "qemu/arch_info.h",
-> a more generic include path.
+> No need to include the huge "hw/core/cpu.h" header to
+> get a simple prototype declaration such target_name().
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   meson.build                                      | 2 +-
->   include/{system/arch_init.h => qemu/arch_info.h} | 4 ++--
->   system/arch_init.c => arch_info-target.c         | 2 +-
->   hw/scsi/scsi-disk.c                              | 2 +-
->   system/qdev-monitor.c                            | 2 +-
->   system/vl.c                                      | 2 +-
->   system/meson.build                               | 1 -
->   7 files changed, 7 insertions(+), 8 deletions(-)
->   rename include/{system/arch_init.h => qemu/arch_info.h} (97%)
->   rename system/arch_init.c => arch_info-target.c (97%)
+>   include/hw/core/cpu.h      | 2 --
+>   include/qemu/arch_info.h   | 2 ++
+>   arch_info-target.c         | 5 +++++
+>   cpu-target.c               | 5 -----
+>   hw/core/machine-qmp-cmds.c | 1 +
+>   system/vl.c                | 1 -
+>   6 files changed, 8 insertions(+), 8 deletions(-)
 
-I can't think of a reason to use QemuArch(Bit) in user-mode.
-But I can't really justify splitting the header either.
-It's certainly not "init" related anyway.
+You should mention moving the function as well.  Otherwise,
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
