@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EA43C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 00:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B6ABC282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpd3C-0000b1-JC; Tue, 04 Mar 2025 19:55:54 -0500
+	id 1tpdLI-0004fi-L8; Tue, 04 Mar 2025 20:14:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpd39-0000ah-HC
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:55:51 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdLH-0004fZ-KZ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:14:35 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpd37-0007we-E1
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:55:51 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43bcb1a9890so1841185e9.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 16:55:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdLG-0003zI-0K
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:14:35 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43995b907cfso40254835e9.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:14:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741136148; x=1741740948; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741137272; x=1741742072; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uAGo3NGmikpZkIcE56ZMcshiOURcTU0IOT+kWtxbtXU=;
- b=YOdG7gMeHD9x9/Fyi7vRdsOVREQ0HlD4LIR45fyl9nczmaJJWmCvdqEBBam+9xAxlO
- xbX/rHqVbtGiWkzNtSQQ1PBkQ8gJ/dW+US2U6vQ1avHs53la+FA23I9VP+xSN4yRIjjo
- pPAFw7FCAtVCOHzWY8zpnicYvvOgC/hUCu2x8FxC0S3bjaVr2zqL7Gn0Qlpe1XpWM0+J
- m0kIPDMrss+4JfbzC8bmcpdG3kRiGzOiiQRJD/DNSs5lDeNJsarFsQLpOg77XaPFtlux
- CWtLkEk3KN9eNpgNsRuQ+0lpT+OQweGbEWWgiQ58Q+Iu46AVtoMGgG8PiqvsXrro7FB7
- PKzg==
+ bh=2aD9YXfiTkDVTArNzKKKVaO8P048H4BbRxh+MeuMyoI=;
+ b=FkJJtCv2sqPxINa80QSWQkyOFNpoJ+6WnwjrdmbFdWxxQpeERfjUKaqco0HU9FguuI
+ 0NlPgoH/AYazjyVFc5vPif9hu35hsGhdJRkGSejXKJlNR3kyCY0boSoFWaBMBSh+Oxk7
+ UMQ3y45BhrMe7qMNreEaPO0324Wbw+l7lnHSnAxQSL7SqbWklstglHwwR2hKJ1rCAGmb
+ TsiGA1P7ID/TUGdak8LKBSAQ+bGP2/Eoezmv4YG0GW76RL/DWROJzJJOqZpo2PmFrNo3
+ ZFTtxvJpS5GJgEn00iMkaKXH1EiXvAG6aHR8BLfMTeB4usCpCc4YkQDhVyqsHuPPUXXd
+ UgPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741136148; x=1741740948;
+ d=1e100.net; s=20230601; t=1741137272; x=1741742072;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uAGo3NGmikpZkIcE56ZMcshiOURcTU0IOT+kWtxbtXU=;
- b=rUsfv9FSYs0ixOez3MNtCXa1ETw5mFC2kwxNcBQUpCcOOgo99/o8pyU88hkz3Mv1cV
- yWxdiBaQYsdl8oUG8vk6Jy+/wIyEGxXxEhNWrJGt6uXjrQlNEXBPSJ+AewGUL2AKBdd5
- DA3JwJNLyHBvq2JZ5ZJHTZ5Y7PaQYShuoWnLt731eiE0RFavGlRAKBx2W/SM3XvITJjL
- w9rg+U4KN7tErvsVYwblaN1lRMRmWGfvmVjqtXRaCe0rI3603sVz2pjiE7PvD5MCPYWR
- JXN0d3urXRbE4tDwC66DIx0ZARPnpUGpVVum/YIK1MouIzXFrtTFQlsVBB35M03iVqZk
- ysxQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTpflBuiFjHTXsqbHvePjTvu7beTEdLn4vsQOOr9QjoYWo6GmRj7vIn7Wo8JIGoSh+wEcInk0eVu7a@nongnu.org
-X-Gm-Message-State: AOJu0YwbXToAjFo8Qb+jb2fwprs0i9HdeK/twPg7VIH9NH3DH6FToTvs
- /2u6LsAktOwkenK4cT2nKtRnL03LdwRYo5iuhYg2aWFDJCAkoj+s94uNI40zjGg=
-X-Gm-Gg: ASbGncuJ1GBF8Nr1DVZUhccoucldH57xhL7FJDif1qfkwJ7tTFukpaPnwHlKpEvb5Y4
- WkbadOQ8Kt1hPIborbF516TjkTd9kF/chiDzxTlXgpzBANbGTF/i2NXCTuVefL50SNvXsNwtDzC
- AJwvIsoQ5WVj3R3bbVEwal9BJ8I1Wd2KkeJYJi0lRnBE7rlUgSbOhis+1dGzBkGOl/JfxsujcYO
- jKDBvJb3FB5+fPq5CdkXZ3IDsvJGoSYYBRJ9BUkzgckFKl3sinNRRQfBwCwzFYMaNWdLSQmRZvt
- hnLMkhjaV2rT1u/64Gu9IKuMg42Ey+RloVKQv/vNNptgDMcl4WJ/ScAcxp1Y0b6Kmi2bPNrl79z
- LrY3iye1OB8NU
-X-Google-Smtp-Source: AGHT+IHXHXfcF5sV17aFqBCr+sTudEFeVdAtVcHm+K/dp3+EdymoUHy5rrydaoWjM5c6CzOspZPbAw==
-X-Received: by 2002:a5d:47a5:0:b0:391:1218:d5f4 with SMTP id
- ffacd0b85a97d-3911ea411f0mr738235f8f.23.1741136147684; 
- Tue, 04 Mar 2025 16:55:47 -0800 (PST)
+ bh=2aD9YXfiTkDVTArNzKKKVaO8P048H4BbRxh+MeuMyoI=;
+ b=ShkQv7CEAxlALJI27/pTsvdiolB8F7LiWNnqiW5KauKUXXA1/mzOfw9DJpXAjNn8/+
+ HIdQ2OXYF6HdgOMfhzF5vBv4zpCbSq2Iu0mPsyzjwDMx1YmHEa8z1JbsrzZI0YrgE1gj
+ 1hEIbXvkqr3pFX2YFGY2a/ist2AkKUdLkp8cfst4kCBIAQ+xmGSV0VK6VQLul0na3FOZ
+ SUXihbJRA/7IR2Sikl2cLHzV1KBCsJXNimtjiBAb+isvhmMbvQFqBFBMz1sLfkud9FiW
+ zkkaE4Kyhn11iNLqrwAeqyQ4hvaaxP6sKs0I/r9cBkgOjgyZJjL+uE3he/jpSdL5ZUiB
+ iH4g==
+X-Gm-Message-State: AOJu0YxiOVPKlFJr1YeqrUJgzYUX02THWOgGaVF/SIZjoxavJt7fllx6
+ 1O+jaBLHOt88jPou16a+9x9oMt0B0bGUc1+WuSu2TbJnOowPPX1ft9ouVRwTsuM=
+X-Gm-Gg: ASbGncveD02xeYjtFGgDmnZ81bElY9IWMU4azwlcEbjhJyHXpkEiqN72sUU9agQOWVB
+ oiiNqauDHyoXIyP3NbMGUSRGTwJhyUP4M53U+FywpKC7PsKUnOV8idMxzl4YIwOyCft42Jn5PUI
+ kcpAUxTJR37BohQw1x2NnT23OvgGMJYpaE3hdKfEC06GRWOGC+QWSDC1CjppZPtDth9lYGyJjK0
+ +bNcrTAgCJ1ShT7cj4zg9v5LphpyzF7dGmcUfmOukSYFE3EZb08AtDOKy837shY9sOxvte839vH
+ 1VcC8GlSMBm28A0gu+MCUkhSClyXIPnpR9cPfB4IkEp8U+hhymRmilgBKS9PJ64rCNOKR8TDuy1
+ H7ri/S5Gon8hr
+X-Google-Smtp-Source: AGHT+IEaofpJIJvrhHUPUm3sNEO6uqhfgxE8JxRKKgMXECUtpS4HcFNOJwf/pvAIsiN2VLu66cFQ9g==
+X-Received: by 2002:a5d:6486:0:b0:391:a74:d7dc with SMTP id
+ ffacd0b85a97d-3911f7ce121mr596832f8f.50.1741137272276; 
+ Tue, 04 Mar 2025 17:14:32 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47a7473sm19505109f8f.38.2025.03.04.16.55.46
+ ffacd0b85a97d-390e4844c0dsm18863437f8f.80.2025.03.04.17.14.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 16:55:47 -0800 (PST)
-Message-ID: <d4f22c7c-66cd-4dc3-b024-7f6e9626b72e@linaro.org>
-Date: Wed, 5 Mar 2025 01:55:46 +0100
+ Tue, 04 Mar 2025 17:14:31 -0800 (PST)
+Message-ID: <54249a76-14b8-4588-866a-b59046ffc309@linaro.org>
+Date: Wed, 5 Mar 2025 02:14:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 24/24] target/m68k: Implement FPIAR
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250224171444.440135-1-richard.henderson@linaro.org>
- <20250224171444.440135-25-richard.henderson@linaro.org>
- <81d01563-8a5d-4002-81e0-1b34108bfce3@linaro.org>
- <34beaac3-405b-47bb-b12a-91a0dd3e9f5b@linaro.org>
+Subject: Re: [PATCH 0/2] hw/ufs: Add temperature event support and test cases
+To: keosung.park@samsung.com, Jeuk Kim <jeuk20.kim@samsung.com>,
+ "kwolf@redhat.com" <kwolf@redhat.com>, "hreitz@redhat.com"
+ <hreitz@redhat.com>, "farosas@suse.de" <farosas@suse.de>,
+ "lvivier@redhat.com" <lvivier@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ Jinyoung Choi <j-young.choi@samsung.com>
+References: <CGME20250225064001epcms2p81497a6cf84a0c06e54cbce0360053bf8@epcms2p8>
+ <20250225064001epcms2p81497a6cf84a0c06e54cbce0360053bf8@epcms2p8>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <34beaac3-405b-47bb-b12a-91a0dd3e9f5b@linaro.org>
+In-Reply-To: <20250225064001epcms2p81497a6cf84a0c06e54cbce0360053bf8@epcms2p8>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,70 +106,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 21:40, Richard Henderson wrote:
-> On 3/3/25 10:39, Philippe Mathieu-Daudé wrote:
->> Hi Richard,
->>
->> On 24/2/25 18:14, Richard Henderson wrote:
->>> So far, this is only read-as-written.
->>>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2497
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>   target/m68k/cpu.h       |  1 +
->>>   target/m68k/cpu.c       | 23 ++++++++++++++++++++++-
->>>   target/m68k/helper.c    | 14 ++++++++------
->>>   target/m68k/translate.c |  3 ++-
->>>   4 files changed, 33 insertions(+), 8 deletions(-)
->>
->>
->>> diff --git a/target/m68k/helper.c b/target/m68k/helper.c
->>> index 6e3bb96762..bc787cbf05 100644
->>> --- a/target/m68k/helper.c
->>> +++ b/target/m68k/helper.c
->>> @@ -45,8 +45,8 @@ static int cf_fpu_gdb_get_reg(CPUState *cs, 
->>> GByteArray *mem_buf, int n)
->>>           return gdb_get_reg32(mem_buf, env->fpcr);
->>>       case 9: /* fpstatus */
->>>           return gdb_get_reg32(mem_buf, env->fpsr);
->>> -    case 10: /* fpiar, not implemented */
->>> -        return gdb_get_reg32(mem_buf, 0);
->>> +    case 10: /* fpiar */
->>> +        return gdb_get_reg32(mem_buf, env->fpiar);
->>>       }
->>>       return 0;
->>>   }
->>> @@ -69,7 +69,8 @@ static int cf_fpu_gdb_set_reg(CPUState *cs, uint8_t 
->>> *mem_buf, int n)
->>>       case 9: /* fpstatus */
->>>           env->fpsr = ldl_be_p(mem_buf);
->>>           return 4;
->>> -    case 10: /* fpiar, not implemented */
->>> +    case 10: /* fpiar */
->>> +        env->fpiar = ldl_p(mem_buf);
->>
->> Should we consider target endianness?
-> 
-> I am.  Are you suggesting that the TARGET_BIG_ENDIAN shorthand be 
-> eliminated entirely, even from target-specific code?
+On 25/2/25 07:40, Keoseong Park wrote:
 
-As we figured earlier, while ldl_p() is expanded as ldl_be_p() for
-m68k, it is easier to review using the expanded form, as done
-previously in this file in commit 3a76d302047:
+> Keoseong Park (2):
+>    hw/ufs: Add temperature event notification support
+>    tests/qtest/ufs-test: Add test code for the temperature feature
 
-commit 3a76d302047ce4518cedef7a9feca1238a00f97b
-Author: Philippe Mathieu-Daudé <philmd@linaro.org>
-Date:   Fri Oct 4 13:30:34 2024 -0300
-
-     target/m68k: Use explicit big-endian LD/ST API
-
-     The M68K architecture uses big endianness. Directly use
-     the big-endian LD/ST API.
-
-So using ldl_be_p():
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Regards,
-
-Phil.
+Series queued, thanks!
 
