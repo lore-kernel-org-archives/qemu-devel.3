@@ -4,171 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BC9C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 05:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3149C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 05:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tphFD-0000xq-Vu; Wed, 05 Mar 2025 00:24:36 -0500
+	id 1tphV5-0004li-SH; Wed, 05 Mar 2025 00:41:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tphFB-0000xM-Cw; Wed, 05 Mar 2025 00:24:33 -0500
-Received: from mail-eastasiaazlp170100000.outbound.protection.outlook.com
- ([2a01:111:f403:c400::] helo=HK2PR02CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tphV2-0004l8-Px
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 00:40:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tphF8-0007WF-Ci; Wed, 05 Mar 2025 00:24:33 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HT/ibBh7AgKQX0w7Xf0oBIrSGUlE6fojXJuEFh5L8fWr/Y/PHWde0f+ZTbBv/vllyKfIrPKnd6ClQyVCG7H72n2Y+PdN5l5vyYlXBHtwauhNoAj9LRicljy8NLp7Rc4U8j0ox3FgXMMa7PF/YrjqI1O7M/1uRy1WrhynydVRWPJfPVCUI9DxCTDiqD3T43EMUnS2i2eqP5vemzkQhqR9S4JE/tTD7rwuG2kYB5ezRld4SEhE1mTBFam/xQ7/EOANvb4YGStUhA10UUS66fTfhSBSFmC6rLCNtgKanUYY6sfpq0zbSCKA+qndqNZsBNT2+mvCGPT5a411Osz8b9OkXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uZoOtfgrmZjQp3eQHDFoQxB7Wca/zkvD4EIaxJWxnHk=;
- b=PcPvddPT5h9UlhBYSxTqqhTiadPCA8xBRuzEVh9n9kPUHXkPTwgr7uRgd5h8Gqk8dyd1fXd5o5yGA7TzzDIT0aR4aAOBiZX1FqvQauUVE01eBzA+lI3swTIZ6WNWJBA94fsrHymA/Tx6NokzUQW0RP0m6RpOz0/R0Z3kmjUhwn0gHuaEr5c6Q6/dlIGx53UOCCuvjLIsHXez+mXq+3UKbQzg4Hvvzq4P3FP361U9oAxLVqtbMp1dqPauNUWSwvklxDUNY956THq1NYKGkSSXK5jsMWLnM/AIS21zvj1nKpDwYkVzQ4Optcf6uZbxTKphxFrZcBj4qqCd9b0BeZ6IRQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uZoOtfgrmZjQp3eQHDFoQxB7Wca/zkvD4EIaxJWxnHk=;
- b=k70GR5VIgZScd60BB4Nvytxzqla3P/rXxVUOH4Pu9hmN/b2KLVEzPFmH5u8gyUp89ztU7BBDfoAdITQC78UzpwpazqvVyWRnLzp+mVc56JuUwrfbp+vnv1xZrzg0Vl5OCxr8WmBzPbBsvUKrfo01rRlT7xelhr9MfcyCsXhcTC7H8K6SAm2tzUrOHqbssoHmDuLzbRICcCZfJIu9C6QmFLmJvCplgrmaRsLkVbV8bVQsN9yEwllTpkB3m3GiR5SBhsRk7GhrAIu7/+MxW8931luMznorTEbd0ehPg5YXCMJyN3HQkFL+Nzmc8Vp1b1S3WP7ogMqCusvwg9U/ia3R1w==
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
- KL1PR0601MB5631.apcprd06.prod.outlook.com (2603:1096:820:c3::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.29; Wed, 5 Mar
- 2025 05:24:16 +0000
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56%6]) with mapi id 15.20.8489.025; Wed, 5 Mar 2025
- 05:24:16 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v4 12/23] hw/intc/aspeed: Introduce AspeedINTCIRQ
- structure to save the irq index and register address
-Thread-Topic: [PATCH v4 12/23] hw/intc/aspeed: Introduce AspeedINTCIRQ
- structure to save the irq index and register address
-Thread-Index: AQHbjCJf9QibyERHa0uM1L2f+HBlRLNii7aAgAF5BPA=
-Date: Wed, 5 Mar 2025 05:24:16 +0000
-Message-ID: <SI2PR06MB504136CBCD9A31CB7578ACB2FCCB2@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <20250303095457.2337631-1-jamin_lin@aspeedtech.com>
- <20250303095457.2337631-13-jamin_lin@aspeedtech.com>
- <e4e07368-9628-4346-abc0-d8a5d0563bc4@kaod.org>
-In-Reply-To: <e4e07368-9628-4346-abc0-d8a5d0563bc4@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|KL1PR0601MB5631:EE_
-x-ms-office365-filtering-correlation-id: a8985f04-2d7e-4f35-917a-08dd5ba5f924
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700018;
-x-microsoft-antispam-message-info: =?utf-8?B?MDlIcnN6NFJNSEE1S3A1Mkk4ckhaTkJTd0ptUkJuM1pQSHBHcXVvUTVrQTlV?=
- =?utf-8?B?MS9FWUw5UEdxbHNaSnZuTVh5UDJHN3EzTXF1SnpnanNTU2ZiZGZVQ1lmeDRo?=
- =?utf-8?B?S3h1YVJlVjNUbnNTNmh4cDVmeFI5VDVMdXdZQkFKcjJPR2tNdENxSi9NdXd6?=
- =?utf-8?B?dGNWZTM5U1pmNktQV2JNT1BrNnJEVzlCQXZBbGlKdklFLzQ0ZDlJTlBYY2ZR?=
- =?utf-8?B?N1hSMHcwWEFQVlBsOFlMczJjeFR5S0tydU5HbEEwdUxGNGZ5c1pjVGJrdjFw?=
- =?utf-8?B?N1FiaVh3dHVWUk9rb0RFY3QxdCttRGF6WnhkYUgreWRZajR0VUhVTDRHSDcy?=
- =?utf-8?B?dTI1Uzh1QStoK0ZJYzIvdmYrRFhGSldsdE96aGNUOUt3QmhqcmpYblphS0F6?=
- =?utf-8?B?cDR4dUxSalN4dGZMRmtNSDZnMnU3ZnNESWwrcGlxNlArUzVvdVk5cXhaY090?=
- =?utf-8?B?NGM3R2RiYzFleEV2TThBam43bWRCY2lxZVlJY29pb1VzZUM0MkRqK3FxZFhm?=
- =?utf-8?B?ditSbjlUR0FiT210RndNWjhKd1ZpVE1iWWNzVWMxSTZpUUNLQXRSRDJvRGZC?=
- =?utf-8?B?YmhGQmRwcGREajQ1YWp4am5pYlVvRlptdU9SNG1wbTdTRWpDLzhFYmxzYnBK?=
- =?utf-8?B?TnE2WFhzYXBLNlU1U3RYbWVBeUVmaVQyOXhKVEJpYVJWSHRob2lvaVg3bExn?=
- =?utf-8?B?YkZDWDVUVmt1UUQyaVR5U041QzRnRkUvRFRYWGd2di90NzZnYWJRMnczZ1Av?=
- =?utf-8?B?MGNaTnAwTElGR2ZWQldRK0xYNnlxRHdsZks1djRZZDRqK3djeUl0YlEwdjE1?=
- =?utf-8?B?cDVmbXNxVDQ4VWpjVjY0aTVSUmFVT290VURjbEFSRXgwUGlKMElINnZEek1F?=
- =?utf-8?B?VVU1RFFPenN0MUFkeE5ENTVBekxTbU53aTNHZEhDZGtxWXhWRWlldmtwYTA4?=
- =?utf-8?B?aFdRcEhuaWFobkFLdWlnR2JUd3Z0ZjJLNHFHL095L1EwNDA1dEtKeVRsRkth?=
- =?utf-8?B?UE0ya1J5Y1RhQ0NkdnBQMnUxenpnMU5hZjNiTEx1QVA2WHQ2NC9COEtpcnFM?=
- =?utf-8?B?YzV3ZDUvcU5pY202eHkrVHBJdUl1clI1NXUxNGsxNDB2ZGRJVVBKNWIxNlpp?=
- =?utf-8?B?bkMvMVVOUmc4bkpOcVVGcGF4MVFLT0xiM3hDZE0yVlNkd1pwQTk2S1N2K3FV?=
- =?utf-8?B?ekFscitrS3Q1ZVM3TzloYWYwOHUzZGN5dVRWK1JwTWZFRFRZdG5ZaXhFdjBH?=
- =?utf-8?B?RFd2YWQwYmx4SW44Z3BqdWUwdXhudHFPYzJRYnBQMlRCVHZJblRWYXJnQW1O?=
- =?utf-8?B?V3BKR0ZtVFpiVGJMVmp5L1NqY25odU84VDN2UE1WUUUzM0VLaGFXdzUrQjUr?=
- =?utf-8?B?SEVyRC90alBhMERYKzBzVGlIaHAxRUFQU0QxVTVCV3VzcVFhWEpLTDU5MUV6?=
- =?utf-8?B?cU0rcms0NHg3SGU5R285Z1F2dzNUQm9DN2t2MWpwOUhYUDFUWTdoeSt3amJY?=
- =?utf-8?B?cFlwTE0yMzV1OVhkay96MGFwbHpUL1Bqc2RrMk5tVDQvd2FBQjFFZVM5TUFQ?=
- =?utf-8?B?QmVJb2k1bThESWs2UnFSVG9FYldRQlFUWktuVWlhSUxRN20vS2dZTUhmUnZH?=
- =?utf-8?B?aS9NOUd2Ty8veWU5VDlSMFFVd2x4bHIwa1pxZU1Ma2xFV1J5U09ublBvbW4x?=
- =?utf-8?B?V0xOVnJldWw1ZTNOMzZZODlpbG9SWk00OWQydGJneEdYY29seXMzMzJXa0JQ?=
- =?utf-8?B?aTFiSFQxQWtsR0NUN2QyWEFBTEM2ekN2eUZ2QkFzUUNuTlpkR3ZLTXNhbVM0?=
- =?utf-8?B?Z2hqT3BTN041WnFsWlByTmExWVQwNHFPYzZYL0NLYVE5dWEydFhja0pVb2ha?=
- =?utf-8?B?U1pBYW9XdmkwRnJzeTBnc1RESGdRaXZkY1JLS01na1daNWkvNi9HZ2lvbXZa?=
- =?utf-8?Q?CJelP6ekWtLb5aFYGoIqVL0hFQTpS/pX?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(376014)(366016)(1800799024)(38070700018); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WEp5Z3lleTRuOURIT3hxWmtja3JBOXVHeWF6a1huRFJrZVQ5Q2gxTE5Hck8v?=
- =?utf-8?B?UHFrL3RTczJrc1VkZHA4Z01sRVFvQjJjeTNjWnhMZnZRTGdtQkdSOUl3WjVn?=
- =?utf-8?B?RjgxZ1l6UTZ3SDBDTEd0TXk5UW5xaDVZNTA0MkI4N012ZWlxZUZJY3Q0dEtP?=
- =?utf-8?B?RGk4NjdCaDJjYzVOcVM1TkNYOGdjOXJVZitqYW5jeWpqQ1p1d2JDR0l6bGIw?=
- =?utf-8?B?Ykxmdm5vTi9xZ3Voa0Q4ampIYm52dklxOHJTRytXc05UVVFHQi91QkJHVUVE?=
- =?utf-8?B?eGZJVWJUOUhwdkJDMU1yZll1NG8yMHdnMjlmTmdZOUwvY3BQaDlBZ2p1Qnd1?=
- =?utf-8?B?SnRFZUltVDkrbzhnTThEbzVwVEkxbkh4aU01REdPRUEvcDNTWHhRQjdQdTBU?=
- =?utf-8?B?OVlpdDZMQlBCaThRT3VXK0VwSnhEeHgxTExBSTlaeUV5OXd0ZTNTWkdGNjlW?=
- =?utf-8?B?cjlxVTFCRFR3MUw5Z2VwSDVyQzlmUVZOVUpBMmo3UkF1RWpvUzRyZnNPVlBQ?=
- =?utf-8?B?NXNHR2svRC9xSFA1dWtHU3lvejY5VzV5QzQyVkh1M2l6M0JzYjdIRkJhZ1Nn?=
- =?utf-8?B?YWNzeFEyR1QvVkR6Nkx6d3poTEZUc2NMaWdnK1hnbE5lRGpnejUxbE1BTFR3?=
- =?utf-8?B?bHFwRXVjOWZGMXVPSURDeElGempJYWE1M24vaXFtdmh4U2lMRXpFdi9RNnh4?=
- =?utf-8?B?L1FkekF0Q0RXMW1RQ09VTHkvRkJsSFFreE1OaFdSZmUvdGsxVnVrN3cvQ0NJ?=
- =?utf-8?B?cjVYblFSRHJIMUhrMmwvRk5qZUhycThjMVZFZkhRVnhXTTUvSEJUeHppQlRz?=
- =?utf-8?B?WEpzMS9pdXpkYzFBRGp4SGx2SlhjU3ZFRWtDYlYvaTZNVUZaYXdGQTJmSDZt?=
- =?utf-8?B?ZGdsMFFXMkgxZjFXNTd6cFhsQ0ttbytaTldQb0FGcEt3aXBhVEtwOS91Q1Ni?=
- =?utf-8?B?blRMeCtCTCszOFlXV1RFd3ZGYlhJNWZ3bnRRa0ZKOEhSTmpWRUFqU2ROL3ky?=
- =?utf-8?B?ZDkxZEZlMDVZbGM5VWhWN2RVK2RFdm8zZnQ4MDZrVXAxMTZUVUdWd1J5ZTE5?=
- =?utf-8?B?ZG5WS2dkSnFibjlsRVlmc1p4Y3phd2xWbjhldE1tVkh6U3pNb1JMTzhhK1Q4?=
- =?utf-8?B?SWFsYmFScGs0T1o5dEpVczZsVVEvRFhyZVJiYVA3SW9qY1RVaXhmVjNkRG4r?=
- =?utf-8?B?UHBzdlprUWU3T3pzMjRiMDJ2bjkwOGNEbVpHMGZrQTZBalEvRDdVUktxK25t?=
- =?utf-8?B?TFVvZUhyb3lOK0E0b2xhVElWRTlFaGFyM3F4Q2hzY2hUTXJTM1VjUVVaeVl5?=
- =?utf-8?B?TWhEVkV4dFlSQVNXZlZXaldOZTdEcDk2MXUxUElHWTk1cnlOY1piRktUb0Nq?=
- =?utf-8?B?NjlPNWVXenEzUmJPTHZzaENnZFBqQVRSVHRGeklGa0JTdXRmQUhqQ2tpLzc4?=
- =?utf-8?B?R3U1VzVVVm02bzRhOFoxcUx6M2x2NTJNYThnSVUyWjZzQUEveVBIb1ZXMlky?=
- =?utf-8?B?WjJtdFRITU1zYTVLSXBiV2M5UkJLNkRRbkRwRlcraEc2QnExc1NMeW9ISmRq?=
- =?utf-8?B?OElmcVJIS2VCT3JIQ3Rkc3lZRk1YZ1RwN0lvWXErQ1g3bmRNaWhDTGF1Ulcv?=
- =?utf-8?B?SHRMNndmVkk0NVM4bzJCdkMyaFJSd0lCMEdRZ3dWTU5XWFlDMjRlZThWZXpO?=
- =?utf-8?B?SDlSOEFJUUE2MVgvOHFVRDVaY29rTjNSbEtSZ3VtY0VOM1BadThNc0pYY3E4?=
- =?utf-8?B?S0d4eUplS0RBUStRTjYwRmtKRUFpTzIzdUFuR2FTZ3NhQ3NrS0pUeURyeHRm?=
- =?utf-8?B?N1JhS1J2VHBVTmxKODMxclpvSDhob1Y3cGJFZndHUklaSk9Ic3NDQWlXOVFY?=
- =?utf-8?B?bmNIemw2OUJLWFByRi9ENzRHZWlIRUpGVWcycDNpR1A5bkcvTlhsdDhoQ1R4?=
- =?utf-8?B?RU00WVVpSUF2ZUx6VVp1RFpwL3BCZzZLN2JDT3NSZnZnNk13ZzAwS0MyeTJk?=
- =?utf-8?B?OUlBb1JKcUIyZmlHRFBUSGtIaTljOFVsV2NlTEJDZnFoajhUR1ZDMTB2Mk1t?=
- =?utf-8?B?bnl1RzZEZEZwYi9vZnhrTWR3TDcyQkFuTnJ2aVNnMmpLSFJlOUt3TS9rUTUr?=
- =?utf-8?Q?bTOYb/NZuVIaVlWgEaFz8vUzS?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tphUz-00039o-H9
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 00:40:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741153251;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tSeegkE9QjJyznywZ+AhbXKtPc8gbtauAIWttF6zfJE=;
+ b=WoSeDJGlcMqKjZnPgD5mLyVBjCpLHIRgQC3pJwtmSAwvVIq9BNmrVUQG+KXjD/y6j+kUDY
+ GPOuUYtyRg/RMpswm/ErwOqAWBUhJOubIqDUqEoeyYzXb9nibUn10LOlXZg/G7HfxMGxVY
+ TVtz/ThACFibYO4Y5fRIXl1s7G7SYaU=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-274-dMjFRTc-No6On3BiTPzUug-1; Wed, 05 Mar 2025 00:40:49 -0500
+X-MC-Unique: dMjFRTc-No6On3BiTPzUug-1
+X-Mimecast-MFC-AGG-ID: dMjFRTc-No6On3BiTPzUug_1741153249
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-abbae81829fso837251566b.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 21:40:49 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741153248; x=1741758048;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tSeegkE9QjJyznywZ+AhbXKtPc8gbtauAIWttF6zfJE=;
+ b=olK0jusuzHoc1cdBbhrKIyQoTt260tEeVD6aYxPA8d/pR5CS+iXshdF93iTVmuUSyD
+ aguLx0YuER0k8iMBvqUk5OsXD+m9mQqmP4PYjf5z0dTJYsyRWq8LGLMk72oIhsS8/Xl9
+ YiG+4tqNhhbE+g1hBaxqUR0xpqiRcMusJiFEIiMvB0UFrC09QQUDmDk4QQYOHlYCkypj
+ ap/ll8L3klpwh+oe/w9vzaUXcyYHpudcNVOm0Ae8iKhP64FvVqx6d5AXdIOoAASHj+WC
+ ThTbvGzJ2fzizfpetofpq8gnTPQK2wQiaE+L9G+qm613BrPa1nNe8Yy/OqCFuao6XOP/
+ utOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbWbfwBtcT5xpwA2JPgj/U6jeZLc/T1rcvLuN2iKggGhxT44nlmMnOLnWUXL0sCTU9bAIND9sjrK7A@nongnu.org
+X-Gm-Message-State: AOJu0YxSC936cJ5yRBfk0Ulf8ZFiZ+q0GpY+Tvw996HFq4KYEbMzATc7
+ ljuxGQ1u33FTUozr8RcC1tFn8Rw9YmD6XZWi3jAIW4T86UDIEkTTWOXiByGa++qZ7X1I2SxwykM
+ 6GcBoJIh/ZTnquTHARjXwrlgHP2e/zaJvpFPipjFoYS5zDaRQNgntl6FFZozRjjf8vwasTN5HaT
+ yGKxlaE81KYFATjmx5T9WBX8KwZarp93+esP0FOA==
+X-Gm-Gg: ASbGncueXVE23Pn9rHwj68BWBKBltgd+RGRAXhLaF4xe9+JcoBzWNX5MrSxJZ5kymUW
+ KQvo+28uS8GJBktTnC7w2MzGSgZ0ebkYeavUPphPO9TDp/eD+bKY2iiJZnwAi64+1bkuX/UpX
+X-Received: by 2002:a17:907:c302:b0:abe:c894:5986 with SMTP id
+ a640c23a62f3a-ac20dae1ff1mr208571366b.39.1741153247588; 
+ Tue, 04 Mar 2025 21:40:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEZthPMvD/ACQ/DfQb3hliRGKfstZEAQfiNxDx/UNxdqZU/jyWQlCcUcGl7raXtH6CS9yQB8cGxv0fp9bAFyoE=
+X-Received: by 2002:a17:907:c302:b0:abe:c894:5986 with SMTP id
+ a640c23a62f3a-ac20dae1ff1mr208569166b.39.1741153247072; Tue, 04 Mar 2025
+ 21:40:47 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a8985f04-2d7e-4f35-917a-08dd5ba5f924
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Mar 2025 05:24:16.3867 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: L1+OZc9uwD4+lB/KOCkWxdThrE1hf3w1bykOIrUbcrfjzIpPwGEEOnixM91B4/RRrnsJ1PnQmo+lCYygX59baJaenMR1W2fVHixmbTFYzOs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR0601MB5631
-Received-SPF: pass client-ip=2a01:111:f403:c400::;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=HK2PR02CU002.outbound.protection.outlook.com
+References: <20250128035526.3750043-1-anisinha@redhat.com>
+ <20250131105408.3c7326da@imammedo.users.ipa.redhat.com>
+ <CAK3XEhOotXY0bjON4EwKSCD2sAMddi20Kymi7f_MtgQ14DNzuQ@mail.gmail.com>
+In-Reply-To: <CAK3XEhOotXY0bjON4EwKSCD2sAMddi20Kymi7f_MtgQ14DNzuQ@mail.gmail.com>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Wed, 5 Mar 2025 11:10:35 +0530
+X-Gm-Features: AQ5f1JoyykHDmH8G8PPEibHSzXMsjr6KuLeJl35bHnwBYHPPrA0knwxAZ2dUUQA
+Message-ID: <CAK3XEhNf09vNGf0969rDHUbb+ywtsU5Djg7eoP4q5Nry3V8dtA@mail.gmail.com>
+Subject: Re: [PATCH v6] hw/i386/cpu: remove default_cpu_version and simplify
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -184,246 +110,552 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ2VkcmljLA0KDQoNCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2NCAxMi8yM10gaHcvaW50Yy9h
-c3BlZWQ6IEludHJvZHVjZSBBc3BlZWRJTlRDSVJRDQo+IHN0cnVjdHVyZSB0byBzYXZlIHRoZSBp
-cnEgaW5kZXggYW5kIHJlZ2lzdGVyIGFkZHJlc3MNCj4gDQo+IE9uIDMvMy8yNSAxMDo1NCwgSmFt
-aW4gTGluIHdyb3RlOg0KPiA+IFRoZSBJTlRDIGNvbnRyb2xsZXIgc3VwcG9ydHMgR0lDSU5UMTI4
-IHRvIEdJQ0lOVDEzNiwgbWFwcGluZyAxOjEgdG8NCj4gPiBpbnB1dCBhbmQgb3V0cHV0IElSUXMg
-MCB0byA4LiBQcmV2aW91c2x5LCB0aGUgZm9ybXVsYSAiYWRkcmVzcyAmDQo+ID4gMHgwZjAwIiB3
-YXMgdXNlZCB0byBkZXJpdmUgdGhlIElSUSBpbmRleCBudW1iZXJzLg0KPiA+DQo+ID4gSG93ZXZl
-ciwgdGhlIElOVEMgY29udHJvbGxlciBhbHNvIHN1cHBvcnRzIEdJQ0lOVDE5Ml8yMDEsIG1hcHBp
-bmcgMQ0KPiA+IGlucHV0IElSUSBwaW4gdG8gMTAgb3V0cHV0IElSUSBwaW5zLiBUaGUgcGluIG51
-bWJlcnMgZm9yIGlucHV0IGFuZCBvdXRwdXQgYXJlDQo+IGRpZmZlcmVudC4NCj4gPiBJdCBpcyBk
-aWZmaWN1bHQgdG8gdXNlIGEgZm9ybXVsYSB0byBkZXRlcm1pbmUgdGhlIGluZGV4IG51bWJlciBv
-ZiBJTlRDDQo+ID4gbW9kZWwgc3VwcG9ydGVkIGlucHV0IGFuZCBvdXRwdXQgSVJRcy4NCj4gPg0K
-PiA+IFRvIHNpbXBsaWZ5IGFuZCBpbXByb3ZlIHJlYWRhYmlsaXR5LCBpbnRyb2R1Y2VzIHRoZSBB
-c3BlZWRJTlRDSVJRDQo+ID4gc3RydWN0dXJlIHRvIHNhdmUgdGhlIGlucHV0L291dHB1dCBJUlEg
-aW5kZXggYW5kIGl0cyBlbmFibGUvc3RhdHVzIHJlZ2lzdGVyDQo+IGFkZHJlc3MuDQo+ID4NCj4g
-PiBJbnRyb2R1Y2UgdGhlICJhc3BlZWRfMjcwMF9pbnRjX2lycXMiIHRhYmxlIHRvIHN0b3JlIElS
-USBpbmZvcm1hdGlvbiBmb3INCj4gSU5UQy4NCj4gPiBJbnRyb2R1Y2UgdGhlICJhc3BlZWRfaW50
-Y19nZXRfaXJxIiBmdW5jdGlvbiB0byByZXRyaWV2ZSB0aGUNCj4gPiBpbnB1dC9vdXRwdXQgSVJR
-IHBpbiBpbmRleCBmcm9tIHRoZSBwcm92aWRlZCBzdGF0dXMvZW5hYmxlIHJlZ2lzdGVyIGFkZHJl
-c3MuDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0
-ZWNoLmNvbT4NCj4gPiAtLS0NCj4gPiAgIGluY2x1ZGUvaHcvaW50Yy9hc3BlZWRfaW50Yy5oIHwg
-IDEwICsrKw0KPiA+ICAgaHcvaW50Yy9hc3BlZWRfaW50Yy5jICAgICAgICAgfCAxMjANCj4gKysr
-KysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tLQ0KPiA+ICAgMiBmaWxlcyBjaGFuZ2VkLCA4
-MiBpbnNlcnRpb25zKCspLCA0OCBkZWxldGlvbnMoLSkNCj4gPg0KPiA+IGRpZmYgLS1naXQgYS9p
-bmNsdWRlL2h3L2ludGMvYXNwZWVkX2ludGMuaA0KPiA+IGIvaW5jbHVkZS9ody9pbnRjL2FzcGVl
-ZF9pbnRjLmggaW5kZXggZjlhMDI3M2Y3OC4uMTEyYTAxZjQwMiAxMDA2NDQNCj4gPiAtLS0gYS9p
-bmNsdWRlL2h3L2ludGMvYXNwZWVkX2ludGMuaA0KPiA+ICsrKyBiL2luY2x1ZGUvaHcvaW50Yy9h
-c3BlZWRfaW50Yy5oDQo+ID4gQEAgLTIwLDYgKzIwLDE0IEBAIE9CSkVDVF9ERUNMQVJFX1RZUEUo
-QXNwZWVkSU5UQ1N0YXRlLA0KPiBBc3BlZWRJTlRDQ2xhc3MsIEFTUEVFRF9JTlRDKQ0KPiA+ICAg
-I2RlZmluZSBBU1BFRURfSU5UQ19NQVhfSU5QSU5TIDkNCj4gPiAgICNkZWZpbmUgQVNQRUVEX0lO
-VENfTUFYX09VVFBJTlMgOQ0KPiA+DQo+ID4gK3R5cGVkZWYgc3RydWN0IEFzcGVlZElOVENJUlEg
-ew0KPiA+ICsgICAgaW50IGlucGluX2lkeDsNCj4gPiArICAgIGludCBvdXRwaW5faWR4Ow0KPiA+
-ICsgICAgaW50IG51bV9vdXRwaW5zOw0KPiA+ICsgICAgdWludDMyX3QgZW5hYmxlX2FkZHI7DQo+
-ID4gKyAgICB1aW50MzJfdCBzdGF0dXNfYWRkcjsNCj4gDQo+IFRoZSBfYWRkciBzdWZmaXggaXMg
-Y29uZnVzaW5nLiBEb2Vzbid0IGl0IHJlZmVyIHRvIGEgcmVnaXN0ZXIgaW5kZXggPw0KPiANCg0K
-SSB3aWxsIGNoYW5nZSB0byBlbmFibGVfcmVnIGFuZCBzdGF0dXNfcmVnLg0KDQo+ID4gK30gQXNw
-ZWVkSU5UQ0lSUTsNCj4gPiArDQo+ID4gICBzdHJ1Y3QgQXNwZWVkSU5UQ1N0YXRlIHsNCj4gPiAg
-ICAgICAvKjwgcHJpdmF0ZSA+Ki8NCj4gPiAgICAgICBTeXNCdXNEZXZpY2UgcGFyZW50X29iajsN
-Cj4gPiBAQCAtNDcsNiArNTUsOCBAQCBzdHJ1Y3QgQXNwZWVkSU5UQ0NsYXNzIHsNCj4gPiAgICAg
-ICB1aW50NjRfdCByZWdfc2l6ZTsNCj4gPiAgICAgICB1aW50NjRfdCByZWdfb2Zmc2V0Ow0KPiA+
-ICAgICAgIGNvbnN0IE1lbW9yeVJlZ2lvbk9wcyAqcmVnX29wczsNCj4gPiArICAgIGNvbnN0IEFz
-cGVlZElOVENJUlEgKmlycV90YWJsZTsNCj4gPiArICAgIGludCBpcnFfdGFibGVfY291bnQ7DQo+
-ID4gICB9Ow0KPiA+DQo+ID4gICAjZW5kaWYgLyogQVNQRUVEX0lOVENfSCAqLw0KPiA+IGRpZmYg
-LS1naXQgYS9ody9pbnRjL2FzcGVlZF9pbnRjLmMgYi9ody9pbnRjL2FzcGVlZF9pbnRjLmMgaW5k
-ZXgNCj4gPiA5YmMzZTA4OWQ4Li41NzMwYTc2MDRkIDEwMDY0NA0KPiA+IC0tLSBhL2h3L2ludGMv
-YXNwZWVkX2ludGMuYw0KPiA+ICsrKyBiL2h3L2ludGMvYXNwZWVkX2ludGMuYw0KPiA+IEBAIC00
-MCw3ICs0MCwyMyBAQCBSRUczMihHSUNJTlQxMzVfU1RBVFVTLCAgICAgMHg3MDQpDQo+ID4gICBS
-RUczMihHSUNJTlQxMzZfRU4sICAgICAgICAgMHg4MDApDQo+ID4gICBSRUczMihHSUNJTlQxMzZf
-U1RBVFVTLCAgICAgMHg4MDQpDQo+ID4NCj4gPiAtI2RlZmluZSBHSUNJTlRfU1RBVFVTX0JBU0Ug
-ICAgIFJfR0lDSU5UMTI4X1NUQVRVUw0KPiA+ICtzdGF0aWMgY29uc3QgQXNwZWVkSU5UQ0lSUSAq
-YXNwZWVkX2ludGNfZ2V0X2lycShBc3BlZWRJTlRDQ2xhc3MgKmFpYywNCj4gPiArICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDMyX3QgYWRkcikgew0K
-PiA+ICsgICAgaW50IGk7DQo+ID4gKw0KPiA+ICsgICAgZm9yIChpID0gMDsgaSA8IGFpYy0+aXJx
-X3RhYmxlX2NvdW50OyBpKyspIHsNCj4gPiArICAgICAgICBpZiAoYWljLT5pcnFfdGFibGVbaV0u
-ZW5hYmxlX2FkZHIgPT0gYWRkciB8fA0KPiA+ICsgICAgICAgICAgICBhaWMtPmlycV90YWJsZVtp
-XS5zdGF0dXNfYWRkciA9PSBhZGRyKSB7DQo+ID4gKyAgICAgICAgICAgIHJldHVybiAmYWljLT5p
-cnFfdGFibGVbaV07DQo+ID4gKyAgICAgICAgfQ0KPiA+ICsgICAgfQ0KPiA+ICsNCj4gPiArICAg
-IC8qDQo+ID4gKyAgICAgKiBJbnZhbGlkIGFkZHIuDQo+ID4gKyAgICAgKi8NCj4gPiArICAgIGdf
-YXNzZXJ0X25vdF9yZWFjaGVkKCk7DQo+ID4gK30NCj4gPg0KPiA+ICAgLyoNCj4gPiAgICAqIFVw
-ZGF0ZSB0aGUgc3RhdGUgb2YgYW4gaW50ZXJydXB0IGNvbnRyb2xsZXIgcGluIGJ5IHNldHRpbmcg
-QEANCj4gPiAtODEsMTUgKzk3LDEwIEBAIHN0YXRpYyB2b2lkIGFzcGVlZF9pbnRjX3NldF9pcnEo
-dm9pZCAqb3BhcXVlLCBpbnQgaXJxLCBpbnQNCj4gbGV2ZWwpDQo+ID4gICAgICAgQXNwZWVkSU5U
-Q1N0YXRlICpzID0gKEFzcGVlZElOVENTdGF0ZSAqKW9wYXF1ZTsNCj4gPiAgICAgICBBc3BlZWRJ
-TlRDQ2xhc3MgKmFpYyA9IEFTUEVFRF9JTlRDX0dFVF9DTEFTUyhzKTsNCj4gPiAgICAgICBjb25z
-dCBjaGFyICpuYW1lID0gb2JqZWN0X2dldF90eXBlbmFtZShPQkpFQ1QocykpOw0KPiA+IC0gICAg
-dWludDMyX3Qgc3RhdHVzX2FkZHIgPSBHSUNJTlRfU1RBVFVTX0JBU0UgKyAoKDB4MTAwICogaXJx
-KSA+PiAyKTsNCj4gPiArICAgIGNvbnN0IEFzcGVlZElOVENJUlEgKmludGNfaXJxOw0KPiA+ICAg
-ICAgIHVpbnQzMl90IHNlbGVjdCA9IDA7DQo+ID4gICAgICAgdWludDMyX3QgZW5hYmxlOw0KPiA+
-ICAgICAgIGludCBpOw0KPiA+IC0gICAgaW50IGlucGluX2lkeDsNCj4gPiAtICAgIGludCBvdXRw
-aW5faWR4Ow0KPiA+IC0NCj4gPiAtICAgIGlucGluX2lkeCA9IGlycTsNCj4gPiAtICAgIG91dHBp
-bl9pZHggPSBpcnE7DQo+ID4NCj4gPiAgICAgICBpZiAoaXJxID49IGFpYy0+bnVtX2lucGlucykg
-ew0KPiA+ICAgICAgICAgICBxZW11X2xvZ19tYXNrKExPR19HVUVTVF9FUlJPUiwgIiVzOiBJbnZh
-bGlkIGlucHV0IHBpbg0KPiBpbmRleDoNCj4gPiAlZFxuIiwgQEAgLTk3LDE1ICsxMDgsMTYgQEAg
-c3RhdGljIHZvaWQgYXNwZWVkX2ludGNfc2V0X2lycSh2b2lkDQo+ICpvcGFxdWUsIGludCBpcnEs
-IGludCBsZXZlbCkNCj4gPiAgICAgICAgICAgcmV0dXJuOw0KPiA+ICAgICAgIH0NCj4gPg0KPiA+
-IC0gICAgdHJhY2VfYXNwZWVkX2ludGNfc2V0X2lycShuYW1lLCBpbnBpbl9pZHgsIGxldmVsKTsN
-Cj4gPiAtICAgIGVuYWJsZSA9IHMtPmVuYWJsZVtpbnBpbl9pZHhdOw0KPiA+ICsgICAgaW50Y19p
-cnEgPSAmYWljLT5pcnFfdGFibGVbaXJxXTsNCj4gPiArICAgIHRyYWNlX2FzcGVlZF9pbnRjX3Nl
-dF9pcnEobmFtZSwgaW50Y19pcnEtPmlucGluX2lkeCwgbGV2ZWwpOw0KPiA+ICsgICAgZW5hYmxl
-ID0gcy0+ZW5hYmxlW2ludGNfaXJxLT5pbnBpbl9pZHhdOw0KPiA+DQo+ID4gICAgICAgaWYgKCFs
-ZXZlbCkgew0KPiA+ICAgICAgICAgICByZXR1cm47DQo+ID4gICAgICAgfQ0KPiA+DQo+ID4gICAg
-ICAgZm9yIChpID0gMDsgaSA8IGFpYy0+bnVtX2xpbmVzOyBpKyspIHsNCj4gPiAtICAgICAgICBp
-ZiAocy0+b3JnYXRlc1tpbnBpbl9pZHhdLmxldmVsc1tpXSkgew0KPiA+ICsgICAgICAgIGlmIChz
-LT5vcmdhdGVzW2ludGNfaXJxLT5pbnBpbl9pZHhdLmxldmVsc1tpXSkgew0KPiA+ICAgICAgICAg
-ICAgICAgaWYgKGVuYWJsZSAmIEJJVChpKSkgew0KPiA+ICAgICAgICAgICAgICAgICAgIHNlbGVj
-dCB8PSBCSVQoaSk7DQo+ID4gICAgICAgICAgICAgICB9DQo+ID4gQEAgLTExOCw3ICsxMzAsNyBA
-QCBzdGF0aWMgdm9pZCBhc3BlZWRfaW50Y19zZXRfaXJxKHZvaWQgKm9wYXF1ZSwgaW50DQo+ID4g
-aXJxLCBpbnQgbGV2ZWwpDQo+ID4NCj4gPiAgICAgICB0cmFjZV9hc3BlZWRfaW50Y19zZWxlY3Qo
-bmFtZSwgc2VsZWN0KTsNCj4gPg0KPiA+IC0gICAgaWYgKHMtPm1hc2tbaW5waW5faWR4XSB8fCBz
-LT5yZWdzW3N0YXR1c19hZGRyXSkgew0KPiA+ICsgICAgaWYgKHMtPm1hc2tbaW50Y19pcnEtPmlu
-cGluX2lkeF0gfHwNCj4gPiArIHMtPnJlZ3NbaW50Y19pcnEtPnN0YXR1c19hZGRyXSkgew0KPiA+
-ICAgICAgICAgICAvKg0KPiA+ICAgICAgICAgICAgKiBhLiBtYXNrIGlzIG5vdCAwIG1lYW5zIGlu
-IElTUiBtb2RlDQo+ID4gICAgICAgICAgICAqIHNvdXJjZXMgaW50ZXJydXB0IHJvdXRpbmUgYXJl
-IGV4ZWN1dGluZy4NCj4gPiBAQCAtMTI3LDE3ICsxMzksMTkgQEAgc3RhdGljIHZvaWQgYXNwZWVk
-X2ludGNfc2V0X2lycSh2b2lkICpvcGFxdWUsIGludA0KPiBpcnEsIGludCBsZXZlbCkNCj4gPiAg
-ICAgICAgICAgICoNCj4gPiAgICAgICAgICAgICogc2F2ZSBzb3VyY2UgaW50ZXJydXB0IHRvIHBl
-bmRpbmcgdmFyaWFibGUuDQo+ID4gICAgICAgICAgICAqLw0KPiA+IC0gICAgICAgIHMtPnBlbmRp
-bmdbaW5waW5faWR4XSB8PSBzZWxlY3Q7DQo+ID4gLSAgICAgICAgdHJhY2VfYXNwZWVkX2ludGNf
-cGVuZGluZ19pcnEobmFtZSwgaW5waW5faWR4LA0KPiBzLT5wZW5kaW5nW2lucGluX2lkeF0pOw0K
-PiA+ICsgICAgICAgIHMtPnBlbmRpbmdbaW50Y19pcnEtPmlucGluX2lkeF0gfD0gc2VsZWN0Ow0K
-PiA+ICsgICAgICAgIHRyYWNlX2FzcGVlZF9pbnRjX3BlbmRpbmdfaXJxKG5hbWUsIGludGNfaXJx
-LT5pbnBpbl9pZHgsDQo+ID4gKw0KPiA+ICsgcy0+cGVuZGluZ1tpbnRjX2lycS0+aW5waW5faWR4
-XSk7DQo+ID4gICAgICAgfSBlbHNlIHsNCj4gPiAgICAgICAgICAgLyoNCj4gPiAgICAgICAgICAg
-ICogbm90aWZ5IGZpcm13YXJlIHdoaWNoIHNvdXJjZSBpbnRlcnJ1cHQgYXJlIGNvbWluZw0KPiA+
-ICAgICAgICAgICAgKiBieSBzZXR0aW5nIHN0YXR1cyByZWdpc3Rlcg0KPiA+ICAgICAgICAgICAg
-Ki8NCj4gPiAtICAgICAgICBzLT5yZWdzW3N0YXR1c19hZGRyXSA9IHNlbGVjdDsNCj4gPiAtICAg
-ICAgICB0cmFjZV9hc3BlZWRfaW50Y190cmlnZ2VyX2lycShuYW1lLCBpbnBpbl9pZHgsIG91dHBp
-bl9pZHgsDQo+ID4gLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcy0+cmVn
-c1tzdGF0dXNfYWRkcl0pOw0KPiA+IC0gICAgICAgIGFzcGVlZF9pbnRjX3VwZGF0ZShzLCBpbnBp
-bl9pZHgsIG91dHBpbl9pZHgsIDEpOw0KPiA+ICsgICAgICAgIHMtPnJlZ3NbaW50Y19pcnEtPnN0
-YXR1c19hZGRyXSA9IHNlbGVjdDsNCj4gPiArICAgICAgICB0cmFjZV9hc3BlZWRfaW50Y190cmln
-Z2VyX2lycShuYW1lLCBpbnRjX2lycS0+aW5waW5faWR4LA0KPiA+ICsgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIGludGNfaXJxLT5vdXRwaW5faWR4LA0KPiA+ICsNCj4gcy0+
-cmVnc1tpbnRjX2lycS0+c3RhdHVzX2FkZHJdKTsNCj4gPiArICAgICAgICBhc3BlZWRfaW50Y191
-cGRhdGUocywgaW50Y19pcnEtPmlucGluX2lkeCwNCj4gPiArIGludGNfaXJxLT5vdXRwaW5faWR4
-LCAxKTsNCj4gPiAgICAgICB9DQo+ID4gICB9DQo+ID4NCj4gPiBAQCAtMTQ2LDE5ICsxNjAsMTcg
-QEAgc3RhdGljIHZvaWQNCj4gYXNwZWVkX2ludGNfZW5hYmxlX2hhbmRsZXIoQXNwZWVkSU5UQ1N0
-YXRlICpzLCBod2FkZHIgb2Zmc2V0LA0KPiA+ICAgew0KPiA+ICAgICAgIEFzcGVlZElOVENDbGFz
-cyAqYWljID0gQVNQRUVEX0lOVENfR0VUX0NMQVNTKHMpOw0KPiA+ICAgICAgIGNvbnN0IGNoYXIg
-Km5hbWUgPSBvYmplY3RfZ2V0X3R5cGVuYW1lKE9CSkVDVChzKSk7DQo+ID4gKyAgICBjb25zdCBB
-c3BlZWRJTlRDSVJRICppbnRjX2lycTsNCj4gPiAgICAgICB1aW50MzJfdCBhZGRyID0gb2Zmc2V0
-ID4+IDI7DQo+ID4gICAgICAgdWludDMyX3Qgb2xkX2VuYWJsZTsNCj4gPiAgICAgICB1aW50MzJf
-dCBjaGFuZ2U7DQo+ID4gLSAgICB1aW50MzJfdCBpcnE7DQo+ID4gLSAgICBpbnQgaW5waW5faWR4
-Ow0KPiA+DQo+ID4gLSAgICBpcnEgPSAob2Zmc2V0ICYgMHgwZjAwKSA+PiA4Ow0KPiA+IC0gICAg
-aW5waW5faWR4ID0gaXJxOw0KPiA+ICsgICAgaW50Y19pcnEgPSBhc3BlZWRfaW50Y19nZXRfaXJx
-KGFpYywgYWRkcik7DQo+IA0KPiBJIHdvdWxkIGtlZXAgdGhlICdpbnBpbl9pZHgnIHZhcmlhYmxl
-IGFuZCBhc3NpZ24gaXQgdG8gJ2ludGNfaXJxLT5pbnBpbl9pZHgnLg0KPiBUaGlzIHdvdWxkIHJl
-ZHVjZSB0aGUgbnVtYmVyIG9mIGNoYW5nZS4NCj4gDQpXaWxsIGRvDQo+IA0KPiA+IC0gICAgaWYg
-KGlucGluX2lkeCA+PSBhaWMtPm51bV9pbnBpbnMpIHsNCj4gPiArICAgIGlmIChpbnRjX2lycS0+
-aW5waW5faWR4ID49IGFpYy0+bnVtX2lucGlucykgew0KPiANCj4gU2luY2UgYm90aCB2YWx1ZXMg
-YXJlIGRlZmluZWQgYXQgY29tcGlsZSB0aW1lLCBzaG91bGRuJ3QgdGhhdCBiZSBhbiBhc3NlcnQg
-Pw0KV2lsbCBkbw0KDQo+IA0KPiA+ICAgICAgICAgICBxZW11X2xvZ19tYXNrKExPR19HVUVTVF9F
-UlJPUiwNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgICAiJXM6IEludmFsaWQgaW5wdXQgcGlu
-IGluZGV4OiAlZFxuIiwNCj4gPiAtICAgICAgICAgICAgICAgICAgICAgIF9fZnVuY19fLCBpbnBp
-bl9pZHgpOw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgX19mdW5jX18sIGludGNfaXJxLT5p
-bnBpbl9pZHgpOw0KPiA+ICAgICAgICAgICByZXR1cm47DQo+ID4gICAgICAgfQ0KPiA+DQo+ID4g
-QEAgLTE2OSwxNyArMTgxLDE3IEBAIHN0YXRpYyB2b2lkDQo+IGFzcGVlZF9pbnRjX2VuYWJsZV9o
-YW5kbGVyKEFzcGVlZElOVENTdGF0ZSAqcywgaHdhZGRyIG9mZnNldCwNCj4gPiAgICAgICAgKi8N
-Cj4gPg0KPiA+ICAgICAgIC8qIGRpc2FibGUgYWxsIHNvdXJjZSBpbnRlcnJ1cHQgKi8NCj4gPiAt
-ICAgIGlmICghZGF0YSAmJiAhcy0+ZW5hYmxlW2lucGluX2lkeF0pIHsNCj4gPiArICAgIGlmICgh
-ZGF0YSAmJiAhcy0+ZW5hYmxlW2ludGNfaXJxLT5pbnBpbl9pZHhdKSB7DQo+ID4gICAgICAgICAg
-IHMtPnJlZ3NbYWRkcl0gPSBkYXRhOw0KPiA+ICAgICAgICAgICByZXR1cm47DQo+ID4gICAgICAg
-fQ0KPiA+DQo+ID4gLSAgICBvbGRfZW5hYmxlID0gcy0+ZW5hYmxlW2lucGluX2lkeF07DQo+ID4g
-LSAgICBzLT5lbmFibGVbaW5waW5faWR4XSB8PSBkYXRhOw0KPiA+ICsgICAgb2xkX2VuYWJsZSA9
-IHMtPmVuYWJsZVtpbnRjX2lycS0+aW5waW5faWR4XTsNCj4gPiArICAgIHMtPmVuYWJsZVtpbnRj
-X2lycS0+aW5waW5faWR4XSB8PSBkYXRhOw0KPiA+DQo+ID4gICAgICAgLyogZW5hYmxlIG5ldyBz
-b3VyY2UgaW50ZXJydXB0ICovDQo+ID4gLSAgICBpZiAob2xkX2VuYWJsZSAhPSBzLT5lbmFibGVb
-aW5waW5faWR4XSkgew0KPiA+IC0gICAgICAgIHRyYWNlX2FzcGVlZF9pbnRjX2VuYWJsZShuYW1l
-LCBzLT5lbmFibGVbaW5waW5faWR4XSk7DQo+ID4gKyAgICBpZiAob2xkX2VuYWJsZSAhPSBzLT5l
-bmFibGVbaW50Y19pcnEtPmlucGluX2lkeF0pIHsNCj4gPiArICAgICAgICB0cmFjZV9hc3BlZWRf
-aW50Y19lbmFibGUobmFtZSwNCj4gPiArIHMtPmVuYWJsZVtpbnRjX2lycS0+aW5waW5faWR4XSk7
-DQo+ID4gICAgICAgICAgIHMtPnJlZ3NbYWRkcl0gPSBkYXRhOw0KPiA+ICAgICAgICAgICByZXR1
-cm47DQo+ID4gICAgICAgfQ0KPiA+IEBAIC0xODcsMTEgKzE5OSwxMSBAQCBzdGF0aWMgdm9pZA0K
-PiBhc3BlZWRfaW50Y19lbmFibGVfaGFuZGxlcihBc3BlZWRJTlRDU3RhdGUgKnMsIGh3YWRkciBv
-ZmZzZXQsDQo+ID4gICAgICAgLyogbWFzayBhbmQgdW5tYXNrIHNvdXJjZSBpbnRlcnJ1cHQgKi8N
-Cj4gPiAgICAgICBjaGFuZ2UgPSBzLT5yZWdzW2FkZHJdIF4gZGF0YTsNCj4gPiAgICAgICBpZiAo
-Y2hhbmdlICYgZGF0YSkgew0KPiA+IC0gICAgICAgIHMtPm1hc2tbaW5waW5faWR4XSAmPSB+Y2hh
-bmdlOw0KPiA+IC0gICAgICAgIHRyYWNlX2FzcGVlZF9pbnRjX3VubWFzayhuYW1lLCBjaGFuZ2Us
-IHMtPm1hc2tbaW5waW5faWR4XSk7DQo+ID4gKyAgICAgICAgcy0+bWFza1tpbnRjX2lycS0+aW5w
-aW5faWR4XSAmPSB+Y2hhbmdlOw0KPiA+ICsgICAgICAgIHRyYWNlX2FzcGVlZF9pbnRjX3VubWFz
-ayhuYW1lLCBjaGFuZ2UsDQo+ID4gKyBzLT5tYXNrW2ludGNfaXJxLT5pbnBpbl9pZHhdKTsNCj4g
-PiAgICAgICB9IGVsc2Ugew0KPiA+IC0gICAgICAgIHMtPm1hc2tbaW5waW5faWR4XSB8PSBjaGFu
-Z2U7DQo+ID4gLSAgICAgICAgdHJhY2VfYXNwZWVkX2ludGNfbWFzayhuYW1lLCBjaGFuZ2UsIHMt
-Pm1hc2tbaW5waW5faWR4XSk7DQo+ID4gKyAgICAgICAgcy0+bWFza1tpbnRjX2lycS0+aW5waW5f
-aWR4XSB8PSBjaGFuZ2U7DQo+ID4gKyAgICAgICAgdHJhY2VfYXNwZWVkX2ludGNfbWFzayhuYW1l
-LCBjaGFuZ2UsDQo+ID4gKyBzLT5tYXNrW2ludGNfaXJxLT5pbnBpbl9pZHhdKTsNCj4gPiAgICAg
-ICB9DQo+ID4NCj4gPiAgICAgICBzLT5yZWdzW2FkZHJdID0gZGF0YTsNCj4gPiBAQCAtMjAyLDI0
-ICsyMTQsMjAgQEAgc3RhdGljIHZvaWQNCj4gYXNwZWVkX2ludGNfc3RhdHVzX2hhbmRsZXIoQXNw
-ZWVkSU5UQ1N0YXRlICpzLCBod2FkZHIgb2Zmc2V0LA0KPiA+ICAgew0KPiA+ICAgICAgIEFzcGVl
-ZElOVENDbGFzcyAqYWljID0gQVNQRUVEX0lOVENfR0VUX0NMQVNTKHMpOw0KPiA+ICAgICAgIGNv
-bnN0IGNoYXIgKm5hbWUgPSBvYmplY3RfZ2V0X3R5cGVuYW1lKE9CSkVDVChzKSk7DQo+ID4gKyAg
-ICBjb25zdCBBc3BlZWRJTlRDSVJRICppbnRjX2lycTsNCj4gPiAgICAgICB1aW50MzJfdCBhZGRy
-ID0gb2Zmc2V0ID4+IDI7DQo+ID4gLSAgICB1aW50MzJfdCBpcnE7DQo+ID4gLSAgICBpbnQgaW5w
-aW5faWR4Ow0KPiA+IC0gICAgaW50IG91dHBpbl9pZHg7DQo+IA0KPiANCj4gSSB3b3VsZCBrZWVw
-IGJvdGggdGhlc2UgdmFyaWFibGVzIHRvIHJlZHVjZSB0aGUgbnVtYmVyIG9mIGNoYW5nZXMuDQpX
-aWxsIGRvDQoNClRoYW5rcyBmb3IgeW91ciByZXZpZXcgYW5kIHN1Z2dlc3Rpb25zLg0KSmFtaW4N
-Cg0KPiANCj4gDQo+IFRoYW5rcywNCj4gDQo+IEMuDQo+IA0KPiANCj4gPiAgICAgICBpZiAoIWRh
-dGEpIHsNCj4gPiAgICAgICAgICAgcWVtdV9sb2dfbWFzayhMT0dfR1VFU1RfRVJST1IsICIlczog
-SW52YWxpZCBkYXRhIDBcbiIsDQo+IF9fZnVuY19fKTsNCj4gPiAgICAgICAgICAgcmV0dXJuOw0K
-PiA+ICAgICAgIH0NCj4gPg0KPiA+IC0gICAgaXJxID0gKG9mZnNldCAmIDB4MGYwMCkgPj4gODsN
-Cj4gPiAtICAgIGlucGluX2lkeCA9IGlycTsNCj4gPiAtICAgIG91dHBpbl9pZHggPSBpcnE7DQo+
-ID4gKyAgICBpbnRjX2lycSA9IGFzcGVlZF9pbnRjX2dldF9pcnEoYWljLCBhZGRyKTsNCj4gPg0K
-PiA+IC0gICAgaWYgKGlucGluX2lkeCA+PSBhaWMtPm51bV9pbnBpbnMpIHsNCj4gPiArICAgIGlm
-IChpbnRjX2lycS0+aW5waW5faWR4ID49IGFpYy0+bnVtX2lucGlucykgew0KPiA+ICAgICAgICAg
-ICBxZW11X2xvZ19tYXNrKExPR19HVUVTVF9FUlJPUiwNCj4gPiAgICAgICAgICAgICAgICAgICAg
-ICAgICAiJXM6IEludmFsaWQgaW5wdXQgcGluIGluZGV4OiAlZFxuIiwNCj4gPiAtICAgICAgICAg
-ICAgICAgICAgICAgIF9fZnVuY19fLCBpbnBpbl9pZHgpOw0KPiA+ICsgICAgICAgICAgICAgICAg
-ICAgICAgX19mdW5jX18sIGludGNfaXJxLT5pbnBpbl9pZHgpOw0KPiA+ICAgICAgICAgICByZXR1
-cm47DQo+ID4gICAgICAgfQ0KPiA+DQo+ID4gQEAgLTIzOCwyMiArMjQ2LDI0IEBAIHN0YXRpYyB2
-b2lkDQo+ID4gYXNwZWVkX2ludGNfc3RhdHVzX2hhbmRsZXIoQXNwZWVkSU5UQ1N0YXRlICpzLCBo
-d2FkZHIgb2Zmc2V0LA0KPiA+DQo+ID4gICAgICAgLyogQWxsIHNvdXJjZSBJU1IgZXhlY3V0aW9u
-IGFyZSBkb25lICovDQo+ID4gICAgICAgaWYgKCFzLT5yZWdzW2FkZHJdKSB7DQo+ID4gLSAgICAg
-ICAgdHJhY2VfYXNwZWVkX2ludGNfYWxsX2lzcl9kb25lKG5hbWUsIGlucGluX2lkeCk7DQo+ID4g
-LSAgICAgICAgaWYgKHMtPnBlbmRpbmdbaW5waW5faWR4XSkgew0KPiA+ICsgICAgICAgIHRyYWNl
-X2FzcGVlZF9pbnRjX2FsbF9pc3JfZG9uZShuYW1lLCBpbnRjX2lycS0+aW5waW5faWR4KTsNCj4g
-PiArICAgICAgICBpZiAocy0+cGVuZGluZ1tpbnRjX2lycS0+aW5waW5faWR4XSkgew0KPiA+ICAg
-ICAgICAgICAgICAgLyoNCj4gPiAgICAgICAgICAgICAgICAqIGhhbmRsZSBwZW5kaW5nIHNvdXJj
-ZSBpbnRlcnJ1cHQNCj4gPiAgICAgICAgICAgICAgICAqIG5vdGlmeSBmaXJtd2FyZSB3aGljaCBz
-b3VyY2UgaW50ZXJydXB0IGFyZSBwZW5kaW5nDQo+ID4gICAgICAgICAgICAgICAgKiBieSBzZXR0
-aW5nIHN0YXR1cyByZWdpc3Rlcg0KPiA+ICAgICAgICAgICAgICAgICovDQo+ID4gLSAgICAgICAg
-ICAgIHMtPnJlZ3NbYWRkcl0gPSBzLT5wZW5kaW5nW2lucGluX2lkeF07DQo+ID4gLSAgICAgICAg
-ICAgIHMtPnBlbmRpbmdbaW5waW5faWR4XSA9IDA7DQo+ID4gLSAgICAgICAgICAgIHRyYWNlX2Fz
-cGVlZF9pbnRjX3RyaWdnZXJfaXJxKG5hbWUsIGlucGluX2lkeCwgb3V0cGluX2lkeCwNCj4gPiAr
-ICAgICAgICAgICAgcy0+cmVnc1thZGRyXSA9IHMtPnBlbmRpbmdbaW50Y19pcnEtPmlucGluX2lk
-eF07DQo+ID4gKyAgICAgICAgICAgIHMtPnBlbmRpbmdbaW50Y19pcnEtPmlucGluX2lkeF0gPSAw
-Ow0KPiA+ICsgICAgICAgICAgICB0cmFjZV9hc3BlZWRfaW50Y190cmlnZ2VyX2lycShuYW1lLCBp
-bnRjX2lycS0+aW5waW5faWR4LA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICBpbnRjX2lycS0+b3V0cGluX2lkeCwNCj4gPiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIHMtPnJlZ3NbYWRkcl0pOw0KPiA+IC0gICAgICAgICAg
-ICBhc3BlZWRfaW50Y191cGRhdGUocywgaW5waW5faWR4LCBvdXRwaW5faWR4LCAxKTsNCj4gPiAr
-ICAgICAgICAgICAgYXNwZWVkX2ludGNfdXBkYXRlKHMsIGludGNfaXJxLT5pbnBpbl9pZHgsDQo+
-ID4gKyBpbnRjX2lycS0+b3V0cGluX2lkeCwgMSk7DQo+ID4gICAgICAgICAgIH0gZWxzZSB7DQo+
-ID4gICAgICAgICAgICAgICAvKiBjbGVhciBpcnEgKi8NCj4gPiAtICAgICAgICAgICAgdHJhY2Vf
-YXNwZWVkX2ludGNfY2xlYXJfaXJxKG5hbWUsIGlucGluX2lkeCwgb3V0cGluX2lkeCwgMCk7DQo+
-ID4gLSAgICAgICAgICAgIGFzcGVlZF9pbnRjX3VwZGF0ZShzLCBpbnBpbl9pZHgsIG91dHBpbl9p
-ZHgsIDApOw0KPiA+ICsgICAgICAgICAgICB0cmFjZV9hc3BlZWRfaW50Y19jbGVhcl9pcnEobmFt
-ZSwgaW50Y19pcnEtPmlucGluX2lkeCwNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIGludGNfaXJxLT5vdXRwaW5faWR4LCAwKTsNCj4gPiArICAgICAgICAgICAg
-YXNwZWVkX2ludGNfdXBkYXRlKHMsIGludGNfaXJxLT5pbnBpbl9pZHgsDQo+ID4gKyBpbnRjX2ly
-cS0+b3V0cGluX2lkeCwgMCk7DQo+ID4gICAgICAgICAgIH0NCj4gPiAgICAgICB9DQo+ID4gICB9
-DQo+ID4gQEAgLTQxNiw2ICs0MjYsMTggQEAgc3RhdGljIGNvbnN0IFR5cGVJbmZvIGFzcGVlZF9p
-bnRjX2luZm8gPSB7DQo+ID4gICAgICAgLmFic3RyYWN0ID0gdHJ1ZSwNCj4gPiAgIH07DQo+ID4N
-Cj4gPiArc3RhdGljIEFzcGVlZElOVENJUlEgYXNwZWVkXzI3MDBfaW50Y19pcnFzW0FTUEVFRF9J
-TlRDX01BWF9JTlBJTlNdID0NCj4gew0KPiA+ICsgICAgezAsIDAsIDEsIFJfR0lDSU5UMTI4X0VO
-LCBSX0dJQ0lOVDEyOF9TVEFUVVN9LA0KPiA+ICsgICAgezEsIDEsIDEsIFJfR0lDSU5UMTI5X0VO
-LCBSX0dJQ0lOVDEyOV9TVEFUVVN9LA0KPiA+ICsgICAgezIsIDIsIDEsIFJfR0lDSU5UMTMwX0VO
-LCBSX0dJQ0lOVDEzMF9TVEFUVVN9LA0KPiA+ICsgICAgezMsIDMsIDEsIFJfR0lDSU5UMTMxX0VO
-LCBSX0dJQ0lOVDEzMV9TVEFUVVN9LA0KPiA+ICsgICAgezQsIDQsIDEsIFJfR0lDSU5UMTMyX0VO
-LCBSX0dJQ0lOVDEzMl9TVEFUVVN9LA0KPiA+ICsgICAgezUsIDUsIDEsIFJfR0lDSU5UMTMzX0VO
-LCBSX0dJQ0lOVDEzM19TVEFUVVN9LA0KPiA+ICsgICAgezYsIDYsIDEsIFJfR0lDSU5UMTM0X0VO
-LCBSX0dJQ0lOVDEzNF9TVEFUVVN9LA0KPiA+ICsgICAgezcsIDcsIDEsIFJfR0lDSU5UMTM1X0VO
-LCBSX0dJQ0lOVDEzNV9TVEFUVVN9LA0KPiA+ICsgICAgezgsIDgsIDEsIFJfR0lDSU5UMTM2X0VO
-LCBSX0dJQ0lOVDEzNl9TVEFUVVN9LCB9Ow0KPiA+ICsNCj4gPiAgIHN0YXRpYyB2b2lkIGFzcGVl
-ZF8yNzAwX2ludGNfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAqa2xhc3MsIHZvaWQgKmRhdGEpDQo+
-ID4gICB7DQo+ID4gICAgICAgRGV2aWNlQ2xhc3MgKmRjID0gREVWSUNFX0NMQVNTKGtsYXNzKTsg
-QEAgLTQyOCw2ICs0NTAsOCBAQA0KPiA+IHN0YXRpYyB2b2lkIGFzcGVlZF8yNzAwX2ludGNfY2xh
-c3NfaW5pdChPYmplY3RDbGFzcyAqa2xhc3MsIHZvaWQgKmRhdGEpDQo+ID4gICAgICAgYWljLT5t
-ZW1fc2l6ZSA9IDB4NDAwMDsNCj4gPiAgICAgICBhaWMtPnJlZ19zaXplID0gMHg4MDg7DQo+ID4g
-ICAgICAgYWljLT5yZWdfb2Zmc2V0ID0gMHgxMDAwOw0KPiA+ICsgICAgYWljLT5pcnFfdGFibGUg
-PSBhc3BlZWRfMjcwMF9pbnRjX2lycXM7DQo+ID4gKyAgICBhaWMtPmlycV90YWJsZV9jb3VudCA9
-IEFSUkFZX1NJWkUoYXNwZWVkXzI3MDBfaW50Y19pcnFzKTsNCj4gPiAgIH0NCj4gPg0KPiA+ICAg
-c3RhdGljIGNvbnN0IFR5cGVJbmZvIGFzcGVlZF8yNzAwX2ludGNfaW5mbyA9IHsNCg0K
+On Wed, Mar 5, 2025 at 3:53=E2=80=AFAM Ani Sinha <anisinha@redhat.com> wrot=
+e:
+>
+> On Fri, Jan 31, 2025 at 3:24=E2=80=AFPM Igor Mammedov <imammedo@redhat.co=
+m> wrote:
+> >
+> > On Tue, 28 Jan 2025 09:25:26 +0530
+> > Ani Sinha <anisinha@redhat.com> wrote:
+> >
+> > > commit 0788a56bd1ae3 ("i386: Make unversioned CPU models be aliases")
+> > > introduced 'default_cpu_version' for PCMachineClass. This created thr=
+ee
+> > > categories of CPU models:
+> > >  - Most unversioned CPU models would use version 1 by default.
+> > >  - For machines 4.0.1 and older that do not support cpu model aliases=
+, a
+> > >    special default_cpu_version value of CPU_VERSION_LEGACY is used.
+> > >  - It was thought that future machines would use the latest value of =
+cpu
+> > >    versions corresponding to default_cpu_version value of
+> > >    CPU_VERSION_LATEST [1].
+> > >
+> > > All pc machines still use the default cpu version of 1 for
+> > > unversioned cpu models. CPU_VERSION_LATEST is a moving target and
+> > > changes with time. Therefore, if machines use CPU_VERSION_LATEST, it =
+would
+> > > mean that over a period of time, for the same machine type, the cpu v=
+ersion
+> > > would be different depending on what is latest at that time. This wou=
+ld
+> > > break guests even when they use a versioned machine type. Therefore, =
+for
+> > > pc machines, use of CPU_VERSION_LATEST is not possible. Currently, on=
+ly
+> > > microvms use CPU_VERSION_LATEST.
+> > >
+> > > This change cleans up the complicated logic around default_cpu_versio=
+n
+> > > including getting rid of default_cpu_version property itself. A coupl=
+e of new
+> > > flags are introduced, one for the legacy model for machines 4.0.1 and=
+ older
+> > > and other for microvms. For older machines, a new pc machine property=
+ is
+> > > introduced that separates pc machine versions 4.0.1 and older from th=
+e newer
+> > > machines. 4.0.1 and older machines are scheduled to be deleted toward=
+s
+> > > end of 2025 since they would be 6 years old by then. At that time, we=
+ can
+> > > remove all logic around legacy cpus. Microvms are the only machines t=
+hat
+> > > continue to use the latest cpu version. If this changes later, we can
+> > > remove all logic around x86_cpu_model_last_version(). Default cpu ver=
+sion
+> > > for unversioned cpu models is hardcoded to the value 1 and applies
+> > > unconditionally for all pc machine types of version 4.1 and above.
+> > >
+> > > This change also removes all complications around CPU_VERSION_AUTO
+> > > including removal of the value itself.
+> > >
+> > > 1) See commit dcafd1ef0af227 ("i386: Register versioned CPU models")
+> > >
+> > > CC: imammedo@redhat.com
+> > > Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> > > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> > > ---
+> > >  hw/i386/microvm.c     |  3 +-
+> > >  hw/i386/pc.c          | 14 +++++++++
+> > >  hw/i386/pc_piix.c     |  6 ++--
+> > >  hw/i386/pc_q35.c      |  6 ++--
+> > >  hw/i386/x86-common.c  |  4 +--
+> > >  include/hw/i386/pc.h  |  7 +++--
+> > >  include/hw/i386/x86.h |  2 +-
+> > >  target/i386/cpu.c     | 69 ++++++++++++++++++++++-------------------=
+--
+> > >  target/i386/cpu.h     | 21 +++----------
+> > >  9 files changed, 67 insertions(+), 65 deletions(-)
+> > >
+> > > changelog:
+> > > v2: explain in commit log why use of CPU_VERSION_LATEST for machines
+> > > is problematic.
+> > > v3: fix a bug that broke the pipeline
+> > > https://gitlab.com/mstredhat/qemu/-/pipelines/1626171267
+> > > when cpu versions are explicitly specified in the command line,
+> > > respect that and do not enforce legacy (unversioned) cpu logic.
+> > > The pipeline is green now with the fix:
+> > > https://gitlab.com/anisinha/qemu/-/pipelines/1626783632
+> > > v4: made changes as per Zhao's suggestions.
+> > > Pipeline passes https://gitlab.com/anisinha/qemu/-/pipelines/16358298=
+77
+> > > v5: adjustment of pc_init_cpus() declaration as per Zhao's suggestion=
+. This
+> > > simplifies things and also passes compilation.
+> > > CI still passes https://gitlab.com/anisinha/qemu/-/pipelines/16376574=
+51
+> > > v6: cosmetic commit log correction as suggested by Igor. rebase, adde=
+d tags.
+> > >
+> > > diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+> > > index a8d354aabe..ffb1b37fe5 100644
+> > > --- a/hw/i386/microvm.c
+> > > +++ b/hw/i386/microvm.c
+> > > @@ -458,7 +458,8 @@ static void microvm_machine_state_init(MachineSta=
+te *machine)
+> > >
+> > >      microvm_memory_init(mms);
+> > >
+> > > -    x86_cpus_init(x86ms, CPU_VERSION_LATEST);
+> > > +    x86_cpu_uses_lastest_version();
+> >
+> > for microvm, we do not have versioned machines,
+> > hence we are not obliged to keep the same cpu between
+> > different qemu versions.
+> >
+> > I'd prefer to follow arm/virt with no default cpu behavior,
+> > but that ship has sailed off already.
+> >
+> > Lets try instead of the latest, use cpu model name as is
+> > (i.e. typically it would be non versioned model) that would keep
+> > existing CLI work.
+> > Ones that want a specific version can use explicit versioned name on CL=
+I.
+> >
+> > i.e. remove the notion of CPU_VERSION_LATEST 1st (a separate patch).
+> > if this accepted that would make this patch a bit simpler.
+> >
+> > > +    x86_cpus_init(x86ms);
+> > >
+> > >      microvm_devices_init(mms);
+> > >  }
+> > > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> > > index b46975c8a4..f97a519573 100644
+> > > --- a/hw/i386/pc.c
+> > > +++ b/hw/i386/pc.c
+> > > @@ -30,6 +30,7 @@
+> > >  #include "hw/hyperv/hv-balloon.h"
+> > >  #include "hw/i386/fw_cfg.h"
+> > >  #include "hw/i386/vmport.h"
+> > > +#include "target/i386/cpu.h"
+> > >  #include "system/cpus.h"
+> > >  #include "hw/ide/ide-bus.h"
+> > >  #include "hw/timer/hpet.h"
+> > > @@ -615,6 +616,19 @@ void pc_acpi_smi_interrupt(void *opaque, int irq=
+, int level)
+> > >      }
+> > >  }
+> > >
+> > > +void pc_init_cpus(MachineState *ms)
+> > > +{
+> > I'd not introduce this function, instead add duplicated
+> > call x86_cpu_set_legacy_version() to pc_init1/pc_q35_init,
+> > this way it would be more concise and introduce less code churn
+> >
+> > > +    X86MachineState *x86ms =3D X86_MACHINE(ms);
+> > > +    PCMachineState *pcms =3D PC_MACHINE(ms);
+> > > +    PCMachineClass *pcmc =3D PC_MACHINE_GET_CLASS(pcms);
+> > > +
+> > > +    if (pcmc->no_versioned_cpu_model) {
+> > > +        /* use legacy cpu as it does not support versions */
+> > > +        x86_cpu_set_legacy_version();
+> > > +    }
+> > > +    x86_cpus_init(x86ms);
+> > > +}
+> > > +
+> > >  static
+> > >  void pc_machine_done(Notifier *notifier, void *data)
+> > >  {
+> > > diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> > > index 04d2957adc..dc684cb011 100644
+> > > --- a/hw/i386/pc_piix.c
+> > > +++ b/hw/i386/pc_piix.c
+> > > @@ -181,7 +181,8 @@ static void pc_init1(MachineState *machine, const=
+ char *pci_type)
+> > >      }
+> > >
+> > >      pc_machine_init_sgx_epc(pcms);
+> > > -    x86_cpus_init(x86ms, pcmc->default_cpu_version);
+> > > +
+> > > +    pc_init_cpus(machine);
+> > >
+> > >      if (kvm_enabled()) {
+> > >          kvmclock_create(pcmc->kvmclock_create_always);
+> > > @@ -457,7 +458,6 @@ static void pc_i440fx_machine_options(MachineClas=
+s *m)
+> > >      ObjectClass *oc =3D OBJECT_CLASS(m);
+> > >      pcmc->default_south_bridge =3D TYPE_PIIX3_DEVICE;
+> > >      pcmc->pci_root_uid =3D 0;
+> > > -    pcmc->default_cpu_version =3D 1;
+> > >
+> > >      m->family =3D "pc_piix";
+> > >      m->desc =3D "Standard PC (i440FX + PIIX, 1996)";
+> > > @@ -669,7 +669,7 @@ static void pc_i440fx_machine_4_0_options(Machine=
+Class *m)
+> > >  {
+> > >      PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
+> > >      pc_i440fx_machine_4_1_options(m);
+> > > -    pcmc->default_cpu_version =3D CPU_VERSION_LEGACY;
+> > > +    pcmc->no_versioned_cpu_model =3D true;
+> > >      compat_props_add(m->compat_props, hw_compat_4_0, hw_compat_4_0_l=
+en);
+> > >      compat_props_add(m->compat_props, pc_compat_4_0, pc_compat_4_0_l=
+en);
+> > >  }
+> > > diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> > > index 77536dd697..045b05da64 100644
+> > > --- a/hw/i386/pc_q35.c
+> > > +++ b/hw/i386/pc_q35.c
+> > > @@ -187,7 +187,8 @@ static void pc_q35_init(MachineState *machine)
+> > >      }
+> > >
+> > >      pc_machine_init_sgx_epc(pcms);
+> > > -    x86_cpus_init(x86ms, pcmc->default_cpu_version);
+> > > +
+> > I'd drop newline
+> >
+> > > +    pc_init_cpus(machine);
+> > >
+> > >      if (kvm_enabled()) {
+> > >          kvmclock_create(pcmc->kvmclock_create_always);
+> > > @@ -339,7 +340,6 @@ static void pc_q35_machine_options(MachineClass *=
+m)
+> > >  {
+> > >      PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
+> > >      pcmc->pci_root_uid =3D 0;
+> > > -    pcmc->default_cpu_version =3D 1;
+> > >
+> > >      m->family =3D "pc_q35";
+> > >      m->desc =3D "Standard PC (Q35 + ICH9, 2009)";
+> > > @@ -547,7 +547,7 @@ static void pc_q35_machine_4_0_1_options(MachineC=
+lass *m)
+> > >  {
+> > >      PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
+> > >      pc_q35_machine_4_1_options(m);
+> > > -    pcmc->default_cpu_version =3D CPU_VERSION_LEGACY;
+> > > +    pcmc->no_versioned_cpu_model =3D true;
+> > >      /*
+> > >       * This is the default machine for the 4.0-stable branch. It is =
+basically
+> > >       * a 4.0 that doesn't use split irqchip by default. It MUST henc=
+e apply the
+> > > diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> > > index 008496b5b8..1ed5bc6010 100644
+> > > --- a/hw/i386/x86-common.c
+> > > +++ b/hw/i386/x86-common.c
+> > > @@ -66,15 +66,13 @@ out:
+> > >      object_unref(cpu);
+> > >  }
+> > >
+> > > -void x86_cpus_init(X86MachineState *x86ms, int default_cpu_version)
+> > > +void x86_cpus_init(X86MachineState *x86ms)
+> > >  {
+> > >      int i;
+> > >      const CPUArchIdList *possible_cpus;
+> > >      MachineState *ms =3D MACHINE(x86ms);
+> > >      MachineClass *mc =3D MACHINE_GET_CLASS(x86ms);
+> > >
+> > > -    x86_cpu_set_default_version(default_cpu_version);
+> > > -
+> > >      /*
+> > >       * Calculates the limit to CPU APIC ID values
+> > >       *
+> > > diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> > > index a558705cb9..563f765d7f 100644
+> > > --- a/include/hw/i386/pc.h
+> > > +++ b/include/hw/i386/pc.h
+> > > @@ -92,9 +92,6 @@ struct PCMachineClass {
+> > >
+> > >      /* Compat options: */
+> > >
+> > > -    /* Default CPU model version.  See x86_cpu_set_default_version()=
+. */
+> > > -    int default_cpu_version;
+> > > -
+> > >      /* ACPI compat: */
+> > >      bool has_acpi_build;
+> > >      int pci_root_uid;
+> > > @@ -125,6 +122,9 @@ struct PCMachineClass {
+> > >       * check for memory.
+> > >       */
+> > >      bool broken_32bit_mem_addr_check;
+> > > +
+> > > +    /* whether the machine supports versioned cpu models */
+> > > +    bool no_versioned_cpu_model;
+> > >  };
+> > >
+> > >  #define TYPE_PC_MACHINE "generic-pc-machine"
+> > > @@ -136,6 +136,7 @@ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci=
+_enabled);
+> > >
+> > >  /* pc.c */
+> > >
+> > > +void pc_init_cpus(MachineState *ms);
+> > >  void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
+> > >
+> > >  #define PCI_HOST_PROP_RAM_MEM          "ram-mem"
+> > > diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+> > > index d43cb3908e..2d2b987fa1 100644
+> > > --- a/include/hw/i386/x86.h
+> > > +++ b/include/hw/i386/x86.h
+> > > @@ -114,7 +114,7 @@ void init_topo_info(X86CPUTopoInfo *topo_info, co=
+nst X86MachineState *x86ms);
+> > >  uint32_t x86_cpu_apic_id_from_index(X86MachineState *x86ms,
+> > >                                      unsigned int cpu_index);
+> > >
+> > > -void x86_cpus_init(X86MachineState *pcms, int default_cpu_version);
+> > > +void x86_cpus_init(X86MachineState *pcms);
+> > >  void x86_rtc_set_cpus_count(ISADevice *rtc, uint16_t cpus_count);
+> > >  void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+> > >                        DeviceState *dev, Error **errp);
+> > > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> > > index 1b9c11022c..c1f868c4dd 100644
+> > > --- a/target/i386/cpu.c
+> > > +++ b/target/i386/cpu.c
+> > > @@ -192,6 +192,9 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_des=
+criptors[] =3D {
+> > >   */
+> > >  #define CACHE_DESCRIPTOR_UNAVAILABLE 0xFF
+> > >
+> > > +/* default cpu version to use */
+> > > +#define DEFAULT_CPU_VERSION 1
+> > > +
+> > >  /*
+> > >   * Return a CPUID 2 cache descriptor for a given cache.
+> > >   * If no known descriptor is found, return CACHE_DESCRIPTOR_UNAVAILA=
+BLE
+> > > @@ -5343,20 +5346,16 @@ static const X86CPUDefinition builtin_x86_def=
+s[] =3D {
+> > >      },
+> > >  };
+> > >
+> > > -/*
+> > > - * We resolve CPU model aliases using -v1 when using "-machine
+> > > - * none", but this is just for compatibility while libvirt isn't
+> > > - * adapted to resolve CPU model versions before creating VMs.
+> > > - * See "Runnability guarantee of CPU models" at
+> > > - * docs/about/deprecated.rst.
+> > > - */
+> > > -X86CPUVersion default_cpu_version =3D 1;
+> > > +static bool use_legacy_cpu;
+> > > +void x86_cpu_set_legacy_version(void)
+> > > +{
+> > > +    use_legacy_cpu =3D true;
+> > so all the difference between legacy and not legacy, is alias_of
+> > in QMP output.
+> >
+> > In that case lets be more specific and name it as such
+> > i.e. something like 'qmp_has_alias'
+> >
+> > > +}
+> > >
+> > > -void x86_cpu_set_default_version(X86CPUVersion version)
+> > > +static bool use_latest_cpu;
+> > > +void x86_cpu_uses_lastest_version(void)
+> > >  {
+> > > -    /* Translating CPU_VERSION_AUTO to CPU_VERSION_AUTO doesn't make=
+ sense */
+> > > -    assert(version !=3D CPU_VERSION_AUTO);
+> > > -    default_cpu_version =3D version;
+> > > +    use_latest_cpu =3D true;
+> > >  }
+> > >
+> > >  static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *m=
+odel)
+> > > @@ -5374,14 +5373,11 @@ static X86CPUVersion x86_cpu_model_last_versi=
+on(const X86CPUModel *model)
+> > >  /* Return the actual version being used for a specific CPU model */
+> > >  static X86CPUVersion x86_cpu_model_resolve_version(const X86CPUModel=
+ *model)
+> > >  {
+> > > -    X86CPUVersion v =3D model->version;
+> > > -    if (v =3D=3D CPU_VERSION_AUTO) {
+> > > -        v =3D default_cpu_version;
+> > > -    }
+> > > -    if (v =3D=3D CPU_VERSION_LATEST) {
+> > > +    if (use_latest_cpu) {
+> > >          return x86_cpu_model_last_version(model);
+> > >      }
+> > > -    return v;
+> > > +
+> > I'd drop newline
+> >
+> > > +    return model->version;
+> > >  }
+> > >
+> > >  static const Property max_x86_cpu_properties[] =3D {
+> > > @@ -5985,10 +5981,15 @@ static char *x86_cpu_class_get_alias_of(X86CP=
+UClass *cc)
+> > >      if (!cc->model || !cc->model->is_alias) {
+> > >          return NULL;
+> > >      }
+> > > -    version =3D x86_cpu_model_resolve_version(cc->model);
+> > > -    if (version <=3D 0) {
+> > > +
+> > > +    if (use_legacy_cpu) {
+> > > +        /* legacy cpu models do not support cpu aliases */
+> > >          return NULL;
+> > >      }
+> > > +
+> > > +    version =3D x86_cpu_model_resolve_version(cc->model);
+> > > +    assert(version);
+> > > +
+> > >      return x86_cpu_versioned_model_name(cc->model->cpudef, version);
+> > >  }
+> > >
+> > > @@ -6002,11 +6003,7 @@ static void x86_cpu_list_entry(gpointer data, =
+gpointer user_data)
+> > >      g_autofree char *model_id =3D x86_cpu_class_get_model_id(cc);
+> > >
+> > >      if (!desc && alias_of) {
+> > > -        if (cc->model && cc->model->version =3D=3D CPU_VERSION_AUTO)=
+ {
+> > > -            desc =3D g_strdup("(alias configured by machine type)");
+> > > -        } else {
+> > >              desc =3D g_strdup_printf("(alias of %s)", alias_of);
+> > misaligned wrt 'new' 'if' block?
+> >
+> > > -        }
+> > >      }
+> > >      if (!desc && cc->model && cc->model->note) {
+> > >          desc =3D g_strdup_printf("%s [%s]", model_id, cc->model->not=
+e);
+> > > @@ -6109,13 +6106,8 @@ static void x86_cpu_definition_entry(gpointer =
+data, gpointer user_data)
+> > >      } else {
+> > >          info->deprecated =3D false;
+> > >      }
+> > > -    /*
+> > > -     * Old machine types won't report aliases, so that alias transla=
+tion
+> > > -     * doesn't break compatibility with previous QEMU versions.
+> > > -     */
+> > > -    if (default_cpu_version !=3D CPU_VERSION_LEGACY) {
+> > > -        info->alias_of =3D x86_cpu_class_get_alias_of(cc);
+> > > -    }
+> > > +
+> > > +    info->alias_of =3D x86_cpu_class_get_alias_of(cc);
+> > >
+> > >      QAPI_LIST_PREPEND(*cpu_list, info);
+> > >  }
+> > > @@ -6287,7 +6279,12 @@ static void x86_cpu_apply_version_props(X86CPU=
+ *cpu, X86CPUModel *model)
+> > >      const X86CPUVersionDefinition *vdef;
+> > >      X86CPUVersion version =3D x86_cpu_model_resolve_version(model);
+> > >
+> > > -    if (version =3D=3D CPU_VERSION_LEGACY) {
+> > > +    /*
+> > > +     * if the machine uses legacy cpus, use legacy cpus with no vers=
+ions
+> > > +     * when no explict CPU versions are specified in the CPU definit=
+ion
+> > > +     * passed from the command line.
+> > > +     */
+> > > +    if (version =3D=3D DEFAULT_CPU_VERSION && use_legacy_cpu) {
+> > >          return;
+> > >      }
+> >
+> > I think we can safely drop this check altogether since followup
+> > call x86_cpu_def_get_versions will return version 1 if not specified
+> > and looking at model definitions all existing v1 defs have no property
+> > overrides. So 'for' loop is effectively would be nop.
+>
+> See this https://lists.gnu.org/archive/html/qemu-devel/2025-01/msg02559.h=
+tml
+> I think this check is needed otherwise
+> tests/functional/test_x86_cpu_model_versions.py fails. You can analyze
+> why.
+
+I take this back, That bugfix was different. The conditional in its
+current form is redundant.
+Removed it and it passed CI
+https://gitlab.com/anisinha/qemu/-/pipelines/1700325177.
+
+>
+> >
+> > >
+> > > @@ -6317,7 +6314,11 @@ static const CPUCaches *x86_cpu_get_versioned_=
+cache_info(X86CPU *cpu,
+> > >      X86CPUVersion version =3D x86_cpu_model_resolve_version(model);
+> > >      const CPUCaches *cache_info =3D model->cpudef->cache_info;
+> > >
+> > > -    if (version =3D=3D CPU_VERSION_LEGACY) {
+> > > +    /*
+> > > +     * If machine supports legacy cpus and no explicit cpu versions =
+are
+> > > +     * specified, use the cache from the unversioned cpu definition.
+> > > +     */
+> > > +    if (version =3D=3D DEFAULT_CPU_VERSION && use_legacy_cpu) {
+> > >          return cache_info;
+> > >      }
+> >
+> > the same as above comment, only wrt cache_info
+> >
+> > >
+> > > @@ -6452,7 +6453,7 @@ static void x86_register_cpudef_types(const X86=
+CPUDefinition *def)
+> > >      /* Unversioned model: */
+> > >      m =3D g_new0(X86CPUModel, 1);
+> > >      m->cpudef =3D def;
+> > > -    m->version =3D CPU_VERSION_AUTO;
+> > > +    m->version =3D DEFAULT_CPU_VERSION;
+> >
+> > with this being the remaining user of macro just drop it and use 1 dire=
+ctly.
+> >
+> > >      m->is_alias =3D true;
+> > >      x86_register_cpu_model_type(def->name, m);
+> > >
+> > > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> > > index b26e25ba15..bdbe54b26f 100644
+> > > --- a/target/i386/cpu.h
+> > > +++ b/target/i386/cpu.h
+> > > @@ -2679,27 +2679,14 @@ void cpu_report_tpr_access(CPUX86State *env, =
+TPRAccess access);
+> > >  void apic_handle_tpr_access_report(DeviceState *d, target_ulong ip,
+> > >                                     TPRAccess access);
+> > >
+> > > -/* Special values for X86CPUVersion: */
+> > > -
+> > > -/* Resolve to latest CPU version */
+> > > -#define CPU_VERSION_LATEST -1
+> > > -
+> > > -/*
+> > > - * Resolve to version defined by current machine type.
+> > > - * See x86_cpu_set_default_version()
+> > > - */
+> > > -#define CPU_VERSION_AUTO   -2
+> > > -
+> > > -/* Don't resolve to any versioned CPU models, like old QEMU versions=
+ */
+> > > -#define CPU_VERSION_LEGACY  0
+> > > -
+> > >  typedef int X86CPUVersion;
+> > >
+> > >  /*
+> > > - * Set default CPU model version for CPU models having
+> > > - * version =3D=3D CPU_VERSION_AUTO.
+> > > + * Set CPU model version to the lastest version.
+> > > + * Currently, this is only used by microvm.
+> > >   */
+> > > -void x86_cpu_set_default_version(X86CPUVersion version);
+> > > +void x86_cpu_uses_lastest_version(void);
+> > > +void x86_cpu_set_legacy_version(void);
+> > >
+> > >  #ifndef CONFIG_USER_ONLY
+> > >
+> >
+
 
