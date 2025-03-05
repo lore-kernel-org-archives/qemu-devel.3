@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DE43C19F32
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 246F3C282D3
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:43:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpiSi-0002Ep-TU; Wed, 05 Mar 2025 01:42:36 -0500
+	id 1tpiT5-0002yV-2n; Wed, 05 Mar 2025 01:43:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1tpiSc-00024H-GL
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:42:31 -0500
+ id 1tpiSv-0002lU-Qa
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:42:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1tpiSa-0001ke-Id
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:42:30 -0500
+ id 1tpiSt-0001lL-PN
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:42:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741156947;
+ s=mimecast20190719; t=1741156967;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=szKeHw66OQkf06T76hhF4jCCjbkVTQWsajG2ol3iiB8=;
- b=ZxYz2xfPJ56rCck6hTUSCTPahR0t5QV9A7uM4CTxPzk6VNIW2ML8UT/iHu3Hto1vXR1/we
- 16uCFOXrIwjDA5FVWMk2+Of7VjVwzLcTPRPQynd8vtlsPHKkLFMQTaowt1SGUOs0OeGn8w
- 0wWfVddmYAylXit848FNwSxtTXZFxG8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9W1tJivdWNPooAUuBUtSOede854BhYMCV5PWynoL1ok=;
+ b=fWEfTzmOuhUD/bbGjBLcf5B60Q5DWP2EC+Z4agnqzfiFUyRCa1tSaYC2Fd5MCIkifmsu+u
+ mA+Ytwzq+B9PV7dcj6yVV4N6U4TWzY5qB3Xoi7CeIKURt8+meFCeXeQj54hA/KF5BdTDoo
+ KxTcDyo4bck5VWT2QBnUTjtaG8wVbcE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-c_WY4-k-PPeQ1yU7Ua8EuQ-1; Wed,
- 05 Mar 2025 01:42:21 -0500
-X-MC-Unique: c_WY4-k-PPeQ1yU7Ua8EuQ-1
-X-Mimecast-MFC-AGG-ID: c_WY4-k-PPeQ1yU7Ua8EuQ_1741156940
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-aFa4LCzmNFCr0Hk-Hoix2A-1; Wed,
+ 05 Mar 2025 01:42:29 -0500
+X-MC-Unique: aFa4LCzmNFCr0Hk-Hoix2A-1
+X-Mimecast-MFC-AGG-ID: aFa4LCzmNFCr0Hk-Hoix2A_1741156948
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A4FD319560A1; Wed,  5 Mar 2025 06:42:20 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 727FD1955BC5; Wed,  5 Mar 2025 06:42:28 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9FBC11944EAA; Wed,  5 Mar 2025 06:42:17 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A0AAF180049D; Wed,  5 Mar 2025 06:42:26 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Roman Penyaev <r.peniaev@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 5/6] ui/console-vc: implement DCH (delete) and ICH (insert)
- commands
-Date: Wed,  5 Mar 2025 10:41:31 +0400
-Message-ID: <20250305064132.87441-6-marcandre.lureau@redhat.com>
+Cc: stefanha@redhat.com, Haoqian He <haoqian.he@smartx.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 6/6] chardev: use remoteAddr if the chardev is client
+Date: Wed,  5 Mar 2025 10:41:32 +0400
+Message-ID: <20250305064132.87441-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20250305064132.87441-1-marcandre.lureau@redhat.com>
 References: <20250305064132.87441-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -87,152 +87,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Roman Penyaev <r.peniaev@gmail.com>
+From: Haoqian He <haoqian.he@smartx.com>
 
-This patch implements DCH (delete character) and ICH (insert
-character) commands.
+If the chardev is client, the socket file path in localAddr may be NULL.
+This is because the socket path comes from getsockname(), according
+to man page, getsockname() returns the current address bound by the
+socket sockfd. If the chardev is client, it's socket is unbound sockfd.
 
-DCH - Delete Character:
-   "As characters are deleted, the remaining characters between the
-    cursor and right margin move to the left. Character attributes move
-    with the characters. The terminal adds blank spaces with no visual
-    character attributes at the right margin. DCH has no effect outside
-    the scrolling margins" [1].
+Therefore, when computing the client chardev socket file path, using
+remoteAddr is more appropriate.
 
-ICH - Insert Character:
-   "The ICH sequence inserts Pn blank characters with the normal
-    character attribute. The cursor remains at the beginning of the
-    blank characters. Text between the cursor and right margin moves to
-    the right. Characters scrolled past the right margin are lost. ICH
-    has no effect outside the scrolling margins" [2].
-
-Without these commands console is barely usable.
-
-[1] https://vt100.net/docs/vt510-rm/DCH.html
-[1] https://vt100.net/docs/vt510-rm/ICH.html
-
-Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20250226075913.353676-6-r.peniaev@gmail.com>
+Signed-off-by: Haoqian He <haoqian.he@smartx.com>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20250225104526.2924175-1-haoqian.he@smartx.com>
 ---
- ui/console-vc.c | 88 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
+ chardev/char-socket.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 522adc2806..df1341513d 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -645,6 +645,88 @@ static void vc_set_cursor(VCChardev *vc, int x, int y)
-     s->y = y;
- }
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 91496ceda9..2f842f9f88 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -571,9 +571,13 @@ static char *qemu_chr_compute_filename(SocketChardev *s)
  
-+/**
-+ * vc_csi_P() - (DCH) deletes one or more characters from the cursor
-+ * position to the right. As characters are deleted, the remaining
-+ * characters between the cursor and right margin move to the
-+ * left. Character attributes move with the characters.
-+ */
-+static void vc_csi_P(struct VCChardev *vc, unsigned int nr)
-+{
-+    QemuTextConsole *s = vc->console;
-+    TextCell *c1, *c2;
-+    unsigned int x1, x2, y;
-+    unsigned int end, len;
-+
-+    if (!nr) {
-+        nr = 1;
-+    }
-+    if (nr > s->width - s->x) {
-+        nr = s->width - s->x;
-+        if (!nr) {
-+            return;
+     switch (ss->ss_family) {
+     case AF_UNIX:
+-        return g_strdup_printf("unix:%s%s",
+-                               ((struct sockaddr_un *)(ss))->sun_path,
+-                               s->is_listen ? ",server=on" : "");
++        if (s->is_listen) {
++            return g_strdup_printf("unix:%s,server=on",
++                                   ((struct sockaddr_un *)(ss))->sun_path);
++        } else {
++            return g_strdup_printf("unix:%s",
++                                   ((struct sockaddr_un *)(ps))->sun_path);
 +        }
-+    }
-+
-+    x1 = s->x;
-+    x2 = s->x + nr;
-+    len = s->width - x2;
-+    if (len) {
-+        y = (s->y_base + s->y) % s->total_height;
-+        c1 = &s->cells[y * s->width + x1];
-+        c2 = &s->cells[y * s->width + x2];
-+        memmove(c1, c2, len * sizeof(*c1));
-+        for (end = x1 + len; x1 < end; x1++) {
-+            vc_update_xy(vc, x1, s->y);
-+        }
-+    }
-+    /* Clear the rest */
-+    for (; x1 < s->width; x1++) {
-+        vc_clear_xy(vc, x1, s->y);
-+    }
-+}
-+
-+/**
-+ * vc_csi_at() - (ICH) inserts `nr` blank characters with the default
-+ * character attribute. The cursor remains at the beginning of the
-+ * blank characters. Text between the cursor and right margin moves to
-+ * the right. Characters scrolled past the right margin are lost.
-+ */
-+static void vc_csi_at(struct VCChardev *vc, unsigned int nr)
-+{
-+    QemuTextConsole *s = vc->console;
-+    TextCell *c1, *c2;
-+    unsigned int x1, x2, y;
-+    unsigned int end, len;
-+
-+    if (!nr) {
-+        nr = 1;
-+    }
-+    if (nr > s->width - s->x) {
-+        nr = s->width - s->x;
-+        if (!nr) {
-+            return;
-+        }
-+    }
-+
-+    x1 = s->x + nr;
-+    x2 = s->x;
-+    len = s->width - x1;
-+    if (len) {
-+        y = (s->y_base + s->y) % s->total_height;
-+        c1 = &s->cells[y * s->width + x1];
-+        c2 = &s->cells[y * s->width + x2];
-+        memmove(c1, c2, len * sizeof(*c1));
-+        for (end = x1 + len; x1 < end; x1++) {
-+            vc_update_xy(vc, x1, s->y);
-+        }
-+    }
-+    /* Insert blanks */
-+    for (x1 = s->x; x1 < s->x + nr; x1++) {
-+        vc_clear_xy(vc, x1, s->y);
-+    }
-+}
-+
- /**
-  * vc_save_cursor() - saves cursor position and character attributes.
-  */
-@@ -847,6 +929,9 @@ static void vc_putchar(VCChardev *vc, int ch)
-                     break;
-                 }
-                 break;
-+            case 'P':
-+                vc_csi_P(vc, vc->esc_params[0]);
-+                break;
-             case 'm':
-                 vc_handle_escape(vc);
-                 break;
-@@ -870,6 +955,9 @@ static void vc_putchar(VCChardev *vc, int ch)
-             case 'u':
-                 vc_restore_cursor(vc);
-                 break;
-+            case '@':
-+                vc_csi_at(vc, vc->esc_params[0]);
-+                break;
-             default:
-                 trace_console_putchar_unhandled(ch);
-                 break;
+     case AF_INET6:
+         left  = "[";
+         right = "]";
 -- 
 2.47.0
 
