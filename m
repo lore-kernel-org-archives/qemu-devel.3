@@ -4,97 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E103C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5157C282D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:38:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdgi-0000t5-7h; Tue, 04 Mar 2025 20:36:44 -0500
+	id 1tpdiW-0004cE-CQ; Tue, 04 Mar 2025 20:38:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tpdgT-0000aA-Cf
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:36:32 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tpdgR-0002RH-18
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:36:29 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2234daaf269so102261675ad.3
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:36:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741138585; x=1741743385; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tVpCsdNOwOHjCA1TYQUBmVt75UEwRqd5gEjf1XDITXA=;
- b=heQvhNrx1D2B5EmNvLPzSVx4gabSOznix+IQBJa5iaYfJzwS1lMrvekYjRgoga7x20
- 1lz3JqeCfIEVSFKd7SwhligL1ZAo09syHupgDvRZnS5IcjsOCohme1sqln3r91MKWfMA
- jHeVkFsE9MmHiAoK8RnZugK5H4ZOlyktvwAbv20QE0vnkPtQKhJHyS5MVEvz/ZTb4842
- 8dd3k6iEAcgwgqPjecaZxEzFsIRPh2r58ZommeiFnO7YCgjm1ibH1Jtmns+rI8uykXIB
- 9nMFlfQm2GCXpKUG2gVLqdyILCe6Al791LToWM8q9bkRmMJ7BhEsuL6X51P0Ih/YWq5m
- PKxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741138585; x=1741743385;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tVpCsdNOwOHjCA1TYQUBmVt75UEwRqd5gEjf1XDITXA=;
- b=g1wjdP3iLFtJ3ugNjW9HLvji0Rv+ZUKxu1uE6lz5vGksjDsnx/CtHeJgJbDUzEIabi
- 9v2ufaBtrh1BVY3UumfQtV010wLsHUjCzDeQQsi8TLv+ZGIfPhLe0WpgWZfgdxhEv32p
- qLr96cIJiDcvD11+vuHLGvHGWSuL5HTNTyvrbiGOaRG/x5JmDW9Lancp1+HzcSFNZpn+
- +uZ7D/x9fFy1ojTfyl20cLjnogBqykPAEl8wdQ0IYdiYIQPJz6WrjFxdlgcjSjyi3y0y
- GQi/lzdkGMFu0xTfHUaYEG9YuP/l6bZk+bafa/vNEyfSNDqmd/1fRc52OPnR7smrRmRr
- O80Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUa9dBRKK+IH0ujS7lgdh5FQpWLaSY9QawP53e2kB62O4SDSTzc2KzaFIFoEKJ3annK0HBFk48PGkSI@nongnu.org
-X-Gm-Message-State: AOJu0YxG3Rr1IcLwZm7U/fwyWIrFkvuE7TFSmabBquBp7EnYcXjim0fD
- 4f/cUJVAN5iCmcoeTHx6f2OkW/PbT1E4q1z2npZb+hb/Dat1R4+cmEPiPXqB1NI=
-X-Gm-Gg: ASbGncv6nL2Nc0rYI9DVz4M4nv7iK7esZNFUMnSgj+8Xh+KRRJXl4UW9P00EQnJUzCk
- IYn/Bz+s7FLRPC60pSYcn4rFME/Tsy1qnJ39M5C8pj9R/Ig49Ii7yHhVvjalKYjcgNO5kmQhACt
- 0fKzaAcAcx6dH4UU+T8OomYV0d9KuZg/NoTWACg9+IP90kZYzFOXhbyEW6bHolXq2s8nzeZXUnB
- 4novs4XYbWZrVukiK3iYUKTwVU4mqpquzbUdO0iIjZ0dDj2cfJmZyXjEFaF7d/9JuNW9lWW4zNB
- OeClv9y1EBYqfrhSwLs5qhu35B9N+4R/vGnst8sG/TaywBGmCul3oeqacQ==
-X-Google-Smtp-Source: AGHT+IHmkC+tefCZ7pb5axTLABLHiMk/Ktr2YLFEcsUy/rJyUQvRy/dzKIMn0CzVxRuIqbE7Nj6oOQ==
-X-Received: by 2002:a17:903:22cb:b0:220:e1e6:4472 with SMTP id
- d9443c01a7336-223f1c932f1mr22762365ad.13.1741138585305; 
- Tue, 04 Mar 2025 17:36:25 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22350503eb9sm101035905ad.193.2025.03.04.17.36.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 17:36:24 -0800 (PST)
-Message-ID: <e04862f6-6341-44cf-92b1-fac656fca3c7@linaro.org>
-Date: Tue, 4 Mar 2025 17:36:24 -0800
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tpdiT-0004bp-5t
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:38:35 -0500
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tpdiP-0002lv-VZ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:38:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1741138710; x=1772674710;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=K4absVKzsv8lTq4U5SKjFXUqDZfm7QdEVd3JKOxSQqQ=;
+ b=UIMI67+Nklx4XEXhwqLXBPjjl0cVV7uLPycxodqlgltOgQwvF4Rlj0no
+ gugKcnTqZdFrB+D1uN22ySWakDRO7WBhrSBQ4uy8+o79r6dcOHHuZVa8P
+ Piq+S/XBf1zwFZyQjHnwWTb9KLkuUFKh0L4ru3Rnr3UOKemAzY+ysJYOk
+ nSwcfxuEZT1pRIbwOPq2HV636QG5kLFBzQzc8zFeEu4Bm3ULZEACSjtr4
+ 6UlhOIAO9j8rfowboGWfFnackr9bDWwGuNKHPA1pLV/HDwU8+SHCheUmV
+ oWCmGuP/aCqycHQfcXKvuHQaNaSZNQA0uV1xNW2QeeKhHQiJSh1a19Ect Q==;
+X-CSE-ConnectionGUID: FxgCA+fKTQK0BlTGdatrzw==
+X-CSE-MsgGUID: 7X1g9RiURVCyoA8qriEBvQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="41976199"
+X-IronPort-AV: E=Sophos;i="6.14,221,1736841600"; d="scan'208";a="41976199"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2025 17:38:27 -0800
+X-CSE-ConnectionGUID: 7VCINtbaT/mZ4zjbg4es1Q==
+X-CSE-MsgGUID: 2uAVGxFmTKO5RLyBpkwRtw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119439029"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2025 17:38:23 -0800
+Message-ID: <1412c575-0a04-4d36-8b7f-e722da4d291f@intel.com>
+Date: Wed, 5 Mar 2025 09:38:19 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/11] system: Introduce QemuArchBit enum
+Subject: Re: [PATCH v2 01/10] target/i386: disable PerfMonV2 when PERFCORE
+ unavailable
+To: dongli.zhang@oracle.com, qemu-devel@nongnu.org, kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
+ like.xu.linux@gmail.com, zhenyuw@linux.intel.com, groug@kaod.org,
+ khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ davydov-max@yandex-team.ru, dapeng1.mi@linux.intel.com, joe.jin@oracle.com
+References: <20250302220112.17653-1-dongli.zhang@oracle.com>
+ <20250302220112.17653-2-dongli.zhang@oracle.com>
+ <46cd2769-aad6-4b99-aea9-426968a9d7cb@intel.com>
+ <d6644767-3ed9-41be-847f-950d3666e0c6@oracle.com>
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Markus Armbruster <armbru@redhat.com>
-References: <20250305005225.95051-1-philmd@linaro.org>
- <20250305005225.95051-4-philmd@linaro.org>
- <1951b0b1-ccea-429e-9e72-e8df7a7a8599@linaro.org>
- <4229013f-8601-4e8a-912a-d641bdf8a105@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <4229013f-8601-4e8a-912a-d641bdf8a105@linaro.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <d6644767-3ed9-41be-847f-950d3666e0c6@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,130 +93,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy80LzI1IDE3OjMxLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gT24g
-NS8zLzI1IDAyOjIzLCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4gT24gMy80LzI1IDE2
-OjUyLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4+PiBEZWNsYXJlIFFFTVVf
-QVJDSF9CSVRfJHRhcmdldCBhcyBRZW11QXJjaEJpdCBlbnVtLg0KPj4+IFVzZSB0aGVtIHRv
-IGRlY2xhcmUgUUVNVV9BUkNIXyR0YXJnZXQgYml0bWFza3MuDQo+Pj4NCj4+PiBTaWduZWQt
-b2ZmLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+DQo+
-Pj4gLS0tDQo+Pj4gIMKgIG1lc29uLmJ1aWxkwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIHzCoCA0ICstLQ0KPj4+ICDCoCBpbmNsdWRlL3N5c3RlbS9hcmNoX2luaXQuaCB8IDY1
-ICsrKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tDQo+Pj4gIMKgIHN5c3Rl
-bS9hcmNoX2luaXQuY8KgwqDCoMKgwqDCoMKgwqAgfMKgIDIgKy0NCj4+PiAgwqAgMyBmaWxl
-cyBjaGFuZ2VkLCA0NiBpbnNlcnRpb25zKCspLCAyNSBkZWxldGlvbnMoLSkNCj4+Pg0KPj4+
-IGRpZmYgLS1naXQgYS9tZXNvbi5idWlsZCBiL21lc29uLmJ1aWxkDQo+Pj4gaW5kZXggMGEy
-YzYxZDJiZmEuLjFhYjAyYTVkNDhkIDEwMDY0NA0KPj4+IC0tLSBhL21lc29uLmJ1aWxkDQo+
-Pj4gKysrIGIvbWVzb24uYnVpbGQNCj4+PiBAQCAtMzM1Nyw4ICszMzU3LDggQEAgZm9yZWFj
-aCB0YXJnZXQgOiB0YXJnZXRfZGlycw0KPj4+ICDCoMKgwqDCoMKgwqDCoCBjb25maWdfdGFy
-Z2V0X2RhdGEuc2V0KGssIHYpDQo+Pj4gIMKgwqDCoMKgwqAgZW5kaWYNCj4+PiAgwqDCoMKg
-IGVuZGZvcmVhY2gNCj4+PiAtwqAgY29uZmlnX3RhcmdldF9kYXRhLnNldCgnUUVNVV9BUkNI
-JywNCj4+PiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgICdRRU1VX0FSQ0hfJyArDQo+Pj4gY29uZmlnX3RhcmdldFsnVEFSR0VUX0JBU0VfQVJD
-SCddLnRvX3VwcGVyKCkpDQo+Pj4gK8KgIGNvbmZpZ190YXJnZXRfZGF0YS5zZXQoJ1FFTVVf
-QVJDSF9CSVQnLA0KPj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgJ1FFTVVfQVJDSF9CSVRfJyArDQo+Pj4gY29uZmlnX3RhcmdldFsnVEFS
-R0VUX0JBU0VfQVJDSCddLnRvX3VwcGVyKCkpDQo+Pj4gIMKgwqDCoCBjb25maWdfdGFyZ2V0
-X2ggKz0ge3RhcmdldDogY29uZmlndXJlX2ZpbGUob3V0cHV0OiB0YXJnZXQgKyAnLQ0KPj4+
-IGNvbmZpZy10YXJnZXQuaCcsDQo+Pj4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCBjb25maWd1cmF0aW9uOg0KPj4+IGNvbmZpZ190YXJnZXRfZGF0YSl9
-DQo+Pj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvc3lzdGVtL2FyY2hfaW5pdC5oIGIvaW5jbHVk
-ZS9zeXN0ZW0vYXJjaF9pbml0LmgNCj4+PiBpbmRleCBkOGI3NzQ0MDQ4Ny4uMDZlNTUyN2Vj
-ODggMTAwNjQ0DQo+Pj4gLS0tIGEvaW5jbHVkZS9zeXN0ZW0vYXJjaF9pbml0LmgNCj4+PiAr
-KysgYi9pbmNsdWRlL3N5c3RlbS9hcmNoX2luaXQuaA0KPj4+IEBAIC0xLDI5ICsxLDUwIEBA
-DQo+Pj4gIMKgICNpZm5kZWYgUUVNVV9BUkNIX0lOSVRfSA0KPj4+ICDCoCAjZGVmaW5lIFFF
-TVVfQVJDSF9JTklUX0gNCj4+PiArI2luY2x1ZGUgInFlbXUvYml0b3BzLmgiDQo+Pj4gLWVu
-dW0gew0KPj4+IC3CoMKgwqAgUUVNVV9BUkNIX0FMTCA9IC0xLA0KPj4+IC3CoMKgwqAgUUVN
-VV9BUkNIX0FMUEhBID0gKDEgPDwgMCksDQo+Pj4gLcKgwqDCoCBRRU1VX0FSQ0hfQVJNID0g
-KDEgPDwgMSksDQo+Pj4gLcKgwqDCoCBRRU1VX0FSQ0hfSTM4NiA9ICgxIDw8IDMpLA0KPj4+
-IC3CoMKgwqAgUUVNVV9BUkNIX002OEsgPSAoMSA8PCA0KSwNCj4+PiAtwqDCoMKgIFFFTVVf
-QVJDSF9NSUNST0JMQVpFID0gKDEgPDwgNiksDQo+Pj4gLcKgwqDCoCBRRU1VX0FSQ0hfTUlQ
-UyA9ICgxIDw8IDcpLA0KPj4+IC3CoMKgwqAgUUVNVV9BUkNIX1BQQyA9ICgxIDw8IDgpLA0K
-Pj4+IC3CoMKgwqAgUUVNVV9BUkNIX1MzOTBYID0gKDEgPDwgOSksDQo+Pj4gLcKgwqDCoCBR
-RU1VX0FSQ0hfU0g0ID0gKDEgPDwgMTApLA0KPj4+IC3CoMKgwqAgUUVNVV9BUkNIX1NQQVJD
-ID0gKDEgPDwgMTEpLA0KPj4+IC3CoMKgwqAgUUVNVV9BUkNIX1hURU5TQSA9ICgxIDw8IDEy
-KSwNCj4+PiAtwqDCoMKgIFFFTVVfQVJDSF9PUEVOUklTQyA9ICgxIDw8IDEzKSwNCj4+PiAt
-wqDCoMKgIFFFTVVfQVJDSF9UUklDT1JFID0gKDEgPDwgMTYpLA0KPj4+IC3CoMKgwqAgUUVN
-VV9BUkNIX0hQUEEgPSAoMSA8PCAxOCksDQo+Pj4gLcKgwqDCoCBRRU1VX0FSQ0hfUklTQ1Yg
-PSAoMSA8PCAxOSksDQo+Pj4gLcKgwqDCoCBRRU1VX0FSQ0hfUlggPSAoMSA8PCAyMCksDQo+
-Pj4gLcKgwqDCoCBRRU1VX0FSQ0hfQVZSID0gKDEgPDwgMjEpLA0KPj4+IC3CoMKgwqAgUUVN
-VV9BUkNIX0hFWEFHT04gPSAoMSA8PCAyMiksDQo+Pj4gLcKgwqDCoCBRRU1VX0FSQ0hfTE9P
-TkdBUkNIID0gKDEgPDwgMjMpLA0KPj4+IC19Ow0KPj4+ICt0eXBlZGVmIGVudW0gUWVtdUFy
-Y2hCaXQgew0KPj4+ICvCoMKgwqAgUUVNVV9BUkNIX0JJVF9BTFBIQcKgwqDCoMKgwqDCoMKg
-wqAgPSAwLA0KPj4+ICvCoMKgwqAgUUVNVV9BUkNIX0JJVF9BUk3CoMKgwqDCoMKgwqDCoMKg
-wqDCoCA9IDEsDQo+Pj4gK8KgwqDCoCBRRU1VX0FSQ0hfQklUX0kzODbCoMKgwqDCoMKgwqDC
-oMKgwqAgPSAzLA0KPj4+ICvCoMKgwqAgUUVNVV9BUkNIX0JJVF9NNjhLwqDCoMKgwqDCoMKg
-wqDCoMKgID0gNCwNCj4+PiArwqDCoMKgIFFFTVVfQVJDSF9CSVRfTUlDUk9CTEFaRcKgwqDC
-oCA9IDYsDQo+Pj4gK8KgwqDCoCBRRU1VX0FSQ0hfQklUX01JUFPCoMKgwqDCoMKgwqDCoMKg
-wqAgPSA3LA0KPj4+ICvCoMKgwqAgUUVNVV9BUkNIX0JJVF9QUEPCoMKgwqDCoMKgwqDCoMKg
-wqDCoCA9IDgsDQo+Pj4gK8KgwqDCoCBRRU1VX0FSQ0hfQklUX1MzOTBYwqDCoMKgwqDCoMKg
-wqDCoCA9IDksDQo+Pj4gK8KgwqDCoCBRRU1VX0FSQ0hfQklUX1NINMKgwqDCoMKgwqDCoMKg
-wqDCoMKgID0gMTAsDQo+Pj4gK8KgwqDCoCBRRU1VX0FSQ0hfQklUX1NQQVJDwqDCoMKgwqDC
-oMKgwqDCoCA9IDExLA0KPj4+ICvCoMKgwqAgUUVNVV9BUkNIX0JJVF9YVEVOU0HCoMKgwqDC
-oMKgwqDCoCA9IDEyLA0KPj4+ICvCoMKgwqAgUUVNVV9BUkNIX0JJVF9PUEVOUklTQ8KgwqDC
-oMKgwqAgPSAxMywNCj4+PiArwqDCoMKgIFFFTVVfQVJDSF9CSVRfVFJJQ09SRcKgwqDCoMKg
-wqDCoCA9IDE2LA0KPj4+ICvCoMKgwqAgUUVNVV9BUkNIX0JJVF9IUFBBwqDCoMKgwqDCoMKg
-wqDCoMKgID0gMTgsDQo+Pj4gK8KgwqDCoCBRRU1VX0FSQ0hfQklUX1JJU0NWwqDCoMKgwqDC
-oMKgwqDCoCA9IDE5LA0KPj4+ICvCoMKgwqAgUUVNVV9BUkNIX0JJVF9SWMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgPSAyMCwNCj4+PiArwqDCoMKgIFFFTVVfQVJDSF9CSVRfQVZSwqDCoMKg
-wqDCoMKgwqDCoMKgwqAgPSAyMSwNCj4+PiArwqDCoMKgIFFFTVVfQVJDSF9CSVRfSEVYQUdP
-TsKgwqDCoMKgwqDCoCA9IDIyLA0KPj4+ICvCoMKgwqAgUUVNVV9BUkNIX0JJVF9MT09OR0FS
-Q0jCoMKgwqDCoCA9IDIzLA0KPj4+ICt9IFFlbXVBcmNoQml0Ow0KPj4+ICsNCj4+PiArI2Rl
-ZmluZSBRRU1VX0FSQ0hfQUxQSEHCoMKgwqDCoMKgwqDCoMKgIEJJVChRRU1VX0FSQ0hfQklU
-X0FMUEhBKQ0KPj4+ICsjZGVmaW5lIFFFTVVfQVJDSF9BUk3CoMKgwqDCoMKgwqDCoMKgwqDC
-oCBCSVQoUUVNVV9BUkNIX0JJVF9BUk0pDQo+Pj4gKyNkZWZpbmUgUUVNVV9BUkNIX0kzODbC
-oMKgwqDCoMKgwqDCoMKgwqAgQklUKFFFTVVfQVJDSF9CSVRfSTM4NikNCj4+PiArI2RlZmlu
-ZSBRRU1VX0FSQ0hfTTY4S8KgwqDCoMKgwqDCoMKgwqDCoCBCSVQoUUVNVV9BUkNIX0JJVF9N
-NjhLKQ0KPj4+ICsjZGVmaW5lIFFFTVVfQVJDSF9NSUNST0JMQVpFwqDCoMKgIEJJVChRRU1V
-X0FSQ0hfQklUX01JQ1JPQkxBWkUpDQo+Pj4gKyNkZWZpbmUgUUVNVV9BUkNIX01JUFPCoMKg
-wqDCoMKgwqDCoMKgwqAgQklUKFFFTVVfQVJDSF9CSVRfTUlQUykNCj4+PiArI2RlZmluZSBR
-RU1VX0FSQ0hfUFBDwqDCoMKgwqDCoMKgwqDCoMKgwqAgQklUKFFFTVVfQVJDSF9CSVRfUFBD
-KQ0KPj4+ICsjZGVmaW5lIFFFTVVfQVJDSF9TMzkwWMKgwqDCoMKgwqDCoMKgwqAgQklUKFFF
-TVVfQVJDSF9CSVRfUzM5MFgpDQo+Pj4gKyNkZWZpbmUgUUVNVV9BUkNIX1NINMKgwqDCoMKg
-wqDCoMKgwqDCoMKgIEJJVChRRU1VX0FSQ0hfQklUX1NINCkNCj4+PiArI2RlZmluZSBRRU1V
-X0FSQ0hfU1BBUkPCoMKgwqDCoMKgwqDCoMKgIEJJVChRRU1VX0FSQ0hfQklUX1NQQVJDKQ0K
-Pj4+ICsjZGVmaW5lIFFFTVVfQVJDSF9YVEVOU0HCoMKgwqDCoMKgwqDCoCBCSVQoUUVNVV9B
-UkNIX0JJVF9YVEVOU0EpDQo+Pj4gKyNkZWZpbmUgUUVNVV9BUkNIX09QRU5SSVNDwqDCoMKg
-wqDCoCBCSVQoUUVNVV9BUkNIX0JJVF9PUEVOUklTQykNCj4+PiArI2RlZmluZSBRRU1VX0FS
-Q0hfVFJJQ09SRcKgwqDCoMKgwqDCoCBCSVQoUUVNVV9BUkNIX0JJVF9UUklDT1JFKQ0KPj4+
-ICsjZGVmaW5lIFFFTVVfQVJDSF9IUFBBwqDCoMKgwqDCoMKgwqDCoMKgIEJJVChRRU1VX0FS
-Q0hfQklUX0hQUEEpDQo+Pj4gKyNkZWZpbmUgUUVNVV9BUkNIX1JJU0NWwqDCoMKgwqDCoMKg
-wqDCoCBCSVQoUUVNVV9BUkNIX0JJVF9SSVNDVikNCj4+PiArI2RlZmluZSBRRU1VX0FSQ0hf
-UljCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIEJJVChRRU1VX0FSQ0hfQklUX1JYKQ0KPj4+ICsj
-ZGVmaW5lIFFFTVVfQVJDSF9BVlLCoMKgwqDCoMKgwqDCoMKgwqDCoCBCSVQoUUVNVV9BUkNI
-X0JJVF9BVlIpDQo+Pj4gKyNkZWZpbmUgUUVNVV9BUkNIX0hFWEFHT07CoMKgwqDCoMKgwqAg
-QklUKFFFTVVfQVJDSF9CSVRfSEVYQUdPTikNCj4+PiArI2RlZmluZSBRRU1VX0FSQ0hfTE9P
-TkdBUkNIwqDCoMKgwqAgQklUKFFFTVVfQVJDSF9CSVRfTE9PTkdBUkNIKQ0KPj4+ICsjZGVm
-aW5lIFFFTVVfQVJDSF9BTEzCoMKgwqDCoMKgwqDCoMKgwqDCoCAtMQ0KPj4+ICDCoCBleHRl
-cm4gY29uc3QgdWludDMyX3QgYXJjaF90eXBlOw0KPj4NCj4+IFdoYXQgYXJlIHdlIGdhaW5p
-bmcgYnkgaGF2aW5nIGEgImJpdCIgb3JpZW50ZWQgZW51bSwgdnMgc2ltcGxlIHZhbHVlcw0K
-Pj4gdGhhdCBjYW4gYmUgY29tcGFyZWQgdG9vPw0KPiANCj4gSSdtIG5vdCBzdXJlIHdoYXQg
-eW91IGFyZSBhc2tpbmcgaGVyZSwgdGhlc2UgZGVmaW5pdGlvbnMgYXJlIGhlYXZpbHkNCj4g
-dXNlZCBpbiBxZW11LW9wdGlvbnMuaHgsIGFuZCBJIGRvbid0IHBsYW4gdG8gY2hhbmdlIHRo
-ZW0gYW55dGltZSBzb29uLg0KPiANCj4gRm9yIHRoZSBzaW5nbGUgYmluYXJ5IEknbGwgdHJ5
-IHRvIGtlZXAgdGhlIGNvbW1hbmQgbGluZSBpbnRlcmZhY2Ugd2l0aA0KPiBubyBjaGFuZ2Uu
-IEZvciBoZXRlcm9nZW5lb3VzIGJpbmFyeSBJIHBsYW4gdG8gc3RhcnQgd2l0aCBubyBDTEkg
-c28gSSdtDQo+IG5vdCByZWFsbHkgY29uc2lkZXJpbmcgdGhlbS4NCj4gDQoNCk15IGJhZCwg
-SSB0aG91Z2h0IHdlIHdlcmUgaW50cm9kdWNpbmcgc29tZXRoaW5nIG5ldyBoZXJlLg0KWWVz
-LCBsZXQncyBzdGljayB0byBhIG1pbmltYWwgY2hhbmdlLg0KDQo+PiBBcyB3ZWxsLCBpdCB3
-b3VsZCBtYWtlIHNlbnNlIHRvIGFkZCBzdWJ2YXJpYW50cyAoYWFyY2g2NCwgeDg2XzY0LCBs
-aXR0bGUNCj4+IGFuZCBiaWcgZW5kaWFuIHZhcmlhbnRzIGZvciBzb21lIGFyY2gpLCBzbyBh
-bGwgb2YgdGhlbSBhcmUgcHJlc2VudCBhbmQNCj4+IGNhbiBiZSBxdWVyaWVkIGVhc2lseS4N
-Cj4gDQo+IElJVUMgd2hhdCB5b3UgYXJlIHJlZmVycmluZywgdGhpcyBpcyBwbGFubmVkIGZv
-ciBhbm90aGVyIGludGVyZmFjZSwgYnV0DQo+IG5vdCB0aGlzIHNlcmllcyB3aGljaCBpcyBm
-b2N1c2VkIG9uIGludHJvZHVjaW5nIHFlbXVfYXJjaF9uYW1lKCkgYW5kDQo+IHJlbW92aW5n
-IFRBUkdFVF9OQU1FLiBXaGlsZSB5b3UgZG9uJ3Qgc2VlIGFueSBpbXByb3ZlbWVudCBpbiBk
-dXBsaWNhdGVkDQo+IHRhcmdldCBmaWxlcyBhcyBvZiB0aGlzIHNlcmllcywgc29tZSByZWR1
-Y3Rpb24gc2hvdWxkIGhhcHBlbiBpbiB0aGUgbmV4dA0KPiBzdGVwIHdoaWNoIHJlbW92ZSBU
-QVJHRVRfQklHX0VORElBTiB1c2VzIGluIGh3Ly4NCj4gDQoNClllcywgc291bmRzIGdvb2Qu
-IEl0J3MganVzdCBhIGJpdCBoYXJkIHRvIHRyYWNrIHRoZSBjaGFuZ2VzIGJldHdlZW4gdGhl
-IA0KY2xlYW51cCBvZiBleGlzdGluZyBmaWxlcywgYW5kIGludHJvZHVjaW5nIGEgbmV3IEFQ
-SSB0byBxdWVyeSB0aGlzIA0KaW5mb3JtYXRpb24gYXQgcnVuIHRpbWUuDQoNCj4+PiBkaWZm
-IC0tZ2l0IGEvc3lzdGVtL2FyY2hfaW5pdC5jIGIvc3lzdGVtL2FyY2hfaW5pdC5jDQo+Pj4g
-aW5kZXggYjkxNDdhZjkzY2IuLmZlZGJiMThlMmNjIDEwMDY0NA0KPj4+IC0tLSBhL3N5c3Rl
-bS9hcmNoX2luaXQuYw0KPj4+ICsrKyBiL3N5c3RlbS9hcmNoX2luaXQuYw0KPj4+IEBAIC0y
-NCw0ICsyNCw0IEBADQo+Pj4gIMKgICNpbmNsdWRlICJxZW11L29zZGVwLmgiDQo+Pj4gIMKg
-ICNpbmNsdWRlICJzeXN0ZW0vYXJjaF9pbml0LmgiDQo+Pj4gLWNvbnN0IHVpbnQzMl90IGFy
-Y2hfdHlwZSA9IFFFTVVfQVJDSDsNCj4+PiArY29uc3QgdWludDMyX3QgYXJjaF90eXBlID0g
-QklUKFFFTVVfQVJDSF9CSVQpOw0KPj4NCj4gDQoNCg==
+On 3/5/2025 6:53 AM, dongli.zhang@oracle.com wrote:
+> Hi Xiaoyao,
+> 
+> On 3/4/25 6:40 AM, Xiaoyao Li wrote:
+>> On 3/3/2025 6:00 AM, Dongli Zhang wrote:
+>>> When the PERFCORE is disabled with "-cpu host,-perfctr-core", it is
+>>> reflected in in guest dmesg.
+>>>
+>>> [    0.285136] Performance Events: AMD PMU driver.
+>>
+>> I'm a little confused. wWhen no perfctr-core, AMD PMU driver can still be
+>> probed? (forgive me if I ask a silly question)
+> 
+> Intel use "cpuid -1 -l 0xa" to determine the support of PMU.
+> 
+> However, AMD doesn't use CPUID to determine PMU support (except AMD PMU
+> PerfMonV2).
+> 
+> I have derived everything from Linux kernel function amd_pmu_init().
+> 
+> As line 1521, the PMU isn't supported by old AMD CPUs.
+> 
+> 1516 __init int amd_pmu_init(void)
+> 1517 {
+> 1518         int ret;
+> 1519
+> 1520         /* Performance-monitoring supported from K7 and later: */
+> 1521         if (boot_cpu_data.x86 < 6)
+> 1522                 return -ENODEV;
+> 1523
+> 1524         x86_pmu = amd_pmu;
+> 1525
+> 1526         ret = amd_core_pmu_init();
+> 
+> 
+> 1. Therefore, at least 4 PMCs are available (without 'perfctr-core').
+> 
+> 2. With 'perfctr-core', there are 6 PMCs. (line 1410)
+> 
+> 1404 static int __init amd_core_pmu_init(void)
+> 1405 {
+> 1406         union cpuid_0x80000022_ebx ebx;
+> 1407         u64 even_ctr_mask = 0ULL;
+> 1408         int i;
+> 1409
+> 1410         if (!boot_cpu_has(X86_FEATURE_PERFCTR_CORE))
+> 1411                 return 0;
+> 1412
+> 1413         /* Avoid calculating the value each time in the NMI handler */
+> 1414         perf_nmi_window = msecs_to_jiffies(100);
+> 1415
+> 1416         /*
+> 1417          * If core performance counter extensions exists, we must use
+> 1418          * MSR_F15H_PERF_CTL/MSR_F15H_PERF_CTR msrs. See also
+> 1419          * amd_pmu_addr_offset().
+> 1420          */
+> 1421         x86_pmu.eventsel        = MSR_F15H_PERF_CTL;
+> 1422         x86_pmu.perfctr         = MSR_F15H_PERF_CTR;
+> 1423         x86_pmu.cntr_mask64     = GENMASK_ULL(AMD64_NUM_COUNTERS_CORE
+> - 1, 0);
+> 
+> 
+> 3. With PerfMonV2, extra global registers are available, as well as PMCs.
+> (line 1426)
+> 
+> 1425         /* Check for Performance Monitoring v2 support */
+> 1426         if (boot_cpu_has(X86_FEATURE_PERFMON_V2)) {
+> 1427                 ebx.full = cpuid_ebx(EXT_PERFMON_DEBUG_FEATURES);
+> 1428
+> 1429                 /* Update PMU version for later usage */
+> 1430                 x86_pmu.version = 2;
+> 1431
+> 1432                 /* Find the number of available Core PMCs */
+> 1433                 x86_pmu.cntr_mask64 =
+> GENMASK_ULL(ebx.split.num_core_pmc - 1, 0);
+> 1434
+> 1435                 amd_pmu_global_cntr_mask = x86_pmu.cntr_mask64;
+> 1436
+> 1437                 /* Update PMC handling functions */
+> 1438                 x86_pmu.enable_all = amd_pmu_v2_enable_all;
+> 1439                 x86_pmu.disable_all = amd_pmu_v2_disable_all;
+> 1440                 x86_pmu.enable = amd_pmu_v2_enable_event;
+> 1441                 x86_pmu.handle_irq = amd_pmu_v2_handle_irq;
+> 1442                 static_call_update(amd_pmu_test_overflow,
+> amd_pmu_test_overflow_status);
+> 1443         }
+> 
+> 
+> That's why legacy 4-PMC PMU is probed after we disable perfctr-core.
+> 
+> - (boot_cpu_data.x86 < 6): No PMU.
+> - Without perfctr-core: 4 PMCs
+> - With perfctr-core: 6 PMCs
+> - PerfMonV2: PMCs (currently 6) + global PMU registers
+> 
+> 
+> May this resolve your concern in another thread that "This looks like a KVM
+> bug."? This isn't a KVM bug. It is because AMD's lack of the configuration
+> to disable PMU.
+
+It helps a lot! Yes, it doesn't a KVM bug.
+
+Thanks for your elaborated explanation!
+
+> Thank you very much!
+> 
+> Dongli Zhang
+> 
+>>
+>>> However, the guest CPUID indicates the PerfMonV2 is still available.
+>>>
+>>> CPU:
+>>>      Extended Performance Monitoring and Debugging (0x80000022):
+>>>         AMD performance monitoring V2         = true
+>>>         AMD LBR V2                            = false
+>>>         AMD LBR stack & PMC freezing          = false
+>>>         number of core perf ctrs              = 0x6 (6)
+>>>         number of LBR stack entries           = 0x0 (0)
+>>>         number of avail Northbridge perf ctrs = 0x0 (0)
+>>>         number of available UMC PMCs          = 0x0 (0)
+>>>         active UMCs bitmask                   = 0x0
+>>>
+>>> Disable PerfMonV2 in CPUID when PERFCORE is disabled.
+>>>
+>>> Suggested-by: Zhao Liu <zhao1.liu@intel.com>
+>>
+>> Though I have above confusion of the description, the change itself looks
+>> good to me. So
+>>
+>> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>
+>>> Fixes: 209b0ac12074 ("target/i386: Add PerfMonV2 feature bit")
+>>> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+>>> ---
+>>> Changed since v1:
+>>>     - Use feature_dependencies (suggested by Zhao Liu).
+>>>
+>>>    target/i386/cpu.c | 4 ++++
+>>>    1 file changed, 4 insertions(+)
+>>>
+>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>> index 72ab147e85..b6d6167910 100644
+>>> --- a/target/i386/cpu.c
+>>> +++ b/target/i386/cpu.c
+>>> @@ -1805,6 +1805,10 @@ static FeatureDep feature_dependencies[] = {
+>>>            .from = { FEAT_7_1_EDX,             CPUID_7_1_EDX_AVX10 },
+>>>            .to = { FEAT_24_0_EBX,              ~0ull },
+>>>        },
+>>> +    {
+>>> +        .from = { FEAT_8000_0001_ECX,       CPUID_EXT3_PERFCORE },
+>>> +        .to = { FEAT_8000_0022_EAX,
+>>> CPUID_8000_0022_EAX_PERFMON_V2 },
+>>> +    },
+>>>    };
+>>>      typedef struct X86RegisterInfo32 {
+>>
+> 
+
 
