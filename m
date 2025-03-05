@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16FAC19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EBAEC282D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpfk9-0001jK-8D; Tue, 04 Mar 2025 22:48:25 -0500
+	id 1tpfjf-0007Xe-Ue; Tue, 04 Mar 2025 22:47:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfk2-000155-Cq
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:48:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfjc-0007Mx-P5
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:47:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfk0-0006Gb-Mm
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:48:18 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfja-0006Cc-JQ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:47:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741146495;
+ s=mimecast20190719; t=1741146469;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xjrvi7N8n46beIgRb552NDK9zm0wuktcVMLvc+e5dro=;
- b=JXqLXe2RaSpKgp3g3SW4mWabRRLn2JjYAalp/iJapD3pWO0swkEyigd4fgVLfqR9hwFhYD
- jz3J/b0mcmAr0LPan+wP9200Ahc32H/PUMN0j0h903BGAQZK04vm9lixmKlqgaNdhDnfLf
- lH1UvALyZsbpSOY1Q3MGDohuU6H2VcA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=bCfOGBdJQwnF5xt02pbv4fzYOIJ9eH+7LDoB69oghKg=;
+ b=ZqK2fgWFuyueX7glf+II4NNnWoaT1FibWaVvK3JdmXFYNBjy9+TsiAzddTxV8+GFIPsUBu
+ 4BozdvGWqhZEGXFc/flCunENqHtGuEcO7XK9arNVRl1EuKCu0q3P6Ns8Vxgqk/Y//ibpsz
+ g8grWS3+BxBPzY8puJ1DxwLBGZKpuqo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-576-ULkdddoRMqKsd_Yxaf1IpA-1; Tue,
- 04 Mar 2025 22:48:04 -0500
-X-MC-Unique: ULkdddoRMqKsd_Yxaf1IpA-1
-X-Mimecast-MFC-AGG-ID: ULkdddoRMqKsd_Yxaf1IpA_1741146483
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-1WX9GH9zO2CR64c-kSLR3w-1; Tue,
+ 04 Mar 2025 22:47:48 -0500
+X-MC-Unique: 1WX9GH9zO2CR64c-kSLR3w-1
+X-Mimecast-MFC-AGG-ID: 1WX9GH9zO2CR64c-kSLR3w_1741146467
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 78C841801A05; Wed,  5 Mar 2025 03:48:03 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B8331954191; Wed,  5 Mar 2025 03:47:47 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.45])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 22B0F1955DDE; Wed,  5 Mar 2025 03:47:59 +0000 (UTC)
+ id 271841956095; Wed,  5 Mar 2025 03:47:43 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
@@ -53,23 +53,22 @@ Cc: Michael Roth <michael.roth@amd.com>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 29/57] docs/qapi-domain: Fix error context reporting in Sphinx
- 5.x and 6.x
-Date: Tue,  4 Mar 2025 22:45:38 -0500
-Message-ID: <20250305034610.960147-30-jsnow@redhat.com>
+Subject: [PATCH 25/57] docs/qapi-domain: add type cross-refs to field lists
+Date: Tue,  4 Mar 2025 22:45:34 -0500
+Message-ID: <20250305034610.960147-26-jsnow@redhat.com>
 In-Reply-To: <20250305034610.960147-1-jsnow@redhat.com>
 References: <20250305034610.960147-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,149 +86,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sphinx 5.3.0 to Sphinx 6.2.0 has a bug where nested content in an
-ObjectDescription content block has its error position reported
-incorrectly due to an oversight when they added nested section support
-to this directive.
+This commit, finally, adds cross-referencing support to various field
+lists; modeled tightly after Sphinx's own Python domain code.
 
-(This bug is present in Sphinx's own Python and C domains; test it
-yourself by creating a py:func directive and creating a syntax error in
-the directive's content block. The reporting will be incorrect.)
+Cross-referencing support is added to type names provided to :arg:,
+:memb:, :returns: and :choice:.
 
-To avoid overriding and re-implementing the entirety of the run()
-method, a workaround is employed where we parse the content block
-ourselves in before_content(), then null the content block to make
-Sphinx's own parsing a no-op. Then, in transform_content (which occurs
-after Sphinx's nested parse), we simply swap our own parsed content tree
-back in for Sphinx's.
+:feat:, :error: and :value:, which do not take type names, do not
+support this syntax.
 
-It appears a little tricky, but it's the nicest solution I can find.
+The general syntax is simple:
+
+:arg TypeName ArgName: Lorem Ipsum ...
+
+The domain will transform TypeName into :qapi:type:`TypeName` in this
+basic case, and also apply the ``literal`` decoration to indicate that
+this is a type cross-reference.
+
+For optional arguments, the special "?" suffix is used. Because "*" has
+special meaning in rST that would cause parsing errors, we elect to use
+"?" instead. The special syntax processing strips this character from
+the end of any type name argument and will append ", optional" to the
+rendered output, applying the cross-reference only to the actual type
+name.
+
+The intent here is that the actual syntax in doc-blocks need not change;
+but e.g. qapidoc.py will need to process and transform "@arg foo lorem
+ipsum" into ":arg type? foo: lorem ipsum" based on the schema
+information. Therefore, nobody should ever actually witness this
+intermediate syntax unless they are writing manual documentation or the
+doc transmogrifier breaks.
+
+For array arguments, type names can similarly be surrounded by "[]",
+which are stripped off and then re-appended outside of the
+cross-reference.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/compat.py      | 56 ++++++++++++++++++++++++++++++++++++++
- docs/sphinx/qapi_domain.py | 13 +++++----
- 2 files changed, 63 insertions(+), 6 deletions(-)
+ docs/sphinx/qapi_domain.py | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
-index 7e8d72c9b1f..e13bee5c209 100644
---- a/docs/sphinx/compat.py
-+++ b/docs/sphinx/compat.py
-@@ -4,6 +4,7 @@
- 
- import re
- from typing import (
-+    TYPE_CHECKING,
-     Any,
-     Callable,
-     Optional,
-@@ -12,9 +13,11 @@
- 
- from docutils import nodes
- from docutils.nodes import Element, Node, Text
-+from docutils.statemachine import StringList
- 
- import sphinx
- from sphinx import addnodes
-+from sphinx.directives import ObjectDescription
- from sphinx.environment import BuildEnvironment
- from sphinx.roles import XRefRole
- from sphinx.util import docfields
-@@ -171,3 +174,56 @@ class CompatGroupedField(docfields.GroupedField):
- class CompatTypedField(docfields.TypedField):
-     if MAKE_XREF_WORKAROUND:
-         make_xref = _compat_make_xref
-+
-+
-+# ################################################################
-+# Nested parsing error location fix for Sphinx 5.3.0 < x < 6.2.0 #
-+# ################################################################
-+
-+# When we require Sphinx 4.x, the TYPE_CHECKING hack where we avoid
-+# subscripting ObjectDescription at runtime can be removed in favor of
-+# just always subscripting the class.
-+
-+# When we require Sphinx > 6.2.0, the rest of this compatibility hack
-+# can be dropped and QAPIObject can just inherit directly from
-+# ObjectDescription[Signature].
-+
-+SOURCE_LOCATION_FIX = (5, 3, 0) <= sphinx.version_info[:3] < (6, 2, 0)
-+
-+Signature = str
-+
-+
-+if TYPE_CHECKING:
-+    _BaseClass = ObjectDescription[Signature]
-+else:
-+    _BaseClass = ObjectDescription
-+
-+
-+class ParserFix(_BaseClass):
-+
-+    _temp_content: StringList
-+    _temp_offset: int
-+    _temp_node: Optional[addnodes.desc_content]
-+
-+    def before_content(self) -> None:
-+        # Work around a sphinx bug and parse the content ourselves.
-+        self._temp_content = self.content
-+        self._temp_offset = self.content_offset
-+        self._temp_node = None
-+
-+        if SOURCE_LOCATION_FIX:
-+            self._temp_node = addnodes.desc_content()
-+            self.state.nested_parse(
-+                self.content, self.content_offset, self._temp_node
-+            )
-+            # Sphinx will try to parse the content block itself,
-+            # Give it nothingness to parse instead.
-+            self.content = StringList()
-+            self.content_offset = 0
-+
-+    def transform_content(self, content_node: addnodes.desc_content) -> None:
-+        # Sphinx workaround: Inject our parsed content and restore state.
-+        if self._temp_node:
-+            content_node += self._temp_node.children
-+            self.content = self._temp_content
-+            self.content_offset = self._temp_offset
 diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index 9a11a2dcbe0..077ab7ae47a 100644
+index 6eaf8ce92b4..753e07024f5 100644
 --- a/docs/sphinx/qapi_domain.py
 +++ b/docs/sphinx/qapi_domain.py
-@@ -31,6 +31,8 @@
-     CompatGroupedField,
-     CompatTypedField,
-     KeywordNode,
-+    ParserFix,
-+    Signature,
-     SpaceNode,
-     nested_parse,
- )
-@@ -163,12 +165,7 @@ def since_validator(param: str) -> str:
-     return param
+@@ -2,6 +2,9 @@
+ QAPI domain extension.
+ """
  
- 
--# Alias for the return of handle_signature(), which is used in several places.
--# (In the Python domain, this is Tuple[str, str] instead.)
--Signature = str
--
--
--class QAPIObject(ObjectDescription[Signature]):
-+class QAPIObject(ParserFix):
-     """
-     Description of a generic QAPI object.
- 
-@@ -415,6 +412,10 @@ def _validate_field(self, field: nodes.field) -> None:
-             logger.warning(msg, location=field)
- 
-     def transform_content(self, content_node: addnodes.desc_content) -> None:
-+        # This hook runs after before_content and the nested parse, but
-+        # before the DocFieldTransformer is executed.
-+        super().transform_content(content_node)
++# The best laid plans of mice and men, ...
++# pylint: disable=too-many-lines
 +
-         self._add_infopips(content_node)
+ from __future__ import annotations
  
-         # Validate field lists.
+ import re
+@@ -119,6 +122,28 @@ def process_link(
+ 
+         return title, target
+ 
++    def result_nodes(
++        self,
++        document: nodes.document,
++        env: BuildEnvironment,
++        node: Element,
++        is_ref: bool,
++    ) -> Tuple[List[nodes.Node], List[nodes.system_message]]:
++
++        # node here is the pending_xref node (or whatever nodeclass was
++        # configured at XRefRole class instantiation time).
++        results: List[nodes.Node] = [node]
++
++        if node.get("qapi:array"):
++            results.insert(0, nodes.literal("[", "["))
++            results.append(nodes.literal("]", "]"))
++
++        if node.get("qapi:optional"):
++            results.append(nodes.Text(", "))
++            results.append(nodes.emphasis("?", "optional"))
++
++        return results, []
++
+ 
+ def since_validator(param: str) -> str:
+     """
+@@ -423,6 +448,7 @@ class QAPICommand(QAPIObject):
+                 "argument",
+                 label=_("Arguments"),
+                 names=("arg",),
++                typerolename="type",
+                 can_collapse=False,
+             ),
+             # :error: descr
+@@ -436,6 +462,7 @@ class QAPICommand(QAPIObject):
+             GroupedField(
+                 "returnvalue",
+                 label=_("Returns"),
++                rolename="type",
+                 names=("return", "returns"),
+                 can_collapse=True,
+             ),
+@@ -471,6 +498,7 @@ class QAPIAlternate(QAPIObject):
+                 "choice",
+                 label=_("Choices"),
+                 names=("choice",),
++                typerolename="type",
+                 can_collapse=False,
+             ),
+         ]
+@@ -488,6 +516,7 @@ class QAPIObjectWithMembers(QAPIObject):
+                 "member",
+                 label=_("Members"),
+                 names=("memb",),
++                typerolename="type",
+                 can_collapse=False,
+             ),
+         ]
 -- 
 2.48.1
 
