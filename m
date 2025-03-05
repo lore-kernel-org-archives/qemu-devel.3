@@ -4,104 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B336C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 20:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74363C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 20:43:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpvMm-0005oT-Qn; Wed, 05 Mar 2025 15:29:20 -0500
+	id 1tpvZJ-00022t-Lm; Wed, 05 Mar 2025 15:42:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1tpvMk-0005ma-HZ
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 15:29:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tpvZ8-000219-MO; Wed, 05 Mar 2025 15:42:08 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1tpvMh-00078t-0E
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 15:29:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741206551;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+nn330fqElfp03cO80gRuIB8WqCj8lLFoAbxdN4NgOw=;
- b=bQ4GmeTeFeohtRByigKVnhZpGOgzMs9WSjUE/m9zG/AfaBoPasRWqxSC84nWOqwMyb4sFx
- M7Amzm5Co+pZs/v74ULhbGyydw6jo/dI0x82Kyflc8RD0RzWx2ZLqzdAagv0qN5qCf8p6a
- 73rPtDa+QfGMzO4CH094skFB+T+31vY=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-vJzXcY_6PNOznt59IFzE3Q-1; Wed, 05 Mar 2025 15:28:58 -0500
-X-MC-Unique: vJzXcY_6PNOznt59IFzE3Q-1
-X-Mimecast-MFC-AGG-ID: vJzXcY_6PNOznt59IFzE3Q_1741206537
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7c3cca5d865so225766685a.1
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 12:28:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741206537; x=1741811337;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+nn330fqElfp03cO80gRuIB8WqCj8lLFoAbxdN4NgOw=;
- b=Tn3ZW7InhSMDThKdPLuwDM7xUSKN0ccI+VuN9Nt6+01Sz5MR2aOlmZLTZi6OCcvhtd
- gDT7mF6kABW/cD7hA5txhOg6pb6KziGSYElfy3UzJ/4Jt/4PdWJRET75gn1vrFqUl+ot
- BWE42DQR0Fhi6QPQiESPBAcc6iNSaqBrOz/OucTPIdPkbvX8SDHoVhUFFoLBpg7NA/QP
- VBvrClu33zEEB13TmKWhWOMBEEESXB0DE3A7X/XFrCJfYv1XRFHJbTo6k1hoI/uO4UKx
- f7mRlHEv1YCe4ZZrjL7pVU79VyeTAmVndXEOAedpXaQPqXNwR3l3KShKZ6gFWPC5UdZU
- sobw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxEsX4nuw0MBA8JUZ7pdWr1RlyDa5/Sx35JUXI1qexDd9gZsVfkWnPHI29wVGdQiklq1oHmZWrQIAo@nongnu.org
-X-Gm-Message-State: AOJu0YxsKtIQjsIey24qVOZbm1OBagT/8zTBL8Sxs1P/EkDh5Z2ljMjn
- N0DZ3S3kbiJAhqsL7//EwpCqQT6BIF54LwjL0aa6jwCbZIoI05ZiVCN5Vl3/OrPRsz8FEuR/NsF
- seDMKSU1JXbvbWWKZCLmJRYlPZZaIfkADYfPAiIaOH2oM20pUU6Tm
-X-Gm-Gg: ASbGncugnV5SLUGONlxAVyr5w5jWeEjMRgHThaB0GEc3hsPEAXn1RJ78mE5Jgk1PcgJ
- qoIQvYKFaZCf+2+RvWJvhoIXxtvnLVlvOQB3yi07zZMiI0rF7kiClfMWfTPQPvbrC+5juVJKwJQ
- ABESC2vKo3CyFKp5g7GUJAaRQ/PgV93TFL7joiiVkw0r0ZwWV3zqM1k/exWmkbDP9U3gChq97CP
- l970dA2sDRwXXAqvVmQFYTeq/0pVV0gQcVyhVUhUuWifd1c8Y/vUW1C/No/CEyuvSI8TFIjYFQR
- teelMOZ4j+OhKSNv
-X-Received: by 2002:a05:620a:6285:b0:7c0:b350:820 with SMTP id
- af79cd13be357-7c3e39b1392mr108098985a.5.1741206537620; 
- Wed, 05 Mar 2025 12:28:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEaFpm3XdjhvzKIqBrzYyHIuRA6tJwcHnsz3Q84K2EFrriPFMhlE9uTUegj0PW3iC9KcadP5A==
-X-Received: by 2002:a05:620a:6285:b0:7c0:b350:820 with SMTP id
- af79cd13be357-7c3e39b1392mr108096885a.5.1741206537326; 
- Wed, 05 Mar 2025 12:28:57 -0800 (PST)
-Received: from [192.168.40.164] ([70.105.235.240])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c378d9e3f9sm924417585a.76.2025.03.05.12.28.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 12:28:56 -0800 (PST)
-Message-ID: <24e0aff1-f95d-4da5-abc9-a16e71d0a4ac@redhat.com>
-Date: Wed, 5 Mar 2025 15:28:51 -0500
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tpvZ6-0001Ud-DS; Wed, 05 Mar 2025 15:42:06 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B12FD4E600F;
+ Wed, 05 Mar 2025 21:41:59 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id PjYwf-AWy0HM; Wed,  5 Mar 2025 21:41:57 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 9757D4E6001; Wed, 05 Mar 2025 21:41:57 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 946D674577C;
+ Wed, 05 Mar 2025 21:41:57 +0100 (CET)
+Date: Wed, 5 Mar 2025 21:41:57 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Thomas Huth <thuth@redhat.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [RFC PATCH 2/4] hw/arm/raspi: Replace TARGET_AARCH64 by
+ legacy_binary_is_64bit()
+In-Reply-To: <1b76a7fc-e79b-4f32-9657-b87fb7761c95@linaro.org>
+Message-ID: <9d0eb259-ec66-28ab-7cb1-8dcced230f0d@eik.bme.hu>
+References: <20250305161248.54901-1-philmd@linaro.org>
+ <20250305161248.54901-3-philmd@linaro.org>
+ <91882e5b-bd0f-4f84-9c03-c40b5e3d3e3f@redhat.com>
+ <9d7283b7-9d05-4dc0-8e80-3c565376a812@kaod.org>
+ <0561d400-6e0b-40e0-a616-bd0d9fd4feec@redhat.com>
+ <1b76a7fc-e79b-4f32-9657-b87fb7761c95@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pci-ids.rst: Add Red Hat pci-id for AMD IOMMU device
-Content-Language: en-US
-To: "Suthikulpanit, Suravee" <suravee.suthikulpanit@amd.com>,
- qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, mtosatti@redhat.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, jon.grimm@amd.com, santosh.shukla@amd.com,
- vasant.hegde@amd.com, Wei.Huang2@amd.com, kraxel@redhat.com, bsd@redhat.com,
- berrange@redhat.com
-References: <20250304183747.639382-1-suravee.suthikulpanit@amd.com>
- <c8adb591-c4e5-4658-9b87-cb11d75c143f@redhat.com>
- <61205b17-3556-45d5-87b2-347a9b2c2b69@amd.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <61205b17-3556-45d5-87b2-347a9b2c2b69@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ddutile@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1915168761-1741207317=:28911"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,27 +75,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--3866299591-1915168761-1741207317=:28911
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On 3/4/25 9:56 PM, Suthikulpanit, Suravee wrote:
-> 
-> 
-> On 3/5/2025 6:02 AM, Donald Dutile wrote:
->> Hi Suravee!
->>
->> Not your issue, but wondering if others know:
->>
->> Why isn't this an issue for Intel-vtd-iommu & ARM-SMMUV3 ?
->> Are they instantiated as non-PCI-id (platform) devices, but AMD puts their IOMMU in PCI space?
->>
->> Adv. thanks for the info.
-> 
-> Unlike AMD IOMMU, Intel VT-d IOMMU and ARM SMMUV3 are not enumerated as a PCI device in the system.
-> 
-> Thanks,
-> Suravee
-> 
-ok. thanks for confirmation.
---dd
+On Wed, 5 Mar 2025, Philippe Mathieu-Daudé wrote:
+> On 5/3/25 19:35, Thomas Huth wrote:
+>> On 05/03/2025 19.12, Cédric Le Goater wrote:
+>>> On 3/5/25 18:40, Thomas Huth wrote:
+>>>> On 05/03/2025 17.12, Philippe Mathieu-Daudé wrote:
+>>>>> For legacy ARM binaries, legacy_binary_is_64bit() is
+>>>>> equivalent of the compile time TARGET_AARCH64 definition.
+>>>>> 
+>>>>> Use it as TypeInfo::registerable() callback to dynamically
+>>>>> add Aarch64 specific types in qemu-system-aarch64 binary,
+>>>>> removing the need of TARGET_AARCH64 #ifdef'ry.
+>>>>> 
+>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>> ---
+>>>>>   hw/arm/bcm2836.c | 6 ++----
+>>>>>   hw/arm/raspi.c   | 7 +++----
+>>>>>   2 files changed, 5 insertions(+), 8 deletions(-)
+>>>>> 
+>>>>> diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
+>>>>> index 95e16806fa1..88a32e5fc20 100644
+>>>>> --- a/hw/arm/bcm2836.c
+>>>>> +++ b/hw/arm/bcm2836.c
+>>>>> @@ -12,6 +12,7 @@
+>>>>>   #include "qemu/osdep.h"
+>>>>>   #include "qapi/error.h"
+>>>>>   #include "qemu/module.h"
+>>>>> +#include "qemu/legacy_binary_info.h"
+>>>>>   #include "hw/arm/bcm2836.h"
+>>>>>   #include "hw/arm/raspi_platform.h"
+>>>>>   #include "hw/sysbus.h"
+>>>>> @@ -195,7 +196,6 @@ static void bcm2836_class_init(ObjectClass *oc, void 
+>>>>> *data)
+>>>>>       dc->realize = bcm2836_realize;
+>>>>>   };
+>>>>> -#ifdef TARGET_AARCH64
+>>>>>   static void bcm2837_class_init(ObjectClass *oc, void *data)
+>>>>>   {
+>>>>>       DeviceClass *dc = DEVICE_CLASS(oc);
+>>>>> @@ -208,7 +208,6 @@ static void bcm2837_class_init(ObjectClass *oc, void 
+>>>>> *data)
+>>>>>       bc->clusterid = 0x0;
+>>>>>       dc->realize = bcm2836_realize;
+>>>>>   };
+>>>>> -#endif
+>>>>>   static const TypeInfo bcm283x_types[] = {
+>>>>>       {
+>>>>> @@ -219,12 +218,11 @@ static const TypeInfo bcm283x_types[] = {
+>>>>>           .name           = TYPE_BCM2836,
+>>>>>           .parent         = TYPE_BCM283X,
+>>>>>           .class_init     = bcm2836_class_init,
+>>>>> -#ifdef TARGET_AARCH64
+>>>>>       }, {
+>>>>>           .name           = TYPE_BCM2837,
+>>>>>           .parent         = TYPE_BCM283X,
+>>>>> +        .registerable   = legacy_binary_is_64bit,
+>>>>>           .class_init     = bcm2837_class_init,
+>>>>> -#endif
+>>>>>       }, {
+>>>>>           .name           = TYPE_BCM283X,
+>>>>>           .parent         = TYPE_BCM283X_BASE,
+>>>>> diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+>>>>> index dce35ca11aa..f7e647a9cbf 100644
+>>>>> --- a/hw/arm/raspi.c
+>>>>> +++ b/hw/arm/raspi.c
+>>>>> @@ -15,6 +15,7 @@
+>>>>>   #include "qemu/osdep.h"
+>>>>>   #include "qemu/units.h"
+>>>>>   #include "qemu/cutils.h"
+>>>>> +#include "qemu/legacy_binary_info.h"
+>>>>>   #include "qapi/error.h"
+>>>>>   #include "hw/arm/boot.h"
+>>>>>   #include "hw/arm/bcm2836.h"
+>>>>> @@ -367,7 +368,6 @@ static void raspi2b_machine_class_init(ObjectClass 
+>>>>> *oc, void *data)
+>>>>>       raspi_machine_class_init(mc, rmc->board_rev);
+>>>>>   };
+>>>>> -#ifdef TARGET_AARCH64
+>>>>>   static void raspi3ap_machine_class_init(ObjectClass *oc, void *data)
+>>>>>   {
+>>>>>       MachineClass *mc = MACHINE_CLASS(oc);
+>>>>> @@ -387,7 +387,6 @@ static void raspi3b_machine_class_init(ObjectClass 
+>>>>> *oc, void *data)
+>>>>>       rmc->board_rev = 0xa02082;
+>>>>>       raspi_machine_class_init(mc, rmc->board_rev);
+>>>>>   };
+>>>>> -#endif /* TARGET_AARCH64 */
+>>>>>   static const TypeInfo raspi_machine_types[] = {
+>>>>>       {
+>>>>> @@ -402,16 +401,16 @@ static const TypeInfo raspi_machine_types[] = {
+>>>>>           .name           = MACHINE_TYPE_NAME("raspi2b"),
+>>>>>           .parent         = TYPE_RASPI_MACHINE,
+>>>>>           .class_init     = raspi2b_machine_class_init,
+>>>>> -#ifdef TARGET_AARCH64
+>>>>>       }, {
+>>>>>           .name           = MACHINE_TYPE_NAME("raspi3ap"),
+>>>>>           .parent         = TYPE_RASPI_MACHINE,
+>>>>> +        .registerable   = legacy_binary_is_64bit,
+>>>>>           .class_init     = raspi3ap_machine_class_init,
+>>>>>       }, {
+>>>>>           .name           = MACHINE_TYPE_NAME("raspi3b"),
+>>>>>           .parent         = TYPE_RASPI_MACHINE,
+>>>>> +        .registerable   = legacy_binary_is_64bit,
+>>>>>           .class_init     = raspi3b_machine_class_init,
+>>>>> -#endif
+>>>>>       }, {
+>>>>>           .name           = TYPE_RASPI_MACHINE,
+>>>>>           .parent         = TYPE_RASPI_BASE_MACHINE,
+>>>> 
+>>>> Uh, this (together with patch 1) looks very cumbersome. Why don't you 
+>>>> simply split the array into two, one for 32-bit and one for 64-bit, and 
+>>>> then use a simply "if (legacy_binary_is_64bit())" in the type_init 
+>>>> function instead?
+>>> 
+>>> Sounds like a good idea.
+>>> 
+>>> So we would have DEFINE_TYPES() and DEFINE_TYPES64() macros ?
+>> 
+>> Either that - or simply use type_init() directly here for the time being.
+>
+> As Pierrick noted on private chat, my approach doesn't scale, I should
+> use smth in the lines of:
+>
+>    }, {
+>        .name           = MACHINE_TYPE_NAME("raspi2b"),
+>        .parent         = TYPE_RASPI_MACHINE,
+>        .registerable   = qemu_binary_has_target_arm,
+>        .class_init     = raspi2b_machine_class_init,
+>    }, {
+>        .name           = MACHINE_TYPE_NAME("raspi3ap"),
+>        .parent         = TYPE_RASPI_MACHINE,
+>        .registerable   = qemu_binary_has_target_aarch64,
+>        .class_init     = raspi3ap_machine_class_init,
+>    }, {
+>
+> Having:
+>
+> bool qemu_binary_has_target_arm(void)
+> {
+>    return qemu_arch_available(QEMU_ARCH_ARM);
+> }
 
+I don't know where this is going and what are the details here but why add 
+yet another one line function that calls another one that's identical to a 
+third one. Why not put in TypeInfo .arch = QEMU_ARCH_ARM then compare to 
+that when needed? Although it's questionable if arch belongs to QOM 
+TypeInfo and not in Device or Machine instead this may be needed if you 
+have to decide on this when registering types. I'm not sure about what 
+.registerable means here but more common spelling might be .registrable 
+(which suggests this could be problematic in practice so maybe try to find 
+a better name for this).
+
+Regards,
+BALATON Zoltan
+
+> Now back to Thomas suggestion, we could define 2 TypeInfo arrays,
+> but I foresee lot of code churn when devices has to be made
+> available on different setup combinations; so with that in mind
+> the QOM registerable() callback appears a bit more future proof.
+>
+>
+--3866299591-1915168761-1741207317=:28911--
 
