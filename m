@@ -4,87 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3546C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:45:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A800EC19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:46:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpiVS-0005zU-P2; Wed, 05 Mar 2025 01:45:26 -0500
+	id 1tpiWK-0006Pi-8j; Wed, 05 Mar 2025 01:46:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tpiVQ-0005yr-GT; Wed, 05 Mar 2025 01:45:24 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tpiVH-0002qx-1Q; Wed, 05 Mar 2025 01:45:24 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2febaaf175fso8288868a91.3; 
- Tue, 04 Mar 2025 22:45:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741157112; x=1741761912; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aNxzV75d6Xdkq9b6SOMn3N6MWQ48/MYIwGTkLwqlFRQ=;
- b=ex2yUw+1X4KmLn5jQE7YfFj68yvCK0OVhc3KrduK5+taL/Ixa2B7q2B070yhkwYEjV
- PkS1+jZZCJIWcnfHji29BInOIKQE2qKLl2QXD7V4UHh46b2GZ++i3WJRlYIHoBl5Lyuc
- sZq3Mfs3uvCZ/QfXAAJehAWor+Erb3/rToCxEHRQfFp87yVh0mnyKb0V5+Su78FddwB8
- dSJ2Wb6h8lA2X9T4sn3b0s4mclyPh6JOrIhb7lJEu9OcMq52/AUjqt5G6NhZoCO05PLH
- OFXOqL5Qt3ERua7DRk7WAmxHojLHzdtY6DmhFPY/9VFPOv8TbGATcpOdgQF/NtvrFrKD
- JtOw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpiWB-0006Ne-Bm
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:46:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpiW9-0003eJ-H1
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:46:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741157167;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=QJmF3al7TjAEXYJ+NwN/XKXpVmlRJV9PVR22W1q2yLM=;
+ b=Nv/VF61hAoT6WTgawSy401nKyBdGuI8RfYzWRlq7yiPmIV8T/yfL8eUF0sth99RMuKG3O/
+ 49TVXBx/t5YtO7xQh79UvMLapNibd7dDJLQeeAiaktOx5sJ0T/P8wDJ7JR8vP3LomaMlH7
+ E5LYfbVter4Dw1cuB89q7G+8JLo4FbQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-262-HUdB98-ZPK6s7HWuEetlng-1; Wed, 05 Mar 2025 01:45:54 -0500
+X-MC-Unique: HUdB98-ZPK6s7HWuEetlng-1
+X-Mimecast-MFC-AGG-ID: HUdB98-ZPK6s7HWuEetlng_1741157153
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-390eefb2913so3340522f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 22:45:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741157112; x=1741761912;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=aNxzV75d6Xdkq9b6SOMn3N6MWQ48/MYIwGTkLwqlFRQ=;
- b=Xu8GBDsoRqD75AWxbA+ywRfTrklKo0u678WbdZqSDTzMHy5QunX37zNC3kwdiRgM/G
- zxzRmEn5pgvSf+2ijc+cR8t3AfRdxJWev3NQw3M28ifqB/fNTaMGxltpNyA6hYGWM7Of
- Uv9jdLyAZ4oVJk8pEuX07IZYUZNY8tXl2YJ7Z37kDH2sSCNJrNxXt6Hmf90jpJP5Qsy6
- 0BJvFfWT2nkybzxAXIXDdeXw4esb+U7N0wzsM4CRU/ZQiylMk7fsUIh7RqRtJ+2RAqUd
- VnBjrIeDQzt2YuUIYC2Xc8p75y1B0eb2Xq/EXvHGxqNto3c6sk4ASAmWk81p+viqbEMo
- 60ig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUu5AwiA8B3ZO6ZYRFRZyts0wglrjBZO6w2Rec87bjjHmViOmWohRd8IxuiALDQSbunWczaw1FJuMHV@nongnu.org
-X-Gm-Message-State: AOJu0YxZny3IrsqWCHcrE/rrifnTDb4HX0+DYabiRoVa7Q99+JaWn3wx
- Qg7TwkEJC3BhRJFHowHlPnr4lP6LLhD/S/I01yPU8c8nw8abM1Et4wIPfAXc
-X-Gm-Gg: ASbGnct7V9T7AwlM1BGGz+1ZXCP2t9Idr4quyOI5tdk44mNtdPR4coeo1aNodu/N1o5
- jEnoSDxYmqoeThFeLDaJQbYpl9hMULXX0CND6l4rcJwchGNl1YBeLh0MnxXrEtdops+P4UWbkjx
- LgrF8n6SnOjVxJs6c0Z9yhQqS+YTdbZXV1aXjrHHOv2AVg0kajbPXL+ZkrywbGh8KMmeOkf0taB
- tVwPW7PVxyddjRL6jmaJF1Lrmn5XOBfCuv+eAKxUQjH9qJ9I+opxrtZHJW1c0MkBKvdHBUzNEz2
- 9NmKFdcgRwBOHeyj9/xpaMseATB4TUOVhqk=
-X-Google-Smtp-Source: AGHT+IERSfWfkMy+FV4Ev1iYVXINH9bpsSYq4a2jSOJekbKZSY4ObQ3rvlnBcLzM3xZbJ+CG68zUOg==
-X-Received: by 2002:a05:6a21:7016:b0:1f3:3916:8722 with SMTP id
- adf61e73a8af0-1f34959498fmr3992632637.27.1741157112440; 
- Tue, 04 Mar 2025 22:45:12 -0800 (PST)
-Received: from localhost ([1.146.6.174]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73628edceffsm9340827b3a.2.2025.03.04.22.45.09
+ d=1e100.net; s=20230601; t=1741157153; x=1741761953;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QJmF3al7TjAEXYJ+NwN/XKXpVmlRJV9PVR22W1q2yLM=;
+ b=TUMTpBwbFUldTCsGqKsYH6tIhYu/jNKAsZrD9Z4eC+plFAZqb/9BHnbD52JKdWZwgq
+ +Foh0uL1cSleslWRxibxOOwb2V/98DpU1C+tmR0TV//vf5QAHzcrlDoWDdWWDbORpF61
+ lztJXo4mv6BwLg7T8hqeilnHjZSdhIRYj5JNu+pNyxzqwvulRO0JZbWoUtFR7KWK2QpF
+ tNVYMICEP5xULyJwq+VgPGkVioUI6gjUPtzQXZTktwfr2MIA7n7kvmd2nkNwa6rCFVXg
+ HHVitiCTfGfM0ls+2DEd6/yA896wqutnedWUACCYSkXEMLX+3OGc8cxkDvF7Ghnkko3f
+ IkwA==
+X-Gm-Message-State: AOJu0Yy4P3/dIONUIP8+CgXvgsuMjNq6hacbxwtpB1BB02iGb3GxoneI
+ uTBUEcGvdl8J3qafnVuRnPqFFw8UvQd8NJ2D61X6kwqm9RwQxFc6hnSY5p9NKALTfjWOM8Z3xfs
+ HFbrhbPh7dgW0IOR8nkgsI48tGMQhyB/TP3K0BLYtyOyEzpTZLXK4
+X-Gm-Gg: ASbGncuF1rpMv8s3wux2DpEupyiNnQ7cVCid7dk7M9Euvjx7eIYhb6w21p6xsrYOlS/
+ MZMYsPV9OIT/cX0eIg2JfbaYMW+Nk7ByWP4bwwDXUyzdYPJj/o6NK2AFAj34tfFzqKY7sAUmh5P
+ vILWCgAYMJY051gyqoRXhjhwRqAwNCEwLBN9iQUIL0pcF2E0Hv5l5eL9YQ9shRfabrovRLQprem
+ IDfWlUDBj+e5XgITS9lVWoIiwquqe3y77fBvFBHFm1OS+PupNxw4b8jdbeMyde4dVWiiYQlrfdZ
+ 9dZbCZEcaqp6dtLPu+hR8TQKfegZuJVpJ4toL02IC+MMkfI=
+X-Received: by 2002:a5d:59ae:0:b0:391:10f9:f3a1 with SMTP id
+ ffacd0b85a97d-3911f7bba1fmr1539186f8f.35.1741157152856; 
+ Tue, 04 Mar 2025 22:45:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXErMUNZhLV6ipwB1/2ZwuyDTXR+uxS3S3Q+2A4gR5QMeVUQKVwvd9UmVQYZaxJxHAvNv1ZA==
+X-Received: by 2002:a5d:59ae:0:b0:391:10f9:f3a1 with SMTP id
+ ffacd0b85a97d-3911f7bba1fmr1539166f8f.35.1741157152525; 
+ Tue, 04 Mar 2025 22:45:52 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
+ [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bd4352fa3sm7748915e9.30.2025.03.04.22.45.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 22:45:11 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 05 Mar 2025 16:45:06 +1000
-Message-Id: <D884OKIYGHJ4.2NBBKSTCAE7NX@gmail.com>
-Cc: <qemu-ppc@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [RFC PATCH] target/ppc: Do not set HPTE R/C bits on
- !guest_visible xlate
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>
-X-Mailer: aerc 0.19.0
-References: <20250303104755.584897-1-npiggin@gmail.com>
- <caad84f0-d3dc-dd89-14d0-498a9246772b@eik.bme.hu>
-In-Reply-To: <caad84f0-d3dc-dd89-14d0-498a9246772b@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102a.google.com
+ Tue, 04 Mar 2025 22:45:52 -0800 (PST)
+Message-ID: <569db74d-15f4-4eea-b285-4556ffd7d60f@redhat.com>
+Date: Wed, 5 Mar 2025 07:45:49 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/avocado: Remove the boot_linux.py and
+ replay_linux.py tests
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250227110014.21048-1-thuth@redhat.com>
+ <87mse7wph2.fsf@draig.linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <87mse7wph2.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,53 +154,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon Mar 3, 2025 at 8:58 PM AEST, BALATON Zoltan wrote:
-> On Mon, 3 Mar 2025, Nicholas Piggin wrote:
->> Perform !guest_visible memory accesses without modifying R/C bits.
->>
->> It's arguable whether !guest_visible memory accesses should modify
->> R/C bits. i386 seems to set accessed/dirty bit updates for "probe"
->> accesses, but ppc with radix MMU does not. Follow the ppc/radix
->> lead and perform the accesses without updating R/C bits.
->>
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->> target/ppc/mmu-hash32.c | 27 ++++++++++++++-------------
->> target/ppc/mmu-hash64.c | 27 ++++++++++++++-------------
->> 2 files changed, 28 insertions(+), 26 deletions(-)
->>
->> diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
->> index 1f791a7f2f7..b8d7f87507b 100644
->> --- a/target/ppc/mmu-hash32.c
->> +++ b/target/ppc/mmu-hash32.c
->> @@ -410,19 +410,20 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr=
-, MMUAccessType access_type,
->>     qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
->>
->>     /* 8. Update PTE referenced and changed bits if necessary */
->> -
->> -    if (!(pte.pte1 & HPTE32_R_R)) {
->> -        ppc_hash32_set_r(cpu, pte_offset, pte.pte1);
->> -    }
->> -    if (!(pte.pte1 & HPTE32_R_C)) {
->> -        if (access_type =3D=3D MMU_DATA_STORE) {
->> -            ppc_hash32_set_c(cpu, pte_offset, pte.pte1);
->> -        } else {
->> -            /*
->> -             * Treat the page as read-only for now, so that a later wri=
-te
->> -             * will pass through this function again to set the C bit
->> -             */
->> -            prot &=3D ~PAGE_WRITE;
->> +    if (guest_visible) {
->
-> Are these unlikely() ? Not sure if that makes a difference but if we know=
-=20
-> it may help some compilers.
+On 27/02/2025 13.18, Alex Bennée wrote:
+> Thomas Huth <thuth@redhat.com> writes:
+> 
+>> These tests are based on the cloudinit functions from Avocado.
+>> The cloudinit is very, very slow compared to our other tests,
+>> so most of these Avocado tests have either been disabled by default
+>> with a decorator, or have been marked to only run with KVM.
+> 
+> I have no objection to dropping the boot_linux tests. However the
+> replay_linux tests could do with porting to use new images (the tuxrun
+> ones?) so we have coverage. Otherwise we only do a simple kernel boot
+> under replay and that covers a lot less.
 
-Yes it probably is. Although we don't tend to use unlikely very much. I
-guess we have to start somewhere.
+Ok ... maybe we can also extend the existing 
+tests/functional/test_*_replay.py tests to do a full boot ... I'll have a look.
 
-Thanks,
-Nick
+  Thomas
+
 
