@@ -4,78 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85391C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 09:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C05B3C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 09:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpkcZ-0005xp-6C; Wed, 05 Mar 2025 04:00:56 -0500
+	id 1tpkd6-0006N6-Cv; Wed, 05 Mar 2025 04:01:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tpkcG-0005sI-NC
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:00:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tpkce-00068j-7z
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:01:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tpkcD-0005Ri-3f
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:00:35 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tpkca-0005Ss-Tr
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:00:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741165232;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1741165256;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VsE80aH61WypSGhqdU+/4hO+oopD3PhROyAO2W3DfSc=;
- b=ZuJ5jUGhIqbp43pUkqR4Mr1kHSuesatqRLf+tvCusO41BpAXpDgog13GNmzczGlzLjS6Ls
- nkyV5tyW4TBtZadClFaXfpXXrfQO2ne/Nt9N3JYGN9g8gmvdI843NZXPSjTf9GK//bWRtE
- YfXZ5aVBXOgP5E14yR63dxBqwVlzIwc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-VI5mqKKYO3qVP7EARD4jMg-1; Wed,
- 05 Mar 2025 04:00:23 -0500
-X-MC-Unique: VI5mqKKYO3qVP7EARD4jMg-1
-X-Mimecast-MFC-AGG-ID: VI5mqKKYO3qVP7EARD4jMg_1741165222
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3771118001E2; Wed,  5 Mar 2025 09:00:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.44])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CFB311954B32; Wed,  5 Mar 2025 09:00:19 +0000 (UTC)
-Date: Wed, 5 Mar 2025 09:00:16 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [RFC PATCH 03/11] system: Introduce QemuArchBit enum
-Message-ID: <Z8gSoHu6zgqM991h@redhat.com>
-References: <20250305005225.95051-1-philmd@linaro.org>
- <20250305005225.95051-4-philmd@linaro.org>
- <Z8gRnioep_Jf5rb0@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=FtRrmVKiegAMU417TqBR5dNnxwanItIjHpI5WjpEFIs=;
+ b=hcDcP5e819ISN16UdKsTPir3UaZ0D7734bXMYCPA0jTDm5hh/rgQF4311PU1xwcDHsFjlr
+ y33bsSW7FCK4zSbrl130b9Q+Fo6NwmneJqGimKJlJB1QoKGknJC33oYo2o73VQ7vCvbJL0
+ WBxNjcASjcFXyF+6BAgsFXGZkEiMhUM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-522-0YECgYrWO4a4Bh7mrtOPNw-1; Wed, 05 Mar 2025 04:00:52 -0500
+X-MC-Unique: 0YECgYrWO4a4Bh7mrtOPNw-1
+X-Mimecast-MFC-AGG-ID: 0YECgYrWO4a4Bh7mrtOPNw_1741165251
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-390fd681712so1770027f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 01:00:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741165250; x=1741770050;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FtRrmVKiegAMU417TqBR5dNnxwanItIjHpI5WjpEFIs=;
+ b=F3z3tVHD/5RnzJf+HTQsjAukZWxreoizh0SkZD5ye1+9Fo+oMEW0R0RXOgGkNxatx/
+ kDz+NTqiJzZqzWclLFOoFHMeHZtGV++O26NdbSW9sr8dDLrPvzw6RFi00hyGOsztcS0v
+ 6EoabsnsfgofFedv8CQJOXlocnlt3wSG1Ff8Ef8M8P14zfjmojEoFNUS9D4/GY8+2WuL
+ qUtrkV2Yf25Pgde0ODXM41HVTGVYDcYFMX+1OL0zxXcdDrVZuLMGHZq6qmP6WeMneIIl
+ 6t/fPCzL6WhzesRaIVq4aUm2TVhGn6U2Bf5xgunvzm/FsjZh2XZtO6Rqg4hqp4iF+eEA
+ ALKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjUmIIZWyh8uEIgglGdYUyi5dyX1uta8q9MYSMX5M0o6Ncy4b+/mwSnku+xKK/45fm2FPA67DYfcKT@nongnu.org
+X-Gm-Message-State: AOJu0YyJUMIg9CG+7fYQLKirEIyiLZB0bYvsq4legh+l79wTia3FMV/6
+ i881qSv2SvOmPZPj29phLLjCUXRnBF/K431Y1+H4opILFgjdFzwCm5tOFKkLT6YfjAIhl8zK6MT
+ OW/XvNlmVc+TN1XEfSBr2XKzYmtLk6rlZA08Y4Foe2HMry4w/GLXI
+X-Gm-Gg: ASbGncur/SU3/F3HzYjm480VUOQYQRVxFSuci98YRJPhWSm9CmtWWkSKmLO3TTHs1YD
+ tN1nq0ip8nUZejK04ZDPMWOY3iEbBjPj/Cs0E26l3EAx7wZRva1VSK3KRyFM7nm9v+x9qsxbcAR
+ uoekiqFozJnM2K67j0NZxZB32cogAqnezI8ipa6HX1ay3aA7KE+/2dLEcJkkzkfeZEQt2pC2RPc
+ iiof0f9e3J+SzGL7F+OKWEqYOrOGFpTUtHrOyzCODcQif/9soLDUiVGhQk39k1HGu4lKNm63QEl
+ WEdyhcIoNgB26IwuBHKRVOR43qV8qLsfdpSDY6QrprHkt3kf3VY6Qg==
+X-Received: by 2002:a05:6000:188b:b0:390:f832:383f with SMTP id
+ ffacd0b85a97d-3911f7264eemr1628102f8f.2.1741165250551; 
+ Wed, 05 Mar 2025 01:00:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEVAhCaMHylLkO9AAR7rguTggVbD2XgbABa/iFsU4LSYsgjmGFLC/ZjeAAbuza5NsEaZkgk0Q==
+X-Received: by 2002:a05:6000:188b:b0:390:f832:383f with SMTP id
+ ffacd0b85a97d-3911f7264eemr1628075f8f.2.1741165250165; 
+ Wed, 05 Mar 2025 01:00:50 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e4848252sm20498934f8f.69.2025.03.05.01.00.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Mar 2025 01:00:49 -0800 (PST)
+Message-ID: <96def84c-d740-458d-bbd4-ac2e8d419e9b@redhat.com>
+Date: Wed, 5 Mar 2025 10:00:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z8gRnioep_Jf5rb0@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 15/36] migration/multifd: Make MultiFDSendData a struct
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
+ <7b02baba8e6ddb23ef7c349d312b9b631db09d7e.1741124640.git.maciej.szmigiero@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <7b02baba8e6ddb23ef7c349d312b9b631db09d7e.1741124640.git.maciej.szmigiero@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,104 +157,183 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 05, 2025 at 08:55:58AM +0000, Daniel P. Berrangé wrote:
-> On Wed, Mar 05, 2025 at 01:52:17AM +0100, Philippe Mathieu-Daudé wrote:
-> > Declare QEMU_ARCH_BIT_$target as QemuArchBit enum.
-> > Use them to declare QEMU_ARCH_$target bitmasks.
-> > 
-> > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > ---
-> >  meson.build                |  4 +--
-> >  include/system/arch_init.h | 65 +++++++++++++++++++++++++-------------
-> >  system/arch_init.c         |  2 +-
-> >  3 files changed, 46 insertions(+), 25 deletions(-)
-> > 
-> > diff --git a/meson.build b/meson.build
-> > index 0a2c61d2bfa..1ab02a5d48d 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -3357,8 +3357,8 @@ foreach target : target_dirs
-> >        config_target_data.set(k, v)
-> >      endif
-> >    endforeach
-> > -  config_target_data.set('QEMU_ARCH',
-> > -                         'QEMU_ARCH_' + config_target['TARGET_BASE_ARCH'].to_upper())
-> > +  config_target_data.set('QEMU_ARCH_BIT',
-> > +                         'QEMU_ARCH_BIT_' + config_target['TARGET_BASE_ARCH'].to_upper())
-> >    config_target_h += {target: configure_file(output: target + '-config-target.h',
-> >                                                 configuration: config_target_data)}
-> >  
-> > diff --git a/include/system/arch_init.h b/include/system/arch_init.h
-> > index d8b77440487..06e5527ec88 100644
-> > --- a/include/system/arch_init.h
-> > +++ b/include/system/arch_init.h
-> > @@ -1,29 +1,50 @@
-> >  #ifndef QEMU_ARCH_INIT_H
-> >  #define QEMU_ARCH_INIT_H
-> >  
-> > +#include "qemu/bitops.h"
-> >  
-> > -enum {
-> > -    QEMU_ARCH_ALL = -1,
-> > -    QEMU_ARCH_ALPHA = (1 << 0),
-> > -    QEMU_ARCH_ARM = (1 << 1),
-> > -    QEMU_ARCH_I386 = (1 << 3),
-> > -    QEMU_ARCH_M68K = (1 << 4),
-> > -    QEMU_ARCH_MICROBLAZE = (1 << 6),
-> > -    QEMU_ARCH_MIPS = (1 << 7),
-> > -    QEMU_ARCH_PPC = (1 << 8),
-> > -    QEMU_ARCH_S390X = (1 << 9),
-> > -    QEMU_ARCH_SH4 = (1 << 10),
-> > -    QEMU_ARCH_SPARC = (1 << 11),
-> > -    QEMU_ARCH_XTENSA = (1 << 12),
-> > -    QEMU_ARCH_OPENRISC = (1 << 13),
-> > -    QEMU_ARCH_TRICORE = (1 << 16),
-> > -    QEMU_ARCH_HPPA = (1 << 18),
-> > -    QEMU_ARCH_RISCV = (1 << 19),
-> > -    QEMU_ARCH_RX = (1 << 20),
-> > -    QEMU_ARCH_AVR = (1 << 21),
-> > -    QEMU_ARCH_HEXAGON = (1 << 22),
-> > -    QEMU_ARCH_LOONGARCH = (1 << 23),
-> > -};
-> > +typedef enum QemuArchBit {
-> > +    QEMU_ARCH_BIT_ALPHA         = 0,
-> > +    QEMU_ARCH_BIT_ARM           = 1,
-> > +    QEMU_ARCH_BIT_I386          = 3,
-> > +    QEMU_ARCH_BIT_M68K          = 4,
-> > +    QEMU_ARCH_BIT_MICROBLAZE    = 6,
-> > +    QEMU_ARCH_BIT_MIPS          = 7,
-> > +    QEMU_ARCH_BIT_PPC           = 8,
-> > +    QEMU_ARCH_BIT_S390X         = 9,
-> > +    QEMU_ARCH_BIT_SH4           = 10,
-> > +    QEMU_ARCH_BIT_SPARC         = 11,
-> > +    QEMU_ARCH_BIT_XTENSA        = 12,
-> > +    QEMU_ARCH_BIT_OPENRISC      = 13,
-> > +    QEMU_ARCH_BIT_TRICORE       = 16,
-> > +    QEMU_ARCH_BIT_HPPA          = 18,
-> > +    QEMU_ARCH_BIT_RISCV         = 19,
-> > +    QEMU_ARCH_BIT_RX            = 20,
-> > +    QEMU_ARCH_BIT_AVR           = 21,
-> > +    QEMU_ARCH_BIT_HEXAGON       = 22,
-> > +    QEMU_ARCH_BIT_LOONGARCH     = 23,
-> > +} QemuArchBit;
+Fabiano,
+
+Could you please ack (or not) this patch please ?
+
+Thanks,
+
+C.
+
+
+On 3/4/25 23:03, Maciej S. Szmigiero wrote:
+> From: Peter Xu <peterx@redhat.com>
 > 
-> I'm somewhat inclined to say we should be defining this as a QemuArch
-> enum in QAPI, especially because that gives us the string <> int
-> conversion that you hand-code in a latter patch.
-
-Having said that, the auto-generated string/int conversion won't work
-if we have differing name mappings based on endian/target bits size.
-So scratch that idea.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> The newly introduced device state buffer can be used for either storing
+> VFIO's read() raw data, but already also possible to store generic device
+> states.  After noticing that device states may not easily provide a max
+> buffer size (also the fact that RAM MultiFDPages_t after all also want to
+> have flexibility on managing offset[] array), it may not be a good idea to
+> stick with union on MultiFDSendData.. as it won't play well with such
+> flexibility.
+> 
+> Switch MultiFDSendData to a struct.
+> 
+> It won't consume a lot more space in reality, after all the real buffers
+> were already dynamically allocated, so it's so far only about the two
+> structs (pages, device_state) that will be duplicated, but they're small.
+> 
+> With this, we can remove the pretty hard to understand alloc size logic.
+> Because now we can allocate offset[] together with the SendData, and
+> properly free it when the SendData is freed.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> [MSS: Make sure to clear possible device state payload before freeing
+> MultiFDSendData, remove placeholders for other patches not included]
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> ---
+>   migration/multifd-device-state.c |  5 -----
+>   migration/multifd-nocomp.c       | 13 ++++++-------
+>   migration/multifd.c              | 25 +++++++------------------
+>   migration/multifd.h              | 15 +++++++++------
+>   4 files changed, 22 insertions(+), 36 deletions(-)
+> 
+> diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
+> index e383e75b1a02..64d8ca180167 100644
+> --- a/migration/multifd-device-state.c
+> +++ b/migration/multifd-device-state.c
+> @@ -20,11 +20,6 @@ static struct {
+>       MultiFDSendData *send_data;
+>   } *multifd_send_device_state;
+>   
+> -size_t multifd_device_state_payload_size(void)
+> -{
+> -    return sizeof(MultiFDDeviceState_t);
+> -}
+> -
+>   void multifd_device_state_send_setup(void)
+>   {
+>       assert(!multifd_send_device_state);
+> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+> index c00804652383..ffe75256c9fb 100644
+> --- a/migration/multifd-nocomp.c
+> +++ b/migration/multifd-nocomp.c
+> @@ -25,15 +25,14 @@
+>   
+>   static MultiFDSendData *multifd_ram_send;
+>   
+> -size_t multifd_ram_payload_size(void)
+> +void multifd_ram_payload_alloc(MultiFDPages_t *pages)
+>   {
+> -    uint32_t n = multifd_ram_page_count();
+> +    pages->offset = g_new0(ram_addr_t, multifd_ram_page_count());
+> +}
+>   
+> -    /*
+> -     * We keep an array of page offsets at the end of MultiFDPages_t,
+> -     * add space for it in the allocation.
+> -     */
+> -    return sizeof(MultiFDPages_t) + n * sizeof(ram_addr_t);
+> +void multifd_ram_payload_free(MultiFDPages_t *pages)
+> +{
+> +    g_clear_pointer(&pages->offset, g_free);
+>   }
+>   
+>   void multifd_ram_save_setup(void)
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 3625c9a37c0e..dfb5189f0ea3 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -105,26 +105,12 @@ struct {
+>   
+>   MultiFDSendData *multifd_send_data_alloc(void)
+>   {
+> -    size_t max_payload_size, size_minus_payload;
+> +    MultiFDSendData *new = g_new0(MultiFDSendData, 1);
+>   
+> -    /*
+> -     * MultiFDPages_t has a flexible array at the end, account for it
+> -     * when allocating MultiFDSendData. Use max() in case other types
+> -     * added to the union in the future are larger than
+> -     * (MultiFDPages_t + flex array).
+> -     */
+> -    max_payload_size = MAX(multifd_ram_payload_size(),
+> -                           multifd_device_state_payload_size());
+> -    max_payload_size = MAX(max_payload_size, sizeof(MultiFDPayload));
+> +    multifd_ram_payload_alloc(&new->u.ram);
+> +    /* Device state allocates its payload on-demand */
+>   
+> -    /*
+> -     * Account for any holes the compiler might insert. We can't pack
+> -     * the structure because that misaligns the members and triggers
+> -     * Waddress-of-packed-member.
+> -     */
+> -    size_minus_payload = sizeof(MultiFDSendData) - sizeof(MultiFDPayload);
+> -
+> -    return g_malloc0(size_minus_payload + max_payload_size);
+> +    return new;
+>   }
+>   
+>   void multifd_send_data_clear(MultiFDSendData *data)
+> @@ -151,8 +137,11 @@ void multifd_send_data_free(MultiFDSendData *data)
+>           return;
+>       }
+>   
+> +    /* This also free's device state payload */
+>       multifd_send_data_clear(data);
+>   
+> +    multifd_ram_payload_free(&data->u.ram);
+> +
+>       g_free(data);
+>   }
+>   
+> diff --git a/migration/multifd.h b/migration/multifd.h
+> index aa679d8bbe83..2d337e7b3b52 100644
+> --- a/migration/multifd.h
+> +++ b/migration/multifd.h
+> @@ -115,9 +115,13 @@ typedef struct {
+>       uint32_t num;
+>       /* number of normal pages */
+>       uint32_t normal_num;
+> +    /*
+> +     * Pointer to the ramblock.  NOTE: it's caller's responsibility to make
+> +     * sure the pointer is always valid!
+> +     */
+>       RAMBlock *block;
+> -    /* offset of each page */
+> -    ram_addr_t offset[];
+> +    /* offset array of each page, managed by multifd */
+> +    ram_addr_t *offset;
+>   } MultiFDPages_t;
+>   
+>   struct MultiFDRecvData {
+> @@ -140,7 +144,7 @@ typedef enum {
+>       MULTIFD_PAYLOAD_DEVICE_STATE,
+>   } MultiFDPayloadType;
+>   
+> -typedef union MultiFDPayload {
+> +typedef struct MultiFDPayload {
+>       MultiFDPages_t ram;
+>       MultiFDDeviceState_t device_state;
+>   } MultiFDPayload;
+> @@ -394,12 +398,11 @@ void multifd_ram_save_cleanup(void);
+>   int multifd_ram_flush_and_sync(QEMUFile *f);
+>   bool multifd_ram_sync_per_round(void);
+>   bool multifd_ram_sync_per_section(void);
+> -size_t multifd_ram_payload_size(void);
+> +void multifd_ram_payload_alloc(MultiFDPages_t *pages);
+> +void multifd_ram_payload_free(MultiFDPages_t *pages);
+>   void multifd_ram_fill_packet(MultiFDSendParams *p);
+>   int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
+>   
+> -size_t multifd_device_state_payload_size(void);
+> -
+>   void multifd_send_data_clear_device_state(MultiFDDeviceState_t *device_state);
+>   
+>   void multifd_device_state_send_setup(void);
+> 
 
 
