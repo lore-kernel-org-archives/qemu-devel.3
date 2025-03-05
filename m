@@ -4,76 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5DD3C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 10:36:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C9A9C282D9
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 10:36:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpm6J-0005cz-VF; Wed, 05 Mar 2025 05:35:44 -0500
+	id 1tpm6e-0005eo-Ua; Wed, 05 Mar 2025 05:36:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tpm6H-0005cN-FT
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 05:35:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tpm6F-0005ce-8g
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 05:35:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741170936;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PzYtpfxgkkU0KLd+uQRqT4Yk3hARGSCyfJ0c+Hud1js=;
- b=KtwlSM5p5G7b8MYY5+ehksXM4wzD7VJoO5us7UYuS/1EYe/8YpsBG6kzWNPl6lC+6j/6HW
- hguGo5aTweNnjdJF9isDfyeUr0cTPqRVM+oI/gQW2qZ+Da2XGh6SomIPIL6spDIoxNp1Su
- Tg+fYmkJOP6nzI9Hlbiq6boB3aBMiiI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-6lK4g4uOMn63wvaZ-8n8SA-1; Wed,
- 05 Mar 2025 05:35:31 -0500
-X-MC-Unique: 6lK4g4uOMn63wvaZ-8n8SA-1
-X-Mimecast-MFC-AGG-ID: 6lK4g4uOMn63wvaZ-8n8SA_1741170930
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8093119560B4; Wed,  5 Mar 2025 10:35:30 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DE7C1956094; Wed,  5 Mar 2025 10:35:30 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id ABF4C21E66C2; Wed, 05 Mar 2025 11:35:27 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
- =?utf-8?Q?hieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
- Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH 39/57] qapi/source: allow multi-line QAPISourceInfo
- advancing
-In-Reply-To: <20250305034610.960147-40-jsnow@redhat.com> (John Snow's message
- of "Tue, 4 Mar 2025 22:45:48 -0500")
-References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-40-jsnow@redhat.com>
-Date: Wed, 05 Mar 2025 11:35:27 +0100
-Message-ID: <871pvbojdc.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
+ id 1tpm6Z-0005eT-Kj
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 05:35:59 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <wangyuquan1236@phytium.com.cn>) id 1tpm6V-0005dw-BX
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 05:35:59 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDn7Az_KMhn9rSNBg--.23229S2;
+ Wed, 05 Mar 2025 18:35:43 +0800 (CST)
+Received: from wangyuquan1236$phytium.com.cn ( [218.76.62.144] ) by
+ ajax-webmail-mail (Coremail) ; Wed, 5 Mar 2025 18:35:40 +0800 (GMT+08:00)
+X-Originating-IP: [218.76.62.144]
+Date: Wed, 5 Mar 2025 18:35:40 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: "Yuquan Wang" <wangyuquan1236@phytium.com.cn>
+To: "Jonathan Cameron" <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH] docs/cxl: Add serial number for persistent-memdev
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.1-cmXT6 build
+ 20240812(cfb32469) Copyright (c) 2002-2025 www.mailtech.cn
+ mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
+In-Reply-To: <20250305141359.00001288@huawei.com>
+References: <20250217112039.138650-1-wangyuquan1236@phytium.com.cn>
+ <20250220161213.000049a9@huawei.com>
+ <20250221065509-mutt-send-email-mst@kernel.org>
+ <17b91a9f.2847.1955fd23d78.Coremail.wangyuquan1236@phytium.com.cn>
+ <20250305141359.00001288@huawei.com>
+Content-Transfer-Encoding: base64
+X-CM-CTRLDATA: BXBrtmZvb3Rlcl90eHQ9MTczMTozODM=
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Message-ID: <4752672.2b5f.19565e01b65.Coremail.wangyuquan1236@phytium.com.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: AQAAfwBna4f8KMhn3Oo6AA--.5354W
+X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAAAWfHXBcGa
+	wAAsG
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
+ 1236@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxAr4xAr4kGrW3AFy8JF1DWrg_yoWrtrW5p3
+ W8Ja48Aw1UKa17G3yS9w18ZryUG3yUGr47Xw10y39FywnrJrn0qrnIgFZ7J3Wjgay5tr4D
+ t3W7X390qr1UtrUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=wangyuquan1236@phytium.com.cn;
+ helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,75 +82,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> This is for the sake of the new rST generator (the "transmogrifier") so
-> we can advance multiple lines on occasion while keeping the
-> generated<-->source mappings accurate.
->
-> next_line now simply takes an optional n parameter which chooses the
-> number of lines to advance.
->
-> RFC: Here's the exorbitant detail on why I want this:
->
-> This is used mainly when converting section syntax in free-form
-> documentation to more traditional rST section header syntax, which
-> does not always line up 1:1 for line counts.
-
-Obvious way to resolve the RFC:
-
-  The next patch will use this when converting ...
-
->
-> For example:
->
-> ```
->  ##
->  # = Section     <-- Info is pointing here, "L1"
->  #
->  # Lorem Ipsum
->  ##
-> ```
->
-> would be transformed to rST as:
->
-> ```
-> =======        <-- L1
-> Section        <-- L1
-> =======        <-- L1
->                <-- L2
-> Lorem Ipsum    <-- L3
-> ```
-
-Not a demand, just wondering: could we drop our headings syntax and just
-use rST?
-
->
-> After consuming the single "Section" line from the source, we want to
-> advance the source pointer to the next non-empty line which requires
-> jumping by more than one line.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  scripts/qapi/source.py | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/scripts/qapi/source.py b/scripts/qapi/source.py
-> index 7b379fdc925..ffdc3f482ac 100644
-> --- a/scripts/qapi/source.py
-> +++ b/scripts/qapi/source.py
-> @@ -47,9 +47,9 @@ def set_defn(self, meta: str, name: str) -> None:
->          self.defn_meta = meta
->          self.defn_name = name
->  
-> -    def next_line(self: T) -> T:
-> +    def next_line(self: T, n: int = 1) -> T:
->          info = copy.copy(self)
-> -        info.line += 1
-> +        info.line += n
->          return info
->  
->      def loc(self) -> str:
+Cj4gCj4gT24gVHVlLCA0IE1hciAyMDI1IDE0OjIyOjQ4ICswODAwCj4gWXVxdWFuIFdhbmcgPHdh
+bmd5dXF1YW4xMjM2QHBoeXRpdW0uY29tLmNuPiB3cm90ZToKPiAKPiA+ID4gCj4gPiA+IE9uIFRo
+dSwgRmViIDIwLCAyMDI1IGF0IDA0OjEyOjEzUE0gKzAwMDAsIEpvbmF0aGFuIENhbWVyb24gd3Jv
+dGU6ICAKPiA+ID4gPiBPbiBNb24sIDE3IEZlYiAyMDI1IDE5OjIwOjM5ICswODAwCj4gPiA+ID4g
+WXVxdWFuIFdhbmcgPHdhbmd5dXF1YW4xMjM2QHBoeXRpdW0uY29tLmNuPiB3cm90ZToKPiA+ID4g
+PiAgIAo+ID4gPiA+ID4gQWRkIHNlcmlhbCBudW1iZXIgcGFyYW1ldGVyIGluIHRoZSBjeGwgcGVy
+c2lzdGVudCBleGFtcGxlcy4KPiA+ID4gPiA+IAo+ID4gPiA+ID4gU2lnbmVkLW9mZi1ieTogWXVx
+dWFuIFdhbmcgPHdhbmd5dXF1YW4xMjM2QHBoeXRpdW0uY29tLmNuPiAgCj4gPiA+ID4gTG9va3Mg
+Z29vZC4gIEkndmUgcXVldWVkIGl0IHVwIG9uIG15IGdpdGxhYiBzdGFnaW5nIHRyZWUsIGJ1dAo+
+ID4gPiA+IE1pY2hhZWwgaWYgeW91IHdhbnQgdG8gcGljayB0aGlzIG9uZSBkaXJlY3RseSB0aGF0
+J3MgZmluZSBhcyB3ZWxsLiAgCj4gPiA+IAo+ID4gPiBTZWUgbm8gcmVhc29uIHRvLCBJIHdhcyBu
+b3QgZXZlbiBDQydkLiAgCj4gPiAKPiA+IEhpLCBNaWNoYWVsCj4gPiAKPiA+IEknbSBzb3JyeSwg
+dGhpcyBpcyBteSBmYXVsdC4gSSB1c2VkICJnZXRfbWFpbnRhaW5lci5wbCIgdG8gY2hlY2sgdGhp
+cwo+ID4gcGF0Y2gncyBtYWludGFpbmVycyBidXQgaXQgc2hvd3MgIk5vIG1haW50YWluZXJzIGZv
+dW5kLCBwcmludGluZyByZWNlbnQKPiA+IGNvbnRyaWJ1dG9ycyIuIAo+ID4gCj4gSSB1c3VhbGx5
+IHN0YWdlIHVwIG11bHRpcGxlIHNlcmllcyB0b2dldGhlciBhbmQgc2VuZCBvbiB0byBNaWNoYWVs
+Lgo+IFNvIGl0IHdhcyBiZSBiZWluZyBsYXp5IGZvciBhIG1pbm9yIGNoYW5nZSByYXRoZXIgdGhh
+biBhbnl0aGluZyBtdWNoCj4gdGhhdCB5b3UgZGlkIHdyb25nLgo+IAo+IElmIEkgZ2V0IHRpbWUg
+SSdsbCBwb3N0IGEgc2VyaWVzIHdpdGggdGhpcyBhIGZldyBvdGhlciBwYXRjaGVzCj4gbGF0ZXIg
+dG9kYXkuICAKPiAKPiBKb25hdGhhbgo+IApUaGFuayB5b3UhCgpCVFcsIEkgZm91bmQgYSBjb3Ju
+ZXIgY2FzZSBpbiBDWEwgbnVtYSBub2RlIGNyZWF0aW9uLgoKQ29uZGl0aW9uOiAKMSkgQSBVTUEv
+TlVNQSBzeXN0ZW0gd2l0aG91dCBTUkFULCBidXQgd2l0aCBDRURULkNGTVdTCjLvvIlFbmFibGUg
+Q09ORklHX0FDUElfTlVNQQoKUmVzdWx0czoKMSkgYWNwaV9udW1hX2luaXQ6IHRoZSBmYWtlX3B4
+bSB3aWxsIGJlIDAgYW5kIHNlbmQgdG8gYWNwaV9wYXJzZV9jZm13cygpCjLvvIlJZiBkeW5hbWlj
+YWxseSBjcmVhdGUgY3hsIHJhbSByZWdpb24sIHRoZSBjeGwgbWVtb3J5IHdvdWxkIGJlIGFzc2ln
+bmVkCnRvIG5vZGUwIHJhdGhlciB0aGFuIGEgbmV3IG5vZGUKCkNvbmZ1c2lvbnM6CjEpIElzIGEg
+bnVtYSBzeXN0ZW0gYSByZXF1aXJlbWVudCBmb3IgQ1hMIG1lbW9yeSB1c2FnZT8KMikgU2hvdWxk
+IHdlIGZvcmJpZCB0aGlzIHNpdHVhdGlvbiBieSBhZGRpbmcgZmFrZV9weG0gY2hlY2sgYW5kIHJl
+dHVybmluZwplcnJvciBpbiBhY3BpX251bWFfaW5pdCgpPyAKM++8iU9yIHdlIGNhbiBhZGQgc29t
+ZSBrZXJuZWwgY29kZSB0byBhbGxvdyBjcmVhdGUgdGhlc2UgZmFrZSBub2RlcyBvbiBhCnN5c3Rl
+bSB3aXRob3V0IFNSQVQ/CgpZdXF1YW4KCgoKDQoNCuS/oeaBr+WuieWFqOWjsOaYju+8muacrOmC
+ruS7tuWMheWQq+S/oeaBr+W9kuWPkeS7tuS6uuaJgOWcqOe7hOe7h+aJgOaciSzlj5Hku7bkurrm
+iYDlnKjnu4Tnu4flr7nor6Xpgq7ku7bmi6XmnInmiYDmnInmnYPliKnjgILor7fmjqXmlLbogIXm
+s6jmhI/kv53lr4Ys5pyq57uP5Y+R5Lu25Lq65Lmm6Z2i6K645Y+vLOS4jeW+l+WQkeS7u+S9lees
+rOS4ieaWuee7hOe7h+WSjOS4quS6uumAj+mcsuacrOmCruS7tuaJgOWQq+S/oeaBr+OAgg0KSW5m
+b3JtYXRpb24gU2VjdXJpdHkgTm90aWNlOiBUaGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRo
+aXMgbWFpbCBpcyBzb2xlbHkgcHJvcGVydHkgb2YgdGhlIHNlbmRlcidzIG9yZ2FuaXphdGlvbi5U
+aGlzIG1haWwgY29tbXVuaWNhdGlvbiBpcyBjb25maWRlbnRpYWwuUmVjaXBpZW50cyBuYW1lZCBh
+Ym92ZSBhcmUgb2JsaWdhdGVkIHRvIG1haW50YWluIHNlY3JlY3kgYW5kIGFyZSBub3QgcGVybWl0
+dGVkIHRvIGRpc2Nsb3NlIHRoZSBjb250ZW50cyBvZiB0aGlzIGNvbW11bmljYXRpb24gdG8gb3Ro
+ZXJzLg==
 
 
