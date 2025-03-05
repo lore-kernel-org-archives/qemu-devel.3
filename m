@@ -4,38 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A6D9C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:15:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8141C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpi08-0000nU-J5; Wed, 05 Mar 2025 01:13:04 -0500
+	id 1tpi0A-0000oS-II; Wed, 05 Mar 2025 01:13:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tpi05-0000mQ-EU
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:01 -0500
+ id 1tpi07-0000mx-00
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:03 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tpi01-0004Fp-TD
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:01 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tpi02-0004Fh-9v
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:13:02 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxC3Jk68dntN+KAA--.41010S3;
+ by gateway (Coremail) with SMTP id _____8Bxlmlk68dnt9+KAA--.40813S3;
  Wed, 05 Mar 2025 14:12:52 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBx3MRi68dnfRQ3AA--.5679S2;
- Wed, 05 Mar 2025 14:12:50 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBx3MRi68dnfRQ3AA--.5679S3;
+ Wed, 05 Mar 2025 14:12:52 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Stefan Hajnoczi <stefanha@gmail.com>
 Cc: qemu-devel@nongnu.org,
 	Song Gao <gaosong@loongson.cn>
-Subject: [PULL 00/15] loongarch-to-apply queue
-Date: Wed,  5 Mar 2025 14:12:35 +0800
-Message-Id: <20250305061250.1908444-1-maobibo@loongson.cn>
+Subject: [PULL 01/15] hw/intc/loongarch_ipi: Add basic hotplug framework
+Date: Wed,  5 Mar 2025 14:12:36 +0800
+Message-Id: <20250305061250.1908444-2-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250305061250.1908444-1-maobibo@loongson.cn>
+References: <20250305061250.1908444-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBx3MRi68dnfRQ3AA--.5679S2
+X-CM-TRANSID: qMiowMBx3MRi68dnfRQ3AA--.5679S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -63,50 +65,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 661c2e1ab29cd9c4d268ae3f44712e8d421c0e56:
+LoongArch ipi can send interrupt to multiple CPUs, interrupt routing
+to CPU comes from destination physical cpu id. Here hotplug interface
+is added for IPI object, so that parent irq line can be connected, and
+routing table can be added for new created cpu.
 
-  scripts/checkpatch: Fix a typo (2025-03-04 09:30:26 +0800)
+Here only basic hotplug framework is added, it is stub function.
 
-are available in the Git repository at:
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ hw/intc/loongarch_ipi.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-  https://gitlab.com/bibo-mao/qemu.git tags/pull-loongarch-20250305
-
-for you to fetch changes up to 0a629c827300d514cc1f61806414d214fcf75051:
-
-  target/loongarch: Adjust the cpu reset action to a proper position (2025-03-05 09:45:52 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20250305 queue
-
-----------------------------------------------------------------
-Bibo Mao (14):
-      hw/intc/loongarch_ipi: Add basic hotplug framework
-      hw/intc/loongarch_ipi: Implment cpu hotplug interface
-      hw/intc/loongarch_ipi: Notify ipi object when cpu is plugged
-      hw/intc/loongarch_extioi: Move gpio irq initial to common code
-      hw/intc/loongarch_extioi: Add basic hotplug framework
-      hw/intc/loongarch_extioi: Implment cpu hotplug interface
-      hw/intc/loongarch_extioi: Use cpu plug notification
-      hw/loongarch/virt: Add CPU topology support
-      hw/loongarch/virt: Add topo properties on CPU object
-      hw/loongarch/virt: Add basic cpu plug interface framework
-      hw/loongarch/virt: Implement cpu unplug interface
-      hw/loongarch/virt: Implement cpu plug interface
-      hw/loongarch/virt: Update the ACPI table for hotplug cpu
-      hw/loongarch/virt: Enable cpu hotplug feature on virt machine
-
-Xianglai Li (1):
-      target/loongarch: Adjust the cpu reset action to a proper position
-
- hw/intc/loongarch_extioi.c        |   8 +-
- hw/intc/loongarch_extioi_common.c |  84 ++++++++++-
- hw/intc/loongarch_ipi.c           |  71 +++++++++
- hw/loongarch/Kconfig              |   1 +
- hw/loongarch/virt-acpi-build.c    |  35 ++++-
- hw/loongarch/virt.c               | 301 ++++++++++++++++++++++++++++++++++----
- include/hw/loongarch/virt.h       |   1 +
- target/loongarch/cpu.c            |  25 +++-
- target/loongarch/cpu.h            |  11 ++
- 9 files changed, 493 insertions(+), 44 deletions(-)
+diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
+index 5376f1e084..90bbb7ac6e 100644
+--- a/hw/intc/loongarch_ipi.c
++++ b/hw/intc/loongarch_ipi.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/error-report.h"
+ #include "hw/boards.h"
+ #include "qapi/error.h"
+ #include "hw/intc/loongarch_ipi.h"
+@@ -76,9 +77,34 @@ static void loongarch_ipi_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
++static void loongarch_ipi_cpu_plug(HotplugHandler *hotplug_dev,
++                                   DeviceState *dev, Error **errp)
++{
++    Object *obj = OBJECT(dev);
++
++    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
++        warn_report("LoongArch extioi: Invalid %s device type",
++                                       object_get_typename(obj));
++        return;
++    }
++}
++
++static void loongarch_ipi_cpu_unplug(HotplugHandler *hotplug_dev,
++                                     DeviceState *dev, Error **errp)
++{
++    Object *obj = OBJECT(dev);
++
++    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
++        warn_report("LoongArch extioi: Invalid %s device type",
++                                       object_get_typename(obj));
++        return;
++    }
++}
++
+ static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
+ {
+     LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_CLASS(klass);
++    HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
+     LoongarchIPIClass *lic = LOONGARCH_IPI_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+@@ -86,6 +112,8 @@ static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
+                                     &lic->parent_realize);
+     licc->get_iocsr_as = get_iocsr_as;
+     licc->cpu_by_arch_id = loongarch_cpu_by_arch_id;
++    hc->plug = loongarch_ipi_cpu_plug;
++    hc->unplug = loongarch_ipi_cpu_unplug;
+ }
+ 
+ static const TypeInfo loongarch_ipi_types[] = {
+@@ -95,6 +123,10 @@ static const TypeInfo loongarch_ipi_types[] = {
+         .instance_size      = sizeof(LoongarchIPIState),
+         .class_size         = sizeof(LoongarchIPIClass),
+         .class_init         = loongarch_ipi_class_init,
++        .interfaces         = (InterfaceInfo[]) {
++            { TYPE_HOTPLUG_HANDLER },
++            { }
++        },
+     }
+ };
+ 
+-- 
+2.43.5
 
 
