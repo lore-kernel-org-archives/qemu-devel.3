@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D5AFC282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 00:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C92C282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 00:54:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpd1B-0002Xk-B0; Tue, 04 Mar 2025 19:53:49 -0500
+	id 1tpd0I-00020r-Tu; Tue, 04 Mar 2025 19:52:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpd0o-0002Q8-GF
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:53:28 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpd0H-00020c-5z
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:52:53 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpd0m-0007YB-LV
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:53:26 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-38f403edb4eso3747175f8f.3
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 16:53:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpd0F-0007Tb-7K
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:52:52 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4398ec2abc2so55758515e9.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 16:52:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741136002; x=1741740802; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741135969; x=1741740769; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=b6A3P5mAjc99C3XOMrVg6RA3bQK/YWQGC1ZLsd/UtMk=;
- b=qsrNGILjoGFXNGR7uMjKc8RMCBX5SXbc8YZDIVxR1wucxksnAF2Y1tQUc7SnXX5UU4
- GxV4pWDjPNPhRCWhHYYqHFfzaUgo0NTjwDitrUdkLvV7GNYwgMDiftwlzNMqZZic03dl
- XhFECDHmWqCthMygakDqVD4Mr4VBiHYIrKi13zuuTfDuYUWMfN2cojcp7ozQE20mGN7s
- W5YuahhGRDD1YLvcGEof+duMA9aR8lLAGXpBEvKVSoa3eYGAdV3PuNVLO5UkfLVmQHRO
- QN5kMUIz4v97hIJog6hKtNpB8h8Re9dNsskpFUl52ClZehWTZMkbTcVN5Z6/Sc2ki0FA
- 8k2Q==
+ bh=IqxIPPwTTylIALJZg+yGEIl/36eft918YUUplk+Ib0s=;
+ b=vMfyQlwW3ifHEUez9rMcU15yy3BugspweUKQKayjIpu5JwrHfCAxtruDw8F8M7gvxn
+ S4Xe4+XKEpRMhahyr9uVA54EPr/KAZRWbOZwuVd4KjFL1mNy4CQe2wf+nGs88gyDrfIP
+ +ZuHYI4Knf05+tPSHA8dD08daBwXF+LjmAdWR7wbS9caow2HGdBnWzdhg3CIIh4oP7aM
+ tfIJQcl9CoHnD+30Q7I4x1kJM8iDVdvcDoAfSh/smfchEtdwLHH4+8tPohVVdPf3PXoC
+ 8jTUA4q1a7T1TdmW7Uaf7J0BZXCUk3R57vxby+QweYnyQokwg9YnzgNlKM+6VY8ESKss
+ WxFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741136002; x=1741740802;
+ d=1e100.net; s=20230601; t=1741135969; x=1741740769;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b6A3P5mAjc99C3XOMrVg6RA3bQK/YWQGC1ZLsd/UtMk=;
- b=ug68RWa5pcR3nfDSQ9jCLkslxhb3lF+uXJzwLihtEhQwTGexhGGxOKY3DaaaHSiA9N
- bpod9zJJjfJh6fAYmavj1NzNEIymyCPX76+Vd4ZfyqLkXyx1Z3FZkIYAzrRwQrTHcqXQ
- TAD+zw2FmoX6ZLcuOq4uzXtTW6KymkyaEY6jKqvABEHeyEKL2o5wMe1sXmwS5pnvveAG
- KcXoF5DOhCcFddwF+FYqEaIu3UAGqXDLj12ou0BgEuYVZIbAa/SH7WFG5NNrzuTcMgwJ
- M8wdLyfAb1S9YchqW8LYKs7DQrG2pdhvMaoBCgyJn22F5VAVeKwsNLQhZxcKn+ub9Krd
- rFgw==
-X-Gm-Message-State: AOJu0YxgZIimYuLBLOK0xjBms8qsd5+o/CClxuz8eLLZ3364mGMqQ0sq
- MYxSa1iec92GTmcp+ja+uv7VVuD9JPw8fM/agaM4Sm2hYnXnuhF1ExuyuaG/WI/sLDaA/nR/h16
- FE+I=
-X-Gm-Gg: ASbGncv9ATtGBalF88/1ega1KUCpMnaAvWPiR6v1zp+nzxNS0xlwIflSggTJE8o6sM1
- KYGfR+ceUHYrE5Z53qcCrbeH5HDnvfT216L4Rx/2NsJ8IxG6ROMgyN4180pXtvZqFAohH+CJQcm
- eD74DxPUdg+j79DcYDZqkLsjyF1eZfUzTUjUrF8VQYKkVxPi0u9GotLXCzALqg0B5/4rFCO0A5p
- RSIBSc6GpW9GKvZ9V07huzho76Yo/te/R3K48VTttJHiqV7lKpsuZVDjxRznMqRsh9r1OuS/fxC
- QrjBIdUEeMRkgAlP2thMfOPlAAL9AlbO44W1pYST9eEwiW/9WPEnRAdu9idqG+qe01a1zfYTKnT
- wbh/LgXg097eTvmQAmKQ=
-X-Google-Smtp-Source: AGHT+IE08w5IQES/o1owcvHY4sjqN42KGZBHEOYyiWwIUOgo0oVKzhkwwMtW2brFSdhD2bQ9aO5FNQ==
-X-Received: by 2002:a5d:6c65:0:b0:391:d52:d042 with SMTP id
- ffacd0b85a97d-3911f76ee72mr620459f8f.32.1741136002313; 
- Tue, 04 Mar 2025 16:53:22 -0800 (PST)
+ bh=IqxIPPwTTylIALJZg+yGEIl/36eft918YUUplk+Ib0s=;
+ b=DFCETfR+449XRXOKXuheUPDIi+9daZtuFhZbV27IM+MCDg8MHfEOm+XGxBw9ZDlYeB
+ O/mLK/aNKMdvS9O6KVkrlOVp/Y6oC1tdRxe+t9WbjF1GyRllafL86HwXGBteSBjW090E
+ eTZWLk82TmAyAbCTfmoyMnwLWECWG/Uc+9hUL+ZPfTt9xOBWpdT78SU6iARcQWgL6OqC
+ REp93azp46hgkf1yL9VhIWQG4nvTSy9UiMAqFi9xtja3dy8oYVCn+n0Fnn/jekKoR0I6
+ 9C28+qjcQSw+c0HN5/iTjSxWp0xabvYwlBYcjExFFkbhVyOg67FKXfHljbBocxSejLYu
+ yLHA==
+X-Gm-Message-State: AOJu0Yy7nEJ1rBMNN+arMYByqb1HtM5CzrR3MkmoNdmwWj5wOuA2jbLW
+ zLblAvAtcT/ZruJeb9c/T7AlOlQq1kb48pNH7qMlvamAm8pciuoRYbgzsKQ6NpB04qrgJAZ6zB8
+ 8yO4=
+X-Gm-Gg: ASbGncvEmJT37yCSWJpsxXJyGI+rDuyQ5RKxDJ0FjngIwP+hGyXuhx6UdGIr5l9KZor
+ gt2fOCW9Xp7m9cisif/7FgJpW0Zb9hUaaKXEzHI/qKsghuQWkLk44GBEL+0k45pKcQFXL5hgu1l
+ T44Ym+9dn1IU1cWxtwPWUVuvYc8xlYIf3Ggk4wVwS2QEwGEuCBSprxOT1G+a8qGEsFladNRgMlj
+ LzaLgln8R58fj8ZK2qWvf5dZYPQ4TdUguGEFGNCBykoNlKl+OYDmVhPhqCItSXwuSvp7EI7Suta
+ BHTsp7LoJX6tMno/pELNT10Lf1pj/pRlcWmY9xj26Tbi3jvCFousqVDI4Fc8u44y08sQG6/LOPp
+ /iL1tORcvKoQDAI2M9fs=
+X-Google-Smtp-Source: AGHT+IFkkESVTMJACdAouYCNj8b63Ia4DfV/xQK4xvXC7T6yZGBtKO5jarL2vPnB3cvAXhHTFY/Mvg==
+X-Received: by 2002:a05:600c:3b87:b0:439:6101:5440 with SMTP id
+ 5b1f17b1804b1-43bd296abc2mr5697225e9.8.1741135968698; 
+ Tue, 04 Mar 2025 16:52:48 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4844c0dsm18818713f8f.80.2025.03.04.16.53.20
+ ffacd0b85a97d-390e485e61csm19488252f8f.98.2025.03.04.16.52.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 16:53:21 -0800 (PST)
+ Tue, 04 Mar 2025 16:52:47 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,17 +72,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 10/11] qemu: Introduce qemu_arch_name() helper
-Date: Wed,  5 Mar 2025 01:52:24 +0100
-Message-ID: <20250305005225.95051-11-philmd@linaro.org>
+Subject: [RFC PATCH 04/11] system: Replace arch_type global by
+ qemu_arch_available() helper
+Date: Wed,  5 Mar 2025 01:52:18 +0100
+Message-ID: <20250305005225.95051-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305005225.95051-1-philmd@linaro.org>
 References: <20250305005225.95051-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,77 +106,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a generic helper to get the target name of a QemuArchBit.
-(This will be used for single / heterogeneous binaries).
-Use it in target_name(), removing the last use of the TARGET_NAME
-definition.
+qemu_arch_available() is a bit simpler to understand while
+reviewing than the undocumented arch_type variable.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/qemu/arch_info.h |  2 ++
- arch_info-target.c       | 34 +++++++++++++++++++++++++++++++++-
- 2 files changed, 35 insertions(+), 1 deletion(-)
+ include/system/arch_init.h | 2 +-
+ hw/scsi/scsi-disk.c        | 2 +-
+ system/arch_init.c         | 5 ++++-
+ system/qdev-monitor.c      | 4 ++--
+ system/vl.c                | 6 +++---
+ 5 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/include/qemu/arch_info.h b/include/qemu/arch_info.h
-index 613dc2037db..7e3192f590f 100644
---- a/include/qemu/arch_info.h
-+++ b/include/qemu/arch_info.h
-@@ -46,6 +46,8 @@ typedef enum QemuArchBit {
+diff --git a/include/system/arch_init.h b/include/system/arch_init.h
+index 06e5527ec88..023d27d5bd7 100644
+--- a/include/system/arch_init.h
++++ b/include/system/arch_init.h
+@@ -46,6 +46,6 @@ typedef enum QemuArchBit {
  #define QEMU_ARCH_LOONGARCH     BIT(QEMU_ARCH_BIT_LOONGARCH)
  #define QEMU_ARCH_ALL           -1
  
-+const char *qemu_arch_name(QemuArchBit qemu_arch_bit);
-+
- const char *target_name(void);
+-extern const uint32_t arch_type;
++bool qemu_arch_available(unsigned qemu_arch_mask);
  
- bool qemu_arch_available(unsigned qemu_arch_mask);
-diff --git a/arch_info-target.c b/arch_info-target.c
-index 61007415b30..9b19fe8d56d 100644
---- a/arch_info-target.c
-+++ b/arch_info-target.c
-@@ -24,9 +24,41 @@
+ #endif
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index e7f738b4841..7c87b20e694 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -3165,7 +3165,7 @@ static void scsi_property_add_specifics(DeviceClass *dc)
+     ObjectClass *oc = OBJECT_CLASS(dc);
+ 
+     /* The loadparm property is only supported on s390x */
+-    if (arch_type & QEMU_ARCH_S390X) {
++    if (qemu_arch_available(QEMU_ARCH_S390X)) {
+         object_class_property_add_str(oc, "loadparm",
+                                       scsi_property_get_loadparm,
+                                       scsi_property_set_loadparm);
+diff --git a/system/arch_init.c b/system/arch_init.c
+index fedbb18e2cc..0fec0cd416b 100644
+--- a/system/arch_init.c
++++ b/system/arch_init.c
+@@ -24,4 +24,7 @@
  #include "qemu/osdep.h"
- #include "qemu/arch_info.h"
+ #include "system/arch_init.h"
  
-+const char *qemu_arch_name(QemuArchBit qemu_arch_bit)
+-const uint32_t arch_type = BIT(QEMU_ARCH_BIT);
++bool qemu_arch_available(unsigned qemu_arch_mask)
 +{
-+    static const char *legacy_target_names[] = {
-+        [QEMU_ARCH_ALPHA] = "alpha",
-+        [QEMU_ARCH_BIT_ARM] = TARGET_LONG_BITS == 32 ? "arm" : "aarch64",
-+        [QEMU_ARCH_BIT_AVR] = "avr",
-+        [QEMU_ARCH_BIT_HEXAGON] = "hexagon",
-+        [QEMU_ARCH_BIT_HPPA] = "hppa",
-+        [QEMU_ARCH_BIT_I386] = TARGET_LONG_BITS == 32 ? "i386" : "x86_64",
-+        [QEMU_ARCH_BIT_LOONGARCH] = "loongarch64",
-+        [QEMU_ARCH_BIT_M68K] = "m68k",
-+        [QEMU_ARCH_BIT_MICROBLAZE] = TARGET_BIG_ENDIAN ? "microblaze"
-+                                                       : "microblazeel",
-+        [QEMU_ARCH_BIT_MIPS] = TARGET_BIG_ENDIAN
-+                             ? (TARGET_LONG_BITS == 32 ? "mips" : "mips64")
-+                             : (TARGET_LONG_BITS == 32 ? "mipsel" : "mips64el"),
-+        [QEMU_ARCH_BIT_OPENRISC] = "or1k",
-+        [QEMU_ARCH_BIT_PPC] = TARGET_LONG_BITS == 32 ? "ppc" : "ppc64",
-+        [QEMU_ARCH_BIT_RISCV] = TARGET_LONG_BITS == 32 ? "riscv32" : "riscv64",
-+        [QEMU_ARCH_BIT_RX] = "rx",
-+        [QEMU_ARCH_BIT_S390X] = "s390x",
-+        [QEMU_ARCH_BIT_SH4] = TARGET_BIG_ENDIAN ? "sh4eb" : "sh4",
-+        [QEMU_ARCH_BIT_SPARC] = TARGET_LONG_BITS == 32 ? "sparc" : "sparc64",
-+        [QEMU_ARCH_BIT_TRICORE] = "tricore",
-+        [QEMU_ARCH_BIT_XTENSA] = TARGET_BIG_ENDIAN ? "xtensaeb" : "xtensa",
-+    };
-+
-+    assert(qemu_arch_bit < ARRAY_SIZE(legacy_target_names));
-+    assert(legacy_target_names[qemu_arch_bit]);
-+    return legacy_target_names[qemu_arch_bit];
++    return qemu_arch_mask & BIT(QEMU_ARCH_BIT);
 +}
-+
- const char *target_name(void)
- {
--    return TARGET_NAME;
-+    return qemu_arch_name(QEMU_ARCH_BIT);
- }
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 856c9e8c32e..5588ed2047d 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -132,7 +132,7 @@ static const char *qdev_class_get_alias(DeviceClass *dc)
  
- bool qemu_arch_available(unsigned qemu_arch_mask)
+     for (i = 0; qdev_alias_table[i].typename; i++) {
+         if (qdev_alias_table[i].arch_mask &&
+-            !(qdev_alias_table[i].arch_mask & arch_type)) {
++            !qemu_arch_available(qdev_alias_table[i].arch_mask)) {
+             continue;
+         }
+ 
+@@ -218,7 +218,7 @@ static const char *find_typename_by_alias(const char *alias)
+ 
+     for (i = 0; qdev_alias_table[i].alias; i++) {
+         if (qdev_alias_table[i].arch_mask &&
+-            !(qdev_alias_table[i].arch_mask & arch_type)) {
++            !qemu_arch_available(qdev_alias_table[i].arch_mask)) {
+             continue;
+         }
+ 
+diff --git a/system/vl.c b/system/vl.c
+index 04f78466c41..ec93988a03a 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -878,11 +878,11 @@ static void help(int exitcode)
+             g_get_prgname());
+ 
+ #define DEF(option, opt_arg, opt_enum, opt_help, arch_mask)    \
+-    if ((arch_mask) & arch_type)                               \
++    if (qemu_arch_available(arch_mask)) \
+         fputs(opt_help, stdout);
+ 
+ #define ARCHHEADING(text, arch_mask) \
+-    if ((arch_mask) & arch_type)    \
++    if (qemu_arch_available(arch_mask)) \
+         puts(stringify(text));
+ 
+ #define DEFHEADING(text) ARCHHEADING(text, QEMU_ARCH_ALL)
+@@ -2929,7 +2929,7 @@ void qemu_init(int argc, char **argv)
+             const QEMUOption *popt;
+ 
+             popt = lookup_opt(argc, argv, &optarg, &optind);
+-            if (!(popt->arch_mask & arch_type)) {
++            if (!qemu_arch_available(popt->arch_mask)) {
+                 error_report("Option not supported for this target");
+                 exit(1);
+             }
 -- 
 2.47.1
 
