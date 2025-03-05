@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2034C282D9
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D04C282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:16:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdzN-00087q-9Z; Tue, 04 Mar 2025 20:56:01 -0500
+	id 1tpeIr-0004Oj-Sr; Tue, 04 Mar 2025 21:16:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdyq-00075l-AK
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:28 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tpeIO-0004M4-L0; Tue, 04 Mar 2025 21:15:42 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdyo-0000Qz-HF
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:28 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-22113560c57so118917285ad.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:55:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tpeIL-0005Dj-Kf; Tue, 04 Mar 2025 21:15:40 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2fe848040b1so12929627a91.3; 
+ Tue, 04 Mar 2025 18:15:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741139725; x=1741744525; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TdcLLvpFN1+Z9B+s54N+xpwueNucZWMefLhcdyHr3hI=;
- b=AWIbw8hdE4Z7MRIKib/zEwjkQlmfxATzImt5qSCWjjp4b0LxncFfOUXW+XX3OPFGKw
- ZhhFDogxYNhq14RlaIjgQ6waEKHDJ2TE1RkAln5hsZtD95HXAFwxDgL0d7EJzViOLjxV
- hNIwz0i+CBtnjtPMQIRVbNNxZTEjP3WkBnCLtaBTX4366a/KsTkSeF3LdHQVG2Daiy8E
- YeYEJQXlP7QIx1Z6u1HBsiLKziqv/bIb3l9/V4vCppfRGgcJVxzspmOiuzZVB06bD7lb
- qcgLezx2gFQvp8iPwIJyL5SCzp9jomH8dxhFPVukK8WSBOhcRgoJLXWFefgtSzAWSe5b
- OO3g==
+ d=gmail.com; s=20230601; t=1741140935; x=1741745735; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=l1qeFEEjOAAigLBXucqEKGRjvpQU2PXzgTPoFxOqU9Q=;
+ b=QK52i6/m3E/ohKVd/V0PiWywzRHDc50iMfhoGieQwcYXoI7dYjhQblQTBAuE8ySEAP
+ yS4hX35Ym4goIrPTfQdQVg3uSvlvhAuysJY6ICCW/HeLLz6RYl2VQYuoM9ORMM8MjEOv
+ DfIYB2koaXcfdSx0lkWG9aHK2jR/FMHwlRvJ0ncq3FS2qomxSNBrwzVORxUsjQ0BgrPK
+ afNleL4q7EhAd9mjFy8wn3zu7SFHddzk2/FcT8oAzDYyvlYygaKgzy8l9JwcfXSaBefm
+ Xopzu1k4Gpoj+piR4gnZxTy+9LfuejfgZq+4gVmbmLZbztMdSphl3hqC/55MZ8n64K4F
+ dczg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741139725; x=1741744525;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TdcLLvpFN1+Z9B+s54N+xpwueNucZWMefLhcdyHr3hI=;
- b=Fnx/06+m5XlzJwOROU60sLXbMYb7SHhhPu+JNda9pC5uekU4FpSHT4GFXHwZ0I+IbN
- QvD3DlmFgIlVx/8k4+eSXOXvn52OBrvJRsvuGtTiXxZfSCJ4SO3tMQ3R2Ba8zcp+ZAXG
- LnEI0N79OpQmtOSdfXnplMneN+etKebu5ZKHftzColT0oaHp0j+gLrEawEoGmcEIgDic
- Ira/7TnNkF+RvwGwVKmfVt8wBSjel500sy76DC2jZq0JR2GR1NFggwkgK3OK0uVYcmiO
- ALPPSO+Kzpt+JBpWHMFq2KJY+j0WFryLZh63NrZwdwbSoyEYMPqu/QdvOt7QL1WFAfFH
- fAHQ==
-X-Gm-Message-State: AOJu0YwPpzIgm5+2EgLzNTRG5byrmKj4FxcW8glAnv4SI6TjT2FlkEE4
- Sd5OIYuiHEELWjHXWzGvStIH2LQUqNoW7Fdb91X7SetiW4TWvK2lvsPr8ygTecY=
-X-Gm-Gg: ASbGnctXhbo7kIngRpqXUfON4404sA0v8Wd7//V3OekIAcYnwgY4mn7tDgWY+srQD57
- tJPRwIpdqgWuSxhYY8cl8KeNwtuxYX69+0iK45hhdnADSFPyJrPIdBhHwoho6zUUGlbP3dA90+V
- ZjTm/C2qGFwSqQUc5ODBfxPLigoUo9BbDTCXlbeXYXYDaL06I2FFGKXI0WJcber1pkYvWCOQfaz
- cEpj+oN+xLhNlMkRFlus9t01KqKGxSm9wVJJB9YLgd3ag/Y37wMUWR7VG1vmDmyJZARkHg5uYAc
- H9WpwTagfXkMeP8EHzomW8KVattB0qooNUMKb5remwckdhsBp7rQkO+xNTDFnw+TRIh6HcepO7N
- /7kULHW3TmTaSP5GUjlkH++N8ozOKkG6/++Uqm2H5Yx1+OHHFUF8=
-X-Google-Smtp-Source: AGHT+IGSgFzyddFBTl/O3MrTXMI5DRqZsVYwV+hkmn5qD+3hPwF6ljorS0ri4FBVOHKxg/LAif0SIQ==
-X-Received: by 2002:a17:902:e881:b0:223:6744:bfb9 with SMTP id
- d9443c01a7336-223f1d20e54mr22347475ad.41.1741139724005; 
- Tue, 04 Mar 2025 17:55:24 -0800 (PST)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
+ d=1e100.net; s=20230601; t=1741140935; x=1741745735;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=l1qeFEEjOAAigLBXucqEKGRjvpQU2PXzgTPoFxOqU9Q=;
+ b=BTq/kooCDdkcTklSbNzFx067lGxc6GyGmnpAlJ9C9mbAZ0h2adcQe4mII9g+M6lc7U
+ L8SNRYwlBb3qkeHLjj2SB89rlyqBnMovb4oZOEPs9KvuY9lE1L6GLIEPs/gKS1rIUTP3
+ 0Tms0hRUj+b8r0/aVu5bGmBXO1MD6nR3OBnh9llfIWksx4HW0S8z5xIPT63kNYNraAWC
+ DO74EjBctBnKvr3v0j2m9Y+seVCEEvrytzVgtMqijBV//87SVqkSU8SqvzJtpNvTmNSq
+ RkFLyg16qXEK1vj4uqmei9wRygLT4QScirIEngCTnecZzsk8Il5fWgnYEMAyBj6de9ov
+ nk2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUAg3t26NoD/caY2lIUkPq1gB3H6LqggC2Oy23sUSmK2fTflQDMBDKN99hEsP7gT9HKQmMXqjLOWoe@nongnu.org,
+ AJvYcCXfA+WHx2tIxQkJsUeoMiaJwZOcnQx/xr7u9QgH6EzvGqmi9Is1WYEBa2OvMDVjoov1Wpgo5Mb/wPMk@nongnu.org
+X-Gm-Message-State: AOJu0YxEwjDMN6e2yGIwDuM6MalqgdneMmz+KLqUr1BNQeZM7v69R8/h
+ 6srZW0Xf+4NTZ30AyPNKiUJ9+Wg6tC0TGc79xL/Fmf0+phBhG74MbK6xuAP1
+X-Gm-Gg: ASbGncsBWHdxzfcy8yLjfZUWzE7tcjsAl6N8PKyFr15QZnRbqhEA7YlXFANSP73IX48
+ c7VgxdE1uxiNHlMOc5sFi0x2tUTTr+uUIo3jQxXbdODOc0tbXTMV5cayu+Fop3ZzHFkXEpqISnZ
+ d6d3RHlNBhOJuRFq1HCsQeMS7FeMHQOFzJqr7aCS+2fnRmGcxIybMrsJMH6UMmIIEWWFrSjElKn
+ O4nN3txpsSWeMXtR0ZGFl5UacgpGnYDW5cR7vwpEudPgQNC0NmAGl2ybjgGYor+GDLKyF+3MeTC
+ 4zJNtoiceTMlln1OYrMpAEIS+DU7UE6v+q5j/JlAsknNg/cPdawEn1pV8Eo26cM=
+X-Google-Smtp-Source: AGHT+IEDc4V5klj+zeXy4maEhDvbfCB6WdKK4y01cVkF/mYcK2VnI4YHbh0qThxsLuu+BoPqyUSGZQ==
+X-Received: by 2002:a17:90b:6cb:b0:2fa:17dd:6afa with SMTP id
+ 98e67ed59e1d1-2ff49753458mr3003710a91.17.1741140935332; 
+ Tue, 04 Mar 2025 18:15:35 -0800 (PST)
+Received: from localhost (n11648126014.netvigator.com. [116.48.126.14])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.55.21
+ 98e67ed59e1d1-2ff4e7a2c3bsm151013a91.39.2025.03.04.18.15.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 17:55:23 -0800 (PST)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 44/59] hw/riscv/riscv-iommu: add IOCOUNTINH mmio writes
-Date: Wed,  5 Mar 2025 11:52:52 +1000
-Message-ID: <20250305015307.1463560-45-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250305015307.1463560-1-alistair.francis@wdc.com>
-References: <20250305015307.1463560-1-alistair.francis@wdc.com>
+ Tue, 04 Mar 2025 18:15:34 -0800 (PST)
+From: Stefan Hajnoczi <stefanha@gmail.com>
+X-Google-Original-From: Stefan Hajnoczi <stefanha@fedora>
+Date: Wed, 5 Mar 2025 10:15:30 +0800
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, pbonzini@redhat.com,
+ manos.pitsidianakis@linaro.org, philmd@linaro.org,
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH v2 04/11] rust/qemu-api: Add wrappers to run futures in
+ QEMU
+Message-ID: <20250305021530.GA247800@fedora>
+References: <20250218182019.111467-1-kwolf@redhat.com>
+ <20250218182019.111467-5-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="h5u3hztMFs09Paiw"
+Content-Disposition: inline
+In-Reply-To: <20250218182019.111467-5-kwolf@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=stefanha@gmail.com; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,173 +104,312 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
 
-RISCV_IOMMU_REG_IOCOUNTINH is done by riscv_iommu_process_iocntinh_cy(),
-which is called during riscv_iommu_mmio_write() callback via a new
-riscv_iommu_pricess_hpm_writes() helper.
+--h5u3hztMFs09Paiw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250224190826.1858473-7-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- hw/riscv/riscv-iommu-hpm.h |  1 +
- hw/riscv/riscv-iommu-hpm.c | 60 ++++++++++++++++++++++++++++++++++++++
- hw/riscv/riscv-iommu.c     | 38 ++++++++++++++++++++++++
- 3 files changed, 99 insertions(+)
+On Tue, Feb 18, 2025 at 07:20:12PM +0100, Kevin Wolf wrote:
+> This adds helper functions that allow running Rust futures to completion
+> using QEMU's event loops.
 
-diff --git a/hw/riscv/riscv-iommu-hpm.h b/hw/riscv/riscv-iommu-hpm.h
-index cd896d3b7c..ee888650fb 100644
---- a/hw/riscv/riscv-iommu-hpm.h
-+++ b/hw/riscv/riscv-iommu-hpm.h
-@@ -26,5 +26,6 @@ uint64_t riscv_iommu_hpmcycle_read(RISCVIOMMUState *s);
- void riscv_iommu_hpm_incr_ctr(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                               unsigned event_id);
- void riscv_iommu_hpm_timer_cb(void *priv);
-+void riscv_iommu_process_iocntinh_cy(RISCVIOMMUState *s, bool prev_cy_inh);
- 
- #endif
-diff --git a/hw/riscv/riscv-iommu-hpm.c b/hw/riscv/riscv-iommu-hpm.c
-index 325088333e..70814b942d 100644
---- a/hw/riscv/riscv-iommu-hpm.c
-+++ b/hw/riscv/riscv-iommu-hpm.c
-@@ -202,3 +202,63 @@ void riscv_iommu_hpm_timer_cb(void *priv)
-         riscv_iommu_notify(s, RISCV_IOMMU_INTR_PM);
-     }
- }
-+
-+static void hpm_setup_timer(RISCVIOMMUState *s, uint64_t value)
-+{
-+    const uint32_t inhibit = riscv_iommu_reg_get32(
-+        s, RISCV_IOMMU_REG_IOCOUNTINH);
-+    uint64_t overflow_at, overflow_ns;
-+
-+    if (get_field(inhibit, RISCV_IOMMU_IOCOUNTINH_CY)) {
-+        return;
-+    }
-+
-+    /*
-+     * We are using INT64_MAX here instead to UINT64_MAX because cycle counter
-+     * has 63-bit precision and INT64_MAX is the maximum it can store.
-+     */
-+    if (value) {
-+        overflow_ns = INT64_MAX - value + 1;
-+    } else {
-+        overflow_ns = INT64_MAX;
-+    }
-+
-+    overflow_at = (uint64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + overflow_ns;
-+
-+    if (overflow_at > INT64_MAX) {
-+        s->irq_overflow_left = overflow_at - INT64_MAX;
-+        overflow_at = INT64_MAX;
-+    }
-+
-+    timer_mod_anticipate_ns(s->hpm_timer, overflow_at);
-+}
-+
-+/* Updates the internal cycle counter state when iocntinh:CY is changed. */
-+void riscv_iommu_process_iocntinh_cy(RISCVIOMMUState *s, bool prev_cy_inh)
-+{
-+    const uint32_t inhibit = riscv_iommu_reg_get32(
-+        s, RISCV_IOMMU_REG_IOCOUNTINH);
-+
-+    /* We only need to process CY bit toggle. */
-+    if (!(inhibit ^ prev_cy_inh)) {
-+        return;
-+    }
-+
-+    if (!(inhibit & RISCV_IOMMU_IOCOUNTINH_CY)) {
-+        /*
-+         * Cycle counter is enabled. Just start the timer again and update
-+         * the clock snapshot value to point to the current time to make
-+         * sure iohpmcycles read is correct.
-+         */
-+        s->hpmcycle_prev = get_cycles();
-+        hpm_setup_timer(s, s->hpmcycle_val);
-+    } else {
-+        /*
-+         * Cycle counter is disabled. Stop the timer and update the cycle
-+         * counter to record the current value which is last programmed
-+         * value + the cycles passed so far.
-+         */
-+        s->hpmcycle_val = s->hpmcycle_val + (get_cycles() - s->hpmcycle_prev);
-+        timer_del(s->hpm_timer);
-+    }
-+}
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index f26aa15f55..a4580dca0b 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2024,6 +2024,27 @@ static void riscv_iommu_update_ipsr(RISCVIOMMUState *s, uint64_t data)
-     riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IPSR, ipsr_set, ipsr_clr);
- }
- 
-+static void riscv_iommu_process_hpm_writes(RISCVIOMMUState *s,
-+                                           uint32_t regb,
-+                                           bool prev_cy_inh)
-+{
-+    switch (regb) {
-+    case RISCV_IOMMU_REG_IOCOUNTINH:
-+        riscv_iommu_process_iocntinh_cy(s, prev_cy_inh);
-+        break;
-+
-+    case RISCV_IOMMU_REG_IOHPMCYCLES:
-+    case RISCV_IOMMU_REG_IOHPMCYCLES + 4:
-+        /* not yet implemented */
-+        break;
-+
-+    case RISCV_IOMMU_REG_IOHPMEVT_BASE ...
-+        RISCV_IOMMU_REG_IOHPMEVT(RISCV_IOMMU_IOCOUNT_NUM) + 4:
-+        /* not yet implemented */
-+        break;
-+    }
-+}
-+
- /*
-  * Write the resulting value of 'data' for the reg specified
-  * by 'reg_addr', after considering read-only/read-write/write-clear
-@@ -2051,6 +2072,7 @@ static MemTxResult riscv_iommu_mmio_write(void *opaque, hwaddr addr,
-     uint32_t regb = addr & ~3;
-     uint32_t busy = 0;
-     uint64_t val = 0;
-+    bool cy_inh = false;
- 
-     if ((addr & (size - 1)) != 0) {
-         /* Unsupported MMIO alignment or access size */
-@@ -2118,6 +2140,16 @@ static MemTxResult riscv_iommu_mmio_write(void *opaque, hwaddr addr,
-         busy = RISCV_IOMMU_TR_REQ_CTL_GO_BUSY;
-         break;
- 
-+    case RISCV_IOMMU_REG_IOCOUNTINH:
-+        if (addr != RISCV_IOMMU_REG_IOCOUNTINH) {
-+            break;
-+        }
-+        /* Store previous value of CY bit. */
-+        cy_inh = !!(riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_IOCOUNTINH) &
-+            RISCV_IOMMU_IOCOUNTINH_CY);
-+        break;
-+
-+
-     default:
-         break;
-     }
-@@ -2136,6 +2168,12 @@ static MemTxResult riscv_iommu_mmio_write(void *opaque, hwaddr addr,
-         stl_le_p(&s->regs_rw[regb], rw | busy);
-     }
- 
-+    /* Process HPM writes and update any internal state if needed. */
-+    if (regb >= RISCV_IOMMU_REG_IOCOUNTOVF &&
-+        regb <= (RISCV_IOMMU_REG_IOHPMEVT(RISCV_IOMMU_IOCOUNT_NUM) + 4)) {
-+        riscv_iommu_process_hpm_writes(s, regb, cy_inh);
-+    }
-+
-     if (process_fn) {
-         process_fn(s);
-     }
--- 
-2.48.1
+This commit is a cliff-hanger. I'm intrigued to find out how timer, fd,
+etc event loop integration will work :).
 
+>=20
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  include/qemu/coroutine-rust.h | 24 +++++++++++
+>  rust/wrapper.h                |  1 +
+>  util/qemu-co-rust-async.c     | 55 +++++++++++++++++++++++++
+>  rust/qemu-api/meson.build     |  1 +
+>  rust/qemu-api/src/futures.rs  | 77 +++++++++++++++++++++++++++++++++++
+>  rust/qemu-api/src/lib.rs      |  1 +
+>  util/meson.build              |  3 ++
+>  7 files changed, 162 insertions(+)
+>  create mode 100644 include/qemu/coroutine-rust.h
+>  create mode 100644 util/qemu-co-rust-async.c
+>  create mode 100644 rust/qemu-api/src/futures.rs
+>=20
+> diff --git a/include/qemu/coroutine-rust.h b/include/qemu/coroutine-rust.h
+> new file mode 100644
+> index 0000000000..0c5cf42a6b
+> --- /dev/null
+> +++ b/include/qemu/coroutine-rust.h
+> @@ -0,0 +1,24 @@
+> +/* SPDX-License-Identifier: LGPL-2.1-or-later */
+> +/*
+> + * Helpers to run Rust futures using QEMU coroutines
+> + *
+> + * Copyright Red Hat
+> + *
+> + * Author:
+> + *   Kevin Wolf <kwolf@redhat.com>
+> + *
+> + * This work is licensed under the terms of the GNU LGPL, version 2.1 or=
+ later.
+> + * See the COPYING.LIB file in the top-level directory.
+> + */
+> +
+> +#ifndef QEMU_COROUTINE_RUST_H
+> +#define QEMU_COROUTINE_RUST_H
+> +
+> +typedef struct RustBoxedFuture RustBoxedFuture;
+> +typedef void coroutine_fn RunFuture(RustBoxedFuture *future, void *opaqu=
+e);
+> +
+> +void no_coroutine_fn rust_run_future(RustBoxedFuture *future,
+> +                                     RunFuture *entry,
+> +                                     void *opaque);
+
+This adds a blocking (aio_poll()-style) API. The more blocking APIs we
+add, the more points are created where QEMU hangs when the async
+operation doesn't complete in a reasonable amount of time. It would be
+best to avoid introducing new blocking APIs, but sometimes it is
+unavoidable.
+
+rust_run_future() is very generic and I think the downsides should be
+pointed out to discourage people from using it when not absolutely
+necessary. Can you document when it's appropriate to use this API?
+
+> +
+> +#endif
+> diff --git a/rust/wrapper.h b/rust/wrapper.h
+> index 303d7bba7f..3dc385e256 100644
+> --- a/rust/wrapper.h
+> +++ b/rust/wrapper.h
+> @@ -58,3 +58,4 @@ typedef enum memory_order {
+>  #include "block/block_int.h"
+>  #include "block/qdict.h"
+>  #include "qapi/qapi-visit-block-core.h"
+> +#include "qemu/coroutine-rust.h"
+> diff --git a/util/qemu-co-rust-async.c b/util/qemu-co-rust-async.c
+> new file mode 100644
+> index 0000000000..d893dfb7bd
+> --- /dev/null
+> +++ b/util/qemu-co-rust-async.c
+> @@ -0,0 +1,55 @@
+> +/* SPDX-License-Identifier: LGPL-2.1-or-later */
+> +/*
+> + * Helpers to run Rust futures using QEMU coroutines
+> + *
+> + * Copyright Red Hat
+> + *
+> + * Author:
+> + *   Kevin Wolf <kwolf@redhat.com>
+> + *
+> + * This work is licensed under the terms of the GNU LGPL, version 2.1 or=
+ later.
+> + * See the COPYING.LIB file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +
+> +#include "block/aio-wait.h"
+> +#include "qemu/coroutine.h"
+> +#include "qemu/coroutine-rust.h"
+> +#include "qemu/main-loop.h"
+> +
+> +typedef struct FutureCo {
+> +    RustBoxedFuture *future;
+> +    RunFuture *entry;
+> +    void *opaque;
+> +    bool done;
+> +} FutureCo;
+> +
+> +static void coroutine_fn rust_co_run_future_entry(void *opaque)
+> +{
+> +    FutureCo *data =3D opaque;
+> +
+> +    data->entry(data->future, data->opaque);
+> +    data->done =3D true;
+> +    aio_wait_kick();
+> +}
+> +
+> +void no_coroutine_fn rust_run_future(RustBoxedFuture *future,
+> +                                     RunFuture *entry,
+> +                                     void *opaque)
+> +{
+> +    AioContext *ctx =3D qemu_get_current_aio_context();
+> +    Coroutine *co;
+> +    FutureCo data =3D {
+> +        .future =3D future,
+> +        .entry =3D entry,
+> +        .opaque =3D opaque,
+> +        .done =3D false,
+> +    };
+> +
+> +    GLOBAL_STATE_CODE();
+> +
+> +    co =3D qemu_coroutine_create(rust_co_run_future_entry, &data);
+> +    aio_co_enter(ctx, co);
+> +    AIO_WAIT_WHILE(ctx, !data.done);
+> +}
+> diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+> index e0a3052c79..44fd34e193 100644
+> --- a/rust/qemu-api/meson.build
+> +++ b/rust/qemu-api/meson.build
+> @@ -22,6 +22,7 @@ sources_core =3D [
+>    'src/chardev.rs',
+>    'src/c_str.rs',
+>    'src/errno.rs',
+> +  'src/futures.rs',
+>    'src/module.rs',
+>    'src/offset_of.rs',
+>    'src/prelude.rs',
+> diff --git a/rust/qemu-api/src/futures.rs b/rust/qemu-api/src/futures.rs
+> new file mode 100644
+> index 0000000000..cd307a1d62
+> --- /dev/null
+> +++ b/rust/qemu-api/src/futures.rs
+> @@ -0,0 +1,77 @@
+> +use crate::bindings;
+> +use std::ffi::c_void;
+> +use std::future::Future;
+> +use std::mem::MaybeUninit;
+> +use std::sync::Arc;
+> +use std::task::{Context, Poll, Wake, Waker};
+> +
+> +struct RunFutureWaker {
+> +    co: *mut bindings::Coroutine,
+> +}
+> +unsafe impl Send for RunFutureWaker {}
+> +unsafe impl Sync for RunFutureWaker {}
+> +
+> +impl Wake for RunFutureWaker {
+> +    fn wake(self: Arc<Self>) {
+> +        unsafe {
+> +            bindings::aio_co_wake(self.co);
+> +        }
+> +    }
+> +}
+> +
+> +/// Use QEMU's event loops to run a Rust [`Future`] to completion and re=
+turn its result.
+> +///
+> +/// This function must be called in coroutine context. If the future isn=
+'t ready yet, it yields.
+> +pub fn qemu_co_run_future<F: Future>(future: F) -> F::Output {
+> +    let waker =3D Waker::from(Arc::new(RunFutureWaker {
+> +        co: unsafe { bindings::qemu_coroutine_self() },
+> +    }));
+> +    let mut cx =3D Context::from_waker(&waker);
+> +
+> +    let mut pinned_future =3D std::pin::pin!(future);
+> +    loop {
+> +        match pinned_future.as_mut().poll(&mut cx) {
+> +            Poll::Ready(res) =3D> return res,
+> +            Poll::Pending =3D> unsafe {
+> +                bindings::qemu_coroutine_yield();
+> +            },
+> +        }
+> +    }
+> +}
+> +
+> +/// Wrapper around [`qemu_co_run_future`] that can be called from C.
+> +///
+> +/// # Safety
+> +///
+> +/// `future` must be a valid pointer to an owned `F` (it will be freed i=
+n this function).  `output`
+> +/// must be a valid pointer representing a mutable reference to an `F::O=
+utput` where the result can
+> +/// be stored.
+> +unsafe extern "C" fn rust_co_run_future<F: Future>(
+> +    future: *mut bindings::RustBoxedFuture,
+> +    output: *mut c_void,
+> +) {
+> +    let future =3D unsafe { Box::from_raw(future.cast::<F>()) };
+> +    let output =3D output.cast::<F::Output>();
+> +    let ret =3D qemu_co_run_future(*future);
+> +    unsafe {
+> +        output.write(ret);
+> +    }
+> +}
+> +
+> +/// Use QEMU's event loops to run a Rust [`Future`] to completion and re=
+turn its result.
+> +///
+> +/// This function must be called outside of coroutine context to avoid d=
+eadlocks. It blocks and
+
+rust_run_future() has GLOBAL_STATE_CODE() so qemu_run_future() needs to
+run not just outside coroutine context, but also under the BQL. Should
+this be mentioned?
+
+> +/// runs a nested even loop until the future is ready and returns a resu=
+lt.
+> +pub fn qemu_run_future<F: Future>(future: F) -> F::Output {
+> +    let future_ptr =3D Box::into_raw(Box::new(future));
+> +    let mut output =3D MaybeUninit::<F::Output>::uninit();
+> +    unsafe {
+> +        bindings::rust_run_future(
+> +            future_ptr.cast::<bindings::RustBoxedFuture>(),
+> +            #[allow(clippy::as_underscore)]
+> +            Some(rust_co_run_future::<F> as _),
+
+This line is hard to follow. I think it's casting to the C equivalent
+type:
+
+ void coroutine_fn (*)(RustBoxedFuture *future, void *opaque)
+
+I wonder if there's a clearer way of writing this. Maybe being explicit
+rather than implicit here would be helpful.
+
+If not, it's not a big deal, but I spent some time trying to figure out
+what this does and others might too.
+
+> +            output.as_mut_ptr().cast::<c_void>(),
+> +        );
+> +        output.assume_init()
+> +    }
+> +}
+> diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
+> index 825443abde..84928905f1 100644
+> --- a/rust/qemu-api/src/lib.rs
+> +++ b/rust/qemu-api/src/lib.rs
+> @@ -20,6 +20,7 @@
+>  pub mod cell;
+>  pub mod chardev;
+>  pub mod errno;
+> +pub mod futures;
+>  #[cfg(feature =3D "system")]
+>  pub mod irq;
+>  #[cfg(feature =3D "system")]
+> diff --git a/util/meson.build b/util/meson.build
+> index 780b5977a8..14a2ae17fd 100644
+> --- a/util/meson.build
+> +++ b/util/meson.build
+> @@ -101,6 +101,9 @@ if have_block
+>    util_ss.add(files('qemu-coroutine-sleep.c'))
+>    util_ss.add(files('qemu-co-shared-resource.c'))
+>    util_ss.add(files('qemu-co-timeout.c'))
+> +  if have_rust
+> +    util_ss.add(files('qemu-co-rust-async.c'))
+> +  endif
+>    util_ss.add(files('readline.c'))
+>    util_ss.add(files('throttle.c'))
+>    util_ss.add(files('timed-average.c'))
+> --=20
+> 2.48.1
+>=20
+>=20
+
+--h5u3hztMFs09Paiw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfHs8IACgkQnKSrs4Gr
+c8hGiAf+NOviB8GIuCttSMS6JgpN2D8+11emqUAroVsKv5AjCGjjQidIuvEOgjOY
+XYpYlyIvLfSi3PBzuXujaJweZjnpNtzGlxoxERhRTw5fMpsSeIHPjV/MdUGeQ4x7
+E5qU9NcVHJVeP50PskmGzvguXRJmnDbiaDaVJ/LAgsrWp/ZyOTlZCeCBYHQg/JXI
+IhIbo8TtHsEKEo2nq89SmAQXgh9uZ9UgKalHJB8/n8/UQWK8aMHvKTusLReZeMsJ
+52vMrKYhRNfNxPv3V/21tBSz/7gyM4dC3viYnVCrTKoKsutX5ZNFKZ92/MEv7g+y
+pzKG90KabceSsPrIJgEEVqOlMYsHxQ==
+=r8ZW
+-----END PGP SIGNATURE-----
+
+--h5u3hztMFs09Paiw--
 
