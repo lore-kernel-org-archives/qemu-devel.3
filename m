@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 802E4C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 08:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B74EC19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 08:30:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpjwU-0006dk-DA; Wed, 05 Mar 2025 03:17:26 -0500
+	id 1tpk8o-0001gi-6H; Wed, 05 Mar 2025 03:30:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpjwR-0006cd-4d
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:17:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpk8l-0001eY-Rl
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:30:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpjwP-0004Wk-1W
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:17:22 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpk8k-0007sa-61
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:30:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741162640;
+ s=mimecast20190719; t=1741163403;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lCS1o7wFnfMW+Zqg8GFXuEo/T96XtVvKMwlOwSEiPSc=;
- b=EFD4EXy0HrSFqKpIi9+pSejnUG31NCLzXNNx/pK1O+0IRzPqCxPflFTpRxtxuII/MFltzt
- Yw6tqR3DvS2+KC0NWuYJ0kprp+NvjpRQ5VFccSBXd8QZjoVteGuxK1/sY1+wWUEUXVufFx
- NRD2bpi6IaWAPgKmmU6wt6y0p+7YUfk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4bKWkKL39Bxqrc7HrjIuffUHyI5hkAAo6QVe+9HKpn4=;
+ b=Y5NlkWqaytS4+bvWDBHwgMyGy/nzJu9HBf/HpDIHJ4wGiZXURIwU6dyXpXpwbFdWoFS2zu
+ HOy45pQJB/5TbqVhpa5nSWhw/KAM2njQvXlyc1dRfRq86dI+JS9Z8g8rftBXZbugyutmPd
+ gkRFrSF7C6IpMN7/oYKWwrfgNOZXzpo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225-zabqgi1GMiajVYs-6cNIVA-1; Wed, 05 Mar 2025 03:17:14 -0500
-X-MC-Unique: zabqgi1GMiajVYs-6cNIVA-1
-X-Mimecast-MFC-AGG-ID: zabqgi1GMiajVYs-6cNIVA_1741162634
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43bcc04d2ebso12256705e9.1
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 00:17:14 -0800 (PST)
+ us-mta-244-5P_corUjOeSuFZJd3bfyOg-1; Wed, 05 Mar 2025 03:29:50 -0500
+X-MC-Unique: 5P_corUjOeSuFZJd3bfyOg-1
+X-Mimecast-MFC-AGG-ID: 5P_corUjOeSuFZJd3bfyOg_1741163390
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3912539665cso57389f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 00:29:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741162633; x=1741767433;
+ d=1e100.net; s=20230601; t=1741163389; x=1741768189;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lCS1o7wFnfMW+Zqg8GFXuEo/T96XtVvKMwlOwSEiPSc=;
- b=iBxBzlm69FV1FAUFnOX7BA4fbl9Le1+js01ZWQwXAHzInD0my6yaQmF60w5R3dY3CT
- gKkIPXyEzs1ZdYPNAVuiOPf/cwTtl07Bx/iBvVuBRDFNnoYBCctxgi+z29VkTIW4o90+
- ZjF2b8UPfrIqSUzSJeS7ApCUCtATgWTPIBO859V3NyZtOsEqWFSv59ggqE0m4EgZcswj
- TjnMptpOLc8qMEyMRMiAmb+SsYsyqo7NqKUPbUhBwFg5JRleMGF+l1WSvzhH8QCoL0n8
- b9AKSUP26CRd0b1JreLPKutsJiu+P/JThl1qRYUc9tWjC9jw1cg5RPVFVLq2c5jQLcfu
- dXAw==
+ bh=4bKWkKL39Bxqrc7HrjIuffUHyI5hkAAo6QVe+9HKpn4=;
+ b=n2Qr8NUB75Zw6pwRypkD9KV3qP5/lbcFuqmXSIwq6fZojPLYMFDwZ2MQ2+Dnysjyla
+ RZFeueaLLENLmV4P5qR9NQZnEo457oAX7Hob39RrqUFdFRvFNByMvmUigINQZyO36n8d
+ 780VNtve+od7EX0Yrysx2tllfHD/lEA+Rou+8ehIIHdg53ZTa4mlRpXkKxp6bLmT+0Kq
+ hK93qIpwYoVDdO6eJ4v9Ti8Xx2ZGP/EuobHvKHYv4cbTbg3jCB5RTa+89ibuEY+noEYu
+ yVihBr2pSkgJFNZls1cY8O03DJo4alPTqxQE/Dv02kD+7LkT/O8DY6IfAC99hqLOa9q3
+ L+dw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgIUqbIY6jmgDAaXcDafsUqiM1g3jhABX4gGNQ0Y9zEk6cUF5dMKpMiIfmsgi7vXTDcPuLUJe/Sj/Z@nongnu.org
-X-Gm-Message-State: AOJu0Yw3I8eLr0MqFYB9MBYo765ycQorFV+8gEvTP+VqzRVxN35Pvcb5
- zuGSD0qFHZvKhyPo+pzdAiPx8WopHaV7MgCMyMmYoHrc1CWhr3MSIimvyBDpJYiHAp/GXHj4LxR
- zy7tXrGhbdBn8rb1IIQijh2jEBYtTtQo5BkIySzOs/9WB3PlivDTt
-X-Gm-Gg: ASbGncssRaDplOdEBOkeyWwAAQm/JbHJJV0PbeVifDExF+mjNaFaEQYcT/GeXY+4Zku
- BhmSo9VpJzmwM8hVd1Kml/G2kYBcccGtd50LPagd/8cPz7JxPDgX5qUNsj124aZPVbMKmJEln8u
- M8eLWFznf1exwfZDqJ1TlWv7KINS9B+h2pj9uMmau6lOH8cN3gp+WHrO+wC0F6eH3yo7bSWvF/5
- T/F21q3C0TcINC/OSG6L2zKSScFxkq0W8VKo/eoKcIrdA02on/vBlQvaM58plLx6YYGTlqKun8c
- emRVFIZdVSQX1MJchxBK+LKf53kk3wmb72rpUtn20mRdrkY=
-X-Received: by 2002:a05:600c:4f83:b0:43b:cfc2:fff with SMTP id
- 5b1f17b1804b1-43bd2979938mr14900285e9.12.1741162633657; 
- Wed, 05 Mar 2025 00:17:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE7VJRQUUDak8Yyj2Xs5NZUj9+zIcOpgAsROZO2tdM0KV/GC2GvLrDEb3OwLJgMj403F1df/Q==
-X-Received: by 2002:a05:600c:4f83:b0:43b:cfc2:fff with SMTP id
- 5b1f17b1804b1-43bd2979938mr14899955e9.12.1741162633159; 
- Wed, 05 Mar 2025 00:17:13 -0800 (PST)
+ AJvYcCWfW51FXdqGFTROX1CSxeZRUdO/t0h+8w3Xtm5V0DIwJctG6wjFI/w4V2pqUOVGK0as9BYTMKPi7HdG@nongnu.org
+X-Gm-Message-State: AOJu0YwCu7uNpDxl9a8joVPuB5Y918246fQ3xoMWc9aN4z1V3KkRcm6c
+ qFdKmvyE4OJ7MBTIb8fmtTt+d4qFBVEs99rMZJ50hhOGGOyToGHd0qBdBiXWOlKtlS29O5lW/sQ
+ kxj5dxxWIr0dr/0PHfB3zylE5dtdp9HtQ8iXpGOidAVlwOuG0bGdP
+X-Gm-Gg: ASbGncvz+lwDuvxxdfKqSND+wxJUdBR3LNHgUNqSiqPwsb5c0LHfO4jHF+etz7L0c0t
+ 6va+OCESBHMOkiRNT+999x0Z6yIjNNlrSEtWsq62x4GDJWzVnQN6FTwgTzZ2YYesiZUX3jX+Pu5
+ PpJhdWzPYToVc0XUXNuktOSMO95PYMHQn6aPZFDvDBnGSP0kQLXIQHo74fYhyiK2HI6GuGCwffC
+ shU4a79W7VbbcR90IxNwWYNnDFzppBzYbIpr43JYc4QPMZdJcOHyyh8OTV2urYoF6T879DkxKq1
+ imUdB1TFmqSLKfH6qRyvkwZfQ4EAJfIrDEPvL0Fo1g91NMs=
+X-Received: by 2002:a5d:64c8:0:b0:390:dec3:2780 with SMTP id
+ ffacd0b85a97d-3911ea54955mr1992886f8f.24.1741163389658; 
+ Wed, 05 Mar 2025 00:29:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFFTZLda1kqvJVQ6UyegyEVaY8Y78zbCoT0EmKEoHylfPiopE2PwLBYPgz1NC5X8avUQ7RFJw==
+X-Received: by 2002:a5d:64c8:0:b0:390:dec3:2780 with SMTP id
+ ffacd0b85a97d-3911ea54955mr1992848f8f.24.1741163389321; 
+ Wed, 05 Mar 2025 00:29:49 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
  [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd435c592sm9765395e9.35.2025.03.05.00.17.11
+ ffacd0b85a97d-3912563f973sm180972f8f.84.2025.03.05.00.29.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 00:17:12 -0800 (PST)
-Message-ID: <58227a15-801c-4190-999a-b5f896ad6505@redhat.com>
-Date: Wed, 5 Mar 2025 09:17:10 +0100
+ Wed, 05 Mar 2025 00:29:48 -0800 (PST)
+Message-ID: <034b88ac-6d47-4020-a574-13ab91225616@redhat.com>
+Date: Wed, 5 Mar 2025 09:29:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/32] tests/functional: move aarch64 GPU test into own
- file
+Subject: Re: [PATCH v2 02/32] tests/functional: factor out common code in gpu
+ test
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -94,7 +94,7 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  <pierrick.bouvier@linaro.org>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20250304222439.2035603-1-alex.bennee@linaro.org>
- <20250304222439.2035603-2-alex.bennee@linaro.org>
+ <20250304222439.2035603-3-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -139,17 +139,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250304222439.2035603-2-alex.bennee@linaro.org>
+In-Reply-To: <20250304222439.2035603-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -168,47 +168,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 04/03/2025 23.24, Alex Bennée wrote:
-> I want to expand the number of tests to cover a wide range of
-> configurations. That starts with splitting off from the normal virt
-> test from which it doesn't really share much code. We can also reduce
-> the timeout of the original virt test now it is now longer burdened
-> with testing the GPU.
+> In preparation for handling more tests split out the common machine
+> setup details from the test specific stuff and add a helper for
+> launching the weston test. Instead of searching for "vkmark score" we
+> set a custom PS1 and wait for a successful completion. This ensures we
+> capture the score in the console log which otherwise wouldn't log
+> anything.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-...
-> diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-> new file mode 100755
-> index 0000000000..616e6ed656
-> --- /dev/null
-> +++ b/tests/functional/test_aarch64_virt_gpu.py
-> @@ -0,0 +1,94 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional tests for the various graphics modes we can support.
-> +#
-> +# Copyright (c) 2024, 2025 Linaro Ltd.
-> +#
-> +# Author:
-> +#  Alex Bennée <alex.bennee@linaro.org>
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu.machine.machine import VMLaunchFailure
-> +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import exec_command, exec_command_and_wait_for_pattern
-> +from qemu_test import skipIfMissingCommands
-> +
-> +from qemu_test.linuxkernel import LinuxKernelTest
-...
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
 
-You could call LinuxKernelTest.main() instead, then you don't have to import 
-QemuSystemTest anymore.
-
-Anyway,
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
