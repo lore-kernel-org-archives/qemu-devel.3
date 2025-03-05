@@ -4,75 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC94C282DE
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 405CCC282DE
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tprHM-0001Xs-8j; Wed, 05 Mar 2025 11:07:28 -0500
+	id 1tprMh-00036K-Bg; Wed, 05 Mar 2025 11:12:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tprHI-0001XP-Ro
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:07:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tprHG-0006j3-Iq
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:07:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741190841;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=0FbufB9azIj51ks58PPvu5Y2aqeLF5m4KfJ2DemOhtw=;
- b=d+aRBeL9tz7SBAdxCaq/2uysRgnryjzEJDz9sLDcm7EK7VR90qvqkWw2GHwYwx+rOAWFQe
- ufxFdCcdJmrCrdUMYgxdJIY7Ph/J4x8Oh4rHoVgm2lmIOB3NaS09cfBFIG5ONf1ghPfgjQ
- t4tUdUpHQw+tQLnEnRvh7YVO+xM1Vc0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-zsmZfW64OAiS-gXm5gVwpA-1; Wed,
- 05 Mar 2025 11:07:16 -0500
-X-MC-Unique: zsmZfW64OAiS-gXm5gVwpA-1
-X-Mimecast-MFC-AGG-ID: zsmZfW64OAiS-gXm5gVwpA_1741190832
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8DF70186653C; Wed,  5 Mar 2025 16:06:34 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.44])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E759F1800255; Wed,  5 Mar 2025 16:06:31 +0000 (UTC)
-Date: Wed, 5 Mar 2025 16:06:28 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>,
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tprMc-00034z-6R
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:12:54 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tprMa-0007YU-JK
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:12:53 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-390dd3403fdso5981744f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:12:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741191170; x=1741795970; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=eULSMR+wOPom3XwDZHhHaMYxsR4PJeNusGTgEDgMQis=;
+ b=BxSLhhf/g8rAJnynhuOD14+idpEn/O5ata/V3BK3b+bbyzJhlM1dQTVV0wAGm1pdFB
+ a1kyxWDY5ouSBny3MKPOd8S2V1wC1C3vahMucp3Snvjo0xOVUOWk27/UdZaAbVc+jAhZ
+ arQaeW6Eh0O5I5C8tXUddeybylFzjeUfxvcmtetuwexcRNOjVWv/EHP+OJDCBeAx2rDX
+ +5El08uidhBW9Pap1XaCMEcXjLunkcVdImBVjPfg/GVpyQ6mBdGwvBCD1Gxq6UkskNBU
+ 1xnrQNigHGy7x2HRw8+P3W2/yLV/W2tOIKn4GJk74uToSZwdytvk1L+yIPDZfkIKPGOU
+ bj+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741191170; x=1741795970;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eULSMR+wOPom3XwDZHhHaMYxsR4PJeNusGTgEDgMQis=;
+ b=KHD4HAe28OpCJSq6Y9uuB/t6mMPGdSCBRohqeIe7T95g5g6PiCmwDV6aeoGo+ZmTNb
+ jpIYo8VTtE3q9FfWvojDIMiYWdGhDu9y4x9EXO+1xzu3wW9ASMjJDCD1uC4C3pwuelSV
+ b7SbzqfQFZGOrW3LpVI8CDyokB6AGcYMCCQEeXmnfgcPU1lk18BIo/SR2adkmtvgVQ5v
+ i7HBVXqHsZUXuz/v+1NesJ1tWmdXKzPqiGYiU8+xmuieMz0mb+6FiR519cTUkOWNIUVm
+ kL5+nspYEQw+csQ8QZvmu1iYdw6/8ot1rgILX/aeEz8hBV7HiqDaC6PG3idOKefWg1BX
+ d35w==
+X-Gm-Message-State: AOJu0Ywr73+5JWeATZQamIfPbmC+lXH9YJxw7oKeqWJ4FXysCxMAYfe6
+ WBmbJgiSn78vIsCtK//u7TuCkkuKtIShyMnLZfUL7nGFdO9aK6N5tQKjMhwDYprUcW8iIa0UfjE
+ GwFc=
+X-Gm-Gg: ASbGncuk+pTlvJk10/Xpo97lIWcIKQIcC/sEoOMqUGCWjoP3/zG8ebooJN7Ptqz0pw7
+ XiMVVLvZVny0I/Qw5JdVq24ltta4t8arh6iyoaw4kx9d/SiKkBB5zk3brtLrHt//fbjIFFPfs6Q
+ xYIGy0KIlObTzslRGP1MX676rGXyP+qcJgHyDter7i4k/kGmUTgbXPpHJwjvRw+odjBTo22db73
+ pcFs9/yTvVgQuSGG5Hbo66o/3b+Rr/I70IejV1fo1Y6Rz8itbb2wT/lA9TTi5g/744DU+t1ANGi
+ OwLfAGRqhJUiRkynZzLHFLO5z5pKFCKvE84xUWcdaQ7RVlvoUy2uOJs0DSSHSEE6taAzajlTI3h
+ Py9OdMwpuw0k5r6YZYbA=
+X-Google-Smtp-Source: AGHT+IEYQibmHjw9N7LchBFy6y339Sg5OLg0NcqSCdtZ2kKQKuxt6kE3aOx+yP0Jn5TOb4rm6hpdDA==
+X-Received: by 2002:a5d:588b:0:b0:390:ebae:6c18 with SMTP id
+ ffacd0b85a97d-3911f740b6amr2820440f8f.12.1741191169879; 
+ Wed, 05 Mar 2025 08:12:49 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912933c050sm41438f8f.100.2025.03.05.08.12.48
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 05 Mar 2025 08:12:49 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
- qemu-devel mailing list <qemu-devel@nongnu.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>
-Subject: Re: [PATCH qemu v2 1/3] hw/s390x: add CPI identifiers to QOM
-Message-ID: <Z8h2hNFlNvjWWHqd@redhat.com>
-References: <20250224120449.1764114-1-shalini@linux.ibm.com>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH 0/4] hw/arm: Register target-specific QOM types at runtime
+Date: Wed,  5 Mar 2025 17:12:44 +0100
+Message-ID: <20250305161248.54901-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250224120449.1764114-1-shalini@linux.ibm.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,124 +100,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 24, 2025 at 01:04:47PM +0100, Shalini Chellathurai Saroja wrote:
-> Add Control-Program Identification (CPI) to the QEMU Object
-> Model (QOM). The CPI identifiers provide information about
-> the guest operating system. The CPI identifiers are:
-> system type, system name, system level and sysplex name.
-> 
-> The system type provides the OS type of the guest (e.g. LINUX).
-> The system name provides the name of the guest (e.g. TESTVM).
-> The system level provides the distribution and kernel version
-> of the guest OS (e.g. 0x50e00).
-> The sysplex name provides the sysplex name of the guest
-> (e.g. SYSPLEX).
-> 
-> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-> ---
->  hw/s390x/s390-virtio-ccw.c         | 29 +++++++++++++++++++++++++++++
->  include/hw/s390x/s390-virtio-ccw.h |  8 ++++++++
->  qapi/machine.json                  | 24 ++++++++++++++++++++++++
->  3 files changed, 61 insertions(+)
-> 
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index 51ae0c133d..13ea8db1b0 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -50,6 +50,7 @@
->  #include "hw/s390x/virtio-ccw-md.h"
->  #include "system/replay.h"
->  #include CONFIG_DEVICES
-> +#include "qapi/qapi-visit-machine.h"
->  
->  static Error *pv_mig_blocker;
->  
-> @@ -803,6 +804,26 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
->      s390_ipl_fmt_loadparm(ms->loadparm, val, errp);
->  }
->  
-> +static void machine_get_control_program_id(Object *obj, Visitor *v,
-> +                                           const char *name, void *opaque,
-> +                                           Error **errp)
-> +{
-> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
-> +    S390ControlProgramId *cpi;
-> +    cpi = &(S390ControlProgramId){
-> +        .system_type = g_strndup((char *) ms->cpi.system_type,
-> +                       sizeof(ms->cpi.system_type)),
-> +        .system_name = g_strndup((char *) ms->cpi.system_name,
-> +                       sizeof(ms->cpi.system_name)),
-> +        .system_level = g_strdup_printf("0x%lx", ms->cpi.system_level),
+In preparation of having a single binary for both ARM and
+Aarch64 targets, unify raspi & aspeed by replacing the
+compile-time TARGET_AARCH64 check by a QOM runtime call
+on legacy_binary_is_64bit().
 
-If the data is an integer, we must return it in QMP as an integer,
-not formatted into a hex string.
+No behavior change with current binaries:
 
-> +        .sysplex_name = g_strndup((char *) ms->cpi.sysplex_name,
-> +                        sizeof(ms->cpi.sysplex_name)),
-> +        .timestamp = ms->cpi.timestamp
-> +    };
+  $ ./qemu-system-arm -M help | fgrep raspi
+  raspi0               Raspberry Pi Zero (revision 1.2)
+  raspi1ap             Raspberry Pi A+ (revision 1.1)
+  raspi2b              Raspberry Pi 2B (revision 1.1)
 
-> +##
-> +# @S390ControlProgramId:
-> +#
-> +# Control-program identifiers provide data about Linux instance.
-> +#
-> +# @system-type: operating system of Linux instance
+  $ ./qemu-system-aarch64 -M help | fgrep raspi
+  raspi0               Raspberry Pi Zero (revision 1.2)
+  raspi1ap             Raspberry Pi A+ (revision 1.1)
+  raspi2b              Raspberry Pi 2B (revision 1.1)
+  raspi3ap             Raspberry Pi 3A+ (revision 1.0)
+  raspi3b              Raspberry Pi 3B (revision 1.2)
+  raspi4b              Raspberry Pi 4B (revision 1.5)
 
-Is there a list of well known operating system names, or is
-this arbitrary free-form text. Needs to be documented.
+Based-on: <20250305153929.43687-1-philmd@linaro.org>
 
+Philippe Mathieu-Daudé (4):
+  qom: Introduce TypeInfo::registerable() callback
+  hw/arm/raspi: Replace TARGET_AARCH64 by legacy_binary_is_64bit()
+  hw/arm/aspeed: Replace TARGET_AARCH64 by legacy_binary_is_64bit()
+  hw/ppc: Remove TARGET_PPC64 use in ppc_create_page_sizes_prop()
 
-> +# @system-name: system name of Linux instance
+ include/qom/object.h | 1 +
+ hw/arm/aspeed.c      | 8 ++------
+ hw/arm/bcm2836.c     | 6 ++----
+ hw/arm/raspi.c       | 7 +++----
+ hw/ppc/fdt.c         | 5 +++--
+ qom/object.c         | 4 ++++
+ qom/trace-events     | 1 +
+ 7 files changed, 16 insertions(+), 16 deletions(-)
 
-What is a system name ?  Is that a hostname, or is that something
-else ?
-
-> +#
-> +# @system-level: distribution and kernel version of Linux instance
-
-What does this actually mean ?  This is a single field, but the docs
-are describing 2 distinct versions. Even a single version usually
-has multiple digits and even a string suffix. This needs to document
-how the version information actually encoded in practice, and if
-some info is discarded in this process.
-
-> +#
-> +# @sysplex-name: sysplex name of Linux instance
-
-I guess "sysplex" is some term people from s390 world would
-already understand ? It is possible to explain it or do we just
-have to assume prior knowledge ?
-
-> +#
-> +# @timestamp: latest update of CPI data
-
-In what units and epoch ? Seconds since the UNIX epoch, or
-something else ?
-
-> +#
-> +# Since: 9.2
-> +##
-> +{ 'struct': 'S390ControlProgramId', 'data': {
-> +     'system-type': 'str',
-> +     'system-name': 'str',
-> +     'system-level': 'str',
-> +     'sysplex-name': 'str',
-> +     'timestamp': 'uint64' } }
-> -- 
-> 2.47.0
-> 
-> 
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.1
 
 
