@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D85F8C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 08:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B74CC19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 08:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpjo5-00045R-2R; Wed, 05 Mar 2025 03:08:45 -0500
+	id 1tpjon-0004VA-7Y; Wed, 05 Mar 2025 03:09:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tpjo2-00045F-Ks
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:08:43 -0500
+ id 1tpjoj-0004Qp-JG
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:09:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tpjo0-00038H-RB
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:08:42 -0500
+ id 1tpjoh-0003E9-BP
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:09:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741162119;
+ s=mimecast20190719; t=1741162162;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yiaNlSXiwgbZPRrjJbVDFxpIHhLNFUXiwsIv+oOoAnU=;
- b=gj9zmkH1yl5fjWK48XI0zBksrH5Nba209gtnrMld0wfYlilsH4JE5y+W1saJUQl780yeUI
- JAOdAxmMIeoHAZS5riN2v88X56NcyjZTaXcIL4b94vp2vFMCAm7MyQ/G5LMZ9Ogfzj9d3Y
- EAsRNv+jt+TTsH+XdqfpmmWdesQ8aUQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=UsphDG/iloa8ASTYNlzj/5Oz05/kqqpVcB84gftSDCI=;
+ b=I3p3T3yroHQPC3mJeduXymt0V7QTlcDoFBOYt69PCebht5HMHTODtK+VDAuSvC8+NSbWpe
+ iKwS6sCRNsFRrolqUrzznXVxHrQPShqk6O2TkGxcBkWwp6xdY8FzAD7i+Ap2E/I5T/5yHI
+ /YYGroWBz0oWhmOgHK75YR9i59QiPOU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-R-GGgYu9NwK4FWlyqzLEBQ-1; Wed,
- 05 Mar 2025 03:08:36 -0500
-X-MC-Unique: R-GGgYu9NwK4FWlyqzLEBQ-1
-X-Mimecast-MFC-AGG-ID: R-GGgYu9NwK4FWlyqzLEBQ_1741162115
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-FDOkcat0MCyObKWwhNAvvw-1; Wed,
+ 05 Mar 2025 03:09:15 -0500
+X-MC-Unique: FDOkcat0MCyObKWwhNAvvw-1
+X-Mimecast-MFC-AGG-ID: FDOkcat0MCyObKWwhNAvvw_1741162154
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F355C1800EC5; Wed,  5 Mar 2025 08:08:34 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 74B2E1955BCD; Wed,  5 Mar 2025 08:09:14 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.44])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A26A21956095; Wed,  5 Mar 2025 08:08:33 +0000 (UTC)
-Date: Wed, 5 Mar 2025 08:08:30 +0000
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BED81800265; Wed,  5 Mar 2025 08:09:10 +0000 (UTC)
+Date: Wed, 5 Mar 2025 08:09:06 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2] tests/avocado: Remove the boot_linux.py tests
-Message-ID: <Z8gGa72c3nwh7r-0@redhat.com>
-References: <20250305071646.44702-1-thuth@redhat.com>
+Subject: Re: [PATCH] tests/functional: Increase the timeout of the
+ mips64el_replay test
+Message-ID: <Z8gGolLMFnE6hCzz@redhat.com>
+References: <20250305074353.52552-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250305071646.44702-1-thuth@redhat.com>
+In-Reply-To: <20250305074353.52552-1-thuth@redhat.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 127.0.0.2
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -90,24 +91,17 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 05, 2025 at 08:16:46AM +0100, Thomas Huth wrote:
-> These tests are based on the cloudinit functions from Avocado.
-> The cloudinit is very, very slow compared to our other tests,
-> so a lot of these Avocado tests have either been disabled by default
-> with a decorator, or have been marked to only run with KVM.
+On Wed, Mar 05, 2025 at 08:43:53AM +0100, Thomas Huth wrote:
+> We run the gitlab-CI with the untrusted tests enabled, and
+> the test_replay_mips64el_malta_5KEc_cpio subtest is rather slow,
+> so this already hit the standard 90 seconds timeout in the CI.
+> Increase the timeout for more headroom.
 > 
-> We won't include this sluggish cloudinit stuff in the functional
-> framework, and we've already got plenty of other tests there that
-> check pretty much the same things, so let's simply get rid of these
-> old tests now.
-> 
+> Reported-by: Stefan Hajnoczi <stefanha@redhat.com>
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  v2: Only remove boot_linux.py, but keep replay_linux.py for now
-> 
->  tests/avocado/boot_linux.py | 132 ------------------------------------
->  1 file changed, 132 deletions(-)
->  delete mode 100644 tests/avocado/boot_linux.py
+>  tests/functional/meson.build | 1 +
+>  1 file changed, 1 insertion(+)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
