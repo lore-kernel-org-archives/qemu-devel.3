@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2297DC282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 883DFC282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdVb-0004QT-En; Tue, 04 Mar 2025 20:25:17 -0500
+	id 1tpdXI-0000NW-MZ; Tue, 04 Mar 2025 20:27:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUI-00021w-8t
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:55 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVe-0004To-4e
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:25:21 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUG-00079J-M7
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:54 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43bcad638efso10144815e9.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:23:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVW-0007QL-BS
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:25:12 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3910e101d0fso1839209f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:25:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137831; x=1741742631; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741137908; x=1741742708; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZnAwaBdhJN/kNZhyvNDoVKLIcUFbc7BOsa1ZC7/+qgE=;
- b=ckD8q9cCjeg07PFn5jvflfQRaryZPLVyiyMTnrDScblq4oZfVB7/qjFD54p+fU08Oq
- 2FtE90CgjjcNcS3KK05g8kqFV0m3pj5Pth/8iU9exYyZu51TMgOS8oIoy1tyMp2mwKYH
- Vh/CzpeGOabTwusaruXBzUvEQGqayGJ/RMju39w/HXdDNwjxqaO9z3GCYUsxFhgAwH/B
- Arvr3v3/3vDReg5mOzKfYit+3plxYzJiS9Y3is84moqWyGNuET8+CBM2oTkEXIxZGbez
- yffAFcyP91Yxs3jazH1c9gQPalEP1uV630ORxFxQp7aqSRb7jqrTL1oHrYyZ926Rmz6k
- sVLA==
+ bh=BfDhx6dXYnykeldUX+NORiuKe1+4dgkAJvvKMJwXJlA=;
+ b=uoxAaEA/mgd0E0DYys9gVHhJB2TvbpFZvKsMDgaAfjE1JAlIBkQA+IkAv5SQV4lV8+
+ LCfZ0OAJVXHEzGVTTf4N8Bem3LX6+fMLY9kIMm2O8kcg/b27iICtLXtXBadrRJcDG8Cn
+ KTu7IOs/SXSvZzmQHddsMNoa2YAk4cALFYvqhJGzHa3keU22CPD7Fch24EfywnbwSQ0q
+ qdGiTqRhevqH4UbBLkbEB1KDCLtygw5mJcrlCm6LsfX6eekpUT9m2nVYmlfwVFKIjlzh
+ qANwUyPXaOuHMPRa8yzkX4Oh9HMrHaWZHKuI82JPhNEcR3uia9WAo11EFJgMwj/FmXRN
+ GFTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137831; x=1741742631;
+ d=1e100.net; s=20230601; t=1741137908; x=1741742708;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZnAwaBdhJN/kNZhyvNDoVKLIcUFbc7BOsa1ZC7/+qgE=;
- b=aXMwooP8B0sIt51phEjp8bnZnwsZpdHMLzbT+XaBmA9tkzHy0APVqlMwWW9U6PLXlt
- 8daVNz7BVz7NaCLqTvW0QEDBvrQCNp3A9RAHTVUi91UpHHfCYNOa6Qsdbr/oi+ep64lo
- ubGa+EJXO3D+fiaxMHS/ku5RFICvr+eisWYpW7pzdUoS0nSIwVcPiUkHlPzei2CtKNKD
- 9y09J0FMLVxDXHgytEitlPqnyrHubQ6pUIneoFPR3yXGwilxA50E/bW84sShjXsMVZ+O
- Fn709MBRvzQoNOXuI3jBHexGGyTMBipyeWsr/SnqJk2sis3XS7/aMCOTUonaJG6E3do0
- EkvQ==
-X-Gm-Message-State: AOJu0YzqhoMwrdd61TksbE6cl5nu2+WlhzILdHMEtWGGEoXp2AuVz0SJ
- I3Gt5dpDUYnxUIbSG9Qyjm2gYpQRsV73W0j0i4JwTYKhGhXrirlJ4/h4yCdck2RSbKGJPD9QC69
- RioM=
-X-Gm-Gg: ASbGncvSp2GAX3XleuOzwew8sEfdjrNKQgxFLppKtySYu6DnKXCBfpbKUDnScdbmaif
- MqfcAaM5PaQIrBJE0SYPIY+7m86oJYRmDAEYBAQXR9F160+ORkLaE5ejCfMkMxQF+S04Lu19QSr
- 0DxswN1tFaMvtVGx5S6sDc+nUaEuARpJorwqFw/F+bjFdZBr7rkulMwMCsJLT2tQrORyWOuzp44
- 2R2nXdb7KIsiZLffFvzZiMl51tLyy3oRmOqj+ok2a3qn83XgwLbeoREWb2EWbTpKifdchcA9Iud
- +gTNjC8Hh9LO1zr8q/H+zkOsbeYyM2ut3YhidFPJbWhPBQy4Xt1sIm8T2RPaSTpsEZRnuZqkLdu
- QZ+5vyEIlwM0ZkotHowk=
-X-Google-Smtp-Source: AGHT+IHQjFcVkrER2JAN0yrKdDyhp69G7z/M3MsPPRTR3N81lST5vwanaLoZdXDVR9aUVwms6Ax5sg==
-X-Received: by 2002:a05:6000:156d:b0:391:10c5:d1a9 with SMTP id
- ffacd0b85a97d-3911f76e3a4mr736504f8f.31.1741137830987; 
- Tue, 04 Mar 2025 17:23:50 -0800 (PST)
+ bh=BfDhx6dXYnykeldUX+NORiuKe1+4dgkAJvvKMJwXJlA=;
+ b=ElqtnIhjwRW6MIEsaZlH+FTBv2F7s4KXtKgaz9gj6WDE/KvPp9QiV/VatQL2rb/hqr
+ FjwPsAEslHT9WZGvDm81J/IkVxeewVWn5UBzKh3mvmBB4UnD7qwoTpDlWSUnra2RGvUn
+ Mrf2kgOVJbEsTtlVbs9q70Uy/tOMCCd6BE5G4uIKFxSt3X/wRXaztRNkW8o9tzeCdReF
+ c4WpcYychQBU2kB+93I8iBTtyBuQrsyiqBH3hwedpHYZ7lXQIxlIp9uTEyya9a4vaeBC
+ YrsRNt+7XcN8sw+dxRcUcETc8z+CDgSikJyeuP21U7kTUqWOIsZ1DFjCiKej9x8e3XjH
+ K5CQ==
+X-Gm-Message-State: AOJu0Yxz7avBqlj70oNDhLbDxe86FUTC1U6kik1hIZKv8EZVbIwrpYGY
+ ifdC+i34luz9KidvWFnn04m8CgYm3UlI7e7VQoX0pVFOhbBbkCLao7+S+PnJRVBpe9KDArP3+o+
+ JPnU=
+X-Gm-Gg: ASbGncsbjsG9TygWz7M9qGGyViGoemWKgZwZNeZ1qqaLwZwCyV71FP5LdgyKytPfeZr
+ uo4neqYmSaehcDqQSYAkCa/BRKgc/GlVQqy5brx0z+2I7Tqwz8975k1c6aiyYGzoFSRMUz4+zw4
+ Zgmm0cvjgHw/82N+yxYo46r1JIm/4GkPSnEMI7ft4uAUmhi873r9Ts8iZeI6LfGQfWKBRT7+hLJ
+ CLF18/GvtY4UBNeD508nJLKntWPvr+M6GhiozcEZbwqbRHa74I8uETPaeqt5ozTh54iTAbdBvDr
+ My+de9HkjN5AnBb2nUo9I80Weytq6Kktt++DA4nwYeEPul78pACl58TgvarnMdMemccsDYjgRBE
+ DkNVxI9eCkveJ1BUPlQk=
+X-Google-Smtp-Source: AGHT+IFdaDJC26axO68WBbQYWgB5Uxwn5n2ntVK/vCHtuezXOnVByz5M4l4YaOKWNvOKy8oicfsviw==
+X-Received: by 2002:a5d:47a7:0:b0:38f:3224:6615 with SMTP id
+ ffacd0b85a97d-3911f7265d2mr608397f8f.7.1741137908148; 
+ Tue, 04 Mar 2025 17:25:08 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4795962sm19846140f8f.13.2025.03.04.17.23.50
+ ffacd0b85a97d-390e4844a16sm19320417f8f.79.2025.03.04.17.25.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 17:23:50 -0800 (PST)
+ Tue, 04 Mar 2025 17:25:07 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Luc Michel <luc.michel@amd.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 23/41] hw/char/bcm2835_aux: Really use RX FIFO depth
-Date: Wed,  5 Mar 2025 02:21:38 +0100
-Message-ID: <20250305012157.96463-24-philmd@linaro.org>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 39/41] hw/nvram/eeprom_at24c: Remove ERR macro that calls
+ fprintf to stderr
+Date: Wed,  5 Mar 2025 02:21:54 +0100
+Message-ID: <20250305012157.96463-40-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
 References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,45 +101,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While we model a 8-elements RX FIFO since the BCM2835 AUX model
-was introduced in commit 97398d900ca ("bcm2835_aux: add emulation
-of BCM2835 AUX block") we only read 1 char at a time!
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Have the IOCanReadHandler handler return how many elements are
-available, and use that in the IOReadHandler handler.
+In the realize method error_setg can be used like other places there
+already do. The other usage can be replaced with error_report which is
+the preferred way instead of directly printing to stderr.
 
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <637b92984795a385b648a84208f093947cc261e4.1740839457.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Luc Michel <luc.michel@amd.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250220092903.3726-6-philmd@linaro.org>
 ---
- hw/char/bcm2835_aux.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/nvram/eeprom_at24c.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/hw/char/bcm2835_aux.c b/hw/char/bcm2835_aux.c
-index 73ad5934067..c6e7eccf7dd 100644
---- a/hw/char/bcm2835_aux.c
-+++ b/hw/char/bcm2835_aux.c
-@@ -221,7 +221,7 @@ static int bcm2835_aux_can_receive(void *opaque)
- {
-     BCM2835AuxState *s = opaque;
+diff --git a/hw/nvram/eeprom_at24c.c b/hw/nvram/eeprom_at24c.c
+index 2ae03935d47..9f606842eb6 100644
+--- a/hw/nvram/eeprom_at24c.c
++++ b/hw/nvram/eeprom_at24c.c
+@@ -10,6 +10,7 @@
+ #include "qemu/osdep.h"
  
--    return s->read_count < BCM2835_AUX_RX_FIFO_LEN;
-+    return BCM2835_AUX_RX_FIFO_LEN - s->read_count;
- }
+ #include "qapi/error.h"
++#include "qemu/error-report.h"
+ #include "qemu/module.h"
+ #include "hw/i2c/i2c.h"
+ #include "hw/nvram/eeprom_at24c.h"
+@@ -26,9 +27,6 @@
+ #define DPRINTK(FMT, ...) do {} while (0)
+ #endif
  
- static void bcm2835_aux_put_fifo(void *opaque, uint8_t value)
-@@ -243,7 +243,9 @@ static void bcm2835_aux_put_fifo(void *opaque, uint8_t value)
+-#define ERR(FMT, ...) fprintf(stderr, TYPE_AT24C_EE " : " FMT, \
+-                            ## __VA_ARGS__)
+-
+ #define TYPE_AT24C_EE "at24c-eeprom"
+ OBJECT_DECLARE_SIMPLE_TYPE(EEPROMState, AT24C_EE)
  
- static void bcm2835_aux_receive(void *opaque, const uint8_t *buf, int size)
- {
--    bcm2835_aux_put_fifo(opaque, *buf);
-+    for (int i = 0; i < size; i++) {
-+        bcm2835_aux_put_fifo(opaque, buf[i]);
-+    }
- }
+@@ -75,8 +73,7 @@ int at24c_eeprom_event(I2CSlave *s, enum i2c_event event)
+         if (ee->blk && ee->changed) {
+             int ret = blk_pwrite(ee->blk, 0, ee->rsize, ee->mem, 0);
+             if (ret < 0) {
+-                ERR(TYPE_AT24C_EE
+-                        " : failed to write backing file\n");
++                error_report("%s: failed to write backing file", __func__);
+             }
+             DPRINTK("Wrote to backing file\n");
+         }
+@@ -203,8 +200,9 @@ static void at24c_eeprom_realize(DeviceState *dev, Error **errp)
+         int ret = blk_pread(ee->blk, 0, ee->rsize, ee->mem, 0);
  
- static const MemoryRegionOps bcm2835_aux_ops = {
+         if (ret < 0) {
+-            ERR(TYPE_AT24C_EE
+-                    " : Failed initial sync with backing file\n");
++            error_setg(errp, "%s: Failed initial sync with backing file",
++                       TYPE_AT24C_EE);
++            return;
+         }
+         DPRINTK("Reset read backing file\n");
+     }
 -- 
 2.47.1
 
