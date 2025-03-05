@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B0F7C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 23:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162DEC282EC
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 23:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpxoR-0007Iw-4v; Wed, 05 Mar 2025 18:06:03 -0500
+	id 1tpxof-0007OQ-M2; Wed, 05 Mar 2025 18:06:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tpxoO-0007Gz-LP
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 18:06:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tpxoY-0007N1-WD
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 18:06:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tpxoM-0000A7-GD
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 18:06:00 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tpxoX-0000Hj-2E
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 18:06:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741215955;
+ s=mimecast20190719; t=1741215967;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5y/cYejfVUQnD5+YFuefcNA8OwV8O2KncbnWN0ret9E=;
- b=DL8myni7IVEWTNk9C9GokplU6HkzmPu5LmRX5kK54BUDM2GC519nh787jry8UUfNBxBEvh
- vBokg+u8pr+X6JsKbwjdtxRbQbnmRwetoZPglmuTz8cb+WIBfvMrDeCsaEd5T5AhIGwod4
- HiZjcpYJW5NATiFGvTSKJtdwL7Vvu7w=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=v0aMqzc1F0dHi5tCg3272uegy17iK1O0O6GbkFKQ1uI=;
+ b=RMu+Tx8+mNjwAbjV8Hj17M+q8DH48urH6QivQkhH13NdMKyBNEBucf6NLTRcjwQX9RMyTg
+ xyJZnLKSbBRouX451DeKJGtbF0P1ORxzlXwutfcNynTzrdqy9oZ6h4cX/bPDqersBPYH7d
+ 7emrjTgDWug/G1tx1I/QbZTi/byJa2s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-8WRBXni6NquSb_HHq6oSIQ-1; Wed,
- 05 Mar 2025 18:05:54 -0500
-X-MC-Unique: 8WRBXni6NquSb_HHq6oSIQ-1
-X-Mimecast-MFC-AGG-ID: 8WRBXni6NquSb_HHq6oSIQ_1741215953
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-_W5aEhsjOKOW8ri72rDrtA-1; Wed,
+ 05 Mar 2025 18:05:50 -0500
+X-MC-Unique: _W5aEhsjOKOW8ri72rDrtA-1
+X-Mimecast-MFC-AGG-ID: _W5aEhsjOKOW8ri72rDrtA_1741215949
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AC6019560B4; Wed,  5 Mar 2025 23:05:53 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 10F38180049D; Wed,  5 Mar 2025 23:05:49 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.105])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 69E0F1955DCE; Wed,  5 Mar 2025 23:05:51 +0000 (UTC)
+ id 268021955DCE; Wed,  5 Mar 2025 23:05:45 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+Cc: Nir Soffer <nirsof@gmail.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- qemu-block@nongnu.org (open list:Network Block Dev...)
-Subject: [PULL 3/4] qapi: merge common parts of NbdServerOptions and
- nbd-server-start data
-Date: Wed,  5 Mar 2025 17:05:23 -0600
-Message-ID: <20250305230542.2225013-9-eblake@redhat.com>
+ qemu-block@nongnu.org (open list:Block layer core)
+Subject: [PULL 1/4] iotest: Unbreak 302 with python 3.13
+Date: Wed,  5 Mar 2025 17:05:21 -0600
+Message-ID: <20250305230542.2225013-7-eblake@redhat.com>
 In-Reply-To: <20250305230542.2225013-6-eblake@redhat.com>
 References: <20250305230542.2225013-6-eblake@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,162 +84,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Nir Soffer <nirsof@gmail.com>
 
-Instead of comment
-"Keep this type consistent with the nbd-server-start arguments", we
-can simply merge these things.
+This test depends on TarFile.addfile() to add tar member header without
+writing the member data, which we write ourself using qemu-nbd. Python
+3.13 changed the function in a backward incompatible way[1] to require a
+file object for tarinfo with non-zero size, breaking the test:
 
-Note that each field of new base already has "since" tag, equal in both
-original copies. So "since" information is saved.
+     -[{"name": "vm.ovf", "offset": 512, "size": 6}, {"name": "disk", "offset": 1536, "size": 393216}]
+     +Traceback (most recent call last):
+     +  File "/home/stefanha/qemu/tests/qemu-iotests/302", line 118, in <module>
+     +    tar.addfile(disk)
+     +    ~~~~~~~~~~~^^^^^^
+     +  File "/usr/lib64/python3.13/tarfile.py", line 2262, in addfile
+     +    raise ValueError("fileobj not provided for non zero-size regular file")
+     +ValueError: fileobj not provided for non zero-size regular file
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20250219191914.440451-1-vsementsov@yandex-team.ru>
+The new behavior makes sense for most users, but breaks our unusual
+usage. Fix the test to add the member header directly using public but
+undocumented attributes. This is more fragile but the test works again.
+
+This also fixes a bug in the previous code - when calling addfile()
+without a fileobject, tar.offset points to the start of the member data
+instead of the end.
+
+[1] https://github.com/python/cpython/pull/117988
+
+Signed-off-by: Nir Soffer <nirsof@gmail.com>
+Message-ID: <20250228195708.48035-1-nirsof@gmail.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Eric Blake <eblake@redhat.com>
 ---
- qapi/block-export.json | 94 +++++++++++++++++++-----------------------
- blockdev-nbd.c         |  4 +-
- 2 files changed, 44 insertions(+), 54 deletions(-)
+ tests/qemu-iotests/302 | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index 68dcec7edc5..c783e01a532 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -9,53 +9,7 @@
- { 'include': 'block-core.json' }
+diff --git a/tests/qemu-iotests/302 b/tests/qemu-iotests/302
+index a6d79e727b5..e980ec513f2 100755
+--- a/tests/qemu-iotests/302
++++ b/tests/qemu-iotests/302
+@@ -115,13 +115,22 @@ with tarfile.open(tar_file, "w") as tar:
 
- ##
--# @NbdServerOptions:
--#
--# Keep this type consistent with the nbd-server-start arguments.  The
--# only intended difference is using SocketAddress instead of
--# SocketAddressLegacy.
--#
--# @addr: Address on which to listen.
--#
--# @handshake-max-seconds: Time limit, in seconds, at which a client
--#     that has not completed the negotiation handshake will be
--#     disconnected, 0 for no limit (since 10.0; default: 10).
--#
--# @tls-creds: ID of the TLS credentials object (since 2.6).
--#
--# @tls-authz: ID of the QAuthZ authorization object used to validate
--#     the client's x509 distinguished name.  This object is is only
--#     resolved at time of use, so can be deleted and recreated on the
--#     fly while the NBD server is active.  If missing, it will default
--#     to denying access (since 4.0).
--#
--# @max-connections: The maximum number of connections to allow at the
--#     same time, 0 for unlimited.  Setting this to 1 also stops the
--#     server from advertising multiple client support (since 5.2;
--#     default: 100)
--#
--# Since: 4.2
--##
--{ 'struct': 'NbdServerOptions',
--  'data': { 'addr': 'SocketAddress',
--            '*handshake-max-seconds': 'uint32',
--            '*tls-creds': 'str',
--            '*tls-authz': 'str',
--            '*max-connections': 'uint32' } }
--
--##
--# @nbd-server-start:
--#
--# Start an NBD server listening on the given host and port.  Block
--# devices can then be exported using @nbd-server-add.  The NBD server
--# will present them as named exports; for example, another QEMU
--# instance could refer to them as "nbd:HOST:PORT:exportname=NAME".
--#
--# Keep this type consistent with the NbdServerOptions type.  The only
--# intended difference is using SocketAddressLegacy instead of
--# SocketAddress.
--#
--# @addr: Address on which to listen.
-+# @NbdServerOptionsBase:
- #
- # @handshake-max-seconds: Time limit, in seconds, at which a client
- #     that has not completed the negotiation handshake will be
-@@ -73,6 +27,46 @@
- #     same time, 0 for unlimited.  Setting this to 1 also stops the
- #     server from advertising multiple client support (since 5.2;
- #     default: 100).
-+##
-+{ 'struct': 'NbdServerOptionsBase',
-+  'data': { '*handshake-max-seconds': 'uint32',
-+            '*tls-creds': 'str',
-+            '*tls-authz': 'str',
-+            '*max-connections': 'uint32' } }
+     disk = tarfile.TarInfo("disk")
+     disk.size = actual_size
+-    tar.addfile(disk)
+
+-    # 6. Shrink the tar to the actual size, aligned to 512 bytes.
++    # Since python 3.13 we cannot use addfile() to create the member header.
++    # Add the tarinfo directly using public but undocumented attributes.
+
+-    tar_size = offset + (disk.size + 511) & ~511
+-    tar.fileobj.seek(tar_size)
+-    tar.fileobj.truncate(tar_size)
++    buf = disk.tobuf(tar.format, tar.encoding, tar.errors)
++    tar.fileobj.write(buf)
++    tar.members.append(disk)
 +
-+##
-+# @NbdServerOptions:
-+#
-+# Keep this type consistent with the NbdServerOptionsLegacy type.  The
-+# only intended difference is using SocketAddress instead of
-+# SocketAddressLegacy.
-+#
-+# @addr: Address on which to listen (since 4.2).
-+##
-+{ 'struct': 'NbdServerOptions',
-+  'base': 'NbdServerOptionsBase',
-+  'data': { 'addr': 'SocketAddress' } }
++    # Update the offset and position to the location of the next member.
 +
-+##
-+# @NbdServerOptionsLegacy:
-+#
-+# Keep this type consistent with the NbdServerOptions type.  The only
-+# intended difference is using SocketAddressLegacy instead of
-+# SocketAddress.
-+#
-+# @addr: Address on which to listen (since 1.3).
-+##
-+{ 'struct': 'NbdServerOptionsLegacy',
-+  'base': 'NbdServerOptionsBase',
-+  'data': { 'addr': 'SocketAddressLegacy' } }
++    tar.offset = offset + (disk.size + 511) & ~511
++    tar.fileobj.seek(tar.offset)
 +
-+##
-+# @nbd-server-start:
-+#
-+# Start an NBD server listening on the given host and port.  Block
-+# devices can then be exported using @nbd-server-add.  The NBD server
-+# will present them as named exports; for example, another QEMU
-+# instance could refer to them as "nbd:HOST:PORT:exportname=NAME".
- #
- # Errors:
- #     - if the server is already running
-@@ -80,11 +74,7 @@
- # Since: 1.3
- ##
- { 'command': 'nbd-server-start',
--  'data': { 'addr': 'SocketAddressLegacy',
--            '*handshake-max-seconds': 'uint32',
--            '*tls-creds': 'str',
--            '*tls-authz': 'str',
--            '*max-connections': 'uint32' },
-+  'data': 'NbdServerOptionsLegacy',
-   'allow-preconfig': true }
++    # 6. Shrink the tar to the actual size.
++
++    tar.fileobj.truncate(tar.offset)
 
- ##
-diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-index 3f6f4ef92b4..1e3e634b87d 100644
---- a/blockdev-nbd.c
-+++ b/blockdev-nbd.c
-@@ -219,12 +219,12 @@ void nbd_server_start_options(NbdServerOptions *arg, Error **errp)
-                      arg->tls_authz, arg->max_connections, errp);
- }
-
--void qmp_nbd_server_start(SocketAddressLegacy *addr,
--                          bool has_handshake_max_secs,
-+void qmp_nbd_server_start(bool has_handshake_max_secs,
-                           uint32_t handshake_max_secs,
-                           const char *tls_creds,
-                           const char *tls_authz,
-                           bool has_max_connections, uint32_t max_connections,
-+                          SocketAddressLegacy *addr,
-                           Error **errp)
- {
-     SocketAddress *addr_flat = socket_address_flatten(addr);
+ with tarfile.open(tar_file) as tar:
+     members = [{"name": m.name, "size": m.size, "offset": m.offset_data}
 -- 
 2.48.1
 
