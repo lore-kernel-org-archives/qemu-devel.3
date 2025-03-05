@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DEF5C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08BBC282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:25:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdUG-0001wB-66; Tue, 04 Mar 2025 20:23:52 -0500
+	id 1tpdUu-0003BE-7a; Tue, 04 Mar 2025 20:24:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTZ-0000BC-6c
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:11 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTq-0000hB-8P
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:26 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTV-00071e-6M
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:07 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43948f77f1aso40736085e9.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:23:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTn-00074U-R0
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:25 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-390effd3e85so4770627f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:23:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137783; x=1741742583; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741137802; x=1741742602; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z1HY9sBjuk9kbpZKm7s52igZtwUaZd0dmJ6wZJ2aD0c=;
- b=blyXb4n7rIarjWat9guQIA2HxtaZD7jdUg4C+SzPCMlxA50rWHaupiWH3duaXDzKsX
- MIzah7xmzFK8pub6Zp3t6mVs44pg1Hka824qd1OmNros6B64muGrCmR/dZvAXpIKVqab
- LBStIj12poTlHnq7TMm28QwiQ+VF0/UStvMtzwMC7rAXFO60IL1jrlXY67FsCQ8m6WK4
- In+23n/17Q3fKF9DvbMgQHDVBDa9OnGv50Tomm8opYxae0p0/K4SaOe46GEf7YxnnuBr
- Vp5PBN+Q4h+LwyUiAeiJJMkLlU7uAv19MB7DrGFlRK7HfH4j1yyx/XcKvQp93KypPRrq
- MxyA==
+ bh=/QUbgFdH+LpUBvr3jWV7pVNPKK1k5LRXJFBmyMiAPQM=;
+ b=w3W9wYSqKFkjVuCqfdOLwMdquHGCBVKpYoj9WukBRl5bx+EQbr2OGAa5H8v8QOQEXF
+ caJrjlA3eMhK/j8+tHyb7oGD1ALNP9ShShZQiMIu/3MX5oddODay4RuVM323m8mwXTIq
+ sjbax4sWgdspIq9NR+O2UDiFzTpR5nW4oprZOOKvkctfBYXyKJ2oXXWBo1Susl5gXstG
+ bNngnxdn80ai06MsZYJoLTvAvCh6wUWT59T5bAPIPTzVXGJXimKywgTkalOvbr2UaBBO
+ iN9vco/msSJW3SAbiJemdCGZd8LRVkR/ECXkwTMDxDzzCoo9eGRoNoT0TxdAEZMw+Z/x
+ Q8bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137783; x=1741742583;
+ d=1e100.net; s=20230601; t=1741137802; x=1741742602;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z1HY9sBjuk9kbpZKm7s52igZtwUaZd0dmJ6wZJ2aD0c=;
- b=hvhi1sfdJXCYIDBY5yoOmNtcQ82zZ8oVFQhtLgRUgA+18r29hPlS/eYJN0NnsC/NAI
- cVl7iO65MvmyazHukHogxDEjxrVzjyBy3waH/AtHm1LS1GISlPvqOxCV/f/+WyqUDB1E
- 2fl3opEkmNqDaqOc6YcvsZCfnarM7+fiI+c+hEX2Ef9E1Y7rjA/os7OK0CX+PSXt0Rwd
- 7LoQXI8XXuir1hbqzpCloeMaVRKGRuF2jXbxTA35Xo8HylLS+0C15rVSsOcpeR4j0jyo
- JIrfADOIxLy/N/DINK5jPgVz7qQGT34RiAN4ahLoAcjkyLtoendml6BEfTxDJvDWLt3E
- mmPA==
-X-Gm-Message-State: AOJu0Ywo2nCjgZdtlVGX/+LwZHOtdrYIxp66tYry4cMtn2yoDTZ92XQ4
- Huir9FOYHBOW8gL1LGmlQrRdmleJD6UPSNaLyG4Nq6YfQnWw0cg1F2eQZ4LvzHqsTiUcP8OH2db
- l9b4=
-X-Gm-Gg: ASbGncs1A2SeeJcF9JMD9syTRprqcjBIp+HzQ8rspDPQ2pYyTiCpsP/tB3GfkEsMZKP
- fGZcjJbU50f1AtUMjkaUk/MP2ARtQPDR4v4+l7U1TyRQ5zkF78k6X3tAHeMd0spqN/9WIcZwa41
- o1GzXoAojXTmO4ipXc1qFT9d7Z5RxF22Sf6Yunx9p2USwD/qaby4QpKUUMQpNFq8Uka1vkaJpCK
- e3svpIFA4rDEf+mTUVI9DMMCWbuPZh0iGVeNkX6Aa3PwjT+TDKCKzIOX49Km5EY+s2tVHf3wwNT
- kkzHvRI1FmywkRpfNMl8ML0aLC8bjvpXf3lwxJBCZmm084vZ3AhI0hEg6lQdo3svtvUPsuBltyo
- bV28hOwdyA8Gkx/bJJPY=
-X-Google-Smtp-Source: AGHT+IGKilKfXDFpupZCE6t8Xm96A8TSiW0MpnEDwWP8SPmCYvEhJajQdQxNiEJfpAWd5ORZ0G6XZg==
-X-Received: by 2002:a05:600c:35c3:b0:439:9ac3:a8b3 with SMTP id
- 5b1f17b1804b1-43bd29dd2b6mr5818615e9.18.1741137783469; 
- Tue, 04 Mar 2025 17:23:03 -0800 (PST)
+ bh=/QUbgFdH+LpUBvr3jWV7pVNPKK1k5LRXJFBmyMiAPQM=;
+ b=Vz4jvsl6zDc5xHHPmP49huC14ao0Uovyl6iUR44kBImJWFK24EQN/ZOCT9I8RWCWe9
+ lblms1Yh8YlBtRJ1I86ZzIXxpyyxU/06sO5XuCgG62dBd840ftxxLxnhjluDauL5tjP1
+ +M58XdyDWokAveO9QGFJB138LOmfErozwU8B+WGhn3902HiybWF8En/aVU2ko9JfKglC
+ KCx0uOwScq2PjFQtMBNE839QhVswJ6rW7erYS1Tc6emda0vHHubbAvgn9Fz0Ut/L5MJB
+ T1nVPjzMRc1jYI22U9zmrKRIIunDyaQMhtfBjthuR5aN++jJKl/D8I23OmZEFFsexz7G
+ J9Fw==
+X-Gm-Message-State: AOJu0YyXLWmDASvhemRVfDg2aUQwO4tHXD9nMi05245ydgmLkv8o8bFx
+ kkCLRJMl5/VQ+RfvJmsKk6ppJhvpA9QdC+gnp12WsCde5NWUEZx9jsrvhouIAgzHX9ecfUbLkQ3
+ kzec=
+X-Gm-Gg: ASbGnctFCZa+j+qAZwdMfqIS2QitlFoN9vKYEA9cqWkbCJuN1gmBQLCYMCbDurcOVP/
+ 9PEUgrvNs4SHxtke948eWDM3dcs5zlyXHRHZKdfW/BEKkdYQLngwAMgkRW6u+nsi7BJmHWYAjfD
+ nBnHf6ya/Oji6rk+BVqe5jVF7wOIRrrQEUKblfGbImeryUrdv6DpbbYPSnlxe/ds13O+GN2MABO
+ lkNfEcydpxrdFJuPuhuKxbq6S01eXId4Eie7RZfG7j5OR2spmIEWH/Fz5jO8mj6TD4W7uX3nasG
+ F7nDpRAZZjDj/01yOolxSOkU+bJFaBo5j65e0qilQC/WIkNR+zcDLNykI6tJUa9D9ShtJPEcgV5
+ Gs3wRfRwxIQVWY+yeuLs=
+X-Google-Smtp-Source: AGHT+IHkhqNryqZFpM238fJOfII6PO1kZdEUeuykTBuEcIfg3+vfRMOl2LupPUicva2CG9Jz0cGPKw==
+X-Received: by 2002:a5d:64a6:0:b0:390:eb32:3fd2 with SMTP id
+ ffacd0b85a97d-3911f57cc31mr909806f8f.0.1741137802156; 
+ Tue, 04 Mar 2025 17:23:22 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4844a38sm19442661f8f.75.2025.03.04.17.23.02
+ ffacd0b85a97d-390e4795978sm18925528f8f.3.2025.03.04.17.23.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 17:23:03 -0800 (PST)
+ Tue, 04 Mar 2025 17:23:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Subject: [PULL 13/41] hw/xen: Link XenPVH with GPEX PCIe bridge
-Date: Wed,  5 Mar 2025 02:21:28 +0100
-Message-ID: <20250305012157.96463-14-philmd@linaro.org>
+ Anthony PERARD <anthony.perard@vates.tech>
+Subject: [PULL 17/41] hw/xen/xen-legacy-backend: Remove unused 'net/net.h'
+ header
+Date: Wed,  5 Mar 2025 02:21:32 +0100
+Message-ID: <20250305012157.96463-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
 References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,40 +101,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-XenPVH requires the PCIe/GPEX device. Add it to Kconfig
-to avoid when configuring using --without-default-devices:
-
-  /usr/bin/ld: libqemu-aarch64-softmmu.a.p/hw_xen_xen-pvh-common.c.o: in function `xenpvh_gpex_init':
-  hw/xen/xen-pvh-common.c:174: undefined reference to `gpex_set_irq_num'
-  /usr/bin/ld: libqemu-aarch64-softmmu.a.p/hw_xen_xen-hvm-common.c.o: in function `pci_dev_bus_num':
-  include/hw/pci/pci.h:337: undefined reference to `pci_bus_num'
-  /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to `pci_bus_num'
-  /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to `pci_bus_num'
-  /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to `pci_bus_num'
-  /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to `pci_bus_num'
-  /usr/bin/ld: libqemu-aarch64-softmmu.a.p/hw_xen_xen-hvm-common.c.o: in function `cpu_ioreq_config':
-  hw/xen/xen-hvm-common.c:412: undefined reference to `pci_host_config_read_common'
-  /usr/bin/ld: hw/xen/xen-hvm-common.c:428: undefined reference to `pci_host_config_read_common'
-  /usr/bin/ld: hw/xen/xen-hvm-common.c:438: undefined reference to `pci_host_config_write_common'
-
-Fixes: f22e598a72c ("hw/xen: pvh-common: Add support for creating PCIe/GPEX")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-Id: <20250218162618.46167-2-philmd@linaro.org>
+Reviewed-by: Anthony PERARD <anthony.perard@vates.tech>
+Message-Id: <20250218162618.46167-8-philmd@linaro.org>
 ---
- accel/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ include/hw/xen/xen-legacy-backend.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/accel/Kconfig b/accel/Kconfig
-index 794e0d18d21..4263cab7227 100644
---- a/accel/Kconfig
-+++ b/accel/Kconfig
-@@ -16,4 +16,5 @@ config KVM
- config XEN
-     bool
-     select FSDEV_9P if VIRTFS
-+    select PCI_EXPRESS_GENERIC_BRIDGE
-     select XEN_BUS
+diff --git a/include/hw/xen/xen-legacy-backend.h b/include/hw/xen/xen-legacy-backend.h
+index e198b120c5d..2d0cbfecade 100644
+--- a/include/hw/xen/xen-legacy-backend.h
++++ b/include/hw/xen/xen-legacy-backend.h
+@@ -3,7 +3,6 @@
+ 
+ #include "hw/xen/xen_backend_ops.h"
+ #include "hw/xen/xen_pvdev.h"
+-#include "net/net.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_XENSYSDEV "xen-sysdev"
 -- 
 2.47.1
 
