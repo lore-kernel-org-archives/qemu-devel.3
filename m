@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6F1C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53FC2C282D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:35:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdWp-0006IS-1k; Tue, 04 Mar 2025 20:26:31 -0500
+	id 1tpdXA-0008L5-Sd; Tue, 04 Mar 2025 20:26:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVC-0004Dv-5o
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:51 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdV0-0003lD-L1
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:38 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdV8-0007I5-Ae
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:48 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-439a4fc2d65so66719755e9.3
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:24:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUy-0007GR-FL
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:38 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43bc0b8520cso18285865e9.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:24:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137884; x=1741742684; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741137874; x=1741742674; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vsB2TZLz8IJAYUss30F4SD873ZK7oobvrmd57J9F3o0=;
- b=d9EBc4M7DtdnX5/ouPG6Hv8NEZttA3tFYjeIBH8By2eqq2Ra2oDAacct+xHPxuJBtd
- rxAXOnw338au/rq7PawSmKqghl+EkOYFfck2CtrXoTnbSgqvaPUUC74qMIE4ZhRc1Xpc
- 3ejC1PSzJBUn2Grbkk4x2jXYm+9A1/EZJcq/Pr748W+IM/qkhY233cQEYtMLxKm/0CLW
- AeHg/ewbJ4FHOOg+GSfWQhO64IO8EG5d3711lUhQhdaPH1Rzi10fF6P0LEdIOEsCBXFF
- yNrLqrCePQZ0/t5C08NzXZUy7Xtpg3Eh1MBwyC1urX5oB0Mkl561tFyZzQv8uMMKynYZ
- VO0g==
+ bh=1mWnfHltEj6tHRnPRGRMEHYizLDHaaGta9SL21+nd1o=;
+ b=hc/LkIRUATJSRI49wJ2RBhflEIAKYAB7myCjrhabHKx/Uw4g5TX9DGd/uQeC3oWcJz
+ 3u+OQsEo9lycpw+1R+0nbExp+dbeHHNnPMQZWioAgBTvN3SUgQNq47uqpW7QZN7ez31w
+ plMZuWtQkCorpCotRyKJXGtq1cmRl+sGIj+DdueaQzMvFflIFnrpXTY0nRuy/Q17Jb9R
+ w1aLfR7SvHdjEjq8Vju/B3FiQlQGL0zpbQcf36w5W0QlVnJ39wU8Sj9YgChV96c2Ibdw
+ /XANeIw8OitxcRywjUdnA7Dd2BLz47dE0nO67+HNmXsN39TlVl2qvQRa4CqDjFiRnTAo
+ 2spA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137884; x=1741742684;
+ d=1e100.net; s=20230601; t=1741137874; x=1741742674;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vsB2TZLz8IJAYUss30F4SD873ZK7oobvrmd57J9F3o0=;
- b=PI3JXkfEffI5PA6p8xlaHexr5ccfZhUhxRLtPdFAexz33ELG31HCE8ps51XNnKJXej
- uK0Pq4PArRcSnabZxD47MA8TkKjP44Bf+ZhevL1Bmxs3jGyVXhVulGHy9zwf3LxcGYXA
- 72UBP1Rg4je9O0XY0MTVMNfbG29EkKYn3wSBH4ilq2M07VTDbAZK4zJVmQGbvvRsX40E
- VDpHK5K+iZmUKxRBe1CmUe8K2wP2FaIFudkqMWr+swnLk1MIUiUFHXZLdS7o8JLRz0YS
- e7HsmEHvc7t/Zn3xx4LIjzBfVOiXbUF27NvIlXTUDvLEhEXD6rLMn4ECOnZkqfJIZNCd
- vlMg==
-X-Gm-Message-State: AOJu0YyuCaR5hiEVFAvkOFtp5FVIFvbfyYLind+ZtmEjOX7Xc3L/FqI3
- 1ctyJNU41+Tr5ZZujEVeauahMwUyQ8h+wBsOYZwbM3xJ3PO3gixBIQ0KM0twIsR4OBTmm9/c/7F
- /BOg=
-X-Gm-Gg: ASbGnctTi7vBCWiV+Hdwvsja/40HvItJ0sIqF5Dr6a2jsCrLdihGRnHduFGgZJl1Dnt
- w+Vw+p+aF5g0DaaHwnJ83Ns7552zvxjE7mT7y3EsAHg/U/hQfZZRGqIvIMvTgV7mlsmXS7FRlGQ
- CF1UuYlJODjBhbhDweTDT8n7xsHR9k6Hg2awaQIDimPqYyFhYsTrbYlabBxlQCQrHf5XfTYiPRi
- Piz3y6TFXAVa2CKF/DBzqeqqrXVSWro93mO9ZWkOzJ+PVG8peEOsPPbZn0MOn0bjLkFBXzbp3El
- dKNgyb+6EnsCC9FKy9KRyks0sgjSaKfSxtPfIeig7o2PVOVgH5FyNXboLTgUhj/CMjSwoYgre8L
- bMiHqWO6mwtYDV0/r19o=
-X-Google-Smtp-Source: AGHT+IGxk7eg1Xv5sm2d19xhoDzc6uZ48JcHKvIhl1VpBR9o+o0bqgzx6p/f0J3nikKvpGQLF/QMrg==
-X-Received: by 2002:a05:600c:458c:b0:439:9424:1b70 with SMTP id
- 5b1f17b1804b1-43bd29e0456mr7645145e9.30.1741137884655; 
- Tue, 04 Mar 2025 17:24:44 -0800 (PST)
+ bh=1mWnfHltEj6tHRnPRGRMEHYizLDHaaGta9SL21+nd1o=;
+ b=kF1LseIIktEfLe8eHWJgrmR717O2XaAI0qLadOxiCbsV5pyiTAHuDrcsl/zNNEA+dh
+ 1g87pnBrk58Eai49n+Ck1pb132Mro8aUSKOLjqna6npADAhIQ0wkj+L8Fv9yFa6V+lqL
+ fzfXO8vjqc4zuBbDGkf1nVKNCQ3tbGLC3qEGyxKgN3X2PnWvWGgTd+J0dlfwxMGnkyEx
+ mXkERBm10FI1QRLrGAUnujUa3I1FfpKkbf9RJUT9PbZc7xdSZr6bwUnhWZWjRU6Ew8xs
+ ysyF3LkbLTOwENLniMElSwjmRODYKSSVbxONRsd09sfToQK+uwA/xa1qkPlI/5QrwyHl
+ fe1w==
+X-Gm-Message-State: AOJu0YweaJUAfBCWd2a3NlrKkT6oYp34sntAFO4flwWZ3/A515c7QrpB
+ 1NC5rBeGOGKvslUpz/juRhhg67lMxTe4HgGCEG6ELPl0tWgVIWfcU8l/rxxsCgDuwnqJhaTjZUD
+ vVwo=
+X-Gm-Gg: ASbGncu1J0LD2uihG/yH3oM/mNkqLkW72dCk9D8+g+fWqSk94KpgMdwQcspXw4/DXRY
+ osWDXWMDKln12Qa4haDkWzX+SlH7Rk+TSYmPa5rFKq7EJTHg+ni1hOy+sRBybnbmfvN3LxP6+ai
+ 7ow1JpplNJFuBenf1ZCIsvNEz2G2yDYwRv3FB5+S4hVTjRCnq1c1K/hCs5YQ2suzW5NOT2seC8a
+ 56Jff0+Qcn025trtArQv4c5pa0hEUHjhMrjRNqUlyjqSjyVlmUFngA+GUTYGpuoxyOQkJEZaUaA
+ htOhyXLaUyL+WRDONDb7O7qoH7WQZCgwbL+VJRY0A8zL/A1ZH9VCf6AuMecW/6dSOszWSlbTfRJ
+ c9LjF1lhwgoRyIdBNqKM=
+X-Google-Smtp-Source: AGHT+IFD3pgOlhis6f0S3UKzIuGTZWgOG/uOLqazzWAzAiVz/aQlZPTA3PivA+kPSv2VnG0oHSTbig==
+X-Received: by 2002:a5d:56c7:0:b0:390:f55b:baa4 with SMTP id
+ ffacd0b85a97d-3911f7c3383mr449324f8f.42.1741137874653; 
+ Tue, 04 Mar 2025 17:24:34 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd42b7478sm2005795e9.17.2025.03.04.17.24.43
+ ffacd0b85a97d-390e4795983sm19152823f8f.6.2025.03.04.17.24.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 17:24:44 -0800 (PST)
+ Tue, 04 Mar 2025 17:24:34 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: Keoseong Park <keosung.park@samsung.com>, Fabiano Rosas <farosas@suse.de>,
+ Jeuk Kim <jeuk20.kim@samsung.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 34/41] hw/arm/omap1: Drop ALMDEBUG ifdeffed out code
-Date: Wed,  5 Mar 2025 02:21:49 +0100
-Message-ID: <20250305012157.96463-35-philmd@linaro.org>
+Subject: [PULL 32/41] tests/qtest/ufs-test: Add test code for the temperature
+ feature
+Date: Wed,  5 Mar 2025 02:21:47 +0100
+Message-ID: <20250305012157.96463-33-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
 References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,176 +102,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Keoseong Park <keosung.park@samsung.com>
 
-In omap1.c, there are some debug printfs in the omap_rtc_write()
-function that are guardad by ifdef ALMDEBUG. ALMDEBUG is never
-set, so this is all dead code.
+This commit adds tests to verify the correctness of query attribute
+results related to the temperature feature. It ensures that querying
+temperature attributes returns expected values.
 
-It's not worth the effort of converting all of these to tracepoints;
-a modern tracepoint approach would probably have a single tracepoint
-covering all the register writes anyway. Just delete the printf()s.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250227170117.1726895-3-peter.maydell@linaro.org>
+Signed-off-by: Keoseong Park <keosung.park@samsung.com>
+Acked-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
+Message-ID: <20250225064243epcms2p8b7b59e7bf381bd68d30a6f59b40dea9f@epcms2p8>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/omap1.c | 51 --------------------------------------------------
- 1 file changed, 51 deletions(-)
+ tests/qtest/ufs-test.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index 3c0ce5e0979..8f5bb81c96a 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -2660,25 +2660,16 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index d5076bdeb54..4867ccf08a1 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -784,6 +784,30 @@ static void ufstest_query_attr_request(void *obj, void *data,
+     g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
+     g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
  
-     switch (offset) {
-     case 0x00:	/* SECONDS_REG */
--#ifdef ALMDEBUG
--        printf("RTC SEC_REG <-- %02x\n", value);
--#endif
-         s->ti -= s->current_tm.tm_sec;
-         s->ti += from_bcd(value);
-         return;
- 
-     case 0x04:	/* MINUTES_REG */
--#ifdef ALMDEBUG
--        printf("RTC MIN_REG <-- %02x\n", value);
--#endif
-         s->ti -= s->current_tm.tm_min * 60;
-         s->ti += from_bcd(value) * 60;
-         return;
- 
-     case 0x08:	/* HOURS_REG */
--#ifdef ALMDEBUG
--        printf("RTC HRS_REG <-- %02x\n", value);
--#endif
-         s->ti -= s->current_tm.tm_hour * 3600;
-         if (s->pm_am) {
-             s->ti += (from_bcd(value & 0x3f) & 12) * 3600;
-@@ -2688,17 +2679,11 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
-         return;
- 
-     case 0x0c:	/* DAYS_REG */
--#ifdef ALMDEBUG
--        printf("RTC DAY_REG <-- %02x\n", value);
--#endif
-         s->ti -= s->current_tm.tm_mday * 86400;
-         s->ti += from_bcd(value) * 86400;
-         return;
- 
-     case 0x10:	/* MONTHS_REG */
--#ifdef ALMDEBUG
--        printf("RTC MTH_REG <-- %02x\n", value);
--#endif
-         memcpy(&new_tm, &s->current_tm, sizeof(new_tm));
-         new_tm.tm_mon = from_bcd(value);
-         ti[0] = mktimegm(&s->current_tm);
-@@ -2715,9 +2700,6 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
-         return;
- 
-     case 0x14:	/* YEARS_REG */
--#ifdef ALMDEBUG
--        printf("RTC YRS_REG <-- %02x\n", value);
--#endif
-         memcpy(&new_tm, &s->current_tm, sizeof(new_tm));
-         new_tm.tm_year += from_bcd(value) - (new_tm.tm_year % 100);
-         ti[0] = mktimegm(&s->current_tm);
-@@ -2737,25 +2719,16 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
-         return;	/* Ignored */
- 
-     case 0x20:	/* ALARM_SECONDS_REG */
--#ifdef ALMDEBUG
--        printf("ALM SEC_REG <-- %02x\n", value);
--#endif
-         s->alarm_tm.tm_sec = from_bcd(value);
-         omap_rtc_alarm_update(s);
-         return;
- 
-     case 0x24:	/* ALARM_MINUTES_REG */
--#ifdef ALMDEBUG
--        printf("ALM MIN_REG <-- %02x\n", value);
--#endif
-         s->alarm_tm.tm_min = from_bcd(value);
-         omap_rtc_alarm_update(s);
-         return;
- 
-     case 0x28:	/* ALARM_HOURS_REG */
--#ifdef ALMDEBUG
--        printf("ALM HRS_REG <-- %02x\n", value);
--#endif
-         if (s->pm_am)
-             s->alarm_tm.tm_hour =
-                     ((from_bcd(value & 0x3f)) % 12) +
-@@ -2766,33 +2739,21 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
-         return;
- 
-     case 0x2c:	/* ALARM_DAYS_REG */
--#ifdef ALMDEBUG
--        printf("ALM DAY_REG <-- %02x\n", value);
--#endif
-         s->alarm_tm.tm_mday = from_bcd(value);
-         omap_rtc_alarm_update(s);
-         return;
- 
-     case 0x30:	/* ALARM_MONTHS_REG */
--#ifdef ALMDEBUG
--        printf("ALM MON_REG <-- %02x\n", value);
--#endif
-         s->alarm_tm.tm_mon = from_bcd(value);
-         omap_rtc_alarm_update(s);
-         return;
- 
-     case 0x34:	/* ALARM_YEARS_REG */
--#ifdef ALMDEBUG
--        printf("ALM YRS_REG <-- %02x\n", value);
--#endif
-         s->alarm_tm.tm_year = from_bcd(value);
-         omap_rtc_alarm_update(s);
-         return;
- 
-     case 0x40:	/* RTC_CTRL_REG */
--#ifdef ALMDEBUG
--        printf("RTC CONTROL <-- %02x\n", value);
--#endif
-         s->pm_am = (value >> 3) & 1;
-         s->auto_comp = (value >> 2) & 1;
-         s->round = (value >> 1) & 1;
-@@ -2802,32 +2763,20 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
-         return;
- 
-     case 0x44:	/* RTC_STATUS_REG */
--#ifdef ALMDEBUG
--        printf("RTC STATUSL <-- %02x\n", value);
--#endif
-         s->status &= ~((value & 0xc0) ^ 0x80);
-         omap_rtc_interrupts_update(s);
-         return;
- 
-     case 0x48:	/* RTC_INTERRUPTS_REG */
--#ifdef ALMDEBUG
--        printf("RTC INTRS <-- %02x\n", value);
--#endif
-         s->interrupts = value;
-         return;
- 
-     case 0x4c:	/* RTC_COMP_LSB_REG */
--#ifdef ALMDEBUG
--        printf("RTC COMPLSB <-- %02x\n", value);
--#endif
-         s->comp_reg &= 0xff00;
-         s->comp_reg |= 0x00ff & value;
-         return;
- 
-     case 0x50:	/* RTC_COMP_MSB_REG */
--#ifdef ALMDEBUG
--        printf("RTC COMPMSB <-- %02x\n", value);
--#endif
-         s->comp_reg &= 0x00ff;
-         s->comp_reg |= 0xff00 & (value << 8);
-         return;
++    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
++                         UFS_UPIU_QUERY_OPCODE_READ_ATTR,
++                         UFS_QUERY_ATTR_IDN_CASE_ROUGH_TEMP, 0, 0, 0,
++                         &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x00));
++
++    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
++                         UFS_UPIU_QUERY_OPCODE_READ_ATTR,
++                         UFS_QUERY_ATTR_IDN_HIGH_TEMP_BOUND, 0, 0, 0,
++                         &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(160));
++
++    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
++                         UFS_UPIU_QUERY_OPCODE_READ_ATTR,
++                         UFS_QUERY_ATTR_IDN_LOW_TEMP_BOUND, 0, 0, 0,
++                         &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(60));
++
+     /* Write Writable Attributes & Read Again */
+     ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
+                          UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
 -- 
 2.47.1
 
