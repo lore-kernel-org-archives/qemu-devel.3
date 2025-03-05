@@ -4,90 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FECCC282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D12C282DE
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpf3g-0004u6-1f; Tue, 04 Mar 2025 22:04:32 -0500
+	id 1tpfib-0005P7-LN; Tue, 04 Mar 2025 22:46:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tpf3f-0004tQ-14; Tue, 04 Mar 2025 22:04:31 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tpf3c-0000XP-Ac; Tue, 04 Mar 2025 22:04:30 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-223480ea43aso157437345ad.1; 
- Tue, 04 Mar 2025 19:04:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741143866; x=1741748666; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QLcgE8yUo/zShcOLQFfIjpRxCQoguCjvk3qipznlNXw=;
- b=RdfuHuK8+lj2vmz+YJCoV7Udq3AvZGrFDjU6DwbV3AukhTN2jCilGo/wSGC8pML5V2
- f8ddNUHHVo9cgwVRqgT7yyb9EN6t/kBAP1TZpQGYW/pQgqASe+fVPbJXNEKu9i+uwBG2
- oB0LxITW+QbpLphtFyZw1Mso0zPuewmIpp6ab88jTLY2ljTi96b7uTr+CQh8rQK1pkVZ
- MSlpan1h/BZPWGcNP31rwUlj0D/N1Hl1l1OVcyNQeWtSOROFWKT4O9SMiH42H22jDDXv
- p9tlkPib+W8jTcHltvm7VktkBH2fUSGOiyjCrXOhDXLgSl5UxOw5eO7LJhijzMZeouPy
- 3G0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741143866; x=1741748666;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QLcgE8yUo/zShcOLQFfIjpRxCQoguCjvk3qipznlNXw=;
- b=PFtTrbpeDFaa5JSUSkhpBVN3460K3xV6ttOAxkKjLYVBqJB4j1vYa+fpIAsUUMCX9E
- AVMT0A+h7ixNvRKaMceGMb7DlbuvDJQFj2EcNRMjgw2l2kz4uO1hClObxl6hT7m+MzAT
- MlJW3pvFMGrK4xVfuqNhykoga5AkKCIMhz/RsDw+ByXS07utsgRHZLOq0xHIDBgkMn1C
- yvnXBC5e4o6SfadF1BCLynDlwMZ9e1oUmOz+mBwBvz30TY8ioeez10mKLe5XIiMUTuDi
- 6Qn3Xo+lPL0yDinGYX7qLFg1vNdOS0k1r4wjnyTYG/I7uJF0PlU5R7EpPoDolTeXgpxq
- jElg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXEhIJ+wdVrAQjP/6kyzO7Y12WLz1x9YUeQch2oPNVSIqK7W5SaRdlUbLdnyv7bZ5IrCzoSQ7tCJgB9@nongnu.org,
- AJvYcCXucKJB5ydBwLO0k8dGrG/TOUKOX7l7vs/UCy6cPsvrLArIDJRo34P0M2FZMvWTGsp0QMe9o5v95pP7@nongnu.org
-X-Gm-Message-State: AOJu0YzR2cl05DmdpVbE4bpEdeY8iqZMrwtt3G+Y7DkEgKyGqs/c++R2
- LdMB1lfwGKM1Sn0A2622BuFKikxY1+CBE53iH45vc/1fFMX+l+4AtExCz5OQ
-X-Gm-Gg: ASbGnct0odWCCZO+hI4eK3eAmUpBw5SZZQHVewjfQH6syPYor+ek7wtXbDVUE8zVmC1
- OVmDe90PbTZrP20xdKl1jMhTFfX0hUMUDmPn8DxrAVstjVKKQh30Z7mPA9ajvsIiUMcVIoPYLfR
- mo4iWu6pgWfJzZj/y/bWYtLQnwVcPCbDmBJXgTTgGD+AlaP2hi0EOtcEo6HOAXrSw0GzGVA2XzK
- LSVVY30Xitxgz+YXqnlQyAFYC0j6OvZtQl6Aoi44RmZaSZSStvxwm+LRlKvC5+z7GaRbO0OfXAe
- CLxsIKaIjCFQHC942dLX/v9Qf7fkRiTRoMmCw8JT8of6/a5iAowbM48+rRmqsrk=
-X-Google-Smtp-Source: AGHT+IHBKewSNecbWeNtLaqd7usGubmbEaZ1LnIR5IwOn/y2ZhjoAJVRSl/wceihno9DVOsb09rjKQ==
-X-Received: by 2002:a17:902:da88:b0:223:2744:cb32 with SMTP id
- d9443c01a7336-223f1c81c41mr23994095ad.5.1741143866036; 
- Tue, 04 Mar 2025 19:04:26 -0800 (PST)
-Received: from localhost (n11648126014.netvigator.com. [116.48.126.14])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223504e1b2dsm103635915ad.170.2025.03.04.19.04.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 19:04:25 -0800 (PST)
-From: Stefan Hajnoczi <stefanha@gmail.com>
-X-Google-Original-From: Stefan Hajnoczi <stefanha@fedora>
-Date: Wed, 5 Mar 2025 11:04:21 +0800
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, pbonzini@redhat.com,
- manos.pitsidianakis@linaro.org, philmd@linaro.org,
- qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH v2 09/11] rust/block: Add read support for block drivers
-Message-ID: <20250305030421.GC247800@fedora>
-References: <20250218182019.111467-1-kwolf@redhat.com>
- <20250218182019.111467-10-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfiX-0005O0-77
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:46:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfiV-00062Y-6f
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:46:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741146402;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MJ8i3B3IWUv9hwDYZ3ZSUdrZb/ZBpQUf3O+dp/jYjMw=;
+ b=cvpcA9lN5l950s/7tWCGn1PuzPs1tWFn5HrQKUm6H0dvn9LmSDgT6nAXIWq5tIHzau6isX
+ tFSGS8BSzxuoohkPN1Pwg1JMaqoqd+PvjOVQptLlpo/xDDD2HUpicsXEGe1RiWWoCXWdim
+ fwwj62gw2V7G/gjbKhCzo2xPoEo6FNo=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-xeOJpzt0PyOGHsjD6QAQcA-1; Tue,
+ 04 Mar 2025 22:46:34 -0500
+X-MC-Unique: xeOJpzt0PyOGHsjD6QAQcA-1
+X-Mimecast-MFC-AGG-ID: xeOJpzt0PyOGHsjD6QAQcA_1741146393
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4D196193578F; Wed,  5 Mar 2025 03:46:27 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.45])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CCFBB1956095; Wed,  5 Mar 2025 03:46:23 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: [PATCH 03/57] docs/sphinx: create QAPI domain extension stub
+Date: Tue,  4 Mar 2025 22:45:12 -0500
+Message-ID: <20250305034610.960147-4-jsnow@redhat.com>
+In-Reply-To: <20250305034610.960147-1-jsnow@redhat.com>
+References: <20250305034610.960147-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="h/NQToe/oFUJD5v/"
-Content-Disposition: inline
-In-Reply-To: <20250218182019.111467-10-kwolf@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=stefanha@gmail.com; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,191 +86,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+A Sphinx domain is a collection of directive and role extensions meant
+to facilitate the documentation of a specific language. For instance,
+Sphinx ships with "python" and "cpp" domains. This patch introduces a
+stub for the "qapi" language domain.
 
---h/NQToe/oFUJD5v/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Please see https://www.sphinx-doc.org/en/master/usage/domains/index.html
+for more information.
 
-On Tue, Feb 18, 2025 at 07:20:17PM +0100, Kevin Wolf wrote:
-> This adds a map() function to the BlockDriver trait and makes use of it
-> to implement reading from an image.
->=20
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->  rust/block/src/driver.rs | 95 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 95 insertions(+)
->=20
-> diff --git a/rust/block/src/driver.rs b/rust/block/src/driver.rs
-> index fe19f4b88f..022d50ffbc 100644
-> --- a/rust/block/src/driver.rs
-> +++ b/rust/block/src/driver.rs
-> @@ -9,10 +9,45 @@
-> =20
->  use crate::{IoBuffer, SizedIoBuffer};
->  use qemu_api::bindings;
-> +use qemu_api::errno::Errno;
-> +use qemu_api::futures::qemu_co_run_future;
-> +use std::cmp::min;
->  use std::ffi::c_void;
->  use std::io::{self, Error, ErrorKind};
->  use std::mem::MaybeUninit;
->  use std::ptr;
-> +use std::sync::Arc;
-> +
-> +/// A request to a block driver
-> +pub enum Request {
-> +    Read { offset: u64, len: u64 },
-> +}
-> +
-> +/// The target for a number of guest blocks, e.g. a location in a child =
-node or the information
-> +/// that the described blocks are unmapped.
-> +pub enum MappingTarget {
-> +    /// The described blocks are unallocated. Reading from them yields z=
-eros.
-> +    Unmapped,
-> +
-> +    /// The described blocks are stored in a child node.
-> +    Data {
-> +        /// Child node in which the data is stored
-> +        node: Arc<BdrvChild>,
-> +
-> +        /// Offset in the child node at which the data is stored
-> +        offset: u64,
-> +    },
-> +}
-> +
-> +/// A mapping for a number of contiguous guest blocks
-> +pub struct Mapping {
-> +    /// Offset of the mapped blocks from the perspective of the guest
-> +    pub offset: u64,
-> +    /// Length of the mapping in bytes
-> +    pub len: u64,
-> +    /// Where the data for the described blocks is stored
-> +    pub target: MappingTarget,
-> +}
-> =20
->  /// A trait for writing block drivers.
->  ///
-> @@ -37,6 +72,11 @@ unsafe fn open(
-> =20
->      /// Returns the size of the image in bytes
->      fn size(&self) -> u64;
-> +
-> +    /// Returns the mapping for the first part of `req`. If the returned=
- mapping is shorter than
-> +    /// the request, the function can be called again with a shortened r=
-equest to get the mapping
-> +    /// for the remaining part.
-> +    async fn map(&self, req: &Request) -> io::Result<Mapping>;
+This stub doesn't really do anything yet, we'll get to it brick-by-brick
+in the forthcoming commits to keep the series breezy and the git history
+informative.
 
-What are the constraints on the lifetime of returned mappings? I don't
-mean a Rust lifetimes, but how long a returned mapping remains valid. I
-guess at the moment returned mappings stay valid forever (i.e. the
-BlockDriver cannot move data once it has been mapped)?
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ docs/conf.py               |  9 +++++-
+ docs/sphinx/qapi_domain.py | 56 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 64 insertions(+), 1 deletion(-)
+ create mode 100644 docs/sphinx/qapi_domain.py
 
-This becomes more interesting once write or discard requests are
-supported or truncate() is implemented, but it would be worth spelling
-out the lifetime of a mappings from the start and extending that model
-later because it's an important assumption.
+diff --git a/docs/conf.py b/docs/conf.py
+index 31bb9a37893..49d9de894c0 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -60,7 +60,14 @@
+ # Add any Sphinx extension module names here, as strings. They can be
+ # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+ # ones.
+-extensions = ['kerneldoc', 'qmp_lexer', 'hxtool', 'depfile', 'qapidoc']
++extensions = [
++    'depfile',
++    'hxtool',
++    'kerneldoc',
++    'qapi_domain',
++    'qapidoc',
++    'qmp_lexer',
++]
+ 
+ if sphinx.version_info[:3] > (4, 0, 0):
+     tags.add('sphinx4')
+diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+new file mode 100644
+index 00000000000..a1983d94440
+--- /dev/null
++++ b/docs/sphinx/qapi_domain.py
+@@ -0,0 +1,56 @@
++"""
++QAPI domain extension.
++"""
++
++from __future__ import annotations
++
++from typing import (
++    TYPE_CHECKING,
++    AbstractSet,
++    Any,
++    Dict,
++    Tuple,
++)
++
++from sphinx.domains import Domain, ObjType
++from sphinx.util import logging
++
++
++if TYPE_CHECKING:
++    from sphinx.application import Sphinx
++
++logger = logging.getLogger(__name__)
++
++
++class QAPIDomain(Domain):
++    """QAPI language domain."""
++
++    name = "qapi"
++    label = "QAPI"
++
++    object_types: Dict[str, ObjType] = {}
++    directives = {}
++    roles = {}
++    initial_data: Dict[str, Dict[str, Tuple[Any]]] = {}
++    indices = []
++
++    def merge_domaindata(
++        self, docnames: AbstractSet[str], otherdata: Dict[str, Any]
++    ) -> None:
++        pass
++
++    def resolve_any_xref(self, *args: Any, **kwargs: Any) -> Any:
++        # pylint: disable=unused-argument
++        return []
++
++
++def setup(app: Sphinx) -> Dict[str, Any]:
++    app.setup_extension("sphinx.directives")
++    app.add_domain(QAPIDomain)
++
++    return {
++        "version": "1.0",
++        "env_version": 1,
++        "parallel_read_safe": True,
++        "parallel_write_safe": True,
++    }
+-- 
+2.48.1
 
->  }
-> =20
->  /// Represents the connection between a parent and its child node.
-> @@ -166,6 +206,60 @@ pub async fn read_uninit<T: SizedIoBuffer>(
->      }
->  }
-> =20
-> +#[doc(hidden)]
-> +pub unsafe extern "C" fn bdrv_co_preadv_part<D: BlockDriver>(
-> +    bs: *mut bindings::BlockDriverState,
-> +    offset: i64,
-> +    bytes: i64,
-> +    qiov: *mut bindings::QEMUIOVector,
-> +    mut qiov_offset: usize,
-> +    flags: bindings::BdrvRequestFlags,
-> +) -> std::os::raw::c_int {
-> +    let s =3D unsafe { &mut *((*bs).opaque as *mut D) };
-> +
-> +    let mut offset =3D offset as u64;
-> +    let mut bytes =3D bytes as u64;
-> +
-> +    while bytes > 0 {
-> +        let req =3D Request::Read { offset, len: bytes };
-> +        let mapping =3D match qemu_co_run_future(s.map(&req)) {
-> +            Ok(mapping) =3D> mapping,
-> +            Err(e) =3D> return -i32::from(Errno::from(e).0),
-> +        };
-> +
-> +        let mapping_offset =3D offset - mapping.offset;
-> +        let cur_bytes =3D min(bytes, mapping.len - mapping_offset);
-> +
-> +        match mapping.target {
-> +            MappingTarget::Unmapped =3D> unsafe {
-> +                bindings::qemu_iovec_memset(qiov, qiov_offset, 0, cur_by=
-tes.try_into().unwrap());
-> +            },
-> +            MappingTarget::Data {
-> +                node,
-> +                offset: target_offset,
-> +            } =3D> unsafe {
-> +                let ret =3D bindings::bdrv_co_preadv_part(
-> +                    node.child,
-> +                    (target_offset + mapping_offset) as i64,
-> +                    cur_bytes as i64,
-> +                    qiov,
-> +                    qiov_offset,
-> +                    flags,
-> +                );
-> +                if ret < 0 {
-> +                    return ret;
-> +                }
-> +            },
-> +        }
-> +
-> +        offset +=3D cur_bytes;
-> +        qiov_offset +=3D cur_bytes as usize;
-> +        bytes -=3D cur_bytes;
-> +    }
-> +
-> +    0
-> +}
-> +
->  /// Declare a format block driver. This macro is meant to be used at the=
- top level.
->  ///
->  /// `typ` is a type implementing the [`BlockDriver`] trait to handle the=
- image format with the
-> @@ -179,6 +273,7 @@ macro_rules! block_driver {
->                      instance_size: ::std::mem::size_of::<$typ>() as i32,
->                      bdrv_open: Some($crate::driver::bdrv_open::<$typ>),
->                      bdrv_close: Some($crate::driver::bdrv_close::<$typ>),
-> +                    bdrv_co_preadv_part: Some($crate::driver::bdrv_co_pr=
-eadv_part::<$typ>),
->                      bdrv_child_perm: Some(::qemu_api::bindings::bdrv_def=
-ault_perms),
->                      is_format: true,
->                      ..::qemu_api::zeroable::Zeroable::ZERO
-> --=20
-> 2.48.1
->=20
->=20
-
---h/NQToe/oFUJD5v/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfHvzUACgkQnKSrs4Gr
-c8jgvgf/ZqkpfIjP02y6xJ97ktOZz3KOqL1v3G/DeiQ0B/FB1QHJwdO7HfZ6lztd
-f4I7+3ArMTKilYatZy2+GSyolBa3n5yB4TpHVAIZpiV2x+ItYyqo/FJfiAwUrFak
-/yVTik+LZmUStuBgUDHABbdDxBZQ1Ue5QQD6DKLK+vHTGNI2DHbjwH7i7EByHpe0
-1EkV4wd5eybF7ltEqogEZAxT8u+chS5GDvZTtpkhr0nKuk9V6NQEsDg0xV5c3udM
-RkTXhRA5S4NVRc7iQEl7BIAbwdTiMu73lVmlgsrRcYQY5QP4YYhT7UTEjyaP+oWA
-nDsImKBgVJ6w8KZHIJVMNwgZNEk7ig==
-=ITpS
------END PGP SIGNATURE-----
-
---h/NQToe/oFUJD5v/--
 
