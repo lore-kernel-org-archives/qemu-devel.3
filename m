@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4354C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 09:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80937C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 10:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tplU5-0004Lg-7C; Wed, 05 Mar 2025 04:56:13 -0500
+	id 1tpleT-0007AN-3t; Wed, 05 Mar 2025 05:06:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tplU3-0004LD-R7; Wed, 05 Mar 2025 04:56:11 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <pmgpatil@gmail.com>)
+ id 1tpleP-0007A1-Mi
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 05:06:54 -0500
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tplU1-0007D5-Qi; Wed, 05 Mar 2025 04:56:11 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-223fd89d036so2230005ad.1; 
- Wed, 05 Mar 2025 01:56:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pmgpatil@gmail.com>)
+ id 1tpleN-0000Ge-Gf
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 05:06:53 -0500
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-30615661f98so69778871fa.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 02:06:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741168567; x=1741773367; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Tzy3UH7UzkMEGdBhjgDNFmclNQWzRn0iUNq7DiTDGJI=;
- b=Zda2QNDFIurtoskIHu2OUmdJwb3Jqj9QvKpwa5zYOlVrwXAZiOxf9rNsFD6mEPRdnT
- o1YCt1b52iBYeC4eMQUwDtz/tx6QQ59gS/yZ3jHyZvT59gc0m/Gc1j5BiH/DRQsD+vuZ
- Y3e4XjN9ZCg6TvjI43+GHeKS7wcgU54VvR2KtOdu6+tK8sFrI0F0IOWZPoIIfDFgzgsk
- qEfBdzpb6JtA/qiTLJ1CSTp+/l0h3IOYQ0CuyP5eGMVq8Cq4nzj9vXcBqlu9QCbqQAVH
- xCKB+P19QPAEdgSNE+OcgJZZTyZ0COrp+n/lc8gm+Zk9/WB12fWcQ7tO1vTvEiLqkB9e
- G1Fw==
+ d=gmail.com; s=20230601; t=1741169209; x=1741774009; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DCAHDBgtEbuqIEOkImjLMTTMiHEJyTCbH84LYBvTb/Y=;
+ b=mTsOKFTxiKNjl6zpIK25VAp3Oy8DrLsTXF3dbgOLqMfQFdbsOxWZ1Awpayy9W3yEiE
+ ge6WBFSNPvGLMSddJn3aUFyC/EvHHnNQ1BJjGCivvnvuydVubnosIxQQUklCV3Cym1Tw
+ Q37RuXlMdKVWA/ElwvszQXvbBDR/B82Bf1HiohnqCxpLpQY+Re8CRKD5tSz0jMMq3gfv
+ ilDNfZVmZOWNEABjfBbTLOVg4q5Pa5lJe0prLvLciFYq4J7AOmuk4hO4GHzprSIPwPMB
+ yo/0DAR7f+DWHZhK1chrnN6YUij2V36uOwB9yulAQk9fgKET+C+1txsvc/Vj3xduNZEv
+ 1FdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741168567; x=1741773367;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Tzy3UH7UzkMEGdBhjgDNFmclNQWzRn0iUNq7DiTDGJI=;
- b=a3INS4Lcsc3FjtshjlaiR5JxAEvDGa/COvMOAmmKy2uuPiCMjplRoG3MGdxFSXGHaZ
- v37Ru79Vk80cLh2W2WWYY8ubqHQIwvNJnVbaifEn3Nux4NdtuKzRN6JfAopaVjknlLoC
- h2gRmyQWEM7v/bphF9rS7hKDavOTzJTmLcpxqfwsEjsA2LMri2+8f5OKurTqOmtHsw74
- Sv155Eqwv1twH66xJ1DJhBrmtr5odHMncqcsoxYQV5sk8t3KsbpSYRIFxeakKsRiOwyF
- AtDgiZI9gk/yCD5R7PfvOFB+bchvRQ1o4GVdrfQslbIWNv3kHsu0t2TV31vO2tHllUXl
- DhEg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWCQooTA1mA2fA7wFArvGEyEzu7vw/geshjgieloYpA1LF+EAEGeS6Z80Xz8aDIbJ1kXQYv3FH1GNyX@nongnu.org,
- AJvYcCXXRcQFR1C2NV/qLwtI4KK/bRNnZOXdtvtrIkrWIlci7YN2PZkSEczRY29lnEe3bl6iCheA1xj488ba@nongnu.org
-X-Gm-Message-State: AOJu0YzzOq1DeNNDWO9/0ApNWfe5jjY/MykAMsszZPkUEhCe18CP1BeB
- ag+7BLpqhT8/zDjrwEVq/JdBafKcIoPDPPfkmZa3Kus20hHXvPCiNGvL7tNT
-X-Gm-Gg: ASbGncuhoTZCwypFdSEu1W4SqoTCjWdoAnWA6ZqdEnX4wN9qX6gLs344LafwoxyQ3Dz
- R3v8HIH7e796vty+kPRRSrtynuTX70IU/4NST1gk2LfH8cSU3C5sJMM3EJzMiyXi9cWYr9JHznf
- 4oj29cALcq+XYn1JgjIyD6PFrZ4iVpHIif4vnJfcJujQgbFzExKRdZ3agyNnmI4ZaDoSt+1ijUZ
- S4Mw8psXpA3pC+HMV804n3txROErAcbQqU1xLc0ZUkgBKCKcjurf+QcA6mapPVVT6mlwsl7mofv
- QM1+ZPmornZ73gUO+3zkbBaFK7ZCnhEMuDpqgcOrzWpX9j+0DfRiqKZarykyksM=
-X-Google-Smtp-Source: AGHT+IEiWNpdAo/hQUgxWC8n3LIlDkMz+l4RILr7yPiCLXfM1loZPpMcH1nQ8y5XNMvWtZ9fu1jW6g==
-X-Received: by 2002:a05:6a00:4b01:b0:736:5b46:489b with SMTP id
- d2e1a72fcca58-73682b55238mr4129139b3a.1.1741168566765; 
- Wed, 05 Mar 2025 01:56:06 -0800 (PST)
-Received: from localhost (n11648126014.netvigator.com. [116.48.126.14])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736550edf72sm5621776b3a.167.2025.03.05.01.56.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Mar 2025 01:56:05 -0800 (PST)
-From: Stefan Hajnoczi <stefanha@gmail.com>
-X-Google-Original-From: Stefan Hajnoczi <stefanha@fedora>
-Date: Wed, 5 Mar 2025 17:56:01 +0800
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, pbonzini@redhat.com,
- manos.pitsidianakis@linaro.org, philmd@linaro.org,
- qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH v2 09/11] rust/block: Add read support for block drivers
-Message-ID: <20250305095601.GD247800@fedora>
-References: <20250218182019.111467-1-kwolf@redhat.com>
- <20250218182019.111467-10-kwolf@redhat.com>
+ d=1e100.net; s=20230601; t=1741169209; x=1741774009;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DCAHDBgtEbuqIEOkImjLMTTMiHEJyTCbH84LYBvTb/Y=;
+ b=qs5iIbDU3jD0toxWzTMzmJrPPnUY7ehTrxiE9Nyx0ZJ/bABM8feToMcQ8PM7aIhteb
+ eZafA/KcCx8UFwLN6aOvOTIKWXAsBB2HAQ/KODAr35xxP3c6LW2nFkkXCZIgL6sGo20y
+ Qyfuhw/Li5VBwNFJMZxW4HAngtawXaRe+jeO/q6zh5BvPvewdWV3avp1i71U2S+vY5cW
+ ZZSTiYoEoSFLYga3bI7mLKpQabGqT4mxot64XExx1wKTZ2dNyuJKSili5JHv5Ct40Ft/
+ QVzFE+sXEW/1y00b5kolD9t91YMgv+rE1YZ7sf5i51i8NTFaqv9+81Pmf58uofF2t5l9
+ MKCw==
+X-Gm-Message-State: AOJu0YwY44J7cbSsqxg5TVMtgwPG37ikMT7qRPflrPes/XhBTkdIRQnX
+ a4ZaHCEdjXO8UUEp2TtriMWaXn3eDZzE/jmn4At+W2zG8MktgCsXdDQps1ypQwCZxBB0/Wf1sQE
+ 8aJDKVFIX/BHcU3f41SZEJhryoCo=
+X-Gm-Gg: ASbGncv9LgazeNH6AggV3fBN44Lr+8OVTmiV1T70LESU0xFRmkOiqtTO2YYg59PA04H
+ 1dS9W095CRXllUd9/kHGDxvDVPe7yqO7Gp/unl3apn0FTi2w0QB8rkuHY2JkMokv7fcaXSLk25N
+ Jnf0nSDDEwpaKokPi9RtzWQFELcRzs
+X-Google-Smtp-Source: AGHT+IFC9K3ZF61em6IqeUFCfxzG8qglyhELEFXPuhQO7WyCxUQEwIW5gn6mpUUGbAsNrxiJMd5RSAu4BmKZgDTf0XA=
+X-Received: by 2002:a05:651c:1504:b0:30b:d187:622b with SMTP id
+ 38308e7fff4ca-30bd7a53bedmr11306511fa.18.1741169208255; Wed, 05 Mar 2025
+ 02:06:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="ANoX1nAJAWeM9Fej"
-Content-Disposition: inline
-In-Reply-To: <20250218182019.111467-10-kwolf@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=stefanha@gmail.com; helo=mail-pl1-x633.google.com
+References: <CAFvsdYns1yO6Wsm8VKP_khbTPm09Kf5KDmBpeMSrjboyccK4Aw@mail.gmail.com>
+ <d2276vugq6wureu6zzrwci5sdtg3b6gllqskjv7hfvuulsmhyn@anl3d5htudty>
+In-Reply-To: <d2276vugq6wureu6zzrwci5sdtg3b6gllqskjv7hfvuulsmhyn@anl3d5htudty>
+From: prashant patil <pmgpatil@gmail.com>
+Date: Wed, 5 Mar 2025 15:36:35 +0530
+X-Gm-Features: AQ5f1JqqpivS5m1Qqn-6fjWXPA1DKTlyIhQKm4dM9dKQpeCAfRDm_7iuLrgKefo
+Message-ID: <CAFvsdYk0J7ybdu+dL+w70Po1bGypLopBkixPp-ZzmTA8MdTr0w@mail.gmail.com>
+Subject: Re: Query on the dirty bitmap
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000026ee09062f958cfa"
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=pmgpatil@gmail.com; helo=mail-lj1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,160 +92,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---ANoX1nAJAWeM9Fej
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--00000000000026ee09062f958cfa
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 18, 2025 at 07:20:17PM +0100, Kevin Wolf wrote:
-> +/// A request to a block driver
-> +pub enum Request {
-> +    Read { offset: u64, len: u64 },
-> +}
-> +
-> +/// The target for a number of guest blocks, e.g. a location in a child =
-node or the information
-> +/// that the described blocks are unmapped.
-> +pub enum MappingTarget {
-> +    /// The described blocks are unallocated. Reading from them yields z=
-eros.
-> +    Unmapped,
-> +
-> +    /// The described blocks are stored in a child node.
-> +    Data {
-> +        /// Child node in which the data is stored
-> +        node: Arc<BdrvChild>,
-> +
-> +        /// Offset in the child node at which the data is stored
-> +        offset: u64,
-> +    },
-> +}
-> +
-> +/// A mapping for a number of contiguous guest blocks
-> +pub struct Mapping {
-> +    /// Offset of the mapped blocks from the perspective of the guest
-> +    pub offset: u64,
-> +    /// Length of the mapping in bytes
-> +    pub len: u64,
-> +    /// Where the data for the described blocks is stored
-> +    pub target: MappingTarget,
-> +}
-> =20
->  /// A trait for writing block drivers.
->  ///
-> @@ -37,6 +72,11 @@ unsafe fn open(
-> =20
->      /// Returns the size of the image in bytes
->      fn size(&self) -> u64;
-> +
-> +    /// Returns the mapping for the first part of `req`. If the returned=
- mapping is shorter than
-> +    /// the request, the function can be called again with a shortened r=
-equest to get the mapping
-> +    /// for the remaining part.
-> +    async fn map(&self, req: &Request) -> io::Result<Mapping>;
+I was trying to read the bitmap of the running vm's disk. When I followed
+below mentioned commands, then I was able to read the bitmap properly.
+block-dirty-bitmap-add, block-dirty-bitmap-disable, nbd-server-start,
+nbd-server-add, qemu-img
+map with x-dirty-bitmap image-opts.
 
-Here are my thoughts about how the interface could evolve as more
-functionality is added (beyond the scope of this patch). I'm sure you
-have your own ideas that aren't in this patch series, so take it for
-what it's worth.
+Please let me know if there is any other better alternative to do the same.
 
-The main point:
-The current interface has Request, which tells the BlockDriver that this
-is a Read. I think this interface is still based on I/O requests rather
-than being about mappings. The caller should handle
-read/write/discard/etc request logic themselves based on the mapping
-information from the BlockDriver. Then the BlockDriver just worries
-about mapping blocks rather than how to treat different types of
-requests.
+Thanks
+Prashant
 
-A sketch of the interface:
-The interface consists of fetch(), alloc(), and update().
+On Fri, Feb 28, 2025 at 3:53=E2=80=AFAM Eric Blake <eblake@redhat.com> wrot=
+e:
 
-1. Fetch mappings located around a given range:
-   fetch(offset, len) -> [Mapping]
+> On Wed, Feb 19, 2025 at 04:23:26PM +0530, prashant patil wrote:
+> > Hello All,
+> > Hope this email finds you well.
+> >
+> > I have been trying with qemu for a while now, and have come across a
+> > problem specific to dirty bitmaps. I have enabled bitmap on the qcow2
+> disk
+> > image using 'qemu-img bitmap' command, exposed the bitmap over a unix
+> > socket using 'qemu-nbd' command. Now when I try to read the bitmap usin=
+g
+> > 'qemu-img map' command with 'x-dirty-bitmap=3Dqemu:dirty-bitmap:{bitmap=
+}'
+> > option, I get one single extent which shows that the entire disk is
+> dirty.
+> > Note that the disk size is 5 GB, and has only a few MB of data in it, a=
+nd
+> > had added very small data after the bitmap was enabled. Bitmap output h=
+as
+> > been pasted below.
+>
+> Can you show the exact sequence of command lines you used to create
+> the image, dirty a portion of it, then start up the qemu-nbd process
+> to inspect it?  As written, I can't reproduce your issue, but I know
+> it sounds similar to tests/qemu-iotests/tests/qemu-img-bitmaps which
+> does what you're talking about, so I know the code works and have to
+> suspect you may have missed a step or reordered things in such a way
+> that the entire bitmap is reading as dirty.
+>
+> >
+> > [{ "start": 0, "length": 5368709120, "depth": 0, "present": true, "zero=
+":
+> > false, "data": true, "compressed": false, "offset": 0}]
+> >
+> > Can someone please help me understand why the bitmap content shows the
+> > entire disk as dirty?
+>
+> --
+> Eric Blake, Principal Software Engineer
+> Red Hat, Inc.
+> Virtualization:  qemu.org | libguestfs.org
+>
+>
 
-   The returned array of mappings must cover <offset, len>, but it can
-   also be larger. For example, it could return the entire extent that
-   includes <offset, len>. Or it could even contain the <offset, len>
-   mapping along with a bunch of other mappings.
+--00000000000026ee09062f958cfa
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-   If the BlockDriver pays the cost of a metadata read operation to load
-   mappings, then let's report all mappings even if they precede or
-   follow the <offset, len> range. The exact amount of extra mappings
-   reported depends on the BlockDriver implementation and the metadata
-   layout, but in qcow2 it might be an L2 table, for example. The idea
-   is that if the BlockDriver volunteers extra mapping information, then
-   the caller can perform future operations without calling into the
-   BlockDriver again.
+<div dir=3D"ltr">I was trying to read the bitmap of the running vm&#39;s di=
+sk. When I followed below mentioned commands, then I was able to read the b=
+itmap properly.<div>block-dirty-bitmap-add,=C2=A0block-dirty-bitmap-disable=
+,=C2=A0nbd-server-start,=C2=A0nbd-server-add,=C2=A0qemu-img map with x-dirt=
+y-bitmap image-opts.</div><div><br><div>Please let me know if there is any =
+other better alternative to do the same.</div></div><div><br></div><div>Tha=
+nks</div><div>Prashant</div></div><br><div class=3D"gmail_quote gmail_quote=
+_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Feb 28, 2025 at 3=
+:53=E2=80=AFAM Eric Blake &lt;<a href=3D"mailto:eblake@redhat.com">eblake@r=
+edhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">On Wed, Feb 19, 2025 at 04:23:26PM +0530, prashant patil wrote:<=
+br>
+&gt; Hello All,<br>
+&gt; Hope this email finds you well.<br>
+&gt; <br>
+&gt; I have been trying with qemu for a while now, and have come across a<b=
+r>
+&gt; problem specific to dirty bitmaps. I have enabled bitmap on the qcow2 =
+disk<br>
+&gt; image using &#39;qemu-img bitmap&#39; command, exposed the bitmap over=
+ a unix<br>
+&gt; socket using &#39;qemu-nbd&#39; command. Now when I try to read the bi=
+tmap using<br>
+&gt; &#39;qemu-img map&#39; command with &#39;x-dirty-bitmap=3Dqemu:dirty-b=
+itmap:{bitmap}&#39;<br>
+&gt; option, I get one single extent which shows that the entire disk is di=
+rty.<br>
+&gt; Note that the disk size is 5 GB, and has only a few MB of data in it, =
+and<br>
+&gt; had added very small data after the bitmap was enabled. Bitmap output =
+has<br>
+&gt; been pasted below.<br>
+<br>
+Can you show the exact sequence of command lines you used to create<br>
+the image, dirty a portion of it, then start up the qemu-nbd process<br>
+to inspect it?=C2=A0 As written, I can&#39;t reproduce your issue, but I kn=
+ow<br>
+it sounds similar to tests/qemu-iotests/tests/qemu-img-bitmaps which<br>
+does what you&#39;re talking about, so I know the code works and have to<br=
+>
+suspect you may have missed a step or reordered things in such a way<br>
+that the entire bitmap is reading as dirty.<br>
+<br>
+&gt; <br>
+&gt; [{ &quot;start&quot;: 0, &quot;length&quot;: 5368709120, &quot;depth&q=
+uot;: 0, &quot;present&quot;: true, &quot;zero&quot;:<br>
+&gt; false, &quot;data&quot;: true, &quot;compressed&quot;: false, &quot;of=
+fset&quot;: 0}]<br>
+&gt; <br>
+&gt; Can someone please help me understand why the bitmap content shows the=
+<br>
+&gt; entire disk as dirty?<br>
+<br>
+-- <br>
+Eric Blake, Principal Software Engineer<br>
+Red Hat, Inc.<br>
+Virtualization:=C2=A0 <a href=3D"http://qemu.org" rel=3D"noreferrer" target=
+=3D"_blank">qemu.org</a> | <a href=3D"http://libguestfs.org" rel=3D"norefer=
+rer" target=3D"_blank">libguestfs.org</a><br>
+<br>
+</blockquote></div>
 
-   If it turns out that certain BlockDriver implementations don't
-   benefit, that's okay, but let's include the flexibility to volunteer
-   more mapping information than just <offset, len> in the interface.
-
-2. Allocate new unmapped blocks:
-   alloc(num_blocks) -> Result<(BdrvChild, Offset)>
-
-   (A choice needs to be made whether the blocks are contiguous or not,
-   I'm showing the contiguous function prototype here because it's
-   simpler, but it could also support non-contiguous allocations.)
-
-   These blocks are not mapped yet and the caller is expected to write
-   to them eventually, populating them with data.
-
-   I'm assuming the qcow2 crash consistency model where leaking clusters
-   is acceptable here. Not sure whether this API makes sense for all
-   other image formats, but please bear with me for the final part of
-   the interface where everything fits together.
-
-3. Update mapping:
-   update(offset, len, MappingTarget) -> Result<()>
-
-   This adds or changes mappings. It's the most complicated function and
-   there are a lot of details about which inputs should be
-   allowed/forbidden (e.g. creating completely new mappings, splitting
-   existing mappings, toggling MappingTarget on an existing mapping).
-   Perhaps in practice only a few valid combinations of inputs will be
-   allowed rather than full ability to manipulate mappings.
-
-   Anyway, here is how it can be used:
-   - Allocating write. After blocks allocated with alloc() have been
-     written with data, call update() to establish a mapping.
-   - Discard. Change the MappingTarget of an existing mapping to unmap
-     blocks. This frees blocks unless they should be anchored (aka
-     pre-allocated).
-   - Write to anchored blocks. If the mapping had blocks allocated but
-     they were not mapped, then update() should be called after data has
-     been written to the blocks to restore the mapping from anchored to
-     normal mapped blocks.
-
-The overall idea is that I/O requests are not part of the interface,
-only mappings. The caller decides how to perform I/O requests and calls
-the appropriate combination of fetch(), alloc(), and update() APIs to
-ensure the necessary mapping state is present.
-
-It will probably be necessary to add additional mapping information
-indicating permissions, compression/encryption info, etc so that the
-caller can process I/O requests rather than sending them into the
-BlockDriver.
-
-Stefan
-
---ANoX1nAJAWeM9Fej
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfIH7AACgkQnKSrs4Gr
-c8g8GQf+MjdHdx0XauT6RqNJaeZkTgPEVVl/dGqdcrNtMqmEeKYXqHAn2gmlcIB9
-Nf4gXx9Ke/l0UeVpUWMBCh9//N5ivucYIRVkX+u+zezWKGJc+H91howVrRf/qyYR
-mIuRo3sHKeQutaJkuFJbPhkYYpT0vBvWqHtKHgj9+KMQEgb24CHH8cqxyswI3TDT
-iW3fAPEQzaKN5Os6eir1t1U68/8pz1Wp+FTCRGIiFwS+J1+0/IMXssgZtmL8ad0D
-7lE1+ZAnOQZGCVfirNw1sYST+vAUsB19SiWdX7jGpWL6LSDxYm5+mCcoly6R6v6j
-XSGjnWXNAXQIGgDWCLqpp7hLdAMOvw==
-=w06F
------END PGP SIGNATURE-----
-
---ANoX1nAJAWeM9Fej--
+--00000000000026ee09062f958cfa--
 
