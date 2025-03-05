@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C0E2C282D3
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AFBFC282E3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdUj-0002fO-63; Tue, 04 Mar 2025 20:24:23 -0500
+	id 1tpdWd-0005be-SD; Tue, 04 Mar 2025 20:26:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTb-0000Cw-K5
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:14 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUo-0002yk-3f
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:27 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTZ-00072K-R2
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:11 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43bc0b8520cso18283125e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:23:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUk-0007EN-4K
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:24 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43bd03ed604so6218155e9.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:24:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137788; x=1741742588; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741137860; x=1741742660; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aeQ4l2OYCtamyJNS0OGrQ+B6RH9yuhSbCm/kTfeIjFw=;
- b=sHuL/NuiwUnmUgf9vSd4+e4dcqwHfNMzS6WvPuHPb5ejnVnN5XQmK3zgpgdPCYza8w
- cb9GIEWiYDocMNlYsU+ioQOC+d6Dl7UYQ1iaukqBcXQKF9IrcVIlSaeOpxycxE3+SM4Z
- QQ4hlWDrCSirRxNxUaV9EBevQCmuBr7yKdVUtgD4I2eeGZ2KmZoLH0Xlw7spr7seMhRY
- cgV18xqB3rkgIrusf+zebm6DZKCtQ5eSjKCHYXdHnALbfucC1FtyfO8UOerluP82MQS3
- yjqY4nQco/DrhEjU6+PrczvfyQNDgJkSptbDCroEwQ2yWWVompncH+2d3GKw0VtXVS/p
- aLUw==
+ bh=xAGfCuU3Kbhb9h0Vekx8SOe9ZIxHfI7sjhoEbEJI7Ok=;
+ b=hubTVO4R2p4r1S8gLTr3+QZlWXp5e8Oopx8eAOfNG7BWMlOy8WmoCLwX1vuy25cYNC
+ Ky3Gq2uBYX2LNhJ6BkBpYoCIozd3Q56YPj5uL4dwevhUvIXbOiG1ugkWo/XarqwCS4G3
+ 2wbg+WnitPfFlMKAM5/NcAmDPiCBjBiOiQcdUgLybzPXMioou4qCepDPH5yZTKTOS6Tv
+ GF9oK12jCmgpCj/7n6vlP7zO33/tSekZDpnohGC89VN97X+b4vrcbvDJBFcWsnhWf9G0
+ oFZte12l6EACbw62RfAuCt1S2wBkWfqJmYjvM/cG3ZFgrti4Hk4oTL6HGa0+znDYD9g4
+ p5IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137788; x=1741742588;
+ d=1e100.net; s=20230601; t=1741137860; x=1741742660;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aeQ4l2OYCtamyJNS0OGrQ+B6RH9yuhSbCm/kTfeIjFw=;
- b=b/Xvp0kmG6AtPxP1L0Fy+5qBCtbAqbjiN4UbxUgNW+mJiJex3Bh7fPyaedGgp4wHhm
- UeniYTynt/scGhkaYVsf1+U3bdc1mSHHZrVBjQSNvaane3LzZIlF5ty2zP5qzegRt1S3
- cMgFqWJ3sni0U4cZc5r0VJ4rHwEkRNFZEd6SYhB56DBvXnmskSNHc8HpiSbn6w+gzUBR
- Udl34SW1YYSKn5gaG8TRfx1JMdIUTsosHxHgOH5oaUfIbLYRxp6seoilb8GtZfL43i/p
- fVXec9IHGcgONS5j/+ZlM/xqZOUofvVGtcm1H75oSy9qCSlj2rHS4Pk51cQZswxT8iUG
- 1aCQ==
-X-Gm-Message-State: AOJu0YzYLaGak6KNVWP+UidJ6xv1OPMaiImSSU4u5P6uTSL2pQAA0dZH
- aanws5d+ezeWlDVnRKIPbsNITeQafWAt6Ibj+FVS9GTNA8+JLiHFa+UvhOPX3IowVR8/OFKhQ84
- YDH8=
-X-Gm-Gg: ASbGnctUXlZfv7xtIRHgWxIBJx47+zklkWhedEVwx3X+5w20aSBTxtvNrH44TwvfxH3
- X8U335nKxNn270hG5SgHJVKCcXGDIUjxjahBN9Ao1EDjbUa3NMt0VgiVfYnEaqlX9ywen3pn/qp
- OAm93dB4pgz+uQ6LgFT/5VugR3beQePXiDjF4bbPlBzrySsZ77ywjTjo+/qjhugkty9p/FNevQM
- cEYom2BrDR7MkvvXQlTwOgXjb8oOvBUkCEvtEHBCoajW2Bwff0htaGfOnnv6oUj//UAEMhD69+J
- JbLqHGK57XojhHDFqPVlIVkekoNdua5GVsbxRWkyO5cTnjGxhobaiRwtsXM00ZkAvQqpzYAkppf
- P8f9D+aOSbLCb/N0wGis=
-X-Google-Smtp-Source: AGHT+IEz9bELYNHsjKK2F/BgmQWXnXhLASFYyS27hnCY1gOJJavUIwFuGaRJcYLARH10q7J9vflpNg==
-X-Received: by 2002:a05:6000:1448:b0:391:ab2:9e87 with SMTP id
- ffacd0b85a97d-3911f7264e3mr616606f8f.6.1741137787876; 
- Tue, 04 Mar 2025 17:23:07 -0800 (PST)
+ bh=xAGfCuU3Kbhb9h0Vekx8SOe9ZIxHfI7sjhoEbEJI7Ok=;
+ b=e5NlyD7rnfAoo5S80kKYaNNnEEqssGwcf+p90zQG61vwd2epSierzMEzts2i7FtNiw
+ 3k0czleK6+OQdGdE8Q/ihmxsikwaODi950d1lkabbajIqH/w0lWnegBDqJZMTnmiHjM1
+ gwXfYPeZZ6Q3GfqUaUy4NelXg44HXz2RbS3ms2u7wX3S7HOuFY0hU1eNMKWWQXFAmdov
+ 2Jsvas1Uk7UK9/iOVbTX3fYFnoDdaF+eOTyFwj7yJG5zCz1dln5tPFnk0Kv0gnGzZoxA
+ XRiePZSHAQLelggHVTtKF+OGmj62FxM2XhuyDBPCyg3dfN9MDMkE70W+G+a3kdg0QTVF
+ 3SFA==
+X-Gm-Message-State: AOJu0YzT7APCHsUHxp880nuZvvVY0C5AcVkSiEg2n3bWv52ntgc+Yznk
+ HbBT2E4/yVxGqJ4ygQ1SpVW3nKSYfPlCpTf2Lq9VA4r+peD12oX/G7O2xegtKNq/M86EmUmomo0
+ Y9Yw=
+X-Gm-Gg: ASbGncsmZiqt973V1q7jImXMGpc7zsgMPGYThsNtAQMv+xUt4PluG2MnGDA2TZS5qaf
+ 0d4kxL5txBYbPNF6nQNxlLIT/wuV1ifpovKUX2YNvKQ9DAjQ+sL4J8HiQR46iGnZqlVJn9taPjm
+ QP+1WzXStJcFfMxpCc83Ly4ho0IwILXSnHWY+8I1uKXvpEoyyB2wPb6Byauba//eCnhloMZyaUU
+ 8HM4v4XHP7AOJCZFHv945EXELHbE+qqnJu2yPU0uShm86nxxi5xwkQ8EK35K/Hed3pPwAgeA0P3
+ ifHXqMy1ktU5tIZPqQzMeLhtR3zLg9Xq+sSlGFmaKwNki5wEsSGikaiVejwmR5UVRGkA3dDbu3O
+ wk8urbnlWHj44StXX2LI=
+X-Google-Smtp-Source: AGHT+IEeaMdkz+OCDDar26RrJDW6XKvyYLGDFccIYNMjGIaCbM++RD13r2zkzb8ETUGgc67yotR0IA==
+X-Received: by 2002:a05:6000:4025:b0:390:f6aa:4e6f with SMTP id
+ ffacd0b85a97d-3911f714de9mr847057f8f.10.1741137860151; 
+ Tue, 04 Mar 2025 17:24:20 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4847fe5sm19388500f8f.73.2025.03.04.17.23.07
+ ffacd0b85a97d-390e485d773sm19173652f8f.81.2025.03.04.17.24.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 17:23:07 -0800 (PST)
+ Tue, 04 Mar 2025 17:24:19 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Subject: [PULL 14/41] hw/xen/xen-pvh: Reduce included headers
-Date: Wed,  5 Mar 2025 02:21:29 +0100
-Message-ID: <20250305012157.96463-15-philmd@linaro.org>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 29/41] hw/misc/macio: Improve trace logs
+Date: Wed,  5 Mar 2025 02:21:44 +0100
+Message-ID: <20250305012157.96463-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
 References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,84 +101,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Have "hw/xen/xen-pvh-common.h" include the bare minimal set
-of headers. Adapt sources to avoid errors when refactoring
-unrelated headers such:
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-    hw/i386/xen/xen-pvh.c: In function ‘xen_pvh_machine_class_init’:
-    hw/i386/xen/xen-pvh.c:84:28: error: ‘TARGET_DEFAULT_CPU_TYPE’ undeclared (first use in this function)
-       84 |     mc->default_cpu_type = TARGET_DEFAULT_CPU_TYPE;
-          |                            ^~~~~~~~~~~~~~~~~~~~~~~
-    hw/xen/xen-pvh-common.c: In function ‘xen_pvh_init’:
-    hw/xen/xen-pvh-common.c:217:43: error: ‘MiB’ undeclared (first use in this function)
-      217 |         if (s->cfg.pci_ecam.size != 256 * MiB) {
-          |                                           ^~~
-    hw/xen/xen-hvm-common.c:18:6: error: no previous prototype for ‘xen_mr_is_memory’ [-Werror=missing-prototypes]
-       18 | bool xen_mr_is_memory(MemoryRegion *mr)
-          |      ^~~~~~~~~~~~~~~~
+Add macio_gpio_read trace event and use that in macio_gpio_read()
+instead of macio_gpio_write. Also change log message to match
+macio_timer_{read,write}.
 
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250222122850.9D8B84E603D@zero.eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-Id: <20250218162618.46167-5-philmd@linaro.org>
 ---
- include/hw/xen/xen-pvh-common.h | 8 ++++----
- hw/i386/xen/xen-pvh.c           | 1 +
- hw/xen/xen-pvh-common.c         | 5 ++---
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ hw/misc/macio/gpio.c       | 2 +-
+ hw/misc/macio/trace-events | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/xen/xen-pvh-common.h b/include/hw/xen/xen-pvh-common.h
-index 5cdd23c2f4d..17c5a58a5a4 100644
---- a/include/hw/xen/xen-pvh-common.h
-+++ b/include/hw/xen/xen-pvh-common.h
-@@ -9,11 +9,11 @@
- #ifndef XEN_PVH_COMMON_H__
- #define XEN_PVH_COMMON_H__
+diff --git a/hw/misc/macio/gpio.c b/hw/misc/macio/gpio.c
+index 7cad62819a0..4364afc84af 100644
+--- a/hw/misc/macio/gpio.c
++++ b/hw/misc/macio/gpio.c
+@@ -135,7 +135,7 @@ static uint64_t macio_gpio_read(void *opaque, hwaddr addr, unsigned size)
+         }
+     }
  
--#include <assert.h>
--#include "hw/sysbus.h"
--#include "hw/hw.h"
--#include "hw/xen/xen-hvm-common.h"
-+#include "exec/memory.h"
-+#include "qom/object.h"
-+#include "hw/boards.h"
- #include "hw/pci-host/gpex.h"
-+#include "hw/xen/xen-hvm-common.h"
+-    trace_macio_gpio_write(addr, val);
++    trace_macio_gpio_read(addr, val);
+     return val;
+ }
  
- #define TYPE_XEN_PVH_MACHINE MACHINE_TYPE_NAME("xen-pvh-base")
- OBJECT_DECLARE_TYPE(XenPVHMachineState, XenPVHMachineClass,
-diff --git a/hw/i386/xen/xen-pvh.c b/hw/i386/xen/xen-pvh.c
-index 33c10279763..f6356f2a7ed 100644
---- a/hw/i386/xen/xen-pvh.c
-+++ b/hw/i386/xen/xen-pvh.c
-@@ -14,6 +14,7 @@
- #include "hw/xen/arch_hvm.h"
- #include <xen/hvm/hvm_info_table.h>
- #include "hw/xen/xen-pvh-common.h"
-+#include "target/i386/cpu.h"
+diff --git a/hw/misc/macio/trace-events b/hw/misc/macio/trace-events
+index ad4b9d1c08e..055a407aebb 100644
+--- a/hw/misc/macio/trace-events
++++ b/hw/misc/macio/trace-events
+@@ -18,7 +18,8 @@ macio_timer_read(uint64_t addr, unsigned len, uint32_t val) "read addr 0x%"PRIx6
+ macio_set_gpio(int gpio, bool state) "setting GPIO %d to %d"
+ macio_gpio_irq_assert(int gpio) "asserting GPIO %d"
+ macio_gpio_irq_deassert(int gpio) "deasserting GPIO %d"
+-macio_gpio_write(uint64_t addr, uint64_t val) "addr: 0x%"PRIx64" value: 0x%"PRIx64
++macio_gpio_write(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
++macio_gpio_read(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
  
- #define TYPE_XEN_PVH_X86  MACHINE_TYPE_NAME("xenpvh")
- OBJECT_DECLARE_SIMPLE_TYPE(XenPVHx86State, XEN_PVH_X86)
-diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
-index 9c21fa858d3..d675f7a8aeb 100644
---- a/hw/xen/xen-pvh-common.c
-+++ b/hw/xen/xen-pvh-common.c
-@@ -8,14 +8,13 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
--#include "qapi/error.h"
-+#include "qemu/units.h"
- #include "qapi/visitor.h"
- #include "hw/boards.h"
- #include "hw/irq.h"
--#include "hw/sysbus.h"
--#include "system/system.h"
- #include "system/tpm.h"
- #include "system/tpm_backend.h"
-+#include "system/runstate.h"
- #include "hw/xen/xen-pvh-common.h"
- #include "trace.h"
- 
+ # pmu.c
+ pmu_adb_poll(int olen) "ADB autopoll, olen=%d"
 -- 
 2.47.1
 
