@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD15C282D9
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC55C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpfjS-0006lU-LO; Tue, 04 Mar 2025 22:47:44 -0500
+	id 1tpfj9-0005u4-1j; Tue, 04 Mar 2025 22:47:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfjL-0006Ub-OB
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:47:36 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfj4-0005iG-Hs
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:47:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfjJ-00069y-Ti
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:47:35 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfj1-00067O-C7
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:47:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741146453;
+ s=mimecast20190719; t=1741146434;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NOuPk1n5NCVsVAJdRRLy69vdaa01uAEYuIFG9s4IFjA=;
- b=UUisPXd1g5m6fwM6ZtCH83JxjLzFfbESim+3CWslCm+mEicfxWvbO52oVO728ZjLT+mRGW
- rna2tUemJD4IDPpxm24ElgBoaV6WuadsAhQo+dg63AWIzibSRpnMKlINipTsuWk1N5hhzR
- 9/ikjQu46UH9MvVql4Jo5z2g3GnZx5o=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=av/LEwhuXaKikBGm7XHenppYaeUIC4NUezABwrF9viY=;
+ b=F1rAz1JbWFlM/VNucPD++9NkHhhZK6I7QqB/QwMhAkLGk099vgTcGcAKPA2c1cO1Mg+jRn
+ NyMyRHN7UtYa2tLbYPtpvk80kuGUOcKIBGZX2/hgC/RtIQ/fgoqS5/9SRBLYtITLJgUwVT
+ qFegNo5svpL/RKka3Z11+94TSf8vnCI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-6C8053U2NQa9CfSb4GANlw-1; Tue,
- 04 Mar 2025 22:47:23 -0500
-X-MC-Unique: 6C8053U2NQa9CfSb4GANlw-1
-X-Mimecast-MFC-AGG-ID: 6C8053U2NQa9CfSb4GANlw_1741146442
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-mMwqJkyBOnmfS4B7d3yLQA-1; Tue,
+ 04 Mar 2025 22:47:11 -0500
+X-MC-Unique: mMwqJkyBOnmfS4B7d3yLQA-1
+X-Mimecast-MFC-AGG-ID: mMwqJkyBOnmfS4B7d3yLQA_1741146430
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E1E7A18001CA; Wed,  5 Mar 2025 03:47:21 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9367F180AF51; Wed,  5 Mar 2025 03:47:10 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.45])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ED29B1956095; Wed,  5 Mar 2025 03:47:18 +0000 (UTC)
+ id 277221955DDD; Wed,  5 Mar 2025 03:47:07 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
@@ -53,9 +53,9 @@ Cc: Michael Roth <michael.roth@amd.com>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 18/57] docs/qapi-domain: add qapi:alternate directive
-Date: Tue,  4 Mar 2025 22:45:27 -0500
-Message-ID: <20250305034610.960147-19-jsnow@redhat.com>
+Subject: [PATCH 15/57] docs/qapi-domain: add "Errors:" field lists
+Date: Tue,  4 Mar 2025 22:45:24 -0500
+Message-ID: <20250305034610.960147-16-jsnow@redhat.com>
 In-Reply-To: <20250305034610.960147-1-jsnow@redhat.com>
 References: <20250305034610.960147-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -86,77 +86,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the .. qapi:alternate:: directive, object, and qapi:alt:`name`
-cross-reference role.
-
-Add the "Choices:" field list for describing alternate choices. Like
-other field lists that reference QAPI types, a forthcoming commit will
-add cross-referencing support to this field.
-
-RFC: In the future, it would be nice to directly inline Alternates as
-part of the type information in the containing object (i.e. directly in
-arguments/members) - but that's a task for another series. For now, the
-branch "names" are documented just like qapidoc.py does, even though
-this information is superfluous for user documentation. Room for future
-improvement, but not now.
+``:error: descr`` can now be used to document error conditions. The
+format of the description is not defined here; so the ability to name
+specific types is left to the document writer.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapi_domain.py | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ docs/sphinx/qapi_domain.py | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index 66fdeec1d37..d4120fa5ac6 100644
+index e1b766d9481..d60cccb8e95 100644
 --- a/docs/sphinx/qapi_domain.py
 +++ b/docs/sphinx/qapi_domain.py
-@@ -320,6 +320,23 @@ class QAPIEnum(QAPIObject):
+@@ -35,7 +35,7 @@
+ from sphinx.locale import _, __
+ from sphinx.roles import XRefRole
+ from sphinx.util import logging
+-from sphinx.util.docfields import GroupedField, TypedField
++from sphinx.util.docfields import Field, GroupedField, TypedField
+ from sphinx.util.docutils import SphinxDirective
+ from sphinx.util.nodes import make_id, make_refnode
+ 
+@@ -285,6 +285,13 @@ class QAPICommand(QAPIObject):
+                 names=("arg",),
+                 can_collapse=False,
+             ),
++            # :error: descr
++            Field(
++                "error",
++                label=_("Errors"),
++                names=("error", "errors"),
++                has_arg=False,
++            ),
+         ]
      )
  
- 
-+class QAPIAlternate(QAPIObject):
-+    """Description of a QAPI Alternate."""
-+
-+    doc_field_types = QAPIObject.doc_field_types.copy()
-+    doc_field_types.extend(
-+        [
-+            # :choice type name: descr
-+            TypedField(
-+                "choice",
-+                label=_("Choices"),
-+                names=("choice",),
-+                can_collapse=False,
-+            ),
-+        ]
-+    )
-+
-+
- class QAPIModule(SphinxDirective):
-     """
-     Directive to mark description of a new module.
-@@ -483,6 +500,7 @@ class QAPIDomain(Domain):
-         "module": ObjType(_("module"), "mod", "any"),
-         "command": ObjType(_("command"), "cmd", "any"),
-         "enum": ObjType(_("enum"), "enum", "type", "any"),
-+        "alternate": ObjType(_("alternate"), "alt", "type", "any"),
-     }
- 
-     # Each of these provides a rST directive,
-@@ -491,6 +509,7 @@ class QAPIDomain(Domain):
-         "module": QAPIModule,
-         "command": QAPICommand,
-         "enum": QAPIEnum,
-+        "alternate": QAPIAlternate,
-     }
- 
-     # These are all cross-reference roles; e.g.
-@@ -500,6 +519,7 @@ class QAPIDomain(Domain):
-         "mod": QAPIXRefRole(),
-         "cmd": QAPIXRefRole(),
-         "enum": QAPIXRefRole(),
-+        "alt": QAPIXRefRole(),
-         # reference any data type (excludes modules, commands, events)
-         "type": QAPIXRefRole(),
-         "any": QAPIXRefRole(),  # reference *any* type of QAPI object.
 -- 
 2.48.1
 
