@@ -4,103 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6BC8C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 00:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 913A3C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 00:53:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpctI-0000c1-C0; Tue, 04 Mar 2025 19:45:40 -0500
+	id 1tpczz-0001yA-Pf; Tue, 04 Mar 2025 19:52:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tpct7-0000bM-4i
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:45:29 -0500
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpczx-0001xc-8A
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:52:33 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tpct5-0005IQ-4V
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:45:28 -0500
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-474faf23fbeso19387181cf.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 16:45:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpczv-0007Q9-55
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:52:32 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43bc38bb6baso17009465e9.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 16:52:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741135526; x=1741740326; darn=nongnu.org;
- h=thread-index:content-language:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=qRcmkWgm7tdxqssTsGaC7f1QgJqfUqVZwLzSVzJ9PvY=;
- b=kSAvI6C9QShY0GqKwqjavcDm8KPjAoOoyh+KY+j2w86CKytjDYPOOcu4ZnXXgE2vqg
- sP3UDuHBtvvmzRIIiKQ2fnEz9sR46THVB5eJMwdlZgkm9SfOdhkrMV9UQ6fA5txhMcbk
- m0v1RW7FwAq1dF1PQ8AHwt1zRvHRO6wPXWwJNlupLnpfS2pbt3FirBKM8BIjyD9ttR9I
- CsPBJNz42dEnvxq1jyczAB0Y14Js8CRbv1DnzhVkJzYAA0G+v8dGqB5Y8Xr2E6vqGy5z
- AfyDJfihreapj4PAJ4gAPHbDsw1ExGr5uG0JK8NcnaZGkhJ1KlsTHRhafQlCEJGcseVx
- IdYg==
+ d=linaro.org; s=google; t=1741135948; x=1741740748; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9cx41270KwV2RsvJaXRPp+qFCSNUAqq2qOHjSJJvwi0=;
+ b=eGf+TXfeFZukIKX+A4fivp0kJ7VV0DpXt/v33sg47rwNjha9naaEvS3AbTVj0s31Mz
+ 0EIrVIPbIyTyfkTSBgT/O9430imvX50kK4aqSU1Gq9ZqcYrAbUFLX2kSpPdWoHYtR1CS
+ VaqDkM5DwqUVsO4UKoxKDs7+LUZPvFRofTOrfOqgn+Ydlzk+tgaWmochJ2lTdTvkP5jx
+ QT7KO3XkOOW7hogwjlfcZw6cacQsMbUNiL/lia6s2G74D/ag5rPjSja3Wi6ex50DTQLE
+ 0IRZ2LDjsTV1dUMbeiHdWog6479m7CTgrqwOmsPIeLRndJFUmBu91bwlySgxr3kbNJ2y
+ /bRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741135526; x=1741740326;
- h=thread-index:content-language:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qRcmkWgm7tdxqssTsGaC7f1QgJqfUqVZwLzSVzJ9PvY=;
- b=W+cDWvMNHuV/3FAtPyau5uHU/erReNtuiYFbqxhHAhMPNC/8RqqzccmtXS9XTrxTom
- ZVapALLVIv5WfMrETUPYPMtY/+cx9mPEO/y0xgl4cp7eAMB1VvG5xoonyamxo+NEXGwc
- 0eqCHFykstFUf5xgvIR6rmIMo3DSHyIPHaMWc/MpE5LGpZbGvr6pW7vj1oTnvw7LM/Cy
- 7YB5WF+po4b8kRO4df03EMJaqo9/2kE2d26BOcGw1fLUZt4fSvzN4vSZaNUM7hJt3H+z
- vk5CjqKRiQ2cfZ5Td/4X9C+I5rMiiUbpN0JTEzXPpWT3C0HyWTQeIo8okkvX7UW2YWqQ
- VpuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWwJpo8t1nEinUSz+Rij537oJUgHEFg4QCPgjTh0icPhvgSMM5FRiHKbfDBAhlMAP6CEj4aBFqWiTM3@nongnu.org
-X-Gm-Message-State: AOJu0YxFIeJqt+XNswwfgN/h5gKePlkAnynehgd6EUhF2T69gvFjFkWg
- 6JTuL7xKhXyQge4Gpl+wuu1IxfFmNkwf3RJUbDg6mcV6t8MLAyuf
-X-Gm-Gg: ASbGncvEw7dpr2TnDhUlOqNOu0Ku1NrM9DIjiIQRJ3YhonfRQt/Pre1S3Y5D7h/87Z0
- +5k28zVkwQZfzqmiAzv6kuXRaCn7+0i3R2WQhU3R+58q06tqxii9uS+ArolYyDMrqWoCJTbNfMl
- ElswdqwcVHSQctieVYz7ixkhpz+friCrTWie3omR/5JKpYKPaja6/VJdfEAwmxTfOPHeJN/K7k1
- n8Lll/gUGox+GxbaGsdWlKY1giP5FFXRATwDyXfigwHmo0el2BKE2l/htAGF60nVRjAEi4/xApt
- tyufmD4tsY+FW+GNrCdvrHkPPsyhmL3z0J22Ey6DTAnjGzVKWug6N/LkfjxPUaTeutaJGtmmRQC
- J/SKNIXI=
-X-Google-Smtp-Source: AGHT+IE0ZVB5f9n8knGTUnvCf6Y/T9OFvlhjp9hObXuPlzEu/P1WIqqPJodD3fEXnLDH3JmZx9CEZw==
-X-Received: by 2002:ac8:5dc8:0:b0:472:5f9:1f71 with SMTP id
- d75a77b69052e-4750b24861dmr18739341cf.2.1741135525740; 
- Tue, 04 Mar 2025 16:45:25 -0800 (PST)
-Received: from DESKTOPUU50BPD (syn-174-097-131-055.res.spectrum.com.
- [174.97.131.55]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-47472431036sm80983191cf.80.2025.03.04.16.45.22
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 04 Mar 2025 16:45:24 -0800 (PST)
-From: <ltaylorsimpson@gmail.com>
-To: =?utf-8?Q?'Philippe_Mathieu-Daud=C3=A9'?= <philmd@linaro.org>,
- <richard.henderson@linaro.org>,
- "'Brian Cain'" <brian.cain@oss.qualcomm.com>, <qemu-devel@nongnu.org>
-Cc: <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
- "'Brian Cain'" <bcain@quicinc.com>
-References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
- <20250301052845.1012069-35-brian.cain@oss.qualcomm.com>
- <3329ec67-3bf3-425d-b15c-ba77cd8bcd30@oss.qualcomm.com>
- <014701db8d5a$8a1ad930$9e508b90$@gmail.com>
- <d18103eb-b07e-4017-8c27-6bc8f5585360@linaro.org>
- <016101db8d62$5644ea30$02cebe90$@gmail.com>
- <a9a4ca6e-8908-4360-a44d-c688bb51b134@linaro.org>
-In-Reply-To: <a9a4ca6e-8908-4360-a44d-c688bb51b134@linaro.org>
-Subject: RE: [PATCH 34/39] target/hexagon: Add TLB, k0 {un,}lock
-Date: Tue, 4 Mar 2025 18:45:22 -0600
-Message-ID: <016701db8d67$e1a3fc10$a4ebf430$@gmail.com>
+ d=1e100.net; s=20230601; t=1741135948; x=1741740748;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9cx41270KwV2RsvJaXRPp+qFCSNUAqq2qOHjSJJvwi0=;
+ b=jdfOesi+vQny7ay0l+nU0AgoHqi9iwAfrbh/YjENdUqaRzD2NSHpW7vxV/Hs2f7S5B
+ hf2TPEhYeBeg6zx8SnH7Xa+m7gKozGtkN2PsdGn8zo9gVNDaOKVYPv6nScgPogSwhcoR
+ OJx5xx6t408ykgMgNmdo0ckHmp5CXkEQTCpnQ77yB2v7UhrycJasDQ07FMrrj9qAnFDq
+ QiBcelv0fox00S/h5U/Y8fBVw+wjR5L5mx8gx2EsYF3RKl4XMQ1z7JVmbQcfLYKZMgn8
+ SWR9Ns+q1QNaRYYu7qWUhwrBbiR0yC0ZxxNwhudC3tekwdLLtbvVF0C4Hp8p/L8FIiqf
+ wK2Q==
+X-Gm-Message-State: AOJu0YwM1UsLj4ffiuTM2oUyTfeTSfKt/xql2azAIEUtzykRGrbwnZiu
+ FY9EA8ARIhmtmSNUL7B2Tkbvr+bTobykvD9v4B/iWLOshkX6xtxeimts7Jrm3IoqxeHGvNwFXMp
+ uzls=
+X-Gm-Gg: ASbGncsyVD8SsVn7fUZI2V3251BrxN94wv4dtZURkb11U4nVAp/wbNENkUkShaTrZoM
+ 6zX1XtClxKuf+nYZcPfoh0FJen36dOyU8y7Tnm0ZUEIZLQgRKpkIkGr1tqq35v1YebTQJN2YbkW
+ kUOhM8umissTjqiBH1SmFYGJ/qdQDvyPhc8CMuOZyzXEO68AQ1BDlpYyrti5LNQrqIQ0YeZUcnS
+ 55QnHM6ObQzVivgIs+WAC8wa6j/C/vkN9+ON4T3OtIZzXFn/3lQJ18dADjj/nSH2RyjgGesFhJS
+ V1XtaWTG/KirCaV62iFc+M4AH2hldo91RyucilHNvVLVK31hOUr+uX2OmBMD6pgRHTinKOsD+Uo
+ IoUTapRsQX91ER4Skudw=
+X-Google-Smtp-Source: AGHT+IEo720edrp++aFGTVzlJSAcmqBI9AGhStP/JHiBmJ8dEFczj6L0vPHQ/Po5qYhYfWg+4aOriw==
+X-Received: by 2002:a05:6000:1565:b0:390:f6aa:4e72 with SMTP id
+ ffacd0b85a97d-3911f740127mr652893f8f.18.1741135948381; 
+ Tue, 04 Mar 2025 16:52:28 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47b7a73sm19632623f8f.50.2025.03.04.16.52.26
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 04 Mar 2025 16:52:27 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH 00/11] qemu: Remove TARGET_NAME definition
+Date: Wed,  5 Mar 2025 01:52:14 +0100
+Message-ID: <20250305005225.95051-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-us
-Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQLrtTt/AcPvtVgCvPo6dgIOVP6gAZ8llVwB3K3HiLKGbe5g
-X-Antivirus: Norton (VPS 250304-10, 3/4/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qt1-x82b.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,141 +102,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Replace all TARGET_NAME uses by target_name() runtime,
+then remove the definition and poison it.
 
+While is looks like another cleanup, it is a small step
+required for the single binary project.
 
-> -----Original Message-----
-> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Sent: Tuesday, March 4, 2025 6:19 PM
-> To: ltaylorsimpson@gmail.com; richard.henderson@linaro.org; 'Brian =
-Cain'
-> <brian.cain@oss.qualcomm.com>; qemu-devel@nongnu.org
-> Cc: quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> quic_mliebel@quicinc.com; alex.bennee@linaro.org;
-> quic_mburton@quicinc.com; sidneym@quicinc.com; 'Brian Cain'
-> <bcain@quicinc.com>
-> Subject: Re: [PATCH 34/39] target/hexagon: Add TLB, k0 {un,}lock
->=20
-> On 5/3/25 01:05, ltaylorsimpson@gmail.com wrote:
-> >
-> >
-> >> -----Original Message-----
-> >> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >> Sent: Tuesday, March 4, 2025 5:58 PM
-> >> To: richard.henderson@linaro.org; ltaylorsimpson@gmail.com; 'Brian =
-Cain'
-> >> <brian.cain@oss.qualcomm.com>; qemu-devel@nongnu.org
-> >> Cc: quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> >> quic_mliebel@quicinc.com; alex.bennee@linaro.org;
-> >> quic_mburton@quicinc.com; sidneym@quicinc.com; 'Brian Cain'
-> >> <bcain@quicinc.com>
-> >> Subject: Re: [PATCH 34/39] target/hexagon: Add TLB, k0 {un,}lock
-> >>
-> >> Hi Taylor,
-> >>
-> >> On 5/3/25 00:09, ltaylorsimpson@gmail.com wrote:
-> >>>
-> >>>
-> >>>> -----Original Message-----
-> >>>> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> >>>> Sent: Monday, March 3, 2025 10:24 AM
-> >>>> To: qemu-devel@nongnu.org
-> >>>> Cc: richard.henderson@linaro.org; philmd@linaro.org;
-> >>>> quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> >>>> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
-> >>>> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> >>>> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> >>>> Subject: Re: [PATCH 34/39] target/hexagon: Add TLB, k0 {un,}lock
-> >>>>
-> >>>>
-> >>>> On 2/28/2025 11:28 PM, Brian Cain wrote:
-> >>>>> From: Brian Cain <bcain@quicinc.com>
-> >>>>>
-> >>>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> >>>>> ---
-> >>>>>     target/hexagon/sys_macros.h |   8 +--
-> >>>>>     target/hexagon/op_helper.c  | 104
-> >>>> ++++++++++++++++++++++++++++++++++++
-> >>>>>     2 files changed, 108 insertions(+), 4 deletions(-)
-> >>>>>
-> >>>>> diff --git a/target/hexagon/sys_macros.h
-> >>>>> b/target/hexagon/sys_macros.h index 3c4c3c7aa5..e5dc1ce0ab
-> 100644
-> >>>>> --- a/target/hexagon/sys_macros.h
-> >>>>> +++ b/target/hexagon/sys_macros.h
-> >>>>> @@ -143,11 +143,11 @@
-> >>>>>     #define fDCINVIDX(REG)
-> >>>>>     #define fDCINVA(REG) do { REG =3D REG; } while (0) /* =
-Nothing to
-> >>>>> do in qemu */
-> >>>>>
-> >>>>> -#define fSET_TLB_LOCK()       g_assert_not_reached()
-> >>>>> -#define fCLEAR_TLB_LOCK()     g_assert_not_reached()
-> >>>>> +#define fSET_TLB_LOCK()       hex_tlb_lock(env);
-> >>>>> +#define fCLEAR_TLB_LOCK()     hex_tlb_unlock(env);
-> >>>>>
-> >>>>> -#define fSET_K0_LOCK()        g_assert_not_reached()
-> >>>>> -#define fCLEAR_K0_LOCK()      g_assert_not_reached()
-> >>>>> +#define fSET_K0_LOCK()        hex_k0_lock(env);
-> >>>>> +#define fCLEAR_K0_LOCK()      hex_k0_unlock(env);
-> >>>>>
-> >>>>>     #define fTLB_IDXMASK(INDEX) \
-> >>>>>         ((INDEX) & (fPOW2_ROUNDUP(fCAST4u(env_archcpu(env)-
-> >>>>> num_tlbs)) -
-> >>>>> 1)) diff --git a/target/hexagon/op_helper.c
-> >>>>> b/target/hexagon/op_helper.c index 702c3dd3c6..f3b14fbf58 100644
-> >>>>> --- a/target/hexagon/op_helper.c
-> >>>>> +++ b/target/hexagon/op_helper.c
-> >>>>> @@ -1184,6 +1184,110 @@ void
-> HELPER(modify_ssr)(CPUHexagonState
-> >>>> *env, uint32_t new, uint32_t old)
-> >>>>>         BQL_LOCK_GUARD();
-> >>>>>         hexagon_modify_ssr(env, new, old);
-> >>>>>     }
-> >>>>> +
-> >>>>> +static void hex_k0_lock(CPUHexagonState *env) {
-> >>>>> +    BQL_LOCK_GUARD();
-> >>>>> +    g_assert((env->k0_lock_count =3D=3D 0) || =
-(env->k0_lock_count =3D=3D
-> >>>>> +1));
-> >>>>> +
-> >>>>> +    uint32_t syscfg =3D arch_get_system_reg(env, =
-HEX_SREG_SYSCFG);
-> >>>
-> >>> Minor nit - registers should be target_ulong type.
-> >>
-> >> Since Hexagon is only implemented using 32-bit registers, is it =
-worth
-> >> using target_ulong? (I'm trying to foresee heterogeneous =
-emulation).
-> >>
-> >> Richard, any thought on this (whether a target implementing only 32
-> >> *or* 64 bits should use target_[u]long).
-> >
-> > It's just a hedge against the future in case Qualcomm ever builds a =
-64-bit
-> Hexagon.
->=20
-> If there are plan for such future, then this is fine.
-> We are worried by maintenance burden, see for microblaze:
-> https://lore.kernel.org/qemu-devel/ad364fce-f73d-4dde-b890-
-> 0ea86d9c4674@linaro.org/
+Alex Bennée (1):
+  plugins/loader: populate target_name with target_name()
 
-As I said "minor nit".  I did a search through the code and the =
-registers are declared in cpu.h as target_ulong but arch_get_system_reg =
-is defined to return uint32_t.  The users of this function have a mix of =
-uint32_t and target_ulong.
+Philippe Mathieu-Daudé (10):
+  system: Extract target-specific globals to their own compilation unit
+  system: Open-code qemu_init_arch_modules() using target_name()
+  system: Introduce QemuArchBit enum
+  system: Replace arch_type global by qemu_arch_available() helper
+  include: Expose QemuArchBit enum to user emulation
+  include: Declare target_name() in common "qemu/arch_info.h"
+  tests/qtest: Replace TARGET_NAME -> target_name()
+  user: Replace TARGET_NAME -> target_name()
+  qemu: Introduce qemu_arch_name() helper
+  qemu: Remove C definitions of TARGET_NAME
 
-From a quick read of the thread you pointed out, the problem for =
-microblaze is changing the TARGET_LONG_BITS from 64 to 32.  Hexagon =
-wouldn't have this problem.
+ meson.build                     | 10 +++--
+ include/exec/poison.h           |  1 -
+ include/hw/core/cpu.h           |  2 -
+ include/qemu/arch_info.h        | 55 +++++++++++++++++++++++++++
+ include/qemu/osdep.h            |  2 +
+ include/system/arch_init.h      | 32 ----------------
+ arch_info-target.c              | 67 +++++++++++++++++++++++++++++++++
+ bsd-user/main.c                 |  9 +++--
+ cpu-target.c                    |  5 ---
+ hw/core/machine-qmp-cmds.c      |  1 +
+ hw/scsi/scsi-disk.c             |  4 +-
+ linux-user/main.c               | 12 +++---
+ plugins/loader.c                |  3 +-
+ system/arch_init.c              | 50 ------------------------
+ system/globals-target.c         | 24 ++++++++++++
+ system/qdev-monitor.c           |  6 +--
+ system/vl.c                     | 14 ++++---
+ tests/qtest/fuzz/fuzz.c         |  5 +--
+ tests/qtest/fuzz/generic_fuzz.c |  4 +-
+ tests/qtest/fuzz/i440fx_fuzz.c  |  5 ++-
+ tests/qtest/fuzz/qos_fuzz.c     |  5 ++-
+ system/meson.build              |  2 +-
+ 22 files changed, 195 insertions(+), 123 deletions(-)
+ create mode 100644 include/qemu/arch_info.h
+ delete mode 100644 include/system/arch_init.h
+ create mode 100644 arch_info-target.c
+ delete mode 100644 system/arch_init.c
+ create mode 100644 system/globals-target.c
 
-I'm not aware of any plans for a 64-bit Hexagon, so I'll leave it to =
-Brian to decide if he thinks the change is worthwhile.
-
-Taylor
-
-
-
-
+-- 
+2.47.1
 
 
