@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C280BC19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 19:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A7AC282DE
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 19:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpuHW-00073B-2K; Wed, 05 Mar 2025 14:19:50 -0500
+	id 1tpuRY-0001CJ-J9; Wed, 05 Mar 2025 14:30:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tpuHU-00072n-Bz
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 14:19:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tpuHS-00043t-4d
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 14:19:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741202383;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=raKFbYZgx6EtnhqVRtqYHsYdeIsSSRibe2PrwymB/fk=;
- b=QEq0T48Z99WteZVybnU0QtNOgO+FrujafMbKoXnMDwNk2oAYbXAUqn1wf+U4w2nS1Ho5WK
- csORDq+u6HhfegEb5oN8pGEDC5MB5veOKTBXtpdQozQKSmAJEYj6RH39T/IU53sIaL7ppV
- FIcL4ITkxx/6VhG38NzF6WVv2sF3tsk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-449-s-n2EW7POguFHwkZDDJLog-1; Wed, 05 Mar 2025 14:19:37 -0500
-X-MC-Unique: s-n2EW7POguFHwkZDDJLog-1
-X-Mimecast-MFC-AGG-ID: s-n2EW7POguFHwkZDDJLog_1741202376
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-39126c3469fso336671f8f.3
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 11:19:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tpuRW-0001Ba-4q
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 14:30:10 -0500
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tpuRR-0006IB-6B
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 14:30:08 -0500
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-47208e35f9cso82832691cf.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 11:30:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741203003; x=1741807803; darn=nongnu.org;
+ h=thread-index:content-language:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zHH2O1TInz9VrI/SztIfijTfhVxlGFaMbW2AqIdIofQ=;
+ b=J8LyMl3nkExqarQSzANkd7hPfpxP0I/2FbHwbnUo1K3L1WMHLWFu6eMmu6eqBa0Dcs
+ Z5/4K6ZenMhrInH031mj6pz3Ykc1AuLAS+seIYyKbuWXd8bNlaGAir8Mmmpm31Mw+Mzb
+ olkkqdzOgvs+9GwX8q1TjEtYVXryRb8IKTFvF6uqZeFik5rCsSj02r+VRGKReBne8N/0
+ x5YthYNaSWLcPTWuntlZmqkdpa8E1pccRTGbaKVjb2S8OGeikhBrJA2okSDijQHkszWZ
+ 5f2xItQYxLyX22puQL+JpuRzdfO0iiTupVDH24/X0jVL6pFnhXASlPTq8mi3Jop+023F
+ j7EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741202376; x=1741807176;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=raKFbYZgx6EtnhqVRtqYHsYdeIsSSRibe2PrwymB/fk=;
- b=nUG3qZtm6+huhkSO5xWrqgZyt4NSpQEd9A608WiujKaYIXX8C4/ewxHJ6gA6fQNMgC
- hcpdFlWTDHFbMO37n5qxzwF3k1dIwpBeE9Ab2Cgcz4/ZfQHOJ0EY7wuQ2ILmBXoVPPXS
- RhsMt02D93h+a5b2GChH60vvJx710JSZTMTg2j4RhNV7wbngrA4XVMcDfkq8jzJijKLS
- g61v4cO8E3VSMBOF7B98gmnhR2GNshPjj6FRfe2YeUYxyeSpRB/R1eg693lYLFldsDss
- hhNYvwGilVYCAvg2HQ4D2KL6bD2Ca7FuDWUzy4gqMnqfY90qkSBUSczx7BN/I55dYtNw
- RggA==
-X-Gm-Message-State: AOJu0Yz4H59plAQ8bBARsjlp+QMcHaW7nXQ6x8Z7em8l1j+tJRm/FFN2
- Dc4xqkl85kZIj0BzHo80ktJBhnZOVTyXHNHihOrd+bzd35m4nhOg54YuMvlNwgM6o1nk/6LNC2u
- YwWt8Isgn65M1RT6G1b/dRVoS42dqCFpC78S1ji/5vC+9JWscHs7fSFpRs4YJvWqoBrqCA1ZV+G
- +jkhNJnVUtCVINjyXwKVn8FKPczN4=
-X-Gm-Gg: ASbGncuCAzk3GcduucaBWKzUsNk3T229SjE6CbarAvqvrM/5THuCKs6wLuYtxiVSklz
- vzaIzDYixLRCtDAeQHpG2txbiOjlfhRp0M1JU4UNjCynTelrXhWjdpCj9hAXJ9DgF/H35+era
-X-Received: by 2002:a5d:47a2:0:b0:391:490:7acb with SMTP id
- ffacd0b85a97d-3911f72614dmr3493035f8f.2.1741202375962; 
- Wed, 05 Mar 2025 11:19:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHBiUtw9LfZrOX9zPeO1cP8SAZaz/c9E9KYVcgRW7Hl+XhaxXWhdx08gkJBJC5Y3WWn7lk8dTEB35UZHiCRwJM=
-X-Received: by 2002:a5d:47a2:0:b0:391:490:7acb with SMTP id
- ffacd0b85a97d-3911f72614dmr3493018f8f.2.1741202375682; Wed, 05 Mar 2025
- 11:19:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741203003; x=1741807803;
+ h=thread-index:content-language:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zHH2O1TInz9VrI/SztIfijTfhVxlGFaMbW2AqIdIofQ=;
+ b=Ky5cm+3rRQdlcdBfUME2aEy+3pTmUBd1wSK7m7POaxoJnZUB6022hue2O60nqFfqZE
+ leTQH1amHpDe1OXAgKCr/4DcVsKRtH4bkl1zVhE8NTVzhHq1fmKE+mQ9PBmTtX4SwUOw
+ z1Ufzzn1yR6ejSwsfKsE7TwHFfQCt8liJKL0JB1YIAjb808ILqT2tt304leAH/ddP3Dr
+ Sink7hCi+5w8pODOHxGfPkQgJMEvc293vopMzxeYf+DEq3alGfFTsXrCtqwP9RB80dtK
+ 8eejK1nqfzoX//Xj+s2TjezJQdCeQzL1B3efnwLBSbG8hiT6qkOAyKpfEBf8kB6sRO5D
+ hCIw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV0TTTBF7MB0kGOAcVl6vNenI1cyU/jTNfXP3QG+gBnkDm6L4fWVda8yp64nRJbkU7BkS1ltHff22Mk@nongnu.org
+X-Gm-Message-State: AOJu0YyOz7Sq61Bc/wtTdCyynpF0FklBL/XmFSvRHc6lnCk/Tg8gbZEz
+ RInK9Co1YzNx+5b4fzFH7Z34T26YxyZcbHF1pRK1jCmx0XmGRNPd
+X-Gm-Gg: ASbGnctyJeYh+3ZCkigWU/UFu5UV14PbjR7ydhgSV5ZeUyl0tBzR9iCHHrYpOJ5d8qq
+ oZ/uyaOEerO8woMcfmNGhPZRjx9jwvb5ptb2R4mrXbZ2UUw5xYY8JX255flNyyVJOejBiUCFhBV
+ VaDtwsRHK9EMJ/qIij8y4hMdgsqGPDldPi46OQqEpFaHunCGyAnpvP29jF+IiUpebEfIREdOCd5
+ NUKtEe71qBdSEP/zhdNojXd0MdrneTUXlWZQtY+0RqkckLTlOX7ypbv3yvXLk8SKmq8mCmcTnPJ
+ v3OrvORBlV356+bMR89blhkk5Vw/Tfg3notJcoJF1EKnPpgHonykGvomgonY/I6F4FK5sJP4Ad4
+ L0aeOUL0=
+X-Google-Smtp-Source: AGHT+IGNMmmGtRvvb27aHQZDl5ygdCXtVYq5WMN1t6a/wsTzNddMzJB9QTbLMpT+syF0ZLbcaVLBvg==
+X-Received: by 2002:a05:6214:b65:b0:6e8:f1b6:a120 with SMTP id
+ 6a1803df08f44-6e8f1b6a2a9mr25145606d6.5.1741203003561; 
+ Wed, 05 Mar 2025 11:30:03 -0800 (PST)
+Received: from DESKTOPUU50BPD (syn-174-097-131-055.res.spectrum.com.
+ [174.97.131.55]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e8976cc74asm82257596d6.76.2025.03.05.11.30.01
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 05 Mar 2025 11:30:03 -0800 (PST)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
+ "'Brian Cain'" <bcain@quicinc.com>
+References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
+ <20250301052628.1011210-2-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052628.1011210-2-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 01/38] docs: Add hexagon sysemu docs
+Date: Wed, 5 Mar 2025 13:29:59 -0600
+Message-ID: <01a901db8e04$fde0c0a0$f9a241e0$@gmail.com>
 MIME-Version: 1.0
-References: <20250305153929.43687-1-philmd@linaro.org>
- <20250305153929.43687-5-philmd@linaro.org>
-In-Reply-To: <20250305153929.43687-5-philmd@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 5 Mar 2025 20:19:21 +0100
-X-Gm-Features: AQ5f1JoH8cI10JQuvFGbMD61r1kx-pp7jwtownPfm8UAQIgs9QcfNr2TEo9q4TA
-Message-ID: <CABgObfZNDHMiOeif8dbsxNptARQf22ZgYeREjqbcLYLD9xcwNw@mail.gmail.com>
-Subject: Re: [RFC PATCH 04/18] qemu: Introduce 'qemu/legacy_binary_info.h'
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000015c2cf062f9d4595"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-us
+Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgFSIBaptO634iA=
+X-Antivirus: Norton (VPS 250305-8, 3/5/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qt1-x82e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,117 +113,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000015c2cf062f9d4595
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Il mer 5 mar 2025, 16:39 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> ha
-scritto:
 
-> +    for (size_t i =3D 0; i < ARRAY_SIZE(legacy_binary_infos); i++) {
-> +        if (!strcmp(legacy_binary_infos[i].binary_name, binary_name)) {
-> +            current_index =3D i;
-> +            return;
-> +        }
-> +    }
-> +    fprintf(stderr, "Missing legacy info for '%s' binary.\n",
-> binary_name);
->
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Friday, February 28, 2025 11:26 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
+> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
+> Subject: [PATCH 01/38] docs: Add hexagon sysemu docs
+> 
+> From: Brian Cain <bcain@quicinc.com>
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  MAINTAINERS                    |   2 +
+>  docs/devel/hexagon-sys.rst     | 106
+> +++++++++++++++++++++++++++++++++
+>  docs/devel/index-internals.rst |   1 +
+>  docs/system/hexagon/cdsp.rst   |  10 ++++
+>  docs/system/target-hexagon.rst | 100
+> +++++++++++++++++++++++++++++++
+>  docs/system/targets.rst        |   1 +
+>  6 files changed, 220 insertions(+)
+>  create mode 100644 docs/devel/hexagon-sys.rst  create mode 100644
+> docs/system/hexagon/cdsp.rst  create mode 100644 docs/system/target-
+> hexagon.rst
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 1911949526..804c07bcd5 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -240,6 +240,8 @@ F: disas/hexagon.c
+>  F: configs/targets/hexagon-linux-user/default.mak
+>  F: docker/dockerfiles/debian-hexagon-cross.docker
+>  F: gdb-xml/hexagon*.xml
+> +F: docs/system/target-hexagon.rst
+> +F: docs/devel/hexagon-sys.rst
 
-Wouldn't this crash if a binary is renamed to qemu-kvm or anything else but
-its original name? There should be a default target in the binary, and this
-function should only be called it there's none; but it should also use the
-normal Error** interface instead of aborting.
+Don't forget this file
+docs/system/hexagon/cdsp.rst
 
-Also do not call things legacy, as Pierrick also said and explained.
+Otherwise
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
-Paolo
-
-+    abort();
-> +}
-> diff --git a/system/vl.c b/system/vl.c
-> index a41ba4a2d5f..74a062c7fff 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -28,6 +28,7 @@
->  #include "qemu/units.h"
->  #include "qemu/module.h"
->  #include "qemu/arch_info.h"
-> +#include "qemu/legacy_binary_info.h"
->  #include "exec/cpu-common.h"
->  #include "exec/page-vary.h"
->  #include "hw/qdev-properties.h"
-> @@ -2883,6 +2884,7 @@ void qemu_init(int argc, char **argv)
->
->      error_init(argv[0]);
->      qemu_init_exec_dir(argv[0]);
-> +    legacy_binary_info_init(argv[0]);
->
->      os_setup_limits();
->
-> --
-> 2.47.1
->
->
-
---00000000000015c2cf062f9d4595
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 5 mar 2025, 16:39 Philipp=
-e Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro=
-.org</a>&gt; ha scritto:</div></div></div><div dir=3D"auto"><div class=3D"g=
-mail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-+=C2=A0 =C2=A0 for (size_t i =3D 0; i &lt; ARRAY_SIZE(legacy_binary_infos);=
- i++) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!strcmp(legacy_binary_infos[i].binary_name=
-, binary_name)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 current_index =3D i;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 fprintf(stderr, &quot;Missing legacy info for &#39;%s&#39; b=
-inary.\n&quot;, binary_name);<br></blockquote></div></div><div dir=3D"auto"=
-><br></div><div dir=3D"auto">Wouldn&#39;t this crash if a binary is renamed=
- to qemu-kvm or anything else but its original name? There should be a defa=
-ult target in the binary, and this function should only be called it there&=
-#39;s none; but it should also use the normal Error** interface instead of =
-aborting.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Also do not ca=
-ll things legacy, as Pierrick also said and explained.</div><div dir=3D"aut=
-o"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div =
-dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
-d rgb(204,204,204);padding-left:1ex">
-+=C2=A0 =C2=A0 abort();<br>
-+}<br>
-diff --git a/system/vl.c b/system/vl.c<br>
-index a41ba4a2d5f..74a062c7fff 100644<br>
---- a/system/vl.c<br>
-+++ b/system/vl.c<br>
-@@ -28,6 +28,7 @@<br>
-=C2=A0#include &quot;qemu/units.h&quot;<br>
-=C2=A0#include &quot;qemu/module.h&quot;<br>
-=C2=A0#include &quot;qemu/arch_info.h&quot;<br>
-+#include &quot;qemu/legacy_binary_info.h&quot;<br>
-=C2=A0#include &quot;exec/cpu-common.h&quot;<br>
-=C2=A0#include &quot;exec/page-vary.h&quot;<br>
-=C2=A0#include &quot;hw/qdev-properties.h&quot;<br>
-@@ -2883,6 +2884,7 @@ void qemu_init(int argc, char **argv)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0error_init(argv[0]);<br>
-=C2=A0 =C2=A0 =C2=A0qemu_init_exec_dir(argv[0]);<br>
-+=C2=A0 =C2=A0 legacy_binary_info_init(argv[0]);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0os_setup_limits();<br>
-<br>
--- <br>
-2.47.1<br>
-<br>
-</blockquote></div></div></div>
-
---00000000000015c2cf062f9d4595--
 
 
