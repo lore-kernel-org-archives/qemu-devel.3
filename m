@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DF29C021B8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 00:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 030F6C021B8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 00:53:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpd0S-00022M-J7; Tue, 04 Mar 2025 19:53:04 -0500
+	id 1tpd0O-00021z-LI; Tue, 04 Mar 2025 19:53:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpd0Q-00022A-Ux
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:53:02 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpd0N-00021a-Oe
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:52:59 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpd0O-0007Uh-Us
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:53:02 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-390eebcc371so2710193f8f.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 16:53:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpd0J-0007U3-8Y
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 19:52:59 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43bcc85ba13so10279135e9.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 16:52:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741135979; x=1741740779; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741135973; x=1741740773; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aI7bGdusWwalQtQ/oihM/Pr8zgv/ivF1OVwRKsBRxKw=;
- b=g3whpSgMsjfDpFlmtAsVyRlysniRThxnmibzudnqjCWKjl1E5iFCW/ty37mXHiiXol
- hu6vog9URuJA8U6KdqasYWEET7zCsSRf6pUKFT3LnCBXI0OvoEJuMEvlhi3F6tt6Gsu9
- KuJiC0fV5q3Q0u2vhvFV0fJpJ2ZtE9nSaQfEXlpWvgohOXTnJqzbMs0PXkWUNXLj/VbC
- /6vGf1q8r/trHZ94M1N50UgiIuPd7u95alxDWeBXJ6tWazTGnFMYJcTdZwG22Y3AZ14L
- IJ5n+QkTk+Cz360OAOUCKa50IyC+CBzWSMZ+IXaet/FayLsbs5N1SvX6Lhmf2k2+ti1Q
- K5nQ==
+ bh=TUuRn4CzCPoO/VAnx0IGvC9GeVl9hidcvGsy50QPlH8=;
+ b=tc6373CcIS6dpBTOy9WZ7ZHQigFCE0fEXIH1V4nODo0Z1rD7z1n36TSMcbpTk9grhq
+ e6WoGFXSOzMHg0jr7kfVfgkuhy6MTEmUDfMtwZLS2rY9zCpMOlshEPuHdnhH5rLVfX/I
+ Heg2OMFBUMIJ1f0BiY+fkkyDc5OVX6T0V0PWrYmP9NusI80n9KJCgO2zsm9ytvNblppa
+ 9lsUu50YH782MtVQ0FJf62N57eFVvbd/j6BEslcgau6N7FtEDXRW8E8mXdInYi1Y943s
+ TESbbEmCZIuTHAlGiEaBfiw4BuMbQp7rGokQju78JQju9AbMfNsf5a3G5X/NHTNDffRi
+ UlZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741135979; x=1741740779;
+ d=1e100.net; s=20230601; t=1741135973; x=1741740773;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aI7bGdusWwalQtQ/oihM/Pr8zgv/ivF1OVwRKsBRxKw=;
- b=EJsxJpqeMiQT2q3oBkXOm41d3ZI0iu6PFY6Nao/Vrx8x7Wa6LNGSSB/VF6uCch4Ryq
- epfpDMFyK1KU7JWP8a4FW/PEF0CoPTWxG4HfDQBP8Eq1Q3YlUX0vJBUe1iw2H3u0l9jK
- ExXbvNKdQ8Auchmj3/zdAWw1fS6QaY/LrqLjEZ97GzVhhF8xUQOHeySQTXrCm9KmyRFR
- YDdKEajX2jV3IDadaJpG5JpdBxiHecBJ/7hhpuZmS08TAMkpHV9blJ3+/L0eAUkiUpZt
- CSLn4rtxmVkgfnxgEoh3Ok4SyWI3P6eE4r0YVkrwVf2DH0tZzLEePc5kULkTd9nN8jtC
- eT6w==
-X-Gm-Message-State: AOJu0Ywg8w1n2Cimo61fYQ6qZ3cukyH6Lcfg0SXXuzSIsCdcfiQ70Wid
- UDDyThebxodO5T62a4zTr40kxCn6uJoqVSHNrbL5zH7hueS/weIznbCY3u6xwGkq1CCojqvY9bc
- dp1k=
-X-Gm-Gg: ASbGnctMbkMx++0DE3RLniqMCE8UsbSPnubqso9jN3By6qb2aylaJpzHhJi5aBigCyq
- VTsFpZvo4uZZwFGv5synPaI/QwSkMxJlHH92/pIls6gs0sdMerlsNS6uAQe5QvN9zbUqEjJzhn7
- OqaKzx6VCAeS6AduaRA7vsQeYAHSOney2eOYdoqV6gTbACG/bzPirq7Av9yW80bdSWNARQW5aHW
- DlcMLVjc/e5kxLjX8EtF994EREKh3CJl4Xhk4c2zl/gdPtbCYfq1G14Vv4YSpv0gMwe5Cq2fu3w
- 6TUVnINT0VfwAKAQ7O1SryaC/RaSWt5/4arJzTAAsufe1ftij690lUi4w4oQ0vB9eviuyIMlsn8
- IHatGGKkx0lfTrYPKNhg=
-X-Google-Smtp-Source: AGHT+IHyudN3+aoLMMTl2NXHC5V5XiMCm46ELQZrXWSOxnMrXDJ0eiX43eqvnq0Af6uh3iIJFwywVw==
-X-Received: by 2002:a05:6000:18a7:b0:38f:483f:8319 with SMTP id
- ffacd0b85a97d-3911f7c17f2mr662075f8f.51.1741135978743; 
- Tue, 04 Mar 2025 16:52:58 -0800 (PST)
+ bh=TUuRn4CzCPoO/VAnx0IGvC9GeVl9hidcvGsy50QPlH8=;
+ b=NC4S8/7AFFjFJuU3OvO4Ozu/GaTtq+chfD0fuqTQa/O9qfu5FSzPFtQfVkiZHdFtBS
+ UdVHpZjrGbsJe4xXoZXHPrzx4lNvX/4UA7htJi6oPHKAR1NPRphLAOGi3R+3CWkoqVef
+ sx0/KrZfGl4/bJz+BywREszXXppJgCw2EFjSv/BUaC4trLt0R5I8GL9X+b8A3HNKnjx4
+ TvLGUqpuIt0V1UwIElFqNyjqVHC2jSNIsaSthDXFz0rkz7HSzKyGkcXdc71hWpJuhkdE
+ Y9cGKKXET62W+7kGhaPderEHGUVmsD74d+lA8R2tbb87m626ywHltzZ9/IYG4uvBhVP9
+ Z7UQ==
+X-Gm-Message-State: AOJu0YyfmKyPFqKKz/hGsxnW2wGhXo2R1MzJVbghDn4J2XGoC1uKRi+u
+ 1ZhOX1pC+w5/K5F6LQIsTfaCUj+hVf0fxoHKYxHO9LfYUAql168WEJfld9hDpxwGMUR9VIYO3OO
+ UuJU=
+X-Gm-Gg: ASbGncvrDxOhF7nHgiddxNHHWmhbelcdM5lSzO/Ynmza14e497jJa38WoCCuofvhWZv
+ 19y1ap8wsEdPfbbxstJpN/hmuQ+8QSSn8xr+1Rja4SwfFLtPWf76gJuzn0Ee3ZsexCw9dhpFqEO
+ YeYLMrK248rfBMRJ7Ncn9rqe50V36Nr5WOcOrcjX/jOzRnjeyYvJZFYc9x21My6LjPbuRXHMq3o
+ m9XvOi3RDzGZ9F6PSLAOZEpi2evZhMsAYL713X2Ku7qknyQv/cwNTnVKS92crGmRUbK+6UxL5qR
+ fHovZ9XH9dUizENtrevhIGV2brVCnNDyoG3uyB/fhYp89NzWOb4Mtsz0Qq0h64u2cUZ/bIJ/Ko4
+ m+Ie7nOj281mz4TewZEQ=
+X-Google-Smtp-Source: AGHT+IHnxvc6C4PFeofnXej0/DW0dO6R02VRDzhyURZuK4Dhj8oTHGkRfi7M6bv/MN6+HzSs/PDJ5Q==
+X-Received: by 2002:a05:600c:45c9:b0:439:8185:4ad4 with SMTP id
+ 5b1f17b1804b1-43bd2ae6055mr5100495e9.27.1741135973366; 
+ Tue, 04 Mar 2025 16:52:53 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd42b7478sm1496035e9.17.2025.03.04.16.52.57
+ 5b1f17b1804b1-43bd4352ed7sm1356915e9.26.2025.03.04.16.52.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 16:52:58 -0800 (PST)
+ Tue, 04 Mar 2025 16:52:52 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,18 +72,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 06/11] include: Declare target_name() in common
- "qemu/arch_info.h"
-Date: Wed,  5 Mar 2025 01:52:20 +0100
-Message-ID: <20250305005225.95051-7-philmd@linaro.org>
+Subject: [RFC PATCH 05/11] include: Expose QemuArchBit enum to user emulation
+Date: Wed,  5 Mar 2025 01:52:19 +0100
+Message-ID: <20250305005225.95051-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305005225.95051-1-philmd@linaro.org>
 References: <20250305005225.95051-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,98 +105,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No need to include the huge "hw/core/cpu.h" header to
-get a simple prototype declaration such target_name().
+QemuArchBit isn't really specific to system emulation,
+move the "system/arch_init.h" header to "qemu/arch_info.h",
+a more generic include path.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h      | 2 --
- include/qemu/arch_info.h   | 2 ++
- arch_info-target.c         | 5 +++++
- cpu-target.c               | 5 -----
- hw/core/machine-qmp-cmds.c | 1 +
- system/vl.c                | 1 -
- 6 files changed, 8 insertions(+), 8 deletions(-)
+ meson.build                                      | 2 +-
+ include/{system/arch_init.h => qemu/arch_info.h} | 4 ++--
+ system/arch_init.c => arch_info-target.c         | 2 +-
+ hw/scsi/scsi-disk.c                              | 2 +-
+ system/qdev-monitor.c                            | 2 +-
+ system/vl.c                                      | 2 +-
+ system/meson.build                               | 1 -
+ 7 files changed, 7 insertions(+), 8 deletions(-)
+ rename include/{system/arch_init.h => qemu/arch_info.h} (97%)
+ rename system/arch_init.c => arch_info-target.c (97%)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 5d11d26556a..4f538a8f96d 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -1162,8 +1162,6 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp);
- void cpu_exec_unrealizefn(CPUState *cpu);
- void cpu_exec_reset_hold(CPUState *cpu);
+diff --git a/meson.build b/meson.build
+index 1ab02a5d48d..04d8c477644 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3766,7 +3766,7 @@ if have_block
+ endif
  
--const char *target_name(void);
--
- #ifdef COMPILING_PER_TARGET
+ common_ss.add(files('cpu-common.c'))
+-specific_ss.add(files('cpu-target.c'))
++specific_ss.add(files('cpu-target.c', 'arch_info-target.c'))
  
- #ifndef CONFIG_USER_ONLY
-diff --git a/include/qemu/arch_info.h b/include/qemu/arch_info.h
-index 3cb95926e27..613dc2037db 100644
---- a/include/qemu/arch_info.h
+ subdir('system')
+ 
+diff --git a/include/system/arch_init.h b/include/qemu/arch_info.h
+similarity index 97%
+rename from include/system/arch_init.h
+rename to include/qemu/arch_info.h
+index 023d27d5bd7..3cb95926e27 100644
+--- a/include/system/arch_init.h
 +++ b/include/qemu/arch_info.h
-@@ -46,6 +46,8 @@ typedef enum QemuArchBit {
- #define QEMU_ARCH_LOONGARCH     BIT(QEMU_ARCH_BIT_LOONGARCH)
- #define QEMU_ARCH_ALL           -1
+@@ -1,5 +1,5 @@
+-#ifndef QEMU_ARCH_INIT_H
+-#define QEMU_ARCH_INIT_H
++#ifndef QEMU_ARCH_INFO_H
++#define QEMU_ARCH_INFO_H
  
-+const char *target_name(void);
-+
- bool qemu_arch_available(unsigned qemu_arch_mask);
+ #include "qemu/bitops.h"
  
- #endif
-diff --git a/arch_info-target.c b/arch_info-target.c
-index 6c11c73feb9..61007415b30 100644
---- a/arch_info-target.c
+diff --git a/system/arch_init.c b/arch_info-target.c
+similarity index 97%
+rename from system/arch_init.c
+rename to arch_info-target.c
+index 0fec0cd416b..6c11c73feb9 100644
+--- a/system/arch_init.c
 +++ b/arch_info-target.c
-@@ -24,6 +24,11 @@
+@@ -22,7 +22,7 @@
+  * THE SOFTWARE.
+  */
  #include "qemu/osdep.h"
- #include "qemu/arch_info.h"
+-#include "system/arch_init.h"
++#include "qemu/arch_info.h"
  
-+const char *target_name(void)
-+{
-+    return TARGET_NAME;
-+}
-+
  bool qemu_arch_available(unsigned qemu_arch_mask)
  {
-     return qemu_arch_mask & BIT(QEMU_ARCH_BIT);
-diff --git a/cpu-target.c b/cpu-target.c
-index f7e17a650c0..1177e93c444 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -158,8 +158,3 @@ bool target_words_bigendian(void)
- {
-     return TARGET_BIG_ENDIAN;
- }
--
--const char *target_name(void)
--{
--    return TARGET_NAME;
--}
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 3130c5cd456..3bf280cef16 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -19,6 +19,7 @@
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/type-helpers.h"
- #include "qemu/uuid.h"
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 7c87b20e694..bafa9f39497 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -27,12 +27,12 @@
+ #include "qemu/module.h"
+ #include "qemu/hw-version.h"
+ #include "qemu/memalign.h"
 +#include "qemu/arch_info.h"
- #include "qom/qom-qobject.h"
- #include "system/hostmem.h"
- #include "system/hw_accel.h"
+ #include "hw/scsi/scsi.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+ #include "hw/scsi/emulation.h"
+ #include "scsi/constants.h"
+-#include "system/arch_init.h"
+ #include "system/block-backend.h"
+ #include "system/blockdev.h"
+ #include "hw/block/block.h"
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 5588ed2047d..b88e6e83512 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -22,7 +22,6 @@
+ #include "monitor/hmp.h"
+ #include "monitor/monitor.h"
+ #include "monitor/qdev.h"
+-#include "system/arch_init.h"
+ #include "system/runstate.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-qdev.h"
+@@ -37,6 +36,7 @@
+ #include "qemu/option.h"
+ #include "qemu/qemu-print.h"
+ #include "qemu/option_int.h"
++#include "qemu/arch_info.h"
+ #include "system/block-backend.h"
+ #include "migration/misc.h"
+ #include "qemu/cutils.h"
 diff --git a/system/vl.c b/system/vl.c
-index e96c72e5400..a41ba4a2d5f 100644
+index ec93988a03a..e96c72e5400 100644
 --- a/system/vl.c
 +++ b/system/vl.c
-@@ -80,7 +80,6 @@
- #include "hw/block/block.h"
- #include "hw/i386/x86.h"
- #include "hw/i386/pc.h"
--#include "hw/core/cpu.h"
- #include "migration/cpr.h"
- #include "migration/misc.h"
- #include "migration/snapshot.h"
+@@ -27,6 +27,7 @@
+ #include "qemu/datadir.h"
+ #include "qemu/units.h"
+ #include "qemu/module.h"
++#include "qemu/arch_info.h"
+ #include "exec/cpu-common.h"
+ #include "exec/page-vary.h"
+ #include "hw/qdev-properties.h"
+@@ -110,7 +111,6 @@
+ #include "trace/control.h"
+ #include "qemu/plugin.h"
+ #include "qemu/queue.h"
+-#include "system/arch_init.h"
+ #include "system/confidential-guest-support.h"
+ 
+ #include "ui/qemu-spice.h"
+diff --git a/system/meson.build b/system/meson.build
+index 181195410fb..900c5d52ee4 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -1,5 +1,4 @@
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
+-  'arch_init.c',
+   'ioport.c',
+   'globals-target.c',
+   'memory.c',
 -- 
 2.47.1
 
