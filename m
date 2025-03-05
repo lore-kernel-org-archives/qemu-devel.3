@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0106C282DE
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:13:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52F5C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tprMw-0003BZ-Nr; Wed, 05 Mar 2025 11:13:14 -0500
+	id 1tprMm-00037u-HO; Wed, 05 Mar 2025 11:13:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tprMv-0003B7-1J
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:13:13 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tprMl-00037c-5I
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:13:03 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tprMt-0007bk-Iw
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:13:12 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3911748893aso1624874f8f.3
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:13:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tprMj-0007aE-Gs
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:13:02 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43bcc85ba13so17092335e9.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:13:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741191189; x=1741795989; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741191179; x=1741795979; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gIhGGd0/1q+JIY0hi7j9g+a5nqH/JO9F2rnfsDDPgP4=;
- b=jLcB8MJn6aiLDED7LOigsfWfMo/umHTsbG/+hunMpAbgD7NQ5H4ibH6GfZRuIgw6lZ
- HQ6Eb7ZgoqRb139QDl88wvDQ7jGVrORFIk1lbZWCy5xwJt4dhZJfOzgx9zoiamPxDOfk
- vYbD/ct6QYRlJ/VmvCRpBo4pFpb9Q6poxjc8jfoC0qdMQQ4z2BAlZlbr6en6e8IZVY2A
- ZehGII3lihnzARqAI7rhsqdlie7ZAX0GcdUTSM1zmr2Pg9tzelZNtYBwF6dPjqKypmV6
- 5OLFHghqRc0WxB13IL22osxJbZfmJT2maATUbaRVqpQTCOQilu7nqBHArIOGnzKAcHIZ
- dzkg==
+ bh=orvtcKfihVUFCViVDE72hkVKr7ZPDEWfYMWfWKQWuPY=;
+ b=ja5xZk/2aA57HeG2bu1heOs6gjoh9rd6PMPqAsWADnDrkTY6L1ImC+icBwNKCNecTf
+ 0cj0B1Mj1FhdaOSsCuu0qzYNUweALUFtJh5EgufzOjIXNU/3K1b3rc5JaImpJ9Bi/Yzr
+ Qjv4JFhLdSsVxuZDX2bDyLqBLM0gsQRreZFzt+vBlAyrl3HqFSnif3cbSg/zqYZL82Fl
+ Z/1h/9L8dk+0E2p9BxYgP6jOq3xHNcksukj9uGPzGUcjeOhYhdZc6vlXXA+OKRW/8l6V
+ /6/8TaR86Q10TbMerrk35Hz3ByiBDqa4xvF76Ival/ULKuxLgWXz/ZAYeID/bNmQHd4M
+ MY5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741191189; x=1741795989;
+ d=1e100.net; s=20230601; t=1741191179; x=1741795979;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gIhGGd0/1q+JIY0hi7j9g+a5nqH/JO9F2rnfsDDPgP4=;
- b=le8E3qiE0ObbAJG4smV2eDDeiaJc7+pkDFMZIz0onFhwaLPdlyW6/TxSg5gj0QxTho
- YpbBCKoFpOZ+T74ecKKX6jv6lEcstP3Jbuje0AqBm/rBalEO6aSRKb2JigLH3GGXbmUU
- XazBrsZueFX4zRie8OqLs2/BMDjoYNAviGZb3AlbXk03+kNkdwDdw0yMag04H2G88tiG
- RwN0RswKwpd0psGzc7joIrhOXi3AghvLy+4ruRjKEXwbVRMtugL94Wp/ZaHhBtKUKmpP
- 8QahdaiV8DRnC8d12nLVv3gebSiKcdHVnHeghFZSmhjuNpnHFbLl9WeMWSiISlH1WceA
- WYdw==
-X-Gm-Message-State: AOJu0YwRHrbBnkH/xfMnqSGbYlNGXLDhzSN14txrxcc8RtvldK9uRuwj
- PMAiO2NrdUVJeZeOAgsFsFEzz1Dm4Y+IXeivdthCoqly0wUSQXVGuiFlho2xPXyrpoPRwOEawoo
- Ezfw=
-X-Gm-Gg: ASbGncvM5T+H5eyp0/DSIZtUCfIbe1JbbWu5VdaeTCuWBFqgPmrLjWsjwP3a6aQamGM
- CgVeJv4ZlqdC5Q2y5xibu5EaL7krUoGAwb3toNnicsiJ0T3ZIcTNuwGStnmYKJTJ9l/36VuqsYE
- eQHNsS8iO8Qn4Gc374Ln4pyM3ZnN5WWWSuioekOhHwZs7arVBpUTW4db84R4g6nqKKQd/pDvXop
- CoJFJ6s7gDHTHvFvNP5C2nTZ4f/9axodQ98A7WuFmwKKjcbjqCmWIh+sWOAw8bNPR/w6iAE8tVX
- rIsSRc5D1a1FgTH/ZcoOuAnEyl/Zyc0MbDoKbApqor5sZWY4noFULTRN16U60thiMbBzbyyCqpO
- TLQ6dtWkPjoGnqaHGGyc=
-X-Google-Smtp-Source: AGHT+IHG44iYgP80iqa7aBVAlp2+znWXEwDSeRUMjjw21rd3eIQVyHabxI8YmCSES1ldC4HgNL+bTQ==
-X-Received: by 2002:a05:6000:1562:b0:38d:e6f4:5a88 with SMTP id
- ffacd0b85a97d-3911f749c86mr2983958f8f.12.1741191188770; 
- Wed, 05 Mar 2025 08:13:08 -0800 (PST)
+ bh=orvtcKfihVUFCViVDE72hkVKr7ZPDEWfYMWfWKQWuPY=;
+ b=tCebPA11YmOydwYQG22zeFc+ALYI4OexfAhJIWzX+P6u/+IjhonngMOnsyiTekxx+g
+ YhTzwNJifySPgSJjahRL/+84pnqCPPqnQeBmKHVxQR2cXpR+B1XoHBeTJLjQTMMYn7xh
+ 6lxgwgTZPWhhUVGFAS+STW9vQpXW7EOUWD+EdCHIrkzn3wzzcC9oXoNV7umTA/16QaDT
+ mkjCLVaPbTVkg2/6AsO0PipsRKLRUcnHU6PQA+sXibHo0XDaZANsvDqPkY5qQvzEhDqE
+ oaadY429R/FBPdnJOgqtUIEpHonfSNYKeENpixdK6rx3oCy+LFF6EYUZ67K+W6S6q4Bl
+ lNvQ==
+X-Gm-Message-State: AOJu0Yz/WiHPI/oHTolv77iCfamTK7kQRyoGVDT4dxndXYNdZ0YKF6vE
+ wSfOFfNN5IFxyuhLH9umRLcuPb0f1H5MjJIRKuy8CWqck7269gOnb3UDbxisJlQ/cvS4Y9rd2yl
+ wZH8=
+X-Gm-Gg: ASbGncuVm7pSXWtmC7EJIhvU+nScGGfXCPVMoED19V8TLVCsqA1xIegfJOzyYWdz7ue
+ lF5TsEtakxr6U7juqNCIS/6ASxsRbckiu6+7cNSNZM13v7AuzdeIWTbUjdLgNs3cVX4sf5G6YMN
+ MePgyDmR4MYwaAD+nGhbWPKTI//pyZ4Zd8hHUMWSYgH4ip8nPu7EWeb/rVUCHMjCkFQPBMGM6vE
+ iixauI0VYuBsOow1MWmq8uLV+JoWBMNRXM37wVPWPAgtm7SssTHjvHhmhWVpCOvlS9jvL3Gc+YY
+ CuaVvHeRieYfohwoC0OHjZADMMpeQjlNwo3EmUj/7fKgTZrFLU1XxWtY5BI+nbKASTmT38kBA0X
+ zm3oY2YHQcOeOIzvUydo=
+X-Google-Smtp-Source: AGHT+IHdItuvKX+lQ1X4oGvok1OXlpr6c8Tv3ERZvjrwMhvQRnaiHtRHrPNICpMnfkrfYNsFJGPflA==
+X-Received: by 2002:a05:6000:18ab:b0:391:241d:a13e with SMTP id
+ ffacd0b85a97d-391241da3c8mr2108327f8f.48.1741191179375; 
+ Wed, 05 Mar 2025 08:12:59 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47b6f22sm21116273f8f.47.2025.03.05.08.13.07
+ ffacd0b85a97d-390e4795d1asm21143947f8f.4.2025.03.05.08.12.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 05 Mar 2025 08:13:08 -0800 (PST)
+ Wed, 05 Mar 2025 08:12:58 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -73,25 +73,25 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 4/4] hw/ppc: Remove TARGET_PPC64 use in
- ppc_create_page_sizes_prop()
-Date: Wed,  5 Mar 2025 17:12:48 +0100
-Message-ID: <20250305161248.54901-5-philmd@linaro.org>
+Subject: [RFC PATCH 2/4] hw/arm/raspi: Replace TARGET_AARCH64 by
+ legacy_binary_is_64bit()
+Date: Wed,  5 Mar 2025 17:12:46 +0100
+Message-ID: <20250305161248.54901-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305161248.54901-1-philmd@linaro.org>
 References: <20250305161248.54901-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,46 +107,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check the binary is built for 64-bit PPC at runtime,
-removing the need for TARGET_PPC64 #ifdef'ry.
+For legacy ARM binaries, legacy_binary_is_64bit() is
+equivalent of the compile time TARGET_AARCH64 definition.
+
+Use it as TypeInfo::registerable() callback to dynamically
+add Aarch64 specific types in qemu-system-aarch64 binary,
+removing the need of TARGET_AARCH64 #ifdef'ry.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/fdt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/arm/bcm2836.c | 6 ++----
+ hw/arm/raspi.c   | 7 +++----
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/hw/ppc/fdt.c b/hw/ppc/fdt.c
-index 0828ad72548..bae269c72ac 100644
---- a/hw/ppc/fdt.c
-+++ b/hw/ppc/fdt.c
-@@ -8,12 +8,12 @@
-  */
- 
+diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
+index 95e16806fa1..88a32e5fc20 100644
+--- a/hw/arm/bcm2836.c
++++ b/hw/arm/bcm2836.c
+@@ -12,6 +12,7 @@
  #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "qemu/module.h"
 +#include "qemu/legacy_binary_info.h"
- #include "target/ppc/cpu.h"
- #include "target/ppc/mmu-hash64.h"
+ #include "hw/arm/bcm2836.h"
+ #include "hw/arm/raspi_platform.h"
+ #include "hw/sysbus.h"
+@@ -195,7 +196,6 @@ static void bcm2836_class_init(ObjectClass *oc, void *data)
+     dc->realize = bcm2836_realize;
+ };
  
- #include "hw/ppc/fdt.h"
- 
--#if defined(TARGET_PPC64)
- size_t ppc_create_page_sizes_prop(PowerPCCPU *cpu, uint32_t *prop,
-                                   size_t maxsize)
+-#ifdef TARGET_AARCH64
+ static void bcm2837_class_init(ObjectClass *oc, void *data)
  {
-@@ -21,6 +21,8 @@ size_t ppc_create_page_sizes_prop(PowerPCCPU *cpu, uint32_t *prop,
-     int i, j, count;
-     uint32_t *p = prop;
- 
-+    assert(legacy_binary_is_64bit());
-+
-     for (i = 0; i < PPC_PAGE_SIZES_MAX_SZ; i++) {
-         PPCHash64SegmentPageSizes *sps = &cpu->hash64_opts->sps[i];
- 
-@@ -46,4 +48,3 @@ size_t ppc_create_page_sizes_prop(PowerPCCPU *cpu, uint32_t *prop,
- 
-     return (p - prop) * sizeof(uint32_t);
- }
+     DeviceClass *dc = DEVICE_CLASS(oc);
+@@ -208,7 +208,6 @@ static void bcm2837_class_init(ObjectClass *oc, void *data)
+     bc->clusterid = 0x0;
+     dc->realize = bcm2836_realize;
+ };
 -#endif
+ 
+ static const TypeInfo bcm283x_types[] = {
+     {
+@@ -219,12 +218,11 @@ static const TypeInfo bcm283x_types[] = {
+         .name           = TYPE_BCM2836,
+         .parent         = TYPE_BCM283X,
+         .class_init     = bcm2836_class_init,
+-#ifdef TARGET_AARCH64
+     }, {
+         .name           = TYPE_BCM2837,
+         .parent         = TYPE_BCM283X,
++        .registerable   = legacy_binary_is_64bit,
+         .class_init     = bcm2837_class_init,
+-#endif
+     }, {
+         .name           = TYPE_BCM283X,
+         .parent         = TYPE_BCM283X_BASE,
+diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+index dce35ca11aa..f7e647a9cbf 100644
+--- a/hw/arm/raspi.c
++++ b/hw/arm/raspi.c
+@@ -15,6 +15,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
+ #include "qemu/cutils.h"
++#include "qemu/legacy_binary_info.h"
+ #include "qapi/error.h"
+ #include "hw/arm/boot.h"
+ #include "hw/arm/bcm2836.h"
+@@ -367,7 +368,6 @@ static void raspi2b_machine_class_init(ObjectClass *oc, void *data)
+     raspi_machine_class_init(mc, rmc->board_rev);
+ };
+ 
+-#ifdef TARGET_AARCH64
+ static void raspi3ap_machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -387,7 +387,6 @@ static void raspi3b_machine_class_init(ObjectClass *oc, void *data)
+     rmc->board_rev = 0xa02082;
+     raspi_machine_class_init(mc, rmc->board_rev);
+ };
+-#endif /* TARGET_AARCH64 */
+ 
+ static const TypeInfo raspi_machine_types[] = {
+     {
+@@ -402,16 +401,16 @@ static const TypeInfo raspi_machine_types[] = {
+         .name           = MACHINE_TYPE_NAME("raspi2b"),
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi2b_machine_class_init,
+-#ifdef TARGET_AARCH64
+     }, {
+         .name           = MACHINE_TYPE_NAME("raspi3ap"),
+         .parent         = TYPE_RASPI_MACHINE,
++        .registerable   = legacy_binary_is_64bit,
+         .class_init     = raspi3ap_machine_class_init,
+     }, {
+         .name           = MACHINE_TYPE_NAME("raspi3b"),
+         .parent         = TYPE_RASPI_MACHINE,
++        .registerable   = legacy_binary_is_64bit,
+         .class_init     = raspi3b_machine_class_init,
+-#endif
+     }, {
+         .name           = TYPE_RASPI_MACHINE,
+         .parent         = TYPE_RASPI_BASE_MACHINE,
 -- 
 2.47.1
 
