@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08C44C282EC
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8149C282E5
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:26:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdTu-0000p8-9l; Tue, 04 Mar 2025 20:23:31 -0500
+	id 1tpdUq-000320-LJ; Tue, 04 Mar 2025 20:24:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTL-0008Ox-AI
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:22:57 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUh-0002g6-0s
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:19 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTI-0006zm-Ha
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:22:54 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-38f406e9f80so4730832f8f.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:22:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUf-0007Dl-AU
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:18 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-390dd3403fdso5299899f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:24:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137770; x=1741742570; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741137855; x=1741742655; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=stXxHtQ0ysec4RTH3tLbFblvlwVcUcFY/+2ohtZUeAg=;
- b=QlgXeVICKr9WPBfJuln9+cdlJfTLPQdaGOTowahZtbNU5Djyg2hYkHcfnT9oxckMeJ
- 9d0vKhQYkv6qHQ4ZJaB+un7/OyVBQ4+XSZWS00KIxjUM2p2kANztSnUOd0x3Z0e0QFE7
- 7M15bgk7Uh0qbe3dtlnIrFZ7H4MBvl7FJzi4iu+A70aAmgT5Z6ZEnF0SrwAW+VAt7zO/
- lo1npBcjz3hvfQR/s47LjUiTlNpESckRi63vlh2UC8pzjO6mPQBfOwhuWRqhI5Q6oN3Q
- 9+uyukkqlgc0sU53NFWVP1mdMaRUc5chJi4slZE4+bVJEFwY48QXq/AS1UgLIcAKQmQf
- AVRw==
+ bh=0qqjRyLJXA943FvFgC6O1oaicZbTpbgR9SXUAwOPgKM=;
+ b=yGSEADqTL008eLG6S5OtMwHWaNS5Jv0QsxJRCztptOZ9CfbSq59aUfqUQ5F5YuTShK
+ N7t51v7Wytk2EYKh0+zvrXlXmYEmLYqXX77RmFWhEf1IkajMs2Mg3GANpQ+TZITkBV3k
+ XIeHQQyidSRZI1mIhsCkmQ6yNHUD8HyH9R6LB9FnlSBZglottM+KpMrVmLAz3TPpxUQt
+ D5+/UIrFLCd6f+re/KH23EtIafbihiZD9NdEh0E8wvXLESTzpAdegFEUEayLVO27Fl/s
+ C/SVY16QsFHoekcRxC2nDL8aHCCLQTB7UpnjUFwNLUEm27Bcuqf9epUa2CbEMQT4+teD
+ wFPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137770; x=1741742570;
+ d=1e100.net; s=20230601; t=1741137855; x=1741742655;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=stXxHtQ0ysec4RTH3tLbFblvlwVcUcFY/+2ohtZUeAg=;
- b=XH1ozMt0DVrDR2oEZLDd8x67Gasxtwb/Fzgb+E8wCbBVfWgtO1wPsoY8COegGd3v6M
- oY5/kiQx0iVE11vcTZG497Smjrl5NahVhX1O532R773X2oCLcRQyT2y3pUyrJKSb8Jau
- MryEh82H3YvSPjmTfCNTdHdJQWyXRfGJd1lVbfyZZ3i3GYRs1+pT17FBhHRcWNNM5U54
- F/8AHRQc4pBs04ygmYtvWA6BfkTGgWMAMZyKic6SYAUMRWl+OwFd2ZbSnQwsKzZ8ONi6
- cqigMGwYgwjhZMH7uvh6iBZv69kFjPx3CJO081WbAVx5Fc46DRxNSl5eRGfJ/yfgR7Hb
- BHug==
-X-Gm-Message-State: AOJu0YzeMyssBD+NgodaLCc+cv4qP+LfK7+a7Mr9XPu12XkbKuWMBrxp
- zrH/KTGLFd8xG9Dqso1VJIctlbKk9lH1akk7uoJDeGFRRC4KPvxrVtAsqEN3v9+1YVRdCMPDsz8
- I/w4=
-X-Gm-Gg: ASbGncuScK/0JMqYBTDZo5aYDKnk5OdX+nFEBaOGgNAl6D/8ktfKprG5qdzVsMeSzOF
- o9ew/To6NfGogPV5IBR+1wf+o2U0/JpDcrfdkZRiXSkBw/9MPfhZhkaJe3w/FsS3kVhflKjkSV2
- sELXlWixzm2cxk51vxTFZ50Zu17XDQ4jNuN4FAu135fTuAioYa8XkAOHJBnIqOY1Mdk7pHEAuhR
- zhAYN56qk8oaNZd+LfYOhv02u6DouadnoDfcPU70Uach7Pml+pz0uaYTkY+GhwB42RdPDMVhwNO
- s8aTWU0pE9nUo01LoGfyaxmKIJ4c9TSyQ0hyYMyMIggRaES0XbTGeVBTeIh+ohG2nacbkrMRdb8
- uJEz68LQ7LAIal/FhLhs=
-X-Google-Smtp-Source: AGHT+IGz19L3Zveyac+y+96ofS6J9afQGtwp7wWdiedlNiSy91Nl8HBB0BZk+QDMwd9rjoXoDre0gg==
-X-Received: by 2002:a05:6000:1546:b0:38d:d0ea:b04c with SMTP id
- ffacd0b85a97d-3911f7bb84fmr763818f8f.38.1741137770058; 
- Tue, 04 Mar 2025 17:22:50 -0800 (PST)
+ bh=0qqjRyLJXA943FvFgC6O1oaicZbTpbgR9SXUAwOPgKM=;
+ b=Y5hzl5x6dWAP3taqyx+7p0Xc+vbPWMpmAQGEpBS3MumJ/OJGwQmz9Tu7jSBRXI5Lh4
+ ky2Mc3PDdhfKW848R87Cb7Xz6UiEd6SGpa+nWQzo5erXHBjeywAGPjTDGKbNJFPm5JVG
+ YWDRLBPDj+epFxIQgi8Be2B/YMzO/PXVLO3BHquVc8phyRHpHftmmNdTx6/K7W8nmmJc
+ 2NEDpLj6J25uDkPWo/GypHnlyJfc195iKrUGzglwQ6AagXpbyVKUV6DvXA4eSt8PgAs6
+ lgm3v+a6PBxbWCEGOiG1M51qhifiYnqYSuOMhz++Kfw8PrbpJbHhveOEyfs7zlq8sAbg
+ 3xWw==
+X-Gm-Message-State: AOJu0YzOKYBSZosDc5XaF//u8t8DjLuNvd3Wmqtgl15mulmeb1bafXo5
+ 5bhyiVcPzwAakeEOraSTI14wwQVs4vRESAqpuvGuowD8rabNb5FreZHtnqm0MBQg4AqZL8ZBm44
+ JbUE=
+X-Gm-Gg: ASbGnctzstu2B9x5NLiBFcxSkRIBx8jrkdDhGV8la37rg3Iz0OJJ61DPUFXHYZpXHm5
+ tkj+OMykj4+X/l0VZ2xv4BPbfZer2RPbf90EIA0AUjNkoPBC79hWuwgykvttLQTnWxsjtZvNRc1
+ 4QIBfaxpXpy4sWujDMZOo0fuHS8gr3iCaDXaNTeGiD+/DC/ArHjFroi8zn4p71Bell54nkgeS0b
+ h56O+eEcT5IwSqt9wxPQvew2flACPecMY1UFKAILsqDAvB+3gbw0w/bFcmxknvQMsuMHH78dLN2
+ z8UWjmSEADD5URVKNKYBMIdrVfvOTVPUL1wnikxr2/idXkaPbEsNw39SYhSk/acANyAQnSqNrjt
+ Ntpl07BgYczq9fWp9rjY=
+X-Google-Smtp-Source: AGHT+IHEnSfe15n9kkeZo+PEMl+EdPMJ2MLBnSq4QrPDPYtKySnpCUirv2IunIYIF/e35wMoHAHsZg==
+X-Received: by 2002:a05:6000:2b06:b0:391:4f9:a047 with SMTP id
+ ffacd0b85a97d-3911f741393mr383577f8f.17.1741137855549; 
+ Tue, 04 Mar 2025 17:24:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e479608fsm19575557f8f.14.2025.03.04.17.22.49
+ ffacd0b85a97d-390e47965ddsm19712111f8f.18.2025.03.04.17.24.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 17:22:49 -0800 (PST)
+ Tue, 04 Mar 2025 17:24:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 10/41] hw/ppc/spapr: Restrict part of PAGE_INIT hypercall to TCG
-Date: Wed,  5 Mar 2025 02:21:25 +0100
-Message-ID: <20250305012157.96463-11-philmd@linaro.org>
+Cc: Alistair Francis <alistair23@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
+Subject: [PULL 28/41] hw/char/sifive_uart: Free fifo on unrealize
+Date: Wed,  5 Mar 2025 02:21:43 +0100
+Message-ID: <20250305012157.96463-29-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
 References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,31 +103,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restrict the tb_flush() call to TCG. Assert we are using KVM or TCG.
+From: Alistair Francis <alistair23@gmail.com>
 
+We previously allocate the fifo on reset and never free it, which means
+we are leaking memory.
+
+Instead let's allocate on realize and free on unrealize.
+
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Tested-by: Clément Chigot <chigot@adacore.com>
+Message-ID: <20250303023120.157221-1-alistair.francis@wdc.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-Id: <20250127102620.39159-3-philmd@linaro.org>
 ---
- hw/ppc/spapr_hcall.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/char/sifive_uart.c | 44 +++++++++++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index f8ab7670630..f987ff323f8 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -299,8 +299,10 @@ static target_ulong h_page_init(PowerPCCPU *cpu, SpaprMachineState *spapr,
-     if (flags & (H_ICACHE_SYNCHRONIZE | H_ICACHE_INVALIDATE)) {
-         if (kvm_enabled()) {
-             kvmppc_icbi_range(cpu, pdst, len);
--        } else {
-+        } else if (tcg_enabled()) {
-             tb_flush(CPU(cpu));
-+        } else {
-+            g_assert_not_reached();
-         }
-     }
+diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+index 4bc5767284b..b45e6c098c4 100644
+--- a/hw/char/sifive_uart.c
++++ b/hw/char/sifive_uart.c
+@@ -251,6 +251,23 @@ static int sifive_uart_be_change(void *opaque)
+     return 0;
+ }
  
++static void sifive_uart_reset_enter(Object *obj, ResetType type)
++{
++    SiFiveUARTState *s = SIFIVE_UART(obj);
++
++    s->txfifo = 0;
++    s->ie = 0;
++    s->ip = 0;
++    s->txctrl = 0;
++    s->rxctrl = 0;
++    s->div = 0;
++
++    s->rx_fifo_len = 0;
++
++    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
++    fifo8_reset(&s->tx_fifo);
++}
++
+ static const Property sifive_uart_properties[] = {
+     DEFINE_PROP_CHR("chardev", SiFiveUARTState, chr),
+ };
+@@ -270,30 +287,24 @@ static void sifive_uart_realize(DeviceState *dev, Error **errp)
+ {
+     SiFiveUARTState *s = SIFIVE_UART(dev);
+ 
++    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
++
+     s->fifo_trigger_handle = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+                                           fifo_trigger_update, s);
+ 
+-    qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart_rx,
+-                             sifive_uart_event, sifive_uart_be_change, s,
+-                             NULL, true);
++    if (qemu_chr_fe_backend_connected(&s->chr)) {
++        qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart_rx,
++                                 sifive_uart_event, sifive_uart_be_change, s,
++                                 NULL, true);
++    }
+ 
+ }
+ 
+-static void sifive_uart_reset_enter(Object *obj, ResetType type)
++static void sifive_uart_unrealize(DeviceState *dev)
+ {
+-    SiFiveUARTState *s = SIFIVE_UART(obj);
++    SiFiveUARTState *s = SIFIVE_UART(dev);
+ 
+-    s->txfifo = 0;
+-    s->ie = 0;
+-    s->ip = 0;
+-    s->txctrl = 0;
+-    s->rxctrl = 0;
+-    s->div = 0;
+-
+-    s->rx_fifo_len = 0;
+-
+-    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
+-    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
++    fifo8_destroy(&s->tx_fifo);
+ }
+ 
+ static void sifive_uart_reset_hold(Object *obj, ResetType type)
+@@ -329,6 +340,7 @@ static void sifive_uart_class_init(ObjectClass *oc, void *data)
+     ResettableClass *rc = RESETTABLE_CLASS(oc);
+ 
+     dc->realize = sifive_uart_realize;
++    dc->unrealize = sifive_uart_unrealize;
+     dc->vmsd = &vmstate_sifive_uart;
+     rc->phases.enter = sifive_uart_reset_enter;
+     rc->phases.hold  = sifive_uart_reset_hold;
 -- 
 2.47.1
 
