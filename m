@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D98BC282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:36:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F0FC282D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdWu-0006q4-CW; Tue, 04 Mar 2025 20:26:37 -0500
+	id 1tpdWm-00065R-2T; Tue, 04 Mar 2025 20:26:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVe-0004Tl-4Y
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVe-0004Tq-4Y
  for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:25:21 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVR-0007L4-PK
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:25:07 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43bc63876f1so21515215e9.3
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:25:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVa-0007XW-Ho
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:25:16 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3910e101d0fso1839227f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:25:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137904; x=1741742704; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741137913; x=1741742713; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fBKaSdciz4vWObThuGuztLYugPKsPiaANZDROnbbSag=;
- b=f7vv46wcHJziPk1i4fP4WQSugpG4FTyl9MJLFjIT6RldKP+9D+hR4iNDQiChuhYU5b
- HmeBgZJGfr5yVtB7tp5HRSPF6E6pbG9Wk4dAqm1EPa0p/xq9hx1pbSKAkY4YXTSe5bEQ
- 9oLzdpYsX7J3f5U4XUD/z5XLWgicfiy1SnmfJIlNLFjQdu/FSrT9sdtnaD30RzvuTtun
- 6IZpQ4TXIKTUg6mWPJZtw7ca3xrlr/f2eS/44iz6caiL8g1rMPMiww0E4dvs4UcX5cHE
- uZQ1LJyfGesYg5rG7IHXT2S0gVOk1gJ4zgeDN2v1P/z3lZPJOiK0D+kRLLJ6o+pbWpun
- h83Q==
+ bh=zNYmKdmAkSe74tv/hM9qGRHhB0/eo8ytTK5WDBjYNps=;
+ b=vQQfY9jgOF3N27M2LmAJimAt22HJRbBmZkLexoiPUTTC96GoFEx5aZgDT5et57GrEG
+ txGeceelQVXCLhDyaIRUFcuFW8Ke6D91f3iM91CACgxh9GeGp2HhzHeYGot5PsQvqyst
+ IyyZFMCQ036U371z+nu/yssKk1p3UEAMoBOBYtFABHxGpWYKFHBpG9gS3f+lV7KECtu/
+ aeZMqX+Vv5+ybnKiIYkDof1sGlZPQPCZbKTtJJ8n8dZ8Q8XcoUQCpWGa1SfHi3nnUcXg
+ Ua2EtFRTEv/+8IxCVodK3hAbrM7F+ryVu1OrA9muicFd67dgqcBCfTM4AKG3tdwJ4CuX
+ 1X8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137904; x=1741742704;
+ d=1e100.net; s=20230601; t=1741137913; x=1741742713;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fBKaSdciz4vWObThuGuztLYugPKsPiaANZDROnbbSag=;
- b=iwJKyfHpIyHLGqbAPljtcoD54adWUuxbMALsZXOHdu9asITN+Q1KXDcLG50wIwbiOQ
- YaSW9Ir1Ar+mzN5FJzSVXSMeOZ4DU+4FVi8Lvadzqm5QsRy+E5kH8dfFUJo7BkO7LHeW
- BBZFUR9Ij5y84UP86hRfld6T0QrQdFSZq1nvpsvX2PraJpo81ghL6io6X4WEG8Erqr6S
- uFH6g9i71JWgJOFvm/aYS8TQJeDXCZ2n+XkSX5MimiMStFMHH1SL/fcp7x9ZoyHiD6tX
- ktSTTjMTsb+3/YIChEbqihuCWIdTryoQRj9MF1gmwX9KWqXNBamgt7UWtTOr4WzThFb6
- x56w==
-X-Gm-Message-State: AOJu0YzjUANriqBBOxxp/yLB314jlIcOAypx98xFASU3nru5bmzn6QF5
- eyu7fRP9qG00UQ7ZPcoAGyMm3YT6b/yQ4uXwtK0jsrqzsQu9NtTkNmhR6bGi9dutUQ2p4wTrN56
- GU48=
-X-Gm-Gg: ASbGnctRwGtVAtgiTl+/2w+sIweKKqxVLpMBXepVCwU/98S9uDjNeelBSTxaQf6eT1V
- 6kImeaFzBnGy1iBANJgXaYU2bumjrLAs4IuZscZv119vX9dNHKfGA9xOT1y8+9UYnjcH5cMq6Zf
- 1zo74UbEhLt8KzMi2Rd92Pn+geIaFVbWid7rnvepshmeW2IiKAs8bSRJeCwDPRvcByv+WCsO7g8
- zo9z4frXHwcd0ETfAie/gkaE+Izyyn8oYchYlycTUwf4FEBCR0Ohk7IWpyUebyLc+FjlfW7fmlS
- oESVaeiKwbumUIuV3Y3WCmumPJCeN1m7VriDk9a/Kzg5v3KSkRL1DZlcyUsDeC7P4ocqkQTIL6I
- DfE5nPVkdfMpV8OJ/mOQ=
-X-Google-Smtp-Source: AGHT+IGQlstr4QKzVtgWdZq8j7qDheTdAWqwVZT6dBgKI8NoqRkvrhgRtkXpntsEVCd8+Y0mzmW8gA==
-X-Received: by 2002:a5d:64a6:0:b0:390:eb32:3fd2 with SMTP id
- ffacd0b85a97d-3911f57cc31mr912485f8f.0.1741137903706; 
- Tue, 04 Mar 2025 17:25:03 -0800 (PST)
+ bh=zNYmKdmAkSe74tv/hM9qGRHhB0/eo8ytTK5WDBjYNps=;
+ b=Trol7ZGIDUPzI5Wjok+f5hkHo1/xFDbhVLkrNwC2+TLRM5pZdkBn67/vKwJFsDLQEZ
+ u/jPQ4wSFxALSuWRUdXxhd2dS1m2ubqFxuZsaL1rPsCERy4UWoxRNdpFzMhY1sp2iwsg
+ yoHH7SqX2qsz38V2YLoihCfO6+ncjgJ222Y7EGA3lpta2CaOwqEPLxJNmOtWHSxT4oMP
+ egX7WE6LwO4kXKDVwFmsmObUruRFUQCnPJjZDAmwXXxi/SOYoHqxSzhy/y8wUQbDU4nY
+ ZFLax3Efsvh0YWQvbEaCDoltjvUmUObxqrcTEL0vatUywqdUgI3qMsqYW64HT9P9GRbv
+ 4QBw==
+X-Gm-Message-State: AOJu0YwwKtQXRmAWWOVidcOLPSP+pYE2qfbnb5qRMcH4e0BzLmt56UWC
+ TUVvBKkP/+OQITSTs1xrl2YWVxpBzIlH9M0jzar91zgoZ64vJKzxe8Qq6UfmKFeKDPvgh8gkmCm
+ 8UJ8=
+X-Gm-Gg: ASbGncs5I/3eOVvS4mX1kyoeQieXQkJy5OPOrsCx/9Qhp7CIZf6dMK8eWoEE751nr64
+ h7fM4I7V/n62xcAtLg1REi+qsew0Izcb5IkiQpZmlKFSB14kRiK5Pp0LsEfID+vpZWd4LjIhthQ
+ be/Z3tIV+7wiOueMUok2D7gkGbItwWKBcWCxKmYd/xGzQ5ywFWsqXr7w/omce1huPx2cBcBAfZw
+ d6aIJLYzfZ5ISL6gV9lTugMUn8RguhGj9cHYLit8JwXY4o7rYETrn9g+pube2wegKP336DIG9iv
+ muKb5+0LqsA0OPLtGlBdTe4wMXQxYt/kJLmMVEkbjaz9K6BewbDmaQeu53lxcCT2RZwIkCqrH/e
+ xBZFtAoUcXZaUEsKyvZc=
+X-Google-Smtp-Source: AGHT+IF/Aq1E6HYWY3+62q3IhdcMlhTsymuc5Adu1vrnYudPtzpupQTtly/2q4Cr8h8MIyFdiiwrjg==
+X-Received: by 2002:a5d:59ad:0:b0:391:8a3:d943 with SMTP id
+ ffacd0b85a97d-3911f73f9f3mr787266f8f.13.1741137912683; 
+ Tue, 04 Mar 2025 17:25:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4795983sm19153614f8f.6.2025.03.04.17.25.03
+ ffacd0b85a97d-390e485e03asm19626906f8f.95.2025.03.04.17.25.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 17:25:03 -0800 (PST)
+ Tue, 04 Mar 2025 17:25:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 38/41] hw/nvram/eeprom_at24c: Use OBJECT_DECLARE_SIMPLE_TYPE
-Date: Wed,  5 Mar 2025 02:21:53 +0100
-Message-ID: <20250305012157.96463-39-philmd@linaro.org>
+Subject: [PULL 40/41] hw/nvram/eeprom_at24c: Remove memset after g_malloc0
+Date: Wed,  5 Mar 2025 02:21:55 +0100
+Message-ID: <20250305012157.96463-41-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
 References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,31 +102,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: BALATON Zoltan <balaton@eik.bme.hu>
 
-No need to open code it so use the simple object type declaration.
+Calling memset to zero memory is not needed after g_malloc0 which
+already clears memory. These used to be in separate functions but
+after some patches the memset ended up after g_malloc0 and thus can be
+dropped.
 
+Fixes: 4f2c6448c3 (hw/nvram/eeprom_at24c: Make reset behavior more like hardware)
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <08d9900af04789ede485942c8072eaa58bf52f80.1740839457.git.balaton@eik.bme.hu>
+Message-ID: <ff281851e6d824ecd01b8b5cd955328dae1515a0.1740839457.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/nvram/eeprom_at24c.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ hw/nvram/eeprom_at24c.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/hw/nvram/eeprom_at24c.c b/hw/nvram/eeprom_at24c.c
-index a40cc5dd15a..2ae03935d47 100644
+index 9f606842eb6..78c81bea77f 100644
 --- a/hw/nvram/eeprom_at24c.c
 +++ b/hw/nvram/eeprom_at24c.c
-@@ -30,9 +30,7 @@
-                             ## __VA_ARGS__)
+@@ -190,7 +190,6 @@ static void at24c_eeprom_realize(DeviceState *dev, Error **errp)
+     }
  
- #define TYPE_AT24C_EE "at24c-eeprom"
--typedef struct EEPROMState EEPROMState;
--DECLARE_INSTANCE_CHECKER(EEPROMState, AT24C_EE,
--                         TYPE_AT24C_EE)
-+OBJECT_DECLARE_SIMPLE_TYPE(EEPROMState, AT24C_EE)
+     ee->mem = g_malloc0(ee->rsize);
+-    memset(ee->mem, 0, ee->rsize);
  
- struct EEPROMState {
-     I2CSlave parent_obj;
+     if (ee->init_rom) {
+         memcpy(ee->mem, ee->init_rom, MIN(ee->init_rom_size, ee->rsize));
 -- 
 2.47.1
 
