@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3FEFC19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1713C282D9
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:49:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpfk2-00014G-RY; Tue, 04 Mar 2025 22:48:18 -0500
+	id 1tpfkC-00023K-Uf; Tue, 04 Mar 2025 22:48:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfjz-0000oL-2z
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:48:15 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfk8-0001hr-UN
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:48:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfjx-0006Fp-7h
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:48:14 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfk7-0006I6-5Y
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:48:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741146492;
+ s=mimecast20190719; t=1741146502;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/RxCjFYPvrEydD2D4WJ3pep23Kg6DeegEtOUm7zlMIk=;
- b=B356igV3tXqBob/AsDqqPZVjtzR4DnHpua54pdgiWMPQEcfR86ITnSAgKhLhcpSLv4n5jF
- ZCLrfn2m8ENlVUOPz1O9Ov2AJ6fQvAI7SvzeF6TkgtYAxZ5YesOQ19wgywpSH3MMtIpymp
- Pl+XfeIM7VOT8CwzxyIM1UxEINtQ8jE=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Wa1Xi1ebmSpbrQKxKvSJI+EMuuyJ3SeCmG/4SFx/eQw=;
+ b=NbQPZXVCwSeUNY732E261haFp2neItMrtbyQdVZBTKYr7u2K0D8qCxpaAH06IhbrdSWrkf
+ namJ2RLybE813jhgpu2lfvi5UWqS2KkMfsoWhAiI1yNAkNiJAclVMgE3e5EFYmCzDerhpq
+ N7wiIVGKXfQ78rUhxhICBh8oUkSYDLI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-PtLRJPgENVC4lt3XQHCfIw-1; Tue,
- 04 Mar 2025 22:47:01 -0500
-X-MC-Unique: PtLRJPgENVC4lt3XQHCfIw-1
-X-Mimecast-MFC-AGG-ID: PtLRJPgENVC4lt3XQHCfIw_1741146420
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-IW5jUfzwP0SmPAUhzdE2XA-1; Tue,
+ 04 Mar 2025 22:48:18 -0500
+X-MC-Unique: IW5jUfzwP0SmPAUhzdE2XA-1
+X-Mimecast-MFC-AGG-ID: IW5jUfzwP0SmPAUhzdE2XA_1741146497
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 586AE1955BFC; Wed,  5 Mar 2025 03:47:00 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A14C1955BCD; Wed,  5 Mar 2025 03:48:17 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.45])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E37501956095; Wed,  5 Mar 2025 03:46:55 +0000 (UTC)
+ id D7F801956095; Wed,  5 Mar 2025 03:48:14 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
@@ -53,9 +53,9 @@ Cc: Michael Roth <michael.roth@amd.com>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 12/57] docs/qapi-domain: add :since: directive option
-Date: Tue,  4 Mar 2025 22:45:21 -0500
-Message-ID: <20250305034610.960147-13-jsnow@redhat.com>
+Subject: [PATCH 33/57] docs/qapidoc: add transmogrifier stub
+Date: Tue,  4 Mar 2025 22:45:42 -0500
+Message-ID: <20250305034610.960147-34-jsnow@redhat.com>
 In-Reply-To: <20250305034610.960147-1-jsnow@redhat.com>
 References: <20250305034610.960147-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -86,77 +86,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a little special markup for registering "Since:" information. Adding
-it as an option instead of generic content lets us hoist the information
-into the Signature bar, optionally put it in the index, etc.
+This commit adds a stubbed option to the qapi-doc directive that opts-in
+to the new rST generator; the implementation of which will follow in
+subsequent commits.
+
+Once all QAPI documents have been converted, this option and the old
+qapidoc implementation can be dropped.
+
+Note that moving code outside of the try...except block has no impact
+because the code moved outside of that block does not ever raise a
+QAPIError.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapi_domain.py | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ docs/sphinx/qapidoc.py | 41 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 13 deletions(-)
 
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index 6168c23936f..9919dacd4e6 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -4,6 +4,7 @@
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index d622398f1da..dc72f3fd3f3 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -452,9 +452,9 @@ def _parse_text_into_node(self, doctext, node):
+         rstlist.append("", self._cur_doc.info.fname, self._cur_doc.info.line)
+         self._sphinx_directive.do_parse(rstlist, node)
  
- from __future__ import annotations
- 
-+import re
- from typing import (
-     TYPE_CHECKING,
-     AbstractSet,
-@@ -104,6 +105,18 @@ def process_link(
-         return title, target
+-    def get_document_nodes(self):
+-        """Return the list of docutils nodes which make up the document"""
+-        return self._top_node.children
++    def get_document_node(self):
++        """Return the root docutils node which makes up the document"""
++        return self._top_node
  
  
-+def since_validator(param: str) -> str:
-+    """
-+    Validate the `:since: X.Y` option field.
-+    """
-+    match = re.match(r"[0-9]+\.[0-9]+", param)
-+    if not match:
-+        raise ValueError(
-+            f":since: requires a version number in X.Y format; not {param!r}"
-+        )
-+    return param
+ # Turn the black formatter on for the rest of the file.
+@@ -503,7 +503,10 @@ class QAPIDocDirective(NestedDirective):
+ 
+     required_argument = 1
+     optional_arguments = 1
+-    option_spec = {"qapifile": directives.unchanged_required}
++    option_spec = {
++        "qapifile": directives.unchanged_required,
++        "transmogrify": directives.flag,
++    }
+     has_content = False
+ 
+     def new_serialno(self):
+@@ -511,10 +514,24 @@ def new_serialno(self):
+         env = self.state.document.settings.env
+         return "qapidoc-%d" % env.new_serialno("qapidoc")
+ 
++    def transmogrify(self, schema) -> nodes.Element:
++        raise NotImplementedError
 +
++    def legacy(self, schema) -> nodes.Element:
++        vis = QAPISchemaGenRSTVisitor(self)
++        vis.visit_begin(schema)
++        for doc in schema.docs:
++            if doc.symbol:
++                vis.symbol(doc, schema.lookup_entity(doc.symbol))
++            else:
++                vis.freeform(doc)
++        return vis.get_document_node()
 +
- # Alias for the return of handle_signature(), which is used in several places.
- # (In the Python domain, this is Tuple[str, str] instead.)
- Signature = str
-@@ -124,6 +137,8 @@ class QAPIObject(ObjectDescription[Signature]):
-         {
-             # Borrowed from the Python domain:
-             "module": directives.unchanged,  # Override contextual module name
-+            # These are QAPI originals:
-+            "since": since_validator,
-         }
-     )
+     def run(self):
+         env = self.state.document.settings.env
+         qapifile = env.config.qapidoc_srctree + "/" + self.arguments[0]
+         qapidir = os.path.dirname(qapifile)
++        transmogrify = "transmogrify" in self.options
  
-@@ -135,9 +150,19 @@ def get_signature_prefix(self) -> List[nodes.Node]:
-             SpaceNode(" "),
-         ]
+         try:
+             schema = QAPISchema(qapifile)
+@@ -522,20 +539,18 @@ def run(self):
+             # First tell Sphinx about all the schema files that the
+             # output documentation depends on (including 'qapifile' itself)
+             schema.visit(QAPISchemaGenDepVisitor(env, qapidir))
+-
+-            vis = QAPISchemaGenRSTVisitor(self)
+-            vis.visit_begin(schema)
+-            for doc in schema.docs:
+-                if doc.symbol:
+-                    vis.symbol(doc, schema.lookup_entity(doc.symbol))
+-                else:
+-                    vis.freeform(doc)
+-            return vis.get_document_nodes()
+         except QAPIError as err:
+             # Launder QAPI parse errors into Sphinx extension errors
+             # so they are displayed nicely to the user
+             raise ExtensionError(str(err)) from err
  
--    def get_signature_suffix(self) -> list[nodes.Node]:
-+    def get_signature_suffix(self) -> List[nodes.Node]:
-         """Returns a suffix to put after the object name in the signature."""
--        return []
-+        ret: List[nodes.Node] = []
++        if transmogrify:
++            contentnode = self.transmogrify(schema)
++        else:
++            contentnode = self.legacy(schema)
 +
-+        if "since" in self.options:
-+            ret += [
-+                SpaceNode(" "),
-+                addnodes.desc_sig_element(
-+                    "", f"(Since: {self.options['since']})"
-+                ),
-+            ]
++        return contentnode.children
 +
-+        return ret
  
-     def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
-         """
+ class QMPExample(CodeBlock, NestedDirective):
+     """
 -- 
 2.48.1
 
