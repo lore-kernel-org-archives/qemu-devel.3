@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 640E1C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 992ABC282E5
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tprPU-0006qM-Vq; Wed, 05 Mar 2025 11:15:53 -0500
+	id 1tprVe-00008H-R6; Wed, 05 Mar 2025 11:22:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tprP4-0006ch-BS
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:15:29 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tprVd-00007z-SV
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:22:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tprP1-0008GR-7x
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:15:26 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tprVc-00017n-BY
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:22:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741191318;
+ s=mimecast20190719; t=1741191730;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YSbtf0VeiXuQ2EGGhQqCS9w7SUBpRjiKEgQOM2AIrLo=;
- b=YPhZqV4FiPFG+LCSe9G7cvzvw+PIntID1iE4vdVvHFHqVsHTf2r3SeVjn7+aXuTt7oGr2O
- v5QW1iLybR4Wel6aXc+sSFZxRXUVX1bVJaHVPc6jgRPS93TNiDvr376McpR9flBuzbxPCP
- NUR1JOliIEprEny8NIXwSWi8OywGh30=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6wBwkAtifNAodq85dur72m5NAtGlaa79Y3PIM3WJOKY=;
+ b=R/uTul3U1LelA1H5MeWtYbKRy4XSxo1FuKLKxq9pk9/RQFtcyFTAgC1sitOx9DmB/m6svS
+ a9d3VtQgyJTN24vpi9OrriWlKyDWdRCFPJUIv7ZbeU2MbZjKHsvDV5lt9su4+2iHXsxXuT
+ usOpMU3uF35UDkdf3cjctXHhj48KSM8=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-310-UnXWuuewPgm7WqISzk4FxA-1; Wed, 05 Mar 2025 11:15:11 -0500
-X-MC-Unique: UnXWuuewPgm7WqISzk4FxA-1
-X-Mimecast-MFC-AGG-ID: UnXWuuewPgm7WqISzk4FxA_1741191311
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c0b0cf53f3so1292864585a.2
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:15:11 -0800 (PST)
+ us-mta-662-0HBQByROM3OMlgmFxwK4Yg-1; Wed, 05 Mar 2025 11:22:07 -0500
+X-MC-Unique: 0HBQByROM3OMlgmFxwK4Yg-1
+X-Mimecast-MFC-AGG-ID: 0HBQByROM3OMlgmFxwK4Yg_1741191727
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4750717a643so32342911cf.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:22:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741191311; x=1741796111;
+ d=1e100.net; s=20230601; t=1741191727; x=1741796527;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YSbtf0VeiXuQ2EGGhQqCS9w7SUBpRjiKEgQOM2AIrLo=;
- b=aCJyMuohNsqJ9sVRiTh9BK0oJZg5b/+gbvpNsUssRC88iGw4zfsvhrisixSjHaIUWk
- 22ITQEyqD9uP2/n2J+/yR/mFnaj9gPyZJaJwvyl6MjA/oOhsPCpy/+8hqBhKfLFcxgpO
- RD/ZDbeOft2+zxMUviQitmXXhoIpdItUpKpJ7ZVNx8xdXs2nffVytw7WLXuKH12DKR2K
- XtTSOus03oct441RJ+9OSQuAfVQy+yVe8Vg7AHLQHzm3Lqx6GGtbWNUyUM8ezpA64GDY
- uI71gZnBYtRARuPzzHAuH25stQcHvSO/Bxce1rj3JHgaApWQYMONH6q1BN5WLNYeAt66
- QCcQ==
+ bh=6wBwkAtifNAodq85dur72m5NAtGlaa79Y3PIM3WJOKY=;
+ b=dPEuGbZf6JDLgcFVgDoChJrUa9dulewnAiTKYlqJZl7sTXh9NzPus9MDaWkyyfUbhB
+ HsRxH1m1Up8ESXjP5ckfvCqdkjHu1/7ecr8xQHRKz+T/uD18usvQlLSBmR0nHSbXKxR0
+ j/IwmzAknJD0+4/+lFbyYVVy3Fq+nSGGYx5nTLotwhkJxXLFBntYWd/dPe/+lvNYlR2Q
+ /R33HzBdoCu0VfEhwfwRyJeNMrwYtNdbOi+Z4VACeHqJSWmV19iB0ruZTVC0lveTHkmK
+ srNzYW8vFgIWs74lreCdq4SIzw5Vek4Euh8AdKgkc1T2rHZ/6WgYMLs/ghWHqW4PNMG7
+ hZZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV2Nrr42PMzNV9oTzj3Itu77jK+QtY5vT326j3EC/xO9khsNfGfXN1LZnR3UFJGKeEdSlY1g0NAzdGC@nongnu.org
-X-Gm-Message-State: AOJu0Yxf1Lo1TfrwqCEyRYzw1q8JXVsrX9VzMPzwPafd5Wuuy/rHbxv5
- wr8LD573ZADR+hSsxrUOjok1Zd68Kt8emPcaHD4XrwqNs8/46eEAZ9R+KiPVviEsCqmz/M6BqDg
- pSooZCry28yMBSct5DeP33yNfyQnX4FxtOO+6ux4kThu0NZhjZ422
-X-Gm-Gg: ASbGncsC0b84argMu94DxtAQn5XZ4Ozs4j+OCzc2W06NJ2h6iH4t12zPIwPabNO4/wX
- JTtI6c5aYnhD5Dtfg0M+m0n5c8uTu/CLTwTizKMTf6HXTTkgkPiYWwW5YzokX7FDjF3q62/Aif4
- ZO8mMPJEKSq2J2Dqzg6sjbhJTOj+8FsBR/lsKEbT6VoyipHWFeatx5IlzoZ+9Az2MSUasgIeUj6
- Xi/Nef/aqOiOD4qP/jqgvdAUMeE471ARn3v9MVzll4TIoi0B3DP/rSiJAv/8pPXp3SW2jE8IkMD
- 9Qz4m8Q=
-X-Received: by 2002:a05:620a:2815:b0:7c0:9ac5:7f9a with SMTP id
- af79cd13be357-7c3d8e17302mr735460385a.7.1741191311193; 
- Wed, 05 Mar 2025 08:15:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFlD0pRyV3W4fDIpo4QcKCwrpitCTRdi69ahnTabZjjsXKrbz++nEOeRLo4MGh4QB2DasAtLw==
-X-Received: by 2002:a05:620a:2815:b0:7c0:9ac5:7f9a with SMTP id
- af79cd13be357-7c3d8e17302mr735455185a.7.1741191310783; 
- Wed, 05 Mar 2025 08:15:10 -0800 (PST)
+ AJvYcCWkl7cnIkyVwCbj2XLFxfXroYi7NAHWaJEBEKP11X9dGhmR6IH/Wu0NmD9/nnDK3fM80mxIX1Erj2JN@nongnu.org
+X-Gm-Message-State: AOJu0YyhnAEqQQre4xvxhrT0I+d6gHvBijWYvSc/JJvIcq9kR21WJPur
+ HsuzavBt8SsS2nb6oqhWkXqiDAAbXDeMYtI1Pw95x4XuerKPLujd6qOVhfNuJcgSWwTp9/7x3Ao
+ nk8oRDmBlBD/hr2O1bjtVTaT5BTx0TEivaNlafxXHudeTZ2FG0mZG
+X-Gm-Gg: ASbGncvjWjGogTgHwKrswjkHpuAk7+MfMXAf3PGMBk0YEbaatEKGi+afXBAawhez13y
+ tr/7u2ZYohtXJy74ClJFxBTB8eTPamKXfjr+C9TzJyJxztJ4XwFVCVKTjHGgx/mjzWQUmlI7bK/
+ rkbYG3mdVlBdcAHjS1YPY4BZdCdJLxsKh+aPg0E0CZHnC/3Pw3CNs8nGwSWmUxQ7fNZBWL05Zxf
+ wzuH17h+kD+rPoK2fPEr9wRNqgpcYJgl8zq9bRUsilX7sbz1agcBg6PMTHDSi7QZ/FTnlSWb26T
+ Rpd2uMk=
+X-Received: by 2002:ac8:5fc3:0:b0:472:58b:463d with SMTP id
+ d75a77b69052e-4750b23e2b5mr50797531cf.5.1741191727253; 
+ Wed, 05 Mar 2025 08:22:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFHVl6YEGSeBhZ/aVAs1boI2U1xjgFSbaRnFonB5St0c0f0Ks+VFNgHjfDFyAnzAvAMDPPo3Q==
+X-Received: by 2002:ac8:5fc3:0:b0:472:58b:463d with SMTP id
+ d75a77b69052e-4750b23e2b5mr50797161cf.5.1741191726936; 
+ Wed, 05 Mar 2025 08:22:06 -0800 (PST)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c3d29d77dasm202640485a.115.2025.03.05.08.15.09
+ d75a77b69052e-474ede93859sm40508941cf.50.2025.03.05.08.22.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Mar 2025 08:15:10 -0800 (PST)
-Date: Wed, 5 Mar 2025 11:15:07 -0500
+ Wed, 05 Mar 2025 08:22:06 -0800 (PST)
+Date: Wed, 5 Mar 2025 11:22:04 -0500
 From: Peter Xu <peterx@redhat.com>
 To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Cc: Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v6 07/36] migration: postcopy_ram_listen_thread() should
- take BQL for some calls
-Message-ID: <Z8h4i3Ima6BhaoBs@x1.local>
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 25/36] vfio/migration: Setup and cleanup multifd
+ transfer in these general methods
+Message-ID: <Z8h6LGGrw82RgA_Y@x1.local>
 References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
- <24a7412cc151f8b48d74cd170a3bdc1ce8e6c879.1741124640.git.maciej.szmigiero@oracle.com>
- <Z8hE3ujEKkwsBiJO@x1.local>
- <4aac2a7e-f42e-4e92-8e27-3b0e9a7b6603@maciej.szmigiero.name>
+ <b1f864a65fafd4fdab1f89230df52e46ae41f2ac.1741124640.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <4aac2a7e-f42e-4e92-8e27-3b0e9a7b6603@maciej.szmigiero.name>
+In-Reply-To: <b1f864a65fafd4fdab1f89230df52e46ae41f2ac.1741124640.git.maciej.szmigiero@oracle.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -116,151 +113,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 05, 2025 at 04:11:30PM +0100, Maciej S. Szmigiero wrote:
-> On 5.03.2025 13:34, Peter Xu wrote:
-> > On Tue, Mar 04, 2025 at 11:03:34PM +0100, Maciej S. Szmigiero wrote:
-> > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> > > 
-> > > All callers to migration_incoming_state_destroy() other than
-> > > postcopy_ram_listen_thread() do this call with BQL held.
-> > > 
-> > > Since migration_incoming_state_destroy() ultimately calls "load_cleanup"
-> > > SaveVMHandlers and it will soon call BQL-sensitive code it makes sense
-> > > to always call that function under BQL rather than to have it deal with
-> > > both cases (with BQL and without BQL).
-> > > Add the necessary bql_lock() and bql_unlock() to
-> > > postcopy_ram_listen_thread().
-> > > 
-> > > qemu_loadvm_state_main() in postcopy_ram_listen_thread() could call
-> > > "load_state" SaveVMHandlers that are expecting BQL to be held.
-> > > 
-> > > In principle, the only devices that should be arriving on migration
-> > > channel serviced by postcopy_ram_listen_thread() are those that are
-> > > postcopiable and whose load handlers are safe to be called without BQL
-> > > being held.
-> > > 
-> > > But nothing currently prevents the source from sending data for "unsafe"
-> > > devices which would cause trouble there.
-> > > Add a TODO comment there so it's clear that it would be good to improve
-> > > handling of such (erroneous) case in the future.
-> > > 
-> > > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> > > ---
-> > >   migration/migration.c | 16 ++++++++++++++++
-> > >   migration/savevm.c    |  4 ++++
-> > >   2 files changed, 20 insertions(+)
-> > > 
-> > > diff --git a/migration/migration.c b/migration/migration.c
-> > > index 9e9db26667f1..6b2a8af4231d 100644
-> > > --- a/migration/migration.c
-> > > +++ b/migration/migration.c
-> > > @@ -402,10 +402,26 @@ void migration_incoming_state_destroy(void)
-> > >       struct MigrationIncomingState *mis = migration_incoming_get_current();
-> > >       multifd_recv_cleanup();
-> > > +
-> > >       /*
-> > >        * RAM state cleanup needs to happen after multifd cleanup, because
-> > >        * multifd threads can use some of its states (receivedmap).
-> > > +     *
-> > > +     * This call also needs BQL held since it calls all registered
-> > > +     * load_cleanup SaveVMHandlers and at least the VFIO implementation is
-> > > +     * BQL-sensitive.
-> > > +     *
-> > > +     * In addition to the above, it also performs cleanup of load threads
-> > > +     * thread pool.
-> > > +     * This cleanup operation is BQL-sensitive as it requires unlocking BQL
-> > > +     * so a thread possibly waiting for it could get unblocked and finally
-> > > +     * exit.
-> > > +     * The reason why a load thread may need to hold BQL in the first place
-> > > +     * is because address space modification operations require it.
-> > 
-> > Hold on...
-> > 
-> > This almost says exactly why load_cleanup() should _not_ take BQL... rather
-> > than should..
-> > 
-> > So I had a closer look at the latest code, it's about this:
-> > 
-> > static void vfio_load_cleanup_load_bufs_thread(VFIOMultifd *multifd)
-> > {
-> >      /* The lock order is load_bufs_mutex -> BQL so unlock BQL here first */
-> >      bql_unlock();
-> >      WITH_QEMU_LOCK_GUARD(&multifd->load_bufs_mutex) {
-> >          while (multifd->load_bufs_thread_running) {
-> >              multifd->load_bufs_thread_want_exit = true;
-> > 
-> >              qemu_cond_signal(&multifd->load_bufs_buffer_ready_cond);
-> >              qemu_cond_signal(&multifd->load_bufs_iter_done_cond);
-> >              qemu_cond_wait(&multifd->load_bufs_thread_finished_cond,
-> >                             &multifd->load_bufs_mutex);
-> >          }
-> >      }
-> >      bql_lock();
-> > }
-> > 
-> > It doesn't make much sense to me to take it only because we want to drop it
-> > unconditionally. Can we guarantee the function not taking BQL instead?  I
-> > had a quick look on pmem's pmem_persist() (from libpmem, qemu_ram_msync <-
-> > qemu_ram_block_writeback <- ram_load_cleanup), it looks ok.
-> > 
-> > So the question is, is it safe to unlock BQL in whatever context (in
-> > coroutines, or in a bottom half)?
-> > 
-> > If the answer is yes, we could make migration_incoming_state_destroy()
-> > always not taking BQL (and assert(!bql_locked()) instead).
-> 
-> All the other callers of migration_incoming_state_destroy() are holding BQL:
-> process_incoming_migration_bh(), process_incoming_migration_co() (called on,
-> failure path only), load_snapshot() and qmp_xen_load_devices_state().
-> 
-> So AFAIK the safer way is to standardize on holding BQL when calling
-> that function.
-> > If the answer is no, then vfio_load_cleanup_load_bufs_thread()'s current
-> > version may not work either..
-> 
-> I think the reason for BQL is to serialize access to the QEMU internals
-> which are not thread-safe.
-> 
-> So as long as these internals aren't touched when not holding BQL then
-> we should be safe - I don't see any particular state that's cached
-> around these BQL calls and would need explicit reloading after re-gaining
-> it.
+On Tue, Mar 04, 2025 at 11:03:52PM +0100, Maciej S. Szmigiero wrote:
+> @@ -509,6 +513,9 @@ static void vfio_save_cleanup(void *opaque)
+>      Error *local_err = NULL;
+>      int ret;
+>  
+> +    /* Currently a NOP, done for symmetry with load_cleanup() */
+> +    vfio_multifd_cleanup(vbasedev);
 
-OK, I checked with misterious force and looks like it's ok.
+So I just notice this when looking at the cleanup path.  It can be super
+confusing to cleanup the load threads in save()..  IIUC we should drop it.
 
-Would you please rephrase the comment, though?  I want to make it crystal
-clear that what we're looking for is not holding BQL.. Maybe something like
-this:
-
-    /*
-     * The VFIO load_cleanup() implementation is BQL-sensitive. It requires
-     * BQL must NOT be taken when recycling load threads, so that it won't
-     * block the load threads from making progress on address space
-     * modification operations.
-     *
-     * To make it work, we could try to not take BQL for all load_cleanup(),
-     * or conditionally unlock BQL only if bql_locked() in VFIO.
-     *
-     * Since most existing call sites take BQL for load_cleanup(), make
-     * it simple by taking BQL always as the rule, so that VFIO can unlock
-     * BQL and retake unconditionally.
-     */
-
-We may also want to update the subject.  Currently:
-
-  "migration: postcopy_ram_listen_thread() should take BQL for some calls"
-
-It's not accurate anymore, it could be:
-
-  "migration: Always take BQL for migration_incoming_state_destroy()"
-
-If with all above, please feel free to take:
-
-Acked-by: Peter Xu <peterx@redhat.com>
-
-I'm OK if it'll be touched up when merge too.
-
-Thanks,
+> +
+>      /*
+>       * Changing device state from STOP_COPY to STOP can take time. Do it here,
+>       * after migration has completed, so it won't increase downtime.
 
 -- 
 Peter Xu
