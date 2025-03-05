@@ -4,103 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DBE1C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4762C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 07:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpih9-0003sS-OL; Wed, 05 Mar 2025 01:57:31 -0500
+	id 1tpinR-0006G6-Gs; Wed, 05 Mar 2025 02:04:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpih7-0003px-Cs
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:57:29 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tpih5-0006H2-M4
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:57:29 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5dee07e51aaso12022983a12.3
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 22:57:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741157845; x=1741762645; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/xG/+rnnGjuO4E25qQMY9Z7bUYYakfC8Y9C5Ls7pO+s=;
- b=VmMWvyCktl7dJWvSuKQGgYd8eRKc4JLzQ1ULmYgfFhRk8cTQbiBrxvBvgnTzqDSgh7
- 3GfGElrnx87FeM83t6VFUUiYq3ESzRLfmAFm7jeQA/bZFYmxuKAywmSRRZzAYQ0wOu4K
- N8fQBVux7g/29FkBz5UBQIlSwEmwlYC+AEdzt+j9dZ/5YHq40qESc3CaMlbw9HU2cQKF
- Fm4QD3GeXFrdodrJmWdVNQThc1d714vFkd+78nHjtHpfPH6gBIOzaG4H1plv9H2GEqdy
- 8wwiPE5W9rCxx49xBtkZrakLHxJCCP4gnAY4p2sG2F7gQOMfrUalUm0FvjVOHGxf3tn/
- JQIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741157845; x=1741762645;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/xG/+rnnGjuO4E25qQMY9Z7bUYYakfC8Y9C5Ls7pO+s=;
- b=a+i1jX+jceQbM/De/0GXRPktDJerHBdWaBrZO4VA37H7VAfIOC6ZWt6AKaharqhs1x
- Xrjf/mgDa00Lv3qFJXLml1tOH50nB5wRVJHTgHiNbk/sqM1pWWeBw+QGkPOol8UWsCxG
- RFjSfs3iqKu1YeMbqHg6M3y76XWu3+M69yoDo8QKvXr2653onLUcfcCYeazYfieNdoBB
- kFCHgGWuwQvTfKtcc+aT29ScVrOYBOFxSJpP6AREBjda3jxNk7nU5E2eXxLeEgrlxtmr
- +XvEUHWtyyCv1KUQUYtCbYBnPL4ub5IfuKOA6iW83iPFGwaFoh5kAzuTGWUc3OT9cmBo
- Dx+g==
-X-Gm-Message-State: AOJu0YyljFF6+XYlkNAFXm2aOpDhE1TcAUOqfQbaCMNT7xKdLx9TChZ6
- UULT4VVx0/HJLH/VFyZKYQbs/87lMMUdPUcmUskimIN1GezlOFbefj8kIXCbM58=
-X-Gm-Gg: ASbGnct78MDCcsN3kIqyMgWlmUOq6qUs41XKsvs3slAIxHkvOfxQpBjInlPuoJcyxXI
- +HIgF6425iZMdPj9DGpM99JdZKU5t9icYaZ5rbSY/cxyvyQo/aASToXDCQNTmlbTJerpQ/qXHM3
- iO2q6bIbKgxxkKYT4vxilUgiw0idczzInTNWTepOnRLHWLFMvU/vg5MbSdFUwYXOvDNsFKYfDv2
- 0vGT14LMbcuJqv5tjUYipcxu58o6nSVsQxBrwXeiCuyoJFW9MlohpTBM4j2SZsl7sEGNDbbejF/
- H4+m1qP8PR3Fo9GV6edYmq35aPDeas2mf9R0w9z1TCuiKrg=
-X-Google-Smtp-Source: AGHT+IG1igyyXdRoM5dt+EurMRT3F0KivqOcqAVAkNVVm3hzPIAkb+gf6r4bbpYu1G496VNabaGsxA==
-X-Received: by 2002:a17:906:7308:b0:abf:489b:5c77 with SMTP id
- a640c23a62f3a-ac20db67a33mr198673966b.31.1741157844763; 
- Tue, 04 Mar 2025 22:57:24 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abf75c6d4f3sm499091766b.184.2025.03.04.22.57.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 22:57:23 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9F1E65F932;
- Wed,  5 Mar 2025 06:57:21 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Eduardo Habkost <eduardo@habkost.net>,  Li-Wen
- Hsu <lwhsu@freebsd.org>,  Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,  qemu-arm@nongnu.org,  Alexandre
- Iooss <erdnaxe@crans.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Riku Voipio
- <riku.voipio@iki.fi>,  Warner Losh <imp@bsdimp.com>,  Brian Cain
- <brian.cain@oss.qualcomm.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
- Kyle Evans <kevans@freebsd.org>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Ed Maste <emaste@freebsd.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v2 21/32] plugins/loader: populate target_name with
- target_name()
-In-Reply-To: <44f7f6d6-2c13-49a0-8775-40a9a12ba86b@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 5 Mar 2025 01:01:50
- +0100")
-References: <20250304222439.2035603-1-alex.bennee@linaro.org>
- <20250304222439.2035603-22-alex.bennee@linaro.org>
- <44f7f6d6-2c13-49a0-8775-40a9a12ba86b@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Wed, 05 Mar 2025 06:57:21 +0000
-Message-ID: <87pliw3qy6.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1tpinO-0006Fb-Ac
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 02:03:59 -0500
+Received: from mgamail.intel.com ([198.175.65.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1tpinK-00074k-BG
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 02:03:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1741158234; x=1772694234;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=8jzrqTqhnifkrDyJTtW4igiWDfZ+eSKjlbRZVYBx39w=;
+ b=LHB89xXbc2UO5iDSzo2GIXh8ib/drpa1i+PXvJ0ttcpwW/ltyeFpW3nF
+ aFxmimukS+2WxhucGzP1eLaZw8lqhTIwDR/s5CCngeg+o8aPXWWNhSBgH
+ 2OkicnDs/rvOX1ZqviEiQEop8VDWE8KqCjSM8gt4svG9FjjJUSA3UlVJL
+ 8i0yeBtlr5r9Rm155VWvzlhdBjp+9CHtghLsrbfiZKntU++0OIaIM0apG
+ 5wR0Wul85zycNG+mDrw8Zi4hFNgVdanpsZuYImwNv2r5zOwYGbWa3vASe
+ 38Vss9lVDa1b73bmyjcg+dhQt8tCycl0KYMvyRbRfChfWtytagx2BLCli w==;
+X-CSE-ConnectionGUID: N6UM6k6/QkuAy8au4bPcOg==
+X-CSE-MsgGUID: 8GpuKrxmRjW8FzFOy035YQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="41965852"
+X-IronPort-AV: E=Sophos;i="6.14,222,1736841600"; d="scan'208";a="41965852"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2025 23:03:48 -0800
+X-CSE-ConnectionGUID: 9xVNrOErS1+czG8AUsdpxw==
+X-CSE-MsgGUID: gJ77evYTTHyiJK2c6J45sw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="155794923"
+Received: from unknown (HELO [10.238.2.135]) ([10.238.2.135])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2025 23:03:44 -0800
+Message-ID: <7a6ec4ef-500f-491a-aba9-bf013b1058da@linux.intel.com>
+Date: Wed, 5 Mar 2025 15:03:41 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/10] target/i386/kvm: extract unrelated code out of
+ kvm_x86_build_cpuid()
+To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
+ like.xu.linux@gmail.com, zhenyuw@linux.intel.com, groug@kaod.org,
+ khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ davydov-max@yandex-team.ru, xiaoyao.li@intel.com, joe.jin@oracle.com
+References: <20250302220112.17653-1-dongli.zhang@oracle.com>
+ <20250302220112.17653-6-dongli.zhang@oracle.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20250302220112.17653-6-dongli.zhang@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=198.175.65.19;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,39 +90,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> On 4/3/25 23:24, Alex Benn=C3=A9e wrote:
->> We have a function we can call for this, lets not rely on macros that
->> stop us building once.
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> Message-Id: <20250226140343.3907080-17-alex.bennee@linaro.org>
->> ---
->>   plugins/loader.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->> diff --git a/plugins/loader.c b/plugins/loader.c
->> index 99686b5466..827473c8b6 100644
->> --- a/plugins/loader.c
->> +++ b/plugins/loader.c
->> @@ -297,7 +297,7 @@ int qemu_plugin_load_list(QemuPluginList *head, Erro=
-r **errp)
->>       struct qemu_plugin_desc *desc, *next;
->>       g_autofree qemu_info_t *info =3D g_new0(qemu_info_t, 1);
->>   -    info->target_name =3D TARGET_NAME;
->> +    info->target_name =3D target_name();
+On 3/3/2025 6:00 AM, Dongli Zhang wrote:
+> The initialization of 'has_architectural_pmu_version',
+> 'num_architectural_pmu_gp_counters', and
+> 'num_architectural_pmu_fixed_counters' is unrelated to the process of
+> building the CPUID.
 >
-> Unfortunately the declaration is in "hw/core/cpu.h".
-
-I thought that was common. It didn't break anything.
-
+> Extract them out of kvm_x86_build_cpuid().
 >
->>       info->version.min =3D QEMU_PLUGIN_MIN_VERSION;
->>       info->version.cur =3D QEMU_PLUGIN_VERSION;
->>   #ifndef CONFIG_USER_ONLY
+> No functional change.
+>
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> ---
+> Changed since v1:
+>   - Still extract the code, but call them for all CPUs.
+>
+>  target/i386/kvm/kvm.c | 66 +++++++++++++++++++++++++------------------
+>  1 file changed, 39 insertions(+), 27 deletions(-)
+>
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 5c8a852dbd..8f293ffd61 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -1959,33 +1959,6 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
+>          }
+>      }
+>  
+> -    if (limit >= 0x0a) {
+> -        uint32_t eax, edx;
+> -
+> -        cpu_x86_cpuid(env, 0x0a, 0, &eax, &unused, &unused, &edx);
+> -
+> -        has_architectural_pmu_version = eax & 0xff;
+> -        if (has_architectural_pmu_version > 0) {
+> -            num_architectural_pmu_gp_counters = (eax & 0xff00) >> 8;
+> -
+> -            /* Shouldn't be more than 32, since that's the number of bits
+> -             * available in EBX to tell us _which_ counters are available.
+> -             * Play it safe.
+> -             */
+> -            if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
+> -                num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
+> -            }
+> -
+> -            if (has_architectural_pmu_version > 1) {
+> -                num_architectural_pmu_fixed_counters = edx & 0x1f;
+> -
+> -                if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
+> -                    num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
+> -                }
+> -            }
+> -        }
+> -    }
+> -
+>      cpu_x86_cpuid(env, 0x80000000, 0, &limit, &unused, &unused, &unused);
+>  
+>      for (i = 0x80000000; i <= limit; i++) {
+> @@ -2085,6 +2058,43 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+>      return 0;
+>  }
+>  
+> +static void kvm_init_pmu_info(CPUX86State *env)
+> +{
+> +    uint32_t eax, edx;
+> +    uint32_t unused;
+> +    uint32_t limit;
+> +
+> +    cpu_x86_cpuid(env, 0, 0, &limit, &unused, &unused, &unused);
+> +
+> +    if (limit < 0x0a) {
+> +        return;
+> +    }
+> +
+> +    cpu_x86_cpuid(env, 0x0a, 0, &eax, &unused, &unused, &edx);
+> +
+> +    has_architectural_pmu_version = eax & 0xff;
+> +    if (has_architectural_pmu_version > 0) {
+> +        num_architectural_pmu_gp_counters = (eax & 0xff00) >> 8;
+> +
+> +        /*
+> +         * Shouldn't be more than 32, since that's the number of bits
+> +         * available in EBX to tell us _which_ counters are available.
+> +         * Play it safe.
+> +         */
+> +        if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
+> +            num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
+> +        }
+> +
+> +        if (has_architectural_pmu_version > 1) {
+> +            num_architectural_pmu_fixed_counters = edx & 0x1f;
+> +
+> +            if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
+> +                num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
+> +            }
+> +        }
+> +    }
+> +}
+> +
+>  int kvm_arch_init_vcpu(CPUState *cs)
+>  {
+>      struct {
+> @@ -2267,6 +2277,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>      cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+>      cpuid_data.cpuid.nent = cpuid_i;
+>  
+> +    kvm_init_pmu_info(env);
+> +
+>      if (((env->cpuid_version >> 8)&0xF) >= 6
+>          && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
+>             (CPUID_MCE | CPUID_MCA)) {
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+
+
 
