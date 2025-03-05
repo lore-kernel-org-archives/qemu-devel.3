@@ -4,139 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4350C282D9
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 08:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73F8C282D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 08:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpk9t-0002ad-Ki; Wed, 05 Mar 2025 03:31:17 -0500
+	id 1tpk9v-0002hK-LR; Wed, 05 Mar 2025 03:31:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tpk9i-0002QZ-Jc
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:31:10 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpk9t-0002bk-MT
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:31:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tpk9g-0008Ck-GR
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:31:06 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpk9s-0008EG-1S
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:31:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741163463;
+ s=mimecast20190719; t=1741163472;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=43U7b7wcPVNrxJy0h0WCCqdBpAkhvoSrXjCLmtstfBs=;
- b=VBxWScsFHYR/wzSmHuUcgcFINMPWg/2CIE9YvsIhzKGt04p1ifLeCyQC1aaPNstm28TgKP
- BCIPsXDvRWkbIcFKi8JSe48wUN6R/WaW0qJIYNRIg9QKRLuqZACIBjDtUpmXlfG8sLe1VL
- 54HRhRTc8VbmVXEqEtN5gBcn65yg1Cg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8nBjuin2Lbe79ghTaUiX4CP3xI1Xg49qzkChxqbFIFE=;
+ b=gIN2jGObdwPMYmPd9gHyK5G5gB3ottIghcMwUIFzgVCP6Hh/tkpl08Dp611ol7DmkTYR/p
+ BjHz5vHejKQ6DG9vIzfD4gv43+NLgeR1/1LonzSpByBwPvm2Mq7FQhhQBnswW10mLrJf70
+ jCBz2tLgSLKdDOcXAQ+n8tAOfrLntB4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-29-5gw6DHoSN9uais2HQyLOrg-1; Wed, 05 Mar 2025 03:31:01 -0500
-X-MC-Unique: 5gw6DHoSN9uais2HQyLOrg-1
-X-Mimecast-MFC-AGG-ID: 5gw6DHoSN9uais2HQyLOrg_1741163460
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-390eb06d920so4882102f8f.3
+ us-mta-9-yIOGBGs0MyWPKa8X9e3yEQ-1; Wed, 05 Mar 2025 03:31:01 -0500
+X-MC-Unique: yIOGBGs0MyWPKa8X9e3yEQ-1
+X-Mimecast-MFC-AGG-ID: yIOGBGs0MyWPKa8X9e3yEQ_1741163460
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43bcc04d2ebso12345665e9.1
  for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 00:31:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1741163460; x=1741768260;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=43U7b7wcPVNrxJy0h0WCCqdBpAkhvoSrXjCLmtstfBs=;
- b=AAxnyWNKROnlZgAtntE+vrnLXcO8x4yuON2k03+zh4w2xWzsUVHZrySkGmeMQyN58a
- SMgAGBsR1ugS6XTv+9XPYZUFThHHFVE/f2HeUr8wJvXVSzEcKqRrWQZt+5r/zwlnydaF
- 9pxuhg5fw5euMYV2Cht6H+QUISQSXjVLCxFQSLsJaR+Vx88jvXTsZWLGxiyxZ61O/guS
- 3Z5AummwqJlI50ljHurw4UAmJiVoJZAsn4rNUFJfAzr9V8ZR+2rPP0fTpMg0gHK+YlgX
- JKEtZ8SeuBV6H9wuAcps251Lcos9N+fOPsuq4iZqjKJRkVJFXklqOWuU8aTJjMXUBjtB
- g+Xg==
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8nBjuin2Lbe79ghTaUiX4CP3xI1Xg49qzkChxqbFIFE=;
+ b=qhDvI9O8gN4M62qz8pcBmaVtck3fzYkJwUan8kF1Lyb+Vahq8LeWaqosLUthWNI88G
+ MAoxGhVspYwnB0goM1VEKiu42fl6iPBEqFYzgqltusQ7rJaGsb/P/eOubhhLMB/m4Ft0
+ OvolRGtoOhNTWLSjNe2fcZLWDJ54hwZ1byHR15Cm0ydziTWa07pN2jcz7c+7UmbHTtpX
+ C1nuS7ATE8gidaaSpSRzyZHB9IabFkinbrP7c/g2gtQZa2HQrQS6MLahUaEl2r1EN+3G
+ lC8Nq5uc2OvmPMGkCVVa5+Dgs9xXLCpdRlWjDxT+N+uNZZ34bBoKuwS2LuzAYmY8haPA
+ mGkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXA6wKedISCpLWr2/3QiPTvoGzggq8AEYxndKTveOrUJRA4BHGk48MqdRWU7CmAaPKwEfuua4qPwCli@nongnu.org
-X-Gm-Message-State: AOJu0YxSyGQ2RyqquSiD+GBxsHiGm0OmrFd4jFDtk7tWFb2Vc7Z1DvbR
- AVC7C+9D3Vla9nbs53n0zLyzSs/NuqBztQZUz6Zl5u4qvF0srPwttyrqABuoC4voyqwDver19Dn
- lbc+r4Y+z3myfEEcMu8dhW64/VrlDjPajMBzgAEDvO7SL40J4Ox2m
-X-Gm-Gg: ASbGncv8OXezKzM8qvAS5f4O+l1SrSHfn4MC9Mo/ykFC+AqkPdFBHGoJ6nayMIeAZWU
- 1Zi1z/5hzWJsY1/WyeS9XeIqDxbKUxvaIhnoiUAQvYlabwkCD5naTaD1R+oaYs4RuRo8yTLjBzp
- 0J8p06VbtZGWCc/JS3z7J2cjJNkGas4Mb6B5p0hG1sy5e5Sa4+UN1Zz/FVkgxImkjODo84SGN6x
- 4Zvvo0drFGIQkGB64BCqhDvjG8BAXJqkjEDMtyrSTrhAKTRNOC6p5yxCywLZ2ZLiUvRu5ROcC0B
- 1itM8Q/S+EvEGUkMiya6E2o3at8oIfYlzpf7Jl+1LG0klcfPjnl1uA==
-X-Received: by 2002:a5d:5f91:0:b0:390:e9e0:5cb3 with SMTP id
- ffacd0b85a97d-3911f73b6b4mr1346676f8f.12.1741163459906; 
+ AJvYcCWB7Wnqv0sZUrthNsBujrFZzmtOQTWKPCqAVUijOK67WMl4ZAa1iyw7CgDPKpdOGaxngjHwDI0pzplq@nongnu.org
+X-Gm-Message-State: AOJu0Yyv9urufpqIZy6hvtJOMt0OReFt2Pn3IJkvZsfApszlaEvuE9Ub
+ jLntolPlGcXihUiNyANLGpTisUW1nt0sM9Xb6+VlUWn3w5BdCtdumyzKL9r/M19ireCetXlw1oh
+ gXcQpbINEM7jfsYcF/CQS9jfouM/EuINpOV0q0ojzfBug4ur3lKmp
+X-Gm-Gg: ASbGnctYnHAGxvqaXyXG2t8u4XpZ8RQ6YjrTriEF3K8kWKDFYT/QIkTk4WbgBZGDnN0
+ 1dDVjuInxtjbyRRtEYUXQXeBWkJkH91u/Vh/CigGZz+3Jl2bZCYILLRAqCPVz81toWOpJobqpFg
+ 8rWbgbYuyB2bgALj9j5oXf40zJysb/9NS16vcmn306ixtWgvSigwoD62bn4vh5TBRZoPydsbtJP
+ a+HfQ/2eKVYmccrJadFmr8tpujKqgilBIZroXDJYRYMc6PnSg6EynQKMRcPAbpN8mzu1ISR6Z/T
+ 9TQ7ZGnjuSsP70Df7Bzg34gxpMHJJsjElg0DDoqMF4o99iw=
+X-Received: by 2002:a05:6000:2b0e:b0:390:f699:8c27 with SMTP id
+ ffacd0b85a97d-3911f727144mr795405f8f.12.1741163459928; 
  Wed, 05 Mar 2025 00:30:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHXyzeZ1+MpwFValD0wSQY/kfVEM7dnGQ8sWkLRMCYJrCrFv7EU4km/zbwEhUc9jPTdQ5aSyg==
-X-Received: by 2002:a5d:5f91:0:b0:390:e9e0:5cb3 with SMTP id
- ffacd0b85a97d-3911f73b6b4mr1346651f8f.12.1741163459505; 
+X-Google-Smtp-Source: AGHT+IF40y3tjzyVSseNJM8PPZJya5ZtlJzzvSCZ0WTbwYJEuCNp3q4yFUUvsp0W6IJsvHlo+26M+A==
+X-Received: by 2002:a05:6000:2b0e:b0:390:f699:8c27 with SMTP id
+ ffacd0b85a97d-3911f727144mr795376f8f.12.1741163459572; 
  Wed, 05 Mar 2025 00:30:59 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47a66adsm20036846f8f.25.2025.03.05.00.30.58
+Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
+ [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e47b6f22sm19891114f8f.47.2025.03.05.00.30.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 00:30:58 -0800 (PST)
-Message-ID: <1ed59cbe-eb42-4da4-a829-a31b5b9986ae@redhat.com>
-Date: Wed, 5 Mar 2025 09:30:58 +0100
+ Wed, 05 Mar 2025 00:30:59 -0800 (PST)
+Message-ID: <07c73848-3476-419d-8400-c741cec038e2@redhat.com>
+Date: Wed, 5 Mar 2025 09:30:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 26/36] vfio/migration: Multifd device state transfer
- support - received buffers queuing
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+Subject: Re: [PATCH v2 04/32] tests/functional: bail early if vkmark hangs
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
-References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
- <e3bff515a8d61c582b94b409eb12a45b1a143a69.1741124640.git.maciej.szmigiero@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <e3bff515a8d61c582b94b409eb12a45b1a143a69.1741124640.git.maciej.szmigiero@oracle.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Li-Wen Hsu <lwhsu@freebsd.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
+ <laurent@vivier.eu>, qemu-arm@nongnu.org, Alexandre Iooss
+ <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Ed Maste <emaste@freebsd.org>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20250304222439.2035603-1-alex.bennee@linaro.org>
+ <20250304222439.2035603-5-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250304222439.2035603-5-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -145,7 +150,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,259 +166,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/25 23:03, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On 04/03/2025 23.24, Alex Bennée wrote:
+> The message:
 > 
-> The multifd received data needs to be reassembled since device state
-> packets sent via different multifd channels can arrive out-of-order.
+>    MESA-VIRTIO: debug: stuck in fence wait with iter at %d
 > 
-> Therefore, each VFIO device state packet carries a header indicating its
-> position in the stream.
-> The raw device state data is saved into a VFIOStateBuffer for later
-> in-order loading into the device.
+> Seems to occur more often on debug builds. Rather than waiting for our
+> long timeout to hit we might as well bail as soon as we see the
+> message.
 > 
-> The last such VFIO device state packet should have
-> VFIO_DEVICE_STATE_CONFIG_STATE flag set and carry the device config state.
-> 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   hw/vfio/migration-multifd.c | 163 ++++++++++++++++++++++++++++++++++++
->   hw/vfio/migration-multifd.h |   3 +
->   hw/vfio/migration.c         |   1 +
->   hw/vfio/trace-events        |   1 +
->   4 files changed, 168 insertions(+)
-> 
-> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-> index 091dc43210ad..79df11b7baa9 100644
-> --- a/hw/vfio/migration-multifd.c
-> +++ b/hw/vfio/migration-multifd.c
-> @@ -32,18 +32,181 @@ typedef struct VFIODeviceStatePacket {
->       uint8_t data[0];
->   } QEMU_PACKED VFIODeviceStatePacket;
->   
-> +/* type safety */
-> +typedef struct VFIOStateBuffers {
-> +    GArray *array;
-> +} VFIOStateBuffers;
-> +
-> +typedef struct VFIOStateBuffer {
-> +    bool is_present;
-> +    char *data;
-> +    size_t len;
-> +} VFIOStateBuffer;
-> +
->   typedef struct VFIOMultifd {
-> +    VFIOStateBuffers load_bufs;
-> +    QemuCond load_bufs_buffer_ready_cond;
-> +    QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
-> +    uint32_t load_buf_idx;
-> +    uint32_t load_buf_idx_last;
->   } VFIOMultifd;
->   
-> +static void vfio_state_buffer_clear(gpointer data)
-> +{
-> +    VFIOStateBuffer *lb = data;
-> +
-> +    if (!lb->is_present) {
-> +        return;
-> +    }
-> +
-> +    g_clear_pointer(&lb->data, g_free);
-> +    lb->is_present = false;
-> +}
-> +
-> +static void vfio_state_buffers_init(VFIOStateBuffers *bufs)
-> +{
-> +    bufs->array = g_array_new(FALSE, TRUE, sizeof(VFIOStateBuffer));
-> +    g_array_set_clear_func(bufs->array, vfio_state_buffer_clear);
-> +}
-> +
-> +static void vfio_state_buffers_destroy(VFIOStateBuffers *bufs)
-> +{
-> +    g_clear_pointer(&bufs->array, g_array_unref);
-> +}
-> +
-> +static void vfio_state_buffers_assert_init(VFIOStateBuffers *bufs)
-> +{
-> +    assert(bufs->array);
-> +}
-> +
-> +static unsigned int vfio_state_buffers_size_get(VFIOStateBuffers *bufs)
-> +{
-> +    return bufs->array->len;
-> +}
-> +
-> +static void vfio_state_buffers_size_set(VFIOStateBuffers *bufs,
-> +                                        unsigned int size)
-> +{
-> +    g_array_set_size(bufs->array, size);
-> +}
-> +
-> +static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs,
-> +                                              unsigned int idx)
-> +{
-> +    return &g_array_index(bufs->array, VFIOStateBuffer, idx);
-> +}
-> +
-> +/* called with load_bufs_mutex locked */
-> +static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
-> +                                          VFIODeviceStatePacket *packet,
-> +                                          size_t packet_total_size,
-> +                                          Error **errp)
-> +{
-> +    VFIOMigration *migration = vbasedev->migration;
-> +    VFIOMultifd *multifd = migration->multifd;
-> +    VFIOStateBuffer *lb;
-> +
-> +    vfio_state_buffers_assert_init(&multifd->load_bufs);
-> +    if (packet->idx >= vfio_state_buffers_size_get(&multifd->load_bufs)) {
-> +        vfio_state_buffers_size_set(&multifd->load_bufs, packet->idx + 1);
-> +    }
-> +
-> +    lb = vfio_state_buffers_at(&multifd->load_bufs, packet->idx);
-> +    if (lb->is_present) {
-> +        error_setg(errp, "%s: state buffer %" PRIu32 " already filled",
-> +                   vbasedev->name, packet->idx);
-> +        return false;
-> +    }
-> +
-> +    assert(packet->idx >= multifd->load_buf_idx);
-> +
-> +    lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
-> +    lb->len = packet_total_size - sizeof(*packet);
-> +    lb->is_present = true;
-> +
-> +    return true;
-> +}
-> +
-> +bool vfio_multifd_load_state_buffer(void *opaque, char *data, size_t data_size,
-> +                                    Error **errp)
-> +{
-> +    VFIODevice *vbasedev = opaque;
-> +    VFIOMigration *migration = vbasedev->migration;
-> +    VFIOMultifd *multifd = migration->multifd;
-> +    VFIODeviceStatePacket *packet = (VFIODeviceStatePacket *)data;
-> +
-> +    if (!vfio_multifd_transfer_enabled(vbasedev)) {
-> +        error_setg(errp,
-> +                   "%s: got device state packet but not doing multifd transfer",
-> +                   vbasedev->name);
-> +        return false;
-> +    }
-> +
-> +    assert(multifd);
-> +
-> +    if (data_size < sizeof(*packet)) {
-> +        error_setg(errp, "%s: packet too short at %zu (min is %zu)",
-> +                   vbasedev->name, data_size, sizeof(*packet));
-> +        return false;
-> +    }
-> +
-> +    if (packet->version != VFIO_DEVICE_STATE_PACKET_VER_CURRENT) {
-> +        error_setg(errp, "%s: packet has unknown version %" PRIu32,
-> +                   vbasedev->name, packet->version);
-> +        return false;
-> +    }
-> +
-> +    if (packet->idx == UINT32_MAX) {
-> +        error_setg(errp, "%s: packet index is invalid", vbasedev->name);
-> +        return false;
-> +    }
-> +
-> +    trace_vfio_load_state_device_buffer_incoming(vbasedev->name, packet->idx);
-> +
-> +    /*
-> +     * Holding BQL here would violate the lock order and can cause
-> +     * a deadlock once we attempt to lock load_bufs_mutex below.
-> +     */
-> +    assert(!bql_locked());
-> +
-> +    WITH_QEMU_LOCK_GUARD(&multifd->load_bufs_mutex) {
-> +        /* config state packet should be the last one in the stream */
-> +        if (packet->flags & VFIO_DEVICE_STATE_CONFIG_STATE) {
-> +            multifd->load_buf_idx_last = packet->idx;
-> +        }
-> +
-> +        if (!vfio_load_state_buffer_insert(vbasedev, packet, data_size,
-> +                                           errp)) {
-> +            return false;
-> +        }
-> +
-> +        qemu_cond_signal(&multifd->load_bufs_buffer_ready_cond);
-> +    }
-> +
-> +    return true;
-> +}
-> +
->   static VFIOMultifd *vfio_multifd_new(void)
->   {
->       VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
->   
-> +    vfio_state_buffers_init(&multifd->load_bufs);
-> +
-> +    qemu_mutex_init(&multifd->load_bufs_mutex);
-> +
-> +    multifd->load_buf_idx = 0;
-> +    multifd->load_buf_idx_last = UINT32_MAX;
-> +    qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
-> +
->       return multifd;
->   }
->   
->   static void vfio_multifd_free(VFIOMultifd *multifd)
->   {
-> +    vfio_state_buffers_destroy(&multifd->load_bufs);
-> +    qemu_cond_destroy(&multifd->load_bufs_buffer_ready_cond);
-> +    qemu_mutex_destroy(&multifd->load_bufs_mutex);
-> +
->       g_free(multifd);
->   }
->   
-> diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
-> index 2a7a76164f29..8c6320fcb484 100644
-> --- a/hw/vfio/migration-multifd.h
-> +++ b/hw/vfio/migration-multifd.h
-> @@ -20,4 +20,7 @@ void vfio_multifd_cleanup(VFIODevice *vbasedev);
->   bool vfio_multifd_transfer_supported(void);
->   bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev);
->   
-> +bool vfio_multifd_load_state_buffer(void *opaque, char *data, size_t data_size,
-> +                                    Error **errp);
-> +
->   #endif
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 3c8286ae6230..ecc4ee940567 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -801,6 +801,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
->       .load_setup = vfio_load_setup,
->       .load_cleanup = vfio_load_cleanup,
->       .load_state = vfio_load_state,
-> +    .load_state_buffer = vfio_multifd_load_state_buffer,
->       .switchover_ack_needed = vfio_switchover_ack_needed,
->   };
->   
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index a02c668f28a4..404ea079b25c 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -154,6 +154,7 @@ vfio_load_device_config_state_start(const char *name) " (%s)"
->   vfio_load_device_config_state_end(const char *name) " (%s)"
->   vfio_load_state(const char *name, uint64_t data) " (%s) data 0x%"PRIx64
->   vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size %"PRIu64" ret %d"
-> +vfio_load_state_device_buffer_incoming(const char *name, uint32_t idx) " (%s) idx %"PRIu32
->   vfio_migration_realize(const char *name) " (%s)"
->   vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
->   vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
-> 
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
