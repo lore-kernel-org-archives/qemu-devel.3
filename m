@@ -4,97 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D13C9C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C52C282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:22:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdRO-0006av-TU; Tue, 04 Mar 2025 20:20:54 -0500
+	id 1tpdSc-0007sr-So; Tue, 04 Mar 2025 20:22:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdRM-0006a1-CV
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:20:52 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdSa-0007qr-Ej
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:22:08 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdRJ-0005k6-9N
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:20:52 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-390f69e71c8so215535f8f.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:20:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdSY-0006tb-Ha
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:22:08 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43bcf9612f4so6813285e9.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:22:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137647; x=1741742447; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=tk/h5aC9157IndKi5d93agJzQQcdRdCNAHnwM8zwr7s=;
- b=Xw+ScyPTqa/E4fQ2DYfccOmiUMkQnKRjLi3UFWu3I3vtdwMCgxEzt4T9S25RxvtOQJ
- dBCoJXnrEudswLFDtRm73HYwCTN38/Uqz/Vg4xaghSG+IUgTCdBuD5mdjA2vdU8eJPc9
- T+eAEYRQ5W/uxxAXyU+zbfCF6Ootc2eF+i4+lKzfigl658yG3ip0sTGg2LyPpT5SnhEt
- ix02JUT7em6riz650r8yuzsUOBjeKsvlnlAh5OFGk+7hT3zpIUOnjOUgCgT1EQop4B52
- YJLAXSggR0UjrqHUcsLHkwfHOpxULm2jdDpGjuu8OyV2SviMvw6WTsyEfD7b3ngJrdWw
- FTmw==
+ d=linaro.org; s=google; t=1741137724; x=1741742524; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hSEi0FhosgxuvGNlDjYLhuekfWSpIYsUVfwm4laOPdk=;
+ b=HAqTVITlFOIuP9xemVAFL5ccf2nSwLbJYIepQ1r81irpIczm6W1GC8cgmssWY0IpRp
+ F9iKhQjDUD07XSBS+KLBHkKoiVRdo6L2+ggwxU6w6iDkKxVBr26iEMKvn4+8fY3uQroc
+ zD3X3M8hlXXKE6t4xqQqYAkQH5/DCariNsq290iS/95Z3Zuz03KLGmLfny0mtELhQNvN
+ VrzGscaiGkj6Ih1ICmOnSP+PhHJZ5MiR124vNawosuBlp6I+Pe954aZSv60rwXnnps+E
+ Xx20T4wYlpxCXFrHyuSw1i6FYIFJmv655WCEf8TsRU6/3rre060tfN2dHP5yGmw0OYIH
+ 6dow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137647; x=1741742447;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tk/h5aC9157IndKi5d93agJzQQcdRdCNAHnwM8zwr7s=;
- b=iarBABQTNucKlWe1FsKgjVMqlGetGhx/TYsChpPgNrvlq9sna7kTbw0LS41dZ4KU9O
- DSWtc2pcJcWPuS+FFqCneR8++T1srKGuwDVwR4vcFylnpYu5N7bylPIdp2qNHws39SrD
- q5aRs9VPay/8j51INsZzA8qZQIUIkJdOCpzQ6mtfj2MH1PjdBPlE/klPUEd7x4viazAW
- Ga3a/913rBUuKOdapAGR9RKEXWCUCYpNFe79TjRyXKJR/4xd3zK3IRVaX1hj4s/nW/HC
- BnxWhCg1c6hRx0qH6VjvgmqICRqYpArl/Mn9Zx9KuGWaorjdkhAVMPpWInekgZ94lCsh
- oCzA==
-X-Gm-Message-State: AOJu0YygKYDK3lXBzCTOBo9h2KcccAhayehaI8bRIF278Tn5sHQBKRCw
- C9vclQ1N0AHAVdWLnbswJC7hR30LnDjg+jotHz6QvKiIj8+holJD4g75ZbVHB80=
-X-Gm-Gg: ASbGncvoMNQt9gTL0Groi1xqEKPsRUHMSVhtkBPH/MpG15rOn45EnHY89s3XYzRVcuk
- T9LaGqYmFs1MzfKVQlu9Z8KJE3KBNOrB/M6EYlG+Ib8vpVN4xi4uCPajb21trn9VtaefZvQ1Yp6
- eDVy3aKbHGyRb4Hg14LW7RHphFX3YOM7/nq2KpX00fPpK8bPAdxCUZ33+1743M9a+tNPx+zNoXL
- 0Sg/uDnOjleNIJwExY6Id5Gy3YGL+7BRXf6pz/48WJ8DOecybFDUReeZAzwk/FHAE2eXwQuxR6a
- 9YoXIi5nLUeAt5Idv3A6v+gmPn2fxem234i66wrclbClBMBev5b++rldw7gFu5RYl3OI4PKU+51
- QB79m/LD8eRgN
-X-Google-Smtp-Source: AGHT+IEUM1iwwu8LPCt3wShcauBD88FFdJciFH6VNKztu3VtAO0/r2xK/eKIdMbodubiw3iBG6BsHQ==
-X-Received: by 2002:a05:6000:4009:b0:38d:ba8e:7327 with SMTP id
- ffacd0b85a97d-3911e9df21fmr958328f8f.8.1741137647606; 
- Tue, 04 Mar 2025 17:20:47 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1741137724; x=1741742524;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hSEi0FhosgxuvGNlDjYLhuekfWSpIYsUVfwm4laOPdk=;
+ b=Rm1piNq0aAAVQhLcNtIh6V9XOFfEHnQt/b8LPbJDvuMn/oaz+WUvaZH8478rcnn2j7
+ WqFKmSeJVIa0RTQdOTF+BIsX4SxK7oELz/t1Z5hYJLpOMeAGaoBup9zIyn1DKTInoF5i
+ ES0PhvIbCB7z8eQq+Q1xd1dz9gramDPmF9FHDHTXLnEIE8Bl+I7sz4HSzZ5i8yqwiVJc
+ VvstULsreWIKWRGVgj5EOybqH4aY3hxlrqV0yfMMGWeW2ts9GGmUyYxr1cHFGuSDt4D4
+ BEmxa+yVtqE7p3sxBg4am6Kh79c8FJKdUEFI9YGzwVHLecB+wdtecs1SN1oy09A3Bxay
+ 1cOg==
+X-Gm-Message-State: AOJu0YzpF5+14zN73PMjTme5tmEexhHizjebttng+1caqoLYFSR4+zIG
+ 3lI6grX7s+A83U3SnCjtnMn8CTSkGrkk0+E4NYs+EB7ATShEyubOYs5oTBUd2pYovNDXPjYXypt
+ xWsM=
+X-Gm-Gg: ASbGncs7+61BjTpNUfrC0oQV81NWiQ/jxjiE7meZ+EK9PF3Ok3IWIZFCQouJE4fBrRM
+ jGy4Z7TW7vHoVhJK88XtSBmBTqHDdA1RMFBQfC+kJgzK9E/b/waFFWLNqFLbKjFzkPpchIixwRD
+ tEuvJy6dP0OWeRz+wgmCZDiU8gEKW1uh2UjVp58SSkqVjIu4rLAN7QejYA1oNCRM22enG3jWS+x
+ gqqWTiCPRuUYYcYbDCDZwFqEEzPXFXNquyhUT5UqSNVHbiRuYlObgi15QjaYJ4UivLI5GHVEj4q
+ /v7X9ifqGsyGd1fjul6bb1oG/3SLqzkhwKdOUq6OXjR+8iSuJ4v/5y0Z8Aw+jfOAGcrMbvRkvAX
+ P8ZE4/5Yjgi994BBVUr0=
+X-Google-Smtp-Source: AGHT+IGmPCj6OLKM48knjp6GAd5/ofkT7EJWI48/PBPO1fXViLa3Ar8sLEBHbk29lR506fRxz4tkWw==
+X-Received: by 2002:a05:600c:4ece:b0:439:5a37:815c with SMTP id
+ 5b1f17b1804b1-43bd2ae5547mr5352495e9.20.1741137724121; 
+ Tue, 04 Mar 2025 17:22:04 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4795d1asm18998820f8f.4.2025.03.04.17.20.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 17:20:46 -0800 (PST)
-Message-ID: <b6d6b2bc-bd5a-4917-9486-9a23ba4afbf4@linaro.org>
-Date: Wed, 5 Mar 2025 02:20:45 +0100
+ ffacd0b85a97d-390e47a6a9fsm19525804f8f.36.2025.03.04.17.22.02
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 04 Mar 2025 17:22:02 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PULL 01/41] hw/intc: Remove TCG dependency on ARM_GICV3
+Date: Wed,  5 Mar 2025 02:21:16 +0100
+Message-ID: <20250305012157.96463-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
+References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 11/11] hw/vmapple/vmapple: Add vmapple machine type
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Phil Dennis-Jordan <phil@philjordan.eu>, peter.maydell@linaro.org,
- berrange@redhat.com, pbonzini@redhat.com, John Snow <jsnow@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, mst@redhat.com,
- stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com,
- qemu-block@nongnu.org, qemu-arm@nongnu.org, Alexander Graf
- <graf@amazon.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20250112210056.16658-1-phil@philjordan.eu>
- <20250112210056.16658-12-phil@philjordan.eu>
- <2a4229cf-c789-41ed-ab46-0f0fd9efd19a@linaro.org>
- <CAAibmn0tV_YLwJwcgfy5sZiPyeaBWE_FPOPEEE_0aZ7mMANFig@mail.gmail.com>
- <81390b0b-bae7-43bc-84d4-7447805a1a83@linaro.org>
-Content-Language: en-US
-In-Reply-To: <81390b0b-bae7-43bc-84d4-7447805a1a83@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,75 +100,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/25 23:11, Philippe Mathieu-Daudé wrote:
-> On 3/3/25 21:36, Phil Dennis-Jordan wrote:
->>
->>
->> On Mon, 3 Mar 2025 at 19:20, Philippe Mathieu-Daudé <philmd@linaro.org 
->> <mailto:philmd@linaro.org>> wrote:
->>
->>     On 12/1/25 22:00, Phil Dennis-Jordan wrote:
->>      > From: Alexander Graf <graf@amazon.com <mailto:graf@amazon.com>>
+The TYPE_ARM_GICV3 model doesn't have any particular
+dependency on TCG, remove it. Rename the Kconfig selector
+ARM_GICV3_TCG -> ARM_GICV3.
 
+Fixes: a8a5546798c ("hw/intc/arm_gicv3: Introduce CONFIG_ARM_GIC_TCG Kconfig selector")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Message-Id: <20241227202435.48055-2-philmd@linaro.org>
+---
+ hw/intc/Kconfig     | 6 +++---
+ hw/intc/meson.build | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
->>      >   MAINTAINERS                 |   1 +
->>      >   contrib/vmapple/uuid.sh     |   9 +
->>      >   docs/system/arm/vmapple.rst |  63 ++++
->>      >   docs/system/target-arm.rst  |   1 +
->>      >   hw/vmapple/Kconfig          |  20 ++
->>      >   hw/vmapple/meson.build      |   1 +
->>      >   hw/vmapple/vmapple.c        | 618 +++++++++++++++++++++++++++++
->>     +++++++
->>      >   7 files changed, 713 insertions(+)
+diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+index dd405bdb5d2..7547528f2c2 100644
+--- a/hw/intc/Kconfig
++++ b/hw/intc/Kconfig
+@@ -23,13 +23,13 @@ config APIC
+ 
+ config ARM_GIC
+     bool
+-    select ARM_GICV3_TCG if TCG
++    select ARM_GICV3 if TCG
+     select ARM_GIC_KVM if KVM
+     select MSI_NONBROKEN
+ 
+-config ARM_GICV3_TCG
++config ARM_GICV3
+     bool
+-    depends on ARM_GIC && TCG
++    depends on ARM_GIC
+ 
+ config ARM_GIC_KVM
+     bool
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index 510fdfb6886..602da304b02 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -6,7 +6,7 @@ system_ss.add(when: 'CONFIG_ARM_GIC', if_true: files(
+   'arm_gicv3_common.c',
+   'arm_gicv3_its_common.c',
+ ))
+-system_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files(
++system_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files(
+   'arm_gicv3.c',
+   'arm_gicv3_dist.c',
+   'arm_gicv3_its.c',
+@@ -39,7 +39,7 @@ endif
+ 
+ specific_ss.add(when: 'CONFIG_APIC', if_true: files('apic.c', 'apic_common.c'))
+ specific_ss.add(when: 'CONFIG_ARM_GIC', if_true: files('arm_gicv3_cpuif_common.c'))
+-specific_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files('arm_gicv3_cpuif.c'))
++specific_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files('arm_gicv3_cpuif.c'))
+ specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gic_kvm.c'))
+ specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
+ specific_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
+-- 
+2.47.1
 
-
->>     Alex, Phil, we now mandate a SPDX tag. Due to the license used in
->>     vmapple.c in this patch, are you OK with me squashing here:
->>
->>
->> Sorry about that, I forgot all about the SPDX tags in scripts and docs 
->> - yes, please add that SPDX on uuid.sh. The vmapple.rst is Alex's 
->> creation (I think I tweaked a few lines max) - but if that's the usual 
->> license we use for documentation as well then it seems a reasonable 
->> assumption to use GPL2+ there too if we don't hear from him.
-> 
-> TBH IDK and IANAL :) "GPL-2.0-or-later" is about *program*, is it
-> relevant for documentation? This is the single license used with SPDX
-> in docs/:
-> 
-> $ git grep SPDX docs
-> docs/system/devices/igb.rst:1:.. SPDX-License-Identifier: GPL-2.0-or-later
-> docs/system/devices/virtio-gpu.rst:2:   SPDX-License-Identifier: 
-> GPL-2.0-or-later
-> 
-> Note we also use the FreeBSD-DOC in bitmaps.rst (not as SPDX tag):
-> 
-> docs/interop/bitmaps.rst:5:   This file is licensed via The FreeBSD 
-> Documentation License, the full
-> 
-> Per commit 2b96c1a4931 ("scripts: validate SPDX license choices"):
-> 
-> +    my $prefer = "GPL-2.0-or-later";
-> +    my @valid = qw(
-> +       GPL-2.0-only
-> +       LGPL-2.1-only
-> +       LGPL-2.1-or-later
-> +       BSD-2-Clause
-> +       BSD-3-Clause
-> +       MIT
-> +       );
-> 
-> GPL: "program"
-> LGPL: "library"
-> BSD/MIT: "software"
-> 
-> In doubt I'll stick with $prefer except if someone has a better clue /
-> suggestion.
-
-FTR I'm going to send a PR including this series with the previously
-$prefer = "GPL-2.0-or-later" snippets squashed.
-
-Regards,
-
-Phil.
 
