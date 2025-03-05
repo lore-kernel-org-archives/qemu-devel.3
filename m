@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAF3C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73CEC282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpeUD-0000uU-Je; Tue, 04 Mar 2025 21:27:53 -0500
+	id 1tpeVw-00024g-0w; Tue, 04 Mar 2025 21:29:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tpeUB-0000oy-FC
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 21:27:51 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tpeVs-00024N-F9
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 21:29:36 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tpeU9-0000MR-E1
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 21:27:50 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2235189adaeso6772415ad.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 18:27:49 -0800 (PST)
+ id 1tpeVq-0000Ym-O6
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 21:29:36 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2fe821570e4so9178780a91.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 18:29:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741141666; x=1741746466; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741141773; x=1741746573; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=x6qzhv1QG/pHgenmeZm3BgPjzHstBT+EOkqJHPZ7+Js=;
- b=eHIXPXvoBfgLPmKytIV1D1sLlUHWGLELq/nLQG92Da04LInxbxcg4ROrASmH0PH/SG
- U7B9EGaSXhXV+SosT2cDf3WlL+z7sgcubLoStZLZQnmjv7vgu2oqJUWc4I+M90eCCDeD
- O3q8158dS8pxOghTTnk+fk2HBP2NSnoD0PEePdaJN0yqOKdIheG+OIbZR5pAU6HCmsgF
- 0Y4SLYbmkAnzvNjo8KHem00ubZd/Y7BLumxQMcurEO2AafM6ucuGLw+HJGR3MHnYt7m0
- pYcXYGaowy4cddEL0Yp2RuyGTG54gkkBbDbBAWvlAV2+cZnmCxnomYioOWQ9gOhzmY4y
- L7/A==
+ bh=SktsCfhHvUlMeUwk3PbUs24ca/xziyWPr9rC1KMmCzg=;
+ b=E821KpfNSd3YBlmGj5qrulUvjzlR3tfd765/YDRY6CZwoYif0/eFEDuY8AWK084t3Z
+ PwjYqm1cKmRoJPh8k36SeZ36HSqkwUom4U2aiKlep6giyC2+PPMt+l6w4kZCLswAhoCB
+ pgsWNNIwHRijm3bMPSjswabAL5YFASh+4/Ip84CH9ABmcZLq+ld8ZI+kHnr+mi7Dircv
+ SbFwRrZVNZXglm0jlHA9ZrzBVJ391voZJkF2BekK17tmexCsIL5eZlZKR8YRQmK+0KVt
+ W+/0tk9fcT6ZbnS48G3yxfZ+QWX/8IhMXU5Uxhno/SSjuXNrUY8Py0l/myu1vzc8Rnf3
+ xNEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741141666; x=1741746466;
+ d=1e100.net; s=20230601; t=1741141773; x=1741746573;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x6qzhv1QG/pHgenmeZm3BgPjzHstBT+EOkqJHPZ7+Js=;
- b=B3eiZOpHfkPH+wdznaEEtTx9wwmXr7SSCm3penXc9iH/H27/V+7F0uKzGUAB/pRvjq
- 2mtp/LuZdJh8DuvWCd/c52/WCOaxVKrOCVtPSrFGM4/Gw8wOyxEB2FeBjAbCP0qU/Nns
- 35LpXfFrFeEp5duCJW9axRYvaQO5DG0XncJaH7m8vMvZirERujxjMeFVV/SyMhcBrMmJ
- uFzmeVL0P553dJCjTKowsW/H0E3QV708G50DddxguJ0/g3NDVpXDE5zCnqUFAt/A851m
- 2nhDU10qcCDAiRZJqguvF5MJsuERCpT4CG2GZli/2viQ84MyGKUSCagvLoJc7/KZxY6o
- kFcw==
+ bh=SktsCfhHvUlMeUwk3PbUs24ca/xziyWPr9rC1KMmCzg=;
+ b=A+K3W+F71d5d5nONC7nuAxK1fKw5xXRMjk5OdOOocV3pPUnsOaggxk7M+LCNk2N9sX
+ 6pPFjJBz8vJzCzD/2vS1zqfxuGrTierAQCxSDxXugxamw1kSe/rlyW8Nby59zYzgB+ei
+ XbV6JwVqrBqLmtdG+jROtqcOFfwYcvDtuUA1NBWIYy0uexdBop/H0L6fb4wWPhQdvGUw
+ 7T+nAJkmIq5w0uwAIgS4WMBvFc1aAr/4biM4UpTRWXV8auBB0CDX6wIXrGJV1OyHkv4V
+ GzsVJnRRvK5KiR8mbuNXAKu8YNSoW1h56WZnrZQxIDk5meeSMQoO3YSGJpzdfWgj0K8F
+ 3UBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgfMHnDZh62ooO4DDt+Apri2HlkL6v9TbwB0bKviChj/9ohSJexEyuB03CDZGb5xjeSFW44kQiBGnK@nongnu.org
-X-Gm-Message-State: AOJu0YyQIUg2bSRklNynAO/C1SDSkR/T00K9+apO3ShrrMTMlLY3+wOX
- mLqKeZtJw7VIoDCD8eKeBzs0t/2tOV2i82SpLMYkiEL20b+J6Q0BkraHO0S7Qn4=
-X-Gm-Gg: ASbGnctv2HoVuGOvbcZeB/k7vxLAqpOax6D8+4SZABxOen/Gc1rv6JT+mRxqDfMHwfZ
- oGfOCUKW7c2BKS1Foxo6sRzz892uodmkpFpOF1FIFyNOu7crH2c1DXpkiM+GoPd3u24ubMcm5v1
- n3mYDC2m86KX4mC8nSuU6RASRRqAmOLgUCZ+uold1fmZdpLI9eeSrzmHvcuQmbGpFwgXFpvbuY0
- caLozuPqirl2NKZZmhipwjMoeE4RRRWK2jv6SWXU/mWfaBW9ycV1guBemTOQWrzCbm/rrsjfepb
- vZD+C0Kc+IkFw7ffA4ttVCd6GfpreSAFfPVv5miMV7nEKaZS20Ut3n4rM/BwcsthvsgsR05Khml
- XV+lxFhzp
-X-Google-Smtp-Source: AGHT+IGrgKtm3xwGRJH+VWHJ9AJGDCmEMSE/zJKwg24sgcNTf7NMAsz7dDwdt+eP8kdGOqZBeUQJAQ==
-X-Received: by 2002:a17:902:d485:b0:223:3eed:f680 with SMTP id
- d9443c01a7336-223d978ef21mr87499235ad.18.1741141660484; 
- Tue, 04 Mar 2025 18:27:40 -0800 (PST)
+ AJvYcCU09xlcjamh8uFBUWCaP4gnF4twboXVAOXCT5ZWjMAWdqzZnRnyj3iRYpJws2o5EWeFt9c2/pSopsme@nongnu.org
+X-Gm-Message-State: AOJu0YzIqYPVQxOkNg2xtENW9mCt7M8Mky+P2Hntv5hV4Zn+/S3rPwHZ
+ qV9Ew2R7tpUY0HZriZinHa2u3Wgo4rS65JnegFWHl7036sXYrV4Pw/pLUE4JOFo=
+X-Gm-Gg: ASbGnctje28KadOFyLfE9eou33OuqzcN90t/VDs41tvou1w1LMnRZlrcKxTtM+r4041
+ OW0wxVR5kflBZOH3UbIHX/pTLSXQEUQTYyZ4MRw033IwnafsZBZngQRHXyvqQ37dcI+izHjThEG
+ YhmTygqtrFeKcR/C8KeDUnJZXZa9dZVA9ea2eDNJ+s5BNfoupgSHhmHCiSn63eMSH7rros8eN4F
+ 3JShGczIgPY89ZJt47lWxIvHROcCGBLp2Gf1V2PRlwqdax+1/fBxQE2yjt3etpKzHshR4CBDWtp
+ 7Ny+LyXeq8dib2dXwzlNqE0bJFg1u18r1IqhVXkNZz7qaPlDM9/1ZSBiRbZGiZ1sI4iHjvumk1g
+ JbS9x5QNx
+X-Google-Smtp-Source: AGHT+IFIEl9q8T/O6H0NwNK6U/uVQNqkYq0C7T9MFDMQPsd+OFXRN6SAeTAkmlfje9T/MwTW+xZ0TQ==
+X-Received: by 2002:a17:90b:3b47:b0:2ee:cded:9ac7 with SMTP id
+ 98e67ed59e1d1-2ff497ac991mr2629409a91.20.1741141772963; 
+ Tue, 04 Mar 2025 18:29:32 -0800 (PST)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4d457cd0sm176424a91.0.2025.03.04.18.27.39
+ 98e67ed59e1d1-2ff4e789392sm163355a91.28.2025.03.04.18.29.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 18:27:40 -0800 (PST)
-Message-ID: <3ed35539-db92-41e2-8ec6-dbae613cd377@linaro.org>
-Date: Tue, 4 Mar 2025 18:27:38 -0800
+ Tue, 04 Mar 2025 18:29:32 -0800 (PST)
+Message-ID: <d9d6e0a1-f2be-4caa-b7bc-0d7d52ae5377@linaro.org>
+Date: Tue, 4 Mar 2025 18:29:31 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/11] system: Introduce QemuArchBit enum
+Subject: Re: [RFC PATCH 04/11] system: Replace arch_type global by
+ qemu_arch_available() helper
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -79,14 +80,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>
 References: <20250305005225.95051-1-philmd@linaro.org>
- <20250305005225.95051-4-philmd@linaro.org>
+ <20250305005225.95051-5-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250305005225.95051-4-philmd@linaro.org>
+In-Reply-To: <20250305005225.95051-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,18 +111,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/4/25 16:52, Philippe Mathieu-Daudé wrote:
-> Declare QEMU_ARCH_BIT_$target as QemuArchBit enum.
-> Use them to declare QEMU_ARCH_$target bitmasks.
+> qemu_arch_available() is a bit simpler to understand while
+> reviewing than the undocumented arch_type variable.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   meson.build                |  4 +--
->   include/system/arch_init.h | 65 +++++++++++++++++++++++++-------------
->   system/arch_init.c         |  2 +-
->   3 files changed, 46 insertions(+), 25 deletions(-)
+>   include/system/arch_init.h | 2 +-
+>   hw/scsi/scsi-disk.c        | 2 +-
+>   system/arch_init.c         | 5 ++++-
+>   system/qdev-monitor.c      | 4 ++--
+>   system/vl.c                | 6 +++---
+>   5 files changed, 11 insertions(+), 8 deletions(-)
 
-If we ignore the array index in patch 10, is there any other reason for this?
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
