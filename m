@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 992ABC282E5
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB06C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tprVe-00008H-R6; Wed, 05 Mar 2025 11:22:15 -0500
+	id 1tprap-0001l2-UK; Wed, 05 Mar 2025 11:27:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tprVd-00007z-SV
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:22:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tprao-0001kk-2x
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:27:34 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tprVc-00017n-BY
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:22:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741191730;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6wBwkAtifNAodq85dur72m5NAtGlaa79Y3PIM3WJOKY=;
- b=R/uTul3U1LelA1H5MeWtYbKRy4XSxo1FuKLKxq9pk9/RQFtcyFTAgC1sitOx9DmB/m6svS
- a9d3VtQgyJTN24vpi9OrriWlKyDWdRCFPJUIv7ZbeU2MbZjKHsvDV5lt9su4+2iHXsxXuT
- usOpMU3uF35UDkdf3cjctXHhj48KSM8=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-0HBQByROM3OMlgmFxwK4Yg-1; Wed, 05 Mar 2025 11:22:07 -0500
-X-MC-Unique: 0HBQByROM3OMlgmFxwK4Yg-1
-X-Mimecast-MFC-AGG-ID: 0HBQByROM3OMlgmFxwK4Yg_1741191727
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4750717a643so32342911cf.3
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:22:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741191727; x=1741796527;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6wBwkAtifNAodq85dur72m5NAtGlaa79Y3PIM3WJOKY=;
- b=dPEuGbZf6JDLgcFVgDoChJrUa9dulewnAiTKYlqJZl7sTXh9NzPus9MDaWkyyfUbhB
- HsRxH1m1Up8ESXjP5ckfvCqdkjHu1/7ecr8xQHRKz+T/uD18usvQlLSBmR0nHSbXKxR0
- j/IwmzAknJD0+4/+lFbyYVVy3Fq+nSGGYx5nTLotwhkJxXLFBntYWd/dPe/+lvNYlR2Q
- /R33HzBdoCu0VfEhwfwRyJeNMrwYtNdbOi+Z4VACeHqJSWmV19iB0ruZTVC0lveTHkmK
- srNzYW8vFgIWs74lreCdq4SIzw5Vek4Euh8AdKgkc1T2rHZ/6WgYMLs/ghWHqW4PNMG7
- hZZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWkl7cnIkyVwCbj2XLFxfXroYi7NAHWaJEBEKP11X9dGhmR6IH/Wu0NmD9/nnDK3fM80mxIX1Erj2JN@nongnu.org
-X-Gm-Message-State: AOJu0YyhnAEqQQre4xvxhrT0I+d6gHvBijWYvSc/JJvIcq9kR21WJPur
- HsuzavBt8SsS2nb6oqhWkXqiDAAbXDeMYtI1Pw95x4XuerKPLujd6qOVhfNuJcgSWwTp9/7x3Ao
- nk8oRDmBlBD/hr2O1bjtVTaT5BTx0TEivaNlafxXHudeTZ2FG0mZG
-X-Gm-Gg: ASbGncvjWjGogTgHwKrswjkHpuAk7+MfMXAf3PGMBk0YEbaatEKGi+afXBAawhez13y
- tr/7u2ZYohtXJy74ClJFxBTB8eTPamKXfjr+C9TzJyJxztJ4XwFVCVKTjHGgx/mjzWQUmlI7bK/
- rkbYG3mdVlBdcAHjS1YPY4BZdCdJLxsKh+aPg0E0CZHnC/3Pw3CNs8nGwSWmUxQ7fNZBWL05Zxf
- wzuH17h+kD+rPoK2fPEr9wRNqgpcYJgl8zq9bRUsilX7sbz1agcBg6PMTHDSi7QZ/FTnlSWb26T
- Rpd2uMk=
-X-Received: by 2002:ac8:5fc3:0:b0:472:58b:463d with SMTP id
- d75a77b69052e-4750b23e2b5mr50797531cf.5.1741191727253; 
- Wed, 05 Mar 2025 08:22:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFHVl6YEGSeBhZ/aVAs1boI2U1xjgFSbaRnFonB5St0c0f0Ks+VFNgHjfDFyAnzAvAMDPPo3Q==
-X-Received: by 2002:ac8:5fc3:0:b0:472:58b:463d with SMTP id
- d75a77b69052e-4750b23e2b5mr50797161cf.5.1741191726936; 
- Wed, 05 Mar 2025 08:22:06 -0800 (PST)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-474ede93859sm40508941cf.50.2025.03.05.08.22.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Mar 2025 08:22:06 -0800 (PST)
-Date: Wed, 5 Mar 2025 11:22:04 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tpral-0001jA-Vk
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:27:33 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tprae-00000000NJI-3SYD; Wed, 05 Mar 2025 17:27:24 +0100
+Message-ID: <068929b1-6a07-4dc0-a807-77152d6d7160@maciej.szmigiero.name>
+Date: Wed, 5 Mar 2025 17:27:19 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v6 25/36] vfio/migration: Setup and cleanup multifd
  transfer in these general methods
-Message-ID: <Z8h6LGGrw82RgA_Y@x1.local>
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
 References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
  <b1f864a65fafd4fdab1f89230df52e46ae41f2ac.1741124640.git.maciej.szmigiero@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <b1f864a65fafd4fdab1f89230df52e46ae41f2ac.1741124640.git.maciej.szmigiero@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <Z8h6LGGrw82RgA_Y@x1.local>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <Z8h6LGGrw82RgA_Y@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,23 +111,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 04, 2025 at 11:03:52PM +0100, Maciej S. Szmigiero wrote:
-> @@ -509,6 +513,9 @@ static void vfio_save_cleanup(void *opaque)
->      Error *local_err = NULL;
->      int ret;
->  
-> +    /* Currently a NOP, done for symmetry with load_cleanup() */
-> +    vfio_multifd_cleanup(vbasedev);
+On 5.03.2025 17:22, Peter Xu wrote:
+> On Tue, Mar 04, 2025 at 11:03:52PM +0100, Maciej S. Szmigiero wrote:
+>> @@ -509,6 +513,9 @@ static void vfio_save_cleanup(void *opaque)
+>>       Error *local_err = NULL;
+>>       int ret;
+>>   
+>> +    /* Currently a NOP, done for symmetry with load_cleanup() */
+>> +    vfio_multifd_cleanup(vbasedev);
+> 
+> So I just notice this when looking at the cleanup path.  It can be super
+> confusing to cleanup the load threads in save()..  IIUC we should drop it.
+> 
 
-So I just notice this when looking at the cleanup path.  It can be super
-confusing to cleanup the load threads in save()..  IIUC we should drop it.
+It's a NOP since in the save operation migration->multifd is going to be
+NULL so that "g_clear_pointer(&migration->multifd, vfio_multifd_free)"
+inside it won't do anything.
 
-> +
->      /*
->       * Changing device state from STOP_COPY to STOP can take time. Do it here,
->       * after migration has completed, so it won't increase downtime.
+Cedric suggested calling it anyway since vfio_save_setup() calls
+vfio_multifd_setup() so to be consistent we should call
+vfio_multifd_cleanup() on cleanup too.
 
--- 
-Peter Xu
+I think calling it makes sense since otherwise that vfio_multifd_setup()
+calls looks unbalanced.
+
+Thanks,
+Maciej
 
 
