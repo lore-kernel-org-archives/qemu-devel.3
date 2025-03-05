@@ -4,72 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39143C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 12:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B272C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 12:43:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpo5P-0006ZS-Sl; Wed, 05 Mar 2025 07:42:55 -0500
+	id 1tpo6D-0006rf-3R; Wed, 05 Mar 2025 07:43:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tpo5M-0006Z7-M4
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 07:42:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tpo5L-0004M4-3C
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 07:42:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741178569;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Fg5J8NxkDbLS4yeDRQRJ9QAMHMcVuEAVMAod44bApaU=;
- b=E774GMilVvjeKnMqwEloGPktF8cggOIX9qZOGT2G0Yq6fipVbI1GxOy/9k1H5HqmNpx6zI
- KnDLWuVv8XPU+2fLOWkt2p2TCoBodt0C1UoFbIB+m5h28pJbpUerAx+W7U6cmm0GgUT7iD
- 2Ee06WyKOgpZ3FnMHQrB3Tgxohwm6Bg=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-D3XAp5m1O0Ok5eXVo-XRYA-1; Wed,
- 05 Mar 2025 07:42:41 -0500
-X-MC-Unique: D3XAp5m1O0Ok5eXVo-XRYA-1
-X-Mimecast-MFC-AGG-ID: D3XAp5m1O0Ok5eXVo-XRYA_1741178560
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tpo5x-0006ml-6Z
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 07:43:30 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tpo5v-0004Ou-G3
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 07:43:28 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0DD9019560B4; Wed,  5 Mar 2025 12:42:39 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.45.225.55])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DF9AB1956095; Wed,  5 Mar 2025 12:42:32 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, alex.williamson@redhat.com, peter.maydell@linaro.org,
- philmd@linaro.org, clg@redhat.com
-Cc: zhenzhong.duan@intel.com,
-	will@kernel.org,
-	maz@kernel.org
-Subject: [PATCH v2] vfio-platform: Deprecate all forms of vfio-platform devices
-Date: Wed,  5 Mar 2025 13:42:25 +0100
-Message-ID: <20250305124225.952791-1-eric.auger@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 9711A1F770;
+ Wed,  5 Mar 2025 12:43:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741178601; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=n9cqipSbXcYXiASJq+Ys6cxD+oQ95xdLKywezshOfXQ=;
+ b=Q5I9ZFKWP6SiRkLAPVG5SMU2415dM6cCMF/9DSWWOaiGnkhiXom2rhrP00TFqQmnEth/03
+ 5WcOl3LoTqxAyC7kS7RqxDNuC0lakv8sHf/WF8Ff1dvZ2nxGudbVbw6P+yzIPFZDYITzwl
+ JjwsThQoR9u9X7EWVxyWQIh/t5l4FNQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741178601;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=n9cqipSbXcYXiASJq+Ys6cxD+oQ95xdLKywezshOfXQ=;
+ b=F3N8GU1dgW16LlU7vJqFBnok6W57wnLgjhwsmxZP/mZNkDaNRQaLkHL6ii5lE2OqAeRkiu
+ acgcqmGUlf/gtUDw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741178601; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=n9cqipSbXcYXiASJq+Ys6cxD+oQ95xdLKywezshOfXQ=;
+ b=Q5I9ZFKWP6SiRkLAPVG5SMU2415dM6cCMF/9DSWWOaiGnkhiXom2rhrP00TFqQmnEth/03
+ 5WcOl3LoTqxAyC7kS7RqxDNuC0lakv8sHf/WF8Ff1dvZ2nxGudbVbw6P+yzIPFZDYITzwl
+ JjwsThQoR9u9X7EWVxyWQIh/t5l4FNQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741178601;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=n9cqipSbXcYXiASJq+Ys6cxD+oQ95xdLKywezshOfXQ=;
+ b=F3N8GU1dgW16LlU7vJqFBnok6W57wnLgjhwsmxZP/mZNkDaNRQaLkHL6ii5lE2OqAeRkiu
+ acgcqmGUlf/gtUDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1157213939;
+ Wed,  5 Mar 2025 12:43:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 8cq1MOhGyGedLQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 05 Mar 2025 12:43:20 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Peter Xu
+ <peterx@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
+ Goater <clg@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Avihai
+ Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 15/36] migration/multifd: Make MultiFDSendData a struct
+In-Reply-To: <7b02baba8e6ddb23ef7c349d312b9b631db09d7e.1741124640.git.maciej.szmigiero@oracle.com>
+References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
+ <7b02baba8e6ddb23ef7c349d312b9b631db09d7e.1741124640.git.maciej.szmigiero@oracle.com>
+Date: Wed, 05 Mar 2025 09:43:18 -0300
+Message-ID: <87bjufveah.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,105 +120,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As an outcome of KVM forum 2024 "vfio-platform: live and let die?"
-talk, let's deprecate vfio-platform devices.
+"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- docs/about/deprecated.rst | 25 +++++++++++++++++++++++++
- hw/vfio/amd-xgbe.c        |  2 ++
- hw/vfio/calxeda-xgmac.c   |  2 ++
- hw/vfio/platform.c        |  1 +
- 4 files changed, 30 insertions(+)
+> From: Peter Xu <peterx@redhat.com>
+>
+> The newly introduced device state buffer can be used for either storing
+> VFIO's read() raw data, but already also possible to store generic device
+> states.  After noticing that device states may not easily provide a max
+> buffer size (also the fact that RAM MultiFDPages_t after all also want to
+> have flexibility on managing offset[] array), it may not be a good idea to
+> stick with union on MultiFDSendData.. as it won't play well with such
+> flexibility.
+>
+> Switch MultiFDSendData to a struct.
+>
+> It won't consume a lot more space in reality, after all the real buffers
+> were already dynamically allocated, so it's so far only about the two
+> structs (pages, device_state) that will be duplicated, but they're small.
+>
+> With this, we can remove the pretty hard to understand alloc size logic.
+> Because now we can allocate offset[] together with the SendData, and
+> properly free it when the SendData is freed.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> [MSS: Make sure to clear possible device state payload before freeing
+> MultiFDSendData, remove placeholders for other patches not included]
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index abadf8de27..004ed48159 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -434,6 +434,31 @@ Stream ``reconnect`` (since 9.2)
- The ``reconnect`` option only allows specifiying second granularity timeouts,
- which is not enough for all types of use cases, use ``reconnect-ms`` instead.
- 
-+VFIO device options
-+'''''''''''''''''''
-+
-+``-device vfio-calxeda-xgmac`` (since 10.0)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+The vfio-calxeda-xgmac device allows to assign a host Calxeda Highbank
-+10Gb XGMAC Ethernet controller device ("calxeda,hb-xgmac" compatibility
-+string) to a guest. Calxeda HW has been ewasted now and there is no point
-+keeping that device.
-+
-+``-device vfio-amd-xgbe`` (since 10.0)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+The vfio-amd-xgbe devices allows to assign a host AMD 10GbE controller
-+to a guest ("amd,xgbe-seattle-v1a" compatibility string). AMD "Seattle"
-+is not supported anymore and there is no point keeping that device.
-+
-+``-device vfio-platform`` (since 10.0)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+The vfio-platform device allows to assign a host platform device
-+to a guest in a generic manner. Integrating a new device into
-+the vfio-platform infrastructure requires some adaptation at
-+both kernel and qemu level. No such attempt has been done for years
-+and the conclusion is that vfio-platform has not got any traction.
-+PCIe passthrough shall be the mainline solution.
-+
- CPU device properties
- '''''''''''''''''''''
- 
-diff --git a/hw/vfio/amd-xgbe.c b/hw/vfio/amd-xgbe.c
-index aaa96903db..5927503b5c 100644
---- a/hw/vfio/amd-xgbe.c
-+++ b/hw/vfio/amd-xgbe.c
-@@ -15,12 +15,14 @@
- #include "hw/vfio/vfio-amd-xgbe.h"
- #include "migration/vmstate.h"
- #include "qemu/module.h"
-+#include "qemu/error-report.h"
- 
- static void amd_xgbe_realize(DeviceState *dev, Error **errp)
- {
-     VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(dev);
-     VFIOAmdXgbeDeviceClass *k = VFIO_AMD_XGBE_DEVICE_GET_CLASS(dev);
- 
-+    warn_report("-device vfio-amd-xgbe is deprecated");
-     vdev->compat = g_strdup("amd,xgbe-seattle-v1a");
-     vdev->num_compat = 1;
- 
-diff --git a/hw/vfio/calxeda-xgmac.c b/hw/vfio/calxeda-xgmac.c
-index b016d42b49..a5ef262def 100644
---- a/hw/vfio/calxeda-xgmac.c
-+++ b/hw/vfio/calxeda-xgmac.c
-@@ -15,12 +15,14 @@
- #include "hw/vfio/vfio-calxeda-xgmac.h"
- #include "migration/vmstate.h"
- #include "qemu/module.h"
-+#include "qemu/error-report.h"
- 
- static void calxeda_xgmac_realize(DeviceState *dev, Error **errp)
- {
-     VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(dev);
-     VFIOCalxedaXgmacDeviceClass *k = VFIO_CALXEDA_XGMAC_DEVICE_GET_CLASS(dev);
- 
-+    warn_report("-device vfio-calxeda-xgmac is deprecated");
-     vdev->compat = g_strdup("calxeda,hb-xgmac");
-     vdev->num_compat = 1;
- 
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index f491f4dc95..a09f7f65c6 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -575,6 +575,7 @@ static void vfio_platform_realize(DeviceState *dev, Error **errp)
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     int i;
- 
-+    warn_report("-device vfio-platform is deprecated");
-     qemu_mutex_init(&vdev->intp_mutex);
- 
-     trace_vfio_platform_realize(vbasedev->sysfsdev ?
--- 
-2.47.1
-
+Acked-by: Fabiano Rosas <farosas@suse.de>
 
