@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AEC6C282D3
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77C2EC282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdyv-00077K-24; Tue, 04 Mar 2025 20:55:33 -0500
+	id 1tpdx1-0001PX-11; Tue, 04 Mar 2025 20:53:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdyU-0005xN-PZ
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:06 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tpdwy-0001OZ-Nv
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:53:32 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdyT-0000H9-00
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:06 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2238d965199so61667435ad.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:55:04 -0800 (PST)
+ id 1tpdwv-0008Lj-Mu
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:53:31 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2238d965199so61653515ad.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:53:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741139703; x=1741744503; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741139608; x=1741744408; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NVR/Huqfaq4TbGUsXCBBJHlbyJU+hGBoWuEhfaSp23c=;
- b=L0toRI6uzfnihUsDxs25fnVtgzyH9lhaFv0QIXCRAjlUuWs1SW+CouxYLONelggg9H
- vVE7qLwxClbaQB+NXvxwuQlKSioxJqsaiOpUv+k3IqvJyzgygVn9QzUv0RSwwrPDixWt
- WdP0E6Ub8WkWecPKI0Jw9N2ytISMtmjo2GWEK1ehu3gUju+of4VKc3gPBSkr+u+aMcXQ
- cra3hPWIKj7KIpTrBvWN+z/jY5CNLf2Jv+s9mNw+dPN7x8cH1eOpphIZ3g1XJ6QHXrjr
- n35l8Z/KjEHAmPy+R/AeIsaa8wYTORhkVmOJDYW6S+4u4JQMuOq3fubMhBawHDCcc2lL
- ZSeA==
+ bh=wW5zURPCWXC9LghxnOTTQW/12iqlMGnRb2lijiceHcM=;
+ b=lfVLYRfRMlqULJDCrlPoM4HjfftDma6Shh15XWlmQQEsWfBvjFINinlyDXsCGU1mzO
+ kuIVOSgce9dnbXFLR0dd9Vgc73YA/+4fRmp4y9sThG7+0p2YHRS2w8M0OaMiIy4mTDKN
+ vlI1XAThYv71wcNzUd/FRHChcrFrx2ah+GWEzqKIKGRVHmnrjA4E62vOAwTJX8yhFotU
+ gP12fm6zikgDRMA92WqEzpmozX5DFAE9wlj3IlAB8waSEXMyzblwXlMFwCna6rMVn2IL
+ yLCpRUAdlK5qkZidBvmEoq7DvSazGgGEzHhiSddLpZJqE90z1HQYcPAwd2uSzQVhjOLN
+ +0YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741139703; x=1741744503;
+ d=1e100.net; s=20230601; t=1741139608; x=1741744408;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NVR/Huqfaq4TbGUsXCBBJHlbyJU+hGBoWuEhfaSp23c=;
- b=S59OLifTabO1ooAEqVncFOqL+I0qnspcnEjIlDc+jCorjHfI1FvtilOei1EBAprj/J
- s+HnvCQ0hAoahiBZOn4Lgt5sK683mMT0x9VbMoDb1zrWByfODd5PE6+ev5Ra3aStBdAP
- DdrQLghNNzKVtI50xWtJVM45LYDvDKCH1JBMkyhdsIJsGz8LdxsgcpRhZsS2oCoToSfg
- 7l3sXhSN8OlZLW1kG8sVZ5JO53vfF8QqkCEi8L/4bpRBKsg6rE77h7LA+WaW+7E95hqG
- r0rS1iCMKMUp3LUu+5gbzpb7WkwYdfRxFpDxfJCwXLCKj+JFJynJpvnnrQ9BVUU+7xZZ
- hq+w==
-X-Gm-Message-State: AOJu0YziLDvByztD9SRTrCegVnJhNRAgLzUDQSZW6KINn05XwFgNhObk
- wMVMIaJ4K19D5TCrr9DkCDuywG6XsDB6i2hNZA/eEszdA/7SymeMf++/Klb8e2g=
-X-Gm-Gg: ASbGncuXY/NULN2mH+3ado/Xg6l8bvVpXYVW1H01qn4jYTyHVVgfndYRsSOIuVzazd8
- X/hp+gcKNG+19DSxL8ifeM5kFDBZBVssTF00zqhyTeAKY11EX0f0wqhlVfVujdvumrEC4KcVEjh
- Zem3SnYJqnb9yxzj9TxPiX9abB00bHWfcdEhKm5Fr6BOMV29MtsXdsNAhJWCBJ8eA3+N8Po2xnR
- qqOu9T3AkQ2ie6152gRrYWj0NV/06B9qfrPktN+3hO+D7lwTNLWH0dC1CTEZ5+cOGUR3G3FOavh
- fgTREuzv78+m2Wx2xWJHwGGVdPuz+Z4hcuRsVn0onU2JKilbXD/Qivb5nT5eCbKYY3Ex7ZxSrma
- bxfpep6r0Vnl9MIbIIMjzXG/IsMCuP9ceeubW44Jl+MJ8nZs/5wM=
-X-Google-Smtp-Source: AGHT+IH7ma15kAKOu/g8ri6xiOrrtyDf2eHBhR4uXRETmNOocxQr3pZ6aez8CQ7aymlR+l6PJTRfFw==
-X-Received: by 2002:a17:902:c951:b0:220:cb1a:da5 with SMTP id
- d9443c01a7336-223f1d0fa09mr21705455ad.40.1741139702727; 
- Tue, 04 Mar 2025 17:55:02 -0800 (PST)
+ bh=wW5zURPCWXC9LghxnOTTQW/12iqlMGnRb2lijiceHcM=;
+ b=adnP4aPOst1As7eU39FAgaqKayRev6ztsEHP0z1EP2dhOpgK3OxwKirTtrBlRnp4pM
+ 96R0RAROYt5I5QRagTp9YVxpfZlwU/DEgwyqRCgwHEt4QybTayXz46A5o0gvACl/qNJJ
+ P7pKWH+OlRPO8yuy4f4pkNWMi+Env8fLCvLI474jN6pVZoOxWKdsZ1ot8wBE0xvqTo4v
+ UrM+ZDg2K9ipaU34xsqHdr/uNDsZLF7Y7Ihy9/Rr46VWFiPioEWz++X7VQyfSd2mLO2y
+ 6M3Ua/4VLqvy6J8Jh9utcM7lucYDHx0RIxE3s4T1vr5k57D817dYD2LHd+/7+LDS6vgp
+ a4rA==
+X-Gm-Message-State: AOJu0YwhgkQmqneLt51I70k+wnCwrLLdBDdNgqLfDJ0SqwEPwuuRSv6F
+ 0JxVB3/yrT4/gmGdzCfCiF1icmMchGdDGLDjfLKU+TIGGNAzgY1/ABM00v0Qpw8=
+X-Gm-Gg: ASbGncvqyKVkkrZOQhs2f+x8OsaZ3rNrpOjPvinRPFAddqSOuoo00Jg4d/d73lCpI2M
+ BC9twlmL3tXQoGghu9azmKAz2r3bJamaW/h6PzfVP/GaXaFFOmyY1CIhZJ5guR3V0p5ft6ley8S
+ QHurS73dzAc83anapsMNS+X1AyorNRH6BxOi3/H4RmFpng6OMwJVdZNdtBFVOzvW2YyEaXVT0h0
+ 19OS++GKium0NgOxPOiwWyoWtLzu3Fd12LZzCEECUDKEivFpD+hQ9tdJn/zfGo3F25vN97UFJV1
+ aJdJ7fB+R74Cva6q39qoIR0uvU2oq3P29aIQOoz4PfT0cYL3dC/5LO3KpDCqqI2uK/sh4WswdP4
+ hr87IA1+cUb0w97QIlc2mNseEDMIGNiMfT+vJu+rf5lgRbwDVHwI=
+X-Google-Smtp-Source: AGHT+IFoq01iz0MCSueot8Imc7i5RllpvClielHOgJOh24LtPKrIDovz1DIP0o3Stt7uu5fm3gt+aA==
+X-Received: by 2002:a17:903:22d0:b0:223:4d7e:e523 with SMTP id
+ d9443c01a7336-223f1d3543fmr21502325ad.50.1741139608131; 
+ Tue, 04 Mar 2025 17:53:28 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.54.59
+ d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.53.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 17:55:02 -0800 (PST)
+ Tue, 04 Mar 2025 17:53:27 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 37/59] target/riscv/cpu.c: create flag for ziccrse
-Date: Wed,  5 Mar 2025 11:52:45 +1000
-Message-ID: <20250305015307.1463560-38-alistair.francis@wdc.com>
+Subject: [PULL 05/59] target/riscv/cpu_helper.c: fix bad_shift in
+ riscv_cpu_interrupt()
+Date: Wed,  5 Mar 2025 11:52:13 +1000
+Message-ID: <20250305015307.1463560-6-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305015307.1463560-1-alistair.francis@wdc.com>
 References: <20250305015307.1463560-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,73 +107,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-At this moment ziccrse is a TCG always enabled named feature for
-priv_ver > 1.11 that has no exclusive flag. In the next patch we'll make
-the KVM driver turn ziccrse off if the extension isn't available in the
-host, and we'll need an ext_ziccrse flag in the CPU state for that.
+Coverity reported a BAD_SHIFT issue in the following code:
 
-Create an exclusive flag for it like we do with other named features.
-As with any named features we already have, it won't be exposed to
-users.
+ > 2097
+ >>>>      CID 1590355:  Integer handling issues  (BAD_SHIFT)
+ >>>>      In expression "hdeleg >> cause", right shifting by more than 63
+       bits has undefined behavior.  The shift amount, "cause", is at least 64.
+ > 2098         vsmode_exc = env->virt_enabled && (((hdeleg >> cause) & 1) || vs_injected);
+ > 2099         /*
 
+It is not clear to me how the tool guarantees that '"cause" is at least
+64', but indeed there's no guarantees that it would be < 64 in the
+'async = true' code path.
+
+A simple fix to avoid a potential UB is to add a 'cause < 64' guard like
+'mode' is already doing right before 'vsmode_exc'.
+
+Resolves: Coverity CID 1590355
+Fixes: 967760f62c ("target/riscv: Implement Ssdbltrp exception handling")
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Message-ID: <20250221153758.652078-3-dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250121184847.2109128-6-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_cfg.h     | 3 +++
- target/riscv/cpu.c         | 3 ++-
- target/riscv/tcg/tcg-cpu.c | 2 ++
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ target/riscv/cpu_helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 3f3c1118c0..8a843482cc 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -166,6 +166,9 @@ struct RISCVCPUConfig {
-     bool has_priv_1_12;
-     bool has_priv_1_11;
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 8ff6d900f2..1de8e0e494 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -2084,7 +2084,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     mode = env->priv <= PRV_S && cause < 64 &&
+         (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : PRV_M;
  
-+    /* Always enabled for TCG if has_priv_1_11 */
-+    bool ext_ziccrse;
+-    vsmode_exc = env->virt_enabled && (((hdeleg >> cause) & 1) || vs_injected);
++    vsmode_exc = env->virt_enabled && cause < 64 &&
++        (((hdeleg >> cause) & 1) || vs_injected);
 +
-     /* Vendor-specific custom extensions */
-     bool ext_xtheadba;
-     bool ext_xtheadbb;
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a4ee381a07..47424fd5e2 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -105,7 +105,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1_11),
--    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, has_priv_1_11),
-+    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_ziccrse),
-     ISA_EXT_DATA_ENTRY(zicfilp, PRIV_VERSION_1_12_0, ext_zicfilp),
-     ISA_EXT_DATA_ENTRY(zicfiss, PRIV_VERSION_1_13_0, ext_zicfiss),
-     ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
-@@ -1742,6 +1742,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
-     MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
-     MULTI_EXT_CFG_BOOL("ssstateen", ext_ssstateen, true),
-     MULTI_EXT_CFG_BOOL("sha", ext_sha, true),
-+    MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
- 
-     { },
- };
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 929ed5fd2c..f1d971eec1 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -360,6 +360,8 @@ static void riscv_cpu_update_named_features(RISCVCPU *cpu)
- 
-     cpu->cfg.ext_sha = riscv_has_ext(&cpu->env, RVH) &&
-                        cpu->cfg.ext_ssstateen;
-+
-+    cpu->cfg.ext_ziccrse = cpu->cfg.has_priv_1_11;
- }
- 
- static void riscv_cpu_validate_g(RISCVCPU *cpu)
+     /*
+      * Check double trap condition only if already in S-mode and targeting
+      * S-mode
 -- 
 2.48.1
 
