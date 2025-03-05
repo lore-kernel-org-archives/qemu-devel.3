@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08BBC282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D356C282D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:26:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdUu-0003BE-7a; Tue, 04 Mar 2025 20:24:34 -0500
+	id 1tpdWG-0004vm-Np; Tue, 04 Mar 2025 20:25:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTq-0000hB-8P
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:26 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUS-0002Fa-ON
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:11 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTn-00074U-R0
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:25 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-390effd3e85so4770627f8f.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:23:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUR-0007BE-6f
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:04 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43bcad638efso10145755e9.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:24:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137802; x=1741742602; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741137841; x=1741742641; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/QUbgFdH+LpUBvr3jWV7pVNPKK1k5LRXJFBmyMiAPQM=;
- b=w3W9wYSqKFkjVuCqfdOLwMdquHGCBVKpYoj9WukBRl5bx+EQbr2OGAa5H8v8QOQEXF
- caJrjlA3eMhK/j8+tHyb7oGD1ALNP9ShShZQiMIu/3MX5oddODay4RuVM323m8mwXTIq
- sjbax4sWgdspIq9NR+O2UDiFzTpR5nW4oprZOOKvkctfBYXyKJ2oXXWBo1Susl5gXstG
- bNngnxdn80ai06MsZYJoLTvAvCh6wUWT59T5bAPIPTzVXGJXimKywgTkalOvbr2UaBBO
- iN9vco/msSJW3SAbiJemdCGZd8LRVkR/ECXkwTMDxDzzCoo9eGRoNoT0TxdAEZMw+Z/x
- Q8bw==
+ bh=GWCkeTUZ1Bwoa+5rt2QUs52v09pE2by6BJ43I/9OHfA=;
+ b=GCfUfAtIrzHLlH/2PKgYp41BYSS/VC+sMlt2aBoOgsv5WWw96+LLCa7e9Ey5oolEMG
+ s0aUcNBFNw8pSGl9wJFFx1keMLTIcGuLEf6ENh6PPWkB3dNlru6cgfbMI1dyLzZUM238
+ 07DAOX6RJfb7B8+YXeKIxuO1VpRsCn66njZ2S0++aBqLh8ShV3LbTlMOb/6VWcrCWFNq
+ bAoapJgQND1xUoWCuubtXc6bTcvLD7Ks74v5MIQ/J1ABryAxKk/hp4xVNuMfwPITICYS
+ wmPqS+LBmsYqie7HrzzfDhDFv2UPzeuSBNuibXq7NZM3/U3mG59F5S/307ewz+68Ye5G
+ nVjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137802; x=1741742602;
+ d=1e100.net; s=20230601; t=1741137841; x=1741742641;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/QUbgFdH+LpUBvr3jWV7pVNPKK1k5LRXJFBmyMiAPQM=;
- b=Vz4jvsl6zDc5xHHPmP49huC14ao0Uovyl6iUR44kBImJWFK24EQN/ZOCT9I8RWCWe9
- lblms1Yh8YlBtRJ1I86ZzIXxpyyxU/06sO5XuCgG62dBd840ftxxLxnhjluDauL5tjP1
- +M58XdyDWokAveO9QGFJB138LOmfErozwU8B+WGhn3902HiybWF8En/aVU2ko9JfKglC
- KCx0uOwScq2PjFQtMBNE839QhVswJ6rW7erYS1Tc6emda0vHHubbAvgn9Fz0Ut/L5MJB
- T1nVPjzMRc1jYI22U9zmrKRIIunDyaQMhtfBjthuR5aN++jJKl/D8I23OmZEFFsexz7G
- J9Fw==
-X-Gm-Message-State: AOJu0YyXLWmDASvhemRVfDg2aUQwO4tHXD9nMi05245ydgmLkv8o8bFx
- kkCLRJMl5/VQ+RfvJmsKk6ppJhvpA9QdC+gnp12WsCde5NWUEZx9jsrvhouIAgzHX9ecfUbLkQ3
- kzec=
-X-Gm-Gg: ASbGnctFCZa+j+qAZwdMfqIS2QitlFoN9vKYEA9cqWkbCJuN1gmBQLCYMCbDurcOVP/
- 9PEUgrvNs4SHxtke948eWDM3dcs5zlyXHRHZKdfW/BEKkdYQLngwAMgkRW6u+nsi7BJmHWYAjfD
- nBnHf6ya/Oji6rk+BVqe5jVF7wOIRrrQEUKblfGbImeryUrdv6DpbbYPSnlxe/ds13O+GN2MABO
- lkNfEcydpxrdFJuPuhuKxbq6S01eXId4Eie7RZfG7j5OR2spmIEWH/Fz5jO8mj6TD4W7uX3nasG
- F7nDpRAZZjDj/01yOolxSOkU+bJFaBo5j65e0qilQC/WIkNR+zcDLNykI6tJUa9D9ShtJPEcgV5
- Gs3wRfRwxIQVWY+yeuLs=
-X-Google-Smtp-Source: AGHT+IHkhqNryqZFpM238fJOfII6PO1kZdEUeuykTBuEcIfg3+vfRMOl2LupPUicva2CG9Jz0cGPKw==
-X-Received: by 2002:a5d:64a6:0:b0:390:eb32:3fd2 with SMTP id
- ffacd0b85a97d-3911f57cc31mr909806f8f.0.1741137802156; 
- Tue, 04 Mar 2025 17:23:22 -0800 (PST)
+ bh=GWCkeTUZ1Bwoa+5rt2QUs52v09pE2by6BJ43I/9OHfA=;
+ b=TCVDQI1a+T8X8laRZ8RvMShF6DVwZSjU4O7YRxyQv55o+wuBq4McljzZVCekcBVJOA
+ d0AquUTBJVrpg+wt6DTZDnafFQNfXqzjjXwGPIqhDoaxPyXNBgbNzrIk+vpSGQ25RGRK
+ 7g2nCgfWG9LxOB5n/2+ppQIm53362DP0Iz0bu5Kgav+3krwvbakQ3hwOkKBwT2NkxvCv
+ Wugesf7IFGJ0dC8ylqTBpQ/DHBWJ9fMmPKT/pm16I2AJ07FfZALoeJHk6ENQyoNo3Pel
+ a1MXuyNTTOv8Mlev4lbXC3QWMhDlaFWokSEguKPe3TMJTv9MX2/ZLLIDQ+RVo0ibCJHY
+ 5/gw==
+X-Gm-Message-State: AOJu0YxzrrbPjijQUBZZThhAMoqf0HRqRI3G68uEVh/sgZTNBl4JrBuO
+ KRgddAKO3WQPssOZt5t0i6r6AhoQDHaIq4Nkmm/ziJHu1RmneKo45CuyJ8foyOhd/3sZFsGRJVD
+ cC50=
+X-Gm-Gg: ASbGncveFHx2qsJfrJDinjwwFaQyOfd+o4CaBlWbEZL7Lf3xbTfWizCVoa/EdTCKdFn
+ ek7yM2bsdoX+2eIfOSSB4BlMb/PAhbp4rvItfJhSZK9SMa83Nrh0lx3o01TwGoaFgy+XeQDi+IF
+ qI7gB5B/drA0qLNikaB0MSA3AfpJZu3Zc763x8AI+7wQ6FGPzPU/swD4P+JsZbwY32KdUtWDXTf
+ t9k6GErlSgvEWRmLAD4ktqAWad6Z9fDNpEzSyXE5BjOPn0R2ofBlrWLTXBhX8OJV38WJ/TWwxAQ
+ rtmMEfuphrp8M26i9J6Xhcf2OjdgB9M6BbQGKNksTGTWqB/Yb+o5cVj6H3x91poKYWjExflaEfH
+ ZIDjcHdfMzPWTJ54I71E=
+X-Google-Smtp-Source: AGHT+IEDnbjMa1qZO+TqVDNEIcP6ZL46N87m9w0qmJfAaCjm2r5QnBMcwlcnE+z00mQf2jHlHbIhzA==
+X-Received: by 2002:a05:600c:4ed2:b0:439:a5e6:73ff with SMTP id
+ 5b1f17b1804b1-43bd29d8441mr6558595e9.17.1741137840978; 
+ Tue, 04 Mar 2025 17:24:00 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e4795978sm18925528f8f.3.2025.03.04.17.23.21
+ 5b1f17b1804b1-43bd42e6bcfsm1952175e9.32.2025.03.04.17.23.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 17:23:21 -0800 (PST)
+ Tue, 04 Mar 2025 17:24:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anthony PERARD <anthony.perard@vates.tech>
-Subject: [PULL 17/41] hw/xen/xen-legacy-backend: Remove unused 'net/net.h'
- header
-Date: Wed,  5 Mar 2025 02:21:32 +0100
-Message-ID: <20250305012157.96463-18-philmd@linaro.org>
+ Luc Michel <luc.michel@amd.com>, Thomas Huth <huth@tuxfamily.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 25/41] hw/char/mcf_uart: Use FIFO_DEPTH definition instead of
+ magic values
+Date: Wed,  5 Mar 2025 02:21:40 +0100
+Message-ID: <20250305012157.96463-26-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
 References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,25 +102,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anthony PERARD <anthony.perard@vates.tech>
-Message-Id: <20250218162618.46167-8-philmd@linaro.org>
----
- include/hw/xen/xen-legacy-backend.h | 1 -
- 1 file changed, 1 deletion(-)
+Defines FIFO_DEPTH and use it, fixing coding style.
 
-diff --git a/include/hw/xen/xen-legacy-backend.h b/include/hw/xen/xen-legacy-backend.h
-index e198b120c5d..2d0cbfecade 100644
---- a/include/hw/xen/xen-legacy-backend.h
-+++ b/include/hw/xen/xen-legacy-backend.h
-@@ -3,7 +3,6 @@
- 
- #include "hw/xen/xen_backend_ops.h"
- #include "hw/xen/xen_pvdev.h"
--#include "net/net.h"
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Luc Michel <luc.michel@amd.com>
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250220092903.3726-8-philmd@linaro.org>
+---
+ hw/char/mcf_uart.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/hw/char/mcf_uart.c b/hw/char/mcf_uart.c
+index 980a12fcb7d..95f269ee9b7 100644
+--- a/hw/char/mcf_uart.c
++++ b/hw/char/mcf_uart.c
+@@ -17,6 +17,8 @@
+ #include "chardev/char-fe.h"
  #include "qom/object.h"
  
- #define TYPE_XENSYSDEV "xen-sysdev"
++#define FIFO_DEPTH 4
++
+ struct mcf_uart_state {
+     SysBusDevice parent_obj;
+ 
+@@ -27,7 +29,7 @@ struct mcf_uart_state {
+     uint8_t imr;
+     uint8_t bg1;
+     uint8_t bg2;
+-    uint8_t fifo[4];
++    uint8_t fifo[FIFO_DEPTH];
+     uint8_t tb;
+     int current_mr;
+     int fifo_len;
+@@ -247,14 +249,16 @@ static void mcf_uart_reset(DeviceState *dev)
+ static void mcf_uart_push_byte(mcf_uart_state *s, uint8_t data)
+ {
+     /* Break events overwrite the last byte if the fifo is full.  */
+-    if (s->fifo_len == 4)
++    if (s->fifo_len == FIFO_DEPTH) {
+         s->fifo_len--;
++    }
+ 
+     s->fifo[s->fifo_len] = data;
+     s->fifo_len++;
+     s->sr |= MCF_UART_RxRDY;
+-    if (s->fifo_len == 4)
++    if (s->fifo_len == FIFO_DEPTH) {
+         s->sr |= MCF_UART_FFULL;
++    }
+ 
+     mcf_uart_update(s);
+ }
 -- 
 2.47.1
 
