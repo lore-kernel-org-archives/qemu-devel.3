@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C2E6C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 14:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA9ACC19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 14:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tppfT-0005Yv-Jx; Wed, 05 Mar 2025 09:24:15 -0500
+	id 1tpphl-0006Ry-NG; Wed, 05 Mar 2025 09:26:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tppfR-0005Yh-IL
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 09:24:13 -0500
-Received: from mgamail.intel.com ([198.175.65.19])
+ id 1tpphk-0006Qh-0Y
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 09:26:36 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tppfP-0005uE-7j
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 09:24:13 -0500
+ id 1tpphi-0006Jk-7U
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 09:26:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741184652; x=1772720652;
+ t=1741184794; x=1772720794;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=x05EX333NKXOFTqc+uZagDz/CRKZvPUFB+nBn2iqWig=;
- b=iolKRjzVOunZpxmlowCqoqm8qr9FAhKH6b0vgcRG4Oz7vjxhi0yY2VvS
- 9UW2yly8JIAlNKO9AqEn2HQNhlAdwCV6Da+InjvvMSYV6TQ+Xh4k5pic0
- t4PN317xwlrxI4FM4jbE57sW0Qg22ukb1N3SOtAxEx8H3Kqo0Vv3rcYhh
- dkGfhcsJsr/c1DUw6jp1D476jy6ZGfURTVh4dIC001+4CdaG87TCHHDS7
- JA55AdpKTcCYEpfqpLKzTWiOpqYfMPb8hIF8zbPsK+7c8RhuNEZUWGYiG
- 9YD1cHzp6jmFwPsuPAwFdHyP8o8VgVycWDu3+4LY4oW6PIhSNn1YEm5qF w==;
-X-CSE-ConnectionGUID: O9tMZGtkTzCf0WaAvluVzA==
-X-CSE-MsgGUID: Kgezz1ooQ/mhS+eeyG6W7g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="42012952"
-X-IronPort-AV: E=Sophos;i="6.14,223,1736841600"; d="scan'208";a="42012952"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Mar 2025 06:24:07 -0800
-X-CSE-ConnectionGUID: oJrAzU2STQK/lNbn55v2gQ==
-X-CSE-MsgGUID: 80ywhNNrQOCT2LwTfPLMPw==
+ bh=BVqqC4oAStGeOipkGPpjlWcVg3qYzVoBzqOa6HasjaM=;
+ b=dTubrwu0xWC7OWTf7681dwdt3N0XQrSZeZgo0ClEW8Mz0DJ2SOEsv5cc
+ pZkXsZTDnbVG6VjPhjOtT9H/Gq49z2Fs0/lp2MmDMDlYkNtYmfop7hKiB
+ A8yFIV5XvLKQCn9rKQ77KlBMBbOkGcrmCvgraVQB8e0tYpCndZrMSlmsv
+ pVkbdOIzrx7gvS0Wz1IiWxLtuqfIvMiENFewHHnY5pMft0YPGn3i3Y0D7
+ LX4gVO4601c+EOL69UbR13P7NCuIjbJurvkQa2kY+OVFwWp8tWHaKSbGq
+ /qef++CyFDb9YVmoi9LhtEWDAw7Hj+4mA5t+8z58KOYY3uSPBV8RGx1u1 A==;
+X-CSE-ConnectionGUID: RmgL9yDySJGPgEm+busHMg==
+X-CSE-MsgGUID: UyQqLHPCR9ObW6fTxRRwxQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="42277571"
+X-IronPort-AV: E=Sophos;i="6.14,223,1736841600"; d="scan'208";a="42277571"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Mar 2025 06:26:32 -0800
+X-CSE-ConnectionGUID: hqljol+XQH62Na0I4uq5aw==
+X-CSE-MsgGUID: IBDtrwGBQb27aA9PkdRS0w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,223,1736841600"; d="scan'208";a="123740616"
+X-IronPort-AV: E=Sophos;i="6.14,223,1736841600"; d="scan'208";a="119396142"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 05 Mar 2025 06:24:03 -0800
-Date: Wed, 5 Mar 2025 22:44:10 +0800
+ by fmviesa009.fm.intel.com with ESMTP; 05 Mar 2025 06:26:28 -0800
+Date: Wed, 5 Mar 2025 22:46:35 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Dongli Zhang <dongli.zhang@oracle.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
@@ -56,16 +56,16 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
  alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
  davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
  dapeng1.mi@linux.intel.com, joe.jin@oracle.com
-Subject: Re: [PATCH v2 04/10] target/i386/kvm: set KVM_PMU_CAP_DISABLE if
- "-pmu" is configured
-Message-ID: <Z8hjOgFURpgApBX5@intel.com>
+Subject: Re: [PATCH v2 03/10] [DO NOT MERGE] kvm: Introduce
+ kvm_arch_pre_create_vcpu()
+Message-ID: <Z8hjy/8OBTXEA1kp@intel.com>
 References: <20250302220112.17653-1-dongli.zhang@oracle.com>
- <20250302220112.17653-5-dongli.zhang@oracle.com>
+ <20250302220112.17653-4-dongli.zhang@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250302220112.17653-5-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250302220112.17653-4-dongli.zhang@oracle.com>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -90,48 +90,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 02, 2025 at 02:00:12PM -0800, Dongli Zhang wrote:
-> Date: Sun,  2 Mar 2025 14:00:12 -0800
+On Sun, Mar 02, 2025 at 02:00:11PM -0800, Dongli Zhang wrote:
+> Date: Sun,  2 Mar 2025 14:00:11 -0800
 > From: Dongli Zhang <dongli.zhang@oracle.com>
-> Subject: [PATCH v2 04/10] target/i386/kvm: set KVM_PMU_CAP_DISABLE if
->  "-pmu" is configured
+> Subject: [PATCH v2 03/10] [DO NOT MERGE] kvm: Introduce
+>  kvm_arch_pre_create_vcpu()
 > X-Mailer: git-send-email 2.43.5
 > 
-> Although AMD PERFCORE and PerfMonV2 are removed when "-pmu" is configured,
-> there is no way to fully disable KVM AMD PMU virtualization. Neither
-> "-cpu host,-pmu" nor "-cpu EPYC" achieves this.
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
 > 
-> As a result, the following message still appears in the VM dmesg:
+> Introduce kvm_arch_pre_create_vcpu(), to perform arch-dependent
+> work prior to create any vcpu. This is for i386 TDX because it needs
+> call TDX_INIT_VM before creating any vcpu.
 > 
-> [    0.263615] Performance Events: AMD PMU driver.
+> The specific implemnet of i386 will be added in the future patch.
 > 
-> However, the expected output should be:
-> 
-> [    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
-> [    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
-> 
-> This occurs because AMD does not use any CPUID bit to indicate PMU
-> availability.
-> 
-> To address this, KVM_CAP_PMU_CAPABILITY is used to set KVM_PMU_CAP_DISABLE
-> when "-pmu" is configured.
-> 
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-> ---
-> Changed since v1:
->   - Switch back to the initial implementation with "-pmu".
-> https://lore.kernel.org/all/20221119122901.2469-3-dongli.zhang@oracle.com
->   - Mention that "KVM_PMU_CAP_DISABLE doesn't change the PMU behavior on
->     Intel platform because current "pmu" property works as expected."
-> 
->  target/i386/kvm/kvm.c | 31 +++++++++++++++++++++++++++++++
->  1 file changed, 31 insertions(+)
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 
-Overall LGTM. And with Xiaoyao's comment fixed :-)
+Your Signed-off is missing...
+
+(When you send the patch, it's better to attach your own Signed-off :-))
+
+> ---
+> I used to send a version:
+> https://lore.kernel.org/all/20221119122901.2469-2-dongli.zhang@oracle.com/
+> Just pick the one from Xiaoyao's patchset as Dapeng may use this version
+> as well.
+> https://lore.kernel.org/all/20250124132048.3229049-8-xiaoyao.li@intel.com/
+> 
+>  accel/kvm/kvm-all.c        | 5 +++++
+>  include/system/kvm.h       | 1 +
+>  target/arm/kvm.c           | 5 +++++
+>  target/i386/kvm/kvm.c      | 5 +++++
+>  target/loongarch/kvm/kvm.c | 5 +++++
+>  target/mips/kvm.c          | 5 +++++
+>  target/ppc/kvm.c           | 5 +++++
+>  target/riscv/kvm/kvm-cpu.c | 5 +++++
+>  target/s390x/kvm/kvm.c     | 5 +++++
+>  9 files changed, 41 insertions(+)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
-Thanks,
-Zhao
 
 
