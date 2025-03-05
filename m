@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D84C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 086A9C282D9
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:49:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpfkg-0003hj-Uv; Tue, 04 Mar 2025 22:48:59 -0500
+	id 1tpfk0-0000pq-9v; Tue, 04 Mar 2025 22:48:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfkW-0002kY-M0
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:48:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfjv-0000gT-PJ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:48:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfkU-0006MY-1t
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:48:47 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfju-0006FE-1B
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:48:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741146525;
+ s=mimecast20190719; t=1741146487;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7RoKJbqlQB3AZV623n4GqGylO66vrkMFX3kGFcnwnYw=;
- b=FCr+lpiXh2B0BlIVlen3stqKzJ9gyG2OxSVcb+Gn2qr/4C617LC2aILdO+8hAks3X9SUuA
- ziny4UkG+wqaK+mTp56Fa2pk7tEZNYKyVsZRDNXw6hOZjzDgeAEqFy2bNgpf5hdjuJMb/k
- Sw7Hvs6I/AO2TQsWN0aPMFLx5rgWy5w=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=M4NWkQ4ouYUL+mKJBAl/nb9/STXk2k++zJ8lVadQp84=;
+ b=GR2NAovtL7xolgbBRXIUiTSpXQdUiwbtDk6fh6gj2MVliBwDJ3ZggkT+6zWjdpmFlUi9Zq
+ NHYDEC8Cjc9qXGj3jAZz47lzHgj/H3xjzkmuLrCGFnMhQx0Cb8l9nEXlX2jpvDwaOcWL4X
+ Z63SgVWRORoILK/XSaGgs1sUVIapCaA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-7NnxBmKoN8iQ4naF68p7Vg-1; Tue,
- 04 Mar 2025 22:48:37 -0500
-X-MC-Unique: 7NnxBmKoN8iQ4naF68p7Vg-1
-X-Mimecast-MFC-AGG-ID: 7NnxBmKoN8iQ4naF68p7Vg_1741146516
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-328-089OL6oYPDeXDB1PT4Pt_w-1; Tue,
+ 04 Mar 2025 22:47:57 -0500
+X-MC-Unique: 089OL6oYPDeXDB1PT4Pt_w-1
+X-Mimecast-MFC-AGG-ID: 089OL6oYPDeXDB1PT4Pt_w_1741146471
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39E9E1800262; Wed,  5 Mar 2025 03:48:36 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D2F781954218; Wed,  5 Mar 2025 03:47:51 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.45])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AAB941956095; Wed,  5 Mar 2025 03:48:32 +0000 (UTC)
+ id 261031956095; Wed,  5 Mar 2025 03:47:47 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
@@ -52,23 +52,24 @@ Cc: Michael Roth <michael.roth@amd.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 38/57] docs/qapidoc: add visit_module() method
-Date: Tue,  4 Mar 2025 22:45:47 -0500
-Message-ID: <20250305034610.960147-39-jsnow@redhat.com>
+ Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
+ Harmonie Snow <harmonie@gmail.com>
+Subject: [PATCH 26/57] docs/qapi-domain: add CSS styling
+Date: Tue,  4 Mar 2025 22:45:35 -0500
+Message-ID: <20250305034610.960147-27-jsnow@redhat.com>
 In-Reply-To: <20250305034610.960147-1-jsnow@redhat.com>
 References: <20250305034610.960147-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,41 +87,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This method annotates the start of a new module, crediting the source
-location to the first line of the module file.
+Improve the general look and feel of generated QAPI docs.
 
+Attempt to limit line lengths to offer a more comfortable measure on
+maximized windows, and improve some margin and spacing for field lists.
+
+Signed-off-by: Harmonie Snow <harmonie@gmail.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ docs/sphinx-static/theme_overrides.css | 56 +++++++++++++++++++++++++-
+ 1 file changed, 54 insertions(+), 2 deletions(-)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index c243bb6faaa..6de8c900543 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -28,6 +28,7 @@
+diff --git a/docs/sphinx-static/theme_overrides.css b/docs/sphinx-static/theme_overrides.css
+index 3fd326613d9..92f395054a8 100644
+--- a/docs/sphinx-static/theme_overrides.css
++++ b/docs/sphinx-static/theme_overrides.css
+@@ -18,8 +18,8 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
  
- from contextlib import contextmanager
- import os
-+from pathlib import Path
- import sys
- from typing import TYPE_CHECKING
+ .rst-content dl:not(.docutils) dt {
+     border-top: none;
+-    border-left: solid 3px #ccc;
+-    background-color: #f0f0f0;
++    border-left: solid 5px #bcc6d2;
++    background-color: #eaedf1;
+     color: black;
+ }
  
-@@ -121,6 +122,14 @@ def ensure_blank_line(self) -> None:
-             # +2: correct for zero/one index, then increment by one.
-             self.add_line_raw("", fname, line + 2)
+@@ -211,6 +211,18 @@ div[class^="highlight"] pre {
  
-+    # Transmogrification core methods
+ /* QAPI domain theming */
+ 
++/* most content in a qapi object definition should not eclipse about
++   80ch, but nested field lists are explicitly exempt due to their
++   two-column nature */
++.qapi dd *:not(dl) {
++    max-width: 80ch;
++}
 +
-+    def visit_module(self, path: str) -> None:
-+        name = Path(path).stem
-+        # module directives are credited to the first line of a module file.
-+        self.add_line_raw(f".. qapi:module:: {name}", path, 1)
-+        self.ensure_blank_line()
++/* but the content column itself should still be less than ~80ch. */
++.qapi .field-list dd {
++    max-width: 80ch;
++}
 +
- 
- class QAPISchemaGenDepVisitor(QAPISchemaVisitor):
-     """A QAPI schema visitor which adds Sphinx dependencies each module
+ .qapi-infopips {
+     margin-bottom: 1em;
+ }
+@@ -250,3 +262,43 @@ div[class^="highlight"] pre {
+     border-radius: 15px;
+     margin: 5px;
+ }
++
++/* code blocks */
++.qapi div[class^="highlight"] {
++    width: fit-content;
++    background-color: #fffafd;
++    border: 2px solid #ffe1f3;
++}
++
++/* note, warning, etc. */
++.qapi .admonition {
++    width: fit-content;
++}
++
++/* pad the top of the field-list so the text doesn't start directly at
++   the top border; primarily for the field list labels, but adjust the
++   field bodies as well for parity. */
++dl.field-list > dt:first-of-type, dl.field-list > dd:first-of-type {
++    padding-top: 0.3em;
++}
++
++dl.field-list > dt:last-of-type, dl.field-list > dd:last-of-type {
++    padding-bottom: 0.3em;
++}
++
++/* pad the field list labels so they don't crash into the border */
++dl.field-list > dt {
++    padding-left: 0.5em;
++    padding-right: 0.5em;
++}
++
++/* Add a little padding between field list sections */
++dl.field-list > dd:not(:last-child) {
++    padding-bottom: 1em;
++}
++
++/* Sphinx 3.x: unresolved xrefs */
++.rst-content *:not(a) > code.xref {
++    font-weight: 400;
++    color: #333333;
++}
 -- 
 2.48.1
 
