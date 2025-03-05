@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D01DC19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 09:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0C2C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 09:05:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpkea-0007eX-NT; Wed, 05 Mar 2025 04:03:00 -0500
+	id 1tpkgq-00005R-2G; Wed, 05 Mar 2025 04:05:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpkeY-0007ds-MW
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:02:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpkgo-0008VK-8W
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:05:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpkeX-0005YI-6K
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:02:58 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpkgm-0006q0-0J
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:05:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741165376;
+ s=mimecast20190719; t=1741165513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=B+KyzFznb5xM1jNUbiCsm4I8r4scK332AnXVveuvCxw=;
- b=IJj7O9Eqx5j8acuU9cIJRWxh8FZ5cfnkAvG27tZd9sx6wf+Sxao3hmdqoj83YAIB+XUC4f
- J5sU9cwXwkno7Gz9cbxzOl65/3rYMvkTFitMCeb6n+lTRfg6IE7M9cVNRmacQoK6UBTO1I
- 8R8FF1tWW10dP3YysKkw4m4VgW5rWYU=
+ bh=mpmrctgQoEbnVAJGhV4oLqcUw6ECuXoLd9MjYPBrQEc=;
+ b=JuNSXr01JY/sOQtGIk+k7RCmeDCSaSwCJITyDLMnL2RPIq60IUn2EW0P3hYooe4mRbJp2T
+ DxH4eu/zcVOuShdQdHkWAIUDNkXpR7oPf+Mpq72hPai5uRiOcz+PIrHjFyLKgriHa8nfyC
+ q8HASqPn6iBqu8m/u8DY9hzSyh9aPdI=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-Tr-hw3PEPi6lgKWOOxY-UQ-1; Wed, 05 Mar 2025 04:02:51 -0500
-X-MC-Unique: Tr-hw3PEPi6lgKWOOxY-UQ-1
-X-Mimecast-MFC-AGG-ID: Tr-hw3PEPi6lgKWOOxY-UQ_1741165370
+ us-mta-453-F5BW6cCNM9SQamQLGBRiHg-1; Wed, 05 Mar 2025 04:05:01 -0500
+X-MC-Unique: F5BW6cCNM9SQamQLGBRiHg-1
+X-Mimecast-MFC-AGG-ID: F5BW6cCNM9SQamQLGBRiHg_1741165501
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43bc1aa0673so13927835e9.2
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 01:02:51 -0800 (PST)
+ 5b1f17b1804b1-43bcfd1cefbso3877685e9.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 01:05:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741165370; x=1741770170;
+ d=1e100.net; s=20230601; t=1741165501; x=1741770301;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=B+KyzFznb5xM1jNUbiCsm4I8r4scK332AnXVveuvCxw=;
- b=rb19zvhbf9sOCcxAlqgpQjNKBOfCz+++xi/Rg1uU56H+eUBt2Px+Jvex+Vp1Sk8+1Q
- gBeb8ihq1l/Zw0127snNRz0Sht5qTt5znkvfAoHrk/CvQDTxLLyL8XyM+h+6Nwd1376/
- bao6Z1tzhl6U/rABXAXFPlf5KmX35EXDqdtBtNQMEPKhLC3JStbpIPGihaxEwgJ0j1by
- x7yewhjQeNEn0tI5DOsLTGXlgbEnost+LZHIhqlha/nxACgFaSbNmoSJxxjQ93L+Z3su
- tzOeW92sP5hfusT5Vv0bpmBS9/FKIDZVdLeG5btQ5mYxCNalcUG7oJsdvUpk1p0/l0Mn
- xt5w==
+ bh=mpmrctgQoEbnVAJGhV4oLqcUw6ECuXoLd9MjYPBrQEc=;
+ b=S//zuKCQn3HaAq5E4nTg7jB+BBcgRjbljD6ANCMc3GnWuLzLejPQPhN6tEo3IbeLow
+ pNASwf5HGB3VgdQ1kaFdbUAKrszUZkxJgvzwxHAqoGPOvx5SVPMP/fHZff+kI1vPlaiF
+ cQxvkymhNmE0tlunQyf2AHD770K6Jt8dxHSNfA+/zxCFEbfVBAlq9C0anngkmyjt7Ik/
+ wL/NHfWxpS4lJRrVK3pdthvD0CZyY8nDbmE/bhtV16gMzpmEaCKXE/DeXX7qPOOJF/xw
+ 9XsF6YbkkBFwhLWNE8n1mXdft2wwDCrKrQBcFG2pJzBiIrCccJ08eRuW6G0NTxUvvYU/
+ W3gQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVj0+QPcY10cNYCWBycNQjMMN8tQPN9jBjCz0NspO2LZ2U3BiCOPL4As0trppAJBMIPF+sTuI5JpEez@nongnu.org
-X-Gm-Message-State: AOJu0YzXuvwmboLkyhc8Hrf8l+PewpkefV0NGykyZyNG59PiJYXPq1N0
- ubWCLST3dxfXgi+jlU6ACGX9TKFZAVwaIi8Hoam/WJ/4twEtNqfBT5soP5eVad1Ptrsu4FXZP0d
- uI3FLj4zypeE7Tyc/u5QLEelVzfRIF2ASr2f0dFRgzpUbKvnXTHMZ
-X-Gm-Gg: ASbGnctmnPx+5UNOlXTUyfEZ7OgHrzGklYQapBRnWnmavIVxwyR+M3XPEuqiuddAmEq
- Fe9NI+ap40TY4l5PIyi8P7o9mQyGQrsFtxf/CmtFnqTptHOzLztWYKmW8/YpifAGJCyCo7Nx8AK
- CyKgHcs30xXDl+gxRgWoYz3KtTft/CAf9O5mgzNuHKnvZ0fEvjRjqAVKxA0imBWUfgpRt9DJPnT
- Vgh3K8w6cK5HMLiTePYtygN4QDkctVGTmRuNz68HyG7wZhgDjLuDMiRYLaprfHN0VzJx6NuM/qk
- KbOUgS9husKC9NRDn/pbHZFQpN4+jO5VWl2OkYONPrKHdk0=
-X-Received: by 2002:a05:600c:548a:b0:439:86fb:7340 with SMTP id
- 5b1f17b1804b1-43bd29d9ae9mr17152245e9.30.1741165370227; 
- Wed, 05 Mar 2025 01:02:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFRB4oz5e1l41BxorX5q2TCNF1pc00kNiW3CkqP4JIcfY75KqWgpiK5PJaVbLSg+qQiKSyRDA==
-X-Received: by 2002:a05:600c:548a:b0:439:86fb:7340 with SMTP id
- 5b1f17b1804b1-43bd29d9ae9mr17151805e9.30.1741165369876; 
- Wed, 05 Mar 2025 01:02:49 -0800 (PST)
+ AJvYcCXtN4TMMw+zmfBArR2UXgynTjbisvPCyHdusCiqLfPS6DVB9ODaAMO7BQpe0OHOvxgD3xr8S7lOfizX@nongnu.org
+X-Gm-Message-State: AOJu0YwVw0rAnZGFFHO8Ebr1RfPH5YIBQckCm1yTv+HrepkHcbk6izXh
+ RR2IJJecbN5bsYrwHzZG8TgnDJ1OmxgzvK00ZL+/BgWxgR5KdbkU42gGmP2RCSJVDEFg4UnPmug
+ 38iwwNERT82Za6IxyaC8qwU7UhTtdC1NEhTWdptA98/k64CtYEHGy
+X-Gm-Gg: ASbGncuhWkysPDRuxv9UWLxWeZD7lUgdY8Q79Xq/RpJIsnQcKFYcKULFU7EMz5/V+Ve
+ SIDUOlx1+iPjPthK+/9LQMG4rOUmdOnDgtzFkR3dxbO3w8Zi/U2Ba6LHjzFz1Lv9vuhn+2AgNLb
+ ScPTEpUHxDfangO0UpUrRCBM1/ScGm527wM6cy+LUGR0zMnjmHv0BdsEa0jHyDkAx/ZY2OKT4SU
+ Oj9iQ7g5REeS8yehFMFnyShIocucbIPcB2bV8LS6VTnnBL79rj1jw5dP8B/hQ54V1dQ3AHn9wwt
+ jxZ72er98gtjBgj6U+47e1ZuAZTRJBQKridwNLQl+sF2fUc=
+X-Received: by 2002:a05:600c:4ed2:b0:439:987c:2309 with SMTP id
+ 5b1f17b1804b1-43bd29d410bmr13961195e9.27.1741165500762; 
+ Wed, 05 Mar 2025 01:05:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH8/ABUPdIkI2ycUJIhutuvNiwcWPqs6CZOIJd00QscomeghLXFcqY9YlKuWR8yCJMUMB7d/Q==
+X-Received: by 2002:a05:600c:4ed2:b0:439:987c:2309 with SMTP id
+ 5b1f17b1804b1-43bd29d410bmr13960815e9.27.1741165500315; 
+ Wed, 05 Mar 2025 01:05:00 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
  [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd435c592sm10953415e9.35.2025.03.05.01.02.47
+ 5b1f17b1804b1-43bd435c88esm10997075e9.36.2025.03.05.01.04.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 01:02:49 -0800 (PST)
-Message-ID: <d4ef5754-e7a0-49f1-81d3-fbb5c7c0ade6@redhat.com>
-Date: Wed, 5 Mar 2025 10:02:46 +0100
+ Wed, 05 Mar 2025 01:04:59 -0800 (PST)
+Message-ID: <dcab2fd6-8443-4ae1-a3cb-91c0e6875520@redhat.com>
+Date: Wed, 5 Mar 2025 10:04:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] tests/functional: skip memaddr tests on 32-bit
- builds
+Subject: Re: [PATCH v2 6/7] tests/functional: drop unused 'get_tag' method
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -87,7 +86,7 @@ Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-ppc@nongnu.org
 References: <20250228102738.3064045-1-berrange@redhat.com>
- <20250228102738.3064045-6-berrange@redhat.com>
+ <20250228102738.3064045-7-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -132,17 +131,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250228102738.3064045-6-berrange@redhat.com>
+In-Reply-To: <20250228102738.3064045-7-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -161,23 +160,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/02/2025 11.27, Daniel P. Berrangé wrote:
-> If the QEMU binary was built for a 32-bit ELF target we cannot run the
-> memory address space tests as they all require ability to address more
-> RAM that can be represented on 32-bit.
-> 
-> We can't use a decorator to skip the tests as we need setUp() to run to
-> pick the QEMU binary, thus we must call a method at the start of each
-> test to check and skip it. The functional result is effectively the
-> same as using a decorator, just less pretty. This code will go away when
-> 32-bit hosts are full dropped from QEMU.
-> 
-> The code allows any non-ELF target since all macOS versions supported
-> at 64-bit only and we already dropped support for 32-bit Windows.
-> 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/test_mem_addr_space.py | 34 +++++++++++++++++++++++++
->   1 file changed, 34 insertions(+)
+>   tests/functional/qemu_test/tuxruntest.py | 11 -----------
+>   1 file changed, 11 deletions(-)
+> 
+> diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
+> index 41a4945a14..ad74156f9c 100644
+> --- a/tests/functional/qemu_test/tuxruntest.py
+> +++ b/tests/functional/qemu_test/tuxruntest.py
+> @@ -24,17 +24,6 @@ class TuxRunBaselineTest(QemuSystemTest):
+>       # Tests are ~10-40s, allow for --debug/--enable-gcov overhead
+>       timeout = 100
+>   
+> -    def get_tag(self, tagname, default=None):
+> -        """
+> -        Get the metadata tag or return the default.
+> -        """
+> -        utag = self._get_unique_tag_val(tagname)
+> -        print(f"{tagname}/{default} -> {utag}")
+> -        if utag:
+> -            return utag
+> -
+> -        return default
+
+A remainder from the avocado days... can be removed now, indeed.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
