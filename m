@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 742C3C282D9
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014C1C282DE
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 02:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdwr-0001LE-KU; Tue, 04 Mar 2025 20:53:25 -0500
+	id 1tpdzl-0002GT-FV; Tue, 04 Mar 2025 20:56:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdwp-0001Jo-Lo
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:53:23 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tpdz0-0007V0-HQ
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:43 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdwo-0008KV-4Z
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:53:23 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2239f8646f6so64289125ad.2
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:53:21 -0800 (PST)
+ id 1tpdyx-0000SB-L3
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:37 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22355618fd9so108724855ad.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:55:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741139600; x=1741744400; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741139733; x=1741744533; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CHDgly9sQszED10pugyis6zMJVVAhpUJBdFueBMt+lA=;
- b=hCEztbZyMBZf/kZVf4yh8aEITdE2lXCYfFwCQVosM0Uh8ihlhEaCOvh50PJR+X5F0c
- Ot1j1/kD9r1K7YC0vYXVEinkS0ETKki0OWdrdrTZ0BP6fFoxGkiqxFbAoyZrts6cbjFc
- iUOC1nWlkgHHvE2Orx2qP2AWTtwMYNo8L92J0iEFJ/HbCSOB3U/IErZHPBBWHMDPUPXB
- cO1pcPgQIFdbaKlKDTopjqJf7XxlfkTU7uryxc5ue1KsUiGS6iE3P2ctm0Fx+Qxa1gm+
- xjorH37SRN4qs0rChAqj8WFLutp5Avd7uHKEpvLQ2iAGCuxlGibb1JjnBunQ7BisYCem
- od+A==
+ bh=/+pVAm+qdHHoPEozzQnAWofmyOHOLCO+Ul/WzzNiW7U=;
+ b=ITQaqPk2PhrvWiAktMtU7iNku3iudkjvxBs3AsI9s3WyUYyHqln0jKwA59smvtP4jf
+ FODBBxyBH7sBtQ6HPY43Rk8n2DAE9iKjTPT59zPTQjA/dYWpETdfIA5lt8tYLgdbPxc4
+ Hl46G+mHL73qcgPd8GYf9Dl0lIv7ylj+n31Ouj9pLpRFNszum1WlYvn+qUacJROy+SJp
+ Srk8CAwJXfB3PwGTtOew46sP4/GfPLfNB+4JAdZCwPYhx3zyma5iKlkewsL5+C6a/X3G
+ 8qUEpJOqlqyTNnZGcPau0597f7yMIqlNy68O/DL2qChI5/kTrA6PxwmwZnJRoy8uYjwA
+ 45ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741139600; x=1741744400;
+ d=1e100.net; s=20230601; t=1741139733; x=1741744533;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CHDgly9sQszED10pugyis6zMJVVAhpUJBdFueBMt+lA=;
- b=Lpiul8tADAag0w1/OqJ81cEdfI5TP42ryKP0PrGOQj9DnRpEJQuxX925FeuRn/brlK
- azZMTbhIaZDrOm3c3KEr9u9f4xwT3ViG5bWIivqnrTvg1w6tPZ6F84jD+JCbgYv7t8e7
- Bd+ORDU892t80zUfcUn0P48ZGWbObxXprYKUb1nQRZLuP2RZOO1l/+mktAXjmNLUHTtT
- SLVevnzDk8PecE0Ek8Y9u132VgMSV8vWmlxCjOotQuBxuqzC2sGV4P1kHIu3QPSEC3V+
- uJBRWYpbHnwOh+UO+Hq04CP/fw/d3RThdmANS/4ppSkgfqVs97zsLtjwqMrtVo+uiNwI
- FPDA==
-X-Gm-Message-State: AOJu0Yy1pcSLsf4t+SwFdd00OZQt8svvtH2KJDbw7SKt0OCXocoxQsf+
- pNG+BPMNKV4BNSX9jIyY0dfBQeowLt5S4ixTqhL7sw6niBdg9JveNj4Ch/e9Lic=
-X-Gm-Gg: ASbGncslqnbxmDH5RUW2eTqIO+qZFVRas1CUIwRVTFMjj29yuuBzvdEWDqRh+D/AE2D
- fy2w/8p15E7A7riETViQDtCI7i+kpwtdYxbI2KTLt0h44TCjFOwVZFa3mV4062LUa1Vk0PXwitX
- fhUtkYtM3tS89LIYC0WV6WeeMZsjzllxCREicK5qwGRne7/Qd83v9faEqJeJid53vBjZj6IPGRX
- nQhpGrqVUh8ap6YROAs6IYHp5BiRkKLH76dAYSkJC7NXCU/37ewGmjjmXRPfvcXS/BuAncL4wSK
- QlbK5nRQRdeBQoieVOWIPjowLQv8gBbbVwXHvWmZfh9iF8h4r1eoWhyPI7ABsoQHNXwkp1/Eoia
- MoyiVD+8B4tkhHUoZcOdjfIB10kziSSYBe7dFK7RHdp+4ztspVbA=
-X-Google-Smtp-Source: AGHT+IFWpBZSRWeiQauEvQ8u+vKdi6hibUxVmecoB/J52REhMH3YqUTXaW9rlV5ZdkTHeQbgBw93mw==
-X-Received: by 2002:a17:902:f693:b0:223:66bb:8993 with SMTP id
- d9443c01a7336-223f1d10941mr22187645ad.43.1741139599959; 
- Tue, 04 Mar 2025 17:53:19 -0800 (PST)
+ bh=/+pVAm+qdHHoPEozzQnAWofmyOHOLCO+Ul/WzzNiW7U=;
+ b=V7p4zI5v2nDW0QVyrMQE63WdaAelxanccj3YJaekYsjs5NOPSb5d6OR//uSmlqmKkN
+ NzMTz3+SgwxDUdP8jY2qRiVZ5N73zeKTUgYbyIsUBK0uQ+cbDFAZ92hbcCrwZuaaTLh0
+ uNILMP1P7dac+ZYgkn15Vn3yKbPAs0M0riB9xCy23PvYGKZOZ1coHg/5fr1soEcY6xx5
+ c+BOBFVf9HjY0exNGHTWSSfag6h/iuTlj4WoFuRvpyqIjtz6knENMksTI5OVa/iQMyFl
+ CLpd8pS2f3LxxP3UUrFik6DQ2yVh1kSrxhsKNnQUEZNWa6sbaE4EcTw5kL/wYCuk6i1t
+ kANg==
+X-Gm-Message-State: AOJu0Ywu7xzUHMYzmHsbS5FOBV41+5gHK0KyiHqhx68qIBun0htJwAve
+ A6W9eIZF7HsLU4BerUnVwmAhuwAtTLNhwwlvbJKt6VffNg85Zaw7ry1b33f0rPQ=
+X-Gm-Gg: ASbGncs8fBwoxnEInRIgCoCknce4PtjnUmkTrM7dbXbc7Y9F4TdILxsHQ7PnNREqEdk
+ HWS3O9plfoDNaONP29P4OYzkGnuDXNx3xrP08DHJ0jxvqyH2uYflh0odNxtjR9gc+MA9zCCb6lR
+ QX5mUucIufsb+N0LMtYGJw6/7d07DJv+MXWnsNMBzxc+T0TBnlXv2J3cDOX1+r1oV+/EbC7Z0GS
+ rzg4EFxqGa9fKuDe2u67s/Z/q13wX2PWTFUyNOIaQ/gC0HY8m9CCs3LI1Xp6DF0fjSH6Oj38F3O
+ 6tju6SJnD7S18UrSUF1ADINVzpx8k7cCaZGvsiXw9G60LvODlQCqO7QMSR+EjnKM5OHZDTRebQ3
+ hmW2T0JGy7W+eSZdXNTswHYZDsJHEkLAyaTkx+XZkUHWTEOBjGZ4=
+X-Google-Smtp-Source: AGHT+IG9Qa6W+2RZ8jDp06RQZ2+2ktmK7g3N8ol7rVfFdEKCFnyGnOGoFKPqguFToxwPbsL34mgeTQ==
+X-Received: by 2002:a17:903:182:b0:223:2630:6b82 with SMTP id
+ d9443c01a7336-223f1c6903amr26918465ad.10.1741139733120; 
+ Tue, 04 Mar 2025 17:55:33 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.53.17
+ d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.55.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 17:53:19 -0800 (PST)
+ Tue, 04 Mar 2025 17:55:32 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 02/59] target/riscv/csr.c: fix 'ret' deadcode in rmw_xireg()
-Date: Wed,  5 Mar 2025 11:52:10 +1000
-Message-ID: <20250305015307.1463560-3-alistair.francis@wdc.com>
+Subject: [PULL 47/59] hw/riscv/riscv-iommu.c: add RISCV_IOMMU_CAP_HPM cap
+Date: Wed,  5 Mar 2025 11:52:55 +1000
+Message-ID: <20250305015307.1463560-48-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305015307.1463560-1-alistair.francis@wdc.com>
 References: <20250305015307.1463560-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,79 +105,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Tomasz Jeznach <tjeznach@rivosinc.com>
 
-Coverity found a second DEADCODE issue in rmw_xireg() claiming that we can't
-reach 'RISCV_EXCP_NONE' at the 'done' label:
+Now that we have every piece in place we can advertise CAP_HTM to
+software, allowing any HPM aware driver to make use of the counters.
 
- > 2706     done:
- > 2707         if (ret) {
- > 2708             return (env->virt_enabled && virt) ?
- > 2709                    RISCV_EXCP_VIRT_INSTRUCTION_FAULT : RISCV_EXCP_ILLEGAL_INST;
- > 2710         }
- >>>>      CID 1590356:  Control flow issues  (DEADCODE)
- >>>>      Execution cannot reach this statement: "return RISCV_EXCP_NONE;".
- > 2711         return RISCV_EXCP_NONE;
+HPM is enabled/disabled via the 'hpm-counters' attribute. Default value
+is 31, max value is also 31. Setting it to zero will disable HPM
+support.
 
-Our label is now reduced after fixing another deadcode in the previous
-patch but the problem reported here still remains:
-
- done:
-    if (ret) {
-        return RISCV_EXCP_ILLEGAL_INST;
-    }
-    return RISCV_EXCP_NONE;
-
-This happens because 'ret' changes only once at the start of the
-function:
-
-    ret = smstateen_acc_ok(env, 0, SMSTATEEN0_SVSLCT);
-    if (ret != RISCV_EXCP_NONE) {
-        return ret;
-    }
-
-So it's a guarantee that ret will be RISCV_EXCP_NONE (-1) if we ever
-reach the label, i.e. "if (ret)" will always be true, and  the label can
-be even further reduced to:
-
-done:
-    return RISCV_EXCP_ILLEGAL_INST;
-
-To make a better use of the label, remove the 'else' from the
-xiselect_aia_range() chain and let it fall-through to the 'done' label
-since they are now both returning RISCV_EXCP_ILLEGAL_INST.
-
-Resolves: Coverity CID 1590356
-Fixes: dc0280723d ("target/riscv: Decouple AIA processing from xiselect and xireg")
+Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250121184847.2109128-3-dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250224190826.1858473-10-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ hw/riscv/riscv-iommu.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index ab209d0cda..0e83c3b045 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2697,15 +2697,10 @@ static RISCVException rmw_xireg(CPURISCVState *env, int csrno,
-     } else if (riscv_cpu_cfg(env)->ext_smcsrind ||
-                riscv_cpu_cfg(env)->ext_sscsrind) {
-         return rmw_xireg_csrind(env, csrno, isel, val, new_val, wr_mask);
--    } else {
--        return RISCV_EXCP_ILLEGAL_INST;
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index cdbb848181..d46beb2d64 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2357,6 +2357,15 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+                   RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4;
      }
  
- done:
--    if (ret) {
--        return RISCV_EXCP_ILLEGAL_INST;
--    }
--    return RISCV_EXCP_NONE;
-+    return RISCV_EXCP_ILLEGAL_INST;
- }
++    if (s->hpm_cntrs > 0) {
++        /* Clip number of HPM counters to maximum supported (31). */
++        if (s->hpm_cntrs > RISCV_IOMMU_IOCOUNT_NUM) {
++            s->hpm_cntrs = RISCV_IOMMU_IOCOUNT_NUM;
++        }
++        /* Enable hardware performance monitor interface */
++        s->cap |= RISCV_IOMMU_CAP_HPM;
++    }
++
+     /* Out-of-reset translation mode: OFF (DMA disabled) BARE (passthrough) */
+     s->ddtp = set_field(0, RISCV_IOMMU_DDTP_MODE, s->enable_off ?
+                         RISCV_IOMMU_DDTP_MODE_OFF : RISCV_IOMMU_DDTP_MODE_BARE);
+@@ -2404,6 +2413,18 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+             RISCV_IOMMU_TR_REQ_CTL_GO_BUSY);
+     }
  
- static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
++    /* If HPM registers are enabled. */
++    if (s->cap & RISCV_IOMMU_CAP_HPM) {
++        /* +1 for cycle counter bit. */
++        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_IOCOUNTINH],
++                 ~((2 << s->hpm_cntrs) - 1));
++        stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_IOHPMCYCLES], 0);
++        memset(&s->regs_ro[RISCV_IOMMU_REG_IOHPMCTR_BASE],
++               0x00, s->hpm_cntrs * 8);
++        memset(&s->regs_ro[RISCV_IOMMU_REG_IOHPMEVT_BASE],
++               0x00, s->hpm_cntrs * 8);
++    }
++
+     /* Memory region for downstream access, if specified. */
+     if (s->target_mr) {
+         s->target_as = g_new0(AddressSpace, 1);
 -- 
 2.48.1
 
