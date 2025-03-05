@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58116C282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236D5C282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdWr-0006VR-5u; Tue, 04 Mar 2025 20:26:33 -0500
+	id 1tpdWr-0006VQ-8M; Tue, 04 Mar 2025 20:26:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVi-0004bw-8y
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:25:28 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUN-0002Di-3D
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:00 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdVg-0007Yh-KD
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:25:22 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-439a4fc2d65so66721705e9.3
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:25:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUL-0007AM-I2
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:58 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-390ddf037ffso3360399f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:23:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137919; x=1741742719; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741137835; x=1741742635; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JT3mCpufvIuWr8BVM5sYDayVdvf5uoSCrbbGB14l/A8=;
- b=pZaCGHpCED2gvXOOGqzKab5OS8z+/vtjFTiEY/QBWcAn+zECcXovbLu1V7ANK9Y1+A
- ZZQ3sNqU4/aQrqzZm5r3fQS794yo/Wa+v66vbfGN1U1BQo9fmIwf68A9aiHzCJSUXWgf
- Sj3Tj0jsuBepcuMK808aismpA8FNwl3xt58YLh67qW98BjgZlk3+Qabw+Q2Zmw+SnyS/
- 1RYCNJdLY1rrUs/gVnA5yvFmaArCy6Lempr8xtBLHLVVVxAv7zO9k8NeV9rstWL5ous2
- axCYKnp0/lh1EXL1RZogQ1/RZEZFkNsE7GtlHA6uFsoot0FcKmwGXlHAWQ3Llt2rjRQH
- 8kPQ==
+ bh=qd7m5wMCz+XZxcgvBF3/5ywn7cJ5I9SW91UZjpHUbeA=;
+ b=cYsEZF4DPwJbbCt2fcEC3RW4ULWbSjKrmFSsyxUxqf3vY1nCYW87qh0oHAI9zVhh5/
+ 6pl70pzVP1Opom2qJKsNV5QzuF++Mq1Inl+/nim0nBhV7q4+71MzBpr3iiw8m++giGO1
+ qxnEzfCdR5vlq7KHnYVV+5LRd1DWh5BfIyKgJB53AA19mfvqAYwvBi4wpqEjn1NTwYOR
+ v1Un3+6KvPG9YtVPcIW4C8QltQvzFk5MsQwUOXsQGQ8ScxJBhqZd43dHUiFHDDg2Q81C
+ KS1gCmkBdfFbSMk2a4LhiUq7QLLx8sRGqOlCT38y3YynIvCPvONf5F8K0gXuzNoFu9rY
+ rAcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137919; x=1741742719;
+ d=1e100.net; s=20230601; t=1741137835; x=1741742635;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JT3mCpufvIuWr8BVM5sYDayVdvf5uoSCrbbGB14l/A8=;
- b=hnqhiM9U1YnZIjkoKf/D+NRdGEklnzjQPZG2UY+E/vvTpf+Txnzbq9AYoKNr1tyER9
- LzdDzO+iKl1QkHHbWzhFtY6b6eOyjdtfR9bO164ZrQ2ACP7FMzHvd1jx7o+Vbx1lUqXH
- 4BWHwXZk1bQbAVJXwu6RQ0Qk0uwvecLftlLtTD+fEwTnpFQibg7JP4o0NCxSaEa3/x6P
- BmHBKcIqV48e58G8D5MG0zMtFRybIgCks2t8day4MMF6lYT3cK8JXs6KZKycYiCzv/MC
- YcA8paRFpPaEOtfSv0ZcqNS576kk1JAjk5mm6n080IcbXWeVCD49epMOhM3Ufl2Lc3m8
- f4RA==
-X-Gm-Message-State: AOJu0Yyz7PXESq0gmZ4yLkswQJuMTvaKzpEIQTVLoaOcVEygF4N91U0i
- ZIT4/dN5lcbTDp70PMEfCLxSHGFIGsOXJCpX+CmC/jE3zNhu901F2Ud3xSDdqPquWkr23pW5Jn9
- zP+8=
-X-Gm-Gg: ASbGncswmWwK5KsNSQKFh5VC2c23ogAa6cO+dV5TCVSMlHksFtDGsFgV7iXhN1qZRgs
- GSy7dC+7NFhu4IlkVC4jGr/CCqFMR3OLJm4r8pn2q2QC++/ShFCT8sBJH6m9RlcX3pbTsNSuQNx
- B1hz/ivq4YJTxTTG5e1Xc2s2+36wv8jhuRyBmkkMnA7piF7fuhc9CMRA95uo3RbJ9eOKbaF+9rn
- lHCyAZ49XwZc03KHYCntx7ksr/ebc4DiXpl3wdg80aiL34oQkCa11BjfDGhOzKz9Gx7t9ARW35Q
- TWd6CKVQiuzWnAe9Vk/SV5fkyCZmwawnEywsjKemawSsB/SkCd5en7P42mwswMsmASShWeAS/5Q
- I9UTuN2o6a1LxweJqiac=
-X-Google-Smtp-Source: AGHT+IEbSpdl7IDdjNfclOU3aa8iGxhBPbwTaibTF4bgxSFgtVp3aMl5+aMrUYQhClS+Y4Mg+tLHUA==
-X-Received: by 2002:a05:600c:35ca:b0:43b:ce86:b31a with SMTP id
- 5b1f17b1804b1-43bd29bd205mr5545765e9.22.1741137918695; 
- Tue, 04 Mar 2025 17:25:18 -0800 (PST)
+ bh=qd7m5wMCz+XZxcgvBF3/5ywn7cJ5I9SW91UZjpHUbeA=;
+ b=Awo44fFGfeZqqPNZXzGOppZGOv9Ug5FF8NE5H24lK5kU1N9LyUbcjH7McRYrQSd+mB
+ 1h4lfHWLWcH8oHswepdAG1StsLSJyEIgqyhoqtS/r9MrBLEo44IPaDQnNUMvUzToHq2A
+ KvlISm+hdIJc64D5CZX1jtv+fRCO8JjJtS3yxgmgwFpCVGdaQYiVc0ZdhlZmSAny7FHh
+ 1bYKhKtBN25gqCa6ighF30q7z0YcfwE7P74UePPJGljGQP8L+JegdclRrrPyd54aNc5b
+ /U2/0Tk3xxoEpdA5LvAQqvfNCSTsd2irKRseopgiNVRxqhSP5F6lnNDe6Q9ccOAQiJuO
+ KA9g==
+X-Gm-Message-State: AOJu0Yx5HYI4NwhSiWy1IBNC+GMntEJ0ttMZSMURE0/WmShy8bVbQGA6
+ UyBGJkQ4XlEaUrDBEEPXJ5k5lCj6V6NEUC4s39LonL6Xy0StLnK+OqB8TC79oL0NnEelAO6FFAu
+ nzzc=
+X-Gm-Gg: ASbGnctVnumn7uZWEozYHEe2A3uH+FH4Xub98GUrtX0WoCIpOHGPm+2YRWwL8Rk+a5R
+ J+m7HyNvzAYQcKktbGJ0YfATt/UDI8GMIcSzEJ3tqG9xw/78xzVv6u0Hbc62vctoAdBPjpoQ3C8
+ OHqzmH61P54k8kRHe0/EIR5T26FtQq6M1ZydnvdGESUBxHHnn0bVMK4dXmtcQQ3JW+w5wY1Yw7m
+ TVBCW59YXivH1Oa2SyVjP+dam4PxfxSnsN++RscEBE6oW3Bh1eXQoCXoB783WycRrZbFEOkNN2r
+ Y27trYw9wCdVN2dwE7gjL5Z00nnEVKz6ahSmLngeFvJjlco40NpoSg+LX/fPWQIu+DXvCr0M+wt
+ 7rTW/uYFSirzj/CJPWCg=
+X-Google-Smtp-Source: AGHT+IFQriLDXu0bW0VYcFYpFnrQQOenK3H2DTY1wBvYAaLm4iAVNypHhoO05v4I74OKggKoXOtFHg==
+X-Received: by 2002:a05:6000:381:b0:38f:2f0e:980c with SMTP id
+ ffacd0b85a97d-3911f7d2fc9mr585329f8f.47.1741137835466; 
+ Tue, 04 Mar 2025 17:23:55 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd429375fsm2018015e9.10.2025.03.04.17.25.16
+ ffacd0b85a97d-390e4844c0dsm18880330f8f.80.2025.03.04.17.23.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 17:25:17 -0800 (PST)
+ Tue, 04 Mar 2025 17:23:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 41/41] hw/nvram/eeprom_at24c: Reorganise init to avoid
- overwriting values
-Date: Wed,  5 Mar 2025 02:21:56 +0100
-Message-ID: <20250305012157.96463-42-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Luc Michel <luc.michel@amd.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PULL 24/41] hw/char/imx_serial: Really use RX FIFO depth
+Date: Wed,  5 Mar 2025 02:21:39 +0100
+Message-ID: <20250305012157.96463-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
 References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,49 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+While we model a 32-elements RX FIFO since the IMX serial
+model was introduced in commit 988f2442971 ("hw/char/imx_serial:
+Implement receive FIFO and ageing timer") we only read 1 char
+at a time!
 
-The init_rom[] can write values to the beginning of the memory but
-these are overwritten by values from a backing file that covers the
-whole memory.
+Have the IOCanReadHandler handler return how many elements are
+available, and use that in the IOReadHandler handler.
 
-init_rom[] is used only if there's no backing file (provides default
-content) but should not overwrite backing file content (especially
-leaving the file unchanged and only change it in memory).
-Do the init_rom[] handling only if it would not be overwritten.
-
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <fd8e0478febd60d5f48c58bc77c60e043d1c3cdc.1740839457.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Luc Michel <luc.michel@amd.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Bernhard Beschow <shentey@gmail.com>
+Message-Id: <20250220092903.3726-7-philmd@linaro.org>
 ---
- hw/nvram/eeprom_at24c.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ hw/char/imx_serial.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/hw/nvram/eeprom_at24c.c b/hw/nvram/eeprom_at24c.c
-index 78c81bea77f..ff7a21eee7f 100644
---- a/hw/nvram/eeprom_at24c.c
-+++ b/hw/nvram/eeprom_at24c.c
-@@ -191,10 +191,6 @@ static void at24c_eeprom_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
+index 38b4865157e..6f14f8403a9 100644
+--- a/hw/char/imx_serial.c
++++ b/hw/char/imx_serial.c
+@@ -386,7 +386,8 @@ static void imx_serial_write(void *opaque, hwaddr offset,
+ static int imx_can_receive(void *opaque)
+ {
+     IMXSerialState *s = (IMXSerialState *)opaque;
+-    return s->ucr2 & UCR2_RXEN && fifo32_num_used(&s->rx_fifo) < FIFO_SIZE;
++
++    return s->ucr2 & UCR2_RXEN ? fifo32_num_free(&s->rx_fifo) : 0;
+ }
  
-     ee->mem = g_malloc0(ee->rsize);
+ static void imx_put_data(void *opaque, uint32_t value)
+@@ -417,7 +418,10 @@ static void imx_receive(void *opaque, const uint8_t *buf, int size)
+     IMXSerialState *s = (IMXSerialState *)opaque;
  
--    if (ee->init_rom) {
--        memcpy(ee->mem, ee->init_rom, MIN(ee->init_rom_size, ee->rsize));
--    }
--
-     if (ee->blk) {
-         int ret = blk_pread(ee->blk, 0, ee->rsize, ee->mem, 0);
+     s->usr2 |= USR2_WAKE;
+-    imx_put_data(opaque, *buf);
++
++    for (int i = 0; i < size; i++) {
++        imx_put_data(opaque, buf[i]);
++    }
+ }
  
-@@ -204,6 +200,8 @@ static void at24c_eeprom_realize(DeviceState *dev, Error **errp)
-             return;
-         }
-         DPRINTK("Reset read backing file\n");
-+    } else if (ee->init_rom) {
-+        memcpy(ee->mem, ee->init_rom, MIN(ee->init_rom_size, ee->rsize));
-     }
- 
-     /*
+ static void imx_event(void *opaque, QEMUChrEvent event)
 -- 
 2.47.1
 
