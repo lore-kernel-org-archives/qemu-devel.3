@@ -4,104 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09937C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 15:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED4FFC282DE
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 15:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpqxs-0004D6-Ii; Wed, 05 Mar 2025 10:47:20 -0500
+	id 1tpr1A-00052a-QF; Wed, 05 Mar 2025 10:50:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1tpqxq-0004Ct-JU
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 10:47:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tpr18-00052A-5o; Wed, 05 Mar 2025 10:50:42 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1tpqxo-0003bJ-3O
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 10:47:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741189633;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3+qIQfbx9rmVOsAsqywWh8I3RJVLEPLhoLGrzhAqy9E=;
- b=XM8YQ35x66SDpZXbBaPiwFqhuutDojR9GvTg2OOSUkUDkMCmIE83iPkjcul/Esj0kfU2A+
- 3VLVkm91rdywEbVyPGlOW6vkpJjmbCIANYSBGGD6lJ5oo7P3fDPhHL0gI1mIGCxduhnIA9
- l3YPOF3HSmrBOg4F3aNhJIIIzct5F/E=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237--ewqNipGMBurOWX4XZwzJg-1; Wed, 05 Mar 2025 10:47:11 -0500
-X-MC-Unique: -ewqNipGMBurOWX4XZwzJg-1
-X-Mimecast-MFC-AGG-ID: -ewqNipGMBurOWX4XZwzJg_1741189630
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3910b93cb1eso1632310f8f.1
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 07:47:11 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741189630; x=1741794430;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3+qIQfbx9rmVOsAsqywWh8I3RJVLEPLhoLGrzhAqy9E=;
- b=EaAPea5MwHTvgCYNXNLQHeXAMl8SkoTySGrZeGOWJp5reDe6B1N5HvFUcuJlaGzaU+
- M6YZg/5NOSbM3wruI6nZm7yq+ai1ai5x0+wyHTAh+liw6a1jj6Ewwp98aYDg1QMq9yW+
- 3A52zIsxWieOhRdtYX32vOsnVrdi+zlDZ+TAwmj2tN66y+iSuD+eeWYrWk9p9GX1n8XA
- i0iYqaPwfhg1L1oA+koiflzjXEUfMPXcyPjyF24HhK3lgseQJxqejjnUownWfgM2sMj9
- HnyPvxtTfOU99P9KVKjqiAa7lKI5Wg9ZXyGqS5dB22N3D0w/LnLUiiSD0qa4xOYQQLiV
- n/eg==
-X-Gm-Message-State: AOJu0Yx3H32Z8GEy12Zjlo4jHvJbc5IlXT84k+334ZKs7ycFnCehN7ix
- 248UC9jg0gUc7QR6M+4G8/0a869LQg5gzsr/mVqLU9Il3ztkR/EbbaG/3C91UiXc8pqqbYk2QBM
- CtWE7ucDJNHYj8otAPlcj1eJGnwATxwwG/HRhEqo1QtMiVrLP22pe
-X-Gm-Gg: ASbGncuOvDbe1Vd7PsoAAogYpLjsThj+3imHwMEtnxPrC12d6xqWbsH8T7Jm4JwBX17
- aJ85S2ReERje/G6vOleHqXfs0Ozj0FowAi+3pVhrVOlmO4W8lhDPMUmD4dJn9Y6tOkP7jsGuF1o
- ynY36q16l75J5oaAwy47oNqgRNGbcpOlr0o9LCpK4UqKQ1u+mEKLSWinIs6+txGGl+uHs1+Fosf
- zAfREOveomGhDoaxYgmAMC6gPCtVX+H8WkaLKLzSE/nKYbEhbCgk+vbSZz3ujz2sqHI0ZYHUIQR
- OLN6y4FoYsru3skFXYZ8rRZ/4E5zszy2JX8GhWKhR/Jhxv4cu4F6i/K6Tt+wmxiZ
-X-Received: by 2002:a05:6000:2b0a:b0:391:5f:fa30 with SMTP id
- ffacd0b85a97d-3911f7700d4mr2104701f8f.28.1741189630395; 
- Wed, 05 Mar 2025 07:47:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE7H26qrX/QzPdemWW+4mjYgJ5+MI7HiyPmwcilqoI5/JXb44U4BiPSdSusW05cyoqeMgl3ig==
-X-Received: by 2002:a05:6000:2b0a:b0:391:5f:fa30 with SMTP id
- ffacd0b85a97d-3911f7700d4mr2104669f8f.28.1741189629765; 
- Wed, 05 Mar 2025 07:47:09 -0800 (PST)
-Received: from sgarzare-redhat (host-79-46-200-29.retail.telecomitalia.it.
- [79.46.200.29]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd4352ec1sm20912515e9.25.2025.03.05.07.47.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Mar 2025 07:47:08 -0800 (PST)
-Date: Wed, 5 Mar 2025 16:47:04 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Roy Hopkins <roy.hopkins@randomman.co.uk>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Roy Hopkins <roy.hopkins@randomman.co.uk>, 
- "Daniel P . Berrange" <berrange@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- Joerg Roedel <jroedel@suse.com>
-Subject: Re: [PATCH v7 00/16] Introduce support for IGVM files
-Message-ID: <CAGxU2F4pq3Y7QnQBCEPQ35kQ2hxrwU5nVA9FmR=J6id+EJXAtA@mail.gmail.com>
-References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tpr15-0004CA-PG; Wed, 05 Mar 2025 10:50:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=4mh+0ykTD/iNdoCIrvBMb/N3ggMQ+6PSgMzxpFz3Kws=; b=v2DmFWB1WPHVZ6UE+KVAU/9b/C
+ 2GCO57f3KAutA7mPa8OOI54MYaGPZx66GV3OAusS0xUrXF6yL94CPRHe2ShKFx8o1nptPm8P7CVV4
+ bmInDN9epyGre9BLmY891OxS2bBHloBJPuFpyox/1TCF0ugpBpxKYjKDM9TGJlMzhqkAjofHGl/73
+ Do94P4N2+N/vj+fpp+vFIKMVlzpoSQr2Y4eHm2Fe/uly6/7dOYpqWtGDhT2EQFoSfzo4zy7C6eOc7
+ MDGUueAZs9XukWcheLjPgqrOXqhcLR50kId1kYre0fJKSUc6JWO0hj+u7lhr8f0P8uek+2B/iTGkw
+ fwCk9lHITOD22Dy/aR9FWdQTv2iL86R7FPAftPEM93BV1LORkvO5RGxqc5VzU9sTRi1Y4NQunHrN+
+ YMASIEX8h8zlUj9Jw0vlht9M5usX1AabdvPc/4O4mkD53WocfFB1O5jk2rKHaYELdEmeKxg5FCRew
+ RjFXoIFpkMDTL3dvepT5xPQH52g7o8CGR6zuPfdecAsZogwMB3EftEB5996vKTp/+bgb/j17LcxWc
+ HP04ZbM0CjJOSU2YEiIq/+IZ7utPbJf0cVECrpE/Pz4SDXktL14TqroNcTvr6AkAQFr7OMnJrFj+I
+ ybiqChfDcQ+Ik+T3zh+VwQoMlFBllc60cv3LgGrXY=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tpqzy-0002Ro-TM; Wed, 05 Mar 2025 15:49:34 +0000
+Message-ID: <8957f2ce-5679-467a-ad91-7b96c9d7e11c@ilande.co.uk>
+Date: Wed, 5 Mar 2025 15:50:26 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+To: Hab Gallagher <hab.gallagher@gmail.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Gerd Hoffmann <kraxel@redhat.com>
+Cc: Howard Spoelstra <hsp.cat7@gmail.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+References: <CANDMsCp3wH3xhEvHz_DvnPbv7NLCdGb2LDaECOG=yJqfKObLkA@mail.gmail.com>
+ <0f927835-62e6-a2a8-7de0-262657edb638@eik.bme.hu>
+ <CABLmASFQby0KpR646Vp=7JGsw40_2cvW-gFa49f2G3iMCAz14A@mail.gmail.com>
+ <85e1dcb9-f0d7-6ed2-6370-30cd8f31a604@eik.bme.hu>
+ <CANDMsCpVVsXihocUmKNQr4VFmjk57MjHh=_rx0Hbfny1wZ74aQ@mail.gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <CANDMsCpVVsXihocUmKNQr4VFmjk57MjHh=_rx0Hbfny1wZ74aQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: Adding gamma support to QemuMacDrivers
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,107 +107,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Roy,
+On 03/03/2025 17:52, Hab Gallagher wrote:
 
-On Thu, 27 Feb 2025 at 14:47, Roy Hopkins <roy.hopkins@randomman.co.uk> wrote:
->
-> Here is v7 of the set of patches to add support for IGVM files to QEMU. This is
-> based on commit 40efe733e10cc00e4fb4f9f5790a28e744e63c62 of qemu.
->
-> Firstly, apologies for the amount of time between the last version and this one.
-> I moved roles to a different company and, although I always planned to see this
-> patch series to completion, it took a while before I found time to setup a
-> development environment and be in a position to send a new version. I will
-> continue this series using a personal email address for now, hence the change
-> to the author and signed-off-by emails.
->
-> The only changes in this version are to rebase on the current master branch and
-> update commit metadata, including Signed-Off-By and Author emails for my
-> replacement email address, and to include the final Reviewed-By that were added
-> in the last review. There were no requested changes on the previous version [1]
-> so I believe this series is ready to merge.
->
-> As always, thanks to those that have been following along, reviewing and testing
-> this series. This v7 patch series is also available on github: [2]
->
-> For testing IGVM support in QEMU you need to generate an IGVM file that is
-> configured for the platform you want to launch. You can use the `buildigvm`
-> test tool [3] to allow generation of IGVM files for all currently supported
-> platforms. Patch 11/17 contains information on how to generate an IGVM file
-> using this tool.
+(added Gerd on CC)
 
-I was testing this series with the IGVM file generated by COCONUT SVSM, 
-but QEMU was failing in this way:
+>     That driver is for a VGA device which I think does not support gamma in
+>     hardware. QEMU emulates the hardware so if it does not support gamma then
+>     there's no place to add it in QEMU. Therefore if you want to emulate gamma
+>     on VGA this should be done within the guest driver but that may be slower.
+>     How does this work on real hardware? What graphics device is used there
+>     and does that support gamma in hardware? Maybe that graphics device needs
+>     to be emulated instead?
+> 
+> 
+> For understanding the MacOS side of things, I have been consulting https:// 
+> developer.apple.com/library/archive/documentation/Hardware/DeviceManagers/pci_srvcs/ 
+> pci_cards_drivers/Designing_PCI_Cards_Drivers.pdf <https://developer.apple.com/ 
+> library/archive/documentation/Hardware/DeviceManagers/pci_srvcs/pci_cards_drivers/ 
+> Designing_PCI_Cards_Drivers.pdf>
+> 
+>     To reduce visible flashes resulting from color table changes, the SetGamma
+>     routine works in conjunction with the SetEntries control routine on indexed
+>     devices. The SetGamma routine first loads new gamma correction data into the
+>     driver’s private storage; the next SetEntries control call applies the gamma
+>     correction as it changes the CLUT. SetGamma calls are always followed by
+>     SetEntries control calls on indexed devices.
+> 
+>     For direct devices, the SetGamma routine first sets up the gamma correction data
+>     table. Next, it synthesizes a black-to-white linear ramp color table. Finally, it
+>     applies the new gamma correction to the color table and sets the data directly in
+>     the hardware.
+> 
+> 
+> As far as I can tell, the documentation is implying that somewhere between the driver 
+> and the physical hardware, *something* must keep track of the gamma table (even if 
+> indirectly by subsequently applying it to the palette table) to map the raw 
+> framebuffer data to gamma-corrected colors.
+> 
+>     Perhaps this is also of interest: https://github.com/SolraBizna/mac_qfb_driver
+>     <https://github.com/SolraBizna/mac_qfb_driver>The nubus declaration rom supports
+>     gamma correction.
+> 
+> 
+> This is very much of interest! Thank you. I am hoping to continue to use the mac99 
+> machine type, but this code is a useful reference.
+> 
+> The most basic support requires cscGetGamma and cscSetGamma to at least return 
+> success: https://github.com/cebix/macemu/ 
+> commit/2676e1bd134703d888788c682fb56e07b5cf56a9 <https://github.com/cebix/macemu/ 
+> commit/2676e1bd134703d888788c682fb56e07b5cf56a9>
+> The patch to SheepShaver was small because most of the functionality was already 
+> present, albeit dead code.
+> 
+> Surprisingly, github can't deal with CR line endings, so I can't (easily) link to 
+> some of the code to cite it: https://github.com/ozbenh/QemuMacDrivers/blob/master/ 
+> shared/MacDriverUtils.c <https://github.com/ozbenh/QemuMacDrivers/blob/master/shared/ 
+> MacDriverUtils.c>
+> 
+> Once the gamma table is saved, it's "applied" by cscSetEntries to combine a color 
+> palette and gamma table into the "real" color. QemuMacDrivers does not seem to keep 
+> track of the palette at all, sending it upstream to the driver by calling this 
+> function in a loop:
+> 
+> OSStatus QemuVga_SetColorEntry(UInt32 index, RGBColor *color)
+> {
+> VgaWriteB(0x3c8, index);
+> VgaWriteB(0x3c9, color->red >> 8);
+> VgaWriteB(0x3c9, color->green >> 8);
+> VgaWriteB(0x3c9, color->blue >> 8);
+> return noErr;
+> }
+> 
+> VgaWriteB seems to be doing MMIO to write those values upstream.
+> 
+> Similarly, mac_qfb_driver seems to use MMIO to write back both the palette table and 
+> the gamma table to the driver, saving neither one in emulated driver state: https:// 
+> github.com/SolraBizna/mac_qfb_driver/blob/e78ba4ccd08d254a10bad7c13d90810b17dbfd87/ 
+> src/control.cc#L48-L62 <https://github.com/SolraBizna/mac_qfb_driver/blob/ 
+> e78ba4ccd08d254a10bad7c13d90810b17dbfd87/src/control.cc#L48-L62>
 
-   qemu-system-x86_64: KVM does not support guest_memfd
-   qemu-system-x86_64: failed to initialize kvm: Operation not permitted
+Implementing the registers to store the gamma table is trivial: the tricky part is 
+updating the VGA framebuffer code to apply the gamma as it is rendered. Have a look 
+at 
+https://gitlab.com/qemu-project/qemu/-/blob/master/hw/display/vga.c?ref_type=heads#L1478 
+(vga_draw_graphic) and 
+https://gitlab.com/qemu-project/qemu/-/blob/master/hw/display/vga.c?ref_type=heads#L1194 
+(vga_draw_text) to see how this is handled.
 
-After spending some time debugging, I found that IGVM is parsed in 
-kvm_arch_init(). One of the handler called during the parsing is 
-qigvm_prepare_memory(), which adds a new memory region calling 
-memory_region_init_ram_guest_memfd(), but it fails:
+Gerd: what do you think would be the best way to apply a gamma to the VGA device?
 
-kvm_arch_init()
--> qigvm_prepare_memory()
-   -> memory_region_init_ram_guest_memfd()
-      -> kvm_create_guest_memfd()
-           ...
-           if (!kvm_guest_memfd_supported) {
-               error_setg(errp, "KVM does not support guest_memfd");
-               return -1;
-           }
 
-So, I applied the following change and SVSM booted!
+ATB,
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index f89568bfa3..840f36675e 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2722,17 +2722,17 @@ static int kvm_init(MachineState *ms)
- 
-     kvm_state = s;
- 
--    ret = kvm_arch_init(ms, s);
--    if (ret < 0) {
--        goto err;
--    }
--
-     kvm_supported_memory_attributes = kvm_vm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
-     kvm_guest_memfd_supported =
-         kvm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
-         kvm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
-         (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
- 
-+    ret = kvm_arch_init(ms, s);
-+    if (ret < 0) {
-+        goto err;
-+    }
-+
-     if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
-         s->kernel_irqchip_split = mc->default_kernel_irqchip_split ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-     }
-
-Checking, I discovered that it was done on purpose by Paolo, so not sure 
-if my fix is valid:
-
-commit 586d708c1e3e5e29a0b3c05c347290aed9478854
-Author: Paolo Bonzini <pbonzini@redhat.com>
-Date:   Fri Oct 11 10:39:58 2024 +0200
-
-    accel/kvm: check for KVM_CAP_MEMORY_ATTRIBUTES on vm
-   
-    The exact set of available memory attributes can vary by VM.  In the
-    future it might vary depending on enabled capabilities, too.  Query the
-    extension on the VM level instead of on the KVM level, and only after
-    architecture-specific initialization.
-   
-    Inspired by an analogous patch by Tom Dohrmann.
-   
-    Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-
-@Paolo any suggestion?
-
-Thanks,
-Stefano
+Mark.
 
 
