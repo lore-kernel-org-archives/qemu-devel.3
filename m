@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2188BC282DE
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C9C4C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tprMi-00037O-Nx; Wed, 05 Mar 2025 11:13:00 -0500
+	id 1tprMt-00039g-BQ; Wed, 05 Mar 2025 11:13:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tprMh-00036L-96
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:12:59 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tprMr-000397-Mv
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:13:09 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tprMf-0007ZV-MZ
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:12:58 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-390e6ac844fso6239295f8f.3
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:12:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tprMo-0007as-1v
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:13:08 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43bc6a6aaf7so27647445e9.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:13:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741191176; x=1741795976; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741191184; x=1741795984; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5iRGFcNlfrygrR4654WJl6FH925RxAyYFzhn3HJMQeo=;
- b=UqD7P4r6VSqYqoQwk31geuFK3XCZaBH2HkulAKGiv7Q5YJzqCLW/lf9LRuudfoOf5J
- 2NQWy0lODSwbUwbjXPovBFIVCOb41EtySUeGyiTIOuTTDXNs54UJcibkaKXfwXHaWvaa
- 0mjSdkZpXjV/877s3snXeciwhMu9NGa36FRWFPcad8fvMIEr3oYqIchRO0t/94FawJgX
- VwxIXhDv81zTEd7sUItXjAzOrtateCDsPKaBXRAd5Qdx9bo8OuPHugYRmd7jbPCd7Ghv
- 2nfpeakbZAX+A/IOTEpmckDGKdRZ7/DhnLfboB1U7nxQFAJlB89+TpMFm2uA3t57obJh
- bPGw==
+ bh=Qg/30+ydc7IJRGhxhQY+axZZcsxzMfsJFGVXHCMQm/4=;
+ b=qT3lE5TU6Wz6aKfb09qDS3Q6OTYQWt4fBNGPTB2RblvMhVGaFcK38G2VsxMrMb3g+T
+ sGUrGUnSKD+gaCicHyq1371VD7HpuAblllENyprwYLgM4cbLVQhBYSNkfzzDVYkn/+K/
+ oICh+1JAEbIoztq6wxjXa1H4rPsI7PaSXzMFJK5RF0kiK44/sEjS6ibUBnH1KW0NH7nn
+ BfWchRqrQ4sWfXgaS8RWG+tuZ3FVP51ms6CyNKurpN8sn2HfEiOacGkgOsMrBI0g1Rxu
+ ZB1cKEPhzqCM4dD2R2jccdtZcCqATQBm09Bjsmcycq2ScCT3e39EJ+rc5ercLTMtKBTK
+ azQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741191176; x=1741795976;
+ d=1e100.net; s=20230601; t=1741191184; x=1741795984;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5iRGFcNlfrygrR4654WJl6FH925RxAyYFzhn3HJMQeo=;
- b=KDo1GHZMuMU6WU4qtWx5iY42MRjc04iNPLy/CB7Gd7S8HkcPxuXrnGh2N47tPgOyKX
- EFfC+doqnPEbK4+GQ5Tabs7bcfsO/JKIcuDuSov0dg3/Yz1KR7xqozRlNdFtalETVT1G
- /6LWOV1Zo9GLthT56cw7AXzWPMfu56q7YbQ4h2PdKIi24KzIThHi/sQ0UioyP5h86Xc6
- uKxv4dXdgRpCHWr9g+j06qH6hBNfQ4HrU+2T7fLiEjXaXUKZkIb8dr6ARxss6wCLLgq2
- 6wo9jAn8AbQi9PBZ9revTehdpsa5rErXEylCAHjiWP3feyviMjXtMhGI1zSS1YR7AaEw
- sYlw==
-X-Gm-Message-State: AOJu0YxWJ+0S3rRUQDwkA3wkIeh3UN7LQGgj5iRrhTLbEO6Ujp7Ar1R4
- ogG0DQYbj7RIiEK7klB6j39veAEawZm3g3plSchIcbQ+f6F0xFcav99vt/BAGgAQuRRsf/ARzie
- FRTU=
-X-Gm-Gg: ASbGncuRZ12Maq1Zz2q4bnS9BVerflEuLdZ1jwi6SDiC13EtKB3eDUtWURGHqI5BxA1
- Bbksfr/bwiqJ8qdDn2gcuyPU1a3MUyTIlhm26RQ9AP4oulHadmwedKO2cQ7C+fMyNP/EpMGmghY
- 8EX3DTGqrmZzxcPFo0djziBirvMUnEVXc7uyG2oZE/Sm483G3ymu5LBNQIRYMK6jfRuBrxEiEdl
- R251rVjkMH8rbj6vr0UN8A5CNg7WFJ4NpWqAITkcG9sYwRH5c3j/DWhthmTgUuqDSM5dHpSdqKB
- 9PMQlqACaaR282Y9oYuk7zjH5lOPxVGpTGFGBQY6cv4RouH7njzIbZGsfTIZ9kJWq6KKgSc+h6R
- WOW7Wx7fCTu1wlc9TWs0=
-X-Google-Smtp-Source: AGHT+IFLvOuqcQaWIvhKOfkOIDgBwiLE7r039mnF8WCMADboJoIwCgmIqRFmjouKEZ5ItO7SLhnuBw==
-X-Received: by 2002:a05:6000:144e:b0:390:fbdd:994d with SMTP id
- ffacd0b85a97d-3911f74e691mr3439508f8f.27.1741191174532; 
- Wed, 05 Mar 2025 08:12:54 -0800 (PST)
+ bh=Qg/30+ydc7IJRGhxhQY+axZZcsxzMfsJFGVXHCMQm/4=;
+ b=uCKaGZp/hTzeYHdceyDFegKVLYsawkWeAVH/1rE3HkvCGPvMDZCD0ip+cgaglYO90E
+ KjsOIoUmW7yMxUFgFssbPd5XJ8Wsu9He4khG0a9aQcfCuWctWVyKCiIk2yuRUdq0yLiv
+ dQp1E7UyxVxKc+mXuoOIalopizKUUVNqfGDFbx3/wEUb6/FIlq5HhgYGj3Xo9R+TdIz+
+ +dpMLTnC+Iv/LmAS87FeKgnVYnbCZ1gOirivlPhNOrx9LXIZKYBOrv+8WGdjYPi7QHEj
+ u681Z5gdMcxbTCwEwGwM/i3FsS6XNu/4FWsdsonxEovlqHawB92nQX9OhIEPkoVD12dG
+ 7Cwg==
+X-Gm-Message-State: AOJu0YwZ2jlOOIjtTdqndxOe0S2rj31FhHTn6FA5rkbmLxgXJZLPrAsn
+ iTuHTvvmVQODcTIpm4/PjP3mSemBbQUlPU3vFbtQuQ7cs6R+YG3ScSnmIf2yMWDCRbLkiD+xWDJ
+ 044Y=
+X-Gm-Gg: ASbGnct4UJV6gRss+8sWaOjQbuADqPo+g/uAB91Y5BdjmXWRhDrRyRQACD95mIl4jwr
+ X2/sztw4/CfJ661uzwCC0pMhqS9zt9Vyl1+Uai9bGy2kNrgz7c4l1R7OyGOBgkdgfYCI6gA5Red
+ l6ssO9XVjQ2o4pXoqCu2l5GdpsSSYmVnLNfpuWK+dgaCt3AOGXBAYdNVnwdsDcG8TKr6wVmLri+
+ h5Q6lPXhk62+XwhycwRlbl1sHsV5G8GljYNub7bTR6cb9hLrhyWCED4VKeHdrNelHWhtGFBuk5I
+ wuKKoDaZQeWkqXi6/NpVxvbzU5/+32jdohBIk+vMuFDOnYo4HH3QtXblx+X/XtbYefeBfSsUQFX
+ anJk6EXvJvGAfz7Xt0Z4=
+X-Google-Smtp-Source: AGHT+IFxDeN876InatIsSjSDZ80/TUSkTjwZpHJWITAgNTNUaTC/7w/dc/lOxL2VwxyFs/KwQhqeEA==
+X-Received: by 2002:a05:600c:35cf:b0:43b:ca8c:fc76 with SMTP id
+ 5b1f17b1804b1-43bd29a84f1mr29527715e9.18.1741191184087; 
+ Wed, 05 Mar 2025 08:13:04 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e479609asm21179412f8f.2.2025.03.05.08.12.53
+ 5b1f17b1804b1-43bd42c6203sm21718385e9.24.2025.03.05.08.13.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 05 Mar 2025 08:12:54 -0800 (PST)
+ Wed, 05 Mar 2025 08:13:03 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -73,17 +73,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 1/4] qom: Introduce TypeInfo::registerable() callback
-Date: Wed,  5 Mar 2025 17:12:45 +0100
-Message-ID: <20250305161248.54901-2-philmd@linaro.org>
+Subject: [RFC PATCH 3/4] hw/arm/aspeed: Replace TARGET_AARCH64 by
+ legacy_binary_is_64bit()
+Date: Wed,  5 Mar 2025 17:12:47 +0100
+Message-ID: <20250305161248.54901-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305161248.54901-1-philmd@linaro.org>
 References: <20250305161248.54901-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,52 +107,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the TypeInfo::registerable() callback to allow
-runtime decision on whether register a QOM type or not.
+For legacy ARM binaries, legacy_binary_is_64bit() is
+equivalent of the compile time TARGET_AARCH64 definition.
+
+Use it as TypeInfo::registerable() callback to dynamically
+add Aarch64 specific types in qemu-system-aarch64 binary,
+removing the need of TARGET_AARCH64 #ifdef'ry.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/qom/object.h | 1 +
- qom/object.c         | 4 ++++
- qom/trace-events     | 1 +
- 3 files changed, 6 insertions(+)
+ hw/arm/aspeed.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 9192265db76..f046791f60c 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -476,6 +476,7 @@ struct TypeInfo
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 98bf071139b..3f18a4501e0 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -28,6 +28,7 @@
+ #include "hw/loader.h"
+ #include "qemu/error-report.h"
+ #include "qemu/units.h"
++#include "qemu/legacy_binary_info.h"
+ #include "hw/qdev-clock.h"
+ #include "system/system.h"
+ 
+@@ -179,11 +180,9 @@ struct AspeedMachineState {
+ #define AST2600_EVB_HW_STRAP1 0x000000C0
+ #define AST2600_EVB_HW_STRAP2 0x00000003
+ 
+-#ifdef TARGET_AARCH64
+ /* AST2700 evb hardware value */
+ #define AST2700_EVB_HW_STRAP1 0x000000C0
+ #define AST2700_EVB_HW_STRAP2 0x00000003
+-#endif
+ 
+ /* Rainier hardware value: (QEMU prototype) */
+ #define RAINIER_BMC_HW_STRAP1 (0x00422016 | SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC)
+@@ -1661,7 +1660,6 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+     aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
+-#ifdef TARGET_AARCH64
+ static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
  {
-     const char *name;
-     const char *parent;
-+    bool (*registerable)(void);
+     AspeedSoCState *soc = bmc->soc;
+@@ -1690,7 +1688,6 @@ static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
+     mc->default_ram_size = 1 * GiB;
+     aspeed_machine_class_init_cpus_defaults(mc);
+ }
+-#endif
  
-     size_t instance_size;
-     size_t instance_align;
-diff --git a/qom/object.c b/qom/object.c
-index 01618d06bd8..c62b7fd1695 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -168,6 +168,10 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
-         fprintf(stderr, "Registering '%s' with illegal type name\n", info->name);
-         abort();
-     }
-+    if (info->registerable && !info->registerable()) {
-+        trace_object_register_skipped(info->name);
-+        return NULL;
-+    }
- 
-     ti = type_new(info);
- 
-diff --git a/qom/trace-events b/qom/trace-events
-index b2e9f4a7127..29af95d8507 100644
---- a/qom/trace-events
-+++ b/qom/trace-events
-@@ -3,3 +3,4 @@
- # object.c
- object_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
- object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
-+object_register_skipped(const char *type) "Not registering '%s' type"
+ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+                                                      void *data)
+@@ -1813,12 +1810,11 @@ static const TypeInfo aspeed_machine_types[] = {
+         .name           = MACHINE_TYPE_NAME("ast1030-evb"),
+         .parent         = TYPE_ASPEED_MACHINE,
+         .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
+-#ifdef TARGET_AARCH64
+     }, {
+         .name          = MACHINE_TYPE_NAME("ast2700-evb"),
+         .parent        = TYPE_ASPEED_MACHINE,
++        .registerable   = legacy_binary_is_64bit,
+         .class_init    = aspeed_machine_ast2700_evb_class_init,
+-#endif
+     }, {
+         .name          = TYPE_ASPEED_MACHINE,
+         .parent        = TYPE_MACHINE,
 -- 
 2.47.1
 
