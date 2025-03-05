@@ -4,138 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1502CC19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 07:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A93FC19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 08:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpjf3-0008Jx-JE; Wed, 05 Mar 2025 02:59:29 -0500
+	id 1tpjj1-0001zn-QA; Wed, 05 Mar 2025 03:03:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpjex-0008Fj-Bo
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 02:59:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tpjiz-0001zC-QD
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:03:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpjev-00015R-RT
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 02:59:19 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tpjix-0001bE-BR
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 03:03:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741161554;
+ s=mimecast20190719; t=1741161805;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xaB82zWmnFiq7sFszgCPrnXb5l77fqe/rPMn9qymANI=;
- b=beGiY/o7XLVB2Zi8bW0w5bKUFENm2piDva/2SHW986h/VG8U7WUuuZoRdpqfHCpAe2jN0A
- 0yeqHWwgd79CRLmKhRI93G5R3Q1W7HFdGcAOn1D1i1g0lUceKi1mcTwIH3RXMx/zDdRldS
- HC9MzCvqdIC/C4pbziNUQ6CJZcttfVw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Tiqajl8YrEsRZNofLkPxgRiu6e9IyXEU30+HPtH1A7k=;
+ b=LAb+EQsN2DFlVucI7whdW4LZIEqODRtac/uIsJI7wyVuIWdc8v8YNYItAAr1bqwU+BQUN3
+ oCyXTpJA2yKzpLpSvBpaaugfZ70Xrs4lUId+MfIss1u7M+2G1YxheGeeBAFTvxcmkjvENL
+ OHtevdAYQM0QP7DOp0AynHojVDFsb5w=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-325-qdeiyh6KPsKHVVFgbiSRlQ-1; Wed, 05 Mar 2025 02:58:55 -0500
-X-MC-Unique: qdeiyh6KPsKHVVFgbiSRlQ-1
-X-Mimecast-MFC-AGG-ID: qdeiyh6KPsKHVVFgbiSRlQ_1741161534
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4394c489babso34850825e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 23:58:55 -0800 (PST)
+ us-mta-610-0VZuk5iNO4eqPmd0BPdPTA-1; Wed, 05 Mar 2025 03:03:24 -0500
+X-MC-Unique: 0VZuk5iNO4eqPmd0BPdPTA-1
+X-Mimecast-MFC-AGG-ID: 0VZuk5iNO4eqPmd0BPdPTA_1741161803
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-390fc428a45so1560827f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 00:03:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741161534; x=1741766334;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xaB82zWmnFiq7sFszgCPrnXb5l77fqe/rPMn9qymANI=;
- b=moh6UoZIsG7nAiLTgJBBKi5GErDtcP++Ti9SLyUUwBxtQ+wOqDavMinM5Ex3MvcXZi
- +ikRn1Q52879S80g/WemIPzJFlql27cc+i892GJ9xgCuBtrt7RybvExYfDcGKSSdeyaD
- Ezj94x9XUPK3Md3s4iG1h4hubnz/h7P9C6bcMZVMRbxm5R68yUWEu9/MZc88oJWZFxQn
- dXXr9qh7gjkEcwBtCbHBpyxdplOmf0cxumEcmiyFjYMZ25K/+GhhtEC+9pWzN8XmNh3z
- KQSIe0LNZqx7PbqV13rZbQDBIciLsDpC7OJ8G3lKxSaPSH40P+gTsOiCRKro0xU7STWi
- yL6w==
+ d=1e100.net; s=20230601; t=1741161803; x=1741766603;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Tiqajl8YrEsRZNofLkPxgRiu6e9IyXEU30+HPtH1A7k=;
+ b=AL6FqQu6PP+0k/pHWhUHIXKMi//uxu/CLYAxNR9U83bj2DsoxPYuqV8IQ9AQnharoF
+ RDS2zLk4wFB44Fk9J7l5ewvunFPuNlREBnBn1idLYK5V2pw2V9IUwD9UkEb+j6VdPgdj
+ H6mat88zgnQ5/uKRbota3FVvpyI9o2TqE4ZSty90UIrEQOBj231jNaKMpNBMNuR9EGFr
+ pSz79FDQRssuF23wd9dZI6cG09RznNAIuYj5NKVCQwzCdEnJ+s1H2qfnk5Zchq/4Nrrb
+ 4RnkP9SU/fkoknhuw1JLIKkJp5WXZVPay0O6Ko/zbkPudoZfe6zKAo8sxM5iHED9/tqE
+ LFKQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXvPZhbx/ZQ1vUaMK1zpv+zXPxSw5N6OnAX0UfariDOW9lhSiX2G0SSR/OVwskPag+CvyWNAGDGpeNk@nongnu.org
-X-Gm-Message-State: AOJu0Yx9QFC73WLJrGQ6yis+3NfEiT7vuPemyLdUmJKI8/N/QYtrHeYw
- 53sUveaRS9dyfDs7Hiw5tGwrSXpcpKeVd2Z55Pt4gjB3RlEGoQWGOPyXq5xQe7YP3uPSJogr8nY
- TjqXv7G9zL9R1oN58EgxLsZ2FwKlL250uCcfLALD7EAa51uK3796f
-X-Gm-Gg: ASbGncu5vlOCRXqW4PFgQatRXRYerzq4pdB95FcJA+J6LG0lUet9v8Y0OPH+MwlI67H
- Q0kkhDS9975wSk4ASm5KcSkuCvOi5VZjbIXty1N7KhpGHyQ2C22/uYdeA+gSc980WLCJIpYP3/G
- EHt/XaWsuOSVUeaV+ViZ2B0+e1eMuTuL2AglMYjk1U5mYH7w1zgtMHKH0ENJQi1OBl70ZSVA3tW
- UeVkho49mSQyembF7fnWdr4OFr2yZdsMCY3U2vvw+Hiqta3PCcrglrCCYq0P64bjL80Rk7bEfM2
- 29CYvdSeIovq5Kvblf/ZElV3gCKhsDT2qu1TGuauvKq6uJw=
-X-Received: by 2002:a05:600c:4f0f:b0:43b:c390:b78d with SMTP id
- 5b1f17b1804b1-43bd2aed6d8mr11289535e9.24.1741161534279; 
- Tue, 04 Mar 2025 23:58:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHsLeU3xArhVLMGCkDpAxw7z9V2H7UvqV849ZtltLyAjLJvDl/3OUXiBzOFX1E+SHVE7VaDMg==
-X-Received: by 2002:a05:600c:4f0f:b0:43b:c390:b78d with SMTP id
- 5b1f17b1804b1-43bd2aed6d8mr11289425e9.24.1741161533956; 
- Tue, 04 Mar 2025 23:58:53 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
- [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd426c841sm9640145e9.8.2025.03.04.23.58.53
+ AJvYcCUcB7AU3PnN8ADb2unjxr5h78epzp5WsE0h+Cj/+pe6x4eyfG3f1UFS83bNM1YMD5k1+Rp+Vh3CDb9R@nongnu.org
+X-Gm-Message-State: AOJu0YztoeZdxCXS80D1WUVptmNG0J8JcVZZ1FnoWULinf/98zMQ1cwN
+ ldS2P+OZnn1N2q6ICGanVOK9UrMTCkeTuXN57Vv5q5xx4YOXQzSjJwphhScHYXeInPLB3+Jms6X
+ m+DwPanl62TpxJq+NH4/2oVt7XSc8p4MKa+dnyXiGD/xmNjqmlxgn
+X-Gm-Gg: ASbGncvVqQ3Ljoiuh5IldPupihzDdvaiFvpOfeAX6CP4ltpjpH4B0JWWOYTIXyxaq2Q
+ ewMH9FVBBigOxQDfsIxzVm+chkkIuokmaCt7cKhE+454XszbWI5fcr4oAml2VbnVkeu9UgBzxZN
+ 6hsviOPaKCkdv1qeyWdP3KspNntNmWda/YQe5gzn48Ic0Y1NEcQl+6Zeoa9BxEIscz9NtUz4r45
+ kLEXExkPpR5OfRCGjUfHbNuSI3T5kV2KIS7gI8fYTqedyE80SuCd8K39wEyD6hMn5kYlYUmvVJi
+ sX36QzwO2uyg0+P8WL9li64kDWy41IWAIhaukSU1ql5QZBL5mFuEIw==
+X-Received: by 2002:a05:6000:156f:b0:390:f734:13b1 with SMTP id
+ ffacd0b85a97d-3911f756fdfmr1451835f8f.23.1741161801624; 
+ Wed, 05 Mar 2025 00:03:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEE/1Nw6iZtpKfJgJZTMBa3nMOFVCKBWlgT/9yOd5GR4azas2k0lp8ndp4qk8nlv5P6xgpeAA==
+X-Received: by 2002:a05:6000:156f:b0:390:f734:13b1 with SMTP id
+ ffacd0b85a97d-3911f756fdfmr1451800f8f.23.1741161801273; 
+ Wed, 05 Mar 2025 00:03:21 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390e485e045sm20390612f8f.99.2025.03.05.00.03.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 23:58:53 -0800 (PST)
-Message-ID: <1432e257-3673-4467-a2b6-b81d7f29361c@redhat.com>
-Date: Wed, 5 Mar 2025 08:58:52 +0100
+ Wed, 05 Mar 2025 00:03:20 -0800 (PST)
+Message-ID: <ab68c2e7-b44b-484a-959c-45d430664032@redhat.com>
+Date: Wed, 5 Mar 2025 09:03:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: fix race in virtio balloon test
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+Subject: Re: [PATCH v6 24/36] vfio/migration: Multifd setup/cleanup functions
+ and associated VFIOMultifd
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, David Hildenbrand <david@redhat.com>
-References: <20250304183340.3749797-1-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250304183340.3749797-1-berrange@redhat.com>
+References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
+ <c0520523053b1087787152ddf2163257d3030be0.1741124640.git.maciej.szmigiero@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <c0520523053b1087787152ddf2163257d3030be0.1741124640.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -153,26 +161,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/03/2025 19.33, Daniel P. Berrangé wrote:
-> There are two race conditions in the recently added virtio balloon
-> test
+On 3/4/25 23:03, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
->   * The /dev/vda device node is not ready
->   * The virtio-balloon driver has not issued the first stats refresh
+> Add multifd setup/cleanup functions and an associated VFIOMultifd data
+> structure that will contain most of the receive-side data together
+> with its init/cleanup methods.
 > 
-> To fix the former, monitor dmesg for a line about 'vda'.
-> 
-> To fix the latter, retry the stats query until seeing fresh data.
-> 
-> Adding 'quiet' to the kernel command line reduces serial output
-> which otherwise slows boot, making it less likely to hit the former
-> race too.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/test_virtio_balloon.py | 24 +++++++++++++++++++-----
->   1 file changed, 19 insertions(+), 5 deletions(-)
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/vfio/migration-multifd.c   | 44 +++++++++++++++++++++++++++++++++++
+>   hw/vfio/migration-multifd.h   |  4 ++++
+>   include/hw/vfio/vfio-common.h |  3 +++
+>   3 files changed, 51 insertions(+)
+> 
+> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+> index 79fae0b6296f..091dc43210ad 100644
+> --- a/hw/vfio/migration-multifd.c
+> +++ b/hw/vfio/migration-multifd.c
+> @@ -32,8 +32,52 @@ typedef struct VFIODeviceStatePacket {
+>       uint8_t data[0];
+>   } QEMU_PACKED VFIODeviceStatePacket;
+>   
+> +typedef struct VFIOMultifd {
+> +} VFIOMultifd;
+> +
+> +static VFIOMultifd *vfio_multifd_new(void)
+> +{
+> +    VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
+> +
+> +    return multifd;
+> +}
+> +
+> +static void vfio_multifd_free(VFIOMultifd *multifd)
+> +{
+> +    g_free(multifd);
+> +}
+> +
+> +void vfio_multifd_cleanup(VFIODevice *vbasedev)
+> +{
+> +    VFIOMigration *migration = vbasedev->migration;
+> +
+> +    g_clear_pointer(&migration->multifd, vfio_multifd_free);
+> +}
+> +
+>   bool vfio_multifd_transfer_supported(void)
+>   {
+>       return multifd_device_state_supported() &&
+>           migrate_send_switchover_start();
+>   }
+> +
+> +bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev)
+> +{
+> +    return false;
+> +}
+> +
+> +bool vfio_multifd_setup(VFIODevice *vbasedev, bool alloc_multifd, Error **errp)
+> +{
+> +    VFIOMigration *migration = vbasedev->migration;
+> +
+> +    if (!vfio_multifd_transfer_enabled(vbasedev)) {
+> +        /* Nothing further to check or do */
+> +        return true;
+> +    }
+> +
+> +    if (alloc_multifd) {
+> +        assert(!migration->multifd);
+> +        migration->multifd = vfio_multifd_new();
+> +    }
+> +
+> +    return true;
+> +}
+> diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
+> index 1b60d5f67a1c..2a7a76164f29 100644
+> --- a/hw/vfio/migration-multifd.h
+> +++ b/hw/vfio/migration-multifd.h
+> @@ -14,6 +14,10 @@
+>   
+>   #include "hw/vfio/vfio-common.h"
+>   
+> +bool vfio_multifd_setup(VFIODevice *vbasedev, bool alloc_multifd, Error **errp);
+> +void vfio_multifd_cleanup(VFIODevice *vbasedev);
+> +
+>   bool vfio_multifd_transfer_supported(void);
+> +bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev);
+>   
+>   #endif
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index bf5d52087129..40382390692d 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -78,6 +78,8 @@ typedef struct VFIORegion {
+>       uint8_t nr; /* cache the region number for debug */
+>   } VFIORegion;
+>   
+> +typedef struct VFIOMultifd VFIOMultifd;
+> +
+>   typedef struct VFIOMigration {
+>       struct VFIODevice *vbasedev;
+>       VMChangeStateEntry *vm_state;
+> @@ -89,6 +91,7 @@ typedef struct VFIOMigration {
+>       uint64_t mig_flags;
+>       uint64_t precopy_init_size;
+>       uint64_t precopy_dirty_size;
+> +    VFIOMultifd *multifd;
+>       bool initial_data_sent;
+>   
+>       bool event_save_iterate_started;
+> 
 
 
