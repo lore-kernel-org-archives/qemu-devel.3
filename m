@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8149C282E5
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D5EC28B21
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:26:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdUq-000320-LJ; Tue, 04 Mar 2025 20:24:29 -0500
+	id 1tpdUO-00025k-FY; Tue, 04 Mar 2025 20:24:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUh-0002g6-0s
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:19 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTg-0000MS-TV
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:18 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdUf-0007Dl-AU
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:24:18 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-390dd3403fdso5299899f8f.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:24:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tpdTe-00073A-G1
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:23:16 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-38f406e9f80so4730969f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:23:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741137855; x=1741742655; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741137792; x=1741742592; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0qqjRyLJXA943FvFgC6O1oaicZbTpbgR9SXUAwOPgKM=;
- b=yGSEADqTL008eLG6S5OtMwHWaNS5Jv0QsxJRCztptOZ9CfbSq59aUfqUQ5F5YuTShK
- N7t51v7Wytk2EYKh0+zvrXlXmYEmLYqXX77RmFWhEf1IkajMs2Mg3GANpQ+TZITkBV3k
- XIeHQQyidSRZI1mIhsCkmQ6yNHUD8HyH9R6LB9FnlSBZglottM+KpMrVmLAz3TPpxUQt
- D5+/UIrFLCd6f+re/KH23EtIafbihiZD9NdEh0E8wvXLESTzpAdegFEUEayLVO27Fl/s
- C/SVY16QsFHoekcRxC2nDL8aHCCLQTB7UpnjUFwNLUEm27Bcuqf9epUa2CbEMQT4+teD
- wFPQ==
+ bh=q2IHjjPDhAlThC5AYDDLcqpca6XJWi3ImZ01k6AVQ1k=;
+ b=h727yHxxlFu8IHv/fSPHUjGxf7eBGh8Gghj+BPPI/vJVqyuVizsyrbIdrEqf8oiSfI
+ z8JzyUyl/FDcGrOMGfrW6FWo4xvgeDVt2qZEbZE4kNnrsSWDUKhKwC5fWPZV9u8zoPuO
+ R2dgEu7MxatphqIcqMssuSjhPy58hTiFX8LqKeVdwuVXEJWyUZb4c2MRmbYdL97by2xl
+ /lvJ2z6yh3tbVZwSjOeTE8A1mFyilVNs23rV6xGf9ziTjsLZ9EUWSNApa/HyTAjBIZ7f
+ WBhVLzlFT9T05/trv3I4fuGvs3HS2SEbvWEqp1k+IG8PrrawxN3Mia6vA0dZpMda8hcj
+ 5fkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741137855; x=1741742655;
+ d=1e100.net; s=20230601; t=1741137792; x=1741742592;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0qqjRyLJXA943FvFgC6O1oaicZbTpbgR9SXUAwOPgKM=;
- b=Y5hzl5x6dWAP3taqyx+7p0Xc+vbPWMpmAQGEpBS3MumJ/OJGwQmz9Tu7jSBRXI5Lh4
- ky2Mc3PDdhfKW848R87Cb7Xz6UiEd6SGpa+nWQzo5erXHBjeywAGPjTDGKbNJFPm5JVG
- YWDRLBPDj+epFxIQgi8Be2B/YMzO/PXVLO3BHquVc8phyRHpHftmmNdTx6/K7W8nmmJc
- 2NEDpLj6J25uDkPWo/GypHnlyJfc195iKrUGzglwQ6AagXpbyVKUV6DvXA4eSt8PgAs6
- lgm3v+a6PBxbWCEGOiG1M51qhifiYnqYSuOMhz++Kfw8PrbpJbHhveOEyfs7zlq8sAbg
- 3xWw==
-X-Gm-Message-State: AOJu0YzOKYBSZosDc5XaF//u8t8DjLuNvd3Wmqtgl15mulmeb1bafXo5
- 5bhyiVcPzwAakeEOraSTI14wwQVs4vRESAqpuvGuowD8rabNb5FreZHtnqm0MBQg4AqZL8ZBm44
- JbUE=
-X-Gm-Gg: ASbGnctzstu2B9x5NLiBFcxSkRIBx8jrkdDhGV8la37rg3Iz0OJJ61DPUFXHYZpXHm5
- tkj+OMykj4+X/l0VZ2xv4BPbfZer2RPbf90EIA0AUjNkoPBC79hWuwgykvttLQTnWxsjtZvNRc1
- 4QIBfaxpXpy4sWujDMZOo0fuHS8gr3iCaDXaNTeGiD+/DC/ArHjFroi8zn4p71Bell54nkgeS0b
- h56O+eEcT5IwSqt9wxPQvew2flACPecMY1UFKAILsqDAvB+3gbw0w/bFcmxknvQMsuMHH78dLN2
- z8UWjmSEADD5URVKNKYBMIdrVfvOTVPUL1wnikxr2/idXkaPbEsNw39SYhSk/acANyAQnSqNrjt
- Ntpl07BgYczq9fWp9rjY=
-X-Google-Smtp-Source: AGHT+IHEnSfe15n9kkeZo+PEMl+EdPMJ2MLBnSq4QrPDPYtKySnpCUirv2IunIYIF/e35wMoHAHsZg==
-X-Received: by 2002:a05:6000:2b06:b0:391:4f9:a047 with SMTP id
- ffacd0b85a97d-3911f741393mr383577f8f.17.1741137855549; 
- Tue, 04 Mar 2025 17:24:15 -0800 (PST)
+ bh=q2IHjjPDhAlThC5AYDDLcqpca6XJWi3ImZ01k6AVQ1k=;
+ b=N1TIpaVOoExgCTrdiV7lO2iksjUhQptSN+PJih02DY1XC2gC48/An8ShA3RcKR2Ygy
+ MqzPwsMWm1THHazuvIkMx80x7x6MiTzlrGWIpD0KdzNq1R/TP0fv8ZrZjhCEoMJDroAe
+ vC4E/v3FiviJ0/9O2hiW30WkDnUHdkN4UOJdAz5BFD8tz/aJ1M6Exe8mNX6zgGnh1ukO
+ eNE89/w3QVC2ggHhf8n2tHjEZyt9MfRx8KjcYcnh2g84Eu/lVfwUJU0D+9ectlp3nfIw
+ 9HstJlnY24ipf0HB7gyakFNSQXO5/UY0MOXEtISQwXw5WgB8+KK0gJW/V5whncsjbjQm
+ xBDQ==
+X-Gm-Message-State: AOJu0Yzg99y6U2+EAxQ60lX7NciR/aoBLEY2p7MOgE+if85k3ts/qh7f
+ cpHXapJ3WR76nhxcyW5CtvylLoiwPTAB11AiTuN+NT9K7SX1GX4UK/3LOkiW1y3v4gTljbXA7kS
+ ofNY=
+X-Gm-Gg: ASbGncsqDRsEllb9D37HeaF0wbEH2WWWZGZz0dHHw73GJibYpdObmm5lGwwVT0V0YpX
+ DYuawkYeLT6J60CauSAGCJ5gteA1NRLwh1hV40jWvPyBHZpdJCHO0DRLUZSS8nGdRaXcDmgKUc5
+ 4GmMXY8DRIKn+W0qi3iuUSHhQIGAbI9BBOMoKd2817ROqyr2liZuMtEp/++q4FdgaJe84ZwaG0k
+ WiCsccSVWWHcC7qKvzsWCyzXVSl94x5nhDUPUYbY5rDwLRbTn/Sy886/3ez0u1EpNfzFCZGyGOV
+ 9mlaIBKqYUBYuL/lz2dy1fwrylX2wiDA0p3ZH9HU2KfowywiR2MXGhq87xO4d0cTXyDGQTIiE9q
+ SxndNqngSBSpHCVCtNy8=
+X-Google-Smtp-Source: AGHT+IGmPJqNugJgMNTXD3BqXBJSRvxwid1ZabjiCa/EK9RyDTVAmdrleDK1M9LFNLm9SMi2A4P+uw==
+X-Received: by 2002:a05:6000:4007:b0:38d:e584:81ea with SMTP id
+ ffacd0b85a97d-3911f7c8308mr650163f8f.45.1741137792366; 
+ Tue, 04 Mar 2025 17:23:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390e47965ddsm19712111f8f.18.2025.03.04.17.24.14
+ ffacd0b85a97d-390e485d6cdsm19218804f8f.84.2025.03.04.17.23.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Mar 2025 17:24:15 -0800 (PST)
+ Tue, 04 Mar 2025 17:23:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair23@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-Subject: [PULL 28/41] hw/char/sifive_uart: Free fifo on unrealize
-Date: Wed,  5 Mar 2025 02:21:43 +0100
-Message-ID: <20250305012157.96463-29-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anthony PERARD <anthony.perard@vates.tech>
+Subject: [PULL 15/41] hw/xen/xen-hvm: Reduce included headers
+Date: Wed,  5 Mar 2025 02:21:30 +0100
+Message-ID: <20250305012157.96463-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250305012157.96463-1-philmd@linaro.org>
 References: <20250305012157.96463-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,100 +100,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair23@gmail.com>
+Have "hw/xen/xen-hvm-common.h" include the bare minimal set
+of headers. Adapt sources to avoid errors when refactoring
+unrelated headers such:
 
-We previously allocate the fifo on reset and never free it, which means
-we are leaking memory.
+  include/hw/xen/xen-hvm-common.h:71:5: error: unknown type name ‘xenevtchn_handle’
+     71 |     xenevtchn_handle *xce_handle;
+        |     ^~~~~~~~~~~~~~~~
+  hw/xen/xen-hvm-common.c: In function ‘cpu_get_ioreq’:
+  hw/xen/xen-hvm-common.c:227:13: error: implicit declaration of function ‘hw_error’
+    227 |             hw_error("Fatal error while trying to get io event!\n");
+        |             ^~~~~~~~
+        |             herror
+  hw/xen/xen-hvm-common.c: In function ‘handle_ioreq’:
+  hw/xen/xen-hvm-common.c:446:34: error: ‘target_ulong’ undeclared (first use in this function)
+    446 |             (req->size < sizeof (target_ulong))) {
+        |                                  ^~~~~~~~~~~~
+  hw/i386/xen/xen-hvm.c: In function ‘xen_add_to_physmap’:
+  hw/i386/xen/xen-hvm.c:298:22: error: implicit declaration of function ‘xen_replace_cache_entry’
+    298 |         uint8_t *p = xen_replace_cache_entry(phys_offset, start_addr, size);
+        |                      ^~~~~~~~~~~~~~~~~~~~~~~
+  hw/i386/xen/xen-hvm.c:314:9: error: implicit declaration of function 'error_report' is invalid in C99
+    314 |    error_report("relocate_memory %lu pages from GFN %"HWADDR_PRIx
+             ^~~~~~~~~~~~
+  hw/i386/xen/xen-hvm.c: In function ‘xen_log_global_start’:
+  hw/i386/xen/xen-hvm.c:465:9: error: implicit declaration of function ‘xen_enabled’
+    465 |     if (xen_enabled()) {
+        |         ^~~~~~~~~~~
+  hw/i386/xen/xen-hvm.c: In function ‘regs_to_cpu’:
+  hw/i386/xen/xen-hvm.c:487:5: error: unknown type name ‘X86CPU’
+    487 |     X86CPU *cpu;
+        |     ^~~~~~
+  hw/i386/xen/xen-hvm.c:492:15: error: ‘R_EAX’ undeclared (first use in this function)
+    492 |     env->regs[R_EAX] = req->data;
+        |               ^~~~~
+        |               REG_RAX
 
-Instead let's allocate on realize and free on unrealize.
-
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Tested-by: Clément Chigot <chigot@adacore.com>
-Message-ID: <20250303023120.157221-1-alistair.francis@wdc.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anthony PERARD <anthony.perard@vates.tech>
+Message-Id: <20250218162618.46167-6-philmd@linaro.org>
 ---
- hw/char/sifive_uart.c | 44 +++++++++++++++++++++++++++----------------
- 1 file changed, 28 insertions(+), 16 deletions(-)
+ include/hw/xen/xen-hvm-common.h | 14 +++-----------
+ hw/arm/xen-stubs.c              |  5 ++---
+ hw/i386/xen/xen-hvm.c           |  6 ++++++
+ hw/xen/xen-hvm-common.c         |  7 +++++++
+ 4 files changed, 18 insertions(+), 14 deletions(-)
 
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index 4bc5767284b..b45e6c098c4 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -251,6 +251,23 @@ static int sifive_uart_be_change(void *opaque)
-     return 0;
- }
+diff --git a/include/hw/xen/xen-hvm-common.h b/include/hw/xen/xen-hvm-common.h
+index c1ea2c0d787..19df5600a39 100644
+--- a/include/hw/xen/xen-hvm-common.h
++++ b/include/hw/xen/xen-hvm-common.h
+@@ -1,18 +1,10 @@
+ #ifndef HW_XEN_HVM_COMMON_H
+ #define HW_XEN_HVM_COMMON_H
  
-+static void sifive_uart_reset_enter(Object *obj, ResetType type)
-+{
-+    SiFiveUARTState *s = SIFIVE_UART(obj);
-+
-+    s->txfifo = 0;
-+    s->ie = 0;
-+    s->ip = 0;
-+    s->txctrl = 0;
-+    s->rxctrl = 0;
-+    s->div = 0;
-+
-+    s->rx_fifo_len = 0;
-+
-+    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
-+    fifo8_reset(&s->tx_fifo);
-+}
-+
- static const Property sifive_uart_properties[] = {
-     DEFINE_PROP_CHR("chardev", SiFiveUARTState, chr),
- };
-@@ -270,30 +287,24 @@ static void sifive_uart_realize(DeviceState *dev, Error **errp)
- {
-     SiFiveUARTState *s = SIFIVE_UART(dev);
- 
-+    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
-+
-     s->fifo_trigger_handle = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-                                           fifo_trigger_update, s);
- 
--    qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart_rx,
--                             sifive_uart_event, sifive_uart_be_change, s,
--                             NULL, true);
-+    if (qemu_chr_fe_backend_connected(&s->chr)) {
-+        qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart_rx,
-+                                 sifive_uart_event, sifive_uart_be_change, s,
-+                                 NULL, true);
-+    }
- 
- }
- 
--static void sifive_uart_reset_enter(Object *obj, ResetType type)
-+static void sifive_uart_unrealize(DeviceState *dev)
- {
--    SiFiveUARTState *s = SIFIVE_UART(obj);
-+    SiFiveUARTState *s = SIFIVE_UART(dev);
- 
--    s->txfifo = 0;
--    s->ie = 0;
--    s->ip = 0;
--    s->txctrl = 0;
--    s->rxctrl = 0;
--    s->div = 0;
+-#include "qemu/units.h"
 -
--    s->rx_fifo_len = 0;
--
--    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
--    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
-+    fifo8_destroy(&s->tx_fifo);
- }
+-#include "cpu.h"
+-#include "hw/pci/pci.h"
+-#include "hw/hw.h"
++#include "qemu/queue.h"
++#include "exec/hwaddr.h"
+ #include "hw/xen/xen_native.h"
+-#include "hw/xen/xen-legacy-backend.h"
+-#include "system/runstate.h"
+-#include "system/system.h"
+-#include "system/xen.h"
+-#include "system/xen-mapcache.h"
+-#include "qemu/error-report.h"
++#include "hw/xen/xen_backend_ops.h"
+ #include <xen/hvm/ioreq.h>
  
- static void sifive_uart_reset_hold(Object *obj, ResetType type)
-@@ -329,6 +340,7 @@ static void sifive_uart_class_init(ObjectClass *oc, void *data)
-     ResettableClass *rc = RESETTABLE_CLASS(oc);
+ extern MemoryRegion xen_memory;
+diff --git a/hw/arm/xen-stubs.c b/hw/arm/xen-stubs.c
+index 34beb8b08cb..5551584dc20 100644
+--- a/hw/arm/xen-stubs.c
++++ b/hw/arm/xen-stubs.c
+@@ -5,10 +5,9 @@
+  */
  
-     dc->realize = sifive_uart_realize;
-+    dc->unrealize = sifive_uart_unrealize;
-     dc->vmsd = &vmstate_sifive_uart;
-     rc->phases.enter = sifive_uart_reset_enter;
-     rc->phases.hold  = sifive_uart_reset_hold;
+ #include "qemu/osdep.h"
+-#include "qemu/error-report.h"
+ #include "qapi/qapi-commands-migration.h"
+-#include "hw/boards.h"
+-#include "system/system.h"
++#include "system/xen.h"
++#include "hw/hw.h"
+ #include "hw/xen/xen-hvm-common.h"
+ #include "hw/xen/arch_hvm.h"
+ 
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index d3df488c483..d4516acec69 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -10,10 +10,12 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
++#include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-migration.h"
+ #include "trace.h"
+ 
++#include "hw/hw.h"
+ #include "hw/i386/pc.h"
+ #include "hw/irq.h"
+ #include "hw/i386/apic-msidef.h"
+@@ -24,6 +26,10 @@
+ #include "hw/xen/arch_hvm.h"
+ #include <xen/hvm/e820.h>
+ #include "exec/target_page.h"
++#include "target/i386/cpu.h"
++#include "system/runstate.h"
++#include "system/xen-mapcache.h"
++#include "system/xen.h"
+ 
+ static MemoryRegion ram_640k, ram_lo, ram_hi;
+ static MemoryRegion *framebuffer;
+diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+index 7ffbbfea23b..9a677e8ed74 100644
+--- a/hw/xen/xen-hvm-common.c
++++ b/hw/xen/xen-hvm-common.c
+@@ -1,14 +1,21 @@
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
++#include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "exec/target_long.h"
+ #include "exec/target_page.h"
+ #include "trace.h"
+ 
++#include "hw/hw.h"
+ #include "hw/pci/pci_host.h"
+ #include "hw/xen/xen-hvm-common.h"
+ #include "hw/xen/xen-bus.h"
+ #include "hw/boards.h"
+ #include "hw/xen/arch_hvm.h"
++#include "system/runstate.h"
++#include "system/system.h"
++#include "system/xen.h"
++#include "system/xen-mapcache.h"
+ 
+ MemoryRegion xen_memory, xen_grants;
+ 
 -- 
 2.47.1
 
