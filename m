@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5C4CC282D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10DCEC282D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdzh-0001k7-N0; Tue, 04 Mar 2025 20:56:21 -0500
+	id 1tpdze-0001Hf-6s; Tue, 04 Mar 2025 20:56:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdyk-0006zj-5U
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:26 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tpdzH-0007hk-T1
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:56 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdyh-0000Ph-D7
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:21 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-22356471820so101633145ad.0
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:55:18 -0800 (PST)
+ id 1tpdzD-0000VT-VE
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:54 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-223480ea43aso156445295ad.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:55:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741139718; x=1741744518; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741139750; x=1741744550; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=waHiBsQHcDvHNZymY9pi8A1HMdBUTLG1FFlGIB1D400=;
- b=EL6Xc/ARJpLJ88WO0Mfg6MY66aBtiaO1dK8URtqP3YKXLNsJ9zDg3mT/yRgcb6m4Bq
- C0Nd0r2NOViTyCN0QXztPQ5nZxrxtnM5GJTH7OF6S7CbfdOTvAvPTYXCAr89uzhqgVgc
- hVOxBgPx3jO4RGPG2UMHVgDnLebHAEu8oJMwSFMkc6vDQGfV78LFItn48dB/zGMW8uq6
- ySm8UF2HJtdTuxd3n6398e953YNVrbdXamiFn0FgEEZ4a/zM9MGg5FXn6ezudyvHW72n
- hRrgwqi0ryLDe9gjobQ2xf1E5Lk8608WFs7iUugebBCYHKe0jWRjk6YERfdDN3CGtzwf
- RKwQ==
+ bh=sqlXuHoQttbFjb7GklM7QN7V3vl4gqchpKqjbHsAjDg=;
+ b=WHGwnhJAMz9Hz01LrcvmmbhcTeIlxGwRKJ4KEi26YfxTl9m5UKKrDalR52VW4EyD23
+ ZpuFdzPGZudbs2SNrKKo4VIH1gerNKoc5qJMd+JNz6NEADsEhb28zCJzvoYCDPHEH0D6
+ fXkAv4Y51TFrjRML0lfRRXuuUCo5ydQ6DPK2ZznZOuHrizOme+r+dTo0CWWSdq2JCmyo
+ TgqfRqkYb8N88+U8D8kwBTLvMT091+vuTW/dWJO0+ZgDLztJifTKFnS+mKYQc9agZoTJ
+ Z3TOLOMdGMbapmXGFgiUGyIgLB3XBiqHR7S6yJI0OSyRwkYIdxp0pX3SY2lPryWacDen
+ VpFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741139718; x=1741744518;
+ d=1e100.net; s=20230601; t=1741139750; x=1741744550;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=waHiBsQHcDvHNZymY9pi8A1HMdBUTLG1FFlGIB1D400=;
- b=ssHQxQecJfCuHwIfGeNZSvWhwN5NmPuqLENqFJpdPF83W9QfGOpkh5vnd5ytZi1Jmu
- IAjOiIbLZiTF1XbHHIgFJnXWDs7m5q3+P46kUTObGcLjZbTxhZY4lS2mbW3NKFePQfyJ
- k62TUNNafio0miL7gGgCfkImAcvcxRDzO0Zli00hkpSRVSSDRO++SmEyl/BC9yAgORtG
- K9GX8ufHZehSdcbJw4r87l5YA/KlBwS6lLkWOPJcBIGhhlT8sNFxosqx+/RkyJUtoa60
- Xec9JxiKWhNpmMV3hdedXPBPMXSi7Yy8jffzXdZaVDm8YHWgr3HKROnvwgo/xySEQ6JB
- Oiew==
-X-Gm-Message-State: AOJu0YzX9MiKpOpaU0Jqw95IiPqpUhiYlKKAgY6CzAyezxi5vMqkzG1a
- jpn0yaoQN6wQ/zGYzgOurgPvAc/J8YfzaDGbYaAAHAhyj3krDZuzsvgZ6TfEtDc=
-X-Gm-Gg: ASbGncsJ4xYgfbmBca/CiyKl9FH2fZp3amIo0sLqzBcAQdifFl8VKOdSHM2KSxvPzA9
- E94ADXrDo6xr9m6TWPdNZn4rn3+52cRKmy9ftzWy6NBpSL0NhLsSrZL2SX9x5VTrsG18Z4LU//p
- BETJ2+DtXC36Qvawp3ZtfZyHpZhYsJkyXYrwaVQxtsJJLl6aiutpbJM89U4t0d7lpes5RORSnhY
- wJ1x2PZDH4RXYr/kEQ7mev28c0U7pdh3ciL47D+EOts7KQbS7q6KWXbnfX3rXQ1iODpSbwdlEPD
- gxXDSmEKECe2Kjk+ug8VByPZieNYAlmtRyAgQePnMxBt2WJQt38UD35DdIcHsqt+PrQss0VRPl+
- /DU6uDlPxa8COgfl/CpgDLsGarimvOZ9kcjm5OnqtW9KtkgBL8rQ=
-X-Google-Smtp-Source: AGHT+IFhGUbmOTQ8wtOLodOwq/boDE++iezmvJkKYYYhn2hNqJRJPSoO1DfGmsorbRM/r6hyFtfDDw==
-X-Received: by 2002:a17:903:41cb:b0:216:3466:7414 with SMTP id
- d9443c01a7336-223f1d397ecmr28378985ad.44.1741139717618; 
- Tue, 04 Mar 2025 17:55:17 -0800 (PST)
+ bh=sqlXuHoQttbFjb7GklM7QN7V3vl4gqchpKqjbHsAjDg=;
+ b=I65yO3+XDHo9o6jw2Oto/P/NeV6jb1TvBn+4qUvz5PECMT9mFPYeJQdqZTA/UUwRjx
+ sgxivZrvAe1jv8jU35/VAbHyF+aGYxtg2wspvnNAiXPgelCgzirX5b6VCZ5nc65xbOEJ
+ sieMtxXTBHKkASRcCmg7ombkbaoOPLeojjvxOjooSmpoXvmfPzFSvnm/srRKJZQM3w3q
+ ZR1aMy6KzBicbceImnub85FJCLHkgo+Jf4hCfnFhkvs7hM4kIg1qpJ52OJoPVwZR1tkO
+ Z2xSjGEDtK5LzNb2j9Sw9KVIIHFGd8t23P0+K8sHatXIlXjRXZeCvRFj0Ywpqe7N2St5
+ GtMw==
+X-Gm-Message-State: AOJu0YzaeaDWCGCA86UalXJBDE+pl3fWcNO6N2ZvNdcMa1luKbyelVsg
+ ORkfNDuQi/mUGerPZ33pwOczPDIWDe2g+OndD2LWVMrkBIYUD0mxB1/txnUN8ac=
+X-Gm-Gg: ASbGncugwHcbG85mWxe0VQt0we7UiqCEZCjzD3gUR3ORGlVVkLMvyeRm0TaDNF1+xAc
+ 0P9FNRuvjgLeeXEdv/U1oF+Q1RDOBTolp1qMG3mqMdSqdvhja6j++H0zcRQIpdiHSt1UveTEB56
+ hGU3SfkxoGNDMDqrcmivdEqDlOF/C6qTznGRyT6SinR4B6lMbKR2HeUv5dAef96nOCvDiVYhQc8
+ k83kfpJoEdJ3vu2UMWe25OYtI2Fch4Tttsvs1TnXMVpjcHr2N8qIdW2f6aiGtrW85szC/3b7W1r
+ GP7/k/xlDUtMW+nhbqXYzfrlrHnTrKAUB53e62Rvlhvdu2ZqL/JLz91X1gCc3g06CQKyBcmRYAC
+ YTKk0orGh+Wbi+lMqkvh/Gz1REKb2pRrei74oEISOeb0KiqQAsMc=
+X-Google-Smtp-Source: AGHT+IHRnoyiFNoA8awxrW/PPd7PJ8O8t/G0gu5rkTWbtmiitsaRy3uMY/u9QqvKlpfnBiur9GKBEg==
+X-Received: by 2002:a17:903:2f8d:b0:223:6180:1bea with SMTP id
+ d9443c01a7336-223f1d212bamr23886325ad.37.1741139750341; 
+ Tue, 04 Mar 2025 17:55:50 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.55.14
+ d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.55.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 17:55:17 -0800 (PST)
+ Tue, 04 Mar 2025 17:55:49 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 42/59] hw/riscv/riscv-iommu: add riscv_iommu_hpm_incr_ctr()
-Date: Wed,  5 Mar 2025 11:52:50 +1000
-Message-ID: <20250305015307.1463560-43-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Andrea Bolognani <abologna@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PULL 53/59] binfmt: Add --ignore-family option
+Date: Wed,  5 Mar 2025 11:53:01 +1000
+Message-ID: <20250305015307.1463560-54-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305015307.1463560-1-alistair.francis@wdc.com>
 References: <20250305015307.1463560-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,341 +106,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+From: Andrea Bolognani <abologna@redhat.com>
 
-This function will increment a specific counter, generating an interrupt
-when an overflow occurs.
+Until now, the script has worked under the assumption that a
+host CPU can run binaries targeting any CPU in the same family.
+That's a fair enough assumption when it comes to running i386
+binaries on x86_64, but it doesn't quite apply in the general
+case.
 
-Some extra changes in riscv-iommu.c  were required to add this new
-helper in riscv-iommu-hpm.c:
+For example, while riscv64 CPUs could theoretically run riscv32
+applications natively, in practice there exist few (if any?)
+CPUs that implement the necessary silicon; moreover, even if you
+had one such CPU, your host OS would most likely not have
+enabled the necessary kernel bits.
 
-- RISCVIOMMUContext was moved to riscv-iommu.h, making it visible in
-  riscv-iommu-hpm.c;
+This new option gives distro packagers the ability to opt out of
+the assumption, likely on a per-architecture basis, and make
+things work out of the box for a larger fraction of their user
+base.
 
-- riscv_iommu_notify() is now public.
+As an interesting side effect, this makes it possible to enable
+execution of 64-bit binaries on 32-bit CPUs of the same family,
+which is a perfectly valid use case that apparently hadn't been
+considered until now.
 
-No behavior change is made since HPM support is not being advertised
-yet.
-
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250224190826.1858473-5-dbarboza@ventanamicro.com>
+Link: https://src.fedoraproject.org/rpms/qemu/pull-request/72
+Thanks: David Abdurachmanov <davidlt@rivosinc.com>
+Thanks: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Andrea Bolognani <abologna@redhat.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Message-ID: <20250127182924.103510-4-abologna@redhat.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu-hpm.h |   2 +
- hw/riscv/riscv-iommu.h     |  18 ++++++
- hw/riscv/riscv-iommu-hpm.c | 114 +++++++++++++++++++++++++++++++++++++
- hw/riscv/riscv-iommu.c     |  43 +++++++++-----
- 4 files changed, 162 insertions(+), 15 deletions(-)
+ scripts/qemu-binfmt-conf.sh | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/hw/riscv/riscv-iommu-hpm.h b/hw/riscv/riscv-iommu-hpm.h
-index 231c110ff2..411d869dce 100644
---- a/hw/riscv/riscv-iommu-hpm.h
-+++ b/hw/riscv/riscv-iommu-hpm.h
-@@ -23,5 +23,7 @@
- #include "hw/riscv/riscv-iommu.h"
+diff --git a/scripts/qemu-binfmt-conf.sh b/scripts/qemu-binfmt-conf.sh
+index 8d9136a29f..5fd462b1d1 100755
+--- a/scripts/qemu-binfmt-conf.sh
++++ b/scripts/qemu-binfmt-conf.sh
+@@ -205,6 +205,9 @@ Usage: qemu-binfmt-conf.sh [--qemu-path PATH][--debian][--systemd CPU]
+        --persistent:    if yes, the interpreter is loaded when binfmt is
+                         configured and remains in memory. All future uses
+                         are cloned from the open file.
++       --ignore-family: if yes, it is assumed that the host CPU (e.g. riscv64)
++                        can't natively run programs targeting a CPU that is
++                        part of the same family (e.g. riscv32).
+        --preserve-argv0 preserve argv[0]
  
- uint64_t riscv_iommu_hpmcycle_read(RISCVIOMMUState *s);
-+void riscv_iommu_hpm_incr_ctr(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-+                              unsigned event_id);
+     To import templates with update-binfmts, use :
+@@ -337,7 +340,12 @@ qemu_set_binfmts() {
+         fi
  
- #endif
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 59db3fd02a..4384f39515 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -85,12 +85,30 @@ struct RISCVIOMMUState {
-     /* HPM cycle counter */
-     uint64_t hpmcycle_val;      /* Current value of cycle register */
-     uint64_t hpmcycle_prev;     /* Saved value of QEMU_CLOCK_VIRTUAL clock */
-+
-+    /* HPM event counters */
-+    GHashTable *hpm_event_ctr_map; /* Mapping of events to counters */
- };
+         if [ "$host_family" = "$family" ] ; then
+-            continue
++            # When --ignore-family is used, we have to generate rules even
++            # for targets that are in the same family as the host CPU. The
++            # only exception is of course when the CPU types exactly match
++            if [ "$target" = "$host_cpu" ] || [ "$IGNORE_FAMILY" = "no" ] ; then
++                continue
++            fi
+         fi
  
- void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
-          Error **errp);
- void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mode);
- void riscv_iommu_reset(RISCVIOMMUState *s);
-+void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type);
-+
-+typedef struct RISCVIOMMUContext RISCVIOMMUContext;
-+/* Device translation context state. */
-+struct RISCVIOMMUContext {
-+    uint64_t devid:24;          /* Requester Id, AKA device_id */
-+    uint64_t process_id:20;     /* Process ID. PASID for PCIe */
-+    uint64_t tc;                /* Translation Control */
-+    uint64_t ta;                /* Translation Attributes */
-+    uint64_t satp;              /* S-Stage address translation and protection */
-+    uint64_t gatp;              /* G-Stage address translation and protection */
-+    uint64_t msi_addr_mask;     /* MSI filtering - address mask */
-+    uint64_t msi_addr_pattern;  /* MSI filtering - address pattern */
-+    uint64_t msiptp;            /* MSI redirection page table pointer */
-+};
+         $BINFMT_SET
+@@ -355,10 +363,11 @@ CREDENTIAL=no
+ PERSISTENT=no
+ PRESERVE_ARG0=no
+ QEMU_SUFFIX=""
++IGNORE_FAMILY=no
  
- /* private helpers */
+ _longopts="debian,systemd:,qemu-path:,qemu-suffix:,exportdir:,help,credential:,\
+-persistent:,preserve-argv0:"
+-options=$(getopt -o ds:Q:S:e:hc:p:g:F: -l ${_longopts} -- "$@")
++persistent:,preserve-argv0:,ignore-family:"
++options=$(getopt -o ds:Q:S:e:hc:p:g:F:i: -l ${_longopts} -- "$@")
+ eval set -- "$options"
  
-diff --git a/hw/riscv/riscv-iommu-hpm.c b/hw/riscv/riscv-iommu-hpm.c
-index 5833ab8956..8eca5ee17e 100644
---- a/hw/riscv/riscv-iommu-hpm.c
-+++ b/hw/riscv/riscv-iommu-hpm.c
-@@ -52,3 +52,117 @@ uint64_t riscv_iommu_hpmcycle_read(RISCVIOMMUState *s)
-     return (ctr_val + get_cycles() - ctr_prev) |
-         (cycle & RISCV_IOMMU_IOHPMCYCLES_OVF);
- }
-+
-+static void hpm_incr_ctr(RISCVIOMMUState *s, uint32_t ctr_idx)
-+{
-+    const uint32_t off = ctr_idx << 3;
-+    uint64_t cntr_val;
-+
-+    cntr_val = ldq_le_p(&s->regs_rw[RISCV_IOMMU_REG_IOHPMCTR_BASE + off]);
-+    stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_IOHPMCTR_BASE + off], cntr_val + 1);
-+
-+    /* Handle the overflow scenario. */
-+    if (cntr_val == UINT64_MAX) {
-+        /*
-+         * Generate interrupt only if OF bit is clear. +1 to offset the cycle
-+         * register OF bit.
-+         */
-+        const uint32_t ovf =
-+            riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IOCOUNTOVF,
-+                                  BIT(ctr_idx + 1), 0);
-+        if (!get_field(ovf, BIT(ctr_idx + 1))) {
-+            riscv_iommu_reg_mod64(s,
-+                                  RISCV_IOMMU_REG_IOHPMEVT_BASE + off,
-+                                  RISCV_IOMMU_IOHPMEVT_OF,
-+                                  0);
-+            riscv_iommu_notify(s, RISCV_IOMMU_INTR_PM);
-+        }
-+    }
-+}
-+
-+void riscv_iommu_hpm_incr_ctr(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-+                              unsigned event_id)
-+{
-+    const uint32_t inhibit = riscv_iommu_reg_get32(
-+        s, RISCV_IOMMU_REG_IOCOUNTINH);
-+    uint32_t did_gscid;
-+    uint32_t pid_pscid;
-+    uint32_t ctr_idx;
-+    gpointer value;
-+    uint32_t ctrs;
-+    uint64_t evt;
-+
-+    if (!(s->cap & RISCV_IOMMU_CAP_HPM)) {
-+        return;
-+    }
-+
-+    value = g_hash_table_lookup(s->hpm_event_ctr_map,
-+                                GUINT_TO_POINTER(event_id));
-+    if (value == NULL) {
-+        return;
-+    }
-+
-+    for (ctrs = GPOINTER_TO_UINT(value); ctrs != 0; ctrs &= ctrs - 1) {
-+        ctr_idx = ctz32(ctrs);
-+        if (get_field(inhibit, BIT(ctr_idx + 1))) {
-+            continue;
-+        }
-+
-+        evt = riscv_iommu_reg_get64(s,
-+            RISCV_IOMMU_REG_IOHPMEVT_BASE + (ctr_idx << 3));
-+
-+        /*
-+         * It's quite possible that event ID has been changed in counter
-+         * but hashtable hasn't been updated yet. We don't want to increment
-+         * counter for the old event ID.
-+         */
-+        if (event_id != get_field(evt, RISCV_IOMMU_IOHPMEVT_EVENT_ID)) {
-+            continue;
-+        }
-+
-+        if (get_field(evt, RISCV_IOMMU_IOHPMEVT_IDT)) {
-+            did_gscid = get_field(ctx->gatp, RISCV_IOMMU_DC_IOHGATP_GSCID);
-+            pid_pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
-+        } else {
-+            did_gscid = ctx->devid;
-+            pid_pscid = ctx->process_id;
-+        }
-+
-+        if (get_field(evt, RISCV_IOMMU_IOHPMEVT_PV_PSCV)) {
-+            /*
-+             * If the transaction does not have a valid process_id, counter
-+             * increments if device_id matches DID_GSCID. If the transaction
-+             * has a valid process_id, counter increments if device_id
-+             * matches DID_GSCID and process_id matches PID_PSCID. See
-+             * IOMMU Specification, Chapter 5.23. Performance-monitoring
-+             * event selector.
-+             */
-+            if (ctx->process_id &&
-+                get_field(evt, RISCV_IOMMU_IOHPMEVT_PID_PSCID) != pid_pscid) {
-+                continue;
-+            }
-+        }
-+
-+        if (get_field(evt, RISCV_IOMMU_IOHPMEVT_DV_GSCV)) {
-+            uint32_t mask = ~0;
-+
-+            if (get_field(evt, RISCV_IOMMU_IOHPMEVT_DMASK)) {
-+                /*
-+                 * 1001 1011   mask = GSCID
-+                 * 0000 0111   mask = mask ^ (mask + 1)
-+                 * 1111 1000   mask = ~mask;
-+                 */
-+                mask = get_field(evt, RISCV_IOMMU_IOHPMEVT_DID_GSCID);
-+                mask = mask ^ (mask + 1);
-+                mask = ~mask;
-+            }
-+
-+            if ((get_field(evt, RISCV_IOMMU_IOHPMEVT_DID_GSCID) & mask) !=
-+                (did_gscid & mask)) {
-+                continue;
-+            }
-+        }
-+
-+        hpm_incr_ctr(s, ctr_idx);
-+    }
-+}
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 0fbd50bb52..0b15acf4e6 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -39,7 +39,6 @@
- #define PPN_PHYS(ppn)                 ((ppn) << TARGET_PAGE_BITS)
- #define PPN_DOWN(phy)                 ((phy) >> TARGET_PAGE_BITS)
- 
--typedef struct RISCVIOMMUContext RISCVIOMMUContext;
- typedef struct RISCVIOMMUEntry RISCVIOMMUEntry;
- 
- /* Device assigned I/O address space */
-@@ -52,19 +51,6 @@ struct RISCVIOMMUSpace {
-     QLIST_ENTRY(RISCVIOMMUSpace) list;
- };
- 
--/* Device translation context state. */
--struct RISCVIOMMUContext {
--    uint64_t devid:24;          /* Requester Id, AKA device_id */
--    uint64_t process_id:20;     /* Process ID. PASID for PCIe */
--    uint64_t tc;                /* Translation Control */
--    uint64_t ta;                /* Translation Attributes */
--    uint64_t satp;              /* S-Stage address translation and protection */
--    uint64_t gatp;              /* G-Stage address translation and protection */
--    uint64_t msi_addr_mask;     /* MSI filtering - address mask */
--    uint64_t msi_addr_pattern;  /* MSI filtering - address pattern */
--    uint64_t msiptp;            /* MSI redirection page table pointer */
--};
--
- typedef enum RISCVIOMMUTransTag {
-     RISCV_IOMMU_TRANS_TAG_BY,  /* Bypass */
-     RISCV_IOMMU_TRANS_TAG_SS,  /* Single Stage */
-@@ -101,7 +87,7 @@ static uint8_t riscv_iommu_get_icvec_vector(uint32_t icvec, uint32_t vec_type)
-     }
- }
- 
--static void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type)
-+void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type)
- {
-     uint32_t ipsr, icvec, vector;
- 
-@@ -423,6 +409,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             }
-         }
- 
-+
-+        if (pass == S_STAGE) {
-+            riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_S_VS_WALKS);
-+        } else {
-+            riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_G_WALKS);
-+        }
-+
-         /* Read page table entry */
-         if (sc[pass].ptesize == 4) {
-             uint32_t pte32 = 0;
-@@ -941,6 +934,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
- 
-     /* Device directory tree walk */
-     for (; depth-- > 0; ) {
-+        riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_DD_WALK);
-         /*
-          * Select device id index bits based on device directory tree level
-          * and device context format.
-@@ -968,6 +962,8 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
-         addr = PPN_PHYS(get_field(de, RISCV_IOMMU_DDTE_PPN));
-     }
- 
-+    riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_DD_WALK);
-+
-     /* index into device context entry page */
-     addr |= (ctx->devid * dc_len) & ~TARGET_PAGE_MASK;
- 
-@@ -1033,6 +1029,8 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
-     }
- 
-     for (depth = mode - RISCV_IOMMU_DC_FSC_PDTP_MODE_PD8; depth-- > 0; ) {
-+        riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_PD_WALK);
-+
-         /*
-          * Select process id index bits based on process directory tree
-          * level. See IOMMU Specification, 2.2. Process-Directory-Table.
-@@ -1050,6 +1048,8 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
-         addr = PPN_PHYS(get_field(de, RISCV_IOMMU_PC_FSC_PPN));
-     }
- 
-+    riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_PD_WALK);
-+
-     /* Leaf entry in PDT */
-     addr |= (ctx->process_id << 4) & ~TARGET_PAGE_MASK;
-     if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2,
-@@ -1419,6 +1419,8 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     GHashTable *iot_cache;
-     int fault;
- 
-+    riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_URQ);
-+
-     iot_cache = g_hash_table_ref(s->iot_cache);
-     /*
-      * TC[32] is reserved for custom extensions, used here to temporarily
-@@ -1429,6 +1431,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
- 
-     /* Check for ATS request. */
-     if (iotlb->perm == IOMMU_NONE) {
-+        riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_ATS_RQ);
-         /* Check if ATS is disabled. */
-         if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_ATS)) {
-             enable_pri = false;
-@@ -1447,6 +1450,8 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-         goto done;
-     }
- 
-+    riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_TLB_MISS);
-+
-     /* Translate using device directory / page table information. */
-     fault = riscv_iommu_spa_fetch(s, ctx, iotlb);
- 
-@@ -2375,6 +2380,10 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
-     memory_region_init_io(&s->trap_mr, OBJECT(dev), &riscv_iommu_trap_ops, s,
-             "riscv-iommu-trap", ~0ULL);
-     address_space_init(&s->trap_as, &s->trap_mr, "riscv-iommu-trap-as");
-+
-+    if (s->cap & RISCV_IOMMU_CAP_HPM) {
-+        s->hpm_event_ctr_map = g_hash_table_new(g_direct_hash, g_direct_equal);
-+    }
- }
- 
- static void riscv_iommu_unrealize(DeviceState *dev)
-@@ -2383,6 +2392,10 @@ static void riscv_iommu_unrealize(DeviceState *dev)
- 
-     g_hash_table_unref(s->iot_cache);
-     g_hash_table_unref(s->ctx_cache);
-+
-+    if (s->cap & RISCV_IOMMU_CAP_HPM) {
-+        g_hash_table_unref(s->hpm_event_ctr_map);
-+    }
- }
- 
- void riscv_iommu_reset(RISCVIOMMUState *s)
+ while true ; do
+@@ -418,6 +427,10 @@ while true ; do
+         shift
+         PRESERVE_ARG0="$1"
+         ;;
++    -i|--ignore-family)
++        shift
++        IGNORE_FAMILY="$1"
++        ;;
+     *)
+         break
+         ;;
 -- 
 2.48.1
 
