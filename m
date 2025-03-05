@@ -4,158 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B8DCC282D3
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:39:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F415C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 06:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpiPF-0007mI-Lh; Wed, 05 Mar 2025 01:39:01 -0500
+	id 1tpiR1-0000eV-K6; Wed, 05 Mar 2025 01:40:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpiPB-0007lx-Iy
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:38:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tpiQx-0000YN-7m; Wed, 05 Mar 2025 01:40:47 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpiP9-0000xi-2k
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 01:38:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741156730;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JYYUs2fBDZGyQRkxAl6EA2s4BhdIPh9cwsN5arzJRQg=;
- b=UEh5qAwzmGckUd96HdNqYOWTDoCU7d9ntHuvpCdbaPNaSILdyA7gT0DYukTsdnV84lvk5W
- 7zfRpw/poTLqwlnseM9gedVKaqx7sIxvjPdk/8wtmw9IiqFjp1mlcBe5iYzAS+P8toy07+
- xWmvUNEn3NMchDAlP4q0oPrHRxFhcBw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524--arPV_qBPfyaYuHZJQA10g-1; Wed, 05 Mar 2025 01:38:48 -0500
-X-MC-Unique: -arPV_qBPfyaYuHZJQA10g-1
-X-Mimecast-MFC-AGG-ID: -arPV_qBPfyaYuHZJQA10g_1741156727
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43bd0586b86so6040865e9.3
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 22:38:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741156727; x=1741761527;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JYYUs2fBDZGyQRkxAl6EA2s4BhdIPh9cwsN5arzJRQg=;
- b=SNR6/dFxb9/SvNOLyjsA6DZR/BJ6+RpqG8x9GrAtpZWSOVj1MC3Bctm0Zw/jsfxgqj
- dtNErHSO7AZ8I+jaME8xPvXxQXw1V321Ydxiu0p+h+hb1gZkRDrDPbkaamp6nt+OGltE
- XF5ndNI1svMI1YKTwhW1eyHPXSnfxhvJkDc7+Wa6yVwTHYb/PGgXtHmghHwQNEwSXtAA
- gBY/l2XJYuV8hbh/ShM5FwTK3oxKmsMN3PE+Rd9o49ubh9HnZ6JC5So1nSMKxo7LsvtW
- ihEBZcl4cW6blzrIIDdU0RJnPPjo/V6/KWzK2IFBkEHyH6d4011Oy69pSmiA4A1QoXqQ
- yyHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0xS8q+fqMBSxcT0FRg6D13u9S4XE8o8Tx+N10UueUAzEBZqUpvcVZT/rzTm79YHy6qGg6VqEGcGdR@nongnu.org
-X-Gm-Message-State: AOJu0YyRMXDpYJmqCVk9sKd/HY/dl/RSpkcU5psFFUE+MykgQxH50tTz
- DuEQ4UfHdoK72wb0ak9kI6DKI2bjciIqHqJibMLh6y9s8thvHwVGd0xv+OGmPgLGhNYNcdNC3me
- K+DGVpmpwAt2+ZlZVatP7kRk27+Qk/yEq9GwBqJsSFE57O3Qq/yh2
-X-Gm-Gg: ASbGnctUJSMOvoE6GMKx/G9ttk/GG8yDV1IfWhFBqc11xr0H69AS7aeqr8/0RVneh7j
- d07uybWKE2kFVDPfXW+Wd4a97DwqNW69HPKQ1A8t0nEOkr6N7s/zYlz2eN6OLoHo3NUDksCDoEi
- JwTxfPBuwxtNvgLTWem2qYPxqXOsd2yUvm5/vvLjjpZh0Z3lYY5jSLgFmp7CrpuyH1bVmc+5AyW
- e1MJc4bddDV523BHTYBBgw+y0fpDPD9XjI8NrIAT5I4NKgR4IgLHE/n7F5vSY50QCyXRiSiGS6d
- CKH3N87d7NCEebjzpHO6rM+qPkMxd0H3s3V55X6KIn6oIPw=
-X-Received: by 2002:a05:600c:458a:b0:439:5da7:8e0 with SMTP id
- 5b1f17b1804b1-43bd2992d20mr13444575e9.16.1741156727129; 
- Tue, 04 Mar 2025 22:38:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEFgFDO9pjgjRN7EVdQM+28tR8gOu+IwlE9xKq/ZVnbl87C8RKnhAPHPzvnCBTwJy2UpqXndg==
-X-Received: by 2002:a05:600c:458a:b0:439:5da7:8e0 with SMTP id
- 5b1f17b1804b1-43bd2992d20mr13444375e9.16.1741156726746; 
- Tue, 04 Mar 2025 22:38:46 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
- [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd4310779sm7604665e9.37.2025.03.04.22.38.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Mar 2025 22:38:45 -0800 (PST)
-Message-ID: <c37bff90-72f2-4f82-94b0-e2ea63684b35@redhat.com>
-Date: Wed, 5 Mar 2025 07:38:43 +0100
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tpiQu-0001OB-Si; Wed, 05 Mar 2025 01:40:46 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524Kqa59028078;
+ Wed, 5 Mar 2025 06:40:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=IIxgX4
+ OOZFEsJ2xo0jkYDDu4mtv3lh1OW8naT5ofDBU=; b=InPsNeTQVLRTocVN22C1k9
+ iLauItc4lLDPowI0zLKbPaNbky8sR6LvuQzGYLHZLxOC8hyo347BrAYteTjIkJY8
+ vChIHu+gSfAqhPnFkA1R3NGVwhlD7+/3BIrn8Yl1dp8UlLGCkohxSvbReBTMqblU
+ kj64Hb5eUmqBOA9yfkCf/Svoqqtu5+W8y0B+lW305lWUNyjVrT5N8O9+uovGrRcn
+ UaRP3CJ4jKSckfDAVGADUKoUMPVn+tU5BPWJF+ukr4ErkvZTrl3yb24fB8fGLKz1
+ 9w2mAqEinb33mlWQnZ+1GqQhlrNgVvKSY8Te1IWCOLxdccMY2JQ5/EY8vZlFhXpg
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4568x51ux7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 05 Mar 2025 06:40:42 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 5256biCs025361;
+ Wed, 5 Mar 2025 06:40:41 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4568x51ux5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 05 Mar 2025 06:40:41 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52532Hfg020846;
+ Wed, 5 Mar 2025 06:40:41 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 454djnhf5d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 05 Mar 2025 06:40:41 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5256eefj31916608
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 5 Mar 2025 06:40:40 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2F17758053;
+ Wed,  5 Mar 2025 06:40:40 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4A91358043;
+ Wed,  5 Mar 2025 06:40:37 +0000 (GMT)
+Received: from [9.39.18.13] (unknown [9.39.18.13])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  5 Mar 2025 06:40:36 +0000 (GMT)
+Message-ID: <f5494f6f-599f-427b-8c37-42cc5396c35d@linux.ibm.com>
+Date: Wed, 5 Mar 2025 12:10:35 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio: Make vfio-pci available on 64-bit host
- platforms only
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
- qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Eric Auger <eric.auger@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250226084721.232703-1-clg@redhat.com>
- <20250226084721.232703-2-clg@redhat.com>
- <a39e97c2-c6fd-34e4-f91b-b3491185b789@eik.bme.hu>
- <c60b7780-5b3f-43a0-a7f1-30820d4e6fb8@redhat.com>
- <bb7c2adf-f146-50c7-7716-c1ee7b606b01@eik.bme.hu>
- <aa01f3dd-e3ac-4ee5-87b4-8133103bd000@linaro.org>
- <270cc189-e3b2-4bf4-b32b-8655be51bcb4@redhat.com>
- <b2075e91-79ca-4d5f-b13b-151f2a59181d@redhat.com>
- <8e3a5810-accf-1f77-8692-4e077c3ce327@eik.bme.hu>
- <b0b56480-0b5a-4f32-af27-13394795b58e@redhat.com>
- <CAFEAcA8FRyuuPxZQhLM8Jq4iD6TEMqN+E=iTNfNOeafTzTBeNg@mail.gmail.com>
- <2ccd4a87-68f3-4eb1-bc2a-dbc424bc8d34@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 3/6] hw/ppc: Preserve memory regions registered for fadump
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250217071711.83735-1-adityag@linux.ibm.com>
+ <20250217071711.83735-4-adityag@linux.ibm.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <2ccd4a87-68f3-4eb1-bc2a-dbc424bc8d34@linaro.org>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20250217071711.83735-4-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: GUVsRbEh0gSO_8TYx181df4cWzHKC6aN
+X-Proofpoint-ORIG-GUID: oU6XtI3Pj2tRvmPklI1BwhCLXWunIqiW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-05_03,2025-03-04_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0
+ lowpriorityscore=0 adultscore=0 phishscore=0 mlxlogscore=999
+ suspectscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503050049
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,37 +120,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/03/2025 18.32, Philippe Mathieu-Daudé wrote:
-> On 3/3/25 17:57, Peter Maydell wrote:
->> On Mon, 3 Mar 2025 at 15:49, Cédric Le Goater <clg@redhat.com> wrote:
->>> Why are we keeping qemu-system-ppc and qemu-system-i386, and arm,
->>> since qemu-system-ppc64 and qemu-system-x86_64 should be able to
->>> run the same machines ?
->>
->> They're not identical -- for example "-cpu max" on
->> qemu-system-arm is a 32-bit CPU but on qemu-system-aarch64
->> it is a 64-bit CPU.
->>
->> There's definitely a lot of overlap but we can't just drop
->> the -arm executable until/unless we figure out what to do
->> about the corner cases where they are different. Plus there's
->> a lot of users out there with existing command lines and
->> configs that assume the existence of a qemu-system-arm
->> executable.
+
+
+On 2/17/25 12:47, Aditya Gupta wrote:
+> While the first kernel boots, it registers memory regions for fadump
+> such as:
+>      * CPU state data  (has to be populated by the platform)
+>      * HPTE state data (has to be populated by the platform)
+>      * Real Mode Regions (platform should copy it to requested
+>        destination addresses)
+>      * OS defined regions (such as parameter save area)
 > 
-> Thomas and myself have been trying to sort that out. Now with the
-> single-binary effort, it gained new interest. This hasn't be a trivial
-> task so far, due to as you mentioned the legacy CLI uses and migration.
+> Platform is also expected to modify the 'bytes_dumped' to the length of
+> data preserved/copied by platform (ideally same as the source length
+> passed by kernel).
+> 
+> The kernel passes source address and length for the memory regions, and
+> a destination address to where the memory is to be copied.
+> 
+> Implement the preserving/copying of the Real Mode Regions and the
+> Parameter Save Area in QEMU Pseries
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   hw/ppc/spapr_rtas.c    | 117 ++++++++++++++++++++++++++++++++++++++++-
+>   include/hw/ppc/spapr.h |  27 +++++++++-
+>   2 files changed, 142 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
+> index 01c82375f03d..9b29cadab2c9 100644
+> --- a/hw/ppc/spapr_rtas.c
+> +++ b/hw/ppc/spapr_rtas.c
+> @@ -344,6 +344,120 @@ static void rtas_ibm_set_system_parameter(PowerPCCPU *cpu,
+>   struct fadump_metadata fadump_metadata;
+>   bool is_next_boot_fadump;
+>   
+> +/* Preserve the memory locations registered for fadump */
+> +static bool fadump_preserve_mem(void)
+> +{
+> +    struct rtas_fadump_mem_struct *fdm = &fadump_metadata.registered_fdm;
+> +    uint64_t next_section_addr;
+> +    int dump_num_sections, data_type;
+> +    uint64_t src_addr, src_len, dest_addr;
+> +    void *copy_buffer;
+> +
+> +    assert(fadump_metadata.fadump_registered);
+> +    assert(fadump_metadata.fdm_addr != -1);
+> +
+> +    /* Read the fadump header passed during fadump registration */
+> +    cpu_physical_memory_read(fadump_metadata.fdm_addr,
+> +            &fdm->header, sizeof(fdm->header));
+> +
+> +    /* Verify that we understand the fadump header version */
+> +    if (fdm->header.dump_format_version != cpu_to_be32(FADUMP_VERSION)) {
+> +        /*
+> +         * Dump format version is unknown and likely changed from the time
+> +         * of fadump registration. Back out now.
+> +         */
+> +        return false;
+> +    }
+> +
+> +    dump_num_sections = be16_to_cpu(fdm->header.dump_num_sections);
+> +
+> +    if (dump_num_sections > FADUMP_MAX_SECTIONS) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +            "FADUMP: Too many sections: %d\n", fdm->header.dump_num_sections);
+> +        return false;
+> +    }
+> +
+> +    next_section_addr =
+> +        fadump_metadata.fdm_addr +
+> +        be32_to_cpu(fdm->header.offset_first_dump_section);
+> +
+> +    /*
+> +     * Handle all sections
+> +     *
+> +     * CPU State Data and HPTE regions are handled in their own cases
+> +     *
+> +     * RMR regions and any custom OS reserved regions such as parameter
+> +     * save area, are handled by simply copying the source region to
+> +     * destination address
+> +     */
+> +    for (int i = 0; i < dump_num_sections; ++i) {
+> +        /* Read the fadump section from memory */
+> +        cpu_physical_memory_read(next_section_addr,
+> +                &fdm->rgn[i], sizeof(fdm->rgn[i]));
+> +
+> +        next_section_addr += sizeof(fdm->rgn[i]);
+> +
+> +        data_type = be16_to_cpu(fdm->rgn[i].source_data_type);
+> +        src_addr  = be64_to_cpu(fdm->rgn[i].source_address);
+> +        src_len   = be64_to_cpu(fdm->rgn[i].source_len);
+> +        dest_addr = be64_to_cpu(fdm->rgn[i].destination_address);
+> +
+> +        /* Reset error_flags & bytes_dumped for now */
+> +        fdm->rgn[i].error_flags = 0;
+> +        fdm->rgn[i].bytes_dumped = 0;
+> +
+> +        if (be32_to_cpu(fdm->rgn[i].request_flag) != FADUMP_REQUEST_FLAG) {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "FADUMP: Skipping copying region as not requested\n");
+> +            continue;
+> +        }
+> +
+> +        switch (data_type) {
+> +        case FADUMP_CPU_STATE_DATA:
+> +            /* TODO: Add CPU state data */
+> +            break;
+> +        case FADUMP_HPTE_REGION:
+> +            /* TODO: Add hpte state data */
+> +            break;
+> +        case FADUMP_REAL_MODE_REGION:
+> +        case FADUMP_PARAM_AREA:
+> +            /* Skip copy if source and destination are same (eg. param area) */
+> +            if (src_addr != dest_addr) {
+> +                copy_buffer = g_malloc(src_len + 1);
+> +                if (copy_buffer == NULL) {
+> +                    qemu_log_mask(LOG_GUEST_ERROR,
+> +                        "FADUMP: Failed allocating memory for copying reserved memory regions\n");
+> +                    fdm->rgn[i].error_flags =
+> +                        cpu_to_be16(FADUMP_ERROR_LENGTH_EXCEEDS_SOURCE);
+> +
+> +                    continue;
+> +                }
+> +
+> +                /* Copy the source region to destination */
+> +                cpu_physical_memory_read(src_addr, copy_buffer, src_len);
+> +                cpu_physical_memory_write(dest_addr, copy_buffer, src_len);
+> +                g_free(copy_buffer);
+> +            }
+> +
+> +            /*
+> +             * Considering cpu_physical_memory_write would have copied the
+> +             * complete region
+> +             */
+> +            fdm->rgn[i].bytes_dumped = cpu_to_be64(src_len);
 
-FWIW, here's my former attempt to see whether we could move into that direction:
+Is this really valid for FADUMP_PARAM_AREA where we intend to skip copy?
 
-  https://lore.kernel.org/qemu-devel/20230425133851.489283-1-thuth@redhat.com/
+> +
+> +            break;
+> +        default:
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                "FADUMP: Skipping unknown source data type: %d\n", data_type);
+> +
+> +            fdm->rgn[i].error_flags =
+> +                cpu_to_be16(FADUMP_ERROR_INVALID_DATA_TYPE);
+> +        }
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>   static void trigger_fadump_boot(target_ulong spapr_retcode)
+>   {
+>       /*
+> @@ -353,7 +467,8 @@ static void trigger_fadump_boot(target_ulong spapr_retcode)
+>        */
+>       pause_all_vcpus();
+>   
+> -    if (true /* TODO: Preserve memory registered for fadump */) {
+> +    /* Preserve the memory locations registered for fadump */
+> +    if (!fadump_preserve_mem()) {
 
-In the end, it was too frustrating to struggle with the 
-backwards-compatibility questions (do we really need to keep 
-qemu-system-i386 around forever?), so I pretty much gave up on that patch 
-series.
+This change can be avoided as suggested in previous patch.
 
-  Thomas
+>           /* Failed to preserve the registered memory regions */
+>           rtas_st(spapr_retcode, 0, RTAS_OUT_HW_ERROR);
+>   
+> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+> index efa2f891a8a7..a80704187583 100644
+> --- a/include/hw/ppc/spapr.h
+> +++ b/include/hw/ppc/spapr.h
+> @@ -776,7 +776,32 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
+>   #define FADUMP_CMD_UNREGISTER          2
+>   #define FADUMP_CMD_INVALIDATE          3
+>   
+> -#define FADUMP_VERSION    1
+> +#define FADUMP_VERSION                 1
 
+This change can be avoided if taken care initially.
+
+Thanks
+Harsh
+> +
+> +/*
+> + * The Firmware Assisted Dump Memory structure supports a maximum of 10 sections
+> + * in the dump memory structure. Presently, three sections are used for
+> + * CPU state data, HPTE & Parameters area, while the remaining seven sections
+> + * can be used for boot memory regions.
+> + */
+> +#define FADUMP_MAX_SECTIONS            10
+> +#define RTAS_FADUMP_MAX_BOOT_MEM_REGS  7
+> +
+> +/* Firmware provided dump sections */
+> +#define FADUMP_CPU_STATE_DATA   0x0001
+> +#define FADUMP_HPTE_REGION      0x0002
+> +#define FADUMP_REAL_MODE_REGION 0x0011
+> +
+> +/* OS defined sections */
+> +#define FADUMP_PARAM_AREA       0x0100
+> +
+> +/* Dump request flag */
+> +#define FADUMP_REQUEST_FLAG     0x00000001
+> +
+> +/* Dump status flag */
+> +#define FADUMP_ERROR_INVALID_DATA_TYPE          0x8000
+> +#define FADUMP_ERROR_INVALID_SOURCE_ADDR        0x4000
+> +#define FADUMP_ERROR_LENGTH_EXCEEDS_SOURCE      0x2000
+>   
+>   /*
+>    * The Firmware Assisted Dump Memory structure supports a maximum of 10 sections
 
