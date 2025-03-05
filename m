@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9B5FC282D3
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:56:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF70CC282D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 01:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpdxS-0002BQ-2t; Tue, 04 Mar 2025 20:54:02 -0500
+	id 1tpdzJ-0007fF-3a; Tue, 04 Mar 2025 20:55:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdxP-000257-7a
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:53:59 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1tpdyX-0006ER-A7
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:09 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpdxN-0008Qb-5A
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:53:58 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-223785beedfso79513575ad.1
- for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:53:56 -0800 (PST)
+ id 1tpdyV-0000NP-Co
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 20:55:08 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-22398e09e39so58667885ad.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Mar 2025 17:55:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741139635; x=1741744435; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741139706; x=1741744506; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y/mnKCkxUHseq2DEPIBKL6BK8gURWClF8u9vsAqWZ2g=;
- b=atMlgwbR45VECPJAyRV/THbHJSJCnwX7MB36ji1MDUp3H5lzrKZDcplO++Zx+v1FbZ
- XkaHV4jJ4Pe6EDwjRTnsxaISTA/Z70+i8GQVSp0F6nhrBE8xT1CNi+sW+ITJn7ezWkAT
- bvWNhI2DY9aqL9/yjeGWDexOa74WLX+qk+GC/G7tWFzdYqrQxs1tR6CfPWDlm0CJ94jM
- iL8fMpzILYkOPZ0DTIHFi408ZwPKU2oZwDy0NsnGcaj/4UBIzW7A6uQ9yg+BkInqZoCr
- TGbo1JOx/oU4sNj/aTsKZLkRABhIY2f9ZAAhnekELZqFD/8Ow/h8K5QwHeHfvPDlY1TO
- mk6g==
+ bh=ZiODDY/366gqEbz3qx1fab9KEQDWoxxeKu1jXAINex8=;
+ b=CdSjHsAdgDsdZmpVfJ1yg3zicdDfK3GKX6m/jTOZUvcG3NwALDcL2yqOwkr9iFxvsl
+ OznaFah+vthWqu5P7KGPtlpEcNmOleDx6rwhT320uEbpZYy/d03xxNeZa0g7v3bF4lfa
+ X/i2xYKu821esWPMTbWaH8Y1qnlp6uU4wl0mB2jj5SqgoK4TBJmUAZe9svOyVrB8PINV
+ dKQXlWRscyFLvTTuK/1PhyPhNB3JLBzTdeFb7dPrTHWb98dM6vaP8o1D2fzasRlu02mI
+ 12jUBPE5Ud803SLP6UtSOYxvgG2NSxNcB+MpLwjdQRURnqaGKhAaRFUyPZ+vziAjVOKO
+ FcnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741139635; x=1741744435;
+ d=1e100.net; s=20230601; t=1741139706; x=1741744506;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=y/mnKCkxUHseq2DEPIBKL6BK8gURWClF8u9vsAqWZ2g=;
- b=sksQLi9p24UGdZxjOsIn2AitZtaWdltEV9ykxQ0HROFfD/8YQOvFm7gy3CiPQ+Z2tJ
- pBuhD0FR1lCveZTktWFcf5H88KGqmYAYd5KdgTVTbpZ9QWJSINSjS5ZTdH1N8FfW0g5q
- bPGVGqOKZD+snB2mgo11cQCjrDnh3gU9reN30HIpjQ9pVZ5cleqFl9FXHjR185zOnLbg
- N0IL2fDNs2dizL7OkJ+/ikuJF1pmuk/HONX85y4kqGMw/1VXV2fEIJRrO7WZ+cUIItQF
- Dr/e/Rwi5HF90mwrrnYvKrWGZbzF9JYc4UuF3++LW3/G9FTrhXpW7+f/Hd3Jw0tCpVTg
- Dl/w==
-X-Gm-Message-State: AOJu0Yy1A9a9UzELOjOj6xI6y8n0AxHf3SN3AzbCXFCfFeJSIT0PrUCs
- 1igDLQum5irzPN3/9CHwbor3jE+FzvjuPnvqz0pfdlg1YP5a5VUqps7jmU0ehpw=
-X-Gm-Gg: ASbGncvPZMDW06l4Krm1UvbAMMdMRwW4+n4HTaSq29evakWFR5hEUBUhFQMlfZyRzpM
- JyT7KHAgY8j18QGK1WwsrF23y/gT7TRUac631ZibsRFySfjXW9lmXKE16Fd08mi3SLL9KPf6etT
- vq9DIdEQY66wX7pOr5rLCC4MM6zoOqMZYu+/RGNy/GWDH0OlSt30z7eESsXpyWWuLWX34pJ9hE1
- gxfAcDsCaGkusHOJduTw9BJM0xQsum0R0vgJYLPB9cN9y8KxnlKOJaazw3Ua4nzFy0vw3U6jKo6
- lH7vt+W5cva6725j0tGzvseHRCyj0kdrIULC6rlnIp7vAeyprt5Q2q9GFk5IesEYOyaRdKInfVs
- w1KIJwYbEdBuOjd4OwTjohioGFObG/ya+ma8/srAG7mJ/50SxzmY=
-X-Google-Smtp-Source: AGHT+IHMqcDDYqF0qavMhjnPjFR/1qb447IJq47ruL7HOCET4aoxCMe84LNKkNEIINHS8E/P+u2zqA==
-X-Received: by 2002:a17:903:244d:b0:223:67e1:401f with SMTP id
- d9443c01a7336-223f1d34f8amr22624085ad.48.1741139635378; 
- Tue, 04 Mar 2025 17:53:55 -0800 (PST)
+ bh=ZiODDY/366gqEbz3qx1fab9KEQDWoxxeKu1jXAINex8=;
+ b=txW3POo+kjKhNEG2w7UKwyGEFXHNMFuhMS+QvPIMIL3qataGoPkh2hXEK1wKS4wiNk
+ 24VrbcGoVaPkv1id0pvVgBhgXzk7slmDEj8PhQKlEOKtgKySW9E7uSU1y4zb+FZFKkJk
+ BVCr8xiwpiG0aZirEh5IsJ24QphEtCnacXI1VkgvCDPDgrc36sYbChpS8DHg2tNYY1oy
+ RRF8XIYaVA9Gye4qLQj1baoYeW0HDT79zNJdZpF1/ljPDZ2jDG3jDS37OVYahfoP4Vly
+ eE86dLeWIL14EjX72GJhIr3LN8eGSHMjBae0iSO8QY3oXI5mLWDoZVBXtqouuTBqdSwI
+ ac4w==
+X-Gm-Message-State: AOJu0Ywf3vyEu2JE+iSvC+38ZoS8GliJV2hDiy8ZUP5DTG7GWbPvmuzh
+ Jcwov4oa543xtd/Qx2Bd3TMPBMP0KdBw5eKcN67QsiuapDfo9G5wbDXwuhflfk4=
+X-Gm-Gg: ASbGncuD5gLxFUQCbcO2MxL/tK2d4jX6CIzx+525W3Kn9yAShtGApdBGUow9RQW9N53
+ 2m5O0zR9FRgKtCiVyaCzp2wSs5ew2llYjG2aZ8plpT/xNTQxdfRGWNq+AGM/dkT61u5eVgxNUfz
+ Kt8JPZKRud6cADmh/tjxprnZ6Hi+hl1xK+5vNuc8g19Mg6Q4stNtHr61uz32eKC0mrK3xUNPnb1
+ FxT6IcQFN09ne/7wXVIoHU9g8wsL9km2f4tShwHv87sBgzPngysowZWRHkrvUZSMySpqqzN3QKk
+ zL2jswD8Mp7t8AeEBwIFhM78+/rLw4Z0Dx/P6yCGyW4uqzctXSlltXJBjLvqwSA9kqshW2ZsxOL
+ T5vbMmeA6jNGVo2owQSsKX6j9LoOP5CkpJN0IANaEuo35tke9vFs=
+X-Google-Smtp-Source: AGHT+IFRM+CsB9vCeKqOmLx353E055ooYdaB87yK4mkQ8jaN74xzhKsdYU4bgBofWs3fvm4tPtV0iA==
+X-Received: by 2002:a17:903:8c4:b0:220:f91a:4650 with SMTP id
+ d9443c01a7336-223f1c95712mr18682595ad.19.1741139705719; 
+ Tue, 04 Mar 2025 17:55:05 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.53.52
+ d9443c01a7336-223501f9e04sm102583695ad.87.2025.03.04.17.55.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Mar 2025 17:53:54 -0800 (PST)
+ Tue, 04 Mar 2025 17:55:05 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Andrew Jones <ajones@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 14/59] target/riscv: change priv_ver check in validate_profile()
-Date: Wed,  5 Mar 2025 11:52:22 +1000
-Message-ID: <20250305015307.1463560-15-alistair.francis@wdc.com>
+Subject: [PULL 38/59] target/riscv/kvm: add extensions after 6.14-rc3 update
+Date: Wed,  5 Mar 2025 11:52:46 +1000
+Message-ID: <20250305015307.1463560-39-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305015307.1463560-1-alistair.francis@wdc.com>
 References: <20250305015307.1463560-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,47 +107,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-The S profiles do a priv_ver check during validation to see if the
-running priv_ver is compatible with it. This check is done by comparing
-if the running priv_ver is equal to the priv_ver the profile specifies.
-
-There is an universe where we added RVA23S64 support based on both
-RVA23U64 and RVA22S64 and this error is being thrown:
-
-qemu-system-riscv64: warning: Profile rva22s64 requires
-    priv spec v1.12.0, but priv ver v1.13.0 was set
-
-We're enabling RVA22S64 (priv_ver 1.12) as a dependency of RVA23S64
-(priv_ver 1.13) and complaining to users about what we did ourselves.
-
-There's no drawback in allowing a profile to run in an env that has a
-priv_ver newer than it's required by it. So, like Hiro Nakamura saves
-the future by changing the past, change the priv_ver check now to allow
-profiles to run in a newer priv_ver. This universe will have one less
-warning to deal with.
+Expose ziccrse, zabha and svvptc.
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250115184316.2344583-5-dbarboza@ventanamicro.com>
+Message-ID: <20250221153758.652078-4-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/tcg-cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/kvm/kvm-cpu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 2b21942ef2..cb9b504012 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -746,7 +746,7 @@ static void riscv_cpu_validate_profile(RISCVCPU *cpu,
- #endif
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 23ce779359..471fd554b3 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -274,6 +274,7 @@ static void kvm_riscv_update_cpu_misa_ext(RISCVCPU *cpu, CPUState *cs)
+ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
+     KVM_EXT_CFG("zicbom", ext_zicbom, KVM_RISCV_ISA_EXT_ZICBOM),
+     KVM_EXT_CFG("zicboz", ext_zicboz, KVM_RISCV_ISA_EXT_ZICBOZ),
++    KVM_EXT_CFG("ziccrse", ext_ziccrse, KVM_RISCV_ISA_EXT_ZICCRSE),
+     KVM_EXT_CFG("zicntr", ext_zicntr, KVM_RISCV_ISA_EXT_ZICNTR),
+     KVM_EXT_CFG("zicond", ext_zicond, KVM_RISCV_ISA_EXT_ZICOND),
+     KVM_EXT_CFG("zicsr", ext_zicsr, KVM_RISCV_ISA_EXT_ZICSR),
+@@ -283,6 +284,7 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
+     KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
+     KVM_EXT_CFG("zimop", ext_zimop, KVM_RISCV_ISA_EXT_ZIMOP),
+     KVM_EXT_CFG("zcmop", ext_zcmop, KVM_RISCV_ISA_EXT_ZCMOP),
++    KVM_EXT_CFG("zabha", ext_zabha, KVM_RISCV_ISA_EXT_ZABHA),
+     KVM_EXT_CFG("zacas", ext_zacas, KVM_RISCV_ISA_EXT_ZACAS),
+     KVM_EXT_CFG("zawrs", ext_zawrs, KVM_RISCV_ISA_EXT_ZAWRS),
+     KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
+@@ -325,6 +327,7 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
+     KVM_EXT_CFG("svinval", ext_svinval, KVM_RISCV_ISA_EXT_SVINVAL),
+     KVM_EXT_CFG("svnapot", ext_svnapot, KVM_RISCV_ISA_EXT_SVNAPOT),
+     KVM_EXT_CFG("svpbmt", ext_svpbmt, KVM_RISCV_ISA_EXT_SVPBMT),
++    KVM_EXT_CFG("svvptc", ext_svvptc, KVM_RISCV_ISA_EXT_SVVPTC),
+ };
  
-     if (profile->priv_spec != RISCV_PROFILE_ATTR_UNUSED &&
--        profile->priv_spec != env->priv_ver) {
-+        profile->priv_spec > env->priv_ver) {
-         profile_impl = false;
- 
-         if (send_warn) {
+ static void *kvmconfig_get_cfg_addr(RISCVCPU *cpu, KVMCPUConfig *kvmcfg)
 -- 
 2.48.1
 
