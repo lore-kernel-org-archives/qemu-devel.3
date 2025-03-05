@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC55C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 120F3C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 03:48:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpfj9-0005u4-1j; Tue, 04 Mar 2025 22:47:23 -0500
+	id 1tpfjY-0006y6-BA; Tue, 04 Mar 2025 22:47:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfj4-0005iG-Hs
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:47:18 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfjP-0006lq-V0
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:47:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfj1-00067O-C7
- for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:47:17 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tpfjO-0006Ai-4Y
+ for qemu-devel@nongnu.org; Tue, 04 Mar 2025 22:47:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741146434;
+ s=mimecast20190719; t=1741146457;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=av/LEwhuXaKikBGm7XHenppYaeUIC4NUezABwrF9viY=;
- b=F1rAz1JbWFlM/VNucPD++9NkHhhZK6I7QqB/QwMhAkLGk099vgTcGcAKPA2c1cO1Mg+jRn
- NyMyRHN7UtYa2tLbYPtpvk80kuGUOcKIBGZX2/hgC/RtIQ/fgoqS5/9SRBLYtITLJgUwVT
- qFegNo5svpL/RKka3Z11+94TSf8vnCI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=izzwoRTUjt1It3o5vsHMkCHTQ88Kc5AkVwfiriXCANY=;
+ b=UK1r21JQ0GvP4xy79nXx6Vok73yb2irFDisuVnXimR6iKpZRx8im3v42BkP11Hwa7px1f8
+ NDjNzIMKAL5YnfCljvpJCzt76dRvV+BaWYpktJL69or+pWzdZzDRIVsxqnpe/RwzHpLCNj
+ ch17iDxhfL+v5jWXxtVCFS7pXj8g8kk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-mMwqJkyBOnmfS4B7d3yLQA-1; Tue,
- 04 Mar 2025 22:47:11 -0500
-X-MC-Unique: mMwqJkyBOnmfS4B7d3yLQA-1
-X-Mimecast-MFC-AGG-ID: mMwqJkyBOnmfS4B7d3yLQA_1741146430
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-5RensmS4MWCQACtVwFjTDw-1; Tue,
+ 04 Mar 2025 22:47:34 -0500
+X-MC-Unique: 5RensmS4MWCQACtVwFjTDw-1
+X-Mimecast-MFC-AGG-ID: 5RensmS4MWCQACtVwFjTDw_1741146452
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9367F180AF51; Wed,  5 Mar 2025 03:47:10 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB4B118001D4; Wed,  5 Mar 2025 03:47:32 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.45])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 277221955DDD; Wed,  5 Mar 2025 03:47:07 +0000 (UTC)
+ id B09AF1956095; Wed,  5 Mar 2025 03:47:29 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
@@ -52,13 +52,15 @@ Cc: Michael Roth <michael.roth@amd.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 15/57] docs/qapi-domain: add "Errors:" field lists
-Date: Tue,  4 Mar 2025 22:45:24 -0500
-Message-ID: <20250305034610.960147-16-jsnow@redhat.com>
+ Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
+ Harmonie Snow <harmonie@gmail.com>
+Subject: [PATCH 21/57] docs/qapi-domain: add :deprecated: directive option
+Date: Tue,  4 Mar 2025 22:45:30 -0500
+Message-ID: <20250305034610.960147-22-jsnow@redhat.com>
 In-Reply-To: <20250305034610.960147-1-jsnow@redhat.com>
 References: <20250305034610.960147-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
@@ -86,41 +88,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-``:error: descr`` can now be used to document error conditions. The
-format of the description is not defined here; so the ability to name
-specific types is left to the document writer.
+Although "deprecated" is a feature (and *will* appear in the features
+list), add a special :deprecated: option to generate an eye-catch that
+makes this information very hard to miss.
 
+(The intent is to modify qapidoc.py to add this option whenever it
+detects that the features list attached to a definition contains the
+"deprecated" entry.)
+
+-
+
+RFC: Technically, this object-level option is un-needed and could be
+replaced with a standard content-level directive that e.g. qapidoc.py
+could insert at the beginning of the content block. I've done it here as
+an option to demonstrate how it would be possible to do.
+
+It's a matter of taste for "where" we feel like implementing it.
+
+One benefit of doing it this way is that we can create a single
+containing box to set CSS style options controlling the flow of multiple
+infoboxes. The other way to achieve that would be to create a directive
+that allows us to set multiple options instead, e.g.:
+
+.. qapi:infoboxes:: deprecated unstable
+
+or possibly:
+
+.. qapi:infoboxes::
+   :deprecated:
+   :unstable:
+
+For now, I've left these as top-level QAPI object options. "Hey, it works."
+
+P.S., I outsourced the CSS ;)
+
+Signed-off-by: Harmonie Snow <harmonie@gmail.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapi_domain.py | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ docs/sphinx-static/theme_overrides.css | 25 +++++++++++++++++++++++++
+ docs/sphinx/qapi_domain.py             | 26 ++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+)
 
+diff --git a/docs/sphinx-static/theme_overrides.css b/docs/sphinx-static/theme_overrides.css
+index 965ecac54fd..3765cab1b20 100644
+--- a/docs/sphinx-static/theme_overrides.css
++++ b/docs/sphinx-static/theme_overrides.css
+@@ -208,3 +208,28 @@ div[class^="highlight"] pre {
+         color: inherit;
+     }
+ }
++
++/* QAPI domain theming */
++
++.qapi-infopips {
++    margin-bottom: 1em;
++}
++
++.qapi-infopip {
++    display: inline-block;
++    padding: 0em 0.5em 0em 0.5em;
++    margin: 0.25em;
++}
++
++.qapi-deprecated {
++    background-color: #fffef5;
++    border: solid #fff176 6px;
++    font-weight: bold;
++    padding: 8px;
++    border-radius: 15px;
++    margin: 5px;
++}
++
++.qapi-deprecated::before {
++    content: '⚠️ ';
++}
 diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index e1b766d9481..d60cccb8e95 100644
+index fff5cca24cc..1be59e36bdf 100644
 --- a/docs/sphinx/qapi_domain.py
 +++ b/docs/sphinx/qapi_domain.py
-@@ -35,7 +35,7 @@
- from sphinx.locale import _, __
- from sphinx.roles import XRefRole
- from sphinx.util import logging
--from sphinx.util.docfields import GroupedField, TypedField
-+from sphinx.util.docfields import Field, GroupedField, TypedField
- from sphinx.util.docutils import SphinxDirective
- from sphinx.util.nodes import make_id, make_refnode
- 
-@@ -285,6 +285,13 @@ class QAPICommand(QAPIObject):
-                 names=("arg",),
-                 can_collapse=False,
-             ),
-+            # :error: descr
-+            Field(
-+                "error",
-+                label=_("Errors"),
-+                names=("error", "errors"),
-+                has_arg=False,
-+            ),
-         ]
+@@ -140,6 +140,7 @@ class QAPIObject(ObjectDescription[Signature]):
+             "module": directives.unchanged,  # Override contextual module name
+             # These are QAPI originals:
+             "since": since_validator,
++            "deprecated": directives.flag,
+         }
      )
+ 
+@@ -253,6 +254,31 @@ def add_target_and_index(
+                     ("single", indextext, node_id, "", None)
+                 )
+ 
++    def _add_infopips(self, contentnode: addnodes.desc_content) -> None:
++        # Add various eye-catches and things that go below the signature
++        # bar, but precede the user-defined content.
++        infopips = nodes.container()
++        infopips.attributes["classes"].append("qapi-infopips")
++
++        def _add_pip(source: str, content: str, classname: str) -> None:
++            node = nodes.container(source)
++            node.append(nodes.Text(content))
++            node.attributes["classes"].extend(["qapi-infopip", classname])
++            infopips.append(node)
++
++        if "deprecated" in self.options:
++            _add_pip(
++                ":deprecated:",
++                f"This {self.objtype} is deprecated.",
++                "qapi-deprecated",
++            )
++
++        if infopips.children:
++            contentnode.insert(0, infopips)
++
++    def transform_content(self, content_node: addnodes.desc_content) -> None:
++        self._add_infopips(content_node)
++
+     def _toc_entry_name(self, sig_node: desc_signature) -> str:
+         # This controls the name in the TOC and on the sidebar.
  
 -- 
 2.48.1
