@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0C2C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 09:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10D41C282D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 09:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpkgq-00005R-2G; Wed, 05 Mar 2025 04:05:20 -0500
+	id 1tpkhZ-0000jq-3r; Wed, 05 Mar 2025 04:06:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpkgo-0008VK-8W
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:05:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpkhX-0000ia-A5
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:06:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpkgm-0006q0-0J
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:05:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tpkhV-0006yi-Jj
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 04:06:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741165513;
+ s=mimecast20190719; t=1741165560;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mpmrctgQoEbnVAJGhV4oLqcUw6ECuXoLd9MjYPBrQEc=;
- b=JuNSXr01JY/sOQtGIk+k7RCmeDCSaSwCJITyDLMnL2RPIq60IUn2EW0P3hYooe4mRbJp2T
- DxH4eu/zcVOuShdQdHkWAIUDNkXpR7oPf+Mpq72hPai5uRiOcz+PIrHjFyLKgriHa8nfyC
- q8HASqPn6iBqu8m/u8DY9hzSyh9aPdI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Fw2Tb9JWr/sxvSObFQ7ucVSMvme05rEetn/E3ajU6vs=;
+ b=bvaXu1uRoX5Wtp38dQmbuNEcpcbpoYIT7QjOsMzLOf5bkr3NTRU9R7NBQVeGjwHW3qm+nV
+ U3XVLAHdMIFeV6v2Kb1fT2idsBH0I0tvupqgADc9YYTkr2+8YEq5kGDp7sV5H8AQHY96OZ
+ DZ2MU/3MEfEEJwOL2B2Ag90RuIF423Q=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-F5BW6cCNM9SQamQLGBRiHg-1; Wed, 05 Mar 2025 04:05:01 -0500
-X-MC-Unique: F5BW6cCNM9SQamQLGBRiHg-1
-X-Mimecast-MFC-AGG-ID: F5BW6cCNM9SQamQLGBRiHg_1741165501
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43bcfd1cefbso3877685e9.2
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 01:05:01 -0800 (PST)
+ us-mta-530--vJB0hIIPW-LHe1tfbbapA-1; Wed, 05 Mar 2025 04:05:57 -0500
+X-MC-Unique: -vJB0hIIPW-LHe1tfbbapA-1
+X-Mimecast-MFC-AGG-ID: -vJB0hIIPW-LHe1tfbbapA_1741165557
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-390df5962e1so277553f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 01:05:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741165501; x=1741770301;
+ d=1e100.net; s=20230601; t=1741165556; x=1741770356;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mpmrctgQoEbnVAJGhV4oLqcUw6ECuXoLd9MjYPBrQEc=;
- b=S//zuKCQn3HaAq5E4nTg7jB+BBcgRjbljD6ANCMc3GnWuLzLejPQPhN6tEo3IbeLow
- pNASwf5HGB3VgdQ1kaFdbUAKrszUZkxJgvzwxHAqoGPOvx5SVPMP/fHZff+kI1vPlaiF
- cQxvkymhNmE0tlunQyf2AHD770K6Jt8dxHSNfA+/zxCFEbfVBAlq9C0anngkmyjt7Ik/
- wL/NHfWxpS4lJRrVK3pdthvD0CZyY8nDbmE/bhtV16gMzpmEaCKXE/DeXX7qPOOJF/xw
- 9XsF6YbkkBFwhLWNE8n1mXdft2wwDCrKrQBcFG2pJzBiIrCccJ08eRuW6G0NTxUvvYU/
- W3gQ==
+ bh=Fw2Tb9JWr/sxvSObFQ7ucVSMvme05rEetn/E3ajU6vs=;
+ b=XAKl3NLcK/MGszDIJLnh8vM4yVSxizqNqjlpdjLpAuR12dmmORImfM1faGtZ0xzhDi
+ oTw7H3uqVx2v4/xZOpixClpSO+qTOuNsun8SVGrFvV9fZwAEj9EjApnz3QrzR1loee6Q
+ 3pW2/5r8yElFmy6CCam/ETA3Uf6aOguFEuOZk4G9WVNNSyDCwnKzsYufaAChXMZnC7m5
+ PIlAAEeggROCcA2e5Nmc5yTzoPR5riIGwhWxqFZlXIslPpxgzpxiEw1RAqAaMGJcI81U
+ 8eTnk/85ZFRQ0Rby7FnAo8kDAf9yjhPApsrOB28IwN04U4qzBvqMon35eED5q8NHbMGB
+ 7EEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXtN4TMMw+zmfBArR2UXgynTjbisvPCyHdusCiqLfPS6DVB9ODaAMO7BQpe0OHOvxgD3xr8S7lOfizX@nongnu.org
-X-Gm-Message-State: AOJu0YwVw0rAnZGFFHO8Ebr1RfPH5YIBQckCm1yTv+HrepkHcbk6izXh
- RR2IJJecbN5bsYrwHzZG8TgnDJ1OmxgzvK00ZL+/BgWxgR5KdbkU42gGmP2RCSJVDEFg4UnPmug
- 38iwwNERT82Za6IxyaC8qwU7UhTtdC1NEhTWdptA98/k64CtYEHGy
-X-Gm-Gg: ASbGncuhWkysPDRuxv9UWLxWeZD7lUgdY8Q79Xq/RpJIsnQcKFYcKULFU7EMz5/V+Ve
- SIDUOlx1+iPjPthK+/9LQMG4rOUmdOnDgtzFkR3dxbO3w8Zi/U2Ba6LHjzFz1Lv9vuhn+2AgNLb
- ScPTEpUHxDfangO0UpUrRCBM1/ScGm527wM6cy+LUGR0zMnjmHv0BdsEa0jHyDkAx/ZY2OKT4SU
- Oj9iQ7g5REeS8yehFMFnyShIocucbIPcB2bV8LS6VTnnBL79rj1jw5dP8B/hQ54V1dQ3AHn9wwt
- jxZ72er98gtjBgj6U+47e1ZuAZTRJBQKridwNLQl+sF2fUc=
-X-Received: by 2002:a05:600c:4ed2:b0:439:987c:2309 with SMTP id
- 5b1f17b1804b1-43bd29d410bmr13961195e9.27.1741165500762; 
- Wed, 05 Mar 2025 01:05:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH8/ABUPdIkI2ycUJIhutuvNiwcWPqs6CZOIJd00QscomeghLXFcqY9YlKuWR8yCJMUMB7d/Q==
-X-Received: by 2002:a05:600c:4ed2:b0:439:987c:2309 with SMTP id
- 5b1f17b1804b1-43bd29d410bmr13960815e9.27.1741165500315; 
- Wed, 05 Mar 2025 01:05:00 -0800 (PST)
+ AJvYcCX1tUNd8ku4UofZ/dorzI5PYgnTpZGFAP4u+JF+xgjOkd5uEMuquU4XZRK6PuMWQ5tnS7N9YwmIHUcq@nongnu.org
+X-Gm-Message-State: AOJu0YyP7NUUtE4bDE6d4PFe6mUsXaurJib/TFqFx9vZo0sTrIWpcy+y
+ nB7SUIgkthD5jftweedjX0kb1I29FEA4+tpFW7vJAtUscgXu5BtaPyYh7W3/dblBSiDbSFR5r77
+ wTDgvlTqZgElpnSFCqMIAt7sf3KwF0h3tWzW9CDKO5EXauxGvQKc5
+X-Gm-Gg: ASbGncvaUS8qQXDxy3NQg+1JSl7AucCRQJkqWUROcM/+YoFQfXUGYTpNnuuDUlTxc8M
+ VWB9bIFRXCPxbZQ6vEfAZ4US0H6Z7V6pN7C2e76v4H/vzJ/iyObtsZip4s49mMh49tBt9fMQmUU
+ 53T8TpidsdZ7DcSh1+BBUQriA1dQHYH2uyapFk/BE04ijFKiX9O/ODS3z8yhn/eRV4a5Or145s1
+ nwJY5+SJwIBu+lUlb9gdnOo4+ZXtiVioyXBWz5t3PamkYzG3D2e4Um7ftovSGn8cWY4NtF7nZVs
+ UoVlNf5/rESeO0PaY/wR6WnRqAN56/XQt68pNDL+fxL/cl4=
+X-Received: by 2002:adf:e183:0:b0:391:22e2:ccd2 with SMTP id
+ ffacd0b85a97d-39122e2d080mr850805f8f.3.1741165556614; 
+ Wed, 05 Mar 2025 01:05:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE3JL6dEwafitRYdnv7uBAzmeV1GhZosDKbcPRzV/hcRRSbAJDK0tHXsOmCuzm1ajZGDEaXkA==
+X-Received: by 2002:adf:e183:0:b0:391:22e2:ccd2 with SMTP id
+ ffacd0b85a97d-39122e2d080mr850772f8f.3.1741165556291; 
+ Wed, 05 Mar 2025 01:05:56 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
  [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd435c88esm10997075e9.36.2025.03.05.01.04.59
+ 5b1f17b1804b1-43bd42c5b33sm11406335e9.22.2025.03.05.01.05.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 01:04:59 -0800 (PST)
-Message-ID: <dcab2fd6-8443-4ae1-a3cb-91c0e6875520@redhat.com>
-Date: Wed, 5 Mar 2025 10:04:58 +0100
+ Wed, 05 Mar 2025 01:05:55 -0800 (PST)
+Message-ID: <a65bc513-5e13-4e63-96f8-5486a51ab377@redhat.com>
+Date: Wed, 5 Mar 2025 10:05:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] tests/functional: drop unused 'get_tag' method
+Subject: Re: [PATCH v2 7/7] tests/functional: stop output from zstd command
+ when uncompressing
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -86,7 +87,7 @@ Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-ppc@nongnu.org
 References: <20250228102738.3064045-1-berrange@redhat.com>
- <20250228102738.3064045-7-berrange@redhat.com>
+ <20250228102738.3064045-8-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -131,17 +132,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250228102738.3064045-7-berrange@redhat.com>
+In-Reply-To: <20250228102738.3064045-8-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -160,31 +161,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/02/2025 11.27, Daniel P. Berrangé wrote:
+> The zstd command will print incremental decompression progress to stderr
+> when running. Fortunately it is not on stdout as that would confuse the
+> TAP parsing, but we should still not have this printed. By switching
+> from 'check_call' to 'run' with the check=True and capture_output=True
+> we'll get the desired silence on success, and on failure the raised
+> exception will automatically include stdout/stderr data for diagnosis
+> purposes.
+> 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/qemu_test/tuxruntest.py | 11 -----------
->   1 file changed, 11 deletions(-)
+>   tests/functional/qemu_test/uncompress.py | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
-> index 41a4945a14..ad74156f9c 100644
-> --- a/tests/functional/qemu_test/tuxruntest.py
-> +++ b/tests/functional/qemu_test/tuxruntest.py
-> @@ -24,17 +24,6 @@ class TuxRunBaselineTest(QemuSystemTest):
->       # Tests are ~10-40s, allow for --debug/--enable-gcov overhead
->       timeout = 100
+> diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
+> index 76dcf22385..ce79da1b68 100644
+> --- a/tests/functional/qemu_test/uncompress.py
+> +++ b/tests/functional/qemu_test/uncompress.py
+> @@ -13,7 +13,7 @@
+>   import stat
+>   import shutil
+>   from urllib.parse import urlparse
+> -from subprocess import check_call, CalledProcessError
+> +from subprocess import run, CalledProcessError, DEVNULL
 >   
-> -    def get_tag(self, tagname, default=None):
-> -        """
-> -        Get the metadata tag or return the default.
-> -        """
-> -        utag = self._get_unique_tag_val(tagname)
-> -        print(f"{tagname}/{default} -> {utag}")
-> -        if utag:
-> -            return utag
-> -
-> -        return default
-
-A remainder from the avocado days... can be removed now, indeed.
+>   from .asset import Asset
+>   
+> @@ -46,8 +46,8 @@ def zstd_uncompress(zstd_path, output_path):
+>           return
+>   
+>       try:
+> -        check_call(['zstd', "-f", "-d", zstd_path,
+> -                    "-o", output_path])
+> +        run(['zstd', "-f", "-d", zstd_path,
+> +             "-o", output_path], capture_output=True, check=True)
+>       except CalledProcessError as e:
+>           os.remove(output_path)
+>           raise Exception(
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
