@@ -4,102 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 374C0C19F32
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C9F6C19F32
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Mar 2025 16:59:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tps3p-0004S8-90; Wed, 05 Mar 2025 11:57:33 -0500
+	id 1tps4n-0005V9-3R; Wed, 05 Mar 2025 11:58:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tps3m-0004ON-TF
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:57:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tps3k-0006yo-Us
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:57:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741193848;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ro/uAiz8KrtRiLEIDDBY59Jsc1UsZOMUjifs8ibsjpo=;
- b=D7wVl320Sk46FYsJTsU4bGokw9qyFozD2Tke6/QacScAJoc+7c4J5BBZONbwvExvfV4wwS
- XIY1BbRhbaaVp43ypSEeSjktd7BK+6Jw0xya83y5Oi5XTe3KjcM7tjxGHp2Vfjp4nI0gJ2
- /bLeKUnDfjqTEfmH+eILDj7r0xuZVAc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-34-FPbbOMpJPqmrYgsmHBTUhw-1; Wed, 05 Mar 2025 11:56:20 -0500
-X-MC-Unique: FPbbOMpJPqmrYgsmHBTUhw-1
-X-Mimecast-MFC-AGG-ID: FPbbOMpJPqmrYgsmHBTUhw_1741193779
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-39104223bb5so1892469f8f.2
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:56:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tps4g-0005UK-Ej
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:58:26 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tps4e-0007An-Nt
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 11:58:26 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5050d19e9so9241854a12.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 08:58:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741193903; x=1741798703; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OqqMOx2SW5qI2K7spDUtIJB3NXGuVoyvBTmNrS9R2c8=;
+ b=Vny+/nRT0gmpnxbMrQAMjunP7UkkXReq2q3oToau/dcqpDEFTX3/QDdqKTsYP7sKPZ
+ LfPkwM61ZG6J6XUjKFnctVPTBmjNb9g1wwVfvodrQP6rqMvO8Iv+v+oQ3z58ZuZoTCnd
+ F7lg1jJPoX0AlgjSSWDEfA5O44DdOHMexYW9g+23wR7bYquv9xyr62XRyW8jmxjQX0Lp
+ yLWwF4EWHrTtbWpzK/WjkDyqbQmAX86ZthB4x3TFT1/+/S+EQnSpKHSLYpTWDhLA4eal
+ 4O5zRv0nXF+q7HWBKw6j9d1CqzMFOZQDfR6oYZpQwd/wflIcz3l5ux2+9vdAPBXyTVVc
+ cT1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741193779; x=1741798579;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ro/uAiz8KrtRiLEIDDBY59Jsc1UsZOMUjifs8ibsjpo=;
- b=E859K9IE596NR+77YG1vI85YuFUV7faWIn52faz+ErexpMznJ/gpusngRInsJPUgrv
- tyhA+SnFNWNDxGxyR30v7drmpVlu9AJ57leekv4KstP5bNkm9/uvu3InuT+jmIf6digp
- /NQOGNsXeoTgd9877N5gdcvHf2JR08oPrEKgkzjVz73JtyehpTNxmi7Abs8QpQAkIRY5
- toy2ca1FHIRklUusLjmzXB/bDW/m6FKJQsxnkcQcdrpmbA3EK08U135zCixR5CpSncKM
- zu433HO5QTNWiESXLE0eazbMUq2KkGGHtyeiqQccvcqmfqEDtXuafVUr88Hb612aSZVn
- qALw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXRD7LBVdEuov8jIQYu5jFQTTueg1NNPCrYsWfMgNHoHkor42KlO0Xgt23CLTMIgtqjRJiJOoQFvQkh@nongnu.org
-X-Gm-Message-State: AOJu0Yzw8yCDsyrlMCSqv5MmK67RIy/w3NwHwFa87IwJzEOnqrBFVssC
- b3q4vqlasZrq8w0sJW1VSZ7E/YZNUebRR1ku0GW0DBaZ9XmSuVcNPl2lpCagVTI7uRT8E/ZbxZH
- W8xPiLrDxRqafj0AiauyqHzxrK4QOJQriwZ4CAMvvKKtORSZfup+a
-X-Gm-Gg: ASbGncv1LIy8jgvj7yAIzpPCs5Mf546QZC9E46zJS0KFI2TQtz6NMRcAXW1yxMoV7rm
- HO3XxFP38IQDyRxL+V9vW3Rcfl2i86YNvTGmVuEIdCncueL/+ehLbgUHjpaDWlA6ZvHic7XEF1B
- IbJzXtOIP1Ro+Vb5IDobaClrF9q+i7EGuTEBi6SqSkDPa1uXpdmnLw3PC8O8tqbIawY7rNBbMcn
- pYFYVPBARvGeLmNW5U7OXcgvNdfyh1yYGkjxE4iTyfvvuuokdPx2j/DezcvSuMl3bmYZftO/dWj
- PXdpIoXCsS/IA7KBE5cqXL4WC78LY88+MbAlUAf03+pnx9DBm0KfDNHpHqw0w5E=
-X-Received: by 2002:a5d:6d8a:0:b0:391:1f9:c599 with SMTP id
- ffacd0b85a97d-3911f726350mr2699719f8f.4.1741193778910; 
- Wed, 05 Mar 2025 08:56:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFTpwqaUb2e3nPekDRpsPyGFA/nWmzMgzDpUc6iXlFAdVOR3hmIQriKoj0HQf60C4gkVunWLw==
-X-Received: by 2002:a5d:6d8a:0:b0:391:1f9:c599 with SMTP id
- ffacd0b85a97d-3911f726350mr2699704f8f.4.1741193778536; 
- Wed, 05 Mar 2025 08:56:18 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd4292eeasm22539525e9.16.2025.03.05.08.56.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 08:56:17 -0800 (PST)
-Message-ID: <a55764ff-5e44-4057-af0f-3beb9ae1c0c1@redhat.com>
-Date: Wed, 5 Mar 2025 17:56:16 +0100
+ d=1e100.net; s=20230601; t=1741193903; x=1741798703;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OqqMOx2SW5qI2K7spDUtIJB3NXGuVoyvBTmNrS9R2c8=;
+ b=V2FDE0t+5f/gY4kbv4lfK7n6h2HP5Ce5t0f5Zammsz6ohAPPyVnc+9rwDOXt5i7PJN
+ m57yI2ldEcq5rojCkhGuKEU8WcczkQhz+/TooRInFt+q/wKqVBzUDOoAPLCo31mzNDS/
+ rZNe2MyTyZUQesuhVYXWUb661XtiFn85/i4Lxjmh3qYAAxgR5Gvo30wD9lCqBX8Y1czu
+ mPdgP4s4TVsBL/uwvBFdi1Xmgc90RBCRHJqQ8DvTdsw/4jEBq1JhvtlKkqXetgS9itai
+ nhJoRE5KR0KCrlLdls5FDWSgtSvafzxuYQV9f56Y2fqZoBLgXfs/MabRyjUrG0y9B2XD
+ D3kQ==
+X-Gm-Message-State: AOJu0YyJpXqccZEp5VHarGQAWPw7P6OYr66sq3HSZAs4lXKF434Oazbm
+ kZ8ZqGM3CX9v5onnY71wXIOjMEPKNEH9qaFlNM8VYm7uHnFqWQqzLcLT9GqVs3c=
+X-Gm-Gg: ASbGnct6HbtdGmPV1UqPVGJdDNUAOLXeodIBE8DaZozeKUWVoOZTt+MD5szZPJkix2b
+ n8LqQeD+Jss8wZIwt6QWeQQYsVgelh3V2aBKxQxWLsLuodWdKiEYh/YLaV/k1Ruf0y27dJbNL1p
+ rVP7H33b1K5NBGAK73Wmp70/Rb44YzAzjN4Pfi24yJzwvf0dRx3QPUVKD6Mn7S3pZEkqCWNgjVX
+ JCfpPL8DBRTx9Bm4ZqtMEDcAZa/wrUHhmLaKlQtCVgJRhlhPmI7bglQ4m3MkNjLTfJBZmhmwhoK
+ jq3X3O3MuucOFsOio84hztwtSntIaXtscLUF5mLZ5SRZcQk=
+X-Google-Smtp-Source: AGHT+IHIWWaubpF2qPGZqYMf3xsxVjzVL+olHb49BMM3DkfVQKnMnEm8SORIy7gdJJpMka1l4tQgMw==
+X-Received: by 2002:a05:6402:34c6:b0:5e0:82a0:50ab with SMTP id
+ 4fb4d7f45d1cf-5e59f4f947bmr4097005a12.27.1741193902922; 
+ Wed, 05 Mar 2025 08:58:22 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5e5bcd1595bsm314744a12.42.2025.03.05.08.58.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Mar 2025 08:58:21 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D7B0B5F932;
+ Wed,  5 Mar 2025 16:58:19 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,  Li-Wen Hsu <lwhsu@freebsd.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  Laurent Vivier
+ <laurent@vivier.eu>,  qemu-arm@nongnu.org,  Alexandre Iooss
+ <erdnaxe@crans.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  Riku Voipio
+ <riku.voipio@iki.fi>,  Warner Losh <imp@bsdimp.com>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Kyle Evans <kevans@freebsd.org>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Ed Maste <emaste@freebsd.org>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v2 07/32] tests/functional: update the aarch64_virg_gpu
+ images
+In-Reply-To: <20f719a9-a26d-4cb7-aa59-aab6cb20fe77@redhat.com> (Thomas Huth's
+ message of "Wed, 5 Mar 2025 09:35:08 +0100")
+References: <20250304222439.2035603-1-alex.bennee@linaro.org>
+ <20250304222439.2035603-8-alex.bennee@linaro.org>
+ <20f719a9-a26d-4cb7-aa59-aab6cb20fe77@redhat.com>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Wed, 05 Mar 2025 16:58:19 +0000
+Message-ID: <87cyev4dp0.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/arm/smmu: Introduce smmu_configs_inv_sid_range()
- helper
-Content-Language: en-US
-To: JianChunfu <jansef.jian@hj-micro.com>, peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20250228031438.3916-1-jansef.jian@hj-micro.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250228031438.3916-1-jansef.jian@hj-micro.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,175 +114,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Thomas Huth <thuth@redhat.com> writes:
 
-Hi,
-
-On 2/28/25 4:14 AM, JianChunfu wrote:
-> Use a similar terminology smmu_hash_remove_by_sid_range() as the one
-> being used for other hash table matching functions since
-> smmuv3_invalidate_ste() name is not self explanatory, and introduce a
-> helper that invokes the g_hash_table_foreach_remove.
+> On 04/03/2025 23.24, Alex Benn=C3=A9e wrote:
+>> Update to the most recent aarch64_virt_gpu image. The principle
+>> differences are:
+>>    - target a v8.0 baseline CPU
+>>    - latest vkmark (2025.1)
+>>    - actually uses the rootfs (previously was initrd)
+>>    - rootfs includes more testing tools for interactive use
+>> See README.md in https://fileserver.linaro.org/s/ce5jXBFinPxtEdx for
+>> details about the image creation and the buildroot config.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>   tests/functional/test_aarch64_virt_gpu.py | 10 +++++-----
+>>   1 file changed, 5 insertions(+), 5 deletions(-)
+>> diff --git a/tests/functional/test_aarch64_virt_gpu.py
+>> b/tests/functional/test_aarch64_virt_gpu.py
+>> index 3fdb31f034..e417ca9beb 100755
+>> --- a/tests/functional/test_aarch64_virt_gpu.py
+>> +++ b/tests/functional/test_aarch64_virt_gpu.py
+>> @@ -25,14 +25,14 @@ class Aarch64VirtGPUMachine(LinuxKernelTest):
+>>       ASSET_VIRT_GPU_KERNEL =3D Asset(
+>>           'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
+>>           'download?path=3D%2F&files=3D'
+>> -        'Image',
+>> -        '89e5099d26166204cc5ca4bb6d1a11b92c217e1f82ec67e3ba363d09157462=
+f6')
+>> +        'Image.6.12.16.aarch64',
+>> +        '7888c51c55d37e86bbbdeb5acea9f08c34e6b0f03c1f5b2463285f6a6f6eec=
+8b')
+>>         ASSET_VIRT_GPU_ROOTFS =3D Asset(
+>>           'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
+>>           'download?path=3D%2F&files=3D'
+>> -        'rootfs.ext4.zstd',
+>> -        '792da7573f5dc2913ddb7c638151d4a6b2d028a4cb2afb38add513c1924bda=
+d4')
+>> +        'rootfs.aarch64.ext2.zstd',
 >
-> No functional change intended.
+> I'm a little bit surprised to see "ext2" instead of "ext4" here, did
+> they really downgrade the filesystem?
+
+I think buildroot just symlinked them all together. I'll double check.
+
 >
-> Signed-off-by: JianChunfu <jansef.jian@hj-micro.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Anyway,
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-Thanks
-
-Eric
-> ---
-> v3: - Modify the commit msg
->     - Rename the trace funtion
-> v2: - move smmuv3_invalidate_ste() to smmu_hash_remove_by_sid_range()
->     - add function smmu_configs_inv_sid_range()
-> v1: - Rename smmuv3_invalidate_ste to smmuv3_hash_remove_by_sid_range
-> ---
->  hw/arm/smmu-common.c         | 21 +++++++++++++++++++++
->  hw/arm/smmu-internal.h       |  5 -----
->  hw/arm/smmuv3.c              | 19 ++-----------------
->  hw/arm/trace-events          |  3 ++-
->  include/hw/arm/smmu-common.h |  6 ++++++
->  5 files changed, 31 insertions(+), 23 deletions(-)
->
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index 3f8272875..bad3b3b0b 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -225,6 +225,27 @@ static gboolean smmu_hash_remove_by_vmid_ipa(gpointer key, gpointer value,
->             ((entry->iova & ~info->mask) == info->iova);
->  }
->  
-> +static gboolean
-> +smmu_hash_remove_by_sid_range(gpointer key, gpointer value, gpointer user_data)
-> +{
-> +    SMMUDevice *sdev = (SMMUDevice *)key;
-> +    uint32_t sid = smmu_get_sid(sdev);
-> +    SMMUSIDRange *sid_range = (SMMUSIDRange *)user_data;
-> +
-> +    if (sid < sid_range->start || sid > sid_range->end) {
-> +        return false;
-> +    }
-> +    trace_smmu_config_cache_inv(sid);
-> +    return true;
-> +}
-> +
-> +void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range)
-> +{
-> +    trace_smmu_configs_inv_sid_range(sid_range.start, sid_range.end);
-> +    g_hash_table_foreach_remove(s->configs, smmu_hash_remove_by_sid_range,
-> +                                &sid_range);
-> +}
-> +
->  void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
->                           uint8_t tg, uint64_t num_pages, uint8_t ttl)
->  {
-> diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
-> index 843bebb18..d143d296f 100644
-> --- a/hw/arm/smmu-internal.h
-> +++ b/hw/arm/smmu-internal.h
-> @@ -141,9 +141,4 @@ typedef struct SMMUIOTLBPageInvInfo {
->      uint64_t mask;
->  } SMMUIOTLBPageInvInfo;
->  
-> -typedef struct SMMUSIDRange {
-> -    uint32_t start;
-> -    uint32_t end;
-> -} SMMUSIDRange;
-> -
->  #endif
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 4c49b5a88..1c55bc56d 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -903,7 +903,7 @@ static void smmuv3_flush_config(SMMUDevice *sdev)
->      SMMUv3State *s = sdev->smmu;
->      SMMUState *bc = &s->smmu_state;
->  
-> -    trace_smmuv3_config_cache_inv(smmu_get_sid(sdev));
-> +    trace_smmu_config_cache_inv(smmu_get_sid(sdev));
->      g_hash_table_remove(bc->configs, sdev);
->  }
->  
-> @@ -1277,20 +1277,6 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
->      }
->  }
->  
-> -static gboolean
-> -smmuv3_invalidate_ste(gpointer key, gpointer value, gpointer user_data)
-> -{
-> -    SMMUDevice *sdev = (SMMUDevice *)key;
-> -    uint32_t sid = smmu_get_sid(sdev);
-> -    SMMUSIDRange *sid_range = (SMMUSIDRange *)user_data;
-> -
-> -    if (sid < sid_range->start || sid > sid_range->end) {
-> -        return false;
-> -    }
-> -    trace_smmuv3_config_cache_inv(sid);
-> -    return true;
-> -}
-> -
->  static int smmuv3_cmdq_consume(SMMUv3State *s)
->  {
->      SMMUState *bs = ARM_SMMU(s);
-> @@ -1373,8 +1359,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
->              sid_range.end = sid_range.start + mask;
->  
->              trace_smmuv3_cmdq_cfgi_ste_range(sid_range.start, sid_range.end);
-> -            g_hash_table_foreach_remove(bs->configs, smmuv3_invalidate_ste,
-> -                                        &sid_range);
-> +            smmu_configs_inv_sid_range(bs, sid_range);
->              break;
->          }
->          case SMMU_CMD_CFGI_CD:
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index c64ad344b..e96f9ae47 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -15,6 +15,8 @@ smmu_iotlb_inv_asid_vmid(int asid, int vmid) "IOTLB invalidate asid=%d vmid=%d"
->  smmu_iotlb_inv_vmid(int vmid) "IOTLB invalidate vmid=%d"
->  smmu_iotlb_inv_vmid_s1(int vmid) "IOTLB invalidate vmid=%d"
->  smmu_iotlb_inv_iova(int asid, uint64_t addr) "IOTLB invalidate asid=%d addr=0x%"PRIx64
-> +smmu_configs_inv_sid_range(uint32_t start, uint32_t end) "Config cache INV SID range from 0x%x to 0x%x"
-> +smmu_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
->  smmu_inv_notifiers_mr(const char *name) "iommu mr=%s"
->  smmu_iotlb_lookup_hit(int asid, int vmid, uint64_t addr, uint32_t hit, uint32_t miss, uint32_t p) "IOTLB cache HIT asid=%d vmid=%d addr=0x%"PRIx64" hit=%d miss=%d hit rate=%d"
->  smmu_iotlb_lookup_miss(int asid, int vmid, uint64_t addr, uint32_t hit, uint32_t miss, uint32_t p) "IOTLB cache MISS asid=%d vmid=%d addr=0x%"PRIx64" hit=%d miss=%d hit rate=%d"
-> @@ -52,7 +54,6 @@ smmuv3_cmdq_tlbi_nh(int vmid) "vmid=%d"
->  smmuv3_cmdq_tlbi_nsnh(void) ""
->  smmuv3_cmdq_tlbi_nh_asid(int asid) "asid=%d"
->  smmuv3_cmdq_tlbi_s12_vmid(int vmid) "vmid=%d"
-> -smmuv3_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
->  smmuv3_notify_flag_add(const char *iommu) "ADD SMMUNotifier node for iommu mr=%s"
->  smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s"
->  smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
-> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-> index e5ad55bba..e5e2d0929 100644
-> --- a/include/hw/arm/smmu-common.h
-> +++ b/include/hw/arm/smmu-common.h
-> @@ -142,6 +142,11 @@ typedef struct SMMUIOTLBKey {
->      uint8_t level;
->  } SMMUIOTLBKey;
->  
-> +typedef struct SMMUSIDRange {
-> +    uint32_t start;
-> +    uint32_t end;
-> +} SMMUSIDRange;
-> +
->  struct SMMUState {
->      /* <private> */
->      SysBusDevice  dev;
-> @@ -219,6 +224,7 @@ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
->                           uint8_t tg, uint64_t num_pages, uint8_t ttl);
->  void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
->                          uint64_t num_pages, uint8_t ttl);
-> +void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range);
->  /* Unmap the range of all the notifiers registered to any IOMMU mr */
->  void smmu_inv_notifiers_all(SMMUState *s);
->  
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
