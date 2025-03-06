@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DF45C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:05:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A851FC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqClt-0004l3-2j; Thu, 06 Mar 2025 10:04:25 -0500
+	id 1tqCmC-0004qN-0g; Thu, 06 Mar 2025 10:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org>)
- id 1tqCln-0004jb-Gh; Thu, 06 Mar 2025 10:04:19 -0500
+ id 1tqClp-0004kA-Tt; Thu, 06 Mar 2025 10:04:23 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org>)
- id 1tqClk-00086D-QO; Thu, 06 Mar 2025 10:04:19 -0500
+ id 1tqCln-00086m-Df; Thu, 06 Mar 2025 10:04:21 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z7t3s4W6Dz4x3q;
- Fri,  7 Mar 2025 02:04:09 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z7t4073gjz4x6n;
+ Fri,  7 Mar 2025 02:04:16 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z7t3n6Btmz4wcT;
- Fri,  7 Mar 2025 02:04:04 +1100 (AEDT)
-Message-ID: <70a83582-8792-46b2-bd23-fa6d13f57653@kaod.org>
-Date: Thu, 6 Mar 2025 16:04:00 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z7t3x3jDpz4wcd;
+ Fri,  7 Mar 2025 02:04:13 +1100 (AEDT)
+Message-ID: <84dfe23f-d66d-4fa5-a87d-704ef2bb4d3e@kaod.org>
+Date: Thu, 6 Mar 2025 16:04:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/29] hw/intc/aspeed: Support setting different memory
- size
+Subject: Re: [PATCH v5 02/29] hw/intc/aspeed: Rename status_addr and addr to
+ status_reg and reg for clarity
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
- <20250306103846.429221-2-jamin_lin@aspeedtech.com>
+ <20250306103846.429221-3-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,7 +86,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250306103846.429221-2-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250306103846.429221-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -114,12 +114,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/6/25 11:38, Jamin Lin wrote:
-> According to the AST2700 datasheet, the INTC(CPU DIE) controller has 16KB
-> (0x4000) of register space, and the INTCIO (I/O DIE) controller has 1KB (0x400)
-> of register space.
-> 
-> Introduced a new class attribute "mem_size" to set different memory sizes for
-> the INTC models in AST2700.
+> Rename the variables "status_addr" to "status_reg" and "addr" to "reg" because
+> they are used as register index. This change makes the code more appropriate
+> and improves readability.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
@@ -132,60 +129,158 @@ C.
 
 
 > ---
->   include/hw/intc/aspeed_intc.h | 3 +++
->   hw/intc/aspeed_intc.c         | 9 ++++++++-
->   2 files changed, 11 insertions(+), 1 deletion(-)
+>   hw/intc/aspeed_intc.c | 38 +++++++++++++++++++-------------------
+>   1 file changed, 19 insertions(+), 19 deletions(-)
 > 
-> diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-> index 18cb43476c..03324f05ab 100644
-> --- a/include/hw/intc/aspeed_intc.h
-> +++ b/include/hw/intc/aspeed_intc.h
-> @@ -25,6 +25,8 @@ struct AspeedINTCState {
->   
->       /*< public >*/
->       MemoryRegion iomem;
-> +    MemoryRegion iomem_container;
-> +
->       uint32_t regs[ASPEED_INTC_NR_REGS];
->       OrIRQState orgates[ASPEED_INTC_NR_INTS];
->       qemu_irq output_pins[ASPEED_INTC_NR_INTS];
-> @@ -39,6 +41,7 @@ struct AspeedINTCClass {
->   
->       uint32_t num_lines;
->       uint32_t num_ints;
-> +    uint64_t mem_size;
->   };
->   
->   #endif /* ASPEED_INTC_H */
 > diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-> index 126b711b94..033b574c1e 100644
+> index 033b574c1e..465f41e4fd 100644
 > --- a/hw/intc/aspeed_intc.c
 > +++ b/hw/intc/aspeed_intc.c
-> @@ -302,10 +302,16 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+> @@ -60,7 +60,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+>   {
+>       AspeedINTCState *s = (AspeedINTCState *)opaque;
 >       AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+> -    uint32_t status_addr = GICINT_STATUS_BASE + ((0x100 * irq) >> 2);
+> +    uint32_t status_reg = GICINT_STATUS_BASE + ((0x100 * irq) >> 2);
+>       uint32_t select = 0;
+>       uint32_t enable;
 >       int i;
+> @@ -92,7 +92,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
 >   
-> +    memory_region_init(&s->iomem_container, OBJECT(s),
-> +            TYPE_ASPEED_INTC ".container", aic->mem_size);
-> +
-> +    sysbus_init_mmio(sbd, &s->iomem_container);
-> +
->       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
->                             TYPE_ASPEED_INTC ".regs", ASPEED_INTC_NR_REGS << 2);
+>       trace_aspeed_intc_select(select);
 >   
-> -    sysbus_init_mmio(sbd, &s->iomem);
-> +    memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
-> +
->       qdev_init_gpio_in(dev, aspeed_intc_set_irq, aic->num_ints);
->   
->       for (i = 0; i < aic->num_ints; i++) {
-> @@ -344,6 +350,7 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
->       dc->desc = "ASPEED 2700 INTC Controller";
->       aic->num_lines = 32;
->       aic->num_ints = 9;
-> +    aic->mem_size = 0x4000;
+> -    if (s->mask[irq] || s->regs[status_addr]) {
+> +    if (s->mask[irq] || s->regs[status_reg]) {
+>           /*
+>            * a. mask is not 0 means in ISR mode
+>            * sources interrupt routine are executing.
+> @@ -108,8 +108,8 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+>            * notify firmware which source interrupt are coming
+>            * by setting status register
+>            */
+> -        s->regs[status_addr] = select;
+> -        trace_aspeed_intc_trigger_irq(irq, s->regs[status_addr]);
+> +        s->regs[status_reg] = select;
+> +        trace_aspeed_intc_trigger_irq(irq, s->regs[status_reg]);
+>           aspeed_intc_update(s, irq, 1);
+>       }
 >   }
+> @@ -117,17 +117,17 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+>   static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned int size)
+>   {
+>       AspeedINTCState *s = ASPEED_INTC(opaque);
+> -    uint32_t addr = offset >> 2;
+> +    uint32_t reg = offset >> 2;
+>       uint32_t value = 0;
 >   
->   static const TypeInfo aspeed_2700_intc_info = {
+> -    if (addr >= ASPEED_INTC_NR_REGS) {
+> +    if (reg >= ASPEED_INTC_NR_REGS) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                         "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
+>                         __func__, offset);
+>           return 0;
+>       }
+>   
+> -    value = s->regs[addr];
+> +    value = s->regs[reg];
+>       trace_aspeed_intc_read(offset, size, value);
+>   
+>       return value;
+> @@ -138,12 +138,12 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>   {
+>       AspeedINTCState *s = ASPEED_INTC(opaque);
+>       AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+> -    uint32_t addr = offset >> 2;
+> +    uint32_t reg = offset >> 2;
+>       uint32_t old_enable;
+>       uint32_t change;
+>       uint32_t irq;
+>   
+> -    if (addr >= ASPEED_INTC_NR_REGS) {
+> +    if (reg >= ASPEED_INTC_NR_REGS) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                         "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
+>                         __func__, offset);
+> @@ -152,7 +152,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>   
+>       trace_aspeed_intc_write(offset, size, data);
+>   
+> -    switch (addr) {
+> +    switch (reg) {
+>       case R_GICINT128_EN:
+>       case R_GICINT129_EN:
+>       case R_GICINT130_EN:
+> @@ -177,7 +177,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>   
+>           /* disable all source interrupt */
+>           if (!data && !s->enable[irq]) {
+> -            s->regs[addr] = data;
+> +            s->regs[reg] = data;
+>               return;
+>           }
+>   
+> @@ -187,12 +187,12 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>           /* enable new source interrupt */
+>           if (old_enable != s->enable[irq]) {
+>               trace_aspeed_intc_enable(s->enable[irq]);
+> -            s->regs[addr] = data;
+> +            s->regs[reg] = data;
+>               return;
+>           }
+>   
+>           /* mask and unmask source interrupt */
+> -        change = s->regs[addr] ^ data;
+> +        change = s->regs[reg] ^ data;
+>           if (change & data) {
+>               s->mask[irq] &= ~change;
+>               trace_aspeed_intc_unmask(change, s->mask[irq]);
+> @@ -200,7 +200,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>               s->mask[irq] |= change;
+>               trace_aspeed_intc_mask(change, s->mask[irq]);
+>           }
+> -        s->regs[addr] = data;
+> +        s->regs[reg] = data;
+>           break;
+>       case R_GICINT128_STATUS:
+>       case R_GICINT129_STATUS:
+> @@ -220,7 +220,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>           }
+>   
+>           /* clear status */
+> -        s->regs[addr] &= ~data;
+> +        s->regs[reg] &= ~data;
+>   
+>           /*
+>            * These status registers are used for notify sources ISR are executed.
+> @@ -233,7 +233,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>           }
+>   
+>           /* All source ISR execution are done */
+> -        if (!s->regs[addr]) {
+> +        if (!s->regs[reg]) {
+>               trace_aspeed_intc_all_isr_done(irq);
+>               if (s->pending[irq]) {
+>                   /*
+> @@ -241,9 +241,9 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>                    * notify firmware which source interrupt are pending
+>                    * by setting status register
+>                    */
+> -                s->regs[addr] = s->pending[irq];
+> +                s->regs[reg] = s->pending[irq];
+>                   s->pending[irq] = 0;
+> -                trace_aspeed_intc_trigger_irq(irq, s->regs[addr]);
+> +                trace_aspeed_intc_trigger_irq(irq, s->regs[reg]);
+>                   aspeed_intc_update(s, irq, 1);
+>               } else {
+>                   /* clear irq */
+> @@ -253,7 +253,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>           }
+>           break;
+>       default:
+> -        s->regs[addr] = data;
+> +        s->regs[reg] = data;
+>           break;
+>       }
+>   
 
 
