@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E568C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 14:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4875EC282EC
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 14:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqC3s-0003BY-6j; Thu, 06 Mar 2025 09:18:58 -0500
+	id 1tqC3h-0002wL-3F; Thu, 06 Mar 2025 09:18:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC1U-0000lf-9M
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:16:34 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC1O-0000jl-M7
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:16:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC1S-00025e-8V
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:16:27 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC1L-00023E-Dg
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:16:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741270585;
+ s=mimecast20190719; t=1741270578;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9tE6LKSxXlL5BjHPli5rp4ZzG1kP0l59yDZWkLvT/qs=;
- b=gEj+rz9rCFkj3nUPh+KSjIycEX6kmt+Zf4BQOHaWmWVAspBgPB4SMQkZVRzTZV+BZqgWB2
- I/XDDPBdjsEvjGBWdv7SVyKVCGOwaRK1qS2ygIlQXgzHIE8nfsgafR3RsrmcRF+s7jq0MH
- GlTpsi1tWboAzxavRE/G7JTGS6zMtUo=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=L1KeHcnkM0S5lcdMHwWh6X32Ga/cnuREcHAcx8VowSQ=;
+ b=i6rT2QD2vOn4ujEcuGbp9SHXrHd91Smvzd/FTpc8vqIePU8g/Kx0bcl+tukBzqxW6FdXFu
+ 1mv2Es88zHuBNSRkEx3ngSehcdYMIal5I5ODgP6IndDKiqf6IFBn40drKlExWVPCbUdNLT
+ Tgwn1s31feXNmNPtM80X5LnoQa5kMb4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-zH1qSnrdPB6958rPOerx6Q-1; Thu,
- 06 Mar 2025 09:16:04 -0500
-X-MC-Unique: zH1qSnrdPB6958rPOerx6Q-1
-X-Mimecast-MFC-AGG-ID: zH1qSnrdPB6958rPOerx6Q_1741270564
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-pXcvA0plN6SFiENyJW-_Rw-1; Thu,
+ 06 Mar 2025 09:16:15 -0500
+X-MC-Unique: pXcvA0plN6SFiENyJW-_Rw-1
+X-Mimecast-MFC-AGG-ID: pXcvA0plN6SFiENyJW-_Rw_1741270574
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 11AA41955EF4; Thu,  6 Mar 2025 14:16:04 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 770461801A00; Thu,  6 Mar 2025 14:16:14 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.141])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F17DD18009BC; Thu,  6 Mar 2025 14:16:01 +0000 (UTC)
+ id 131D618009BC; Thu,  6 Mar 2025 14:16:11 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 33/42] vfio/migration: Multifd setup/cleanup functions and
- associated VFIOMultifd
-Date: Thu,  6 Mar 2025 15:14:09 +0100
-Message-ID: <20250306141419.2015340-34-clg@redhat.com>
+Subject: [PULL 37/42] migration/qemu-file: Define g_autoptr() cleanup function
+ for QEMUFile
+Date: Thu,  6 Mar 2025 15:14:13 +0100
+Message-ID: <20250306141419.2015340-38-clg@redhat.com>
 In-Reply-To: <20250306141419.2015340-1-clg@redhat.com>
 References: <20250306141419.2015340-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,113 +88,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Add multifd setup/cleanup functions and an associated VFIOMultifd data
-structure that will contain most of the receive-side data together
-with its init/cleanup methods.
+Automatic memory management helps avoid memory safety issues.
 
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/c0520523053b1087787152ddf2163257d3030be0.1741124640.git.maciej.szmigiero@oracle.com
+Link: https://lore.kernel.org/qemu-devel/2fd01d773a783d572dcf538a064a98cc09e75c12.1741124640.git.maciej.szmigiero@oracle.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/migration-multifd.h   |  4 ++++
- include/hw/vfio/vfio-common.h |  3 +++
- hw/vfio/migration-multifd.c   | 44 +++++++++++++++++++++++++++++++++++
- 3 files changed, 51 insertions(+)
+ migration/qemu-file.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
-index 1b60d5f67a1c76cdac21d71a7fb7335f4e194ffe..2a7a76164f291d182172775524a5b11c0a560c58 100644
---- a/hw/vfio/migration-multifd.h
-+++ b/hw/vfio/migration-multifd.h
-@@ -14,6 +14,10 @@
+diff --git a/migration/qemu-file.h b/migration/qemu-file.h
+index 3e47a20621a7e9b57822f0f8911de02dd5e63293..f5b9f430e04b1933747eba80587f9d88726c56a8 100644
+--- a/migration/qemu-file.h
++++ b/migration/qemu-file.h
+@@ -33,6 +33,8 @@ QEMUFile *qemu_file_new_input(QIOChannel *ioc);
+ QEMUFile *qemu_file_new_output(QIOChannel *ioc);
+ int qemu_fclose(QEMUFile *f);
  
- #include "hw/vfio/vfio-common.h"
- 
-+bool vfio_multifd_setup(VFIODevice *vbasedev, bool alloc_multifd, Error **errp);
-+void vfio_multifd_cleanup(VFIODevice *vbasedev);
++G_DEFINE_AUTOPTR_CLEANUP_FUNC(QEMUFile, qemu_fclose)
 +
- bool vfio_multifd_transfer_supported(void);
-+bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev);
- 
- #endif
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index bf5d5208712925f140e55583a2c0fe216184d046..40382390692dcd772f2ceb6689d9b31dc5e8b8d5 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -78,6 +78,8 @@ typedef struct VFIORegion {
-     uint8_t nr; /* cache the region number for debug */
- } VFIORegion;
- 
-+typedef struct VFIOMultifd VFIOMultifd;
-+
- typedef struct VFIOMigration {
-     struct VFIODevice *vbasedev;
-     VMChangeStateEntry *vm_state;
-@@ -89,6 +91,7 @@ typedef struct VFIOMigration {
-     uint64_t mig_flags;
-     uint64_t precopy_init_size;
-     uint64_t precopy_dirty_size;
-+    VFIOMultifd *multifd;
-     bool initial_data_sent;
- 
-     bool event_save_iterate_started;
-diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-index 79fae0b6296f9244317ed5215e4950703c45a717..091dc43210ad1459d5114da18336e73f6cb0baf9 100644
---- a/hw/vfio/migration-multifd.c
-+++ b/hw/vfio/migration-multifd.c
-@@ -32,8 +32,52 @@ typedef struct VFIODeviceStatePacket {
-     uint8_t data[0];
- } QEMU_PACKED VFIODeviceStatePacket;
- 
-+typedef struct VFIOMultifd {
-+} VFIOMultifd;
-+
-+static VFIOMultifd *vfio_multifd_new(void)
-+{
-+    VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
-+
-+    return multifd;
-+}
-+
-+static void vfio_multifd_free(VFIOMultifd *multifd)
-+{
-+    g_free(multifd);
-+}
-+
-+void vfio_multifd_cleanup(VFIODevice *vbasedev)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+
-+    g_clear_pointer(&migration->multifd, vfio_multifd_free);
-+}
-+
- bool vfio_multifd_transfer_supported(void)
- {
-     return multifd_device_state_supported() &&
-         migrate_send_switchover_start();
- }
-+
-+bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev)
-+{
-+    return false;
-+}
-+
-+bool vfio_multifd_setup(VFIODevice *vbasedev, bool alloc_multifd, Error **errp)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+
-+    if (!vfio_multifd_transfer_enabled(vbasedev)) {
-+        /* Nothing further to check or do */
-+        return true;
-+    }
-+
-+    if (alloc_multifd) {
-+        assert(!migration->multifd);
-+        migration->multifd = vfio_multifd_new();
-+    }
-+
-+    return true;
-+}
+ /*
+  * qemu_file_transferred:
+  *
 -- 
 2.48.1
 
