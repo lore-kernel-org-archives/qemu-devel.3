@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C91C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 07:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3286BC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 07:28:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq5d7-0002IJ-G4; Thu, 06 Mar 2025 02:26:53 -0500
+	id 1tq5et-0003IO-SQ; Thu, 06 Mar 2025 02:28:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tq5d5-0002Hf-9E
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 02:26:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tq5em-0003E9-2R
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 02:28:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tq5d0-0002il-IZ
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 02:26:50 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tq5eg-0002wc-2k
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 02:28:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741246004;
+ s=mimecast20190719; t=1741246108;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bhwDuhJ1tTLGNxTF/qNaU5ImEDZVJdARyHSoIsnYC7g=;
- b=hRwmTHdmIooazK13fZ+viYoWhWTD7VWnfRx51KA2AYNbW9IoWzUP4W6KuDJ6Vt1D7pFB9H
- 1lJzwnfB6V0FBOp+OcxGgj5iLcmp3nQyX+ujzdTbg8dnEuqD3CwiQA1JYegduigButDxe3
- xjACfdXQK2SZGjrn/eV8zuwU8VcK3i8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7Mos7lA4bAnI8g6uFhU4PaNkakA8j/isPVVRDneAMMk=;
+ b=Q5c8KR3R8Yn3V02sSpokDphEmdAbVNBrl8u6I/bax+cpLKyZotRURkKW+xKQHG4lwlB2AU
+ 6fr4+24Se8vPBcwjq8BBoXYWpb0q2AN9ZNz955A1nxgT1BBIa/9w/u1jEglgqeX+G3Z15j
+ sjDIP1xfBtJY+sSVwI7uVfMyMyx9UEg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-449-a7s5IWoUMqmGOJoaqRSonQ-1; Thu, 06 Mar 2025 02:26:42 -0500
-X-MC-Unique: a7s5IWoUMqmGOJoaqRSonQ-1
-X-Mimecast-MFC-AGG-ID: a7s5IWoUMqmGOJoaqRSonQ_1741246002
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-390ddebcbd1so192587f8f.2
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 23:26:42 -0800 (PST)
+ us-mta-55-qYAuhQfANhOiPhAlgcyP4A-1; Thu, 06 Mar 2025 02:28:22 -0500
+X-MC-Unique: qYAuhQfANhOiPhAlgcyP4A-1
+X-Mimecast-MFC-AGG-ID: qYAuhQfANhOiPhAlgcyP4A_1741246101
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3910876fce0so209720f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 23:28:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741246001; x=1741850801;
+ d=1e100.net; s=20230601; t=1741246101; x=1741850901;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bhwDuhJ1tTLGNxTF/qNaU5ImEDZVJdARyHSoIsnYC7g=;
- b=cpCHITuOq5EjvVUmfxFL21FdYNos5NLj4xZoF/iaSVEq+ra9EOWK4dGvtoEgX6PHse
- /Mhlq/Y/JY4a8PfuYF7wXjZARZ+bA3gW5fB7+92rBhudRgHQlGkyuOgO9yWqQn7PMucI
- zEFERTqIfDgY0T8ssQJvUKlZ5vN0oAP6T4oSFbIRR6W52MfoDn7G5U5N44T14MJdglif
- j+NFBiK+Z0FOo1z+U/Xdxq9RTauJq6/TjNr+0yxy2VYGglaGZ3uSZFDY33RpGIRZqA5b
- BEJq2vQUTuRGDgT9TEEn0YyoMNqMQPcrhZgxW1zuZDofHO1bVuzZSxAYToCG8UsXl5AO
- vyHQ==
+ bh=7Mos7lA4bAnI8g6uFhU4PaNkakA8j/isPVVRDneAMMk=;
+ b=kgUS85DeDWI6xCCI3SQIx8tUmBCC37BMZvJ7fdV3b7njWZiTDbS1BWmXCjR3ONtgl+
+ PHZ134R7tXpqDxzt31reUQDe0E2Ofqpkb0OoWeiRH6AmfgOh9P7WmlWM3dLUVnNKLNKL
+ Z1FmjhXOwcPDRVpPr6scn0x3/e3w4SxGkFvXBAVhWMJz+p+sOrGbsA9d+Pp/P1GtkL65
+ USBuSNUnQdpJJqPE4TQkuIg1kVPBqQgWpXgCMrO8TbMeek5WKBCFd+kYJ2Wec8aLzsxj
+ gC/xvJfTYjB/Y6CDmSI/UJThkg3tKenMhWNHDulyQ6zzIRP+Oh52/lZYDtGcycRRLXuW
+ LQZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkSDgdnP13pD1Yc+BoHHzaw2DgQRL/z6+Pnuymz+A1q7piw3ttX7fESYuls5ZWJX/+gzuhf918U0ZQ@nongnu.org
-X-Gm-Message-State: AOJu0YxaUa/04MOoKL3Dkwd2eCI0nrbnhMM9C9uVSFsYXY5Lz0CDuSzM
- GBtCWN38AmUWdJo4rAoz7mAk36tg5r4553YgvOkFQ/eXXHPJaaczSFHQZkwrlSxCLoTCT8JPsjN
- VTs5KtvayD+wsiYFQmyhZ+njmkXSkYeVAPOhcMDfh+N+JumBHz8lASzMgURc9
-X-Gm-Gg: ASbGncuZ3j21T+UWITUe6/uZ5AepA7OP7H6wJb+h9nvzxkKdBJSlOX9pqNqb34JWZCE
- dHiryqtxC0Fo9295NohzKrocI70nQvu6UGd68rsxOST06ngwZpD5BOipPIek7rn56YZ9vJQmUX6
- L6WkL1mFWz29AIJXtCWiNZqUcWTSF5kWipjsEU9QC9p+X7kzGDKTz5TofdMfYODtNd9sRI46nZ9
- l3wFKu7ZuXhWJcco3ooShkEwsPw9Jk5G1hOHx0o1WQ9g9Olyq2eYQw1TxsfDm4XijD3XJQmDGo+
- XiSaZRgwotwatn6eLXOokJlMyOK19UagSutfgFkTejtQIyc=
-X-Received: by 2002:a05:6000:1f8b:b0:390:f400:2083 with SMTP id
- ffacd0b85a97d-3911f58fa13mr5895100f8f.0.1741246001700; 
- Wed, 05 Mar 2025 23:26:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFPfgjvvNY8mfUw36Pftg+Bbp/VOSHoz+LIdTiFdpEFFvRswx90F8BdJskCnZ/fkNUFRRS/qA==
-X-Received: by 2002:a05:6000:1f8b:b0:390:f400:2083 with SMTP id
- ffacd0b85a97d-3911f58fa13mr5895085f8f.0.1741246001395; 
- Wed, 05 Mar 2025 23:26:41 -0800 (PST)
+ AJvYcCXaTQZ3SLIBQNojOvrvoU18UBbMg2TYWuvVs7kOomyqIGtz2tW1NpzMdncGd2sh7NehVKtS/pn0MEQH@nongnu.org
+X-Gm-Message-State: AOJu0Yys5HHFnZvoixRzbLBFH7PoapEVHhXB5EGDf4I9CUw59As2JCy3
+ JS1nBB7nkKi8I9FCsluDjK90WrIOrtw2x+lFV9SZ1KVfw667weEQgtQwPUAQ8CX5d0cpM2VsedV
+ RX5YT25RIcJJK109rYrL7RhYMFIfBFJ9DeBFbLBxQs1ek21C8HftoWVseY/ED
+X-Gm-Gg: ASbGnctn96BNW1Gqq3iVU/8lQjZjqni6xSisqurTd2C5fYLTrAUh1eImTaLsqN0lVSi
+ 2mVC+O73qKaziiGAD8wfqx418xSkx8NoZo7u/V02m55QuyPMuA2/YtPT3cN8xfAsD0S7TWJFsp+
+ hS2I0JycgK3oXpkMgWh+Q+oIXpk7UlrHA6qCENF8XmdryJH7zIE51WgP9wKvY4uWolD+6GbpV+o
+ eg9yFpitdS9btRou04y9gVzQ/D8J9TvUrvG4HFY3KVdK0UipuHVbauRmR9I8I0ic3HhEaMbO/QI
+ ZhfQRVkY6nbWCOojWflpNqDa0a2B/cQ3r7s4a3Q9AhXu3p4=
+X-Received: by 2002:a5d:5f4d:0:b0:385:fc70:7f6 with SMTP id
+ ffacd0b85a97d-3911f726fb3mr4366686f8f.7.1741246101394; 
+ Wed, 05 Mar 2025 23:28:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF5/6RutygN7vz8kZSxuGx4EoAQF5Toy5kKT6SPa4ACnfn+2I+Ief+fGoJMSs7vRQ+9QHDaYA==
+X-Received: by 2002:a5d:5f4d:0:b0:385:fc70:7f6 with SMTP id
+ ffacd0b85a97d-3911f726fb3mr4366669f8f.7.1741246100967; 
+ Wed, 05 Mar 2025 23:28:20 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
  [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd93ca93sm10386115e9.32.2025.03.05.23.26.39
+ ffacd0b85a97d-3912c103035sm1063733f8f.88.2025.03.05.23.28.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 23:26:41 -0800 (PST)
-Message-ID: <dd0336c2-c2ed-477c-8f40-eaee2f110238@redhat.com>
-Date: Thu, 6 Mar 2025 08:26:38 +0100
+ Wed, 05 Mar 2025 23:28:20 -0800 (PST)
+Message-ID: <195b3558-3cb7-4a14-b9ee-5ba11ad0d333@redhat.com>
+Date: Thu, 6 Mar 2025 08:28:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 04/18] qemu: Introduce 'qemu/legacy_binary_info.h'
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [RFC PATCH 10/18] qemu: Introduce legacy_binary_is_big_endian()
+ helper
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20250305153929.43687-1-philmd@linaro.org>
- <20250305153929.43687-5-philmd@linaro.org>
- <35177cd6-0741-4c28-a5d5-3529208a31dc@linaro.org>
+ <20250305153929.43687-11-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -131,7 +131,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <35177cd6-0741-4c28-a5d5-3529208a31dc@linaro.org>
+In-Reply-To: <20250305153929.43687-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -142,8 +142,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,30 +159,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/03/2025 17.59, Pierrick Bouvier wrote:
-> On 3/5/25 07:39, Philippe Mathieu-Daudé wrote:
->> Introduce an API to get information specific to a binary
->> from the binary name (argv[0]).
->>
->> Initialize it from qemu_init() on system emulation.
->>
+On 05/03/2025 16.39, Philippe Mathieu-Daudé wrote:
+> Introduce legacy_binary_endianness() to return the endianness
+> of a legacy binary, and legacy_binary_is_big_endian() being
+> equivalent of compile time TARGET_BIG_ENDIAN definition.
 > 
-> What we want here is more a include/qemu/target_info.h, which will allow to 
-> query the name of it, and helper for every architecture:
-> 
-> target_is_aarch64()
-> target_is_ppc64()
-> ...
-> 
-> Eventually, we can add combined getters like:
-> target_is_64bit()
-> ...
-> 
-> Naming "legacy" something that will be present in the long term is not the 
-> best move I think.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/qemu/legacy_binary_info.h |  8 ++++++
+>   legacy_binary_info.c              | 43 +++++++++++++++++++++++++++++++
+>   2 files changed, 51 insertions(+)
 
-FWIW, I agree, this should rather be target_is_64bit() or something similar, 
-like target_words_bigendian() ?
+We already have target_words_bigendian() ... why do we need yet another 
+function?
 
   Thomas
 
