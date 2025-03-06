@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA6C3C28B24
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E9EC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqEG7-0006rI-CP; Thu, 06 Mar 2025 11:39:43 -0500
+	id 1tqEG7-0006rD-4h; Thu, 06 Mar 2025 11:39:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEG4-0006oz-1C
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:40 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tqEFz-0006lZ-EU
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:37 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEG1-0004c5-3j
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:39 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43bc4b1603fso6021925e9.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:36 -0800 (PST)
+ id 1tqEFx-0004ZY-Dw
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:34 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43bbc8b7c65so10746905e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741279175; x=1741883975; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741279172; x=1741883972; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=drdpohR6Dj+KXd2wNLa0BIt2hP6cDbsQHnby3gMJcxE=;
- b=GyzJ/WOv8bJzxSkuKfLH+GxrynXPq+CYjXxiVCvrfz21ayLzUEeBu/rP2u4EF9+3fI
- j6cSUhc5ZRQJWcQvEZYVGmDBTK27TKE89h0jqHOTPaLXJcljQGmDmaxlVjkTb++CRUc8
- 0TnOWBBGyFeIteegVVuJK2xAjJ4xzPSpQNzK+/bCRfjsKkaWLwE/jQ0imm1bYnXQqtRH
- w2znJ7ylOrvf38zwvgvmES/X/iBw9mPoFR3+7qBmSEErpWbTzsdr/fAx5bNfnYFfhcy6
- UA1+lENcN2nDk5BgxXGMcJrqNlWl7Sls/9ZLaJVDpGgz8m1YQ4CCFzrR3jzxjYj9Mmhc
- 7A8A==
+ :reply-to; bh=buL5XagIeXqBLgJBqfarfsuVQtwTrOnKW/TPgRyLsQw=;
+ b=iQ1+eKJl5E/ZjpTszX6H/5GYgVqaAa8JF/fX54uXq5xM+qwDqZCgURHxpUWlhki9CT
+ Sr2RMTRq17rbOIaZ//nBhoRX9K7kHVYsYJf0FfstVFE0pXvw/tohuH8+tM+9TmkvXpX4
+ Y3bfNFZb+3CaNogGL5nsZnCoXFtYHExwdImX7EzgR/1URs/jspCwqDcUdnj374+XZCVi
+ HaYNOAwwNBnhIeMyLFuDhJdN6WX07s4QGJZ9L6WqMRoFyxQRIeyGk0tQ+ZHN4HD72E/g
+ 9aFsLs711BO8sZCxayPOSgGS7dailEnTHq9gbV+GV9DKqQiybrsOCt4uHsYXZ+KRy/Ci
+ VfAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741279175; x=1741883975;
+ d=1e100.net; s=20230601; t=1741279172; x=1741883972;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=drdpohR6Dj+KXd2wNLa0BIt2hP6cDbsQHnby3gMJcxE=;
- b=mQgwYG2K5gaQadc2LBLMCZI+6A/cSxg3Cvl0bBfDZO9TGyuqz/NtHv332p3nD/jbHm
- gCYyEx0zZhQtQYAJAA34GhH/aEd2y8Bu6unYHaTrym17E7wfab3e2JcDe/5QM9cRq6wU
- SYsVM8IrbpaFSSfwmVysiZdxPk8AFNAsOUuqeqPQuGKGIIU9KBradRxz9d33RvLbvB3n
- yzlmTDA9Lc7MRwcshCKguw7hn+v0mEXZAbIfyTP56yltSij6U4mOEB8nsbCxW+0SswrI
- QpG6uCf44yGYBz5HlKIO3Y6wWx//l3XdgIgYzTZxsDsqTRUJy6I1LLaXo1s/she9TNc1
- gn3g==
+ bh=buL5XagIeXqBLgJBqfarfsuVQtwTrOnKW/TPgRyLsQw=;
+ b=QMpyj77ETG8mY9sEGREDgRSjVP/LTB5rJqdLpwuJ+8Z2bIZMEa5ksbmLEmAbfssiky
+ vSoYf8J5q+tEzG544Zbbi3lAgB+pcBy4BdNE1LlqspwkOxJUh9PiRScalg0U3B+WIkxn
+ runK6rNcDfiQ/A51td7duyHXjlmwOloL/lzV3MQiOhGpFyBki8vaxAJ8sQadPVaCj4CR
+ XFYdC93o7yH3VdJLgYlkfwtG1TTzNi09w9/B7yUfK2fA2PFADE5I0epf5atxnVq3ZYTL
+ Wo1FuOO82rkZPpVPV8OHYXUFbJmLtzAVunDueD0ecqSOCCUVMroqlUF+F/Jx85heb6UB
+ b6Bw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU41bt4FKAac4S3R9/4NgN/qfMnetUDyyK9xMga9v6EqjyeG24+ZVupt5hJ/7vvH1zBUL/tIbdRo/5u@nongnu.org
-X-Gm-Message-State: AOJu0YxD2NhEkE7l0AsJaEhagH5cdgWzwGJNxjC0Ag3cfIy1TDWUQCvG
- +UJwgcPJ0kGvvsvlCVyQgsMuUd/5CvCCVf+DzH6k84Z/60iAGT4ozjHl4FFrbrWerkhOwn5J/eA
- s
-X-Gm-Gg: ASbGncvKZv/yGkWthwsnfqhE7ar100Yk2tI0CHQE7ECAOh5d6UXQKS230/VgrhGCAlp
- 6L0OYhZHzxy1Bls0dtJM43YPFD/w363TWlHMUnXxeT4NES/Jncm/zr5HYtGP21w1IZbY67eHh80
- dkl4ih4noO6EcGOpO5R7xS0F1uYq1OncLzuN4+34ERCId+ZpAK5mRUYKardjmGYjlaQSi2yodxZ
- zGKJT9HWbZ+2TR/qMbODlUHbiKBNbYwjfjiII7UNd25OvyssCiu3PRTm/ONviGhKaPD+O1Bq+34
- Bni+W6v/DAYDLZWzRg0YvPknPu8b91q4zBtskJfDYcHXkiMKJBk=
-X-Google-Smtp-Source: AGHT+IFNN8F/4sELOsNc+0T3Px0KR+vrozTFstGGTSCZTMFbAxhKS3Gy/GEBZf/tmjTF/9oad+6zZA==
-X-Received: by 2002:a05:600c:358e:b0:43b:cc42:c54f with SMTP id
- 5b1f17b1804b1-43c5a60eab5mr1862695e9.14.1741279175508; 
- Thu, 06 Mar 2025 08:39:35 -0800 (PST)
+ AJvYcCWpl5I845lBrk1RIG3TPzxokz62ZbFTbwSYrvfDmxQGr64+a6iK5TUKx3NVJUZW/rZLpwrhsX6TP5O7@nongnu.org
+X-Gm-Message-State: AOJu0Yy/ptG/xtUcnENCPrVALwwSIdjW1qSY0IgsKnnrisxOFJU6JUPc
+ /bTyYD2NN4Z+xI5Fr0DkbILhwxtJobb7jPlgmCxKeA5qrfZI2rHznm/EyFFz9FI=
+X-Gm-Gg: ASbGncsrwsRitLs9LZV0vZLjtt+Dy23dLCdB73p50tVltf9g8tPJ8fkePfPfsXBarOp
+ O7y6YM0Qjbk+D9Zew6wGpSVmO7OpOdnohn9JpVBg4hkAsnPO6tvClQMP3uSX34XlbEzpPn0qMW0
+ cfD6vcehZ4LxXQrnktjdHSygRvz5n/NrDlVyUp3cagXU/x8KAJ4b2AIA1XZRc2k9Klu6lHOtvov
+ kUg4zp/6t4lzAMnOt0cMOb4weURNNTJ3kxSA93d2LixMvYjJb36VBKx/20RlatFKEdfxTYIwUOY
+ V2Kb7wRMRjmRkeBJYzHRiivkwhlSFrxKKr6/qtpoglCzwOuldqI=
+X-Google-Smtp-Source: AGHT+IEEYGL9tqCMwfLyvefG1uTJpLPffLAmX4TKspr+p0zl4LlYyG/4959wzOxLRv/PwLIPVA6JoQ==
+X-Received: by 2002:a05:600c:3b88:b0:43b:da79:582b with SMTP id
+ 5b1f17b1804b1-43c601d67edmr1966075e9.18.1741279171939; 
+ Thu, 06 Mar 2025 08:39:31 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.34
+ 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 08:39:34 -0800 (PST)
+ Thu, 06 Mar 2025 08:39:31 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 09/10] target/arm: Add cpu local variable to exception_return
- helper
-Date: Thu,  6 Mar 2025 16:39:23 +0000
-Message-ID: <20250306163925.2940297-10-peter.maydell@linaro.org>
+Subject: [PATCH 05/10] target/arm: Move arm_cpu_data_is_big_endian() etc to
+ internals.h
+Date: Thu,  6 Mar 2025 16:39:19 +0000
+Message-ID: <20250306163925.2940297-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250306163925.2940297-1-peter.maydell@linaro.org>
 References: <20250306163925.2940297-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,55 +100,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We already call env_archcpu() multiple times within the
-exception_return helper function, and we're about to want to
-add another use of the ARMCPU pointer. Add a local variable
-cpu so we can call env_archcpu() just once.
+The arm_cpu_data_is_big_endian() and related functions are now used
+only in target/arm; they can be moved to internals.h.
+
+The motivation here is that we would like to move arm_current_el()
+to internals.h.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-a64.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ target/arm/cpu.h       | 48 ------------------------------------------
+ target/arm/internals.h | 48 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 48 deletions(-)
 
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 32f0647ca4f..e2bdf07833d 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -631,6 +631,7 @@ static void cpsr_write_from_spsr_elx(CPUARMState *env,
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 5ae40f32491..16c9083be61 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -3030,47 +3030,6 @@ static inline bool arm_sctlr_b(CPUARMState *env)
  
- void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+ uint64_t arm_sctlr(CPUARMState *env, int el);
+ 
+-static inline bool arm_cpu_data_is_big_endian_a32(CPUARMState *env,
+-                                                  bool sctlr_b)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    /*
+-     * In system mode, BE32 is modelled in line with the
+-     * architecture (as word-invariant big-endianness), where loads
+-     * and stores are done little endian but from addresses which
+-     * are adjusted by XORing with the appropriate constant. So the
+-     * endianness to use for the raw data access is not affected by
+-     * SCTLR.B.
+-     * In user mode, however, we model BE32 as byte-invariant
+-     * big-endianness (because user-only code cannot tell the
+-     * difference), and so we need to use a data access endianness
+-     * that depends on SCTLR.B.
+-     */
+-    if (sctlr_b) {
+-        return true;
+-    }
+-#endif
+-    /* In 32bit endianness is determined by looking at CPSR's E bit */
+-    return env->uncached_cpsr & CPSR_E;
+-}
+-
+-static inline bool arm_cpu_data_is_big_endian_a64(int el, uint64_t sctlr)
+-{
+-    return sctlr & (el ? SCTLR_EE : SCTLR_E0E);
+-}
+-
+-/* Return true if the processor is in big-endian mode. */
+-static inline bool arm_cpu_data_is_big_endian(CPUARMState *env)
+-{
+-    if (!is_a64(env)) {
+-        return arm_cpu_data_is_big_endian_a32(env, arm_sctlr_b(env));
+-    } else {
+-        int cur_el = arm_current_el(env);
+-        uint64_t sctlr = arm_sctlr(env, cur_el);
+-        return arm_cpu_data_is_big_endian_a64(cur_el, sctlr);
+-    }
+-}
+-
+ #include "exec/cpu-all.h"
+ 
+ /*
+@@ -3256,13 +3215,6 @@ static inline bool bswap_code(bool sctlr_b)
+ #endif
+ }
+ 
+-#ifdef CONFIG_USER_ONLY
+-static inline bool arm_cpu_bswap_data(CPUARMState *env)
+-{
+-    return TARGET_BIG_ENDIAN ^ arm_cpu_data_is_big_endian(env);
+-}
+-#endif
+-
+ void cpu_get_tb_cpu_state(CPUARMState *env, vaddr *pc,
+                           uint64_t *cs_base, uint32_t *flags);
+ 
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index a6ff228f9fd..70d1f88c20b 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -392,6 +392,54 @@ static inline FloatRoundMode arm_rmode_to_sf(ARMFPRounding rmode)
+     return arm_rmode_to_sf_map[rmode];
+ }
+ 
++static inline bool arm_cpu_data_is_big_endian_a32(CPUARMState *env,
++                                                  bool sctlr_b)
++{
++#ifdef CONFIG_USER_ONLY
++    /*
++     * In system mode, BE32 is modelled in line with the
++     * architecture (as word-invariant big-endianness), where loads
++     * and stores are done little endian but from addresses which
++     * are adjusted by XORing with the appropriate constant. So the
++     * endianness to use for the raw data access is not affected by
++     * SCTLR.B.
++     * In user mode, however, we model BE32 as byte-invariant
++     * big-endianness (because user-only code cannot tell the
++     * difference), and so we need to use a data access endianness
++     * that depends on SCTLR.B.
++     */
++    if (sctlr_b) {
++        return true;
++    }
++#endif
++    /* In 32bit endianness is determined by looking at CPSR's E bit */
++    return env->uncached_cpsr & CPSR_E;
++}
++
++static inline bool arm_cpu_data_is_big_endian_a64(int el, uint64_t sctlr)
++{
++    return sctlr & (el ? SCTLR_EE : SCTLR_E0E);
++}
++
++/* Return true if the processor is in big-endian mode. */
++static inline bool arm_cpu_data_is_big_endian(CPUARMState *env)
++{
++    if (!is_a64(env)) {
++        return arm_cpu_data_is_big_endian_a32(env, arm_sctlr_b(env));
++    } else {
++        int cur_el = arm_current_el(env);
++        uint64_t sctlr = arm_sctlr(env, cur_el);
++        return arm_cpu_data_is_big_endian_a64(cur_el, sctlr);
++    }
++}
++
++#ifdef CONFIG_USER_ONLY
++static inline bool arm_cpu_bswap_data(CPUARMState *env)
++{
++    return TARGET_BIG_ENDIAN ^ arm_cpu_data_is_big_endian(env);
++}
++#endif
++
+ static inline void aarch64_save_sp(CPUARMState *env, int el)
  {
-+    ARMCPU *cpu = env_archcpu(env);
-     int cur_el = arm_current_el(env);
-     unsigned int spsr_idx = aarch64_banked_spsr_index(cur_el);
-     uint32_t spsr = env->banked_spsr[spsr_idx];
-@@ -682,7 +683,7 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
-     }
- 
-     bql_lock();
--    arm_call_pre_el_change_hook(env_archcpu(env));
-+    arm_call_pre_el_change_hook(cpu);
-     bql_unlock();
- 
-     if (!return_to_aa64) {
-@@ -710,7 +711,7 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
-         int tbii;
- 
-         env->aarch64 = true;
--        spsr &= aarch64_pstate_valid_mask(&env_archcpu(env)->isar);
-+        spsr &= aarch64_pstate_valid_mask(&cpu->isar);
-         pstate_write(env, spsr);
-         if (!arm_singlestep_active(env)) {
-             env->pstate &= ~PSTATE_SS;
-@@ -749,7 +750,7 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
-     aarch64_sve_change_el(env, cur_el, new_el, return_to_aa64);
- 
-     bql_lock();
--    arm_call_el_change_hook(env_archcpu(env));
-+    arm_call_el_change_hook(cpu);
-     bql_unlock();
- 
-     return;
+     if (env->pstate & PSTATE_SP) {
 -- 
 2.43.0
 
