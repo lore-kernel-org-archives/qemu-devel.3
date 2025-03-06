@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C818C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 17:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFDFCC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 17:59:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqFN2-0005w3-9j; Thu, 06 Mar 2025 12:50:56 -0500
+	id 1tqFUJ-0001Fm-Vc; Thu, 06 Mar 2025 12:58:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqFMz-0005vi-Ui
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 12:50:54 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqFUI-0001C3-LW
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 12:58:26 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqFMx-0006vy-7J
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 12:50:53 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-390f5f48eafso621253f8f.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 09:50:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqFUG-0007tO-Dn
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 12:58:26 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43bcf9612f4so8408075e9.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 09:58:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741283449; x=1741888249; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741283900; x=1741888700; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GzL1wmnYzX0x1R9dTMiKuEwyMh6et1pxH8MfNvaya3w=;
- b=aOa3t+PW5vsuF7Nsve5UkbhmI3IX1WKjSX/O2UK80CbK5Jc7RiBOmwDaSPaqTlCYJh
- VB6eyJMtdgsk4UvbLhV5gKhGHGD+oGKksdTpT6UZhF0oi7/+aC7ult4B3S/nLDNcI14k
- 1pGk6aYD9BAbYYERHuq/PP+SVU9Nsm/Iq/E+1OXL0TFmv6DCPIoALwe7FewaQFLPpyyz
- oAj/PYhaR4XC7bUmCOB2yqTHAPXOh7oqkjAQn9yZQE6pjAg0I8VwtddMN0yP4f/AT+nr
- 2xeVwE41PhXBj0LjG9QdoJ4hoWqQJ+i+nj8cmLE++/6++v33rlSHRqeBoznmdbdCIfcR
- l3BA==
+ bh=9VwvtDnWxxWjHWm12aZwqWQ/LW3Ynbl8TGhwNxgYLB4=;
+ b=F2vFOvFSt60nws5V6CUEnCDI5qHOGE1bXs/sBbwFbIQKT5fBa1OWBZ9+Rp2PTgY8FL
+ 8wqhf+JrlTDV6p6p5DcKYGyvMYICchatuM8R1ET6MY7VIgAFSpJ5uGspZUfBOlwi+Uiy
+ 7PslKB7mx5nDq6+j/52ToyPdsh2TbuhvWYkgAULWkSp3jYonkB3nBuebxWvfHD+xKQyG
+ aLs4dtj5ozwU0twupo5lKbh1TrpOx+6AE/JsatvXaUs184ZTLF0ZcOWcO8yOgS0szyKE
+ YlWJEl4PKaguWDGOnAm4CHYS4SG3ol5ptIPfDJktU0w8QXENiboOEQeeZntL5jR2QpVt
+ hpcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741283449; x=1741888249;
+ d=1e100.net; s=20230601; t=1741283900; x=1741888700;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GzL1wmnYzX0x1R9dTMiKuEwyMh6et1pxH8MfNvaya3w=;
- b=fRgd4R+uyq+PIgiWyns9qyV4EXzjNKrsU61fRSvtDGVJnMIMwdZBWQwGE4dlgwn3+i
- rg4GUdA7ZWx+rl1kzzsoVCAghXqrYzreg6PGM38EcnY0xOsaWyo4AYoD18kUZTiz54HX
- 1w1DLpokzMCv6/T3yynMFY2u9T9/Q0xBG6TYhYNDok2w51Vuw1B1hVLOdO7EDLdS8AQx
- 8DtsqSRzZi5rtRhHydgxMLUZX0zk3VZOXo8s9fd7OnVMX5V58NO8nI6zfisKl8rimDny
- bPdg9P3pizOM28sa75e36tsj8/UmsPKPXP+k9ag5ZtUhSL7vOyhS0CYVzSHDjdxK3naf
- lP1w==
+ bh=9VwvtDnWxxWjHWm12aZwqWQ/LW3Ynbl8TGhwNxgYLB4=;
+ b=u0XiEKdP4DVrnu0Mjw0G6P36HqVyYGR0Dc5S6CceZHu0Ub3x1+2x/DNQrCHRHuJxqm
+ /lkGJ1hFGc/N3Lny4D2Icx6t+jmFzFItveppkUU2RRatvqww2Lssqqe2w+EmPEQmnOpM
+ /Ov6IseQzby3/wlvUwRT6/KnCRLIIQanoU/Z/KyfH3DxOzO8XpbXWlkJRf/W1ctnOQ3J
+ XnF7jv5kg4a68maqJoB9bx0O4qeA2hWmVV8h8wymPauqsOnf53OWTmlC6QciNR39Rb3w
+ YPpt0bKtbxzJxEDRdyg2XKZfvy6EplhjnsqSihKIhDxENa6OS1fNvaFpNt1w8KxYikxA
+ DISg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUyyuVR6+NduOTi0LymnhKkK382PFGgctVczCjHd2uAjTTYN9Hk5qRtjpUv5P+6iEUx6kOqu+Incltw@nongnu.org
-X-Gm-Message-State: AOJu0YzIMPIY0NSS365iAe4b5VPvEoAp05TWvyFqPEynVH1IkALReEOO
- 1qJpdS0Bt7+uCm45FyMSWxSYRMEeBWxtbZIe0REm5sawBq8Q0dCBLT7PfJ9JPfFA9JdlYgLOvGk
- bnQU=
-X-Gm-Gg: ASbGncsubJoBQUH7YYjqGbxGXkZqoEGy/dIBdwd7pJX9rd38jDe12vY73ME7dcZdIs0
- 1jaCtvXSe7vwmRYbNECDYFrbGbrp4vIja/osRd5oUmPM0vCmpb3EkORU0o8QFgktwjT5mrBm/P8
- arz1vuHgQMZlJ65Rea87XARzkBMniznYKjd75/8R6lgasd/GZovWfxVFshZ1tW3P8nyZA9n6S2Y
- CSZDLsQMNLhWJbgQIDZaqcmVd3urbZNZMBCHynm5XWugyJQen/Nhf9siMi5LeSJWfzaqGr+hhOp
- 7XDFUAePpB0FHwtg1EZ93m1k5aeUntk8VN9AmfJ9pm5MTRnl0epQC3LSD9hnTGJu3orqBHc4TWp
- PUuG0PD9foicC
-X-Google-Smtp-Source: AGHT+IG+04NQyQ6qVRW1cY8Cbh2ezZ5euoK3IMI/9AkxtYDZ1UkA3jvwr4id2vvbDFAiTj02i2C+Rw==
-X-Received: by 2002:a05:6000:402a:b0:38f:2ffc:1e99 with SMTP id
- ffacd0b85a97d-39132dd9426mr17216f8f.49.1741283448941; 
- Thu, 06 Mar 2025 09:50:48 -0800 (PST)
+ AJvYcCUaSeqIkaOo6BIP99rlXO4XgoVDsK2+rv+KZru0j9oTBBiAq55usOQRO3lEiBuVI3qwMarSUAuqU/8C@nongnu.org
+X-Gm-Message-State: AOJu0YxXGvWLtLPsyr6DiROJ5D8dCicMOuMdCIQL40ge1pbJ0SjF+VxI
+ ex/SHT2TXI6G7mGaGKxqGFNO7/OrWty4Dxr1f91jF+OE0oyLMy1GJBCgHfVSjpU=
+X-Gm-Gg: ASbGncurNXWzIHozk8+xw3xYmPLbYwo7bamz0qnIKmjCVwtYCkx6n7+Diz1sXHmN+j6
+ 1Ye6/C1P5MoEZEGJxvcMblLhfnfEWuPq278nHdP6w43a9ibPJmN/AwgpYvR1ZN6J756MW87nLp+
+ UNiofKL78vF6Wwp+YW3fx7VTZNNVuAns1EFylJIg6gyFehXTy0nYJV6w4uSNAXMVTxr6MzM+Cyc
+ 3rmlenww8V61H7fP3JlMHYrFC6Pe9UEJ1bAuUbzRaUe1xYygD4gxSwk3TiWKIQyR09gu6pduIb3
+ HLAzyJ+oCWfC3kbckyJ0vBWgHzYNUXGrJW8bZjyA1tGR+jVkNbcJ/u+0/CPCvmgSAjLPfXcD4gB
+ LwLdS0E405pVT
+X-Google-Smtp-Source: AGHT+IEOGtBDdAD18sfYjElHHabFYEAK4hG9FCCt8OtBHu6CQyPWoFisVCQvxBYwOeMEWSSxRTHC6w==
+X-Received: by 2002:a05:600c:1d24:b0:439:9b2a:1b2f with SMTP id
+ 5b1f17b1804b1-43c5a63023dmr3243295e9.3.1741283900253; 
+ Thu, 06 Mar 2025 09:58:20 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c015d1csm2665597f8f.44.2025.03.06.09.50.48
+ 5b1f17b1804b1-43bd435300esm56599785e9.29.2025.03.06.09.58.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 09:50:48 -0800 (PST)
-Message-ID: <211519d6-ea5d-48bc-8213-154b94a6fdde@linaro.org>
-Date: Thu, 6 Mar 2025 18:50:47 +0100
+ Thu, 06 Mar 2025 09:58:19 -0800 (PST)
+Message-ID: <d62743f5-ca79-47c0-a72b-c36308574bdd@linaro.org>
+Date: Thu, 6 Mar 2025 18:58:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: Rename default-configs to configs
-To: Greg Kurz <groug@kaod.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250306174113.427116-1-groug@kaod.org>
+Subject: Re: [PATCH 5/7] hw/hyperv/syndbg: common compilation unit
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ manos.pitsidianakis@linaro.org,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, alex.bennee@linaro.org
+References: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
+ <20250306064118.3879213-6-pierrick.bouvier@linaro.org>
+ <353b36fd-2265-43c3-8072-3055e5bd7057@linaro.org>
+ <35c2c7a5-5b12-4c21-a40a-375caae60d0c@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250306174113.427116-1-groug@kaod.org>
+In-Reply-To: <35c2c7a5-5b12-4c21-a40a-375caae60d0c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,16 +108,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/25 18:41, Greg Kurz wrote:
-> This was missed at the time.
+On 6/3/25 17:23, Pierrick Bouvier wrote:
+> On 3/6/25 08:19, Richard Henderson wrote:
+>> On 3/5/25 22:41, Pierrick Bouvier wrote:
+>>> Replace TARGET_PAGE.* by runtime calls
+>>>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>    hw/hyperv/syndbg.c    | 7 ++++---
+>>>    hw/hyperv/meson.build | 2 +-
+>>>    2 files changed, 5 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
+>>> index d3e39170772..f9382202ed3 100644
+>>> --- a/hw/hyperv/syndbg.c
+>>> +++ b/hw/hyperv/syndbg.c
+>>> @@ -14,7 +14,7 @@
+>>>    #include "migration/vmstate.h"
+>>>    #include "hw/qdev-properties.h"
+>>>    #include "hw/loader.h"
+>>> -#include "cpu.h"
+>>> +#include "exec/target_page.h"
+>>>    #include "hw/hyperv/hyperv.h"
+>>>    #include "hw/hyperv/vmbus-bridge.h"
+>>>    #include "hw/hyperv/hyperv-proto.h"
+>>> @@ -188,7 +188,8 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, 
+>>> uint64_t outgpa,
+>>>                                    uint64_t timeout, uint32_t 
+>>> *retrieved_count)
+>>>    {
+>>>        uint16_t ret;
+>>> -    uint8_t data_buf[TARGET_PAGE_SIZE - UDP_PKT_HEADER_SIZE];
+>>> +    const size_t buf_size = qemu_target_page_size() - 
+>>> UDP_PKT_HEADER_SIZE;
+>>> +    uint8_t *data_buf = g_alloca(buf_size);
+>>>        hwaddr out_len;
+>>>        void *out_data;
+>>>        ssize_t recv_byte_count;
+>>
+>> We've purged the code base of VLAs, and those are preferable to alloca.
+>> Just use g_malloc and g_autofree.
+>>
 > 
-> Fixes: 812b31d3f91 ("configs: rename default-configs to configs and reorganise")
-> Signed-off-by: Greg Kurz <groug@kaod.org>
-> ---
->   docs/devel/build-system.rst | 10 +++++-----
->   docs/devel/kconfig.rst      | 16 ++++++++--------
->   2 files changed, 13 insertions(+), 13 deletions(-)
+> I hesitated, due to potential performance considerations for people 
+> reviewing the patch. I'll switch to heap based storage.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+OTOH hyperv is x86-only, so we could do:
 
+#define BUFSZ (4 * KiB)
+
+handle_recv_msg()
+{
+   uint8_t data_buf[BUFSZ - UDP_PKT_HEADER_SIZE];
+   ...
+
+hv_syndbg_class_init()
+{
+   assert(BUFSZ > qemu_target_page_size());
+   ...
+
+and call it a day.
 
