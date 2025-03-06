@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB3CC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 03:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE364C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 03:50:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq29P-0005eZ-Il; Wed, 05 Mar 2025 22:43:59 -0500
+	id 1tq2FM-0007Ow-B0; Wed, 05 Mar 2025 22:50:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq29M-0005eB-Li; Wed, 05 Mar 2025 22:43:56 -0500
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ id 1tq2FA-0007O2-Nu; Wed, 05 Mar 2025 22:49:57 -0500
+Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq29K-0004YT-L1; Wed, 05 Mar 2025 22:43:56 -0500
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-5235db99207so85018e0c.2; 
- Wed, 05 Mar 2025 19:43:53 -0800 (PST)
+ id 1tq2F7-00058H-BD; Wed, 05 Mar 2025 22:49:56 -0500
+Received: by mail-vk1-xa2b.google.com with SMTP id
+ 71dfb90a1353d-5236d34a37fso86731e0c.3; 
+ Wed, 05 Mar 2025 19:49:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741232632; x=1741837432; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741232991; x=1741837791; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m419S0McCJVd9ramFrEOmlGILW64OQ4WMwACvLAxGrI=;
- b=W7UhRklP9ojKrYItEgHtQUTX9t5Xa5aDdn+I3oXeQvWuPVhGfxwqlwfnZu+F9OhO/H
- OqhS25l8ebXM/z9aCl9mrjHNwI4hKOnNL2mx0bpvutS+dNu2/nJ4G5uavuWukhm7kRwg
- tgDFIN1ZGPuTg9/gQg5ftZODo9NaQddcSX7TsIXPOiFKjHTTJ/uPB51Tyg1dRjNKt0WN
- TW1/WUUR83NYGoWF7u5mtvDw2yQMIJzE0BEp3TqRq0kfQsaMEZWh517sK11j18BNMPhQ
- 3YhDiuH+kDdc+u/77KR/fsuaxYLm90HUl3rKY45G3Elo+1HEHjaTVEpWH/Th/5i1YDXD
- 4Y+w==
+ bh=q8Bdtea+MTgwMLWizuKQfW99ZWm4hCJkAs7pqe/VHrw=;
+ b=KW9oHwSNzLhMfibNvyyunMzgZiY/30tQfO2mGYQlNe9mw2biraDvnfDDJUCU+IGMSI
+ dofpnTU3X5SVDY0tfzgU5vd3VMW3/fKx70gYoFUoxZ8gF8aD+X00ri8OBBZ8Zmr06jdx
+ ofXCbClZZY+VQt+/UgjTv894CnhZgIGLwgosLsr5ix7ygfGBuhIV7OqtRSvKUtZXsB6F
+ vcDCauylpmD6jVwBk1k3t1BZ1bT1hXuCEypsMfoBxqlE6KmOvOG/EbpvjP1fLISf4PBC
+ A4HGGJCzJdb81Srira2BcmXZDkd0WJKbIGB5gGZxWgsmn87xP+agxDST3AR5Kf7GDJn8
+ S/WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741232632; x=1741837432;
+ d=1e100.net; s=20230601; t=1741232991; x=1741837791;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=m419S0McCJVd9ramFrEOmlGILW64OQ4WMwACvLAxGrI=;
- b=Nfr2lAXdg7Bs8ceMFzCO8ug6ywjGkAnL18tMj2XKvV8QqoIXp8s7fMfWQIcgIYx3AX
- nA1m6ZESOwm0rE3DSj6b5autsfkoXiIMo4yVf2hFwZwMkMhtpuHLKf/x96wkkMCP+QHp
- MA6AuT4sDKjIHKs7FxBv3MiVBSpvm9Omp1VgUaHBWYdAhf7kll92B8NBGnRvSTO7mPo5
- 85cew7CUG4JvJtitfHaXclspf7pe204NeFmTFP4ZCi/7cssFhUM1EI+e0OmLkrn49KYP
- AXN0cp+CpCzFq5cX1Qa7DWd2UuH5cWYepIFqiJXu6WshgLN2X4cD8mOQhcguGeAuWHM5
- Aw9Q==
+ bh=q8Bdtea+MTgwMLWizuKQfW99ZWm4hCJkAs7pqe/VHrw=;
+ b=E2XfHw1LHDUKa070vCbqzkN4ybVmu6KM8AZbkt7xhpMT4a4YM0ZYjbzjMIbvWMPBWL
+ DGXSPFV9EunGzwvr2gqmd9sPYQPlUt9ZmvzIhM8iq92LvHEyfTYRW5u0C3T9UqylSZBh
+ LJcy4TL/ndGa+W9vOcFTcUpKNGYB8fZ5Dtx06N9EMte55hLf2fvyWZlwxFvo9Oii1Nns
+ OExC4ZJaji9m4X6U4qs/NFqxXLiybRjVDYI0iYcbOB80bxYTGiWpevmt1oUIKd0Rai6X
+ aNQVptbujSwUIzg7eX4/xUndyzyOlK6rUJaEJuG3GtLt0GNOiLekjuWrjCpV45dG5u5R
+ +g8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXc60A6t06Ckwty4GMIWZ2YT+BYl/01SlWxfkXfxLMP6GE/4ww954aRXzHzaLOwczBA8YNEXL/jSVDEA==@nongnu.org,
- AJvYcCXItQeixXHjyZHHG00ErgThFA38GwarXjlCyFo2/pwzMnGEJwSBqIEfcjAXGse254RZW9nJijyCQsn/@nongnu.org
-X-Gm-Message-State: AOJu0YwkkQnsohDo3I12TAw8kejvijlL5L3EXyEArZpvdA2pILt0RuRI
- ghUzMkJhYkhKo7bm5Ym8j4V5TjRfjpyEBPvUudQEeVqvsBWOt9QdhoC5c0g38WEPq4+6vu5pVpN
- QeRdKFXCWAQRRweig4fON6TxhwlE=
-X-Gm-Gg: ASbGncvVyGWVmJV90D5I84zBCy0DbAkJGDo8X58cja6iR5w7es9zPncLgr3Gnua9F5W
- Lt4XW/2n/U9mMhueZgthpukNamgkMuWXrZNU6hvGu6A67otgyP+Zm300II2SonTaqbJMl4TPoMb
- kQWwJgJ0UN58iXGjmeU3xzBpUJh2Q/dQ/0zyvvAf3ml5yiq7Yawcy9ojlc
-X-Google-Smtp-Source: AGHT+IFT4riVnsCg6AEjpSosQSHb1Xsd1WNfcXO8lgtsMoZ8WJC0zy3UmHzQJ6VdV0N0Y2s/oLS0rq81wiaA4dAqghU=
-X-Received: by 2002:a05:6122:2a14:b0:520:42d3:91bc with SMTP id
- 71dfb90a1353d-523c61149b6mr3636703e0c.2.1741232632393; Wed, 05 Mar 2025
- 19:43:52 -0800 (PST)
+ AJvYcCUucrUzMQ4TMc34rZ/F30j8ZsmjyDkGkAPs0DG3Zkg0stNLyP2d/xyO3aRkgG8AmnmTEfQeGSRXyvYq@nongnu.org
+X-Gm-Message-State: AOJu0YyWKfx9L2DdYIhm+8HL6DXKbXBIMJuUeHrLqq4vQcghu8kUMZFI
+ D3ONQQYjHCfqDjgB5qbAiNorfaU8YhkzJ7QVTwdEGYluk9wjMzinnRkjAXTcLhuMo4dMm8TD1gh
+ daqX3yJaiZGChh5OeBp5+dQMEkcg=
+X-Gm-Gg: ASbGncsnpsZNXcv2QnAE9RLfsqVgqmpIuGstSHndSCS8jsOue+TpZ8vy17CS4F4G1Aw
+ AZBbu+pElzcyUdY/MhH+nNYt8w0zNkZKfXELSfjCnx6gCyTl7sT/797IPA+RJ9QqQgOXIc9zMPG
+ OWMROmn7P8qj1hgonPBwXYeRn5FkNBc9k/EIb8zNfwPwFbpU5RupMZiXWr
+X-Google-Smtp-Source: AGHT+IF1iWSqiJ/c68rEgZ4CfDWgPc77uCApFpcWgw1FRs5hAMWFL+P4FHiR3xgW9bOcVHya9h9c9YV0g74+y0/LMII=
+X-Received: by 2002:a05:6102:3e1f:b0:4bb:dfd8:4181 with SMTP id
+ ada2fe7eead31-4c2e2745ad4mr3732134137.4.1741232991266; Wed, 05 Mar 2025
+ 19:49:51 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1736130472.git.lc00631@tecorigin.com>
- <20250305112412.1804-1-lc00631@tecorigin.com>
-In-Reply-To: <20250305112412.1804-1-lc00631@tecorigin.com>
+References: <20250304231956.34396-1-philmd@linaro.org>
+In-Reply-To: <20250304231956.34396-1-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 13:43:26 +1000
-X-Gm-Features: AQ5f1JoKhfmiUhKdTAUOaHdGM7_neBmLSZ63dFM6FHfMyE1ey5bbtThqJxBZgWk
-Message-ID: <CAKmqyKMoJ-EMn5dYY93_mEtf8wqCekyjcQQ_quxJv2FpY=+WHQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] Enhanced VSTART and VL checks for vector
- instructions
-To: Chao Liu <lc00631@tecorigin.com>
-Cc: alistair.francis@wdc.com, bmeng.cn@gmail.com, dbarboza@ventanamicro.com, 
- liwei1518@gmail.com, palmer@dabbelt.com, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, zqz00548@tecorigin.com
+Date: Thu, 6 Mar 2025 13:49:25 +1000
+X-Gm-Features: AQ5f1JrlGgMs97-L4OfMSr7YZEuivxZckHW74aeMi37yCsXSw2MWQt2BN_tp-Js
+Message-ID: <CAKmqyKMmsgBMW1iQX9ZPrGTpywu5y+DFnes+Cx0GJQr_NTFNVA@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: Get target page info using runtime
+ helpers
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, qemu-riscv@nongnu.org, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Weiwei Li <liwei1518@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,61 +101,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 5, 2025 at 9:24=E2=80=AFPM Chao Liu <lc00631@tecorigin.com> wro=
-te:
+On Wed, Mar 5, 2025 at 9:20=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
 >
-> Hi,
+> Prefer runtime helpers to get target page size / mask / bits
+> rather than compile time definitions. This will help to build
+> these files once for all RISC-V binaries.
 >
-> This patchset fixes some bugs in RVV instructions,
->
-> can you pull it in the near future please?
->
-> Looking forward to your reply!
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-@Daniel Henrique Barboza you commented on v2, can you have a look at this?
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  hw/riscv/riscv-iommu-pci.c |  4 +++-
+>  hw/riscv/riscv-iommu.c     | 29 +++++++++++++++--------------
+>  2 files changed, 18 insertions(+), 15 deletions(-)
 >
+> diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+> index 12451869e41..e2b893c5898 100644
+> --- a/hw/riscv/riscv-iommu-pci.c
+> +++ b/hw/riscv/riscv-iommu-pci.c
+> @@ -23,6 +23,7 @@
+>  #include "hw/qdev-properties.h"
+>  #include "hw/riscv/riscv_hart.h"
+>  #include "migration/vmstate.h"
+> +#include "exec/target_page.h"
+>  #include "qapi/error.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/host-utils.h"
+> @@ -102,7 +103,8 @@ static void riscv_iommu_pci_realize(PCIDevice *dev, E=
+rror **errp)
+>      qdev_realize(DEVICE(iommu), NULL, errp);
+>
+>      memory_region_init(&s->bar0, OBJECT(s), "riscv-iommu-bar0",
+> -        QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr), TARGET_PAGE_S=
+IZE));
+> +                       QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr)=
+,
+> +                                     qemu_target_page_size()));
+>      memory_region_add_subregion(&s->bar0, 0, &iommu->regs_mr);
+>
+>      pcie_endpoint_cap_init(dev, 0);
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index e7568ca227a..8bbb33b8b53 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -23,6 +23,7 @@
+>  #include "hw/qdev-properties.h"
+>  #include "hw/riscv/riscv_hart.h"
+>  #include "migration/vmstate.h"
+> +#include "exec/target_page.h"
+>  #include "qapi/error.h"
+>  #include "qemu/timer.h"
+>
+> @@ -300,14 +301,14 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s=
+, RISCVIOMMUContext *ctx,
+>          riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
+>          iotlb->target_as =3D &s->trap_as;
+>          iotlb->translated_addr =3D iotlb->iova;
+> -        iotlb->addr_mask =3D ~TARGET_PAGE_MASK;
+> +        iotlb->addr_mask =3D ~qemu_target_page_mask();
+>          return 0;
+>      }
+>
+>      /* Exit early for pass-through mode. */
+>      if (!(en_s || en_g)) {
+>          iotlb->translated_addr =3D iotlb->iova;
+> -        iotlb->addr_mask =3D ~TARGET_PAGE_MASK;
+> +        iotlb->addr_mask =3D ~qemu_target_page_mask();
+>          /* Allow R/W in pass-through mode */
+>          iotlb->perm =3D IOMMU_RW;
+>          return 0;
+> @@ -390,7 +391,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, =
+RISCVIOMMUContext *ctx,
+>      do {
+>          const unsigned widened =3D (pass && !sc[pass].step) ? 2 : 0;
+>          const unsigned va_bits =3D widened + sc[pass].ptidxbits;
+> -        const unsigned va_skip =3D TARGET_PAGE_BITS + sc[pass].ptidxbits=
+ *
+> +        const unsigned va_skip =3D qemu_target_page_bits() + sc[pass].pt=
+idxbits *
+>                                   (sc[pass].levels - 1 - sc[pass].step);
+>          const unsigned idx =3D (addr >> va_skip) & ((1 << va_bits) - 1);
+>          const dma_addr_t pte_addr =3D base + idx * sc[pass].ptesize;
+> @@ -448,7 +449,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, =
+RISCVIOMMUContext *ctx,
+>              break;                /* Reserved leaf PTE flags: PTE_W */
+>          } else if ((pte & (PTE_R | PTE_W | PTE_X)) =3D=3D (PTE_W | PTE_X=
+)) {
+>              break;                /* Reserved leaf PTE flags: PTE_W + PT=
+E_X */
+> -        } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
+> +        } else if (ppn & ((1ULL << (va_skip - qemu_target_page_bits())) =
+- 1)) {
+>              break;                /* Misaligned PPN */
+>          } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
+>              break;                /* Read access check failed */
+> @@ -480,7 +481,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, =
+RISCVIOMMUContext *ctx,
+>                  riscv_iommu_msi_check(s, ctx, base)) {
+>                  /* Trap MSI writes and return GPA address. */
+>                  iotlb->target_as =3D &s->trap_as;
+> -                iotlb->addr_mask =3D ~TARGET_PAGE_MASK;
+> +                iotlb->addr_mask =3D ~qemu_target_page_mask();
+>                  return 0;
+>              }
+>
+> @@ -950,7 +951,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, =
+RISCVIOMMUContext *ctx)
+>           *   device index: [23:16][15:7][6:0]
+>           */
+>          const int split =3D depth * 9 + 6 + dc_fmt;
+> -        addr |=3D ((ctx->devid >> split) << 3) & ~TARGET_PAGE_MASK;
+> +        addr |=3D ((ctx->devid >> split) << 3) & ~qemu_target_page_mask(=
+);
+>          if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
+>                              MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {
+>              return RISCV_IOMMU_FQ_CAUSE_DDT_LOAD_FAULT;
+> @@ -968,7 +969,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, =
+RISCVIOMMUContext *ctx)
+>      }
+>
+>      /* index into device context entry page */
+> -    addr |=3D (ctx->devid * dc_len) & ~TARGET_PAGE_MASK;
+> +    addr |=3D (ctx->devid * dc_len) & ~qemu_target_page_mask();
+>
+>      memset(&dc, 0, sizeof(dc));
+>      if (dma_memory_read(s->target_as, addr, &dc, dc_len,
+> @@ -1037,7 +1038,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s=
+, RISCVIOMMUContext *ctx)
+>           * level. See IOMMU Specification, 2.2. Process-Directory-Table.
+>           */
+>          const int split =3D depth * 9 + 8;
+> -        addr |=3D ((ctx->process_id >> split) << 3) & ~TARGET_PAGE_MASK;
+> +        addr |=3D ((ctx->process_id >> split) << 3) & ~qemu_target_page_=
+mask();
+>          if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
+>                              MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {
+>              return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+> @@ -1050,7 +1051,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s=
+, RISCVIOMMUContext *ctx)
+>      }
+>
+>      /* Leaf entry in PDT */
+> -    addr |=3D (ctx->process_id << 4) & ~TARGET_PAGE_MASK;
+> +    addr |=3D (ctx->process_id << 4) & ~qemu_target_page_mask();
+>      if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2=
+,
+>                          MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {
+>          return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+> @@ -1440,7 +1441,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s=
+, RISCVIOMMUContext *ctx,
+>      perm =3D iot ? iot->perm : IOMMU_NONE;
+>      if (perm !=3D IOMMU_NONE) {
+>          iotlb->translated_addr =3D PPN_PHYS(iot->phys);
+> -        iotlb->addr_mask =3D ~TARGET_PAGE_MASK;
+> +        iotlb->addr_mask =3D ~qemu_target_page_mask();
+>          iotlb->perm =3D perm;
+>          fault =3D 0;
+>          goto done;
+> @@ -1481,7 +1482,7 @@ done:
+>                                 RISCV_IOMMU_PREQ_HDR_PID, ctx->process_id=
+);
+>          }
+>          pr.hdr =3D set_field(pr.hdr, RISCV_IOMMU_PREQ_HDR_DID, ctx->devi=
+d);
+> -        pr.payload =3D (iotlb->iova & TARGET_PAGE_MASK) |
+> +        pr.payload =3D (iotlb->iova & qemu_target_page_mask()) |
+>                       RISCV_IOMMU_PREQ_PAYLOAD_M;
+>          riscv_iommu_pri(s, &pr);
+>          return fault;
+> @@ -1683,7 +1684,7 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUS=
+tate *s)
+>                                         RISCV_IOMMU_CMD_IOTINVAL_GSCID);
+>              uint32_t pscid =3D get_field(cmd.dword0,
+>                                         RISCV_IOMMU_CMD_IOTINVAL_PSCID);
+> -            hwaddr iova =3D (cmd.dword1 << 2) & TARGET_PAGE_MASK;
+> +            hwaddr iova =3D (cmd.dword1 << 2) & qemu_target_page_mask();
+>
+>              if (pscv) {
+>                  /* illegal command arguments IOTINVAL.GVMA & PSCV =3D=3D=
+ 1 */
+> @@ -1715,7 +1716,7 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUS=
+tate *s)
+>                                         RISCV_IOMMU_CMD_IOTINVAL_GSCID);
+>              uint32_t pscid =3D get_field(cmd.dword0,
+>                                         RISCV_IOMMU_CMD_IOTINVAL_PSCID);
+> -            hwaddr iova =3D (cmd.dword1 << 2) & TARGET_PAGE_MASK;
+> +            hwaddr iova =3D (cmd.dword1 << 2) & qemu_target_page_mask();
+>              RISCVIOMMUTransTag transtag;
+>
+>              if (gv) {
+> @@ -1928,7 +1929,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState=
+ *s)
+>              iova =3D RISCV_IOMMU_TR_RESPONSE_FAULT | (((uint64_t) fault)=
+ << 10);
+>          } else {
+>              iova =3D iotlb.translated_addr & ~iotlb.addr_mask;
+> -            iova >>=3D TARGET_PAGE_BITS;
+> +            iova >>=3D qemu_target_page_bits();
+>              iova &=3D RISCV_IOMMU_TR_RESPONSE_PPN;
+>
+>              /* We do not support superpages (> 4kbs) for now */
 > --
-> Regards,
-> Chao
+> 2.47.1
 >
-> >
-> > Hi, all:
-> >
-> > In accordance with the review, i improved the commit message of patch a=
-nd added
-> > the reason for the modification.
-> >
-> > There was no change in the patch content.
-> >
-> > PATCH v2 review:
-> > https://lore.kernel.org/qemu-devel/61e8f7d8-607a-4d63-b9dd-cfbfc840716e=
-@ventanamicro.com/
-> >
-> > PATCH v1 review:
-> > https://lore.kernel.org/qemu-devel/CAKmqyKPFYxhK8PANOVzV3FMWxd79wZSJYLW=
-kKOAgEMt_b2KvZA@mail.gmail.com/
-> >
-> > --
-> > Regards,
-> > Chao
-> >
-> > Chao Liu (2):
-> >   target/riscv: refactor VSTART_CHECK_EARLY_EXIT() to accept vl as a
-> >     parameter
-> >   target/riscv: fix handling of nop for vstart >=3D vl in some vector
-> >     instruction
-> >
-> >  target/riscv/vcrypto_helper.c   | 32 ++++++-------
-> >  target/riscv/vector_helper.c    | 83 ++++++++++++++++++---------------
-> >  target/riscv/vector_internals.c |  4 +-
-> >  target/riscv/vector_internals.h | 12 ++---
-> >  4 files changed, 69 insertions(+), 62 deletions(-)
-> >
-> > --
-> > 2.47.1
-> >
-> >
+>
 
