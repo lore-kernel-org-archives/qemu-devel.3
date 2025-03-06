@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E889CC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 05:29:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE106C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 05:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq3nc-0001hQ-1n; Thu, 06 Mar 2025 00:29:36 -0500
+	id 1tq46k-0004s2-Gl; Thu, 06 Mar 2025 00:49:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq3nW-0001gc-2k; Thu, 06 Mar 2025 00:29:30 -0500
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ id 1tq46i-0004rm-VL; Thu, 06 Mar 2025 00:49:20 -0500
+Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq3nU-0006i2-5z; Thu, 06 Mar 2025 00:29:29 -0500
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-86d2fba8647so234782241.0; 
- Wed, 05 Mar 2025 21:29:27 -0800 (PST)
+ id 1tq46h-0008Tk-5T; Thu, 06 Mar 2025 00:49:20 -0500
+Received: by mail-ua1-x936.google.com with SMTP id
+ a1e0cc1a2514c-86929964ed3so243443241.0; 
+ Wed, 05 Mar 2025 21:49:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741238966; x=1741843766; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741240157; x=1741844957; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KaB6rGB5gEbShao80tHZ3Iu2QrvpBVQpim6kGrMH9Fw=;
- b=O7yhhc3j1VBxz6c7SyTdoEZ5Dwp2k14V9+GhvbI4GHwA491EjoEu9SnVn5+g6lJD9N
- 0xbGQyftackMZsU1KSvPV0Ao4cRO22io3jF4D7gun4yCKg5SaT8pY+0TSIRgC4bzbjdQ
- DVY4sGkAR5gNbIb27b6Q2SObDKlKvezKDCG6FBqHv+Z61p23ruQ8jWifMWgya8xTgrp4
- C5k35NPGAWAE5mwZA4uDCkJzBGFL4y37cnuvvEK9oHgmmZZUXTlSWiUNQgEaIednnTNy
- 4HymMeiLKhAY8M3azWP/7+uHA+PHDAm2fyRNoIcvAdRGpBtqdfp9qjWDI6CzuOh3MwKr
- jAyw==
+ bh=P3rJG0ePzz2XmIZWNCI3Zgw7Yg7x1sbqwnNy4uRAv7M=;
+ b=RNH5Gc0bxA6Jpblv6vj8/wtVM+boHH6cSNztdYmflKxbkwrr/xvg5nDBsPg0mLl27Z
+ Zbchoz1kuk8UN0qo/hFliwPGZpgvW+gRztxpmp52lDlB6Aqt0ppZCyC4ZUAHxjVk4JII
+ LdF9L/dtVQ+nqeqVMV96yuEsrMvK3iPFvDT216/LW0ghLOHnkFfJOK70LKVPF/hEyold
+ 7Ht6ZNwUqnOhhg56/9/0BC4aKzmy4dQjCJXuyfzZEzQXR0OW+ZeKTsMv9PVoIz7W95wK
+ 6dS8wDL1CwTjBJYgj9Ei5SCrrBHKM+cbR56TqkRJL3QbLhf7OlsbGv8e4XkzImXxS4pm
+ 0GHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741238966; x=1741843766;
+ d=1e100.net; s=20230601; t=1741240157; x=1741844957;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KaB6rGB5gEbShao80tHZ3Iu2QrvpBVQpim6kGrMH9Fw=;
- b=LGitl5+xnA5fgoSIJUKqotIBxLYKIhjzPXwHwfpdKBHKjqPfFuGZPeJ95APOqagpt8
- Km5Urinpz5rh0jb2yWkAA3IO7K/8VYMRZyCsQhzjQy6fF9IlsxXpunwqCg0azQ3KXfug
- Guhdy3+EnHczcwu5ds9np5d0O93K5LC/ekZnpsGTcINv56sPVMd0Ac8QBnqjyizbvn8v
- O16YQo8QqpfgwBYgKrQF6Jzxsg3Ip2h4WMdx8TGBz17o2Zxwe7tmf+1VP/H9yWX9VMH1
- khQCFv0CpRM5eIBekCXukJjYnPSnTgDPncI0dcAVbZCYV9QOC0HScSeZWXAg1fAFH4/S
- 755w==
+ bh=P3rJG0ePzz2XmIZWNCI3Zgw7Yg7x1sbqwnNy4uRAv7M=;
+ b=fV/dR8xO+XfRFmtcmbaHUUM7Q7nv2W3p/i9q825Gweipv+TvPICCqACP2Y6V8LUPU1
+ 0bxydbxDv0EEs3Q7NGd+InwIpfaouZwy7JMmppxJqMAbbhwOiQ09Amu63Dli0wSIp8kL
+ 830wUjhwnHRP5tbBs2j4OPL7GVC9VHVkXGpWW4IaC8QDrhq/JZGDlaB5pNORds6zkXX2
+ FwQgYezu2jbmIHrVflMFD652rkECxD7FJBaGIwuP7uSvybTi8BW9f+O/M3F0PGZGuAAq
+ 6pOUsS+oyvMQOXpBfSkF/gawA2H2zVVklsdKDnix39GAhvef/uHKLGvw7WrUaixlylUB
+ N09g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2B44Y8MksFkhTndtV+WaH5OWqKI113wEx0VrfRSLAeY46Mz5h/b6TxReVA6ZJs/6FFw+PinJbEZiG@nongnu.org
-X-Gm-Message-State: AOJu0YwIrHtPBlT0zv8DpUIZFZ9X4BP4y67V0gWPRXPxh5KH3fkyf8Ma
- IQklU06qLLsmU0v+6MFO6ZVxzJ+HXT4gB7AR8BKbErfZ+Q1hmOKH5Jr/TXXBA3zn6vRugwhylOs
- u30Cmp9uYB7rdVBoeYtKXGmEky3k=
-X-Gm-Gg: ASbGncsidJYCZ9GrCcr9T7hVDoXc8SsaASkIIUcycoR+pwOni/1duk0YqnBMDcB1TgW
- vaIhajop1NbCYVR+Zkn3hUNJp7XeDAQYVf9HjQKputmKwQJ/6kMKgAq+EP10qyVRHJx1Y+8JbP+
- +eKgkWb8XGAHEOEu9L34NMdI+RSuP+VV1hpxTfEM5PbMUa3vEP9/aWWYbO
-X-Google-Smtp-Source: AGHT+IHYH1GFahdFuw3bQuT4Kf3Q6FVnOAU/Spp9SFh2IoqnxLSFUNrPiMNVIvr+f4Df9FvbOBa8C8bRoNX7tvoLT5I=
-X-Received: by 2002:a05:6102:2925:b0:4c1:b227:1144 with SMTP id
- ada2fe7eead31-4c2e27ffc03mr3571014137.12.1741238966640; Wed, 05 Mar 2025
- 21:29:26 -0800 (PST)
+ AJvYcCWcq8V5pITeiZuKN4lFiWKmbPe/Rw6l3EEecGuincF89oi2YNAYNfnWDmjIBvdLa+CMJgvO2V7QL5Ca@nongnu.org
+X-Gm-Message-State: AOJu0YyYOu625iyGzaGmzb+xXQOk4DGlAfUfWT96Md6OTsD0MBG4JTho
+ Rt/Ux6j4fhQzg4uGNOLrIcyu25ur4d3/UnOiRoRG5nLJpAAt6ElUb1ox9YNbanfxAvoDby63iAO
+ 29Z9RBrzOHp7P4dppYPpVxA8lhds=
+X-Gm-Gg: ASbGncuK36GyoYixs2AtRyIj0ojAwG26Ucao89RsbIUZ9BWCfVFlsVkv5kCNIEjQa8o
+ UzMimytjitTiMEaW4k5SgRBw6USl8xKHlHtvVzSo3jf0xYhkWmJWP2BNE1qgycpQM+uKACMHdtj
+ X+DF1yF+SbSzJB71d2twgs34lVcMJLb3glqGjVk1q3S2bxz9lCZ/mT+XG3
+X-Google-Smtp-Source: AGHT+IE4loaKfS40kOKsfdI5oxl3nsRuGPswH3JdtTiD8obLijizDXn9QLheCFEHjFSbrWrXkvGgs54OhPdSXMsGPh4=
+X-Received: by 2002:a05:6102:c46:b0:4c1:9acb:a572 with SMTP id
+ ada2fe7eead31-4c2e2969c37mr3660001137.21.1741240157568; Wed, 05 Mar 2025
+ 21:49:17 -0800 (PST)
 MIME-Version: 1.0
-References: <20250218025446.2452254-1-debug@rivosinc.com>
- <20250218025446.2452254-2-debug@rivosinc.com>
-In-Reply-To: <20250218025446.2452254-2-debug@rivosinc.com>
+References: <20250303093155.35585-1-florian.lugou@provenrun.com>
+ <20250303093155.35585-2-florian.lugou@provenrun.com>
+In-Reply-To: <20250303093155.35585-2-florian.lugou@provenrun.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 15:29:00 +1000
-X-Gm-Features: AQ5f1JrCCwGwdk24wFfMbFPMy68SelbGt08vRv1AyhJQBurFql4qALeJuv7MuZE
-Message-ID: <CAKmqyKMip2t-QyEvFFvnsMkXV1Wokt0dXAqpe4MAzyCHpUm--A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] target/riscv: fixes a bug against `ssamoswap`
- behavior in M-mode
-To: Deepak Gupta <debug@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- Ved Shanbhogue <ved@rivosinc.com>
+Date: Thu, 6 Mar 2025 15:48:51 +1000
+X-Gm-Features: AQ5f1JrtjtTDx8vY236w4UcdDoSXykMHhtOJ0ilSDjYI92NXnQ9xQ-7SWYAYKS0
+Message-ID: <CAKmqyKOhUpLbmj3ob7htaYdmqhZxOn2nJCyoerb=UsuLxECjig@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] target/riscv: Add scontext CSR handling
+To: Florian Lugou <florian.lugou@provenrun.com>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,86 +99,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 18, 2025 at 12:57=E2=80=AFPM Deepak Gupta <debug@rivosinc.com> =
-wrote:
+On Mon, Mar 3, 2025 at 7:39=E2=80=AFPM Florian Lugou
+<florian.lugou@provenrun.com> wrote:
 >
-> Commit f06bfe3dc38c ("target/riscv: implement zicfiss instructions") adds
-> `ssamoswap` instruction. `ssamoswap` takes the code-point from existing
-> reserved encoding (and not a zimop like other shadow stack instructions).
-> If shadow stack is not enabled (via xenvcfg.SSE), then `ssamoswap` must
-> result in an illegal instruction exception. However there is a slightly
-> modified behavior for M-mode.
->
-> Shadow stack are not available in M-mode and all shadow stack instruction=
-s
-> in M-mode exhibit zimop behavior. However, `ssamoswap` can still succeed
-> if MPRV=3D1 and MPP is non-zero (see section 2.7 of zicfiss specification=
-).
-> This patch corrects that behavior for `ssamoswap`.
+> scontext size is 16 bits on RV32 and 32 bits on RV64, as recommended by
+> version 1.0 2025-02-21 of the debug specification.
 
-Section "22.2.3. Shadow Stack Memory Protection " of the latest priv
-spec [1] seems to say: "When the effective privilege mode is M, any
-memory access by an SSAMOSWAP.W/D
-instruction will result in a store/AMO access-fault exception."
-
-1: https://github.com/riscv/riscv-isa-manual/releases/tag/riscv-isa-release=
--9cfaf37-2025-03-06
+Section 5.7.8 indicates the register is XLEN bits wide, with data
+being 32-bits wide for both RV32 and RV64.
 
 Alistair
 
 >
-> Fixes: f06bfe3dc38c ("target/riscv: implement zicfiss instructions")
+> When the Smstateen extension is implemented, accessibility to the
+> scontext CSR is controlled by bit 57 of the [mh]stateen0 CSRs.
 >
-> Reported-by: Ved Shanbhogue <ved@rivosinc.com>
-> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+> Signed-off-by: Florian Lugou <florian.lugou@provenrun.com>
 > ---
->  target/riscv/insn_trans/trans_rvzicfiss.c.inc | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
+>  target/riscv/cpu.h      |  1 +
+>  target/riscv/cpu_bits.h |  5 +++++
+>  target/riscv/csr.c      | 36 ++++++++++++++++++++++++++++++++++++
+>  target/riscv/debug.c    |  1 +
+>  4 files changed, 43 insertions(+)
 >
-> diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv=
-/insn_trans/trans_rvzicfiss.c.inc
-> index e3ebc4977c..ec016cd70f 100644
-> --- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> @@ -15,6 +15,13 @@
->   * You should have received a copy of the GNU General Public License alo=
-ng with
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 616c3bdc1c..102e8285a6 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -440,6 +440,7 @@ struct CPUArchState {
+>      target_ulong tdata2[RV_MAX_TRIGGERS];
+>      target_ulong tdata3[RV_MAX_TRIGGERS];
+>      target_ulong mcontext;
+> +    target_ulong scontext;
+>      struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
+>      struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
+>      QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index a30317c617..e8997f3153 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -258,6 +258,9 @@
+>  /* VS-Level Control transfer records CSRs */
+>  #define CSR_VSCTRCTL        0x24e
+>
+> +/* Supervisor-Level Sdtrig CSRs (debug) */
+> +#define CSR_SCONTEXT        0x5a8
 > +
-> + #define REQUIRE_ZICFISS(ctx) do {       \
-> +    if (!ctx->cfg_ptr->ext_zicfiss) {    \
-> +        return false;                    \
-> +    }                                    \
-> +} while (0)
-> +
->  static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
->  {
->      if (!ctx->bcfi_enabled) {
-> @@ -77,7 +84,8 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *a=
-)
->  static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
->  {
->      REQUIRE_A_OR_ZAAMO(ctx);
-> -    if (!ctx->bcfi_enabled) {
-> +    REQUIRE_ZICFISS(ctx);
-> +    if ((ctx->priv !=3D PRV_M) && !ctx->bcfi_enabled) {
->          return false;
+>  /* Hpervisor CSRs */
+>  #define CSR_HSTATUS         0x600
+>  #define CSR_HEDELEG         0x602
+> @@ -1103,4 +1106,6 @@ typedef enum CTRType {
+>  #define MCONTEXT64                         0x0000000000001FFFULL
+>  #define MCONTEXT32_HCONTEXT                0x0000007F
+>  #define MCONTEXT64_HCONTEXT                0x0000000000003FFFULL
+> +#define SCONTEXT32                         0x0000FFFF
+> +#define SCONTEXT64                         0x00000000FFFFFFFFULL
+>  #endif
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 0ebcca4597..37b38f24a6 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -3393,6 +3393,10 @@ static RISCVException write_mstateen0(CPURISCVStat=
+e *env, int csrno,
+>          wr_mask |=3D SMSTATEEN0_P1P13;
 >      }
 >
-> @@ -97,7 +105,8 @@ static bool trans_ssamoswap_d(DisasContext *ctx, arg_a=
-moswap_w *a)
+> +    if (riscv_cpu_cfg(env)->debug) {
+> +        wr_mask |=3D SMSTATEEN0_HSCONTXT;
+> +    }
+> +
+>      if (riscv_cpu_cfg(env)->ext_smaia || riscv_cpu_cfg(env)->ext_smcsrin=
+d) {
+>          wr_mask |=3D SMSTATEEN0_SVSLCT;
+>      }
+> @@ -5321,6 +5325,35 @@ static RISCVException write_mcontext(CPURISCVState=
+ *env, int csrno,
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> +static RISCVException read_scontext(CPURISCVState *env, int csrno,
+> +                                    target_ulong *val)
+> +{
+> +    RISCVException ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSCONTXT)=
+;
+> +    if (ret !=3D RISCV_EXCP_NONE) {
+> +        return ret;
+> +    }
+> +
+> +    *val =3D env->scontext;
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+> +static RISCVException write_scontext(CPURISCVState *env, int csrno,
+> +                                     target_ulong val)
+> +{
+> +    bool rv32 =3D riscv_cpu_mxl(env) =3D=3D MXL_RV32 ? true : false;
+> +
+> +    RISCVException ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSCONTXT)=
+;
+> +    if (ret !=3D RISCV_EXCP_NONE) {
+> +        return ret;
+> +    }
+> +
+> +    /* Spec suggest 16-bit for RV32 and 34-bit for RV64 */
+> +    target_ulong mask =3D rv32 ? SCONTEXT32 : SCONTEXT64;
+> +
+> +    env->scontext =3D val & mask;
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+>  static RISCVException read_mnscratch(CPURISCVState *env, int csrno,
+>                                       target_ulong *val)
 >  {
->      REQUIRE_64BIT(ctx);
->      REQUIRE_A_OR_ZAAMO(ctx);
-> -    if (!ctx->bcfi_enabled) {
-> +    REQUIRE_ZICFISS(ctx);
-> +    if ((ctx->priv !=3D PRV_M) && !ctx->bcfi_enabled) {
->          return false;
+> @@ -5973,6 +6006,9 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D {
+>      [CSR_SIEH]       =3D { "sieh",   aia_smode32, NULL, NULL, rmw_sieh }=
+,
+>      [CSR_SIPH]       =3D { "siph",   aia_smode32, NULL, NULL, rmw_siph }=
+,
+>
+> +    /* Supervisor-Level Sdtrig CSRs (debug) */
+> +    [CSR_SCONTEXT]   =3D { "scontext", debug, read_scontext, write_scont=
+ext },
+> +
+>      [CSR_HSTATUS]     =3D { "hstatus",     hmode,   read_hstatus, write_=
+hstatus,
+>                            .min_priv_ver =3D PRIV_VERSION_1_12_0         =
+       },
+>      [CSR_HEDELEG]     =3D { "hedeleg",     hmode,   read_hedeleg, write_=
+hedeleg,
+> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> index 9db4048523..072593ab12 100644
+> --- a/target/riscv/debug.c
+> +++ b/target/riscv/debug.c
+> @@ -1088,4 +1088,5 @@ void riscv_trigger_reset_hold(CPURISCVState *env)
 >      }
 >
+>      env->mcontext =3D 0;
+> +    env->scontext =3D 0;
+>  }
 > --
-> 2.34.1
+> 2.43.0
 >
 >
 
