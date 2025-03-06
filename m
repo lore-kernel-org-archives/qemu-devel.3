@@ -4,67 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64DE8C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 09:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67641C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 09:22:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq7D8-0000yq-GC; Thu, 06 Mar 2025 04:08:10 -0500
+	id 1tq7QR-0004YD-8A; Thu, 06 Mar 2025 04:21:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tq7D5-0000yK-D7
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:08:07 -0500
-Received: from 4.mo552.mail-out.ovh.net ([178.33.43.201])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tq7QM-0004Xm-OP
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:21:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tq7D2-0006dH-Al
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:08:07 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.176.76])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4Z7k8t1DGPz1Wbk;
- Thu,  6 Mar 2025 09:07:58 +0000 (UTC)
-Received: from kaod.org (37.59.142.112) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Thu, 6 Mar
- 2025 10:07:57 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-112S0063cc64be7-4286-4742-bcd7-f9f6f1717f32,
- 37C52C01EA5DF959F069A379DC9FDBD07502A922) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Thu, 6 Mar 2025 10:07:56 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-CC: <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 2/2] 9pfs: reduce latency of v9fs_reclaim_fd()
-Message-ID: <20250306100756.28e6bea2@bahia>
-In-Reply-To: <35b3e1bc74c4f2825acb98252398d2f8805fc99f.1741101468.git.qemu_oss@crudebyte.com>
-References: <cover.1741101468.git.qemu_oss@crudebyte.com>
- <35b3e1bc74c4f2825acb98252398d2f8805fc99f.1741101468.git.qemu_oss@crudebyte.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tq7QK-0000H0-8b
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:21:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741252906;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+fE7ocxEBIWLDJiLQCiXw6MUiosAmWceyhwxWZUHTzM=;
+ b=L9qhgjDJIz4UEgvUJQ7e2VY+Pj1d3LUGjy3bl12Z9cfNbSXt1sonOes6VI22/fAp0L65Vr
+ b3MOOBFVrYa09tUv3bJfXAfG/WFIQCaaxUyt4j0k4RtRIZ4z0v2UXD6/NKMdGUmfbk8BGi
+ orjXCegMkGF/v3gZiNfup4XSQ9XlYcE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-xgyO-kMTN9GtFWtkMS4LtQ-1; Thu,
+ 06 Mar 2025 04:21:21 -0500
+X-MC-Unique: xgyO-kMTN9GtFWtkMS4LtQ-1
+X-Mimecast-MFC-AGG-ID: xgyO-kMTN9GtFWtkMS4LtQ_1741252880
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E1BBD1800361; Thu,  6 Mar 2025 09:21:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.112])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9719B300019E; Thu,  6 Mar 2025 09:21:15 +0000 (UTC)
+Date: Thu, 6 Mar 2025 09:21:11 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [RFC PATCH 2/4] hw/arm/raspi: Replace TARGET_AARCH64 by
+ legacy_binary_is_64bit()
+Message-ID: <Z8lpB6XdNPT8zyTa@redhat.com>
+References: <20250305161248.54901-1-philmd@linaro.org>
+ <20250305161248.54901-3-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.112]
-X-ClientProxiedBy: DAG5EX2.mxp5.local (172.16.2.42) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: 18b2b9b5-0c98-4e53-84bb-663b5aef0593
-X-Ovh-Tracer-Id: 7344808043234826650
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdejfeegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegkeejtdevgeekieelffdvtedvvdegtdduudeigffhhffgvdfhgeejteekheefkeenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddrudduvddpkeekrddujeelrdelrdduheegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepvddprhgtphhtthhopehqvghmuhgpohhsshestghruhguvggshihtvgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdfovfetjfhoshhtpehmohehhedvmgdpmhhouggvpehsmhhtphhouhht
-DKIM-Signature: a=rsa-sha256; bh=/pazhm2T2KBH7nvhREPHTZRA+4H3JdZPXvBe0ilg8yk=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1741252078; v=1;
- b=C4h8vZMZbBlA4/bWmtjvhzxVe1NN4H6p/PtF+WkcKcZoo40wHZksJYHFqxsKlS5zKSrQrRd9
- /uJhw026fPDWtRM/R4rM/XfrHU00NDlt8t7KjSusG7lWCh9m3YCtSuh2MFdl/GoOfNkHg0Dj+/s
- FOG4TdsCC+RiseZiDlnnMazAG1RsHTYAPftbu+X2p8K8PMNK5zLivwZc22IxURuI1jRIKEAJLvx
- UapUfEaPcuxSmNPqllzG3MqKgP0CVfdoj0fgtDcnWh5rBdPEmELmI2sQpN7AJr/lMjLGz2PgD/2
- D77Akkpcl2V5iCIrgFu/DcxuG8HfiDwJQ7g0e0uFx1JWw==
-Received-SPF: pass client-ip=178.33.43.201; envelope-from=groug@kaod.org;
- helo=4.mo552.mail-out.ovh.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250305161248.54901-3-philmd@linaro.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -80,115 +91,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 4 Mar 2025 16:16:05 +0100
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
-
-> This function calls v9fs_co_close() and v9fs_co_closedir() in a loop. Each
-> one of the calls adds two thread hops (between main thread and a fs driver
-> background thread). Each thread hop adds latency, which sums up in
-> function's loop to a significant duration.
+On Wed, Mar 05, 2025 at 05:12:46PM +0100, Philippe Mathieu-Daudé wrote:
+> For legacy ARM binaries, legacy_binary_is_64bit() is
+> equivalent of the compile time TARGET_AARCH64 definition.
 > 
-> Reduce overall latency by open coding what v9fs_co_close() and
-> v9fs_co_closedir() do, executing those and the loop itself altogether in
-> only one background thread block, hence reducing the total amount of
-> thread hops to only two.
+> Use it as TypeInfo::registerable() callback to dynamically
+> add Aarch64 specific types in qemu-system-aarch64 binary,
+> removing the need of TARGET_AARCH64 #ifdef'ry.
 > 
-
-I'm afraid it is a bit trickier but I might have found a subtle bug
-in the current code :-)
-
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/9pfs/9p.c | 26 +++++++++++++++++---------
->  1 file changed, 17 insertions(+), 9 deletions(-)
+>  hw/arm/bcm2836.c | 6 ++----
+>  hw/arm/raspi.c   | 7 +++----
+>  2 files changed, 5 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> index 4f9c2dde9c..4b52b1a22a 100644
-> --- a/hw/9pfs/9p.c
-> +++ b/hw/9pfs/9p.c
-> @@ -434,6 +434,7 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
->      V9fsFidState *f;
->      GHashTableIter iter;
->      gpointer fid;
-> +    int err;
->  
->      /* prevent multiple coroutines running this function simultaniously */
->      if (s->reclaiming) {
-> @@ -446,10 +447,10 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
->      QSLIST_HEAD(, V9fsFidState) reclaim_list =
->          QSLIST_HEAD_INITIALIZER(reclaim_list);
->  
-> +    /* Pick FIDs to be closed, collect them on reclaim_list. */
->      while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &f)) {
->          /*
-> -         * Unlink fids cannot be reclaimed. Check
-> -         * for them and skip them. Also skip fids
-> +         * Unlinked fids cannot be reclaimed, skip those, and also skip fids
->           * currently being operated on.
->           */
->          if (f->ref || f->flags & FID_NON_RECLAIMABLE) {
-> @@ -499,17 +500,24 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
->          }
->      }
->      /*
-> -     * Now close the fid in reclaim list. Free them if they
-> -     * are already clunked.
-> +     * Close the picked FIDs altogether on a background I/O driver thread. Do
-> +     * this all at once to keep latency (i.e. amount of thread hops between main
-> +     * thread <-> fs driver background thread) as low as possible.
->       */
-> +    v9fs_co_run_in_worker({
-> +        QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
-> +            err = (f->fid_type == P9_FID_DIR) ?
-> +                s->ops->closedir(&s->ctx, &f->fs_reclaim) :
-> +                s->ops->close(&s->ctx, &f->fs_reclaim);
-> +            if (!err) {
-> +                total_open_fd--;
+> diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
+> index 95e16806fa1..88a32e5fc20 100644
+> --- a/hw/arm/bcm2836.c
+> +++ b/hw/arm/bcm2836.c
 
-Hmm... total_open_fd is supposed to be accessed by the main thread only.
-Maybe turn total_open_fd into an atomic ? Or have this block to return
-the count of closed fds and propagate that to total_open_fd in the main
-thread ?
 
-> +            }
-> +        }
-> +    });
-> +    /* Free the closed FIDs. */
->      while (!QSLIST_EMPTY(&reclaim_list)) {
->          f = QSLIST_FIRST(&reclaim_list);
->          QSLIST_REMOVE(&reclaim_list, f, V9fsFidState, reclaim_next);
-> -        if (f->fid_type == P9_FID_FILE) {
-> -            v9fs_co_close(pdu, &f->fs_reclaim);
-> -        } else if (f->fid_type == P9_FID_DIR) {
-> -            v9fs_co_closedir(pdu, &f->fs_reclaim);
-> -        }
+> @@ -219,12 +218,11 @@ static const TypeInfo bcm283x_types[] = {
+>          .name           = TYPE_BCM2836,
+>          .parent         = TYPE_BCM283X,
+>          .class_init     = bcm2836_class_init,
+> -#ifdef TARGET_AARCH64
+>      }, {
+>          .name           = TYPE_BCM2837,
+>          .parent         = TYPE_BCM283X,
+> +        .registerable   = legacy_binary_is_64bit,
+>          .class_init     = bcm2837_class_init,
+> -#endif
+>      }, {
+>          .name           = TYPE_BCM283X,
+>          .parent         = TYPE_BCM283X_BASE,
 
-An now for the subtle bug in the existing code :
+So historically we have a subset of machines that are only exposed in
+the qemu-system-aarch64 binary, and not qemu-system-arm.
 
-v9fs_co_close() and v9fs_co_closedir() honor TFLUSH with the following
-check that skips the actual closing :
+You're attempting to build a single binary to cover both 32 & 64 bit
+arm, so need to be able to filter what machines are available to
+create when the symlink indicates invokation of the 32-bit binary.
 
-    if (v9fs_request_cancelled(pdu)) {
-        return -EINTR;
-    }
+If we extend your approach into the future, we may eventually have
+a qemu-system-any with all targets, and symlinks from the legacy
+binary names, so need to filter based on target as well as on
+32/64-bit.
 
-If the client cancels the request that needs fd reclaim, some
-fds will be cleared from the fids without being closed. This
-causes fd leaks and probably ruins the overall reclaim logic.
 
-This is kinda fixed by the current patch since all the fds
-in the reclaim list are closed altogether atomically in the
-same v9fs_co_run_in_worker().
+The reason you want the .registerable callback is so that we can
+have a single static list of all machine types passed into
+DEFINE_TYPES in bulk, instead of implementing a manual constructor
+to do type registration and conditionally calling type_register()
+for each type.
 
->          /*
->           * Now drop the fid reference, free it
->           * if clunked.
+So I can understand why you took this approach, but conceptually I'm not
+comfortable with the semantics of 'type_register' being a method that
+registers a type, except when it doesn't register a type. That feels
+like dubious semantic design.
 
-Cheers,
+If I step back a level, I would ask why do we need to skip the registration
+of machine types at all ?
 
+It is because existing code blindly assumes that if a machine class is
+registered, then it is valid to instantiate that machine class. IMHO this
+is where the current design limitation is.
+
+No matter what we do the code will exist in  memory in the binary. If we
+register a type that's a tiny bit of memory to hold the "Class" instance
+and ought to be logically harmless if we never instantiate a type.
+
+IMHO we should always unconditionally register all types for which we
+have code in memory. If there are types like machine types, where some
+Classes should be blocked from instantiation based on certain criteria,
+we should instead represent that with a check at that class level in
+some manner.
+
+i.e, we could have a helper
+
+    bool machine_is_available(MachineClass *mc)
+
+which we use as a filter when querying machine types that are available to
+instantiate (-M help, query-machines), and as a pre-condition prior to
+instiating a machine type (-M <name>).
+
+That may in turn imply a callback
+
+   bool (*is_available)(void)
+
+on the MachineClass, for which your legacy_binary_is_64bit() method would
+serve as an impl.
+
+With regards,
+Daniel
 -- 
-Greg
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
