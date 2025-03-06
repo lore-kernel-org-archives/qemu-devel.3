@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10892C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89C6C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:17:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq4Xf-0002Mw-FS; Thu, 06 Mar 2025 01:17:11 -0500
+	id 1tq4XF-00028c-ER; Thu, 06 Mar 2025 01:16:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tq4Xa-0002Jm-PJ
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:17:06 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tq4XC-00028M-Ri
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:16:42 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tq4XX-0003Wc-R0
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:17:06 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-22334203781so30547795ad.0
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 22:17:03 -0800 (PST)
+ id 1tq4XA-0003Ut-AF
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:16:42 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-22355618fd9so3813065ad.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 22:16:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741241822; x=1741846622;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741241797; x=1741846597;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AGRsR0xCOtQhyX6ujNZbtw42ERJg2g6jZAFsjNyb/5c=;
- b=nJQArtk+KwS58B/lRS6Q3n24QYEwQpPtJhYt37nJTQfSr//dCdCji1rbaNx8b9vgCP
- bQ01XEhBTPKPCaIudhThT/7vt7C8KEQ+OVkpfRN6kP71hUKRdTe4LTopBC3qeLAyJkqI
- iQQ2GvhVRysFtITKemzN+1vQuqrNiGqoYeE7OEsA2DSrNklrjXYfKIIyHFs63l0BQqMU
- 33uY8lBuhnYuEq6iblD2jXr4o9cO8uyamWMYnpTH4bHBKIR5+J+cn3RHkrYIU2bwbZRl
- XgDUTX8C/qW8WxK9Wbbqx6UVtDB022iXeiSkkIhVufmPxGj6czqmqq2eypK+HEMl7+D8
- 1UEw==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vKVPkK6RGouYGT6PzP93MOS62t8/ijRTB8K4FZLswIs=;
+ b=ghoSeY16mTu+uGlmQH4auRmgQBB5iV5Mlpg5ejUQcwIDoP6LGX3xHQ3NEDZhZYY50R
+ mMI9igqEcCYuG68oqWuKNLAM8n7aTC8vFYWhyHr4SCg8ADSwXp6KW2g+pmcA1EtiwQvV
+ 94V3eqHSennelj/bYbjwGMl6xOzJ27olrV0r8+7vQgErHyJVxc/SlMUsxGTq4kJBzH+g
+ xqQVvispTQT7nu8ec+jgKicq/ku0dvnYbf+kVXc9o4ETiFCYFEu+3JKXemLM6mPbvFD6
+ 07eU5k+6P0pe+3IeeAfYWdye9cXJiaTZqVNx9HONYS/vh2Vn/QVU1peT/4pb5ZbSGkW9
+ YcvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741241822; x=1741846622;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AGRsR0xCOtQhyX6ujNZbtw42ERJg2g6jZAFsjNyb/5c=;
- b=igHwgxBVhRZUFoldD+qoh83JKUZp+o+LSX8eoNSEjgBkdqJ8CRAF55LLPQFY5/H6T4
- C8csPHAMJ8YRB8i4SXUR6jqYuiU2J7A/XDaqBLqsrYkFZF2x+dVeZWb5BR0mpKvTJ3zN
- i38uiNERebV6d00ZUrvdXGWPrv16LMKYVfhFx158zW4xEv2Zf6/yeX0bOMUOE3vNK5EQ
- NvfnWJdljCTAI1PUVCKOQVB/RfjcKRpYLOF0Z/hrXfEjje+T9B3fDRs/2WmeM0W+dg6U
- QVaDZ6sIVXTvnlGEOF89iiIbVAPqa76Y4z7ati8VdRCWVxQ+hEfIsoO1R8ckysDHc6/e
- aGFQ==
-X-Gm-Message-State: AOJu0YwrGIypzgs8YMSVnOq98dFct/8cX6zS/y6DyKexn1d2ZnuNr+e/
- r7cgNXoXfCCAeMEFq7sqN3WT4E75VsZZuiX6ZPuhYaa0z6W1M67UFotvISY+rlU=
-X-Gm-Gg: ASbGncuCb30X30UjiZk7X8Ph7x7WNeDqGBw6K20N43VwNb5xJ4w30RGSQhLpkLK+Krt
- h/Rnxu1nyvezdDJqRo/r4RBL4SI6EYqO7StHramP6e1u+uA6RyPNEiDT7UYZRyaj1Af7BrIEX+Q
- w+dDe5lRwm5uj83oNh5jo0xPRacbrdZ2Pvaa19wutOzTZUPe33XQmxt7HD8nAzMQKWIQrvKNVoh
- 4MnhXoyrCk7dgsuNoJlS5MCZTm64Sa2fLKkhCt9XNl74iAkQyYzYHlX3+G7FPY7lJGNKrlcty2p
- E0MbnVCrJAJJEnaBUxrUbavPNmgLVI0VPeLCdutdzLdzwSwo
-X-Google-Smtp-Source: AGHT+IG8eajS4GyqD5p++5kFvzmjivQbzFN0Vvv0tKWIiVXpqP6Qg/d5gbQxmCtCaVriHzLoKQnKtg==
-X-Received: by 2002:a05:6a00:1816:b0:732:706c:c4ff with SMTP id
- d2e1a72fcca58-73693f731b2mr3741981b3a.7.1741241822254; 
- Wed, 05 Mar 2025 22:17:02 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741241797; x=1741846597;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vKVPkK6RGouYGT6PzP93MOS62t8/ijRTB8K4FZLswIs=;
+ b=Y4eJsz8tBqiZv0gN9+q6QYWKJdV7985b3sRInyzvXyTKRc4mWs3B9oCf+0lSW4bZAU
+ 8L4xRPvxD/Ih5t4df7gJPAzGDy81/W1tlsT5bWsrrvjlBXJxqY8/6u6FYCUpfd8eodgU
+ h1eF77kxQouRGo208Qd6/zwMvFH+TaaPCdt7RQ3faEQkuxX5YMfEATrmaFMqLxqlNkQ6
+ DASFPH5jwvkgOHQBhT8ZUhSOBKYBwjKp6aRkOcZGXB2ownQ6sOYy6X99sLgCl1Q3t1zX
+ Vmy1Kd8O63H3wt0yIqzd9VpLWKvbtKGmtjghMbXBhHu3mou+d3JD1vrp2P/2T+ijs2sf
+ jc7Q==
+X-Gm-Message-State: AOJu0YzEQOMFE9nBDX2G87lp4omizpQH+h7jzzwkkFIyQViKsP8Ch79i
+ JjP7pO/xcdSNE6lddJMciqtwXui8RlQ6x7/fFN+Y3t7uucyU8Q/UkU31Gf+Nc6g=
+X-Gm-Gg: ASbGncs1BHyO4E/M4WNd4QT5/4DH8NO6YmNo7hF8tqYRXO6hcZbW6ugBZdh49ira/fa
+ VcOXb4mnAnnqgnkzi94fMFCHl6qCjDc73N4czymXsO3m8A9DD5hp8jSjQ4DODmTHC3dOU9kF0Gx
+ U+VE9sanVcMl6ExxZlqoy67pHIKqyFvdxX2k+WoUSFNBPQLpG/A5fKpNhb/UpUWUNAFkf+WMaND
+ WoX1aULNMUBlySlkfqaMVTVeU1UTNLPd+BdBGb9aK7yM4ARxAURY8fKeozmtnEIjcPITpYvQjN5
+ u2IwlFJKbf9TlFDwStcKAQ5wdai4qAm3QgIqREvWNBqtsPeQ
+X-Google-Smtp-Source: AGHT+IFSuzeHw70UQjZcVDmOeSWpzqywpYEMjS+YtPR0cwHee4Oe32K0Gmk/7s7XQbSgM/902TFQ6A==
+X-Received: by 2002:a17:903:41cb:b0:216:3466:7414 with SMTP id
+ d9443c01a7336-223f1d397ecmr116303965ad.44.1741241797039; 
+ Wed, 05 Mar 2025 22:16:37 -0800 (PST)
 Received: from localhost ([157.82.207.107])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-7369844ce73sm499880b3a.74.2025.03.05.22.16.58
+ d2e1a72fcca58-7369844cfd8sm498323b3a.83.2025.03.05.22.16.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 22:17:01 -0800 (PST)
+ Wed, 05 Mar 2025 22:16:36 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 06 Mar 2025 15:16:30 +0900
-Subject: [PATCH v6 4/4] virtio: Convert feature properties to OnOffAuto
+Subject: [PATCH v6 0/4] virtio: Convert feature properties to OnOffAuto
+Date: Thu, 06 Mar 2025 15:16:26 +0900
+Message-Id: <20250306-virtio-v6-0-1235eab776d9@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250306-virtio-v6-4-1235eab776d9@daynix.com>
-References: <20250306-virtio-v6-0-1235eab776d9@daynix.com>
-In-Reply-To: <20250306-virtio-v6-0-1235eab776d9@daynix.com>
+X-B4-Tracking: v=1; b=H4sIALo9yWcC/2XNQW7DIBCF4atErEs0zAA2XfUeVRcYDw2L2hGOU
+ KLIdw+x5MSVlw/x/XMXE+fEk/g83EXmkqY0DnXYj4MIJz/8skx93QIBtQJFsqR8SaNUVrOniM4
+ EEvXzOXNM1yX0/VP3KU2XMd+WblHP1zWh10RREiS7vo+Nb1Xr1Ffvb0O6HsP4J56NghuH+HJYX
+ YfkNJJlMLRztDoDCt73qDpLHBtYru6d3rr25XR1oYvgPejgots583a4caY6TY0NHao2QPzn5nl
+ +AGENRPF9AQAA
+X-Change-ID: 20241013-virtio-164ea3f295c3
 To: Jason Wang <jasowang@redhat.com>, 
  Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
@@ -91,8 +95,8 @@ To: Jason Wang <jasowang@redhat.com>,
 Cc: qemu-devel@nongnu.org, devel@daynix.com, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -114,6 +118,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This series was spun off from:
+"[PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto"
+(https://patchew.org/QEMU/20240714-auto-v3-0-e27401aabab3@daynix.com/)
+
 Some features are not always available with vhost. Legacy features are
 not available with vp_vdpa in particular. virtio devices used to disable
 them when not available even if the corresponding properties were
@@ -127,152 +135,52 @@ features are not available.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/hw/virtio/virtio.h | 38 +++++++++++++++++++++-----------------
- hw/core/machine.c          |  1 +
- hw/virtio/virtio-bus.c     | 14 ++++++++++++--
- hw/virtio/virtio.c         |  4 +++-
- 4 files changed, 37 insertions(+), 20 deletions(-)
+Changes in v6:
+- Rebased.
+- Link to v5: https://lore.kernel.org/qemu-devel/20250208-virtio-v5-0-4376cb218c0f@daynix.com
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 638691028050d2599592d8c7e95c75ac3913fbdd..b854c2cb1d04da0a35165289c28f87e8cb869df6 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -113,7 +113,8 @@ struct VirtIODevice
-     uint16_t queue_sel;
-     /**
-      * These fields represent a set of VirtIO features at various
--     * levels of the stack. @host_features indicates the complete
-+     * levels of the stack. @requested_features indicates the feature
-+     * set the user requested. @host_features indicates the complete
-      * feature set the VirtIO device can offer to the driver.
-      * @guest_features indicates which features the VirtIO driver has
-      * selected by writing to the feature register. Finally
-@@ -121,6 +122,7 @@ struct VirtIODevice
-      * backend (e.g. vhost) and could potentially be a subset of the
-      * total feature set offered by QEMU.
-      */
-+    OnOffAutoBit64 requested_features;
-     uint64_t host_features;
-     uint64_t guest_features;
-     uint64_t backend_features;
-@@ -149,6 +151,7 @@ struct VirtIODevice
-     bool started;
-     bool start_on_kick; /* when virtio 1.0 feature has not been negotiated */
-     bool disable_legacy_check;
-+    bool force_features_auto;
-     bool vhost_started;
-     VMChangeStateEntry *vmstate;
-     char *bus_name;
-@@ -376,22 +379,23 @@ typedef struct VirtIOSCSIConf VirtIOSCSIConf;
- typedef struct VirtIORNGConf VirtIORNGConf;
- 
- #define DEFINE_VIRTIO_COMMON_FEATURES(_state, _field) \
--    DEFINE_PROP_BIT64("indirect_desc", _state, _field,    \
--                      VIRTIO_RING_F_INDIRECT_DESC, true), \
--    DEFINE_PROP_BIT64("event_idx", _state, _field,        \
--                      VIRTIO_RING_F_EVENT_IDX, true),     \
--    DEFINE_PROP_BIT64("notify_on_empty", _state, _field,  \
--                      VIRTIO_F_NOTIFY_ON_EMPTY, true), \
--    DEFINE_PROP_BIT64("any_layout", _state, _field, \
--                      VIRTIO_F_ANY_LAYOUT, true), \
--    DEFINE_PROP_BIT64("iommu_platform", _state, _field, \
--                      VIRTIO_F_IOMMU_PLATFORM, false), \
--    DEFINE_PROP_BIT64("packed", _state, _field, \
--                      VIRTIO_F_RING_PACKED, false), \
--    DEFINE_PROP_BIT64("queue_reset", _state, _field, \
--                      VIRTIO_F_RING_RESET, true), \
--    DEFINE_PROP_BIT64("in_order", _state, _field, \
--                      VIRTIO_F_IN_ORDER, false)
-+    DEFINE_PROP_ON_OFF_AUTO_BIT64("indirect_desc", _state, _field, \
-+                                  VIRTIO_RING_F_INDIRECT_DESC, \
-+                                  ON_OFF_AUTO_AUTO), \
-+    DEFINE_PROP_ON_OFF_AUTO_BIT64("event_idx", _state, _field, \
-+                                  VIRTIO_RING_F_EVENT_IDX, ON_OFF_AUTO_AUTO), \
-+    DEFINE_PROP_ON_OFF_AUTO_BIT64("notify_on_empty", _state, _field, \
-+                                  VIRTIO_F_NOTIFY_ON_EMPTY, ON_OFF_AUTO_AUTO), \
-+    DEFINE_PROP_ON_OFF_AUTO_BIT64("any_layout", _state, _field, \
-+                                  VIRTIO_F_ANY_LAYOUT, ON_OFF_AUTO_AUTO), \
-+    DEFINE_PROP_ON_OFF_AUTO_BIT64("iommu_platform", _state, _field, \
-+                                  VIRTIO_F_IOMMU_PLATFORM, ON_OFF_AUTO_OFF), \
-+    DEFINE_PROP_ON_OFF_AUTO_BIT64("packed", _state, _field, \
-+                                  VIRTIO_F_RING_PACKED, ON_OFF_AUTO_OFF), \
-+    DEFINE_PROP_ON_OFF_AUTO_BIT64("queue_reset", _state, _field, \
-+                                  VIRTIO_F_RING_RESET, ON_OFF_AUTO_AUTO), \
-+    DEFINE_PROP_ON_OFF_AUTO_BIT64("in_order", _state, _field, \
-+                                  VIRTIO_F_IN_ORDER, ON_OFF_AUTO_OFF)
- 
- hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
- bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 02cff735b3fb8cf0ce8a85ec7f1fb36a98005a24..b25b366bdc715acd5c90af7ac38cfb3ac88f4c5b 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -43,6 +43,7 @@ GlobalProperty hw_compat_9_2[] = {
-     { "virtio-balloon-pci-non-transitional", "vectors", "0" },
-     { "virtio-mem-pci", "vectors", "0" },
-     { "migration", "multifd-clean-tls-termination", "false" },
-+    { TYPE_VIRTIO_DEVICE, "x-force-features-auto", "on" },
- };
- const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
- 
-diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
-index 896feb37a1caa805543e971c150d3673675b9a6b..75d433b252d5337d91616a2847b3dc12e811c2da 100644
---- a/hw/virtio/virtio-bus.c
-+++ b/hw/virtio/virtio-bus.c
-@@ -50,6 +50,7 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
-     bool has_iommu = virtio_host_has_feature(vdev, VIRTIO_F_IOMMU_PLATFORM);
-     bool vdev_has_iommu;
-     Error *local_err = NULL;
-+    uint64_t features;
- 
-     DPRINTF("%s: plug device.\n", qbus->name);
- 
-@@ -63,13 +64,22 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
- 
-     /* Get the features of the plugged device. */
-     assert(vdc->get_features != NULL);
--    vdev->host_features = vdc->get_features(vdev, vdev->host_features,
--                                            &local_err);
-+    features = vdev->host_features | vdev->requested_features.auto_bits |
-+               vdev->requested_features.on_bits;
-+    features = vdc->get_features(vdev, features, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return;
-     }
- 
-+    if (!vdev->force_features_auto &&
-+        (features & vdev->requested_features.on_bits) != vdev->requested_features.on_bits) {
-+        error_setg(errp, "A requested feature is not supported by the device");
-+        return;
-+    }
-+
-+    vdev->host_features = features;
-+
-     if (klass->device_plugged != NULL) {
-         klass->device_plugged(qbus->parent, &local_err);
-     }
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 85110bce37443bb46c4159761af112d0dba466b4..83f803fc703da6257608e21476305c8e9c6a8b07 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -4013,11 +4013,13 @@ static void virtio_device_instance_finalize(Object *obj)
- }
- 
- static const Property virtio_properties[] = {
--    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, host_features),
-+    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, requested_features),
-     DEFINE_PROP_BOOL("use-started", VirtIODevice, use_started, true),
-     DEFINE_PROP_BOOL("use-disabled-flag", VirtIODevice, use_disabled_flag, true),
-     DEFINE_PROP_BOOL("x-disable-legacy-check", VirtIODevice,
-                      disable_legacy_check, false),
-+    DEFINE_PROP_BOOL("x-force-features-auto", VirtIODevice,
-+                     force_features_auto, false),
- };
- 
- static int virtio_device_start_ioeventfd_impl(VirtIODevice *vdev)
+Changes in v5:
+- Covered QAPI more than just qdev.
+- Expanded the description of patch
+  "qapi: Accept bool for OnOffAuto and OnOffSplit".
+- Rebased.
+- Link to v4: https://lore.kernel.org/r/20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com
 
+Changes in v4:
+- Added patch "qapi: Do not consume a value if failed".
+- Link to v3: https://lore.kernel.org/r/20250104-virtio-v3-0-63ef70e9ddf3@daynix.com
+
+Changes in v3:
+- Rebased.
+- Link to v2: https://lore.kernel.org/r/20241022-virtio-v2-0-b2394236e053@daynix.com
+
+Changes in v2:
+- Expanded the message of patch "qdev-properties: Accept bool for
+  OnOffAuto".
+- Link to v1: https://lore.kernel.org/r/20241014-virtio-v1-0-e9ddf7a81891@daynix.com
+
+---
+Akihiko Odaki (4):
+      qapi: Do not consume a value if failed
+      qapi: Accept bool for OnOffAuto and OnOffSplit
+      qdev-properties: Add DEFINE_PROP_ON_OFF_AUTO_BIT64()
+      virtio: Convert feature properties to OnOffAuto
+
+ include/hw/qdev-properties.h |  18 ++++++++
+ include/hw/virtio/virtio.h   |  38 +++++++++-------
+ hw/core/machine.c            |   1 +
+ hw/core/qdev-properties.c    |  83 +++++++++++++++++++++++++++++++++-
+ hw/virtio/virtio-bus.c       |  14 +++++-
+ hw/virtio/virtio.c           |   4 +-
+ qapi/qobject-input-visitor.c | 103 +++++++++++++++++++++++++++++--------------
+ scripts/qapi/visit.py        |  24 ++++++++++
+ 8 files changed, 229 insertions(+), 56 deletions(-)
+---
+base-commit: b69801dd6b1eb4d107f7c2f643adf0a4e3ec9124
+change-id: 20241013-virtio-164ea3f295c3
+
+Best regards,
 -- 
-2.48.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
