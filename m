@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B606C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 23:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E6ACC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 23:02:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqKDz-0007vK-4j; Thu, 06 Mar 2025 18:01:55 -0500
+	id 1tqKEP-000093-Oq; Thu, 06 Mar 2025 18:02:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqKDw-0007sw-ME
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 18:01:53 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tqKEL-0008VZ-6E
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 18:02:17 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqKDt-0007Tp-I9
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 18:01:51 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-223cc017ef5so25142045ad.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 15:01:49 -0800 (PST)
+ id 1tqKEJ-0007Wx-IB
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 18:02:16 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2235189adaeso20888835ad.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 15:02:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741302108; x=1741906908; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741302134; x=1741906934; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ytHOyfwRxokLFu3lT1VbdTpUTCElXlDMOtqzDFwyOIE=;
- b=NUKFO4WzuKu6rwbel3HYZQW4PymtnhNhPXr/pMQRrJTDxAIYlgejWUZN5SVthLM/JX
- 0ARdW8cslO+4ln+T3kUYCJvzUJm1x3ALgUuTgw48hHFIwNNa8KA2jGqi4dKZNbb2q9eC
- dV/DBod/pdMxNZbhVkozdotgQyzvUW0DIQcgvsVjP1RORbvurKeD2mqUJwsTQsOctpqq
- LFfF1CkwSnyoeuxdqfUoMXQSl+reYAAb7XOqO83uTRRTTLkXnOKuLTPRNqDRXvJj4mx1
- 8LAjeI4G/MlZ0BtfBZkLJ1yE6ccnEXWDFzslOeviUW+OV42aBgVNB3yqDoGznYAu01T5
- 1tsQ==
+ bh=QcNv71ZCuoXXGbwQ+4M8hddCjN8+qXhq0EMORrnX4/o=;
+ b=BHLvTDNZs1yX2hN9klfySupL84q6tAKqQlk28aF2HpxTZeGKDG1f9+ny0A5HFnD1Vl
+ ZwUjgmf73FXz/DA7JH9e5EXfkeb1ZPJaxYTbtJEKK0XR7HOIX/zx4ClBa8QrHOt8Muf2
+ IXp9fxSOZmYmGLpa+3fBaD7leXp3uFc+e52TxBIdIReX7x92V/ubc+as8/5i4IVu4wor
+ pjk5DCqxNp8vwnaATniBDFkK2v33kgFOA3tqDk64H33Wsn2rVeB/JLobSeJDajBIyJ9G
+ ziCXJsCSlAro2ZL171piHwdwXDRR6Y4BmKpfPOI1YYim+Yzj2CD8S6F6j7JbguCtgSTz
+ EXZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741302108; x=1741906908;
+ d=1e100.net; s=20230601; t=1741302134; x=1741906934;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ytHOyfwRxokLFu3lT1VbdTpUTCElXlDMOtqzDFwyOIE=;
- b=ZVxKnlHkycplbseivytZRKnRJ/vWuz6GqnPkTMkYapvCiyKGjmdKPe7fPkt+tA8k7W
- ZSiDPsvOKfKrrbvkH8Z2qdg0Ogzb2Ztj8RCGdNVfA0G0GJ1met+H9T35aaZD69fDl5HC
- UCTD86Il2NMAyWEyFrLn68z1aHXZMPX5nIRI8L+8AU9h1tgwrJ4Z+KlGUekTi5WUAH7p
- 8/4cc8bYqTAeAZ/3GdESLl2c9ieuMepD9h2bgzThtdVvQWtdpwd5ky0D9jfntjxLV1P6
- 0ySa6vQxqZakdtioYXH0qL8xerpA04dmQn6WcPGTUpsAFlEDj6XYFtZwGHVGpcoCkilm
- r2+Q==
-X-Gm-Message-State: AOJu0YxzX0yn9N4OFWay1tUX5xH5usoUI75N3nf90cKM7tbBSTd2fXlq
- BFDRj7nMtqWn9OZvcxqBgJiJhoSDyBAnxI21GvkITTYGBrUpzCbDyEGLnzy3Az58shlqxFfa10e
- q
-X-Gm-Gg: ASbGncsZYcF+G4zJDnIvsyzbbvtlXW64BCPKfQ9QfkfLM7Pqre1X/GRsmWXu4fcFtjS
- 5EEC2axMnK2utZPD6X57Vp6W0+EXYp/+xnPllPuyRJbAHShkjypwK04J7Q8NPpdVWJfwnNE5sfB
- wSfTk4HbXTZZSm8gncRn0aTckQUVmkQOyaoiiezOCEI0/teZ/asEPTYftm4peeKJ99mgmg5ohHe
- t/z5YuBmhT352pW70Db4KMBvw0Y4sPH9zNKZqv3ZJSxkpgirzhje3ps8e0k7Pu4Z7/7MdII7rsr
- VXRKqSjFFqKh0NtzmDzIMzGzYe8TM64tON8mUqykRVUCSh9EFtVns56E8uFfXC+RFbS0Xd8rhI3
- XtT0kfe3s
-X-Google-Smtp-Source: AGHT+IGag/SqiOgcN59w+QHUw8lMEM5TsY0q+Qd9bgBOF8ppg2OXVJFg7pHPjdsglhtSpzTF1Pu79w==
-X-Received: by 2002:a17:903:41c2:b0:220:e9f5:4b7c with SMTP id
- d9443c01a7336-2242889f0abmr16410615ad.17.1741302107983; 
- Thu, 06 Mar 2025 15:01:47 -0800 (PST)
+ bh=QcNv71ZCuoXXGbwQ+4M8hddCjN8+qXhq0EMORrnX4/o=;
+ b=vpNhh3Ytm8wkYyJ8CYhg382csjb7hzmNbegAZl2Enntw9OWsff96ZRbKCHMZe6QJ7g
+ 2Ko6VhAyhqgZPrF50+qm4GkKz2WSsDlNNClgiFXnwUORKRzrBXTZmRDxaDh9D7H2l4PI
+ 7C53e5D0ldN8oxHKSTqlSmIHlEYUI5qhJyQZbtC3rkdPC01uXWl5QkScby4Ki1boxwt8
+ LEYOMXQn+20QZzDh49sE3A2TeS6kh0zCzocIYC+UW38r7UlySUyHYrK2e7Mx+xJo49hi
+ WQQ5F2tH+V1CnklbWkPR5ZAwp6PNrE4D3JbOXq5sAF+ruF2a6A1e83/XFp/BNTFReHwg
+ MHBw==
+X-Gm-Message-State: AOJu0YzZ+9ogOitoxcdUuWaSLwuhyY2eiIafr8Rrb1FdXZkAPnDpdBzD
+ pkhPwTWJLHoq+o+7b07yUZpxtulrdiD0f2wF0lvRcVsBLC31N0E+h43OfOA6ZhXj9IxppFMXSMj
+ d
+X-Gm-Gg: ASbGncukiMSlYjvS5eNIvYRZukrSajrnEYCAu92Rc0PCxYR3N/lBK03T6QgvWQLlPlZ
+ mII1n0BZC09px8HXuHz6XR9KWQ8lJ1wkGZJSJqanVZE/5jyGZx7yQPANtmTsINbVHoSOeQ6Y8zP
+ QoX1jnFjA+BcVq3OyrqhsU6jDK+LH1ty9BUr36Qb544FpwSdeAiRhAYZHZy84LCFstX+R9moOvy
+ I71quNbgpkyJvhtZHLa6BpYq8Z2aMt/UQxvcA+nVjVFhCaoh9hA4ReX61eCgH2h1FFAiHBLbPqe
+ 0Apbz5EranBqdWHOg3CUPYQA3YQq3a9sp/R+7pHkkudW210jnfwSpnUpA3vYsck0+eqaoqmvFFf
+ PR7sIE/qm
+X-Google-Smtp-Source: AGHT+IGQD+F1d4ja2xBe6Xi8REehvYepWgjjuV2McF40ra4IQGpYxXaZC93yPTeLERVR7CPzk0JFtg==
+X-Received: by 2002:a17:902:e807:b0:215:9eac:1857 with SMTP id
+ d9443c01a7336-224091ea762mr74689405ad.5.1741302133849; 
+ Thu, 06 Mar 2025 15:02:13 -0800 (PST)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a91e66sm17735475ad.202.2025.03.06.15.01.47
+ d9443c01a7336-22410aa4bf2sm17808225ad.213.2025.03.06.15.02.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 15:01:47 -0800 (PST)
-Message-ID: <f3e37fee-405b-40a1-b975-153c44d2e049@linaro.org>
-Date: Thu, 6 Mar 2025 15:01:46 -0800
+ Thu, 06 Mar 2025 15:02:13 -0800 (PST)
+Message-ID: <56eb8724-1eda-455c-9101-3aa2a736ba30@linaro.org>
+Date: Thu, 6 Mar 2025 15:02:12 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] target/arm: HCR_EL2.RW should be RAO/WI if EL1
- doesn't support AArch32
+Subject: Re: [PATCH 09/10] target/arm: Add cpu local variable to
+ exception_return helper
 To: qemu-devel@nongnu.org
 References: <20250306163925.2940297-1-peter.maydell@linaro.org>
- <20250306163925.2940297-9-peter.maydell@linaro.org>
+ <20250306163925.2940297-10-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250306163925.2940297-9-peter.maydell@linaro.org>
+In-Reply-To: <20250306163925.2940297-10-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,19 +105,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/6/25 08:39, Peter Maydell wrote:
-> When EL1 doesn't support AArch32, the HCR_EL2.RW bit is supposed to
-> be RAO/WI.  We don't enforce this.  This isn't a problem yet because
-> at the moment all of our CPU types with AArch64 support AArch32 at
-> all exception levels, but in the future this is likely to no longer
-> be true. Enforce the RAO/WI behaviour.
-> 
-> Note that we handle "reset value should honour RES1 bits" in the same
-> way that SCR_EL3 does, via a reset function.
+> We already call env_archcpu() multiple times within the
+> exception_return helper function, and we're about to want to
+> add another use of the ARMCPU pointer. Add a local variable
+> cpu so we can call env_archcpu() just once.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/helper.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
+>   target/arm/tcg/helper-a64.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
