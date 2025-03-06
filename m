@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE364C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 03:50:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B316C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 04:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq2FM-0007Ow-B0; Wed, 05 Mar 2025 22:50:08 -0500
+	id 1tq2Rm-0002K2-Dl; Wed, 05 Mar 2025 23:02:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq2FA-0007O2-Nu; Wed, 05 Mar 2025 22:49:57 -0500
-Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
+ id 1tq2Rg-0002JJ-TO; Wed, 05 Mar 2025 23:02:55 -0500
+Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq2F7-00058H-BD; Wed, 05 Mar 2025 22:49:56 -0500
-Received: by mail-vk1-xa2b.google.com with SMTP id
- 71dfb90a1353d-5236d34a37fso86731e0c.3; 
- Wed, 05 Mar 2025 19:49:52 -0800 (PST)
+ id 1tq2Re-0006Mm-LA; Wed, 05 Mar 2025 23:02:52 -0500
+Received: by mail-ua1-x92d.google.com with SMTP id
+ a1e0cc1a2514c-86911fd168dso69369241.1; 
+ Wed, 05 Mar 2025 20:02:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741232991; x=1741837791; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741233769; x=1741838569; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q8Bdtea+MTgwMLWizuKQfW99ZWm4hCJkAs7pqe/VHrw=;
- b=KW9oHwSNzLhMfibNvyyunMzgZiY/30tQfO2mGYQlNe9mw2biraDvnfDDJUCU+IGMSI
- dofpnTU3X5SVDY0tfzgU5vd3VMW3/fKx70gYoFUoxZ8gF8aD+X00ri8OBBZ8Zmr06jdx
- ofXCbClZZY+VQt+/UgjTv894CnhZgIGLwgosLsr5ix7ygfGBuhIV7OqtRSvKUtZXsB6F
- vcDCauylpmD6jVwBk1k3t1BZ1bT1hXuCEypsMfoBxqlE6KmOvOG/EbpvjP1fLISf4PBC
- A4HGGJCzJdb81Srira2BcmXZDkd0WJKbIGB5gGZxWgsmn87xP+agxDST3AR5Kf7GDJn8
- S/WQ==
+ bh=0Q44+Jr43EjF7kk5hQoiPCOSjLF+Y6mo7Oc5ScaxovM=;
+ b=OJyD7RUWKl9egpAV6M0TLRscG8mW6Xr3n46WgAneTlsdMxN1p4aCKp86N+5Y6e2H/p
+ XFFNY/WaZyTaPG/t6OV80ZWep+ZNcr/bTAtpKpbK09qxEdTuVQ2QzCUv2JDmBJoc1t10
+ Fb1PjZaFQrl3Ndb6oB2jai4IszgV3c5vr+wWWWf9EBO/ctxss29n7vgrcC3yLQPTcOVO
+ PKWTvmi9B1oqEn11yzPZyifxsZDVUh8eNHu3PyDh1zPnds3zDPucHUhyhhhnIonBA0l2
+ a5gq5QSGV0tMTgPpO5vozzNYGUwpzDZA9g/MeLUDw3rl2y58naA7l98uvzDp3i33TMph
+ FIpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741232991; x=1741837791;
+ d=1e100.net; s=20230601; t=1741233769; x=1741838569;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=q8Bdtea+MTgwMLWizuKQfW99ZWm4hCJkAs7pqe/VHrw=;
- b=E2XfHw1LHDUKa070vCbqzkN4ybVmu6KM8AZbkt7xhpMT4a4YM0ZYjbzjMIbvWMPBWL
- DGXSPFV9EunGzwvr2gqmd9sPYQPlUt9ZmvzIhM8iq92LvHEyfTYRW5u0C3T9UqylSZBh
- LJcy4TL/ndGa+W9vOcFTcUpKNGYB8fZ5Dtx06N9EMte55hLf2fvyWZlwxFvo9Oii1Nns
- OExC4ZJaji9m4X6U4qs/NFqxXLiybRjVDYI0iYcbOB80bxYTGiWpevmt1oUIKd0Rai6X
- aNQVptbujSwUIzg7eX4/xUndyzyOlK6rUJaEJuG3GtLt0GNOiLekjuWrjCpV45dG5u5R
- +g8A==
+ bh=0Q44+Jr43EjF7kk5hQoiPCOSjLF+Y6mo7Oc5ScaxovM=;
+ b=pOs5pMDuixPT+tXeQzPD3C/RfnQ9sWQSs5bTItJ6Mqr+275JxnBJXLn0EPt+pqG3Fz
+ by+H7nmLxBPLPAYmRnGxsyBFniMx/aSbOjgd/m9yuujRI8K2Ou0pmYMlwkhX8rB8ZYAY
+ ul2Xh4Ghp1Hr/Rfqm1W/lP3t6ONhg4l2iRgWa6OUSL0LntwGtPIik0hBUqJSVIvSNIz7
+ UvHacRjTFsY0BuhyMVZ/O+4GmhGlMIFYeVXO4C6p6T1G8HzawMoFiK9ylHpvDu1BlEoT
+ JSHOSdY9Eg8X/jSPm2Y41FTveAVNFglH8ktrf+tmOwo7DluRUp3O1uumawAzUiuKM+tR
+ HkwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUucrUzMQ4TMc34rZ/F30j8ZsmjyDkGkAPs0DG3Zkg0stNLyP2d/xyO3aRkgG8AmnmTEfQeGSRXyvYq@nongnu.org
-X-Gm-Message-State: AOJu0YyWKfx9L2DdYIhm+8HL6DXKbXBIMJuUeHrLqq4vQcghu8kUMZFI
- D3ONQQYjHCfqDjgB5qbAiNorfaU8YhkzJ7QVTwdEGYluk9wjMzinnRkjAXTcLhuMo4dMm8TD1gh
- daqX3yJaiZGChh5OeBp5+dQMEkcg=
-X-Gm-Gg: ASbGncsnpsZNXcv2QnAE9RLfsqVgqmpIuGstSHndSCS8jsOue+TpZ8vy17CS4F4G1Aw
- AZBbu+pElzcyUdY/MhH+nNYt8w0zNkZKfXELSfjCnx6gCyTl7sT/797IPA+RJ9QqQgOXIc9zMPG
- OWMROmn7P8qj1hgonPBwXYeRn5FkNBc9k/EIb8zNfwPwFbpU5RupMZiXWr
-X-Google-Smtp-Source: AGHT+IF1iWSqiJ/c68rEgZ4CfDWgPc77uCApFpcWgw1FRs5hAMWFL+P4FHiR3xgW9bOcVHya9h9c9YV0g74+y0/LMII=
-X-Received: by 2002:a05:6102:3e1f:b0:4bb:dfd8:4181 with SMTP id
- ada2fe7eead31-4c2e2745ad4mr3732134137.4.1741232991266; Wed, 05 Mar 2025
- 19:49:51 -0800 (PST)
+ AJvYcCUaOeBtlRa0flKOFR5db+yB53kP/8BjgmstMv4U7HfeSFFWvi8VoWYiu2zHKqOHYTEccftgnu7ThpL1@nongnu.org
+X-Gm-Message-State: AOJu0YwU/PFR0aXZBnG0u8BfVDdet5Cbc39pSxLfqH7/D5QQ3ZaKhExd
+ Vs0X84h399qniugkatKROsbDvFfGEUnt7fAG0qerA+BTokcmxd6xTh0GfWXqxcWw9UaxjT3cyOj
+ f9dgxvpou1/Wii9BrK7bciBIDQzc=
+X-Gm-Gg: ASbGnctMc6t3qsQGDaCKfg7GPOsXy6Tupp7bsMA/lBEr/Wj5AjjX9UKxXWpvSOaPFn4
+ LpLf+Sji7Kij/xUZvsfDLuUsQBGyafKoyzDSlXZ7/sYNgySyoo5sSxt6ypkkQk3Bhc5ZXxaD1db
+ JBP3SKJHDeuzwcFER77WYJIea4nDc1WA2ZvO9GaQrElLbldrgBpeVvaYUo
+X-Google-Smtp-Source: AGHT+IH+qakCOVujinTt/Hp6uFlHGJy0KOCDjDY/tWzeLi8InMEnIiFo8XJXyEsBmq9OmN0IPHVKEg9eI5TY8mMb/jc=
+X-Received: by 2002:a05:6102:c48:b0:4bb:f1f0:1b34 with SMTP id
+ ada2fe7eead31-4c2e2749be6mr4173482137.2.1741233769096; Wed, 05 Mar 2025
+ 20:02:49 -0800 (PST)
 MIME-Version: 1.0
 References: <20250304231956.34396-1-philmd@linaro.org>
 In-Reply-To: <20250304231956.34396-1-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 13:49:25 +1000
-X-Gm-Features: AQ5f1JrlGgMs97-L4OfMSr7YZEuivxZckHW74aeMi37yCsXSw2MWQt2BN_tp-Js
-Message-ID: <CAKmqyKMmsgBMW1iQX9ZPrGTpywu5y+DFnes+Cx0GJQr_NTFNVA@mail.gmail.com>
+Date: Thu, 6 Mar 2025 14:02:23 +1000
+X-Gm-Features: AQ5f1Jr8oSuimA5fjovSBgba_uOsDnwGVx-IZP3agI9uN18k3bict7kk3SMNlJQ
+Message-ID: <CAKmqyKOKUZ4Ct0K1X3DrK3VqVEKCStdig076ys59Y1UMnA_qmw@mail.gmail.com>
 Subject: Re: [PATCH] hw/riscv/riscv-iommu: Get target page info using runtime
  helpers
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
@@ -76,8 +76,8 @@ Cc: qemu-devel@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Weiwei Li <liwei1518@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,7 +110,10 @@ linaro.org> wrote:
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Do you mind rebasing on
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next ?
 
 Alistair
 
