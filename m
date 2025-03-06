@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB5BC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D3F8C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqCsR-0001gC-JR; Thu, 06 Mar 2025 10:11:11 -0500
+	id 1tqCsU-0001q8-TF; Thu, 06 Mar 2025 10:11:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org>)
- id 1tqCrl-0001Ro-Bu; Thu, 06 Mar 2025 10:10:30 -0500
+ id 1tqCsR-0001iT-Dm; Thu, 06 Mar 2025 10:11:11 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org>)
- id 1tqCri-0000vY-SR; Thu, 06 Mar 2025 10:10:29 -0500
+ id 1tqCsO-00015E-8J; Thu, 06 Mar 2025 10:11:11 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z7tC20pvFz4x3d;
- Fri,  7 Mar 2025 02:10:22 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z7tCs4ZHBz4x5k;
+ Fri,  7 Mar 2025 02:11:05 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z7tBy4RtGz4wcT;
- Fri,  7 Mar 2025 02:10:18 +1100 (AEDT)
-Message-ID: <9dfe2d2a-1e24-4c78-ad87-75118ea74c83@kaod.org>
-Date: Thu, 6 Mar 2025 16:10:15 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z7tCn5m8qz4wcd;
+ Fri,  7 Mar 2025 02:11:01 +1100 (AEDT)
+Message-ID: <2e2dfcb4-ecbe-4dc8-82eb-dd55b61c793d@kaod.org>
+Date: Thu, 6 Mar 2025 16:10:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 14/29] hw/intc/aspeed: Introduce AspeedINTCIRQ
- structure to save the irq index and register address
+Subject: Re: [PATCH v5 16/29] hw/intc/aspeed: Add Support for Multi-Output IRQ
+ Handling
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
- <20250306103846.429221-15-jamin_lin@aspeedtech.com>
+ <20250306103846.429221-17-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,7 +86,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250306103846.429221-15-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250306103846.429221-17-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -114,21 +114,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/6/25 11:38, Jamin Lin wrote:
-> The INTC controller supports GICINT128 to GICINT136, mapping 1:1 to input and
-> output IRQs 0 to 8. Previously, the formula "address & 0x0f00" was used to
-> derive the IRQ index numbers.
+> This update introduces support for handling multi-output IRQs in the AST2700
+> interrupt controller (INTC), specifically for GICINT192_201. GICINT192_201 maps
+> 1:10 to input IRQ 0 and output IRQs 0 to 9. Each status bit corresponds to a
+> specific IRQ.
 > 
-> However, the INTC controller also supports GICINT192_201, mapping 1 input IRQ
-> pin to 10 output IRQ pins. The pin numbers for input and output are different.
-> It is difficult to use a formula to determine the index number of INTC model
-> supported input and output IRQs.
+> Implemented "aspeed_intc_set_irq_handler_multi_outpins" to handle IRQs with
+> multiple output pins. Introduced "aspeed_intc_status_handler_multi_outpins"
+> for managing status registers associated with multi-output IRQs.
 > 
-> To simplify and improve readability, introduces the AspeedINTCIRQ structure to
-> save the input/output IRQ index and its enable/status register address.
+> Added new IRQ definitions for GICINT192_201 in INTC.
+> Adjusted the IRQ array to accommodate 10 input pins and 19 output pins,
+> aligning with the new GICINT192_201 mappings.
 > 
-> Introduce the "aspeed_2700_intc_irqs" table to store IRQ information for INTC.
-> Introduce the "aspeed_intc_get_irq" function to retrieve the input/output IRQ
-> pin index from the provided status/enable register address.
+>                     |------------------------------|
+>                     |            INTC              |
+>                     |inpin[0:0]--------->outpin[0] |
+>                     |inpin[0:1]--------->outpin[1] |
+>                     |inpin[0:2]--------->outpin[2] |
+>                     |inpin[0:3]--------->outpin[3] |
+> orgates[0]-------> |inpin[0:4]--------->outpin[4] |
+>                     |inpin[0:5]--------->outpin[5] |
+>                     |inpin[0:6]--------->outpin[6] |
+>                     |inpin[0:7]--------->outpin[7] |
+>                     |inpin[0:8]--------->outpin[8] |
+>                     |inpin[0:9]--------->outpin[9] |
+>                     |                              |
+>   orgates[1]------> |inpin[1]----------->outpin[10]|
+>   orgates[2]------> |inpin[2]----------->outpin[11]|
+>   orgates[3]------> |inpin[3]----------->outpin[12]|
+>   orgates[4]------> |inpin[4]----------->outpin[13]|
+>   orgates[5]------> |inpin[5]----------->outpin[14]|
+>   orgates[6]------> |inpin[6]----------->outpin[15]|
+>   orgates[7]------> |inpin[7]----------->outpin[16]|
+>   orgates[8]------> |inpin[8]----------->outpin[17]|
+>   orgates[9]------> |inpin[9]----------->outpin[18]|
+>                     |------------------------------|
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
@@ -141,200 +162,261 @@ C.
 
 
 > ---
->   include/hw/intc/aspeed_intc.h | 10 ++++
->   hw/intc/aspeed_intc.c         | 87 +++++++++++++++++++----------------
->   2 files changed, 58 insertions(+), 39 deletions(-)
+>   include/hw/intc/aspeed_intc.h |   4 +-
+>   hw/intc/aspeed_intc.c         | 149 ++++++++++++++++++++++++++++++----
+>   hw/intc/trace-events          |   1 +
+>   3 files changed, 137 insertions(+), 17 deletions(-)
 > 
 > diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-> index 41b1f82d73..fa92e9eef2 100644
+> index fa92e9eef2..e57f93bc8b 100644
 > --- a/include/hw/intc/aspeed_intc.h
 > +++ b/include/hw/intc/aspeed_intc.h
-> @@ -19,6 +19,14 @@ OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
->   #define ASPEED_INTC_MAX_INPINS 9
->   #define ASPEED_INTC_MAX_OUTPINS 9
+> @@ -16,8 +16,8 @@
+>   #define TYPE_ASPEED_2700_INTC TYPE_ASPEED_INTC "-ast2700"
+>   OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
 >   
-> +typedef struct AspeedINTCIRQ {
-> +    int inpin_idx;
-> +    int outpin_idx;
-> +    int num_outpins;
-> +    uint32_t enable_reg;
-> +    uint32_t status_reg;
-> +} AspeedINTCIRQ;
-> +
->   struct AspeedINTCState {
->       /*< private >*/
->       SysBusDevice parent_obj;
-> @@ -46,6 +54,8 @@ struct AspeedINTCClass {
->       uint64_t reg_size;
->       uint64_t reg_offset;
->       const MemoryRegionOps *reg_ops;
-> +    const AspeedINTCIRQ *irq_table;
-> +    int irq_table_count;
->   };
+> -#define ASPEED_INTC_MAX_INPINS 9
+> -#define ASPEED_INTC_MAX_OUTPINS 9
+> +#define ASPEED_INTC_MAX_INPINS 10
+> +#define ASPEED_INTC_MAX_OUTPINS 19
 >   
->   #endif /* ASPEED_INTC_H */
+>   typedef struct AspeedINTCIRQ {
+>       int inpin_idx;
 > diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-> index 5b0d15f463..0ac59745f6 100644
+> index d0b91d6420..95b65d2452 100644
 > --- a/hw/intc/aspeed_intc.c
 > +++ b/hw/intc/aspeed_intc.c
-> @@ -40,7 +40,23 @@ REG32(GICINT135_STATUS,     0x704)
+> @@ -39,6 +39,8 @@ REG32(GICINT135_EN,         0x700)
+>   REG32(GICINT135_STATUS,     0x704)
 >   REG32(GICINT136_EN,         0x800)
 >   REG32(GICINT136_STATUS,     0x804)
+> +REG32(GICINT192_201_EN,         0xB00)
+> +REG32(GICINT192_201_STATUS,     0xB04)
 >   
-> -#define GICINT_STATUS_BASE     R_GICINT128_STATUS
-> +static const AspeedINTCIRQ *aspeed_intc_get_irq(AspeedINTCClass *aic,
-> +                                                uint32_t reg)
+>   static const AspeedINTCIRQ *aspeed_intc_get_irq(AspeedINTCClass *aic,
+>                                                   uint32_t reg)
+> @@ -112,9 +114,55 @@ static void aspeed_intc_set_irq_handler(AspeedINTCState *s,
+>       }
+>   }
+>   
+> +static void aspeed_intc_set_irq_handler_multi_outpins(AspeedINTCState *s,
+> +                                 const AspeedINTCIRQ *intc_irq, uint32_t select)
 > +{
+> +    const char *name = object_get_typename(OBJECT(s));
+> +    uint32_t status_reg;
+> +    int num_outpins;
+> +    int outpin_idx;
+> +    int inpin_idx;
 > +    int i;
 > +
-> +    for (i = 0; i < aic->irq_table_count; i++) {
-> +        if (aic->irq_table[i].enable_reg == reg ||
-> +            aic->irq_table[i].status_reg == reg) {
-> +            return &aic->irq_table[i];
-> +        }
-> +    }
-> +
-> +    /*
-> +     * Invalid reg.
-> +     */
-> +    g_assert_not_reached();
-> +}
->   
->   /*
->    * Update the state of an interrupt controller pin by setting
-> @@ -54,17 +70,7 @@ static void aspeed_intc_update(AspeedINTCState *s, int inpin_idx,
->       AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
->       const char *name = object_get_typename(OBJECT(s));
->   
-> -    if (inpin_idx >= aic->num_inpins) {
-> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid input pin index: %d\n",
-> -                      __func__, inpin_idx);
-> -        return;
-> -    }
-> -
-> -    if (outpin_idx >= aic->num_outpins) {
-> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid output pin index: %d\n",
-> -                      __func__, outpin_idx);
-> -        return;
-> -    }
-> +    assert((outpin_idx < aic->num_outpins) && (inpin_idx < aic->num_inpins));
->   
->       trace_aspeed_intc_update_irq(name, inpin_idx, outpin_idx, level);
->       qemu_set_irq(s->output_pins[outpin_idx], level);
-> @@ -81,21 +87,20 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
->       AspeedINTCState *s = (AspeedINTCState *)opaque;
->       AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
->       const char *name = object_get_typename(OBJECT(s));
-> -    uint32_t status_reg = GICINT_STATUS_BASE + ((0x100 * irq) >> 2);
-> +    const AspeedINTCIRQ *intc_irq;
-> +    uint32_t status_reg;
->       uint32_t select = 0;
->       uint32_t enable;
->       int outpin_idx;
->       int inpin_idx;
->       int i;
->   
-> -    outpin_idx = irq;
-> -    inpin_idx = irq;
-> +    assert(irq < aic->num_inpins);
->   
-> -    if (irq >= aic->num_inpins) {
-> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid input pin index: %d\n",
-> -                      __func__, irq);
-> -        return;
-> -    }
-> +    intc_irq = &aic->irq_table[irq];
+> +    num_outpins = intc_irq->num_outpins;
 > +    status_reg = intc_irq->status_reg;
 > +    outpin_idx = intc_irq->outpin_idx;
 > +    inpin_idx = intc_irq->inpin_idx;
+> +
+> +    for (i = 0; i < num_outpins; i++) {
+> +        if (select & BIT(i)) {
+> +            if (s->mask[inpin_idx] & BIT(i) ||
+> +                s->regs[status_reg] & BIT(i)) {
+> +                /*
+> +                 * a. mask bit is not 0 means in ISR mode sources interrupt
+> +                 * routine are executing.
+> +                 * b. status bit is not 0 means previous source interrupt
+> +                 * does not be executed, yet.
+> +                 *
+> +                 * save source interrupt to pending bit.
+> +                 */
+> +                 s->pending[inpin_idx] |= BIT(i);
+> +                 trace_aspeed_intc_pending_irq(name, inpin_idx,
+> +                                               s->pending[inpin_idx]);
+> +            } else {
+> +                /*
+> +                 * notify firmware which source interrupt are coming
+> +                 * by setting status bit
+> +                 */
+> +                s->regs[status_reg] |= BIT(i);
+> +                trace_aspeed_intc_trigger_irq(name, inpin_idx, outpin_idx + i,
+> +                                              s->regs[status_reg]);
+> +                aspeed_intc_update(s, inpin_idx, outpin_idx + i, 1);
+> +            }
+> +        }
+> +    }
+> +}
+> +
+>   /*
+> - * GICINT128 to GICINT136 map 1:1 to input and output IRQs 0 to 8.
+> - * The value of input IRQ should be between 0 and the number of inputs.
+> + * GICINT192_201 maps 1:10 to input IRQ 0 and output IRQs 0 to 9.
+> + * GICINT128 to GICINT136 map 1:1 to input IRQs 1 to 9 and output
+> + * IRQs 10 to 18. The value of input IRQ should be between 0 and
+> + * the number of input pins.
+>    */
+>   static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+>   {
+> @@ -124,12 +172,14 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+>       const AspeedINTCIRQ *intc_irq;
+>       uint32_t select = 0;
+>       uint32_t enable;
+> +    int num_outpins;
+>       int inpin_idx;
+>       int i;
 >   
+>       assert(irq < aic->num_inpins);
+>   
+>       intc_irq = &aic->irq_table[irq];
+> +    num_outpins = intc_irq->num_outpins;
+>       inpin_idx = intc_irq->inpin_idx;
 >       trace_aspeed_intc_set_irq(name, inpin_idx, level);
 >       enable = s->enable[inpin_idx];
-> @@ -146,21 +151,16 @@ static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
->   {
->       AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
->       const char *name = object_get_typename(OBJECT(s));
-> +    const AspeedINTCIRQ *intc_irq;
->       uint32_t reg = offset >> 2;
->       uint32_t old_enable;
->       uint32_t change;
->       int inpin_idx;
-> -    uint32_t irq;
->   
-> -    irq = (offset & 0x0f00) >> 8;
-> -    inpin_idx = irq;
-> +    intc_irq = aspeed_intc_get_irq(aic, reg);
-> +    inpin_idx = intc_irq->inpin_idx;
->   
-> -    if (inpin_idx >= aic->num_inpins) {
-> -        qemu_log_mask(LOG_GUEST_ERROR,
-> -                      "%s: Invalid input pin index: %d\n",
-> -                      __func__, inpin_idx);
-> -        return;
-> -    }
-> +    assert(inpin_idx < aic->num_inpins);
->   
->       /*
->        * The enable registers are used to enable source interrupts.
-> @@ -202,26 +202,21 @@ static void aspeed_intc_status_handler(AspeedINTCState *s, hwaddr offset,
->   {
->       AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
->       const char *name = object_get_typename(OBJECT(s));
-> +    const AspeedINTCIRQ *intc_irq;
->       uint32_t reg = offset >> 2;
->       int outpin_idx;
->       int inpin_idx;
-> -    uint32_t irq;
->   
->       if (!data) {
->           qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid data 0\n", __func__);
->           return;
+> @@ -151,7 +201,11 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
 >       }
 >   
-> -    irq = (offset & 0x0f00) >> 8;
-> -    outpin_idx = irq;
-> -    inpin_idx = irq;
-> +    intc_irq = aspeed_intc_get_irq(aic, reg);
-> +    outpin_idx = intc_irq->outpin_idx;
-> +    inpin_idx = intc_irq->inpin_idx;
->   
-> -    if (inpin_idx >= aic->num_inpins) {
-> -        qemu_log_mask(LOG_GUEST_ERROR,
-> -                      "%s: Invalid input pin index: %d\n",
-> -                      __func__, inpin_idx);
-> -        return;
-> -    }
-> +    assert(inpin_idx < aic->num_inpins);
->   
->       /* clear status */
->       s->regs[reg] &= ~data;
-> @@ -411,6 +406,18 @@ static const TypeInfo aspeed_intc_info = {
->       .abstract = true,
->   };
->   
-> +static AspeedINTCIRQ aspeed_2700_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
-> +    {0, 0, 1, R_GICINT128_EN, R_GICINT128_STATUS},
-> +    {1, 1, 1, R_GICINT129_EN, R_GICINT129_STATUS},
-> +    {2, 2, 1, R_GICINT130_EN, R_GICINT130_STATUS},
-> +    {3, 3, 1, R_GICINT131_EN, R_GICINT131_STATUS},
-> +    {4, 4, 1, R_GICINT132_EN, R_GICINT132_STATUS},
-> +    {5, 5, 1, R_GICINT133_EN, R_GICINT133_STATUS},
-> +    {6, 6, 1, R_GICINT134_EN, R_GICINT134_STATUS},
-> +    {7, 7, 1, R_GICINT135_EN, R_GICINT135_STATUS},
-> +    {8, 8, 1, R_GICINT136_EN, R_GICINT136_STATUS},
-> +};
-> +
->   static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
->   {
->       DeviceClass *dc = DEVICE_CLASS(klass);
-> @@ -423,6 +430,8 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
->       aic->mem_size = 0x4000;
->       aic->reg_size = 0x808 >> 2;
->       aic->reg_offset = 0x1000;
-> +    aic->irq_table = aspeed_2700_intc_irqs;
-> +    aic->irq_table_count = ARRAY_SIZE(aspeed_2700_intc_irqs);
+>       trace_aspeed_intc_select(name, select);
+> -    aspeed_intc_set_irq_handler(s, intc_irq, select);
+> +    if (num_outpins > 1) {
+> +        aspeed_intc_set_irq_handler_multi_outpins(s, intc_irq, select);
+> +    } else {
+> +        aspeed_intc_set_irq_handler(s, intc_irq, select);
+> +    }
 >   }
 >   
->   static const TypeInfo aspeed_2700_intc_info = {
+>   static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
+> @@ -261,6 +315,66 @@ static void aspeed_intc_status_handler(AspeedINTCState *s, hwaddr offset,
+>       }
+>   }
+>   
+> +static void aspeed_intc_status_handler_multi_outpins(AspeedINTCState *s,
+> +                                                hwaddr offset, uint64_t data)
+> +{
+> +    const char *name = object_get_typename(OBJECT(s));
+> +    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+> +    const AspeedINTCIRQ *intc_irq;
+> +    uint32_t reg = offset >> 2;
+> +    int num_outpins;
+> +    int outpin_idx;
+> +    int inpin_idx;
+> +    int i;
+> +
+> +    if (!data) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid data 0\n", __func__);
+> +        return;
+> +    }
+> +
+> +    intc_irq = aspeed_intc_get_irq(aic, reg);
+> +    num_outpins = intc_irq->num_outpins;
+> +    outpin_idx = intc_irq->outpin_idx;
+> +    inpin_idx = intc_irq->inpin_idx;
+> +    assert(inpin_idx < aic->num_inpins);
+> +
+> +    /* clear status */
+> +    s->regs[reg] &= ~data;
+> +
+> +    /*
+> +     * The status registers are used for notify sources ISR are executed.
+> +     * If one source ISR is executed, it will clear one bit.
+> +     * If it clear all bits, it means to initialize this register status
+> +     * rather than sources ISR are executed.
+> +     */
+> +    if (data == 0xffffffff) {
+> +        return;
+> +    }
+> +
+> +    for (i = 0; i < num_outpins; i++) {
+> +        /* All source ISR executions are done from a specific bit */
+> +        if (data & BIT(i)) {
+> +            trace_aspeed_intc_all_isr_done_bit(name, inpin_idx, i);
+> +            if (s->pending[inpin_idx] & BIT(i)) {
+> +                /*
+> +                 * Handle pending source interrupt.
+> +                 * Notify firmware which source interrupt is pending
+> +                 * by setting the status bit.
+> +                 */
+> +                s->regs[reg] |= BIT(i);
+> +                s->pending[inpin_idx] &= ~BIT(i);
+> +                trace_aspeed_intc_trigger_irq(name, inpin_idx, outpin_idx + i,
+> +                                              s->regs[reg]);
+> +                aspeed_intc_update(s, inpin_idx, outpin_idx + i, 1);
+> +            } else {
+> +                /* clear irq for the specific bit */
+> +                trace_aspeed_intc_clear_irq(name, inpin_idx, outpin_idx + i, 0);
+> +                aspeed_intc_update(s, inpin_idx, outpin_idx + i, 0);
+> +            }
+> +        }
+> +    }
+> +}
+> +
+>   static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned int size)
+>   {
+>       AspeedINTCState *s = ASPEED_INTC(opaque);
+> @@ -293,6 +407,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>       case R_GICINT134_EN:
+>       case R_GICINT135_EN:
+>       case R_GICINT136_EN:
+> +    case R_GICINT192_201_EN:
+>           aspeed_intc_enable_handler(s, offset, data);
+>           break;
+>       case R_GICINT128_STATUS:
+> @@ -306,6 +421,9 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>       case R_GICINT136_STATUS:
+>           aspeed_intc_status_handler(s, offset, data);
+>           break;
+> +    case R_GICINT192_201_STATUS:
+> +        aspeed_intc_status_handler_multi_outpins(s, offset, data);
+> +        break;
+>       default:
+>           s->regs[reg] = data;
+>           break;
+> @@ -415,15 +533,16 @@ static const TypeInfo aspeed_intc_info = {
+>   };
+>   
+>   static AspeedINTCIRQ aspeed_2700_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
+> -    {0, 0, 1, R_GICINT128_EN, R_GICINT128_STATUS},
+> -    {1, 1, 1, R_GICINT129_EN, R_GICINT129_STATUS},
+> -    {2, 2, 1, R_GICINT130_EN, R_GICINT130_STATUS},
+> -    {3, 3, 1, R_GICINT131_EN, R_GICINT131_STATUS},
+> -    {4, 4, 1, R_GICINT132_EN, R_GICINT132_STATUS},
+> -    {5, 5, 1, R_GICINT133_EN, R_GICINT133_STATUS},
+> -    {6, 6, 1, R_GICINT134_EN, R_GICINT134_STATUS},
+> -    {7, 7, 1, R_GICINT135_EN, R_GICINT135_STATUS},
+> -    {8, 8, 1, R_GICINT136_EN, R_GICINT136_STATUS},
+> +    {0, 0, 10, R_GICINT192_201_EN, R_GICINT192_201_STATUS},
+> +    {1, 10, 1, R_GICINT128_EN, R_GICINT128_STATUS},
+> +    {2, 11, 1, R_GICINT129_EN, R_GICINT129_STATUS},
+> +    {3, 12, 1, R_GICINT130_EN, R_GICINT130_STATUS},
+> +    {4, 13, 1, R_GICINT131_EN, R_GICINT131_STATUS},
+> +    {5, 14, 1, R_GICINT132_EN, R_GICINT132_STATUS},
+> +    {6, 15, 1, R_GICINT133_EN, R_GICINT133_STATUS},
+> +    {7, 16, 1, R_GICINT134_EN, R_GICINT134_STATUS},
+> +    {8, 17, 1, R_GICINT135_EN, R_GICINT135_STATUS},
+> +    {9, 18, 1, R_GICINT136_EN, R_GICINT136_STATUS},
+>   };
+>   
+>   static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+> @@ -433,10 +552,10 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+>   
+>       dc->desc = "ASPEED 2700 INTC Controller";
+>       aic->num_lines = 32;
+> -    aic->num_inpins = 9;
+> -    aic->num_outpins = 9;
+> +    aic->num_inpins = 10;
+> +    aic->num_outpins = 19;
+>       aic->mem_size = 0x4000;
+> -    aic->reg_size = 0x808 >> 2;
+> +    aic->reg_size = 0xB08 >> 2;
+>       aic->reg_offset = 0x1000;
+>       aic->irq_table = aspeed_2700_intc_irqs;
+>       aic->irq_table_count = ARRAY_SIZE(aspeed_2700_intc_irqs);
+> diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+> index e97eea820b..913197a181 100644
+> --- a/hw/intc/trace-events
+> +++ b/hw/intc/trace-events
+> @@ -92,6 +92,7 @@ aspeed_intc_enable(const char *s, uint32_t value) "%s: Enable: 0x%x"
+>   aspeed_intc_select(const char *s, uint32_t value) "%s: Select: 0x%x"
+>   aspeed_intc_mask(const char *s, uint32_t change, uint32_t value) "%s: Mask: 0x%x: 0x%x"
+>   aspeed_intc_unmask(const char *s, uint32_t change, uint32_t value) "%s: UnMask: 0x%x: 0x%x"
+> +aspeed_intc_all_isr_done_bit(const char *s, int inpin_idx, int bit) "%s: All source ISR execution are done from specific bit: %d-%d"
+>   
+>   # arm_gic.c
+>   gic_enable_irq(int irq) "irq %d enabled"
 
 
