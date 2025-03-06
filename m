@@ -4,143 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C263DC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 19:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5925CC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 19:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqGoe-0006Pg-Ao; Thu, 06 Mar 2025 14:23:32 -0500
+	id 1tqHF6-0006b7-De; Thu, 06 Mar 2025 14:50:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqGoY-0006PF-73
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 14:23:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tqHF3-0006aM-BD
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 14:50:50 -0500
+Received: from mail-dm6nam04on2083.outbound.protection.outlook.com
+ ([40.107.102.83] helo=NAM04-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqGoW-0007AQ-4K
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 14:23:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741289001;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QxohkXhrb828nGmCVt5c+wvR3MEFfrquNs4yJAmuhCU=;
- b=KQLO8ubKl5uT88SrSo7IYyfsOt9rsp+iSdYDBhgsFtl7tHrbHgkz7GM5xUEQBiAUyvpYTJ
- ZoIhFsYeNJyWXuv5foNIwMK9zK74v/yxc2v2osCFaTSauseNGzguwSu43a1BmQB0MrNsGi
- RAEm2X8MBS3dZNT3jZ5GZUqlps2lhH8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-30-n-KGVy0NN0W1j_xvegrz8g-1; Thu, 06 Mar 2025 14:23:19 -0500
-X-MC-Unique: n-KGVy0NN0W1j_xvegrz8g-1
-X-Mimecast-MFC-AGG-ID: n-KGVy0NN0W1j_xvegrz8g_1741288999
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43bd8fd03a2so4816585e9.3
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 11:23:19 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741288998; x=1741893798;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QxohkXhrb828nGmCVt5c+wvR3MEFfrquNs4yJAmuhCU=;
- b=G0xNIEW4jgIZC2+ccr/UP5eKiIzvX2CJDu+FS+3WJPsTni6TRTBBCUiTNgl46JRRaP
- hOROHrqbhpawXowQpDMEcl53XgGVoIOsqTCaw0ThU3Z+cqrxW5eAd/a/p42HbtQmmKXy
- 9Auer5eMuH3Cy5ApUkJIDqQ2CVgpgeZzI7s/xnY8B5IqOrbF+2cACJxfEkIEmJe5e3kN
- GrU6GvetXjBdNnFW+OKg02a0KmRyVbaOb35PjZoDH3wpK0jrInybtY1A52f6LhX0seOK
- iPTKToHzj4d6ahcej8nSGqHC/VHbXKWzpJnXPDk+5XazRda0uOoMsr0l6G5sLdv2XiEH
- 9qOQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNeQFqY/yciphBsUNllLzJxIfXsQagEK+YiPQwRLGzJoAdnV/xU/zcEvmc4dvD+xdDOgDzizFP4Vkt@nongnu.org
-X-Gm-Message-State: AOJu0YwK0ORNNwxfT3o2qvJUK2zMpl67yvqlRoZxybwbx1QPUg8ymF74
- fM1ZBXIK0wDvWZVFQ4Bak+A+Woe0HAt3q7/Po+iGazumvmXCmoXrVsx6TSkEvMO4/Kf2xWE7p9C
- y3t4MAolNmb0xOQ5iwLeeeyRR6m8k35hwjmCIBO+5CQs8/1KLaUx2
-X-Gm-Gg: ASbGnctBWloZ/jr7HWW2KLhLdROK9HQ8h8wVNuE4iNUad3ujjkT/Jyf5znOVgl4nR0H
- 0w0kUl1baqkPD/m6STiNtoAX3Yb3bLOwYL2otZHqwvzRep7Bfo/0BfoywQT8C1TvLOr3fFktfoZ
- yX/DCTkim64vNuAUXaof5ecKJEXchey2X5a6HHbRWetIiocm43tPVtmlCMWPQBkCos/ZaGLB89i
- LDnrFYHmGj0t7rK6fVqwd6WGzbUbJJDtsqCNYJhBfvVt5fqR09c0yi/LfQe8GUgqJtSC9icPeF+
- Q0mXQuD4mwTHp1Ei5TpwS6VNGaB+zg7HRtM9GpjAFVqjmk4=
-X-Received: by 2002:a05:600c:1c0b:b0:43b:c0fa:f9ce with SMTP id
- 5b1f17b1804b1-43c601e117emr5986045e9.14.1741288998251; 
- Thu, 06 Mar 2025 11:23:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFJSsrwTdW+rPYfwEtDqJ/YMI0sekbbjBsIm6PdDnrxe2TFn+tOI4f4O+SpqnL+14SW330rJg==
-X-Received: by 2002:a05:600c:1c0b:b0:43b:c0fa:f9ce with SMTP id
- 5b1f17b1804b1-43c601e117emr5985905e9.14.1741288997871; 
- Thu, 06 Mar 2025 11:23:17 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
- [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd8c3d61sm27706735e9.15.2025.03.06.11.23.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 11:23:17 -0800 (PST)
-Message-ID: <45c99267-0b91-469f-82d8-5261bbb8ca90@redhat.com>
-Date: Thu, 6 Mar 2025 20:23:15 +0100
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tqHF0-0003X3-8N
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 14:50:48 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TKapjLoFINXxKnIXq1ICxXwUNZYjhCEZkvCDNiheSmLsIj+KgpuTbK+ivlNpJVnQoPkqDndseTszVRcCya/9AT/FJ2ZJnS2wWOWnCfe9Y0tpbbqFid0n9jcrolUb1Q8vckKXAn1QDyC/G22tjfuKl78u+20nIkJqpVTdgIknerOwJnpoVQNO+jtNNy7DrLrJH2664wwIlbfno+fHdXq0wJ4P9M7tXEC+RfmNaU6T74Urx1Rd0l0/5gFyFnkc1n4BGF11US1T/ABrNdQ4o0nVhU66nG8mOWFAJCRCarX4dF+b5tApdrm9m5b+Lix1o9Kb7JhBPUw7hu1Ddim022lRGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OzhXS+ouWVbtFIMyA75K5Zk/B6kA0381AqrIQTw1CWw=;
+ b=DKcm9z0xdTXkrHPc90AzdAyZuJS2z3Kka5buKPao/DDkl6dYmKZSBD51B4KkihXNsCePk+Gb45hFNyjHeD/i+kTde00ENtJz9NRyzBFVvqJqf7On3inhVx9n0KTwsHuX/vQYou1huWoNPucY7YIEmpHmpTaq6jaQT4w6M/RiKV29L5qzfVWNYykd8QhsuoDUt/p256QahVSPWDMUUjRVYMj0dVW2AAhCFpBjfupApEM4EPc01CoMcNkQNvXDL1hWm2ImiuZC4vI8BVLSMFTx7eFKf55rJwyhJIma98iB+dpfu9z+DcwkiJU4rwfu39HmybsN0jCEEMMeHG6FkKxWgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OzhXS+ouWVbtFIMyA75K5Zk/B6kA0381AqrIQTw1CWw=;
+ b=tV8d99fkY10FEKVbJkRb73DvRWN4XkzKBar+5CD48M5arbFsnez+OjT0IfYy++6U7mjUgAVBCIzPTco9EGWb8BhXfAuP+dtV10qvvYanCwJxk/VSL3F8BBgNUiqWF3uXiOuJURDZSCNRtDhp4f0a/fbS3/s/FosgJ+FQDTCt5xORkJ+RieYFd5+HpymLBaI+NvWG5gEg4N5aD0j39JISr3my2jJEFIIeT3v33impa5q008+smloCxK5H9Mc0KTsl2kmaNhbG1i0XeB9ilQZt5iCqTm3pbS1INgrqH3nVjQEgZlOAAY4OAkLhdbRNY07a+NZ1atg98kB66uvMUrDnFA==
+Received: from CH0PR04CA0070.namprd04.prod.outlook.com (2603:10b6:610:74::15)
+ by PH7PR12MB5781.namprd12.prod.outlook.com (2603:10b6:510:1d0::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.19; Thu, 6 Mar
+ 2025 19:45:35 +0000
+Received: from CH3PEPF0000000F.namprd04.prod.outlook.com
+ (2603:10b6:610:74:cafe::ef) by CH0PR04CA0070.outlook.office365.com
+ (2603:10b6:610:74::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8511.17 via Frontend Transport; Thu,
+ 6 Mar 2025 19:45:35 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CH3PEPF0000000F.mail.protection.outlook.com (10.167.244.40) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8511.15 via Frontend Transport; Thu, 6 Mar 2025 19:45:35 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 6 Mar 2025
+ 11:45:22 -0800
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 6 Mar
+ 2025 11:45:21 -0800
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Thu, 6 Mar 2025 11:45:20 -0800
+Date: Thu, 6 Mar 2025 11:45:19 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Eric Auger <eric.auger@redhat.com>
+CC: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "alex.williamson@redhat.com"
+ <alex.williamson@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
+Subject: Re: [PATCH rfcv2 06/20] host_iommu_device: Define two new
+ capabilities HOST_IOMMU_DEVICE_CAP_[NESTING|FS1GP]
+Message-ID: <Z8n7TwzKoLvl5XGF@Asurada-Nvidia>
+References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
+ <20250219082228.3303163-7-zhenzhong.duan@intel.com>
+ <4f13004c-a6d9-4f45-938e-3fc8d49183d7@redhat.com>
+ <SJ0PR11MB6744FAC917F2DF9A7BF9FF9992CC2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <0ccbf699-e6be-4936-89f7-b4f69672516f@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: fix race in virtio balloon test
-From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, David Hildenbrand <david@redhat.com>
-References: <20250304183340.3749797-1-berrange@redhat.com>
- <5b5bcdd3-f102-4f32-967a-a352cd1803ed@linaro.org>
- <d06be182-b6f2-4031-91af-50475fae554c@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <d06be182-b6f2-4031-91af-50475fae554c@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <0ccbf699-e6be-4936-89f7-b4f69672516f@redhat.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PEPF0000000F:EE_|PH7PR12MB5781:EE_
+X-MS-Office365-Filtering-Correlation-Id: a707e251-0063-4339-880a-08dd5ce77690
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|7416014|36860700013|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?joU/gCPX36KZcYK6VossADIixLTSD9/rBSS+0D/ie+9Je72OqCHVoji1RoZn?=
+ =?us-ascii?Q?rCxzTm3EQoMPdimr22ajbom0yoXiHjXbEVphGE1Ed9bOsgppPHIQGVTT0l4T?=
+ =?us-ascii?Q?uBnb/iwFK/nlzFFegcMx5SppRqFAx5ancUjdZA4JUe9jI0vbhi0SUwNYHQLO?=
+ =?us-ascii?Q?HgmcotvHGTu6XMSDJ6C1m7IBHUCn1gQp8hLZ1pWLWe218JTbTfkUep4fmi8B?=
+ =?us-ascii?Q?/u9ERPGvG+demZmf1h/c2Efx8ZL4OiuxNJagzyhx55N/eZH27nUvMayngshy?=
+ =?us-ascii?Q?Bexohu4nRC3suC5vEt55AJyaEoK0vJGyTFQgRhIAjxYGka6gG9h0sBp2lyls?=
+ =?us-ascii?Q?CS5e6pJgHvBeYHK5FxD/K3qBk19Y2yiI5E2mIgwUvyTck4Fty7iGLliBwxPf?=
+ =?us-ascii?Q?iLTCn4MSV8kq9mu/zmARMpQG5skxhbmBA0gvU3qn9a0RsNiUd01x8JaNcAQU?=
+ =?us-ascii?Q?1MCTZ1Ui7se8ShBvVd6tq2NqFLfOV7e1EEIztxM2+WhXU8iMp66xcFA+1v97?=
+ =?us-ascii?Q?G4KNXrIiDxFhoPMsGV0klFoKzq/gb6NZDpJIJQ0CtPMUG5rkSYWqnNSwIqwj?=
+ =?us-ascii?Q?6EqwFHqrUB4vskb1bQVHN2qhY2PHKqshPptb1Co0sY0bx3R9vCvN2pqZouQH?=
+ =?us-ascii?Q?TNNnjXXkv2OKfA55nXcCA/g2Yf/aN+pH3el6hbyUifN5F/lAWr1sM9Ig20wp?=
+ =?us-ascii?Q?2x9mes41uOPyTlbEX9G94p9dUrUTNIgf7Je2xm9/s6ZY5/6d7E/f+zPOPNl5?=
+ =?us-ascii?Q?Osb5cZxSalee+OGpuVEcBMZ1w6yhbkhJPYkTAx9iYXkQFPGuU/6ED0mymGfT?=
+ =?us-ascii?Q?q8IVvf6ZEHkdE9wP19qQlBJQS9QuJc0hxzypnFloxIZu6AKDQYTKi65TZ+Nb?=
+ =?us-ascii?Q?1vgERISpBDRFkTVBrS89UMDJSXqzDDJgWRmvoPrBeLB9aMegVCAiqmZf4god?=
+ =?us-ascii?Q?6TAv+pXU5HRUTGe7bCyITIGAev7DxMulF5aqdSU2dwa6BwJe8jak6rlpErn7?=
+ =?us-ascii?Q?n0NxVqVdxQD/h9LHQooTjCLiZKzVz/w7QiIA4s9JfulArMGpkM/CX1WuIaJu?=
+ =?us-ascii?Q?ZZVxNg2OQUzjuQnwo+IjKTut6u8dJH1ZGkX6XGzdx8UwgnWDBat0lnD0eJlY?=
+ =?us-ascii?Q?VaKgbIYjWvdgbHmHSTt6HEdj1dw4LPT7o+jd22QuuYygx9okuZTLoeZ2/KMo?=
+ =?us-ascii?Q?dE32O5TMicCBUs+7YWHaqs3o8WNxYoV4tQ5gfezE2PtBud6l71FGBad1oGFt?=
+ =?us-ascii?Q?yX7opkYayjrQNE24N1tvduES+OiKeiqrCRMFjM+LP0wkGTuarOdDLTO0en4p?=
+ =?us-ascii?Q?XH8phkQm+QxwMinLkLHJjFCUKUBzPXAzqZygrObLCGcy5JlDhO9pGaZmEftP?=
+ =?us-ascii?Q?hkOtKT1yovg98S2aukisDGxzDs69K25orGNzGjBs9FU22npKobNY+Fk6Mu5N?=
+ =?us-ascii?Q?doJr8tGbNrOgz3yYrjONOk9n5Nfknqzhp/xSViYKat7Uc+ipPrtpjw=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(7416014)(36860700013)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2025 19:45:35.1144 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a707e251-0063-4339-880a-08dd5ce77690
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH3PEPF0000000F.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5781
+Received-SPF: softfail client-ip=40.107.102.83;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM04-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,129 +169,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/03/2025 18.42, Thomas Huth wrote:
-> On 05/03/2025 13.25, Philippe Mathieu-Daudé wrote:
->> Hi Daniel,
->>
->> On 4/3/25 19:33, Daniel P. Berrangé wrote:
->>> There are two race conditions in the recently added virtio balloon
->>> test
->>>
->>>   * The /dev/vda device node is not ready
->>>   * The virtio-balloon driver has not issued the first stats refresh
->>>
->>> To fix the former, monitor dmesg for a line about 'vda'.
->>>
->>> To fix the latter, retry the stats query until seeing fresh data.
->>>
->>> Adding 'quiet' to the kernel command line reduces serial output
->>> which otherwise slows boot, making it less likely to hit the former
->>> race too.
->>>
->>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>> ---
->>>   tests/functional/test_virtio_balloon.py | 24 +++++++++++++++++++-----
->>>   1 file changed, 19 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/tests/functional/test_virtio_balloon.py b/tests/functional/ 
->>> test_virtio_balloon.py
->>> index 67b48e1b4e..308d197eb3 100755
->>> --- a/tests/functional/test_virtio_balloon.py
->>> +++ b/tests/functional/test_virtio_balloon.py
->>> @@ -32,7 +32,7 @@ class VirtioBalloonx86(QemuSystemTest):
->>>           
->>> 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
->>>       DEFAULT_KERNEL_PARAMS = ('root=/dev/vda1 console=ttyS0 net.ifnames=0 '
->>> -                             'rd.rescue')
->>> +                             'rd.rescue quiet')
->>>       def wait_for_console_pattern(self, success_message, vm=None):
->>>           wait_for_console_pattern(
->>> @@ -47,6 +47,9 @@ def mount_root(self):
->>>           prompt = '# '
->>>           self.wait_for_console_pattern(prompt)
->>> +        # Synchronize on virtio-block driver creating the root device
->>> +        exec_command_and_wait_for_pattern(self, "while ! (dmesg -c | 
->>> grep vda:) ; do sleep 1 ; done", "vda1")
->>> +
->>>           exec_command_and_wait_for_pattern(self, 'mount /dev/vda1 / 
->>> sysroot',
->>>                                             prompt)
->>>           exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
->>> @@ -65,10 +68,21 @@ def assert_initial_stats(self):
->>>               assert val == UNSET_STATS_VALUE
->>>       def assert_running_stats(self, then):
->>> -        ret = self.vm.qmp('qom-get',
->>> -                          {'path': '/machine/peripheral/balloon',
->>> -                           'property': 'guest-stats'})['return']
->>> -        when = ret.get('last-update')
->>> +        # We told the QEMU to refresh stats every 100ms, but
->>> +        # there can be a delay between virtio-ballon driver
->>> +        # being modprobed and seeing the first stats refresh
->>> +        # Retry a few times for robustness under heavy load
->>> +        retries = 10
->>> +        when = 0
->>> +        while when == 0 and retries:
->>> +            ret = self.vm.qmp('qom-get',
->>> +                              {'path': '/machine/peripheral/balloon',
->>> +                               'property': 'guest-stats'})['return']
->>> +            when = ret.get('last-update')
->>> +            if when == 0:
->>> +                retries = retries - 1
->>> +                time.sleep(0.5)
->>> +
->>>           now = time.time()
->>>           assert when > then and when < now
->>
->> Unfortunately I'm still getting a timeout:
->> https://gitlab.com/philmd/qemu/-/jobs/9318095233
->>
->> 2025-03-05 12:09:55,360 - DEBUG: Console interaction: 
->> success_msg='Entering emergency mode.' failure_msg='Kernel panic - not 
->> syncing' send_string='None'
->> 2025-03-05 12:09:55,360 - DEBUG: Opening console socket
->> 2025-03-05 12:10:32,722 - DEBUG: Console interaction: success_msg='# ' 
->> failure_msg='Kernel panic - not syncing' send_string='None'
->> 2025-03-05 12:10:32,823 - DEBUG: Console interaction: success_msg='vda1' 
->> failure_msg='None' send_string='while ! (dmesg -c | grep vda:) ; do sleep 
->> 1 ; done
->>
->> 2025-03-05 12:10:30,534: Warning: /dev/vda1 does not exist
->> 2025-03-05 12:10:30,535:
->> 2025-03-05 12:10:30,598: Generating "/run/initramfs/rdsosreport.txt"
->> 2025-03-05 12:10:32,720:
->> 2025-03-05 12:10:32,721:
->> 2025-03-05 12:10:32,722: Entering emergency mode.
->> 2025-03-05 12:10:32,724: Exit the shell to continue.
->> 2025-03-05 12:10:32,726: Type "journalctl" to view system logs.
->> 2025-03-05 12:10:32,727: You might want to save "/run/initramfs/ 
->> rdsosreport.txt" to a USB stick or /boot
->> 2025-03-05 12:10:32,728: after mounting them and attach it to a bug report.
->> 2025-03-05 12:10:32,729:
->> 2025-03-05 12:10:32,731:
->> 2025-03-05 12:10:32,823: :/#
-> 
-> Same for me, it always seems to hang when being run with the gitlab shared 
-> runners:
-> 
->   https://gitlab.com/thuth/qemu/-/jobs/9333926038#L612
->   https://gitlab.com/thuth/qemu/-/jobs/9333926046#L625
-> 
-> ... no clue what's still going wrong, though ...
+On Thu, Mar 06, 2025 at 04:59:39PM +0100, Eric Auger wrote:
+> >>> +++ b/include/system/host_iommu_device.h
+> >>> @@ -22,10 +22,16 @@
+> >>>   *
+> >>>   * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this
+> >> represents
+> >>>   *           the @out_capabilities value returned from IOMMU_GET_HW_INFO
+> >> ioctl)
+> >>> + *
+> >>> + * @nesting: nesting page table support.
+> >>> + *
+> >>> + * @fs1gp: first stage(a.k.a, Stage-1) 1GB huge page support.
+> >>>   */
+> >>>  typedef struct HostIOMMUDeviceCaps {
+> >>>      uint32_t type;
+> >>>      uint64_t hw_caps;
+> >>> +    bool nesting;
+> >>> +    bool fs1gp;
+> >> this looks quite vtd specific, isn't it? Shouldn't we hide this is a
+> >> vendor specific cap struct?
+> > Yes? I guess ARM hw could also provide nesting support at least
+> > There are some reasons I perfer a flatten struct even if some
+> > Elements may be vendor specific.
+> > 1. If a vendor doesn't support an capability for other vendor,
+> > corresponding element should be zero by default.
+> > 2. An element vendor specific may become generic in future
+> > and we don't need to update the structure when that happens.
+> > 3. vIOMMU calls get_cap() to query if a capability is supported,
+> > so a vIOMMU never query a vendor specific capability it doesn't
+> > recognize. Even if that happens, zero is returned hinting no support.
+> I will let others comment but in general this is frown upon and unions
+> are prefered at least.
 
-... but I just noticed that all other functional tests that use the same 
-assets are using:
+Yea, it feels odd to me that we stuff vendor specific thing in
+the public structure.
 
-         self.require_accelerator('kvm')
-         self.vm.add_args('-accel', 'kvm')
+It's okay if we want to store in HostIOMMUDeviceCaps the vendor
+specific data pointer (opaque), just for convenience.
 
-so they are skipped on the gitlab shared runners (but still executed in the 
-custom runners of the qemu-project), while your test also is enabled for TCG 
-and thus runs in the shared runners, too.
-So unless you've got a clue what's going wrong here (I fail to see the 
-reason for the problem unfortunately), I'd suggest that we mark the 
-virtio_balloon test with require_accelerator('kvm'), too, to get the CI 
-working with the shared runners again. WDYT?
+I think we can have another PCIIOMMUOps op for vendor code to
+run iommufd_backend_get_device_info() that returns the hw_caps
+for the core code to read.
 
-  Thomas
+Or perhaps the vendor code can just return a HWPT directly? If
+IOMMU_HW_CAP_DIRTY_TRACKING is set in the hw_caps, the vendor
+code can allocate a HWPT for that. And if vendor code detects
+the "nesting" cap in vendor struct, then return a nest_parent
+HWPT. And returning NULL can let core code allocate a default
+HWPT (or just attach the device to IOAS for auto domain/hwpt).
 
+I am also hoping that this can handle a shared S2 nest_parent
+HWPT case. Could the core container structure or so store the
+HWPT?
+
+Thanks
+Nicolin
 
