@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03E7C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4926FC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDuA-0000EI-3O; Thu, 06 Mar 2025 11:17:05 -0500
+	id 1tqDxJ-0001qo-If; Thu, 06 Mar 2025 11:20:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tqDto-000077-Vg
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:16:41 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tqDx1-0001lf-4o
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:19:59 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tqDtm-0001pF-DT
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:16:40 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5e56b229d60so3824075a12.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:16:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tqDwz-0002A8-Fi
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:19:58 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-223378e2b0dso13143095ad.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:19:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741277796; x=1741882596; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xjVTMoKE2YFpSamLuLdkjBohjXiM/7zwA6+1VeWKxpo=;
- b=oVBRreKYAWr5kwLywwVR1m77HyRW2FoVX+k7Mc8J71JqOYVrNypq8Ahsf/CNKtg/Fz
- nMl7Kcf91+t8txyfWpCM8g1bw0H0yPeQbJ0Isr31Ps+lfrA3ch1cElIveTD0O10NkFNJ
- DNb+4fymhKp+kfHutwua8uawmY9jqgGOlGoDepH7TXsDjeBnVZKYMPqJBzCY3u08yj6G
- ShQIijjOK57SRxjF82jFRc7GmePLjDowxHQXP6xL1iROlucvXV4NGo7GD3lEnVouW1cC
- hX95Ckk7d0JPhM03T92KZ1UF4UWzmoyN7mG6maAQ9ZBVhi/EagZXoQDFcrISSSCjzMHT
- H+2Q==
+ d=linaro.org; s=google; t=1741277995; x=1741882795; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YyTTslkGZl/g2Xh5c93BjxA1h20vhJ1AQm8u4TqCtoc=;
+ b=ju7gENEUnoW7wW4ypDLXZYfi5sto3CCa4Y3RcIgHJNiOGvb3jtF2aOKGpD5HdKjBu2
+ dOjaTXwh0qJmmmITeTn4oaUVfClkH0gNKQ5yJS3pGl00zAaIhjdhbHI5RojW63+XQT4a
+ XlcqwIpI4727tW9pC1d72bsbkv5jcCybne4ArsLcuL2lpQYL9mnTd05j/eLjGru7zsp5
+ lFW1dM6wbOYBtYUCpotoUzqL9ljjWDw/AcgRs2eWvVZNKco72SgH9+2LURGkcmqQOYZ6
+ v9x5uXegj3k6aBmuNaLesQ4r8hm24EJ3v3g9UTmsrga9RwViYcDF+P/Rpv+R0z1kdCkT
+ FZGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741277796; x=1741882596;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xjVTMoKE2YFpSamLuLdkjBohjXiM/7zwA6+1VeWKxpo=;
- b=nrbzZzQEpVuHvwLUjVBNbrhfcgGwMPuuEbGBtaUq2S8h8u/WMWOixTqp/us+dFD+To
- cZBxLTE05qMicA2Vj6tIuLJB2BMPJnvCyAmkjUO2wXW8DIFGtjcYKggrYPQ7nTjZgqZM
- J8mHh3pdHZcGHW/+SXHhP+u2qRDHBzCA3r8ZcjrXPirbm2j/Lalgs1YCFGWKlG2CuC/B
- Afu7O9GZpHVrbGMfxtX0UHhupp0Ky0Sb5hcWA021fmoNeJ0H8sWmNX4O/Cm5VJKMOPOo
- WCYN+KpMPxEz5/iVd9KyR2kejqNjglC9zIw0yK2NI99cbdczfA832w9vPV2L+cxAhA1N
- Gomw==
-X-Gm-Message-State: AOJu0Yxldn/RL3fSqTG0eOW1q+ACZSSv2Z+ZdmpnNYJHAWZxzXDe+TOU
- /P32VeLJ12XJ835itYOqTRR1Asc0CBHCLPlsC+l+FT9/xKiNFfdd3XDhU0mxBJw=
-X-Gm-Gg: ASbGncvcBHGAEGZepIdFaUfAFoCK7E/xoKkoXKAMSLKrPgGD1AX4vjsKvJWRsIl9Olt
- YQ6z2ndXxCViuYQFiVwGgmI5gHcOI4g84iWeaWcH+dApoxZ93wY7XrvvdzRVHhO/FxvDGx8Cm08
- kBF0AKxUq73fwJ3ezFLU1iSgLE3EsC9dzwOEsGe+o1vm5AK4IPMwLALH166xMiu+e9GKkofRwUq
- epZCu2KyoCv3bqeSEcEi9B06dTiSAKlFcV+ckwvP3FGDdyEVnIdUdfuPQhsKSJx3dlYytnwGM9G
- XUUdf6gp3WJ8e2yzv9g/5ui7icaLuAiCV/XlxddJGiQJ0GA=
-X-Google-Smtp-Source: AGHT+IE2rweZda0aTyDW7H6qIDPPUb9oJwx8Du2H5900izeIF/3Nv4whjLksifvkrYUwNJrLHlZucw==
-X-Received: by 2002:a17:907:3e13:b0:abf:6e9:3732 with SMTP id
- a640c23a62f3a-ac22ca6c386mr368387766b.3.1741277796388; 
- Thu, 06 Mar 2025 08:16:36 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac2399d7de3sm117527066b.184.2025.03.06.08.16.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 08:16:35 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CB8265F9CF;
- Thu,  6 Mar 2025 16:16:34 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3] meson.build: default to -gsplit-dwarf for debug info
-Date: Thu,  6 Mar 2025 16:16:31 +0000
-Message-Id: <20250306161631.2477685-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ d=1e100.net; s=20230601; t=1741277995; x=1741882795;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YyTTslkGZl/g2Xh5c93BjxA1h20vhJ1AQm8u4TqCtoc=;
+ b=osTOtN7h8qJIlO21nolvxHqrpQIpePqR55hxKCqfeRZxVNbfr20g0OpZeY1h5vw0/X
+ H3sPun8/D09lEJ5/UKrhnPYWBSxrvatLNx8yMMO9H+2mUMgLaWORoK0UK7xZGTUhMiDe
+ XhN4RNKBOHZ+/buU6ceb5xyjFfo8161Ph3x1CP044JOWrvN0Ji3ncsyijFfDP0BUUBSB
+ Y9rEqNNCiSgZoR4kjkDONOwMyGCtRYzuprr02E+bmfluHYq08UTdU6y8VCKQW/GLXwWR
+ yFvNCg//yEvvPPbg0uvil6oKA6+eqav3F6Pu6EhWzU6OMlZ0lsKAHiZ/Qd4K+sSvh8Bq
+ Y1qw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3dBrCiyLYgG53NdAaz++6J9yLD3hl88Hnz9a8spTsB8yxCXvBjVXlZpArWVNnyxoGVG6+csUSEuO9@nongnu.org
+X-Gm-Message-State: AOJu0YymsicrZ2Efz3zqtcrbz1JtD5pxHh1Mi8mmN7XbpoMQcOVzSM2b
+ FXWZNqQKka9Z1U2Xg6e7rtczEP3hQaQujBRVfdNo8D7fQema32OFsmzG1vl+6PQ=
+X-Gm-Gg: ASbGnctHLYpe/3OmYHN5F5yALHPrbEZP3nYJsqRFWrPcRM6ZcmlamnAWJy8YCtHgnov
+ a8bQCnQKGYInWC9Nf5v37ludClaoWQRD1k7mglJpmtKdSmR/NO5rqiEqvho/0Ahd4uraYpz2gIt
+ 0xw60wpWETKu/vYt2fhSf1oHIhLk+mNOBFQk+NkWzNPEsXlr6dfhLKNQLq5yTsVL7RQserKvnYp
+ kWRypxrbDQ9i6bJuEovm4DU1n8qJNUbldSLRZUD7bx6AVY96tPYYm5wAqzzGsOvUG3ONLP+N6uA
+ seGJXT7sTo87sjxqQ7PEIbv81HJXotMU2DTbycwMjcZhRkzkIM8Hs9dgw/9xGNQJUkyQk75aEDA
+ lMAtK1MQm
+X-Google-Smtp-Source: AGHT+IH8cqQB1JFfHtiMgSr7M3xuAxg7M2IV0C6IViP0/skUuvFOVdV5zfYv+gm3L/lv7o9w6zE9+w==
+X-Received: by 2002:a05:6a00:2e9f:b0:736:5486:7820 with SMTP id
+ d2e1a72fcca58-73682be6ed9mr12077370b3a.13.1741277995216; 
+ Thu, 06 Mar 2025 08:19:55 -0800 (PST)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73698244daesm1596751b3a.53.2025.03.06.08.19.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Mar 2025 08:19:54 -0800 (PST)
+Message-ID: <353b36fd-2265-43c3-8072-3055e5bd7057@linaro.org>
+Date: Thu, 6 Mar 2025 08:19:53 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/7] hw/hyperv/syndbg: common compilation unit
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, philmd@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>, manos.pitsidianakis@linaro.org,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, alex.bennee@linaro.org
+References: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
+ <20250306064118.3879213-6-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250306064118.3879213-6-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,86 +107,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This option is supported by both gcc (since 4.7) and clang (since
-7.0). Not only does this make the linkers job easier by reducing the
-amount of ELF it needs to parse it also reduces the total build size
-quite considerably. In my case a default build went from 5.8G to
-3.9G (vs 1.9G for --disable-debug-info).
+On 3/5/25 22:41, Pierrick Bouvier wrote:
+> Replace TARGET_PAGE.* by runtime calls
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   hw/hyperv/syndbg.c    | 7 ++++---
+>   hw/hyperv/meson.build | 2 +-
+>   2 files changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
+> index d3e39170772..f9382202ed3 100644
+> --- a/hw/hyperv/syndbg.c
+> +++ b/hw/hyperv/syndbg.c
+> @@ -14,7 +14,7 @@
+>   #include "migration/vmstate.h"
+>   #include "hw/qdev-properties.h"
+>   #include "hw/loader.h"
+> -#include "cpu.h"
+> +#include "exec/target_page.h"
+>   #include "hw/hyperv/hyperv.h"
+>   #include "hw/hyperv/vmbus-bridge.h"
+>   #include "hw/hyperv/hyperv-proto.h"
+> @@ -188,7 +188,8 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
+>                                   uint64_t timeout, uint32_t *retrieved_count)
+>   {
+>       uint16_t ret;
+> -    uint8_t data_buf[TARGET_PAGE_SIZE - UDP_PKT_HEADER_SIZE];
+> +    const size_t buf_size = qemu_target_page_size() - UDP_PKT_HEADER_SIZE;
+> +    uint8_t *data_buf = g_alloca(buf_size);
+>       hwaddr out_len;
+>       void *out_data;
+>       ssize_t recv_byte_count;
 
-The --disable-split-debug option allows distros to keep all the info
-together for ease of packaging.
+We've purged the code base of VLAs, and those are preferable to alloca.
+Just use g_malloc and g_autofree.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
----
-v1
-  - add --disable/enable-split-debug
-  - move to option_cflags
-v2
-  - removed unneeded []'s
-  - fix stray whitespace
-v3
-  - set qemu_cflags instead of option_cflags
-  - move up to the rest of the qemu_cflag setting code
-  - update build size numbers with --disable-debug-info
----
- meson.build                   | 6 +++++-
- meson_options.txt             | 2 ++
- scripts/meson-buildoptions.sh | 2 ++
- 3 files changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/meson.build b/meson.build
-index 8d0abe7f12..bba17c73f1 100644
---- a/meson.build
-+++ b/meson.build
-@@ -601,6 +601,10 @@ if get_option('tsan')
-   qemu_ldflags = ['-fsanitize=thread'] + qemu_ldflags
- endif
- 
-+if get_option('debug')
-+  qemu_cflags += get_option('split_debug') ? ['-gsplit-dwarf'] : ['-g']
-+endif
-+
- # Detect support for PT_GNU_RELRO + DT_BIND_NOW.
- # The combination is known as "full relro", because .got.plt is read-only too.
- qemu_ldflags += cc.get_supported_link_arguments('-Wl,-z,relro', '-Wl,-z,now')
-@@ -4589,7 +4593,7 @@ if have_rust
-   summary_info += {'bindgen':         bindgen.full_path()}
-   summary_info += {'bindgen version': bindgen.version()}
- endif
--option_cflags = (get_option('debug') ? ['-g'] : [])
-+option_cflags = []
- if get_option('optimization') != 'plain'
-   option_cflags += ['-O' + get_option('optimization')]
- endif
-diff --git a/meson_options.txt b/meson_options.txt
-index 59d973bca0..3432123fee 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -362,6 +362,8 @@ option('debug_mutex', type: 'boolean', value: false,
-        description: 'mutex debugging support')
- option('debug_stack_usage', type: 'boolean', value: false,
-        description: 'measure coroutine stack usage')
-+option('split_debug', type: 'boolean', value: true,
-+       description: 'split debug info from object files')
- option('qom_cast_debug', type: 'boolean', value: true,
-        description: 'cast debugging support')
- option('slirp_smbd', type : 'feature', value : 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 3e8e00852b..aca6e68830 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -504,6 +504,8 @@ _meson_option_parse() {
-     --disable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=false ;;
-     --enable-strip) printf "%s" -Dstrip=true ;;
-     --disable-strip) printf "%s" -Dstrip=false ;;
-+    --enable-split-debug) printf "%s" -Dsplit_debug=true ;;
-+    --disable-split-debug) printf "%s" -Dsplit_debug=false ;;
-     --sysconfdir=*) quote_sh "-Dsysconfdir=$2" ;;
-     --enable-tcg) printf "%s" -Dtcg=enabled ;;
-     --disable-tcg) printf "%s" -Dtcg=disabled ;;
--- 
-2.39.5
-
+r~
 
