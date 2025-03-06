@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAF7EC282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 14:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA3AC28B23
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 14:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqBzz-0006ma-Cx; Thu, 06 Mar 2025 09:14:55 -0500
+	id 1tqC07-0006px-ND; Thu, 06 Mar 2025 09:15:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqBzx-0006kX-9O
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:14:53 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC05-0006pG-OS
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:15:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqBzv-0001ZA-J2
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:14:53 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC04-0001Zt-3p
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:15:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741270491;
+ s=mimecast20190719; t=1741270499;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k/mUuly+YXerGoJ1N3+hUtW3oITKd6pZGZ38TrFk4Go=;
- b=TY6vu/OwQwrJ5hpR3mPw0wuWV+qVeWL4fc+ZzPxVBgjip/wGArLhXt8H4PakZvmpYcRvN/
- Lo/KTQrxVzo/VOIjdvB6SUTfT7P12e6xH7+0JIf11VW1V9nt2PVAuTl2HC898kTNCx18vo
- xaQLmFHyUBXHbfoNh6fJOQMxBSpkCgI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GbTP8IzGP3RAVbnH0sdHeVXyTt1UNb7Ycl82RIrpHdQ=;
+ b=PiR0bOEvaEiccBSSUAqGOQk0sM+f+Tr+bp7M09xX+lysIZGI/vrk7egEj7Tp4LJW1DL4rJ
+ /N3YKB0Ruz6ulF+tD1I6SspKbQyymzgD3cCK/Y+tFOlsJWciT/x2kVeOD+FuKqUqzCF0rU
+ MKpi5QD/UEerp23msivh/oS0pCmtMA0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-120-SaMLVixZNRatAXW8gDf33Q-1; Thu,
- 06 Mar 2025 09:14:48 -0500
-X-MC-Unique: SaMLVixZNRatAXW8gDf33Q-1
-X-Mimecast-MFC-AGG-ID: SaMLVixZNRatAXW8gDf33Q_1741270487
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-rflt-SbcPVaR574y1f6ylA-1; Thu,
+ 06 Mar 2025 09:14:56 -0500
+X-MC-Unique: rflt-SbcPVaR574y1f6ylA-1
+X-Mimecast-MFC-AGG-ID: rflt-SbcPVaR574y1f6ylA_1741270495
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 606CE19560B8; Thu,  6 Mar 2025 14:14:47 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6424B1955DDF; Thu,  6 Mar 2025 14:14:55 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.141])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8F324180174C; Thu,  6 Mar 2025 14:14:44 +0000 (UTC)
+ id B903B18009BC; Thu,  6 Mar 2025 14:14:53 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Eric Auger <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL 05/42] vfio/pci: Delete local pm_cap
-Date: Thu,  6 Mar 2025 15:13:41 +0100
-Message-ID: <20250306141419.2015340-6-clg@redhat.com>
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 08/42] MAINTAINERS: Add myself as vfio-igd maintainer
+Date: Thu,  6 Mar 2025 15:13:44 +0100
+Message-ID: <20250306141419.2015340-9-clg@redhat.com>
 In-Reply-To: <20250306141419.2015340-1-clg@redhat.com>
 References: <20250306141419.2015340-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,68 +84,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Williamson <alex.williamson@redhat.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
 
-This is now redundant to PCIDevice.pm_cap.
+As suggested by Cédric, I'm glad to be a maintainer of vfio-igd.
 
-Cc: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250225215237.3314011-4-alex.williamson@redhat.com
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250227162741.9860-1-tomitamoeko@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.h | 1 -
- hw/vfio/pci.c | 9 ++++-----
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ MAINTAINERS | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 43c166680abbc2460c75fae33565c3fdeb2c40d8..d638c781f6f168a71d3a44b48ba0c4edfd334f44 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -160,7 +160,6 @@ struct VFIOPCIDevice {
-     int32_t bootindex;
-     uint32_t igd_gms;
-     OffAutoPCIBAR msix_relo;
--    uint8_t pm_cap;
-     uint8_t nv_gpudirect_clique;
-     bool pci_aer;
-     bool req_enabled;
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index d33b795af079ae6999a5b4e4074c202c5a9de362..a8db19d8d2f9707693500493eb237c7362d35c06 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2215,7 +2215,6 @@ static bool vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
-         break;
-     case PCI_CAP_ID_PM:
-         vfio_check_pm_reset(vdev, pos);
--        vdev->pm_cap = pos;
-         ret = pci_pm_init(pdev, pos, errp) >= 0;
-         /*
-          * PCI-core config space emulation needs write access to the power
-@@ -2412,17 +2411,17 @@ void vfio_pci_pre_reset(VFIOPCIDevice *vdev)
-     vfio_disable_interrupts(vdev);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 692628cd7801f2f5b7d18ca451bed3439b01e217..1a920e7dc4cfc637b5f976ae91dcf40eb7f172e3 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2186,10 +2186,17 @@ M: Cédric Le Goater <clg@redhat.com>
+ S: Supported
+ F: hw/vfio/*
+ F: include/hw/vfio/
+-F: docs/igd-assign.txt
+ F: docs/devel/migration/vfio.rst
+ F: qapi/vfio.json
  
-     /* Make sure the device is in D0 */
--    if (vdev->pm_cap) {
-+    if (pdev->pm_cap) {
-         uint16_t pmcsr;
-         uint8_t state;
- 
--        pmcsr = vfio_pci_read_config(pdev, vdev->pm_cap + PCI_PM_CTRL, 2);
-+        pmcsr = vfio_pci_read_config(pdev, pdev->pm_cap + PCI_PM_CTRL, 2);
-         state = pmcsr & PCI_PM_CTRL_STATE_MASK;
-         if (state) {
-             pmcsr &= ~PCI_PM_CTRL_STATE_MASK;
--            vfio_pci_write_config(pdev, vdev->pm_cap + PCI_PM_CTRL, pmcsr, 2);
-+            vfio_pci_write_config(pdev, pdev->pm_cap + PCI_PM_CTRL, pmcsr, 2);
-             /* vfio handles the necessary delay here */
--            pmcsr = vfio_pci_read_config(pdev, vdev->pm_cap + PCI_PM_CTRL, 2);
-+            pmcsr = vfio_pci_read_config(pdev, pdev->pm_cap + PCI_PM_CTRL, 2);
-             state = pmcsr & PCI_PM_CTRL_STATE_MASK;
-             if (state) {
-                 error_report("vfio: Unable to power on device, stuck in D%d",
++vfio-igd
++M: Alex Williamson <alex.williamson@redhat.com>
++M: Cédric Le Goater <clg@redhat.com>
++M: Tomita Moeko <tomitamoeko@gmail.com>
++S: Supported
++F: hw/vfio/igd.c
++F: docs/igd-assign.txt
++
+ vfio-ccw
+ M: Eric Farman <farman@linux.ibm.com>
+ M: Matthew Rosato <mjrosato@linux.ibm.com>
 -- 
 2.48.1
 
