@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC811C28B24
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDDBBC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDRr-0007Br-B3; Thu, 06 Mar 2025 10:47:47 -0500
+	id 1tqDS1-0007FO-8n; Thu, 06 Mar 2025 10:47:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRo-0007Am-Cm
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:45 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRz-0007Ey-SO
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:55 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRl-0006BX-2M
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:43 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-38a8b17d7a7so484223f8f.2
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:47:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRy-0006DM-Al
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:55 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-39127512371so627363f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:47:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276059; x=1741880859; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=wuI7V/wj7tWMmMltqycpG0sxIIJcyAqxcbZTwRonqDg=;
- b=X/TbEFMz2lNZ5z5kfySHQ19j5ZewU1KBQH+topVpXEodH9unjicPjw2l3nsn5WrK4U
- eGCT10Xs6DU3JmuLJNvgETa3TadzuHBKTaffM3ZSt+lh50LUM11UsmyYV7SSyiS2dnMF
- 440TLxGnM3xIrxWK99Kc70H82OcXdcK1PXQNyPNYatdVgdStrfhWOdGYDgP6iIKNkcZp
- 1vpao0JcNi5cNLzkEvA9ZOfLk7Tcg3794Ub1SY+DF+S+o8ZxHsrRx+g4R7Z9zIlTxQcU
- 0rtUYEu4X9rAiEEPRs8bcNijm4GOcwFBp+b5cD5gl5pg1O+K4imh2Du+tMQVNUWbbfLM
- 4B8Q==
+ d=linaro.org; s=google; t=1741276072; x=1741880872; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=keumHK/xGB74dShNqulk/5Z/c6mVK2UvLucS0OMjfzY=;
+ b=mfOo+0B7IsEnV/LTFZcIjpsGj4Wqjv5JOZq+Wly0pYw22/Qsbs1N1AAoZrKCXUwWTS
+ 62ci6XX+7WqBXgWJvRt67S9x+7FytA9ByR9cVXi9vkwSOT3a25lHVIHjCKdSyfQNFfgy
+ laotQEt/PORnArEl//TCWD3QsXKZ18xy67ecTIzlFtogXZ4VZSDkSVP/y+vKUbvZxnnA
+ 4khjtq6L2glER2+YzC6Z5o6Nu8VL0XYDF93CkcUNItcSASM8EGUKQ5RIiylsVFwT2QUZ
+ dckQJin+rSQ74H6IEgpld2GMknSNnvn4c/1DeaSarG+2PP9diCWfsW4UfWNlAw5LzbBF
+ a5/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276059; x=1741880859;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wuI7V/wj7tWMmMltqycpG0sxIIJcyAqxcbZTwRonqDg=;
- b=CIATTzE60NQP3iCL+/ijJpWEm3xSKw8lVqkHGoajUnTTDDDG/JnHOByhxQ8jEzj7Mg
- ReiaD6Tuwo9i3LOixRy1y8p4bDD2Q3Doba3WkSj+UuIiEf2UH8ufXflkyBzhg1U4MMC+
- oEPJ5ypjjhF5UmWgrNvJWvjNwXX+vmlPL4ZyemAwrX1Sxf7DuefyAbqLolKdWm+PqTPY
- zZe123DUED4oI5s3QNSJN51Sjce7RpsG0rNXYrUkT3Yi1FkMqZK8u2sJ0ytDPiJ+G6Yk
- /PyMvd56CFhEMna58z06vacg6+9h+pTQXRAvaUH2HswiL1YT9zbwqq4kHfILl5vl2b/b
- eUGQ==
-X-Gm-Message-State: AOJu0YxgHERNcLKFDUsZbf4EOk1ktHhwLacLdjVQa5XJfjFgi69xKFhp
- kOFBIXDYdvNbW2v+y88RAtbw/j+G4VujwtXv68bhpJOFCca2iJ0SxnbmMahOyvYYtI6PphwbxVX
- KioU=
-X-Gm-Gg: ASbGncuuW1RhwwKJPFVy+XrurZweZw9py0btgtdymqez30mfIZANU+JQQ0l2TemXyxF
- csqhIthRF3TllMdlf963e63T8YbfVSYjQ6ThzRwG7RVvNrw0RpZt3D7+l0a1RY9oWqIDiZ0rNk8
- wuq13KdTkAGmNHPfFHDuppOnVQ43eWfd+GxMS9eWLgy4diV8kWRs01Iy1b2B1W+pXKjLREdFK+L
- wwUw2eXAt/nAbp1gsa8yoQYthBtHur3s4JeKDW6Q2kqzhtJBAemljipOE2iDy2dGxaWJmvpARgK
- YLAdERZ9UUvQGaCApXUjRwZAZoL9oB5pTUo3qrNern3iOdGRq67HxgZG5WUfB1wbAmPKIrA0I8d
- n+zSeFdRaz7sFsaTJ5WI=
-X-Google-Smtp-Source: AGHT+IFNuDy9qaomZ5Ip64d3cr+C6HWVcRKzks9V0PzmykU7nCtwWnNf1gxzgUKJ1DhMDBY7r0u1rg==
-X-Received: by 2002:a05:6000:1844:b0:391:304f:34e7 with SMTP id
- ffacd0b85a97d-391304f3856mr1083691f8f.44.1741276058703; 
- Thu, 06 Mar 2025 07:47:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741276072; x=1741880872;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=keumHK/xGB74dShNqulk/5Z/c6mVK2UvLucS0OMjfzY=;
+ b=egORtYPpY9/VtdTN89g7mons0oSbYfLyCQfTZbznEfDdOU3CmvRPbAsjK4xTeCjLee
+ AI5lsw3pK3cLHwiKNlYC4O1V5LaW9j5U7XC4d4wzvOT0AWbmAwnPezI/wYt9uuj6tB22
+ UrIYirJmQmQqM7NUJd3VcjLRrlAbgZ2STS032nVWNHXy/TICYXIqv35+Tg/83w1lV2mj
+ ULcN9VzCyYpoSdk1Kn2axYmv69pszZeCxfDVhuOfuKLcsEd+BN8pFqDRH+KcXTFlHWjK
+ 4Sw1BqYhW80tTq85FYJY0D4xuDA+iTSjDW6Ys+oxGHL3h1SX3XvFGhQhRB9eo0XYMpzF
+ r0Vg==
+X-Gm-Message-State: AOJu0YwL/TnjQMHckunH++n1Ndzl7eJB9e575bF9jGGO7/UE7pCtBYxx
+ d1/DcCzm4bdZ6UiJHxOcZHpho0zF7WayNzHLGmwpBTZjXBD15OzayzbTBaIdvWKLyUDALiejjGg
+ MiOw=
+X-Gm-Gg: ASbGncuJegh/KTKrSORV6O2zwpMyJUar3h4gw7tdnJHWtAGZC7MOtl+OYnO+JtgGCSv
+ KjW+9qSUlqcLQjoKpF0F6MkVIq9fMkoWv11yx1Me8pH1s9+uulcVqyOnPsHYeP2dn7SZ+3gptmV
+ 6upVQp+kuowrtwQ/obxqE6dA+EYSV7W5XymM/HWwryO5UXlA9muYEiny2FM68oGKILVjZH6MUOi
+ A5OpbblQfLG+xabBB4cs6CD311Wm+l1aupeGO3/VDxQbKbAcco95FGv5oH6ysu1dzba139wvc4C
+ dki4PBTZ1aBYG4U0500/Ztt+19owF7mqDKSUjBqEkwmNksIkA/DrDYHbeSO4Lc14KX9YAqbpwHg
+ JWNrw1Mpb1P54+dAxneQ=
+X-Google-Smtp-Source: AGHT+IHIPwAgUmDOJbT8oesttxWDkLwRMDZI6dbZvHgFzA9Fs1H9+ME+8UsLVwBKo6h0CBxYMDRbwQ==
+X-Received: by 2002:a05:6000:1864:b0:391:22a9:4408 with SMTP id
+ ffacd0b85a97d-39122a9453cmr7996914f8f.16.1741276072503; 
+ Thu, 06 Mar 2025 07:47:52 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e344esm2381259f8f.73.2025.03.06.07.47.38
+ ffacd0b85a97d-3912bfba66esm2442214f8f.18.2025.03.06.07.47.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:47:38 -0800 (PST)
+ Thu, 06 Mar 2025 07:47:52 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/54] Accelerators & CPU patches
-Date: Thu,  6 Mar 2025 16:46:42 +0100
-Message-ID: <20250306154737.70886-1-philmd@linaro.org>
+Subject: [PULL 03/54] gdbstub: Check for TCG before calling tb_flush()
+Date: Thu,  6 Mar 2025 16:46:45 +0100
+Message-ID: <20250306154737.70886-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
+References: <20250306154737.70886-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,216 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit e8a01102936286e012ed0f00bd7f3b7474d415c9:
+Use the tcg_enabled() check so the compiler can elide
+the call when TCG isn't available, allowing to remove
+the tb_flush() stub.
 
-  Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2025-03-05 21:58:23 +0800)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250123234415.59850-4-philmd@linaro.org>
+---
+ accel/stubs/tcg-stub.c | 4 ----
+ gdbstub/system.c       | 5 ++++-
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/accel-cpus-20250306
-
-for you to fetch changes up to 92941c94e7f4858fdd61b4c1b85f6d1c6f164359:
-
-  include: Poison TARGET_PHYS_ADDR_SPACE_BITS definition (2025-03-06 15:46:18 +0100)
-
-----------------------------------------------------------------
-Generic CPUs / accelerators patch queue
-
-- Merge "qemu/clang-tsa.h" within "qemu/compiler.h"
-- Various cleanups around accelerators initialization code
-  (better user/system split)
-- Various trivial cleanups in accel/tcg/,
-  Guard few TCG calls with tcg_enabled()
-- Explicit disassemble_info endianness
-- Improve dual-endianness support for MicroBlaze
-
-Ignored checkpatch error:
-
-  WARNING: architecture specific defines should be avoided
-  #215: FILE: include/qemu/compiler.h:215:
-  +#ifdef __clang__
-
-----------------------------------------------------------------
-
-Denis Rastyogin (1):
-  target/mips: Fix possible MSA int overflow
-
-Phil Dennis-Jordan (1):
-  target/i386/hvf: Variable type fixup in decoder
-
-Philippe Mathieu-Daudé (52):
-  qemu/compiler: Absorb 'clang-tsa.h'
-  gdbstub: Clarify no more than @gdb_num_core_regs can be accessed
-  gdbstub: Check for TCG before calling tb_flush()
-  cpus: Cache CPUClass early in instance_init() handler
-  cpus: Keep default fields initialization in cpu_common_initfn()
-  accel/accel: Make TYPE_ACCEL abstract
-  accel/tcg: Remove pointless initialization of cflags_next_tb
-  accel/tcg: Build tcg_flags helpers as common code
-  accel/tcg: Restrict tlb_init() / destroy() to TCG
-  accel/tcg: Restrict 'icount_align_option' global to TCG
-  accel/tcg: Rename 'hw/core/tcg-cpu-ops.h' -> 'accel/tcg/cpu-ops.h'
-  accel: Rename 'hw/core/accel-cpu.h' -> 'accel/accel-cpu-target.h'
-  accel: Forward-declare AccelOpsClass in 'qemu/typedefs.h'
-  accel/accel-cpu-target.h: Include missing 'cpu.h' header
-  accel/tcg: Include missing bswap headers in user-exec.c
-  accel/tcg: Take mmap lock in the whole cpu_memory_rw_debug() function
-  accel/tcg: Avoid using lock_user() in cpu_memory_rw_debug()
-  accel/tcg: Move cpu_memory_rw_debug() user implementation to
-    user-exec.c
-  accel/kvm: Remove unused 'system/cpus.h' header in kvm-cpus.h
-  cpus: Fix style in cpu-target.c
-  cpus: Restrict cpu_common_post_load() code to TCG
-  cpus: Have cpu_class_init_props() per user / system emulation
-  cpus: Have cpu_exec_initfn() per user / system emulation
-  cpus: Restrict cpu_get_memory_mapping() to system emulation
-  hw/core/generic-loader: Do not open-code cpu_set_pc()
-  target/microblaze: Explode MO_TExx -> MO_TE | MO_xx
-  target/microblaze: Set MO_TE once in do_load() / do_store()
-  target/microblaze: Introduce mo_endian() helper
-  target/microblaze: Consider endianness while translating code
-  target/openrisc: Call cpu_openrisc_clock_init() in cpu_realize()
-  target/hexagon: Ensure not being build on system emulation
-  target/rx: Ensure not being build on user emulation
-  target/tricore: Ensure not being build on user emulation
-  target: Set disassemble_info::endian value for little-endian targets
-  target: Set disassemble_info::endian value for big-endian targets
-  target/arm: Set disassemble_info::endian value in disas_set_info()
-  target/microblaze: Set disassemble_info::endian value in
-    disas_set_info
-  target/mips: Set disassemble_info::endian value in disas_set_info()
-  target/ppc: Set disassemble_info::endian value in disas_set_info()
-  target/riscv: Set disassemble_info::endian value in disas_set_info()
-  target/sh4: Set disassemble_info::endian value in disas_set_info()
-  target/xtensa: Set disassemble_info::endian value in disas_set_info()
-  disas: Remove target_words_bigendian() call in
-    initialize_debug_target()
-  target/i386: Constify X86CPUModel uses
-  target/sparc: Constify SPARCCPUClass::cpu_def
-  target/xtensa: Finalize config in xtensa_register_core()
-  target/riscv: Declare RISCVCPUClass::misa_mxl_max as RISCVMXL
-  target/riscv: Convert misa_mxl_max using GLib macros
-  target/alpha: Do not mix exception flags and FPCR bits
-  target/i386: Mark WHPX APIC region as little-endian
-  system: Open-code qemu_init_arch_modules() using target_name()
-  include: Poison TARGET_PHYS_ADDR_SPACE_BITS definition
-
- MAINTAINERS                                   |   5 +-
- accel/kvm/kvm-cpus.h                          |   2 -
- accel/tcg/internal-common.h                   |  13 ++
- bsd-user/qemu.h                               |   1 -
- .../accel-cpu.h => accel/accel-cpu-target.h}  |   7 +-
- .../tcg-cpu-ops.h => accel/tcg/cpu-ops.h}     |   0
- include/block/block_int-common.h              |   1 -
- include/block/graph-lock.h                    |   2 -
- include/exec/exec-all.h                       |  16 --
- include/exec/page-protection.h                |   2 -
- include/exec/poison.h                         |   1 +
- include/hw/core/cpu.h                         |   6 +-
- include/qemu/clang-tsa.h                      | 114 ----------
- include/qemu/compiler.h                       |  96 ++++++++
- include/qemu/thread.h                         |   1 -
- include/qemu/typedefs.h                       |   1 +
- include/system/accel-ops.h                    |   1 -
- include/system/arch_init.h                    |   2 -
- include/system/cpus.h                         |   4 -
- target/hexagon/cpu.h                          |   4 +
- target/i386/cpu.h                             |   2 +-
- target/microblaze/cpu.h                       |   7 +
- target/riscv/cpu.h                            |   2 +-
- target/rx/cpu.h                               |   6 +-
- target/sparc/cpu.h                            |   2 +-
- target/tricore/cpu.h                          |   4 +
- target/xtensa/cpu.h                           |   2 +-
- accel/accel-system.c                          |   1 +
- accel/accel-target.c                          |   3 +-
- accel/hvf/hvf-accel-ops.c                     |   1 +
- accel/kvm/kvm-accel-ops.c                     |   1 +
- accel/qtest/qtest.c                           |   1 +
- accel/stubs/tcg-stub.c                        |   4 -
- accel/tcg/cpu-exec-common.c                   |  34 ++-
- accel/tcg/cpu-exec.c                          |  35 +--
- accel/tcg/cputlb.c                            |   2 +-
- accel/tcg/icount-common.c                     |   2 +
- accel/tcg/monitor.c                           |   1 -
- accel/tcg/tcg-accel-ops.c                     |   1 +
- accel/tcg/translate-all.c                     |   3 +-
- accel/tcg/user-exec-stub.c                    |  11 +
- accel/tcg/user-exec.c                         |  84 ++++++-
- accel/tcg/watchpoint.c                        |   2 +-
- accel/xen/xen-all.c                           |   1 +
- block/create.c                                |   1 -
- bsd-user/signal.c                             |   2 +-
- cpu-common.c                                  |   1 -
- cpu-target.c                                  | 205 ++----------------
- disas/disas-common.c                          |   8 +-
- gdbstub/system.c                              |   6 +-
- hw/core/cpu-common.c                          |   6 +-
- hw/core/cpu-system.c                          |  47 ++++
- hw/core/cpu-user.c                            |  32 +++
- hw/core/generic-loader.c                      |   5 +-
- hw/mips/jazz.c                                |   2 +-
- hw/openrisc/openrisc_sim.c                    |   2 -
- hw/openrisc/virt.c                            |   2 -
- linux-user/signal.c                           |   2 +-
- system/arch_init.c                            |   9 -
- system/cpus.c                                 |   1 +
- system/globals.c                              |   1 -
- system/physmem.c                              |   2 +-
- system/vl.c                                   |   7 +-
- target/alpha/cpu.c                            |   3 +-
- target/alpha/fpu_helper.c                     |  15 +-
- target/arm/cpu.c                              |  12 +-
- target/arm/tcg/cpu-v7m.c                      |   2 +-
- target/arm/tcg/cpu32.c                        |   2 +-
- target/arm/tcg/mte_helper.c                   |   2 +-
- target/arm/tcg/sve_helper.c                   |   2 +-
- target/avr/cpu.c                              |   3 +-
- target/avr/helper.c                           |   2 +-
- target/hexagon/cpu.c                          |   3 +-
- target/hppa/cpu.c                             |   3 +-
- target/i386/cpu.c                             |   9 +-
- target/i386/hvf/hvf-cpu.c                     |   2 +-
- target/i386/hvf/x86_decode.c                  |   4 +-
- target/i386/kvm/kvm-cpu.c                     |   2 +-
- target/i386/nvmm/nvmm-accel-ops.c             |   1 +
- target/i386/tcg/tcg-cpu.c                     |   4 +-
- target/i386/whpx/whpx-accel-ops.c             |   1 +
- target/i386/whpx/whpx-apic.c                  |   2 +-
- target/loongarch/cpu.c                        |   3 +-
- target/m68k/cpu.c                             |   3 +-
- target/microblaze/cpu.c                       |   4 +-
- target/microblaze/gdbstub.c                   |   5 -
- target/microblaze/translate.c                 |  49 +++--
- target/mips/cpu.c                             |  12 +-
- target/mips/tcg/msa_helper.c                  |   6 +-
- target/openrisc/cpu.c                         |   7 +-
- target/openrisc/gdbstub.c                     |   5 -
- target/ppc/cpu_init.c                         |   4 +-
- target/ppc/kvm.c                              |   2 +-
- target/riscv/cpu.c                            |  19 +-
- target/riscv/cpu_helper.c                     |   2 +-
- target/riscv/kvm/kvm-cpu.c                    |   2 +-
- target/riscv/tcg/tcg-cpu.c                    |   4 +-
- target/rx/cpu.c                               |   9 +-
- target/rx/helper.c                            |   4 -
- target/s390x/cpu.c                            |   3 +-
- target/s390x/tcg/mem_helper.c                 |   2 +-
- target/sh4/cpu.c                              |   4 +-
- target/sparc/cpu.c                            |   3 +-
- target/tricore/cpu.c                          |   2 +-
- target/xtensa/cpu.c                           |   4 +-
- target/xtensa/helper.c                        |   5 +-
- tests/unit/test-bdrv-drain.c                  |   1 -
- tests/unit/test-block-iothread.c              |   1 -
- util/qemu-thread-posix.c                      |   1 -
- hw/core/meson.build                           |   5 +-
- 110 files changed, 544 insertions(+), 533 deletions(-)
- rename include/{hw/core/accel-cpu.h => accel/accel-cpu-target.h} (92%)
- rename include/{hw/core/tcg-cpu-ops.h => accel/tcg/cpu-ops.h} (100%)
- delete mode 100644 include/qemu/clang-tsa.h
- create mode 100644 hw/core/cpu-user.c
-
+diff --git a/accel/stubs/tcg-stub.c b/accel/stubs/tcg-stub.c
+index 7f4208fddf2..b2b9881bdfb 100644
+--- a/accel/stubs/tcg-stub.c
++++ b/accel/stubs/tcg-stub.c
+@@ -14,10 +14,6 @@
+ #include "exec/tb-flush.h"
+ #include "exec/exec-all.h"
+ 
+-void tb_flush(CPUState *cpu)
+-{
+-}
+-
+ G_NORETURN void cpu_loop_exit(CPUState *cpu)
+ {
+     g_assert_not_reached();
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 8ce79fa88cf..7f047a285c8 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -22,6 +22,7 @@
+ #include "system/cpus.h"
+ #include "system/runstate.h"
+ #include "system/replay.h"
++#include "system/tcg.h"
+ #include "hw/core/cpu.h"
+ #include "hw/cpu/cluster.h"
+ #include "hw/boards.h"
+@@ -171,7 +172,9 @@ static void gdb_vm_state_change(void *opaque, bool running, RunState state)
+         } else {
+             trace_gdbstub_hit_break();
+         }
+-        tb_flush(cpu);
++        if (tcg_enabled()) {
++            tb_flush(cpu);
++        }
+         ret = GDB_SIGNAL_TRAP;
+         break;
+     case RUN_STATE_PAUSED:
 -- 
 2.47.1
 
