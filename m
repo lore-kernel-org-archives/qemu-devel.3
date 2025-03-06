@@ -4,92 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C83C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D77C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:30:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqE3h-0005q5-7J; Thu, 06 Mar 2025 11:26:53 -0500
+	id 1tqE79-00006m-Fu; Thu, 06 Mar 2025 11:30:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqE3Z-0005ny-Uo
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:26:46 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqE3X-0002zW-4N
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:26:45 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-22401f4d35aso16448805ad.2
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:26:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741278401; x=1741883201; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=P88s8ijDyDl014pRNdvWiHhjjv/J6gaml3H1P6W98Lw=;
- b=bFlhVTyaZwKbS0kaJARKtReXVctJ2+vc7H4lQjE4O7h+wUpR2p6Gg7ghH6zytYtHE0
- v+drekHj06FsSsh8U1YP+8StFOKs5kZLLzcL19UveiKaU054T4/2Jh8c6Nfd+47qhVLt
- Jmh477JxrZmtBQPdn0g7ZtcvPqImoDvAU5avnIJxRdJqKIyKVNXOUUw2ArSklIj04hIx
- 3t6WCAOAI9ZETv9EQc2/scEkMYLWo652uwXGP6bJNSV8vMW1j8UutohQm84uo6S/QGsR
- SPV9uSgYeGpCmM9zoTDfwQ2SiTBNl5/2Uk1XXD7JJhMecMpaTtuSlDXrjs/PahDxrMq7
- gG7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741278401; x=1741883201;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P88s8ijDyDl014pRNdvWiHhjjv/J6gaml3H1P6W98Lw=;
- b=Xbx71urG8Lz6h3SxGEqvsa1x9dtCcc14D3dqoRsPfRS1F1OmYBxls3TFyLKfLXV7QQ
- ePPFelHz51HIq2RZ+GyIibgY6vRYqqxpwfm3L0xtEYIAgv/ZxBNEKasbZHB9f3NjQl+k
- eb39dYzOYuM1fwYH46qLIaJ9ttoHJSK7G+NolDvCRxV1Iw7eZkzYJ1nV/CXXe/QmKSDU
- dwJdP+UWKP2NIH9XrhNfhz600FIGyFjbonL4UXW87FVIEDdPXkl7b8IEDHUE4riQ9Onb
- BlclX/738l23mqH4tOd+sfWzVi+GRzRLJmfsDJfR6sI0Cuqpi+SqkQIuKJH7Q/bWiJig
- BH3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXmxz2x3rVMC6xtE/nOkv86FckGtUGUcjcRDJ6PurfB1kQjGx95vOm0oqwUtcZWGCegu7tI4PStbJ0@nongnu.org
-X-Gm-Message-State: AOJu0YwX5sLQugyWyV+6QNvlmxCHT0GhgvT7yT+u/E8P+mleju3preyg
- VjrkqqmILJjK/0392g0U3DlvP+CeyvMZJ0ljxH/W08lcFODi2RwBuEhGeM7hVFQ=
-X-Gm-Gg: ASbGnct+nmMKNp95MFDPc9Ix1ixRVdK+1ThCDkD0fHY3/jTZbF4LmNend/3K795MwoL
- RhuGF0d+F0kzE4Mw98rBaoQow7HqiX2Kla73NtEhcbP++zSfO2a3JIAgb5oZpsiKSfusm1OGOMT
- IwoOqCbBdRcD/zkCqB94M3/neI+5VliMl3UivNRoUPt2M4+QWlPPAMH44St6ecwUFACZjB3pHJY
- l2q+iOfkWzJcqhgUmU+IlaFj+/wmMHUegZb2lDkhxB0OqF5elNASTHYObwnPbdip6Av23clMqJI
- 67qfziDwwtTNUV0YWninNS30TBsnIoDBw+8gxUxKC5W/tCRjGGMFT9v0c5c2wKtt6G2uNK1zhbP
- RtNQrCKpe
-X-Google-Smtp-Source: AGHT+IF2L/lKg15OIAaCMIYLxQaKbWT7sQWPJ+xEc0jfrMHwXQV6p9m7lMIUPUnEh8yf9K51D9tM2w==
-X-Received: by 2002:a17:902:e5c4:b0:223:58ff:c722 with SMTP id
- d9443c01a7336-223f1c989fdmr142423325ad.28.1741278401547; 
- Thu, 06 Mar 2025 08:26:41 -0800 (PST)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af281288790sm1247442a12.63.2025.03.06.08.26.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 08:26:41 -0800 (PST)
-Message-ID: <0226e9d5-edbc-417a-8cf0-8c752f52b7ed@linaro.org>
-Date: Thu, 6 Mar 2025 08:26:39 -0800
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tqE6o-0008Uq-Dm
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:30:08 -0500
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tqE6l-0003CU-QG
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:30:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1741278604; x=1772814604;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=9JT6hQcuHPteGjoaNI+sWKgKEc5E/9AZD+AdonkE+gQ=;
+ b=Tm11V0NaurniXzAkZR8hY+PCrLEyUBMH3EUXKpppVj/66VVpGWADyidm
+ zO0Efh9ceVn0Qi+l2PEFYmhRWsCvb9Y8P1jTD4roiiHFrF5OwaeAMBJYj
+ sswFJNH4V7s4urey94xyHo/f0xAVPBAnm8tgfHIVGU3v9eS5GedNXLKf7
+ 6ZsWoe4jEpQHqAwfzLf3mK85LyGXxCHwyFpJuV7XFOiRCWfTbbBdZJ9Ox
+ bPGF3rRdAuEydKYU93tANbHYkiqFAzXwCHLPOZ6qvCO54FqDBTmd3e1Oi
+ KUvCzF7CjU4I2C6gGIakq2BgkwYkmBDVValaijzcItU136eX8y4wL0Z8q w==;
+X-CSE-ConnectionGUID: gdBHqypTSPaTNMgJxPW33w==
+X-CSE-MsgGUID: dwFjMivZRLS3u/F6UcFTxA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11365"; a="46069640"
+X-IronPort-AV: E=Sophos;i="6.14,226,1736841600"; d="scan'208";a="46069640"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Mar 2025 08:30:01 -0800
+X-CSE-ConnectionGUID: 6/o4d1CJRlmH59W6JvCY3g==
+X-CSE-MsgGUID: 9vz7cgYqQKO18CkQEoPjYw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119579483"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 06 Mar 2025 08:29:57 -0800
+Date: Fri, 7 Mar 2025 00:50:05 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
+ likexu@tencent.com, like.xu.linux@gmail.com,
+ zhenyuw@linux.intel.com, groug@kaod.org, khorenko@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com
+Subject: Re: [PATCH v2 02/10] target/i386: disable PERFCORE when "-pmu" is
+ configured
+Message-ID: <Z8nSPf4bUPICgf3g@intel.com>
+References: <20250302220112.17653-1-dongli.zhang@oracle.com>
+ <20250302220112.17653-3-dongli.zhang@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] hw/hyperv: remove duplication compilation units
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, philmd@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>, manos.pitsidianakis@linaro.org,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, alex.bennee@linaro.org
-References: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250302220112.17653-3-dongli.zhang@oracle.com>
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,38 +90,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/25 22:41, Pierrick Bouvier wrote:
-> Work towards having a single binary, by removing duplicated object files.
-> 
-> hw/hyperv/hyperv.c was excluded at this time, because it depends on target
-> dependent symbols:
-> - from system/kvm.h
->      - kvm_check_extension
->      - kvm_vm_ioctl
-> - from exec/cpu-all.h | memory_ldst_phys.h.inc
->      - ldq_phys
-> 
-> Pierrick Bouvier (7):
->    hw/hyperv/hv-balloon-stub: common compilation unit
->    hw/hyperv/hyperv.h: header cleanup
->    hw/hyperv/vmbus: common compilation unit
->    hw/hyperv/hyperv-proto: move SYNDBG definition from target/i386
->    hw/hyperv/syndbg: common compilation unit
->    hw/hyperv/balloon: common balloon compilation units
->    hw/hyperv/hyperv_testdev: common compilation unit
-> 
->   include/hw/hyperv/hyperv-proto.h | 12 ++++++++
->   include/hw/hyperv/hyperv.h       |  4 ++-
->   target/i386/kvm/hyperv-proto.h   | 12 --------
->   hw/hyperv/syndbg.c               |  7 +++--
->   hw/hyperv/vmbus.c                | 50 ++++++++++++++++----------------
->   hw/hyperv/meson.build            |  9 +++---
->   6 files changed, 49 insertions(+), 45 deletions(-)
-> 
+Hi Dongli,
 
-I'm reasonably certain that hyperv is specific to x86.
-Are these only "duplicated" because of qemu-system-{i386,x86_64}?
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index b6d6167910..61a671028a 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7115,6 +7115,10 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>              !(env->hflags & HF_LMA_MASK)) {
+>              *edx &= ~CPUID_EXT2_SYSCALL;
+>          }
+> +
+> +        if (kvm_enabled() && IS_AMD_CPU(env) && !cpu->enable_pmu) {
+
+No need to check "kvm_enabled() && IS_AMD_CPU(env)" because:
+
+ * "pmu" is a general CPU property option which should cover all PMU
+   related features, and not kvm-specific/vendor-specific.
+ * this bit is reserved on Intel. So the following operation doesn't
+   affect Intel.
+
+I think Xiaoyao's idea about checking in x86_cpu_expand_features() is
+good. And I believe it's worth having another cleanup series to revisit
+pmu dependencies. I can help you later to consolidate and move this
+check to x86_cpu_expand_features(), so this patch can focus on correctly
+defining the current dependency relationship.
+
+With the above nit fixed,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
-r~
+
 
