@@ -4,97 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70416C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:27:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFB4C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqD88-0005z6-Jm; Thu, 06 Mar 2025 10:27:24 -0500
+	id 1tqD9Z-0006pv-FZ; Thu, 06 Mar 2025 10:28:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org>)
- id 1tqD86-0005yE-Cq; Thu, 06 Mar 2025 10:27:22 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tqD9V-0006oj-C9
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:28:49 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org>)
- id 1tqD84-0003bx-2l; Thu, 06 Mar 2025 10:27:22 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z7tZX2D53z4x5k;
- Fri,  7 Mar 2025 02:27:16 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z7tZS64cTz4x3d;
- Fri,  7 Mar 2025 02:27:12 +1100 (AEDT)
-Message-ID: <f6bc0f9c-e208-4a07-b2a0-02f0a23b220e@kaod.org>
-Date: Thu, 6 Mar 2025 16:27:10 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tqD9S-0003hU-Sq
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:28:48 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5940C4E6013;
+ Thu, 06 Mar 2025 16:28:43 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id rIuRJW1JyRqo; Thu,  6 Mar 2025 16:28:41 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 5DF6E4E6001; Thu, 06 Mar 2025 16:28:41 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5B43074577D;
+ Thu, 06 Mar 2025 16:28:41 +0100 (CET)
+Date: Thu, 6 Mar 2025 16:28:41 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [RFC PATCH 04/18] qemu: Introduce 'qemu/legacy_binary_info.h'
+In-Reply-To: <Z8m8GmPzTum7qEcS@redhat.com>
+Message-ID: <15694c26-5a08-d786-e1bf-212365b1f957@eik.bme.hu>
+References: <20250305153929.43687-1-philmd@linaro.org>
+ <20250305153929.43687-5-philmd@linaro.org>
+ <35177cd6-0741-4c28-a5d5-3529208a31dc@linaro.org>
+ <dd0336c2-c2ed-477c-8f40-eaee2f110238@redhat.com>
+ <21a34cac-855b-4628-a154-e708ea85df59@linaro.org>
+ <CABgObfaKQLizim36Lzqzn+brc5d7m10eKbZV59ZK9+03Kt7eTg@mail.gmail.com>
+ <Z8mMhjwiYCY7Pq4H@redhat.com>
+ <c6953b69-a54d-6d42-343e-dae07266306f@eik.bme.hu>
+ <Z8m8GmPzTum7qEcS@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/29] Support AST2700 A1
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1209260455-1741274921=:53921"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,123 +79,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On 3/6/25 11:38, Jamin Lin wrote:
-> v1:
->   1. Refactor INTC model to support both INTC0 and INTC1.
->   2. Support AST2700 A1.
->   3. Create ast2700a0-evb machine.
->   
-> v2:
->    To streamline the review process, split the following patch series into
->    three parts.
->    https://patchwork.kernel.org/project/qemu-devel/cover/20250121070424.2465942-1-jamin_lin@aspeedtech.com/
->    This patch series focuses on cleaning up the INTC model to
->    facilitate future support for the INTC_IO model.
-> 
-> v3:
->   1. Update and add functional test for AST2700
->   2. Add AST2700 INTC design guidance and its block diagram.
->   3. Retaining the INTC naming and introducing a new INTCIO model to support the AST2700 A1.
->   4. Create ast2700a1-evb machine and rename ast2700a0-evb machine
->   5. Fix silicon revision issue and support AST2700 A1.
-> 
-> v4:
->   1. rework functional test for AST2700
->   2. the initial machine "ast2700-evb" is aliased to "ast2700a0-evb.
->   3. intc: Reduce regs array size by adding a register sub-region
->   4. intc: split patch for Support setting different register sizes
->   5. update ast2700a1-evb machine parent to TYPE_ASPEED_MACHINE
-> 
-> v5:
->   1. Rename status_addr and addr to status_reg and reg for clarity
->   2. Introduce dynamic allocation for regs array
->   3. Sort the memmap table by mapping address
->   4. ast27x0.c split patch for Support two levels of INTC controllers for AST2700 A1
->   5. tests/functional/aspped split patch for Introduce start_ast2700_test API
->   6. keep variable naming for reviewer suggestion.
->   7. Add reviewer suggestion and split patch to make more readable.
->   
-> With the patch applied, QEMU now supports two machines for running AST2700 SoCs:
-> ast2700a0-evb: Designed for AST2700 A0
-> ast2700a1-evb: Designed for AST2700 A1
-> 
-> Test information
-> 1. QEMU version: https://github.com/qemu/qemu/commit/50d38b8921837827ea397d4b20c8bc5efe186e53
-> 2. ASPEED SDK v09.05 pre-built image
->     https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.05
->     ast2700-default-obmc.tar.gz (AST2700 A1)
->     https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz
->     ast2700-a0-default-obmc.tar.gz (AST2700 A0)
->     https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz
->     
-> This patch series depends on the following patch series:
-> https://patchwork.kernel.org/project/qemu-devel/cover/20250303073547.1145080-1-jamin_lin@aspeedtech.com/
-> https://patchwork.kernel.org/project/qemu-devel/cover/20250225075622.305515-1-jamin_lin@aspeedtech.com/
-> 
-> Jamin Lin (29):
->    hw/intc/aspeed: Support setting different memory size
->    hw/intc/aspeed: Rename status_addr and addr to status_reg and reg for
->      clarity
->    hw/intc/aspeed: Introduce dynamic allocation for regs array
->    hw/intc/aspeed: Support setting different register size
->    hw/intc/aspeed: Reduce regs array size by adding a register sub-region
->    hw/intc/aspeed: Introduce helper functions for enable and status
->      registers
->    hw/intc/aspeed: Add object type name to trace events for better
->      debugging
->    hw/arm/aspeed: Rename IRQ table and machine name for AST2700 A0
->    hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ number
->    hw/intc/aspeed: Support different memory region ops
->    hw/intc/aspeed: Rename num_ints to num_inpins for clarity
->    hw/intc/aspeed: Add support for multiple output pins in INTC
->    hw/intc/aspeed: Refactor INTC to support separate input and output pin
->      indices
->    hw/intc/aspeed: Introduce AspeedINTCIRQ structure to save the irq
->      index and register address
->    hw/intc/aspeed: Introduce IRQ handler function to reduce code
->      duplication
->    hw/intc/aspeed: Add Support for Multi-Output IRQ Handling
->    hw/intc/aspeed: Add Support for AST2700 INTCIO Controller
->    hw/misc/aspeed_scu: Add Support for AST2700/AST2750 A1 Silicon
->      Revisions
->    hw/arm/aspeed_ast27x0.c Support AST2700 A1 GIC Interrupt Mapping
->    hw/arm/aspeed_ast27x0: Define an Array of AspeedINTCState with Two
->      Instances
->    hw/arm/aspeed_ast27x0: Support two levels of INTC controllers for
->      AST2700 A1
->    hw/arm/aspeed_ast27x0: Add SoC Support for AST2700 A1
->    hw/arm/aspeed: Add Machine Support for AST2700 A1
->    hw/arm/aspeed_ast27x0: Sort the memmap table by mapping address
->    tests/functional/aspeed: Introduce start_ast2700_test API
->    tests/functional/aspeed: Update temperature hwmon path
->    tests/functional/aspeed: Update test ASPEED SDK v09.05
->    tests/functional/aspeed: Add test case for AST2700 A1
->    docs/specs: Add aspeed-intc
-> 
->   docs/specs/aspeed-intc.rst              | 136 +++++
->   docs/specs/index.rst                    |   1 +
->   include/hw/arm/aspeed_soc.h             |   3 +-
->   include/hw/intc/aspeed_intc.h           |  36 +-
->   include/hw/misc/aspeed_scu.h            |   2 +
->   hw/arm/aspeed.c                         |  33 +-
->   hw/arm/aspeed_ast27x0.c                 | 329 ++++++++----
->   hw/intc/aspeed_intc.c                   | 667 ++++++++++++++++++------
->   hw/misc/aspeed_scu.c                    |   2 +
->   hw/intc/trace-events                    |  25 +-
->   tests/functional/test_aarch64_aspeed.py |  47 +-
->   11 files changed, 978 insertions(+), 303 deletions(-)
->   create mode 100644 docs/specs/aspeed-intc.rst
-> 
+--3866299591-1209260455-1741274921=:53921
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Patches 3-5 need some care. The rest looks OK.
+On Thu, 6 Mar 2025, Daniel P. Berrangé wrote:
+> On Thu, Mar 06, 2025 at 02:45:52PM +0100, BALATON Zoltan wrote:
+>> On Thu, 6 Mar 2025, Daniel P. Berrangé wrote:
+>>> On Thu, Mar 06, 2025 at 12:34:13PM +0100, Paolo Bonzini wrote:
+>>>> Il gio 6 mar 2025, 10:27 Philippe Mathieu-Daudé <philmd@linaro.org> ha
+>>>> scritto:
+>>>>
+>>>>> This API is to allow refactoring code for heterogeneous emulation,
+>>>>> without changing user-facing behavior of current qemu-system binaries,
+>>>>> which I now consider as 'legacy'.
+>>>>>
+>>>>> Once all current restrictions removed, the new qemu-system-heterogeneous
+>>>>> binary is expected to run any combination of targets.
+>>>>>
+>>>>> qemu-system-$target will be a call to qemu-system-heterogeneous with
+>>>>> a restricted subset, possibly in the form of:
+>>>>>
+>>>>>   $ qemu-system-heterogeneous --target aarch64-softmmu
+>>>>>
+>>>>
+>>>> Or just qemu-system I guess.
+>>>>
+>>>>     ^ equivalent of today's qemu-system-aarch64
+>>>>>
+>>>>> If you don't like 'qemu_legacy_binary_' prefix, I can use
+>>>>> 'qemu_single_binary_' instead.
+>>>>>
+>>>>
+>>>> Still there is a problem with renaming binaries (both the "qemu-kvm" case
+>>>> and the good/bad case that Richard pointed out).
+>>>
+>>> We could special case the '-kvm' suffix, because by its nature it
+>>> implies the current binary build target.
+>>>
+>>>>
+>>>> I think you should try creating two versions of system/arch_init.c, so that
+>>>> it has a separate implementation for heterogeneous vs. single-target
+>>>> binaries. Then you can keep separate linking steps for single-target
+>>>> binaries and you naturally get the right target info from either the
+>>>> target-specific arch_init-single.c, or the --target option for
+>>>> arch_init-multi.c.
+>>>>
+>>>> (Is --target even necessary? As long as you have a way disambiguate
+>>>> same-named machines like -M virt, and have no default machine in the
+>>>> multi-target binary, you shouldn't need it).
+>>>
+>>> If we did 'query-machines' on qemu-system-heterogeneous, it would
+>>> return all machines from all targets. To disambiguate naming there
+>>> are various options
+>>>
+>>>  * The query-machines command would have to gain a new 'target'
+>>>    field and we would have to document that uniqness is across
+>>>    the tuple (name, target), not merely name. That's a semantic
+>>>    change.
+>>>
+>>>    We would still need a way to express the 'target' when asking
+>>>    to instantiate a machine
+>>>
+>>>  * The query-machines command would have to gain a new 'target'
+>>>    paramter so callers can restrict the data they receive back
+>>>
+>>>    We would still need a way to express the 'target' when asking
+>>>    to instantiate a machine
+>>>
+>>>  * Rename all machine types so they are '<target>-<machine>'
+>>>    The query-machines command doesn't change. Apps would have
+>>>    to "parse" the machine name to see what 'target' each is
+>>>    associated with, or we include an explicit 'target' field
+>>>    in the returned data. Instianting a machine would not need
+>>>    changing
+>>
+>> I think -machine m68k:virt could work, -M help would list machines like:
+>>
+>> arm:raspi
+>> i386:pc
+>> etc.
+>>
+>> Management apps could easily find : to separate arch but those that don't
+>> care about arch would just work and list more possible machines. Some
+>> machines like pc or mac99 that may appear differently in different single
+>> arch binary might need to get resolved first. Maybe need a way to search
+>> machine list by pattern e.g. as -machine x86_64:help.
+>
+> ...except that custom structures/formats in command line args is
+> something we've tried very hard to eliminate in Qemu, and instead
+> model everything as a distinct fields, using QAPI, so...
+>
+> .. if you're meaning "arm:raspi" as a short hand for "target:machine"
+>   that would be a design anti-pattern, b
+>
+> ...if you're meaning that "arm:raspi" is the full machine name, to be
+>   strictly treated as an opaque string that would be acceptable.
+>
+> I rather think the latter would not end up being treated as an opaque
+> string though - the tempetation to parse it & assign semantics to the
+> pieces is just too great. So I'm not a fan of that approach.
+>
+> From a QAPI design best pratice POV, the requirement would be for
+>
+> -machine target=arm,name=raspi
 
-Thanks,
+As long as I don't have to type that and can use -M arm:raspi as a 
+shorthand that's OK but then we could just make an exception for this and 
+combine target and machine name here for simplicity. Unless it's simpler 
+to internally use separate name and target attributes and implement a 
+command line shorthand. You'll also need a way to display machine list 
+with target and name in a way that's easy to parse for tools for which the 
+target:name format seems like a trivial way. So I don't mind how you 
+rationalise it and call all of it the machine name or if it's implemented 
+as separate name and target attributes but please try to keep the command 
+line something a human can use too.
 
-C.
-
-
-
-
+Regards,
+BALATON Zoltan
+--3866299591-1209260455-1741274921=:53921--
 
