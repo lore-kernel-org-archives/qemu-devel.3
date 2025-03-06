@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2AFC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F259C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:40:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq8d1-0004mY-Vm; Thu, 06 Mar 2025 05:39:00 -0500
+	id 1tq8dD-0004qE-74; Thu, 06 Mar 2025 05:39:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tq8d0-0004mG-5w; Thu, 06 Mar 2025 05:38:58 -0500
+ id 1tq8d9-0004os-3y; Thu, 06 Mar 2025 05:39:07 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tq8cw-0000St-9p; Thu, 06 Mar 2025 05:38:57 -0500
+ id 1tq8d4-0000TZ-52; Thu, 06 Mar 2025 05:39:06 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 6 Mar
- 2025 18:38:46 +0800
+ 2025 18:38:47 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 6 Mar 2025 18:38:46 +0800
+ Transport; Thu, 6 Mar 2025 18:38:47 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v5 00/29] Support AST2700 A1
-Date: Thu, 6 Mar 2025 18:38:08 +0800
-Message-ID: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v5 02/29] hw/intc/aspeed: Rename status_addr and addr to
+ status_reg and reg for clarity
+Date: Thu, 6 Mar 2025 18:38:10 +0800
+Message-ID: <20250306103846.429221-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
+References: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -63,112 +66,165 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:
- 1. Refactor INTC model to support both INTC0 and INTC1.
- 2. Support AST2700 A1.
- 3. Create ast2700a0-evb machine.
+Rename the variables "status_addr" to "status_reg" and "addr" to "reg" because
+they are used as register index. This change makes the code more appropriate
+and improves readability.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/intc/aspeed_intc.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
+
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 033b574c1e..465f41e4fd 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -60,7 +60,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+ {
+     AspeedINTCState *s = (AspeedINTCState *)opaque;
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+-    uint32_t status_addr = GICINT_STATUS_BASE + ((0x100 * irq) >> 2);
++    uint32_t status_reg = GICINT_STATUS_BASE + ((0x100 * irq) >> 2);
+     uint32_t select = 0;
+     uint32_t enable;
+     int i;
+@@ -92,7 +92,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
  
-v2:
-  To streamline the review process, split the following patch series into
-  three parts.
-  https://patchwork.kernel.org/project/qemu-devel/cover/20250121070424.2465942-1-jamin_lin@aspeedtech.com/
-  This patch series focuses on cleaning up the INTC model to
-  facilitate future support for the INTC_IO model.
-
-v3:
- 1. Update and add functional test for AST2700
- 2. Add AST2700 INTC design guidance and its block diagram.
- 3. Retaining the INTC naming and introducing a new INTCIO model to support the AST2700 A1.
- 4. Create ast2700a1-evb machine and rename ast2700a0-evb machine
- 5. Fix silicon revision issue and support AST2700 A1.
-
-v4:
- 1. rework functional test for AST2700
- 2. the initial machine "ast2700-evb" is aliased to "ast2700a0-evb.
- 3. intc: Reduce regs array size by adding a register sub-region
- 4. intc: split patch for Support setting different register sizes
- 5. update ast2700a1-evb machine parent to TYPE_ASPEED_MACHINE
-
-v5:
- 1. Rename status_addr and addr to status_reg and reg for clarity
- 2. Introduce dynamic allocation for regs array
- 3. Sort the memmap table by mapping address
- 4. ast27x0.c split patch for Support two levels of INTC controllers for AST2700 A1
- 5. tests/functional/aspped split patch for Introduce start_ast2700_test API
- 6. keep variable naming for reviewer suggestion.
- 7. Add reviewer suggestion and split patch to make more readable.
+     trace_aspeed_intc_select(select);
  
-With the patch applied, QEMU now supports two machines for running AST2700 SoCs:
-ast2700a0-evb: Designed for AST2700 A0
-ast2700a1-evb: Designed for AST2700 A1
-
-Test information
-1. QEMU version: https://github.com/qemu/qemu/commit/50d38b8921837827ea397d4b20c8bc5efe186e53
-2. ASPEED SDK v09.05 pre-built image
-   https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.05
-   ast2700-default-obmc.tar.gz (AST2700 A1)
-   https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz
-   ast2700-a0-default-obmc.tar.gz (AST2700 A0)
-   https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz
-   
-This patch series depends on the following patch series:
-https://patchwork.kernel.org/project/qemu-devel/cover/20250303073547.1145080-1-jamin_lin@aspeedtech.com/
-https://patchwork.kernel.org/project/qemu-devel/cover/20250225075622.305515-1-jamin_lin@aspeedtech.com/
-
-Jamin Lin (29):
-  hw/intc/aspeed: Support setting different memory size
-  hw/intc/aspeed: Rename status_addr and addr to status_reg and reg for
-    clarity
-  hw/intc/aspeed: Introduce dynamic allocation for regs array
-  hw/intc/aspeed: Support setting different register size
-  hw/intc/aspeed: Reduce regs array size by adding a register sub-region
-  hw/intc/aspeed: Introduce helper functions for enable and status
-    registers
-  hw/intc/aspeed: Add object type name to trace events for better
-    debugging
-  hw/arm/aspeed: Rename IRQ table and machine name for AST2700 A0
-  hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ number
-  hw/intc/aspeed: Support different memory region ops
-  hw/intc/aspeed: Rename num_ints to num_inpins for clarity
-  hw/intc/aspeed: Add support for multiple output pins in INTC
-  hw/intc/aspeed: Refactor INTC to support separate input and output pin
-    indices
-  hw/intc/aspeed: Introduce AspeedINTCIRQ structure to save the irq
-    index and register address
-  hw/intc/aspeed: Introduce IRQ handler function to reduce code
-    duplication
-  hw/intc/aspeed: Add Support for Multi-Output IRQ Handling
-  hw/intc/aspeed: Add Support for AST2700 INTCIO Controller
-  hw/misc/aspeed_scu: Add Support for AST2700/AST2750 A1 Silicon
-    Revisions
-  hw/arm/aspeed_ast27x0.c Support AST2700 A1 GIC Interrupt Mapping
-  hw/arm/aspeed_ast27x0: Define an Array of AspeedINTCState with Two
-    Instances
-  hw/arm/aspeed_ast27x0: Support two levels of INTC controllers for
-    AST2700 A1
-  hw/arm/aspeed_ast27x0: Add SoC Support for AST2700 A1
-  hw/arm/aspeed: Add Machine Support for AST2700 A1
-  hw/arm/aspeed_ast27x0: Sort the memmap table by mapping address
-  tests/functional/aspeed: Introduce start_ast2700_test API
-  tests/functional/aspeed: Update temperature hwmon path
-  tests/functional/aspeed: Update test ASPEED SDK v09.05
-  tests/functional/aspeed: Add test case for AST2700 A1
-  docs/specs: Add aspeed-intc
-
- docs/specs/aspeed-intc.rst              | 136 +++++
- docs/specs/index.rst                    |   1 +
- include/hw/arm/aspeed_soc.h             |   3 +-
- include/hw/intc/aspeed_intc.h           |  36 +-
- include/hw/misc/aspeed_scu.h            |   2 +
- hw/arm/aspeed.c                         |  33 +-
- hw/arm/aspeed_ast27x0.c                 | 329 ++++++++----
- hw/intc/aspeed_intc.c                   | 667 ++++++++++++++++++------
- hw/misc/aspeed_scu.c                    |   2 +
- hw/intc/trace-events                    |  25 +-
- tests/functional/test_aarch64_aspeed.py |  47 +-
- 11 files changed, 978 insertions(+), 303 deletions(-)
- create mode 100644 docs/specs/aspeed-intc.rst
-
+-    if (s->mask[irq] || s->regs[status_addr]) {
++    if (s->mask[irq] || s->regs[status_reg]) {
+         /*
+          * a. mask is not 0 means in ISR mode
+          * sources interrupt routine are executing.
+@@ -108,8 +108,8 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+          * notify firmware which source interrupt are coming
+          * by setting status register
+          */
+-        s->regs[status_addr] = select;
+-        trace_aspeed_intc_trigger_irq(irq, s->regs[status_addr]);
++        s->regs[status_reg] = select;
++        trace_aspeed_intc_trigger_irq(irq, s->regs[status_reg]);
+         aspeed_intc_update(s, irq, 1);
+     }
+ }
+@@ -117,17 +117,17 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+ static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned int size)
+ {
+     AspeedINTCState *s = ASPEED_INTC(opaque);
+-    uint32_t addr = offset >> 2;
++    uint32_t reg = offset >> 2;
+     uint32_t value = 0;
+ 
+-    if (addr >= ASPEED_INTC_NR_REGS) {
++    if (reg >= ASPEED_INTC_NR_REGS) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
+                       __func__, offset);
+         return 0;
+     }
+ 
+-    value = s->regs[addr];
++    value = s->regs[reg];
+     trace_aspeed_intc_read(offset, size, value);
+ 
+     return value;
+@@ -138,12 +138,12 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+ {
+     AspeedINTCState *s = ASPEED_INTC(opaque);
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+-    uint32_t addr = offset >> 2;
++    uint32_t reg = offset >> 2;
+     uint32_t old_enable;
+     uint32_t change;
+     uint32_t irq;
+ 
+-    if (addr >= ASPEED_INTC_NR_REGS) {
++    if (reg >= ASPEED_INTC_NR_REGS) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
+                       __func__, offset);
+@@ -152,7 +152,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+ 
+     trace_aspeed_intc_write(offset, size, data);
+ 
+-    switch (addr) {
++    switch (reg) {
+     case R_GICINT128_EN:
+     case R_GICINT129_EN:
+     case R_GICINT130_EN:
+@@ -177,7 +177,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+ 
+         /* disable all source interrupt */
+         if (!data && !s->enable[irq]) {
+-            s->regs[addr] = data;
++            s->regs[reg] = data;
+             return;
+         }
+ 
+@@ -187,12 +187,12 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+         /* enable new source interrupt */
+         if (old_enable != s->enable[irq]) {
+             trace_aspeed_intc_enable(s->enable[irq]);
+-            s->regs[addr] = data;
++            s->regs[reg] = data;
+             return;
+         }
+ 
+         /* mask and unmask source interrupt */
+-        change = s->regs[addr] ^ data;
++        change = s->regs[reg] ^ data;
+         if (change & data) {
+             s->mask[irq] &= ~change;
+             trace_aspeed_intc_unmask(change, s->mask[irq]);
+@@ -200,7 +200,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+             s->mask[irq] |= change;
+             trace_aspeed_intc_mask(change, s->mask[irq]);
+         }
+-        s->regs[addr] = data;
++        s->regs[reg] = data;
+         break;
+     case R_GICINT128_STATUS:
+     case R_GICINT129_STATUS:
+@@ -220,7 +220,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+         }
+ 
+         /* clear status */
+-        s->regs[addr] &= ~data;
++        s->regs[reg] &= ~data;
+ 
+         /*
+          * These status registers are used for notify sources ISR are executed.
+@@ -233,7 +233,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+         }
+ 
+         /* All source ISR execution are done */
+-        if (!s->regs[addr]) {
++        if (!s->regs[reg]) {
+             trace_aspeed_intc_all_isr_done(irq);
+             if (s->pending[irq]) {
+                 /*
+@@ -241,9 +241,9 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+                  * notify firmware which source interrupt are pending
+                  * by setting status register
+                  */
+-                s->regs[addr] = s->pending[irq];
++                s->regs[reg] = s->pending[irq];
+                 s->pending[irq] = 0;
+-                trace_aspeed_intc_trigger_irq(irq, s->regs[addr]);
++                trace_aspeed_intc_trigger_irq(irq, s->regs[reg]);
+                 aspeed_intc_update(s, irq, 1);
+             } else {
+                 /* clear irq */
+@@ -253,7 +253,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+         }
+         break;
+     default:
+-        s->regs[addr] = data;
++        s->regs[reg] = data;
+         break;
+     }
+ 
 -- 
 2.43.0
 
