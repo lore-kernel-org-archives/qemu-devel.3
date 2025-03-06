@@ -4,81 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67641C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 09:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6F49C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 09:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq7QR-0004YD-8A; Thu, 06 Mar 2025 04:21:55 -0500
+	id 1tq7VV-0005vP-23; Thu, 06 Mar 2025 04:27:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tq7QM-0004Xm-OP
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:21:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tq7QK-0000H0-8b
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:21:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741252906;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+fE7ocxEBIWLDJiLQCiXw6MUiosAmWceyhwxWZUHTzM=;
- b=L9qhgjDJIz4UEgvUJQ7e2VY+Pj1d3LUGjy3bl12Z9cfNbSXt1sonOes6VI22/fAp0L65Vr
- b3MOOBFVrYa09tUv3bJfXAfG/WFIQCaaxUyt4j0k4RtRIZ4z0v2UXD6/NKMdGUmfbk8BGi
- orjXCegMkGF/v3gZiNfup4XSQ9XlYcE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-xgyO-kMTN9GtFWtkMS4LtQ-1; Thu,
- 06 Mar 2025 04:21:21 -0500
-X-MC-Unique: xgyO-kMTN9GtFWtkMS4LtQ-1
-X-Mimecast-MFC-AGG-ID: xgyO-kMTN9GtFWtkMS4LtQ_1741252880
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E1BBD1800361; Thu,  6 Mar 2025 09:21:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.112])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9719B300019E; Thu,  6 Mar 2025 09:21:15 +0000 (UTC)
-Date: Thu, 6 Mar 2025 09:21:11 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [RFC PATCH 2/4] hw/arm/raspi: Replace TARGET_AARCH64 by
- legacy_binary_is_64bit()
-Message-ID: <Z8lpB6XdNPT8zyTa@redhat.com>
-References: <20250305161248.54901-1-philmd@linaro.org>
- <20250305161248.54901-3-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tq7VS-0005uj-5F
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:27:06 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tq7VN-0000q0-3B
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:27:05 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43bcc04d4fcso2346715e9.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 01:26:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741253217; x=1741858017; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0l6ASPZ+A+bjtY+nXTAeRhBMi6RMwcUpq9n4X/ZPyaI=;
+ b=Qxp51nYWadf0KuxJdj/ZTj1iIYv/O5GgwiujIPqSTod+xpSmryHCg/HF9nrWrxYtJN
+ a/8uvqPoQlmYyA3pGG2r+LM6hiGREbMGBe6suMSrG4Hyh1sXzItDx7E7d5Kxh+xuBF5p
+ Z0lJIONIxh1i3ypuWnwaFUPcSYjRZmG6BsfnmUiA3q/aKNqMzeU2x6uzqqGM8DVvEwfZ
+ iV/L6x8dpnaRe7CR7FL1navwI1DcELBVgH9tnhlWNKtKGHEiiyzUFvHChdpMMlR9tz8n
+ hq8oSxJjxJfMk97T/YlZc6LDtmAoCZ4I+A3UC0mpFogCu6AyQRyrRguZVFmEZdkf+in4
+ Hplg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741253217; x=1741858017;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0l6ASPZ+A+bjtY+nXTAeRhBMi6RMwcUpq9n4X/ZPyaI=;
+ b=eiYY0rEENErvkVgPMw4BaYVVLGuNAtiaeZSCL1IMfV9dZ2w8vFU5aUFP5V+IlJPOMx
+ IAvTeWhL3jfwABWL/KSUvqFiLmvfcK0dmb0Kf29Y7WJSrrKIeqyPkK36gEcSLOqzq8PW
+ EXYdMPJ/jf5nKovGZuot8vvaZuqtLognbQHIQoVx1k25brwmJhTokEl/VkXz5KXqNrtt
+ zvGw7sywRar9lGUTId+fdpZHaPXRjMSPCvgKPY9FGnQdje4MaEnNM4WxJ82LPb/zwwAA
+ jm0RXvnpsrNKw/2nrV/pPV0HEkbll9batsSYC8SolfzDAjepDJzTqW9f0tIiefci66S8
+ jM5g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWqTD5d/bMgJESghZM4LRwVGZ4BDy6teNKdK33x18IHn48HBlRMLBSDhKmN7chK0X2Xg0+w9Vmmv7om@nongnu.org
+X-Gm-Message-State: AOJu0YxPUg9FiD2CDOvwBdvNUwRH8jQJNmmV+PvhBnUw6irEY3nzo3bj
+ M7tZYGhHB5O9Wpcx1f+KIIHiQmZkk7ugNJokkluR1C4E4PtEjh2yE6c8SxF+mhc=
+X-Gm-Gg: ASbGncv3DsQdhwkpMNhqNdByuSI+HJa079lDPKCU9tNp2BxCUf3aWhQMPecTgmikarj
+ cXVuuU9Ah2Oy9eOmtEZiyJXF0lpfbrZUFvTrCsb3BJYK6ztL8ktnjJVLoMPEoA2tWgUuVfnFWK2
+ kUgm8HRyh09JT/7l/zsSfgHCoVsBh4Jh8H25oZa4yFGOHNCdW+9h0EuVzKByRrMpetrn++cfkiY
+ qQnNoAH3ZOo8ucOyt4k1q1skNc7ZTVs7NbNBbqyiQdp7kNbce1SP071ayfuohN/ERKVUZGNcu2r
+ oe8qiiaIziojDIcbOzgTT82R9Car/mrkc4sMNBxwgiN79TgNyD18wixOx8x+vfZEgBwyjuFIhKd
+ nWH3piuTvRVrr
+X-Google-Smtp-Source: AGHT+IF6s1lVr+OB09Y5mYXJF2AysWUZzz7Q7BXAtdTjv1VB8DYwVAgc3jYGcsde93DBnaV8/kL+yQ==
+X-Received: by 2002:a05:600c:470f:b0:43b:ccfe:eee5 with SMTP id
+ 5b1f17b1804b1-43bd29c02b4mr47779775e9.17.1741253216897; 
+ Thu, 06 Mar 2025 01:26:56 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912c01d81csm1450266f8f.58.2025.03.06.01.26.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Mar 2025 01:26:56 -0800 (PST)
+Message-ID: <21a34cac-855b-4628-a154-e708ea85df59@linaro.org>
+Date: Thu, 6 Mar 2025 10:26:55 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 04/18] qemu: Introduce 'qemu/legacy_binary_info.h'
+To: Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250305153929.43687-1-philmd@linaro.org>
+ <20250305153929.43687-5-philmd@linaro.org>
+ <35177cd6-0741-4c28-a5d5-3529208a31dc@linaro.org>
+ <dd0336c2-c2ed-477c-8f40-eaee2f110238@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <dd0336c2-c2ed-477c-8f40-eaee2f110238@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250305161248.54901-3-philmd@linaro.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,106 +105,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 05, 2025 at 05:12:46PM +0100, Philippe Mathieu-Daudé wrote:
-> For legacy ARM binaries, legacy_binary_is_64bit() is
-> equivalent of the compile time TARGET_AARCH64 definition.
+On 6/3/25 08:26, Thomas Huth wrote:
+> On 05/03/2025 17.59, Pierrick Bouvier wrote:
+>> On 3/5/25 07:39, Philippe Mathieu-Daudé wrote:
+>>> Introduce an API to get information specific to a binary
+>>> from the binary name (argv[0]).
+>>>
+>>> Initialize it from qemu_init() on system emulation.
+>>>
+>>
+>> What we want here is more a include/qemu/target_info.h, which will 
+>> allow to query the name of it, and helper for every architecture:
+>>
+>> target_is_aarch64()
+>> target_is_ppc64()
+>> ...
+>>
+>> Eventually, we can add combined getters like:
+>> target_is_64bit()
+>> ...
+>>
+>> Naming "legacy" something that will be present in the long term is not 
+>> the best move I think.
 > 
-> Use it as TypeInfo::registerable() callback to dynamically
-> add Aarch64 specific types in qemu-system-aarch64 binary,
-> removing the need of TARGET_AARCH64 #ifdef'ry.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  hw/arm/bcm2836.c | 6 ++----
->  hw/arm/raspi.c   | 7 +++----
->  2 files changed, 5 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
-> index 95e16806fa1..88a32e5fc20 100644
-> --- a/hw/arm/bcm2836.c
-> +++ b/hw/arm/bcm2836.c
+> FWIW, I agree, this should rather be target_is_64bit() or something 
+> similar, like target_words_bigendian() ?
+
+This API is to allow refactoring code for heterogeneous emulation,
+without changing user-facing behavior of current qemu-system binaries,
+which I now consider as 'legacy'.
+
+Once all current restrictions removed, the new qemu-system-heterogeneous
+binary is expected to run any combination of targets.
+
+qemu-system-$target will be a call to qemu-system-heterogeneous with
+a restricted subset, possibly in the form of:
+
+  $ qemu-system-heterogeneous --target aarch64-softmmu
+
+    ^ equivalent of today's qemu-system-aarch64
+
+If you don't like 'qemu_legacy_binary_' prefix, I can use
+'qemu_single_binary_' instead.
 
 
-> @@ -219,12 +218,11 @@ static const TypeInfo bcm283x_types[] = {
->          .name           = TYPE_BCM2836,
->          .parent         = TYPE_BCM283X,
->          .class_init     = bcm2836_class_init,
-> -#ifdef TARGET_AARCH64
->      }, {
->          .name           = TYPE_BCM2837,
->          .parent         = TYPE_BCM283X,
-> +        .registerable   = legacy_binary_is_64bit,
->          .class_init     = bcm2837_class_init,
-> -#endif
->      }, {
->          .name           = TYPE_BCM283X,
->          .parent         = TYPE_BCM283X_BASE,
+target_is_64bit() is misleading, for example in:
 
-So historically we have a subset of machines that are only exposed in
-the qemu-system-aarch64 binary, and not qemu-system-arm.
+  $ qemu-system-aarch64 -M zynqmp
 
-You're attempting to build a single binary to cover both 32 & 64 bit
-arm, so need to be able to filter what machines are available to
-create when the symlink indicates invokation of the 32-bit binary.
-
-If we extend your approach into the future, we may eventually have
-a qemu-system-any with all targets, and symlinks from the legacy
-binary names, so need to filter based on target as well as on
-32/64-bit.
-
-
-The reason you want the .registerable callback is so that we can
-have a single static list of all machine types passed into
-DEFINE_TYPES in bulk, instead of implementing a manual constructor
-to do type registration and conditionally calling type_register()
-for each type.
-
-So I can understand why you took this approach, but conceptually I'm not
-comfortable with the semantics of 'type_register' being a method that
-registers a type, except when it doesn't register a type. That feels
-like dubious semantic design.
-
-If I step back a level, I would ask why do we need to skip the registration
-of machine types at all ?
-
-It is because existing code blindly assumes that if a machine class is
-registered, then it is valid to instantiate that machine class. IMHO this
-is where the current design limitation is.
-
-No matter what we do the code will exist in  memory in the binary. If we
-register a type that's a tiny bit of memory to hold the "Class" instance
-and ought to be logically harmless if we never instantiate a type.
-
-IMHO we should always unconditionally register all types for which we
-have code in memory. If there are types like machine types, where some
-Classes should be blocked from instantiation based on certain criteria,
-we should instead represent that with a check at that class level in
-some manner.
-
-i.e, we could have a helper
-
-    bool machine_is_available(MachineClass *mc)
-
-which we use as a filter when querying machine types that are available to
-instantiate (-M help, query-machines), and as a pre-condition prior to
-instiating a machine type (-M <name>).
-
-That may in turn imply a callback
-
-   bool (*is_available)(void)
-
-on the MachineClass, for which your legacy_binary_is_64bit() method would
-serve as an impl.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+we create 64-bit and 32-bit ARM cores.
 
