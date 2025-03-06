@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8379C282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 00:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DA07C19F32
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 00:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpymw-0001V5-6K; Wed, 05 Mar 2025 19:08:34 -0500
+	id 1tpysI-0003lj-7S; Wed, 05 Mar 2025 19:14:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3dOfIZwwKCqsYLMTSPdePQLYRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--nabihestefan.bounces.google.com>)
- id 1tpyml-0001Mb-C4
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 19:08:24 -0500
-Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1tpysG-0003lY-Uo
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 19:14:04 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3dOfIZwwKCqsYLMTSPdePQLYRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--nabihestefan.bounces.google.com>)
- id 1tpymj-000724-JX
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 19:08:23 -0500
-Received: by mail-pj1-x1049.google.com with SMTP id
- 98e67ed59e1d1-2fede63f32dso397423a91.1
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 16:08:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1tpysA-0007bh-4Z
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 19:14:04 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5e4b410e48bso68456a12.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 16:13:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1741219700; x=1741824500; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:from:subject:message-id
- :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=UyjiFGUgfhIevwFcnNYqsTxfpyZqsh+g52PkrRzwRGo=;
- b=e0Fk6GHFJMipGibu9Z2Xi0c14FTh1ZmRq9+BAT2xFVydyoIMgBZt722peMRYLaQmqY
- mabshmbkAqKtzT4lqwZ80zaXYFSW6xfKunvP7gzOeLd0VUUg42TCp8GRt46ZzUQx9tTo
- eY18V4LGj+kn6MMMYznRenpwM4imTlfywBjFtGAIEa7zPgv2ct3uzkQer/JajUokpY42
- FnNecZjz6o1NCg/EE+5Kh6ISNRL3Vh8gnfftMIjhl4l0nWewM9zcE6+j3+S7a1GGJArV
- rAlLy5kTtWXRzRulMM4I77s4aM613KiilII1oG+y9Xb/+QmvnvqIjLYhoGy7focc3PFm
- 2nLg==
+ d=gmail.com; s=20230601; t=1741220036; x=1741824836; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=41Jh2PhIyYCNxRiATCApNqTXto276bZ6p7bfaH56Uuw=;
+ b=KURkm0GOdxp1K/2Pf+yFI2nDm/Hu7e847GpO3pW6DIUugCwxehgf+b3haVLrTnQ2Kb
+ mgtmXLwjFxAqyOVbHNGM1wHXWM+HX95v7zKvfTONcHBsFHiUCBDRTAhSry3jJIc0bo+w
+ pvhU/aQ6GBqfbLUPu2JQJxha+BdMzV7L6zbCvVH9Mn5YVPz+KWyMI/w+f49JhAZYAHiA
+ iFJtURURO4enGAaaksGH/Y2i5ymfhizcj4SXNsL92rfxJ+i7gcHSvl0ZviuLulBz6Gxg
+ Qh8Av0mtrfISy4bFPrLcGMP82UNjFpoD4ZJB6XifZoeFIbY8QPv1Hm4vxU7tqUWipxp0
+ 3G1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741219700; x=1741824500;
- h=content-transfer-encoding:cc:to:from:subject:message-id
- :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=UyjiFGUgfhIevwFcnNYqsTxfpyZqsh+g52PkrRzwRGo=;
- b=KvXnjoewiCrCC4n7BRPvQiLyWG787Q774sOpjzU4SrpzAeybPCFxU7410U11Nk2a6E
- lCm2/MAwyR0qnzZisdfm/vfqmfiBGlpzlFbRNsrOvO3mDXXZ8j1KQr6RstHFuWcmQMIC
- PE105iS249HUgv8fIihb8N5AmhfJSg+jD6YadRJ86bIdnXcOLTx6ppBw/wWFB+C0qDEg
- uhdvJEO6uMHvYAadZG1f7pDmIHnvCoGigZi2ecj3K5l0lLXkwVob/OEUHadetgMkcvV+
- FtiLZFOzaS8SQ3LhHH2u3SRqcIyZqWxlffMLYSka0jDevVS4/6FcLdTa7l84hBAhFNNP
- r3qw==
+ d=1e100.net; s=20230601; t=1741220036; x=1741824836;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=41Jh2PhIyYCNxRiATCApNqTXto276bZ6p7bfaH56Uuw=;
+ b=LfeqK9D/z2DUjI+DI3HU3ZxEjSwH7xcBOGL78/+CMmMp8iHIvOz3NqHGbnJKN2cfEc
+ zuCNxaP50aAOEqcG1iCDY16kwKmVr70LyutM6I7B1zdQ/uFiKcowpvP8PDMs/SBCwyCL
+ e2RwTQgHAKzaDZltz6465jB3BioHq3NYo++m+f5MN2n8uHTWA0ztGKbKybzt6BWjsNMq
+ 4FkkqqvUX1Hs+XIe2z7/dw8/U4dX64jpbZX/dvhjK0m6JfgFoFa6xHjVkwjgf/W6B9tT
+ 7UWTqyxsK9ivRPFNo9UzbNUazGgaQ4ibvihZKG/5Nz3kmTJac6o6Z6s5LbqhY/ul5CWS
+ YiOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXxOVnYYnh/E28q739bzgA57bUXPG7DQRCUkdoyZqUVZPtDu1Cq4KKuUpgiN9WFR6z5FbGV6e7iWVLd@nongnu.org
-X-Gm-Message-State: AOJu0Yy4wscX+t1NZpoFfHM+SBDlKvHWBG5mIlLyFML4b4+gQN6VI1ep
- 6r/snoDCYz554r4kJM+bHR/p57wFla2+IEcVtTr5Dvm+qKhJIt3yTZ4VU9n2/QmK50YecfPBl7M
- bxCJpQ9XRcMmLkSZVEUhdQxy1JQ==
-X-Google-Smtp-Source: AGHT+IFFcHEZYlKd4zyzyME9x2X0Y5fg//iTVj58oW0uk84bylAEXG5uRnjF9w3zkMWzwgwr1KsmMSZe8VGHKTyGsts=
-X-Received: from pjj3.prod.google.com ([2002:a17:90b:5543:b0:2fc:1e77:d6b6])
- (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:5688:b0:2ee:9e06:7db0 with SMTP id
- 98e67ed59e1d1-2ff497a921amr8789665a91.11.1741219700056; 
- Wed, 05 Mar 2025 16:08:20 -0800 (PST)
-Date: Thu,  6 Mar 2025 00:08:14 +0000
-In-Reply-To: <20250304064710.2128993-7-jamin_lin@aspeedtech.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.48.1.711.g2feabab25a-goog
-Message-ID: <20250306000816.2098104-1-nabihestefan@google.com>
-Subject: Re: [v5,6/6] hw/arm/aspeed_ast27x0.c Fix boot issue for AST2700
-From: Nabih Estefan <nabihestefan@google.com>
-To: jamin_lin@aspeedtech.com
-Cc: "=?utf-8?q?C=C3=A9dric_Le_Goater?=" <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Nabih Estefan <nabihestefan@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
- envelope-from=3dOfIZwwKCqsYLMTSPdePQLYRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--nabihestefan.bounces.google.com;
- helo=mail-pj1-x1049.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ AJvYcCWgysP5ZAtsjkL2b4MWM932f1Lvjdls45acJ4ydyqBeOM00rWl40i6XwIZTNq0UN52rnLtcnxn0HdlG@nongnu.org
+X-Gm-Message-State: AOJu0YweEeeadkQXR9AK+AruTeifpspR7pkdMcHZbmdsqW2fflQVtuL2
+ bAUyjQJDYJBeNqlahorXoHJwXMpnsKazT5n+813tizWcEhtRdLl6DHZelNOOCcv1r+djRayEZyH
+ HNPyN117/k1ZDJuiruyZZZma9vCY=
+X-Gm-Gg: ASbGncvbXi+b84/IQ9T4XxrT8c/Yx9cCaBuOumw+DgD7rDlOJbdmhxZhcw5I6KIg89q
+ wJIv7Cm1iZ700ripjJCz288+cKjOHFOvAzN6OSFzFXFUVM+QuTCfMNxNh84Naxe6q19/Si6f7AT
+ NRvROFOXl5yumK8Abw6ZKwI4JrIA==
+X-Google-Smtp-Source: AGHT+IE3xX5ZPUdyfBCVy/jxUf6eBtw2bosoPlZM/4noyX+SSYZTKgEnpv/qdStw/GlzbGgxlr+T96qyz49SDJdFDF8=
+X-Received: by 2002:a05:6402:90c:b0:5e5:3a51:f23b with SMTP id
+ 4fb4d7f45d1cf-5e59f3c1e2amr4808038a12.13.1741220035542; Wed, 05 Mar 2025
+ 16:13:55 -0800 (PST)
+MIME-Version: 1.0
+References: <alpine.DEB.2.22.394.2306151649350.897208@ubuntu-linux-20-04-desktop>
+ <20230615235254.1366267-9-sstabellini@kernel.org>
+ <a0982117-5602-49ee-9e0c-ef2f7c716e7b@linaro.org>
+ <alpine.DEB.2.22.394.2503051519550.1303386@ubuntu-linux-20-04-desktop>
+In-Reply-To: <alpine.DEB.2.22.394.2503051519550.1303386@ubuntu-linux-20-04-desktop>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Wed, 5 Mar 2025 18:13:43 -0600
+X-Gm-Features: AQ5f1JpUjbbjfz4zDHABCyfv6UTJ_jL9Oj1MBdTy7SLPxMfaJs08zygEKS-w4_A
+Message-ID: <CAJy5ezrx8mYWfE1Ty16g-Do9-itWN2qn36pqM9u0mNDw5SbaLw@mail.gmail.com>
+Subject: Re: [PULL v5 09/11] hw/arm: introduce xenpvh machine
+To: Stefano Stabellini <sstabellini@kernel.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ peter.maydell@linaro.org, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
+ vikram.garhwal@amd.com, Stefano Stabellini <stefano.stabellini@amd.com>,
+ Edgar.Iglesias@amd.com
+Content-Type: multipart/alternative; boundary="000000000000b1c971062fa16167"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,44 +99,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Currently, ASPEED_DEV_SPI_BOOT is set to "0x400000000", which is the DRAM=
- start
-> address, and the QEMU loader is used to load the U-Boot binary into this =
-address.
->=20
-> However, if users want to install FMC flash contents as a boot ROM, the D=
-RAM
-> address 0x400000000 would be overwritten with Boot ROM data. This causes =
-the
-> AST2700 to fail to boot because the U-Boot data becomes incorrect.
->=20
-> To fix this, change the ASPEED_DEV_SPI_BOOT address to "0x100000000", whi=
-ch is
-> the FMC0 memory-mapped start address in the AST2700.
->=20
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
+--000000000000b1c971062fa16167
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Nabih Estefan <nabihestefan@google.com>
+On Wed, Mar 5, 2025 at 5:22=E2=80=AFPM Stefano Stabellini <sstabellini@kern=
+el.org>
+wrote:
 
-Thanks,
-Nabih
-
-> ---
->  hw/arm/aspeed_ast27x0.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 92487bf229..10e1358166 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -24,7 +24,7 @@
->  #include "qemu/log.h"
-> =20
->  static const hwaddr aspeed_soc_ast2700_memmap[] =3D {
-> -    [ASPEED_DEV_SPI_BOOT]  =3D  0x400000000,
-> +    [ASPEED_DEV_SPI_BOOT]  =3D  0x100000000,
->      [ASPEED_DEV_SRAM]      =3D  0x10000000,
->      [ASPEED_DEV_SDMC]      =3D  0x12C00000,
->      [ASPEED_DEV_SCU]       =3D  0x12C02000,
+> +Edgar
 >
+> On Wed, 5 Mar 2025, Philippe Mathieu-Daud=C3=A9 wrote:
+> > On 16/6/23 01:52, Stefano Stabellini wrote:
+> > > From: Vikram Garhwal <vikram.garhwal@amd.com>
+> > >
+> > > Add a new machine xenpvh which creates a IOREQ server to
+> register/connect
+> > > with
+> > > Xen Hypervisor.
+> > >
+> > > Optional: When CONFIG_TPM is enabled, it also creates a
+> tpm-tis-device, adds
+> > > a
+> > > TPM emulator and connects to swtpm running on host machine via charde=
+v
+> > > socket
+> > > and support TPM functionalities for a guest domain.
+> > >
+> > > Extra command line for aarch64 xenpvh QEMU to connect to swtpm:
+> > >      -chardev socket,id=3Dchrtpm,path=3D/tmp/myvtpm2/swtpm-sock \
+> > >      -tpmdev emulator,id=3Dtpm0,chardev=3Dchrtpm \
+> > >      -machine tpm-base-addr=3D0x0c000000 \
+> > >
+> > > swtpm implements a TPM software emulator(TPM 1.2 & TPM 2) built on
+> libtpms
+> > > and
+> > > provides access to TPM functionality over socket, chardev and CUSE
+> > > interface.
+> > > Github repo: https://github.com/stefanberger/swtpm
+> > > Example for starting swtpm on host machine:
+> > >      mkdir /tmp/vtpm2
+> > >      swtpm socket --tpmstate dir=3D/tmp/vtpm2 \
+> > >      --ctrl type=3Dunixio,path=3D/tmp/vtpm2/swtpm-sock &
+> > >
+> > > Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
+> > > Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+> > > Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+> > > ---
+> > >   docs/system/arm/xenpvh.rst    |  34 +++++++
+> > >   docs/system/target-arm.rst    |   1 +
+> > >   hw/arm/meson.build            |   2 +
+> > >   hw/arm/xen_arm.c              | 181
+> ++++++++++++++++++++++++++++++++++
+> > >   include/hw/arm/xen_arch_hvm.h |   9 ++
+> > >   include/hw/xen/arch_hvm.h     |   2 +
+> > >   6 files changed, 229 insertions(+)
+> > >   create mode 100644 docs/system/arm/xenpvh.rst
+> > >   create mode 100644 hw/arm/xen_arm.c
+> > >   create mode 100644 include/hw/arm/xen_arch_hvm.h
+> >
+> >
+> > > diff --git a/include/hw/xen/arch_hvm.h b/include/hw/xen/arch_hvm.h
+> > > index 26674648d8..c7c515220d 100644
+> > > --- a/include/hw/xen/arch_hvm.h
+> > > +++ b/include/hw/xen/arch_hvm.h
+> > > @@ -1,3 +1,5 @@
+> > >   #if defined(TARGET_I386) || defined(TARGET_X86_64)
+> > >   #include "hw/i386/xen_arch_hvm.h"
+> > > +#elif defined(TARGET_ARM) || defined(TARGET_ARM_64)
+> >
+> > I suppose this is a typo and you meant TARGET_AARCH64 :)
+> > Luckily TARGET_AARCH64 defines TARGET_ARM.
+>
+> Hi Philippe, it looks like this is an older patch.
+>
+> Edgar, is this patch still valid?
+
+
+Hi,
+
+Yes, I think Phil is right, this works by luck and should have been
+TARGET_AARCH64.
+Phil, will you send a patch?
+
+Best regards,
+Edgar
+
+--000000000000b1c971062fa16167
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><div class=3D"gmail_quote gmail=
+_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Mar 5, 2025=
+ at 5:22=E2=80=AFPM Stefano Stabellini &lt;<a href=3D"mailto:sstabellini@ke=
+rnel.org">sstabellini@kernel.org</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">+Edgar<br>
+<br>
+On Wed, 5 Mar 2025, Philippe Mathieu-Daud=C3=A9 wrote:<br>
+&gt; On 16/6/23 01:52, Stefano Stabellini wrote:<br>
+&gt; &gt; From: Vikram Garhwal &lt;<a href=3D"mailto:vikram.garhwal@amd.com=
+" target=3D"_blank">vikram.garhwal@amd.com</a>&gt;<br>
+&gt; &gt; <br>
+&gt; &gt; Add a new machine xenpvh which creates a IOREQ server to register=
+/connect<br>
+&gt; &gt; with<br>
+&gt; &gt; Xen Hypervisor.<br>
+&gt; &gt; <br>
+&gt; &gt; Optional: When CONFIG_TPM is enabled, it also creates a tpm-tis-d=
+evice, adds<br>
+&gt; &gt; a<br>
+&gt; &gt; TPM emulator and connects to swtpm running on host machine via ch=
+ardev<br>
+&gt; &gt; socket<br>
+&gt; &gt; and support TPM functionalities for a guest domain.<br>
+&gt; &gt; <br>
+&gt; &gt; Extra command line for aarch64 xenpvh QEMU to connect to swtpm:<b=
+r>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 -chardev socket,id=3Dchrtpm,path=3D/tmp/myvtp=
+m2/swtpm-sock \<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 -tpmdev emulator,id=3Dtpm0,chardev=3Dchrtpm \=
+<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 -machine tpm-base-addr=3D0x0c000000 \<br>
+&gt; &gt; <br>
+&gt; &gt; swtpm implements a TPM software emulator(TPM 1.2 &amp; TPM 2) bui=
+lt on libtpms<br>
+&gt; &gt; and<br>
+&gt; &gt; provides access to TPM functionality over socket, chardev and CUS=
+E<br>
+&gt; &gt; interface.<br>
+&gt; &gt; Github repo: <a href=3D"https://github.com/stefanberger/swtpm" re=
+l=3D"noreferrer" target=3D"_blank">https://github.com/stefanberger/swtpm</a=
+><br>
+&gt; &gt; Example for starting swtpm on host machine:<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 mkdir /tmp/vtpm2<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 swtpm socket --tpmstate dir=3D/tmp/vtpm2 \<br=
+>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 --ctrl type=3Dunixio,path=3D/tmp/vtpm2/swtpm-=
+sock &amp;<br>
+&gt; &gt; <br>
+&gt; &gt; Signed-off-by: Vikram Garhwal &lt;<a href=3D"mailto:vikram.garhwa=
+l@amd.com" target=3D"_blank">vikram.garhwal@amd.com</a>&gt;<br>
+&gt; &gt; Signed-off-by: Stefano Stabellini &lt;<a href=3D"mailto:stefano.s=
+tabellini@amd.com" target=3D"_blank">stefano.stabellini@amd.com</a>&gt;<br>
+&gt; &gt; Reviewed-by: Stefano Stabellini &lt;<a href=3D"mailto:sstabellini=
+@kernel.org" target=3D"_blank">sstabellini@kernel.org</a>&gt;<br>
+&gt; &gt; ---<br>
+&gt; &gt;=C2=A0 =C2=A0docs/system/arm/xenpvh.rst=C2=A0 =C2=A0 |=C2=A0 34 ++=
++++++<br>
+&gt; &gt;=C2=A0 =C2=A0docs/system/target-arm.rst=C2=A0 =C2=A0 |=C2=A0 =C2=
+=A01 +<br>
+&gt; &gt;=C2=A0 =C2=A0hw/arm/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 |=C2=A0 =C2=A02 +<br>
+&gt; &gt;=C2=A0 =C2=A0hw/arm/xen_arm.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 | 181 ++++++++++++++++++++++++++++++++++<br>
+&gt; &gt;=C2=A0 =C2=A0include/hw/arm/xen_arch_hvm.h |=C2=A0 =C2=A09 ++<br>
+&gt; &gt;=C2=A0 =C2=A0include/hw/xen/arch_hvm.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 =
+=C2=A02 +<br>
+&gt; &gt;=C2=A0 =C2=A06 files changed, 229 insertions(+)<br>
+&gt; &gt;=C2=A0 =C2=A0create mode 100644 docs/system/arm/xenpvh.rst<br>
+&gt; &gt;=C2=A0 =C2=A0create mode 100644 hw/arm/xen_arm.c<br>
+&gt; &gt;=C2=A0 =C2=A0create mode 100644 include/hw/arm/xen_arch_hvm.h<br>
+&gt; <br>
+&gt; <br>
+&gt; &gt; diff --git a/include/hw/xen/arch_hvm.h b/include/hw/xen/arch_hvm.=
+h<br>
+&gt; &gt; index 26674648d8..c7c515220d 100644<br>
+&gt; &gt; --- a/include/hw/xen/arch_hvm.h<br>
+&gt; &gt; +++ b/include/hw/xen/arch_hvm.h<br>
+&gt; &gt; @@ -1,3 +1,5 @@<br>
+&gt; &gt;=C2=A0 =C2=A0#if defined(TARGET_I386) || defined(TARGET_X86_64)<br=
+>
+&gt; &gt;=C2=A0 =C2=A0#include &quot;hw/i386/xen_arch_hvm.h&quot;<br>
+&gt; &gt; +#elif defined(TARGET_ARM) || defined(TARGET_ARM_64)<br>
+&gt; <br>
+&gt; I suppose this is a typo and you meant TARGET_AARCH64 :)<br>
+&gt; Luckily TARGET_AARCH64 defines TARGET_ARM.<br>
+<br>
+Hi Philippe, it looks like this is an older patch.<br>
+<br>
+Edgar, is this patch still valid?</blockquote><div><br></div><div>Hi,</div>=
+<div><br></div><div>Yes, I think Phil is right, this works by luck and shou=
+ld have been TARGET_AARCH64.</div><div>Phil, will you send a patch?</div><d=
+iv><br></div><div>Best regards,</div><div>Edgar</div></div></div>
+
+--000000000000b1c971062fa16167--
 
