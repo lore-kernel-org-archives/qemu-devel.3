@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A03C282DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3943C282D1
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDW0-0005E3-EA; Thu, 06 Mar 2025 10:52:04 -0500
+	id 1tqDVs-00051n-NF; Thu, 06 Mar 2025 10:51:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDVe-0004ZP-3A
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:51:42 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDUX-00043p-CH
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:50:35 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDVX-0006mc-5n
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:51:36 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-39127512371so630910f8f.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:51:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDUV-0006ho-0I
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:50:32 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43bbb440520so9749635e9.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:50:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276293; x=1741881093; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741276229; x=1741881029; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8iAMOsd7yhgOQOkZMNXOMWl45bAeyqtgN6CSQKPbqzQ=;
- b=QtUAL6MIgsiVYwYRVlsUXwafygnWQ8QkxL0nBB7haHd4LD7TGrRCZjhVVfsAk5vRT6
- +G2nYIjS6yAaPJc9C84lEaw8McV/a3fi6JG+bxZ5UtEppjmTKMIacu2iBl4Rdqz2WkBK
- Ym9gZe+tzmTndyycy6jAh6f7u/RgVlUxwBfmYt5Kwu+MCTqPLh95Cu1owNvwgZTduJMr
- 17nSodLdJ6BM1YPBQxvZ7CNoLBkIxXOCWzIPtKoY6q9a+9MFeVjay6U3Kq94F59UrpPn
- 3ZW2LGo2xZ44HLTXGm35jBQkg6PzpFz9ZWjpNQfEz5K3LoDS5qV/2x+g0Z+U1o5D2099
- FiOw==
+ :reply-to; bh=1WCMtYnB/Q/FPr4quB+y9Nf8Ulz7xJ98JX+NEB2sY0o=;
+ b=XmbW7AgOzkAEZz5a1fjCsUf6f+nF4FESBHMI09NRgiFLeOB2S0c93EIMcTtXbsexPg
+ f50qJDADyIPlMNDvLBO6xA+c59axKIR5MPreS+sRZ+Gr6qjbPa4U1k1P0Wo4oG3mM+Rx
+ xC3uAfoVlcvVxIxJ5pv/fMMhUsPFTkeH5Kbh/45EjhAXZa+t5KPKOnHM2jWJLgJNpJz6
+ lL4KhBnZaPEerO8sg3IFmiYrAmEs1d/7BPyBOAuZSNHMccTRiyXG5TIwY/zxJuPaFddP
+ 3vCA/B/8eH4rpl7by7PRBy52NxFtZH7f+cyC1PRdU9Z5NKKHRTuXHeKd/1hIA8/kaLXp
+ Ss7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276293; x=1741881093;
+ d=1e100.net; s=20230601; t=1741276229; x=1741881029;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8iAMOsd7yhgOQOkZMNXOMWl45bAeyqtgN6CSQKPbqzQ=;
- b=uEfSncPq79KihvszHNuO5Di3C7ZqQMjZwJZenBrpkCgCISEruyhmloEMhkZz6/amXQ
- BFYY5RInP6wsmuxALTDWFvGlamy/QCJRoDiIljiSsqb2+LdWrRDr6odYeZVkkWmbhu6A
- yR/8ZTiwvWvFEaDczCu9FvG2Bx5wJwNXuJY/hc42NE6No7o8Ha9JUlX2Km6U2K7dviXk
- 0unjwEoHW5dZDyHZXoGBs3zNUg3uq00w0XzCh1vAyqUpssOVtURKX3RoltFM7YAL/8FG
- FFuGEc2ufwL0kek3PUlcCwF0BpYk7mLG9UO0M5qcF8QU4ihpCW7b++T2OMW10tcgJA5e
- RGgQ==
-X-Gm-Message-State: AOJu0YxJJ1DzqXOV4vZznW/ebh0r4T1oq9/X2oOtVaBA9unw6IzF93Nk
- phY8R1AhEk7R4iu64u9QOPw1QKnNF7DXeXFduVAVk3i7fxLaANute5dBh9Vg20GsaIrZySvWZej
- Xcrw=
-X-Gm-Gg: ASbGncv638T/II4gz5qJiUbNEPonCcvuEcMYl4xaNggVt+cGRzJDzMZIHjrNGyQWv83
- 2bOY0XD6OWHDUMorP5togj/QU/YkIF8nzRVemBudBJuwQtArvX7dgf3W/d4K2fiPhW9MYdjETMs
- JkVlsNRqXC5qsUQmY8j5z+zGh6JtTgGtt8QV4o/aO2ujAJp3ZfNy342vSvnLVUAcxJCT7b5hL0X
- RxEYl2zUAMw1uv4tk/+EdH37MtXBxc8lcVgNxWwYiBFNV/4FGlKIqZdu4hid/lRrrVFQ+6h+B5m
- 4840Rx/4S3rg9ROO8wKOrm7Z4w5tYGq0VrsASM2K9xdnujO4PNwjIBR5/4d6hgBHBHAR9czKizT
- s2gllY7VasMmRydtpjhI=
-X-Google-Smtp-Source: AGHT+IFfU6FQV9Lj5NaK+MWlGh1nIjCTFYb3BmaFRFUZYNuw1YriS+rY5v1o6f+Pr2eL8yRSWtAm3w==
-X-Received: by 2002:a05:6000:1844:b0:391:306f:57d1 with SMTP id
- ffacd0b85a97d-391306f5a44mr873346f8f.35.1741276293277; 
- Thu, 06 Mar 2025 07:51:33 -0800 (PST)
+ bh=1WCMtYnB/Q/FPr4quB+y9Nf8Ulz7xJ98JX+NEB2sY0o=;
+ b=UO6+jsP7dvZ5Zm282rFoM2NwCHzClCSf7fROiFxj0+oZ4qUoPmKEcOGtK/sPQyi1Ds
+ O+S6QsDs4W7SpnuDNXIqZw6/Wvj9fb4BRnuFShBp13FlRe41pKe10yZvq5k7JO45zzjR
+ kv4Q53yvP+f3yE48X4R6mMfKJfl8hI9+7aLABOApfaldidg7NnKx83St8QhTw8Btp64n
+ DaLFrHDBFJ9A/caMInedKrXLF1xNgMITdWJqNcemw6mCyaTzdpOJTWWQ43Y/kTEmAxCh
+ k5sB42riU3D9mT8to8xM20cGS0zF8RNyep8Vm28dF4gD+8JL7iT03ykQQitPZdkmCTJv
+ tPxw==
+X-Gm-Message-State: AOJu0Yx8YgJib0yp0ZhzX5Q15pOXErR3zIDhcoMrM8XEBtgSyk8ZpBQC
+ +gxpOan8DcsshTMpEbyubfmF2wtzqi3dBL5A/Ij6W6JguuK+KjecLy8dhD/Fs5Rijvx6M32rfpS
+ zlbI=
+X-Gm-Gg: ASbGncsbrT/oNjXxpjrV4hVsYEjlHBSLUl5BF2Gwl3jrAJf6vEfXcEnwx5QfIlGgpOW
+ vMlLeqww0tDJ2XzBZ+CsLzNo7u8NoMG+5Ngpms+E4Qz3lOxKTBacZxahPLv2cdx/s8qvVZWh2eu
+ il/lCSASWPqRY94gQsG/8Np/EqGm3RyrDrlPnG/5HXdOpA4M803Gs8GSlBNYL3SuZHu3ejvkxq9
+ A3cb46lAp/ew5CLhfeicn5vNCasBTCGHac56XUJQDcGWE15Jo4TJY6uufGO0Na7OLQ5GkP+6GPQ
+ 1UQJHyB2/QfNfVcqI/ZlRojdE5WZplrkoB7Xw2yvMQvl0wj6pqHS5IrxLrScnYHl8aS32PmWci8
+ Rf22KxPDzarzSFwmJ/P0=
+X-Google-Smtp-Source: AGHT+IGkDbcVHf3B9eL8q6jL42T2q+4DkUCpBOGSOBuP2C8/ANLvBmK75fbj3N4OUQ/rHXD6mT1qOw==
+X-Received: by 2002:a05:6000:18a6:b0:390:f0f3:138a with SMTP id
+ ffacd0b85a97d-3911f757382mr8911760f8f.27.1741276229176; 
+ Thu, 06 Mar 2025 07:50:29 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0195bfsm2411546f8f.48.2025.03.06.07.51.32
+ 5b1f17b1804b1-43bd4292b06sm53471455e9.14.2025.03.06.07.50.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:51:32 -0800 (PST)
+ Thu, 06 Mar 2025 07:50:28 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 52/54] target/i386: Mark WHPX APIC region as little-endian
-Date: Thu,  6 Mar 2025 16:47:34 +0100
-Message-ID: <20250306154737.70886-53-philmd@linaro.org>
+Subject: [PULL 38/54] target/arm: Set disassemble_info::endian value in
+ disas_set_info()
+Date: Thu,  6 Mar 2025 16:47:20 +0100
+Message-ID: <20250306154737.70886-39-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
 References: <20250306154737.70886-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,32 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This device is only used by the x86 targets, which are only
-built as little-endian. Therefore the DEVICE_NATIVE_ENDIAN
-definition expand to DEVICE_LITTLE_ENDIAN (besides, the
-DEVICE_BIG_ENDIAN case isn't tested). Simplify directly
-using DEVICE_LITTLE_ENDIAN.
+Have the CPUClass::disas_set_info() callback set the
+disassemble_info::endian field.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250212113938.38692-6-philmd@linaro.org>
+Message-Id: <20250210212931.62401-4-philmd@linaro.org>
 ---
- target/i386/whpx/whpx-apic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/cpu.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
-index 4245ab68a27..630a9616d71 100644
---- a/target/i386/whpx/whpx-apic.c
-+++ b/target/i386/whpx/whpx-apic.c
-@@ -231,7 +231,7 @@ static void whpx_apic_mem_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps whpx_apic_io_ops = {
-     .read = whpx_apic_mem_read,
-     .write = whpx_apic_mem_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index ac1ceec2110..948defa3f5d 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1171,7 +1171,7 @@ static void arm_disas_set_info(CPUState *cpu, disassemble_info *info)
+ {
+     ARMCPU *ac = ARM_CPU(cpu);
+     CPUARMState *env = &ac->env;
+-    bool sctlr_b;
++    bool sctlr_b = arm_sctlr_b(env);
  
- static void whpx_apic_reset(APICCommonState *s)
+     if (is_a64(env)) {
+         info->cap_arch = CS_ARCH_ARM64;
+@@ -1198,13 +1198,9 @@ static void arm_disas_set_info(CPUState *cpu, disassemble_info *info)
+         info->cap_mode = cap_mode;
+     }
+ 
+-    sctlr_b = arm_sctlr_b(env);
++    info->endian = BFD_ENDIAN_LITTLE;
+     if (bswap_code(sctlr_b)) {
+-#if TARGET_BIG_ENDIAN
+-        info->endian = BFD_ENDIAN_LITTLE;
+-#else
+-        info->endian = BFD_ENDIAN_BIG;
+-#endif
++        info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_LITTLE : BFD_ENDIAN_BIG;
+     }
+     info->flags &= ~INSN_ARM_BE32;
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.47.1
 
