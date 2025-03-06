@@ -4,90 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E7BC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8576FC28B22
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:16:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq8EX-0005Rz-Kg; Thu, 06 Mar 2025 05:13:41 -0500
+	id 1tq8H8-0006d2-8m; Thu, 06 Mar 2025 05:16:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tq8EU-0005RT-2V
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 05:13:38 -0500
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tq8EM-0006ez-UF
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 05:13:37 -0500
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-6fcf90d09c6so4316417b3.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 02:13:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741256009; x=1741860809; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5lJXKZf5zcYw5ohzoA4hRxGVuZ41Pla04bRM8TI0aM4=;
- b=MJYZkVWbD5XB4NKLIA9PtjUjIDXnvZq5bWEGgLXrbH6iinDZ7siA6KxfubCkbW9lkT
- PPH39bHvy7U69bjaHPW6ocdugq1TeuwK4txNU/jSLQGBdyEe1rXW12snocC3WtEzZkbZ
- tjVCzOv15hpxRSc3qnpfYRoN7PGJPSMrvqlK4RRe4SWKXjexZqXMy+hf+NOstS+rBfPV
- nybDjJvuUBUnt2TxeECtlC6P2xlj9GJaE+pDGjMSqnVQJ6GWNblyVuvMeo5get79AHeE
- W38WPZJkLfGputWFXue4ldMSBHdmPlMm3HAm7MLZ3vITLV6sIqv+tBqbjZE2FLKLtl6U
- d+PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741256009; x=1741860809;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5lJXKZf5zcYw5ohzoA4hRxGVuZ41Pla04bRM8TI0aM4=;
- b=VBLK0KZvNzNZ7xzsO0avbqDOZQhPUNWDqn/j+fa6uemqLFgxm2u8p0y6fom3mhpTd8
- q2oYefUEeXNy2qKScLDzJAxi/HyyZfjiNWDgEhMbUUQGjZOtEP6kX9KXJHEHA2eYNyQn
- I+olHKAwfw/Z5BI0b0N4LPRFpxPEwDiRgPrpvCi13eLM4cJopt2Ila5KV8xZ+iiDHY8g
- V/A72oAGOaVdVq9geiKm8S8qwyxr7ofhPa450BpexGPy+RtwARb162+l12uyy3mGwhQR
- Hdx/GjdpVLmuNikheRRcvPS/MO+sjE2CIz6Bg96pACAB/+lMLJLl8yONHCoUxMnDZYJe
- VnBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXkdV0drgY+U8Ahm9Pqlh2m1T/BFpaXxhf6JhNXWaT4QUTGB+dGuBQtAS06ughHFSUqNq3CKrAjQyrq@nongnu.org
-X-Gm-Message-State: AOJu0Yya6xlgXq7/I963xB70OvcEr3/sHCKyycpLrAUfVzZXRkFlyMq4
- nyjhkiRa0avtLiPwcMOcoEQeh6GOlCrQXnxkM/OkzpR3+iwa87dqubCrkX4+XVsKY/eQUWYwFI9
- XXX0HT6x1bBHn6tfNFAo/d/hqx6bYEKEg/MzlfQ==
-X-Gm-Gg: ASbGncvoTocyEHmVpOYTvaO7gO6yNxC1FE4W8kyeAW1bdHGsubb/2qpu3QyksHs2TIj
- Any/vQttJZifjtf6Eg/+zP+794OfmD+BDDdtXbopg5B622SYzhjoBaxy6QG5BgBD5V+Jg7zHf+Y
- XrIKcr9IjtwuSv3Pvbnpn1v5JR5Gc=
-X-Google-Smtp-Source: AGHT+IGAkHtVrhbM0rUIE+VF0q/zYEaQvPttC/adGGYQuG8e/lqVdReWfCOxNKL4LxUj14JV08rUtstqnYBbEZ++ko0=
-X-Received: by 2002:a05:690c:64c5:b0:6fa:fd85:a2b6 with SMTP id
- 00721157ae682-6feaeeda024mr37834847b3.13.1741256008805; Thu, 06 Mar 2025
- 02:13:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tq8H4-0006b1-E1
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 05:16:18 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tq8H1-00073S-PU
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 05:16:18 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tq8Gl-00000000P5h-18fT; Thu, 06 Mar 2025 11:15:59 +0100
+Message-ID: <97b87f22-b867-4282-ba13-efba16458859@maciej.szmigiero.name>
+Date: Thu, 6 Mar 2025 11:15:53 +0100
 MIME-Version: 1.0
-References: <20250305161248.54901-1-philmd@linaro.org>
- <20250305161248.54901-3-philmd@linaro.org>
- <Z8lpB6XdNPT8zyTa@redhat.com>
-In-Reply-To: <Z8lpB6XdNPT8zyTa@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 6 Mar 2025 10:13:16 +0000
-X-Gm-Features: AQ5f1JrjmBIvYLT_jqvL_Q04vutWHCYlIcEFcz_IjkUx64YHVNTExNWlQGns4ZU
-Message-ID: <CAFEAcA9FuNJZwQ2NyJdBicoMMF=3Ua+qokrHu+-_uwnF9_tDNQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/4] hw/arm/raspi: Replace TARGET_AARCH64 by
- legacy_binary_is_64bit()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 30/36] vfio/migration: Multifd device state transfer
+ support - send side
+To: Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
+ <4d727e2e0435e0022d50004e474077632830e08d.1741124640.git.maciej.szmigiero@oracle.com>
+ <629dff3c-865d-47d9-a01a-d212dfed1efb@nvidia.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <629dff3c-865d-47d9-a01a-d212dfed1efb@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,69 +110,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Mar 2025 at 09:21, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
->
-> On Wed, Mar 05, 2025 at 05:12:46PM +0100, Philippe Mathieu-Daud=C3=A9 wro=
-te:
-> > For legacy ARM binaries, legacy_binary_is_64bit() is
-> > equivalent of the compile time TARGET_AARCH64 definition.
-> >
-> > Use it as TypeInfo::registerable() callback to dynamically
-> > add Aarch64 specific types in qemu-system-aarch64 binary,
-> > removing the need of TARGET_AARCH64 #ifdef'ry.
-> >
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > ---
-> >  hw/arm/bcm2836.c | 6 ++----
-> >  hw/arm/raspi.c   | 7 +++----
-> >  2 files changed, 5 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
-> > index 95e16806fa1..88a32e5fc20 100644
-> > --- a/hw/arm/bcm2836.c
-> > +++ b/hw/arm/bcm2836.c
->
->
-> > @@ -219,12 +218,11 @@ static const TypeInfo bcm283x_types[] =3D {
-> >          .name           =3D TYPE_BCM2836,
-> >          .parent         =3D TYPE_BCM283X,
-> >          .class_init     =3D bcm2836_class_init,
-> > -#ifdef TARGET_AARCH64
-> >      }, {
-> >          .name           =3D TYPE_BCM2837,
-> >          .parent         =3D TYPE_BCM283X,
-> > +        .registerable   =3D legacy_binary_is_64bit,
-> >          .class_init     =3D bcm2837_class_init,
-> > -#endif
-> >      }, {
-> >          .name           =3D TYPE_BCM283X,
-> >          .parent         =3D TYPE_BCM283X_BASE,
->
-> So historically we have a subset of machines that are only exposed in
-> the qemu-system-aarch64 binary, and not qemu-system-arm.
->
-> You're attempting to build a single binary to cover both 32 & 64 bit
-> arm, so need to be able to filter what machines are available to
-> create when the symlink indicates invokation of the 32-bit binary.
+On 6.03.2025 07:47, Avihai Horon wrote:
+> 
+> On 05/03/2025 0:03, Maciej S. Szmigiero wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>
+>> Implement the multifd device state transfer via additional per-device
+>> thread inside save_live_complete_precopy_thread handler.
+>>
+>> Switch between doing the data transfer in the new handler and doing it
+>> in the old save_state handler depending if VFIO multifd transfer is enabled
+>> or not.
+>>
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   hw/vfio/migration-multifd.c   | 142 ++++++++++++++++++++++++++++++++++
+>>   hw/vfio/migration-multifd.h   |   6 ++
+>>   hw/vfio/migration.c           |  22 ++++--
+>>   hw/vfio/trace-events          |   2 +
+>>   include/hw/vfio/vfio-common.h |   6 ++
+>>   5 files changed, 172 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+>> index 1d81233c755f..bfb9a72fa450 100644
+>> --- a/hw/vfio/migration-multifd.c
+>> +++ b/hw/vfio/migration-multifd.c
+>> @@ -496,6 +496,148 @@ bool vfio_multifd_setup(VFIODevice *vbasedev, bool alloc_multifd, Error **errp)
+>>       return true;
+>>   }
+>>
+>> +void vfio_multifd_emit_dummy_eos(VFIODevice *vbasedev, QEMUFile *f)
+>> +{
+>> +    assert(vfio_multifd_transfer_enabled(vbasedev));
+>> +
+>> +    /*
+>> +     * Emit dummy NOP data on the main migration channel since the actual
+>> +     * device state transfer is done via multifd channels.
+>> +     */
+>> +    qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+>> +}
+>> +
+>> +static bool
+>> +vfio_save_complete_precopy_thread_config_state(VFIODevice *vbasedev,
+>> +                                               char *idstr,
+>> +                                               uint32_t instance_id,
+>> +                                               uint32_t idx,
+>> +                                               Error **errp)
+>> +{
+>> +    g_autoptr(QIOChannelBuffer) bioc = NULL;
+>> +    g_autoptr(QEMUFile) f = NULL;
+>> +    int ret;
+>> +    g_autofree VFIODeviceStatePacket *packet = NULL;
+>> +    size_t packet_len;
+>> +
+>> +    bioc = qio_channel_buffer_new(0);
+>> +    qio_channel_set_name(QIO_CHANNEL(bioc), "vfio-device-config-save");
+>> +
+>> +    f = qemu_file_new_output(QIO_CHANNEL(bioc));
+>> +
+>> +    if (vfio_save_device_config_state(f, vbasedev, errp)) {
+>> +        return false;
+>> +    }
+>> +
+>> +    ret = qemu_fflush(f);
+>> +    if (ret) {
+>> +        error_setg(errp, "%s: save config state flush failed: %d",
+>> +                   vbasedev->name, ret);
+>> +        return false;
+>> +    }
+>> +
+>> +    packet_len = sizeof(*packet) + bioc->usage;
+>> +    packet = g_malloc0(packet_len);
+>> +    packet->version = VFIO_DEVICE_STATE_PACKET_VER_CURRENT;
+>> +    packet->idx = idx;
+>> +    packet->flags = VFIO_DEVICE_STATE_CONFIG_STATE;
+> 
+> The packet is sent on the wire.
+> Shouldn't we use cpu_to_be32() for version, idx and flags? Also below in vfio_multifd_save_complete_precopy_thread().
+> And then use be32_to_cpu() in patch #26 when receiving the packet?
 
-What machines are there that we don't want to provide, though?
-We don't provide for instance raspi4b in today's qemu-system-arm,
-but that's because it wouldn't work there: qemu-system-arm
-doesn't have the 64-bit CPUs. But if we have a single binary
-that has both 32 and 64 bit arm in it, then the 64-bit CPUs
-will be in that combined binary. Do we actually need to explicitly
-forbid the user from saying 'qemu-system-arm -M raspi4b' when
-qemu-system-arm is a symlink and the command would work fine
-if it wasn't forbidden?
+Is it even possible to migrate to a host with different endianess here?
 
-I had assumed that the motivation here was that we'd like to
-be able to build this C file only once. Currently we have to
-build it once for the aarch64 target and once for the arm target;
-to avoid that we would need to determine "does the binary I'm
-in have the AArch64 CPU types this type depends on" at runtime,
-not at compile time (which is what the ifdef is doing, effectively).
+Also AFAIK big endian hosts barely exist today, is any of them even VFIO-capable?
+  
+> Thanks.
 
-thanks
--- PMM
+Thanks,
+Maciej
+
 
