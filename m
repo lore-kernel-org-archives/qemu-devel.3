@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CBE8C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CABFC28B24
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDSJ-0007cm-CN; Thu, 06 Mar 2025 10:48:15 -0500
+	id 1tqDVp-0004yC-DO; Thu, 06 Mar 2025 10:51:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDSH-0007ap-22
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:48:13 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDUS-0003l8-RM
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:50:29 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDSF-0006FL-JS
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:48:12 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-390e88caa4dso500673f8f.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:48:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDUR-0006hM-48
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:50:28 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43bd45e4d91so5733365e9.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:50:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276090; x=1741880890; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741276225; x=1741881025; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nZgvu424mm38yBUBld8avtZKLtMG0rtQm4gPKkeUkoo=;
- b=GyyIQ6zhFxC8AkFnNYeBbskaCMSdrQZ9shnuI8Zwd09rsvloGX/6+Mu30y/tHJnOwl
- eRb6dwdmW5qhsykX76bLsy+szlzGdljDPgnSzDtFn5QKEAvvM3Hp56KcxLoGSkNY4Hnd
- tRy3egHeTNyWYAZcmkPAR15HQ5yQWeK436F6hwNf3/HLalXCOyfp73IP8tkRQ1p7dN3Z
- 3pzS3tcYAs+9FEfZXXr+l+4ssyT0puF9inzh7LmEfF5z+kxCBIG64Yucu7AeTZQSmpYS
- N6sv7mbl8XM4tp2JrhVwQzuY/jJwqH/RDPVq+sqYd0bRsLrjdhtis+ReEdFphaCJakFU
- 3k2A==
+ :reply-to; bh=BUX6zYPG6f15eLnBlXMyTHI0pnIpQboe8CXPknmBs/s=;
+ b=kEjyKDT0Gveyo07K/bZRAQT/bkUGGaBcr4QQf/eZUwKXxSc18Oa7mym4NEYmaXO4gC
+ VgrsXM3ZN9Uknao0un39SL/KsAxppIi2EeH3Iafx+txyg0ohcxqxnmTcLCUr35gLwyWe
+ ZQcHLXyHQIod3BzNfhg8eZT9Gj9bN26D9/Fa2VeO/Pmuvmn0uYl4j9uxNkhkHtzck5N8
+ EuQfjVzf/t4vvdWFExpD8+Ew/9irbH/cJrMdFCS8Cjw4Hd6WWL74D7wiOLDuftranNMe
+ 48W858yeKjV00TgrDq/sdA+UjUAbqZeO5UvQKHfKuz+wMz6OD4ckkfz0adaDPMVeE2Us
+ uG5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276090; x=1741880890;
+ d=1e100.net; s=20230601; t=1741276225; x=1741881025;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nZgvu424mm38yBUBld8avtZKLtMG0rtQm4gPKkeUkoo=;
- b=OmJq8IVjgSs24bpC+ggfI62qxt54Q/5V83ytIaRl4FYgi/HJNjQ29bdbvwe5CnM8Xm
- IBE2St5eElBE0PGHLw1BMtLB8g8CPuyjoZlVezUSxJ4/hlywScA5NUETUeXQfHiBaAwk
- hrdOq7V25NUnBc1wY7bFwNbMoq1f9E2Q2PcLAATlLqTGB7urUAMa/MjDRWSaUg2ZTo5/
- W3NJB7s60lJEJvjfy1KUYuBop1qrwarZ8Ue+69+HeqtuywtZ6IEIOKlEU04/0DjrDSGz
- rs/Orcd3oCe9u70SztfHFQC5VVCfAokr0gX6pLbY459MxpTVAV/VxjY2fyTc9ookR66x
- fCvw==
-X-Gm-Message-State: AOJu0Yw012Ft0vKak0DRFbT6z+1/qXy98wTMM1tM2dFc16uv77gquuWw
- 83DKM5u2iCPFPshZMY8UVVFy0quJzTyhPWYPMLQsbth2RwpEjeABc8254+mXUESm+QqEPce7rwa
- jHIQ=
-X-Gm-Gg: ASbGncs+SdHZ7j4BesW7+qrKJpAo5yz/efRT/9WMH+3oUlx926NsrIgoeeh3Jyjs8Zc
- s1r75x6SeCU7sXPmGlaHG1/hK9m4FvSBYiidaLtZYI9CCcJl47X6qNxATP7OooAC9EhiaDOHZkZ
- z3biuXm/89zVg///9dp2Owfn5ElAo+/ApnFbFDzTgbNODU2z+KPMgEMAFMQhZkk1WneYA9yc9iV
- t7tXTI02Xpwt1LB6HUirLxFt1pBOlGPdxaa6ZAo2c8a3linnLh6oeJI50SMM02cX3brwbNI+mzN
- sdGK35lWII5JwJbpoONHeoTeukLXQTz3556jr6VE+yuL1pG1ogUAQMad4qEPOqOO2agO1H7b3Xt
- i82/6GxqIe8VHC6a1pxY=
-X-Google-Smtp-Source: AGHT+IGCFrD1Hyn++CnlZauzLkf8AL9dXp3VP5oMErW2YvOsaOJ8g5pBGngFmX5XxH++nYtMxqnCaQ==
-X-Received: by 2002:a5d:6489:0:b0:38d:d701:419c with SMTP id
- ffacd0b85a97d-3911f7b8adbmr6397848f8f.41.1741276089942; 
- Thu, 06 Mar 2025 07:48:09 -0800 (PST)
+ bh=BUX6zYPG6f15eLnBlXMyTHI0pnIpQboe8CXPknmBs/s=;
+ b=J1XIRYRfMs5jUsZDpUGYs27doYYdbrARJOHnMNT3m7vvwNVEdQkyNyzLyssNko9ezk
+ /AeLC/qDQ41inrTu+yr23du6xd2WpCRM1ClXmZZPXXCfXAr/YL0oQw/vIpDvdz8LmRbw
+ Hqt8aQOtmeIZYVtvh5R/V6HNUGoDXeKOvLqnzA1YEZZ3zsqIYmCUxBPXIvGcvwusfi99
+ joHc0rwlVWLF0TfS32aQ0cLxviQ0jMVSb9Zwzb4muBO+6eae5asvSw8247EFIPm2lsJz
+ SZhwBy21DNUUwEuuTfING4ymtMs/JgFYA4wXBHPrLcvQxibg8AEKu3MLqQLXcVRcYTSi
+ HYKw==
+X-Gm-Message-State: AOJu0YzTnSikMWGGjTOQu5flftyZzPrbGroqKmXB8rUtF4MgwXzqFztO
+ HH2nl0s+n4DKKR2DlTWH+obtJ1Uk7Z2v5Xrw5J75x1U5MhgUZfrhMBFTlK+yWYslgbNB7AiFhd5
+ 11vI=
+X-Gm-Gg: ASbGncsX+o5kGBDI44vXLnAkEo2e102RIaTbXkx9IVmdfQQ7ZmxfbcEtbWgE5VVzzDi
+ 6oz59+ifNtEFvkBM1lyHnWCQwNrsWfRYuVi7gApM8tUEe0G1wC8Tc3Grv3tF6kWM/ldpFhHPy8J
+ y9BAdxQ4kLmVJJI0rXmDHfCGfVAW3u84Gwi+pRA6etaeGxb3h9Q94hvtPIxwKGQ17jRSZo+TF49
+ iQYP1dN0FW8LAAJkKWPF7QWADm/sSWHzbX55oSO5IJhe+hR3bE+PMbZpjZDMZcntfO5vH8MlHoh
+ qHXAu2WXv2hM+OdHwsC8P2IMW4RSUx/smepc58pKY7FNdLqdNPmduT+vh+Yv5yjB+aDoP5QspCX
+ n+x1mXwWKZvg2Y2QqnO4=
+X-Google-Smtp-Source: AGHT+IEvkLEVWVnVJ0+3wlCN6PfwpqRiojj1/29nXQzQ8XxLkgdpXjS9Od/6r4SMeYYz9exmhAUSeA==
+X-Received: by 2002:a05:600c:4997:b0:43b:c824:97fa with SMTP id
+ 5b1f17b1804b1-43bdb3e12f3mr31592375e9.14.1741276224782; 
+ Thu, 06 Mar 2025 07:50:24 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfba66esm2442919f8f.18.2025.03.06.07.48.09
+ 5b1f17b1804b1-43bd435c88esm52884005e9.36.2025.03.06.07.50.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:48:09 -0800 (PST)
+ Thu, 06 Mar 2025 07:50:24 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/54] accel/tcg: Remove pointless initialization of
- cflags_next_tb
-Date: Thu,  6 Mar 2025 16:46:49 +0100
-Message-ID: <20250306154737.70886-8-philmd@linaro.org>
+Subject: [PULL 37/54] target: Set disassemble_info::endian value for
+ big-endian targets
+Date: Thu,  6 Mar 2025 16:47:19 +0100
+Message-ID: <20250306154737.70886-38-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
 References: <20250306154737.70886-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,29 +99,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cflags_next_tb is always re-initialized in the CPU Reset()
-handler in cpu_common_reset_hold(), no need to initialize
-it in cpu_common_initfn().
+Have the CPUClass::disas_set_info() callback set the
+disassemble_info::endian field for big-endian targets.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240427155714.53669-13-philmd@linaro.org>
+Message-Id: <20250210212931.62401-3-philmd@linaro.org>
 ---
- hw/core/cpu-common.c | 1 -
- 1 file changed, 1 deletion(-)
+ target/hppa/cpu.c     | 1 +
+ target/m68k/cpu.c     | 1 +
+ target/openrisc/cpu.c | 1 +
+ target/s390x/cpu.c    | 1 +
+ target/sparc/cpu.c    | 1 +
+ 5 files changed, 5 insertions(+)
 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 71425cb7422..d5cd227fe6d 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -249,7 +249,6 @@ static void cpu_common_initfn(Object *obj)
-     /* user-mode doesn't have configurable SMP topology */
-     /* the default value is changed by qemu_init_vcpu() for system-mode */
-     cpu->nr_threads = 1;
--    cpu->cflags_next_tb = -1;
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 4bb5cff624e..d15f8c9c217 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -150,6 +150,7 @@ static int hppa_cpu_mmu_index(CPUState *cs, bool ifetch)
+ static void hppa_cpu_disas_set_info(CPUState *cs, disassemble_info *info)
+ {
+     info->mach = bfd_mach_hppa20;
++    info->endian = BFD_ENDIAN_BIG;
+     info->print_insn = print_insn_hppa;
+ }
  
-     /* allocate storage for thread info, initialise condition variables */
-     cpu->thread = g_new0(QemuThread, 1);
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index eedda07c2ab..df8b9c53fca 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -157,6 +157,7 @@ static void m68k_cpu_reset_hold(Object *obj, ResetType type)
+ static void m68k_cpu_disas_set_info(CPUState *s, disassemble_info *info)
+ {
+     info->print_insn = print_insn_m68k;
++    info->endian = BFD_ENDIAN_BIG;
+     info->mach = 0;
+ }
+ 
+diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
+index 785b065b513..e8c357ae836 100644
+--- a/target/openrisc/cpu.c
++++ b/target/openrisc/cpu.c
+@@ -83,6 +83,7 @@ static int openrisc_cpu_mmu_index(CPUState *cs, bool ifetch)
+ 
+ static void openrisc_disas_set_info(CPUState *cpu, disassemble_info *info)
+ {
++    info->endian = BFD_ENDIAN_BIG;
+     info->print_insn = print_insn_or1k;
+ }
+ 
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index 3bea014f9ee..972d265478d 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -243,6 +243,7 @@ static void s390_cpu_disas_set_info(CPUState *cpu, disassemble_info *info)
+ {
+     info->mach = bfd_mach_s390_64;
+     info->cap_arch = CS_ARCH_SYSZ;
++    info->endian = BFD_ENDIAN_BIG;
+     info->cap_insn_unit = 2;
+     info->cap_insn_split = 6;
+ }
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index e3b46137178..9fd222e4c82 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -106,6 +106,7 @@ static bool sparc_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ static void cpu_sparc_disas_set_info(CPUState *cpu, disassemble_info *info)
+ {
+     info->print_insn = print_insn_sparc;
++    info->endian = BFD_ENDIAN_BIG;
+ #ifdef TARGET_SPARC64
+     info->mach = bfd_mach_sparc_v9b;
+ #endif
 -- 
 2.47.1
 
