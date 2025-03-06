@@ -4,132 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 229DFC282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 13:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C19C0C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 13:11:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqApz-0005OK-Oj; Thu, 06 Mar 2025 08:00:32 -0500
+	id 1tqAzP-0000vI-KZ; Thu, 06 Mar 2025 08:10:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tqApg-0005Mb-Lo
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:00:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1tqAzM-0000sU-Dj
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:10:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tqApe-0000Xv-SA
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:00:12 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1tqAzK-0001tr-B8
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:10:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741266009;
+ s=mimecast20190719; t=1741266608;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+t5m3blux13m5/AN+9QhSes99LHJkGcmyTKz9/ruqKk=;
- b=SLzrnKzp47jyLvLaY6dptTqEiDB3MQQh20lAha7w90qKNzYxwZEjGDicUDezYd8VMzqFVY
- +FjjVp9AeuTG5eWEGrinfvyipT7RFO7KvSMi9UCDdViFFccq6ed0H/2MQVSUyJOe7sMJ2J
- a71zrKcjDhZ2JoEjpz2GfIno0isX0YU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=jrchpUaZXU1w5UNogp7/g8pYM+L+EWIl83Kl/TzPxq4=;
+ b=KUFGGx0lWBAdVru4s+piPVRK/jCefG8/J/05d2Yxz61XTrVNwCvRuzbbgnTxYejsZId3gC
+ ifQuMTLth9ZSR7NEGPwnDvSFh77/F8ojPEfvNUW0qgjznRyAMRQBjvmKmsDhr4s8ZWkgOE
+ KUK59M+QIWuOk/j/CuU1qmZKMkWKL2s=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-175-Zpq4NBraPGiyOY1AZuVzJg-1; Thu, 06 Mar 2025 08:00:07 -0500
-X-MC-Unique: Zpq4NBraPGiyOY1AZuVzJg-1
-X-Mimecast-MFC-AGG-ID: Zpq4NBraPGiyOY1AZuVzJg_1741266006
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3912a0439afso247089f8f.3
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 05:00:07 -0800 (PST)
+ us-mta-582-NJQm3piIO6Gf3QvahfBARw-1; Thu, 06 Mar 2025 08:09:51 -0500
+X-MC-Unique: NJQm3piIO6Gf3QvahfBARw-1
+X-Mimecast-MFC-AGG-ID: NJQm3piIO6Gf3QvahfBARw_1741266591
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43947979ce8so2680515e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 05:09:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741266006; x=1741870806;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+t5m3blux13m5/AN+9QhSes99LHJkGcmyTKz9/ruqKk=;
- b=RbhtnOdfBbTeRtLXhZ7iF7uc6Lm4+NPUw4K9Fhe4usJZ8f3AVH8TKfU6vYgQsw1QrD
- SP6Pb3ePytufm4UU/4ZNva0f2/wAJbRw4cnv8Jo4ydZ/r/uvtTbwWRuZX94NRt290ZHq
- 51l/U5zxN3uJpB571GHVb0GrG4HfVkfbc4H0+zqwE6VdZJ6g2Dc52xk7arfSnEQGoYG4
- npVQ9KQ0faPAQS37mNr2Q6HRJz70l+7PBd9kA8Z40A+pEXB4imhVsXvWfULp/oa41foM
- Ry11Pc03/lXQ+mvwY5WV/FgibRlvIkRQzvvrKqTtilAa54/3I9kOqxHF2bVxGNi0Uh8H
- +3zA==
-X-Gm-Message-State: AOJu0YwL6F2bnqyzyzU4rsbbV7dn0LPg+LJHzsxmRS7QvK8TbZiAiSoy
- zCbpaagtQx/dfVp5C9fg46UaYb368Vg6NYT9ARGzloUk1NVN14Akv87+EB4CKbNZBuSwFP0mHIg
- ZxBPofDSTJo6c1vajCKzXm8y6vtxR4teGzG88KZ5flIIgXWy7XsEW
-X-Gm-Gg: ASbGncvB0SDGHLR4I81wR27PYTXuctN+3GuMlQurI3mnyb4cJePrB1jRpaQ6Lo0Qmky
- tCYcspi6EvU4VqTF/xK9S8aHsVc0FokjeejuHKBcPMCp8W3xlbyU4e354jSdIow/hdRZGTm24eG
- jRrIaZJELZpsSGdIVDNFKXQwTj7pRIQiqONNWBPERZK1q6fVPT/01pCO2enB7soN/DezolmzIcb
- 4a4DYllWU0fK740uJG0GF/vmegRcZH5tEd21yD03q1hWsmj0f5/EAIY+OJXVBI2vcKnqKORPaDZ
- o1r/yzrXY3Lc5bUzUak=
-X-Received: by 2002:a05:6000:1f8c:b0:391:ab2:9e71 with SMTP id
- ffacd0b85a97d-3911f74bfcamr5971384f8f.20.1741266006287; 
- Thu, 06 Mar 2025 05:00:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHZmZs/cItBjdJSQHOBKnrqZTMnOiUtPxPe5+eYq9OU66g6ygaaZen3HCIUq6brA9oFwlbMyQ==
-X-Received: by 2002:a05:6000:1f8c:b0:391:ab2:9e71 with SMTP id
- ffacd0b85a97d-3911f74bfcamr5971344f8f.20.1741266005847; 
- Thu, 06 Mar 2025 05:00:05 -0800 (PST)
-Received: from [192.168.10.27] ([151.95.119.44])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-43bd42c6203sm49463545e9.24.2025.03.06.05.00.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 05:00:05 -0800 (PST)
-Message-ID: <ab9b6720-cb48-4b8f-9059-2856c78b5577@redhat.com>
-Date: Thu, 6 Mar 2025 14:00:04 +0100
+ d=1e100.net; s=20230601; t=1741266590; x=1741871390;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jrchpUaZXU1w5UNogp7/g8pYM+L+EWIl83Kl/TzPxq4=;
+ b=IADVcTLjqQnBHfQPLghq0mgsvzoM2nZSBj79ZzUuP+bveEKkRE3oC1usfVVAN1CgST
+ e5DecBnFStdp9yC7LZ0i3BP5qS4EkIcBRIvMuv84l653bgjQrIjcMDSmzDHRe/ONe+XB
+ +tyvMdDt6cjbNoPEtVkg0iSiAp94aCp2TiQmptd0Us0Oybgrg1MjlS+nlQJF+c1AI1L2
+ QEYzIs4+dNaQPw26IYGbMiQprkcitZyNyveM8ua+bH210TiM6lN+1ubVBnVmHhxwGDHX
+ udk69BzS9g0UZskmhgkr14RzurYXdqN2Vj7X2U75bklnMxLLEo/P2/jrRlP7n/u7xavl
+ b9Vg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUINz4m33Pmbqs9TdwT8vAryOH1acLhbmOwEGj+Sivd8FMkNw5TXxDG4+Db1t0oxu1BjyqWCwx4sSr+@nongnu.org
+X-Gm-Message-State: AOJu0Ywi1ozqf/fVP66IHJt+dcaKKwjN/5+52vT47b/hcUl5zpvHIp+z
+ 4xIPEU6Ld+yeh4Em2Wli3O+OuefrxvmthNsg423JDFotT3CTxqJpzOBmmlWiiT+h6p6d7jIZE2T
+ FUuyOgwK2HqIzJ1I6jl5X9go/XuPDOU/FDg5EVEiiYbC2JdunYFz1
+X-Gm-Gg: ASbGncvkvuKQTdhY2HkBZeVmYEk+nVe3/gBQBNp9ayiyv8MtvgYHEvxri8VI7jUW4iy
+ XAiSPWpYTKsn25mL1sewQiRCcQiz34DcmiU7lAs8gIjARdLRIUit6ZV+qx2ZKOEk9gIEJf3xeHr
+ GuC4LgDnJGlph2k9IXNwKKQb7MvfiYaEhrSZ8f8sDNc2iWndIeNwpy0b4X2qmGEqgtduxJ7RU88
+ GWj1LRM4nD614/vGXEfzbuK66mszDg3CPOzJ3p8GYCHIRxB5BezrwAl91pIQ/W8Mv3gxP5D6DoD
+ 5+X38wY42pfMDquSIv+oD7wwklNIlqI5WLdloxRhI8zjy23DSo61pUt67/RtHA+g
+X-Received: by 2002:a05:600c:3b82:b0:439:9a5b:87d4 with SMTP id
+ 5b1f17b1804b1-43bd296befcmr49585455e9.13.1741266590485; 
+ Thu, 06 Mar 2025 05:09:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFjlI7PEnXJF7oo6EDSGlJOpLi0vKwYRB+lTbrqDOnCLyDPhAYmOQhHvy6zL5qDBhJqG6tXlw==
+X-Received: by 2002:a05:600c:3b82:b0:439:9a5b:87d4 with SMTP id
+ 5b1f17b1804b1-43bd296befcmr49585035e9.13.1741266589805; 
+ Thu, 06 Mar 2025 05:09:49 -0800 (PST)
+Received: from sgarzare-redhat (host-79-46-200-29.retail.telecomitalia.it.
+ [79.46.200.29]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bdd93ca9fsm19266405e9.28.2025.03.06.05.09.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Mar 2025 05:09:48 -0800 (PST)
+Date: Thu, 6 Mar 2025 14:09:44 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ "Daniel P . Berrange" <berrange@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ Joerg Roedel <jroedel@suse.com>
+Subject: Re: [PATCH v7 00/16] Introduce support for IGVM files
+Message-ID: <6egfshlf7x32gnz36xoi7if2mmjx6yaiuccv35byzuxlmfr3gy@7wu343fzyvr3>
+References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+ <CAGxU2F4pq3Y7QnQBCEPQ35kQ2hxrwU5nVA9FmR=J6id+EJXAtA@mail.gmail.com>
+ <3bc8c923df287519b552a1b67c2f01b557adbf02.camel@randomman.co.uk>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] target/riscv: env->misa_mxl is a constant
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-References: <20250218165757.554178-1-pbonzini@redhat.com>
- <20250218165757.554178-3-pbonzini@redhat.com>
- <CAKmqyKMdUONoXD69m3RH1PeoLLtL8qT-eXweVh9WHEZM5Feufg@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <CAKmqyKMdUONoXD69m3RH1PeoLLtL8qT-eXweVh9WHEZM5Feufg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <3bc8c923df287519b552a1b67c2f01b557adbf02.camel@randomman.co.uk>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -147,72 +120,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/25 02:16, Alistair Francis wrote:
-> On Wed, Feb 19, 2025 at 3:01 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
->>
->> There is nothing that overwrites env->misa_mxl, so it is a constant.  Do
-> 
-> The idea is that misa_mxl can change, although that's not supported now.
+Hi Roy,
 
-At run-time, or only at configuration time (before realize)?
+On Thu, Mar 06, 2025 at 11:48:29AM +0000, Roy Hopkins wrote:
+>On Wed, 2025-03-05 at 16:47 +0100, Stefano Garzarella wrote:
 
->> not let a corrupted migration stream change the value; changing misa_mxl
-> 
-> Does this actually happen? If the migration data is corrupted won't we
-> have all sorts of strange issues?
+[...]
 
-Generally migration data (just like disk image formats) is treated as 
-security-sensitive, overriding any other considerations.  So you have to 
-assume that the corruption is intentional, and sneaky enough to cause 
-trouble.
+>
+>Thanks for testing this. The problem seems to be down to the fact that I
+>had to introduce an initial parsing of the IGVM file during initialization
+>to extract sev_features. I was parsing all directives in the file but it
+>appears this has some unwanted side effects.
+>
+>Please could you try the patch below to see if it fixes the issue? If it
+>does I'll incorporate it into the patch series and resubmit.
 
-Paolo
+Great, it worked, so feel free to add:
 
-> Alistair
-> 
->> would have a snowball effect on, for example, the valid VM modes.
->>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->>   target/riscv/machine.c | 13 +++++++++++++
->>   1 file changed, 13 insertions(+)
->>
->> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
->> index d8445244ab2..c3d8e7c4005 100644
->> --- a/target/riscv/machine.c
->> +++ b/target/riscv/machine.c
->> @@ -375,6 +375,18 @@ static const VMStateDescription vmstate_ssp = {
->>       }
->>   };
->>
->> +static bool riscv_validate_misa_mxl(void *opaque, int version_id)
->> +{
->> +    RISCVCPU *cpu = RISCV_CPU(opaque);
->> +    CPURISCVState *env = &cpu->env;
->> +    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cpu);
->> +    uint32_t misa_mxl_saved = env->misa_mxl;
->> +
->> +    /* Preserve misa_mxl even if the migration stream corrupted it  */
->> +    env->misa_mxl = mcc->misa_mxl_max;
->> +    return misa_mxl_saved == mcc->misa_mxl_max;
->> +}
->> +
->>   const VMStateDescription vmstate_riscv_cpu = {
->>       .name = "cpu",
->>       .version_id = 10,
->> @@ -394,6 +406,7 @@ const VMStateDescription vmstate_riscv_cpu = {
->>           VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
->>           VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
->>           VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
->> +        VMSTATE_VALIDATE("MXL must match", riscv_validate_misa_mxl),
->>           VMSTATE_UINT32(env.misa_ext, RISCVCPU),
->>           VMSTATE_UNUSED(4),
->>           VMSTATE_UINT32(env.misa_ext_mask, RISCVCPU),
->> --
->> 2.48.1
->>
->>
-> 
-> 
+Tested-by: Stefano Garzarella <sgarzare@redhat.com>
+
+About the patch, I have some comments below:
+
+>
+>From 3590460ec3945b02a679ad79735681a642596d60 Mon Sep 17 00:00:00 2001
+>From: Roy Hopkins <roy.hopkins@randomman.co.uk>
+>Date: Thu, 6 Mar 2025 11:25:07 +0000
+>Subject: [PATCH 1/1] backends/igvm: Add function to process only VP context
+>
+>When initializing kvm for SEV, the sev_features need to be
+>passed to the initialization function. When using IGVM files,
+>sev_features is provided in the VP context definintions in
+>the file. Currently this is handled in sev.c by processing
+>the entire file to extract the VP context, however this has
+>unwanted side-effects. Therefore this commit adds a new
+>function that allows only the VP context definitions to
+>be parsed in the IGVM file.
+>
+>Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+>---
+> backends/igvm-cfg.c       |  1 +
+> backends/igvm.c           | 51 +++++++++++++++++++++++++++++++++++++++
+> backends/igvm.h           |  3 +++
+> include/system/igvm-cfg.h | 10 ++++++++
+> target/i386/sev.c         | 10 ++++----
+> 5 files changed, 70 insertions(+), 5 deletions(-)
+>
+>diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+>index 38f17dae44..25c4469768 100644
+>--- a/backends/igvm-cfg.c
+>+++ b/backends/igvm-cfg.c
+>@@ -41,6 +41,7 @@ static void igvm_cfg_class_init(ObjectClass *oc, void *data)
+>                                           "Set the IGVM filename to use");
+>
+>     igvmc->process = qigvm_process_file;
+>+    igvmc->process_vp_context = qigvm_process_vp_context;
+> }
+>
+> static void igvm_cfg_init(Object *obj)
+>diff --git a/backends/igvm.c b/backends/igvm.c
+>index 7673e4a882..aae83f8a77 100644
+>--- a/backends/igvm.c
+>+++ b/backends/igvm.c
+>@@ -965,3 +965,54 @@ cleanup:
+>
+>     return retval;
+> }
+>+
+>+int qigvm_process_vp_context(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
+>+                             Error **errp)
+>+{
+
+This new function share a lot of code with qigvm_process_file(), can we 
+avoid that? e.g. adding a parameter to the process callback, or just 
+factoring out common code?
+
+>+    int32_t header_count;
+>+    int retval = -1;
+>+    QIgvm ctx;
+>+
+>+    memset(&ctx, 0, sizeof(ctx));
+>+    ctx.file = qigvm_file_init(cfg->filename, errp);
+>+    if (ctx.file < 0) {
+>+        return -1;
+>+    }
+>+
+>+    ctx.cgs = cgs;
+>+    ctx.cgsc = cgs ? CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(cgs) : NULL;
+>+
+>+    /*
+>+     * Check that the IGVM file provides configuration for the current
+>+     * platform
+>+     */
+>+    if (qigvm_supported_platform_compat_mask(&ctx, errp) < 0) {
+>+        goto cleanup;
+>+    }
+>+
+>+    header_count = igvm_header_count(ctx.file, IGVM_HEADER_SECTION_DIRECTIVE);
+>+    if (header_count <= 0) {
+>+        error_setg(
+>+            errp, "Invalid directive header count in IGVM file. Error code: %X",
+>+            header_count);
+>+        goto cleanup;
+>+    }
+>+
+>+    for (ctx.current_header_index = 0;
+>+         ctx.current_header_index < (unsigned)header_count;
+>+         ctx.current_header_index++) {
+>+        IgvmVariableHeaderType type = igvm_get_header_type(
+>+            ctx.file, IGVM_HEADER_SECTION_DIRECTIVE, ctx.current_header_index);
+>+        if (type == IGVM_VHT_VP_CONTEXT) {
+>+            if (qigvm_handler(&ctx, type, errp) < 0) {
+
+Understanding the error I had was a bit tricky, since it didn't mention 
+IGVM at all.
+
+Can we add an error_prepend() here or ...
+
+>+                goto cleanup;
+>+            }
+>+        }
+>+    }
+>+    retval = 0;
+>+
+>+cleanup:
+>+    igvm_free(ctx.file);
+>+
+>+    return retval;
+>+}
+>diff --git a/backends/igvm.h b/backends/igvm.h
+>index 269eb3a10e..a43b029d56 100644
+>--- a/backends/igvm.h
+>+++ b/backends/igvm.h
+>@@ -20,4 +20,7 @@
+> int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
+>                       Error **errp);
+>
+>+int qigvm_process_vp_context(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
+>+                             Error **errp);
+>+
+> #endif
+>diff --git a/include/system/igvm-cfg.h b/include/system/igvm-cfg.h
+>index 21fadfe5b7..0c1a7ef309 100644
+>--- a/include/system/igvm-cfg.h
+>+++ b/include/system/igvm-cfg.h
+>@@ -38,6 +38,16 @@ typedef struct IgvmCfgClass {
+>     int (*process)(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
+>                    Error **errp);
+>
+>+    /*
+>+     * If an IGVM filename has been specified then only process
+>+     * the VMSA sections in the IGVM file.
+>+     * Performs a no-op if no filename has been specified.
+>+     *
+>+     * Returns 0 for ok and -1 on error.
+>+     */
+>+    int (*process_vp_context)(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
+>+        Error **errp);
+>+
+> } IgvmCfgClass;
+>
+> #define TYPE_IGVM_CFG "igvm-cfg"
+>diff --git a/target/i386/sev.c b/target/i386/sev.c
+>index ef25e64b14..d22e9870ea 100644
+>--- a/target/i386/sev.c
+>+++ b/target/i386/sev.c
+>@@ -1893,14 +1893,14 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+>          * each vcpu.
+>          *
+>          * The IGVM file is normally processed after initialization. Therefore
+>-         * we need to pre-process it here to extract sev_features in order to
+>-         * provide it to KVM_SEV_INIT2. Each cgs_* function that is called by
+>-         * the IGVM processor detects this pre-process by observing the state
+>-         * as SEV_STATE_UNINIT.
+>+         * we need to pre-process it here, just looking for the vp_context to
+>+         * extract sev_features in order to provide it to KVM_SEV_INIT2. Each
+>+         * cgs_* function that is called by the IGVM processor detects this
+>+         * pre-process by observing the state as SEV_STATE_UNINIT.
+>          */
+>         if (x86machine->igvm) {
+>             if (IGVM_CFG_GET_CLASS(x86machine->igvm)
+>-                    ->process(x86machine->igvm, machine->cgs, errp) == -1) {
+>+                    ->process_vp_context(x86machine->igvm, machine->cgs, errp) == -1) {
+
+... here?
+
+BTW we can fix it later, but since you have to repost, I pointed it out.
+
+Thanks,
+Stefano
+
+>                 return -1;
+>             }
+>             /*
+>-- 
+>2.43.0
+>
+>
 
 
