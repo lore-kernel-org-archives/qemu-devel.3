@@ -4,80 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66554C282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 12:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A42CC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 12:21:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqA7K-0001JH-5v; Thu, 06 Mar 2025 07:14:22 -0500
+	id 1tqADb-0002lN-9p; Thu, 06 Mar 2025 07:20:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tqA7C-0001G3-Rk
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 07:14:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tqA7B-0003SA-29
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 07:14:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741263252;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nS+3xFPXcMVz8qCgElJuiE63kZ9Kx19R5+2J2b0MPd0=;
- b=QhMMDV5ierU3fFBzUQFJFSnfiIP6ibktUaJipylFNFZLjyQ7wOyHNIjkhwa801JdN9kOWC
- XR7gvN/LMopylCG4RRqZuWVVWpO/nS6Cr2Z/1jGcnUTK48fwofdS6W6m61DNFfhUzOqjxM
- J/6DJ5MtvCWxHNempVDHV8dtwAsTUiM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-373-MuEFQ1AHOmeDZF6t82db0w-1; Thu,
- 06 Mar 2025 07:13:55 -0500
-X-MC-Unique: MuEFQ1AHOmeDZF6t82db0w-1
-X-Mimecast-MFC-AGG-ID: MuEFQ1AHOmeDZF6t82db0w_1741263234
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9BE451954B39; Thu,  6 Mar 2025 12:13:54 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.112])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27B051800373; Thu,  6 Mar 2025 12:13:51 +0000 (UTC)
-Date: Thu, 6 Mar 2025 12:13:48 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [RFC PATCH 04/18] qemu: Introduce 'qemu/legacy_binary_info.h'
-Message-ID: <Z8mRfNqcU_sic6_m@redhat.com>
-References: <20250305153929.43687-1-philmd@linaro.org>
- <20250305153929.43687-5-philmd@linaro.org>
- <b2971494-525a-4d39-820d-7bb8905d60d5@linaro.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tqADK-0002jk-C5
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 07:20:35 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tqADH-0004J4-DJ
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 07:20:33 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-abf57138cfaso108433766b.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 04:20:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741263628; x=1741868428; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rT1YCztb4Hh7u9SljOfPZl9P0rIXzctNgjxjZmwRtIc=;
+ b=BRh9M+G5rvIMfdty1Ii72fSvBFmN98bP7EW8BNY4mhgTaARFTHK5LCyNaQJBdsyO6/
+ g7bihQQ023K+U1Y3ZNZldjbClv0Zqy2KLjXyUcy7WW+Tkram+E6WKe4HiVr4kRT1vCUH
+ bwCr5+fGYSpsDxJA+JFVHvLEtq46Zf/WgWwoKfR6+RfOybsz/U3lgI7Rd1evbNFcwStg
+ /05JEkpqFfo7R+DiGjRfCMplBiiWbNV/Pkv3pf5OVEpmGLiLrh0SGLYpGHTIlcTPW6KA
+ nUWJW6l0Skhg/fXM+HMVrRwURuvVSxHvRw6k/OwMZGyoZ/LHnV9VNadHc+s9TFcjuBp8
+ 9xAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741263628; x=1741868428;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rT1YCztb4Hh7u9SljOfPZl9P0rIXzctNgjxjZmwRtIc=;
+ b=s0g0v6WVyuEtBqE6VUcAFVhrkxY9RYWKV14H6LQLwP1vbRPwmKp7EhVfXZR+ZquFe6
+ omSB66aDY1EGXBgIdQBRI2uWsefnUcVr883FB4Nt+osCtmppqfE96TEM+Q2PUHol55s1
+ PlT/nEmRKoRDlgSw/HAtnw7VaxDBR+mkyzPlCr/tG8cYHddZyBY1+C9Urwjfo0JkSGFh
+ fvd2DwMFYyk+jv5Vek1UlU9GehMs/ZuEIhFVUbcCt6loD+wkapbvrXCTmEuWVt27cL7p
+ CaDnLRbSCF/WsAaAYswZmTOK852c3mvScFFPaTqnPeWbwvllqWIcaQtWtkS04YUOMcUU
+ 5bSA==
+X-Gm-Message-State: AOJu0YwVty6jVE6uqCyBRt704ELCQsaEwtoo8/L1TTlKNsVyKEShu+MJ
+ n9vlmspcnOvTTzGz4Tiu9gegTXVJ07zVJQe0xBP8m++Vw/ZJsjkigciu9vb04f4=
+X-Gm-Gg: ASbGncurdeUDdbiiEyE9372HDyzDho1rI6h2Vb/i328pqzHoE51TF/12w18lUwhGbQw
+ 3JHx/bzZ86U/fZCHF3em7x51TT225FGTYP8lhKW0kjE7C7xh31BPwjLng6UxSy3MfOffh5ZDfxK
+ R23B2wHgzyk7zIZYDSFcCpcPAHL29Vrw2Ps6Ea5a1vb5xctNKVhNF1CINmrQyU2nPRC31S1X7M8
+ qKv9n+57ZG7BbJ7pP9hjf7qfdgfVaREXglHo9gcgH9Nb61G6Mh6tFbTkIijB3p34PJ0+4pdEMyR
+ Safr8WgOTpbiNIvuGZe+Su83oU3ZneTLYnNLg8CqAbTCwzE=
+X-Google-Smtp-Source: AGHT+IGsS6u7RiEQGIRRSqNpad5wb/GVJxpyjnpQ9ll5i6Uw8c/E/Zr73jdwK6Z04SR2eAEHimgK9w==
+X-Received: by 2002:a17:907:3f29:b0:ac1:e889:c2a with SMTP id
+ a640c23a62f3a-ac20da47762mr645255566b.11.1741263627667; 
+ Thu, 06 Mar 2025 04:20:27 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac23988c54esm87204566b.132.2025.03.06.04.20.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Mar 2025 04:20:26 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A88BE5F9CF;
+ Thu,  6 Mar 2025 12:20:25 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2] meson.build: default to -gsplit-dwarf for debug info
+In-Reply-To: <CABgObfZpf7Oki+0rH-3OTBLF_cW8+5e-jAaG=AU58oAn8CP=5w@mail.gmail.com>
+ (Paolo Bonzini's message of "Thu, 6 Mar 2025 12:36:40 +0100")
+References: <20250306105306.2064458-1-alex.bennee@linaro.org>
+ <CABgObfZpf7Oki+0rH-3OTBLF_cW8+5e-jAaG=AU58oAn8CP=5w@mail.gmail.com>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Thu, 06 Mar 2025 12:20:25 +0000
+Message-ID: <877c524agm.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b2971494-525a-4d39-820d-7bb8905d60d5@linaro.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,56 +103,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 05, 2025 at 05:56:46PM -0800, Richard Henderson wrote:
-> On 3/5/25 07:39, Philippe Mathieu-Daudé wrote:
-> > +void legacy_binary_info_init(const char *argv0)
-> > +{
-> > +    g_auto(GStrv) tokens = g_strsplit(argv0, G_DIR_SEPARATOR_S, -1);
-> > +    unsigned count = 0;
-> > +    const char *binary_name;
-> > +
-> > +    while (tokens[count]) {
-> > +        count++;
-> > +    }
-> > +    assert(count > 0);
-> > +    binary_name = tokens[count - 1];
-> 
-> This is g_path_get_basename().
-> 
-> > +
-> > +    for (size_t i = 0; i < ARRAY_SIZE(legacy_binary_infos); i++) {
-> > +        if (!strcmp(legacy_binary_infos[i].binary_name, binary_name)) {
-> > +            current_index = i;
-> > +            return;
-> > +        }
-> > +    }
-> > +    fprintf(stderr, "Missing legacy info for '%s' binary.\n", binary_name);
-> > +    abort();
-> > +}
-> 
-> I'm with Paolo that this should not abort here; Error is better.
-> Even if the caller supplies error_fatal.
-> 
-> When testing for errors before and after a patch, I often rename
-> the binary, e.g. qemu-system-aarch64-good / qemu-system-aarch64-bad.
-> Leaving it in the same build directory is required in order to let
-> it find the uninstalled rom images.
-> 
-> Is there a way we can preserve something akin to this?
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Replacign !strcmp with  g_str_has_prefix in the above code would be
-an simple option to preseve the use of custom suffixes, along with
-special casing on existence of 'kvm' in the name.
+> Il gio 6 mar 2025, 11:53 Alex Benn=C3=A9e <alex.bennee@linaro.org> ha scr=
+itto:
+>
+>  -option_cflags =3D (get_option('debug') ? ['-g'] : [])
+>  +option_cflags =3D []
+>  +if get_option('debug')
+>  +  option_cflags +=3D get_option('split_debug') ? ['-gsplit-dwarf'] : ['=
+-g']
+>  +endif
+>
+> option_cflags does nothing, it's only for clarity in the final summary. S=
+o you need
+>
+> if get_option('debug') and get_option('split_debug')
+>   qemu_cflags +=3D '-gsplit-dwarf'
+> endif
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Should I update the optimization field as well? is this the reason why I
+wasn't seeing changes occur for the tests that meson builds?
 
+>
+> (I wonder if it should be implemented in meson instead... It should be be=
+neficial for other projects surely).
+>
+> Paolo
+>
+>   if get_option('optimization') !=3D 'plain'
+>     option_cflags +=3D ['-O' + get_option('optimization')]
+>   endif
+>  diff --git a/meson_options.txt b/meson_options.txt
+>  index 59d973bca0..3432123fee 100644
+>  --- a/meson_options.txt
+>  +++ b/meson_options.txt
+>  @@ -362,6 +362,8 @@ option('debug_mutex', type: 'boolean', value: false,
+>          description: 'mutex debugging support')
+>   option('debug_stack_usage', type: 'boolean', value: false,
+>          description: 'measure coroutine stack usage')
+>  +option('split_debug', type: 'boolean', value: true,
+>  +       description: 'split debug info from object files')
+>   option('qom_cast_debug', type: 'boolean', value: true,
+>          description: 'cast debugging support')
+>   option('slirp_smbd', type : 'feature', value : 'auto',
+>  diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.=
+sh
+>  index 3e8e00852b..aca6e68830 100644
+>  --- a/scripts/meson-buildoptions.sh
+>  +++ b/scripts/meson-buildoptions.sh
+>  @@ -504,6 +504,8 @@ _meson_option_parse() {
+>       --disable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=3Dfals=
+e ;;
+>       --enable-strip) printf "%s" -Dstrip=3Dtrue ;;
+>       --disable-strip) printf "%s" -Dstrip=3Dfalse ;;
+>  +    --enable-split-debug) printf "%s" -Dsplit_debug=3Dtrue ;;
+>  +    --disable-split-debug) printf "%s" -Dsplit_debug=3Dfalse ;;
+>       --sysconfdir=3D*) quote_sh "-Dsysconfdir=3D$2" ;;
+>       --enable-tcg) printf "%s" -Dtcg=3Denabled ;;
+>       --disable-tcg) printf "%s" -Dtcg=3Ddisabled ;;
+>  --=20
+>  2.39.5
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
