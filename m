@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3FCEC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 22:50:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9680AC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 22:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqK2H-0003iF-Bo; Thu, 06 Mar 2025 17:49:49 -0500
+	id 1tqK6M-0005PX-3g; Thu, 06 Mar 2025 17:54:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tqK2F-0003he-IX
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:49:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tqK2D-0005P4-Bd
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:49:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741301381;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NctHom0GrGZVLrmBsUbBKg+Glapv9tPM1mXLLORzNFo=;
- b=PqkXP8dAWIZnm0Zmqbk7mVfoJMNNhBJQcOgpxr1fMjjMVPG7jpgGKqGOei0ENWDo6/PKdX
- wZqkWLHzpgd+qeHC1bEjE7dPShpVXOU3cP4aLzctmE7FRiXcO7sj28kCkVylTmcTsEsF5v
- yjgIRpdiaxFcmzu3Ohkx+XAsvFaLSsI=
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
- [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-R1c6n-MxO86GHozg3edQTw-1; Thu, 06 Mar 2025 17:49:38 -0500
-X-MC-Unique: R1c6n-MxO86GHozg3edQTw-1
-X-Mimecast-MFC-AGG-ID: R1c6n-MxO86GHozg3edQTw_1741301378
-Received: by mail-il1-f198.google.com with SMTP id
- e9e14a558f8ab-3d401ede48dso159905ab.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 14:49:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tqK6J-0005PD-J0
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:53:59 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tqK6H-0005xy-B5
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:53:58 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-223378e2b0dso18322995ad.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 14:53:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741301635; x=1741906435; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nl/jhMzmVZEo9pU7yMQkkOyBLUor62rSygjZp4bu5bA=;
+ b=AxqJhn8BnsbF2ybZFjYqi8tEZYvYO8ICHDVJV9Akgk0wBfM4pZXCnykaspxfcYMAEj
+ IGvYnVlHAhZnbua4p6I62qv6RfaONLzFao/w7B4RwrHB7fu1eo4hJh/MbwcUqGHqoZHq
+ LwGLhWCbFXv3ufn5pph9pjwP50NIozh19VeZIUxFAuCp5HDChx9A/SBTxHWSyQLTHxrW
+ RzQIMcYcMdCyVZkXrXFIflAUVA76SxqjggAQPAOxVA6m5pYb3YUtSTQgjbcw/CEOHOD3
+ DlvWQPhu8+rkELspFTJ1QVjUTl+ri6XjWQNHCwkXeHfZAO28Xvyo7EtX8A7WSvcunrOP
+ LSKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741301378; x=1741906178;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NctHom0GrGZVLrmBsUbBKg+Glapv9tPM1mXLLORzNFo=;
- b=UpOW6baopTRsnLfiGZRh+M86hKGOY9W/kUcyhRWibic5pL3k6OxhScw5HlLqg58Eb3
- 2A21hG83X/i042NdJdlvACwikmX/8+4W+4O7MonRK93pFjxjy0Gaklvm11x5NxhdhmsY
- f/vmO6smIkgOkSrMDPIddewyeNHmUD+rX6crQ135MYdScoS4jdxNHPr1nzbEFUq21Taq
- o2oQzAemRq9e4a6YexuVmUV/Q6a+Kj7oeesbzajGPobfgvPCAMdCGXzVx3arjJ6WYwqn
- J+NWAGFovVHVCyn7gVztHZRR1Op7rIAD5ss+e+futYFqEU03QAiwyJbJdL0eyVjBUCiY
- VegQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsa4bPudUcdR9a1GukV9vcYSHk2v9R9KXJ0lLdB6Z3chJHQ/uXECpjyeQ2G4agXody1n2yOZwHB0/W@nongnu.org
-X-Gm-Message-State: AOJu0Yz3P9mbhe0A662oqWhITsKGKaQLTHs/liqCPh7lQo01YyHQZBwA
- I7+3qepz35KZbCkTEuxQGeU8nsvNSBVxZ7jyrKq9mz952sjHZ+z7BhRbQYOjD/gdQDIY6rO8+nD
- /BqjIKdauC/SYOe+/0//QQhcCtoDLQRpc5t+t4XZe5F5AnTI8x2vM
-X-Gm-Gg: ASbGnct/7qZfPpWwkzILQVDm8xWuHImRYTh7WN97UnolxRD3nzqEXgGS+/GUFjFbcJK
- /PG6ZhO+WkmdE7giQZhS9dlpGlP4J9iRdfp6DAC0gJrsnA9FUSPLCkEpQyfzGpUliM84t09gATk
- NidCDez/3FamqIbnBL/k9x9RlNuztcBpnGF1oolitCKOzEqLJdxzoJhMCx6dpm+yYuCVdAkopcG
- u67VFB8hckybjxxAvexPhpMfXRffD+gxuHp+PS+1AN4K8dsQyWbpYIB3EZZe8IrflWDy20BGGg6
- VbeP6lYtpcZ1ZJZez6k=
-X-Received: by 2002:a05:6e02:1645:b0:3d4:3aba:dcf9 with SMTP id
- e9e14a558f8ab-3d443fa0e85mr107535ab.6.1741301377801; 
- Thu, 06 Mar 2025 14:49:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEcpUumaiVrRKJ9S+l8wPj7srjDnhOuz0x42o4mM5GMHEftpT4Fg0DSKTFcNwyp5wjmpQx0/w==
-X-Received: by 2002:a05:6e02:1645:b0:3d4:3aba:dcf9 with SMTP id
- e9e14a558f8ab-3d443fa0e85mr107455ab.6.1741301377290; 
- Thu, 06 Mar 2025 14:49:37 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d43b512e6fsm5022235ab.38.2025.03.06.14.49.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 14:49:36 -0800 (PST)
-Date: Thu, 6 Mar 2025 15:49:30 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, Corvin =?UTF-8?B?S8O2aG5l?=
- <corvin.koehne@gmail.com>
-Subject: Re: [PATCH v3 00/10] vfio/igd: Decoupling quirks with legacy mode
-Message-ID: <20250306154930.7a3b1c16.alex.williamson@redhat.com>
-In-Reply-To: <20250306180131.32970-1-tomitamoeko@gmail.com>
-References: <20250306180131.32970-1-tomitamoeko@gmail.com>
-Organization: Red Hat
+ d=1e100.net; s=20230601; t=1741301635; x=1741906435;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nl/jhMzmVZEo9pU7yMQkkOyBLUor62rSygjZp4bu5bA=;
+ b=Jw0ifJPbA9vXuGhVheYQKOw94JtsZHyFH9SQ8J5hhd5gz3XcDJgOLxDbLJZDI6i3Hy
+ YZF1TJUCF7p6Qc3j6qbe0yIAOb9HudVSZ8xUyFprkjPWDALJy9eeJko3MIiaEMoKrMtV
+ SYPuStSLouY6wablH9RIh4mihAK1jD3nLVXOoPDhr25AwzrA37CVipvVDy+JDUd/Z9No
+ E7a4xbS/I8KOq/R2/zh93RjtdhzFkNUnvOG5ddlBD2Gq2QDz5IJYLslJZswk+W8r41Cf
+ AZgEPpMhOFZ1sFiik0odtDPLZ/7SbV4p+2CFDWzHxuME+tzJdOZDDHk4IvIqZTp4SAV+
+ mK6g==
+X-Gm-Message-State: AOJu0Yx/Zr0Bz7NgnJQ++zVAoMKOqzxwpNb7jiZaoN8Rf/XZojsIuD3+
+ bzvvjJ4/NNDYKTnbV8jqD35d0Lph4wO8xL0yZIm82lH0owSg51oDrEBOG9B+gAld0pYsp5l2BbU
+ K
+X-Gm-Gg: ASbGncuGYXRwTDHtdOpdq3u2Hw8rdxy0XgTl4p081yLITXC8yyofTJG9BKeDGGP82Cl
+ HBo8aJZz2ulKYl8K6Fwx53DPo9+qeaMSZ3MfUMBZCDCFXsT7cOSsQur9fmzze0NNFItvFr9co07
+ hUw4uoSL6xhOD5isq9m42dx0G6TRb9IlI5+H6zoLCWFx5CsDfQjxIkzpfrdh1BR6bCrMcBZyG2v
+ ANWXIiRC25I3sorsD3Ur3v04Pdnzn0ZgyACvf8rp11PpoxTg/+mQt6FT2oDORH8QMPuFjIjSh1U
+ X7+Riz2RIVyNFwUdL2cgOJ5I4v9Z3umzGZ8ZTMP6lsztz89hUfgxhVkZqMasFdb8qBm1+h7M3j5
+ DC1J6nbuU
+X-Google-Smtp-Source: AGHT+IGeU40AWz4W+RQD6osP2G1g81PWzQwT8TtMZkPKM5hHVyUGAHP+BCpsW52lBlI2+LsQ0OK6PA==
+X-Received: by 2002:a05:6a00:8d0:b0:736:7960:981f with SMTP id
+ d2e1a72fcca58-736aa9e55aamr1970716b3a.8.1741301635508; 
+ Thu, 06 Mar 2025 14:53:55 -0800 (PST)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73698450244sm1917873b3a.80.2025.03.06.14.53.55
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Mar 2025 14:53:55 -0800 (PST)
+Message-ID: <54de9ed5-6314-4a49-a1ed-cc9d6225897d@linaro.org>
+Date: Thu, 6 Mar 2025 14:53:53 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/10] target/arm: SCR_EL3.RW should be treated as 1 if
+ EL2 doesn't support AArch32
+To: qemu-devel@nongnu.org
+References: <20250306163925.2940297-1-peter.maydell@linaro.org>
+ <20250306163925.2940297-8-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250306163925.2940297-8-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,69 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri,  7 Mar 2025 02:01:20 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
+On 3/6/25 08:39, Peter Maydell wrote:
+> +/* Return the effective value of SCR_EL3.RW */
+> +static inline bool arm_scr_rw_eff(CPUARMState *env)
+> +{
+> +    /*
+> +     * SCR_EL3.RW has an effective value of 1 if:
+> +     *  - we are NS and EL2 is implemented but doesn't support AArch32
+> +     *  - we are S and EL2 is enabled (in which case it must be AArch64)
+> +     */
+> +    ARMCPU *cpu = env_archcpu(env);
+> +    bool ns_and_no_aarch32_el2 = arm_feature(env, ARM_FEATURE_EL2) &&
+> +        (env->cp15.scr_el3 & SCR_NS) &&
+> +        !cpu_isar_feature(aa64_aa32_el1, cpu);
+> +    bool s_and_el2_enabled =
+> +        (env->cp15.scr_el3 & (SCR_NS | SCR_EEL2)) == SCR_EEL2;
+> +
+> +    return ns_and_no_aarch32_el2 || s_and_el2_enabled ||
+> +        (env->cp15.scr_el3 & SCR_RW);
+> +}
 
-> This patchset intends to decouple existing quirks from legacy mode.
-> Currently all quirks depends on legacy mode (except x-igd-opregion),
-> which includes following conditions:
-> * Machine type is i440fx
-> * IGD device is at guest BDF 00:02.0
-> * VBIOS in ROM BAR or file
-> * VGA IO/MMIO ranges are claimed by IGD
-> * OpRegion
-> * Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
-> 
-> If one of the condition is not met, the quirks will not be applied.
-> However, for recent generations, espcially Gen 11+ devices that removed
-> VBIOS support, not all the conditions are required. For example, on EFI-
-> based systems, VBIOS ROM is unnecessary, and VGA ranges are not used.
-> 
-> To have better support on newer UEFI-based VMs, this patchset makes the
-> quirks independent of legacy mode. The BDSM and GGC register quirks are
-> applied to all supported IGD devices, new x-igd-lpc option for the LPC
-> bridge / Host bridge ID quirk is introduced for possible Q35 support.
-> It also prepares for supporting IGD passthrough when it is not primary
-> display later (kernel change will be merged in 6.15).
-> 
-> To maintain backward compatbility with exising configuration, legacy
-> mode will automatically be enabled when:
-> * Machine type is i440fx
-> * IGD device is at guest BDF 00:02.0
-> If the legacy mode behavior is unwanted, option x-igd-legacy-mode=off
-> is provided for users to disable it. Setting x-igd-legacy-mode=on checks
-> if the condition above are met, and set up all the required quirks.
-> 
-> The default value is x-igd-legacy-mode=auto. When the above conditions
-> are all met, it acts as before and continues on any error. Otherwise it
-> is equivalent to x-igd-legacy-mode=off.
-> 
-> When x-igd-legacy-mode is set to on or off, QEMU will fail immediately
-> on error.
-> 
-> The first 2 patches of this patchset was taken from a previous one,
-> details can be found at:
-> https://lore.kernel.org/all/20250124191245.12464-1-tomitamoeko@gmail.com/
-> 
-> This patchest was mainly tested on Alder Lake UHD770, with Debian 12
-> (kernel 6.1), Windows 11 (driver 32.0.101.6458) and Intel GOP driver
-> 17.0.1081.
-> 
-> Due to I caught COVID these days, I am unable to deliver the proposed
-> documentation update before QEMU 10.0 soft-freeze next week. Please help
-> decide whether to make this patch series in 10.0 or next release.
-> 
-> Changelog:
-> v3:
-> * Use OnOffAuto for x-igd-legacy-mode option, default is auto, to keep
->   current behavior.
-> * Added a new patch to solve the possible KVMGT/GVT-g fail.
-> Link: https://lore.kernel.org/all/20250303175220.74917-1-tomitamoeko@gmail.com/
+The computation here can be simplified.
 
-See comment on 07/ but otherwise works for me with GVT-d and GVT-g on
-my i7-7700:
+     if (env->cp15.scr_el3 & SCR_RW) {
+         return true;
+     }
+     if (env->cp15.scr_el3 & SCR_NS) {
+         return arm_feature(env, ARM_FEATURE_EL2) &&
+                !cpu_isar_feature(aa64_aa32_el1, cpu);
+     } else {
+         return env->cp15.scr_el3 & SCR_EEL2;
+     }
 
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Tested-by: Alex Williamson <alex.williamson@redhat.com>
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+
+r~
 
