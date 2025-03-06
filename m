@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81ABCC19F32
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 01:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32750C19F32
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 01:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpzxU-0005lM-KU; Wed, 05 Mar 2025 20:23:32 -0500
+	id 1tq04f-0007dN-Et; Wed, 05 Mar 2025 20:30:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpzxR-0005ks-Sm
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:23:30 -0500
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ id 1tq04S-0007cV-NM
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:30:49 -0500
+Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpzxQ-0005zZ-34
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:23:29 -0500
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-5236fe026c7so59609e0c.0
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 17:23:27 -0800 (PST)
+ id 1tq04Q-0006mi-ER
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:30:43 -0500
+Received: by mail-ua1-x92d.google.com with SMTP id
+ a1e0cc1a2514c-86714f41f5bso35160241.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 17:30:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741224207; x=1741829007; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741224640; x=1741829440; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FJALTU45RRm48psp2fF9HAKE4CL+zga6CBYBb3/pPb0=;
- b=Q3127TvMiy9VkJMk0QzLMqrA1C5LwK4X6ohuKshclS+ZHNGZClPEaGjmsA7pKEMd69
- KQ378WP6Qpq7JWTsbce1DuWfI9JEl4zvWxn7034z/A4PlmLw492c/cm2y5CTgL3MzBDb
- rh4tdglq/Q+PUn5r6pnl7mYzaWvRsdkgDPsaH/vu1BaM4QPuqehAGayAfihb2zdg3VVa
- 7MKDc42yjd2/cgi7y/AjLRu8titg5PkHjhejZ23wLdJTGV4B+/RhVA6A2tSxSQ8sEmMP
- r4r8+nnCJt4oBFz6ZPd5AyGI0cMU0nO05R/May3KWHDBqG0SHEGA6MgUjGzC2+iVb3jh
- 6MSQ==
+ bh=v7qqLCA07Y+Jjp51cPajkHn1eyd32Vjm+Q+MxEWgQto=;
+ b=OJW9+BeAw5VyvensnBD6inGdqJIalLlkdWLPtMhvmGpYVLEgGzijcqaLLmQ6qd1BsX
+ HxHcsFGyvbviyIt4kndf2CXTbKP0U45m1hPV2dOdSTrk352/zQ6JUYwRliy5Z00zkvIu
+ lgnBQ3vKC7gBXkafJXzm5cN+8uagnf45HCm6OEERYxJ+WDCUjrMgxusfXzWxzWhniTRN
+ s5iy0cVjGL77NJ9EqYJki0wI+jHgThWZxQlZvAv3nZwl+Rgl/MYzbH4tITRCmKsBQSkr
+ rFg53npp6RQB9o8UTxOXU2Djs5pwiZ5Gt3j9B2efhaHq6eLKO1ZP3hoggM/81nKPldko
+ wY9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741224207; x=1741829007;
+ d=1e100.net; s=20230601; t=1741224640; x=1741829440;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FJALTU45RRm48psp2fF9HAKE4CL+zga6CBYBb3/pPb0=;
- b=tRFQ/eWDJkpgytttQpidmHofvihR/XJkY1y+3m4QAOHrPKG9gECbqDvhu7UcBYnPaD
- 6hqW9r+S2pSltHDkF6NoUN6H6PaoOr4DyUEHBBhxqJiXgLexupUOp8wcXNMdIQSDzv3/
- Dl5zTI14duCt2OxnzLNAIxoazcFOw9pjx4Dx9HWgkKH95I10hB1hu3OrS8PAMyAHVDi3
- fbYlSxrJAgPm5hRAY8n6KPcwU59oVjfpiwBEaFiD9qApXxh/y+0tEbwCPsCmAtoK2+ok
- IuugNz+N/wZH5MfzOsKTFt/59vot360dgLe8dvHBFa3vkXK0/ccJBeo1AdYAVyt+emHP
- HoXA==
-X-Gm-Message-State: AOJu0Yy4FA+KFpYSw4SlTrUTR0LScH56Hq3wtckmIrD/dgns6IvanjuR
- U90djUgjJIWm8KzvgLpc11CqsPLfdon+/qwaO5jkV9BGQPCoCYgIalzcyLlrnezjIvlAsriQIpR
- 2J2LpQQ94h37VnkbdWrHMdUWTy/E=
-X-Gm-Gg: ASbGncuPMNopKppeFF23D7F05XXUIsOr3dJ+wgMMlh0EYZ8LONSwRU91vPLybUS7K3P
- gDBx8BCcnz3LBSg4hRV4bSZGcwYQGN34qQbjLpeUBk6mWQCKKGGoUOtJ3C9jYsu0jvD/0ccKl7T
- /nJfsA0Xm4bSA8HPzsRrR5NkAh3w3lubj9ZSqohNdcJY7bzADg8khQGd2S
-X-Google-Smtp-Source: AGHT+IFmHuMkarRBPw4730Z5D17TxxQMyHlvaI9Y4zwb4T89HnGocCIHIyOKGjPLWmtFDOgCVu7JqJjCo2NJjlmrBkg=
-X-Received: by 2002:a05:6122:4b0c:b0:518:7ab7:afbb with SMTP id
- 71dfb90a1353d-523c62a8fd6mr3223916e0c.8.1741224207016; Wed, 05 Mar 2025
- 17:23:27 -0800 (PST)
+ bh=v7qqLCA07Y+Jjp51cPajkHn1eyd32Vjm+Q+MxEWgQto=;
+ b=V+kueutd/Zlzq9HXCPTW3V1Zx126w0hBfFMqq6rTK/wSFPRJN5eZY7cd6BMWTHBb27
+ 5LZV1g4jQ1NAJHFMCjt7UaZsKiNi7FAw1g3uiy+YVii9+fk8XjS2LI8iu326+gi/r81H
+ u4JMsoKympjg9kpexmT5HvthXIZu5Q1bNuTvMF2668t8A5oLeujZ2zU3VfZ7xiLUULjr
+ uL/0Ta/RSV0Q2ulB21DH0c1TmmHGPoOtyxIOdIEhNHdOkkZgjiRsiGGwJjbqbIlXm5LI
+ plpwzyihTmUquhnKphf4IHRqcB4PT0yO75Nd6iuKqPK6kX7JUkiNkak972TspCu/KUPs
+ 97Kw==
+X-Gm-Message-State: AOJu0Yz8q4T0LG+wh2BUWiymAuUZkWB7Z1Qdm6uA3GeecGP4WDIbK1eA
+ Hqaukl3/FYCpNxslIs1WAcMlwqy6PbaoiXvdsG5yQvI9w5UcQqNuTsz/BXFsz18VWYl5LXROrNZ
+ eZBhITpIgDJUo1NS6IyMXLr4DRL8=
+X-Gm-Gg: ASbGncs1kD1jML4RtaPRm6K7xfxS7nkUd7aoENn2BS5NHo4XdYINh0/e5xwnd68SlbO
+ lqkIyJRHNqxyeitufMlJ65TB3uX+He8ZddpLhTMCP/8TVXKu97v9dK9bM6B749mp+0L0LrHAZVH
+ EOHyDshKf7D9Q78DTP6Uq+87/rjGnf4+QAQoHdKd6xA8R1+tjhsBaYCVmU
+X-Google-Smtp-Source: AGHT+IGPymaTjf4P0KWmXTECJ+VmojTByJ7xl7I58lHAbDbuqLOQhEHMlPzdp7xRXvEyIa0wqDUV2C3nq3cf51pUjaE=
+X-Received: by 2002:a05:6102:dd3:b0:4be:78d2:4be1 with SMTP id
+ ada2fe7eead31-4c2e29dbb3bmr3742376137.24.1741224640229; Wed, 05 Mar 2025
+ 17:30:40 -0800 (PST)
 MIME-Version: 1.0
 References: <20250218165757.554178-1-pbonzini@redhat.com>
- <20250218165757.554178-4-pbonzini@redhat.com>
-In-Reply-To: <20250218165757.554178-4-pbonzini@redhat.com>
+ <20250218165757.554178-5-pbonzini@redhat.com>
+In-Reply-To: <20250218165757.554178-5-pbonzini@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 11:23:01 +1000
-X-Gm-Features: AQ5f1JrKq1vOZ9frtnu660ow4CzlQgb5IuXu3Jd2ZbLGn7wVyjwlFzsz2f7HZV0
-Message-ID: <CAKmqyKMgMOKduscWLL9AUC_-UDNVP_PzbN9=q21TUPSJdLHPjg@mail.gmail.com>
-Subject: Re: [PATCH 3/7] target/riscv: assert argument to
- set_satp_mode_max_supported is valid
+Date: Thu, 6 Mar 2025 11:30:14 +1000
+X-Gm-Features: AQ5f1JpX8ciysYpPdcBPU2be4mu1FTw0OSI2OvKcRvOlKYar_KGArACMcdaMeEU
+Message-ID: <CAKmqyKPvUOHMCAJko8cw_CunFZVvLuPdHegk+oPrjXA9KcG6DA@mail.gmail.com>
+Subject: Re: [PATCH 4/7] target/riscv: cpu: store max SATP mode as a single
+ integer
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,16 +96,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 19, 2025 at 2:58=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
+On Wed, Feb 19, 2025 at 3:00=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
  wrote:
 >
-> Check that the argument to set_satp_mode_max_supported is valid for
-> the MXL value of the CPU.  It would be a bug in the CPU definition
-> if it weren't.
->
-> In fact, there is such a bug in riscv_bare_cpu_init(): not just
-> SV32 is not a valid VM mode for 64-bit CPUs, SV64 is not a
-> valid VM mode at all, not yet at least.
+> The maximum available SATP mode implies all the shorter virtual address s=
+izes.
+> Store it in RISCVCPUConfig and avoid recomputing it via satp_mode_max_fro=
+m_map.
 >
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
@@ -114,34 +111,99 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+>  target/riscv/cpu_cfg.h     |  1 +
+>  target/riscv/cpu.c         | 11 +++++------
+>  target/riscv/tcg/tcg-cpu.c |  3 ++-
+>  3 files changed, 8 insertions(+), 7 deletions(-)
 >
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index b410b1e6038..28d8de978fa 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -192,6 +192,7 @@ struct RISCVCPUConfig {
+>      bool short_isa_string;
+>
+>  #ifndef CONFIG_USER_ONLY
+> +    int8_t max_satp_mode;
+>      RISCVSATPMap satp_mode;
+>  #endif
+>  };
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index cca24b9f1fc..7950b6447f8 100644
+> index 7950b6447f8..2d06543217a 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -442,6 +442,8 @@ static void set_satp_mode_max_supported(RISCVCPU *cpu=
+> @@ -444,6 +444,7 @@ static void set_satp_mode_max_supported(RISCVCPU *cpu=
 ,
->              cpu->cfg.satp_mode.supported |=3D (1 << i);
->          }
 >      }
-> +
-> +    assert(cpu->cfg.satp_mode.supported & (1 << satp_mode));
+>
+>      assert(cpu->cfg.satp_mode.supported & (1 << satp_mode));
+> +    cpu->cfg.max_satp_mode =3D satp_mode;
 >  }
 >
 >  /* Set the satp mode to the max supported */
-> @@ -1502,7 +1504,9 @@ static void riscv_bare_cpu_init(Object *obj)
->       * satp_mode manually (see set_satp_mode_default()).
->       */
->  #ifndef CONFIG_USER_ONLY
-> -    set_satp_mode_max_supported(cpu, VM_1_10_SV64);
-> +    set_satp_mode_max_supported(RISCV_CPU(obj),
-> +        riscv_cpu_mxl(&RISCV_CPU(obj)->env) =3D=3D MXL_RV32 ?
-> +        VM_1_10_SV32 : VM_1_10_SV57);
->  #endif
+> @@ -1177,16 +1178,13 @@ static void riscv_cpu_disas_set_info(CPUState *s,=
+ disassemble_info *info)
+>  static void riscv_cpu_satp_mode_finalize(RISCVCPU *cpu, Error **errp)
+>  {
+>      bool rv32 =3D riscv_cpu_is_32bit(cpu);
+> -    uint8_t satp_mode_map_max, satp_mode_supported_max;
+> +    uint8_t satp_mode_map_max;
+>
+>      /* The CPU wants the OS to decide which satp mode to use */
+>      if (cpu->cfg.satp_mode.supported =3D=3D 0) {
+>          return;
+>      }
+>
+> -    satp_mode_supported_max =3D
+> -                    satp_mode_max_from_map(cpu->cfg.satp_mode.supported)=
+;
+> -
+>      if (cpu->cfg.satp_mode.map =3D=3D 0) {
+>          if (cpu->cfg.satp_mode.init =3D=3D 0) {
+>              /* If unset by the user, we fallback to the default satp mod=
+e. */
+> @@ -1215,10 +1213,10 @@ static void riscv_cpu_satp_mode_finalize(RISCVCPU=
+ *cpu, Error **errp)
+>      satp_mode_map_max =3D satp_mode_max_from_map(cpu->cfg.satp_mode.map)=
+;
+>
+>      /* Make sure the user asked for a supported configuration (HW and qe=
+mu) */
+> -    if (satp_mode_map_max > satp_mode_supported_max) {
+> +    if (satp_mode_map_max > cpu->cfg.max_satp_mode) {
+>          error_setg(errp, "satp_mode %s is higher than hw max capability =
+%s",
+>                     satp_mode_str(satp_mode_map_max, rv32),
+> -                   satp_mode_str(satp_mode_supported_max, rv32));
+> +                   satp_mode_str(cpu->cfg.max_satp_mode, rv32));
+>          return;
+>      }
+>
+> @@ -1477,6 +1475,7 @@ static void riscv_cpu_init(Object *obj)
+>      cpu->cfg.cbom_blocksize =3D 64;
+>      cpu->cfg.cbop_blocksize =3D 64;
+>      cpu->cfg.cboz_blocksize =3D 64;
+> +    cpu->cfg.max_satp_mode =3D -1;
+>      cpu->env.vext_ver =3D VEXT_VERSION_1_00_0;
 >  }
 >
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 0a137281de1..a9f59a67e00 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -693,8 +693,9 @@ static bool riscv_cpu_validate_profile_satp(RISCVCPU =
+*cpu,
+>                                              RISCVCPUProfile *profile,
+>                                              bool send_warn)
+>  {
+> -    int satp_max =3D satp_mode_max_from_map(cpu->cfg.satp_mode.supported=
+);
+> +    int satp_max =3D cpu->cfg.max_satp_mode;
+>
+> +    assert(satp_max >=3D 0);
+>      if (profile->satp_mode > satp_max) {
+>          if (send_warn) {
+>              bool is_32bit =3D riscv_cpu_is_32bit(cpu);
 > --
 > 2.48.1
 >
