@@ -4,79 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB20C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 08:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64DE8C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 09:09:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq74D-0007uU-K3; Thu, 06 Mar 2025 03:58:57 -0500
+	id 1tq7D8-0000yq-GC; Thu, 06 Mar 2025 04:08:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tq74B-0007uG-F5
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 03:58:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tq7D5-0000yK-D7
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:08:07 -0500
+Received: from 4.mo552.mail-out.ovh.net ([178.33.43.201])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tq747-00052e-UP
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 03:58:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741251527;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7q2Tv/7YczIE/QdnFeZHTj5srGGkYnJMOuifRsrHJ8k=;
- b=GUp89TY98oGHO9DGaLIMXo46g50EN0v1ak42nAnqVy52o4E4BrsUaWYzhZ1jzTe9UKCVTx
- h2NnL68rVwjyzjfJ5b4VTnHwR466hvB9Az6QjOjCIgqnR0XETcfK0AENDG5pgAGS09nG7V
- OrA0W9l+I5bRdFV/PWb/UcaPAjPIvzk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-SVHpoHPlMCKIztlAGBDZoQ-1; Thu,
- 06 Mar 2025 03:58:46 -0500
-X-MC-Unique: SVHpoHPlMCKIztlAGBDZoQ-1
-X-Mimecast-MFC-AGG-ID: SVHpoHPlMCKIztlAGBDZoQ_1741251525
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0CD5419560B0; Thu,  6 Mar 2025 08:58:44 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.112])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75A3E1955DCE; Thu,  6 Mar 2025 08:58:38 +0000 (UTC)
-Date: Thu, 6 Mar 2025 08:58:35 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Yan Vugenfirer <yvugenfi@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
- marcel.apfelbaum@gmail.com, jon.grimm@amd.com,
- santosh.shukla@amd.com, vasant.hegde@amd.com, Wei.Huang2@amd.com,
- kraxel@redhat.com, bsd@redhat.com, ddutile@redhat.com
-Subject: Re: [PATCH] pci-ids.rst: Add Red Hat pci-id for AMD IOMMU device
-Message-ID: <Z8ljpeR9qcW5fhKC@redhat.com>
-References: <20250304183747.639382-1-suravee.suthikulpanit@amd.com>
- <20250305015122-mutt-send-email-mst@kernel.org>
- <CAGoVJZzWqJt-XCOq0GSCg68HYp1DYEEhEUgE-c6a+rd0m-d+cA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tq7D2-0006dH-Al
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:08:07 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.176.76])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4Z7k8t1DGPz1Wbk;
+ Thu,  6 Mar 2025 09:07:58 +0000 (UTC)
+Received: from kaod.org (37.59.142.112) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Thu, 6 Mar
+ 2025 10:07:57 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-112S0063cc64be7-4286-4742-bcd7-f9f6f1717f32,
+ 37C52C01EA5DF959F069A379DC9FDBD07502A922) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Thu, 6 Mar 2025 10:07:56 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 2/2] 9pfs: reduce latency of v9fs_reclaim_fd()
+Message-ID: <20250306100756.28e6bea2@bahia>
+In-Reply-To: <35b3e1bc74c4f2825acb98252398d2f8805fc99f.1741101468.git.qemu_oss@crudebyte.com>
+References: <cover.1741101468.git.qemu_oss@crudebyte.com>
+ <35b3e1bc74c4f2825acb98252398d2f8805fc99f.1741101468.git.qemu_oss@crudebyte.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGoVJZzWqJt-XCOq0GSCg68HYp1DYEEhEUgE-c6a+rd0m-d+cA@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.112]
+X-ClientProxiedBy: DAG5EX2.mxp5.local (172.16.2.42) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 18b2b9b5-0c98-4e53-84bb-663b5aef0593
+X-Ovh-Tracer-Id: 7344808043234826650
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdejfeegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegkeejtdevgeekieelffdvtedvvdegtdduudeigffhhffgvdfhgeejteekheefkeenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddrudduvddpkeekrddujeelrdelrdduheegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepvddprhgtphhtthhopehqvghmuhgpohhsshestghruhguvggshihtvgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdfovfetjfhoshhtpehmohehhedvmgdpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=/pazhm2T2KBH7nvhREPHTZRA+4H3JdZPXvBe0ilg8yk=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1741252078; v=1;
+ b=C4h8vZMZbBlA4/bWmtjvhzxVe1NN4H6p/PtF+WkcKcZoo40wHZksJYHFqxsKlS5zKSrQrRd9
+ /uJhw026fPDWtRM/R4rM/XfrHU00NDlt8t7KjSusG7lWCh9m3YCtSuh2MFdl/GoOfNkHg0Dj+/s
+ FOG4TdsCC+RiseZiDlnnMazAG1RsHTYAPftbu+X2p8K8PMNK5zLivwZc22IxURuI1jRIKEAJLvx
+ UapUfEaPcuxSmNPqllzG3MqKgP0CVfdoj0fgtDcnWh5rBdPEmELmI2sQpN7AJr/lMjLGz2PgD/2
+ D77Akkpcl2V5iCIrgFu/DcxuG8HfiDwJQ7g0e0uFx1JWw==
+Received-SPF: pass client-ip=178.33.43.201; envelope-from=groug@kaod.org;
+ helo=4.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,56 +80,115 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 06, 2025 at 09:11:53AM +0200, Yan Vugenfirer wrote:
-> On Wed, Mar 5, 2025 at 8:54 AM Michael S. Tsirkin <mst@redhat.com> wrote:
+On Tue, 4 Mar 2025 16:16:05 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+
+> This function calls v9fs_co_close() and v9fs_co_closedir() in a loop. Each
+> one of the calls adds two thread hops (between main thread and a fs driver
+> background thread). Each thread hop adds latency, which sums up in
+> function's loop to a significant duration.
 > 
-> > On Tue, Mar 04, 2025 at 06:37:47PM +0000, Suravee Suthikulpanit wrote:
-> > > The QEMU-emulated AMD IOMMU PCI device is implemented based on the AMD
-> > I/O
-> > > Virtualization Technology (IOMMU) Specification [1]. The PCI id for this
-> > > device is platform-specific.
-> > >
-> > > Currently, the QEMU-emulated AMD IOMMU device is using AMD vendor id and
-> > > undefined device id.
-> >
-> > undefined?
-> >
-> > > Therefore, change the vendor id to Red Hat and request a new
-> > QEMU-specific
-> > > device id.
-> >
-> > Won't the drivers fail to load then?
-> >
+> Reduce overall latency by open coding what v9fs_co_close() and
+> v9fs_co_closedir() do, executing those and the loop itself altogether in
+> only one background thread block, hence reducing the total amount of
+> thread hops to only two.
 > 
-> Windows will not identify the device (it is a dummy device, without driver)
-> and SVVP certifications will fail as a result.
-> I suggest using ID that is already present in Windows machine.inf:
-> VEN_1002&DEV_5A23
 
- Ven:  Advanced Micro Devices, Inc. [AMD/ATI]
- Dev: RD890S/RD990 I/O Memory Management Unit (IOMMU) 
+I'm afraid it is a bit trickier but I might have found a subtle bug
+in the current code :-)
 
-> VEN_1022&DEV_1419
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
+>  hw/9pfs/9p.c | 26 +++++++++++++++++---------
+>  1 file changed, 17 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index 4f9c2dde9c..4b52b1a22a 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -434,6 +434,7 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+>      V9fsFidState *f;
+>      GHashTableIter iter;
+>      gpointer fid;
+> +    int err;
+>  
+>      /* prevent multiple coroutines running this function simultaniously */
+>      if (s->reclaiming) {
+> @@ -446,10 +447,10 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+>      QSLIST_HEAD(, V9fsFidState) reclaim_list =
+>          QSLIST_HEAD_INITIALIZER(reclaim_list);
+>  
+> +    /* Pick FIDs to be closed, collect them on reclaim_list. */
+>      while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &f)) {
+>          /*
+> -         * Unlink fids cannot be reclaimed. Check
+> -         * for them and skip them. Also skip fids
+> +         * Unlinked fids cannot be reclaimed, skip those, and also skip fids
+>           * currently being operated on.
+>           */
+>          if (f->ref || f->flags & FID_NON_RECLAIMABLE) {
+> @@ -499,17 +500,24 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+>          }
+>      }
+>      /*
+> -     * Now close the fid in reclaim list. Free them if they
+> -     * are already clunked.
+> +     * Close the picked FIDs altogether on a background I/O driver thread. Do
+> +     * this all at once to keep latency (i.e. amount of thread hops between main
+> +     * thread <-> fs driver background thread) as low as possible.
+>       */
+> +    v9fs_co_run_in_worker({
+> +        QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
+> +            err = (f->fid_type == P9_FID_DIR) ?
+> +                s->ops->closedir(&s->ctx, &f->fs_reclaim) :
+> +                s->ops->close(&s->ctx, &f->fs_reclaim);
+> +            if (!err) {
+> +                total_open_fd--;
 
- Vendor:  Advanced Micro Devices, Inc. [AMD]
- Dev: Family 15h (Models 10h-1fh) I/O Memory Management Unit
+Hmm... total_open_fd is supposed to be accessed by the main thread only.
+Maybe turn total_open_fd into an atomic ? Or have this block to return
+the count of closed fds and propagate that to total_open_fd in the main
+thread ?
 
-Is our implementation semantically a match for the functionality
-in either of those real hardware devices ?
+> +            }
+> +        }
+> +    });
+> +    /* Free the closed FIDs. */
+>      while (!QSLIST_EMPTY(&reclaim_list)) {
+>          f = QSLIST_FIRST(&reclaim_list);
+>          QSLIST_REMOVE(&reclaim_list, f, V9fsFidState, reclaim_next);
+> -        if (f->fid_type == P9_FID_FILE) {
+> -            v9fs_co_close(pdu, &f->fs_reclaim);
+> -        } else if (f->fid_type == P9_FID_DIR) {
+> -            v9fs_co_closedir(pdu, &f->fs_reclaim);
+> -        }
 
-We shouldn't use an existing hardware dev ID unless we intend to
-emulate its functionality as a precise match.
+An now for the subtle bug in the existing code :
 
+v9fs_co_close() and v9fs_co_closedir() honor TFLUSH with the following
+check that skips the actual closing :
 
-With regards,
-Daniel
+    if (v9fs_request_cancelled(pdu)) {
+        return -EINTR;
+    }
+
+If the client cancels the request that needs fd reclaim, some
+fds will be cleared from the fids without being closed. This
+causes fd leaks and probably ruins the overall reclaim logic.
+
+This is kinda fixed by the current patch since all the fds
+in the reclaim list are closed altogether atomically in the
+same v9fs_co_run_in_worker().
+
+>          /*
+>           * Now drop the fid reference, free it
+>           * if clunked.
+
+Cheers,
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Greg
 
