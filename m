@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09CC0C282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686E4C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq8fV-0000sM-H8; Thu, 06 Mar 2025 05:41:33 -0500
+	id 1tq8eb-0006zL-6S; Thu, 06 Mar 2025 05:40:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tq8f9-0008D5-Sl; Thu, 06 Mar 2025 05:41:12 -0500
+ id 1tq8eS-0006i6-DG; Thu, 06 Mar 2025 05:40:30 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tq8f3-0000om-AF; Thu, 06 Mar 2025 05:41:11 -0500
+ id 1tq8eQ-0000XB-FB; Thu, 06 Mar 2025 05:40:28 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 6 Mar
- 2025 18:38:55 +0800
+ 2025 18:38:53 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 6 Mar 2025 18:38:55 +0800
+ Transport; Thu, 6 Mar 2025 18:38:53 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v5 24/29] hw/arm/aspeed_ast27x0: Sort the memmap table by
- mapping address
-Date: Thu, 6 Mar 2025 18:38:32 +0800
-Message-ID: <20250306103846.429221-25-jamin_lin@aspeedtech.com>
+Subject: [PATCH v5 20/29] hw/arm/aspeed_ast27x0: Define an Array of
+ AspeedINTCState with Two Instances
+Date: Thu, 6 Mar 2025 18:38:28 +0800
+Message-ID: <20250306103846.429221-21-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
 References: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
@@ -66,94 +66,166 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To improve readability, sort the memmap table by mapping address
+Updated Aspeed27x0SoCState to include an intc[2] array instead of a single
+AspeedINTCState instance. Modified aspeed_soc_ast2700_get_irq and
+aspeed_soc_ast2700_get_irq_index to correctly reference the corresponding
+interrupt controller instance and OR gate index.
+
+Currently, only GIC 192 to 201 are supported, and their source interrupts are
+from INTCIO and connected to INTC at input pin 0 and output pins 0 to 9 for
+GIC 192-201.
+
+To support both AST2700 A1 and A0, INTC input pins 1 to 9 and output pins
+10 to 18 remain to support GIC 128-136, which source interrupts from INTC.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast27x0.c | 54 ++++++++++++++++++++---------------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+ include/hw/arm/aspeed_soc.h |  2 +-
+ hw/arm/aspeed_ast27x0.c     | 58 +++++++++++++++++++++++++------------
+ 2 files changed, 40 insertions(+), 20 deletions(-)
 
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 689f52dae8..1ac99269ae 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -128,7 +128,7 @@ struct Aspeed27x0SoCState {
+     AspeedSoCState parent;
+ 
+     ARMCPU cpu[ASPEED_CPUS_NUM];
+-    AspeedINTCState intc;
++    AspeedINTCState intc[2];
+     GICv3State gic;
+     MemoryRegion dram_empty;
+ };
 diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 7439512b83..3330484bf5 100644
+index 343fe87921..90545215e2 100644
 --- a/hw/arm/aspeed_ast27x0.c
 +++ b/hw/arm/aspeed_ast27x0.c
-@@ -24,16 +24,40 @@
- #include "qemu/log.h"
- 
- static const hwaddr aspeed_soc_ast2700_memmap[] = {
--    [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
-     [ASPEED_DEV_SRAM]      =  0x10000000,
-+    [ASPEED_DEV_HACE]      =  0x12070000,
-+    [ASPEED_DEV_EMMC]      =  0x12090000,
-+    [ASPEED_DEV_INTC]      =  0x12100000,
-+    [ASPEED_GIC_DIST]      =  0x12200000,
-+    [ASPEED_GIC_REDIST]    =  0x12280000,
-     [ASPEED_DEV_SDMC]      =  0x12C00000,
-     [ASPEED_DEV_SCU]       =  0x12C02000,
-+    [ASPEED_DEV_RTC]       =  0x12C0F000,
-+    [ASPEED_DEV_TIMER1]    =  0x12C10000,
-+    [ASPEED_DEV_SLI]       =  0x12C17000,
-+    [ASPEED_DEV_UART4]     =  0X12C1A000,
-+    [ASPEED_DEV_FMC]       =  0x14000000,
-+    [ASPEED_DEV_SPI0]      =  0x14010000,
-+    [ASPEED_DEV_SPI1]      =  0x14020000,
-+    [ASPEED_DEV_SPI2]      =  0x14030000,
-+    [ASPEED_DEV_MII1]      =  0x14040000,
-+    [ASPEED_DEV_MII2]      =  0x14040008,
-+    [ASPEED_DEV_MII3]      =  0x14040010,
-+    [ASPEED_DEV_ETH1]      =  0x14050000,
-+    [ASPEED_DEV_ETH2]      =  0x14060000,
-+    [ASPEED_DEV_ETH3]      =  0x14070000,
-+    [ASPEED_DEV_SDHCI]     =  0x14080000,
-+    [ASPEED_DEV_ADC]       =  0x14C00000,
-     [ASPEED_DEV_SCUIO]     =  0x14C02000,
-+    [ASPEED_DEV_GPIO]      =  0x14C0B000,
-+    [ASPEED_DEV_I2C]       =  0x14C0F000,
-+    [ASPEED_DEV_INTCIO]    =  0x14C18000,
-+    [ASPEED_DEV_SLIIO]     =  0x14C1E000,
-+    [ASPEED_DEV_VUART]     =  0X14C30000,
-     [ASPEED_DEV_UART0]     =  0X14C33000,
-     [ASPEED_DEV_UART1]     =  0X14C33100,
-     [ASPEED_DEV_UART2]     =  0X14C33200,
-     [ASPEED_DEV_UART3]     =  0X14C33300,
--    [ASPEED_DEV_UART4]     =  0X12C1A000,
-     [ASPEED_DEV_UART5]     =  0X14C33400,
-     [ASPEED_DEV_UART6]     =  0X14C33500,
-     [ASPEED_DEV_UART7]     =  0X14C33600,
-@@ -43,32 +67,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_UART11]    =  0X14C33A00,
-     [ASPEED_DEV_UART12]    =  0X14C33B00,
-     [ASPEED_DEV_WDT]       =  0x14C37000,
--    [ASPEED_DEV_VUART]     =  0X14C30000,
--    [ASPEED_DEV_FMC]       =  0x14000000,
--    [ASPEED_DEV_SPI0]      =  0x14010000,
--    [ASPEED_DEV_SPI1]      =  0x14020000,
--    [ASPEED_DEV_SPI2]      =  0x14030000,
-+    [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
-     [ASPEED_DEV_SDRAM]     =  0x400000000,
--    [ASPEED_DEV_MII1]      =  0x14040000,
--    [ASPEED_DEV_MII2]      =  0x14040008,
--    [ASPEED_DEV_MII3]      =  0x14040010,
--    [ASPEED_DEV_ETH1]      =  0x14050000,
--    [ASPEED_DEV_ETH2]      =  0x14060000,
--    [ASPEED_DEV_ETH3]      =  0x14070000,
--    [ASPEED_DEV_EMMC]      =  0x12090000,
--    [ASPEED_DEV_INTC]      =  0x12100000,
--    [ASPEED_DEV_INTCIO]    =  0x14C18000,
--    [ASPEED_DEV_SLI]       =  0x12C17000,
--    [ASPEED_DEV_SLIIO]     =  0x14C1E000,
--    [ASPEED_GIC_DIST]      =  0x12200000,
--    [ASPEED_GIC_REDIST]    =  0x12280000,
--    [ASPEED_DEV_ADC]       =  0x14C00000,
--    [ASPEED_DEV_I2C]       =  0x14C0F000,
--    [ASPEED_DEV_GPIO]      =  0x14C0B000,
--    [ASPEED_DEV_RTC]       =  0x12C0F000,
--    [ASPEED_DEV_SDHCI]     =  0x14080000,
--    [ASPEED_DEV_TIMER1]    =  0x12C10000,
--    [ASPEED_DEV_HACE]      =  0x12070000,
+@@ -178,32 +178,48 @@ static const int ast2700_gic133_gic197_intcmap[] = {
+ /* GICINT 192 ~ 201 */
+ struct gic_intc_irq_info {
+     int irq;
++    int intc_idx;
++    int orgate_idx;
+     const int *ptr;
  };
  
- #define AST2700_MAX_IRQ 256
+ static const struct gic_intc_irq_info ast2700_gic_intcmap[] = {
+-    {128,  ast2700_gic128_gic192_intcmap},
+-    {129,  NULL},
+-    {130,  ast2700_gic130_gic194_intcmap},
+-    {131,  ast2700_gic131_gic195_intcmap},
+-    {132,  ast2700_gic132_gic196_intcmap},
+-    {133,  ast2700_gic133_gic197_intcmap},
+-    {134,  NULL},
+-    {135,  NULL},
+-    {136,  NULL},
++    {192, 1, 0, ast2700_gic128_gic192_intcmap},
++    {193, 1, 1, NULL},
++    {194, 1, 2, ast2700_gic130_gic194_intcmap},
++    {195, 1, 3, ast2700_gic131_gic195_intcmap},
++    {196, 1, 4, ast2700_gic132_gic196_intcmap},
++    {197, 1, 5, ast2700_gic133_gic197_intcmap},
++    {198, 1, 6, NULL},
++    {199, 1, 7, NULL},
++    {200, 1, 8, NULL},
++    {201, 1, 9, NULL},
++    {128, 0, 1, ast2700_gic128_gic192_intcmap},
++    {129, 0, 2, NULL},
++    {130, 0, 3, ast2700_gic130_gic194_intcmap},
++    {131, 0, 4, ast2700_gic131_gic195_intcmap},
++    {132, 0, 5, ast2700_gic132_gic196_intcmap},
++    {133, 0, 6, ast2700_gic133_gic197_intcmap},
++    {134, 0, 7, NULL},
++    {135, 0, 8, NULL},
++    {136, 0, 9, NULL},
+ };
+ 
+ static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
+ {
+     Aspeed27x0SoCState *a = ASPEED27X0_SOC(s);
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
++    int or_idx;
++    int idx;
+     int i;
+ 
+     for (i = 0; i < ARRAY_SIZE(ast2700_gic_intcmap); i++) {
+         if (sc->irqmap[dev] == ast2700_gic_intcmap[i].irq) {
+             assert(ast2700_gic_intcmap[i].ptr);
+-            return qdev_get_gpio_in(DEVICE(&a->intc.orgates[i]),
+-                ast2700_gic_intcmap[i].ptr[dev]);
++            or_idx = ast2700_gic_intcmap[i].orgate_idx;
++            idx = ast2700_gic_intcmap[i].intc_idx;
++            return qdev_get_gpio_in(DEVICE(&a->intc[idx].orgates[or_idx]),
++                                    ast2700_gic_intcmap[i].ptr[dev]);
+         }
+     }
+ 
+@@ -215,12 +231,16 @@ static qemu_irq aspeed_soc_ast2700_get_irq_index(AspeedSoCState *s, int dev,
+ {
+     Aspeed27x0SoCState *a = ASPEED27X0_SOC(s);
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
++    int or_idx;
++    int idx;
+     int i;
+ 
+     for (i = 0; i < ARRAY_SIZE(ast2700_gic_intcmap); i++) {
+         if (sc->irqmap[dev] == ast2700_gic_intcmap[i].irq) {
+             assert(ast2700_gic_intcmap[i].ptr);
+-            return qdev_get_gpio_in(DEVICE(&a->intc.orgates[i]),
++            or_idx = ast2700_gic_intcmap[i].orgate_idx;
++            idx = ast2700_gic_intcmap[i].intc_idx;
++            return qdev_get_gpio_in(DEVICE(&a->intc[idx].orgates[or_idx]),
+                                     ast2700_gic_intcmap[i].ptr[dev] + index);
+         }
+     }
+@@ -390,7 +410,7 @@ static void aspeed_soc_ast2700_init(Object *obj)
+ 
+     object_initialize_child(obj, "sli", &s->sli, TYPE_ASPEED_2700_SLI);
+     object_initialize_child(obj, "sliio", &s->sliio, TYPE_ASPEED_2700_SLIIO);
+-    object_initialize_child(obj, "intc", &a->intc, TYPE_ASPEED_2700_INTC);
++    object_initialize_child(obj, "intc", &a->intc[0], TYPE_ASPEED_2700_INTC);
+ 
+     snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);
+     object_initialize_child(obj, "adc", &s->adc, typename);
+@@ -502,7 +522,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
+     AspeedSoCState *s = ASPEED_SOC(dev);
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+-    AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc);
++    AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc[0]);
+     g_autofree char *sram_name = NULL;
+     qemu_irq irq;
+ 
+@@ -533,23 +553,23 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     /* INTC */
+-    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc), errp)) {
++    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
+         return;
+     }
+ 
+-    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc), 0,
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[0]), 0,
+                     sc->memmap[ASPEED_DEV_INTC]);
+ 
+     /* irq sources -> orgates -> INTC */
+     for (i = 0; i < ic->num_inpins; i++) {
+-        qdev_connect_gpio_out(DEVICE(&a->intc.orgates[i]), 0,
+-                              qdev_get_gpio_in(DEVICE(&a->intc), i));
++        qdev_connect_gpio_out(DEVICE(&a->intc[0].orgates[i]), 0,
++                              qdev_get_gpio_in(DEVICE(&a->intc[0]), i));
+     }
+ 
+     /* INTC -> GIC192 - GIC201 */
+     /* INTC -> GIC128 - GIC136 */
+     for (i = 0; i < ic->num_outpins; i++) {
+-        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), i,
++        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[0]), i,
+                            qdev_get_gpio_in(DEVICE(&a->gic),
+                                             ast2700_gic_intcmap[i].irq));
+     }
 -- 
 2.43.0
 
