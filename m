@@ -4,107 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F6FCC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 04:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 542FDC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 04:27:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq2kZ-0001LG-GY; Wed, 05 Mar 2025 23:22:23 -0500
+	id 1tq2p6-0003G8-35; Wed, 05 Mar 2025 23:27:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tq2kX-0001Ky-Un; Wed, 05 Mar 2025 23:22:21 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tq2kV-0008Ig-Ci; Wed, 05 Mar 2025 23:22:21 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 525KcZC7027401;
- Thu, 6 Mar 2025 04:22:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=x6/hwl
- 4Psm9b54OfzeUMezvCwp5Ez3rVLEkGc0BQemY=; b=cS8LOBA5rnhYpfTA829+Mf
- sWf77Pa4l/fzlk/qFnLIy17k75vnCez6HzaYMoZfBYLEQ0K00yaINbJgRDHxK+N7
- rU3NJFMHqmYSiYQby3l2xvk7PZRNzXJ/MyKS47iegYPMQNvw7tCk6deESj95wEde
- OlyJ3AnMHVTyKN4+23VvfDhMRNSzhN3Ni9+ospqYRsg+orE701TioX5/mofB79+A
- OYtsOX53HH+xYGt37Tk8rhLT99Ep1RU1bKeHBRbErql86Ds1i/pPJ9S+eGkUrcCO
- QguALhWldxXlsYZuQ8DT77j5+ZiHzMuoKD2+XGnTaersmxwmawryj+WJ8LWiNxwA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 456wu01jve-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 06 Mar 2025 04:22:15 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 5264HpHY011671;
- Thu, 6 Mar 2025 04:22:15 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 456wu01jva-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 06 Mar 2025 04:22:15 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52620DIt013776;
- Thu, 6 Mar 2025 04:22:14 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 454e2kxjdn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 06 Mar 2025 04:22:14 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5264MAX019595738
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 6 Mar 2025 04:22:11 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C9BF52004B;
- Thu,  6 Mar 2025 04:22:10 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 876FD20040;
- Thu,  6 Mar 2025 04:22:08 +0000 (GMT)
-Received: from [9.124.214.147] (unknown [9.124.214.147])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  6 Mar 2025 04:22:08 +0000 (GMT)
-Message-ID: <d141c027-72dc-40f0-be0a-303690dfd424@linux.ibm.com>
-Date: Thu, 6 Mar 2025 09:52:07 +0530
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tq2p3-0003F2-MZ; Wed, 05 Mar 2025 23:27:01 -0500
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tq2p1-0000A4-5M; Wed, 05 Mar 2025 23:27:01 -0500
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-868ddc4c6b6so75884241.2; 
+ Wed, 05 Mar 2025 20:26:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741235217; x=1741840017; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Bx4puBQivAuJsOLPt8xU6PKXp2qZnrQ/J/frK9k7Hss=;
+ b=Kem77jMe6Nk3Vj6G3wPlbztGu0SS5olLWUu/K6caOtD9A+jNx8wA8KIStGhx0B0PF0
+ OF1Aj9iyD8xALTOaLUsz4th7Nkmc6qH51ql2rpr8DKz0YV54+Prqbdh8yAN7QRg/0koz
+ zEMExsw+f8kZ5jbBOH0ovJK7Rc/+iDAZnHWI8rn1gDs+rtdmSNGq1nGpJL7dsQWIphm3
+ Bd2/70JJo90hwhXei4d8XPUC9XVMQrI6Hnv7Bssytcbj14MiTudS9Fl1mAobcADcPy//
+ tKq7BLiJrG8dGrBMgcFFS1uwopLWXeDP97CsYyt9dO3ffqHh0mSoSzSC7qE7+OLTwKfc
+ cSvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741235217; x=1741840017;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Bx4puBQivAuJsOLPt8xU6PKXp2qZnrQ/J/frK9k7Hss=;
+ b=CVVPrPhCCNpkDsmDRoXX4CgmV6xC1nwbf+ihOESHpZL30EWkDHLQjerkqyO+nsvVUv
+ Ik8c5EQxgNz7s8yDKwN5jLQVGrhovx3WS3ZvQnw5NFZauGrCzDP5bUNupaphHfEPlHn7
+ ng9+EW/FCGRxeTiMO6P18RlJK4I8XF9sMGb8AWpiRwEMCSePGexWmFF2OsiMpn7XscgD
+ 1U2tVR8ywmElbt78p4pDQmI0RgXl+0g5wQZ0ZqD5Srkrn5tldzC1xfX4dEvYfQ/+puZB
+ 0Ecuvp8WmmBoONw6QGZA4zXWV7kapZ7KIenrkIra53572eIsP7RLbAIsJLF/bFkqVH4A
+ 1moA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdO8pTPblVN/S2K7ANAh0VcvBvrZFmeptv7AYkjYmrdJGpiyx1BcHNNN9NCihZMP3YBd2rvNjyDEP7@nongnu.org
+X-Gm-Message-State: AOJu0YyBNuTmRPEPDpHUBWGy7AXEreCZqIPxn3VTFzCGpit+NnUnHowd
+ vDjcVhU4gkH1U0s76FdZrN1iBa1EpMw7BPJgR26PLRQhsEhzH3kgbQhPYG++6RXYyzh3XJAoOWd
+ 5HJ/5zsjAcAlRCfviSB6r2Nzdi2Suxxs+q1A=
+X-Gm-Gg: ASbGncsFMPORgzc9JgU2KZ0UaEH2pKOZbRgqO4UtS0gbPHDfbj++VTCnawvrkjSHQD/
+ 8CQJ/oQ8P1yw0rx9+TKRk/quJONB2IlOXAzNn7w2a/9VHUH6RaCb47dP7CatwZq5y/ABVbrsN0i
+ jMqh64MrpCAp9Pmwv73IsU/r1sGkZITmNUnexu19yIWsHk2QAqxvcU+MYO
+X-Google-Smtp-Source: AGHT+IGt7liEHiYLg/aNMzsZVNt7yRjQ+Z+sXzvzbtMiiUEjE8McDEqNUsxt/FHw8OKzvOiqSMwRCFsb4kKH4Ldtjx4=
+X-Received: by 2002:a05:6102:2ac6:b0:4c1:9439:f70 with SMTP id
+ ada2fe7eead31-4c2e279ede5mr3470495137.6.1741235217338; Wed, 05 Mar 2025
+ 20:26:57 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] hw/ppc: Implement saving CPU state in Fadump
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-References: <20250217071711.83735-1-adityag@linux.ibm.com>
- <20250217071711.83735-5-adityag@linux.ibm.com>
- <33bb8b6e-5a48-4242-9a52-598aff99fbbe@linux.ibm.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <33bb8b6e-5a48-4242-9a52-598aff99fbbe@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Y7nsN_XNqlkAFB9s4674ZzV6AKkFl4We
-X-Proofpoint-ORIG-GUID: bDsB7--7nRIcXHzQ6NSLxV3zhggqzTtA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-06_02,2025-03-05_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
- bulkscore=0 adultscore=0 spamscore=0 mlxlogscore=999 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503060025
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250225005446.13894-1-sebastian.huber@embedded-brains.de>
+ <20250225005446.13894-7-sebastian.huber@embedded-brains.de>
+In-Reply-To: <20250225005446.13894-7-sebastian.huber@embedded-brains.de>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 6 Mar 2025 14:26:31 +1000
+X-Gm-Features: AQ5f1JpTLzjlLU10vX9g_DQGXPtA8Ysjh21ABxtlj0xqPHNkFF_odsjqJtHVtlU
+Message-ID: <CAKmqyKNYpuryP6b6QqdDJ9Ov14AnoRYxmwKcKh00FFL7-m3eLg@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] hw/riscv: microchip_pfsoc: Rework documentation
+To: Sebastian Huber <sebastian.huber@embedded-brains.de>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Conor Dooley <conor.dooley@microchip.com>, Bin Meng <bin.meng@windriver.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,279 +97,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/03/25 12:53, Harsh Prateek Bora wrote:
+On Tue, Feb 25, 2025 at 10:55=E2=80=AFAM Sebastian Huber
+<sebastian.huber@embedded-brains.de> wrote:
+>
+> Mention that running the HSS no longer works.  Document the changed boot
+> options.  Reorder documentation blocks.  Update URLs.
+>
+> Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
 
->
->
-> On 2/17/25 12:47, Aditya Gupta wrote:
->> <...snip...>
->>
->> +        case FADUMP_CPU_STATE_DATA: {
->> +            struct rtas_fadump_reg_save_area_header reg_save_hdr;
->> +            struct rtas_fadump_reg_entry **reg_entries;
->> +            struct rtas_fadump_reg_entry *curr_reg_entry;
->> +
->> +            uint32_t fadump_reg_entries_size;
->> +            __be32 num_cpus = 0;
->> +            uint32_t num_regs_per_cpu = 0;
->> +            CPUState *cpu;
->> +            CPUPPCState *env;
->> +            PowerPCCPU *ppc_cpu;
->> +
->> +            CPU_FOREACH(cpu) {
->> +                ++num_cpus;
->> +            }
->> +
->> +            reg_save_hdr.version = cpu_to_be32(1);
->
-> PAPR spec mentions version value as 0. Do we need to update ?
-Yes, will fix, thanks Harsh.
->
->> +            reg_save_hdr.magic_number =
->> +                cpu_to_be64(fadump_str_to_u64("REGSAVE"));
->> +
->> +            /* Reg save area header is immediately followed by num 
->> cpus */
->> +            reg_save_hdr.num_cpu_offset =
->> +                cpu_to_be32(sizeof(struct 
->> rtas_fadump_reg_save_area_header));
->> +
->
-> Above inits could go into a helper 
-> fadump_init_reg_save_header(&reg_save_hdr);
-> BTW, the PAPR spec also mentions about padding followed by 
-> num_cpus_offset, see another comment later below.
->
->
->> +            fadump_reg_entries_size = num_cpus *
->> +                                      FADUMP_NUM_PER_CPU_REGS *
->> +                                      sizeof(struct 
->> rtas_fadump_reg_entry);
->> +
->> +            reg_entries = malloc(fadump_reg_entries_size);
->
-> This was declared as double pointer, but being used as a pointer.
-Agreed, not needed to keep it as double pointer. My initial plan for 
-this variable was different, that's why i was using double pointer 
-earlier to point to a list of CPU registers, and each CPU registers 
-itself an array. Not needed in current implementation. Will fix it.
->
->> +            curr_reg_entry = (struct rtas_fadump_reg_entry 
->> *)reg_entries;
->> +
->> +            /* This must loop num_cpus time */
->> +            CPU_FOREACH(cpu) {
->> +                ppc_cpu = POWERPC_CPU(cpu);
->> +                env = cpu_env(cpu);
->> +                num_regs_per_cpu = 0;
->> +
->> +                curr_reg_entry->reg_id =
->> +                    cpu_to_be64(fadump_str_to_u64("CPUSTRT"));
->> +                curr_reg_entry->reg_value = ppc_cpu->vcpu_id;
->> +                ++curr_reg_entry;
->> +
->> +#define REG_ENTRY(id, val) \
->> +                do { \
->> +                    curr_reg_entry->reg_id =                   \
->> +                        cpu_to_be64(fadump_str_to_u64(#id)); \
->> +                    curr_reg_entry->reg_value = val;           \
->> +                    ++curr_reg_entry; \
->> +                    ++num_regs_per_cpu; \
->> +                } while (0)
->> +
->> +                REG_ENTRY(ACOP, env->spr[SPR_ACOP]);
->> +                REG_ENTRY(AMR, env->spr[SPR_AMR]);
->> +                REG_ENTRY(BESCR, env->spr[SPR_BESCR]);
->> +                REG_ENTRY(CFAR, env->spr[SPR_CFAR]);
->> +                REG_ENTRY(CIABR, env->spr[SPR_CIABR]);
->> +
->> +                /* Save the condition register */
->> +                uint64_t cr = 0;
->> +                cr |= (env->crf[0] & 0xf);
->> +                cr |= (env->crf[1] & 0xf) << 1;
->> +                cr |= (env->crf[2] & 0xf) << 2;
->> +                cr |= (env->crf[3] & 0xf) << 3;
->> +                cr |= (env->crf[4] & 0xf) << 4;
->> +                cr |= (env->crf[5] & 0xf) << 5;
->> +                cr |= (env->crf[6] & 0xf) << 6;
->> +                cr |= (env->crf[7] & 0xf) << 7;
->> +                REG_ENTRY(CR, cr);
->
-> ppc_get_cr ?
-Thanks, will use it.
->
->> +
->> +                REG_ENTRY(CTR, env->spr[SPR_CTR]);
->> +                REG_ENTRY(CTRL, env->spr[SPR_CTRL]);
->> +                REG_ENTRY(DABR, env->spr[SPR_DABR]);
->> +                REG_ENTRY(DABRX, env->spr[SPR_DABRX]);
->> +                REG_ENTRY(DAR, env->spr[SPR_DAR]);
->> +                REG_ENTRY(DAWR0, env->spr[SPR_DAWR0]);
->> +                REG_ENTRY(DAWR1, env->spr[SPR_DAWR1]);
->> +                REG_ENTRY(DAWRX0, env->spr[SPR_DAWRX0]);
->> +                REG_ENTRY(DAWRX1, env->spr[SPR_DAWRX1]);
->> +                REG_ENTRY(DPDES, env->spr[SPR_DPDES]);
->> +                REG_ENTRY(DSCR, env->spr[SPR_DSCR]);
->> +                REG_ENTRY(DSISR, env->spr[SPR_DSISR]);
->> +                REG_ENTRY(EBBHR, env->spr[SPR_EBBHR]);
->> +                REG_ENTRY(EBBRR, env->spr[SPR_EBBRR]);
->> +
->> +                REG_ENTRY(FPSCR, env->fpscr);
->> +                REG_ENTRY(FSCR, env->spr[SPR_FSCR]);
->> +
->> +                /* Save the GPRs */
->> +                for (int gpr_id = 0; gpr_id < 32; ++gpr_id) {
->> +                    curr_reg_entry->reg_id =
->> + cpu_to_be64(fadump_gpr_id_to_u64(gpr_id));
->> +                    curr_reg_entry->reg_value = env->gpr[i];
->> +                    ++curr_reg_entry;
->> +                    ++num_regs_per_cpu;
->> +                }
->> +
->> +                REG_ENTRY(IAMR, env->spr[SPR_IAMR]);
->> +                REG_ENTRY(IC, env->spr[SPR_IC]);
->> +                REG_ENTRY(LR, env->spr[SPR_LR]);
->> +
->> +                REG_ENTRY(MSR, env->msr);
->> +                REG_ENTRY(NIA, env->nip);   /* NIA */
->> +                REG_ENTRY(PIR, env->spr[SPR_PIR]);
->> +                REG_ENTRY(PSPB, env->spr[SPR_PSPB]);
->> +                REG_ENTRY(PVR, env->spr[SPR_PVR]);
->> +                REG_ENTRY(RPR, env->spr[SPR_RPR]);
->> +                REG_ENTRY(SPURR, env->spr[SPR_SPURR]);
->> +                REG_ENTRY(SRR0, env->spr[SPR_SRR0]);
->> +                REG_ENTRY(SRR1, env->spr[SPR_SRR1]);
->> +                REG_ENTRY(TAR, env->spr[SPR_TAR]);
->> +                REG_ENTRY(TEXASR, env->spr[SPR_TEXASR]);
->> +                REG_ENTRY(TFHAR, env->spr[SPR_TFHAR]);
->> +                REG_ENTRY(TFIAR, env->spr[SPR_TFIAR]);
->> +                REG_ENTRY(TIR, env->spr[SPR_TIR]);
->> +                REG_ENTRY(UAMOR, env->spr[SPR_UAMOR]);
->> +                REG_ENTRY(VRSAVE, env->spr[SPR_VRSAVE]);
->> +                REG_ENTRY(VSCR, env->vscr);
->> +                REG_ENTRY(VTB, env->spr[SPR_VTB]);
->> +                REG_ENTRY(WORT, env->spr[SPR_WORT]);
->> +                REG_ENTRY(XER, env->spr[SPR_XER]);
->> +
->> +                /*
->> +                 * Ignoring transaction checkpoint and few other 
->> registers
->> +                 * mentioned in PAPR as not supported in QEMU
->> +                 */
->> +#undef REG_ENTRY
->> +
->> +                /* End the registers for this CPU with "CPUEND" reg 
->> entry */
->> +                curr_reg_entry->reg_id =
->> +                    cpu_to_be64(fadump_str_to_u64("CPUEND"));
->> +
->> +                /* Ensure the number of registers match (+2 for STRT 
->> & END) */
->> +                assert(FADUMP_NUM_PER_CPU_REGS == num_regs_per_cpu + 
->> 2);
->> +
->> +                ++curr_reg_entry;
->> +            }
->> +
->> +            cpu_state_len = 0;
->> +            cpu_state_len += sizeof(reg_save_hdr);     /* reg save 
->> header */
->> +            cpu_state_len += sizeof(__be32);           /* num_cpus */
->> +            cpu_state_len += fadump_reg_entries_size;  /* reg 
->> entries */
->> +
->
-> above 4 inits could be a single line init.
-Yes it could be, but i kept it this way as it looks more readable to me 
-with the comments, what do you think ?
->
->> +            cpu_state_region = &fdm->rgn[i];
->> +            cpu_state_addr = dest_addr;
->> +            cpu_state_buffer = g_malloc(cpu_state_len);
->> +
->> +            uint64_t offset = 0;
->> +            memcpy(cpu_state_buffer + offset,
->> +                    &reg_save_hdr, sizeof(reg_save_hdr));
->> +            offset += sizeof(reg_save_hdr);
->> +
->> +            /* Write num_cpus */
->> +            num_cpus = cpu_to_be32(num_cpus);
->> +            memcpy(cpu_state_buffer + offset, &num_cpus, 
->> sizeof(__be32));
->> +            offset += sizeof(__be32);
->
-> As per PAPR spec, NumCpusOffset is followed by a padding of 0xC bytes
-> initialized to 0. Any reasons for skipping that here ?
-Missed that padding, didn't notice as kernel also was picking up the 
-correct num cpus in my testing, will fix this, and see how the kernel 
-got the correct value then.
->
->> +
->> +            /* Write the register entries */
->> +            memcpy(cpu_state_buffer + offset,
->> +                    reg_entries, fadump_reg_entries_size);
->> +            offset += fadump_reg_entries_size;
->> +
->> +            /*
->> +             * We will write the cpu state data later, as otherwise it
->> +             * might get overwritten by other fadump regions
->> +             */
->> +
->
-> Better to have a separate routine fadump_preserve_cpu_state_data() 
-> when the switch case logic grows this large, applies wherever applicable.
-Yes, multiple switch cases have huge logic in my patches, will move them 
-to helpers.
->
->>               break;
->> +        }
->>           case FADUMP_HPTE_REGION:
->>               /* TODO: Add hpte state data */
->>               break;
->> @@ -455,6 +623,34 @@ static bool fadump_preserve_mem(void)
->>           }
->>       }
->>   +    /*
->> +     * Write the Register Save Area
->> +     *
->> +     * CPU State/Register Save Area should be written after dumping the
->> +     * memory to prevent overwritting while saving other memory regions
->> +     *
->> +     * eg. If boot memory region is 1G, then both the first 1GB 
->> memory, and
->> +     * the Register Save Area needs to be saved at 1GB.
->> +     * And as the CPU_STATE_DATA region comes first than the
->> +     * REAL_MODE_REGION region to be copied, the CPU_STATE_DATA will 
->> get
->> +     * overwritten if saved before the 0GB - 1GB region is copied after
->> +     * saving CPU state data
->> +     */
->> +    cpu_physical_memory_write(cpu_state_addr, cpu_state_buffer, 
->> cpu_state_len);
->> +    g_free(cpu_state_buffer);
->> +
->> +    /*
->> +     * Set bytes_dumped in cpu state region, so kernel knows 
->> platform have
->> +     * exported it
->> +     */
->> +    cpu_state_region->bytes_dumped = cpu_to_be64(cpu_state_len);
->> +
->> +    if (cpu_state_region->source_len != 
->> cpu_state_region->bytes_dumped) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +                "CPU State region's length passed by kernel, doesn't 
->> match"
->> +                " with CPU State region length exported by QEMU");
->
->           return error ?
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Yes, will return PARAM_ERROR here ?
+Alistair
 
-
-Thanks Harsh for the detailed reviews.
-
-- Aditya Gupta
-
-
+> ---
+>  docs/system/riscv/microchip-icicle-kit.rst | 124 +++++++--------------
+>  1 file changed, 43 insertions(+), 81 deletions(-)
+>
+> diff --git a/docs/system/riscv/microchip-icicle-kit.rst b/docs/system/ris=
+cv/microchip-icicle-kit.rst
+> index 40798b1aae..9809e94b84 100644
+> --- a/docs/system/riscv/microchip-icicle-kit.rst
+> +++ b/docs/system/riscv/microchip-icicle-kit.rst
+> @@ -5,10 +5,10 @@ Microchip PolarFire SoC Icicle Kit integrates a PolarFi=
+re SoC, with one
+>  SiFive's E51 plus four U54 cores and many on-chip peripherals and an FPG=
+A.
+>
+>  For more details about Microchip PolarFire SoC, please see:
+> -https://www.microsemi.com/product-directory/soc-fpgas/5498-polarfire-soc=
+-fpga
+> +https://www.microchip.com/en-us/products/fpgas-and-plds/system-on-chip-f=
+pgas/polarfire-soc-fpgas
+>
+>  The Icicle Kit board information can be found here:
+> -https://www.microsemi.com/existing-parts/parts/152514
+> +https://www.microchip.com/en-us/development-tool/mpfs-icicle-kit-es
+>
+>  Supported devices
+>  -----------------
+> @@ -26,95 +26,48 @@ The ``microchip-icicle-kit`` machine supports the fol=
+lowing devices:
+>  * 2 GEM Ethernet controllers
+>  * 1 SDHC storage controller
+>
+> +The memory is set to 1537 MiB by default.  A sanity check on RAM size is
+> +performed in the machine init routine to prompt user to increase the RAM=
+ size
+> +to > 1537 MiB when less than 1537 MiB RAM is detected.
+> +
+>  Boot options
+>  ------------
+>
+> -The ``microchip-icicle-kit`` machine can start using the standard -bios
+> -functionality for loading its BIOS image, aka Hart Software Services (HS=
+S_).
+> -HSS loads the second stage bootloader U-Boot from an SD card. Then a ker=
+nel
+> -can be loaded from U-Boot. It also supports direct kernel booting via th=
+e
+> --kernel option along with the device tree blob via -dtb. When direct ker=
+nel
+> -boot is used, the OpenSBI fw_dynamic BIOS image is used to boot a payloa=
+d
+> -like U-Boot or OS kernel directly.
+> -
+> -The user provided DTB should have the following requirements:
+> -
+> -* The /cpus node should contain at least one subnode for E51 and the num=
+ber
+> -  of subnodes should match QEMU's ``-smp`` option
+> -* The /memory reg size should match QEMU=E2=80=99s selected ram_size via=
+ ``-m``
+> -* Should contain a node for the CLINT device with a compatible string
+> -  "riscv,clint0"
+> -
+> -QEMU follows below truth table to select which payload to execute:
+> -
+> -=3D=3D=3D=3D=3D =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D =3D=3D=3D=3D=3D=3D=3D
+> --bios    -kernel       -dtb payload
+> -=3D=3D=3D=3D=3D =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D =3D=3D=3D=3D=3D=3D=3D
+> -    N          N don't care     HSS
+> -    Y don't care don't care     HSS
+> -    N          Y          Y  kernel
+> -=3D=3D=3D=3D=3D =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D =3D=3D=3D=3D=3D=3D=3D
+> -
+> -The memory is set to 1537 MiB by default which is the minimum required h=
+igh
+> -memory size by HSS. A sanity check on ram size is performed in the machi=
+ne
+> -init routine to prompt user to increase the RAM size to > 1537 MiB when =
+less
+> -than 1537 MiB ram is detected.
+> -
+> -Running HSS
+> ------------
+> -
+> -HSS 2020.12 release is tested at the time of writing. To build an HSS im=
+age
+> -that can be booted by the ``microchip-icicle-kit`` machine, type the fol=
+lowing
+> -in the HSS source tree:
+> -
+> -.. code-block:: bash
+> -
+> -  $ export CROSS_COMPILE=3Driscv64-linux-
+> -  $ cp boards/mpfs-icicle-kit-es/def_config .config
+> -  $ make BOARD=3Dmpfs-icicle-kit-es
+> -
+> -Download the official SD card image released by Microchip and prepare it=
+ for
+> -QEMU usage:
+> -
+> -.. code-block:: bash
+> -
+> -  $ wget ftp://ftpsoc.microsemi.com/outgoing/core-image-minimal-dev-icic=
+le-kit-es-sd-20201009141623.rootfs.wic.gz
+> -  $ gunzip core-image-minimal-dev-icicle-kit-es-sd-20201009141623.rootfs=
+.wic.gz
+> -  $ qemu-img resize core-image-minimal-dev-icicle-kit-es-sd-202010091416=
+23.rootfs.wic 4G
+> -
+> -Then we can boot the machine by:
+> -
+> -.. code-block:: bash
+> -
+> -  $ qemu-system-riscv64 -M microchip-icicle-kit -smp 5 \
+> -      -bios path/to/hss.bin -sd path/to/sdcard.img \
+> -      -nic user,model=3Dcadence_gem \
+> -      -nic tap,ifname=3Dtap,model=3Dcadence_gem,script=3Dno \
+> -      -display none -serial stdio \
+> -      -chardev socket,id=3Dserial1,path=3Dserial1.sock,server=3Don,wait=
+=3Don \
+> -      -serial chardev:serial1
+> +The ``microchip-icicle-kit`` machine provides some options to run a firm=
+ware
+> +(BIOS) or a kernel image.  QEMU follows below truth table to select the
+> +firmware:
+>
+> -With above command line, current terminal session will be used for the f=
+irst
+> -serial port. Open another terminal window, and use ``minicom`` to connec=
+t the
+> -second serial port.
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +-bios          -kernel    firmware
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +none                    N this is an error
+> +none                    Y the kernel image
+> +NULL, default           N hss.bin
+> +NULL, default           Y opensbi-riscv64-generic-fw_dynamic.bin
+> +other          don't care the BIOS image
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> -.. code-block:: bash
+> +Direct Kernel Boot
+> +------------------
+>
+> -  $ minicom -D unix\#serial1.sock
+> +Use the ``-kernel`` option to directly run a kernel image.  When a direc=
+t
+> +kernel boot is requested, a device tree blob may be specified via the ``=
+-dtb``
+> +option.  Unlike other QEMU machines, this machine does not generate a de=
+vice
+> +tree for the kernel.  It shall be provided by the user.  The user provid=
+ed DTB
+> +should meet the following requirements:
+>
+> -HSS output is on the first serial port (stdio) and U-Boot outputs on the
+> -second serial port. U-Boot will automatically load the Linux kernel from
+> -the SD card image.
+> +* The ``/cpus`` node should contain at least one subnode for E51 and the=
+ number
+> +  of subnodes should match QEMU's ``-smp`` option.
+>
+> -Direct Kernel Boot
+> -------------------
+> +* The ``/memory`` reg size should match QEMU=E2=80=99s selected RAM size=
+ via the ``-m``
+> +  option.
+>
+> -Sometimes we just want to test booting a new kernel, and transforming th=
+e
+> -kernel image to the format required by the HSS bootflow is tedious. We c=
+an
+> -use '-kernel' for direct kernel booting just like other RISC-V machines =
+do.
+> +* It should contain a node for the CLINT device with a compatible string
+> +  "riscv,clint0".
+>
+> -In this mode, the OpenSBI fw_dynamic BIOS image for 'generic' platform i=
+s
+> -used to boot an S-mode payload like U-Boot or OS kernel directly.
+> +When ``-bios`` is not specified or set to ``default``, the OpenSBI
+> +``fw_dynamic`` BIOS image for the ``generic`` platform is used to boot a=
+n
+> +S-mode payload like U-Boot or OS kernel directly.
+>
+>  For example, the following commands show building a U-Boot image from U-=
+Boot
+>  mainline v2021.07 for the Microchip Icicle Kit board:
+> @@ -146,4 +99,13 @@ CAVEATS:
+>    ``u-boot.bin`` has to be used which does contain one. To use the ELF i=
+mage,
+>    we need to change to CONFIG_OF_EMBED or CONFIG_OF_PRIOR_STAGE.
+>
+> +Running HSS
+> +-----------
+> +
+> +The machine ``microchip-icicle-kit`` used to run the Hart Software Servi=
+ces
+> +(HSS_), however, the HSS development progressed and the QEMU machine
+> +implementation lacks behind.  Currently, running the HSS no longer works=
+.
+> +There is missing support in the clock and memory controller devices.  In
+> +particular, reading from the SD card does not work.
+> +
+>  .. _HSS: https://github.com/polarfire-soc/hart-software-services
+> --
+> 2.43.0
+>
 
