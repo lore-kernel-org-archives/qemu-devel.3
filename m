@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A55BC28B23
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 22:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 322C5C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 22:10:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqJPq-00015s-FY; Thu, 06 Mar 2025 17:10:06 -0500
+	id 1tqJPa-0000iP-Qk; Thu, 06 Mar 2025 17:09:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqJPn-0000wL-08
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:10:03 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tqJPY-0000iH-P3
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:09:48 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqJPk-0005RM-Vf
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:10:02 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-22334203781so46839425ad.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 14:10:00 -0800 (PST)
+ id 1tqJPX-0005QU-0c
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:09:48 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-223cc017ef5so24434325ad.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 14:09:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741298999; x=1741903799; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741298985; x=1741903785; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=50Yb4m4RoUbCo+jFNAyXQr1aRoOzdBZYd0J5HNF539k=;
- b=D8vBqR9p3zFAHbul0RItv7k65huuuw92jY9yUwXHHFBVBz16Y1fE4HExpzbT9Nldr7
- oHmQpujQPNUwyxN6wgjQ8DhqHbkQpl7pqRUQe/IAtzlWr6rrYubojDZpLUsY//dwamsu
- G/4UqRAX8YrwuXJ7hMCa2j4zHzsJ15kGdvjuuetS3swihZKt35NNeUw5dnpDBtr5Zs4i
- 5N3dynNrlaDrew9UV1IJ2/vHqbty9Mc07lQ0NCrQDh4qs+eQnBLT/YtCm4Ul/Z566INz
- zV6B9HFBkCRINYaxMLxputSxdvDIlkQ5p75yfpRJj21aeoci+cM221RDl9n6pvAI5EhK
- /M7A==
+ bh=197N/sLLhaFlD6ueIYkgzFwKq+QiA+TqVrks6EWNrp4=;
+ b=lA8KeFTLx4NzXaYd+1Bsh7QsvRSJrsHvHxdruC3R4/IXCZtEFICTK9qp3HBiCiQWFg
+ VJkMS5L8jOlqHXZHl8lgvW/SsGm7/83c/zTuT/6lAIZiqY3k5RSmJddL/5jRpaVKwXBS
+ 7KhN6VbydH0P1P1dJx9norvJjQUMXZajI+GOC2/UGZyHA9zxKGWGNGS7/xAYWpKq2AN/
+ Y0Otgzo62pbndrHlCjX10OITKMaDFybjB0uJ3ekVVXyfbCGjgh5XC65C0NLtRpyo/EtG
+ FIaK2DajqDehnWaSifMbuVkR2zf6JLHB9DNYtm62AFkXQLAZLnHTVGWoXpaz4hPkYr1p
+ DE0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741298999; x=1741903799;
+ d=1e100.net; s=20230601; t=1741298985; x=1741903785;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=50Yb4m4RoUbCo+jFNAyXQr1aRoOzdBZYd0J5HNF539k=;
- b=YL5fkJUn2BcgvL/3m2LnaANCW4uo3+GaS+GzcGfQDynyT4USh0zQXTK1TM1xkv4Tga
- rAv7vk2sdiMUk3DCISSiclsW6ohjvzhuJe5lgGNCdMxss8flCKBC1GNK9fuvs3BH8DnK
- mctTuyxWkRxBtCCoO64yDZ1hEHXr7m8aWF+KLgMCLfcE+hgLOuFX3Jg6mCQg68M/trHj
- +MwmSIdC7JBQke0/fWaez1cxkkuAmzN07iayZ0llD81/bsahQ6nfEwa2nYUW9IxJ9QV2
- joH8Tmv8rQfdNACyTRYd+rwBzEEvH1tRE+jSv5Si8RiREHW1cFXyvDxsHkJazcJo5/kM
- bfPQ==
-X-Gm-Message-State: AOJu0Yzhs2LqugZEWpvGJ3WgnLuzZwNC3LAimIlN5/R4jm9r2s+fg8PY
- X0MIyb+dll7/jzp2kSAzTbLa58KlAqzNpDGSRZPLlLvrQ9ICYgxC42JSIYV0IFa0ghMr7YM6gjR
- I
-X-Gm-Gg: ASbGncu8IRVEDf/sYRqfeU8sTp4AdZP5ClL81YOTowGpTE/eutapdc+rCeGEVu9I/if
- 7fItn8rG/zF/cXepM/67Vp818nQouks9gKa7TkS9llxvem0QOmEfve0NuWNWYwhc7u6SMJQPtYo
- t9yFCuH2AwEBdbFdxRib2ZYiUBLl+5zEUniW4n1QIC34P18MSolRPfRGknck5E2oTPym7G5jg30
- 5LYrNFc2RITJysnHkLIYw5HHbORUs4FX03FxrJNVTcXCW6jpmCsiRurORNGSRPil3CtzSOdf8Ml
- oSwHzramfG+E99Dbha24uHAxHYuCrmYT5aJKwOA8XAmOJ0U9KexIThhiqRZiWiR7CFR1rP+EQFe
- GXRHRbQIq
-X-Google-Smtp-Source: AGHT+IHpQjcF1QnP1dhgR8zU3aXqjjbYY6xIJaxiazfPOHGoi5foYIFmMRtEd2XcSdlOFe3PLR2Eow==
-X-Received: by 2002:a05:6a00:3397:b0:734:26c6:26d3 with SMTP id
- d2e1a72fcca58-73693e85ddcmr9941371b3a.5.1741298999456; 
- Thu, 06 Mar 2025 14:09:59 -0800 (PST)
+ bh=197N/sLLhaFlD6ueIYkgzFwKq+QiA+TqVrks6EWNrp4=;
+ b=pSXVT7NQq2B0OtNT1JNHPtO78/lg9CjXYEI3skCtrSxYpqJe8tzlE+NELPXPNegnj4
+ KqO7ELz8zHKGYO5lmmfUhaRybP30ndH9tQNaK5593ClNKpMemY6qmUvtm+6Xf8ohgCO8
+ RpBvPCxrXwfr4huwhec8q7sYhCR1K1yy+fW1FxBHPS/D8T9/xxOuG2QyTuIhOdB7E0jR
+ E0BIqzMZAdAyWe86QKTjCEDsNFCmhANTkcVmBSB2QtsZRGFyOiuis3wW69AN/DSz9XJE
+ d/eRhcOQmGWAZWe/G4nZ6AAW112EfZXDla2VPC0UH78CfwmuL+6dFU+vxnDL71xWyvdD
+ V5/Q==
+X-Gm-Message-State: AOJu0YygBKzFKUwWIjLG+Le8AwdeymhfeKo6AEOiBUxQWXdHiXt/96ym
+ xGvEmhL+BHi2FSCpmcod5dEzxAv2ypON3PsPhmU6eN/38ibU38Y4ubjCrlI4L9LFTyF9J4kRsPI
+ m
+X-Gm-Gg: ASbGncvBVu7w/ks8uPbom+HzHpHBlBSNiRZ7HQuo0HPWkrtfgMLGR9uuUcAtr4e9oMu
+ oe5oQIMdc/Y6dFtllMU+XiOjW7VXRiizn7QNbv5zMwpwTgC/LHRhjE28YwIXfDe2Gfz0FL+/eRF
+ jjCLnYLnIAcfTIhtQAOGdT/zk1oivqInRkoTg5x5Qr3tocCoG8vpKqI0XTNOrE38MKQMsPIC5BC
+ 0GCuUNn4wu3VV8Nmw6IQl63DKSHh3VR9F3KQwNWfmCXPtLQSQhsdcKm9XckuZh6hWcDs7S3HfK+
+ EQGLjvDExPWvSi1wU0nC6PYz9C7lnwOMSnZLv4HSkLB3spuWoSF2rqjBaB/kajywka7JE3CiYRu
+ 4xNr2Yk4k
+X-Google-Smtp-Source: AGHT+IF/BU7BZZeJ/aErC83E+VUqPGSKTLVBAxMNa2nju7snGHvoIUI1bTWj+qFaJDO4gDULtLQB+g==
+X-Received: by 2002:a17:902:e5d2:b0:223:3b76:4e22 with SMTP id
+ d9443c01a7336-22428886738mr13018785ad.6.1741298984914; 
+ Thu, 06 Mar 2025 14:09:44 -0800 (PST)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736982456d8sm1874321b3a.46.2025.03.06.14.09.58
+ d9443c01a7336-224109e974fsm17585855ad.78.2025.03.06.14.09.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 14:09:59 -0800 (PST)
-Message-ID: <ade4a142-d304-44e0-8888-a0d61569fe7d@linaro.org>
-Date: Thu, 6 Mar 2025 14:09:57 -0800
+ Thu, 06 Mar 2025 14:09:44 -0800 (PST)
+Message-ID: <d886ab14-fbd4-4414-8519-fdb1a718c703@linaro.org>
+Date: Thu, 6 Mar 2025 14:09:43 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] linux-user/arm: Remove unused get_put_user macros
+Subject: Re: [PATCH 03/10] linux-user/aarch64: Remove unused get/put_user
+ macros
 To: qemu-devel@nongnu.org
 References: <20250306163925.2940297-1-peter.maydell@linaro.org>
- <20250306163925.2940297-5-peter.maydell@linaro.org>
+ <20250306163925.2940297-4-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250306163925.2940297-5-peter.maydell@linaro.org>
+In-Reply-To: <20250306163925.2940297-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,19 +105,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/6/25 08:39, Peter Maydell wrote:
-> In linux-user/arm/cpu_loop.c we define a full set of get/put
-> macros for both code and data (since the endianness handling
-> is different between the two). However the only one we actually
-> use is get_user_code_u32(). Remove the rest.
-> 
-> We leave a comment noting how data-side accesses should be handled
-> for big-endian, because that's a subtle point and we just removed the
-> macros that were effectively documenting it.
+> At the top of linux-user/aarch64/cpu_loop.c we define a set of
+> macros for reading and writing data and code words, but we never
+> use these macros. Delete them.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   linux-user/arm/cpu_loop.c | 43 ++++-----------------------------------
->   1 file changed, 4 insertions(+), 39 deletions(-)
+>   linux-user/aarch64/cpu_loop.c | 48 -----------------------------------
+>   1 file changed, 48 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
