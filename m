@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDDBBC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390A8C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:48:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDS1-0007FO-8n; Thu, 06 Mar 2025 10:47:57 -0500
+	id 1tqDRx-0007E4-QV; Thu, 06 Mar 2025 10:47:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRz-0007Ey-SO
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:55 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRw-0007Cz-48
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:52 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRy-0006DM-Al
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:55 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-39127512371so627363f8f.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:47:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRt-0006D0-Vk
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:51 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-390d98ae34dso663145f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:47:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276072; x=1741880872; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741276068; x=1741880868; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=keumHK/xGB74dShNqulk/5Z/c6mVK2UvLucS0OMjfzY=;
- b=mfOo+0B7IsEnV/LTFZcIjpsGj4Wqjv5JOZq+Wly0pYw22/Qsbs1N1AAoZrKCXUwWTS
- 62ci6XX+7WqBXgWJvRt67S9x+7FytA9ByR9cVXi9vkwSOT3a25lHVIHjCKdSyfQNFfgy
- laotQEt/PORnArEl//TCWD3QsXKZ18xy67ecTIzlFtogXZ4VZSDkSVP/y+vKUbvZxnnA
- 4khjtq6L2glER2+YzC6Z5o6Nu8VL0XYDF93CkcUNItcSASM8EGUKQ5RIiylsVFwT2QUZ
- dckQJin+rSQ74H6IEgpld2GMknSNnvn4c/1DeaSarG+2PP9diCWfsW4UfWNlAw5LzbBF
- a5/g==
+ :reply-to; bh=ps7cd0cxm4BakNCXqH/ls7rCDQIclvSwSBPha/6qx+g=;
+ b=MJR5X6KWHHqFSltW1MnEN6Xd7wOJb1xtwEv3yrZkY+4iSU3atvK1O7uY5wrplQ2bl3
+ gAjKHQlp06ZQhcek02Asn4Bjspi8Ac5CsOZqGQEuCxo10+kIq5Dzz/2QVS/9JP9CsbRp
+ jRAH42BxkeT3LDKwvM/vicSYjgYCoVzSYHKJmLOqxl6hlfhGg/6oCGvbp34+csRrKTSq
+ WBZ3S6B6nAyCE/hgMJdDSgO+LJOevbw6tiuT+1sI1vgmaVTyMfoXnKasqV4vY38cRI5G
+ 60oB6cnKMMOCs7bwBe1EZ5qMh9vVTw82kH7NDUBMtKRp32UsbLhSW7tXZ8Yh3ve6kVhQ
+ Ls3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276072; x=1741880872;
+ d=1e100.net; s=20230601; t=1741276068; x=1741880868;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=keumHK/xGB74dShNqulk/5Z/c6mVK2UvLucS0OMjfzY=;
- b=egORtYPpY9/VtdTN89g7mons0oSbYfLyCQfTZbznEfDdOU3CmvRPbAsjK4xTeCjLee
- AI5lsw3pK3cLHwiKNlYC4O1V5LaW9j5U7XC4d4wzvOT0AWbmAwnPezI/wYt9uuj6tB22
- UrIYirJmQmQqM7NUJd3VcjLRrlAbgZ2STS032nVWNHXy/TICYXIqv35+Tg/83w1lV2mj
- ULcN9VzCyYpoSdk1Kn2axYmv69pszZeCxfDVhuOfuKLcsEd+BN8pFqDRH+KcXTFlHWjK
- 4Sw1BqYhW80tTq85FYJY0D4xuDA+iTSjDW6Ys+oxGHL3h1SX3XvFGhQhRB9eo0XYMpzF
- r0Vg==
-X-Gm-Message-State: AOJu0YwL/TnjQMHckunH++n1Ndzl7eJB9e575bF9jGGO7/UE7pCtBYxx
- d1/DcCzm4bdZ6UiJHxOcZHpho0zF7WayNzHLGmwpBTZjXBD15OzayzbTBaIdvWKLyUDALiejjGg
- MiOw=
-X-Gm-Gg: ASbGncuJegh/KTKrSORV6O2zwpMyJUar3h4gw7tdnJHWtAGZC7MOtl+OYnO+JtgGCSv
- KjW+9qSUlqcLQjoKpF0F6MkVIq9fMkoWv11yx1Me8pH1s9+uulcVqyOnPsHYeP2dn7SZ+3gptmV
- 6upVQp+kuowrtwQ/obxqE6dA+EYSV7W5XymM/HWwryO5UXlA9muYEiny2FM68oGKILVjZH6MUOi
- A5OpbblQfLG+xabBB4cs6CD311Wm+l1aupeGO3/VDxQbKbAcco95FGv5oH6ysu1dzba139wvc4C
- dki4PBTZ1aBYG4U0500/Ztt+19owF7mqDKSUjBqEkwmNksIkA/DrDYHbeSO4Lc14KX9YAqbpwHg
- JWNrw1Mpb1P54+dAxneQ=
-X-Google-Smtp-Source: AGHT+IHIPwAgUmDOJbT8oesttxWDkLwRMDZI6dbZvHgFzA9Fs1H9+ME+8UsLVwBKo6h0CBxYMDRbwQ==
-X-Received: by 2002:a05:6000:1864:b0:391:22a9:4408 with SMTP id
- ffacd0b85a97d-39122a9453cmr7996914f8f.16.1741276072503; 
- Thu, 06 Mar 2025 07:47:52 -0800 (PST)
+ bh=ps7cd0cxm4BakNCXqH/ls7rCDQIclvSwSBPha/6qx+g=;
+ b=FKITAkjV3TXw7oNAjMZvyB/SPntdgiAtUjucalCIVCjHof44djfAsMGesN1+04PVih
+ hH3lrsFw8KyqUqVZJaGobafK2xo8pn8NEfcHvSyGhsSAXqxftgnEtxF8ndJIup2FbdpK
+ 1PPnJU1LsfBsD67P9znZXGtcem/wyYJOJs68j0bPTITAbf1BIWbj0z9uXpmAEraiwDF1
+ zCX115jyD5lcPvbtJ6I/cbbJSiJ1vF+MDsfKY3+ggluGY305ZG4iWwoiBWkktq4hrRdP
+ ayWM798s3K1ELqYOCnQWinrizPaFdkww5l+zl3DFDencpaUw2XL9uloxdV0DMXxU0WT+
+ tpDA==
+X-Gm-Message-State: AOJu0Yza0ulm8arnjGxP1x545coJ9Rj8C/hvF7Jnwil35VnyeokFhd0m
+ jaG6kFoV4RWYI9n/PsCYgYYRvxfHxZm2/KhiDUDhabUWyXwvxzQ2XPbl88Hj3DNLJFcvyVy1/p8
+ HtCE=
+X-Gm-Gg: ASbGncvZ+rg7B80tPrJpmOO80D4TK4LHSiyeDDC9mWSXthTiSki08lodn1tBVmqS+KE
+ wG/TzckAkfLmsAKxnjw3wVE6dfVqfRvnCK+JPE3bB2RNeJ4ixc4+TA/5MP2JQQjr+Wzoy2j3sJ5
+ c90EDLHtjCja7TNnG8Si3j5hq/kI/mMJr5NJhnHrUYVNyPxJ9jph3DpPRm96oxTaVNYeaXnyJMG
+ sprOFzxPwkgNuGc1CWr7BIMXjWDGgxdGfNBkFoxJoJEQ9W78Xh9bTna9xVoRcPBH+ECEsjhi3Ga
+ oPoOTNDNYOGwTAQmkOs6NQZZpXQ8xWgz5ZvXldSWmT6531C6yL+beXTOXS41OMo6B0yDbMNDFdo
+ AbCKiNpgZ6TYWJ7rq6fU=
+X-Google-Smtp-Source: AGHT+IEbtpagiNqwY2dxBTpQiSYGjQmA8ttIT1BJ9tpsIb64z7hkClevq/hj9tW/wURNNY69MesUxA==
+X-Received: by 2002:a05:6000:4185:b0:390:e8ef:5e74 with SMTP id
+ ffacd0b85a97d-3911f74139emr5094381f8f.15.1741276068066; 
+ Thu, 06 Mar 2025 07:47:48 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfba66esm2442214f8f.18.2025.03.06.07.47.51
+ 5b1f17b1804b1-43bd42c55e6sm53006655e9.23.2025.03.06.07.47.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:47:52 -0800 (PST)
+ Thu, 06 Mar 2025 07:47:47 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/54] gdbstub: Check for TCG before calling tb_flush()
-Date: Thu,  6 Mar 2025 16:46:45 +0100
-Message-ID: <20250306154737.70886-4-philmd@linaro.org>
+Subject: [PULL 02/54] gdbstub: Clarify no more than @gdb_num_core_regs can be
+ accessed
+Date: Thu,  6 Mar 2025 16:46:44 +0100
+Message-ID: <20250306154737.70886-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
 References: <20250306154737.70886-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,57 +99,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the tcg_enabled() check so the compiler can elide
-the call when TCG isn't available, allowing to remove
-the tb_flush() stub.
+Both CPUClass::gdb_read_register() and CPUClass::gdb_write_register()
+handlers are called from common gdbstub code, and won't be called with
+register index over CPUClass::gdb_num_core_regs:
+
+  int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
+  {
+      CPUClass *cc = CPU_GET_CLASS(cpu);
+
+      if (reg < cc->gdb_num_core_regs) {
+          return cc->gdb_read_register(cpu, buf, reg);
+      }
+      ...
+  }
+
+  static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
+  {
+      CPUClass *cc = CPU_GET_CLASS(cpu);
+
+      if (reg < cc->gdb_num_core_regs) {
+          return cc->gdb_write_register(cpu, mem_buf, reg);
+      }
+      ...
+  }
+
+Clarify that in CPUClass docstring, and remove unreachable code on
+the microblaze and openrisc implementations.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250123234415.59850-4-philmd@linaro.org>
+Message-Id: <20250122093028.52416-3-philmd@linaro.org>
 ---
- accel/stubs/tcg-stub.c | 4 ----
- gdbstub/system.c       | 5 ++++-
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ include/hw/core/cpu.h       | 2 ++
+ target/microblaze/gdbstub.c | 5 -----
+ target/openrisc/gdbstub.c   | 5 -----
+ 3 files changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/accel/stubs/tcg-stub.c b/accel/stubs/tcg-stub.c
-index 7f4208fddf2..b2b9881bdfb 100644
---- a/accel/stubs/tcg-stub.c
-+++ b/accel/stubs/tcg-stub.c
-@@ -14,10 +14,6 @@
- #include "exec/tb-flush.h"
- #include "exec/exec-all.h"
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index fb397cdfc53..7b6b22c431b 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -124,7 +124,9 @@ struct SysemuCPUOps;
+  * @get_pc: Callback for getting the Program Counter register.
+  *       As above, with the semantics of the target architecture.
+  * @gdb_read_register: Callback for letting GDB read a register.
++ *                     No more than @gdb_num_core_regs registers can be read.
+  * @gdb_write_register: Callback for letting GDB write a register.
++ *                     No more than @gdb_num_core_regs registers can be written.
+  * @gdb_adjust_breakpoint: Callback for adjusting the address of a
+  *       breakpoint.  Used by AVR to handle a gdb mis-feature with
+  *       its Harvard architecture split code and data.
+diff --git a/target/microblaze/gdbstub.c b/target/microblaze/gdbstub.c
+index 09d74e164d0..d493681d38d 100644
+--- a/target/microblaze/gdbstub.c
++++ b/target/microblaze/gdbstub.c
+@@ -110,14 +110,9 @@ int mb_cpu_gdb_read_stack_protect(CPUState *cs, GByteArray *mem_buf, int n)
  
--void tb_flush(CPUState *cpu)
--{
--}
--
- G_NORETURN void cpu_loop_exit(CPUState *cpu)
+ int mb_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
  {
-     g_assert_not_reached();
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 8ce79fa88cf..7f047a285c8 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -22,6 +22,7 @@
- #include "system/cpus.h"
- #include "system/runstate.h"
- #include "system/replay.h"
-+#include "system/tcg.h"
- #include "hw/core/cpu.h"
- #include "hw/cpu/cluster.h"
- #include "hw/boards.h"
-@@ -171,7 +172,9 @@ static void gdb_vm_state_change(void *opaque, bool running, RunState state)
-         } else {
-             trace_gdbstub_hit_break();
-         }
--        tb_flush(cpu);
-+        if (tcg_enabled()) {
-+            tb_flush(cpu);
-+        }
-         ret = GDB_SIGNAL_TRAP;
-         break;
-     case RUN_STATE_PAUSED:
+-    CPUClass *cc = CPU_GET_CLASS(cs);
+     CPUMBState *env = cpu_env(cs);
+     uint32_t tmp;
+ 
+-    if (n > cc->gdb_num_core_regs) {
+-        return 0;
+-    }
+-
+     tmp = ldl_p(mem_buf);
+ 
+     switch (n) {
+diff --git a/target/openrisc/gdbstub.c b/target/openrisc/gdbstub.c
+index c2a77d5d4d5..45bba80d878 100644
+--- a/target/openrisc/gdbstub.c
++++ b/target/openrisc/gdbstub.c
+@@ -47,14 +47,9 @@ int openrisc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ 
+ int openrisc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+-    CPUClass *cc = CPU_GET_CLASS(cs);
+     CPUOpenRISCState *env = cpu_env(cs);
+     uint32_t tmp;
+ 
+-    if (n > cc->gdb_num_core_regs) {
+-        return 0;
+-    }
+-
+     tmp = ldl_p(mem_buf);
+ 
+     if (n < 32) {
 -- 
 2.47.1
 
