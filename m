@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 729FEC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B43CC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq4wF-0002j5-KK; Thu, 06 Mar 2025 01:42:36 -0500
+	id 1tq4vN-00020u-Of; Thu, 06 Mar 2025 01:41:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tq4w2-0002du-Gf; Thu, 06 Mar 2025 01:42:23 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tq4vz-0006Hh-1Y; Thu, 06 Mar 2025 01:42:20 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A354FF857F;
- Thu, 06 Mar 2025 09:41:35 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 252441C4FF0;
- Thu,  6 Mar 2025 09:42:15 +0300 (MSK)
-Message-ID: <f741f6da-46b6-499d-9432-11277b9dded6@tls.msk.ru>
-Date: Thu, 6 Mar 2025 09:42:15 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tq4vC-0001yx-Sf
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:41:30 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tq4vB-0006FE-7W
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:41:30 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-223959039f4so4517275ad.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 22:41:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741243287; x=1741848087; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wT8pzATX7z0g510B/bcUtetzdKIxpUlAXqTAPEA9Pmo=;
+ b=TX9YD6JUYameHKisYMzsZHECxTV8cv/iY96XkR4ANkGSj4h2zZEcd2vPeU0OHwG93s
+ ze7mxt0qDg0soI3ni5FocjqJPnu9hjqC+bEuCWFVKLJrHj9VtE5/7o91mat0G2t4YTin
+ qht8fqsf2eNO++3pU+f42cUtAxnGcszDLCMxQxCKUcD3cQIBlNnxq/lDGtZFffFTFxl2
+ wUiApHvOP7XiXN8+sUEshQXedaj49i8miqY3cyW9ylssyfUWHsgdGUGb8aX6c5cX6q5U
+ Sep2XxglVNsloiLPyg5JZa1eqOUOkMPAk8H39zJQL+J+NtDyV2x35loyXPgfjQ9LBVQm
+ FzAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741243287; x=1741848087;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wT8pzATX7z0g510B/bcUtetzdKIxpUlAXqTAPEA9Pmo=;
+ b=fJpAcb57YE9CH0YtuFgC+lFlM+IvUiuTN66P0ZfptvsuEewsdLi+BqTdiPPGaVM9y3
+ Q4i523PiYiqQ0PKfiR1bj3kml2SQlFyb84Y/LTiQUPGPFrcF6WEGZEDuO0G3Ma5MooD1
+ shWkrZF0Tw9iKZkTF3tyedFspSZY5hZoHH7Do2GBvUpSeEfm7NLg8W0g7PJbaw41v0My
+ R2xEKa0QPL91sxVAMlRah1iHpUlWVLxsuHvpGIChDAzKrvUdQjvjoituo4WHYnKbwKWp
+ +Oz+r2bpladnR4AWL758C+cU73tLs4fWEDBQeRvLAplzrE6hD6axv2e9fKv02Iiz+Eeb
+ 8yFw==
+X-Gm-Message-State: AOJu0YzYkJ9IYFv3dD5zNG3RawPR2xATwlxSRRpU02SUB0ogaik/g/di
+ FLf6xt/XXQvx+gPsLxHGe+ZTCX9T7QUzBdj5oDckBrCRTapCIohDs1qsCY+66vi3hBTBPo4a6Np
+ C
+X-Gm-Gg: ASbGnctZ5brq+z9MRE3SDOtsG/N+3G8sdr776L+ORi0pqv/dMjvrN/DVxgdI8h7HMwM
+ LIj5EqhoJXDhMLiLV0W2sbOiBMogACwK2P85Yt0HVNw9HbyGq/7oI0ZB04ZQarUPrybkqiSV1aV
+ usZnsbiFuTrI2TX5CiqO85c8pcu7XfIX7AdohrJaMg6B+QwhjPiEXE2tlCfpP5HUJpjmDjIcXbl
+ Cvjzip5q9FuDLkTub412Buuin+z0Crixae94Hvb52jw/1aa6/ob8oM1ngGx7kQtH9mIwo19JaQp
+ uBHUB0aQWM2X+Qon1RDZ5GM4QbVnz1vSx/ApggxbqXyl
+X-Google-Smtp-Source: AGHT+IFLB8iv4RFayusNn/dU8XKbHiB/II8ZC0o6pkKlvCRP8oMz/PdatWDGujnk6B+WsfH2+JYe+Q==
+X-Received: by 2002:a17:902:d2ca:b0:224:10a2:cae1 with SMTP id
+ d9443c01a7336-22410a2cdafmr13816755ad.37.1741243287140; 
+ Wed, 05 Mar 2025 22:41:27 -0800 (PST)
+Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22410a91cffsm4769355ad.174.2025.03.05.22.41.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Mar 2025 22:41:26 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, philmd@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>, pierrick.bouvier@linaro.org,
+ manos.pitsidianakis@linaro.org,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ richard.henderson@linaro.org, Marcelo Tosatti <mtosatti@redhat.com>,
+ alex.bennee@linaro.org
+Subject: [PATCH 1/7] hw/hyperv/hv-balloon-stub: common compilation unit
+Date: Wed,  5 Mar 2025 22:41:12 -0800
+Message-Id: <20250306064118.3879213-2-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
+References: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] goldfish_rtc: Fix tick_offset migration
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Rodrigo Dias Correa <r@drigo.nl>, anup.patel@wdc.com,
- Alistair.Francis@wdc.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250114212150.228241-1-r@drigo.nl>
- <558cbfb7-fdd4-40b1-84ee-27c1c6aba4b2@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <558cbfb7-fdd4-40b1-84ee-27c1c6aba4b2@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,19 +103,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-06.03.2025 09:35, Michael Tokarev wrote:
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ hw/hyperv/meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
->> Migrate the tick_offset directly, adding it as a version-dependent field
->> to VMState. Keep the old behavior when migrating from previous versions.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2033
-> 
-> Is this a qemu-stable material?
+diff --git a/hw/hyperv/meson.build b/hw/hyperv/meson.build
+index d3d2668c71a..f4aa0a5ada9 100644
+--- a/hw/hyperv/meson.build
++++ b/hw/hyperv/meson.build
+@@ -2,4 +2,5 @@ specific_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'))
+ specific_ss.add(when: 'CONFIG_HYPERV_TESTDEV', if_true: files('hyperv_testdev.c'))
+ specific_ss.add(when: 'CONFIG_VMBUS', if_true: files('vmbus.c'))
+ specific_ss.add(when: 'CONFIG_SYNDBG', if_true: files('syndbg.c'))
+-specific_ss.add(when: 'CONFIG_HV_BALLOON', if_true: files('hv-balloon.c', 'hv-balloon-page_range_tree.c', 'hv-balloon-our_range_memslots.c'), if_false: files('hv-balloon-stub.c'))
++specific_ss.add(when: 'CONFIG_HV_BALLOON', if_true: files('hv-balloon.c', 'hv-balloon-page_range_tree.c', 'hv-balloon-our_range_memslots.c'))
++system_ss.add(when: 'CONFIG_HV_BALLOON', if_false: files('hv-balloon-stub.c'))
+-- 
+2.39.5
 
-It is probably not, since this change adds a new field (and version) to the
-migration stream.
-
-Thanks,
-
-/mjt
 
