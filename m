@@ -4,93 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC9F7C282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2AFC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:39:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq8bv-0004Af-9B; Thu, 06 Mar 2025 05:37:51 -0500
+	id 1tq8d1-0004mY-Vm; Thu, 06 Mar 2025 05:39:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tq8bs-0004AA-NR
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 05:37:49 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tq8bn-0000PF-Dg
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 05:37:48 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43948f77f1aso2743795e9.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 02:37:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741257461; x=1741862261; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cnmNlNqWUiYotLjRx0btPSV2jHI6AFnF6iMz5rPyZ2A=;
- b=m+H0oGxm8uyJ4NT0yz/iIar5rWtQT1r6rHPKVXtj16vPR0Wwj9ADnbizi82Kggoulx
- fQyZRgmOBAA19EquTPenrcNfjk3BjlKMjE6Q5gQ9FLaZeDAqWk2JJt3EazbgZUUol24m
- gddxnT/adO0Zj1D6MdBAbwayHQooWEyYcj8hwBvwFlQRjbdw1wHH3sOk58j5/tZUJchU
- 8RvFFfYoHLpx02e7KmZfLgO2wsmm1yXoZIoyrRVVO4atQCmkNldfU07CNXUnl1EmSX6/
- D9BpYebDAU/FmoWPSyQyZFO6OOKP3cgxFMOvmSyNnbfQZD173AbQ0LMC/l3vEFUAD2mb
- knxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741257461; x=1741862261;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cnmNlNqWUiYotLjRx0btPSV2jHI6AFnF6iMz5rPyZ2A=;
- b=jLOrxv3aNJhRUi63GvqUuxsjcN5eI8Ic2BpJoeUEDls+DvfmTUx8fqnAk9E8d1AZtJ
- P++7QRjRYVpETh98ZX8ePyg0G2VhtMqTe0b8ZKE8ovR0AFvkejmwwRPaGoAiUXuFZYkO
- NCfyBJRYlC6QLbcESyMoJEumaIixLQE1i3RC6R6Slci5VZ8OL+URb0Ls5J1dtgNUSZVz
- TLhss8V2CndvffURzOXsv4L5vpjXqBTwmRH8LJjcTYrqQalcDKGSrZ/f6tc0IXZVaXDZ
- pCQh5h9U5IGnaPXdSlXtFhYaH9wC0Liz2/wWuiMB2e9JRORdXANMOKB29F4mV+0lOGsJ
- R6NQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVgx/W1Bj+KAvIt2+OcDNXqJLeLlmvzo9gCnmulzpS5tZl6hpEJqXyRmrOWDkCE5bGI+Z3aDw3lnGsC@nongnu.org
-X-Gm-Message-State: AOJu0Yyy646qhYeKE4O1Y8CMksuIcEnMFc9V1Dp76MSZvVokXo/AGtwc
- jBMI0O6oL7iqFPp7964IGwTidhqbvufiYaaU1wBhKDVPdq0g4fBW6USrG9MEKPo=
-X-Gm-Gg: ASbGncvLKhKU4kp/HQHfRb6nctWf9l9PTmNWb5CEV4RKzlcx8XGFhkuAua1xTO6cNRZ
- npYxgPMVHWLDuaaHhwZSkW9OpaCKYgN2D2mDUHepNAPBoHEusgkH4PxBawuZm+wESTSyXiBC4Fr
- VbxWGnbCswYIQVT4LAp1JRJMaNRoTRwoq/qptTDutj9dFtCn793TLmjqRi9NmwPZbViMVr7vU4E
- Faqjtq9Uz25MNBy9Ru3o0ZSLQtysJLNRfkz8uUc9xW7vjoe7/fjt0u6NXcZ4Jxt1rpl/eZs8v1G
- N0Fv6EVHU5AYVjs0ESpY1+KE8dg+FzX6XxBeNqoI7RLMoiWnu0FKdUL84EubKJQQLG2PLNVyOgh
- Ldl9TOTF2b14f
-X-Google-Smtp-Source: AGHT+IGNXVK1QhDHo/kNBIIeGlO7DFsE4gAoebSrHG+W2B+Sbcao7NMfHhDrIWM4v/GpGoSbo0keMA==
-X-Received: by 2002:a05:600c:4f0f:b0:43b:c390:b78d with SMTP id
- 5b1f17b1804b1-43bd2aed6d8mr47714195e9.24.1741257460622; 
- Thu, 06 Mar 2025 02:37:40 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd94913fsm15398605e9.37.2025.03.06.02.37.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 02:37:39 -0800 (PST)
-Message-ID: <4dc45084-fb9d-4fed-88b0-18b0034c8c74@linaro.org>
-Date: Thu, 6 Mar 2025 11:37:38 +0100
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tq8d0-0004mG-5w; Thu, 06 Mar 2025 05:38:58 -0500
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tq8cw-0000St-9p; Thu, 06 Mar 2025 05:38:57 -0500
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 6 Mar
+ 2025 18:38:46 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Thu, 6 Mar 2025 18:38:46 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v5 00/29] Support AST2700 A1
+Date: Thu, 6 Mar 2025 18:38:08 +0800
+Message-ID: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/9] cpu: Introduce cpu_get_phys_bits()
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20250130134346.1754143-1-clg@redhat.com>
- <20250130134346.1754143-8-clg@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250130134346.1754143-8-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,149 +58,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/1/25 14:43, Cédric Le Goater wrote:
-> The Intel CPU has a complex history regarding setting of the physical
-> address space width on KVM. A 'phys_bits' field and a "phys-bits"
-> property were added by commit af45907a1328 ("target-i386: Allow
-> physical address bits to be set") to tune this value.
-> 
-> In certain circumstances, it is interesting to know this value to
-> check that all the conditions are met for optimal operation. For
-> instance, when the system has a 39-bit IOMMU address space width and a
-> larger CPU physical address space, we expect issues when mapping the
-> MMIO regions of passthrough devices and it would good to report to the
-> user. These hybrid HW configs can be found on some consumer grade
-> processors or when using a vIOMMU device with default settings.
-> 
-> For this purpose, add an helper routine and a CPUClass callback to
-> return the physical address space width of a CPU.
-> 
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Eduardo Habkost <eduardo@habkost.net>
-> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
-> Cc: Yanan Wang <wangyanan55@huawei.com>
-> Cc: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   include/hw/core/cpu.h            |  9 +++++++++
->   include/hw/core/sysemu-cpu-ops.h |  6 ++++++
->   cpu-target.c                     |  5 +++++
->   hw/core/cpu-system.c             | 11 +++++++++++
->   target/i386/cpu.c                |  6 ++++++
->   5 files changed, 37 insertions(+)
-> 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index fb397cdfc53d12d40d3e4e7f86251fc31c48b9f6..1b3eead102ce62fcee55ab0ed5e0dff327fa2fc5 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -748,6 +748,14 @@ int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs);
->    */
->   bool cpu_virtio_is_big_endian(CPUState *cpu);
->   
-> +/**
-> + * cpu_get_phys_bits:
-> + * @cpu: CPU
-> + *
-> + * Return the physical address space width of the CPU @cpu.
-> + */
-> +uint32_t cpu_get_phys_bits(const CPUState *cpu);
-> +
->   #endif /* CONFIG_USER_ONLY */
->   
->   /**
-> @@ -1168,6 +1176,7 @@ void cpu_exec_unrealizefn(CPUState *cpu);
->   void cpu_exec_reset_hold(CPUState *cpu);
->   
->   const char *target_name(void);
-> +uint32_t target_phys_bits(void);
->   
->   #ifdef COMPILING_PER_TARGET
->   
-> diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-> index 0df5b058f50073e47d2a6b8286be5204776520d2..210b3ed57985525795b81559e41e0085969210d5 100644
-> --- a/include/hw/core/sysemu-cpu-ops.h
-> +++ b/include/hw/core/sysemu-cpu-ops.h
-> @@ -81,6 +81,12 @@ typedef struct SysemuCPUOps {
->        */
->       bool (*virtio_is_big_endian)(CPUState *cpu);
->   
-> +    /**
-> +     * @get_phys_bits: Callback to return the physical address space
-> +     * width of a CPU.
-> +     */
-> +    uint32_t (*get_phys_bits)(const CPUState *cpu);
-> +
->       /**
->        * @legacy_vmsd: Legacy state for migration.
->        *               Do not use in new targets, use #DeviceClass::vmsd instead.
-> diff --git a/cpu-target.c b/cpu-target.c
-> index 667688332c929aa53782c94343def34571272d5f..88158272c06cc42424d435b9701e33735f080239 100644
-> --- a/cpu-target.c
-> +++ b/cpu-target.c
-> @@ -472,3 +472,8 @@ const char *target_name(void)
->   {
->       return TARGET_NAME;
->   }
-> +
-> +uint32_t target_phys_bits(void)
-> +{
-> +    return TARGET_PHYS_ADDR_SPACE_BITS;
-> +}
-> diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-> index 6aae28a349a7a377d010ff9dcab5ebc29e1126ca..05067d84f4258facf4252216f17729e390d38eae 100644
-> --- a/hw/core/cpu-system.c
-> +++ b/hw/core/cpu-system.c
-> @@ -60,6 +60,17 @@ hwaddr cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
->       return cc->sysemu_ops->get_phys_page_debug(cpu, addr);
->   }
->   
-> +uint32_t cpu_get_phys_bits(const CPUState *cpu)
-> +{
-> +    CPUClass *cc = CPU_GET_CLASS(cpu);
-> +
-> +    if (cc->sysemu_ops->get_phys_bits) {
-> +        return cc->sysemu_ops->get_phys_bits(cpu);
-> +    }
-> +
-> +    return target_phys_bits();
+v1:
+ 1. Refactor INTC model to support both INTC0 and INTC1.
+ 2. Support AST2700 A1.
+ 3. Create ast2700a0-evb machine.
+ 
+v2:
+  To streamline the review process, split the following patch series into
+  three parts.
+  https://patchwork.kernel.org/project/qemu-devel/cover/20250121070424.2465942-1-jamin_lin@aspeedtech.com/
+  This patch series focuses on cleaning up the INTC model to
+  facilitate future support for the INTC_IO model.
 
-I might have suggested to return TARGET_PHYS_ADDR_SPACE_BITS
-by default in v1, I'm not sure about it anymore. Maybe default
-to 0 and have each target register its helper if necessary?
+v3:
+ 1. Update and add functional test for AST2700
+ 2. Add AST2700 INTC design guidance and its block diagram.
+ 3. Retaining the INTC naming and introducing a new INTCIO model to support the AST2700 A1.
+ 4. Create ast2700a1-evb machine and rename ast2700a0-evb machine
+ 5. Fix silicon revision issue and support AST2700 A1.
 
-> +}
-> +
->   hwaddr cpu_get_phys_page_debug(CPUState *cpu, vaddr addr)
->   {
->       MemTxAttrs attrs = {};
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index b5dd60d2812e0c3d13c1743fd485a9068ab29c4f..01cf9a44963710a415c755c17582730f75233143 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -8393,6 +8393,11 @@ static bool x86_cpu_get_paging_enabled(const CPUState *cs)
->   
->       return cpu->env.cr[0] & CR0_PG_MASK;
->   }
-> +
-> +static uint32_t x86_cpu_get_phys_bits(const CPUState *cs)
-> +{
-> +    return X86_CPU(cs)->phys_bits;
-> +}
->   #endif /* !CONFIG_USER_ONLY */
->   
->   static void x86_cpu_set_pc(CPUState *cs, vaddr value)
-> @@ -8701,6 +8706,7 @@ static const struct SysemuCPUOps i386_sysemu_ops = {
->       .get_memory_mapping = x86_cpu_get_memory_mapping,
->       .get_paging_enabled = x86_cpu_get_paging_enabled,
->       .get_phys_page_attrs_debug = x86_cpu_get_phys_page_attrs_debug,
-> +    .get_phys_bits = x86_cpu_get_phys_bits,
->       .asidx_from_attrs = x86_asidx_from_attrs,
->       .get_crash_info = x86_cpu_get_crash_info,
->       .write_elf32_note = x86_cpu_write_elf32_note,
+v4:
+ 1. rework functional test for AST2700
+ 2. the initial machine "ast2700-evb" is aliased to "ast2700a0-evb.
+ 3. intc: Reduce regs array size by adding a register sub-region
+ 4. intc: split patch for Support setting different register sizes
+ 5. update ast2700a1-evb machine parent to TYPE_ASPEED_MACHINE
+
+v5:
+ 1. Rename status_addr and addr to status_reg and reg for clarity
+ 2. Introduce dynamic allocation for regs array
+ 3. Sort the memmap table by mapping address
+ 4. ast27x0.c split patch for Support two levels of INTC controllers for AST2700 A1
+ 5. tests/functional/aspped split patch for Introduce start_ast2700_test API
+ 6. keep variable naming for reviewer suggestion.
+ 7. Add reviewer suggestion and split patch to make more readable.
+ 
+With the patch applied, QEMU now supports two machines for running AST2700 SoCs:
+ast2700a0-evb: Designed for AST2700 A0
+ast2700a1-evb: Designed for AST2700 A1
+
+Test information
+1. QEMU version: https://github.com/qemu/qemu/commit/50d38b8921837827ea397d4b20c8bc5efe186e53
+2. ASPEED SDK v09.05 pre-built image
+   https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.05
+   ast2700-default-obmc.tar.gz (AST2700 A1)
+   https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz
+   ast2700-a0-default-obmc.tar.gz (AST2700 A0)
+   https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz
+   
+This patch series depends on the following patch series:
+https://patchwork.kernel.org/project/qemu-devel/cover/20250303073547.1145080-1-jamin_lin@aspeedtech.com/
+https://patchwork.kernel.org/project/qemu-devel/cover/20250225075622.305515-1-jamin_lin@aspeedtech.com/
+
+Jamin Lin (29):
+  hw/intc/aspeed: Support setting different memory size
+  hw/intc/aspeed: Rename status_addr and addr to status_reg and reg for
+    clarity
+  hw/intc/aspeed: Introduce dynamic allocation for regs array
+  hw/intc/aspeed: Support setting different register size
+  hw/intc/aspeed: Reduce regs array size by adding a register sub-region
+  hw/intc/aspeed: Introduce helper functions for enable and status
+    registers
+  hw/intc/aspeed: Add object type name to trace events for better
+    debugging
+  hw/arm/aspeed: Rename IRQ table and machine name for AST2700 A0
+  hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ number
+  hw/intc/aspeed: Support different memory region ops
+  hw/intc/aspeed: Rename num_ints to num_inpins for clarity
+  hw/intc/aspeed: Add support for multiple output pins in INTC
+  hw/intc/aspeed: Refactor INTC to support separate input and output pin
+    indices
+  hw/intc/aspeed: Introduce AspeedINTCIRQ structure to save the irq
+    index and register address
+  hw/intc/aspeed: Introduce IRQ handler function to reduce code
+    duplication
+  hw/intc/aspeed: Add Support for Multi-Output IRQ Handling
+  hw/intc/aspeed: Add Support for AST2700 INTCIO Controller
+  hw/misc/aspeed_scu: Add Support for AST2700/AST2750 A1 Silicon
+    Revisions
+  hw/arm/aspeed_ast27x0.c Support AST2700 A1 GIC Interrupt Mapping
+  hw/arm/aspeed_ast27x0: Define an Array of AspeedINTCState with Two
+    Instances
+  hw/arm/aspeed_ast27x0: Support two levels of INTC controllers for
+    AST2700 A1
+  hw/arm/aspeed_ast27x0: Add SoC Support for AST2700 A1
+  hw/arm/aspeed: Add Machine Support for AST2700 A1
+  hw/arm/aspeed_ast27x0: Sort the memmap table by mapping address
+  tests/functional/aspeed: Introduce start_ast2700_test API
+  tests/functional/aspeed: Update temperature hwmon path
+  tests/functional/aspeed: Update test ASPEED SDK v09.05
+  tests/functional/aspeed: Add test case for AST2700 A1
+  docs/specs: Add aspeed-intc
+
+ docs/specs/aspeed-intc.rst              | 136 +++++
+ docs/specs/index.rst                    |   1 +
+ include/hw/arm/aspeed_soc.h             |   3 +-
+ include/hw/intc/aspeed_intc.h           |  36 +-
+ include/hw/misc/aspeed_scu.h            |   2 +
+ hw/arm/aspeed.c                         |  33 +-
+ hw/arm/aspeed_ast27x0.c                 | 329 ++++++++----
+ hw/intc/aspeed_intc.c                   | 667 ++++++++++++++++++------
+ hw/misc/aspeed_scu.c                    |   2 +
+ hw/intc/trace-events                    |  25 +-
+ tests/functional/test_aarch64_aspeed.py |  47 +-
+ 11 files changed, 978 insertions(+), 303 deletions(-)
+ create mode 100644 docs/specs/aspeed-intc.rst
+
+-- 
+2.43.0
 
 
