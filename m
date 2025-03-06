@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D815FC28B25
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC0FFC282DE
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:58:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDUT-0003iY-8T; Thu, 06 Mar 2025 10:50:29 -0500
+	id 1tqDU9-000391-IW; Thu, 06 Mar 2025 10:50:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDTs-0001ff-0r
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:52 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDSy-0008Or-B3
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:00 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDTq-0006Pv-AO
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:51 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-390f5f48eafso533535f8f.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:49:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDSr-0006KE-71
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:48:50 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43bd5644de8so9712635e9.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:48:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276188; x=1741880988; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741276127; x=1741880927; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tN8MUCR59yT1PPc6yhlXwubOk3u9382+22fqIhPwV6Q=;
- b=F1+dCZfx9smevkYfX546qkYJuRQPls9DVG8+aPO+1MWnzHeNtdQZZT1uLKyfOF9joL
- to89XuqEcsPRanXi4FH3x/GFgm1tkj+ElYkSt1J5dHvJKNSyS9doWZvrWB8QJqnre1MT
- 1jCl4T6p+74C6aF4MS3lwPBfwewMKs4/qn7qpGqy3wbnUq+KknhNX24RR254yceb/QCm
- ogZBGHDeJA1TeKptwAe+MtSbb2HGfP47EgDx3LUBQPs/CvZukb7owEZQnIwQSx5ARDq+
- W4C4DhyDIvSzgGi4j5TfAy1fCDug3RA12FGfQrljRdPK/m9MlAGKeyLiwjQjAKQYC+zx
- 0SnA==
+ :reply-to; bh=tpYVdS1VQrRLJn+AtzliasS5gEtN/QTYnA/EkOtkTRg=;
+ b=cupCHcmMB0qqy4dGe0tVVkt7WbJOAGy5AkiUCstKkGyZrm+UfcbIazj4zZsB2DAKb4
+ 1ukNwR912P4qAKpxFVXp0zsY2q9lc7Z3O7gG4Pnnuqyu98ychq2sijJL7TyIQbq+zFEN
+ E8JWKtU1+saC3Fj8kEr8IfE/+Ow9xr0Hvrn6ihveSkcjr6gGTuWMkNJkoZPNNAxMIc3K
+ 90ULV5bfGggKrAZiHIgEt0BvvyzNJz2jKjcvOalplzwJ3CQ7wtfwjCWZmPeDq4ooCvrW
+ RCr48+oAy7cRdYwtLE+gLPjIAht/KNKVfoj1JaOV96GTqlCxluADJHlFbo63WVG6y8yE
+ 3iug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276188; x=1741880988;
+ d=1e100.net; s=20230601; t=1741276127; x=1741880927;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tN8MUCR59yT1PPc6yhlXwubOk3u9382+22fqIhPwV6Q=;
- b=sMH55rRV9jHX83kk/Z1cuEkF4y1kYLxuB1d1HDRMHuz88iFw19D89Zkmj81cZcOnL9
- xUYHPNujG1kHL/MEX+VE9CAsfqVmAMe+dD9Qhi93HcwRc8Ev5oWe4pMsLGOOPyu78If3
- ulA9VkiSpshH91dgNfqowIkaIuq6L6N/6w9F9me8alNhv41qElo2ziWhVw9WtmtdKqs8
- O1dE+aiSC6ZeH9DXjP7hyAuBUIBwOn/TxgnBJaXFYUsW5kqCjGYcfY0sYZwN/qAl7kCE
- 5YgE5Y2z7/txxIooKT1xDmiB7A3pGg77T3/yotQhqk2G/sXQHPvGyxYqnj2NKAacDnLg
- nljw==
-X-Gm-Message-State: AOJu0Yxy+AgcZxqD3xRt9R6E7lT0QgPOXOs0dkGCG/XcV/lACFJIt/vJ
- 8wjaWyUSfztDkxPxzTr3MwOgn/KKI9yYBkxMFg5OQjdkgRDeAZIMunE3i5/o6b+UWLIndMcKUjc
- Iqgk=
-X-Gm-Gg: ASbGncu92On7+ug1EyNwknhtLxjiCa5nANN9jPxKww0DyopFRx49JSEPQq+esmWUy9y
- UA7k/aQOYvmQFW7Lwpva61nG4GJeKS/HbJDF/ou9KppKSWHCjhDqjonrG3g2oYjIL3yrO5+2Kf2
- EFJiSgd7uzzTSeO1Ti8mEtVu/LaUlgGmzIjtRBLWCDyLjY4QHG/dhwmRRwaIgTJ5WgCmkbIKyIJ
- jfBFX9tKqmSLDKf5EbGieC5GpZ3O/NiKj3sNStPYmrjWmBCkmfsRHp0TgeXk/WHZy5yf2b2mQCs
- Po2pHoHiQ2fv7ZoHz6mVkpxwcGGhWSaqk1S/h9dfbNS4nxJQKWM0Ay/n/1/62xgzKmzF905ggCX
- zxcHoLSoKbSmTPzm/WRM=
-X-Google-Smtp-Source: AGHT+IHxRlfu4FBJ94iJFB9sf/brhCb/i8kpYjVchB/zZlv7pql9rvIAphOvf+hmqJHy0WQAw8xVHw==
-X-Received: by 2002:a5d:6da2:0:b0:38f:451b:653c with SMTP id
- ffacd0b85a97d-3911f72fe43mr5891315f8f.7.1741276188481; 
- Thu, 06 Mar 2025 07:49:48 -0800 (PST)
+ bh=tpYVdS1VQrRLJn+AtzliasS5gEtN/QTYnA/EkOtkTRg=;
+ b=Cv76mQBmvPYtlVZuHzbL7CkWZxg5HL/NV2WPg2YfPJ4StaAw+cwH2pDNFY6tqHWWVX
+ +ApSNjCYZkT3iT2AYaj+7LiDrndFjmIgkN+J33IGsf9IoU6kiGj6SgPqU0XbCEnKRhga
+ 2e83C//1NkWvVl+Ipa67ndVby6l/wPrDbxSbS0ytZqer7hEnH24Z40C24iREZoiMf4iT
+ LXHjo9HkWWYE8xDgT2PjuJOu/vpwoq9ScAb7qCwI9122rXEXAdECP/h0zdOYfa9+Bw/F
+ qyy9SywCynYb9/Dlkojoo8KAzoU9qQPMB8B8jKDtzGnaSSM02uN9A0dQ5XdetqwUf3mK
+ Fx/w==
+X-Gm-Message-State: AOJu0YzsK1QA3+ShL7WNDxwaLY/TcgwIhLrxwG1ieh2eLU32pnd7y1tg
+ QPDSIBTWhVMM527jXrCXFN5rCCDd+m/Dq8v+g3axqSfGHmKBGbseOVrdssBqViz2wEfYvGz+/Kl
+ OdFs=
+X-Gm-Gg: ASbGncvxl6StkeQrcFPEhDVSESGXzpDQyLcOP79ux7oRh7JNHQS5pNwF8K7MikYzGrA
+ eCVIrilI0i0tZMdn+8t4H6U/IzFpguivJQXvHdGuyUmuAbRuQlx+qeRs4TTqSjaKk3fGeP4efFD
+ rLtXpLp9gZy3o1zJBx8PDQzY66Dbkq4br0iWegJDRyty+Um6UFVwQQtVY3TVs/YKxjIiH5hUqRM
+ Z2r8m7ZmndqZI9IsWz8SCBeexuJ3jLTkzLkQYlt1c0+nOCSEBAufrr/03XSw1pquYkq/zDM/VbR
+ t/qclgR8Nmyz9td/mZdP9UPkUSkNUO/zIUGEIpdXKzamvQj4zPSqSVLZN0ArLvBFvURglZzBcHG
+ aKyYhbA03aaJFDRof9lE=
+X-Google-Smtp-Source: AGHT+IE2OyHNjoDTb/KUwR7g+DhA2Fxolpt+sj5X3/foG1y6ZCRFpm89SLi3URB6mm9wtdj+XgJPEA==
+X-Received: by 2002:a05:600c:4f15:b0:43b:ce36:756e with SMTP id
+ 5b1f17b1804b1-43bd29487a8mr76591035e9.12.1741276126567; 
+ Thu, 06 Mar 2025 07:48:46 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c103035sm2380215f8f.88.2025.03.06.07.49.47
+ 5b1f17b1804b1-43bdd8b0461sm25054045e9.4.2025.03.06.07.48.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:49:48 -0800 (PST)
+ Thu, 06 Mar 2025 07:48:46 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/54] target/microblaze: Consider endianness while translating
- code
-Date: Thu,  6 Mar 2025 16:47:11 +0100
-Message-ID: <20250306154737.70886-30-philmd@linaro.org>
+Subject: [PULL 15/54] accel/tcg: Include missing bswap headers in user-exec.c
+Date: Thu,  6 Mar 2025 16:46:57 +0100
+Message-ID: <20250306154737.70886-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
 References: <20250306154737.70886-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,58 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Consider the CPU ENDI bit, swap instructions when the CPU
-endianness doesn't match the binary one.
+Commit 35c653c4029 ("tcg: Add 128-bit guest memory
+primitives") introduced the use of bswap128() which is
+declared in "qemu/int128.h", commit de95016dfbf ("accel/tcg:
+Implement helper_{ld,st}*_mmu for user-only") introduced the
+other bswap*() uses, which are declared in "qemu/bswap.h".
+Include the missing headers.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241105130431.22564-17-philmd@linaro.org>
+Message-Id: <20250217130610.18313-3-philmd@linaro.org>
 ---
- target/microblaze/cpu.h       | 7 +++++++
- target/microblaze/translate.c | 5 +++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ accel/tcg/user-exec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-index f6879eee352..e44ddd53078 100644
---- a/target/microblaze/cpu.h
-+++ b/target/microblaze/cpu.h
-@@ -414,6 +414,13 @@ void mb_translate_code(CPUState *cs, TranslationBlock *tb,
- /* Ensure there is no overlap between the two masks. */
- QEMU_BUILD_BUG_ON(MSR_TB_MASK & IFLAGS_TB_MASK);
- 
-+static inline bool mb_cpu_is_big_endian(CPUState *cs)
-+{
-+    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
-+
-+    return !cpu->cfg.endi;
-+}
-+
- static inline void cpu_get_tb_cpu_state(CPUMBState *env, vaddr *pc,
-                                         uint64_t *cs_base, uint32_t *flags)
- {
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index b5389d65b2e..b54e5ac4b2f 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -710,7 +710,7 @@ static void record_unaligned_ess(DisasContext *dc, int rd,
- 
- static inline MemOp mo_endian(DisasContext *dc)
- {
--    return MO_TE;
-+    return dc->cfg->endi ? MO_LE : MO_BE;
- }
- 
- static bool do_load(DisasContext *dc, int rd, TCGv addr, MemOp mop,
-@@ -1647,7 +1647,8 @@ static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
- 
-     dc->tb_flags_to_set = 0;
- 
--    ir = translator_ldl(cpu_env(cs), &dc->base, dc->base.pc_next);
-+    ir = translator_ldl_swap(cpu_env(cs), &dc->base, dc->base.pc_next,
-+                             mb_cpu_is_big_endian(cs) != TARGET_BIG_ENDIAN);
-     if (!decode(dc, ir)) {
-         trap_illegal(dc, true);
-     }
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index c4454100ad7..9d53c9440ea 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -30,6 +30,8 @@
+ #include "exec/page-protection.h"
+ #include "exec/helper-proto.h"
+ #include "qemu/atomic128.h"
++#include "qemu/bswap.h"
++#include "qemu/int128.h"
+ #include "trace.h"
+ #include "tcg/tcg-ldst.h"
+ #include "internal-common.h"
 -- 
 2.47.1
 
