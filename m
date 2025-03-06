@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32750C19F32
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 01:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38841C282EC
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 01:34:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq04f-0007dN-Et; Wed, 05 Mar 2025 20:30:57 -0500
+	id 1tq07l-0008OF-Po; Wed, 05 Mar 2025 20:34:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq04S-0007cV-NM
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:30:49 -0500
-Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tq07i-0008O1-C6
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:34:07 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq04Q-0006mi-ER
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:30:43 -0500
-Received: by mail-ua1-x92d.google.com with SMTP id
- a1e0cc1a2514c-86714f41f5bso35160241.3
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 17:30:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tq07g-00071O-PU
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:34:06 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso1419605ad.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 17:34:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741224640; x=1741829440; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=v7qqLCA07Y+Jjp51cPajkHn1eyd32Vjm+Q+MxEWgQto=;
- b=OJW9+BeAw5VyvensnBD6inGdqJIalLlkdWLPtMhvmGpYVLEgGzijcqaLLmQ6qd1BsX
- HxHcsFGyvbviyIt4kndf2CXTbKP0U45m1hPV2dOdSTrk352/zQ6JUYwRliy5Z00zkvIu
- lgnBQ3vKC7gBXkafJXzm5cN+8uagnf45HCm6OEERYxJ+WDCUjrMgxusfXzWxzWhniTRN
- s5iy0cVjGL77NJ9EqYJki0wI+jHgThWZxQlZvAv3nZwl+Rgl/MYzbH4tITRCmKsBQSkr
- rFg53npp6RQB9o8UTxOXU2Djs5pwiZ5Gt3j9B2efhaHq6eLKO1ZP3hoggM/81nKPldko
- wY9g==
+ d=linaro.org; s=google; t=1741224843; x=1741829643; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RblFHSCqjHMP/WjqJeF6vZiBPgSR/TJFwijUWZfnJ60=;
+ b=xcRrU3X7vOAyp+BvOrPdNqllXHwhg1XY2meKGDRdfCcZW6Vy6bFFCQefUKqEjwkGuq
+ 5cBf7rXuH+hUUL4bHJB3XElw8rwklsBITAk4ThSom8FmxEmnHz5SRK8uUmq8mgOKTdCC
+ PKUVF40gayw/dYGf27jT1sF8jdIiumzghCq2/IPKHKDxg8iKePPDMcyXAxzzljSgC+Y5
+ KdIIKOWA2DclcXSPhlA1z2nKiwlmRcAnKeJpoRW2ViOB9t/imwNlGglSsgcxAhcxWDUC
+ nJ0JwmlfF74k5gM3X2WaoIkDTfIsJ4qHHAengW8quoYEYSJO7v8chgJ/gT5ertlaMoGl
+ QUhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741224640; x=1741829440;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=v7qqLCA07Y+Jjp51cPajkHn1eyd32Vjm+Q+MxEWgQto=;
- b=V+kueutd/Zlzq9HXCPTW3V1Zx126w0hBfFMqq6rTK/wSFPRJN5eZY7cd6BMWTHBb27
- 5LZV1g4jQ1NAJHFMCjt7UaZsKiNi7FAw1g3uiy+YVii9+fk8XjS2LI8iu326+gi/r81H
- u4JMsoKympjg9kpexmT5HvthXIZu5Q1bNuTvMF2668t8A5oLeujZ2zU3VfZ7xiLUULjr
- uL/0Ta/RSV0Q2ulB21DH0c1TmmHGPoOtyxIOdIEhNHdOkkZgjiRsiGGwJjbqbIlXm5LI
- plpwzyihTmUquhnKphf4IHRqcB4PT0yO75Nd6iuKqPK6kX7JUkiNkak972TspCu/KUPs
- 97Kw==
-X-Gm-Message-State: AOJu0Yz8q4T0LG+wh2BUWiymAuUZkWB7Z1Qdm6uA3GeecGP4WDIbK1eA
- Hqaukl3/FYCpNxslIs1WAcMlwqy6PbaoiXvdsG5yQvI9w5UcQqNuTsz/BXFsz18VWYl5LXROrNZ
- eZBhITpIgDJUo1NS6IyMXLr4DRL8=
-X-Gm-Gg: ASbGncs1kD1jML4RtaPRm6K7xfxS7nkUd7aoENn2BS5NHo4XdYINh0/e5xwnd68SlbO
- lqkIyJRHNqxyeitufMlJ65TB3uX+He8ZddpLhTMCP/8TVXKu97v9dK9bM6B749mp+0L0LrHAZVH
- EOHyDshKf7D9Q78DTP6Uq+87/rjGnf4+QAQoHdKd6xA8R1+tjhsBaYCVmU
-X-Google-Smtp-Source: AGHT+IGPymaTjf4P0KWmXTECJ+VmojTByJ7xl7I58lHAbDbuqLOQhEHMlPzdp7xRXvEyIa0wqDUV2C3nq3cf51pUjaE=
-X-Received: by 2002:a05:6102:dd3:b0:4be:78d2:4be1 with SMTP id
- ada2fe7eead31-4c2e29dbb3bmr3742376137.24.1741224640229; Wed, 05 Mar 2025
- 17:30:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741224843; x=1741829643;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RblFHSCqjHMP/WjqJeF6vZiBPgSR/TJFwijUWZfnJ60=;
+ b=bzR57iUrXi7T1hlfRmX7UEEQoyNv6jHbmjAcU9fwWKogjSY+gHXagTMsE3jDYDxg/q
+ S9TMGQopMW60ZyVrs1zdFd+DqMZPaEutW0hqoZvQNxlQpFjR/XNl8bYyTu9EaNf9s8Nc
+ xYdjyiRHQ4BFb1S9AJjM/+/gVMSPAh+7LpkZIqAxr7Z5ZD9n4DP0XYl+eOykuDYtt4nt
+ kHcVeaj/q66jqqRxxvjOa5JhYWCxQEZY4V0dPEcvpE3BEMYYj/izjSrTLJqTqvVRt5YK
+ fMYrZNhafCZajWemzZTEZKpzNwVG2nKjwrSMzeJLnyJ7Lm38kxnd2jMpEXkVO/+xjBv9
+ 9x1Q==
+X-Gm-Message-State: AOJu0Yzqgm28zJcwB/CPojnCN2yVskTo1lQzatqdiwu++qLAFlGv3kA/
+ PgPes3GdUnkLtMwTRd40SgKpU1nziLZ9rQUFwE7k1TawISp1smBmYkUpjlvCLzQ0ftUh/DsHvnM
+ R
+X-Gm-Gg: ASbGncsk3M0LTbLXI4k5DE7bL3LMz4dhNasshpKvP8E5uV6M4WSXlcU1hjb6GLJ4fFX
+ 08vTv8l9cqdKqKlTjHxXdT1RFgYL+0yBjD1z3lsYD+IIK0gnRM4dcVP/tvdbPq/PsB+tVBDAGJ4
+ msVRaPC3r1skYe+G0eqUQ+VvKoTIBOALfJaZQv9OWfoF6DlUvq/3NTJ6ylcuE8DWPWC0g/ACKV2
+ Ju/foeMEziIvlZq4yCpAbHUmg5A6UO+rLJ/zkFtlB9YGWUre8zR9hwnbMwbRGBcXYw+xg+6clf6
+ pPvU15i0hNuayfK83a9dImZ6v7yEOyw6yLycBBouaWXhPGPYiMNGjM+v1+SHssxzqLvHKu7dVvK
+ HxoQK15rv
+X-Google-Smtp-Source: AGHT+IFCy/9TDl0C+oxxu1GFJ8jVXunlQfHAA96DQXZP2wyfD0UfbOUF05VL4aca6hGBhoHrBcxQig==
+X-Received: by 2002:a17:903:8c4:b0:220:f91a:4650 with SMTP id
+ d9443c01a7336-223f1c95712mr85895955ad.19.1741224843068; 
+ Wed, 05 Mar 2025 17:34:03 -0800 (PST)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af28109676esm111783a12.28.2025.03.05.17.34.02
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Mar 2025 17:34:02 -0800 (PST)
+Message-ID: <5bcfffef-d125-4392-9825-81edb3a5acc8@linaro.org>
+Date: Wed, 5 Mar 2025 17:34:01 -0800
 MIME-Version: 1.0
-References: <20250218165757.554178-1-pbonzini@redhat.com>
- <20250218165757.554178-5-pbonzini@redhat.com>
-In-Reply-To: <20250218165757.554178-5-pbonzini@redhat.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 11:30:14 +1000
-X-Gm-Features: AQ5f1JpX8ciysYpPdcBPU2be4mu1FTw0OSI2OvKcRvOlKYar_KGArACMcdaMeEU
-Message-ID: <CAKmqyKPvUOHMCAJko8cw_CunFZVvLuPdHegk+oPrjXA9KcG6DA@mail.gmail.com>
-Subject: Re: [PATCH 4/7] target/riscv: cpu: store max SATP mode as a single
- integer
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/4] qom: Introduce TypeInfo::registerable() callback
+To: qemu-devel@nongnu.org
+References: <20250305161248.54901-1-philmd@linaro.org>
+ <20250305161248.54901-2-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250305161248.54901-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,116 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 19, 2025 at 3:00=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> The maximum available SATP mode implies all the shorter virtual address s=
-izes.
-> Store it in RISCVCPUConfig and avoid recomputing it via satp_mode_max_fro=
-m_map.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
+On 3/5/25 08:12, Philippe Mathieu-Daudé wrote:
+> Introduce theTypeInfo::registerable() callback to allow
+> runtime decision on whether register a QOM type or not.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->  target/riscv/cpu_cfg.h     |  1 +
->  target/riscv/cpu.c         | 11 +++++------
->  target/riscv/tcg/tcg-cpu.c |  3 ++-
->  3 files changed, 8 insertions(+), 7 deletions(-)
->
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index b410b1e6038..28d8de978fa 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -192,6 +192,7 @@ struct RISCVCPUConfig {
->      bool short_isa_string;
->
->  #ifndef CONFIG_USER_ONLY
-> +    int8_t max_satp_mode;
->      RISCVSATPMap satp_mode;
->  #endif
->  };
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 7950b6447f8..2d06543217a 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -444,6 +444,7 @@ static void set_satp_mode_max_supported(RISCVCPU *cpu=
-,
->      }
->
->      assert(cpu->cfg.satp_mode.supported & (1 << satp_mode));
-> +    cpu->cfg.max_satp_mode =3D satp_mode;
->  }
->
->  /* Set the satp mode to the max supported */
-> @@ -1177,16 +1178,13 @@ static void riscv_cpu_disas_set_info(CPUState *s,=
- disassemble_info *info)
->  static void riscv_cpu_satp_mode_finalize(RISCVCPU *cpu, Error **errp)
->  {
->      bool rv32 =3D riscv_cpu_is_32bit(cpu);
-> -    uint8_t satp_mode_map_max, satp_mode_supported_max;
-> +    uint8_t satp_mode_map_max;
->
->      /* The CPU wants the OS to decide which satp mode to use */
->      if (cpu->cfg.satp_mode.supported =3D=3D 0) {
->          return;
->      }
->
-> -    satp_mode_supported_max =3D
-> -                    satp_mode_max_from_map(cpu->cfg.satp_mode.supported)=
-;
-> -
->      if (cpu->cfg.satp_mode.map =3D=3D 0) {
->          if (cpu->cfg.satp_mode.init =3D=3D 0) {
->              /* If unset by the user, we fallback to the default satp mod=
-e. */
-> @@ -1215,10 +1213,10 @@ static void riscv_cpu_satp_mode_finalize(RISCVCPU=
- *cpu, Error **errp)
->      satp_mode_map_max =3D satp_mode_max_from_map(cpu->cfg.satp_mode.map)=
-;
->
->      /* Make sure the user asked for a supported configuration (HW and qe=
-mu) */
-> -    if (satp_mode_map_max > satp_mode_supported_max) {
-> +    if (satp_mode_map_max > cpu->cfg.max_satp_mode) {
->          error_setg(errp, "satp_mode %s is higher than hw max capability =
-%s",
->                     satp_mode_str(satp_mode_map_max, rv32),
-> -                   satp_mode_str(satp_mode_supported_max, rv32));
-> +                   satp_mode_str(cpu->cfg.max_satp_mode, rv32));
->          return;
->      }
->
-> @@ -1477,6 +1475,7 @@ static void riscv_cpu_init(Object *obj)
->      cpu->cfg.cbom_blocksize =3D 64;
->      cpu->cfg.cbop_blocksize =3D 64;
->      cpu->cfg.cboz_blocksize =3D 64;
-> +    cpu->cfg.max_satp_mode =3D -1;
->      cpu->env.vext_ver =3D VEXT_VERSION_1_00_0;
->  }
->
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 0a137281de1..a9f59a67e00 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -693,8 +693,9 @@ static bool riscv_cpu_validate_profile_satp(RISCVCPU =
-*cpu,
->                                              RISCVCPUProfile *profile,
->                                              bool send_warn)
->  {
-> -    int satp_max =3D satp_mode_max_from_map(cpu->cfg.satp_mode.supported=
-);
-> +    int satp_max =3D cpu->cfg.max_satp_mode;
->
-> +    assert(satp_max >=3D 0);
->      if (profile->satp_mode > satp_max) {
->          if (send_warn) {
->              bool is_32bit =3D riscv_cpu_is_32bit(cpu);
-> --
-> 2.48.1
->
->
+>   include/qom/object.h | 1 +
+>   qom/object.c         | 4 ++++
+>   qom/trace-events     | 1 +
+>   3 files changed, 6 insertions(+)
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
