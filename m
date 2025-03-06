@@ -4,81 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C34F9C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86D26C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqEG8-0006sm-Ik; Thu, 06 Mar 2025 11:39:44 -0500
+	id 1tqEIA-0000vO-R6; Thu, 06 Mar 2025 11:41:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEG2-0006no-AD
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:39 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tqEHw-0000iQ-J6
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:41:38 -0500
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEG0-0004bh-A1
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:37 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43bc38bb6baso5709905e9.3
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:35 -0800 (PST)
+ id 1tqEHu-0005PX-T0
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:41:36 -0500
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-6fd8be1e534so8431087b3.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:41:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741279174; x=1741883974; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0WIG0SaEOnTT7Vl+CcOLcRx6EDCmK/EJvLZA/gTBtzQ=;
- b=HOUs+GU02ulIkn54U9ZPk0a4nSMACpeUf9svog4JIY4UKovzPG5xkL/jI6JHiLPhaD
- mm3ZCM91PFWj7y2llp2HpM+kL1Ja43vYqhX1WZeQ9D2hg2YZy6hSSxYg4kjevtmuK2Wc
- NZ1A9WXfOmgGdSBCvVSixCHscWwp+NyP2JyJjjTgfhWM5M9TCU7nac+8wMcRBYtmGUt8
- kaKgIgEn/5UaQeKYbpAGw8dMsdhoR15aNpmSb92upTIMpDSvbeHe8VfMp5Pu0YE8uGGb
- PDQwdxFoHEcC6oUaKHqASPcLhY1ztbgXD7V+0NkdxVD9eCLEbFQ+7cxsKM6icA+MVLfJ
- ED2g==
+ d=linaro.org; s=google; t=1741279293; x=1741884093; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tuE7sAT+n3xPBCauhqafEUU/Z7tC+IuzsmyDxqxYy8g=;
+ b=tyHbUL4rlx98W5EgQ0sj5oW3mGJJLm0fA4QmbIOcBm9XQ1i3ldISatUGC4+LO1dfsp
+ 98veupZrN5t+B9/z3q/mU4z69sVYLyXxR1Fhd1l7yhqWX/vudFgZSNKsFw/WjlKkIJqz
+ ulWhskTiCHjCBwqn264BdZFXAS51B6GCPjYvgRAC19EmA8pHGuRzivmwwET7QVgg660l
+ tbGLwqy8g4y6cDiJaJcciQ0iqj5uQZTmP+T/09hl3626UYA657WePHxcxfb3WiHobyxq
+ asX2kUeulBXZk5Cuq/vFJ81HDWX/yNoFyP168LNfCzUterfuqxC7e1W+Dmqg4qqK1gt7
+ YTtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741279174; x=1741883974;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0WIG0SaEOnTT7Vl+CcOLcRx6EDCmK/EJvLZA/gTBtzQ=;
- b=NBC7IGq30gW7mfs2EPVU/91IKzP2bbPiiAp0QZNw5X0bq004ZE2CllNgUBWrhCVYqt
- TYR5qYwBCfgruUulRlrg0iG5CfbE5Fu5dmCUFi7QJC7JaBW43QnMXw96dbEOSMld2ign
- oa8f5xJKOYBhAw8ev7M60wuFh0dW7MfB+gkx6is5Es/i6zS1XLLY3MI/jq3spLz40xmh
- ytka3bsUb/2l9BE6AHuHEhQlt2xs6h1NMvYrPNjghcyJ80yum+OqtI4sC5+6FxEPODNU
- LtYf1Uk++fH+VV/AN0+ezCy7tYJk+0hSEElavgHfciGyTPuvHiET0HLss3fmqQ+WrC/d
- K+hA==
+ d=1e100.net; s=20230601; t=1741279293; x=1741884093;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tuE7sAT+n3xPBCauhqafEUU/Z7tC+IuzsmyDxqxYy8g=;
+ b=lBqGPFJr/DpJJpxjcBDX6NgT2N7df6TN5v2HDfUrQAx8N0NAtuCeKVW1SBrXpfdMZE
+ i0mXSyxblVj12lOObhnLm5i23ni/rifbw+cSoB61n1WrrO8xVUGJOyUiXiRWJtgAGEy4
+ 6keDKXm3qZ7k7lFH8XAiRrDbWRQX/3NlQyXsk7YQOKkz1s6qu6qbHvM/R5IdBy/AMIAa
+ sNHV7lxpLzlYEZUOyIn/ZMdVOKDxDc6WA642C6AeH1/lu9qDJ3dWuO6zliAuqmCuUN2q
+ g8GwWoEXzFJO3eD4JfYYvDuK8SCYzuNPZ3GlRpZoE3xnreaBfH8AXVyU+SIHcnJuvkKj
+ bAqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCt1bmumc2Q9dVKYXWNEwjI6WDfsBd898edjsJpiFat87/fbqOpw2HfFJujyBcas1/O+PHtGsH3d9n@nongnu.org
-X-Gm-Message-State: AOJu0Yw+LLsvsJ/T8vfhyNGSroy7xhkDJkhvK0Cd9P8Xz2FovwN3zEnQ
- 8GeKY4Q6M7Z9Txksu05CLXzQQgRzxCgW+qyuSHPnQIGOirhFtROU8I4epfkzYgoMWiixS+5g/2S
- I
-X-Gm-Gg: ASbGnct5osxGs5xALacJVW+a4c0uxGI6nV/V+QpoBovhZPAzHdO98rxnjFhvz73Ujc5
- aeCbkRbdT2amCQiIvQQ71onIHIF+MuSO8cGJqKfKPKD9qc5Dkmw1mH7ODdBHOWnBNHsmb0Qemwq
- rZHiDMdywChMTX5MviP72/AporDTi8/eGmhXm+7qC42wBuCqMYpmxrs5CsxcKr8/NuHeMokVCfQ
- ldgmyFAjP0zaZArlwgVA3hIf/txVNZbu7YtFuKsGOfH40gG2DpXC1ENfw7mWRxeqDtbcpOzE1rZ
- bHoUBxgwyxbsLYXaHbqx0aKQI43gTFx+LLe9AIVT6ALP0o3i6Rk=
-X-Google-Smtp-Source: AGHT+IE5ojsik7X1e+U4TVORywURpZgRGu2Wm1h5bYw+VFTI4+V0Kfxa5h1Wz19KCBnSw3NroGrIEA==
-X-Received: by 2002:a5d:64cf:0:b0:390:fe13:e0ba with SMTP id
- ffacd0b85a97d-3911f756fd2mr7745130f8f.27.1741279174616; 
- Thu, 06 Mar 2025 08:39:34 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 08:39:34 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 08/10] target/arm: HCR_EL2.RW should be RAO/WI if EL1 doesn't
- support AArch32
-Date: Thu,  6 Mar 2025 16:39:22 +0000
-Message-ID: <20250306163925.2940297-9-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250306163925.2940297-1-peter.maydell@linaro.org>
-References: <20250306163925.2940297-1-peter.maydell@linaro.org>
+ AJvYcCVOQvxT4ONC8GvAaF36dZjnLuE4pawnxva5YyHDtQWM1PYNIHplc98ZssiBPWDuAjtXzn8SeqWYyi6w@nongnu.org
+X-Gm-Message-State: AOJu0Yyx4+qLOFmf06lc5tqCnAhIXlFPDlNCTqT+BtF6eDWKRRql7VZB
+ GfVzO08B+qhFKtDUXpoWgI6e6Dzs5dyqkp9mryFoKebQ2vhxNlzVXUqZS44MZCfz7ABQ/jlklWh
+ pk7wv1XpAUq8R+Mx5fhRm0UEwTxrBLwyzhNUb5w==
+X-Gm-Gg: ASbGnctMHaSyjtd8Z1fjp/KxCW/oA+ZMOOQBPjMOgzC+DmK593WHNiejh+h6HqtiDac
+ kXL5HGYp7bA85SrtBgqMkoR3ve3m731pHjzUuZt3LURMd8qof9o85IKr8vR5ZkRHQz29etxv4+n
+ tKpCkcCVqIJ8QDtRNJUVVC/ws9+Jc=
+X-Google-Smtp-Source: AGHT+IGrIld9lFINAvm3RbCjtTvZCDPufYXALDYiM29oLzWtQOIB4YLIVElw8MjUe8w+rRSXeChP8kYPHrLO0Z1LBhw=
+X-Received: by 2002:a05:690c:6009:b0:6f9:48c6:6a17 with SMTP id
+ 00721157ae682-6fda3018933mr98932527b3.26.1741279293570; Thu, 06 Mar 2025
+ 08:41:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+References: <20250306163925.2940297-1-peter.maydell@linaro.org>
+In-Reply-To: <20250306163925.2940297-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 6 Mar 2025 16:41:22 +0000
+X-Gm-Features: AQ5f1JoDreMEI4B7qV2l_bTBhgXgesld--17niqj2WiZlEgRMn5BhszwrB0rMwg
+Message-ID: <CAFEAcA8g0D_TyRyBGjjC=RaPjp-aNQb-P5K7bUcvDACDpWFFyA@mail.gmail.com>
+Subject: [PATCH 00/10] target/arm: Forbid exception returns to unimplemented
+ AArch32 ELs
+To: qemu-arm <qemu-arm@nongnu.org>, QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,58 +92,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When EL1 doesn't support AArch32, the HCR_EL2.RW bit is supposed to
-be RAO/WI.  We don't enforce this.  This isn't a problem yet because
-at the moment all of our CPU types with AArch64 support AArch32 at
-all exception levels, but in the future this is likely to no longer
-be true. Enforce the RAO/WI behaviour.
+Apologies for the bogus subject line in the cover letter:
+I accidentally put a leading ' ' into the file and then
+git send-email interpreted that From line as the subject.
+Intended subject line was:
+[PATCH 00/10] target/arm: Forbid exception returns to unimplemented AArch32 ELs
 
-Note that we handle "reset value should honour RES1 bits" in the same
-way that SCR_EL3 does, via a reset function.
+-- PMM
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/helper.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 1085bff0ec5..6dc6f3858fc 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -5167,6 +5167,11 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
-     /* Clear RES0 bits.  */
-     value &= valid_mask;
- 
-+    /* RW is RAO/WI if EL1 is AArch64 only */
-+    if (!cpu_isar_feature(aa64_aa32_el1, cpu)) {
-+        value |= HCR_RW;
-+    }
-+
-     /*
-      * These bits change the MMU setup:
-      * HCR_VM enables stage 2 translation
-@@ -5224,6 +5229,12 @@ static void hcr_writelow(CPUARMState *env, const ARMCPRegInfo *ri,
-     do_hcr_write(env, value, MAKE_64BIT_MASK(32, 32));
- }
- 
-+static void hcr_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    /* hcr_write will set the RES1 bits on an AArch64-only CPU */
-+    hcr_write(env, ri, 0);
-+}
-+
- /*
-  * Return the effective value of HCR_EL2, at the given security state.
-  * Bits that are not included here:
-@@ -5459,6 +5470,7 @@ static const ARMCPRegInfo el2_cp_reginfo[] = {
-       .opc0 = 3, .opc1 = 4, .crn = 1, .crm = 1, .opc2 = 0,
-       .access = PL2_RW, .fieldoffset = offsetof(CPUARMState, cp15.hcr_el2),
-       .nv2_redirect_offset = 0x78,
-+      .resetfn = hcr_reset,
-       .writefn = hcr_write, .raw_writefn = raw_write },
-     { .name = "HCR", .state = ARM_CP_STATE_AA32,
-       .type = ARM_CP_ALIAS | ARM_CP_IO,
--- 
-2.43.0
-
+On Thu, 6 Mar 2025 at 16:39, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Newer Arm CPUs need not implement AArch32 at all exception levels
+> (and Armv9 forbids implementing AArch32 at any EL except EL0).
+> All our current CPU models implement both AArch32 and AArch64
+> at every exception levels, so we currently get away with failing
+> to enforce that the guest isn't trying to do an exception return
+> to AArch32 when the target EL doesn't support AArch32.
+>
+> This patchset adds the missing checks:
+>  * SCR_EL3.RW has an effective value of 1 if EL2 is AArch64-only
+>  * HCR_EL2.RW is RAO/WI if EL1 is AArch64-only
+>  * return to AArch32 when no EL supports AArch32 is an illegal
+>    exception return
+>
+> To do this it needs to start off with some cleanup. This is
+> because we need to add a cpu_isar_feature() check to
+> arm_el_is_aa64(), but we don't want to include cpu-features.h
+> in cpu.h. arm_el_is_aa64() is really an internal part of the
+> CPU implementation, so we can move it to internals.h; this
+> means also moving some other functions in cpu.h that are
+> defined as inline functions and which call arm_el_is_aa64().
+> Removing some unused macros from linux-user allows us to
+> avoid having linux-user include internals.h.
+>
+> (No doubt there are other functions that could be moved out
+> of cpu.h, but I stuck to only the ones that I actually needed
+> to move.)
+>
+> thanks
+> -- PMM
+>
+> Peter Maydell (10):
+>   target/arm: Move A32_BANKED_REG_{GET,SET} macros to cpregs.h
+>   target/arm: Un-inline access_secure_reg()
+>   linux-user/aarch64: Remove unused get/put_user macros
+>   linux-user/arm: Remove unused get_put_user macros
+>   target/arm: Move arm_cpu_data_is_big_endian() etc to internals.h
+>   target/arm: Move arm_current_el() and arm_el_is_aa64() to internals.h
+>   target/arm: SCR_EL3.RW should be treated as 1 if EL2 doesn't support
+>     AArch32
+>   target/arm: HCR_EL2.RW should be RAO/WI if EL1 doesn't support AArch32
+>   target/arm: Add cpu local variable to exception_return helper
+>   target/arm: Forbid return to AArch32 when CPU is AArch64-only
+>
+>  target/arm/cpregs.h           |  28 +++++++
+>  target/arm/cpu.h              | 153 +---------------------------------
+>  target/arm/internals.h        | 133 +++++++++++++++++++++++++++++
+>  hw/intc/arm_gicv3_cpuif.c     |   1 +
+>  linux-user/aarch64/cpu_loop.c |  48 -----------
+>  linux-user/arm/cpu_loop.c     |  43 +---------
+>  target/arm/arch_dump.c        |   1 +
+>  target/arm/helper.c           |  16 +++-
+>  target/arm/tcg/helper-a64.c   |  12 ++-
+>  target/arm/tcg/hflags.c       |   9 ++
+>  10 files changed, 202 insertions(+), 242 deletions(-)
 
