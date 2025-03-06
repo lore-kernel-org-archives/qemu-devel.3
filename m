@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFB59C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 21:32:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C214FC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 21:39:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqIpd-00074L-74; Thu, 06 Mar 2025 16:32:41 -0500
+	id 1tqIvS-0000U6-FE; Thu, 06 Mar 2025 16:38:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tqIpc-000747-Ii
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 16:32:40 -0500
-Received: from mail-qv1-xf2b.google.com ([2607:f8b0:4864:20::f2b])
+ id 1tqIvN-0000QR-Hs
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 16:38:39 -0500
+Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tqIpb-0005SX-4g
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 16:32:40 -0500
-Received: by mail-qv1-xf2b.google.com with SMTP id
- 6a1803df08f44-6e89a2501a0so10292506d6.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 13:32:38 -0800 (PST)
+ id 1tqIvM-00075s-1p
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 16:38:37 -0500
+Received: by mail-qk1-x735.google.com with SMTP id
+ af79cd13be357-7c3d3147b81so137340185a.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 13:38:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741296758; x=1741901558; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741297115; x=1741901915; darn=nongnu.org;
  h=thread-index:content-language:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=6aYQdtyWQMbB5Ng3iHHRn4xuqgYsbYxigZPKqGANCSc=;
- b=H5NiAFnZoRHXd+jd0yoTFmDZ4XeD+nT5cOMCgfym04HYYGnLWhGssrsjhHBWyNm5Tp
- ynupYyL/yiLb1BZOj3SVhycognuFik7ibdmFgA1Nf1EH5Nt4ZTzC/cEsoOP8UkG/KOPS
- 9Ugd4oI00HUyD1uLH37Sg4MPrYTOdkZMTi+9P5aswwGTGrJ/73828/T30NQv9X4R/8Mw
- d7nJpctQn2N+0DL7VEF9XKf7oNi5kjRPJW2oQWQvDR8SymSJkcMw6yHhFfONcV5Rrkl0
- XW7wb6U6GgzJoNTcaW4jMY5FhviDti6CtX6X7toDDfaBarMrx8U5HeN4mHxdKOgaZs+/
- Ve8g==
+ bh=gLlz8w6pyVr8UYFGeXKy9ZVt3ayZEKpIuJVaDqZ7P0I=;
+ b=cZBO2p0ExdUxtOhD7caBAHfowL8KIpTwQfG6oVB6CwodswxR8kkwKdDf0+J8SbV4z3
+ hcQvSD3Z4XvZ4nz3Ki0G91FY0NNnUyG2Y9tm83gYB+c268Z5kixY+EZa5DIHmknNphy7
+ LRgCYJbrYR8phggXc7AZJU9NVR7FVKz2Fq7LcJOoIpG7lqe3ifbDU1WrDDkj+fYcAJrx
+ 76tIpfw6Cs49UfUTO/g2wrxCYkB0vQ6c/NIDTq+ap9izw82J6Bp7cYq/zCkEHtWDP4P7
+ 8uzanF6c9OzB87BX0a7EhGHZPktBEL7jzLNtC9V+4hp8rAWpPLAejS034uSSU0+y4Sew
+ Amjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741296758; x=1741901558;
+ d=1e100.net; s=20230601; t=1741297115; x=1741901915;
  h=thread-index:content-language:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6aYQdtyWQMbB5Ng3iHHRn4xuqgYsbYxigZPKqGANCSc=;
- b=S3AAsfj52+PJVjcYMO0NMF6YPRMit2xu0Iqpd04K7u8m4yql/9p8WEaTPHcDiuIQlD
- wABRLsnsHDwaK4JZkrFvwpWS1TznBGWcEffiuWKZ5xQ/AGj54Puw8V6VwWSpWqD50dG+
- 3iYq3XDcMqyyHUzkd9O0sO6XoEJQznoENlMfGdO/6udCxscScUG0ikNdWbl78dg2F5B9
- vLMcI/fvt6kCyFtMoe9zNIVJi/rHUraobq4LnMtvYzzVJUAdQHJaZ/mO9RMDPLe4Ktrf
- Sfnoh8A+i41zH3mo1XhPSNUYp2n6xgkkT7Gi279j2vEw3UIz+v2c3olJg9ZSaKRMH9N2
- jGSQ==
+ bh=gLlz8w6pyVr8UYFGeXKy9ZVt3ayZEKpIuJVaDqZ7P0I=;
+ b=L7wxoZ2fKW5GIGk7Z77UN3lXu1ZroqwuC3S7TGYauknDAB1PZhsESlH3BYSQVCmWDN
+ +G0LefOgEegxRbI7+V6v94OO6YnMp47HmxBFNFNqqeldEhofXMxUDljyOddKRj5l1Wpi
+ 3Xnpcg1AsBDGZKIUXov5Ip5a2XGGc9+5XLZ3JJfu+LJSnUBYOK+52fHEGRnI45GfFwx+
+ qMuAMzQ4l1QxJAvdXOZtDyX72g90/HMgUnQ1Lye31O/YAYvKV4GjFIZg/DZsJS2cOp5h
+ CKqzukEeFOecAWZAEb0RxeUlka3mgaUytVH1SDWxZkxF4jgu2Xs95GPqT+mLPN+SRYvt
+ YYQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU6+UrM/qDqhPg2cQMkmD86CfOcqHbZZWaGUbcZ67yFLmsF2GrxChDirwnjS0ZGaEbglXkwpHOGANce@nongnu.org
-X-Gm-Message-State: AOJu0YzQ3ciV7zP1rHvQ7uZoVWDFSMDIJKGn4OTGZ55Tby+cxK5TZsHF
- kMHPV0GbLG/MTVib0T8CoRxM0H5EZsoG0H2+8aQGLLnIgdv8NcT9
-X-Gm-Gg: ASbGncuLPylBJv2RPOPrABSm7m7H5xW1x8fIAh7qm3RGakE/9LKJ3UEzy5DTIAt/JHA
- C1lWVAA4qHWduw0UAD8zxR1JrocRmI2NKcYvNu67VcoWf1Kxuha/uFsqkqI/REuexVbubIMtawP
- NtV53Kk5ViPhKkGbE9F2/i/Uf/p2gIyxe97+jlZRdpo1BNjmo91L8P8jExf28xeIbKGYYKcUBfx
- jG0TFnkzF74d5mxn+6pAbNBcIbU1oK2+ji3L5hYmcGDoPsZOyhD+DhGtbpVduCDFYo2kKyTQc2m
- v9k/ODikjs9T0fLX232WTI8Sw1ZcCfqI2g2tW9D6izwuPisGOHeu52Hq4e4EsDY=
-X-Google-Smtp-Source: AGHT+IEHEI+u/gvrrNETZvhOt/wTHTYgFyUNTI0pX4BQnOGs6rxADOw/cwqWaXdru7UccVB8qLeA3Q==
-X-Received: by 2002:a05:6214:d6d:b0:6e6:6a6e:7596 with SMTP id
- 6a1803df08f44-6e900694192mr8752456d6.39.1741296758058; 
- Thu, 06 Mar 2025 13:32:38 -0800 (PST)
+ AJvYcCXVOekaf28LRcyLh1wZk51TYAVXyP4CaejJGrDow/cvBLt/7BXJQP5+2WewQkdtLIphsXETu9IHYaMl@nongnu.org
+X-Gm-Message-State: AOJu0YzPi9PHdT0S8sXtfd7RZS5M4IDV3p4AmcKU0iebFlEDlgMApx9A
+ vgQXM2EKyP/m6G2S28ezHE0L4u3nHbu9Pz40FaeYzj1fIwRTSAw2
+X-Gm-Gg: ASbGnctksBfhQhdTnjxSBiX3CHaJHgy2gpXCibvbDK/7pgCL7ekXA6rR7tY/nJVUQC4
+ almUKoqTMFaXszFrwEYVAF2p5OX83TVW//nPs11hiQ/stG4Ej6ufijCJjXPznKo7SqMr7io95Sd
+ oEgqfwLOPscNnIFkazDTh7KsdqnIlxc7LOWuqrAwxSQf7qcK1yrhLS+kpUJ5GJnx5AJFOLcJtqJ
+ 0CaMVut3a4fOwpxoRV+aTV2M0MlOarm+iBNUEIkwbkV1c9afY/m8krF2nqSzJU3cHhSTp6A4Ukc
+ W4XsU8WWgHTKVJBfGupgYa/sytlMVsW180j5QugPyQZxBGTKEeGtaEG4JqhMyHk=
+X-Google-Smtp-Source: AGHT+IFSvteZUcHf0w2JeTfQQ7cdupB/xFY3KRALTkXDbDv/N8Jo2nDY/mo1Am/jGwgthTnVMZKRCA==
+X-Received: by 2002:a05:620a:6181:b0:7c0:c09a:bac0 with SMTP id
+ af79cd13be357-7c4e60f0ae0mr103885085a.15.1741297114740; 
+ Thu, 06 Mar 2025 13:38:34 -0800 (PST)
 Received: from DESKTOPUU50BPD ([2603:6000:a500:306:f449:4838:1970:9d05])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e8f7090c27sm11455726d6.44.2025.03.06.13.32.36
+ af79cd13be357-7c3e534bb1esm140830785a.31.2025.03.06.13.38.33
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 06 Mar 2025 13:32:37 -0800 (PST)
+ Thu, 06 Mar 2025 13:38:34 -0800 (PST)
 From: <ltaylorsimpson@gmail.com>
 To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
 	<qemu-devel@nongnu.org>
@@ -74,22 +74,22 @@ Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
  <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
  "'Brian Cain'" <bcain@quicinc.com>
 References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-10-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052628.1011210-10-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 09/38] target/hexagon: Add guest, system reg number state
-Date: Thu, 6 Mar 2025 15:32:36 -0600
-Message-ID: <023a01db8edf$4844c800$d8ce5800$@gmail.com>
+ <20250301052628.1011210-11-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052628.1011210-11-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 10/38] target/hexagon: Add TCG values for sreg, greg
+Date: Thu, 6 Mar 2025 15:38:33 -0600
+Message-ID: <023e01db8ee0$1cdcc310$56964930$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-us
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgHJR+d4tOy0MsA=
+Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgGxGQ3AtO116OA=
 X-Antivirus: Norton (VPS 250306-6, 3/6/2025), Outbound message
 X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2b;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x735.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,13 +123,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
 > alex.bennee@linaro.org; quic_mburton@quicinc.com;
 > sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 09/38] target/hexagon: Add guest, system reg number state
-> 
+> Subject: [PATCH 10/38] target/hexagon: Add TCG values for sreg, greg
+>=20
 > From: Brian Cain <bcain@quicinc.com>
-> 
+>=20
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c =
+index
+> 2e9a934fc6..71c137be30 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -61,6 +61,13 @@ TCGv hex_vstore_addr[VSTORES_MAX];  TCGv
+> hex_vstore_size[VSTORES_MAX];  TCGv
+> hex_vstore_pending[VSTORES_MAX];
+>=20
+> +#ifndef CONFIG_USER_ONLY
+> +TCGv hex_greg[NUM_GREGS];
+> +TCGv hex_t_sreg[NUM_SREGS];
+> +TCGv_ptr hex_g_sreg_ptr;
+> +TCGv hex_g_sreg[NUM_SREGS];
+> +#endif
+> +
+>  static const char * const hexagon_prednames[] =3D {
+>    "p0", "p1", "p2", "p3"
+>  };
 
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-
+Is there code in a later patch to do the tcg_global_mem_new for all of =
+these?  Go ahead and combine that patch with this one.
 
 
