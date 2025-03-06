@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 635A9C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2A68C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDVp-0004y2-Dl; Thu, 06 Mar 2025 10:51:53 -0500
+	id 1tqDUT-0003m6-QY; Thu, 06 Mar 2025 10:50:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDVS-0004UM-NA
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:51:30 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDT9-0000Bo-Tp
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:11 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDV6-0006km-Eu
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:51:09 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-391211ea598so631518f8f.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:51:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDT8-0006M2-3D
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:07 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43bb6b0b898so7161125e9.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:49:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276266; x=1741881066; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741276144; x=1741880944; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=/DxhRNL6h72ajthgv6sxFLibq8RyJHMeyPI1bV4pMio=;
- b=s2STrUh/p2U9sWuPBU46eDMbI9RPHrw1t95UykA5l0NGhGFIoi39tTW2sw87TOWgM3
- R4Fs/U7ggwYzRBrbxWYPNqlGfQ06zrsopehDYkpMSD4WU6PpEmxzU+cp35Wn+oh0ZgMk
- 0mdXTr4GQdXFPb9XsTh2mwy2wMAFl1Ye8h7h0oIInPbWet4S+j7S8xI8nMXOkMPRS2dU
- b9QUql0rYoR5TvPUsKiBynd06VQ2Oiscg4PXRtj4s+aIvU/9qBTkWHNus1y8iS7CaLAF
- GcSFeKpLBQeKhayXXXxgx7C+9+OCb+GeteD4UEYGMgkf5HyBqJsv/MIxkvvJfaCjp4dI
- fvIg==
+ :reply-to; bh=MUTTZ9ZjMGE0zesMow2iRN4HqaCDCLVgPrmD8dOYeq0=;
+ b=LbJ29HbZtBY0+K7BiFXUS7Ejz8cMwaiyaF2/CQenRgj59IIvtnhGF6NNCrWm9acrRQ
+ gHrBa3oumXcl0/6xKUlp+WcLYOPsniAOcwQYyS/qdNsBwn3N/4LZOk71f5gA41dsLxY5
+ 15U/1i7euowX+UEOIDn58qvQ/tM1RbukwjdRDphjr2j7T7Ee31IVTTCG0IruDM3X99Gv
+ 1s6UFrBet6Q9BTZ9KxnwngquttFmEXRKU9NO0sPGLCff1H0LEXNQqZPlc4o4JaavTtrB
+ Hxyt8BVz5GNJiXLVb+dj+51cP3ZpnF4LnsUgfYvvvaeCJylv0xUtehbejRxNOx08u7zE
+ yWkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276266; x=1741881066;
+ d=1e100.net; s=20230601; t=1741276144; x=1741880944;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/DxhRNL6h72ajthgv6sxFLibq8RyJHMeyPI1bV4pMio=;
- b=NFNOlTjteNMTCg9yABmcCgfEaTyxHxjDWKlSZrGVvXo5yxv0BKcDyyI5r6NqBndhrQ
- D7iQFNaUzGRXQCRaJmeQfI0bY8aLJIY0ce8S1zygHj3duzJ6TcWHkeMW3EjMGacq4s5M
- 4eoMW/JhiWuq0CKQ2HCl5lN+XbK+vHG6ryvG2Pd/Jsf2zY0MTwnJQQu6eDxNjDFLyao4
- H/lZCheWk/Wj9+ps2TQmd0U3X/v3LSROQ8v/JZ3CRc5xMvLyqlQIp/rufkYH8Tlccaei
- QCiSmJgNOXEbL1Qkqfk4pue1Tl0hLvRQHrXcYQ+tvJf5vUCLDm7oalVmp++LAPKlMegw
- Lk3g==
-X-Gm-Message-State: AOJu0YxpnzgOnplkAwAXJ2l3oma98XSurUCrQsGoiaEzh1Pjj6hKMnpg
- 7xPR8d8p2nrnPhvy/7gPjot3pVU48rXhXS6XdST87sipCQFJBSRfbMJPz7+CbcSjs0Dpv4ft0Xr
- VEiQ=
-X-Gm-Gg: ASbGnctg2wLLOC8EQFD/YiFbO4kXw2uZTQDrp7yy3jSLo8bOPq6Y1/rsTvsqySaVEZd
- cuw0nIbYH2G+guqp5/0zH8sx5IXenD2WX0E8u8D+E2DF/774GetOi+GRR0kNIFGY+9FyQsWvpZY
- yvBgJn8nZvlMURa3QkHoePfzzNk4bmEUvKYrruZ11gRf6TjaCidQbw9WJfphypL6ygCfDSHn0CP
- vtOlum7OqL92KpGRK2vuLSKDYtOfCWQZagRQw5bwRRXqd4JTfNg0Mo6wIK5aPSFr3prD5h5kG8/
- ExGKVUxT9yw9CZDX9csUNrIFdbFaXLekGy/jcImn0mwh0XEgtBD+Mq86zXp5ShusvyaPYx2T4MV
- igM/Y4wJRxZl4FZIjVFo=
-X-Google-Smtp-Source: AGHT+IHfrORliDrZ745y3s294xlXByFLox+pgX87rrNnEB6HGf+3bp0ACQvxZMjcSK8IxkAnvY63Ew==
-X-Received: by 2002:a5d:6486:0:b0:391:a74:d7dc with SMTP id
- ffacd0b85a97d-3911f7ce121mr6838226f8f.50.1741276266436; 
- Thu, 06 Mar 2025 07:51:06 -0800 (PST)
+ bh=MUTTZ9ZjMGE0zesMow2iRN4HqaCDCLVgPrmD8dOYeq0=;
+ b=hZQMGYGYJS0KQwlwnmrztoYpMRMoqroDiF37c2wflSW7EPBup3ODkvILY8AEaD4NGq
+ U72P/A+pkeUe7ARtnNqbvBvGomIG62OXBC/470Sq0uYe6yrTOPoMVkpg/l+lkCJe9FON
+ ahVKPrMoMKxXGz4xFaTC6xyQN5O9w6cyH5jQV+X7s6sClnsh5fgLFZLv1Tzh75JwLhGl
+ 2yhF00oDetqU/BpkeO4xJ5petUh/e919Pps8VKcodSiHOc6um5ObNNm1eE/iMwpEqRRP
+ bczTr51ABY/E7Vk4/y4bqhBU9oasfImAqW0nc72W/dZtHYxuLteNdXDC0Jdy8YTS2DCs
+ hWeA==
+X-Gm-Message-State: AOJu0YxwZ9ZQ68A+0nS3+DsivOcIDm5c/plTUvXZ7leLbYKrE6CoQJeY
+ ETzthBwDtgH//yJE4Aa0WveJNkgMv1uLhoOWzPOJZLFdylCUkWtXADVBbtEvbo4vDat6eoL2ani
+ ypas=
+X-Gm-Gg: ASbGncv7l1Bxv9/JgCZuN71uLtuhxiyFekyGeV7IUcKt/whSDtTu8WEkceYPQoUgXQU
+ 5kr2bhwVuVuQtyE9oIDjhuqx9UlWjmCJzzm2DAeP5+LC+2F6CtD62VQmYTkYNz/HVYb1IcCz4KB
+ ErgotSoi2u6Dp4V3pLTBnY/gBLrYvQR96oGSy0/wgsD0XH01W5YA1irCVbQ0pmTYWZRV7nvMMDC
+ EGjqooBjp5dvVsh2I0jdy5dpXnNJWF2qrZ3JdE2M3Rht5k0/3BojOPH0EnwJUd3bSA4ZgPoaYwy
+ fGd7MSPTXj6L91DhDNfmast19deJtjTtofuQp/fA/VC38mJJXdVi/df4g4W0TaAbOIRYYX1wVxc
+ 8VdEVd7+W1V3J5/tUlL4=
+X-Google-Smtp-Source: AGHT+IFhVkJPPbUk+3vwT8Cf6Bcc8u9Z7SO6TTn+Atl0a/aWr10ra37GP6yBFhioMER9JPv676+hwg==
+X-Received: by 2002:a05:600c:511c:b0:43b:c0fa:f9cd with SMTP id
+ 5b1f17b1804b1-43bd2972e1dmr67090175e9.7.1741276144130; 
+ Thu, 06 Mar 2025 07:49:04 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfbab43sm2453993f8f.15.2025.03.06.07.51.05
+ 5b1f17b1804b1-43bcbcc0c39sm66381085e9.0.2025.03.06.07.49.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:51:05 -0800 (PST)
+ Thu, 06 Mar 2025 07:49:03 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 46/54] target/i386: Constify X86CPUModel uses
-Date: Thu,  6 Mar 2025 16:47:28 +0100
-Message-ID: <20250306154737.70886-47-philmd@linaro.org>
+Subject: [PULL 19/54] accel/kvm: Remove unused 'system/cpus.h' header in
+ kvm-cpus.h
+Date: Thu,  6 Mar 2025 16:47:01 +0100
+Message-ID: <20250306154737.70886-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
 References: <20250306154737.70886-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,67 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Missed in commit b86f59c7155 ("accel: replace struct CpusAccel
+with AccelOpsClass") which removed the single CpusAccel use.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250210133134.90879-2-philmd@linaro.org>
+Message-Id: <20250123234415.59850-7-philmd@linaro.org>
 ---
- target/i386/cpu.h | 2 +-
- target/i386/cpu.c | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ accel/kvm/kvm-cpus.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 10ce019e3f8..7882b63b9b6 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2327,7 +2327,7 @@ struct X86CPUClass {
-      * CPU definition, automatically loaded by instance_init if not NULL.
-      * Should be eventually replaced by subclass-specific property defaults.
-      */
--    X86CPUModel *model;
-+    const X86CPUModel *model;
+diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h
+index b5435286e42..688511151c8 100644
+--- a/accel/kvm/kvm-cpus.h
++++ b/accel/kvm/kvm-cpus.h
+@@ -10,8 +10,6 @@
+ #ifndef KVM_CPUS_H
+ #define KVM_CPUS_H
  
-     bool host_cpuid_required;
-     int ordering;
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index ab328485acc..b3e1c2bca49 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6563,7 +6563,7 @@ void x86_cpu_apply_props(X86CPU *cpu, PropValue *props)
-  * Only for builtin_x86_defs models initialized with x86_register_cpudef_types.
-  */
- 
--static void x86_cpu_apply_version_props(X86CPU *cpu, X86CPUModel *model)
-+static void x86_cpu_apply_version_props(X86CPU *cpu, const X86CPUModel *model)
- {
-     const X86CPUVersionDefinition *vdef;
-     X86CPUVersion version = x86_cpu_model_resolve_version(model);
-@@ -6592,7 +6592,7 @@ static void x86_cpu_apply_version_props(X86CPU *cpu, X86CPUModel *model)
- }
- 
- static const CPUCaches *x86_cpu_get_versioned_cache_info(X86CPU *cpu,
--                                                         X86CPUModel *model)
-+                                                       const X86CPUModel *model)
- {
-     const X86CPUVersionDefinition *vdef;
-     X86CPUVersion version = x86_cpu_model_resolve_version(model);
-@@ -6620,7 +6620,7 @@ static const CPUCaches *x86_cpu_get_versioned_cache_info(X86CPU *cpu,
-  * Load data from X86CPUDefinition into a X86CPU object.
-  * Only for builtin_x86_defs models initialized with x86_register_cpudef_types.
-  */
--static void x86_cpu_load_model(X86CPU *cpu, X86CPUModel *model)
-+static void x86_cpu_load_model(X86CPU *cpu, const X86CPUModel *model)
- {
-     const X86CPUDefinition *def = model->cpudef;
-     CPUX86State *env = &cpu->env;
-@@ -6690,7 +6690,7 @@ static const gchar *x86_gdb_arch_name(CPUState *cs)
- 
- static void x86_cpu_cpudef_class_init(ObjectClass *oc, void *data)
- {
--    X86CPUModel *model = data;
-+    const X86CPUModel *model = data;
-     X86CPUClass *xcc = X86_CPU_CLASS(oc);
-     CPUClass *cc = CPU_CLASS(oc);
- 
+-#include "system/cpus.h"
+-
+ int kvm_init_vcpu(CPUState *cpu, Error **errp);
+ int kvm_cpu_exec(CPUState *cpu);
+ void kvm_destroy_vcpu(CPUState *cpu);
 -- 
 2.47.1
 
