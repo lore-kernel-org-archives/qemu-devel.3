@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E74FC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA50C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:41:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqEGB-0006vu-BP; Thu, 06 Mar 2025 11:39:47 -0500
+	id 1tqEG5-0006qG-Hd; Thu, 06 Mar 2025 11:39:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEFx-0006km-Se
+ id 1tqEFx-0006kj-SK
  for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:36 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEFv-0004Xx-Nh
+ id 1tqEFu-0004W5-8P
  for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:33 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43bc4b1603fso6021235e9.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:31 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43bdcd0d97dso5396765e9.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741279170; x=1741883970; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741279168; x=1741883968; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=k5hIZtfWRRivBnmcIBAqfcb8VlTDxUApJC/AqX8qCP4=;
- b=aeCxaM4dCe5pBIWdJWX2aetAxBvkC+jC8SlF6DN9rPXudbQ2297KRZFHgv1WJgYByk
- BJc14/pnsoQgaFDZpqtJEHqXT8WE2OMYCsgEn5SQh5c3QyIrDUWu491Js8K8RDN7nCFH
- njt+nkDzMJU2lkKsPpQvFS/VpjLqefnDdHahbALRw6Np+2RxrKBtgczZCy577vUXl+SP
- gnUB8kQ04pNYFofrIWjK+tIAAgAuanATbC8I9j7RMhjp2ZnLOV7hIKez4uZtKvbaMANp
- 562uhsoZ0tUHHbbhaPT7nucTXFNScrEUwCfN/RmS1cXQd+V1/H3JU8/LLrMrsiNReZIe
- uQQA==
+ :reply-to; bh=Q+T7VuurGO0f901MDk6f8XYzX0X5BpbcVrzC5rBMrok=;
+ b=Shj7twNxNso0/7igM+cnhcekdGRnwcLGR3N1/f+epBdrzzpaJEGYfo7CXWMI2yY6vr
+ zX+khxiK2mQcZDks6DKw3Zlk89+tr5wR5nddI17pEvMN2Jn/YSJHEADjnT0WRFJwib/l
+ xp3IZmRrKyfgFD9Y1l9DVqrFIlR3Fx/S5RpnGNNe/xT6jnqNaOpOi9E8Q8DvmhUuhmoW
+ wZZekJv7WfhOMMVOobk3N0JkQxY509o/d3QcfWXQye4GMwqjTfdE9p4Nhh30jmUug/yA
+ o1Rj61+kbgwGuLRg/7213RJg0LxWj/StoSzbGhXxnbsJ7udxXa9I2vRhfjiBXvyfkRku
+ 246Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741279170; x=1741883970;
+ d=1e100.net; s=20230601; t=1741279168; x=1741883968;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=k5hIZtfWRRivBnmcIBAqfcb8VlTDxUApJC/AqX8qCP4=;
- b=wFqc0p6CEHHh7vLi2Uc1IcQtoLfXHDPljpuAzYfhZt6wH/kGiTb7N8kI+1rYmb6pA6
- zFb7AQWNgud3qNgL35v7Jtkf5zvYl66Qb0pFCLrQKGBcWTXFGhzCKuCc5v2T5Og1jhs2
- woiseU4rNPKVh25/+VhEwKwie7FYg4Mu5NW6MT/anPjXV6D+U6vtcZ9i85x4Rsb17G9b
- YyW3mT7sz4Rbcxxif1zMWMhN7oeGJ+nQWNuhuS3PCMDHDZcuJ2TYKF9ntnTqv2x7QNtp
- dWvJiKXHDf24W46ftM+mZkjmuIPRFyiaqAx1ACW2KcSKbCKw3S/tS8TkEWxmOAZYxloM
- Erjg==
+ bh=Q+T7VuurGO0f901MDk6f8XYzX0X5BpbcVrzC5rBMrok=;
+ b=OFdKuW8p+rB0/YuCdU2d8gg41CLxfhh6Qq1bID1cp7YMLuSSEmG9rGZesprvf1ANGx
+ MlZ6Q4PBGFH3BYwGu2fKs7RpEDBd/yxghS0HiS69VE/E5zM14WzrtnxpaaO88k13NcWE
+ doG7WDntky+VFKOT0wDw1yF3CP6rFDfi0rJg/2rkbkNExR6TxHT27Sy8ubQa+vtlDkPA
+ czwi+js6anyUaympuHzblL7iFcXJWjo6VoxFR2PXhXgAbsTSW1ivB85DIaJaQ/Nhi9dA
+ TwG4bz+uqKAz6YWc9TEWR4IrQXU3Lb3jq7zbvjb22u7UgLh/e1HOjocOhL/4FuZ58buQ
+ iKew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnFgE2FFYRceXla+VZ9yCKFcY03JD1HLN8G2rIXn0lBr+7bSo2knBH6EYJl29+GVDKC5OHT2KALc1h@nongnu.org
-X-Gm-Message-State: AOJu0YyuMDhuGQenY9rJjIJvknLEz/Ix4iTGAPR0F7+yCmUluuVcQ55A
- nnDoz4qKQbEIsA8PmeEF2YSQWnQD/vJUE3wOxYyTARZh8NCILHrySj2K90/3P3g=
-X-Gm-Gg: ASbGnctY2cjlms0tY1U3yp9qBGHZZ+KCiQx/o24r6+Go9iW7VuOZoJzPra/vTLdlBgO
- DyVqkI20XCM0vOgUUYOx+sxmMLPwIABp3KZ9a5yeSxzSNVNG5ZblTvDiORWLeTqfgJ0msxESW66
- RFGzN0yNzP6pFkrClD6inNqUaHfdGruBRhNQdonjI6bPpE5F2ASLe8uPd6J96JsSBBQBD08TEYP
- artR+r/oxZia8++LKopksP/5FkqhWgDm3iumzAyqcDSQmRIOa1UgXlmh10UXE82GdNFRg6sfujg
- tCcF4tvtKzCc+/Er/1wdT+u9cdLxAdoZAPbcL1uLHLmY4ekNhoA=
-X-Google-Smtp-Source: AGHT+IFabVIqy8aCxJEcyjhR80/9tWEvJ9O8DiM/wCJERMGnJVT3HpHx0G9e0dkiNc3FMufcA8zwwQ==
-X-Received: by 2002:a05:600c:4ece:b0:43b:c390:b77f with SMTP id
- 5b1f17b1804b1-43c5cb68e08mr1457075e9.26.1741279170193; 
- Thu, 06 Mar 2025 08:39:30 -0800 (PST)
+ AJvYcCVTWjbpIHw8DZNGWwUNEMLLjEosUS/HBRzJ22M6nxwd2r5JkNRObZ0sw2F4LWyFrzM4mloL8jrpLXc3@nongnu.org
+X-Gm-Message-State: AOJu0Yzv524eKggLZNQ5i30eZQX3yNbM3t/gXa1F+mVifXNDTngs3uBN
+ sH8VTOvvzXSl1+L7bPUb1eeQc1c4GvyBBkLTjU6DJDeEFIYrrw9C1uKmhfycTWU=
+X-Gm-Gg: ASbGnctXd6ggFAwepnY1R1dQu26uWTSeJ1a2boA09sI2yXx8UlCzZFNxZAPXlsYRz7g
+ Fz5ujqToyc5N30oJSG+e3uS4ZoCpaY0q+7NMRrwO9Xba2eJkA0wsjVozcAQfxkCCGVcJ9EkIsoW
+ uUuiWIl3q7eMkhu43j9dMW7NM++tSX+AIaHRxSfAhb2UbvH3hxmN14PJlJUueonnw21VUwiiFjf
+ ZR7mZd3XustFxkVBljuj7rq5FlqdZE6rfIbtcENqC+8+Dds5FH6/VL3+FJI2HKUEcmLmk3CFyZG
+ FGjP7vVYSEkPJ1UB0nF+aQAjY2THIV2TJhf2LBAEye4JnMgptbg=
+X-Google-Smtp-Source: AGHT+IHbC7FFo3TvqgJ+WqBlkcSvP24OU++PPGVTKay20fczsXHko4p3Yn+1YpwWW6u1IcBz3J0INA==
+X-Received: by 2002:a05:600c:17d1:b0:439:8e95:795b with SMTP id
+ 5b1f17b1804b1-43c68729939mr716785e9.31.1741279168451; 
+ Thu, 06 Mar 2025 08:39:28 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.29
+ 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 08:39:29 -0800 (PST)
+ Thu, 06 Mar 2025 08:39:27 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 03/10] linux-user/aarch64: Remove unused get/put_user macros
-Date: Thu,  6 Mar 2025 16:39:17 +0000
-Message-ID: <20250306163925.2940297-4-peter.maydell@linaro.org>
+Subject: [PATCH 01/10] target/arm: Move A32_BANKED_REG_{GET,
+ SET} macros to cpregs.h
+Date: Thu,  6 Mar 2025 16:39:15 +0000
+Message-ID: <20250306163925.2940297-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250306163925.2940297-1-peter.maydell@linaro.org>
 References: <20250306163925.2940297-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,74 +100,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At the top of linux-user/aarch64/cpu_loop.c we define a set of
-macros for reading and writing data and code words, but we never
-use these macros. Delete them.
+The A32_BANKED_REG_{GET,SET} macros are only used inside target/arm;
+move their definitions to cpregs.h. There's no need to have them
+defined in all the code that includes cpu.h.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- linux-user/aarch64/cpu_loop.c | 48 -----------------------------------
- 1 file changed, 48 deletions(-)
+ target/arm/cpregs.h | 28 ++++++++++++++++++++++++++++
+ target/arm/cpu.h    | 27 ---------------------------
+ 2 files changed, 28 insertions(+), 27 deletions(-)
 
-diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
-index c5d8a483a3f..fea43cefa6b 100644
---- a/linux-user/aarch64/cpu_loop.c
-+++ b/linux-user/aarch64/cpu_loop.c
-@@ -27,54 +27,6 @@
- #include "target/arm/syndrome.h"
- #include "target/arm/cpu-features.h"
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 52377c6eb50..2183de8eda6 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -1157,4 +1157,32 @@ static inline bool arm_cpreg_traps_in_nv(const ARMCPRegInfo *ri)
+     return ri->opc1 == 4 || ri->opc1 == 5;
+ }
  
--#define get_user_code_u32(x, gaddr, env)                \
--    ({ abi_long __r = get_user_u32((x), (gaddr));       \
--        if (!__r && bswap_code(arm_sctlr_b(env))) {     \
--            (x) = bswap32(x);                           \
--        }                                               \
--        __r;                                            \
--    })
++/* Macros for accessing a specified CP register bank */
++#define A32_BANKED_REG_GET(_env, _regname, _secure)                     \
++    ((_secure) ? (_env)->cp15._regname##_s : (_env)->cp15._regname##_ns)
++
++#define A32_BANKED_REG_SET(_env, _regname, _secure, _val)       \
++    do {                                                        \
++        if (_secure) {                                          \
++            (_env)->cp15._regname##_s = (_val);                 \
++        } else {                                                \
++            (_env)->cp15._regname##_ns = (_val);                \
++        }                                                       \
++    } while (0)
++
++/*
++ * Macros for automatically accessing a specific CP register bank depending on
++ * the current secure state of the system.  These macros are not intended for
++ * supporting instruction translation reads/writes as these are dependent
++ * solely on the SCR.NS bit and not the mode.
++ */
++#define A32_BANKED_CURRENT_REG_GET(_env, _regname)                          \
++    A32_BANKED_REG_GET((_env), _regname,                                    \
++                       (arm_is_secure(_env) && !arm_el_is_aa64((_env), 3)))
++
++#define A32_BANKED_CURRENT_REG_SET(_env, _regname, _val)                    \
++    A32_BANKED_REG_SET((_env), _regname,                                    \
++                       (arm_is_secure(_env) && !arm_el_is_aa64((_env), 3)), \
++                       (_val))
++
+ #endif /* TARGET_ARM_CPREGS_H */
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 215845c7e25..c360b74ded9 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2682,33 +2682,6 @@ static inline bool access_secure_reg(CPUARMState *env)
+     return ret;
+ }
+ 
+-/* Macros for accessing a specified CP register bank */
+-#define A32_BANKED_REG_GET(_env, _regname, _secure)    \
+-    ((_secure) ? (_env)->cp15._regname##_s : (_env)->cp15._regname##_ns)
 -
--#define get_user_code_u16(x, gaddr, env)                \
--    ({ abi_long __r = get_user_u16((x), (gaddr));       \
--        if (!__r && bswap_code(arm_sctlr_b(env))) {     \
--            (x) = bswap16(x);                           \
+-#define A32_BANKED_REG_SET(_env, _regname, _secure, _val)   \
+-    do {                                                \
+-        if (_secure) {                                   \
+-            (_env)->cp15._regname##_s = (_val);            \
+-        } else {                                        \
+-            (_env)->cp15._regname##_ns = (_val);           \
 -        }                                               \
--        __r;                                            \
--    })
+-    } while (0)
 -
--#define get_user_data_u32(x, gaddr, env)                \
--    ({ abi_long __r = get_user_u32((x), (gaddr));       \
--        if (!__r && arm_cpu_bswap_data(env)) {          \
--            (x) = bswap32(x);                           \
--        }                                               \
--        __r;                                            \
--    })
+-/* Macros for automatically accessing a specific CP register bank depending on
+- * the current secure state of the system.  These macros are not intended for
+- * supporting instruction translation reads/writes as these are dependent
+- * solely on the SCR.NS bit and not the mode.
+- */
+-#define A32_BANKED_CURRENT_REG_GET(_env, _regname)        \
+-    A32_BANKED_REG_GET((_env), _regname,                \
+-                       (arm_is_secure(_env) && !arm_el_is_aa64((_env), 3)))
 -
--#define get_user_data_u16(x, gaddr, env)                \
--    ({ abi_long __r = get_user_u16((x), (gaddr));       \
--        if (!__r && arm_cpu_bswap_data(env)) {          \
--            (x) = bswap16(x);                           \
--        }                                               \
--        __r;                                            \
--    })
+-#define A32_BANKED_CURRENT_REG_SET(_env, _regname, _val)                       \
+-    A32_BANKED_REG_SET((_env), _regname,                                    \
+-                       (arm_is_secure(_env) && !arm_el_is_aa64((_env), 3)), \
+-                       (_val))
 -
--#define put_user_data_u32(x, gaddr, env)                \
--    ({ typeof(x) __x = (x);                             \
--        if (arm_cpu_bswap_data(env)) {                  \
--            __x = bswap32(__x);                         \
--        }                                               \
--        put_user_u32(__x, (gaddr));                     \
--    })
--
--#define put_user_data_u16(x, gaddr, env)                \
--    ({ typeof(x) __x = (x);                             \
--        if (arm_cpu_bswap_data(env)) {                  \
--            __x = bswap16(__x);                         \
--        }                                               \
--        put_user_u16(__x, (gaddr));                     \
--    })
--
- /* AArch64 main loop */
- void cpu_loop(CPUARMState *env)
- {
+ uint32_t arm_phys_excp_target_el(CPUState *cs, uint32_t excp_idx,
+                                  uint32_t cur_el, bool secure);
+ 
 -- 
 2.43.0
 
