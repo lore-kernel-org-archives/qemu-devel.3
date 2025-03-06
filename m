@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92633C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 21:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7983CC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 21:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqIRu-0007ao-Fn; Thu, 06 Mar 2025 16:08:10 -0500
+	id 1tqIVl-0000iC-DG; Thu, 06 Mar 2025 16:12:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tqIRp-0007Zk-Ih
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 16:08:05 -0500
-Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
+ id 1tqIVc-0000gE-5q
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 16:12:01 -0500
+Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tqIRm-0001JK-6k
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 16:08:05 -0500
-Received: by mail-qt1-x834.google.com with SMTP id
- d75a77b69052e-47519994f25so14535401cf.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 13:08:00 -0800 (PST)
+ id 1tqIVX-0001uA-UF
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 16:11:59 -0500
+Received: by mail-qk1-x72f.google.com with SMTP id
+ af79cd13be357-7c3c9f7b1a6so115885385a.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 13:11:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741295280; x=1741900080; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741295509; x=1741900309; darn=nongnu.org;
  h=thread-index:content-language:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=l6BwE9SYAn4qTGitRNfMWTTNEcvnK+veA5QXKvra8fM=;
- b=alt7s8CocCwdEfblzEsj2+gwefOquimD+3dKXUU52M/ffxTVGRU2qEZVfJEvHphzW4
- Wzw4JJCGF6F3fB2HiHcsVrr5M/DbupqHTjqSlmvOzXe2fDQ7QvmNUKoJZ6Yotije0DVX
- q5xOn/298tJglQG2H7Yt4DbB1CqcqkHE7+zns5n5X0dSGytwGAlBJM8x35GZ64MJpgbd
- jHdFdz8FX5/C/4Lim8sODEflqxWXbT3OJ1oQj2FlgMuKoC0Eco3dx42NgWOOy3tgrLya
- bv+l1DQ6/f/CKwkJ4WahBUK0NY24t8PNepkcx88WZrXBxaZGgG+u+4WjTrfoGnduRKPU
- rMcQ==
+ bh=Kv67r4qCpZI2QUALaAbbDFRDkZKRfPDWFVOEoemS944=;
+ b=LIH7moaU0NXXibMVh2C0gnHh2wFB8TPd43qiKVFm4ojjy8Z6T3QvRSk5NAUjZTXueM
+ F0vxlZojjzYaLzB8zpN8hGxEi8SPxUL7wqMWSlzLjlXHBHWka2fDTw4NFNLjEaEb90Sx
+ 003CyeGCzapFw+T+TeVFOajhTXJfgMEgq6GeWO6JdIQ7nYYi9UtIim7SN7As5BzlmM+/
+ UcqqQHb8k3Uf5cqPuqDYC7xinZtsSyBSylsbEDDX6e9ae4X6QD2kcn2jMb11hBEYgxbW
+ sp/6UhEMpOclDYPTiXIfrbrxzM6QcDfyDEQSVYd951chxQ8az71UKFapBGmRGQTRGlFd
+ 5W3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741295280; x=1741900080;
+ d=1e100.net; s=20230601; t=1741295509; x=1741900309;
  h=thread-index:content-language:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l6BwE9SYAn4qTGitRNfMWTTNEcvnK+veA5QXKvra8fM=;
- b=B2nepiBTZbZSCzkGFJKTAZ2V2MGsZWKKQ4P9Mla+KfJ38djqIrXEXdtxLnWtrpGX6l
- sU//fK/tax0zJlcGc6lMH+0Liz0jnSBcbxvktl13CW4lfKxB04YPZIs1mrP7sPsHTHEQ
- uHs+EuamZQZ8fadMeroQ+EQfihSBnDdsK0AdP+/KzW+vWNCmzFv995C+NkY/A+ZFr8yn
- hOci9nKUkR+B6o3xTsIuus8q2AmH7YJP2huDOFsOj1Zif0N+a00K0+0d5YuePD8FQgTY
- d4k6Q7qjMDxS6dplq2qB+S4jwTfQreAiMdN4FdAyoG+xZ2/rL1uck+iq11AGysLZ/oZ7
- Gzbw==
+ bh=Kv67r4qCpZI2QUALaAbbDFRDkZKRfPDWFVOEoemS944=;
+ b=ClX/TqbeydT1gDBayZ3j4Tub5NdFq5n6nfwM//5Bcu4EXBPZlxWLu4hqrRY5xeqNY3
+ vivBpBsgvfux7xQK8EQwoY/322m+l4uiH9FgPcO5D83BZ3gkVO+/IZOAnAh7bUMrR0sG
+ l2rTwqWYHKW8Pe36sKUU6qhVIn8J9SE3Y3Ah/tFjIKQiKJYYlr/RPctMMx+1lv31W3a2
+ a4M6x7mifsUKVCksGkuVnLJXmcYjemqrWnYVjGpLv3PJMSfPVj5xWTkRQuLXlVHygBGn
+ b41A0mKMF9oYtKMfgfwOvSAU0KfyavIBelp+FUTX9SjpxzmFAmIlMDyp/f0+gpX/4Ihb
+ fryg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0HRiyu2zE9ZaOvnImLloQUhoPaWgccEhRmlm+5zYoeWo3deVrX5Ta4psaj2+D+ItzANJWDkOZcjhM@nongnu.org
-X-Gm-Message-State: AOJu0Yzod1i0Gh32PtJuyBu/B8t8/QG2wE+5wZq2amIdMUU/8M3LwGvs
- nJ2lbMmdw3g8BbvJJcRu7npSAl3OuxVw4/z3qC1z8khXZAS0Kq8L
-X-Gm-Gg: ASbGncsP/HzyyOeRKeB0W2O0wByugWWKN6mYvfWuRqrjYriEiyVG2mxS/cL/EA5eOCa
- BHE0mpKnOyuBogXOek3MNlX3GXzXiBgE4vYy0AjsV0Kj1HUaFhbHc+AQ4LOhIRLCjgZk+6WMFtz
- vwJnYHLVdgx6+1slxrn/mV1bNA+/gsQNW52qw0vGClijnB2nGgO8ZwLJ46F7IzoeQk1SkiuQUqb
- FOH4LbcDfugYTv/Oz8YIfw7d83odnGUYekSiHV9wFdIdf6eoXcn2U86AOX5dkXFNJAwgwXAnmmK
- 4RHD7kGWl5Vugcqj0/n5d8l8GTLYoKUmg3AZzA999yrUVWmlCD21q0WtjN4O/cM=
-X-Google-Smtp-Source: AGHT+IHWJlZuEHxxl+aoD5wsO/Ux01zotJT9euVSYGDzksdXEoLnCWqXoZCjEyGB0t/YO88S0tEPkg==
-X-Received: by 2002:ac8:57c4:0:b0:472:6e5:d7b6 with SMTP id
- d75a77b69052e-4761095001fmr7640581cf.6.1741295280151; 
- Thu, 06 Mar 2025 13:08:00 -0800 (PST)
+ AJvYcCW7gAsGsmSgQR2KW6AqwBHhlJ03TJjUfOoQT73gnNA+NNPFlDG/+r/VBqUkGm7TvfsNtRUseysk2VVG@nongnu.org
+X-Gm-Message-State: AOJu0YyOQZqwziFO6SklSw7HtDiU7YUGhKKp+I2vKfE2MxBwBdeIjxvm
+ sKzGPOTqoSycOKiSzhyaG5VpD1BllbT6VAUt9Xfy0iC/uJEhToKP
+X-Gm-Gg: ASbGnctymHYcCmWnUaNZn4dP9eCu6Wg3IXqAIL0G+T3SdW943YA11dbWIWmynro4IEP
+ atQx5Hm9PDwH1bWcTU2l8plrvXwQyMKgqIw90IsSxMxvZ8jsvCUPKeKm9KUImMT6g3NVKpSwkeQ
+ psyHBnE1/2vsGlCgqbs/QY0yXLbNoSxPjXR6mYLcBhGMdWhHjIJL81EXdhF7qMycUcaMSHqBZGL
+ WrIHdGkemufpClHA+JwDZ4YQiMBwmph5Fyrgc3xJIj5gQs0i4mhGGS5/kgYOHssqicqK7+wRH51
+ ootu81Z8ZFq0zS14TpdDGveIdSRR5QVSSR3cA1wyhvKL7LgW2DMdb8741YYIn5g=
+X-Google-Smtp-Source: AGHT+IH5DxxHZeyNTdKmbLJmZuT8KnrNJExE9IkHw1T1rGom4qlizWTehS2Ns3MaUnZBFB/P2D80kg==
+X-Received: by 2002:a05:620a:4389:b0:7b6:d7be:2e4 with SMTP id
+ af79cd13be357-7c3e3a3375bmr678531585a.26.1741295509534; 
+ Thu, 06 Mar 2025 13:11:49 -0800 (PST)
 Received: from DESKTOPUU50BPD ([2603:6000:a500:306:f449:4838:1970:9d05])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4751d96c3b8sm11766171cf.26.2025.03.06.13.07.58
+ af79cd13be357-7c3e54ffa16sm136676585a.67.2025.03.06.13.11.48
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 06 Mar 2025 13:07:59 -0800 (PST)
+ Thu, 06 Mar 2025 13:11:49 -0800 (PST)
 From: <ltaylorsimpson@gmail.com>
 To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
 	<qemu-devel@nongnu.org>
@@ -74,23 +74,23 @@ Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
  <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
  "'Brian Cain'" <bcain@quicinc.com>
 References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-6-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052628.1011210-6-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 05/38] target/hexagon: Switch to tag_ignore(),
- generate via get_{user, sys}_tags()
-Date: Thu, 6 Mar 2025 15:07:58 -0600
-Message-ID: <022c01db8edb$d73c5900$85b50b00$@gmail.com>
+ <20250301052628.1011210-7-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052628.1011210-7-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 06/38] target/hexagon: Add privilege check,
+ use tag_ignore()
+Date: Thu, 6 Mar 2025 15:11:47 -0600
+Message-ID: <022f01db8edc$600bb190$202314b0$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-us
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgJ+THThtOcCAFA=
+Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgG+Xu//tO0E8ZA=
 X-Antivirus: Norton (VPS 250306-6, 3/6/2025), Outbound message
 X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qt1-x834.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72f;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x72f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,14 +124,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
 > alex.bennee@linaro.org; quic_mburton@quicinc.com;
 > sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 05/38] target/hexagon: Switch to tag_ignore(), generate via
-> get_{user,sys}_tags()
+> Subject: [PATCH 06/38] target/hexagon: Add privilege check, use
+> tag_ignore()
 > 
 > From: Brian Cain <bcain@quicinc.com>
 > 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/cpu_bits.h       |  2 ++
+>  target/hexagon/gen_tcg_funcs.py | 32 +++++++++++++++++++-------------
+>  2 files changed, 21 insertions(+), 13 deletions(-)
+> 
+> diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h index
+> ff596e2a94..6582bb4f16 100644
+> --- a/target/hexagon/cpu_bits.h
+> +++ b/target/hexagon/cpu_bits.h
+> @@ -37,6 +37,8 @@ enum hex_cause {
+>      HEX_CAUSE_PC_NOT_ALIGNED =  0x01e,
+>      HEX_CAUSE_PRIV_NO_UREAD  =  0x024,
+>      HEX_CAUSE_PRIV_NO_UWRITE =  0x025,
+> +    HEX_CAUSE_PRIV_USER_NO_GINSN = 0x01a,
+> +    HEX_CAUSE_PRIV_USER_NO_SINSN = 0x01b,
+>  };
+> 
+>  #define PACKET_WORDS_MAX         4
+> diff --git a/target/hexagon/gen_tcg_funcs.py
+> b/target/hexagon/gen_tcg_funcs.py index c2ba91ddc0..65bfa046b8 100755
+> --- a/target/hexagon/gen_tcg_funcs.py
+> +++ b/target/hexagon/gen_tcg_funcs.py
+> @@ -21,7 +21,7 @@
+>  import re
+>  import string
+>  import hex_common
+> -
+> +from textwrap import dedent
+> 
+>  ##
+>  ## Generate the TCG code to call the helper @@ -50,6 +50,18 @@ def
+> gen_tcg_func(f, tag, regs, imms):
+> 
+>      f.write("    Insn *insn G_GNUC_UNUSED = ctx->insn;\n")
+> 
+> +    if "A_PRIV" in hex_common.attribdict[tag]:
+> +        f.write(dedent("""\
+> +#ifdef CONFIG_USER_ONLY
+> +    hex_gen_exception_end_tb(ctx, HEX_CAUSE_PRIV_USER_NO_SINSN);
+> #else
 
+Indent this?  Are you worried the line will be too long for checkpatch?
+
+> +"""))
+> +    if "A_GUEST" in hex_common.attribdict[tag]:
+> +        f.write(dedent("""\
+> +#ifdef CONFIG_USER_ONLY
+> +    hex_gen_exception_end_tb(ctx, HEX_CAUSE_PRIV_USER_NO_GINSN);
+> #else
+
+Ditto
+
+> +"""))
+>      if hex_common.need_ea(tag):
+>          f.write("    TCGv EA G_GNUC_UNUSED = tcg_temp_new();\n")
+> 
+> @@ -97,6 +109,11 @@ def gen_tcg_func(f, tag, regs, imms):
+>          if reg.is_written():
+>              reg.log_write(f, tag)
+> 
+> +    if (
+> +        "A_PRIV" in hex_common.attribdict[tag]
+> +        or "A_GUEST" in hex_common.attribdict[tag]
+> +    ):
+> +        f.write("#endif   /* CONFIG_USER_ONLY */\n")
+>      f.write("}\n\n")
+
+Otherwise
 Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-
 
 
