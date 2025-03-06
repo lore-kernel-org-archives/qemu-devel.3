@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF684C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 18:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167DEC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 18:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqFXp-00038M-UL; Thu, 06 Mar 2025 13:02:05 -0500
+	id 1tqFXz-0003AH-E3; Thu, 06 Mar 2025 13:02:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tqFXf-00033y-D1
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 13:01:57 -0500
-Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
+ id 1tqFXn-00036K-Dy
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 13:02:03 -0500
+Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tqFXW-00007F-9n
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 13:01:51 -0500
-Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-223fd89d036so20056785ad.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 10:01:45 -0800 (PST)
+ id 1tqFXg-00009L-1d
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 13:02:03 -0500
+Received: by mail-pl1-x642.google.com with SMTP id
+ d9443c01a7336-2240b4de12bso24739285ad.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 10:01:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741284105; x=1741888905; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741284113; x=1741888913; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=stCgZpQtE1zFYYbrS3BPR9VSrLJmwkhXSnn+AFxTDO4=;
- b=VlMLqKnNBbcjuIgr0eeNQOz2CN+oduGE1htLN9GVZ3VEf9KJ2b01pkrtKaZmzJ4Tla
- RZLZUyMpJgbSreDmU/0hQwzKYsn0gHIoDz/NRKO5GkJq3htWQph9gdB2wh5Vlh0TisVH
- tU/ZnWkTeGkRp0MbA8FjzfI1vXQ3DtfUc+qKeNy3AjzJ9EZRVXTULtYragwb6y9YyPiC
- +6VnrntpiNufSXLKWcikv/wIp2sQUadqcUpSoC4aUZUSbbJi05y9tfCvWPpe9gbzyyGB
- UMFfdiab2/xRHgqoPRv6HwS/2u+rvW1CAbjY06AB5NZrY5mikYDtUxQBcIPP+/N3FpSW
- mr+g==
+ bh=KEzBw2eiAZv/edrA+dgMo//vRMLgwdY1/zctaB1iA3M=;
+ b=kgM0rYOO/EenzGrH/IAfHbl6cLe2F/eFq+PlbUA/Y6dtzElS2HQ4cPmagXD27QhMSl
+ 5db7EzgT8pwTAl9FlLKA/c/jMuPXWY1mMyGQboV1rfJ1QlwjtAZieffhoyved91sduli
+ pQky0wXGqee0xsUJA8xKt9odSMPYeokEqHxoyaWwvZ47MBc2TeTw5F1WlbglaK3pEEpV
+ wMOo/gCdo9NNvwtarXwuuEeoSBa4re5YafLIAIiI+3YJFM+0tEtRTWLdnP6QQlZ5Ke2C
+ sgTUxsZa4jBmxa1Dew4etW4nRe7nUzbZQMrF01zFeWNQxx4h2fV0LEUyBpQDgbzQ2Oyq
+ x0uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741284105; x=1741888905;
+ d=1e100.net; s=20230601; t=1741284113; x=1741888913;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=stCgZpQtE1zFYYbrS3BPR9VSrLJmwkhXSnn+AFxTDO4=;
- b=F70GTNyAOq4M6aZ26qwDcQjnMFPjF00+3R3mA/qFumKqDHDO93SyT145MA13oeFDAS
- 47u1Vq9ClXDf7ogp+xvf9u7/RuDnxeCQEfAcz52P4rXZl8m1nCWqqiGJLGPu+2Sgyb0l
- gGaVirVqmp9xo6c+X9wzSVlVBhv+LFoB20IXLgtgqRwfDVkx3ohQO0rcWdhLEVaG2eLB
- Wfo2KMJsij+hH8q62W78Dy0HVvJhtUa/p5JOEjA0vCoBsBpNEr0d+weMgkl2Wv6bJafZ
- 6ykD2asV2Xbjy0wZ7nbWKK+Vyj1/7MaV+Jq0os7pNBFZGTrMe0gqV5s88JoPXPFwNpAe
- Vcxg==
-X-Gm-Message-State: AOJu0YySUQAxniLjEJluIwrEQmdWjIsdQ6fwjoPPusA469d16u8LnApx
- DRK/zqwz1WwSBub4cTlI2XuxTWtQDP47rGt78u4Y5Uh2Au7wsJly47+rRXyOEA==
-X-Gm-Gg: ASbGncsAAk1MViZOKLq9h3hKHd0Ycgh4CS4nrZ5JtGhSqCfpCP4P1fb+eHrkKOYgssO
- uAPBoAagjVlmUzbbrzcWllkTQr9Bb4kwFDX0dElXo3YzCyXcYS6ljDzly0C/ErBrNiNIKQ7P60u
- MC7+nYQzZzTIaAmhpo7qaNaq0uknszQjHoJ4/xVZQ8jLudRGRREuS8iTUw7KNf7VbQ1Uu/udsfx
- 9JANjRnH60RFdI03kZV8aHwnyWjUlz3ulFt+lee+hLT1s1lA09XZZHFo2Ub+zoRvJn0mpB2BIwp
- 6z06LgZGXtasq/rgqqKYb9NmDb6Up7xWFEteatjMnA6xBIareEOFFsAWAw==
-X-Google-Smtp-Source: AGHT+IG4JYNyfyeJViWCRhuaHcaPArr2NIPJdALGhMWAQM4oDSuzOb4yeNW4Fr/HLYT0S9dGrpSv7A==
-X-Received: by 2002:a05:6a21:497:b0:1f1:2a5:1667 with SMTP id
- adf61e73a8af0-1f544c381e0mr822134637.32.1741284104552; 
- Thu, 06 Mar 2025 10:01:44 -0800 (PST)
+ bh=KEzBw2eiAZv/edrA+dgMo//vRMLgwdY1/zctaB1iA3M=;
+ b=pb5Y2f0kjUKrk04QfYBOJk6CO64nR5jC+gAz6FGNtISxopR29nShkmYmBmjGFnvCv4
+ OTA2O87TvfbN1t4G+JkttBPnb+ob1ZVNuTO8Q0RN/sK6bOfuh7PIrLzcHohlVW2Yo/7R
+ p9HYC3ubBysTaXKxdoIlAQ7IdhNMmOcElpEmqKCZDffJHue4BoztG9KwBmpZ8pFHY9Wl
+ fppZrADPkvvGFbf06YBO64obm2YkaIlWFkY7B12fggv9c6sN8qRAD6JopqFIRyEz3AIq
+ R75VbPYoaq8ikZ4LfcBIt/H9iFpVlg6W6ck1Cu5zdEYFQ8Vk3o6C8vYbg2weiTYHC2JV
+ YSvQ==
+X-Gm-Message-State: AOJu0YyAYVZZJecmn5EYaUAJScGim7jDz3JGKqB+lb8HQVUr975AjMKj
+ OGuWmzRDLYfFTYqR/YtN6aSwf6xAl93nHODX+cDXBVVhw+rRRlA=
+X-Gm-Gg: ASbGncso86D+84+DyA15lWSxaT9h0rFFJKL0d4tuczoWhgrN2anG542L8iuOPFK+Hj2
+ Sxb9GrP2QbF9aXjlAjeu6BRYdI7JZvTCKE5HyekV4anaDVj0EVpYS0NjWnwFem8I5lTfmq6sgoo
+ Yrx9oCBNvc0FfRuPfnvZ11AIeyJGRSvzvIpxeFlt3RnmPnbaSai+ElzFCYNJwxhyPxzuKxbgylv
+ GISTygZxrny+Y/D1wkECHvakEKfkfT0adpOlgZgGV5zUAgtB4nwPKua+6LzECSJ+j0enH1N+CYJ
+ cwwM1XoHTASepudvEG2W+4vKR1aPptrltq2kGfgPngzTfvNdbRlrn307AA==
+X-Google-Smtp-Source: AGHT+IFu1mUXgHQDMjUHRZ2EOapE+Rk1wuT3ctevIZQQUOaG1F6EM8jl4VGMDc8otg2vr+k+clBBZA==
+X-Received: by 2002:a05:6a21:2d08:b0:1f3:47d6:aa05 with SMTP id
+ adf61e73a8af0-1f5449336e0mr967761637.0.1741284113065; 
+ Thu, 06 Mar 2025 10:01:53 -0800 (PST)
 Received: from localhost.localdomain ([58.37.175.138])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af28126db9bsm1338498a12.58.2025.03.06.10.01.42
+ 41be03b00d2f7-af28126db9bsm1338498a12.58.2025.03.06.10.01.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 10:01:44 -0800 (PST)
+ Thu, 06 Mar 2025 10:01:52 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>,
  Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v3 03/10] vfio/igd: Consolidate OpRegion initialization into a
- single function
-Date: Fri,  7 Mar 2025 02:01:23 +0800
-Message-ID: <20250306180131.32970-4-tomitamoeko@gmail.com>
+Subject: [PATCH v3 07/10] vfio/igd: Decouple common quirks from legacy mode
+Date: Fri,  7 Mar 2025 02:01:27 +0800
+Message-ID: <20250306180131.32970-8-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250306180131.32970-1-tomitamoeko@gmail.com>
 References: <20250306180131.32970-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x642.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,286 +101,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both x-igd-opregion option and legacy mode require identical steps to
-set up OpRegion for IGD devices. Consolidate these steps into a single
-vfio_pci_igd_setup_opregion function.
+So far, IGD-specific quirks all require enabling legacy mode, which is
+toggled by assigning IGD to 00:02.0. However, some quirks, like the BDSM
+and GGC register quirks, should be applied to all supported IGD devices.
+A new config option, x-igd-legacy-mode=[on|off|auto], is introduced to
+control the legacy mode only quirks. The default value is "auto", which
+keeps current behavior that enables legacy mode implicitly and continues
+on error when all following conditions are met.
+* Machine type is i440fx
+* IGD device is at guest BDF 00:02.0
 
-The function call in pci.c is wrapped with ifdef temporarily to prevent
-build error for non-x86 archs, it will be removed after we decouple it
-from legacy mode.
+If any one of the conditions above is not met, the default behavior is
+equivalent to "off", QEMU will fail immediately if any error occurs.
 
-Additionally, move vfio_pci_igd_opregion_init to igd.c to prevent it
-from being compiled in non-x86 builds.
+Users can also use "on" to force enabling legacy mode. It checks if all
+the conditions above are met and set up legacy mode. QEMU will also fail
+immediately on error in this case.
+
+Additionally, the hotplug check in legacy mode is removed as hotplugging
+IGD device is never supported, and it will be checked when enabling the
+OpRegion quirk.
 
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 ---
- hw/vfio/igd.c        | 101 +++++++++++++++++++++++++++++++++++--------
- hw/vfio/pci-quirks.c |  50 ---------------------
- hw/vfio/pci.c        |  22 ++--------
- hw/vfio/pci.h        |   4 +-
- 4 files changed, 88 insertions(+), 89 deletions(-)
+ hw/vfio/igd.c | 127 +++++++++++++++++++++++++++++---------------------
+ hw/vfio/pci.c |   2 +
+ hw/vfio/pci.h |   1 +
+ 3 files changed, 77 insertions(+), 53 deletions(-)
 
 diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index dda4c7bb5d..50e4007abe 100644
+index f5e19f1241..ac096e2eb5 100644
 --- a/hw/vfio/igd.c
 +++ b/hw/vfio/igd.c
-@@ -106,6 +106,7 @@ static int igd_gen(VFIOPCIDevice *vdev)
-     return -1;
- }
- 
-+#define IGD_ASLS 0xfc /* ASL Storage Register */
- #define IGD_GMCH 0x50 /* Graphics Control Register */
- #define IGD_BDSM 0x5c /* Base Data of Stolen Memory */
- #define IGD_BDSM_GEN11 0xc0 /* Base Data of Stolen Memory of gen 11 and later */
-@@ -138,6 +139,82 @@ static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
-     return 0;
- }
- 
-+/*
-+ * The OpRegion includes the Video BIOS Table, which seems important for
-+ * telling the driver what sort of outputs it has.  Without this, the device
-+ * may work in the guest, but we may not get output.  This also requires BIOS
-+ * support to reserve and populate a section of guest memory sufficient for
-+ * the table and to write the base address of that memory to the ASLS register
-+ * of the IGD device.
-+ */
-+static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-+                                       struct vfio_region_info *info,
-+                                       Error **errp)
-+{
-+    int ret;
-+
-+    vdev->igd_opregion = g_malloc0(info->size);
-+    ret = pread(vdev->vbasedev.fd, vdev->igd_opregion,
-+                info->size, info->offset);
-+    if (ret != info->size) {
-+        error_setg(errp, "failed to read IGD OpRegion");
-+        g_free(vdev->igd_opregion);
-+        vdev->igd_opregion = NULL;
-+        return false;
-+    }
-+
-+    /*
-+     * Provide fw_cfg with a copy of the OpRegion which the VM firmware is to
-+     * allocate 32bit reserved memory for, copy these contents into, and write
-+     * the reserved memory base address to the device ASLS register at 0xFC.
-+     * Alignment of this reserved region seems flexible, but using a 4k page
-+     * alignment seems to work well.  This interface assumes a single IGD
-+     * device, which may be at VM address 00:02.0 in legacy mode or another
-+     * address in UPT mode.
-+     *
-+     * NB, there may be future use cases discovered where the VM should have
-+     * direct interaction with the host OpRegion, in which case the write to
-+     * the ASLS register would trigger MemoryRegion setup to enable that.
-+     */
-+    fw_cfg_add_file(fw_cfg_find(), "etc/igd-opregion",
-+                    vdev->igd_opregion, info->size);
-+
-+    trace_vfio_pci_igd_opregion_enabled(vdev->vbasedev.name);
-+
-+    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
-+    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
-+    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
-+
-+    return true;
-+}
-+
-+bool vfio_pci_igd_setup_opregion(VFIOPCIDevice *vdev, Error **errp)
-+{
-+    g_autofree struct vfio_region_info *opregion = NULL;
-+    int ret;
-+
-+    /* Hotplugging is not supprted for opregion access */
-+    if (vdev->pdev.qdev.hotplugged) {
-+        error_setg(errp, "IGD OpRegion is not supported on hotplugged device");
-+        return false;
-+    }
-+
-+    ret = vfio_get_dev_region_info(&vdev->vbasedev,
-+                    VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
-+                    VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
-+    if (ret) {
-+        error_setg_errno(errp, -ret,
-+                         "Device does not supports IGD OpRegion feature");
-+        return false;
-+    }
-+
-+    if (!vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
- /*
-  * The rather short list of registers that we copy from the host devices.
-  * The LPC/ISA bridge values are definitely needed to support the vBIOS, the
-@@ -342,7 +419,6 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
- void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
- {
-     g_autofree struct vfio_region_info *rom = NULL;
--    g_autofree struct vfio_region_info *opregion = NULL;
-     g_autofree struct vfio_region_info *host = NULL;
-     g_autofree struct vfio_region_info *lpc = NULL;
-     PCIDevice *lpc_bridge;
-@@ -418,15 +494,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
-      * Check whether we have all the vfio device specific regions to
-      * support legacy mode (added in Linux v4.6).  If not, bail.
+@@ -15,6 +15,7 @@
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "qapi/qmp/qerror.h"
++#include "hw/boards.h"
+ #include "hw/hw.h"
+ #include "hw/nvram/fw_cfg.h"
+ #include "pci.h"
+@@ -432,9 +433,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+      * bus address.
       */
--    ret = vfio_get_dev_region_info(&vdev->vbasedev,
--                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
--                        VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
--    if (ret) {
--        error_report("IGD device %s does not support OpRegion access,"
--                     "legacy mode disabled", vdev->vbasedev.name);
--        return;
--    }
--
-     ret = vfio_get_dev_region_info(&vdev->vbasedev,
-                         VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
-                         VFIO_REGION_SUBTYPE_INTEL_IGD_HOST_CFG, &host);
-@@ -459,6 +526,13 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+-        !vfio_is_vga(vdev) || nr != 0 ||
+-        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
+-                                       0, PCI_DEVFN(0x2, 0))) {
++        !vfio_is_vga(vdev) || nr != 0) {
          return;
      }
  
-+    /* Setup OpRegion access */
-+    if (!vfio_pci_igd_setup_opregion(vdev, &err)) {
-+        error_append_hint(&err, "IGD legacy mode disabled\n");
-+        error_report_err(err);
-+        return;
-+    }
-+
-     /* Create our LPC/ISA bridge */
-     ret = vfio_pci_igd_lpc_init(vdev, lpc);
-     if (ret) {
-@@ -475,13 +549,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
-         return;
-     }
- 
--    /* Setup OpRegion access */
--    if (!vfio_pci_igd_opregion_init(vdev, opregion, &err)) {
--        error_append_hint(&err, "IGD legacy mode disabled\n");
--        error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
--        return;
--    }
--
-     /*
-      * Allow user to override dsm size using x-igd-gms option, in multiples of
-      * 32MiB. This option should only be used when the desired size cannot be
-diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-index fbe43b0a79..cac0aa1910 100644
---- a/hw/vfio/pci-quirks.c
-+++ b/hw/vfio/pci-quirks.c
-@@ -1114,56 +1114,6 @@ static void vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
-     trace_vfio_quirk_rtl8168_probe(vdev->vbasedev.name);
+@@ -482,14 +481,13 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
  }
  
--#define IGD_ASLS 0xfc /* ASL Storage Register */
--
--/*
-- * The OpRegion includes the Video BIOS Table, which seems important for
-- * telling the driver what sort of outputs it has.  Without this, the device
-- * may work in the guest, but we may not get output.  This also requires BIOS
-- * support to reserve and populate a section of guest memory sufficient for
-- * the table and to write the base address of that memory to the ASLS register
-- * of the IGD device.
-- */
--bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
--                                struct vfio_region_info *info, Error **errp)
--{
--    int ret;
--
--    vdev->igd_opregion = g_malloc0(info->size);
--    ret = pread(vdev->vbasedev.fd, vdev->igd_opregion,
--                info->size, info->offset);
--    if (ret != info->size) {
--        error_setg(errp, "failed to read IGD OpRegion");
--        g_free(vdev->igd_opregion);
--        vdev->igd_opregion = NULL;
--        return false;
+-bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+-                                 Error **errp G_GNUC_UNUSED)
++bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+ {
+-    g_autofree struct vfio_region_info *rom = NULL;
+     int ret, gen;
+     uint64_t gms_size;
+     uint64_t *bdsm_size;
+     uint32_t gmch;
++    bool legacy_mode_enabled = false;
+     Error *err = NULL;
+ 
+     /*
+@@ -498,9 +496,7 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+      * PCI bus address.
+      */
+     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+-        !vfio_is_vga(vdev) ||
+-        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
+-                                       0, PCI_DEVFN(0x2, 0))) {
++        !vfio_is_vga(vdev)) {
+         return true;
+     }
+ 
+@@ -516,56 +512,67 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+         return true;
+     }
+ 
+-    /*
+-     * Most of what we're doing here is to enable the ROM to run, so if
+-     * there's no ROM, there's no point in setting up this quirk.
+-     * NB. We only seem to get BIOS ROMs, so a UEFI VM would need CSM support.
+-     */
+-    ret = vfio_get_region_info(&vdev->vbasedev,
+-                               VFIO_PCI_ROM_REGION_INDEX, &rom);
+-    if ((ret || !rom->size) && !vdev->pdev.romfile) {
+-        error_report("IGD device %s has no ROM, legacy mode disabled",
+-                     vdev->vbasedev.name);
+-        return true;
 -    }
 -
 -    /*
--     * Provide fw_cfg with a copy of the OpRegion which the VM firmware is to
--     * allocate 32bit reserved memory for, copy these contents into, and write
--     * the reserved memory base address to the device ASLS register at 0xFC.
--     * Alignment of this reserved region seems flexible, but using a 4k page
--     * alignment seems to work well.  This interface assumes a single IGD
--     * device, which may be at VM address 00:02.0 in legacy mode or another
--     * address in UPT mode.
--     *
--     * NB, there may be future use cases discovered where the VM should have
--     * direct interaction with the host OpRegion, in which case the write to
--     * the ASLS register would trigger MemoryRegion setup to enable that.
+-     * Ignore the hotplug corner case, mark the ROM failed, we can't
+-     * create the devices we need for legacy mode in the hotplug scenario.
 -     */
--    fw_cfg_add_file(fw_cfg_find(), "etc/igd-opregion",
--                    vdev->igd_opregion, info->size);
+-    if (vdev->pdev.qdev.hotplugged) {
+-        error_report("IGD device %s hotplugged, ROM disabled, "
+-                     "legacy mode disabled", vdev->vbasedev.name);
+-        vdev->rom_read_failed = true;
+-        return true;
+-    }
 -
--    trace_vfio_pci_igd_opregion_enabled(vdev->vbasedev.name);
--
--    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
--    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
--    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
--
--    return true;
--}
--
- /*
-  * Common quirk probe entry points.
-  */
+     gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, 4);
+ 
+     /*
+-     * If IGD VGA Disable is clear (expected) and VGA is not already enabled,
+-     * try to enable it.  Probably shouldn't be using legacy mode without VGA,
+-     * but also no point in us enabling VGA if disabled in hardware.
++     * For backward compatibilty, enable legacy mode when
++     * - Machine type is i440fx (pc_piix)
++     * - IGD device is at guest BDF 00:02.0
++     * - Not manually disabled by x-igd-legacy-mode=off
+      */
+-    if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, &err)) {
+-        error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+-        error_report("IGD device %s failed to enable VGA access, "
+-                     "legacy mode disabled", vdev->vbasedev.name);
+-        return true;
+-    }
++    if ((vdev->igd_legacy_mode != ON_OFF_AUTO_OFF) &&
++        !strcmp(MACHINE_GET_CLASS(qdev_get_machine())->family, "pc_piix") &&
++        (&vdev->pdev == pci_find_device(pci_device_root_bus(&vdev->pdev),
++        0, PCI_DEVFN(0x2, 0)))) {
++        /*
++         * IGD legacy mode requires:
++         * - VBIOS in ROM BAR or file
++         * - VGA IO/MMIO ranges are claimed by IGD
++         * - OpRegion
++         * - Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
++         */
++        g_autofree struct vfio_region_info *rom = NULL;
++
++        legacy_mode_enabled = true;
++        warn_report("IGD legacy mode enabled, "
++                    "use x-igd-legacy-mode=off to disable it if unwanted.");
++
++        /*
++         * Most of what we're doing here is to enable the ROM to run, so if
++         * there's no ROM, there's no point in setting up this quirk.
++         * NB. We only seem to get BIOS ROMs, so UEFI VM would need CSM support.
++         */
++        ret = vfio_get_region_info(&vdev->vbasedev,
++                                   VFIO_PCI_ROM_REGION_INDEX, &rom);
++        if ((ret || !rom->size) && !vdev->pdev.romfile) {
++            error_setg(&err, "Device has no ROM");
++            goto error;
++        }
+ 
+-    /* Setup OpRegion access */
+-    if (!vfio_pci_igd_setup_opregion(vdev, &err)) {
+-        error_append_hint(&err, "IGD legacy mode disabled\n");
+-        error_report_err(err);
+-        return true;
+-    }
++        /*
++         * If IGD VGA Disable is clear (expected) and VGA is not already
++         * enabled, try to enable it. Probably shouldn't be using legacy mode
++         * without VGA, but also no point in us enabling VGA if disabled in
++         * hardware.
++         */
++        if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, &err)) {
++            error_setg(&err, "Unable to enable VGA access");
++            goto error;
++        }
+ 
+-    /* Setup LPC bridge / Host bridge PCI IDs */
+-    if (!vfio_pci_igd_setup_lpc_bridge(vdev, &err)) {
+-        error_append_hint(&err, "IGD legacy mode disabled\n");
+-        error_report_err(err);
+-        return true;
++        /* Setup OpRegion access */
++        if (!vfio_pci_igd_setup_opregion(vdev, &err)) {
++            goto error;
++        }
++
++        /* Setup LPC bridge / Host bridge PCI IDs */
++        if (!vfio_pci_igd_setup_lpc_bridge(vdev, &err)) {
++            goto error;
++        }
++    } else if (vdev->igd_legacy_mode == ON_OFF_AUTO_ON) {
++        error_setg(&err,
++                   "Machine is not i440fx or assigned BDF is not 00:02.0");
++        goto error;
+     }
+ 
+     /*
+@@ -627,4 +634,18 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+     trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, (gms_size / MiB));
+ 
+     return true;
++
++error:
++    /*
++     * When legacy mode is implicity enabled, continue on error,
++     * to keep compatibility
++     */
++    if (legacy_mode_enabled && (vdev->igd_legacy_mode == ON_OFF_AUTO_AUTO)) {
++        error_report_err(err);
++        error_report("IGD legacy mode disabled");
++        return true;
++    }
++
++    error_propagate(errp, err);
++    return false;
+ }
 diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 89d900e9cf..098d17b866 100644
+index a58d555934..d5ff8c1ea8 100644
 --- a/hw/vfio/pci.c
 +++ b/hw/vfio/pci.c
-@@ -3132,30 +3132,14 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-         vfio_bar_quirk_setup(vdev, i);
-     }
- 
-+#ifdef CONFIG_VFIO_IGD
-     if (!vdev->igd_opregion &&
-         vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION) {
--        g_autofree struct vfio_region_info *opregion = NULL;
--
--        if (vdev->pdev.qdev.hotplugged) {
--            error_setg(errp,
--                       "cannot support IGD OpRegion feature on hotplugged "
--                       "device");
--            goto out_unset_idev;
--        }
--
--        ret = vfio_get_dev_region_info(vbasedev,
--                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
--                        VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
--        if (ret) {
--            error_setg_errno(errp, -ret,
--                             "does not support requested IGD OpRegion feature");
--            goto out_unset_idev;
--        }
--
--        if (!vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
-+        if (!vfio_pci_igd_setup_opregion(vdev, errp)) {
-             goto out_unset_idev;
-         }
-     }
-+#endif
- 
-     /* QEMU emulates all of MSI & MSIX */
-     if (pdev->cap_present & QEMU_PCI_CAP_MSIX) {
+@@ -3363,6 +3363,8 @@ static const Property vfio_pci_dev_properties[] = {
+                     VFIO_FEATURE_ENABLE_REQ_BIT, true),
+     DEFINE_PROP_BIT("x-igd-opregion", VFIOPCIDevice, features,
+                     VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
++    DEFINE_PROP_ON_OFF_AUTO("x-igd-legacy-mode", VFIOPCIDevice,
++                            igd_legacy_mode, ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
+                             vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
 diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 43c166680a..4763f14415 100644
+index 2e81f9eb19..aa67ceb346 100644
 --- a/hw/vfio/pci.h
 +++ b/hw/vfio/pci.h
-@@ -228,9 +228,7 @@ int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
- 
- bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
- 
--bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
--                                struct vfio_region_info *info,
--                                Error **errp);
-+bool vfio_pci_igd_setup_opregion(VFIOPCIDevice *vdev, Error **errp);
- 
- void vfio_display_reset(VFIOPCIDevice *vdev);
- bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp);
+@@ -158,6 +158,7 @@ struct VFIOPCIDevice {
+     uint32_t display_xres;
+     uint32_t display_yres;
+     int32_t bootindex;
++    OnOffAuto igd_legacy_mode;
+     uint32_t igd_gms;
+     OffAutoPCIBAR msix_relo;
+     uint8_t pm_cap;
 -- 
 2.47.2
 
