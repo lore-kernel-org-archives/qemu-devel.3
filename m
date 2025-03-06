@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 321A9C19F32
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 00:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE6C0C19F32
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 00:46:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpzKY-00029I-9a; Wed, 05 Mar 2025 19:43:18 -0500
+	id 1tpzNw-0003KD-UR; Wed, 05 Mar 2025 19:46:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpzKS-00028Q-0D; Wed, 05 Mar 2025 19:43:13 -0500
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ id 1tpzNm-0003Ji-L1
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 19:46:38 -0500
+Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpzKM-0001uV-1z; Wed, 05 Mar 2025 19:43:09 -0500
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-5236d34a37fso40119e0c.3; 
- Wed, 05 Mar 2025 16:43:05 -0800 (PST)
+ id 1tpzNk-0002PD-7T
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 19:46:37 -0500
+Received: by mail-vk1-xa2a.google.com with SMTP id
+ 71dfb90a1353d-51f22008544so37673e0c.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 16:46:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741221784; x=1741826584; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741221994; x=1741826794; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RoHudwowyeHQI/sVge4Yz/or3zZHSKFuniJ8Gp3LYyw=;
- b=GLzwF8JSV8uf9Gg2Zpw2i/c/R9zUoDQW6IlZpEmGKf/0Ag7ILiLCPYBpPODrXr7gUQ
- 2IMrhDzgK/xJF+f5XnCUw5xSvd0pSn9fJRAd0NZ3zfaMHVJ5vvTqoXklGW3JgJGr1J5b
- CExVRsHYH87aggjlooWfuQAOfyCWjFS4ApAgfuu8itDak+vNENlvXC30HnQaRVcJG41+
- 1M/qZduswfdFQmdRctjLjuT9B31JIQzPy3Kbii3gteEtsCm0A/HuTPzDjYnlVzmrhAcX
- UGUcx0qBJIhuXp2YT8Qk/9GCL6DVKE4zQ1SjIZP2ztapC8Lz25SGRUDZCEceIfFUqnTv
- KMpw==
+ bh=SLgtt0jj/ZeWbafRoDg3HnCPHK0fs2Ncp9ULEmiYjKo=;
+ b=UJ9EZn1v6+30SyEAU8Nb7vH+mJsev2lk1CkIH3RWh0v1AY6jsuXT3y1qpaNT6SBZGy
+ 1lGv1bhXlFlIWL3uHa3tZxe+0PhwtHWIlxYJ3DtevJdOTKhVggx9vQPWGMqw3APRsndJ
+ 2ZqWFhb3sOPXPR+5dbRKDv2Hu6z+OY/lgYu1iBu5efF1b3c1Bs6JC19pP3Wiz/sp6sjc
+ iXeimR4QzondQJYhh2IokkJVFJrLc0IVCiQjUH0DdJCShU92hYdXrSddAvu40Xwhc6OK
+ BkANJZH7mqFlt827FgRDBAbbdQ/K/51+MhsZ3ZDDpOpmbFjc0+/PIYe1LV2nRTOMJs9k
+ xcvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741221784; x=1741826584;
+ d=1e100.net; s=20230601; t=1741221994; x=1741826794;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RoHudwowyeHQI/sVge4Yz/or3zZHSKFuniJ8Gp3LYyw=;
- b=jm8VkJaJE9zsl6dKBwZk+zbjpHek6t9/ryRG4/ji+CIzjZcmzEc39LCJVtkRMKGc/r
- uEWMN52vXx4HFxTw/f4zsBcijc/Ak9dRnwHOOqPrXiCeGTYWRRLY/lp0jDZNFaIKhXH1
- 5cqATjVD3XfGZ6hTMu6dbbPsYZaBkPRcWZ+VSAg2+5PE9XIboCe2miFc+lmprY1Irk4w
- yQPolnsKo42fK7azKF2V8TZXM5tX+IuqcsbM9jn/gfWycWUCvpIb10in39dFa/x6dM9G
- dJs2twocqorDvTuHW1SaSLkXpstxb8nd7PrUaIghK/1L35oVImPKGQQjtWTLwF3E8E8w
- +DQg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVknWFbn1VMXeM6sa8cYytZztM0EluC5jWkW08iV7KNlW27XEAfitXlV8YOzCm/8++hPBlobQFn7w6FVzk=@nongnu.org
-X-Gm-Message-State: AOJu0YwrgXdc/ONCdcRVnzg3joiPlisPTOZsCUQv2pPHoWrjPKSUAZjX
- lVq8kbjKtjnHwVL8F6AvgdU9afoWhU7n+TgvWJ+nN9XK8ATmicQybt70GkLnb0FR5YgyQhaE0//
- pxBhdBsLqs/ePcMk7quIzl+qB25A=
-X-Gm-Gg: ASbGncsLxbqFU24Azx7H34a0r/Tm/UxYxVZ06XH8PZElS3DCgoKZlYb/TtxMTlEPfCU
- J5Em/wxei2OeUYDQ2oaHZR6lIyZ2aqdpG+ELy16Jqh/2memuNdpBRHoFkJdwot8LBkh79t+3p1Z
- zeXv4ENkt3zhRIZtg/X0/j12bVbe360fFo+zRRBv2VhaFLqXKgU3ncMsQx
-X-Google-Smtp-Source: AGHT+IGJlFw3HQXnuMZxKltSm836f8PpQ/8tyYNVsfw454QIBJMHONmSXkM5y9eJwTpyF3VADFN6QAFZXE5hJghiyuA=
-X-Received: by 2002:a05:6102:4a81:b0:4bb:d394:46f4 with SMTP id
- ada2fe7eead31-4c2e2744b13mr3824778137.3.1741221784405; Wed, 05 Mar 2025
- 16:43:04 -0800 (PST)
+ bh=SLgtt0jj/ZeWbafRoDg3HnCPHK0fs2Ncp9ULEmiYjKo=;
+ b=RAZhc9H3v+MyD24OSNmJA5wIc2/jdFYQU/tCHaCaabVR0CZdNVmTcQtQfGBHyhOsDL
+ KOMnIQHq+C+DIcDcoKfzBZwH7Ufgn9v34wLxYCe2AiW4zA7CghG1dMftH2Vv2ftsrveZ
+ j9juQJJ/Nz9bRUZDnPV/ENBKJrN2xv+B/l8MV+VHDUWJ47dJooSeYlAueoDv7+TRCzAH
+ U6zu43pxpcsjKfHhRGiTZ1EkjPJYXaYfg64UuqUsU86E5kVMH8AjoHnFzj8FeufgNOnt
+ ZqcOogqopIa4R4+uoDUyqaI0snXVe1QlulUzjEkyKtLMGSxc+uCPfchM474QpsfJDcQI
+ ws3Q==
+X-Gm-Message-State: AOJu0YwPYTUBv2qAYfaYrdM5LK6oiRrqqzqCGoJITDqLVQoT/BBeXlRK
+ nGPvoIJXp0e6JeirFDHJh9cZBZKZjI7YO5sBjVhcjfjHTkA12T7Goz79gCRj6DYnjtoQsuG+CSH
+ +qh65fy9NLzHlReypGYfwcKs2nYI=
+X-Gm-Gg: ASbGncu3BgG2W71diaW3W43j/BUhYstpFWlHrfgXMZs2ZOXB450sz6oGTZbCc6NXOSp
+ sGDx76K3IYM4Y4slsd3+6UNKslaceBASDnZa/qBZniTOzdnJgQmMN+MFb8G6+MrmVjSw+47/Cff
+ eQKLYMS5T8q7xjNu4OiM/+R0iiinLpHI+DjVsxh0VFforhY9XklazlA0ED
+X-Google-Smtp-Source: AGHT+IFKU6iEHicQBeoyphWUOTV4gjxt0708lkELKfOTxyrXI0SsI/vAzRBbk8nvQQeZ9ghRIKgdcxQDoIAZkJEvBVo=
+X-Received: by 2002:a05:6122:4890:b0:523:7316:7f31 with SMTP id
+ 71dfb90a1353d-523c617d351mr3639074e0c.5.1741221994609; Wed, 05 Mar 2025
+ 16:46:34 -0800 (PST)
 MIME-Version: 1.0
-References: <20250305102632.91376-1-santimonserr@gmail.com>
-In-Reply-To: <20250305102632.91376-1-santimonserr@gmail.com>
+References: <20250228102747.867770-1-pbonzini@redhat.com>
+ <20250228102747.867770-2-pbonzini@redhat.com>
+In-Reply-To: <20250228102747.867770-2-pbonzini@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 10:42:38 +1000
-X-Gm-Features: AQ5f1JorVzbYnRWw3ZoKFfFlvLANvWR1ezYpVRcRDu2U28eOQmscUW1d8XSG6NE
-Message-ID: <CAKmqyKOQq0L0Wc3X3jTw31P4XSVucti2qL8fWH-XH3r96wCtuA@mail.gmail.com>
-Subject: Re: [PATCH] docs/about/emulation: Fix broken link
-To: Santiago Monserrat Campanello <santimonserr@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, laurent@vivier.eu, 
- mjt@tls.msk.ru
+Date: Thu, 6 Mar 2025 10:46:08 +1000
+X-Gm-Features: AQ5f1JoHSUT38YBZL4A-E9umRyocUQ21TuLe30afjnWslBEmkf25UC4u3fHcQy4
+Message-ID: <CAKmqyKNjoaKEEVYd8NJ293L-AFbNofrhczqExb_cNrQ0MVpEOw@mail.gmail.com>
+Subject: Re: [PATCH 01/22] target/riscv: Declare RISCVCPUClass::misa_mxl_max
+ as RISCVMXL
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -95,45 +98,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 5, 2025 at 8:27=E2=80=AFPM Santiago Monserrat Campanello
-<santimonserr@gmail.com> wrote:
+On Fri, Feb 28, 2025 at 8:31=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
 >
-> semihosting link to risc-v changed
+> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 >
-> Signed-off-by: Santiago Monserrat Campanello <santimonserr@gmail.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2717
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Link: https://lore.kernel.org/r/20250212213249.45574-7-philmd@linaro.org
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
-> the original one linked it's still accesible on
-> https://github.com/riscv-non-isa/riscv-semihosting/blob/0.2/riscv-semihos=
-ting-spec.adoc
-> ---
->  docs/about/emulation.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  target/riscv/cpu.h | 2 +-
+>  target/riscv/cpu.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-> index 3bc3579434..a72591ee4d 100644
-> --- a/docs/about/emulation.rst
-> +++ b/docs/about/emulation.rst
-> @@ -171,7 +171,7 @@ for that architecture.
->      - Unified Hosting Interface (MD01069)
->    * - RISC-V
->      - System and User-mode
-> -    - https://github.com/riscv/riscv-semihosting-spec/blob/main/riscv-se=
-mihosting-spec.adoc
-> +    - https://github.com/riscv-non-isa/riscv-semihosting/blob/main/riscv=
--semihosting.adoc
->    * - Xtensa
->      - System
->      - Tensilica ISS SIMCALL
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index df7a05e7d15..3041a4be5c9 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -543,7 +543,7 @@ struct RISCVCPUClass {
+>
+>      DeviceRealize parent_realize;
+>      ResettablePhases parent_phases;
+> -    uint32_t misa_mxl_max;  /* max mxl for this cpu */
+> +    RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
+>  };
+>
+>  static inline int riscv_has_ext(CPURISCVState *env, target_ulong ext)
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 244e44ce410..85dc2fe3bec 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2961,7 +2961,7 @@ static void riscv_cpu_class_init(ObjectClass *c, vo=
+id *data)
+>  {
+>      RISCVCPUClass *mcc =3D RISCV_CPU_CLASS(c);
+>
+> -    mcc->misa_mxl_max =3D (uint32_t)(uintptr_t)data;
+> +    mcc->misa_mxl_max =3D (RISCVMXL)(uintptr_t)data;
+>      riscv_cpu_validate_misa_mxl(mcc);
+>  }
+>
 > --
-> 2.43.0
+> 2.48.1
 >
 >
 
