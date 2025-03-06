@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 714F1C19F32
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 01:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81ABCC19F32
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 01:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpzra-0004ja-Oi; Wed, 05 Mar 2025 20:17:26 -0500
+	id 1tpzxU-0005lM-KU; Wed, 05 Mar 2025 20:23:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpzrY-0004jG-PD
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:17:24 -0500
+ id 1tpzxR-0005ks-Sm
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:23:30 -0500
 Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpzrR-0005UN-UU
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:17:24 -0500
+ id 1tpzxQ-0005zZ-34
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:23:29 -0500
 Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-523a5dbe070so50474e0c.1
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 17:17:17 -0800 (PST)
+ 71dfb90a1353d-5236fe026c7so59609e0c.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 17:23:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741223836; x=1741828636; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741224207; x=1741829007; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G6ZE1izSOrE2SDS5HRswZUsHYuYNU9xlFVugsd8beI0=;
- b=glfZGB+QHJ1EYl/fpSKDpr2XR3mYPZXGhxCXChteEqAy02ycOTplRfXmKYElDqoVPe
- RJvxljcmJI/fg4qUcHtI4Z1/gBOThQsN44qlJFgnn6JYpvHgocVPJZUDLFm61Ty6amh1
- JoM73SiJn5SE64Qtnbu6KsK8b2ZXfxm+mDzvY//yCPdESIGACkcU4YHdJnFXuOrAX4A6
- CRNOKZL/+2Z9RIO+nz+YRfkdCv1jrg+zyYv7BJRpJXqGKvVUQEha0bh0YirbMNA/nsRl
- quU0BHcvJ0qtcSM0zfbod6Q4tx07sYgPgC99IF1CKc4YrjQGr1AWpQwp55iXOU9VN0aK
- p1vg==
+ bh=FJALTU45RRm48psp2fF9HAKE4CL+zga6CBYBb3/pPb0=;
+ b=Q3127TvMiy9VkJMk0QzLMqrA1C5LwK4X6ohuKshclS+ZHNGZClPEaGjmsA7pKEMd69
+ KQ378WP6Qpq7JWTsbce1DuWfI9JEl4zvWxn7034z/A4PlmLw492c/cm2y5CTgL3MzBDb
+ rh4tdglq/Q+PUn5r6pnl7mYzaWvRsdkgDPsaH/vu1BaM4QPuqehAGayAfihb2zdg3VVa
+ 7MKDc42yjd2/cgi7y/AjLRu8titg5PkHjhejZ23wLdJTGV4B+/RhVA6A2tSxSQ8sEmMP
+ r4r8+nnCJt4oBFz6ZPd5AyGI0cMU0nO05R/May3KWHDBqG0SHEGA6MgUjGzC2+iVb3jh
+ 6MSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741223836; x=1741828636;
+ d=1e100.net; s=20230601; t=1741224207; x=1741829007;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=G6ZE1izSOrE2SDS5HRswZUsHYuYNU9xlFVugsd8beI0=;
- b=xMnTtTjr/7Nsnvwuh13iBG9SiMp6vJzuI/mHt/j97Ldf1AmTNYSupYxbhSxs7DJEWI
- dnDQGyAxFvd5kHhESvkRgHp2KQSu0Hgw2HzDIQKlhk/POOdIwpgwg8u7FpYwmuOGqflh
- NGnSVX9eTunRK1tesm6Dhb9zw2+xA6YaIwdUuBWzsQl1aOml/dBD/XrPrRAxOe9envP5
- FwjujR9I4VDiBzzmpO4yLShO+jX9oBVNLGL3uuQ5QAwUqR2iQc68ZHvsqQCgWH2KXlCO
- RDrZhYFES2uZJ6JCbIQ9vFVjtewDzTKz7hasM7TsNBdZK9lLdIK6KR5Hi6ceYCu20CMt
- 2r6Q==
-X-Gm-Message-State: AOJu0YwIzgPlW2tDCYs5IkBo0KhN3DHFZezppci+PLw9uGNsLwhtAeI5
- SYDRldn9nE4X/ualjZbm3rBP6TkjVeTF+q+OHyKCBquEhSVHZkDA2Uh2bwJ5Qt4SDAbMlq90IaC
- 2zNDkwut7qQhUPpPu+6JvXwRoAhi2usonb8fz/g==
-X-Gm-Gg: ASbGnctZ0lHQsGi9vyrH3X5+MuMwE1laZuKwCR5XTAAGcmhl5Zdz4J1kb20wO0dmBVC
- Th8Oe5rS1bB5qa2oGBgAPHy2U9n86IfLVOQqvrU8ykZT6LJ+3INGdSDDkOFa0jWYJLjacvSvTwO
- CY0CEQQGvKokISTvcDKgmucpyIIWlTlHN/Ubk2fLvPmMDI+j17zp5pyjP6
-X-Google-Smtp-Source: AGHT+IGepBO4V8LbFqTK4GK92kDHzU1dStd3C78GLCyJkMNBMgsZbSO4zhUuCfzOD4N4wpxZtpx+Vzw5pExz3hpik8E=
-X-Received: by 2002:a05:6102:dd0:b0:4bb:d062:447 with SMTP id
- ada2fe7eead31-4c2e2707657mr3563890137.5.1741223836619; Wed, 05 Mar 2025
- 17:17:16 -0800 (PST)
+ bh=FJALTU45RRm48psp2fF9HAKE4CL+zga6CBYBb3/pPb0=;
+ b=tRFQ/eWDJkpgytttQpidmHofvihR/XJkY1y+3m4QAOHrPKG9gECbqDvhu7UcBYnPaD
+ 6hqW9r+S2pSltHDkF6NoUN6H6PaoOr4DyUEHBBhxqJiXgLexupUOp8wcXNMdIQSDzv3/
+ Dl5zTI14duCt2OxnzLNAIxoazcFOw9pjx4Dx9HWgkKH95I10hB1hu3OrS8PAMyAHVDi3
+ fbYlSxrJAgPm5hRAY8n6KPcwU59oVjfpiwBEaFiD9qApXxh/y+0tEbwCPsCmAtoK2+ok
+ IuugNz+N/wZH5MfzOsKTFt/59vot360dgLe8dvHBFa3vkXK0/ccJBeo1AdYAVyt+emHP
+ HoXA==
+X-Gm-Message-State: AOJu0Yy4FA+KFpYSw4SlTrUTR0LScH56Hq3wtckmIrD/dgns6IvanjuR
+ U90djUgjJIWm8KzvgLpc11CqsPLfdon+/qwaO5jkV9BGQPCoCYgIalzcyLlrnezjIvlAsriQIpR
+ 2J2LpQQ94h37VnkbdWrHMdUWTy/E=
+X-Gm-Gg: ASbGncuPMNopKppeFF23D7F05XXUIsOr3dJ+wgMMlh0EYZ8LONSwRU91vPLybUS7K3P
+ gDBx8BCcnz3LBSg4hRV4bSZGcwYQGN34qQbjLpeUBk6mWQCKKGGoUOtJ3C9jYsu0jvD/0ccKl7T
+ /nJfsA0Xm4bSA8HPzsRrR5NkAh3w3lubj9ZSqohNdcJY7bzADg8khQGd2S
+X-Google-Smtp-Source: AGHT+IFmHuMkarRBPw4730Z5D17TxxQMyHlvaI9Y4zwb4T89HnGocCIHIyOKGjPLWmtFDOgCVu7JqJjCo2NJjlmrBkg=
+X-Received: by 2002:a05:6122:4b0c:b0:518:7ab7:afbb with SMTP id
+ 71dfb90a1353d-523c62a8fd6mr3223916e0c.8.1741224207016; Wed, 05 Mar 2025
+ 17:23:27 -0800 (PST)
 MIME-Version: 1.0
 References: <20250218165757.554178-1-pbonzini@redhat.com>
- <20250218165757.554178-3-pbonzini@redhat.com>
-In-Reply-To: <20250218165757.554178-3-pbonzini@redhat.com>
+ <20250218165757.554178-4-pbonzini@redhat.com>
+In-Reply-To: <20250218165757.554178-4-pbonzini@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 11:16:50 +1000
-X-Gm-Features: AQ5f1Jq9PrRc8Iprk3GS821vjIqyMlL5U3Svbw7D45dVeBpV6AYldTbGJwgrBUg
-Message-ID: <CAKmqyKMdUONoXD69m3RH1PeoLLtL8qT-eXweVh9WHEZM5Feufg@mail.gmail.com>
-Subject: Re: [PATCH 2/7] target/riscv: env->misa_mxl is a constant
+Date: Thu, 6 Mar 2025 11:23:01 +1000
+X-Gm-Features: AQ5f1JrKq1vOZ9frtnu660ow4CzlQgb5IuXu3Jd2ZbLGn7wVyjwlFzsz2f7HZV0
+Message-ID: <CAKmqyKMgMOKduscWLL9AUC_-UDNVP_PzbN9=q21TUPSJdLHPjg@mail.gmail.com>
+Subject: Re: [PATCH 3/7] target/riscv: assert argument to
+ set_satp_mode_max_supported is valid
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -95,58 +96,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 19, 2025 at 3:01=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
+On Wed, Feb 19, 2025 at 2:58=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
  wrote:
 >
-> There is nothing that overwrites env->misa_mxl, so it is a constant.  Do
+> Check that the argument to set_satp_mode_max_supported is valid for
+> the MXL value of the CPU.  It would be a bug in the CPU definition
+> if it weren't.
+>
+> In fact, there is such a bug in riscv_bare_cpu_init(): not just
+> SV32 is not a valid VM mode for 64-bit CPUs, SV64 is not a
+> valid VM mode at all, not yet at least.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-The idea is that misa_mxl can change, although that's not supported now.
-
-> not let a corrupted migration stream change the value; changing misa_mxl
-
-Does this actually happen? If the migration data is corrupted won't we
-have all sorts of strange issues?
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
-> would have a snowball effect on, for example, the valid VM modes.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  target/riscv/machine.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+>  target/riscv/cpu.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 >
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index d8445244ab2..c3d8e7c4005 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -375,6 +375,18 @@ static const VMStateDescription vmstate_ssp =3D {
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index cca24b9f1fc..7950b6447f8 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -442,6 +442,8 @@ static void set_satp_mode_max_supported(RISCVCPU *cpu=
+,
+>              cpu->cfg.satp_mode.supported |=3D (1 << i);
+>          }
 >      }
->  };
+> +
+> +    assert(cpu->cfg.satp_mode.supported & (1 << satp_mode));
+>  }
 >
-> +static bool riscv_validate_misa_mxl(void *opaque, int version_id)
-> +{
-> +    RISCVCPU *cpu =3D RISCV_CPU(opaque);
-> +    CPURISCVState *env =3D &cpu->env;
-> +    RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(cpu);
-> +    uint32_t misa_mxl_saved =3D env->misa_mxl;
-> +
-> +    /* Preserve misa_mxl even if the migration stream corrupted it  */
-> +    env->misa_mxl =3D mcc->misa_mxl_max;
-> +    return misa_mxl_saved =3D=3D mcc->misa_mxl_max;
-> +}
-> +
->  const VMStateDescription vmstate_riscv_cpu =3D {
->      .name =3D "cpu",
->      .version_id =3D 10,
-> @@ -394,6 +406,7 @@ const VMStateDescription vmstate_riscv_cpu =3D {
->          VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
->          VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
->          VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
-> +        VMSTATE_VALIDATE("MXL must match", riscv_validate_misa_mxl),
->          VMSTATE_UINT32(env.misa_ext, RISCVCPU),
->          VMSTATE_UNUSED(4),
->          VMSTATE_UINT32(env.misa_ext_mask, RISCVCPU),
+>  /* Set the satp mode to the max supported */
+> @@ -1502,7 +1504,9 @@ static void riscv_bare_cpu_init(Object *obj)
+>       * satp_mode manually (see set_satp_mode_default()).
+>       */
+>  #ifndef CONFIG_USER_ONLY
+> -    set_satp_mode_max_supported(cpu, VM_1_10_SV64);
+> +    set_satp_mode_max_supported(RISCV_CPU(obj),
+> +        riscv_cpu_mxl(&RISCV_CPU(obj)->env) =3D=3D MXL_RV32 ?
+> +        VM_1_10_SV32 : VM_1_10_SV57);
+>  #endif
+>  }
+>
 > --
 > 2.48.1
 >
