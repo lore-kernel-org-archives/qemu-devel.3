@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5706C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 23:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8882C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 23:49:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqKq9-0001A0-IL; Thu, 06 Mar 2025 18:41:22 -0500
+	id 1tqKx4-0002F0-7X; Thu, 06 Mar 2025 18:48:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqKq1-00019W-Cd
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 18:41:14 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tqKx2-0002Er-Vg
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 18:48:29 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqKpz-000188-G2
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 18:41:13 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2234e4b079cso22703145ad.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 15:41:10 -0800 (PST)
+ id 1tqKx1-0003BY-0v
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 18:48:28 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2ff6ae7667dso2435213a91.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 15:48:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741304470; x=1741909270; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=L5b/Oejd0mTwwlW1J+0jZU46/YaPksZa78jQ92shGik=;
- b=hbNmKUj3iAAmqdIgTQgStNqLane9PviKs2kkzm/PSCad2FQ4JX8AH9+JBI8Z9Rng3V
- e0Ly9ewh6Mcd5f4Sk8WiKbSMxp0UgL3rkXLBxiwEKZb+tuwOUOsE2/2fvBm1RSyWD+CE
- eVDitUhiz6+XLvYUQSwG4AblGzijfs74idKgSi/mX7LElwpLvtPWugtFDc5i36yWFSfg
- prD0Sb0vdCQdwYCGmZUx2GvWVA2Pq9uTzn08SQudvj1AbomgXKdF1xEtOIsH9+v3pnM+
- XF34fORFp5UMtrlGpr/DVf0JKxgwPBnRv1rXofLtRkWvCj6HeNDaNDwRapAiBZGTiPbg
- tzxw==
+ d=linaro.org; s=google; t=1741304904; x=1741909704; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bRqePB45GBZN7ZCafFyXPJdA45kXj2KqJmuQlAKgyVI=;
+ b=ydctkEqFdCZ6Et9L3n9mObMnQNLgnvEnrmr0qQYhR8v8vfT8oeI7OAl5VNQw5k2ulw
+ aimmzO04W9U/AfSAxZBt1V7xwDRRgDKbGr6fTqR5Ki7iqc0w5zKSxFPmnOeYHPAYE8wZ
+ gRUCQfstGWTrN8MTkWlSbYCNlYtoaQLbvRVSZ6x90MkfDKudfvIfYCXoQ7m/1dGqsVIG
+ lvQMoAPeCMMmFJPe/38MOILXutSkB30mz8I76OL0ngu99RFZwbmq66XT2Du4kcaMp13f
+ IfqRnLgXB/g3TDwv/sXuMOM61U7Ry1brhMy3xxrrgOQ7LRkn0ySF6MaX3OxKcRQcdxgb
+ XjZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741304470; x=1741909270;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=L5b/Oejd0mTwwlW1J+0jZU46/YaPksZa78jQ92shGik=;
- b=PVQbZiQxu4Mfb3PudRSuXgJRgpss96EX00eE5XmQTFqXxOGnzKSODtU/uEg/pr2mMh
- dKDnT9ioPvucSvVvk6l7kQaOD/u22clETJSgabfkCD+bHF1uYKEh1dTidXz0W5Td4Fwa
- RVrxlybJN556rs7yRzUHMgKDgy2XKDr/3M3i94S1f8Cf4OJBzWxOwpO2SP24TNZvZUtK
- OBNPBenEt+j1phnpXXvUUaPXXpfMdwqi6Ugr9Y2abuE79xV5ZAqVAg+BE7kWAXIwlfVZ
- Z02Ztx7dYtouUQiyFWqnwuQrQeXT503GOPVxAWrZLgDXGUPv5oIT1s2p5wHakUitLFBV
- f5Rw==
-X-Gm-Message-State: AOJu0YyJaamxofTwtfJdD8BAvt5TTebfsl8q8+2JCxYa+54U4U7oX3Ti
- RrJZCi8EC4HL/N+vrRc3PLZLJSxnFpDeaBJ5v1zROeCgmej/1KOJcHH0GPmUeAPJgzRB0rCniz1
- C
-X-Gm-Gg: ASbGncsV7gGpNhDvnWujhPxk+0tUsTvJlfpAjvc5wMiLO4ZGK7smWI0hCx1kgriXASa
- b9rfVPcVWbyh2tdMK5YduaeDsZqPWyCOHg6D4AjP28T1iiugsd/8B2KbWmUVJbwscCIXX9fhbHh
- DICJY32Ta4fqXO6jSoJs8U3Uu4VjdGt7AXn0maomeZrH+BNh087h0P8U4bUi2AEeDPVKKqKxknj
- zPOiiErhTdjsfH57rG6sVO/iSNIZqcB/V7SygbWRyruaJGtei6xeJiu9iu+ScirkPYu9DSMa5Rj
- 1S3jBlA2C9Pp3382l4+ZBQrGgr0A37vDyDelGqwAE3/EvNmpQtkFk4vbIZPr09cbMIsYVKGUX21
- H
-X-Google-Smtp-Source: AGHT+IF33HD4M0pE4rN22ZHk8lRSmH0oNc9NA9lGbaCFkPCfW2mcP1wfd/cj3KYrLaYjD0LHKkYwHA==
-X-Received: by 2002:a05:6a21:3986:b0:1f3:2ad7:ef5c with SMTP id
- adf61e73a8af0-1f544b19bc2mr2736031637.22.1741304469704; 
- Thu, 06 Mar 2025 15:41:09 -0800 (PST)
-Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ d=1e100.net; s=20230601; t=1741304904; x=1741909704;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bRqePB45GBZN7ZCafFyXPJdA45kXj2KqJmuQlAKgyVI=;
+ b=ENpyJkFkfsP5EtiXinkpNADveq4OnLccrdegkC+o2Uamy9lZFCvQx/TetvC5vggS3j
+ 7oM+J1HAR+M87vUr+VSB9oOtmy2NTOm6/EUuV7doWGkJzwTSLv2WKKfMH/f1lK855S2u
+ xI/SMqdNYVPg1ts5wTArXYQttbZJq94GO9u7p8aItI7A/EAvyaGHttSboUAbrz9C/Vmv
+ qJATxxKq7mU0S84aSO97czBfG5Hz0KPb2NNQ+eTOgkQZKs1/OG+Pt2IJVRA2o9GA+MXU
+ 2ZcM496VgUVU0nrif+sFlKFaQaCNJEMOGao05FdMcJx8spA70zX6xjewWtLL/dK/OSre
+ wWKw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWyK1cLbcrhcu/q7V5srcl0sz1yNgFvdY/Nk5tK5vu99cBAmg3cHlTKJxZmL3R/0I7h8PXedbVUO+b@nongnu.org
+X-Gm-Message-State: AOJu0YytwKExhTunWm7xHykFwL1VE0z0zzIwgSoowRlGyFyq6hXH1nZj
+ /ryfkAO0Sftr2lNC+Rbk+f0mF3V+eoQPXtIKzAM0SnlHTtCAWr6Abtded9EeqGs=
+X-Gm-Gg: ASbGncu8Wqvqmj5usVADpbxjLI0HivU+DlJakk22GXvZ+7d94cqW5cqk+LFxD1R7vPa
+ fHPtQ3NpNNRxsbFOd5kotzhZjRoZGqa+MPVpaSWeAg1ByLAKIACe7unbMi1b/oSTA2RprCdM+Og
+ eaYTQ8dq8ilUGbOj1iZgR74dVLqzHuYPaInLmBuATAL3PNrk3WHQyDtsWQjadKexfBqCaIVAqY/
+ 0/h+WUshDYjGO9bj/adxaSfdjvLxLdEUKih8TUJM4zkYLrW//tBGYMSq0R+439wuC/4c+Usomv/
+ wI5tndxA1uanZARGe4XH9xYyakQ8NHv+BbmkUMRiVcz0WTVC2wPt4n1QqpnDZ/P85ZAIEaMpOa5
+ tdvaIaFrz
+X-Google-Smtp-Source: AGHT+IEagHWqJTlY3DlGElqcxzUFTX0pRGOgK963Lb1LCbReHEWvS1IyxbEFKtYAszTrOwJk+OYKNg==
+X-Received: by 2002:a17:90b:380e:b0:2f2:a664:df1a with SMTP id
+ 98e67ed59e1d1-2ff7ce594ccmr1990723a91.2.1741304904499; 
+ Thu, 06 Mar 2025 15:48:24 -0800 (PST)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af28126e09dsm1809545a12.53.2025.03.06.15.41.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 15:41:09 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org,
-	alex.bennee@linaro.org,
-	philmd@linaro.org
-Subject: [PATCH] include/exec: Move TARGET_PAGE_{SIZE, MASK,
- BITS} to target_page.h
-Date: Thu,  6 Mar 2025 15:41:08 -0800
-Message-ID: <20250306234108.378881-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ 98e67ed59e1d1-2ff693739ecsm2060406a91.26.2025.03.06.15.48.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Mar 2025 15:48:23 -0800 (PST)
+Message-ID: <a69053d3-83e7-4f25-9b41-92648b474376@linaro.org>
+Date: Thu, 6 Mar 2025 15:48:22 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/tcg: Restrict CPU_TLB_DYN_*_BITS definitions to
+ accel/tcg/
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20250305191859.71608-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250305191859.71608-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,183 +105,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Re-use the TARGET_PAGE_BITS_VARY mechanism to define
-TARGET_PAGE_SIZE and friends when not compiling per-target.
-Inline qemu_target_page_{size,mask,bits} as they are now trivial.
+On 3/5/25 11:18, Philippe Mathieu-Daudé wrote:
+> CPU_TLB_DYN_*_BITS definitions are only used by accel/tcg/cputlb.c
+> and accel/tcg/translate-all.c. Move them to accel/tcg/tb-internal.h.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   accel/tcg/tb-internal.h | 27 +++++++++++++++++++++++++++
+>   include/exec/cpu-defs.h | 26 --------------------------
+>   2 files changed, 27 insertions(+), 26 deletions(-)
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
-
-After this, we could in fact remove qemu_target_page_foo(), etc.
-We certainly don't need to convert any more uses of TARGET_PAGE_FOO.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
----
- include/exec/cpu-all.h     | 21 +-------------
- include/exec/poison.h      |  5 ----
- include/exec/target_page.h | 58 ++++++++++++++++++++++++++++++++++----
- page-target.c              | 18 ------------
- page-vary-target.c         |  2 ++
- 5 files changed, 55 insertions(+), 49 deletions(-)
-
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 09f537d06f..8f7aebb088 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -105,26 +105,7 @@ static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val
- 
- /* page related stuff */
- #include "exec/cpu-defs.h"
--#ifdef TARGET_PAGE_BITS_VARY
--# include "exec/page-vary.h"
--extern const TargetPageBits target_page;
--# ifdef CONFIG_DEBUG_TCG
--#  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
--                                target_page.bits; })
--#  define TARGET_PAGE_MASK   ({ assert(target_page.decided); \
--                                (target_long)target_page.mask; })
--# else
--#  define TARGET_PAGE_BITS   target_page.bits
--#  define TARGET_PAGE_MASK   ((target_long)target_page.mask)
--# endif
--# define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
--#else
--# define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
--# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
--# define TARGET_PAGE_MASK    ((target_long)-1 << TARGET_PAGE_BITS)
--#endif
--
--#define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
-+#include "exec/target_page.h"
- 
- CPUArchState *cpu_copy(CPUArchState *env);
- 
-diff --git a/include/exec/poison.h b/include/exec/poison.h
-index f4283f693a..ce43a12965 100644
---- a/include/exec/poison.h
-+++ b/include/exec/poison.h
-@@ -44,11 +44,6 @@
- #pragma GCC poison TARGET_FMT_ld
- #pragma GCC poison TARGET_FMT_lu
- 
--#pragma GCC poison TARGET_PAGE_SIZE
--#pragma GCC poison TARGET_PAGE_MASK
--#pragma GCC poison TARGET_PAGE_BITS
--#pragma GCC poison TARGET_PAGE_ALIGN
--
- #pragma GCC poison CPU_INTERRUPT_HARD
- #pragma GCC poison CPU_INTERRUPT_EXITTB
- #pragma GCC poison CPU_INTERRUPT_HALT
-diff --git a/include/exec/target_page.h b/include/exec/target_page.h
-index 98ffbb5c23..8e89e5cbe6 100644
---- a/include/exec/target_page.h
-+++ b/include/exec/target_page.h
-@@ -14,10 +14,56 @@
- #ifndef EXEC_TARGET_PAGE_H
- #define EXEC_TARGET_PAGE_H
- 
--size_t qemu_target_page_size(void);
--int qemu_target_page_mask(void);
--int qemu_target_page_bits(void);
--int qemu_target_page_bits_min(void);
--
--size_t qemu_target_pages_to_MiB(size_t pages);
-+/*
-+ * If compiling per-target, get the real values.
-+ * For generic code, reuse the mechanism for variable page size.
-+ */
-+#ifdef COMPILING_PER_TARGET
-+#include "cpu-param.h"
-+#include "exec/target_long.h"
-+#define TARGET_PAGE_TYPE  target_long
-+#else
-+#define TARGET_PAGE_BITS_VARY
-+#define TARGET_PAGE_TYPE  int
-+#endif
-+
-+#ifdef TARGET_PAGE_BITS_VARY
-+# include "exec/page-vary.h"
-+extern const TargetPageBits target_page;
-+# ifdef CONFIG_DEBUG_TCG
-+#  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
-+                                target_page.bits; })
-+#  define TARGET_PAGE_MASK   ({ assert(target_page.decided); \
-+                                (TARGET_PAGE_TYPE)target_page.mask; })
-+# else
-+#  define TARGET_PAGE_BITS   target_page.bits
-+#  define TARGET_PAGE_MASK   ((TARGET_PAGE_TYPE)target_page.mask)
-+# endif
-+# define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
-+#else
-+# define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
-+# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
-+# define TARGET_PAGE_MASK    ((TARGET_PAGE_TYPE)-1 << TARGET_PAGE_BITS)
-+#endif
-+
-+#define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
-+
-+static inline size_t qemu_target_page_size(void)
-+{
-+    return TARGET_PAGE_SIZE;
-+}
-+
-+static inline int qemu_target_page_mask(void)
-+{
-+    return TARGET_PAGE_MASK;
-+}
-+
-+static inline int qemu_target_page_bits(void)
-+{
-+    return TARGET_PAGE_BITS;
-+}
-+
-+int qemu_target_page_bits_min(void);
-+size_t qemu_target_pages_to_MiB(size_t pages);
-+
- #endif
-diff --git a/page-target.c b/page-target.c
-index 82211c8593..321e43d06f 100644
---- a/page-target.c
-+++ b/page-target.c
-@@ -8,24 +8,6 @@
- 
- #include "qemu/osdep.h"
- #include "exec/target_page.h"
--#include "exec/cpu-defs.h"
--#include "cpu.h"
--#include "exec/cpu-all.h"
--
--size_t qemu_target_page_size(void)
--{
--    return TARGET_PAGE_SIZE;
--}
--
--int qemu_target_page_mask(void)
--{
--    return TARGET_PAGE_MASK;
--}
--
--int qemu_target_page_bits(void)
--{
--    return TARGET_PAGE_BITS;
--}
- 
- int qemu_target_page_bits_min(void)
- {
-diff --git a/page-vary-target.c b/page-vary-target.c
-index 343b4adb95..1b4a9a10be 100644
---- a/page-vary-target.c
-+++ b/page-vary-target.c
-@@ -37,5 +37,7 @@ void finalize_target_page_bits(void)
- {
- #ifdef TARGET_PAGE_BITS_VARY
-     finalize_target_page_bits_common(TARGET_PAGE_BITS_MIN);
-+#else
-+    finalize_target_page_bits_common(TARGET_PAGE_BITS);
- #endif
- }
--- 
-2.43.0
+> 
+> diff --git a/accel/tcg/tb-internal.h b/accel/tcg/tb-internal.h
+> index 90be61f296a..abd423fcf58 100644
+> --- a/accel/tcg/tb-internal.h
+> +++ b/accel/tcg/tb-internal.h
+> @@ -13,6 +13,33 @@
+>   #include "exec/exec-all.h"
+>   #include "exec/translation-block.h"
+>   
+> +#ifdef CONFIG_SOFTMMU
+> +
+> +#define CPU_TLB_DYN_MIN_BITS 6
+> +#define CPU_TLB_DYN_DEFAULT_BITS 8
+> +
+> +# if HOST_LONG_BITS == 32
+> +/* Make sure we do not require a double-word shift for the TLB load */
+> +#  define CPU_TLB_DYN_MAX_BITS (32 - TARGET_PAGE_BITS)
+> +# else /* HOST_LONG_BITS == 64 */
+> +/*
+> + * Assuming TARGET_PAGE_BITS==12, with 2**22 entries we can cover 2**(22+12) ==
+> + * 2**34 == 16G of address space. This is roughly what one would expect a
+> + * TLB to cover in a modern (as of 2018) x86_64 CPU. For instance, Intel
+> + * Skylake's Level-2 STLB has 16 1G entries.
+> + * Also, make sure we do not size the TLB past the guest's address space.
+> + */
+> +#  ifdef TARGET_PAGE_BITS_VARY
+> +#   define CPU_TLB_DYN_MAX_BITS                                  \
+> +    MIN(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
+> +#  else
+> +#   define CPU_TLB_DYN_MAX_BITS                                  \
+> +    MIN_CONST(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
+> +#  endif
+> +# endif
+> +
+> +#endif /* CONFIG_SOFTMMU */
+> +
+>   #ifdef CONFIG_USER_ONLY
+>   #include "user/page-protection.h"
+>   /*
+> diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
+> index ae18398fa99..9f955f53fde 100644
+> --- a/include/exec/cpu-defs.h
+> +++ b/include/exec/cpu-defs.h
+> @@ -46,30 +46,4 @@
+>   
+>   #include "exec/target_long.h"
+>   
+> -#if defined(CONFIG_SOFTMMU) && defined(CONFIG_TCG)
+> -#define CPU_TLB_DYN_MIN_BITS 6
+> -#define CPU_TLB_DYN_DEFAULT_BITS 8
+> -
+> -# if HOST_LONG_BITS == 32
+> -/* Make sure we do not require a double-word shift for the TLB load */
+> -#  define CPU_TLB_DYN_MAX_BITS (32 - TARGET_PAGE_BITS)
+> -# else /* HOST_LONG_BITS == 64 */
+> -/*
+> - * Assuming TARGET_PAGE_BITS==12, with 2**22 entries we can cover 2**(22+12) ==
+> - * 2**34 == 16G of address space. This is roughly what one would expect a
+> - * TLB to cover in a modern (as of 2018) x86_64 CPU. For instance, Intel
+> - * Skylake's Level-2 STLB has 16 1G entries.
+> - * Also, make sure we do not size the TLB past the guest's address space.
+> - */
+> -#  ifdef TARGET_PAGE_BITS_VARY
+> -#   define CPU_TLB_DYN_MAX_BITS                                  \
+> -    MIN(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
+> -#  else
+> -#   define CPU_TLB_DYN_MAX_BITS                                  \
+> -    MIN_CONST(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
+> -#  endif
+> -# endif
+> -
+> -#endif /* CONFIG_SOFTMMU && CONFIG_TCG */
+> -
+>   #endif
 
 
