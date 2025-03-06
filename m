@@ -4,93 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A42CC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 12:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 739AAC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 12:23:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqADb-0002lN-9p; Thu, 06 Mar 2025 07:20:51 -0500
+	id 1tqAFt-0003UW-Mo; Thu, 06 Mar 2025 07:23:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tqADK-0002jk-C5
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 07:20:35 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tqADH-0004J4-DJ
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 07:20:33 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-abf57138cfaso108433766b.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 04:20:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741263628; x=1741868428; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rT1YCztb4Hh7u9SljOfPZl9P0rIXzctNgjxjZmwRtIc=;
- b=BRh9M+G5rvIMfdty1Ii72fSvBFmN98bP7EW8BNY4mhgTaARFTHK5LCyNaQJBdsyO6/
- g7bihQQ023K+U1Y3ZNZldjbClv0Zqy2KLjXyUcy7WW+Tkram+E6WKe4HiVr4kRT1vCUH
- bwCr5+fGYSpsDxJA+JFVHvLEtq46Zf/WgWwoKfR6+RfOybsz/U3lgI7Rd1evbNFcwStg
- /05JEkpqFfo7R+DiGjRfCMplBiiWbNV/Pkv3pf5OVEpmGLiLrh0SGLYpGHTIlcTPW6KA
- nUWJW6l0Skhg/fXM+HMVrRwURuvVSxHvRw6k/OwMZGyoZ/LHnV9VNadHc+s9TFcjuBp8
- 9xAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741263628; x=1741868428;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rT1YCztb4Hh7u9SljOfPZl9P0rIXzctNgjxjZmwRtIc=;
- b=s0g0v6WVyuEtBqE6VUcAFVhrkxY9RYWKV14H6LQLwP1vbRPwmKp7EhVfXZR+ZquFe6
- omSB66aDY1EGXBgIdQBRI2uWsefnUcVr883FB4Nt+osCtmppqfE96TEM+Q2PUHol55s1
- PlT/nEmRKoRDlgSw/HAtnw7VaxDBR+mkyzPlCr/tG8cYHddZyBY1+C9Urwjfo0JkSGFh
- fvd2DwMFYyk+jv5Vek1UlU9GehMs/ZuEIhFVUbcCt6loD+wkapbvrXCTmEuWVt27cL7p
- CaDnLRbSCF/WsAaAYswZmTOK852c3mvScFFPaTqnPeWbwvllqWIcaQtWtkS04YUOMcUU
- 5bSA==
-X-Gm-Message-State: AOJu0YwVty6jVE6uqCyBRt704ELCQsaEwtoo8/L1TTlKNsVyKEShu+MJ
- n9vlmspcnOvTTzGz4Tiu9gegTXVJ07zVJQe0xBP8m++Vw/ZJsjkigciu9vb04f4=
-X-Gm-Gg: ASbGncurdeUDdbiiEyE9372HDyzDho1rI6h2Vb/i328pqzHoE51TF/12w18lUwhGbQw
- 3JHx/bzZ86U/fZCHF3em7x51TT225FGTYP8lhKW0kjE7C7xh31BPwjLng6UxSy3MfOffh5ZDfxK
- R23B2wHgzyk7zIZYDSFcCpcPAHL29Vrw2Ps6Ea5a1vb5xctNKVhNF1CINmrQyU2nPRC31S1X7M8
- qKv9n+57ZG7BbJ7pP9hjf7qfdgfVaREXglHo9gcgH9Nb61G6Mh6tFbTkIijB3p34PJ0+4pdEMyR
- Safr8WgOTpbiNIvuGZe+Su83oU3ZneTLYnNLg8CqAbTCwzE=
-X-Google-Smtp-Source: AGHT+IGsS6u7RiEQGIRRSqNpad5wb/GVJxpyjnpQ9ll5i6Uw8c/E/Zr73jdwK6Z04SR2eAEHimgK9w==
-X-Received: by 2002:a17:907:3f29:b0:ac1:e889:c2a with SMTP id
- a640c23a62f3a-ac20da47762mr645255566b.11.1741263627667; 
- Thu, 06 Mar 2025 04:20:27 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac23988c54esm87204566b.132.2025.03.06.04.20.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 04:20:26 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A88BE5F9CF;
- Thu,  6 Mar 2025 12:20:25 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2] meson.build: default to -gsplit-dwarf for debug info
-In-Reply-To: <CABgObfZpf7Oki+0rH-3OTBLF_cW8+5e-jAaG=AU58oAn8CP=5w@mail.gmail.com>
- (Paolo Bonzini's message of "Thu, 6 Mar 2025 12:36:40 +0100")
-References: <20250306105306.2064458-1-alex.bennee@linaro.org>
- <CABgObfZpf7Oki+0rH-3OTBLF_cW8+5e-jAaG=AU58oAn8CP=5w@mail.gmail.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Thu, 06 Mar 2025 12:20:25 +0000
-Message-ID: <877c524agm.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <shalini@imap.linux.ibm.com>)
+ id 1tqAFr-0003UH-M8; Thu, 06 Mar 2025 07:23:11 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shalini@imap.linux.ibm.com>)
+ id 1tqAFp-0004Ts-Bj; Thu, 06 Mar 2025 07:23:11 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5263kBLD023805;
+ Thu, 6 Mar 2025 12:23:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=w2tiYE
+ GDAv8ZvsIcs5Z1s39WS70wAlmrWRpFj2oeVFo=; b=h9FBodQwTJ9m3t/c/ZO1Gp
+ z1+Odtr6ZEjApTMlxyjUf8urviMLyWG2XDwUET5Tgoi4cAw/AgOeq8yQMAvyz0MW
+ Gdx6O24l/flQl06I1uznBXbTkF+u9He3UYW4Wjc/BLBtub5PraT7WrKIVujQktMd
+ w0qbC1xutC69TJkuRI1ziSXp5J0MkYFGQzeJJkthFIPB38taTKvUjhDmWwYSSf6z
+ 7zY4mhftgBjOyiPE6KtBtX5DyV71S9rbysf0jYZO47nXTrAv5jbnRytGW2dvmrnU
+ BQjUyyjUnHvXfhONI3h1YH837FCQFthdVqF/dGjifocxu9UF7/O3/0bMfB4dVtEQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45743929ru-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 06 Mar 2025 12:23:06 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 526CC4jp008934;
+ Thu, 6 Mar 2025 12:23:05 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 454cxyrrr5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 06 Mar 2025 12:23:05 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 526CN4uu21496538
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 6 Mar 2025 12:23:04 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1FE1B58061;
+ Thu,  6 Mar 2025 12:23:04 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 92D8658059;
+ Thu,  6 Mar 2025 12:23:03 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  6 Mar 2025 12:23:03 +0000 (GMT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Date: Thu, 06 Mar 2025 13:23:03 +0100
+From: shalini <shalini@imap.linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Shalini Chellathurai Saroja <shalini@linux.ibm.com>, qemu-s390x mailing
+ list <qemu-s390x@nongnu.org>, qemu-devel mailing list
+ <qemu-devel@nongnu.org>, Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>
+Subject: Re: [PATCH qemu v2 1/3] hw/s390x: add CPI identifiers to QOM
+In-Reply-To: <48caabe7-c112-4454-96a8-742d154c77ee@redhat.com>
+References: <20250224120449.1764114-1-shalini@linux.ibm.com>
+ <48caabe7-c112-4454-96a8-742d154c77ee@redhat.com>
+Message-ID: <78b6c548212517ef8620fce0c6832e4f@imap.linux.ibm.com>
+X-Sender: shalini@imap.linux.ibm.com
+Organization: IBM Deutschland Research & Development GmbH
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: hVTR2yhlcGAh1IM4sJ2OdOnoUI_tclOJ
+X-Proofpoint-ORIG-GUID: hVTR2yhlcGAh1IM4sJ2OdOnoUI_tclOJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-06_05,2025-03-06_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ lowpriorityscore=0 spamscore=0 phishscore=0 clxscore=1034 mlxscore=0
+ malwarescore=0 adultscore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503060090
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=shalini@imap.linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_ADSP_NXDOMAIN=0.9,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, NO_DNS_FOR_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,69 +113,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On 2025-03-05 16:56, Thomas Huth wrote:
+> On 24/02/2025 13.04, Shalini Chellathurai Saroja wrote:
+>> Add Control-Program Identification (CPI) to the QEMU Object
+>> Model (QOM). The CPI identifiers provide information about
+>> the guest operating system. The CPI identifiers are:
+>> system type, system name, system level and sysplex name.
+>> 
+>> The system type provides the OS type of the guest (e.g. LINUX).
+>> The system name provides the name of the guest (e.g. TESTVM).
+>> The system level provides the distribution and kernel version
+>> of the guest OS (e.g. 0x50e00).
+>> The sysplex name provides the sysplex name of the guest
+>> (e.g. SYSPLEX).
+>> 
+>> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+>> ---
+>>   hw/s390x/s390-virtio-ccw.c         | 29 
+>> +++++++++++++++++++++++++++++
+>>   include/hw/s390x/s390-virtio-ccw.h |  8 ++++++++
+>>   qapi/machine.json                  | 24 ++++++++++++++++++++++++
+>>   3 files changed, 61 insertions(+)
+>> 
+>> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+>> index 51ae0c133d..13ea8db1b0 100644
+>> --- a/hw/s390x/s390-virtio-ccw.c
+>> +++ b/hw/s390x/s390-virtio-ccw.c
+>> @@ -50,6 +50,7 @@
+>>   #include "hw/s390x/virtio-ccw-md.h"
+>>   #include "system/replay.h"
+>>   #include CONFIG_DEVICES
+>> +#include "qapi/qapi-visit-machine.h"
+>>     static Error *pv_mig_blocker;
+>>   @@ -803,6 +804,26 @@ static void machine_set_loadparm(Object *obj, 
+>> Visitor *v,
+>>       s390_ipl_fmt_loadparm(ms->loadparm, val, errp);
+>>   }
+>>   +static void machine_get_control_program_id(Object *obj, Visitor *v,
+>> +                                           const char *name, void 
+>> *opaque,
+>> +                                           Error **errp)
+>> +{
+>> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+>> +    S390ControlProgramId *cpi;
+>> +    cpi = &(S390ControlProgramId){
+>> +        .system_type = g_strndup((char *) ms->cpi.system_type,
+>> +                       sizeof(ms->cpi.system_type)),
+>> +        .system_name = g_strndup((char *) ms->cpi.system_name,
+>> +                       sizeof(ms->cpi.system_name)),
+>> +        .system_level = g_strdup_printf("0x%lx", 
+>> ms->cpi.system_level),
+>> +        .sysplex_name = g_strndup((char *) ms->cpi.sysplex_name,
+>> +                        sizeof(ms->cpi.sysplex_name)),
+>> +        .timestamp = ms->cpi.timestamp
+>> +    };
+> 
+> Could you please indend the sizeof() lines with the "(" after the
+> g_strndup in the previous line?
+> 
 
-> Il gio 6 mar 2025, 11:53 Alex Benn=C3=A9e <alex.bennee@linaro.org> ha scr=
-itto:
->
->  -option_cflags =3D (get_option('debug') ? ['-g'] : [])
->  +option_cflags =3D []
->  +if get_option('debug')
->  +  option_cflags +=3D get_option('split_debug') ? ['-gsplit-dwarf'] : ['=
--g']
->  +endif
->
-> option_cflags does nothing, it's only for clarity in the final summary. S=
-o you need
->
-> if get_option('debug') and get_option('split_debug')
->   qemu_cflags +=3D '-gsplit-dwarf'
-> endif
+Hello Thomas,
 
-Should I update the optimization field as well? is this the reason why I
-wasn't seeing changes occur for the tests that meson builds?
+Sure, I have provided a sample code below, please let me know if this is 
+incorrect. Thank you.
 
->
-> (I wonder if it should be implemented in meson instead... It should be be=
-neficial for other projects surely).
->
-> Paolo
->
->   if get_option('optimization') !=3D 'plain'
->     option_cflags +=3D ['-O' + get_option('optimization')]
->   endif
->  diff --git a/meson_options.txt b/meson_options.txt
->  index 59d973bca0..3432123fee 100644
->  --- a/meson_options.txt
->  +++ b/meson_options.txt
->  @@ -362,6 +362,8 @@ option('debug_mutex', type: 'boolean', value: false,
->          description: 'mutex debugging support')
->   option('debug_stack_usage', type: 'boolean', value: false,
->          description: 'measure coroutine stack usage')
->  +option('split_debug', type: 'boolean', value: true,
->  +       description: 'split debug info from object files')
->   option('qom_cast_debug', type: 'boolean', value: true,
->          description: 'cast debugging support')
->   option('slirp_smbd', type : 'feature', value : 'auto',
->  diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.=
-sh
->  index 3e8e00852b..aca6e68830 100644
->  --- a/scripts/meson-buildoptions.sh
->  +++ b/scripts/meson-buildoptions.sh
->  @@ -504,6 +504,8 @@ _meson_option_parse() {
->       --disable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=3Dfals=
-e ;;
->       --enable-strip) printf "%s" -Dstrip=3Dtrue ;;
->       --disable-strip) printf "%s" -Dstrip=3Dfalse ;;
->  +    --enable-split-debug) printf "%s" -Dsplit_debug=3Dtrue ;;
->  +    --disable-split-debug) printf "%s" -Dsplit_debug=3Dfalse ;;
->       --sysconfdir=3D*) quote_sh "-Dsysconfdir=3D$2" ;;
->       --enable-tcg) printf "%s" -Dtcg=3Denabled ;;
->       --disable-tcg) printf "%s" -Dtcg=3Ddisabled ;;
->  --=20
->  2.39.5
+>> +    cpi = &(S390ControlProgramId){
+>> +        .system_type = g_strndup((char *) ms->cpi.system_type,
+>> +                                 sizeof(ms->cpi.system_type)),
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+>> +
+>> +    visit_type_S390ControlProgramId(v, name, &cpi, &error_abort);
+>> +}
+>> +
+>>   static void ccw_machine_class_init(ObjectClass *oc, void *data)
+>>   {
+>>       MachineClass *mc = MACHINE_CLASS(oc);
+>> @@ -854,6 +875,14 @@ static void ccw_machine_class_init(ObjectClass 
+>> *oc, void *data)
+>>               "Up to 8 chars in set of [A-Za-z0-9. ] (lower case chars 
+>> converted"
+>>               " to upper case) to pass to machine loader, boot 
+>> manager,"
+>>               " and guest kernel");
+>> +    object_class_property_add(oc, "s390-control-program-id",
+> 
+> I think I'd rather drop the "s390-" prefix here. The property is
+> already part of the s390-virtio-ccw machine, so it should be obvious
+> that this is related to s390.
+ok.
+
+> 
+>> +                              "S390ControlProgramId",
+>> +                              machine_get_control_program_id,
+>> +                              NULL, NULL, NULL);
+>> +    object_class_property_set_description(oc, 
+>> "s390-control-program-id",
+>> +        "Control-progam identifiers provide data about the guest "
+> 
+> s/progam/program/
+> 
+ok.
+
+>> +        "operating system");
+>> +
+>>   }
+>>     static inline void s390_machine_initfn(Object *obj)
+
+[...]
+
+>> diff --git a/qapi/machine.json b/qapi/machine.json
+>> index a6b8795b09..c6cbad87e1 100644
+>> --- a/qapi/machine.json
+>> +++ b/qapi/machine.json
+>> @@ -1898,3 +1898,27 @@
+>>   { 'command': 'x-query-interrupt-controllers',
+>>     'returns': 'HumanReadableText',
+>>     'features': [ 'unstable' ]}
+>> +
+>> +##
+>> +# @S390ControlProgramId:
+>> +#
+>> +# Control-program identifiers provide data about Linux instance.
+> 
+> If I understood correctly, this could also theoretically be used by
+> other guest operating systems? If so, please replace "Linux instance"
+> with "guest operating system".
+> 
+
+Yes, that is correct. I will change the description of the attributes 
+below based on the comments from you and Daniel, thank you.
+
+>> +#
+>> +# @system-type: operating system of Linux instance
+> 
+> Replace with:
+> 
+>  @system-type: operating system (e.g. "LINUX")
+> 
+> ?
+> 
+>> +#
+>> +# @system-name: system name of Linux instance
+> 
+> Name of the VM instance ?
+> 
+>> +# @system-level: distribution and kernel version of Linux instance
+>> +#
+>> +# @sysplex-name: sysplex name of Linux instance
+>> +#
+>> +# @timestamp: latest update of CPI data
+>> +#
+>> +# Since: 9.2
+> 
+> 9.2 has already been released, so this should be 10.0.
+> 
+
+ok.
+
+>> +##
+>> +{ 'struct': 'S390ControlProgramId', 'data': {
+>> +     'system-type': 'str',
+>> +     'system-name': 'str',
+>> +     'system-level': 'str',
+> 
+> Not sure, but would it make sense to use a number for the system-level
+> instead? At least it's a number in ControlProgramId, not a string.
+> 
+
+The system-level, when interpreted as an int provides the output below
+
+'system-level': 74872343805430528
+
+But the desired output below is obtained only when interpreted as a str. 
+please refer 
+https://www.ibm.com/docs/en/linux-on-systems?topic=identification-system-level 
+for details on system-level. I will also document this in the 
+description of system-level as suggested by Daniel. Thank you.
+
+'system-level': '0x10a000000060b00'
+
+>  Thomas
+> 
+> 
+>> +     'sysplex-name': 'str',
+>> +     'timestamp': 'uint64' } }
+
+-- 
+Mit freundlichen Grüßen / Kind regards
+Shalini Chellathurai Saroja
+Software Developer
+Linux on IBM Z & KVM Development
+IBM Deutschland Research & Development GmbH
+Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Geschäftsführung: David Faller
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
+Stuttgart, HRB 243294
 
