@@ -4,88 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2CF6C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 18:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A8EC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 18:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqFbK-0001Qw-Q5; Thu, 06 Mar 2025 13:05:42 -0500
+	id 1tqFt3-0006BN-Mm; Thu, 06 Mar 2025 13:24:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1tqFb7-0001MP-4v
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 13:05:29 -0500
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1tqFb3-0001Kq-TY
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 13:05:28 -0500
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-4750a85a0ddso9221cf.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 10:05:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1741284323; x=1741889123; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h1KmfNYxKGtGgHY0ymgELcudFoIW5QI3uHOLWnlpF6s=;
- b=1iG1enuw9QFhwOKRYn4gxLJnrAqmZNpD9Nv/gTzhpUXDoxsGS6sv8mkRvJTrP7Zmu3
- Svrs+gppPtY3j5rJqR/LAqpj816rsg/qstNu1t5b70N07RoDgCr+DOlahQkN3c3hR0i0
- ZWmxJ9UKFpJiJOdaFS1bWG45PUzlXurj0qE8rHHhgmPQ58O1t7Fls+orInrzIKiAzQnT
- rw0jlenNAihVpxzYxUGKJYmRRcb7jPfPrw9JoXk//G/7Kfyx9iRVtzm+sfoFqn20D/+F
- vfAdeltm7ze4YQ84cEz5GlAEEB50Rcrtdnu9BuOtikh4niAbnH8E1x+fBDP5jxSY5wPJ
- I8PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741284323; x=1741889123;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=h1KmfNYxKGtGgHY0ymgELcudFoIW5QI3uHOLWnlpF6s=;
- b=h/lBiS6TdGVWWysHTIGtoav10+2O9+UM3lizUWEgb+1h8ywtlMpT54v185woOGa6d2
- RMJouQkA0jMkIWt6Ee6eI+QymlhUfyiJTS9ulvacYUoGXJjeaYPnM+zI+Je2Xq/OHyF4
- YfPFaccC/hO43Fk74UCIuCqKjUiwWGrL5KVu4QHGc0NlJ+XQ+0hX0chfBO5qkJvlsIOd
- DtJ5aUF8kKAcPxiCxI3xataQj3J9TLjvlh2v8Gt0Ieiq/5R8kybMmcz1R5669weop9Qs
- EJEkK2Su7+a6XDokc/2qVrwUJOWdVHp/uQno9qd1qfg6oDBWh+1MJ2LzDbK8SAbzQYLu
- xwNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXukLOYWz1XNKxmSLbHnJuPMVfru3fG6Ja/BUfv9gENvNEnyAhPqAkdcdGT71XKjjC7UU5gBUQKcWin@nongnu.org
-X-Gm-Message-State: AOJu0YxmTFqOxvSm7e7lgzeeq5PEx5LQwHlfgH9eUT59HY+Gw/oSibGE
- v9T1/o9wg80XMxBNV1ORqAlUyHvlAGBtvcwccv2Ya5RsOuFT7wYy3CsiYDrHsGCwSsuRKlinKQN
- RyHmzpTyle7uyNhsukJzInyKEsuLIoepWpRmcM6sgNI21Ng+kILKecaDLQg==
-X-Gm-Gg: ASbGncuGLQJ/T+KGHqO8CHRcFH+BmytfO+6g4GHHMTjNn41OL8G3jniaXyJ6jC2TF+L
- bBmfTbYJeDXF3KcamBLvzstJxFh1qSV1YMRsgSmW19Xti1Wv3EqGOGesrVMhObmccLpaxKre/Lk
- G8Ko2IeDQLBzBebuoj9HBSitmwdlnzR2KlWhgA8lMBLtsJPJW+7kFXEj2Q
-X-Google-Smtp-Source: AGHT+IEpy4SMpwB76nHg+z7VDp6WUm74+d6waQr2dvTOPmTwYXiGRL+tCxd8ielTaklGQDYySdNL7wYGs172OcuXoA4=
-X-Received: by 2002:ac8:590f:0:b0:466:975f:b219 with SMTP id
- d75a77b69052e-4751b01835fmr5128821cf.8.1741284322454; Thu, 06 Mar 2025
- 10:05:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tqFt1-0006Ac-SD; Thu, 06 Mar 2025 13:23:59 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tqFsy-0003vQ-ER; Thu, 06 Mar 2025 13:23:59 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 128DD4E6001;
+ Thu, 06 Mar 2025 19:23:50 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id LIcx5ypPzU58; Thu,  6 Mar 2025 19:23:48 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 068BE4E6000; Thu, 06 Mar 2025 19:23:48 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 025E274577C;
+ Thu, 06 Mar 2025 19:23:47 +0100 (CET)
+Date: Thu, 6 Mar 2025 19:23:47 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Bernhard Beschow <shentey@gmail.com>
+Subject: Re: [PATCH v2] hw/sd/sdhci: Set reset value of interrupt registers
+In-Reply-To: <ad0e4bde-40dd-db32-b8d9-46c27c257aa3@eik.bme.hu>
+Message-ID: <0f3814d3-7c27-fd50-2ad3-b4d5344d9fc1@eik.bme.hu>
+References: <20250210160329.DDA7F4E600E@zero.eik.bme.hu>
+ <918e9ae0-fb22-43c7-a2cf-376aaee0e98b@linaro.org>
+ <ad0e4bde-40dd-db32-b8d9-46c27c257aa3@eik.bme.hu>
 MIME-Version: 1.0
-References: <20250306000408.2088020-1-nabihestefan@google.com>
- <310205a4-15b1-43b1-93ee-d20d47285478@kaod.org>
-In-Reply-To: <310205a4-15b1-43b1-93ee-d20d47285478@kaod.org>
-From: Nabih Estefan <nabihestefan@google.com>
-Date: Thu, 6 Mar 2025 10:05:11 -0800
-X-Gm-Features: AQ5f1JpGZPV9LXpzx4PWq8aUBA-kLwPnlE8xRLaDyU7KkUm0YEK2oncUfEWo56w
-Message-ID: <CA+QoejW15VztgKQ8f2a_ApA=P+eC70Et80pUVcd9rBR=j+cRAw@mail.gmail.com>
-Subject: Re: [v5,1/6] hw/misc/aspeed_scu: Skipping dram_init in u-boot
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: jamin_lin@aspeedtech.com, Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=nabihestefan@google.com; helo=mail-qt1-x833.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ BOUNDARY="3866299591-1210530465-1741284843=:15792"
+Content-ID: <570c1695-1ec4-4413-2ad4-03d664ab6198@eik.bme.hu>
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,39 +68,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi C=C3=A9dric,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-We have a custom machine and a custom image using the AST27x0 A0. I ran
-some of our internal tests using these patches. They even fixed some of the
-errors we=E2=80=99d been seeing recently!
+--3866299591-1210530465-1741284843=:15792
+Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <c98dd5dd-0ec7-db10-6902-42204ceaf9a3@eik.bme.hu>
 
-I=E2=80=99m also working on testing through the A1 patches, will reply to t=
-hose soon.
+On Mon, 3 Mar 2025, BALATON Zoltan wrote:
+> On Mon, 3 Mar 2025, Philippe Mathieu-Daudé wrote:
+>> Hi Zoltan,
+>> 
+>> On 10/2/25 17:03, BALATON Zoltan wrote:
+>>> The interrupt enable registers are not reset to 0 on Freescale eSDHC
+>>> but some bits are enabled on reset. At least some U-Boot versions seem
+>>> to expect this and not initialise these registers before expecting
+>>> interrupts. Use existing vendor property for Freescale eSDHC and set
+>>> the reset value of the interrupt registers to match Freescale
+>>> documentation.
+>>> 
+>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>> ---
+>>> v2: Restrict to e500. Adding a reset method in a subclass does not
+>>> work because the common reset function is called directly on register
+>>> write from the guest but there's already provision for vendor specific
+>>> behaviour which can be used to restrict this to Freescale SoCs.
+>>>
+>>>   hw/ppc/e500.c         | 1 +
+>>>   hw/sd/sdhci.c         | 4 ++++
+>>>   include/hw/sd/sdhci.h | 1 +
+>>>   3 files changed, 6 insertions(+)
+>>> 
+>>> diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+>>> index 26933e0457..560eb42a12 100644
+>>> --- a/hw/ppc/e500.c
+>>> +++ b/hw/ppc/e500.c
+>>> @@ -1044,6 +1044,7 @@ void ppce500_init(MachineState *machine)
+>>>           dev = qdev_new(TYPE_SYSBUS_SDHCI);
+>>>           qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+>>>           qdev_prop_set_uint8(dev, "endianness", DEVICE_BIG_ENDIAN);
+>>> +        qdev_prop_set_uint8(dev, "vendor", SDHCI_VENDOR_FSL);
+>>>           s = SYS_BUS_DEVICE(dev);
+>>>           sysbus_realize_and_unref(s, &error_fatal);
+>>>           sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, 
+>>> MPC85XX_ESDHC_IRQ));
+>>> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+>>> index 99dd4a4e95..afa3c6d448 100644
+>>> --- a/hw/sd/sdhci.c
+>>> +++ b/hw/sd/sdhci.c
+>>> @@ -307,6 +307,10 @@ static void sdhci_reset(SDHCIState *s)
+>>>       s->data_count = 0;
+>>>       s->stopped_state = sdhc_not_stopped;
+>>>       s->pending_insert_state = false;
+>>> +    if (s->vendor == SDHCI_VENDOR_FSL) {
+>>> +        s->norintstsen = 0x013f;
+>>> +        s->errintstsen = 0x117f;
+>> 
+>> I'd rather do like capareg, and add:
+>>
+>>  DEFINE_PROP_UINT16("norintstsen", _state, norintstsen, 0),
+>>  ...
+>
+> I don't see what you mean. capareg does not seem to be set via a property.
+>
+>> Then SoC code sets it:
+>>
+>>  qdev_prop_set_uint16(dev, "norintstsen", 0x013f);
+>>  ...
+>> 
+>> WDYT?
+>
+> I think it may be overkill to add properties for this if there are no other 
+> vendor or variant that needs this. Also properties are for something the user 
+> may want to set as those can be changed with QEMU command line and these 
+> reset values aren't something the user should change so I think this patch is 
+> the simplest solution now.
 
-Thanks,
-Nabih
+This patch wasn't in the pull request but I haven't seen an answer to this 
+message either so was it missed or do you have furhter comments? Bernhard 
+has a comment about naming of SDHCI_VENDOR_FSL but I think the already 
+existing IMX name is what's wrong not the one added in this patch but I 
+don't think that's really that confusing to worth further effort. We still 
+have time as this can be considered a fix but I'd like this to not get 
+forgotten so I bring it up again.
 
-On Thu, Mar 6, 2025 at 12:05=E2=80=AFAM C=C3=A9dric Le Goater <clg@kaod.org=
-> wrote:
->
-> Nabih,
->
-> On 3/6/25 01:04, Nabih Estefan wrote:
-> >> Setting BIT6 in VGA0 SCRATCH register will indicate that the ddr trani=
-ng
-> >> is done, therefore skipping the u-boot-spl dram_init() process.
-> >>
-> >> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> >> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-> >> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> >
-> > Tested-by: Nabih Estefan <nabihestefan@google.com>
-> Thanks for the feedback !
->
-> Can you tell us a bit more about your tests ?
->
->
-> C.
->
->
+Regards,
+BALATON Zoltan
+--3866299591-1210530465-1741284843=:15792--
 
