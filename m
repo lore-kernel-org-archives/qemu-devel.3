@@ -4,75 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B055FC282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 11:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 447F4C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 12:13:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq9n0-00022s-G8; Thu, 06 Mar 2025 06:53:22 -0500
+	id 1tqA5G-0000Gm-Ox; Thu, 06 Mar 2025 07:12:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tq9mz-00022j-99
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 06:53:21 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tqA5C-0000GL-F4
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 07:12:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tq9mv-0000aq-TZ
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 06:53:20 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tqA5A-00039U-01
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 07:12:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741261994;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1741263124;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yei7ybyqzBFo5udSBL62hX06mvgEi9MLZ/jpWKvEBIo=;
- b=KdPvhNVjTPF/hj5LDG7miw2VbZXPnnFjlUYS0oeoP6157sqldOSPVKzjt6+Zc2Yd6kOVAt
- MUiKB2WyeOIDmjysGvfrdf9O3eC06n1dDR4j3Kqt+uJK2szimbEf9U9n3gokv/HZ4Sm6HM
- gJgosdp/m4S2hWjg6zZChaplSCl6lDw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-yhseRxsRPIuZGW6C19mnKA-1; Thu,
- 06 Mar 2025 06:52:59 -0500
-X-MC-Unique: yhseRxsRPIuZGW6C19mnKA-1
-X-Mimecast-MFC-AGG-ID: yhseRxsRPIuZGW6C19mnKA_1741261978
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7210E18333C8; Thu,  6 Mar 2025 11:52:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.112])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73D0E1828A81; Thu,  6 Mar 2025 11:52:42 +0000 (UTC)
-Date: Thu, 6 Mar 2025 11:52:38 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [RFC PATCH 04/18] qemu: Introduce 'qemu/legacy_binary_info.h'
-Message-ID: <Z8mMhjwiYCY7Pq4H@redhat.com>
-References: <20250305153929.43687-1-philmd@linaro.org>
- <20250305153929.43687-5-philmd@linaro.org>
- <35177cd6-0741-4c28-a5d5-3529208a31dc@linaro.org>
- <dd0336c2-c2ed-477c-8f40-eaee2f110238@redhat.com>
- <21a34cac-855b-4628-a154-e708ea85df59@linaro.org>
- <CABgObfaKQLizim36Lzqzn+brc5d7m10eKbZV59ZK9+03Kt7eTg@mail.gmail.com>
+ bh=D3uLVVqhtl2OnmlIBykV2AXDaHLUFcwt5ikFfAirtdY=;
+ b=MMWYgOpBHgP+LXsSe0FnAseII9bUgr8b72alMyBJ5EphJo0iddjXErYEN+21C+rx7jLyel
+ F+hLhi3mglOq2ydkkSH6gx249xbELcpG5GBxf24hPUSL8cKcI5sn5GzCHx9/hSISX3sSB3
+ hUWl4SReB6AS0XZEK7rnNGUWYuWiW+w=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-149-fjsDu-GUP5SjAWYIPiRhfA-1; Thu, 06 Mar 2025 07:12:02 -0500
+X-MC-Unique: fjsDu-GUP5SjAWYIPiRhfA-1
+X-Mimecast-MFC-AGG-ID: fjsDu-GUP5SjAWYIPiRhfA_1741263122
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-390eefb2913so416588f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 04:12:02 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741263121; x=1741867921;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=D3uLVVqhtl2OnmlIBykV2AXDaHLUFcwt5ikFfAirtdY=;
+ b=srvJtmTQVft/HrJr4xwrsV+e4NaIdbg2Q9PGIQOw3jekjMfuJ37D1AwVgo+0+/Q89m
+ KAfA7p1h99BAzyq2P1jec1TbqnGSAEf4S3NZdQNyZwb3Ci8qaPbmh6ih1aE7eEVum1vA
+ FR63jSk4Zk9R3jge7ezY4nn7987h2+HtOACCXPN8aFheYAkU1Q9qziaFMlH1CfBkCNo/
+ fOWGg+X9FI7f7ldty1Af3osZ8ugUy/YIWYd81hXWtvS3ROIJqb83fiD+eaJTq+P1mvW3
+ ma/0th2d2zkmX6v1IePW8ZPDxwDuLhJY32P1/rO2SfoUKVCZiS2E5S3pM9+TCQBBZNNY
+ 3iXQ==
+X-Gm-Message-State: AOJu0YzjTFl+ccIVrdCBw+ALx25m5Q08rjHXpkPzq7njWNBAGCG/8vs7
+ sc2ciUotfnmDWTCfbDO03ZJ2SIOIUuG3BmyfUxyjVNxmj47qXy0/FHMqCABjMxUlItbdP0QldZP
+ vl6552TJSKslM35hqgh1JEpLLOx2kvCQLr+Ih8Ium0UcatFEW4ElyXrB22FAQEdMkjXq2v/oZ+7
+ TDIxCBisdcIBRecXnDKr8y0l2oTXU=
+X-Gm-Gg: ASbGncsvkngX98ysXjQHZbejXExmZFagl7CEWRi0R2y2vw9hfmR/EUp5Xq/0y4WrLog
+ XWi7c5GFBUjd9tlf+tAGeRkZVksYQ0RhrONnnsygdb8Dg7OBpU70vjJxxUPMMZzpYTEmCDza3
+X-Received: by 2002:a05:6000:1546:b0:38d:d0ea:b04c with SMTP id
+ ffacd0b85a97d-3911f7bb84fmr6877643f8f.38.1741263120976; 
+ Thu, 06 Mar 2025 04:12:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEzdIX8moChDlYv3SMK2btEcMqgaiyO5SakWvLLohdqs38stoj/3YNyE1PJPsM7fxLEY5Pfv+9OA+V64E3wLcs=
+X-Received: by 2002:a05:6000:1546:b0:38d:d0ea:b04c with SMTP id
+ ffacd0b85a97d-3911f7bb84fmr6877587f8f.38.1741263120107; Thu, 06 Mar 2025
+ 04:12:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfaKQLizim36Lzqzn+brc5d7m10eKbZV59ZK9+03Kt7eTg@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+References: <20250218165757.554178-1-pbonzini@redhat.com>
+ <20250218165757.554178-2-pbonzini@redhat.com>
+ <CAKmqyKPxdUjq1m6C8mZT5Ats3eh01-BMVPAJAdMrOc8foT5mNQ@mail.gmail.com>
+In-Reply-To: <CAKmqyKPxdUjq1m6C8mZT5Ats3eh01-BMVPAJAdMrOc8foT5mNQ@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 6 Mar 2025 13:11:47 +0100
+X-Gm-Features: AQ5f1Jpri0dBGlith1x6EvxRcl_RmYnTOeI_-oiyM4E3F416RqEDNNQvbLPev6w
+Message-ID: <CABgObfbMjYXZZhEfLH_5k8vxn8zoLh9drWN=Y881yQ7Wcqm9Aw@mail.gmail.com>
+Subject: Re: [PATCH 1/7] hw/riscv: acpi: only create RHCT MMU entry for
+ supported types
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -94,91 +101,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 06, 2025 at 12:34:13PM +0100, Paolo Bonzini wrote:
-> Il gio 6 mar 2025, 10:27 Philippe Mathieu-Daudé <philmd@linaro.org> ha
-> scritto:
-> 
-> > This API is to allow refactoring code for heterogeneous emulation,
-> > without changing user-facing behavior of current qemu-system binaries,
-> > which I now consider as 'legacy'.
+On Thu, Mar 6, 2025 at 2:13=E2=80=AFAM Alistair Francis <alistair23@gmail.c=
+om> wrote:
+>
+> On Wed, Feb 19, 2025 at 2:58=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.co=
+m> wrote:
 > >
-> > Once all current restrictions removed, the new qemu-system-heterogeneous
-> > binary is expected to run any combination of targets.
-> >
-> > qemu-system-$target will be a call to qemu-system-heterogeneous with
-> > a restricted subset, possibly in the form of:
-> >
-> >   $ qemu-system-heterogeneous --target aarch64-softmmu
-> >
-> 
-> Or just qemu-system I guess.
-> 
->     ^ equivalent of today's qemu-system-aarch64
-> >
-> > If you don't like 'qemu_legacy_binary_' prefix, I can use
-> > 'qemu_single_binary_' instead.
-> >
-> 
-> Still there is a problem with renaming binaries (both the "qemu-kvm" case
-> and the good/bad case that Richard pointed out).
+> > Do not create the RHCT MMU type entry for RV32 CPUs, since it
+> > only has definitions for SV39/SV48/SV57.  Likewise, check that
+>
+> I don't have access to the spec, so I'm going to take your word on this
 
-We could special case the '-kvm' suffix, because by its nature it
-implies the current binary build target.
+Thanks for reviewing - the closest thing I found to a spec are two
+Google documents linked from
+https://github.com/riscv-non-isa/riscv-acpi/issues/16 and
+https://github.com/riscv-non-isa/riscv-acpi/issues/18.
 
-> 
-> I think you should try creating two versions of system/arch_init.c, so that
-> it has a separate implementation for heterogeneous vs. single-target
-> binaries. Then you can keep separate linking steps for single-target
-> binaries and you naturally get the right target info from either the
-> target-specific arch_init-single.c, or the --target option for
-> arch_init-multi.c.
-> 
-> (Is --target even necessary? As long as you have a way disambiguate
-> same-named machines like -M virt, and have no default machine in the
-> multi-target binary, you shouldn't need it).
+In particular, the MMU type documentation can be found at
+https://drive.google.com/file/d/1sKbOa8m1UZw1JkquZYe3F1zQBN1xXsaf/view:
 
-If we did 'query-machines' on qemu-system-heterogeneous, it would
-return all machines from all targets. To disambiguate naming there
-are various options
+MMU Type (byte length=3D1, byte offset=3D7)
+0: Sv39
+1: Sv48
+2: Sv57
+All other values are reserved.
 
-  * The query-machines command would have to gain a new 'target'
-    field and we would have to document that uniqness is across
-    the tuple (name, target), not merely name. That's a semantic
-    change.
-
-    We would still need a way to express the 'target' when asking
-    to instantiate a machine
-
-  * The query-machines command would have to gain a new 'target'
-    paramter so callers can restrict the data they receive back
-
-    We would still need a way to express the 'target' when asking
-    to instantiate a machine
-
-  * Rename all machine types so they are '<target>-<machine>'
-    The query-machines command doesn't change. Apps would have
-    to "parse" the machine name to see what 'target' each is
-    associated with, or we include an explicit 'target' field
-    in the returned data. Instianting a machine would not need
-    changing
-
-  * Require --target CLI arg, meaning query-machines remains
-    unchanged, as does instantiating machines
-
-Any other options ?
-
-The last is the simplest option if we just make --target be defaulted
-based on the binary name.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Paolo
 
 
