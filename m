@@ -4,154 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5925CC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 19:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 382D4C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 20:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqHF6-0006b7-De; Thu, 06 Mar 2025 14:50:52 -0500
+	id 1tqHqi-00074P-0O; Thu, 06 Mar 2025 15:29:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tqHF3-0006aM-BD
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 14:50:50 -0500
-Received: from mail-dm6nam04on2083.outbound.protection.outlook.com
- ([40.107.102.83] helo=NAM04-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tqHqf-00073x-Ej
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 15:29:41 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tqHF0-0003X3-8N
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 14:50:48 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TKapjLoFINXxKnIXq1ICxXwUNZYjhCEZkvCDNiheSmLsIj+KgpuTbK+ivlNpJVnQoPkqDndseTszVRcCya/9AT/FJ2ZJnS2wWOWnCfe9Y0tpbbqFid0n9jcrolUb1Q8vckKXAn1QDyC/G22tjfuKl78u+20nIkJqpVTdgIknerOwJnpoVQNO+jtNNy7DrLrJH2664wwIlbfno+fHdXq0wJ4P9M7tXEC+RfmNaU6T74Urx1Rd0l0/5gFyFnkc1n4BGF11US1T/ABrNdQ4o0nVhU66nG8mOWFAJCRCarX4dF+b5tApdrm9m5b+Lix1o9Kb7JhBPUw7hu1Ddim022lRGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OzhXS+ouWVbtFIMyA75K5Zk/B6kA0381AqrIQTw1CWw=;
- b=DKcm9z0xdTXkrHPc90AzdAyZuJS2z3Kka5buKPao/DDkl6dYmKZSBD51B4KkihXNsCePk+Gb45hFNyjHeD/i+kTde00ENtJz9NRyzBFVvqJqf7On3inhVx9n0KTwsHuX/vQYou1huWoNPucY7YIEmpHmpTaq6jaQT4w6M/RiKV29L5qzfVWNYykd8QhsuoDUt/p256QahVSPWDMUUjRVYMj0dVW2AAhCFpBjfupApEM4EPc01CoMcNkQNvXDL1hWm2ImiuZC4vI8BVLSMFTx7eFKf55rJwyhJIma98iB+dpfu9z+DcwkiJU4rwfu39HmybsN0jCEEMMeHG6FkKxWgg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OzhXS+ouWVbtFIMyA75K5Zk/B6kA0381AqrIQTw1CWw=;
- b=tV8d99fkY10FEKVbJkRb73DvRWN4XkzKBar+5CD48M5arbFsnez+OjT0IfYy++6U7mjUgAVBCIzPTco9EGWb8BhXfAuP+dtV10qvvYanCwJxk/VSL3F8BBgNUiqWF3uXiOuJURDZSCNRtDhp4f0a/fbS3/s/FosgJ+FQDTCt5xORkJ+RieYFd5+HpymLBaI+NvWG5gEg4N5aD0j39JISr3my2jJEFIIeT3v33impa5q008+smloCxK5H9Mc0KTsl2kmaNhbG1i0XeB9ilQZt5iCqTm3pbS1INgrqH3nVjQEgZlOAAY4OAkLhdbRNY07a+NZ1atg98kB66uvMUrDnFA==
-Received: from CH0PR04CA0070.namprd04.prod.outlook.com (2603:10b6:610:74::15)
- by PH7PR12MB5781.namprd12.prod.outlook.com (2603:10b6:510:1d0::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.19; Thu, 6 Mar
- 2025 19:45:35 +0000
-Received: from CH3PEPF0000000F.namprd04.prod.outlook.com
- (2603:10b6:610:74:cafe::ef) by CH0PR04CA0070.outlook.office365.com
- (2603:10b6:610:74::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8511.17 via Frontend Transport; Thu,
- 6 Mar 2025 19:45:35 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CH3PEPF0000000F.mail.protection.outlook.com (10.167.244.40) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8511.15 via Frontend Transport; Thu, 6 Mar 2025 19:45:35 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 6 Mar 2025
- 11:45:22 -0800
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 6 Mar
- 2025 11:45:21 -0800
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Thu, 6 Mar 2025 11:45:20 -0800
-Date: Thu, 6 Mar 2025 11:45:19 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>
-CC: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "alex.williamson@redhat.com"
- <alex.williamson@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
-Subject: Re: [PATCH rfcv2 06/20] host_iommu_device: Define two new
- capabilities HOST_IOMMU_DEVICE_CAP_[NESTING|FS1GP]
-Message-ID: <Z8n7TwzKoLvl5XGF@Asurada-Nvidia>
-References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
- <20250219082228.3303163-7-zhenzhong.duan@intel.com>
- <4f13004c-a6d9-4f45-938e-3fc8d49183d7@redhat.com>
- <SJ0PR11MB6744FAC917F2DF9A7BF9FF9992CC2@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <0ccbf699-e6be-4936-89f7-b4f69672516f@redhat.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tqHqc-0002VK-U1
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 15:29:41 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tqHqY-00000000PqO-3e91; Thu, 06 Mar 2025 21:29:34 +0100
+Message-ID: <adadeb12-9eb7-4338-828e-62e77034b1dd@maciej.szmigiero.name>
+Date: Thu, 6 Mar 2025 21:29:29 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <0ccbf699-e6be-4936-89f7-b4f69672516f@redhat.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PEPF0000000F:EE_|PH7PR12MB5781:EE_
-X-MS-Office365-Filtering-Correlation-Id: a707e251-0063-4339-880a-08dd5ce77690
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|7416014|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?joU/gCPX36KZcYK6VossADIixLTSD9/rBSS+0D/ie+9Je72OqCHVoji1RoZn?=
- =?us-ascii?Q?rCxzTm3EQoMPdimr22ajbom0yoXiHjXbEVphGE1Ed9bOsgppPHIQGVTT0l4T?=
- =?us-ascii?Q?uBnb/iwFK/nlzFFegcMx5SppRqFAx5ancUjdZA4JUe9jI0vbhi0SUwNYHQLO?=
- =?us-ascii?Q?HgmcotvHGTu6XMSDJ6C1m7IBHUCn1gQp8hLZ1pWLWe218JTbTfkUep4fmi8B?=
- =?us-ascii?Q?/u9ERPGvG+demZmf1h/c2Efx8ZL4OiuxNJagzyhx55N/eZH27nUvMayngshy?=
- =?us-ascii?Q?Bexohu4nRC3suC5vEt55AJyaEoK0vJGyTFQgRhIAjxYGka6gG9h0sBp2lyls?=
- =?us-ascii?Q?CS5e6pJgHvBeYHK5FxD/K3qBk19Y2yiI5E2mIgwUvyTck4Fty7iGLliBwxPf?=
- =?us-ascii?Q?iLTCn4MSV8kq9mu/zmARMpQG5skxhbmBA0gvU3qn9a0RsNiUd01x8JaNcAQU?=
- =?us-ascii?Q?1MCTZ1Ui7se8ShBvVd6tq2NqFLfOV7e1EEIztxM2+WhXU8iMp66xcFA+1v97?=
- =?us-ascii?Q?G4KNXrIiDxFhoPMsGV0klFoKzq/gb6NZDpJIJQ0CtPMUG5rkSYWqnNSwIqwj?=
- =?us-ascii?Q?6EqwFHqrUB4vskb1bQVHN2qhY2PHKqshPptb1Co0sY0bx3R9vCvN2pqZouQH?=
- =?us-ascii?Q?TNNnjXXkv2OKfA55nXcCA/g2Yf/aN+pH3el6hbyUifN5F/lAWr1sM9Ig20wp?=
- =?us-ascii?Q?2x9mes41uOPyTlbEX9G94p9dUrUTNIgf7Je2xm9/s6ZY5/6d7E/f+zPOPNl5?=
- =?us-ascii?Q?Osb5cZxSalee+OGpuVEcBMZ1w6yhbkhJPYkTAx9iYXkQFPGuU/6ED0mymGfT?=
- =?us-ascii?Q?q8IVvf6ZEHkdE9wP19qQlBJQS9QuJc0hxzypnFloxIZu6AKDQYTKi65TZ+Nb?=
- =?us-ascii?Q?1vgERISpBDRFkTVBrS89UMDJSXqzDDJgWRmvoPrBeLB9aMegVCAiqmZf4god?=
- =?us-ascii?Q?6TAv+pXU5HRUTGe7bCyITIGAev7DxMulF5aqdSU2dwa6BwJe8jak6rlpErn7?=
- =?us-ascii?Q?n0NxVqVdxQD/h9LHQooTjCLiZKzVz/w7QiIA4s9JfulArMGpkM/CX1WuIaJu?=
- =?us-ascii?Q?ZZVxNg2OQUzjuQnwo+IjKTut6u8dJH1ZGkX6XGzdx8UwgnWDBat0lnD0eJlY?=
- =?us-ascii?Q?VaKgbIYjWvdgbHmHSTt6HEdj1dw4LPT7o+jd22QuuYygx9okuZTLoeZ2/KMo?=
- =?us-ascii?Q?dE32O5TMicCBUs+7YWHaqs3o8WNxYoV4tQ5gfezE2PtBud6l71FGBad1oGFt?=
- =?us-ascii?Q?yX7opkYayjrQNE24N1tvduES+OiKeiqrCRMFjM+LP0wkGTuarOdDLTO0en4p?=
- =?us-ascii?Q?XH8phkQm+QxwMinLkLHJjFCUKUBzPXAzqZygrObLCGcy5JlDhO9pGaZmEftP?=
- =?us-ascii?Q?hkOtKT1yovg98S2aukisDGxzDs69K25orGNzGjBs9FU22npKobNY+Fk6Mu5N?=
- =?us-ascii?Q?doJr8tGbNrOgz3yYrjONOk9n5Nfknqzhp/xSViYKat7Uc+ipPrtpjw=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(7416014)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2025 19:45:35.1144 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a707e251-0063-4339-880a-08dd5ce77690
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH3PEPF0000000F.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5781
-Received-SPF: softfail client-ip=40.107.102.83;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM04-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] hw/hyperv/vmbus: common compilation unit
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: kvm@vger.kernel.org, philmd@linaro.org, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, manos.pitsidianakis@linaro.org,
+ richard.henderson@linaro.org, Marcelo Tosatti <mtosatti@redhat.com>,
+ alex.bennee@linaro.org
+References: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
+ <20250306064118.3879213-4-pierrick.bouvier@linaro.org>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <20250306064118.3879213-4-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -169,60 +106,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 06, 2025 at 04:59:39PM +0100, Eric Auger wrote:
-> >>> +++ b/include/system/host_iommu_device.h
-> >>> @@ -22,10 +22,16 @@
-> >>>   *
-> >>>   * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this
-> >> represents
-> >>>   *           the @out_capabilities value returned from IOMMU_GET_HW_INFO
-> >> ioctl)
-> >>> + *
-> >>> + * @nesting: nesting page table support.
-> >>> + *
-> >>> + * @fs1gp: first stage(a.k.a, Stage-1) 1GB huge page support.
-> >>>   */
-> >>>  typedef struct HostIOMMUDeviceCaps {
-> >>>      uint32_t type;
-> >>>      uint64_t hw_caps;
-> >>> +    bool nesting;
-> >>> +    bool fs1gp;
-> >> this looks quite vtd specific, isn't it? Shouldn't we hide this is a
-> >> vendor specific cap struct?
-> > Yes? I guess ARM hw could also provide nesting support at least
-> > There are some reasons I perfer a flatten struct even if some
-> > Elements may be vendor specific.
-> > 1. If a vendor doesn't support an capability for other vendor,
-> > corresponding element should be zero by default.
-> > 2. An element vendor specific may become generic in future
-> > and we don't need to update the structure when that happens.
-> > 3. vIOMMU calls get_cap() to query if a capability is supported,
-> > so a vIOMMU never query a vendor specific capability it doesn't
-> > recognize. Even if that happens, zero is returned hinting no support.
-> I will let others comment but in general this is frown upon and unions
-> are prefered at least.
+On 6.03.2025 07:41, Pierrick Bouvier wrote:
+> Replace TARGET_PAGE.* by runtime calls.
 
-Yea, it feels odd to me that we stuff vendor specific thing in
-the public structure.
+Seems like this patch subject/title is not aligned
+well with its content, or a least incomplete.
 
-It's okay if we want to store in HostIOMMUDeviceCaps the vendor
-specific data pointer (opaque), just for convenience.
+Also, could you provide more detailed information
+why TARGET_PAGE_SIZE is getting replaced by
+qemu_target_page_size() please?
 
-I think we can have another PCIIOMMUOps op for vendor code to
-run iommufd_backend_get_device_info() that returns the hw_caps
-for the core code to read.
+I don't see such information in the cover letter either.
 
-Or perhaps the vendor code can just return a HWPT directly? If
-IOMMU_HW_CAP_DIRTY_TRACKING is set in the hw_caps, the vendor
-code can allocate a HWPT for that. And if vendor code detects
-the "nesting" cap in vendor struct, then return a nest_parent
-HWPT. And returning NULL can let core code allocate a default
-HWPT (or just attach the device to IOAS for auto domain/hwpt).
+Thanks,
+Maciej
+  
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   hw/hyperv/vmbus.c     | 50 +++++++++++++++++++++----------------------
+>   hw/hyperv/meson.build |  2 +-
+>   2 files changed, 26 insertions(+), 26 deletions(-)
+> 
+> diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+> index 12a7dc43128..109ac319caf 100644
+> --- a/hw/hyperv/vmbus.c
+> +++ b/hw/hyperv/vmbus.c
+> @@ -18,7 +18,7 @@
+>   #include "hw/hyperv/vmbus.h"
+>   #include "hw/hyperv/vmbus-bridge.h"
+>   #include "hw/sysbus.h"
+> -#include "cpu.h"
+> +#include "exec/target_page.h"
+>   #include "trace.h"
+>   
+>   enum {
+> @@ -309,7 +309,7 @@ void vmbus_put_gpadl(VMBusGpadl *gpadl)
+>   
+>   uint32_t vmbus_gpadl_len(VMBusGpadl *gpadl)
+>   {
+> -    return gpadl->num_gfns * TARGET_PAGE_SIZE;
+> +    return gpadl->num_gfns * qemu_target_page_size();
+>   }
+>   
+>   static void gpadl_iter_init(GpadlIter *iter, VMBusGpadl *gpadl,
+> @@ -323,14 +323,14 @@ static void gpadl_iter_init(GpadlIter *iter, VMBusGpadl *gpadl,
+>   
+>   static inline void gpadl_iter_cache_unmap(GpadlIter *iter)
+>   {
+> -    uint32_t map_start_in_page = (uintptr_t)iter->map & ~TARGET_PAGE_MASK;
+> -    uint32_t io_end_in_page = ((iter->last_off - 1) & ~TARGET_PAGE_MASK) + 1;
+> +    uint32_t map_start_in_page = (uintptr_t)iter->map & ~qemu_target_page_mask();
+> +    uint32_t io_end_in_page = ((iter->last_off - 1) & ~qemu_target_page_mask()) + 1;
+>   
+>       /* mapping is only done to do non-zero amount of i/o */
+>       assert(iter->last_off > 0);
+>       assert(map_start_in_page < io_end_in_page);
+>   
+> -    dma_memory_unmap(iter->as, iter->map, TARGET_PAGE_SIZE - map_start_in_page,
+> +    dma_memory_unmap(iter->as, iter->map, qemu_target_page_size() - map_start_in_page,
+>                        iter->dir, io_end_in_page - map_start_in_page);
+>   }
+>   
+> @@ -348,17 +348,17 @@ static ssize_t gpadl_iter_io(GpadlIter *iter, void *buf, uint32_t len)
+>       assert(iter->active);
+>   
+>       while (len) {
+> -        uint32_t off_in_page = iter->off & ~TARGET_PAGE_MASK;
+> -        uint32_t pgleft = TARGET_PAGE_SIZE - off_in_page;
+> +        uint32_t off_in_page = iter->off & ~qemu_target_page_mask();
+> +        uint32_t pgleft = qemu_target_page_size() - off_in_page;
+>           uint32_t cplen = MIN(pgleft, len);
+>           void *p;
+>   
+>           /* try to reuse the cached mapping */
+>           if (iter->map) {
+>               uint32_t map_start_in_page =
+> -                (uintptr_t)iter->map & ~TARGET_PAGE_MASK;
+> -            uint32_t off_base = iter->off & ~TARGET_PAGE_MASK;
+> -            uint32_t mapped_base = (iter->last_off - 1) & ~TARGET_PAGE_MASK;
+> +                (uintptr_t)iter->map & ~qemu_target_page_mask();
+> +            uint32_t off_base = iter->off & ~qemu_target_page_mask();
+> +            uint32_t mapped_base = (iter->last_off - 1) & ~qemu_target_page_mask();
+>               if (off_base != mapped_base || off_in_page < map_start_in_page) {
+>                   gpadl_iter_cache_unmap(iter);
+>                   iter->map = NULL;
+> @@ -368,10 +368,10 @@ static ssize_t gpadl_iter_io(GpadlIter *iter, void *buf, uint32_t len)
+>           if (!iter->map) {
+>               dma_addr_t maddr;
+>               dma_addr_t mlen = pgleft;
+> -            uint32_t idx = iter->off >> TARGET_PAGE_BITS;
+> +            uint32_t idx = iter->off >> qemu_target_page_bits();
+>               assert(idx < iter->gpadl->num_gfns);
+>   
+> -            maddr = (iter->gpadl->gfns[idx] << TARGET_PAGE_BITS) | off_in_page;
+> +            maddr = (iter->gpadl->gfns[idx] << qemu_target_page_bits()) | off_in_page;
+>   
+>               iter->map = dma_memory_map(iter->as, maddr, &mlen, iter->dir,
+>                                          MEMTXATTRS_UNSPECIFIED);
+> @@ -382,7 +382,7 @@ static ssize_t gpadl_iter_io(GpadlIter *iter, void *buf, uint32_t len)
+>               }
+>           }
+>   
+> -        p = (void *)(uintptr_t)(((uintptr_t)iter->map & TARGET_PAGE_MASK) |
+> +        p = (void *)(uintptr_t)(((uintptr_t)iter->map & qemu_target_page_mask()) |
+>                   off_in_page);
+>           if (iter->dir == DMA_DIRECTION_FROM_DEVICE) {
+>               memcpy(p, buf, cplen);
+> @@ -591,9 +591,9 @@ static void ringbuf_init_common(VMBusRingBufCommon *ringbuf, VMBusGpadl *gpadl,
+>                                   uint32_t begin, uint32_t end)
+>   {
+>       ringbuf->as = as;
+> -    ringbuf->rb_addr = gpadl->gfns[begin] << TARGET_PAGE_BITS;
+> -    ringbuf->base = (begin + 1) << TARGET_PAGE_BITS;
+> -    ringbuf->len = (end - begin - 1) << TARGET_PAGE_BITS;
+> +    ringbuf->rb_addr = gpadl->gfns[begin] << qemu_target_page_bits();
+> +    ringbuf->base = (begin + 1) << qemu_target_page_bits();
+> +    ringbuf->len = (end - begin - 1) << qemu_target_page_bits();
+>       gpadl_iter_init(&ringbuf->iter, gpadl, as, dir);
+>   }
+>   
+> @@ -734,7 +734,7 @@ static int vmbus_channel_notify_guest(VMBusChannel *chan)
+>       unsigned long *int_map, mask;
+>       unsigned idx;
+>       hwaddr addr = chan->vmbus->int_page_gpa;
+> -    hwaddr len = TARGET_PAGE_SIZE / 2, dirty = 0;
+> +    hwaddr len = qemu_target_page_size() / 2, dirty = 0;
+>   
+>       trace_vmbus_channel_notify_guest(chan->id);
+>   
+> @@ -743,7 +743,7 @@ static int vmbus_channel_notify_guest(VMBusChannel *chan)
+>       }
+>   
+>       int_map = cpu_physical_memory_map(addr, &len, 1);
+> -    if (len != TARGET_PAGE_SIZE / 2) {
+> +    if (len != qemu_target_page_size() / 2) {
+>           res = -ENXIO;
+>           goto unmap;
+>       }
+> @@ -1038,14 +1038,14 @@ static int sgl_from_gpa_ranges(QEMUSGList *sgl, VMBusDevice *dev,
+>           }
+>           len -= sizeof(range);
+>   
+> -        if (range.byte_offset & TARGET_PAGE_MASK) {
+> +        if (range.byte_offset & qemu_target_page_mask()) {
+>               goto eio;
+>           }
+>   
+>           for (; range.byte_count; range.byte_offset = 0) {
+>               uint64_t paddr;
+>               uint32_t plen = MIN(range.byte_count,
+> -                                TARGET_PAGE_SIZE - range.byte_offset);
+> +                                qemu_target_page_size() - range.byte_offset);
+>   
+>               if (len < sizeof(uint64_t)) {
+>                   goto eio;
+> @@ -1055,7 +1055,7 @@ static int sgl_from_gpa_ranges(QEMUSGList *sgl, VMBusDevice *dev,
+>                   goto err;
+>               }
+>               len -= sizeof(uint64_t);
+> -            paddr <<= TARGET_PAGE_BITS;
+> +            paddr <<= qemu_target_page_bits();
+>               paddr |= range.byte_offset;
+>               range.byte_count -= plen;
+>   
+> @@ -1804,7 +1804,7 @@ static void handle_gpadl_header(VMBus *vmbus, vmbus_message_gpadl_header *msg,
+>        * anything else and simplify things greatly.
+>        */
+>       if (msg->rangecount != 1 || msg->range[0].byte_offset ||
+> -        (msg->range[0].byte_count != (num_gfns << TARGET_PAGE_BITS))) {
+> +        (msg->range[0].byte_count != (num_gfns << qemu_target_page_bits()))) {
+>           return;
+>       }
+>   
+> @@ -2240,10 +2240,10 @@ static void vmbus_signal_event(EventNotifier *e)
+>           return;
+>       }
+>   
+> -    addr = vmbus->int_page_gpa + TARGET_PAGE_SIZE / 2;
+> -    len = TARGET_PAGE_SIZE / 2;
+> +    addr = vmbus->int_page_gpa + qemu_target_page_size() / 2;
+> +    len = qemu_target_page_size() / 2;
+>       int_map = cpu_physical_memory_map(addr, &len, 1);
+> -    if (len != TARGET_PAGE_SIZE / 2) {
+> +    if (len != qemu_target_page_size() / 2) {
+>           goto unmap;
+>       }
+>   
+> diff --git a/hw/hyperv/meson.build b/hw/hyperv/meson.build
+> index f4aa0a5ada9..c855fdcf04c 100644
+> --- a/hw/hyperv/meson.build
+> +++ b/hw/hyperv/meson.build
+> @@ -1,6 +1,6 @@
+>   specific_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'))
+>   specific_ss.add(when: 'CONFIG_HYPERV_TESTDEV', if_true: files('hyperv_testdev.c'))
+> -specific_ss.add(when: 'CONFIG_VMBUS', if_true: files('vmbus.c'))
+> +system_ss.add(when: 'CONFIG_VMBUS', if_true: files('vmbus.c'))
+>   specific_ss.add(when: 'CONFIG_SYNDBG', if_true: files('syndbg.c'))
+>   specific_ss.add(when: 'CONFIG_HV_BALLOON', if_true: files('hv-balloon.c', 'hv-balloon-page_range_tree.c', 'hv-balloon-our_range_memslots.c'))
+>   system_ss.add(when: 'CONFIG_HV_BALLOON', if_false: files('hv-balloon-stub.c'))
 
-I am also hoping that this can handle a shared S2 nest_parent
-HWPT case. Could the core container structure or so store the
-HWPT?
-
-Thanks
-Nicolin
 
