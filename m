@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03FA0C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8C2C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:40:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqEG4-0006pG-FW; Thu, 06 Mar 2025 11:39:40 -0500
+	id 1tqEG9-0006sx-Ou; Thu, 06 Mar 2025 11:39:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEFw-0006kf-PT
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:36 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1tqEFv-0006kU-59
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:34 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEFu-0004XC-SL
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:32 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43bdc607c3fso5934355e9.3
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:30 -0800 (PST)
+ id 1tqEFt-0004W1-CL
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:30 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso5998195e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741279169; x=1741883969; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=E0hdGCsrUBN3Wc4QZ13PTDB9u8eo9z7EzbgSppoTB1E=;
- b=lg828fm8L9ZKBVx3DN8VQee9PmuHimim0HNhiER6bkAL9gEysurK4ozTluGC/JStt5
- bJ1vkE0uPn3YiKCPcDzaPDphCMya3Mrnr0hjMEaoG3BNgdY2hFLsD/dUb4HmqO5uuoQf
- 5E+fizwghKiG9uhjswdr8UcJjTWq98KRgP9ZmMb+VrDo7Hx7nzlCouHWl/c4tSAtiJO+
- hBbSQ9W++bQq219b7+FvX1eOg+s+faLGlM5uxM09/deGfEczXHjEmd5al2HspQqisXl3
- vCHZnAw6dcT/5RQoW6gQvSeyb1nbQzeQTtQUMdXbhQD0nD9DLMVNO0L3axEfFB8JA5Xj
- 9+Mg==
+ d=linaro.org; s=google; t=1741279168; x=1741883968; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y3lF4QXwAXqr0/RhGUX/8f5AxZ/nEi7UOp1O/QtSQMQ=;
+ b=IkG2lSrn9+bexSIoM48UUDiGUqb2oPo/muMlPRR5D6ReQVkxuEXdjRq4BzR3kcNAEH
+ CLks8jhEglv+10P011jijeHHu0p8JU7QkzgR8GR2lE17qGM9+jfcE2TO/6yNaBWeYlzc
+ 0bgjC/qB2BlKYtst/C71dFV7FmFWTsgKigb11ASJ0YcjlYo1zz3zBKkPE1x+LPEqiGPF
+ A3Xbha+HuAgJv4luO9Ol3QmxzOvboEyOdWc8qPJQZMkqetBul9MfTqOXgEDRNpwpgizw
+ dVr4EuPUB4t2tVjPWUVsOPgVeRZj+qN6QEv9aXdxuThpnM83R9/8oqsLLlHupZ6ib+Tu
+ HWew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741279169; x=1741883969;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=E0hdGCsrUBN3Wc4QZ13PTDB9u8eo9z7EzbgSppoTB1E=;
- b=H0vQdH4s9urrrGPtgFbcNT01OvmMzeRFS+5i57nB48qEP0XbOOmkeSoU/oP+2RGn4Q
- SKq0xsZB/xUSjJY//mC6/tGWFaQ/vAhEUUPg8aiGCyeyTgcQAivY4SPXWr2Lzno4Lrno
- cfjBPZ6MKMMcGrg0VpTaqvudYxfAf0d1nVdyjnL/qX4YL0/6+yvSPt973/1/9zjLP0Ps
- ySX5C5Vg4IfIeecPWT5DtNrSAqJaS9Ncp1uH0/E9UgcWeGLBDpNmAM/3iBYidHzHBDhi
- rY93msR+8nZcu9rM08ypZL9YyAwDaMufB9cZK6x+GWOgDGFBRAxsVLoA8dpubPNxQGHo
- kaNA==
+ d=1e100.net; s=20230601; t=1741279168; x=1741883968;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y3lF4QXwAXqr0/RhGUX/8f5AxZ/nEi7UOp1O/QtSQMQ=;
+ b=fgFsivpa8ykJs1Xt6oxbrIQqXzGK6XAjXrOJ2Vme0qZkFi04BQaTe63csFtSJRO0nP
+ UVaWhzuvUJ1TVIyZfTxEB69xo/MbaG1OpvGVUrZMy631p/iTa52Ph3A8RcVPwtVAr3qZ
+ yAGBGRR2UwN/jID7d4oGXPt6aI41/cH5pvQsqj9F8vF91rRMveX++Ev4bZfkCHAXNRGv
+ 8DaxtYPTxh3x7ViFCY/E5JswC/sh5MUr3WMOugsZPany4KgSMh9qmwjutvQIUX4hE5co
+ YWEFBilQ7kDHhDYxkr8WuZ2AK2y16nxa6BFvQnVuoLZGUORrGy8WpcahlXcC91zT4CjA
+ KZ+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2KWSkXqjvnkGcn2GgQPNyuZjqC5P60LJkR/pmcD17JQPDDdxUzTgVgpQiBQKAu1qixPv2CBFIt645@nongnu.org
-X-Gm-Message-State: AOJu0YzCJEBaoI5m1/NvBvdiXBSijaJcfvmTEDCZpOGIOnQ9io0lc5Hx
- F3dzDpzYkk4zIiHCCndZ0EKuecjpGVq8I94+ZvJr3wyn/HnEi8iAP53lzeL9zWo=
-X-Gm-Gg: ASbGncvTw/qcA37ty7BGPRM4XPORlbP+9fJaPlgcC9YQZDycpG7UuPYaAyIhDyFkVMR
- aVd40Dn9ftfgUj2kYg0YXk/4h1et7kkHRWPSWgAVOdq9ms41I8/uv/lO5CqEFZzIL1FoAeod3gc
- 4ftc8wET3TC2qc5iM5UDvnzsh+t9l/curQbCu+kbpNx1G2ESY3qMEK8BSb1LxuZ9GHLdkd85Fob
- 1e4QCDG4cwZnXvho3x3E3eued57vXdRSHaclY8uxB4chgRD+Fl5ektP73/dZ+WMy7syOC9/tNCq
- bQ5zGrjVvEFwuFHGWMtY2b9Fuye0qipGGDT4/G4X6JIC9E8n44g=
-X-Google-Smtp-Source: AGHT+IFsn/ec1R9i+Fpps338yQh6rBG8tA2TWcz6GS2dcpzjiXbcNjaeAPStctOe3FWvDL1vF5KGnQ==
-X-Received: by 2002:a05:600c:3544:b0:43b:c878:1466 with SMTP id
- 5b1f17b1804b1-43c601d94f1mr1280315e9.8.1741279169336; 
- Thu, 06 Mar 2025 08:39:29 -0800 (PST)
+ AJvYcCWh9dzDej89jhW0i8KUdrCWiN4ZTRqrNg6/0M4PkJyzq2FqYrTotUZArkdxPTgiBRYEW85kiwBPIa3j@nongnu.org
+X-Gm-Message-State: AOJu0YxRAvHaFcBiY4t3j5cZaOc1in3HLDsCSz11lhuaLqsWylaHC2nx
+ ZeYgJ34KCT3jWsTs3qxauygzgB/PvQiCJWOK5w+D5v5yq3O1jzD7nECUJUT9dgTZW11c8PRSrkC
+ q
+X-Gm-Gg: ASbGnct8vTf4F+tvqORkmeXhS4bTU9aGWwZSb8dNVIni1zr76QSLsRdU3H7Ljqd87Ca
+ uoYJYj3zbzhEMsLIsjJRHNIIXfLzv9BPd0QR/4QWYKwQLIrZZZhSwhg7A74Xs4LfVrtsGJQB9uh
+ pBbWXNvCU7m9mVEv7NMBx3w/4vNfVsVG+5Jvtbm3RsMTdE9FweeOqr8VaJWMjqy/oHUpQ3wbWfr
+ uxbKMY4wkmpMPPMexgmEc+j0koHlPcXsQ6uhCZSf2ktGjecVU+hqD6Z6mTS6R49MdIv4K+uQ7oU
+ 7O/ABOMhq/HBvnmnFP+sJMzawWNfeTPTKl3ztpQJukf5ArJVByw=
+X-Google-Smtp-Source: AGHT+IFegjuDYBEVA/nuybmIrjSOCdMavvCdffBIz0j23VZQ1qlsd8N0SHHItuXfI+yWd6348PkEbA==
+X-Received: by 2002:a05:600c:474c:b0:439:9b19:9e2d with SMTP id
+ 5b1f17b1804b1-43c601e1393mr1627435e9.16.1741279167524; 
+ Thu, 06 Mar 2025 08:39:27 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.28
+ 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 08:39:28 -0800 (PST)
+ Thu, 06 Mar 2025 08:39:26 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 02/10] target/arm: Un-inline access_secure_reg()
-Date: Thu,  6 Mar 2025 16:39:16 +0000
-Message-ID: <20250306163925.2940297-3-peter.maydell@linaro.org>
+Subject: From ce9a42483c23c32cee233f648101a160b6604b45 Mon Sep 17 00:00:00 2001
+Date: Thu,  6 Mar 2025 16:39:14 +0000
+Message-ID: <20250306163925.2940297-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250306163925.2940297-1-peter.maydell@linaro.org>
-References: <20250306163925.2940297-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,76 +97,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We would like to move arm_el_is_aa64() to internals.h; however, it is
-used by access_secure_reg().  Make that function not be inline, so
-that it can stay in cpu.h.
+Newer Arm CPUs need not implement AArch32 at all exception levels
+(and Armv9 forbids implementing AArch32 at any EL except EL0).
+All our current CPU models implement both AArch32 and AArch64
+at every exception levels, so we currently get away with failing
+to enforce that the guest isn't trying to do an exception return
+to AArch32 when the target EL doesn't support AArch32.
 
-access_secure_reg() is used only in two places:
- * in hflags.c
- * in the user-mode arm emulators, to decide whether to store
-   the TLS value in the secure or non-secure banked field
+This patchset adds the missing checks:
+ * SCR_EL3.RW has an effective value of 1 if EL2 is AArch64-only
+ * HCR_EL2.RW is RAO/WI if EL1 is AArch64-only
+ * return to AArch32 when no EL supports AArch32 is an illegal
+   exception return
 
-The second of these is not on a super-hot path that would care about
-the inlining (and incidentally will always use the NS banked field
-because our user-mode CPUs never set ARM_FEATURE_EL3); put the
-definition of access_secure_reg() in hflags.c, near its only use
-inside target/arm.
+To do this it needs to start off with some cleanup. This is
+because we need to add a cpu_isar_feature() check to
+arm_el_is_aa64(), but we don't want to include cpu-features.h
+in cpu.h. arm_el_is_aa64() is really an internal part of the
+CPU implementation, so we can move it to internals.h; this
+means also moving some other functions in cpu.h that are
+defined as inline functions and which call arm_el_is_aa64().
+Removing some unused macros from linux-user allows us to
+avoid having linux-user include internals.h.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/cpu.h        | 12 +++---------
- target/arm/tcg/hflags.c |  9 +++++++++
- 2 files changed, 12 insertions(+), 9 deletions(-)
+(No doubt there are other functions that could be moved out
+of cpu.h, but I stuck to only the ones that I actually needed
+to move.)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index c360b74ded9..5ae40f32491 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2666,21 +2666,15 @@ static inline bool arm_el_is_aa64(CPUARMState *env, int el)
-     return aa64;
- }
- 
--/* Function for determining whether guest cp register reads and writes should
-+/*
-+ * Function for determining whether guest cp register reads and writes should
-  * access the secure or non-secure bank of a cp register.  When EL3 is
-  * operating in AArch32 state, the NS-bit determines whether the secure
-  * instance of a cp register should be used. When EL3 is AArch64 (or if
-  * it doesn't exist at all) then there is no register banking, and all
-  * accesses are to the non-secure version.
-  */
--static inline bool access_secure_reg(CPUARMState *env)
--{
--    bool ret = (arm_feature(env, ARM_FEATURE_EL3) &&
--                !arm_el_is_aa64(env, 3) &&
--                !(env->cp15.scr_el3 & SCR_NS));
--
--    return ret;
--}
-+bool access_secure_reg(CPUARMState *env);
- 
- uint32_t arm_phys_excp_target_el(CPUState *cs, uint32_t excp_idx,
-                                  uint32_t cur_el, bool secure);
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index 9e6a1869f94..8d79b8b7ae1 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -63,6 +63,15 @@ static bool aprofile_require_alignment(CPUARMState *env, int el, uint64_t sctlr)
- #endif
- }
- 
-+bool access_secure_reg(CPUARMState *env)
-+{
-+    bool ret = (arm_feature(env, ARM_FEATURE_EL3) &&
-+                !arm_el_is_aa64(env, 3) &&
-+                !(env->cp15.scr_el3 & SCR_NS));
-+
-+    return ret;
-+}
-+
- static CPUARMTBFlags rebuild_hflags_common(CPUARMState *env, int fp_el,
-                                            ARMMMUIdx mmu_idx,
-                                            CPUARMTBFlags flags)
+thanks
+-- PMM
+
+Peter Maydell (10):
+  target/arm: Move A32_BANKED_REG_{GET,SET} macros to cpregs.h
+  target/arm: Un-inline access_secure_reg()
+  linux-user/aarch64: Remove unused get/put_user macros
+  linux-user/arm: Remove unused get_put_user macros
+  target/arm: Move arm_cpu_data_is_big_endian() etc to internals.h
+  target/arm: Move arm_current_el() and arm_el_is_aa64() to internals.h
+  target/arm: SCR_EL3.RW should be treated as 1 if EL2 doesn't support
+    AArch32
+  target/arm: HCR_EL2.RW should be RAO/WI if EL1 doesn't support AArch32
+  target/arm: Add cpu local variable to exception_return helper
+  target/arm: Forbid return to AArch32 when CPU is AArch64-only
+
+ target/arm/cpregs.h           |  28 +++++++
+ target/arm/cpu.h              | 153 +---------------------------------
+ target/arm/internals.h        | 133 +++++++++++++++++++++++++++++
+ hw/intc/arm_gicv3_cpuif.c     |   1 +
+ linux-user/aarch64/cpu_loop.c |  48 -----------
+ linux-user/arm/cpu_loop.c     |  43 +---------
+ target/arm/arch_dump.c        |   1 +
+ target/arm/helper.c           |  16 +++-
+ target/arm/tcg/helper-a64.c   |  12 ++-
+ target/arm/tcg/hflags.c       |   9 ++
+ 10 files changed, 202 insertions(+), 242 deletions(-)
+
 -- 
 2.43.0
 
