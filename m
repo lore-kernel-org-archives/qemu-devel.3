@@ -4,75 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2DEC19F32
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 03:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA88BC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 03:35:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq1jf-0005Rt-Sq; Wed, 05 Mar 2025 22:17:23 -0500
+	id 1tq205-0001Yp-4V; Wed, 05 Mar 2025 22:34:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq1jb-0005RC-IJ; Wed, 05 Mar 2025 22:17:20 -0500
+ id 1tq203-0001Ya-UV; Wed, 05 Mar 2025 22:34:19 -0500
 Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq1jV-0001HG-Qe; Wed, 05 Mar 2025 22:17:18 -0500
+ id 1tq201-0002nX-0g; Wed, 05 Mar 2025 22:34:19 -0500
 Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-86c29c0acdfso68425241.3; 
- Wed, 05 Mar 2025 19:17:10 -0800 (PST)
+ a1e0cc1a2514c-86b2cc89e4aso162694241.1; 
+ Wed, 05 Mar 2025 19:34:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741231029; x=1741835829; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741232054; x=1741836854; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PKZ2QvL5KiQFOZV8IdtWKVhZGUtDHCL87UZXjoYtV8g=;
- b=E+fUCAbHN/Dcscjk8tXaTUO2GFpzg4kA1KplmFBsmd62oQpKCCl7DzCOW7csU3fPkS
- aXYbig5k4j4UxA/O86Zj7oVuCAZzRu8WRFckWJOr/OGO36HJeyxWSu3pcT6716G487oj
- p744zET/CTw8URW/I0SjNL7+skBo5Dmuk+pF2DlxD32Mi7dm9D5pABvKAu9uWVpel06Z
- 1RvqFt7e2KzBLAahgbjucUGrAm59tFTRJJHxzCmpr/6hJ/tk7JNVI3L6FSxfmbn9s1Tg
- hVaUVdYMbpeu9Tmq1iQmGQjT77O9bmOlqCrvr8GRiqYNCcCt1e+LBeowelQuU0F/fh8w
- RkMg==
+ bh=YghJWPgOkVw3V15Axb49yHBROOeuI2BD/N6R+VPIlng=;
+ b=h+N99tsKNX9/fo/JMW6Ydl64AObfEhS7AmDpxmyKCo4JT0ZVi1RuvHLQ6n9d8IOrwr
+ pdWmC4fAqIVkE6yAjR/GSNoIjYjzYnHIOrm3mtR9ebAVw33tVFSE9lBOndxdnI9VHhZl
+ Ly89vzthNM8UKMBpCmhZAsb1PqVabKuwsBsof7gOAA75c/oDDb0ly42Imj9xUL3ZvFux
+ SaYAZ5Cp3x7dZdv2JNrChZlRPlyT3MGmvGHAQNWYcEX8bWMCS+Gk34438ApScZ8K9QZZ
+ 2bdl+WUdo57klQppzAwK+NOQNumH+UixUot+DtWo3twWnVvhwrHqRvCHsZKBkqt57KGM
+ WEIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741231029; x=1741835829;
+ d=1e100.net; s=20230601; t=1741232054; x=1741836854;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PKZ2QvL5KiQFOZV8IdtWKVhZGUtDHCL87UZXjoYtV8g=;
- b=EJ2f79+fo2BmKSAsIROhbWQbH1APLSiGTtCd2r1j1u+NcENO5eTkOKPNwOyquNyOHA
- VcT65WK8hb0STyTGm564NO9AnbRuCImdVwxQiq8kv5QbVa3jUiZqUMe5oy3xafQVKhMY
- 8Bzn5yi8o1GuLcRhZgcAF29850aRsKAUAebL2xhiGYXSDrD8c5fkAZ48M6e4RyjCmzc/
- YzzUyguKPO5+Q09v9wqHZNo6hB32gh/tvp/zbxCZtRoMU4wHUK9h28HOJeas2+/ngXZ/
- SjCJInRAiLzonUZyMp48HXPKkkkN9r/pEAONqv7uGAd191cgxdyRW9Ant1RG1FEMWqAa
- sfNg==
+ bh=YghJWPgOkVw3V15Axb49yHBROOeuI2BD/N6R+VPIlng=;
+ b=qKItcurO3rBWFuaMBBRjNa5znfrh1wLxMjum9e7VuQcp9lgbfCIxFQnKSfmuv+DV5K
+ fKmSMOhQqwnXeWTbbaz6SYa0pdrVjxFyy28FFJKmJBcefwMKX1+bSiR2W8XmEYoiP5Ln
+ 3LXlThmrJc0Lv5zur1gU8x5vFYmlLDDVX8qCE1f5diYoOohqTdWnKEvVyZLhIcpfNDKH
+ vuT3IlrHiaqnq+akokfUsFNhu4rjcoZ2XG2A4Viax8RAFfO7pC/aHL5fN/gRgaNxXmIA
+ 7/AFn7ifqAnrHaZzXP6L29W19wtWmDr6jfJSrFXPfi4Rdaq5d2TLlCqfH4dzHNlTXE+v
+ b6Jw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuM9AwjtU4LJ4/36UoXl8J2xmnHj1YyzAAKwawKkeLu0IwKqj7pRQndXz6FXkg1GYEUCPpgZJ/yM11@nongnu.org
-X-Gm-Message-State: AOJu0Yzlbx2jVTWEWW4N1u6QOI3TeNMpLnBK2Zj70HS6mV19x9Qp4/8S
- gbWQ/Zdr0olMpXELrJJsiXErHrtT7VD182YtnKhXWo47TEpU1qfecmcWW1M+kZYbIM1zV016Qvk
- S1jASU7PHMk6iUKCtTNHPAB/IN6A=
-X-Gm-Gg: ASbGncsf8E8QH9g/2lzszsSCukhy7L8z4wAgS12I3k7kUZFXwa1Bq90C5CsA3pesvI5
- QVIc+ZuylSE/gYyxCvEERiAqtzn+Ju1f77I6nkADnfouHRI8EP9Z8lqHvko6pV8uGGXrXfkEwn2
- vwWxdxxHCamyPB87k+yRGwUbEu/beRC3wty7gDlYC3kt1ghjHCOC2Iz8x9
-X-Google-Smtp-Source: AGHT+IGT87Rjy8Cmr/JBMRjAgKq2wiYQc70CkzKh6L3aIXZz2UfqhL+/Cc9+fXA69XqVK7TYKEjVGSQO2uyly69VhAs=
-X-Received: by 2002:a05:6102:e12:b0:4bd:3519:44be with SMTP id
- ada2fe7eead31-4c2e2804512mr3693325137.15.1741231029385; Wed, 05 Mar 2025
- 19:17:09 -0800 (PST)
+ AJvYcCWcu8HZd4IrdJ1hwhOixMIRYO4fkJ1NsPrlljz8znnqfkiPDLQ7MUocZxB3H9fxwhje6kinzKifSIGl@nongnu.org
+X-Gm-Message-State: AOJu0Yz/LMwKVtMil1FkVfTOS65tI56ZLi21nxPp7sgPjjUVOkzERrlS
+ i8NDD/0SCmbqW00ZWK1rekGmDwrCX3u6O11tYUAq5lW1//NbrQ9gvqJTcW+WyiJaf6RYnZ1GRIZ
+ k3+l5StZIyec5KVzEqEM4G+H5Ne0=
+X-Gm-Gg: ASbGncuz5qaKLQ22YeqNbbEQd2xh13BNG3Gy3FsZceVgww7BmEEFQPEM3Q1gjuR+E/p
+ deqNIGkXZ6BfzltEanQtfPmqtUYo/OK8TZgAzmPr8Ar9ACZN3cx7IiEtZcxEaI6vbJj9z6bimYi
+ e/qYO3G7OffNQsPLBtBEb9ky4IpWz37gd71Z/1oMIOJJJbw91GB1cr8Cc+
+X-Google-Smtp-Source: AGHT+IFTo+NLvUHshhOY/4muJCV9BUpxmB70811zEmlXQ0mJjntgTO6enlCLPy+o6hV2eHMorfnclNfd7YjI4n9xWbk=
+X-Received: by 2002:a05:6102:54a4:b0:4c1:a15c:ab5c with SMTP id
+ ada2fe7eead31-4c2e2906669mr3636799137.20.1741232054327; Wed, 05 Mar 2025
+ 19:34:14 -0800 (PST)
 MIME-Version: 1.0
-References: <174044811783.27139.4910941776283875756-0@git.sr.ht>
-In-Reply-To: <174044811783.27139.4910941776283875756-0@git.sr.ht>
+References: <20250221162036.61521-1-paolo.savini@embecosm.com>
+ <20250221162036.61521-2-paolo.savini@embecosm.com>
+In-Reply-To: <20250221162036.61521-2-paolo.savini@embecosm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 13:16:43 +1000
-X-Gm-Features: AQ5f1JrcLk9bNjkwTXcrQre9trYhwSSeRg7Y6laY8Mo9DN-eBJZOLu-ZYqC3jWE
-Message-ID: <CAKmqyKMKHsLpn4ywyqu6r2rf9m1mrPm814JvxnRncem2MNQa2w@mail.gmail.com>
-Subject: Re: [PATCH qemu] target/riscv: Only check ext_zca for 16-bit aligned
- PC.
-To: "~yuming" <yumin686@andestech.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Thu, 6 Mar 2025 13:33:47 +1000
+X-Gm-Features: AQ5f1JpIK1uvzlrsVup-NvgeUEh2DcJg3G3U5GwD-txbPJDnBBs8ysbGc4iGRck
+Message-ID: <CAKmqyKPJP4+fDvZzhnfKTXCaiPbUFU5-Sy01LuA0=95_z7rL+w@mail.gmail.com>
+Subject: Re: [PATCH 1/1] [RISC-V/RVV] Expand the probe_pages helper function
+ to handle probe flags.
+To: Paolo Savini <paolo.savini@embecosm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Richard Handerson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, 
+ Nathan Egge <negge@google.com>, Max Chou <max.chou@sifive.com>, 
+ Jeremy Bennett <jeremy.bennett@embecosm.com>, 
+ Craig Blackmore <craig.blackmore@embecosm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
@@ -100,102 +106,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 25, 2025 at 11:49=E2=80=AFAM ~yuming <yuming@git.sr.ht> wrote:
+On Sat, Feb 22, 2025 at 2:21=E2=80=AFAM Paolo Savini <paolo.savini@embecosm=
+.com> wrote:
 >
-> From: Yu-Ming Chang <yumin686@andestech.com>
+> This commit expands the probe_pages helper function in
+> target/riscv/vector_helper.c to handle also the cases in which we need ac=
+cess to
+> the flags raised while probing the memory and the host address.
+> This is done in order to provide a unified interface to probe_access and
+> probe_access_flags.
+> The new version of probe_pages can now act as a regular call to probe_acc=
+ess as
+> before and as a call to probe_access_flags. In the latter case the user n=
+eed to
+> pass pointers to flags and host address and a boolean value for nonfault.
+> The flags and host address will be set and made available as for a direct=
+ call
+> to probe_access_flags.
 >
-> Since C always implies Zca, Zca is always enabled when 16-bit
-> insructions are supported. we can only check ext_zca to allow
-> 16-bit aligned PC addresses.
+> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
 
-Urgh! Sorry about this
-
-Zca is only in priv spec version 1.12 or newer. So although C does
-always imply Zca, that's only true for 1.12 priv specs.
-
-This patch as is breaks older CPUs (like the sifive_u).
-
-That's my fault as I told you to use Zca, but unfortunately it doesn't work=
-.
-
-So, the best bet is probably a helper function that checks the priv
-spec version then based on that checks either Zca or C. That way
-when/if we drop versions before 1.12 we can update the code.
+Do you mind rebasing this on
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next ?
 
 Alistair
 
->
-> Signed-off-by: Yu-Ming Chang <yumin686@andestech.com>
 > ---
->  target/riscv/insn_trans/trans_rvi.c.inc | 5 ++---
->  target/riscv/op_helper.c                | 4 ++--
->  target/riscv/translate.c                | 2 +-
->  3 files changed, 5 insertions(+), 6 deletions(-)
+>  target/riscv/vector_helper.c | 57 +++++++++++++++++++++++-------------
+>  1 file changed, 37 insertions(+), 20 deletions(-)
 >
-> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_=
-trans/trans_rvi.c.inc
-> index 96c218a9d7..e5965201a7 100644
-> --- a/target/riscv/insn_trans/trans_rvi.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-> @@ -106,7 +106,7 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a=
-)
->          tcg_gen_ext32s_tl(target_pc, target_pc);
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 772cff8fbe..c0f1b7994e 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -114,25 +114,42 @@ static inline uint32_t vext_max_elems(uint32_t desc=
+, uint32_t log2_esz)
+>   * It will trigger an exception if there is no mapping in TLB
+>   * and page table walk can't fill the TLB entry. Then the guest
+>   * software can return here after process the exception or never return.
+> + *
+> + * This function can also be used when direct access to probe_access_fla=
+gs is
+> + * needed in order to access the flags. If a pointer to a flags operand =
+is
+> + * provided the function will call probe_access_flags instead, use nonfa=
+ult
+> + * and update host and flags.
+>   */
+> -static void probe_pages(CPURISCVState *env, target_ulong addr,
+> -                        target_ulong len, uintptr_t ra,
+> -                        MMUAccessType access_type)
+> +static void probe_pages(CPURISCVState *env, target_ulong addr, target_ul=
+ong len,
+> +                        uintptr_t ra, MMUAccessType access_type, int mmu=
+_index,
+> +                        void **host, int *flags, bool nonfault)
+>  {
+>      target_ulong pagelen =3D -(addr | TARGET_PAGE_MASK);
+>      target_ulong curlen =3D MIN(pagelen, len);
+> -    int mmu_index =3D riscv_env_mmu_index(env, false);
+>
+> -    probe_access(env, adjust_addr(env, addr), curlen, access_type,
+> -                 mmu_index, ra);
+> +    if (flags !=3D NULL) {
+> +        *flags =3D probe_access_flags(env, adjust_addr(env, addr), curle=
+n,
+> +                                    access_type, mmu_index, nonfault, ho=
+st, ra);
+> +    } else {
+> +        probe_access(env, adjust_addr(env, addr), curlen, access_type,
+> +                     mmu_index, ra);
+> +    }
+> +
+>      if (len > curlen) {
+>          addr +=3D curlen;
+>          curlen =3D len - curlen;
+> -        probe_access(env, adjust_addr(env, addr), curlen, access_type,
+> -                     mmu_index, ra);
+> +        if (flags !=3D NULL) {
+> +            *flags =3D probe_access_flags(env, adjust_addr(env, addr), c=
+urlen,
+> +                                        access_type, mmu_index, nonfault=
+,
+> +                                        host, ra);
+> +        } else {
+> +            probe_access(env, adjust_addr(env, addr), curlen, access_typ=
+e,
+> +                         mmu_index, ra);
+> +        }
+>      }
+>  }
+>
+> +
+>  static inline void vext_set_elem_mask(void *v0, int index,
+>                                        uint8_t value)
+>  {
+> @@ -332,8 +349,8 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, targe=
+t_ulong addr,
+>      MMUAccessType access_type =3D is_load ? MMU_DATA_LOAD : MMU_DATA_STO=
+RE;
+>
+>      /* Check page permission/pmp/watchpoint/etc. */
+> -    flags =3D probe_access_flags(env, adjust_addr(env, addr), size, acce=
+ss_type,
+> -                               mmu_index, true, &host, ra);
+> +    probe_pages(env, addr, size, ra, access_type, mmu_index, &host, &fla=
+gs,
+> +                true);
+>
+>      if (flags =3D=3D 0) {
+>          if (nf =3D=3D 1) {
+> @@ -635,7 +652,7 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPUR=
+ISCVState *env,
+>      uint32_t vma =3D vext_vma(desc);
+>      target_ulong addr, addr_probe, addr_i, offset, remain, page_split, e=
+lems;
+>      int mmu_index =3D riscv_env_mmu_index(env, false);
+> -    int flags;
+> +    int flags, probe_flags;
+>      void *host;
+>
+>      VSTART_CHECK_EARLY_EXIT(env);
+> @@ -649,15 +666,15 @@ vext_ldff(void *vd, void *v0, target_ulong base, CP=
+URISCVState *env,
 >      }
 >
-> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca) {
-> +    if (!ctx->cfg_ptr->ext_zca) {
->          TCGv t0 =3D tcg_temp_new();
+>      /* Check page permission/pmp/watchpoint/etc. */
+> -    flags =3D probe_access_flags(env, adjust_addr(env, addr), elems * ms=
+ize,
+> -                               MMU_DATA_LOAD, mmu_index, true, &host, ra=
+);
+> +    probe_pages(env, addr, elems * msize, ra, MMU_DATA_LOAD, mmu_index, =
+&host,
+> +                &flags, true);
 >
->          misaligned =3D gen_new_label();
-> @@ -236,8 +236,7 @@ static bool gen_branch(DisasContext *ctx, arg_b *a, T=
-CGCond cond)
->
->      gen_set_label(l); /* branch taken */
->
-> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca &&
-> -        (a->imm & 0x3)) {
-> +    if (!ctx->cfg_ptr->ext_zca && (a->imm & 0x3)) {
->          /* misaligned */
->          TCGv target_pc =3D tcg_temp_new();
->          gen_pc_plus_diff(target_pc, ctx, a->imm);
-> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index ce1256f439..68882136d7 100644
-> --- a/target/riscv/op_helper.c
-> +++ b/target/riscv/op_helper.c
-> @@ -276,7 +276,7 @@ target_ulong helper_sret(CPURISCVState *env)
+>      /* If we are crossing a page check also the second page. */
+>      if (env->vl > elems) {
+>          addr_probe =3D addr + (elems << log2_esz);
+> -        flags |=3D probe_access_flags(env, adjust_addr(env, addr_probe),
+> -                                    elems * msize, MMU_DATA_LOAD, mmu_in=
+dex,
+> -                                    true, &host, ra);
+> +        probe_pages(env, addr_probe, elems * msize, ra, MMU_DATA_LOAD,
+> +                    mmu_index, &host, &probe_flags, true);
+> +        flags |=3D probe_flags;
 >      }
 >
->      target_ulong retpc =3D env->sepc;
-> -    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
-> +    if (!env_archcpu(env)->cfg.ext_zca && (retpc & 0x3)) {
->          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
->      }
+>      if (flags & ~TLB_WATCHPOINT) {
+> @@ -669,16 +686,16 @@ vext_ldff(void *vd, void *v0, target_ulong base, CP=
+URISCVState *env,
+>              addr_i =3D adjust_addr(env, base + i * (nf << log2_esz));
+>              if (i =3D=3D 0) {
+>                  /* Allow fault on first element. */
+> -                probe_pages(env, addr_i, nf << log2_esz, ra, MMU_DATA_LO=
+AD);
+> +                probe_pages(env, addr_i, nf << log2_esz, ra, MMU_DATA_LO=
+AD,
+> +                            mmu_index, &host, NULL, false);
+>              } else {
+>                  remain =3D nf << log2_esz;
+>                  while (remain > 0) {
+>                      offset =3D -(addr_i | TARGET_PAGE_MASK);
 >
-> @@ -349,7 +349,7 @@ static void check_ret_from_m_mode(CPURISCVState *env,=
- target_ulong retpc,
->          riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
->      }
+>                      /* Probe nonfault on subsequent elements. */
+> -                    flags =3D probe_access_flags(env, addr_i, offset,
+> -                                               MMU_DATA_LOAD, mmu_index,=
+ true,
+> -                                               &host, 0);
+> +                    probe_pages(env, addr_i, offset, 0, MMU_DATA_LOAD,
+> +                                mmu_index, &host, &flags, true);
 >
-> -    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
-> +    if (!env_archcpu(env)->cfg.ext_zca && (retpc & 0x3)) {
->          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
->      }
->
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 698b74f7a8..34eeed50be 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -566,7 +566,7 @@ static void gen_jal(DisasContext *ctx, int rd, target=
-_ulong imm)
->      TCGv succ_pc =3D dest_gpr(ctx, rd);
->
->      /* check misaligned: */
-> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca) {
-> +    if (!ctx->cfg_ptr->ext_zca) {
->          if ((imm & 0x3) !=3D 0) {
->              TCGv target_pc =3D tcg_temp_new();
->              gen_pc_plus_diff(target_pc, ctx, imm);
+>                      /*
+>                       * Stop if invalid (unmapped) or mmio (transaction m=
+ay
 > --
-> 2.45.3
+> 2.34.1
+>
 >
 
