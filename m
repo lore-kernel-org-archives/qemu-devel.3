@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC96C19F32
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 01:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 625B8C19F32
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 01:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpzoq-0002xY-CS; Wed, 05 Mar 2025 20:14:36 -0500
+	id 1tpzpj-0003eF-KY; Wed, 05 Mar 2025 20:15:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tpzok-0002pR-H9
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:14:31 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tpzpV-0003VL-BP
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:15:17 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tpzoi-0004wi-Fe
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:14:30 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2234e4b079cso1085485ad.1
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 17:14:27 -0800 (PST)
+ id 1tpzpT-0005AQ-7Z
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:15:16 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso1225785ad.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 17:15:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741223666; x=1741828466; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741223714; x=1741828514; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=IZNSX40B0LWPocH4d937YtNReVbf2z70/WFhXiXVLeg=;
- b=vbfEO/o86y3yQwvMgTDIER2Sr706HnDKGpQwY1UliQ083n87XMUFFQcxCdOFwUQXHF
- 225ahz6IPufK6Z+9/Tz+syH/HjXVB4Q3zRhfDsMeEiKrdwvBgAxDJ3XHbxPsgTcCQlAG
- zS1wMQKRk70tWXNkR/VFBpWo3VO2ipiP/rvqnFeD4vzmSybddupwwqOJaQf6oX1Q9Yw8
- uiUA3Iv41EUjgMdszj83x8Eh73uPhl/c9eaNhWrWoRNoOLFH32uB8ccnQR0Ne0deK57r
- z55dN0y/RJEtkVTHoOdYx/EL3rVshaIdcNpy92PGjHIY77kRoEk6QVnli9uaGgmY/k+k
- NsWQ==
+ bh=peS1IFpFZGPqH0XWzCyVnBhmWH03rjRCu+gaSVoubTk=;
+ b=h9M19mzEEn2b0kuRlI6gS3k0NMtx4RHW0O2vpK7qS3ZZn8oEaud99itmJhKjvF1jAH
+ d+cpg0wL1v57EXOsMftXSYBs0y4JPlALlu730uftD5rO28Oj1aMHSlFdB0qRBMhUVmjp
+ hkJ9JvuUTzwFgboF0hRH46bs1hympHDy29DAbynjgIjtFrItyc3rNPURZo0U3k2zxAS+
+ EapS4/MBbRZ9/BvzCYk6Xtxa8xHkxaLfEscqTAVlcyvIWFQz16ZwHQXFeIgquRnKwYJE
+ SZe/2xyx3nafm/VGK9JLY3Byy10lhHZotpDet57Lot0MY3jtgs94PgpLeOg9T/JCkDEU
+ SHVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741223666; x=1741828466;
+ d=1e100.net; s=20230601; t=1741223714; x=1741828514;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IZNSX40B0LWPocH4d937YtNReVbf2z70/WFhXiXVLeg=;
- b=xJhSa2zh5AxMhCnDSKPRwbRM/J+vvMCPx7Ggz1sap/wYeeq4ZOoh+lBAX+zSLjxlq6
- n+VfHnhCKBszWb/j2kPqbKGpmu5HTte+/ePlBbbsRiIADE8wW2VH6Em6oI23/QEN+yFR
- gozYCmMdRaExJAYINrea7iyWaP3CvdP1V1+bOPYQh3l3efHXbjXtfp7CO68LScPHGhFx
- HiERXPYhcOQ25GmJ9xoxqI0pTopntqwFxjUFSNttCzn3l+PpHsrZEy3X8Xwgkn4k1Kio
- j9HIa6O2g1h2D5WIWuqJqAQvT5aPhhv7O2fbRoodiaaPXfXAN6B9AQTxpunn4DVd9mH1
- v/ow==
+ bh=peS1IFpFZGPqH0XWzCyVnBhmWH03rjRCu+gaSVoubTk=;
+ b=AHyd8gcZ3Bl7R/TWFQ1yrcBuQcws8es4BpTKWHCiGSGaKa5lc0otHV1+b7XvBKakUw
+ 6kMRwynZXNyvNMNATV1nbvJhj5b3DH7axI1h4xKlnIn3uOfGrle82T+ZyCJ4R7aHJK7C
+ bkEkCV8Ob5APas97a9NsZ1ImFK3Du8UuChuIzIEcKPXS4c/RkYdOZTVevQ5qd93is56I
+ uWWAMQ7NwprUWDb5XYSQMqWa7R+2PA2tSsEbOWCPJvoU4m2wP76vIHUEGr05U3LZ7MZE
+ +Ae3qWZBBy7srWsDLvnMQXmhfIybOM1dEk8UdnL+PmFUV/6QFGHvkarz6iY/vDHK3s48
+ Kz/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUf68k1393FIv5avlFXmRScS1DVvzEKnT8KoccKcBCRwRGINiM2WwzjO1bPSu6MtGTIAv7TS5y5FrDo@nongnu.org
-X-Gm-Message-State: AOJu0YzVZxLIl6jUYVPFFO2KhMX3jjpNaXa0YAYJm/wRY+bt9O5gPZXg
- oGpKyCoO+WenWiYQSHP+mssR9HFzJxxHQf0WmQnFvxEBaLbZTs5Ml9FJmXXyXoQ=
-X-Gm-Gg: ASbGncucJAuptRkavntV61hkYWYtq2fBVWr7Aw7CbH8dSqKFjpCEKh/2SvJtZb62APs
- xKziZ6DIuuefE9Iv3ovh1e6iqWAo5FkwzH3lo4bre2IzmF6+Fm76Do0aHTSHgYiHwmij+dCU/Lz
- GdxsR2V1o1+Mv8x7fW2hub2qohgAwx++PmDi5FzFogPlFe9zspRD6GVPX9Ux7JxxxG9brHRKfNV
- 1bdxMTrivFyliGhVIE28a6tId1xMY3aSdR4ANezyZS/LxSMYp2CrR1gCIGfANXWZDZAhOi5Wf3K
- Sd8whtSJb84NCUedtNKhzvAiDDxdpw3lsFvyf6yYfO+qWGP/nyCWegHnujYGiLCQFAcD+VaAmH8
- qg64f2a1t
-X-Google-Smtp-Source: AGHT+IGXAOH99+JMKbDDMTO61pZ4BpDGxWBANf54nFDjX3JNoiGqYPQphtgz0nlQ5EED/deQGJmUoQ==
-X-Received: by 2002:a17:902:d48d:b0:220:e7ae:dbcf with SMTP id
- d9443c01a7336-223f1cf61aemr82910775ad.23.1741223666070; 
- Wed, 05 Mar 2025 17:14:26 -0800 (PST)
+ AJvYcCVIK4k1TufUu6hfp2D8x9n6vNQsrsyJcf7BZ3wXIDG3OUb17ZoY3D/3YCU7ZEsuj639SokMYZV+PvVl@nongnu.org
+X-Gm-Message-State: AOJu0YwWc7BC/4Yae6BCxityz81fBY1my0xdITBXBxxP8kN7wUcEcBew
+ ls0PnNc393FNBw42prGa9q0fRWdEeNwbsmKzzLLWDu2CVK6oN/YW+lgwWbCYfdc=
+X-Gm-Gg: ASbGncuKksAEKLOux1KDz3YHhDYSPdB5CNwCCZJ7vpxvDemfg5qoY7bFIqzg50QQ+xi
+ JbAWAUyMLpr6WXoB+5oMTkoPg5KNfn6dhX8mpps9fPA1klu0dy9dtTpwwUCZIZi2dpgI780pWsf
+ eP50R1DF3dDE67fmHy/lODhesx0On0OscauzgCF2HcU/9wkIg0cbIoy5PtlbwAQf7bOj4+QN/g+
+ 2vGEqZtIYN+WkdpvzCczNtaPocCPFNw7lQ+xT0Qy7QOxg+U3H1W6lK8lsTsticdIh8HYNj5rWDl
+ oDgDMc6atIFZD/gV9tm7SccZsorAoat08WErD8ruDiXO6U3+O+BBBMERbR1BBx3YeDQcyegjwQK
+ cbOXaqkfe
+X-Google-Smtp-Source: AGHT+IEm4Zr/o8mBAYJfCJvPksIFAdJ6dDYUh7Izp35zc5IRAKDVWpRwvIo/IodsT6vudxaXTakfsg==
+X-Received: by 2002:a05:6a00:4b01:b0:736:4110:5579 with SMTP id
+ d2e1a72fcca58-73682b4ad97mr7747773b3a.2.1741223713591; 
+ Wed, 05 Mar 2025 17:15:13 -0800 (PST)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-224109e9fbfsm671265ad.92.2025.03.05.17.14.25
+ d2e1a72fcca58-7369824402bsm95490b3a.49.2025.03.05.17.15.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 17:14:25 -0800 (PST)
-Message-ID: <1f8bfd50-669a-41be-95e1-b277255a96a4@linaro.org>
-Date: Wed, 5 Mar 2025 17:14:23 -0800
+ Wed, 05 Mar 2025 17:15:13 -0800 (PST)
+Message-ID: <8f4b598e-d09d-4d2e-afcc-317a6997ad02@linaro.org>
+Date: Wed, 5 Mar 2025 17:15:11 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/14] arm/cpu: Add sysreg definitions in cpu-sysregs.h
+Subject: Re: [PATCH v2 02/14] arm/kvm: add accessors for storing host features
+ into idregs
 To: Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
 References: <20250305163819.2477553-1-cohuck@redhat.com>
- <20250305163819.2477553-2-cohuck@redhat.com>
+ <20250305163819.2477553-3-cohuck@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250305163819.2477553-2-cohuck@redhat.com>
+In-Reply-To: <20250305163819.2477553-3-cohuck@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,166 +106,97 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/5/25 08:38, Cornelia Huck wrote:
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+>   target/arm/cpu-sysregs.h |  3 +++
+>   target/arm/cpu64.c       | 25 +++++++++++++++++++++++++
+>   target/arm/kvm.c         | 12 ++++++++++++
+>   3 files changed, 40 insertions(+)
+> 
+> diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
+> index de09ebae91a5..54a4fadbf0c1 100644
+> --- a/target/arm/cpu-sysregs.h
 > +++ b/target/arm/cpu-sysregs.h
-> @@ -0,0 +1,131 @@
-> +#ifndef ARM_CPU_SYSREGS_H
-> +#define ARM_CPU_SYSREGS_H
+> @@ -128,4 +128,7 @@ static const uint32_t id_register_sysreg[NUM_ID_IDX] = {
+>       [CTR_EL0_IDX] = SYS_CTR_EL0,
+>   };
+>   
+> +int get_sysreg_idx(ARMSysRegs sysreg);
+> +uint64_t idregs_sysreg_to_kvm_reg(ARMSysRegs sysreg);
 > +
-> +/*
-> + * Following is similar to the coprocessor regs encodings, but with an argument
-> + * ordering that matches the ARM ARM. We also reuse the various CP_REG_ defines
-> + * that actually are the same as the equivalent KVM_REG_ values.
-> + */
-> +#define ENCODE_ID_REG(op0, op1, crn, crm, op2)          \
-> +    (((op0) << CP_REG_ARM64_SYSREG_OP0_SHIFT) |         \
-> +     ((op1) << CP_REG_ARM64_SYSREG_OP1_SHIFT) |         \
-> +     ((crn) << CP_REG_ARM64_SYSREG_CRN_SHIFT) |         \
-> +     ((crm) << CP_REG_ARM64_SYSREG_CRM_SHIFT) |         \
-> +     ((op2) << CP_REG_ARM64_SYSREG_OP2_SHIFT))
+>   #endif /* ARM_CPU_SYSREGS_H */
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index 8188ede5cc8a..9ae78253cb34 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -736,6 +736,31 @@ static void aarch64_a53_initfn(Object *obj)
+>       define_cortex_a72_a57_a53_cp_reginfo(cpu);
+>   }
+>   
+> +#ifdef CONFIG_KVM
 > +
-> +typedef enum ARMIDRegisterIdx {
-> +    ID_AA64PFR0_EL1_IDX,
-> +    ID_AA64PFR1_EL1_IDX,
-> +    ID_AA64SMFR0_EL1_IDX,
-> +    ID_AA64DFR0_EL1_IDX,
-> +    ID_AA64DFR1_EL1_IDX,
-> +    ID_AA64ISAR0_EL1_IDX,
-> +    ID_AA64ISAR1_EL1_IDX,
-> +    ID_AA64ISAR2_EL1_IDX,
-> +    ID_AA64MMFR0_EL1_IDX,
-> +    ID_AA64MMFR1_EL1_IDX,
-> +    ID_AA64MMFR2_EL1_IDX,
-> +    ID_AA64MMFR3_EL1_IDX,
-> +    ID_PFR0_EL1_IDX,
-> +    ID_PFR1_EL1_IDX,
-> +    ID_DFR0_EL1_IDX,
-> +    ID_MMFR0_EL1_IDX,
-> +    ID_MMFR1_EL1_IDX,
-> +    ID_MMFR2_EL1_IDX,
-> +    ID_MMFR3_EL1_IDX,
-> +    ID_ISAR0_EL1_IDX,
-> +    ID_ISAR1_EL1_IDX,
-> +    ID_ISAR2_EL1_IDX,
-> +    ID_ISAR3_EL1_IDX,
-> +    ID_ISAR4_EL1_IDX,
-> +    ID_ISAR5_EL1_IDX,
-> +    ID_MMFR4_EL1_IDX,
-> +    ID_ISAR6_EL1_IDX,
-> +    MVFR0_EL1_IDX,
-> +    MVFR1_EL1_IDX,
-> +    MVFR2_EL1_IDX,
-> +    ID_PFR2_EL1_IDX,
-> +    ID_DFR1_EL1_IDX,
-> +    ID_MMFR5_EL1_IDX,
-> +    ID_AA64ZFR0_EL1_IDX,
-> +    CTR_EL0_IDX,
-> +    NUM_ID_IDX,
-> +} ARMIDRegisterIdx;
+> +int get_sysreg_idx(ARMSysRegs sysreg)
+> +{
+> +    int i;
 > +
-> +typedef enum ARMSysRegs {
-> +    SYS_ID_AA64PFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 0),
-> +    SYS_ID_AA64PFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 1),
-> +    SYS_ID_AA64SMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 5),
-> +    SYS_ID_AA64DFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 5, 0),
-> +    SYS_ID_AA64DFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 5, 1),
-> +    SYS_ID_AA64ISAR0_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 0),
-> +    SYS_ID_AA64ISAR1_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 1),
-> +    SYS_ID_AA64ISAR2_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 2),
-> +    SYS_ID_AA64MMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 0),
-> +    SYS_ID_AA64MMFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 1),
-> +    SYS_ID_AA64MMFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 2),
-> +    SYS_ID_AA64MMFR3_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 3),
-> +    SYS_ID_PFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 0),
-> +    SYS_ID_PFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 1),
-> +    SYS_ID_DFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 2),
-> +    SYS_ID_MMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 4),
-> +    SYS_ID_MMFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 5),
-> +    SYS_ID_MMFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 6),
-> +    SYS_ID_MMFR3_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 7),
-> +    SYS_ID_ISAR0_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 0),
-> +    SYS_ID_ISAR1_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 1),
-> +    SYS_ID_ISAR2_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 2),
-> +    SYS_ID_ISAR3_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 3),
-> +    SYS_ID_ISAR4_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 4),
-> +    SYS_ID_ISAR5_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 5),
-> +    SYS_ID_MMFR4_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 6),
-> +    SYS_ID_ISAR6_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 7),
-> +    SYS_MVFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 0),
-> +    SYS_MVFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 1),
-> +    SYS_MVFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 2),
-> +    SYS_ID_PFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 4),
-> +    SYS_ID_DFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 5),
-> +    SYS_ID_MMFR5_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 6),
-> +    SYS_ID_AA64ZFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 4),
-> +    SYS_CTR_EL0 = ENCODE_ID_REG(3, 3, 0, 0, 1),
-> +} ARMSysRegs;
+> +    for (i = 0; i < NUM_ID_IDX; i++) {
+> +        if (id_register_sysreg[i] == sysreg) {
+> +            return i;
+> +        }
+> +    }
+> +    return -1;
+> +}
 > +
-> +static const uint32_t id_register_sysreg[NUM_ID_IDX] = {
-> +    [ID_AA64PFR0_EL1_IDX] = SYS_ID_AA64PFR0_EL1,
-> +    [ID_AA64PFR1_EL1_IDX] = SYS_ID_AA64PFR1_EL1,
-> +    [ID_AA64SMFR0_EL1_IDX] = SYS_ID_AA64SMFR0_EL1,
-> +    [ID_AA64DFR0_EL1_IDX] = SYS_ID_AA64DFR0_EL1,
-> +    [ID_AA64DFR1_EL1_IDX] = SYS_ID_AA64DFR1_EL1,
-> +    [ID_AA64ISAR0_EL1_IDX] = SYS_ID_AA64ISAR0_EL1,
-> +    [ID_AA64ISAR1_EL1_IDX] = SYS_ID_AA64ISAR1_EL1,
-> +    [ID_AA64ISAR2_EL1_IDX] = SYS_ID_AA64ISAR2_EL1,
-> +    [ID_AA64MMFR0_EL1_IDX] = SYS_ID_AA64MMFR0_EL1,
-> +    [ID_AA64MMFR1_EL1_IDX] = SYS_ID_AA64MMFR1_EL1,
-> +    [ID_AA64MMFR2_EL1_IDX] = SYS_ID_AA64MMFR2_EL1,
-> +    [ID_AA64MMFR3_EL1_IDX] = SYS_ID_AA64MMFR3_EL1,
-> +    [ID_PFR0_EL1_IDX] = SYS_ID_PFR0_EL1,
-> +    [ID_PFR1_EL1_IDX] = SYS_ID_PFR1_EL1,
-> +    [ID_DFR0_EL1_IDX] = SYS_ID_DFR0_EL1,
-> +    [ID_MMFR0_EL1_IDX] = SYS_ID_MMFR0_EL1,
-> +    [ID_MMFR1_EL1_IDX] = SYS_ID_MMFR1_EL1,
-> +    [ID_MMFR2_EL1_IDX] = SYS_ID_MMFR2_EL1,
-> +    [ID_MMFR3_EL1_IDX] = SYS_ID_MMFR3_EL1,
-> +    [ID_ISAR0_EL1_IDX] = SYS_ID_ISAR0_EL1,
-> +    [ID_ISAR1_EL1_IDX] = SYS_ID_ISAR1_EL1,
-> +    [ID_ISAR2_EL1_IDX] = SYS_ID_ISAR2_EL1,
-> +    [ID_ISAR3_EL1_IDX] = SYS_ID_ISAR3_EL1,
-> +    [ID_ISAR4_EL1_IDX] = SYS_ID_ISAR4_EL1,
-> +    [ID_ISAR5_EL1_IDX] = SYS_ID_ISAR5_EL1,
-> +    [ID_MMFR4_EL1_IDX] = SYS_ID_MMFR4_EL1,
-> +    [ID_ISAR6_EL1_IDX] = SYS_ID_ISAR6_EL1,
-> +    [MVFR0_EL1_IDX] = SYS_MVFR0_EL1,
-> +    [MVFR1_EL1_IDX] = SYS_MVFR1_EL1,
-> +    [MVFR2_EL1_IDX] = SYS_MVFR2_EL1,
-> +    [ID_PFR2_EL1_IDX] = SYS_ID_PFR2_EL1,
-> +    [ID_DFR1_EL1_IDX] = SYS_ID_DFR1_EL1,
-> +    [ID_MMFR5_EL1_IDX] = SYS_ID_MMFR5_EL1,
-> +    [ID_AA64ZFR0_EL1_IDX] = SYS_ID_AA64ZFR0_EL1,
-> +    [CTR_EL0_IDX] = SYS_CTR_EL0,
-> +};
+> +uint64_t idregs_sysreg_to_kvm_reg(ARMSysRegs sysreg)
+> +{
+> +    return ARM64_SYS_REG((sysreg & CP_REG_ARM64_SYSREG_OP0_MASK) >> CP_REG_ARM64_SYSREG_OP0_SHIFT,
+> +                         (sysreg & CP_REG_ARM64_SYSREG_OP1_MASK) >> CP_REG_ARM64_SYSREG_OP1_SHIFT,
+> +                         (sysreg & CP_REG_ARM64_SYSREG_CRN_MASK) >> CP_REG_ARM64_SYSREG_CRN_SHIFT,
+> +                         (sysreg & CP_REG_ARM64_SYSREG_CRM_MASK) >> CP_REG_ARM64_SYSREG_CRM_SHIFT,
+> +                         (sysreg & CP_REG_ARM64_SYSREG_OP2_MASK) >> CP_REG_ARM64_SYSREG_OP2_SHIFT);
+> +}
+> +
+> +#endif
 
-Again, you should NOT place this array in a header,
-to be replicated in every single user of the header.
+Why are these here, with an ifdef, instead of in kvm.c?
 
+Rather than a loop over an array, you could do
 
-This can be a bit more automated to avoid mistakes.
-
---- target/arm/cpu-sysregs.h.inc
-
-DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
-...
-
---- target/arm/cpu-sysregs.h
-
-#define DEF(NAME, OP0, OP1, CRN, CRM, OP2)  NAME##_IDX,
-
-typedef enum ARMIDRegisterIdx {
-#include "cpu-sysregs.h.inc"
-} ARMIDRegisterIdx;
-
-#undef DEF
 #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
-     SYS_##NAME = ENCODE_ID_REG(OP0, OP1, CRN, CRM, OP2),
+     case SYS_##NAME: return NAME##_IDX;
 
-typedef enum ARMSysRegs {
+int get_sysreg_idx(ARMSysRegs sysreg)
+{
+     switch (sysreg) {
 #include "cpu-sysregs.h.inc"
-} ARMSysRegs;
+     }
+     g_assert_not_reached();
+}
 
 #undef DEF
+
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index da30bdbb2349..2381c87e4ba1 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -246,6 +246,18 @@ static bool kvm_arm_pauth_supported(void)
+>               kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_GENERIC));
+>   }
+>   
+> +/* read a sysreg value and store it in the idregs */
+> +static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf, ARMIDRegisterIdx index)
+> +{
+> +    uint64_t *reg;
+> +    int ret;
+> +
+> +    reg = &ahcf->isar.idregs[index];
+> +    ret = read_sys_reg64(fd, reg,
+> +                         idregs_sysreg_to_kvm_reg(id_register_sysreg[index]));
+> +    return ret;
+> +}
+
+Surely this patch doesn't compile by itself,
+because this will Werror for the unused function.
 
 
 r~
