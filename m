@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA360C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 04:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0103C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 04:22:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq2hw-0000Ic-3p; Wed, 05 Mar 2025 23:19:40 -0500
+	id 1tq2jx-000189-G7; Wed, 05 Mar 2025 23:21:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq2hu-0000IJ-HC; Wed, 05 Mar 2025 23:19:38 -0500
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ id 1tq2jv-00017e-Is; Wed, 05 Mar 2025 23:21:43 -0500
+Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq2hs-00080Q-G2; Wed, 05 Mar 2025 23:19:38 -0500
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-86b2cc5b3c4so66376241.3; 
- Wed, 05 Mar 2025 20:19:35 -0800 (PST)
+ id 1tq2jt-0008Hf-Qm; Wed, 05 Mar 2025 23:21:43 -0500
+Received: by mail-vk1-xa33.google.com with SMTP id
+ 71dfb90a1353d-52399515bd2so247804e0c.1; 
+ Wed, 05 Mar 2025 20:21:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741234775; x=1741839575; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741234900; x=1741839700; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3wCTbxMwQ3XuuHLcnkdHuK66BhMoeYK5a2s+XgTMkJw=;
- b=H5MPKF9AqWuH7nY9p4s8lh9mkDcH9VIdaC6KxgO1cFAxfb79oToa4m/8ziVG7GVq3b
- IYBubCZGX1dvEFiNaDcsIlOMJCJMZIsO1VJ5tzTDNxkjSrbZ3wGn5TX/5jpJWaeHkKrb
- ay02y86YxaVYzFaE3Z33Ho29ODbdgYgA5lsLWgFpcYp7TKTKk3y3gEb59/8Rf9srrIKN
- FoMWQGDF/ClSb5b+Ijb9aXcbDsfycgSxphmLeBNkzadHrL2/lZ9CNxL7K7QRZIgHu+V0
- i6xuP2GCbJJsi+ETUUxwqdc6yz3NuWNHKAyrNmkgPI2Z0wTeUqI84KAiGzUXT3ReZ+vE
- 4t8Q==
+ bh=049l3ey0bOivZhgApDw0mmziJI4t9UXjqFwQhKRF/24=;
+ b=EUSDWrECb+XVP/yuJdzCh/+Z5HnmcfRaQPAn8uUn36CnAaMi0L2iBYt/5sTjp7elFt
+ 5RrIIY+66KrSQH7xlk+siUWSnj31H0i8lwhC17Ztu9Wx438Trf6XoE57ZS7S81r2XSMw
+ vpRhe8c4Ft2DSFLcU9QgzBvGyR+udT0LXXAaA7e0dGFBAhUrrCC8YexKhzk0ht4TGleS
+ TnLsyN/8OgZzg8k682zqs6abHZ+virYmgkoRnrGLt5nKQI4jfP2R+EDY6jmqDVQNFrM/
+ crzyHUIMuV4I4b53lPkufCLrMq17TmsuZBaWLK31K+kSXMTDYpwi7ix6W+nv7HDjdvJ0
+ 4MEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741234775; x=1741839575;
+ d=1e100.net; s=20230601; t=1741234900; x=1741839700;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3wCTbxMwQ3XuuHLcnkdHuK66BhMoeYK5a2s+XgTMkJw=;
- b=SvUA5fdS9gksRw8rI5hQEklXcGUIBPJENZ8rylIgkCLXbZAJ01LlkWa46NZcAQL7ra
- 0pX4blzH0Dhx23TVWgv0mkO5elh55f11ztBy2k9Vu7I1wR4v8468V1hfS/gpXdFfh7re
- 3Irun8P4WgBLxRGsx4txI1nPeU7w1NrtnWOIcujMB0RzP2epIqP3zIqSVT5i2IpcxlYz
- +BD08rMAYirQi4bDykvWAcKLixcyw60XB/IASm29QVCWDK9P6aCTsNQx4zsgz3DsxtJf
- XVqcAY9TK5FXG8vfMTZP8BATwLOjOW9qjKnvbPLNPAS5jSlGKv1LS9qqV1UdL4EEOjEr
- CY9g==
+ bh=049l3ey0bOivZhgApDw0mmziJI4t9UXjqFwQhKRF/24=;
+ b=c0OFuQuc8YsyVJkiBhWneqEYQ1A5fbT0GSU6YetcC/5/xs7hR+Ltbvgw4RvXIkKjfS
+ n6zxn4te6irRo1LieN4KV3LjTTuAd/zlcdpdrwGyeyv7k3I8G9zJI3xNkQ7y5L1lrXhD
+ wv8fULlZb7lFtrgZryYFstw37JKR5cMnbyNt+4Nt8WH0YIt4ZclYEDh0W8m+RLhelEXu
+ /3+7Nk8R0SJarlXHfLkLUAIOIKlrdSbXFz16ImRjqmq2TOnLsj5mc9PLu3V2EkkJlEVc
+ nmkTd+xK8vXJB9jnpksHP3afXZenM/FUlCdN2pUQB40M/aO0evzfg7FkvvxtI92m7oDq
+ a9qw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXtLtd+cQ1/FdJpgLXSKo8AzL/W7QuwdZvFDfhW+i7vbfPU1fB3Lq7GA8tUVyf7Vh2QxVqTLTZ815J@nongnu.org
-X-Gm-Message-State: AOJu0YwJAwfgigG9lC+18hPIosbG5e7xCFqsIz8b7ioijlAsYetr/b36
- jH8opRy+wbcCjg+u0h9iU8feqr9F3F9ZJ+dIAIMWJddZkQWu3l9BWBNg73uAx6oscy9DSZJcG9f
- C4ncGjFL6iQJd9trrYnM+y7kINDs=
-X-Gm-Gg: ASbGncsxSAIqcjArbYDcNjorgVVujXE6ANxmGYDuudu7ahUEAM53CaReQLeigwPO1bW
- Fi9BKtY43tMDLZi2uGU56zUmAMBrzQKE6bN7ACTyKTnDfSqDwPKO2iwmx9Hpk1IGccO/HF0qGr5
- w0LyJ224kKdYP4gdW8UU1NMZ+3/N0Xt/eixp6ph5DyWtl4zcfvKnT1qMol
-X-Google-Smtp-Source: AGHT+IGkVvrBlObm/L1nPbZF24D/SA9Pk2LEjtnUevfVKqcpJ3ZEzF5RJAqsIt1Eh8NmYXRSWvWHQOqnOQxV22iW6m4=
-X-Received: by 2002:a05:6102:3a0f:b0:4c2:2beb:b726 with SMTP id
- ada2fe7eead31-4c2e27af9e3mr3998581137.10.1741234774933; Wed, 05 Mar 2025
- 20:19:34 -0800 (PST)
+ AJvYcCXrCOFaS4oxoVLFbP5FdiTFTblkOlqB+Nb5dJPy7Qs2fO/PylHIbtTU9NHem0uRwL3+jLZXvoC+lZum@nongnu.org
+X-Gm-Message-State: AOJu0YycrBPitUZti99VPO6JsWQA6MRx5Gjmd45Xc5LRcIsPZYUz5sEP
+ TAqrjUy6pXzoQieJ0LlowaJoZzQ0QHIh/jp1JHlvGUkCzsxWqdYXie76eO/ZEASejVvelm9vm9Q
+ bkeueA0/azOmYuI7/OLNACETRsPE=
+X-Gm-Gg: ASbGncv9xPawAAjH81RbOzayoxwbrQ+sdNknpPaEaJSAoQbht+0XYqRxQIyfdxB67cB
+ rIcRVjdoSpkz4b3yKhuIL004YzEveilsikAgvmjVcfJN9Xc9vx1kRQ0I8ZeLCnjSaQf2Tkx+SO+
+ ckizpVXxQ5MF+qgDAj9YldayQ5C6/VltXxMd1uBtFAb5+aYdIL0qaNqyO+
+X-Google-Smtp-Source: AGHT+IGaGPbM3O3971xIztkVtMQN4ojUuTHwaCfkrzivRwrxPyDZhsbHEeNc9YNG+cjzXWnfAi6WhFm9O8EyVT6y6XE=
+X-Received: by 2002:a05:6122:3542:b0:520:4fff:4c85 with SMTP id
+ 71dfb90a1353d-523d5002f54mr1340256e0c.2.1741234900174; Wed, 05 Mar 2025
+ 20:21:40 -0800 (PST)
 MIME-Version: 1.0
 References: <20250225005446.13894-1-sebastian.huber@embedded-brains.de>
- <20250225005446.13894-5-sebastian.huber@embedded-brains.de>
-In-Reply-To: <20250225005446.13894-5-sebastian.huber@embedded-brains.de>
+ <20250225005446.13894-6-sebastian.huber@embedded-brains.de>
+In-Reply-To: <20250225005446.13894-6-sebastian.huber@embedded-brains.de>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 14:19:08 +1000
-X-Gm-Features: AQ5f1Jqvm3oCxIBvvbXP6J25FH-ZXeRqLiy9jR1nYtWfd3Jt_xIFECZA4YRfUYM
-Message-ID: <CAKmqyKMHXcV_JhBrdMVz+DS=iPgYsFyOoP_OPjzM1FVnV6erBA@mail.gmail.com>
-Subject: Re: [PATCH v2 4/6] hw/riscv: Allow direct start of kernel for MPFS
+Date: Thu, 6 Mar 2025 14:21:14 +1000
+X-Gm-Features: AQ5f1Jpbd67JJpio6ETR3wX1PgFi8ge4-88Kzckd-BSOcd4OYCN0HtgcB13VvpY
+Message-ID: <CAKmqyKMckasbSFHohQL4odC-sK1oSw1d7ozX3banriGywoMS8A@mail.gmail.com>
+Subject: Re: [PATCH v2 5/6] hw/riscv: Configurable MPFS CLINT timebase freq
 To: Sebastian Huber <sebastian.huber@embedded-brains.de>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Conor Dooley <conor.dooley@microchip.com>, Bin Meng <bin.meng@windriver.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa33.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,116 +100,149 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Feb 25, 2025 at 10:55=E2=80=AFAM Sebastian Huber
 <sebastian.huber@embedded-brains.de> wrote:
 >
-> Further customize the -bios and -kernel options behaviour for the
-> microchip-icicle-kit machine.  If "-bios none -kernel filename" is
-> specified, then do not load a firmware and instead only load and start
-> the kernel image.
+> This property enables the setting of the CLINT timebase frequency
+> through the command line, for example:
+>
+>   -machine microchip-icicle-kit,clint-timebase-frequency=3D10000000
 >
 > Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  hw/riscv/microchip_pfsoc.c | 57 ++++++++++++++++++++++++++------------
->  1 file changed, 40 insertions(+), 17 deletions(-)
+>  hw/riscv/microchip_pfsoc.c         | 49 +++++++++++++++++++++++++++---
+>  include/hw/riscv/microchip_pfsoc.h |  1 +
+>  2 files changed, 46 insertions(+), 4 deletions(-)
 >
 > diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-> index 844dc0545c..df902c8667 100644
+> index df902c8667..9068eed780 100644
 > --- a/hw/riscv/microchip_pfsoc.c
 > +++ b/hw/riscv/microchip_pfsoc.c
-> @@ -578,29 +578,45 @@ static void microchip_icicle_kit_machine_init(Machi=
-neState *machine)
->      }
+> @@ -39,6 +39,7 @@
+>  #include "qemu/units.h"
+>  #include "qemu/cutils.h"
+>  #include "qapi/error.h"
+> +#include "qapi/visitor.h"
+>  #include "hw/boards.h"
+>  #include "hw/loader.h"
+>  #include "hw/sysbus.h"
+> @@ -61,9 +62,6 @@
+>  #define BIOS_FILENAME   "hss.bin"
+>  #define RESET_VECTOR    0x20220000
 >
->      /*
-> -     * We follow the following table to select which payload we execute.
-> +     * We follow the following table to select which firmware we use.
->       *
-> -     *  -bios |    -kernel | payload
-> -     * -------+------------+--------
-> -     *      N |          N | HSS
-> -     *      Y | don't care | HSS
-> -     *      N |          Y | kernel
-> -     *
-> -     * This ensures backwards compatibility with how we used to expose -=
-bios
-> -     * to users but allows them to run through direct kernel booting as =
-well.
-> +     * -bios         | -kernel    | firmware
-> +     * --------------+------------+--------
-> +     * none          |          N | error
-> +     * none          |          Y | kernel
-> +     * NULL, default |          N | BIOS_FILENAME
-> +     * NULL, default |          Y | RISCV64_BIOS_BIN
-> +     * other         | don't care | other
->       */
-> +    if (machine->firmware && !strcmp(machine->firmware, "none")) {
-> +        if (!machine->kernel_filename) {
-> +            error_report("for -bios none, a kernel is required");
-> +            exit(1);
-> +        }
+> -/* CLINT timebase frequency */
+> -#define CLINT_TIMEBASE_FREQ 1000000
+> -
+>  /* GEM version */
+>  #define GEM_REVISION    0x0107010c
 >
-> -    if (machine->kernel_filename) {
-> -        firmware_name =3D RISCV64_BIOS_BIN;
-> -        firmware_load_addr =3D memmap[MICROCHIP_PFSOC_DRAM_LO].base;
-> +        firmware_name =3D NULL;
-> +        firmware_load_addr =3D RESET_VECTOR;
-> +    } else if (!machine->firmware || !strcmp(machine->firmware, "default=
-")) {
-> +        if (machine->kernel_filename) {
-> +            firmware_name =3D RISCV64_BIOS_BIN;
-> +            firmware_load_addr =3D memmap[MICROCHIP_PFSOC_DRAM_LO].base;
-> +        } else {
-> +            firmware_name =3D BIOS_FILENAME;
-> +            firmware_load_addr =3D RESET_VECTOR;
-> +        }
->      } else {
-> -        firmware_name =3D BIOS_FILENAME;
-> +        firmware_name =3D machine->firmware;
->          firmware_load_addr =3D RESET_VECTOR;
->      }
+> @@ -193,6 +191,7 @@ static void microchip_pfsoc_soc_instance_init(Object =
+*obj)
+>  static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+>  {
+>      MachineState *ms =3D MACHINE(qdev_get_machine());
+> +    MicrochipIcicleKitState *iks =3D MICROCHIP_ICICLE_KIT_MACHINE(ms);
+>      MicrochipPFSoCState *s =3D MICROCHIP_PFSOC(dev);
+>      const MemMapEntry *memmap =3D microchip_pfsoc_memmap;
+>      MemoryRegion *system_memory =3D get_system_memory();
+> @@ -253,7 +252,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *=
+dev, Error **errp)
+>          memmap[MICROCHIP_PFSOC_CLINT].base + RISCV_ACLINT_SWI_SIZE,
+>          RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
+>          RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+> -        CLINT_TIMEBASE_FREQ, false);
+> +        iks->clint_timebase_freq, false);
 >
-> -    /* Load the firmware */
-> -    firmware_end_addr =3D riscv_find_and_load_firmware(machine, firmware=
-_name,
-> -                                                     &firmware_load_addr=
-, NULL);
-> +    /* Load the firmware if necessary */
-> +    if (firmware_name) {
-> +        const char *filename =3D riscv_find_firmware(firmware_name, NULL=
-);
-> +        firmware_end_addr =3D riscv_load_firmware(filename, &firmware_lo=
-ad_addr,
-> +                                                NULL);
-> +    } else {
-> +        firmware_end_addr =3D firmware_load_addr;
-> +    }
->
->      riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
->      if (machine->kernel_filename) {
-> @@ -638,8 +654,15 @@ static void microchip_icicle_kit_machine_init(Machin=
+>      /* L2 cache controller */
+>      create_unimplemented_device("microchip.pfsoc.l2cc",
+> @@ -669,6 +668,40 @@ static void microchip_icicle_kit_machine_init(Machin=
 eState *machine)
->              fdt_load_addr =3D 0;
->          }
+>      }
+>  }
 >
-> +        hwaddr start_addr;
-> +        if (firmware_name) {
-> +            start_addr =3D firmware_load_addr;
-> +        } else {
-> +            start_addr =3D kernel_entry;
-> +        }
+> +static void microchip_icicle_kit_set_clint_timebase_freq(Object *obj,
+> +                                                         Visitor *v,
+> +                                                         const char *nam=
+e,
+> +                                                         void *opaque,
+> +                                                         Error **errp)
+> +{
+> +    MicrochipIcicleKitState *s =3D MICROCHIP_ICICLE_KIT_MACHINE(obj);
+> +    uint32_t value;
 > +
->          /* Load the reset vector */
-> -        riscv_setup_rom_reset_vec(machine, &s->soc.u_cpus, firmware_load=
-_addr,
-> +        riscv_setup_rom_reset_vec(machine, &s->soc.u_cpus, start_addr,
->                                    memmap[MICROCHIP_PFSOC_ENVM_DATA].base=
+> +    if (!visit_type_uint32(v, name, &value, errp)) {
+> +        return;
+> +    }
+> +
+> +    s->clint_timebase_freq =3D value;
+> +}
+> +
+> +static void microchip_icicle_kit_get_clint_timebase_freq(Object *obj,
+> +                                                         Visitor *v,
+> +                                                         const char *nam=
+e,
+> +                                                         void *opaque,
+> +                                                         Error **errp)
+> +{
+> +    MicrochipIcicleKitState *s =3D MICROCHIP_ICICLE_KIT_MACHINE(obj);
+> +    uint32_t value =3D s->clint_timebase_freq;
+> +
+> +    visit_type_uint32(v, name, &value, errp);
+> +}
+> +
+> +static void microchip_icicle_kit_machine_instance_init(Object *obj)
+> +{
+> +    MicrochipIcicleKitState *m =3D MICROCHIP_ICICLE_KIT_MACHINE(obj);
+> +    m->clint_timebase_freq =3D 1000000;
+> +}
+> +
+>  static void microchip_icicle_kit_machine_class_init(ObjectClass *oc, voi=
+d *data)
+>  {
+>      MachineClass *mc =3D MACHINE_CLASS(oc);
+> @@ -690,12 +723,20 @@ static void microchip_icicle_kit_machine_class_init=
+(ObjectClass *oc, void *data)
+>       * See memory_tests() in mss_ddr.c in the HSS source code.
+>       */
+>      mc->default_ram_size =3D 1537 * MiB;
+> +
+> +    object_class_property_add(oc, "clint-timebase-frequency", "uint32_t"=
 ,
->                                    memmap[MICROCHIP_PFSOC_ENVM_DATA].size=
+> +                              microchip_icicle_kit_get_clint_timebase_fr=
+eq,
+> +                              microchip_icicle_kit_set_clint_timebase_fr=
+eq,
+> +                              NULL, NULL);
+> +    object_class_property_set_description(oc, "clint-timebase-frequency"=
 ,
->                                    kernel_entry, fdt_load_addr);
+> +                                  "Set CLINT timebase frequency in Hz.")=
+;
+>  }
+>
+>  static const TypeInfo microchip_icicle_kit_machine_typeinfo =3D {
+>      .name       =3D MACHINE_TYPE_NAME("microchip-icicle-kit"),
+>      .parent     =3D TYPE_MACHINE,
+>      .class_init =3D microchip_icicle_kit_machine_class_init,
+> +    .instance_init =3D microchip_icicle_kit_machine_instance_init,
+>      .instance_size =3D sizeof(MicrochipIcicleKitState),
+>  };
+>
+> diff --git a/include/hw/riscv/microchip_pfsoc.h b/include/hw/riscv/microc=
+hip_pfsoc.h
+> index daef086da6..7ca9b976c1 100644
+> --- a/include/hw/riscv/microchip_pfsoc.h
+> +++ b/include/hw/riscv/microchip_pfsoc.h
+> @@ -67,6 +67,7 @@ typedef struct MicrochipIcicleKitState {
+>      MachineState parent_obj;
+>
+>      /*< public >*/
+> +    uint32_t clint_timebase_freq;
+>      MicrochipPFSoCState soc;
+>  } MicrochipIcicleKitState;
+>
 > --
 > 2.43.0
 >
