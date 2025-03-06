@@ -4,91 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A4E5C282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 13:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494CBC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 13:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqBHU-0006FZ-Fn; Thu, 06 Mar 2025 08:28:57 -0500
+	id 1tqBPm-00018A-T3; Thu, 06 Mar 2025 08:37:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqBGn-00069u-KM
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:28:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1tqBPa-00017o-Kr
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:37:18 -0500
+Received: from mail-dm6nam11on20611.outbound.protection.outlook.com
+ ([2a01:111:f403:2415::611]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqBGi-0003tV-3D
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:28:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741267677;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kjQ/NbiUE+LGUOD8WauZX81xXrfE8k/1CDdmdy1Irsw=;
- b=drTISwbspAiCj1imSL1NLIyIuKNWxwSwvb1vOidybaUyCFU2JmY6eblU/9LAJLnDlBifQv
- FazWgNkGsv9h68T8kX7YZMgbrBwM2Yo4sD0t3E8zT8P0pgk6/h8XlVawmgGebJdHCA0h2Q
- qOASc1ymfFRIxw4GEpvbf8AYKX4S2Ns=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-6O9D65gTNm2yuAhg8sqe0Q-1; Thu, 06 Mar 2025 08:27:51 -0500
-X-MC-Unique: 6O9D65gTNm2yuAhg8sqe0Q-1
-X-Mimecast-MFC-AGG-ID: 6O9D65gTNm2yuAhg8sqe0Q_1741267670
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2234dddbd6fso15752895ad.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 05:27:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741267670; x=1741872470;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kjQ/NbiUE+LGUOD8WauZX81xXrfE8k/1CDdmdy1Irsw=;
- b=q9mU0q0nk+LKRX1kikRFS3oBAro/BbYLBc6XPdvbn7fJtTi8l5OPyvTS7+DdfPq8/f
- m5SqoxSsO9MYT20tSgWVBPfF/2+erGEGZ93Da+TkU9NoiLgNdp98lDah2SQ0ZXLkSn7q
- dU9yumGctkcfYfJJs/+1qPSonBr/q6tHcooWtx2dp0WpokCAAF/zyc6I+HpWMMwe/FnG
- QkN0UpJMJ2VeHCbf+AzS8KA3NslC9s0MCA1BxDRJY3KzG3j9ZeaRkMiTdA/NEnQS75db
- ozCDT9dRNyS50fXEub1ub5/1BYR+u9LL2SDt9xyIbpqvGvVaVyjyqCW8qZkL2t/3RnCh
- JjlA==
-X-Gm-Message-State: AOJu0YwjwNI1o7S04l5n8GzSu7Ath1SNUFl8E6xO6xLlO8w79J2qids6
- Db6gndwweypaylIhaG1BzQQZBZYvaidk9CNTKyRqz5q0F1MwZKDRDmRHTDVXleswMKX9kwk8e9C
- F3RqWLQSlaTDTQPlA2LzJHPSZjRw3mSyDBaCBdF/NIC6vHG1nGS4HIFjqnIbSLXTCnOny9FDDr3
- 4LJpWTR5pYavJgVQBEP4EBUNPwCqE=
-X-Gm-Gg: ASbGncvd+83gUpotALfd5lWPXitN2JuJaBztt2HZtKtelFBb5WzmfBhuxmMZaF0lDYF
- L2FMwiqEbcnPDk2abB7LEljeVWP04kcTDuCyt2Fk2iNrb9KIxGZJR7A6zEGiSnqxUNvEMx2mBvy
- PzvMrorINeDVKjin+03OX5LoySmaB4
-X-Received: by 2002:a17:90b:3ec5:b0:2ea:8aac:6ac1 with SMTP id
- 98e67ed59e1d1-2ff617b5145mr5139775a91.15.1741267670103; 
- Thu, 06 Mar 2025 05:27:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFDTlQe3Hc2VpC0EAs0iK4egDPfV3MFOK53uKiMrb5uw4hbz7RLtlgWU06Zb4WtUBMXP9lkbHwy+ptMwj6lWzw=
-X-Received: by 2002:a17:90b:3ec5:b0:2ea:8aac:6ac1 with SMTP id
- 98e67ed59e1d1-2ff617b5145mr5139735a91.15.1741267669613; Thu, 06 Mar 2025
- 05:27:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1tqBPY-0004to-0A
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:37:18 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=O8N+yOk3r2LEyLxMQvePW0iQK03FjwP1RYvbKcpxQVJXgbv8oRatSyM/ruAGlk1Hssq6LZosqutzRurYFmgbISC0BMxLEOsSCqo5bOgyqOrcRr7GNd3D3BtA4gThkpcpO0rwcr28EdcDOTikQctk8Wf7NbZMQcu14wTSp8BSxiV2FlX1d9y0qiHS8Da174DMlRSSZ84KTJyH6TQl+XxRZzdVA01adRkmiFBSnBDGnP7Vl5q30tq7j8c+6Cn/gvoB4ZV+pAAW8azAdjhJI54sJeQoOhTWGUCe45UzGOkeO9X2VUOlp69mqRRljVT0T5u45rSIHlLmSxEufluMM+HaXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=F2/cUurOPvwcgbyXA8wKflbs1xZBdf17jE4NfZI6jHQ=;
+ b=tewvgql1+KfamAragiCJDKDzH4o90OJd1blBucKpxtLQ+rlBJQ+4+E+5ErjpxKOVmrOzVlV29hpdCfE2eDFKmAx8Uq0ATMi9ZHXjwgRJLNgMvyZhoQL4cJjVImaCE99Jq9loYHaB0LbKrIglIMGV8RrWg6o7n8OyLFyHIAv9xNY6eKAiszMvegMHGLjKRnX+CNmdHpxYAxkiXGyFLhvQXXcvJc2HVGX4/nt+bB2vwaA1BLlojBm0vApu4hk3BhXmo0ruwn7HPkUkFib5vDh6w9qZKTMu2clUaCzM5xSmDNotx9jDntCFVh0XUGu+NSSsJKENgixB5PwU4qUH+bDqCg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=F2/cUurOPvwcgbyXA8wKflbs1xZBdf17jE4NfZI6jHQ=;
+ b=HgZdoXFB2Q8IC5XsGalteY3ts1yEXrz8wPDlqeWm//tYG5IQgR6bwcYP8loC11X6xZSDo5f1Qp1evq0sA83eyJTh2b9QKgooInibZGskmr/ewwl6sLwJqO7YObQ++j6dV6TMpOeHsSZUiYGyiYDUHGVELMRQiqjunppqI2aLuNZbnN/RgMzBmFkuTEKXNvhU19AwkLb97v+q736XcDYQxPz+t7jDUpJYn3DL0INU9UBKRcpXDGK43Vl4lJyD8Yg0kug3wkUu6a/Aeb9ZDUfowu9Zj/rfxzH+0SMM2/qXi2tC3eUQQtER8uRS6elHpmVr9327SkJTq8BsjXLuxC+Hqg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL0PR12MB5538.namprd12.prod.outlook.com (2603:10b6:208:1c9::11)
+ by CY8PR12MB7537.namprd12.prod.outlook.com (2603:10b6:930:94::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.16; Thu, 6 Mar
+ 2025 13:37:10 +0000
+Received: from BL0PR12MB5538.namprd12.prod.outlook.com
+ ([fe80::3699:352b:fbf8:b41d]) by BL0PR12MB5538.namprd12.prod.outlook.com
+ ([fe80::3699:352b:fbf8:b41d%6]) with mapi id 15.20.8511.015; Thu, 6 Mar 2025
+ 13:37:09 +0000
+Message-ID: <d85c8d21-5e1b-4162-9f5b-fe270beb5eca@nvidia.com>
+Date: Thu, 6 Mar 2025 15:37:03 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 30/36] vfio/migration: Multifd device state transfer
+ support - send side
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
+ <4d727e2e0435e0022d50004e474077632830e08d.1741124640.git.maciej.szmigiero@oracle.com>
+ <629dff3c-865d-47d9-a01a-d212dfed1efb@nvidia.com>
+ <97b87f22-b867-4282-ba13-efba16458859@maciej.szmigiero.name>
+ <973268d4-85d6-4a17-ae76-2d20d8cfd7cb@redhat.com>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <973268d4-85d6-4a17-ae76-2d20d8cfd7cb@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR0P281CA0042.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:48::9) To BL0PR12MB5538.namprd12.prod.outlook.com
+ (2603:10b6:208:1c9::11)
 MIME-Version: 1.0
-References: <20250305034610.960147-1-jsnow@redhat.com>
- <87wmd272wo.fsf@pond.sub.org>
-In-Reply-To: <87wmd272wo.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 6 Mar 2025 08:27:36 -0500
-X-Gm-Features: AQ5f1JqnzhYd_zk7vx8DX9hErnu75ISQ309uRAI7TpzR2zq3Nt7MCDkCODkGOOU
-Message-ID: <CAFn=p-ZcFT6nnm+jOf=5QsLmpR4K+PJYJ3VPN_wfdx8BL_q_WA@mail.gmail.com>
-Subject: Re: [PATCH 00/57] docs: Add new QAPI transmogrifier
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Michael Roth <michael.roth@amd.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000e826d8062fac7854"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL0PR12MB5538:EE_|CY8PR12MB7537:EE_
+X-MS-Office365-Filtering-Correlation-Id: ca80e8dc-df9f-4a2c-4e53-08dd5cb3fe80
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TFlzOEtKemtjVnZXYllkUGdhanhhcSsrN2JTMm5ySWpLTFlQRlcrdmlWVTNE?=
+ =?utf-8?B?VExsSzFvdWFidHJYSXo1ZEdEcTd2Y0ZBZlBZY3cvbUtRWXVSUXRINkplVFhq?=
+ =?utf-8?B?bXdqSEp2Y0duVVRDZG9hNUJCL1djR1FNQ3ltS0ZLd250eTVKb3Y2UGVpUXhG?=
+ =?utf-8?B?UWIyczdqa3N5clR0aFBnRmZyeW1yczVUeWxVRnBsTFhTK1hFS2w0WDEySVpl?=
+ =?utf-8?B?Rms5UEE3QnNqb0FDc1pPSkRmcjlTVk9Wek90cTdTN25qL0ovbVpEYXVINjlt?=
+ =?utf-8?B?T0NjS05xNkdvUjlWVEhsc0Z4NnJwSjl6aWFnajFsNzJRdXY2c3JVOTF5RDVY?=
+ =?utf-8?B?Z1pWcW5hdnJTWjJnTU1KLzNFWlpLd2orNXFjV3hvUlRHR2YzdnFrMlptRUdw?=
+ =?utf-8?B?eGltNU1VRGtuZmxaRVJmTGh5aTdxUXhQLzNST3A4NngwNnlBLzhteGRUNkxJ?=
+ =?utf-8?B?TE95NmErUmU1QjN3U3drMXpiSjFzR0oxbXhwSWhJYXlLZWtKTUZuNmJRSUdk?=
+ =?utf-8?B?SFdnRjdlYWdmMUpIek9remhGdWFWajZQMGo3SDcyWm9iYWdnR0F5SEtRUkRa?=
+ =?utf-8?B?ejFYT3E3ekZNeW4ybVl5NlpsM3NOQjBYT3RxWU41OFZqTUd0NVRjOTFuZCt3?=
+ =?utf-8?B?VnZOS0p2dnVXTHRCSzFDVUxBWmNkcUZxbjZKSVJrRVJmcEJuaHNHN2dKUWFS?=
+ =?utf-8?B?VTNkWTJjUGo4RjQ2NkxaUDRubzBCcytyR2Qrc2orNzJvRTY4aU1vWFdBYjhT?=
+ =?utf-8?B?V1RYL2JMQkpRMHlCSDVrRWsrdVNram5zbjNBTS9RWWxzbHhGM0RLWlZDcUNZ?=
+ =?utf-8?B?Skh1OFg1dXA4TlFuYXE5VWg0dnNDUnQ4cm50ZnlFd0x1STUvUnFNZzJBcXNI?=
+ =?utf-8?B?TFVMckRYcUhhR0lXNm5EUGxpSjVsVWcwZ0JhbmpoRVl2Y25YcWlZTDQvK2ZM?=
+ =?utf-8?B?Z0NjcjQ5ZEVVK2Rhb25jdlBORTBwR1hwWjQyMWNmU3VXWjVQUnBHY295dGc3?=
+ =?utf-8?B?Y25TLzNjbGVwbm9WWnVSQkNZQ2VrOG54OUwxUndJUGo5UGlIbnJvUENqMExE?=
+ =?utf-8?B?VzZpNUxlbHdYM1V1bE9FL0N3cWw4dFRtV2lkNk9IZGxyMVZJUzlBNzQ1RlF1?=
+ =?utf-8?B?L1dJSlMvRXFMbVA2d3dRcmNFVGZqWXoyOHY3YVNwdEZBeE01S2JuMFc1Y0xm?=
+ =?utf-8?B?cEtIRktTYmdvMFgyS1VmS3dSN05YK2prZ0dSUEQvTlM1UGRtN1lFSS9GTVQx?=
+ =?utf-8?B?cUYwM3p3Tk5yUTI2Um5ndjBoK0RjZFNvRXpMWExGMngrL3hCTFZWVkVlNnZD?=
+ =?utf-8?B?K1Y1UFU1MWxDQkpEeWRsU0hvaUJ3M0V4TERPdTUvb294T3RsL09wTGd6Sm00?=
+ =?utf-8?B?KzYzdDNQOWc1YmNoMGhYdWs2OVYwWXdsb0Y4cEE0MEJRZnlHYmdyVmRYVjhR?=
+ =?utf-8?B?QmNadVpNQnNFZ29BR2Qzc3piVjhTQkI2S1l0TFFmQXlmbGExNUlZTitQUGNJ?=
+ =?utf-8?B?WkJZSWQ1TXQyaUttQURTbFdteHlZTHBUQjFKWDNPQTBLWDMvZ2xQVm1YZndh?=
+ =?utf-8?B?Q3NOc3l2Ui93cktNR1BoSkM4Z0IwTHBDdDBNNWYyMFdIMXl5R0Rla1pnUzV0?=
+ =?utf-8?B?eVVYUE0wSWJEeDJnVTcySkg3c3pMcmY1ZFNWSlJoUG55K0ZLbVRJWTMyK2ta?=
+ =?utf-8?B?R05iY2VDNXlDQ0JBZFdEM1Q5anpJeWtENmc0dWc0cFM2UEVaWEZ4cVRmNG5U?=
+ =?utf-8?B?eEVLU3NJc2dxN05Ca3B2R0k3aFgwQ2xrelhMcVdrT0lRaUg1c3RrRFZscUl1?=
+ =?utf-8?B?Q1h4MjNYTWRIRXB0S3dpYWhXQ3NITnM0UU1mWUpUS3h3UmJmTjR0OTJmclB4?=
+ =?utf-8?Q?dkGtrkU3DGIJK?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL0PR12MB5538.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bmJYMm8vTmg0UzdhL3NETGRQREErbXpVcGorSjNBT09KZGlCMWpmTVdUS2xn?=
+ =?utf-8?B?U0NlUkYyZUQ5amdwTjR1Zit6UFZTaWZEdWRWeVVUWnhCQ21pbHpJc084NlBQ?=
+ =?utf-8?B?TnNrYkRGMGQwQnloUC9uNmlkaFIwSm1BNFRKVFVhT0ZwYlZ5TWJyZ00ybEhJ?=
+ =?utf-8?B?a0RZTzkvWXdKdVI5UUxqRmlwVXcyWXZUZzg0M0xMUmZBaFBKeWU5YXJUdWlK?=
+ =?utf-8?B?bUlwSmd0QWppdHU3Ykt0S0lFTWlXc0IvOFZZdVg1SSt0cUxFL3ptZkczc2Zn?=
+ =?utf-8?B?SkxTa2tDYno0d0UybGtPU0gyc0NiaXJUU2FvaFI3YWJmOE51ZDNNS09ZTnZQ?=
+ =?utf-8?B?SkZITlQ3Vm5lOFhHMTl4UWxMaWdKWDdkWFpyUDhZdkJZaHBnVlQ4ekluNC9k?=
+ =?utf-8?B?eTltVlBtZmdFd3FXWFNEamNZbDJLQ2xkSXJDeWxjbXl0Zk1waVlLR0ZxWGVV?=
+ =?utf-8?B?U1ArbjZONFZFaHRxNDNmb0pKaSs5VlNETzdtTk93TVdZR0YzVXI5T0poditN?=
+ =?utf-8?B?UkFlcU1YRUg2bjBveVdQaTRQdEloNW1OUG4wSkRYMDdRV1RSWGpJcmg1dWdP?=
+ =?utf-8?B?Sjl0NlBmWitTc1hZUVdaOGdLdGJ5RE55MEZXcm55d1BpTGdpSVNXbTU3a2ZW?=
+ =?utf-8?B?M1E5NUUzVThFU0puOWFlMlNVZStvNkpuT3FYUEpSbmpGYzFSR2xXZVcvUVNa?=
+ =?utf-8?B?dncvSXQ1eEYzQ0wyNHpWcXIyQk8zQk1hdks1aEw5NGZpNjZVTStWZ3VJVUhH?=
+ =?utf-8?B?RXlmS2gxRlVNN2FENnNuOTBPT3FsVzVocllPT1hJc0pKTWQ2c3RJL0hKZndQ?=
+ =?utf-8?B?MWs4ZWJVZkVkbFp4OVJtSU5QWUVhK2RzakhIcnJkdzBiRWNjZXppbUEraG1y?=
+ =?utf-8?B?aU9KQndzVmF6Si8ySytZcDJsNzdvRWJhL3RZenFwWUhFNUZXT2MweVRFRFVX?=
+ =?utf-8?B?cnNpWERLUWlCNVV5TG5xWit2VmQ5bmJhSkp3UllWdUxVUW01NVpZWUVCYmN6?=
+ =?utf-8?B?MWVtNHE2bWZaNitKTGt3bTZJK1YvMmFkY0p3L2VuRlhDNzk1ODJIKzNNVlNm?=
+ =?utf-8?B?OERpTEJmWTYwdVhTYktsbUhCZDc4QW41K0hsZGlnRDVxRmJlSEd3WnllYXRv?=
+ =?utf-8?B?R3NSS1pEUDNqK2d0QlUrbFZOMjF5N0hBNDBVeWd1SnZnOTVTMG1PZU04NlJE?=
+ =?utf-8?B?YjZDYjBLMVIwU0w1TW1GMmZnTlovRVVaaTR1Y01WYUtoVW9EWWNHMi81VnZt?=
+ =?utf-8?B?eXY2dEFkTlp6VjhpbUI2UmljVDJlUTZFeUlZcFJHTkhJZXNtTDRZUnhkV3Zz?=
+ =?utf-8?B?QkFiMkRsNTk5dFpYVlBheWNtbXRTb3FWSFZycU9zS1hZNitqc0prRVJQUWhy?=
+ =?utf-8?B?TXhORmdibHNPVHI3aFB3MEw5TVFWRFdGVWFTWFVFZCs5RXNjNUVxQ2VPejBN?=
+ =?utf-8?B?ZjN0UzdISlNWeWxXSExqRG03b0NjYXFIdlg2bGtpbVVxYjlPaklXQS9EQUpU?=
+ =?utf-8?B?aktpRXc5d0tnMFIxTm5oaG1SUDczS0t3US9waGlIN1YvTElqb0ZicW8xMUNH?=
+ =?utf-8?B?KzMvZ0lkN3krbjhONktRMEpjenZYM09hSElTdGg0V3FRdW9xM3l1RXNtOVox?=
+ =?utf-8?B?cEtNMlkzYk5TWU4zemhFcEU3NXVGTHB4YVJNSmhEdWhMem5ERkxJVER0cDhs?=
+ =?utf-8?B?L2xiKzJxbHBBS3dGNEtIZTkrMHcxNUg3VDlZMFJvUTNxL1U3S01RUXVxNm96?=
+ =?utf-8?B?ajl2ZktEK1BTSUI5M1pwd2VYRzJEdUJZNXZ1ZS9MWTJFeG9pSGtoL1ZYSTVY?=
+ =?utf-8?B?Si96K2ZtRjAvTVAvNXpJT1B5dXBDTFlpWHppTHkycWJpVnU5c24weHd4TW5a?=
+ =?utf-8?B?MDVaZjY1eFcxSzZsb0FtWjJ0TTlEaXpXc21wb1MvSitWUFFIWXRtT0UwQmFO?=
+ =?utf-8?B?clgyRXp3UlluYnRwbEw5aDJYT0ZlcjRGNzI2ODFaWkRNdThHVjNtZ0lPb1hn?=
+ =?utf-8?B?dGFLVXRGNE0rR1FLZEl4a3A1NkNPS09xK3Rxc0JzNS9yempwYUJZak9sOWg4?=
+ =?utf-8?B?MEQwVktFRENJekxoYXBFRXZiU3h0c3FENGN1NjdpbTRiRU5PM0U1bENQSFBa?=
+ =?utf-8?Q?6T6UPqq/7ciSgvoJewEr0RBcz?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ca80e8dc-df9f-4a2c-4e53-08dd5cb3fe80
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB5538.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2025 13:37:09.8842 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6eFZSv8P6wGq/eDHEIbOjp9jBLi6LdxR9hdm2W396qx4qSb8v7eaq2fPzRw2tawzMW7J6ezAAjfXQcKRwqR3yA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7537
+Received-SPF: softfail client-ip=2a01:111:f403:2415::611;
+ envelope-from=avihaih@nvidia.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,319 +186,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e826d8062fac7854
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 6, 2025, 7:35=E2=80=AFAM Markus Armbruster <armbru@redhat.com> =
-wrote:
+On 06/03/2025 12:32, Cédric Le Goater wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> On 3/6/25 11:15, Maciej S. Szmigiero wrote:
+>> On 6.03.2025 07:47, Avihai Horon wrote:
+>>>
+>>> On 05/03/2025 0:03, Maciej S. Szmigiero wrote:
+>>>> External email: Use caution opening links or attachments
+>>>>
+>>>>
+>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>
+>>>> Implement the multifd device state transfer via additional per-device
+>>>> thread inside save_live_complete_precopy_thread handler.
+>>>>
+>>>> Switch between doing the data transfer in the new handler and doing it
+>>>> in the old save_state handler depending if VFIO multifd transfer is 
+>>>> enabled
+>>>> or not.
+>>>>
+>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>>> ---
+>>>>   hw/vfio/migration-multifd.c   | 142 
+>>>> ++++++++++++++++++++++++++++++++++
+>>>>   hw/vfio/migration-multifd.h   |   6 ++
+>>>>   hw/vfio/migration.c           |  22 ++++--
+>>>>   hw/vfio/trace-events          |   2 +
+>>>>   include/hw/vfio/vfio-common.h |   6 ++
+>>>>   5 files changed, 172 insertions(+), 6 deletions(-)
+>>>>
+>>>> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+>>>> index 1d81233c755f..bfb9a72fa450 100644
+>>>> --- a/hw/vfio/migration-multifd.c
+>>>> +++ b/hw/vfio/migration-multifd.c
+>>>> @@ -496,6 +496,148 @@ bool vfio_multifd_setup(VFIODevice *vbasedev, 
+>>>> bool alloc_multifd, Error **errp)
+>>>>       return true;
+>>>>   }
+>>>>
+>>>> +void vfio_multifd_emit_dummy_eos(VFIODevice *vbasedev, QEMUFile *f)
+>>>> +{
+>>>> +    assert(vfio_multifd_transfer_enabled(vbasedev));
+>>>> +
+>>>> +    /*
+>>>> +     * Emit dummy NOP data on the main migration channel since the 
+>>>> actual
+>>>> +     * device state transfer is done via multifd channels.
+>>>> +     */
+>>>> +    qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+>>>> +}
+>>>> +
+>>>> +static bool
+>>>> +vfio_save_complete_precopy_thread_config_state(VFIODevice *vbasedev,
+>>>> +                                               char *idstr,
+>>>> +                                               uint32_t instance_id,
+>>>> +                                               uint32_t idx,
+>>>> +                                               Error **errp)
+>>>> +{
+>>>> +    g_autoptr(QIOChannelBuffer) bioc = NULL;
+>>>> +    g_autoptr(QEMUFile) f = NULL;
+>>>> +    int ret;
+>>>> +    g_autofree VFIODeviceStatePacket *packet = NULL;
+>>>> +    size_t packet_len;
+>>>> +
+>>>> +    bioc = qio_channel_buffer_new(0);
+>>>> +    qio_channel_set_name(QIO_CHANNEL(bioc), 
+>>>> "vfio-device-config-save");
+>>>> +
+>>>> +    f = qemu_file_new_output(QIO_CHANNEL(bioc));
+>>>> +
+>>>> +    if (vfio_save_device_config_state(f, vbasedev, errp)) {
+>>>> +        return false;
+>>>> +    }
+>>>> +
+>>>> +    ret = qemu_fflush(f);
+>>>> +    if (ret) {
+>>>> +        error_setg(errp, "%s: save config state flush failed: %d",
+>>>> +                   vbasedev->name, ret);
+>>>> +        return false;
+>>>> +    }
+>>>> +
+>>>> +    packet_len = sizeof(*packet) + bioc->usage;
+>>>> +    packet = g_malloc0(packet_len);
+>>>> +    packet->version = VFIO_DEVICE_STATE_PACKET_VER_CURRENT;
+>>>> +    packet->idx = idx;
+>>>> +    packet->flags = VFIO_DEVICE_STATE_CONFIG_STATE;
+>>>
+>>> The packet is sent on the wire.
+>>> Shouldn't we use cpu_to_be32() for version, idx and flags? Also 
+>>> below in vfio_multifd_save_complete_precopy_thread().
+>>> And then use be32_to_cpu() in patch #26 when receiving the packet?
+>>
+>> Is it even possible to migrate to a host with different endianess here?
+>>
+>> Also AFAIK big endian hosts barely exist today, is any of them even 
+>> VFIO-capable?
+>
+> s390x is VFIO capable. VFIO PCI migration is not supported on these.
+>
+It is indeed a niche use case and not even applicable today, but if we 
+want to add support for it after the release, we will have to add a 
+compatibility option for older QEMUs.
+If we add support for it now, then we can avoid the compatibility option.
 
-> When I eyeballed the previous iteration, I made a few observations[1].
-> Let's see what has changed.
->
-> } New table of contents shows one level, old two.  No objection; the
-> } navigation thingie on the left is more useful anyway.
->
-> No change.  Okay.
->
+It's a really small change and it can come even after the series is 
+merged, as a fix.
+So IMHO it wouldn't hurt, for completeness.
 
-This is configured in the .rst file, not in code. I just happened to use a
-different level in my test document.
-
-For initial merge, I'll probably enable the new generator on QMP only while
-I work on namespace support.
-
-
-> } The new generator elides unreferenced types.  Generally good, but two
-> } observations:
-> }
-> } * QapiErrorClass is unreferenced, but its members are mentioned in
-> }   Errors sections.  QapiErrorClass serves as better than nothing error
-> }   code documentation, but it's gone in the new doc.  So this is a minor
-> }   regression.  We can figure out what to do about it later.
-> }
-> } * Section "QMP errors" is empty in the new doc, because its entire
-> }   contents is elided.  I guess we should elide the section as well, but
-> }   it's fine to leave that for later.
->
-> Unreferenced types are back.  Okay; we can elide them later.
->
-
-Yep, it will come along with the inliner later.
-
-
-> } Old doc shows a definition's since information like any other section.
-> } New doc has it in the heading box.  Looks prettier and uses much less
-> } space.  Not sure the heading box is the best place, but it'll do for
-> } now, we can always move it around later.
->
-> No change.
->
-
-Always happy to take HTML/CSS patches from someone with a strong opinion.
-For now, though, ...
-
-
-> } The new doc's headings use "Struct" or "Union" where the old one uses
-> } just "Object".  Let's keep "Object", please.
->
-> Fixed.
->
-> } In the new doc, some member references are no longer rendered as such,
-> } e.g. @on-source-error and @on-target-error in BackupCommon's note.
-> } Another small regression.
->
-> Fixed.
->
-> } Union branches are busted in the new generator's output.  I know they
-> } used to work, so I'm not worried about it.
->
-> Fixed: "When TAG-MEMBER is VALUE; The members of BRANCH-TYPE."
->
-> The semicolon feels odd.  I'd use a colon there.  Or put the when at the
-> end like the old generator does: "The members of BRANCH-TYPE when
-> TAG-MEMBER is VALUE".
->
-
-Easy to change!
-
-
-> Side effects, I think:
->
-> * Members of explicit base types are no longer inlined.  Instead: "The
->   members of BASE-TYPE."
->
-> * Members of explicit command / event argument types are no longer
->   inlined.  Instead: "The members of ARG-TYPE."
->
-> Both fine for the initial version.
->
-
-Yeah, inliner is all or nothing.
-
-
-> } The new doc shows the return type, the old doc doesn't.  Showing it is
-> } definitely an improvement, but we need to adjust the doc text to avoid
-> } silliness like "Returns: SnapshotInfo =E2=80=93 SnapshotInfo".
->
-> No change.  Can polish on top.
->
-
-I have a patch for this in my kvm forum branch, along with "convert
-everything into actual cross-references". Will send afterwards.
-
-
-> } The new doc shows Arguments / Members, Returns, and Errors in two-colum=
-n
-> } format.  Looks nice.  But for some reason, the two columns don't align
-> } horizontally for Errors like they do for the others.  Certainly not a
-> } blocker of anything, but we should try to fix it at some point.
->
-> No change.  Fine to leave for later.
->
-
-Yes, but I did figure out why and I do have a solution planned now. It's
-something I had to work around for "The members of..." pointers.
-
-
-> } The new doc doesn't show non-definition conditionals, as mentioned in
-> } the cover letter.  It shows definition conditionals twice.  Once should
-> } suffice.
->
-> No change.  You asked for advice, and I gave some[2].
->
-
-D'oh!
-
-
-> } There's probably more, but this is it for now.
->
-> Again, this is it for now.
->
->
->
-> [1] Message-ID: <87wmds4tpk.fsf@pond.sub.org>
-> https://lore.kernel.org/qemu-devel/87wmds4tpk.fsf@pond.sub.org/
->
-> [2] Message-ID: <87zfhya0is.fsf@pond.sub.org>
-> https://lore.kernel.org/qemu-devel/87zfhya0is.fsf@pond.sub.org/
->
->
-
---000000000000e826d8062fac7854
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Mar 6, 2025, 7:35=E2=80=
-=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@red=
-hat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">When I eyeba=
-lled the previous iteration, I made a few observations[1].<br>
-Let&#39;s see what has changed.<br>
-<br>
-} New table of contents shows one level, old two.=C2=A0 No objection; the<b=
-r>
-} navigation thingie on the left is more useful anyway.<br>
-<br>
-No change.=C2=A0 Okay.<br></blockquote></div></div><div dir=3D"auto"><br></=
-div><div dir=3D"auto">This is configured in the .rst file, not in code. I j=
-ust happened to use a different level in my test document.</div><div dir=3D=
-"auto"><br></div><div dir=3D"auto">For initial merge, I&#39;ll probably ena=
-ble the new generator on QMP only while I work on namespace support.</div><=
-div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmai=
-l_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 =
-.8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-} The new generator elides unreferenced types.=C2=A0 Generally good, but tw=
-o<br>
-} observations:<br>
-} <br>
-} * QapiErrorClass is unreferenced, but its members are mentioned in<br>
-}=C2=A0 =C2=A0Errors sections.=C2=A0 QapiErrorClass serves as better than n=
-othing error<br>
-}=C2=A0 =C2=A0code documentation, but it&#39;s gone in the new doc.=C2=A0 S=
-o this is a minor<br>
-}=C2=A0 =C2=A0regression.=C2=A0 We can figure out what to do about it later=
-.<br>
-} <br>
-} * Section &quot;QMP errors&quot; is empty in the new doc, because its ent=
-ire<br>
-}=C2=A0 =C2=A0contents is elided.=C2=A0 I guess we should elide the section=
- as well, but<br>
-}=C2=A0 =C2=A0it&#39;s fine to leave that for later.<br>
-<br>
-Unreferenced types are back.=C2=A0 Okay; we can elide them later.<br></bloc=
-kquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Yep, it wi=
-ll come along with the inliner later.</div><div dir=3D"auto"><br></div><div=
- dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote =
-class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid=
-;padding-left:1ex">
-<br>
-} Old doc shows a definition&#39;s since information like any other section=
-.<br>
-} New doc has it in the heading box.=C2=A0 Looks prettier and uses much les=
-s<br>
-} space.=C2=A0 Not sure the heading box is the best place, but it&#39;ll do=
- for<br>
-} now, we can always move it around later.<br>
-<br>
-No change.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">Always happy to take HTML/CSS patches from someone with a strong =
-opinion. For now, though, ...</div><div dir=3D"auto"><br></div><div dir=3D"=
-auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D=
-"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding=
--left:1ex">
-<br>
-} The new doc&#39;s headings use &quot;Struct&quot; or &quot;Union&quot; wh=
-ere the old one uses<br>
-} just &quot;Object&quot;.=C2=A0 Let&#39;s keep &quot;Object&quot;, please.=
-<br>
-<br>
-Fixed.<br>
-<br>
-} In the new doc, some member references are no longer rendered as such,<br=
->
-} e.g. @on-source-error and @on-target-error in BackupCommon&#39;s note.<br=
->
-} Another small regression.<br>
-<br>
-Fixed.<br>
-<br>
-} Union branches are busted in the new generator&#39;s output.=C2=A0 I know=
- they<br>
-} used to work, so I&#39;m not worried about it.<br>
-<br>
-Fixed: &quot;When TAG-MEMBER is VALUE; The members of BRANCH-TYPE.&quot;<br=
->
-<br>
-The semicolon feels odd.=C2=A0 I&#39;d use a colon there.=C2=A0 Or put the =
-when at the<br>
-end like the old generator does: &quot;The members of BRANCH-TYPE when<br>
-TAG-MEMBER is VALUE&quot;.<br></blockquote></div></div><div dir=3D"auto"><b=
-r></div><div dir=3D"auto">Easy to change!</div><div dir=3D"auto"><br></div>=
-<div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc s=
-olid;padding-left:1ex">
-<br>
-Side effects, I think:<br>
-<br>
-* Members of explicit base types are no longer inlined.=C2=A0 Instead: &quo=
-t;The<br>
-=C2=A0 members of BASE-TYPE.&quot;<br>
-<br>
-* Members of explicit command / event argument types are no longer<br>
-=C2=A0 inlined.=C2=A0 Instead: &quot;The members of ARG-TYPE.&quot;<br>
-<br>
-Both fine for the initial version.<br></blockquote></div></div><div dir=3D"=
-auto"><br></div><div dir=3D"auto">Yeah, inliner is all or nothing.</div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_=
-quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8=
-ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-} The new doc shows the return type, the old doc doesn&#39;t.=C2=A0 Showing=
- it is<br>
-} definitely an improvement, but we need to adjust the doc text to avoid<br=
->
-} silliness like &quot;Returns: SnapshotInfo =E2=80=93 SnapshotInfo&quot;.<=
-br>
-<br>
-No change.=C2=A0 Can polish on top.<br></blockquote></div></div><div dir=3D=
-"auto"><br></div><div dir=3D"auto">I have a patch for this in my kvm forum =
-branch, along with &quot;convert everything into actual cross-references&qu=
-ot;. Will send afterwards.</div><div dir=3D"auto"><br></div><div dir=3D"aut=
-o"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-le=
-ft:1ex">
-<br>
-} The new doc shows Arguments / Members, Returns, and Errors in two-column<=
-br>
-} format.=C2=A0 Looks nice.=C2=A0 But for some reason, the two columns don&=
-#39;t align<br>
-} horizontally for Errors like they do for the others.=C2=A0 Certainly not =
-a<br>
-} blocker of anything, but we should try to fix it at some point.<br>
-<br>
-No change.=C2=A0 Fine to leave for later.<br></blockquote></div></div><div =
-dir=3D"auto"><br></div><div dir=3D"auto">Yes, but I did figure out why and =
-I do have a solution planned now. It&#39;s something I had to work around f=
-or &quot;The members of...&quot; pointers.</div><div dir=3D"auto"><br></div=
-><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc =
-solid;padding-left:1ex">
-<br>
-} The new doc doesn&#39;t show non-definition conditionals, as mentioned in=
-<br>
-} the cover letter.=C2=A0 It shows definition conditionals twice.=C2=A0 Onc=
-e should<br>
-} suffice.<br>
-<br>
-No change.=C2=A0 You asked for advice, and I gave some[2].<br></blockquote>=
-</div></div><div dir=3D"auto"><br></div><div dir=3D"auto">D&#39;oh!</div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail=
-_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .=
-8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-} There&#39;s probably more, but this is it for now.<br>
-<br>
-Again, this is it for now.<br>
-<br>
-<br>
-<br>
-[1] Message-ID: &lt;<a href=3D"mailto:87wmds4tpk.fsf@pond.sub.org" target=
-=3D"_blank" rel=3D"noreferrer">87wmds4tpk.fsf@pond.sub.org</a>&gt;<br>
-<a href=3D"https://lore.kernel.org/qemu-devel/87wmds4tpk.fsf@pond.sub.org/"=
- rel=3D"noreferrer noreferrer" target=3D"_blank">https://lore.kernel.org/qe=
-mu-devel/87wmds4tpk.fsf@pond.sub.org/</a><br>
-<br>
-[2] Message-ID: &lt;<a href=3D"mailto:87zfhya0is.fsf@pond.sub.org" target=
-=3D"_blank" rel=3D"noreferrer">87zfhya0is.fsf@pond.sub.org</a>&gt;<br>
-<a href=3D"https://lore.kernel.org/qemu-devel/87zfhya0is.fsf@pond.sub.org/"=
- rel=3D"noreferrer noreferrer" target=3D"_blank">https://lore.kernel.org/qe=
-mu-devel/87zfhya0is.fsf@pond.sub.org/</a><br>
-<br>
-</blockquote></div></div></div>
-
---000000000000e826d8062fac7854--
-
+Thanks.
 
