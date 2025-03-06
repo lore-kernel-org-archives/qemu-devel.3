@@ -4,58 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9602C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 11:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B055FC282EC
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 11:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq9il-0000Z1-23; Thu, 06 Mar 2025 06:48:59 -0500
+	id 1tq9n0-00022s-G8; Thu, 06 Mar 2025 06:53:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1tq9ij-0000Yl-Uo
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 06:48:57 -0500
-Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
- helo=smtp.livemail.co.uk)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tq9mz-00022j-99
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 06:53:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1tq9ig-0008OK-9b
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 06:48:57 -0500
-Received: from [172.22.54.5] (unknown [145.40.191.116])
- (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id A9128403C0;
- Thu,  6 Mar 2025 11:48:29 +0000 (GMT)
-Message-ID: <3bc8c923df287519b552a1b67c2f01b557adbf02.camel@randomman.co.uk>
-Subject: Re: [PATCH v7 00/16] Introduce support for IGVM files
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, "Daniel P . Berrange" <berrange@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, Eduardo
- Habkost <eduardo@habkost.net>,  Alistair Francis <alistair@alistair23.me>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,  Igor
- Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,  Ani Sinha <anisinha@redhat.com>,
- Joerg Roedel <jroedel@suse.com>
-Date: Thu, 06 Mar 2025 11:48:29 +0000
-In-Reply-To: <CAGxU2F4pq3Y7QnQBCEPQ35kQ2hxrwU5nVA9FmR=J6id+EJXAtA@mail.gmail.com>
-References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
- <CAGxU2F4pq3Y7QnQBCEPQ35kQ2hxrwU5nVA9FmR=J6id+EJXAtA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tq9mv-0000aq-TZ
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 06:53:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741261994;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yei7ybyqzBFo5udSBL62hX06mvgEi9MLZ/jpWKvEBIo=;
+ b=KdPvhNVjTPF/hj5LDG7miw2VbZXPnnFjlUYS0oeoP6157sqldOSPVKzjt6+Zc2Yd6kOVAt
+ MUiKB2WyeOIDmjysGvfrdf9O3eC06n1dDR4j3Kqt+uJK2szimbEf9U9n3gokv/HZ4Sm6HM
+ gJgosdp/m4S2hWjg6zZChaplSCl6lDw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-yhseRxsRPIuZGW6C19mnKA-1; Thu,
+ 06 Mar 2025 06:52:59 -0500
+X-MC-Unique: yhseRxsRPIuZGW6C19mnKA-1
+X-Mimecast-MFC-AGG-ID: yhseRxsRPIuZGW6C19mnKA_1741261978
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7210E18333C8; Thu,  6 Mar 2025 11:52:45 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.112])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73D0E1828A81; Thu,  6 Mar 2025 11:52:42 +0000 (UTC)
+Date: Thu, 6 Mar 2025 11:52:38 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [RFC PATCH 04/18] qemu: Introduce 'qemu/legacy_binary_info.h'
+Message-ID: <Z8mMhjwiYCY7Pq4H@redhat.com>
+References: <20250305153929.43687-1-philmd@linaro.org>
+ <20250305153929.43687-5-philmd@linaro.org>
+ <35177cd6-0741-4c28-a5d5-3529208a31dc@linaro.org>
+ <dd0336c2-c2ed-477c-8f40-eaee2f110238@redhat.com>
+ <21a34cac-855b-4628-a154-e708ea85df59@linaro.org>
+ <CABgObfaKQLizim36Lzqzn+brc5d7m10eKbZV59ZK9+03Kt7eTg@mail.gmail.com>
 MIME-Version: 1.0
-Received-SPF: neutral client-ip=213.171.216.60;
- envelope-from=roy.hopkins@randomman.co.uk; helo=smtp.livemail.co.uk
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfaKQLizim36Lzqzn+brc5d7m10eKbZV59ZK9+03Kt7eTg@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,278 +94,91 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2025-03-05 at 16:47 +0100, Stefano Garzarella wrote:
-> Hi Roy,
->=20
-> I was testing this series with the IGVM file generated by COCONUT SVSM,=
-=20
-> but QEMU was failing in this way:
->=20
-> =C2=A0=C2=A0 qemu-system-x86_64: KVM does not support guest_memfd
-> =C2=A0=C2=A0 qemu-system-x86_64: failed to initialize kvm: Operation not =
-permitted
->=20
-> After spending some time debugging, I found that IGVM is parsed in=20
-> kvm_arch_init(). One of the handler called during the parsing is=20
-> qigvm_prepare_memory(), which adds a new memory region calling=20
-> memory_region_init_ram_guest_memfd(), but it fails:
->=20
-> kvm_arch_init()
-> -> qigvm_prepare_memory()
-> =C2=A0=C2=A0 -> memory_region_init_ram_guest_memfd()
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -> kvm_create_guest_memfd()
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ...
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!kvm_gue=
-st_memfd_supported) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 error_setg(errp, "KVM does not support guest_memfd");
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 return -1;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->=20
-> So, I applied the following change and SVSM booted!
->=20
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index f89568bfa3..840f36675e 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2722,17 +2722,17 @@ static int kvm_init(MachineState *ms)
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 kvm_state =3D s;
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 ret =3D kvm_arch_init(ms, s);
-> -=C2=A0=C2=A0=C2=A0 if (ret < 0) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto err;
-> -=C2=A0=C2=A0=C2=A0 }
-> -
-> =C2=A0=C2=A0=C2=A0=C2=A0 kvm_supported_memory_attributes =3D kvm_vm_check=
-_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
-> =C2=A0=C2=A0=C2=A0=C2=A0 kvm_guest_memfd_supported =3D
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kvm_check_extension(s, K=
-VM_CAP_GUEST_MEMFD) &&
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kvm_check_extension(s, K=
-VM_CAP_USER_MEMORY2) &&
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (kvm_supported_memory_at=
-tributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
-> =C2=A0
-> +=C2=A0=C2=A0=C2=A0 ret =3D kvm_arch_init(ms, s);
-> +=C2=A0=C2=A0=C2=A0 if (ret < 0) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto err;
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> =C2=A0=C2=A0=C2=A0=C2=A0 if (s->kernel_irqchip_split =3D=3D ON_OFF_AUTO_A=
-UTO) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->kernel_irqchip_split =
-=3D mc->default_kernel_irqchip_split ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
->=20
-> Checking, I discovered that it was done on purpose by Paolo, so not sure=
-=20
-> if my fix is valid:
->=20
-> commit 586d708c1e3e5e29a0b3c05c347290aed9478854
-> Author: Paolo Bonzini <pbonzini@redhat.com>
-> Date:=C2=A0=C2=A0 Fri Oct 11 10:39:58 2024 +0200
->=20
-> =C2=A0=C2=A0=C2=A0 accel/kvm: check for KVM_CAP_MEMORY_ATTRIBUTES on vm
-> =C2=A0=C2=A0=20
-> =C2=A0=C2=A0=C2=A0 The exact set of available memory attributes can vary =
-by VM.=C2=A0 In the
-> =C2=A0=C2=A0=C2=A0 future it might vary depending on enabled capabilities=
-, too.=C2=A0 Query the
-> =C2=A0=C2=A0=C2=A0 extension on the VM level instead of on the KVM level,=
- and only after
-> =C2=A0=C2=A0=C2=A0 architecture-specific initialization.
-> =C2=A0=C2=A0=20
-> =C2=A0=C2=A0=C2=A0 Inspired by an analogous patch by Tom Dohrmann.
-> =C2=A0=C2=A0=20
-> =C2=A0=C2=A0=C2=A0 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->=20
-> @Paolo any suggestion?
->=20
-> Thanks,
-> Stefano
->=20
-Hi Stefano,
+On Thu, Mar 06, 2025 at 12:34:13PM +0100, Paolo Bonzini wrote:
+> Il gio 6 mar 2025, 10:27 Philippe Mathieu-Daudé <philmd@linaro.org> ha
+> scritto:
+> 
+> > This API is to allow refactoring code for heterogeneous emulation,
+> > without changing user-facing behavior of current qemu-system binaries,
+> > which I now consider as 'legacy'.
+> >
+> > Once all current restrictions removed, the new qemu-system-heterogeneous
+> > binary is expected to run any combination of targets.
+> >
+> > qemu-system-$target will be a call to qemu-system-heterogeneous with
+> > a restricted subset, possibly in the form of:
+> >
+> >   $ qemu-system-heterogeneous --target aarch64-softmmu
+> >
+> 
+> Or just qemu-system I guess.
+> 
+>     ^ equivalent of today's qemu-system-aarch64
+> >
+> > If you don't like 'qemu_legacy_binary_' prefix, I can use
+> > 'qemu_single_binary_' instead.
+> >
+> 
+> Still there is a problem with renaming binaries (both the "qemu-kvm" case
+> and the good/bad case that Richard pointed out).
 
-Thanks for testing this. The problem seems to be down to the fact that I
-had to introduce an initial parsing of the IGVM file during initialization
-to extract sev_features. I was parsing all directives in the file but it
-appears this has some unwanted side effects.
+We could special case the '-kvm' suffix, because by its nature it
+implies the current binary build target.
 
-Please could you try the patch below to see if it fixes the issue? If it
-does I'll incorporate it into the patch series and resubmit.
+> 
+> I think you should try creating two versions of system/arch_init.c, so that
+> it has a separate implementation for heterogeneous vs. single-target
+> binaries. Then you can keep separate linking steps for single-target
+> binaries and you naturally get the right target info from either the
+> target-specific arch_init-single.c, or the --target option for
+> arch_init-multi.c.
+> 
+> (Is --target even necessary? As long as you have a way disambiguate
+> same-named machines like -M virt, and have no default machine in the
+> multi-target binary, you shouldn't need it).
 
-From 3590460ec3945b02a679ad79735681a642596d60 Mon Sep 17 00:00:00 2001
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-Date: Thu, 6 Mar 2025 11:25:07 +0000
-Subject: [PATCH 1/1] backends/igvm: Add function to process only VP context
+If we did 'query-machines' on qemu-system-heterogeneous, it would
+return all machines from all targets. To disambiguate naming there
+are various options
 
-When initializing kvm for SEV, the sev_features need to be
-passed to the initialization function. When using IGVM files,
-sev_features is provided in the VP context definintions in
-the file. Currently this is handled in sev.c by processing
-the entire file to extract the VP context, however this has
-unwanted side-effects. Therefore this commit adds a new
-function that allows only the VP context definitions to
-be parsed in the IGVM file.
+  * The query-machines command would have to gain a new 'target'
+    field and we would have to document that uniqness is across
+    the tuple (name, target), not merely name. That's a semantic
+    change.
 
-Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
----
- backends/igvm-cfg.c       |  1 +
- backends/igvm.c           | 51 +++++++++++++++++++++++++++++++++++++++
- backends/igvm.h           |  3 +++
- include/system/igvm-cfg.h | 10 ++++++++
- target/i386/sev.c         | 10 ++++----
- 5 files changed, 70 insertions(+), 5 deletions(-)
+    We would still need a way to express the 'target' when asking
+    to instantiate a machine
 
-diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
-index 38f17dae44..25c4469768 100644
---- a/backends/igvm-cfg.c
-+++ b/backends/igvm-cfg.c
-@@ -41,6 +41,7 @@ static void igvm_cfg_class_init(ObjectClass *oc, void *da=
-ta)
-                                           "Set the IGVM filename to use");
-=20
-     igvmc->process =3D qigvm_process_file;
-+    igvmc->process_vp_context =3D qigvm_process_vp_context;
- }
-=20
- static void igvm_cfg_init(Object *obj)
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 7673e4a882..aae83f8a77 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -965,3 +965,54 @@ cleanup:
-=20
-     return retval;
- }
-+
-+int qigvm_process_vp_context(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-+                             Error **errp)
-+{
-+    int32_t header_count;
-+    int retval =3D -1;
-+    QIgvm ctx;
-+
-+    memset(&ctx, 0, sizeof(ctx));
-+    ctx.file =3D qigvm_file_init(cfg->filename, errp);
-+    if (ctx.file < 0) {
-+        return -1;
-+    }
-+
-+    ctx.cgs =3D cgs;
-+    ctx.cgsc =3D cgs ? CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(cgs) : NULL;
-+
-+    /*
-+     * Check that the IGVM file provides configuration for the current
-+     * platform
-+     */
-+    if (qigvm_supported_platform_compat_mask(&ctx, errp) < 0) {
-+        goto cleanup;
-+    }
-+
-+    header_count =3D igvm_header_count(ctx.file, IGVM_HEADER_SECTION_DIREC=
-TIVE);
-+    if (header_count <=3D 0) {
-+        error_setg(
-+            errp, "Invalid directive header count in IGVM file. Error code=
-: %X",
-+            header_count);
-+        goto cleanup;
-+    }
-+
-+    for (ctx.current_header_index =3D 0;
-+         ctx.current_header_index < (unsigned)header_count;
-+         ctx.current_header_index++) {
-+        IgvmVariableHeaderType type =3D igvm_get_header_type(
-+            ctx.file, IGVM_HEADER_SECTION_DIRECTIVE, ctx.current_header_in=
-dex);
-+        if (type =3D=3D IGVM_VHT_VP_CONTEXT) {
-+            if (qigvm_handler(&ctx, type, errp) < 0) {
-+                goto cleanup;
-+            }
-+        }
-+    }
-+    retval =3D 0;
-+
-+cleanup:
-+    igvm_free(ctx.file);
-+   =20
-+    return retval;
-+}
-diff --git a/backends/igvm.h b/backends/igvm.h
-index 269eb3a10e..a43b029d56 100644
---- a/backends/igvm.h
-+++ b/backends/igvm.h
-@@ -20,4 +20,7 @@
- int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
-                       Error **errp);
-=20
-+int qigvm_process_vp_context(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
-+                             Error **errp);
-+
- #endif
-diff --git a/include/system/igvm-cfg.h b/include/system/igvm-cfg.h
-index 21fadfe5b7..0c1a7ef309 100644
---- a/include/system/igvm-cfg.h
-+++ b/include/system/igvm-cfg.h
-@@ -38,6 +38,16 @@ typedef struct IgvmCfgClass {
-     int (*process)(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-                    Error **errp);
-=20
-+    /*
-+     * If an IGVM filename has been specified then only process=20
-+     * the VMSA sections in the IGVM file.
-+     * Performs a no-op if no filename has been specified.
-+     *
-+     * Returns 0 for ok and -1 on error.
-+     */
-+    int (*process_vp_context)(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-+        Error **errp);
-+
- } IgvmCfgClass;
-=20
- #define TYPE_IGVM_CFG "igvm-cfg"
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index ef25e64b14..d22e9870ea 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1893,14 +1893,14 @@ static int sev_common_kvm_init(ConfidentialGuestSup=
-port *cgs, Error **errp)
-          * each vcpu.
-          *
-          * The IGVM file is normally processed after initialization. There=
-fore
--         * we need to pre-process it here to extract sev_features in order=
- to
--         * provide it to KVM_SEV_INIT2. Each cgs_* function that is called=
- by
--         * the IGVM processor detects this pre-process by observing the st=
-ate
--         * as SEV_STATE_UNINIT.
-+         * we need to pre-process it here, just looking for the vp_context=
- to
-+         * extract sev_features in order to provide it to KVM_SEV_INIT2. E=
-ach
-+         * cgs_* function that is called by the IGVM processor detects thi=
-s=20
-+         * pre-process by observing the state as SEV_STATE_UNINIT.
-          */
-         if (x86machine->igvm) {
-             if (IGVM_CFG_GET_CLASS(x86machine->igvm)
--                    ->process(x86machine->igvm, machine->cgs, errp) =3D=3D=
- -1) {
-+                    ->process_vp_context(x86machine->igvm, machine->cgs, e=
-rrp) =3D=3D -1) {
-                 return -1;
-             }
-             /*
---=20
-2.43.0
+  * The query-machines command would have to gain a new 'target'
+    paramter so callers can restrict the data they receive back
 
+    We would still need a way to express the 'target' when asking
+    to instantiate a machine
+
+  * Rename all machine types so they are '<target>-<machine>'
+    The query-machines command doesn't change. Apps would have
+    to "parse" the machine name to see what 'target' each is
+    associated with, or we include an explicit 'target' field
+    in the returned data. Instianting a machine would not need
+    changing
+
+  * Require --target CLI arg, meaning query-machines remains
+    unchanged, as does instantiating machines
+
+Any other options ?
+
+The last is the simplest option if we just make --target be defaulted
+based on the binary name.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
