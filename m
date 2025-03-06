@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4875EC282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 14:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E2E9C282EC
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 14:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqC3h-0002wL-3F; Thu, 06 Mar 2025 09:18:45 -0500
+	id 1tqC1A-0008UJ-4P; Thu, 06 Mar 2025 09:16:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC1O-0000jl-M7
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:16:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC0f-0007RU-Co
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:15:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC1L-00023E-Dg
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:16:20 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC0d-0001pD-Gi
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:15:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741270578;
+ s=mimecast20190719; t=1741270534;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L1KeHcnkM0S5lcdMHwWh6X32Ga/cnuREcHAcx8VowSQ=;
- b=i6rT2QD2vOn4ujEcuGbp9SHXrHd91Smvzd/FTpc8vqIePU8g/Kx0bcl+tukBzqxW6FdXFu
- 1mv2Es88zHuBNSRkEx3ngSehcdYMIal5I5ODgP6IndDKiqf6IFBn40drKlExWVPCbUdNLT
- Tgwn1s31feXNmNPtM80X5LnoQa5kMb4=
+ bh=FNw/KaJyd7djxjrv3Hx0XbcUdwV3P/GfQA35U0gME/I=;
+ b=FCbk6RGsU1FUle12Aklj9AtLDcMrQ5dM1SL1FKgApCXjYe+VVvcaUFsBqGEwbaDt/8dlZx
+ LYsM6SF12/mjtOqW3Rxfd1KOnGN+OyF4BKHLek7Wyi6iEJSsZYPq4/nNTTRPdJf4H5jxNb
+ UkGPf27ZWwUoCQ49G0ABVCCsfA1wVho=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-pXcvA0plN6SFiENyJW-_Rw-1; Thu,
- 06 Mar 2025 09:16:15 -0500
-X-MC-Unique: pXcvA0plN6SFiENyJW-_Rw-1
-X-Mimecast-MFC-AGG-ID: pXcvA0plN6SFiENyJW-_Rw_1741270574
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-E2sSZGpxPy2Y5kLjsH0vQQ-1; Thu,
+ 06 Mar 2025 09:15:32 -0500
+X-MC-Unique: E2sSZGpxPy2Y5kLjsH0vQQ-1
+X-Mimecast-MFC-AGG-ID: E2sSZGpxPy2Y5kLjsH0vQQ_1741270531
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 770461801A00; Thu,  6 Mar 2025 14:16:14 +0000 (UTC)
+ id 6D8A41801A12; Thu,  6 Mar 2025 14:15:31 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.141])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 131D618009BC; Thu,  6 Mar 2025 14:16:11 +0000 (UTC)
+ id 6AD17180174E; Thu,  6 Mar 2025 14:15:29 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 37/42] migration/qemu-file: Define g_autoptr() cleanup function
- for QEMUFile
-Date: Thu,  6 Mar 2025 15:14:13 +0100
-Message-ID: <20250306141419.2015340-38-clg@redhat.com>
+Subject: [PULL 21/42] migration/multifd: Make multifd_send() thread safe
+Date: Thu,  6 Mar 2025 15:13:57 +0100
+Message-ID: <20250306141419.2015340-22-clg@redhat.com>
 In-Reply-To: <20250306141419.2015340-1-clg@redhat.com>
 References: <20250306141419.2015340-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,30 +87,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Automatic memory management helps avoid memory safety issues.
+multifd_send() function is currently not thread safe, make it thread safe
+by holding a lock during its execution.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+This way it will be possible to safely call it concurrently from multiple
+threads.
+
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Link: https://lore.kernel.org/qemu-devel/2fd01d773a783d572dcf538a064a98cc09e75c12.1741124640.git.maciej.szmigiero@oracle.com
+Link: https://lore.kernel.org/qemu-devel/dd0f3bcc02ca96a7d523ca58ea69e495a33b453b.1741124640.git.maciej.szmigiero@oracle.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- migration/qemu-file.h | 2 ++
- 1 file changed, 2 insertions(+)
+ migration/multifd.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index 3e47a20621a7e9b57822f0f8911de02dd5e63293..f5b9f430e04b1933747eba80587f9d88726c56a8 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -33,6 +33,8 @@ QEMUFile *qemu_file_new_input(QIOChannel *ioc);
- QEMUFile *qemu_file_new_output(QIOChannel *ioc);
- int qemu_fclose(QEMUFile *f);
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 01f427d8ed036417559a0573d369172f72b508e1..add6f86175c25c0f7925a919c267240826fab54c 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -50,6 +50,10 @@ typedef struct {
  
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(QEMUFile, qemu_fclose)
+ struct {
+     MultiFDSendParams *params;
 +
- /*
-  * qemu_file_transferred:
-  *
++    /* multifd_send() body is not thread safe, needs serialization */
++    QemuMutex multifd_send_mutex;
++
+     /*
+      * Global number of generated multifd packets.
+      *
+@@ -339,6 +343,8 @@ bool multifd_send(MultiFDSendData **send_data)
+         return false;
+     }
+ 
++    QEMU_LOCK_GUARD(&multifd_send_state->multifd_send_mutex);
++
+     /* We wait here, until at least one channel is ready */
+     qemu_sem_wait(&multifd_send_state->channels_ready);
+ 
+@@ -507,6 +513,7 @@ static void multifd_send_cleanup_state(void)
+     socket_cleanup_outgoing_migration();
+     qemu_sem_destroy(&multifd_send_state->channels_created);
+     qemu_sem_destroy(&multifd_send_state->channels_ready);
++    qemu_mutex_destroy(&multifd_send_state->multifd_send_mutex);
+     g_free(multifd_send_state->params);
+     multifd_send_state->params = NULL;
+     g_free(multifd_send_state);
+@@ -887,6 +894,7 @@ bool multifd_send_setup(void)
+     thread_count = migrate_multifd_channels();
+     multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
+     multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
++    qemu_mutex_init(&multifd_send_state->multifd_send_mutex);
+     qemu_sem_init(&multifd_send_state->channels_created, 0);
+     qemu_sem_init(&multifd_send_state->channels_ready, 0);
+     qatomic_set(&multifd_send_state->exiting, 0);
 -- 
 2.48.1
 
