@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B1EC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 07:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CCE1C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 07:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq5tA-000855-8O; Thu, 06 Mar 2025 02:43:28 -0500
+	id 1tq5tN-000864-AQ; Thu, 06 Mar 2025 02:43:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tq5t6-00084f-IO
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 02:43:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tq5t3-0004GF-CQ
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 02:43:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741246998;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zi1RqQkMCCf0Yj2VyGRuoP6+fhnqRcv4cba5n4bNypo=;
- b=azc9l81qOP8PXgWfXC5NpC0bubIUyvd91a1ELgulA3drFCaQyNeondOShWcx28jyjnMrKD
- PY9vtQ9jT5XfRi4hRwD9G4s6SAhs8atyd5SlVecFBqVCnuWxYEQG078/mnEgXlyEehK2Hz
- xBjXnr2vD4udhCo1rpjrOftFpnuehzM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-546-UImi3Js2MbSHM5iWX_fQkA-1; Thu,
- 06 Mar 2025 02:43:01 -0500
-X-MC-Unique: UImi3Js2MbSHM5iWX_fQkA-1
-X-Mimecast-MFC-AGG-ID: UImi3Js2MbSHM5iWX_fQkA_1741246980
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A01BB180AF6E; Thu,  6 Mar 2025 07:43:00 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39C2E1956095; Thu,  6 Mar 2025 07:42:59 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C630121E675F; Thu, 06 Mar 2025 08:42:56 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
- =?utf-8?Q?hieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
- Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH 31/57] qapi: expand tags to all doc sections
-In-Reply-To: <CAFn=p-bUtzo1dByK0k6kevNDqghcc15L1N8WFWNB_nm9kXvCbQ@mail.gmail.com>
- (John Snow's message of "Wed, 5 Mar 2025 22:58:14 -0500")
-References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-32-jsnow@redhat.com>
- <875xknok8w.fsf@pond.sub.org>
- <CAFn=p-bUtzo1dByK0k6kevNDqghcc15L1N8WFWNB_nm9kXvCbQ@mail.gmail.com>
-Date: Thu, 06 Mar 2025 08:42:56 +0100
-Message-ID: <87zfhyeha7.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tq5tL-00085m-I8; Thu, 06 Mar 2025 02:43:40 -0500
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tq5tJ-0004Gn-II; Thu, 06 Mar 2025 02:43:39 -0500
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-867129fdb0aso331325241.1; 
+ Wed, 05 Mar 2025 23:43:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741247015; x=1741851815; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HqNGyI//q83eMzRxlxja32xoaCTlCbUk9n2MSqaDgKM=;
+ b=S+a9TMVXhOVhHVfUMW9gt+EjSvXP7rTEzOJiGqzomSd6CYJx013qAZRv+yGIhs5LIt
+ m0E99Si3CNXk0FqJiRbZ1UxxnJ5ORe3cGf0cb79XKdKEtNXwbf8yI27Uiwn5s22vMoVT
+ lseaOLboYMtrQ9d3zAvL7bOJuRiuafpVost0OVXX0JOwAuJOfv4K+znyNN3+gw8GGrr7
+ NGP3/USMjvrH5gmkl5qj6W09klQ4n7JJkRihH5sb8MQejyh78j8SeifuI4P193jfqTcD
+ T7T9tMGt3QTV8ciIJpF+5CHsc5syj9iOe79LJv9RJEhFo7pnrOzD0YSSsUg1tkjqJ8Sz
+ 5gFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741247015; x=1741851815;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HqNGyI//q83eMzRxlxja32xoaCTlCbUk9n2MSqaDgKM=;
+ b=Kmm+rEPj0W2kg0VzEUlEis5oc/q4Eko+GigmufVywWxsoCFUQm8M7p60kiW2DsDvTk
+ qgXxx+KGptSgc1VqZ06cGj7thVQJDN9OgOEihF2MZ1gRBggHeDCscrSpfvQ+RBT2tShV
+ h/74+eoYvKEwe+SfSNms8s5aNTVr9UeFbOTIKIMxLmv7aKdB/WS2Zn0BVayGchKO4gma
+ cBPzh3qbzQEhPj1o9lVUkShdcRiW7XuhzlKnNul01Oq2oxNX+02M07MNraHpZ/FP82Ih
+ mLT7ucoTw7IxeCPxELsQnt+2DMvKUwqGMMBu2rZYVHXriVwsR/ddYSCD1PPFdHoG29Sd
+ njhw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV3+h9NXU58FGhF/w2FWhUmPHaKexnkaTwha/JLt97Z+af9PIL4YIEiKHDykKOgLInAnFE7ppPxgwRHuA==@nongnu.org,
+ AJvYcCW83f4e/yOop+4cbUe/6HAehULMzUzlkLGBkkKSniaIzXOTqGN57sw9Zh83HLABceiUxXM0a2J3Qi0bldk=@nongnu.org,
+ AJvYcCWkKDhxwk2bhbDgJbzD08fYY0Ez5NFI0wR9WRHVPkQdCHEKdYzWGjm15hxi/KDzdHaHNm/Hizv14Vcd@nongnu.org
+X-Gm-Message-State: AOJu0YwUOTM0RM92VKDMQzOQm6RCJ3lm8Esxvv3jSyKcIGF/X+VItmti
+ BWMh3SoRc1NEj/OFnkbdHaOqbFMt7Ky7FRcvpGFbUkimyGNNrqfq3czrCuH9hY/yQALj7lYnRF8
+ lQ3v+rBwy13+n6DSpVDSNeybVfw4=
+X-Gm-Gg: ASbGncvUAKwc3RMwlgJZVGPl0tEGSf7vhxw8wTitztbdYqD0Q2faC6YxQdzpRV0Ucsp
+ 4GruvEE03L80zcSCQa8F0XWTnwwBMw7gfNZXETXHmlKZpueuN4yVDSwJovlK2Dj65nWaz4rg0MJ
+ bCRMvVzhlH7lOSQh2PGZ3ZjBu9NYfjSQUp5CGTGAyivAQ/VaRTyBpgvVj8
+X-Google-Smtp-Source: AGHT+IEPASYQj/Hyp3BsdPQEaFGu5kINDlxXANE49uya3QAPk5Wmij3MOrddE2T7FU5g/+8cley3k/GR1huquNBRTOo=
+X-Received: by 2002:a05:6102:4bc5:b0:4bb:623:e1f7 with SMTP id
+ ada2fe7eead31-4c2e2920642mr4103259137.16.1741247015566; Wed, 05 Mar 2025
+ 23:43:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250124101452.2519171-1-max.chou@sifive.com>
+ <26e6ce70-94f8-4fb7-8a56-77135ef3928f@tls.msk.ru>
+In-Reply-To: <26e6ce70-94f8-4fb7-8a56-77135ef3928f@tls.msk.ru>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 6 Mar 2025 17:43:09 +1000
+X-Gm-Features: AQ5f1JpJEODXqsEL28-CyC5iaxcKj8JYQzzGXBW4Sia-2yMeP7hny9YpI2hLY2Y
+Message-ID: <CAKmqyKNDry=f_Y7BCqAEPLVziyyWXyKm0BXwnov8JCaXwprinw@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: rvv: Fix unexpected behavior of vector
+ reduction instructions when vl is 0
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ qemu-stable <qemu-stable@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,369 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> On Wed, Mar 5, 2025 at 5:16=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
-om> wrote:
+On Thu, Mar 6, 2025 at 4:27=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wro=
+te:
 >
->> Replaying review of a previous posting for your convenience...
->>
->> John Snow <jsnow@redhat.com> writes:
->>
->> > This patch adds an explicit section "kind" to all QAPIDoc
->> > sections. Members/Features are now explicitly marked as such, with the
->> > name now being stored in a dedicated "name" field (which qapidoc.py was
->> > not actually using anyway.)
->>
->> I'm not sure what the parenthesis is trying to convey.
->>
+> 24.01.2025 13:14, Max Chou wrote:
+> > According to the Vector Reduction Operations section in the RISC-V "V"
+> > Vector Extension spec,
+> > "If vl=3D0, no operation is performed and the destination register is n=
+ot
+> > updated."
+> >
+> > The vd should be updated when vl is larger than 0.
 >
-> The old qapidoc.py doesn't actually use the name field, so there's nothing
-> to adjust for old callers.
+> Is this a qemu-stable material?
+
+Yes
+
 >
+> If yes, how far to previous releases it is worth to pick?
+> (Current older stable series are 7.2 and 8.2).
 >
->>
->> Before the patch, we have:
->>
->>               type        tag
->>     untagged  Section     None
->>     @foo:     ArgSection  'foo'
->>     Returns:  Section     'Returns'
->>     Errors:   Section     'Errors'
->>     Since:    Section     'Since'
->>     TODO:     Section     'TODO'
->>
->> Afterwards, I believe:
->>
->>               type         kind     name
->>     untagged  Section      PLAIN
->>     @foo:     ArgSection   MEMBER   'foo'   if member or argument
->>               ArgSection   FEATURE  'foo'   if feature
->>     Returns:  Section      RETURNS
->>     Errors:   Section      ERRORS
->>     Since:    Section      SINCE
->>     TODO:     Section      TODO
->>
->> So, .tag is replaced by .kind and .name, member vs. feature vs. other
->> tags is now obvious from .kind alone, i.e. there's no need to account
->> for context or type.
->>
->> Fine print: why do we need to account for type before the patch?
->> Consider @Since: ...
->>
+> I currently picked this up for 7.2, 8.2 and 9.2.
+
+That's perfect
+
+Alistair
+
 >
-> I'm not sure I follow...
-
-Consider
-
-    ##
-    # @some-command
-    #
-    # @Since: an anti-socially named argument
-    #
-    # Since: 10.0
-    ##
-
-Before the patch, both the argument description and the Since section
-have tag 'Since'.  The former has type ArgSection, which is a subtype of
-Section.  The latter has type Section.  This is how we tell them apart.
-There's potential for confusion and misuse of .tag.
-
-After the patch, they have different kinds.
-
-Do you follow now?
-
->> > The qapi-schema tests are updated to account for the new section names;
->> > mostly "TODO" becomes "Todo" and `None` becomes "Plain".
->> >
->> > Signed-off-by: John Snow <jsnow@redhat.com>
->> > ---
->> >  docs/sphinx/qapidoc.py         |   7 ++-
->> >  scripts/qapi/parser.py         | 109 ++++++++++++++++++++++++---------
->> >  tests/qapi-schema/doc-good.out |  10 +--
->> >  tests/qapi-schema/test-qapi.py |   2 +-
->> >  4 files changed, 90 insertions(+), 38 deletions(-)
->> >
->> > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
->> > index 61997fd21af..d622398f1da 100644
->> > --- a/docs/sphinx/qapidoc.py
->> > +++ b/docs/sphinx/qapidoc.py
->> > @@ -35,6 +35,7 @@
->> >  from docutils.statemachine import ViewList
->> >  from qapi.error import QAPIError, QAPISemError
->> >  from qapi.gen import QAPISchemaVisitor
->> > +from qapi.parser import QAPIDoc
->> >  from qapi.schema import QAPISchema
->> >
->> >  from sphinx import addnodes
->> > @@ -258,11 +259,11 @@ def _nodes_for_sections(self, doc):
->> >          """Return list of doctree nodes for additional sections"""
->> >          nodelist =3D []
->> >          for section in doc.sections:
->> > -            if section.tag and section.tag =3D=3D 'TODO':
->> > +            if section.kind =3D=3D QAPIDoc.Kind.TODO:
->> >                  # Hide TODO: sections
->> >                  continue
->> >
->> > -            if not section.tag:
->> > +            if section.kind =3D=3D QAPIDoc.Kind.PLAIN:
->> >                  # Sphinx cannot handle sectionless titles;
->> >                  # Instead, just append the results to the prior secti=
-on.
->> >                  container =3D nodes.container()
->> > @@ -270,7 +271,7 @@ def _nodes_for_sections(self, doc):
->> >                  nodelist +=3D container.children
->> >                  continue
->> >
->> > -            snode =3D self._make_section(section.tag)
->> > +            snode =3D self._make_section(section.kind.name.title())
->> >              self._parse_text_into_node(dedent(section.text), snode)
->> >              nodelist.append(snode)
->> >          return nodelist
->> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
->> > index 36cb64a677a..c3004aa70c6 100644
->> > --- a/scripts/qapi/parser.py
->> > +++ b/scripts/qapi/parser.py
->> > @@ -15,6 +15,7 @@
->> >  # See the COPYING file in the top-level directory.
->> >
->> >  from collections import OrderedDict
->> > +import enum
->> >  import os
->> >  import re
->> >  from typing import (
->> > @@ -575,7 +576,10 @@ def get_doc(self) -> 'QAPIDoc':
->> >                          )
->> >                          raise QAPIParseError(self, emsg)
->> >
->> > -                    doc.new_tagged_section(self.info, match.group(1))
->> > +                    doc.new_tagged_section(
->> > +                        self.info,
->> > +                        QAPIDoc.Kind.from_string(match.group(1))
->> > +                    )
->> >                      text =3D line[match.end():]
->> >                      if text:
->> >                          doc.append_line(text)
->> > @@ -586,7 +590,7 @@ def get_doc(self) -> 'QAPIDoc':
->> >                          self,
->> >                          "unexpected '=3D' markup in definition docume=
-ntation")
->> >                  else:
->> > -                    # tag-less paragraph
->> > +                    # plain paragraph(s)
->>
->> We're parsing a single pargraph here.  The plain section we add it to
->> may have any number of paragraphs.  But for me, the comment is about
->> what's being parsed.  Mind to drop (s)?
->>
+> Thanks,
 >
-> Anguish. I can't keep this straight in my head. OK. It wasn't obvious at a
-> glance where the break is if we get an empty newline ...
-
-The doc parsing code is more subtle than I'd like it to be.
-
->> >                      doc.ensure_untagged_section(self.info)
->> >                      doc.append_line(line)
->> >                      line =3D self.get_doc_paragraph(doc)
->> > @@ -635,14 +639,37 @@ class QAPIDoc:
->> >      Free-form documentation blocks consist only of a body section.
->> >      """
->> >
->> > +    class Kind(enum.Enum):
->> > +        PLAIN =3D 0
->> > +        MEMBER =3D 1
->> > +        FEATURE =3D 2
->> > +        RETURNS =3D 3
->> > +        ERRORS =3D 4
->> > +        SINCE =3D 5
->> > +        TODO =3D 6
->> > +
->> > +        @staticmethod
->> > +        def from_string(kind: str) -> 'QAPIDoc.Kind':
->>
->> Remind me, why do we need to quote the type here?
->>
+> /mjt
 >
-> It doesn't exist yet; it's a forward reference, basically. While we are in
-> the context of defining the class, we don't have access to variables scop=
-ed
-> within the class :)
-
-Thanks!  Sure this wasn't designed in the 70s?
-
->> > +            return QAPIDoc.Kind[kind.upper()]
->> > +
->> > +        def text_required(self) -> bool:
->> > +            # Only "plain" sections can be empty
->> > +            return self.value not in (0,)
->>
->> Rather roundabout way to check for PLAIN, isn't it?
->>
->
-> Vestigial from intro/details split. It can be removed here for now.
->
->
->>
->> There's just one caller (see below).  I doubt the method is worth its
->> keep.
->>
->
-> Vestigial again. Whether it's worth it once there are multiple such
-> sections, who knows. I thought it made the code read nicer in context. We
-> don't need it right now anyway...
-
-Let's drop it then.
-
->> > +
->> > +        def __str__(self) -> str:
->> > +            return self.name.title()
->> > +
->>
->> I wonder whether a simple StrEnum without methods would do.  Oh, StrEnum
->> is new in 3.11.  Nevermind.
->>
->> Hmm.
->>
->>     >>> Kind =3D Enum('Kind', [('PLAIN', 'Plain'), ('TODO, 'TODO)])
->>     >>> kind=3DKind('Plain')
->>     >>> kind.value
->>     'Plain'
->>
->> What do you think?
->>
->
-> Maybe, lemme play with it and see if it makes something else worse, I don=
-'t
-> know right away.
->
->
->>
->> >      class Section:
->> >          # pylint: disable=3Dtoo-few-public-methods
->> > -        def __init__(self, info: QAPISourceInfo,
->> > -                     tag: Optional[str] =3D None):
->> > +        def __init__(
->> > +            self,
->> > +            info: QAPISourceInfo,
->> > +            kind: 'QAPIDoc.Kind',
->> > +        ):
->> >              # section source info, i.e. where it begins
->> >              self.info =3D info
->> > -            # section tag, if any ('Returns', '@name', ...)
->> > -            self.tag =3D tag
->> > +            # section kind
->> > +            self.kind =3D kind
->> >              # section text without tag
->> >              self.text =3D ''
->> >
->> > @@ -650,8 +677,14 @@ def append_line(self, line: str) -> None:
->> >              self.text +=3D line + '\n'
->> >
->> >      class ArgSection(Section):
->> > -        def __init__(self, info: QAPISourceInfo, tag: str):
->> > -            super().__init__(info, tag)
->> > +        def __init__(
->> > +            self,
->> > +            info: QAPISourceInfo,
->> > +            kind: 'QAPIDoc.Kind',
->> > +            name: str
->> > +        ):
->> > +            super().__init__(info, kind)
->> > +            self.name =3D name
->> >              self.member: Optional['QAPISchemaMember'] =3D None
->>
->> Before the patch, use of a separate type for members, arguments and
->> features was necessary to distinguish between '@TAG:' and 'TAG:' for the
->> various TAGs.  This is no longer the case.  Fold ArgSection into
->> Section?  Not sure.  If yes, separate patch to keep this one as
->> mechanical as possible.
->>
->
-> Possibly the case. I'll play with it. Do you want it in this series? (It's
-> pretty long as is...!)
-
-Perfectly fine as a follow-up.  We should resist mission-creep.
-
->> >
->> >          def connect(self, member: 'QAPISchemaMember') -> None:
->> > @@ -663,7 +696,9 @@ def __init__(self, info: QAPISourceInfo, symbol: O=
-ptional[str] =3D None):
->> >          # definition doc's symbol, None for free-form doc
->> >          self.symbol: Optional[str] =3D symbol
->> >          # the sections in textual order
->> > -        self.all_sections: List[QAPIDoc.Section] =3D [QAPIDoc.Section=
-(info)]
->> > +        self.all_sections: List[QAPIDoc.Section] =3D [
->> > +            QAPIDoc.Section(info, QAPIDoc.Kind.PLAIN)
->> > +        ]
->> >          # the body section
->> >          self.body: Optional[QAPIDoc.Section] =3D self.all_sections[0]
->> >          # dicts mapping parameter/feature names to their description
->> > @@ -680,12 +715,17 @@ def __init__(self, info: QAPISourceInfo, symbol:=
- Optional[str] =3D None):
->> >      def end(self) -> None:
->> >          for section in self.all_sections:
->> >              section.text =3D section.text.strip('\n')
->> > -            if section.tag is not None and section.text =3D=3D '':
->> > +            if section.kind.text_required() and section.text =3D=3D '=
-':
->>
->> This is the only use of .text_required().  I believe checking for PLAIN
->> would be clearer.
->>
->> >                  raise QAPISemError(
->> > -                    section.info, "text required after '%s:'" % secti=
-on.tag)
->> > +                    section.info, "text required after '%s:'" % secti=
-on.kind)
->> >
->> > -    def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
->> > -        if self.all_sections and not self.all_sections[-1].tag:
->> > +    def ensure_untagged_section(
->> > +        self,
->> > +        info: QAPISourceInfo,
->> > +    ) -> None:
->>
->> Accidental line breaking?
->>
->
-> Something something something black autoformatter. I wonder why it did
-> this, though... I'll see if I can undo it.
-
-Yes, please.
-
->> > +        kind =3D QAPIDoc.Kind.PLAIN
->> > +
->> > +        if self.all_sections and self.all_sections[-1].kind =3D=3D ki=
-nd:
->>
->> I'd prefer not to hide PLAIN behind a variable, but I'd also prefer
->> the condition to fit on a line.  Hmm.
->>
->
-> Also somewhat vestigial from when I had intro/details. When that split
-> comes, kind =3D becomes a conditional ternary.
->
->
->>
->> >              # extend current section
->> >              section =3D self.all_sections[-1]
->> >              if not section.text:
->>
->> Maybe
->>
->>            section =3D self.all_sections[-1] if self.all_sections else N=
-one
->>
->>            if second and section.kind =3D QAPIDoc.Kind.Plain:
->>                # extend current section
->>                if not section.text:
->>
->
-> Could, but it's going to get rewritten when the inliner comes anyway, ...
-
-You decide.
-
-[...]
-
 
