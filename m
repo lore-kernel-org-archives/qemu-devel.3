@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA495C282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5FAC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:48:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq8fZ-00014t-Vy; Thu, 06 Mar 2025 05:41:38 -0500
+	id 1tq8dM-0004vJ-C6; Thu, 06 Mar 2025 05:39:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tq8fK-0000OT-7J; Thu, 06 Mar 2025 05:41:23 -0500
+ id 1tq8dK-0004tw-4o; Thu, 06 Mar 2025 05:39:18 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tq8fF-0000om-77; Thu, 06 Mar 2025 05:41:21 -0500
+ id 1tq8dI-0000St-Ec; Thu, 06 Mar 2025 05:39:17 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 6 Mar
- 2025 18:38:56 +0800
+ 2025 18:38:49 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 6 Mar 2025 18:38:56 +0800
+ Transport; Thu, 6 Mar 2025 18:38:49 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v5 26/29] tests/functional/aspeed: Update temperature hwmon
- path
-Date: Thu, 6 Mar 2025 18:38:34 +0800
-Message-ID: <20250306103846.429221-27-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v5 09/29] hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ
+ number
+Date: Thu, 6 Mar 2025 18:38:17 +0800
+Message-ID: <20250306103846.429221-10-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
 References: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -48,7 +49,8 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,32 +68,91 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modified the temperature hwmon path to use a wildcard to handle different SDK
-versions: "cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input".
+To improve readability, sort the IRQ table by IRQ number.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/functional/test_aarch64_aspeed.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 50 ++++++++++++++++++++---------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index e1ad7fd470..07b0c7c1fd 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -83,11 +83,11 @@ def start_ast2700_test(self, name):
-             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
-             'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
-         exec_command_and_wait_for_pattern(self,
--            'cat /sys/class/hwmon/hwmon20/temp1_input', '0')
-+            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
-         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-                     property='temperature', value=18000)
-         exec_command_and_wait_for_pattern(self,
--            'cat /sys/class/hwmon/hwmon20/temp1_input', '18000')
-+            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index de79724446..abd1f6b741 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -74,27 +74,13 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
  
-     def test_aarch64_ast2700_evb_sdk_v09_03(self):
-         self.set_machine('ast2700-evb')
+ /* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
+ static const int aspeed_soc_ast2700a0_irqmap[] = {
+-    [ASPEED_DEV_UART0]     = 132,
+-    [ASPEED_DEV_UART1]     = 132,
+-    [ASPEED_DEV_UART2]     = 132,
+-    [ASPEED_DEV_UART3]     = 132,
+-    [ASPEED_DEV_UART4]     = 8,
+-    [ASPEED_DEV_UART5]     = 132,
+-    [ASPEED_DEV_UART6]     = 132,
+-    [ASPEED_DEV_UART7]     = 132,
+-    [ASPEED_DEV_UART8]     = 132,
+-    [ASPEED_DEV_UART9]     = 132,
+-    [ASPEED_DEV_UART10]    = 132,
+-    [ASPEED_DEV_UART11]    = 132,
+-    [ASPEED_DEV_UART12]    = 132,
+-    [ASPEED_DEV_FMC]       = 131,
+     [ASPEED_DEV_SDMC]      = 0,
+-    [ASPEED_DEV_SCU]       = 12,
+-    [ASPEED_DEV_ADC]       = 130,
++    [ASPEED_DEV_HACE]      = 4,
+     [ASPEED_DEV_XDMA]      = 5,
+-    [ASPEED_DEV_EMMC]      = 15,
+-    [ASPEED_DEV_GPIO]      = 130,
++    [ASPEED_DEV_UART4]     = 8,
++    [ASPEED_DEV_SCU]       = 12,
+     [ASPEED_DEV_RTC]       = 13,
++    [ASPEED_DEV_EMMC]      = 15,
+     [ASPEED_DEV_TIMER1]    = 16,
+     [ASPEED_DEV_TIMER2]    = 17,
+     [ASPEED_DEV_TIMER3]    = 18,
+@@ -103,19 +89,33 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
+     [ASPEED_DEV_TIMER6]    = 21,
+     [ASPEED_DEV_TIMER7]    = 22,
+     [ASPEED_DEV_TIMER8]    = 23,
+-    [ASPEED_DEV_WDT]       = 131,
+-    [ASPEED_DEV_PWM]       = 131,
++    [ASPEED_DEV_DP]        = 28,
+     [ASPEED_DEV_LPC]       = 128,
+     [ASPEED_DEV_IBT]       = 128,
++    [ASPEED_DEV_KCS]       = 128,
++    [ASPEED_DEV_ADC]       = 130,
++    [ASPEED_DEV_GPIO]      = 130,
+     [ASPEED_DEV_I2C]       = 130,
+-    [ASPEED_DEV_PECI]      = 133,
++    [ASPEED_DEV_FMC]       = 131,
++    [ASPEED_DEV_WDT]       = 131,
++    [ASPEED_DEV_PWM]       = 131,
++    [ASPEED_DEV_I3C]       = 131,
++    [ASPEED_DEV_UART0]     = 132,
++    [ASPEED_DEV_UART1]     = 132,
++    [ASPEED_DEV_UART2]     = 132,
++    [ASPEED_DEV_UART3]     = 132,
++    [ASPEED_DEV_UART5]     = 132,
++    [ASPEED_DEV_UART6]     = 132,
++    [ASPEED_DEV_UART7]     = 132,
++    [ASPEED_DEV_UART8]     = 132,
++    [ASPEED_DEV_UART9]     = 132,
++    [ASPEED_DEV_UART10]    = 132,
++    [ASPEED_DEV_UART11]    = 132,
++    [ASPEED_DEV_UART12]    = 132,
+     [ASPEED_DEV_ETH1]      = 132,
+     [ASPEED_DEV_ETH2]      = 132,
+     [ASPEED_DEV_ETH3]      = 132,
+-    [ASPEED_DEV_HACE]      = 4,
+-    [ASPEED_DEV_KCS]       = 128,
+-    [ASPEED_DEV_DP]        = 28,
+-    [ASPEED_DEV_I3C]       = 131,
++    [ASPEED_DEV_PECI]      = 133,
+     [ASPEED_DEV_SDHCI]     = 133,
+ };
+ 
 -- 
 2.43.0
 
