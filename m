@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E9EC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C34F9C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:44:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqEG7-0006rD-4h; Thu, 06 Mar 2025 11:39:43 -0500
+	id 1tqEG8-0006sm-Ik; Thu, 06 Mar 2025 11:39:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEFz-0006lZ-EU
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:37 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1tqEG2-0006no-AD
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:39 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEFx-0004ZY-Dw
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:34 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43bbc8b7c65so10746905e9.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:33 -0800 (PST)
+ id 1tqEG0-0004bh-A1
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:37 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43bc38bb6baso5709905e9.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741279172; x=1741883972; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741279174; x=1741883974; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=buL5XagIeXqBLgJBqfarfsuVQtwTrOnKW/TPgRyLsQw=;
- b=iQ1+eKJl5E/ZjpTszX6H/5GYgVqaAa8JF/fX54uXq5xM+qwDqZCgURHxpUWlhki9CT
- Sr2RMTRq17rbOIaZ//nBhoRX9K7kHVYsYJf0FfstVFE0pXvw/tohuH8+tM+9TmkvXpX4
- Y3bfNFZb+3CaNogGL5nsZnCoXFtYHExwdImX7EzgR/1URs/jspCwqDcUdnj374+XZCVi
- HaYNOAwwNBnhIeMyLFuDhJdN6WX07s4QGJZ9L6WqMRoFyxQRIeyGk0tQ+ZHN4HD72E/g
- 9aFsLs711BO8sZCxayPOSgGS7dailEnTHq9gbV+GV9DKqQiybrsOCt4uHsYXZ+KRy/Ci
- VfAA==
+ :reply-to; bh=0WIG0SaEOnTT7Vl+CcOLcRx6EDCmK/EJvLZA/gTBtzQ=;
+ b=HOUs+GU02ulIkn54U9ZPk0a4nSMACpeUf9svog4JIY4UKovzPG5xkL/jI6JHiLPhaD
+ mm3ZCM91PFWj7y2llp2HpM+kL1Ja43vYqhX1WZeQ9D2hg2YZy6hSSxYg4kjevtmuK2Wc
+ NZ1A9WXfOmgGdSBCvVSixCHscWwp+NyP2JyJjjTgfhWM5M9TCU7nac+8wMcRBYtmGUt8
+ kaKgIgEn/5UaQeKYbpAGw8dMsdhoR15aNpmSb92upTIMpDSvbeHe8VfMp5Pu0YE8uGGb
+ PDQwdxFoHEcC6oUaKHqASPcLhY1ztbgXD7V+0NkdxVD9eCLEbFQ+7cxsKM6icA+MVLfJ
+ ED2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741279172; x=1741883972;
+ d=1e100.net; s=20230601; t=1741279174; x=1741883974;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=buL5XagIeXqBLgJBqfarfsuVQtwTrOnKW/TPgRyLsQw=;
- b=QMpyj77ETG8mY9sEGREDgRSjVP/LTB5rJqdLpwuJ+8Z2bIZMEa5ksbmLEmAbfssiky
- vSoYf8J5q+tEzG544Zbbi3lAgB+pcBy4BdNE1LlqspwkOxJUh9PiRScalg0U3B+WIkxn
- runK6rNcDfiQ/A51td7duyHXjlmwOloL/lzV3MQiOhGpFyBki8vaxAJ8sQadPVaCj4CR
- XFYdC93o7yH3VdJLgYlkfwtG1TTzNi09w9/B7yUfK2fA2PFADE5I0epf5atxnVq3ZYTL
- Wo1FuOO82rkZPpVPV8OHYXUFbJmLtzAVunDueD0ecqSOCCUVMroqlUF+F/Jx85heb6UB
- b6Bw==
+ bh=0WIG0SaEOnTT7Vl+CcOLcRx6EDCmK/EJvLZA/gTBtzQ=;
+ b=NBC7IGq30gW7mfs2EPVU/91IKzP2bbPiiAp0QZNw5X0bq004ZE2CllNgUBWrhCVYqt
+ TYR5qYwBCfgruUulRlrg0iG5CfbE5Fu5dmCUFi7QJC7JaBW43QnMXw96dbEOSMld2ign
+ oa8f5xJKOYBhAw8ev7M60wuFh0dW7MfB+gkx6is5Es/i6zS1XLLY3MI/jq3spLz40xmh
+ ytka3bsUb/2l9BE6AHuHEhQlt2xs6h1NMvYrPNjghcyJ80yum+OqtI4sC5+6FxEPODNU
+ LtYf1Uk++fH+VV/AN0+ezCy7tYJk+0hSEElavgHfciGyTPuvHiET0HLss3fmqQ+WrC/d
+ K+hA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWpl5I845lBrk1RIG3TPzxokz62ZbFTbwSYrvfDmxQGr64+a6iK5TUKx3NVJUZW/rZLpwrhsX6TP5O7@nongnu.org
-X-Gm-Message-State: AOJu0Yy/ptG/xtUcnENCPrVALwwSIdjW1qSY0IgsKnnrisxOFJU6JUPc
- /bTyYD2NN4Z+xI5Fr0DkbILhwxtJobb7jPlgmCxKeA5qrfZI2rHznm/EyFFz9FI=
-X-Gm-Gg: ASbGncsrwsRitLs9LZV0vZLjtt+Dy23dLCdB73p50tVltf9g8tPJ8fkePfPfsXBarOp
- O7y6YM0Qjbk+D9Zew6wGpSVmO7OpOdnohn9JpVBg4hkAsnPO6tvClQMP3uSX34XlbEzpPn0qMW0
- cfD6vcehZ4LxXQrnktjdHSygRvz5n/NrDlVyUp3cagXU/x8KAJ4b2AIA1XZRc2k9Klu6lHOtvov
- kUg4zp/6t4lzAMnOt0cMOb4weURNNTJ3kxSA93d2LixMvYjJb36VBKx/20RlatFKEdfxTYIwUOY
- V2Kb7wRMRjmRkeBJYzHRiivkwhlSFrxKKr6/qtpoglCzwOuldqI=
-X-Google-Smtp-Source: AGHT+IEEYGL9tqCMwfLyvefG1uTJpLPffLAmX4TKspr+p0zl4LlYyG/4959wzOxLRv/PwLIPVA6JoQ==
-X-Received: by 2002:a05:600c:3b88:b0:43b:da79:582b with SMTP id
- 5b1f17b1804b1-43c601d67edmr1966075e9.18.1741279171939; 
- Thu, 06 Mar 2025 08:39:31 -0800 (PST)
+ AJvYcCWCt1bmumc2Q9dVKYXWNEwjI6WDfsBd898edjsJpiFat87/fbqOpw2HfFJujyBcas1/O+PHtGsH3d9n@nongnu.org
+X-Gm-Message-State: AOJu0Yw+LLsvsJ/T8vfhyNGSroy7xhkDJkhvK0Cd9P8Xz2FovwN3zEnQ
+ 8GeKY4Q6M7Z9Txksu05CLXzQQgRzxCgW+qyuSHPnQIGOirhFtROU8I4epfkzYgoMWiixS+5g/2S
+ I
+X-Gm-Gg: ASbGnct5osxGs5xALacJVW+a4c0uxGI6nV/V+QpoBovhZPAzHdO98rxnjFhvz73Ujc5
+ aeCbkRbdT2amCQiIvQQ71onIHIF+MuSO8cGJqKfKPKD9qc5Dkmw1mH7ODdBHOWnBNHsmb0Qemwq
+ rZHiDMdywChMTX5MviP72/AporDTi8/eGmhXm+7qC42wBuCqMYpmxrs5CsxcKr8/NuHeMokVCfQ
+ ldgmyFAjP0zaZArlwgVA3hIf/txVNZbu7YtFuKsGOfH40gG2DpXC1ENfw7mWRxeqDtbcpOzE1rZ
+ bHoUBxgwyxbsLYXaHbqx0aKQI43gTFx+LLe9AIVT6ALP0o3i6Rk=
+X-Google-Smtp-Source: AGHT+IE5ojsik7X1e+U4TVORywURpZgRGu2Wm1h5bYw+VFTI4+V0Kfxa5h1Wz19KCBnSw3NroGrIEA==
+X-Received: by 2002:a5d:64cf:0:b0:390:fe13:e0ba with SMTP id
+ ffacd0b85a97d-3911f756fd2mr7745130f8f.27.1741279174616; 
+ Thu, 06 Mar 2025 08:39:34 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.31
+ 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 08:39:31 -0800 (PST)
+ Thu, 06 Mar 2025 08:39:34 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 05/10] target/arm: Move arm_cpu_data_is_big_endian() etc to
- internals.h
-Date: Thu,  6 Mar 2025 16:39:19 +0000
-Message-ID: <20250306163925.2940297-6-peter.maydell@linaro.org>
+Subject: [PATCH 08/10] target/arm: HCR_EL2.RW should be RAO/WI if EL1 doesn't
+ support AArch32
+Date: Thu,  6 Mar 2025 16:39:22 +0000
+Message-ID: <20250306163925.2940297-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250306163925.2940297-1-peter.maydell@linaro.org>
 References: <20250306163925.2940297-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,143 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The arm_cpu_data_is_big_endian() and related functions are now used
-only in target/arm; they can be moved to internals.h.
+When EL1 doesn't support AArch32, the HCR_EL2.RW bit is supposed to
+be RAO/WI.  We don't enforce this.  This isn't a problem yet because
+at the moment all of our CPU types with AArch64 support AArch32 at
+all exception levels, but in the future this is likely to no longer
+be true. Enforce the RAO/WI behaviour.
 
-The motivation here is that we would like to move arm_current_el()
-to internals.h.
+Note that we handle "reset value should honour RES1 bits" in the same
+way that SCR_EL3 does, via a reset function.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h       | 48 ------------------------------------------
- target/arm/internals.h | 48 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+), 48 deletions(-)
+ target/arm/helper.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 5ae40f32491..16c9083be61 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -3030,47 +3030,6 @@ static inline bool arm_sctlr_b(CPUARMState *env)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 1085bff0ec5..6dc6f3858fc 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -5167,6 +5167,11 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
+     /* Clear RES0 bits.  */
+     value &= valid_mask;
  
- uint64_t arm_sctlr(CPUARMState *env, int el);
++    /* RW is RAO/WI if EL1 is AArch64 only */
++    if (!cpu_isar_feature(aa64_aa32_el1, cpu)) {
++        value |= HCR_RW;
++    }
++
+     /*
+      * These bits change the MMU setup:
+      * HCR_VM enables stage 2 translation
+@@ -5224,6 +5229,12 @@ static void hcr_writelow(CPUARMState *env, const ARMCPRegInfo *ri,
+     do_hcr_write(env, value, MAKE_64BIT_MASK(32, 32));
+ }
  
--static inline bool arm_cpu_data_is_big_endian_a32(CPUARMState *env,
--                                                  bool sctlr_b)
--{
--#ifdef CONFIG_USER_ONLY
--    /*
--     * In system mode, BE32 is modelled in line with the
--     * architecture (as word-invariant big-endianness), where loads
--     * and stores are done little endian but from addresses which
--     * are adjusted by XORing with the appropriate constant. So the
--     * endianness to use for the raw data access is not affected by
--     * SCTLR.B.
--     * In user mode, however, we model BE32 as byte-invariant
--     * big-endianness (because user-only code cannot tell the
--     * difference), and so we need to use a data access endianness
--     * that depends on SCTLR.B.
--     */
--    if (sctlr_b) {
--        return true;
--    }
--#endif
--    /* In 32bit endianness is determined by looking at CPSR's E bit */
--    return env->uncached_cpsr & CPSR_E;
--}
--
--static inline bool arm_cpu_data_is_big_endian_a64(int el, uint64_t sctlr)
--{
--    return sctlr & (el ? SCTLR_EE : SCTLR_E0E);
--}
--
--/* Return true if the processor is in big-endian mode. */
--static inline bool arm_cpu_data_is_big_endian(CPUARMState *env)
--{
--    if (!is_a64(env)) {
--        return arm_cpu_data_is_big_endian_a32(env, arm_sctlr_b(env));
--    } else {
--        int cur_el = arm_current_el(env);
--        uint64_t sctlr = arm_sctlr(env, cur_el);
--        return arm_cpu_data_is_big_endian_a64(cur_el, sctlr);
--    }
--}
--
- #include "exec/cpu-all.h"
- 
++static void hcr_reset(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    /* hcr_write will set the RES1 bits on an AArch64-only CPU */
++    hcr_write(env, ri, 0);
++}
++
  /*
-@@ -3256,13 +3215,6 @@ static inline bool bswap_code(bool sctlr_b)
- #endif
- }
- 
--#ifdef CONFIG_USER_ONLY
--static inline bool arm_cpu_bswap_data(CPUARMState *env)
--{
--    return TARGET_BIG_ENDIAN ^ arm_cpu_data_is_big_endian(env);
--}
--#endif
--
- void cpu_get_tb_cpu_state(CPUARMState *env, vaddr *pc,
-                           uint64_t *cs_base, uint32_t *flags);
- 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index a6ff228f9fd..70d1f88c20b 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -392,6 +392,54 @@ static inline FloatRoundMode arm_rmode_to_sf(ARMFPRounding rmode)
-     return arm_rmode_to_sf_map[rmode];
- }
- 
-+static inline bool arm_cpu_data_is_big_endian_a32(CPUARMState *env,
-+                                                  bool sctlr_b)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    /*
-+     * In system mode, BE32 is modelled in line with the
-+     * architecture (as word-invariant big-endianness), where loads
-+     * and stores are done little endian but from addresses which
-+     * are adjusted by XORing with the appropriate constant. So the
-+     * endianness to use for the raw data access is not affected by
-+     * SCTLR.B.
-+     * In user mode, however, we model BE32 as byte-invariant
-+     * big-endianness (because user-only code cannot tell the
-+     * difference), and so we need to use a data access endianness
-+     * that depends on SCTLR.B.
-+     */
-+    if (sctlr_b) {
-+        return true;
-+    }
-+#endif
-+    /* In 32bit endianness is determined by looking at CPSR's E bit */
-+    return env->uncached_cpsr & CPSR_E;
-+}
-+
-+static inline bool arm_cpu_data_is_big_endian_a64(int el, uint64_t sctlr)
-+{
-+    return sctlr & (el ? SCTLR_EE : SCTLR_E0E);
-+}
-+
-+/* Return true if the processor is in big-endian mode. */
-+static inline bool arm_cpu_data_is_big_endian(CPUARMState *env)
-+{
-+    if (!is_a64(env)) {
-+        return arm_cpu_data_is_big_endian_a32(env, arm_sctlr_b(env));
-+    } else {
-+        int cur_el = arm_current_el(env);
-+        uint64_t sctlr = arm_sctlr(env, cur_el);
-+        return arm_cpu_data_is_big_endian_a64(cur_el, sctlr);
-+    }
-+}
-+
-+#ifdef CONFIG_USER_ONLY
-+static inline bool arm_cpu_bswap_data(CPUARMState *env)
-+{
-+    return TARGET_BIG_ENDIAN ^ arm_cpu_data_is_big_endian(env);
-+}
-+#endif
-+
- static inline void aarch64_save_sp(CPUARMState *env, int el)
- {
-     if (env->pstate & PSTATE_SP) {
+  * Return the effective value of HCR_EL2, at the given security state.
+  * Bits that are not included here:
+@@ -5459,6 +5470,7 @@ static const ARMCPRegInfo el2_cp_reginfo[] = {
+       .opc0 = 3, .opc1 = 4, .crn = 1, .crm = 1, .opc2 = 0,
+       .access = PL2_RW, .fieldoffset = offsetof(CPUARMState, cp15.hcr_el2),
+       .nv2_redirect_offset = 0x78,
++      .resetfn = hcr_reset,
+       .writefn = hcr_write, .raw_writefn = raw_write },
+     { .name = "HCR", .state = ARM_CP_STATE_AA32,
+       .type = ARM_CP_ALIAS | ARM_CP_IO,
 -- 
 2.43.0
 
