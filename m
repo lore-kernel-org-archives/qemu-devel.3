@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BEEAC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 490B6C282EC
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq8g7-0001rD-AH; Thu, 06 Mar 2025 05:42:15 -0500
+	id 1tq8dE-0004r1-2t; Thu, 06 Mar 2025 05:39:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tq8fQ-0000aY-8j; Thu, 06 Mar 2025 05:41:28 -0500
+ id 1tq8dC-0004qT-Fv; Thu, 06 Mar 2025 05:39:10 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tq8fO-0000om-DH; Thu, 06 Mar 2025 05:41:28 -0500
+ id 1tq8dA-0000TZ-Qk; Thu, 06 Mar 2025 05:39:10 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 6 Mar
- 2025 18:38:56 +0800
+ 2025 18:38:48 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 6 Mar 2025 18:38:56 +0800
+ Transport; Thu, 6 Mar 2025 18:38:48 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v5 28/29] tests/functional/aspeed: Add test case for AST2700 A1
-Date: Thu, 6 Mar 2025 18:38:36 +0800
-Message-ID: <20250306103846.429221-29-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v5 05/29] hw/intc/aspeed: Reduce regs array size by adding a
+ register sub-region
+Date: Thu, 6 Mar 2025 18:38:13 +0800
+Message-ID: <20250306103846.429221-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
 References: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
@@ -66,40 +66,110 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- tests/functional/test_aarch64_aspeed.py | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Currently, the size of the "regs" array is 0x2000, which is too large. So far,
+it only uses "GICINT128 to `GICINT134", and the offsets from 0 to 0x1000 are
+unused. To save code size and avoid mapping large unused gaps, update to only
+map the useful set of registers:
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index 8df6a97a28..c25c966278 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -31,6 +31,10 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz',
-             'cfbbd1cce72f2a3b73b9080c41eecdadebb7077fba4f7806d72ac99f3e84b74a')
+INTC register [0x1000 – 0x1804]
+
+Update "reg_size" to 0x808. Introduce a new class attribute "reg_offset" to set
+the start offset of a "INTC" sub-region. Set the "reg_offset" to 0x1000 for INTC
+registers.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ include/hw/intc/aspeed_intc.h |  1 +
+ hw/intc/aspeed_intc.c         | 50 ++++++++++++++++++++---------------
+ 2 files changed, 30 insertions(+), 21 deletions(-)
+
+diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+index 17cd889e0d..d72a5b4ab1 100644
+--- a/include/hw/intc/aspeed_intc.h
++++ b/include/hw/intc/aspeed_intc.h
+@@ -42,6 +42,7 @@ struct AspeedINTCClass {
+     uint32_t num_ints;
+     uint64_t mem_size;
+     uint64_t reg_size;
++    uint64_t reg_offset;
+ };
  
-+    ASSET_SDK_V905_AST2700A1 = Asset(
-+            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
-+            'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
-+
-     def start_ast2700_test(self, name):
-         num_cpu = 4
-         uboot_size = os.path.getsize(self.scratch_file(name,
-@@ -95,6 +99,12 @@ def test_aarch64_ast2700_evb_sdk_v09_05(self):
-         self.archive_extract(self.ASSET_SDK_V905_AST2700)
-         self.start_ast2700_test('ast2700-a0-default')
+ #endif /* ASPEED_INTC_H */
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 1c3dc3fce0..fad351449b 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -14,25 +14,31 @@
+ #include "hw/registerfields.h"
+ #include "qapi/error.h"
  
-+    def test_aarch64_ast2700a1_evb_sdk_v09_05(self):
-+        self.set_machine('ast2700a1-evb')
-+
-+        self.archive_extract(self.ASSET_SDK_V905_AST2700A1)
-+        self.start_ast2700_test('ast2700-default')
-+
+-/* INTC Registers */
+-REG32(GICINT128_EN,         0x1000)
+-REG32(GICINT128_STATUS,     0x1004)
+-REG32(GICINT129_EN,         0x1100)
+-REG32(GICINT129_STATUS,     0x1104)
+-REG32(GICINT130_EN,         0x1200)
+-REG32(GICINT130_STATUS,     0x1204)
+-REG32(GICINT131_EN,         0x1300)
+-REG32(GICINT131_STATUS,     0x1304)
+-REG32(GICINT132_EN,         0x1400)
+-REG32(GICINT132_STATUS,     0x1404)
+-REG32(GICINT133_EN,         0x1500)
+-REG32(GICINT133_STATUS,     0x1504)
+-REG32(GICINT134_EN,         0x1600)
+-REG32(GICINT134_STATUS,     0x1604)
+-REG32(GICINT135_EN,         0x1700)
+-REG32(GICINT135_STATUS,     0x1704)
+-REG32(GICINT136_EN,         0x1800)
+-REG32(GICINT136_STATUS,     0x1804)
++/*
++ * INTC Registers
++ *
++ * values below are offset by - 0x1000 from datasheet
++ * because its memory region is start at 0x1000
++ *
++ */
++REG32(GICINT128_EN,         0x000)
++REG32(GICINT128_STATUS,     0x004)
++REG32(GICINT129_EN,         0x100)
++REG32(GICINT129_STATUS,     0x104)
++REG32(GICINT130_EN,         0x200)
++REG32(GICINT130_STATUS,     0x204)
++REG32(GICINT131_EN,         0x300)
++REG32(GICINT131_STATUS,     0x304)
++REG32(GICINT132_EN,         0x400)
++REG32(GICINT132_STATUS,     0x404)
++REG32(GICINT133_EN,         0x500)
++REG32(GICINT133_STATUS,     0x504)
++REG32(GICINT134_EN,         0x600)
++REG32(GICINT134_STATUS,     0x604)
++REG32(GICINT135_EN,         0x700)
++REG32(GICINT135_STATUS,     0x704)
++REG32(GICINT136_EN,         0x800)
++REG32(GICINT136_STATUS,     0x804)
  
- if __name__ == '__main__':
-     QemuSystemTest.main()
+ #define GICINT_STATUS_BASE     R_GICINT128_STATUS
+ 
+@@ -298,7 +304,8 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
+                           TYPE_ASPEED_INTC ".regs", aic->reg_size << 2);
+ 
+-    memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
++    memory_region_add_subregion(&s->iomem_container, aic->reg_offset,
++                                &s->iomem);
+ 
+     qdev_init_gpio_in(dev, aspeed_intc_set_irq, aic->num_ints);
+ 
+@@ -348,7 +355,8 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+     aic->num_lines = 32;
+     aic->num_ints = 9;
+     aic->mem_size = 0x4000;
+-    aic->reg_size = 0x2000 >> 2;
++    aic->reg_size = 0x808 >> 2;
++    aic->reg_offset = 0x1000;
+ }
+ 
+ static const TypeInfo aspeed_2700_intc_info = {
 -- 
 2.43.0
 
