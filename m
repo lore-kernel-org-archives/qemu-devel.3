@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4291C28B24
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41C8CC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:00:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDTi-0000sx-O4; Thu, 06 Mar 2025 10:49:42 -0500
+	id 1tqDTr-0001cs-VO; Thu, 06 Mar 2025 10:49:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDTN-0000OE-J4
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:28 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDSj-0008Ga-UW
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:48:42 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDTL-0006N8-6K
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:21 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43bbb440520so9728715e9.2
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:49:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDSh-0006JP-9h
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:48:41 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43bbc8b7c65so9799555e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:48:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276157; x=1741880957; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741276117; x=1741880917; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=X8Saq/dqG9xCUSyrkXOExGdZvozj3jjUcX+27h5Z2go=;
- b=bP07UptFVuMFyGaSNuiW6PlW/YCahiaEZYQQZkqa+O0zOrVYTXcIOuAgCjwEpC1Xm9
- WD9fs14yJr9bZg7Sv5cI+wmAQ8Me7MDuVxibFqaACPWIbEA4Bxig1ERBiIWZR20BTXwN
- lV5VTSuRFKMawHd0BCTHQNiRex9ihjy5xCg94SwOxsxR4Aifhj86Z1U2/qjXtZZkYPUU
- o4SSjyrZ0tJwLIWSxoJ3UYDpb/LMXdrRjeA1GihHbIpzqNtwdM2EJPmTQOy/GjJChh6c
- +stYeCNZ8VcR5MJbxz4jGaXHhclwqahyDc3CaPyCOZEB5uLRRxZw3UF4w8glQVE83XPJ
- pgag==
+ :reply-to; bh=JBB3Tbxqc4/M0bxYWwDzYqPlVpodl+6MXJuHVeJUQgs=;
+ b=G+XA9HdrPUUxWNjjWtG4mVsTJnQqWuYIB7g+bCw5tyFgduz6cKYu/rqRjKYuvhw4Wf
+ 3xav7ipEKQoCQZzjPQxIbPWL/uj5KpIgsNVJrh0NM4lAJ0VEZN7n/JSDj2miBeDw2k7q
+ hc5NC5QuSRj8SDXe5ApJ7q2BLT7AppnTJBNX45XbSpUf9nVz8k6QaWKEIPItB6/miejA
+ WDPAzocWVtM4YuWMH595+Tmxtxh+0WD+hOF3SOEHiNCL019utmyZRc4S1xW95CWttxm3
+ Ps83CBe68/7GO5/duTD5Sd9a4IF/5VU+zkLwB7iLimOEnnZHD3zMR9PNbmSx2CJdfNth
+ ZEEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276157; x=1741880957;
+ d=1e100.net; s=20230601; t=1741276117; x=1741880917;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X8Saq/dqG9xCUSyrkXOExGdZvozj3jjUcX+27h5Z2go=;
- b=dkVmuxXIQPFaN9XWsMMIZeWwz1q+cjg/WmgDHucYyvtCQAF+hQzyVguaVQGsycMkv3
- yYJI9bOIfjOtzLChgCOYCHsbdFfULwKKOs9rOipUbRCZy9Y1ycITO/h3qAOmLBjiMZWL
- pH6YFYkMP22VU88tawNxluLgUIZDx4CKfLvuIhYLCvx2D7vlbz9yBeVH2vQ7/jNUcHq0
- i5+K3ukmT+zoUXuojP7t22r+Q7sDsjJEl8nRm7dPvV2vu+kj1/C+hJjvXfp8lBUART1M
- vZDlNDfqWTe6qucnxcypgAq9dFbsnsyQFWSgq8VtNyt0YrUFroJqQndcqvCkDhbGiyl6
- AwOg==
-X-Gm-Message-State: AOJu0YyOBywk6VarU1Sy2xHWbl4ax3acmE7I0PDiINwvQO0g7q1b+14z
- S6Kxkerjx/uAV41emZjAVcgMZCvd6g5AjMKvoDjGnn2hDfDCtWIVb44Mcpj4g+ZK6CK2nGG/GVU
- jpyg=
-X-Gm-Gg: ASbGncuXpyj4+oKtm44N7/GGtyRsxYlPhmCRobRLmYQEZ7RIdx3jUZLpQFZzKovKXld
- cr/vAmuNht9p0kWiPqpwTJJxKadzpR5yFVf3SSctPcIBZWW+VKI6DU4HxlVNfoTuPnMcl+w+oMN
- 9xfC46mJzJ/XDotDYu0Fk+5hQ43cLjBHzv67xnMXQvHPXsZxom9np9G+lW8QvxIDbZDcGUIh0SY
- QI1RHH7pxTa8+Y00x85JPxtlcMnLLt0BI0UDTL/v9I3bdnmcD+6g+Np+w9DHtUnTjKClb+68p76
- rGGVqCd5E+Qq4uRqQlxk5hoyv4lEtMpl2XVkAiFZ7BLIpQpMFhuXe6tId5fRdwDcvkzGcT9Xr3b
- y6SqLwkg9seXJh0zM9rQ=
-X-Google-Smtp-Source: AGHT+IH9wdlnQxq7wbRbJX92lGMVU192CqrT8ag1QqbhsaemZW0TIgoFgjujrUxua/iPI+Ra+Q4miA==
-X-Received: by 2002:a05:6000:4109:b0:391:2c67:7999 with SMTP id
- ffacd0b85a97d-3912c677bdfmr3208820f8f.48.1741276157402; 
- Thu, 06 Mar 2025 07:49:17 -0800 (PST)
+ bh=JBB3Tbxqc4/M0bxYWwDzYqPlVpodl+6MXJuHVeJUQgs=;
+ b=vq9BdZe9Iz1QRwWMq4QgBlIj7eG2wAbeHWIMOOUm3dZZC5gV4KN4ncj6FB4qtvgZx9
+ PM0prd+xE5jCmGMmacyOr7ztUFIYT5eb69+Z5VRc0wHuM9iSa+tGUIddYfOMEzfTTI11
+ QpXyba7ukoB9bH2ZYtw+YOi2e1w8Av2SM2wjUihZXzLnEfu4LZnH6XyldRUC/ZBXRk8s
+ SCNX26TUcz5zbTOBnsIm+nKYDO6VEZGVGLe/8JtaSvFQHi+NV9Ie7CRWaacrQLm8RxG4
+ st8/fPr+FFJAEBbb78HnqDyHmsVt5BhVVsZ77Jn35aEDE86dxoLHOEiJp34Pg8fy12KM
+ bSMg==
+X-Gm-Message-State: AOJu0YwvQvw52Z/Pq2/ZUtnMjV2f1AYP5vhfmE1frLIr8IHXsd3xXI7L
+ +P3RchzHSPdSriO+qx+LvOgIedrphCAoea3fDeLVzy8tYAWJykq/+lujHo2qlmN5eldnp1rgNXp
+ JTXU=
+X-Gm-Gg: ASbGnct/nrrk67RZllFyB2cgmiD65Ls+mifxN/yeP7oVIkt65ScCBULhu+8IItYD0N+
+ w48oY1b/5iSw++Dw3Fi4758Jm0GGpDVdG55zJ5KMqjYHaqhisZSnYsQvKf4azg6oeBeAvuaSy1F
+ uoC3M2xHjUn1cut5FdyvQooSoYEdYNC+76NttD4lihd1rptoiY1KIxeccUT2ONQQ3GFN6n5JLGJ
+ K0XiaRf1k67zPbGX3o5xSkb5p2Qm+IXeEi39m3c4vCE+hqA/HZ7zLgvMwGDsZmNeMB4jbWCNzZV
+ ffDym2aJJTqksS23wUFl1IHCpnNqxQXWPjHMK0Zu6P4V3gP7Ezwzpb2Kr0+//xAFZiIo/8e2X8m
+ 1ksjqcxPCreiYEJHQwmI=
+X-Google-Smtp-Source: AGHT+IEl8zcFRJYIy+1D9NS+wFsHmHCP4CCEQmYKoBJ03zW78SeS5RM29Oss2sU8BgQeghG9vb2Mjw==
+X-Received: by 2002:a05:600c:1988:b0:439:9e13:2df4 with SMTP id
+ 5b1f17b1804b1-43bd29bcc56mr62552685e9.21.1741276116977; 
+ Thu, 06 Mar 2025 07:48:36 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e2f39sm2374704f8f.80.2025.03.06.07.49.16
+ 5b1f17b1804b1-43bd4352ed7sm53288995e9.26.2025.03.06.07.48.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:49:16 -0800 (PST)
+ Thu, 06 Mar 2025 07:48:36 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/54] cpus: Have cpu_class_init_props() per user / system
- emulation
-Date: Thu,  6 Mar 2025 16:47:04 +0100
-Message-ID: <20250306154737.70886-23-philmd@linaro.org>
+Subject: [PULL 13/54] accel: Forward-declare AccelOpsClass in 'qemu/typedefs.h'
+Date: Thu,  6 Mar 2025 16:46:55 +0100
+Message-ID: <20250306154737.70886-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
 References: <20250306154737.70886-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,218 +98,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than maintaining a mix of system / user code for CPU
-class properties, move system properties to cpu-system.c
-and user ones to the new cpu-user.c unit.
+The heavily imported "system/cpus.h" header includes "accel-ops.h"
+to get AccelOpsClass type declaration. Reduce headers pressure by
+forward declaring it in "qemu/typedefs.h", where we already
+declare the AccelCPUState type.
+
+Reduce "system/cpus.h" inclusions by only including
+"system/accel-ops.h" when necessary.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250123234415.59850-18-philmd@linaro.org>
+Message-Id: <20250123234415.59850-14-philmd@linaro.org>
 ---
- MAINTAINERS          |  1 +
- cpu-target.c         | 58 --------------------------------------------
- hw/core/cpu-system.c | 40 ++++++++++++++++++++++++++++++
- hw/core/cpu-user.c   | 27 +++++++++++++++++++++
- hw/core/meson.build  |  5 +++-
- 5 files changed, 72 insertions(+), 59 deletions(-)
- create mode 100644 hw/core/cpu-user.c
+ include/qemu/typedefs.h           | 1 +
+ include/system/accel-ops.h        | 1 -
+ include/system/cpus.h             | 2 --
+ accel/accel-system.c              | 1 +
+ accel/hvf/hvf-accel-ops.c         | 1 +
+ accel/kvm/kvm-accel-ops.c         | 1 +
+ accel/qtest/qtest.c               | 1 +
+ accel/tcg/cpu-exec-common.c       | 1 -
+ accel/tcg/cpu-exec.c              | 1 -
+ accel/tcg/monitor.c               | 1 -
+ accel/tcg/tcg-accel-ops.c         | 1 +
+ accel/tcg/translate-all.c         | 1 -
+ accel/xen/xen-all.c               | 1 +
+ cpu-common.c                      | 1 -
+ cpu-target.c                      | 1 +
+ gdbstub/system.c                  | 1 +
+ system/cpus.c                     | 1 +
+ target/i386/nvmm/nvmm-accel-ops.c | 1 +
+ target/i386/whpx/whpx-accel-ops.c | 1 +
+ 19 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a0e462d03ca..1d1fadc3bc9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3791,6 +3791,7 @@ Overall usermode emulation
- M: Riku Voipio <riku.voipio@iki.fi>
- S: Maintained
- F: accel/tcg/user-exec*.c
-+F: hw/core/cpu-user.c
- F: include/user/
- F: common-user/
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 3d84efcac47..465cc501773 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -22,6 +22,7 @@
+  * Please keep this list in case-insensitive alphabetical order.
+  */
+ typedef struct AccelCPUState AccelCPUState;
++typedef struct AccelOpsClass AccelOpsClass;
+ typedef struct AccelState AccelState;
+ typedef struct AddressSpace AddressSpace;
+ typedef struct AioContext AioContext;
+diff --git a/include/system/accel-ops.h b/include/system/accel-ops.h
+index 137fb96d444..4c99d25aeff 100644
+--- a/include/system/accel-ops.h
++++ b/include/system/accel-ops.h
+@@ -17,7 +17,6 @@
+ #define TYPE_ACCEL_OPS "accel" ACCEL_OPS_SUFFIX
+ #define ACCEL_OPS_NAME(name) (name "-" TYPE_ACCEL_OPS)
+ 
+-typedef struct AccelOpsClass AccelOpsClass;
+ DECLARE_CLASS_CHECKERS(AccelOpsClass, ACCEL_OPS, TYPE_ACCEL_OPS)
+ 
+ /**
+diff --git a/include/system/cpus.h b/include/system/cpus.h
+index 1cffeaaf5c4..3226c765d01 100644
+--- a/include/system/cpus.h
++++ b/include/system/cpus.h
+@@ -1,8 +1,6 @@
+ #ifndef QEMU_CPUS_H
+ #define QEMU_CPUS_H
+ 
+-#include "system/accel-ops.h"
+-
+ /* register accel-specific operations */
+ void cpus_register_accel(const AccelOpsClass *i);
+ 
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index a7596aef59d..5df49fbe831 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -26,6 +26,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/accel.h"
+ #include "hw/boards.h"
++#include "system/accel-ops.h"
+ #include "system/cpus.h"
+ #include "qemu/error-report.h"
+ #include "accel-system.h"
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index 945ba720513..12fc30c2761 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -54,6 +54,7 @@
+ #include "exec/exec-all.h"
+ #include "gdbstub/enums.h"
+ #include "hw/boards.h"
++#include "system/accel-ops.h"
+ #include "system/cpus.h"
+ #include "system/hvf.h"
+ #include "system/hvf_int.h"
+diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
+index a81e8f3b03b..54ea60909e2 100644
+--- a/accel/kvm/kvm-accel-ops.c
++++ b/accel/kvm/kvm-accel-ops.c
+@@ -16,6 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
++#include "system/accel-ops.h"
+ #include "system/kvm.h"
+ #include "system/kvm_int.h"
+ #include "system/runstate.h"
+diff --git a/accel/qtest/qtest.c b/accel/qtest/qtest.c
+index ad7e3441a5a..7fae80f6a1b 100644
+--- a/accel/qtest/qtest.c
++++ b/accel/qtest/qtest.c
+@@ -18,6 +18,7 @@
+ #include "qemu/option.h"
+ #include "qemu/config-file.h"
+ #include "qemu/accel.h"
++#include "system/accel-ops.h"
+ #include "system/qtest.h"
+ #include "system/cpus.h"
+ #include "qemu/guest-random.h"
+diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
+index 100746d555a..c5c513f1e4a 100644
+--- a/accel/tcg/cpu-exec-common.c
++++ b/accel/tcg/cpu-exec-common.c
+@@ -19,7 +19,6 @@
+ 
+ #include "qemu/osdep.h"
+ #include "exec/log.h"
+-#include "system/cpus.h"
+ #include "system/tcg.h"
+ #include "qemu/plugin.h"
+ #include "internal-common.h"
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 3a3c45f52ed..ef3d967e3af 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -33,7 +33,6 @@
+ #include "qemu/rcu.h"
+ #include "exec/log.h"
+ #include "qemu/main-loop.h"
+-#include "system/cpus.h"
+ #include "exec/cpu-all.h"
+ #include "system/cpu-timers.h"
+ #include "exec/replay-core.h"
+diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
+index ae1dbeb79f8..eeb38a4d9ce 100644
+--- a/accel/tcg/monitor.c
++++ b/accel/tcg/monitor.c
+@@ -13,7 +13,6 @@
+ #include "qapi/type-helpers.h"
+ #include "qapi/qapi-commands-machine.h"
+ #include "monitor/monitor.h"
+-#include "system/cpus.h"
+ #include "system/cpu-timers.h"
+ #include "system/tcg.h"
+ #include "tcg/tcg.h"
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 6e3f1fa92b2..132c5d14613 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -26,6 +26,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "system/accel-ops.h"
+ #include "system/tcg.h"
+ #include "system/replay.h"
+ #include "system/cpu-timers.h"
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 786e2f6f1a7..0914d6e98b2 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -54,7 +54,6 @@
+ #include "qemu/cacheinfo.h"
+ #include "qemu/timer.h"
+ #include "exec/log.h"
+-#include "system/cpus.h"
+ #include "system/cpu-timers.h"
+ #include "system/tcg.h"
+ #include "qapi/error.h"
+diff --git a/accel/xen/xen-all.c b/accel/xen/xen-all.c
+index 852e9fbe5fe..7aa28b9ab93 100644
+--- a/accel/xen/xen-all.c
++++ b/accel/xen/xen-all.c
+@@ -18,6 +18,7 @@
+ #include "hw/xen/xen_igd.h"
+ #include "chardev/char.h"
+ #include "qemu/accel.h"
++#include "system/accel-ops.h"
+ #include "system/cpus.h"
+ #include "system/xen.h"
+ #include "system/runstate.h"
+diff --git a/cpu-common.c b/cpu-common.c
+index 4248b2d727e..f5dcc2d136b 100644
+--- a/cpu-common.c
++++ b/cpu-common.c
+@@ -21,7 +21,6 @@
+ #include "qemu/main-loop.h"
+ #include "exec/cpu-common.h"
+ #include "hw/core/cpu.h"
+-#include "system/cpus.h"
+ #include "qemu/lockable.h"
+ #include "trace/trace-root.h"
  
 diff --git a/cpu-target.c b/cpu-target.c
-index 48446c90212..f4c834fd26a 100644
+index f97f3a14751..20933bde7d4 100644
 --- a/cpu-target.c
 +++ b/cpu-target.c
-@@ -19,15 +19,12 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "hw/qdev-core.h"
--#include "hw/qdev-properties.h"
- #include "qemu/error-report.h"
- #include "qemu/qemu-print.h"
- #include "migration/vmstate.h"
- #ifndef CONFIG_USER_ONLY
- #include "hw/core/sysemu-cpu-ops.h"
+@@ -35,6 +35,7 @@
  #include "exec/address-spaces.h"
--#include "exec/memory.h"
+ #include "exec/memory.h"
  #endif
- #include "system/accel-ops.h"
++#include "system/accel-ops.h"
  #include "system/cpus.h"
-@@ -178,61 +175,6 @@ void cpu_exec_unrealizefn(CPUState *cpu)
-     accel_cpu_common_unrealize(cpu);
- }
- 
--/*
-- * This can't go in hw/core/cpu.c because that file is compiled only
-- * once for both user-mode and system builds.
-- */
--static const Property cpu_common_props[] = {
--#ifdef CONFIG_USER_ONLY
--    /*
--     * Create a property for the user-only object, so users can
--     * adjust prctl(PR_SET_UNALIGN) from the command-line.
--     * Has no effect if the target does not support the feature.
--     */
--    DEFINE_PROP_BOOL("prctl-unalign-sigbus", CPUState,
--                     prctl_unalign_sigbus, false),
--#else
--    /*
--     * Create a memory property for system CPU object, so users can
--     * wire up its memory.  The default if no link is set up is to use
--     * the system address space.
--     */
--    DEFINE_PROP_LINK("memory", CPUState, memory, TYPE_MEMORY_REGION,
--                     MemoryRegion *),
--#endif
--};
--
--#ifndef CONFIG_USER_ONLY
--static bool cpu_get_start_powered_off(Object *obj, Error **errp)
--{
--    CPUState *cpu = CPU(obj);
--    return cpu->start_powered_off;
--}
--
--static void cpu_set_start_powered_off(Object *obj, bool value, Error **errp)
--{
--    CPUState *cpu = CPU(obj);
--    cpu->start_powered_off = value;
--}
--#endif
--
--void cpu_class_init_props(DeviceClass *dc)
--{
--#ifndef CONFIG_USER_ONLY
--    ObjectClass *oc = OBJECT_CLASS(dc);
--
--    /*
--     * We can't use DEFINE_PROP_BOOL in the Property array for this
--     * property, because we want this to be settable after realize.
--     */
--    object_class_property_add_bool(oc, "start-powered-off",
--                                   cpu_get_start_powered_off,
--                                   cpu_set_start_powered_off);
--#endif
--
--    device_class_set_props(dc, cpu_common_props);
--}
--
- void cpu_exec_initfn(CPUState *cpu)
- {
- #ifndef CONFIG_USER_ONLY
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 6e307c89597..1310b4203fd 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -20,7 +20,10 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "exec/memory.h"
+ #include "system/tcg.h"
  #include "exec/tswap.h"
-+#include "hw/qdev-core.h"
-+#include "hw/qdev-properties.h"
- #include "hw/core/sysemu-cpu-ops.h"
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 7f047a285c8..416c1dbe1e9 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -19,6 +19,7 @@
+ #include "gdbstub/commands.h"
+ #include "exec/hwaddr.h"
+ #include "exec/tb-flush.h"
++#include "system/accel-ops.h"
+ #include "system/cpus.h"
+ #include "system/runstate.h"
+ #include "system/replay.h"
+diff --git a/system/cpus.c b/system/cpus.c
+index 37e5892c240..2cc5f887ab5 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -31,6 +31,7 @@
+ #include "qapi/qapi-events-run-state.h"
+ #include "qapi/qmp/qerror.h"
+ #include "exec/gdbstub.h"
++#include "system/accel-ops.h"
+ #include "system/hw_accel.h"
+ #include "exec/cpu-common.h"
+ #include "qemu/thread.h"
+diff --git a/target/i386/nvmm/nvmm-accel-ops.c b/target/i386/nvmm/nvmm-accel-ops.c
+index e7b56662fee..4e4e63de78e 100644
+--- a/target/i386/nvmm/nvmm-accel-ops.c
++++ b/target/i386/nvmm/nvmm-accel-ops.c
+@@ -10,6 +10,7 @@
+ #include "qemu/osdep.h"
+ #include "system/kvm_int.h"
+ #include "qemu/main-loop.h"
++#include "system/accel-ops.h"
+ #include "system/cpus.h"
+ #include "qemu/guest-random.h"
  
- bool cpu_paging_enabled(const CPUState *cpu)
-@@ -147,3 +150,40 @@ GuestPanicInformation *cpu_get_crash_info(CPUState *cpu)
-     }
-     return res;
- }
-+
-+static const Property cpu_system_props[] = {
-+    /*
-+     * Create a memory property for system CPU object, so users can
-+     * wire up its memory.  The default if no link is set up is to use
-+     * the system address space.
-+     */
-+    DEFINE_PROP_LINK("memory", CPUState, memory, TYPE_MEMORY_REGION,
-+                     MemoryRegion *),
-+};
-+
-+static bool cpu_get_start_powered_off(Object *obj, Error **errp)
-+{
-+    CPUState *cpu = CPU(obj);
-+    return cpu->start_powered_off;
-+}
-+
-+static void cpu_set_start_powered_off(Object *obj, bool value, Error **errp)
-+{
-+    CPUState *cpu = CPU(obj);
-+    cpu->start_powered_off = value;
-+}
-+
-+void cpu_class_init_props(DeviceClass *dc)
-+{
-+    ObjectClass *oc = OBJECT_CLASS(dc);
-+
-+    /*
-+     * We can't use DEFINE_PROP_BOOL in the Property array for this
-+     * property, because we want this to be settable after realize.
-+     */
-+    object_class_property_add_bool(oc, "start-powered-off",
-+                                   cpu_get_start_powered_off,
-+                                   cpu_set_start_powered_off);
-+
-+    device_class_set_props(dc, cpu_system_props);
-+}
-diff --git a/hw/core/cpu-user.c b/hw/core/cpu-user.c
-new file mode 100644
-index 00000000000..e5ccf6bf13a
---- /dev/null
-+++ b/hw/core/cpu-user.c
-@@ -0,0 +1,27 @@
-+/*
-+ * QEMU CPU model (user specific)
-+ *
-+ * Copyright (c) Linaro, Ltd.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/qdev-core.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/core/cpu.h"
-+
-+static const Property cpu_user_props[] = {
-+    /*
-+     * Create a property for the user-only object, so users can
-+     * adjust prctl(PR_SET_UNALIGN) from the command-line.
-+     * Has no effect if the target does not support the feature.
-+     */
-+    DEFINE_PROP_BOOL("prctl-unalign-sigbus", CPUState,
-+                     prctl_unalign_sigbus, false),
-+};
-+
-+void cpu_class_init_props(DeviceClass *dc)
-+{
-+    device_class_set_props(dc, cpu_user_props);
-+}
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index 65a1698ed1f..b5a545a0edd 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -46,4 +46,7 @@ system_ss.add(files(
-   'vm-change-state-handler.c',
-   'clock-vmstate.c',
- ))
--user_ss.add(files('qdev-user.c'))
-+user_ss.add(files(
-+  'cpu-user.c',
-+  'qdev-user.c',
-+))
+diff --git a/target/i386/whpx/whpx-accel-ops.c b/target/i386/whpx/whpx-accel-ops.c
+index ab2e014c9ea..81fdd06e487 100644
+--- a/target/i386/whpx/whpx-accel-ops.c
++++ b/target/i386/whpx/whpx-accel-ops.c
+@@ -11,6 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "system/kvm_int.h"
+ #include "qemu/main-loop.h"
++#include "system/accel-ops.h"
+ #include "system/cpus.h"
+ #include "qemu/guest-random.h"
+ 
 -- 
 2.47.1
 
