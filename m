@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8541DC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86ECCC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq4yP-0007vB-Dl; Thu, 06 Mar 2025 01:44:49 -0500
+	id 1tq50I-0000lv-Ig; Thu, 06 Mar 2025 01:46:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tq4yO-0007uB-3i
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:44:48 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1tq50G-0000js-9l
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:46:44 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tq4yL-0006SE-6K
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:44:46 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-390fb1b987fso308660f8f.1
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 22:44:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1tq50E-0006hy-4d
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:46:43 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-224171d6826so1420865ad.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 22:46:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741243483; x=1741848283; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UMoWzdJKPmx3GK+kmpHJkUBkTaJGlw70lnDXziwQI9Q=;
- b=YwFrBBpSgN0XvOG56I7SkzRSgF/7sv7Txce8gKa/l417laWf2vdd4eox1zD1vDbUg/
- foOU7GlSJzYjJ54jShUhZ0ZVX48rbLmaCAmsQwVYrf2ElT0IbISeVYgIIYE4cL/fmVVm
- 2uqDt757jSHbYqR8xgQCtkR1dHHh+vw+GpUb2+U/Y960sWgZSN0B+vQllrrLj/SJya5y
- KzGxUOygKXqlUx85ahAhLDRDCPqQlfkP0PHExSfH9+msp4g/EFKVMQj0K472HB4JbAQG
- HKh8kdaqh4PNiJpK70RD2/GZAP2/hPttMw8y0VC7nPZ7c0hNgGmCgNmgfLqiuLmO2YvK
- jGrg==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1741243600; x=1741848400;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Be/GHZSOLbcX266/6hC+i01oZ+3WzvyKnxve3aa29ec=;
+ b=0nJcGlwtnO/IQCFgUa1c+sHD1GE+BiHgyRwnKs4NDfflU5k7HwhmN+/oY7f4sqdUP1
+ OO+6vAJZH4oojF3mZwzo71Iut36uTTaxFqbLrFswLJpFF2oDzbEBSjjxYFY0+JF8gvaM
+ kPIb0iBS4W57k18iBBCsZ7ZkE5IMIaZ5/wwX7DLhF0A/vpdvHd31qUelh3PilfDW61Xv
+ CAXOQTPJq09hJ4RsRocPWsR/a18GHoBQa65wYLP27MU7+O/FeEBa+FU9Nka8F3LuLFsa
+ BsHBmSN6r8Nw3ySCg3AgjMLlfBA4Pzkg7rqe6cVKqP9ucV58l4p/nm/83ux+30X4vdEW
+ o1Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741243483; x=1741848283;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UMoWzdJKPmx3GK+kmpHJkUBkTaJGlw70lnDXziwQI9Q=;
- b=b/bYFOFjKcInGzlpNUViQuxaTUKqXpjdam9oc22CY1t46dPSM6oyZy508IEsQVcwsv
- lo9O/kob0ZCZZF1PyqFofs/rzYn2e+gZadUUVWS6AJggbqzre6f40juW0PQ1/5tmC2Yd
- pnoAlCrl5eJf0fprmx1y5fgiiKakT6XozDiCeciR60yLovlFxJ7t9YKDlO+SUHOeHgun
- PAZxv2+TeRphQSGPKEwI/jakje7WapBpwF3GKvijgErrw8zq80wo7Gthr9sot9jDO9+K
- AcEdBrJRuDCbHuYRMRQWJR6TsuuqAVffqMIbm3D+9yuTiIrYwBvAqiJvT9jzEjn+DCUI
- Uwsg==
+ d=1e100.net; s=20230601; t=1741243600; x=1741848400;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Be/GHZSOLbcX266/6hC+i01oZ+3WzvyKnxve3aa29ec=;
+ b=T2tMKUJS1bdwIJTEpsoffmikOZVEGqTEpnCny+oeeD7R9zEo544F3TylRQICoeslmL
+ X1iGMRPIpGOv7xQsJqLUuuWCO/gXh6STif8rFwT19Ofr9N9Q7/NbOWjaUoT9asLcXddF
+ K29XJ2nYzSipkPJRn9HMX3ANnrgasDCM0fw6gvoCetUetG5S81nWqh/7qe88XrHoZg4s
+ 3dRvOTSBz3VbILLim3OxzNTUnLCbmBWLDk06/Aj27XBkDnJsJdrQT0EAFe+2n8bPNeTJ
+ jP+fAeZwaeRrZGZK1g+hu0cLkPMo/lU5fQC5pY7NY1rU5Oq8bsH7Zms3pKs8J8bxuIgY
+ GUsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWGoJmigx/RlRgO5CBwo3+rF4HB+SQBYHqXwhM538I7yeOVAm2AAjbF6CdARa/VObHAQrbxXQw6OqCm@nongnu.org
-X-Gm-Message-State: AOJu0Yykob+9icx9mSPN2+HvkDJXPnlQwB0oPZjgjSPqq6QbEybRNLsF
- k1ABfd58QJ8tzgG43q1nFBxVpzMTVA/KWbA70yxt9u4G1iDhJwbbTXJIGQr9O5c=
-X-Gm-Gg: ASbGncuNmifv7FsmxneSiG3zmsmLKWW8zbU5PY2Pqsx5g3YCxFyyCOhAG4Bs3CN1d3o
- xEZ9K8jN5cSWRTjivbsLN3KSTACCqjSoI1ZjgmBJdiQ/rZuHtiArZlxt2qws4/u4KeMT0tv+iNY
- tT77DmRvaLe+mHNstQ1Zr2cs3MAdXZgLLLFH0b7nYb8drt5Zx4EWE+6DMNzOEbbmZ8u3iVvivUy
- kdj84LbU9xVAoRowYB/R5NObQOixImoiMvsIIjpFlvlASUWMhZ0NDlU9qqpgMaEWQA++lQzQSJ+
- TKW+nZ1a0wARB2tphN96qrbkqGoHK09DctYO3hiz/QDwQZtlhTZKsUkVJlU9QPrXNEEpDuwRmov
- FEe5XoQZpj8KJ
-X-Google-Smtp-Source: AGHT+IG51/TVu0yGDusBChVu1K5myslQQqOEAyRUHbnXnnHjWYVVzzKs2dRLuEMQDHqMG5gDwg+7Zw==
-X-Received: by 2002:a5d:598d:0:b0:390:d990:823 with SMTP id
- ffacd0b85a97d-3911f740b29mr5064279f8f.13.1741243483163; 
- Wed, 05 Mar 2025 22:44:43 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c103808sm968518f8f.97.2025.03.05.22.44.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 22:44:42 -0800 (PST)
-Message-ID: <4a96e43a-a4f3-4b24-8ffe-63b5da01f82b@linaro.org>
-Date: Thu, 6 Mar 2025 07:44:42 +0100
+ AJvYcCVMo1ih1xFamw/A6WoZ6ZZ7lEhrww3FWOiERMUVfplz7lLbdtxiFQWqZX7iY1hcgEpJj/xtX2JWDHsd@nongnu.org
+X-Gm-Message-State: AOJu0YwCb1NqTLq3SmhhdZXC6J+f7MjfMx4FWInwpNJkXKEAgEbpdOsW
+ 8YcTuPJ4qn5genS8fPOn2CamBZosAbK8PTEQo8iBtPqoZf9VTCzxkkrez3rhZsTfel4sJg0prci
+ U
+X-Gm-Gg: ASbGncscHX+nfPDB47gd77uHVpulRBfK1ePtdTDc8MgqHLXYZmUSvjeqS7moW4gjol0
+ aaIRjXjkM5XTrMraI0R7iveZ0byKTyECBl24C6Ok+74uCu40de+uCaDvA1le2gKphpiXN2KpNx4
+ oLw7Zct2+QJSISsjMvdIhWE71iCdtjz2G6eXCTkNnRnvKBBd5nzN0sUKapBFpz7npPg9eguriPE
+ 76cbrVdjrx3D67VDCSptb0oVf9mgwyo/Nzdn9OVERM/JGTaao7Qf34ZjysVp3KkDAPRvba3gCQ8
+ 3KQTdUUzQ66N7YU/yoirkZbdALc9HpaSjq98VbIROA7heLRH5/fuyuI=
+X-Google-Smtp-Source: AGHT+IG8dDeseyVbj2bax72SCNmsI2gXQCC4mc2IixV9ZlxknM5FQAaSSYaZYVT99TVEsPX3Jtoqqw==
+X-Received: by 2002:a17:902:e750:b0:216:4064:53ad with SMTP id
+ d9443c01a7336-223f1d45cfamr108163425ad.48.1741243600279; 
+ Wed, 05 Mar 2025 22:46:40 -0800 (PST)
+Received: from debug.ba.rivosinc.com ([64.71.180.162])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22410a80edfsm4828185ad.150.2025.03.05.22.46.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Mar 2025 22:46:39 -0800 (PST)
+From: Deepak Gupta <debug@rivosinc.com>
+To: qemu-riscv@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com,
+ liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>,
+ Adam Zabrocki <azabrocki@nvidia.com>
+Subject: [PATCH v2 1/2] target/riscv: fix access permission checks for CSR_SSP
+Date: Wed,  5 Mar 2025 22:46:35 -0800
+Message-Id: <20250306064636.452396-1-debug@rivosinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] doc: add missing 'Asset' type in function test doc
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20250306060706.1982992-1-adityag@linux.ibm.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250306060706.1982992-1-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=debug@rivosinc.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,41 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/25 07:07, Aditya Gupta wrote:
-> Seems 'Asset' got missed in the documentation by mistake.
-> 
-> Also fix the one spellcheck issue pointed by spellcheck
-> 
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   docs/devel/testing/functional.rst | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-> index ecc738922b7c..50fca2a0291e 100644
-> --- a/docs/devel/testing/functional.rst
-> +++ b/docs/devel/testing/functional.rst
-> @@ -251,7 +251,7 @@ Many functional tests download assets (e.g. Linux kernels, initrds,
->   firmware images, etc.) from the internet to be able to run tests with
->   them. This imposes additional challenges to the test framework.
->   
-> -First there is the the problem that some people might not have an
-> +First there is the problem that some people might not have an
->   unconstrained internet connection, so such tests should not be run by
->   default when running ``make check``. To accomplish this situation,
->   the tests that download files should only be added to the "thorough"
-> @@ -274,7 +274,9 @@ the tests are run. This pre-caching is done with the qemu_test.Asset
->   class. To use it in your test, declare an asset in your test class with
->   its URL and SHA256 checksum like this::
->   
-> -    ASSET_somename = (
-> +    from qemu_test import Asset
-> +
-> +    ASSET_somename = Asset(
->           ('https://www.qemu.org/assets/images/qemu_head_200.png'),
->           '34b74cad46ea28a2966c1d04e102510daf1fd73e6582b6b74523940d5da029dd')
->   
+Commit:8205bc1 ("target/riscv: introduce ssp and enabling controls for
+zicfiss") introduced CSR_SSP but it mis-interpreted the spec on access
+to CSR_SSP in M-mode. Gated to CSR_SSP is not gated via `xSSE`. But
+rather rules clearly specified in section "22.2.1. Shadow Stack Pointer
+(ssp) CSR access contr" in the priv spec.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls
+for zicfiss". Thanks to Adam Zabrocki for bringing this to attention.
+
+Reported-by: Adam Zabrocki <azabrocki@nvidia.com>
+Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/csr.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index afb7544f07..75c661d2a1 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -191,6 +191,11 @@ static RISCVException cfi_ss(CPURISCVState *env, int csrno)
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
+ 
++    /* If ext implemented, M-mode always have access to SSP CSR */
++    if (env->priv == PRV_M) {
++        return RISCV_EXCP_NONE;
++    }
++
+     /* if bcfi not active for current env, access to csr is illegal */
+     if (!cpu_get_bcfien(env)) {
+ #if !defined(CONFIG_USER_ONLY)
+-- 
+2.34.1
 
 
