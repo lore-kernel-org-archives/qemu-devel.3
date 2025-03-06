@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98DE1C282D1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA6C3C28B24
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqEGD-00070t-NQ; Thu, 06 Mar 2025 11:39:49 -0500
+	id 1tqEG7-0006rI-CP; Thu, 06 Mar 2025 11:39:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEG4-0006pn-Mo
+ id 1tqEG4-0006oz-1C
  for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:40 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEG2-0004db-Tc
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:40 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43bc63876f1so8062285e9.3
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:38 -0800 (PST)
+ id 1tqEG1-0004c5-3j
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:39 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43bc4b1603fso6021925e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741279177; x=1741883977; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741279175; x=1741883975; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Gn+iRr/DyOLW0klhx/+n+/C8SaHWZdNPyfpde7R5NiY=;
- b=PnSqnbZSWdBa/Xb/D8tqJBI2WZptpWDIQcnncJ2oyjFB9WwpEaPry9ZKPQKd6iF90I
- 37puYtKrdpfdvRQ66idItOLh3qI3w9jcPHcFy84Wo3/o740hbVGetHh6PrL/zYFYwwjr
- 49eVVsUEwV09rGZ8wdwdptpASc93pYBzNur5nb/kE6yGd/OQ98T5z1zwR21w0RQkKxMC
- sgPy66PLKL5A0MySz1EQ/AWO6iW0Fdu8OiBGim0KtUS6i8Muk8rZPk7UMDGNH9TwOawm
- 3DfcGPjBoE/2EPOmIQjYUGAAcmAG7nbal8AvrfUs/AXmVjiezv651tNfQs86m+FQu3xL
- ZqFQ==
+ :reply-to; bh=drdpohR6Dj+KXd2wNLa0BIt2hP6cDbsQHnby3gMJcxE=;
+ b=GyzJ/WOv8bJzxSkuKfLH+GxrynXPq+CYjXxiVCvrfz21ayLzUEeBu/rP2u4EF9+3fI
+ j6cSUhc5ZRQJWcQvEZYVGmDBTK27TKE89h0jqHOTPaLXJcljQGmDmaxlVjkTb++CRUc8
+ 0TnOWBBGyFeIteegVVuJK2xAjJ4xzPSpQNzK+/bCRfjsKkaWLwE/jQ0imm1bYnXQqtRH
+ w2znJ7ylOrvf38zwvgvmES/X/iBw9mPoFR3+7qBmSEErpWbTzsdr/fAx5bNfnYFfhcy6
+ UA1+lENcN2nDk5BgxXGMcJrqNlWl7Sls/9ZLaJVDpGgz8m1YQ4CCFzrR3jzxjYj9Mmhc
+ 7A8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741279177; x=1741883977;
+ d=1e100.net; s=20230601; t=1741279175; x=1741883975;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Gn+iRr/DyOLW0klhx/+n+/C8SaHWZdNPyfpde7R5NiY=;
- b=SLS16e0N5n+hUesfRY6HnnWwzSsyJIM0cd6C4qkn8OQNl0QED3G5p5u5L74yiCXeKF
- ySYX1KniVuP83prpDt959rkOsATKEhLtRjxDA6VJDbeWEsDV9wDKD6PT+fsnX4Lj7LjO
- XhuEoDh17UVp430tTCIe+d+Fa/yHN1ud8LR3kKecKfdeVygQAxDlD3WEpdLp2XtQbp9Y
- 4+AaeDuMimOTRNErXKEGsXy3rrd0M2JsCO9jdmLm70HKtW125iX1hGt1IwI15mfoSZI3
- RUh1pHbASO2iFvEgPcpW12UVz/xOBYUjHRnY+b4l9A5xOPb7gwU1le/BFRXJxWpotFbV
- xA1Q==
+ bh=drdpohR6Dj+KXd2wNLa0BIt2hP6cDbsQHnby3gMJcxE=;
+ b=mQgwYG2K5gaQadc2LBLMCZI+6A/cSxg3Cvl0bBfDZO9TGyuqz/NtHv332p3nD/jbHm
+ gCYyEx0zZhQtQYAJAA34GhH/aEd2y8Bu6unYHaTrym17E7wfab3e2JcDe/5QM9cRq6wU
+ SYsVM8IrbpaFSSfwmVysiZdxPk8AFNAsOUuqeqPQuGKGIIU9KBradRxz9d33RvLbvB3n
+ yzlmTDA9Lc7MRwcshCKguw7hn+v0mEXZAbIfyTP56yltSij6U4mOEB8nsbCxW+0SswrI
+ QpG6uCf44yGYBz5HlKIO3Y6wWx//l3XdgIgYzTZxsDsqTRUJy6I1LLaXo1s/she9TNc1
+ gn3g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXewqtpUAv7IX56cMN51E+rloVQIYaDxdjQ13R0z0ibWPnlcXYySQ1Z2hhyF91V/kZlfNH6fLzS+anG@nongnu.org
-X-Gm-Message-State: AOJu0YzYNQwzuNmPE5N3yFDM5CVZSrS6AvbC5t3cpr609cLl23nT4FIs
- qg5jSHJPdgoN9GNMz2e6jajEln8MoCoiNmLYGDue/YO3DRQyenH799PhQthhZk4=
-X-Gm-Gg: ASbGncucBMQrs6RCppgB1vFX9ax2iieXitv9qsG59EBNqHsopKoZ66fAyNMAyJ7HxOP
- ZmeC0brZg4MuBAiAWjnjEiRpwuvywj7BduoM0USiSAIR1a6OcegKRiJDoCfvjemY7wnUcJ+MY5z
- 7pL995CQcaeNnvrMNul6PixwQIJm3M6pPscOWz6ttR4LDIJahNBRXfZWDWfGbTd9YLU9hIHuCTH
- xU5WoYe6efOmgv8W4MEJppSnOKrrFTycKp5nwti2sskwySfyownqMF8R8PJlBD6NxnTuuj7HWZL
- 4Xu6TrX9zdtYsT5UWiBSAyrJLnqdNtBllp1l4cWNWsRLrbHXCyE=
-X-Google-Smtp-Source: AGHT+IFc8om0H9QBBv0wuiEQDM4mQZFPwxA/4ZSQCFDKgMoJpbSBlTO0sY69P5BijKAPpMjt1oO/LA==
-X-Received: by 2002:a05:600c:4f4d:b0:43b:ca5b:847b with SMTP id
- 5b1f17b1804b1-43c6872dd3bmr763745e9.30.1741279177128; 
- Thu, 06 Mar 2025 08:39:37 -0800 (PST)
+ AJvYcCU41bt4FKAac4S3R9/4NgN/qfMnetUDyyK9xMga9v6EqjyeG24+ZVupt5hJ/7vvH1zBUL/tIbdRo/5u@nongnu.org
+X-Gm-Message-State: AOJu0YxD2NhEkE7l0AsJaEhagH5cdgWzwGJNxjC0Ag3cfIy1TDWUQCvG
+ +UJwgcPJ0kGvvsvlCVyQgsMuUd/5CvCCVf+DzH6k84Z/60iAGT4ozjHl4FFrbrWerkhOwn5J/eA
+ s
+X-Gm-Gg: ASbGncvKZv/yGkWthwsnfqhE7ar100Yk2tI0CHQE7ECAOh5d6UXQKS230/VgrhGCAlp
+ 6L0OYhZHzxy1Bls0dtJM43YPFD/w363TWlHMUnXxeT4NES/Jncm/zr5HYtGP21w1IZbY67eHh80
+ dkl4ih4noO6EcGOpO5R7xS0F1uYq1OncLzuN4+34ERCId+ZpAK5mRUYKardjmGYjlaQSi2yodxZ
+ zGKJT9HWbZ+2TR/qMbODlUHbiKBNbYwjfjiII7UNd25OvyssCiu3PRTm/ONviGhKaPD+O1Bq+34
+ Bni+W6v/DAYDLZWzRg0YvPknPu8b91q4zBtskJfDYcHXkiMKJBk=
+X-Google-Smtp-Source: AGHT+IFNN8F/4sELOsNc+0T3Px0KR+vrozTFstGGTSCZTMFbAxhKS3Gy/GEBZf/tmjTF/9oad+6zZA==
+X-Received: by 2002:a05:600c:358e:b0:43b:cc42:c54f with SMTP id
+ 5b1f17b1804b1-43c5a60eab5mr1862695e9.14.1741279175508; 
+ Thu, 06 Mar 2025 08:39:35 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.35
+ 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 08:39:35 -0800 (PST)
+ Thu, 06 Mar 2025 08:39:34 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 10/10] target/arm: Forbid return to AArch32 when CPU is
- AArch64-only
-Date: Thu,  6 Mar 2025 16:39:24 +0000
-Message-ID: <20250306163925.2940297-11-peter.maydell@linaro.org>
+Subject: [PATCH 09/10] target/arm: Add cpu local variable to exception_return
+ helper
+Date: Thu,  6 Mar 2025 16:39:23 +0000
+Message-ID: <20250306163925.2940297-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250306163925.2940297-1-peter.maydell@linaro.org>
 References: <20250306163925.2940297-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,43 +101,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the Arm ARM, rule R_TYTWB states that returning to AArch32
-is an illegal exception return if:
- * AArch32 is not supported at any exception level
- * the target EL is configured for AArch64 via SCR_EL3.RW
-   or HCR_EL2.RW or via CPU state at reset
-
-We check the second of these, but not the first (which can only be
-relevant for the case of a return to EL0, because if AArch32 is not
-supported at one of the higher ELs then the RW bits will have an
-effective value of 1 and the the "configured for AArch64" condition
-will hold also).
-
-Add the missing condition. This isn't currently a bug because
-all our CPUs support AArch32 at EL0, but future CPUs we add
-might be 64-bit only.
+We already call env_archcpu() multiple times within the
+exception_return helper function, and we're about to want to
+add another use of the ARMCPU pointer. Add a local variable
+cpu so we can call env_archcpu() just once.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-a64.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/arm/tcg/helper-a64.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index e2bdf07833d..9244848efed 100644
+index 32f0647ca4f..e2bdf07833d 100644
 --- a/target/arm/tcg/helper-a64.c
 +++ b/target/arm/tcg/helper-a64.c
-@@ -678,6 +678,11 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
-         goto illegal_return;
+@@ -631,6 +631,7 @@ static void cpsr_write_from_spsr_elx(CPUARMState *env,
+ 
+ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+ {
++    ARMCPU *cpu = env_archcpu(env);
+     int cur_el = arm_current_el(env);
+     unsigned int spsr_idx = aarch64_banked_spsr_index(cur_el);
+     uint32_t spsr = env->banked_spsr[spsr_idx];
+@@ -682,7 +683,7 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
      }
  
-+    if (!return_to_aa64 && !cpu_isar_feature(aa64_aa32, cpu)) {
-+        /* Return to AArch32 when CPU is AArch64-only */
-+        goto illegal_return;
-+    }
-+
-     if (new_el == 1 && (arm_hcr_el2_eff(env) & HCR_TGE)) {
-         goto illegal_return;
-     }
+     bql_lock();
+-    arm_call_pre_el_change_hook(env_archcpu(env));
++    arm_call_pre_el_change_hook(cpu);
+     bql_unlock();
+ 
+     if (!return_to_aa64) {
+@@ -710,7 +711,7 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+         int tbii;
+ 
+         env->aarch64 = true;
+-        spsr &= aarch64_pstate_valid_mask(&env_archcpu(env)->isar);
++        spsr &= aarch64_pstate_valid_mask(&cpu->isar);
+         pstate_write(env, spsr);
+         if (!arm_singlestep_active(env)) {
+             env->pstate &= ~PSTATE_SS;
+@@ -749,7 +750,7 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+     aarch64_sve_change_el(env, cur_el, new_el, return_to_aa64);
+ 
+     bql_lock();
+-    arm_call_el_change_hook(env_archcpu(env));
++    arm_call_el_change_hook(cpu);
+     bql_unlock();
+ 
+     return;
 -- 
 2.43.0
 
