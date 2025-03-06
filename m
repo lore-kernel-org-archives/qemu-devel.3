@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 880D4C282DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D3F8C282D1
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDVu-00053Q-6z; Thu, 06 Mar 2025 10:51:58 -0500
+	id 1tqDTm-00018w-Vm; Thu, 06 Mar 2025 10:49:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDVR-0004U1-8q
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:51:29 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDT1-00005o-10
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:01 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDUs-0006jM-W1
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:50:57 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43bccfa7b89so7148085e9.2
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:50:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDSz-0006Kp-7U
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:48:58 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43bb6b0b898so7159715e9.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:48:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276251; x=1741881051; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741276135; x=1741880935; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5B/bpSAszS/Z+RxXmZ3jyXxyW08tQFInocZVZ8QKZ0I=;
- b=HmFTfqA0nkb+dzMiJ+jzXBtoILyq9tNOrUktj3Vko1Kbd/D4LuRswRx9UEdF2MN2OO
- owAhjqtKEWGNqiZC1nqq5lnwPjW92bQHv67iA3FeH0xgCuvRIAkAtDckvWVO7KEpjqIO
- 2cEzNHSkbE2+rfMx7f2sfV8DaQSias0CeO4wUB2j7XcYsSacox1UiVks8NWz95QM8b02
- TGfVzlLfmlZAh0Qrj0psUCvBQKBvIgHm1wmBKkc8MvHg8dKKMysB2N8z9BEcWhwN+AXB
- cQrFIHpAHKjiyHu6QG1J8NvErSf0pjQ+nBpIIqYbXGs7TuEZzbdortwNS0ZYoJ4ilr1Q
- 1o4A==
+ :reply-to; bh=tTLBFu22G8ChNwnUUuiiV0/VSwHr+qaXgLj/hapvjNA=;
+ b=U1vgWMQxX69TlhsF4blk4qZwYqKIMTK6ekfzKEVov30ebnZF7s1VYz97Wl24wrgbTp
+ az6wo0jkSTdeoJiLcGQfnSIA7/rDPZ4M9DXs/5qI6vGrTACtKcwixonkI0ncF5PMusPy
+ KT7hr+IhYLp1fFSOCdVXNCN7jdq/suVBE/3GvwXtqI0hJFUVXEY8mzpv5qa6CuZmSAl8
+ fMzTSrKc4zhRx4BmPUDjDJK95dqw/5H8EFj8vWu365+bf/Xc8llgiw7jI+BdnQ21Ze/j
+ 56yte3IG88UbDKOmDj1dIZBGwu6OrfdlKoAXT3h6vw/6iRf01NYEYWwVAcBoyRKsanUv
+ 5wCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276251; x=1741881051;
+ d=1e100.net; s=20230601; t=1741276135; x=1741880935;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5B/bpSAszS/Z+RxXmZ3jyXxyW08tQFInocZVZ8QKZ0I=;
- b=pLEWw02ppT6WI38Ef8pZy6sXDDIPxECF5+PFN1ZkwcqHTUb4yLe1odmLQumSApXrru
- n5jeqsgKahvmxfjX3BViVOfJesi7o8imlOjP8JGwtaOcwRoaDWyMkvBKehahZGHkeicn
- aTpy/AKVU0/OsDmsm7EU1TWgbJzo9amsnISydzep2TmG0pDjvjqcpdDsMNdJVQiYBFKM
- 65kweQaLEFPEWVrgG4MFUW9AAnLxRWW+xX0/0A/LrhfoWkIjoKN02J7Keh2he7yBfwWr
- jzVE2mu9o+33XIj23m+KvMgkhR5H6yKswiQagTukUVRheSkdsdCtM4Epb8LotGG1IWgc
- PW7A==
-X-Gm-Message-State: AOJu0YwLjXj6yjE6/fnMKDKaAuUcuBfEUe1JSpfi4gizDHtl/0/S1Mkn
- p7VrDROzbX/BjRHOqet59UqnlUjGi6r5aykDbVSYGjHzgpqPLl4QAG2OUOGN24uNeUMRrmXuGWf
- LUOM=
-X-Gm-Gg: ASbGncuWmKRYZBfcXxXV2373UvG0TOxyqSfIOd9o/rsbTIZoaF8Dsx1fmeki1omC9Fq
- vq/353f0djczMJyTLq6FahTz032vazdC2jsCF6/XiNEro22GmM0QZum/zDMKD0I8PJTd2boZIQc
- sFkCCqBbm91iGxY6T7Ro0Yea78rzF4xpi33wk5tTeR9vcQDfoy59P4R9ZX8ht+NWe5sEd/Mu5uK
- zIs1vn/Xz5Of8h78jzuigYVE/vZCRr6UkZb5fV+/iGz95DOy5FTTpqX3M6F0ZzFFykAIa9d2dBk
- 0UegRWtX/teQCLpVOlNLIPLz1CCVvcwGtxkwGTf2PSnAE3+HhWDP2ezmB4BtAfuSTGYMFK/XYPz
- cc8lad2nCR3861rhnKj8=
-X-Google-Smtp-Source: AGHT+IEg0uk/ZwIThl/zSvRqPKB8YctVuJLcbAB9JbYvMq4ztgAmVlRAdWMYGSqI60BAPs63y0g0Dg==
-X-Received: by 2002:a05:600c:3544:b0:439:a1f2:50a3 with SMTP id
- 5b1f17b1804b1-43bd29462e3mr61703515e9.4.1741276251519; 
- Thu, 06 Mar 2025 07:50:51 -0800 (PST)
+ bh=tTLBFu22G8ChNwnUUuiiV0/VSwHr+qaXgLj/hapvjNA=;
+ b=Q0MZXOtTi1g7c2iKzHQLfiDe8Pp9/Vx4XOklsuSVN/4Ai/zPpRwAxN3Z+0uLWoLCM2
+ RB03qizs4Bfh0b0CmbOSqIg34lexdlmcvQDkRQJqp20HRvYO49LWEhyzBvVZKKLh5C5i
+ vNWJ58Wqq4N8w4lERfyppljJ5TFrLtjbToq6Bt3x6TQJlD7UFLU0ACPtrc7iN7tkpEkG
+ av7o9/rnJvEjZw+lVvLYU+5jG/oKIePBVxb4Dy0YJzcCcNjotDY6wWb8RQ4jIL9mBaiQ
+ XRb3C3jmIAygfFx7KuYLsTGCnbHpuJiPqHunsB9ddlTVZec4WxwWW7m1YQeVdCIxBo4Z
+ Wahg==
+X-Gm-Message-State: AOJu0YyJlWH/cJHEsf1Qb/yqJI9IwKyyEf+TGRnD1k4IhvtD7psQstXx
+ mHRI5/5n/YOsT0JC1iDpktvnOyMwB59YmKsiie4Xmb7PXTHbcuLZgyJpENfyaZ7xJ5V/TnS7kAf
+ lYg8=
+X-Gm-Gg: ASbGncuNAda6gcswniKTczeQyn5xvccgeI9gzqmnusbLAvP2cMQi4Fb2pqQWvM4en1L
+ /6w/EyU04t3E25vWNnqW4aXc9D6BT31AG3Un8W4OtDefGE/gR92f0Y1RO+hqRJtyA0VAyDc+cbH
+ vzalGRCTIZNp1EpRIdlVh2LXckSjd4lGHNEbdg5b5J1jJTvjIuZi75Ow+LuiRZdlIMWBDYAPW10
+ ypgWDmUcemsfB0P00Y1AScP7AtHBABFE/eVnYRvr+iTIaXh3ewJP/qG+O56CD9EvM5ijR0BEWr5
+ FHlCNLl1Pp4Hu4RnuAy5xNRbNWPAuOcCKJf8ir55yIw2pCz5zLa8vCWEEt97CJCwE+mRdhahzL0
+ 0VfY2T19npLODkBUarZU=
+X-Google-Smtp-Source: AGHT+IFJr2jgtqTnLgcuDpOtP8ONwP4dgqyH2Y2WNPtLCuhBb2RVfdFnuVSOGidQ3T4uzOvqGKKVxQ==
+X-Received: by 2002:a05:600c:4687:b0:439:8346:506b with SMTP id
+ 5b1f17b1804b1-43bd2ae56f5mr59372335e9.19.1741276135333; 
+ Thu, 06 Mar 2025 07:48:55 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd8da473sm23319515e9.18.2025.03.06.07.50.50
+ 5b1f17b1804b1-43bd426c01bsm54378555e9.2.2025.03.06.07.48.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:50:51 -0800 (PST)
+ Thu, 06 Mar 2025 07:48:54 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 43/54] target/sh4: Set disassemble_info::endian value in
- disas_set_info()
-Date: Thu,  6 Mar 2025 16:47:25 +0100
-Message-ID: <20250306154737.70886-44-philmd@linaro.org>
+Subject: [PULL 17/54] accel/tcg: Avoid using lock_user() in
+ cpu_memory_rw_debug()
+Date: Thu,  6 Mar 2025 16:46:59 +0100
+Message-ID: <20250306154737.70886-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
 References: <20250306154737.70886-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,30 +99,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Have the CPUClass::disas_set_info() callback set the
-disassemble_info::endian field.
+We checked the page flags with page_get_flags(), so
+locking the page is superfluous. Remove the lock_user()
+calls and directly use g2h() in place.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250210212931.62401-9-philmd@linaro.org>
+Message-Id: <20250217130610.18313-5-philmd@linaro.org>
 ---
- target/sh4/cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ cpu-target.c | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
-index 22cdf9b4e12..c2aaa40a037 100644
---- a/target/sh4/cpu.c
-+++ b/target/sh4/cpu.c
-@@ -143,6 +143,8 @@ static void superh_cpu_reset_hold(Object *obj, ResetType type)
- 
- static void superh_cpu_disas_set_info(CPUState *cpu, disassemble_info *info)
+diff --git a/cpu-target.c b/cpu-target.c
+index b5230ce1837..3892ce12229 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -374,7 +374,6 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
  {
-+    info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
-+                                     : BFD_ENDIAN_LITTLE;
-     info->mach = bfd_mach_sh4;
-     info->print_insn = print_insn_sh;
- }
+     int flags;
+     vaddr l, page;
+-    void * p;
+     uint8_t *buf = ptr;
+     ssize_t written;
+     int ret = -1;
+@@ -393,13 +392,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+         }
+         if (is_write) {
+             if (flags & PAGE_WRITE) {
+-                /* XXX: this code should not depend on lock_user */
+-                p = lock_user(VERIFY_WRITE, addr, l, 0);
+-                if (!p) {
+-                    goto out_close;
+-                }
+-                memcpy(p, buf, l);
+-                unlock_user(p, addr, l);
++                memcpy(g2h(cpu, addr), buf, l);
+             } else {
+                 /* Bypass the host page protection using ptrace. */
+                 if (fd == -1) {
+@@ -424,13 +417,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+                 }
+             }
+         } else if (flags & PAGE_READ) {
+-            /* XXX: this code should not depend on lock_user */
+-            p = lock_user(VERIFY_READ, addr, l, 1);
+-            if (!p) {
+-                goto out_close;
+-            }
+-            memcpy(buf, p, l);
+-            unlock_user(p, addr, 0);
++            memcpy(buf, g2h(cpu, addr), l);
+         } else {
+             /* Bypass the host page protection using ptrace. */
+             if (fd == -1) {
 -- 
 2.47.1
 
