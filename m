@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5AA5C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4291C28B24
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDU0-0002Yu-Hg; Thu, 06 Mar 2025 10:50:01 -0500
+	id 1tqDTi-0000sx-O4; Thu, 06 Mar 2025 10:49:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDTe-0000kn-VU
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:40 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDTN-0000OE-J4
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:28 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDTd-0006Oe-4U
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:38 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3912c09bea5so643727f8f.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:49:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDTL-0006N8-6K
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:21 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43bbb440520so9728715e9.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:49:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276175; x=1741880975; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741276157; x=1741880957; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=c1VlvOtxLHbEwfuyvRPb+ktDAXmv1s+XhzIa2Um25I8=;
- b=UmD5xqViltVPiOVNYS5sqGi7eZ3XrLY+3Ut07Vmc/syZvPvLKdTBJ4QEmWkKFwMEzm
- sbo539BQ64vmDS94wESeTg82zVsFdRh9YUlUeRSSJesh/4nTI/+5cO/PTwYhVrJP6JiF
- k352JlV16pmr/+b9ssm4dgo5RITqSm+heHh99hCtRaTJulNbcBWIUAKPOKmHXPzS08Q+
- 3bY0Dy7Q86mq9knkOtdfUqEaed4QmJ9mU/Ag5YzyWYHO8svqb+lr1ilymtPMx4XpBQVW
- pOpm5/3AFzQmpC2cWHXoe6hciEuPpbqv0OfBrfZPqSJ2bDDnGUfJ6BpiKm5IYZnCQ6Cz
- 9RYQ==
+ :reply-to; bh=X8Saq/dqG9xCUSyrkXOExGdZvozj3jjUcX+27h5Z2go=;
+ b=bP07UptFVuMFyGaSNuiW6PlW/YCahiaEZYQQZkqa+O0zOrVYTXcIOuAgCjwEpC1Xm9
+ WD9fs14yJr9bZg7Sv5cI+wmAQ8Me7MDuVxibFqaACPWIbEA4Bxig1ERBiIWZR20BTXwN
+ lV5VTSuRFKMawHd0BCTHQNiRex9ihjy5xCg94SwOxsxR4Aifhj86Z1U2/qjXtZZkYPUU
+ o4SSjyrZ0tJwLIWSxoJ3UYDpb/LMXdrRjeA1GihHbIpzqNtwdM2EJPmTQOy/GjJChh6c
+ +stYeCNZ8VcR5MJbxz4jGaXHhclwqahyDc3CaPyCOZEB5uLRRxZw3UF4w8glQVE83XPJ
+ pgag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276175; x=1741880975;
+ d=1e100.net; s=20230601; t=1741276157; x=1741880957;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=c1VlvOtxLHbEwfuyvRPb+ktDAXmv1s+XhzIa2Um25I8=;
- b=D56bmfnTzBKPeOblg3uPVqxKSIann4gcxisUR4DgkvOOy/j/ymeY44F/cg+NmRw4v7
- p6TI+cvLp+6DkFEbE9dROErlJHydcCQzQLkNOl2EECQL9l7Z8F7I/9S8wWY3BpFa89fT
- uAPf68Hf5wKjIhxs9i4Qae7JhdH1H+xGo2mXAxsTXMfz2AoHvwd1f7LA98UlT1nJge7v
- 8gUjOcekIqBCZbOn9nGBE1o3GlVyruaHthkvh2QyEr+Z8MY7JbjLS+4ux/tVySy5cZYS
- nnX2mAREJoYaF5M8r/VsannctJqKIsSIslZZmXoFXjTME7ljwVrPsUB294fWMOeqZr4l
- OIrQ==
-X-Gm-Message-State: AOJu0YwZ9UvOC8ppmM8MST24b4St+G2You80z5cbTWONv5i8Ipaeypob
- v3DnzBdk42yUcV00qAkiic9LF6kP5Zo2S+/SRpVudyNse5VPvBOjR/Ss9Dahol9gW8ALVavf4D6
- 5DBc=
-X-Gm-Gg: ASbGncuFwEm6lc9Gk83lFqEfix9x/SGcehtX+dAwkoY2gkUk+1HvOQXuH34vfUm62uv
- 0H4TXOu2hMprI4hI9fqj4Yccc28QZYVrKgbC2CnQrqQL1yoHwvf/rCw5KKUDhVtb0YqgICelaFV
- eM7/8Pqj6svdFBQe7X3puSOeFmdyXkzYwzzCgBgVdfS6sITKD2Y+tV6ingw/lfzp69Zdt7nuo0a
- lbflW9ElCwSfv8ECGHAzeIGn7/lIF28PCnYDii77zMNoO1oaCAfYQ7f4PibhGKDaET5I8Y5wrbe
- /5pnY2ijYpPM6p3egiEzS/mPPTKJIDbHHGq2Z1kcZ7Knf//bYd2DviGKPu9ee/TiNyNGZlYNQpk
- JuHedCAoXy4lODCycE6g=
-X-Google-Smtp-Source: AGHT+IGKZREUEl1Da/nQffqtYKpB/BQRXlIbk3sq+bvyeW9HgB/9hnE3bcBfwxaxCnHUKMWR2oMeDg==
-X-Received: by 2002:a5d:6d83:0:b0:391:2a9a:478c with SMTP id
- ffacd0b85a97d-3912a9a491dmr3042976f8f.23.1741276175205; 
- Thu, 06 Mar 2025 07:49:35 -0800 (PST)
+ bh=X8Saq/dqG9xCUSyrkXOExGdZvozj3jjUcX+27h5Z2go=;
+ b=dkVmuxXIQPFaN9XWsMMIZeWwz1q+cjg/WmgDHucYyvtCQAF+hQzyVguaVQGsycMkv3
+ yYJI9bOIfjOtzLChgCOYCHsbdFfULwKKOs9rOipUbRCZy9Y1ycITO/h3qAOmLBjiMZWL
+ pH6YFYkMP22VU88tawNxluLgUIZDx4CKfLvuIhYLCvx2D7vlbz9yBeVH2vQ7/jNUcHq0
+ i5+K3ukmT+zoUXuojP7t22r+Q7sDsjJEl8nRm7dPvV2vu+kj1/C+hJjvXfp8lBUART1M
+ vZDlNDfqWTe6qucnxcypgAq9dFbsnsyQFWSgq8VtNyt0YrUFroJqQndcqvCkDhbGiyl6
+ AwOg==
+X-Gm-Message-State: AOJu0YyOBywk6VarU1Sy2xHWbl4ax3acmE7I0PDiINwvQO0g7q1b+14z
+ S6Kxkerjx/uAV41emZjAVcgMZCvd6g5AjMKvoDjGnn2hDfDCtWIVb44Mcpj4g+ZK6CK2nGG/GVU
+ jpyg=
+X-Gm-Gg: ASbGncuXpyj4+oKtm44N7/GGtyRsxYlPhmCRobRLmYQEZ7RIdx3jUZLpQFZzKovKXld
+ cr/vAmuNht9p0kWiPqpwTJJxKadzpR5yFVf3SSctPcIBZWW+VKI6DU4HxlVNfoTuPnMcl+w+oMN
+ 9xfC46mJzJ/XDotDYu0Fk+5hQ43cLjBHzv67xnMXQvHPXsZxom9np9G+lW8QvxIDbZDcGUIh0SY
+ QI1RHH7pxTa8+Y00x85JPxtlcMnLLt0BI0UDTL/v9I3bdnmcD+6g+Np+w9DHtUnTjKClb+68p76
+ rGGVqCd5E+Qq4uRqQlxk5hoyv4lEtMpl2XVkAiFZ7BLIpQpMFhuXe6tId5fRdwDcvkzGcT9Xr3b
+ y6SqLwkg9seXJh0zM9rQ=
+X-Google-Smtp-Source: AGHT+IH9wdlnQxq7wbRbJX92lGMVU192CqrT8ag1QqbhsaemZW0TIgoFgjujrUxua/iPI+Ra+Q4miA==
+X-Received: by 2002:a05:6000:4109:b0:391:2c67:7999 with SMTP id
+ ffacd0b85a97d-3912c677bdfmr3208820f8f.48.1741276157402; 
+ Thu, 06 Mar 2025 07:49:17 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfe61sm2440970f8f.38.2025.03.06.07.49.34
+ ffacd0b85a97d-3912c0e2f39sm2374704f8f.80.2025.03.06.07.49.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:49:34 -0800 (PST)
+ Thu, 06 Mar 2025 07:49:16 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 26/54] target/microblaze: Explode MO_TExx -> MO_TE | MO_xx
-Date: Thu,  6 Mar 2025 16:47:08 +0100
-Message-ID: <20250306154737.70886-27-philmd@linaro.org>
+Subject: [PULL 22/54] cpus: Have cpu_class_init_props() per user / system
+ emulation
+Date: Thu,  6 Mar 2025 16:47:04 +0100
+Message-ID: <20250306154737.70886-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
 References: <20250306154737.70886-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,174 +99,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract the implicit MO_TE definition in order to replace
-it by runtime variable in the next commit.
-
-Mechanical change using:
-
-  $ for n in UW UL UQ UO SW SL SQ; do \
-      sed -i -e "s/MO_TE$n/MO_TE | MO_$n/" \
-           $(git grep -l MO_TE$n target/microblaze); \
-    done
+Rather than maintaining a mix of system / user code for CPU
+class properties, move system properties to cpu-system.c
+and user ones to the new cpu-user.c unit.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-Id: <20241105130431.22564-14-philmd@linaro.org>
+Message-Id: <20250123234415.59850-18-philmd@linaro.org>
 ---
- target/microblaze/translate.c | 36 +++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ MAINTAINERS          |  1 +
+ cpu-target.c         | 58 --------------------------------------------
+ hw/core/cpu-system.c | 40 ++++++++++++++++++++++++++++++
+ hw/core/cpu-user.c   | 27 +++++++++++++++++++++
+ hw/core/meson.build  |  5 +++-
+ 5 files changed, 72 insertions(+), 59 deletions(-)
+ create mode 100644 hw/core/cpu-user.c
 
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 24005f05b21..86efabb83b5 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -780,13 +780,13 @@ static bool trans_lbui(DisasContext *dc, arg_typeb *arg)
- static bool trans_lhu(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a0e462d03ca..1d1fadc3bc9 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3791,6 +3791,7 @@ Overall usermode emulation
+ M: Riku Voipio <riku.voipio@iki.fi>
+ S: Maintained
+ F: accel/tcg/user-exec*.c
++F: hw/core/cpu-user.c
+ F: include/user/
+ F: common-user/
  
- static bool trans_lhur(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUW, dc->mem_index, true);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, true);
- }
+diff --git a/cpu-target.c b/cpu-target.c
+index 48446c90212..f4c834fd26a 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -19,15 +19,12 @@
  
- static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
-@@ -798,26 +798,26 @@ static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
-     return true;
- #else
-     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUW, MMU_NOMMU_IDX, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, MMU_NOMMU_IDX, false);
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "hw/qdev-core.h"
+-#include "hw/qdev-properties.h"
+ #include "qemu/error-report.h"
+ #include "qemu/qemu-print.h"
+ #include "migration/vmstate.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/core/sysemu-cpu-ops.h"
+ #include "exec/address-spaces.h"
+-#include "exec/memory.h"
  #endif
+ #include "system/accel-ops.h"
+ #include "system/cpus.h"
+@@ -178,61 +175,6 @@ void cpu_exec_unrealizefn(CPUState *cpu)
+     accel_cpu_common_unrealize(cpu);
  }
  
- static bool trans_lhui(DisasContext *dc, arg_typeb *arg)
+-/*
+- * This can't go in hw/core/cpu.c because that file is compiled only
+- * once for both user-mode and system builds.
+- */
+-static const Property cpu_common_props[] = {
+-#ifdef CONFIG_USER_ONLY
+-    /*
+-     * Create a property for the user-only object, so users can
+-     * adjust prctl(PR_SET_UNALIGN) from the command-line.
+-     * Has no effect if the target does not support the feature.
+-     */
+-    DEFINE_PROP_BOOL("prctl-unalign-sigbus", CPUState,
+-                     prctl_unalign_sigbus, false),
+-#else
+-    /*
+-     * Create a memory property for system CPU object, so users can
+-     * wire up its memory.  The default if no link is set up is to use
+-     * the system address space.
+-     */
+-    DEFINE_PROP_LINK("memory", CPUState, memory, TYPE_MEMORY_REGION,
+-                     MemoryRegion *),
+-#endif
+-};
+-
+-#ifndef CONFIG_USER_ONLY
+-static bool cpu_get_start_powered_off(Object *obj, Error **errp)
+-{
+-    CPUState *cpu = CPU(obj);
+-    return cpu->start_powered_off;
+-}
+-
+-static void cpu_set_start_powered_off(Object *obj, bool value, Error **errp)
+-{
+-    CPUState *cpu = CPU(obj);
+-    cpu->start_powered_off = value;
+-}
+-#endif
+-
+-void cpu_class_init_props(DeviceClass *dc)
+-{
+-#ifndef CONFIG_USER_ONLY
+-    ObjectClass *oc = OBJECT_CLASS(dc);
+-
+-    /*
+-     * We can't use DEFINE_PROP_BOOL in the Property array for this
+-     * property, because we want this to be settable after realize.
+-     */
+-    object_class_property_add_bool(oc, "start-powered-off",
+-                                   cpu_get_start_powered_off,
+-                                   cpu_set_start_powered_off);
+-#endif
+-
+-    device_class_set_props(dc, cpu_common_props);
+-}
+-
+ void cpu_exec_initfn(CPUState *cpu)
  {
-     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
--    return do_load(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
+ #ifndef CONFIG_USER_ONLY
+diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
+index 6e307c89597..1310b4203fd 100644
+--- a/hw/core/cpu-system.c
++++ b/hw/core/cpu-system.c
+@@ -20,7 +20,10 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
++#include "exec/memory.h"
+ #include "exec/tswap.h"
++#include "hw/qdev-core.h"
++#include "hw/qdev-properties.h"
+ #include "hw/core/sysemu-cpu-ops.h"
+ 
+ bool cpu_paging_enabled(const CPUState *cpu)
+@@ -147,3 +150,40 @@ GuestPanicInformation *cpu_get_crash_info(CPUState *cpu)
+     }
+     return res;
  }
- 
- static bool trans_lw(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
- }
- 
- static bool trans_lwr(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUL, dc->mem_index, true);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, true);
- }
- 
- static bool trans_lwea(DisasContext *dc, arg_typea *arg)
-@@ -829,14 +829,14 @@ static bool trans_lwea(DisasContext *dc, arg_typea *arg)
-     return true;
- #else
-     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUL, MMU_NOMMU_IDX, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, MMU_NOMMU_IDX, false);
- #endif
- }
- 
- static bool trans_lwi(DisasContext *dc, arg_typeb *arg)
- {
-     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
--    return do_load(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
- }
- 
- static bool trans_lwx(DisasContext *dc, arg_typea *arg)
-@@ -846,7 +846,7 @@ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
-     /* lwx does not throw unaligned access errors, so force alignment */
-     tcg_gen_andi_tl(addr, addr, ~3);
- 
--    tcg_gen_qemu_ld_i32(cpu_res_val, addr, dc->mem_index, MO_TEUL);
-+    tcg_gen_qemu_ld_i32(cpu_res_val, addr, dc->mem_index, MO_TE | MO_UL);
-     tcg_gen_mov_tl(cpu_res_addr, addr);
- 
-     if (arg->rd) {
-@@ -930,13 +930,13 @@ static bool trans_sbi(DisasContext *dc, arg_typeb *arg)
- static bool trans_sh(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
- }
- 
- static bool trans_shr(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUW, dc->mem_index, true);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, true);
- }
- 
- static bool trans_shea(DisasContext *dc, arg_typea *arg)
-@@ -948,26 +948,26 @@ static bool trans_shea(DisasContext *dc, arg_typea *arg)
-     return true;
- #else
-     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUW, MMU_NOMMU_IDX, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, MMU_NOMMU_IDX, false);
- #endif
- }
- 
- static bool trans_shi(DisasContext *dc, arg_typeb *arg)
- {
-     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
--    return do_store(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
- }
- 
- static bool trans_sw(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
- }
- 
- static bool trans_swr(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUL, dc->mem_index, true);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, true);
- }
- 
- static bool trans_swea(DisasContext *dc, arg_typea *arg)
-@@ -979,14 +979,14 @@ static bool trans_swea(DisasContext *dc, arg_typea *arg)
-     return true;
- #else
-     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUL, MMU_NOMMU_IDX, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, MMU_NOMMU_IDX, false);
- #endif
- }
- 
- static bool trans_swi(DisasContext *dc, arg_typeb *arg)
- {
-     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
--    return do_store(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
- }
- 
- static bool trans_swx(DisasContext *dc, arg_typea *arg)
-@@ -1015,7 +1015,7 @@ static bool trans_swx(DisasContext *dc, arg_typea *arg)
- 
-     tcg_gen_atomic_cmpxchg_i32(tval, cpu_res_addr, cpu_res_val,
-                                reg_for_write(dc, arg->rd),
--                               dc->mem_index, MO_TEUL);
-+                               dc->mem_index, MO_TE | MO_UL);
- 
-     tcg_gen_brcond_i32(TCG_COND_NE, cpu_res_val, tval, swx_fail);
- 
++
++static const Property cpu_system_props[] = {
++    /*
++     * Create a memory property for system CPU object, so users can
++     * wire up its memory.  The default if no link is set up is to use
++     * the system address space.
++     */
++    DEFINE_PROP_LINK("memory", CPUState, memory, TYPE_MEMORY_REGION,
++                     MemoryRegion *),
++};
++
++static bool cpu_get_start_powered_off(Object *obj, Error **errp)
++{
++    CPUState *cpu = CPU(obj);
++    return cpu->start_powered_off;
++}
++
++static void cpu_set_start_powered_off(Object *obj, bool value, Error **errp)
++{
++    CPUState *cpu = CPU(obj);
++    cpu->start_powered_off = value;
++}
++
++void cpu_class_init_props(DeviceClass *dc)
++{
++    ObjectClass *oc = OBJECT_CLASS(dc);
++
++    /*
++     * We can't use DEFINE_PROP_BOOL in the Property array for this
++     * property, because we want this to be settable after realize.
++     */
++    object_class_property_add_bool(oc, "start-powered-off",
++                                   cpu_get_start_powered_off,
++                                   cpu_set_start_powered_off);
++
++    device_class_set_props(dc, cpu_system_props);
++}
+diff --git a/hw/core/cpu-user.c b/hw/core/cpu-user.c
+new file mode 100644
+index 00000000000..e5ccf6bf13a
+--- /dev/null
++++ b/hw/core/cpu-user.c
+@@ -0,0 +1,27 @@
++/*
++ * QEMU CPU model (user specific)
++ *
++ * Copyright (c) Linaro, Ltd.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/qdev-core.h"
++#include "hw/qdev-properties.h"
++#include "hw/core/cpu.h"
++
++static const Property cpu_user_props[] = {
++    /*
++     * Create a property for the user-only object, so users can
++     * adjust prctl(PR_SET_UNALIGN) from the command-line.
++     * Has no effect if the target does not support the feature.
++     */
++    DEFINE_PROP_BOOL("prctl-unalign-sigbus", CPUState,
++                     prctl_unalign_sigbus, false),
++};
++
++void cpu_class_init_props(DeviceClass *dc)
++{
++    device_class_set_props(dc, cpu_user_props);
++}
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index 65a1698ed1f..b5a545a0edd 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -46,4 +46,7 @@ system_ss.add(files(
+   'vm-change-state-handler.c',
+   'clock-vmstate.c',
+ ))
+-user_ss.add(files('qdev-user.c'))
++user_ss.add(files(
++  'cpu-user.c',
++  'qdev-user.c',
++))
 -- 
 2.47.1
 
