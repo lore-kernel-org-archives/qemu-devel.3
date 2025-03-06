@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E254CC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DF2BC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq8d5-0004nV-Ec; Thu, 06 Mar 2025 05:39:03 -0500
+	id 1tq8fB-0008IL-Io; Thu, 06 Mar 2025 05:41:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tq8d2-0004nD-VY; Thu, 06 Mar 2025 05:39:00 -0500
+ id 1tq8f1-0007u5-B7; Thu, 06 Mar 2025 05:41:04 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tq8d1-0000St-5d; Thu, 06 Mar 2025 05:39:00 -0500
+ id 1tq8ez-0000om-Ks; Thu, 06 Mar 2025 05:41:03 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 6 Mar
- 2025 18:38:46 +0800
+ 2025 18:38:55 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 6 Mar 2025 18:38:46 +0800
+ Transport; Thu, 6 Mar 2025 18:38:55 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v5 01/29] hw/intc/aspeed: Support setting different memory size
-Date: Thu, 6 Mar 2025 18:38:09 +0800
-Message-ID: <20250306103846.429221-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v5 23/29] hw/arm/aspeed: Add Machine Support for AST2700 A1
+Date: Thu, 6 Mar 2025 18:38:31 +0800
+Message-ID: <20250306103846.429221-24-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
 References: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
@@ -65,70 +65,56 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the AST2700 datasheet, the INTC(CPU DIE) controller has 16KB
-(0x4000) of register space, and the INTCIO (I/O DIE) controller has 1KB (0x400)
-of register space.
-
-Introduced a new class attribute "mem_size" to set different memory sizes for
-the INTC models in AST2700.
+Introduce "aspeed_machine_ast2700a1_evb_class_init" to initialize the
+AST2700 A1 EVB.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/intc/aspeed_intc.h | 3 +++
- hw/intc/aspeed_intc.c         | 9 ++++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ hw/arm/aspeed.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-index 18cb43476c..03324f05ab 100644
---- a/include/hw/intc/aspeed_intc.h
-+++ b/include/hw/intc/aspeed_intc.h
-@@ -25,6 +25,8 @@ struct AspeedINTCState {
- 
-     /*< public >*/
-     MemoryRegion iomem;
-+    MemoryRegion iomem_container;
-+
-     uint32_t regs[ASPEED_INTC_NR_REGS];
-     OrIRQState orgates[ASPEED_INTC_NR_INTS];
-     qemu_irq output_pins[ASPEED_INTC_NR_INTS];
-@@ -39,6 +41,7 @@ struct AspeedINTCClass {
- 
-     uint32_t num_lines;
-     uint32_t num_ints;
-+    uint64_t mem_size;
- };
- 
- #endif /* ASPEED_INTC_H */
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index 126b711b94..033b574c1e 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -302,10 +302,16 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
-     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
-     int i;
- 
-+    memory_region_init(&s->iomem_container, OBJECT(s),
-+            TYPE_ASPEED_INTC ".container", aic->mem_size);
-+
-+    sysbus_init_mmio(sbd, &s->iomem_container);
-+
-     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
-                           TYPE_ASPEED_INTC ".regs", ASPEED_INTC_NR_REGS << 2);
- 
--    sysbus_init_mmio(sbd, &s->iomem);
-+    memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
-+
-     qdev_init_gpio_in(dev, aspeed_intc_set_irq, aic->num_ints);
- 
-     for (i = 0; i < aic->num_ints; i++) {
-@@ -344,6 +350,7 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
-     dc->desc = "ASPEED 2700 INTC Controller";
-     aic->num_lines = 32;
-     aic->num_ints = 9;
-+    aic->mem_size = 0x4000;
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 18f7c450da..82f42582fa 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1693,6 +1693,26 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
+     mc->default_ram_size = 1 * GiB;
+     aspeed_machine_class_init_cpus_defaults(mc);
  }
++
++static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc, void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
++
++    mc->desc = "Aspeed AST2700 A1 EVB (Cortex-A35)";
++    amc->soc_name  = "ast2700-a1";
++    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
++    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
++    amc->fmc_model = "w25q01jvq";
++    amc->spi_model = "w25q512jv";
++    amc->num_cs    = 2;
++    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
++    amc->uart_default = ASPEED_DEV_UART12;
++    amc->i2c_init  = ast2700_evb_i2c_init;
++    mc->auto_create_sdcard = true;
++    mc->default_ram_size = 1 * GiB;
++    aspeed_machine_class_init_cpus_defaults(mc);
++}
+ #endif
  
- static const TypeInfo aspeed_2700_intc_info = {
+ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+@@ -1821,6 +1841,10 @@ static const TypeInfo aspeed_machine_types[] = {
+         .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_ast2700a0_evb_class_init,
++        }, {
++        .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
++        .parent        = TYPE_ASPEED_MACHINE,
++        .class_init    = aspeed_machine_ast2700a1_evb_class_init,
+ #endif
+     }, {
+         .name          = TYPE_ASPEED_MACHINE,
 -- 
 2.43.0
 
