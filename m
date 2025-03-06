@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA87C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF9FC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq4d0-0007nd-9q; Thu, 06 Mar 2025 01:22:42 -0500
+	id 1tq4dh-0008IF-Al; Thu, 06 Mar 2025 01:23:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1tq4cv-0007m5-2Z
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:22:37 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tq4df-0008Hf-2Z; Thu, 06 Mar 2025 01:23:23 -0500
+Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1tq4cs-0004AK-RD
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 01:22:36 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-223cc017ef5so4261855ad.0
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 22:22:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tq4dc-0004Eh-T5; Thu, 06 Mar 2025 01:23:22 -0500
+Received: by mail-ua1-x933.google.com with SMTP id
+ a1e0cc1a2514c-86b31db3c3bso92287241.3; 
+ Wed, 05 Mar 2025 22:23:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1741242153; x=1741846953;
- darn=nongnu.org; 
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=UnTVfzkjDFdmGYMUUbYLV3dkLlTUEGcuIcobOT96F9k=;
- b=RQxKmyMbF4mTbfg81iei4uiNP7/cNounJYUE8aNQZ/Jc3H/yY+Dkm9v3paYV53q7Qw
- 8sc5z5oyGd6RCihfmEfab90BpOyevFV56uUGYH4p9VlQLt493M5oj+MoN5BkG8DGcxpD
- WN1/VKcX4gPy5dKDw5SKak5iprFJxna1C+udydyG4RivgTKfHerPuCjtuggwIOwc3Hnn
- GI6NQLnh6hxnGQNkg1tJ/lMqKLinOCY/Zj+07KK5SV3jm5oS5NP41hscdvLf1UV08eDV
- Sn4yf5rZc0QsaloX6abH+yY+WMnUOSkmR1tUNT9DmwVYwuWuAk4Gl8eCqQdwuOle7d+1
- gCcg==
+ d=gmail.com; s=20230601; t=1741242198; x=1741846998; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZybjbWGi0zUTNXb3Q9QlwhbluTwjDo8OZa6hiI0XHBY=;
+ b=g75VPwXNeShEUJuzPxZ4yBCIAV8JUdCNiH3iIGMXuskjKXKsNXHKF2vt4zjk9Mhxpw
+ bCDQZEFFEYVOg1AJvULfEshkzodU9qrTkQfLalIZT+TUap6C+igA49dseMMCfN8iE0wX
+ x2GD2uV9i66JpbwzPZf2DnVnDDHL5GZICA8NpHcqkbN7gEz0rXw2MiL0yO3MjEfGBnnH
+ zNhB3ICrCNj9JSWi7BPvGt9s4Ww43iVovfCcdPr/ry3HLwbG2voSLA1LeU2Ad3ly8xrt
+ nxMbBBupOKqcLoZPeJxAaz4u7fBgMqIT2z/zicGbSQ/eCnH6z/A0RiVYy73do5vuHsOy
+ M/3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741242153; x=1741846953;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UnTVfzkjDFdmGYMUUbYLV3dkLlTUEGcuIcobOT96F9k=;
- b=tLhnMlDp1BbhftrsT+VpxQWfX3LVkGTSljzkoWSE430AEJdw77QkxcYWoYnPH3GSrw
- Hg1mitH9am/OUVqf05Qk3+WFEK8u9/5lIok4PFEZjEtNnptXB6UMjEowUu540nNp08D3
- 40WOaC4IL0C96REPyrME9N/5ZcAQg89mQOx2f+4QxTL13+2fJg92uehMBAvAuaYpYQSl
- UMI5GF+wLAYOd3YgjW4any1UCrk+pNRDWJzERC3rsP5Yvp5yGVefIl5y0tkJ9m6JGphT
- 99YOPhmX5RtrfF7bSyEOtTe98jr4oY8UY8sdyyM0A7Q7Ns63mAsP9x+3Gia71ErHo06P
- o3dw==
+ d=1e100.net; s=20230601; t=1741242198; x=1741846998;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZybjbWGi0zUTNXb3Q9QlwhbluTwjDo8OZa6hiI0XHBY=;
+ b=bJblmsRn66fqpBP4riYNNLxEZBGHKUFW91bRYvihA3+7M+bXSyO6CAuR9IUhfRgqDP
+ 35wJXhGz7mIKnXZ2Ld1HVYuAixp5uIc5yjHDRkd1rkjdxs0hgi0EuVcvFT/siC4aI6eH
+ cTg9giwqmFyXY0uo7ojaPX9Ozd86RthdhxuSSCqURkwhRtubVAQvtUFMQ/YDwMPn6hyJ
+ vmYx0cqdBkxoniKgbHV2ITIkm03yhE187dOTV7Y1/9FITDdgDG9V8vz+OdD8tICYcu0w
+ sUqgkwdtCPXlIjPbU254CdRmuqJg2wlixheuf3+ag25TnrzZH+afcNBood9MPlrjOOX9
+ pUBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUosDIGjODbghhS5IOtwxoVcvg7S98JS+QlIK2aXX2iTqehCXV4OciA8/mkqNSDIeBTrXKkOQL2bCLe@nongnu.org
-X-Gm-Message-State: AOJu0YxNsF7ZyFRR+OCuJk0GNY4gwKxErF4DHpNe5CGfkf+yjEMX2UOr
- exnaO2oH47N8xTkXArbf+MPnWBNCiyQwZbBNRJ92sCg1psKPs1YDkihrpA/hkuQ=
-X-Gm-Gg: ASbGnct3BbeXiQXXh+3JOTxhOlRKoLz8IfZ71R0B39FuQuqC+q1CY890b3phBxFpQb2
- JQS3z84shfuiEeIIxqSxQWVfw/l1SjSIw51hzUm5gSeRwDymn4op6Zi3z4G4UEUsoLPtNaJFTRP
- EEJp7qvnWeG7ukSRdQPw0lycNHZvuJCIjN/0YlBQh19doiT3KB0lCYeiky/r6RccNAe6kDO8Vlt
- KwQ8zHUktevMioRUeFDWr/7Z11okhbd3RDPwXWgQHJVGXED/KA1mMhm3ApW61SthDejEI9Qfn3H
- bLfJrTSZY2A2JsbHRGYO0i0u2KKSuNIlwXneEj2xYO8olgQbjHwdDL8=
-X-Google-Smtp-Source: AGHT+IENwOdNi3m7HsfZC99151ddBuW3/wLzgwLWuSWEsi6o01jmz9vCB8Z2bfX8tMmY9nBednOmVw==
-X-Received: by 2002:a17:902:e54d:b0:223:5c33:56a2 with SMTP id
- d9443c01a7336-223f1ca7c58mr111810165ad.28.1741242152945; 
- Wed, 05 Mar 2025 22:22:32 -0800 (PST)
-Received: from debug.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-224109e944csm4472655ad.74.2025.03.05.22.22.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Mar 2025 22:22:32 -0800 (PST)
-Date: Wed, 5 Mar 2025 22:22:30 -0800
-From: Deepak Gupta <debug@rivosinc.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- Adam Zabrocki <azabrocki@nvidia.com>
-Subject: Re: [PATCH 1/2] target/riscv: fix access permission checks for CSR_SSP
-Message-ID: <Z8k/JpXDl63sbAOb@debug.ba.rivosinc.com>
-References: <20250218025446.2452254-1-debug@rivosinc.com>
- <CAKmqyKMrod154GEdDFajnBMh0gg2zFGWxXYA0+xF=xW42SgEjg@mail.gmail.com>
- <Z8k8zi3Moy/RxCWr@debug.ba.rivosinc.com>
- <CAKmqyKPYCWEVyd8ygKR+j8u9cTLG2xoG053p7-EDXcd+8qWfUg@mail.gmail.com>
+ AJvYcCWPMt9frsUTIsoqgTpi2IpxCSX6i7XuDp2UfsuYy1EuOhV4uTJocfogXW3iaq81W3XWhyn1M1Vh0liz@nongnu.org
+X-Gm-Message-State: AOJu0YxmeRFdxALYoc03sWblVRHwIayUBk5uf9mRYPdCT0+kOT50043t
+ 3VzbvwJ4wJzosJ6L7c936NGqBmWfGdk+z52u/swecgV2E0S76M/YmoiNpVldk7eim6a/I9s3X5t
+ H/RYBDDC+kOAfn3xVEqEST8rv9p0=
+X-Gm-Gg: ASbGncvvtH8SEtbvtYESdzZgcXXuuTZI8BHJkqt/Vu5+M9ahsW7zIld76uFutjZw+ug
+ D6uvtBVmBtjFrNLeas4QkJds3+qYEGQvEJ/FXfSTiYR2PWk6cMHahrearMwx997el9aE1ZMPVds
+ CLHq6IBUkevtJu12AJjq2VqckMBdolny5NVxiRwWbUVlsb2JypMRvcwatD
+X-Google-Smtp-Source: AGHT+IEfOzgX2LQ2eL8I/R7WLvB9pnurdFruZbptENa5Ttqf81PzuykpIEhvYLZEdLU8QXmnPCrJzPFKNvk0AqzTCAQ=
+X-Received: by 2002:a05:6102:38cf:b0:4c1:8bea:d421 with SMTP id
+ ada2fe7eead31-4c2e27fe02fmr3584917137.14.1741242198556; Wed, 05 Mar 2025
+ 22:23:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKPYCWEVyd8ygKR+j8u9cTLG2xoG053p7-EDXcd+8qWfUg@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=debug@rivosinc.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20250218025446.2452254-1-debug@rivosinc.com>
+ <20250218025446.2452254-2-debug@rivosinc.com>
+ <CAKmqyKMip2t-QyEvFFvnsMkXV1Wokt0dXAqpe4MAzyCHpUm--A@mail.gmail.com>
+ <Z8k8/rhi/COfv/vj@debug.ba.rivosinc.com>
+In-Reply-To: <Z8k8/rhi/COfv/vj@debug.ba.rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 6 Mar 2025 16:22:52 +1000
+X-Gm-Features: AQ5f1JpQ8QfGiL79reijAvTfQrZaQS76T3c_CaD8xSBrdh2lrnXAEhatlhTl45U
+Message-ID: <CAKmqyKNd9HRX9vWBBihVn6EFhYHXTmFpKV4iNJpcgDmteJfhjA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] target/riscv: fixes a bug against `ssamoswap`
+ behavior in M-mode
+To: Deepak Gupta <debug@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ Ved Shanbhogue <ved@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,76 +101,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 06, 2025 at 04:20:56PM +1000, Alistair Francis wrote:
->On Thu, Mar 6, 2025 at 4:12 PM Deepak Gupta <debug@rivosinc.com> wrote:
->>
->> On Thu, Mar 06, 2025 at 03:20:55PM +1000, Alistair Francis wrote:
->> >On Tue, Feb 18, 2025 at 12:56 PM Deepak Gupta <debug@rivosinc.com> wrote:
->> >>
->> >> Commit:8205bc1 ("target/riscv: introduce ssp and enabling controls for
->> >> zicfiss") introduced CSR_SSP but it mis-interpreted the spec on access
->> >> to CSR_SSP in M-mode. Gated to CSR_SSP is not gated via `xSSE`. But
->> >> rather rules clearly specified in section "2.2.4. Shadow Stack Pointer"
->> >
->> >Do you mean "22.2.1. Shadow Stack Pointer (ssp) CSR access contr" in
->> >the priv spec?
->>
->> No I meant 2.2.4 of zicfiss specification. Section 22.2.1 of priv spec
->> says same.
+On Thu, Mar 6, 2025 at 4:13=E2=80=AFPM Deepak Gupta <debug@rivosinc.com> wr=
+ote:
 >
->I meant that it's now just in the priv spec, the zicfiss spec is no
->longer maintained so we should just reference the priv spec
+> On Thu, Mar 06, 2025 at 03:29:00PM +1000, Alistair Francis wrote:
+> >On Tue, Feb 18, 2025 at 12:57=E2=80=AFPM Deepak Gupta <debug@rivosinc.co=
+m> wrote:
+> >>
+> >> Commit f06bfe3dc38c ("target/riscv: implement zicfiss instructions") a=
+dds
+> >> `ssamoswap` instruction. `ssamoswap` takes the code-point from existin=
+g
+> >> reserved encoding (and not a zimop like other shadow stack instruction=
+s).
+> >> If shadow stack is not enabled (via xenvcfg.SSE), then `ssamoswap` mus=
+t
+> >> result in an illegal instruction exception. However there is a slightl=
+y
+> >> modified behavior for M-mode.
+> >>
+> >> Shadow stack are not available in M-mode and all shadow stack instruct=
+ions
+> >> in M-mode exhibit zimop behavior. However, `ssamoswap` can still succe=
+ed
+> >> if MPRV=3D1 and MPP is non-zero (see section 2.7 of zicfiss specificat=
+ion).
+> >> This patch corrects that behavior for `ssamoswap`.
+> >
+> >Section "22.2.3. Shadow Stack Memory Protection " of the latest priv
+> >spec [1] seems to say: "When the effective privilege mode is M, any
+> >memory access by an SSAMOSWAP.W/D
+> >instruction will result in a store/AMO access-fault exception."
+>
+> Hmm I didn't look at priv spec. Let me fix this one.
 
-Got it.
+I hope the two don't conflict, that will be a nightmare
+
+Alistair
 
 >
->Alistair
->
->>
->> >
->> >> of `zicfiss` specification. Thanks to Adam Zabrocki for bringing this
->> >> to attention.
->> >
->> >The thanks should probably be below the line
->>
->> Sure
->>
->> >
->> >>
->> >> Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls
->> >> for zicfiss"
->> >>
->> >> Reported-by: Adam Zabrocki <azabrocki@nvidia.com>
->> >> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
->> >
->> >The actual change looks good:
->> >
->> >Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
->> >
->> >Alistair
->> >
->> >> ---
->> >>  target/riscv/csr.c | 5 +++++
->> >>  1 file changed, 5 insertions(+)
->> >>
->> >> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
->> >> index afb7544f07..75c661d2a1 100644
->> >> --- a/target/riscv/csr.c
->> >> +++ b/target/riscv/csr.c
->> >> @@ -191,6 +191,11 @@ static RISCVException cfi_ss(CPURISCVState *env, int csrno)
->> >>          return RISCV_EXCP_ILLEGAL_INST;
->> >>      }
->> >>
->> >> +    /* If ext implemented, M-mode always have access to SSP CSR */
->> >> +    if (env->priv == PRV_M) {
->> >> +        return RISCV_EXCP_NONE;
->> >> +    }
->> >> +
->> >>      /* if bcfi not active for current env, access to csr is illegal */
->> >>      if (!cpu_get_bcfien(env)) {
->> >>  #if !defined(CONFIG_USER_ONLY)
->> >> --
->> >> 2.34.1
->> >>
->> >>
+> >
+> >1: https://github.com/riscv/riscv-isa-manual/releases/tag/riscv-isa-rele=
+ase-9cfaf37-2025-03-06
+> >
+> >Alistair
+> >
+> >>
+> >> Fixes: f06bfe3dc38c ("target/riscv: implement zicfiss instructions")
+> >>
+> >> Reported-by: Ved Shanbhogue <ved@rivosinc.com>
+> >> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+> >> ---
+> >>  target/riscv/insn_trans/trans_rvzicfiss.c.inc | 13 +++++++++++--
+> >>  1 file changed, 11 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/ri=
+scv/insn_trans/trans_rvzicfiss.c.inc
+> >> index e3ebc4977c..ec016cd70f 100644
+> >> --- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+> >> +++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+> >> @@ -15,6 +15,13 @@
+> >>   * You should have received a copy of the GNU General Public License =
+along with
+> >>   * this program.  If not, see <http://www.gnu.org/licenses/>.
+> >>   */
+> >> +
+> >> + #define REQUIRE_ZICFISS(ctx) do {       \
+> >> +    if (!ctx->cfg_ptr->ext_zicfiss) {    \
+> >> +        return false;                    \
+> >> +    }                                    \
+> >> +} while (0)
+> >> +
+> >>  static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+> >>  {
+> >>      if (!ctx->bcfi_enabled) {
+> >> @@ -77,7 +84,8 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp=
+ *a)
+> >>  static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
+> >>  {
+> >>      REQUIRE_A_OR_ZAAMO(ctx);
+> >> -    if (!ctx->bcfi_enabled) {
+> >> +    REQUIRE_ZICFISS(ctx);
+> >> +    if ((ctx->priv !=3D PRV_M) && !ctx->bcfi_enabled) {
+> >>          return false;
+> >>      }
+> >>
+> >> @@ -97,7 +105,8 @@ static bool trans_ssamoswap_d(DisasContext *ctx, ar=
+g_amoswap_w *a)
+> >>  {
+> >>      REQUIRE_64BIT(ctx);
+> >>      REQUIRE_A_OR_ZAAMO(ctx);
+> >> -    if (!ctx->bcfi_enabled) {
+> >> +    REQUIRE_ZICFISS(ctx);
+> >> +    if ((ctx->priv !=3D PRV_M) && !ctx->bcfi_enabled) {
+> >>          return false;
+> >>      }
+> >>
+> >> --
+> >> 2.34.1
+> >>
+> >>
 
