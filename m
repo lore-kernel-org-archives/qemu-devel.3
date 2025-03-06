@@ -4,87 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82984C19F32
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 03:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B63FC19F32
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 03:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq1So-00013M-LG; Wed, 05 Mar 2025 21:59:58 -0500
+	id 1tq1gw-0004aP-Lb; Wed, 05 Mar 2025 22:14:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq1Sj-0000zb-7d; Wed, 05 Mar 2025 21:59:54 -0500
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq1Sg-0007XT-4m; Wed, 05 Mar 2025 21:59:52 -0500
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-51eb18130f9so81911e0c.3; 
- Wed, 05 Mar 2025 18:59:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741229987; x=1741834787; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=r7+Xg3w7AAR07uAWdomT3Ya921CSzcZWjod6SEhzFJY=;
- b=JEgrPdLnfxObjZg4CyD7ds3xmIcg/VZXKZ+2ef49jqRqFFVvyerghjzF0WRim4itDI
- QnCoqNKFn0MymSn+ysKcHfhNArMgwfvfmDeM6pbhArJS10hnHiFp8ckFRRC4XTRdQEe2
- mH/BrJeDhkCnQptdN9CXsJQj9aNHZY2DpFG22UuN3ukHfKU/+OKCQxXcNF6lvFM69Ny5
- Y0qWb/caqR8QwoP4SmmitXpLh2Pu6c1Agms+BudHVQKumMFQ2MBStrAnvgKEwOj3gTFt
- HWfC8Pi6cojX5dDkWtjUAz8ucARmI1i6N1u7NzxFj3WoVt3xd58oPZNl9OSP6FRbJYvK
- R7Lg==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tq1gn-0004Zz-G0
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 22:14:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tq1gl-0000b5-9L
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 22:14:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741230860;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ud+Yls8jr3a5df6/+OI5c9NMsJ25duooX1HidscoT5c=;
+ b=TWRAI09wM5d96ow3691B+L6PspdsGvP247OfNAmQliIxeV+vTDOykkCWFTLg4owWDKRToC
+ Dz6FdTgLtAvYbqbEtynNDFUl7G2OBOeMnM3EsvGg3vByhWeAy7xxKwuPxAbLmU3lVIuO9g
+ 8Ol+KdqXvga9JkiXgmmu3CMMsA5kysQ=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-320-CSGlJNy-MsuMMq1H3G7zrQ-1; Wed, 05 Mar 2025 22:14:07 -0500
+X-MC-Unique: CSGlJNy-MsuMMq1H3G7zrQ-1
+X-Mimecast-MFC-AGG-ID: CSGlJNy-MsuMMq1H3G7zrQ_1741230847
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2fe870bc003so476954a91.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 19:14:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741229987; x=1741834787;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=r7+Xg3w7AAR07uAWdomT3Ya921CSzcZWjod6SEhzFJY=;
- b=LzuO7ot/BsnjubTWoySC9DknC+rsE3LengxcTk8aixfs0/1GoM2k0i7BWU/uHzsRoI
- 1n3g6ZFv3MIsW6T3sRs14EzSeI8i7Z70kkGu28VgYymT7Monu0ymsCZk41JlWqX0fpzf
- 3p8HNX4AZ54QWm84Xn6LDZbCv1xqRAZCvBUw7123PwO4ZWLcTg4Tmxz38YBkv77RChGN
- Z3FBQ8yMTV0d5z8aZVxnpnL4BuqL2qDE544NDe6Oi2vDlJn2dOEgyCw4Z+dmvZbqm9Nf
- 4Unsk6igvz8fh4l+vRbMfGEXsn1NtGojrCbvS/3xDwuZrOZSXz7naPNI3xWQ/rHyunPn
- jzlg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzUrKKLm2iv39z4cmzqBRHPgH8mFSzf1P/VxtKPKFJ26mFzZvtXEl0KVwJgGe+lFsIJZdqSdLSiAn2@nongnu.org
-X-Gm-Message-State: AOJu0YyIm1wn+xl/lUxChVMl/eedHTKbIrOIvpVJF9bjYf43tvpJIYVi
- 3NER/osGke8gq/k5/8fOXTiFzHTbqJ3PDVSv5mwPih1FA+DAMlo3hSrMc6h0K8tAzuzrVCsNqfz
- BHYvdmmnDhaE3Q5L77d53qslceaY=
-X-Gm-Gg: ASbGncu1I2ulMCsom0lDgEhk5+pq+FSl7l8n0h+A4PImdOKaH+FLrgryRNOyTHndwKZ
- JAS2b9gOoqd48RNN04bMGrm1rldZCE+/3EV3LrMu/1wFhdj1ofl2gfiggHscUQrgjzbU0qtP/DR
- V7Aek0JKm0uUmzaPCDxkEgeMfg0rNnrbKVw6rRayXLy4UpA/FVX9NuYfAN
-X-Google-Smtp-Source: AGHT+IErSTaQ6CVU7db1Isb45I6BTkhs+cKiSvBrznw9I4MBPJbBCcQ6GVDPGvATpyx/tm6g2wFEhvAi2s+HX4vmBIw=
-X-Received: by 2002:a05:6102:3c98:b0:4c1:9e65:f90b with SMTP id
- ada2fe7eead31-4c2e2910854mr4171878137.17.1741229986916; Wed, 05 Mar 2025
- 18:59:46 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741230846; x=1741835646;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ud+Yls8jr3a5df6/+OI5c9NMsJ25duooX1HidscoT5c=;
+ b=LY6lA83/MQfPj7q7DkLUK35Gmm/sHKDz/DPlwbfiVSIIt9/qk5OfMwiKru3S7lrGUd
+ /BRRAildjRSTOW7F2fISWVThcxl3h8O518/bZwqAPJ36W/QjHqj9yi0+/KTta8tt3T1e
+ uWgaiPCgZ3mbFqR1nL/HwAMf5DrY9sEP9LjFTKtQ11a7y95/Il9U0IZbi6kE/9wP6gVA
+ 1r2AuubGzUkmEjxH+TjkN3TX+TVtdY7jOr8DEnkILxjMGQ2tvPFhwuOECv8EB3ToCsp9
+ 1VuvJptxJDW9BKkYWbSzFNlmm6AnoYFQ7MdhvzPmKqy3UeR3p5CE/Hg2XbIWlgueLxpa
+ aChw==
+X-Gm-Message-State: AOJu0YwTDdr86xjnii8YLexikYe0Wuv4/8Xo5WkyEmvDi5zod/svFv/+
+ VWF1Nkn31OXo9nCB9DruzI8DowR/wqgFCbk3qepwMubDpbteFs8Mil9Xm/Iq7GcXdcQuwWDPR1n
+ GipBWW4h6TxOhK82upFJyBhEcyDGM0LRYjrt0ppX6Cc/T3dSM/9Krb2zyOu3qCsxhtKHp19p/YS
+ utKx9ybrWLkABWFClJReDDMhOo4nA=
+X-Gm-Gg: ASbGnctkSlzmEdBBqm9HBbLZ2h3gNiIu/8KXapiEQ9I6+oer5aV4pga2siGz7ytp9rs
+ 4yt3riMLxnU8ODq8B42QhmdMfRuSMDYVxrJy+ru182jiOHcvZJG59V0Af5/BtJVdzZefg34gsPm
+ NxePjcjfIWgedsuYGcXXHZ2YBAi+u3
+X-Received: by 2002:a17:90b:3142:b0:2ff:53d6:2b82 with SMTP id
+ 98e67ed59e1d1-2ff617d8269mr2809865a91.11.1741230846617; 
+ Wed, 05 Mar 2025 19:14:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrFcKPKROqrhP1e9nQNAu3U1dH8LhjWocXlRLW6RSLDnjBmOdScuXMpufMBhGijBSP0qCmwUwfcLlP2LMTU4c=
+X-Received: by 2002:a17:90b:3142:b0:2ff:53d6:2b82 with SMTP id
+ 98e67ed59e1d1-2ff617d8269mr2809842a91.11.1741230846345; Wed, 05 Mar 2025
+ 19:14:06 -0800 (PST)
 MIME-Version: 1.0
-References: <174044811783.27139.4910941776283875756-0@git.sr.ht>
-In-Reply-To: <174044811783.27139.4910941776283875756-0@git.sr.ht>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 12:59:20 +1000
-X-Gm-Features: AQ5f1Jp730SsjRe5OL3LVaSMUEKoI8XFIJ5VtVaUzI-1DCr1GYGNWVxPj6t61nI
-Message-ID: <CAKmqyKMOaGs4aTgHzgsfYTVxkawNG9xRrJac02PazJ8kWQWScQ@mail.gmail.com>
-Subject: Re: [PATCH qemu] target/riscv: Only check ext_zca for 16-bit aligned
- PC.
-To: "~yuming" <yumin686@andestech.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250305034610.960147-1-jsnow@redhat.com>
+ <20250305034610.960147-40-jsnow@redhat.com>
+ <871pvbojdc.fsf@pond.sub.org>
+In-Reply-To: <871pvbojdc.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 5 Mar 2025 22:13:53 -0500
+X-Gm-Features: AQ5f1JovAyvQFZkKcxpsYhS3WET5Mel6BHtGY85WSq3GkVIUr4CtOgP_nFFGu0E
+Message-ID: <CAFn=p-ZngFzWDyKgkKzxs1Uv_rnn2RVtVeFMJUb_BkFCDCe1Rw@mail.gmail.com>
+Subject: Re: [PATCH 39/57] qapi/source: allow multi-line QAPISourceInfo
+ advancing
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000119cef062fa3e643"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,92 +105,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 25, 2025 at 11:49=E2=80=AFAM ~yuming <yuming@git.sr.ht> wrote:
->
-> From: Yu-Ming Chang <yumin686@andestech.com>
->
-> Since C always implies Zca, Zca is always enabled when 16-bit
-> insructions are supported. we can only check ext_zca to allow
-> 16-bit aligned PC addresses.
->
-> Signed-off-by: Yu-Ming Chang <yumin686@andestech.com>
+--000000000000119cef062fa3e643
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks!
+On Wed, Mar 5, 2025 at 5:35=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
 
-Applied to riscv-to-apply.next
+> John Snow <jsnow@redhat.com> writes:
+>
+> > This is for the sake of the new rST generator (the "transmogrifier") so
+> > we can advance multiple lines on occasion while keeping the
+> > generated<-->source mappings accurate.
+> >
+> > next_line now simply takes an optional n parameter which chooses the
+> > number of lines to advance.
+> >
+> > RFC: Here's the exorbitant detail on why I want this:
+> >
+> > This is used mainly when converting section syntax in free-form
+> > documentation to more traditional rST section header syntax, which
+> > does not always line up 1:1 for line counts.
+>
+> Obvious way to resolve the RFC:
+>
+>   The next patch will use this when converting ...
+>
+> >
+> > For example:
+> >
+> > ```
+> >  ##
+> >  # =3D Section     <-- Info is pointing here, "L1"
+> >  #
+> >  # Lorem Ipsum
+> >  ##
+> > ```
+> >
+> > would be transformed to rST as:
+> >
+> > ```
+> > =3D=3D=3D=3D=3D=3D=3D        <-- L1
+> > Section        <-- L1
+> > =3D=3D=3D=3D=3D=3D=3D        <-- L1
+> >                <-- L2
+> > Lorem Ipsum    <-- L3
+> > ```
+>
+> Not a demand, just wondering: could we drop our headings syntax and just
+> use rST?
+>
 
-Alistair
+Yes, once we drop the old qapidoc fully, which I am not sure I can do
+before freeze ... So we have some goofy stuff in the meantime.
+You suggested before I can rewrite the freeform generator to avoid needing
+this; I wrote the freeform generator to be as close to the old one as I
+could, but we could kerjiggle it if needed.
 
-> ---
->  target/riscv/insn_trans/trans_rvi.c.inc | 5 ++---
->  target/riscv/op_helper.c                | 4 ++--
->  target/riscv/translate.c                | 2 +-
->  3 files changed, 5 insertions(+), 6 deletions(-)
+... On the other hand, this is a patch for a +=3D n, so... eh.
+
+--js
+
+--000000000000119cef062fa3e643
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Mar 5, =
+2025 at 5:35=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
+at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" =
+target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; This is for the sake of the new rST generator (the &quot;transmogrifie=
+r&quot;) so<br>
+&gt; we can advance multiple lines on occasion while keeping the<br>
+&gt; generated&lt;--&gt;source mappings accurate.<br>
+&gt;<br>
+&gt; next_line now simply takes an optional n parameter which chooses the<b=
+r>
+&gt; number of lines to advance.<br>
+&gt;<br>
+&gt; RFC: Here&#39;s the exorbitant detail on why I want this:<br>
+&gt;<br>
+&gt; This is used mainly when converting section syntax in free-form<br>
+&gt; documentation to more traditional rST section header syntax, which<br>
+&gt; does not always line up 1:1 for line counts.<br>
+<br>
+Obvious way to resolve the RFC:<br>
+<br>
+=C2=A0 The next patch will use this when converting ...<br>
+<br>
+&gt;<br>
+&gt; For example:<br>
+&gt;<br>
+&gt; ```<br>
+&gt;=C2=A0 ##<br>
+&gt;=C2=A0 # =3D Section=C2=A0 =C2=A0 =C2=A0&lt;-- Info is pointing here, &=
+quot;L1&quot;<br>
+&gt;=C2=A0 #<br>
+&gt;=C2=A0 # Lorem Ipsum<br>
+&gt;=C2=A0 ##<br>
+&gt; ```<br>
+&gt;<br>
+&gt; would be transformed to rST as:<br>
+&gt;<br>
+&gt; ```<br>
+&gt; =3D=3D=3D=3D=3D=3D=3D=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;-- L1<br>
+&gt; Section=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;-- L1<br>
+&gt; =3D=3D=3D=3D=3D=3D=3D=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;-- L1<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;-- L2<br>
+&gt; Lorem Ipsum=C2=A0 =C2=A0 &lt;-- L3<br>
+&gt; ```<br>
+<br>
+Not a demand, just wondering: could we drop our headings syntax and just<br=
 >
-> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_=
-trans/trans_rvi.c.inc
-> index 96c218a9d7..e5965201a7 100644
-> --- a/target/riscv/insn_trans/trans_rvi.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-> @@ -106,7 +106,7 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a=
-)
->          tcg_gen_ext32s_tl(target_pc, target_pc);
->      }
->
-> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca) {
-> +    if (!ctx->cfg_ptr->ext_zca) {
->          TCGv t0 =3D tcg_temp_new();
->
->          misaligned =3D gen_new_label();
-> @@ -236,8 +236,7 @@ static bool gen_branch(DisasContext *ctx, arg_b *a, T=
-CGCond cond)
->
->      gen_set_label(l); /* branch taken */
->
-> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca &&
-> -        (a->imm & 0x3)) {
-> +    if (!ctx->cfg_ptr->ext_zca && (a->imm & 0x3)) {
->          /* misaligned */
->          TCGv target_pc =3D tcg_temp_new();
->          gen_pc_plus_diff(target_pc, ctx, a->imm);
-> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index ce1256f439..68882136d7 100644
-> --- a/target/riscv/op_helper.c
-> +++ b/target/riscv/op_helper.c
-> @@ -276,7 +276,7 @@ target_ulong helper_sret(CPURISCVState *env)
->      }
->
->      target_ulong retpc =3D env->sepc;
-> -    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
-> +    if (!env_archcpu(env)->cfg.ext_zca && (retpc & 0x3)) {
->          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
->      }
->
-> @@ -349,7 +349,7 @@ static void check_ret_from_m_mode(CPURISCVState *env,=
- target_ulong retpc,
->          riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
->      }
->
-> -    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
-> +    if (!env_archcpu(env)->cfg.ext_zca && (retpc & 0x3)) {
->          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
->      }
->
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 698b74f7a8..34eeed50be 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -566,7 +566,7 @@ static void gen_jal(DisasContext *ctx, int rd, target=
-_ulong imm)
->      TCGv succ_pc =3D dest_gpr(ctx, rd);
->
->      /* check misaligned: */
-> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca) {
-> +    if (!ctx->cfg_ptr->ext_zca) {
->          if ((imm & 0x3) !=3D 0) {
->              TCGv target_pc =3D tcg_temp_new();
->              gen_pc_plus_diff(target_pc, ctx, imm);
-> --
-> 2.45.3
->
+use rST?<br></blockquote><div><br></div><div>Yes, once we drop the old qapi=
+doc fully, which I am not sure I can do before freeze ... So we have some g=
+oofy stuff in the meantime.</div><div>You suggested before I can rewrite th=
+e freeform generator to avoid needing this; I wrote the freeform generator =
+to be as close to the old one as I could, but we could kerjiggle it if need=
+ed.</div><div><br></div><div>... On the other hand, this is a patch for a +=
+=3D n, so... eh.</div><div><br></div><div>--js</div></div></div>
+
+--000000000000119cef062fa3e643--
+
 
