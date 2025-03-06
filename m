@@ -4,83 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D38F4C19F32
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 01:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC96C19F32
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 01:15:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tpznr-0002Pc-KR; Wed, 05 Mar 2025 20:13:35 -0500
+	id 1tpzoq-0002xY-CS; Wed, 05 Mar 2025 20:14:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpznp-0002PK-JO
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:13:33 -0500
-Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tpzok-0002pR-H9
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:14:31 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tpzno-0004vB-18
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:13:33 -0500
-Received: by mail-ua1-x936.google.com with SMTP id
- a1e0cc1a2514c-86929964ed3so87057241.0
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 17:13:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tpzoi-0004wi-Fe
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 20:14:30 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2234e4b079cso1085485ad.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 17:14:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741223608; x=1741828408; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EeBI3bM7FCw0yC1kvGAVnnSlIv7euB+xU2FOa3ZxnVE=;
- b=YnWwSk+8DRh0BntOi29crd+1EYSi0elTPsmrw8gyRC/YPGd643x2f1OLcx6SVX7LJD
- KGfyNVQcFSVls13lahwWS05ovaM5iyXvGpHoYrbDRxgLU89i2fzwg00Y2YreB32QVUMh
- NuwaX5HJ6E4Gu1U89oTrGnX65w2j2VXII3K07F5HWiknbtu1lVpO/ygNv2nkH5F91Jh9
- 1LzcJIvTcfT93s3BTHUjHKiMNe/GLjdy+OunF3V1M3k07EF1A06ujaib2cQxU0ZOvH/P
- MUrj1BfB9WCiXDg8Cp26I8KAi3q0GXYsUIZdIxfSY001iAxsnEi8ggz9GBViebStJ1sD
- 4Y2Q==
+ d=linaro.org; s=google; t=1741223666; x=1741828466; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IZNSX40B0LWPocH4d937YtNReVbf2z70/WFhXiXVLeg=;
+ b=vbfEO/o86y3yQwvMgTDIER2Sr706HnDKGpQwY1UliQ083n87XMUFFQcxCdOFwUQXHF
+ 225ahz6IPufK6Z+9/Tz+syH/HjXVB4Q3zRhfDsMeEiKrdwvBgAxDJ3XHbxPsgTcCQlAG
+ zS1wMQKRk70tWXNkR/VFBpWo3VO2ipiP/rvqnFeD4vzmSybddupwwqOJaQf6oX1Q9Yw8
+ uiUA3Iv41EUjgMdszj83x8Eh73uPhl/c9eaNhWrWoRNoOLFH32uB8ccnQR0Ne0deK57r
+ z55dN0y/RJEtkVTHoOdYx/EL3rVshaIdcNpy92PGjHIY77kRoEk6QVnli9uaGgmY/k+k
+ NsWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741223608; x=1741828408;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EeBI3bM7FCw0yC1kvGAVnnSlIv7euB+xU2FOa3ZxnVE=;
- b=Cl/smIZdq6eYkfIluDwDLDFsC4wXAMEwo7DDd5kYl7y4LN6/PBeSqXiJtcAyUNLCuk
- Ke/SZLlHbhWMVXM+CizSi1/HHUuoD8cBk113y6dj9TljxDtYrNaUUSbGlOu/lt7M7bLf
- AqfitGZKy+XUtAE1jehrZgMvgUp8P8RlwSAoYbNS0zIlyj4O+5WwThxCd9z386K+ft9B
- 6PSq7Z62ddD4ihad4VSQ7/HDAY/z0Z59Fg0VU17QcyyN8E6oXUcVG0m4dM/TanRwcAxT
- y4hU8atj1skVMKNTvbklDcJfWlgdUe+xwcMOKgiGO5DOCPZmOp8G7Prclg6K5PHASwrV
- CkhA==
-X-Gm-Message-State: AOJu0Yw8KCWm1I1Z0eaSki7b9ArtP7Xw3QXL8+kURKUudmrjA3qTSg9H
- LkRwecVhCR/1/spJAKpJnMquLfAc5Shsuds8uaaGiiLuXZsB0xlVh14UoHHqPDft5nndTmR3pGF
- HIX+gfMqqXRE9Z2JYQw9wpC1ALAA=
-X-Gm-Gg: ASbGncsQlLf80VVPQAkijTX33SmNI/RPX3n0BPostKQMuJM36Tc7ttS566KQamGAxOc
- 8UGifXvbSI410bjv2VFNioBtMDyyiNZJEIcxT7O9VPeu9iysb0ZXqwk0tUY+wA2eIfaWzj4WDOz
- BcevbdK9LGiMLzGLfiY7ipxnjcRlCKH72NzXrCJlG8fdxcxfPa0E9+f5uN
-X-Google-Smtp-Source: AGHT+IF6/rQoqj1eu97vDAP4uuhLcjcE7Z6AhL2HWTryQr0i7OEhO8xnbT6q4nKOwN5u7PKYI5nIoalQLXdZUcLX7Dg=
-X-Received: by 2002:a05:6102:1498:b0:4bb:9b46:3f92 with SMTP id
- ada2fe7eead31-4c2e273e89fmr4232545137.1.1741223608496; Wed, 05 Mar 2025
- 17:13:28 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741223666; x=1741828466;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IZNSX40B0LWPocH4d937YtNReVbf2z70/WFhXiXVLeg=;
+ b=xJhSa2zh5AxMhCnDSKPRwbRM/J+vvMCPx7Ggz1sap/wYeeq4ZOoh+lBAX+zSLjxlq6
+ n+VfHnhCKBszWb/j2kPqbKGpmu5HTte+/ePlBbbsRiIADE8wW2VH6Em6oI23/QEN+yFR
+ gozYCmMdRaExJAYINrea7iyWaP3CvdP1V1+bOPYQh3l3efHXbjXtfp7CO68LScPHGhFx
+ HiERXPYhcOQ25GmJ9xoxqI0pTopntqwFxjUFSNttCzn3l+PpHsrZEy3X8Xwgkn4k1Kio
+ j9HIa6O2g1h2D5WIWuqJqAQvT5aPhhv7O2fbRoodiaaPXfXAN6B9AQTxpunn4DVd9mH1
+ v/ow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUf68k1393FIv5avlFXmRScS1DVvzEKnT8KoccKcBCRwRGINiM2WwzjO1bPSu6MtGTIAv7TS5y5FrDo@nongnu.org
+X-Gm-Message-State: AOJu0YzVZxLIl6jUYVPFFO2KhMX3jjpNaXa0YAYJm/wRY+bt9O5gPZXg
+ oGpKyCoO+WenWiYQSHP+mssR9HFzJxxHQf0WmQnFvxEBaLbZTs5Ml9FJmXXyXoQ=
+X-Gm-Gg: ASbGncucJAuptRkavntV61hkYWYtq2fBVWr7Aw7CbH8dSqKFjpCEKh/2SvJtZb62APs
+ xKziZ6DIuuefE9Iv3ovh1e6iqWAo5FkwzH3lo4bre2IzmF6+Fm76Do0aHTSHgYiHwmij+dCU/Lz
+ GdxsR2V1o1+Mv8x7fW2hub2qohgAwx++PmDi5FzFogPlFe9zspRD6GVPX9Ux7JxxxG9brHRKfNV
+ 1bdxMTrivFyliGhVIE28a6tId1xMY3aSdR4ANezyZS/LxSMYp2CrR1gCIGfANXWZDZAhOi5Wf3K
+ Sd8whtSJb84NCUedtNKhzvAiDDxdpw3lsFvyf6yYfO+qWGP/nyCWegHnujYGiLCQFAcD+VaAmH8
+ qg64f2a1t
+X-Google-Smtp-Source: AGHT+IGXAOH99+JMKbDDMTO61pZ4BpDGxWBANf54nFDjX3JNoiGqYPQphtgz0nlQ5EED/deQGJmUoQ==
+X-Received: by 2002:a17:902:d48d:b0:220:e7ae:dbcf with SMTP id
+ d9443c01a7336-223f1cf61aemr82910775ad.23.1741223666070; 
+ Wed, 05 Mar 2025 17:14:26 -0800 (PST)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-224109e9fbfsm671265ad.92.2025.03.05.17.14.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Mar 2025 17:14:25 -0800 (PST)
+Message-ID: <1f8bfd50-669a-41be-95e1-b277255a96a4@linaro.org>
+Date: Wed, 5 Mar 2025 17:14:23 -0800
 MIME-Version: 1.0
-References: <20250218165757.554178-1-pbonzini@redhat.com>
- <20250218165757.554178-2-pbonzini@redhat.com>
-In-Reply-To: <20250218165757.554178-2-pbonzini@redhat.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 11:13:02 +1000
-X-Gm-Features: AQ5f1Jr0ZqIWqovlkzmM8h1huF4WwZW3_vzE4Sz6RvP2Exc3H_w_s1_XdeFHkyw
-Message-ID: <CAKmqyKPxdUjq1m6C8mZT5Ats3eh01-BMVPAJAdMrOc8foT5mNQ@mail.gmail.com>
-Subject: Re: [PATCH 1/7] hw/riscv: acpi: only create RHCT MMU entry for
- supported types
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/14] arm/cpu: Add sysreg definitions in cpu-sysregs.h
+To: Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+References: <20250305163819.2477553-1-cohuck@redhat.com>
+ <20250305163819.2477553-2-cohuck@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250305163819.2477553-2-cohuck@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,72 +104,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 19, 2025 at 2:58=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> Do not create the RHCT MMU type entry for RV32 CPUs, since it
-> only has definitions for SV39/SV48/SV57.  Likewise, check that
+On 3/5/25 08:38, Cornelia Huck wrote:
+> +++ b/target/arm/cpu-sysregs.h
+> @@ -0,0 +1,131 @@
+> +#ifndef ARM_CPU_SYSREGS_H
+> +#define ARM_CPU_SYSREGS_H
+> +
+> +/*
+> + * Following is similar to the coprocessor regs encodings, but with an argument
+> + * ordering that matches the ARM ARM. We also reuse the various CP_REG_ defines
+> + * that actually are the same as the equivalent KVM_REG_ values.
+> + */
+> +#define ENCODE_ID_REG(op0, op1, crn, crm, op2)          \
+> +    (((op0) << CP_REG_ARM64_SYSREG_OP0_SHIFT) |         \
+> +     ((op1) << CP_REG_ARM64_SYSREG_OP1_SHIFT) |         \
+> +     ((crn) << CP_REG_ARM64_SYSREG_CRN_SHIFT) |         \
+> +     ((crm) << CP_REG_ARM64_SYSREG_CRM_SHIFT) |         \
+> +     ((op2) << CP_REG_ARM64_SYSREG_OP2_SHIFT))
+> +
+> +typedef enum ARMIDRegisterIdx {
+> +    ID_AA64PFR0_EL1_IDX,
+> +    ID_AA64PFR1_EL1_IDX,
+> +    ID_AA64SMFR0_EL1_IDX,
+> +    ID_AA64DFR0_EL1_IDX,
+> +    ID_AA64DFR1_EL1_IDX,
+> +    ID_AA64ISAR0_EL1_IDX,
+> +    ID_AA64ISAR1_EL1_IDX,
+> +    ID_AA64ISAR2_EL1_IDX,
+> +    ID_AA64MMFR0_EL1_IDX,
+> +    ID_AA64MMFR1_EL1_IDX,
+> +    ID_AA64MMFR2_EL1_IDX,
+> +    ID_AA64MMFR3_EL1_IDX,
+> +    ID_PFR0_EL1_IDX,
+> +    ID_PFR1_EL1_IDX,
+> +    ID_DFR0_EL1_IDX,
+> +    ID_MMFR0_EL1_IDX,
+> +    ID_MMFR1_EL1_IDX,
+> +    ID_MMFR2_EL1_IDX,
+> +    ID_MMFR3_EL1_IDX,
+> +    ID_ISAR0_EL1_IDX,
+> +    ID_ISAR1_EL1_IDX,
+> +    ID_ISAR2_EL1_IDX,
+> +    ID_ISAR3_EL1_IDX,
+> +    ID_ISAR4_EL1_IDX,
+> +    ID_ISAR5_EL1_IDX,
+> +    ID_MMFR4_EL1_IDX,
+> +    ID_ISAR6_EL1_IDX,
+> +    MVFR0_EL1_IDX,
+> +    MVFR1_EL1_IDX,
+> +    MVFR2_EL1_IDX,
+> +    ID_PFR2_EL1_IDX,
+> +    ID_DFR1_EL1_IDX,
+> +    ID_MMFR5_EL1_IDX,
+> +    ID_AA64ZFR0_EL1_IDX,
+> +    CTR_EL0_IDX,
+> +    NUM_ID_IDX,
+> +} ARMIDRegisterIdx;
+> +
+> +typedef enum ARMSysRegs {
+> +    SYS_ID_AA64PFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 0),
+> +    SYS_ID_AA64PFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 1),
+> +    SYS_ID_AA64SMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 5),
+> +    SYS_ID_AA64DFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 5, 0),
+> +    SYS_ID_AA64DFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 5, 1),
+> +    SYS_ID_AA64ISAR0_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 0),
+> +    SYS_ID_AA64ISAR1_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 1),
+> +    SYS_ID_AA64ISAR2_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 2),
+> +    SYS_ID_AA64MMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 0),
+> +    SYS_ID_AA64MMFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 1),
+> +    SYS_ID_AA64MMFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 2),
+> +    SYS_ID_AA64MMFR3_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 3),
+> +    SYS_ID_PFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 0),
+> +    SYS_ID_PFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 1),
+> +    SYS_ID_DFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 2),
+> +    SYS_ID_MMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 4),
+> +    SYS_ID_MMFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 5),
+> +    SYS_ID_MMFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 6),
+> +    SYS_ID_MMFR3_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 7),
+> +    SYS_ID_ISAR0_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 0),
+> +    SYS_ID_ISAR1_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 1),
+> +    SYS_ID_ISAR2_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 2),
+> +    SYS_ID_ISAR3_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 3),
+> +    SYS_ID_ISAR4_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 4),
+> +    SYS_ID_ISAR5_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 5),
+> +    SYS_ID_MMFR4_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 6),
+> +    SYS_ID_ISAR6_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 7),
+> +    SYS_MVFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 0),
+> +    SYS_MVFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 1),
+> +    SYS_MVFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 2),
+> +    SYS_ID_PFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 4),
+> +    SYS_ID_DFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 5),
+> +    SYS_ID_MMFR5_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 6),
+> +    SYS_ID_AA64ZFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 4),
+> +    SYS_CTR_EL0 = ENCODE_ID_REG(3, 3, 0, 0, 1),
+> +} ARMSysRegs;
+> +
+> +static const uint32_t id_register_sysreg[NUM_ID_IDX] = {
+> +    [ID_AA64PFR0_EL1_IDX] = SYS_ID_AA64PFR0_EL1,
+> +    [ID_AA64PFR1_EL1_IDX] = SYS_ID_AA64PFR1_EL1,
+> +    [ID_AA64SMFR0_EL1_IDX] = SYS_ID_AA64SMFR0_EL1,
+> +    [ID_AA64DFR0_EL1_IDX] = SYS_ID_AA64DFR0_EL1,
+> +    [ID_AA64DFR1_EL1_IDX] = SYS_ID_AA64DFR1_EL1,
+> +    [ID_AA64ISAR0_EL1_IDX] = SYS_ID_AA64ISAR0_EL1,
+> +    [ID_AA64ISAR1_EL1_IDX] = SYS_ID_AA64ISAR1_EL1,
+> +    [ID_AA64ISAR2_EL1_IDX] = SYS_ID_AA64ISAR2_EL1,
+> +    [ID_AA64MMFR0_EL1_IDX] = SYS_ID_AA64MMFR0_EL1,
+> +    [ID_AA64MMFR1_EL1_IDX] = SYS_ID_AA64MMFR1_EL1,
+> +    [ID_AA64MMFR2_EL1_IDX] = SYS_ID_AA64MMFR2_EL1,
+> +    [ID_AA64MMFR3_EL1_IDX] = SYS_ID_AA64MMFR3_EL1,
+> +    [ID_PFR0_EL1_IDX] = SYS_ID_PFR0_EL1,
+> +    [ID_PFR1_EL1_IDX] = SYS_ID_PFR1_EL1,
+> +    [ID_DFR0_EL1_IDX] = SYS_ID_DFR0_EL1,
+> +    [ID_MMFR0_EL1_IDX] = SYS_ID_MMFR0_EL1,
+> +    [ID_MMFR1_EL1_IDX] = SYS_ID_MMFR1_EL1,
+> +    [ID_MMFR2_EL1_IDX] = SYS_ID_MMFR2_EL1,
+> +    [ID_MMFR3_EL1_IDX] = SYS_ID_MMFR3_EL1,
+> +    [ID_ISAR0_EL1_IDX] = SYS_ID_ISAR0_EL1,
+> +    [ID_ISAR1_EL1_IDX] = SYS_ID_ISAR1_EL1,
+> +    [ID_ISAR2_EL1_IDX] = SYS_ID_ISAR2_EL1,
+> +    [ID_ISAR3_EL1_IDX] = SYS_ID_ISAR3_EL1,
+> +    [ID_ISAR4_EL1_IDX] = SYS_ID_ISAR4_EL1,
+> +    [ID_ISAR5_EL1_IDX] = SYS_ID_ISAR5_EL1,
+> +    [ID_MMFR4_EL1_IDX] = SYS_ID_MMFR4_EL1,
+> +    [ID_ISAR6_EL1_IDX] = SYS_ID_ISAR6_EL1,
+> +    [MVFR0_EL1_IDX] = SYS_MVFR0_EL1,
+> +    [MVFR1_EL1_IDX] = SYS_MVFR1_EL1,
+> +    [MVFR2_EL1_IDX] = SYS_MVFR2_EL1,
+> +    [ID_PFR2_EL1_IDX] = SYS_ID_PFR2_EL1,
+> +    [ID_DFR1_EL1_IDX] = SYS_ID_DFR1_EL1,
+> +    [ID_MMFR5_EL1_IDX] = SYS_ID_MMFR5_EL1,
+> +    [ID_AA64ZFR0_EL1_IDX] = SYS_ID_AA64ZFR0_EL1,
+> +    [CTR_EL0_IDX] = SYS_CTR_EL0,
+> +};
 
-I don't have access to the spec, so I'm going to take your word on this
+Again, you should NOT place this array in a header,
+to be replicated in every single user of the header.
 
-> satp_mode_max_from_map() will actually return a valid value, skipping
-> the MMU type entry if all MMU types were disabled on the command line.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+This can be a bit more automated to avoid mistakes.
 
-Alistair
+--- target/arm/cpu-sysregs.h.inc
 
-> ---
->  hw/riscv/virt-acpi-build.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 1ad68005085..2b374ebacbf 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -262,6 +262,7 @@ static void build_rhct(GArray *table_data,
->      RISCVCPU *cpu =3D &s->soc[0].harts[0];
->      uint32_t mmu_offset =3D 0;
->      uint8_t satp_mode_max;
-> +    bool rv32 =3D riscv_cpu_is_32bit(cpu);
->      g_autofree char *isa =3D NULL;
->
->      AcpiTable table =3D { .sig =3D "RHCT", .rev =3D 1, .oem_id =3D s->oe=
-m_id,
-> @@ -281,7 +282,8 @@ static void build_rhct(GArray *table_data,
->          num_rhct_nodes++;
->      }
->
-> -    if (cpu->cfg.satp_mode.supported !=3D 0) {
-> +    if (!rv32 && cpu->cfg.satp_mode.supported !=3D 0 &&
-> +        (cpu->cfg.satp_mode.map & ~(1 << VM_1_10_MBARE))) {
->          num_rhct_nodes++;
->      }
->
-> @@ -341,7 +343,8 @@ static void build_rhct(GArray *table_data,
->      }
->
->      /* MMU node structure */
-> -    if (cpu->cfg.satp_mode.supported !=3D 0) {
-> +    if (!rv32 && cpu->cfg.satp_mode.supported !=3D 0 &&
-> +        (cpu->cfg.satp_mode.map & ~(1 << VM_1_10_MBARE))) {
->          satp_mode_max =3D satp_mode_max_from_map(cpu->cfg.satp_mode.map)=
-;
->          mmu_offset =3D table_data->len - table.table_offset;
->          build_append_int_noprefix(table_data, 2, 2);    /* Type */
-> @@ -356,7 +359,7 @@ static void build_rhct(GArray *table_data,
->          } else if (satp_mode_max =3D=3D VM_1_10_SV39) {
->              build_append_int_noprefix(table_data, 0, 1);    /* Sv39 */
->          } else {
-> -            assert(1);
-> +            g_assert_not_reached();
->          }
->      }
->
-> --
-> 2.48.1
->
->
+DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
+...
+
+--- target/arm/cpu-sysregs.h
+
+#define DEF(NAME, OP0, OP1, CRN, CRM, OP2)  NAME##_IDX,
+
+typedef enum ARMIDRegisterIdx {
+#include "cpu-sysregs.h.inc"
+} ARMIDRegisterIdx;
+
+#undef DEF
+#define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
+     SYS_##NAME = ENCODE_ID_REG(OP0, OP1, CRN, CRM, OP2),
+
+typedef enum ARMSysRegs {
+#include "cpu-sysregs.h.inc"
+} ARMSysRegs;
+
+#undef DEF
+
+
+r~
 
