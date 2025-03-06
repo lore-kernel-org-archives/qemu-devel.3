@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E2E9C282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 14:23:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE550C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 14:23:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqC1A-0008UJ-4P; Thu, 06 Mar 2025 09:16:08 -0500
+	id 1tqC4F-0004Dt-Do; Thu, 06 Mar 2025 09:19:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC0f-0007RU-Co
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:15:37 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC1g-0000sH-N5
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:16:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC0d-0001pD-Gi
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:15:37 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqC1a-00028o-TR
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 09:16:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741270534;
+ s=mimecast20190719; t=1741270593;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FNw/KaJyd7djxjrv3Hx0XbcUdwV3P/GfQA35U0gME/I=;
- b=FCbk6RGsU1FUle12Aklj9AtLDcMrQ5dM1SL1FKgApCXjYe+VVvcaUFsBqGEwbaDt/8dlZx
- LYsM6SF12/mjtOqW3Rxfd1KOnGN+OyF4BKHLek7Wyi6iEJSsZYPq4/nNTTRPdJf4H5jxNb
- UkGPf27ZWwUoCQ49G0ABVCCsfA1wVho=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Bb2pXYyk+rCZrdsQNj/06TLTTEn4q37gLE7EXsSn5qo=;
+ b=i7fVQOWW7IgGvstDVX+CxMO/b4U5hv1pTj/q/yhzCjAJI9g8OPceVZDHlplUKo6HqddOqd
+ ZXXYMoDQT3KFNI2n3PA8++JHNwR878bEY3zpJqkE00A+B8iNT+BZyj9nkIYO1wfbGBoFsa
+ wRI9u/SFzi3G+4R1Kf/UtHM8YCtK+lM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-E2sSZGpxPy2Y5kLjsH0vQQ-1; Thu,
- 06 Mar 2025 09:15:32 -0500
-X-MC-Unique: E2sSZGpxPy2Y5kLjsH0vQQ-1
-X-Mimecast-MFC-AGG-ID: E2sSZGpxPy2Y5kLjsH0vQQ_1741270531
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-Zf7mE1gINzCa3Tn8RfUS8Q-1; Thu,
+ 06 Mar 2025 09:15:58 -0500
+X-MC-Unique: Zf7mE1gINzCa3Tn8RfUS8Q-1
+X-Mimecast-MFC-AGG-ID: Zf7mE1gINzCa3Tn8RfUS8Q_1741270557
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D8A41801A12; Thu,  6 Mar 2025 14:15:31 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 27C00195421B; Thu,  6 Mar 2025 14:15:57 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.141])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6AD17180174E; Thu,  6 Mar 2025 14:15:29 +0000 (UTC)
+ id 85F9C18001D3; Thu,  6 Mar 2025 14:15:55 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 21/42] migration/multifd: Make multifd_send() thread safe
-Date: Thu,  6 Mar 2025 15:13:57 +0100
-Message-ID: <20250306141419.2015340-22-clg@redhat.com>
+Subject: [PULL 30/42] vfio/migration: Move migration channel flags to
+ vfio-common.h header file
+Date: Thu,  6 Mar 2025 15:14:06 +0100
+Message-ID: <20250306141419.2015340-31-clg@redhat.com>
 In-Reply-To: <20250306141419.2015340-1-clg@redhat.com>
 References: <20250306141419.2015340-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,60 +87,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-multifd_send() function is currently not thread safe, make it thread safe
-by holding a lock during its execution.
+This way they can also be referenced in other translation
+units than migration.c.
 
-This way it will be possible to safely call it concurrently from multiple
-threads.
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Link: https://lore.kernel.org/qemu-devel/dd0f3bcc02ca96a7d523ca58ea69e495a33b453b.1741124640.git.maciej.szmigiero@oracle.com
+Link: https://lore.kernel.org/qemu-devel/26a940f6b22c1b685818251b7a3ddbbca601b1d6.1741124640.git.maciej.szmigiero@oracle.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- migration/multifd.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/hw/vfio/vfio-common.h | 17 +++++++++++++++++
+ hw/vfio/migration.c           | 17 -----------------
+ 2 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 01f427d8ed036417559a0573d369172f72b508e1..add6f86175c25c0f7925a919c267240826fab54c 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -50,6 +50,10 @@ typedef struct {
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 5c84ebb0029853bf408ffb7d308a603435bd234b..bf5d5208712925f140e55583a2c0fe216184d046 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -36,6 +36,23 @@
  
- struct {
-     MultiFDSendParams *params;
-+
-+    /* multifd_send() body is not thread safe, needs serialization */
-+    QemuMutex multifd_send_mutex;
-+
-     /*
-      * Global number of generated multifd packets.
-      *
-@@ -339,6 +343,8 @@ bool multifd_send(MultiFDSendData **send_data)
-         return false;
-     }
+ #define VFIO_MSG_PREFIX "vfio %s: "
  
-+    QEMU_LOCK_GUARD(&multifd_send_state->multifd_send_mutex);
++/*
++ * Flags to be used as unique delimiters for VFIO devices in the migration
++ * stream. These flags are composed as:
++ * 0xffffffff => MSB 32-bit all 1s
++ * 0xef10     => Magic ID, represents emulated (virtual) function IO
++ * 0x0000     => 16-bits reserved for flags
++ *
++ * The beginning of state information is marked by _DEV_CONFIG_STATE,
++ * _DEV_SETUP_STATE, or _DEV_DATA_STATE, respectively. The end of a
++ * certain state information is marked by _END_OF_STATE.
++ */
++#define VFIO_MIG_FLAG_END_OF_STATE      (0xffffffffef100001ULL)
++#define VFIO_MIG_FLAG_DEV_CONFIG_STATE  (0xffffffffef100002ULL)
++#define VFIO_MIG_FLAG_DEV_SETUP_STATE   (0xffffffffef100003ULL)
++#define VFIO_MIG_FLAG_DEV_DATA_STATE    (0xffffffffef100004ULL)
++#define VFIO_MIG_FLAG_DEV_INIT_DATA_SENT (0xffffffffef100005ULL)
 +
-     /* We wait here, until at least one channel is ready */
-     qemu_sem_wait(&multifd_send_state->channels_ready);
+ enum {
+     VFIO_DEVICE_TYPE_PCI = 0,
+     VFIO_DEVICE_TYPE_PLATFORM = 1,
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 51c056e152aae694ecc1b590c1a94dd8e5277c4a..a9b0970604aa3e15fe2fb2412286e48cac3b03cc 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -31,23 +31,6 @@
+ #include "trace.h"
+ #include "hw/hw.h"
  
-@@ -507,6 +513,7 @@ static void multifd_send_cleanup_state(void)
-     socket_cleanup_outgoing_migration();
-     qemu_sem_destroy(&multifd_send_state->channels_created);
-     qemu_sem_destroy(&multifd_send_state->channels_ready);
-+    qemu_mutex_destroy(&multifd_send_state->multifd_send_mutex);
-     g_free(multifd_send_state->params);
-     multifd_send_state->params = NULL;
-     g_free(multifd_send_state);
-@@ -887,6 +894,7 @@ bool multifd_send_setup(void)
-     thread_count = migrate_multifd_channels();
-     multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
-     multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
-+    qemu_mutex_init(&multifd_send_state->multifd_send_mutex);
-     qemu_sem_init(&multifd_send_state->channels_created, 0);
-     qemu_sem_init(&multifd_send_state->channels_ready, 0);
-     qatomic_set(&multifd_send_state->exiting, 0);
+-/*
+- * Flags to be used as unique delimiters for VFIO devices in the migration
+- * stream. These flags are composed as:
+- * 0xffffffff => MSB 32-bit all 1s
+- * 0xef10     => Magic ID, represents emulated (virtual) function IO
+- * 0x0000     => 16-bits reserved for flags
+- *
+- * The beginning of state information is marked by _DEV_CONFIG_STATE,
+- * _DEV_SETUP_STATE, or _DEV_DATA_STATE, respectively. The end of a
+- * certain state information is marked by _END_OF_STATE.
+- */
+-#define VFIO_MIG_FLAG_END_OF_STATE      (0xffffffffef100001ULL)
+-#define VFIO_MIG_FLAG_DEV_CONFIG_STATE  (0xffffffffef100002ULL)
+-#define VFIO_MIG_FLAG_DEV_SETUP_STATE   (0xffffffffef100003ULL)
+-#define VFIO_MIG_FLAG_DEV_DATA_STATE    (0xffffffffef100004ULL)
+-#define VFIO_MIG_FLAG_DEV_INIT_DATA_SENT (0xffffffffef100005ULL)
+-
+ /*
+  * This is an arbitrary size based on migration of mlx5 devices, where typically
+  * total device migration size is on the order of 100s of MB. Testing with
 -- 
 2.48.1
 
