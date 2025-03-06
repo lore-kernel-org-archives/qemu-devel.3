@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3492C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 09:38:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 644EAC28B25
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 09:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq7eP-0008Tt-PV; Thu, 06 Mar 2025 04:36:23 -0500
+	id 1tq7ed-000064-TD; Thu, 06 Mar 2025 04:36:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tq7eK-0008T0-Ma
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:36:16 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tq7eb-00005X-GJ
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:36:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tq7eH-0002Ab-RS
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:36:16 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tq7eV-0002Cq-1x
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 04:36:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741253772;
+ s=mimecast20190719; t=1741253785;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wVYGB4a0aYe5XmfVsir1N1qs9DgdDMnLkRkugkD+1Xw=;
- b=D+KR9jX3XSfa+O53NjASTIu84np/ji/y1d/QpW4Ex4yAAVXUFRHkkyQaCj7HCEMO9xHFFY
- WoGZMsEe3RELNseym5C74PCc9qJWIMfNHKZaXrXC1//8jLzZwjVK8E4Bg7xhoAggEEMmOT
- nAtJvgnb/0lJL+1hxpwh4Suawl64fFw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=3VOhtzA6w/ZsRKC5No020cqS/j8Hoqulo9VM1qIuy6E=;
+ b=YCfiq8XFxsiHKeRmfZUTkO8VEJsIwbiboz29EHxVcMqyIzbTLfw/t8JlINPW3FRzfbbL93
+ k06I7agUyctsy0AQM6DPraLrJyU4EEMZf1by2bLOiZh41U8ClkVV66cNjlGmAzP9Uy9m8B
+ rDVRYUtC85V3r1Ar7ByVtosrVGwk5M8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-r6QFK1dHM6SsRkGv_-JFcg-1; Thu,
- 06 Mar 2025 04:36:09 -0500
-X-MC-Unique: r6QFK1dHM6SsRkGv_-JFcg-1
-X-Mimecast-MFC-AGG-ID: r6QFK1dHM6SsRkGv_-JFcg_1741253768
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-306-IaoGbr5rPOug1bhKai3heA-1; Thu,
+ 06 Mar 2025 04:36:08 -0500
+X-MC-Unique: IaoGbr5rPOug1bhKai3heA-1
+X-Mimecast-MFC-AGG-ID: IaoGbr5rPOug1bhKai3heA_1741253768
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BDB9F1955BCD
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 041E41801A00
  for <qemu-devel@nongnu.org>; Thu,  6 Mar 2025 09:36:08 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 53ADE195609D
- for <qemu-devel@nongnu.org>; Thu,  6 Mar 2025 09:36:08 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6993518009BC
+ for <qemu-devel@nongnu.org>; Thu,  6 Mar 2025 09:36:07 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D853721E6562; Thu, 06 Mar 2025 10:36:01 +0100 (CET)
+ id D090B21E6560; Thu, 06 Mar 2025 10:36:01 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 10/10] docs/devel/qapi-code-gen: Discourage use of 'prefix'
-Date: Thu,  6 Mar 2025 10:36:01 +0100
-Message-ID: <20250306093601.2264772-11-armbru@redhat.com>
+Subject: [PULL 08/10] qdev: Improve PropertyInfo member @description for enum
+ properties
+Date: Thu,  6 Mar 2025 10:35:59 +0100
+Message-ID: <20250306093601.2264772-9-armbru@redhat.com>
 In-Reply-To: <20250306093601.2264772-1-armbru@redhat.com>
 References: <20250306093601.2264772-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -87,32 +88,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QAPI's 'prefix' feature can make the connection between enumeration
-type and its constants less than obvious.  It's best used with
-restraint.  Commit 7bbadc60b5..64f5e9db77 eliminated most uses.
-Discourage new ones.
+Consistently use format "DESCRIPTION (VALUE/VALUE...)".
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20250228134335.132278-1-armbru@redhat.com>
+Message-ID: <20250227085601.4140852-6-armbru@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/devel/qapi-code-gen.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/core/qdev-properties-system.c | 26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-index 9fa94251b0..f9cfe8721f 100644
---- a/docs/devel/qapi-code-gen.rst
-+++ b/docs/devel/qapi-code-gen.rst
-@@ -229,7 +229,8 @@ These are of the form PREFIX_NAME, where PREFIX is derived from the
- enumeration type's name, and NAME from the value's name.  For the
- example above, the generator maps 'MyEnum' to MY_ENUM and 'value1' to
- VALUE1, resulting in the enumeration constant MY_ENUM_VALUE1.  The
--optional 'prefix' member overrides PREFIX.
-+optional 'prefix' member overrides PREFIX.  This is rarely necessary,
-+and should be used with restraint.
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 0ac1485d54..6d7dcf368d 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -603,6 +603,7 @@ QEMU_BUILD_BUG_ON(sizeof(LostTickPolicy) != sizeof(int));
  
- The generated C enumeration constants have values 0, 1, ..., N-1 (in
- QAPI schema order), where N is the number of values.  There is an
+ const PropertyInfo qdev_prop_losttickpolicy = {
+     .type  = "LostTickPolicy",
++    .description = "Policy for handling lost ticks (discard/delay/slew)",
+     .enum_table  = &LostTickPolicy_lookup,
+     .get   = qdev_propinfo_get_enum,
+     .set   = qdev_propinfo_set_losttickpolicy,
+@@ -642,8 +643,7 @@ QEMU_BUILD_BUG_ON(sizeof(BlockdevOnError) != sizeof(int));
+ 
+ const PropertyInfo qdev_prop_blockdev_on_error = {
+     .type = "BlockdevOnError",
+-    .description = "Error handling policy, "
+-                   "report/ignore/enospc/stop/auto",
++    .description = "Error handling policy (report/ignore/enospc/stop/auto)",
+     .enum_table = &BlockdevOnError_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+@@ -656,8 +656,8 @@ QEMU_BUILD_BUG_ON(sizeof(BiosAtaTranslation) != sizeof(int));
+ 
+ const PropertyInfo qdev_prop_bios_chs_trans = {
+     .type = "BiosAtaTranslation",
+-    .description = "Logical CHS translation algorithm, "
+-                   "auto/none/lba/large/rechs",
++    .description = "Logical CHS translation algorithm "
++                   " (auto/none/lba/large/rechs)",
+     .enum_table = &BiosAtaTranslation_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+@@ -668,8 +668,7 @@ const PropertyInfo qdev_prop_bios_chs_trans = {
+ 
+ const PropertyInfo qdev_prop_fdc_drive_type = {
+     .type = "FloppyDriveType",
+-    .description = "FDC drive type, "
+-                   "144/288/120/none/auto",
++    .description = "Floppy drive type (144/288/120/none/auto)",
+     .enum_table = &FloppyDriveType_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+@@ -680,8 +679,8 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
+ 
+ const PropertyInfo qdev_prop_multifd_compression = {
+     .type = "MultiFDCompression",
+-    .description = "multifd_compression values, "
+-                   "none/zlib/zstd/qpl/uadk/qatzip",
++    .description = "multifd_compression values"
++                   " (none/zlib/zstd/qpl/uadk/qatzip)",
+     .enum_table = &MultiFDCompression_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+@@ -694,8 +693,7 @@ QEMU_BUILD_BUG_ON(sizeof(MigMode) != sizeof(int));
+ 
+ const PropertyInfo qdev_prop_mig_mode = {
+     .type = "MigMode",
+-    .description = "mig_mode values, "
+-                   "normal,cpr-reboot",
++    .description = "Migration mode (normal/cpr-reboot)",
+     .enum_table = &MigMode_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+@@ -708,8 +706,7 @@ QEMU_BUILD_BUG_ON(sizeof(GranuleMode) != sizeof(int));
+ 
+ const PropertyInfo qdev_prop_granule_mode = {
+     .type = "GranuleMode",
+-    .description = "granule_mode values, "
+-                   "4k, 8k, 16k, 64k, host",
++    .description = "Granule page size (4k/8k/16k/64k/host)",
+     .enum_table = &GranuleMode_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+@@ -718,8 +715,7 @@ const PropertyInfo qdev_prop_granule_mode = {
+ 
+ const PropertyInfo qdev_prop_zero_page_detection = {
+     .type = "ZeroPageDetection",
+-    .description = "zero_page_detection values, "
+-                   "none,legacy,multifd",
++    .description = "Zero page detection (none/legacy/multifd)",
+     .enum_table = &ZeroPageDetection_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+@@ -1232,7 +1228,7 @@ QEMU_BUILD_BUG_ON(sizeof(S390CpuEntitlement) != sizeof(int));
+ 
+ const PropertyInfo qdev_prop_cpus390entitlement = {
+     .type  = "S390CpuEntitlement",
+-    .description = "low/medium (default)/high",
++    .description = "auto/low/medium/high (default medium)",
+     .enum_table  = &S390CpuEntitlement_lookup,
+     .get   = qdev_propinfo_get_enum,
+     .set   = qdev_propinfo_set_enum,
 -- 
 2.48.1
 
