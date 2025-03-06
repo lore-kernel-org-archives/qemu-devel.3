@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA88BC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 03:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F038BC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 03:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq205-0001Yp-4V; Wed, 05 Mar 2025 22:34:21 -0500
+	id 1tq28k-0005bJ-D9; Wed, 05 Mar 2025 22:43:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq203-0001Ya-UV; Wed, 05 Mar 2025 22:34:19 -0500
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq201-0002nX-0g; Wed, 05 Mar 2025 22:34:19 -0500
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-86b2cc89e4aso162694241.1; 
- Wed, 05 Mar 2025 19:34:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741232054; x=1741836854; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YghJWPgOkVw3V15Axb49yHBROOeuI2BD/N6R+VPIlng=;
- b=h+N99tsKNX9/fo/JMW6Ydl64AObfEhS7AmDpxmyKCo4JT0ZVi1RuvHLQ6n9d8IOrwr
- pdWmC4fAqIVkE6yAjR/GSNoIjYjzYnHIOrm3mtR9ebAVw33tVFSE9lBOndxdnI9VHhZl
- Ly89vzthNM8UKMBpCmhZAsb1PqVabKuwsBsof7gOAA75c/oDDb0ly42Imj9xUL3ZvFux
- SaYAZ5Cp3x7dZdv2JNrChZlRPlyT3MGmvGHAQNWYcEX8bWMCS+Gk34438ApScZ8K9QZZ
- 2bdl+WUdo57klQppzAwK+NOQNumH+UixUot+DtWo3twWnVvhwrHqRvCHsZKBkqt57KGM
- WEIg==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tq28i-0005b1-8x
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 22:43:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tq28e-0004WX-P8
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 22:43:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741232588;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AUJnuDA/oiSsgEYw1Q+y7xvuM378DifWDXmS0En8APE=;
+ b=WqAj6bu4/bNZE+hvQC0s5dK5wUMpwHnKob0RdmtD7a6SvqY691KalwVGoJNptF/3g9KapA
+ U92zhT+blDbovY/RhaxL0A4eblXuNNWQQngDITEM6hHpm1fBunpZdQ/AFhbya6dN8QNttY
+ +vP7jlZ7Ta9hM72TQE1UK+742ZYNDRI=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-413-_WCq2ehuPka3S-YJ_LHW-w-1; Wed, 05 Mar 2025 22:42:52 -0500
+X-MC-Unique: _WCq2ehuPka3S-YJ_LHW-w-1
+X-Mimecast-MFC-AGG-ID: _WCq2ehuPka3S-YJ_LHW-w_1741232571
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2fe86c01f5cso584311a91.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 19:42:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741232054; x=1741836854;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YghJWPgOkVw3V15Axb49yHBROOeuI2BD/N6R+VPIlng=;
- b=qKItcurO3rBWFuaMBBRjNa5znfrh1wLxMjum9e7VuQcp9lgbfCIxFQnKSfmuv+DV5K
- fKmSMOhQqwnXeWTbbaz6SYa0pdrVjxFyy28FFJKmJBcefwMKX1+bSiR2W8XmEYoiP5Ln
- 3LXlThmrJc0Lv5zur1gU8x5vFYmlLDDVX8qCE1f5diYoOohqTdWnKEvVyZLhIcpfNDKH
- vuT3IlrHiaqnq+akokfUsFNhu4rjcoZ2XG2A4Viax8RAFfO7pC/aHL5fN/gRgaNxXmIA
- 7/AFn7ifqAnrHaZzXP6L29W19wtWmDr6jfJSrFXPfi4Rdaq5d2TLlCqfH4dzHNlTXE+v
- b6Jw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcu8HZd4IrdJ1hwhOixMIRYO4fkJ1NsPrlljz8znnqfkiPDLQ7MUocZxB3H9fxwhje6kinzKifSIGl@nongnu.org
-X-Gm-Message-State: AOJu0Yz/LMwKVtMil1FkVfTOS65tI56ZLi21nxPp7sgPjjUVOkzERrlS
- i8NDD/0SCmbqW00ZWK1rekGmDwrCX3u6O11tYUAq5lW1//NbrQ9gvqJTcW+WyiJaf6RYnZ1GRIZ
- k3+l5StZIyec5KVzEqEM4G+H5Ne0=
-X-Gm-Gg: ASbGncuz5qaKLQ22YeqNbbEQd2xh13BNG3Gy3FsZceVgww7BmEEFQPEM3Q1gjuR+E/p
- deqNIGkXZ6BfzltEanQtfPmqtUYo/OK8TZgAzmPr8Ar9ACZN3cx7IiEtZcxEaI6vbJj9z6bimYi
- e/qYO3G7OffNQsPLBtBEb9ky4IpWz37gd71Z/1oMIOJJJbw91GB1cr8Cc+
-X-Google-Smtp-Source: AGHT+IFTo+NLvUHshhOY/4muJCV9BUpxmB70811zEmlXQ0mJjntgTO6enlCLPy+o6hV2eHMorfnclNfd7YjI4n9xWbk=
-X-Received: by 2002:a05:6102:54a4:b0:4c1:a15c:ab5c with SMTP id
- ada2fe7eead31-4c2e2906669mr3636799137.20.1741232054327; Wed, 05 Mar 2025
- 19:34:14 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741232571; x=1741837371;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AUJnuDA/oiSsgEYw1Q+y7xvuM378DifWDXmS0En8APE=;
+ b=WdV3wlCR97T7D/ZSnUHxXtdV+Ppp3KUNasseoK9MUcPErzg5BKE7s5MxppVMhDBGSd
+ 6GAZnYAHprmEqVD4+IxQn1SdWncsWE2qfQYRkVMkldZptfSYhnCZ9uu/hBR/G5nkGElm
+ VNDrz+x9a+rwZY9KDl46CywExSoQhOxX6sRHFI2Z+iFDGysHtgBu/dpUaa5GFMj3QeQz
+ 8qdENhguDHUdeLUVPYKS45Y9xelak3+HdS2vXNRtRyxcamGNkBS2cqMwcRYg2HCwSUU8
+ KbkcnTKeMNY7YRYunq64Cd/R3IbAdWNYyBUDaeCMQbzv3uhBI+X98+MlsW0ajBvF00I5
+ bt1Q==
+X-Gm-Message-State: AOJu0YwenEpFFOAG3XnfgN2XfKEEP92nl2+6I8r4gZNiD3KHx+VhM1d3
+ g6m8xHfLHL9HsKLevUouYRRtHFDUQCJzbFrX5CKdnPBnDw58emWbpgOZ5Ybj4wSXsSP7g3baBPb
+ MRxUUam127m0vzXYBXxGm668KYGdSF5zpoj7a2F/fC5nSEy/HWT5JG7yMt6GIztvABvXnPAp9bO
+ rA7zpY8/GhZDF2cDE6S39XBErQbMc=
+X-Gm-Gg: ASbGncvoVs84u7FjNRdfkkpNHocI4qjnctcU4J2FGSL2yCpfKpn4fAjYvRCRY+C/xxI
+ Fnr++fd4sggJxGLOkZ5vyddKt1XHls2pInkn4D2V4nZ/iQ/PaBx2haSgLCKnonzHqvDitfXReks
+ 9ZmtbPhI9FryiJg8qTntSl4Rz8ombG
+X-Received: by 2002:a17:90b:2e42:b0:2eb:140d:f6df with SMTP id
+ 98e67ed59e1d1-2ff49717407mr8582107a91.1.1741232571006; 
+ Wed, 05 Mar 2025 19:42:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE7VMod3J9E98Yv6vrWY5ZqUQbAn1MqbTE+h7+OqwA5ZtZv+ISO0p8Jkdj9+xVZNKr1OfOxflHiSRwmxOtR3JU=
+X-Received: by 2002:a17:90b:2e42:b0:2eb:140d:f6df with SMTP id
+ 98e67ed59e1d1-2ff49717407mr8582082a91.1.1741232570597; Wed, 05 Mar 2025
+ 19:42:50 -0800 (PST)
 MIME-Version: 1.0
-References: <20250221162036.61521-1-paolo.savini@embecosm.com>
- <20250221162036.61521-2-paolo.savini@embecosm.com>
-In-Reply-To: <20250221162036.61521-2-paolo.savini@embecosm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 13:33:47 +1000
-X-Gm-Features: AQ5f1JpIK1uvzlrsVup-NvgeUEh2DcJg3G3U5GwD-txbPJDnBBs8ysbGc4iGRck
-Message-ID: <CAKmqyKPJP4+fDvZzhnfKTXCaiPbUFU5-Sy01LuA0=95_z7rL+w@mail.gmail.com>
-Subject: Re: [PATCH 1/1] [RISC-V/RVV] Expand the probe_pages helper function
- to handle probe flags.
-To: Paolo Savini <paolo.savini@embecosm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Richard Handerson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, 
- Nathan Egge <negge@google.com>, Max Chou <max.chou@sifive.com>, 
- Jeremy Bennett <jeremy.bennett@embecosm.com>, 
- Craig Blackmore <craig.blackmore@embecosm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20250305034610.960147-1-jsnow@redhat.com>
+ <20250305034610.960147-31-jsnow@redhat.com>
+ <87bjufokj7.fsf@pond.sub.org>
+In-Reply-To: <87bjufokj7.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 5 Mar 2025 22:42:37 -0500
+X-Gm-Features: AQ5f1JrcA2YRrbZ0NhyNI85RcDFj3boL1_tP5wxVnassWhDsRYN4KBsqCqq4XEM
+Message-ID: <CAFn=p-YwnFRZwZVL+NmYNs5MZePf9Rwc_To=BCTejuHMiBazzg@mail.gmail.com>
+Subject: Re: [PATCH 30/57] qapi/parser: adjust info location for doc body
+ section
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000d7a2ba062fa44ccb"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,181 +106,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 22, 2025 at 2:21=E2=80=AFAM Paolo Savini <paolo.savini@embecosm=
-.com> wrote:
->
-> This commit expands the probe_pages helper function in
-> target/riscv/vector_helper.c to handle also the cases in which we need ac=
-cess to
-> the flags raised while probing the memory and the host address.
-> This is done in order to provide a unified interface to probe_access and
-> probe_access_flags.
-> The new version of probe_pages can now act as a regular call to probe_acc=
-ess as
-> before and as a call to probe_access_flags. In the latter case the user n=
-eed to
-> pass pointers to flags and host address and a boolean value for nonfault.
-> The flags and host address will be set and made available as for a direct=
- call
-> to probe_access_flags.
->
-> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+--000000000000d7a2ba062fa44ccb
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Do you mind rebasing this on
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next ?
+On Wed, Mar 5, 2025 at 5:10=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
 
-Alistair
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Instead of using the info object for the doc block as a whole (which
+> > always points to the very first line of the block), update the info
+> > pointer for each call to ensure_untagged_section when the existing
+> > section is otherwise empty. This way, Sphinx error information will
+> > match precisely to where the text actually starts.
+> >
+> > For example, this patch will move the info pointer for the "Hello!"
+> > untagged section ...
+> >
+> >> ##       <-- from here ...
+> >> # Hello! <-- ... to here.
+> >> ##
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+>
+> This patch would be easier to accept with a test case where it improves
+> the error location.  I tried to construct one quickly, but failed.  Can
+> you help?
+>
+> Possible substitute: point to a patch later in this series where things
+> become worse without this patch.
 
-> ---
->  target/riscv/vector_helper.c | 57 +++++++++++++++++++++++-------------
->  1 file changed, 37 insertions(+), 20 deletions(-)
+
+Maybe we can use the "if build_docs" section of the qapi schema testing to
+run things through Sphinx and harvest the error messages for negative
+cases...? I gotta sit down and figure out how.
+
+In the meantime, if I unapply my series, then edit block-core to look like
+this:
+
+##
+# @SnapshotInfo:
+#
+# rST syntax error: *ahh!
+#
+
+(Lines 13-17, error is on line 16)
+
+Building, I get this error:
+
+/home/jsnow/src/qemu/docs/../qapi/block-core.json:14: WARNING: Inline
+emphasis start-string without end-string. [docutils]
+/home/jsnow/src/qemu/docs/../storage-daemon/qapi/../../qapi/block-core.json=
+:14:
+WARNING: Inline emphasis start-string without end-string. [docutils]
+
+Mmm, nope. Not quite.
+
+If I re-push my series and try again with the same edit ...
+
+/home/jsnow/src/qemu/docs/../qapi/block-core.json:14: WARNING: Inline
+emphasis start-string without end-string. [docutils]
+/home/jsnow/src/qemu/docs/../storage-daemon/qapi/../../qapi/block-core.json=
+:14:
+WARNING: Inline emphasis start-string without end-string. [docutils]
+/home/jsnow/src/qemu/docs/../qapi/block-core.json:16: WARNING: Inline
+emphasis start-string without end-string. [docutils]
+
+The two inclusions from the old qapidoc are still wrong, but the inclusion
+through the new transmogrifier is correct.
+
+(I'm going to be honest with you, I don't know why the error location
+didn't change at all for the old qapidoc. I think one of the many error
+location bugs I fixed when writing the new transmogrifier that just never
+got applied to the old system...)
+
+If I undo this fix but keep the rest of my series, I get these errors:
+
+/home/jsnow/src/qemu/docs/../qapi/block-core.json:14: WARNING: Inline
+emphasis start-string without end-string. [docutils]
+/home/jsnow/src/qemu/docs/../storage-daemon/qapi/../../qapi/block-core.json=
+:14:
+WARNING: Inline emphasis start-string without end-string. [docutils]
+/home/jsnow/src/qemu/docs/../qapi/block-core.json:13: WARNING: Inline
+emphasis start-string without end-string. [docutils]
+
+Two are from the old qapidoc, one is from the new one. They're all wrong.
+
+--js
+
+--000000000000d7a2ba062fa44ccb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Mar 5, =
+2025 at 5:10=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
+at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" =
+target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; Instead of using the info object for the doc block as a whole (which<b=
+r>
+&gt; always points to the very first line of the block), update the info<br=
 >
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 772cff8fbe..c0f1b7994e 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -114,25 +114,42 @@ static inline uint32_t vext_max_elems(uint32_t desc=
-, uint32_t log2_esz)
->   * It will trigger an exception if there is no mapping in TLB
->   * and page table walk can't fill the TLB entry. Then the guest
->   * software can return here after process the exception or never return.
-> + *
-> + * This function can also be used when direct access to probe_access_fla=
-gs is
-> + * needed in order to access the flags. If a pointer to a flags operand =
-is
-> + * provided the function will call probe_access_flags instead, use nonfa=
-ult
-> + * and update host and flags.
->   */
-> -static void probe_pages(CPURISCVState *env, target_ulong addr,
-> -                        target_ulong len, uintptr_t ra,
-> -                        MMUAccessType access_type)
-> +static void probe_pages(CPURISCVState *env, target_ulong addr, target_ul=
-ong len,
-> +                        uintptr_t ra, MMUAccessType access_type, int mmu=
-_index,
-> +                        void **host, int *flags, bool nonfault)
->  {
->      target_ulong pagelen =3D -(addr | TARGET_PAGE_MASK);
->      target_ulong curlen =3D MIN(pagelen, len);
-> -    int mmu_index =3D riscv_env_mmu_index(env, false);
+&gt; pointer for each call to ensure_untagged_section when the existing<br>
+&gt; section is otherwise empty. This way, Sphinx error information will<br=
 >
-> -    probe_access(env, adjust_addr(env, addr), curlen, access_type,
-> -                 mmu_index, ra);
-> +    if (flags !=3D NULL) {
-> +        *flags =3D probe_access_flags(env, adjust_addr(env, addr), curle=
-n,
-> +                                    access_type, mmu_index, nonfault, ho=
-st, ra);
-> +    } else {
-> +        probe_access(env, adjust_addr(env, addr), curlen, access_type,
-> +                     mmu_index, ra);
-> +    }
-> +
->      if (len > curlen) {
->          addr +=3D curlen;
->          curlen =3D len - curlen;
-> -        probe_access(env, adjust_addr(env, addr), curlen, access_type,
-> -                     mmu_index, ra);
-> +        if (flags !=3D NULL) {
-> +            *flags =3D probe_access_flags(env, adjust_addr(env, addr), c=
-urlen,
-> +                                        access_type, mmu_index, nonfault=
-,
-> +                                        host, ra);
-> +        } else {
-> +            probe_access(env, adjust_addr(env, addr), curlen, access_typ=
-e,
-> +                         mmu_index, ra);
-> +        }
->      }
->  }
->
-> +
->  static inline void vext_set_elem_mask(void *v0, int index,
->                                        uint8_t value)
->  {
-> @@ -332,8 +349,8 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, targe=
-t_ulong addr,
->      MMUAccessType access_type =3D is_load ? MMU_DATA_LOAD : MMU_DATA_STO=
-RE;
->
->      /* Check page permission/pmp/watchpoint/etc. */
-> -    flags =3D probe_access_flags(env, adjust_addr(env, addr), size, acce=
-ss_type,
-> -                               mmu_index, true, &host, ra);
-> +    probe_pages(env, addr, size, ra, access_type, mmu_index, &host, &fla=
-gs,
-> +                true);
->
->      if (flags =3D=3D 0) {
->          if (nf =3D=3D 1) {
-> @@ -635,7 +652,7 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPUR=
-ISCVState *env,
->      uint32_t vma =3D vext_vma(desc);
->      target_ulong addr, addr_probe, addr_i, offset, remain, page_split, e=
-lems;
->      int mmu_index =3D riscv_env_mmu_index(env, false);
-> -    int flags;
-> +    int flags, probe_flags;
->      void *host;
->
->      VSTART_CHECK_EARLY_EXIT(env);
-> @@ -649,15 +666,15 @@ vext_ldff(void *vd, void *v0, target_ulong base, CP=
-URISCVState *env,
->      }
->
->      /* Check page permission/pmp/watchpoint/etc. */
-> -    flags =3D probe_access_flags(env, adjust_addr(env, addr), elems * ms=
-ize,
-> -                               MMU_DATA_LOAD, mmu_index, true, &host, ra=
-);
-> +    probe_pages(env, addr, elems * msize, ra, MMU_DATA_LOAD, mmu_index, =
-&host,
-> +                &flags, true);
->
->      /* If we are crossing a page check also the second page. */
->      if (env->vl > elems) {
->          addr_probe =3D addr + (elems << log2_esz);
-> -        flags |=3D probe_access_flags(env, adjust_addr(env, addr_probe),
-> -                                    elems * msize, MMU_DATA_LOAD, mmu_in=
-dex,
-> -                                    true, &host, ra);
-> +        probe_pages(env, addr_probe, elems * msize, ra, MMU_DATA_LOAD,
-> +                    mmu_index, &host, &probe_flags, true);
-> +        flags |=3D probe_flags;
->      }
->
->      if (flags & ~TLB_WATCHPOINT) {
-> @@ -669,16 +686,16 @@ vext_ldff(void *vd, void *v0, target_ulong base, CP=
-URISCVState *env,
->              addr_i =3D adjust_addr(env, base + i * (nf << log2_esz));
->              if (i =3D=3D 0) {
->                  /* Allow fault on first element. */
-> -                probe_pages(env, addr_i, nf << log2_esz, ra, MMU_DATA_LO=
-AD);
-> +                probe_pages(env, addr_i, nf << log2_esz, ra, MMU_DATA_LO=
-AD,
-> +                            mmu_index, &host, NULL, false);
->              } else {
->                  remain =3D nf << log2_esz;
->                  while (remain > 0) {
->                      offset =3D -(addr_i | TARGET_PAGE_MASK);
->
->                      /* Probe nonfault on subsequent elements. */
-> -                    flags =3D probe_access_flags(env, addr_i, offset,
-> -                                               MMU_DATA_LOAD, mmu_index,=
- true,
-> -                                               &host, 0);
-> +                    probe_pages(env, addr_i, offset, 0, MMU_DATA_LOAD,
-> +                                mmu_index, &host, &flags, true);
->
->                      /*
->                       * Stop if invalid (unmapped) or mmio (transaction m=
-ay
-> --
-> 2.34.1
->
->
+&gt; match precisely to where the text actually starts.<br>
+&gt;<br>
+&gt; For example, this patch will move the info pointer for the &quot;Hello=
+!&quot;<br>
+&gt; untagged section ...<br>
+&gt;<br>
+&gt;&gt; ##=C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;-- from here ...<br>
+&gt;&gt; # Hello! &lt;-- ... to here.<br>
+&gt;&gt; ##<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+<br>
+This patch would be easier to accept with a test case where it improves<br>
+the error location.=C2=A0 I tried to construct one quickly, but failed.=C2=
+=A0 Can<br>
+you help?<br>
+<br>
+Possible substitute: point to a patch later in this series where things<br>
+become worse without this patch.</blockquote><div><br></div><div>Maybe we c=
+an use the &quot;if build_docs&quot; section of the qapi schema testing to =
+run things through Sphinx and harvest the error messages for negative cases=
+...? I gotta sit down and figure out how.</div><div><br></div><div>In the m=
+eantime, if I unapply my series, then edit block-core to look like this:</d=
+iv><div><br></div><div>##<br># @SnapshotInfo:<br>#<br># rST syntax error: *=
+ahh!<br>#</div><div><br></div><div>(Lines 13-17, error is on line 16)</div>=
+</div><div class=3D"gmail_quote gmail_quote_container"><br></div><div class=
+=3D"gmail_quote gmail_quote_container">Building, I get this error:</div><di=
+v class=3D"gmail_quote gmail_quote_container"><br></div><div class=3D"gmail=
+_quote gmail_quote_container">/home/jsnow/src/qemu/docs/../qapi/block-core.=
+json:14: WARNING: Inline emphasis start-string without end-string. [docutil=
+s]<br>/home/jsnow/src/qemu/docs/../storage-daemon/qapi/../../qapi/block-cor=
+e.json:14: WARNING: Inline emphasis start-string without end-string. [docut=
+ils]</div><div class=3D"gmail_quote gmail_quote_container"><br></div><div c=
+lass=3D"gmail_quote gmail_quote_container">Mmm, nope. Not quite.</div><div =
+class=3D"gmail_quote gmail_quote_container"><div><br></div><div>If I re-pus=
+h my series and try again with the same edit ...</div><div><br></div><div>/=
+home/jsnow/src/qemu/docs/../qapi/block-core.json:14: WARNING: Inline emphas=
+is start-string without end-string. [docutils]<br>/home/jsnow/src/qemu/docs=
+/../storage-daemon/qapi/../../qapi/block-core.json:14: WARNING: Inline emph=
+asis start-string without end-string. [docutils]<br>/home/jsnow/src/qemu/do=
+cs/../qapi/block-core.json:16: WARNING: Inline emphasis start-string withou=
+t end-string. [docutils]<br></div><div><br></div><div>The two inclusions fr=
+om the old qapidoc are still wrong, but the inclusion through the new trans=
+mogrifier is correct.</div></div><div class=3D"gmail_quote gmail_quote_cont=
+ainer"><br></div><div class=3D"gmail_quote gmail_quote_container">(I&#39;m =
+going to be honest with you, I don&#39;t know why the error location didn&#=
+39;t change at all for the old qapidoc. I think one of the many error locat=
+ion bugs I fixed when writing the new transmogrifier that just never got ap=
+plied to the old system...)</div><div class=3D"gmail_quote gmail_quote_cont=
+ainer"><br><div>If I undo this fix but keep the rest of my series, I get th=
+ese errors:</div><div><br></div><div>/home/jsnow/src/qemu/docs/../qapi/bloc=
+k-core.json:14: WARNING: Inline emphasis start-string without end-string. [=
+docutils]<br>/home/jsnow/src/qemu/docs/../storage-daemon/qapi/../../qapi/bl=
+ock-core.json:14: WARNING: Inline emphasis start-string without end-string.=
+ [docutils]<br>/home/jsnow/src/qemu/docs/../qapi/block-core.json:13: WARNIN=
+G: Inline emphasis start-string without end-string. [docutils]<br></div><di=
+v><br></div><div>Two are from the old qapidoc, one is from the new one. The=
+y&#39;re all wrong.</div><div><br></div><div>--js</div></div></div>
+
+--000000000000d7a2ba062fa44ccb--
+
 
