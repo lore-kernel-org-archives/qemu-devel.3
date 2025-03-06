@@ -4,88 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B133BC282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 02:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551DFC19F32
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 02:22:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq0ry-00040Q-1t; Wed, 05 Mar 2025 21:21:54 -0500
+	id 1tq0rU-0003dz-Dq; Wed, 05 Mar 2025 21:21:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tq0rv-0003yY-NV
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 21:21:51 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tq0rt-0003j5-4e
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 21:21:51 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2235189adaeso2908395ad.0
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 18:21:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741227707; x=1741832507; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=joAi8Ar1rtiamHhjK7HlApgRlQgYqjDCr2cjt4iizTk=;
- b=hE5ClbasNvwztaGcUWwwUckB7+RKV9JnLa8chXAeLfiD7OEZAU1Zu9km6E11klVUdX
- t5IvpjC9r2tZTYYtufVr1wFft8DN/omPZr4gcge6LjTT1k9j6ZSgt29QJ7O6uzmfKoe1
- SZtTJaOhuFmK9VCmwGasQCa4yIuiaVT8scEnsrn2lsKe1yy+kY/NxtoDa6gOgXfdtHzx
- epbGVLQBnzixWCaJAV2pKSNmxpT5qndlXXjBzvNoiDOw17+MGOrqVR5IJfpvDLK8FG6v
- RNw8dvOg/kzrJUUPQj4wQZcnMGP3bazSgxRQ7Ayjp6bCtSCth0kCJTPBJJ5yxIhJ/Dk/
- 6YfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741227707; x=1741832507;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=joAi8Ar1rtiamHhjK7HlApgRlQgYqjDCr2cjt4iizTk=;
- b=qJgAusRRMjKKTgxwo59Ye+R2sMHqoUNTtMvp+3fIq7IH6WqTNvbgE5hQR/3osvzuXq
- 7R+ItAgAoxm7wNGEwyzwOvTWV8VVaB8mTgWxVL7t49e5SN8kcsuFXwXJTToefM+5IqUZ
- SHDyZHVHsS6DcvYX3O0wqCVZPRsnEN8wtl6q1d7xg/y1GczpeVzWMqkWOAYheLlg3e5d
- vkZW1zLeyxsyVPZ8QJ4KsqmKqNqW8JiV38AIE/BEAENgFnDhB8p4E9+4EQFB3zvVvsjh
- 7cRYzArOmPi6cKAsYjvMfxHsLQQbdC3FVxyiCpsSIKU4eUN/2E5S0sqeOTyqjQyX9EEq
- QIpQ==
-X-Gm-Message-State: AOJu0YxLG6HIiDwVi3cPK9elLSwefgsJIJ/tThjy0MVh+SplF1lpJtVx
- 1MRGBdweYzAxu6RLSKEcSXpMPaCqHOCBGXNOZXcerdAIWy+VpH0J5EzrfVJt
-X-Gm-Gg: ASbGncvtx3rwmFyHWJeQ9qut6hPrAyljEMmGhjZcZTLM9dKgmXPITm2Ao4xH2GRj6LJ
- brpomNMcGzO8si87NqwcbQ9Cbt9ay4FcSA73FYUUwe+REUrHY2fWhz8tNnArjy3JWTw8KSxZsgL
- fqvwDTuiprRM9sg3OROETisQpVoCADYR0HWVoMmthVyg34Uh05tevlEb9cbo5xDDWtZOMK15fDR
- NEhu1DR+KHjbDvcL+0zSwXiXHjaMSMdcHYtm1JAThtGpO0bkOrSjhRaEUYUIhmUlAGIq88z9qCX
- SWFpDMeD7rzyVnWsmLY0RiQy61S7nvLup4FXApqQdcZezC833gA3hfUL1LbtLog=
-X-Google-Smtp-Source: AGHT+IEsx4HehqBVbmG7+WqYtK/tMORPQcqmUn71w2mi56KY1S8KtYivvIrDzocw+qgAShZ0KlltIw==
-X-Received: by 2002:a17:902:ec89:b0:224:3d:2ffd with SMTP id
- d9443c01a7336-22409476105mr26039125ad.17.1741227707225; 
- Wed, 05 Mar 2025 18:21:47 -0800 (PST)
-Received: from localhost (n11648126014.netvigator.com. [116.48.126.14])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410ac0794sm1103925ad.259.2025.03.05.18.21.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Mar 2025 18:21:45 -0800 (PST)
-From: Stefan Hajnoczi <stefanha@gmail.com>
-X-Google-Original-From: Stefan Hajnoczi <stefanha@fedora>
-Date: Thu, 6 Mar 2025 10:21:42 +0800
-To: gerben@altlinux.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
- sdl.qemu@linuxtesting.org
-Subject: Re: [PATCH] block/qed: fix use-after-free by nullifying timer
- pointer after free
-Message-ID: <20250306022142.GA304567@fedora>
-References: <20250304083927.37681-1-gerben@altlinux.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tq0rT-0003dp-6Q
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 21:21:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tq0rR-0003hS-LP
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 21:21:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741227678;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NXwUaM8NN4kKieEtmoCvD7sRtFBCEuOKuWxpcxPxfBE=;
+ b=i7BdDaSzfkUAai+xBMKZNKPoWx6E7EjLayDYAVK5yzpGucFl9n9jlQbkZYoBeTrzvKw3OQ
+ DPvclJUdHLMg21iJGR012LaXjkkOIEHBeUbSHcUv/oNRHI3kathH+i/SPy5MgJ3Enn3yvW
+ fddy6gcqQDo6aNgY6wVXvHN13iQQoeA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-NejHA3KiOPS3KAO4EueePA-1; Wed,
+ 05 Mar 2025 21:21:15 -0500
+X-MC-Unique: NejHA3KiOPS3KAO4EueePA-1
+X-Mimecast-MFC-AGG-ID: NejHA3KiOPS3KAO4EueePA_1741227674
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 329E9195608D; Thu,  6 Mar 2025 02:21:14 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.55])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9CFEB180035E; Thu,  6 Mar 2025 02:21:12 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Denis Rastyogin <gerben@altlinux.org>
+Subject: [PULL 1/1] block/qed: fix use-after-free by nullifying timer pointer
+ after free
+Date: Thu,  6 Mar 2025 10:21:06 +0800
+Message-ID: <20250306022106.304510-2-stefanha@redhat.com>
+In-Reply-To: <20250306022106.304510-1-stefanha@redhat.com>
+References: <20250306022106.304510-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="TdyAfxLMLbPNptpR"
-Content-Disposition: inline
-In-Reply-To: <20250304083927.37681-1-gerben@altlinux.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=stefanha@gmail.com; helo=mail-pl1-x635.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,50 +86,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Denis Rastyogin <gerben@altlinux.org>
 
---TdyAfxLMLbPNptpR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This error was discovered by fuzzing qemu-img.
 
-On Tue, Mar 04, 2025 at 11:39:10AM +0300, gerben@altlinux.org wrote:
-> From: Denis Rastyogin <gerben@altlinux.org>
->=20
-> This error was discovered by fuzzing qemu-img.
->=20
-> In the QED block driver, the need_check_timer timer is freed in
-> bdrv_qed_detach_aio_context, but the pointer to the timer is not
-> set to NULL. This can lead to a use-after-free scenario
-> in bdrv_qed_drain_begin().
->=20
-> The need_check_timer pointer is set to NULL after freeing the timer.
-> Which helps catch this condition when checking in bdrv_qed_drain_begin().
->=20
-> Closes: https://gitlab.com/qemu-project/qemu/-/issues/2852
-> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
-> ---
->  block/qed.c | 1 +
->  1 file changed, 1 insertion(+)
+In the QED block driver, the need_check_timer timer is freed in
+bdrv_qed_detach_aio_context, but the pointer to the timer is not
+set to NULL. This can lead to a use-after-free scenario
+in bdrv_qed_drain_begin().
 
-Thanks, applied to my block tree:
-https://gitlab.com/stefanha/qemu/commits/block
+The need_check_timer pointer is set to NULL after freeing the timer.
+Which helps catch this condition when checking in bdrv_qed_drain_begin().
 
-Stefan
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2852
+Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+Message-ID: <20250304083927.37681-1-gerben@altlinux.org>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ block/qed.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---TdyAfxLMLbPNptpR
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/block/qed.c b/block/qed.c
+index 382c9e5335..ac24449ffb 100644
+--- a/block/qed.c
++++ b/block/qed.c
+@@ -353,6 +353,7 @@ static void bdrv_qed_detach_aio_context(BlockDriverState *bs)
+ 
+     qed_cancel_need_check_timer(s);
+     timer_free(s->need_check_timer);
++    s->need_check_timer = NULL;
+ }
+ 
+ static void bdrv_qed_attach_aio_context(BlockDriverState *bs,
+-- 
+2.48.1
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfJBrYACgkQnKSrs4Gr
-c8jhlQf/R998gniVgBTb8TRUBwXcabW0YJZ2gRyy6bvFAWxiIGjOS/Wc1m46mjyH
-akEes7uPm6M9dH7s0ToBQ5dAp5KANhCgAnokBuWGKGt1FrOzLcpkcKwaoPO8HvCN
-FAEOFF+N+Hg7qTy4UKdeRVXZxpe/RvXyIEpJICv5gaYd6AZ95T8IDifR7MLxp2G1
-aNxr6WdhYX6FuZH8flK5QlzadAw0EkZ2i/zb0CZOXPDwEvqOAo9F0AkFw6zc17sl
-l7HK7K95R2Nx3ZzVAdKbRJM2OGuA8Vvva3B9FhTmRcNBpES8dEWOih/7ulTI+5+y
-pD2dBhZDgrjEVGHf49R7tHGVvnOTiQ==
-=x0Lc
------END PGP SIGNATURE-----
-
---TdyAfxLMLbPNptpR--
 
