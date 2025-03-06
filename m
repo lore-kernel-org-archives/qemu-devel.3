@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC498C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:42:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98DE1C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqEGB-0006vk-4g; Thu, 06 Mar 2025 11:39:47 -0500
+	id 1tqEGD-00070t-NQ; Thu, 06 Mar 2025 11:39:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEG0-0006lm-VT
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:37 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1tqEG4-0006pn-Mo
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:40 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqEFy-0004ae-P8
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:36 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3912baafc58so546165f8f.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:34 -0800 (PST)
+ id 1tqEG2-0004db-Tc
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:39:40 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43bc63876f1so8062285e9.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:39:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741279173; x=1741883973; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741279177; x=1741883977; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vxTSFCna0HuVCZNyrZWduZwQIOEnzTKyAVW239fxJio=;
- b=KEPeZQXE+d+eT0Ngb9h+TZ3WaV2ItuXH0kwUcdqGae6RXLL0I8ykrn94HBey2xDFxt
- LlWseabZBWqF4I9E7pzAqqSXGvw3uWhpvtBTUVBtRfk5OR4eVQZH8qy7ajUr2FWbXmCO
- mG7Z92SUlC6o0LpEldkcYnjmthajmU/wCndZqa91l+lRcu7VopAseQNSnGMRsZ5jOk1G
- pRf5k1QIIwIZ6Ga6J8yZRlmcyXldpkd4TTSSFraxmciJOTTiOuT6Er5C5cXvDs1ZbnlB
- KrL2ml/ZJ9BAO++AiGob4gUuBW9UjEEgfWDWx0RDCKnVNDslDemsG8pON+kMlhBF22xu
- Iz7w==
+ :reply-to; bh=Gn+iRr/DyOLW0klhx/+n+/C8SaHWZdNPyfpde7R5NiY=;
+ b=PnSqnbZSWdBa/Xb/D8tqJBI2WZptpWDIQcnncJ2oyjFB9WwpEaPry9ZKPQKd6iF90I
+ 37puYtKrdpfdvRQ66idItOLh3qI3w9jcPHcFy84Wo3/o740hbVGetHh6PrL/zYFYwwjr
+ 49eVVsUEwV09rGZ8wdwdptpASc93pYBzNur5nb/kE6yGd/OQ98T5z1zwR21w0RQkKxMC
+ sgPy66PLKL5A0MySz1EQ/AWO6iW0Fdu8OiBGim0KtUS6i8Muk8rZPk7UMDGNH9TwOawm
+ 3DfcGPjBoE/2EPOmIQjYUGAAcmAG7nbal8AvrfUs/AXmVjiezv651tNfQs86m+FQu3xL
+ ZqFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741279173; x=1741883973;
+ d=1e100.net; s=20230601; t=1741279177; x=1741883977;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vxTSFCna0HuVCZNyrZWduZwQIOEnzTKyAVW239fxJio=;
- b=NRDD5SDhiB24E40jKV5c7wfqasa1R/r8LgpJzvRNV4XiuteEnP9WYEe/wcvf8lGhru
- sYaKZXQLd5lpYNp/TP9iLrn5YCgSgd/zfa59nsFdOrzhmYwgD+geL+REAziLtKa2SLBr
- wXA5XRyM5rmnRk/wxQog3Y4sEA7WRM2QNWPjB4bjc6+CiUHv9DXhqUiuPX2rjoZejhwj
- l36yzyygRQN2BGUEhPAWvRC1zpJ1uqo55PfEtJD8BycS2camWGVs5dcoITsUGaPuaZq/
- KWNGKPyj0IssCrP5W/PgIllmTsAd8caL8znHELmUTiSTGNEuz5DRxDo2uXYNZBKPve8Q
- 4KHw==
+ bh=Gn+iRr/DyOLW0klhx/+n+/C8SaHWZdNPyfpde7R5NiY=;
+ b=SLS16e0N5n+hUesfRY6HnnWwzSsyJIM0cd6C4qkn8OQNl0QED3G5p5u5L74yiCXeKF
+ ySYX1KniVuP83prpDt959rkOsATKEhLtRjxDA6VJDbeWEsDV9wDKD6PT+fsnX4Lj7LjO
+ XhuEoDh17UVp430tTCIe+d+Fa/yHN1ud8LR3kKecKfdeVygQAxDlD3WEpdLp2XtQbp9Y
+ 4+AaeDuMimOTRNErXKEGsXy3rrd0M2JsCO9jdmLm70HKtW125iX1hGt1IwI15mfoSZI3
+ RUh1pHbASO2iFvEgPcpW12UVz/xOBYUjHRnY+b4l9A5xOPb7gwU1le/BFRXJxWpotFbV
+ xA1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUI7peEgMp2ieG66ZcpdzKK+ugeP6+GjURz1iZFOaPBfwzQqxlbfdAJrO8ve5/qD9w8FSZRpNMvbd5d@nongnu.org
-X-Gm-Message-State: AOJu0Yx2cypNl93X67ZSEROQbdKtoCIG49ta7WQ5mT2Qd2xLc7Mj3AD1
- NLCJ+1C5h4ebQLqwYHT2xsR1AcAb2dG+q28N5kcPD8Xqy8ofX2//JXkfkFp+BJ/Y2Ut/RYg+RZU
- Q
-X-Gm-Gg: ASbGncvn8qhP9s/Hc9fO65bhMGlaPCB5fIT8QqWHdiSX5ZUEL4HDyxed3N+1ED3qsg7
- pqH8aqH0edwSHXHi0TP3zHGpzLcZZcV6yhEU2an2IOSMxZCTd7TqO2yEPH0l4crEr+vDoVXcAvC
- rCqnU3gt3D3AnxKfPfV0BGIidbxBus4STMLG7ExdxmW0F2t8drMKBLog4HeH26XEpqr7f8WG/Kb
- 0OlKYwyvW7WXdo/KQj8hTQcjLDHRDZ56iXhUbf0sAndwfQzEFy2FeckeM9j8w/BbB6pJdYRn9HX
- 2yStEMTsY0tiSAWCCg9iJ+XKfH2vkYrRwHCp3/e76x4T67zDMuo=
-X-Google-Smtp-Source: AGHT+IH4KVbaMISuzOYsAPqbPgMkGvEvc90VWxve7ucpp2HdwOsqrewdw2fIUlYc9v1m1iyiXvYIzQ==
-X-Received: by 2002:a5d:5889:0:b0:390:f745:bbfb with SMTP id
- ffacd0b85a97d-3911f74256dmr6902144f8f.26.1741279172805; 
- Thu, 06 Mar 2025 08:39:32 -0800 (PST)
+ AJvYcCXewqtpUAv7IX56cMN51E+rloVQIYaDxdjQ13R0z0ibWPnlcXYySQ1Z2hhyF91V/kZlfNH6fLzS+anG@nongnu.org
+X-Gm-Message-State: AOJu0YzYNQwzuNmPE5N3yFDM5CVZSrS6AvbC5t3cpr609cLl23nT4FIs
+ qg5jSHJPdgoN9GNMz2e6jajEln8MoCoiNmLYGDue/YO3DRQyenH799PhQthhZk4=
+X-Gm-Gg: ASbGncucBMQrs6RCppgB1vFX9ax2iieXitv9qsG59EBNqHsopKoZ66fAyNMAyJ7HxOP
+ ZmeC0brZg4MuBAiAWjnjEiRpwuvywj7BduoM0USiSAIR1a6OcegKRiJDoCfvjemY7wnUcJ+MY5z
+ 7pL995CQcaeNnvrMNul6PixwQIJm3M6pPscOWz6ttR4LDIJahNBRXfZWDWfGbTd9YLU9hIHuCTH
+ xU5WoYe6efOmgv8W4MEJppSnOKrrFTycKp5nwti2sskwySfyownqMF8R8PJlBD6NxnTuuj7HWZL
+ 4Xu6TrX9zdtYsT5UWiBSAyrJLnqdNtBllp1l4cWNWsRLrbHXCyE=
+X-Google-Smtp-Source: AGHT+IFc8om0H9QBBv0wuiEQDM4mQZFPwxA/4ZSQCFDKgMoJpbSBlTO0sY69P5BijKAPpMjt1oO/LA==
+X-Received: by 2002:a05:600c:4f4d:b0:43b:ca5b:847b with SMTP id
+ 5b1f17b1804b1-43c6872dd3bmr763745e9.30.1741279177128; 
+ Thu, 06 Mar 2025 08:39:37 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.32
+ 5b1f17b1804b1-43bdd94913fsm23999905e9.37.2025.03.06.08.39.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 08:39:32 -0800 (PST)
+ Thu, 06 Mar 2025 08:39:35 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 06/10] target/arm: Move arm_current_el() and arm_el_is_aa64()
- to internals.h
-Date: Thu,  6 Mar 2025 16:39:20 +0000
-Message-ID: <20250306163925.2940297-7-peter.maydell@linaro.org>
+Subject: [PATCH 10/10] target/arm: Forbid return to AArch32 when CPU is
+ AArch64-only
+Date: Thu,  6 Mar 2025 16:39:24 +0000
+Message-ID: <20250306163925.2940297-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250306163925.2940297-1-peter.maydell@linaro.org>
 References: <20250306163925.2940297-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,214 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The functions arm_current_el() and arm_el_is_aa64() are used only in
-target/arm and in hw/intc/arm_gicv3_cpuif.c.  They're functions that
-query internal state of the CPU.  Move them out of cpu.h and into
-internals.h.
+In the Arm ARM, rule R_TYTWB states that returning to AArch32
+is an illegal exception return if:
+ * AArch32 is not supported at any exception level
+ * the target EL is configured for AArch64 via SCR_EL3.RW
+   or HCR_EL2.RW or via CPU state at reset
 
-This means we need to include internals.h in arm_gicv3_cpuif.c, but
-this is justifiable because that file is implementing the GICv3 CPU
-interface, which really is part of the CPU proper; we just ended up
-implementing it in code in hw/intc/ for historical reasons.
+We check the second of these, but not the first (which can only be
+relevant for the case of a return to EL0, because if AArch32 is not
+supported at one of the higher ELs then the RW bits will have an
+effective value of 1 and the the "configured for AArch64" condition
+will hold also).
 
-The motivation for this move is that we'd like to change
-arm_el_is_aa64() to add a condition that uses cpu_isar_feature();
-but we don't want to include cpu-features.h in cpu.h.
+Add the missing condition. This isn't currently a bug because
+all our CPUs support AArch32 at EL0, but future CPUs we add
+might be 64-bit only.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h          | 66 --------------------------------------
- target/arm/internals.h    | 67 +++++++++++++++++++++++++++++++++++++++
- hw/intc/arm_gicv3_cpuif.c |  1 +
- target/arm/arch_dump.c    |  1 +
- 4 files changed, 69 insertions(+), 66 deletions(-)
+ target/arm/tcg/helper-a64.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 16c9083be61..a779fd5ae94 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2633,39 +2633,6 @@ uint64_t arm_hcr_el2_eff_secstate(CPUARMState *env, ARMSecuritySpace space);
- uint64_t arm_hcr_el2_eff(CPUARMState *env);
- uint64_t arm_hcrx_el2_eff(CPUARMState *env);
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index e2bdf07833d..9244848efed 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -678,6 +678,11 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+         goto illegal_return;
+     }
  
--/* Return true if the specified exception level is running in AArch64 state. */
--static inline bool arm_el_is_aa64(CPUARMState *env, int el)
--{
--    /* This isn't valid for EL0 (if we're in EL0, is_a64() is what you want,
--     * and if we're not in EL0 then the state of EL0 isn't well defined.)
--     */
--    assert(el >= 1 && el <= 3);
--    bool aa64 = arm_feature(env, ARM_FEATURE_AARCH64);
--
--    /* The highest exception level is always at the maximum supported
--     * register width, and then lower levels have a register width controlled
--     * by bits in the SCR or HCR registers.
--     */
--    if (el == 3) {
--        return aa64;
--    }
--
--    if (arm_feature(env, ARM_FEATURE_EL3) &&
--        ((env->cp15.scr_el3 & SCR_NS) || !(env->cp15.scr_el3 & SCR_EEL2))) {
--        aa64 = aa64 && (env->cp15.scr_el3 & SCR_RW);
--    }
--
--    if (el == 2) {
--        return aa64;
--    }
--
--    if (arm_is_el2_enabled(env)) {
--        aa64 = aa64 && (env->cp15.hcr_el2 & HCR_RW);
--    }
--
--    return aa64;
--}
--
- /*
-  * Function for determining whether guest cp register reads and writes should
-  * access the secure or non-secure bank of a cp register.  When EL3 is
-@@ -2697,39 +2664,6 @@ static inline bool arm_v7m_is_handler_mode(CPUARMState *env)
-     return env->v7m.exception != 0;
- }
- 
--/* Return the current Exception Level (as per ARMv8; note that this differs
-- * from the ARMv7 Privilege Level).
-- */
--static inline int arm_current_el(CPUARMState *env)
--{
--    if (arm_feature(env, ARM_FEATURE_M)) {
--        return arm_v7m_is_handler_mode(env) ||
--            !(env->v7m.control[env->v7m.secure] & 1);
--    }
--
--    if (is_a64(env)) {
--        return extract32(env->pstate, 2, 2);
--    }
--
--    switch (env->uncached_cpsr & 0x1f) {
--    case ARM_CPU_MODE_USR:
--        return 0;
--    case ARM_CPU_MODE_HYP:
--        return 2;
--    case ARM_CPU_MODE_MON:
--        return 3;
--    default:
--        if (arm_is_secure(env) && !arm_el_is_aa64(env, 3)) {
--            /* If EL3 is 32-bit then all secure privileged modes run in
--             * EL3
--             */
--            return 3;
--        }
--
--        return 1;
--    }
--}
--
- /**
-  * write_list_to_cpustate
-  * @cpu: ARMCPU
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 70d1f88c20b..b3f732233f4 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -392,6 +392,73 @@ static inline FloatRoundMode arm_rmode_to_sf(ARMFPRounding rmode)
-     return arm_rmode_to_sf_map[rmode];
- }
- 
-+/* Return true if the specified exception level is running in AArch64 state. */
-+static inline bool arm_el_is_aa64(CPUARMState *env, int el)
-+{
-+    /*
-+     * This isn't valid for EL0 (if we're in EL0, is_a64() is what you want,
-+     * and if we're not in EL0 then the state of EL0 isn't well defined.)
-+     */
-+    assert(el >= 1 && el <= 3);
-+    bool aa64 = arm_feature(env, ARM_FEATURE_AARCH64);
-+
-+    /*
-+     * The highest exception level is always at the maximum supported
-+     * register width, and then lower levels have a register width controlled
-+     * by bits in the SCR or HCR registers.
-+     */
-+    if (el == 3) {
-+        return aa64;
++    if (!return_to_aa64 && !cpu_isar_feature(aa64_aa32, cpu)) {
++        /* Return to AArch32 when CPU is AArch64-only */
++        goto illegal_return;
 +    }
 +
-+    if (arm_feature(env, ARM_FEATURE_EL3) &&
-+        ((env->cp15.scr_el3 & SCR_NS) || !(env->cp15.scr_el3 & SCR_EEL2))) {
-+        aa64 = aa64 && (env->cp15.scr_el3 & SCR_RW);
-+    }
-+
-+    if (el == 2) {
-+        return aa64;
-+    }
-+
-+    if (arm_is_el2_enabled(env)) {
-+        aa64 = aa64 && (env->cp15.hcr_el2 & HCR_RW);
-+    }
-+
-+    return aa64;
-+}
-+
-+/*
-+ * Return the current Exception Level (as per ARMv8; note that this differs
-+ * from the ARMv7 Privilege Level).
-+ */
-+static inline int arm_current_el(CPUARMState *env)
-+{
-+    if (arm_feature(env, ARM_FEATURE_M)) {
-+        return arm_v7m_is_handler_mode(env) ||
-+            !(env->v7m.control[env->v7m.secure] & 1);
-+    }
-+
-+    if (is_a64(env)) {
-+        return extract32(env->pstate, 2, 2);
-+    }
-+
-+    switch (env->uncached_cpsr & 0x1f) {
-+    case ARM_CPU_MODE_USR:
-+        return 0;
-+    case ARM_CPU_MODE_HYP:
-+        return 2;
-+    case ARM_CPU_MODE_MON:
-+        return 3;
-+    default:
-+        if (arm_is_secure(env) && !arm_el_is_aa64(env, 3)) {
-+            /* If EL3 is 32-bit then all secure privileged modes run in EL3 */
-+            return 3;
-+        }
-+
-+        return 1;
-+    }
-+}
-+
- static inline bool arm_cpu_data_is_big_endian_a32(CPUARMState *env,
-                                                   bool sctlr_b)
- {
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index 7f1d071c198..de37465bc87 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "target/arm/cpregs.h"
- #include "target/arm/cpu-features.h"
-+#include "target/arm/internals.h"
- #include "system/tcg.h"
- #include "system/qtest.h"
- 
-diff --git a/target/arm/arch_dump.c b/target/arm/arch_dump.c
-index 5c943dc27b5..c40df4e7fd7 100644
---- a/target/arm/arch_dump.c
-+++ b/target/arm/arch_dump.c
-@@ -23,6 +23,7 @@
- #include "elf.h"
- #include "system/dump.h"
- #include "cpu-features.h"
-+#include "internals.h"
- 
- /* struct user_pt_regs from arch/arm64/include/uapi/asm/ptrace.h */
- struct aarch64_user_regs {
+     if (new_el == 1 && (arm_hcr_el2_eff(env) & HCR_TGE)) {
+         goto illegal_return;
+     }
 -- 
 2.43.0
 
