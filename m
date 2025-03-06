@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E966C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE5CC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqCu4-0003Dj-Q5; Thu, 06 Mar 2025 10:12:55 -0500
+	id 1tqCuf-0004Gu-MC; Thu, 06 Mar 2025 10:13:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org>)
- id 1tqCtB-00030x-9m; Thu, 06 Mar 2025 10:11:57 -0500
+ id 1tqCu4-0003L0-Fz; Thu, 06 Mar 2025 10:12:55 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org>)
- id 1tqCt7-0001JB-36; Thu, 06 Mar 2025 10:11:55 -0500
+ id 1tqCu0-0001WZ-Um; Thu, 06 Mar 2025 10:12:51 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z7tDj5knjz4x5k;
- Fri,  7 Mar 2025 02:11:49 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z7tFn4jgnz4x5k;
+ Fri,  7 Mar 2025 02:12:45 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z7tDf2Jhjz4wcd;
- Fri,  7 Mar 2025 02:11:45 +1100 (AEDT)
-Message-ID: <e66c2d6e-7105-43b2-a80a-48307fe00309@kaod.org>
-Date: Thu, 6 Mar 2025 16:11:43 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z7tFj5bKhz4x3d;
+ Fri,  7 Mar 2025 02:12:41 +1100 (AEDT)
+Message-ID: <669f1c06-f819-4922-a80d-3794bd8d2d4f@kaod.org>
+Date: Thu, 6 Mar 2025 16:12:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 20/29] hw/arm/aspeed_ast27x0: Define an Array of
- AspeedINTCState with Two Instances
+Subject: Re: [PATCH v5 23/29] hw/arm/aspeed: Add Machine Support for AST2700 A1
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +40,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
- <20250306103846.429221-21-jamin_lin@aspeedtech.com>
+ <20250306103846.429221-24-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,7 +85,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250306103846.429221-21-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250306103846.429221-24-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -114,17 +113,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/6/25 11:38, Jamin Lin wrote:
-> Updated Aspeed27x0SoCState to include an intc[2] array instead of a single
-> AspeedINTCState instance. Modified aspeed_soc_ast2700_get_irq and
-> aspeed_soc_ast2700_get_irq_index to correctly reference the corresponding
-> interrupt controller instance and OR gate index.
-> 
-> Currently, only GIC 192 to 201 are supported, and their source interrupts are
-> from INTCIO and connected to INTC at input pin 0 and output pins 0 to 9 for
-> GIC 192-201.
-> 
-> To support both AST2700 A1 and A0, INTC input pins 1 to 9 and output pins
-> 10 to 18 remain to support GIC 128-136, which source interrupts from INTC.
+> Introduce "aspeed_machine_ast2700a1_evb_class_init" to initialize the
+> AST2700 A1 EVB.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
@@ -137,151 +127,50 @@ C.
 
 
 > ---
->   include/hw/arm/aspeed_soc.h |  2 +-
->   hw/arm/aspeed_ast27x0.c     | 58 +++++++++++++++++++++++++------------
->   2 files changed, 40 insertions(+), 20 deletions(-)
+>   hw/arm/aspeed.c | 24 ++++++++++++++++++++++++
+>   1 file changed, 24 insertions(+)
 > 
-> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-> index 689f52dae8..1ac99269ae 100644
-> --- a/include/hw/arm/aspeed_soc.h
-> +++ b/include/hw/arm/aspeed_soc.h
-> @@ -128,7 +128,7 @@ struct Aspeed27x0SoCState {
->       AspeedSoCState parent;
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index 18f7c450da..82f42582fa 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -1693,6 +1693,26 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
+>       mc->default_ram_size = 1 * GiB;
+>       aspeed_machine_class_init_cpus_defaults(mc);
+>   }
+> +
+> +static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc, void *data)
+> +{
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+> +
+> +    mc->desc = "Aspeed AST2700 A1 EVB (Cortex-A35)";
+> +    amc->soc_name  = "ast2700-a1";
+> +    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
+> +    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
+> +    amc->fmc_model = "w25q01jvq";
+> +    amc->spi_model = "w25q512jv";
+> +    amc->num_cs    = 2;
+> +    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+> +    amc->uart_default = ASPEED_DEV_UART12;
+> +    amc->i2c_init  = ast2700_evb_i2c_init;
+> +    mc->auto_create_sdcard = true;
+> +    mc->default_ram_size = 1 * GiB;
+> +    aspeed_machine_class_init_cpus_defaults(mc);
+> +}
+>   #endif
 >   
->       ARMCPU cpu[ASPEED_CPUS_NUM];
-> -    AspeedINTCState intc;
-> +    AspeedINTCState intc[2];
->       GICv3State gic;
->       MemoryRegion dram_empty;
->   };
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 343fe87921..90545215e2 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -178,32 +178,48 @@ static const int ast2700_gic133_gic197_intcmap[] = {
->   /* GICINT 192 ~ 201 */
->   struct gic_intc_irq_info {
->       int irq;
-> +    int intc_idx;
-> +    int orgate_idx;
->       const int *ptr;
->   };
->   
->   static const struct gic_intc_irq_info ast2700_gic_intcmap[] = {
-> -    {128,  ast2700_gic128_gic192_intcmap},
-> -    {129,  NULL},
-> -    {130,  ast2700_gic130_gic194_intcmap},
-> -    {131,  ast2700_gic131_gic195_intcmap},
-> -    {132,  ast2700_gic132_gic196_intcmap},
-> -    {133,  ast2700_gic133_gic197_intcmap},
-> -    {134,  NULL},
-> -    {135,  NULL},
-> -    {136,  NULL},
-> +    {192, 1, 0, ast2700_gic128_gic192_intcmap},
-> +    {193, 1, 1, NULL},
-> +    {194, 1, 2, ast2700_gic130_gic194_intcmap},
-> +    {195, 1, 3, ast2700_gic131_gic195_intcmap},
-> +    {196, 1, 4, ast2700_gic132_gic196_intcmap},
-> +    {197, 1, 5, ast2700_gic133_gic197_intcmap},
-> +    {198, 1, 6, NULL},
-> +    {199, 1, 7, NULL},
-> +    {200, 1, 8, NULL},
-> +    {201, 1, 9, NULL},
-> +    {128, 0, 1, ast2700_gic128_gic192_intcmap},
-> +    {129, 0, 2, NULL},
-> +    {130, 0, 3, ast2700_gic130_gic194_intcmap},
-> +    {131, 0, 4, ast2700_gic131_gic195_intcmap},
-> +    {132, 0, 5, ast2700_gic132_gic196_intcmap},
-> +    {133, 0, 6, ast2700_gic133_gic197_intcmap},
-> +    {134, 0, 7, NULL},
-> +    {135, 0, 8, NULL},
-> +    {136, 0, 9, NULL},
->   };
->   
->   static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
->   {
->       Aspeed27x0SoCState *a = ASPEED27X0_SOC(s);
->       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-> +    int or_idx;
-> +    int idx;
->       int i;
->   
->       for (i = 0; i < ARRAY_SIZE(ast2700_gic_intcmap); i++) {
->           if (sc->irqmap[dev] == ast2700_gic_intcmap[i].irq) {
->               assert(ast2700_gic_intcmap[i].ptr);
-> -            return qdev_get_gpio_in(DEVICE(&a->intc.orgates[i]),
-> -                ast2700_gic_intcmap[i].ptr[dev]);
-> +            or_idx = ast2700_gic_intcmap[i].orgate_idx;
-> +            idx = ast2700_gic_intcmap[i].intc_idx;
-> +            return qdev_get_gpio_in(DEVICE(&a->intc[idx].orgates[or_idx]),
-> +                                    ast2700_gic_intcmap[i].ptr[dev]);
->           }
->       }
->   
-> @@ -215,12 +231,16 @@ static qemu_irq aspeed_soc_ast2700_get_irq_index(AspeedSoCState *s, int dev,
->   {
->       Aspeed27x0SoCState *a = ASPEED27X0_SOC(s);
->       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-> +    int or_idx;
-> +    int idx;
->       int i;
->   
->       for (i = 0; i < ARRAY_SIZE(ast2700_gic_intcmap); i++) {
->           if (sc->irqmap[dev] == ast2700_gic_intcmap[i].irq) {
->               assert(ast2700_gic_intcmap[i].ptr);
-> -            return qdev_get_gpio_in(DEVICE(&a->intc.orgates[i]),
-> +            or_idx = ast2700_gic_intcmap[i].orgate_idx;
-> +            idx = ast2700_gic_intcmap[i].intc_idx;
-> +            return qdev_get_gpio_in(DEVICE(&a->intc[idx].orgates[or_idx]),
->                                       ast2700_gic_intcmap[i].ptr[dev] + index);
->           }
->       }
-> @@ -390,7 +410,7 @@ static void aspeed_soc_ast2700_init(Object *obj)
->   
->       object_initialize_child(obj, "sli", &s->sli, TYPE_ASPEED_2700_SLI);
->       object_initialize_child(obj, "sliio", &s->sliio, TYPE_ASPEED_2700_SLIIO);
-> -    object_initialize_child(obj, "intc", &a->intc, TYPE_ASPEED_2700_INTC);
-> +    object_initialize_child(obj, "intc", &a->intc[0], TYPE_ASPEED_2700_INTC);
->   
->       snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);
->       object_initialize_child(obj, "adc", &s->adc, typename);
-> @@ -502,7 +522,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
->       Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
->       AspeedSoCState *s = ASPEED_SOC(dev);
->       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-> -    AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc);
-> +    AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc[0]);
->       g_autofree char *sram_name = NULL;
->       qemu_irq irq;
->   
-> @@ -533,23 +553,23 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
->       }
->   
->       /* INTC */
-> -    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc), errp)) {
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
->           return;
->       }
->   
-> -    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc), 0,
-> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[0]), 0,
->                       sc->memmap[ASPEED_DEV_INTC]);
->   
->       /* irq sources -> orgates -> INTC */
->       for (i = 0; i < ic->num_inpins; i++) {
-> -        qdev_connect_gpio_out(DEVICE(&a->intc.orgates[i]), 0,
-> -                              qdev_get_gpio_in(DEVICE(&a->intc), i));
-> +        qdev_connect_gpio_out(DEVICE(&a->intc[0].orgates[i]), 0,
-> +                              qdev_get_gpio_in(DEVICE(&a->intc[0]), i));
->       }
->   
->       /* INTC -> GIC192 - GIC201 */
->       /* INTC -> GIC128 - GIC136 */
->       for (i = 0; i < ic->num_outpins; i++) {
-> -        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), i,
-> +        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[0]), i,
->                              qdev_get_gpio_in(DEVICE(&a->gic),
->                                               ast2700_gic_intcmap[i].irq));
->       }
+>   static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+> @@ -1821,6 +1841,10 @@ static const TypeInfo aspeed_machine_types[] = {
+>           .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
+>           .parent        = TYPE_ASPEED_MACHINE,
+>           .class_init    = aspeed_machine_ast2700a0_evb_class_init,
+> +        }, {
+> +        .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
+> +        .parent        = TYPE_ASPEED_MACHINE,
+> +        .class_init    = aspeed_machine_ast2700a1_evb_class_init,
+>   #endif
+>       }, {
+>           .name          = TYPE_ASPEED_MACHINE,
 
 
