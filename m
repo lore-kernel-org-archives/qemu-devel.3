@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4734C282EC
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70416C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqD5x-0004bA-NO; Thu, 06 Mar 2025 10:25:09 -0500
+	id 1tqD88-0005z6-Jm; Thu, 06 Mar 2025 10:27:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org>)
- id 1tqD5e-0004Gf-Pw; Thu, 06 Mar 2025 10:24:52 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1tqD86-0005yE-Cq; Thu, 06 Mar 2025 10:27:22 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org>)
- id 1tqD5c-0003FB-ES; Thu, 06 Mar 2025 10:24:50 -0500
+ id 1tqD84-0003bx-2l; Thu, 06 Mar 2025 10:27:22 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z7tWc1Rbqz4x6n;
- Fri,  7 Mar 2025 02:24:44 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z7tZX2D53z4x5k;
+ Fri,  7 Mar 2025 02:27:16 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z7tWX558Bz4x3d;
- Fri,  7 Mar 2025 02:24:40 +1100 (AEDT)
-Message-ID: <351689e6-7267-4641-8096-20a34889aa67@kaod.org>
-Date: Thu, 6 Mar 2025 16:24:38 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z7tZS64cTz4x3d;
+ Fri,  7 Mar 2025 02:27:12 +1100 (AEDT)
+Message-ID: <f6bc0f9c-e208-4a07-b2a0-02f0a23b220e@kaod.org>
+Date: Thu, 6 Mar 2025 16:27:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/29] hw/intc/aspeed: Support setting different
- register size
+Subject: Re: [PATCH v5 00/29] Support AST2700 A1
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +40,6 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
- <20250306103846.429221-5-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,17 +84,16 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250306103846.429221-5-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250306103846.429221-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=VCYv=VZ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,40 +110,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Jamin,
+
 On 3/6/25 11:38, Jamin Lin wrote:
-> Currently, the size of the regs array is 0x2000, which is too large. So far,
-> it only use GICINT128 - GICINT134, and the offsets from 0 to 0x1000 are unused.
-> To save code size, introduce a new class attribute "reg_size" to set the
-> different register sizes for the INTC models in AST2700 and add a regs
-> sub-region in the memory container.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   include/hw/intc/aspeed_intc.h |  2 +-
->   hw/intc/aspeed_intc.c         | 22 +++++-----------------
->   2 files changed, 6 insertions(+), 18 deletions(-)
-> 
-> diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-> index 47ea0520b5..17cd889e0d 100644
-> --- a/include/hw/intc/aspeed_intc.h
-> +++ b/include/hw/intc/aspeed_intc.h
-> @@ -16,7 +16,6 @@
->   #define TYPE_ASPEED_2700_INTC TYPE_ASPEED_INTC "-ast2700"
->   OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+> v1:
+>   1. Refactor INTC model to support both INTC0 and INTC1.
+>   2. Support AST2700 A1.
+>   3. Create ast2700a0-evb machine.
 >   
-> -#define ASPEED_INTC_NR_REGS (0x2000 >> 2)
->   #define ASPEED_INTC_NR_INTS 9
+> v2:
+>    To streamline the review process, split the following patch series into
+>    three parts.
+>    https://patchwork.kernel.org/project/qemu-devel/cover/20250121070424.2465942-1-jamin_lin@aspeedtech.com/
+>    This patch series focuses on cleaning up the INTC model to
+>    facilitate future support for the INTC_IO model.
+> 
+> v3:
+>   1. Update and add functional test for AST2700
+>   2. Add AST2700 INTC design guidance and its block diagram.
+>   3. Retaining the INTC naming and introducing a new INTCIO model to support the AST2700 A1.
+>   4. Create ast2700a1-evb machine and rename ast2700a0-evb machine
+>   5. Fix silicon revision issue and support AST2700 A1.
+> 
+> v4:
+>   1. rework functional test for AST2700
+>   2. the initial machine "ast2700-evb" is aliased to "ast2700a0-evb.
+>   3. intc: Reduce regs array size by adding a register sub-region
+>   4. intc: split patch for Support setting different register sizes
+>   5. update ast2700a1-evb machine parent to TYPE_ASPEED_MACHINE
+> 
+> v5:
+>   1. Rename status_addr and addr to status_reg and reg for clarity
+>   2. Introduce dynamic allocation for regs array
+>   3. Sort the memmap table by mapping address
+>   4. ast27x0.c split patch for Support two levels of INTC controllers for AST2700 A1
+>   5. tests/functional/aspped split patch for Introduce start_ast2700_test API
+>   6. keep variable naming for reviewer suggestion.
+>   7. Add reviewer suggestion and split patch to make more readable.
 >   
->   struct AspeedINTCState {
-> @@ -42,6 +41,7 @@ struct AspeedINTCClass {
->       uint32_t num_lines;
->       uint32_t num_ints;
->       uint64_t mem_size;
-> +    uint64_t reg_size;
+> With the patch applied, QEMU now supports two machines for running AST2700 SoCs:
+> ast2700a0-evb: Designed for AST2700 A0
+> ast2700a1-evb: Designed for AST2700 A1
+> 
+> Test information
+> 1. QEMU version: https://github.com/qemu/qemu/commit/50d38b8921837827ea397d4b20c8bc5efe186e53
+> 2. ASPEED SDK v09.05 pre-built image
+>     https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.05
+>     ast2700-default-obmc.tar.gz (AST2700 A1)
+>     https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz
+>     ast2700-a0-default-obmc.tar.gz (AST2700 A0)
+>     https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz
+>     
+> This patch series depends on the following patch series:
+> https://patchwork.kernel.org/project/qemu-devel/cover/20250303073547.1145080-1-jamin_lin@aspeedtech.com/
+> https://patchwork.kernel.org/project/qemu-devel/cover/20250225075622.305515-1-jamin_lin@aspeedtech.com/
+> 
+> Jamin Lin (29):
+>    hw/intc/aspeed: Support setting different memory size
+>    hw/intc/aspeed: Rename status_addr and addr to status_reg and reg for
+>      clarity
+>    hw/intc/aspeed: Introduce dynamic allocation for regs array
+>    hw/intc/aspeed: Support setting different register size
+>    hw/intc/aspeed: Reduce regs array size by adding a register sub-region
+>    hw/intc/aspeed: Introduce helper functions for enable and status
+>      registers
+>    hw/intc/aspeed: Add object type name to trace events for better
+>      debugging
+>    hw/arm/aspeed: Rename IRQ table and machine name for AST2700 A0
+>    hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ number
+>    hw/intc/aspeed: Support different memory region ops
+>    hw/intc/aspeed: Rename num_ints to num_inpins for clarity
+>    hw/intc/aspeed: Add support for multiple output pins in INTC
+>    hw/intc/aspeed: Refactor INTC to support separate input and output pin
+>      indices
+>    hw/intc/aspeed: Introduce AspeedINTCIRQ structure to save the irq
+>      index and register address
+>    hw/intc/aspeed: Introduce IRQ handler function to reduce code
+>      duplication
+>    hw/intc/aspeed: Add Support for Multi-Output IRQ Handling
+>    hw/intc/aspeed: Add Support for AST2700 INTCIO Controller
+>    hw/misc/aspeed_scu: Add Support for AST2700/AST2750 A1 Silicon
+>      Revisions
+>    hw/arm/aspeed_ast27x0.c Support AST2700 A1 GIC Interrupt Mapping
+>    hw/arm/aspeed_ast27x0: Define an Array of AspeedINTCState with Two
+>      Instances
+>    hw/arm/aspeed_ast27x0: Support two levels of INTC controllers for
+>      AST2700 A1
+>    hw/arm/aspeed_ast27x0: Add SoC Support for AST2700 A1
+>    hw/arm/aspeed: Add Machine Support for AST2700 A1
+>    hw/arm/aspeed_ast27x0: Sort the memmap table by mapping address
+>    tests/functional/aspeed: Introduce start_ast2700_test API
+>    tests/functional/aspeed: Update temperature hwmon path
+>    tests/functional/aspeed: Update test ASPEED SDK v09.05
+>    tests/functional/aspeed: Add test case for AST2700 A1
+>    docs/specs: Add aspeed-intc
+> 
+>   docs/specs/aspeed-intc.rst              | 136 +++++
+>   docs/specs/index.rst                    |   1 +
+>   include/hw/arm/aspeed_soc.h             |   3 +-
+>   include/hw/intc/aspeed_intc.h           |  36 +-
+>   include/hw/misc/aspeed_scu.h            |   2 +
+>   hw/arm/aspeed.c                         |  33 +-
+>   hw/arm/aspeed_ast27x0.c                 | 329 ++++++++----
+>   hw/intc/aspeed_intc.c                   | 667 ++++++++++++++++++------
+>   hw/misc/aspeed_scu.c                    |   2 +
+>   hw/intc/trace-events                    |  25 +-
+>   tests/functional/test_aarch64_aspeed.py |  47 +-
+>   11 files changed, 978 insertions(+), 303 deletions(-)
+>   create mode 100644 docs/specs/aspeed-intc.rst
+> 
 
-The '_size' prefix describing a number of registers is confusing.
-'nr_regs' would be better.
-
+Patches 3-5 need some care. The rest looks OK.
 
 Thanks,
 
@@ -154,71 +228,5 @@ C.
 
 
 
->   };
->   
->   #endif /* ASPEED_INTC_H */
-> diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-> index feb2c52441..1c3dc3fce0 100644
-> --- a/hw/intc/aspeed_intc.c
-> +++ b/hw/intc/aspeed_intc.c
-> @@ -120,13 +120,6 @@ static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned int size)
->       uint32_t reg = offset >> 2;
->       uint32_t value = 0;
->   
-> -    if (reg >= ASPEED_INTC_NR_REGS) {
-> -        qemu_log_mask(LOG_GUEST_ERROR,
-> -                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
-> -                      __func__, offset);
-> -        return 0;
-> -    }
-> -
->       value = s->regs[reg];
->       trace_aspeed_intc_read(offset, size, value);
->   
-> @@ -143,13 +136,6 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
->       uint32_t change;
->       uint32_t irq;
->   
-> -    if (reg >= ASPEED_INTC_NR_REGS) {
-> -        qemu_log_mask(LOG_GUEST_ERROR,
-> -                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
-> -                      __func__, offset);
-> -        return;
-> -    }
-> -
->       trace_aspeed_intc_write(offset, size, data);
->   
->       switch (reg) {
-> @@ -288,8 +274,9 @@ static void aspeed_intc_instance_init(Object *obj)
->   static void aspeed_intc_reset(DeviceState *dev)
->   {
->       AspeedINTCState *s = ASPEED_INTC(dev);
-> +    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
->   
-> -    memset(s->regs, 0, ASPEED_INTC_NR_REGS);
-> +    memset(s->regs, 0, aic->reg_size);
->       memset(s->enable, 0, sizeof(s->enable));
->       memset(s->mask, 0, sizeof(s->mask));
->       memset(s->pending, 0, sizeof(s->pending));
-> @@ -307,9 +294,9 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
->   
->       sysbus_init_mmio(sbd, &s->iomem_container);
->   
-> -    s->regs = g_malloc0(ASPEED_INTC_NR_REGS);
-> +    s->regs = g_malloc0(aic->reg_size);
->       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
-> -                          TYPE_ASPEED_INTC ".regs", ASPEED_INTC_NR_REGS << 2);
-> +                          TYPE_ASPEED_INTC ".regs", aic->reg_size << 2);
->   
->       memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
->   
-> @@ -361,6 +348,7 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
->       aic->num_lines = 32;
->       aic->num_ints = 9;
->       aic->mem_size = 0x4000;
-> +    aic->reg_size = 0x2000 >> 2;
->   }
->   
->   static const TypeInfo aspeed_2700_intc_info = {
 
 
