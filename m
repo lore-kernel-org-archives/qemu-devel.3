@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48870C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 727D3C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq4gT-0001Ui-C2; Thu, 06 Mar 2025 01:26:29 -0500
+	id 1tq4iY-0002fx-5e; Thu, 06 Mar 2025 01:28:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tq4g0-0001T4-NV; Thu, 06 Mar 2025 01:25:50 -0500
+ id 1tq4iO-0002fS-N0; Thu, 06 Mar 2025 01:28:17 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tq4fx-0004ch-VD; Thu, 06 Mar 2025 01:25:48 -0500
+ id 1tq4iK-0004jO-62; Thu, 06 Mar 2025 01:28:13 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B2254F8526;
- Thu, 06 Mar 2025 09:24:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 80FC2F8537;
+ Thu, 06 Mar 2025 09:27:29 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2471F1C4FD9;
- Thu,  6 Mar 2025 09:25:31 +0300 (MSK)
-Message-ID: <26e6ce70-94f8-4fb7-8a56-77135ef3928f@tls.msk.ru>
-Date: Thu, 6 Mar 2025 09:25:31 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id E8D0D1C4FDA;
+ Thu,  6 Mar 2025 09:28:08 +0300 (MSK)
+Message-ID: <082aefaa-932e-42a2-9537-9a5eb74963c0@tls.msk.ru>
+Date: Thu, 6 Mar 2025 09:28:08 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: rvv: Fix unexpected behavior of vector
- reduction instructions when vl is 0
+Subject: Re: [PATCH] target/riscv: rvv: Fix incorrect vlen comparison in
+ prop_vlen_set
 To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -38,7 +38,7 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20250124101452.2519171-1-max.chou@sifive.com>
+References: <20250124090539.2506448-1-max.chou@sifive.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,7 +84,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250124101452.2519171-1-max.chou@sifive.com>
+In-Reply-To: <20250124090539.2506448-1-max.chou@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -110,20 +110,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-24.01.2025 13:14, Max Chou wrote:
-> According to the Vector Reduction Operations section in the RISC-V "V"
-> Vector Extension spec,
-> "If vl=0, no operation is performed and the destination register is not
-> updated."
-> 
-> The vd should be updated when vl is larger than 0.
+24.01.2025 12:05, Max Chou wrote:
+> In prop_vlen_set function, there is an incorrect comparison between
+> vlen(bit) and vlenb(byte).
+> This will cause unexpected error when user applies the `vlen=1024` cpu
+> option with a vendor predefined cpu type that the default vlen is
+> 1024(vlenb=128).
 
 Is this a qemu-stable material?
 
-If yes, how far to previous releases it is worth to pick?
-(Current older stable series are 7.2 and 8.2).
+If yes, how important it is to pick it up for 8.2 and 7.2 series,
+where the patch does not apply directly?
 
-I currently picked this up for 7.2, 8.2 and 9.2.
+I currently picked it for 9.2 series only.
+
+Please keep qemu-stable@ in Cc for future changes which should be
+picked up for stable series.
 
 Thanks,
 
