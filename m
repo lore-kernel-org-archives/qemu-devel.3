@@ -4,65 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72DEDC19F32
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 02:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 913A5C19F32
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 02:22:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq0lr-0002gV-LB; Wed, 05 Mar 2025 21:15:35 -0500
+	id 1tq0rX-0003f4-DW; Wed, 05 Mar 2025 21:21:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tq0ln-0002g7-HM
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 21:15:31 -0500
+ id 1tq0rW-0003em-Lp
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 21:21:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tq0lf-0003Ao-T6
- for qemu-devel@nongnu.org; Wed, 05 Mar 2025 21:15:27 -0500
+ id 1tq0rV-0003hn-2s
+ for qemu-devel@nongnu.org; Wed, 05 Mar 2025 21:21:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741227319;
+ s=mimecast20190719; t=1741227683;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ye7p54CXpH+bLk4mVc+iChbkOhNWfJTVVBKQHyp0qMA=;
- b=iril6DlFlvtPISynS6sYnkYaDQ0vMPzeiDGYhp0g1y/3jDwukMV9SFolsjAkr7dz5WMHyR
- gmeckhastspBeUEGCaE2uiX5IDuXHQhiIrEaIFBEomX/Rs2MsX8Epx2WKBx5qh1UwJOOu2
- D7vmX3ZXHKmh9xianL+wOa8kVM4GyDc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Alqr6X7GxuetCMvVW1qNbyiVitfTgsoQs0fcBgcNbTA=;
+ b=adW+ICFQrJgJnvivU+KahO4o1if5vmuYt5dlm0lvBv4PTlWo/mPackhhOlggcZVkA/EeD6
+ sBcafxKZMbZ8fnNUwnpwD+yxJk0aKiJ1bmUiQTyvEhUbIeqhtGpcFuGNGGD1hKHdSbMudg
+ CzbMF/DXYV9kdARMOmBJr2iepX53p2o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339--qf25Z9XOuuCThHndgQwww-1; Wed,
- 05 Mar 2025 21:15:15 -0500
-X-MC-Unique: -qf25Z9XOuuCThHndgQwww-1
-X-Mimecast-MFC-AGG-ID: -qf25Z9XOuuCThHndgQwww_1741227314
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-6trnh0NPPL-YBMsHU6I2kg-1; Wed,
+ 05 Mar 2025 21:21:10 -0500
+X-MC-Unique: 6trnh0NPPL-YBMsHU6I2kg-1
+X-Mimecast-MFC-AGG-ID: 6trnh0NPPL-YBMsHU6I2kg_1741227669
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 752551955F67; Thu,  6 Mar 2025 02:15:14 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2CEF1800DB3; Thu,  6 Mar 2025 02:21:09 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.55])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 66E541944F2E; Thu,  6 Mar 2025 02:15:13 +0000 (UTC)
-Date: Thu, 6 Mar 2025 10:15:10 +0800
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A1FD11800373; Thu,  6 Mar 2025 02:21:08 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [PATCH] tests/functional: Increase the timeout of the
- mips64el_replay test
-Message-ID: <20250306021510.GC303194@fedora>
-References: <20250305074353.52552-1-thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Subject: [PULL 0/1] Block patches
+Date: Thu,  6 Mar 2025 10:21:05 +0800
+Message-ID: <20250306022106.304510-1-stefanha@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="cV3a8DfTa7hAWk1G"
-Content-Disposition: inline
-In-Reply-To: <20250305074353.52552-1-thuth@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -88,41 +82,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The following changes since commit 661c2e1ab29cd9c4d268ae3f44712e8d421c0e56:
 
---cV3a8DfTa7hAWk1G
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  scripts/checkpatch: Fix a typo (2025-03-04 09:30:26 +0800)
 
-On Wed, Mar 05, 2025 at 08:43:53AM +0100, Thomas Huth wrote:
-> We run the gitlab-CI with the untrusted tests enabled, and
-> the test_replay_mips64el_malta_5KEc_cpio subtest is rather slow,
-> so this already hit the standard 90 seconds timeout in the CI.
-> Increase the timeout for more headroom.
->=20
-> Reported-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  tests/functional/meson.build | 1 +
->  1 file changed, 1 insertion(+)
+are available in the Git repository at:
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+  https://gitlab.com/stefanha/qemu.git tags/block-pull-request
 
---cV3a8DfTa7hAWk1G
-Content-Type: application/pgp-signature; name="signature.asc"
+for you to fetch changes up to 2ad638a3d160923ef3dbf87c73944e6e44bdc724:
 
------BEGIN PGP SIGNATURE-----
+  block/qed: fix use-after-free by nullifying timer pointer after free (2025-03-06 10:19:54 +0800)
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfJBS4ACgkQnKSrs4Gr
-c8i5Vwf+LBvcH7LNaPupRu1e1zj95QNp640jdVuHFUkAgEF/tEPB5WzBLpiSFZ54
-zF342ObVO7rolpEsVsWZHCgJRwkuUfM2kvhZTA57qX6bzrb8sqhffQ+OaEr5vGD9
-m+lSe9NnmtIlUOsM7YRqXd8oUetAH0bDBelqEG7zcvjD/160IkSzy/VwAt8BFpyl
-SyMgxvri3PHNxNMweRX3bopupQWyQWROOAUNrF5hF6tFmmu4ApzfENJ/Jo8mPJwq
-7JgjBwKuwSd4r451C5EeF82/e46zinF1P+h7pJMN0nGoDT4VzbrTGcH4KwtoTYwu
-YBHs8UQ9EY8TwqAfQti5debf0HHVbg==
-=Nn6x
------END PGP SIGNATURE-----
+----------------------------------------------------------------
+Pull request
 
---cV3a8DfTa7hAWk1G--
+QED need_check_timer use-after-free fix
+
+----------------------------------------------------------------
+
+Denis Rastyogin (1):
+  block/qed: fix use-after-free by nullifying timer pointer after free
+
+ block/qed.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+-- 
+2.48.1
 
 
