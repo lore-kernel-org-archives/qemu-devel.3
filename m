@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 720A7C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC1A4C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:07:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDTs-0001fl-OG; Thu, 06 Mar 2025 10:49:53 -0500
+	id 1tqDjl-000786-Fa; Thu, 06 Mar 2025 11:06:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDTR-0000Ox-62
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:30 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tqDiX-00061w-NH
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:05:04 -0500
+Received: from mail-io1-xd30.google.com ([2607:f8b0:4864:20::d30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDTP-0006NS-IF
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:49:24 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43bbb440520so9729865e9.2
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:49:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tqDiT-00085d-Eb
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:05:01 -0500
+Received: by mail-io1-xd30.google.com with SMTP id
+ ca18e2360f4ac-854a682d2b6so50768539f.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:04:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276162; x=1741880962; darn=nongnu.org;
+ d=chromium.org; s=google; t=1741277095; x=1741881895; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7gQL+fUXOizsPvaDiR2QJscVtgRbEO+e68iNhkxG0Ak=;
- b=klKKoksQTPsQ5yCZ5+lP/2GKoMC+co/ZDnNm0C22Y+DX02pD9pNajQc7SGooSnI0bJ
- G5eIKNxGtMNGfwpF0oFirB3BeaVjooHyDw54qxPp75wCEUvsXWEDtKgqV9Z3UhYW7SE1
- ANVFtF/oWVeLrXygSzY1Gj22FReVSf9KFcVgdU0HkUeWiLUq8UV+M5uZ1/dpeSoiWnGX
- QNwPYLcFjOmWrQYYMlnxyk1wg1tl2bmUBBfJ4l/6xiYOdeWPJJ/wAUg40MIVigcKpuRw
- uVTdkPP+QkAw8uAzL16w5iStSFvlYbPz2/HcbFPbL6hNtFyMqLNM1DOkFWq+Bt+hLbMw
- 0fdg==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UBXnQzSJkDrutDwfAQ4rGuJkH23aeovCFlYOdDvXid8=;
+ b=VIlBLlTPr33gj2ZTnDFpukQC5n08ngxUyis3SddTJ04+z9khVxP7RhfyUeTfdSMH6L
+ Z2AJ4vzVEug8rKKh3W9+VuZ92+6OWLdGKnTkdbL0a24A/Fnvl1drvaXDCCel+8903Wn3
+ 3Gtcovtxkq1P425KzpJmtCbymWC1sz2aQKqTs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276162; x=1741880962;
+ d=1e100.net; s=20230601; t=1741277095; x=1741881895;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7gQL+fUXOizsPvaDiR2QJscVtgRbEO+e68iNhkxG0Ak=;
- b=S0iWBHzyl+uRSwZ11E2uAmOzKKtkUjKYaGRDH692SMH+J7VhkFy4GkCMwyA5SVEVE3
- qLaAkZDQ84lrvc4N0gmv1SXnIFkrVnFlqim6VA1madcX89rH0c5ysGa6LKKpVnl239tY
- gWwd+EtkSgCUjkAaoJbtKuLyKujIdKgKz/4vd8d7dyVhQRl2VTRcXOrQeaZS6Dq2QdWP
- 5/VaS41t91qYMTN1nmSpubRGVfUPeTMW3I6h1iIfa6DWddfte+3/zUvzMZd7KAeEFzKC
- ghIJ7fKdRbmg5jyAyTj3winQMZoyGa80J+IHrx6G8bsjWyvL7ME6SRP0BesOCtLJO4lP
- CV4Q==
-X-Gm-Message-State: AOJu0Yz/hQJVyA1DaFmFyL5MpctviNgiRmlZ0pMu5mMSfys7x417bTNd
- QPJBGO3z+7ZHVv4HB5ZzMEr0hpascs8fSHOHFqWLjRnZZ0nSTIYd6G08FCnCkjiRfjxMVMR33eL
- Azms=
-X-Gm-Gg: ASbGncuJLsR/lPmmwYpNzIraBIFOhV76mx1rOdB0BrSkkQGb+S8x9izcjzlpVsyBP2b
- 0/FQUXWpDw2ltefYr32NwqMqUr8ngoMafUlqEjlNsfcLhcsqGA49D4SLQEz+gkht+KGzi5fbcQt
- WRsj2jKHiRSHIkUIaPXhV1WRpeoqUlEGF7A6a0qROE2EAxCB3/SekAQNxtcj95rv5SNAb5DTVvA
- z6QPaNRvPFVpljuoaynu48beUkT4yDXVHZerM0seDnUXvkkJsDUjvddZx74QsPp0C798baPv/Rm
- YuSfz17kiGSaneUeWmqj1IiI7V2c0c5ywPcO6vXhs5/S4v2RB6RBoWjlUgxugx47xWKAS5qBkpB
- CegN+SDXom5MZ/HnpTsc=
-X-Google-Smtp-Source: AGHT+IHI5bm8Q2OvpeafvKTe7+ygU6pEWjyJsA32DtcgZQzug5v9fTlo3D1R1UG0HoGPhfqRAw1kDw==
-X-Received: by 2002:a05:6000:1f82:b0:390:f75e:f815 with SMTP id
- ffacd0b85a97d-3911f7543a6mr8563839f8f.23.1741276161875; 
- Thu, 06 Mar 2025 07:49:21 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c103f57sm2411276f8f.91.2025.03.06.07.49.21
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:49:21 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 23/54] cpus: Have cpu_exec_initfn() per user / system emulation
-Date: Thu,  6 Mar 2025 16:47:05 +0100
-Message-ID: <20250306154737.70886-24-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
-References: <20250306154737.70886-1-philmd@linaro.org>
+ bh=UBXnQzSJkDrutDwfAQ4rGuJkH23aeovCFlYOdDvXid8=;
+ b=lrpQcDBDU1ANgHIAqkIeFXSKhezOnpOOATv0S5tfUqkk+LAqUYEz7ZnXuZot+kj9P8
+ 6zC8rC0omo+8Ad6rCvu03Rzpdqs77AD5+kEGmKmCJdTfCtRW9lcMw01VNHJqTco+TxhU
+ dlvodaQs4tlGHGAq9cV1u3+0kG99JRJ5Pg2RD0DdljXSLlYDvcxizMcLjDEh0YajQWE9
+ IQdbkQDNZGqweuabtuJ8ForeaswPArmfciiFrEHmGP1tvwd7IjxydRZdEO45BrvWP4HP
+ OUCf2K5jbJdGWRY32pEsiopr1/dbDogqtBo9L4urlm++jmSFo3+X3YBfYbKe5EKy93uI
+ Y4UQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWw+hG4xqaGAhQxJ4pe18SaozlAhIMIhoR7V+v1sUFCN1mJ0q2P6kTOaJTrEA9K0H50h/yfheq394Ho@nongnu.org
+X-Gm-Message-State: AOJu0YzisVgQIhbZH0/Af43u/kEyo5NnUMWAO5iHJ7fPSu8FnpGR8MQ5
+ GbAwKwkFIHVSL9/GkkjcHmHTacn0pcYfiazVcI0suCxi5rYOEscJp8qXsEl8YQ==
+X-Gm-Gg: ASbGnctoMZGffXVOv8n0DAcipM8Bslp3r4cel4+xRuxB9VEWTyhw5kT5bqba1IS7SFi
+ nRzgNYWCgQEZoggZpPPy/h9iCxJumkBVZN+gm00KMQzaYlbFFEdTLv2yJW+3gr4VxEXuCF5Pmcd
+ bnLrVdYCIFueTpy1pEmOgKDSdorGbUIziAK/j9Qhy5Xhsrx4soE+GrsbkY7KeCAOJU/BvV74KA3
+ 9h0HoX+xoPkiVEYMO6OJ3L62yZPaDVgiNa1vNuWAYqI2U0RoyjytBnNYftAqeY5Zbv9Ztldx5Y1
+ VwYoGTrl+2SFRd5xX6TwetUjLZiLxAIkQgqn2dEYJCWmnz6ztUEgArT5U0a8aI5WLx2/IwVLosu
+ Ub35JSQ==
+X-Google-Smtp-Source: AGHT+IFptUsVDgwryU3pACMw9DrREQ9iwYAZSwjMMULniLe8f5QvU7XKJlpZw5jtr9diDtsIm1c6bg==
+X-Received: by 2002:a92:cdaf:0:b0:3d4:38a4:388e with SMTP id
+ e9e14a558f8ab-3d44187c0f4mr897545ab.1.1741277095097; 
+ Thu, 06 Mar 2025 08:04:55 -0800 (PST)
+Received: from chromium.org (c-73-203-119-151.hsd1.co.comcast.net.
+ [73.203.119.151]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4f213b959c1sm46759173.38.2025.03.06.08.04.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Mar 2025 08:04:53 -0800 (PST)
+From: Simon Glass <sjg@chromium.org>
+To: U-Boot Mailing List <u-boot@lists.denx.de>
+Cc: Bin Meng <bmeng.cn@gmail.com>, Simon Glass <sjg@chromium.org>,
+ Tom Rini <trini@konsulko.com>, qemu-devel@nongnu.org
+Subject: [PATCH v4 05/47] x86: qemu: Enable dhrystone
+Date: Thu,  6 Mar 2025 09:03:32 -0700
+Message-ID: <20250306160428.3041057-6-sjg@chromium.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250306160428.3041057-1-sjg@chromium.org>
+References: <20250306160428.3041057-1-sjg@chromium.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d30;
+ envelope-from=sjg@chromium.org; helo=mail-io1-xd30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,81 +97,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Slighly simplify cpu-target.c again by extracting cpu_exec_initfn()
-to cpu-{system,user}.c, adding an empty stub for user emulation.
+Provide the 'dhry' command, which helps to check that kvm is being used
+properly with QEMU.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250123234415.59850-19-philmd@linaro.org>
+Signed-off-by: Simon Glass <sjg@chromium.org>
 ---
- cpu-target.c         | 9 ---------
- hw/core/cpu-system.c | 7 +++++++
- hw/core/cpu-user.c   | 5 +++++
- 3 files changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/cpu-target.c b/cpu-target.c
-index f4c834fd26a..5aa6c4b0c63 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -24,7 +24,6 @@
- #include "migration/vmstate.h"
- #ifndef CONFIG_USER_ONLY
- #include "hw/core/sysemu-cpu-ops.h"
--#include "exec/address-spaces.h"
- #endif
- #include "system/accel-ops.h"
- #include "system/cpus.h"
-@@ -175,14 +174,6 @@ void cpu_exec_unrealizefn(CPUState *cpu)
-     accel_cpu_common_unrealize(cpu);
- }
- 
--void cpu_exec_initfn(CPUState *cpu)
--{
--#ifndef CONFIG_USER_ONLY
--    cpu->memory = get_system_memory();
--    object_ref(OBJECT(cpu->memory));
--#endif
--}
--
- char *cpu_model_from_type(const char *typename)
- {
-     const char *suffix = "-" CPU_RESOLVING_TYPE;
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 1310b4203fd..e511507e13b 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -20,6 +20,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "exec/address-spaces.h"
- #include "exec/memory.h"
- #include "exec/tswap.h"
- #include "hw/qdev-core.h"
-@@ -187,3 +188,9 @@ void cpu_class_init_props(DeviceClass *dc)
- 
-     device_class_set_props(dc, cpu_system_props);
- }
-+
-+void cpu_exec_initfn(CPUState *cpu)
-+{
-+    cpu->memory = get_system_memory();
-+    object_ref(OBJECT(cpu->memory));
-+}
-diff --git a/hw/core/cpu-user.c b/hw/core/cpu-user.c
-index e5ccf6bf13a..cdd8de2fefa 100644
---- a/hw/core/cpu-user.c
-+++ b/hw/core/cpu-user.c
-@@ -25,3 +25,8 @@ void cpu_class_init_props(DeviceClass *dc)
- {
-     device_class_set_props(dc, cpu_user_props);
- }
-+
-+void cpu_exec_initfn(CPUState *cpu)
-+{
-+    /* nothing to do */
-+}
+(no changes since v1)
+
+ configs/qemu-x86_64_defconfig | 1 +
+ configs/qemu-x86_defconfig    | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/configs/qemu-x86_64_defconfig b/configs/qemu-x86_64_defconfig
+index ff2a192ee7d..84b7dc8e99f 100644
+--- a/configs/qemu-x86_64_defconfig
++++ b/configs/qemu-x86_64_defconfig
+@@ -89,4 +89,5 @@ CONFIG_CONSOLE_SCROLL_LINES=5
+ CONFIG_SPL_VIDEO=y
+ # CONFIG_SPL_USE_TINY_PRINTF is not set
+ CONFIG_GENERATE_ACPI_TABLE=y
++CONFIG_CMD_DHRYSTONE=y
+ # CONFIG_GZIP is not set
+diff --git a/configs/qemu-x86_defconfig b/configs/qemu-x86_defconfig
+index ee5b150e062..d52afa42955 100644
+--- a/configs/qemu-x86_defconfig
++++ b/configs/qemu-x86_defconfig
+@@ -66,4 +66,5 @@ CONFIG_VIDEO_BOCHS=y
+ # CONFIG_VIDEO_VESA is not set
+ CONFIG_CONSOLE_SCROLL_LINES=5
+ CONFIG_GENERATE_ACPI_TABLE=y
++CONFIG_CMD_DHRYSTONE=y
+ # CONFIG_GZIP is not set
 -- 
-2.47.1
+2.43.0
 
 
