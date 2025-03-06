@@ -4,86 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE106C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 05:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDD2CC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 05:50:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq46k-0004s2-Gl; Thu, 06 Mar 2025 00:49:22 -0500
+	id 1tq47n-0005lA-TC; Thu, 06 Mar 2025 00:50:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq46i-0004rm-VL; Thu, 06 Mar 2025 00:49:20 -0500
-Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq46h-0008Tk-5T; Thu, 06 Mar 2025 00:49:20 -0500
-Received: by mail-ua1-x936.google.com with SMTP id
- a1e0cc1a2514c-86929964ed3so243443241.0; 
- Wed, 05 Mar 2025 21:49:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741240157; x=1741844957; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=P3rJG0ePzz2XmIZWNCI3Zgw7Yg7x1sbqwnNy4uRAv7M=;
- b=RNH5Gc0bxA6Jpblv6vj8/wtVM+boHH6cSNztdYmflKxbkwrr/xvg5nDBsPg0mLl27Z
- Zbchoz1kuk8UN0qo/hFliwPGZpgvW+gRztxpmp52lDlB6Aqt0ppZCyC4ZUAHxjVk4JII
- LdF9L/dtVQ+nqeqVMV96yuEsrMvK3iPFvDT216/LW0ghLOHnkFfJOK70LKVPF/hEyold
- 7Ht6ZNwUqnOhhg56/9/0BC4aKzmy4dQjCJXuyfzZEzQXR0OW+ZeKTsMv9PVoIz7W95wK
- 6dS8wDL1CwTjBJYgj9Ei5SCrrBHKM+cbR56TqkRJL3QbLhf7OlsbGv8e4XkzImXxS4pm
- 0GHg==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tq47m-0005ku-Gh
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 00:50:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tq47k-0000JF-Hm
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 00:50:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741240222;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=3syLFzaHMXatZ8dFo04m8GqKmf4x8o+I0TMYQkVK8DI=;
+ b=SZVOSicSDiPV/QHbuAJgOKWrgdxV7tjz8e1dgvqEHNATA/u0reXCorfDLWoRBjbZJSF/oJ
+ gu4CiJ95PgYUStXYvTQTrpwnRivx8DXYNR+J+0P/ooQb8Te1HJh8Hrw3JO4Guk4vBMJZ5v
+ 8naDaDinLtSCW/ePli5y4LnQdAchFG0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-301-nBgjlq_HPJGOXtSjMaS6uA-1; Thu, 06 Mar 2025 00:50:16 -0500
+X-MC-Unique: nBgjlq_HPJGOXtSjMaS6uA-1
+X-Mimecast-MFC-AGG-ID: nBgjlq_HPJGOXtSjMaS6uA_1741240215
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-390ee05e2ceso166204f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 21:50:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741240157; x=1741844957;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=P3rJG0ePzz2XmIZWNCI3Zgw7Yg7x1sbqwnNy4uRAv7M=;
- b=fV/dR8xO+XfRFmtcmbaHUUM7Q7nv2W3p/i9q825Gweipv+TvPICCqACP2Y6V8LUPU1
- 0bxydbxDv0EEs3Q7NGd+InwIpfaouZwy7JMmppxJqMAbbhwOiQ09Amu63Dli0wSIp8kL
- 830wUjhwnHRP5tbBs2j4OPL7GVC9VHVkXGpWW4IaC8QDrhq/JZGDlaB5pNORds6zkXX2
- FwQgYezu2jbmIHrVflMFD652rkECxD7FJBaGIwuP7uSvybTi8BW9f+O/M3F0PGZGuAAq
- 6pOUsS+oyvMQOXpBfSkF/gawA2H2zVVklsdKDnix39GAhvef/uHKLGvw7WrUaixlylUB
- N09g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcq8V5pITeiZuKN4lFiWKmbPe/Rw6l3EEecGuincF89oi2YNAYNfnWDmjIBvdLa+CMJgvO2V7QL5Ca@nongnu.org
-X-Gm-Message-State: AOJu0YyYOu625iyGzaGmzb+xXQOk4DGlAfUfWT96Md6OTsD0MBG4JTho
- Rt/Ux6j4fhQzg4uGNOLrIcyu25ur4d3/UnOiRoRG5nLJpAAt6ElUb1ox9YNbanfxAvoDby63iAO
- 29Z9RBrzOHp7P4dppYPpVxA8lhds=
-X-Gm-Gg: ASbGncuK36GyoYixs2AtRyIj0ojAwG26Ucao89RsbIUZ9BWCfVFlsVkv5kCNIEjQa8o
- UzMimytjitTiMEaW4k5SgRBw6USl8xKHlHtvVzSo3jf0xYhkWmJWP2BNE1qgycpQM+uKACMHdtj
- X+DF1yF+SbSzJB71d2twgs34lVcMJLb3glqGjVk1q3S2bxz9lCZ/mT+XG3
-X-Google-Smtp-Source: AGHT+IE4loaKfS40kOKsfdI5oxl3nsRuGPswH3JdtTiD8obLijizDXn9QLheCFEHjFSbrWrXkvGgs54OhPdSXMsGPh4=
-X-Received: by 2002:a05:6102:c46:b0:4c1:9acb:a572 with SMTP id
- ada2fe7eead31-4c2e2969c37mr3660001137.21.1741240157568; Wed, 05 Mar 2025
- 21:49:17 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741240215; x=1741845015;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3syLFzaHMXatZ8dFo04m8GqKmf4x8o+I0TMYQkVK8DI=;
+ b=aCtAQwiaS6iFA58TmvkwpsuRRRAaZhfEf02p17hds6egb2XBCCifUUaTgf8wg9pexJ
+ rtDdRkKk7CFpTFu+CIc0pqsx+axhiLsp1mogfCaSYxcFFdSZw6RXgdWMYZeTmuKHYFOa
+ YnVokg0kdRRSBz5gT3IRcpeMGdLiFJmVyrBxwiDILbG7yNQ67qoDTxTGtKB1/wSex/fb
+ 15rwl9ekg18U3kbbFe5W6er9ZmtqFQsQLFaEkiUNnWpSTPvtRlp9dOPdneR4P8wAxifR
+ sOoJd52f4FopacF/8wJndAlIzyRFJcFgRFOaDUYTDql1u/5A7VUihAbwByHVI6Vkuqlw
+ 9xRg==
+X-Gm-Message-State: AOJu0YyZFtmcL/LqN9UqybZiunLT8oJEE2J8R6z6cyvAc2FlXB8RCVoc
+ aVM1ALOE3CdKjD72l7Iw5MbWZcF0Aj4gOhMDYjzaN9IXTi6hNAwsFRnPo9omL+h93gt51pJC9rR
+ etMSCpu/W+wUGxYyiVy/L8DjjLVlKZm7oOKwpVwZXkVkcw5CzLnrB
+X-Gm-Gg: ASbGncs0jFaRsTyJPeLsJLqA3TNuGAxQeGNn5UdnNVgy+v1k/3jE74vN2/Hx30Ih9yt
+ 3J8zVw4whEDam8PY6ZM7i/pINiTaSMX6pmK9OxQiOxWg3Ao9pp9GE+oqg9yH2r2SMxQhxcOMOQq
+ 2CqCyEBv/wM5MKNMjbUM9XPFgZ5Xp+1IohJujj0NReEozioJ+UFPyIlamajDnItGYfwd8I6s0kv
+ tponkZC+gQR0Mt13cXSgseNldW+9fYzLLtPn1wrvyghe3YD0uhVdWwKGe0SfFj91QDaFvN/kWGD
+ nVyo4TpLf9Wm0HuxROpL7DCUdIqqoY9JHRPll+FhzkSGExfe5P52wA==
+X-Received: by 2002:a05:6000:1f8e:b0:38d:ca55:76c3 with SMTP id
+ ffacd0b85a97d-3911f7276bfmr5134619f8f.11.1741240214969; 
+ Wed, 05 Mar 2025 21:50:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHLs3hDtN+VEvLZMbjkWepAoyLQXtUnCp/VqYu+2yXDcSeZ7wrUew+ChlnoDfqN+rleASrGIQ==
+X-Received: by 2002:a05:6000:1f8e:b0:38d:ca55:76c3 with SMTP id
+ ffacd0b85a97d-3911f7276bfmr5134609f8f.11.1741240214550; 
+ Wed, 05 Mar 2025 21:50:14 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912c102db1sm830750f8f.95.2025.03.05.21.50.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Mar 2025 21:50:13 -0800 (PST)
+Message-ID: <c6a67c17-c845-4b28-b01c-d5bebc327314@redhat.com>
+Date: Thu, 6 Mar 2025 06:50:12 +0100
 MIME-Version: 1.0
-References: <20250303093155.35585-1-florian.lugou@provenrun.com>
- <20250303093155.35585-2-florian.lugou@provenrun.com>
-In-Reply-To: <20250303093155.35585-2-florian.lugou@provenrun.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 15:48:51 +1000
-X-Gm-Features: AQ5f1JrtjtTDx8vY236w4UcdDoSXykMHhtOJ0ilSDjYI92NXnQ9xQ-7SWYAYKS0
-Message-ID: <CAKmqyKOhUpLbmj3ob7htaYdmqhZxOn2nJCyoerb=UsuLxECjig@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] target/riscv: Add scontext CSR handling
-To: Florian Lugou <florian.lugou@provenrun.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/9] vfio/igd: Decoupling quirks with legacy mode
+To: Tomita Moeko <tomitamoeko@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
+ <corvin.koehne@gmail.com>
+References: <20250303175220.74917-1-tomitamoeko@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250303175220.74917-1-tomitamoeko@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,146 +154,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 3, 2025 at 7:39=E2=80=AFPM Florian Lugou
-<florian.lugou@provenrun.com> wrote:
->
-> scontext size is 16 bits on RV32 and 32 bits on RV64, as recommended by
-> version 1.0 2025-02-21 of the debug specification.
+Tomita,
 
-Section 5.7.8 indicates the register is XLEN bits wide, with data
-being 32-bits wide for both RV32 and RV64.
+On 3/3/25 18:52, Tomita Moeko wrote:
+> This patchset intends to decouple existing quirks from legacy mode.
+> Currently all quirks depends on legacy mode (except x-igd-opregion),
+> which includes following conditions:
+> * Machine type is i440fx
+> * IGD device is at guest BDF 00:02.0
+> * VBIOS in ROM BAR or file
+> * VGA IO/MMIO ranges are claimed by IGD
+> * OpRegion
+> * Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
+> 
+> If one of the condition is not met, the quirks will not be applied.
+> However, for recent generations, espcially Gen 11+ devices that removed
+> VBIOS support, not all the conditions are required. For example, on EFI-
+> based systems, VBIOS ROM is unnecessary, and VGA ranges are not used.
+> 
+> To have better support on newer UEFI-based VMs, this patchset makes the
+> quirks independent of legacy mode. The BDSM and GGC register quirks are
+> applied to all supported IGD devices, new x-igd-lpc option for the LPC
+> bridge / Host bridge ID quirk is introduced for possible Q35 support.
+> It also prepares for supporting IGD passthrough when it is not primary
+> display later (kernel change will be merged in 6.15).
+> 
+> To maintain backward compatbility with exising configuration, legacy
+> mode will automatically be enabled when:
+> * Machine type is i440fx
+> * IGD device is at guest BDF 00:02.0
+> If the legacy mode behavior is unwanted, option x-igd-legacy-mode=off
+> is provided for users to disable it.
+> 
+> Note that a major difference is that instead of simply continues, legacy
+> mode will now fail immediately on error, this may break functionality,
+> but the impact should be low as IGD passthrough is not working, and
+> there would be no display output if it fails halfway.
+> 
+> The first 2 patches of this patchset was taken from a previous one,
+> details can be found at:
+> https://lore.kernel.org/all/20250124191245.12464-1-tomitamoeko@gmail.com/
+> 
+> This patchest was mainly tested on Alder Lake UHD770, with Debian 12
+> (kernel 6.1), Windows 11 (driver 32.0.101.6458) and Intel GOP driver
+> 17.0.1081.
+> 
+> Btw, documentation change would be added after everyone considers the
+> proposed change is okay.
+> 
+> 
+> Changelog:
+> v2:
+> * Keep legacy mode for compatbility
+> * Renamed from "vfio/igd: Remove legacy mode"
+> Link: https://lore.kernel.org/all/20250224182927.31519-1-tomitamoeko@gmail.com/
 
-Alistair
 
->
-> When the Smstateen extension is implemented, accessibility to the
-> scontext CSR is controlled by bit 57 of the [mh]stateen0 CSRs.
->
-> Signed-off-by: Florian Lugou <florian.lugou@provenrun.com>
-> ---
->  target/riscv/cpu.h      |  1 +
->  target/riscv/cpu_bits.h |  5 +++++
->  target/riscv/csr.c      | 36 ++++++++++++++++++++++++++++++++++++
->  target/riscv/debug.c    |  1 +
->  4 files changed, 43 insertions(+)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 616c3bdc1c..102e8285a6 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -440,6 +440,7 @@ struct CPUArchState {
->      target_ulong tdata2[RV_MAX_TRIGGERS];
->      target_ulong tdata3[RV_MAX_TRIGGERS];
->      target_ulong mcontext;
-> +    target_ulong scontext;
->      struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
->      struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
->      QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index a30317c617..e8997f3153 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -258,6 +258,9 @@
->  /* VS-Level Control transfer records CSRs */
->  #define CSR_VSCTRCTL        0x24e
->
-> +/* Supervisor-Level Sdtrig CSRs (debug) */
-> +#define CSR_SCONTEXT        0x5a8
-> +
->  /* Hpervisor CSRs */
->  #define CSR_HSTATUS         0x600
->  #define CSR_HEDELEG         0x602
-> @@ -1103,4 +1106,6 @@ typedef enum CTRType {
->  #define MCONTEXT64                         0x0000000000001FFFULL
->  #define MCONTEXT32_HCONTEXT                0x0000007F
->  #define MCONTEXT64_HCONTEXT                0x0000000000003FFFULL
-> +#define SCONTEXT32                         0x0000FFFF
-> +#define SCONTEXT64                         0x00000000FFFFFFFFULL
->  #endif
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 0ebcca4597..37b38f24a6 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -3393,6 +3393,10 @@ static RISCVException write_mstateen0(CPURISCVStat=
-e *env, int csrno,
->          wr_mask |=3D SMSTATEEN0_P1P13;
->      }
->
-> +    if (riscv_cpu_cfg(env)->debug) {
-> +        wr_mask |=3D SMSTATEEN0_HSCONTXT;
-> +    }
-> +
->      if (riscv_cpu_cfg(env)->ext_smaia || riscv_cpu_cfg(env)->ext_smcsrin=
-d) {
->          wr_mask |=3D SMSTATEEN0_SVSLCT;
->      }
-> @@ -5321,6 +5325,35 @@ static RISCVException write_mcontext(CPURISCVState=
- *env, int csrno,
->      return RISCV_EXCP_NONE;
->  }
->
-> +static RISCVException read_scontext(CPURISCVState *env, int csrno,
-> +                                    target_ulong *val)
-> +{
-> +    RISCVException ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSCONTXT)=
-;
-> +    if (ret !=3D RISCV_EXCP_NONE) {
-> +        return ret;
-> +    }
-> +
-> +    *val =3D env->scontext;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException write_scontext(CPURISCVState *env, int csrno,
-> +                                     target_ulong val)
-> +{
-> +    bool rv32 =3D riscv_cpu_mxl(env) =3D=3D MXL_RV32 ? true : false;
-> +
-> +    RISCVException ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSCONTXT)=
-;
-> +    if (ret !=3D RISCV_EXCP_NONE) {
-> +        return ret;
-> +    }
-> +
-> +    /* Spec suggest 16-bit for RV32 and 34-bit for RV64 */
-> +    target_ulong mask =3D rv32 ? SCONTEXT32 : SCONTEXT64;
-> +
-> +    env->scontext =3D val & mask;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
->  static RISCVException read_mnscratch(CPURISCVState *env, int csrno,
->                                       target_ulong *val)
->  {
-> @@ -5973,6 +6006,9 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D {
->      [CSR_SIEH]       =3D { "sieh",   aia_smode32, NULL, NULL, rmw_sieh }=
-,
->      [CSR_SIPH]       =3D { "siph",   aia_smode32, NULL, NULL, rmw_siph }=
-,
->
-> +    /* Supervisor-Level Sdtrig CSRs (debug) */
-> +    [CSR_SCONTEXT]   =3D { "scontext", debug, read_scontext, write_scont=
-ext },
-> +
->      [CSR_HSTATUS]     =3D { "hstatus",     hmode,   read_hstatus, write_=
-hstatus,
->                            .min_priv_ver =3D PRIV_VERSION_1_12_0         =
-       },
->      [CSR_HEDELEG]     =3D { "hedeleg",     hmode,   read_hedeleg, write_=
-hedeleg,
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index 9db4048523..072593ab12 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -1088,4 +1088,5 @@ void riscv_trigger_reset_hold(CPURISCVState *env)
->      }
->
->      env->mcontext =3D 0;
-> +    env->scontext =3D 0;
->  }
-> --
-> 2.43.0
->
->
+QEMU 10.0 soft-freeze is next week. I plan to send a PR at the end
+of this week.
+
+Thanks,
+
+C.
+
+
 
