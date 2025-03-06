@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F7B1C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 07:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6AD9C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 07:09:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq5K3-0002rr-M5; Thu, 06 Mar 2025 02:07:11 -0500
+	id 1tq5Lc-0003Ug-78; Thu, 06 Mar 2025 02:08:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tq5K2-0002rW-D9
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 02:07:10 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tq5LY-0003R0-A8
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 02:08:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tq5K0-0000pJ-HJ
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 02:07:10 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tq5LW-0000tg-El
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 02:08:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741244825;
+ s=mimecast20190719; t=1741244920;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wExwSt28zXgiRRui6EN72KKAkoulKkK207Co0yn9ynk=;
- b=hGUMs949Mctp2OVYUUd8X1UkHaeqxStPD0KR3JEwgQRaF2grktOzxz/y+mkue+4M1gRL27
- jN4GrEkH1BhvCSQvsLxGr0lpjLYLsb0dHfxrqrp07mwSt+H6LvM4hU7vjGDIxJythqNjXn
- imxgDAogVO4qCEWJ1ftcbN7dDsHzX6A=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aq7el6MmM+lyQkTtJn25+TSSbUsMvqeVY+xw1CoOML0=;
+ b=K5XhkMid1U5FU15DMimp9Ynr/IGX5A0J7nA1Yg374d703ZNbL4T3UCiObwDif6lZGYrQDV
+ +7nIMslLPrWTu8T7VJ7lCfyXCzUc9OnZkX1P6ZhXycVX5SA7lbGby9QVnpdRvkiSqMH0ZH
+ g1RcK0tsw/zfXdivSjV85tbGh4RvVzk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-HBXOHdOqOD6Yz8_JgrCTDQ-1; Thu, 06 Mar 2025 02:07:04 -0500
-X-MC-Unique: HBXOHdOqOD6Yz8_JgrCTDQ-1
-X-Mimecast-MFC-AGG-ID: HBXOHdOqOD6Yz8_JgrCTDQ_1741244823
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-39123912ff0so130074f8f.2
- for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 23:07:04 -0800 (PST)
+ us-mta-683-AWJp-e0hOo6KRhLIwEfRTQ-1; Thu, 06 Mar 2025 02:08:29 -0500
+X-MC-Unique: AWJp-e0hOo6KRhLIwEfRTQ-1
+X-Mimecast-MFC-AGG-ID: AWJp-e0hOo6KRhLIwEfRTQ_1741244908
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43bbbb00891so980775e9.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Mar 2025 23:08:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741244823; x=1741849623;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wExwSt28zXgiRRui6EN72KKAkoulKkK207Co0yn9ynk=;
- b=BiBXWgoIDmc+tGUOzS7TIgMGY7E7VmskZowPG0iXp/cld+7jYG8Rpy0vSxOL0V/8vY
- xnkhkDhjmxJNZjO+LZWz9NCS6/BLLzqB/C7Rv8BL1zni3saRejXJlN0bRPFKTxu75nui
- BRpdGvo6/KDKclZFEJerXuBbpTz0lc1U2t4bEkIgK7ALRIt2qwRbyvTr49QBL1U3Qusm
- VYEee7gotVOIpHMlfyAwIdoWjMjYJ19OERoZ5HX10JSAWqlpDnExr0KnkdAI3s2IzMPA
- VEA/bRsgcPfvogX6azTyElI34muHKGT5NXHR8UjgwS6YWuCMCk9Y6JLyQua/Ii/MMDBH
- Tofw==
+ d=1e100.net; s=20230601; t=1741244908; x=1741849708;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aq7el6MmM+lyQkTtJn25+TSSbUsMvqeVY+xw1CoOML0=;
+ b=PdYlJBkLr7MXfYqGR4x3k5Jh+2VBM2o0yCgbH453kwkE+IEv4er7JmIRODkhwL3TF9
+ 19z4pQCNdBVDC9rMH16mSwLCWW/iIuQ5YNrpzvJnOOYjXGOduLq+5fpV8FskeXaluVpr
+ denDL9vckK/RkwhfFvB9WdTBr80bE60N6LyPhPeojTRpU/UhFLhE9kwS+lQGauumE442
+ OvjfYHtv4gqJfN9nckOUEINcaWlR5EtM+q+NppEwx7SnVCTT9gNjr2PkrxalqBWeiMEW
+ 45IfmoCS8lcy/h/folIyPe1kYjbdZGSLYV1zeZG+0soc425bdvKd8yIq36wcApWlyZOx
+ 1biQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCValbuLpR+PJfdo0rIvBRGJfIeuBLf4109WusAXN/Sh7qLvBnf+ecblFzdueOylqrhl5CwrzZKyk8bJ@nongnu.org
-X-Gm-Message-State: AOJu0Yx5rd959RBcapPyw5GdmN0ZV/53vaG9XdoHERgS48llROKRLgjy
- 0Py9nrnDTSrZBXLt9t372eJKeOC+SeRvkpNhdXfgtJS/4Vjadsp1FT/r+/t0V4doprMThZewdTM
- eqwFh3xA+J9uxKfaldMsmz94hCuxYGv86ITrmjl3w5CrYTNrFg6il
-X-Gm-Gg: ASbGncvLolZpi3MrSJjHB9QoTaWRTBxVH7u3pTqJ1xGqpqtR7fPhXiiaR36unDYeVy2
- fGRy1N8BNEIVkTE6//S4bt6JE3HGozxMR7T1eTPiyuO2ukCQzKgQsY6pGzbLi1q/CqNVQubJOOO
- lsb63tNAKVDwLViCnfALImqgBnuFIrMd0tLdC6z4rSIRMBqeygbxQkGJfvjXRk5h5E0GWaYNBO/
- AvdB0fhvhwSOzr0WnhmdKDOP8iQ5bHvf5ZRbx1lTyt6D8X1qKaXFmsDgJFmqKRYWe+Xp1mRw0mD
- Np9pFISjdISoBtbDucZH+Lq6dscaTThy10zLrSzx7NnmM/M=
-X-Received: by 2002:a05:6000:2a6:b0:38f:2ef1:dd2b with SMTP id
- ffacd0b85a97d-3911f740b80mr3894369f8f.22.1741244823081; 
- Wed, 05 Mar 2025 23:07:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG+cqeq7iQZZzsrytVxUi29sGII74Q9uklg4ePJ/AJAzBnEeCxcgtD4KvLIoA8+mARaYc2P4w==
-X-Received: by 2002:a05:6000:2a6:b0:38f:2ef1:dd2b with SMTP id
- ffacd0b85a97d-3911f740b80mr3894352f8f.22.1741244822699; 
- Wed, 05 Mar 2025 23:07:02 -0800 (PST)
+ AJvYcCX3oa+Y0wskXRFXlvT38mLv6heRcuF7+T1UugXBNSZipiJJV912JDlpvD1gcuvCZdLvWZ78hDXxTjO8@nongnu.org
+X-Gm-Message-State: AOJu0YyurQtccPrSah076mhgpNuxYFt4a2U1Pt//tLXzoOK2hR27EscI
+ VBtHzmxofkBD1yhH5riLIUlTHzTvPDumZkgaGfTx5euvOsZeMWusUVbzfKa+j0Qf3nSX9Fgww79
+ +6lOmjsRxdRKU8e/3OL3WLFN6tYbXWvvvhwGsqJizq5wHRcLU79u5
+X-Gm-Gg: ASbGncsmI4EtqHvPBkz57FwZlzwd7NIePRSNXABip/AoKlhLDRKW5DYLuBfg1Q10x+L
+ kmpeJ6RvGHkeGKWMkpvSfFt0GRoDOzJYsICs4meQNfBepmmXo7/hM/vqo1lafqObQRUQHBnRr/T
+ OCtaPgZbs6a7q3DD+1GLC+jsPJOKWkZO9i0wEaAJhhaHYMJ5GiGIkKdHmTAAOB4aXICZSp3wma8
+ IZ+8IdBf8u2BR4OQbm9Eq94clvYqQ/HrJMaQYPHfXekc26SjjMQjbTRgV62c8ZHyjX4MIlWM4Hp
+ 8yyF43m7UKmRqb9FylbUBdjBuvI9qJ7RAcxK1ehhGFtc/D4=
+X-Received: by 2002:a05:6000:1542:b0:391:2391:2f79 with SMTP id
+ ffacd0b85a97d-39123913196mr5596379f8f.43.1741244907895; 
+ Wed, 05 Mar 2025 23:08:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEBNJcc5ikHkpNhh9AXpXifgRrFp6Ucj/Xyj7REs/wXS5KrjlzVuILOaoFmD9FiKKAyojlZiA==
+X-Received: by 2002:a05:6000:1542:b0:391:2391:2f79 with SMTP id
+ ffacd0b85a97d-39123913196mr5596345f8f.43.1741244907492; 
+ Wed, 05 Mar 2025 23:08:27 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
  [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e2e89sm1019060f8f.71.2025.03.05.23.07.01
+ ffacd0b85a97d-3912c0194f2sm1044419f8f.54.2025.03.05.23.08.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Mar 2025 23:07:02 -0800 (PST)
-Message-ID: <85f61970-665f-4519-aaa6-ae267948a982@redhat.com>
-Date: Thu, 6 Mar 2025 08:07:00 +0100
+ Wed, 05 Mar 2025 23:08:26 -0800 (PST)
+Message-ID: <ad51f681-98d1-4347-bbfe-5ffb8366af8d@redhat.com>
+Date: Thu, 6 Mar 2025 08:08:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] doc: add missing 'Asset' type in function test doc
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-References: <20250306060706.1982992-1-adityag@linux.ibm.com>
- <4a96e43a-a4f3-4b24-8ffe-63b5da01f82b@linaro.org>
-Content-Language: en-US
+Subject: Re: [PATCH v5 0/2] s390x/pci: relax I/O address translation
+ requirement
+To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, richard.henderson@linaro.org, david@redhat.com,
+ iii@linux.ibm.com, clg@redhat.com, qemu-devel@nongnu.org
+References: <20250226210013.238349-1-mjrosato@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -126,9 +127,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <4a96e43a-a4f3-4b24-8ffe-63b5da01f82b@linaro.org>
+In-Reply-To: <20250226210013.238349-1-mjrosato@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -154,45 +155,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/03/2025 07.44, Philippe Mathieu-Daudé wrote:
-> On 6/3/25 07:07, Aditya Gupta wrote:
->> Seems 'Asset' got missed in the documentation by mistake.
->>
->> Also fix the one spellcheck issue pointed by spellcheck
->>
->> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
->> ---
->>   docs/devel/testing/functional.rst | 6 ++++--
->>   1 file changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/ 
->> functional.rst
->> index ecc738922b7c..50fca2a0291e 100644
->> --- a/docs/devel/testing/functional.rst
->> +++ b/docs/devel/testing/functional.rst
->> @@ -251,7 +251,7 @@ Many functional tests download assets (e.g. Linux 
->> kernels, initrds,
->>   firmware images, etc.) from the internet to be able to run tests with
->>   them. This imposes additional challenges to the test framework.
->> -First there is the the problem that some people might not have an
->> +First there is the problem that some people might not have an
->>   unconstrained internet connection, so such tests should not be run by
->>   default when running ``make check``. To accomplish this situation,
->>   the tests that download files should only be added to the "thorough"
->> @@ -274,7 +274,9 @@ the tests are run. This pre-caching is done with the 
->> qemu_test.Asset
->>   class. To use it in your test, declare an asset in your test class with
->>   its URL and SHA256 checksum like this::
->> -    ASSET_somename = (
->> +    from qemu_test import Asset
->> +
->> +    ASSET_somename = Asset(
->>           ('https://www.qemu.org/assets/images/qemu_head_200.png'),
->>           '34b74cad46ea28a2966c1d04e102510daf1fd73e6582b6b74523940d5da029dd')
+On 26/02/2025 22.00, Matthew Rosato wrote:
+> This series introduces the concept of the relaxed translation requirement
+> for s390x guests in order to allow bypass of the guest IOMMU for more
+> efficient PCI passthrough.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> With this series, QEMU can indicate to the guest that an IOMMU is not
+> strictly required for a zPCI device.  This would subsequently allow a
+> guest linux to use iommu.passthrough=1 and bypass their guest IOMMU for
+> PCI devices.
+> 
+> When this occurs, QEMU will note the behavior via an intercepted MPCIFC
+> instruction and will fill the host iommu with mappings of the entire
+> guest address space in response.
+> 
+> The kernel series [1] that adds the relevant behavior needed to
+> exploit this new feature from within a s390x linux guest is available
+> in linux-next via iommu-next.
+> 
+> [1]: https://lore.kernel.org/linux-s390/20250212213418.182902-1-mjrosato@linux.ibm.com/
+> 
+> Changes for v5:
+> - Add some review/test tags (had to drop some due to code changes)
+> - Dynamically allocate iommu->dm_mr, remove direct_map bool
+> 
+> Changes for v4:
+> - use get_system_memory() instead of ms->ram
+> - rename rtr_allowed to rtr_avail
+> - turn off rtr_avail for emulated devices so MPCFIC fence properly
+>    rejects an attempt at direct mapping (we only advertise via CLP
+>    for passthrough devices)
+> - turn off rtr_avail for passthrough ISM devices
+> - various minor changes
+> 
+> Changes for v3:
+> - use s390_get_memory_limit
+> - advertise full aperture for relaxed-translation-capable devices
+> 
+> Changes for v2:
+> - Add relax-translation property, fence for older machines
+> - Add a new MPCIFC failure case when direct-mapping requested but
+>    the relax-translation property is set to off.
+> - For direct mapping, use a memory alias to handle the SMDA offset and
+>    then just let vfio handle the pinning of memory.
+> 
+> Matthew Rosato (2):
+>    s390x/pci: add support for guests that request direct mapping
+>    s390x/pci: indicate QEMU supports relaxed translation for passthrough
+> 
+>   hw/s390x/s390-pci-bus.c         | 39 +++++++++++++++++++++++++++++++--
+>   hw/s390x/s390-pci-inst.c        | 13 +++++++++--
+>   hw/s390x/s390-pci-vfio.c        | 28 ++++++++++++++++++-----
+>   hw/s390x/s390-virtio-ccw.c      |  5 +++++
+>   include/hw/s390x/s390-pci-bus.h |  3 +++
+>   include/hw/s390x/s390-pci-clp.h |  1 +
+>   6 files changed, 80 insertions(+), 9 deletions(-)
+> 
 
-Thanks, queued!
+Series
+Acked-by: Thomas Huth <thuth@redhat.com>
+
+I'll queue it for my next pull request.
 
   Thomas
 
