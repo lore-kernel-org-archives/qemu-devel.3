@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C4B8C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 18:03:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21A1EC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 18:03:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqFXh-00033e-SS; Thu, 06 Mar 2025 13:01:58 -0500
+	id 1tqFY0-0003AL-9A; Thu, 06 Mar 2025 13:02:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tqFXU-00032h-2F
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 13:01:44 -0500
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ id 1tqFXn-00036Z-IY
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 13:02:03 -0500
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tqFXS-0008WM-2h
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 13:01:43 -0500
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-223fb0f619dso20397205ad.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 10:01:39 -0800 (PST)
+ id 1tqFXl-0000DN-OL
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 13:02:03 -0500
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-22401f4d35aso18439285ad.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 10:02:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741284098; x=1741888898; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=GdJfYXrcqWD3zMkJvz+5nykVW2SM0vZ2bQZguTS5vXM=;
- b=e9KRQO7MrRD6APFW4OWJ16NZoYiFSMWVj/ys2oI3SDbqN19aiACWk7O7ZZJYgNMrBY
- AOStIop8MTNKdC9Jglk0WhOGSG7qWrPT0O/1Z2A0Jb9e4AaxEwTU0v6ZnJhZoPqbOrO1
- gDmBbaO1LTJ1SG8yFD0Gzg8PCC8XDNusGiQ5t/1LeK8K3cSgCfVR6xhN1cyhHvPUNuoH
- FllsdqMDyOma9LkKyu02wTKdtNpvGhH3Ywy6XfNFeXkfDvSIEAundVB9O8PaD5Luib+E
- NyUJaT0XCDIcuSttDIHS8l8ikdN0FvUNU3ncJ8bAYvLXyaSbTShpIRH91qMOeg097MvK
- v84Q==
+ d=gmail.com; s=20230601; t=1741284120; x=1741888920; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+jrFIingrAbF5dij+VV01pN3aIuY/zKM1+KpxvGbRKI=;
+ b=BffE7O73YHCSxxL38icGoNCj2UY8CVfCkDJtA6aHAU8UdT6mRBC/Iu7j9g2N2qyjYH
+ GccGPcOueWLZWyBKClMTY1GD75BcMDZV63sIqjC80paTXOj/F8ev/s0UqIdE4zaPXcss
+ uBsqYlMmtXsb7pVCwgOieZINHdw/+y2VTwSsUhK+BG8y4kdqtiwqHz3nUbLXpHUkIiK7
+ yGh9Ko9qvBDYe+rtyr1j2G0a325JX8qaZZ3qgNwmW+rX4PlWzQRdqT7UJe/PAls2c89O
+ TTLeve3Ks2DAUty2z1WRVNLPlrtFEWLF3bw99PRv9A4wvb1mw7UGvXZmJDtWmSbu1Ces
+ TjSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741284098; x=1741888898;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GdJfYXrcqWD3zMkJvz+5nykVW2SM0vZ2bQZguTS5vXM=;
- b=RY9OBPXtQOJkw/f2zEdOk8GAx8x97Ig2gPABwHgARVCuosSaigSEwGsXuoWyKX21k4
- gDMQTXgxT4Z0zv8rOMtVr0c+pQbHbun9NzG5N1/6Z9til0+Am3ICacgCp0uaMyg+UBQ4
- 74WMifJe9bWS2DqCzc3D/DURv3SVESpBlQ3OggGsOWOqw7P5AOW72WrN4vtFqU91QV5q
- 9R4eLU5CqBwPYPsMlctAlzvNq2lnalWGax25KtKdT0CLKpV0tXq+7hm3uNw/faOXQKwo
- KqHoBclW31nnq5KMhqrQ5jE5d6rnkwT2fSPtXZPMFhrQ9jwjyEyiFwhiAqqdyRSm/m1L
- h26g==
-X-Gm-Message-State: AOJu0Yy8ZNePuIAtMpUWxtgbu9MaGwF+ywY7iMbg7s2aGtEy1IVhIv6p
- u2srM+OYAwqS5ml7mhiN93vXWPV4cynQ+ly0RsPns6Hptr5CR2LwNdZQCUKNCw==
-X-Gm-Gg: ASbGnctOmmQqLk13pRTVE6JGlBjd3Zi8/97YLNjR/8YlqRRTBqXRilLQtpME/x+uvfO
- eDoqkeMJEvRxdZGSi27bf5/+qaRxzbN6d4kMqz0tgXNCuyspqBbVKkNpMLmIu5Nmc3auJLrrXzJ
- nlsBp93jLvt3kKnS1aCHF/BLIZIlLq8MfYnnKTgFXv9K2hKi1CGdjCaikdr8XENdWpiPeZWzntA
- fYLmlMyBE/RJ2HSXbX5VPhs++pp63a31Db2mA31D/U1BHxievf+qPLTGgu7KXux9HMk2/9M9U5a
- /M0losIdidNYVPzD0PmvcxbCwD5Ez+BI2aLLOeXoSPc2ydxllo+rUWhmng==
-X-Google-Smtp-Source: AGHT+IHMT5IBxVOWiMgPmNAcfmnyYrFbvjQ19Z0TcYm62OO67Catwhpcbjs+EmAMlt5fY5LPgWLTvA==
-X-Received: by 2002:a05:6a21:398:b0:1f3:36f7:c0d2 with SMTP id
- adf61e73a8af0-1f544c93c57mr622069637.41.1741284098216; 
- Thu, 06 Mar 2025 10:01:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741284120; x=1741888920;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+jrFIingrAbF5dij+VV01pN3aIuY/zKM1+KpxvGbRKI=;
+ b=IJyLkO6L0Q2uGjfCNkKBjxMFisFVqxSLxw1CvrLTN6qalt7nvm3wh+EDTu7ZPbR9Gj
+ HTRXVl/CVXaxh0VFFA8dtNLRVglgHTZjEwue0jnevieai+JBeQfnuBccwZb2p7lzi/kk
+ FdJfWqsGNY+pItXc7c/1Tk0DTZENZQOGtjFReS/xI37IDc9UzbL9dIHTdnR1guzub5Uq
+ e+vvRRgntYcFoqQi2/aNKEI35FxaCgJT00dBqOXcJQNPKAiCSs8PM5hO8QuROWwWRhit
+ VwHhQyt+WvWTxb5C10N6oQV8fN8BPw7eXDQ3Fv7LlNzVcQNjL7rSNH7PTaljyhkxnx5n
+ OFlg==
+X-Gm-Message-State: AOJu0YxTnTR5eYk8ubBFvoU3+3MX62Ryr4C5kaaVxzwvUlMUnYZCkJr4
+ a4VQw+YYEesQycWwW2ET/F/wl3Hhl4CpbPn6PK17Yxx/D/OPfkQ=
+X-Gm-Gg: ASbGncuZ+n21sw6R/kkGCiQQi52zlyTe/kKqdXmRDoK9zcOR6KEazsfZlk/ttiw/rz0
+ V58uEOHtbPy0sSKvdKuqR6r/a8inU6wUD/+K4UeObWe8RhUCZIpeUk0y95xklnqsv7+hHl0oQ2i
+ f45SAKITZVVNYladu14V3/fhfdv6d/iYoHDxx5LNcSZYMieE2RgfIxNnMGHjt/Ns9wCBBnhqsHT
+ x2TH2laK3WoTcAvqLqDvqBeibYW68zGMHj8aKkHoyITC1TuDX3oMFb2dNTCxLMxOJr7m7WuwZnk
+ W73pjy2UcLPv41qz1lZc0IRnREFRStZHjzi4UX90nwvOwTV49il8uChXRA==
+X-Google-Smtp-Source: AGHT+IGM+vtzTBAbn3N/cHyXCI95F0tCreWUJsk8cg2uorxSD5Tj6eRkaJiFjpeTcqP8yizysmsBbg==
+X-Received: by 2002:a17:90b:1b0b:b0:2fa:e9b:33b8 with SMTP id
+ 98e67ed59e1d1-2ff7ce989dcmr336874a91.18.1741284119206; 
+ Thu, 06 Mar 2025 10:01:59 -0800 (PST)
 Received: from localhost.localdomain ([58.37.175.138])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af28126db9bsm1338498a12.58.2025.03.06.10.01.36
+ 41be03b00d2f7-af28126db9bsm1338498a12.58.2025.03.06.10.01.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 10:01:37 -0800 (PST)
+ Thu, 06 Mar 2025 10:01:58 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>,
  Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v3 00/10] vfio/igd: Decoupling quirks with legacy mode
-Date: Fri,  7 Mar 2025 02:01:20 +0800
-Message-ID: <20250306180131.32970-1-tomitamoeko@gmail.com>
+Subject: [PATCH v3 10/10] vfio/igd: Fix broken KVMGT OpRegion support
+Date: Fri,  7 Mar 2025 02:01:30 +0800
+Message-ID: <20250306180131.32970-11-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250306180131.32970-1-tomitamoeko@gmail.com>
+References: <20250306180131.32970-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,85 +101,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset intends to decouple existing quirks from legacy mode.
-Currently all quirks depends on legacy mode (except x-igd-opregion),
-which includes following conditions:
-* Machine type is i440fx
-* IGD device is at guest BDF 00:02.0
-* VBIOS in ROM BAR or file
-* VGA IO/MMIO ranges are claimed by IGD
-* OpRegion
-* Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
+The KVMGT/GVT-g vGPU also exposes OpRegion. But unlike IGD passthrough,
+it only needs the OpRegion quirk. A previous change moved x-igd-opregion
+handling to config quirk breaks KVMGT functionality as it brings extra
+checks and applied other quirks. Here we check if the device is mdev
+(KVMGT) or not (passthrough), and then applies corresponding quirks.
 
-If one of the condition is not met, the quirks will not be applied.
-However, for recent generations, espcially Gen 11+ devices that removed
-VBIOS support, not all the conditions are required. For example, on EFI-
-based systems, VBIOS ROM is unnecessary, and VGA ranges are not used.
+As before, users must manually specify x-igd-opregion=on to enable it
+on KVMGT devices. In the future, we may check the VID/DID and enable
+OpRegion automatically.
 
-To have better support on newer UEFI-based VMs, this patchset makes the
-quirks independent of legacy mode. The BDSM and GGC register quirks are
-applied to all supported IGD devices, new x-igd-lpc option for the LPC
-bridge / Host bridge ID quirk is introduced for possible Q35 support.
-It also prepares for supporting IGD passthrough when it is not primary
-display later (kernel change will be merged in 6.15).
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+---
+ hw/vfio/igd.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
-To maintain backward compatbility with exising configuration, legacy
-mode will automatically be enabled when:
-* Machine type is i440fx
-* IGD device is at guest BDF 00:02.0
-If the legacy mode behavior is unwanted, option x-igd-legacy-mode=off
-is provided for users to disable it. Setting x-igd-legacy-mode=on checks
-if the condition above are met, and set up all the required quirks.
-
-The default value is x-igd-legacy-mode=auto. When the above conditions
-are all met, it acts as before and continues on any error. Otherwise it
-is equivalent to x-igd-legacy-mode=off.
-
-When x-igd-legacy-mode is set to on or off, QEMU will fail immediately
-on error.
-
-The first 2 patches of this patchset was taken from a previous one,
-details can be found at:
-https://lore.kernel.org/all/20250124191245.12464-1-tomitamoeko@gmail.com/
-
-This patchest was mainly tested on Alder Lake UHD770, with Debian 12
-(kernel 6.1), Windows 11 (driver 32.0.101.6458) and Intel GOP driver
-17.0.1081.
-
-Due to I caught COVID these days, I am unable to deliver the proposed
-documentation update before QEMU 10.0 soft-freeze next week. Please help
-decide whether to make this patch series in 10.0 or next release.
-
-Changelog:
-v3:
-* Use OnOffAuto for x-igd-legacy-mode option, default is auto, to keep
-  current behavior.
-* Added a new patch to solve the possible KVMGT/GVT-g fail.
-Link: https://lore.kernel.org/all/20250303175220.74917-1-tomitamoeko@gmail.com/
-
-v2:
-* Keep legacy mode for compatbility
-* Renamed from "vfio/igd: Remove legacy mode"
-Link: https://lore.kernel.org/all/20250224182927.31519-1-tomitamoeko@gmail.com/
-
-Tomita Moeko (10):
-  vfio/igd: Remove GTT write quirk in IO BAR 4
-  vfio/igd: Do not include GTT stolen size in etc/igd-bdsm-size
-  vfio/igd: Consolidate OpRegion initialization into a single function
-  vfio/igd: Move LPC bridge initialization to a separate function
-  vfio/pci: Add placeholder for device-specific config space quirks
-  vfio/igd: Refactor vfio_probe_igd_bar4_quirk into pci config quirk
-  vfio/igd: Decouple common quirks from legacy mode
-  vfio/igd: Handle x-igd-opregion option in config quirk
-  vfio/igd: Introduce x-igd-lpc option for LPC bridge ID quirk
-  vfio/igd: Fix broken KVMGT OpRegion support
-
- hw/vfio/igd.c        | 529 +++++++++++++++++++------------------------
- hw/vfio/pci-quirks.c |  51 +----
- hw/vfio/pci.c        |  33 +--
- hw/vfio/pci.h        |  11 +-
- 4 files changed, 248 insertions(+), 376 deletions(-)
-
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 6775ce2eac..4c5d6a016b 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -481,7 +481,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
+ }
+ 
+-bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
++static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+ {
+     int ret, gen;
+     uint64_t gms_size;
+@@ -655,3 +655,28 @@ error:
+     error_propagate(errp, err);
+     return false;
+ }
++
++/*
++ * KVMGT/GVT-g vGPU exposes an emulated OpRegion. So far, users have to specify
++ * x-igd-opregion=on to enable the access.
++ * TODO: Check VID/DID and enable opregion access automatically
++ */
++static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error **errp)
++{
++    if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION) &&
++        !vfio_pci_igd_setup_opregion(vdev, errp)) {
++        return false;
++    }
++
++    return true;
++}
++
++bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
++{
++    /* KVMGT/GVT-g vGPU is exposed as mdev */
++    if (vdev->vbasedev.mdev) {
++        return vfio_pci_kvmgt_config_quirk(vdev, errp);
++    }
++
++    return vfio_pci_igd_config_quirk(vdev, errp);
++}
 -- 
 2.47.2
 
