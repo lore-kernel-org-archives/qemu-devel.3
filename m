@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76334C282D1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC811C28B24
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDRv-0007CV-8I; Thu, 06 Mar 2025 10:47:51 -0500
+	id 1tqDRr-0007Br-B3; Thu, 06 Mar 2025 10:47:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRs-0007Bw-Aj
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:48 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRo-0007Am-Cm
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:45 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRp-0006CC-Mj
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:48 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-39129017bbbso368597f8f.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:47:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDRl-0006BX-2M
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:47:43 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-38a8b17d7a7so484223f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:47:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276063; x=1741880863; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IEYGBSZ2FGAx0/1E6h+Sk6ak4YyUKlVgtW93H+twQDY=;
- b=yGiInYEkjx6o6pBzcnQPqMepRmGcpyS4i1hY8el1rEfFu3Gdpi3gKUrUwiqrVYtIXG
- hW6JeGq8ob7+GWB93whppkLbbdJMhAyr18vYSggmxokLXhs7Gi/OJ9u6cDO6RoRRShMT
- zYIMZ594tj7nj4vSGGULwke07NbTTSx9YdGF3+F1DdIAzQdqnPFHaswhliT+OLsUJkcc
- XEQUIS1jbbIx5c5HgblBjYn7g7LVBC3AuRUqDZB6JiOcek4M2/1swn4KVEPPzdDDKTan
- rGumLcbaFotdxSwkmdlrF6ErH+XFl2+32HXj49DBFwdcd0uWmxH/w8gEqN6L+8MXTIiu
- 8cww==
+ d=linaro.org; s=google; t=1741276059; x=1741880859; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wuI7V/wj7tWMmMltqycpG0sxIIJcyAqxcbZTwRonqDg=;
+ b=X/TbEFMz2lNZ5z5kfySHQ19j5ZewU1KBQH+topVpXEodH9unjicPjw2l3nsn5WrK4U
+ eGCT10Xs6DU3JmuLJNvgETa3TadzuHBKTaffM3ZSt+lh50LUM11UsmyYV7SSyiS2dnMF
+ 440TLxGnM3xIrxWK99Kc70H82OcXdcK1PXQNyPNYatdVgdStrfhWOdGYDgP6iIKNkcZp
+ 1vpao0JcNi5cNLzkEvA9ZOfLk7Tcg3794Ub1SY+DF+S+o8ZxHsrRx+g4R7Z9zIlTxQcU
+ 0rtUYEu4X9rAiEEPRs8bcNijm4GOcwFBp+b5cD5gl5pg1O+K4imh2Du+tMQVNUWbbfLM
+ 4B8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276063; x=1741880863;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IEYGBSZ2FGAx0/1E6h+Sk6ak4YyUKlVgtW93H+twQDY=;
- b=IbM+ji0sKJ2mHIRQFjgBX0RqSMRk7qZwCY+pnyExtxE1NiBOiIXBgELMzLrSH/9YyK
- uV6Hf2CPxQCFSiALRwVGrEnPZqizONE8dO5mocJ2hzABwU2U77pxrvKkVlA7F0hIr2MA
- phxK2FAXyNpgHzsXK1b/z49Extk9jWYY47p0sg1j7tIPum2Oh/URGgW6xNSGWS+roXDG
- XXZ3euciuIxS0V3i9PUP89f5rQFb5CtJYOZuaBXUQxakRgLYPikeyqSDOF9iY5cOjIq5
- Oy60goHHaxiv9T/uypb+824zNOmyHNZAb57CEGJAmeHHKbWfEt52lXNdFLLAFRbzwkW5
- eM2Q==
-X-Gm-Message-State: AOJu0YwZ6PEgxY8aK0UNNJsO05F9pMq3Z8RpejUNqkpGkk0fQSEX/A7f
- ZGzmhSJxlzfH2WwZ8rUydd5T+HKqEenGP/uYiMfS8kjwPmAEyi5X6pkb117oeumTEsA29yVPhM4
- vsEs=
-X-Gm-Gg: ASbGncuzmxE4OYjlatLrXVsyqMcwjCyzDkD6Sdwuvw1zfcH26WciYPlh3RzELHj2X8F
- 9u3V9SQaVv4nAHyKPCl55cXotmVUMrIUwLsYT5IZHGZLkM1V8f1BdQmlSi50isEo0dnY4no5zT5
- dCnODfDc9v0RttBG6RAI12GDjI4sboy3Qd7oMsdLIAs+VtEmD4yo1s9WrPjjNOc7iEfsRd1y4Bz
- DZ7IHU7xlRHIyWPtbCjCCtCO3vQvTHXkFxTulCZKWvEu/SpvnCVOBslrT2YVmoommyaQ0R/gDGK
- VW8+gMQ/q7lL9Q3t2FEEqrGXJ+QMOiA/XJfoahOsfQA2YSZVwKfH7GlUW9BjIYdCiVoOIRrgULX
- RrDyFeCnu3vbZaEVZzv0=
-X-Google-Smtp-Source: AGHT+IFWFJpuRqZ7MseNg+B3NPYnSOC4GlDP3rfy4A6/EBhKLDhzSLHE8kSj0eFVzlhTUQXuBTaTiQ==
-X-Received: by 2002:a05:6000:1788:b0:390:f9d0:5e3 with SMTP id
- ffacd0b85a97d-3911f72632cmr5813862f8f.1.1741276063257; 
- Thu, 06 Mar 2025 07:47:43 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741276059; x=1741880859;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wuI7V/wj7tWMmMltqycpG0sxIIJcyAqxcbZTwRonqDg=;
+ b=CIATTzE60NQP3iCL+/ijJpWEm3xSKw8lVqkHGoajUnTTDDDG/JnHOByhxQ8jEzj7Mg
+ ReiaD6Tuwo9i3LOixRy1y8p4bDD2Q3Doba3WkSj+UuIiEf2UH8ufXflkyBzhg1U4MMC+
+ oEPJ5ypjjhF5UmWgrNvJWvjNwXX+vmlPL4ZyemAwrX1Sxf7DuefyAbqLolKdWm+PqTPY
+ zZe123DUED4oI5s3QNSJN51Sjce7RpsG0rNXYrUkT3Yi1FkMqZK8u2sJ0ytDPiJ+G6Yk
+ /PyMvd56CFhEMna58z06vacg6+9h+pTQXRAvaUH2HswiL1YT9zbwqq4kHfILl5vl2b/b
+ eUGQ==
+X-Gm-Message-State: AOJu0YxgHERNcLKFDUsZbf4EOk1ktHhwLacLdjVQa5XJfjFgi69xKFhp
+ kOFBIXDYdvNbW2v+y88RAtbw/j+G4VujwtXv68bhpJOFCca2iJ0SxnbmMahOyvYYtI6PphwbxVX
+ KioU=
+X-Gm-Gg: ASbGncuuW1RhwwKJPFVy+XrurZweZw9py0btgtdymqez30mfIZANU+JQQ0l2TemXyxF
+ csqhIthRF3TllMdlf963e63T8YbfVSYjQ6ThzRwG7RVvNrw0RpZt3D7+l0a1RY9oWqIDiZ0rNk8
+ wuq13KdTkAGmNHPfFHDuppOnVQ43eWfd+GxMS9eWLgy4diV8kWRs01Iy1b2B1W+pXKjLREdFK+L
+ wwUw2eXAt/nAbp1gsa8yoQYthBtHur3s4JeKDW6Q2kqzhtJBAemljipOE2iDy2dGxaWJmvpARgK
+ YLAdERZ9UUvQGaCApXUjRwZAZoL9oB5pTUo3qrNern3iOdGRq67HxgZG5WUfB1wbAmPKIrA0I8d
+ n+zSeFdRaz7sFsaTJ5WI=
+X-Google-Smtp-Source: AGHT+IFNuDy9qaomZ5Ip64d3cr+C6HWVcRKzks9V0PzmykU7nCtwWnNf1gxzgUKJ1DhMDBY7r0u1rg==
+X-Received: by 2002:a05:6000:1844:b0:391:304f:34e7 with SMTP id
+ ffacd0b85a97d-391304f3856mr1083691f8f.44.1741276058703; 
+ Thu, 06 Mar 2025 07:47:38 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c103290sm2339957f8f.87.2025.03.06.07.47.42
+ ffacd0b85a97d-3912c0e344esm2381259f8f.73.2025.03.06.07.47.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:47:42 -0800 (PST)
+ Thu, 06 Mar 2025 07:47:38 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/54] qemu/compiler: Absorb 'clang-tsa.h'
-Date: Thu,  6 Mar 2025 16:46:43 +0100
-Message-ID: <20250306154737.70886-2-philmd@linaro.org>
+Subject: [PULL 00/54] Accelerators & CPU patches
+Date: Thu,  6 Mar 2025 16:46:42 +0100
+Message-ID: <20250306154737.70886-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
-References: <20250306154737.70886-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,369 +95,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We already have "qemu/compiler.h" for compiler-specific arrangements,
-automatically included by "qemu/osdep.h" for each source file. No
-need to explicitly include a header for a Clang particularity.
+The following changes since commit e8a01102936286e012ed0f00bd7f3b7474d415c9:
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250117170201.91182-1-philmd@linaro.org>
----
- bsd-user/qemu.h                  |   1 -
- include/block/block_int-common.h |   1 -
- include/block/graph-lock.h       |   2 -
- include/exec/page-protection.h   |   2 -
- include/qemu/clang-tsa.h         | 114 -------------------------------
- include/qemu/compiler.h          |  96 ++++++++++++++++++++++++++
- include/qemu/thread.h            |   1 -
- block/create.c                   |   1 -
- tests/unit/test-bdrv-drain.c     |   1 -
- tests/unit/test-block-iothread.c |   1 -
- util/qemu-thread-posix.c         |   1 -
- 11 files changed, 96 insertions(+), 125 deletions(-)
+  Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2025-03-05 21:58:23 +0800)
+
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/accel-cpus-20250306
+
+for you to fetch changes up to 92941c94e7f4858fdd61b4c1b85f6d1c6f164359:
+
+  include: Poison TARGET_PHYS_ADDR_SPACE_BITS definition (2025-03-06 15:46:18 +0100)
+
+----------------------------------------------------------------
+Generic CPUs / accelerators patch queue
+
+- Merge "qemu/clang-tsa.h" within "qemu/compiler.h"
+- Various cleanups around accelerators initialization code
+  (better user/system split)
+- Various trivial cleanups in accel/tcg/,
+  Guard few TCG calls with tcg_enabled()
+- Explicit disassemble_info endianness
+- Improve dual-endianness support for MicroBlaze
+
+Ignored checkpatch error:
+
+  WARNING: architecture specific defines should be avoided
+  #215: FILE: include/qemu/compiler.h:215:
+  +#ifdef __clang__
+
+----------------------------------------------------------------
+
+Denis Rastyogin (1):
+  target/mips: Fix possible MSA int overflow
+
+Phil Dennis-Jordan (1):
+  target/i386/hvf: Variable type fixup in decoder
+
+Philippe Mathieu-Daudé (52):
+  qemu/compiler: Absorb 'clang-tsa.h'
+  gdbstub: Clarify no more than @gdb_num_core_regs can be accessed
+  gdbstub: Check for TCG before calling tb_flush()
+  cpus: Cache CPUClass early in instance_init() handler
+  cpus: Keep default fields initialization in cpu_common_initfn()
+  accel/accel: Make TYPE_ACCEL abstract
+  accel/tcg: Remove pointless initialization of cflags_next_tb
+  accel/tcg: Build tcg_flags helpers as common code
+  accel/tcg: Restrict tlb_init() / destroy() to TCG
+  accel/tcg: Restrict 'icount_align_option' global to TCG
+  accel/tcg: Rename 'hw/core/tcg-cpu-ops.h' -> 'accel/tcg/cpu-ops.h'
+  accel: Rename 'hw/core/accel-cpu.h' -> 'accel/accel-cpu-target.h'
+  accel: Forward-declare AccelOpsClass in 'qemu/typedefs.h'
+  accel/accel-cpu-target.h: Include missing 'cpu.h' header
+  accel/tcg: Include missing bswap headers in user-exec.c
+  accel/tcg: Take mmap lock in the whole cpu_memory_rw_debug() function
+  accel/tcg: Avoid using lock_user() in cpu_memory_rw_debug()
+  accel/tcg: Move cpu_memory_rw_debug() user implementation to
+    user-exec.c
+  accel/kvm: Remove unused 'system/cpus.h' header in kvm-cpus.h
+  cpus: Fix style in cpu-target.c
+  cpus: Restrict cpu_common_post_load() code to TCG
+  cpus: Have cpu_class_init_props() per user / system emulation
+  cpus: Have cpu_exec_initfn() per user / system emulation
+  cpus: Restrict cpu_get_memory_mapping() to system emulation
+  hw/core/generic-loader: Do not open-code cpu_set_pc()
+  target/microblaze: Explode MO_TExx -> MO_TE | MO_xx
+  target/microblaze: Set MO_TE once in do_load() / do_store()
+  target/microblaze: Introduce mo_endian() helper
+  target/microblaze: Consider endianness while translating code
+  target/openrisc: Call cpu_openrisc_clock_init() in cpu_realize()
+  target/hexagon: Ensure not being build on system emulation
+  target/rx: Ensure not being build on user emulation
+  target/tricore: Ensure not being build on user emulation
+  target: Set disassemble_info::endian value for little-endian targets
+  target: Set disassemble_info::endian value for big-endian targets
+  target/arm: Set disassemble_info::endian value in disas_set_info()
+  target/microblaze: Set disassemble_info::endian value in
+    disas_set_info
+  target/mips: Set disassemble_info::endian value in disas_set_info()
+  target/ppc: Set disassemble_info::endian value in disas_set_info()
+  target/riscv: Set disassemble_info::endian value in disas_set_info()
+  target/sh4: Set disassemble_info::endian value in disas_set_info()
+  target/xtensa: Set disassemble_info::endian value in disas_set_info()
+  disas: Remove target_words_bigendian() call in
+    initialize_debug_target()
+  target/i386: Constify X86CPUModel uses
+  target/sparc: Constify SPARCCPUClass::cpu_def
+  target/xtensa: Finalize config in xtensa_register_core()
+  target/riscv: Declare RISCVCPUClass::misa_mxl_max as RISCVMXL
+  target/riscv: Convert misa_mxl_max using GLib macros
+  target/alpha: Do not mix exception flags and FPCR bits
+  target/i386: Mark WHPX APIC region as little-endian
+  system: Open-code qemu_init_arch_modules() using target_name()
+  include: Poison TARGET_PHYS_ADDR_SPACE_BITS definition
+
+ MAINTAINERS                                   |   5 +-
+ accel/kvm/kvm-cpus.h                          |   2 -
+ accel/tcg/internal-common.h                   |  13 ++
+ bsd-user/qemu.h                               |   1 -
+ .../accel-cpu.h => accel/accel-cpu-target.h}  |   7 +-
+ .../tcg-cpu-ops.h => accel/tcg/cpu-ops.h}     |   0
+ include/block/block_int-common.h              |   1 -
+ include/block/graph-lock.h                    |   2 -
+ include/exec/exec-all.h                       |  16 --
+ include/exec/page-protection.h                |   2 -
+ include/exec/poison.h                         |   1 +
+ include/hw/core/cpu.h                         |   6 +-
+ include/qemu/clang-tsa.h                      | 114 ----------
+ include/qemu/compiler.h                       |  96 ++++++++
+ include/qemu/thread.h                         |   1 -
+ include/qemu/typedefs.h                       |   1 +
+ include/system/accel-ops.h                    |   1 -
+ include/system/arch_init.h                    |   2 -
+ include/system/cpus.h                         |   4 -
+ target/hexagon/cpu.h                          |   4 +
+ target/i386/cpu.h                             |   2 +-
+ target/microblaze/cpu.h                       |   7 +
+ target/riscv/cpu.h                            |   2 +-
+ target/rx/cpu.h                               |   6 +-
+ target/sparc/cpu.h                            |   2 +-
+ target/tricore/cpu.h                          |   4 +
+ target/xtensa/cpu.h                           |   2 +-
+ accel/accel-system.c                          |   1 +
+ accel/accel-target.c                          |   3 +-
+ accel/hvf/hvf-accel-ops.c                     |   1 +
+ accel/kvm/kvm-accel-ops.c                     |   1 +
+ accel/qtest/qtest.c                           |   1 +
+ accel/stubs/tcg-stub.c                        |   4 -
+ accel/tcg/cpu-exec-common.c                   |  34 ++-
+ accel/tcg/cpu-exec.c                          |  35 +--
+ accel/tcg/cputlb.c                            |   2 +-
+ accel/tcg/icount-common.c                     |   2 +
+ accel/tcg/monitor.c                           |   1 -
+ accel/tcg/tcg-accel-ops.c                     |   1 +
+ accel/tcg/translate-all.c                     |   3 +-
+ accel/tcg/user-exec-stub.c                    |  11 +
+ accel/tcg/user-exec.c                         |  84 ++++++-
+ accel/tcg/watchpoint.c                        |   2 +-
+ accel/xen/xen-all.c                           |   1 +
+ block/create.c                                |   1 -
+ bsd-user/signal.c                             |   2 +-
+ cpu-common.c                                  |   1 -
+ cpu-target.c                                  | 205 ++----------------
+ disas/disas-common.c                          |   8 +-
+ gdbstub/system.c                              |   6 +-
+ hw/core/cpu-common.c                          |   6 +-
+ hw/core/cpu-system.c                          |  47 ++++
+ hw/core/cpu-user.c                            |  32 +++
+ hw/core/generic-loader.c                      |   5 +-
+ hw/mips/jazz.c                                |   2 +-
+ hw/openrisc/openrisc_sim.c                    |   2 -
+ hw/openrisc/virt.c                            |   2 -
+ linux-user/signal.c                           |   2 +-
+ system/arch_init.c                            |   9 -
+ system/cpus.c                                 |   1 +
+ system/globals.c                              |   1 -
+ system/physmem.c                              |   2 +-
+ system/vl.c                                   |   7 +-
+ target/alpha/cpu.c                            |   3 +-
+ target/alpha/fpu_helper.c                     |  15 +-
+ target/arm/cpu.c                              |  12 +-
+ target/arm/tcg/cpu-v7m.c                      |   2 +-
+ target/arm/tcg/cpu32.c                        |   2 +-
+ target/arm/tcg/mte_helper.c                   |   2 +-
+ target/arm/tcg/sve_helper.c                   |   2 +-
+ target/avr/cpu.c                              |   3 +-
+ target/avr/helper.c                           |   2 +-
+ target/hexagon/cpu.c                          |   3 +-
+ target/hppa/cpu.c                             |   3 +-
+ target/i386/cpu.c                             |   9 +-
+ target/i386/hvf/hvf-cpu.c                     |   2 +-
+ target/i386/hvf/x86_decode.c                  |   4 +-
+ target/i386/kvm/kvm-cpu.c                     |   2 +-
+ target/i386/nvmm/nvmm-accel-ops.c             |   1 +
+ target/i386/tcg/tcg-cpu.c                     |   4 +-
+ target/i386/whpx/whpx-accel-ops.c             |   1 +
+ target/i386/whpx/whpx-apic.c                  |   2 +-
+ target/loongarch/cpu.c                        |   3 +-
+ target/m68k/cpu.c                             |   3 +-
+ target/microblaze/cpu.c                       |   4 +-
+ target/microblaze/gdbstub.c                   |   5 -
+ target/microblaze/translate.c                 |  49 +++--
+ target/mips/cpu.c                             |  12 +-
+ target/mips/tcg/msa_helper.c                  |   6 +-
+ target/openrisc/cpu.c                         |   7 +-
+ target/openrisc/gdbstub.c                     |   5 -
+ target/ppc/cpu_init.c                         |   4 +-
+ target/ppc/kvm.c                              |   2 +-
+ target/riscv/cpu.c                            |  19 +-
+ target/riscv/cpu_helper.c                     |   2 +-
+ target/riscv/kvm/kvm-cpu.c                    |   2 +-
+ target/riscv/tcg/tcg-cpu.c                    |   4 +-
+ target/rx/cpu.c                               |   9 +-
+ target/rx/helper.c                            |   4 -
+ target/s390x/cpu.c                            |   3 +-
+ target/s390x/tcg/mem_helper.c                 |   2 +-
+ target/sh4/cpu.c                              |   4 +-
+ target/sparc/cpu.c                            |   3 +-
+ target/tricore/cpu.c                          |   2 +-
+ target/xtensa/cpu.c                           |   4 +-
+ target/xtensa/helper.c                        |   5 +-
+ tests/unit/test-bdrv-drain.c                  |   1 -
+ tests/unit/test-block-iothread.c              |   1 -
+ util/qemu-thread-posix.c                      |   1 -
+ hw/core/meson.build                           |   5 +-
+ 110 files changed, 544 insertions(+), 533 deletions(-)
+ rename include/{hw/core/accel-cpu.h => accel/accel-cpu-target.h} (92%)
+ rename include/{hw/core/tcg-cpu-ops.h => accel/tcg/cpu-ops.h} (100%)
  delete mode 100644 include/qemu/clang-tsa.h
+ create mode 100644 hw/core/cpu-user.c
 
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index 3eaa14f3f56..4e97c796318 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -40,7 +40,6 @@ extern char **environ;
- #include "target.h"
- #include "exec/gdbstub.h"
- #include "exec/page-protection.h"
--#include "qemu/clang-tsa.h"
- #include "accel/tcg/vcpu-state.h"
- 
- #include "qemu-os.h"
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index bb91a0f62fa..ebb4e56a503 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -28,7 +28,6 @@
- #include "block/block-common.h"
- #include "block/block-global-state.h"
- #include "block/snapshot.h"
--#include "qemu/clang-tsa.h"
- #include "qemu/iov.h"
- #include "qemu/rcu.h"
- #include "qemu/stats64.h"
-diff --git a/include/block/graph-lock.h b/include/block/graph-lock.h
-index dc8d9491843..2c26c721081 100644
---- a/include/block/graph-lock.h
-+++ b/include/block/graph-lock.h
-@@ -20,8 +20,6 @@
- #ifndef GRAPH_LOCK_H
- #define GRAPH_LOCK_H
- 
--#include "qemu/clang-tsa.h"
--
- /**
-  * Graph Lock API
-  * This API provides a rwlock used to protect block layer
-diff --git a/include/exec/page-protection.h b/include/exec/page-protection.h
-index bae3355f62c..3e0a8a03331 100644
---- a/include/exec/page-protection.h
-+++ b/include/exec/page-protection.h
-@@ -40,8 +40,6 @@
- 
- #ifdef CONFIG_USER_ONLY
- 
--#include "qemu/clang-tsa.h"
--
- void TSA_NO_TSA mmap_lock(void);
- void TSA_NO_TSA mmap_unlock(void);
- bool have_mmap_lock(void);
-diff --git a/include/qemu/clang-tsa.h b/include/qemu/clang-tsa.h
-deleted file mode 100644
-index ba06fb8c924..00000000000
---- a/include/qemu/clang-tsa.h
-+++ /dev/null
-@@ -1,114 +0,0 @@
--#ifndef CLANG_TSA_H
--#define CLANG_TSA_H
--
--/*
-- * Copyright 2018 Jarkko Hietaniemi <jhi@iki.fi>
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining
-- * a copy of this software and associated documentation files (the "Software"),
-- * to deal in the Software without restriction, including without
-- * limitation the rights to use, copy, modify, merge, publish,
-- * distribute, sublicense, and/or sell copies of the Software, and to
-- * permit persons to whom the Software is furnished to do so, subject to
-- * the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be
-- * included in all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-- * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-- */
--
--/* http://clang.llvm.org/docs/ThreadSafetyAnalysis.html
-- *
-- * TSA is available since clang 3.6-ish.
-- */
--#ifdef __clang__
--#  define TSA(x)   __attribute__((x))
--#else
--#  define TSA(x)   /* No TSA, make TSA attributes no-ops. */
--#endif
--
--/* TSA_CAPABILITY() is used to annotate typedefs:
-- *
-- * typedef pthread_mutex_t TSA_CAPABILITY("mutex") tsa_mutex;
-- */
--#define TSA_CAPABILITY(x) TSA(capability(x))
--
--/* TSA_GUARDED_BY() is used to annotate global variables,
-- * the data is guarded:
-- *
-- * Foo foo TSA_GUARDED_BY(mutex);
-- */
--#define TSA_GUARDED_BY(x) TSA(guarded_by(x))
--
--/* TSA_PT_GUARDED_BY() is used to annotate global pointers, the data
-- * behind the pointer is guarded.
-- *
-- * Foo* ptr TSA_PT_GUARDED_BY(mutex);
-- */
--#define TSA_PT_GUARDED_BY(x) TSA(pt_guarded_by(x))
--
--/* The TSA_REQUIRES() is used to annotate functions: the caller of the
-- * function MUST hold the resource, the function will NOT release it.
-- *
-- * More than one mutex may be specified, comma-separated.
-- *
-- * void Foo(void) TSA_REQUIRES(mutex);
-- */
--#define TSA_REQUIRES(...) TSA(requires_capability(__VA_ARGS__))
--#define TSA_REQUIRES_SHARED(...) TSA(requires_shared_capability(__VA_ARGS__))
--
--/* TSA_EXCLUDES() is used to annotate functions: the caller of the
-- * function MUST NOT hold resource, the function first acquires the
-- * resource, and then releases it.
-- *
-- * More than one mutex may be specified, comma-separated.
-- *
-- * void Foo(void) TSA_EXCLUDES(mutex);
-- */
--#define TSA_EXCLUDES(...) TSA(locks_excluded(__VA_ARGS__))
--
--/* TSA_ACQUIRE() is used to annotate functions: the caller of the
-- * function MUST NOT hold the resource, the function will acquire the
-- * resource, but NOT release it.
-- *
-- * More than one mutex may be specified, comma-separated.
-- *
-- * void Foo(void) TSA_ACQUIRE(mutex);
-- */
--#define TSA_ACQUIRE(...) TSA(acquire_capability(__VA_ARGS__))
--#define TSA_ACQUIRE_SHARED(...) TSA(acquire_shared_capability(__VA_ARGS__))
--
--/* TSA_RELEASE() is used to annotate functions: the caller of the
-- * function MUST hold the resource, but the function will then release it.
-- *
-- * More than one mutex may be specified, comma-separated.
-- *
-- * void Foo(void) TSA_RELEASE(mutex);
-- */
--#define TSA_RELEASE(...) TSA(release_capability(__VA_ARGS__))
--#define TSA_RELEASE_SHARED(...) TSA(release_shared_capability(__VA_ARGS__))
--
--/* TSA_NO_TSA is used to annotate functions.  Use only when you need to.
-- *
-- * void Foo(void) TSA_NO_TSA;
-- */
--#define TSA_NO_TSA TSA(no_thread_safety_analysis)
--
--/*
-- * TSA_ASSERT() is used to annotate functions: This function will assert that
-- * the lock is held. When it returns, the caller of the function is assumed to
-- * already hold the resource.
-- *
-- * More than one mutex may be specified, comma-separated.
-- */
--#define TSA_ASSERT(...) TSA(assert_capability(__VA_ARGS__))
--#define TSA_ASSERT_SHARED(...) TSA(assert_shared_capability(__VA_ARGS__))
--
--#endif /* #ifndef CLANG_TSA_H */
-diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-index d904408e5ed..496dac5ac11 100644
---- a/include/qemu/compiler.h
-+++ b/include/qemu/compiler.h
-@@ -207,6 +207,102 @@
- # define QEMU_USED
- #endif
- 
-+/*
-+ * http://clang.llvm.org/docs/ThreadSafetyAnalysis.html
-+ *
-+ * TSA is available since clang 3.6-ish.
-+ */
-+#ifdef __clang__
-+#  define TSA(x)   __attribute__((x))
-+#else
-+#  define TSA(x)   /* No TSA, make TSA attributes no-ops. */
-+#endif
-+
-+/*
-+ * TSA_CAPABILITY() is used to annotate typedefs:
-+ *
-+ * typedef pthread_mutex_t TSA_CAPABILITY("mutex") tsa_mutex;
-+ */
-+#define TSA_CAPABILITY(x) TSA(capability(x))
-+
-+/*
-+ * TSA_GUARDED_BY() is used to annotate global variables,
-+ * the data is guarded:
-+ *
-+ * Foo foo TSA_GUARDED_BY(mutex);
-+ */
-+#define TSA_GUARDED_BY(x) TSA(guarded_by(x))
-+
-+/*
-+ * TSA_PT_GUARDED_BY() is used to annotate global pointers, the data
-+ * behind the pointer is guarded.
-+ *
-+ * Foo* ptr TSA_PT_GUARDED_BY(mutex);
-+ */
-+#define TSA_PT_GUARDED_BY(x) TSA(pt_guarded_by(x))
-+
-+/*
-+ * The TSA_REQUIRES() is used to annotate functions: the caller of the
-+ * function MUST hold the resource, the function will NOT release it.
-+ *
-+ * More than one mutex may be specified, comma-separated.
-+ *
-+ * void Foo(void) TSA_REQUIRES(mutex);
-+ */
-+#define TSA_REQUIRES(...) TSA(requires_capability(__VA_ARGS__))
-+#define TSA_REQUIRES_SHARED(...) TSA(requires_shared_capability(__VA_ARGS__))
-+
-+/*
-+ * TSA_EXCLUDES() is used to annotate functions: the caller of the
-+ * function MUST NOT hold resource, the function first acquires the
-+ * resource, and then releases it.
-+ *
-+ * More than one mutex may be specified, comma-separated.
-+ *
-+ * void Foo(void) TSA_EXCLUDES(mutex);
-+ */
-+#define TSA_EXCLUDES(...) TSA(locks_excluded(__VA_ARGS__))
-+
-+/*
-+ * TSA_ACQUIRE() is used to annotate functions: the caller of the
-+ * function MUST NOT hold the resource, the function will acquire the
-+ * resource, but NOT release it.
-+ *
-+ * More than one mutex may be specified, comma-separated.
-+ *
-+ * void Foo(void) TSA_ACQUIRE(mutex);
-+ */
-+#define TSA_ACQUIRE(...) TSA(acquire_capability(__VA_ARGS__))
-+#define TSA_ACQUIRE_SHARED(...) TSA(acquire_shared_capability(__VA_ARGS__))
-+
-+/*
-+ * TSA_RELEASE() is used to annotate functions: the caller of the
-+ * function MUST hold the resource, but the function will then release it.
-+ *
-+ * More than one mutex may be specified, comma-separated.
-+ *
-+ * void Foo(void) TSA_RELEASE(mutex);
-+ */
-+#define TSA_RELEASE(...) TSA(release_capability(__VA_ARGS__))
-+#define TSA_RELEASE_SHARED(...) TSA(release_shared_capability(__VA_ARGS__))
-+
-+/*
-+ * TSA_NO_TSA is used to annotate functions.  Use only when you need to.
-+ *
-+ * void Foo(void) TSA_NO_TSA;
-+ */
-+#define TSA_NO_TSA TSA(no_thread_safety_analysis)
-+
-+/*
-+ * TSA_ASSERT() is used to annotate functions: This function will assert that
-+ * the lock is held. When it returns, the caller of the function is assumed to
-+ * already hold the resource.
-+ *
-+ * More than one mutex may be specified, comma-separated.
-+ */
-+#define TSA_ASSERT(...) TSA(assert_capability(__VA_ARGS__))
-+#define TSA_ASSERT_SHARED(...) TSA(assert_shared_capability(__VA_ARGS__))
-+
- /*
-  * Ugly CPP trick that is like "defined FOO", but also works in C
-  * code.  Useful to replace #ifdef with "if" statements; assumes
-diff --git a/include/qemu/thread.h b/include/qemu/thread.h
-index 7eba27a7049..6f800aad31a 100644
---- a/include/qemu/thread.h
-+++ b/include/qemu/thread.h
-@@ -3,7 +3,6 @@
- 
- #include "qemu/processor.h"
- #include "qemu/atomic.h"
--#include "qemu/clang-tsa.h"
- 
- typedef struct QemuCond QemuCond;
- typedef struct QemuSemaphore QemuSemaphore;
-diff --git a/block/create.c b/block/create.c
-index 72abafb4c12..6b23a216753 100644
---- a/block/create.c
-+++ b/block/create.c
-@@ -24,7 +24,6 @@
- 
- #include "qemu/osdep.h"
- #include "block/block_int.h"
--#include "qemu/clang-tsa.h"
- #include "qemu/job.h"
- #include "qemu/main-loop.h"
- #include "qapi/qapi-commands-block-core.h"
-diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
-index 98ad89b390c..7410e6f3528 100644
---- a/tests/unit/test-bdrv-drain.c
-+++ b/tests/unit/test-bdrv-drain.c
-@@ -28,7 +28,6 @@
- #include "system/block-backend.h"
- #include "qapi/error.h"
- #include "qemu/main-loop.h"
--#include "qemu/clang-tsa.h"
- #include "iothread.h"
- 
- static QemuEvent done_event;
-diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
-index 7324ea4a68d..2b358eaaa82 100644
---- a/tests/unit/test-block-iothread.c
-+++ b/tests/unit/test-block-iothread.c
-@@ -29,7 +29,6 @@
- #include "system/block-backend.h"
- #include "qapi/error.h"
- #include "qobject/qdict.h"
--#include "qemu/clang-tsa.h"
- #include "qemu/main-loop.h"
- #include "iothread.h"
- 
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index 6fff4162ac6..b2e26e21205 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -17,7 +17,6 @@
- #include "qemu-thread-common.h"
- #include "qemu/tsan.h"
- #include "qemu/bitmap.h"
--#include "qemu/clang-tsa.h"
- 
- #ifdef CONFIG_PTHREAD_SET_NAME_NP
- #include <pthread_np.h>
 -- 
 2.47.1
 
