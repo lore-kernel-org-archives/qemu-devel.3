@@ -4,84 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08293C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7B2FC28B25
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 16:10:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDj8-0006i6-Ti; Thu, 06 Mar 2025 11:05:39 -0500
+	id 1tqDgy-0003ut-Fi; Thu, 06 Mar 2025 11:03:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tqDiW-00061k-AP
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:05:03 -0500
-Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tqDiU-00085w-Hy
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:05:00 -0500
-Received: by mail-il1-x133.google.com with SMTP id
- e9e14a558f8ab-3cf8e017abcso2924165ab.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 08:04:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1741277097; x=1741881897; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aSH50K2JoZy3b57Ten2+Yq1o4INV7m/qW+7NuVpQc3U=;
- b=MMR8nphitQ/WDcheEWdnV6IJWF1G1FXKxtvaTc1U1y4/jE+h0h1od+engyb6om/umW
- sgCLn2LSljMfXblD2C5v0G46pp1hlULiRD2uMt8FVQfGWuD7ttFQBaeAlv8FH/VsOZ3B
- i5Lo8tH3HNdy9rEwoQ2zvtgsYmU9HPxuUR4l0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741277097; x=1741881897;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aSH50K2JoZy3b57Ten2+Yq1o4INV7m/qW+7NuVpQc3U=;
- b=KRFBYZP4xcUODRLHqsIjisO++V+rllF6IzuVCbTSDAmGR/3avYr2Yj9HCNVip4bKEf
- vjgSfPWaEHvOmX+Pi7IczEGcPk11C/VQkd+hdJgrhI5YRb8C2LmY8ffDZyiA5chHumzr
- Z2vkzYtUDvshSonVieE02LTlF7qzwKg7x+6MD1BK6WUA9eZqAdWDx5m4kUEeP6Qgz05U
- apVxK9bQ3CCXmV+/Y6b4MHltbdf2RaxFtylBYO9OtSYjkEqdqEIdOkXqpOk3conHl3e/
- 3ixxNcf4rmSlTReX+CAJfcOrUFZJNDIeotyPb+LJC2iGDUqmkz9HgDiH5eMarK2umRaQ
- Mj3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV8aF3kCjd9DATYKZEFaBbVhrPKVqjnqIO0v/1OOCWQRKlsESutWDrJRnKm6OQyAh+2nnWn6sgYeTAU@nongnu.org
-X-Gm-Message-State: AOJu0YzOMMoNdkJF4/tABTDk2++3Seh8txYyPxh09dvF1LRr0bmbR1rZ
- 3qJOF4tFAaJEcWYOAp2/S6NTtiDJNBGWAPtF3z6Paq6qe83T9kzRjytIj9ds4w==
-X-Gm-Gg: ASbGncuD1ftlKmEacJK3jQEyobWYSP/ZWEEJ2s8r7ZreqfV+25N90rsB2HkrGKDozKs
- +5+94LwNX+66Ifycvm6y4eurbvhDFN6KuqpsGB9oBTmaGr57pu9q9MKcQAPWq8VM3/o7twbzbua
- 0VDcGwJK4rQse/st5PlY8dKPdGW1WedHDNLrvKwrqq2COx+a4XBiFDz7usXoBYTRA6+XBBXioT4
- OXBYxz821UthXczqA3v8FeWqI6orwKnSmTlL1jyog2eJTucQ5cY9ceBHP/lD+AcW372fhFYugwA
- Pd/XkVebctKoBg/awEUShfNZNVxgP7CvabY/QrfIosi0MU2+k+gpxNEC9901krYRfED4FJO8xvL
- xTUm46w==
-X-Google-Smtp-Source: AGHT+IEEQXDzmyW5nkBuIaoREplf5yZ8Jtg/vswpLt2FZkwUf5WEnmJN1MFp2Hg2Quy0N2OWtvpMLg==
-X-Received: by 2002:a92:c266:0:b0:3cf:bac5:d90c with SMTP id
- e9e14a558f8ab-3d42b9759f5mr105381605ab.18.1741277097260; 
- Thu, 06 Mar 2025 08:04:57 -0800 (PST)
-Received: from chromium.org (c-73-203-119-151.hsd1.co.comcast.net.
- [73.203.119.151]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f213b959c1sm46759173.38.2025.03.06.08.04.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Mar 2025 08:04:55 -0800 (PST)
-From: Simon Glass <sjg@chromium.org>
-To: U-Boot Mailing List <u-boot@lists.denx.de>
-Cc: Bin Meng <bmeng.cn@gmail.com>, Simon Glass <sjg@chromium.org>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Tom Rini <trini@konsulko.com>, qemu-devel@nongnu.org
-Subject: [PATCH v4 06/47] x86: qemu: Avoid accessing BSS too early
-Date: Thu,  6 Mar 2025 09:03:33 -0700
-Message-ID: <20250306160428.3041057-7-sjg@chromium.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250306160428.3041057-1-sjg@chromium.org>
-References: <20250306160428.3041057-1-sjg@chromium.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tqDgW-0003D2-Gd
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:02:57 -0500
+Received: from mgamail.intel.com ([192.198.163.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tqDgU-0007ro-86
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 11:02:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1741276974; x=1772812974;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=tFAUos7YRNSU2MirkPiVo9raKTjzn98Zr1WYKgiI16Y=;
+ b=B2XPloeZBIqjzbrS/tFQronZmv2waVVx9qBDFgxufkBLFCX7EeRpVs3F
+ UMZvZSvt7UdzkLW8tMtMd4Yee5NRwOxV0bkBAVInsAJ36DYmre+H4KHcu
+ 9QkzYxehmTe9wNu60NMQO3x+eNtyqSycZrYrsmFL8rT4IPuDBQLDwtmTW
+ sv1NUUkf+CzN8awhKHXYNWp6QUxkRH33CHciKcYwzzy3IjiUAUTwmAJM5
+ LYBzFnFDshzVAwaLrvg9+LGa1yaLF+yWhIUFvYgksTDdb4MSyrS4vxMUE
+ R+D2dvI3++Zji/GTz853XLm0/pVt/z5J49bcqjVuDj5F0JuvXg7c1XsOp A==;
+X-CSE-ConnectionGUID: I0sX/Sq4Rxip5NcRS0/7DQ==
+X-CSE-MsgGUID: e+/GixYLSVmpnoLItMX5tw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11365"; a="41546422"
+X-IronPort-AV: E=Sophos;i="6.14,226,1736841600"; d="scan'208";a="41546422"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Mar 2025 08:02:34 -0800
+X-CSE-ConnectionGUID: tBOxjrUnTNWjU1RFgus0ZA==
+X-CSE-MsgGUID: bXpeDC06QpWMOAU6Yb3LvA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="124275590"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa005.jf.intel.com with ESMTP; 06 Mar 2025 08:02:33 -0800
+Date: Fri, 7 Mar 2025 00:22:41 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Dongli Zhang <dongli.zhang@oracle.com>
+Subject: Re: [PATCH 0/2] i386: Adjust CPUID_EXT_PDCM based on enable_pmu at
+ realization
+Message-ID: <Z8nL0eLE/trEtlNd@intel.com>
+References: <20250304052450.465445-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
- envelope-from=sjg@chromium.org; helo=mail-il1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250304052450.465445-1-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,78 +84,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BSS is placed in DRAM which is actually available early with QEMU. But
-it is cleared by the init sequence, so values stored there are lost.
+Hi Xiaoyao,
 
-Move the system-type flag into a function, instead.
+> First, it's not a good practice that values in env->features[] cannot be
+> directly used for guest CPUID in void cpu_x86_cpuid(), but require further
+> adjustment there. env->features[] are supposed to be finalized at cpu
+> realization, so that after it env->features[] is reliable.
+> 
+> Second, there is one dependency entry relates to CPUID_EXT_PDCM in
+> feature_dependencies[]. QEMU needs to get correct value of
+> CPUID_EXT_PDCM in env->features[] to ensure applying the dependencies
+> correctly.
 
-Signed-off-by: Simon Glass <sjg@chromium.org>
----
+I agree that this is a very good idea, especially since PDCM has a
+dependency entry.
 
-(no changes since v1)
+"pmu" is totally a property rather than a feature bit, which makes the
+dependency relationships in the code complex. Therefore, I think it's
+worth having a series to clarify the dependencies of pmu as much as
+possible.
 
- arch/x86/cpu/qemu/qemu.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+I remember Dapeng/Zide also have fixes for pmu dependencies, and if
+possible, I could help you combine this series with others' cleanups.
 
-diff --git a/arch/x86/cpu/qemu/qemu.c b/arch/x86/cpu/qemu/qemu.c
-index 563f63e2bc8..e846ccd44aa 100644
---- a/arch/x86/cpu/qemu/qemu.c
-+++ b/arch/x86/cpu/qemu/qemu.c
-@@ -15,14 +15,21 @@
- #include <asm/arch/qemu.h>
- #include <asm/u-boot-x86.h>
- 
--static bool i440fx;
--
- #if CONFIG_IS_ENABLED(QFW_PIO)
- U_BOOT_DRVINFO(x86_qfw_pio) = {
- 	.name = "qfw_pio",
- };
- #endif
- 
-+static bool is_i440fx(void)
-+{
-+	u16 device;
-+
-+	pci_read_config16(PCI_BDF(0, 0, 0), PCI_DEVICE_ID, &device);
-+
-+	return device == PCI_DEVICE_ID_INTEL_82441;
-+}
-+
- static void enable_pm_piix(void)
- {
- 	u8 en;
-@@ -50,16 +57,17 @@ static void enable_pm_ich9(void)
- 
- void qemu_chipset_init(void)
- {
--	u16 device, xbcs;
-+	bool i440fx;
-+	u16 xbcs;
- 	int pam, i;
- 
-+	i440fx = is_i440fx();
-+
- 	/*
- 	 * i440FX and Q35 chipset have different PAM register offset, but with
- 	 * the same bitfield layout. Here we determine the offset based on its
- 	 * PCI device ID.
- 	 */
--	pci_read_config16(PCI_BDF(0, 0, 0), PCI_DEVICE_ID, &device);
--	i440fx = (device == PCI_DEVICE_ID_INTEL_82441);
- 	pam = i440fx ? I440FX_PAM : Q35_PAM;
- 
- 	/*
-@@ -123,7 +131,7 @@ int mp_determine_pci_dstirq(int bus, int dev, int func, int pirq)
- {
- 	u8 irq;
- 
--	if (i440fx) {
-+	if (is_i440fx()) {
- 		/*
- 		 * Not like most x86 platforms, the PIRQ[A-D] on PIIX3 are not
- 		 * connected to I/O APIC INTPIN#16-19. Instead they are routed
--- 
-2.43.0
+Additionally, I think patch 1 and patch 2 can be merged together. Do you
+agree?
+
+Thanks,
+Zhao
 
 
