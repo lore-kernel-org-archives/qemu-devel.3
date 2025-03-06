@@ -4,90 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83AF0C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 22:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32B07C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 22:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqJSX-0003Bz-UE; Thu, 06 Mar 2025 17:12:53 -0500
+	id 1tqJph-0000K9-R2; Thu, 06 Mar 2025 17:36:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqJSS-0003Bd-Hw
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:12:51 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqJSR-0005of-1w
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:12:48 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-22401f4d35aso22184105ad.2
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 14:12:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741299165; x=1741903965; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=krQRbOL278W+oJrJxxiSvtUOLHtiXoInrPgfO0rnWE4=;
- b=VKTuhV55EXYHQTA+vwapmv7C81yMtBLjayxBEIAiDODGKlGo3VuvHsWbLmp26mTUPT
- Ck6IcQPIa+JGbEu+A9WRCTKxNc+JtFEd+ipdI8WvUc+Yns9e7/hAp9/oa70RPsfUK00I
- UURe85Syxly0tzQogJSSun0OHssN+aG0FG4JZs9lYliM14zQvAXKrb6c9ngM7GaotqII
- 7PtRt/3hc/dzz80TIaEd+H3OAwLEjBhYsFLJUX6LcmeRa9t2fUiQIWpAfNBEwPlUMrQ6
- G0TZMbr+zrzLAFNLJ+GCoTR6Mp1vkGQhRiowpT79WM9GrQr7hkMbetdrJiKAX2VHGe6d
- ywRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741299165; x=1741903965;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=krQRbOL278W+oJrJxxiSvtUOLHtiXoInrPgfO0rnWE4=;
- b=X+5Ijmudo+k+ia/hEiRDbHVq/dXNRjz1U8hK2GqYYD/GU5cXjE42hDZyQvqdkNNadp
- bdtSGuO+qbNzXrYzy17CuOErbJQ7WvxTpbgDkq8Lad9YoPPz4MtJomKJH6wtIe3Sn7WT
- zjdZevStQw0VxSWHx33YFTZlXlzyQdvU62OuL2m/rBFoL5OcC91/ioN8m9lf4lUjExA4
- HlVjIiE3YV2+PAn06pjUYRnsBuo77ODfW5tHa4ao3h4gitG1gA6wPiIcfH/oiA56jgdH
- QppfEUpNe9BBPyCezCJhueSKxo/u/4IZGUSfRbMvvnHvdqK++m4UVUe7+Y8mLbil3qKd
- dApw==
-X-Gm-Message-State: AOJu0YyRgeSJMRiSAD+kq0XAB4/cuOtHcXMZ8xRpAF+N3HIKTT7rbDj+
- ffHUv15M/fNG7ptfM2f6o3hiPb8nzg7QeGbzlkiqk/R3SzbUSm00je457YuUGb8ssEppz/qYy08
- G
-X-Gm-Gg: ASbGncvkunHe1AziEQCXJLvacBQ/GxQOTN7e8YH1EJlGMp11NtDhyveZuEol5vcYRkz
- bpcvlnnTP9M0DJ/MRof+pGyIaR/x1IzpuyJVwrqaEfz76nT0Dn++i3FdWLr7AEehkRE2rbM6K21
- VBdl7IV58XTVsYI1ncemCsAsZwL3HUc2AghLLtlX40b5xBiLGOU7lQ9DDo034WJ2mVQoYv9J0QP
- 6F6wb2aWd+3D/gHxc7GDIOj2HuoNsbYAmrEg9WOkKVpkTtNXdE/JjFwBDj+6XRxoVVFRjWJo/Y8
- +dvjrwqHVSkawrmm1hXzv/DvxVvLKdin43zFdWXeuZk7SEs9eox64GtCs4HYuaEA6u7Q2dvTfL0
- c3si5mgD7
-X-Google-Smtp-Source: AGHT+IH3HvKVgQy90h7Q2Mvmxjb1TOtdNQ4F+SkZ9jtodOlQq2jwgA2ZSfBYduzpyeHZ6Do8GGLIQg==
-X-Received: by 2002:a17:902:f54e:b0:223:4d7e:e52c with SMTP id
- d9443c01a7336-224288695d3mr15362495ad.5.1741299165278; 
- Thu, 06 Mar 2025 14:12:45 -0800 (PST)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a9193fsm17441835ad.164.2025.03.06.14.12.44
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 14:12:44 -0800 (PST)
-Message-ID: <300563a6-a37f-47a7-bb94-74cdcd6256b3@linaro.org>
-Date: Thu, 6 Mar 2025 14:12:42 -0800
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tqJpg-0000Jz-D8
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:36:48 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tqJpd-0002qY-Op
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 17:36:48 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id AD77FA439AD;
+ Thu,  6 Mar 2025 22:31:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEFA0C4CEE0;
+ Thu,  6 Mar 2025 22:36:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1741300597;
+ bh=gt1AQ5QtPCkUd+YdNm+NOU/MJtxuM4Mjf0w6vyoQrkU=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=CXG2zHEyOhFh8VjOTwjNt/ho+PFB9w8J32hjPfTPEizh+5+lOl9L4JY3cl3h0V9cO
+ FuAtZOQ0gaflJANBGFUSqKd1y7s4R0t+SgNB+88yMT5lp80/+rShnYk383AArq93qP
+ RN3C3KLCuM1azD7igj2A2d5Qpt1nIBVvi4fwWN4g7mcIJEvS5zBWl0FTK4CEGH33/W
+ zwD1nLiZ0OadJP1tnTfz03qgt5c73WT90cPCtpCL2MSLLTrjknytksvXs5HTC+zfuk
+ iBKAfQdNw9AXxPGO0McGV2R6vX6+Nk9ydrkaIDe+yIx40qgjcDicPvtPDL4nLT2O21
+ C7Ev3b/XQCBiA==
+Date: Thu, 6 Mar 2025 23:36:32 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: Re: [PULL 11/41] hw/acpi/ghes: Make ghes_record_cper_errors() static
+Message-ID: <20250306233632.5b22e382@foz.lan>
+In-Reply-To: <20250305012157.96463-12-philmd@linaro.org>
+References: <20250305012157.96463-1-philmd@linaro.org>
+ <20250305012157.96463-12-philmd@linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/10] target/arm: Move arm_cpu_data_is_big_endian() etc
- to internals.h
-To: qemu-devel@nongnu.org
-References: <20250306163925.2940297-1-peter.maydell@linaro.org>
- <20250306163925.2940297-6-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250306163925.2940297-6-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=147.75.193.91;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,26 +74,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/25 08:39, Peter Maydell wrote:
-> The arm_cpu_data_is_big_endian() and related functions are now used
-> only in target/arm; they can be moved to internals.h.
-> 
-> The motivation here is that we would like to move arm_current_el()
-> to internals.h.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Em Wed,  5 Mar 2025 02:21:26 +0100
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> escreveu:
+
+> From: Gavin Shan <gshan@redhat.com>
+>=20
+> acpi_ghes_memory_errors() is the only caller, no need to expose
+> the function. Besides, the last 'return' in this function isn't
+> necessary and remove it.
+>=20
+> No functional changes intended.
+
+Please revert this patch, as ghes_record_cper_errors() was written
+to be used for error injection. As agreed last year with some ACPI
+maintainers, we ended splitting the error injection series on two parts
+to make easier for people to review it.
+
+The followup series:
+
+	https://lore.kernel.org/qemu-devel/cover.1740903110.git.mchehab+huawei@ker=
+nel.org/
+
+Need this function to be not static, as this will be used by a
+QMP caller.
+
+The usage itself is on this patch:
+
+	https://lore.kernel.org/qemu-devel/6ef8d6a3f42e3347ed6fd3d1fc29ab5ff2a070d=
+f.1740903110.git.mchehab+huawei@kernel.org/
+
+but this one causes conflict since patch 01 of the series.
+
+Regards,
+Mauro
+
+
+>=20
+> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Message-ID: <20250214041635.608012-2-gshan@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->   target/arm/cpu.h       | 48 ------------------------------------------
->   target/arm/internals.h | 48 ++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 48 insertions(+), 48 deletions(-)
+>  include/hw/acpi/ghes.h | 2 --
+>  hw/acpi/ghes.c         | 6 ++----
+>  2 files changed, 2 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+> index 39619a2457c..578a582203c 100644
+> --- a/include/hw/acpi/ghes.h
+> +++ b/include/hw/acpi/ghes.h
+> @@ -75,8 +75,6 @@ void acpi_build_hest(GArray *table_data, GArray *hardwa=
+re_errors,
+>  void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
+>                            GArray *hardware_errors);
+>  int acpi_ghes_memory_errors(uint16_t source_id, uint64_t error_physical_=
+addr);
+> -void ghes_record_cper_errors(const void *cper, size_t len,
+> -                             uint16_t source_id, Error **errp);
+> =20
+>  /**
+>   * acpi_ghes_present: Report whether ACPI GHES table is present
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index b709c177cde..b85bb48195a 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -390,8 +390,8 @@ static void get_hw_error_offsets(uint64_t ghes_addr,
+>      *read_ack_register_addr =3D ghes_addr + sizeof(uint64_t);
+>  }
+> =20
+> -void ghes_record_cper_errors(const void *cper, size_t len,
+> -                             uint16_t source_id, Error **errp)
+> +static void ghes_record_cper_errors(const void *cper, size_t len,
+> +                                    uint16_t source_id, Error **errp)
+>  {
+>      uint64_t cper_addr =3D 0, read_ack_register_addr =3D 0, read_ack_reg=
+ister;
+>      AcpiGedState *acpi_ged_state;
+> @@ -440,8 +440,6 @@ void ghes_record_cper_errors(const void *cper, size_t=
+ len,
+> =20
+>      /* Write the generic error data entry into guest memory */
+>      cpu_physical_memory_write(cper_addr, cper, len);
+> -
+> -    return;
+>  }
+> =20
+>  int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_addres=
+s)
 
-Is there a good reason to keep these inline?
-The expansion of arm_cpu_data_is_big_endian is really quite large, it would seem.
-
-Either way,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
-r~
-
+Thanks,
+Mauro
 
