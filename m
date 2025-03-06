@@ -4,86 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E63F2C28B24
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41998C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 15:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqDVv-00055z-FI; Thu, 06 Mar 2025 10:51:59 -0500
+	id 1tqDag-0004FC-FP; Thu, 06 Mar 2025 10:56:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDUf-0004Nk-Ek
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:50:41 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqDUd-0006iF-TR
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:50:41 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-390e702d481so461865f8f.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:50:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741276238; x=1741881038; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nOGFUYxB5eZJvISEgMjDmq17fgmjL5t+bLCA40GL5/4=;
- b=sGUixhDTDP4YJvKfgKGxwlfUQD/TGN+WjBWcMFUW7bMpaVlH2yIRS66/pPNWblLRb2
- N/DovEPQTN0e7rXrUIaVqQtY7hLJcWiXjy67om/MfobYN9QpSRAzNTtUFsIIwpj0fEmu
- +OaAwKDqe1IsEbPz6nTGSiNf9AbRZ0ik9EjvZK+eCM8/aeSfSWCJ0baA8Q8Yyn8q6kJ2
- JGiKDph5YGNHx1Ij/UV606TDnlc8M+XxkMJ60b/2AhyBp5MfB761qh2td7aepci+ou9b
- RZcRMVtRyYu0OfEe3oVilLZTfpes9rbd/0aDVaX7FzxAVuw0RYxJe4/Ikhf3rFbkOgUD
- tJoQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tqDaO-0003N4-JU
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:56:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tqDaM-0007Ff-Su
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 10:56:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741276593;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FjM6zY5Yik7Qo+JU7LFR+LTH6lh/qDgoKWL6ATnBGkc=;
+ b=E03nECidP0wmpmPwbcm0XS7rSIPkitywUDezU+gJDELThr3T1c0/guR0/lne3jTWNJDUKH
+ IGJPEzZXPyPGErn0KQV/Jb7q00JWSsLqDhpRFv5l+4ZxJwPPm1QI1Pwja9UeL8YrJGAcsL
+ CJ+CO6SZLHkLVQN5FGeOG+maOKfQOCo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-JK1hHK03O2ednaqrg5Zuwg-1; Thu, 06 Mar 2025 10:56:30 -0500
+X-MC-Unique: JK1hHK03O2ednaqrg5Zuwg-1
+X-Mimecast-MFC-AGG-ID: JK1hHK03O2ednaqrg5Zuwg_1741276588
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4388eee7073so10667245e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 07:56:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741276238; x=1741881038;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nOGFUYxB5eZJvISEgMjDmq17fgmjL5t+bLCA40GL5/4=;
- b=W/BcTGx2JyijIiXd8dPUn+PUy//AL2YUJ6td0O6BFamjiQXnwL4rE+9uexskJCIBH+
- rOi8c6N6fsJeUbK442G8+ViwFr6E4PGY7rATmjAw5L69llEumE9IAImd8nw1+QXT3qm7
- 4QKKIOYTtG5Y1ehle/094BSI038lsJFb1qMCwASRjqPXpKCNqjMHPhOq1C6r8E4EpAUY
- R4kx4fKCm/1KUgaxFUjpbaM0/KL8knrV7WgPBjXCB3TpuiQj7/u4v06VKZbO0KkKFILr
- zX5e4c0O50zd4CUjd2WrpTc4dDVdL8cIZATMt4JGy3Sy2WB2aHarPMpE0H+MIhpmVlZ/
- 9FpQ==
-X-Gm-Message-State: AOJu0Yzc1XAsKgXNdA+bxJimB9memFO0jKWdMnExIaXpLiBqilglV/pH
- mI2Dez2VRRm59oqwP1Cr8dUU+pZxPLC+p9vyJmkKHsr4HgrX5r3ot80U1h+R28Ebiu+LFcmB4bd
- T8d4=
-X-Gm-Gg: ASbGncuszculHjDF9v6e5c+L+2xNP0+sNuSYUCOi9asOv2FkkswXiuDkMOx6eXm+9PD
- v1tb9aTN0OceGDjZlQ8dDgK0/MhESJTwg+48Hq+b5p3hPx6vJbDicAwslitsJ/hAFBkEKj+kbQ2
- fnUd2ETixQZE4BiAN6TT3S6qXWX6p26U6HwMuBbMup14qkFE4IV5kY3YLbSYGFa69Vms2hieCBX
- +3jDfwzsoAL1KuN/aTT3h5LpJ8RhCsk/B+XV+lmP+kLC6LZsQGjvaaStllIag2QenRhFq238YKu
- VCCCmFPBpCeFZiG/OdNWJr9H2Y2qafUAq0E9a+ucsdHTQFmW++WN4X697SUg6dVDA4PRb76WFI/
- mhUZOqeXLL1NSxWvXeHY=
-X-Google-Smtp-Source: AGHT+IGqRe7gw6ucQlUUysGIBukpbQwlDIaaEUW5EtRZjIyXt8e+xg5m4KVJOcdBSdyBoDAY+2GMhg==
-X-Received: by 2002:a5d:5f4d:0:b0:38f:3224:65ff with SMTP id
- ffacd0b85a97d-3911f725ea9mr6391563f8f.5.1741276238053; 
- Thu, 06 Mar 2025 07:50:38 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfb16sm2406334f8f.29.2025.03.06.07.50.37
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Mar 2025 07:50:37 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 40/54] target/mips: Set disassemble_info::endian value in
- disas_set_info()
-Date: Thu,  6 Mar 2025 16:47:22 +0100
-Message-ID: <20250306154737.70886-41-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250306154737.70886-1-philmd@linaro.org>
-References: <20250306154737.70886-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1741276588; x=1741881388;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FjM6zY5Yik7Qo+JU7LFR+LTH6lh/qDgoKWL6ATnBGkc=;
+ b=JMy5VY/Ij2Bj66x3vjQY81Uz6V1873SyY9B2fugdlBmdfxR3UhTTRZ4V4t4mCYBuZK
+ GrYSnJLRGpkacWucchSHPb5OjMZywlJOlIO8+W47Q/OlVGSeKuQXjFQH/2BJnaA9iqyl
+ P4tcKc9GVNEhJnKqTl5QT6waIqol8PhQ5fAoIpS+ZK9yPlplcwHwlIICcu7Wldjr+I+j
+ W8YQAgemz2Au3V3NoMuh2ORPDJyYblmyylffEBN00abi4arqKKOhYPZMj0IPiPb98i9v
+ /1LZEGiy2koq0TPEB5x8M99grobrca3BUxdOLn+h2cA66+2HhOHnw+FJn6ZxJSYoTPcq
+ QkFA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYFEULxEf6jpPh9lHs6nBb45KppC1UYaKGMLuD8VCiQ+F273Grni1TZDWnxBUwEy0/spyflff/orcU@nongnu.org
+X-Gm-Message-State: AOJu0YwwBPT8Av+NlGMpFJLdKkraYVSvPMSXsxeQELLbQq6DcFAwukY2
+ LfiWID0j8xGk2cJVeQOaWeve4kWhl30sF/08kcH+ojG7uA+k1DFzSEX58T+MQQwwl9/IXXYXN0h
+ MRMgtstwPqW6AFAONtwyWwTsuYDi8gokVGnWf3y2aXshimoHoHzYb
+X-Gm-Gg: ASbGncuDeE/JiT7LDmjgZmpXc7GVMD+CruG3NMWFLqExcLasdS1VZLhdwqZJis4xG6l
+ SMvYIUtwAd5IX0pPn1J6dkd/hfeB1zNVidVYoYlhj2ePQbalquhIjPvPLWIqVM8coz6HC/WThqY
+ WJ5ix9csECY/1k3zAAB6r41jFuTfdju5bCdhrC1rzsbWkNuW6R47bHfPchU5mL/YF3D1ESwKoRA
+ Mys4uosTTRPUy6gguBnFbByMrXx561pLvwGIBVCUVQzL2idLUsIagCOLQzyDH+yz7eaqLjt1VXi
+ 7DdILqWvODVm3fCYue9BQKiSgGSXE4oppL7usHEETUpeiXuBWskZ26ba3lVB7hY=
+X-Received: by 2002:a05:600c:458f:b0:439:91c7:895a with SMTP id
+ 5b1f17b1804b1-43bdb38dd94mr30742725e9.7.1741276587995; 
+ Thu, 06 Mar 2025 07:56:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHEXZtC3h1HxHZp5QLqSWMCM/WBI97psT+YZ5fi8+s++1dWsKn6/ymprw7Qm1Q609DT/Q46mg==
+X-Received: by 2002:a05:600c:458f:b0:439:91c7:895a with SMTP id
+ 5b1f17b1804b1-43bdb38dd94mr30742505e9.7.1741276587566; 
+ Thu, 06 Mar 2025 07:56:27 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912bfba87csm2478466f8f.17.2025.03.06.07.56.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Mar 2025 07:56:26 -0800 (PST)
+Message-ID: <3f200adc-13fc-44e8-ba86-04508a2c44e8@redhat.com>
+Date: Thu, 6 Mar 2025 16:56:24 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rfcv2 05/20] vfio/iommufd: Implement [at|de]tach_hwpt
+ handlers
+Content-Language: en-US
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>
+References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
+ <20250219082228.3303163-6-zhenzhong.duan@intel.com>
+ <65c7bf72-10d2-4183-b548-f0f842083c49@redhat.com>
+ <SJ0PR11MB6744DB4CF84B062FF62022B992CC2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <SJ0PR11MB6744DB4CF84B062FF62022B992CC2@SJ0PR11MB6744.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,44 +126,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Have the CPUClass::disas_set_info() callback set the
-disassemble_info::endian field.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250210212931.62401-6-philmd@linaro.org>
----
- target/mips/cpu.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index 0b267d2e507..e76298699ab 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -428,13 +428,13 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
- static void mips_cpu_disas_set_info(CPUState *s, disassemble_info *info)
- {
-     if (!(cpu_env(s)->insn_flags & ISA_NANOMIPS32)) {
--#if TARGET_BIG_ENDIAN
--        info->print_insn = print_insn_big_mips;
--#else
--        info->print_insn = print_insn_little_mips;
--#endif
-+        info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
-+                                         : BFD_ENDIAN_LITTLE;
-+        info->print_insn = TARGET_BIG_ENDIAN ? print_insn_big_mips
-+                                             : print_insn_little_mips;
-     } else {
-         info->print_insn = print_insn_nanomips;
-+        info->endian = BFD_ENDIAN_LITTLE;
-     }
- }
- 
--- 
-2.47.1
+
+On 2/28/25 9:24 AM, Duan, Zhenzhong wrote:
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Subject: Re: [PATCH rfcv2 05/20] vfio/iommufd: Implement [at|de]tach_hwpt
+>> handlers
+>>
+>>
+>>
+>>
+>> On 2/19/25 9:22 AM, Zhenzhong Duan wrote:
+>>> Implement [at|de]tach_hwpt handlers in VFIO subsystem. vIOMMU
+>>> utilizes them to attach to or detach from hwpt on host side.
+>>>
+>>> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> ---
+>>>  hw/vfio/iommufd.c | 22 ++++++++++++++++++++++
+>>>  1 file changed, 22 insertions(+)
+>>>
+>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>>> index 53639bf88b..175c4fe1f4 100644
+>>> --- a/hw/vfio/iommufd.c
+>>> +++ b/hw/vfio/iommufd.c
+>>> @@ -802,6 +802,24 @@ static void
+>> vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
+>>>      vioc->query_dirty_bitmap = iommufd_query_dirty_bitmap;
+>>>  };
+>>>
+>>> +static bool
+>> can't we return an integer instead. This looks more standard to me
+> I can do that, but I remember VFIO honors bool return value
+> whenever possible. We had ever cleanup patches to make all functions
+> return bool when possible. Do we really want to return int for only these
+> two functions?
+I now remember those patches from Cédric. As I mentionned realier I have
+not found in the errp doc that this was a requirement but nevertheless
+ignore this comment then ;-)
+
+Eric
+>
+> Thanks
+> Zhenzhong
+>
+>> Eric
+>> +host_iommu_device_iommufd_vfio_attach_hwpt(HostIOMMUDeviceIOMMUFD
+>> *idev,
+>>> +                                           uint32_t hwpt_id, Error **errp)
+>>> +{
+>>> +    VFIODevice *vbasedev = HOST_IOMMU_DEVICE(idev)->agent;
+>>> +
+>>> +    return !iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
+>>> +}
+>>> +
+>>> +static bool
+>>>
+>> +host_iommu_device_iommufd_vfio_detach_hwpt(HostIOMMUDeviceIOMMUF
+>> D *idev,
+>>> +                                           Error **errp)
+>>> +{
+>>> +    VFIODevice *vbasedev = HOST_IOMMU_DEVICE(idev)->agent;
+>>> +
+>>> +    return iommufd_cdev_detach_ioas_hwpt(vbasedev, errp);
+>>> +}
+>>> +
+>>>  static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void
+>> *opaque,
+>>>                                        Error **errp)
+>>>  {
+>>> @@ -863,11 +881,15 @@
+>> hiod_iommufd_vfio_get_page_size_mask(HostIOMMUDevice *hiod)
+>>>  static void hiod_iommufd_vfio_class_init(ObjectClass *oc, void *data)
+>>>  {
+>>>      HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
+>>> +    HostIOMMUDeviceIOMMUFDClass *idevc =
+>> HOST_IOMMU_DEVICE_IOMMUFD_CLASS(oc);
+>>>      hiodc->realize = hiod_iommufd_vfio_realize;
+>>>      hiodc->realize_late = hiod_iommufd_vfio_realize_late;
+>>>      hiodc->get_iova_ranges = hiod_iommufd_vfio_get_iova_ranges;
+>>>      hiodc->get_page_size_mask = hiod_iommufd_vfio_get_page_size_mask;
+>>> +
+>>> +    idevc->attach_hwpt = host_iommu_device_iommufd_vfio_attach_hwpt;
+>>> +    idevc->detach_hwpt = host_iommu_device_iommufd_vfio_detach_hwpt;
+>>>  };
+>>>
+>>>  static const TypeInfo types[] = {
 
 
