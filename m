@@ -4,107 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 819DFC282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 04:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13114C282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 04:12:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq2Zn-0006Ij-In; Wed, 05 Mar 2025 23:11:15 -0500
+	id 1tq2am-0006el-J7; Wed, 05 Mar 2025 23:12:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tq2Zl-0006IH-VD; Wed, 05 Mar 2025 23:11:13 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tq2Zj-0007Hv-Oy; Wed, 05 Mar 2025 23:11:13 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 525KpkPr031874;
- Thu, 6 Mar 2025 04:11:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Yq3Hm8
- AGHWR0VT0yqVYN+SOOGap3B7fiqhHbSVrdqhk=; b=oPDam5/QJq32OgBmtLBtxx
- olBoCgBjeZ8fs7pmEB0Opk2O3ueNF+Fk+3gxVbBM60W8gZfD10T8pMJ1iPKldpl3
- 4jK6sSOIYvFJjWXgC7NEXU2QqyKzNIXtKKLMZj4HFQmXHMB8J9J0jiyGTHlU3dEz
- 6WNM717kv7ebW0hko7s/+DlYciat79/5SzApz5629mD2de8Vl/n/RyNN7lmzGzg1
- +vNeFb3SMd7QS99RlO2iILXjCfyZKGMjgQ8BA6YDhawb5bh6fOth7uGp/dDRymnY
- mmgboxd/lcKKJbfffJpx4Q/OofPuPomOP4l1+aw5Mt8qchekwKEvH+1EN669nFUA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 456x15hghe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 06 Mar 2025 04:11:10 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52646JcM029948;
- Thu, 6 Mar 2025 04:11:09 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 456x15hghb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 06 Mar 2025 04:11:09 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5261Frp3020936;
- Thu, 6 Mar 2025 04:11:09 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 454djnpm73-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 06 Mar 2025 04:11:09 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5264B50w35193484
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 6 Mar 2025 04:11:05 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 18B9C20040;
- Thu,  6 Mar 2025 04:11:05 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B557520043;
- Thu,  6 Mar 2025 04:11:02 +0000 (GMT)
-Received: from [9.124.214.147] (unknown [9.124.214.147])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  6 Mar 2025 04:11:02 +0000 (GMT)
-Message-ID: <c82a0177-ba29-41ef-be7a-ad4ebb0dc966@linux.ibm.com>
-Date: Thu, 6 Mar 2025 09:41:01 +0530
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tq2aV-0006aA-M9; Wed, 05 Mar 2025 23:12:00 -0500
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tq2aT-0007KO-Pe; Wed, 05 Mar 2025 23:11:59 -0500
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-5239067df8eso83864e0c.3; 
+ Wed, 05 Mar 2025 20:11:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741234315; x=1741839115; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xfAFU0n8E2x+65ma+4/seir36h9JujQcLnUNYu+mCl0=;
+ b=OM4y3tv6D2R/dr3sbU+OXyyjH4rCG9jDUphPhYWsRAtnB44SS8SL+4X01VVcOkKxwr
+ F0pf1ACudKDRDKpEmNxwFb35B/y19BJ/avNKpqvOCVGYJN/di7/26/a57cuOLeFGbbNv
+ 1yzSkMIQCT9stukpO/FXaUKl9Ne0rt9lEypzPaE5eRgE5GAgpV6xYzMGek66UZAR4k93
+ kaB3YactoSeYhwkw5YfffU4CMnONp+1aE97Gw4HHv/Ppvg9kzsdpGSzt+2vZfY4revyW
+ OYEDqUMvg9LcGLxlZrx+j/oEDtZg8j8D5lu8R83lndRGRaP8MAuazye+/uFBJpJ3nU9K
+ 9j1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741234315; x=1741839115;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xfAFU0n8E2x+65ma+4/seir36h9JujQcLnUNYu+mCl0=;
+ b=eZ7gl7xQpFwRMh39QeofDJwJIc3wPcCUK1DBZLv7+as+D9DUWfDH0RF+xbmz7fTV3v
+ MisUjxNJhld1ENu/eFJy8xjC2JZghtoS/UWD1F76gcxGAkD2wL2oXRU5PZAE9WTjuKmL
+ iCUrS/bfVkMooubdUIHUL2IcI5ub+TbrHpWbTk+u5a521ZGciqDaSQZz96rDj4JQUPLx
+ 8IihZmUs8AwC65Kqb8GyCeGPHPRci0BoMjjRj4SgRPjRJ62JEectcbUL5Sw23teL+WAY
+ AAadyVd4bGNNpAW9r0IJmX+/btOZF6O07sqtelfPrnmCtDre32wWPfBZh5NwQoEeOAtb
+ StLw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTjKrVcByB6Syds3HmCeYyyC5rpKn7s28tZvmnMJpz0YBYEiAe3pqIF1gW/qxiZgYB9r5S3M5dJXD8@nongnu.org
+X-Gm-Message-State: AOJu0Yx4AS91/SAKZXZzjok+u3hbd1t7aID7OEGTvf4NxTiihYBgRVUL
+ Gvx/3QybYrSSAdi3PIPsI7/2citAfthilxTGccUzYC6oLNkaLuuGpX5B0okHsOhonLphxmFsVIE
+ 4KIxtmbM8DhxnAPyCKUfK6PDsd9M=
+X-Gm-Gg: ASbGncu+s1FvTtaRwwEuXohUxAjpP6YAg3ajwPvA9vlrHR5pdFSbYr4sPdfQ9e63ApI
+ h5qGnOJp1oi9FpgcW+iPr0T3Z2ky6qieZZOy52YbfTsQGuD/5NRMCddAZ1x9hy21e+QZaYQAQCD
+ D6QFCKERE63DqhjkGvVO0+npS6bdYQ8nV2lY9o5OYCUd/QtruPFjlx/KuV
+X-Google-Smtp-Source: AGHT+IEX1j93wMxt5wJIjyKSQkz87WYgNOGlzpH1jWIBYN1U2UyDeDi1UQjHhd/aXV0I82j/0mfwHnpGRfEyrOWRrR8=
+X-Received: by 2002:a05:6102:38cf:b0:4c1:8bea:d421 with SMTP id
+ ada2fe7eead31-4c2e27fe02fmr3517758137.14.1741234315248; Wed, 05 Mar 2025
+ 20:11:55 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] hw/ppc: Trigger Fadump boot if fadump is registered
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-References: <20250217071711.83735-1-adityag@linux.ibm.com>
- <20250217071711.83735-3-adityag@linux.ibm.com>
- <93a44d0c-1712-4535-a7d0-e4c285e0255f@linux.ibm.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <93a44d0c-1712-4535-a7d0-e4c285e0255f@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: L2_sM5YaBvajsEcNYtghO3zswv8XZNL0
-X-Proofpoint-ORIG-GUID: ech1K4B4HE0313wJlS09GlLMliLnMXYG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-06_02,2025-03-05_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- suspectscore=0 phishscore=0 adultscore=0 malwarescore=0 spamscore=0
- priorityscore=1501 mlxlogscore=999 mlxscore=0 impostorscore=0
- clxscore=1015 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503060025
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250225005446.13894-1-sebastian.huber@embedded-brains.de>
+ <20250225005446.13894-4-sebastian.huber@embedded-brains.de>
+In-Reply-To: <20250225005446.13894-4-sebastian.huber@embedded-brains.de>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 6 Mar 2025 14:11:29 +1000
+X-Gm-Features: AQ5f1JpZY8ZwfpGDoKj-7N95lPZyHFsXxZE9MG9zIpk9wv_e4GuwK6tadmnYCuk
+Message-ID: <CAKmqyKOgbKh29K06gi-QTUzNfrjvaTp1PwF1g0WuJ3_Ck5CWSA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] hw/riscv: Make FDT optional for MPFS
+To: Sebastian Huber <sebastian.huber@embedded-brains.de>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Conor Dooley <conor.dooley@microchip.com>, Bin Meng <bin.meng@windriver.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,132 +97,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Feb 25, 2025 at 10:55=E2=80=AFAM Sebastian Huber
+<sebastian.huber@embedded-brains.de> wrote:
+>
+> Real-time kernels such as RTEMS or Zephyr may use a static device tree
+> built into the kernel image.  Do not require to use the -dtb option if
+> -kernel is used for the microchip-icicle-kit machine.  Issue a warning
+> if no device tree is provided by the user since the machine does not
+> generate one.
+>
+> Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
 
-On 04/03/25 14:51, Harsh Prateek Bora wrote:
->
->
-> On 2/17/25 12:47, Aditya Gupta wrote:
->> According to PAPR:
->>
->>      R1–7.3.30–3. When the platform receives an ibm,os-term RTAS 
->> call, or
->>      on a system reset without an ibm,nmi-interlock RTAS call, if the
->>      platform has a dump structure registered through the
->>      ibm,configure-kernel-dump call, the platform must process each
->>      registered kernel dump section as required and, when available,
->>      present the dump structure information to the operating system
->>      through the “ibm,kernel-dump” property, updated with status for 
->> each
->>      dump section, until the dump has been invalidated through the
->>      ibm,configure-kernel-dump RTAS call.
->>
->> If Fadump has been registered, trigger an Fadump boot (memory preserving
->> boot), if QEMU recieves a 'ibm,os-term' rtas call.
->>
->> Implementing the fadump boot as:
->>      * pause all vcpus (will save registers later)
->>      * preserve memory regions specified by fadump
->
-> Although mentioned later, but needs to call out here as not implemented
-> in this patch. Ideally, all the prep work patches should be introduced
-> earlier before enabling the trigger.
->
-Got it, will try rearranging the code. Though with current code, the 
-trigger won't be called as fadump will not get registered (as of this 
-patch the rtas call was not exposed to the kernel, this will likely 
-change in v2).
->>      * do a memory preserving reboot (GUEST_RESET in QEMU doesn't clear
->>        the memory)
->>
->> Memory regions registered by fadump will be handled in a later patch.
->>
->> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
->> ---
->>   hw/ppc/spapr_rtas.c | 42 ++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 42 insertions(+)
->>
->> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
->> index eebdf13b1552..01c82375f03d 100644
->> --- a/hw/ppc/spapr_rtas.c
->> +++ b/hw/ppc/spapr_rtas.c
->> @@ -342,6 +342,43 @@ static void 
->> rtas_ibm_set_system_parameter(PowerPCCPU *cpu,
->>   }
->>     struct fadump_metadata fadump_metadata;
->> +bool is_next_boot_fadump;
->> +
->> +static void trigger_fadump_boot(target_ulong spapr_retcode)
->> +{
->> +    /*
->> +     * In PowerNV, SBE stops all clocks for cores, do similar to it
->> +     * QEMU's nearest equivalent is 'pause_all_vcpus'
->> +     * See 'stopClocksS0' in SBE source code for more info on SBE part
->> +     */
->> +    pause_all_vcpus();
->> +
->> +    if (true /* TODO: Preserve memory registered for fadump */) {
->> +        /* Failed to preserve the registered memory regions */
->
-> Instead of this, it is better to introduce the dummy stub here now 
-> which can be populated in a later patch. That also helps in avoiding 
-> code changes in this hunk in future patch.
->
-> For eg:
->
-> static bool fadump_preserved_mem(void)
-> {
->     return false; /* TBD */
-> }
->
-> ...
->
-> if (!fadump_preserve_mem()) {
->  ...
-> }
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Thanks, makes sense. I will do it this way.
+Alistair
 
-
-Thanks,
-
-- Aditya Gupta
-
+> ---
+>  hw/riscv/microchip_pfsoc.c | 56 +++++++++++++++++++-------------------
+>  1 file changed, 28 insertions(+), 28 deletions(-)
 >
->> +        rtas_st(spapr_retcode, 0, RTAS_OUT_HW_ERROR);
->> +
->> +        /* Cause a reboot */
->> +        qemu_system_guest_panicked(NULL);
->> +        return;
->> +    }
->> +
->> +    /* Mark next boot as fadump boot */
->> +    is_next_boot_fadump = true;
->> +
->> +    /* Reset fadump_registered for next boot */
->> +    fadump_metadata.fadump_registered = false;
->> +    fadump_metadata.fadump_dump_active = true;
->> +
->> +    /* Then do a guest reset */
->> +    /*
->> +     * Requirement:
->> +     * This guest reset should not clear the memory (which is
->> +     * the case when this is merged)
->> +     */
->> +    qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
->> +
->> +    rtas_st(spapr_retcode, 0, RTAS_OUT_SUCCESS);
->> +}
->>     /* Papr Section 7.4.9 ibm,configure-kernel-dump RTAS call */
->>   static __attribute((unused)) void 
->> rtas_configure_kernel_dump(PowerPCCPU *cpu,
->> @@ -449,6 +486,11 @@ static void rtas_ibm_os_term(PowerPCCPU *cpu,
->>       target_ulong msgaddr = rtas_ld(args, 0);
->>       char msg[512];
->>   +    if (fadump_metadata.fadump_registered) {
->> +        /* If fadump boot works, control won't come back here */
->> +        return trigger_fadump_boot(rets);
->> +    }
->> +
->>       cpu_physical_memory_read(msgaddr, msg, sizeof(msg) - 1);
->>       msg[sizeof(msg) - 1] = 0;
+> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+> index f477d2791e..844dc0545c 100644
+> --- a/hw/riscv/microchip_pfsoc.c
+> +++ b/hw/riscv/microchip_pfsoc.c
+> @@ -516,7 +516,6 @@ static void microchip_icicle_kit_machine_init(Machine=
+State *machine)
+>      uint64_t mem_low_size, mem_high_size;
+>      hwaddr firmware_load_addr;
+>      const char *firmware_name;
+> -    bool kernel_as_payload =3D false;
+>      target_ulong firmware_end_addr, kernel_start_addr;
+>      uint64_t kernel_entry;
+>      uint64_t fdt_load_addr;
+> @@ -589,25 +588,12 @@ static void microchip_icicle_kit_machine_init(Machi=
+neState *machine)
+>       *
+>       * This ensures backwards compatibility with how we used to expose -=
+bios
+>       * to users but allows them to run through direct kernel booting as =
+well.
+> -     *
+> -     * When -kernel is used for direct boot, -dtb must be present to pro=
+vide
+> -     * a valid device tree for the board, as we don't generate device tr=
+ee.
+>       */
+>
+> -    if (machine->kernel_filename && machine->dtb) {
+> -        int fdt_size;
+> -        machine->fdt =3D load_device_tree(machine->dtb, &fdt_size);
+> -        if (!machine->fdt) {
+> -            error_report("load_device_tree() failed");
+> -            exit(1);
+> -        }
+> -
+> +    if (machine->kernel_filename) {
+>          firmware_name =3D RISCV64_BIOS_BIN;
+>          firmware_load_addr =3D memmap[MICROCHIP_PFSOC_DRAM_LO].base;
+> -        kernel_as_payload =3D true;
+> -    }
+> -
+> -    if (!kernel_as_payload) {
+> +    } else {
+>          firmware_name =3D BIOS_FILENAME;
+>          firmware_load_addr =3D RESET_VECTOR;
+>      }
+> @@ -617,7 +603,7 @@ static void microchip_icicle_kit_machine_init(Machine=
+State *machine)
+>                                                       &firmware_load_addr=
+, NULL);
+>
+>      riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
+> -    if (kernel_as_payload) {
+> +    if (machine->kernel_filename) {
+>          kernel_start_addr =3D riscv_calc_kernel_start_addr(&boot_info,
+>                                                           firmware_end_ad=
+dr);
+>
+> @@ -625,19 +611,33 @@ static void microchip_icicle_kit_machine_init(Machi=
+neState *machine)
+>                            true, NULL);
+>          kernel_entry =3D boot_info.image_low_addr;
+>
+> -        /* Compute the fdt load address in dram */
+> -        hwaddr kernel_ram_base =3D memmap[MICROCHIP_PFSOC_DRAM_LO].base;
+> -        hwaddr kernel_ram_size =3D memmap[MICROCHIP_PFSOC_DRAM_LO].size;
+> -
+> -        if (kernel_entry - kernel_ram_base >=3D kernel_ram_size) {
+> -            kernel_ram_base =3D memmap[MICROCHIP_PFSOC_DRAM_HI].base;
+> -            kernel_ram_size =3D mem_high_size;
+> +        if (machine->dtb) {
+> +            int fdt_size;
+> +            machine->fdt =3D load_device_tree(machine->dtb, &fdt_size);
+> +            if (!machine->fdt) {
+> +                error_report("load_device_tree() failed");
+> +                exit(1);
+> +            }
+> +
+> +            /* Compute the FDT load address in DRAM */
+> +            hwaddr kernel_ram_base =3D memmap[MICROCHIP_PFSOC_DRAM_LO].b=
+ase;
+> +            hwaddr kernel_ram_size =3D memmap[MICROCHIP_PFSOC_DRAM_LO].s=
+ize;
+> +
+> +            if (kernel_entry - kernel_ram_base >=3D kernel_ram_size) {
+> +                kernel_ram_base =3D memmap[MICROCHIP_PFSOC_DRAM_HI].base=
+;
+> +                kernel_ram_size =3D mem_high_size;
+> +            }
+> +
+> +            fdt_load_addr =3D riscv_compute_fdt_addr(kernel_ram_base, ke=
+rnel_ram_size,
+> +                                                   machine, &boot_info);
+> +            riscv_load_fdt(fdt_load_addr, machine->fdt);
+> +        } else {
+> +            warn_report_once("The QEMU microchip-icicle-kit machine does=
+ not "
+> +                             "generate a device tree, so no device tree =
+is "
+> +                             "being provided to the guest.");
+> +            fdt_load_addr =3D 0;
+>          }
+>
+> -        fdt_load_addr =3D riscv_compute_fdt_addr(kernel_ram_base, kernel=
+_ram_size,
+> -                                               machine, &boot_info);
+> -        riscv_load_fdt(fdt_load_addr, machine->fdt);
+> -
+>          /* Load the reset vector */
+>          riscv_setup_rom_reset_vec(machine, &s->soc.u_cpus, firmware_load=
+_addr,
+>                                    memmap[MICROCHIP_PFSOC_ENVM_DATA].base=
+,
+> --
+> 2.43.0
+>
 
