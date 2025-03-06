@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBAC8C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC9F7C282EC
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 10:38:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq8YX-00029g-Jo; Thu, 06 Mar 2025 05:34:26 -0500
+	id 1tq8bv-0004Af-9B; Thu, 06 Mar 2025 05:37:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tq8YE-00026q-Tm
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 05:34:02 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tq8bs-0004AA-NR
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 05:37:49 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tq8Y7-0008W2-IF
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 05:34:02 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-390e3b3d3bcso501395f8f.3
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 02:33:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tq8bn-0000PF-Dg
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 05:37:48 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43948f77f1aso2743795e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 02:37:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741257231; x=1741862031; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741257461; x=1741862261; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VtE1iEOZkI1sAQooTHAixfRIlazc17GL3n7kh/f7qXc=;
- b=YTeEE2WJrLPnQHihwxjuEob1F5g0UshkdSyAwCVQLuNKIF3Gm+NLXms3khmgrnLhEG
- mDd6YhzuLsvkkQHyPazciPVRwG+7XuO0apSIQR9NZDSjRZWMBqXGKRJIaoIbnDrJLbVy
- XrHOvtFQ6sdMLIIAW2gQYRt8Nd/8sbrIw0x6ssWD9XcyCQm1hmvxCm/TNYAIYVH5uLAX
- 04kaHIhPupz+Vu+19FQA71bONSabnrPC2C3l7LkWYaSxwuDIJBYavI2liuDYblqBV7ct
- 8S4++6FOHEC4eGII4Qrdk2HERu6uTbeSlMW/tDbW1Eep+L7LEIBVv8vMIdpkKg66Y5WO
- uxuw==
+ bh=cnmNlNqWUiYotLjRx0btPSV2jHI6AFnF6iMz5rPyZ2A=;
+ b=m+H0oGxm8uyJ4NT0yz/iIar5rWtQT1r6rHPKVXtj16vPR0Wwj9ADnbizi82Kggoulx
+ fQyZRgmOBAA19EquTPenrcNfjk3BjlKMjE6Q5gQ9FLaZeDAqWk2JJt3EazbgZUUol24m
+ gddxnT/adO0Zj1D6MdBAbwayHQooWEyYcj8hwBvwFlQRjbdw1wHH3sOk58j5/tZUJchU
+ 8RvFFfYoHLpx02e7KmZfLgO2wsmm1yXoZIoyrRVVO4atQCmkNldfU07CNXUnl1EmSX6/
+ D9BpYebDAU/FmoWPSyQyZFO6OOKP3cgxFMOvmSyNnbfQZD173AbQ0LMC/l3vEFUAD2mb
+ knxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741257231; x=1741862031;
+ d=1e100.net; s=20230601; t=1741257461; x=1741862261;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VtE1iEOZkI1sAQooTHAixfRIlazc17GL3n7kh/f7qXc=;
- b=Ls4MoXCnAmJfA02Exv7emW8Kpg9CcXtzaBfj1JB7kVJ3K8/aQmLDEpUkvTZzlaQBQp
- nCuNlNoSD5HFV5oJUech3TpBNO6NsUWjoMyT7XcBT9RllG8KJwK4KdN/KPKzAOuALJsL
- CY9niBR4NOsFDGFTJnVkjHlsXpn4L/SBXoOCQURb8UMvdLhIP1Au45luUoHMf4VKFScu
- Ur/E5SZ0TlTvLhqoda2vA3lZJOexD5XPtTfzF0FuxTPwo34DG3owov1Xhzf02ocEO1kM
- yQebDSHf1kw8vUwiKnHPkUPbxP/dcMO4PhNhbkzfW/AL3UwoUHAmr5LzDivfsIkdCs9w
- tTtw==
+ bh=cnmNlNqWUiYotLjRx0btPSV2jHI6AFnF6iMz5rPyZ2A=;
+ b=jLOrxv3aNJhRUi63GvqUuxsjcN5eI8Ic2BpJoeUEDls+DvfmTUx8fqnAk9E8d1AZtJ
+ P++7QRjRYVpETh98ZX8ePyg0G2VhtMqTe0b8ZKE8ovR0AFvkejmwwRPaGoAiUXuFZYkO
+ NCfyBJRYlC6QLbcESyMoJEumaIixLQE1i3RC6R6Slci5VZ8OL+URb0Ls5J1dtgNUSZVz
+ TLhss8V2CndvffURzOXsv4L5vpjXqBTwmRH8LJjcTYrqQalcDKGSrZ/f6tc0IXZVaXDZ
+ pCQh5h9U5IGnaPXdSlXtFhYaH9wC0Liz2/wWuiMB2e9JRORdXANMOKB29F4mV+0lOGsJ
+ R6NQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuuPhO7pr8jjQOZ6E1QvvsIAMg2YW+qqeV71+4J4T7qOzwGgj1R1xogeBQAVxPHptbhIbbNuzvCX/C@nongnu.org
-X-Gm-Message-State: AOJu0YzTZhYSyC6+msdje+eIA2mTotWZTUZAxoVlfNC954T8dTEnbDAv
- kgFKLlbGg/kRN79lS9Sw1PTBjSWwzAyJGVavfTiXeYhw8sjL/i0mohyLenb6kNM=
-X-Gm-Gg: ASbGncsvRzFpZFt1bAPlVzQNOcdJmsQ3BaE/bxGHLXmwHtlFuIz2toIUbKt2Wzthz/k
- 6l8R+wOW9meiOzyJ3XHmol9mQXCQitHnacZxc5gmXSbWoWz240LLZ2IBCX8iITAHK2Vp0YYyh4+
- 9foURVkHTuqOVTwB/KNKsfbQcUWjOYkKV2j5TpYpLD1MU9pYbOQSrMlv0u1WkVIVmdZu57zz8bB
- PF8Wb93e2LOs6nz+QgKluvr1EOnNF0eD3/FG0RWNhVWIJPhvdsl2oZ0mC9OQ66fB/A235nY5+I5
- +0TPICVR2FCY4sHP+QJccVnNOHLgfGLallmlRhQ5Pa4jVprU3Y+m2mfFdbN8zDiK04a+PNa2ARJ
- VW66S+zJGPUk3
-X-Google-Smtp-Source: AGHT+IF33iHksvt9MLx03vTbDPs6T06jc9D40ihJRPIU11hf2kIKzE50Nl/EBe5l3Ji0pVCbC9i4BQ==
-X-Received: by 2002:a05:6000:2108:b0:391:2c0c:1247 with SMTP id
- ffacd0b85a97d-3912c0c1ca4mr952583f8f.1.1741257230864; 
- Thu, 06 Mar 2025 02:33:50 -0800 (PST)
+ AJvYcCVgx/W1Bj+KAvIt2+OcDNXqJLeLlmvzo9gCnmulzpS5tZl6hpEJqXyRmrOWDkCE5bGI+Z3aDw3lnGsC@nongnu.org
+X-Gm-Message-State: AOJu0Yyy646qhYeKE4O1Y8CMksuIcEnMFc9V1Dp76MSZvVokXo/AGtwc
+ jBMI0O6oL7iqFPp7964IGwTidhqbvufiYaaU1wBhKDVPdq0g4fBW6USrG9MEKPo=
+X-Gm-Gg: ASbGncvLKhKU4kp/HQHfRb6nctWf9l9PTmNWb5CEV4RKzlcx8XGFhkuAua1xTO6cNRZ
+ npYxgPMVHWLDuaaHhwZSkW9OpaCKYgN2D2mDUHepNAPBoHEusgkH4PxBawuZm+wESTSyXiBC4Fr
+ VbxWGnbCswYIQVT4LAp1JRJMaNRoTRwoq/qptTDutj9dFtCn793TLmjqRi9NmwPZbViMVr7vU4E
+ Faqjtq9Uz25MNBy9Ru3o0ZSLQtysJLNRfkz8uUc9xW7vjoe7/fjt0u6NXcZ4Jxt1rpl/eZs8v1G
+ N0Fv6EVHU5AYVjs0ESpY1+KE8dg+FzX6XxBeNqoI7RLMoiWnu0FKdUL84EubKJQQLG2PLNVyOgh
+ Ldl9TOTF2b14f
+X-Google-Smtp-Source: AGHT+IGNXVK1QhDHo/kNBIIeGlO7DFsE4gAoebSrHG+W2B+Sbcao7NMfHhDrIWM4v/GpGoSbo0keMA==
+X-Received: by 2002:a05:600c:4f0f:b0:43b:c390:b78d with SMTP id
+ 5b1f17b1804b1-43bd2aed6d8mr47714195e9.24.1741257460622; 
+ Thu, 06 Mar 2025 02:37:40 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e2f10sm1614500f8f.65.2025.03.06.02.33.49
+ 5b1f17b1804b1-43bdd94913fsm15398605e9.37.2025.03.06.02.37.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 02:33:50 -0800 (PST)
-Message-ID: <2390cf9e-c9df-4d19-946b-68c51763ce16@linaro.org>
-Date: Thu, 6 Mar 2025 11:33:48 +0100
+ Thu, 06 Mar 2025 02:37:39 -0800 (PST)
+Message-ID: <4dc45084-fb9d-4fed-88b0-18b0034c8c74@linaro.org>
+Date: Thu, 6 Mar 2025 11:37:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/9] vfio: Check compatibility of CPU and IOMMU address
- space width
+Subject: Re: [PATCH v2 7/9] cpu: Introduce cpu_get_phys_bits()
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
 References: <20250130134346.1754143-1-clg@redhat.com>
- <20250130134346.1754143-9-clg@redhat.com>
+ <20250130134346.1754143-8-clg@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250130134346.1754143-9-clg@redhat.com>
+In-Reply-To: <20250130134346.1754143-8-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,76 +107,145 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 30/1/25 14:43, Cédric Le Goater wrote:
-> Print a warning if IOMMU address space width is smaller than the
-> physical address width. In this case, PCI peer-to-peer transactions on
-> BARs are not supported and failures of device MMIO regions are to be
-> expected.
+> The Intel CPU has a complex history regarding setting of the physical
+> address space width on KVM. A 'phys_bits' field and a "phys-bits"
+> property were added by commit af45907a1328 ("target-i386: Allow
+> physical address bits to be set") to tune this value.
 > 
-> This can occur with the 39-bit IOMMU address space width as found on
-> consumer grade processors or when using a vIOMMU device with default
-> settings.
+> In certain circumstances, it is interesting to know this value to
+> check that all the conditions are met for optimal operation. For
+> instance, when the system has a 39-bit IOMMU address space width and a
+> larger CPU physical address space, we expect issues when mapping the
+> MMIO regions of passthrough devices and it would good to report to the
+> user. These hybrid HW configs can be found on some consumer grade
+> processors or when using a vIOMMU device with default settings.
 > 
+> For this purpose, add an helper routine and a CPUClass callback to
+> return the physical address space width of a CPU.
+> 
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Eduardo Habkost <eduardo@habkost.net>
+> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
+> Cc: Yanan Wang <wangyanan55@huawei.com>
+> Cc: Zhao Liu <zhao1.liu@intel.com>
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   hw/vfio/common.c | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
+>   include/hw/core/cpu.h            |  9 +++++++++
+>   include/hw/core/sysemu-cpu-ops.h |  6 ++++++
+>   cpu-target.c                     |  5 +++++
+>   hw/core/cpu-system.c             | 11 +++++++++++
+>   target/i386/cpu.c                |  6 ++++++
+>   5 files changed, 37 insertions(+)
 > 
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index 5c9d8657d746ce30af5ae8f9122101e086a61ef5..e5ef93c589b2bed68f790608868ec3c7779d4cb8 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -44,6 +44,8 @@
->   #include "migration/qemu-file.h"
->   #include "system/tpm.h"
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index fb397cdfc53d12d40d3e4e7f86251fc31c48b9f6..1b3eead102ce62fcee55ab0ed5e0dff327fa2fc5 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -748,6 +748,14 @@ int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs);
+>    */
+>   bool cpu_virtio_is_big_endian(CPUState *cpu);
 >   
-> +#include "hw/core/cpu.h"
+> +/**
+> + * cpu_get_phys_bits:
+> + * @cpu: CPU
+> + *
+> + * Return the physical address space width of the CPU @cpu.
+> + */
+> +uint32_t cpu_get_phys_bits(const CPUState *cpu);
 > +
->   VFIODeviceList vfio_device_list =
->       QLIST_HEAD_INITIALIZER(vfio_device_list);
->   static QLIST_HEAD(, VFIOAddressSpace) vfio_address_spaces =
-> @@ -1546,12 +1548,28 @@ retry:
->       return info;
+>   #endif /* CONFIG_USER_ONLY */
+>   
+>   /**
+> @@ -1168,6 +1176,7 @@ void cpu_exec_unrealizefn(CPUState *cpu);
+>   void cpu_exec_reset_hold(CPUState *cpu);
+>   
+>   const char *target_name(void);
+> +uint32_t target_phys_bits(void);
+>   
+>   #ifdef COMPILING_PER_TARGET
+>   
+> diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
+> index 0df5b058f50073e47d2a6b8286be5204776520d2..210b3ed57985525795b81559e41e0085969210d5 100644
+> --- a/include/hw/core/sysemu-cpu-ops.h
+> +++ b/include/hw/core/sysemu-cpu-ops.h
+> @@ -81,6 +81,12 @@ typedef struct SysemuCPUOps {
+>        */
+>       bool (*virtio_is_big_endian)(CPUState *cpu);
+>   
+> +    /**
+> +     * @get_phys_bits: Callback to return the physical address space
+> +     * width of a CPU.
+> +     */
+> +    uint32_t (*get_phys_bits)(const CPUState *cpu);
+> +
+>       /**
+>        * @legacy_vmsd: Legacy state for migration.
+>        *               Do not use in new targets, use #DeviceClass::vmsd instead.
+> diff --git a/cpu-target.c b/cpu-target.c
+> index 667688332c929aa53782c94343def34571272d5f..88158272c06cc42424d435b9701e33735f080239 100644
+> --- a/cpu-target.c
+> +++ b/cpu-target.c
+> @@ -472,3 +472,8 @@ const char *target_name(void)
+>   {
+>       return TARGET_NAME;
+>   }
+> +
+> +uint32_t target_phys_bits(void)
+> +{
+> +    return TARGET_PHYS_ADDR_SPACE_BITS;
+> +}
+> diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
+> index 6aae28a349a7a377d010ff9dcab5ebc29e1126ca..05067d84f4258facf4252216f17729e390d38eae 100644
+> --- a/hw/core/cpu-system.c
+> +++ b/hw/core/cpu-system.c
+> @@ -60,6 +60,17 @@ hwaddr cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
+>       return cc->sysemu_ops->get_phys_page_debug(cpu, addr);
 >   }
 >   
-> +static bool vfio_device_check_address_space(VFIODevice *vbasedev, Error **errp)
+> +uint32_t cpu_get_phys_bits(const CPUState *cpu)
 > +{
-> +    uint32_t cpu_aw_bits = cpu_get_phys_bits(first_cpu);
-
-This 'first_cpu' use is annoying. I understand the device is created
-from the CLI, and passing the host physical bits limit as a device
-property is not practical. We'll deal with that later...
-
-> +    uint32_t iommu_aw_bits = vfio_device_get_aw_bits(vbasedev);
+> +    CPUClass *cc = CPU_GET_CLASS(cpu);
 > +
-> +    if (cpu_aw_bits && cpu_aw_bits > iommu_aw_bits) {
-> +        error_setg(errp, "Host physical address space (%u) is larger than "
-> +                   "the host IOMMU address space (%u).", cpu_aw_bits,
-> +                   iommu_aw_bits);
-> +        vfio_device_error_append(vbasedev, errp);
-> +        return false;
+> +    if (cc->sysemu_ops->get_phys_bits) {
+> +        return cc->sysemu_ops->get_phys_bits(cpu);
 > +    }
-> +    return true;
+> +
+> +    return target_phys_bits();
+
+I might have suggested to return TARGET_PHYS_ADDR_SPACE_BITS
+by default in v1, I'm not sure about it anymore. Maybe default
+to 0 and have each target register its helper if necessary?
+
 > +}
 > +
->   bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->                           AddressSpace *as, Error **errp)
+>   hwaddr cpu_get_phys_page_debug(CPUState *cpu, vaddr addr)
 >   {
->       const VFIOIOMMUClass *ops =
->           VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
->       HostIOMMUDevice *hiod = NULL;
-> +    Error *local_err = NULL;
+>       MemTxAttrs attrs = {};
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index b5dd60d2812e0c3d13c1743fd485a9068ab29c4f..01cf9a44963710a415c755c17582730f75233143 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -8393,6 +8393,11 @@ static bool x86_cpu_get_paging_enabled(const CPUState *cs)
 >   
->       if (vbasedev->iommufd) {
->           ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
-> @@ -1571,6 +1589,9 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->           return false;
->       }
->   
-> +    if (!vfio_device_check_address_space(vbasedev, &local_err)) {
-> +        warn_report_err(local_err);
-> +    }
->       return true;
+>       return cpu->env.cr[0] & CR0_PG_MASK;
 >   }
+> +
+> +static uint32_t x86_cpu_get_phys_bits(const CPUState *cs)
+> +{
+> +    return X86_CPU(cs)->phys_bits;
+> +}
+>   #endif /* !CONFIG_USER_ONLY */
 >   
+>   static void x86_cpu_set_pc(CPUState *cs, vaddr value)
+> @@ -8701,6 +8706,7 @@ static const struct SysemuCPUOps i386_sysemu_ops = {
+>       .get_memory_mapping = x86_cpu_get_memory_mapping,
+>       .get_paging_enabled = x86_cpu_get_paging_enabled,
+>       .get_phys_page_attrs_debug = x86_cpu_get_phys_page_attrs_debug,
+> +    .get_phys_bits = x86_cpu_get_phys_bits,
+>       .asidx_from_attrs = x86_asidx_from_attrs,
+>       .get_crash_info = x86_cpu_get_crash_info,
+>       .write_elf32_note = x86_cpu_write_elf32_note,
 
 
