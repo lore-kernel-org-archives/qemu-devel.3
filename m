@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03778C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D794DC28B23
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 06:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tq4ZA-0003fM-JV; Thu, 06 Mar 2025 01:18:46 -0500
+	id 1tq4bn-0006te-Q6; Thu, 06 Mar 2025 01:21:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq4Ys-0003IU-IQ; Thu, 06 Mar 2025 01:18:29 -0500
+ id 1tq4bm-0006tN-HD; Thu, 06 Mar 2025 01:21:26 -0500
 Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tq4Yp-0003eY-4H; Thu, 06 Mar 2025 01:18:26 -0500
+ id 1tq4bk-00047A-R7; Thu, 06 Mar 2025 01:21:26 -0500
 Received: by mail-vk1-xa2a.google.com with SMTP id
- 71dfb90a1353d-523cbce071bso118472e0c.0; 
- Wed, 05 Mar 2025 22:18:21 -0800 (PST)
+ 71dfb90a1353d-52361a772e7so1501560e0c.1; 
+ Wed, 05 Mar 2025 22:21:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741241901; x=1741846701; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741242083; x=1741846883; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6BM8CTonOD41abNgTsIDQXYLsdWl2uI7cynfSO39ShQ=;
- b=TNaDpkJ5j4dGzmHFW+LYnuw7gD4FcsJ/geKqyI4H87iHgRGuvridkO1gk5udCGiNpB
- CUUyIdzmWxk0oZs4/ntK9v2JSqxJ6F53R3cTjpPxLqsLYrrjH+ztsHFgHwG0dIrpMJbA
- 57laQ+BJPkQhnbTLZLH16ALxoYtX4y6PKMl8p3EsnoXeF9egsExkISRwOWHfrdQY7hjR
- AqFDg50pvqiZpKrP5P2hB0/Rnz99YJTtVZ7Bk7eEliP+aCXvl85OFa5VUPrbbwch1Yju
- GJKL2zPRQgq/cgeHrAsyDNrFuC2YCf+XnrQOFH+0SkK750MkGXaJzdYr/N65wwQHn7Xq
- pzUQ==
+ bh=RtwhlKwnVBgOF6cp1v+m4PZ8wCf5vvQthXWMJ0XQXcE=;
+ b=FcW6si8qciXFEAK0t7+cy3FOJ6fhDjnsdBVqS3TnYhuT3ApPmsoHgW6KGJvf31MGt3
+ EwmsQf8pKnyQJOgIzd5bUQWrztdR9FgHsIczmoqoi7hAS4g354QkfxhyJPGJUO7y98zA
+ lwP2KhDuZOxp7MNBB6hgY2w2UrMcF9WYVZ9WoAz8f9RT3PZ6ltB5SyJbMYFAQlcTUm8r
+ pzvNhcJqyseSSRf8qCG++ypfys7gjwAA2YOFUR8oqhfnz1NxV1mCdUhndm2R6rOnUFgQ
+ awZFsIF3RmJbS2W1jICrubCmqy6OrGfI9ligra2E8O2YB1LO7G65x4rHhmX5FFXC0VVP
+ k/gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741241901; x=1741846701;
+ d=1e100.net; s=20230601; t=1741242083; x=1741846883;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6BM8CTonOD41abNgTsIDQXYLsdWl2uI7cynfSO39ShQ=;
- b=gvDX3ZGBDAcB+cfDDQCwn1P201GqS7o8kVLTH2F8ZZYKW4QYqYXz1tndIaNQvKXIiq
- 44gujs/2fLmc/pPYroOMJ9ccWh4h8syWb2QKyLJ1i2WjBDg4qFcBmD/uqh672SZTiMUg
- zt3HnhqYtD9N3WNXenqLP2z41bMWH618ctpyjhATeK/i+tsmBacfIwZuH1ZkfwCcrp50
- kNm5PWggZPU2gw5kYOG1IChbmMg4nLRlZYxyqWP9xYaArFr4bG5motQCNBNb9z976O+Q
- Qi+YPAeVPGbNWXEOkOy+Pa74edCRVeeunWGc0auZI/Jh6o5P6hWb5B6OXHOfbtUG9IwY
- AU9w==
+ bh=RtwhlKwnVBgOF6cp1v+m4PZ8wCf5vvQthXWMJ0XQXcE=;
+ b=DVOxiUuMw1clLM2ZiMOQta7etop7J681zMLJpqEqxPOzpE5LDpyBdbq1IIC/mS+ANV
+ lHlsVkKIk/cJbcpAI/pQzrlUG0lS9ISZvcTRnGsURGwm35ofJvse2v9Lklln6yXbbJsH
+ 7WygccXZf/gncLMbjiciecaTVnYaVE2DgReyP5lnSGsNQwkPf9TOM7Nml95Xgh94IE5E
+ UpFp9hHZNwfdySjuTfVYja4XIgC65+0fI0eG2PlTrXD3aMtAluiFXUpZA185rG+ypxxi
+ SaA81N8thK+G311Y2grwBM1OJq79P58ZWrJm8veFFIZe2RToR8vXM/xQ0b4WUq9sLcWz
+ LdUg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZqv+gkeGhVrSl4rPHO5Dt5mHRDNRsdiF1iNFMmPQii4NZn+R8lnvY65e7l+fPXiyCBm6Q51QjsJxu@nongnu.org
-X-Gm-Message-State: AOJu0Yw8iG4Eh/srx4NQHbWSA9exHZLp5+yMoUROE215EG+BJWZNwj01
- E41Q+CNV8g0HX4fyy0g9shnd+irvduWQh7w7SFPrZdKZPuWARuT8zf/ot6RdOwjCv9uGzef3UA4
- GggD5oTahNJr2XKPQNJgCBNK8TRLqrztRe/DE6w==
-X-Gm-Gg: ASbGncsAN8SrsiVYb8lsQyt64WJHLEDi00AYcYTXvPpJd+0QR3c4nkqcf/YuLV2lyqE
- t5ZwxeTILpuDX+phW7KAvd954BtJ8Davvn2NjSWPYCAWwD5n7jZ75vuXDvVhN8iryISswlbTOOV
- GcC3ltfjEyHaIq6fAwcBhDMsJH09V25K7Qm3pHixKR9a1vg/U/ma5wE781
-X-Google-Smtp-Source: AGHT+IEcLQ0x6YmQ+PSfKR/iO5VuVWe8Z2M7I/U2LDAFcd4SU+ob8QdhdynQFRJQmOOEAOrUfNW1kNuuKsnafT91vnE=
-X-Received: by 2002:a05:6102:1622:b0:4c1:9536:523e with SMTP id
- ada2fe7eead31-4c2e29bbf61mr4031029137.23.1741241900870; Wed, 05 Mar 2025
- 22:18:20 -0800 (PST)
+ AJvYcCVijd5LpcG8egBwRczvGBIE2W9rEfrZ0P9HBFpyyukomhMOVS8G9scLBfkCdY3ATtKEZvtz0GzlFZi7@nongnu.org
+X-Gm-Message-State: AOJu0YwBAR95Gykb7a6yECMhmwedooVj3vMU2JmtH6JXIQfk/kktFqw2
+ lGyAjvT/8TYYyVtd7pZzznVwRZe5GHO4jRUywbuzEj5iapZtRPXR3T6oRToWy3UQl8ArD/yZA9m
+ JKg5BDkd9V2Rtz1vXrYs29Ns1dwQ=
+X-Gm-Gg: ASbGnctljjWO/Vozawm4D4SQByEIEu5pUnaZe+mS5v/PLYhrk6cJjXvCyHQm8dlW8c2
+ 62Kkbp+RrX+g+qATFoi9IMP162N03JsBrAT7gj+evtbizR8bhfcatby+jVcjEbhas8GdRZsdVFj
+ wxWy72ASB9eayvd8sDp+DXfkZ+Lvi53Et0ASxuudV3HbKzYPsSp2MIp/6w
+X-Google-Smtp-Source: AGHT+IFhf0ajAxvVrPsuo5338jbKLWjCYpqZmU4/AwtiVwArvHOMEkUqQR1XngXA7G1/vskdSLVDm5AAYd841rtFGPk=
+X-Received: by 2002:a05:6122:3d15:b0:523:792e:e9c3 with SMTP id
+ 71dfb90a1353d-523d4ecd2d4mr1390829e0c.0.1741242082989; Wed, 05 Mar 2025
+ 22:21:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20250303093155.35585-1-florian.lugou@provenrun.com>
- <20250303093155.35585-3-florian.lugou@provenrun.com>
-In-Reply-To: <20250303093155.35585-3-florian.lugou@provenrun.com>
+References: <20250218025446.2452254-1-debug@rivosinc.com>
+ <CAKmqyKMrod154GEdDFajnBMh0gg2zFGWxXYA0+xF=xW42SgEjg@mail.gmail.com>
+ <Z8k8zi3Moy/RxCWr@debug.ba.rivosinc.com>
+In-Reply-To: <Z8k8zi3Moy/RxCWr@debug.ba.rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Mar 2025 16:17:54 +1000
-X-Gm-Features: AQ5f1JoHB4Lg3aC7I5HDC8u_AGk7xqbyBaYBgZn-89KIXZtrypW87SVjxEeU2UE
-Message-ID: <CAKmqyKNUO1ruHijU2BxcBYzXQuvt=jA87L5O_b76hY5bYb1i3Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] target/riscv: Support matching scontext in
- Sdtrig's textra CSRs
-To: Florian Lugou <florian.lugou@provenrun.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+Date: Thu, 6 Mar 2025 16:20:56 +1000
+X-Gm-Features: AQ5f1JovqO5tCrdz-tqZxjWqdNg7udYTtB_6D2hmmjUT0PSAyFq7NWdxEHSKibs
+Message-ID: <CAKmqyKPYCWEVyd8ygKR+j8u9cTLG2xoG053p7-EDXcd+8qWfUg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] target/riscv: fix access permission checks for CSR_SSP
+To: Deepak Gupta <debug@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ Adam Zabrocki <azabrocki@nvidia.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
@@ -100,195 +99,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 3, 2025 at 7:38=E2=80=AFPM Florian Lugou
-<florian.lugou@provenrun.com> wrote:
+On Thu, Mar 6, 2025 at 4:12=E2=80=AFPM Deepak Gupta <debug@rivosinc.com> wr=
+ote:
 >
-> Support setting textra32.sselect or textra64.sselect to 1 (scontext).
-> The trigger will only match if the content of scontext matches the value
-> in svalue, after it is masked as configured in sbytemask.
+> On Thu, Mar 06, 2025 at 03:20:55PM +1000, Alistair Francis wrote:
+> >On Tue, Feb 18, 2025 at 12:56=E2=80=AFPM Deepak Gupta <debug@rivosinc.co=
+m> wrote:
+> >>
+> >> Commit:8205bc1 ("target/riscv: introduce ssp and enabling controls for
+> >> zicfiss") introduced CSR_SSP but it mis-interpreted the spec on access
+> >> to CSR_SSP in M-mode. Gated to CSR_SSP is not gated via `xSSE`. But
+> >> rather rules clearly specified in section "2.2.4. Shadow Stack Pointer=
+"
+> >
+> >Do you mean "22.2.1. Shadow Stack Pointer (ssp) CSR access contr" in
+> >the priv spec?
+>
+> No I meant 2.2.4 of zicfiss specification. Section 22.2.1 of priv spec
+> says same.
 
-I don't think this matches the 0.13 debug spec [1].
-
-If we want to support the newly ratified 1.0 spec as well we need to
-communicate that to users. Ideally we want to support both versions
-and let users choose, but it might be ok to just drop 0.13, as I get
-the feeling it should not have been ratified.
-
-1: https://github.com/riscv/riscv-debug-spec/releases/tag/task_group_vote
+I meant that it's now just in the priv spec, the zicfiss spec is no
+longer maintained so we should just reference the priv spec
 
 Alistair
 
 >
-> Signed-off-by: Florian Lugou <florian.lugou@provenrun.com>
-> ---
->  target/riscv/debug.c | 75 +++++++++++++++++++++++++++++++-------------
->  target/riscv/debug.h |  3 ++
->  2 files changed, 57 insertions(+), 21 deletions(-)
+> >
+> >> of `zicfiss` specification. Thanks to Adam Zabrocki for bringing this
+> >> to attention.
+> >
+> >The thanks should probably be below the line
 >
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index 072593ab12..a64dadf6d6 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -219,8 +219,8 @@ static inline void warn_always_zero_bit(target_ulong =
-val, target_ulong mask,
+> Sure
 >
->  static target_ulong textra_validate(CPURISCVState *env, target_ulong tda=
-ta3)
->  {
-> -    target_ulong mhvalue, mhselect;
-> -    target_ulong mhselect_new;
-> +    target_ulong mhvalue, mhselect, sbytemask, svalue, sselect;
-> +    target_ulong mhselect_new, sselect_new;
->      target_ulong textra;
->      const uint32_t mhselect_no_rvh[8] =3D { 0, 0, 0, 0, 4, 4, 4, 4 };
->
-> @@ -228,25 +228,17 @@ static target_ulong textra_validate(CPURISCVState *=
-env, target_ulong tdata3)
->      case MXL_RV32:
->          mhvalue  =3D get_field(tdata3, TEXTRA32_MHVALUE);
->          mhselect =3D get_field(tdata3, TEXTRA32_MHSELECT);
-> -        /* Validate unimplemented (always zero) bits */
-> -        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA32_SBYTEMASK,
-> -                             "sbytemask");
-> -        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA32_SVALUE,
-> -                             "svalue");
-> -        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA32_SSELECT,
-> -                             "sselect");
-> +        sbytemask  =3D get_field(tdata3, TEXTRA32_SBYTEMASK);
-> +        svalue  =3D get_field(tdata3, TEXTRA32_SVALUE);
-> +        sselect =3D get_field(tdata3, TEXTRA32_SSELECT);
->          break;
->      case MXL_RV64:
->      case MXL_RV128:
->          mhvalue  =3D get_field(tdata3, TEXTRA64_MHVALUE);
->          mhselect =3D get_field(tdata3, TEXTRA64_MHSELECT);
-> -        /* Validate unimplemented (always zero) bits */
-> -        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA64_SBYTEMASK,
-> -                             "sbytemask");
-> -        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA64_SVALUE,
-> -                             "svalue");
-> -        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA64_SSELECT,
-> -                             "sselect");
-> +        sbytemask  =3D get_field(tdata3, TEXTRA64_SBYTEMASK);
-> +        svalue  =3D get_field(tdata3, TEXTRA64_SVALUE);
-> +        sselect =3D get_field(tdata3, TEXTRA64_SSELECT);
->          break;
->      default:
->          g_assert_not_reached();
-> @@ -258,17 +250,34 @@ static target_ulong textra_validate(CPURISCVState *=
-env, target_ulong tdata3)
->          qemu_log_mask(LOG_UNIMP, "mhselect only supports 0 or 4 for now\=
-n");
->      }
->
-> +    /* Validate sselect. */
-> +    switch (sselect) {
-> +    case SSELECT_IGNORE:
-> +    case SSELECT_SCONTEXT:
-> +        sselect_new =3D sselect;
-> +        break;
-> +    default:
-> +        sselect_new =3D 0;
-> +        qemu_log_mask(LOG_UNIMP, "sselect only supports 0 or 1 for now\n=
-");
-> +    }
-> +
->      /* Write legal values into textra */
->      textra =3D 0;
->      switch (riscv_cpu_mxl(env)) {
->      case MXL_RV32:
-> -        textra =3D set_field(textra, TEXTRA32_MHVALUE,  mhvalue);
-> -        textra =3D set_field(textra, TEXTRA32_MHSELECT, mhselect_new);
-> +        textra =3D set_field(textra, TEXTRA32_MHVALUE,   mhvalue);
-> +        textra =3D set_field(textra, TEXTRA32_MHSELECT,  mhselect_new);
-> +        textra =3D set_field(textra, TEXTRA32_SBYTEMASK, sbytemask);
-> +        textra =3D set_field(textra, TEXTRA32_SVALUE,    svalue);
-> +        textra =3D set_field(textra, TEXTRA32_SSELECT,   sselect_new);
->          break;
->      case MXL_RV64:
->      case MXL_RV128:
-> -        textra =3D set_field(textra, TEXTRA64_MHVALUE,  mhvalue);
-> -        textra =3D set_field(textra, TEXTRA64_MHSELECT, mhselect_new);
-> +        textra =3D set_field(textra, TEXTRA64_MHVALUE,   mhvalue);
-> +        textra =3D set_field(textra, TEXTRA64_MHSELECT,  mhselect_new);
-> +        textra =3D set_field(textra, TEXTRA64_SBYTEMASK, sbytemask);
-> +        textra =3D set_field(textra, TEXTRA64_SVALUE,    svalue);
-> +        textra =3D set_field(textra, TEXTRA64_SSELECT,   sselect_new);
->          break;
->      default:
->          g_assert_not_reached();
-> @@ -368,7 +377,7 @@ static bool trigger_textra_match(CPURISCVState *env, =
-trigger_type_t type,
->                                   int trigger_index)
->  {
->      target_ulong textra =3D env->tdata3[trigger_index];
-> -    target_ulong mhvalue, mhselect;
-> +    target_ulong mhvalue, mhselect, sbytemask, svalue, sselect;
->
->      if (type < TRIGGER_TYPE_AD_MATCH || type > TRIGGER_TYPE_AD_MATCH6) {
->          /* textra checking is only applicable when type is 2, 3, 4, 5, o=
-r 6 */
-> @@ -379,11 +388,17 @@ static bool trigger_textra_match(CPURISCVState *env=
-, trigger_type_t type,
->      case MXL_RV32:
->          mhvalue  =3D get_field(textra, TEXTRA32_MHVALUE);
->          mhselect =3D get_field(textra, TEXTRA32_MHSELECT);
-> +        sbytemask =3D get_field(textra, TEXTRA32_SBYTEMASK);
-> +        svalue =3D get_field(textra, TEXTRA32_SVALUE);
-> +        sselect =3D get_field(textra, TEXTRA32_SSELECT);
->          break;
->      case MXL_RV64:
->      case MXL_RV128:
->          mhvalue  =3D get_field(textra, TEXTRA64_MHVALUE);
->          mhselect =3D get_field(textra, TEXTRA64_MHSELECT);
-> +        sbytemask  =3D get_field(textra, TEXTRA64_SBYTEMASK);
-> +        svalue  =3D get_field(textra, TEXTRA64_SVALUE);
-> +        sselect =3D get_field(textra, TEXTRA64_SSELECT);
->          break;
->      default:
->          g_assert_not_reached();
-> @@ -403,6 +418,24 @@ static bool trigger_textra_match(CPURISCVState *env,=
- trigger_type_t type,
->          break;
->      }
->
-> +    target_ulong svalue_mask =3D ((sbytemask & 1) * 0xFF) |
-> +        ((sbytemask & 2) * 0x7F80) | ((sbytemask & 4) * 0x3FC000) |
-> +        ((sbytemask & 8) * 0x1FE00000);
-> +
-> +    /* Check svalue and sselect. */
-> +    switch (sselect) {
-> +    case SSELECT_IGNORE:
-> +        break;
-> +    case SSELECT_SCONTEXT:
-> +        /* Match if the low bits of scontext equal svalue. */
-> +        if ((svalue & svalue_mask) !=3D (env->scontext & svalue_mask)) {
-> +            return false;
-> +        }
-> +        break;
-> +    default:
-> +        break;
-> +    }
-> +
->      return true;
->  }
->
-> diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-> index f76b8f944a..16b66441ca 100644
-> --- a/target/riscv/debug.h
-> +++ b/target/riscv/debug.h
-> @@ -134,6 +134,9 @@ enum {
->  #define MHSELECT_IGNORE       0
->  #define MHSELECT_MCONTEXT     4
->
-> +#define SSELECT_IGNORE        0
-> +#define SSELECT_SCONTEXT      1
-> +
->  bool tdata_available(CPURISCVState *env, int tdata_index);
->
->  target_ulong tselect_csr_read(CPURISCVState *env);
-> --
-> 2.43.0
->
->
+> >
+> >>
+> >> Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling control=
+s
+> >> for zicfiss"
+> >>
+> >> Reported-by: Adam Zabrocki <azabrocki@nvidia.com>
+> >> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+> >
+> >The actual change looks good:
+> >
+> >Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> >
+> >Alistair
+> >
+> >> ---
+> >>  target/riscv/csr.c | 5 +++++
+> >>  1 file changed, 5 insertions(+)
+> >>
+> >> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> >> index afb7544f07..75c661d2a1 100644
+> >> --- a/target/riscv/csr.c
+> >> +++ b/target/riscv/csr.c
+> >> @@ -191,6 +191,11 @@ static RISCVException cfi_ss(CPURISCVState *env, =
+int csrno)
+> >>          return RISCV_EXCP_ILLEGAL_INST;
+> >>      }
+> >>
+> >> +    /* If ext implemented, M-mode always have access to SSP CSR */
+> >> +    if (env->priv =3D=3D PRV_M) {
+> >> +        return RISCV_EXCP_NONE;
+> >> +    }
+> >> +
+> >>      /* if bcfi not active for current env, access to csr is illegal *=
+/
+> >>      if (!cpu_get_bcfien(env)) {
+> >>  #if !defined(CONFIG_USER_ONLY)
+> >> --
+> >> 2.34.1
+> >>
+> >>
 
