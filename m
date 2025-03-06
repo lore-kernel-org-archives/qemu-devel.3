@@ -4,63 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8C34C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 13:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A45DAC282D1
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 13:49:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqBY0-0003LM-Ql; Thu, 06 Mar 2025 08:46:01 -0500
+	id 1tqBb3-000478-Jf; Thu, 06 Mar 2025 08:49:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tqBXz-0003LB-NZ
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:45:59 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tqBXx-0005v8-Da
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:45:59 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 762A54E600F;
- Thu, 06 Mar 2025 14:45:54 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id FQjDyNgrJp7b; Thu,  6 Mar 2025 14:45:52 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 787434E6000; Thu, 06 Mar 2025 14:45:52 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7683E74577C;
- Thu, 06 Mar 2025 14:45:52 +0100 (CET)
-Date: Thu, 6 Mar 2025 14:45:52 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-cc: Paolo Bonzini <pbonzini@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [RFC PATCH 04/18] qemu: Introduce 'qemu/legacy_binary_info.h'
-In-Reply-To: <Z8mMhjwiYCY7Pq4H@redhat.com>
-Message-ID: <c6953b69-a54d-6d42-343e-dae07266306f@eik.bme.hu>
-References: <20250305153929.43687-1-philmd@linaro.org>
- <20250305153929.43687-5-philmd@linaro.org>
- <35177cd6-0741-4c28-a5d5-3529208a31dc@linaro.org>
- <dd0336c2-c2ed-477c-8f40-eaee2f110238@redhat.com>
- <21a34cac-855b-4628-a154-e708ea85df59@linaro.org>
- <CABgObfaKQLizim36Lzqzn+brc5d7m10eKbZV59ZK9+03Kt7eTg@mail.gmail.com>
- <Z8mMhjwiYCY7Pq4H@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqBb1-00046s-Kp
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:49:08 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqBay-0006Ad-Cq
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 08:49:06 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A688D211CD;
+ Thu,  6 Mar 2025 13:48:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741268939; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uPAT4g6NHqVdnUCwope0dxqYQd8GSVk1fhZ35uxuT+I=;
+ b=Rb3Ee/NYSCWYou79rVSymilyqDHkeGT9h55Ty/UkrSGR/XikzfbAJvu99tUbzpeyprGHCj
+ IK+/WoUTbvN+z0vFES+3rnoNcx2sKnhycyO7uascHJMPQKfwpdI9ra9DWTCYXt7HMEGtGn
+ 4ip0+Ev8G96jWM9l+Ps4rGuACtpZA7I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741268939;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uPAT4g6NHqVdnUCwope0dxqYQd8GSVk1fhZ35uxuT+I=;
+ b=zc8+JH15RPW9aAqQXC44UV/XBH9hKoIF/fmepKz8Vs7riVMWK90PiYYodgTVioO0EYshfK
+ 1tSL0qa2dGPkDKDw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="Rb3Ee/NY";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=zc8+JH15
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741268939; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uPAT4g6NHqVdnUCwope0dxqYQd8GSVk1fhZ35uxuT+I=;
+ b=Rb3Ee/NYSCWYou79rVSymilyqDHkeGT9h55Ty/UkrSGR/XikzfbAJvu99tUbzpeyprGHCj
+ IK+/WoUTbvN+z0vFES+3rnoNcx2sKnhycyO7uascHJMPQKfwpdI9ra9DWTCYXt7HMEGtGn
+ 4ip0+Ev8G96jWM9l+Ps4rGuACtpZA7I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741268939;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uPAT4g6NHqVdnUCwope0dxqYQd8GSVk1fhZ35uxuT+I=;
+ b=zc8+JH15RPW9aAqQXC44UV/XBH9hKoIF/fmepKz8Vs7riVMWK90PiYYodgTVioO0EYshfK
+ 1tSL0qa2dGPkDKDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1DB8813A61;
+ Thu,  6 Mar 2025 13:48:58 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 8FdUM8qnyWe4bgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 06 Mar 2025 13:48:58 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v7 0/5] Allow to enable multifd and postcopy migration
+ together
+In-Reply-To: <CAE8KmOxEXLnUxhJCr7T0nVozZcLSb1WaKNfzZhrig2zYkGMktw@mail.gmail.com>
+References: <20250228121749.553184-1-ppandit@redhat.com>
+ <87frjy2k8z.fsf@suse.de>
+ <CAE8KmOwVoGJ2frVCY76W7UxSr90wAL2EMj5Nmtcrdc+BE1e9=g@mail.gmail.com>
+ <Z8W4xVOLLAD1wXjC@x1.local>
+ <CAE8KmOzkVpG5iUqwShWWMF4+96-cbNm1AU8b=s3187EyWXXT4g@mail.gmail.com>
+ <Z8cRYO1Kacl7vl-I@x1.local>
+ <CAE8KmOyrSidELiHAtegX16gYbW6jWKL7m9YGJKzfmLbZ9x8Xaw@mail.gmail.com>
+ <878qpjvaw5.fsf@suse.de>
+ <CAE8KmOxEXLnUxhJCr7T0nVozZcLSb1WaKNfzZhrig2zYkGMktw@mail.gmail.com>
+Date: Thu, 06 Mar 2025 10:48:56 -0300
+Message-ID: <875xkmuv5j.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1427507060-1741268752=:23885"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: A688D211CD
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,118 +131,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Prasad Pandit <ppandit@redhat.com> writes:
 
---3866299591-1427507060-1741268752=:23885
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Thu, 6 Mar 2025, Daniel P. Berrangé wrote:
-> On Thu, Mar 06, 2025 at 12:34:13PM +0100, Paolo Bonzini wrote:
->> Il gio 6 mar 2025, 10:27 Philippe Mathieu-Daudé <philmd@linaro.org> ha
->> scritto:
+> Hello Fabiano,
+>
+> On Wed, 5 Mar 2025 at 19:26, Fabiano Rosas <farosas@suse.de> wrote:
+>> Note that none of this is out of the ordinary, you'll find such
+>> discussions in any thread on this community. It may feel arbitrary to
+>> you because that's tacit knowledge we gathered along the years.
+>
+> * I understand. I don't find it arbitrary.
+>
+>> We need an extra patch that reads:
 >>
->>> This API is to allow refactoring code for heterogeneous emulation,
->>> without changing user-facing behavior of current qemu-system binaries,
->>> which I now consider as 'legacy'.
->>>
->>> Once all current restrictions removed, the new qemu-system-heterogeneous
->>> binary is expected to run any combination of targets.
->>>
->>> qemu-system-$target will be a call to qemu-system-heterogeneous with
->>> a restricted subset, possibly in the form of:
->>>
->>>   $ qemu-system-heterogeneous --target aarch64-softmmu
->>>
+>>  migration: Refactor channel discovery mechanism
 >>
->> Or just qemu-system I guess.
+>>  The various logical migration channels don't have a standardized way of
+>>  advertising themselves and their connections may be seen out of order
+>>  by the migration destination. When a new connection arrives, the
+>>  incoming migration currently make use of heuristics to determine which
+>>  channel it belongs to.
 >>
->>     ^ equivalent of today's qemu-system-aarch64
->>>
->>> If you don't like 'qemu_legacy_binary_' prefix, I can use
->>> 'qemu_single_binary_' instead.
->>>
+>>  The next few patches will need to change how the multifd and postcopy
+>>  capabilities interact and that affects the channel discovery heuristic.
 >>
->> Still there is a problem with renaming binaries (both the "qemu-kvm" case
->> and the good/bad case that Richard pointed out).
->
-> We could special case the '-kvm' suffix, because by its nature it
-> implies the current binary build target.
->
+>>  Refactor the channel discovery heuristic to make it less opaque and
+>>  simplify the subsequent patches.
 >>
->> I think you should try creating two versions of system/arch_init.c, so that
->> it has a separate implementation for heterogeneous vs. single-target
->> binaries. Then you can keep separate linking steps for single-target
->> binaries and you naturally get the right target info from either the
->> target-specific arch_init-single.c, or the --target option for
->> arch_init-multi.c.
+>>  <some description of the new code which might be pertinent>
+>>  ---
 >>
->> (Is --target even necessary? As long as you have a way disambiguate
->> same-named machines like -M virt, and have no default machine in the
->> multi-target binary, you shouldn't need it).
+>> You'd move all of the channel discovery code into this patch. Some of it
+>> will be unreacheable because multifd is not yet allowed with postcopy,
+>> but that's fine. You can mention it on the commit message.
 >
-> If we did 'query-machines' on qemu-system-heterogeneous, it would
-> return all machines from all targets. To disambiguate naming there
-> are various options
+> Please see:
+>     -> https://privatebin.net/?dad6f052dd986f9f#FULnfrCV29NkQpvsQyvWuU4HdYjDwFbUPbDtvLro7mwi
 >
->  * The query-machines command would have to gain a new 'target'
->    field and we would have to document that uniqness is across
->    the tuple (name, target), not merely name. That's a semantic
->    change.
+> * Does this division look okay?
 >
->    We would still need a way to express the 'target' when asking
->    to instantiate a machine
->
->  * The query-machines command would have to gain a new 'target'
->    paramter so callers can restrict the data they receive back
->
->    We would still need a way to express the 'target' when asking
->    to instantiate a machine
->
->  * Rename all machine types so they are '<target>-<machine>'
->    The query-machines command doesn't change. Apps would have
->    to "parse" the machine name to see what 'target' each is
->    associated with, or we include an explicit 'target' field
->    in the returned data. Instianting a machine would not need
->    changing
 
-I think -machine m68k:virt could work, -M help would list machines like:
+Yes.
 
-arm:raspi
-i386:pc
-etc.
-
-Management apps could easily find : to separate arch but those that don't 
-care about arch would just work and list more possible machines. Some 
-machines like pc or mac99 that may appear differently in different single 
-arch binary might need to get resolved first. Maybe need a way to search 
-machine list by pattern e.g. as -machine x86_64:help.
-
-I tend to agree with Peter that if a multi binary qemu-system-arm would be 
-able to also create the 64 bit machines that's not a problem as long as 
-all the 32 bit machines still work the same. This would just make 
-qemu-system-arm and qemu-system-aarch64 the same or maybe you can set the 
-search pattern from command name so qemu-system-arm -M help would be the 
-same as qemu-system -M arm:help.
-
-Allowing renaming binaries and still keep single arch behaviour probably 
-needs to keep a way to build single arch binaries so you can't convert 
-everything to runtime check and drop #ifdefs.
-
-Regards,
-BALATON Zoltan
-
->  * Require --target CLI arg, meaning query-machines remains
->    unchanged, as does instantiating machines
+>> About moving the code out of migration.c, it was a suggestion that
+>> you're free to push back. Ideally, doing the work would be faster than
+>> arguing against it on the mailing list. But that's fine.
 >
-> Any other options ?
+> * Same here, I'm not against moving that code part to connection.c OR
+> doing the work. My suggestion has been to do that movement in another
+> series and not try to do everything in this one series.
 >
-> The last is the simplest option if we just make --target be defaulted
-> based on the binary name.
+>> About the hang in the test. It doesn't reproduce often, but once it
+>> does, it hangs forever (although I haven't waited that long).
 >
-> With regards,
-> Daniel
->
---3866299591-1427507060-1741268752=:23885--
+> * Okay, I'm not seeing it or able to reproduce it across 3 different
+> machines. One is my laptop and the other 2 are servers wherein I'm
+> testing migrations of guests with 64G/128G of RAM and guest dirtying
+> memory to the tune of 68M/128M/256M bytes. I'll keep an eye on it if I
+> find something.
+
+Usually a loaded (or slow) machine is needed to reproduce multifd
+synchronization issues. Sometimes running the test in a loop in parallel
+with some other workload helps to uncover them. The CI also tends to
+have slower machines that hit these problems.
 
