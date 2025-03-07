@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34538C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E5DC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZIQ-0000zS-Jr; Fri, 07 Mar 2025 10:07:30 -0500
+	id 1tqZIb-00015U-Rj; Fri, 07 Mar 2025 10:07:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIO-0000yT-Ga
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:28 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1tqZIZ-00014C-2P
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:39 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIL-0008H2-J5
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:27 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3913958ebf2so192411f8f.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:25 -0800 (PST)
+ id 1tqZIW-0008O5-Tx
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:38 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43bdcd0d97dso11445325e9.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741360044; x=1741964844; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741360055; x=1741964855; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=y41BX0LJZfpDpcW2N8rAeN5eJqcWg7U9y6aGyYB7vHI=;
- b=cS2fqHtwq0T47Nv0BwJ5jerXL3UF4js+QsUGu+kEE8hg7rAnOlbfJY8i/e0xo5DPt5
- zLmkrpLgc/bukZ71RiWyBSwUthb9pGvrrld4gGv8+kVdMGSysu1Ysi6t7EeUQLqi0Y+x
- cQTRFbWJcaBgwOfDI4Bol3gRCC6JcwN7fTDcncki+uR3ibaEkf70cVWGuFs6mSOmSrQs
- ewIZMtwZc71TEaB66sByfOmJAy0HMSMalm6tCUf8u3zM2lr40deIOg6HOFIpYOGCLVcZ
- AWKxCj7FpCzS7x7az5uxy6yNiBfnXDR0Jks9XiENiaEjmtikSTeHTB91Fd/PI0vg+x9m
- n/4w==
+ :reply-to; bh=Od4b3d3rOr7fMBRm5KIcutZc76QQ9AX8573/i1gjMqU=;
+ b=gYun6AsMReztoOr8unR7rNvi1wfAeL06gY+A85Lhv76dnBpN1AS+onhnBxPa2RpdQh
+ TqNMi3VVRisVoVEmefd5HCkNVHkeKpW6S7D6+sNnRK/jDeNWHJKDOXvxpzAVA2v6hdhs
+ WHEnA+XC95GukhdLIck+xYV8ErvbxnwN5LPM53qEuRWj1J0W8P5vtdhcUQiwHUDK7+X5
+ m1vvO0clUijRLHj+KT/IGkU557c0v8Ehi6e6bpoox5xATxnxF29UdliCBm31ul21AtJc
+ 4IANShW5YX3HRp3ONrxUydTnflCOuHvYCjvc3Voa4IFemD/dI6Af6N31Ryvg3c/3NEV8
+ Eilw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741360044; x=1741964844;
+ d=1e100.net; s=20230601; t=1741360055; x=1741964855;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=y41BX0LJZfpDpcW2N8rAeN5eJqcWg7U9y6aGyYB7vHI=;
- b=AfWF7c/bcPj3XhY0WUBxvUUv9xUjZgzoeKD5dRX582FcfILm6UTJZHR8X4ynH7Sxa5
- dlywEhz3lkg8wv1yA5H1nTFQQYhbPGiudLc6wxXpJrHudTsZ6vYub8wjEgBEHJrxmSp1
- +xfdTuslnJV0pXlTJpgZd8t1TEyMUA4hH6eputh4TSCslIXwJ/0s45euMQVlU1xqt9f+
- 9ZA/ZP1lrZeFj7WjcQbrpbV0d9pCaoDIimpVTUNLmaYInlaC2kneSBwPWJoSiSHHrhp+
- Rf5ZHi/mcWFJKBkYCkg9P+36/kShbJPEUI/GqmmUkXZNeK7jrW6EJ51Hq7yJDG8kLSMn
- ayCw==
-X-Gm-Message-State: AOJu0YyvejlGAK08w8MEwHYB4jsjWXr+ansP4Mt8v93bUaFUvnfqNCNi
- h9ongnk9xN8dDPWm9LgQVPDSFoqah1pVrMS5Rj+WeCj0zNsbS3wyiUtrRoal6AElI0jmGJ2FwVS
- s
-X-Gm-Gg: ASbGnctMhSH/ByAh2ZpeUyalfCfc9dX/ttlULHjKhkhRZZMOd+8sVMxPQzRMYNrvsBl
- zS463jSNbTJhvzhvss1O1cw0pde1XMbvJp6dGY9OLTcLPysF4i29b9bw4Dr6HbvMsOGvW1NyEFq
- Z0MzEpSs7NtpX/RyZC8J3XfDUpcPJ/nrD9aY/p2/4skybl0uBhJL+oQk4DHh7XK8jxTQLJL/N9o
- C7RMSUeayrFIlZ5On10BJdh9dxb+jdboNC9i6pBJ4hz3JILpvc3B5OTfPUlYjfiMarv8cpi7fem
- 3lukOsWgjaDXy9L7kyMzbYQ8FEWV6am7y7Yyl4IXeEwNHQoCUr4=
-X-Google-Smtp-Source: AGHT+IFSd3bC3wHsvyi4BkO/+GbFn+PUqRcbDs4LMVOJtPClH/PegcJK+rLfHfEZVqAeVep86vdQuQ==
-X-Received: by 2002:a05:6000:1447:b0:391:30b9:557b with SMTP id
- ffacd0b85a97d-39132d5a940mr2407754f8f.29.1741360043666; 
- Fri, 07 Mar 2025 07:07:23 -0800 (PST)
+ bh=Od4b3d3rOr7fMBRm5KIcutZc76QQ9AX8573/i1gjMqU=;
+ b=GhBd07rR44OeVVreo4u+2LQ8HBLLrfrCkkPcuBZi2QpGm4GxAJP3Q9e9VCG/EirdH+
+ xOhpGl+bEuqADPDo+FA7wA396Y+E05VGGplFi005AzfYPxbDKa92QBSXtrOLJxaGIYzf
+ 3u4ajIDX5WNFL5SVqid2bU/uoTcr7BMecxD85SFaRrZRFY7w0TiBDltvcKwUekQAuMb2
+ /CCrXnxbMY8PAtUfXRqQo7snqFQIF43vcrDO2Hba7NRx1ojoUmDJaWmJ+o1XHjX6TrZT
+ kmVvgcFK+kU9NsSD/9MP8fSsPKSYINZrKTz8zrX1V8nOSUhSr0FKNKJxwnpJJXetgc2e
+ UqSg==
+X-Gm-Message-State: AOJu0Yz8tJWA7/4wN8DauRpWTyCZJCV+/pYtcZBp1n4rwnIYgcj0hn+B
+ /oJeqkzKOQUkVosSHMUPShpBA/b2Nxx+Ab/vjBA/dALiIdystyIY9C1LnpOuc6az+Pf/82URgEX
+ b
+X-Gm-Gg: ASbGncvwEX+IEet2K+CHJWYGwE6ajl7PIRhbdTdq7VlrVKHEXynplqxGXLy0faXl5cH
+ 3HjVvkL2icNxWUfchIQGSj72mv1uun3AtO8pw4grhO2Bd+23veitQaH7E+0JnNbJQv1U54XrJYL
+ cacj6zoqia5VWSvkjnP8GA9NQKz2ea5/lK2rGX/MNXtLtiiABvcPZ5gtbLmdaXMqr2ghVpfFmgM
+ NgYTNUWT5lLihvVV+10cAJpnGYXHxKhCuevRveTzmSZvJ0lQcq5I8j52G7Gavkd9sfRJDMj/P6F
+ j8VvbZHgTbj1FipmzSGPNkHLA0/NhL5JJFgYNUbNsZyJ7l3t7Ig=
+X-Google-Smtp-Source: AGHT+IEoIMNAFnjO5XzmagLGHpNdNwOcFL/OOJZUkHhPY1znWBpaXL669magZfTPwXeRTR8eu+EWcg==
+X-Received: by 2002:a05:6000:1864:b0:391:39ea:7866 with SMTP id
+ ffacd0b85a97d-39139ea7d93mr495744f8f.19.1741360055304; 
+ Fri, 07 Mar 2025 07:07:35 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.22
+ ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 07:07:22 -0800 (PST)
+ Fri, 07 Mar 2025 07:07:34 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/21] target/arm: Document the architectural names of our
- GTIMERs
-Date: Fri,  7 Mar 2025 15:06:57 +0000
-Message-ID: <20250307150708.3222813-11-peter.maydell@linaro.org>
+Subject: [PULL 21/21] target/rx: Remove TCG_CALL_NO_WG from helpers which
+ write env
+Date: Fri,  7 Mar 2025 15:07:08 +0000
+Message-ID: <20250307150708.3222813-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307150708.3222813-1-peter.maydell@linaro.org>
 References: <20250307150708.3222813-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,43 +99,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Keith Packard <keithp@keithp.com>
 
-As we are about to add more physical and virtual timers let's make it
-clear what each timer does.
+Functions which modify TCG globals must not be marked TCG_CALL_NO_WG,
+as that tells the optimizer that TCG global values already loaded in
+machine registers are still valid, and so any changes which these
+helpers make to the CPU state may be ignored.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250204125009.2281315-8-peter.maydell@linaro.org
-[PMM: Add timer register name prefix to each comment]
+The target/rx code chooses to put (among other things) all the PSW
+bits and also ACC into globals, so the NO_WG flag on various
+functions that touch the PSW or ACC is incorrect and must be removed.
+This includes all the floating point helper functions, because
+update_fpsw() will update PSW Z and S.
+
+Signed-off-by: Keith Packard <keithp@keithp.com>
+[PMM: Clarified commit message]
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/gtimer.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ target/rx/helper.h | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/target/arm/gtimer.h b/target/arm/gtimer.h
-index 0e89b8e58d0..d49c63cbf87 100644
---- a/target/arm/gtimer.h
-+++ b/target/arm/gtimer.h
-@@ -10,11 +10,11 @@
- #define TARGET_ARM_GTIMER_H
- 
- enum {
--    GTIMER_PHYS     = 0,
--    GTIMER_VIRT     = 1,
--    GTIMER_HYP      = 2,
--    GTIMER_SEC      = 3,
--    GTIMER_HYPVIRT  = 4,
-+    GTIMER_PHYS     = 0, /* CNTP_* ; EL1 physical timer */
-+    GTIMER_VIRT     = 1, /* CNTV_* ; EL1 virtual timer */
-+    GTIMER_HYP      = 2, /* CNTHP_* ; EL2 physical timer */
-+    GTIMER_SEC      = 3, /* CNTPS_* ; EL3 physical timer */
-+    GTIMER_HYPVIRT  = 4, /* CNTHV_* ; EL2 virtual timer ; only if FEAT_VHE */
-     GTIMER_S_EL2_PHYS = 5, /* CNTHPS_* ; only if FEAT_SEL2 */
-     GTIMER_S_EL2_VIRT = 6, /* CNTHVS_* ; only if FEAT_SEL2 */
- #define NUM_GTIMERS   7
+diff --git a/target/rx/helper.h b/target/rx/helper.h
+index ebb47394744..8cc38b0cb71 100644
+--- a/target/rx/helper.h
++++ b/target/rx/helper.h
+@@ -4,27 +4,27 @@ DEF_HELPER_1(raise_privilege_violation, noreturn, env)
+ DEF_HELPER_1(wait, noreturn, env)
+ DEF_HELPER_2(rxint, noreturn, env, i32)
+ DEF_HELPER_1(rxbrk, noreturn, env)
+-DEF_HELPER_FLAGS_3(fadd, TCG_CALL_NO_WG, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fsub, TCG_CALL_NO_WG, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fmul, TCG_CALL_NO_WG, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fdiv, TCG_CALL_NO_WG, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fcmp, TCG_CALL_NO_WG, void, env, f32, f32)
+-DEF_HELPER_FLAGS_2(ftoi, TCG_CALL_NO_WG, i32, env, f32)
+-DEF_HELPER_FLAGS_2(round, TCG_CALL_NO_WG, i32, env, f32)
+-DEF_HELPER_FLAGS_2(itof, TCG_CALL_NO_WG, f32, env, i32)
++DEF_HELPER_3(fadd, f32, env, f32, f32)
++DEF_HELPER_3(fsub, f32, env, f32, f32)
++DEF_HELPER_3(fmul, f32, env, f32, f32)
++DEF_HELPER_3(fdiv, f32, env, f32, f32)
++DEF_HELPER_3(fcmp, void, env, f32, f32)
++DEF_HELPER_2(ftoi, i32, env, f32)
++DEF_HELPER_2(round, i32, env, f32)
++DEF_HELPER_2(itof, f32, env, i32)
+ DEF_HELPER_2(set_fpsw, void, env, i32)
+-DEF_HELPER_FLAGS_2(racw, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(set_psw_rte, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(set_psw, TCG_CALL_NO_WG, void, env, i32)
++DEF_HELPER_2(racw, void, env, i32)
++DEF_HELPER_2(set_psw_rte, void, env, i32)
++DEF_HELPER_2(set_psw, void, env, i32)
+ DEF_HELPER_1(pack_psw, i32, env)
+-DEF_HELPER_FLAGS_3(div, TCG_CALL_NO_WG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_3(divu, TCG_CALL_NO_WG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_1(scmpu, TCG_CALL_NO_WG, void, env)
++DEF_HELPER_3(div, i32, env, i32, i32)
++DEF_HELPER_3(divu, i32, env, i32, i32)
++DEF_HELPER_1(scmpu, void, env)
+ DEF_HELPER_1(smovu, void, env)
+ DEF_HELPER_1(smovf, void, env)
+ DEF_HELPER_1(smovb, void, env)
+ DEF_HELPER_2(sstr, void, env, i32)
+-DEF_HELPER_FLAGS_2(swhile, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(suntil, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(rmpa, TCG_CALL_NO_WG, void, env, i32)
++DEF_HELPER_2(swhile, void, env, i32)
++DEF_HELPER_2(suntil, void, env, i32)
++DEF_HELPER_2(rmpa, void, env, i32)
+ DEF_HELPER_1(satr, void, env)
 -- 
 2.43.0
 
