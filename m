@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785B6C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A91C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqc3c-0003tz-W9; Fri, 07 Mar 2025 13:04:25 -0500
+	id 1tqc4f-00052v-9h; Fri, 07 Mar 2025 13:05:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqc3a-0003pU-0a
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:04:22 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqc3s-0004FE-83
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:04:40 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqc3Y-0002Cw-A3
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:04:21 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43bb6b0b898so18299055e9.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:04:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqc3p-0002GQ-7h
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:04:39 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4394a823036so18351005e9.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:04:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741370658; x=1741975458; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741370675; x=1741975475; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qbL4jYEWkDOTQMFiCDljIBBdBkk1lhILqkIilS+kSdQ=;
- b=HKVoIiIoAJ1gDmGpff2w+WFjxf+iITnwQ6amPSOGbkNwnCInuvmE8kA+zGQyxTuOOx
- f9XjHxD/eSoFEliyozU9urdyM8BMxlSJTjsI/eh4cXYPQGcj/S6fI2jDcCXU3UrHJgMy
- GIepAVnNmOnawNJXawQNLLCywj49zcyJdYipyQVfR63eUvPZs6GTjp1CzxdFINh4RcGa
- srcQK3+qOaRUEBZLNrFU4syMfJYiRM3eqeShGovwM84QaK0oA96ZlRlQPiYVeHeiqEiF
- xQP7BY2skNNlfQoC8xETef61Jm7OwCeUgPiqt0lUVkcoQdbO3fVTWNB3t7L8lgRtHfgy
- TX3A==
+ bh=jwX1K0+iQl31BRmPX8xi9KD5c4T56nkQjSQYXLzdF0A=;
+ b=FsaGK+bYWMrrh1VO/iXLetGyjlNAB0rEFx8h9NyObQsRr6MS2DfTywFCRUkVvOIcGt
+ +DIs3wJQTNioNiisTopZ+5iyTWkIoRsUZ+ALNIVb8Ec20ZD5W1vRxz850koLIAoYd4y6
+ o1Z58s/32fdXayGgmPpS4np3kTxQiRlAY5AvkulUGiEx+aSaiHAserAAlqo1BAI/UpL7
+ 4vvZVnG9k2Ik0QVWLvBbnhJ7GTx75sjSiHm0xGdW1jTYeO5/I+lkLBgVjOiH7H/WXEKC
+ +lgPvcxwERvxAH4GPZpprbgP7WThhj9+pJ4g4GR8QyTafwzDDz7pfQzEIl9MKqbBVdJn
+ AKyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741370658; x=1741975458;
+ d=1e100.net; s=20230601; t=1741370675; x=1741975475;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qbL4jYEWkDOTQMFiCDljIBBdBkk1lhILqkIilS+kSdQ=;
- b=gEOy3aQRdR7hN2wdbFZUEV0USvHhjva5Ycu6vzSs0sp5Uzvn5W7l83aa4joaAvTbKf
- K72H97SBJgPqfx8yacc7wcHl6QohF3wMCKvr6dfr7479Ge9B/7tebgom7Hemv3yW2DQX
- OT2pADo8LANhz+fY7sfBVevvom31oeRNqYF5IW5z98lRoQYi0/DKQkUiS4bnrZhOw67s
- B6pgJ0UMwJx8SUflym/TeicePtF2jW/RF1GlQcZpHqcw0eGS0/t071dXg6iLzfMB9fpV
- pBHtLQ8P1WbggB5yyA3MZWPGjDrojh4ZI9FmP+z0i0cDvqKcCLPx0juuUvoA7rP1c643
- GdFw==
-X-Gm-Message-State: AOJu0Yzi00PW87sb08D9u0JyprutBOFLveb5kito8YDLwfJIUMqdlk+F
- WzRama4ZJN/vbtKLSXrAXHL7DSYOpthWLf9G7kUoQrb+lNRizZm7DzDpRHfUoPM6ltPf+ZwoUmk
- TKSs=
-X-Gm-Gg: ASbGncubgERqsF3iRe3H0iaX6dAjloXhJUeaVsc9cV7evMUyiEqK5uwpcgDBCIRqC8p
- 7Drl70k6Za5898weMtOQjk7Yyzq23KRGr3flaQI4mgG4f/DGpuwmnjnn565F3zzW/R2x24ABlIj
- Ic4cY2uNspXGli7kg8WFlkvnLnw391xJOzL+fZXzNOfGR3XV6xJM4Ne2Z87m8lpXQT/sp+0MTeV
- UPvR3hCZvLmUN+7e5eLEP7H4xMIMH+V6td0q7p0jesmTYw9iHgOOobubtJRRQAExvgj+R8/vzFh
- VT4PlBqZs5GAOf6y7p34melhghTcXYJ7WKr1d0iN5vIMn3KFjHSz/3ulS5UCsdfu9yibA9xW+Ap
- In0CC02t5a762QnPNTSo=
-X-Google-Smtp-Source: AGHT+IEc0uflM7XSjD6JKBXbS+veYnGpRErIZqn03oBD1gdH1lamqtUvX68sdYGTF8GJTCscI5i4zw==
-X-Received: by 2002:a05:600c:5117:b0:43b:d12a:40e4 with SMTP id
- 5b1f17b1804b1-43c601cfd31mr33628725e9.17.1741370658139; 
- Fri, 07 Mar 2025 10:04:18 -0800 (PST)
+ bh=jwX1K0+iQl31BRmPX8xi9KD5c4T56nkQjSQYXLzdF0A=;
+ b=sSR/rFklsuREpW9wiTEsfEgX46fFQunSiGXJUZK5RoD44OT+DVXmQh2Jgk4RIkgtjC
+ 8OOGElHrG9q+KAV6lc8vsURlkyIviuIlpJEJ7OAfG82a+idsyCovkXBm6HmRwtrGXVqS
+ G89VzbYzeRm44yVavP59msIE4Io5G4Wyk/DnmLEBsEITXZuyPec6fuezB+d0nByOCNx5
+ U+AOMVQBOY768QqhIAqgI3e5ponWOBX7wYkNojPMRq0I8PV2qvg85CzQIXC8M+6KqExx
+ BoKW1Hz/B6Juy2/PDt22gLsJu7nIO4ca1+kUcz4hzvvAH9adpgI+/JQUUpF1jHh/Z+f+
+ YlMg==
+X-Gm-Message-State: AOJu0YzgQFDehffAtH4O1+wOksbWmkXTxq6iIM38qtxwQcDfpVFyxURY
+ lg7SMwqHLtp+icyErwgKVpifhs4+vKSASTc4ZEeJjVCqyTl/uuD7jSx7uepRBPXwNTNUtReCED3
+ iAe0=
+X-Gm-Gg: ASbGncsEXp3Ypc6kfrm/kYA2vOFm6HMvyM3ys9zL/j9Ld24ZO5Lq0X5Ejoc2zlPBGr4
+ Al1NaQm5zvNhcJbK4CFZ4yu9GClv2cC9lLqCo4KRNGAG+9Qgjs+uk2gZ8n3JT811udcwHegipxI
+ +Au08cB2vkuJbYWAdOKPXWMOGGlYhQdJSMC+CGKWYBVpBVp5bH8pAo/iAxNiiqxJ/c6QpEwv3xB
+ ZfC+H4RNoHLgnqHEyQxkOY+7NDXaSkEn5urncb6LyWu9buJagvngIPejNbhJNmAqTDV8yqTBW7j
+ Y/5fuWL1PIHabNBynka6D9mC+o3Gbrzdv22pveKw52ON2u5IRDx7eick+Bs4NDshOFxsGaoFrxZ
+ KsZKieqO5dVG4v9iwXBY=
+X-Google-Smtp-Source: AGHT+IFd2dAhiRB8kpwGRBj8I24YTq49QXdG4iwSMQDOtTBB781rulRfrC60gif1x5YVtYtrXppgDw==
+X-Received: by 2002:a05:600c:350a:b0:439:86fb:7326 with SMTP id
+ 5b1f17b1804b1-43c602082a0mr29865065e9.22.1741370675155; 
+ Fri, 07 Mar 2025 10:04:35 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ce3d5a0e2sm5945365e9.12.2025.03.07.10.04.16
+ 5b1f17b1804b1-43bdd8db6c7sm58089865e9.22.2025.03.07.10.04.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 07 Mar 2025 10:04:17 -0800 (PST)
+ Fri, 07 Mar 2025 10:04:34 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -87,24 +87,24 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>, Halil Pasic <pasic@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 07/14] hw/vfio: Compile display.c once
-Date: Fri,  7 Mar 2025 19:03:30 +0100
-Message-ID: <20250307180337.14811-8-philmd@linaro.org>
+Subject: [PATCH 10/14] system/iommufd: Introduce iommufd_builtin() helper
+Date: Fri,  7 Mar 2025 19:03:33 +0100
+Message-ID: <20250307180337.14811-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250307180337.14811-1-philmd@linaro.org>
 References: <20250307180337.14811-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,33 +120,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-display.c doesn't rely on target specific definitions,
-move it to system_ss[] to build it once.
+iommufd_builtin() can be used to check at runtime whether
+the IOMMUFD feature is built in a qemu-system binary.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/vfio/meson.build | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ docs/devel/vfio-iommufd.rst | 2 +-
+ include/system/iommufd.h    | 8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-index fea6dbe88cd..96e342aa8cb 100644
---- a/hw/vfio/meson.build
-+++ b/hw/vfio/meson.build
-@@ -5,7 +5,6 @@ vfio_ss.add(files(
- ))
- vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
- vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
--  'display.c',
-   'pci-quirks.c',
-   'pci.c',
- ))
-@@ -28,3 +27,6 @@ system_ss.add(when: 'CONFIG_VFIO', if_true: files(
- system_ss.add(when: ['CONFIG_VFIO', 'CONFIG_IOMMUFD'], if_true: files(
-   'iommufd.c',
- ))
-+system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
-+  'display.c',
-+))
+diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
+index 3d1c11f175e..08882094eee 100644
+--- a/docs/devel/vfio-iommufd.rst
++++ b/docs/devel/vfio-iommufd.rst
+@@ -88,7 +88,7 @@ Step 2: configure QEMU
+ ----------------------
+ 
+ Interactions with the ``/dev/iommu`` are abstracted by a new iommufd
+-object (compiled in with the ``CONFIG_IOMMUFD`` option).
++object (which availability can be checked at runtime using ``iommufd_builtin()``).
+ 
+ Any QEMU device (e.g. VFIO device) wishing to use ``/dev/iommu`` must
+ be linked with an iommufd object. It gets a new optional property
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index cbab75bfbf6..ce459254025 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -63,4 +63,12 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+                                       Error **errp);
+ 
+ #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
++
++static inline bool iommufd_builtin(void)
++{
++    bool ambig = false;
++
++    return object_resolve_path_type("", TYPE_IOMMUFD_BACKEND, &ambig) || ambig;
++}
++
+ #endif
 -- 
 2.47.1
 
