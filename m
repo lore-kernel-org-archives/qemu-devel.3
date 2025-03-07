@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C345BC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C256C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqdnV-00080t-ML; Fri, 07 Mar 2025 14:55:53 -0500
+	id 1tqdoA-0008PU-CV; Fri, 07 Mar 2025 14:56:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liuwe@linux.microsoft.com>)
- id 1tqdnM-0007zT-D1
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:55:44 -0500
+ id 1tqdnO-00080H-Vy
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:55:48 -0500
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <liuwe@linux.microsoft.com>) id 1tqdnK-0005io-Ls
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:55:44 -0500
+ (envelope-from <liuwe@linux.microsoft.com>) id 1tqdnK-0005iv-MC
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:55:45 -0500
 Received: by linux.microsoft.com (Postfix, from userid 1031)
- id 654A12038F41; Fri,  7 Mar 2025 11:55:36 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 654A12038F41
+ id 726772038F42; Fri,  7 Mar 2025 11:55:36 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 726772038F42
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
  s=default; t=1741377336;
- bh=Y0YgMAVKYo8cSOptnzThemrN+dmKmi2kQS3lqt0kQFM=;
+ bh=uK+kdzNkKDZrnT0yBwwpB4lvxszopJKdzSxPU5w2DnE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=pDKrnpdC2n9y7GcmVpNCMW7y08bfRymXzBg6H2mHwPYqX99z971s7YOQGKFZvqjLx
- sY3P6IF5nOL7XGbtxUbSupjNqz32XPuODrDi+gLCeucLSykx+vw7LR3ErO5/tqE5hp
- onM/9f/qKUEjWkvBSjnPP6pbSG5VhyfzP/3L8jjw=
+ b=Tbp6akmfyspzvF33wLjMyhHlwZnFCU1qh+GGsjSlPU2r8X0qbcBaR25Ih/R/msC2e
+ R5/tRA3m5iBdUtrBLrLHb5Z6Kb7AYdmu/Tgh6l3unIpIWUamplLGwu7PvXeiM3mXXM
+ Hy3F0me/qqeY9JLBhRGrSCq3OpjhRon+hOCZtng0=
 From: Wei Liu <liuwe@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: wei.liu@kernel.org, dirty@apple.com, rbolshakov@ddn.com,
@@ -37,10 +37,9 @@ Cc: wei.liu@kernel.org, dirty@apple.com, rbolshakov@ddn.com,
  mukeshrathor@microsoft.com, magnuskulke@microsoft.com,
  prapal@microsoft.com, jpiotrowski@microsoft.com, deviv@microsoft.com,
  Wei Liu <liuwe@linux.microsoft.com>
-Subject: [PATCH v2 07/14] target/i386/hvf: provide and use simulate_{wrmsr,
- rdmsr} in emul_ops
-Date: Fri,  7 Mar 2025 11:55:18 -0800
-Message-Id: <1741377325-28175-8-git-send-email-liuwe@linux.microsoft.com>
+Subject: [PATCH v2 08/14] target/i386: rename lazy flags field and its type
+Date: Fri,  7 Mar 2025 11:55:19 -0800
+Message-Id: <1741377325-28175-9-git-send-email-liuwe@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1741377325-28175-1-git-send-email-liuwe@linux.microsoft.com>
 References: <1741377325-28175-1-git-send-email-liuwe@linux.microsoft.com>
@@ -68,117 +67,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change the first argument's type to be CPUState to match other hooks.
+The same structure and code can be used by other accelerators. Drop
+the hvf prefix in the type and field name.
+
+No functional change.
 
 Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
 ---
- target/i386/hvf/hvf-i386.h |  4 ++--
- target/i386/hvf/hvf.c      | 18 ++++++++++--------
- target/i386/hvf/x86_emu.c  |  4 ++--
- target/i386/hvf/x86_emu.h  |  2 ++
- 4 files changed, 16 insertions(+), 12 deletions(-)
+ target/i386/cpu.h           |  6 ++--
+ target/i386/hvf/x86_flags.c | 56 ++++++++++++++++++-------------------
+ 2 files changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/target/i386/hvf/hvf-i386.h b/target/i386/hvf/hvf-i386.h
-index 044ad236ae80..8c42ae6b0130 100644
---- a/target/i386/hvf/hvf-i386.h
-+++ b/target/i386/hvf/hvf-i386.h
-@@ -19,8 +19,8 @@
- uint32_t hvf_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index cf2bd0e9ada9..04ade00abb3d 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1811,10 +1811,10 @@ typedef struct CPUCaches {
+         CPUCacheInfo *l3_cache;
+ } CPUCaches;
  
- void hvf_handle_io(CPUState *, uint16_t, void *, int, int, int);
--void hvf_simulate_rdmsr(CPUX86State *env);
--void hvf_simulate_wrmsr(CPUX86State *env);
-+void hvf_simulate_rdmsr(CPUState *cpu);
-+void hvf_simulate_wrmsr(CPUState *cpu);
+-typedef struct HVFX86LazyFlags {
++typedef struct X86LazyFlags {
+     target_ulong result;
+     target_ulong auxbits;
+-} HVFX86LazyFlags;
++} X86LazyFlags;
  
- /* Host specific functions */
- int hvf_inject_interrupt(CPUArchState *env, int vector);
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index e4f48a79fb7c..8c31d2e0cf72 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -252,6 +252,8 @@ static const struct x86_emul_ops hvf_x86_emul_ops = {
-     .write_mem = hvf_write_mem,
-     .read_segment_descriptor = hvf_read_segment_descriptor,
-     .handle_io = hvf_handle_io,
-+    .simulate_rdmsr = hvf_simulate_rdmsr,
-+    .simulate_wrmsr = hvf_simulate_wrmsr,
- };
+ typedef struct CPUArchState {
+     /* standard registers */
+@@ -2108,7 +2108,7 @@ typedef struct CPUArchState {
+     QemuMutex xen_timers_lock;
+ #endif
+ #if defined(CONFIG_HVF)
+-    HVFX86LazyFlags hvf_lflags;
++    X86LazyFlags lflags;
+     void *emu_mmio_buf;
+ #endif
  
- int hvf_arch_init_vcpu(CPUState *cpu)
-@@ -506,10 +508,10 @@ void hvf_store_regs(CPUState *cs)
-     macvm_set_rip(cs, env->eip);
+diff --git a/target/i386/hvf/x86_flags.c b/target/i386/hvf/x86_flags.c
+index 03d6de5efc3e..3c02c9c5632e 100644
+--- a/target/i386/hvf/x86_flags.c
++++ b/target/i386/hvf/x86_flags.c
+@@ -62,7 +62,7 @@
+ #define SET_FLAGS_OSZAPC_SIZE(size, lf_carries, lf_result) { \
+     target_ulong temp = ((lf_carries) & (LF_MASK_AF)) | \
+     (((lf_carries) >> (size - 2)) << LF_BIT_PO); \
+-    env->hvf_lflags.result = (target_ulong)(int##size##_t)(lf_result); \
++    env->lflags.result = (target_ulong)(int##size##_t)(lf_result); \
+     if ((size) == 32) { \
+         temp = ((lf_carries) & ~(LF_MASK_PDB | LF_MASK_SD)); \
+     } else if ((size) == 16) { \
+@@ -72,7 +72,7 @@
+     } else { \
+         VM_PANIC("unimplemented");  \
+     } \
+-    env->hvf_lflags.auxbits = (target_ulong)(uint32_t)temp; \
++    env->lflags.auxbits = (target_ulong)(uint32_t)temp; \
  }
  
--void hvf_simulate_rdmsr(CPUX86State *env)
-+void hvf_simulate_rdmsr(CPUState *cs)
- {
--    X86CPU *cpu = env_archcpu(env);
--    CPUState *cs = env_cpu(env);
-+    X86CPU *cpu = X86_CPU(cs);
-+    CPUX86State *env = &cpu->env;
-     uint32_t msr = ECX(env);
-     uint64_t val = 0;
- 
-@@ -611,10 +613,10 @@ void hvf_simulate_rdmsr(CPUX86State *env)
-     RDX(env) = (uint32_t)(val >> 32);
+ /* carries, result */
+@@ -99,10 +99,10 @@
+     } else { \
+         VM_PANIC("unimplemented");      \
+     } \
+-    env->hvf_lflags.result = (target_ulong)(int##size##_t)(lf_result); \
+-    target_ulong delta_c = (env->hvf_lflags.auxbits ^ temp) & LF_MASK_CF; \
++    env->lflags.result = (target_ulong)(int##size##_t)(lf_result); \
++    target_ulong delta_c = (env->lflags.auxbits ^ temp) & LF_MASK_CF; \
+     delta_c ^= (delta_c >> 1); \
+-    env->hvf_lflags.auxbits = (target_ulong)(uint32_t)(temp ^ delta_c); \
++    env->lflags.auxbits = (target_ulong)(uint32_t)(temp ^ delta_c); \
  }
  
--void hvf_simulate_wrmsr(CPUX86State *env)
-+void hvf_simulate_wrmsr(CPUState *cs)
+ /* carries, result */
+@@ -116,8 +116,8 @@
+ void SET_FLAGS_OxxxxC(CPUX86State *env, uint32_t new_of, uint32_t new_cf)
  {
--    X86CPU *cpu = env_archcpu(env);
--    CPUState *cs = env_cpu(env);
-+    X86CPU *cpu = X86_CPU(cs);
-+    CPUX86State *env = &cpu->env;
-     uint32_t msr = ECX(env);
-     uint64_t data = ((uint64_t)EDX(env) << 32) | EAX(env);
- 
-@@ -900,9 +902,9 @@ int hvf_vcpu_exec(CPUState *cpu)
-         {
-             hvf_load_regs(cpu);
-             if (exit_reason == EXIT_REASON_RDMSR) {
--                hvf_simulate_rdmsr(env);
-+                hvf_simulate_rdmsr(cpu);
-             } else {
--                hvf_simulate_wrmsr(env);
-+                hvf_simulate_wrmsr(cpu);
-             }
-             env->eip += ins_len;
-             hvf_store_regs(cpu);
-diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
-index 3ff41c35d89a..aec7a8a3fa85 100644
---- a/target/i386/hvf/x86_emu.c
-+++ b/target/i386/hvf/x86_emu.c
-@@ -672,13 +672,13 @@ void x86_emul_raise_exception(CPUX86State *env, int exception_index, int error_c
- 
- static void exec_rdmsr(CPUX86State *env, struct x86_decode *decode)
- {
--    hvf_simulate_rdmsr(env);
-+    emul_ops->simulate_rdmsr(env_cpu(env));
-     env->eip += decode->len;
+     uint32_t temp_po = new_of ^ new_cf;
+-    env->hvf_lflags.auxbits &= ~(LF_MASK_PO | LF_MASK_CF);
+-    env->hvf_lflags.auxbits |= (temp_po << LF_BIT_PO) | (new_cf << LF_BIT_CF);
++    env->lflags.auxbits &= ~(LF_MASK_PO | LF_MASK_CF);
++    env->lflags.auxbits |= (temp_po << LF_BIT_PO) | (new_cf << LF_BIT_CF);
  }
  
- static void exec_wrmsr(CPUX86State *env, struct x86_decode *decode)
+ void SET_FLAGS_OSZAPC_SUB32(CPUX86State *env, uint32_t v1, uint32_t v2,
+@@ -213,27 +213,27 @@ void SET_FLAGS_OSZAPC_LOGIC8(CPUX86State *env, uint8_t v1, uint8_t v2,
+ 
+ bool get_PF(CPUX86State *env)
  {
--    hvf_simulate_wrmsr(env);
-+    emul_ops->simulate_wrmsr(env_cpu(env));
-     env->eip += decode->len;
+-    uint32_t temp = (255 & env->hvf_lflags.result);
+-    temp = temp ^ (255 & (env->hvf_lflags.auxbits >> LF_BIT_PDB));
++    uint32_t temp = (255 & env->lflags.result);
++    temp = temp ^ (255 & (env->lflags.auxbits >> LF_BIT_PDB));
+     temp = (temp ^ (temp >> 4)) & 0x0F;
+     return (0x9669U >> temp) & 1;
  }
  
-diff --git a/target/i386/hvf/x86_emu.h b/target/i386/hvf/x86_emu.h
-index 107c1f1ac866..555b567e2c7d 100644
---- a/target/i386/hvf/x86_emu.h
-+++ b/target/i386/hvf/x86_emu.h
-@@ -30,6 +30,8 @@ struct x86_emul_ops {
-                                     enum X86Seg seg);
-     void (*handle_io)(CPUState *cpu, uint16_t port, void *data, int direction,
-                       int size, int count);
-+    void (*simulate_rdmsr)(CPUState *cs);
-+    void (*simulate_wrmsr)(CPUState *cs);
- };
+ void set_PF(CPUX86State *env, bool val)
+ {
+-    uint32_t temp = (255 & env->hvf_lflags.result) ^ (!val);
+-    env->hvf_lflags.auxbits &= ~(LF_MASK_PDB);
+-    env->hvf_lflags.auxbits |= (temp << LF_BIT_PDB);
++    uint32_t temp = (255 & env->lflags.result) ^ (!val);
++    env->lflags.auxbits &= ~(LF_MASK_PDB);
++    env->lflags.auxbits |= (temp << LF_BIT_PDB);
+ }
  
- extern const struct x86_emul_ops *emul_ops;
+ bool get_OF(CPUX86State *env)
+ {
+-    return ((env->hvf_lflags.auxbits + (1U << LF_BIT_PO)) >> LF_BIT_CF) & 1;
++    return ((env->lflags.auxbits + (1U << LF_BIT_PO)) >> LF_BIT_CF) & 1;
+ }
+ 
+ bool get_CF(CPUX86State *env)
+ {
+-    return (env->hvf_lflags.auxbits >> LF_BIT_CF) & 1;
++    return (env->lflags.auxbits >> LF_BIT_CF) & 1;
+ }
+ 
+ void set_OF(CPUX86State *env, bool val)
+@@ -250,45 +250,45 @@ void set_CF(CPUX86State *env, bool val)
+ 
+ bool get_AF(CPUX86State *env)
+ {
+-    return (env->hvf_lflags.auxbits >> LF_BIT_AF) & 1;
++    return (env->lflags.auxbits >> LF_BIT_AF) & 1;
+ }
+ 
+ void set_AF(CPUX86State *env, bool val)
+ {
+-    env->hvf_lflags.auxbits &= ~(LF_MASK_AF);
+-    env->hvf_lflags.auxbits |= val << LF_BIT_AF;
++    env->lflags.auxbits &= ~(LF_MASK_AF);
++    env->lflags.auxbits |= val << LF_BIT_AF;
+ }
+ 
+ bool get_ZF(CPUX86State *env)
+ {
+-    return !env->hvf_lflags.result;
++    return !env->lflags.result;
+ }
+ 
+ void set_ZF(CPUX86State *env, bool val)
+ {
+     if (val) {
+-        env->hvf_lflags.auxbits ^=
+-         (((env->hvf_lflags.result >> LF_SIGN_BIT) & 1) << LF_BIT_SD);
++        env->lflags.auxbits ^=
++         (((env->lflags.result >> LF_SIGN_BIT) & 1) << LF_BIT_SD);
+         /* merge the parity bits into the Parity Delta Byte */
+-        uint32_t temp_pdb = (255 & env->hvf_lflags.result);
+-        env->hvf_lflags.auxbits ^= (temp_pdb << LF_BIT_PDB);
++        uint32_t temp_pdb = (255 & env->lflags.result);
++        env->lflags.auxbits ^= (temp_pdb << LF_BIT_PDB);
+         /* now zero the .result value */
+-        env->hvf_lflags.result = 0;
++        env->lflags.result = 0;
+     } else {
+-        env->hvf_lflags.result |= (1 << 8);
++        env->lflags.result |= (1 << 8);
+     }
+ }
+ 
+ bool get_SF(CPUX86State *env)
+ {
+-    return ((env->hvf_lflags.result >> LF_SIGN_BIT) ^
+-            (env->hvf_lflags.auxbits >> LF_BIT_SD)) & 1;
++    return ((env->lflags.result >> LF_SIGN_BIT) ^
++            (env->lflags.auxbits >> LF_BIT_SD)) & 1;
+ }
+ 
+ void set_SF(CPUX86State *env, bool val)
+ {
+     bool temp_sf = get_SF(env);
+-    env->hvf_lflags.auxbits ^= (temp_sf ^ val) << LF_BIT_SD;
++    env->lflags.auxbits ^= (temp_sf ^ val) << LF_BIT_SD;
+ }
+ 
+ void lflags_to_rflags(CPUX86State *env)
+@@ -303,7 +303,7 @@ void lflags_to_rflags(CPUX86State *env)
+ 
+ void rflags_to_lflags(CPUX86State *env)
+ {
+-    env->hvf_lflags.auxbits = env->hvf_lflags.result = 0;
++    env->lflags.auxbits = env->lflags.result = 0;
+     set_OF(env, env->eflags & CC_O);
+     set_SF(env, env->eflags & CC_S);
+     set_ZF(env, env->eflags & CC_Z);
 -- 
 2.47.2
 
