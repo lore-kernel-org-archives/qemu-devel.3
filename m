@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 787BBC28B23
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9612BC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:12:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqd5O-0002Sh-1m; Fri, 07 Mar 2025 14:10:18 -0500
+	id 1tqd5T-0002Ve-9T; Fri, 07 Mar 2025 14:10:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqd5L-0002RP-QT
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:10:15 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tqd5Q-0002UM-3V
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:10:20 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqd5J-0005sw-TI
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:10:15 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-224341bbc1dso14051625ad.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:10:13 -0800 (PST)
+ id 1tqd5O-0005u5-EY
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:10:19 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-224191d92e4so37897045ad.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:10:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741374612; x=1741979412; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741374617; x=1741979417; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UGch4Y0Ix8wHfMNh+EmB6vJG8JHgkY01LTyS9A7oXr0=;
- b=rhxR7tKpR2+NcVwaeu8WxL28PGcN+f8aahT2BytdDWyW/ohzG4WE4dBvyMeskP73cL
- 47zvNihPmIEsfKFMQxipiIuAx0R5K38XEPPTvxRQ7V0Xk+FJ3ew8+uOwLcrkXP3e818p
- Utv1n8YJtdyHMc0bTrABMhsEDjG3mwyV/K3iFhLlQwHYtQQjUwFahzqkM9mlnn2cnTea
- CREfqVayGgy7yW/JcwuLfX2Ux+SBRKf8l93A8gBiuRY9NFOKrbltNLFJL0IL8L8Zgx6U
- EFWs4+0Vx/eh15/QFWdg5HMhB25QQr+8MzuyX00VebgQCxwnYzBg8iN2D8VoI5KdMyBl
- PN9w==
+ bh=KS1pyoPrhLTMjTQ7DxzuSKRnXO6pGHCc8r+hitBpHy0=;
+ b=R5nPJRhBrecmz6ZfiUT/k0KattpXJexeOzTvUiv08/GQ45zdlBxeHCuSU4ZfgbcKpO
+ gGFYMPEbiz4m7ulMp5VYONV1YKMfaPMftPe+SQvtxCfKmYFu4RWJtmUGvOPE3JzpG9dV
+ hjB2AqoW5myKSFp63xbh0pbBwhoTddO5y5B4dz5UiBwrgvfnOYqdV5zepxMDhUsCt+7g
+ W69XGjjnlLdXUBP8K9vxAtXiEpmuVnLLkL+JNMeOj1vF3gvkCwsx+tu6nsb9kISupb7k
+ sjPScn6RoBPRD+vadi+7l7XU+50CL17OfjnHqXeV3DGNYLPw0qPjEyn0SfejMTXETOht
+ aXlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741374612; x=1741979412;
+ d=1e100.net; s=20230601; t=1741374617; x=1741979417;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UGch4Y0Ix8wHfMNh+EmB6vJG8JHgkY01LTyS9A7oXr0=;
- b=E8dHDYenu30o0oD/DqlLinX8Gf9uiuE+4WOm00AdBOk0n+sk/P3Ec+KbLXbLAjLEgm
- 0BNrpFSSk0D1NAKJjz1KLkV7YAl/EtHlqH7jVPdVyG0aM1w99fpMhlpV+fOATLwLGADf
- /y1jpe6pH8JSwGOvqnpWmdPWIv5BtKJ+mvP88GvNFGKUxQ63ui2pbw4Wr9VKRU9WX/H4
- efg4XVY2b9qe2jlyZtULAIStNkW4tYvUJbo+2o6RNOpxPReHNUiox54QipxDJAMQHSsn
- BKCzRG0utlJ6Hyc42gWHDRSUcgok4bnLbOeCaR9rpPXJUEm+88OdCYWvFJgRTAxgLp/a
- vk/w==
-X-Gm-Message-State: AOJu0YwdfM72xfxOcimV3Mc3nhCCUlW4Syls43xOilz34upM6qeA9r0O
- mFHSzC5TBTofrtrm9bilY40vy2HisQSkuKXajaHrNrWuFi/unwjs9XiuUnUxJh7DcXSbTPPKbwI
- 9
-X-Gm-Gg: ASbGncvnA7kW36T09SDNAXXCwdMfYDIiVc3dOe4GIO7dX/OmuBc0MTzuVctr7PiODsf
- yWoEP03DyByn20gAs0YzaDi8jqUmAuvM/A3yoUTtiesSotwoPwM3q8tR2mxwfO5FebZG/vKPtyh
- 7ygILc4E4LVxXlt39eSE9KQ46GQLVDs/zP8Ks6bny8gFkti+7HuEorF7Tr8Ut8qp3YwOUH5Z6zt
- hPIHay0Ed4yOrikJMypMNYPXVzj+EebVXm4oo9GPCI1cGwZHV99krDTVLfHTpoWJ17wChgn8UQ2
- FwgzeCzIF6ZdwtSf5yQgQRo9GdPDHndH3G5onDdWWkYT
-X-Google-Smtp-Source: AGHT+IHuC+PNa1SmzqJI0M4CoWasSHWXoq4grtPPWkbR5pKc5S8Z5/JOsqXNjYzvCEePHATvEPGVWw==
-X-Received: by 2002:a05:6a20:a11f:b0:1f2:f1a8:fbc8 with SMTP id
- adf61e73a8af0-1f544ad7265mr8852497637.2.1741374612398; 
- Fri, 07 Mar 2025 11:10:12 -0800 (PST)
+ bh=KS1pyoPrhLTMjTQ7DxzuSKRnXO6pGHCc8r+hitBpHy0=;
+ b=pLskGhp3rqNg5edIWTreYrA+d3gik4bWXnkShO1n68I8KEoa9yig+JUoCZ5PpOTww4
+ E2Ocxey7/wG9r5xpLMD0iWs18k3Q4M/SkcYAmKlJzNL/dEwjO41F+97KpnNSzXOH/Aad
+ YHTYxTuqleJ6N+AJod/Tn6fteXrJPR5QXHR0xxkdnaIPkuyX1zBuC1fRax7cyDumoW0z
+ txM38Ozqu0He/TMwXb4pbiUj+Npw3onPC5R1265ElELT6P3y7eGDswlhcHs0yg3/YnPF
+ jNQXqiprf0+xQFdg+gDp3HxMW9HZAkEj4qbLG7cc3IbPCvN5RH2iC25u058veWwpe2XD
+ 35Sg==
+X-Gm-Message-State: AOJu0YwH/xCenPnp0p5rm5yt+GSYJ62tkkAliH2DPN3w8ygu4Dy2Le81
+ 4qEvj++O5vWoMk78rv3TBqNfHMLWb/bHyLThOXdp1r+Eji/Yc553pEkEIVo1DaG34sV2b6vCkx6
+ g
+X-Gm-Gg: ASbGncuGcDOvflrG2GvkimwK4Ju3IkbG0Vrk1JrYUaC5LAX0JgjFwt3IK1UadZPx4Zj
+ mob9rlzdeo4Mpuarzdinrxn3ygZ0jwVNlU05m1l7E7P8Ln0860meY6WnswXZ777CHQrlcIrPuWr
+ /Vcqeyf8TOJ3rk3SUII/4iRUhGdro++Dch1CeNo3xAA6Bq6iaazZBCyZhztRBYgK0qe8Ejd3K1w
+ DwtKKFA5eit2LLMWiysdzz/EWF85n1GT32ChiyVwCmmFh0KcOVgyZT8x9uGvbR4ARCOVpZvxyuu
+ UIbCZ7zKCgZ9r7+xMJxDUIiBQfAUA3kg9F4YkBLz7MVa
+X-Google-Smtp-Source: AGHT+IG6FYKNJhA8fJgyJC2Shcb8wrPw9XFICBMg0Te6QK6uwGTN0bNhmb4BB9yGI8nrBiug8C0XEA==
+X-Received: by 2002:a05:6a00:4b4a:b0:736:54c9:df2c with SMTP id
+ d2e1a72fcca58-736aaab75e8mr6208720b3a.15.1741374617086; 
+ Fri, 07 Mar 2025 11:10:17 -0800 (PST)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736b2da32c6sm1449895b3a.149.2025.03.07.11.10.11
+ d2e1a72fcca58-736b2da32c6sm1449895b3a.149.2025.03.07.11.10.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 11:10:11 -0800 (PST)
+ Fri, 07 Mar 2025 11:10:16 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
  pierrick.bouvier@linaro.org, alex.bennee@linaro.org, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  richard.henderson@linaro.org, manos.pitsidianakis@linaro.org
-Subject: [PATCH v2 2/7] hw/hyperv/hyperv.h: header cleanup
-Date: Fri,  7 Mar 2025 11:09:58 -0800
-Message-Id: <20250307191003.248950-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 7/7] hw/hyperv/hyperv_testdev: common compilation unit
+Date: Fri,  7 Mar 2025 11:10:03 -0800
+Message-Id: <20250307191003.248950-8-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250307191003.248950-1-pierrick.bouvier@linaro.org>
 References: <20250307191003.248950-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,23 +103,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/hw/hyperv/hyperv.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/hyperv/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
-index d717b4e13d4..63a8b65278f 100644
---- a/include/hw/hyperv/hyperv.h
-+++ b/include/hw/hyperv/hyperv.h
-@@ -10,7 +10,8 @@
- #ifndef HW_HYPERV_HYPERV_H
- #define HW_HYPERV_HYPERV_H
- 
--#include "cpu-qom.h"
-+#include "exec/hwaddr.h"
-+#include "hw/core/cpu.h"
- #include "hw/hyperv/hyperv-proto.h"
- 
- typedef struct HvSintRoute HvSintRoute;
+diff --git a/hw/hyperv/meson.build b/hw/hyperv/meson.build
+index 5acd709bdd5..ef5a596c8ab 100644
+--- a/hw/hyperv/meson.build
++++ b/hw/hyperv/meson.build
+@@ -1,5 +1,5 @@
+ specific_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'))
+-specific_ss.add(when: 'CONFIG_HYPERV_TESTDEV', if_true: files('hyperv_testdev.c'))
++system_ss.add(when: 'CONFIG_HYPERV_TESTDEV', if_true: files('hyperv_testdev.c'))
+ system_ss.add(when: 'CONFIG_VMBUS', if_true: files('vmbus.c'))
+ system_ss.add(when: 'CONFIG_SYNDBG', if_true: files('syndbg.c'))
+ system_ss.add(when: 'CONFIG_HV_BALLOON', if_true: files('hv-balloon.c', 'hv-balloon-page_range_tree.c', 'hv-balloon-our_range_memslots.c'))
 -- 
 2.39.5
 
