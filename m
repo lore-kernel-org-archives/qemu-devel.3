@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15311C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 089C5C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcwr-0001jL-Ax; Fri, 07 Mar 2025 14:01:29 -0500
+	id 1tqcyu-0003Wn-VE; Fri, 07 Mar 2025 14:03:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tqcwl-0001eB-B4
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:01:27 -0500
-Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
+ id 1tqcyn-0003Vq-3h
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:03:29 -0500
+Received: from mail-qk1-x729.google.com ([2607:f8b0:4864:20::729])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tqcwj-0002De-I4
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:01:23 -0500
-Received: by mail-qk1-x735.google.com with SMTP id
- af79cd13be357-7c08f9d0ef3so137857885a.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:01:19 -0800 (PST)
+ id 1tqcyl-0002py-IG
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:03:28 -0500
+Received: by mail-qk1-x729.google.com with SMTP id
+ af79cd13be357-7c3b533a683so247060485a.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:03:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741374078; x=1741978878; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741374206; x=1741979006; darn=nongnu.org;
  h=thread-index:content-language:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=w/R1O3YLdqGlmMACJzMlbMzhf4Z4Gk2YTjjraP7JN1E=;
- b=gif43WjJGHhOAiXDxda1YlGHaZbiDquziFGhMCQrA7IqeZTmbg5rZzNhEOwT2EIZDa
- PsWvs3KAKVv1I+IJATq1CrQL/aIMucaGyMgRl0FTYMGw1w5Th0UM9nqXX9AbdA1SZEgV
- ejjhvuFKCyeKKM090Tc3WqvPmRhb/60KqQKS1ImKpAkddXOmFH2nO4DbHlkQ3UvqGZ51
- iZJc4do4yLPCGJm19v0uSFxaeLItkk466uPplgfhgV7H61lo9qlXHIrtwZ+oKZOrd5nA
- eHfK1mH79V/+EEGaAWyCYFKI4FDtyxr1tKUpbae8r1FQYVd0Nbxuze9EKJ5tkTktR7ZX
- vi5g==
+ bh=WAOzkhzEpY5DWwFo429YeQi4dH4n/O184rVme7sTzpM=;
+ b=cmb6Y0lAkR4d+FiGadpeE9FAyS2HD2yojJLv7KtMoP+5pPMuPiKTov95OwJQX+qAF3
+ kHQjiv00Es5iC5VkExj9Vyc7rZHnu+6v7Of0/JwKJsZa4U7xTiXEVDWpy9X3GkxvbrpJ
+ vfgPmjFlLJW3gtVbDQq9VpH78sh2OqpRQbXTaK24h92EZn/o3olpTmfmi5hKD63U/6up
+ gHeYlBopKgYyQMQPLmJGPJhz7n/zzYF8TwikoI6S5E6wK7hnQvVdlCT72XJzhxNs+T2T
+ FJHLhJMq09pxJKyHlrGYufvsB6N14x5/5G6jaSx1GBMA91RCy5kXky3xFHhzOUtMHycm
+ /I/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741374078; x=1741978878;
+ d=1e100.net; s=20230601; t=1741374206; x=1741979006;
  h=thread-index:content-language:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w/R1O3YLdqGlmMACJzMlbMzhf4Z4Gk2YTjjraP7JN1E=;
- b=hEdPuY32yjKPmccKdAlxy4cy0/x8zHcImdunfBzScvj/yUcZql5CCKVJROqr4JRMIw
- 7mX08b8qaxtEiac6pmXa6GvGxIr08GcfetFQVwRM1/48Wi6s16PQIN/zhW+DP4pwWhaG
- E0+0LgMxQBRT6+3VeIBN5GsMXm1Fpgz9SJdVtQbBF128CTc79waoYUpQWxWTqk7Df41n
- Xvxt90J5B60pc15yD7p1P9dvW+ff6FHbYQJf+JiRKhha/IPjn38IhySBTSdf3kXLBX8P
- FDJ7K5MwTNG6Gw65BAyOtZGg0MDw3vU+29C0PMfLFWjhab4S1130BV5J2YbEFTg6H/x0
- Ua/Q==
+ bh=WAOzkhzEpY5DWwFo429YeQi4dH4n/O184rVme7sTzpM=;
+ b=pyv6ARy9XwRL8kRLoEXHvVu5ZqwTVP8cFtkGLgQf6Xw6u+/WB0OvtOVtH93bftrk3j
+ MC+pT1pYg7ymf87p6ISu7wlczqTwh08CgTbXaVwyeUyQ/ZJImaTbZpcUuH7fDZsO56ug
+ DA3hYTqLTx7o8m/fEKkzIp1rVsEZ8XqLXNHD+NO6HFTdKNzaUp/FCq++FBajXe7Fbh7/
+ BTTxeY4Hfpb1LgfitfX4P7F/oO2SUzFRvvREedtyYRjadE28jz49rWyQGqIPOVMBmhtX
+ fVOcrVu/sb6LLPq2o+E3BmWqZr7h6UBV1oB3fllLFzUJ8m5j3YkK8rW3+Y/dX+T/U1sc
+ EhrQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgZFJ6g0u+qdlLnTO91G+mZX4ZbLUBwqmt6MS4Xm9m/PJBYef3rLDrRRL3OKZ/BBjwgJWxcQZKeVN8@nongnu.org
-X-Gm-Message-State: AOJu0Yys2mxcFtD/Z7SJK+5oiz1VmFBMrjyu5eRYp3wRlvGFSm+BpuKa
- p0WgPUdWbD27PvytV6zpUaPL0ae2BkOPv/XBpZZoE/DdmDqaj5YU
-X-Gm-Gg: ASbGnct0rQAMUH/SbVp5kqmXx/rLZYQ9YkbYxLeXlx5zrRkX9j0lL7afR2Fk9unSZOy
- Ql13hCYTnc1K1/+4pWJYmoHUvTPbGhcu9YdyFn61NEbqQet1TE2WtiA3vnbEGS2UwfBuiNOzpak
- UURWNduXcpNc4w5R7fV37gjiTL0jBE5uhKMv3GwZmtGknPGjCA8wrDuPeKhPWRZ6pKrKth+G6hm
- c9i1gG4TbBK1xmgoC69qtzrw/3i+L/aXzGp+mpGPL4am7usDZNdLsTSR+WVu7i7jykuH98y52mR
- bOaZHWi1GUfBZ6FRfoQg374i96V4kH2v+DukCmsfB6c0Kj/6G9r6YEj6us3fAG0=
-X-Google-Smtp-Source: AGHT+IFGCu/Ukzp0uyAILW+H/9Nd6iJYQ2FAaaSVBg0IPi3DpO/QdghnG+mdgbs6l1x2oIO/ckeOew==
-X-Received: by 2002:a05:620a:6289:b0:7c3:d778:6c0 with SMTP id
- af79cd13be357-7c4e617abacmr670159085a.43.1741374078515; 
- Fri, 07 Mar 2025 11:01:18 -0800 (PST)
+ AJvYcCVUiMqam5v5q6Qdu/XM6t+BM3sVIBIu6gMUC0Iajrc88I6J++lfI4Vgyiq3XNAuoLRUL02Irgg64GpW@nongnu.org
+X-Gm-Message-State: AOJu0YwSp4blIw0piitYnEN2sFrZsAylAG56QvakeIwap+zbPuif7EBb
+ TJKDrTW8SJO6uklyi6znbzjQL6csyml9C3CIUy7TTMQBnyHzPh4D
+X-Gm-Gg: ASbGncvlbb/L/eTXHwOhz2z3x4m+WteiBaduilFYgQvxjIXa+/+QK9F5KruY+YQB999
+ GpNYh+wXOTcBoCWaiCADuY3IcGCEt9Gt03Bf/1nbYboazwOG6LdWVw7jAsv7nyt9JRQmeLdxB12
+ MR7xQ0RCwGS7+QJwJ/2RvssTw4km5AGTXde+wb8c3zL+USBWIdEZtjPRbuKtoPDkk6GxtR/MoQd
+ c7JcnlR05tQNLMI0+MCV9iStnVn4dIx7M4dcwJ9WnsNTV8ujgAwI1SK30H0oyiT9Dw2ysGWnRhv
+ iWZBaLWmqztuCL00FMvx3SipEkdD67yy3nVVAinRsVt05E/QwfnkidVXUqfSuhY=
+X-Google-Smtp-Source: AGHT+IE7C2voghsBbuVTW3tNSQiSnLOl2oRPYeMooTc4PQPYTL0tVRQq+v10tTUcX3ODx1STsgC8Sw==
+X-Received: by 2002:a05:620a:1d06:b0:7c3:c853:dfd8 with SMTP id
+ af79cd13be357-7c4e61126d1mr631334885a.26.1741374206358; 
+ Fri, 07 Mar 2025 11:03:26 -0800 (PST)
 Received: from DESKTOPUU50BPD ([2603:6000:a500:306:f449:4838:1970:9d05])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e8f7090ea6sm22506456d6.37.2025.03.07.11.01.16
+ af79cd13be357-7c53d010250sm10612585a.6.2025.03.07.11.03.24
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 07 Mar 2025 11:01:17 -0800 (PST)
+ Fri, 07 Mar 2025 11:03:25 -0800 (PST)
 From: <ltaylorsimpson@gmail.com>
 To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
 	<qemu-devel@nongnu.org>
@@ -74,23 +74,22 @@ Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
  <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
  "'Brian Cain'" <bcain@quicinc.com>
 References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-13-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052628.1011210-13-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 12/38] target/hexagon: Add imported macro,
- attr defs for sysemu
-Date: Fri, 7 Mar 2025 13:01:16 -0600
-Message-ID: <028c01db8f93$4ebc2840$ec3478c0$@gmail.com>
+ <20250301052628.1011210-14-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052628.1011210-14-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 13/38] target/hexagon: Define DCache states
+Date: Fri, 7 Mar 2025 13:03:24 -0600
+Message-ID: <028d01db8f93$9aaa7b30$cfff7190$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-us
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgFLLUsNtPH992A=
+Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgLkLMeitOVFuLA=
 X-Antivirus: Norton (VPS 250307-6, 3/7/2025), Outbound message
 X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x735.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::729;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x729.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,103 +123,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
 > alex.bennee@linaro.org; quic_mburton@quicinc.com;
 > sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 12/38] target/hexagon: Add imported macro, attr defs =
-for
-> sysemu
->=20
+> Subject: [PATCH 13/38] target/hexagon: Define DCache states
+> 
 > From: Brian Cain <bcain@quicinc.com>
->=20
+> 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  target/hexagon/attribs_def.h.inc   | 414 +++++++++++++++++++--
->  target/hexagon/imported/macros.def | 558
-> +++++++++++++++++++++++++++++
->  2 files changed, 942 insertions(+), 30 deletions(-)  mode change =
-100755 =3D>
-> 100644 target/hexagon/imported/macros.def
->=20
-> diff --git a/target/hexagon/attribs_def.h.inc
-> b/target/hexagon/attribs_def.h.inc
-> index 9e3a05f882..e6523a739b 100644
-> --- a/target/hexagon/attribs_def.h.inc
-> +++ b/target/hexagon/attribs_def.h.inc
-> @@ -19,20 +19,41 @@
->  DEF_ATTRIB(AA_DUMMY, "Dummy Zeroth Attribute", "", "")
->=20
->  /* Misc */
-> +DEF_ATTRIB(FAKEINSN, "Not a real instruction", "", "")
-> +DEF_ATTRIB(MAPPING, "Not real -- asm mapped", "", "")
-> +DEF_ATTRIB(CONDMAPPING, "Not real -- mapped based on values", "", "")
->  DEF_ATTRIB(EXTENSION, "Extension instruction", "", "")
-> +DEF_ATTRIB(SHARED_EXTENSION, "Shared extension instruction", "", "")
-> +DEF_ATTRIB(CABAC,
-> +           "Cabac Instruction. Used in conjuction with =
-QDSP6_CABAC_PRESENT",
-> "",
-> +           "")
-> +DEF_ATTRIB(EXPERIMENTAL, "This may not work correctly not supported =
-by
-> RTL.",
-> +           "", "")
+>  target/hexagon/cpu_bits.h | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h index
+> 6582bb4f16..5d26815eb9 100644
+> --- a/target/hexagon/cpu_bits.h
+> +++ b/target/hexagon/cpu_bits.h
+> @@ -41,6 +41,13 @@ enum hex_cause {
+>      HEX_CAUSE_PRIV_USER_NO_SINSN = 0x01b,  };
+> 
+> +enum data_cache_state {
+> +    HEX_DC_STATE_INVALID   = 0x0,
+> +    HEX_DC_STATE_VALID     = 0x1,
+> +    HEX_DC_STATE_RESERVED  = 0x2,
+> +    HEX_DC_STATE_UNUSED_WT = 0x3,
+> +};
+> +
 
-Personally, I don't think we should be adding all of these.  Few are =
-needed, and we run the risk of having attributes that aren=E2=80=99t =
-used in QEMU and therefore aren=E2=80=99t properly implemented in QEMU.  =
-Somewhere down the road, an instruction or macro could show up in the =
-imported directory with such an attribute, and it will cause unnecessary =
-headaches.  Examples above are CONDMAPPING and EXPERIMENTAL.  These =
-should be included in hex_common.tag_ignore.
+Why is this needed?  QEMU doesn't model the data cache.
 
-Better to wait until an instruction in a future version of Hexagon shows =
-up that uses an attribute.  These will be few, so it will be simpler to =
-examine each new attribute to ensure it is properly implemented in QEMU.
-
->=20
->  /* access to implicit registers */
->  DEF_ATTRIB(IMPLICIT_WRITES_LR, "Writes the link register", "", =
-"UREG.LR")
-> +DEF_ATTRIB(IMPLICIT_READS_LR, "Reads the link register", "UREG.LR", =
-"")
-> +DEF_ATTRIB(IMPLICIT_READS_LC0, "Reads loop count for loop 0",
-> +"UREG.LC0", "") DEF_ATTRIB(IMPLICIT_READS_LC1, "Reads loop count for
-> +loop 1", "UREG.LC1", "") DEF_ATTRIB(IMPLICIT_READS_SA0, "Reads start
-> +address for loop 0", "UREG.SA0", "") DEF_ATTRIB(IMPLICIT_READS_SA1,
-> +"Reads start address for loop 1", "UREG.SA1", "")
-> +DEF_ATTRIB(IMPLICIT_WRITES_PC, "Writes the program counter", "",
-> +"UREG.PC") DEF_ATTRIB(IMPLICIT_READS_PC, "Reads the program
-> counter",
-> +"UREG.PC", "")
->  DEF_ATTRIB(IMPLICIT_WRITES_SP, "Writes the stack pointer", "",
-> "UREG.SP")
-> +DEF_ATTRIB(IMPLICIT_READS_SP, "Reads the stack pointer", "UREG.SP",
-> "")
->  DEF_ATTRIB(IMPLICIT_WRITES_FP, "Writes the frame pointer", "",
-> "UREG.FP")
-> +DEF_ATTRIB(IMPLICIT_READS_FP, "Reads the frame pointer", "UREG.FP",
-> "")
-> +DEF_ATTRIB(IMPLICIT_WRITES_GP, "Writes the GP register", "",
-> "UREG.GP")
-> +DEF_ATTRIB(IMPLICIT_READS_GP, "Reads the GP register", "UREG.GP", "")
->  DEF_ATTRIB(IMPLICIT_WRITES_LC0, "Writes loop count for loop 0", "",
-> "UREG.LC0")  DEF_ATTRIB(IMPLICIT_WRITES_LC1, "Writes loop count for
-> loop 1", "", "UREG.LC1")  DEF_ATTRIB(IMPLICIT_WRITES_SA0, "Writes =
-start
-> addr for loop 0", "", "UREG.SA0")  DEF_ATTRIB(IMPLICIT_WRITES_SA1,
-> "Writes start addr for loop 1", "", "UREG.SA1")
-> +DEF_ATTRIB(IMPLICIT_WRITES_R00, "Writes Register 0", "", "UREG.R00")
-
-The IMPLICIT_READS_* and IMPLICIT_WRITES_* are examples that would need =
-to be handled properly if ever used.  Look at IMPLICIT_*_P0 to see how =
-they are used in translate.c::analyze_packet.  Imagine a day in the =
-future when an instruction gets imported with IMPLICIT_WRITES_R00 =
-attribute.  When that instruction is in a packet with an instruction =
-that reads R0, analyze_packet will not know there is a conflict and =
-decide it's OK to short-circuit the packet semantics.  That bug would go =
-unnoticed for a long time and only show up when a large program runs =
-incorrectly on QEMU.
-
-Thanks,
-Taylor
 
 
 
