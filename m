@@ -4,77 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C653C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:59:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8560CC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 09:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqTY3-00080L-0A; Fri, 07 Mar 2025 03:59:15 -0500
+	id 1tqU5O-0000W1-5o; Fri, 07 Mar 2025 04:33:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tqTY0-0007yX-54
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:59:12 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1)
+ (envelope-from <5c622067efd66dd4ee5eca740dcf263f41db20b2@kylie.crudebyte.com>)
+ id 1tqU5K-0000VD-C2; Fri, 07 Mar 2025 04:33:39 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tqTXy-0002bU-B2
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:59:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741337950; x=1772873950;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=lcLY1x1iW003ARIIYfypc8gSXCdCsMc0qubiz9RJXy8=;
- b=TvsusSPxF+dX/IvjyzSJ9pKPXPAqDnD2QDwc2Z4dPQnm+X/A3WwT/UT3
- PwRSIOh9ddsMzBog4Pu5iDBQA6Ya/W8ecYMI/VmPqtyvKMYckXDJE8xXk
- zrU9kIV3Nwpqf920mIUlD3jLBEc0YYZr1WYLqSofT8RRoJvWIpNylcLqM
- KAMDFRCKV32NAVgnWENLUnLRG2b/7IDdbkJIxNFW9FltVo9lEPrX9Sy3k
- WHOf2/U1N1Ek6+ON7NKu62wtqInp8ltGnIWJa9tiRaEgITu2dzycm5+Ps
- SV0SClDm4i5AkUERvTopfa/i8Vi8+HvwlW5PMRUyjkgwvjU0eYzSUbsEU w==;
-X-CSE-ConnectionGUID: emsayoJjT924HkW0u/dQfA==
-X-CSE-MsgGUID: qcAq3riFRBiVhCga1/N1+g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11365"; a="42521574"
-X-IronPort-AV: E=Sophos;i="6.14,228,1736841600"; d="scan'208";a="42521574"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Mar 2025 00:59:07 -0800
-X-CSE-ConnectionGUID: lflAClxPRXafbSNVjWQY3Q==
-X-CSE-MsgGUID: nQXLNZKkRem5CEU/Z4hs7w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="123459836"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa003.fm.intel.com with ESMTP; 07 Mar 2025 00:59:03 -0800
-Date: Fri, 7 Mar 2025 17:19:11 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
- likexu@tencent.com, like.xu.linux@gmail.com,
- zhenyuw@linux.intel.com, groug@kaod.org, khorenko@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
- davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com
-Subject: Re: [PATCH v2 06/10] target/i386/kvm: rename architectural PMU
- variables
-Message-ID: <Z8q6D8fqFmegi4uW@intel.com>
-References: <20250302220112.17653-1-dongli.zhang@oracle.com>
- <20250302220112.17653-7-dongli.zhang@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250302220112.17653-7-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1)
+ (envelope-from <5c622067efd66dd4ee5eca740dcf263f41db20b2@kylie.crudebyte.com>)
+ id 1tqU5I-0002u5-Nv; Fri, 07 Mar 2025 04:33:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=HE/Kzh5V43tzdD8T3Art6OIycWgew71hLgw70s1MLto=; b=xF65K
+ /aPM4fh7UdW3Fsfg+ryknOJDnym0Z7PmBflcQm1CEYgfeGPLdPoBVaHFdp21kH2Yg9nvK8LPTkyZ7
+ dclsXbYp/J89XGkiGLIvXCkOHmweDz5REkzqJPdHdBPenAa+mkz8SXacpOpMn2x1DetIQLt/JP+dH
+ OAZHzcOFMEnfCmXPT7DWclN6peVVk0a1wC/+3yHDGGw1d52n9ng3lNriN99irN87Tc0gkKSKgbLmo
+ OzOcmq7XW6yo8wKZ7nPkbDtR8G00fgMaXmfLmhCYoctBBh7qLNxtxfkiuze3oLMQTRK0ILIsrYSeK
+ i9DR3tMIPxsTxg351sZlzCA7iEfb4xQtGFBDqW77hsW0Din7FbMyvNn/Xef/p9JfUG21nT6rd8qtC
+ LPVQHU6SuMBkMwAEM0ME9DL5pXFWkZeJOWhC2OzEgWNE2XnDiNLOMrBUYhprXMIVT8EcBAjgrbzWP
+ xt1kkU9/hbfagpFHqv588F5qSI2y0/d3hFzEX1PNaeHhQXtJcQJyNs+k3hb5pRGPdqoFJl+my2jHp
+ 6mGpE8vcRXPFFszXMibNLo8RLtCPbPd5wRvlYb1ja8wflTFmCPlN7VVu/uUH39iPtNvDiB4a+8JIJ
+ DW17bThB73oGghtwN9gtS9xeV4HTus6sbQYvf8nlkroHiZ9vOU2eWKra2SSEAU=;
+Message-Id: <5c622067efd66dd4ee5eca740dcf263f41db20b2.1741339452.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1741339452.git.qemu_oss@crudebyte.com>
+References: <cover.1741339452.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Fri, 7 Mar 2025 10:22:56 +0100
+Subject: [PATCH v2 1/2] 9pfs: fix concurrent v9fs_reclaim_fd() calls
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>,
+    qemu-stable@nongnu.org
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=5c622067efd66dd4ee5eca740dcf263f41db20b2@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,19 +67,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> +/*
-> + * For Intel processors, the meaning is the architectural PMU version
-> + * number.
-> + *
-> + * For AMD processors: 1 corresponds to the prior versions, and 2
-> + * corresponds to AMD PerfMonV2.
-> + */
-> +static uint32_t has_pmu_version;
+Even though this function is serialized to be always called from main
+thread, v9fs_reclaim_fd() is dispatching the coroutine to a worker thread
+in between via its v9fs_co_*() calls, hence leading to the situation where
+v9fs_reclaim_fd() is effectively executed multiple times simultaniously,
+which renders its LRU algorithm useless and causes high latency.
 
-The "has_" prefix sounds like a boolean type. So what about "pmu_version"?
+Fix this by adding a simple boolean variable to ensure this function is
+only called once at a time. No synchronization needed for this boolean
+variable as this function is only entered and returned on main thread.
 
-Others look good to me,
+Fixes: 7a46274529c ('hw/9pfs: Add file descriptor reclaim support')
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+---
+ hw/9pfs/9p.c | 10 ++++++++++
+ hw/9pfs/9p.h |  1 +
+ 2 files changed, 11 insertions(+)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 7cad2bce62..4f9c2dde9c 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -435,6 +435,12 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+     GHashTableIter iter;
+     gpointer fid;
+ 
++    /* prevent multiple coroutines running this function simultaniously */
++    if (s->reclaiming) {
++        return;
++    }
++    s->reclaiming = true;
++
+     g_hash_table_iter_init(&iter, s->fids);
+ 
+     QSLIST_HEAD(, V9fsFidState) reclaim_list =
+@@ -510,6 +516,8 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+          */
+         put_fid(pdu, f);
+     }
++
++    s->reclaiming = false;
+ }
+ 
+ /*
+@@ -4324,6 +4332,8 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
+     s->ctx.fst = &fse->fst;
+     fsdev_throttle_init(s->ctx.fst);
+ 
++    s->reclaiming = false;
++
+     rc = 0;
+ out:
+     if (rc) {
+diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
+index 5e041e1f60..259ad32ed1 100644
+--- a/hw/9pfs/9p.h
++++ b/hw/9pfs/9p.h
+@@ -362,6 +362,7 @@ struct V9fsState {
+     uint64_t qp_ndevices; /* Amount of entries in qpd_table. */
+     uint16_t qp_affix_next;
+     uint64_t qp_fullpath_next;
++    bool reclaiming;
+ };
+ 
+ /* 9p2000.L open flags */
+-- 
+2.39.5
 
 
