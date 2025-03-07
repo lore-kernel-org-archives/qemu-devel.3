@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9740FC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 04:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3765C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 04:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqOv2-0004iF-K8; Thu, 06 Mar 2025 23:02:40 -0500
+	id 1tqOtW-0000Tj-0x; Thu, 06 Mar 2025 23:01:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tqOup-0003lf-NR; Thu, 06 Mar 2025 23:02:31 -0500
+ id 1tqOtC-0008S3-1s; Thu, 06 Mar 2025 23:00:46 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tqOuo-00056A-92; Thu, 06 Mar 2025 23:02:27 -0500
+ id 1tqOtA-00050B-0n; Thu, 06 Mar 2025 23:00:45 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 7 Mar
- 2025 11:59:56 +0800
+ 2025 11:59:51 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 7 Mar 2025 11:59:56 +0800
+ Transport; Fri, 7 Mar 2025 11:59:51 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,9 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v6 28/29] tests/functional/aspeed: Add test case for AST2700 A1
-Date: Fri, 7 Mar 2025 11:59:37 +0800
-Message-ID: <20250307035945.3698802-29-jamin_lin@aspeedtech.com>
+Subject: [PATCH v6 15/29] hw/intc/aspeed: Introduce IRQ handler function to
+ reduce code duplication
+Date: Fri, 7 Mar 2025 11:59:24 +0800
+Message-ID: <20250307035945.3698802-16-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
 References: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
@@ -66,40 +67,121 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The behavior of the INTC set IRQ is almost identical between INTC and INTCIO.
+To reduce duplicated code, introduce the "aspeed_intc_set_irq_handler" function
+to handle both INTC and INTCIO IRQ behavior. No functional change.
+
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/functional/test_aarch64_aspeed.py | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/intc/aspeed_intc.c | 70 ++++++++++++++++++++++++-------------------
+ 1 file changed, 39 insertions(+), 31 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index 8df6a97a28..c25c966278 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -31,6 +31,10 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz',
-             'cfbbd1cce72f2a3b73b9080c41eecdadebb7077fba4f7806d72ac99f3e84b74a')
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index be24516ec9..3aa97add8b 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -76,11 +76,45 @@ static void aspeed_intc_update(AspeedINTCState *s, int inpin_idx,
+     qemu_set_irq(s->output_pins[outpin_idx], level);
+ }
  
-+    ASSET_SDK_V905_AST2700A1 = Asset(
-+            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
-+            'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
++static void aspeed_intc_set_irq_handler(AspeedINTCState *s,
++                                        const AspeedINTCIRQ *intc_irq,
++                                        uint32_t select)
++{
++    const char *name = object_get_typename(OBJECT(s));
++    uint32_t status_reg;
++    int outpin_idx;
++    int inpin_idx;
 +
-     def start_ast2700_test(self, name):
-         num_cpu = 4
-         uboot_size = os.path.getsize(self.scratch_file(name,
-@@ -95,6 +99,12 @@ def test_aarch64_ast2700_evb_sdk_v09_05(self):
-         self.archive_extract(self.ASSET_SDK_V905_AST2700)
-         self.start_ast2700_test('ast2700-a0-default')
++    status_reg = intc_irq->status_reg;
++    outpin_idx = intc_irq->outpin_idx;
++    inpin_idx = intc_irq->inpin_idx;
++
++    if (s->mask[inpin_idx] || s->regs[status_reg]) {
++        /*
++         * a. mask is not 0 means in ISR mode
++         * sources interrupt routine are executing.
++         * b. status register value is not 0 means previous
++         * source interrupt does not be executed, yet.
++         *
++         * save source interrupt to pending variable.
++         */
++        s->pending[inpin_idx] |= select;
++        trace_aspeed_intc_pending_irq(name, inpin_idx, s->pending[inpin_idx]);
++    } else {
++        /*
++         * notify firmware which source interrupt are coming
++         * by setting status register
++         */
++        s->regs[status_reg] = select;
++        trace_aspeed_intc_trigger_irq(name, inpin_idx, outpin_idx,
++                                      s->regs[status_reg]);
++        aspeed_intc_update(s, inpin_idx, outpin_idx, 1);
++    }
++}
++
+ /*
+- * The address of GICINT128 to GICINT136 are from 0x1000 to 0x1804.
+- * Utilize "address & 0x0f00" to get the irq and irq output pin index
+- * The value of irq should be 0 to num_inpins.
+- * The irq 0 indicates GICINT128, irq 1 indicates GICINT129 and so on.
++ * GICINT128 to GICINT136 map 1:1 to input and output IRQs 0 to 8.
++ * The value of input IRQ should be between 0 and the number of inputs.
+  */
+ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+ {
+@@ -88,20 +122,15 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+     const char *name = object_get_typename(OBJECT(s));
+     const AspeedINTCIRQ *intc_irq;
+-    uint32_t status_reg;
+     uint32_t select = 0;
+     uint32_t enable;
+-    int outpin_idx;
+     int inpin_idx;
+     int i;
  
-+    def test_aarch64_ast2700a1_evb_sdk_v09_05(self):
-+        self.set_machine('ast2700a1-evb')
-+
-+        self.archive_extract(self.ASSET_SDK_V905_AST2700A1)
-+        self.start_ast2700_test('ast2700-default')
-+
+     assert(irq < aic->num_inpins);
  
- if __name__ == '__main__':
-     QemuSystemTest.main()
+     intc_irq = &aic->irq_table[irq];
+-    status_reg = intc_irq->status_reg;
+-    outpin_idx = intc_irq->outpin_idx;
+     inpin_idx = intc_irq->inpin_idx;
+-
+     trace_aspeed_intc_set_irq(name, inpin_idx, level);
+     enable = s->enable[inpin_idx];
+ 
+@@ -122,28 +151,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+     }
+ 
+     trace_aspeed_intc_select(name, select);
+-
+-    if (s->mask[inpin_idx] || s->regs[status_reg]) {
+-        /*
+-         * a. mask is not 0 means in ISR mode
+-         * sources interrupt routine are executing.
+-         * b. status register value is not 0 means previous
+-         * source interrupt does not be executed, yet.
+-         *
+-         * save source interrupt to pending variable.
+-         */
+-        s->pending[inpin_idx] |= select;
+-        trace_aspeed_intc_pending_irq(name, inpin_idx, s->pending[inpin_idx]);
+-    } else {
+-        /*
+-         * notify firmware which source interrupt are coming
+-         * by setting status register
+-         */
+-        s->regs[status_reg] = select;
+-        trace_aspeed_intc_trigger_irq(name, inpin_idx, outpin_idx,
+-                                      s->regs[status_reg]);
+-        aspeed_intc_update(s, inpin_idx, outpin_idx, 1);
+-    }
++    aspeed_intc_set_irq_handler(s, intc_irq, select);
+ }
+ 
+ static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
 -- 
 2.43.0
 
