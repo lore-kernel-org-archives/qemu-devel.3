@@ -4,95 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8466C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8CC3C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:53:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZ2V-0001G1-6W; Fri, 07 Mar 2025 09:51:03 -0500
+	id 1tqZ3v-0001yV-Io; Fri, 07 Mar 2025 09:52:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tqZ2S-0001Fi-5A
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:51:00 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1tqZ3r-0001yG-7V
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:52:27 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tqZ2Q-0005v6-4c
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:50:59 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5e033c2f106so1921781a12.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 06:50:56 -0800 (PST)
+ id 1tqZ3p-00089U-5q
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:52:26 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5b56fc863so2706111a12.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 06:52:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741359056; x=1741963856; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741359143; x=1741963943; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dNZtIZJytF/Zt61U4OrGGE9iALPc/9QtNmwJUb2ZA74=;
- b=IX8E2e64P/VQwE4sM3O6nG555AkZ+qAdJEYuYyWDHf8GfI91z+axJ2CEIOS9zTmS7O
- yVxqpg1vjd8CgIE7Tj7I+7zJetoHezXsypy2QUtel+7Ry31Q+P2XiO+9KZYulYXsSOrI
- VpISACTtEapc6xFeq6L78oA+4Yke9vDoxwxck4krkdaHQpxIvSVdYfdaY8zLVkZq2MpP
- koObz8HWPVPod/CwS1iPs7v20uC2AP+ZmpPp2yUbyEzQKiC5KTivan806VEQiUGNrPTo
- ucibw3RHnXl/8wQ9OKfuXLTOLs2jot4BRpQG8p3OvR1lU8P9eVa6awFiUp/f9JZCH1Ji
- vqVw==
+ bh=ws+wq/2UEr/6t9Jg3xA8GMiXPDqWXp7+OVOIoqXOryE=;
+ b=cUg6KgBM1+PJ4MTpKdn2NTnmx9J1CGZL6dbmRwomPFGZi+I3EaLF9LR2QSpgNo2+L3
+ zg9xo4WXeDwViO6U3W3t1x4LyYjx0kRUUlmNQmjrYQH60O6qcormt3SeBT4sEgH1trS8
+ lSrrpgpa/MyQDJhIZF4cMCl+83f6cil7ioRU4sdNzAVMddsaquqkY8T/4o7Qg6uONVZr
+ Vxgrtweoac8mhGnKXniyOeotwe+J/mL2+cYi4tBPY91/EJmQETPL8R0heb4hpCjJjpyX
+ L/103aQZwTBEktFnPrg83/FjvhpYAgntmNngnSc4L7mW4dNUc6tSpgGWAp8LJdUZl2ox
+ XKBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741359056; x=1741963856;
+ d=1e100.net; s=20230601; t=1741359143; x=1741963943;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dNZtIZJytF/Zt61U4OrGGE9iALPc/9QtNmwJUb2ZA74=;
- b=luaFPoxvvSWQRlihCujJ59GoleLmQszhWJ8RPjUHOUVgYrUWARi8PBcUJmy4TTpFzB
- qBcZP5GJzlL/XTnsBKQYagOD95rDZC2nrqdEfIiim5av/DjpuxZ6ppfxSuqb3cCKkE1j
- 8/PwJ2Kk3VWrDwpOJq0W4Ti6GO9XbUYVPC/fGfYjiJcWW+PuUfloXfOeRP74qK0VDUUB
- 7R0khrGITRGnwq9/XVCqV1BeXPSju1CnGZtNqaN7Rx1xr9haRdHopUHzk9fznltXwldC
- q2x+klpshKjvOUhr8iwDaSKmaHQOm8/TFtQ5d8S3kVkwNTYb+qVSoCAhfaYjODvxrQ5A
- HgTA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXc6m0dVFJ2DYZAk0Qgoy3uzdzC90dIPHIRBdJ10B1KoyNumkS4jFVTkYzUNF1asDaBNr5FRQt0RpaS@nongnu.org
-X-Gm-Message-State: AOJu0YwMvR380NbvXfaBTI5Xh4J0Z/1ZvAASDEpzzWFc8M7mTfdeWFoa
- HMaTm9VVaEQAbSQCljjeTQCOyrQTYScNRFnfPUx+/DsRXaMtCKFHFDFSQ3745/g=
-X-Gm-Gg: ASbGncshX+eVCYq1KMug3FyfguU4EjluzUpuTllkUVxcIMWvU22g0Qd69aGMxexGx4A
- vrp+uXl4oFMzn9X40R98LHeaCKxUvSQu19X1ubJxKSq4ay01ZnlcHlwc6LAjDQOA+HcgP/8IY+B
- RmChxTh+GWqnYb6Ajq4mWYRl6z6qQg2sq/Ou+DGHMXbKwprSHXy51UB+nzTfmu8HFNeeUEbweAJ
- kk3YpQr1YrP4tHqVwdrD9Tk26ZyA0P7RYQwdiz7mXezi68nhKODODJHnheDhiT32GLQfypm+X6U
- CeAcgarKkjQUnCnNLwBbhAVFDOtw/m12eRaaq6XQuzDw2Ks=
-X-Google-Smtp-Source: AGHT+IGlT1ukA1jbMwwSvTcNJeSfQ9ZpWZAeZEzYscuw2hkZ6zyCLpFa1cLRIlIwBB9gpCeXrZuDzg==
-X-Received: by 2002:a05:6402:34c7:b0:5e5:ba77:6f24 with SMTP id
- 4fb4d7f45d1cf-5e5e22d4c66mr8934967a12.16.1741359054974; 
- Fri, 07 Mar 2025 06:50:54 -0800 (PST)
+ bh=ws+wq/2UEr/6t9Jg3xA8GMiXPDqWXp7+OVOIoqXOryE=;
+ b=KKaTbBwr4iu6w0qmYiPUV3PHtzuD6rE99TkM7Q75roxR1gQoVce1UGPhfzfICa3Nmk
+ Mr6rNbesA8w8hII0hGO7lqWIkynQJzTD43ItIeIWIf4aaUQbVkRyM06L6UbqNfECJjul
+ qEe8lbf6VkNwvCxPE73XDx4fjMd1A9fdJrT2UvO3uvT0NqB5+MMro/mAjkggl+W8ry7j
+ c5+Y9AGIqCogijFv34fGLTEGeSVNaHV8M7hDgOK0fdo9t+6q5TjpV78+47/gy+xtNg3w
+ bzj1XlRjz5rW9khujx6OErPDU1kE+PMIxIzZuZckjMmHbW9Va++ypjzXS5xQ10ASs5ct
+ pZ1Q==
+X-Gm-Message-State: AOJu0Yz8he7Br9Bg2D2nudrt7Ho8BC8CSGi7uV3QcvQEjpm3WtxZ3NU5
+ s4fC/z8psqB4ppp3m3XDSXF6ZuE3VXgsTYrt2nKGkPmdWUmUuojXZHkJyr/RNEw=
+X-Gm-Gg: ASbGnctD6dxhPSTUgDnCqTMs16+EhyCMTH7s1RXqE+cV4vH8dMZMZeH6AmaSSlGwl+M
+ FzkOHhfHZI4d/jbdXi8LC6iWA5boORyG1xblrdOKGuBfUdTaRR0fh4g/pk0CNCNeLFwkDydHhuK
+ hNu5RTDLCN4qBlVyhji7l5HJY/Y0dqKbURKBLmFGbDWnBgzcvXhN9qrt4jP/+77z9ZgI7LvrjIY
+ x7Gg9eESoaCD0YfOXcfD1IlOutMnAVLeFGrKR+dt+h/HUNbEULZY8Q+VD6qVF/Wxhs/IHdgfyjw
+ d77KX5vDmgfg1dwnKZiUElDx+fmJFmUxTsn3/iYT/hEHG50=
+X-Google-Smtp-Source: AGHT+IGmE/KMv4Lirm/s4UP3hqPRuXpaX0FjdAK+Brv22wDzUef+zp9Becrox3gKBa0/2ENlHOjLNQ==
+X-Received: by 2002:a17:906:c4c8:b0:abf:4647:a8cb with SMTP id
+ a640c23a62f3a-ac252eab7c6mr291582366b.44.1741359143201; 
+ Fri, 07 Mar 2025 06:52:23 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e5c745c552sm2726825a12.17.2025.03.07.06.50.54
+ a640c23a62f3a-ac2394830a6sm285835266b.47.2025.03.07.06.52.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 06:50:54 -0800 (PST)
+ Fri, 07 Mar 2025 06:52:22 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 27D825F90C;
- Fri,  7 Mar 2025 14:50:53 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 0ED205F90C;
+ Fri,  7 Mar 2025 14:52:22 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org,  manos.pitsidianakis@linaro.org,  Marcelo Tosatti
- <mtosatti@redhat.com>
-Subject: Re: [PATCH 5/7] hw/hyperv/syndbg: common compilation unit
-In-Reply-To: <95a6f718-8fab-434c-9b02-6812f7afbcc3@maciej.szmigiero.name>
- (Maciej S. Szmigiero's message of "Fri, 7 Mar 2025 12:07:25 +0100")
-References: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
- <20250306064118.3879213-6-pierrick.bouvier@linaro.org>
- <353b36fd-2265-43c3-8072-3055e5bd7057@linaro.org>
- <35c2c7a5-5b12-4c21-a40a-375caae60d0c@linaro.org>
- <d62743f5-ca79-47c0-a72b-c36308574bdd@linaro.org>
- <6556fdd8-83ea-4cc6-9a3b-3822fdc8cb5d@linaro.org>
- <95a6f718-8fab-434c-9b02-6812f7afbcc3@maciej.szmigiero.name>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3] meson.build: default to -gsplit-dwarf for debug info
+In-Reply-To: <CABgObfbcTqr7LNDumDXo7wXf=WigZ2U0Kwv97NRFAHgPoCQ8WQ@mail.gmail.com>
+ (Paolo Bonzini's message of "Fri, 7 Mar 2025 15:36:01 +0100")
+References: <20250306161631.2477685-1-alex.bennee@linaro.org>
+ <CABgObfbcTqr7LNDumDXo7wXf=WigZ2U0Kwv97NRFAHgPoCQ8WQ@mail.gmail.com>
 User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Fri, 07 Mar 2025 14:50:53 +0000
-Message-ID: <87o6yc3nea.fsf@draig.linaro.org>
+Date: Fri, 07 Mar 2025 14:52:22 +0000
+Message-ID: <87ikok3nbt.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -115,98 +106,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> On 6.03.2025 23:56, Pierrick Bouvier wrote:
->> On 3/6/25 09:58, Philippe Mathieu-Daud=C3=A9 wrote:
->>> On 6/3/25 17:23, Pierrick Bouvier wrote:
->>>> On 3/6/25 08:19, Richard Henderson wrote:
->>>>> On 3/5/25 22:41, Pierrick Bouvier wrote:
->>>>>> Replace TARGET_PAGE.* by runtime calls
->>>>>>
->>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>>> ---
->>>>>> =C2=A0=C2=A0=C2=A0 hw/hyperv/syndbg.c=C2=A0=C2=A0=C2=A0 | 7 ++++---
->>>>>> =C2=A0=C2=A0=C2=A0 hw/hyperv/meson.build | 2 +-
->>>>>> =C2=A0=C2=A0=C2=A0 2 files changed, 5 insertions(+), 4 deletions(-)
->>>>>>
->>>>>> diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
->>>>>> index d3e39170772..f9382202ed3 100644
->>>>>> --- a/hw/hyperv/syndbg.c
->>>>>> +++ b/hw/hyperv/syndbg.c
->>>>>> @@ -14,7 +14,7 @@
->>>>>> =C2=A0=C2=A0=C2=A0 #include "migration/vmstate.h"
->>>>>> =C2=A0=C2=A0=C2=A0 #include "hw/qdev-properties.h"
->>>>>> =C2=A0=C2=A0=C2=A0 #include "hw/loader.h"
->>>>>> -#include "cpu.h"
->>>>>> +#include "exec/target_page.h"
->>>>>> =C2=A0=C2=A0=C2=A0 #include "hw/hyperv/hyperv.h"
->>>>>> =C2=A0=C2=A0=C2=A0 #include "hw/hyperv/vmbus-bridge.h"
->>>>>> =C2=A0=C2=A0=C2=A0 #include "hw/hyperv/hyperv-proto.h"
->>>>>> @@ -188,7 +188,8 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg,
->>>>>> uint64_t outgpa,
->>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint6=
-4_t timeout, uint32_t
->>>>>> *retrieved_count)
->>>>>> =C2=A0=C2=A0=C2=A0 {
->>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint16_t ret;
->>>>>> -=C2=A0=C2=A0=C2=A0 uint8_t data_buf[TARGET_PAGE_SIZE - UDP_PKT_HEAD=
-ER_SIZE];
->>>>>> +=C2=A0=C2=A0=C2=A0 const size_t buf_size =3D qemu_target_page_size(=
-) -
->>>>>> UDP_PKT_HEADER_SIZE;
->>>>>> +=C2=A0=C2=A0=C2=A0 uint8_t *data_buf =3D g_alloca(buf_size);
->>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hwaddr out_len;
->>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 void *out_data;
->>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ssize_t recv_byte_count;
->>>>>
->>>>> We've purged the code base of VLAs, and those are preferable to alloc=
-a.
->>>>> Just use g_malloc and g_autofree.
->>>>>
->>>>
->>>> I hesitated, due to potential performance considerations for people
->>>> reviewing the patch. I'll switch to heap based storage.
->>>
->>> OTOH hyperv is x86-only, so we could do:
->>>
->>> #define BUFSZ (4 * KiB)
->>>
->>> handle_recv_msg()
->>> {
->>> =C2=A0=C2=A0=C2=A0 uint8_t data_buf[BUFSZ - UDP_PKT_HEADER_SIZE];
->>> =C2=A0=C2=A0=C2=A0 ...
->>>
->>> hv_syndbg_class_init()
->>> {
->>> =C2=A0=C2=A0=C2=A0 assert(BUFSZ > qemu_target_page_size());
->>> =C2=A0=C2=A0=C2=A0 ...
->>>
->>> and call it a day.
->> Could be possible for now yes.
->> Any opinion from concerned maintainers?
+> On Thu, Mar 6, 2025 at 5:16=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lina=
+ro.org> wrote:
+>> +if get_option('debug')
+>> +  qemu_cflags +=3D get_option('split_debug') ? ['-gsplit-dwarf'] : ['-g=
+']
+>> +endif
 >
-> I think essentially hardcoding 4k pages in hyperv is okay
-> (with an appropriate checking/enforcement asserts() of course),
-> since even if this gets ported to ARM64 at some point
-> it is going to need *a lot* of changes anyway.
+> Since -g is already added by meson, it's enough to do
+>
+> -if get_option('debug')
+> -  qemu_cflags +=3D get_option('split_debug') ? ['-gsplit-dwarf'] : ['-g']
+> +if get_option('debug') and get_option('split_debug')
+> +  qemu_cflags +=3D '-gsplit-dwarf'
+>  endif
+>
+> Applied with this change, then.
 
-There was a talk at last years KVM Forum about porting WHPX for Windows
-on Arm:
-
-  https://kvm-forum.qemu.org/2024/Qemu_support_for_Windows_on_Arm_GgKlLjf.p=
-df
-
-but am I right in thinking all the hyperv code in QEMU is about
-providing guest facing enlightenments for Windows guests under KVM? I
-guess no one is working on that at the moment.
+Ahh I guess I was missing that meson does that under the hood. Can I
+have a r-b with that change or do do you want to wait for v4?
 
 
 >
-> Thanks,
-> Maciej
+> Paolo
 
 --=20
 Alex Benn=C3=A9e
