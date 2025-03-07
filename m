@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 309A7C28B23
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C5F4C28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqc5f-0006YY-Vc; Fri, 07 Mar 2025 13:06:32 -0500
+	id 1tqc3g-000447-Jm; Fri, 07 Mar 2025 13:04:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqc3x-0004LL-Kc
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:04:46 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqc3Y-0003pC-IG
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:04:22 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqc3u-0002Ia-K4
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:04:45 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-390e702d481so1168656f8f.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:04:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqc3S-0002C5-Vp
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:04:16 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso13550675e9.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:04:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741370681; x=1741975481; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741370653; x=1741975453; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=otdB0Dz5nRAMnlnyGAk6/GxyQibbHb9x6DFoSBTI7l0=;
- b=Tvs8+1q8i7N+avAe1w9JySLJKId9LqyaNg12JeYnWit2UTki8AozYf19g/FM1rGHCC
- HQCn2yPAoC1uRqFzZrXKCMyhuRWM8Cu+dj7XuOlV5h+4xDP3eOYTHAWCoypeSu+Lgijr
- 0AHZdPZmW6uTZm/1HLK4siNrv9KwUoIGmrc774WrPoJnYekReo0EYi/jJ3WE6q3xaScK
- hNveDEfe5bWJ9xK7UsQ1pW3aimm6PKl92Aah2q85wUZd3QO/VkxHJjps2kfCP/lmx3oG
- JcZb2l4GH1OSLeFUZRkkwWU1u7crDpETYUg4dYOvZTEvqjcnpkeebjx17JxCCj4FnAWM
- ymgw==
+ bh=MrW4KPeEMsJGAah1rF/LLgEoRbvBGZD/GNv5niDZ+2Y=;
+ b=slcup8ATBtXMjaMZKZunoCV9PcZRR83l4OITejKb0GtynPUukaY9c0DaWS/Gpk0fRc
+ TAUG2EUSHzRzoij/DCSkBqGyjqwdv31FXaLBGjBXm5nROjrKf3dvVaz4/TcSWBAkVbNo
+ lGBuBrzFz2k8dqEZTTMGjlJU93njeprZ9MXDP035DteSHUGD2EAfxUMw5P8ypubEhEic
+ hRbvbaMoxUUljSa/HPjNQiOOUFdqyoHhdaINmfNQj+0TLduVJX7SpH6YTfQyK0PVIhqE
+ tINgySvpxMXbMlT8Gs4cAFDnJzL36tqIpgkl6QJJvGwsBRFX+q5BECNjDak33UEvBlb5
+ TJ5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741370681; x=1741975481;
+ d=1e100.net; s=20230601; t=1741370653; x=1741975453;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=otdB0Dz5nRAMnlnyGAk6/GxyQibbHb9x6DFoSBTI7l0=;
- b=Mcl8zjK/bt7V3q6QtMjPtM61zgl1J2tZ2cC0mcxBshMm+zBKg/To8fpHCjH2U7IzcN
- r/SvFoz6T6KbAB/qxtV+OhPhq1o/5Rs9Us7zqMA/rYwCnzMzYY0/2z3CMBjsBBuFrHsX
- 5o8JulGp8Ri/mLpLqlPPdBrvnmFaLwaoCJYVmz+hGHQMbeGAMDQZhJzg8q6gxQRLPsR+
- xEBrHmI8IWnCCghKmj93H1AHs9xmP4vjww/fPI7PxqsNsVZfPov62qZug4TxV0TY8XND
- /3Vbqk22AUOtthrx89SsXMXqK7kDxoOJ+XlNLrcBHD13Cgyj0PD2Vt017wgyyojilGtx
- dmVQ==
-X-Gm-Message-State: AOJu0YwCBY7tiIOB52/HL9OWmw+P1SrpJCFUDsRy3YfqwDhZtm8GOtwE
- sM9cpB7Nk6ekmIZOKIRabtyn5AyyInrlLsETrLUM4PA+TIs99fhQkZ8e3uXiOpTZBhDLLP8dCbt
- /xtM=
-X-Gm-Gg: ASbGncs7CSLUZ80WXwl3djVYxsJIYF2x8aVVnHxFaUEEKaa1Ysw3AcWN7rwOThJ8GPb
- Qzb+v9uA6X5E3eiqOGebuigPUScnCKK+2ptMEifQNsPjpH/Dr8SlKDuspCvUg7vxI3Nc+ZYKXEh
- pYLrNw5AkPAeeSQap/lug7MTOLwy4veEbqj6FuIVf6WwUHrZmQ9bWMRnwWA6ryiERUPCq6C09sX
- bDd+EW6FeujlfQQYHDbWEMyGS46tIITIGXYtQQOc/LU60xTrl6zSF87ppC4hwIe9uhbMDir3kuM
- zWzbBmahRLHNmqRR4I8E3OmYnSCiMtwm4vmro8i2keN6HGwqqka35LTeTD0b4o7bUge1H5IQzdW
- nOQHsj8a+vF4WlzQqWIM=
-X-Google-Smtp-Source: AGHT+IGoXSQiYR+Znceq9QhV/DA24dcXDFRGzeqHnWry6oSbt2EZw73v5ZrTBEMEOa+RqbZY3pfWWQ==
-X-Received: by 2002:a05:6000:4112:b0:391:d52:d042 with SMTP id
- ffacd0b85a97d-39132d883f3mr2410120f8f.32.1741370680523; 
- Fri, 07 Mar 2025 10:04:40 -0800 (PST)
+ bh=MrW4KPeEMsJGAah1rF/LLgEoRbvBGZD/GNv5niDZ+2Y=;
+ b=nAIvov7HYmuau4gUgEzJKiaXOQQYL1iHyDvw5R30b6J5ItiraSUEXw/FdegC2YWCXA
+ UNTuFTezAIJVIPoX6elV2Fn7gUHH3fArBeUXouTRRLkHGuqwfxMVHfmzwd9sQ77IKeDy
+ 7Y9CrseiEkQO5dR0hIbKFlYoKQOnuDcFXk4mJlfJNQqc6pa3zAVPXL62Bq7oL3bf6NNs
+ hY3QwDADkpb4+LrryUcFX8dbHthz2ep/L2Su7aKpRC65dyfyPP76WPTECFVHffAXwPZW
+ 8aeyMfKJiADsCYWPeU4pUQlqbJLSrR3ztUD/qFXGEUsqNcwsH36suzTNlNUBVBUyQp2X
+ 2U7w==
+X-Gm-Message-State: AOJu0YyeYjiZ5EtVR+ON+8n+imHcV+RZwwuQOW/KsTFKxFgvQmE3hnEj
+ QEjgAtLo4DxdJdeylJAdzYtFLUsm3PVXBj6/VzW3ZfE8y6IdExFETNH4LpIfx4rOVe0515p4FLh
+ TDSY=
+X-Gm-Gg: ASbGncvuBsBiJKA/mBX+9I7Ypo+KjwIm4q+eoZv38iRHjQo2NApINwHLq9pbsrHg0J2
+ vMK35HsttVwHLdw0sIUAceAY4kUncI642OaThsFuFP0CJf4Xpkfkp/fWzp6fe7xow8XXH6XdLQV
+ ErgF3p1gcJuH/vHFvvT1yEMReFOfkTFNtRjQarO/CQkSAF1fKexnkxYWbRB9a843aUMwZRNP/pZ
+ rpYAA9RHzFHHaOMpbfOg8tOIW+OxBWKYQO64+665YW3Wg5OTBhwo7c0Pxu9UsVsPUqf5Ei+RUhS
+ jhkPkpP4eLBUwjI/s9yY/LBz1+j2zFTxICVqtWNarR+QcPdcgwgkb5oWTcqD2JXNj+gqkrTNlPz
+ 5QHUW8cxTz2JURXqY1QY=
+X-Google-Smtp-Source: AGHT+IGFTJtAtCuhG8E9BzVu/Ipl6XSR97mVKepvf/WN8vp2isiEEQxnLWYj7XYHqmF1ObgwOUeF7w==
+X-Received: by 2002:a05:600c:4f87:b0:439:9828:c425 with SMTP id
+ 5b1f17b1804b1-43c601d9508mr32710975e9.7.1741370652735; 
+ Fri, 07 Mar 2025 10:04:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd8b0425sm58830765e9.3.2025.03.07.10.04.39
+ 5b1f17b1804b1-43bdd8b046dsm58400885e9.5.2025.03.07.10.04.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 07 Mar 2025 10:04:39 -0800 (PST)
+ Fri, 07 Mar 2025 10:04:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -87,18 +87,18 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>, Halil Pasic <pasic@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 11/14] hw/vfio/pci: Check CONFIG_IOMMUFD at runtime using
- iommufd_builtin()
-Date: Fri,  7 Mar 2025 19:03:34 +0100
-Message-ID: <20250307180337.14811-12-philmd@linaro.org>
+Subject: [PATCH 06/14] system: Declare qemu_[min/max]rampagesize() in
+ 'system/hostmem.h'
+Date: Fri,  7 Mar 2025 19:03:29 +0100
+Message-ID: <20250307180337.14811-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250307180337.14811-1-philmd@linaro.org>
 References: <20250307180337.14811-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,120 +121,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the compile time check on the CONFIG_IOMMUFD definition
-by a runtime one by calling iommufd_builtin().
-
-Since the file doesn't use any target-specific knowledge anymore,
-move it to system_ss[] to build it once.
+Both qemu_minrampagesize() and qemu_maxrampagesize() are
+related to host memory backends. Move their prototype
+declaration to "system/hostmem.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/vfio/pci.c       | 38 ++++++++++++++++++--------------------
- hw/vfio/meson.build |  2 +-
- 2 files changed, 19 insertions(+), 21 deletions(-)
+ include/exec/ram_addr.h    | 3 ---
+ include/system/hostmem.h   | 3 +++
+ hw/ppc/spapr_caps.c        | 1 +
+ hw/s390x/s390-virtio-ccw.c | 1 +
+ hw/vfio/spapr.c            | 1 +
+ 5 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 9872884ff8a..e83252766d1 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -19,7 +19,6 @@
-  */
+diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
+index 94bb3ccbe42..ccc8df561af 100644
+--- a/include/exec/ram_addr.h
++++ b/include/exec/ram_addr.h
+@@ -101,9 +101,6 @@ static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
  
- #include "qemu/osdep.h"
--#include CONFIG_DEVICES /* CONFIG_IOMMUFD */
- #include <linux/vfio.h>
- #include <sys/ioctl.h>
+ bool ramblock_is_pmem(RAMBlock *rb);
  
-@@ -2973,11 +2972,10 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-         if (!(~vdev->host.domain || ~vdev->host.bus ||
-               ~vdev->host.slot || ~vdev->host.function)) {
-             error_setg(errp, "No provided host device");
--            error_append_hint(errp, "Use -device vfio-pci,host=DDDD:BB:DD.F "
--#ifdef CONFIG_IOMMUFD
--                              "or -device vfio-pci,fd=DEVICE_FD "
--#endif
--                              "or -device vfio-pci,sysfsdev=PATH_TO_DEVICE\n");
-+            error_append_hint(errp, "Use -device vfio-pci,host=DDDD:BB:DD.F %s"
-+                              "or -device vfio-pci,sysfsdev=PATH_TO_DEVICE\n",
-+                              iommufd_builtin()
-+                              ? "or -device vfio-pci,fd=DEVICE_FD " : "");
-             return;
-         }
-         vbasedev->sysfsdev =
-@@ -3412,19 +3410,18 @@ static const Property vfio_pci_dev_properties[] = {
-                                    qdev_prop_nv_gpudirect_clique, uint8_t),
-     DEFINE_PROP_OFF_AUTO_PCIBAR("x-msix-relocation", VFIOPCIDevice, msix_relo,
-                                 OFF_AUTO_PCIBAR_OFF),
--#ifdef CONFIG_IOMMUFD
--    DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
--                     TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
--#endif
-     DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, skip_vsc_check, true),
- };
+-long qemu_minrampagesize(void);
+-long qemu_maxrampagesize(void);
+-
+ /**
+  * qemu_ram_alloc_from_file,
+  * qemu_ram_alloc_from_fd:  Allocate a ram block from the specified backing
+diff --git a/include/system/hostmem.h b/include/system/hostmem.h
+index 5c21ca55c01..62642e602ca 100644
+--- a/include/system/hostmem.h
++++ b/include/system/hostmem.h
+@@ -93,4 +93,7 @@ bool host_memory_backend_is_mapped(HostMemoryBackend *backend);
+ size_t host_memory_backend_pagesize(HostMemoryBackend *memdev);
+ char *host_memory_backend_get_name(HostMemoryBackend *backend);
  
--#ifdef CONFIG_IOMMUFD
-+static const Property vfio_pci_dev_iommufd_properties[] = {
-+    DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
-+                     TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
-+};
++long qemu_minrampagesize(void);
++long qemu_maxrampagesize(void);
 +
- static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
- {
-     vfio_device_set_fd(&VFIO_PCI(obj)->vbasedev, str, errp);
- }
--#endif
+ #endif
+diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
+index 904bff87ce1..9e53d0c1fd1 100644
+--- a/hw/ppc/spapr_caps.c
++++ b/hw/ppc/spapr_caps.c
+@@ -34,6 +34,7 @@
+ #include "kvm_ppc.h"
+ #include "migration/vmstate.h"
+ #include "system/tcg.h"
++#include "system/hostmem.h"
  
- static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
- {
-@@ -3433,9 +3430,10 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
+ #include "hw/ppc/spapr.h"
  
-     device_class_set_legacy_reset(dc, vfio_pci_reset);
-     device_class_set_props(dc, vfio_pci_dev_properties);
--#ifdef CONFIG_IOMMUFD
--    object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
--#endif
-+    if (iommufd_builtin()) {
-+        device_class_set_props(dc, vfio_pci_dev_iommufd_properties);
-+        object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
-+    }
-     dc->desc = "VFIO-based PCI device assignment";
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-     pdc->realize = vfio_realize;
-@@ -3540,11 +3538,11 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
-                                           "vf-token",
-                                           "Specify UUID VF token. Required for VF when PF is owned "
-                                           "by another VFIO driver");
--#ifdef CONFIG_IOMMUFD
--    object_class_property_set_description(klass, /* 9.0 */
--                                          "iommufd",
--                                          "Set host IOMMUFD backend device");
--#endif
-+    if (iommufd_builtin()) {
-+        object_class_property_set_description(klass, /* 9.0 */
-+                                              "iommufd",
-+                                              "Set host IOMMUFD backend device");
-+    }
-     object_class_property_set_description(klass, /* 9.1 */
-                                           "x-device-dirty-page-tracking",
-                                           "Disable device dirty page tracking and use "
-diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-index 96e342aa8cb..9a004992c11 100644
---- a/hw/vfio/meson.build
-+++ b/hw/vfio/meson.build
-@@ -6,7 +6,6 @@ vfio_ss.add(files(
- vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
- vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
-   'pci-quirks.c',
--  'pci.c',
- ))
- vfio_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
- vfio_ss.add(when: 'CONFIG_VFIO_PLATFORM', if_true: files('platform.c'))
-@@ -29,4 +28,5 @@ system_ss.add(when: ['CONFIG_VFIO', 'CONFIG_IOMMUFD'], if_true: files(
- ))
- system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
-   'display.c',
-+  'pci.c',
- ))
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 51ae0c133d8..1261d93b7ce 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -41,6 +41,7 @@
+ #include "hw/s390x/tod.h"
+ #include "system/system.h"
+ #include "system/cpus.h"
++#include "system/hostmem.h"
+ #include "target/s390x/kvm/pv.h"
+ #include "migration/blocker.h"
+ #include "qapi/visitor.h"
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index 9b5ad05bb1c..1a5d1611f2c 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -12,6 +12,7 @@
+ #include <sys/ioctl.h>
+ #include <linux/vfio.h>
+ #include "system/kvm.h"
++#include "system/hostmem.h"
+ #include "exec/address-spaces.h"
+ 
+ #include "hw/vfio/vfio-common.h"
 -- 
 2.47.1
 
