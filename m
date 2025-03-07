@@ -4,100 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0006C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 17:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30798C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 17:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqbaS-0006Wp-CQ; Fri, 07 Mar 2025 12:34:16 -0500
+	id 1tqbnS-0004YP-BD; Fri, 07 Mar 2025 12:47:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tqbaP-0006V9-Qx
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:34:13 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tqbaN-0002J9-MV
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:34:13 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tqbaJ-00000000RvH-3weB; Fri, 07 Mar 2025 18:34:07 +0100
-Message-ID: <2a0ec1b4-4beb-4b95-a48d-32a8d5274269@maciej.szmigiero.name>
-Date: Fri, 7 Mar 2025 18:34:02 +0100
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1tqbnQ-0004YA-Vc
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:47:41 -0500
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1tqbnO-0007gG-Ll
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:47:40 -0500
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-4750a85a0ddso1591cf.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 09:47:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1741369657; x=1741974457; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=feL4R4ZJXF6MyVjUyjqzY2Z+HJ2fBwu7I/n7r1qbgbM=;
+ b=2jOQrzhzPwcYbNMTAGRnZ4bAAZAIjvg+FnKVt3mp4oLccBxlXlfzN0Ht/7RdZqwF0b
+ jQ31DFYgZc1RfOqTUnRIiGkafKW0htAhBrr929WHRDpP167PdU+eaSPqAFSp2pMov5wy
+ ClL5zhv+YqVdF+VVQkqqD0Jq88jxDcXz/X00m6+/0ir8iz4FwOOipShVJsSQA0bvRrvA
+ D+LaSEjurTRcOwJIDLBjhS2yG7AKdzcjmpSjNUvNkpgtoAbjEjpYeroZLHFJ9aRulePw
+ 7xr6brMO4ejxjbvr7zDoem0Mghq2RELpsHReUdsZhJxNoTlCYW04k938Pka5wJeQGLBH
+ 0wjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741369657; x=1741974457;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=feL4R4ZJXF6MyVjUyjqzY2Z+HJ2fBwu7I/n7r1qbgbM=;
+ b=oh3V6R32Ds1uurZfk/YFYxKtfEWFo5TQISbDlhvxHh/zl+G3T7JFDzbopaiq3BiNNR
+ zWj/TwW2PqxAy1yN1tQnZ2gAUzBYaC2AGEpYsUUi4eFTXFrU5Xhzv0o/6/ZVrYl9JKZ0
+ Xaaa9O+LT/a7guwBsfrdNPtWdz/LyM+Ql9M/TFldsLkDNUhnB9KI+Bf/+HWeqiFrqP7w
+ 8JKC7FhDQN8Gjsf42KWxmZjdVLeZGlCafGP7sMyDGFjzn+AEZ4So0Nak82Ra0r9jqhx/
+ DXW9SQ6As7AUKuIETIfKEBq1aZ4vDkxEVWFZydHEH/3FeGKlJM5D8Ig9uV/G2uigXtFW
+ xhew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVz/aBdS3nqmsKz64lBUFI9xUrkq/8oi90bwF/COvGw0svmGB/6PgrFJigZrZPXY4sjZ6e0HFU/cl63@nongnu.org
+X-Gm-Message-State: AOJu0YxWorCrNrwrfXGO5AJU14DpAL/5lVVg6ZU/Rh4QO6jZraR+vkiC
+ Il65GZO1zlZGUaqnW+JnLD3M56BsKISXfHfsGm2U7kunc3Jb5RlTwMlkoWqkJAt86Kby7jQi90w
+ IlMdxbDuICDLqoTBb7FEjSX9eZGCw8YqTQufp
+X-Gm-Gg: ASbGncuMA1cePCkvLBN7j91aJ08/vdgQoB0MmC1RsrzlN4TYn7QghNk3uPe8TH8Ve5l
+ 5AI58JFtP+ICTo2H26bhLboeCnHEeteyOWc8Lenk8j6R8zdaFGGTMjlVBN8U5/PgHHaitQlkdU4
+ 4ymAU7gCF86Y769m0wuYaVAJphalk7IG1KTC7QiR2dZl3A3JMd24XQdA==
+X-Google-Smtp-Source: AGHT+IFZybVWDkwqnIqxo54mwbuzWcJGIKdQnGTRnFp2MfNp/U5dLiSSwWddnnArQ2OCx3mhYMN6rswXCW1+fuWu+Yw=
+X-Received: by 2002:a05:622a:1894:b0:474:fb73:6988 with SMTP id
+ d75a77b69052e-4765ddb1ed8mr1478191cf.24.1741369657309; Fri, 07 Mar 2025
+ 09:47:37 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] hw/hyperv/syndbg: common compilation unit
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- manos.pitsidianakis@linaro.org, Marcelo Tosatti <mtosatti@redhat.com>
-References: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
- <20250306064118.3879213-6-pierrick.bouvier@linaro.org>
- <353b36fd-2265-43c3-8072-3055e5bd7057@linaro.org>
- <35c2c7a5-5b12-4c21-a40a-375caae60d0c@linaro.org>
- <d62743f5-ca79-47c0-a72b-c36308574bdd@linaro.org>
- <6556fdd8-83ea-4cc6-9a3b-3822fdc8cb5d@linaro.org>
- <95a6f718-8fab-434c-9b02-6812f7afbcc3@maciej.szmigiero.name>
- <87o6yc3nea.fsf@draig.linaro.org>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <87o6yc3nea.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
+ <3485cd84-2aab-45e7-a72c-ca1d85e007ec@kaod.org>
+In-Reply-To: <3485cd84-2aab-45e7-a72c-ca1d85e007ec@kaod.org>
+From: Nabih Estefan <nabihestefan@google.com>
+Date: Fri, 7 Mar 2025 09:47:26 -0800
+X-Gm-Features: AQ5f1JoblDUizINNZLSUGnYrySK2OuouiegF02eg93wjuonbRuAGBeOHodrgb-o
+Message-ID: <CA+QoejWqZvhr6XWNxGGEJD8JEbeeRWf61dPDPY3ofzf_2z3cHg@mail.gmail.com>
+Subject: Re: [PATCH v6 00/29] Support AST2700 A1
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, troy_lee@aspeedtech.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=nabihestefan@google.com; helo=mail-qt1-x829.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,95 +102,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7.03.2025 15:50, Alex Bennée wrote:
-> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
-> 
->> On 6.03.2025 23:56, Pierrick Bouvier wrote:
->>> On 3/6/25 09:58, Philippe Mathieu-Daudé wrote:
->>>> On 6/3/25 17:23, Pierrick Bouvier wrote:
->>>>> On 3/6/25 08:19, Richard Henderson wrote:
->>>>>> On 3/5/25 22:41, Pierrick Bouvier wrote:
->>>>>>> Replace TARGET_PAGE.* by runtime calls
->>>>>>>
->>>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>>>> ---
->>>>>>>      hw/hyperv/syndbg.c    | 7 ++++---
->>>>>>>      hw/hyperv/meson.build | 2 +-
->>>>>>>      2 files changed, 5 insertions(+), 4 deletions(-)
->>>>>>>
->>>>>>> diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
->>>>>>> index d3e39170772..f9382202ed3 100644
->>>>>>> --- a/hw/hyperv/syndbg.c
->>>>>>> +++ b/hw/hyperv/syndbg.c
->>>>>>> @@ -14,7 +14,7 @@
->>>>>>>      #include "migration/vmstate.h"
->>>>>>>      #include "hw/qdev-properties.h"
->>>>>>>      #include "hw/loader.h"
->>>>>>> -#include "cpu.h"
->>>>>>> +#include "exec/target_page.h"
->>>>>>>      #include "hw/hyperv/hyperv.h"
->>>>>>>      #include "hw/hyperv/vmbus-bridge.h"
->>>>>>>      #include "hw/hyperv/hyperv-proto.h"
->>>>>>> @@ -188,7 +188,8 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg,
->>>>>>> uint64_t outgpa,
->>>>>>>                                      uint64_t timeout, uint32_t
->>>>>>> *retrieved_count)
->>>>>>>      {
->>>>>>>          uint16_t ret;
->>>>>>> -    uint8_t data_buf[TARGET_PAGE_SIZE - UDP_PKT_HEADER_SIZE];
->>>>>>> +    const size_t buf_size = qemu_target_page_size() -
->>>>>>> UDP_PKT_HEADER_SIZE;
->>>>>>> +    uint8_t *data_buf = g_alloca(buf_size);
->>>>>>>          hwaddr out_len;
->>>>>>>          void *out_data;
->>>>>>>          ssize_t recv_byte_count;
->>>>>>
->>>>>> We've purged the code base of VLAs, and those are preferable to alloca.
->>>>>> Just use g_malloc and g_autofree.
->>>>>>
->>>>>
->>>>> I hesitated, due to potential performance considerations for people
->>>>> reviewing the patch. I'll switch to heap based storage.
->>>>
->>>> OTOH hyperv is x86-only, so we could do:
->>>>
->>>> #define BUFSZ (4 * KiB)
->>>>
->>>> handle_recv_msg()
->>>> {
->>>>      uint8_t data_buf[BUFSZ - UDP_PKT_HEADER_SIZE];
->>>>      ...
->>>>
->>>> hv_syndbg_class_init()
->>>> {
->>>>      assert(BUFSZ > qemu_target_page_size());
->>>>      ...
->>>>
->>>> and call it a day.
->>> Could be possible for now yes.
->>> Any opinion from concerned maintainers?
->>
->> I think essentially hardcoding 4k pages in hyperv is okay
->> (with an appropriate checking/enforcement asserts() of course),
->> since even if this gets ported to ARM64 at some point
->> it is going to need *a lot* of changes anyway.
-> 
-> There was a talk at last years KVM Forum about porting WHPX for Windows
-> on Arm:
-> 
->    https://kvm-forum.qemu.org/2024/Qemu_support_for_Windows_on_Arm_GgKlLjf.pdf
-> 
-> but am I right in thinking all the hyperv code in QEMU is about
-> providing guest facing enlightenments for Windows guests under KVM? I
-> guess no one is working on that at the moment.
+It already got applied, so idk how worthwhile it is, but for
+what it's worth: I was just able to test this whole patchset with our
+custom A1 machine + custom A1 image!
 
-Yes, I think that talk was about running QEMU on actual Hyper-V hypervisor,
-while the code in hw/hyperv is about QEMU emulating Hyper-V interfaces to
-QEMU's VMs.
+I'll keep an eye out on future AST27x0 patches that we can help test
+so I can test them earlier in the revision process.
 
-CONFIG_HYPERV in hw/hyperv/Kconfig is even marked as "depends on KVM".
+Thank you for the development Jamin, and thank you for helping review this
+C=C3=A8dric!
 
-Thanks,
-Maciej
+- Nabih
 
+On Thu, Mar 6, 2025 at 11:35=E2=80=AFPM C=C3=A9dric Le Goater <clg@kaod.org=
+> wrote:
+>
+> On 3/7/25 04:59, Jamin Lin wrote:
+> > v1:
+> >   1. Refactor INTC model to support both INTC0 and INTC1.
+> >   2. Support AST2700 A1.
+> >   3. Create ast2700a0-evb machine.
+> >
+> > v2:
+> >    To streamline the review process, split the following patch series i=
+nto
+> >    three parts.
+> >    https://patchwork.kernel.org/project/qemu-devel/cover/20250121070424=
+.2465942-1-jamin_lin@aspeedtech.com/
+> >    This patch series focuses on cleaning up the INTC model to
+> >    facilitate future support for the INTC_IO model.
+> >
+> > v3:
+> >   1. Update and add functional test for AST2700
+> >   2. Add AST2700 INTC design guidance and its block diagram.
+> >   3. Retaining the INTC naming and introducing a new INTCIO model to su=
+pport the AST2700 A1.
+> >   4. Create ast2700a1-evb machine and rename ast2700a0-evb machine
+> >   5. Fix silicon revision issue and support AST2700 A1.
+> >
+> > v4:
+> >   1. rework functional test for AST2700
+> >   2. the initial machine "ast2700-evb" is aliased to "ast2700a0-evb.
+> >   3. intc: Reduce regs array size by adding a register sub-region
+> >   4. intc: split patch for Support setting different register sizes
+> >   5. update ast2700a1-evb machine parent to TYPE_ASPEED_MACHINE
+> >
+> > v5:
+> >   1. Rename status_addr and addr to status_reg and reg for clarity
+> >   2. Introduce dynamic allocation for regs array
+> >   3. Sort the memmap table by mapping address
+> >   4. ast27x0.c split patch for Support two levels of INTC controllers f=
+or AST2700 A1
+> >   5. tests/functional/aspped split patch for Introduce start_ast2700_te=
+st API
+> >   6. keep variable naming for reviewer suggestion.
+> >   7. Add reviewer suggestion and split patch to make more readable.
+> >
+> > v6:
+> >    1. rename reg_size to nr_regs
+> >    2. Fix clean regs size
+> >    3. replace g_malloc with g_new
+> >
+> > With the patch applied, QEMU now supports two machines for running AST2=
+700 SoCs:
+> > ast2700a0-evb: Designed for AST2700 A0
+> > ast2700a1-evb: Designed for AST2700 A1
+> >
+> > Test information
+> > 1. QEMU version: https://github.com/qemu/qemu/commit/50d38b8921837827ea=
+397d4b20c8bc5efe186e53
+> > 2. ASPEED SDK v09.05 pre-built image
+> >     https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.05
+> >     ast2700-default-obmc.tar.gz (AST2700 A1)
+> >     https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/=
+ast2700-default-obmc.tar.gz
+> >     ast2700-a0-default-obmc.tar.gz (AST2700 A0)
+> >     https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/=
+ast2700-a0-default-obmc.tar.gz
+> >
+> > This patch series depends on the following patch series:
+> > https://patchwork.kernel.org/project/qemu-devel/cover/20250304064710.21=
+28993-1-jamin_lin@aspeedtech.com/
+> > https://patchwork.kernel.org/project/qemu-devel/cover/20250225075622.30=
+5515-1-jamin_lin@aspeedtech.com/
+> >
+> > Jamin Lin (29):
+> >    hw/intc/aspeed: Support setting different memory size
+> >    hw/intc/aspeed: Rename status_addr and addr to status_reg and reg fo=
+r
+> >      clarity
+> >    hw/intc/aspeed: Introduce dynamic allocation for regs array
+> >    hw/intc/aspeed: Support setting different register size
+> >    hw/intc/aspeed: Reduce regs array size by adding a register sub-regi=
+on
+> >    hw/intc/aspeed: Introduce helper functions for enable and status
+> >      registers
+> >    hw/intc/aspeed: Add object type name to trace events for better
+> >      debugging
+> >    hw/arm/aspeed: Rename IRQ table and machine name for AST2700 A0
+> >    hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ number
+> >    hw/intc/aspeed: Support different memory region ops
+> >    hw/intc/aspeed: Rename num_ints to num_inpins for clarity
+> >    hw/intc/aspeed: Add support for multiple output pins in INTC
+> >    hw/intc/aspeed: Refactor INTC to support separate input and output p=
+in
+> >      indices
+> >    hw/intc/aspeed: Introduce AspeedINTCIRQ structure to save the irq
+> >      index and register address
+> >    hw/intc/aspeed: Introduce IRQ handler function to reduce code
+> >      duplication
+> >    hw/intc/aspeed: Add Support for Multi-Output IRQ Handling
+> >    hw/intc/aspeed: Add Support for AST2700 INTCIO Controller
+> >    hw/misc/aspeed_scu: Add Support for AST2700/AST2750 A1 Silicon
+> >      Revisions
+> >    hw/arm/aspeed_ast27x0.c Support AST2700 A1 GIC Interrupt Mapping
+> >    hw/arm/aspeed_ast27x0: Define an Array of AspeedINTCState with Two
+> >      Instances
+> >    hw/arm/aspeed_ast27x0: Support two levels of INTC controllers for
+> >      AST2700 A1
+> >    hw/arm/aspeed_ast27x0: Add SoC Support for AST2700 A1
+> >    hw/arm/aspeed: Add Machine Support for AST2700 A1
+> >    hw/arm/aspeed_ast27x0: Sort the memmap table by mapping address
+> >    tests/functional/aspeed: Introduce start_ast2700_test API
+> >    tests/functional/aspeed: Update temperature hwmon path
+> >    tests/functional/aspeed: Update test ASPEED SDK v09.05
+> >    tests/functional/aspeed: Add test case for AST2700 A1
+> >    docs/specs: Add aspeed-intc
+> >
+> >   docs/specs/aspeed-intc.rst              | 136 +++++
+> >   docs/specs/index.rst                    |   1 +
+> >   include/hw/arm/aspeed_soc.h             |   3 +-
+> >   include/hw/intc/aspeed_intc.h           |  36 +-
+> >   include/hw/misc/aspeed_scu.h            |   2 +
+> >   hw/arm/aspeed.c                         |  33 +-
+> >   hw/arm/aspeed_ast27x0.c                 | 329 ++++++++----
+> >   hw/intc/aspeed_intc.c                   | 667 ++++++++++++++++++-----=
+-
+> >   hw/misc/aspeed_scu.c                    |   2 +
+> >   hw/intc/trace-events                    |  25 +-
+> >   tests/functional/test_aarch64_aspeed.py |  47 +-
+> >   11 files changed, 978 insertions(+), 303 deletions(-)
+> >   create mode 100644 docs/specs/aspeed-intc.rst
+> >
+>
+> Applied to aspeed-next.
+>
+> Thanks,
+>
+> C.
+>
+>
+>
 
