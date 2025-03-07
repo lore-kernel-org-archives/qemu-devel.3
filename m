@@ -4,83 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F24C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71BDAC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:29:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZd8-0007Ci-Vf; Fri, 07 Mar 2025 10:28:55 -0500
+	id 1tqZdQ-0007gz-T9; Fri, 07 Mar 2025 10:29:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZd1-000733-Qo
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:28:49 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZcw-0001ot-U9
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:28:47 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-391342fc148so533304f8f.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:28:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741361321; x=1741966121; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=F3KuVTn8B611IFPyA6Mi2UlNCZvQYZ1GukXvvGw/PZ0=;
- b=ASZW8HP1ZYOI/iVCZH79Ou0jvMQFlX3ZKg1utk//OzNqVVSIR1mm0ZBX3hDdVrQ77h
- 1iy2Fm61tkFVNybHiTwJbwmrw9HEYf9pYzr7v/ptfGfK5lbv7LbBE6Jl5nVeeSOJnyXN
- je25OMTAyikV8LoQjuy9WO7Lkh9X0W5vX8mbUrIPVLftsGZ45qUyZNmoLENuZrMBZiw+
- qkZkPRtNV7/XFZNR7A9D95TOpGxErsYIm5G5pD4Zy3Wg/s7WXy4xYkciu4YOOTBTSi7z
- hr/coJHrF1DKMoiwz6rLIVgz/MCe4oRUfDeH/F5ucI3QDucOy0mSVhvUFpbOlfnirAA8
- b9Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741361321; x=1741966121;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F3KuVTn8B611IFPyA6Mi2UlNCZvQYZ1GukXvvGw/PZ0=;
- b=FSTjQHJLWVVzq80u5gyWE5oYPGDXHAOiuMfaW4+SSUrgsIXSOnTTn1J2qKSGgLJD3t
- CzzRHtHkmPpvQv7XNbSLZj5QlzEdojfMlby30DwBGDyBH7F0t+AWxjTlaFeoCvOYnRRl
- icDcddNuKZ3bO+szSTIU9bkFMSBM354KroBmf0uAm+4qWYiLZ3f+Wtdd0BcQqyyAV/2d
- DBajFmU1mRbFcrFdpG3C7Gpc6FBKhlbdEngMk3VQHN67ff+CRDJaiVKi1b74Zqd0uoEj
- elWbf7c5SJUTVMAEyZXgcNE+gQTbYFnIKto3Y3mGRb5Nt7JYYSUSreCf88LjEitEwiUc
- fa+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWZkQwrhnd8hgMXMrsevJWnjuAmXGxlpzbOhODvv9FPM750OstxgKTlnDBLgLbffwVo+FKR4KwdmU6w@nongnu.org
-X-Gm-Message-State: AOJu0YzpoWMURvrWEtHVn9c72nR1dMlIVp/968lAnSCczUCxLN3ogesK
- 7cJ0phXWAzemhRrNDpsGE1J8jocywvpBwy3bEteJpJw1Suo3h189vcq7Dii1VEM6JYT9zIJwuRW
- d
-X-Gm-Gg: ASbGnctqk4bLWYdbCDQ9kh+KBRvEYdasQb+sYHEuZFl6nu1h7eYsTTJBXH07JLN0txX
- NH5MbAxqhqVfraZ8bAGh4jG42EZgvxgct9D2y+VhOJ7Fz5gynhki0vuibXspaeyZiiGvSTmip6E
- CRL6+1zDmxH7r7myfup+HICMpfJRTHBgkQZAIE1wWB7CB9595OfuVWLXfX9Y4vSJm63F7r+wsQl
- LgsaRcGZ3MV8rd5RBoArabR1LI5wgdlzCqsGcOOj34qR1zMeMrwxGUQkMMG4qXeeHjSKLAlQqAz
- ajPNMbJXQ6pI0i01ax4jCjfc2XWBX3zeyh7eQob+6HAzC3LQyqE=
-X-Google-Smtp-Source: AGHT+IGpM1yB34YCeM5ATo05udrHVgTPsMyRqdYxDa2p4dWiFie3hzZpJHoVaCFq92EdW51AeQa3Lg==
-X-Received: by 2002:a5d:5f8f:0:b0:391:2e31:c7e8 with SMTP id
- ffacd0b85a97d-39132d66e3dmr2590353f8f.2.1741361320897; 
- Fri, 07 Mar 2025 07:28:40 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfe61sm5748750f8f.38.2025.03.07.07.28.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 07:28:40 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH] MAINTAINERS: Fix status for Arm boards I "maintain"
-Date: Fri,  7 Mar 2025 15:28:38 +0000
-Message-ID: <20250307152838.3226398-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1tqZdP-0007de-3u; Fri, 07 Mar 2025 10:29:11 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1tqZdN-0001qY-CD; Fri, 07 Mar 2025 10:29:10 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5278H94Y023090;
+ Fri, 7 Mar 2025 15:29:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=cZ4Jld
+ 0Ad9R4vftsePQv1cyChyDqZ+iVn8sKtTxiPGo=; b=bIO6mZXjquuZpThPABbRpj
+ PiW1MpMw30aHf+ftV46iCpUqjmguCp+L+DPoUOMgh1T9Y6vXcmpO6n/OpLCD7zvd
+ TzzhYrWcqHPqO07TZzzXnU3kR5do1KuGR5scmkG8IfgY3kXHgTW//U9jhzlmsArI
+ ZQneZ86RgbPmRybAC+rrmkJtG/X10pc1jpeoxPG5167zFV0tWdzv9iTmf22iY+Sy
+ Os/lo8NNv3QzjY7NVYtD9YaAOJ6hqmM0unVNT3ue+k142HGef0NGJlMsFbZzppMH
+ aqWDOZCdkhRj2fodhFRfy/MRsBBhIOyzIPERUdnq7a4YSB4nt5Ql+WvFQroS9HhA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 457jvpcpcc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Mar 2025 15:29:07 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 527DT2lc013743;
+ Fri, 7 Mar 2025 15:29:06 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 454e2m7ek3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Mar 2025 15:29:06 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 527FT5kY27918898
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 7 Mar 2025 15:29:05 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A227858056;
+ Fri,  7 Mar 2025 15:29:05 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C63858052;
+ Fri,  7 Mar 2025 15:29:05 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  7 Mar 2025 15:29:05 +0000 (GMT)
 MIME-Version: 1.0
+Date: Fri, 07 Mar 2025 16:29:05 +0100
+From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, qemu-devel mailing list
+ <qemu-devel@nongnu.org>, Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>
+Subject: Re: [PATCH qemu v2 3/3] hw/s390x: support migration of CPI values
+In-Reply-To: <f19d3690-e8af-4ccb-a4da-20a87a48852c@redhat.com>
+References: <20250224120449.1764114-1-shalini@linux.ibm.com>
+ <20250224120449.1764114-3-shalini@linux.ibm.com>
+ <f19d3690-e8af-4ccb-a4da-20a87a48852c@redhat.com>
+Message-ID: <90d244afa7d4359bc9c26e9571df53da@linux.ibm.com>
+X-Sender: shalini@linux.ibm.com
+Organization: IBM Deutschland Research & Development GmbH
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: B3eS7lViUVXBoirbcGqP7fMirNNUYeEM
+X-Proofpoint-GUID: B3eS7lViUVXBoirbcGqP7fMirNNUYeEM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-07_06,2025-03-06_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ spamscore=0 suspectscore=0 malwarescore=0 clxscore=1015 adultscore=0
+ mlxscore=0 impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503070115
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=shalini@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,92 +113,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm down as the only listed maintainer for quite a lot of Arm SoC and
-board types.  In some cases this is only as the "maintainer of last
-resort" and I'm not in practice doing anything beyond patch review
-and the odd bit of tidyup.
+On 2025-03-05 19:33, Thomas Huth wrote:
+> On 24/02/2025 13.04, Shalini Chellathurai Saroja wrote:
+>> Register Control-Program Identification data with the live
+>> migration infrastructure.
+>> 
+>> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+>> Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+>> ---
+>>   hw/s390x/s390-virtio-ccw.c | 17 +++++++++++++++++
+>>   1 file changed, 17 insertions(+)
+>> 
+>> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+>> index 13ea8db1b0..4d0838d037 100644
+>> --- a/hw/s390x/s390-virtio-ccw.c
+>> +++ b/hw/s390x/s390-virtio-ccw.c
+>> @@ -260,6 +260,20 @@ static void s390_create_sclpconsole(SCLPDevice 
+>> *sclp,
+>>       qdev_realize_and_unref(dev, ev_fac_bus, &error_fatal);
+>>   }
+>>   +static const VMStateDescription vmstate_control_program_id = {
+>> +    .name = "s390_control_program_id",
+>> +    .version_id = 0,
+>> +    .minimum_version_id = 0,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_UINT8_ARRAY(system_type, ControlProgramId, 8),
+>> +        VMSTATE_UINT8_ARRAY(system_name, ControlProgramId, 8),
+>> +        VMSTATE_UINT64(system_level, ControlProgramId),
+>> +        VMSTATE_UINT8_ARRAY(sysplex_name, ControlProgramId, 8),
+>> +        VMSTATE_UINT64(timestamp, ControlProgramId),
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> +
+>>   static void ccw_init(MachineState *machine)
+>>   {
+>>       MachineClass *mc = MACHINE_GET_CLASS(machine);
+>> @@ -308,6 +322,9 @@ static void ccw_init(MachineState *machine)
+>>       ret = css_create_css_image(VIRTUAL_CSSID, true);
+>>       assert(ret == 0);
+>>   +    /* register CPI values */
+>> +    vmstate_register_any(NULL, &vmstate_control_program_id, 
+>> &ms->cpi);
+> 
+>  Hi again,
+> 
+> after looking at this for a while, I think it might be cleaner to
+> store the state in the TYPE_SCLP_CPI device instead of storing it in
+> the machine state. Then you can also use dc->vmsd there instead of
+> using the legacy vmstate_register_any() function.
+> 
+> Additionally, I think you need some compat handling for backward
+> migration in your patches. E.g. have you tried migrating from an old
+> version of QEMU to a newer one (that includes your patches) and then
+> back to the old one?
+> I think the TYPE_SCLP_CPI device should only be instantiated for the
+> machine types >= 10.0, but not for the older machine types, e.g. by
+> introducing a "use-cpi" property to the TYPE_SCLP_EVENT_FACILITY (set
+> to true by default). Then in ccw_machine_9_2_class_options(), make
+> sure that this property gets switched to "off" again, so that older
+> machine types don't have the new TYPE_SCLP_CPI device. WDYT?
+> 
+Hello Thomas,
+That is correct. I will change this as per your suggestion. Thank you.
 
-Move these entries in MAINTAINERS from "Maintained" to "Odd Fixes",
-to better represent reality.  Entries for other boards and SoCs where
-I do more actively care (or where there is a listed co-maintainer)
-remain as they are.
+>  Thomas
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-Somebody was talking about OMAP on IRC and I was shocked
-to see that we claimed it to be in "Maintained" state :-)
----
- MAINTAINERS | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5df6020ed54..29aa32158a1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -786,7 +786,7 @@ F: docs/system/arm/kzm.rst
- Integrator CP
- M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
--S: Maintained
-+S: Odd Fixes
- F: hw/arm/integratorcp.c
- F: hw/misc/arm_integrator_debug.c
- F: include/hw/misc/arm_integrator_debug.h
-@@ -865,7 +865,7 @@ F: docs/system/arm/mps2.rst
- Musca
- M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
--S: Maintained
-+S: Odd Fixes
- F: hw/arm/musca.c
- F: docs/system/arm/musca.rst
- 
-@@ -913,7 +913,7 @@ F: tests/functional/test_aarch64_raspi4.py
- Real View
- M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
--S: Maintained
-+S: Odd Fixes
- F: hw/arm/realview*
- F: hw/cpu/realview_mpcore.c
- F: hw/intc/realview_gic.c
-@@ -963,7 +963,7 @@ F: tests/functional/test_arm_collie.py
- Stellaris
- M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
--S: Maintained
-+S: Odd Fixes
- F: hw/*/stellaris*
- F: hw/display/ssd03*
- F: include/hw/input/gamepad.h
-@@ -993,7 +993,7 @@ F: docs/system/arm/stm32.rst
- Versatile Express
- M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
--S: Maintained
-+S: Odd Fixes
- F: hw/arm/vexpress.c
- F: hw/display/sii9022.c
- F: docs/system/arm/vexpress.rst
-@@ -1002,7 +1002,7 @@ F: tests/functional/test_arm_vexpress.py
- Versatile PB
- M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
--S: Maintained
-+S: Odd Fixes
- F: hw/*/versatile*
- F: hw/i2c/arm_sbcon_i2c.c
- F: include/hw/i2c/arm_sbcon_i2c.h
-@@ -2006,7 +2006,7 @@ F: include/hw/hyperv/vmbus*.h
- OMAP
- M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
--S: Maintained
-+S: Odd Fixes
- F: hw/*/omap*
- F: include/hw/arm/omap.h
- F: docs/system/arm/sx1.rst
 -- 
-2.43.0
-
+Mit freundlichen Grüßen / Kind regards
+Shalini Chellathurai Saroja
+Software Developer
+Linux on IBM Z & KVM Development
+IBM Deutschland Research & Development GmbH
+Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Geschäftsführung: David Faller
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
+Stuttgart, HRB 243294
 
