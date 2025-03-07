@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B33C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 12:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9645C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 12:42:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqX01-00059Y-Sb; Fri, 07 Mar 2025 07:40:23 -0500
+	id 1tqX1i-00068r-UI; Fri, 07 Mar 2025 07:42:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tqWzn-0004z9-RF
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:40:09 -0500
-Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqX1W-000654-D5
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:41:56 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tqWzl-0002JT-8i
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:40:07 -0500
-Received: by mail-oi1-x232.google.com with SMTP id
- 5614622812f47-3f66dae4db9so1137195b6e.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 04:40:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqX1S-0006kg-EM
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:41:53 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-38a25d4b9d4so913120f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 04:41:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1741351202; x=1741956002; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741351308; x=1741956108; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wyVdeXu2D6TSunIj/hbFRqVIEaBOmx3AQY685BxEiaQ=;
- b=VRn0T3X4Bqo6URXAKiBEiMs5qICni1BXftBVZFHmiU4zu3jpJBmOgRL5SQJiItQkrN
- q7ItXl2P9ulObcXjWIkRbJGMd3FR/K9M+ZxhTa1xwHxzLt0+NGmYjWPKVmnTfjl/+guE
- U0QLNmhaMZle8K7zz+Uofy9d4TZGDrv82z3G5pKs2ICHDYp16Qrq3F4nVpdbK7Gc5Tqt
- SA3ofSZoQSoXxataWhNpASo3BZDbSLsVK5P0DXzjAYtmVjyipfT6yoxrO7Hwk5l3YzQ7
- cNUZQ4G+jtt4RusDveFKI2/V5Jfch+KWAxvTEK1Vf3ABeFbJMGVxjMBdI2Uv/ivPyiDs
- r1gQ==
+ bh=ePKOWhU5xNMVZjnFn4kdCnaARO5o6Jx746CnhEu7hQY=;
+ b=YC7ztA5ChVLQtGHikBEv/9kg40Fk8rtKxn9PFZjVhMfsnNMfImUgI0WZ6KTUfbm4JA
+ IT/5Ge5HfkJ9eGGE4W3EhUFSGXAmC5YQh+obxBKeLbS144Xx4nJB6xXBBuvbL4sRrOmW
+ 3uXyFEug9BrIRybk2WnE2L8DCnsMgK42qcIG5fbpnzXOtLv7dpUnfGB5SrkZlUuzxJsN
+ eVGZgxYzyWb6y39+IPv0qjBxB6O26SEPxN8VEI6HkuYgKTeysJBwNsHeSePzHt6po9FZ
+ qoc2sX+C4FeF+LxLv+7jZOsunM7KK0wirQq4O8sKpoPeh6CsF/9Ba7ZmXK2AgydKKUb1
+ bFGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741351202; x=1741956002;
+ d=1e100.net; s=20230601; t=1741351308; x=1741956108;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wyVdeXu2D6TSunIj/hbFRqVIEaBOmx3AQY685BxEiaQ=;
- b=e2jC33HjmMAMeBmqgoekWGNgQg2MqfbSQeY50clwmwBr3AWliLzxCnc9vw0Hzy+hnR
- iUADft1KrVtKKkAghtiGtGQe/FSWq0d9xg3R67hb65ea8KG2qhrsLFo8UumOtm1cZNq0
- Yk4hUIkyJFHvFZwyF78LyaTnus3rHPB8FU5NkPi+j69Y70fg2tqwbj8T/iRGa/uBkLcl
- xt30ll6giTS9xGnQCbs48nEuXKXwQt889pAQBhb5tPY+UntgvRGWG+/rfAj6ShGo2Zlf
- A9sFERPZVdltWBSa+O/R0E9BAukircD4rPc7FEUbzuFRGlTjz5cQM4+mXBJjbYheA+nb
- Y4hQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBpG8tSo/4aurbrDW/0s4FZD6XsTPusEAL5b+LKSTcJnQXNGhEUfm1+xmAcCGFqdP+Crzx/r+jVC2K@nongnu.org
-X-Gm-Message-State: AOJu0Yxt5Nkx2DXvvmVwu15rGXfknprq/yC49dGmUlcbXEwejUQ4dGcN
- L+LqWRBWwqwq7zORARZDL/DZgSoWY7gsqwvXw57nDHGoCXwcGlvHRCyZiJvpbx0=
-X-Gm-Gg: ASbGncuvT/eyBESxBpFucUzlpZHDBPiBkuwuaHh9BN4Ht6Q4N41DT06AfVgwKDHXPGf
- xIH97FEqnng+pCK5BiwIbknChuwn1dXBk1V7HFm8jw6ub9cjhpse3d78KK6EkPyJOecORxkTv9c
- 175yDV5bxLPVjJcWQGaxom1/qvSz8VLqEB6qLBSKD4JWvahwRxk9xhTSWmaRbhii06XE/LmayfY
- B3FAk+Kn3/egD+gy3VfG9ABWraC1qsfuoKve4MBG6+064j9c+JM14++lXcKrlauZsgHim4/Jsif
- p41ENzdOua09Fa6rZz3n0xL+NGHDBUkA7d6AT1M+89wDWJKg5OSZyaVCO+o=
-X-Google-Smtp-Source: AGHT+IG9LttOnb88gGfkkomSDsTE533uca5EP61J7/ffgSQtS7BK9Efxx2ncM2YAfDj6GCseXI7U4A==
-X-Received: by 2002:a05:6808:1819:b0:3f6:7192:6aaf with SMTP id
- 5614622812f47-3f697b6635dmr1834719b6e.22.1741351202128; 
- Fri, 07 Mar 2025 04:40:02 -0800 (PST)
-Received: from [192.168.68.110] ([177.170.118.40])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3f68f0572bdsm650408b6e.46.2025.03.07.04.39.58
+ bh=ePKOWhU5xNMVZjnFn4kdCnaARO5o6Jx746CnhEu7hQY=;
+ b=nx4e4cfwd98PmV+3Ga6vcC0/Pr5zuQ0hGvKl9ro9sLO6TWk/S7NpuQjdkGukPjbwY+
+ wGfuE4HeFkmAWp8xqUiI+ol0N5dRZOSd82pLpX/262VOLyez2uhVjG1kN2UNY5QMIdJN
+ 1XR1jk0cNfTd82iiw65rt5a6FnSciqeNkWwnrKA5JABAOijQFkI5f/qImK1YLVhCBxm3
+ cY5Q+oY4pephz9fTi/8gFeaQi7lDBwLLlCBqHHeikUZ8zy5DAFuzaNb9w5B3mzIU2qFc
+ Z13K5Y8v600Rq0ibR2tXbmwGgBVH2aLqgY+Wz9OX/1VT0BFMN9g3fTyLsm7nZ5J6iJRK
+ oAPA==
+X-Gm-Message-State: AOJu0YxdyH/ijuPhnH7rDy6zPyqW4lKSxWH01gi0N7NCWKQnx1PSgh0x
+ jchX4AW8pfDyqtoUmUaSo0NoH2c2MABjktzAGGffNOmtH9qio8quOBOEQcNERnyq076vJupzbTh
+ 7KR4=
+X-Gm-Gg: ASbGncvr3urVm02RiqfK06yW6jhWviyyaH7GlN4Iu3JB7IbJfai9z6YEF+UBU2RqqTk
+ Zj6b7c9Dt2zPeb/VxTd07EPRwEgTYHeD6vTH8hlU+BKqRTFZS+/4A/HrdqIN1jl65L26qKbWdi+
+ WRTKIk+tFVAA1d7SamelsTyqRyMkcYpDcQFSJzqEYAxK6ytrGNmT3al94fVo3ixzGKBgdzDZJX3
+ M0so4iNlSHRl02/Ya2jkv1itsDk3DlEPlfTlO0PvLEU/nS02PkYMTW7T7/Z29UPcVs4O326D3Mw
+ FHSxECa8a/cWXMutJeUcSt7kPvHkgwX2S0/HstUfXM1EIKgJfOmiXhWwxaB/ES7Fq8U8LYv/vGR
+ m25tDqFBgGvwY
+X-Google-Smtp-Source: AGHT+IEZxOa55+XAdiiZxWBMDlqPJAkdWH4LPRarony5xxWVPSeIuihWtTVCbD4g+RaVE4uS4vzaZA==
+X-Received: by 2002:a5d:64e2:0:b0:391:253b:4049 with SMTP id
+ ffacd0b85a97d-39132d8c572mr2368646f8f.33.1741351308499; 
+ Fri, 07 Mar 2025 04:41:48 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912bfdfbb4sm5361644f8f.30.2025.03.07.04.41.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 04:40:00 -0800 (PST)
-Message-ID: <0464a115-fbfe-4038-9e2d-409ad133647e@ventanamicro.com>
-Date: Fri, 7 Mar 2025 09:39:56 -0300
+ Fri, 07 Mar 2025 04:41:47 -0800 (PST)
+Message-ID: <c0b7aa04-6172-4403-808f-b6ad2bc91840@linaro.org>
+Date: Fri, 7 Mar 2025 13:41:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] include/hw/pci: Attach BDF to Memory Attributes
-To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20250302091209.20063-1-jason.chien@sifive.com>
- <20250302091209.20063-2-jason.chien@sifive.com>
+Subject: Re: [PULL 11/41] hw/acpi/ghes: Make ghes_record_cper_errors() static
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+References: <20250305012157.96463-1-philmd@linaro.org>
+ <20250305012157.96463-12-philmd@linaro.org> <20250306233632.5b22e382@foz.lan>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250302091209.20063-2-jason.chien@sifive.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250306233632.5b22e382@foz.lan>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x232.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,64 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Mauro,
 
-
-On 3/2/25 6:12 AM, Jason Chien wrote:
-> This commit adds the BDF to the memory attributes for DMA operations.
+On 6/3/25 23:36, Mauro Carvalho Chehab wrote:
+> Em Wed,  5 Mar 2025 02:21:26 +0100
+> Philippe Mathieu-Daudé <philmd@linaro.org> escreveu:
 > 
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
-> ---
-
-This looks sensible but I'll feel more comfortable if Michael/Marcel also
-takes a look. Thanks,
-
-
-Daniel
-
->   include/hw/pci/pci_device.h | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
+>> From: Gavin Shan <gshan@redhat.com>
+>>
+>> acpi_ghes_memory_errors() is the only caller, no need to expose
+>> the function. Besides, the last 'return' in this function isn't
+>> necessary and remove it.
+>>
+>> No functional changes intended.
 > 
-> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-> index add208edfa..968f1ba3e9 100644
-> --- a/include/hw/pci/pci_device.h
-> +++ b/include/hw/pci/pci_device.h
-> @@ -244,6 +244,8 @@ static inline MemTxResult pci_dma_rw(PCIDevice *dev, dma_addr_t addr,
->                                        void *buf, dma_addr_t len,
->                                        DMADirection dir, MemTxAttrs attrs)
->   {
-> +    attrs.unspecified = 0;
-> +    attrs.requester_id = pci_requester_id(dev);
->       return dma_memory_rw(pci_get_address_space(dev), addr, buf, len,
->                            dir, attrs);
->   }
-> @@ -292,6 +294,8 @@ static inline MemTxResult pci_dma_write(PCIDevice *dev, dma_addr_t addr,
->                                                  uint##_bits##_t *val, \
->                                                  MemTxAttrs attrs) \
->       { \
-> +        attrs.unspecified = 0; \
-> +        attrs.requester_id = pci_requester_id(dev); \
->           return ld##_l##_dma(pci_get_address_space(dev), addr, val, attrs); \
->       } \
->       static inline MemTxResult st##_s##_pci_dma(PCIDevice *dev, \
-> @@ -299,6 +303,8 @@ static inline MemTxResult pci_dma_write(PCIDevice *dev, dma_addr_t addr,
->                                                  uint##_bits##_t val, \
->                                                  MemTxAttrs attrs) \
->       { \
-> +        attrs.unspecified = 0; \
-> +        attrs.requester_id = pci_requester_id(dev); \
->           return st##_s##_dma(pci_get_address_space(dev), addr, val, attrs); \
->       }
->   
-> @@ -327,8 +333,8 @@ PCI_DMA_DEFINE_LDST(q_be, q_be, 64);
->   static inline void *pci_dma_map(PCIDevice *dev, dma_addr_t addr,
->                                   dma_addr_t *plen, DMADirection dir)
->   {
-> -    return dma_memory_map(pci_get_address_space(dev), addr, plen, dir,
-> -                          MEMTXATTRS_UNSPECIFIED);
-> +    MemTxAttrs attrs = {.requester_id = pci_requester_id(dev)};
-> +    return dma_memory_map(pci_get_address_space(dev), addr, plen, dir, attrs);
->   }
->   
->   static inline void pci_dma_unmap(PCIDevice *dev, void *buffer, dma_addr_t len,
+> Please revert this patch, as ghes_record_cper_errors() was written
+> to be used for error injection. As agreed last year with some ACPI
+> maintainers, we ended splitting the error injection series on two parts
+> to make easier for people to review it.
+> 
+> The followup series:
+> 
+> 	https://lore.kernel.org/qemu-devel/cover.1740903110.git.mchehab+huawei@kernel.org/
+> 
+> Need this function to be not static, as this will be used by a
+> QMP caller.
+> 
+> The usage itself is on this patch:
+> 
+> 	https://lore.kernel.org/qemu-devel/6ef8d6a3f42e3347ed6fd3d1fc29ab5ff2a070df.1740903110.git.mchehab+huawei@kernel.org/
+> 
+> but this one causes conflict since patch 01 of the series.
 
+As of this commit this method isn't used elsewhere in the tree,
+so the reversion has to happen in the series using it, if it
+eventually lands. Otherwise it is too costly to maintain
+incomplete features.
+
+Regards,
+
+Phil.
 
