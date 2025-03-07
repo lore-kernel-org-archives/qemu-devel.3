@@ -4,101 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85157C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463ACC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqSln-0001ge-5w; Fri, 07 Mar 2025 03:09:23 -0500
+	id 1tqT7G-0007A0-6V; Fri, 07 Mar 2025 03:31:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=3Khh=V2=kaod.org=clg@ozlabs.org>)
- id 1tqSld-0001eu-DM; Fri, 07 Mar 2025 03:09:14 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1tqT76-00079e-RY; Fri, 07 Mar 2025 03:31:24 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=3Khh=V2=kaod.org=clg@ozlabs.org>)
- id 1tqSlX-0002gF-DI; Fri, 07 Mar 2025 03:09:10 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z8JpQ3TzFz4x7D;
- Fri,  7 Mar 2025 19:09:02 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z8JpM0Kyhz4wy9;
- Fri,  7 Mar 2025 19:08:57 +1100 (AEDT)
-Message-ID: <deb95684-4cf9-4370-bed1-55327eee400a@kaod.org>
-Date: Fri, 7 Mar 2025 09:08:55 +0100
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1tqT74-0003xv-SE; Fri, 07 Mar 2025 03:31:24 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5276s1V7023081;
+ Fri, 7 Mar 2025 08:31:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=qEHRgG
+ GBSwto4+R736Zqb8VhUj4jy0lvTvxc1TvA4fM=; b=aO/aA3aBPSqoz3X1zPoj1F
+ KBIqs5/ksXlbSUn+Mj/kZJoWrWfn8xmt2kVwNdh/gjl17y7MddvghHb+1pd3dnjI
+ IdZJA7c03gyMtcnWTlKJ6Qzx8JwJYbTftSppBpCt/kRTrmXT4WLgb5ydqpz7mtcI
+ JcrKInxY2x69nlnxotTLk1T1Uwf66mAjzmG/7XhJAiySySobCtK+AwuPtbLcD4kc
+ m4MAhhfxVy5uhzgW5yzsMXuOC9G9J9/oqBo3KAxe5uKFsJbDTyifrK1tybFbZh7r
+ uUR1+KSxrq8k/ZDR4JG6qJKpSk7uiRW6SkZwNnxRsD4yJx/ncf6EjFlcRn73TkKw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 457jvpamw3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Mar 2025 08:31:17 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5274mD7C032216;
+ Fri, 7 Mar 2025 08:31:17 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 454cjtdxf9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Mar 2025 08:31:17 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5278VF2H46924282
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 7 Mar 2025 08:31:15 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0F7EC58628;
+ Fri,  7 Mar 2025 08:04:53 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8913258629;
+ Fri,  7 Mar 2025 08:04:52 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  7 Mar 2025 08:04:52 +0000 (GMT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/29] Support AST2700 A1
-To: Steven Lee <steven_lee@aspeedtech.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
- <3485cd84-2aab-45e7-a72c-ca1d85e007ec@kaod.org>
- <SI2PR06MB5041DD86414B93AB1C77C759FCD52@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <09cb40d5-dcba-40f5-916e-f303eba911cb@kaod.org>
- <SI2PR06MB41873452B148F9CC13B149B985D52@SI2PR06MB4187.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <SI2PR06MB41873452B148F9CC13B149B985D52@SI2PR06MB4187.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Fri, 07 Mar 2025 09:04:52 +0100
+From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, qemu-devel mailing list
+ <qemu-devel@nongnu.org>, Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>, "<Shalini Chellathurai Saroja"
+ <shalini@linux.ibm.com>
+Subject: Re: [PATCH qemu v2 3/3] hw/s390x: support migration of CPI values
+In-Reply-To: <020b1851-1249-446f-844c-2bc598128446@redhat.com>
+References: <20250224120449.1764114-1-shalini@linux.ibm.com>
+ <20250224120449.1764114-3-shalini@linux.ibm.com>
+ <f19d3690-e8af-4ccb-a4da-20a87a48852c@redhat.com>
+ <ac723d90e0536e42707420b0fc329a5c@imap.linux.ibm.com>
+ <020b1851-1249-446f-844c-2bc598128446@redhat.com>
+Message-ID: <77054e690f8bb6ddf84bb869d00fe6e9@linux.ibm.com>
+X-Sender: shalini@linux.ibm.com
+Organization: IBM Deutschland Research & Development GmbH
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=3Khh=V2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: aOfwjjrtIsR3V1qdD6y2hNzyuJYaXiAy
+X-Proofpoint-GUID: aOfwjjrtIsR3V1qdD6y2hNzyuJYaXiAy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-07_03,2025-03-06_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ spamscore=0 suspectscore=0 malwarescore=0 clxscore=1015 adultscore=0
+ mlxscore=0 impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503070060
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=shalini@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,199 +116,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/25 08:56, Steven Lee wrote:
->> -----Original Message-----
->> From: Cédric Le Goater <clg@kaod.org>
->> Sent: Friday, March 7, 2025 3:44 PM
->> To: Jamin Lin <jamin_lin@aspeedtech.com>; Peter Maydell
->> <peter.maydell@linaro.org>; Steven Lee <steven_lee@aspeedtech.com>; Troy
->> Lee <leetroy@gmail.com>; Andrew Jeffery <andrew@codeconstruct.com.au>;
->> Joel Stanley <joel@jms.id.au>; open list:All patches CC here
->> <qemu-devel@nongnu.org>; open list:ASPEED BMCs
->> <qemu-arm@nongnu.org>
->> Cc: Troy Lee <troy_lee@aspeedtech.com>
->> Subject: Re: [PATCH v6 00/29] Support AST2700 A1
->>
->> On 3/7/25 08:36, Jamin Lin wrote:
->>> Hi Cedric,
->>>
->>>> Subject: Re: [PATCH v6 00/29] Support AST2700 A1
->>>>
->>>> On 3/7/25 04:59, Jamin Lin wrote:
->>>>> v1:
->>>>>     1. Refactor INTC model to support both INTC0 and INTC1.
->>>>>     2. Support AST2700 A1.
->>>>>     3. Create ast2700a0-evb machine.
->>>>>
->>>>> v2:
->>>>>      To streamline the review process, split the following patch series into
->>>>>      three parts.
->>>>>
->>>>
->> https://patchwork.kernel.org/project/qemu-devel/cover/20250121070424.24
->> 6
->>>> 5942-1-jamin_lin@aspeedtech.com/
->>>>>      This patch series focuses on cleaning up the INTC model to
->>>>>      facilitate future support for the INTC_IO model.
->>>>>
->>>>> v3:
->>>>>     1. Update and add functional test for AST2700
->>>>>     2. Add AST2700 INTC design guidance and its block diagram.
->>>>>     3. Retaining the INTC naming and introducing a new INTCIO model to
->>>> support the AST2700 A1.
->>>>>     4. Create ast2700a1-evb machine and rename ast2700a0-evb
->> machine
->>>>>     5. Fix silicon revision issue and support AST2700 A1.
->>>>>
->>>>> v4:
->>>>>     1. rework functional test for AST2700
->>>>>     2. the initial machine "ast2700-evb" is aliased to "ast2700a0-evb.
->>>>>     3. intc: Reduce regs array size by adding a register sub-region
->>>>>     4. intc: split patch for Support setting different register sizes
->>>>>     5. update ast2700a1-evb machine parent to TYPE_ASPEED_MACHINE
->>>>>
->>>>> v5:
->>>>>     1. Rename status_addr and addr to status_reg and reg for clarity
->>>>>     2. Introduce dynamic allocation for regs array
->>>>>     3. Sort the memmap table by mapping address
->>>>>     4. ast27x0.c split patch for Support two levels of INTC controllers for
->>>> AST2700 A1
->>>>>     5. tests/functional/aspped split patch for Introduce
->> start_ast2700_test API
->>>>>     6. keep variable naming for reviewer suggestion.
->>>>>     7. Add reviewer suggestion and split patch to make more readable.
->>>>>
->>>>> v6:
->>>>>      1. rename reg_size to nr_regs
->>>>>      2. Fix clean regs size
->>>>>      3. replace g_malloc with g_new
->>>>>
->>>>> With the patch applied, QEMU now supports two machines for running
->>>> AST2700 SoCs:
->>>>> ast2700a0-evb: Designed for AST2700 A0
->>>>> ast2700a1-evb: Designed for AST2700 A1
->>>>>
->>>>> Test information
->>>>> 1. QEMU version:
->>>>
->> https://github.com/qemu/qemu/commit/50d38b8921837827ea397d4b20c8b
->> c
->>>> 5efe186e53
->>>>> 2. ASPEED SDK v09.05 pre-built image
->>>>>
->> https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.05
->>>>>       ast2700-default-obmc.tar.gz (AST2700 A1)
->>>>>
->>>>
->> https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/a
->> st
->>>> 2700-default-obmc.tar.gz
->>>>>       ast2700-a0-default-obmc.tar.gz (AST2700 A0)
->>>>>
->>>>
->> https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/a
->> st
->>>> 2700-a0-default-obmc.tar.gz
->>>>>
->>>>> This patch series depends on the following patch series:
->>>>>
->>>>
->> https://patchwork.kernel.org/project/qemu-devel/cover/20250304064710.21
->> 2
->>>> 8993-1-jamin_lin@aspeedtech.com/
->>>>>
->>>>
->> https://patchwork.kernel.org/project/qemu-devel/cover/20250225075622.30
->> 5
->>>> 515-1-jamin_lin@aspeedtech.com/
->>>>>
->>>>> Jamin Lin (29):
->>>>>      hw/intc/aspeed: Support setting different memory size
->>>>>      hw/intc/aspeed: Rename status_addr and addr to status_reg and
->> reg for
->>>>>        clarity
->>>>>      hw/intc/aspeed: Introduce dynamic allocation for regs array
->>>>>      hw/intc/aspeed: Support setting different register size
->>>>>      hw/intc/aspeed: Reduce regs array size by adding a register
->> sub-region
->>>>>      hw/intc/aspeed: Introduce helper functions for enable and status
->>>>>        registers
->>>>>      hw/intc/aspeed: Add object type name to trace events for better
->>>>>        debugging
->>>>>      hw/arm/aspeed: Rename IRQ table and machine name for AST2700
->> A0
->>>>>      hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ number
->>>>>      hw/intc/aspeed: Support different memory region ops
->>>>>      hw/intc/aspeed: Rename num_ints to num_inpins for clarity
->>>>>      hw/intc/aspeed: Add support for multiple output pins in INTC
->>>>>      hw/intc/aspeed: Refactor INTC to support separate input and output
->> pin
->>>>>        indices
->>>>>      hw/intc/aspeed: Introduce AspeedINTCIRQ structure to save the irq
->>>>>        index and register address
->>>>>      hw/intc/aspeed: Introduce IRQ handler function to reduce code
->>>>>        duplication
->>>>>      hw/intc/aspeed: Add Support for Multi-Output IRQ Handling
->>>>>      hw/intc/aspeed: Add Support for AST2700 INTCIO Controller
->>>>>      hw/misc/aspeed_scu: Add Support for AST2700/AST2750 A1 Silicon
->>>>>        Revisions
->>>>>      hw/arm/aspeed_ast27x0.c Support AST2700 A1 GIC Interrupt
->> Mapping
->>>>>      hw/arm/aspeed_ast27x0: Define an Array of AspeedINTCState with
->> Two
->>>>>        Instances
->>>>>      hw/arm/aspeed_ast27x0: Support two levels of INTC controllers for
->>>>>        AST2700 A1
->>>>>      hw/arm/aspeed_ast27x0: Add SoC Support for AST2700 A1
->>>>>      hw/arm/aspeed: Add Machine Support for AST2700 A1
->>>>>      hw/arm/aspeed_ast27x0: Sort the memmap table by mapping
->> address
->>>>>      tests/functional/aspeed: Introduce start_ast2700_test API
->>>>>      tests/functional/aspeed: Update temperature hwmon path
->>>>>      tests/functional/aspeed: Update test ASPEED SDK v09.05
->>>>>      tests/functional/aspeed: Add test case for AST2700 A1
->>>>>      docs/specs: Add aspeed-intc
->>>>>
->>>>>     docs/specs/aspeed-intc.rst              | 136 +++++
->>>>>     docs/specs/index.rst                    |   1 +
->>>>>     include/hw/arm/aspeed_soc.h             |   3 +-
->>>>>     include/hw/intc/aspeed_intc.h           |  36 +-
->>>>>     include/hw/misc/aspeed_scu.h            |   2 +
->>>>>     hw/arm/aspeed.c                         |  33 +-
->>>>>     hw/arm/aspeed_ast27x0.c                 | 329 ++++++++----
->>>>>     hw/intc/aspeed_intc.c                   | 667
->>>> ++++++++++++++++++------
->>>>>     hw/misc/aspeed_scu.c                    |   2 +
->>>>>     hw/intc/trace-events                    |  25 +-
->>>>>     tests/functional/test_aarch64_aspeed.py |  47 +-
->>>>>     11 files changed, 978 insertions(+), 303 deletions(-)
->>>>>     create mode 100644 docs/specs/aspeed-intc.rst
->>>>>
->>>>
->>>> Applied to aspeed-next.
->>>>
->>>
->>> I really appreciate your great help and support recently. Supporting
->>> AST2700 A1 is a significant milestone.
->>
->> yw.
->>
->> What about the "AST27x0 multi-SoC machine" series ?
->>
->> Thanks,
->>
->> C.
+On 2025-03-06 16:08, Thomas Huth wrote:
+> On 06/03/2025 15.10, shalini wrote:
+>> On 2025-03-05 19:33, Thomas Huth wrote:
+>>> On 24/02/2025 13.04, Shalini Chellathurai Saroja wrote:
+>>>> Register Control-Program Identification data with the live
+>>>> migration infrastructure.
+>>>> 
+>>>> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+>>>> Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+>>>> ---
+>>>>   hw/s390x/s390-virtio-ccw.c | 17 +++++++++++++++++
+>>>>   1 file changed, 17 insertions(+)
+>>>> 
+>>>> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+>>>> index 13ea8db1b0..4d0838d037 100644
+>>>> --- a/hw/s390x/s390-virtio-ccw.c
+>>>> +++ b/hw/s390x/s390-virtio-ccw.c
+>>>> @@ -260,6 +260,20 @@ static void s390_create_sclpconsole(SCLPDevice 
+>>>> *sclp,
+>>>>       qdev_realize_and_unref(dev, ev_fac_bus, &error_fatal);
+>>>>   }
+>>>>   +static const VMStateDescription vmstate_control_program_id = {
+>>>> +    .name = "s390_control_program_id",
+>>>> +    .version_id = 0,
+>>>> +    .minimum_version_id = 0,
+>>>> +    .fields = (const VMStateField[]) {
+>>>> +        VMSTATE_UINT8_ARRAY(system_type, ControlProgramId, 8),
+>>>> +        VMSTATE_UINT8_ARRAY(system_name, ControlProgramId, 8),
+>>>> +        VMSTATE_UINT64(system_level, ControlProgramId),
+>>>> +        VMSTATE_UINT8_ARRAY(sysplex_name, ControlProgramId, 8),
+>>>> +        VMSTATE_UINT64(timestamp, ControlProgramId),
+>>>> +        VMSTATE_END_OF_LIST()
+>>>> +    }
+>>>> +};
+>>>> +
+>>>>   static void ccw_init(MachineState *machine)
+>>>>   {
+>>>>       MachineClass *mc = MACHINE_GET_CLASS(machine);
+>>>> @@ -308,6 +322,9 @@ static void ccw_init(MachineState *machine)
+>>>>       ret = css_create_css_image(VIRTUAL_CSSID, true);
+>>>>       assert(ret == 0);
+>>>>   +    /* register CPI values */
+>>>> +    vmstate_register_any(NULL, &vmstate_control_program_id, 
+>>>> &ms->cpi);
+>>> 
+>>>  Hi again,
+>>> 
+>>> after looking at this for a while, I think it might be cleaner to
+>>> store the state in the TYPE_SCLP_CPI device instead of storing it in
+>>> the machine state. Then you can also use dc->vmsd there instead of
+>>> using the legacy vmstate_register_any() function.
+>>> 
+>> 
+>> Hello Thomas,
+>> 
+>> The SCLP event type CPI is used to transfer the data mentioned below 
+>> from guest operating system to QEMU. The job of the CPI event is 
+>> complete, when this transfer is done.
+>> 
+>> The received data must be saved in the QEMU object model, so that it 
+>> is possible for the user to retrieve the data via QMP. The received 
+>> data provides information about the guest virtual machine.
+>> 
+>> System type - Operating system of the guest (eg: LINUX)
+>> System name - Hostname provided to the guest (eg: TESTVM)
+>> System level - Kernel version of the guest operating system (eg: 
+>> 0x50e00)
+>> Sysplex name - Sysplex refers to a cluster of logical partitions  that 
+>> communicates and co-operates with each other. Sysplex name is the name 
+>> of the cluster which the guest belongs to(If any).(eg: PLEX)
+>> 
+>> In my perspective, I believe that the s390 machine state is 
+>> appropriate for storing the data about the guest virtual machine. 
+>> Please do let me know if you still want to change this?, thank you.
 > 
-> Hi Cedric,
+>  Hi Shalini,
 > 
-> I will submit AST27x0 multi-SoC machine v2 patch next week.
-> V2 supports both A0 and A1 chips and depends on Jamin's AST2700 A1 patch.
+> yes, please change this patch to put the migration state into the
+> SCLP_CPI device.
+> 
+> vmstate_register_any() is a legacy function, see its description in
+> include/migration/vmstate.h ... so if anyhow possible, this should be
+> avoided in new code.
+> 
+> You introduced a new device in patch 2 which will be handling the
+> related data. Devices are the right place for storing migration data
+> in new QEMU code, so I think this really should go into dc->vmsd of
+> TYPE_SCLP_CPI.
+> 
+> For retrieving the information, the user should then just get the
+> property from /machine/sclp/s390-sclp-event-facility/sclpcpi instead
+> of /machine. This should be fine since it is a well-defined location,
+> too.
+> 
 
-Great ! Then, It is best that you wait for the aspeed-next branch to be
-merged first. Should be next week.
+Good Morning Thomas,
 
-Thanks,
+Thank you very much for the explanation. I will change this.
 
-C.
+>  Thanks!
+>   Thomas
 
+-- 
+Mit freundlichen Grüßen / Kind regards
+Shalini Chellathurai Saroja
+Software Developer
+Linux on IBM Z & KVM Development
+IBM Deutschland Research & Development GmbH
+Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Geschäftsführung: David Faller
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
+Stuttgart, HRB 243294
 
