@@ -4,79 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B90D4C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 13:39:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74094C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 13:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqXuK-0007LN-Gq; Fri, 07 Mar 2025 08:38:32 -0500
+	id 1tqXxx-0008VZ-Vt; Fri, 07 Mar 2025 08:42:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqXu9-0007KN-1G
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:38:22 -0500
-Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqXxu-0008V0-6V
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:42:14 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqXu6-0004O2-LF
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:38:19 -0500
-Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-e6182c6d52aso1297106276.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 05:38:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741354697; x=1741959497; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Cw5sUSnklijdo29CgiK62N1n84MNDZ3JoG6l3xvNkUs=;
- b=Md9SEzd2YSvtbg7svE3Z8mzmtAjRnwJizU55mTuvIQLXu9CJxaFFufnUXVb/c4u7Wb
- sv87IFAJB3GKDUVBWTt+mtqpdasqDNjHJeptauK+kK9KwLDMDHTG1RmlfO3w5ry4mS/G
- fhawqvsNwD0yAVoIMElV9jSaDY3bX0VCSrCJNwTlmH+iJ7kWObDaQNoHCYp5UE339u+S
- 13d8MVQ9bueazGYZhPCITmx9JDRRtB7UWcgic1Cne4QxFX/VNFCD1bPaxBDKh2f9I0sb
- DgE3RviAB2vBYS4FDknGRiFHeggNGJEoesmYRawPrjC95/6+VwcAledMkovD04AMrxS1
- kzug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741354697; x=1741959497;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Cw5sUSnklijdo29CgiK62N1n84MNDZ3JoG6l3xvNkUs=;
- b=su2meKKHoaullBGjmUDv8KoCs6OGji9CV5r9obntQK1CR1JHL3ESyvaUjGDIO2MUje
- WErDbTBiaaoNqFsOjKaKFtqyya26AZEm8cx7LqdQdBRvqkn/cT81c2wt9kiOjFNJD+YP
- Rh06Ulwnl4VT7iVD3KzLZ43zxoJE31tsNxe0mlDTdTAisNaliohRWQIyVHENZBIxnnqS
- X8JJFfEVwZDUAUlpK0XDcq4ReROQGEBuARlXdFde1Kyy922HeLoYiO5grMZPZ2fax8vM
- 4LosOKkgAQAdzGmhcZZEeKbDRQYVwZAPz6GIqiakRp0uw+r5Ar7yQL277T2pSrqiEKen
- 3LkQ==
-X-Gm-Message-State: AOJu0YynEMsSeTVRoTnXjqKuM0Kps131JUtzFdZwWfe3mPj925foogar
- /FiOHLWJLjwqFMx0tWRAANBK4oa5icmY6agGCD/+3kKrDtrEsQAwpoAmFkmrpNpsX72Zce2p2Ja
- IMQyR1AeNOKeWXOixw4QS/JMBsxa5wj29X/4ZnvcnZRWZhK1P
-X-Gm-Gg: ASbGncsxBKubQG0okRwU0WzY2ZskYnjx7ehvv36O7/nVepcG6Ib3CHFgQ+VndZ9RMVS
- B2sh76ivEvv3k+yBPRCvlkx+SLzEDHl0eA+hjqEM1tfep43r2OG7OSjcInwbTluSDCwo7NXJIjg
- 0TklMACwUtgeweXkAg4Lq+FcWMJY4=
-X-Google-Smtp-Source: AGHT+IGs1jI1Ybyc+35mMJ4xP1lEXtKZbNvE9GvZIqtMLRtoJpy9RJnIFOJnXno119rlo02O/AxMvIgUn/FxJ6Ev00A=
-X-Received: by 2002:a05:6902:1a4a:b0:e48:7efe:57b0 with SMTP id
- 3f1490d57ef6-e635c1dcd07mr4234571276.47.1741354696984; Fri, 07 Mar 2025
- 05:38:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqXxs-0006hu-Je
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:42:13 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E980621185;
+ Fri,  7 Mar 2025 13:42:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741354928; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ckz8khHOM9dqBLmOn0vlpaf0vU18hGKmShT8lBnHgx0=;
+ b=ynqkjqdooZR79IMffZSC8g1HqRP0WmbzYkhY8FlOh+q6vs5ASCvVd85lMS+viN1gPKdzXo
+ sL8JuhmZbJlkGWzGUPkIN0A4KOCIOPzgjkHJnhKAVARPTpAWSixc2mBdmfl+xv7vynoBl1
+ RyG2e3ba3kvK5NMtTYy996FSDnG11g4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741354928;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ckz8khHOM9dqBLmOn0vlpaf0vU18hGKmShT8lBnHgx0=;
+ b=Blq6JNWYzOAoBwCXAnDOyt2RsFVu2MUsWm+x6PQGNpOKI3jjOaJIAi9vsR8xHD0eRvdKGw
+ baXNP8KJ3Y9GmLCQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=h4oWpUuk;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4iE8VZQK
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741354927; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ckz8khHOM9dqBLmOn0vlpaf0vU18hGKmShT8lBnHgx0=;
+ b=h4oWpUukKmd6OUEC1LMvsWM3TPZboSwaj/5AyRBAFRGjN7WMUfp2rlpHbh1ZNqxCmRJPUE
+ LzeRMQkgybHbZf3/OHo2TX+O2UYT+akSNJhoP4VKhervIX6cY5ir53r5u8mQeU11CMXBAz
+ c4yBsdLQGTFDc193sGwAw7TIIVwYV2Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741354927;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ckz8khHOM9dqBLmOn0vlpaf0vU18hGKmShT8lBnHgx0=;
+ b=4iE8VZQKNAc8iolUkS8ZP1LiqKqQogJFdZl/TaHMgLCJILJoHVHzOEsJcTDr71cnyrDBB3
+ MepaLP65wnNtgKCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 346D213A22;
+ Fri,  7 Mar 2025 13:42:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Z87zN633ymfJHAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Mar 2025 13:42:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 0/2] migration: multifd documentation
+Date: Fri,  7 Mar 2025 10:42:01 -0300
+Message-Id: <20250307134203.29443-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-References: <20250215021654.1786679-1-keithp@keithp.com>
- <20250218212103.2024039-1-keithp@keithp.com>
- <20250218212103.2024039-5-keithp@keithp.com>
-In-Reply-To: <20250218212103.2024039-5-keithp@keithp.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Mar 2025 13:38:05 +0000
-X-Gm-Features: AQ5f1Jp9ir4sy9kabwEDsR7eSJm-Su2jqvHCrOY7hmZ-9yCl-b_qsB0U2rC_vK8
-Message-ID: <CAFEAcA_5tnaXvGXXp17=LKNkr6+BWcaEBpLj3YxJ8-np1hSAcg@mail.gmail.com>
-Subject: Re: [PATCH 4/4] rx: Support loading of ELF files too
-To: Keith Packard <keithp@keithp.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: E980621185
+X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,41 +121,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Feb 2025 at 21:23, Keith Packard via <qemu-devel@nongnu.org> wrote:
->
-> The existing loader supports raw binary blobs with the entry point
-> defined as the start of the blob. Add support for loading ELF files by
-> first checking if the provided filename has a valid ELF header,
-> falling back to the existing loader code when that fails.
->
-> Signed-off-by: Keith Packard <keithp@keithp.com>
+Hi, Cédric pointed out that we don't have any documentation for
+multifd. Now that the feature is in more of a coherent shape, let's
+try to add some words explaining how it works. I tried to explain
+every quirky part, while not adding excess detail.
 
-Ths code does what it intends to, and I'm not saying we should
-definitely *not* have it. I do think it's worth considering whether
-we need it, given that you can already load an ELF image via the
-generic loader (-device loader).
+Fabiano Rosas (2):
+  migration: Add some documentation for multifd
+  migration: Move compression docs under multifd
 
--kernel is a very "do what I mean" option that differs from target to
-target, but what it's ideally supposed to mean is "this is a Linux
-kernel, boot it like a Linux kernel". Some of our targets also
-overload it to additionally have the behaviour "but if it's an ELF
-file, load it as an ELF file, not like a kernel" (notably at least
-arm M-profile). But I think that's something I'd consider a mistake
-in retrospect, which we can't change now for backwards compatibility
-reasons. (In particular it means we can't have "-kernel kernel.elf"
-mean "this is a Linux kernel which is an ELF file and it wants
-all the usual CPU setup that Linux's booting requirements mandate".)
+ docs/devel/migration/features.rst |   4 +-
+ docs/devel/migration/multifd.rst  | 264 ++++++++++++++++++++++++++++++
+ 2 files changed, 265 insertions(+), 3 deletions(-)
+ create mode 100644 docs/devel/migration/multifd.rst
 
-So for target/rx, I guess what I'm saying is that if Linux
-kernels for this architecture really are usually floating around
-as ELF files then we should support that, but if this is just
-"some users would like a way to load an ELF file, start at the
-ELF entry point, and do no other setup of the CPU or system before
-running code" then it might be better to instead point those
-users at the generic loader (which does exactly that job
-and does the same thing on all target architectures),
-rather than adding a second mechanism for doing that.
+-- 
+2.35.3
 
-thanks
--- PMM
 
