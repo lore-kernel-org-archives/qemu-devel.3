@@ -4,145 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BA0C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C29EC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqSeH-0006bE-9S; Fri, 07 Mar 2025 03:01:38 -0500
+	id 1tqSfL-0006tT-7z; Fri, 07 Mar 2025 03:02:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tqSe8-0006ad-Ig
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:01:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tqSes-0006nf-If
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:02:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tqSe6-0007Xq-Tx
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:01:28 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tqSep-0007bC-DH
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:02:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741334484;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1741334529;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XbDePPgsD/75RKsQYUCL2uJEcXU5mvZhyFBRWh1z+28=;
- b=G89bUbmfQBc1PdrrzIl+qRmRqaZD3g9RnJX2nCTrwqQDY2bvNCloSXau2n6wDoK88nvv27
- Icfecj0FDXvAL/ev1NOKjbBblWQKbenblFr5xv4iqBcTy9oHxukD0mFaMbL3UQrdD87jX+
- 073xUq+zFMEDwkFeA4gqTqkKcSc8K+U=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-OXA7u0tDNKaduwNpA0dpSQ-1; Fri, 07 Mar 2025 03:01:22 -0500
-X-MC-Unique: OXA7u0tDNKaduwNpA0dpSQ-1
-X-Mimecast-MFC-AGG-ID: OXA7u0tDNKaduwNpA0dpSQ_1741334481
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3912fe32a30so500538f8f.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 00:01:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741334481; x=1741939281;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=XbDePPgsD/75RKsQYUCL2uJEcXU5mvZhyFBRWh1z+28=;
- b=CilziRnjnn8KmlbyMcle/xppihbSDJOTBdP9lWej5PEnMcRH1yKT9m/uO6CbGKlG+H
- mzbD5lhJfFQlNjMRq2ciV6KEZjxPP1Mju191USVGCCmxVaas5XgoKpchSl9urMHUIR4G
- 58Cvq3hvFnA5uYc87HtPLRyLx9sNm8eHCVzhucU7TNWHKxLqMalH7TBjIYxItuH+8/o8
- xQ9ByoOW5NIyYV0H8NhulnB6skkqbHlDcZRKT7OP/ECVDMnR1l29gwLQSQMlT9JNAQK2
- 1jCkDCpNeVUK4D3Mktrd3FvdKvETF5hvDRgWKNI6V+m43HL7cs0QERJ7JgZ1Kg0niVBv
- YM3A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4bNzDzcdE42ts8D+7M2AD0yiBhMVvx3R6FdcHKYFi0WqvHpDmzew/av5xHczD6OBej18ZSZ4d7UnQ@nongnu.org
-X-Gm-Message-State: AOJu0YwofK7WrIQcSYru9kqFRiP8wVS5meLlu6AdRwSnsdYU4PK5Hq1O
- nu7L2G9xnmhVxP3gh/gvHUEFv7/Q5KEWt7ou3UGpG3JpoScOvDxKA6hnHsdTgtOM1EAbxnjCBdE
- yD/NUNuVIWjVxaXyM6GCr4vBF8fR3izaK2xlzT/MLFvGiN52LrjXt
-X-Gm-Gg: ASbGnctQ897nlxjvMWBYnC+/6rN1xFWUykFgOPoqxxPWoqbAs+aBR7mi6ZKeYXXdRqC
- q+y5gOvhXzu/AJ4/oYI53GVReodj/OrRmqOMhJbnRVa3ZVi4wOwWu9mDN3dIR+vt8VNv8S5u38S
- oleG5OaY3FLv5r7gUu6C/4XWb1Wc+DoiijcIF6g2543/F4wk1kHsa06xqv1ypf5j/FLHa5zuNfR
- jdbDfTonLmvs/mp0EmSiKD+O4NLpfMP8MW0mc4uCi3oRGQ4ZHCFYXZaCMx4yb+lrjlCBXF6yITi
- A/3T205LJmZ0e5H5JJwdqf5qsyf4DITM3WGf5eMC9TiuSrERhhQtvtAkUYyubmLYboMrrjlcsyD
- YwDk3HazWp1gIfYiEScq3eRjLCIbcUktghMomHg==
-X-Received: by 2002:a5d:47ad:0:b0:38d:b325:471f with SMTP id
- ffacd0b85a97d-39132d7c9c0mr1476894f8f.15.1741334481186; 
- Fri, 07 Mar 2025 00:01:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG2JT76T2bmDch13XNwuBWH0iGkItnP8nnKexWTUuscpz4ozuKT++mP3FcJw+SXwW9KiaItEA==
-X-Received: by 2002:a5d:47ad:0:b0:38d:b325:471f with SMTP id
- ffacd0b85a97d-39132d7c9c0mr1476864f8f.15.1741334480789; 
- Fri, 07 Mar 2025 00:01:20 -0800 (PST)
-Received: from ?IPV6:2003:cb:c721:7400:ab0b:9ceb:d2:6a17?
- (p200300cbc7217400ab0b9ceb00d26a17.dip0.t-ipconnect.de.
- [2003:cb:c721:7400:ab0b:9ceb:d2:6a17])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd93c9b6sm43440965e9.29.2025.03.07.00.01.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 00:01:20 -0800 (PST)
-Message-ID: <160b44eb-bf3f-45c9-b1ea-c82dbbe40bb0@redhat.com>
-Date: Fri, 7 Mar 2025 09:01:19 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=4aQKxSiRKtabosOokJ69zqJs9IjcnxpM/zqFwhVkY/0=;
+ b=O9afrjRsy8Br6rPoYLWgjdCd4njcwUE/oJRRju8e1djlt6XRzJSn01BpBQ2DKWuQmi553e
+ 269MlSJfmS/OjVTS1uBPgQLwnpJIr5kWJSOBBOKEKFOQlrxALTCgyWmUPr25GF2KUEMV2o
+ DdmGYl4G139lMGPo3RSop3ARKmeOrzw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-moLuBlouMgW8NX3QnxBRvQ-1; Fri,
+ 07 Mar 2025 03:02:06 -0500
+X-MC-Unique: moLuBlouMgW8NX3QnxBRvQ-1
+X-Mimecast-MFC-AGG-ID: moLuBlouMgW8NX3QnxBRvQ_1741334525
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E6CE919560B2; Fri,  7 Mar 2025 08:02:04 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.49])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 037A018009BC; Fri,  7 Mar 2025 08:02:02 +0000 (UTC)
+Date: Fri, 7 Mar 2025 08:02:00 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH] tests/functional: fix race in virtio balloon test
+Message-ID: <Z8qn4WB0EXdYOJE-@redhat.com>
+References: <20250304183340.3749797-1-berrange@redhat.com>
+ <5b5bcdd3-f102-4f32-967a-a352cd1803ed@linaro.org>
+ <d06be182-b6f2-4031-91af-50475fae554c@redhat.com>
+ <45c99267-0b91-469f-82d8-5261bbb8ca90@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/test_virtio_balloon: Only use KVM for
- running this test
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-References: <20250307063904.1081961-1-thuth@redhat.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250307063904.1081961-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <45c99267-0b91-469f-82d8-5261bbb8ca90@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -157,53 +89,142 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07.03.25 07:39, Thomas Huth wrote:
-> The virtio_balloon test is currently hanging for unknown reasons
-> when being run on the shared gitlab CI runners (which don't provide
-> KVM, thus it's running in TCG mode there). All other functional tests
-> that use the same asset (the Fedora 31 kernel) have already been
-> marked to work only with KVM in the past, so those other tests are
-> skipped on the shared gitlab CI runners. As long as the problem isn't
-> fully understood and fixed, let's do the same with the virtio_balloon
-> test to avoid that the CI is failing here.
-
-Reviewed-by: David Hildenbrand <david@redhat.com>
-
+On Thu, Mar 06, 2025 at 08:23:15PM +0100, Thomas Huth wrote:
+> On 06/03/2025 18.42, Thomas Huth wrote:
+> > On 05/03/2025 13.25, Philippe Mathieu-Daudé wrote:
+> > > Hi Daniel,
+> > > 
+> > > On 4/3/25 19:33, Daniel P. Berrangé wrote:
+> > > > There are two race conditions in the recently added virtio balloon
+> > > > test
+> > > > 
+> > > >   * The /dev/vda device node is not ready
+> > > >   * The virtio-balloon driver has not issued the first stats refresh
+> > > > 
+> > > > To fix the former, monitor dmesg for a line about 'vda'.
+> > > > 
+> > > > To fix the latter, retry the stats query until seeing fresh data.
+> > > > 
+> > > > Adding 'quiet' to the kernel command line reduces serial output
+> > > > which otherwise slows boot, making it less likely to hit the former
+> > > > race too.
+> > > > 
+> > > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > > > ---
+> > > >   tests/functional/test_virtio_balloon.py | 24 +++++++++++++++++++-----
+> > > >   1 file changed, 19 insertions(+), 5 deletions(-)
+> > > > 
+> > > > diff --git a/tests/functional/test_virtio_balloon.py
+> > > > b/tests/functional/ test_virtio_balloon.py
+> > > > index 67b48e1b4e..308d197eb3 100755
+> > > > --- a/tests/functional/test_virtio_balloon.py
+> > > > +++ b/tests/functional/test_virtio_balloon.py
+> > > > @@ -32,7 +32,7 @@ class VirtioBalloonx86(QemuSystemTest):
+> > > > 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
+> > > >       DEFAULT_KERNEL_PARAMS = ('root=/dev/vda1 console=ttyS0 net.ifnames=0 '
+> > > > -                             'rd.rescue')
+> > > > +                             'rd.rescue quiet')
+> > > >       def wait_for_console_pattern(self, success_message, vm=None):
+> > > >           wait_for_console_pattern(
+> > > > @@ -47,6 +47,9 @@ def mount_root(self):
+> > > >           prompt = '# '
+> > > >           self.wait_for_console_pattern(prompt)
+> > > > +        # Synchronize on virtio-block driver creating the root device
+> > > > +        exec_command_and_wait_for_pattern(self, "while ! (dmesg
+> > > > -c | grep vda:) ; do sleep 1 ; done", "vda1")
+> > > > +
+> > > >           exec_command_and_wait_for_pattern(self, 'mount
+> > > > /dev/vda1 / sysroot',
+> > > >                                             prompt)
+> > > >           exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
+> > > > @@ -65,10 +68,21 @@ def assert_initial_stats(self):
+> > > >               assert val == UNSET_STATS_VALUE
+> > > >       def assert_running_stats(self, then):
+> > > > -        ret = self.vm.qmp('qom-get',
+> > > > -                          {'path': '/machine/peripheral/balloon',
+> > > > -                           'property': 'guest-stats'})['return']
+> > > > -        when = ret.get('last-update')
+> > > > +        # We told the QEMU to refresh stats every 100ms, but
+> > > > +        # there can be a delay between virtio-ballon driver
+> > > > +        # being modprobed and seeing the first stats refresh
+> > > > +        # Retry a few times for robustness under heavy load
+> > > > +        retries = 10
+> > > > +        when = 0
+> > > > +        while when == 0 and retries:
+> > > > +            ret = self.vm.qmp('qom-get',
+> > > > +                              {'path': '/machine/peripheral/balloon',
+> > > > +                               'property': 'guest-stats'})['return']
+> > > > +            when = ret.get('last-update')
+> > > > +            if when == 0:
+> > > > +                retries = retries - 1
+> > > > +                time.sleep(0.5)
+> > > > +
+> > > >           now = time.time()
+> > > >           assert when > then and when < now
+> > > 
+> > > Unfortunately I'm still getting a timeout:
+> > > https://gitlab.com/philmd/qemu/-/jobs/9318095233
+> > > 
+> > > 2025-03-05 12:09:55,360 - DEBUG: Console interaction:
+> > > success_msg='Entering emergency mode.' failure_msg='Kernel panic -
+> > > not syncing' send_string='None'
+> > > 2025-03-05 12:09:55,360 - DEBUG: Opening console socket
+> > > 2025-03-05 12:10:32,722 - DEBUG: Console interaction: success_msg='#
+> > > ' failure_msg='Kernel panic - not syncing' send_string='None'
+> > > 2025-03-05 12:10:32,823 - DEBUG: Console interaction:
+> > > success_msg='vda1' failure_msg='None' send_string='while ! (dmesg -c
+> > > | grep vda:) ; do sleep 1 ; done
+> > > 
+> > > 2025-03-05 12:10:30,534: Warning: /dev/vda1 does not exist
+> > > 2025-03-05 12:10:30,535:
+> > > 2025-03-05 12:10:30,598: Generating "/run/initramfs/rdsosreport.txt"
+> > > 2025-03-05 12:10:32,720:
+> > > 2025-03-05 12:10:32,721:
+> > > 2025-03-05 12:10:32,722: Entering emergency mode.
+> > > 2025-03-05 12:10:32,724: Exit the shell to continue.
+> > > 2025-03-05 12:10:32,726: Type "journalctl" to view system logs.
+> > > 2025-03-05 12:10:32,727: You might want to save "/run/initramfs/
+> > > rdsosreport.txt" to a USB stick or /boot
+> > > 2025-03-05 12:10:32,728: after mounting them and attach it to a bug report.
+> > > 2025-03-05 12:10:32,729:
+> > > 2025-03-05 12:10:32,731:
+> > > 2025-03-05 12:10:32,823: :/#
+> > 
+> > Same for me, it always seems to hang when being run with the gitlab
+> > shared runners:
+> > 
+> >   https://gitlab.com/thuth/qemu/-/jobs/9333926038#L612
+> >   https://gitlab.com/thuth/qemu/-/jobs/9333926046#L625
+> > 
+> > ... no clue what's still going wrong, though ...
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/functional/test_virtio_balloon.py | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+> ... but I just noticed that all other functional tests that use the same
+> assets are using:
 > 
-> diff --git a/tests/functional/test_virtio_balloon.py b/tests/functional/test_virtio_balloon.py
-> index 082bf08c4e8..5877b6c408c 100755
-> --- a/tests/functional/test_virtio_balloon.py
-> +++ b/tests/functional/test_virtio_balloon.py
-> @@ -110,6 +110,7 @@ def assert_running_stats(self, then):
->   
->       def test_virtio_balloon_stats(self):
->           self.set_machine('q35')
-> +        self.require_accelerator("kvm")
->           kernel_path = self.ASSET_KERNEL.fetch()
->           initrd_path = self.ASSET_INITRD.fetch()
->           diskimage_path = self.ASSET_DISKIMAGE.fetch()
-> @@ -122,7 +123,7 @@ def test_virtio_balloon_stats(self):
->           # reset, we can reliably catch the clean stats again in BIOS
->           # phase before the guest OS launches
->           self.vm.add_args("-boot", "menu=on")
-> -        self.vm.add_args("-machine", "q35,accel=kvm:tcg")
-> +        self.vm.add_args("-accel", "kvm")
->           self.vm.add_args("-device", "virtio-balloon,id=balloon")
->           self.vm.add_args('-drive',
->                            f'file={diskimage_path},if=none,id=drv0,snapshot=on')
+>         self.require_accelerator('kvm')
+>         self.vm.add_args('-accel', 'kvm')
 
+Hmm, yes, and my testing locally will be with kvm too.
 
+> so they are skipped on the gitlab shared runners (but still executed in the
+> custom runners of the qemu-project), while your test also is enabled for TCG
+> and thus runs in the shared runners, too.
+> So unless you've got a clue what's going wrong here (I fail to see the
+> reason for the problem unfortunately), I'd suggest that we mark the
+> virtio_balloon test with require_accelerator('kvm'), too, to get the CI
+> working with the shared runners again. WDYT?
+
+Lets do that for now
+
+With regards,
+Daniel
 -- 
-Cheers,
-
-David / dhildenb
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
