@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA5D4C28B24
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D2D2C19F32
 	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:17:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqdBW-0008O3-D0; Fri, 07 Mar 2025 14:16:38 -0500
+	id 1tqdCK-0000xC-T9; Fri, 07 Mar 2025 14:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tqdA0-0004mf-4d; Fri, 07 Mar 2025 14:15:06 -0500
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ id 1tqdA2-0004pN-QF; Fri, 07 Mar 2025 14:15:09 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tqd9w-0007mp-DA; Fri, 07 Mar 2025 14:15:03 -0500
+ id 1tqd9x-0007n9-Eo; Fri, 07 Mar 2025 14:15:06 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id EE638A4514A;
- Fri,  7 Mar 2025 19:09:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84B6C4CEEA;
+ by dfw.source.kernel.org (Postfix) with ESMTP id 4260F5C5ECB;
+ Fri,  7 Mar 2025 19:12:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91F1C4CED1;
  Fri,  7 Mar 2025 19:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1741374897;
- bh=LvlI96l+YbIl5MsIJDnbtQxU7YniO+B5OBQkHO2lJqA=;
+ bh=Gj8pds6qQJyNoVx1JIwsKELvm2AAmJ9YGS0647jBI7g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=cbt/xoxZQCzmWvuaKadzoWUZ6b+stlN+VllunKJ3ScaANDLd5HZLleyJbaRLUZ9X5
- 8f2zTWtjEAa5stb15RzSVU+88KHcGy4J4+Zoy+J15xLWnX9TO7/v7G4Nn0oqx6ANzB
- g5CAvn14JzHSInSCXz/pusb34wVqTzDC+NTVJxmquCE8w4R5e31roNqjZUFEyPbyC6
- +4epYM0QPNnG4FUVJsHUHOCgpkhsrV78t67nDWj7wJ4CpkFKkL1DmdS/t9wsRFsOnK
- gCYIOzxQdp/JRcGz7mtJDbiisky1Z3ZiWjghdE1AC1ptwVYXu0QJTjgVwjz0Pvg2q4
- n86V6m4fDC4vw==
+ b=NWFyoN7o8sdxNFJZKS9h9VZ60nzPm4L0l7tQ3nfF+f1dCFGEhGbIG3u4uu9IAwxTO
+ FVQUwj9utkFvvmvN4tE5PIi1yxsjKsPDKfmmV0IrxEPECdlh/8wvOCRUxqG/+VOqeA
+ NrZa7kjfZqWCn2UzcJ7wVVbm8PfljnctRaUVM6j/au8ZM/6jI6bZzSkv2l3Lh9duHa
+ o+qjiHiqwt9sWE6WEpZck90WwuBkEMfyLGz3NC5K6wl+mvHhESmtOFGiKSsqA7TZFe
+ EIh3E9uKESdxS1yqtUVlx8S8DOtwQE6Pnyyp1LpgCf1hSd8a/HjGf/inO9ELqZGFU1
+ wyH6qJY8DJ/tA==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.1)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tqd9r-0000000BQmv-3kKe; Fri, 07 Mar 2025 20:14:55 +0100
+ id 1tqd9r-0000000BQn3-3xbI; Fri, 07 Mar 2025 20:14:55 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -43,25 +43,29 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  "Gavin Shan" <gshan@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v8 10/20] acpi/ghes: add a notifier to notify when error data
- is ready
-Date: Fri,  7 Mar 2025 20:14:39 +0100
-Message-ID: <af2bb6dd484aca8fd8baf29200cf2a04e365befe.1741374594.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v8 12/20] acpi/generic_event_device: add logic to detect if
+ HEST addr is available
+Date: Fri,  7 Mar 2025 20:14:41 +0100
+Message-ID: <6bdd6596b8f5771a4ee41d66609cd2bd29a534b2.1741374594.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1741374594.git.mchehab+huawei@kernel.org>
 References: <cover.1741374594.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=147.75.193.91;
- envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -70
+X-Spam_score: -7.1
+X-Spam_bar: -------
+X-Spam_report: (-7.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -79,55 +83,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some error injection notify methods are async, like GPIO
-notify. Add a notifier to be used when the error record is
-ready to be sent to the guest OS.
+Create a new property (x-has-hest-addr) and use it to detect if
+the GHES table offsets can be calculated from the HEST address
+(qemu 10.0 and upper) or via the legacy way via an offset obtained
+from the hardware_errors firmware file.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/ghes.c         | 5 ++++-
- include/hw/acpi/ghes.h | 3 +++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ hw/acpi/generic_event_device.c |  2 ++
+ hw/arm/virt-acpi-build.c       | 18 ++++++++++++++++--
+ hw/core/machine.c              |  2 ++
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index f49d0d628fc4..0135ac844bcf 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -510,6 +510,9 @@ static void get_ghes_source_offsets(uint16_t source_id,
-     *read_ack_start_addr = le64_to_cpu(*read_ack_start_addr);
- }
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index 5346cae573b7..471d1a7afc76 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -318,6 +318,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
  
-+NotifierList acpi_generic_error_notifiers =
-+    NOTIFIER_LIST_INITIALIZER(error_device_notifiers);
+ static const Property acpi_ged_properties[] = {
+     DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
++    DEFINE_PROP_BOOL("x-has-hest-addr", AcpiGedState,
++                     ghes_state.use_hest_addr, false),
+ };
+ 
+ static const VMStateDescription vmstate_memhp_state = {
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index ea9682ee2662..5443615d976d 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -897,6 +897,10 @@ static const AcpiNotificationSourceId hest_ghes_notify[] = {
+     { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
+ };
+ 
++static const AcpiNotificationSourceId hest_ghes_notify_9_2[] = {
++    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
++};
 +
- void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-                              uint16_t source_id, Error **errp)
+ static
+ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
  {
-@@ -550,7 +553,7 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-     /* Write the generic error data entry into guest memory */
-     cpu_physical_memory_write(cper_addr, cper, len);
+@@ -951,15 +955,25 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
  
--    return;
-+    notifier_list_notify(&acpi_generic_error_notifiers, NULL);
- }
+     if (vms->ras) {
+         AcpiGedState *acpi_ged_state;
++        static const AcpiNotificationSourceId *notify;
++        unsigned int notify_sz;
+         AcpiGhesState *ags;
  
- int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 8c4b08433760..390943e46d99 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -24,6 +24,9 @@
- 
- #include "hw/acpi/bios-linker-loader.h"
- #include "qapi/error.h"
-+#include "qemu/notify.h"
+         acpi_ged_state = ACPI_GED(vms->acpi_dev);
+         ags = &acpi_ged_state->ghes_state;
+         if (ags) {
+             acpi_add_table(table_offsets, tables_blob);
 +
-+extern NotifierList acpi_generic_error_notifiers;
++            if (!ags->use_hest_addr) {
++                notify = hest_ghes_notify_9_2;
++                notify_sz = ARRAY_SIZE(hest_ghes_notify_9_2);
++            } else {
++                notify = hest_ghes_notify;
++                notify_sz = ARRAY_SIZE(hest_ghes_notify);
++            }
++
+             acpi_build_hest(ags, tables_blob, tables->hardware_errors,
+-                            tables->linker, hest_ghes_notify,
+-                            ARRAY_SIZE(hest_ghes_notify),
++                            tables->linker, notify, notify_sz,
+                             vms->oem_id, vms->oem_table_id);
+         }
+     }
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index b68b8b94a3c4..f5f0731e7062 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -35,6 +35,7 @@
+ #include "hw/virtio/virtio-pci.h"
+ #include "hw/virtio/virtio-net.h"
+ #include "hw/virtio/virtio-iommu.h"
++#include "hw/acpi/generic_event_device.h"
+ #include "audio/audio.h"
  
- /*
-  * Values for Hardware Error Notification Type field
+ GlobalProperty hw_compat_9_2[] = {
+@@ -44,6 +45,7 @@ GlobalProperty hw_compat_9_2[] = {
+     { "virtio-balloon-pci-non-transitional", "vectors", "0" },
+     { "virtio-mem-pci", "vectors", "0" },
+     { "migration", "multifd-clean-tls-termination", "false" },
++    { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
+ };
+ const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
+ 
 -- 
 2.48.1
 
