@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BAC8C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F5BC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZRw-00060T-2U; Fri, 07 Mar 2025 10:17:21 -0500
+	id 1tqZSG-0006D0-Gd; Fri, 07 Mar 2025 10:17:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZQe-0005pz-RE
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:16:06 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZQi-0005qB-PC
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:16:13 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZQd-0003cy-0X
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:16:00 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43bd87f7c2eso11395935e9.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:15:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZQh-0003qQ-0P
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:16:04 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-390ec449556so2400708f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:16:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741360556; x=1741965356; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741360561; x=1741965361; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oJ6QS8bPHspYWexuxW/Mo3/+G0MWF76KuZRGtLsMeFA=;
- b=fA/hhJRylF7WJsSoWEQvloCOypH9P60jFhquyRMNytYvJY3jBMphqwPMWP8mV3l5z3
- oMkMwPG+yaEWFgVFZdumjZSNP1hysX6ylV3rJdgejDwknBAOb6X1n2sXWya3JfZ8/x3o
- snTgttPFVav/qFvYKeuw6Q3IMIvHj5qRP9n3/gGz1R3g/qiK0kTPlBib9e/bTu1P0eN5
- KpdGlrYZt6ngIztmIYHERIpqgwtr2cy/A76fHnSfCmLXXu/nZHQhV06IdMFupRz1v3Dr
- k6HvfzyCJQG8ZteL3FZqOdiPJlPF42EcKA3S3HPgObyjL4AFWplFZs8jp+zEor6oE75c
- uesg==
+ bh=PLnyOTswVEaIwB5mduyl0BorXeO7LlZ/oZ3CWTRx72Q=;
+ b=vriINjjN6R8Va2N+qXe2ea5pcYBDA4lP7re9T1beXa+MsKZTi5b9XDDL8UtzQ8mUYi
+ 1NukZHvQHg+8hxsoUBNrvlWzDkDAMKZly26NdSA7lvYvPBltj6iVgTlarcMjy1NSg7KE
+ iV5kb9ciyvnZQ6t5jG7N2Avfite+b2V1wZKW8NP+dJEJZM7nAWdaUwFTaE4W7UCJY6uA
+ wCCSJkulotPGRGIt4vKZ2qEURHLS4cqU3lfaKbbeiaXtASSgbkhiR/AXe9600Wk1t/Ez
+ UTKVb4IdOLC27bBgp4W/5J4Q9n2uPjClzlA4lHJsbpUCLtfoSTQxL5KgZZm7W0hnxGTg
+ ovNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741360556; x=1741965356;
+ d=1e100.net; s=20230601; t=1741360561; x=1741965361;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oJ6QS8bPHspYWexuxW/Mo3/+G0MWF76KuZRGtLsMeFA=;
- b=iAI/QIcOfscneJb3CXKz0ZBCKs70LJGV7ZbjVTgil1w7h7PeRB22ByzqOKVOAJ6EOg
- c1EKHc1+JBz6jlN+c7WXr7oi7TJN/Itf0fUmnnhrzVe2Z3sWDWW8+nkHeqPShyvq+T5Q
- MpwmIUU2V7YFb9n4EGlJhLO3BLALwmv6BuJ1cF7li6d+dk+qrSgbnvzxICO6pwUOUy5p
- 8v4CxajcYlxzODwLWGRIvC1S9So/h1XYe7zFAoDldHb2PLUTR6odw36rcxNPvJ4DbA0G
- ilUCa/mgQvLUcHo35at49uB4r4vxENpQr1oBXuWjVNlOA8t9ZaEK6xEfeec4xsT4mQ12
- xEPA==
-X-Gm-Message-State: AOJu0Yxd5ZUWp4LYUdR68ECXX1A6kfMKdJ7uKSyAF+i9uRL/jxwOLx8R
- ZQGQmshRzjqbEDxlPdapjgnfmMpl7Bpwpqx9cf/ByGAgzd6mNNmInw33lVXWiK/J8FLcejOb124
- BCBM=
-X-Gm-Gg: ASbGncsVM/GS8udDZEScZk/Dm0jK6XL/y31RcCoHVmcYd2EOuyOtnCgvAbAY/liUINM
- +Dba8/0cNEGRcgBJOGGxNy6QYnFmIZRhVaKDRs4/rbkrDgRJM8d8H4fTje6cllp4ywHtxMF/J1Q
- tua8iDTVLVy5oPvNEuUvrfveLenFazM10+BDWdi2hkbzU+rwW4yRuSY+FOxZr5yFk9uSJvlAcod
- h5Tfan12/tbTff7yuWswAvAKL97tcgHZLKj3ifvTw+vIRdUWJa+OxbXDk697ynMNSoj5nkp2VaM
- Iai2ngGl8gLRfCUUeAhsc6XtxS9OhLtHtEh9N0eXQMJAXttqoPz16l1T6e3w5ijjBWrLRoHBL/0
- QvmOum1OuQ8yDbmI5KVQ=
-X-Google-Smtp-Source: AGHT+IHIxS2nBbTkCFfhUa0L725ephvV/Uo1ESsaRG+Jl7BKmzoCqtJVQzYdFtvsEm6vfDvuJAb2yQ==
-X-Received: by 2002:a5d:5f45:0:b0:390:fb37:1bd with SMTP id
- ffacd0b85a97d-39132da8e47mr2305456f8f.46.1741360555832; 
- Fri, 07 Mar 2025 07:15:55 -0800 (PST)
+ bh=PLnyOTswVEaIwB5mduyl0BorXeO7LlZ/oZ3CWTRx72Q=;
+ b=Wp/SJmdi1Ft4Ifj86eW5Mbr5qsq/WZRm9aCzqIUPc/L9zytf1QY/qUPYvxe/EsNKLg
+ GEgGBlu/rylRqbH6156FYrAnAQnyTdVSRCLGD+UFm2/LTwh1cr2qbgaB4yYmVKNgySrW
+ bA1M4EC2pUHb69KImz26JaTj1KVzOhwo7WAvKxspKA6sAiRiwYDv93N9U9DvISuMqJbs
+ pwg/LkV5Grfv8+94q0YkUUFeYK2SKWnWTXtz/eSMEH+HFjha0FKQAz7b5Dlsq4DZZePf
+ IDgcoPXylz3U/d8GnU5DsYbIvTWqkNf3p71xpREXXR83ujRTl2JLrOMp0A3PyY4W5rqx
+ czeA==
+X-Gm-Message-State: AOJu0YzSl9P3oPShyQwoKX09Ks8JxrFQAHogqsheC6tA+jv/lIPbcRwX
+ /9PAm0IulSvT2tl97Nd9vGpHRMFpcYRyeHCW6ZRz/TrVy3O7Zxr7GAxgUStMvIeQaW4QLnqukTq
+ 668U=
+X-Gm-Gg: ASbGnctDwOQsahy9Gk2npK4r7MA5TCynXnSL+1ua7/k30pP7tIoPXsYK8KPkroyGVRJ
+ N9qlVumjDxnfdP1au3U89C8DlTDkvnBWabgoo+wjhf1zKsRjJ061P0Fg8vZCWG6rpSpwHhoGNNH
+ GwGYPZxiLUYLF6w14iEsuMMZU9ur5I4+ojmboij8ksogP8Ywu2L+9QeOpvwFvHwx/KRn9pLNHC5
+ Eef/sgkwh1hueuFU4nqN02JyDUO2rVCBJdCBD3rHlDPsY6SD9jtFg+gbBsxQgUz3QESTNKqmsuI
+ BHoT+OTrq9yRmqiX13qzioq3bqtqV7U77b+GOoDl4GH7FCHdQNih/x3Vs0OULjrG2x5ABFO3mC0
+ YotZ+SDJOsYoERL8kMY0=
+X-Google-Smtp-Source: AGHT+IHwBlMfoxAmttDu3Na/s3AqdWOqN+kkI2+sWSqc+y9t5/VH5MoIzS3usN6Ve/QcRbUh6pBbrg==
+X-Received: by 2002:a5d:47cc:0:b0:391:3049:d58d with SMTP id
+ ffacd0b85a97d-39132b58ad8mr3788604f8f.0.1741360560624; 
+ Fri, 07 Mar 2025 07:16:00 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfa52sm5474263f8f.21.2025.03.07.07.15.54
+ ffacd0b85a97d-3912bee262esm5625123f8f.0.2025.03.07.07.15.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 07 Mar 2025 07:15:55 -0800 (PST)
+ Fri, 07 Mar 2025 07:16:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -75,17 +75,18 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/7] hw/acpi: Introduce acpi_builtin() helper
-Date: Fri,  7 Mar 2025 16:15:38 +0100
-Message-ID: <20250307151543.8156-3-philmd@linaro.org>
+Subject: [PATCH 3/7] hw/i386/fw_cfg: Check ACPI availability with
+ acpi_builtin()
+Date: Fri,  7 Mar 2025 16:15:39 +0100
+Message-ID: <20250307151543.8156-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250307151543.8156-1-philmd@linaro.org>
 References: <20250307151543.8156-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,59 +109,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-acpi_builtin() can be used to check at runtime whether
-the ACPI subsystem is built in a qemu-system binary.
+Replace the compile-time CONFIG_ACPI check by a runtime one.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/acpi/acpi.h | 3 +++
- hw/acpi/acpi-stub.c    | 5 +++++
- hw/acpi/core.c         | 5 +++++
- 3 files changed, 13 insertions(+)
+ hw/i386/fw_cfg.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/acpi/acpi.h b/include/hw/acpi/acpi.h
-index e0e51e85b41..d1a4fa2af84 100644
---- a/include/hw/acpi/acpi.h
-+++ b/include/hw/acpi/acpi.h
-@@ -150,6 +150,9 @@ struct ACPIREGS {
-     Notifier wakeup;
- };
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index d08aefa0291..a7f1b60b98c 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -145,10 +145,10 @@ FWCfgState *fw_cfg_arch_create(MachineState *ms,
+      */
+     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, apic_id_limit);
+     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, ms->ram_size);
+-#ifdef CONFIG_ACPI
+-    fw_cfg_add_bytes(fw_cfg, FW_CFG_ACPI_TABLES,
+-                     acpi_tables, acpi_tables_len);
+-#endif
++    if (acpi_builtin()) {
++        fw_cfg_add_bytes(fw_cfg, FW_CFG_ACPI_TABLES,
++                         acpi_tables, acpi_tables_len);
++    }
+     fw_cfg_add_i32(fw_cfg, FW_CFG_IRQ0_OVERRIDE, 1);
  
-+/* Return whether ACPI subsystem is built in */
-+bool acpi_builtin(void);
-+
- /* PM_TMR */
- void acpi_pm_tmr_update(ACPIREGS *ar, bool enable);
- void acpi_pm_tmr_calc_overflow_time(ACPIREGS *ar);
-diff --git a/hw/acpi/acpi-stub.c b/hw/acpi/acpi-stub.c
-index e268ce9b1a9..790bf509e5d 100644
---- a/hw/acpi/acpi-stub.c
-+++ b/hw/acpi/acpi-stub.c
-@@ -25,3 +25,8 @@ void acpi_table_add(const QemuOpts *opts, Error **errp)
- {
-     g_assert_not_reached();
- }
-+
-+bool acpi_builtin(void)
-+{
-+    return false;
-+}
-diff --git a/hw/acpi/core.c b/hw/acpi/core.c
-index 870391ed7c8..58f8964e130 100644
---- a/hw/acpi/core.c
-+++ b/hw/acpi/core.c
-@@ -78,6 +78,11 @@ static void acpi_register_config(void)
- 
- opts_init(acpi_register_config);
- 
-+bool acpi_builtin(void)
-+{
-+    return true;
-+}
-+
- static int acpi_checksum(const uint8_t *data, int len)
- {
-     int sum, i;
+     fw_cfg_add_bytes(fw_cfg, FW_CFG_HPET, &hpet_fw_cfg, sizeof(hpet_fw_cfg));
 -- 
 2.47.1
 
