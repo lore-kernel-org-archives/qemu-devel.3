@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33575C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 11:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05047C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 11:56:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqWGs-0002La-E8; Fri, 07 Mar 2025 06:53:42 -0500
+	id 1tqWH5-0002Ny-Df; Fri, 07 Mar 2025 06:53:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWGq-0002Ks-EW
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWH4-0002Ni-1g
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWGo-0000Jw-Vc
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:40 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWH2-0000Lb-FL
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741348418;
+ s=mimecast20190719; t=1741348430;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6ODttkY/S+wdI4qfJM7IuKT40adwY7alCOmfckIuHiI=;
- b=B2I17mIV3/KGGqh4svGebo4LzdFlZnwEVO5PDbi0wSdkbnUYK1JEcMkD682iN20cA+aMom
- nm5urOCIkYIDgm8CT52OSbpd+OoBIfcTbMvIMw7LRRC5uwSsYb64JjjrrS05IhfYPGNuvw
- wrPmDQgnD0CGpL0op+mET1swvKpg6Xc=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Cd6O1VZDeIT786/XOF02v5jigOV2z1r9juG1O4n0MAM=;
+ b=YYw31uqsWAEemIzRC/JuY509eLYUeLTDNYem6tMtfnuQqlE5ROz9aK2IeVlrvjJaNwZjAO
+ S7jX4JvA+P2Io3jV2XDnfJCSxdvhZNtXuVHJfnknh7+WtCQUoA2U49sGz2Z4iMzX1FLK7J
+ jvn++tyebc90cYCeTFrNkJAkBJQuCUI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-116-8mLW6mMAMs6zK0TWCchM8Q-1; Fri,
- 07 Mar 2025 06:53:37 -0500
-X-MC-Unique: 8mLW6mMAMs6zK0TWCchM8Q-1
-X-Mimecast-MFC-AGG-ID: 8mLW6mMAMs6zK0TWCchM8Q_1741348416
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-_pdVH5ESOMSRMxsgZakQLw-1; Fri,
+ 07 Mar 2025 06:53:47 -0500
+X-MC-Unique: _pdVH5ESOMSRMxsgZakQLw-1
+X-Mimecast-MFC-AGG-ID: _pdVH5ESOMSRMxsgZakQLw_1741348426
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C0771956048
- for <qemu-devel@nongnu.org>; Fri,  7 Mar 2025 11:53:36 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD9EA19560A1
+ for <qemu-devel@nongnu.org>; Fri,  7 Mar 2025 11:53:46 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.60])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B28231944F2E; Fri,  7 Mar 2025 11:53:33 +0000 (UTC)
+ id 66C561944F2E; Fri,  7 Mar 2025 11:53:43 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 06/15] tests/functional: stop output from zstd command when
- uncompressing
-Date: Fri,  7 Mar 2025 12:53:05 +0100
-Message-ID: <20250307115314.1096373-7-thuth@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PULL 10/15] tests/functional: fix race in virtio balloon test
+Date: Fri,  7 Mar 2025 12:53:09 +0100
+Message-ID: <20250307115314.1096373-11-thuth@redhat.com>
 In-Reply-To: <20250307115314.1096373-1-thuth@redhat.com>
 References: <20250307115314.1096373-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,46 +87,81 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The zstd command will print incremental decompression progress to stderr
-when running. Fortunately it is not on stdout as that would confuse the
-TAP parsing, but we should still not have this printed. By switching
-from 'check_call' to 'run' with the check=True and capture_output=True
-we'll get the desired silence on success, and on failure the raised
-exception will automatically include stdout/stderr data for diagnosis
-purposes.
+There are two race conditions in the recently added virtio balloon
+test
+
+ * The /dev/vda device node is not ready
+ * The virtio-balloon driver has not issued the first stats refresh
+
+To fix the former, monitor dmesg for a line about 'vda'.
+
+To fix the latter, retry the stats query until seeing fresh data.
+
+Adding 'quiet' to the kernel command line reduces serial output
+which otherwise slows boot, making it less likely to hit the former
+race too.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250304183340.3749797-1-berrange@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250228102738.3064045-8-berrange@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+[thuth: Break long line to avoid checkpatch error]
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/uncompress.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tests/functional/test_virtio_balloon.py | 26 ++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
-index 76dcf223856..ce79da1b686 100644
---- a/tests/functional/qemu_test/uncompress.py
-+++ b/tests/functional/qemu_test/uncompress.py
-@@ -13,7 +13,7 @@
- import stat
- import shutil
- from urllib.parse import urlparse
--from subprocess import check_call, CalledProcessError
-+from subprocess import run, CalledProcessError, DEVNULL
+diff --git a/tests/functional/test_virtio_balloon.py b/tests/functional/test_virtio_balloon.py
+index 67b48e1b4e8..082bf08c4e8 100755
+--- a/tests/functional/test_virtio_balloon.py
++++ b/tests/functional/test_virtio_balloon.py
+@@ -32,7 +32,7 @@ class VirtioBalloonx86(QemuSystemTest):
+         'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
  
- from .asset import Asset
+     DEFAULT_KERNEL_PARAMS = ('root=/dev/vda1 console=ttyS0 net.ifnames=0 '
+-                             'rd.rescue')
++                             'rd.rescue quiet')
  
-@@ -46,8 +46,8 @@ def zstd_uncompress(zstd_path, output_path):
-         return
+     def wait_for_console_pattern(self, success_message, vm=None):
+         wait_for_console_pattern(
+@@ -47,6 +47,11 @@ def mount_root(self):
+         prompt = '# '
+         self.wait_for_console_pattern(prompt)
  
-     try:
--        check_call(['zstd', "-f", "-d", zstd_path,
--                    "-o", output_path])
-+        run(['zstd', "-f", "-d", zstd_path,
-+             "-o", output_path], capture_output=True, check=True)
-     except CalledProcessError as e:
-         os.remove(output_path)
-         raise Exception(
++        # Synchronize on virtio-block driver creating the root device
++        exec_command_and_wait_for_pattern(self,
++                        "while ! (dmesg -c | grep vda:) ; do sleep 1 ; done",
++                        "vda1")
++
+         exec_command_and_wait_for_pattern(self, 'mount /dev/vda1 /sysroot',
+                                           prompt)
+         exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
+@@ -65,10 +70,21 @@ def assert_initial_stats(self):
+             assert val == UNSET_STATS_VALUE
+ 
+     def assert_running_stats(self, then):
+-        ret = self.vm.qmp('qom-get',
+-                          {'path': '/machine/peripheral/balloon',
+-                           'property': 'guest-stats'})['return']
+-        when = ret.get('last-update')
++        # We told the QEMU to refresh stats every 100ms, but
++        # there can be a delay between virtio-ballon driver
++        # being modprobed and seeing the first stats refresh
++        # Retry a few times for robustness under heavy load
++        retries = 10
++        when = 0
++        while when == 0 and retries:
++            ret = self.vm.qmp('qom-get',
++                              {'path': '/machine/peripheral/balloon',
++                               'property': 'guest-stats'})['return']
++            when = ret.get('last-update')
++            if when == 0:
++                retries = retries - 1
++                time.sleep(0.5)
++
+         now = time.time()
+ 
+         assert when > then and when < now
 -- 
 2.48.1
 
