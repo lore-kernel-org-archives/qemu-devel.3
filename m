@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2405C28B24
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB26C28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcsh-0007Xz-05; Fri, 07 Mar 2025 13:57:11 -0500
+	id 1tqcsc-0007X9-T3; Fri, 07 Mar 2025 13:57:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsV-0007T8-0N
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:59 -0500
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1tqcsY-0007Up-6G
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:57:02 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsS-0007nW-Cy
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:58 -0500
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2ff6ae7667dso4392664a91.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:55 -0800 (PST)
+ id 1tqcsW-0007pM-MZ
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:57:01 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2ff6ae7667dso4392832a91.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:57:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741373814; x=1741978614; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741373819; x=1741978619; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=13ZFhLiBHBjpoAqV9uKZaMKlyYRJeq7eTuuvmkqTawA=;
- b=MJHLb+4qdZheBqrNvc+rfUB/yzNXmhOxppiTeY5oedFF2ty/4gKjGLGM9qxGron3nC
- b2UQEMe76KkzWjiePnblvuH2ANwyFQAzk3AEMjdyrjdwLPIVoQOUrwRDjNmwnQH6BEwD
- 68Kd3uaC8GnqcjUPvabBlTUEveFhvzGd/jcKs/HK0WiMEGz/Yc7dxIH0FS4TnE7QLslJ
- hllIHqPZcvtz2zmnn4c3NrHct9o2CufA+nQXwbsUiVAaegD5Kn7e3hyFcsBq1CjSbhqu
- v/XIJHoF49O5++GP4M5PPrcIv3EBQ6zXjiEsD2YB5XQr6pUS4zNha5j4HT2jru4s2HH5
- a3pA==
+ bh=U6baNnWHy0ZHd5ntn8fAFXTjSBc8gCrPqSjCFJWFWZE=;
+ b=i0Dn61+wwzXEWZqVaoCZBDJWOvSyoL+WT2hB9QUF3Iv8Il/uV9bOrDKAPJbp+I1ZTB
+ 8KxJpPLVe1QfNMKFvLI4XixczQPBpPxFTPChYRLgH2baPaqlS5AdukofH04/C6JlZINt
+ jnu2yswjTEpht23kthkQy63q/i8rbdYs+cFmcm7+Yg2LQmBIKMA5VozqBYPn15gEyfWW
+ XPddsURD1/6YXl3EROrd1FcnjuQRaPl6tpnRIjjhPOMyKJJWvb50pTQsLLPRixmnJMg1
+ KKQYscx2GNg7nwqKa0Yl4ujOKaXWKXQ+AZDuHSLqOCKX2sczrmy0dqexuK2o6zWiPnIR
+ Cjag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741373814; x=1741978614;
+ d=1e100.net; s=20230601; t=1741373819; x=1741978619;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=13ZFhLiBHBjpoAqV9uKZaMKlyYRJeq7eTuuvmkqTawA=;
- b=k+QojHKfwt3yNjGYaMtLH7NtZlo3wO3u0Ays2r3w0/TpqLZOk5matEA+gplLv/SlXx
- mOg8G2dQSprwPdP4CvmNVQb3A0vTN2QqOa3ck7GzH8HfK5s9vAZhBcEBgPpiQknQiUMD
- 310vMu6K5mZrQACf88OfhE69HptervsHDS5xvBXAfgyQ+M0+27QPeIP5qsFolef8miy0
- mCcMDo7ttc+Kpwc+sd/oLWSvApWjXpEqAw0lCY634MeQBLGNBNbjJWIdtJMo9cq+ZjH0
- kXeEMq6BDKun/jTZy3Y0jnrbJXpunbFjwzro6oXzcsXFzwyU8Gd3YQ2nZJFd2ZUp2pOI
- 3Ltg==
-X-Gm-Message-State: AOJu0YzDmRtX7BPUeZylNVpb8V3BIiibaebRM3cm1lHyzcgNrM//bXVc
- 1c6x/xnR19BwP8lFzc2r99fgoRFhJE6Exh1hBuAFnzSNBvkEzGbpAP6idmnW7q7jgKdYwu0go8p
- V
-X-Gm-Gg: ASbGncsFjQMSH6UIa0S0e9Gt00aZNvtmgJQ9AjEj9ZnH8o5ZAOPKhVYLpMDNc1arA+F
- eHkvUlOTHnFLfLW0RkrZfQmpMZ56eY+SeQczQ0MM4CcbtMB82f/q3YQTd4TwypChOwngIcPadyI
- lfhevPd7oUKTLron4nuXq6cp1TU5LeuqpePaKbzULrpLOT8wZ6KIA3Q39gJ1MoSZjwoc9wFDUmI
- 9qgIiTpcZOsRh/KiT+5uvVD4O+5/ADAYONe/yw9G2Aak8Q3TlIdEs3VQBFaLumKG9X1/pH57rd/
- b3q2DiWVjiGWPJeoVyJux4D/Yvez2oMGL4M8NQW2cIR5xHkNMlG/TSUSUYYmNiT3VWXqVJFwL2Y
- v
-X-Google-Smtp-Source: AGHT+IEAY/SPgd3nEC+70Ay82umoGARB5I1yeVNjbtP87Prcx09es8xIt2jI2qthEYcfy4pdsVb0Sg==
-X-Received: by 2002:a17:90b:4cca:b0:2ff:7b28:a51c with SMTP id
- 98e67ed59e1d1-2ff7cf32cb7mr5728103a91.34.1741373814493; 
- Fri, 07 Mar 2025 10:56:54 -0800 (PST)
+ bh=U6baNnWHy0ZHd5ntn8fAFXTjSBc8gCrPqSjCFJWFWZE=;
+ b=HupBuITScu01Ly5FnJMV598J3YtEFqUQtlJI1nXwFoR2EXSfLoWqUB7QZ8iTFNfr/f
+ 3AkctwGmECMFTW54A/GU4l5Ce9Yv9ssiDyg0JIGWLnWJfTBcQ0rNJKsqy5OoNzxLttu1
+ 7YbtAcx2D/H77Fu805Oj9GPw6IXyFYZmnZl85MbYEMNYBwCypI6wcdP/s8xiH1lxFYJH
+ rL/zvI+DcRNURiNSA3qtJ9s6DNfcJeq37WfZWdnz7T3XKhEYJcC7plsFTO5VjCjdSIKz
+ n5w59nGjcq3L6erjhiVkWbh2S33qmJfHX0Rs6K/nM2k23tYU8IqKKVQwucYeLGnThu9t
+ 4fjA==
+X-Gm-Message-State: AOJu0YzkaegaHaTABafR9G1h1BmSLQgmjBsLPMO4cd6EvbgNNahgC1VT
+ sDrF7M/Ekp0P0GJ0z5wtkgI1ujn3OToqKkNXE1Kwsx3MiwA0jof8To1QX1CUFdDWggbbE1X3bE0
+ 3
+X-Gm-Gg: ASbGnctA/B03jPyU+js+3QzFGoYntuFnITjkm3lsMsu3w1VYDEJ8w+fIiSQvD4iN8KE
+ 97AIAfwfnuLnZ7oHHDlwWDmg8wAptfrclMXNA4JOGxfxCxOEFr6N8OLBvNBqjdRSmuLhO1s0H8A
+ aOci3kXrSYdyDkS/pndiMRWyQSRFGalQH1BCb8EIh6klyH9rhxNuZjbTzOBrpV83Da7L7sIbHdp
+ scz1HHCQd4WLS+x7ORtY82NgEEqwHNtI8IzxdXd05fPPGt9uQpQrXQzZH9bwgWr1buJEhebV+qE
+ gvfnfT+mVTk0sjx8k0HCZv5ZnhMIutTwHarcdkGFbN8R5a5QjlYQ23Xa215rXDWLnZ52Kk4GSfU
+ a
+X-Google-Smtp-Source: AGHT+IFsw/XOvGJcwXtADDB/hFwtkZ12uAkErnlnwZWRixIpMVNGa5K0GBDNKuSaAegrps9pWFZafA==
+X-Received: by 2002:a17:90b:164f:b0:2ee:45fd:34f2 with SMTP id
+ 98e67ed59e1d1-2ff7ce596edmr6719118a91.6.1741373819313; 
+ Fri, 07 Mar 2025 10:56:59 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.53
+ 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 10:56:54 -0800 (PST)
+ Fri, 07 Mar 2025 10:56:58 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH 09/16] system: Build watchpoint.c once
-Date: Fri,  7 Mar 2025 10:56:38 -0800
-Message-ID: <20250307185645.970034-11-richard.henderson@linaro.org>
+Subject: [PATCH 16/16] accel/tcg: Build tcg-runtime-gvec.c once
+Date: Fri,  7 Mar 2025 10:56:45 -0800
+Message-ID: <20250307185645.970034-18-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307185645.970034-1-richard.henderson@linaro.org>
 References: <20250307185645.970034-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,34 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that watchpoint.c uses cputlb.h instead of exec-all.h,
-it can be built once.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- system/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ accel/tcg/tcg-runtime-gvec.c | 1 -
+ accel/tcg/meson.build        | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/system/meson.build b/system/meson.build
-index 4952f4b2c7..c83d80fa24 100644
---- a/system/meson.build
-+++ b/system/meson.build
-@@ -3,7 +3,6 @@ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
-   'ioport.c',
-   'memory.c',
-   'physmem.c',
--  'watchpoint.c',
- )])
+diff --git a/accel/tcg/tcg-runtime-gvec.c b/accel/tcg/tcg-runtime-gvec.c
+index afca89baa1..ff927c5dd8 100644
+--- a/accel/tcg/tcg-runtime-gvec.c
++++ b/accel/tcg/tcg-runtime-gvec.c
+@@ -19,7 +19,6 @@
  
- system_ss.add(files(
-@@ -24,6 +23,7 @@ system_ss.add(files(
-   'runstate.c',
-   'tpm-hmp-cmds.c',
-   'vl.c',
-+  'watchpoint.c',
- ), sdl, libpmem, libdaxctl)
+ #include "qemu/osdep.h"
+ #include "qemu/host-utils.h"
+-#include "cpu.h"
+ #include "exec/helper-proto-common.h"
+ #include "tcg/tcg-gvec-desc.h"
  
- if have_tpm
+diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+index 411fe28dea..38ff227eb0 100644
+--- a/accel/tcg/meson.build
++++ b/accel/tcg/meson.build
+@@ -1,13 +1,13 @@
+ common_ss.add(when: 'CONFIG_TCG', if_true: files(
+   'cpu-exec-common.c',
+   'tcg-runtime.c',
++  'tcg-runtime-gvec.c',
+ ))
+ tcg_specific_ss = ss.source_set()
+ tcg_specific_ss.add(files(
+   'tcg-all.c',
+   'cpu-exec.c',
+   'tb-maint.c',
+-  'tcg-runtime-gvec.c',
+   'translate-all.c',
+   'translator.c',
+ ))
 -- 
 2.43.0
 
