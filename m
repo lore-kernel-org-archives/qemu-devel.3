@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F9B0C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 11:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5729EC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 11:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqWGo-0002Kf-FY; Fri, 07 Mar 2025 06:53:38 -0500
+	id 1tqWH7-0002OT-9X; Fri, 07 Mar 2025 06:53:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWGl-0002Jk-Ts
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:36 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWH3-0002Nh-Up
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWGg-0000IJ-NL
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:35 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWH2-0000Lk-Fd
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741348409;
+ s=mimecast20190719; t=1741348432;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MfhLHfgKPr/FwlLhvjlnugv1UxVPm/hPYhqF6xil7OY=;
- b=CyucGqpd9VxXsuLX3Hj9lRNGQRAPITDXPQcpTQ0CzUkyVnl48bIYeC0k5wNcwVH/jYucno
- puejda410ZjuLOd/LLdEf4lWPZllcwaEMhcXdUusGnJBifE2Wh/j+8zkVgzW7y+WyEacz7
- BXsti6Cmr5A8e1MbCAbojp/ZXe7QhjM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=v9KadL5vdr7SKy68eKgZ8dWZa4b1SmWVaaLeb6HSmlQ=;
+ b=CD0rVS3hBIW7jwMiUAzoQOYNkl+dAqKI2116h00WOVvgfIvMOqifc2aSLY0BRLLgEk0qBp
+ a+WPsZ/89eEUxQXApoGM6iSnbL1ok6P/cfncMS3ehKjkpmsaEAYzwIsjFaJiotRmzy3Hen
+ z+5meEu+coDacV0vqgeu86vG6uAQV1U=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-tjL5iULGOhmwDoIzDT0zIg-1; Fri,
- 07 Mar 2025 06:53:26 -0500
-X-MC-Unique: tjL5iULGOhmwDoIzDT0zIg-1
-X-Mimecast-MFC-AGG-ID: tjL5iULGOhmwDoIzDT0zIg_1741348405
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-DGRZ1yeiOpeN0orzR77kHg-1; Fri,
+ 07 Mar 2025 06:53:50 -0500
+X-MC-Unique: DGRZ1yeiOpeN0orzR77kHg-1
+X-Mimecast-MFC-AGG-ID: DGRZ1yeiOpeN0orzR77kHg_1741348429
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB6A91956048; Fri,  7 Mar 2025 11:53:25 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D0FA0195609F
+ for <qemu-devel@nongnu.org>; Fri,  7 Mar 2025 11:53:49 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.60])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 213F11944F2E; Fri,  7 Mar 2025 11:53:21 +0000 (UTC)
+ id 0C5A41944F2E; Fri,  7 Mar 2025 11:53:47 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 02/15] tests/functional: set 'qemu_bin' as an object level field
-Date: Fri,  7 Mar 2025 12:53:01 +0100
-Message-ID: <20250307115314.1096373-3-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, David Hildenbrand <david@redhat.com>
+Subject: [PULL 11/15] tests/functional/test_virtio_balloon: Only use KVM for
+ running this test
+Date: Fri,  7 Mar 2025 12:53:10 +0100
+Message-ID: <20250307115314.1096373-12-thuth@redhat.com>
 In-Reply-To: <20250307115314.1096373-1-thuth@redhat.com>
 References: <20250307115314.1096373-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -84,57 +83,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+The virtio_balloon test is currently hanging for unknown reasons
+when being run on the shared gitlab CI runners (which don't provide
+KVM, thus it's running in TCG mode there). All other functional tests
+that use the same asset (the Fedora 31 kernel) have already been
+marked to work only with KVM in the past, so those other tests are
+skipped on the shared gitlab CI runners. As long as the problem isn't
+fully understood and fixed, let's do the same with the virtio_balloon
+test to avoid that the CI is failing here.
 
-The 'qemu_bin' field is currently set on the class, despite being
-accessed as if it were an object instance field with 'self.qemu_bin'.
-
-This is no obvious need to have it as a class field, so move it into
-the object instance.
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250228102738.3064045-3-berrange@redhat.com>
+Message-ID: <20250307063904.1081961-1-thuth@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/devel/testing/functional.rst      | 2 +-
- tests/functional/qemu_test/testcase.py | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tests/functional/test_virtio_balloon.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index ecc738922b7..bcb5509512e 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -173,7 +173,7 @@ QEMU binary selection
- ^^^^^^^^^^^^^^^^^^^^^
+diff --git a/tests/functional/test_virtio_balloon.py b/tests/functional/test_virtio_balloon.py
+index 082bf08c4e8..5877b6c408c 100755
+--- a/tests/functional/test_virtio_balloon.py
++++ b/tests/functional/test_virtio_balloon.py
+@@ -110,6 +110,7 @@ def assert_running_stats(self, then):
  
- The QEMU binary used for the ``self.vm`` QEMUMachine instance will
--primarily depend on the value of the ``qemu_bin`` class attribute.
-+primarily depend on the value of the ``qemu_bin`` instance attribute.
- If it is not explicitly set by the test code, its default value will
- be the result the QEMU_TEST_QEMU_BINARY environment variable.
- 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 9d5611c4d7f..058bf270eca 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -33,7 +33,6 @@
- 
- class QemuBaseTest(unittest.TestCase):
- 
--    qemu_bin = os.getenv('QEMU_TEST_QEMU_BINARY')
-     arch = None
- 
-     workdir = None
-@@ -193,6 +192,7 @@ def assets_available(self):
-         return True
- 
-     def setUp(self):
-+        self.qemu_bin = os.getenv('QEMU_TEST_QEMU_BINARY')
-         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
-         self.arch = self.qemu_bin.split('-')[-1]
-         self.socketdir = None
+     def test_virtio_balloon_stats(self):
+         self.set_machine('q35')
++        self.require_accelerator("kvm")
+         kernel_path = self.ASSET_KERNEL.fetch()
+         initrd_path = self.ASSET_INITRD.fetch()
+         diskimage_path = self.ASSET_DISKIMAGE.fetch()
+@@ -122,7 +123,7 @@ def test_virtio_balloon_stats(self):
+         # reset, we can reliably catch the clean stats again in BIOS
+         # phase before the guest OS launches
+         self.vm.add_args("-boot", "menu=on")
+-        self.vm.add_args("-machine", "q35,accel=kvm:tcg")
++        self.vm.add_args("-accel", "kvm")
+         self.vm.add_args("-device", "virtio-balloon,id=balloon")
+         self.vm.add_args('-drive',
+                          f'file={diskimage_path},if=none,id=drv0,snapshot=on')
 -- 
 2.48.1
 
