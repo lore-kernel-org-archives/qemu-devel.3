@@ -4,91 +4,208 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8391C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED730C28B25
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:48:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqgPm-0003Sm-Gy; Fri, 07 Mar 2025 17:43:34 -0500
+	id 1tqgUO-0006Lq-9H; Fri, 07 Mar 2025 17:48:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqgPk-0003Ri-68
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:43:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1tqgUM-0006J4-9F
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:48:18 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqgPi-0004RJ-3P
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:43:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741387408;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oz/XZ0UZs0t/89iAj1+OMLxOHoE+RFXNTb7ZmRrWT3o=;
- b=aRS731PyTHPC9ardMCstw80R1/COg1x+SsoHOVn29U1TdBWEIpZejZIs17P5Dyn6ILeuEF
- kklz6ZEIiaXdp4CIvA1SRt5LMg3UudpmW7y9bjqeh3LDyJL5lAml5MYAbxLNYUK/A8iFkt
- vPOlgPEc93+Ul+JQCKwhz11a8cJGrzM=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-345-tvfN-i14MeajqCJnxoAxig-1; Fri, 07 Mar 2025 17:43:27 -0500
-X-MC-Unique: tvfN-i14MeajqCJnxoAxig-1
-X-Mimecast-MFC-AGG-ID: tvfN-i14MeajqCJnxoAxig_1741387406
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2ff605a7a43so6917925a91.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:43:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741387406; x=1741992206;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oz/XZ0UZs0t/89iAj1+OMLxOHoE+RFXNTb7ZmRrWT3o=;
- b=SqWANE2ZKI82sxKe+nNF9xSP5GsmrkWmmFwVNfvUkn8Yu252BQH8Ri6UGqgTJUt7+F
- 4fwV6ln12iH/NoWPQydO5TmUFG6zS9fI0qqr7XGuihjHaoyBacFYyitR+JhM8EIDmq4m
- LSI+fRKcwDUqCf4G9Cg6EK4q0OUossnvBEH/FGmi3YvGiLlboyPzNd5t7uaKgu6Kyrex
- zitYyThwl3Rz33YcCzLm1x/IZISBxLpqsBc40P95jBHIyq+iiJP8F3F/RVU80H9z1IPu
- 0o6j863CqsvavtG6Yj3zLyRf9HOu6tMI2eRRA1gsUmJouhzi0m42/kxs+kXSXmHOXny0
- saWA==
-X-Gm-Message-State: AOJu0YyDgZhQKeriWTuWRhpuqSZJ9HMwJ9RQ65vp6XZ3oIPV38bOqYXr
- HtRl+qYyN/XhTnW7nDFv6n9XBbSjZxus4rT8WgweKB4AZZKkW/0sOO5JsMipKD9kxfWtXwU3oHt
- HW9kK5knt4HVJEHawd3+gmUBbTFwiESg23skBOHIOKCRC3/igZ6rqmOyU+kjYDD6lHo9GgGeg61
- x+tFNusALU3trzy4vUiWTR4JlAwt0=
-X-Gm-Gg: ASbGncve4fLswsad0vnCIM+tnsGBDebEgl05Qu8IHT5OyjV/hRS246w98CwaMGQkk05
- ksm9XtClefEm4eKjNX+yv6fRcp8PAHV8yfmyvno4URBxElyigVMqmbjSAGm3kgz1PLN3gpg==
-X-Received: by 2002:a17:90a:e7c2:b0:2fe:8a84:e032 with SMTP id
- 98e67ed59e1d1-2ff7ceab4d6mr8155628a91.20.1741387406084; 
- Fri, 07 Mar 2025 14:43:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF/SQKtjg/xzSjPTQQC5Ll/5LaU0Ewd4/4LLtlFnR3ylVS/ZQO8ogqifYwqXxe6OzFeYGHYF7A1Rvd/Tf9g7z4=
-X-Received: by 2002:a17:90a:e7c2:b0:2fe:8a84:e032 with SMTP id
- 98e67ed59e1d1-2ff7ceab4d6mr8155618a91.20.1741387405869; Fri, 07 Mar 2025
- 14:43:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1tqgUJ-0000g5-Hn
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:48:17 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 527LJI83012281;
+ Fri, 7 Mar 2025 22:47:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=DdSNich6hsqBbqHV+g14G3nLCBrE/IDsP2qnk5cgTmE=; b=
+ RDhcMl9BGSSC6TCov6Oyv/K1J7zo7QMOobJe5/VJwSVZ7rsVvG6xqs1x0jJ4zmMo
+ Pmsn4fR6tctf2bCzcc+A6XJA4UbdtJCWxpmmv/dW+CSAkCR+c5KrvC0bp90uplhg
+ 0KBU5Q/xMz/Fmjbt5aIQD0pkN/krS2wTkljJWo8CwOIXhxLbJnufCsGP96iXq+uQ
+ gC4iPv+tW9tpNgUnhxnLr6MdQwHMpigymFbQXETPcGdWc1Ea2GSU2Hu0w/GQRAYf
+ O92LF4TfEY6jY607vP8/0xWupKbXg3pTc3aXE3L4Uqfk0UD9MIFXL2gCE+p4qWhV
+ KHXWs5SkGfPUk/S286QCXA==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 453u8ww0mm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 07 Mar 2025 22:47:58 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 527MOS0u003230; Fri, 7 Mar 2025 22:47:58 GMT
+Received: from nam11-co1-obe.outbound.protection.outlook.com
+ (mail-co1nam11lp2176.outbound.protection.outlook.com [104.47.56.176])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 453rpe483g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 07 Mar 2025 22:47:58 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KTVJOibS4Y29VxwNUbCKK8fliyKksPYXn2sw8toJ0WJ2cqEPcF3fYdsSFY2luVcl4ZsSuZS/2c66KXzlfFnTu5M67dtNIaIYHiqCmd7o1uEkorEjbMSx4Dbn6i5SYTj80eBYNqPpbPHO4CLJ60vSW9v06JMRVOM0EBjBL8Cwyqp3m9eJJd1lvMbfSUTaBtrQnAKh3L/J9pVNjqgjk/xzBPelV0ZNI87bcIxd1nV53ENBcJJAwWy+V6rF0TONEOU7zMJ1NszDMU6fRA0kOFrWYeJZqdYAMjoaxni22dWnEKKnVLBD0fVhOUnhmt+FD3gA5EfJ4iqIN2pY7+qv+Pijww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DdSNich6hsqBbqHV+g14G3nLCBrE/IDsP2qnk5cgTmE=;
+ b=mllKq7aoSkUBocxCWZHT/Q2f8c+LoU7x9HPLvKBE1YtaDQHvNAhAnL0dENYXyLpyn2sH8MvrH4cSNAl/GKqJ/pHFBgTHf02/YAMYRzWTMWfITev9bJ1Pn42aXDEeT5dOTMphgXCOAqDXcZOQtDtSmLDxudXbK35n+rQWe56K1hes27kGcL7a12ARDYfFkiZVrIrFyCgmYcwoE1WLbHZSjm9briOtOdCYEBmmLzNaV/6GVWb0ddqNmBtHmvDFpOXSYHUHo4/ImS0yawHJGTEkUo1AhkniiveauxrV2WE3/NRn0tN91PtvFaLxR8IlaZoimzjRE1EJzHkQkB5Ignk75Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DdSNich6hsqBbqHV+g14G3nLCBrE/IDsP2qnk5cgTmE=;
+ b=umIwlT/BdKvGEXnXRMDfK5T97P8jLCUO449psUez4Sqm++bOGxKImcxqO29hsXQHc/uAjpqSVIbgfjzpbepnxOKupzCQL1Lb2F1M/XBeB85DrdumF+yRUZltB6358nya49re0BInFcGXNElfDnM5rHyHcjFTW6NvlN7kgr2Pqr0=
+Received: from BN6PR1001MB2068.namprd10.prod.outlook.com
+ (2603:10b6:405:2b::35) by SA1PR10MB6663.namprd10.prod.outlook.com
+ (2603:10b6:806:2ba::6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.22; Fri, 7 Mar
+ 2025 22:47:55 +0000
+Received: from BN6PR1001MB2068.namprd10.prod.outlook.com
+ ([fe80::c9b4:7351:3a7d:942f]) by BN6PR1001MB2068.namprd10.prod.outlook.com
+ ([fe80::c9b4:7351:3a7d:942f%4]) with mapi id 15.20.8511.017; Fri, 7 Mar 2025
+ 22:47:55 +0000
+Message-ID: <23cca084-2081-408d-a360-22fad0ff5037@oracle.com>
+Date: Fri, 7 Mar 2025 14:47:46 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/10] target/i386/kvm: extract unrelated code out of
+ kvm_x86_build_cpuid()
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
+ likexu@tencent.com, like.xu.linux@gmail.com, zhenyuw@linux.intel.com,
+ groug@kaod.org, khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com
+References: <20250302220112.17653-1-dongli.zhang@oracle.com>
+ <20250302220112.17653-6-dongli.zhang@oracle.com> <Z8q5NHQeIgXxTmPO@intel.com>
+Content-Language: en-US
+From: Dongli Zhang <dongli.zhang@oracle.com>
+In-Reply-To: <Z8q5NHQeIgXxTmPO@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO2P123CA0092.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:139::7) To BN6PR1001MB2068.namprd10.prod.outlook.com
+ (2603:10b6:405:2b::35)
 MIME-Version: 1.0
-References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-13-jsnow@redhat.com>
- <878qphs4v1.fsf@pond.sub.org>
-In-Reply-To: <878qphs4v1.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 7 Mar 2025 17:43:13 -0500
-X-Gm-Features: AQ5f1JoPfPufgUmfy3n10viSprRccxKRR-1eoP42yK5dMZjYMRWunJE0j3-Xb9Y
-Message-ID: <CAFn=p-bDyj5AQ0TK9Y8BQj-zj9uVg8MOO7NFq5S_A0UTmjpWeg@mail.gmail.com>
-Subject: Re: [PATCH 12/57] docs/qapi-domain: add :since: directive option
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000be5a19062fc859be"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN6PR1001MB2068:EE_|SA1PR10MB6663:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6903ae77-ca1a-40c8-78bd-08dd5dca1983
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|7416014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Y01wcW9vaWVWNUpTYmUydEFURjR1TzBrRzBwTVlsa0lJckR1UERuOFREZS91?=
+ =?utf-8?B?dC81cVVmUHc3UEtUNHRSaDM4bmdxcTZNRCtqRUJqSEJYMHZ4MldxVDNHaE82?=
+ =?utf-8?B?a2s1VXVwdVgrd0VZZXM5MlIxakZVUGNBdU1BaCtnd05MSmltMWkwVVY1UDdZ?=
+ =?utf-8?B?SWxhLzF5dXRQQ0drUTczS01uT1NGTWN2MUZ4OVF3cHdROERZbUR5M0NVM2Jh?=
+ =?utf-8?B?alBrNmw3TjlETTlXZ21GSElBM3FvQ05KNGxPRVRMcUVUSGVRd2dmenF3UmdX?=
+ =?utf-8?B?bnUzcENHNVIzSm1rZjNmUUEwWERZOEpCUzVlM3lTWk82SU0xWEV6QlA4VjlL?=
+ =?utf-8?B?c295blJlc2FGdGRSakZZKzA3cCsvNVNnblk3Y1RMRzh5NWJNd0xzRzJUMmZt?=
+ =?utf-8?B?TTVkb0I2aHhtSG53cU5uMHMzTGpPVTRXU0NKaC94aVdBNXlJaFV4Ui9CdXNz?=
+ =?utf-8?B?LzRoejc2dS9lSnp4LzgrMjdEU09FNHZWaWtpR0ZZdEx4Z1FQa01TaXJ4WHd2?=
+ =?utf-8?B?K1FGSGp2TWJSQm1kZWpFRlF2dnUrcklSbEhiUFNDelRLTUQ3aXRma3JyYVdH?=
+ =?utf-8?B?Q2xHdnVITGhGa05zSTB3Q1hUZEEwYnJDWGxIZ0ZUaXNPNTVSWmRMRlk4Mzlo?=
+ =?utf-8?B?UGxFREUwbEVuUTRoVi8zeEdwaVBOV1pVdHk3bzJRY3RMWEVFK3luRkxhRGhM?=
+ =?utf-8?B?RERxOWxmQmNsa2d1d3IvQmxOZG5OWDlsTjZpRUJaUjNLQ2xURGJNSmxjL1lH?=
+ =?utf-8?B?UExYQjFENGV6bVd4RDlwRHNKeWFzMTFlSnNML2JocWVEMWRiTnNRSWQyaURq?=
+ =?utf-8?B?dnd5SUNVREhaUXhrL3lNdWVLOWRBdklPK3VKT0VLOUFOR0UvSHp2Q2Z5ZlNx?=
+ =?utf-8?B?S0JuSWVWaUVyTStRVVJvc0ltR1ZkR3pkQW11YjFKb2FKS3B1TVZ5VmZBamts?=
+ =?utf-8?B?WFZzeTlTMkNqWVhqOXRnMlQvQnBGMng0R0F6VzhYb1E4OWR1aXR0T05KU0lV?=
+ =?utf-8?B?UjV2ZnhuSkkrWW1NRTl0eitDdFg2Sm8xcWhHRjV1OWlYNnNOcUJNZE1VNnc0?=
+ =?utf-8?B?MW1wM2xhWWdqL2ZtWHJlUkxHVWdLUEFKcUNicW5BZE9mSFRTeVZrT1JlSHVY?=
+ =?utf-8?B?MnJlcDJjUjB1REtWWkF2cFFDZmxzY1FpaGR0aFdkNS9XdW1rTmhHa1pDN1pi?=
+ =?utf-8?B?Y0IzYkFmSXhlZ3ZNUEFPa2cxVVZOYXYyM3RBaEsvVkNUYTI1Vkp0U09MaXlt?=
+ =?utf-8?B?b3J5OGw5eGRHWVVycTY5N2ZkcjVITVJEQVFDVWNJMDZRYWlodndwY05sWG5D?=
+ =?utf-8?B?ekhZNi9jazM1czlGWXNnQjdWTEY3SjUrYmpRbXMvWGgyUVJIVDlUNU05T0dL?=
+ =?utf-8?B?clF4am1TUHdjeUpiZHZLVVNhVmNkODZLZkZ1d1VpS2s0eEx2S0hKS3o3U1Zh?=
+ =?utf-8?B?VXpqLzdBdkJEUjNKMmM2YXp1NHNUM2ZwUkhaWmNYVEwzcVRYZlZFVkhIOVVj?=
+ =?utf-8?B?TFp3a0c3VUxVYlZ2YlJhT0U0bUh4NDMwd2lkUVVkOENqMk1VUEQzcFZNUjUz?=
+ =?utf-8?B?MnhzWXBHNERwOTR2bi9vR1Z0blo3NFVkamk3RUNXRjhjdGQ5K1V6K1AxejZU?=
+ =?utf-8?B?a3BTV2VsZGZETTdvUEFNZnhKTzZPY0NuSGp3M0pzZDNMS2VxT1l5NmlqOEQw?=
+ =?utf-8?B?NWp4d3NNYWJ3Q1RDc2NtRmNjcWlYOUtQYzJ1WGZhL0g0SmJTVitlVlg5N0Yx?=
+ =?utf-8?B?ZEVWU05TMklDaE9VQjU0OWFoZTVYSEszUFM1cUgwR1RPZlNRWGt4cGVzNTJx?=
+ =?utf-8?B?TGh5dUNSZnNZa3E0cjNaUmw5WUlnZHVZancyc2JxWXdSbUlLMU5Ic1A0cEpN?=
+ =?utf-8?Q?N5Q+Z14hJD/l8?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BN6PR1001MB2068.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(7416014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?K0VJZkVCanljajhUN3dqUFh6aFhxbml1NzNpQjgzR0xuNHdhNERxTEJ0R05r?=
+ =?utf-8?B?Sy80SGpBNmxucXFudFI3Z3QwUkRpU3YrdXFjNDhrVHJETzc0TllqZm1TdVVB?=
+ =?utf-8?B?cVQ3UVI4aW5XNTQ0TmxvNGlxd1VhS1NvSSt3SnFaaEd1bGlHbk8wbzh3aCtM?=
+ =?utf-8?B?eFprQWF6aU5ZZ1BmNFEyeVpnbTVua09UN1dvb3dJQ0JvQ00remtUdzhNY2ll?=
+ =?utf-8?B?V0p3Q1BmNncrSUtRZllialVTOXJBN01ON0hVMjd6czhMR0VLc3Z0VmVMQk9I?=
+ =?utf-8?B?MFZTYmNscUJ0Q2xGb3hKS3JTcGxCNGpJcDVxVDVCNWtEQWN2bHZ6cTJyY0Jz?=
+ =?utf-8?B?NFhlVUlCNjMxMzBJVVhHL1JBN2ZYenExN0pLWjBEZXkzODlHbDVnUUJnZWxr?=
+ =?utf-8?B?STRVeVNUWEkyUHVpYnBRam1tWE4xTmdVVldZRnZ1dlRWWTJ5cEluR0x6dFFS?=
+ =?utf-8?B?aTBJYlNiR3U3VGpwYWMxM0dzTnVjaG51Q3R5RjNTVTYwaG5wV1hXeVJ4SjZm?=
+ =?utf-8?B?b0IrVzRYc1N0WWo1RktObWtlTEFuYjNWcjVFV0djMEc1R1FrdEdvWHJxaUhN?=
+ =?utf-8?B?WGI3K1FBVDY1WFhneDVhZW54Nm9wMFZxaHJMNE44YjM2ZVZsbTh2YlFKaXAy?=
+ =?utf-8?B?bDI0ejFmUnNCcFhwZWNBYk5jQS9hVHEzMm10RXJuU2dKbW5JOFlKTTR6UFV2?=
+ =?utf-8?B?YlRSNHdsYlVZUUVQcTV5cVJUczFwZlZLRFpIcm9KdFVPMDEvaE9pT0FWOUVw?=
+ =?utf-8?B?TFdXc3ZvREcveHhKekZ1TWEyV3BZb1kyLzR5YmNMUDQ0b2NyanYzVkxhUDA4?=
+ =?utf-8?B?UFBrRkVHelpKVUEyUWRZNXp5RWV4WmszQWc1WnU1TjJlSXJ0SFdYczg4dzUv?=
+ =?utf-8?B?ZVNURlZkUDZIaFBYQWdTQmVpZFZUaXp4OVJtNnlpWHlwTWUxMEtiMG9XRHMr?=
+ =?utf-8?B?YmRnazhPUEpycG9aUUFkYzZ4eWdDT0V2T284MkxvTFU4ck5hQnJXZjJpamVo?=
+ =?utf-8?B?ZjdaeGNHTnRaV2phSC9VMm5ZSUxpb3dFNExUZ0pGWWI1Nk8xWlVYa2RoaEYw?=
+ =?utf-8?B?OVprY0pTV2JPSGwxb3RuQ3dQczkwY3NGUHQwbE1jN0JTNUtYcENvRld2Y2Fj?=
+ =?utf-8?B?aVc0a3BERE9HK1JYWnhNRjhCVkc4cGw3TjNNalNWUS9SK2tUOW1oeEpnbXJE?=
+ =?utf-8?B?OGpQNEVHLzZtbUhBZEZHU2tVRXdLSzIxdWpnbUdiZG1CdWRMTXp2REY3aDEx?=
+ =?utf-8?B?M2ltUDBxMjFhRlhwUjAwZzV4aWtYV2pMdFBRU2g5a2Y0NXhxaGQySzI2c2lT?=
+ =?utf-8?B?c1VuNjRoeGZaSmlBNzl4UVJpMWVpcU82OUVXeU9ZZFBiS0tCOHJmODZocHBO?=
+ =?utf-8?B?bE1uaFF3aDJEQTZ4ZzF6NGVhSXpqcGxiWnMxRWJ0SGlydDl5T3h3WmF2TnVv?=
+ =?utf-8?B?WkhLejVXNkc1N2tkR1NJaFpEOU5VY3RQazhCcHN3empPU3d1OS8wSERKeDd4?=
+ =?utf-8?B?ZHFuUVRJaXk0VUhuRjcyUTcyeVZoRXorUSt3dVJrRWZqVlNJblgvMFFmVlBw?=
+ =?utf-8?B?S2VzQXB1MW5RNjJ4dWVGYVA2TVZVZSthQ2FXZUdjSitzZGlVNXJ3WnlGWG1v?=
+ =?utf-8?B?MTkvYXVYbC9oQWliKzMxNVFja2ZTMzJtL3p0SEFwb3ZXaHRzSVJpNWs4eFN5?=
+ =?utf-8?B?L2NQN2lFSjB1L1VRRDhEREZXL3RGVlg2TnFKWnQrVVBPT0NGVGZiM3hEcmtN?=
+ =?utf-8?B?bnQwQ0NwWHRrUDZGVFNPRUNLeE04amt3ZGd6ZGtadFpzczZVSlFqWFczWFNB?=
+ =?utf-8?B?TVd2OUFPRi9kRTlETTVqcGVPaTIrTWNQN09ISklxd0U0VEZNZnJHZDhXbFl3?=
+ =?utf-8?B?WHY5akQwZVhSM3BMTDc3THNuWnphV3QweGNxcUZSZjRtOFZZZWJrK05KRUNX?=
+ =?utf-8?B?c2JOaWFvUEtVUkJJQVRjNWxja09HVFltZi9TdmRybVo1c0x6ajJVeURCaFds?=
+ =?utf-8?B?VjBNWnQrdlB6ME5HbnVXRzJSL3JmWjh1Ym1qakt0c3dPU2pTVGxzdHRReUpP?=
+ =?utf-8?B?RW5yMUZ1c1RrOTdITG1TM1o3SHRtRE1nWDRSWDNybndwVGRVRXdIdW9ZeW0x?=
+ =?utf-8?B?bmp4NSsrQ05Dd3Urck43ZitJU2pBdENRV216dHJ6aEtGWUJwWnozMXVKcDdX?=
+ =?utf-8?B?V3c9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 3W33AxGY/J5rjwbXjNA87CeYUDSgvmQgMKLTx2DHuDKIlN4YnUFtpVjwCp1SzZtZWqfT2dAK7tEl2kHhqOIFZgunDjkc7/FELVC3+ywHgJRs4wJvYv8f9YDKTu6xoTPEEYDnCiBJL9BbbstvH3YWQXyatZm9qs6id8bsLldOJ+ChvuFt+shyXrKdTDl7OoFNE66+p7bbE/WB7OCmMnc7b+shZLoX8CHWIxAjyvMJyR16RryJ8vNwQy/HVmihtJV5a+WTwc4IfTxA7ForKaTsXq4Nzn/NXY0WMwPw3RSciMhyJxZkw7WJwAtBx9eP/w5p3fqekXxvv6+f/wyYih/EPJ9NM4YY7K4Ad5PjgiSWujNEqUP9s5XMqts1ML57pP66hJd9QJ3AfATkfA52E//wdsZlMkAbMn1QFzPoYuNxSdxPa4LMgp6UJZ/Pyd6DgwrI1krtLsdSGHpdex++3r5ry6BsUIwpvvGY9DO7GzcXkwiI/sC8O3+/xDzNGzl6nPc2vFIM8+qjWJRZxu8vB/yMsOaL2vdV+2rGBFG8Syx5aMtJKFsv8dDUTj/l9yL7OXid3kMwHfTvyqLEpSyHMPG60B6EyczW0fx6lVeWKHbB/Q8=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6903ae77-ca1a-40c8-78bd-08dd5dca1983
+X-MS-Exchange-CrossTenant-AuthSource: BN6PR1001MB2068.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Mar 2025 22:47:55.2859 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: syH+F/+Bpsjrlyj1Kk+EOwVaHAw7xO/bHScTyyZ46D0SndoeewFG1czZQNS8bFsav9RKzbrefmKSbGVyKDJciQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB6663
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-07_08,2025-03-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ adultscore=0 bulkscore=0
+ mlxlogscore=999 malwarescore=0 spamscore=0 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502100000
+ definitions=main-2503070172
+X-Proofpoint-ORIG-GUID: 7S7rJmOHiiBpD9FC0qNfmsaOQX9VXBDt
+X-Proofpoint-GUID: 7S7rJmOHiiBpD9FC0qNfmsaOQX9VXBDt
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,265 +221,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000be5a19062fc859be
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Zhao,
 
-On Fri, Mar 7, 2025 at 1:59=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
+On 3/7/25 1:15 AM, Zhao Liu wrote:
+>> +static void kvm_init_pmu_info(CPUX86State *env)
+>> +{
+>> +    uint32_t eax, edx;
+>> +    uint32_t unused;
+>> +    uint32_t limit;
+>> +
+>> +    cpu_x86_cpuid(env, 0, 0, &limit, &unused, &unused, &unused);
+> 
+> At this stage, CPUID has already been filled and we should not use
+> cpu_x86_cpuid() to get the "raw" CPUID info.
+> 
+> Instead, after kvm_x86_build_cpuid(), the cpuid_find_entry() helper
+> should be preferred.
+> 
+> With cpuid_find_entry(), we don't even need to check the limit again.
+> 
+>> +
+>> +    if (limit < 0x0a) {
+>> +        return;
+>> +    }
+> 
+> ...
+> 
+>>  int kvm_arch_init_vcpu(CPUState *cs)
+>>  {
+>>      struct {
+>> @@ -2267,6 +2277,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>>      cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+>>      cpuid_data.cpuid.nent = cpuid_i;
+>>  
+>> +    kvm_init_pmu_info(env);
+>> +
+> 
+> Referring what has_msr_feature_control did, what about the following
+> change?
+> 
+>  int kvm_arch_init_vcpu(CPUState *cs)
+>  {
+>      struct {
+> @@ -2277,8 +2240,6 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>      cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+>      cpuid_data.cpuid.nent = cpuid_i;
+> 
+> -    kvm_init_pmu_info(env);
+> -
+>      if (((env->cpuid_version >> 8)&0xF) >= 6
+>          && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
+>             (CPUID_MCE | CPUID_MCA)) {
+> @@ -2329,6 +2290,31 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>          has_msr_feature_control = true;
+>      }
+> 
+> +    c = cpuid_find_entry(&cpuid_data.cpuid, 0xa, 0);
+> +    if (c) {
+> +        has_architectural_pmu_version = c->eax & 0xff;
+> +        if (has_architectural_pmu_version > 0) {
+> +            num_architectural_pmu_gp_counters = (c->eax & 0xff00) >> 8;
+> +
+> +            /*
+> +             * Shouldn't be more than 32, since that's the number of bits
+> +             * available in EBX to tell us _which_ counters are available.
+> +             * Play it safe.
+> +             */
+> +            if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > Add a little special markup for registering "Since:" information. Addin=
-g
-> > it as an option instead of generic content lets us hoist the informatio=
-n
-> > into the Signature bar, optionally put it in the index, etc.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  docs/sphinx/qapi_domain.py | 29 +++++++++++++++++++++++++++--
-> >  1 file changed, 27 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-> > index 6168c23936f..9919dacd4e6 100644
-> > --- a/docs/sphinx/qapi_domain.py
-> > +++ b/docs/sphinx/qapi_domain.py
-> > @@ -4,6 +4,7 @@
-> >
-> >  from __future__ import annotations
-> >
-> > +import re
-> >  from typing import (
-> >      TYPE_CHECKING,
-> >      AbstractSet,
-> > @@ -104,6 +105,18 @@ def process_link(
-> >          return title, target
-> >
-> >
-> > +def since_validator(param: str) -> str:
-> > +    """
-> > +    Validate the `:since: X.Y` option field.
-> > +    """
-> > +    match =3D re.match(r"[0-9]+\.[0-9]+", param)
->
-> This accepts arbitrary crap after the version.  Example:
-> "9.2.50v9.2.0-2253-ge8a0110293" is fine.  Intentional?
->
+BTW, I may need this bound checking for the PerfMonV2 patch, where the
+number of counters is determined by cpuid(0x80000022).
 
-Nope! O:-) I forgot that match doesn't imply ^...$
+> +                num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
+> +            }
+> +
+> +            if (has_architectural_pmu_version > 1) {
+> +                num_architectural_pmu_fixed_counters = c->edx & 0x1f;
+> +
+> +                if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
+> +                    num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
+> +                }
+> +            }
+> +        }
+> +    }
+> +
+>      if (env->mcg_cap & MCG_LMCE_P) {
+>          has_msr_mcg_ext_ctl = has_msr_feature_control = true;
+>      }
+> ---
+> 
+> The above codes check 0xa after 0x1 and 0x7, and uses the local variable
+> `c`, so that it doesn't need to wrap another new function.
+> 
+
+How about we still wrap in another new function with &cpuid_data.cpuid as
+an argument?
+
+1. In current patch, we need cpuid(0xa) to query Intel PMU info.
+
+2. In PATCH 08/10 (AMD), we need cpuid(0x80000001) to determine PERFCORE.
+
+https://lore.kernel.org/all/20250302220112.17653-9-dongli.zhang@oracle.com/
+
+(Otherwise, we may use ((env->features[FEAT_8000_0001_ECX] &
+CPUID_EXT3_PERFCORE), but I prefer something consistent)
 
 
->
-> > +    if not match:
-> > +        raise ValueError(
-> > +            f":since: requires a version number in X.Y format; not
-> {param!r}"
-> > +        )
-> > +    return param
->
-> Schema validation is the frontend's job.  Ideally, a backend doesn't
-> report any errors.  The backends generating C don't.  A backend
-> generating docs has to: all the reST processing happens there, and
-> therefore reST errors can only be diagnosed there.  Since "no errors"
-> purity is impossible for this backend, we can be pragmatic about sinning
-> a bit more.
->
-> Still, I think this one should rather go into the doc comment parser.
->
-> This is not a demand.  We can always clean it up later.
->
+3. In PATCH 09/10 (AMD PerfMonV2), we need cpuid(0x80000022) to query the
+PerfMonV2 support, and the number of PMU counters.
 
-You *can* technically use this without touching the QAPI parser at all,
-nothing stops you. I.e., you *could* write a QMP reference manual by hand
-into an .rst if you wanted.
+https://lore.kernel.org/all/20250302220112.17653-10-dongli.zhang@oracle.com/
 
-That said, I know we probably won't. I can remove the validator.
+Thank you very much!
 
-
->
-> > +
-> > +
-> >  # Alias for the return of handle_signature(), which is used in several
-> places.
-> >  # (In the Python domain, this is Tuple[str, str] instead.)
-> >  Signature =3D str
-> > @@ -124,6 +137,8 @@ class QAPIObject(ObjectDescription[Signature]):
-> >          {
-> >              # Borrowed from the Python domain:
-> >              "module": directives.unchanged,  # Override contextual
-> module name
-> > +            # These are QAPI originals:
-> > +            "since": since_validator,
-> >          }
-> >      )
-> >
-> > @@ -135,9 +150,19 @@ def get_signature_prefix(self) -> List[nodes.Node]=
-:
-> >              SpaceNode(" "),
-> >          ]
-> >
-> > -    def get_signature_suffix(self) -> list[nodes.Node]:
-> > +    def get_signature_suffix(self) -> List[nodes.Node]:
-> >          """Returns a suffix to put after the object name in the
-> signature."""
-> > -        return []
-> > +        ret: List[nodes.Node] =3D []
-> > +
-> > +        if "since" in self.options:
-> > +            ret +=3D [
-> > +                SpaceNode(" "),
-> > +                addnodes.desc_sig_element(
-> > +                    "", f"(Since: {self.options['since']})"
-> > +                ),
-> > +            ]
-> > +
-> > +        return ret
-> >
-> >      def handle_signature(self, sig: str, signode: desc_signature) ->
-> Signature:
-> >          """
->
->
-
---000000000000be5a19062fc859be
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 7, =
-2025 at 1:59=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
-at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" =
-target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Add a little special markup for registering &quot;Since:&quot; informa=
-tion. Adding<br>
-&gt; it as an option instead of generic content lets us hoist the informati=
-on<br>
-&gt; into the Signature bar, optionally put it in the index, etc.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 docs/sphinx/qapi_domain.py | 29 +++++++++++++++++++++++++++--<br=
->
-&gt;=C2=A0 1 file changed, 27 insertions(+), 2 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py<b=
-r>
-&gt; index 6168c23936f..9919dacd4e6 100644<br>
-&gt; --- a/docs/sphinx/qapi_domain.py<br>
-&gt; +++ b/docs/sphinx/qapi_domain.py<br>
-&gt; @@ -4,6 +4,7 @@<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 from __future__ import annotations<br>
-&gt;=C2=A0 <br>
-&gt; +import re<br>
-&gt;=C2=A0 from typing import (<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 TYPE_CHECKING,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 AbstractSet,<br>
-&gt; @@ -104,6 +105,18 @@ def process_link(<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return title, target<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 <br>
-&gt; +def since_validator(param: str) -&gt; str:<br>
-&gt; +=C2=A0 =C2=A0 &quot;&quot;&quot;<br>
-&gt; +=C2=A0 =C2=A0 Validate the `:since: X.Y` option field.<br>
-&gt; +=C2=A0 =C2=A0 &quot;&quot;&quot;<br>
-&gt; +=C2=A0 =C2=A0 match =3D re.match(r&quot;[0-9]+\.[0-9]+&quot;, param)<=
-br>
-<br>
-This accepts arbitrary crap after the version.=C2=A0 Example:<br>
-&quot;9.2.50v9.2.0-2253-ge8a0110293&quot; is fine.=C2=A0 Intentional?<br></=
-blockquote><div><br></div><div>Nope! O:-) I forgot that match doesn&#39;t i=
-mply ^...$</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex">
-<br>
-&gt; +=C2=A0 =C2=A0 if not match:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 raise ValueError(<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 f&quot;:since: requires a v=
-ersion number in X.Y format; not {param!r}&quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 )<br>
-&gt; +=C2=A0 =C2=A0 return param<br>
-<br>
-Schema validation is the frontend&#39;s job.=C2=A0 Ideally, a backend doesn=
-&#39;t<br>
-report any errors.=C2=A0 The backends generating C don&#39;t.=C2=A0 A backe=
-nd<br>
-generating docs has to: all the reST processing happens there, and<br>
-therefore reST errors can only be diagnosed there.=C2=A0 Since &quot;no err=
-ors&quot;<br>
-purity is impossible for this backend, we can be pragmatic about sinning<br=
->
-a bit more.<br>
-<br>
-Still, I think this one should rather go into the doc comment parser.<br>
-<br>
-This is not a demand.=C2=A0 We can always clean it up later.<br></blockquot=
-e><div><br></div><div>You *can* technically use this without touching the Q=
-API parser at all, nothing stops you. I.e., you *could* write a QMP referen=
-ce manual by hand into an .rst if you wanted.</div><div><br></div><div>That=
- said, I know we probably won&#39;t. I can remove the validator.</div><div>=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; +<br>
-&gt; +<br>
-&gt;=C2=A0 # Alias for the return of handle_signature(), which is used in s=
-everal places.<br>
-&gt;=C2=A0 # (In the Python domain, this is Tuple[str, str] instead.)<br>
-&gt;=C2=A0 Signature =3D str<br>
-&gt; @@ -124,6 +137,8 @@ class QAPIObject(ObjectDescription[Signature]):<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Borrowed from the Py=
-thon domain:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;module&quot;: di=
-rectives.unchanged,=C2=A0 # Override contextual module name<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # These are QAPI originals:=
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;since&quot;: since_va=
-lidator,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 )<br>
-&gt;=C2=A0 <br>
-&gt; @@ -135,9 +150,19 @@ def get_signature_prefix(self) -&gt; List[nodes.N=
-ode]:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 SpaceNode(&quot; &quot=
-;),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ]<br>
-&gt;=C2=A0 <br>
-&gt; -=C2=A0 =C2=A0 def get_signature_suffix(self) -&gt; list[nodes.Node]:<=
-br>
-&gt; +=C2=A0 =C2=A0 def get_signature_suffix(self) -&gt; List[nodes.Node]:<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;&quot;&quot;Returns a suffix t=
-o put after the object name in the signature.&quot;&quot;&quot;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 return []<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret: List[nodes.Node] =3D []<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if &quot;since&quot; in self.options:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret +=3D [<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 SpaceNode(&qu=
-ot; &quot;),<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 addnodes.desc=
-_sig_element(<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- &quot;&quot;, f&quot;(Since: {self.options[&#39;since&#39;]})&quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ),<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ]<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 def handle_signature(self, sig: str, signode: desc=
-_signature) -&gt; Signature:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;&quot;&quot;<br>
-<br>
-</blockquote></div></div>
-
---000000000000be5a19062fc859be--
+Dongli Zhang
 
 
