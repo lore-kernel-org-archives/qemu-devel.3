@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB29C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 07:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2587C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 07:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqS3U-00084C-SA; Fri, 07 Mar 2025 02:23:37 -0500
+	id 1tqS3r-000071-So; Fri, 07 Mar 2025 02:23:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=3Khh=V2=kaod.org=clg@ozlabs.org>)
- id 1tqS2f-0007lg-C6; Fri, 07 Mar 2025 02:22:52 -0500
+ id 1tqS3n-0008Uv-UY; Fri, 07 Mar 2025 02:23:56 -0500
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=3Khh=V2=kaod.org=clg@ozlabs.org>)
- id 1tqS2c-0001Xn-AB; Fri, 07 Mar 2025 02:22:44 -0500
+ id 1tqS3j-0001cN-Nd; Fri, 07 Mar 2025 02:23:53 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z8Hmn0lWKz4x5k;
- Fri,  7 Mar 2025 18:22:33 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z8HpD4gQgz4x5k;
+ Fri,  7 Mar 2025 18:23:48 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z8Hmj5Fqvz4wcy;
- Fri,  7 Mar 2025 18:22:26 +1100 (AEDT)
-Message-ID: <271f6eac-a6ac-40c4-94ce-4f1f9f0daeb9@kaod.org>
-Date: Fri, 7 Mar 2025 08:22:23 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z8Hp91tV5z4wcy;
+ Fri,  7 Mar 2025 18:23:44 +1100 (AEDT)
+Message-ID: <08b3a2e4-8d71-413b-9a04-257a35ca28a1@kaod.org>
+Date: Fri, 7 Mar 2025 08:23:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 05/29] hw/intc/aspeed: Reduce regs array size by adding
- a register sub-region
+Subject: Re: [PATCH v6 03/29] hw/intc/aspeed: Introduce dynamic allocation for
+ regs array
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
- <20250307035945.3698802-6-jamin_lin@aspeedtech.com>
+ <20250307035945.3698802-4-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,7 +86,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250307035945.3698802-6-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250307035945.3698802-4-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -113,16 +113,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/7/25 04:59, Jamin Lin wrote:
-> Currently, the size of the "regs" array is 0x2000, which is too large. So far,
-> it only uses "GICINT128 to `GICINT134", and the offsets from 0 to 0x1000 are
-> unused. To save code size and avoid mapping large unused gaps, update to only
-> map the useful set of registers:
+> Currently, the size of the "regs" array is 0x2000, which is too large. To save
+> code size and avoid mapping large unused gaps, will update it to only map the
+> useful set of registers. This update will support multiple sub-regions with
+> different sizes.
 > 
-> INTC register [0x1000 – 0x1804]
+> To address the redundant size issue, replace the static "regs" array with a
+> dynamically allocated "regs" memory.
 > 
-> Update "reg_size" to 0x808. Introduce a new class attribute "reg_offset" to set
-> the start offset of a "INTC" sub-region. Set the "reg_offset" to 0x1000 for INTC
-> registers.
+> Introduce a new "aspeed_intc_unrealize" function to free the allocated "regs"
+> memory.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
@@ -135,96 +135,65 @@ C.
 
 
 > ---
->   include/hw/intc/aspeed_intc.h |  1 +
->   hw/intc/aspeed_intc.c         | 50 ++++++++++++++++++++---------------
->   2 files changed, 30 insertions(+), 21 deletions(-)
+>   include/hw/intc/aspeed_intc.h |  2 +-
+>   hw/intc/aspeed_intc.c         | 12 +++++++++++-
+>   2 files changed, 12 insertions(+), 2 deletions(-)
 > 
 > diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-> index ec4936b3f4..208e764c4a 100644
+> index 03324f05ab..47ea0520b5 100644
 > --- a/include/hw/intc/aspeed_intc.h
 > +++ b/include/hw/intc/aspeed_intc.h
-> @@ -42,6 +42,7 @@ struct AspeedINTCClass {
->       uint32_t num_ints;
->       uint64_t mem_size;
->       uint64_t nr_regs;
-> +    uint64_t reg_offset;
->   };
+> @@ -27,7 +27,7 @@ struct AspeedINTCState {
+>       MemoryRegion iomem;
+>       MemoryRegion iomem_container;
 >   
->   #endif /* ASPEED_INTC_H */
+> -    uint32_t regs[ASPEED_INTC_NR_REGS];
+> +    uint32_t *regs;
+>       OrIRQState orgates[ASPEED_INTC_NR_INTS];
+>       qemu_irq output_pins[ASPEED_INTC_NR_INTS];
+>   
 > diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-> index 134922e46f..d684b4bb4f 100644
+> index 465f41e4fd..558901570f 100644
 > --- a/hw/intc/aspeed_intc.c
 > +++ b/hw/intc/aspeed_intc.c
-> @@ -14,25 +14,31 @@
->   #include "hw/registerfields.h"
->   #include "qapi/error.h"
+> @@ -289,7 +289,7 @@ static void aspeed_intc_reset(DeviceState *dev)
+>   {
+>       AspeedINTCState *s = ASPEED_INTC(dev);
 >   
-> -/* INTC Registers */
-> -REG32(GICINT128_EN,         0x1000)
-> -REG32(GICINT128_STATUS,     0x1004)
-> -REG32(GICINT129_EN,         0x1100)
-> -REG32(GICINT129_STATUS,     0x1104)
-> -REG32(GICINT130_EN,         0x1200)
-> -REG32(GICINT130_STATUS,     0x1204)
-> -REG32(GICINT131_EN,         0x1300)
-> -REG32(GICINT131_STATUS,     0x1304)
-> -REG32(GICINT132_EN,         0x1400)
-> -REG32(GICINT132_STATUS,     0x1404)
-> -REG32(GICINT133_EN,         0x1500)
-> -REG32(GICINT133_STATUS,     0x1504)
-> -REG32(GICINT134_EN,         0x1600)
-> -REG32(GICINT134_STATUS,     0x1604)
-> -REG32(GICINT135_EN,         0x1700)
-> -REG32(GICINT135_STATUS,     0x1704)
-> -REG32(GICINT136_EN,         0x1800)
-> -REG32(GICINT136_STATUS,     0x1804)
-> +/*
-> + * INTC Registers
-> + *
-> + * values below are offset by - 0x1000 from datasheet
-> + * because its memory region is start at 0x1000
-> + *
-> + */
-> +REG32(GICINT128_EN,         0x000)
-> +REG32(GICINT128_STATUS,     0x004)
-> +REG32(GICINT129_EN,         0x100)
-> +REG32(GICINT129_STATUS,     0x104)
-> +REG32(GICINT130_EN,         0x200)
-> +REG32(GICINT130_STATUS,     0x204)
-> +REG32(GICINT131_EN,         0x300)
-> +REG32(GICINT131_STATUS,     0x304)
-> +REG32(GICINT132_EN,         0x400)
-> +REG32(GICINT132_STATUS,     0x404)
-> +REG32(GICINT133_EN,         0x500)
-> +REG32(GICINT133_STATUS,     0x504)
-> +REG32(GICINT134_EN,         0x600)
-> +REG32(GICINT134_STATUS,     0x604)
-> +REG32(GICINT135_EN,         0x700)
-> +REG32(GICINT135_STATUS,     0x704)
-> +REG32(GICINT136_EN,         0x800)
-> +REG32(GICINT136_STATUS,     0x804)
+> -    memset(s->regs, 0, sizeof(s->regs));
+> +    memset(s->regs, 0, ASPEED_INTC_NR_REGS << 2);
+>       memset(s->enable, 0, sizeof(s->enable));
+>       memset(s->mask, 0, sizeof(s->mask));
+>       memset(s->pending, 0, sizeof(s->pending));
+> @@ -307,6 +307,7 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
 >   
->   #define GICINT_STATUS_BASE     R_GICINT128_STATUS
+>       sysbus_init_mmio(sbd, &s->iomem_container);
 >   
-> @@ -298,7 +304,8 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+> +    s->regs = g_new(uint32_t, ASPEED_INTC_NR_REGS);
 >       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
->                             TYPE_ASPEED_INTC ".regs", aic->nr_regs << 2);
+>                             TYPE_ASPEED_INTC ".regs", ASPEED_INTC_NR_REGS << 2);
 >   
-> -    memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
-> +    memory_region_add_subregion(&s->iomem_container, aic->reg_offset,
-> +                                &s->iomem);
->   
->       qdev_init_gpio_in(dev, aspeed_intc_set_irq, aic->num_ints);
->   
-> @@ -348,7 +355,8 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
->       aic->num_lines = 32;
->       aic->num_ints = 9;
->       aic->mem_size = 0x4000;
-> -    aic->nr_regs = 0x2000 >> 2;
-> +    aic->nr_regs = 0x808 >> 2;
-> +    aic->reg_offset = 0x1000;
+> @@ -322,12 +323,21 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+>       }
 >   }
 >   
->   static const TypeInfo aspeed_2700_intc_info = {
+> +static void aspeed_intc_unrealize(DeviceState *dev)
+> +{
+> +    AspeedINTCState *s = ASPEED_INTC(dev);
+> +
+> +    g_free(s->regs);
+> +    s->regs = NULL;
+> +}
+> +
+>   static void aspeed_intc_class_init(ObjectClass *klass, void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>   
+>       dc->desc = "ASPEED INTC Controller";
+>       dc->realize = aspeed_intc_realize;
+> +    dc->unrealize = aspeed_intc_unrealize;
+>       device_class_set_legacy_reset(dc, aspeed_intc_reset);
+>       dc->vmsd = NULL;
+>   }
 
 
