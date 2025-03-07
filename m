@@ -4,97 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F1D7C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BDFC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:31:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqY1b-0002BM-Gu; Fri, 07 Mar 2025 08:46:03 -0500
+	id 1tqY7T-0003TV-Qo; Fri, 07 Mar 2025 08:52:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tqY1L-0002A7-40
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:45:55 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
+ id 1tqY7N-0003Hd-5e
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:52:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tqY1E-00085w-00
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:45:42 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tqY16-00000000RdZ-3O7q; Fri, 07 Mar 2025 14:45:32 +0100
-Message-ID: <3826d47f-d79b-4db2-9719-35f48f582bf0@maciej.szmigiero.name>
-Date: Fri, 7 Mar 2025 14:45:27 +0100
+ (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
+ id 1tqY7L-0001DU-EB
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:52:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741355516;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2TU5GunQuBlTAPNvY7g2xEzf17JFRYlC5aa6Y+0KKdI=;
+ b=GPLVIc2Z3St4tFTti9zBg605Fw4m5dj3azrosrn74ezqzPU9o1QOaAOTdUATy8pFyKDTlj
+ PBmDmcv9PQNlcT6B4JAtCUUZJfRl6JgnyZFOc7KtkvdQ0PPZiC6eSvuG155J44u3Ur+icU
+ wMAUcWHxQqKKfnZuItw0GB+Jjl/0Pi8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-l7hJ5df0OuCvSh3fFXqRtw-1; Fri,
+ 07 Mar 2025 08:51:53 -0500
+X-MC-Unique: l7hJ5df0OuCvSh3fFXqRtw-1
+X-Mimecast-MFC-AGG-ID: l7hJ5df0OuCvSh3fFXqRtw_1741355512
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C9921800258; Fri,  7 Mar 2025 13:51:52 +0000 (UTC)
+Received: from localhost (unknown [10.44.34.26])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 73E381801748; Fri,  7 Mar 2025 13:51:50 +0000 (UTC)
+Date: Fri, 7 Mar 2025 14:51:48 +0100
+From: Victor Toso <victortoso@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>, 
+ Andrea Bolognani <abologna@redhat.com>
+Subject: Re: New git repository for Go bindings
+Message-ID: <cwxf24xijypebuv44uqeiyxdspifcey3447t6iyz2kv5ljwger@fksnjsmro37o>
+References: <xu3qsijvpbguwdnlj6ovomlkd2wggd76x2lvfusmczljhnmx4f@kgw6di2754ta>
+ <Z8rrd8DoLUVh_Je1@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio/migration: Add also max in-flight VFIO device
- state buffers size limit
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
- <2b2469939198c2f31dba33b284576d2df22697b7.1741344976.git.maciej.szmigiero@oracle.com>
- <abc049f2-3497-4557-89c8-74bcfaea221c@redhat.com>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <abc049f2-3497-4557-89c8-74bcfaea221c@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="zxb543gg6f3sjxpf"
+Content-Disposition: inline
+In-Reply-To: <Z8rrd8DoLUVh_Je1@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=victortoso@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,75 +91,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7.03.2025 13:03, Cédric Le Goater wrote:
-> On 3/7/25 11:57, Maciej S. Szmigiero wrote:
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> There's already a max in-flight VFIO device state buffers *count* limit,
-> 
-> no. there isn't. Do we need both ?
 
-This is on a top of the remaining patches (x-migration-load-config-after-iter
-and x-migration-max-queued-buffers) - I thought we were supposed to work
-on these after the main series was merged as they are relatively non-critical.
+--zxb543gg6f3sjxpf
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: New git repository for Go bindings
+MIME-Version: 1.0
 
-I would also give x-migration-load-config-after-iter priority over
-x-migration-max-queued-buffers{,-size} as the former is correctness fix
-while the later are just additional functionalities.
+On Fri, Mar 07, 2025 at 12:49:59PM +0000, Daniel P. Berrang=C3=A9 wrote:
+> On Fri, Mar 07, 2025 at 01:30:38PM +0100, Victor Toso wrote:
+> > Hi,
+> >=20
+> > I've been working on and off in having Go bindings for QEMU's
+> > QAPI specification. The last version [0] seems to be accepted so
+> > far but we would like not to have that in qemu.git.
+> >=20
+> > In the past [1], Daniel suggested creating a repo per each
+> > generated schema: go-qemu.git, go-qga.git, go-qsd.git
+> >
+> > While that works well from the point of view of Go applications
+> > and is neat organized too, afaict they are all bounded to QEMU's
+> > release schedule so it might be enough to create a single repo
+> > such as:
+> >=20
+> > qapi-generators.git
+> > =E2=94=94=E2=94=80=E2=94=80 golang
+> >     =E2=94=9C=E2=94=80=E2=94=80 module.py # The go generator
+> >     =E2=94=9C=E2=94=80=E2=94=80 qemu      # For qapi/qapi-schema.json
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 doc.go
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_iface_command=
+=2Ego
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_iface_event.go
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_alternat=
+e.go
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_command.=
+go
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_enum.go
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_event.go
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_struct.go
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_union.go
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 go.mod
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 protocol.go
+> >     =E2=94=82=C2=A0=C2=A0 =E2=94=94=E2=94=80=E2=94=80 utils.go
+> >     =E2=94=9C=E2=94=80=E2=94=80 qga # qga/qapi-schema.json
+> >     =E2=94=94=E2=94=80=E2=94=80 qsd # storage-daemon/qapi/qapi-schema.j=
+son
+> >=20
+> > Or perhaps a per language repo?
+>=20
+> I'd suggest we keep the repo dedicated just for 'go' language,
+> as mixed language repos are more trouble than they are worth
+> when it comes to dealing with language specific build tools.
 
-Also, if some setup is truly worried about these buffers consuming too much
-memory then roughly the same thing could be achieved by (temporarily) putting
-the target QEMU process in a memory-limited cgroup.
+That's fine for me. Should we go with qapi-go or go-qapi or ?
 
-On the other hand, the network endianess patch is urgent since it affects
-the bit stream.
+Cheers,
+Victor
 
->> add also max queued buffers *size* limit.
->>
->> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->> ---
->>   docs/devel/migration/vfio.rst |  8 +++++---
->>   hw/vfio/migration-multifd.c   | 21 +++++++++++++++++++--
->>   hw/vfio/pci.c                 |  9 +++++++++
->>   include/hw/vfio/vfio-common.h |  1 +
->>   4 files changed, 34 insertions(+), 5 deletions(-)
->>
->> diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
->> index 7c9cb7bdbf87..127a1db35949 100644
->> --- a/docs/devel/migration/vfio.rst
->> +++ b/docs/devel/migration/vfio.rst
->> @@ -254,12 +254,14 @@ This means that a malicious QEMU source could theoretically cause the target
->>   QEMU to allocate unlimited amounts of memory for such buffers-in-flight.
->>   The "x-migration-max-queued-buffers" property allows capping the maximum count
->> -of these VFIO device state buffers queued at the destination.
->> +of these VFIO device state buffers queued at the destination while
->> +"x-migration-max-queued-buffers-size" property allows capping their total queued
->> +size.
->>   Because a malicious QEMU source causing OOM on the target is not expected to be
->>   a realistic threat in most of VFIO live migration use cases and the right value
->> -depends on the particular setup by default this queued buffers limit is
->> -disabled by setting it to UINT64_MAX.
->> +depends on the particular setup by default these queued buffers limits are
->> +disabled by setting them to UINT64_MAX.
->>   Some host platforms (like ARM64) require that VFIO device config is loaded only
->>   after all iterables were loaded.
->> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
->> index dccd763d7c39..a9d41b9f1cb1 100644
->> --- a/hw/vfio/migration-multifd.c
->> +++ b/hw/vfio/migration-multifd.c
->> @@ -83,6 +83,7 @@ typedef struct VFIOMultifd {
->>       uint32_t load_buf_idx;
->>       uint32_t load_buf_idx_last;
->>       uint32_t load_buf_queued_pending_buffers;
-> 
-> 'load_buf_queued_pending_buffers' is not in mainline. Please rebase.
-> 
-> 
-> Thanks,
-> 
-> C.
+--zxb543gg6f3sjxpf
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks,
-Maciej
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEIG07NS9WbzsOZXLpl9kSPeN6SE8FAmfK+fQACgkQl9kSPeN6
+SE8hcA//T4jw866HFplQ8eRb4Creie3t44+xLyQkz4TXiolXKYM/KiLz1Kapc8CZ
+jvFC+Xeekso4Mx49E0UTvaGLGhctjxerrBvScoMYslqGdoOcS1leEcOdzgHv5yJf
+4y9C3yIoya7G9zRPQKoYOLLNAsfvCSa/ovhYpILOTIZ9PVzdB5Cu4H+8yuJHD/5Y
+PIYXIKe7cGADgoX5C7n2/B0TPNFmJQCXnK/z0P+EL54eIFd5e9+P1RXpvx5h2s6P
+DcZtDbOx2EO2pffD+IiDg1rsiLF7K7vdVtojCh6j1GuM2GG3Titg8G1I65XoIUqv
+GVVYflnk2Jfe58N6DPEea5bN0VEt9ze5FKCCF/vr+T5pBPFhq4NnzuZrq6Nd4y/F
+9z71+LW7KAlvkUYzRnpnvYTGuLVKO2Ho/hEZkQBh+iaW5MqXQeOF5wyhJtfoypT+
+pSXCCVAdMRh6/2VUwi73+U4ttkelS/vjaLyHZ+ZWkeZB9OJap1AdI7V6TCw3JqYn
+c6kde/kGjsgNRvo8yOtKayBJxhsm9VJohajirv+wzTrKHoXpvTKPRCc13SPy8SGO
+VWC56vdhncN0THC1sUd9DAAzniZZWmr4e5TkOwU2gwNeEyA4cIpDrbEUyKaDXfaC
+rxyMMSCVObfMWEklVtY/jeqy8lOuN2nZKwRNXdKCRuHF3/XSdNQ=
+=wtNs
+-----END PGP SIGNATURE-----
+
+--zxb543gg6f3sjxpf--
 
 
