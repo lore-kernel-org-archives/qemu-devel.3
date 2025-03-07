@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 399C3C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:09:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6449DC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZIO-0000yS-IP; Fri, 07 Mar 2025 10:07:28 -0500
+	id 1tqZIL-0000x2-So; Fri, 07 Mar 2025 10:07:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIL-0000wP-4o
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:25 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1tqZIH-0000vM-8e
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:21 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZII-0008FX-IV
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:24 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-38dcac27bcbso2129292f8f.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:22 -0800 (PST)
+ id 1tqZIF-0008D3-I0
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:21 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-39129fc51f8so1697890f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741360041; x=1741964841; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741360038; x=1741964838; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Tjmv83nAHErAC/ciev0XLUkQWxcsHmZ1ReYlvJi0IGY=;
- b=Guu0Ak6NFFmQu0ZUku9auCxF27GRuKjZRDKguWgvalHJxLWVrY8CTJ4CfRH5zsdj0Z
- sVgthLXGqKcOxfTO+LLY1Gt14jI+pHSV1XXG3FMFXj/tyTeW8bU3JRra4TtDGz12OBkm
- lw9EQ4sLizEUmKuyHHZ2bXmFgNqZX6k1jca4g80IO1uzz8KhrQcyGe7HUyqb6Tiy5bAA
- 7Z1GVD/LLPmlm4U2W66pw8Yqipy1KZSVz2A8AU5Htcyu3MDgnOy2e4mbxS0yNRt4KT3h
- HyOUf8wtNLhR1SJIi3fV0pzqKlQg7l15wf/5rIZV7bDaBVETXkSYRJ0LoW7tfktE21V1
- 2b2g==
+ :reply-to; bh=aSWu7SERkDl4TrKpc52a/rImNAR7H05Ny8NJ0H5vIQY=;
+ b=uCABt+866vWW+CObqd+rU+h5jLeK34m7UnixvPcPSfrRkwo30yZ6OVIg42KCJEfRB/
+ FJSrNcv70X/YDA0mICK1XF11NpTK+mH6x0LuGrUjh+FlZNC+ICGQwxHf+TTCUZB4OAKc
+ 6RNuhKALz3xR6lZJW4U4FvjE7e0+DIGG3qH7wp8zV03l0ydcHakph6Yr9+kOPgl7XG5s
+ lFU7x/j1nwCafkjmkq9ol6jBt2O4k4UNekvYvDc2CcCSrKFPF10ED1oEiE25rklw4e4z
+ KzU+mKGWpqcQ+3ibGIfhhtInUXViH//sH6NWon4Wy/qki0Jp8WinFIb8DjzKKs+VgKvu
+ bAkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741360041; x=1741964841;
+ d=1e100.net; s=20230601; t=1741360038; x=1741964838;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Tjmv83nAHErAC/ciev0XLUkQWxcsHmZ1ReYlvJi0IGY=;
- b=OTx5bNB38sn9tJQe7qgzmJdvoiQRDZDN0D5/KD0IH6YrCwTnTqGtgQLuENeW41WEP1
- Jkx7bsEZw+Ij6JC1HUaOItL2kwaXf5mHUSq3EBnRtJEPbx1a3YJUZN4kq8WkgQyT2u40
- JWjm9ekXnB+zkg3TAfTbfJ3c5k5sTI/Jop0GoxvDALJdExOMeH6gJx1u0Ck4tETnT9UM
- oAg5VKdv6i++Vv82kkEGC8OltNto9Xn/3ir3iOQCz/Ombp8Adfsru1VJFnHoWzZaySHI
- cbR7MjEF+Z3BJm2hbHZtvgRroYjeAxKKgOB6mS/bN2Gneo4EvoDgctKwGo++UH6z9Yv8
- KrGw==
-X-Gm-Message-State: AOJu0Yzo1yX4O6wUOARSJC/KRSCeGsTIam3hFuIV4fDquza6dNv0rbpE
- kpQ4RgfLHeDWkFaw5AVF7uVf+MemXGW4/UvessQxDmez5HmFQ7CvgwHPtMYx+mSeApFP6i04/iR
- z
-X-Gm-Gg: ASbGncuM4y2iScv9EgxXPQPTFtFMtD0Ce/D+RqQjzZtlHrS98jMj/CMg02z47njeL6d
- kdY1bpY3nGpdqPHakNsQIu8Uz2DbBGxH1wI6huKkGYpZbaGToARgHpo7fTKyxuVCjroFSom9r4p
- LSKnVNv6dhjcqrGbg8sSAX4cAm/K1poQpZ6mFwyAGBmJoDdznKSTVSwHsqm4Nh6M3BwqsFDHmqZ
- U9QJCZSQ+wHwssfU4I0I3SR+DfPF+pc3SpWU6Hho5jJ1nr//1flpv9wawlmg57zKtnohiWZKooW
- 7cKivPC4lcVRR1DMBvNdV5kZihjBYNuYvLdMRowaHQmM46ExZtI=
-X-Google-Smtp-Source: AGHT+IEh+jo1KriQfa3p7qW9YWfbHuJLVpsEXhwvRrZnQqb57o7H4QKnszqDcH6i6slwLprsIQWDRA==
-X-Received: by 2002:a5d:588a:0:b0:38d:d222:ee70 with SMTP id
- ffacd0b85a97d-3913210e1bamr2632600f8f.20.1741360041000; 
- Fri, 07 Mar 2025 07:07:21 -0800 (PST)
+ bh=aSWu7SERkDl4TrKpc52a/rImNAR7H05Ny8NJ0H5vIQY=;
+ b=E4VaY8DkhSA/HVU5oiHVpJzsLb1sfvk8zq23NJzuOEaKKJE+AhKrg64egjQGlCHBGy
+ 9yHWqsF9fT/GhrZBDp7v+lVYiJOnz+xKYSxaAg3FOWtWFOcjUz5PfC+vEIf5k4XwIeTZ
+ KsuWVPXhhAI+h4QPKMXeXP5MFjO1aJjuqI0qnOVNZpSmNJs8pi5zgKhGw7sqzO9greOc
+ Q+3/9b3qQmV6/9hLWpQ2QdUsiYRCbxVdahpc0JUme5kH8JrtJYT1tlKh7nLBxE4Sxj+m
+ 0ZmxJzYjyrLcLSGDBzv/zHTuqIHx1RS2OdjLasUC+YE9hQEUSAbrE3NQAoCHYc9hGz2b
+ pl6g==
+X-Gm-Message-State: AOJu0Yza7hz1cWjjK572Dre7K0ZmDpiLecRLsoMxm8v/Sh8JHhR2Jifc
+ oeYbueDn6XfFLVRynOFp8OrlQkDX4If+P4ZBc/ctcwyyt1J2I/tFdYWDujHDrtdrFIN1yRXx7ef
+ m
+X-Gm-Gg: ASbGncsRRor+VY1Gg/r0rydGTevtLgycGaDPSQubSSlxXdAauRoETbEVC8FCdGTSmYw
+ r7bZ1xyUz/KO5HZytYMWmlzEG+74VrTWtbP1dRFLCOb0Rf7K3+E7K7dbEiZ5jsIg9B01eGZbLGy
+ fXdvduK/BVyiMJJyKNAl46t4P/xG94t8EHkRitQnzwesAA9o9b12QcSpux/877wMLqN35IyEYO0
+ 9deyLuztKkiTdMbYe4TmOEeHLtIqoe6cgnu3fkKZHGY/QKIVqKONx4j2EEOEFLarYnh8DXnQoQd
+ 7nC4A72JgDBf1+FZLRIXYWvqs6YMVyQWs3DPT4343pIDe/D/1UM=
+X-Google-Smtp-Source: AGHT+IEjEya4lXF0/VdtEPqr400qAh/j7du9RnWoBz7wuoGOdMhUUBVusIlBb0R2DJe1kjY1RYXVBw==
+X-Received: by 2002:a05:6000:1fa9:b0:391:2e31:c7e1 with SMTP id
+ ffacd0b85a97d-39132d2b0ebmr2397201f8f.4.1741360036529; 
+ Fri, 07 Mar 2025 07:07:16 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.20
+ ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 07:07:20 -0800 (PST)
+ Fri, 07 Mar 2025 07:07:15 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/21] target/arm: Refactor handling of timer offset for direct
- register accesses
-Date: Fri,  7 Mar 2025 15:06:55 +0000
-Message-ID: <20250307150708.3222813-9-peter.maydell@linaro.org>
+Subject: [PULL 04/21] target/arm: Apply correct timer offset when calculating
+ deadlines
+Date: Fri,  7 Mar 2025 15:06:51 +0000
+Message-ID: <20250307150708.3222813-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307150708.3222813-1-peter.maydell@linaro.org>
 References: <20250307150708.3222813-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,115 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When reading or writing the timer registers, sometimes we need to
-apply one of the timer offsets.  Specifically, this happens for
-direct reads of the counter registers CNTPCT_EL0 and CNTVCT_EL0 (and
-their self-synchronized variants CNTVCTSS_EL0 and CNTPCTSS_EL0).  It
-also applies for direct reads and writes of the CNT*_TVAL_EL*
-registers that provide the 32-bit downcounting view of each timer.
+When we are calculating timer deadlines, the correct definition of
+whether or not to apply an offset to the physical count is described
+in the Arm ARM DDI4087 rev L.a section D12.2.4.1.  This is different
+from when the offset should be applied for a direct read of the
+counter sysreg.
 
-We currently do this with duplicated code in gt_tval_read() and
-gt_tval_write() and a special-case in gt_virt_cnt_read() and
-gt_cnt_read().  Refactor this so that we handle it all in a single
-function gt_direct_access_timer_offset(), to parallel how we handle
-the offset for indirect accesses.
+We got this right for the EL1 physical timer and for the EL1 virtual
+timer, but got all the rest wrong: they should be using a zero offset
+always.
 
-The call in the WFIT helper previously to gt_virt_cnt_offset() is
-now to gt_direct_access_timer_offset(); this is the correct
-behaviour, but it's not immediately obvious that it shouldn't be
-considered an indirect access, so we add an explanatory comment.
-
-This commit should make no behavioural changes.
-
-(Cc to stable because the following bugfix commit will
-depend on this one.)
+Factor the offset calculation out into a function that has a comment
+documenting exactly which offset it is calculating and which gets the
+HYP, SEC, and HYPVIRT cases right.
 
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20250204125009.2281315-6-peter.maydell@linaro.org
+Message-id: 20250204125009.2281315-2-peter.maydell@linaro.org
 ---
- target/arm/internals.h     |   5 +-
- target/arm/helper.c        | 103 +++++++++++++++++++------------------
- target/arm/tcg/op_helper.c |   8 ++-
- 3 files changed, 62 insertions(+), 54 deletions(-)
+ target/arm/helper.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index a6ff228f9fd..bb962389192 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1819,9 +1819,10 @@ int delete_hw_watchpoint(target_ulong addr, target_ulong len, int type);
- uint64_t gt_get_countervalue(CPUARMState *env);
- /*
-  * Return the currently applicable offset between the system counter
-- * and CNTVCT_EL0 (this will be either 0 or the value of CNTVOFF_EL2).
-+ * and the counter for the specified timer, as used for direct register
-+ * accesses.
-  */
--uint64_t gt_virt_cnt_offset(CPUARMState *env);
-+uint64_t gt_direct_access_timer_offset(CPUARMState *env, int timeridx);
- 
- /*
-  * Return mask of ARMMMUIdxBit values corresponding to an "invalidate
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index acf77793c79..54147d97611 100644
+index 71dead7241b..7f341d753cd 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -2455,14 +2455,6 @@ static uint64_t gt_phys_raw_cnt_offset(CPUARMState *env)
-     return 0;
+@@ -2460,6 +2460,32 @@ static uint64_t gt_phys_cnt_offset(CPUARMState *env)
+     return gt_phys_raw_cnt_offset(env);
  }
  
--static uint64_t gt_phys_cnt_offset(CPUARMState *env)
--{
--    if (arm_current_el(env) >= 2) {
--        return 0;
--    }
--    return gt_phys_raw_cnt_offset(env);
--}
--
- static uint64_t gt_indirect_access_timer_offset(CPUARMState *env, int timeridx)
- {
-     /*
-@@ -2489,6 +2481,52 @@ static uint64_t gt_indirect_access_timer_offset(CPUARMState *env, int timeridx)
-     }
- }
- 
-+uint64_t gt_direct_access_timer_offset(CPUARMState *env, int timeridx)
++static uint64_t gt_indirect_access_timer_offset(CPUARMState *env, int timeridx)
 +{
 +    /*
-+     * Return the timer offset to use for direct accesses to the
-+     * counter registers CNTPCT and CNTVCT, and for direct accesses
-+     * to the CNT*_TVAL registers.
++     * Return the timer offset to use for indirect accesses to the timer.
++     * This is the Offset value as defined in D12.2.4.1 "Operation of the
++     * CompareValue views of the timers".
 +     *
-+     * This isn't exactly the same as the indirect-access offset,
-+     * because here we also care about what EL the register access
-+     * is being made from.
-+     *
-+     * This corresponds to the access pseudocode for the registers.
++     * The condition here is not always the same as the condition for
++     * whether to apply an offset register when doing a direct read of
++     * the counter sysreg; those conditions are described in the
++     * access pseudocode for each counter register.
 +     */
-+    uint64_t hcr;
-+
 +    switch (timeridx) {
 +    case GTIMER_PHYS:
-+        if (arm_current_el(env) >= 2) {
-+            return 0;
-+        }
 +        return gt_phys_raw_cnt_offset(env);
 +    case GTIMER_VIRT:
-+        switch (arm_current_el(env)) {
-+        case 2:
-+            hcr = arm_hcr_el2_eff(env);
-+            if (hcr & HCR_E2H) {
-+                return 0;
-+            }
-+            break;
-+        case 0:
-+            hcr = arm_hcr_el2_eff(env);
-+            if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
-+                return 0;
-+            }
-+            break;
-+        }
 +        return env->cp15.cntvoff_el2;
 +    case GTIMER_HYP:
 +    case GTIMER_SEC:
@@ -222,100 +159,16 @@ index acf77793c79..54147d97611 100644
  static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
  {
      ARMGenericTimer *gt = &cpu->env.cp15.c14_timer[timeridx];
-@@ -2561,34 +2599,14 @@ static void gt_timer_reset(CPUARMState *env, const ARMCPRegInfo *ri,
- 
- static uint64_t gt_cnt_read(CPUARMState *env, const ARMCPRegInfo *ri)
- {
--    return gt_get_countervalue(env) - gt_phys_cnt_offset(env);
--}
--
--uint64_t gt_virt_cnt_offset(CPUARMState *env)
--{
--    uint64_t hcr;
--
--    switch (arm_current_el(env)) {
--    case 2:
--        hcr = arm_hcr_el2_eff(env);
--        if (hcr & HCR_E2H) {
--            return 0;
--        }
--        break;
--    case 0:
--        hcr = arm_hcr_el2_eff(env);
--        if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
--            return 0;
--        }
--        break;
--    }
--
--    return env->cp15.cntvoff_el2;
-+    uint64_t offset = gt_direct_access_timer_offset(env, GTIMER_PHYS);
-+    return gt_get_countervalue(env) - offset;
- }
- 
- static uint64_t gt_virt_cnt_read(CPUARMState *env, const ARMCPRegInfo *ri)
- {
--    return gt_get_countervalue(env) - gt_virt_cnt_offset(env);
-+    uint64_t offset = gt_direct_access_timer_offset(env, GTIMER_VIRT);
-+    return gt_get_countervalue(env) - offset;
- }
- 
- static void gt_cval_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -2609,16 +2627,7 @@ static uint64_t do_tval_read(CPUARMState *env, int timeridx, uint64_t offset)
- static uint64_t gt_tval_read(CPUARMState *env, const ARMCPRegInfo *ri,
-                              int timeridx)
- {
--    uint64_t offset = 0;
--
--    switch (timeridx) {
--    case GTIMER_VIRT:
--        offset = gt_virt_cnt_offset(env);
--        break;
--    case GTIMER_PHYS:
--        offset = gt_phys_cnt_offset(env);
--        break;
--    }
-+    uint64_t offset = gt_direct_access_timer_offset(env, timeridx);
- 
-     return do_tval_read(env, timeridx, offset);
- }
-@@ -2636,16 +2645,8 @@ static void gt_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                           int timeridx,
-                           uint64_t value)
- {
--    uint64_t offset = 0;
-+    uint64_t offset = gt_direct_access_timer_offset(env, timeridx);
- 
--    switch (timeridx) {
--    case GTIMER_VIRT:
--        offset = gt_virt_cnt_offset(env);
--        break;
--    case GTIMER_PHYS:
--        offset = gt_phys_cnt_offset(env);
--        break;
--    }
-     do_tval_write(env, timeridx, value, offset);
- }
- 
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 02c375d196d..30786fd1ff4 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -427,7 +427,13 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
-     int target_el = check_wfx_trap(env, false, &excp);
-     /* The WFIT should time out when CNTVCT_EL0 >= the specified value. */
-     uint64_t cntval = gt_get_countervalue(env);
--    uint64_t offset = gt_virt_cnt_offset(env);
-+    /*
-+     * We want the value that we would get if we read CNTVCT_EL0 from
-+     * the current exception level, so the direct_access offset, not
-+     * the indirect_access one. Compare the pseudocode LocalTimeoutEvent(),
-+     * which calls VirtualCounterTimer().
-+     */
-+    uint64_t offset = gt_direct_access_timer_offset(env, GTIMER_VIRT);
-     uint64_t cntvct = cntval - offset;
-     uint64_t nexttick;
- 
+@@ -2469,8 +2495,7 @@ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
+          * Timer enabled: calculate and set current ISTATUS, irq, and
+          * reset timer to when ISTATUS next has to change
+          */
+-        uint64_t offset = timeridx == GTIMER_VIRT ?
+-            cpu->env.cp15.cntvoff_el2 : gt_phys_raw_cnt_offset(&cpu->env);
++        uint64_t offset = gt_indirect_access_timer_offset(&cpu->env, timeridx);
+         uint64_t count = gt_get_countervalue(&cpu->env);
+         /* Note that this must be unsigned 64 bit arithmetic: */
+         int istatus = count - offset >= gt->cval;
 -- 
 2.43.0
 
