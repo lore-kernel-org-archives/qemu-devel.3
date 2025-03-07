@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F5BC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 136EDC282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:18:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZSG-0006D0-Gd; Fri, 07 Mar 2025 10:17:55 -0500
+	id 1tqZTD-0006Xv-GH; Fri, 07 Mar 2025 10:18:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZQi-0005qB-PC
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:16:13 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZQx-0005ro-R3
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:16:25 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZQh-0003qQ-0P
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:16:04 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-390ec449556so2400708f8f.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:16:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZQu-00040z-UT
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:16:19 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43bcc04d4fcso12213985e9.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:16:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741360561; x=1741965361; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741360565; x=1741965365; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PLnyOTswVEaIwB5mduyl0BorXeO7LlZ/oZ3CWTRx72Q=;
- b=vriINjjN6R8Va2N+qXe2ea5pcYBDA4lP7re9T1beXa+MsKZTi5b9XDDL8UtzQ8mUYi
- 1NukZHvQHg+8hxsoUBNrvlWzDkDAMKZly26NdSA7lvYvPBltj6iVgTlarcMjy1NSg7KE
- iV5kb9ciyvnZQ6t5jG7N2Avfite+b2V1wZKW8NP+dJEJZM7nAWdaUwFTaE4W7UCJY6uA
- wCCSJkulotPGRGIt4vKZ2qEURHLS4cqU3lfaKbbeiaXtASSgbkhiR/AXe9600Wk1t/Ez
- UTKVb4IdOLC27bBgp4W/5J4Q9n2uPjClzlA4lHJsbpUCLtfoSTQxL5KgZZm7W0hnxGTg
- ovNw==
+ bh=PNl8UgOnANk9MlIZCbbjo+hTAONQ4gInW5Qx1vX0kuY=;
+ b=y/Ht3ErJQIEPadWhmaSMCXE4IzRQelbF+Kgi0AU/e3jwBiCPWXD4y1b9HFqUJ9mq1t
+ GJyGIIVUW4+C2eNrYJ4594gW18vrow6xJDKJ1910nmUFybkowLpVUDIRtiCuQPZ4fexX
+ zjKeqWmhRn2xUSmwz1gLQnqEaK+/7dvJdAtOlgdyry+eAM9vBoK7Hnwy1GG3KvFfVkzF
+ H/6zyDYwfWWfqTK7mvTdkAK17QKB7fK/dXkF02p22HhzaEN58k1hhgy0BeDDL0tk1dVK
+ R+NLhR2zaagSHzLylwSsewJdXkXuqiquGETHy8Q90+2AOy7G1eTwTOQW+Axv17xrrR3m
+ n74g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741360561; x=1741965361;
+ d=1e100.net; s=20230601; t=1741360565; x=1741965365;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PLnyOTswVEaIwB5mduyl0BorXeO7LlZ/oZ3CWTRx72Q=;
- b=Wp/SJmdi1Ft4Ifj86eW5Mbr5qsq/WZRm9aCzqIUPc/L9zytf1QY/qUPYvxe/EsNKLg
- GEgGBlu/rylRqbH6156FYrAnAQnyTdVSRCLGD+UFm2/LTwh1cr2qbgaB4yYmVKNgySrW
- bA1M4EC2pUHb69KImz26JaTj1KVzOhwo7WAvKxspKA6sAiRiwYDv93N9U9DvISuMqJbs
- pwg/LkV5Grfv8+94q0YkUUFeYK2SKWnWTXtz/eSMEH+HFjha0FKQAz7b5Dlsq4DZZePf
- IDgcoPXylz3U/d8GnU5DsYbIvTWqkNf3p71xpREXXR83ujRTl2JLrOMp0A3PyY4W5rqx
- czeA==
-X-Gm-Message-State: AOJu0YzSl9P3oPShyQwoKX09Ks8JxrFQAHogqsheC6tA+jv/lIPbcRwX
- /9PAm0IulSvT2tl97Nd9vGpHRMFpcYRyeHCW6ZRz/TrVy3O7Zxr7GAxgUStMvIeQaW4QLnqukTq
- 668U=
-X-Gm-Gg: ASbGnctDwOQsahy9Gk2npK4r7MA5TCynXnSL+1ua7/k30pP7tIoPXsYK8KPkroyGVRJ
- N9qlVumjDxnfdP1au3U89C8DlTDkvnBWabgoo+wjhf1zKsRjJ061P0Fg8vZCWG6rpSpwHhoGNNH
- GwGYPZxiLUYLF6w14iEsuMMZU9ur5I4+ojmboij8ksogP8Ywu2L+9QeOpvwFvHwx/KRn9pLNHC5
- Eef/sgkwh1hueuFU4nqN02JyDUO2rVCBJdCBD3rHlDPsY6SD9jtFg+gbBsxQgUz3QESTNKqmsuI
- BHoT+OTrq9yRmqiX13qzioq3bqtqV7U77b+GOoDl4GH7FCHdQNih/x3Vs0OULjrG2x5ABFO3mC0
- YotZ+SDJOsYoERL8kMY0=
-X-Google-Smtp-Source: AGHT+IHwBlMfoxAmttDu3Na/s3AqdWOqN+kkI2+sWSqc+y9t5/VH5MoIzS3usN6Ve/QcRbUh6pBbrg==
-X-Received: by 2002:a5d:47cc:0:b0:391:3049:d58d with SMTP id
- ffacd0b85a97d-39132b58ad8mr3788604f8f.0.1741360560624; 
- Fri, 07 Mar 2025 07:16:00 -0800 (PST)
+ bh=PNl8UgOnANk9MlIZCbbjo+hTAONQ4gInW5Qx1vX0kuY=;
+ b=t46bI1R5HFbXoAgWIHF8ldcxEjPNHd9WvkvCkbgai7Vukhk/WgTI0omkw5xmDQDcbf
+ gP0LBtWvp/x53Jo/HIysuFcISi5Vx8BLbrbtNn1gDH7hdUk6l8Crag3mZTa+mS6NKi1d
+ 0TGsJhuTNYcODJAeoRCONEL7TEFwoXBoHvhg/wwCA3gAh/awpiqC2w/+lQtfJDEkrbrY
+ QiQFH39WE9LyZZGfTQKz1BRGoRjHf1JINDkY17CUpuA8VgOntdg4RmjzRdsZRFWaxMR/
+ oEZr1Tbys0IyxTLvdEYsp7qDNQhW4jXWDLm2pG43nmpqOhHcFWq7spEP4SIBaGKhE38V
+ tV3A==
+X-Gm-Message-State: AOJu0YyqWrffYGHERkMm9jEuujAwl6vAAQUmzwe8FxqGtcIG1s8mF0Ax
+ w6XtEmI5LTF3UT0sJ0dEIVbGMMeOOjHPkURAzWDmpLb9JE11l3WgCcr0bks+PWbg/ddEzzFmM4W
+ 5PWA=
+X-Gm-Gg: ASbGncsih3F701GptxRkunvjcBxdy1QDzCSrggOlqRfS1aAQ/fhp+DVjl2tS9Da8/gP
+ rlfrejexYR4QDghfGYu6Ke8JhEjuYzmbFJWlvSNvY8psZmAUyhMhOYQji4M0hWABRCi8OiBViZB
+ upc4BQL5vXaTCz9xmp6c3I3Jdt0/BCzS9pW5HTlJ5N0U+Rr4y0f3KeQ5yQdA2RFs8n1PnnhisxC
+ vwbJIyf5nMIhsXkk4QEUSX956dfV42RDGRgbUxvosjHkN+hbcuiXrObm7VvzhGFtmC3Yrr/33/0
+ lv7a7dReT3MlrsBzOp6EihiebiecOVVVgqpXRcIXZLauyaMldZqURhAs0+dAlsX/bTgsop8nXPS
+ uit1Y4zC9b1qaUNVlY4E=
+X-Google-Smtp-Source: AGHT+IHNNMgnVDRwDCiLNtmYODq5h4evUDAvCPa10r6l4Vq5BNgyXNka2sDISKnOd6QFJlRDNO/WMA==
+X-Received: by 2002:a05:600c:444c:b0:43b:c7ad:55f0 with SMTP id
+ 5b1f17b1804b1-43c601cfdf5mr33222165e9.5.1741360565544; 
+ Fri, 07 Mar 2025 07:16:05 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bee262esm5625123f8f.0.2025.03.07.07.15.59
+ 5b1f17b1804b1-43bd42c55f2sm84148105e9.20.2025.03.07.07.16.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 07 Mar 2025 07:16:00 -0800 (PST)
+ Fri, 07 Mar 2025 07:16:05 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -75,18 +75,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/7] hw/i386/fw_cfg: Check ACPI availability with
- acpi_builtin()
-Date: Fri,  7 Mar 2025 16:15:39 +0100
-Message-ID: <20250307151543.8156-4-philmd@linaro.org>
+Subject: [PATCH 4/7] hw/virtio/virtio-mem: Remove CONFIG_DEVICES include
+Date: Fri,  7 Mar 2025 16:15:40 +0100
+Message-ID: <20250307151543.8156-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250307151543.8156-1-philmd@linaro.org>
 References: <20250307151543.8156-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,32 +108,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the compile-time CONFIG_ACPI check by a runtime one.
+Rather than checking ACPI availability at compile time by
+checking the CONFIG_ACPI definition from CONFIG_DEVICES,
+check at runtime via acpi_builtin().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/fw_cfg.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/virtio/virtio-mem.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-index d08aefa0291..a7f1b60b98c 100644
---- a/hw/i386/fw_cfg.c
-+++ b/hw/i386/fw_cfg.c
-@@ -145,10 +145,10 @@ FWCfgState *fw_cfg_arch_create(MachineState *ms,
-      */
-     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, apic_id_limit);
-     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, ms->ram_size);
--#ifdef CONFIG_ACPI
--    fw_cfg_add_bytes(fw_cfg, FW_CFG_ACPI_TABLES,
--                     acpi_tables, acpi_tables_len);
--#endif
-+    if (acpi_builtin()) {
-+        fw_cfg_add_bytes(fw_cfg, FW_CFG_ACPI_TABLES,
-+                         acpi_tables, acpi_tables_len);
-+    }
-     fw_cfg_add_i32(fw_cfg, FW_CFG_IRQ0_OVERRIDE, 1);
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index 7b140add765..5f57eccbb66 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -28,7 +28,7 @@
+ #include "migration/misc.h"
+ #include "hw/boards.h"
+ #include "hw/qdev-properties.h"
+-#include CONFIG_DEVICES
++#include "hw/acpi/acpi.h"
+ #include "trace.h"
  
-     fw_cfg_add_bytes(fw_cfg, FW_CFG_HPET, &hpet_fw_cfg, sizeof(hpet_fw_cfg));
+ static const VMStateDescription vmstate_virtio_mem_device_early;
+@@ -883,10 +883,8 @@ static uint64_t virtio_mem_get_features(VirtIODevice *vdev, uint64_t features,
+     MachineState *ms = MACHINE(qdev_get_machine());
+     VirtIOMEM *vmem = VIRTIO_MEM(vdev);
+ 
+-    if (ms->numa_state) {
+-#if defined(CONFIG_ACPI)
++    if (ms->numa_state && acpi_builtin()) {
+         virtio_add_feature(&features, VIRTIO_MEM_F_ACPI_PXM);
+-#endif
+     }
+     assert(vmem->unplugged_inaccessible != ON_OFF_AUTO_AUTO);
+     if (vmem->unplugged_inaccessible == ON_OFF_AUTO_ON) {
 -- 
 2.47.1
 
