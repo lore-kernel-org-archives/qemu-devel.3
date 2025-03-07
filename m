@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A8ACC282D0
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 05:47:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29356C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 06:34:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqQXN-0006JA-07; Fri, 07 Mar 2025 00:46:21 -0500
+	id 1tqRHX-0002Ed-Td; Fri, 07 Mar 2025 01:34:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqQXL-0006Ip-4R
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 00:46:19 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqRHW-0002ER-M5
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 01:34:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqQXJ-0006fg-7n
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 00:46:18 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqRHU-0006AE-V6
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 01:34:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741326375;
+ s=mimecast20190719; t=1741329239;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=rG+eEZR1YRqsjeR54znBAI4pudwZxEuMEwqD6HPODTM=;
- b=AUwF1OFxxX8PdKmK7MdrVGsNiaSz0v9J6Ejtem68caWrP4Fd7HDBSjPunafIFoCmvDkiyU
- tRpfllEP8I0P43MuvE0fdjZSDIo7uxOqdK8auNAbdkYbhts1+/BNXNGnsPLAH+KPbC7rz3
- 91RNVSKuYLY4WvuTSRomxLLKFmDB8Jo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=syfad5OqPcErHx6LK0OpRAZNhvk5+kf3vsfEoJ8IAO4=;
+ b=WRwXHDV8ySU5VLYGfWskuFQ0vgaTSaPRYbg5ffbABMNLFWGGKacSqpx4uPffJlOdYtBXwE
+ lPLkqBlA/wAW2Um3O4Uad46HSh9rFoox3zf+F2lngHrRj9qAkul3dKa8FCLj4xRSmIK964
+ +2/Ts2hXf+ZDoYMuc7MTO4/b0ZlrmHc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-369-khXI9QXgObaj5ovjcpqehA-1; Fri,
- 07 Mar 2025 00:46:10 -0500
-X-MC-Unique: khXI9QXgObaj5ovjcpqehA-1
-X-Mimecast-MFC-AGG-ID: khXI9QXgObaj5ovjcpqehA_1741326369
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-1EEJhJPyP8SHxuhfzSf6fA-1; Fri,
+ 07 Mar 2025 01:33:56 -0500
+X-MC-Unique: 1EEJhJPyP8SHxuhfzSf6fA-1
+X-Mimecast-MFC-AGG-ID: 1EEJhJPyP8SHxuhfzSf6fA_1741329234
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8B28180035E; Fri,  7 Mar 2025 05:46:08 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF857180AF4D; Fri,  7 Mar 2025 06:33:53 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C7F31956095; Fri,  7 Mar 2025 05:46:08 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B3BE300019E; Fri,  7 Mar 2025 06:33:53 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9FCE621E66C2; Fri, 07 Mar 2025 06:46:05 +0100 (CET)
+ id D794E21E675F; Fri, 07 Mar 2025 07:33:50 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
@@ -54,18 +54,17 @@ Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
  <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
  Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: Re: [PATCH 04/57] docs/sphinx: add compat.py module and
- nested_parse helper
-In-Reply-To: <20250305034610.960147-5-jsnow@redhat.com> (John Snow's message
- of "Tue, 4 Mar 2025 22:45:13 -0500")
+Subject: Re: [PATCH 11/57] docs/qapi-domain: add qapi:command directive
+In-Reply-To: <20250305034610.960147-12-jsnow@redhat.com> (John Snow's message
+ of "Tue, 4 Mar 2025 22:45:20 -0500")
 References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-5-jsnow@redhat.com>
-Date: Fri, 07 Mar 2025 06:46:05 +0100
-Message-ID: <87o6ydtmua.fsf@pond.sub.org>
+ <20250305034610.960147-12-jsnow@redhat.com>
+Date: Fri, 07 Mar 2025 07:33:50 +0100
+Message-ID: <87ikols629.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -93,65 +92,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> Create a compat module that handles sphinx cross-version compatibility
-> issues. For the inaugural function, add a nested_parse() helper that
-> handles differences in line number tracking for nested directive body
-> parsing.
+> This commit adds a stubbed version of QAPICommand that utilizes the
+> QAPIObject class, the qapi:command directive, the :qapi:cmd:
+> cross-reference role, and the "command" object type in the QAPI object
+> registry.
 >
-> Spoilers: there are more cross-version hacks to come throughout the
-> series.
+> This commit also adds the aforementioned generic QAPIObject class for
+> use in documenting various QAPI entities in the Sphinx ecosystem.
 >
+> They don't do anything *particularly* interesting yet, but that will
+> come in forthcoming commits.
+>
+> Note: some versions of mypy get a little confused over the difference
+> between class and instance variables; because sphinx's ObjectDescription
+> does not declare option_spec as a ClassVar (even though it's obvious
+> that it is), mypy may produce this error:
+>
+> qapi-domain.py:125: error: Cannot override instance variable (previously
+> declared on base class "ObjectDescription") with class variable [misc]
+>
+> I can't control that; so silence the error with a pragma.
+
+Is this still accurate?  qapi-domain.py line 125 is a comment.  I can't
+see the pragma.
+
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->  docs/sphinx/compat.py | 33 +++++++++++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
->  create mode 100644 docs/sphinx/compat.py
+>  docs/sphinx/qapi_domain.py | 146 ++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 144 insertions(+), 2 deletions(-)
 >
-> diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
-> new file mode 100644
-> index 00000000000..792aca10e39
-> --- /dev/null
-> +++ b/docs/sphinx/compat.py
-> @@ -0,0 +1,33 @@
-> +"""
-> +Sphinx cross-version compatibility goop
-> +"""
+> diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+> index 104bae709f3..6168c23936f 100644
+> --- a/docs/sphinx/qapi_domain.py
+> +++ b/docs/sphinx/qapi_domain.py
+> @@ -21,9 +21,10 @@
+>  from docutils import nodes
+>  from docutils.parsers.rst import directives
+>  
+> -from compat import nested_parse
+> +from compat import KeywordNode, SpaceNode, nested_parse
+>  from sphinx import addnodes
+> -from sphinx.addnodes import pending_xref
+> +from sphinx.addnodes import desc_signature, pending_xref
+> +from sphinx.directives import ObjectDescription
+>  from sphinx.domains import (
+>      Domain,
+>      Index,
+> @@ -103,6 +104,144 @@ def process_link(
+>          return title, target
+>  
+>  
+> +# Alias for the return of handle_signature(), which is used in several places.
+> +# (In the Python domain, this is Tuple[str, str] instead.)
+> +Signature = str
 > +
-> +from docutils.nodes import Element
 > +
-> +from sphinx.util.docutils import SphinxDirective, switch_source_input
-> +from sphinx.util.nodes import nested_parse_with_titles
-> +
-> +
-> +def nested_parse(directive: SphinxDirective, content_node: Element) -> None:
+> +class QAPIObject(ObjectDescription[Signature]):
 > +    """
-> +    This helper preserves error parsing context across sphinx versions.
+> +    Description of a generic QAPI object.
+> +
+> +    It's not used directly, but is instead subclassed by specific directives.
 > +    """
 > +
-> +    # necessary so that the child nodes get the right source/line set
-> +    content_node.document = directive.state.document
-> +
-> +    try:
-> +        # Modern sphinx (6.2.0+) supports proper offsetting for
-> +        # nested parse error context management
-> +        nested_parse_with_titles(
-> +            directive.state,
-> +            directive.content,
-> +            content_node,
-> +            content_offset=directive.content_offset,
-> +        )
-> +    except TypeError:
-> +        # No content_offset argument. Fall back to SSI method.
-> +        with switch_source_input(directive.state, directive.content):
-> +            nested_parse_with_titles(
-> +                directive.state, directive.content, content_node
-> +            )
+> +    # Inherit some standard options from Sphinx's ObjectDescription
+> +    option_spec: OptionSpec = (  # type:ignore[misc]
+> +        ObjectDescription.option_spec.copy()
+> +    )
+> +    option_spec.update(
+> +        {
+> +            # Borrowed from the Python domain:
 
-The function wraps around sphinx.util.nodes.nested_parse_with_titles().
-Would calling it nested_parse_with_titles() reduce readers' cognitive
-load at call sites?
+This is line 125 mentioned above.
 
-Please do not misinterpret my question as a demand.  It's really just a
-question :)
+> +            "module": directives.unchanged,  # Override contextual module name
+> +        }
+> +    )
+
+[...]
 
 
