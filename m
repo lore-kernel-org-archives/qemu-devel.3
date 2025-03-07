@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91EEAC282D0
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 04:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F03C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 04:07:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqOtl-0001HR-1s; Thu, 06 Mar 2025 23:01:21 -0500
+	id 1tqOsf-0007mU-Qj; Thu, 06 Mar 2025 23:00:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tqOtg-0000yK-PE; Thu, 06 Mar 2025 23:01:16 -0500
+ id 1tqOsY-0007eu-1M; Thu, 06 Mar 2025 23:00:06 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tqOtf-00053C-54; Thu, 06 Mar 2025 23:01:16 -0500
+ id 1tqOsV-0004jN-QJ; Thu, 06 Mar 2025 23:00:05 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 7 Mar
- 2025 11:59:52 +0800
+ 2025 11:59:47 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 7 Mar 2025 11:59:52 +0800
+ Transport; Fri, 7 Mar 2025 11:59:47 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v6 18/29] hw/misc/aspeed_scu: Add Support for AST2700/AST2750
- A1 Silicon Revisions
-Date: Fri, 7 Mar 2025 11:59:27 +0800
-Message-ID: <20250307035945.3698802-19-jamin_lin@aspeedtech.com>
+Subject: [PATCH v6 06/29] hw/intc/aspeed: Introduce helper functions for
+ enable and status registers
+Date: Fri, 7 Mar 2025 11:59:15 +0800
+Message-ID: <20250307035945.3698802-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
 References: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
@@ -67,42 +67,242 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added new definitions for AST2700_A1_SILICON_REV and AST2750_A1_SILICON_REV to
-identify the A1 silicon revisions.
+The behavior of the enable and status registers is almost identical between
+INTC(CPU Die) and INTCIO(IO Die). To reduce duplicated code, adds
+"aspeed_intc_enable_handler" functions to handle enable register write
+behavior and "aspeed_intc_status_handler" functions to handle status
+register write behavior. No functional change.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/misc/aspeed_scu.h | 2 ++
- hw/misc/aspeed_scu.c         | 2 ++
- 2 files changed, 4 insertions(+)
+ hw/intc/aspeed_intc.c | 191 ++++++++++++++++++++++++------------------
+ 1 file changed, 108 insertions(+), 83 deletions(-)
 
-diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
-index 356be95e45..684b48b722 100644
---- a/include/hw/misc/aspeed_scu.h
-+++ b/include/hw/misc/aspeed_scu.h
-@@ -54,6 +54,8 @@ struct AspeedSCUState {
- #define AST2700_A0_SILICON_REV   0x06000103U
- #define AST2720_A0_SILICON_REV   0x06000203U
- #define AST2750_A0_SILICON_REV   0x06000003U
-+#define AST2700_A1_SILICON_REV   0x06010103U
-+#define AST2750_A1_SILICON_REV   0x06010003U
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index d684b4bb4f..b58a7ee712 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -120,6 +120,112 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+     }
+ }
  
- #define ASPEED_IS_AST2500(si_rev)     ((((si_rev) >> 24) & 0xff) == 0x04)
++static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
++                                       uint64_t data)
++{
++    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
++    uint32_t reg = offset >> 2;
++    uint32_t old_enable;
++    uint32_t change;
++    uint32_t irq;
++
++    irq = (offset & 0x0f00) >> 8;
++
++    if (irq >= aic->num_ints) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
++                      __func__, irq);
++        return;
++    }
++
++    /*
++     * The enable registers are used to enable source interrupts.
++     * They also handle masking and unmasking of source interrupts
++     * during the execution of the source ISR.
++     */
++
++    /* disable all source interrupt */
++    if (!data && !s->enable[irq]) {
++        s->regs[reg] = data;
++        return;
++    }
++
++    old_enable = s->enable[irq];
++    s->enable[irq] |= data;
++
++    /* enable new source interrupt */
++    if (old_enable != s->enable[irq]) {
++        trace_aspeed_intc_enable(s->enable[irq]);
++        s->regs[reg] = data;
++        return;
++    }
++
++    /* mask and unmask source interrupt */
++    change = s->regs[reg] ^ data;
++    if (change & data) {
++        s->mask[irq] &= ~change;
++        trace_aspeed_intc_unmask(change, s->mask[irq]);
++    } else {
++        s->mask[irq] |= change;
++        trace_aspeed_intc_mask(change, s->mask[irq]);
++    }
++
++    s->regs[reg] = data;
++}
++
++static void aspeed_intc_status_handler(AspeedINTCState *s, hwaddr offset,
++                                       uint64_t data)
++{
++    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
++    uint32_t reg = offset >> 2;
++    uint32_t irq;
++
++    if (!data) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid data 0\n", __func__);
++        return;
++    }
++
++    irq = (offset & 0x0f00) >> 8;
++
++    if (irq >= aic->num_ints) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
++                      __func__, irq);
++        return;
++    }
++
++    /* clear status */
++    s->regs[reg] &= ~data;
++
++    /*
++     * These status registers are used for notify sources ISR are executed.
++     * If one source ISR is executed, it will clear one bit.
++     * If it clear all bits, it means to initialize this register status
++     * rather than sources ISR are executed.
++     */
++    if (data == 0xffffffff) {
++        return;
++    }
++
++    /* All source ISR execution are done */
++    if (!s->regs[reg]) {
++        trace_aspeed_intc_all_isr_done(irq);
++        if (s->pending[irq]) {
++            /*
++             * handle pending source interrupt
++             * notify firmware which source interrupt are pending
++             * by setting status register
++             */
++            s->regs[reg] = s->pending[irq];
++            s->pending[irq] = 0;
++            trace_aspeed_intc_trigger_irq(irq, s->regs[reg]);
++            aspeed_intc_update(s, irq, 1);
++        } else {
++            /* clear irq */
++            trace_aspeed_intc_clear_irq(irq, 0);
++            aspeed_intc_update(s, irq, 0);
++        }
++    }
++}
++
+ static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned int size)
+ {
+     AspeedINTCState *s = ASPEED_INTC(opaque);
+@@ -136,11 +242,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+                                         unsigned size)
+ {
+     AspeedINTCState *s = ASPEED_INTC(opaque);
+-    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+     uint32_t reg = offset >> 2;
+-    uint32_t old_enable;
+-    uint32_t change;
+-    uint32_t irq;
  
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index 0581c744f1..76cfd91671 100644
---- a/hw/misc/aspeed_scu.c
-+++ b/hw/misc/aspeed_scu.c
-@@ -560,6 +560,8 @@ static uint32_t aspeed_silicon_revs[] = {
-     AST2700_A0_SILICON_REV,
-     AST2720_A0_SILICON_REV,
-     AST2750_A0_SILICON_REV,
-+    AST2700_A1_SILICON_REV,
-+    AST2750_A1_SILICON_REV,
- };
+     trace_aspeed_intc_write(offset, size, data);
  
- bool is_supported_silicon_rev(uint32_t silicon_rev)
+@@ -154,45 +256,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+     case R_GICINT134_EN:
+     case R_GICINT135_EN:
+     case R_GICINT136_EN:
+-        irq = (offset & 0x0f00) >> 8;
+-
+-        if (irq >= aic->num_ints) {
+-            qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
+-                          __func__, irq);
+-            return;
+-        }
+-
+-        /*
+-         * These registers are used for enable sources interrupt and
+-         * mask and unmask source interrupt while executing source ISR.
+-         */
+-
+-        /* disable all source interrupt */
+-        if (!data && !s->enable[irq]) {
+-            s->regs[reg] = data;
+-            return;
+-        }
+-
+-        old_enable = s->enable[irq];
+-        s->enable[irq] |= data;
+-
+-        /* enable new source interrupt */
+-        if (old_enable != s->enable[irq]) {
+-            trace_aspeed_intc_enable(s->enable[irq]);
+-            s->regs[reg] = data;
+-            return;
+-        }
+-
+-        /* mask and unmask source interrupt */
+-        change = s->regs[reg] ^ data;
+-        if (change & data) {
+-            s->mask[irq] &= ~change;
+-            trace_aspeed_intc_unmask(change, s->mask[irq]);
+-        } else {
+-            s->mask[irq] |= change;
+-            trace_aspeed_intc_mask(change, s->mask[irq]);
+-        }
+-        s->regs[reg] = data;
++        aspeed_intc_enable_handler(s, offset, data);
+         break;
+     case R_GICINT128_STATUS:
+     case R_GICINT129_STATUS:
+@@ -203,46 +267,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+     case R_GICINT134_STATUS:
+     case R_GICINT135_STATUS:
+     case R_GICINT136_STATUS:
+-        irq = (offset & 0x0f00) >> 8;
+-
+-        if (irq >= aic->num_ints) {
+-            qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
+-                          __func__, irq);
+-            return;
+-        }
+-
+-        /* clear status */
+-        s->regs[reg] &= ~data;
+-
+-        /*
+-         * These status registers are used for notify sources ISR are executed.
+-         * If one source ISR is executed, it will clear one bit.
+-         * If it clear all bits, it means to initialize this register status
+-         * rather than sources ISR are executed.
+-         */
+-        if (data == 0xffffffff) {
+-            return;
+-        }
+-
+-        /* All source ISR execution are done */
+-        if (!s->regs[reg]) {
+-            trace_aspeed_intc_all_isr_done(irq);
+-            if (s->pending[irq]) {
+-                /*
+-                 * handle pending source interrupt
+-                 * notify firmware which source interrupt are pending
+-                 * by setting status register
+-                 */
+-                s->regs[reg] = s->pending[irq];
+-                s->pending[irq] = 0;
+-                trace_aspeed_intc_trigger_irq(irq, s->regs[reg]);
+-                aspeed_intc_update(s, irq, 1);
+-            } else {
+-                /* clear irq */
+-                trace_aspeed_intc_clear_irq(irq, 0);
+-                aspeed_intc_update(s, irq, 0);
+-            }
+-        }
++        aspeed_intc_status_handler(s, offset, data);
+         break;
+     default:
+         s->regs[reg] = data;
 -- 
 2.43.0
 
