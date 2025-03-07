@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FCDCC282D1
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 02:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BCDFC282EC
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 02:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqN5Z-0006ix-Rz; Thu, 06 Mar 2025 21:05:25 -0500
+	id 1tqN8o-0008I6-Rg; Thu, 06 Mar 2025 21:08:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tqN5V-0006i8-QP; Thu, 06 Mar 2025 21:05:22 -0500
-Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tqN8k-0008HU-3z
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 21:08:42 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tqN5T-0006vD-26; Thu, 06 Mar 2025 21:05:20 -0500
-Received: by mail-ua1-x936.google.com with SMTP id
- a1e0cc1a2514c-86d3805a551so483943241.3; 
- Thu, 06 Mar 2025 18:05:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tqN8i-0007XR-Gb
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 21:08:41 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-22185cddbffso47945275ad.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 18:08:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741313115; x=1741917915; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=P9ITJx13kNMIqYZjjXQ+4FwbeWPJ58U+jFQbaQmMDBE=;
- b=EYD3lR3T5zYeYZu5ZU3cvNKk8K/FZ/9/p2H01H9uuZc2QIU/io37Un3J3ipnuLaGFt
- lxK4Su/P4/D2z8leH/g6a9ry1/nsqmxyuKnicWxQiMMPWr/aBHWS4hfiNEjqaf1eSx9g
- HxZt+BKxJpIEMEIvyYVOdvdciDuWBVxit1w5KbbEBk3kKBpck8vupgwUUV263qnF9lO0
- kLdRbSXzA/86hUi/4pTSWMaqORZQby/wzcySbUjV77QKzybyllBnQ93t6zZCGCfusenh
- xwA7fouGSNIi9G413WzI105hM7p4Mn3pJLSBwy1bS1nPDZYEDWLgMmOCQXNIt3KFNUs+
- FB5g==
+ d=linaro.org; s=google; t=1741313318; x=1741918118; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=XPm7vUDA5ufTI4bbQzGsBhjs3j6e558LlXKlob7pDOo=;
+ b=Jzim5kTUplhdKSeP7fcxFPoSpWOKGtsTGZ0p3BJIJof4ADY920sNcJG8X17D7TVvLc
+ Lnxck1Gao+rwdBCbATrGj1lx0AGELwEzhQj6FCZwqSsrdVqdVHWSEu0RMXqe/A3iZW1K
+ BA+zLr+ZBw4TzwD1+OHPitUh8kyUnE/tUThhpnRmGkG1eLnda6ZWHL40xkCujf7ip6JP
+ Jpwe6mS3ITLAlqYnFz5hcX4nxjWOxKm4a1F+QTSrrbLxEz0ccc+kwelkxJawLCTnV/Tj
+ 0vCkr68oEX6D5CfjYj3xLgsvoBcfnghLWfS9EMIJWBMYtmOO3nPLcteIaIEo0cOFHyoP
+ SZoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741313115; x=1741917915;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=P9ITJx13kNMIqYZjjXQ+4FwbeWPJ58U+jFQbaQmMDBE=;
- b=wAbfU/eEG5Xv7rG/DwtXLpB/4CMOhtPUExjcsMoU2K7yza98yFMbQccMif2H3PdJeV
- D2+n7B99ggsrCfwmCS8f+8s4Ad60Nfmg7BfzNm92lsN8hb1tEaiirv/q49RrpFc5sARi
- FIPfyHsiooFVIlAlgRkMPUqHvoIj0uIdsMmfZ077JOVJ5VctXr2cL9w0qVtt3GTupTbM
- xoArBAIGgyeMYryTvQMWB7A+dtYbVH0R9T5Rp0ZN4WqoF7TKCYCSi7EsfDOZ2UssGWGh
- kOUjXe1IHhzvSZxa4q+4QNPLH6eTUTEmfDsYy1AuSZB9kZ8VQpkP0OltRAUk+e4Ho3Es
- taMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIH5+6sR1dQCaHh09/Aggvf8+0WnPUYJrCl9QqAYZkVYgdDE+BYoJxiEaQBeU2eyEgrSV7M9TZzvZw@nongnu.org
-X-Gm-Message-State: AOJu0YzVMqbymnQo6GCqMXlJYFON9QEjMZrXltsL4JBJF6sltX97qHCD
- QZITo8RIY656r+DKap8JEXvbr5Zj/SPuKgLSUO9SzibCy8E+23gCUN9iLzyGaKDte960ZhAF3Hw
- 7Hny41PaKTBeNY97N40QLBsax/BE=
-X-Gm-Gg: ASbGncsfogfqxkagPkGgvE+Pr8iPWzJJIyzr50A0oQrN7aJQz4ADxXCUAFQVF2794UW
- TA3r7z9szUUcknmCg4a2PBzYc+mpg4VEBrTJFXCmG9pEdTl1LpPZOvljpv83wJ6HbK7L18R7I82
- kN/CrNBiSA2XoImRt1IpJGNLcHunQ93lzXUPt5boQiijbPqiDxNC7gtiLT
-X-Google-Smtp-Source: AGHT+IG00xtOVrQNZQyFj3/9+QCtlHz9A1CtBx78XzMsfoSKs4fTngJHFgeGryeOoU/Dvb4QFoMvae0JwNe8edm7csk=
-X-Received: by 2002:a05:6102:41a8:b0:4c1:76a4:aee4 with SMTP id
- ada2fe7eead31-4c30a6ad03amr1124505137.19.1741313114754; Thu, 06 Mar 2025
- 18:05:14 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741313318; x=1741918118;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XPm7vUDA5ufTI4bbQzGsBhjs3j6e558LlXKlob7pDOo=;
+ b=EKeGrBoo20IlL1ngMpiELXGkg6k09/em51nEuu39rLcsA/moZw/fYtYk2HBryleR75
+ IW9/THQJBN4gg7Hf5yRw7ZVQ6Nv4KmbNDaBW/UG6UrmjMq1dmfvkWctkktneulnVwTca
+ 9OkZoy1LC9c47cDoDOHojBK8sdwSSZBX1Ky5ir7uU3nU3q9TFg80yVB782wS7yBn3qPc
+ H44tkW6bM/NLmBHNwy+oGRvqU6ME+lb4bG8vCP7XzEWwArl7wvfbhByO5dDyWUk4/WKF
+ EP8otk9AccyFkx8N+evRmYFRLRe3NYMcSvSdXKmriKORIvcNppbfVOwczrUV9lDdtqgz
+ xlTA==
+X-Gm-Message-State: AOJu0YzSSKmk8qgCEfPkLkdbW5Z/XTjlx41kBoiEvB1Ggnfk5bVM07ci
+ lxDUV5YC1fFHCh/p/9IhC92bRGE4EF4sJCVPpj5E4JRroeDJBOvzRsLU3DwrixQ/itSjXr/Ir6z
+ n
+X-Gm-Gg: ASbGncvNAQVt0+0Y/HbxJsJ10OpCY29U7CcU0077R/XZ18DE9TjytTrEA3MGtAwqcIE
+ UO0Yi77kMqrn9+MxZ2ySS9WCYZDn0jiqYbwq39fy3SulOmkodTMNrOFJaGzzj+Q46C32fZGz4nE
+ 7PFH5Is+ktHftxGWtpHIlhPuHCU0CRD2/Bniy+ELu4GNpzMN+i50CjERj9fs+WvpixTfpDz5PtX
+ pYrIcr6UIwGNXZzsJ0WlMHTlmEFGXYGFFm9t8gLW4EfgvQ3WGwuBjer/8MEWR+NMxOuC6OkYLAM
+ oM/Y0oYat3+r5nyIYGDCybML0GbrRTABKskHt6Z8vm+EfJeUyLqh+j3zyTUgPnietLoH/+2xqDm
+ b15DsbphF
+X-Google-Smtp-Source: AGHT+IHK/TboxA35bxI7syF7jO5+TnRsl7DxiHtyMKXxbkDpq1E5vQnRvLpr682OSZ2TKVVs0rppjg==
+X-Received: by 2002:a05:6a00:140d:b0:728:f21b:ce4c with SMTP id
+ d2e1a72fcca58-736a97086b3mr3212944b3a.5.1741313318043; 
+ Thu, 06 Mar 2025 18:08:38 -0800 (PST)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-736ae61b68fsm183181b3a.178.2025.03.06.18.08.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Mar 2025 18:08:37 -0800 (PST)
+Message-ID: <b44e107d-3481-4d88-a0da-e7587c69afe0@linaro.org>
+Date: Thu, 6 Mar 2025 18:08:35 -0800
 MIME-Version: 1.0
-References: <20250306064636.452396-1-debug@rivosinc.com>
- <20250306064636.452396-2-debug@rivosinc.com>
-In-Reply-To: <20250306064636.452396-2-debug@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 7 Mar 2025 12:04:48 +1000
-X-Gm-Features: AQ5f1Jo_KDgc44UU25IKVNuatd6Yj2ELWeCNmvcAnK672xM15DLzrYS5Ynf6Sys
-Message-ID: <CAKmqyKOHrYSMVNUo9B6fcG7921eMeuioXw0KK8rD=NS8HEqbTQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] target/riscv: fixes a bug against `ssamoswap`
- behavior in M-mode
-To: Deepak Gupta <debug@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- Ved Shanbhogue <ved@rivosinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] include/exec: Move TARGET_PAGE_{SIZE,MASK,BITS} to
+ target_page.h
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, alex.bennee@linaro.org, philmd@linaro.org
+References: <20250306234108.378881-1-richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250306234108.378881-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,83 +103,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 6, 2025 at 4:47=E2=80=AFPM Deepak Gupta <debug@rivosinc.com> wr=
-ote:
->
-> Commit f06bfe3dc38c ("target/riscv: implement zicfiss instructions") adds
-> `ssamoswap` instruction. `ssamoswap` takes the code-point from existing
-> reserved encoding (and not a zimop like other shadow stack instructions).
-> If shadow stack is not enabled (via xenvcfg.SSE) and effective priv is
-> less than M then `ssamoswap` must result in an illegal instruction
-> exception. However if effective priv is M, then `ssamoswap` results in
-> store/AMO access fault. See Section "22.2.3. Shadow Stack Memory
-> Protection" of priv spec.
->
-> Fixes: f06bfe3dc38c ("target/riscv: implement zicfiss instructions")
->
-> Reported-by: Ved Shanbhogue <ved@rivosinc.com>
-> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+On 3/6/25 15:41, Richard Henderson wrote:
+> diff --git a/page-vary-target.c b/page-vary-target.c
+> index 343b4adb95..1b4a9a10be 100644
+> --- a/page-vary-target.c
+> +++ b/page-vary-target.c
+> @@ -37,5 +37,7 @@ void finalize_target_page_bits(void)
+>   {
+>   #ifdef TARGET_PAGE_BITS_VARY
+>       finalize_target_page_bits_common(TARGET_PAGE_BITS_MIN);
+> +#else
+> +    finalize_target_page_bits_common(TARGET_PAGE_BITS);
+>   #endif
+>   }
 
-Thanks!
+Actually, the ifdef here should be removed.
+TARGET_PAGE_BITS_MIN is always correct.
 
-Applied to riscv-to-apply.next
-
-Please use a cover letter for a multi-patch series in the future
-
-Alistair
-
-> ---
->  target/riscv/insn_trans/trans_rvzicfiss.c.inc | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv=
-/insn_trans/trans_rvzicfiss.c.inc
-> index e3ebc4977c..b0096adcd0 100644
-> --- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> @@ -15,6 +15,13 @@
->   * You should have received a copy of the GNU General Public License alo=
-ng with
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
-> +
-> +#define REQUIRE_ZICFISS(ctx) do {        \
-> +    if (!ctx->cfg_ptr->ext_zicfiss) {    \
-> +        return false;                    \
-> +    }                                    \
-> +} while (0)
-> +
->  static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
->  {
->      if (!ctx->bcfi_enabled) {
-> @@ -77,6 +84,11 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *=
-a)
->  static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
->  {
->      REQUIRE_A_OR_ZAAMO(ctx);
-> +    REQUIRE_ZICFISS(ctx);
-> +    if (ctx->priv =3D=3D PRV_M) {
-> +        generate_exception(ctx, RISCV_EXCP_STORE_AMO_ACCESS_FAULT);
-> +    }
-> +
->      if (!ctx->bcfi_enabled) {
->          return false;
->      }
-> @@ -97,6 +109,11 @@ static bool trans_ssamoswap_d(DisasContext *ctx, arg_=
-amoswap_w *a)
->  {
->      REQUIRE_64BIT(ctx);
->      REQUIRE_A_OR_ZAAMO(ctx);
-> +    REQUIRE_ZICFISS(ctx);
-> +    if (ctx->priv =3D=3D PRV_M) {
-> +        generate_exception(ctx, RISCV_EXCP_STORE_AMO_ACCESS_FAULT);
-> +    }
-> +
->      if (!ctx->bcfi_enabled) {
->          return false;
->      }
-> --
-> 2.34.1
->
->
+r~
 
