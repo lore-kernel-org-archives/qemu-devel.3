@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC2EC282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB5AC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZIV-00012H-1v; Fri, 07 Mar 2025 10:07:35 -0500
+	id 1tqZQw-0005pd-TC; Fri, 07 Mar 2025 10:16:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIT-000112-EO
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:33 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZQV-0005md-NS
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:15:54 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIR-0008KE-ML
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:33 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-38a8b17d7a7so1051203f8f.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZQS-00038I-Jm
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:15:51 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43bc4b16135so11856585e9.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:15:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741360050; x=1741964850; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JgJS/SVQeQz4sdPOdeejG5h+ujK/Zmmbe/SnJbGOVC4=;
- b=s99krChcdcGKCIidrXLGsnnVnXmsbe3WfLzpO7XNLqlieoJk1GFJVFvla9o7zpLSCh
- 6BciYlADtrDIOlms0EeOFEjMKfDedZz1nsefw7o7Rs5rE5JYir9eaqI+NsQwBc84sVk2
- vdX7jRHMKl8UadqAEKm9/+zuJC//wGRnd8Q7CUQKPp19XeSNVw9IBmbDqzO1bkNH7A9e
- O8YaE3jBizFW5Z3nn8gX8eCHiqzyzVAWkDmNt6psnp0Mu+IXzE3wZmKNVD/QEza0utnG
- Zex0j16yU+1vGlulm8+l00WfJnQgOEai9Ekkd2y6+tBLvkNlsn0Am7i5rv5LWbIWKPod
- k2Cg==
+ d=linaro.org; s=google; t=1741360546; x=1741965346; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7oKWh8O/IZLO/Fz45tuitlzS7POId7kZ1F5N/LuYBuM=;
+ b=jaLGyH1CaUD7/aaX89qRGysWbd5sEHMr2Ge2E4M6R4K8ut2GbmhPMvR2xg/HcdQwyH
+ J4kAR3Ex1LMRFqddpkImqkvk6H/3CmSRVqSqkGmeppGWFXL5h/EEzb8cR8+xm2RvySFH
+ NGySEPZhJnRtMWEDVNuxSbIIR204lBJKmoIt6SmvO7Xl6sRbMgUb2eTh6c9IkwxvH96w
+ akeMCIaAZjYB+3Fidtkf5auzBi4wi+EO/9NGPxYKEapFYr48vCuiigx9T+bN+1Vh4NjY
+ KAg9/6LnfCPDX4qrI7bdy2UZcWriudVS8syGVIOivtCLX7PS2+kxor99elWbAZ4Y/XXk
+ Rj7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741360050; x=1741964850;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JgJS/SVQeQz4sdPOdeejG5h+ujK/Zmmbe/SnJbGOVC4=;
- b=igTnabsFNROh6ESewFk0m9ALrXFQcG/jNNc4O14myhRJxOlObFMl0SaZm0hTncAGDN
- 9WcIq3ougp7VCWWnk7Kr6gdRCvvOVfMkMrpY+4qmB2JjBcodMqU1EFswlYWK9ds2qoBp
- dFSJF8VVYnCyqYfA2pjQMZ78OFyO39HLVzT/6XfCKfNQD7Ty9fjxYDJfWTnDkKm13zLc
- GKxGe5DqhNyevFS0sclTEnlJv8y689c9BH2AQw8+kMVEbiaoWqFCNyBqhTjRyCYl1OBH
- vh0oRfKVHUtYQ70XL7q8Tyuui/JFPJu8zrXVXTbiQ5ck4vE1BSS6SZbiVLh9WGgPtiUm
- IW3A==
-X-Gm-Message-State: AOJu0Yzd/Bn6sDXnfUojCKvdNEw4VbFajz9HazqD0cjHxqLngIlKx7M0
- ZzEnqacuF7CjuKSMh58nKCmjbUP3PrkwVUgj/GEkHd2znMRRQbcQa/heTfrusiW9exCU0Acd1xp
- s
-X-Gm-Gg: ASbGnctTmp/V2tmsKrZv0Q9P9vhAmvjCz/x/RG+4ImB5YVUIFt8SsArCFN4AcsSchdp
- /saAxQxYRO1XcQcVsRi9Y6/8h0T8mXnIckYbjn4ghaOE+otSNOh9/Dm2brQW5xgprDZ/oLcnH5H
- +B38CywnE1Cz5X3RrlCTqXM3TLksYNe2XHrjPCk5ZQvjcpyBpIOKrhQxuToL+uYGynvexhZ998i
- gouibx7z4HcWfxQtTMNi3lzBxlI8X8SgS6pcaXGFkD0WJjY5XC2moQGHhCi0VQbYfwAFne5WJXJ
- h7DVuGR/WkSndHOSHg3wicgy8OzUmKC02DUVhC/iX7eCNTUeeLk=
-X-Google-Smtp-Source: AGHT+IETWHkAgGuZpYG/2wfbGn5u+wgVKUno0rEx0xHFcld+P5+fuxObCSgQgEcWmgo/O6iUE0S4TQ==
-X-Received: by 2002:a5d:64eb:0:b0:391:1806:e25c with SMTP id
- ffacd0b85a97d-39132d1d3e0mr2461684f8f.17.1741360049679; 
- Fri, 07 Mar 2025 07:07:29 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.28
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 07:07:29 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1741360546; x=1741965346;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7oKWh8O/IZLO/Fz45tuitlzS7POId7kZ1F5N/LuYBuM=;
+ b=W1NZGzmuRxoUkPOqfDX6ahwasqhvWirWqNaXDcHUU4tXaNwl0jHD45Fbexo1qsm09e
+ ZnOQM+nz9DgaveCfN9FzYKoAkExfXI7wchPvVSTzAu8z6yOhwzNJAAmAZcVzjE6bi9F7
+ rLytXkkcoOutSrOTyAgnTo3gVBgc1GD5KCiGftxDRmv0QzfCamdmgOh9JJZY1AHfd/vT
+ z/E79S2FX94xbOyMMRhIEuMbSwtojhSyXyTMZSM95dL6cLFFtD96z4PR03LgHCKVoSmW
+ Gm1n1T7AcbY+Mh0TSUZ/swgHNVEDJdFANYIUhCpFn0OfZ908uJtZimtbiL7wMSBvP/S3
+ ydOw==
+X-Gm-Message-State: AOJu0YyI8swBUr3qjjzGfCQhkcTeJ6xUSoMgLyw907xucQtTJrdMOzH+
+ sIfPe8CEjTzwsx+uCvq8vprUROdDFtvFMzsQp9j3GeA1aBZe8tN8dgpLpA5+DKwbuW1zYZy5P9A
+ 2tyo=
+X-Gm-Gg: ASbGncsvfkEWrb8FEsoQxp+iAIFyqrcifd/Sfd/xka1tCi0qcjhA73+xf2CL9Bk5NHk
+ h/NtoWJhxJGi4lH1//UuHOlLTT8CifRyZL22WrWtEto4QGLfBljDrjW++Net8yMx0Tihen7t0h3
+ L4JoM/3V048BltLLlyFVlL9AhDC1wx9Lj19CHxFoTsoiVDwARvAEe061/NDyN1o6wXpy2YcXEIW
+ dk8bkcABXmbwQuCmRf3cK8zL+En0lMFHBu+GRr/iAwWARsshZcbU7F8eMV7KhfmBB2SnxqZdVaC
+ bIZvQl+ISK6XT7QukVs4twpqww5ZMJC8lGbnl5HpD+2RVgsYPFecCjYqpjiBQXJuzwJ0rrdcxfD
+ uWrseDSxNlv9zy3uJtqg=
+X-Google-Smtp-Source: AGHT+IEeMAOkiYda9KJWykCtQsfkURmdlX5nIBs8EvUkcBmhy9h8osraHRrgUBginPGiAcsVJ/CJiQ==
+X-Received: by 2002:a5d:5f89:0:b0:391:253b:4046 with SMTP id
+ ffacd0b85a97d-39132d3331bmr3113963f8f.16.1741360546018; 
+ Fri, 07 Mar 2025 07:15:46 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912bfb7934sm5702072f8f.12.2025.03.07.07.15.44
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 07 Mar 2025 07:15:45 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/21] target/arm: Make dummy debug registers RAZ, not NOP
-Date: Fri,  7 Mar 2025 15:07:03 +0000
-Message-ID: <20250307150708.3222813-17-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250307150708.3222813-1-peter.maydell@linaro.org>
-References: <20250307150708.3222813-1-peter.maydell@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/7] hw/virtio: Build virtio-mem.c once
+Date: Fri,  7 Mar 2025 16:15:36 +0100
+Message-ID: <20250307151543.8156-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,68 +105,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In debug_helper.c we provide a few dummy versions of
-debug registers:
- * DBGVCR (AArch32 only): enable bits for vector-catch
-   debug events
- * MDCCINT_EL1: interrupt enable bits for the DCC
-   debug communications channel
- * DBGVCR32_EL2: the AArch64 accessor for the state in
-   DBGVCR
+Replace compile-time checks by runtime ones:
+- CONFIG_DEVICES::CONFIG_ACPI -> acpi_builtin()
+- TARGET_FOO || TARGET_BAR -> qemu_arch_available(FOO|BAR)
 
-We implemented these only to stop Linux crashing on startup,
-but we chose to implement them as ARM_CP_NOP. This worked
-for Linux where it only cares about trying to write to these
-registers, but is very confusing behaviour for anything that
-wants to read the registers (perhaps for context state switches),
-because the destination register will be left with whatever
-random value it happened to have before the read.
+Philippe Mathieu-Daudé (7):
+  system: Replace arch_type global by qemu_arch_available() helper
+  hw/acpi: Introduce acpi_builtin() helper
+  hw/i386/fw_cfg: Check ACPI availability with acpi_builtin()
+  hw/virtio/virtio-mem: Remove CONFIG_DEVICES include
+  hw/virtio/virtio-mem: Convert VIRTIO_MEM_USABLE_EXTENT to runtime
+  hw/virtio/virtio-mem: Convert VIRTIO_MEM_HAS_LEGACY_GUESTS to runtime
+  hw/virtio: Compile virtio-mem.c once
 
-Model these registers instead as RAZ.
+ include/hw/acpi/acpi.h     |  3 ++
+ include/system/arch_init.h |  2 +-
+ hw/acpi/acpi-stub.c        |  5 +++
+ hw/acpi/core.c             |  5 +++
+ hw/i386/fw_cfg.c           |  8 ++--
+ hw/scsi/scsi-disk.c        |  2 +-
+ hw/virtio/virtio-mem.c     | 88 ++++++++++++++++++++------------------
+ system/arch_init.c         |  5 ++-
+ system/qdev-monitor.c      |  4 +-
+ system/vl.c                |  6 +--
+ hw/virtio/meson.build      |  2 +-
+ 11 files changed, 75 insertions(+), 55 deletions(-)
 
-Fixes: 5e8b12ffbb8c68 ("target-arm: Implement minimal DBGVCR, OSDLR_EL1, MDCCSR_EL0")
-Fixes: 5dbdc4342f479d ("target-arm: Implement dummy MDCCINT_EL1")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2708
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250228162424.1917269-1-peter.maydell@linaro.org
----
- target/arm/debug_helper.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index 36bffde74e9..a9a619ba6b1 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -1037,7 +1037,7 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
-     { .name = "DBGVCR",
-       .cp = 14, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 0,
-       .access = PL1_RW, .accessfn = access_tda,
--      .type = ARM_CP_NOP },
-+      .type = ARM_CP_CONST, .resetvalue = 0 },
-     /*
-      * Dummy MDCCINT_EL1, since we don't implement the Debug Communications
-      * Channel but Linux may try to access this register. The 32-bit
-@@ -1046,7 +1046,7 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
-     { .name = "MDCCINT_EL1", .state = ARM_CP_STATE_BOTH,
-       .cp = 14, .opc0 = 2, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 0,
-       .access = PL1_RW, .accessfn = access_tdcc,
--      .type = ARM_CP_NOP },
-+      .type = ARM_CP_CONST, .resetvalue = 0 },
-     /*
-      * Dummy DBGCLAIM registers.
-      * "The architecture does not define any functionality for the CLAIM tag bits.",
-@@ -1075,7 +1075,8 @@ static const ARMCPRegInfo debug_aa32_el1_reginfo[] = {
-     { .name = "DBGVCR32_EL2", .state = ARM_CP_STATE_AA64,
-       .opc0 = 2, .opc1 = 4, .crn = 0, .crm = 7, .opc2 = 0,
-       .access = PL2_RW, .accessfn = access_dbgvcr32,
--      .type = ARM_CP_NOP | ARM_CP_EL3_NO_EL2_KEEP },
-+      .type = ARM_CP_CONST | ARM_CP_EL3_NO_EL2_KEEP,
-+      .resetvalue = 0 },
- };
- 
- static const ARMCPRegInfo debug_lpae_cp_reginfo[] = {
 -- 
-2.43.0
+2.47.1
 
 
