@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F7DC282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 13:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B90D4C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 13:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqXii-0000hp-FJ; Fri, 07 Mar 2025 08:26:32 -0500
+	id 1tqXuK-0007LN-Gq; Fri, 07 Mar 2025 08:38:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqXie-0000hV-UF
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:26:31 -0500
+ id 1tqXu9-0007KN-1G
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:38:22 -0500
 Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqXid-0007Fb-5S
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:26:28 -0500
+ id 1tqXu6-0004O2-LF
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:38:19 -0500
 Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-e46ebe19489so1399640276.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 05:26:26 -0800 (PST)
+ 3f1490d57ef6-e6182c6d52aso1297106276.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 05:38:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741353985; x=1741958785; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741354697; x=1741959497; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zSDIgEnwut/0cuVmGxS3WfG5GsPK27jE0q3te0D2oOE=;
- b=s2ZS772f1ltaxo6a6LxmzlcUgdxbFuC/ZhGALWf1Dm5/nwPwN6Fgh8GX9kMyl0amxI
- Vu0QUT4Ud0AR4sPCoj2wHlOTDyZbtxi3LQYaeFEwp9mYdSh9iKOG+cERCVoMXZp3UlQE
- WlKrv7xff+Zb5zR9TSWFt5rQQtLyZGQEvY4WDa8MdUinfiQHinBoxQuGy6X53LjQN872
- XO6xvqM/leghiWh7hmsPdBb6Xq08QBNma2xmHAwaIX3BJ0byRHTJ5QTTGYUn5NLMqv6q
- 52RVxh9iv0NDG4vR54ZXf5BUvKREQZPmVjplre8ydEaYtsjhTPMZ0Dxn2z2wWb3971bT
- MFlQ==
+ bh=Cw5sUSnklijdo29CgiK62N1n84MNDZ3JoG6l3xvNkUs=;
+ b=Md9SEzd2YSvtbg7svE3Z8mzmtAjRnwJizU55mTuvIQLXu9CJxaFFufnUXVb/c4u7Wb
+ sv87IFAJB3GKDUVBWTt+mtqpdasqDNjHJeptauK+kK9KwLDMDHTG1RmlfO3w5ry4mS/G
+ fhawqvsNwD0yAVoIMElV9jSaDY3bX0VCSrCJNwTlmH+iJ7kWObDaQNoHCYp5UE339u+S
+ 13d8MVQ9bueazGYZhPCITmx9JDRRtB7UWcgic1Cne4QxFX/VNFCD1bPaxBDKh2f9I0sb
+ DgE3RviAB2vBYS4FDknGRiFHeggNGJEoesmYRawPrjC95/6+VwcAledMkovD04AMrxS1
+ kzug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741353985; x=1741958785;
+ d=1e100.net; s=20230601; t=1741354697; x=1741959497;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zSDIgEnwut/0cuVmGxS3WfG5GsPK27jE0q3te0D2oOE=;
- b=dnNImCLufwchqWC35DjvvOFCi6j3nfpoXnhED+xeSvkQ6M4ErpE8yyoHgZTrRxWe/c
- 68x48caQjcSOeyUCpkL89aa3gF0ByJxGNHqASnUqxUrLHax3VEUi908MwoyPU7IyLk0V
- KcdnegdsmU8oZ7xOpESI68EWtnPfk6VmuntbNEDTv585wk7k4BL0wGqHKrMpARb+GN8z
- nCLRRCBgzRE2jjQzO9ZNFaYwZ1ELmk3cN+ZlAG9tSae8TdC4aUCGCegOqBXz4w3g6ymV
- JSyHZImMqGQBYvVG7eROSsLOCkYFZw5of+vlrUowRh/ELlOFVp5lO1RU48dj4MzXszdn
- 70mQ==
-X-Gm-Message-State: AOJu0YxRlQK5Jn+v2y+6KTd6AoRVVZO2vCvFNG4WGjhCkPvz7xoxLjLg
- JEVtXn31r5IldW2CBPZMc6XZpDnjMqKt6eiVaXQlA+lAyA5ZJK8KClFiHJIHUw9RrwaYS4ofIEZ
- GyO606KA3qcJjYiU6bYWNHmvofUX2OFNdy5TZdxEcL+eFug4y
-X-Gm-Gg: ASbGnctvoJbKkRCmplYpbnmEIbb34+6g1DDzpi4Ay2eOpBBPt1mByuPHTWtyewQ/D8B
- y2jeXh5E3VtM/DPusjU6k3yLCjd55a2XtzEaxEgoyxjygUMLcoBBkFO8R/vlczRRuPzy9uhKfmY
- PmSiVRK/0SdbR5tM32gZIgyr/t72Q=
-X-Google-Smtp-Source: AGHT+IGpaaPKCgD6dGSgHh8MPsESAxvuLrvOuT8AY+A3Q8WEdecXZMm3/DJY56E/suCnUYB/+jiLn31FI18ZQAykudw=
-X-Received: by 2002:a05:6902:e0f:b0:e5d:cdc6:7acf with SMTP id
- 3f1490d57ef6-e635c1d7c51mr3868593276.31.1741353985523; Fri, 07 Mar 2025
- 05:26:25 -0800 (PST)
+ bh=Cw5sUSnklijdo29CgiK62N1n84MNDZ3JoG6l3xvNkUs=;
+ b=su2meKKHoaullBGjmUDv8KoCs6OGji9CV5r9obntQK1CR1JHL3ESyvaUjGDIO2MUje
+ WErDbTBiaaoNqFsOjKaKFtqyya26AZEm8cx7LqdQdBRvqkn/cT81c2wt9kiOjFNJD+YP
+ Rh06Ulwnl4VT7iVD3KzLZ43zxoJE31tsNxe0mlDTdTAisNaliohRWQIyVHENZBIxnnqS
+ X8JJFfEVwZDUAUlpK0XDcq4ReROQGEBuARlXdFde1Kyy922HeLoYiO5grMZPZ2fax8vM
+ 4LosOKkgAQAdzGmhcZZEeKbDRQYVwZAPz6GIqiakRp0uw+r5Ar7yQL277T2pSrqiEKen
+ 3LkQ==
+X-Gm-Message-State: AOJu0YynEMsSeTVRoTnXjqKuM0Kps131JUtzFdZwWfe3mPj925foogar
+ /FiOHLWJLjwqFMx0tWRAANBK4oa5icmY6agGCD/+3kKrDtrEsQAwpoAmFkmrpNpsX72Zce2p2Ja
+ IMQyR1AeNOKeWXOixw4QS/JMBsxa5wj29X/4ZnvcnZRWZhK1P
+X-Gm-Gg: ASbGncsxBKubQG0okRwU0WzY2ZskYnjx7ehvv36O7/nVepcG6Ib3CHFgQ+VndZ9RMVS
+ B2sh76ivEvv3k+yBPRCvlkx+SLzEDHl0eA+hjqEM1tfep43r2OG7OSjcInwbTluSDCwo7NXJIjg
+ 0TklMACwUtgeweXkAg4Lq+FcWMJY4=
+X-Google-Smtp-Source: AGHT+IGs1jI1Ybyc+35mMJ4xP1lEXtKZbNvE9GvZIqtMLRtoJpy9RJnIFOJnXno119rlo02O/AxMvIgUn/FxJ6Ev00A=
+X-Received: by 2002:a05:6902:1a4a:b0:e48:7efe:57b0 with SMTP id
+ 3f1490d57ef6-e635c1dcd07mr4234571276.47.1741354696984; Fri, 07 Mar 2025
+ 05:38:16 -0800 (PST)
 MIME-Version: 1.0
 References: <20250215021654.1786679-1-keithp@keithp.com>
  <20250218212103.2024039-1-keithp@keithp.com>
- <20250218212103.2024039-4-keithp@keithp.com>
-In-Reply-To: <20250218212103.2024039-4-keithp@keithp.com>
+ <20250218212103.2024039-5-keithp@keithp.com>
+In-Reply-To: <20250218212103.2024039-5-keithp@keithp.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Mar 2025 13:26:14 +0000
-X-Gm-Features: AQ5f1Jp_B0srcvbhBQlDFs6uBkGUUstmJJw-XOcbkWU4je_rrbQ_V0uFhWeYnOY
-Message-ID: <CAFEAcA-YDsGJNyARdv4_3TmzvDyT06xykzLCxyVXY3YZCk6bCA@mail.gmail.com>
-Subject: Re: [PATCH 3/4] hw/rx: Reset the CPU at qemu reset time
+Date: Fri, 7 Mar 2025 13:38:05 +0000
+X-Gm-Features: AQ5f1Jp9ir4sy9kabwEDsR7eSJm-Su2jqvHCrOY7hmZ-9yCl-b_qsB0U2rC_vK8
+Message-ID: <CAFEAcA_5tnaXvGXXp17=LKNkr6+BWcaEBpLj3YxJ8-np1hSAcg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] rx: Support loading of ELF files too
 To: Keith Packard <keithp@keithp.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
@@ -93,88 +93,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Feb 2025 at 21:22, Keith Packard via <qemu-devel@nongnu.org> wrote:
+On Tue, 18 Feb 2025 at 21:23, Keith Packard via <qemu-devel@nongnu.org> wrote:
 >
-> This ensure that the CPU gets reset every time QEMU resets. Use either
-> the kernel entry point or the reset vector if no kernel was loaded.
+> The existing loader supports raw binary blobs with the entry point
+> defined as the start of the blob. Add support for loading ELF files by
+> first checking if the provided filename has a valid ELF header,
+> falling back to the existing loader code when that fails.
 >
 > Signed-off-by: Keith Packard <keithp@keithp.com>
-> ---
->  hw/rx/rx-gdbsim.c | 36 +++++++++++++++++++++++++++++++++++-
->  target/rx/cpu.c   |  9 ++-------
->  target/rx/cpu.h   |  3 +++
->  3 files changed, 40 insertions(+), 8 deletions(-)
->
-> diff --git a/hw/rx/rx-gdbsim.c b/hw/rx/rx-gdbsim.c
-> index 4afd77efd5..9e395ae345 100644
-> --- a/hw/rx/rx-gdbsim.c
-> +++ b/hw/rx/rx-gdbsim.c
-> @@ -22,6 +22,7 @@
->  #include "qemu/guest-random.h"
->  #include "qemu/units.h"
->  #include "qapi/error.h"
-> +#include "exec/cpu_ldst.h"
->  #include "hw/loader.h"
->  #include "hw/rx/rx62n.h"
->  #include "system/qtest.h"
-> @@ -56,6 +57,34 @@ DECLARE_OBJ_CHECKERS(RxGdbSimMachineState, RxGdbSimMachineClass,
->                       RX_GDBSIM_MACHINE, TYPE_RX_GDBSIM_MACHINE)
->
->
-> +static void rx_cpu_reset(void *opaque)
-> +{
-> +    RXCPU *cpu = opaque;
-> +    CPUState *cs = CPU(cpu);
-> +    CPURXState *env = cpu_env(cs);
-> +
-> +    cpu_reset(cs);
-> +
-> +    if (env->use_reset_pc) {
-> +        /*
-> +         * Load the PC with the starting address for the kernel
-> +         */
-> +        env->pc = env->reset_pc;
-> +    } else {
-> +        /*
-> +         * Load the initial PC from the reset vector. If there is
-> +         * a ROM containing that vector use that, otherwise read
-> +         * it from target memory.
-> +         */
-> +        uint32_t *resetvec_p = rom_ptr_for_as(cs->as, 0xfffffffc, 4);
-> +        if (resetvec_p) {
-> +            env->pc = ldl_p(resetvec_p);
-> +        } else {
-> +            env->pc = cpu_ldl_data(env, 0xfffffffc);
-> +        }
-> +    }
-> +}
 
-Unless there's a strong reason for doing something different,
-I would favour following the same pattern arm does for this.
-(Or were you following existing code in some other target?
-I certainly wouldn't be surprised if we already did this in
-multiple different ways...)
+Ths code does what it intends to, and I'm not saying we should
+definitely *not* have it. I do think it's worth considering whether
+we need it, given that you can already load an ELF image via the
+generic loader (-device loader).
 
-Anyway, Arm splits up the work like this:
- * the CPU reset function does the "load initial PC from
-   reset vector table" part (including using rom_ptr_for_as()
-   to decide whether to do cpu_ldl_data() or not)
- * the board boot code's reset function does:
-    cpu_reset();
-    if (need to override the start PC because of the image loaded) {
-        cpu_set_pc(cs, image_pc);
-    }
-    /* and any other CPU setup that's specific to kernel load etc */
+-kernel is a very "do what I mean" option that differs from target to
+target, but what it's ideally supposed to mean is "this is a Linux
+kernel, boot it like a Linux kernel". Some of our targets also
+overload it to additionally have the behaviour "but if it's an ELF
+file, load it as an ELF file, not like a kernel" (notably at least
+arm M-profile). But I think that's something I'd consider a mistake
+in retrospect, which we can't change now for backwards compatibility
+reasons. (In particular it means we can't have "-kernel kernel.elf"
+mean "this is a Linux kernel which is an ELF file and it wants
+all the usual CPU setup that Linux's booting requirements mandate".)
 
-That way if the user chooses to use the 'generic loader'
-(-device loader) to load their guest image rather than
--kernel, we will correctly load the reset PC out
-of their image.
-
-You might then prefer to put the initial image_pc into
-the RxGdbSimMachineState instead of the CPURXState,
-since the code that cares about it directly is all
-in hw/rx/ rather than target/rx/.
+So for target/rx, I guess what I'm saying is that if Linux
+kernels for this architecture really are usually floating around
+as ELF files then we should support that, but if this is just
+"some users would like a way to load an ELF file, start at the
+ELF entry point, and do no other setup of the CPU or system before
+running code" then it might be better to instead point those
+users at the generic loader (which does exactly that job
+and does the same thing on all target architectures),
+rather than adding a second mechanism for doing that.
 
 thanks
 -- PMM
