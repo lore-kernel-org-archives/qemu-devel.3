@@ -4,92 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFBD2C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 17:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68A30C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 17:28:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqbUl-0000AA-VC; Fri, 07 Mar 2025 12:28:24 -0500
+	id 1tqbV9-0001Ia-QA; Fri, 07 Mar 2025 12:28:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tqbUh-00006h-Ng
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:28:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tqbUg-00087X-C3
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:28:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741368495;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LT1/mLVrR27HX2+KjkcyUxv1hIeIghS1k2wdRFOIQNM=;
- b=fIJ/adwV6ms2ZTANn/UAQnmEBanP+5uAUIBnR5AQtlqXlwzt0OyQak92RRxUpk0foIVOlH
- CQHch4JTaeJ0Qw0NHMKGUpwnsTu3oPiLndFDe0+nO31hSTzdKz3hugAVgIFldIi8TGLy4H
- zzYt8BUfgedebGWyuVpSNJx27rmoEaQ=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-322-rVH4Vac4MqmV4-uxFiZaAw-1; Fri, 07 Mar 2025 12:28:14 -0500
-X-MC-Unique: rVH4Vac4MqmV4-uxFiZaAw-1
-X-Mimecast-MFC-AGG-ID: rVH4Vac4MqmV4-uxFiZaAw_1741368494
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6e8cf10d1c2so43407906d6.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 09:28:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tqbV6-0001DH-MK
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:28:44 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tqbV4-0000Pl-OD
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:28:44 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2f42992f608so3903774a91.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 09:28:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741368521; x=1741973321; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fuCjjgBkNEewYDYmiM8ozxvRqJg4DrU5jlpsU73PMjU=;
+ b=ott3vYpf5ARak/WRU/JRuvajE1JOBGz24go66oACLh6Q8mK6GgOhj6qIVYJs/P/ic9
+ R474+kXZR1BYOr8DxyI1Fk1Ui2f85E0vB8lSaS3resw2Kqbp9QThPE0mVAsrzAdUpoCO
+ ZxWe8R1RYMqqTmPjMZ6NB0DMMAdjBhbr2ODsFDF03l01Gojl42us1kcAt57g8X5qk8Do
+ 3Qi5xyEq7fQSzdh1PkCEINn9T0WFS62L0X6lfMd0A9kjYyJimf7jVcKaIe52Ys/U0v8u
+ OH4Ayty3ur8xuGa4rVayeiHI+w7BQGrMDK4fiVmtxikrY+TUaJhZk7OgG4HW8Vple5JG
+ xtGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741368494; x=1741973294;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LT1/mLVrR27HX2+KjkcyUxv1hIeIghS1k2wdRFOIQNM=;
- b=o0T7yZP3UK41tr4Y4RK98zZdvRcm2GP0HImrHZd1AoQshdSHVbyAIdalOeShIBdch/
- Rsf80A2xH7m8vErnqhg/JGIjv7xQwETaDKhrn08dZ8Y2PUs224rMHdwkKUVfQ055nh0K
- QiAk/DIeFWWOH1dNAvaChIMqy80VBDn0sZqHc8QzHg/nGj+UQQYeBIRv4gq4mgEDKcS+
- vtLbADFRU1mJFOim7S9hz7KluBzSuq+tEwazpEHn6P0i3ZMfxkrGIZqHY+o5sITMSvjd
- 8cj4D1yXqmweop/4ZPP+b6rV4Iv4ecmmftIa+s+CsHmJzHZp8tLlV6XCC2b0Y7jPwwJA
- lNBg==
-X-Gm-Message-State: AOJu0YzI1zkzTRVMaI/QF98ro5VIB6WtstkTlUP0fulO7dKtQKovU6Ny
- o99WAnGzi9cJSlgNFMXo0GS/3OYq0nBCV6+LLKrka7AjaPvL4s4PlbS2X3GgcSrnq9WHquLAgJf
- qDpxzyW+aSwh+8JWJkjxx9AP/vFT9SNjwUKjKT6//5lXHQDSyqoRM
-X-Gm-Gg: ASbGnctN4UxJ8iqbnzd2lT0cxjLawxWltfESc+SGBgVwjB94cIHVNO4MBKKciP0HD7i
- um7mFNsQ6qNKNq5WtaIxXF9lckutkWab5DY35gmlpP0J1WThZg6YIc1Gsx6NeMhHgWNBep3+QGn
- SIjCkzUEr7es487Nhh5QZFx0Yt+fDylK0CLsRGClOFewSBDG57TCcIZPYFjpW3fszt1buavP4xP
- yoJ0JFFDcukaClZGmIYVOYCr0BRU8qIo1iTboEs8rlvaRlSD+n46OWoeg6DZGgwWqQX1GMlbecc
- X+n3ChI=
-X-Received: by 2002:a05:6214:202b:b0:6e8:fee2:aadb with SMTP id
- 6a1803df08f44-6e900642dacmr58731726d6.27.1741368493767; 
- Fri, 07 Mar 2025 09:28:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGK4fQSgX6M4M5k9wMk1gXBIpSW7STSGnag28OO+B+aWK3eoj1S0sRTj4NoBqIbg7kT5uaFUA==
-X-Received: by 2002:a05:6214:202b:b0:6e8:fee2:aadb with SMTP id
- 6a1803df08f44-6e900642dacmr58731436d6.27.1741368493437; 
- Fri, 07 Mar 2025 09:28:13 -0800 (PST)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e8f717097dsm21559526d6.111.2025.03.07.09.28.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 09:28:12 -0800 (PST)
-Date: Fri, 7 Mar 2025 12:28:10 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH 2/2] migration: Move compression docs under multifd
-Message-ID: <Z8ssqi0OW5TELSzW@x1.local>
-References: <20250307134203.29443-1-farosas@suse.de>
- <20250307134203.29443-3-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1741368521; x=1741973321;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fuCjjgBkNEewYDYmiM8ozxvRqJg4DrU5jlpsU73PMjU=;
+ b=mRgCtV8l4s2qrejaQoPh2YB5+x9KsOb4kBmzbpnw5Fg6RknXQX2lCiodC7T+tzq+Yl
+ DnhwRsZzb7RhmmD6VpV/qO9P3aahWe5QM8RpUPes+dMb00iL1PZ5S9/eRMawIj/aR9r2
+ aa6U/3Kk0if1zoq/QN2lV1vE0B3WQL41mFeldAni7js1UhkPvaImSiizvt8PPMVrtD/D
+ wJThQcEFcSjEVtBH4WCS0F1u2x3NjHX0OJaATikn7fLE+WNc30dx6z9gMUIs9Jw6ufNn
+ +Izez9dBjm0XfxfCPIj4lbomI9zlzyjXqcJZ1h63McqoeXKcxHoBxB/99HGrXaIY5CXE
+ R/Tg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXosJfAFTNcBwQKJK3tIl8FgS5117LCCPIlgh+dlB4kela8DJ/jTZQjyAyIJGjWjumGQYy/BMzgOR0s@nongnu.org
+X-Gm-Message-State: AOJu0YxEOAiGLpBz/yuRUUgqhgBc1ougfxLrV5u/cEFec22pav7C+9bk
+ xYBiLFUsM76DNtBSDMFJfSsoSRCwriHc06NZg0aLUFdvXY1s8d6z9B/aY3H2OAY=
+X-Gm-Gg: ASbGncsZZYOJDPYOlvx98+fmAA1fn1BtI2zr6oqOENRiz0kKzi72yiTwfZu/pF7ZLEX
+ xE3eHOptyl2Yi/NiV+4OzbO/cO71wMogS2lXDKppDTbuFG0fZEmhAKZyuhiYN9hsqvvRjIhTNYb
+ x0iRfvU2kyzQPiHhwZOyzMv9Qv1l1KVINy2v+RDxWsHpFzRudgEu1ncFpEzKb3t5bMrTsxcpRVu
+ K70+IPt769pXIXXErU6Zo49H6aZw6V+ex/C18+bg6lrGEFKHLekRu9GlIAKA2NeoevPhPF4lhpY
+ aeSehQ/HE09E2ezLJYXuGCZQoKW5731QssEPnlyYlqlGPTWpJ4YH7jeKHA==
+X-Google-Smtp-Source: AGHT+IHkmMPBeC7Jjz6QaagGABV93I+Jsq2T/Kqau419WQZhtTKYIasZKgrWrz43zBNXteOS9gtokg==
+X-Received: by 2002:a05:6a20:43a0:b0:1f1:253:2e6d with SMTP id
+ adf61e73a8af0-1f544c377efmr7566014637.29.1741368521281; 
+ Fri, 07 Mar 2025 09:28:41 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af2812887b3sm2819173a12.71.2025.03.07.09.28.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Mar 2025 09:28:40 -0800 (PST)
+Message-ID: <ab1a90fb-e068-4ddc-865e-07bdeb2789e3@linaro.org>
+Date: Fri, 7 Mar 2025 09:28:40 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250307134203.29443-3-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/7] hw/hyperv/syndbg: common compilation unit
+Content-Language: en-US
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ manos.pitsidianakis@linaro.org, Marcelo Tosatti <mtosatti@redhat.com>,
+ alex.bennee@linaro.org
+References: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
+ <20250306064118.3879213-6-pierrick.bouvier@linaro.org>
+ <353b36fd-2265-43c3-8072-3055e5bd7057@linaro.org>
+ <35c2c7a5-5b12-4c21-a40a-375caae60d0c@linaro.org>
+ <d62743f5-ca79-47c0-a72b-c36308574bdd@linaro.org>
+ <6556fdd8-83ea-4cc6-9a3b-3822fdc8cb5d@linaro.org>
+ <95a6f718-8fab-434c-9b02-6812f7afbcc3@maciej.szmigiero.name>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <95a6f718-8fab-434c-9b02-6812f7afbcc3@maciej.szmigiero.name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,16 +112,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 07, 2025 at 10:42:03AM -0300, Fabiano Rosas wrote:
-> The current migration compression documentation applies only to
-> multifd. Now that we have a multifd section, move the compression
-> documentation under it.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
--- 
-Peter Xu
-
+T24gMy83LzI1IDAzOjA3LCBNYWNpZWogUy4gU3ptaWdpZXJvIHdyb3RlOg0KPiBPbiA2LjAz
+LjIwMjUgMjM6NTYsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBPbiAzLzYvMjUgMDk6
+NTgsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPj4+IE9uIDYvMy8yNSAxNzoy
+MywgUGllcnJpY2sgQm91dmllciB3cm90ZToNCj4+Pj4gT24gMy82LzI1IDA4OjE5LCBSaWNo
+YXJkIEhlbmRlcnNvbiB3cm90ZToNCj4+Pj4+IE9uIDMvNS8yNSAyMjo0MSwgUGllcnJpY2sg
+Qm91dmllciB3cm90ZToNCj4+Pj4+PiBSZXBsYWNlIFRBUkdFVF9QQUdFLiogYnkgcnVudGlt
+ZSBjYWxscw0KPj4+Pj4+DQo+Pj4+Pj4gU2lnbmVkLW9mZi1ieTogUGllcnJpY2sgQm91dmll
+ciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4+Pj4+IC0tLQ0KPj4+Pj4+ICDC
+oMKgwqAgaHcvaHlwZXJ2L3N5bmRiZy5jwqDCoMKgIHwgNyArKysrLS0tDQo+Pj4+Pj4gIMKg
+wqDCoCBody9oeXBlcnYvbWVzb24uYnVpbGQgfCAyICstDQo+Pj4+Pj4gIMKgwqDCoCAyIGZp
+bGVzIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKSwgNCBkZWxldGlvbnMoLSkNCj4+Pj4+Pg0K
+Pj4+Pj4+IGRpZmYgLS1naXQgYS9ody9oeXBlcnYvc3luZGJnLmMgYi9ody9oeXBlcnYvc3lu
+ZGJnLmMNCj4+Pj4+PiBpbmRleCBkM2UzOTE3MDc3Mi4uZjkzODIyMDJlZDMgMTAwNjQ0DQo+
+Pj4+Pj4gLS0tIGEvaHcvaHlwZXJ2L3N5bmRiZy5jDQo+Pj4+Pj4gKysrIGIvaHcvaHlwZXJ2
+L3N5bmRiZy5jDQo+Pj4+Pj4gQEAgLTE0LDcgKzE0LDcgQEANCj4+Pj4+PiAgwqDCoMKgICNp
+bmNsdWRlICJtaWdyYXRpb24vdm1zdGF0ZS5oIg0KPj4+Pj4+ICDCoMKgwqAgI2luY2x1ZGUg
+Imh3L3FkZXYtcHJvcGVydGllcy5oIg0KPj4+Pj4+ICDCoMKgwqAgI2luY2x1ZGUgImh3L2xv
+YWRlci5oIg0KPj4+Pj4+IC0jaW5jbHVkZSAiY3B1LmgiDQo+Pj4+Pj4gKyNpbmNsdWRlICJl
+eGVjL3RhcmdldF9wYWdlLmgiDQo+Pj4+Pj4gIMKgwqDCoCAjaW5jbHVkZSAiaHcvaHlwZXJ2
+L2h5cGVydi5oIg0KPj4+Pj4+ICDCoMKgwqAgI2luY2x1ZGUgImh3L2h5cGVydi92bWJ1cy1i
+cmlkZ2UuaCINCj4+Pj4+PiAgwqDCoMKgICNpbmNsdWRlICJody9oeXBlcnYvaHlwZXJ2LXBy
+b3RvLmgiDQo+Pj4+Pj4gQEAgLTE4OCw3ICsxODgsOCBAQCBzdGF0aWMgdWludDE2X3QgaGFu
+ZGxlX3JlY3ZfbXNnKEh2U3luRGJnICpzeW5kYmcsDQo+Pj4+Pj4gdWludDY0X3Qgb3V0Z3Bh
+LA0KPj4+Pj4+ICDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQ2NF90IHRpbWVvdXQsIHVpbnQzMl90
+DQo+Pj4+Pj4gKnJldHJpZXZlZF9jb3VudCkNCj4+Pj4+PiAgwqDCoMKgIHsNCj4+Pj4+PiAg
+wqDCoMKgwqDCoMKgwqAgdWludDE2X3QgcmV0Ow0KPj4+Pj4+IC3CoMKgwqAgdWludDhfdCBk
+YXRhX2J1ZltUQVJHRVRfUEFHRV9TSVpFIC0gVURQX1BLVF9IRUFERVJfU0laRV07DQo+Pj4+
+Pj4gK8KgwqDCoCBjb25zdCBzaXplX3QgYnVmX3NpemUgPSBxZW11X3RhcmdldF9wYWdlX3Np
+emUoKSAtDQo+Pj4+Pj4gVURQX1BLVF9IRUFERVJfU0laRTsNCj4+Pj4+PiArwqDCoMKgIHVp
+bnQ4X3QgKmRhdGFfYnVmID0gZ19hbGxvY2EoYnVmX3NpemUpOw0KPj4+Pj4+ICDCoMKgwqDC
+oMKgwqDCoCBod2FkZHIgb3V0X2xlbjsNCj4+Pj4+PiAgwqDCoMKgwqDCoMKgwqAgdm9pZCAq
+b3V0X2RhdGE7DQo+Pj4+Pj4gIMKgwqDCoMKgwqDCoMKgIHNzaXplX3QgcmVjdl9ieXRlX2Nv
+dW50Ow0KPj4+Pj4NCj4+Pj4+IFdlJ3ZlIHB1cmdlZCB0aGUgY29kZSBiYXNlIG9mIFZMQXMs
+IGFuZCB0aG9zZSBhcmUgcHJlZmVyYWJsZSB0byBhbGxvY2EuDQo+Pj4+PiBKdXN0IHVzZSBn
+X21hbGxvYyBhbmQgZ19hdXRvZnJlZS4NCj4+Pj4+DQo+Pj4+DQo+Pj4+IEkgaGVzaXRhdGVk
+LCBkdWUgdG8gcG90ZW50aWFsIHBlcmZvcm1hbmNlIGNvbnNpZGVyYXRpb25zIGZvciBwZW9w
+bGUNCj4+Pj4gcmV2aWV3aW5nIHRoZSBwYXRjaC4gSSdsbCBzd2l0Y2ggdG8gaGVhcCBiYXNl
+ZCBzdG9yYWdlLg0KPj4+DQo+Pj4gT1RPSCBoeXBlcnYgaXMgeDg2LW9ubHksIHNvIHdlIGNv
+dWxkIGRvOg0KPj4+DQo+Pj4gI2RlZmluZSBCVUZTWiAoNCAqIEtpQikNCj4+Pg0KPj4+IGhh
+bmRsZV9yZWN2X21zZygpDQo+Pj4gew0KPj4+ICDCoMKgwqAgdWludDhfdCBkYXRhX2J1ZltC
+VUZTWiAtIFVEUF9QS1RfSEVBREVSX1NJWkVdOw0KPj4+ICDCoMKgwqAgLi4uDQo+Pj4NCj4+
+PiBodl9zeW5kYmdfY2xhc3NfaW5pdCgpDQo+Pj4gew0KPj4+ICDCoMKgwqAgYXNzZXJ0KEJV
+RlNaID4gcWVtdV90YXJnZXRfcGFnZV9zaXplKCkpOw0KPj4+ICDCoMKgwqAgLi4uDQo+Pj4N
+Cj4+PiBhbmQgY2FsbCBpdCBhIGRheS4NCj4+DQo+PiBDb3VsZCBiZSBwb3NzaWJsZSBmb3Ig
+bm93IHllcy4NCj4+DQo+PiBBbnkgb3BpbmlvbiBmcm9tIGNvbmNlcm5lZCBtYWludGFpbmVy
+cz8NCj4gDQo+IEkgdGhpbmsgZXNzZW50aWFsbHkgaGFyZGNvZGluZyA0ayBwYWdlcyBpbiBo
+eXBlcnYgaXMgb2theQ0KPiAod2l0aCBhbiBhcHByb3ByaWF0ZSBjaGVja2luZy9lbmZvcmNl
+bWVudCBhc3NlcnRzKCkgb2YgY291cnNlKSwNCj4gc2luY2UgZXZlbiBpZiB0aGlzIGdldHMg
+cG9ydGVkIHRvIEFSTTY0IGF0IHNvbWUgcG9pbnQNCj4gaXQgaXMgZ29pbmcgdG8gbmVlZCAq
+YSBsb3QqIG9mIGNoYW5nZXMgYW55d2F5Lg0KPiANCg0KT2ssIEkgd2lsbCBoYXJkY29kZSB0
+aGlzIGZvbGxvd2luZyBQaGlsaXBwZSBzdWdnZXN0aW9uIHRoZW4uDQoNCj4gVGhhbmtzLA0K
+PiBNYWNpZWoNCj4gDQoNCg==
 
