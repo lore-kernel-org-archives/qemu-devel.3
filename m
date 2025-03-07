@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1513C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 10:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA1A9C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 10:48:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqV8n-0002oh-9Y; Fri, 07 Mar 2025 05:41:17 -0500
+	id 1tqVFZ-00043x-6Y; Fri, 07 Mar 2025 05:48:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqV8k-0002mp-AI
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:41:14 -0500
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqV8h-0008Lm-A0
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:41:14 -0500
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e46ebe19489so1284291276.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 02:41:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741344070; x=1741948870; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Or8nid5ZiXi3yxl/7VmAKOyJyaMIwbEgpuB/hf5xtIQ=;
- b=gRaBxdCJTNv69zk5nxw5GahTLC83/ZndfQUslkyCzi61Og5YHfn00103j5ZAaqrvgz
- Ad64/g2J/N3bqQs9wIo3dkRvDMXD9UJKW7/3NhwSS25j03bGrHLY/urad+EDcyqEgYpa
- wwHzdkWSwHMZoP2F2Y9ZHHPM88CVM7CrQNUrKbky8iuklcntl3UorbsjFnxe8T6fRhJW
- maPdlm7ebQ8/ndZFmq1LCi7So2QmOO6eDQ/sir9yVh9DRP/2Rei/0RmL8anlBZthk3Gc
- FPS1WzBsHBWCA7Pm96j1DONMeVJrfds7mGwHbfwUwjTkGsSQuLG1Xjc50d0+IfUbt1fp
- 3W2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741344070; x=1741948870;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Or8nid5ZiXi3yxl/7VmAKOyJyaMIwbEgpuB/hf5xtIQ=;
- b=hJjpEywQbtJOeIKVwHnPdsYSPSp10lEq5vl5m2cMjEI48snqzhWyl02RYvS/BDaFqZ
- hBopsXI85UoIFdSG4DQwNWhFYKGWSZxlf+dDORCG/L2/xAywWRVKdW4LE4bKl7L2AV+V
- DwtMETRJC9qLEaDeRRoBNnD+nVGtNEL/z86bLjzLOwDT6UT/mFjwQdx6GqYdNwS9Saeg
- q2UAOgnaNGwbcSndAK4S+7wxT49nbl+T/4CSxOx5k+jA2k2HXVkQRL7mTv15V6xXEmNL
- x4aOknqlYPleh+PUzuejExHlM8cHnORTKRVvu46OMnJodscoMK87HYWd0nG01zuZHc3h
- qyYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUKTDBmj3n0EykawEY6xvo+sgecBn2AShOddawYS/3yfxIhdipXcbXsSFY1iIq83BZpiB3+f9KdGrpA@nongnu.org
-X-Gm-Message-State: AOJu0YwMmMkbl/a66PF2BPwiHtZ7tjV2+O15Kc+TuX2TuLpZtsoEmdyO
- koiL2L7nUZvzaJL4UHUYIsUFsX5DFKGeJByvMcUMKF9dR/QsB+hVHrhJJ+k+Jbz9o0ZgJEFljWW
- Oyy83tePOsnEC/Xa0erdvsb/nIfKx3MPYMQHLig==
-X-Gm-Gg: ASbGncvTJbTRDgGM8UX65tiJy0nPF190PrEBhLSel1xF7qOvdecuiK+U25RB1p98aXI
- DsRkLYY4vBm7iQNwgPSxPVWVac2vHPK5GcLqrvM0DMWR+Iw08cHiioy7XqdW+1cCFhlCAUese8v
- EXUbInImUn9ZF1TibkYhHcIbSEXcE=
-X-Google-Smtp-Source: AGHT+IFzrYzPZFAlAn+/swqFCr9qte1Ec2VPxUIhV4b+ZpfQUohk6+l07F/6+QStoqcr0ni6LKa23EsdVmzJTvG+pd0=
-X-Received: by 2002:a05:6902:1b8e:b0:e60:a16c:d01f with SMTP id
- 3f1490d57ef6-e635c1f4d28mr3524529276.47.1741344070188; Fri, 07 Mar 2025
- 02:41:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqVFL-00043E-DH
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:48:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqVFJ-0001pE-FE
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:48:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741344478;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vDgxdIqyMPD+47whYzZC68qzegYABl5Wx1gPV99N9zw=;
+ b=KFfWm1ZnHRPvw6Sjm0U+IAQMXnW5ryVESSRKOJFbNWZB+u9H9jI4IR6gTt8SNLQ4alSorp
+ SljrpQvf4FvX0MWYIMB9ZmulNMvJ1tdxThuJSSSb3q0VmRbVPUQoi+3Ca7S2vYRPGN0Etb
+ idnmM0bWRdSY/xtBXFWA1beK0Tn5HTg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-261-YSm8Rk5wMkKWgH_oeTspJA-1; Fri,
+ 07 Mar 2025 05:47:53 -0500
+X-MC-Unique: YSm8Rk5wMkKWgH_oeTspJA-1
+X-Mimecast-MFC-AGG-ID: YSm8Rk5wMkKWgH_oeTspJA_1741344472
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A6C191801A07; Fri,  7 Mar 2025 10:47:52 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3E7871956095; Fri,  7 Mar 2025 10:47:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A760721E675F; Fri, 07 Mar 2025 11:47:49 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
+ =?utf-8?Q?hieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
+ Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,  Harmonie Snow <harmonie@gmail.com>
+Subject: Re: [PATCH 21/57] docs/qapi-domain: add :deprecated: directive option
+In-Reply-To: <20250305034610.960147-22-jsnow@redhat.com> (John Snow's message
+ of "Tue, 4 Mar 2025 22:45:30 -0500")
+References: <20250305034610.960147-1-jsnow@redhat.com>
+ <20250305034610.960147-22-jsnow@redhat.com>
+Date: Fri, 07 Mar 2025 11:47:49 +0100
+Message-ID: <87plitm816.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20250228174802.1945417-1-peter.maydell@linaro.org>
- <CAFEAcA9RPnZdf5zqFwu255-LdJ5inFbjtCA8SJ4o89aiUuabpA@mail.gmail.com>
-In-Reply-To: <CAFEAcA9RPnZdf5zqFwu255-LdJ5inFbjtCA8SJ4o89aiUuabpA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Mar 2025 10:40:58 +0000
-X-Gm-Features: AQ5f1JoIK5vHYIdC4x-PFgjp35sYufdDTGe4cFGEW41goOLjFhItfVdX-p0j9_M
-Message-ID: <CAFEAcA8+oA6jJPrN_o3VDbSETyZugsFrRZH7uUSP9i6KdQE3vQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] hw/net/smc91c111: Fix potential array overflows
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,40 +91,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping for review of this series (and the other smc91c111
-patch I link below), please?
+John Snow <jsnow@redhat.com> writes:
 
-thanks
--- PMM
+> Although "deprecated" is a feature (and *will* appear in the features
+> list), add a special :deprecated: option to generate an eye-catch that
+> makes this information very hard to miss.
+>
+> (The intent is to modify qapidoc.py to add this option whenever it
+> detects that the features list attached to a definition contains the
+> "deprecated" entry.)
 
+Let me explain it in my own words to make sure I understand.
 
-On Fri, 28 Feb 2025 at 19:22, Peter Maydell <peter.maydell@linaro.org> wrote:
+1. The transmogrifier emits a :feat: for the feature like for any other.
+   Therefore, the feature is rendered like any other.,
+
+2. The transmogrifier additionally emits the owning directive with a
+   :deprecated: option.  This gets the eye-catch rendered.
+
+Example:
+
+    Command drive-backup (Since: 1.6)
+ -->    This command is deprecated.
+
+       Start a point-in-time copy of a block device to a new destination.
+       The status of ongoing drive-backup operations can be checked with
+       query-block-jobs where the BlockJobInfo.type field has the value
+       'backup'.  The operation can be stopped before it has completed
+       using the block-job-cancel command.
+
+       Arguments:
+          * The members of "DriveBackup".
+
+       Features:
+ -->      * **deprecated** -- This command is deprecated.  Use "blockdev-
+            backup" instead.
+
+The first arrow marks the eye-catch.  The second marks the normally
+rendered feature.
+
+The eye-catch is redundant with the feature rendering.  Readers may
+nevertheless find an eye-catch useful.
+
+For what it's worth, the Python documentation has deprecation
+information at the end of a definition documentation, together with
+"changed in" information.  Both are colored to catch the eye.  More
+restrained than your eye-catch.  Also uses less space.
+
+Hmm.
+
+Not a blocker.
+
+> -
 >
-> On Fri, 28 Feb 2025 at 17:48, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > This patchset fixes some potential array overflows in the
-> > smc91c111 ethernet device model, including the one found in
-> > https://gitlab.com/qemu-project/qemu/-/issues/2742
-> >
-> > There are two classes of bugs:
-> >  * we accept packet numbers from the guest, but we were not
-> >    validating that they were in range before using them as an
-> >    index into the data[][] array
-> >  * we didn't sanitize the length field read from the data
-> >    frame on tx before using it as an index to find the
-> >    control byte at the end of the frame, so we could read off
-> >    the end of the buffer
-> >
-> > This patchset fixes both of these. The datasheet is sadly
-> > silent on the h/w behaviour for these errors, so I opted to
-> > LOG_GUEST_ERROR and silently ignore the invalid operations.
-> >
-> > Patch 3 tidies up the existing code to use a constant defined
-> > in patch 2; I put it last so we can cc the first two patches
-> > to stable without having to also backport that patch.
+> RFC: Technically, this object-level option is un-needed and could be
+> replaced with a standard content-level directive that e.g. qapidoc.py
+> could insert at the beginning of the content block. I've done it here as
+> an option to demonstrate how it would be possible to do.
 >
-> See also the other smc91c111 fuzzer fix patch:
-> https://patchew.org/QEMU/20250228191652.1957208-1-peter.maydell@linaro.org/
+> It's a matter of taste for "where" we feel like implementing it.
 >
-> (if I need to do a v2 of this series I'll put that one in too)
+> One benefit of doing it this way is that we can create a single
+> containing box to set CSS style options controlling the flow of multiple
+> infoboxes. The other way to achieve that would be to create a directive
+> that allows us to set multiple options instead, e.g.:
+>
+> .. qapi:infoboxes:: deprecated unstable
+>
+> or possibly:
+>
+> .. qapi:infoboxes::
+>    :deprecated:
+>    :unstable:
+>
+> For now, I've left these as top-level QAPI object options. "Hey, it works."
+
+Do you intend to drop this part in the final version?
+
+Having the commit message explain paths not taken can be useful.  But
+this is phrased as an RFC, which suggests to me you plan to drop it.
+
+> P.S., I outsourced the CSS ;)
+
+Hi, Harmonie!
+
+> Signed-off-by: Harmonie Snow <harmonie@gmail.com>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+
 
