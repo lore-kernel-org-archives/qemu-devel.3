@@ -4,90 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24864C28B23
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B43C19F32
 	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZXG-0004Bu-3s; Fri, 07 Mar 2025 10:22:50 -0500
+	id 1tqZXM-0004Gj-7E; Fri, 07 Mar 2025 10:22:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZXE-00047k-32
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:22:48 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqZXC-0007Ug-4V
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:22:47 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43bdc607c16so15516285e9.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:22:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741360964; x=1741965764; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mb//xinM30vegk6aHiJzczJ1WiKP8BqLuew4qetSOXA=;
- b=l9uE5TCKZ7h3xRsCVTM3jKHI9L1VDvYSEIsulkBVKA77rqpVc7wVwrnYEcbHq+MNOv
- GZDV+d5LT25LqvVj2Zj5Fy6grbdxUWLZJ+EYgvgwGRcbp3jRzL1JulPwiKnxOk+Un02B
- RiRpOdjKruRr6LHzi1p/Ijph6dNwP5kmUVNop1o/4u8r81xe6QS+pOK3AGmJT2xb3qIi
- Bb8iySpx0ApfjoqeSZ351D6PNVGTscRSg0nqUgoOg6KsBkrD+iBvCr2NQrXpJRXarR9U
- hpAIg5dGAVUp42M0mDrffzI7lnCQTegNC1A48ajylR/dmgOc3BfOLTm0Jftt88Bom8B2
- 4BRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741360964; x=1741965764;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mb//xinM30vegk6aHiJzczJ1WiKP8BqLuew4qetSOXA=;
- b=aKT9XA0y7Nzb0/Xng/GsoEtKYtZ8p0qPEkvj42h9/v8xxaHuR58vaKWiT/HIXRiy0w
- rcvQyaAo0tO7xg3fzt3rHHRJUAHyKzHDsbf62OtYpanUuTfawneXSvB/wdg0t2naqal7
- bO1eTaVrdmBlfQrNXy90Jy0cdMrb6JywfJORRS4ZwOhA2N8bGBExEluWoWrpXKJm6ETj
- x0JUNV5QkrR+qOytnixI/ehrLucXzOi80+pZCBXleBdO52C4MZkxAstJXuhyA9g3oo8s
- f10YYcAvdo3l9DnfCIdj1163cy392bKlbqIXLqwZOnBWAzgeDomSbsemlEvasVRyvJXr
- Ck6w==
-X-Gm-Message-State: AOJu0Yx1Mg49UKxbqZdtCMLvvj/Dc7ggbBV2qIqI7m9Bx/jMT8oMZtd5
- FxYMVpdl6KYm0ZXjHfdORtGwgNMTmb8tGR8JklCXnSG5vC5Z525Z5+iQt+sfmIDmSKp+iIeh4gb
- 5b1M=
-X-Gm-Gg: ASbGncu0pFj+XXy0m+mqEdO1Xgv2qpa7OaOkNxL48Z/2FmYsA2kJnWDCvOF+PBiW6La
- KjgdtXj/8ORK0NLa1YyDhpl21KhHQIHYHz9dT1XQL3BN0V0YARh5s4gzBIoiruO7cHdqIErnYmx
- 4RnsbXvDjWPYOj5+tXkN1/D/+ipsL2x4p+Ic6tYY4/DXS2L3FdpHFOb4Owh3UPK0kPfqHdsLfwF
- RmN1zQzkqozZQpdG3J2ghGdZa2vrOZYHj4XnWGqKVO6mU9g41m+jfsEtIFfW3qmaEDGnBp6vAHy
- X4khkqPvi/Jh9DlL0+6DAzzyMZyv+fyZU9yMDGPLxcyR6P+ZpyiB/LflYTbpdjp1YkR59rpfJgV
- 39IFPrJI/lCs0
-X-Google-Smtp-Source: AGHT+IGYTf13AgRJtYOw4VyCe0wasR5FMIv68Exbnwm55qmFOXmsK/g0vLBLMqIuRczM+ualfpnn1A==
-X-Received: by 2002:a5d:6d8a:0:b0:38d:d371:e04d with SMTP id
- ffacd0b85a97d-39132dacb85mr2714324f8f.34.1741360963752; 
- Fri, 07 Mar 2025 07:22:43 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd8b03cesm54097885e9.7.2025.03.07.07.22.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 07:22:43 -0800 (PST)
-Message-ID: <3bff4d7a-56c8-44a4-8093-9a7a10699d2b@linaro.org>
-Date: Fri, 7 Mar 2025 16:22:42 +0100
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1tqZXI-0004FW-HN; Fri, 07 Mar 2025 10:22:52 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1tqZXG-0007Vf-Jm; Fri, 07 Mar 2025 10:22:52 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 527E38je028483;
+ Fri, 7 Mar 2025 15:22:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=tC1sNL
+ lnSJVvokfCSBPMfrC30pxEBMcgR73v/yvQXIE=; b=OnWeBPAba5mwI5c+XYh+xS
+ l+saL1FtmRCCNEaEfLNX10BdWPcbn+A6BNk0gTHNForI2F1ectO4lrTNtAy3bMl+
+ OXRTVW/xH42sGg7UUJkOmbU5DKCIQRP/bYu7wbY5lAxMZ7Biv+3K/hCg/QCp1lz+
+ HxMqrpZoIJcWKsMC4ZWXJ59+SnQastFMJ4wTKCmFOnlresRb9sXuS19YVfXGA1L5
+ r3GGHSTtgvD4P5QCM70ga56a1WnGEI7vMd3yCynDx7Tl1qtOYVaG1OY/DfZdw5H8
+ xHmPlWy+LUQTbLzSLC3nph0FgK6/6N5wfnL4KWrSd+fNdVKpHw9satcehcYLmcZg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45827p8ddh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Mar 2025 15:22:47 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 527Ekaua032243;
+ Fri, 7 Mar 2025 15:22:46 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 454cjtfr2t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Mar 2025 15:22:46 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 527FMjTx29360866
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 7 Mar 2025 15:22:45 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C94D5803F;
+ Fri,  7 Mar 2025 15:22:45 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D094858054;
+ Fri,  7 Mar 2025 15:22:44 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  7 Mar 2025 15:22:44 +0000 (GMT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] ppc/amigaone: Add default environment
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>
-References: <cover.1740673173.git.balaton@eik.bme.hu>
- <4d63f88191612329e0ca8102c7c0d4fc626dc372.1740673173.git.balaton@eik.bme.hu>
- <84151f43-d952-4515-aee5-04f339baa546@linaro.org>
- <33e3ef97-749e-4701-4955-0e88d0eb2199@eik.bme.hu>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <33e3ef97-749e-4701-4955-0e88d0eb2199@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Fri, 07 Mar 2025 16:22:44 +0100
+From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, qemu-devel mailing list
+ <qemu-devel@nongnu.org>, Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH qemu v2 1/3] hw/s390x: add CPI identifiers to QOM
+In-Reply-To: <Z8m5pV0kPIfp2jo2@redhat.com>
+References: <20250224120449.1764114-1-shalini@linux.ibm.com>
+ <Z8h2hNFlNvjWWHqd@redhat.com>
+ <b44e0b46f69ee6f86a15ecabecd6942c@imap.linux.ibm.com>
+ <Z8m5pV0kPIfp2jo2@redhat.com>
+Message-ID: <ccfdc0de96646f09f1c7211bdea261c1@linux.ibm.com>
+X-Sender: shalini@linux.ibm.com
+Organization: IBM Deutschland Research & Development GmbH
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: AFujJSBwhqlNpsDXdRjv5xmfG02cSB6Y
+X-Proofpoint-GUID: AFujJSBwhqlNpsDXdRjv5xmfG02cSB6Y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-07_06,2025-03-06_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ impostorscore=0 bulkscore=0 clxscore=1011 spamscore=0 mlxlogscore=999
+ malwarescore=0 lowpriorityscore=0 phishscore=0 adultscore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503070111
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,161 +114,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/25 15:46, BALATON Zoltan wrote:
-> On Fri, 7 Mar 2025, Philippe Mathieu-Daudé wrote:
->> Hi Zoltan,
->>
->> Minor review comments in case you respin (not blocking).
->>
->> On 27/2/25 17:39, BALATON Zoltan wrote:
->>> Initialise empty NVRAM with default values. This also enables IDE UDMA
->>> mode in AmigaOS that is faster but has to be enabled in environment
->>> due to problems with real hardware but that does not affect emulation
->>> so we can use faster defaults here.
->>>
->>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>> ---
->>>   hw/ppc/amigaone.c | 37 ++++++++++++++++++++++++++++++++++++-
->>>   1 file changed, 36 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
->>> index 849c9fc6e0..5c5585d39a 100644
->>> --- a/hw/ppc/amigaone.c
->>> +++ b/hw/ppc/amigaone.c
->>> @@ -52,6 +52,28 @@ static const char dummy_fw[] = {
->>>   #define NVRAM_ADDR 0xfd0e0000
->>>   #define NVRAM_SIZE (4 * KiB)
->>>   +static char default_env[] =
->>
->> 'const'
+On 2025-03-06 16:06, Daniel P. Berrangé wrote:
+> BTW, your email client is possibly mis-configured - your mail
+> came through with "From: shalini <shalini@imap.linux.ibm.com>"
+> and attempting to reply to that gets an error saying that
+> 'imap.linux.ibm.com' does not exist.
 > 
-> OK. Could be fixed up on merge by Nick or I can send a new version if 
-> needed.
-> 
->>> +    "baudrate=115200\0"
->>> +    "stdout=vga\0"
->>> +    "stdin=ps2kbd\0"
->>> +    "bootcmd=boota; menu; run menuboot_cmd\0"
->>> +    "boot1=ide\0"
->>> +    "boot2=cdrom\0"
->>> +    "boota_timeout=3\0"
->>> +    "ide_doreset=on\0"
->>> +    "pci_irqa=9\0"
->>> +    "pci_irqa_select=level\0"
->>> +    "pci_irqb=10\0"
->>> +    "pci_irqb_select=level\0"
->>> +    "pci_irqc=11\0"
->>> +    "pci_irqc_select=level\0"
->>> +    "pci_irqd=7\0"
->>> +    "pci_irqd_select=level\0"
->>> +    "a1ide_irq=1111\0"
->>> +    "a1ide_xfer=FFFF\0";
->>> +#define CRC32_DEFAULT_ENV 0xb5548481
->>> +#define CRC32_ALL_ZEROS   0x603b0489
->>
->>> +
->>>   #define TYPE_A1_NVRAM "a1-nvram"
->>>   OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
->>>   @@ -94,7 +116,7 @@ static void nvram_realize(DeviceState *dev, 
->>> Error **errp)
->>>   {
->>>       A1NVRAMState *s = A1_NVRAM(dev);
->>>       void *p;
->>> -    uint32_t *c;
->>> +    uint32_t crc, *c;
->>>         memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, 
->>> "nvram",
->>>                                     NVRAM_SIZE, &error_fatal);
->>> @@ -113,12 +135,25 @@ static void nvram_realize(DeviceState *dev, 
->>> Error **errp)
->>>               return;
->>>           }
->>>       }
->>> +    crc = crc32(0, p + 4, NVRAM_SIZE - 4);
->>> +    if (crc == CRC32_ALL_ZEROS) { /* If env is uninitialized set 
->>> default */
->>> +        *c = cpu_to_be32(CRC32_DEFAULT_ENV);
->>
->> Prefer the ld/st API over cpu_to/from:
->>
->>           stl_be_p(c, CRC32_DEFAULT_ENV);
->>
->>> +        /* Also copies terminating \0 as env is terminated by \0\0 */
->>> +        memcpy(p + 4, default_env, sizeof(default_env));
->>> +        if (s->blk) {
->>> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), 
->>> p, 0);
->>> +        }
->>> +        return;
->>> +    }
->>>       if (*c == 0) {
->>>           *c = cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
->>>           if (s->blk) {
->>>               blk_pwrite(s->blk, 0, 4, p, 0);
->>>           }
->>>       }
->>> +    if (be32_to_cpu(*c) != crc) {
->>
->>       if (ldl_be_p(c) != crc) {
-> 
-> Why? Here we want to convert a value from host CPU endianness to a 
-> specific endianness and vice versa in code running on the host. (We are 
-> not accessing guest memory, we operate on the memory region pointer. The 
-> guest is not even running yet.)
-> 
-> Also:
-> 
-> static inline int ldl_be_p(const void *ptr)
-> {
->      return be_bswap(ldl_he_p(ptr), 32);
-> }
-> 
-> static inline int ldl_he_p(const void *ptr)
-> {
->      int32_t r;
->      __builtin_memcpy(&r, ptr, sizeof(r));
->      return r;
-> }
-> 
-> #define be_bswap(v, size) glue(__builtin_bswap, size)(v)
-> 
-> so this is
-> 
-> int32_t r;
-> __builtin_memcpy(&r, c, sizeof(r));
 
-This call makes the address alignment access safe.
+Hello Daniel,
+Thank you very much for pointing this out. I have fixed it.
 
-Sometimes we use similar API doing unaligned access and static
-analyzers complain [*]. Rather than maintaining 2 differents APIs
-with some corner cases in one, we could always use the reliable
-one.
+> On Thu, Mar 06, 2025 at 02:55:27PM +0100, shalini wrote:
+>> On 2025-03-05 17:06, Daniel P. Berrangé wrote:
+>> > On Mon, Feb 24, 2025 at 01:04:47PM +0100, Shalini Chellathurai Saroja
+>> > wrote:
+>> > > Add Control-Program Identification (CPI) to the QEMU Object
+>> > > Model (QOM). The CPI identifiers provide information about
+>> > > the guest operating system. The CPI identifiers are:
+>> > > system type, system name, system level and sysplex name.
+>> > >
+>> > > The system type provides the OS type of the guest (e.g. LINUX).
+>> > > The system name provides the name of the guest (e.g. TESTVM).
+>> > > The system level provides the distribution and kernel version
+>> > > of the guest OS (e.g. 0x50e00).
+>> > > The sysplex name provides the sysplex name of the guest
+>> > > (e.g. SYSPLEX).
+>> > >
+>> > > Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+>> > > ---
+>> > >  hw/s390x/s390-virtio-ccw.c         | 29 +++++++++++++++++++++++++++++
+>> > >  include/hw/s390x/s390-virtio-ccw.h |  8 ++++++++
+>> > >  qapi/machine.json                  | 24 ++++++++++++++++++++++++
+>> > >  3 files changed, 61 insertions(+)
+>> > >
+>> > > diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+>> > > index 51ae0c133d..13ea8db1b0 100644
+>> > > --- a/hw/s390x/s390-virtio-ccw.c
+>> > > +++ b/hw/s390x/s390-virtio-ccw.c
+>> > > @@ -50,6 +50,7 @@
+>> > >  #include "hw/s390x/virtio-ccw-md.h"
+>> > >  #include "system/replay.h"
+>> > >  #include CONFIG_DEVICES
+>> > > +#include "qapi/qapi-visit-machine.h"
+>> > >
+>> > >  static Error *pv_mig_blocker;
+>> > >
+>> > > @@ -803,6 +804,26 @@ static void machine_set_loadparm(Object *obj,
+>> > > Visitor *v,
+>> > >      s390_ipl_fmt_loadparm(ms->loadparm, val, errp);
+>> > >  }
+>> > >
+>> > > +static void machine_get_control_program_id(Object *obj, Visitor *v,
+>> > > +                                           const char *name, void
+>> > > *opaque,
+>> > > +                                           Error **errp)
+>> > > +{
+>> > > +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+>> > > +    S390ControlProgramId *cpi;
+>> > > +    cpi = &(S390ControlProgramId){
+>> > > +        .system_type = g_strndup((char *) ms->cpi.system_type,
+>> > > +                       sizeof(ms->cpi.system_type)),
+>> > > +        .system_name = g_strndup((char *) ms->cpi.system_name,
+>> > > +                       sizeof(ms->cpi.system_name)),
+>> > > +        .system_level = g_strdup_printf("0x%lx",
+>> > > ms->cpi.system_level),
+>> >
+>> > If the data is an integer, we must return it in QMP as an integer,
+>> > not formatted into a hex string.
+>> >
+>> 
+>> Hello Daniel,
+>> 
+>> Thank you very much for the review.
+>> 
+>> The system-level, when interpreted as an int provides the output below
+>> 
+>> 'system-level': 74872343805430528
+> 
+> Yes, that is correct from a QMP design POV. Data should formatted
+> in the most appropriate way for machines to consume, using native
+> JSON data types.
+> 
+>> But the desired output below is obtained only when interpreted as a 
+>> str.
+>> 
+>> 'system-level': '0x10a000000060b00'
+> 
+> If a human wants to read the data in hex format, that should be
+> formatted by whatever tool is consuming the data from QMP and
+> presenting it in the user.
+> 
 
-[*] see for example commit 5814c084679 ("hw/net/virtio-net.c: Don't 
-assume IP length field is aligned")
+Thank you for the explanation. I will change this.
 
-> __builtin_bswap32(r);
+>> > > +# @system-name: system name of Linux instance
+>> >
+>> > What is a system name ?  Is that a hostname, or is that something
+>> > else ?
+>> >
+>> 
+>> Yes, it is the hostname of the guest virtual machine.
 > 
-> versus
+> Lets rename it to 'system-hostname' to be unambiguous.
 > 
-> static inline type endian ## size ## _to_cpu(type v)
-> {
->      return glue(endian, _bswap)(v, size);
-> }
-> 
-> which is just
-> 
-> __builtin_bswap32(*c);
-> 
-> The second one makes more sense to me and don't see why I'd want to do 
-> it in a more cumbersome way when we end up with the same result but 
-> simpler.
-> 
-> Regards,
-> BALATON Zoltan
-> 
->>> +        warn_report("NVRAM checksum mismatch");
->>> +    }
->>>   }
 
+I was wrong. System name is not the hostname of the guest virtual 
+machine. As mentioned by Nina it is a user configurable name of the 
+system. So system-name cannot be change to 'system-hostname'. I am sorry 
+for the inconvenience. Thank you.
+
+> 
+> With regards,
+> Daniel
+
+-- 
+Mit freundlichen Grüßen / Kind regards
+Shalini Chellathurai Saroja
+Software Developer
+Linux on IBM Z & KVM Development
+IBM Deutschland Research & Development GmbH
+Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Geschäftsführung: David Faller
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
+Stuttgart, HRB 243294
 
