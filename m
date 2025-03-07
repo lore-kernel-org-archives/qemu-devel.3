@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85ED8C28B2E
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 21:01:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9521FC28B28
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 21:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqeoP-0007YQ-0K; Fri, 07 Mar 2025 16:00:53 -0500
+	id 1tqeqa-0001sR-7o; Fri, 07 Mar 2025 16:03:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqeoA-0007UW-4z
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:00:38 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqeqT-0001rM-Rj
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:03:02 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqeo7-000598-Ag
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:00:37 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43bb6b0b898so19453275e9.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 13:00:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqeqS-0005VZ-5L
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:03:01 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43948021a45so19474495e9.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 13:02:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741381233; x=1741986033; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741381378; x=1741986178; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DBlpnXVduv+5AmoyZl6pqWu84JM1UmMBLVVhVQDwJbY=;
- b=ga9TZdrU/+iQi9Hetrp2c1DWPDEDBueN/Jmr68aWc5xekiWwKiG9kKqTfEgdEzLV8m
- bliDUaHGxy3bIoP1Yso5nraxxaUNg6QbMDn0Uh5BwqUnotvsedYE4M3PcbxntHon0rRz
- RV8wJvylbHtfCMawjrZum+ySumOo+IwfCgwjWc23tIJKSf37zjdDzI0eVf77YkqqZ5li
- pm169l5G/QdZMby/uq8z/0GTouII7l/0kvkqkYhr3OonjLI1Bbdqo0Lh6fiOwzSd8X6e
- 297kXUS4zQ/lT8znJa7NtWHHpTOOKUzDkBrneMcTx/HYRUKG6zB72j91TlXuxzW86wwO
- S8oQ==
+ bh=W1pIO3W6UHho5/y6qR/VqXNkL6ggB/e6+WfIGEybHyU=;
+ b=mmz4N48xd9EZ8TqKedBFiZa6BPEtnBc8RP+yt6sbAFRNPkS06u/JE7W+aqdCVDieXd
+ PvrUa6A71nnUHFjeReoKjepaSkpnyV9YZh6sv1f1LUflM4yP0JcKYHCAT7CjbPpfnZpK
+ 5RkP1gnDwOxhhxkzdyhCetzou7PghEauaAjsuK7ZcRdAgJxupuoCTfl5v/sxh5ksqkVF
+ rY6JKEZKTR7x8vN9/fUGDnYOE3fw9AWisfSpgzXKIlpQEAkIYUtp/F6SZmPlYC4nO3YV
+ 9KTzv5/OYUKRhnvk4Ns1gCPyVv/TyoegcYYPceOwvBUEAWGKOlwlyYG5zLH1tvMgoblw
+ cx0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741381233; x=1741986033;
+ d=1e100.net; s=20230601; t=1741381378; x=1741986178;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DBlpnXVduv+5AmoyZl6pqWu84JM1UmMBLVVhVQDwJbY=;
- b=WG7uUD9XmUh23r71QDfyO8xdh2OjiTZEuvjBVufusD4uAKuzuEYqDEoYhG1UaRLfkt
- U7693wwNoB6vBTyd3yX3CrSy1n2+ME2MCTjKWYzaQR5xGNM7oiWiVbfikRyKD+/JMmph
- 57No9mpydwNP0Oo9Aej40erTbjZOyv4gOPo4tIdsPy5/JQLx3VnlUy2i5jdgGccy9ZEc
- wIJkNzA3EsfbfDIDNnNSg5LAu9jrSrE6q3uwR13GOlZh0A5pdjT2pVG0ZEpzaimRUvTo
- 8y1a1mqPZEmSwxOj+W8qD3V/8lp/5zwWvhCatn7kvp9uiZ+6Z9EC+xkiZFqLNTN2Xb+9
- 2qtQ==
-X-Gm-Message-State: AOJu0YwdMz/pcxUmDMbgn+AUXPOGAMKp2AUFpPramUHNuKwIGcv1RKCc
- WWPUpkXbuaWYTxylDMVuqXcDG5OwwOCtBpUuhikebSEY5I4vXXrH/afa14mDs6s=
-X-Gm-Gg: ASbGncvTxsaKHhmmnR8ah+gkVzlU16wIDeK2MrT6TCLgOKcmhNmEzuTXfgrSIXi+JGe
- uXz7mwKAjpcucIqUXc79VdbHp+dvpZTAyghnxfPY4kEIWCWixA+W2Z4NrzUMdHpJ/m/fYg3IQGX
- XgNIvw02vQvAb/L+crb66R9ENjvIdg2145rYz3MDHRZtFDo95CSmy8XeYY9j73Zc95lixuQVjfg
- 58p6WjDS5F3deEhx1WUUO4jBU3bfcfaxI3a6MwwigTXA9c8JjZwW9HW+sw1NTlcc0A5WJMkifbE
- 4H03Dxtx58cXKx9sNp3s2si3o5xqFTAdKhnvINW59ugSoktE5Y/ttnTBCqDO6lzip9+dQ3ZxkvS
- +AOJWtol84KNo
-X-Google-Smtp-Source: AGHT+IE0Gp1qXbtCuv9Bulwm1KI40337TQnXd3oScjrftwexmZN2k7oxxGD0Prtym8VVD08S2Jl1cg==
-X-Received: by 2002:a05:600c:4e89:b0:43b:c448:bc34 with SMTP id
- 5b1f17b1804b1-43c601d0758mr36327145e9.18.1741381233183; 
- Fri, 07 Mar 2025 13:00:33 -0800 (PST)
+ bh=W1pIO3W6UHho5/y6qR/VqXNkL6ggB/e6+WfIGEybHyU=;
+ b=qDeKnmYvGsjsUwXN5mPqnZwMrka0SZJg5u2d+B0i2MQ1ivqaf+i812eRKgVyvWjGfo
+ SvRGsjPDAbUmUPC6+oZOpz9gXvJP3dAxBWREr5CCTwumeHtac4K374nTVQQYu1UIrGMq
+ 1mYTD1P7SBwwSBgSw+gcadM1I4G6Wx3XkfgbZyWCHYZ73d58A+sMiT/VFJRt5LPoDfdS
+ 9VFBSYN9sqdfnoZ/jXgKPXTgj8qo6iufs+ug2lWE4ArMmKrpcJKfqst3DjqiYJq91TBO
+ CxM8vSoitCcpFefCwTEY6brMh2aLM4cPg8Rh/8k8lxNMmGyMxPAJetMdM2r4qivjJjiC
+ HIzQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXwVHXdGwQd+G4nSP69ikvWcSN2S4/OGfcSKcp3w4DJ2qYKx3IfNwaYADaZiID8SuRYL4j8SDCGP6QH@nongnu.org
+X-Gm-Message-State: AOJu0YzQuBPsAK+Ln2Xkl168zF0X3xjOU5CtnFTQSIf2XkSSpKecOhAf
+ RmbEBDJvxlxOb5YzSDgz/zwQOVXzlwt/M/bpe7aViv2BU5aD3c/+sdBhmXrZ69c=
+X-Gm-Gg: ASbGncs1X+rTPn5G5b9MUrJH8/cawKiJoOZR0zzsYJeabN5S+8mRHPGxit01ziqiYGx
+ u9BHoFSRchralV/rZftZUXXTv0EXlFyyK3BHSwN0N680HqXPnMpzUvNHt+75fac97IGcUl5s1UQ
+ 8y5hdBgMT4Iy8dUGukb/zybdLwO52OM4KfO5lHFeeawDrsFwBHNOfA25kHRNtEidAecmw93C2Oc
+ NQtob2wc65rO06MKp0MM8po35XkgaGdLaIhkMcJmjpR6DhydYVRglm/gxu4TWpKf8HET7vaDgq2
+ L4rosuurUgfuvCxAL3a1X8ol/yuv+2403fyMR1l2QCf65uI/WmHpRvVfp0zAeXZIEMf2I9/3FlW
+ N0466eUbZgTPg
+X-Google-Smtp-Source: AGHT+IFnECB2WJgp4h3URm4FZPTxJWKmnEDM3Aq2p4c4hzaxYSIhwVdcFCF4TerCDIJ8dTIfi5XEXA==
+X-Received: by 2002:a05:600c:1c05:b0:439:6e08:f4 with SMTP id
+ 5b1f17b1804b1-43c687014f2mr30261315e9.26.1741381377638; 
+ Fri, 07 Mar 2025 13:02:57 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfa52sm6285939f8f.21.2025.03.07.13.00.31
+ ffacd0b85a97d-3912c11e9desm6344762f8f.101.2025.03.07.13.02.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 13:00:32 -0800 (PST)
-Message-ID: <ad9ab961-da0b-4835-a346-38c339150226@linaro.org>
-Date: Fri, 7 Mar 2025 22:00:30 +0100
+ Fri, 07 Mar 2025 13:02:57 -0800 (PST)
+Message-ID: <26709015-6fac-48c4-80a2-cc6a4150d3a4@linaro.org>
+Date: Fri, 7 Mar 2025 22:02:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] hw/virtio/virtio-mem: Convert
- VIRTIO_MEM_USABLE_EXTENT to runtime
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20250307151543.8156-1-philmd@linaro.org>
- <20250307151543.8156-6-philmd@linaro.org> <877c503ie6.fsf@draig.linaro.org>
- <a7126584-00fa-42ed-8e5c-d27d9933ac2f@linaro.org>
- <bb567f0a-ed7a-4861-a7bd-fda95f2ae7ce@linaro.org>
+Subject: Re: [PATCH v8 04/20] Revert "hw/acpi/ghes: Make
+ ghes_record_cper_errors() static"
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ linux-kernel@vger.kernel.org
+References: <cover.1741374594.git.mchehab+huawei@kernel.org>
+ <9cb6c734f32f01206db562b9a406829bf81e19d9.1741374594.git.mchehab+huawei@kernel.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <bb567f0a-ed7a-4861-a7bd-fda95f2ae7ce@linaro.org>
+In-Reply-To: <9cb6c734f32f01206db562b9a406829bf81e19d9.1741374594.git.mchehab+huawei@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,78 +108,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/25 20:28, Pierrick Bouvier wrote:
-> On 3/7/25 08:49, Philippe Mathieu-Daudé wrote:
->> On 7/3/25 17:38, Alex Bennée wrote:
->>> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>>
->>>> Use qemu_arch_available() to check at runtime if a target
->>>> architecture is built in.
->>>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>>    hw/virtio/virtio-mem.c | 20 ++++++++++++--------
->>>>    1 file changed, 12 insertions(+), 8 deletions(-)
->>>>
->>>> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
->>>> index 5f57eccbb66..8c40042108c 100644
->>>> --- a/hw/virtio/virtio-mem.c
->>>> +++ b/hw/virtio/virtio-mem.c
->>>> @@ -15,6 +15,7 @@
->>>>    #include "qemu/cutils.h"
->>>>    #include "qemu/error-report.h"
->>>>    #include "qemu/units.h"
->>>> +#include "system/arch_init.h"
->>>>    #include "system/numa.h"
->>>>    #include "system/system.h"
->>>>    #include "system/reset.h"
->>>> @@ -170,13 +171,16 @@ static bool 
->>>> virtio_mem_has_shared_zeropage(RAMBlock *rb)
->>>>     * necessary (as the section size can change). But it's more 
->>>> likely that the
->>>>     * section size will rather get smaller and not bigger over time.
->>>>     */
->>>> -#if defined(TARGET_X86_64) || defined(TARGET_I386) || 
->>>> defined(TARGET_S390X)
->>>> -#define VIRTIO_MEM_USABLE_EXTENT (2 * (128 * MiB))
->>>> -#elif defined(TARGET_ARM)
->>>> -#define VIRTIO_MEM_USABLE_EXTENT (2 * (512 * MiB))
->>>> -#else
->>>> -#error VIRTIO_MEM_USABLE_EXTENT not defined
->>>> -#endif
->>>> +static uint64_t virtio_mem_usable_extent_size(void)
->>>> +{
->>>> +    if (qemu_arch_available(QEMU_ARCH_I386 | QEMU_ARCH_S390X)) {
->>>> +        return 2 * 128 * MiB;
->>>> +    } else if (qemu_arch_available(QEMU_ARCH_ARM)) {
->>>> +        return 2 * 512 * MiB;
->>>> +    } else {
->>>> +        g_assert_not_reached();
->>>> +    }
->>>> +}
->>>
->>> What happens if/when we have multiple arches available? Won't we want to
->>> know which CPU the virtio-mem device is attached to or do we take the
->>> minimal value over the whole system?
->>
->> "per attached vcpu" is how I was previously considering this problem,
->> but IIUC from the discussions with Pierrick, we should consider single
->> binary as a first step before heterogeneous emulation.
->>
+On 7/3/25 20:14, Mauro Carvalho Chehab wrote:
+> The ghes_record_cper_errors() function was introduced to be used
+> by other types of errors, as part of the error injection
+> patch series. That's why it is not static.
 > 
-> I think it's safe to assume only a single arch is enable for now, in the 
-> context of the single binary.
-> A thing we could do is introduce qemu_arch_heterogenenous_emulation(), 
-> that returns false for now. And assert this in places that will need to 
-> be changed. So spots that will need refactoring will already be flagged 
-> in the codebase.
+> Make it non-static again to allow its usage outside ghes.c
+> 
+> This reverts commit 611f3bdb20f7828b0813aa90d47d1275ef18329b.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+>   hw/acpi/ghes.c         | 6 ++++--
+>   include/hw/acpi/ghes.h | 2 ++
+>   2 files changed, 6 insertions(+), 2 deletions(-)
 
-Yes, after some discussion with Markus I started a branch adding such
-macro. I didn't posted it so far waiting to show more realistic changes
-w.r.t. heterogeneous emulation, to not add code that could bitrot.
-Since we might be at a pivot position, I'll consider rebase and post it.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
-Thanks!
+And I apologize for missing to relate the 2 previous series.
 
