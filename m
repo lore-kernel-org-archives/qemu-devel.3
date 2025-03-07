@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F02CC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 16:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DCB2C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 16:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqa8t-0004dC-Nu; Fri, 07 Mar 2025 11:01:43 -0500
+	id 1tqaAQ-0005Em-2n; Fri, 07 Mar 2025 11:03:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqa8r-0004by-IN
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 11:01:41 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqa9c-0004mo-3f
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 11:02:35 -0500
 Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqa8o-0002PP-ES
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 11:01:41 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqa9a-0002XS-Fd
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 11:02:27 -0500
 Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43bc48ff815so12679125e9.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 08:01:34 -0800 (PST)
+ 5b1f17b1804b1-43bcbdf79cdso12781095e9.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 08:02:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741363293; x=1741968093; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741363344; x=1741968144; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1X9inzUwK4qPxtU9MrOSFpWx6Z09ZFZE28S9gTUPiRs=;
- b=xzqbDXwLLpgoJKxUvRR3uF/hIXeMm+5AatK/7+PB9AANgYwGCp63/UdeUFLD9abWJv
- bw0XGwZkKOvLfN7YN65lZM2Cwx7JNOr9BR6hxVXPLphH74z5cqdK4u8Q+kmoU6YqCDRm
- Fq3l4IaePdeye8c9A+qSeRX9pCNimhYJCfjjCD3m4G2Fzv4fvMaVkwg9Fz+e5/40ZprJ
- M+lcC43UNetoJZ+duNsTKg9sKQh2RoD3+UKbBvBA3oX7h1y75WWqUBEfSp6Rj8itXAtj
- 2PhTZIoDqKlG9/TPZwTJq6OhLEnXIOBwKXG9jEkEtMQIk7zKLobjF8RTWA51ZZ/Exb0H
- r0qA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ME81v5aH/TuF2khOtehqCQQR3r3r08weUaCHg73I6Ik=;
+ b=PNFBLALD7uIdmuES3ZypUX8O3/8DakhNjpg0Atlk+y8IuNsxycyiQ7wujRl7QSHK8G
+ ACiudxzi+xOOj5htvlE2YVdNhmKHE2iamBmMaA2S6SURnINfUvhWpGZLMPSktE3DEnLa
+ rzPSp2TKp0PbvlEQLdpCsyp9kTpP4/Zp26xJcJj7H4lzQVEQ8z5S61hn48PVyxmleLf/
+ AHaKHihLyWl0YK5ULeKCEiVhy03vSnlXyIuT5nV87Gqw8DmAZlDNhm83jH6qftxzwD4v
+ nICUO4+avc0QAnYx4EKyPe7wy4jKGEWe+RfYwfzZENChEooWm3CCOy6o+sBkSC1fcWp0
+ 7pmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741363293; x=1741968093;
+ d=1e100.net; s=20230601; t=1741363344; x=1741968144;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1X9inzUwK4qPxtU9MrOSFpWx6Z09ZFZE28S9gTUPiRs=;
- b=GR9Cpk7t3N522wrrLJm7KdgzXNbRbDOHZEVX1dDAyIvi77AGxhswB7mlEHaw3jF58H
- rTx3h1ogM78R0xJy9Xk9p/bRE3OTyOLW2V1VrbZt9po7yhHqsNaD/hCKkhI8llkGtbRa
- qX7tj3uHZfToYKies+X3urI9tYt5gkB6ARtPnnWnYpXbOtJ5FJy74EE1kCnLFxtun79E
- fu8PnUhiYa46jxjx75I6yMFmYksE/bSChyOkgDjalG6GIuISqk/ncgE222gzUhZBVkQS
- X8OYoBfUu32yf/WQm946yciMLgRuO7rpClkSmH8tXsiiOqO+8IAIivRAcvrDcqKTGeh1
- NgpA==
+ bh=ME81v5aH/TuF2khOtehqCQQR3r3r08weUaCHg73I6Ik=;
+ b=VUERvaHj8qy6ib4hLHxGg7rCndV1gX1a2RHkQxVXlJzhrvZzzq9p5xSdtT8nFpLeKn
+ IPpbkFygKck4VY2q3czytpTfqrAN09e5ToznFHYGPLiIN1fMDGRLEmNjjFXo5nWUwhC7
+ vBSTWttCdHQs+YqGdEs0ApUscdg1EvzWs1kX3G0tz6l6kvahzFV4n8XSSsxLQpXqhgep
+ kTiDIu6brYdyfP5pJaup4xQNL6H7Ff/eL6MS+rQhG4F/tTTftcxaqKXOp9Uv0QOXV+Yb
+ AtBZ2m7NzDM4dvdgUw4jpu6sluHtruHOWV2qiN6fMRZfhUKkN4XsyDbqtpjUjR9HzWr6
+ Jgpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVophdnd2CmuYefnadMDNCasdZdqMyQJhUmgtxJSQxN+HUEwJrYH08kwGLYATswmBO8IbhD7trmqbg5@nongnu.org
-X-Gm-Message-State: AOJu0YzXCkUFKg/w5Dlx5ZBKaMkk4X6is8sMxp3GbANg5JDQ4d/9ws0B
- kYHJIqBx740kTu/5f3DjfKOTV0w4Hz1VK0R2RlpBCCrQ1hU1+G+F0MNKmvnZiZo=
-X-Gm-Gg: ASbGncs3glQH5MML3aPkTmHf7nlaKH+5SVIqioajCCctxCaOSprqZqwgx+ltuP/Fwl2
- tEXEYG3BxmhMHjaFA2VYW6FY4BxWkdU8v9XvqGjBHRkofrFKq+sQ3UFWVZGNy9CQfl9ojTQIJA/
- 1I3GdHsBdnsTFSStXWryT68hSn2KBIe3Cdzo+oFrQ9BPkhfKGS5t+uRTOWw44ZCDRXuuCY2WQri
- VUMjf5tPkpkVEGw8FA+iY1t6OtanvPi3fFVMMIBwtJ0KQnc/24LiDbdZb+ZLUVn4enCaLnKl24g
- V8dtkWZ6vp13zJL+Hh6eO5ldn+4hezrFMB8UGZahbs2Lc+h6Gb9P3jFuwnSyCKm1v8Vq1ifgYyX
- As3vQ1XHHZYCI
-X-Google-Smtp-Source: AGHT+IEBVQn3IB2BDQdcl58V3vMxW8H7j7qT1acDInjLZNrYFHUCuEhmRHaoZ3Ghw3ABmR5tpGNY3w==
-X-Received: by 2002:a05:600c:558c:b0:439:91c7:895a with SMTP id
- 5b1f17b1804b1-43ce4ace4abmr377095e9.7.1741363292708; 
- Fri, 07 Mar 2025 08:01:32 -0800 (PST)
+ AJvYcCXrfNaMZBgHOd+oJbF26x0A6W27c0lKcWRH4u88oGdLwEWc8phyzKPH+BBk/c+9bjp9tpthzjJ3lOtV@nongnu.org
+X-Gm-Message-State: AOJu0YzmDSidEI9qgRCOX5ORHYwJ4keaLO28xrGXrDYae54bNG0vqveo
+ /zfmleUE4eqaSrqESGTE5BVtkKpH/C3/eT4vb9vK68ZxsSKg0QnTyXUFvaOQ5BU=
+X-Gm-Gg: ASbGncvWmV2b4+S0FbwNKC81fSBYQzDmNfzrzqmRZvPEGYXhXvSt7uPC8mQB7RE+PUH
+ rWJIXeKTF3c0Cgvir/xfdjDlM5dgFy4tNI9QD5pKPEeokiokxaPUZ08c3uJJxWw8/4Pv2kw7mgb
+ TRBV+oCKzu/MKAx2jZXQcEKFUOP0fI0DMVmxUUd4J4rtfJNlDHGLoWrv4/D7tEgJ35UKhMVbV7H
+ n8sFCfaeMHnTdNu3vIQPnOsZSGpD+/hf3inQRDx14Hf4m5u2LyDw76ol2cVp3Gd9J7bqPYT6yBO
+ 9Xw6A8S1YYOCHzNB6dC1rhPPMoKZBZOyAb/LkuWlK51wJ/Z+I3/3KkV9zF7jr5r2NcS1DZyhLnG
+ 1f8E0IMK7pbiv
+X-Google-Smtp-Source: AGHT+IHbugBgaGWl1wNLvR8hFB6pP+1qwHfWXc1U8dRSFC7C6BmOToRL4Ke3DqxxQL/wC1pSKvj9tg==
+X-Received: by 2002:a05:600c:198f:b0:434:f131:1e64 with SMTP id
+ 5b1f17b1804b1-43c5a6009a6mr25610865e9.9.1741363344242; 
+ Fri, 07 Mar 2025 08:02:24 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd8b0425sm55765975e9.3.2025.03.07.08.01.31
+ 5b1f17b1804b1-43bd4293250sm84318815e9.16.2025.03.07.08.02.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 08:01:32 -0800 (PST)
-Message-ID: <15a3d344-20d0-4a64-be1b-216cc137bfdf@linaro.org>
-Date: Fri, 7 Mar 2025 17:01:31 +0100
+ Fri, 07 Mar 2025 08:02:23 -0800 (PST)
+Message-ID: <500e69a8-2889-459a-8172-a57b342ae0c1@linaro.org>
+Date: Fri, 7 Mar 2025 17:02:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 11/11] target/s390x: Add a CONFIG switch to disable legacy
- CPUs
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240624091043.177484-1-thuth@redhat.com>
- <20240624091043.177484-12-thuth@redhat.com>
- <ced1ce10-b211-4328-b944-20154c24da63@linaro.org>
- <92f9a303-6a25-452d-adc9-b246953baf50@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Fix status for Arm boards I "maintain"
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250307152838.3226398-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <92f9a303-6a25-452d-adc9-b246953baf50@redhat.com>
+In-Reply-To: <20250307152838.3226398-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::333;
@@ -106,133 +101,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/25 16:33, Thomas Huth wrote:
-> On 07/03/2025 16.27, Philippe Mathieu-Daudé wrote:
->> Hi Thomas,
->>
->> On 24/6/24 11:10, Thomas Huth wrote:
->>> The oldest model that IBM still supports is the z13. Considering
->>> that each generation can "emulate" the previous two generations
->>> in hardware (via the "IBC" feature of the CPUs), this means that
->>> everything that is older than z114/196 is not an officially supported
->>> CPU model anymore. The Linux kernel still support the z10, so if
->>> we also take this into account, everything older than that can
->>> definitely be considered as a legacy CPU model.
->>>
->>> For downstream builds of QEMU, we would like to be able to disable
->>> these legacy CPUs in the build. Thus add a CONFIG switch that can be
->>> used to disable them (and old machine types that use them by default).
->>>
->>> Message-Id: <20240614125019.588928-1-thuth@redhat.com>
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>   hw/s390x/s390-virtio-ccw.c | 5 +++++
->>>   target/s390x/cpu_models.c  | 9 +++++++++
->>>   target/s390x/Kconfig       | 5 +++++
->>>   3 files changed, 19 insertions(+)
->>>
->>> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
->>> index 3d0bc3e7f2..cd063f8b64 100644
->>> --- a/hw/s390x/s390-virtio-ccw.c
->>> +++ b/hw/s390x/s390-virtio-ccw.c
->>> @@ -47,6 +47,7 @@
->>>   #include "migration/blocker.h"
->>>   #include "qapi/visitor.h"
->>>   #include "hw/s390x/cpu-topology.h"
->>> +#include CONFIG_DEVICES
->>>   static Error *pv_mig_blocker;
->>> @@ -1126,6 +1127,8 @@ static void 
->>> ccw_machine_2_12_class_options(MachineClass *mc)
->>>   }
->>>   DEFINE_CCW_MACHINE(2_12, "2.12", false);
->>> +#ifdef CONFIG_S390X_LEGACY_CPUS
->>> +
->>>   static void ccw_machine_2_11_instance_options(MachineState *machine)
->>>   {
->>>       static const S390FeatInit qemu_cpu_feat = 
->>> { S390_FEAT_LIST_QEMU_V2_11 };
->>> @@ -1272,6 +1275,8 @@ static void 
->>> ccw_machine_2_4_class_options(MachineClass *mc)
->>>   }
->>>   DEFINE_CCW_MACHINE(2_4, "2.4", false);
->>> +#endif
->>> +
->>>   static void ccw_machine_register_types(void)
->>>   {
->>>       type_register_static(&ccw_machine_info);
->>> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
->>> index efb508cd2e..a27f4b6f79 100644
->>> --- a/target/s390x/cpu_models.c
->>> +++ b/target/s390x/cpu_models.c
->>> @@ -25,6 +25,7 @@
->>>   #ifndef CONFIG_USER_ONLY
->>>   #include "sysemu/sysemu.h"
->>>   #include "target/s390x/kvm/pv.h"
->>> +#include CONFIG_DEVICES
->>>   #endif
->>>   #define CPUDEF_INIT(_type, _gen, _ec_ga, _mha_pow, _hmfai, _name, 
->>> _desc) \
->>> @@ -47,6 +48,13 @@
->>>    * generation 15 one base feature and one optional feature have 
->>> been deprecated.
->>>    */
->>>   static S390CPUDef s390_cpu_defs[] = {
->>> +    /*
->>> +     * Linux requires at least z10 nowadays, and IBM only supports 
->>> recent CPUs
->>> +     * (see https://www.ibm.com/support/pages/ibm-mainframe-life- 
->>> cycle- history),
->>> +     * so we consider older CPUs as legacy that can optionally be 
->>> disabled via
->>> +     * the CONFIG_S390X_LEGACY_CPUS config switch.
->>> +     */
->>> +#if defined(CONFIG_S390X_LEGACY_CPUS) || defined(CONFIG_USER_ONLY)
->>>       CPUDEF_INIT(0x2064, 7, 1, 38, 0x00000000U, "z900", "IBM zSeries 
->>> 900 GA1"),
->>>       CPUDEF_INIT(0x2064, 7, 2, 38, 0x00000000U, "z900.2", "IBM 
->>> zSeries 900 GA2"),
->>>       CPUDEF_INIT(0x2064, 7, 3, 38, 0x00000000U, "z900.3", "IBM 
->>> zSeries 900 GA3"),
->>> @@ -64,6 +72,7 @@ static S390CPUDef s390_cpu_defs[] = {
->>>       CPUDEF_INIT(0x2096, 9, 2, 40, 0x00000000U, "z9BC", "IBM System 
->>> z9 BC GA1"),
->>>       CPUDEF_INIT(0x2094, 9, 3, 40, 0x00000000U, "z9EC.3", "IBM 
->>> System z9 EC GA3"),
->>>       CPUDEF_INIT(0x2096, 9, 3, 40, 0x00000000U, "z9BC.2", "IBM 
->>> System z9 BC GA2"),
->>> +#endif
->>>       CPUDEF_INIT(0x2097, 10, 1, 43, 0x00000000U, "z10EC", "IBM 
->>> System z10 EC GA1"),
->>>       CPUDEF_INIT(0x2097, 10, 2, 43, 0x00000000U, "z10EC.2", "IBM 
->>> System z10 EC GA2"),
->>>       CPUDEF_INIT(0x2098, 10, 2, 43, 0x00000000U, "z10BC", "IBM 
->>> System z10 BC GA1"),
->>> diff --git a/target/s390x/Kconfig b/target/s390x/Kconfig
->>> index d886be48b4..8a95f2bc3f 100644
->>> --- a/target/s390x/Kconfig
->>> +++ b/target/s390x/Kconfig
->>> @@ -2,3 +2,8 @@ config S390X
->>>       bool
->>>       select PCI
->>>       select S390_FLIC
->>> +
->>> +config S390X_LEGACY_CPUS
->>> +    bool
->>> +    default y
->>
->> Do we have plan to deprecate or switch that off?
+On 7/3/25 16:28, Peter Maydell wrote:
+> I'm down as the only listed maintainer for quite a lot of Arm SoC and
+> board types.  In some cases this is only as the "maintainer of last
+> resort" and I'm not in practice doing anything beyond patch review
+> and the odd bit of tidyup.
 > 
-> No, this is mainly a config knob for downstream builds that do not want 
-> to include legacy CPUs, but for upstream it should be fine to keep those 
-> around.
+> Move these entries in MAINTAINERS from "Maintained" to "Odd Fixes",
+> to better represent reality.  Entries for other boards and SoCs where
+> I do more actively care (or where there is a listed co-maintainer)
+> remain as they are.
 > 
-> Why do you ask?
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Somebody was talking about OMAP on IRC and I was shocked
+> to see that we claimed it to be in "Maintained" state :-)
+> ---
+>   MAINTAINERS | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 
-WRT single binary, trying to split target/ VS hw/, I was hoping Kconfig
-switches would only affect hw/. CPUs are odd devices sitting in between.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Generic registration of QOM types isn't a trivial task neither...
-
-Anyway I can postpone this file analysis, since s390x is a "simple"
-target in my setup :)
 
