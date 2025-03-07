@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACC3C28B24
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4171DC28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqd96-0001th-Rk; Fri, 07 Mar 2025 14:14:09 -0500
+	id 1tqd9G-0002AL-NA; Fri, 07 Mar 2025 14:14:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqd8o-0001Yt-58
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:13:50 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tqd8y-0001oZ-UL
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:14:01 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqd8m-0006u3-GE
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:13:49 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-22409077c06so15292825ad.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:13:45 -0800 (PST)
+ id 1tqd8x-0007Rr-4V
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:14:00 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-22185cddbffso63961455ad.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:13:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741374825; x=1741979625; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741374837; x=1741979637; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NY91rOZV95QGQ9Eg3v6BGeiEZpsnL1+JIetFGjDLGFc=;
- b=K+ffHeaBGMKcz+8QZ5QMhyWNA3KVxUiZ8DKYKwP+XjM/O2ZM99ycB0Y/lIT0Sde6CJ
- 7nYve6sWlyWAFDXS4Y134UJGSCVUI1NKXUeUMVFpLPOPHtEanNxcgYZBDQZWOU6AP7us
- RjIelP6rByn8y+2C4ZoJyS3XeMTe6t3l00vRAeEfsWSsPp9Gw6gWcjwei470Yq/iEuFD
- rMby6+Nff2MK1RBv5dZ5Yc4LmB6vtOTwJ+1GR6bS6ommtwXRHbcBp6opJxOrDp42no+h
- Atnvci2/1xmbLQFou3K2bnHTkDEaVGK6MYtPhwsxKTmzK8JmRX+DKnONG1j2Gb4A/951
- 1hIw==
+ bh=bXWV7vE88iw6DMUPkIgypcrZAfNYMyplayycjZHA1kw=;
+ b=NTrPFF3m+wrxLe01ExX1ztlXse5r2ri5BGlGU1HygVPwZ4w/vsTNZ7hID4NcZsL7uM
+ Wpz02napVWY8fccdsRN58m29G1ICoZuivkIntTVkxV4KXm5KbPkMJAA6Of4nV5L7RbbW
+ bPM+hQyLHACHjbi5JwW4QxZ2NNlz4YlZWTvtXWq/2MC6WMjyTkC+TZKFVo6yF7jfmV/6
+ IOh6IDnRvS1fUeM+Uyeq33//y7GnAB132y/kQiZ7EjxxlH8iBZpYmo2MqZpmVNEb2hVo
+ gBm2efiIOEP/d/VDyt0crslJaamarNEt/W9/HSoXdBoB+yPgU8ha0YmATRynjz0i2sSE
+ hsMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741374825; x=1741979625;
+ d=1e100.net; s=20230601; t=1741374837; x=1741979637;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NY91rOZV95QGQ9Eg3v6BGeiEZpsnL1+JIetFGjDLGFc=;
- b=WjcVGYqqjI1k4roUSHRCKpzWK8Bfz9CYOuEhLgYoVSVeALSSTYG0a8Bxa1QLPwMUyv
- LVVL2Vr8fyp9ITJFx/0y73UOSUKCqYVOEnENv0fYO5u3w8NDGw6L7SPhMEcwa2WfM0DB
- 25Jjc/xXxhc0e+P73sSf8E7TsXMS/eNdSFpk4LLa/XiVcTpcuu2XwvttGWKTyqyXg0go
- eVcPW8Q/5M2jWt8teRoB8YxRf+E4cajRps1TTupNQ9HakhsyAX9AaIzJb1l42dHjl6IV
- +0P34eoj6wNpDmC1XM+TpCxwoO+D8rBxFpJEf6WOEiHqSvwjn1ysCu/rHpSSLglCupyB
- VsSw==
+ bh=bXWV7vE88iw6DMUPkIgypcrZAfNYMyplayycjZHA1kw=;
+ b=AEDIg0FYVGfL5AvGcDAlpTUPZreWYT/H+oFxt0NKQZeAnpIJBWa2GYQR0dbECRYL7Y
+ mm1yrFnu+/nYPHlfyodBgfSHWuuunqUbGpgkpm9303bwh2TZSGken6OJC5WgvdM5PFDs
+ yWEGmRfSp35Ac1uCSTSpsIjZmkqXDQgMoiGuF/olmnGj2iLM2W07AXlrNq6DQPUT2rZ8
+ QSzjpUVkVP2ncNF+gENk/9LOBpIfoVf+oD9n03E5poxvSZa5Gr34zYDIiL/QiXyeulPd
+ tAT/lWM07hQHISkz78xVHhT/RbMlZ+BQ9xaImBcrHw2YFWhDYMKrQB8fYDlFv3rfkXFG
+ wtdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJ44kTRWik+X2fe9o9wkVbNIuLW48IG6kqpTTr/LqI6PDtws3sxyMujgiRzsH/Zwb41f7DKXoCaNM6@nongnu.org
-X-Gm-Message-State: AOJu0YyB14auAY+Wbu6Q7Yoyvqu7SinyIvxSxA1K+DCJLgdXaCl1Z03e
- cjOwILl+Ib/MoLc5+8urBnJXX8Sk9q1I+94I8SArwpzRzCnaLsPYwVGVtYui9g92Eg6QOAa0+E0
- j
-X-Gm-Gg: ASbGncvLL1yBCKhGIBlxSxqWhHsYvulcgUyXHXnDiNvBSzooVSH/tzeUkJgyHVSi8Qk
- g/rNKOoNOYATnPK4SoT0Kq/7W/ovAhhmeHxRdMTlcQC9tw+vqpTZ2fArwBlrqRs7aaQA2keAK/h
- WT6aQaFQrvA2FqdcsrVRmXtjcAVm3+vOZwuzxCUCvdqB6ECtCd4OjRT0oFk2v/WOq0tcdqD1mt5
- NHGj1cKdS0qZD/xW3eTpoSZoIDQgmgZAVnDDczHDlZN9XiElnnmrkvVlBnzzGSbLFKcWhKFES1x
- 2sXaX1VRDuhrFwZ2kibgLI8B64PDQA5fUMDFCsnUucPBJOFXC5OOYuxyFw==
-X-Google-Smtp-Source: AGHT+IGO29daCPtwG4WFRvp6mtN4nG3CslnshkuwT8f3YmWwl/bHF2SvImH7tFeXUIdwuWmm5quZvw==
-X-Received: by 2002:a17:902:ce0a:b0:223:6436:72bf with SMTP id
- d9443c01a7336-22428bf7a47mr90946765ad.44.1741374824704; 
- Fri, 07 Mar 2025 11:13:44 -0800 (PST)
+ AJvYcCXXD8QCRsU7p2KRWZDAY13SRc2ZQfg6MmbKNqLCKWj/nV1XXwVCuAQUNnMyVAgQY9Lh6HAAlHiX8sWn@nongnu.org
+X-Gm-Message-State: AOJu0YyYzQfvei1NN8bwkpKCFTk+N59T89ZaADLQ5ryGKbbYfQgdwL05
+ YKPlQ5kypxi0CIMcsS6ppczhNwRBumJVGZLpOOXihoqH4OYERWssJ+rEjEW6Bow=
+X-Gm-Gg: ASbGnctzu37HSLGGlXQvALsdf448MEOwgLWdnIpBUt7/0zr/if1Zw9nKqI4gNW+HF7L
+ CIcBs0hY21aLS3U6uY5N8alsLWmnxXnvAQKxGauzZTIzWK/F2sZo1pjXaWUnyTA8CMRolu1P7H2
+ ySKx6KlvB96avPV0lSCkUp+g7+yeU54JNpt/szFGuCxEuUl7aMhX4QIuFb6j8n8hgJCAxbEEC7D
+ Lq9AHm5rf2g6vkfQw5tdoDnlItVGEPIsaF2kCQ5XkatAYJBy/H8vWRfR/KvSuPpWDYjlOsse/Af
+ l+ZvOEUvYbtv+EIxFVNcjY0R0K2kpOzSk/5VikfVE2TIEYjNTL7qpxZu7Q==
+X-Google-Smtp-Source: AGHT+IGacn4BFSBoyRostO44rwrwqhFEqglhcopclwcAKnTsspqCQoHHK4H58EScFG1Xq8XupbHbcA==
+X-Received: by 2002:a05:6a00:2d97:b0:736:5813:8c46 with SMTP id
+ d2e1a72fcca58-736bc0a2247mr1011254b3a.8.1741374837335; 
+ Fri, 07 Mar 2025 11:13:57 -0800 (PST)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a9193fsm33700535ad.164.2025.03.07.11.13.43
+ d2e1a72fcca58-736984f8611sm3747806b3a.98.2025.03.07.11.13.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 11:13:44 -0800 (PST)
-Message-ID: <354f1a03-538b-4dae-81e3-ab603422e5e9@linaro.org>
-Date: Fri, 7 Mar 2025 11:13:43 -0800
+ Fri, 07 Mar 2025 11:13:56 -0800 (PST)
+Message-ID: <8ebe7ade-2c43-487d-95a6-4395add59aea@linaro.org>
+Date: Fri, 7 Mar 2025 11:13:55 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/16] include/exec: Split out helper-getpc.h
+Subject: Re: [PATCH 15/16] accel/tcg: Build tcg-runtime.c once
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org
 References: <20250307185645.970034-1-richard.henderson@linaro.org>
- <20250307185645.970034-16-richard.henderson@linaro.org>
+ <20250307185645.970034-17-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250307185645.970034-16-richard.henderson@linaro.org>
+In-Reply-To: <20250307185645.970034-17-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,89 +104,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/7/25 10:56, Richard Henderson wrote:
-> Split out GETPC and GETPC_ADJ to a target-independent header.
-> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/exec/exec-all.h     | 19 +------------------
->   include/exec/helper-getpc.h | 31 +++++++++++++++++++++++++++++++
->   2 files changed, 32 insertions(+), 18 deletions(-)
->   create mode 100644 include/exec/helper-getpc.h
+>   accel/tcg/tcg-runtime.c | 8 ++------
+>   accel/tcg/meson.build   | 2 +-
+>   2 files changed, 3 insertions(+), 7 deletions(-)
 > 
-> diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-> index a758b7a843..22a99ca502 100644
-> --- a/include/exec/exec-all.h
-> +++ b/include/exec/exec-all.h
-> @@ -26,6 +26,7 @@
->   #endif
->   #include "exec/mmu-access-type.h"
->   #include "exec/translation-block.h"
+> diff --git a/accel/tcg/tcg-runtime.c b/accel/tcg/tcg-runtime.c
+> index 9fa539ad3d..72c4c6bd31 100644
+> --- a/accel/tcg/tcg-runtime.c
+> +++ b/accel/tcg/tcg-runtime.c
+> @@ -23,13 +23,9 @@
+>    */
+>   #include "qemu/osdep.h"
+>   #include "qemu/host-utils.h"
+> -#include "cpu.h"
+> +#include "exec/cpu-common.h"
+>   #include "exec/helper-proto-common.h"
+> -#include "exec/cpu_ldst.h"
+> -#include "exec/exec-all.h"
+> -#include "disas/disas.h"
+> -#include "exec/log.h"
+> -#include "tcg/tcg.h"
 > +#include "exec/helper-getpc.h"
 >   
->   #if defined(CONFIG_TCG)
->   
-> @@ -177,24 +178,6 @@ void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
->   void tb_invalidate_phys_range(tb_page_addr_t start, tb_page_addr_t last);
->   void tb_set_jmp_target(TranslationBlock *tb, int n, uintptr_t addr);
->   
-> -/* GETPC is the true target of the return instruction that we'll execute.  */
-> -#if defined(CONFIG_TCG_INTERPRETER)
-> -extern __thread uintptr_t tci_tb_ptr;
-> -# define GETPC() tci_tb_ptr
-> -#else
-> -# define GETPC() \
-> -    ((uintptr_t)__builtin_extract_return_addr(__builtin_return_address(0)))
-> -#endif
-> -
-> -/* The true return address will often point to a host insn that is part of
-> -   the next translated guest insn.  Adjust the address backward to point to
-> -   the middle of the call insn.  Subtracting one would do the job except for
-> -   several compressed mode architectures (arm, mips) which set the low bit
-> -   to indicate the compressed mode; subtracting two works around that.  It
-> -   is also the case that there are no host isas that contain a call insn
-> -   smaller than 4 bytes, so we don't worry about special-casing this.  */
-> -#define GETPC_ADJ   2
-> -
->   #if !defined(CONFIG_USER_ONLY)
->   
->   /**
-> diff --git a/include/exec/helper-getpc.h b/include/exec/helper-getpc.h
-> new file mode 100644
-> index 0000000000..1c8bd72c11
-> --- /dev/null
-> +++ b/include/exec/helper-getpc.h
-> @@ -0,0 +1,31 @@
-> +/*
-> + * Get host pc for helper unwinding.
-> + *
-> + * Copyright (c) 2003 Fabrice Bellard
-> + * SPDX-License-Identifier: LGPL-2.1-or-later
-> + */
-> +
-> +#ifndef HELPER_GETPC_H
-> +#define HELPER_GETPC_H
-> +
-> +/* GETPC is the true target of the return instruction that we'll execute.  */
-> +#if defined(CONFIG_TCG_INTERPRETER)
-> +extern __thread uintptr_t tci_tb_ptr;
-> +# define GETPC() tci_tb_ptr
-> +#else
-> +# define GETPC() \
-> +    ((uintptr_t)__builtin_extract_return_addr(__builtin_return_address(0)))
-> +#endif
-> +
-> +/*
-> + * The true return address will often point to a host insn that is part of
-> + * the next translated guest insn.  Adjust the address backward to point to
-> + * the middle of the call insn.  Subtracting one would do the job except for
-> + * several compressed mode architectures (arm, mips) which set the low bit
-> + * to indicate the compressed mode; subtracting two works around that.  It
-> + * is also the case that there are no host isas that contain a call insn
-> + * smaller than 4 bytes, so we don't worry about special-casing this.
-> + */
-> +#define GETPC_ADJ   2
-> +
-> +#endif /* HELPER_GETPC_H */
+>   #define HELPER_H  "accel/tcg/tcg-runtime.h"
+>   #include "exec/helper-info.c.inc"
+> diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+> index 81fb25da5c..411fe28dea 100644
+> --- a/accel/tcg/meson.build
+> +++ b/accel/tcg/meson.build
+> @@ -1,5 +1,6 @@
+>   common_ss.add(when: 'CONFIG_TCG', if_true: files(
+>     'cpu-exec-common.c',
+> +  'tcg-runtime.c',
+>   ))
+>   tcg_specific_ss = ss.source_set()
+>   tcg_specific_ss.add(files(
+> @@ -7,7 +8,6 @@ tcg_specific_ss.add(files(
+>     'cpu-exec.c',
+>     'tb-maint.c',
+>     'tcg-runtime-gvec.c',
+> -  'tcg-runtime.c',
+>     'translate-all.c',
+>     'translator.c',
+>   ))
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
