@@ -4,105 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E74C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F23C1C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqdAb-0005yC-0Q; Fri, 07 Mar 2025 14:15:41 -0500
+	id 1tqdAg-0006WX-Qq; Fri, 07 Mar 2025 14:15:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqdA3-0004qR-Dx
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:15:09 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqd9x-0007nW-RJ
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:15:07 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2fee4d9c2efso4044708a91.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:15:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741374900; x=1741979700; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ofp3lIgWhJlI+W74KkGN0cIXfacVx3s4ofrNFqbS9aQ=;
- b=WWOHc8JULwjpn6vwQOUE6g5ymkutEow+3pryi6M5tgq8zGRFoj9957R4vky4dSrcre
- A5DqcN2GgNG4IdaydSy7mhJhJ7vpRdfYWxHisuSD8suMdT2onDSuBsQ1GgXbdvJiyKC+
- ZX84waz91ejxTkGJAhRblmXTGOiw3W1QsFfj6p4Nqip7vPhEXcVDzz9uDVEs3IEP3L7S
- YHmXle5YYhhYHe5MNKAAg5SQJHFeZ1oOWcvedjExOx5evXn5oufMRKstVD1fjUlVG+My
- 5tDgCFp+mxXzUrfP9FUm3vwy7GmAzzFjIZvVF3zZwnD+zp2mJ12VKZRXO254R0EyMbLQ
- 8/7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741374900; x=1741979700;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ofp3lIgWhJlI+W74KkGN0cIXfacVx3s4ofrNFqbS9aQ=;
- b=lrEX63bGfsmUDqKpUQDoEKsKKWmEQ0kuRUzzvjfvN5uUJFM2vwYm5Ip28rT5A5xedi
- MBT3agGr9CufBtFN3ZXi8U+KDbt1aRbIJenghM62TxmmrrKTMyPsXz0peK9i2dfZlZHS
- lBE2JiXCWB0A/1D5AY8XHGLjw1yuT1jcVW1jtAANL0KygYFjNG9nPstcYF0nLNI/XQYA
- 2y+E8p8Qhn1W009hXNIQcUiaSTJpMcOJLIf1+dE72FrQthDEpN/uYriP2lE1GuPybFg7
- 8LjkOlQI1k8HzQaAxd6irPLPRmcDKQrZBoRRS/VkI9HzG9oQ2Qbtb06pu3UTGO7+4iLh
- 1aHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUc+HaL4rSf0uhD9oaKRDptSLblDOBAzcmXat+Yy/qgnZBzEEA602yDgOwnh/ycD3h8VFduyGIi1Up4@nongnu.org
-X-Gm-Message-State: AOJu0YzOL68vfUuV8Ybs2A8i/vU3Fj4s7B05kD6fTDAUCFPYWWEgKNHs
- L3eR5r6PAsF0LnUEle/XX3l3vJ6nzaZgYMiGT6F8mYAJGslXXVWyN2Lh+YUeShI=
-X-Gm-Gg: ASbGncvVi/bz+s/lOn1ruhyx8zbF8TOgzcTPPJctRiG18n/n9ILvg6wl+2CMGI3rfgD
- mw/UwLv93sznFiielV4SHUWB8cA/tVvPhaVjeLbV7+cVZthCmmBXhnImXGNlCup8nf9pJT5Mn1k
- ftKWWK21dfl/bs1Fbwo9IT18x6BE9YeOWtifoZ5voyvlCeDen4l7wz+VrFBc5i5LtzAX7mB+ssi
- vLfPbPz17+KiqgckgFzH37SE3LpyXTsvVbbnr4G22YjL+FpGXn4XSNLpFNJ1WEtrpgLo3wbpEbM
- 66zpDPZCOSt4hoE/cJgj+2BU9lwZILZSWyUPBI7I9rf/4N4dxyfirArt0g==
-X-Google-Smtp-Source: AGHT+IFumWQakier/Zrq1NKxQVuU8mKCzVTuS9e63eP54WYdDSOTwVpwYCN3lB4CTfz5lr+l3Kb7Tw==
-X-Received: by 2002:a17:90b:4ad0:b0:2ff:6fc3:79c4 with SMTP id
- 98e67ed59e1d1-2ff7cef5cdamr6843613a91.27.1741374900071; 
- Fri, 07 Mar 2025 11:15:00 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e826141sm5300523a91.48.2025.03.07.11.14.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 11:14:59 -0800 (PST)
-Message-ID: <02102ee8-dd7f-47af-afa4-d113d461249c@linaro.org>
-Date: Fri, 7 Mar 2025 11:14:58 -0800
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tqdA6-0004vF-AD; Fri, 07 Mar 2025 14:15:10 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tqdA2-0007za-5p; Fri, 07 Mar 2025 14:15:09 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id AE7D2A451A2;
+ Fri,  7 Mar 2025 19:09:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9754C4CEF5;
+ Fri,  7 Mar 2025 19:14:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1741374897;
+ bh=Czz8Tt4JQ7OG2qz83DhQ/rDSfMDYdFVFtyoa2IaQ3O0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=J9PQo93wTWocCkyWmbXCH4q4V9LjblhpJSUkKYNLeljPsy/sEVhzmgAtEHKVsxg52
+ TtwDuUzmdqrJ+reiFHBKLPA7nDz0iLBa4qmK1EEEeZy2ErjZaVNw+JwFg2nu6Qq3ca
+ u2CkON2612i1l7rTM0+zrq3DdY2nKV1l5po43FUef6zA2kVc4SapGLRJSfZBgtT12H
+ zUh2X1irMwffvPHXuElCxupB7cn+ORVcl5GI7AfY/ZwMr8iZPsztsrNgH/ATgyTNJU
+ ZvxrAoLnn9y6jNGOm0FvFWPykfAPE+KcuLNxzBSHImhCqP/909fnWadDOxpjvULnSv
+ 0jOapOkgV4wVw==
+Received: from mchehab by mail.kernel.org with local (Exim 4.98.1)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tqd9s-0000000BQnO-0IbL; Fri, 07 Mar 2025 20:14:56 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Gavin Shan" <gshan@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, linux-kernel@vger.kernel.org
+Subject: [PATCH v8 17/20] acpi/generic_event_device.c: enable use_hest_addr
+ for QEMU 10.x
+Date: Fri,  7 Mar 2025 20:14:46 +0100
+Message-ID: <d7b493784b36bf4fd856a217ae596b59ed522dda.1741374594.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <cover.1741374594.git.mchehab+huawei@kernel.org>
+References: <cover.1741374594.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/14] hw/vfio/spapr: Do not include <linux/kvm.h>
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, qemu-ppc@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- kvm@vger.kernel.org, Yi Liu <yi.l.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Peter Xu <peterx@redhat.com>, Daniel Henrique Barboza
- <danielhb413@gmail.com>, Eric Auger <eric.auger@redhat.com>,
- qemu-s390x@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20250307180337.14811-1-philmd@linaro.org>
- <20250307180337.14811-3-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250307180337.14811-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,18 +77,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy83LzI1IDEwOjAzLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gPGxp
-bnV4L2t2bS5oPiBpcyBhbHJlYWR5IGluY2x1ZGUgYnkgInN5c3RlbS9rdm0uaCIgaW4gdGhl
-IG5leHQgbGluZS4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1
-ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4NCj4gLS0tDQo+ICAgaHcvdmZpby9zcGFwci5jIHwg
-MyAtLS0NCj4gICAxIGZpbGUgY2hhbmdlZCwgMyBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYg
-LS1naXQgYS9ody92ZmlvL3NwYXByLmMgYi9ody92ZmlvL3NwYXByLmMNCj4gaW5kZXggYWQ0
-YzQ5OWVhZmUuLjliNWFkMDViYjFjIDEwMDY0NA0KPiAtLS0gYS9ody92ZmlvL3NwYXByLmMN
-Cj4gKysrIGIvaHcvdmZpby9zcGFwci5jDQo+IEBAIC0xMSw5ICsxMSw2IEBADQo+ICAgI2lu
-Y2x1ZGUgInFlbXUvb3NkZXAuaCINCj4gICAjaW5jbHVkZSA8c3lzL2lvY3RsLmg+DQo+ICAg
-I2luY2x1ZGUgPGxpbnV4L3ZmaW8uaD4NCj4gLSNpZmRlZiBDT05GSUdfS1ZNDQo+IC0jaW5j
-bHVkZSA8bGludXgva3ZtLmg+DQo+IC0jZW5kaWYNCj4gICAjaW5jbHVkZSAic3lzdGVtL2t2
-bS5oIg0KPiAgICNpbmNsdWRlICJleGVjL2FkZHJlc3Mtc3BhY2VzLmgiDQo+ICAgDQoNClJl
-dmlld2VkLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5v
-cmc+DQoNCg==
+Now that we have everything in place, enable using HEST GPA
+instead of etc/hardware_errors GPA.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+---
+ hw/acpi/generic_event_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index f029753ab709..9fe70b74bd42 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -332,7 +332,7 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+ static const Property acpi_ged_properties[] = {
+     DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
+     DEFINE_PROP_BOOL("x-has-hest-addr", AcpiGedState,
+-                     ghes_state.use_hest_addr, false),
++                     ghes_state.use_hest_addr, true),
+ };
+ 
+ static const VMStateDescription vmstate_memhp_state = {
+-- 
+2.48.1
+
 
