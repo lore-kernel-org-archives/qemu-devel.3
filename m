@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C103C28B2E
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 21:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8328AC28B28
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 21:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqfbk-0000i9-SG; Fri, 07 Mar 2025 16:51:52 -0500
+	id 1tqfdl-0001nM-Ax; Fri, 07 Mar 2025 16:53:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqfbh-0000hW-9l
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:51:49 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqfdj-0001n6-OL
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:53:55 -0500
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqfbf-0005Br-0N
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:51:49 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqfdh-0001F2-Lw
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:53:55 -0500
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43bc638686eso22105845e9.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 13:51:45 -0800 (PST)
+ 5b1f17b1804b1-43bc0b8520cso14403715e9.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 13:53:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741384304; x=1741989104; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741384432; x=1741989232; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VcglSgwL9d3YFt+EM1s5ZcGVoRNp/5wHt30Q6WrDCCI=;
- b=qs6Xt5eTn+KnUJPL4JNyWRMnZyHnXEK+7DWw/7NNP2BGwnPD756zIMQPy0JOj04Xvm
- cwia6OA+694n/ACj7kCkRzS7kygrnjJDWg9w38S3IRiIPEtM3BHdg7gfA6ZScU99649m
- DAnnzXjcKoODfeht54FSgwQuvNUchBnsxUwmbc6FgnO8pIiZsK6uNoR+tykHPz2AHiCH
- kHSNtRlN/uMS+4QTJS3jAR09d88TxK6x3U9VZP+zHjXD+hASFmBqxrQjCxR75QBSub+e
- bXBJH1+iYg9zJW0vT2x5yS3lInuQ6lQSZ+dssCRlaG8DiqiSS8+Mxq1v9x3FDr9RgJkI
- DS6Q==
+ bh=8/QBhpGd4oKIS4wag5OuC3xTrAPGu1jhF+FKNzj5rhk=;
+ b=rMuvHBVGHHnCJjOHn9Pq8sYFuIo+bmYrQmFjhg07UXEF84d1VS2Vnwq8q0k/jyM5c3
+ 8X3VFfOiB+Kc9Xw0mZE0T5lfO3v24Ia3v1VdwD+kXopUNUCfjAgK0An8Z32mHt/RtrGQ
+ wVSecLUZzgv1KBQTYte3h9zaV0yt0UWLwgD0Bi7F32ai0wblbaZsKky+x+mLOVqmiV/l
+ /bUo8uYwunzh2Xhs0O5YLUOyMalTpbrlBToyQfGXGWcUgsJV0MejXvGZZi9CRu7/YLdX
+ K1mbNQwjbYVHPrIlcigEhcUvxFgmGMXo5fRifn0XOoZ5jYrge5XWSlDSgNjT/MnJ7kyC
+ G0Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741384304; x=1741989104;
+ d=1e100.net; s=20230601; t=1741384432; x=1741989232;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VcglSgwL9d3YFt+EM1s5ZcGVoRNp/5wHt30Q6WrDCCI=;
- b=anA6qVqEMjw+JgWGAcxqX32JqYKmDm28nyz54Nj4/mNi0UMnzAsYplWsRzo4zoEk6D
- JiFXBzPsZpfyOJG+z+RRGPNjJZ17S3dmT147LIkUdrKvqvPOyY0RaB5MNi9BO2GeKToM
- ZvA9qdm/SllB0sOZnnSdumkcSGUUbbdUSxobcGVdM1ohH15AXNspXi7yEEq11scgEq2O
- as5Y3RZ7q/IWG7KVwLeKJ/nhmyvPudpYg09/3GkG50N63Sv4q9hvC2/nuSKD1ZFtftFm
- jSyZdpuVfqNDb+Ok2Qk8h7DM3dsfKT8ua5Ncbom6aTtGxr0ft0xi1TkSZplhA6sQay7Y
- /1YQ==
+ bh=8/QBhpGd4oKIS4wag5OuC3xTrAPGu1jhF+FKNzj5rhk=;
+ b=sGV/tU2Z4aNKAG3qJq03L9P6emkjlrsNUY+gIt5/XD4fxCojSXY+NLFg+QdkfslhPY
+ Lg5Ob4Mi2l/zAdtmHIi9NteYnWtqGoXQBDGv4J/pBnbI/pVkOVmL7DKg+SfHZOtpCE2b
+ w1LOOdo86Izwmez9uYHPZ+DP1YOhfOuj3qqrOK3F4UE43iRQwqnK2jGUmSnybMrYxLW6
+ Yj19kiyVfkLFcfmWJL/1/RpIep14BWwao1KXu2FRVBSApqmtd6WcOn5Rs+eaI/ZsPLVv
+ 0W/X7mp0F5EQibEwUhKlsvEaffe+1pC/djF83ZcUs4NyDiPy/fzsIi/fqUhrd5rOFoiU
+ 9/ZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwUOETBkOBpkLPXWS3VWgIGEc3XkEGgzrUtn8w80IBBwBNkTxz7wFA0f18jNCQdLlRO28tMFSdDVdM@nongnu.org
-X-Gm-Message-State: AOJu0YxxchKnY5BMLQ/HcH3JOvh2sTBUOGxo9EvaInyZpnnScY9nuZ9H
- jWevGbNJA7Ee12IRSt803668KArw7ldOTsubIdDcR+Sv0O9W9VjQKiLi0yrzyM8=
-X-Gm-Gg: ASbGncvrdj9YJC3yBO1UAF6f9AwFA/ryS6bHs+tj88oR2MeKlHUctzTKIYZsGGfRQHE
- +RijBInjKZoZ32K3YZIb2Is44iB7kcfcfi/Sqka9/IcDGRoghXAtOO7v7wrX9lRBbO3n3ugD3ms
- rKHoRcUvbYt4rZVuGPXv3JCMCJr5pC0t0n4m0L/B58BiUuei1lYgh53qF4C9WeaRVPJDCzTOJ6p
- 5AC4cuFr0crcl9WwFAdq2DcvnuCsm5Ak8Lrmfp8bmRkv5SODErKI5sPD+jbxpYYloaih/LpBW5+
- 5EUE3wwJ7pbXbWoUfLrEskR3IoTxCFJ0wNkhl4dxIh01noPPhRidGwpgmcuUQxisqDcaNhcYK38
- /bLp1gMbIjhzW
-X-Google-Smtp-Source: AGHT+IEyUVaXQu4EF0C5b/5aTorUNwP4/tS+13vAPKUeCVjbuqmh+xdlynLFipFwyhLadw1pz+YqZA==
-X-Received: by 2002:a05:600c:1f92:b0:439:5f04:4f8d with SMTP id
- 5b1f17b1804b1-43ce4dcf8e4mr6258045e9.12.1741384303692; 
- Fri, 07 Mar 2025 13:51:43 -0800 (PST)
+ AJvYcCUH+GMoKyugfRDRMAArSVn4WH6rdMUUwtqhDsaMSCvlk1aG3t4k9mfaweiGGtPfCTUG/Y7CiKFEbKH3@nongnu.org
+X-Gm-Message-State: AOJu0YyStRUs6V6mlqBsWLUSOEHPPHtcwAZFwNKOqaH3cLt82lM0dJOq
+ l5IhNAy0rDLFQvQMYL9AzbJpg3r6nHVzUo4mDrjJsIY8fhcodSnNR0Xxi5Z+tsk=
+X-Gm-Gg: ASbGncuwwYRPG+JNzhUll4Cg00QfDpE1mQiAqDo0mK8VRzJtkJgsQUkyEVWMH+XFrOv
+ a9hH4+5RrdIZFJfMBGWFsrKFzZ0B4EocpvA7IZxjSFpKAF5gvCH6oEomO6dlaSqNi4t/7+hXB4e
+ lNUdlKDEyvN1ujgArspBc9B9nzEEOQ/hLy/vkOdB7ZW4txUfit667NXisVZp9nEUIegez1+HIno
+ AS6yW8SMCIHdR464Us8kgwW8PHVfb3tBF3KNNf8Q3uWRwMXbCJSggRB2WNCsqvUxMwR78fLnL+m
+ CKwkrybu+vSrWYvDCDquwmViqi7lumW0eZZHfHIMFtxrHffUdGMvIlLAnVOiGvhXKiO1Am2fWBa
+ Rn9WHDLrcSScy
+X-Google-Smtp-Source: AGHT+IFrKeof4SALalLoDbum099MMFGPvPGRkWAgtEfbyIScOE4d85n9obZ2W4qNQYI46HMe6oUKaQ==
+X-Received: by 2002:a05:6000:188c:b0:391:2f71:bbb3 with SMTP id
+ ffacd0b85a97d-39132db782cmr3268573f8f.46.1741384432280; 
+ Fri, 07 Mar 2025 13:53:52 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdff57sm6719302f8f.37.2025.03.07.13.51.42
+ ffacd0b85a97d-3912c0e2f44sm6445131f8f.76.2025.03.07.13.53.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 13:51:43 -0800 (PST)
-Message-ID: <b45cd704-67e5-4b5d-bf4f-9907693c4b08@linaro.org>
-Date: Fri, 7 Mar 2025 22:51:42 +0100
+ Fri, 07 Mar 2025 13:53:51 -0800 (PST)
+Message-ID: <a76de2e3-fee8-4e5e-ab8b-a8afa434757b@linaro.org>
+Date: Fri, 7 Mar 2025 22:53:51 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rust: pl011: Allow NULL chardev argument to pl011_create()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20250307190051.3274226-1-peter.maydell@linaro.org>
+Subject: Re: make check-functional failures with --enable-rust: unsafe
+ precondition(s) violated: NonNull::new_unchecked
+To: Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+References: <CAFEAcA8ozGhFJWc41M6ziB3mPtEQ_bpWcQTCj1Ue_W66-MYf2w@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250307190051.3274226-1-peter.maydell@linaro.org>
+In-Reply-To: <CAFEAcA8ozGhFJWc41M6ziB3mPtEQ_bpWcQTCj1Ue_W66-MYf2w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
@@ -102,44 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/25 20:00, Peter Maydell wrote:
-> It's valid for the caller to pass a NULL chardev to pl011_create();
-> this means "don't set the chardev property on the device", which
-> in turn means "act like there's no chardev". All the chardev
-> frontend APIs (in C, at least) accept a NULL pointer to mean
-> "do nothing".
+On 7/3/25 19:24, Peter Maydell wrote:
+> I noticed that 'make check-functional' for arm targets doesn't all
+> pass when QEMU is built with --enable-rust:
 > 
-> This fixes some failures in 'make check-functional' when Rust support
-> is enabled.
+> 11/46 qemu:func-thorough+func-aarch64-thorough+thorough /
+> func-aarch64-aarch64_virt            TIMEOUT         720.03s   killed
+> by signal 15 SIGTERM
+>   9/46 qemu:func-thorough+func-arm-thorough+thorough /
+> func-arm-arm_tuxrun                      ERROR            51.71s
+> exit status 1
+> 30/46 qemu:func-thorough+func-arm-thorough+thorough /
+> func-arm-arm_vexpress                    ERROR             1.62s
+> exit status 1
+> 44/46 qemu:func-thorough+func-arm-thorough+thorough /
+> func-arm-arm_replay                      TIMEOUT          90.02s
+> killed by signal 15 SIGTERM
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> This is my first Rust related patch for QEMU, so I've
-> probably got something wrong here :-)
-> ---
->   rust/hw/char/pl011/src/device.rs | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+> The first of these is the virt/gpu breakage that's not Rust related.
 > 
-> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-> index d0857b470c9..8098f762f4b 100644
-> --- a/rust/hw/char/pl011/src/device.rs
-> +++ b/rust/hw/char/pl011/src/device.rs
-> @@ -713,10 +713,12 @@ pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
->       // SAFETY: The callers promise that they have owned references.
->       // They do not gift them to pl011_create, so use `Owned::from`.
->       let irq = unsafe { Owned::<IRQState>::from(&*irq) };
-> -    let chr = unsafe { Owned::<Chardev>::from(&*chr) };
->   
->       let dev = PL011State::new();
-> -    dev.prop_set_chr("chardev", &chr);
-> +    if !chr.is_null() {
-> +        let chr = unsafe { Owned::<Chardev>::from(&*chr) };
-> +        dev.prop_set_chr("chardev", &chr);
-> +    }
->       dev.sysbus_realize();
->       dev.mmio_map(0, addr);
->       dev.connect_irq(0, &irq);
+> tuxrun fails because of a Rust panic, though:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[...]
+
+> Is this a known issue ? (I'm using git commit 98c7362b1efe.)
+> 
+> Here's the RUST_BACKTRACE=1 version:
+
+
+> (side note: should we set RUST_BACKTRACE=1 for our
+> make check/check-functional infra? it would probably be better
+> to capture the backtrace in the logfiles rather than needing
+> the user to re-run by hand, especially for the CI case.)
+
+I agree, and Stefan also suggested that:
+https://lore.kernel.org/qemu-devel/CAJSP0QWJ=qkA2Bzih7nGq5K=YrJRqUOt85RAGL=mj3MEjAW6ug@mail.gmail.com/
 
 
