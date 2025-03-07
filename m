@@ -4,137 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E16C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7608FC282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqSh1-00086b-LJ; Fri, 07 Mar 2025 03:04:27 -0500
+	id 1tqShK-0008Av-2T; Fri, 07 Mar 2025 03:04:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tqSgt-00081h-N5
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:04:20 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqShJ-0008Aj-3F
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:04:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tqSgq-00087R-5w
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:04:17 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqShH-0008A5-7D
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:04:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741334655;
+ s=mimecast20190719; t=1741334682;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TQFGXIErLIhUEjgjgIIDlrkpiWE2sEhJy5D/MzJZXeo=;
- b=Gs0zZ/7gWhuHwaGzszOSSJsqezt+22qRdGSTKrkX3uzGuXXuQmHFzBKe7CIdDDDWwj3eXc
- l2iM2PtSQqpJtMHLZ6UioclD3WecF5LBc8JzuuLrnnK9+opX7eBmfVsmDWfXNbPv05biTU
- rRp2DhJx6XinAvwvM7LAIAMi7Za9luY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jK0yFaBRU900Qo1bMZg+7rqMOFRuryusg/EQqR5ZJX8=;
+ b=DPUwqqvnf9S6YPyAmdnWScDk8RZjDijjfTPtsu7OFXAY411Z95Cq/pkYJHAc8Wh70Wby6P
+ Vl3XBxZo3co0cJ8/HoD6YNpHtvptjqluguO39iyBUio7D6/W2+x9NfCPfSBFeioMWfdgha
+ OcizGn1mFqRR9+WZD9iaStx8u5/JtT4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-0Uglg4fIPfqEhp3DXWb9Jw-1; Fri, 07 Mar 2025 03:04:10 -0500
-X-MC-Unique: 0Uglg4fIPfqEhp3DXWb9Jw-1
-X-Mimecast-MFC-AGG-ID: 0Uglg4fIPfqEhp3DXWb9Jw_1741334650
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43bbfc1681eso6777585e9.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 00:04:10 -0800 (PST)
+ us-mta-695-tuPK_1oVO3uFCapPPmJ4FQ-1; Fri, 07 Mar 2025 03:04:41 -0500
+X-MC-Unique: tuPK_1oVO3uFCapPPmJ4FQ-1
+X-Mimecast-MFC-AGG-ID: tuPK_1oVO3uFCapPPmJ4FQ_1741334680
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43bcddbe609so13633285e9.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 00:04:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741334650; x=1741939450;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=TQFGXIErLIhUEjgjgIIDlrkpiWE2sEhJy5D/MzJZXeo=;
- b=HT6eRH0CY+KbH1ODELl5PN9t10UOnnMQaZrRBmmnuraH13idGrCaa7qSVJwA9K4Pq1
- TpyGYSKYWx5/Aeh4p6jWK1GIzi2rFKdVMIOIgJmZohZ8xn5z13/AxJYQOYQv9xnDtDa2
- E3ZWUn9nG4CRfYE9CuFLEpq4/zpNkDAZe3JhcaSSpgXVSVgty/QpTGNvW2tvDup9AJE6
- FmeW/r5+sXLxFOwgtJ4iEv5S26pgqCVG+veqvxdwvpKCXp5ImRyOkvGiPppV1FSEk8uO
- Y4ggEuvCOcsCuMFOMQcOHWJVa07CnuEiSJxMCvOsHODY0Rh+q9bsvCLk2OxJtNy6qHc9
- 8QAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIUVqSDHV9TxlrCl7fVeGtFaj5y0mlU2DwgSUKvvcT3kASucrNidSCQV/ZKovdumPku3GznIDayWid@nongnu.org
-X-Gm-Message-State: AOJu0YwSH8cgmQrJlvHTwTiL2SH/yLnfMt8IMtoNC/Ero0sf8ohunHf0
- sPEse7Li0lT7jgiDfyCrtZBItIK5mJoR8CxW8ujaV/i+Xa9UX9PjAC2ZWakI5mfLTJtQmWvvO8n
- iTIQeA/SFe04bFXKhNFqf76w4J2hzP9qcEGrcAKRYVBMH0U15Ecwb
-X-Gm-Gg: ASbGncveLuXRU/3ZyViR7aYP7igqRq9FCpHjTZ5/HDs18vG7lqYFDtrAedObOKXcK3g
- mFmv7vpe+IXxTKCoRd3ZV9jBuXuK+zWdUXYHVpvFr+/4i4W6kGnjjljzt2xLzkXKMfOtjnoJniR
- OFGzhVcx4emPz+tfleu4pg+qhAeaVU4vU3GpeYFymXD7Cdj4HevZIvWTkrgSUBfmEuy/Qghdsov
- ONKmMlKzOzODQxDTMI9kg2SuUr5XZigD5rIvI1gQbrj4CVrZpkv+iHZqPBBArb9gzDq2o/DMDoA
- Z9fqvN2UBZASnXfRVA7arG6r370Xs6EmD3eCmZRmQ9uqpzxrEVgrRGYrK5kbqBPUlhaSu5TOfmM
- gCBy/1A5Dsc1a+v5K/AETJhxkvsPD+QEQADCuzw==
-X-Received: by 2002:a05:600c:45cc:b0:43b:ccfe:eee5 with SMTP id
- 5b1f17b1804b1-43c601e188bmr15584845e9.17.1741334649736; 
- Fri, 07 Mar 2025 00:04:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH5ei/TqyXLfslPlzo5NyabEszoU+HBxhqRW/jBKz6/SIPv0K/6i5bceCrwexlBN2123HBK8A==
-X-Received: by 2002:a05:600c:45cc:b0:43b:ccfe:eee5 with SMTP id
- 5b1f17b1804b1-43c601e188bmr15584615e9.17.1741334649385; 
- Fri, 07 Mar 2025 00:04:09 -0800 (PST)
-Received: from ?IPV6:2003:cb:c721:7400:ab0b:9ceb:d2:6a17?
- (p200300cbc7217400ab0b9ceb00d26a17.dip0.t-ipconnect.de.
- [2003:cb:c721:7400:ab0b:9ceb:d2:6a17])
+ d=1e100.net; s=20230601; t=1741334680; x=1741939480;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jK0yFaBRU900Qo1bMZg+7rqMOFRuryusg/EQqR5ZJX8=;
+ b=HDxGFW5loX+x+FyQLQCPDTyYIzgsp+mDH6f1InctYjm/j2dDKo+1EMVWzol1MhRoCG
+ VeCdp7u+Ou35augcU4vqEKurEjpKU11IeexTBAZa2bN5Qd4hwymFr85CLw+zLBG6CH+F
+ DSjDKPXD+p7Jixie1vzb6c0eltYrqUvcA27kYZDPMO/xaKfqf4HyTqF9sx1gzNotlc4T
+ snlXU+o1Ksxb8n3irwYREObsL/IkCgaQ/O/dNdthTxH72+CuNnNLtl0PD31nJj2ryIAg
+ NsMc2PsQ5dalJGfCjPMt8SexKS9TEqrEyaE51jBYsW+8pJvdROiQ5UGSS+VO1Ve0sa11
+ Xoqw==
+X-Gm-Message-State: AOJu0YzHHoW9ipPHxyfGWkPKru5lh7zwwrpGRQbkIMAEg0eOqneSSQh1
+ 1WWfGHFdHhBIXbpFtULEtuIRon+zfZSMlnpKNSAQjt7WPpqhYmvELTQS/0Rb+HgQqxDAnq78j3j
+ 3sEhG6dBySusowi5k9wwWWf1f04vBJRjzugiQHXPiWX90vQtq6FdJ
+X-Gm-Gg: ASbGncvnQFp2GmadH8WdoNhfngJMqP+4F5AaBS3LDuQdJkIvepEFednbD4PqKFdqhei
+ cMhRoPnPBGpKR2/nptvXjk6MwO7MC3GGi8Te+jr2SvgotxAWvFRvsKrEuHaGpNGGLbNdhFLhLpd
+ dNWVupNjNycZ8qtAnCPpY4CGPIziFfBcXv907lW+RKH4H+azLInWZHjBmKzr0Bnul8i0XXktHZn
+ pWwJBp+nXocAv2Wll4jFJszCmp0Btu4D1RLek3Dp2pJ9HLdZvK4QOecscKTGgQo3JLkJR0C3Lal
+ rqaHxHyOPkTXWsysEft6J4g2wyKrojsLl9AhDTB+FA03Kf1mpROjJQ==
+X-Received: by 2002:a05:600c:1c03:b0:439:9106:c09 with SMTP id
+ 5b1f17b1804b1-43c6021f124mr16866685e9.26.1741334679948; 
+ Fri, 07 Mar 2025 00:04:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF6JQaLN2wmJxK9PlOz9/R9CWGZqtMO178Ib4VFn+zU0VWZWbFAYHk8QrwWpX/0YF0fBwJMjQ==
+X-Received: by 2002:a05:600c:1c03:b0:439:9106:c09 with SMTP id
+ 5b1f17b1804b1-43c6021f124mr16866355e9.26.1741334679530; 
+ Fri, 07 Mar 2025 00:04:39 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd93cb9bsm43773375e9.31.2025.03.07.00.04.08
+ 5b1f17b1804b1-43bd4352ec1sm73960325e9.25.2025.03.07.00.04.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 00:04:08 -0800 (PST)
-Message-ID: <b4921d1d-6d68-45c9-83a7-6cf4f30ceedb@redhat.com>
-Date: Fri, 7 Mar 2025 09:04:08 +0100
+ Fri, 07 Mar 2025 00:04:39 -0800 (PST)
+Message-ID: <75433541-d80f-47aa-9296-23923c5149c5@redhat.com>
+Date: Fri, 7 Mar 2025 09:04:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: fix race in virtio balloon test
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20250304183340.3749797-1-berrange@redhat.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250304183340.3749797-1-berrange@redhat.com>
+Subject: Re: [PATCH v3 00/10] vfio/igd: Decoupling quirks with legacy mode
+To: Tomita Moeko <tomitamoeko@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
+ <corvin.koehne@gmail.com>
+References: <20250306180131.32970-1-tomitamoeko@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250306180131.32970-1-tomitamoeko@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -159,28 +154,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.03.25 19:33, Daniel P. Berrangé wrote:
-> There are two race conditions in the recently added virtio balloon
-> test
+On 3/6/25 19:01, Tomita Moeko wrote:
+> This patchset intends to decouple existing quirks from legacy mode.
+> Currently all quirks depends on legacy mode (except x-igd-opregion),
+> which includes following conditions:
+> * Machine type is i440fx
+> * IGD device is at guest BDF 00:02.0
+> * VBIOS in ROM BAR or file
+> * VGA IO/MMIO ranges are claimed by IGD
+> * OpRegion
+> * Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
 > 
->   * The /dev/vda device node is not ready
->   * The virtio-balloon driver has not issued the first stats refresh
+> If one of the condition is not met, the quirks will not be applied.
+> However, for recent generations, espcially Gen 11+ devices that removed
+> VBIOS support, not all the conditions are required. For example, on EFI-
+> based systems, VBIOS ROM is unnecessary, and VGA ranges are not used.
 > 
-> To fix the former, monitor dmesg for a line about 'vda'.
+> To have better support on newer UEFI-based VMs, this patchset makes the
+> quirks independent of legacy mode. The BDSM and GGC register quirks are
+> applied to all supported IGD devices, new x-igd-lpc option for the LPC
+> bridge / Host bridge ID quirk is introduced for possible Q35 support.
+> It also prepares for supporting IGD passthrough when it is not primary
+> display later (kernel change will be merged in 6.15).
 > 
-> To fix the latter, retry the stats query until seeing fresh data.
+> To maintain backward compatbility with exising configuration, legacy
+> mode will automatically be enabled when:
+> * Machine type is i440fx
+> * IGD device is at guest BDF 00:02.0
+> If the legacy mode behavior is unwanted, option x-igd-legacy-mode=off
+> is provided for users to disable it. Setting x-igd-legacy-mode=on checks
+> if the condition above are met, and set up all the required quirks.
 > 
-> Adding 'quiet' to the kernel command line reduces serial output
-> which otherwise slows boot, making it less likely to hit the former
-> race too.
+> The default value is x-igd-legacy-mode=auto. When the above conditions
+> are all met, it acts as before and continues on any error. Otherwise it
+> is equivalent to x-igd-legacy-mode=off.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> When x-igd-legacy-mode is set to on or off, QEMU will fail immediately
+> on error.
+> 
+> The first 2 patches of this patchset was taken from a previous one,
+> details can be found at:
+> https://lore.kernel.org/all/20250124191245.12464-1-tomitamoeko@gmail.com/
+> 
+> This patchest was mainly tested on Alder Lake UHD770, with Debian 12
+> (kernel 6.1), Windows 11 (driver 32.0.101.6458) and Intel GOP driver
+> 17.0.1081.
+> 
+> Due to I caught COVID these days, I am unable to deliver the proposed
+> documentation update before QEMU 10.0 soft-freeze next week. Please help
+> decide whether to make this patch series in 10.0 or next release.
+> 
+> Changelog:
+> v3:
+> * Use OnOffAuto for x-igd-legacy-mode option, default is auto, to keep
+>    current behavior.
+> * Added a new patch to solve the possible KVMGT/GVT-g fail.
+> Link: https://lore.kernel.org/all/20250303175220.74917-1-tomitamoeko@gmail.com/
+> 
+> v2:
+> * Keep legacy mode for compatbility
+> * Renamed from "vfio/igd: Remove legacy mode"
+> Link: https://lore.kernel.org/all/20250224182927.31519-1-tomitamoeko@gmail.com/
+> 
+> Tomita Moeko (10):
+>    vfio/igd: Remove GTT write quirk in IO BAR 4
+>    vfio/igd: Do not include GTT stolen size in etc/igd-bdsm-size
+>    vfio/igd: Consolidate OpRegion initialization into a single function
+>    vfio/igd: Move LPC bridge initialization to a separate function
+>    vfio/pci: Add placeholder for device-specific config space quirks
+>    vfio/igd: Refactor vfio_probe_igd_bar4_quirk into pci config quirk
+>    vfio/igd: Decouple common quirks from legacy mode
+>    vfio/igd: Handle x-igd-opregion option in config quirk
+>    vfio/igd: Introduce x-igd-lpc option for LPC bridge ID quirk
+>    vfio/igd: Fix broken KVMGT OpRegion support
+> 
+>   hw/vfio/igd.c        | 529 +++++++++++++++++++------------------------
+>   hw/vfio/pci-quirks.c |  51 +----
+>   hw/vfio/pci.c        |  33 +--
+>   hw/vfio/pci.h        |  11 +-
+>   4 files changed, 248 insertions(+), 376 deletions(-)
+> 
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
 
--- 
-Cheers,
+Applied to vfio-next.
 
-David / dhildenb
+Thanks,
+
+C.
+
 
 
