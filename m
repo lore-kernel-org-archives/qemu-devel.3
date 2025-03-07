@@ -4,54 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 868A5C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:37:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE32C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZku-0004AI-VE; Fri, 07 Mar 2025 10:37:00 -0500
+	id 1tqZqg-0006t0-Tq; Fri, 07 Mar 2025 10:42:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tqZkf-00048Z-VP; Fri, 07 Mar 2025 10:36:45 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tqZqf-0006sr-Su
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:42:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tqZkd-0000Xu-Jz; Fri, 07 Mar 2025 10:36:41 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0441C4E6000;
- Fri, 07 Mar 2025 16:36:22 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id vCyFp1qOsc_A; Fri,  7 Mar 2025 16:36:19 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E2B9C4E600F; Fri, 07 Mar 2025 16:36:19 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E05AF74577C;
- Fri, 07 Mar 2025 16:36:19 +0100 (CET)
-Date: Fri, 7 Mar 2025 16:36:19 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH v2 3/5] ppc/amigaone: Add default environment
-In-Reply-To: <3bff4d7a-56c8-44a4-8093-9a7a10699d2b@linaro.org>
-Message-ID: <caf052a4-2a12-ae71-eeb2-86f27cff7ccb@eik.bme.hu>
-References: <cover.1740673173.git.balaton@eik.bme.hu>
- <4d63f88191612329e0ca8102c7c0d4fc626dc372.1740673173.git.balaton@eik.bme.hu>
- <84151f43-d952-4515-aee5-04f339baa546@linaro.org>
- <33e3ef97-749e-4701-4955-0e88d0eb2199@eik.bme.hu>
- <3bff4d7a-56c8-44a4-8093-9a7a10699d2b@linaro.org>
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tqZqe-0003Qd-11
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:42:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741362169;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6SoxLa8rCXRjAf79S0Qtyb5MwFktxgBiLOHN77Jge0A=;
+ b=DbVqQqs0S2nmvBBNbeE3NjJztzUjWkIq5w6ZcHvURr+8TifqXZqhekpsU3V60jpD/tfnBo
+ pBuyWBWxeciWFXfUAWfDa7Ce2mfN4tlbxr1o61U3j1L//exh7yYXepEivRpvGeSRCWfOI5
+ C6UPLVFxHL1PRvLw4rCaGCWz7LHTv3E=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-490-SOO0E2HdMjOCMhLDMZd_oQ-1; Fri, 07 Mar 2025 10:42:48 -0500
+X-MC-Unique: SOO0E2HdMjOCMhLDMZd_oQ-1
+X-Mimecast-MFC-AGG-ID: SOO0E2HdMjOCMhLDMZd_oQ_1741362167
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-ac1dca8720cso226271466b.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:42:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741362167; x=1741966967;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6SoxLa8rCXRjAf79S0Qtyb5MwFktxgBiLOHN77Jge0A=;
+ b=u1g05L95nyBLP7RsKkSl8HKAR7DO1+Gw/6H1bVEzTYjLsu8pQeyGAJwyHJR0M/OO1J
+ zjAj0jPDBj5QlRXWFn38eSIgpv/QhaoYwL4mnraesJ0OA8uR3eQ1vgXmIDgCpFNKkIya
+ JwxkfeJtdJTXxjb66ePtx64ePYO4ISUI9ew/a5RySEL4qp7wrHkiMePVjUuE37Tmbm0O
+ O/AasHk3BDXM7TfckCCHV+OfPuU8TN3+oAw5RgvQySTleGpQzMnYg6A+0QCiLrcScCXR
+ bOE9u+UlTJNmmEcBBb46aY4Z4W0oq4DCO4/x5F2Kgh/vZn17RAo5I5TWny8Q5ZWeGPyb
+ j7Mg==
+X-Gm-Message-State: AOJu0YxIGcswiPklQRcUWZpezncVLVL2qmXfk34NKSnbK2dnj6XLjVUe
+ Tz5xznn5wi+IKLaCJdjxOmo7OyB5XEsUimptJUae1L1HLMSMxFuWbHuGmr8y8zGIcdQUxF/wDFY
+ k0gzruvbFP+ZlVUED6pQyRM6DD69kHbJk6XOlIZHfD6b8FA0QkcN4GQt+EsTRclbuBKdwu0cuf6
+ 804tD+/LKx37nW6+bm8Miby5hfCeg=
+X-Gm-Gg: ASbGncug5RXFGHujOrImgKad1gDk15qgVXG7lFns7TFlfkys0omyYFWnqVlq7aH94/o
+ QBa6uKk8nk0ORn43V5ckPJvFWVg/7UGS/7l+bQ7xkQrSy15vIPh3IplcYRc3f8BsXi34BvN6JdA
+ ==
+X-Received: by 2002:a17:907:94ce:b0:ac1:e1e1:1f37 with SMTP id
+ a640c23a62f3a-ac25273af3dmr486273066b.10.1741362167322; 
+ Fri, 07 Mar 2025 07:42:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE5gMiJ2wyiUDzshtHVo3FckG9GoIp73K9+hfgkfhzPVLgzWqpqc9HeZzXl1i3GtPdpF5Pu6f2OxOxfZoX51UE=
+X-Received: by 2002:a17:907:94ce:b0:ac1:e1e1:1f37 with SMTP id
+ a640c23a62f3a-ac25273af3dmr486268566b.10.1741362166962; Fri, 07 Mar 2025
+ 07:42:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1937983146-1741361779=:94221"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+References: <20250307151543.8156-1-philmd@linaro.org>
+ <20250307151543.8156-3-philmd@linaro.org>
+In-Reply-To: <20250307151543.8156-3-philmd@linaro.org>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Fri, 7 Mar 2025 21:12:35 +0530
+X-Gm-Features: AQ5f1JowLkJcvz_0Kwnicw2NI-UnhThU1OVeUkO_BmitZhX28NqOmE8Nr0WC1qI
+Message-ID: <CAK3XEhOGuvGgQZ67SLxTonV6Nge_1=zMF4ezsYygvhDjf3Jjqw@mail.gmail.com>
+Subject: Re: [PATCH 2/7] hw/acpi: Introduce acpi_builtin() helper
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -69,179 +111,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-1937983146-1741361779=:94221
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Fri, 7 Mar 2025, Philippe Mathieu-Daudé wrote:
-> On 7/3/25 15:46, BALATON Zoltan wrote:
->> On Fri, 7 Mar 2025, Philippe Mathieu-Daudé wrote:
->>> Hi Zoltan,
->>> 
->>> Minor review comments in case you respin (not blocking).
->>> 
->>> On 27/2/25 17:39, BALATON Zoltan wrote:
->>>> Initialise empty NVRAM with default values. This also enables IDE UDMA
->>>> mode in AmigaOS that is faster but has to be enabled in environment
->>>> due to problems with real hardware but that does not affect emulation
->>>> so we can use faster defaults here.
->>>> 
->>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>> ---
->>>>   hw/ppc/amigaone.c | 37 ++++++++++++++++++++++++++++++++++++-
->>>>   1 file changed, 36 insertions(+), 1 deletion(-)
->>>> 
->>>> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
->>>> index 849c9fc6e0..5c5585d39a 100644
->>>> --- a/hw/ppc/amigaone.c
->>>> +++ b/hw/ppc/amigaone.c
->>>> @@ -52,6 +52,28 @@ static const char dummy_fw[] = {
->>>>   #define NVRAM_ADDR 0xfd0e0000
->>>>   #define NVRAM_SIZE (4 * KiB)
->>>>   +static char default_env[] =
->>> 
->>> 'const'
->> 
->> OK. Could be fixed up on merge by Nick or I can send a new version if 
->> needed.
->> 
->>>> +    "baudrate=115200\0"
->>>> +    "stdout=vga\0"
->>>> +    "stdin=ps2kbd\0"
->>>> +    "bootcmd=boota; menu; run menuboot_cmd\0"
->>>> +    "boot1=ide\0"
->>>> +    "boot2=cdrom\0"
->>>> +    "boota_timeout=3\0"
->>>> +    "ide_doreset=on\0"
->>>> +    "pci_irqa=9\0"
->>>> +    "pci_irqa_select=level\0"
->>>> +    "pci_irqb=10\0"
->>>> +    "pci_irqb_select=level\0"
->>>> +    "pci_irqc=11\0"
->>>> +    "pci_irqc_select=level\0"
->>>> +    "pci_irqd=7\0"
->>>> +    "pci_irqd_select=level\0"
->>>> +    "a1ide_irq=1111\0"
->>>> +    "a1ide_xfer=FFFF\0";
->>>> +#define CRC32_DEFAULT_ENV 0xb5548481
->>>> +#define CRC32_ALL_ZEROS   0x603b0489
->>> 
->>>> +
->>>>   #define TYPE_A1_NVRAM "a1-nvram"
->>>>   OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
->>>>   @@ -94,7 +116,7 @@ static void nvram_realize(DeviceState *dev, Error 
->>>> **errp)
->>>>   {
->>>>       A1NVRAMState *s = A1_NVRAM(dev);
->>>>       void *p;
->>>> -    uint32_t *c;
->>>> +    uint32_t crc, *c;
->>>>         memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, 
->>>> "nvram",
->>>>                                     NVRAM_SIZE, &error_fatal);
->>>> @@ -113,12 +135,25 @@ static void nvram_realize(DeviceState *dev, Error 
->>>> **errp)
->>>>               return;
->>>>           }
->>>>       }
->>>> +    crc = crc32(0, p + 4, NVRAM_SIZE - 4);
->>>> +    if (crc == CRC32_ALL_ZEROS) { /* If env is uninitialized set default 
->>>> */
->>>> +        *c = cpu_to_be32(CRC32_DEFAULT_ENV);
->>> 
->>> Prefer the ld/st API over cpu_to/from:
->>> 
->>>           stl_be_p(c, CRC32_DEFAULT_ENV);
->>> 
->>>> +        /* Also copies terminating \0 as env is terminated by \0\0 */
->>>> +        memcpy(p + 4, default_env, sizeof(default_env));
->>>> +        if (s->blk) {
->>>> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, 
->>>> 0);
->>>> +        }
->>>> +        return;
->>>> +    }
->>>>       if (*c == 0) {
->>>>           *c = cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
->>>>           if (s->blk) {
->>>>               blk_pwrite(s->blk, 0, 4, p, 0);
->>>>           }
->>>>       }
->>>> +    if (be32_to_cpu(*c) != crc) {
->>> 
->>>       if (ldl_be_p(c) != crc) {
->> 
->> Why? Here we want to convert a value from host CPU endianness to a specific 
->> endianness and vice versa in code running on the host. (We are not 
->> accessing guest memory, we operate on the memory region pointer. The guest 
->> is not even running yet.)
->> 
->> Also:
->> 
->> static inline int ldl_be_p(const void *ptr)
->> {
->>      return be_bswap(ldl_he_p(ptr), 32);
->> }
->> 
->> static inline int ldl_he_p(const void *ptr)
->> {
->>      int32_t r;
->>      __builtin_memcpy(&r, ptr, sizeof(r));
->>      return r;
->> }
->> 
->> #define be_bswap(v, size) glue(__builtin_bswap, size)(v)
->> 
->> so this is
->> 
->> int32_t r;
->> __builtin_memcpy(&r, c, sizeof(r));
+On Fri, Mar 7, 2025 at 8:46=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
 >
-> This call makes the address alignment access safe.
+> acpi_builtin() can be used to check at runtime whether
+> the ACPI subsystem is built in a qemu-system binary.
 >
-> Sometimes we use similar API doing unaligned access and static
-> analyzers complain [*]. Rather than maintaining 2 differents APIs
-> with some corner cases in one, we could always use the reliable
-> one.
->
-> [*] see for example commit 5814c084679 ("hw/net/virtio-net.c: Don't assume IP 
-> length field is aligned")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-That concern does not apply here as it's unlikely to have a memory region 
-allocated unaligned so I'd keep this until it's removed from everywhere. 
-We have a lot of uses of cpu_to_, _to_cpu now so it's not likely it would 
-go away soon. I see no advantage in introducing unneeded complexity here 
-to prevent something that cannot happen.
+Ah, very similar to something I did recently.
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
-Regards,
-BALATON Zoltan
+> ---
+>  include/hw/acpi/acpi.h | 3 +++
+>  hw/acpi/acpi-stub.c    | 5 +++++
+>  hw/acpi/core.c         | 5 +++++
+>  3 files changed, 13 insertions(+)
+>
+> diff --git a/include/hw/acpi/acpi.h b/include/hw/acpi/acpi.h
+> index e0e51e85b41..d1a4fa2af84 100644
+> --- a/include/hw/acpi/acpi.h
+> +++ b/include/hw/acpi/acpi.h
+> @@ -150,6 +150,9 @@ struct ACPIREGS {
+>      Notifier wakeup;
+>  };
+>
+> +/* Return whether ACPI subsystem is built in */
+> +bool acpi_builtin(void);
+> +
+>  /* PM_TMR */
+>  void acpi_pm_tmr_update(ACPIREGS *ar, bool enable);
+>  void acpi_pm_tmr_calc_overflow_time(ACPIREGS *ar);
+> diff --git a/hw/acpi/acpi-stub.c b/hw/acpi/acpi-stub.c
+> index e268ce9b1a9..790bf509e5d 100644
+> --- a/hw/acpi/acpi-stub.c
+> +++ b/hw/acpi/acpi-stub.c
+> @@ -25,3 +25,8 @@ void acpi_table_add(const QemuOpts *opts, Error **errp)
+>  {
+>      g_assert_not_reached();
+>  }
+> +
+> +bool acpi_builtin(void)
+> +{
+> +    return false;
+> +}
+> diff --git a/hw/acpi/core.c b/hw/acpi/core.c
+> index 870391ed7c8..58f8964e130 100644
+> --- a/hw/acpi/core.c
+> +++ b/hw/acpi/core.c
+> @@ -78,6 +78,11 @@ static void acpi_register_config(void)
+>
+>  opts_init(acpi_register_config);
+>
+> +bool acpi_builtin(void)
+> +{
+> +    return true;
+> +}
+> +
+>  static int acpi_checksum(const uint8_t *data, int len)
+>  {
+>      int sum, i;
+> --
+> 2.47.1
+>
 
->> __builtin_bswap32(r);
->> 
->> versus
->> 
->> static inline type endian ## size ## _to_cpu(type v)
->> {
->>      return glue(endian, _bswap)(v, size);
->> }
->> 
->> which is just
->> 
->> __builtin_bswap32(*c);
->> 
->> The second one makes more sense to me and don't see why I'd want to do it 
->> in a more cumbersome way when we end up with the same result but simpler.
->> 
->> Regards,
->> BALATON Zoltan
->> 
->>>> +        warn_report("NVRAM checksum mismatch");
->>>> +    }
->>>>   }
->
->
---3866299591-1937983146-1741361779=:94221--
 
