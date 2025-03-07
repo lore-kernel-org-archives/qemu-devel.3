@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5649FC28B23
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57E15C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:57:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcsV-0007TW-Vy; Fri, 07 Mar 2025 13:57:00 -0500
+	id 1tqcsc-0007Ww-Hv; Fri, 07 Mar 2025 13:57:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsO-0007RC-Ho
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:52 -0500
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1tqcsX-0007US-FR
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:57:01 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsL-0007l3-RO
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:52 -0500
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2ff615a114bso4417549a91.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:49 -0800 (PST)
+ id 1tqcsV-0007oZ-HW
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:57:01 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2ff087762bbso3426749a91.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741373808; x=1741978608; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741373818; x=1741978618; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L5b/Oejd0mTwwlW1J+0jZU46/YaPksZa78jQ92shGik=;
- b=NZjFxMbiJnCe7OFWxTCfer08Y75CrfFyE9ye2h4e5z2BffX4HYSLBbscVBujFVlRBZ
- fVSn1aUaZqrmuBE+E06/D8YlkxppI955j7JaqUBhG0WLk6X84GYAbesxVH4yJoD07K/6
- Pg+sgZbsLmbhLKUHicSXr7NvtfSIsHc8pc7glpNcg6Eeg6HEnIrLFCkAZaUpmwNr6LDW
- 1GjGJ4FqQl2kODPjmKOAFQij65k2fPEeKikZH2z31dDgNTz/UGzuEun/65Jy6nxAmmWc
- 7iIIU7FtSV6uSMjq5DGgD7gtEj5WyAcVqWHdq0u2liAMwCjrkXT3FKxAY5rI9ABDzCyh
- xgGQ==
+ bh=RytMCD0LlZ8TULuAO+TyiQ/M0TGfjDPA2CE/B7x8fYg=;
+ b=eRjIM7YLZBgFKoD48CopjteZE+NKJUCbVxUn6Nideg0MKEfs41ZHYRjbU3XnHd2sAe
+ 5KFvZdIQ9LT6+902mwaSSuHqhg12oUkV9fs2zsttb3jCGVwu4oyv4E6egrBX25VVBnrg
+ h32JE8necZfpJxc0mUA5uixp/WoIW6uMnv/1kUQ1hjA5lOlZhQ0aTz8yIvtLsor0zJwf
+ UbBpBeW3qRwctUhW23zQxF9z08ZL2fG4IWG+eKX8Loesm9kbyCosr4eRJtmHIb3fotug
+ MIFhUV3klnSBKHjqsH4OlFMP+fgJM1vAes4fzqWcN90qkQvSl0f6rTUJ0AugEjU+xnLR
+ eJ2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741373808; x=1741978608;
+ d=1e100.net; s=20230601; t=1741373818; x=1741978618;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=L5b/Oejd0mTwwlW1J+0jZU46/YaPksZa78jQ92shGik=;
- b=Oweh59GnSUvzZEE/jOTUVOpTD5PwheM2YFtEa06TQrGUkcy8pbagsq3YQVc30gvtle
- PFhrEZ5pEMeXzxUBlTsEWF28dPYn5TJptzC1Kah+WY783af+VNHuaZrVP0EB26ymg38C
- S6+sQbEPOu6MkjPiYOUfV8N17i1+m3mJePkfVVmufKb8iWwtad23ZGMPoneHGGFaZkNj
- BrkvV9Eo5W+YJkhFba8DAP+T5mmLVhIKjLy/VGpl5vQntbldyppggT+2qNhY/jH9I3b9
- 5zJ81fM1T1xRjRhsPkSP7xeuxaTIE9yjx7a3jPIcQ8LFzwjyFxRLJ5gk1c/0YAl+tGRD
- O9gw==
-X-Gm-Message-State: AOJu0YwZ5fbr6lwEHKVetOGnXGn5vdMKv5gd0Fnl8t9sBJxs4LO3N7us
- XVohQmX4fL3kALYguPLoa2CFo1cIIKceFRGzAeZbwQ5SGdgPkzWf+X29BUFAsP2X9avYGywIIOZ
- D
-X-Gm-Gg: ASbGncvb+vOmmnhE8B0sqHbUtlO6cosZYOXpFEZ2aJbhLxFrrxfKk+jOn/In7ajpdzi
- VheUETCQ0vyh4rOLmP121UftcGiMm3Z8gmYst63+5Ld9k5bYpw3gh7y84hgzkfxS7FXpgAD6Vdy
- hRwzZSqenY/UXjmhfZYPmZnt+xCisavz+ttBZMLafmgwUJoQxnJ5AFB7fch8RfuWEVK5piNBMEV
- y69v6qrwGr7WkwRyEfzTflj+1krit4jKktbc9Y2Unpb2CTf02AU0bLwRmp1uCFUcuefSZxw7pif
- KsboNhFpXvCy2pztuIRP41/YUfWkiHnIRdOSSY/WltOaFRYCjnXYkw3AL661PMwpYUGLNoR8rdB
- D
-X-Google-Smtp-Source: AGHT+IGxqRVkTw0z2OwhtYHb0KfpaLwYFeIosgZ1FGZ4vBWP2WG5+ntedd7BY53I3HlVgEW27Mkhtw==
-X-Received: by 2002:a17:90b:3b4a:b0:2fa:603e:905c with SMTP id
- 98e67ed59e1d1-2ffbc147913mr987991a91.2.1741373808069; 
- Fri, 07 Mar 2025 10:56:48 -0800 (PST)
+ bh=RytMCD0LlZ8TULuAO+TyiQ/M0TGfjDPA2CE/B7x8fYg=;
+ b=XgEFgcgpqoYDktbpabQUs/Pb6j1g//Z5Xbov8eLoB0Zt3cNv/6HV1weygUfwVKaa4h
+ c6qLhIg+RRY6WMUar5SgteW8+pcfD6zzLAv1sE+ZO0wECuv5zcVqrULo4tAdgKGmpB3R
+ JXhu9i67io3s7lAqmXMvrFvGyyWyH5fzmQXW60Rbc2xPsnAv0oEbQorq8l8v+ZHUR6v4
+ 3fRp3MJJ2uRCrnvTjiPeTR6pmm16J5NkvQ0+mHc5axv0+Pq8wG9jL3R2v40oiMcgdvst
+ F87PelKf1rlrV5S1jr3JD0/qUAdAygcHI5RBCA9gPyFWplSVocEzHkga4rZV2z26TCI8
+ EOjg==
+X-Gm-Message-State: AOJu0Yzz5hCe1TT+NdZJ+8Mqg1c8HP1chqlZZDzT5uH8Zkbkn51+yAvc
+ 5tRenc5Br0ViuHaivVJoK2a6tqbzFxXgEwQTFvuF4FlU5+HIgM3ShWf+3TJAPLVRifLsec2EqB3
+ h
+X-Gm-Gg: ASbGnctFAKui2lskGfXOzOHIdPwbmjAwnLguxPkfc3PrPXqOSV7Tlpb8HAogS41rZ2h
+ 7xWbAfCCDQxYSK7a8oXUtYB7DqK4VwXnVF25k4StCSm07rxFmpZ5/8UT1Dz+YcJ8JA2ogKcsPrQ
+ aKgR5Ee5BwMI7BWb0F0ShdK+5w4h9x0eFQmy+UF5Hx+HPVWGag6BSxEimk5VbtOjem+WtQow8s9
+ RaE+7fbuo0/tdTQ1CfGUU8vjyU3o76K/TU/uniCkcqFjI4sSxNHsmbGp0QHATxJvqXZJbQhTlg7
+ Eel9UG1j2cKIKR4KwQVl//gWLrfLnX6H+9W8w4l5sYglmj6HzbHh7sNhEvNUXQJ0sIPB7y0go/Z
+ H
+X-Google-Smtp-Source: AGHT+IEmanZVN6fDq31cc/MRYn0mF40fpIZsYvaPvVw3Ix+iW7huw2xf2c1FQF5DLOmMB6Al2CfLxQ==
+X-Received: by 2002:a17:90b:52c3:b0:2fe:b77a:2eab with SMTP id
+ 98e67ed59e1d1-2ff7cf26f00mr6164815a91.32.1741373817883; 
+ Fri, 07 Mar 2025 10:56:57 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.47
+ 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 10:56:47 -0800 (PST)
+ Fri, 07 Mar 2025 10:56:57 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH] include/exec: Move TARGET_PAGE_{SIZE, MASK,
- BITS} to target_page.h
-Date: Fri,  7 Mar 2025 10:56:29 -0800
-Message-ID: <20250307185645.970034-2-richard.henderson@linaro.org>
+Subject: [PATCH 14/16] include/exec: Split out helper-getpc.h
+Date: Fri,  7 Mar 2025 10:56:43 -0800
+Message-ID: <20250307185645.970034-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307185645.970034-1-richard.henderson@linaro.org>
 References: <20250307185645.970034-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,182 +100,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Re-use the TARGET_PAGE_BITS_VARY mechanism to define
-TARGET_PAGE_SIZE and friends when not compiling per-target.
-Inline qemu_target_page_{size,mask,bits} as they are now trivial.
+Split out GETPC and GETPC_ADJ to a target-independent header.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
+ include/exec/exec-all.h     | 19 +------------------
+ include/exec/helper-getpc.h | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 18 deletions(-)
+ create mode 100644 include/exec/helper-getpc.h
 
-After this, we could in fact remove qemu_target_page_foo(), etc.
-We certainly don't need to convert any more uses of TARGET_PAGE_FOO.
-
-r~
-
----
- include/exec/cpu-all.h     | 21 +-------------
- include/exec/poison.h      |  5 ----
- include/exec/target_page.h | 58 ++++++++++++++++++++++++++++++++++----
- page-target.c              | 18 ------------
- page-vary-target.c         |  2 ++
- 5 files changed, 55 insertions(+), 49 deletions(-)
-
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 09f537d06f..8f7aebb088 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -105,26 +105,7 @@ static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index a758b7a843..22a99ca502 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -26,6 +26,7 @@
+ #endif
+ #include "exec/mmu-access-type.h"
+ #include "exec/translation-block.h"
++#include "exec/helper-getpc.h"
  
- /* page related stuff */
- #include "exec/cpu-defs.h"
--#ifdef TARGET_PAGE_BITS_VARY
--# include "exec/page-vary.h"
--extern const TargetPageBits target_page;
--# ifdef CONFIG_DEBUG_TCG
--#  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
--                                target_page.bits; })
--#  define TARGET_PAGE_MASK   ({ assert(target_page.decided); \
--                                (target_long)target_page.mask; })
--# else
--#  define TARGET_PAGE_BITS   target_page.bits
--#  define TARGET_PAGE_MASK   ((target_long)target_page.mask)
--# endif
--# define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
+ #if defined(CONFIG_TCG)
+ 
+@@ -177,24 +178,6 @@ void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
+ void tb_invalidate_phys_range(tb_page_addr_t start, tb_page_addr_t last);
+ void tb_set_jmp_target(TranslationBlock *tb, int n, uintptr_t addr);
+ 
+-/* GETPC is the true target of the return instruction that we'll execute.  */
+-#if defined(CONFIG_TCG_INTERPRETER)
+-extern __thread uintptr_t tci_tb_ptr;
+-# define GETPC() tci_tb_ptr
 -#else
--# define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
--# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
--# define TARGET_PAGE_MASK    ((target_long)-1 << TARGET_PAGE_BITS)
+-# define GETPC() \
+-    ((uintptr_t)__builtin_extract_return_addr(__builtin_return_address(0)))
 -#endif
 -
--#define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
-+#include "exec/target_page.h"
- 
- CPUArchState *cpu_copy(CPUArchState *env);
- 
-diff --git a/include/exec/poison.h b/include/exec/poison.h
-index f4283f693a..ce43a12965 100644
---- a/include/exec/poison.h
-+++ b/include/exec/poison.h
-@@ -44,11 +44,6 @@
- #pragma GCC poison TARGET_FMT_ld
- #pragma GCC poison TARGET_FMT_lu
- 
--#pragma GCC poison TARGET_PAGE_SIZE
--#pragma GCC poison TARGET_PAGE_MASK
--#pragma GCC poison TARGET_PAGE_BITS
--#pragma GCC poison TARGET_PAGE_ALIGN
+-/* The true return address will often point to a host insn that is part of
+-   the next translated guest insn.  Adjust the address backward to point to
+-   the middle of the call insn.  Subtracting one would do the job except for
+-   several compressed mode architectures (arm, mips) which set the low bit
+-   to indicate the compressed mode; subtracting two works around that.  It
+-   is also the case that there are no host isas that contain a call insn
+-   smaller than 4 bytes, so we don't worry about special-casing this.  */
+-#define GETPC_ADJ   2
 -
- #pragma GCC poison CPU_INTERRUPT_HARD
- #pragma GCC poison CPU_INTERRUPT_EXITTB
- #pragma GCC poison CPU_INTERRUPT_HALT
-diff --git a/include/exec/target_page.h b/include/exec/target_page.h
-index 98ffbb5c23..8e89e5cbe6 100644
---- a/include/exec/target_page.h
-+++ b/include/exec/target_page.h
-@@ -14,10 +14,56 @@
- #ifndef EXEC_TARGET_PAGE_H
- #define EXEC_TARGET_PAGE_H
+ #if !defined(CONFIG_USER_ONLY)
  
--size_t qemu_target_page_size(void);
--int qemu_target_page_mask(void);
--int qemu_target_page_bits(void);
--int qemu_target_page_bits_min(void);
--
--size_t qemu_target_pages_to_MiB(size_t pages);
+ /**
+diff --git a/include/exec/helper-getpc.h b/include/exec/helper-getpc.h
+new file mode 100644
+index 0000000000..1c8bd72c11
+--- /dev/null
++++ b/include/exec/helper-getpc.h
+@@ -0,0 +1,31 @@
 +/*
-+ * If compiling per-target, get the real values.
-+ * For generic code, reuse the mechanism for variable page size.
++ * Get host pc for helper unwinding.
++ *
++ * Copyright (c) 2003 Fabrice Bellard
++ * SPDX-License-Identifier: LGPL-2.1-or-later
 + */
-+#ifdef COMPILING_PER_TARGET
-+#include "cpu-param.h"
-+#include "exec/target_long.h"
-+#define TARGET_PAGE_TYPE  target_long
++
++#ifndef HELPER_GETPC_H
++#define HELPER_GETPC_H
++
++/* GETPC is the true target of the return instruction that we'll execute.  */
++#if defined(CONFIG_TCG_INTERPRETER)
++extern __thread uintptr_t tci_tb_ptr;
++# define GETPC() tci_tb_ptr
 +#else
-+#define TARGET_PAGE_BITS_VARY
-+#define TARGET_PAGE_TYPE  int
++# define GETPC() \
++    ((uintptr_t)__builtin_extract_return_addr(__builtin_return_address(0)))
 +#endif
 +
-+#ifdef TARGET_PAGE_BITS_VARY
-+# include "exec/page-vary.h"
-+extern const TargetPageBits target_page;
-+# ifdef CONFIG_DEBUG_TCG
-+#  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
-+                                target_page.bits; })
-+#  define TARGET_PAGE_MASK   ({ assert(target_page.decided); \
-+                                (TARGET_PAGE_TYPE)target_page.mask; })
-+# else
-+#  define TARGET_PAGE_BITS   target_page.bits
-+#  define TARGET_PAGE_MASK   ((TARGET_PAGE_TYPE)target_page.mask)
-+# endif
-+# define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
-+#else
-+# define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
-+# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
-+# define TARGET_PAGE_MASK    ((TARGET_PAGE_TYPE)-1 << TARGET_PAGE_BITS)
-+#endif
++/*
++ * The true return address will often point to a host insn that is part of
++ * the next translated guest insn.  Adjust the address backward to point to
++ * the middle of the call insn.  Subtracting one would do the job except for
++ * several compressed mode architectures (arm, mips) which set the low bit
++ * to indicate the compressed mode; subtracting two works around that.  It
++ * is also the case that there are no host isas that contain a call insn
++ * smaller than 4 bytes, so we don't worry about special-casing this.
++ */
++#define GETPC_ADJ   2
 +
-+#define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
-+
-+static inline size_t qemu_target_page_size(void)
-+{
-+    return TARGET_PAGE_SIZE;
-+}
-+
-+static inline int qemu_target_page_mask(void)
-+{
-+    return TARGET_PAGE_MASK;
-+}
-+
-+static inline int qemu_target_page_bits(void)
-+{
-+    return TARGET_PAGE_BITS;
-+}
-+
-+int qemu_target_page_bits_min(void);
-+size_t qemu_target_pages_to_MiB(size_t pages);
-+
- #endif
-diff --git a/page-target.c b/page-target.c
-index 82211c8593..321e43d06f 100644
---- a/page-target.c
-+++ b/page-target.c
-@@ -8,24 +8,6 @@
- 
- #include "qemu/osdep.h"
- #include "exec/target_page.h"
--#include "exec/cpu-defs.h"
--#include "cpu.h"
--#include "exec/cpu-all.h"
--
--size_t qemu_target_page_size(void)
--{
--    return TARGET_PAGE_SIZE;
--}
--
--int qemu_target_page_mask(void)
--{
--    return TARGET_PAGE_MASK;
--}
--
--int qemu_target_page_bits(void)
--{
--    return TARGET_PAGE_BITS;
--}
- 
- int qemu_target_page_bits_min(void)
- {
-diff --git a/page-vary-target.c b/page-vary-target.c
-index 343b4adb95..1b4a9a10be 100644
---- a/page-vary-target.c
-+++ b/page-vary-target.c
-@@ -37,5 +37,7 @@ void finalize_target_page_bits(void)
- {
- #ifdef TARGET_PAGE_BITS_VARY
-     finalize_target_page_bits_common(TARGET_PAGE_BITS_MIN);
-+#else
-+    finalize_target_page_bits_common(TARGET_PAGE_BITS);
- #endif
- }
++#endif /* HELPER_GETPC_H */
 -- 
 2.43.0
 
