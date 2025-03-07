@@ -4,107 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A61C28B24
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 620A0C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:26:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqdGy-0001y3-NR; Fri, 07 Mar 2025 14:22:17 -0500
+	id 1tqdKx-00011h-LG; Fri, 07 Mar 2025 14:26:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqdDf-00040y-IH
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:18:52 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tqdKp-0000Sm-2S
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:26:20 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqdDc-0005Jf-8H
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:18:51 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2239c066347so42388725ad.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:18:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tqdKn-0001pZ-GR
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:26:14 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-ab771575040so626355566b.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:26:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741375126; x=1741979926; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ipNYvIfGy9HCoQoe95qjnIHQHz6NRkZlcZWjnotENhs=;
- b=PP4mL/xJ7Ih65FYKirOMOe6EzepjHCib9vCbXkh7m9TnJkocgtPKp600ZkBAoLOA2B
- qR14WkEETWv373O5OkPzJO9j4tMPhCSVy59D6/1S9dLpqRHsES8tLSGqWmOGQwRhKPMN
- MwWEaxNGfJ/RF55BL1WXAiEP4nZ1AJUVL62RSposGWpt5+UkSC8ic76g5DzehWya+eWp
- CCeIJYMg6OjzFRHVUbFlGapoDL+m2pnWl9m5XlTlQVOlRHvA/28m/uIip6AJoP6OjXdJ
- HGcryCT1m8vg9I75FEeSxI5HnReSh+xPxmKd+sp+gdOndJype1z7mMBf4tkG/QNCgmfu
- rBxg==
+ d=gmail.com; s=20230601; t=1741375571; x=1741980371; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OasSmFJgx+gzJhTzshXEaLCXWevDCGuyO2xFbVT+ncA=;
+ b=CmcdM0B87DiO43DrvCqkx26PUB4UROgqOBce8661M0hoSK6TABpFlcKNBEC6u0Nhpl
+ 9guFptGP94htqQxElA2sHXfv1bL33+IR972e6Zf+twb4bwJfYlx33CmEq+V0fHGvNbU4
+ Yydy3RDxIpOmyQuJ4KsNI8nf4ECQ5AzsLU0s+SmDplRa8FrjTJNw383KNmdRT5py1D0E
+ 4UAkmyw9TkKTTp/2Uy2j2Ph4oAeBywUY3yWvzi6t8Qa9sZEIspstV7J9hEjfVRIbBx7C
+ EMx3yFpkD2iuO7dLkOcmTE0d+YAjKCCEDsPR/uce5iHnZq79JK2Vj2jkJ6ZHzbkEOp4P
+ cJpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741375126; x=1741979926;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ipNYvIfGy9HCoQoe95qjnIHQHz6NRkZlcZWjnotENhs=;
- b=tphQ/t2XqGgnWD9VE+sXjglQppeAwGm8UW7yKfTaHcTkmxvlFP/v4JlV/nbEaZitCn
- SZSCt7AoGgUyZFbUAVM+U2OHRwRDycI6XfaMYpsEll9RPC1DluckOctdi1OqyY7LFw4Q
- GUCdWfJORbQD6gMKaSfMjDpj1pF/u9FH1PTq3lS0eeDw57N9nx1eWSzskAV+AKbYisvM
- r7MalGaaktVi4Uvr/mM0kDPP+b25Y0LmBhqGJKHVL/12l1xDWuRfpN6/zYUWzXDW0PU5
- 8PnEbSkORNgfCxK1cpn+yKwGDi7iuyN9eHfMiJCO/YbgQsLzjTHaswb94zZT2cDxWGHG
- LBJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXwVsfyVeYioU3col/+M4W2oj/Zu083FgMOM6CV8NSk343i0WnvFIyV0bJ/V+lrI/MoF25/8/T9Vk+2@nongnu.org
-X-Gm-Message-State: AOJu0YxI4eFT7SdrWtO7+/goe4v7oI7+hXr8sSBDdQ/Q9yeQbZ4L7KtL
- 8Iiz5LKScWetQXQ5T3NiqG/bh/KNhKzjb3ToTJyBI5Q0R8ZYPXjS6/R4BJB94wg=
-X-Gm-Gg: ASbGncuRTZqBQloKZt8mnPl6mjUQN2lW21uau8cx3dwaEzAUKhgw5gItcwGgun2bmrf
- r3s0CdDi78ZlHs3SMXvY7e0nyW5JusEzZlLPqoLT/bI6Ay9WWKTZvp5qiizh3UAVWlxZRfW/3LI
- tpoKk9BiOgpjeuUyFwD3+CHy7x68TIkR7vcMLwZjSxN2+EogBIsEfDx5/D8F9FKeDoPHUYABc+1
- 1F9txQKXdDi9N0e+5j/57igFI4719JUzkkk5BZv2nKfayaIky7OBmbQfwwtFAWmlWF8GiZoj22l
- cs+fZzsCMUoJ5dxlaEBqEpWKjMhuv1xsEUA2+gKMue/9KLVkaiEz9JjXLA==
-X-Google-Smtp-Source: AGHT+IE0ktWZg6kUQjqKpbuS3MyU7bxSsG+GT0spGEIEs+xSxG1l+PxJ1p/cqv6pse/p+Lgki+OoTw==
-X-Received: by 2002:a17:902:f547:b0:224:d72:920d with SMTP id
- d9443c01a7336-22428c056a5mr68176855ad.37.1741375126480; 
- Fri, 07 Mar 2025 11:18:46 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
+ d=1e100.net; s=20230601; t=1741375571; x=1741980371;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OasSmFJgx+gzJhTzshXEaLCXWevDCGuyO2xFbVT+ncA=;
+ b=CHDvlTU0xRCavrFGWyLZrs6feY+pVdT1ZUM0az6tbmNmv2B18slOVITfu1+JyEFqIq
+ jjw5I6P1zduaAr4fwHKpGSQw/EEwB0+hmb3irPeFldVs3VMFXXBiss5Id3KLhCoPrQkt
+ lBXCMz2EUNxUYsVUJm2tNxSUdXEFLYYANVbDBGUPYzRYAD6FSv+Bym8vHfjwDryRRy1S
+ NwOXvbxxfF+yM+fDbYyDvU+DOml+OCedf6Cq8h0D8n7h+MMp5v6sXJjpH/ZGtbaywjqV
+ WFbQJOfL0MpcI9/3nees4qwI+z3EtenmT98twotpef12lJy42s0P+ZEW3j+Y1rPpY0be
+ gpjQ==
+X-Gm-Message-State: AOJu0YzoDw6wPRPrJdoiZGQkNUuN7U6P2+AC8c5SUuAy7AOZhbUWtKae
+ bQ/tl5jQ2sYRx8ar/xzXWi5kkyRqoR7NZx6lmqby69NMlKohKmJWwyhPTA==
+X-Gm-Gg: ASbGncshDmNAcOKKZ+c5jivx57kKSj7yUCo1pdOJ++KThAdRQcldmEFxhwSsvXqXHS6
+ MgFrFmLP81lHM1xqD1Ygn8YheawaFQC7lkkDS0BH6sULT66s9Hc4rtTCl/NZDVGy2ojcrLW/HNJ
+ 2HikTPk+vakULUY5fUyi4r5b/ZfZYfINDMp9PGHkxcpH0zc5GAIXP817FDijVxFOv6Ocwhl09lX
+ DgEzeaAlG5g09xzzqOCMQclHq0rC33Fa9kysSXd8713khnDSRkJTqlVbNsl9uBZGOOO9+x4/BtC
+ hxO236ItR3khLGipGpCRMehgcDm7AlFDfTYtvezeKCsU1S1FSzXXJqYvgee6V9h2Af3J07MpSAM
+ Ra+7sPBA9r+F9o/seDPX0mhK9D2pMVCzyQgbSC9ZT6rJcL3kjTY0w
+X-Google-Smtp-Source: AGHT+IHEfjOFdNKKHZ5f53CNZ8WvJ0gMXVm5zAAwNU/KmmxGwr6snwrFo5D3/ip5rDv8W7wtsd/VBA==
+X-Received: by 2002:a17:907:1908:b0:ac1:edc5:d73b with SMTP id
+ a640c23a62f3a-ac26ca59335mr71873366b.8.1741375570885; 
+ Fri, 07 Mar 2025 11:26:10 -0800 (PST)
+Received: from ?IPv6:::1?
+ (dynamic-2a02-3100-25f3-2600-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
+ [2a02:3100:25f3:2600:69d2:56f6:a5af:50a8])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-224109e944csm33899445ad.74.2025.03.07.11.18.45
+ a640c23a62f3a-ac23988b634sm319966466b.149.2025.03.07.11.26.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 11:18:46 -0800 (PST)
-Message-ID: <86a37660-51be-4777-8bc0-794efc189a60@linaro.org>
-Date: Fri, 7 Mar 2025 11:18:45 -0800
+ Fri, 07 Mar 2025 11:26:10 -0800 (PST)
+Date: Fri, 07 Mar 2025 19:26:09 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Davidson Francis <davidsondfgl@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+CC: davidsondfgl@gmail.com
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_target/i386=3A_Improve_16?=
+ =?US-ASCII?Q?-bit/real_mode_debug_support_in_GDB?=
+In-Reply-To: <20241221054549.21883-1-davidsondfgl@gmail.com>
+References: <20241219013535.GB4298@darkstar>
+ <20241221054549.21883-1-davidsondfgl@gmail.com>
+Message-ID: <68941EA1-F752-4C9E-B4E8-0CDCF48D0EAF@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/14] system/iommufd: Introduce iommufd_builtin() helper
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, qemu-ppc@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- kvm@vger.kernel.org, Yi Liu <yi.l.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Peter Xu <peterx@redhat.com>, Daniel Henrique Barboza
- <danielhb413@gmail.com>, Eric Auger <eric.auger@redhat.com>,
- qemu-s390x@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20250307180337.14811-1-philmd@linaro.org>
- <20250307180337.14811-11-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250307180337.14811-11-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,36 +103,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy83LzI1IDEwOjAzLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gaW9t
-bXVmZF9idWlsdGluKCkgY2FuIGJlIHVzZWQgdG8gY2hlY2sgYXQgcnVudGltZSB3aGV0aGVy
-DQo+IHRoZSBJT01NVUZEIGZlYXR1cmUgaXMgYnVpbHQgaW4gYSBxZW11LXN5c3RlbSBiaW5h
-cnkuDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhp
-bG1kQGxpbmFyby5vcmc+DQo+IC0tLQ0KPiAgIGRvY3MvZGV2ZWwvdmZpby1pb21tdWZkLnJz
-dCB8IDIgKy0NCj4gICBpbmNsdWRlL3N5c3RlbS9pb21tdWZkLmggICAgfCA4ICsrKysrKysr
-DQo+ICAgMiBmaWxlcyBjaGFuZ2VkLCA5IGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkN
-Cj4gDQo+IGRpZmYgLS1naXQgYS9kb2NzL2RldmVsL3ZmaW8taW9tbXVmZC5yc3QgYi9kb2Nz
-L2RldmVsL3ZmaW8taW9tbXVmZC5yc3QNCj4gaW5kZXggM2QxYzExZjE3NWUuLjA4ODgyMDk0
-ZWVlIDEwMDY0NA0KPiAtLS0gYS9kb2NzL2RldmVsL3ZmaW8taW9tbXVmZC5yc3QNCj4gKysr
-IGIvZG9jcy9kZXZlbC92ZmlvLWlvbW11ZmQucnN0DQo+IEBAIC04OCw3ICs4OCw3IEBAIFN0
-ZXAgMjogY29uZmlndXJlIFFFTVUNCj4gICAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+ICAg
-DQo+ICAgSW50ZXJhY3Rpb25zIHdpdGggdGhlIGBgL2Rldi9pb21tdWBgIGFyZSBhYnN0cmFj
-dGVkIGJ5IGEgbmV3IGlvbW11ZmQNCj4gLW9iamVjdCAoY29tcGlsZWQgaW4gd2l0aCB0aGUg
-YGBDT05GSUdfSU9NTVVGRGBgIG9wdGlvbikuDQo+ICtvYmplY3QgKHdoaWNoIGF2YWlsYWJp
-bGl0eSBjYW4gYmUgY2hlY2tlZCBhdCBydW50aW1lIHVzaW5nIGBgaW9tbXVmZF9idWlsdGlu
-KClgYCkuDQo+ICAgDQo+ICAgQW55IFFFTVUgZGV2aWNlIChlLmcuIFZGSU8gZGV2aWNlKSB3
-aXNoaW5nIHRvIHVzZSBgYC9kZXYvaW9tbXVgYCBtdXN0DQo+ICAgYmUgbGlua2VkIHdpdGgg
-YW4gaW9tbXVmZCBvYmplY3QuIEl0IGdldHMgYSBuZXcgb3B0aW9uYWwgcHJvcGVydHkNCj4g
-ZGlmZiAtLWdpdCBhL2luY2x1ZGUvc3lzdGVtL2lvbW11ZmQuaCBiL2luY2x1ZGUvc3lzdGVt
-L2lvbW11ZmQuaA0KPiBpbmRleCBjYmFiNzViZmJmNi4uY2U0NTkyNTQwMjUgMTAwNjQ0DQo+
-IC0tLSBhL2luY2x1ZGUvc3lzdGVtL2lvbW11ZmQuaA0KPiArKysgYi9pbmNsdWRlL3N5c3Rl
-bS9pb21tdWZkLmgNCj4gQEAgLTYzLDQgKzYzLDEyIEBAIGJvb2wgaW9tbXVmZF9iYWNrZW5k
-X2dldF9kaXJ0eV9iaXRtYXAoSU9NTVVGREJhY2tlbmQgKmJlLCB1aW50MzJfdCBod3B0X2lk
-LA0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgRXJyb3IgKipl
-cnJwKTsNCj4gICANCj4gICAjZGVmaW5lIFRZUEVfSE9TVF9JT01NVV9ERVZJQ0VfSU9NTVVG
-RCBUWVBFX0hPU1RfSU9NTVVfREVWSUNFICItaW9tbXVmZCINCj4gKw0KPiArc3RhdGljIGlu
-bGluZSBib29sIGlvbW11ZmRfYnVpbHRpbih2b2lkKQ0KPiArew0KPiArICAgIGJvb2wgYW1i
-aWcgPSBmYWxzZTsNCj4gKw0KPiArICAgIHJldHVybiBvYmplY3RfcmVzb2x2ZV9wYXRoX3R5
-cGUoIiIsIFRZUEVfSU9NTVVGRF9CQUNLRU5ELCAmYW1iaWcpIHx8IGFtYmlnOw0KPiArfQ0K
-PiArDQo+ICAgI2VuZGlmDQoNClJldmlld2VkLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVy
-cmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQoNCg==
+
+
+Am 21=2E Dezember 2024 05:45:49 UTC schrieb Davidson Francis <davidsondfgl=
+@gmail=2Ecom>:
+>Debugging 16-bit/real mode code in QEMU+GDB is challenging due to
+>incorrect architecture detection and segmented memory addressing issues=
+=2E
+>
+>This patch improves the debugging experience by reporting i8086
+>architecture to GDB when in real mode and converting segmented addresses
+>(CS:EIP, SS:ESP) to their physical equivalents when reporting to GDB=2E
+>This enables proper instruction disassembly and stack inspection without
+>complex workarounds=2E
+>
+>Note: Mode switches after GDB attachment still require manual
+>architecture change, as GDB RSP does not support runtime architecture
+>switches=2E
+>
+>Signed-off-by: Davidson Francis <davidsondfgl@gmail=2Ecom>
+>---
+> target/i386/cpu=2Ec     |  8 +++++++-
+> target/i386/gdbstub=2Ec | 15 +++++++++++++--
+> 2 files changed, 20 insertions(+), 3 deletions(-)
+
+Ping
+
+I don't feel confident reviewing this patch=2E Paolo? Zhao?
+
+Best regards,
+Bernhard
+
+>
+>diff --git a/target/i386/cpu=2Ec b/target/i386/cpu=2Ec
+>index 5253399459=2E=2E65bdc48cc0 100644
+>--- a/target/i386/cpu=2Ec
+>+++ b/target/i386/cpu=2Ec
+>@@ -6404,7 +6404,13 @@ static const gchar *x86_gdb_arch_name(CPUState *cs=
+)
+> #ifdef TARGET_X86_64
+>     return "i386:x86-64";
+> #else
+>-    return "i386";
+>+    X86CPU *cpu =3D X86_CPU(cs);
+>+    CPUX86State *env =3D &cpu->env;
+>+    if (env->cr[0] & 1) {
+>+        return "i386";
+>+    } else {
+>+        return "i8086";
+>+    }
+> #endif
+> }
+>=20
+>diff --git a/target/i386/gdbstub=2Ec b/target/i386/gdbstub=2Ec
+>index 04c49e802d=2E=2Ed600aee953 100644
+>--- a/target/i386/gdbstub=2Ec
+>+++ b/target/i386/gdbstub=2Ec
+>@@ -136,7 +136,13 @@ int x86_cpu_gdb_read_register(CPUState *cs, GByteArr=
+ay *mem_buf, int n)
+>                 return gdb_get_regl(mem_buf, 0);
+>             }
+>         } else {
+>-            return gdb_get_reg32(mem_buf, env->regs[gpr_map32[n]]);
+>+            if (n !=3D R_ESP || (env->cr[0] & 1)) {
+>+                return gdb_get_reg32(mem_buf, env->regs[gpr_map32[n]]);
+>+            } else {
+>+                return gdb_get_reg32(mem_buf,
+>+                                     (env->segs[R_SS]=2Eselector << 4) +
+>+                                      env->regs[gpr_map32[n]]);
+>+            }
+>         }
+>     } else if (n >=3D IDX_FP_REGS && n < IDX_FP_REGS + 8) {
+>         int st_index =3D n - IDX_FP_REGS;
+>@@ -155,7 +161,12 @@ int x86_cpu_gdb_read_register(CPUState *cs, GByteArr=
+ay *mem_buf, int n)
+>     } else {
+>         switch (n) {
+>         case IDX_IP_REG:
+>-            return gdb_get_reg(env, mem_buf, env->eip);
+>+            if (TARGET_LONG_BITS !=3D 32 || (env->cr[0] & 1)) {
+>+                return gdb_get_reg(env, mem_buf, env->eip);
+>+            } else {
+>+                return gdb_get_reg(env, mem_buf,
+>+                                   (env->segs[R_CS]=2Eselector << 4) + e=
+nv->eip);
+>+            }
+>         case IDX_FLAGS_REG:
+>             return gdb_get_reg32(mem_buf, env->eflags);
+>=20
 
