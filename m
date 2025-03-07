@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9FCC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 10:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1513C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 10:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqV7r-000278-9d; Fri, 07 Mar 2025 05:40:19 -0500
+	id 1tqV8n-0002oh-9Y; Fri, 07 Mar 2025 05:41:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqV7q-00026W-6S
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:40:18 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1tqV8k-0002mp-AI
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:41:14 -0500
+Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqV7o-0006yM-L5
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:40:17 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-6fd80f30ba5so12418567b3.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 02:40:16 -0800 (PST)
+ id 1tqV8h-0008Lm-A0
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:41:14 -0500
+Received: by mail-yb1-xb35.google.com with SMTP id
+ 3f1490d57ef6-e46ebe19489so1284291276.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 02:41:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741344015; x=1741948815; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741344070; x=1741948870; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5YI/hYqqvKU6tOAc/SFErkl3HO8CSoJdZuzt2pEIiKU=;
- b=S76SQa0i94FcV7yUfE86xBGHNf+njzuMZGrcPhYxA6IbIPjqK6nsfh/8llZRNKGIFc
- uKyjtG/QoDt5CuBpkvZfHMTe0fnrx0r7dU4RGO0ceh480QOkfeD639mJQP5fcr2mzndS
- Uq8HRTT12uX5L/ZyCu6DkrRpqKYxd1zUyFJxvUGEHLM3YrGP4V+rmrAKwB20ddOcJ1XP
- eTFhEctB+mLBW59BgtkgiNpX27QiSxXzurt/v7ePn75SlB13v1ktDnKBWQKYx2GX6XIb
- KX3RKIGBKfVx6/GnLphRMlIEyWp0xNvoH9Jbje84rfFd9IBXwBIaIPaeTfXR/uoAR3fT
- uf6Q==
+ bh=Or8nid5ZiXi3yxl/7VmAKOyJyaMIwbEgpuB/hf5xtIQ=;
+ b=gRaBxdCJTNv69zk5nxw5GahTLC83/ZndfQUslkyCzi61Og5YHfn00103j5ZAaqrvgz
+ Ad64/g2J/N3bqQs9wIo3dkRvDMXD9UJKW7/3NhwSS25j03bGrHLY/urad+EDcyqEgYpa
+ wwHzdkWSwHMZoP2F2Y9ZHHPM88CVM7CrQNUrKbky8iuklcntl3UorbsjFnxe8T6fRhJW
+ maPdlm7ebQ8/ndZFmq1LCi7So2QmOO6eDQ/sir9yVh9DRP/2Rei/0RmL8anlBZthk3Gc
+ FPS1WzBsHBWCA7Pm96j1DONMeVJrfds7mGwHbfwUwjTkGsSQuLG1Xjc50d0+IfUbt1fp
+ 3W2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741344015; x=1741948815;
+ d=1e100.net; s=20230601; t=1741344070; x=1741948870;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5YI/hYqqvKU6tOAc/SFErkl3HO8CSoJdZuzt2pEIiKU=;
- b=fiNzSi8UfKx+nu+DV2Sg2NodykIBcGVf5/s7ZyzmAGe9UfFXgFRkMJaaotKX9UuOgU
- IXMFeUlAxuHzLOKdAJt2SS7KPqCPhjAABBP3s+D1i330EZTz03VP6fgeXkiNMXR1u79n
- VpcjQtugaNS/UJAZIM6d69+2206hviGZMW7kkr+8k1j4pCfLJ/QhqcZJi5fPZR0F9CgP
- dEzsVZd8VtssH17PXUSLfLc1K/16OYKHiFnkj+G+tb5VxUPqZbj4pQADScAeUB4zlpap
- tpXIaSNcpyETxoSJbY+eR/tjrzOfF20zefl6eIryMvCP86Y8dBfMZVE40iuwp15/Iy2J
- uZqQ==
-X-Gm-Message-State: AOJu0Yxh75Xog/kY8YaaOMaNZF8ZKjlJgjmmnmdfiqqBmYTGiHvw4BfF
- belXQ0LxWXml21hhUOY8GZmLISlOvS0vyH6G2oaisbvMd2L48+QR5QV+enEyZJ12hoxuwuupnCF
- 0v+BpqdLQS0R6FodtWy4ldDGojV6bEBCfiVvKAA==
-X-Gm-Gg: ASbGncs7t1juB7wUKMAVZISxce4c5+rXVd42SKrFvDNY0Y8J4BzR4Gj5SNj3jvfbBJA
- ntOUfLrr4sDskibeOH+bntStqtPV40kc/No5tsO1mzDGP9k/NDh8B/QMiPGB556qZLtCToZQRC3
- ITF5cVonKj0QKCwGYUPJc1QICzKoM=
-X-Google-Smtp-Source: AGHT+IHOEveYhDPrhfuqly+yD0sgXep2zBz4LQ5emtTXZcgp8F4qBzZdgnzpNK0Uv9zqDws1tLSagCJeKq6wW4yDaUs=
-X-Received: by 2002:a05:6902:2081:b0:e5a:c837:a8c7 with SMTP id
- 3f1490d57ef6-e635c136db5mr3443557276.11.1741344015549; Fri, 07 Mar 2025
- 02:40:15 -0800 (PST)
+ bh=Or8nid5ZiXi3yxl/7VmAKOyJyaMIwbEgpuB/hf5xtIQ=;
+ b=hJjpEywQbtJOeIKVwHnPdsYSPSp10lEq5vl5m2cMjEI48snqzhWyl02RYvS/BDaFqZ
+ hBopsXI85UoIFdSG4DQwNWhFYKGWSZxlf+dDORCG/L2/xAywWRVKdW4LE4bKl7L2AV+V
+ DwtMETRJC9qLEaDeRRoBNnD+nVGtNEL/z86bLjzLOwDT6UT/mFjwQdx6GqYdNwS9Saeg
+ q2UAOgnaNGwbcSndAK4S+7wxT49nbl+T/4CSxOx5k+jA2k2HXVkQRL7mTv15V6xXEmNL
+ x4aOknqlYPleh+PUzuejExHlM8cHnORTKRVvu46OMnJodscoMK87HYWd0nG01zuZHc3h
+ qyYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUKTDBmj3n0EykawEY6xvo+sgecBn2AShOddawYS/3yfxIhdipXcbXsSFY1iIq83BZpiB3+f9KdGrpA@nongnu.org
+X-Gm-Message-State: AOJu0YwMmMkbl/a66PF2BPwiHtZ7tjV2+O15Kc+TuX2TuLpZtsoEmdyO
+ koiL2L7nUZvzaJL4UHUYIsUFsX5DFKGeJByvMcUMKF9dR/QsB+hVHrhJJ+k+Jbz9o0ZgJEFljWW
+ Oyy83tePOsnEC/Xa0erdvsb/nIfKx3MPYMQHLig==
+X-Gm-Gg: ASbGncvTJbTRDgGM8UX65tiJy0nPF190PrEBhLSel1xF7qOvdecuiK+U25RB1p98aXI
+ DsRkLYY4vBm7iQNwgPSxPVWVac2vHPK5GcLqrvM0DMWR+Iw08cHiioy7XqdW+1cCFhlCAUese8v
+ EXUbInImUn9ZF1TibkYhHcIbSEXcE=
+X-Google-Smtp-Source: AGHT+IFzrYzPZFAlAn+/swqFCr9qte1Ec2VPxUIhV4b+ZpfQUohk6+l07F/6+QStoqcr0ni6LKa23EsdVmzJTvG+pd0=
+X-Received: by 2002:a05:6902:1b8e:b0:e60:a16c:d01f with SMTP id
+ 3f1490d57ef6-e635c1f4d28mr3524529276.47.1741344070188; Fri, 07 Mar 2025
+ 02:41:10 -0800 (PST)
 MIME-Version: 1.0
-References: <20250228103222.1838913-1-peter.maydell@linaro.org>
- <a95ff4d3-e362-403e-8d0b-63b888e098d2@linaro.org>
-In-Reply-To: <a95ff4d3-e362-403e-8d0b-63b888e098d2@linaro.org>
+References: <20250228174802.1945417-1-peter.maydell@linaro.org>
+ <CAFEAcA9RPnZdf5zqFwu255-LdJ5inFbjtCA8SJ4o89aiUuabpA@mail.gmail.com>
+In-Reply-To: <CAFEAcA9RPnZdf5zqFwu255-LdJ5inFbjtCA8SJ4o89aiUuabpA@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Mar 2025 10:40:04 +0000
-X-Gm-Features: AQ5f1JoTTBC9G1kR5NbI1zsyogPpeDAw3LIpBV6_h3IssfJNk-Ywgx10Yzr8D6I
-Message-ID: <CAFEAcA9zM6LmRJ8CRhyyr8DVJRR0KUi-H8dbO4_B_BpbK8dN=w@mail.gmail.com>
-Subject: Re: [PATCH] include/exec/memop.h: Expand comment for MO_ATOM_SUBALIGN
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+Date: Fri, 7 Mar 2025 10:40:58 +0000
+X-Gm-Features: AQ5f1JoIK5vHYIdC4x-PFgjp35sYufdDTGe4cFGEW41goOLjFhItfVdX-p0j9_M
+Message-ID: <CAFEAcA8+oA6jJPrN_o3VDbSETyZugsFrRZH7uUSP9i6KdQE3vQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] hw/net/smc91c111: Fix potential array overflows
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Jason Wang <jasowang@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,23 +94,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 28 Feb 2025 at 17:32, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 2/28/25 02:32, Peter Maydell wrote:
-> > Expand the example in the comment documenting MO_ATOM_SUBALIGN,
-> > to be clearer about the atomicity guarantees it represents.
-> >
-> > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> > ---
-> >   include/exec/memop.h | 8 ++++++--
-> >   1 file changed, 6 insertions(+), 2 deletions(-)
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Ping for review of this series (and the other smc91c111
+patch I link below), please?
 
-Thanks; I'll put this in target-arm.next since I'm doing a
-pullreq before softfreeze, unless you'd rather take it
-via your tree.
-
+thanks
 -- PMM
+
+
+On Fri, 28 Feb 2025 at 19:22, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Fri, 28 Feb 2025 at 17:48, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > This patchset fixes some potential array overflows in the
+> > smc91c111 ethernet device model, including the one found in
+> > https://gitlab.com/qemu-project/qemu/-/issues/2742
+> >
+> > There are two classes of bugs:
+> >  * we accept packet numbers from the guest, but we were not
+> >    validating that they were in range before using them as an
+> >    index into the data[][] array
+> >  * we didn't sanitize the length field read from the data
+> >    frame on tx before using it as an index to find the
+> >    control byte at the end of the frame, so we could read off
+> >    the end of the buffer
+> >
+> > This patchset fixes both of these. The datasheet is sadly
+> > silent on the h/w behaviour for these errors, so I opted to
+> > LOG_GUEST_ERROR and silently ignore the invalid operations.
+> >
+> > Patch 3 tidies up the existing code to use a constant defined
+> > in patch 2; I put it last so we can cc the first two patches
+> > to stable without having to also backport that patch.
+>
+> See also the other smc91c111 fuzzer fix patch:
+> https://patchew.org/QEMU/20250228191652.1957208-1-peter.maydell@linaro.org/
+>
+> (if I need to do a v2 of this series I'll put that one in too)
 
