@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B34CC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 510D2C28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZIc-000160-3I; Fri, 07 Mar 2025 10:07:42 -0500
+	id 1tqZIM-0000xJ-Fd; Fri, 07 Mar 2025 10:07:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIX-00013W-80
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:37 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1tqZIF-0000ut-9C
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:20 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIV-0008MV-85
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:36 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-390fdaf2897so2004104f8f.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:34 -0800 (PST)
+ id 1tqZIC-00088q-7D
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:18 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43bc4b1603fso12251155e9.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741360053; x=1741964853; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xyxLh5BLcDl2AJdz4+J0eOXFTj1L4hj69KVc/wA423Q=;
- b=w4wWq9eeSW9wQgLHt0yDevrtf4PbmBfYewtDKF/szeEj39zQylnLsc+tCr0NRzbmVr
- p4uOlb5PHIjUPIi6jysP1O30VxG8DY3fSh5u8uSCMAs4OCJv7lv9QTh36BqY36Du9MgX
- wHADPwvfcx4vrUzTMRsB6YK3aPYpUykLvgtGPfLPldWl9ECnolY2Cz/X4S1HWi0h5F4F
- F5SX6R6Pvydl6n7wEENn5bczWU9v0fJPVQ5UORF8KDp7ejz9I70XLAHUIsKaaszxvkkr
- mmi5MoLOSn1j8gPjsK15KzWSTeD/6tl3M0jr2Sx5uIAv8X2RixUzfkV77OIYxfJmwKwX
- PM7w==
+ d=linaro.org; s=google; t=1741360033; x=1741964833; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ax9lo+5LO9nqphkjDcLTd5Bed2QycwqilQUSdbsZcjg=;
+ b=gzx/jtq+rZrL8jxs9ejS4ESwLWIYKYKFh8eRdLTypuv/OehGZAwfQrp5NYYnasJSBn
+ EC5BW57aBaykCIzEYHLUkccx0OAcB3wOFDrqKbmdM4QU8J7dXTi+mV6AaCjWoYyG83n5
+ vZNs2+InAU58YjQKC+QUoHHicBd7dwpZBzFcshts5fv8IFzEBNxYeCyzQrHHiGOXSJP8
+ /1dDkvmctZY/ljIIq5eBcRco2Qw9k/E/8FZ5dQ0wGTRYjDmwF1McGfncTBnSiT9G7Dew
+ zcbz8j7gLROJfRZ0O1LcZiKWH2ZI0jdgxhn84NLyXQcSCJdt5KgWJOBIeMaZkeuMGMV9
+ mPiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741360053; x=1741964853;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xyxLh5BLcDl2AJdz4+J0eOXFTj1L4hj69KVc/wA423Q=;
- b=pTSWw1YXZ5qdprIk0f7Ab2bXjTIfRbpymkbdyDtgHIkFMpO88JvspFxss3yXY2p6AC
- C6N81ts2uhlyHj9RxqLUTHtdo3MF2VcOT/yI7b1bhK+wT8lOU8USVvj4xOuRXFSUlV5G
- e7MMGACyoNzMbdaNI/ueMXBMsJNedXaouB/QmZJXxNGCROFpY9zGz6yym7fouZF+6WjV
- ptwKJn2IuKWf4HInxUeBqf2UJPz4EiSDB8QJPFht0XwXPGj6WyT68MmUh2M89fw9aD3C
- umBkYEinhXz4ingFkkuZwEMvKguVAQYXWwcSrDXvtfIJPrkIQo0UDKDtqEJ7nRb3JGJM
- BCAw==
-X-Gm-Message-State: AOJu0YzmGVX2DRRXzXZy4jCxuSx3aIikxdCG6RPshpiuHenM61ahWqvw
- wL2tGfccRhL+wlVRd4l+VEpcU6HDPs2r13hfOXEXq4nN6dVapYpe23ew2burvtWOd3LxWFOryL+
- l
-X-Gm-Gg: ASbGncsA9tbBgb0lEQ5vdMZqwedmu9Cgj2tLpSQQwgQu7bZX3MYZN4AoxbEiTMmfcHz
- tCKmEkXGU0mn7YIZp1VuF3Y/s6fvKehgdJiLj+WGYLOsXGeB6K5D6vWVU9vLRtzi9g3r2OemfTt
- zcxiAZZTUw7pZylp2pm8i03bY6g6QfKEpGP1bz51H5r48+ch8efOU+koFtfCMjfYXnqwoI9LGjW
- F4RjtabzxsJMZMdTtaxwarrNk2wQ06sWUC1yGlJwqih0fR6U+emVAWePkczfhX6J44/mni++5Cq
- VrwlcmcKNcKfcuvmBYYGexq4N/wtp8/wIJ4OhLi/y0SL9I0ZF2s=
-X-Google-Smtp-Source: AGHT+IHEGqfOeCUTUd48JJ3O2Jxl1KS6c7i79ND5qK/GUhCcZdkcDU7cx3gf2QXUaJ4nt3iRbGwsTg==
-X-Received: by 2002:a5d:648b:0:b0:38d:e33d:d0eb with SMTP id
- ffacd0b85a97d-39132d093edmr3297518f8f.9.1741360053321; 
- Fri, 07 Mar 2025 07:07:33 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741360033; x=1741964833;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ax9lo+5LO9nqphkjDcLTd5Bed2QycwqilQUSdbsZcjg=;
+ b=KqV3uLD0oph5gw38apfkRP3vwDigP3UnwojcS7A8u/buM1VV7f8E/W6pUUZ0n+AeL4
+ ZchGhA9f/Z9nKsiToIQTcbmVn/NB81mCQVoq7fG5VmD9vd09Xq1ZVRbVtipr22oe9XhM
+ DGEogWgQWmJ30JBIPDIyfh9Ody0KIugxbg7+Egc70gTqFHh/+c5yebcBhcoDxdR4bplC
+ WzLtADpHjtPNn941MqPt5imIdK4JKxHURLZiqKpKVBCc48W/Ffx1gB2pUza1uY1Md4HJ
+ w7IevlkKO30lEa899uXA4FQT3b7fwFE8kq4Ig4k/MbGtKhFUW/4uISfQKUuLJ5Ro1VoY
+ UXrg==
+X-Gm-Message-State: AOJu0YxXPPeY+tFQ5UvgOoEaVzHc+a4ZLl2S3B2QxGOcd/hILdFmxAzL
+ 2l5ISiG7L3V3i8dDLR3hnAG7q0TxK3RlLNnI13LoIZOl9BZn5TdZTRtFszrrViHmdcaEcguaxlX
+ Z
+X-Gm-Gg: ASbGncs5cbTjh0IRhDGWdQsxW+3GHl0wwRhP4I+utjb7itswp/sH6w8UxCIPap+ddTm
+ vRYz4RKqQ91UjtTRk4F3n/FUVJJvOn78dqeCgqFjo5hPaYn0XEKRRbxH/YzP6Wkw7xTXWK62Nhq
+ 7dDlMY/5S6MciASDq2i2EXcxg+Y0Y8lMtKfzKpvxNW97q8C+XDnaiC7lsXc95/QSUyiQZUTjhJ3
+ qWddzyX66/NNN65QgWY3jpiBo4VEsknyiLvelgahtTRPQWgOSUeD3egpFucUguq6J6dKBJW8yHJ
+ u0Z6jU4PZ+XXupmNBM82tne0Ld/8opVt9djcwTKyx82GE7m7C8w=
+X-Google-Smtp-Source: AGHT+IGMqjy1Xd3OrpdpH5pDvgamygcOa6FZisw+pmEd3ZWpE1Hm1iv7B6rwQH5ZQIWkTaUuz/W/BQ==
+X-Received: by 2002:a5d:6d8e:0:b0:390:e535:8770 with SMTP id
+ ffacd0b85a97d-39132d7ba76mr2535028f8f.14.1741360031461; 
+ Fri, 07 Mar 2025 07:07:11 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.32
+ ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 07:07:32 -0800 (PST)
+ Fri, 07 Mar 2025 07:07:10 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/21] hw/arm/smmu: Introduce smmu_configs_inv_sid_range()
- helper
-Date: Fri,  7 Mar 2025 15:07:06 +0000
-Message-ID: <20250307150708.3222813-20-peter.maydell@linaro.org>
+Subject: [PULL 00/21] target-arm queue
+Date: Fri,  7 Mar 2025 15:06:47 +0000
+Message-ID: <20250307150708.3222813-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250307150708.3222813-1-peter.maydell@linaro.org>
-References: <20250307150708.3222813-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,163 +96,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: JianChunfu <jansef.jian@hj-micro.com>
+Hi; here's a target-arm pullreq to go in before softfreeze.
+This is actually pretty much entirely bugfixes (since the
+SEL2 timers we implement here are a missing part of a feature
+we claim to already implement).
 
-Use a similar terminology smmu_hash_remove_by_sid_range() as the one
-being used for other hash table matching functions since
-smmuv3_invalidate_ste() name is not self explanatory, and introduce a
-helper that invokes the g_hash_table_foreach_remove.
+thanks
+-- PMM
 
-No functional change intended.
+The following changes since commit 98c7362b1efe651327385a25874a73e008c6549e:
 
-Signed-off-by: JianChunfu <jansef.jian@hj-micro.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20250228031438.3916-1-jansef.jian@hj-micro.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/arm/smmu-internal.h       |  5 -----
- include/hw/arm/smmu-common.h |  6 ++++++
- hw/arm/smmu-common.c         | 21 +++++++++++++++++++++
- hw/arm/smmuv3.c              | 19 ++-----------------
- hw/arm/trace-events          |  3 ++-
- 5 files changed, 31 insertions(+), 23 deletions(-)
+  Merge tag 'accel-cpus-20250306' of https://github.com/philmd/qemu into staging (2025-03-07 07:39:49 +0800)
 
-diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
-index 843bebb185d..d143d296f34 100644
---- a/hw/arm/smmu-internal.h
-+++ b/hw/arm/smmu-internal.h
-@@ -141,9 +141,4 @@ typedef struct SMMUIOTLBPageInvInfo {
-     uint64_t mask;
- } SMMUIOTLBPageInvInfo;
- 
--typedef struct SMMUSIDRange {
--    uint32_t start;
--    uint32_t end;
--} SMMUSIDRange;
--
- #endif
-diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index e5ad55bbae7..e5e2d09294d 100644
---- a/include/hw/arm/smmu-common.h
-+++ b/include/hw/arm/smmu-common.h
-@@ -142,6 +142,11 @@ typedef struct SMMUIOTLBKey {
-     uint8_t level;
- } SMMUIOTLBKey;
- 
-+typedef struct SMMUSIDRange {
-+    uint32_t start;
-+    uint32_t end;
-+} SMMUSIDRange;
-+
- struct SMMUState {
-     /* <private> */
-     SysBusDevice  dev;
-@@ -219,6 +224,7 @@ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
-                          uint8_t tg, uint64_t num_pages, uint8_t ttl);
- void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
-                         uint64_t num_pages, uint8_t ttl);
-+void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range);
- /* Unmap the range of all the notifiers registered to any IOMMU mr */
- void smmu_inv_notifiers_all(SMMUState *s);
- 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 8c1b407b824..6e720e1b9a0 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -225,6 +225,27 @@ static gboolean smmu_hash_remove_by_vmid_ipa(gpointer key, gpointer value,
-            ((entry->iova & ~info->mask) == info->iova);
- }
- 
-+static gboolean
-+smmu_hash_remove_by_sid_range(gpointer key, gpointer value, gpointer user_data)
-+{
-+    SMMUDevice *sdev = (SMMUDevice *)key;
-+    uint32_t sid = smmu_get_sid(sdev);
-+    SMMUSIDRange *sid_range = (SMMUSIDRange *)user_data;
-+
-+    if (sid < sid_range->start || sid > sid_range->end) {
-+        return false;
-+    }
-+    trace_smmu_config_cache_inv(sid);
-+    return true;
-+}
-+
-+void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range)
-+{
-+    trace_smmu_configs_inv_sid_range(sid_range.start, sid_range.end);
-+    g_hash_table_foreach_remove(s->configs, smmu_hash_remove_by_sid_range,
-+                                &sid_range);
-+}
-+
- void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
-                          uint8_t tg, uint64_t num_pages, uint8_t ttl)
- {
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index b40acbe0245..1a96287ba9d 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -903,7 +903,7 @@ static void smmuv3_flush_config(SMMUDevice *sdev)
-     SMMUv3State *s = sdev->smmu;
-     SMMUState *bc = &s->smmu_state;
- 
--    trace_smmuv3_config_cache_inv(smmu_get_sid(sdev));
-+    trace_smmu_config_cache_inv(smmu_get_sid(sdev));
-     g_hash_table_remove(bc->configs, sdev);
- }
- 
-@@ -1277,20 +1277,6 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
-     }
- }
- 
--static gboolean
--smmuv3_invalidate_ste(gpointer key, gpointer value, gpointer user_data)
--{
--    SMMUDevice *sdev = (SMMUDevice *)key;
--    uint32_t sid = smmu_get_sid(sdev);
--    SMMUSIDRange *sid_range = (SMMUSIDRange *)user_data;
--
--    if (sid < sid_range->start || sid > sid_range->end) {
--        return false;
--    }
--    trace_smmuv3_config_cache_inv(sid);
--    return true;
--}
--
- static int smmuv3_cmdq_consume(SMMUv3State *s)
- {
-     SMMUState *bs = ARM_SMMU(s);
-@@ -1373,8 +1359,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
-             sid_range.end = sid_range.start + mask;
- 
-             trace_smmuv3_cmdq_cfgi_ste_range(sid_range.start, sid_range.end);
--            g_hash_table_foreach_remove(bs->configs, smmuv3_invalidate_ste,
--                                        &sid_range);
-+            smmu_configs_inv_sid_range(bs, sid_range);
-             break;
-         }
-         case SMMU_CMD_CFGI_CD:
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index f49cae1656e..f3386bd7ae1 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -22,6 +22,8 @@ smmu_iotlb_inv_asid_vmid(int asid, int vmid) "IOTLB invalidate asid=%d vmid=%d"
- smmu_iotlb_inv_vmid(int vmid) "IOTLB invalidate vmid=%d"
- smmu_iotlb_inv_vmid_s1(int vmid) "IOTLB invalidate vmid=%d"
- smmu_iotlb_inv_iova(int asid, uint64_t addr) "IOTLB invalidate asid=%d addr=0x%"PRIx64
-+smmu_configs_inv_sid_range(uint32_t start, uint32_t end) "Config cache INV SID range from 0x%x to 0x%x"
-+smmu_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
- smmu_inv_notifiers_mr(const char *name) "iommu mr=%s"
- smmu_iotlb_lookup_hit(int asid, int vmid, uint64_t addr, uint32_t hit, uint32_t miss, uint32_t p) "IOTLB cache HIT asid=%d vmid=%d addr=0x%"PRIx64" hit=%d miss=%d hit rate=%d"
- smmu_iotlb_lookup_miss(int asid, int vmid, uint64_t addr, uint32_t hit, uint32_t miss, uint32_t p) "IOTLB cache MISS asid=%d vmid=%d addr=0x%"PRIx64" hit=%d miss=%d hit rate=%d"
-@@ -59,7 +61,6 @@ smmuv3_cmdq_tlbi_nh(int vmid) "vmid=%d"
- smmuv3_cmdq_tlbi_nsnh(void) ""
- smmuv3_cmdq_tlbi_nh_asid(int asid) "asid=%d"
- smmuv3_cmdq_tlbi_s12_vmid(int vmid) "vmid=%d"
--smmuv3_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
- smmuv3_notify_flag_add(const char *iommu) "ADD SMMUNotifier node for iommu mr=%s"
- smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s"
- smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
--- 
-2.43.0
+are available in the Git repository at:
 
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20250307
+
+for you to fetch changes up to 0ce0739d46983e5e88fa9c149cb305689c9d8c6f:
+
+  target/rx: Remove TCG_CALL_NO_WG from helpers which write env (2025-03-07 15:03:20 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * hw/arm/smmu-common: Remove the repeated ttb field
+ * hw/gpio: npcm7xx: fixup out-of-bounds access
+ * tests/functional/test_arm_sx1: Check whether the serial console is working
+ * target/arm: Fix minor bugs in generic timer register handling
+ * target/arm: Implement SEL2 physical and virtual timers
+ * target/arm: Correct STRD, LDRD atomicity and fault behaviour
+ * target/arm: Make dummy debug registers RAZ, not NOP
+ * util/qemu-timer.c: Don't warp timer from timerlist_rearm()
+ * include/exec/memop.h: Expand comment for MO_ATOM_SUBALIGN
+ * hw/arm/smmu: Introduce smmu_configs_inv_sid_range() helper
+ * target/rx: Set exception vector base to 0xffffff80
+ * target/rx: Remove TCG_CALL_NO_WG from helpers which write env
+
+----------------------------------------------------------------
+Alex Bennée (4):
+      target/arm: Implement SEL2 physical and virtual timers
+      target/arm: Document the architectural names of our GTIMERs
+      hw/arm: enable secure EL2 timers for virt machine
+      hw/arm: enable secure EL2 timers for sbsa machine
+
+JianChunfu (2):
+      hw/arm/smmu-common: Remove the repeated ttb field
+      hw/arm/smmu: Introduce smmu_configs_inv_sid_range() helper
+
+Keith Packard (2):
+      target/rx: Set exception vector base to 0xffffff80
+      target/rx: Remove TCG_CALL_NO_WG from helpers which write env
+
+Patrick Venture (1):
+      hw/gpio: npcm7xx: fixup out-of-bounds access
+
+Peter Maydell (11):
+      target/arm: Apply correct timer offset when calculating deadlines
+      target/arm: Don't apply CNTVOFF_EL2 for EL2_VIRT timer
+      target/arm: Make CNTPS_* UNDEF from Secure EL1 when Secure EL2 is enabled
+      target/arm: Always apply CNTVOFF_EL2 for CNTV_TVAL_EL02 accesses
+      target/arm: Refactor handling of timer offset for direct register accesses
+      target/arm: Correct LDRD atomicity and fault behaviour
+      target/arm: Correct STRD atomicity
+      target/arm: Drop unused address_offset from op_addr_{rr, ri}_post()
+      target/arm: Make dummy debug registers RAZ, not NOP
+      util/qemu-timer.c: Don't warp timer from timerlist_rearm()
+      include/exec/memop.h: Expand comment for MO_ATOM_SUBALIGN
+
+Thomas Huth (1):
+      tests/functional/test_arm_sx1: Check whether the serial console is working
+
+ MAINTAINERS                      |   1 +
+ hw/arm/smmu-internal.h           |   5 -
+ include/exec/memop.h             |   8 +-
+ include/hw/arm/bsa.h             |   2 +
+ include/hw/arm/smmu-common.h     |   7 +-
+ target/arm/cpu.h                 |   2 +
+ target/arm/gtimer.h              |  14 +-
+ target/arm/internals.h           |   5 +-
+ target/rx/helper.h               |  34 ++--
+ hw/arm/sbsa-ref.c                |   2 +
+ hw/arm/smmu-common.c             |  21 +++
+ hw/arm/smmuv3.c                  |  19 +--
+ hw/arm/virt.c                    |   2 +
+ hw/gpio/npcm7xx_gpio.c           |   3 +-
+ target/arm/cpu.c                 |   4 +
+ target/arm/debug_helper.c        |   7 +-
+ target/arm/helper.c              | 324 ++++++++++++++++++++++++++++++++-------
+ target/arm/tcg/op_helper.c       |   8 +-
+ target/arm/tcg/translate.c       | 147 +++++++++++-------
+ target/rx/helper.c               |   2 +-
+ util/qemu-timer.c                |   4 -
+ hw/arm/trace-events              |   3 +-
+ tests/functional/test_arm_sx1.py |   7 +-
+ 23 files changed, 455 insertions(+), 176 deletions(-)
 
