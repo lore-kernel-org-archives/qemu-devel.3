@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78512C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 04:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9740FC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 04:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqOuR-0002po-PI; Thu, 06 Mar 2025 23:02:04 -0500
+	id 1tqOv2-0004iF-K8; Thu, 06 Mar 2025 23:02:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tqOuL-0002Vu-VW; Thu, 06 Mar 2025 23:01:58 -0500
+ id 1tqOup-0003lf-NR; Thu, 06 Mar 2025 23:02:31 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tqOuJ-00056A-Gq; Thu, 06 Mar 2025 23:01:56 -0500
+ id 1tqOuo-00056A-92; Thu, 06 Mar 2025 23:02:27 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 7 Mar
- 2025 11:59:54 +0800
+ 2025 11:59:56 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 7 Mar 2025 11:59:54 +0800
+ Transport; Fri, 7 Mar 2025 11:59:56 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v6 24/29] hw/arm/aspeed_ast27x0: Sort the memmap table by
- mapping address
-Date: Fri, 7 Mar 2025 11:59:33 +0800
-Message-ID: <20250307035945.3698802-25-jamin_lin@aspeedtech.com>
+Subject: [PATCH v6 28/29] tests/functional/aspeed: Add test case for AST2700 A1
+Date: Fri, 7 Mar 2025 11:59:37 +0800
+Message-ID: <20250307035945.3698802-29-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
 References: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
@@ -67,95 +66,40 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To improve readability, sort the memmap table by mapping address
-
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0.c | 54 ++++++++++++++++++++---------------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+ tests/functional/test_aarch64_aspeed.py | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 7439512b83..3330484bf5 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -24,16 +24,40 @@
- #include "qemu/log.h"
+diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+index 8df6a97a28..c25c966278 100755
+--- a/tests/functional/test_aarch64_aspeed.py
++++ b/tests/functional/test_aarch64_aspeed.py
+@@ -31,6 +31,10 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz',
+             'cfbbd1cce72f2a3b73b9080c41eecdadebb7077fba4f7806d72ac99f3e84b74a')
  
- static const hwaddr aspeed_soc_ast2700_memmap[] = {
--    [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
-     [ASPEED_DEV_SRAM]      =  0x10000000,
-+    [ASPEED_DEV_HACE]      =  0x12070000,
-+    [ASPEED_DEV_EMMC]      =  0x12090000,
-+    [ASPEED_DEV_INTC]      =  0x12100000,
-+    [ASPEED_GIC_DIST]      =  0x12200000,
-+    [ASPEED_GIC_REDIST]    =  0x12280000,
-     [ASPEED_DEV_SDMC]      =  0x12C00000,
-     [ASPEED_DEV_SCU]       =  0x12C02000,
-+    [ASPEED_DEV_RTC]       =  0x12C0F000,
-+    [ASPEED_DEV_TIMER1]    =  0x12C10000,
-+    [ASPEED_DEV_SLI]       =  0x12C17000,
-+    [ASPEED_DEV_UART4]     =  0X12C1A000,
-+    [ASPEED_DEV_FMC]       =  0x14000000,
-+    [ASPEED_DEV_SPI0]      =  0x14010000,
-+    [ASPEED_DEV_SPI1]      =  0x14020000,
-+    [ASPEED_DEV_SPI2]      =  0x14030000,
-+    [ASPEED_DEV_MII1]      =  0x14040000,
-+    [ASPEED_DEV_MII2]      =  0x14040008,
-+    [ASPEED_DEV_MII3]      =  0x14040010,
-+    [ASPEED_DEV_ETH1]      =  0x14050000,
-+    [ASPEED_DEV_ETH2]      =  0x14060000,
-+    [ASPEED_DEV_ETH3]      =  0x14070000,
-+    [ASPEED_DEV_SDHCI]     =  0x14080000,
-+    [ASPEED_DEV_ADC]       =  0x14C00000,
-     [ASPEED_DEV_SCUIO]     =  0x14C02000,
-+    [ASPEED_DEV_GPIO]      =  0x14C0B000,
-+    [ASPEED_DEV_I2C]       =  0x14C0F000,
-+    [ASPEED_DEV_INTCIO]    =  0x14C18000,
-+    [ASPEED_DEV_SLIIO]     =  0x14C1E000,
-+    [ASPEED_DEV_VUART]     =  0X14C30000,
-     [ASPEED_DEV_UART0]     =  0X14C33000,
-     [ASPEED_DEV_UART1]     =  0X14C33100,
-     [ASPEED_DEV_UART2]     =  0X14C33200,
-     [ASPEED_DEV_UART3]     =  0X14C33300,
--    [ASPEED_DEV_UART4]     =  0X12C1A000,
-     [ASPEED_DEV_UART5]     =  0X14C33400,
-     [ASPEED_DEV_UART6]     =  0X14C33500,
-     [ASPEED_DEV_UART7]     =  0X14C33600,
-@@ -43,32 +67,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_UART11]    =  0X14C33A00,
-     [ASPEED_DEV_UART12]    =  0X14C33B00,
-     [ASPEED_DEV_WDT]       =  0x14C37000,
--    [ASPEED_DEV_VUART]     =  0X14C30000,
--    [ASPEED_DEV_FMC]       =  0x14000000,
--    [ASPEED_DEV_SPI0]      =  0x14010000,
--    [ASPEED_DEV_SPI1]      =  0x14020000,
--    [ASPEED_DEV_SPI2]      =  0x14030000,
-+    [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
-     [ASPEED_DEV_SDRAM]     =  0x400000000,
--    [ASPEED_DEV_MII1]      =  0x14040000,
--    [ASPEED_DEV_MII2]      =  0x14040008,
--    [ASPEED_DEV_MII3]      =  0x14040010,
--    [ASPEED_DEV_ETH1]      =  0x14050000,
--    [ASPEED_DEV_ETH2]      =  0x14060000,
--    [ASPEED_DEV_ETH3]      =  0x14070000,
--    [ASPEED_DEV_EMMC]      =  0x12090000,
--    [ASPEED_DEV_INTC]      =  0x12100000,
--    [ASPEED_DEV_INTCIO]    =  0x14C18000,
--    [ASPEED_DEV_SLI]       =  0x12C17000,
--    [ASPEED_DEV_SLIIO]     =  0x14C1E000,
--    [ASPEED_GIC_DIST]      =  0x12200000,
--    [ASPEED_GIC_REDIST]    =  0x12280000,
--    [ASPEED_DEV_ADC]       =  0x14C00000,
--    [ASPEED_DEV_I2C]       =  0x14C0F000,
--    [ASPEED_DEV_GPIO]      =  0x14C0B000,
--    [ASPEED_DEV_RTC]       =  0x12C0F000,
--    [ASPEED_DEV_SDHCI]     =  0x14080000,
--    [ASPEED_DEV_TIMER1]    =  0x12C10000,
--    [ASPEED_DEV_HACE]      =  0x12070000,
- };
++    ASSET_SDK_V905_AST2700A1 = Asset(
++            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
++            'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
++
+     def start_ast2700_test(self, name):
+         num_cpu = 4
+         uboot_size = os.path.getsize(self.scratch_file(name,
+@@ -95,6 +99,12 @@ def test_aarch64_ast2700_evb_sdk_v09_05(self):
+         self.archive_extract(self.ASSET_SDK_V905_AST2700)
+         self.start_ast2700_test('ast2700-a0-default')
  
- #define AST2700_MAX_IRQ 256
++    def test_aarch64_ast2700a1_evb_sdk_v09_05(self):
++        self.set_machine('ast2700a1-evb')
++
++        self.archive_extract(self.ASSET_SDK_V905_AST2700A1)
++        self.start_ast2700_test('ast2700-default')
++
+ 
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.43.0
 
