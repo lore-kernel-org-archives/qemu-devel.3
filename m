@@ -4,89 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4330CC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7504CC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqYQC-0001wL-1z; Fri, 07 Mar 2025 09:11:28 -0500
+	id 1tqYUW-0003ii-RN; Fri, 07 Mar 2025 09:15:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqYQ8-0001tY-5V
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:11:24 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqYUQ-0003fb-Bf
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:15:51 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqYQ6-0006uJ-3V
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:11:23 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3912baafc58so1246640f8f.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 06:11:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741356680; x=1741961480; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kJAAX7vKXgJQE8XqN0qNtPWcrBi2YgAiRTW2vWZKD6U=;
- b=FeQukThQX42dhBMcYE6e5NzOL26KnAOeilvCDzgB9WPSyd9GbGIxVNJTNTZu7aSLvr
- h1Dgxqoaf8m1QD/yOoGIUqnYkCwyd1lkbDqrZcVUwOjEdYlrAg1apwUbGWpnZG9BlgqR
- UQ6grOk8BjxzGPfvVXWC/XXMZW809LUMcYKMpu6dq0nXeYczNHSf1069yXNeTk9+j7qb
- VcTTD1y23tEuhL4pw8PfwMHqfivX19D8iRseyGqHj+zFfTIQySq3FRNix33L5hGH1eLz
- tLTKhOCxnHOTbDMwNFDOGuQsUmCi9qNNcTSutWDoWMJD9B5ANDxlvP+wwVRMC55f6/9+
- LaGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741356680; x=1741961480;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kJAAX7vKXgJQE8XqN0qNtPWcrBi2YgAiRTW2vWZKD6U=;
- b=E7a3xMcuw7GfRlaRAsF9t5AVT0moU3/liPy0kQikIjTcE4FZ9GBx4eL98BDQQmIiuW
- 9SqYjtSVymrDHspz60MPGX7bzOMR/DToxpx+jR5xyLaE4BGPsjxilfJuHASmh9KQd700
- rMyvkff+2F1/iz/SG7XeRH0tYSggy+Zk7dQESHih7qrBHiM9dfp5pvjC1eTDna80N1K9
- DjBxlXHSpDO6TNaGL8rLeiEWFTMILZCjsw0pbN6bd9mJN5IWPfhZpuxh+N1G3CgPpKrR
- JqWWs9+9quMHk16+mrXl29zbEKHns9CVGzdaPQxh/8/1SaZE9Ycq3RSANbIpPuPrEBDG
- GPPA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVuR5/1j1Vm/WZyZqIby+IMID31EmH7Rwe/mgPmv/iNWLIqgL+t7mUUMMiIH5XawLAq7g3UyW0Wyz/I@nongnu.org
-X-Gm-Message-State: AOJu0YzRzdf0+fNTmk519IXzt85H8OLc9RlSSKdw2Ec9nB8Dvprd2OIt
- dk+Bw4jsl1KALM98VHo0LqwFoGIJrPzMz0KmIj1ZlB8EIyUOThych3iETsqxHIw=
-X-Gm-Gg: ASbGncs5iKOm9lAMp0m3B297ZhuagY0Ab5k5kG6bRJS8+JZEUGf9qoM9qb9zXx1om1S
- 57zYVpi+YV+E6jJb6w0gkeftxKjsJP+AHFtdkWHV55cUJ79Wo2pT0onoyi/A1my7WuujiFzrgQq
- 2RdxU6y3mtmWHrzhvppbQYlBw2WT0Q7xZYgD9Lam8CSyUgHGMHO9MNlAdarL7n6aRbNVdUVkNXq
- srpeMZt4OVE0lS91uXGBNTL08oxNWzLjQAqI9esG2hHQQb2fdvb4iC3qaFmEsPrKm5DaMSI1M9N
- HlHfBlZRNQ5UOeJ+yXvW02GEcvi45XOZiMEqFlH0ThlIyqCJ+iRNZk/QTs22SXsiu0bCfTcWNSv
- MFO4wGOmb7EQA
-X-Google-Smtp-Source: AGHT+IFXasXk7QuPA6Mvw2sSC+rTO5X9MeL9Gh2AJ5RXnIJlAM1Pfb41OlCOhqz8D+cW4Tzmo1HkXA==
-X-Received: by 2002:a05:6000:1546:b0:390:f60a:e547 with SMTP id
- ffacd0b85a97d-39132dd8745mr2677922f8f.54.1741356679919; 
- Fri, 07 Mar 2025 06:11:19 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c106a1asm5446252f8f.100.2025.03.07.06.11.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 06:11:19 -0800 (PST)
-Message-ID: <a7769d31-7c0e-4e60-9c67-8ebf4af2fd93@linaro.org>
-Date: Fri, 7 Mar 2025 15:11:18 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqYUO-0007si-I9
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:15:50 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 38AF921196;
+ Fri,  7 Mar 2025 14:15:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741356944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=40EqZFHMzTTXgMYXyjH28dAOUsUqjWExefczeC6h+ZQ=;
+ b=hHhcdpEVvM2ysKqsQvODFmLkZrSE/G0IeHEO5Yc9cz3ebESOnHCa3cEsn0QqDSIu7EVsKN
+ icAYUc4txPIOvhp2GKOCKwlkeMji+zz/moGnypVsJ0Bo7IAerfwzvSmjZVFcZ3E6lNPFYU
+ b23UalOw2Q2s0tVqyZdkta043Rm7OmE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741356944;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=40EqZFHMzTTXgMYXyjH28dAOUsUqjWExefczeC6h+ZQ=;
+ b=hUqnBMZ6jtT30vUvOKr+yHgk5VwfDP24AHI8y+jxBl/x/4ysGnOJlJo1dCzFwKbH5+NgYd
+ +hXo3MYk/fYmuTCA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hHhcdpEV;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=hUqnBMZ6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741356944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=40EqZFHMzTTXgMYXyjH28dAOUsUqjWExefczeC6h+ZQ=;
+ b=hHhcdpEVvM2ysKqsQvODFmLkZrSE/G0IeHEO5Yc9cz3ebESOnHCa3cEsn0QqDSIu7EVsKN
+ icAYUc4txPIOvhp2GKOCKwlkeMji+zz/moGnypVsJ0Bo7IAerfwzvSmjZVFcZ3E6lNPFYU
+ b23UalOw2Q2s0tVqyZdkta043Rm7OmE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741356944;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=40EqZFHMzTTXgMYXyjH28dAOUsUqjWExefczeC6h+ZQ=;
+ b=hUqnBMZ6jtT30vUvOKr+yHgk5VwfDP24AHI8y+jxBl/x/4ysGnOJlJo1dCzFwKbH5+NgYd
+ +hXo3MYk/fYmuTCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A54C213A22;
+ Fri,  7 Mar 2025 14:15:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id jqBpGI//ymcEKAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Mar 2025 14:15:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Li Zhijian via <qemu-devel@nongnu.org>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>
+Subject: Re: [PATCH v5 0/6] migration/rdma: fixes, refactor and cleanup
+In-Reply-To: <20250305062825.772629-1-lizhijian@fujitsu.com>
+References: <20250305062825.772629-1-lizhijian@fujitsu.com>
+Date: Fri, 07 Mar 2025 11:15:40 -0300
+Message-ID: <8734fpudtf.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] ppc/amigaone: Add #defines for memory map constants
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>
-References: <cover.1740673173.git.balaton@eik.bme.hu>
- <3b8e54ad9220d57e7b0a33f3570e880f26677ce8.1740673173.git.balaton@eik.bme.hu>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3b8e54ad9220d57e7b0a33f3570e880f26677ce8.1740673173.git.balaton@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 38AF921196
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_BLOCKED(0.00)[rspamd.com]; MID_RHS_MATCH_FROM(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,13 +123,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/2/25 17:39, BALATON Zoltan wrote:
-> Suggested-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   hw/ppc/amigaone.c | 20 ++++++++++++++------
->   1 file changed, 14 insertions(+), 6 deletions(-)
+Li Zhijian via <qemu-devel@nongnu.org> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> - It fix the RDMA migration broken issue
+> - disable RDMA + postcopy
+> - some cleanups
+> - Add a qtest for RDMA at last
+>
+> Changes since V4:
+>  - collect Reviewed-tags
+>  - Address comments in patch "migration: Add qtest for migration over RDMA" from Fabiano Rosas <farosas@suse.de>
+>
+> Changes since V3:
+> - check RDMA and capabilities are compatible on both sides # renamed from
+>   previous V3's "migration: Add migration_capabilities_and_transport_compatible()"
+>
+> Changes since V2:
+> - squash previous 2/3/4 to '[PATCH v3 5/6] migration: Unfold  control_save_page()'
+> - reorder the patch layout to prevent recently added code from being deleted again.
+> - collect Reviewed tags from Peter
+>
+> Changes since V1[0]:
+> Add some saparate patches to refactor and cleanup based on V1
+>
+> [0] https://lore.kernel.org/qemu-devel/20250218074345.638203-1-lizhijian@fujitsu.com/
+>
+> Li Zhijian (6):
+>   migration: Prioritize RDMA in ram_save_target_page()
+>   migration: check RDMA and capabilities are compatible on both sides
+>   migration: disable RDMA + postcopy-ram
+>   migration/rdma: Remove redundant migration_in_postcopy checks
+>   migration: Unfold control_save_page()
+>   migration: Add qtest for migration over RDMA
+>
+>  MAINTAINERS                           |  1 +
+>  migration/migration.c                 | 30 ++++++++----
+>  migration/options.c                   | 25 ++++++++++
+>  migration/options.h                   |  1 +
+>  migration/ram.c                       | 41 +++++-----------
+>  migration/rdma.c                      | 11 ++---
+>  migration/rdma.h                      |  3 +-
+>  scripts/rdma-migration-helper.sh      | 48 +++++++++++++++++++
+>  tests/qtest/migration/precopy-tests.c | 67 +++++++++++++++++++++++++++
+>  9 files changed, 178 insertions(+), 49 deletions(-)
+>  create mode 100755 scripts/rdma-migration-helper.sh
 
+Queued, thanks!
 
