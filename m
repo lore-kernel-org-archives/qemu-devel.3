@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2587C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 07:24:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47010C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 07:25:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqS3r-000071-So; Fri, 07 Mar 2025 02:23:59 -0500
+	id 1tqS3X-0008At-U9; Fri, 07 Mar 2025 02:23:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=3Khh=V2=kaod.org=clg@ozlabs.org>)
- id 1tqS3n-0008Uv-UY; Fri, 07 Mar 2025 02:23:56 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1tqS3S-00083l-3z; Fri, 07 Mar 2025 02:23:34 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=3Khh=V2=kaod.org=clg@ozlabs.org>)
- id 1tqS3j-0001cN-Nd; Fri, 07 Mar 2025 02:23:53 -0500
+ id 1tqS3P-0001aj-2X; Fri, 07 Mar 2025 02:23:33 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z8HpD4gQgz4x5k;
- Fri,  7 Mar 2025 18:23:48 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z8Hnp5Lymz4x5k;
+ Fri,  7 Mar 2025 18:23:26 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z8Hp91tV5z4wcy;
- Fri,  7 Mar 2025 18:23:44 +1100 (AEDT)
-Message-ID: <08b3a2e4-8d71-413b-9a04-257a35ca28a1@kaod.org>
-Date: Fri, 7 Mar 2025 08:23:42 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z8Hnl2kG1z4wcy;
+ Fri,  7 Mar 2025 18:23:23 +1100 (AEDT)
+Message-ID: <0457f746-fb73-41fd-b95d-aa1d98a35873@kaod.org>
+Date: Fri, 7 Mar 2025 08:23:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 03/29] hw/intc/aspeed: Introduce dynamic allocation for
- regs array
+Subject: Re: [PATCH v6 04/29] hw/intc/aspeed: Support setting different
+ register size
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
- <20250307035945.3698802-4-jamin_lin@aspeedtech.com>
+ <20250307035945.3698802-5-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,16 +86,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250307035945.3698802-4-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250307035945.3698802-5-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=3Khh=V2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,16 +114,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/7/25 04:59, Jamin Lin wrote:
-> Currently, the size of the "regs" array is 0x2000, which is too large. To save
-> code size and avoid mapping large unused gaps, will update it to only map the
-> useful set of registers. This update will support multiple sub-regions with
-> different sizes.
-> 
-> To address the redundant size issue, replace the static "regs" array with a
-> dynamically allocated "regs" memory.
-> 
-> Introduce a new "aspeed_intc_unrealize" function to free the allocated "regs"
-> memory.
+> Currently, the size of the regs array is 0x2000, which is too large. So far,
+> it only use GICINT128 - GICINT134, and the offsets from 0 to 0x1000 are unused.
+> To save code size, introduce a new class attribute "reg_size" to set the
+> different register sizes for the INTC models in AST2700 and add a regs
+> sub-region in the memory container.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
@@ -136,64 +132,91 @@ C.
 
 > ---
 >   include/hw/intc/aspeed_intc.h |  2 +-
->   hw/intc/aspeed_intc.c         | 12 +++++++++++-
->   2 files changed, 12 insertions(+), 2 deletions(-)
+>   hw/intc/aspeed_intc.c         | 22 +++++-----------------
+>   2 files changed, 6 insertions(+), 18 deletions(-)
 > 
 > diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-> index 03324f05ab..47ea0520b5 100644
+> index 47ea0520b5..ec4936b3f4 100644
 > --- a/include/hw/intc/aspeed_intc.h
 > +++ b/include/hw/intc/aspeed_intc.h
-> @@ -27,7 +27,7 @@ struct AspeedINTCState {
->       MemoryRegion iomem;
->       MemoryRegion iomem_container;
+> @@ -16,7 +16,6 @@
+>   #define TYPE_ASPEED_2700_INTC TYPE_ASPEED_INTC "-ast2700"
+>   OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
 >   
-> -    uint32_t regs[ASPEED_INTC_NR_REGS];
-> +    uint32_t *regs;
->       OrIRQState orgates[ASPEED_INTC_NR_INTS];
->       qemu_irq output_pins[ASPEED_INTC_NR_INTS];
+> -#define ASPEED_INTC_NR_REGS (0x2000 >> 2)
+>   #define ASPEED_INTC_NR_INTS 9
 >   
+>   struct AspeedINTCState {
+> @@ -42,6 +41,7 @@ struct AspeedINTCClass {
+>       uint32_t num_lines;
+>       uint32_t num_ints;
+>       uint64_t mem_size;
+> +    uint64_t nr_regs;
+>   };
+>   
+>   #endif /* ASPEED_INTC_H */
 > diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-> index 465f41e4fd..558901570f 100644
+> index 558901570f..134922e46f 100644
 > --- a/hw/intc/aspeed_intc.c
 > +++ b/hw/intc/aspeed_intc.c
-> @@ -289,7 +289,7 @@ static void aspeed_intc_reset(DeviceState *dev)
+> @@ -120,13 +120,6 @@ static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned int size)
+>       uint32_t reg = offset >> 2;
+>       uint32_t value = 0;
+>   
+> -    if (reg >= ASPEED_INTC_NR_REGS) {
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
+> -                      __func__, offset);
+> -        return 0;
+> -    }
+> -
+>       value = s->regs[reg];
+>       trace_aspeed_intc_read(offset, size, value);
+>   
+> @@ -143,13 +136,6 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>       uint32_t change;
+>       uint32_t irq;
+>   
+> -    if (reg >= ASPEED_INTC_NR_REGS) {
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
+> -                      __func__, offset);
+> -        return;
+> -    }
+> -
+>       trace_aspeed_intc_write(offset, size, data);
+>   
+>       switch (reg) {
+> @@ -288,8 +274,9 @@ static void aspeed_intc_instance_init(Object *obj)
+>   static void aspeed_intc_reset(DeviceState *dev)
 >   {
 >       AspeedINTCState *s = ASPEED_INTC(dev);
+> +    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
 >   
-> -    memset(s->regs, 0, sizeof(s->regs));
-> +    memset(s->regs, 0, ASPEED_INTC_NR_REGS << 2);
+> -    memset(s->regs, 0, ASPEED_INTC_NR_REGS << 2);
+> +    memset(s->regs, 0, aic->nr_regs << 2);
 >       memset(s->enable, 0, sizeof(s->enable));
 >       memset(s->mask, 0, sizeof(s->mask));
 >       memset(s->pending, 0, sizeof(s->pending));
-> @@ -307,6 +307,7 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+> @@ -307,9 +294,9 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
 >   
 >       sysbus_init_mmio(sbd, &s->iomem_container);
 >   
-> +    s->regs = g_new(uint32_t, ASPEED_INTC_NR_REGS);
+> -    s->regs = g_new(uint32_t, ASPEED_INTC_NR_REGS);
+> +    s->regs = g_new(uint32_t, aic->nr_regs);
 >       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
->                             TYPE_ASPEED_INTC ".regs", ASPEED_INTC_NR_REGS << 2);
+> -                          TYPE_ASPEED_INTC ".regs", ASPEED_INTC_NR_REGS << 2);
+> +                          TYPE_ASPEED_INTC ".regs", aic->nr_regs << 2);
 >   
-> @@ -322,12 +323,21 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
->       }
+>       memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
+>   
+> @@ -361,6 +348,7 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+>       aic->num_lines = 32;
+>       aic->num_ints = 9;
+>       aic->mem_size = 0x4000;
+> +    aic->nr_regs = 0x2000 >> 2;
 >   }
 >   
-> +static void aspeed_intc_unrealize(DeviceState *dev)
-> +{
-> +    AspeedINTCState *s = ASPEED_INTC(dev);
-> +
-> +    g_free(s->regs);
-> +    s->regs = NULL;
-> +}
-> +
->   static void aspeed_intc_class_init(ObjectClass *klass, void *data)
->   {
->       DeviceClass *dc = DEVICE_CLASS(klass);
->   
->       dc->desc = "ASPEED INTC Controller";
->       dc->realize = aspeed_intc_realize;
-> +    dc->unrealize = aspeed_intc_unrealize;
->       device_class_set_legacy_reset(dc, aspeed_intc_reset);
->       dc->vmsd = NULL;
->   }
+>   static const TypeInfo aspeed_2700_intc_info = {
 
 
