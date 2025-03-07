@@ -4,92 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE0B2C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 17:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE02C28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 17:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqbTy-00086R-H3; Fri, 07 Mar 2025 12:27:34 -0500
+	id 1tqbUV-0008Px-FQ; Fri, 07 Mar 2025 12:28:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tqbTt-0007zH-G3
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:27:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tqbTq-0005Kh-Rx
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:27:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741368443;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KmM3lfsxtHt5Zn+w27ccz0wEtI56PLeRhGRPFWWdWEM=;
- b=KVsZFkL4tR9zFiMZmhkkCSp8O7ySIh3AJlSG8A+ko+UMMDo5aMTzGPDo+Z24X1yrapk6wt
- iwOAZ24A8dfl/EX/fAOntdQUhTWQXP3VcoxAZLH3HJE9gDwvESdVIjZym9h/20etc+GO05
- Lrj01Ugp0RbGwPgl4W4CubMnvWvTWgc=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-218-mWVWdgBiMNWBrFeVDeqPag-1; Fri, 07 Mar 2025 12:27:21 -0500
-X-MC-Unique: mWVWdgBiMNWBrFeVDeqPag-1
-X-Mimecast-MFC-AGG-ID: mWVWdgBiMNWBrFeVDeqPag_1741368440
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4751be23f57so40741111cf.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 09:27:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tqbUT-0008PX-7S
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:28:05 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tqbUQ-0006tL-B7
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:28:04 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-223594b3c6dso39970425ad.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 09:28:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741368480; x=1741973280; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XGRZCwJOp2eTpr1VioEshZadievWX551sr/rhDx3wrk=;
+ b=uhLvi04jEqyGurIozAhH+M3yxL9OggZzliod+A0jd8ZQ4alTxn0ggPYuKC7pxwOxuL
+ QHu8MFqo5LmSHXq+Nfk6cH7ed+OuEj42HiZ7S1H6lx+Ef8QPT/FZHUoeYWjuAg7eZ29I
+ XDLxgqDAuM+ri+eor1KN8Hzvz5SWzfYjvdyovtLfJXFZh3GgRGdGy+0i25FR4tuQwjyn
+ j2v1Qwi4AfXlMCGinq4Gie0ma1vmj7+B64W6U7BBoJXeS8bq2GPv/thpFN9LLd74hAsU
+ pLjkSkPsr6XK6MNWlzY/topmDsh0Cr4CKVAxavzAsO2FqdXf5w6rmNruzjdiHfIN5vJY
+ lyfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741368440; x=1741973240;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KmM3lfsxtHt5Zn+w27ccz0wEtI56PLeRhGRPFWWdWEM=;
- b=YE3mGG+tI+9rBcuLfiT0i4/FuRXiFFQ+5CKUocMQHevjBJ6pKqFsEbpEN0zYACIq3M
- gjIrCnFYQAuGr6fwunuQ1fB7aNCu18bVvqtP+XfL2EckcwfE8yoTdKPzWIa+wlYlIIcD
- ff+/EwiCH3H87s2lQxvM6ZUYGPckj51oFwOwHYA6f9vvaaxslwq6+DfdppRypknm4c9e
- JFWE9bIhgEg2ZnOvwrgyDpY1zqvGDte5r5jffSx2RTrkKVSriiQ3JGbk972r6GkdBMZy
- xmq7wU9jEyEaWjORR2nXUFYlmH8ErYF0U/ooZ/rCYFYXrZrE2g4YoTfxwMFv0lJCDhJ0
- OWDQ==
-X-Gm-Message-State: AOJu0YytaBXtIN/AYaTmHjXJZmw3Nff9z8nIU/Acx3D7Zv12GMRbfIJx
- ffjeF/fpGU4equf0SWRGRv24bMbV7MTZcMaIyUBqHoO+0UHNuC7FIRhHpces+A/BGW1VblXklv5
- ek9HwAGG/N7AqBjhqAsuFG4QNeocwkOLSFUA3mEv9cUv0i2IytGZA
-X-Gm-Gg: ASbGncvD7um6dxjkYbWnUf/Y2fDx46jAV5ZTwRfAjjpZMDvyapjFuX3fE4wwCf94zAb
- lU68dVAxQPJWDOjdOKN9zpNBbHtOrYQHu7fyiH+7X7kSRmGnUSV+ZkK7/FbeOVmvWr9Xbm81rFt
- oYX7xZ715QIEvTGTyLzovVzkK5gg8qvSHTsOS9kOpDB0wwaH4KlDyW3zA16XRtdOkV4Uj0gX03L
- m32/P0sQVl0Aefntyze8idJZ77LA9PaGBSx38aJzpkQ5GKXs65h3p+Lz7bFlseUSta36XDjDGoK
- 3bi5+cE=
-X-Received: by 2002:ac8:7d48:0:b0:472:8fd:90ee with SMTP id
- d75a77b69052e-476109820c1mr54585901cf.13.1741368440344; 
- Fri, 07 Mar 2025 09:27:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF9Gc3tn1wY2x5o7Dk3NoHZ1divXTZsC0hvYIoDuICxiafMPZUKdcy9v0XDwdfZ0Tqj4KmYzg==
-X-Received: by 2002:ac8:7d48:0:b0:472:8fd:90ee with SMTP id
- d75a77b69052e-476109820c1mr54584811cf.13.1741368439128; 
- Fri, 07 Mar 2025 09:27:19 -0800 (PST)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4751db2f9b6sm22419991cf.58.2025.03.07.09.27.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 09:27:17 -0800 (PST)
-Date: Fri, 7 Mar 2025 12:27:15 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH 1/2] migration: Add some documentation for multifd
-Message-ID: <Z8ssc0NETt9KJjTG@x1.local>
-References: <20250307134203.29443-1-farosas@suse.de>
- <20250307134203.29443-2-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1741368480; x=1741973280;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XGRZCwJOp2eTpr1VioEshZadievWX551sr/rhDx3wrk=;
+ b=aUUwP2sWwLafBSY9m3+MERls5fCvHIYDi+m+Bek7/FvwBRQaDLjABp8z/UeiMJE8LR
+ 7MB+hRI2FZ/o9ieXr8tmfVo1U6eGjrvrSNedg0rUCgltL4tc8AdF7uBeVTsiWhtosdGF
+ gbIdmE2Qgf8HY09pphWZup0KDjpZm8Hm88tOpzS2h3Yzb8wafzV8xRpbM1v05HMmOXac
+ Ho2HMVyCTYnmBfR11q22YKKmbHSkQlAdQXKSFFnLL7r/clUbGY5rUHa+gGSPxBdUjXZ1
+ FHnpyrc805TjJdu4Ep7qAOj2i1MPRMuzvFMhnpJk9vpWqcGjAvLymHaBAiB1CzEFwgZy
+ zsNg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUeWH2KQoeu9JgdyCdtJX2XEpq+I24tbAxOp6+2zQ+sGtC9as+ZQoDUg+dyZ6n/UqCZ97Y5NxFxC4w/@nongnu.org
+X-Gm-Message-State: AOJu0Yz6aYKUTZsBW92uVdApdX6sh/GIEzn8RF3IJuMv057EuJk/gqSb
+ IUK5Oi/iq9Hyen5EdYTrEEebaI8abbRzdjA5hiwGofoM5WpC2HoCli3nBz6ioKo=
+X-Gm-Gg: ASbGnctsCZIhfi0CAWazd9yfOUvTAqJ4eafipHqoq/rbExMyp3Gql3c2VNI6FV8Fkri
+ ISw7+2VlTwcyMOO2/TGSs6MAWC/p1vDVchwWWbBGrWa5cS4W8upyfuSXP9vNuKo86fXGyTL3tmc
+ WmdentSx4pgmJzk/va8fNDaqN4dzFCsoz+Vi0ndCAqc0EPCUr5f/hiinMb64nkHxI979Lt+PQkJ
+ Yt5Zd9phtbAMh6F/VGQlVFVpgpExErvl2iIxajHfRPo8uu9AySWO13B+fSS86SvtYKfKyBN6N6u
+ oBwafdZETLfzXXNxBLKxtDhdLYS9H7BbWXXZUmp8z0lHIM9s15xIpHoB5Q==
+X-Google-Smtp-Source: AGHT+IGnINnk58sdUCqBGXgc9cDw8cMUWAFGBf3XN3FnyRoAgX0kSNpQIKqdHYxAgGWM0xzYfEoJ/g==
+X-Received: by 2002:a05:6a00:194b:b0:730:9502:d564 with SMTP id
+ d2e1a72fcca58-736aaa3d2c0mr6572129b3a.14.1741368479975; 
+ Fri, 07 Mar 2025 09:27:59 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af5053a85c2sm1541479a12.10.2025.03.07.09.27.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Mar 2025 09:27:59 -0800 (PST)
+Message-ID: <de815285-78a8-4b82-b6e3-e3315a25ed8f@linaro.org>
+Date: Fri, 7 Mar 2025 09:27:58 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250307134203.29443-2-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] hw/hyperv/vmbus: common compilation unit
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: kvm@vger.kernel.org, philmd@linaro.org, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, manos.pitsidianakis@linaro.org,
+ richard.henderson@linaro.org, Marcelo Tosatti <mtosatti@redhat.com>,
+ alex.bennee@linaro.org
+References: <20250306064118.3879213-1-pierrick.bouvier@linaro.org>
+ <20250306064118.3879213-4-pierrick.bouvier@linaro.org>
+ <adadeb12-9eb7-4338-828e-62e77034b1dd@maciej.szmigiero.name>
+ <9ee1b0aa-27e3-47f9-8276-1158bfa5ad06@linaro.org>
+ <93aa0f81-06c6-4b6b-9d8b-fcae0c17f488@maciej.szmigiero.name>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <93aa0f81-06c6-4b6b-9d8b-fcae0c17f488@maciej.szmigiero.name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,397 +109,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 07, 2025 at 10:42:02AM -0300, Fabiano Rosas wrote:
-> There's currently no documentation for multifd, we can at least
-> provide an overview of the feature.
-
-We missed this for a long time indeed..
-
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
-> Keep in mind the feature grew organically over the years and it has
-> had bugs that required reinventing some concepts, specially on the
-> sync part, so there's still some amount of inconsistency in the code
-> and that's not going to be fixed by documentation.
-> ---
->  docs/devel/migration/features.rst |   1 +
->  docs/devel/migration/multifd.rst  | 254 ++++++++++++++++++++++++++++++
->  2 files changed, 255 insertions(+)
->  create mode 100644 docs/devel/migration/multifd.rst
-> 
-> diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
-> index 8f431d52f9..249d653124 100644
-> --- a/docs/devel/migration/features.rst
-> +++ b/docs/devel/migration/features.rst
-> @@ -15,3 +15,4 @@ Migration has plenty of features to support different use cases.
->     qpl-compression
->     uadk-compression
->     qatzip-compression
-> +   multifd
-
-Considering that it's one of the main features (e.g. all compressors above
-are only sub-features of multifd), we could move this upper, maybe even the
-1st one.
-
-> diff --git a/docs/devel/migration/multifd.rst b/docs/devel/migration/multifd.rst
-> new file mode 100644
-> index 0000000000..8f5ec840cb
-> --- /dev/null
-> +++ b/docs/devel/migration/multifd.rst
-> @@ -0,0 +1,254 @@
-> +Multifd
-> +=======
-> +
-> +Multifd is the name given for the migration capability that enables
-> +data transfer using multiple threads. Multifd supports all the
-> +transport types currently in use with migration (inet, unix, vsock,
-> +fd, file).
-
-I never tried vsock, would it be used in any use case?
-
-It seems to be introduced by accident in 72a8192e225cea, but I'm not sure.
-Maybe there's something I missed.
-
-If we don't plan to obsolete rdma, we may also want to mention it.. in
-which case it doesn't support multifd.
-
-> +
-> +Usage
-> +-----
-> +
-> +On both source and destination, enable the ``multifd`` capability:
-> +
-> +    ``migrate_set_capability multifd on``
-> +
-> +Define a number of channels to use (default is 2, but 8 usually
-> +provides best performance).
-> +
-> +    ``migrate_set_parameter multifd-channels 8``
-> +
-> +Restrictions
-> +------------
-> +
-> +For migration to a file, support is conditional on the presence of the
-> +mapped-ram capability, see `mapped-ram`.
-> +
-> +Snapshots are currently not supported.
-> +
-> +`postcopy` migration is currently not supported.
-> +
-> +Components
-> +----------
-> +
-> +Multifd consists of:
-> +
-> +- A client that produces the data on the migration source side and
-> +  consumes it on the destination. Currently the main client code is
-> +  ram.c, which selects the RAM pages for migration;
-> +
-> +- A shared data structure (``MultiFDSendData``), used to transfer data
-> +  between multifd and the client. On the source side, this structure
-> +  is further subdivided into payload types (``MultiFDPayload``);
-> +
-> +- An API operating on the shared data structure to allow the client
-
-s/An API/A set of APIs/
-
-> +  code to interact with multifd;
-> +
-> +  - ``multifd_send/recv()``: Transfers work to/from the channels.
-> +
-> +  - ``multifd_*payload_*`` and ``MultiFDPayloadType``: Support
-> +    defining an opaque payload. The payload is always wrapped by
-> +    ``MultiFD*Data``.
-> +
-> +  - ``multifd_send_data_*``: Used to manage the memory for the shared
-> +    data structure.
-> +
-> +  - ``multifd_*_sync_main()``: See :ref:`synchronization` below.
-
-When in doc, it might be helpful to list exact function names without
-asterisks, so that people can grep for them when reading.
-
-> +
-> +- A set of threads (aka channels, due to a 1:1 mapping to QIOChannels)
-> +  responsible for doing I/O. Each multifd channel supports callbacks
-> +  (``MultiFDMethods``) that can be used for fine-grained processing of
-> +  the payload, such as compression and zero page detection.
-> +
-> +- A packet which is the final result of all the data aggregation
-> +  and/or transformation. The packet contains: a *header* with magic and
-> +  version numbers and flags that inform of special processing needed
-> +  on the destination; a *payload-specific header* with metadata referent
-> +  to the packet's data portion, e.g. page counts; and a variable-size
-> +  *data portion* which contains the actual opaque payload data.
-> +
-> +  Note that due to historical reasons, the terminology around multifd
-> +  packets is inconsistent.
-> +
-> +  The `mapped-ram` feature ignores packets entirely.
-
-If above "packet" section does not cover mapped-ram, while mapped-ram is
-part of multifd, maybe it means we should reword it?
-
-One option is we drop above paragraph completely, but enrich the previous
-section ("A set of threads.."), with:
-
-    ... such as compression and zero page detection.  Multifd threads can
-    dump the results to different targets.  For socket-based URIs, the data
-    will be queued to the socket with multifd specific headers.  For
-    file-based URIs, the data may be applied directly on top of the target
-    file at specific offset.
-
-Optionally, we may have another separate section to explain the socket
-headers.  If so, we could have the header definition directly, and explain
-the fields.  Might be more straightforward too.
-
-> +
-> +Operation
-> +---------
-> +
-> +The multifd channels operate in parallel with the main migration
-> +thread. The transfer of data from a client code into multifd happens
-> +from the main migration thread using the multifd API.
-> +
-> +The interaction between the client code and the multifd channels
-> +happens in the ``multifd_send()`` and ``multifd_recv()``
-> +methods. These are reponsible for selecting the next idle channel and
-> +making the shared data structure containing the payload accessible to
-> +that channel. The client code receives back an empty object which it
-> +then uses for the next iteration of data transfer.
-> +
-> +The selection of idle channels is simply a round-robin over the idle
-> +channels (``!p->pending_job``). Channels wait at a semaphore and once
-> +a channel is released it starts operating on the data immediately.
-
-The sender side is always like this indeed.  For the recv side (and since
-you also mentioned it above), multifd treats it differently based on socket
-or file based.  Maybe we should also discuss socket-based?
-
-Something like this?
-
-  Multifd receive side relies on a proper ``MultiFDMethods.recv()`` method
-  provided by the consumer of the pages to know how to load the pages.  The
-  recv threads can work in different ways depending on the channel type.
-
-  For socket-based channels, multifd recv side is almost event-driven.
-  Each multifd recv threads will be blocked reading the channels until a
-  complete multifd packet header is received.  With that, pages are loaded
-  as they arrive on the ports with the ``MultiFDMethods.recv()`` method
-  provided by the client, so as to post-process the data received.
-
-  For file-based channels, multifd recv side works slightly differently.
-  It works more like the sender side, that client can queue requests to
-  multifd recv threads to load specific portion of file into corresponding
-  portion of RAMs.  The ``MultiFDMethods.recv()`` in this case simply
-  always executes the load operation from file as requested.
-
-Feel free to take all or none.  You can also mention it after the next
-paragraph on "client-specific handling".  Anyway, some mentioning of
-event-driven model used in socket channels would be nice.
-
-> +
-> +Aside from eventually transmitting the data over the underlying
-> +QIOChannel, a channel's operation also includes calling back to the
-> +client code at pre-determined points to allow for client-specific
-> +handling such as data transformation (e.g. compression), creation of
-> +the packet header and arranging the data into iovs (``struct
-> +iovec``). Iovs are the type of data on which the QIOChannel operates.
-> +
-> +A high-level flow for each thread is:
-> +
-> +Migration thread:
-> +
-> +#. Populate shared structure with opaque data (e.g. ram pages)
-> +#. Call ``multifd_send()``
-> +
-> +   #. Loop over the channels until one is idle
-> +   #. Switch pointers between client data and channel data
-> +   #. Release channel semaphore
-> +#. Receive back empty object
-> +#. Repeat
-> +
-> +Multifd thread:
-> +
-> +#. Channel idle
-> +#. Gets released by ``multifd_send()``
-> +#. Call ``MultiFDMethods`` methods to fill iov
-> +
-> +   #. Compression may happen
-> +   #. Zero page detection may happen
-> +   #. Packet is written
-> +   #. iov is written
-> +#. Pass iov into QIOChannel for transferring (I/O happens here)
-> +#. Repeat
-> +
-> +The destination side operates similarly but with ``multifd_recv()``,
-> +decompression instead of compression, etc. One important aspect is
-> +that when receiving the data, the iov will contain host virtual
-> +addresses, so guest memory is written to directly from multifd
-> +threads.
-> +
-> +About flags
-> +-----------
-> +The main thread orchestrates the migration by issuing control flags on
-> +the migration stream (``QEMU_VM_*``).
-> +
-> +The main memory is migrated by ram.c and includes specific control
-> +flags that are also put on the main migration stream
-> +(``RAM_SAVE_FLAG_*``).
-> +
-> +Multifd has its own set of flags (``MULTIFD_FLAG_*``) that are
-> +included into each packet. These may inform about properties such as
-> +the compression algorithm used if the data is compressed.
-
-I think I get your intention, on that we have different levels of flags and
-maybe it's not easy to know which is which.  However since this is multifd
-specific doc, from that POV the first two paragraphs may be more suitable
-for some more high level doc to me.
-
-Meanwhile, I feel that reading the flag section without a quick packet
-header introduction is a tiny little abrupt to readers, as the flag is part
-of the packet but it came from nowhere yet.  One option is we make this
-section "multifd packet header" then introduce all fields quickly including
-the flags.  If you like keeping this it's ok too, we can work on top.
-
-> +
-> +.. _synchronization:
-> +
-> +Synchronization
-> +---------------
-> +
-> +Data sent through multifd may arrive out of order and with different
-> +timing. Some clients may also have synchronization requirements to
-> +ensure data consistency, e.g. the RAM migration must ensure that
-> +memory pages received by the destination machine are ordered in
-> +relation to previous iterations of dirty tracking.
-> +
-> +Some cleanup tasks such as memory deallocation or error handling may
-> +need to happen only after all channels have finished sending/receiving
-> +the data.
-> +
-> +Multifd provides the ``multifd_send_sync_main()`` and
-> +``multifd_recv_sync_main()`` helpers to synchronize the main migration
-> +thread with the multifd channels. In addition, these helpers also
-> +trigger the emission of a sync packet (``MULTIFD_FLAG_SYNC``) which
-> +carries the synchronization command to the remote side of the
-> +migration.
-
-[1]
-
-> +
-> +After the channels have been put into a wait state by the sync
-> +functions, the client code may continue to transmit additional data by
-> +issuing ``multifd_send()`` once again.
-> +
-> +Note:
-> +
-> +- the RAM migration does, effectively, a global synchronization by
-> +  chaining a call to ``multifd_send_sync_main()`` with the emission of a
-> +  flag on the main migration channel (``RAM_SAVE_FLAG_MULTIFD_FLUSH``)
-
-... or RAM_SAVE_FLAG_EOS ... depending on the machine type.
-
-Maybe we should also add a sentence on the relationship of
-MULTIFD_FLAG_SYNC and RAM_SAVE_FLAG_MULTIFD_FLUSH (or RAM_SAVE_FLAG_EOS ),
-in that they should always be sent together, and only if so would it
-provide ordering of multifd messages and what happens in the main migration
-thread.
-
-Maybe we can attach that sentence at the end of [1].
-
-> +  which in turn causes ``multifd_recv_sync_main()`` to be called on the
-> +  destination.
-> +
-> +  There are also backward compatibility concerns expressed by
-> +  ``multifd_ram_sync_per_section()`` and
-> +  ``multifd_ram_sync_per_round()``. See the code for detailed
-> +  documentation.
-> +
-> +- the `mapped-ram` feature has different requirements because it's an
-> +  asynchronous migration (source and destination not migrating at the
-> +  same time). For that feature, only the sync between the channels is
-> +  relevant to prevent cleanup to happen before data is completely
-> +  written to (or read from) the migration file.
-> +
-> +Data transformation
-> +-------------------
-> +
-> +The ``MultiFDMethods`` structure defines callbacks that allow the
-> +client code to perform operations on the data at key points. These
-> +operations could be client-specific (e.g. compression), but also
-> +include a few required steps such as moving data into an iovs. See the
-> +struct's definition for more detailed documentation.
-> +
-> +Historically, the only client for multifd has been the RAM migration,
-> +so the ``MultiFDMethods`` are pre-registered in two categories,
-> +compression and no-compression, with the latter being the regular,
-> +uncompressed ram migration.
-> +
-> +Zero page detection
-> ++++++++++++++++++++
-> +
-> +The migration without compression has a further specificity of
-
-Compressors also have zero page detection.  E.g.:
-
-  multifd_send_zero_page_detect()
-    <- multifd_send_prepare_common()
-      <- multifd_zstd_send_prepare()
-
-> +possibly doing zero page detection. It involves doing the detection of
-> +a zero page directly in the multifd channels instead of beforehand on
-> +the main migration thread (as it's been done in the past). This is the
-> +default behavior and can be disabled with:
-> +
-> +    ``migrate_set_parameter zero-page-detection legacy``
-> +
-> +or to disable zero page detection completely:
-> +
-> +    ``migrate_set_parameter zero-page-detection none``
-> +
-> +Error handling
-> +--------------
-> +
-> +Any part of multifd code can be made to exit by setting the
-> +``exiting`` atomic flag of the multifd state. Whenever a multifd
-> +channel has an error, it should break out of its loop, set the flag to
-> +indicate other channels to exit as well and set the migration error
-> +with ``migrate_set_error()``.
-> +
-> +For clean exiting (triggered from outside the channels), the
-> +``multifd_send|recv_terminate_threads()`` functions set the
-> +``exiting`` flag and additionally release any channels that may be
-> +idle or waiting for a sync.
-> +
-> +Code structure
-> +--------------
-> +
-> +Multifd code is divided into:
-> +
-> +The main file containing the core routines
-> +
-> +- multifd.c
-> +
-> +RAM migration
-> +
-> +- multifd-nocomp.c (nocomp, for "no compression")
-> +- multifd-zero-page.c
-> +- ram.c (also involved in non-multifd migrations & snapshots)
-> +
-> +Compressors
-> +
-> +- multifd-uadk.c
-> +- multifd-qatzip.c
-> +- multifd-zlib.c
-> +- multifd-qpl.c
-> +- multifd-zstd.c
-> -- 
-> 2.35.3
-> 
-
--- 
-Peter Xu
-
+T24gMy83LzI1IDAzOjAzLCBNYWNpZWogUy4gU3ptaWdpZXJvIHdyb3RlOg0KPiBIaSBQaWVy
+cmljaywNCj4gDQo+IE9uIDYuMDMuMjAyNSAyMzo1OSwgUGllcnJpY2sgQm91dmllciB3cm90
+ZToNCj4+IEhpIE1hY2llaiwNCj4+DQo+PiB3ZSBhcmUgY3VycmVudGx5IHdvcmtpbmcgdG93
+YXJkIGJ1aWxkaW5nIGEgc2luZ2xlIFFFTVUgYmluYXJ5IGFibGUgdG8gZW11bGF0ZSBhbGwg
+YXJjaGl0ZWN0dXJlcywgYW5kIG9uZSBwcmVyZXF1aXNpdGUgaXMgdG8gcmVtb3ZlIGR1cGxp
+Y2F0aW9uIG9mIGNvbXBpbGF0aW9uIHVuaXRzIChzb21lIGFyZSBkdXBsaWNhdGVkIHBlciB0
+YXJnZXQgbm93LCBiZWNhdXNlIG9mIGNvbXBpbGUgdGltZSBkZWZpbmVzKS4NCj4+DQo+PiBT
+byB0aGUgd29yayBoZXJlIGlzIHRvIHJlcGxhY2UgdGhvc2UgY29tcGlsZSB0aW1lIGRlZmlu
+ZXMgd2l0aCBydW50aW1lIGZ1bmN0aW9ucyBpbnN0ZWFkLCBzbyB0aGUgc2FtZSBjb2RlIGNh
+biBiZSB1c2VkIGZvciB2YXJpb3VzIGFyY2hpdGVjdHVyZXMuDQo+IA0KPiBCdXQgdGhpcyBp
+cyB4ODYtb25seSB3aGVyZSBBRkFJSyBwYWdlIHNpemUgaXMgYWx3YXlzIDRrDQo+IHNvIGlz
+IFRBUkdFVF9QQUdFX1NJWkUgZ29pbmcgYXdheSBldmVudHVhbGx5IG9yIGlzIHRoZQ0KPiBR
+RU1VIHBvbGljeSB0byBnZXQgcmlkIG9mIGl0IGF0IHRoZSBmaXJzdCBvcHBvcnR1bml0eT8N
+Cj4NCg0KUG9saWN5IGlzIGEgc3Ryb25nIHdvcmQsIGJ1dCB0aGlzIGlzIHRoZSB3b3JrIHdl
+IGFyZSB0cnlpbmcgdG8gZG8gYXQgdGhlIA0KbW9tZW50LiBQbGVhc2Ugbm90ZSB0aGF0IFJp
+Y2hhcmQgaXMgdHJ5aW5nIHRvIGNvbnZlcnQgdGhvc2UgZ2xvYmFsbHkgdG8gDQpydW50aW1l
+IGNoZWNrczoNCmh0dHBzOi8vcGF0Y2hldy5vcmcvUUVNVS8yMDI1MDMwNjIzNDEwOC4zNzg4
+ODEtMS1yaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3JnLw0KDQpXaGlsZSB0aGlzIGlzIG5v
+dCB1cHN0cmVhbSwgd2UgdHJ5IHRvIG1vdmUgZm9yd2FyZCB3aXRoIHdoYXQgaXMgDQphdmFp
+bGFibGUsIGFuZCB3ZSBjYW4gZG8gdGhlIHJlcGxhY2VtZW50IGFnYWluIGxhdGVyLg0KDQo+
+PiBJcyBpdCBtb3JlIGNsZWFyIGZvciB5b3U/DQo+IA0KPiBUaGFua3MsDQo+IE1hY2llag0K
+PiANCj4+IE9uIDMvNi8yNSAxMjoyOSwgTWFjaWVqIFMuIFN6bWlnaWVybyB3cm90ZToNCj4+
+PiBPbiA2LjAzLjIwMjUgMDc6NDEsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+Pj4+IFJl
+cGxhY2UgVEFSR0VUX1BBR0UuKiBieSBydW50aW1lIGNhbGxzLg0KPj4+DQo+Pj4gU2VlbXMg
+bGlrZSB0aGlzIHBhdGNoIHN1YmplY3QvdGl0bGUgaXMgbm90IGFsaWduZWQNCj4+PiB3ZWxs
+IHdpdGggaXRzIGNvbnRlbnQsIG9yIGEgbGVhc3QgaW5jb21wbGV0ZS4NCj4+Pg0KPj4+IEFs
+c28sIGNvdWxkIHlvdSBwcm92aWRlIG1vcmUgZGV0YWlsZWQgaW5mb3JtYXRpb24NCj4+PiB3
+aHkgVEFSR0VUX1BBR0VfU0laRSBpcyBnZXR0aW5nIHJlcGxhY2VkIGJ5DQo+Pj4gcWVtdV90
+YXJnZXRfcGFnZV9zaXplKCkgcGxlYXNlPw0KPj4+DQo+Pj4gSSBkb24ndCBzZWUgc3VjaCBp
+bmZvcm1hdGlvbiBpbiB0aGUgY292ZXIgbGV0dGVyIGVpdGhlci4NCj4+Pg0KPj4+IFRoYW5r
+cywNCj4+PiBNYWNpZWoNCj4+Pj4gU2lnbmVkLW9mZi1ieTogUGllcnJpY2sgQm91dmllciA8
+cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4+PiAtLS0NCj4+Pj4gIMKgwqAgaHcv
+aHlwZXJ2L3ZtYnVzLmPCoMKgwqDCoCB8IDUwICsrKysrKysrKysrKysrKysrKysrKy0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0NCj4+Pj4gIMKgwqAgaHcvaHlwZXJ2L21lc29uLmJ1aWxkIHzC
+oCAyICstDQo+Pj4+ICDCoMKgIDIgZmlsZXMgY2hhbmdlZCwgMjYgaW5zZXJ0aW9ucygrKSwg
+MjYgZGVsZXRpb25zKC0pDQo+Pj4+DQo+Pj4+IGRpZmYgLS1naXQgYS9ody9oeXBlcnYvdm1i
+dXMuYyBiL2h3L2h5cGVydi92bWJ1cy5jDQo+Pj4+IGluZGV4IDEyYTdkYzQzMTI4Li4xMDlh
+YzMxOWNhZiAxMDA2NDQNCj4+Pj4gLS0tIGEvaHcvaHlwZXJ2L3ZtYnVzLmMNCj4+Pj4gKysr
+IGIvaHcvaHlwZXJ2L3ZtYnVzLmMNCj4+Pj4gQEAgLTE4LDcgKzE4LDcgQEANCj4+Pj4gIMKg
+wqAgI2luY2x1ZGUgImh3L2h5cGVydi92bWJ1cy5oIg0KPj4+PiAgwqDCoCAjaW5jbHVkZSAi
+aHcvaHlwZXJ2L3ZtYnVzLWJyaWRnZS5oIg0KPj4+PiAgwqDCoCAjaW5jbHVkZSAiaHcvc3lz
+YnVzLmgiDQo+Pj4+IC0jaW5jbHVkZSAiY3B1LmgiDQo+Pj4+ICsjaW5jbHVkZSAiZXhlYy90
+YXJnZXRfcGFnZS5oIg0KPj4+PiAgwqDCoCAjaW5jbHVkZSAidHJhY2UuaCINCj4+Pj4gIMKg
+wqAgZW51bSB7DQo+Pj4+IEBAIC0zMDksNyArMzA5LDcgQEAgdm9pZCB2bWJ1c19wdXRfZ3Bh
+ZGwoVk1CdXNHcGFkbCAqZ3BhZGwpDQo+Pj4+ICDCoMKgIHVpbnQzMl90IHZtYnVzX2dwYWRs
+X2xlbihWTUJ1c0dwYWRsICpncGFkbCkNCj4+Pj4gIMKgwqAgew0KPj4+PiAtwqDCoMKgIHJl
+dHVybiBncGFkbC0+bnVtX2dmbnMgKiBUQVJHRVRfUEFHRV9TSVpFOw0KPj4+PiArwqDCoMKg
+IHJldHVybiBncGFkbC0+bnVtX2dmbnMgKiBxZW11X3RhcmdldF9wYWdlX3NpemUoKTsNCj4+
+Pj4gIMKgwqAgfQ0KPj4+PiAgwqDCoCBzdGF0aWMgdm9pZCBncGFkbF9pdGVyX2luaXQoR3Bh
+ZGxJdGVyICppdGVyLCBWTUJ1c0dwYWRsICpncGFkbCwNCj4+Pj4gQEAgLTMyMywxNCArMzIz
+LDE0IEBAIHN0YXRpYyB2b2lkIGdwYWRsX2l0ZXJfaW5pdChHcGFkbEl0ZXIgKml0ZXIsIFZN
+QnVzR3BhZGwgKmdwYWRsLA0KPj4+PiAgwqDCoCBzdGF0aWMgaW5saW5lIHZvaWQgZ3BhZGxf
+aXRlcl9jYWNoZV91bm1hcChHcGFkbEl0ZXIgKml0ZXIpDQo+Pj4+ICDCoMKgIHsNCj4+Pj4g
+LcKgwqDCoCB1aW50MzJfdCBtYXBfc3RhcnRfaW5fcGFnZSA9ICh1aW50cHRyX3QpaXRlci0+
+bWFwICYgflRBUkdFVF9QQUdFX01BU0s7DQo+Pj4+IC3CoMKgwqAgdWludDMyX3QgaW9fZW5k
+X2luX3BhZ2UgPSAoKGl0ZXItPmxhc3Rfb2ZmIC0gMSkgJiB+VEFSR0VUX1BBR0VfTUFTSykg
+KyAxOw0KPj4+PiArwqDCoMKgIHVpbnQzMl90IG1hcF9zdGFydF9pbl9wYWdlID0gKHVpbnRw
+dHJfdClpdGVyLT5tYXAgJiB+cWVtdV90YXJnZXRfcGFnZV9tYXNrKCk7DQo+Pj4+ICvCoMKg
+wqAgdWludDMyX3QgaW9fZW5kX2luX3BhZ2UgPSAoKGl0ZXItPmxhc3Rfb2ZmIC0gMSkgJiB+
+cWVtdV90YXJnZXRfcGFnZV9tYXNrKCkpICsgMTsNCj4+Pj4gIMKgwqDCoMKgwqDCoCAvKiBt
+YXBwaW5nIGlzIG9ubHkgZG9uZSB0byBkbyBub24temVybyBhbW91bnQgb2YgaS9vICovDQo+
+Pj4+ICDCoMKgwqDCoMKgwqAgYXNzZXJ0KGl0ZXItPmxhc3Rfb2ZmID4gMCk7DQo+Pj4+ICDC
+oMKgwqDCoMKgwqAgYXNzZXJ0KG1hcF9zdGFydF9pbl9wYWdlIDwgaW9fZW5kX2luX3BhZ2Up
+Ow0KPj4+PiAtwqDCoMKgIGRtYV9tZW1vcnlfdW5tYXAoaXRlci0+YXMsIGl0ZXItPm1hcCwg
+VEFSR0VUX1BBR0VfU0laRSAtIG1hcF9zdGFydF9pbl9wYWdlLA0KPj4+PiArwqDCoMKgIGRt
+YV9tZW1vcnlfdW5tYXAoaXRlci0+YXMsIGl0ZXItPm1hcCwgcWVtdV90YXJnZXRfcGFnZV9z
+aXplKCkgLSBtYXBfc3RhcnRfaW5fcGFnZSwNCj4+Pj4gIMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaXRlci0+ZGlyLCBpb19lbmRfaW5fcGFnZSAt
+IG1hcF9zdGFydF9pbl9wYWdlKTsNCj4+Pj4gIMKgwqAgfQ0KPj4+PiBAQCAtMzQ4LDE3ICsz
+NDgsMTcgQEAgc3RhdGljIHNzaXplX3QgZ3BhZGxfaXRlcl9pbyhHcGFkbEl0ZXIgKml0ZXIs
+IHZvaWQgKmJ1ZiwgdWludDMyX3QgbGVuKQ0KPj4+PiAgwqDCoMKgwqDCoMKgIGFzc2VydChp
+dGVyLT5hY3RpdmUpOw0KPj4+PiAgwqDCoMKgwqDCoMKgIHdoaWxlIChsZW4pIHsNCj4+Pj4g
+LcKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IG9mZl9pbl9wYWdlID0gaXRlci0+b2ZmICYgflRB
+UkdFVF9QQUdFX01BU0s7DQo+Pj4+IC3CoMKgwqDCoMKgwqDCoCB1aW50MzJfdCBwZ2xlZnQg
+PSBUQVJHRVRfUEFHRV9TSVpFIC0gb2ZmX2luX3BhZ2U7DQo+Pj4+ICvCoMKgwqDCoMKgwqDC
+oCB1aW50MzJfdCBvZmZfaW5fcGFnZSA9IGl0ZXItPm9mZiAmIH5xZW11X3RhcmdldF9wYWdl
+X21hc2soKTsNCj4+Pj4gK8KgwqDCoMKgwqDCoMKgIHVpbnQzMl90IHBnbGVmdCA9IHFlbXVf
+dGFyZ2V0X3BhZ2Vfc2l6ZSgpIC0gb2ZmX2luX3BhZ2U7DQo+Pj4+ICDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCB1aW50MzJfdCBjcGxlbiA9IE1JTihwZ2xlZnQsIGxlbik7DQo+Pj4+ICDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCB2b2lkICpwOw0KPj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+LyogdHJ5IHRvIHJldXNlIHRoZSBjYWNoZWQgbWFwcGluZyAqLw0KPj4+PiAgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAgaWYgKGl0ZXItPm1hcCkgew0KPj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCB1aW50MzJfdCBtYXBfc3RhcnRfaW5fcGFnZSA9DQo+Pj4+IC3CoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKHVpbnRwdHJfdClpdGVyLT5tYXAgJiB+VEFSR0VU
+X1BBR0VfTUFTSzsNCj4+Pj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3Qgb2Zm
+X2Jhc2UgPSBpdGVyLT5vZmYgJiB+VEFSR0VUX1BBR0VfTUFTSzsNCj4+Pj4gLcKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgdWludDMyX3QgbWFwcGVkX2Jhc2UgPSAoaXRlci0+bGFzdF9vZmYg
+LSAxKSAmIH5UQVJHRVRfUEFHRV9NQVNLOw0KPj4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgICh1aW50cHRyX3QpaXRlci0+bWFwICYgfnFlbXVfdGFyZ2V0X3BhZ2VfbWFz
+aygpOw0KPj4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50MzJfdCBvZmZfYmFzZSA9
+IGl0ZXItPm9mZiAmIH5xZW11X3RhcmdldF9wYWdlX21hc2soKTsNCj4+Pj4gK8KgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgdWludDMyX3QgbWFwcGVkX2Jhc2UgPSAoaXRlci0+bGFzdF9vZmYg
+LSAxKSAmIH5xZW11X3RhcmdldF9wYWdlX21hc2soKTsNCj4+Pj4gIMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgaWYgKG9mZl9iYXNlICE9IG1hcHBlZF9iYXNlIHx8IG9mZl9pbl9w
+YWdlIDwgbWFwX3N0YXJ0X2luX3BhZ2UpIHsNCj4+Pj4gIMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCBncGFkbF9pdGVyX2NhY2hlX3VubWFwKGl0ZXIpOw0KPj4+PiAg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGl0ZXItPm1hcCA9IE5VTEw7
+DQo+Pj4+IEBAIC0zNjgsMTAgKzM2OCwxMCBAQCBzdGF0aWMgc3NpemVfdCBncGFkbF9pdGVy
+X2lvKEdwYWRsSXRlciAqaXRlciwgdm9pZCAqYnVmLCB1aW50MzJfdCBsZW4pDQo+Pj4+ICDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCBpZiAoIWl0ZXItPm1hcCkgew0KPj4+PiAgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCBkbWFfYWRkcl90IG1hZGRyOw0KPj4+PiAgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCBkbWFfYWRkcl90IG1sZW4gPSBwZ2xlZnQ7DQo+Pj4+IC3C
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IGlkeCA9IGl0ZXItPm9mZiA+PiBUQVJH
+RVRfUEFHRV9CSVRTOw0KPj4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50MzJfdCBp
+ZHggPSBpdGVyLT5vZmYgPj4gcWVtdV90YXJnZXRfcGFnZV9iaXRzKCk7DQo+Pj4+ICDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGFzc2VydChpZHggPCBpdGVyLT5ncGFkbC0+bnVt
+X2dmbnMpOw0KPj4+PiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBtYWRkciA9IChpdGVyLT5n
+cGFkbC0+Z2Zuc1tpZHhdIDw8IFRBUkdFVF9QQUdFX0JJVFMpIHwgb2ZmX2luX3BhZ2U7DQo+
+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIG1hZGRyID0gKGl0ZXItPmdwYWRsLT5nZm5z
+W2lkeF0gPDwgcWVtdV90YXJnZXRfcGFnZV9iaXRzKCkpIHwgb2ZmX2luX3BhZ2U7DQo+Pj4+
+ICDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGl0ZXItPm1hcCA9IGRtYV9tZW1vcnlf
+bWFwKGl0ZXItPmFzLCBtYWRkciwgJm1sZW4sIGl0ZXItPmRpciwNCj4+Pj4gIMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgTUVNVFhBVFRSU19VTlNQRUNJRklFRCk7DQo+Pj4+IEBA
+IC0zODIsNyArMzgyLDcgQEAgc3RhdGljIHNzaXplX3QgZ3BhZGxfaXRlcl9pbyhHcGFkbEl0
+ZXIgKml0ZXIsIHZvaWQgKmJ1ZiwgdWludDMyX3QgbGVuKQ0KPj4+PiAgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCB9DQo+Pj4+ICDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9DQo+Pj4+
+IC3CoMKgwqDCoMKgwqDCoCBwID0gKHZvaWQgKikodWludHB0cl90KSgoKHVpbnRwdHJfdClp
+dGVyLT5tYXAgJiBUQVJHRVRfUEFHRV9NQVNLKSB8DQo+Pj4+ICvCoMKgwqDCoMKgwqDCoCBw
+ID0gKHZvaWQgKikodWludHB0cl90KSgoKHVpbnRwdHJfdClpdGVyLT5tYXAgJiBxZW11X3Rh
+cmdldF9wYWdlX21hc2soKSkgfA0KPj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIG9mZl9pbl9wYWdlKTsNCj4+Pj4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlm
+IChpdGVyLT5kaXIgPT0gRE1BX0RJUkVDVElPTl9GUk9NX0RFVklDRSkgew0KPj4+PiAgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBtZW1jcHkocCwgYnVmLCBjcGxlbik7DQo+Pj4+
+IEBAIC01OTEsOSArNTkxLDkgQEAgc3RhdGljIHZvaWQgcmluZ2J1Zl9pbml0X2NvbW1vbihW
+TUJ1c1JpbmdCdWZDb21tb24gKnJpbmdidWYsIFZNQnVzR3BhZGwgKmdwYWRsLA0KPj4+PiAg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgdWludDMyX3QgYmVnaW4sIHVpbnQzMl90IGVuZCkNCj4+Pj4gIMKg
+wqAgew0KPj4+PiAgwqDCoMKgwqDCoMKgIHJpbmdidWYtPmFzID0gYXM7DQo+Pj4+IC3CoMKg
+wqAgcmluZ2J1Zi0+cmJfYWRkciA9IGdwYWRsLT5nZm5zW2JlZ2luXSA8PCBUQVJHRVRfUEFH
+RV9CSVRTOw0KPj4+PiAtwqDCoMKgIHJpbmdidWYtPmJhc2UgPSAoYmVnaW4gKyAxKSA8PCBU
+QVJHRVRfUEFHRV9CSVRTOw0KPj4+PiAtwqDCoMKgIHJpbmdidWYtPmxlbiA9IChlbmQgLSBi
+ZWdpbiAtIDEpIDw8IFRBUkdFVF9QQUdFX0JJVFM7DQo+Pj4+ICvCoMKgwqAgcmluZ2J1Zi0+
+cmJfYWRkciA9IGdwYWRsLT5nZm5zW2JlZ2luXSA8PCBxZW11X3RhcmdldF9wYWdlX2JpdHMo
+KTsNCj4+Pj4gK8KgwqDCoCByaW5nYnVmLT5iYXNlID0gKGJlZ2luICsgMSkgPDwgcWVtdV90
+YXJnZXRfcGFnZV9iaXRzKCk7DQo+Pj4+ICvCoMKgwqAgcmluZ2J1Zi0+bGVuID0gKGVuZCAt
+IGJlZ2luIC0gMSkgPDwgcWVtdV90YXJnZXRfcGFnZV9iaXRzKCk7DQo+Pj4+ICDCoMKgwqDC
+oMKgwqAgZ3BhZGxfaXRlcl9pbml0KCZyaW5nYnVmLT5pdGVyLCBncGFkbCwgYXMsIGRpcik7
+DQo+Pj4+ICDCoMKgIH0NCj4+Pj4gQEAgLTczNCw3ICs3MzQsNyBAQCBzdGF0aWMgaW50IHZt
+YnVzX2NoYW5uZWxfbm90aWZ5X2d1ZXN0KFZNQnVzQ2hhbm5lbCAqY2hhbikNCj4+Pj4gIMKg
+wqDCoMKgwqDCoCB1bnNpZ25lZCBsb25nICppbnRfbWFwLCBtYXNrOw0KPj4+PiAgwqDCoMKg
+wqDCoMKgIHVuc2lnbmVkIGlkeDsNCj4+Pj4gIMKgwqDCoMKgwqDCoCBod2FkZHIgYWRkciA9
+IGNoYW4tPnZtYnVzLT5pbnRfcGFnZV9ncGE7DQo+Pj4+IC3CoMKgwqAgaHdhZGRyIGxlbiA9
+IFRBUkdFVF9QQUdFX1NJWkUgLyAyLCBkaXJ0eSA9IDA7DQo+Pj4+ICvCoMKgwqAgaHdhZGRy
+IGxlbiA9IHFlbXVfdGFyZ2V0X3BhZ2Vfc2l6ZSgpIC8gMiwgZGlydHkgPSAwOw0KPj4+PiAg
+wqDCoMKgwqDCoMKgIHRyYWNlX3ZtYnVzX2NoYW5uZWxfbm90aWZ5X2d1ZXN0KGNoYW4tPmlk
+KTsNCj4+Pj4gQEAgLTc0Myw3ICs3NDMsNyBAQCBzdGF0aWMgaW50IHZtYnVzX2NoYW5uZWxf
+bm90aWZ5X2d1ZXN0KFZNQnVzQ2hhbm5lbCAqY2hhbikNCj4+Pj4gIMKgwqDCoMKgwqDCoCB9
+DQo+Pj4+ICDCoMKgwqDCoMKgwqAgaW50X21hcCA9IGNwdV9waHlzaWNhbF9tZW1vcnlfbWFw
+KGFkZHIsICZsZW4sIDEpOw0KPj4+PiAtwqDCoMKgIGlmIChsZW4gIT0gVEFSR0VUX1BBR0Vf
+U0laRSAvIDIpIHsNCj4+Pj4gK8KgwqDCoCBpZiAobGVuICE9IHFlbXVfdGFyZ2V0X3BhZ2Vf
+c2l6ZSgpIC8gMikgew0KPj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmVzID0gLUVOWElP
+Ow0KPj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZ290byB1bm1hcDsNCj4+Pj4gIMKgwqDC
+oMKgwqDCoCB9DQo+Pj4+IEBAIC0xMDM4LDE0ICsxMDM4LDE0IEBAIHN0YXRpYyBpbnQgc2ds
+X2Zyb21fZ3BhX3JhbmdlcyhRRU1VU0dMaXN0ICpzZ2wsIFZNQnVzRGV2aWNlICpkZXYsDQo+
+Pj4+ICDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9DQo+Pj4+ICDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCBsZW4gLT0gc2l6ZW9mKHJhbmdlKTsNCj4+Pj4gLcKgwqDCoMKgwqDCoMKgIGlmIChyYW5n
+ZS5ieXRlX29mZnNldCAmIFRBUkdFVF9QQUdFX01BU0spIHsNCj4+Pj4gK8KgwqDCoMKgwqDC
+oMKgIGlmIChyYW5nZS5ieXRlX29mZnNldCAmIHFlbXVfdGFyZ2V0X3BhZ2VfbWFzaygpKSB7
+DQo+Pj4+ICDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGdvdG8gZWlvOw0KPj4+PiAg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgfQ0KPj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZm9y
+ICg7IHJhbmdlLmJ5dGVfY291bnQ7IHJhbmdlLmJ5dGVfb2Zmc2V0ID0gMCkgew0KPj4+PiAg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50NjRfdCBwYWRkcjsNCj4+Pj4gIMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgcGxlbiA9IE1JTihyYW5nZS5i
+eXRlX2NvdW50LA0KPj4+PiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgVEFSR0VUX1BBR0VfU0laRSAtIHJhbmdlLmJ5
+dGVfb2Zmc2V0KTsNCj4+Pj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHFlbXVfdGFyZ2V0X3BhZ2Vfc2l6ZSgpIC0g
+cmFuZ2UuYnl0ZV9vZmZzZXQpOw0KPj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCBpZiAobGVuIDwgc2l6ZW9mKHVpbnQ2NF90KSkgew0KPj4+PiAgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIGdvdG8gZWlvOw0KPj4+PiBAQCAtMTA1NSw3ICsxMDU1
+LDcgQEAgc3RhdGljIGludCBzZ2xfZnJvbV9ncGFfcmFuZ2VzKFFFTVVTR0xpc3QgKnNnbCwg
+Vk1CdXNEZXZpY2UgKmRldiwNCj4+Pj4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCBnb3RvIGVycjsNCj4+Pj4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+fQ0KPj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBsZW4gLT0gc2l6ZW9mKHVp
+bnQ2NF90KTsNCj4+Pj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcGFkZHIgPDw9IFRBUkdF
+VF9QQUdFX0JJVFM7DQo+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHBhZGRyIDw8PSBx
+ZW11X3RhcmdldF9wYWdlX2JpdHMoKTsNCj4+Pj4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgcGFkZHIgfD0gcmFuZ2UuYnl0ZV9vZmZzZXQ7DQo+Pj4+ICDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIHJhbmdlLmJ5dGVfY291bnQgLT0gcGxlbjsNCj4+Pj4gQEAgLTE4
+MDQsNyArMTgwNCw3IEBAIHN0YXRpYyB2b2lkIGhhbmRsZV9ncGFkbF9oZWFkZXIoVk1CdXMg
+KnZtYnVzLCB2bWJ1c19tZXNzYWdlX2dwYWRsX2hlYWRlciAqbXNnLA0KPj4+PiAgwqDCoMKg
+wqDCoMKgwqAgKiBhbnl0aGluZyBlbHNlIGFuZCBzaW1wbGlmeSB0aGluZ3MgZ3JlYXRseS4N
+Cj4+Pj4gIMKgwqDCoMKgwqDCoMKgICovDQo+Pj4+ICDCoMKgwqDCoMKgwqAgaWYgKG1zZy0+
+cmFuZ2Vjb3VudCAhPSAxIHx8IG1zZy0+cmFuZ2VbMF0uYnl0ZV9vZmZzZXQgfHwNCj4+Pj4g
+LcKgwqDCoMKgwqDCoMKgIChtc2ctPnJhbmdlWzBdLmJ5dGVfY291bnQgIT0gKG51bV9nZm5z
+IDw8IFRBUkdFVF9QQUdFX0JJVFMpKSkgew0KPj4+PiArwqDCoMKgwqDCoMKgwqAgKG1zZy0+
+cmFuZ2VbMF0uYnl0ZV9jb3VudCAhPSAobnVtX2dmbnMgPDwgcWVtdV90YXJnZXRfcGFnZV9i
+aXRzKCkpKSkgew0KPj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuOw0KPj4+PiAg
+wqDCoMKgwqDCoMKgIH0NCj4+Pj4gQEAgLTIyNDAsMTAgKzIyNDAsMTAgQEAgc3RhdGljIHZv
+aWQgdm1idXNfc2lnbmFsX2V2ZW50KEV2ZW50Tm90aWZpZXIgKmUpDQo+Pj4+ICDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCByZXR1cm47DQo+Pj4+ICDCoMKgwqDCoMKgwqAgfQ0KPj4+PiAtwqDC
+oMKgIGFkZHIgPSB2bWJ1cy0+aW50X3BhZ2VfZ3BhICsgVEFSR0VUX1BBR0VfU0laRSAvIDI7
+DQo+Pj4+IC3CoMKgwqAgbGVuID0gVEFSR0VUX1BBR0VfU0laRSAvIDI7DQo+Pj4+ICvCoMKg
+wqAgYWRkciA9IHZtYnVzLT5pbnRfcGFnZV9ncGEgKyBxZW11X3RhcmdldF9wYWdlX3NpemUo
+KSAvIDI7DQo+Pj4+ICvCoMKgwqAgbGVuID0gcWVtdV90YXJnZXRfcGFnZV9zaXplKCkgLyAy
+Ow0KPj4+PiAgwqDCoMKgwqDCoMKgIGludF9tYXAgPSBjcHVfcGh5c2ljYWxfbWVtb3J5X21h
+cChhZGRyLCAmbGVuLCAxKTsNCj4+Pj4gLcKgwqDCoCBpZiAobGVuICE9IFRBUkdFVF9QQUdF
+X1NJWkUgLyAyKSB7DQo+Pj4+ICvCoMKgwqAgaWYgKGxlbiAhPSBxZW11X3RhcmdldF9wYWdl
+X3NpemUoKSAvIDIpIHsNCj4+Pj4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgIGdvdG8gdW5tYXA7
+DQo+Pj4+ICDCoMKgwqDCoMKgwqAgfQ0KPj4+PiBkaWZmIC0tZ2l0IGEvaHcvaHlwZXJ2L21l
+c29uLmJ1aWxkIGIvaHcvaHlwZXJ2L21lc29uLmJ1aWxkDQo+Pj4+IGluZGV4IGY0YWEwYTVh
+ZGE5Li5jODU1ZmRjZjA0YyAxMDA2NDQNCj4+Pj4gLS0tIGEvaHcvaHlwZXJ2L21lc29uLmJ1
+aWxkDQo+Pj4+ICsrKyBiL2h3L2h5cGVydi9tZXNvbi5idWlsZA0KPj4+PiBAQCAtMSw2ICsx
+LDYgQEANCj4+Pj4gIMKgwqAgc3BlY2lmaWNfc3MuYWRkKHdoZW46ICdDT05GSUdfSFlQRVJW
+JywgaWZfdHJ1ZTogZmlsZXMoJ2h5cGVydi5jJykpDQo+Pj4+ICDCoMKgIHNwZWNpZmljX3Nz
+LmFkZCh3aGVuOiAnQ09ORklHX0hZUEVSVl9URVNUREVWJywgaWZfdHJ1ZTogZmlsZXMoJ2h5
+cGVydl90ZXN0ZGV2LmMnKSkNCj4+Pj4gLXNwZWNpZmljX3NzLmFkZCh3aGVuOiAnQ09ORklH
+X1ZNQlVTJywgaWZfdHJ1ZTogZmlsZXMoJ3ZtYnVzLmMnKSkNCj4+Pj4gK3N5c3RlbV9zcy5h
+ZGQod2hlbjogJ0NPTkZJR19WTUJVUycsIGlmX3RydWU6IGZpbGVzKCd2bWJ1cy5jJykpDQo+
+Pj4+ICDCoMKgIHNwZWNpZmljX3NzLmFkZCh3aGVuOiAnQ09ORklHX1NZTkRCRycsIGlmX3Ry
+dWU6IGZpbGVzKCdzeW5kYmcuYycpKQ0KPj4+PiAgwqDCoCBzcGVjaWZpY19zcy5hZGQod2hl
+bjogJ0NPTkZJR19IVl9CQUxMT09OJywgaWZfdHJ1ZTogZmlsZXMoJ2h2LWJhbGxvb24uYycs
+ICdodi1iYWxsb29uLXBhZ2VfcmFuZ2VfdHJlZS5jJywgJ2h2LWJhbGxvb24tb3VyX3Jhbmdl
+X21lbXNsb3RzLmMnKSkNCj4+Pj4gIMKgwqAgc3lzdGVtX3NzLmFkZCh3aGVuOiAnQ09ORklH
+X0hWX0JBTExPT04nLCBpZl9mYWxzZTogZmlsZXMoJ2h2LWJhbGxvb24tc3R1Yi5jJykpDQo+
+Pj4NCj4+DQo+IA0KDQo=
 
