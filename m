@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E5DC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 560DBC282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZIb-00015U-Rj; Fri, 07 Mar 2025 10:07:41 -0500
+	id 1tqZIJ-0000w0-Vo; Fri, 07 Mar 2025 10:07:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIZ-00014C-2P
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:39 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tqZIF-0000us-9C
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:20 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIW-0008O5-Tx
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:38 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43bdcd0d97dso11445325e9.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:36 -0800 (PST)
+ id 1tqZIC-000898-7i
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:18 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-390cf7458f5so1927703f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741360055; x=1741964855; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741360034; x=1741964834; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Od4b3d3rOr7fMBRm5KIcutZc76QQ9AX8573/i1gjMqU=;
- b=gYun6AsMReztoOr8unR7rNvi1wfAeL06gY+A85Lhv76dnBpN1AS+onhnBxPa2RpdQh
- TqNMi3VVRisVoVEmefd5HCkNVHkeKpW6S7D6+sNnRK/jDeNWHJKDOXvxpzAVA2v6hdhs
- WHEnA+XC95GukhdLIck+xYV8ErvbxnwN5LPM53qEuRWj1J0W8P5vtdhcUQiwHUDK7+X5
- m1vvO0clUijRLHj+KT/IGkU557c0v8Ehi6e6bpoox5xATxnxF29UdliCBm31ul21AtJc
- 4IANShW5YX3HRp3ONrxUydTnflCOuHvYCjvc3Voa4IFemD/dI6Af6N31Ryvg3c/3NEV8
- Eilw==
+ :reply-to; bh=dJa7xFMSJ9Cj8sAYI9y1hV/NskVbtE4S9vRHsNQbdj8=;
+ b=XSrxlXKZDWZghH/3DjN+v7VrXSUicoODJzOBNQUNbkH8n9JW9D5UllUJJw5GBnFRNF
+ xUdYs2pYnm1PWhLxgGCfPvF1+zlBKWVdHs6RvGD0x5RfJsBV4EEARMGpNls1ymFI8xR+
+ QPodK6eWVZWoXqfAfwlpwevuOArkn/wIcN6msUZvRSnEa5rUWWg+iSAjR2V0Gb0EOvEw
+ q7CEX/P9z0HQd+oFNAwpGhA3PTRiv7uq935zN2rgl+jIKXIuX7TQc3PDKEarYeVj6PZ7
+ Ct7wh7NvxlbhZwgaeddPvsbvcZNBaSV8xe4QKwaPFCyyJxyq8XzCTe+qhwJS31kEknVY
+ ARYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741360055; x=1741964855;
+ d=1e100.net; s=20230601; t=1741360034; x=1741964834;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Od4b3d3rOr7fMBRm5KIcutZc76QQ9AX8573/i1gjMqU=;
- b=GhBd07rR44OeVVreo4u+2LQ8HBLLrfrCkkPcuBZi2QpGm4GxAJP3Q9e9VCG/EirdH+
- xOhpGl+bEuqADPDo+FA7wA396Y+E05VGGplFi005AzfYPxbDKa92QBSXtrOLJxaGIYzf
- 3u4ajIDX5WNFL5SVqid2bU/uoTcr7BMecxD85SFaRrZRFY7w0TiBDltvcKwUekQAuMb2
- /CCrXnxbMY8PAtUfXRqQo7snqFQIF43vcrDO2Hba7NRx1ojoUmDJaWmJ+o1XHjX6TrZT
- kmVvgcFK+kU9NsSD/9MP8fSsPKSYINZrKTz8zrX1V8nOSUhSr0FKNKJxwnpJJXetgc2e
- UqSg==
-X-Gm-Message-State: AOJu0Yz8tJWA7/4wN8DauRpWTyCZJCV+/pYtcZBp1n4rwnIYgcj0hn+B
- /oJeqkzKOQUkVosSHMUPShpBA/b2Nxx+Ab/vjBA/dALiIdystyIY9C1LnpOuc6az+Pf/82URgEX
- b
-X-Gm-Gg: ASbGncvwEX+IEet2K+CHJWYGwE6ajl7PIRhbdTdq7VlrVKHEXynplqxGXLy0faXl5cH
- 3HjVvkL2icNxWUfchIQGSj72mv1uun3AtO8pw4grhO2Bd+23veitQaH7E+0JnNbJQv1U54XrJYL
- cacj6zoqia5VWSvkjnP8GA9NQKz2ea5/lK2rGX/MNXtLtiiABvcPZ5gtbLmdaXMqr2ghVpfFmgM
- NgYTNUWT5lLihvVV+10cAJpnGYXHxKhCuevRveTzmSZvJ0lQcq5I8j52G7Gavkd9sfRJDMj/P6F
- j8VvbZHgTbj1FipmzSGPNkHLA0/NhL5JJFgYNUbNsZyJ7l3t7Ig=
-X-Google-Smtp-Source: AGHT+IEoIMNAFnjO5XzmagLGHpNdNwOcFL/OOJZUkHhPY1znWBpaXL669magZfTPwXeRTR8eu+EWcg==
-X-Received: by 2002:a05:6000:1864:b0:391:39ea:7866 with SMTP id
- ffacd0b85a97d-39139ea7d93mr495744f8f.19.1741360055304; 
- Fri, 07 Mar 2025 07:07:35 -0800 (PST)
+ bh=dJa7xFMSJ9Cj8sAYI9y1hV/NskVbtE4S9vRHsNQbdj8=;
+ b=PVwUCa4Ikzz0xX+r/SSBTCFxWZ2qLHoIGBoosr23zByCJcks6CivJF0RBxyKvQCPKN
+ ejUa1yY11FkwNAFTXgyqJ0CJrnjYT/TgIYcd1w21g4MjkpSdWV2Hxse8TIqGfSC6zHrt
+ xmU6gxQoSGZsLYeAhvRseLTnqjsSjg4/t48SpUOnLRyF49cjgEijb3G1DGbUSk7ahf/K
+ 3fO2y5SRcVmHnTF3ed824TgHlyaHg0jgJVcor/GZ0QopYT7gbbECSzuaEFFAAxi2MtQi
+ J/i+918QBtkREsLgzq/smnz0J9zTDTmHt95yBWqDUbAgarrofbgURsd3gbR5EO2Sa2Ys
+ cTxQ==
+X-Gm-Message-State: AOJu0YyvXsJgn4lnDmMKEhzuL7+4VkAhrNHVo0fPSW+jD8OC1qWv/vRr
+ M5CSVt+W5zuEB3lerKAvG16CQ3L+8ol7RQ3xEBnQhvz7yXE86iZW3bUrO1qB8ZKZaOZKW55viw0
+ x
+X-Gm-Gg: ASbGnctgfVp/ATlXDSLDzEU52uk9zpeH8FMgHNXUJaEVD+Y67SwFcBhE1CUB4qxt4iq
+ pquYMOW44R8VCoYNDwT87UeMS9IqS7tFVvvj+oQCDjz2IE0jzjOuxMNWthrSd6DV5I0lAeOxCsv
+ 3CgBLowN+/yA8MpeOVbmdzBfrzc4d84NRMaZwtiMfLhmU3b0TL6IFdMPbdqA8ZZ4E8UmVHEoj74
+ EbmZjJdOsyYXvKqf2jH91lwMytq/PO2n33irygIH+yCrlMdzND2cNjgaENGlwAiEcB4dT1fyTHC
+ Rdhb5sRxOesUhpQ2yKsUbbAVVwHGGBYbD4KG1i1TISdmvFfgr1E=
+X-Google-Smtp-Source: AGHT+IHP7D6KsDUOeNhHxc9V30FkxjqXeBIloOt+xMSXLkwTuYXHlPRQ8GjCqG2VQLEBocoq4cbTdA==
+X-Received: by 2002:a5d:6d0f:0:b0:390:e46f:4454 with SMTP id
+ ffacd0b85a97d-39132d72c52mr3186094f8f.32.1741360033505; 
+ Fri, 07 Mar 2025 07:07:13 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.34
+ ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 07:07:34 -0800 (PST)
+ Fri, 07 Mar 2025 07:07:12 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/21] target/rx: Remove TCG_CALL_NO_WG from helpers which
- write env
-Date: Fri,  7 Mar 2025 15:07:08 +0000
-Message-ID: <20250307150708.3222813-22-peter.maydell@linaro.org>
+Subject: [PULL 02/21] hw/gpio: npcm7xx: fixup out-of-bounds access
+Date: Fri,  7 Mar 2025 15:06:49 +0000
+Message-ID: <20250307150708.3222813-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307150708.3222813-1-peter.maydell@linaro.org>
 References: <20250307150708.3222813-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,76 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Keith Packard <keithp@keithp.com>
+From: Patrick Venture <venture@google.com>
 
-Functions which modify TCG globals must not be marked TCG_CALL_NO_WG,
-as that tells the optimizer that TCG global values already loaded in
-machine registers are still valid, and so any changes which these
-helpers make to the CPU state may be ignored.
+The reg isn't validated to be a possible register before
+it's dereferenced for one case.  The mmio space registered
+for the gpio device is 4KiB but there aren't that many
+registers in the struct.
 
-The target/rx code chooses to put (among other things) all the PSW
-bits and also ACC into globals, so the NO_WG flag on various
-functions that touch the PSW or ACC is incorrect and must be removed.
-This includes all the floating point helper functions, because
-update_fpsw() will update PSW Z and S.
-
-Signed-off-by: Keith Packard <keithp@keithp.com>
-[PMM: Clarified commit message]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org
+Fixes: 526dbbe0874 ("hw/gpio: Add GPIO model for Nuvoton NPCM7xx")
+Signed-off-by: Patrick Venture <venture@google.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20250226024603.493148-1-venture@google.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/rx/helper.h | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ hw/gpio/npcm7xx_gpio.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/target/rx/helper.h b/target/rx/helper.h
-index ebb47394744..8cc38b0cb71 100644
---- a/target/rx/helper.h
-+++ b/target/rx/helper.h
-@@ -4,27 +4,27 @@ DEF_HELPER_1(raise_privilege_violation, noreturn, env)
- DEF_HELPER_1(wait, noreturn, env)
- DEF_HELPER_2(rxint, noreturn, env, i32)
- DEF_HELPER_1(rxbrk, noreturn, env)
--DEF_HELPER_FLAGS_3(fadd, TCG_CALL_NO_WG, f32, env, f32, f32)
--DEF_HELPER_FLAGS_3(fsub, TCG_CALL_NO_WG, f32, env, f32, f32)
--DEF_HELPER_FLAGS_3(fmul, TCG_CALL_NO_WG, f32, env, f32, f32)
--DEF_HELPER_FLAGS_3(fdiv, TCG_CALL_NO_WG, f32, env, f32, f32)
--DEF_HELPER_FLAGS_3(fcmp, TCG_CALL_NO_WG, void, env, f32, f32)
--DEF_HELPER_FLAGS_2(ftoi, TCG_CALL_NO_WG, i32, env, f32)
--DEF_HELPER_FLAGS_2(round, TCG_CALL_NO_WG, i32, env, f32)
--DEF_HELPER_FLAGS_2(itof, TCG_CALL_NO_WG, f32, env, i32)
-+DEF_HELPER_3(fadd, f32, env, f32, f32)
-+DEF_HELPER_3(fsub, f32, env, f32, f32)
-+DEF_HELPER_3(fmul, f32, env, f32, f32)
-+DEF_HELPER_3(fdiv, f32, env, f32, f32)
-+DEF_HELPER_3(fcmp, void, env, f32, f32)
-+DEF_HELPER_2(ftoi, i32, env, f32)
-+DEF_HELPER_2(round, i32, env, f32)
-+DEF_HELPER_2(itof, f32, env, i32)
- DEF_HELPER_2(set_fpsw, void, env, i32)
--DEF_HELPER_FLAGS_2(racw, TCG_CALL_NO_WG, void, env, i32)
--DEF_HELPER_FLAGS_2(set_psw_rte, TCG_CALL_NO_WG, void, env, i32)
--DEF_HELPER_FLAGS_2(set_psw, TCG_CALL_NO_WG, void, env, i32)
-+DEF_HELPER_2(racw, void, env, i32)
-+DEF_HELPER_2(set_psw_rte, void, env, i32)
-+DEF_HELPER_2(set_psw, void, env, i32)
- DEF_HELPER_1(pack_psw, i32, env)
--DEF_HELPER_FLAGS_3(div, TCG_CALL_NO_WG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(divu, TCG_CALL_NO_WG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_1(scmpu, TCG_CALL_NO_WG, void, env)
-+DEF_HELPER_3(div, i32, env, i32, i32)
-+DEF_HELPER_3(divu, i32, env, i32, i32)
-+DEF_HELPER_1(scmpu, void, env)
- DEF_HELPER_1(smovu, void, env)
- DEF_HELPER_1(smovf, void, env)
- DEF_HELPER_1(smovb, void, env)
- DEF_HELPER_2(sstr, void, env, i32)
--DEF_HELPER_FLAGS_2(swhile, TCG_CALL_NO_WG, void, env, i32)
--DEF_HELPER_FLAGS_2(suntil, TCG_CALL_NO_WG, void, env, i32)
--DEF_HELPER_FLAGS_2(rmpa, TCG_CALL_NO_WG, void, env, i32)
-+DEF_HELPER_2(swhile, void, env, i32)
-+DEF_HELPER_2(suntil, void, env, i32)
-+DEF_HELPER_2(rmpa, void, env, i32)
- DEF_HELPER_1(satr, void, env)
+diff --git a/hw/gpio/npcm7xx_gpio.c b/hw/gpio/npcm7xx_gpio.c
+index 23e67424c9f..2916056fae6 100644
+--- a/hw/gpio/npcm7xx_gpio.c
++++ b/hw/gpio/npcm7xx_gpio.c
+@@ -220,8 +220,6 @@ static void npcm7xx_gpio_regs_write(void *opaque, hwaddr addr, uint64_t v,
+         return;
+     }
+ 
+-    diff = s->regs[reg] ^ value;
+-
+     switch (reg) {
+     case NPCM7XX_GPIO_TLOCK1:
+     case NPCM7XX_GPIO_TLOCK2:
+@@ -242,6 +240,7 @@ static void npcm7xx_gpio_regs_write(void *opaque, hwaddr addr, uint64_t v,
+     case NPCM7XX_GPIO_PU:
+     case NPCM7XX_GPIO_PD:
+     case NPCM7XX_GPIO_IEM:
++        diff = s->regs[reg] ^ value;
+         s->regs[reg] = value;
+         npcm7xx_gpio_update_pins(s, diff);
+         break;
 -- 
 2.43.0
 
