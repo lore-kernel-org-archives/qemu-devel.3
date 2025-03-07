@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 771C6C28B24
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E59AC28B23
 	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcEx-0000he-GW; Fri, 07 Mar 2025 13:16:07 -0500
+	id 1tqcFO-0000pW-73; Fri, 07 Mar 2025 13:16:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqcEw-0000hW-2C
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:16:06 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqcFL-0000oV-Tw
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:16:31 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqcEu-0004Kk-DF
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:16:05 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqcFJ-0005MU-Sw
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:16:31 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id A670B1F395;
- Fri,  7 Mar 2025 18:16:01 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 2521D2118D;
+ Fri,  7 Mar 2025 18:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1741371361; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1741371369; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=D0wrgi6pxrkmOfIx5ZgU7+DOtdeSiALIzxKjJwUR95Y=;
- b=1741Vt4ViN0IVcWerQoDOBKeHrWVjcTpZpd8WeTO+5IIKXuvZJ+vz4ODQl9HdAD6W1ph5Y
- z9FUkwUdLABgUOyIR+JLqWweE6nYeqJQRdlEVgR9Rj1voLjNbXGiXi3R/CbknA7LZJOzmK
- Zt742ZCSQKA4/mUNOyRiJ+/f9t2dVU8=
+ bh=LrUs++PLGKZhWmWTEUi2shbFpx1DoqHEvexa17ejjMM=;
+ b=1Nvp/vjVIBTWlmMooKH/z2SxDn8tjsG81X7F+JkJEDOZ2HMiTjCAWFLOiY0U2GzDKhs4qz
+ JlFO4V59yXynXYXPgmXzYWN+2Trf5e8/BselY3Ifi4Kqvm22QYvw8sR6StHeAG8JRNLyxj
+ VWWNtcYcU2X0n6jS9lxnmHpMkOO4ZNA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1741371361;
+ s=susede2_ed25519; t=1741371369;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=D0wrgi6pxrkmOfIx5ZgU7+DOtdeSiALIzxKjJwUR95Y=;
- b=Jtf2kRDKJerhq+PzRgwQR6nc8f7Cog6J2uNpFxszFofLnpBNw3PmdsFbwzwNJWw/yestY8
- mI9kKd8m6nGuEJCg==
-Authentication-Results: smtp-out2.suse.de;
+ bh=LrUs++PLGKZhWmWTEUi2shbFpx1DoqHEvexa17ejjMM=;
+ b=xsFeeudMT4Yg/FcjmNMX+AwGV1rC4gyd5kOgkiYR99hvU3QMrxPmuu620Y9yhMFWPjtW56
+ JfHPuGB5/KUBwACg==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1741371361; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1741371369; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=D0wrgi6pxrkmOfIx5ZgU7+DOtdeSiALIzxKjJwUR95Y=;
- b=1741Vt4ViN0IVcWerQoDOBKeHrWVjcTpZpd8WeTO+5IIKXuvZJ+vz4ODQl9HdAD6W1ph5Y
- z9FUkwUdLABgUOyIR+JLqWweE6nYeqJQRdlEVgR9Rj1voLjNbXGiXi3R/CbknA7LZJOzmK
- Zt742ZCSQKA4/mUNOyRiJ+/f9t2dVU8=
+ bh=LrUs++PLGKZhWmWTEUi2shbFpx1DoqHEvexa17ejjMM=;
+ b=1Nvp/vjVIBTWlmMooKH/z2SxDn8tjsG81X7F+JkJEDOZ2HMiTjCAWFLOiY0U2GzDKhs4qz
+ JlFO4V59yXynXYXPgmXzYWN+2Trf5e8/BselY3Ifi4Kqvm22QYvw8sR6StHeAG8JRNLyxj
+ VWWNtcYcU2X0n6jS9lxnmHpMkOO4ZNA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1741371361;
+ s=susede2_ed25519; t=1741371369;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=D0wrgi6pxrkmOfIx5ZgU7+DOtdeSiALIzxKjJwUR95Y=;
- b=Jtf2kRDKJerhq+PzRgwQR6nc8f7Cog6J2uNpFxszFofLnpBNw3PmdsFbwzwNJWw/yestY8
- mI9kKd8m6nGuEJCg==
+ bh=LrUs++PLGKZhWmWTEUi2shbFpx1DoqHEvexa17ejjMM=;
+ b=xsFeeudMT4Yg/FcjmNMX+AwGV1rC4gyd5kOgkiYR99hvU3QMrxPmuu620Y9yhMFWPjtW56
+ JfHPuGB5/KUBwACg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 52B1813A22;
- Fri,  7 Mar 2025 18:16:00 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C353F13A53;
+ Fri,  7 Mar 2025 18:16:07 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id UM2NBOA3y2dNcgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 07 Mar 2025 18:16:00 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 6BL/Huc3y2dNcgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Mar 2025 18:16:07 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
 	Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PULL 3/8] migration: Prioritize RDMA in ram_save_target_page()
-Date: Fri,  7 Mar 2025 15:15:46 -0300
-Message-Id: <20250307181551.19887-4-farosas@suse.de>
+Subject: [PULL 7/8] migration: Unfold control_save_page()
+Date: Fri,  7 Mar 2025 15:15:50 -0300
+Message-Id: <20250307181551.19887-8-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250307181551.19887-1-farosas@suse.de>
 References: <20250307181551.19887-1-farosas@suse.de>
@@ -92,10 +92,10 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
  RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -121,63 +121,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Li Zhijian <lizhijian@fujitsu.com>
 
-Address an error in RDMA-based migration by ensuring RDMA is prioritized
-when saving pages in `ram_save_target_page()`.
+control_save_page() is for RDMA only, unfold it to make the code more
+clear.
+In addition:
+ - Similar to other branches style in ram_save_target_page(), involve RDMA
+   only if the condition 'migrate_rdma()' is true.
+ - Further simplify the code by removing the RAM_SAVE_CONTROL_NOT_SUPP.
 
-Previously, the RDMA protocol's page-saving step was placed after other
-protocols due to a refactoring in commit bc38dc2f5f3. This led to migration
-failures characterized by unknown control messages and state loading errors
-destination:
-(qemu) qemu-system-x86_64: Unknown control message QEMU FILE
-qemu-system-x86_64: error while loading state section id 1(ram)
-qemu-system-x86_64: load of migration failed: Operation not permitted
-source:
-(qemu) qemu-system-x86_64: RDMA is in an error state waiting migration to abort!
-qemu-system-x86_64: failed to save SaveStateEntry with id(name): 1(ram): -1
-qemu-system-x86_64: rdma migration: recv polling control error!
-qemu-system-x86_64: warning: Early error. Sending error.
-qemu-system-x86_64: warning: rdma migration: send polling control error
-
-RDMA migration implemented its own protocol/method to send pages to
-destination side, hand over to RDMA first to prevent pages being saved by
-other protocol.
-
-Fixes: bc38dc2f5f3 ("migration: refactor ram_save_target_page functions")
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Message-ID: <20250305062825.772629-2-lizhijian@fujitsu.com>
+Message-ID: <20250305062825.772629-6-lizhijian@fujitsu.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/ram.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ migration/ram.c  | 34 +++++++---------------------------
+ migration/rdma.c |  7 ++-----
+ migration/rdma.h |  3 +--
+ 3 files changed, 10 insertions(+), 34 deletions(-)
 
 diff --git a/migration/ram.c b/migration/ram.c
-index 589b6505eb..424df6d9f1 100644
+index 424df6d9f1..c363034c88 100644
 --- a/migration/ram.c
 +++ b/migration/ram.c
-@@ -1964,6 +1964,11 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
-     ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
-     int res;
- 
-+    /* Hand over to RDMA first */
-+    if (control_save_page(pss, offset, &res)) {
-+        return res;
-+    }
-+
-     if (!migrate_multifd()
-         || migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
-         if (save_zero_page(rs, pss, offset)) {
-@@ -1976,10 +1981,6 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
-         return ram_save_multifd_page(block, offset);
-     }
- 
--    if (control_save_page(pss, offset, &res)) {
--        return res;
--    }
--
-     return ram_save_page(rs, pss);
+@@ -1143,32 +1143,6 @@ static int save_zero_page(RAMState *rs, PageSearchStatus *pss,
+     return len;
  }
  
+-/*
+- * @pages: the number of pages written by the control path,
+- *        < 0 - error
+- *        > 0 - number of pages written
+- *
+- * Return true if the pages has been saved, otherwise false is returned.
+- */
+-static bool control_save_page(PageSearchStatus *pss,
+-                              ram_addr_t offset, int *pages)
+-{
+-    int ret;
+-
+-    ret = rdma_control_save_page(pss->pss_channel, pss->block->offset, offset,
+-                                 TARGET_PAGE_SIZE);
+-    if (ret == RAM_SAVE_CONTROL_NOT_SUPP) {
+-        return false;
+-    }
+-
+-    if (ret == RAM_SAVE_CONTROL_DELAYED) {
+-        *pages = 1;
+-        return true;
+-    }
+-    *pages = ret;
+-    return true;
+-}
+-
+ /*
+  * directly send the page to the stream
+  *
+@@ -1965,7 +1939,13 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+     int res;
+ 
+     /* Hand over to RDMA first */
+-    if (control_save_page(pss, offset, &res)) {
++    if (migrate_rdma()) {
++        res = rdma_control_save_page(pss->pss_channel, pss->block->offset,
++                                     offset, TARGET_PAGE_SIZE);
++
++        if (res == RAM_SAVE_CONTROL_DELAYED) {
++            res = 1;
++        }
+         return res;
+     }
+ 
+diff --git a/migration/rdma.c b/migration/rdma.c
+index e5b4ac599b..08eb924ffa 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -3284,14 +3284,11 @@ err:
+ int rdma_control_save_page(QEMUFile *f, ram_addr_t block_offset,
+                            ram_addr_t offset, size_t size)
+ {
+-    if (!migrate_rdma()) {
+-        return RAM_SAVE_CONTROL_NOT_SUPP;
+-    }
++    assert(migrate_rdma());
+ 
+     int ret = qemu_rdma_save_page(f, block_offset, offset, size);
+ 
+-    if (ret != RAM_SAVE_CONTROL_DELAYED &&
+-        ret != RAM_SAVE_CONTROL_NOT_SUPP) {
++    if (ret != RAM_SAVE_CONTROL_DELAYED) {
+         if (ret < 0) {
+             qemu_file_set_error(f, ret);
+         }
+diff --git a/migration/rdma.h b/migration/rdma.h
+index f55f28bbed..8eeb0117b9 100644
+--- a/migration/rdma.h
++++ b/migration/rdma.h
+@@ -33,7 +33,6 @@ void rdma_start_incoming_migration(InetSocketAddress *host_port, Error **errp);
+ #define RAM_CONTROL_ROUND     1
+ #define RAM_CONTROL_FINISH    3
+ 
+-#define RAM_SAVE_CONTROL_NOT_SUPP -1000
+ #define RAM_SAVE_CONTROL_DELAYED  -2000
+ 
+ #ifdef CONFIG_RDMA
+@@ -56,7 +55,7 @@ static inline
+ int rdma_control_save_page(QEMUFile *f, ram_addr_t block_offset,
+                            ram_addr_t offset, size_t size)
+ {
+-    return RAM_SAVE_CONTROL_NOT_SUPP;
++    g_assert_not_reached();
+ }
+ #endif
+ #endif
 -- 
 2.35.3
 
