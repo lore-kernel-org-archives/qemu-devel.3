@@ -4,109 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7504CC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A81DC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqYUW-0003ii-RN; Fri, 07 Mar 2025 09:15:56 -0500
+	id 1tqYWb-0005C3-NX; Fri, 07 Mar 2025 09:18:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqYUQ-0003fb-Bf
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:15:51 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqYWP-00052o-VV
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:17:56 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqYUO-0007si-I9
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:15:50 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqYWN-00083e-Rz
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:17:53 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 38AF921196;
- Fri,  7 Mar 2025 14:15:44 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id F2CDA1F38E;
+ Fri,  7 Mar 2025 14:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1741356944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1741357070; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=40EqZFHMzTTXgMYXyjH28dAOUsUqjWExefczeC6h+ZQ=;
- b=hHhcdpEVvM2ysKqsQvODFmLkZrSE/G0IeHEO5Yc9cz3ebESOnHCa3cEsn0QqDSIu7EVsKN
- icAYUc4txPIOvhp2GKOCKwlkeMji+zz/moGnypVsJ0Bo7IAerfwzvSmjZVFcZ3E6lNPFYU
- b23UalOw2Q2s0tVqyZdkta043Rm7OmE=
+ bh=ffmums1pXOLAkeNr7mlKJBxhO/9i3whv9vrgUM0R8LM=;
+ b=AN/Vhb6zRn8YFDWKJ9s72Ghlq7SejXpKfoYPF5jG3epRo2SrRVJl0J6KJORhJourDqJDxA
+ vHdDrgyPeF0bR8Z/lwudC2GguIB1ozlIC+2cEP9N9+PiGZmYsQa63KX8unkUhHZXglqNWs
+ 7pdz6gqnBJJ0pQ0o8SL1OM1wcDIlZD0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1741356944;
+ s=susede2_ed25519; t=1741357070;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=40EqZFHMzTTXgMYXyjH28dAOUsUqjWExefczeC6h+ZQ=;
- b=hUqnBMZ6jtT30vUvOKr+yHgk5VwfDP24AHI8y+jxBl/x/4ysGnOJlJo1dCzFwKbH5+NgYd
- +hXo3MYk/fYmuTCA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hHhcdpEV;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=hUqnBMZ6
+ bh=ffmums1pXOLAkeNr7mlKJBxhO/9i3whv9vrgUM0R8LM=;
+ b=4BXOEdelFjMG/8A0Z3t9Tg5TlwtxSYdObP1Bt6PI8IE8BRMQ/1xyKKXs0fIO2dT/rSOSJH
+ zWR0MtPLuJKBQuDA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="AN/Vhb6z";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4BXOEdel
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1741356944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1741357070; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=40EqZFHMzTTXgMYXyjH28dAOUsUqjWExefczeC6h+ZQ=;
- b=hHhcdpEVvM2ysKqsQvODFmLkZrSE/G0IeHEO5Yc9cz3ebESOnHCa3cEsn0QqDSIu7EVsKN
- icAYUc4txPIOvhp2GKOCKwlkeMji+zz/moGnypVsJ0Bo7IAerfwzvSmjZVFcZ3E6lNPFYU
- b23UalOw2Q2s0tVqyZdkta043Rm7OmE=
+ bh=ffmums1pXOLAkeNr7mlKJBxhO/9i3whv9vrgUM0R8LM=;
+ b=AN/Vhb6zRn8YFDWKJ9s72Ghlq7SejXpKfoYPF5jG3epRo2SrRVJl0J6KJORhJourDqJDxA
+ vHdDrgyPeF0bR8Z/lwudC2GguIB1ozlIC+2cEP9N9+PiGZmYsQa63KX8unkUhHZXglqNWs
+ 7pdz6gqnBJJ0pQ0o8SL1OM1wcDIlZD0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1741356944;
+ s=susede2_ed25519; t=1741357070;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=40EqZFHMzTTXgMYXyjH28dAOUsUqjWExefczeC6h+ZQ=;
- b=hUqnBMZ6jtT30vUvOKr+yHgk5VwfDP24AHI8y+jxBl/x/4ysGnOJlJo1dCzFwKbH5+NgYd
- +hXo3MYk/fYmuTCA==
+ bh=ffmums1pXOLAkeNr7mlKJBxhO/9i3whv9vrgUM0R8LM=;
+ b=4BXOEdelFjMG/8A0Z3t9Tg5TlwtxSYdObP1Bt6PI8IE8BRMQ/1xyKKXs0fIO2dT/rSOSJH
+ zWR0MtPLuJKBQuDA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A54C213A22;
- Fri,  7 Mar 2025 14:15:43 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2867C13A22;
+ Fri,  7 Mar 2025 14:17:48 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id jqBpGI//ymcEKAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 07 Mar 2025 14:15:43 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id y2vNNQwAy2erKAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Mar 2025 14:17:48 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Li Zhijian via <qemu-devel@nongnu.org>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH v5 0/6] migration/rdma: fixes, refactor and cleanup
-In-Reply-To: <20250305062825.772629-1-lizhijian@fujitsu.com>
-References: <20250305062825.772629-1-lizhijian@fujitsu.com>
-Date: Fri, 07 Mar 2025 11:15:40 -0300
-Message-ID: <8734fpudtf.fsf@suse.de>
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Steve Sistare <steven.sistare@oracle.com>
+Subject: Re: [PATCH V5] migration: ram block cpr blockers
+In-Reply-To: <1740667681-257312-1-git-send-email-steven.sistare@oracle.com>
+References: <1740667681-257312-1-git-send-email-steven.sistare@oracle.com>
+Date: Fri, 07 Mar 2025 11:16:42 -0300
+Message-ID: <87zfhxsz79.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Queue-Id: 38AF921196
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Rspamd-Queue-Id: F2CDA1F38E
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
+ MX_GOOD(-0.01)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_BLOCKED(0.00)[rspamd.com]; MID_RHS_MATCH_FROM(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2];
+ MID_RHS_MATCH_FROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
  DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,50 +126,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Li Zhijian via <qemu-devel@nongnu.org> writes:
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-> - It fix the RDMA migration broken issue
-> - disable RDMA + postcopy
-> - some cleanups
-> - Add a qtest for RDMA at last
+> Unlike cpr-reboot mode, cpr-transfer mode cannot save volatile ram blocks
+> in the migration stream file and recreate them later, because the physical
+> memory for the blocks is pinned and registered for vfio.  Add a blocker
+> for volatile ram blocks.
 >
-> Changes since V4:
->  - collect Reviewed-tags
->  - Address comments in patch "migration: Add qtest for migration over RDMA" from Fabiano Rosas <farosas@suse.de>
+> Also add a blocker for RAM_GUEST_MEMFD.  Preserving guest_memfd may be
+> sufficient for CPR, but it has not been tested yet.
 >
-> Changes since V3:
-> - check RDMA and capabilities are compatible on both sides # renamed from
->   previous V3's "migration: Add migration_capabilities_and_transport_compatible()"
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Reviewed-by: David Hildenbrand <david@redhat.com>
+> ---
+>  include/exec/memory.h   |  3 +++
+>  include/exec/ramblock.h |  1 +
+>  migration/savevm.c      |  2 ++
+>  system/physmem.c        | 66 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 72 insertions(+)
 >
-> Changes since V2:
-> - squash previous 2/3/4 to '[PATCH v3 5/6] migration: Unfold  control_save_page()'
-> - reorder the patch layout to prevent recently added code from being deleted again.
-> - collect Reviewed tags from Peter
->
-> Changes since V1[0]:
-> Add some saparate patches to refactor and cleanup based on V1
->
-> [0] https://lore.kernel.org/qemu-devel/20250218074345.638203-1-lizhijian@fujitsu.com/
->
-> Li Zhijian (6):
->   migration: Prioritize RDMA in ram_save_target_page()
->   migration: check RDMA and capabilities are compatible on both sides
->   migration: disable RDMA + postcopy-ram
->   migration/rdma: Remove redundant migration_in_postcopy checks
->   migration: Unfold control_save_page()
->   migration: Add qtest for migration over RDMA
->
->  MAINTAINERS                           |  1 +
->  migration/migration.c                 | 30 ++++++++----
->  migration/options.c                   | 25 ++++++++++
->  migration/options.h                   |  1 +
->  migration/ram.c                       | 41 +++++-----------
->  migration/rdma.c                      | 11 ++---
->  migration/rdma.h                      |  3 +-
->  scripts/rdma-migration-helper.sh      | 48 +++++++++++++++++++
->  tests/qtest/migration/precopy-tests.c | 67 +++++++++++++++++++++++++++
->  9 files changed, 178 insertions(+), 49 deletions(-)
->  create mode 100755 scripts/rdma-migration-helper.sh
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index 9f73b59..ea5d33a 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -3184,6 +3184,9 @@ bool ram_block_discard_is_disabled(void);
+>   */
+>  bool ram_block_discard_is_required(void);
+>  
+> +void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp);
+> +void ram_block_del_cpr_blocker(RAMBlock *rb);
+> +
+>  #endif
+>  
+>  #endif
+> diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+> index 0babd10..64484cd 100644
+> --- a/include/exec/ramblock.h
+> +++ b/include/exec/ramblock.h
+> @@ -39,6 +39,7 @@ struct RAMBlock {
+>      /* RCU-enabled, writes protected by the ramlist lock */
+>      QLIST_ENTRY(RAMBlock) next;
+>      QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
+> +    Error *cpr_blocker;
+>      int fd;
+>      uint64_t fd_offset;
+>      int guest_memfd;
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index bc375db..85a3559 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -3315,12 +3315,14 @@ void vmstate_register_ram(MemoryRegion *mr, DeviceState *dev)
+>      qemu_ram_set_idstr(mr->ram_block,
+>                         memory_region_name(mr), dev);
+>      qemu_ram_set_migratable(mr->ram_block);
+> +    ram_block_add_cpr_blocker(mr->ram_block, &error_fatal);
+>  }
+>  
+>  void vmstate_unregister_ram(MemoryRegion *mr, DeviceState *dev)
+>  {
+>      qemu_ram_unset_idstr(mr->ram_block);
+>      qemu_ram_unset_migratable(mr->ram_block);
+> +    ram_block_del_cpr_blocker(mr->ram_block);
+>  }
+>  
+>  void vmstate_register_ram_global(MemoryRegion *mr)
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 67c9db9..0e84f14 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -70,7 +70,10 @@
+>  
+>  #include "qemu/pmem.h"
+>  
+> +#include "qapi/qapi-types-migration.h"
+> +#include "migration/blocker.h"
+>  #include "migration/cpr.h"
+> +#include "migration/options.h"
+>  #include "migration/vmstate.h"
+>  
+>  #include "qemu/range.h"
+> @@ -1899,6 +1902,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>              qemu_mutex_unlock_ramlist();
+>              goto out_free;
+>          }
+> +
+> +        error_setg(&new_block->cpr_blocker,
+> +                   "Memory region %s uses guest_memfd, "
+> +                   "which is not supported with CPR.",
+> +                   memory_region_name(new_block->mr));
+> +        migrate_add_blocker_modes(&new_block->cpr_blocker, errp,
+> +                                  MIG_MODE_CPR_TRANSFER,
+> +                                  -1);
+>      }
+>  
+>      ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
+> @@ -4059,3 +4070,58 @@ bool ram_block_discard_is_required(void)
+>      return qatomic_read(&ram_block_discard_required_cnt) ||
+>             qatomic_read(&ram_block_coordinated_discard_required_cnt);
+>  }
+> +
+> +/*
+> + * Return true if ram is compatible with CPR.  Do not exclude rom,
+> + * because the rom file could change in new QEMU.
+> + */
+> +static bool ram_is_cpr_compatible(RAMBlock *rb)
+> +{
+> +    MemoryRegion *mr = rb->mr;
+> +
+> +    if (!mr || !memory_region_is_ram(mr)) {
+> +        return true;
+> +    }
+> +
+> +    /* Ram device is remapped in new QEMU */
+> +    if (memory_region_is_ram_device(mr)) {
+> +        return true;
+> +    }
+> +
+> +    /*
+> +     * A file descriptor is passed to new QEMU and remapped, or its backing
+> +     * file is reopened and mapped.  It must be shared to avoid COW.
+> +     */
+> +    if (rb->fd >= 0 && qemu_ram_is_shared(rb)) {
+> +        return true;
+> +    }
+> +
+> +    return false;
+> +}
+> +
+> +/*
+> + * Add a blocker for each volatile ram block.  This function should only be
+> + * called after we know that the block is migratable.  Non-migratable blocks
+> + * are either re-created in new QEMU, or are handled specially, or are covered
+> + * by a device-level CPR blocker.
+> + */
+> +void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp)
+> +{
+> +    assert(qemu_ram_is_migratable(rb));
+> +
+> +    if (ram_is_cpr_compatible(rb)) {
+> +        return;
+> +    }
+> +
+> +    error_setg(&rb->cpr_blocker,
+> +               "Memory region %s is not compatible with CPR. share=on is "
+> +               "required for memory-backend objects, and aux-ram-share=on is "
+> +               "required.", memory_region_name(rb->mr));
+> +    migrate_add_blocker_modes(&rb->cpr_blocker, errp, MIG_MODE_CPR_TRANSFER,
+> +                              -1);
+> +}
+> +
+> +void ram_block_del_cpr_blocker(RAMBlock *rb)
+> +{
+> +    migrate_del_blocker(&rb->cpr_blocker);
+> +}
 
-Queued, thanks!
+I assume this is good for merge. If anyone has further comments, please
+speak up.
+
+Thanks
 
