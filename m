@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BCACC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:20:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3201C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:25:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcId-0006c7-J8; Fri, 07 Mar 2025 13:19:55 -0500
+	id 1tqcNo-0008Gi-Qv; Fri, 07 Mar 2025 13:25:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqcIW-0006WP-Vv
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:19:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqcIU-0001Q1-UE
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:19:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741371584;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=m4Tlj098T/HcIov6vQLVvPIgyATySVI9PovRyEs9UxA=;
- b=SpGHz2vc7a8Css74I5NqR3vYH5k4BVgKz+eTG1fJI/nDFKm598EdaLM39fwsq9EJ4mPF57
- 6eXO0rUgFvguxFGFb7vAx6yqBDWUJdwCXqMEYC1c2RE8EauJa00zZyGvyyx0XdhGkdPdVa
- njoR970mb85c+VOZNRDHXcAH9cYndzg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-60o1-GcsMiqX9SuSSn7PUg-1; Fri,
- 07 Mar 2025 13:19:39 -0500
-X-MC-Unique: 60o1-GcsMiqX9SuSSn7PUg-1
-X-Mimecast-MFC-AGG-ID: 60o1-GcsMiqX9SuSSn7PUg_1741371578
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C2A8180AF67; Fri,  7 Mar 2025 18:19:38 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9058B1955DCE; Fri,  7 Mar 2025 18:19:37 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 28D7B21E675E; Fri, 07 Mar 2025 19:19:35 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
- =?utf-8?Q?hieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
- Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH 00/57] docs: Add new QAPI transmogrifier
-In-Reply-To: <20250305034610.960147-1-jsnow@redhat.com> (John Snow's message
- of "Tue, 4 Mar 2025 22:45:09 -0500")
-References: <20250305034610.960147-1-jsnow@redhat.com>
-Date: Fri, 07 Mar 2025 19:19:34 +0100
-Message-ID: <87r038g0uh.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tqcNm-0008Et-Mc
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:25:14 -0500
+Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tqcNk-0002MH-E3
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:25:14 -0500
+Received: by mail-yb1-xb36.google.com with SMTP id
+ 3f1490d57ef6-e3c8ae3a3b2so1656321276.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:25:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741371909; x=1741976709; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=+gpEaRqeugAKq7EAHSDpLMF/PS6nC1XVz3bMKspA2KU=;
+ b=Wd3sju18zB89y7wnH4T+lFhVQr20GV0i4CBAXQfLQ/jyh9MCwHr9YtDSZfZ+iKQNgE
+ /pT0b0kg0i2pYNmZ3cWp0g5csbzLUMLQH3FRbvCGSN1BDeuGBYf6aDJP+qCc8zrs6Dv6
+ p2WkoZFbxnsIQ6CH/eJDh0o4C/0HsHII/LXrprOtGnvOzD3nSD9QkZshZjUM5dXLHY1O
+ Wb2cjnaxsbJfE0v9gw9YPctIgk3wEBnC4L1gVU5UkQ2y8+9GXos5ithoFS772/c718Gb
+ VqamOt6WC1IiCwITK1FAJFw39c3ZrMbBGH3hZ9u/liXiCA9cwH5K4w+DMAQD3TQgTSFj
+ FjrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741371909; x=1741976709;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+gpEaRqeugAKq7EAHSDpLMF/PS6nC1XVz3bMKspA2KU=;
+ b=cVtj/0Bzsqm9rclNhWYQi0KOqdgiaM0dwL2onP/AOUvlhTGIpTwE/zfrwQCgwcZnGR
+ /opp/CdqUKISc+DUG/AnY1T0mNN4rUY50Xqxapt4CwaMzLeelxM1tQ/IkBY17u9KXsRY
+ UELT5IJi4lXOnpxz40KnBLFlSgwBr9QUCo1canroYNyEnTcaFzWZkI/GK0cpZpIecYI5
+ Xq9u0AegH6LIonxOvMcsHSfTefl6yzOpeuqrJzEWxNCkb8RBEVMl6Hs+Rx1c7jTJ5k35
+ G7ppeYlykZ4/7RFQMUwzXjy/ahyXFzgnbJ8AO0YgXGO3QGQH1eOMXnucoRZgBfobTI1A
+ KcQg==
+X-Gm-Message-State: AOJu0YwXWHQLtYXB/PL6J/Dc6rH5CiNTcFLHhyjL82mqYPXLYU6zUQ8G
+ 6ojSYiSFG2q9Q6Dl4V89z/gtJGyuHOeamI53xe7iqKprJkA6j3gMDZVPHbF6NzGFH7NPEz04gOG
+ wx8XAN5cqy0U/+IyLchhIuS0hfiNBLai6WbBahlyJGDlPqBZl
+X-Gm-Gg: ASbGncuTPUKxObmVSZ/XRBWSMbLmPb1WZM53+vQim28OZ1exdy//pvg85HeJ2kNrtYO
+ C7hXNUjp12CbBL9uWOzudjsj9S069gpdZ3Bt7/wKs1CpMD/MqitkygiHpOxtq0YfHpmEWwPgfYE
+ yvQJJ7WFi8yy+5U3jgJ39Ui4IXXsQ=
+X-Google-Smtp-Source: AGHT+IHS2yNOgScVap31TTmmTbIVaG/pP0J7240vmiy/VIchceiPphyIygRUBE+/ut2NSnlRwMz4U7NPHIC5XZZKWcw=
+X-Received: by 2002:a05:6902:288e:b0:e5d:ac3c:9dec with SMTP id
+ 3f1490d57ef6-e635c1da737mr5294567276.35.1741371909349; Fri, 07 Mar 2025
+ 10:25:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 7 Mar 2025 18:24:57 +0000
+X-Gm-Features: AQ5f1JqhFcSacCEFeFhrY5Dpryr8QC3Nxm2oS8ZsCf6dDyACjQckTQFHZKe2bHk
+Message-ID: <CAFEAcA8ozGhFJWc41M6ziB3mPtEQ_bpWcQTCj1Ue_W66-MYf2w@mail.gmail.com>
+Subject: make check-functional failures with --enable-rust: unsafe
+ precondition(s) violated: NonNull::new_unchecked
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,7 +89,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This looks really, really close.  I like how you split the work into
-patches, and your commit messages have been quite useful.  Thanks!
+I noticed that 'make check-functional' for arm targets doesn't all
+pass when QEMU is built with --enable-rust:
 
+11/46 qemu:func-thorough+func-aarch64-thorough+thorough /
+func-aarch64-aarch64_virt            TIMEOUT         720.03s   killed
+by signal 15 SIGTERM
+ 9/46 qemu:func-thorough+func-arm-thorough+thorough /
+func-arm-arm_tuxrun                      ERROR            51.71s
+exit status 1
+30/46 qemu:func-thorough+func-arm-thorough+thorough /
+func-arm-arm_vexpress                    ERROR             1.62s
+exit status 1
+44/46 qemu:func-thorough+func-arm-thorough+thorough /
+func-arm-arm_replay                      TIMEOUT          90.02s
+killed by signal 15 SIGTERM
+
+The first of these is the virt/gpu breakage that's not Rust related.
+
+tuxrun fails because of a Rust panic, though:
+
+        Command:
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/rust/qemu-system-arm
+-display none -vga none -chardev socket,id=mon,fd=5 -mon
+chardev=mon,mode=control -machine versatilepb -chardev
+socket,id=console,fd=10 -serial chardev:console -cpu arm926 -kernel
+/home/petmay01/.cache/qemu/download/3931a3908dbcf0ec0fe292d035ffc4dfed95f797dedd4a59ccfcf7a46e6f92d4
+-append printk.time=0 root=/dev/vda console=ttyAMA0 -blockdev
+driver=raw,file.driver=file,file.filename=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/rust/tests/functional/arm/test_arm_tuxrun.TuxRunArmTest.test_armv5/scratch/60ff78b68c7021df378e4fc2d66d3b016484d1acc7e07fb8920c1d8e30f4571f,node-name=hd0
+-device virtio-blk-pci,drive=hd0 -dtb
+/home/petmay01/.cache/qemu/download/50988e69ef3f3b08bfb9146e8fe414129990029e8dfbed444953b7e14809530a
+        Output: thread '<unnamed>' panicked at core/src/panicking.rs:221:5:
+unsafe precondition(s) violated: NonNull::new_unchecked requires that
+the pointer is non-null
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+thread caused non-unwinding panic. aborting.
+
+and the vexpress and replay failures are the same panic.
+
+Is this a known issue ? (I'm using git commit 98c7362b1efe.)
+
+Here's the RUST_BACKTRACE=1 version:
+
+thread '<unnamed>' panicked at core/src/panicking.rs:221:5:
+unsafe precondition(s) violated: NonNull::new_unchecked requires that
+the pointer is non-null
+stack backtrace:
+   0: rust_begin_unwind
+             at
+/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/std/src/panicking.rs:662:5
+   1: core::panicking::panic_nounwind_fmt::runtime
+             at
+/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/panicking.rs:112:18
+   2: core::panicking::panic_nounwind_fmt
+             at
+/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/panicking.rs:122:5
+   3: core::panicking::panic_nounwind
+             at
+/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/panicking.rs:221:5
+   4: core::ptr::non_null::NonNull<T>::new_unchecked::precondition_check
+             at
+/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/ub_checks.rs:70:21
+   5: core::ptr::non_null::NonNull<T>::new_unchecked
+             at
+/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/ub_checks.rs:77:17
+   6: qemu_api::qom::Owned<T>::from
+             at ./rust/qemu-api/libqemu_api.rlib.p/structured/qom.rs:741:19
+   7: pl011_create
+             at ./../../rust/hw/char/pl011/src/device.rs:716:24
+   8: vexpress_common_init
+             at ./../../hw/arm/vexpress.c:647:5
+   9: machine_run_board_init
+             at ./../../hw/core/machine.c:1682:5
+  10: qemu_init_board
+             at ./../../system/vl.c:2711:5
+  11: qmp_x_exit_preconfig
+             at ./../../system/vl.c:2807:5
+  12: qemu_init
+             at ./../../system/vl.c:3843:9
+  13: main
+             at ./../../system/main.c:68:5
+  14: __libc_start_call_main
+             at ./csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+  15: __libc_start_main_impl
+             at ./csu/../csu/libc-start.c:360:3
+  16: _start
+
+(side note: should we set RUST_BACKTRACE=1 for our
+make check/check-functional infra? it would probably be better
+to capture the backtrace in the logfiles rather than needing
+the user to re-run by hand, especially for the CI case.)
+
+thanks
+-- PMM
 
