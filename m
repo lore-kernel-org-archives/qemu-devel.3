@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B4FC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEADDC28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcsa-0007VT-7A; Fri, 07 Mar 2025 13:57:04 -0500
+	id 1tqcsX-0007UF-Mm; Fri, 07 Mar 2025 13:57:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsW-0007UA-Ga
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:57:00 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1tqcsP-0007Rg-Vu
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:54 -0500
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsU-0007oT-NJ
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:57:00 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2fef5c978ccso3558533a91.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:58 -0800 (PST)
+ id 1tqcsN-0007lh-Np
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:53 -0500
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2feb91a2492so4019101a91.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741373817; x=1741978617; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741373810; x=1741978610; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+0vlhP+/ciA3q59qQifyZ8D/3OKhNe8zch9jvXIoi5A=;
- b=w7D/qhWZQZMho6FCx+LirGK9aIkw7zzz1u6E7FiW9MEjUxgkgno9powxby5pqECXL0
- zOmNR64RMBjhYADVSut8cS3b5ipmSI3LLkl609BiaKh83LSVUavtt0JH58oNZjkaOh53
- 8cj/bNeOqWquRrhmrr1JJWY7r88+p9XP+v5T9oFolx3HO0U55I0tcSWLtaz5Ubr/aFAg
- I3Q+8XGRsvCmZpf8sWhgev1WRE5u0gTL9nAc+WbQjip+Xs9I/SygGF4DcaG+XSZo/G6h
- Vfvo+piS8tPLimnQa/d9OfaQDIvpLWqHlOcxCOrVNBLaO/UPFHmko1f7DMwj1YlTFprN
- bvRw==
+ bh=k6rq6CIIqovi+rqTbWr+nZgRpCqEfphmlSslf2GR3LU=;
+ b=ApNry4HTsE4L5IdCITjCRkk4QHvKn5RWgFtJV+7RXL79FlqWTkPTk88rEVNsGNu2Zw
+ LXcyolFnOJiGJqKBFzpcqsoAR9je1LjjsoRYc9JAHvzCSQBSgP25b2ynf0uafbOaZeJB
+ I9Eh4lSTMmhDovl2mIcdyF4QbnweHAbPPjByXIL/Grv4qbbq9rzlhny2hGxfaPG+Gpz6
+ zfPuWzpo3kccyP5rrxGCneOQwoCXRZ+TpY3g3Q9Ad1Lm+5qG6vgPA5FQknGYrjgPz/Y2
+ v20X7qm2ySO4gAcij5IjxzzUS24KZUyrVW2Frz2kW1ctrK2Xksxw1SJTBuKyAhiPxX3O
+ f+ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741373817; x=1741978617;
+ d=1e100.net; s=20230601; t=1741373810; x=1741978610;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+0vlhP+/ciA3q59qQifyZ8D/3OKhNe8zch9jvXIoi5A=;
- b=nQnKkx76VxspH7ThEDfMEJt0G/arQBSPwJkaNiXmIeXLWt/s/jquHVeHnywSJwmUyS
- fs8VAnJ5UbrHTE+ciAQ5/4nruzSQXIDpa6mdvaZucLxr8UStBqg59mZ9JmVk/oRQfiX3
- 7E/5Hea8e0cnvx+JWvO0q4Dm2i6z90/aeLk9Cd07+bo/vbWtoUwebSRBhWjAg1JdfJ9j
- 9gPO3cpK2UWcqL46b+B4EMISMmyGALRqGEiXzk0kZA4NOKK8DVuLZng+V6HyQpAtTcj7
- KyAB/7MCi8T/4zMhEizvUgzRoYDP3QhyVGpisAtzYW626FuFQtRJTjNNS80R86gK0Bxd
- 8hKQ==
-X-Gm-Message-State: AOJu0Yx/XwcTuxk6v5bSu3/QYe4AsbwHehb0ERT9Ajdcv9G/+8A4URxE
- myQUHpC6XR9Dzrj8s/YS6n8mM6KBxpeK2rs7DGzi2ROT8m773H/e5plC4f9YrO41R0wqe07QO58
- F
-X-Gm-Gg: ASbGncup7PvEb4Lc2sj/QnCJjuuMentmKfWdoaWviCaZYO4Do8zaiT60JJLWfRzJSm5
- weRhld+dpBNttfjT8bVDtcLCbhT62vfPKWsHfx5cGD+XmUXuSciCbVLOvSFt6KDxYI4FrZ3aBFL
- RA51vrdnTrYmQ2jnjabtf6GG46xk3sSNw0viI3tMe6AMRN5lgTerqBHdMa6iaHFPirsUV0LSv9g
- iFtIZyKy2mTbs+XvgfAX4OIfuuwlmC7yQUfostnPsJacrd2POtDZC8hGp/6HwcRPkf7Nuq6DSKV
- gdbdtznjBxDzl4+7aUm7OmEpXvSmrC/QfROIfQyqdoFnt6+xTNIgDtK7prCT897bRWVil/Ybu12
- z
-X-Google-Smtp-Source: AGHT+IH/8CGOizvE8NyWoZgHayF8ydxCdXF1WReFxrABEX308VrgXK1eoMG/wFgl40kty6/GIKI7wg==
-X-Received: by 2002:a17:90b:3911:b0:2ff:5714:6a with SMTP id
- 98e67ed59e1d1-2ff7ce895fbmr6273140a91.19.1741373817265; 
- Fri, 07 Mar 2025 10:56:57 -0800 (PST)
+ bh=k6rq6CIIqovi+rqTbWr+nZgRpCqEfphmlSslf2GR3LU=;
+ b=UMBgtaAMes1YNtZ2h1Ge6uiXLjbD7KcWSb/ElH751nbl98durYsCpOBnQfYTcSx31F
+ 5d4NEXcUKBR2U8cDp07d6pP9E7JQ7ATgJsMEwEsLO3zzcu9VeWg30iFbV6yyYAOLjFiT
+ Z3t8SdT4UP4jeD6JT4R8BXN15bF1RvCjFUsySxcVGR88+xOderTwWChRMyLc/v7acl4y
+ Im3VYaJwNNHuNYKbhcQGyis7mr5LMSld+UAJ7UrXqdyfjuYotF2w65R1IQfcrkfwI7jZ
+ vg7RLHckckVswbN3QHJ7zBmGmNT0mjj/G3nP8UOiRoJtZe/GkaF/B1z0NFeAeRl4bn3c
+ 0Ong==
+X-Gm-Message-State: AOJu0Yx40Mi4E3twn8rdIQE64sJQ4Wyqb18c8CQdRsdYPPjEO1aD3dHY
+ +y5D+7egTny25B6aCZIYsbnUYwAYoV0X3ytmuXE/KNnxbCO0N9VxibtNDA8WKaYuJoqRLxOQKax
+ e
+X-Gm-Gg: ASbGncs6tbIt8WQJim40AkZ43r/xZrhwUeeNcVYnE4KP0k1F0WaBO88QWCiPSaNsfed
+ xD/+LHgMGu5QeTcxL5apW7P76hUDFcHjE0uLeS+/CuTtqX7pBgKhi22wwkS88Hsudylf6h5UhZI
+ Icn1n0O/x11oJ4WPmdpL5cHkKVv28QSjeDoLwBUX1sWiBw18MluLadK4S5pTizSrIPgZAFtbSJF
+ bLKEbnGc/L1e3DuMxmjvFXOU9mSYJEcPx9dxnuG0GdV7YuzNha6Xbk0sHi0uqw7uA4cjWr4w3Ba
+ uLumFKe92LCxwR+goZUdeirx3+IeVCgHXZDc6sdGKKg1yJ9cEkmGC8/7VHi5vvdesdWYMsq2/+k
+ 3
+X-Google-Smtp-Source: AGHT+IHm3ACmK48dcxvecCMc0q8ObbimEvoFT+PEBg5oQDTvsotjyz6ve+I+ZO6Vqa6s1AQ0+tMkVA==
+X-Received: by 2002:a17:90a:e7c2:b0:2ee:c91a:ad05 with SMTP id
+ 98e67ed59e1d1-2ff7ce52479mr6405940a91.3.1741373810325; 
+ Fri, 07 Mar 2025 10:56:50 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.56
+ 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 10:56:56 -0800 (PST)
+ Fri, 07 Mar 2025 10:56:49 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-Subject: [PATCH 13/16] accel/tcg: Build tcg-accel-ops-mttcg.c once
-Date: Fri,  7 Mar 2025 10:56:42 -0800
-Message-ID: <20250307185645.970034-15-richard.henderson@linaro.org>
+Cc: philmd@linaro.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 03/16] exec: Declare tlb_reset_dirty*() in 'exec/cputlb.h'
+Date: Fri,  7 Mar 2025 10:56:32 -0800
+Message-ID: <20250307185645.970034-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307185645.970034-1-richard.henderson@linaro.org>
 References: <20250307185645.970034-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,46 +102,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All that is required is to avoid including exec-all.h.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Move CPU TLB related methods to "exec/cputlb.h".
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20241114011310.3615-14-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/tcg-accel-ops-mttcg.c | 1 -
- accel/tcg/meson.build           | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ include/exec/cputlb.h   | 7 +++++++
+ include/exec/exec-all.h | 3 ---
+ include/exec/ram_addr.h | 1 +
+ system/physmem.c        | 1 +
+ 4 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index ba7cf6819d..bdcc385ae9 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -30,7 +30,6 @@
- #include "qemu/main-loop.h"
- #include "qemu/notify.h"
- #include "qemu/guest-random.h"
--#include "exec/exec-all.h"
- #include "hw/boards.h"
- #include "tcg/startup.h"
- #include "tcg-accel-ops.h"
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 87c1394b62..81fb25da5c 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -20,7 +20,6 @@ specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
+diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+index ef18642a32..6cac7d530f 100644
+--- a/include/exec/cputlb.h
++++ b/include/exec/cputlb.h
+@@ -32,4 +32,11 @@ void tlb_unprotect_code(ram_addr_t ram_addr);
  
- specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
-   'cputlb.c',
--  'tcg-accel-ops-mttcg.c',
- ))
+ #endif /* CONFIG_TCG */
  
- system_ss.add(when: ['CONFIG_TCG'], if_true: files(
-@@ -28,6 +27,7 @@ system_ss.add(when: ['CONFIG_TCG'], if_true: files(
-   'monitor.c',
-   'tcg-accel-ops.c',
-   'tcg-accel-ops-icount.c',
-+  'tcg-accel-ops-mttcg.c',
-   'tcg-accel-ops-rr.c',
-   'watchpoint.c',
- ))
++#ifndef CONFIG_USER_ONLY
++
++void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
++void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
++
++#endif
++
+ #endif
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 8eb0df48f9..f24256fb5e 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -486,9 +486,6 @@ static inline tb_page_addr_t get_page_addr_code(CPUArchState *env,
+ 
+ #if !defined(CONFIG_USER_ONLY)
+ 
+-void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
+-void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+-
+ MemoryRegionSection *
+ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr addr,
+                                   hwaddr *xlat, hwaddr *plen,
+diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
+index 94bb3ccbe4..3d8df4edf1 100644
+--- a/include/exec/ram_addr.h
++++ b/include/exec/ram_addr.h
+@@ -23,6 +23,7 @@
+ #include "cpu.h"
+ #include "system/xen.h"
+ #include "system/tcg.h"
++#include "exec/cputlb.h"
+ #include "exec/ramlist.h"
+ #include "exec/ramblock.h"
+ #include "exec/exec-all.h"
+diff --git a/system/physmem.c b/system/physmem.c
+index 8c1736f84e..a6af555f4b 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -32,6 +32,7 @@
+ #endif /* CONFIG_TCG */
+ 
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ #include "exec/target_page.h"
+ #include "exec/translation-block.h"
 -- 
 2.43.0
 
