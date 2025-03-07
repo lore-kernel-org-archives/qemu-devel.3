@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDA19C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 20:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABF4FC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 20:45:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqeX2-0008Rj-MV; Fri, 07 Mar 2025 15:42:56 -0500
+	id 1tqeZe-0001qx-9H; Fri, 07 Mar 2025 15:45:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqeWx-0008MO-CD
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:42:52 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tqeZc-0001py-8y
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:45:36 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqeWu-00028Y-Rj
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:42:50 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2241053582dso19189865ad.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 12:42:48 -0800 (PST)
+ id 1tqeZa-0003OX-O2
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:45:36 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2feb867849fso3720600a91.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 12:45:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741380167; x=1741984967; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741380333; x=1741985133; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=du8QOQGF2nqhWzxCQqgYoIbW1gsvamlhUrbkXg3XLe8=;
- b=rksgBp2om3ntcBxIyyBVRBSEeeKVus0a0+MA8IvaBdztiP3ASqb+JogzyYscKqkPM5
- gIi2zIF0TJsluXDGD8w1xo15L570gtJpT1W9gVc8C8sNgTobxhXBJa5wO6ML3Rg8lTQ3
- WgJfsjMRrxowGuWicJgJHJ2JVOYGLpfYtt2XmXOeA260cylZI0m1yfjEVZvUGjkSuGGS
- ThC4MenjCwtZv6AmL9bzcYKwxh1MucFKkpX6lDl+CUx0LceRopGivgftxiTupQpfDSrD
- ZLf2JLB9I9f37NxqJ9MvQUqviezoicM4QEm66NbzGFsYcIfUjSidnKHsV/pXQmoKYRuf
- wzvQ==
+ bh=rLO/+StPw/X4oUCCovoIqeWmzSABFEJNeyQLzxi5l8M=;
+ b=XqhN4vcFIqJdr8jlDA0crrkog+tY6v+5LWeAEwGNzvcLTjkeMj13+oXU3gku7ha2YT
+ 2HgmJcpOTH2ge0ZczYpZGnnmGRLMS6cMtE7lTsW7oSxsmbvhY1gvjczgx20RQvpmkB9s
+ ML6uFk5Ig8Rl9R36q6jDjoKmk8ySS053Oow2RDDHW75xedI+98JV0nrtTJV4x0bYODDy
+ yxPLr+BsfaTjwYJwkVhO6EjdhDcB8Y9fd0nEccDj3uBvgTKObPZPgUi/rpfEwjL4PM5q
+ 6hFpopTdsIY9BgkeVC6GVugWoVIRqBIyRPso4vLvAnX/NNbDkwWaridxsVRcv2bxAqt8
+ dtvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741380167; x=1741984967;
+ d=1e100.net; s=20230601; t=1741380333; x=1741985133;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=du8QOQGF2nqhWzxCQqgYoIbW1gsvamlhUrbkXg3XLe8=;
- b=RwhKlhYqT6RIU3G+lkUKvef+0yJG7Hj+B5ZX+9EjwYCm5Hy2bB0WUvj3jvtEx66ezM
- gBgod+EulSxYK0kiTtZhHs5pfpPrg2IeHHAztBXnH4p1R0FSWZWAY7mMp2R3B90C1EaU
- pQwr0CUDpfXSQbXAu11bTGZIriN0cj3tEKMN81Y1EV1acyuhQpP491I31V2e1P9xKg2P
- H+g7ghjTS0R9H+jWmZfxyzI2jwYU0IvVhELzS3CQJvjWzhZBMoVYmxDusAyycrtgRWHM
- htBb82P8iwidxg/85WfjJ165WILI4SNSVz0m5JDiPB7D3S2gAoQmkzzQRIXmVmFB1ARJ
- +a5A==
+ bh=rLO/+StPw/X4oUCCovoIqeWmzSABFEJNeyQLzxi5l8M=;
+ b=pW5IPLCMXGT92yw3NLXijv4lDG2w9o6LVbVcMf86eAJLfYLo3O/A7RI2gp8T4FGwh1
+ uZLGy/KTcel9OxjRda6DAFz0oVxGdHFjkBSxH6WqkEP9PTDWvmYxm+bJqdg4AOsOaSWc
+ pmAWFArC52bNh+S3bdD8cd+b7l/AFwjxMjhShTqHHR7iy4lzfnJikwPItbOvIOA9cXCo
+ iZsLd13jo6ubL7Z39xubtdXeVdW23fJQ6tnnxe8qiQ61BhGBfjlt1lqluDfLYHBwVer2
+ xKE0gLFW5al2XRkFl/JB85brFH7gIR8EZ/l0Tm6mMeEKWJRp37Zn4J9lQPr5kSPHsCI3
+ uaAg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwO2QTN3DwlxCFbf+c5D56Pe/Zi7Uv7PfMv3kryhfC0J+4BUL4+dCA08p65e4yBjXFMNUAkeucuXWm@nongnu.org
-X-Gm-Message-State: AOJu0YwlTDuTa24ZvZtWSf2uEGcoXI9AzL+SRpgYI9ZlWEG5EKSSEkVG
- IStLgajjlDnKYdZq9rGhPMpVb/o0v9oBqtGqZUqvOXEV0BZcNgrXovWYdHPNRDO2/snZgU4WHHI
- +
-X-Gm-Gg: ASbGnctiEP1MKK0w7d+a9M3ruZWM4nYYtJeKZsHOMCFOgoelr9I6+/qSzenohR8vXI8
- 54I7cKqZXRfz3m+qxOmdY9gxWsNKBy6wHqSuyzdTNq4iOZ/PINeXbBs6NBikFrxtyYleYdy4dJ+
- 981quTdMJl/1fc/sxmp+4Cn1XMX9BunSCBQtcMWYcH1S7xDCSV+whUXr+10AU34jnZJ5LWUv6rQ
- ImuuIjawSwXON54ahqwpauoZNsfOpIcVh5KVMOVDuys6B5s2gYoWx/Qn8ZF7HOiijUbFK+ukg9K
- r0XuIjgxff8fyNpq7aFvK40FIum1Tr6ut2BmP0veGipTB3nCrFjxioxpsf+HPaLUrf6khjWV09y
- 5WTz5URS7
-X-Google-Smtp-Source: AGHT+IF+pabbrgtp5ClZ67I4Q0a375fRWyeWGuyJTM4E1w6Uf2hReBGX5lyrMQOH9uSMhrXmwwNDwg==
-X-Received: by 2002:a05:6a20:72a5:b0:1f3:4661:d197 with SMTP id
- adf61e73a8af0-1f544acd52dmr10283340637.2.1741380167372; 
- Fri, 07 Mar 2025 12:42:47 -0800 (PST)
+ AJvYcCVB5SqpORV7cBpjWYP4sUfP7Views0TJWRIFaC+9nwb5P/+GZ9tMrujOGVx1vWLh3ITv+ne5rxhRfd0@nongnu.org
+X-Gm-Message-State: AOJu0YxeZpG2eGxhgwKgO2Fu15w01UzBhPHAgjQ8JdNBJsMfBvC5N2FP
+ 1DF83HvlqZxdDPAatUXQyMivXtoAD7UKSEk+nXh3HWR8nwTeH2y5os3bHgt1tBNvUrdqdzp7ulS
+ y
+X-Gm-Gg: ASbGnculB5fIIYJNVsWzA97TzGuPmT3em9Moqo5SunXvXGfWqm07lurlZB62raWKnhG
+ LswNf+TuPef4QJ1y4jKdFJVggObJ1hejUxdcXqK+vS6kz5m+MosO8k2JFm+5d7f+lqs23e5NXYn
+ dtRxG3kVfDehQkkfwYotPQuPphdA03Ke5PLnDf47g0cNMkS1wMYozn+e42R0zjc5XmsziAz0YdV
+ ZAlnw7cErDkXvjMr5P3vBhbkzKgzwCw5P2CvQuWAwDSAlWl3zoNR/S0jxR7nshqrOvF8luiKqE6
+ 7j15Rk+8DvV1Sz/zV6IuarxxkbcEEzBgtu9H/4EFH0xloviQkx6DwhTGHhCm5BAu9vjbJ3PvFma
+ BrsHcljvO
+X-Google-Smtp-Source: AGHT+IGwCMdbLAW1CF8VaUmQROJB67bsnK5YtWJaBtG8tJy4UtvlYxRKLmQ0610im2RjPW/Tjy6l0g==
+X-Received: by 2002:a17:90b:2e90:b0:2ee:d7d3:3019 with SMTP id
+ 98e67ed59e1d1-2ff7ce8e50amr8996345a91.12.1741380332757; 
+ Fri, 07 Mar 2025 12:45:32 -0800 (PST)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af281287d78sm3411324a12.74.2025.03.07.12.42.46
+ d9443c01a7336-22410a7f8eesm34513565ad.112.2025.03.07.12.45.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 12:42:47 -0800 (PST)
-Message-ID: <e4dd7393-47d4-4923-b907-dbb875821274@linaro.org>
-Date: Fri, 7 Mar 2025 12:42:45 -0800
+ Fri, 07 Mar 2025 12:45:32 -0800 (PST)
+Message-ID: <77ee5a00-05f7-4163-ab0c-d0cd3202c8d4@linaro.org>
+Date: Fri, 7 Mar 2025 12:45:30 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/14] hw/vfio/ap: Check CONFIG_IOMMUFD at runtime using
+Subject: Re: [PATCH 13/14] hw/vfio/ccw: Check CONFIG_IOMMUFD at runtime using
  iommufd_builtin()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250307180337.14811-1-philmd@linaro.org>
- <20250307180337.14811-13-philmd@linaro.org>
+ <20250307180337.14811-14-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250307180337.14811-13-philmd@linaro.org>
+In-Reply-To: <20250307180337.14811-14-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,49 +115,12 @@ On 3/7/25 10:03, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/s390x/kvm/kvm_s390x.h |  2 +-
->   hw/vfio/ap.c                 | 27 +++++++++++++--------------
->   hw/vfio/meson.build          |  2 +-
->   3 files changed, 15 insertions(+), 16 deletions(-)
-> 
-> diff --git a/target/s390x/kvm/kvm_s390x.h b/target/s390x/kvm/kvm_s390x.h
-> index 649dae5948a..7b1cce3e60d 100644
-> --- a/target/s390x/kvm/kvm_s390x.h
-> +++ b/target/s390x/kvm/kvm_s390x.h
-> @@ -10,7 +10,7 @@
->   #ifndef KVM_S390X_H
->   #define KVM_S390X_H
->   
-> -#include "cpu-qom.h"
-> +#include "target/s390x/cpu-qom.h"
->   
->   struct kvm_s390_irq;
->   
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index c7ab4ff57ad..832b98532ea 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -11,7 +11,6 @@
->    */
->   
->   #include "qemu/osdep.h"
-> -#include CONFIG_DEVICES /* CONFIG_IOMMUFD */
->   #include <linux/vfio.h>
->   #include <sys/ioctl.h>
->   #include "qapi/error.h"
-> @@ -24,7 +23,7 @@
->   #include "qemu/module.h"
->   #include "qemu/option.h"
->   #include "qemu/config-file.h"
-> -#include "kvm/kvm_s390x.h"
-> +#include "target/s390x/kvm/kvm_s390x.h"
+>   hw/vfio/ccw.c       | 27 +++++++++++++--------------
+>   hw/vfio/meson.build |  2 +-
+>   2 files changed, 14 insertions(+), 15 deletions(-)
 
-Do I take from this that this is actually a target-specific device?
-Otherwise the two s390x changes are confusing.
-Is it built once already, due to only being enabled for qemu-system-s390x?
-If so, I question the need to move it out of specific_ss at all.
-
-Anyway, this is two changes -- one for iommufd_builtin and one for meson.build.
+Again, separate the changes for iommufd_builtin and meson.
+This is an s390x specific device; it really can't be shared beyond.
 
 
 r~
