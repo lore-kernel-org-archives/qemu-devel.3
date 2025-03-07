@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8882C282D1
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Mar 2025 23:49:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B396C282D1
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 00:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqKx4-0002F0-7X; Thu, 06 Mar 2025 18:48:30 -0500
+	id 1tqLql-0004gm-FB; Thu, 06 Mar 2025 19:46:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqKx2-0002Er-Vg
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 18:48:29 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tqLqF-0004fl-Q3
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 19:45:31 -0500
+Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqKx1-0003BY-0v
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 18:48:28 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2ff6ae7667dso2435213a91.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 15:48:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tqLqC-0001KL-Aw
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 19:45:31 -0500
+Received: by mail-ua1-x931.google.com with SMTP id
+ a1e0cc1a2514c-86d2fba8647so1133036241.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 16:45:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741304904; x=1741909704; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bRqePB45GBZN7ZCafFyXPJdA45kXj2KqJmuQlAKgyVI=;
- b=ydctkEqFdCZ6Et9L3n9mObMnQNLgnvEnrmr0qQYhR8v8vfT8oeI7OAl5VNQw5k2ulw
- aimmzO04W9U/AfSAxZBt1V7xwDRRgDKbGr6fTqR5Ki7iqc0w5zKSxFPmnOeYHPAYE8wZ
- gRUCQfstGWTrN8MTkWlSbYCNlYtoaQLbvRVSZ6x90MkfDKudfvIfYCXoQ7m/1dGqsVIG
- lvQMoAPeCMMmFJPe/38MOILXutSkB30mz8I76OL0ngu99RFZwbmq66XT2Du4kcaMp13f
- IfqRnLgXB/g3TDwv/sXuMOM61U7Ry1brhMy3xxrrgOQ7LRkn0ySF6MaX3OxKcRQcdxgb
- XjZw==
+ d=gmail.com; s=20230601; t=1741308327; x=1741913127; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bBphd+2KFjs0Cd0y8Fd2STViBQkFlCtFX+kqLjAioic=;
+ b=XmO2McKI15LQD8K+f8u0wDPLVOczZ+3tr16r9lKTBOz8hPZJbF6LiL3jHnLC1xgb+Q
+ +W2yyhB0nnMQoxi8zuvKL97jQhOmw0ebt3usqOU02G5+oiIwaofQIy3oj1/cRUYtCO92
+ 51Qhr9y+JLHRMfGgTt3p56j9LcLhTPndj5fLE6c+sgcz50PQHbU3drjYOWS3v/oKROIW
+ rXX/zXKNg49Q0sCA+S7Onmw3X5fDNLLpmKfc2GM+mmIuV+Ea3ol5/gk5IEI4nQuF+oEM
+ 0G8UQ1zC93FZ0a8lY7GQ4PHPr9s3882tmrC12yZ5N026cALGl7C92SZMdUnCHNiNQTSl
+ g12A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741304904; x=1741909704;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bRqePB45GBZN7ZCafFyXPJdA45kXj2KqJmuQlAKgyVI=;
- b=ENpyJkFkfsP5EtiXinkpNADveq4OnLccrdegkC+o2Uamy9lZFCvQx/TetvC5vggS3j
- 7oM+J1HAR+M87vUr+VSB9oOtmy2NTOm6/EUuV7doWGkJzwTSLv2WKKfMH/f1lK855S2u
- xI/SMqdNYVPg1ts5wTArXYQttbZJq94GO9u7p8aItI7A/EAvyaGHttSboUAbrz9C/Vmv
- qJATxxKq7mU0S84aSO97czBfG5Hz0KPb2NNQ+eTOgkQZKs1/OG+Pt2IJVRA2o9GA+MXU
- 2ZcM496VgUVU0nrif+sFlKFaQaCNJEMOGao05FdMcJx8spA70zX6xjewWtLL/dK/OSre
- wWKw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXWyK1cLbcrhcu/q7V5srcl0sz1yNgFvdY/Nk5tK5vu99cBAmg3cHlTKJxZmL3R/0I7h8PXedbVUO+b@nongnu.org
-X-Gm-Message-State: AOJu0YytwKExhTunWm7xHykFwL1VE0z0zzIwgSoowRlGyFyq6hXH1nZj
- /ryfkAO0Sftr2lNC+Rbk+f0mF3V+eoQPXtIKzAM0SnlHTtCAWr6Abtded9EeqGs=
-X-Gm-Gg: ASbGncu8Wqvqmj5usVADpbxjLI0HivU+DlJakk22GXvZ+7d94cqW5cqk+LFxD1R7vPa
- fHPtQ3NpNNRxsbFOd5kotzhZjRoZGqa+MPVpaSWeAg1ByLAKIACe7unbMi1b/oSTA2RprCdM+Og
- eaYTQ8dq8ilUGbOj1iZgR74dVLqzHuYPaInLmBuATAL3PNrk3WHQyDtsWQjadKexfBqCaIVAqY/
- 0/h+WUshDYjGO9bj/adxaSfdjvLxLdEUKih8TUJM4zkYLrW//tBGYMSq0R+439wuC/4c+Usomv/
- wI5tndxA1uanZARGe4XH9xYyakQ8NHv+BbmkUMRiVcz0WTVC2wPt4n1QqpnDZ/P85ZAIEaMpOa5
- tdvaIaFrz
-X-Google-Smtp-Source: AGHT+IEagHWqJTlY3DlGElqcxzUFTX0pRGOgK963Lb1LCbReHEWvS1IyxbEFKtYAszTrOwJk+OYKNg==
-X-Received: by 2002:a17:90b:380e:b0:2f2:a664:df1a with SMTP id
- 98e67ed59e1d1-2ff7ce594ccmr1990723a91.2.1741304904499; 
- Thu, 06 Mar 2025 15:48:24 -0800 (PST)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693739ecsm2060406a91.26.2025.03.06.15.48.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 15:48:23 -0800 (PST)
-Message-ID: <a69053d3-83e7-4f25-9b41-92648b474376@linaro.org>
-Date: Thu, 6 Mar 2025 15:48:22 -0800
+ d=1e100.net; s=20230601; t=1741308327; x=1741913127;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bBphd+2KFjs0Cd0y8Fd2STViBQkFlCtFX+kqLjAioic=;
+ b=Y4OBx94whbELIH8JS4dZ1MNDjaiQkuhW/vjIPvj2MbOjFsh+kgLZYFyRrVDVjIkDUW
+ 2zFjfbg1aaOYdfSjXNke1BoKT7Jn6lmsOV6K7uobeDlS1dJ01fWw1l6ti8GxszrAyoho
+ zsfs81C6Qcup/ZgKKs5rHCOAeLRrhOYlgGWUq1KKU6jNifWqybM/dYbRqLw2UDby8M9H
+ BHNs9AJ2TYnZx5cnLfOEVPBpUX+76teUGxXQfzfgDiIfBKqJWV80dtE3fJSra0Vpv5ix
+ 55dbqW64QhTeNWWUESvTxXTAQfnE01GCjA4leFymiNM2hIBW4HMBui4qiO+u+lArNRDz
+ 3Yrw==
+X-Gm-Message-State: AOJu0YwUZeWHX+wo8fxPnYIJdKoTt+b//UlMJ0DQgEouTQvsEWK8kMlk
+ wyqVAcn8+xIIoS1tHFdvfXZWQX/8i965NpkId9z04WYBr52yn4O/5VkTwtpfNA4nCrlrpvDQv1q
+ x9qF+oUEtE+Rl+GyDfDCMB+XLRj0=
+X-Gm-Gg: ASbGnctWT6cILDLBmcPbEgw9pfosBYmuu+kxfg18KkGOLBCYPpxTS8jJpi0FDZeDLnT
+ Mavwmr7ADHA0jI9lI6eWss6/P+pCLGM5fgOF1JBML/xL8/UpaEnxmHnO/MFnCVoBLCrRpdQgPwV
+ ATaFzhaNAzILEWJ6sh8nhdW1WMe3YcVNhAInDvFrAjIraexOKAfbYxwPT0
+X-Google-Smtp-Source: AGHT+IG2DlGolwwHFzRQpHcu2gggHIO+DbIoRPQtFhan8c56YzEOhaRH+AOI/zd62EuJ5C1eK9DPv+Sls9aTrtc0Ng4=
+X-Received: by 2002:a05:6102:578f:b0:4bb:e511:15a6 with SMTP id
+ ada2fe7eead31-4c30a5eec6cmr1125494137.11.1741308326799; Thu, 06 Mar 2025
+ 16:45:26 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Restrict CPU_TLB_DYN_*_BITS definitions to
- accel/tcg/
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <20250305191859.71608-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250305191859.71608-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250218165757.554178-1-pbonzini@redhat.com>
+ <20250218165757.554178-3-pbonzini@redhat.com>
+ <CAKmqyKMdUONoXD69m3RH1PeoLLtL8qT-eXweVh9WHEZM5Feufg@mail.gmail.com>
+ <ab9b6720-cb48-4b8f-9059-2856c78b5577@redhat.com>
+In-Reply-To: <ab9b6720-cb48-4b8f-9059-2856c78b5577@redhat.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 7 Mar 2025 10:44:58 +1000
+X-Gm-Features: AQ5f1JpytgaTsPd00sP3ki7nrL8Ya2EslIop-maooGVQxn7GYQ4reZlPJlZ-oSU
+Message-ID: <CAKmqyKP4Fe1FHyW=fpxa47SDq=Tz2-7rAcjTxv8W2L9+q5-oCQ@mail.gmail.com>
+Subject: Re: [PATCH 2/7] target/riscv: env->misa_mxl is a constant
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,93 +97,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/25 11:18, Philippe Mathieu-Daudé wrote:
-> CPU_TLB_DYN_*_BITS definitions are only used by accel/tcg/cputlb.c
-> and accel/tcg/translate-all.c. Move them to accel/tcg/tb-internal.h.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   accel/tcg/tb-internal.h | 27 +++++++++++++++++++++++++++
->   include/exec/cpu-defs.h | 26 --------------------------
->   2 files changed, 27 insertions(+), 26 deletions(-)
+On Thu, Mar 6, 2025 at 11:00=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+>
+> On 3/6/25 02:16, Alistair Francis wrote:
+> > On Wed, Feb 19, 2025 at 3:01=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.=
+com> wrote:
+> >>
+> >> There is nothing that overwrites env->misa_mxl, so it is a constant.  =
+Do
+> >
+> > The idea is that misa_mxl can change, although that's not supported now=
+.
+>
+> At run-time, or only at configuration time (before realize)?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Runtime, at least kind of
 
-r~
+The RISC-V spec 1.12 and earlier allows MXL to change at runtime by
+writing to misa.MXL. QEMU doesn't support this and AFAIK no hardware
+does either, but it was something that we might support in the future
+(hence the split).
 
-> 
-> diff --git a/accel/tcg/tb-internal.h b/accel/tcg/tb-internal.h
-> index 90be61f296a..abd423fcf58 100644
-> --- a/accel/tcg/tb-internal.h
-> +++ b/accel/tcg/tb-internal.h
-> @@ -13,6 +13,33 @@
->   #include "exec/exec-all.h"
->   #include "exec/translation-block.h"
->   
-> +#ifdef CONFIG_SOFTMMU
-> +
-> +#define CPU_TLB_DYN_MIN_BITS 6
-> +#define CPU_TLB_DYN_DEFAULT_BITS 8
-> +
-> +# if HOST_LONG_BITS == 32
-> +/* Make sure we do not require a double-word shift for the TLB load */
-> +#  define CPU_TLB_DYN_MAX_BITS (32 - TARGET_PAGE_BITS)
-> +# else /* HOST_LONG_BITS == 64 */
-> +/*
-> + * Assuming TARGET_PAGE_BITS==12, with 2**22 entries we can cover 2**(22+12) ==
-> + * 2**34 == 16G of address space. This is roughly what one would expect a
-> + * TLB to cover in a modern (as of 2018) x86_64 CPU. For instance, Intel
-> + * Skylake's Level-2 STLB has 16 1G entries.
-> + * Also, make sure we do not size the TLB past the guest's address space.
-> + */
-> +#  ifdef TARGET_PAGE_BITS_VARY
-> +#   define CPU_TLB_DYN_MAX_BITS                                  \
-> +    MIN(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
-> +#  else
-> +#   define CPU_TLB_DYN_MAX_BITS                                  \
-> +    MIN_CONST(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
-> +#  endif
-> +# endif
-> +
-> +#endif /* CONFIG_SOFTMMU */
-> +
->   #ifdef CONFIG_USER_ONLY
->   #include "user/page-protection.h"
->   /*
-> diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
-> index ae18398fa99..9f955f53fde 100644
-> --- a/include/exec/cpu-defs.h
-> +++ b/include/exec/cpu-defs.h
-> @@ -46,30 +46,4 @@
->   
->   #include "exec/target_long.h"
->   
-> -#if defined(CONFIG_SOFTMMU) && defined(CONFIG_TCG)
-> -#define CPU_TLB_DYN_MIN_BITS 6
-> -#define CPU_TLB_DYN_DEFAULT_BITS 8
-> -
-> -# if HOST_LONG_BITS == 32
-> -/* Make sure we do not require a double-word shift for the TLB load */
-> -#  define CPU_TLB_DYN_MAX_BITS (32 - TARGET_PAGE_BITS)
-> -# else /* HOST_LONG_BITS == 64 */
-> -/*
-> - * Assuming TARGET_PAGE_BITS==12, with 2**22 entries we can cover 2**(22+12) ==
-> - * 2**34 == 16G of address space. This is roughly what one would expect a
-> - * TLB to cover in a modern (as of 2018) x86_64 CPU. For instance, Intel
-> - * Skylake's Level-2 STLB has 16 1G entries.
-> - * Also, make sure we do not size the TLB past the guest's address space.
-> - */
-> -#  ifdef TARGET_PAGE_BITS_VARY
-> -#   define CPU_TLB_DYN_MAX_BITS                                  \
-> -    MIN(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
-> -#  else
-> -#   define CPU_TLB_DYN_MAX_BITS                                  \
-> -    MIN_CONST(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
-> -#  endif
-> -# endif
-> -
-> -#endif /* CONFIG_SOFTMMU && CONFIG_TCG */
-> -
->   #endif
+The latest RISC-V priv spec has changed misa.MXL to be read only though.
 
+So I guess although in theory it can be changed at runtime, we are
+probably never going to support that now that it's deprecated.
+
+Now that the latest priv spec has dropped the ability to write to
+misa.MXL we will probably work towards just consolidating misa_mxl_max
+and misa_mxl into a single value that is constant after realise.
+
+>
+> >> not let a corrupted migration stream change the value; changing misa_m=
+xl
+> >
+> > Does this actually happen? If the migration data is corrupted won't we
+> > have all sorts of strange issues?
+>
+> Generally migration data (just like disk image formats) is treated as
+> security-sensitive, overriding any other considerations.  So you have to
+> assume that the corruption is intentional, and sneaky enough to cause
+> trouble.
+
+I'm not convinced that this is the thing that we should be checking
+for. If someone can corrupt the migration data for an attack there are
+better things to change then the MXL
+
+Alistair
+
+>
+> Paolo
+>
+> > Alistair
+> >
+> >> would have a snowball effect on, for example, the valid VM modes.
+> >>
+> >> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> >> ---
+> >>   target/riscv/machine.c | 13 +++++++++++++
+> >>   1 file changed, 13 insertions(+)
+> >>
+> >> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> >> index d8445244ab2..c3d8e7c4005 100644
+> >> --- a/target/riscv/machine.c
+> >> +++ b/target/riscv/machine.c
+> >> @@ -375,6 +375,18 @@ static const VMStateDescription vmstate_ssp =3D {
+> >>       }
+> >>   };
+> >>
+> >> +static bool riscv_validate_misa_mxl(void *opaque, int version_id)
+> >> +{
+> >> +    RISCVCPU *cpu =3D RISCV_CPU(opaque);
+> >> +    CPURISCVState *env =3D &cpu->env;
+> >> +    RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(cpu);
+> >> +    uint32_t misa_mxl_saved =3D env->misa_mxl;
+> >> +
+> >> +    /* Preserve misa_mxl even if the migration stream corrupted it  *=
+/
+> >> +    env->misa_mxl =3D mcc->misa_mxl_max;
+> >> +    return misa_mxl_saved =3D=3D mcc->misa_mxl_max;
+> >> +}
+> >> +
+> >>   const VMStateDescription vmstate_riscv_cpu =3D {
+> >>       .name =3D "cpu",
+> >>       .version_id =3D 10,
+> >> @@ -394,6 +406,7 @@ const VMStateDescription vmstate_riscv_cpu =3D {
+> >>           VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
+> >>           VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
+> >>           VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
+> >> +        VMSTATE_VALIDATE("MXL must match", riscv_validate_misa_mxl),
+> >>           VMSTATE_UINT32(env.misa_ext, RISCVCPU),
+> >>           VMSTATE_UNUSED(4),
+> >>           VMSTATE_UINT32(env.misa_ext_mask, RISCVCPU),
+> >> --
+> >> 2.48.1
+> >>
+> >>
+> >
+> >
+>
 
