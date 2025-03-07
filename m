@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1AD8C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 23:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38950C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 23:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqgmE-0001ER-6Y; Fri, 07 Mar 2025 18:06:46 -0500
+	id 1tqgnj-0002LK-0M; Fri, 07 Mar 2025 18:08:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqgmB-0001Dr-Ot
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 18:06:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tqgng-0002Kk-N7
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 18:08:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqgm9-00085l-DD
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 18:06:42 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tqgne-0001qS-PY
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 18:08:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741388799;
+ s=mimecast20190719; t=1741388892;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NYw2ZnA0iV4COsRziVSNuHQD6OXjwNnfYBaB3+3Qo+E=;
- b=asg1FnbBJpT/NqytW4kKaMHZ4YFpg9l+kF0Y/gc1BMue2FaqElRegGHkCdXd1iLSnqeAG1
- 4j9k6c0RNpBLxP7Q8D7KT8MFFk+dIDfe8Pwdx4YqER3i7YS9WpyHbBvzIJddPbXD6AbMY/
- /mu9WTdSHGD9jGGhtiDjF/u4bPwW/zc=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=k10iL9BmsENp5Okg8dtuC8wct75aAGwF24DUKyEVy14=;
+ b=iC+OyTDgVEQ4irQDaLWTxO/uT5tpaPQ5eqVQlKcentQ26D9RlQQDShgddfrTFwlLRp3CCG
+ WMtpi01uTPOn1nUgJKwHnDGo1ObZ7/fheU9Nok0FcOXzzzZAu3VUy0QE6zzWpnlULY+KM8
+ jm262+lOifwydQq5LvrLEpyiRQkpvWs=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-278-VAyM_Tu1OBOlhoC_Y9RWvA-1; Fri, 07 Mar 2025 18:06:35 -0500
-X-MC-Unique: VAyM_Tu1OBOlhoC_Y9RWvA-1
-X-Mimecast-MFC-AGG-ID: VAyM_Tu1OBOlhoC_Y9RWvA_1741388794
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2242f408320so12696855ad.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 15:06:35 -0800 (PST)
+ us-mta-311-1qGbegCsObiK1GekywBb3A-1; Fri, 07 Mar 2025 18:08:09 -0500
+X-MC-Unique: 1qGbegCsObiK1GekywBb3A-1
+X-Mimecast-MFC-AGG-ID: 1qGbegCsObiK1GekywBb3A_1741388889
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7c0b9242877so595097785a.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 15:08:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741388794; x=1741993594;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NYw2ZnA0iV4COsRziVSNuHQD6OXjwNnfYBaB3+3Qo+E=;
- b=VCcVErh7mwOmOQk3hLMxW+EFXFwbY9SA6g/e19P9pzICKZBmYjQDt+Jvo+NqUevm//
- qeYomhIQ38jQFhHmT5qCyswNuqKDDjKjuiXOiyFbAKwGcOeasHMDxIBYMX20QyFMAxzS
- LBwhvvONrF92vEJ5aJbaHj4ZAnVl5NFMCc/RuxZW6Dhuzrwopk8qI5WezLYlpv6wfr1j
- LcskAO7fPy+aapDL6ExIQNeSj7GQXRY0ZEWoR1u8yCYDNh55BPp4lR+AoTD5CPVgJI0K
- VgA9BAc5GL50ON3KyvjW5S8baM4EjxiPyx9bONL0Z7sidI1p75TUhi7ejtnBR9a1573G
- jF8w==
-X-Gm-Message-State: AOJu0Yx/5LPxjM1/Hd+yvn+JCrAqs34hSqIcLZGemstDjcgO751lRhn6
- OwOU1IN62pOLTmx3wQTTxfkyAb8w490lVIE+JDnAl5B4FtkVScwh64/bRbEIMKwBfgr2QGTScEw
- F0+G92RgcK7rqB40z7Cbjjpeeptk0a8uKhwQegMY0YVXnRLXtmUMMRg15wkV3egm1Q6CLasa2hC
- p2RENxH7PQuLjFv3caIfItPebOkAY=
-X-Gm-Gg: ASbGncv0xedujKCp2mYoZIYo6mtUOMg38oJnZE4YElsBxDGTAnM6ly7JkMp38GRbhjS
- zaSYUP6N6aiMiocHA6hPYnM/ucqH3ydjgHFyrahHKSHm3BUWTGp96tDAQePiJ+kYspowOoQ==
-X-Received: by 2002:a17:902:ecc2:b0:221:7e36:b13e with SMTP id
- d9443c01a7336-22428899c47mr80651575ad.12.1741388794277; 
- Fri, 07 Mar 2025 15:06:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHBogsCL8HyX7nSPDZWOBHF5d9oL4VGKRNIjFuv7cW32o5VIAeX0T9NpVMCpbz/gVxLOkA2jCbDjNY5bGh1l/A=
-X-Received: by 2002:a17:902:ecc2:b0:221:7e36:b13e with SMTP id
- d9443c01a7336-22428899c47mr80651375ad.12.1741388794035; Fri, 07 Mar 2025
- 15:06:34 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741388889; x=1741993689;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k10iL9BmsENp5Okg8dtuC8wct75aAGwF24DUKyEVy14=;
+ b=YGBR4fRdNCd2PjoyLEMgOrFKdaGaaz1AlCkoh+nzzRRgfd0lb2tsYq1SHkLAwq7Ew1
+ yrqn75VO1fNbst62qut61ABhef8DXQA9DZiIiQjzRBkZ9Zwi7kHkvlDa4Y6BkqD29Kii
+ 7iKARldChpXX3l2BYM8adKE/lAKAGeDVwUvE0FNlmq7+2Lo7lx+m8jGdtCr/MxYrsXQp
+ 5qgOqiql2U+yuKdU4L4ww/ydDsKWFljDbrNH8XOMeU5B5VLpQmgmXH4CiAXy7zYjhc61
+ knWVk/g3H/XjebdHN8FL5ZsCLeywRRBi1r1FsFnzIMojPJHqbv76XmgLHdnyAA8HVbaB
+ ENOA==
+X-Gm-Message-State: AOJu0YzHsTBxe13b7473LArqU5GIJT/FHUaDAaCvTAQnEdT+NDmyRzbu
+ ZexeHDMRTz4PvN5id6wFKLi23yW/A2ARlMXsd13aeIHSqFMdumMpUY9a/UZ/5GN+GaZkzyYJqRV
+ DqNupafL/UYJ+ZvYGB5NQKQiUvKUBwit0Yy59XMAjIpUvmrYnkFRz
+X-Gm-Gg: ASbGncvE3C3iEMi5TThZBwTqCIext21GQvcHfVVpKSSNW5wcpwIb+GFcI7wNOEgvjXr
+ HsG2H2wR2b55me1iQCxaFdckrGaotFz0HS698I8PCN6pYshPqIgHFICgpYkzxYkJ3HK7nt8gs/8
+ QI18PdCn9hNdPmaPg/LChf75PX2oAdhoS+mdw2sD9DJu+SpXEZ7jr6j2tIZYdJW1h+CU1SrJAvX
+ 3cLQXen2Ts5MSnGSeBKW2inCFPlO3DFc5REIfMZ1L42GXk/PWDQ97s6VRIt9ZzXCcQv+3xaKFgr
+ vZHZ7qo=
+X-Received: by 2002:a05:620a:6282:b0:7c0:c201:1e0b with SMTP id
+ af79cd13be357-7c4e24dadedmr730719385a.17.1741388889391; 
+ Fri, 07 Mar 2025 15:08:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEWRFijNlyU120KV1DpjvzaoTJe1MBaChADIis9RTTyS2IJhTqrNfy9vlqx8tGGTgSwEjNeTw==
+X-Received: by 2002:a05:620a:6282:b0:7c0:c201:1e0b with SMTP id
+ af79cd13be357-7c4e24dadedmr730716685a.17.1741388889174; 
+ Fri, 07 Mar 2025 15:08:09 -0800 (PST)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c3e534d38dsm301754785a.44.2025.03.07.15.08.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 07 Mar 2025 15:08:08 -0800 (PST)
+Date: Fri, 7 Mar 2025 18:08:05 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH V1 1/4] migration: cpr_is_incoming
+Message-ID: <Z8t8VbFIj60gUDMI@x1.local>
+References: <1741380954-341079-1-git-send-email-steven.sistare@oracle.com>
+ <1741380954-341079-2-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-20-jsnow@redhat.com>
- <87v7slm90e.fsf@pond.sub.org>
-In-Reply-To: <87v7slm90e.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 7 Mar 2025 18:06:21 -0500
-X-Gm-Features: AQ5f1JrXi-gexGezpMgWgLotfttk0uLinip6x_aWhPyBDdbPZYEVxRHc0znBoVc
-Message-ID: <CAFn=p-afzh0nDfRSx3a=yRPzTxyX=92_onSuKwZFUujArkH9Tw@mail.gmail.com>
-Subject: Re: [PATCH 19/57] docs/qapi-domain: add qapi:event directive
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000007c2649062fc8ac02"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1741380954-341079-2-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,99 +107,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007c2649062fc8ac02
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Fri, Mar 07, 2025 at 12:55:51PM -0800, Steve Sistare wrote:
+> Define the cpr_is_incoming helper, to be used in several cpr fix patches.
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-On Fri, Mar 7, 2025 at 5:26=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > Adds the .. qapi:event:: directive, object, and :qapi:event:`name`
-> > cross-referencing role.
-> >
-> > Adds the :memb type name: field list syntax for documenting event data
-> > members. As this syntax and phrasing will be shared with Structs and
-> > Unions as well, add the field list definition to a shared abstract
-> > class.
->
-> docs/devel/qapi-code-gen.rst calls it "event-specific data".  This is
-> quite a mouthful, so the code usually calls it "arguments".  Not least
-> because events are kind of like commands going in the other direction
-> (client to server), and the code dealing with them is often similar.
->
-> Both names make more sense to me than "member".  Hmm.  A rename could be
-> done as a follow-up if that's more convenient for you.
->
-
-Also wish you'd have said sooner :)
-
-I might punt this one. At least, the next respin probably won't include
-this.
-
-I suppose I think about this in terms of "members of the event object."
-Let's talk and fix later, changing the name outside of a gigantic series is
-not difficult at all.
-
-
->
-> > As per usual, QAPI cross-referencing for types in the member field list
-> > will be added in a forthcoming commit.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
->
->
-
---0000000000007c2649062fc8ac02
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 7, =
-2025 at 5:26=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
-at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" =
-target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Adds the .. qapi:event:: directive, object, and :qapi:event:`name`<br>
-&gt; cross-referencing role.<br>
-&gt;<br>
-&gt; Adds the :memb type name: field list syntax for documenting event data=
-<br>
-&gt; members. As this syntax and phrasing will be shared with Structs and<b=
-r>
-&gt; Unions as well, add the field list definition to a shared abstract<br>
-&gt; class.<br>
-<br>
-docs/devel/qapi-code-gen.rst calls it &quot;event-specific data&quot;.=C2=
-=A0 This is<br>
-quite a mouthful, so the code usually calls it &quot;arguments&quot;.=C2=A0=
- Not least<br>
-because events are kind of like commands going in the other direction<br>
-(client to server), and the code dealing with them is often similar.<br>
-<br>
-Both names make more sense to me than &quot;member&quot;.=C2=A0 Hmm.=C2=A0 =
-A rename could be<br>
-done as a follow-up if that&#39;s more convenient for you.<br></blockquote>=
-<div><br></div><div>Also wish you&#39;d have said sooner :)</div><div><br><=
-/div><div>I might punt this one. At least, the next respin probably won&#39=
-;t include this.</div><div><br></div><div>I suppose I think about this in t=
-erms of &quot;members of the event object.&quot; Let&#39;s talk and fix lat=
-er, changing the name outside of a gigantic series is not difficult at all.=
-</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; As per usual, QAPI cross-referencing for types in the member field lis=
-t<br>
-&gt; will be added in a forthcoming commit.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-<br>
-</blockquote></div></div>
-
---0000000000007c2649062fc8ac02--
+-- 
+Peter Xu
 
 
