@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E2DC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 04:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F149C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 04:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqOsS-0007Zs-Cu; Thu, 06 Mar 2025 23:00:00 -0500
+	id 1tqOty-0001pv-R5; Thu, 06 Mar 2025 23:01:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tqOsR-0007ZT-7l; Thu, 06 Mar 2025 22:59:59 -0500
+ id 1tqOtm-0001RN-9D; Thu, 06 Mar 2025 23:01:23 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tqOsP-0004iq-IM; Thu, 06 Mar 2025 22:59:58 -0500
+ id 1tqOtk-00053C-Gg; Thu, 06 Mar 2025 23:01:22 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 7 Mar
- 2025 11:59:46 +0800
+ 2025 11:59:53 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 7 Mar 2025 11:59:46 +0800
+ Transport; Fri, 7 Mar 2025 11:59:53 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v6 02/29] hw/intc/aspeed: Rename status_addr and addr to
- status_reg and reg for clarity
-Date: Fri, 7 Mar 2025 11:59:11 +0800
-Message-ID: <20250307035945.3698802-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v6 20/29] hw/arm/aspeed_ast27x0: Define an Array of
+ AspeedINTCState with Two Instances
+Date: Fri, 7 Mar 2025 11:59:29 +0800
+Message-ID: <20250307035945.3698802-21-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
 References: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
@@ -67,166 +67,167 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename the variables "status_addr" to "status_reg" and "addr" to "reg" because
-they are used as register index. This change makes the code more appropriate
-and improves readability.
+Updated Aspeed27x0SoCState to include an intc[2] array instead of a single
+AspeedINTCState instance. Modified aspeed_soc_ast2700_get_irq and
+aspeed_soc_ast2700_get_irq_index to correctly reference the corresponding
+interrupt controller instance and OR gate index.
+
+Currently, only GIC 192 to 201 are supported, and their source interrupts are
+from INTCIO and connected to INTC at input pin 0 and output pins 0 to 9 for
+GIC 192-201.
+
+To support both AST2700 A1 and A0, INTC input pins 1 to 9 and output pins
+10 to 18 remain to support GIC 128-136, which source interrupts from INTC.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/intc/aspeed_intc.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ include/hw/arm/aspeed_soc.h |  2 +-
+ hw/arm/aspeed_ast27x0.c     | 58 +++++++++++++++++++++++++------------
+ 2 files changed, 40 insertions(+), 20 deletions(-)
 
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index 033b574c1e..465f41e4fd 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -60,7 +60,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 689f52dae8..1ac99269ae 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -128,7 +128,7 @@ struct Aspeed27x0SoCState {
+     AspeedSoCState parent;
+ 
+     ARMCPU cpu[ASPEED_CPUS_NUM];
+-    AspeedINTCState intc;
++    AspeedINTCState intc[2];
+     GICv3State gic;
+     MemoryRegion dram_empty;
+ };
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 343fe87921..90545215e2 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -178,32 +178,48 @@ static const int ast2700_gic133_gic197_intcmap[] = {
+ /* GICINT 192 ~ 201 */
+ struct gic_intc_irq_info {
+     int irq;
++    int intc_idx;
++    int orgate_idx;
+     const int *ptr;
+ };
+ 
+ static const struct gic_intc_irq_info ast2700_gic_intcmap[] = {
+-    {128,  ast2700_gic128_gic192_intcmap},
+-    {129,  NULL},
+-    {130,  ast2700_gic130_gic194_intcmap},
+-    {131,  ast2700_gic131_gic195_intcmap},
+-    {132,  ast2700_gic132_gic196_intcmap},
+-    {133,  ast2700_gic133_gic197_intcmap},
+-    {134,  NULL},
+-    {135,  NULL},
+-    {136,  NULL},
++    {192, 1, 0, ast2700_gic128_gic192_intcmap},
++    {193, 1, 1, NULL},
++    {194, 1, 2, ast2700_gic130_gic194_intcmap},
++    {195, 1, 3, ast2700_gic131_gic195_intcmap},
++    {196, 1, 4, ast2700_gic132_gic196_intcmap},
++    {197, 1, 5, ast2700_gic133_gic197_intcmap},
++    {198, 1, 6, NULL},
++    {199, 1, 7, NULL},
++    {200, 1, 8, NULL},
++    {201, 1, 9, NULL},
++    {128, 0, 1, ast2700_gic128_gic192_intcmap},
++    {129, 0, 2, NULL},
++    {130, 0, 3, ast2700_gic130_gic194_intcmap},
++    {131, 0, 4, ast2700_gic131_gic195_intcmap},
++    {132, 0, 5, ast2700_gic132_gic196_intcmap},
++    {133, 0, 6, ast2700_gic133_gic197_intcmap},
++    {134, 0, 7, NULL},
++    {135, 0, 8, NULL},
++    {136, 0, 9, NULL},
+ };
+ 
+ static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
  {
-     AspeedINTCState *s = (AspeedINTCState *)opaque;
-     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
--    uint32_t status_addr = GICINT_STATUS_BASE + ((0x100 * irq) >> 2);
-+    uint32_t status_reg = GICINT_STATUS_BASE + ((0x100 * irq) >> 2);
-     uint32_t select = 0;
-     uint32_t enable;
+     Aspeed27x0SoCState *a = ASPEED27X0_SOC(s);
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
++    int or_idx;
++    int idx;
      int i;
-@@ -92,7 +92,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
  
-     trace_aspeed_intc_select(select);
- 
--    if (s->mask[irq] || s->regs[status_addr]) {
-+    if (s->mask[irq] || s->regs[status_reg]) {
-         /*
-          * a. mask is not 0 means in ISR mode
-          * sources interrupt routine are executing.
-@@ -108,8 +108,8 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
-          * notify firmware which source interrupt are coming
-          * by setting status register
-          */
--        s->regs[status_addr] = select;
--        trace_aspeed_intc_trigger_irq(irq, s->regs[status_addr]);
-+        s->regs[status_reg] = select;
-+        trace_aspeed_intc_trigger_irq(irq, s->regs[status_reg]);
-         aspeed_intc_update(s, irq, 1);
+     for (i = 0; i < ARRAY_SIZE(ast2700_gic_intcmap); i++) {
+         if (sc->irqmap[dev] == ast2700_gic_intcmap[i].irq) {
+             assert(ast2700_gic_intcmap[i].ptr);
+-            return qdev_get_gpio_in(DEVICE(&a->intc.orgates[i]),
+-                ast2700_gic_intcmap[i].ptr[dev]);
++            or_idx = ast2700_gic_intcmap[i].orgate_idx;
++            idx = ast2700_gic_intcmap[i].intc_idx;
++            return qdev_get_gpio_in(DEVICE(&a->intc[idx].orgates[or_idx]),
++                                    ast2700_gic_intcmap[i].ptr[dev]);
+         }
      }
- }
-@@ -117,17 +117,17 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
- static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned int size)
+ 
+@@ -215,12 +231,16 @@ static qemu_irq aspeed_soc_ast2700_get_irq_index(AspeedSoCState *s, int dev,
  {
-     AspeedINTCState *s = ASPEED_INTC(opaque);
--    uint32_t addr = offset >> 2;
-+    uint32_t reg = offset >> 2;
-     uint32_t value = 0;
+     Aspeed27x0SoCState *a = ASPEED27X0_SOC(s);
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
++    int or_idx;
++    int idx;
+     int i;
  
--    if (addr >= ASPEED_INTC_NR_REGS) {
-+    if (reg >= ASPEED_INTC_NR_REGS) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
-                       __func__, offset);
-         return 0;
+     for (i = 0; i < ARRAY_SIZE(ast2700_gic_intcmap); i++) {
+         if (sc->irqmap[dev] == ast2700_gic_intcmap[i].irq) {
+             assert(ast2700_gic_intcmap[i].ptr);
+-            return qdev_get_gpio_in(DEVICE(&a->intc.orgates[i]),
++            or_idx = ast2700_gic_intcmap[i].orgate_idx;
++            idx = ast2700_gic_intcmap[i].intc_idx;
++            return qdev_get_gpio_in(DEVICE(&a->intc[idx].orgates[or_idx]),
+                                     ast2700_gic_intcmap[i].ptr[dev] + index);
+         }
+     }
+@@ -390,7 +410,7 @@ static void aspeed_soc_ast2700_init(Object *obj)
+ 
+     object_initialize_child(obj, "sli", &s->sli, TYPE_ASPEED_2700_SLI);
+     object_initialize_child(obj, "sliio", &s->sliio, TYPE_ASPEED_2700_SLIIO);
+-    object_initialize_child(obj, "intc", &a->intc, TYPE_ASPEED_2700_INTC);
++    object_initialize_child(obj, "intc", &a->intc[0], TYPE_ASPEED_2700_INTC);
+ 
+     snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);
+     object_initialize_child(obj, "adc", &s->adc, typename);
+@@ -502,7 +522,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
+     AspeedSoCState *s = ASPEED_SOC(dev);
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+-    AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc);
++    AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc[0]);
+     g_autofree char *sram_name = NULL;
+     qemu_irq irq;
+ 
+@@ -533,23 +553,23 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
      }
  
--    value = s->regs[addr];
-+    value = s->regs[reg];
-     trace_aspeed_intc_read(offset, size, value);
- 
-     return value;
-@@ -138,12 +138,12 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
- {
-     AspeedINTCState *s = ASPEED_INTC(opaque);
-     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
--    uint32_t addr = offset >> 2;
-+    uint32_t reg = offset >> 2;
-     uint32_t old_enable;
-     uint32_t change;
-     uint32_t irq;
- 
--    if (addr >= ASPEED_INTC_NR_REGS) {
-+    if (reg >= ASPEED_INTC_NR_REGS) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
-                       __func__, offset);
-@@ -152,7 +152,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
- 
-     trace_aspeed_intc_write(offset, size, data);
- 
--    switch (addr) {
-+    switch (reg) {
-     case R_GICINT128_EN:
-     case R_GICINT129_EN:
-     case R_GICINT130_EN:
-@@ -177,7 +177,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
- 
-         /* disable all source interrupt */
-         if (!data && !s->enable[irq]) {
--            s->regs[addr] = data;
-+            s->regs[reg] = data;
-             return;
-         }
- 
-@@ -187,12 +187,12 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-         /* enable new source interrupt */
-         if (old_enable != s->enable[irq]) {
-             trace_aspeed_intc_enable(s->enable[irq]);
--            s->regs[addr] = data;
-+            s->regs[reg] = data;
-             return;
-         }
- 
-         /* mask and unmask source interrupt */
--        change = s->regs[addr] ^ data;
-+        change = s->regs[reg] ^ data;
-         if (change & data) {
-             s->mask[irq] &= ~change;
-             trace_aspeed_intc_unmask(change, s->mask[irq]);
-@@ -200,7 +200,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-             s->mask[irq] |= change;
-             trace_aspeed_intc_mask(change, s->mask[irq]);
-         }
--        s->regs[addr] = data;
-+        s->regs[reg] = data;
-         break;
-     case R_GICINT128_STATUS:
-     case R_GICINT129_STATUS:
-@@ -220,7 +220,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-         }
- 
-         /* clear status */
--        s->regs[addr] &= ~data;
-+        s->regs[reg] &= ~data;
- 
-         /*
-          * These status registers are used for notify sources ISR are executed.
-@@ -233,7 +233,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-         }
- 
-         /* All source ISR execution are done */
--        if (!s->regs[addr]) {
-+        if (!s->regs[reg]) {
-             trace_aspeed_intc_all_isr_done(irq);
-             if (s->pending[irq]) {
-                 /*
-@@ -241,9 +241,9 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-                  * notify firmware which source interrupt are pending
-                  * by setting status register
-                  */
--                s->regs[addr] = s->pending[irq];
-+                s->regs[reg] = s->pending[irq];
-                 s->pending[irq] = 0;
--                trace_aspeed_intc_trigger_irq(irq, s->regs[addr]);
-+                trace_aspeed_intc_trigger_irq(irq, s->regs[reg]);
-                 aspeed_intc_update(s, irq, 1);
-             } else {
-                 /* clear irq */
-@@ -253,7 +253,7 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-         }
-         break;
-     default:
--        s->regs[addr] = data;
-+        s->regs[reg] = data;
-         break;
+     /* INTC */
+-    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc), errp)) {
++    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
+         return;
      }
  
+-    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc), 0,
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[0]), 0,
+                     sc->memmap[ASPEED_DEV_INTC]);
+ 
+     /* irq sources -> orgates -> INTC */
+     for (i = 0; i < ic->num_inpins; i++) {
+-        qdev_connect_gpio_out(DEVICE(&a->intc.orgates[i]), 0,
+-                              qdev_get_gpio_in(DEVICE(&a->intc), i));
++        qdev_connect_gpio_out(DEVICE(&a->intc[0].orgates[i]), 0,
++                              qdev_get_gpio_in(DEVICE(&a->intc[0]), i));
+     }
+ 
+     /* INTC -> GIC192 - GIC201 */
+     /* INTC -> GIC128 - GIC136 */
+     for (i = 0; i < ic->num_outpins; i++) {
+-        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), i,
++        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[0]), i,
+                            qdev_get_gpio_in(DEVICE(&a->gic),
+                                             ast2700_gic_intcmap[i].irq));
+     }
 -- 
 2.43.0
 
