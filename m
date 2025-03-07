@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F23C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 17:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E317EC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 17:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqboe-00054u-D8; Fri, 07 Mar 2025 12:48:56 -0500
+	id 1tqbsL-0006gt-7C; Fri, 07 Mar 2025 12:52:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tqboX-000514-TC
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:48:52 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tqbsJ-0006gj-NN
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:52:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tqboW-0007tW-BE
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:48:49 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tqbsI-0004wI-8r
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 12:52:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741369726;
+ s=mimecast20190719; t=1741369961;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=G+3AAuAcsrQ5ieZtWRlSZvHk2VWyK3zW5hB4g/SCpTM=;
- b=d0SQMs9T6C/lyPAEqJwloTtdKxYJtshwxaDFdsEXXbTZQsrnqCgaLMnCQk2EbRDOQ8110A
- mYwduBP1Lw9ez28F5VbVN1mr6jZJvyDtf2sUEdvADk62sFlAiramxUVwCY9P9i1Bi+ij1h
- or3R/isQ9WpiyWfGJCQTXxhoyVmmTB4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uF76AsHNHgnRExU9nB+LtF0/BPRBtEd72Oi53mF7B2Y=;
+ b=I8+0d7uQtE0KbhiJtFm5lD+vQwP1NzlDnCDp9PQLs1YkeebpOVEw1CMOz1E8bmG1fXAW2N
+ ljoX/XcfXkrtoL9hpCB1cNRJX8YFMGwaY4EgSgUvDFvlNg9X50k6HoIEtMHXi5iMkBp42E
+ Krz67h+rFu1Kfh5JqjdPNx/p/QpJ8R4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-136-VIZGItziOyuwAW8Bdh_bzQ-1; Fri, 07 Mar 2025 12:48:44 -0500
-X-MC-Unique: VIZGItziOyuwAW8Bdh_bzQ-1
-X-Mimecast-MFC-AGG-ID: VIZGItziOyuwAW8Bdh_bzQ_1741369724
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43bcddbe698so8808465e9.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 09:48:44 -0800 (PST)
+ us-mta-124-eo70VBcTPDy7HYTaHq6v6w-1; Fri, 07 Mar 2025 12:52:37 -0500
+X-MC-Unique: eo70VBcTPDy7HYTaHq6v6w-1
+X-Mimecast-MFC-AGG-ID: eo70VBcTPDy7HYTaHq6v6w_1741369956
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3912b54611dso1305998f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 09:52:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741369723; x=1741974523;
+ d=1e100.net; s=20230601; t=1741369956; x=1741974756;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=G+3AAuAcsrQ5ieZtWRlSZvHk2VWyK3zW5hB4g/SCpTM=;
- b=H1gfbYbFWgP1M4vaK2UyS55/vZRE/luYntbE8qBhrlgDiz7Xccz/nUy5yvBerJOwTW
- sbrSpj6D3OXi18c9p5xE55XeDQGWLoW9keGVKNgWzwgIPNK2et7landHSr76bi+RoGBM
- oCi205B9aTEUXmduPq1bBacR2J3NA+9rHQQV9C06j1PC+9Sil1MC6PWvDWxQkIFAckar
- BxKoOMLv3ow1ncyJlt3IGo4DvAIKdM4mV/Cv3ct8YuuLSdrvbevHpCRG1+gYh3K7QMj+
- Sm/0AjH90DAglMkih3jmUoixAoMLHXZ4bhkUKTnS3MWWZi8CypW55oLBBw5igGHWfLV0
- XA3A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyiDn+vY1ZVAuV6DULnqa2/fTd0hp2GYwg5G63bjQWdpGjwHaAY5XvvaqIjs2O6KR1UKqkq2v2bbLW@nongnu.org
-X-Gm-Message-State: AOJu0YxvOZkce7m0omWpM1lgBDCdT1lLvH5RLsW12djIU8wIxdLTopdi
- Es8+aIpg3emuEJJjNNZLAr6VCbDKOwy5t8XQP9ri7ZiAyzBO0W5Y4ABJbcULP15kv2j9ztY0WAo
- UVa+CvbeWIAVhU1w8dgOA1u5fJydMagUu7GpklV4pfwwrjTLDnffi
-X-Gm-Gg: ASbGncs62SRi4l+LrhQmct+UhytLxiZD1PmrHB47br0Ad6D3YsNMe+G2cr41w3s0Obm
- gXd1teP6Tb/IhfqyhMrf9Upa1bynIy58MRDTu3pUP+7zWJtL8diWYhG0hNNVqHSISL8wVE0hkrY
- DMohkOh4zO15iIdSsfiMszx2gU9nXlfenpgUQidkZEZivCLLnOJiHwRJfVOt1diPXHC2veThA9g
- WH85saYAodRY9Mi3P+2jFAWW4eYzuji3+WRezYf8jLWQaVI2WOtWrCU3NguucmLtI/uUgLeVtM3
- b4eiBrimBW6Fa8z61rZhb//qHhj3tXIQRDPeBgZm52kKqg3SFz7GucnxS9by+d/DY8zMvaytVJ1
- Ccgjjl9xe7roYZJIqFfBI4bsCH93/TvlSU91AIw==
-X-Received: by 2002:a05:600c:4884:b0:439:9d75:9e7d with SMTP id
- 5b1f17b1804b1-43cd169b4d8mr20582795e9.22.1741369723726; 
- Fri, 07 Mar 2025 09:48:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE48fe1qxXAGgRi+V4sr0N3J6k9WUNUIzIMSXhi5dhCeyeWIMAW5xX5+wT2oR4vYP7JoYj7kA==
-X-Received: by 2002:a05:600c:4884:b0:439:9d75:9e7d with SMTP id
- 5b1f17b1804b1-43cd169b4d8mr20582725e9.22.1741369723382; 
- Fri, 07 Mar 2025 09:48:43 -0800 (PST)
+ bh=uF76AsHNHgnRExU9nB+LtF0/BPRBtEd72Oi53mF7B2Y=;
+ b=f6fFxW0+O+etzpxPmDT75HSfhqRV7K26AUYiqsT8b0Bw1g6HawtuNEcWKC7Wi6kMfI
+ zYHcXZGtDYvaimGVMcRCMfRofIVk9vmH718st780wvmUFI8dr+ntT6UNpA1KEKzf2AuY
+ NK4CUDZAOmNjPiWfBQPhM3hjnm+EEoEpbz1o371hYEv9o1nCIAEVwlG2Z/eicYdNmsSZ
+ 6LKUpflNEdHAhOYvNPrY230CsT5NUGso1RIQom1jQOJ/nOvJ2d5y/Ot+JqhrKqxlWpKB
+ 3At9KiJhmWGtb/Den1km+dxP+CmAJ2sIrzBLfr2Byfvc5tFA2gx2ANwMkHzrCXTbGTyh
+ rfUg==
+X-Gm-Message-State: AOJu0Yxkb6qL6QjKGtsvI8UqBsvaNKH65Ur4IMp8mjDtTj9x4d7wV27w
+ eypvuOv65my+0KIileG55f7CXSrbT+4Nklnda/bMMT8CON1YLDN3syDrLm4jPHPpJeMCa3fP2YZ
+ CJ6pfJzUXYNrrx8vnF8DyMByQ0fS1Mfg3ySsIs9sq8jnXOhBTO11p
+X-Gm-Gg: ASbGnctxTz9X6QML8T9rortAtGCttkVz3exCDkOLbV/zI4axXExz9ygTKToXTUZy5Cm
+ 8t4F1oM/nmbyGTheIyqkRx8iKfh9mtB6MsahZ5yMutfwuXCPoPglkyZHHXFb0l3X3Hl7ZxFJ0ey
+ P9ObITzzPPaCTCBHO424XoVxO+FiQqus+tTSKtImaJ9ZbWB69ZXGpfp7N0TlAaXi0GCSlhi2K+t
+ j7rrmPsaTNXz0s1R5wi81tnAx7gPn16nBd8QDfFjqUonnk7lprhMdPiSI3FHH8HRWWgvQuWuGvN
+ ftUIzYgpYuI2LaqdTmd3O2/36njBq1qNymGr7moRBygaKpO9TXfg2TEzwB1geQ738by1gJGcBKu
+ PxCGShaNtHv8WNOa3XUN9jHB/wFqw4QTv8hmNew==
+X-Received: by 2002:a05:6000:402a:b0:390:e535:8758 with SMTP id
+ ffacd0b85a97d-39132d2afc2mr2960361f8f.9.1741369955972; 
+ Fri, 07 Mar 2025 09:52:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG07psx7nrROslR8sb3k2+VrPYd4Y+gRHYnnNZXbFev98tq8ia7nSVjJvoI9nWJEXx99axOog==
+X-Received: by 2002:a05:6000:402a:b0:390:e535:8758 with SMTP id
+ ffacd0b85a97d-39132d2afc2mr2960341f8f.9.1741369955635; 
+ Fri, 07 Mar 2025 09:52:35 -0800 (PST)
 Received: from ?IPV6:2003:cb:c721:7400:ab0b:9ceb:d2:6a17?
  (p200300cbc7217400ab0b9ceb00d26a17.dip0.t-ipconnect.de.
  [2003:cb:c721:7400:ab0b:9ceb:d2:6a17])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd831719sm61145155e9.0.2025.03.07.09.48.42
+ ffacd0b85a97d-3912c0195casm6097677f8f.53.2025.03.07.09.52.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 09:48:42 -0800 (PST)
-Message-ID: <a26f6f63-f4ab-4e9e-8239-682fbb079d01@redhat.com>
-Date: Fri, 7 Mar 2025 18:48:41 +0100
+ Fri, 07 Mar 2025 09:52:35 -0800 (PST)
+Message-ID: <3666e5ef-c664-4b83-acd6-f3d553fd7ae1@redhat.com>
+Date: Fri, 7 Mar 2025 18:52:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] hw/virtio/virtio-mem: Remove CONFIG_DEVICES include
+Subject: Re: [PATCH 5/7] hw/virtio/virtio-mem: Convert
+ VIRTIO_MEM_USABLE_EXTENT to runtime
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Igor Mammedov <imammedo@redhat.com>, Thomas Huth <thuth@redhat.com>
 References: <20250307151543.8156-1-philmd@linaro.org>
- <20250307151543.8156-5-philmd@linaro.org>
+ <20250307151543.8156-6-philmd@linaro.org> <877c503ie6.fsf@draig.linaro.org>
+ <a7126584-00fa-42ed-8e5c-d27d9933ac2f@linaro.org>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -138,7 +138,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250307151543.8156-5-philmd@linaro.org>
+In-Reply-To: <a7126584-00fa-42ed-8e5c-d27d9933ac2f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -166,14 +166,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07.03.25 16:15, Philippe Mathieu-Daudé wrote:
-> Rather than checking ACPI availability at compile time by
-> checking the CONFIG_ACPI definition from CONFIG_DEVICES,
-> check at runtime via acpi_builtin().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 07.03.25 17:49, Philippe Mathieu-Daudé wrote:
+> On 7/3/25 17:38, Alex Bennée wrote:
+>> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+>>
+>>> Use qemu_arch_available() to check at runtime if a target
+>>> architecture is built in.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>    hw/virtio/virtio-mem.c | 20 ++++++++++++--------
+>>>    1 file changed, 12 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+>>> index 5f57eccbb66..8c40042108c 100644
+>>> --- a/hw/virtio/virtio-mem.c
+>>> +++ b/hw/virtio/virtio-mem.c
+>>> @@ -15,6 +15,7 @@
+>>>    #include "qemu/cutils.h"
+>>>    #include "qemu/error-report.h"
+>>>    #include "qemu/units.h"
+>>> +#include "system/arch_init.h"
+>>>    #include "system/numa.h"
+>>>    #include "system/system.h"
+>>>    #include "system/reset.h"
+>>> @@ -170,13 +171,16 @@ static bool virtio_mem_has_shared_zeropage(RAMBlock *rb)
+>>>     * necessary (as the section size can change). But it's more likely that the
+>>>     * section size will rather get smaller and not bigger over time.
+>>>     */
+>>> -#if defined(TARGET_X86_64) || defined(TARGET_I386) || defined(TARGET_S390X)
+>>> -#define VIRTIO_MEM_USABLE_EXTENT (2 * (128 * MiB))
+>>> -#elif defined(TARGET_ARM)
+>>> -#define VIRTIO_MEM_USABLE_EXTENT (2 * (512 * MiB))
+>>> -#else
+>>> -#error VIRTIO_MEM_USABLE_EXTENT not defined
+>>> -#endif
+>>> +static uint64_t virtio_mem_usable_extent_size(void)
+>>> +{
+>>> +    if (qemu_arch_available(QEMU_ARCH_I386 | QEMU_ARCH_S390X)) {
+>>> +        return 2 * 128 * MiB;
+>>> +    } else if (qemu_arch_available(QEMU_ARCH_ARM)) {
+>>> +        return 2 * 512 * MiB;
+>>> +    } else {
+>>> +        g_assert_not_reached();
+>>> +    }
+>>> +}
+>>
+>> What happens if/when we have multiple arches available? Won't we want to
+>> know which CPU the virtio-mem device is attached to or do we take the
+>> minimal value over the whole system?
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+We should take the maximum value here, not the minimum.
+
+> 
+> "per attached vcpu" is how I was previously considering this problem,
+> but IIUC from the discussions with Pierrick, we should consider single
+> binary as a first step before heterogeneous emulation.
+
+It would be related to the machine/vcpu, yes.
+
+Taking the maximum over all available arches is easier; it's a pure 
+optimization.
 
 -- 
 Cheers,
