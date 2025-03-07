@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E30FC28B23
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 20:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C37C28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 20:57:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqekU-0000Y5-3L; Fri, 07 Mar 2025 15:56:50 -0500
+	id 1tqekI-0000Sa-Gr; Fri, 07 Mar 2025 15:56:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqekS-0000Vq-4S
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:56:48 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqekQ-0004ky-CT
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:56:47 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43bd45e4d91so14066565e9.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 12:56:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741381005; x=1741985805; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pYmb7QD/baHmzIh4UjdaMdQDVuT+bDgfSsNtQGMxdOQ=;
- b=nqhVasrRoUQ/UsLDAtigT9+d5Y3IxD2u07yEJTbiPeCNXA/kveFkI4rHrCnZ6F13gy
- 5ic8zQB+XSdTP70S+Fwdc3wcztXoUJi4e9aRO1y/dSm9c0v+wiYFiR7hJrCKzmF3dwJJ
- n4c1Y6hYY4WSU8GzIknczNDROXrNQHyia36lRnMXMSpJh2y5YiEUPAeXB/dzBQ9TKoyD
- eZzFC+48K2J5l6yaAoVy6vuCctsKW0rQwtB9L92em6/AVbNcNMn+5A40nTeHOVss3ju8
- 930O1PyHUqjOBzXY+6PpVXCOe2SjjG99sqVtSayBg1JmFtgxex3y/8Ix5CrPI+Lj8ien
- uOaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741381005; x=1741985805;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pYmb7QD/baHmzIh4UjdaMdQDVuT+bDgfSsNtQGMxdOQ=;
- b=u6LO+nPwfYOTFlSFFXDdoEFB5OK4tSl8UD+dG1Rto4JD69IRJMXI9Afb6k3csvTrRl
- pSPNtSz1MOTgzzgBMXXgnS0IPTHONEl3QbxgwCmJBMRWM7J3iTJR6mBi6t13CXtbc1J2
- ilWYB+MO1+N7OunYj8sTC3jK/uIbzqNa1AKBwOt1OIs4GxjVsPIkHh6gBCgwCEO92bU2
- 2ZFQs1VZRl6b+NFXx3awHBWlV7MYB5ir4D4I7KTTcHaR7IAJNMbQgM9HX6j2A9y3WmIB
- glKYuwxSVcEDmcEwAEyeg4T+mMcGCOjoU2OjdXo+QJhmzast8ayVXLMiViKohRpDJVbl
- 8b4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWoKZ8fAm7w3liTZQyitOI5FtU7tHUi3+w2usA0Mrv4n0whn39EAISlS/46e+ooDhbex5cQs1/4xkon@nongnu.org
-X-Gm-Message-State: AOJu0YzHK31ThucBDVNwXrvbo4E5zw5N66zoMRXYEUR2sqnbH0l4vHxI
- KGXrk7OcaVFMgx6XLJu3jLr1hvJbK72mqKFz2z+SbjQwS7QxnHjUGkzT2cSkBTg=
-X-Gm-Gg: ASbGncvtO44qMkpCz6EFn4TdMGxZ8fFhKTU+SvjfCfYc7qslu1kTcEfLVloulZh1pit
- MufUb+I1Mg/FECjJKbFE9Mt9jh3HvHTdKsH7LhafqfbFdbaGvLyTNnEdBhexpshRHkG30+pPzJJ
- 3Wk7Z2jggR4WNnOy3RStiZfbG+xrFGub/OxYDoSGkMSu8RFUuJkx9AFVCzlIeG7MKqigLtZH4UB
- 8p8kQBa9OdQVbwVzq/m5Ba8rqirSUbvH55QTywlmq4araflgJp8K7PR/TNInPouuH+IP+HUcj7l
- g2OFHQOnh5pxZDP+rJy1BjSoYet84qzc4Mmcxz+1unZAd1pw+DWPIv/SgWpsNqpEuScESMqJcTs
- XOeL0NwfXS7Vr
-X-Google-Smtp-Source: AGHT+IFhARMjA9i8ahOKmVDivdHXzngn0JUxaGhcVWhPJIbs9KAbK3fApFsmdd+EPEtEgWHIvyEhPw==
-X-Received: by 2002:a05:600c:a15:b0:43b:c824:97fa with SMTP id
- 5b1f17b1804b1-43ce4dd6711mr5969265e9.14.1741381004841; 
- Fri, 07 Mar 2025 12:56:44 -0800 (PST)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c01de21sm6548214f8f.59.2025.03.07.12.56.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 12:56:43 -0800 (PST)
-Message-ID: <0e40276f-c9e6-47e1-b70b-5a8b5f8fb30b@linaro.org>
-Date: Fri, 7 Mar 2025 21:56:42 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/7] hw/hyperv/syndbg: common compilation unit
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, kvm@vger.kernel.org, richard.henderson@linaro.org,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Paolo Bonzini <pbonzini@redhat.com>, manos.pitsidianakis@linaro.org,
- Marcelo Tosatti <mtosatti@redhat.com>
-References: <20250307193712.261415-1-pierrick.bouvier@linaro.org>
- <20250307193712.261415-6-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250307193712.261415-6-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tqejp-0008QJ-5w
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:56:14 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tqejl-0003yf-My
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:56:08 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 527Jtknc017497;
+ Fri, 7 Mar 2025 20:56:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2023-11-20; bh=BBN4eRBGJ70X67dVWh+0OrnPfczBU7a0pQTRxmEagm0=; b=
+ H5StVGd4CSolU0wb72gD1NO4JRAURoV9C3UwQ5tAjtNON1pWqJiGuEi4SObLh0FC
+ TZ+pJk2EQIbMQjwC28z2XoTxojEo98VSeZeCdoh2e20FqJRsC3oi5+HiFm5h4UO2
+ YAAWo3daewE7HN9SHN6zlx05u0amzRdWIPgLVGdWCBGjOy11ky2EOPdswMin2c2J
+ f80biwzGmd2RfCjoaWL0hpeZiZGP1tpWAxpsF/03g5ordCVeK9yHzcCTPp0+OFKB
+ wPQ+ltB3lX7RytXz8aiqlDXa9FL1xQjS7eRgWuiuejQvVqMljlXsgA802mW6u40d
+ SHOx8f0y0FC18JjoUejnww==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 453uaw51ha-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 07 Mar 2025 20:56:03 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 527JwRrV011083; Fri, 7 Mar 2025 20:56:01 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 453rpfmv4s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 07 Mar 2025 20:56:01 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 527KtuLx016275;
+ Fri, 7 Mar 2025 20:56:01 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 453rpfmv2c-5; Fri, 07 Mar 2025 20:56:00 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daude <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V1 4/4] hw/qxl: fix cpr
+Date: Fri,  7 Mar 2025 12:55:54 -0800
+Message-Id: <1741380954-341079-5-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1741380954-341079-1-git-send-email-steven.sistare@oracle.com>
+References: <1741380954-341079-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-07_07,2025-03-07_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ adultscore=0 mlxscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 malwarescore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502100000
+ definitions=main-2503070158
+X-Proofpoint-GUID: YrHoVE4Da09EFYh02sqa9fTBqi78xQ5V
+X-Proofpoint-ORIG-GUID: YrHoVE4Da09EFYh02sqa9fTBqi78xQ5V
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,40 +101,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/25 20:37, Pierrick Bouvier wrote:
-> Replace TARGET_PAGE.* by runtime calls
-> We assume that page size is 4KB only, to dimension buffer size for
-> receiving message.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   hw/hyperv/syndbg.c    | 10 +++++++---
->   hw/hyperv/meson.build |  2 +-
->   2 files changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
-> index d3e39170772..0ec71d9bfb8 100644
-> --- a/hw/hyperv/syndbg.c
-> +++ b/hw/hyperv/syndbg.c
-> @@ -14,7 +14,7 @@
->   #include "migration/vmstate.h"
->   #include "hw/qdev-properties.h"
->   #include "hw/loader.h"
-> -#include "cpu.h"
-> +#include "exec/target_page.h"
->   #include "hw/hyperv/hyperv.h"
->   #include "hw/hyperv/vmbus-bridge.h"
->   #include "hw/hyperv/hyperv-proto.h"
-> @@ -183,12 +183,14 @@ static bool create_udp_pkt(HvSynDbg *syndbg, void *pkt, uint32_t pkt_len,
->       return true;
->   }
->   
-> +#define MSG_BUFSZ 4096
+During normal migration, new QEMU creates and initializes memory regions,
+then loads the preserved contents of the region from vmstate.
 
-(4 * KiB) is more readable, but, as a matter of style, I won't
-object if you insist.
+During CPR, memory regions are preserved in place, then the realize
+method initializes the regions contents, losing the old contents.  To
+fix, skip writes to the qxl memory regions during CPR load.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reported-by: andrey.drobyshev@virtuozzo.com
+Tested-by: andrey.drobyshev@virtuozzo.com
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ hw/display/qxl.c | 27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
+
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 2efdc77..da14da5 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -30,6 +30,7 @@
+ #include "qemu/module.h"
+ #include "hw/qdev-properties.h"
+ #include "system/runstate.h"
++#include "migration/cpr.h"
+ #include "migration/vmstate.h"
+ #include "trace.h"
+ 
+@@ -333,6 +334,10 @@ static void init_qxl_rom(PCIQXLDevice *d)
+     uint32_t fb;
+     int i, n;
+ 
++    if (cpr_is_incoming()) {
++        goto skip_init;
++    }
++
+     memset(rom, 0, d->rom_size);
+ 
+     rom->magic         = cpu_to_le32(QXL_ROM_MAGIC);
+@@ -390,6 +395,7 @@ static void init_qxl_rom(PCIQXLDevice *d)
+             sizeof(rom->client_monitors_config));
+     }
+ 
++skip_init:
+     d->shadow_rom = *rom;
+     d->rom        = rom;
+     d->modes      = modes;
+@@ -403,6 +409,9 @@ static void init_qxl_ram(PCIQXLDevice *d)
+ 
+     buf = d->vga.vram_ptr;
+     d->ram = (QXLRam *)(buf + le32_to_cpu(d->shadow_rom.ram_header_offset));
++    if (cpr_is_incoming()) {
++        return;
++    }
+     d->ram->magic       = cpu_to_le32(QXL_RAM_MAGIC);
+     d->ram->int_pending = cpu_to_le32(0);
+     d->ram->int_mask    = cpu_to_le32(0);
+@@ -539,6 +548,10 @@ static void interface_set_compression_level(QXLInstance *sin, int level)
+ 
+     trace_qxl_interface_set_compression_level(qxl->id, level);
+     qxl->shadow_rom.compression_level = cpu_to_le32(level);
++    if (cpr_is_incoming()) {
++        assert(qxl->rom->compression_level == cpu_to_le32(level));
++        return;
++    }
+     qxl->rom->compression_level = cpu_to_le32(level);
+     qxl_rom_set_dirty(qxl);
+ }
+@@ -997,7 +1010,8 @@ static void interface_set_client_capabilities(QXLInstance *sin,
+     }
+ 
+     if (runstate_check(RUN_STATE_INMIGRATE) ||
+-        runstate_check(RUN_STATE_POSTMIGRATE)) {
++        runstate_check(RUN_STATE_POSTMIGRATE) ||
++        cpr_is_incoming()) {
+         return;
+     }
+ 
+@@ -1200,6 +1214,10 @@ static void qxl_reset_state(PCIQXLDevice *d)
+ {
+     QXLRom *rom = d->rom;
+ 
++    if (cpr_is_incoming()) {
++        return;
++    }
++
+     qxl_check_state(d);
+     d->shadow_rom.update_id = cpu_to_le32(0);
+     *rom = d->shadow_rom;
+@@ -1370,8 +1388,11 @@ static int qxl_add_memslot(PCIQXLDevice *d, uint32_t slot_id, uint64_t delta,
+     memslot.virt_start = virt_start + (guest_start - pci_start);
+     memslot.virt_end   = virt_start + (guest_end   - pci_start);
+     memslot.addr_delta = memslot.virt_start - delta;
+-    memslot.generation = d->rom->slot_generation = 0;
+-    qxl_rom_set_dirty(d);
++    if (!cpr_is_incoming()) {
++        d->rom->slot_generation = 0;
++        qxl_rom_set_dirty(d);
++    }
++    memslot.generation = d->rom->slot_generation;
+ 
+     qemu_spice_add_memslot(&d->ssd, &memslot, async);
+     d->guest_slots[slot_id].mr = mr;
+-- 
+1.8.3.1
 
 
