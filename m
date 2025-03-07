@@ -4,77 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 033FAC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 10:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB042C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 10:58:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqVOF-0005x8-Vd; Fri, 07 Mar 2025 05:57:15 -0500
+	id 1tqVOr-0006R5-F5; Fri, 07 Mar 2025 05:57:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqVOE-0005wv-4m
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:57:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tqVOn-0006QI-Us
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:57:50 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqVOC-0003BA-9Q
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:57:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741345030;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pqivcjU1Um+DLgjx4G+j5q3nsFFSrUu9IFvKpbpM2tk=;
- b=VgpTAvadJuYNGmRWEafNvIPvEApiXBKwhn3f/+FtPkZCj0lGU1XHsHjFI8nAEBbWUPJlnH
- sCJwb6N9n4NS+5ih20OTafFOxAy7Ka9io2LQpgnYQ1kuClJKSxzFbbs4ENo1J1N+AwyjCN
- 7F+zpH67qXgaod/UPrykq9YoqjpddRM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-KLb5NLywOF2kmvvzMaY0Yw-1; Fri,
- 07 Mar 2025 05:57:04 -0500
-X-MC-Unique: KLb5NLywOF2kmvvzMaY0Yw-1
-X-Mimecast-MFC-AGG-ID: KLb5NLywOF2kmvvzMaY0Yw_1741345023
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 08FAD180AF4D; Fri,  7 Mar 2025 10:57:03 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B232D180AF7A; Fri,  7 Mar 2025 10:57:02 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4C55E21E675F; Fri, 07 Mar 2025 11:57:00 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
- =?utf-8?Q?hieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
- Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>, Harmonie Snow <harmonie@gmail.com>
-Subject: Re: [PATCH 23/57] docs/qapi-domain: add :ifcond: directive option
-In-Reply-To: <20250305034610.960147-24-jsnow@redhat.com> (John Snow's message
- of "Tue, 4 Mar 2025 22:45:32 -0500")
-References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-24-jsnow@redhat.com>
-Date: Fri, 07 Mar 2025 11:57:00 +0100
-Message-ID: <87cyetm7lv.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tqVOk-0003D9-P5
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:57:49 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tqVOW-00000000RLw-08mS; Fri, 07 Mar 2025 11:57:32 +0100
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+To: Peter Xu <peterx@redhat.com>,
+	Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: [PATCH 1/2] vfio/migration: Add also max in-flight VFIO device state
+ buffers size limit
+Date: Fri,  7 Mar 2025 11:57:24 +0100
+Message-ID: <2b2469939198c2f31dba33b284576d2df22697b7.1741344976.git.maciej.szmigiero@oracle.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <cover.1741124640.git.maciej.szmigiero@oracle.com>
+References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,45 +66,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-> Add a special :ifcond: option that allows us to annotate the
-> definition-level conditionals.
->
-> RFC: This patch renders IFCOND information in two places, because I'm
-> undecided about how to style this information. One option is in the
-> signature bar, and another option is in an eye-catch, like :deprecated:
-> or :unstable:.
->
-> A benefit to having this be a directive option is that we can put it in
-> the signature bar, the QAPI index, etc. However, if we merely want it in
-> the content section, a directive would work just as well,
-> e.g. ".. qapi:ifcond:: CONFIG_LINUX".
+There's already a max in-flight VFIO device state buffers *count* limit,
+add also max queued buffers *size* limit.
 
-You haven't implemented conditionals that aren't at definition-level.
-As I said elsewhere, that's okay for now.  All I want to say here is
-that implementing it might influence your preference on how to do the
-definition-level conditionals.  That's fine, we can revisit this.
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+---
+ docs/devel/migration/vfio.rst |  8 +++++---
+ hw/vfio/migration-multifd.c   | 21 +++++++++++++++++++--
+ hw/vfio/pci.c                 |  9 +++++++++
+ include/hw/vfio/vfio-common.h |  1 +
+ 4 files changed, 34 insertions(+), 5 deletions(-)
 
-> (Though, having it be in the same containing box as the unstable/ifcond
-> boxes might require some extra fiddling/post-processing to
-> achieve. Generally, the less docutils tree muddling I have to do, the
-> happier I am.)
->
-> The syntax of the argument is currently undefined, but it is possible to
-> parse it back down into constituent parts to avoid applying literal
-> formatting to "AND" or "&&" or whichever syntax we formalize. (Or, in
-> the future, applying cross-reference links to the config values for
-> additional reading on some of those build options. Not for this series.)
->
-> "Vote now on your phones!"
-
-Find my vote here:
-
-    Message-ID: <87zfhya0is.fsf@pond.sub.org>
-    https://lore.kernel.org/qemu-devel/87zfhya0is.fsf@pond.sub.org/
-
-> Signed-off-by: Harmonie Snow <harmonie@gmail.com>
-> Signed-off-by: John Snow <jsnow@redhat.com>
-
+diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
+index 7c9cb7bdbf87..127a1db35949 100644
+--- a/docs/devel/migration/vfio.rst
++++ b/docs/devel/migration/vfio.rst
+@@ -254,12 +254,14 @@ This means that a malicious QEMU source could theoretically cause the target
+ QEMU to allocate unlimited amounts of memory for such buffers-in-flight.
+ 
+ The "x-migration-max-queued-buffers" property allows capping the maximum count
+-of these VFIO device state buffers queued at the destination.
++of these VFIO device state buffers queued at the destination while
++"x-migration-max-queued-buffers-size" property allows capping their total queued
++size.
+ 
+ Because a malicious QEMU source causing OOM on the target is not expected to be
+ a realistic threat in most of VFIO live migration use cases and the right value
+-depends on the particular setup by default this queued buffers limit is
+-disabled by setting it to UINT64_MAX.
++depends on the particular setup by default these queued buffers limits are
++disabled by setting them to UINT64_MAX.
+ 
+ Some host platforms (like ARM64) require that VFIO device config is loaded only
+ after all iterables were loaded.
+diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+index dccd763d7c39..a9d41b9f1cb1 100644
+--- a/hw/vfio/migration-multifd.c
++++ b/hw/vfio/migration-multifd.c
+@@ -83,6 +83,7 @@ typedef struct VFIOMultifd {
+     uint32_t load_buf_idx;
+     uint32_t load_buf_idx_last;
+     uint32_t load_buf_queued_pending_buffers;
++    size_t load_buf_queued_pending_buffers_size;
+ } VFIOMultifd;
+ 
+ static void vfio_state_buffer_clear(gpointer data)
+@@ -139,6 +140,7 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
+     VFIOMigration *migration = vbasedev->migration;
+     VFIOMultifd *multifd = migration->multifd;
+     VFIOStateBuffer *lb;
++    size_t data_size = packet_total_size - sizeof(*packet);
+ 
+     vfio_state_buffers_assert_init(&multifd->load_bufs);
+     if (packet->idx >= vfio_state_buffers_size_get(&multifd->load_bufs)) {
+@@ -165,8 +167,19 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
+         return false;
+     }
+ 
+-    lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
+-    lb->len = packet_total_size - sizeof(*packet);
++    multifd->load_buf_queued_pending_buffers_size += data_size;
++    if (multifd->load_buf_queued_pending_buffers_size >
++        vbasedev->migration_max_queued_buffers_size) {
++        error_setg(errp,
++                   "%s: queuing state buffer %" PRIu32
++                   " would exceed the size max of %" PRIu64,
++                   vbasedev->name, packet->idx,
++                   vbasedev->migration_max_queued_buffers_size);
++        return false;
++    }
++
++    lb->data = g_memdup2(&packet->data, data_size);
++    lb->len = data_size;
+     lb->is_present = true;
+ 
+     return true;
+@@ -346,6 +359,9 @@ static bool vfio_load_state_buffer_write(VFIODevice *vbasedev,
+         assert(wr_ret <= buf_len);
+         buf_len -= wr_ret;
+         buf_cur += wr_ret;
++
++        assert(multifd->load_buf_queued_pending_buffers_size >= wr_ret);
++        multifd->load_buf_queued_pending_buffers_size -= wr_ret;
+     }
+ 
+     trace_vfio_load_state_device_buffer_load_end(vbasedev->name,
+@@ -519,6 +535,7 @@ static VFIOMultifd *vfio_multifd_new(void)
+     multifd->load_buf_idx = 0;
+     multifd->load_buf_idx_last = UINT32_MAX;
+     multifd->load_buf_queued_pending_buffers = 0;
++    multifd->load_buf_queued_pending_buffers_size = 0;
+     qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
+ 
+     multifd->load_bufs_iter_done = false;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 02f784c1b2a3..8abf73f810ee 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3392,6 +3392,8 @@ static const Property vfio_pci_dev_properties[] = {
+                             ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_UINT64("x-migration-max-queued-buffers", VFIOPCIDevice,
+                        vbasedev.migration_max_queued_buffers, UINT64_MAX),
++    DEFINE_PROP_SIZE("x-migration-max-queued-buffers-size", VFIOPCIDevice,
++                     vbasedev.migration_max_queued_buffers_size, UINT64_MAX),
+     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
+                      vbasedev.migration_events, false),
+     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
+@@ -3581,6 +3583,13 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
+                                           "destination when doing live "
+                                           "migration of device state via "
+                                           "multifd channels");
++    object_class_property_set_description(klass, /* 10.0 */
++                                          "x-migration-max-queued-buffers-size",
++                                          "Maximum size of in-flight VFIO "
++                                          "device state buffers queued at the "
++                                          "destination when doing live "
++                                          "migration of device state via "
++                                          "multifd channels");
+ }
+ 
+ static const TypeInfo vfio_pci_dev_info = {
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index c8ff4252e24a..fff2f35754b2 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -158,6 +158,7 @@ typedef struct VFIODevice {
+     OnOffAuto migration_multifd_transfer;
+     OnOffAuto migration_load_config_after_iter;
+     uint64_t migration_max_queued_buffers;
++    uint64_t migration_max_queued_buffers_size;
+     bool migration_events;
+     VFIODeviceOps *ops;
+     unsigned int num_irqs;
 
