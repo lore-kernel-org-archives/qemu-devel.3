@@ -4,90 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F83C28B23
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 580C5C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:47:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqYoN-0003Fi-2w; Fri, 07 Mar 2025 09:36:27 -0500
+	id 1tqYyG-0000Ck-F1; Fri, 07 Mar 2025 09:46:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tqYoL-0003F3-8U
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:36:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tqYyE-0000CD-4a; Fri, 07 Mar 2025 09:46:38 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tqYoJ-0007bj-N9
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:36:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741358178;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xJ9CYuJv1fQ7i/4GVoO3JvzYbjxZVldMDGg+EMRQHR0=;
- b=NWTkeWeQtQVTaDz/gV08U/eYlFR2r2aVCHtRmW/HnvTpcxDRCk12wxi0NdoYUcPxLWnTOI
- l6pW77LDOmQ/nkiQOUPNWAZx8qa1TU8LwqxQFnrS5X/mH+my6L+EvlsqZRpovtRbOtnF1r
- 7oj06kTxGMDqFKVPqu0UjZxq+Gvr2T0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-125-SJYzWxjmOuCiOt5ZiJDuGA-1; Fri, 07 Mar 2025 09:36:17 -0500
-X-MC-Unique: SJYzWxjmOuCiOt5ZiJDuGA-1
-X-Mimecast-MFC-AGG-ID: SJYzWxjmOuCiOt5ZiJDuGA_1741358176
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-390ee05e2ceso1346742f8f.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 06:36:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741358176; x=1741962976;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xJ9CYuJv1fQ7i/4GVoO3JvzYbjxZVldMDGg+EMRQHR0=;
- b=u+Tz8tz7VuZy9dBtReuQ4oe91RBDHIXhG6L+zDNMu+V27PfH42Aa/Mfdn3NSxwrQLy
- 4q/Uiw/QnOpH2CL//HdwhJY3GrJzcPT6E292KEAKK7Im7XYMCSWX08G7ylBkEXrwNVvz
- muF+cXLb/HOkV9B3xpA9MbUCBIzjwZb/Z9qtieR4WMln4AQK9nW62tfs/C8XyS7S519y
- xI+ba9yKnVgJ57B38A5og1pX9Z5Eal2I385ck6GIofzX3cPOSv9z1hq5IGVPwWR2d5Rb
- DgKXk/evUeVHNNhFpzkdilmnXNIcoF3hYruMWb2zxKgRWbfu+1lL4K1NHT7rDFSS5Acd
- uebg==
-X-Gm-Message-State: AOJu0Ywto7lmdZkPnTlLG/pilAttgRKEVX0FumM5n5qUSKUvYRphYFzY
- iTczxKjcvdYChX3uVtdnOWnqqLT2mayhIt7a+g9xVVdYc2a508NmaorQnN+ELLNZro59HheA4bK
- R2bic4ntk3SjtKmIapjvR1VFjhV9kLCu/fJx6xTkqiXBFRdLlL0Q52Oo+E44mXtsX1nOIIVToah
- fegvgbxEEzFVaKaFFvbqErOuN5PjQ=
-X-Gm-Gg: ASbGncuPGJWQhbTKGMC+rm1m29wvgVOKfqgv2FFP18MEVLN283muxv9Cq4PpTmcLfcB
- MkDpBMMnxPjvGk/VbCEpyVLiS5m1/e8DhR5mun98zsux0xVilrGD0KIRIBMnbtTaSDlyn+EqosA
- ==
-X-Received: by 2002:a5d:6d09:0:b0:38f:4fa6:68df with SMTP id
- ffacd0b85a97d-39132dbca7amr2842428f8f.51.1741358175456; 
- Fri, 07 Mar 2025 06:36:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE9YOkD9R3kL/03jmv+SwbOdXtWVMGXMk1JvNctTvQ+oX0xDvJvox3JMYWPws9nQFVdLbWT4od4AtMUfr4TQp4=
-X-Received: by 2002:a5d:6d09:0:b0:38f:4fa6:68df with SMTP id
- ffacd0b85a97d-39132dbca7amr2842406f8f.51.1741358175150; Fri, 07 Mar 2025
- 06:36:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tqYyC-0002yc-2p; Fri, 07 Mar 2025 09:46:37 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id AD22E4E600F;
+ Fri, 07 Mar 2025 15:46:32 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 6jjLAS9Cy044; Fri,  7 Mar 2025 15:46:30 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id AB39F4E6005; Fri, 07 Mar 2025 15:46:30 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A95B974577C;
+ Fri, 07 Mar 2025 15:46:30 +0100 (CET)
+Date: Fri, 7 Mar 2025 15:46:30 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH v2 3/5] ppc/amigaone: Add default environment
+In-Reply-To: <84151f43-d952-4515-aee5-04f339baa546@linaro.org>
+Message-ID: <33e3ef97-749e-4701-4955-0e88d0eb2199@eik.bme.hu>
+References: <cover.1740673173.git.balaton@eik.bme.hu>
+ <4d63f88191612329e0ca8102c7c0d4fc626dc372.1740673173.git.balaton@eik.bme.hu>
+ <84151f43-d952-4515-aee5-04f339baa546@linaro.org>
 MIME-Version: 1.0
-References: <20250306161631.2477685-1-alex.bennee@linaro.org>
-In-Reply-To: <20250306161631.2477685-1-alex.bennee@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 7 Mar 2025 15:36:01 +0100
-X-Gm-Features: AQ5f1JqotSwpM7T-QSu9j6AQXc9CYYWDmUedzOdXJgR8TGnPN76H6acktX7AjCY
-Message-ID: <CABgObfbcTqr7LNDumDXo7wXf=WigZ2U0Kwv97NRFAHgPoCQ8WQ@mail.gmail.com>
-Subject: Re: [PATCH v3] meson.build: default to -gsplit-dwarf for debug info
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1814073064-1741358790=:74308"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,23 +67,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 6, 2025 at 5:16=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linaro=
-.org> wrote:
-> +if get_option('debug')
-> +  qemu_cflags +=3D get_option('split_debug') ? ['-gsplit-dwarf'] : ['-g'=
-]
-> +endif
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Since -g is already added by meson, it's enough to do
+--3866299591-1814073064-1741358790=:74308
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
--if get_option('debug')
--  qemu_cflags +=3D get_option('split_debug') ? ['-gsplit-dwarf'] : ['-g']
-+if get_option('debug') and get_option('split_debug')
-+  qemu_cflags +=3D '-gsplit-dwarf'
- endif
+On Fri, 7 Mar 2025, Philippe Mathieu-Daudé wrote:
+> Hi Zoltan,
+>
+> Minor review comments in case you respin (not blocking).
+>
+> On 27/2/25 17:39, BALATON Zoltan wrote:
+>> Initialise empty NVRAM with default values. This also enables IDE UDMA
+>> mode in AmigaOS that is faster but has to be enabled in environment
+>> due to problems with real hardware but that does not affect emulation
+>> so we can use faster defaults here.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   hw/ppc/amigaone.c | 37 ++++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 36 insertions(+), 1 deletion(-)
+>> 
+>> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+>> index 849c9fc6e0..5c5585d39a 100644
+>> --- a/hw/ppc/amigaone.c
+>> +++ b/hw/ppc/amigaone.c
+>> @@ -52,6 +52,28 @@ static const char dummy_fw[] = {
+>>   #define NVRAM_ADDR 0xfd0e0000
+>>   #define NVRAM_SIZE (4 * KiB)
+>>   +static char default_env[] =
+>
+> 'const'
 
-Applied with this change, then.
+OK. Could be fixed up on merge by Nick or I can send a new version if 
+needed.
 
-Paolo
+>> +    "baudrate=115200\0"
+>> +    "stdout=vga\0"
+>> +    "stdin=ps2kbd\0"
+>> +    "bootcmd=boota; menu; run menuboot_cmd\0"
+>> +    "boot1=ide\0"
+>> +    "boot2=cdrom\0"
+>> +    "boota_timeout=3\0"
+>> +    "ide_doreset=on\0"
+>> +    "pci_irqa=9\0"
+>> +    "pci_irqa_select=level\0"
+>> +    "pci_irqb=10\0"
+>> +    "pci_irqb_select=level\0"
+>> +    "pci_irqc=11\0"
+>> +    "pci_irqc_select=level\0"
+>> +    "pci_irqd=7\0"
+>> +    "pci_irqd_select=level\0"
+>> +    "a1ide_irq=1111\0"
+>> +    "a1ide_xfer=FFFF\0";
+>> +#define CRC32_DEFAULT_ENV 0xb5548481
+>> +#define CRC32_ALL_ZEROS   0x603b0489
+>
+>> +
+>>   #define TYPE_A1_NVRAM "a1-nvram"
+>>   OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
+>>   @@ -94,7 +116,7 @@ static void nvram_realize(DeviceState *dev, Error 
+>> **errp)
+>>   {
+>>       A1NVRAMState *s = A1_NVRAM(dev);
+>>       void *p;
+>> -    uint32_t *c;
+>> +    uint32_t crc, *c;
+>>         memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram",
+>>                                     NVRAM_SIZE, &error_fatal);
+>> @@ -113,12 +135,25 @@ static void nvram_realize(DeviceState *dev, Error 
+>> **errp)
+>>               return;
+>>           }
+>>       }
+>> +    crc = crc32(0, p + 4, NVRAM_SIZE - 4);
+>> +    if (crc == CRC32_ALL_ZEROS) { /* If env is uninitialized set default 
+>> */
+>> +        *c = cpu_to_be32(CRC32_DEFAULT_ENV);
+>
+> Prefer the ld/st API over cpu_to/from:
+>
+>           stl_be_p(c, CRC32_DEFAULT_ENV);
+>
+>> +        /* Also copies terminating \0 as env is terminated by \0\0 */
+>> +        memcpy(p + 4, default_env, sizeof(default_env));
+>> +        if (s->blk) {
+>> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, 
+>> 0);
+>> +        }
+>> +        return;
+>> +    }
+>>       if (*c == 0) {
+>>           *c = cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
+>>           if (s->blk) {
+>>               blk_pwrite(s->blk, 0, 4, p, 0);
+>>           }
+>>       }
+>> +    if (be32_to_cpu(*c) != crc) {
+>
+>       if (ldl_be_p(c) != crc) {
 
+Why? Here we want to convert a value from host CPU endianness to a 
+specific endianness and vice versa in code running on the host. (We are 
+not accessing guest memory, we operate on the memory region pointer. The 
+guest is not even running yet.)
+
+Also:
+
+static inline int ldl_be_p(const void *ptr)
+{
+     return be_bswap(ldl_he_p(ptr), 32);
+}
+
+static inline int ldl_he_p(const void *ptr)
+{
+     int32_t r;
+     __builtin_memcpy(&r, ptr, sizeof(r));
+     return r;
+}
+
+#define be_bswap(v, size) glue(__builtin_bswap, size)(v)
+
+so this is
+
+int32_t r;
+__builtin_memcpy(&r, c, sizeof(r));
+__builtin_bswap32(r);
+
+versus
+
+static inline type endian ## size ## _to_cpu(type v)
+{
+     return glue(endian, _bswap)(v, size);
+}
+
+which is just
+
+__builtin_bswap32(*c);
+
+The second one makes more sense to me and don't see why I'd want to do it 
+in a more cumbersome way when we end up with the same result but simpler.
+
+Regards,
+BALATON Zoltan
+
+>> +        warn_report("NVRAM checksum mismatch");
+>> +    }
+>>   }
+
+--3866299591-1814073064-1741358790=:74308--
 
