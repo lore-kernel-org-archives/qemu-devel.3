@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 325DBC282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 13:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA01CC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 13:11:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqXSh-0002hd-46; Fri, 07 Mar 2025 08:09:59 -0500
+	id 1tqXSo-0002lr-PD; Fri, 07 Mar 2025 08:10:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqXSf-0002hN-EW
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:09:57 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqXSj-0002i3-DB
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:10:04 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqXSd-0001FO-Q9
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:09:57 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43bbb440520so20620755e9.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 05:09:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqXSh-0001Fs-Pr
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 08:10:01 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso11201975e9.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 05:09:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741352993; x=1741957793; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2pvYNU7MA+h112B0oi56XMWS7ccwT2Ys8CQNpALrEVc=;
- b=u3Y49qo3TcdgdPeoTI6WKZbybfqJ5A6P/XvyWNmnWAPc8PaRJIojmKfzbxBhJo300P
- M7Elvs65YMFIxs7rOfPngh+jfLVkw0FFgdY1heVqWayxDhLD717GC+mA7h3x0cQ5Sb6i
- sYKvHZE+Unr42aNRbev3PF1Ep2ILyddSCMsshaU2teo/Y/EZ+8MT8eECfsRAVf2eHaY6
- e16Ja0DNRAkfZAYPzgzpLMToGOYgD6ZUtt5BLfp2iDFgAnX6kQ6Knqcf51cykv1rIPEI
- qc9E5UcK37f7lZJc6q6pxVfFDuyC7pL5R2uleGQ8X/2NGB0yi1jbSVWcv/pqOwSOIOdE
- fpsA==
+ d=linaro.org; s=google; t=1741352998; x=1741957798; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+zbc6tMUo3di/HoycSLWx0Ju1YVVknJoWV3wLdfwDGE=;
+ b=kbBJNw1aY08EoIaB+MPJ35riK7zxM93i8AaPhjzedO1eiEIEc0a3mxHJMxLQp9/ByD
+ YzA6kJ6DTckDO8HYKpo0x+5BSArRctY2JvK1b6U4hZj2DmedmZcOnco2zSpabMvXF5KN
+ MGr6vEJWFCT4LXfGixlvQAaSpooRZKXvTvVDBWE9FeyQ1TirGAgsCumtBrrhHE/fz27s
+ XK2P4jlY4lgJ7mZujJTWLOs1M4Pbird1JGOOtKE+ic//0iBtq/wDs0Py2pJjskv7A+c0
+ XOEbK3Sc+x6Vm9c6NSgpNMGgNYmFm6LVx6OGbYDkA75sfeWvE1QQuGUoMAFGBKq+8fv/
+ 08BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741352993; x=1741957793;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2pvYNU7MA+h112B0oi56XMWS7ccwT2Ys8CQNpALrEVc=;
- b=bT/dtC7op7aaN6yTkR3pnpXw97Y5BO9lozKxXBNGBR+qLRbjborAtY3JqLPvCOzVUb
- WTxKUJs1UglmTYO5vxHQWlKgylHM7A3EF/ZdJfbl7ROb35FMu9fgHdCOgZGtxbZ1Bkqz
- 2kzAVqVJRVP2VknbxjOEXQ4spclVZJcOw7uq2Ofqo1+rQ4sioheq4FGhGYbU6sv3X7Rv
- 3ugTaTf3Hb6+9Wk3UtvIEOdHdRI5xPrBSMufMUP4rYpg6vPA9Q6v3WhxdXdHvhEprdbA
- R/Hcy/SzSXvdGHVPSCz3tm86gA+b/1ySO3CPD5TpRMuw+/4wMH66lQrLFzuZGOTWgVTO
- YvPQ==
-X-Gm-Message-State: AOJu0YyexyPWtNZKB4nrzbSk17ZgUD2tAG7Ese8Ykvr/pjkRThoDiKWm
- Xo6N4O7sp7JrhfLhoYx+B7nu1RYCVFa2A9hsxL7Genruw7CvZxUtHCiUx0dT9gynbqoDnVGGduO
- y+2Q=
-X-Gm-Gg: ASbGncuUIM1EBiVcCvXtBn+c7d++8hYF2F5n9c8oShK8U0vnljnmlPhAyH6dFl4ueKM
- +KZUdFDFXmMm8CHLCrnW0l2ObDzPsKUu4h6wF+IjGdT6Ps1lIEHxcuqJe69tF3Yq2a8jYoG0TrL
- e0U/qN5jfkRU3p1gi7vtzjuhEicgcFefzc+XW0CblIUhvKmRzXFksry+Hkr70qGmCDZkWplZQJ1
- AYwV7RCoUesg70H8pJV6EY6dnXZ/En3KNeB83ARRv8I5VrZzuazfNWECTxRy+1WivC6wfzKnUk3
- WN5ZWTBoFDNqwOjo2WTtqvoKdreHAbHml/gB3rgMZ1+9p3S6aAufNhSSaVHZX6zeczjG6WDdJ53
- oIzWAsBgvg3VKSmMRngY=
-X-Google-Smtp-Source: AGHT+IEOodRhnqmmNfFgKNYBWMcKGJaEZZQhoZ8OPv1r3j/0y4ZyOmV3inuW8zv9IHq/YtwoxyoRhg==
-X-Received: by 2002:a05:600c:314d:b0:43b:bfb7:e099 with SMTP id
- 5b1f17b1804b1-43c602222ecmr30102375e9.29.1741352993017; 
- Fri, 07 Mar 2025 05:09:53 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741352998; x=1741957798;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+zbc6tMUo3di/HoycSLWx0Ju1YVVknJoWV3wLdfwDGE=;
+ b=WMn8yQWXPVlTM9qy4DlHceRIsNoCXHtBjtx44adXXF8vLf+X8ttxBuBjF84DUPwMR9
+ /+7i6Vdw9KguEcb6HizP9PDCSVLe9tVOP3of83ySZJjL4dqqdH+oi5E6MkGwZYVgwQxx
+ nW4f4FON9sEIy4kFQxoM2c2QJqfbzUUBYgGKw/dEbjoqeoeI8jgCDoFgbtXgKv9YtB/e
+ w1VtzgLBeLiyx724AcAPtqO96TZwzlEMkKYm9p7EgENRAMOFMIyPBQYsQ0AFnaH8HnWU
+ MUG7uVjaWhHAZ95+31hbnTCBClPWBZISV0mXAHJcUWwhmu0HYzxKBSyFBUPOZVlezuOr
+ 0m+Q==
+X-Gm-Message-State: AOJu0YxwPB4/ofZ6HY5/NQ5UUrWgT/j3OgD4NGRgUpiun5l8Nh/AK0qx
+ jerW2KKG2r8cC87C9S3qsyyqPZhGZzQIME5Z799aRjJJ5ovAh1a/R9yoFjE3JdQJUaZG5FA5Uit
+ O+C4=
+X-Gm-Gg: ASbGnct8B2VUctcwqbmRcz7IlQOotTWan3E+8FgTalVKu7Huw3F2IG2wpMl/7H/58oy
+ sXC62b84BIrRiCkBgPiIzinIwroMMLChqrIxA11FkZGOCRw6hg7pyZ2V2ASQE/JTUYlag3cs08c
+ P+6NbNi0jiwWBVXmfgMXPL3gynIZSTDCqkTro6OfA4WXFjTVeVkUILx32xTUaWn0R/WxE7Qb9Cw
+ wLBwIUVFvpvVf7VWR+s6fYhhxHgj44hfkj4Gvb6kbmjSXeKGKCTsiFeiKakaqqh8uo2ZyHsYt8Q
+ 7e30n/RqZcsV5miG84yBazBBd0Anv+BOfUH4RoCaqx8N6RgkDmy50uy84EP22dc+F9sZjArPmdC
+ OAz/frVJprj7fXz87jAA=
+X-Google-Smtp-Source: AGHT+IFeMnR0kALRLpDimQ00o5/f5MBN9MocDc7ERlSuozqKVr3aJJH8isg7GGTZv461JMREhiOUyA==
+X-Received: by 2002:a05:600c:198b:b0:439:b7e3:ce56 with SMTP id
+ 5b1f17b1804b1-43c687027f5mr22709405e9.29.1741352997660; 
+ Fri, 07 Mar 2025 05:09:57 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd435c9c7sm79495765e9.38.2025.03.07.05.09.52
+ 5b1f17b1804b1-43bd91338cesm69681285e9.7.2025.03.07.05.09.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 07 Mar 2025 05:09:52 -0800 (PST)
+ Fri, 07 Mar 2025 05:09:57 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
  Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 0/3] user: Extract common MMAP API to 'user/mmap.h'
-Date: Fri,  7 Mar 2025 14:09:48 +0100
-Message-ID: <20250307130951.4816-1-philmd@linaro.org>
+Subject: [PATCH v3 1/3] bsd-user: Always use mmap_find_vma_aligned() in
+ target_mmap()
+Date: Fri,  7 Mar 2025 14:09:49 +0100
+Message-ID: <20250307130951.4816-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250307130951.4816-1-philmd@linaro.org>
+References: <20250307130951.4816-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,22 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1:
-- Propagate alignment argument to BSD's mmap_find_vma()
+Massage target_mmap(): calculate alignment once, then
+unconditionally call mmap_find_vma_aligned().
 
-Philippe Mathieu-Daudé (3):
-  bsd-user: Always use mmap_find_vma_aligned() in target_mmap()
-  bsd-user: Propagate alignment argument to mmap_find_vma()
-  user: Extract common MMAP API to 'user/mmap.h'
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ bsd-user/mmap.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
- bsd-user/bsd-mem.h     |  2 +-
- bsd-user/qemu.h        | 12 +-----------
- include/user/mmap.h    | 32 ++++++++++++++++++++++++++++++++
- linux-user/user-mmap.h | 19 ++-----------------
- bsd-user/mmap.c        | 19 +++++++------------
- 5 files changed, 43 insertions(+), 41 deletions(-)
- create mode 100644 include/user/mmap.h
-
+diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
+index 346f2cefd32..28d7e387a20 100644
+--- a/bsd-user/mmap.c
++++ b/bsd-user/mmap.c
+@@ -489,13 +489,14 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int prot,
+      * before we truncate the length for mapping files below.
+      */
+     if (!(flags & MAP_FIXED)) {
++        abi_ulong alignment = 0;
++
+         host_len = len + offset - host_offset;
+         host_len = HOST_PAGE_ALIGN(host_len);
+-        if ((flags & MAP_ALIGNMENT_MASK) != 0)
+-            start = mmap_find_vma_aligned(real_start, host_len,
+-                (flags & MAP_ALIGNMENT_MASK) >> MAP_ALIGNMENT_SHIFT);
+-        else
+-            start = mmap_find_vma(real_start, host_len);
++        if ((flags & MAP_ALIGNMENT_MASK) != 0) {
++            alignment = (flags & MAP_ALIGNMENT_MASK) >> MAP_ALIGNMENT_SHIFT;
++        }
++        start = mmap_find_vma_aligned(real_start, host_len, alignment);
+         if (start == (abi_ulong)-1) {
+             errno = ENOMEM;
+             goto fail;
 -- 
 2.47.1
 
