@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11DF8C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C0BC282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqgMR-0006Az-Tt; Fri, 07 Mar 2025 17:40:07 -0500
+	id 1tqgMp-0006NV-Oh; Fri, 07 Mar 2025 17:40:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMP-00066z-08
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:05 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMZ-0006FA-MG
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:17 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMN-0003Nk-4n
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:04 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43bbd711eedso18413215e9.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:40:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMX-0003b6-OG
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:15 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43bbc8b7c65so27161515e9.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:40:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741387201; x=1741992001; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741387211; x=1741992011; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=koJwEkpLST/7gWyCJsL/yXVo3vaaAtJxi2Nw9A7NzsE=;
- b=DDKsMw29k+bny3kzKqubFlxd+ZrH++YyXmd84Q7l3+ctBdMx/yrmX+s+sQE1BVxmpU
- OkbkXXFx/9B7ln1JVPbAS+qKxLGOG8pYzP1b5Cmc2lQTAVnQUEQQ/eMYdGWzWGmE2P2K
- A4xz+rxxm9+CatJdDnBgFuFgju0TET4drTmc3qIq0I+TAIbGRVp7rH/ZxBC5fB08EcPW
- w7EVfpEweUJwRlDPpePb48HF6pqbmlIlxgRjybNow4bLBGZ8P9BRIx98GkBOhoBanjLI
- qXAUcHeCtX0DCuCWzrFA20bkdJA8pTthVR5Ju0W0SNUaazXtcD3RyksAk3wN/n7rCGK+
- M5uQ==
+ bh=IuwCf4WRGv3h0tr40swdZHn3OJodO5dUQXcRGaznNRk=;
+ b=k3u/8O+LS0s39UwJ54KwjmBxNee5vyeut89tFmivEFbPCN2SBTHVDzm8cXSwkOQDRz
+ 8CvB9lWIhTy2PoHhY3bUHhw4XWqTlU9/e6MD51llTq3ltgp2lVE67bkbFQPevHmCf4FB
+ BzOiTsXoo2Eg6cSgERHM4g/phDtpK0ijYFuEl4Y0qdsEgWpxMsYW+dDnjRP4wMy1vjLs
+ /dKeFJ+h3ol1LUUH+ZDlf8K6p/M1EXIvOxWo74h6Cf3qRJkz6rE5Y4yfaQHUd2Kdx3XD
+ fTe8WcQW7pmwKXItCqmGDmbj9mUZXVnJtD9tWUqHpfgUrc5oR0DVrJaDLJ32qP3lmHSI
+ KfVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741387201; x=1741992001;
+ d=1e100.net; s=20230601; t=1741387211; x=1741992011;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=koJwEkpLST/7gWyCJsL/yXVo3vaaAtJxi2Nw9A7NzsE=;
- b=AqKY6p9iHkRLyXAJmYP9KDs+fZGY8/kI/NmHzdt2zLOOq/4w/32M3VWi1rxLTljri4
- 4JkkmqIj1EB03akC18Nwzpp6QF60H/Qnjc0JgG6NmIErABCX1RoDIFr6mYPPLcGoVGS8
- qDJITs7TuUNNFBxZRWDHLJrSWsd6+wXA48Fha8Iuo/ZGsEePmQ55fK54z6w4GLVfotAY
- myFaMeKIhCChbkSUFIZvHVcSnoOk7WCnufMehxjbrnwZgdJNM+i3clNYKTVgOAlbzEgf
- MQJLC/LcOcndpPwlBtcR4u12Ia7zQhK625tFAR4t2lkKorbVX3Cosxbc8mJKa4mqZ2BD
- dhJw==
-X-Gm-Message-State: AOJu0YxFTJAUTrSR3XP2juI4s5f1ATBYMoYOJEEUiZX0hlyxOomHX6Xi
- BXRagI8Vc4/COr6xPbXyPR5crnLCoeB2Qfer7/TILMNqkAvQv1rGJQ/T9/0L5j4ekYbgrDuMnzP
- O8JY=
-X-Gm-Gg: ASbGncvcovMCpNcXmG8pCfdE+Pkh5ubNJvM6xl1cjHJfE07p/o0xwfz8pfaf5ppS8Mq
- 6s1zlfzWmWWlX3pJFS+kKtLMF49mtIqhRg57h1+xQDPYaHlgbOL5LkZdsOvWsFo2k3z+HGKqqxG
- 41HzzOCxFaISVJpMbDpLXzkiKVs/0q9kspvz9SUoqgfs0N/U9jsmN/13XmsB1Xb/rDzO74HZnGk
- kv5gXHOePxovweL+tv7bcTT6YGzzNraW7CR0rGuigpWzdxqmnqkL8DhS/1bLq2zCK23SQ0ZlPNO
- u3RNoPZCe3LcYwK6OvJ/qhj501MmoOa6jX/KrftgcoJSAlm3EiXOYbLUicd2l0IZCA6k62C/N25
- pIIIxinYu+2ybbbxz+Es=
-X-Google-Smtp-Source: AGHT+IHTfQQ3o6s2tPclL8m5IPfAHPblUiprGcBMAb09s4SRWQab9eVED6oixw2cK26H3Rfih78zuA==
-X-Received: by 2002:a05:600c:1c9d:b0:439:643a:c8d5 with SMTP id
- 5b1f17b1804b1-43c549dcc0amr41814965e9.0.1741387200874; 
- Fri, 07 Mar 2025 14:40:00 -0800 (PST)
+ bh=IuwCf4WRGv3h0tr40swdZHn3OJodO5dUQXcRGaznNRk=;
+ b=nL5XqMhcYekByo0LepGzTyBA59R/05CWIGlUgmOrio2exHBTdcFEqkNTK09K6RNJ0W
+ 9KhJ19Cl9o+FPetu7K/mskVaCrP85zmhnbSnDlHcCz6pPEZVxgOgO9lPSmIXxht+rrBN
+ ej9Cba7KhJil3XOUiyFlWk4fgqGfeGaAW86qPxMzmegh6H1JJup6KvwCxcLIHOiExtRT
+ NK3vfU55o3wgMZyqsrFtA4ZaCSTEWUojN7Ln0X4BzDbJ5KcVb91lmDdRR1IjJEbvsPs0
+ pg5C5guF/e5sf2LCuGREAXQG1jPaursWVFh3JTsK14PePR7NHNBqTP178fCL4YOD/0Hn
+ Cc9g==
+X-Gm-Message-State: AOJu0YxuFul/T6+jEL6V3i5X5fTW8t4qJmRgBUZteKjlN1h1rd1k7wUb
+ d0rIMvrwKEKXrn41voLxbK6Iz4WqgtmbrQsUz+tAOdfZvtfV0uW5lV0X+ju9z4pgDRJSm67SAnU
+ g1Sk=
+X-Gm-Gg: ASbGncs5gX4Ecrp4PWN8g1A7stwywMjvwHIZ+xfykDVwJktjM2UpZLMLuL2A0DvgGzn
+ Dm3/UcNLOTrCeCoq4yosgvETx2/Oq3I+SC46oOFzr9wva48FXz2MKaF0K5g6pnmK/dp1lUSa02X
+ Pgdm+Ny0Y3BrUtm9u5GuIDnnZfOd8v/SnAkVvL49pBdYwr0lpD/9Fu5PIGjL491qlTFEeOEsLt/
+ aA281Ez4jUOAtzuMJ71p7FL2bgsH+5aRC2FZnZbcD5j+3J7OoRGfKr9WUmaXB4Nb/Rq6pcYmXqi
+ sz0owq9ac7toSmo/QViMubfgVkIlHpqYKyWqrBR5eHQpO06ZIVLqV0yoEfbRpv/9RlRgXgJUD5x
+ 3vP7PdPV6Ab5w8lc6k0A=
+X-Google-Smtp-Source: AGHT+IEcp88EWyq6smiXF2nbjZWjJwR4A+5AKGNnyT7ZmkGKimIJgabejM7fbCKRmdY8mB3aWrncGw==
+X-Received: by 2002:a05:600c:46d3:b0:439:9424:1b70 with SMTP id
+ 5b1f17b1804b1-43c602223f0mr53786585e9.30.1741387210570; 
+ Fri, 07 Mar 2025 14:40:10 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd8da473sm64096865e9.18.2025.03.07.14.39.59
+ 5b1f17b1804b1-43ce9f2d081sm303985e9.21.2025.03.07.14.40.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 07 Mar 2025 14:40:00 -0800 (PST)
+ Fri, 07 Mar 2025 14:40:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -76,17 +76,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/7] hw/acpi: Introduce acpi_builtin() helper
-Date: Fri,  7 Mar 2025 23:39:44 +0100
-Message-ID: <20250307223949.54040-3-philmd@linaro.org>
+Subject: [PATCH v2 4/7] hw/virtio/virtio-mem: Remove CONFIG_DEVICES include
+Date: Fri,  7 Mar 2025 23:39:46 +0100
+Message-ID: <20250307223949.54040-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250307223949.54040-1-philmd@linaro.org>
 References: <20250307223949.54040-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,60 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-acpi_builtin() can be used to check at runtime whether
-the ACPI subsystem is built in a qemu-system binary.
+Rather than checking ACPI availability at compile time by
+checking the CONFIG_ACPI definition from CONFIG_DEVICES,
+check at runtime via acpi_builtin().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/hw/acpi/acpi.h | 3 +++
- hw/acpi/acpi-stub.c    | 5 +++++
- hw/acpi/core.c         | 5 +++++
- 3 files changed, 13 insertions(+)
+ hw/virtio/virtio-mem.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/acpi/acpi.h b/include/hw/acpi/acpi.h
-index e0e51e85b41..d1a4fa2af84 100644
---- a/include/hw/acpi/acpi.h
-+++ b/include/hw/acpi/acpi.h
-@@ -150,6 +150,9 @@ struct ACPIREGS {
-     Notifier wakeup;
- };
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index 7b140add765..5f57eccbb66 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -28,7 +28,7 @@
+ #include "migration/misc.h"
+ #include "hw/boards.h"
+ #include "hw/qdev-properties.h"
+-#include CONFIG_DEVICES
++#include "hw/acpi/acpi.h"
+ #include "trace.h"
  
-+/* Return whether ACPI subsystem is built in */
-+bool acpi_builtin(void);
-+
- /* PM_TMR */
- void acpi_pm_tmr_update(ACPIREGS *ar, bool enable);
- void acpi_pm_tmr_calc_overflow_time(ACPIREGS *ar);
-diff --git a/hw/acpi/acpi-stub.c b/hw/acpi/acpi-stub.c
-index e268ce9b1a9..790bf509e5d 100644
---- a/hw/acpi/acpi-stub.c
-+++ b/hw/acpi/acpi-stub.c
-@@ -25,3 +25,8 @@ void acpi_table_add(const QemuOpts *opts, Error **errp)
- {
-     g_assert_not_reached();
- }
-+
-+bool acpi_builtin(void)
-+{
-+    return false;
-+}
-diff --git a/hw/acpi/core.c b/hw/acpi/core.c
-index 870391ed7c8..58f8964e130 100644
---- a/hw/acpi/core.c
-+++ b/hw/acpi/core.c
-@@ -78,6 +78,11 @@ static void acpi_register_config(void)
+ static const VMStateDescription vmstate_virtio_mem_device_early;
+@@ -883,10 +883,8 @@ static uint64_t virtio_mem_get_features(VirtIODevice *vdev, uint64_t features,
+     MachineState *ms = MACHINE(qdev_get_machine());
+     VirtIOMEM *vmem = VIRTIO_MEM(vdev);
  
- opts_init(acpi_register_config);
- 
-+bool acpi_builtin(void)
-+{
-+    return true;
-+}
-+
- static int acpi_checksum(const uint8_t *data, int len)
- {
-     int sum, i;
+-    if (ms->numa_state) {
+-#if defined(CONFIG_ACPI)
++    if (ms->numa_state && acpi_builtin()) {
+         virtio_add_feature(&features, VIRTIO_MEM_F_ACPI_PXM);
+-#endif
+     }
+     assert(vmem->unplugged_inaccessible != ON_OFF_AUTO_AUTO);
+     if (vmem->unplugged_inaccessible == ON_OFF_AUTO_ON) {
 -- 
 2.47.1
 
