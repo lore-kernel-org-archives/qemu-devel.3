@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E6FC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:57:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5649FC28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:57:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcsP-0007RN-9z; Fri, 07 Mar 2025 13:56:53 -0500
+	id 1tqcsV-0007TW-Vy; Fri, 07 Mar 2025 13:57:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsN-0007Qa-1D
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:51 -0500
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1tqcsO-0007RC-Ho
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:52 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsL-0007kv-1W
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:50 -0500
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2ff85fec403so1380656a91.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:48 -0800 (PST)
+ id 1tqcsL-0007l3-RO
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:52 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2ff615a114bso4417549a91.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741373807; x=1741978607; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2S1HL/uh8HJg/YkrhsXfs/r9NeCmk67SG0CfqhKI+fA=;
- b=IbCpEvh++VMlJgmqddhzobnwkjovM4aZYpaGuqyncZidSg7W/F6eao4TeMWrZfR2H9
- iuoQjnq02wpNmSMeStyQA27t8YhB74KpxNQBlIzl83M7iBZZ4I8EcSGFP6rnldoNVNGT
- WBrWqgKvLzJh5C7aG/wZT978svnqmvvLxR1R9m+8yNsnEACjdnkZdaBdqCqcT3IDwze4
- iekg3KwVi3DeBwnFLTjiLuPYfo/LcazFJkHmkk4iy+ulqPo+e2RwFxx+B8MsL8N8jVoD
- P21Da4s98jY8oluRTYhirptFRXg/Md3EvEEZEw/KqW82uNAjQVAQIqcF8pyR1V5ipFEI
- p+Ig==
+ d=linaro.org; s=google; t=1741373808; x=1741978608; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L5b/Oejd0mTwwlW1J+0jZU46/YaPksZa78jQ92shGik=;
+ b=NZjFxMbiJnCe7OFWxTCfer08Y75CrfFyE9ye2h4e5z2BffX4HYSLBbscVBujFVlRBZ
+ fVSn1aUaZqrmuBE+E06/D8YlkxppI955j7JaqUBhG0WLk6X84GYAbesxVH4yJoD07K/6
+ Pg+sgZbsLmbhLKUHicSXr7NvtfSIsHc8pc7glpNcg6Eeg6HEnIrLFCkAZaUpmwNr6LDW
+ 1GjGJ4FqQl2kODPjmKOAFQij65k2fPEeKikZH2z31dDgNTz/UGzuEun/65Jy6nxAmmWc
+ 7iIIU7FtSV6uSMjq5DGgD7gtEj5WyAcVqWHdq0u2liAMwCjrkXT3FKxAY5rI9ABDzCyh
+ xgGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741373807; x=1741978607;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2S1HL/uh8HJg/YkrhsXfs/r9NeCmk67SG0CfqhKI+fA=;
- b=qqNvrfLX9U90G1fL9hq2255EGMmT8ZP4iX4TJ3DDv87DLR17fIEr9yVjSqibtMAKgI
- C/TOdZiA+LIuV4UvO//ZMDcs5ONcAyVxZQIujVbhP/EgHfUcddq7EyV/oeg4o6V7JYQf
- riGxNwPsFuYXLwdEvPp2IPWIjhEakG1f9szACeriMq3YLyYAJsNe1goBfoKqz8wxpYep
- 1/fsy5MfAQHNogqfiJ/MaAK+PagFqPk5kbAN/iXD49CaFQiqeMF3DK9pmsT5EkrPFvgj
- T3LX9+CIt6cwNhZ++zWdzD1AUK1pVnfsAJJMcNs/WXHf5HtwJVyI26GOOb9ygenxG9WR
- ll2Q==
-X-Gm-Message-State: AOJu0YxYpe9HqSompCHScNgwfsvO4hKSZGcOX22Dfnk7NtgX4Gua7tEP
- 8bdSLcxmRPvtKGz0YOQGSlukBMTAsT0TrX5WUZ0VIj8a09i9mK2sHOY35nKd7pTrJauk+V0QdaI
- U
-X-Gm-Gg: ASbGncudb6yuOSHWcAYpG0US7ANyfpoN0DLChnPqLnsD5OWLOpZT/npCtYpwdY/8HF/
- 1jjb+5OAwCyZtw6rNkkQx76qRs3mITSQF7VkxRatZohUK8vra+X5eMNu1dM4hPy4J8CK+CzSmzM
- aZHfD4egKeleNLPzzMH3RUHqSDqLg7EPKkHNcncflSHiX9M/QV2PR8r2VqV4w14pYG6gyZyGnYT
- GOh+HyTrOr2m88Y2jeWa7lcH/QSwWBb2NggQls2KqSATfFHKlLSYrTAp1+YhsNDQEUcWKBafGM0
- hKFoheH8RuJEcICdcGaBaYhRq2GKGi6SRQeKgIqI6GYQupfCsAeS2ZpdcLcE69HT4lCXi+/l/7C
- K
-X-Google-Smtp-Source: AGHT+IFUzMtEFm25y8Fe3nsa/NK/akH20Q5B0kyWy9lpoqJDO626uDeOmFWmDbKv1ulA4z7d8vuG0A==
-X-Received: by 2002:a17:90b:4cc5:b0:2ff:71d2:ee8f with SMTP id
- 98e67ed59e1d1-2ffbc1c8aa0mr1001164a91.13.1741373807316; 
- Fri, 07 Mar 2025 10:56:47 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741373808; x=1741978608;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=L5b/Oejd0mTwwlW1J+0jZU46/YaPksZa78jQ92shGik=;
+ b=Oweh59GnSUvzZEE/jOTUVOpTD5PwheM2YFtEa06TQrGUkcy8pbagsq3YQVc30gvtle
+ PFhrEZ5pEMeXzxUBlTsEWF28dPYn5TJptzC1Kah+WY783af+VNHuaZrVP0EB26ymg38C
+ S6+sQbEPOu6MkjPiYOUfV8N17i1+m3mJePkfVVmufKb8iWwtad23ZGMPoneHGGFaZkNj
+ BrkvV9Eo5W+YJkhFba8DAP+T5mmLVhIKjLy/VGpl5vQntbldyppggT+2qNhY/jH9I3b9
+ 5zJ81fM1T1xRjRhsPkSP7xeuxaTIE9yjx7a3jPIcQ8LFzwjyFxRLJ5gk1c/0YAl+tGRD
+ O9gw==
+X-Gm-Message-State: AOJu0YwZ5fbr6lwEHKVetOGnXGn5vdMKv5gd0Fnl8t9sBJxs4LO3N7us
+ XVohQmX4fL3kALYguPLoa2CFo1cIIKceFRGzAeZbwQ5SGdgPkzWf+X29BUFAsP2X9avYGywIIOZ
+ D
+X-Gm-Gg: ASbGncvb+vOmmnhE8B0sqHbUtlO6cosZYOXpFEZ2aJbhLxFrrxfKk+jOn/In7ajpdzi
+ VheUETCQ0vyh4rOLmP121UftcGiMm3Z8gmYst63+5Ld9k5bYpw3gh7y84hgzkfxS7FXpgAD6Vdy
+ hRwzZSqenY/UXjmhfZYPmZnt+xCisavz+ttBZMLafmgwUJoQxnJ5AFB7fch8RfuWEVK5piNBMEV
+ y69v6qrwGr7WkwRyEfzTflj+1krit4jKktbc9Y2Unpb2CTf02AU0bLwRmp1uCFUcuefSZxw7pif
+ KsboNhFpXvCy2pztuIRP41/YUfWkiHnIRdOSSY/WltOaFRYCjnXYkw3AL661PMwpYUGLNoR8rdB
+ D
+X-Google-Smtp-Source: AGHT+IGxqRVkTw0z2OwhtYHb0KfpaLwYFeIosgZ1FGZ4vBWP2WG5+ntedd7BY53I3HlVgEW27Mkhtw==
+X-Received: by 2002:a17:90b:3b4a:b0:2fa:603e:905c with SMTP id
+ 98e67ed59e1d1-2ffbc147913mr987991a91.2.1741373808069; 
+ Fri, 07 Mar 2025 10:56:48 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.46
+ 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 10:56:46 -0800 (PST)
+ Fri, 07 Mar 2025 10:56:47 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH 00/16] accel/tcg: Compile more files once
-Date: Fri,  7 Mar 2025 10:56:28 -0800
-Message-ID: <20250307185645.970034-1-richard.henderson@linaro.org>
+Subject: [PATCH] include/exec: Move TARGET_PAGE_{SIZE, MASK,
+ BITS} to target_page.h
+Date: Fri,  7 Mar 2025 10:56:29 -0800
+Message-ID: <20250307185645.970034-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250307185645.970034-1-richard.henderson@linaro.org>
+References: <20250307185645.970034-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,104 +101,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Take care of some easy cases in accel/tcg/.
-From here it starts getting harder.  :-)
+Re-use the TARGET_PAGE_BITS_VARY mechanism to define
+TARGET_PAGE_SIZE and friends when not compiling per-target.
+Inline qemu_target_page_{size,mask,bits} as they are now trivial.
 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+
+After this, we could in fact remove qemu_target_page_foo(), etc.
+We certainly don't need to convert any more uses of TARGET_PAGE_FOO.
 
 r~
 
+---
+ include/exec/cpu-all.h     | 21 +-------------
+ include/exec/poison.h      |  5 ----
+ include/exec/target_page.h | 58 ++++++++++++++++++++++++++++++++++----
+ page-target.c              | 18 ------------
+ page-vary-target.c         |  2 ++
+ 5 files changed, 55 insertions(+), 49 deletions(-)
 
-Philippe Mathieu-Daudé (6):
-  exec: Declare tlb_reset_dirty*() in 'exec/cputlb.h'
-  exec: Declare tlb_set_page_full() in 'exec/cputlb.h'
-  exec: Declare tlb_set_page_with_attrs() in 'exec/cputlb.h'
-  exec: Declare tlb_set_page() in 'exec/cputlb.h'
-  exec: Declare tlb_hit*() in 'exec/cputlb.h'
-  exec: Declare tlb_flush*() in 'exec/cputlb.h'
-
-Richard Henderson (10):
-  include/exec: Split out exec/cpu-interrupt.h
-  accel/tcg: Compile watchpoint.c once
-  system: Build watchpoint.c once
-  accel/tcg: Build tcg-accel-ops.c once
-  accel/tcg: Build tcg-accel-ops-icount.c once
-  accel/tcg: Build tcg-accel-ops-rr.c once
-  accel/tcg: Build tcg-accel-ops-mttcg.c once
-  include/exec: Split out helper-getpc.h
-  accel/tcg: Build tcg-runtime.c once
-  accel/tcg: Build tcg-runtime-gvec.c once
-
- accel/tcg/internal-common.h          |   2 +
- accel/tcg/tb-internal.h              |   2 -
- include/exec/cpu-all.h               |  76 +-------
- include/exec/cpu-interrupt.h         |  70 +++++++
- include/exec/cputlb.h                | 263 ++++++++++++++++++++++++++-
- include/exec/exec-all.h              | 262 +-------------------------
- include/exec/helper-getpc.h          |  31 ++++
- include/exec/poison.h                |  13 --
- include/exec/ram_addr.h              |   1 +
- accel/tcg/cputlb.c                   |  23 +++
- accel/tcg/tcg-accel-ops-icount.c     |   2 +-
- accel/tcg/tcg-accel-ops-mttcg.c      |   1 -
- accel/tcg/tcg-accel-ops-rr.c         |   2 +-
- accel/tcg/tcg-accel-ops.c            |   2 +-
- accel/tcg/tcg-runtime-gvec.c         |   1 -
- accel/tcg/tcg-runtime.c              |   8 +-
- accel/tcg/watchpoint.c               |   5 +-
- cpu-target.c                         |   1 +
- hw/intc/armv7m_nvic.c                |   2 +-
- hw/ppc/spapr_nested.c                |   1 +
- hw/sh4/sh7750.c                      |   1 +
- system/physmem.c                     |   1 +
- system/watchpoint.c                  |   3 +-
- target/alpha/helper.c                |   2 +-
- target/alpha/sys_helper.c            |   2 +-
- target/arm/helper.c                  |   1 +
- target/arm/tcg/tlb-insns.c           |   2 +-
- target/avr/helper.c                  |   2 +-
- target/hppa/mem_helper.c             |   1 +
- target/i386/helper.c                 |   2 +-
- target/i386/machine.c                |   2 +-
- target/i386/tcg/fpu_helper.c         |   2 +-
- target/i386/tcg/misc_helper.c        |   2 +-
- target/i386/tcg/system/excp_helper.c |   2 +-
- target/i386/tcg/system/misc_helper.c |   2 +-
- target/i386/tcg/system/svm_helper.c  |   2 +-
- target/loongarch/tcg/csr_helper.c    |   2 +-
- target/loongarch/tcg/tlb_helper.c    |   1 +
- target/m68k/helper.c                 |   1 +
- target/microblaze/helper.c           |   2 +-
- target/microblaze/mmu.c              |   2 +-
- target/mips/system/cp0.c             |   2 +-
- target/mips/tcg/system/cp0_helper.c  |   2 +-
- target/mips/tcg/system/tlb_helper.c  |   1 +
- target/openrisc/mmu.c                |   2 +-
- target/openrisc/sys_helper.c         |   1 +
- target/ppc/helper_regs.c             |   2 +-
- target/ppc/misc_helper.c             |   1 +
- target/ppc/mmu_helper.c              |   1 +
- target/riscv/cpu_helper.c            |   1 +
- target/riscv/csr.c                   |   1 +
- target/riscv/op_helper.c             |   1 +
- target/riscv/pmp.c                   |   2 +-
- target/rx/cpu.c                      |   2 +-
- target/s390x/gdbstub.c               |   2 +-
- target/s390x/sigp.c                  |   1 +
- target/s390x/tcg/excp_helper.c       |   1 +
- target/s390x/tcg/mem_helper.c        |   1 +
- target/s390x/tcg/misc_helper.c       |   1 +
- target/sh4/helper.c                  |   1 +
- target/sparc/ldst_helper.c           |   1 +
- target/sparc/mmu_helper.c            |   2 +-
- target/tricore/helper.c              |   2 +-
- target/xtensa/helper.c               |   2 +-
- target/xtensa/mmu_helper.c           |   1 +
- accel/tcg/meson.build                |  14 +-
- system/meson.build                   |   2 +-
- 67 files changed, 450 insertions(+), 405 deletions(-)
- create mode 100644 include/exec/cpu-interrupt.h
- create mode 100644 include/exec/helper-getpc.h
-
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index 09f537d06f..8f7aebb088 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -105,26 +105,7 @@ static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val
+ 
+ /* page related stuff */
+ #include "exec/cpu-defs.h"
+-#ifdef TARGET_PAGE_BITS_VARY
+-# include "exec/page-vary.h"
+-extern const TargetPageBits target_page;
+-# ifdef CONFIG_DEBUG_TCG
+-#  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
+-                                target_page.bits; })
+-#  define TARGET_PAGE_MASK   ({ assert(target_page.decided); \
+-                                (target_long)target_page.mask; })
+-# else
+-#  define TARGET_PAGE_BITS   target_page.bits
+-#  define TARGET_PAGE_MASK   ((target_long)target_page.mask)
+-# endif
+-# define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
+-#else
+-# define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
+-# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
+-# define TARGET_PAGE_MASK    ((target_long)-1 << TARGET_PAGE_BITS)
+-#endif
+-
+-#define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
++#include "exec/target_page.h"
+ 
+ CPUArchState *cpu_copy(CPUArchState *env);
+ 
+diff --git a/include/exec/poison.h b/include/exec/poison.h
+index f4283f693a..ce43a12965 100644
+--- a/include/exec/poison.h
++++ b/include/exec/poison.h
+@@ -44,11 +44,6 @@
+ #pragma GCC poison TARGET_FMT_ld
+ #pragma GCC poison TARGET_FMT_lu
+ 
+-#pragma GCC poison TARGET_PAGE_SIZE
+-#pragma GCC poison TARGET_PAGE_MASK
+-#pragma GCC poison TARGET_PAGE_BITS
+-#pragma GCC poison TARGET_PAGE_ALIGN
+-
+ #pragma GCC poison CPU_INTERRUPT_HARD
+ #pragma GCC poison CPU_INTERRUPT_EXITTB
+ #pragma GCC poison CPU_INTERRUPT_HALT
+diff --git a/include/exec/target_page.h b/include/exec/target_page.h
+index 98ffbb5c23..8e89e5cbe6 100644
+--- a/include/exec/target_page.h
++++ b/include/exec/target_page.h
+@@ -14,10 +14,56 @@
+ #ifndef EXEC_TARGET_PAGE_H
+ #define EXEC_TARGET_PAGE_H
+ 
+-size_t qemu_target_page_size(void);
+-int qemu_target_page_mask(void);
+-int qemu_target_page_bits(void);
+-int qemu_target_page_bits_min(void);
+-
+-size_t qemu_target_pages_to_MiB(size_t pages);
++/*
++ * If compiling per-target, get the real values.
++ * For generic code, reuse the mechanism for variable page size.
++ */
++#ifdef COMPILING_PER_TARGET
++#include "cpu-param.h"
++#include "exec/target_long.h"
++#define TARGET_PAGE_TYPE  target_long
++#else
++#define TARGET_PAGE_BITS_VARY
++#define TARGET_PAGE_TYPE  int
++#endif
++
++#ifdef TARGET_PAGE_BITS_VARY
++# include "exec/page-vary.h"
++extern const TargetPageBits target_page;
++# ifdef CONFIG_DEBUG_TCG
++#  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
++                                target_page.bits; })
++#  define TARGET_PAGE_MASK   ({ assert(target_page.decided); \
++                                (TARGET_PAGE_TYPE)target_page.mask; })
++# else
++#  define TARGET_PAGE_BITS   target_page.bits
++#  define TARGET_PAGE_MASK   ((TARGET_PAGE_TYPE)target_page.mask)
++# endif
++# define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
++#else
++# define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
++# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
++# define TARGET_PAGE_MASK    ((TARGET_PAGE_TYPE)-1 << TARGET_PAGE_BITS)
++#endif
++
++#define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
++
++static inline size_t qemu_target_page_size(void)
++{
++    return TARGET_PAGE_SIZE;
++}
++
++static inline int qemu_target_page_mask(void)
++{
++    return TARGET_PAGE_MASK;
++}
++
++static inline int qemu_target_page_bits(void)
++{
++    return TARGET_PAGE_BITS;
++}
++
++int qemu_target_page_bits_min(void);
++size_t qemu_target_pages_to_MiB(size_t pages);
++
+ #endif
+diff --git a/page-target.c b/page-target.c
+index 82211c8593..321e43d06f 100644
+--- a/page-target.c
++++ b/page-target.c
+@@ -8,24 +8,6 @@
+ 
+ #include "qemu/osdep.h"
+ #include "exec/target_page.h"
+-#include "exec/cpu-defs.h"
+-#include "cpu.h"
+-#include "exec/cpu-all.h"
+-
+-size_t qemu_target_page_size(void)
+-{
+-    return TARGET_PAGE_SIZE;
+-}
+-
+-int qemu_target_page_mask(void)
+-{
+-    return TARGET_PAGE_MASK;
+-}
+-
+-int qemu_target_page_bits(void)
+-{
+-    return TARGET_PAGE_BITS;
+-}
+ 
+ int qemu_target_page_bits_min(void)
+ {
+diff --git a/page-vary-target.c b/page-vary-target.c
+index 343b4adb95..1b4a9a10be 100644
+--- a/page-vary-target.c
++++ b/page-vary-target.c
+@@ -37,5 +37,7 @@ void finalize_target_page_bits(void)
+ {
+ #ifdef TARGET_PAGE_BITS_VARY
+     finalize_target_page_bits_common(TARGET_PAGE_BITS_MIN);
++#else
++    finalize_target_page_bits_common(TARGET_PAGE_BITS);
+ #endif
+ }
 -- 
 2.43.0
 
