@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03E41C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4330CC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 14:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqYPN-0001W2-0k; Fri, 07 Mar 2025 09:10:37 -0500
+	id 1tqYQC-0001wL-1z; Fri, 07 Mar 2025 09:11:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqYPF-0001RE-9V
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:10:31 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqYQ8-0001tY-5V
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:11:24 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqYPB-0006kw-OS
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:10:28 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3912d2c89ecso1495653f8f.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 06:10:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqYQ6-0006uJ-3V
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 09:11:23 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3912baafc58so1246640f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 06:11:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741356623; x=1741961423; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741356680; x=1741961480; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lK/YR21uNxnbpA1t6NNGYWPPNM55eBnWH14xjT7Am/0=;
- b=zUWqFtEbPXDYweIgU+Ly8BNDj1kC7SYXbBGgIAobSp3+51tTnzWupra3pRiNeB59Bd
- GltHwOW//7mEp3kTykEgI9dykvP3LFZMxLvwrNcbSxTulXSusFY8j4v7dwNOzxDCs8Rd
- PyLqCfWMMv2jUQKjHPg9LFVkzcCJgeKlVHQiluagCvjTtsuocUTPvHlR+Lff6tpAluBw
- W/jNPO41tGKOaSJEWZHfyXvAyhy5hzj8TC+g08BLj3PV0CpT3SNtvFCZrBbBLZI4TClu
- 7CBgEctW7G8JyqNl7o52xM5GX1wEiwSz+Q6SAhBA/Qxlqe+PWk2zBnSrqclTq9upQYUW
- JUzg==
+ bh=kJAAX7vKXgJQE8XqN0qNtPWcrBi2YgAiRTW2vWZKD6U=;
+ b=FeQukThQX42dhBMcYE6e5NzOL26KnAOeilvCDzgB9WPSyd9GbGIxVNJTNTZu7aSLvr
+ h1Dgxqoaf8m1QD/yOoGIUqnYkCwyd1lkbDqrZcVUwOjEdYlrAg1apwUbGWpnZG9BlgqR
+ UQ6grOk8BjxzGPfvVXWC/XXMZW809LUMcYKMpu6dq0nXeYczNHSf1069yXNeTk9+j7qb
+ VcTTD1y23tEuhL4pw8PfwMHqfivX19D8iRseyGqHj+zFfTIQySq3FRNix33L5hGH1eLz
+ tLTKhOCxnHOTbDMwNFDOGuQsUmCi9qNNcTSutWDoWMJD9B5ANDxlvP+wwVRMC55f6/9+
+ LaGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741356623; x=1741961423;
+ d=1e100.net; s=20230601; t=1741356680; x=1741961480;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lK/YR21uNxnbpA1t6NNGYWPPNM55eBnWH14xjT7Am/0=;
- b=al1kwMBdHC0kXxkLI04LcmSJmu/guZ930qo2IITIFzxTO6iLIFhbmIJlEBopr4cF/J
- rGAp3THuos9OUzxTX/XIyBTdqs61mObD7Fb5vZiF6cKkuiL1fmc4r57/iLB7Hbrbo/Iw
- I06n1gnzV3ipAJ1HDOh3B7Vz7NRKVD4gYaTz7he2HOSTOIAiH4THhnX4UaHFsKHA5ZjF
- X0e9FFjCBNiU0JwzlDpJaLzf+P5+ss1uZEFsKtJ7ODHpJDT9/QOv7X7mJQVRaSyStNv0
- NM6OCF04+FDOOLMO4z1HTm5oTPBZw3QIePCPTtjJ1Cp/PI1dDzl/XnxCeQM9WKYls4/8
- jO6g==
+ bh=kJAAX7vKXgJQE8XqN0qNtPWcrBi2YgAiRTW2vWZKD6U=;
+ b=E7a3xMcuw7GfRlaRAsF9t5AVT0moU3/liPy0kQikIjTcE4FZ9GBx4eL98BDQQmIiuW
+ 9SqYjtSVymrDHspz60MPGX7bzOMR/DToxpx+jR5xyLaE4BGPsjxilfJuHASmh9KQd700
+ rMyvkff+2F1/iz/SG7XeRH0tYSggy+Zk7dQESHih7qrBHiM9dfp5pvjC1eTDna80N1K9
+ DjBxlXHSpDO6TNaGL8rLeiEWFTMILZCjsw0pbN6bd9mJN5IWPfhZpuxh+N1G3CgPpKrR
+ JqWWs9+9quMHk16+mrXl29zbEKHns9CVGzdaPQxh/8/1SaZE9Ycq3RSANbIpPuPrEBDG
+ GPPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4o/YuQlB99SvcV5hgSuZoglRBSs6u8JTpDK3lH9JD/q6H8FiHpFP8wWI+HBzmlhM52Dhn5/vBOsCJ@nongnu.org
-X-Gm-Message-State: AOJu0YxA+glEaa5aMW06+z7UwLopoEQOexIWxEb7GHPRHbm4W67/1DN/
- JUo484OVFnTBu+MyaXf3MTpP8qG2Llt5gYXYpmyvdMne4TTKwabISFOH2OfI69I=
-X-Gm-Gg: ASbGncsWB/QWMlzW6kLKF6eQ4CYZLS9AbMXs3R0PZ2UwJ/DxKNHaC/TmsbpR8hVOuuV
- yEgPXSjBo6rnzZo2lb+Mj6ak+R4SrBMAvgN6MHzR98TSEdwlinsJawZ1h1xXGhLcyhDtYnBGsV3
- iF3mK4ouUVEj/NNNsJZo8Qs/fhvSevO1Bx0iaD+eIYORkIf6xiL6FmrLyx6+3Wkwx0UfxXm2P5h
- b+n3fiFsnH8OTt31/F7ffJr5ruJ/8FL362tAdD0r1x5lGzU7RK0zl48VFapy3Wxh+igdYV3Qm5J
- CMNTFbCqzBqwsNzMihTQrNI9AwogvquCQxTUyXBRCvkI6pZ69Fuc13iP3fzecihOFvZQ8qZbrGC
- bqV5DDi7THgP3
-X-Google-Smtp-Source: AGHT+IEpJtGg9EqR3JlWbacrlSAJLNFzJcCFn5nHsfTfvnAjusfi8nWo2F72PLolOUVc3gUIgDO8SQ==
-X-Received: by 2002:a5d:6d04:0:b0:391:13ef:1af5 with SMTP id
- ffacd0b85a97d-39132dc5171mr2431628f8f.48.1741356623313; 
- Fri, 07 Mar 2025 06:10:23 -0800 (PST)
+ AJvYcCVuR5/1j1Vm/WZyZqIby+IMID31EmH7Rwe/mgPmv/iNWLIqgL+t7mUUMMiIH5XawLAq7g3UyW0Wyz/I@nongnu.org
+X-Gm-Message-State: AOJu0YzRzdf0+fNTmk519IXzt85H8OLc9RlSSKdw2Ec9nB8Dvprd2OIt
+ dk+Bw4jsl1KALM98VHo0LqwFoGIJrPzMz0KmIj1ZlB8EIyUOThych3iETsqxHIw=
+X-Gm-Gg: ASbGncs5iKOm9lAMp0m3B297ZhuagY0Ab5k5kG6bRJS8+JZEUGf9qoM9qb9zXx1om1S
+ 57zYVpi+YV+E6jJb6w0gkeftxKjsJP+AHFtdkWHV55cUJ79Wo2pT0onoyi/A1my7WuujiFzrgQq
+ 2RdxU6y3mtmWHrzhvppbQYlBw2WT0Q7xZYgD9Lam8CSyUgHGMHO9MNlAdarL7n6aRbNVdUVkNXq
+ srpeMZt4OVE0lS91uXGBNTL08oxNWzLjQAqI9esG2hHQQb2fdvb4iC3qaFmEsPrKm5DaMSI1M9N
+ HlHfBlZRNQ5UOeJ+yXvW02GEcvi45XOZiMEqFlH0ThlIyqCJ+iRNZk/QTs22SXsiu0bCfTcWNSv
+ MFO4wGOmb7EQA
+X-Google-Smtp-Source: AGHT+IFXasXk7QuPA6Mvw2sSC+rTO5X9MeL9Gh2AJ5RXnIJlAM1Pfb41OlCOhqz8D+cW4Tzmo1HkXA==
+X-Received: by 2002:a05:6000:1546:b0:390:f60a:e547 with SMTP id
+ ffacd0b85a97d-39132dd8745mr2677922f8f.54.1741356679919; 
+ Fri, 07 Mar 2025 06:11:19 -0800 (PST)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e3099sm5584298f8f.69.2025.03.07.06.10.22
+ ffacd0b85a97d-3912c106a1asm5446252f8f.100.2025.03.07.06.11.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 06:10:22 -0800 (PST)
-Message-ID: <84151f43-d952-4515-aee5-04f339baa546@linaro.org>
-Date: Fri, 7 Mar 2025 15:10:22 +0100
+ Fri, 07 Mar 2025 06:11:19 -0800 (PST)
+Message-ID: <a7769d31-7c0e-4e60-9c67-8ebf4af2fd93@linaro.org>
+Date: Fri, 7 Mar 2025 15:11:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] ppc/amigaone: Add default environment
+Subject: Re: [PATCH v2 5/5] ppc/amigaone: Add #defines for memory map constants
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>
 References: <cover.1740673173.git.balaton@eik.bme.hu>
- <4d63f88191612329e0ca8102c7c0d4fc626dc372.1740673173.git.balaton@eik.bme.hu>
+ <3b8e54ad9220d57e7b0a33f3570e880f26677ce8.1740673173.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <4d63f88191612329e0ca8102c7c0d4fc626dc372.1740673173.git.balaton@eik.bme.hu>
+In-Reply-To: <3b8e54ad9220d57e7b0a33f3570e880f26677ce8.1740673173.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,98 +103,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zoltan,
-
-Minor review comments in case you respin (not blocking).
-
 On 27/2/25 17:39, BALATON Zoltan wrote:
-> Initialise empty NVRAM with default values. This also enables IDE UDMA
-> mode in AmigaOS that is faster but has to be enabled in environment
-> due to problems with real hardware but that does not affect emulation
-> so we can use faster defaults here.
-> 
+> Suggested-by: Nicholas Piggin <npiggin@gmail.com>
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/ppc/amigaone.c | 37 ++++++++++++++++++++++++++++++++++++-
->   1 file changed, 36 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-> index 849c9fc6e0..5c5585d39a 100644
-> --- a/hw/ppc/amigaone.c
-> +++ b/hw/ppc/amigaone.c
-> @@ -52,6 +52,28 @@ static const char dummy_fw[] = {
->   #define NVRAM_ADDR 0xfd0e0000
->   #define NVRAM_SIZE (4 * KiB)
->   
-> +static char default_env[] =
+>   hw/ppc/amigaone.c | 20 ++++++++++++++------
+>   1 file changed, 14 insertions(+), 6 deletions(-)
 
-'const'
-
-> +    "baudrate=115200\0"
-> +    "stdout=vga\0"
-> +    "stdin=ps2kbd\0"
-> +    "bootcmd=boota; menu; run menuboot_cmd\0"
-> +    "boot1=ide\0"
-> +    "boot2=cdrom\0"
-> +    "boota_timeout=3\0"
-> +    "ide_doreset=on\0"
-> +    "pci_irqa=9\0"
-> +    "pci_irqa_select=level\0"
-> +    "pci_irqb=10\0"
-> +    "pci_irqb_select=level\0"
-> +    "pci_irqc=11\0"
-> +    "pci_irqc_select=level\0"
-> +    "pci_irqd=7\0"
-> +    "pci_irqd_select=level\0"
-> +    "a1ide_irq=1111\0"
-> +    "a1ide_xfer=FFFF\0";
-> +#define CRC32_DEFAULT_ENV 0xb5548481
-> +#define CRC32_ALL_ZEROS   0x603b0489
-
-> +
->   #define TYPE_A1_NVRAM "a1-nvram"
->   OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
->   
-> @@ -94,7 +116,7 @@ static void nvram_realize(DeviceState *dev, Error **errp)
->   {
->       A1NVRAMState *s = A1_NVRAM(dev);
->       void *p;
-> -    uint32_t *c;
-> +    uint32_t crc, *c;
->   
->       memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram",
->                                     NVRAM_SIZE, &error_fatal);
-> @@ -113,12 +135,25 @@ static void nvram_realize(DeviceState *dev, Error **errp)
->               return;
->           }
->       }
-> +    crc = crc32(0, p + 4, NVRAM_SIZE - 4);
-> +    if (crc == CRC32_ALL_ZEROS) { /* If env is uninitialized set default */
-> +        *c = cpu_to_be32(CRC32_DEFAULT_ENV);
-
-Prefer the ld/st API over cpu_to/from:
-
-            stl_be_p(c, CRC32_DEFAULT_ENV);
-
-> +        /* Also copies terminating \0 as env is terminated by \0\0 */
-> +        memcpy(p + 4, default_env, sizeof(default_env));
-> +        if (s->blk) {
-> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, 0);
-> +        }
-> +        return;
-> +    }
->       if (*c == 0) {
->           *c = cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
->           if (s->blk) {
->               blk_pwrite(s->blk, 0, 4, p, 0);
->           }
->       }
-> +    if (be32_to_cpu(*c) != crc) {
-
-        if (ldl_be_p(c) != crc) {
-
-> +        warn_report("NVRAM checksum mismatch");
-> +    }
->   }
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
