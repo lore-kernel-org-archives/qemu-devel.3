@@ -4,66 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB6BC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 12:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C87C28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 12:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqWqo-0006kA-Vk; Fri, 07 Mar 2025 07:30:51 -0500
+	id 1tqWuu-0000hu-7u; Fri, 07 Mar 2025 07:35:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
- id 1tqWqm-0006fF-HP
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:30:48 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqWuc-0000gP-Dc
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:34:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
- id 1tqWqk-0005t3-KD
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:30:48 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqWuZ-0006SF-Mq
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:34:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741350644;
+ s=mimecast20190719; t=1741350881;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=ob5LsXY4rqaHazhk50DBrrsKA2KX4HPTdbKRiCrTPu0=;
- b=cxhH/Nd6RhtjUt7ZoJeuxPHfWaRywzPPBtpeRolfbbzLBYjMcErH+mxm1DBD1Wj1cOskNy
- o04ek4J+tzT8hTghLzMqgA4nKoWu2X0buoecW4hPOwxR4S4S1n0Bu7ZKyXJVnY20V7tO4W
- K0iG5pXvl+ZcNsZ0Fa+uBJQFEe3W3ZY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nyU4FvEO0XmyjoKmFm2hxDQ8gEGOWcrJVGd8cT7cJL8=;
+ b=cOpdkZhsaiYC4zgzXWfhe2Es4+xSlWLu4yJzCujIis3tbQ6cBQka3IRBpSvg3t/TlHk1P4
+ cqkHTidUFRmGpOv2kHWQwDwlU+PuQOLN8Kp33HIBQrnuMkf05+0BkQSBrT7jZVcnxUDVt/
+ 0v/RBKz2nHJGR4rYsEfO/VdL6Q3vO84=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-oRJXLdJkOR-eZlibe1mpGg-1; Fri,
- 07 Mar 2025 07:30:42 -0500
-X-MC-Unique: oRJXLdJkOR-eZlibe1mpGg-1
-X-Mimecast-MFC-AGG-ID: oRJXLdJkOR-eZlibe1mpGg_1741350641
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-yYQXiYHzNFKN-DMAoWeOiw-1; Fri,
+ 07 Mar 2025 07:34:06 -0500
+X-MC-Unique: yYQXiYHzNFKN-DMAoWeOiw-1
+X-Mimecast-MFC-AGG-ID: yYQXiYHzNFKN-DMAoWeOiw_1741350845
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7AA0180AF68; Fri,  7 Mar 2025 12:30:41 +0000 (UTC)
-Received: from localhost (unknown [10.44.34.26])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C9C761955DCE; Fri,  7 Mar 2025 12:30:39 +0000 (UTC)
-Date: Fri, 7 Mar 2025 13:30:38 +0100
-From: Victor Toso <victortoso@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, 
- John Snow <jsnow@redhat.com>, Andrea Bolognani <abologna@redhat.com>
-Subject: New git repository for Go bindings
-Message-ID: <xu3qsijvpbguwdnlj6ovomlkd2wggd76x2lvfusmczljhnmx4f@kgw6di2754ta>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 02C7B180035E; Fri,  7 Mar 2025 12:34:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFF381801747; Fri,  7 Mar 2025 12:34:04 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2950C21E675E; Fri, 07 Mar 2025 13:34:02 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
+ =?utf-8?Q?hieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
+ Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH 56/57] docs/qapidoc: add intermediate output debugger
+In-Reply-To: <20250305034610.960147-57-jsnow@redhat.com> (John Snow's message
+ of "Tue, 4 Mar 2025 22:46:05 -0500")
+References: <20250305034610.960147-1-jsnow@redhat.com>
+ <20250305034610.960147-57-jsnow@redhat.com>
+Date: Fri, 07 Mar 2025 13:34:02 +0100
+Message-ID: <87o6ydhvet.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="osawk23o3x24zmja"
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=victortoso@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,76 +90,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+John Snow <jsnow@redhat.com> writes:
 
---osawk23o3x24zmja
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: New git repository for Go bindings
-MIME-Version: 1.0
+> Add debugging output for the qapidoc transmogrifier - setting DEBUG=1
+> will produce .ir files (one for each qapidoc directive) that write the
+> generated rst file to disk to allow for easy debugging and verification
+> of the generated document.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
-Hi,
-
-I've been working on and off in having Go bindings for QEMU's
-QAPI specification. The last version [0] seems to be accepted so
-far but we would like not to have that in qemu.git.
-
-In the past [1], Daniel suggested creating a repo per each
-generated schema: go-qemu.git, go-qga.git, go-qsd.git
-
-While that works well from the point of view of Go applications
-and is neat organized too, afaict they are all bounded to QEMU's
-release schedule so it might be enough to create a single repo
-such as:
-
-qapi-generators.git
-=E2=94=94=E2=94=80=E2=94=80 golang
-    =E2=94=9C=E2=94=80=E2=94=80 module.py # The go generator
-    =E2=94=9C=E2=94=80=E2=94=80 qemu      # For qapi/qapi-schema.json
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 doc.go
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_iface_command.go
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_iface_event.go
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_alternate.go
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_command.go
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_enum.go
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_event.go
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_struct.go
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 gen_type_union.go
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 go.mod
-    =E2=94=82=C2=A0=C2=A0 =E2=94=9C=E2=94=80=E2=94=80 protocol.go
-    =E2=94=82=C2=A0=C2=A0 =E2=94=94=E2=94=80=E2=94=80 utils.go
-    =E2=94=9C=E2=94=80=E2=94=80 qga # qga/qapi-schema.json
-    =E2=94=94=E2=94=80=E2=94=80 qsd # storage-daemon/qapi/qapi-schema.json
-
-
-Or perhaps a per language repo?
-
-[0] https://lists.gnu.org/archive/html/qemu-devel/2025-02/msg03019.html
-[1] https://lists.gnu.org/archive/html/qemu-devel/2023-09/msg07024.html
-
-Cheers,
-Victor
-
---osawk23o3x24zmja
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEIG07NS9WbzsOZXLpl9kSPeN6SE8FAmfK5u4ACgkQl9kSPeN6
-SE8Ujg//U4mY3Rpk3CCXcm3ZNpTMEiPqKUAA9cy2n3T3KpGPraFlVacw80pyDRnO
-gZ+4P2curd8/eIZpeL+Jw3bV/m//IkW94M+vtlT39pwFLO3USJzVnfMN5mpVghu2
-tyU13NXnq6dd3IuvMDZZSOEGhU2AegcttZd/D5Rh1bHh/ZelB9w1f0Nk457M/Gfu
-ak1MIjWTpg6CKOeIlbxw79x0HaD/ZSASiY/TbheVRZDUJrrfqg7OhDoGFo+ROfE1
-YPFxVdGJTInYE4mMnNGSebmHsREw8z24vMgMFzSQTOVesG6BZKSyYP8rhcUG9hOA
-i/UEXs3Xaeb99jFA1R4ukxj/u/juhfOPNToU3zBcfZEa9chdIQrYMUf3TOQRzzki
-NINhue/DnQivPSP3GHqExeUv0duMzIa0BHlTpN9dJnMWQo7WteHJAQVtCaLsrJZU
-5Lkor9Qgy1bCf/RNTGei5nZa/F+zWPT1/LlQ85w1cBkuZuy+81EqbPYkZr+oQqbN
-wIpl6jsmQdaRV1S1x8iHQsKVe7vB7Yq6E1mDN3/5MklTKMJ+0wFH322LS+YeiXEx
-EJN3DSZiuu5+YJWBQEUfrttlo2Kc7W43Fy4C7yd/oCa0Zq/frpBlPRZP4Ncs8Jjq
-VkmE5qQ4gelI3llTJuvW938Pqd54JLuaLBjZRA920c2oKJpclCw=
-=idIL
------END PGP SIGNATURE-----
-
---osawk23o3x24zmja--
+I understand we generally need to examine these .ir files only when
+things go wrong, or maybe to help understanding the transmogrifier.  I
+guess few people will care, and only rarely.  But when we care, we
+likely care a *lot*.  Sure we want to dig the information on how to get
+.ir files out of a commit message then?
 
 
