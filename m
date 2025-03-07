@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3201C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91DDCC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:30:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcNo-0008Gi-Qv; Fri, 07 Mar 2025 13:25:17 -0500
+	id 1tqcS5-00029o-0P; Fri, 07 Mar 2025 13:29:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqcNm-0008Et-Mc
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:25:14 -0500
-Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
+ id 1tqcRk-0001zg-Al
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:29:20 -0500
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqcNk-0002MH-E3
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:25:14 -0500
-Received: by mail-yb1-xb36.google.com with SMTP id
- 3f1490d57ef6-e3c8ae3a3b2so1656321276.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:25:10 -0800 (PST)
+ id 1tqcRi-0003ki-Dq
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:29:19 -0500
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e4930eca0d4so1766524276.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:29:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741371909; x=1741976709; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=+gpEaRqeugAKq7EAHSDpLMF/PS6nC1XVz3bMKspA2KU=;
- b=Wd3sju18zB89y7wnH4T+lFhVQr20GV0i4CBAXQfLQ/jyh9MCwHr9YtDSZfZ+iKQNgE
- /pT0b0kg0i2pYNmZ3cWp0g5csbzLUMLQH3FRbvCGSN1BDeuGBYf6aDJP+qCc8zrs6Dv6
- p2WkoZFbxnsIQ6CH/eJDh0o4C/0HsHII/LXrprOtGnvOzD3nSD9QkZshZjUM5dXLHY1O
- Wb2cjnaxsbJfE0v9gw9YPctIgk3wEBnC4L1gVU5UkQ2y8+9GXos5ithoFS772/c718Gb
- VqamOt6WC1IiCwITK1FAJFw39c3ZrMbBGH3hZ9u/liXiCA9cwH5K4w+DMAQD3TQgTSFj
- FjrQ==
+ d=linaro.org; s=google; t=1741372156; x=1741976956; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=sBGrkrGQHrveYxByS1V88t2AqywCMhHvGJGf9hQE/AE=;
+ b=laLOqN4eNFZHgbYzrjvOou12hcUCmGHlJ4KN3iFbiY2WnKtljD7GrmOkCTnJETVeCu
+ xlM8qoh887tdYl61xq6hYgmcIjBtmNLk1jt6l3gTwLmgpkQlXZil4GQkg4rArgtHzLgm
+ I82oR/ffEF+QiSnexgwzYKCajEK+0DkjuAaw2CvnnZJwt+e1a63tWju6JdTGf1OgapGX
+ /U5txjltAGi+XrFhFRwEsYZ6pyRgH8lEonBt1EQDnJqJl9bGBidMk92ysy3U2YAoTjES
+ SksmWhPoWzn2w87x5kwj+f6sQwTDtVaraZD/jAp4NxBrJPcrbR8J+ZqQ6hKFtpEs2RWJ
+ jaxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741371909; x=1741976709;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+gpEaRqeugAKq7EAHSDpLMF/PS6nC1XVz3bMKspA2KU=;
- b=cVtj/0Bzsqm9rclNhWYQi0KOqdgiaM0dwL2onP/AOUvlhTGIpTwE/zfrwQCgwcZnGR
- /opp/CdqUKISc+DUG/AnY1T0mNN4rUY50Xqxapt4CwaMzLeelxM1tQ/IkBY17u9KXsRY
- UELT5IJi4lXOnpxz40KnBLFlSgwBr9QUCo1canroYNyEnTcaFzWZkI/GK0cpZpIecYI5
- Xq9u0AegH6LIonxOvMcsHSfTefl6yzOpeuqrJzEWxNCkb8RBEVMl6Hs+Rx1c7jTJ5k35
- G7ppeYlykZ4/7RFQMUwzXjy/ahyXFzgnbJ8AO0YgXGO3QGQH1eOMXnucoRZgBfobTI1A
- KcQg==
-X-Gm-Message-State: AOJu0YwXWHQLtYXB/PL6J/Dc6rH5CiNTcFLHhyjL82mqYPXLYU6zUQ8G
- 6ojSYiSFG2q9Q6Dl4V89z/gtJGyuHOeamI53xe7iqKprJkA6j3gMDZVPHbF6NzGFH7NPEz04gOG
- wx8XAN5cqy0U/+IyLchhIuS0hfiNBLai6WbBahlyJGDlPqBZl
-X-Gm-Gg: ASbGncuTPUKxObmVSZ/XRBWSMbLmPb1WZM53+vQim28OZ1exdy//pvg85HeJ2kNrtYO
- C7hXNUjp12CbBL9uWOzudjsj9S069gpdZ3Bt7/wKs1CpMD/MqitkygiHpOxtq0YfHpmEWwPgfYE
- yvQJJ7WFi8yy+5U3jgJ39Ui4IXXsQ=
-X-Google-Smtp-Source: AGHT+IHS2yNOgScVap31TTmmTbIVaG/pP0J7240vmiy/VIchceiPphyIygRUBE+/ut2NSnlRwMz4U7NPHIC5XZZKWcw=
-X-Received: by 2002:a05:6902:288e:b0:e5d:ac3c:9dec with SMTP id
- 3f1490d57ef6-e635c1da737mr5294567276.35.1741371909349; Fri, 07 Mar 2025
- 10:25:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741372156; x=1741976956;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sBGrkrGQHrveYxByS1V88t2AqywCMhHvGJGf9hQE/AE=;
+ b=Nm3TPdTZh8j3jY0EGEZhihi2A97TWVZIPaU8vzpSI1KIA4VXyO6hMkdwNJP92lAZw3
+ C4nTVIrLpL6HWcY+be1m+rs2lKQBQkEXhRDYC8/mwBCuqheq8BZGr3HEMvhKlabDw7Mv
+ Xrd5YmEgGI1u743CoD+m3YGqGKhTI94QNEalj2Qb3YQy3ErFHdcUgljujjBzGCtovvzV
+ aVRa1bU5uivrxEyGJ9WGbuBlftriPlyQwFftmaLTiIkIQOalTE7H4b8hcJn/yw97ZWtx
+ M5fCQp+DPR1UozC70nEUuYYV/CQArsw+Qtr6aHf+ZVF8/r2XL5KHC/d7VRMnGm4BS+41
+ 0WXQ==
+X-Gm-Message-State: AOJu0YwZZYIuHMq09UR3httpLODOUlT69eAYyV1R20gIExoOrvwROUe4
+ LpvDWTibsJsHkylM/7OgNj0yFXzZNc3h8RkRy4HSsd8vvST5cyNg+LyfYv0hozAZgMuX9Ctodh0
+ U++rUUl6rFvN6iIjg+f690veUZqxlGOJA6wXlitCzgI2VKueb
+X-Gm-Gg: ASbGnctgLAphPLBeQnozZAvGn3Y9RkRW71/iwTjIHEnl3OSZhVlt0pRDJusn9YMuVQR
+ qE9BsAlwxsiuZb/K6ecEQK1felmwD/6W7wkMtFThXAZaKtTN73vq3TwuvsslxIbZ6MF3ZIiZsm6
+ at25/d3MOmlPysmDIR2LkCvZ+DOIA=
+X-Google-Smtp-Source: AGHT+IEkbIC6ZCHxM/lIetStO0gq/vve/kCpxBZXNAZzEB8R8MNROZ0xKzYe4CObh8KQ8NR6ZpJviJyVWtnhAwx/JuY=
+X-Received: by 2002:a25:155:0:b0:e63:6f6a:ab03 with SMTP id
+ 3f1490d57ef6-e636f6aaca0mr678045276.22.1741372155961; Fri, 07 Mar 2025
+ 10:29:15 -0800 (PST)
 MIME-Version: 1.0
+References: <CAFEAcA8ozGhFJWc41M6ziB3mPtEQ_bpWcQTCj1Ue_W66-MYf2w@mail.gmail.com>
+In-Reply-To: <CAFEAcA8ozGhFJWc41M6ziB3mPtEQ_bpWcQTCj1Ue_W66-MYf2w@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Mar 2025 18:24:57 +0000
-X-Gm-Features: AQ5f1JqhFcSacCEFeFhrY5Dpryr8QC3Nxm2oS8ZsCf6dDyACjQckTQFHZKe2bHk
-Message-ID: <CAFEAcA8ozGhFJWc41M6ziB3mPtEQ_bpWcQTCj1Ue_W66-MYf2w@mail.gmail.com>
-Subject: make check-functional failures with --enable-rust: unsafe
+Date: Fri, 7 Mar 2025 18:29:04 +0000
+X-Gm-Features: AQ5f1JqvRelUg0oW2ZIgvMHadTQfZMlCSfGFCY2dH5RfAeE3KCCGBHDBdUzHjc8
+Message-ID: <CAFEAcA9iepVWQVAsdeGAWDkXVrOLK_dq1cdiceVdwozGuwsYXw@mail.gmail.com>
+Subject: Re: make check-functional failures with --enable-rust: unsafe
  precondition(s) violated: NonNull::new_unchecked
 To: QEMU Developers <qemu-devel@nongnu.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,97 +92,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I noticed that 'make check-functional' for arm targets doesn't all
-pass when QEMU is built with --enable-rust:
+On Fri, 7 Mar 2025 at 18:24, Peter Maydell <peter.maydell@linaro.org> wrote:
+> thread '<unnamed>' panicked at core/src/panicking.rs:221:5:
+> unsafe precondition(s) violated: NonNull::new_unchecked requires that
+> the pointer is non-null
+> stack backtrace:
+>    0: rust_begin_unwind
+>              at
+> /rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/std/src/panicking.rs:662:5
+>    1: core::panicking::panic_nounwind_fmt::runtime
+>              at
+> /rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/panicking.rs:112:18
+>    2: core::panicking::panic_nounwind_fmt
+>              at
+> /rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/panicking.rs:122:5
+>    3: core::panicking::panic_nounwind
+>              at
+> /rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/panicking.rs:221:5
+>    4: core::ptr::non_null::NonNull<T>::new_unchecked::precondition_check
+>              at
+> /rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/ub_checks.rs:70:21
+>    5: core::ptr::non_null::NonNull<T>::new_unchecked
+>              at
+> /rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/ub_checks.rs:77:17
+>    6: qemu_api::qom::Owned<T>::from
+>              at ./rust/qemu-api/libqemu_api.rlib.p/structured/qom.rs:741:19
+>    7: pl011_create
+>              at ./../../rust/hw/char/pl011/src/device.rs:716:24
+>    8: vexpress_common_init
+>              at ./../../hw/arm/vexpress.c:647:5
 
-11/46 qemu:func-thorough+func-aarch64-thorough+thorough /
-func-aarch64-aarch64_virt            TIMEOUT         720.03s   killed
-by signal 15 SIGTERM
- 9/46 qemu:func-thorough+func-arm-thorough+thorough /
-func-arm-arm_tuxrun                      ERROR            51.71s
-exit status 1
-30/46 qemu:func-thorough+func-arm-thorough+thorough /
-func-arm-arm_vexpress                    ERROR             1.62s
-exit status 1
-44/46 qemu:func-thorough+func-arm-thorough+thorough /
-func-arm-arm_replay                      TIMEOUT          90.02s
-killed by signal 15 SIGTERM
+The backtrace suggests that the rust version of pl011_create()
+isn't able to handle being passed in a NULL chr. This is
+permitted and means "don't connect up a chardev to the device's
+chr property" which in turn means "you don't have a chardev
+backend" (and all the C qemu_chr_fe_* functions happily accept
+NULL and interpret it as "just do nothing").
 
-The first of these is the virt/gpu breakage that's not Rust related.
-
-tuxrun fails because of a Rust panic, though:
-
-        Command:
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/rust/qemu-system-arm
--display none -vga none -chardev socket,id=mon,fd=5 -mon
-chardev=mon,mode=control -machine versatilepb -chardev
-socket,id=console,fd=10 -serial chardev:console -cpu arm926 -kernel
-/home/petmay01/.cache/qemu/download/3931a3908dbcf0ec0fe292d035ffc4dfed95f797dedd4a59ccfcf7a46e6f92d4
--append printk.time=0 root=/dev/vda console=ttyAMA0 -blockdev
-driver=raw,file.driver=file,file.filename=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/rust/tests/functional/arm/test_arm_tuxrun.TuxRunArmTest.test_armv5/scratch/60ff78b68c7021df378e4fc2d66d3b016484d1acc7e07fb8920c1d8e30f4571f,node-name=hd0
--device virtio-blk-pci,drive=hd0 -dtb
-/home/petmay01/.cache/qemu/download/50988e69ef3f3b08bfb9146e8fe414129990029e8dfbed444953b7e14809530a
-        Output: thread '<unnamed>' panicked at core/src/panicking.rs:221:5:
-unsafe precondition(s) violated: NonNull::new_unchecked requires that
-the pointer is non-null
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-thread caused non-unwinding panic. aborting.
-
-and the vexpress and replay failures are the same panic.
-
-Is this a known issue ? (I'm using git commit 98c7362b1efe.)
-
-Here's the RUST_BACKTRACE=1 version:
-
-thread '<unnamed>' panicked at core/src/panicking.rs:221:5:
-unsafe precondition(s) violated: NonNull::new_unchecked requires that
-the pointer is non-null
-stack backtrace:
-   0: rust_begin_unwind
-             at
-/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/std/src/panicking.rs:662:5
-   1: core::panicking::panic_nounwind_fmt::runtime
-             at
-/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/panicking.rs:112:18
-   2: core::panicking::panic_nounwind_fmt
-             at
-/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/panicking.rs:122:5
-   3: core::panicking::panic_nounwind
-             at
-/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/panicking.rs:221:5
-   4: core::ptr::non_null::NonNull<T>::new_unchecked::precondition_check
-             at
-/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/ub_checks.rs:70:21
-   5: core::ptr::non_null::NonNull<T>::new_unchecked
-             at
-/rustc/f6e511eec7342f59a25f7c0534f1dbea00d01b14/library/core/src/ub_checks.rs:77:17
-   6: qemu_api::qom::Owned<T>::from
-             at ./rust/qemu-api/libqemu_api.rlib.p/structured/qom.rs:741:19
-   7: pl011_create
-             at ./../../rust/hw/char/pl011/src/device.rs:716:24
-   8: vexpress_common_init
-             at ./../../hw/arm/vexpress.c:647:5
-   9: machine_run_board_init
-             at ./../../hw/core/machine.c:1682:5
-  10: qemu_init_board
-             at ./../../system/vl.c:2711:5
-  11: qmp_x_exit_preconfig
-             at ./../../system/vl.c:2807:5
-  12: qemu_init
-             at ./../../system/vl.c:3843:9
-  13: main
-             at ./../../system/main.c:68:5
-  14: __libc_start_call_main
-             at ./csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-  15: __libc_start_main_impl
-             at ./csu/../csu/libc-start.c:360:3
-  16: _start
-
-(side note: should we set RUST_BACKTRACE=1 for our
-make check/check-functional infra? it would probably be better
-to capture the backtrace in the logfiles rather than needing
-the user to re-run by hand, especially for the CI case.)
-
-thanks
 -- PMM
 
