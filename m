@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF32C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11DF8C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:40:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqgMI-00063c-BL; Fri, 07 Mar 2025 17:39:58 -0500
+	id 1tqgMR-0006Az-Tt; Fri, 07 Mar 2025 17:40:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMG-00063P-4w
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:39:56 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMP-00066z-08
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:05 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMD-0003HM-Jk
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:39:55 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43bd03ed604so19977925e9.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:39:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMN-0003Nk-4n
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:04 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43bbd711eedso18413215e9.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:40:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741387191; x=1741991991; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Ztej1BH9DZD90s0lU7Teqpf3X8cBF6MU9CYCXJiixE4=;
- b=gpQtb3h334Dvrg6lDqMABM5wk2vIXdHAKktNHF8xJ1y5eEE+TMagNdRoAqk1nVTouv
- wwWDvd4xYSg4o/ItaYkiXrx6XedgNCVFS3FVXXwcSble39FbyPKIq5I0jgJ+smvZ5+bt
- +ZSG8EPFwkDYfGAeyfZzwZroFt+Dy9gFDeu/iji/iWRFmvKTM5bkTRVfQIMMDpfRLk46
- JKioDQp194/xbKjovYDBpgagzz/S80mT8noM8liO4RKDqp+XhVgKXm6CJDxYWx8ciOaX
- JJLS7/S73U+qj9TTHDKxE1Z2ODiC9UIapeLb2nt4P1j8GU8xH1pTLyoLw35U3NcuMFKZ
- pjNA==
+ d=linaro.org; s=google; t=1741387201; x=1741992001; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=koJwEkpLST/7gWyCJsL/yXVo3vaaAtJxi2Nw9A7NzsE=;
+ b=DDKsMw29k+bny3kzKqubFlxd+ZrH++YyXmd84Q7l3+ctBdMx/yrmX+s+sQE1BVxmpU
+ OkbkXXFx/9B7ln1JVPbAS+qKxLGOG8pYzP1b5Cmc2lQTAVnQUEQQ/eMYdGWzWGmE2P2K
+ A4xz+rxxm9+CatJdDnBgFuFgju0TET4drTmc3qIq0I+TAIbGRVp7rH/ZxBC5fB08EcPW
+ w7EVfpEweUJwRlDPpePb48HF6pqbmlIlxgRjybNow4bLBGZ8P9BRIx98GkBOhoBanjLI
+ qXAUcHeCtX0DCuCWzrFA20bkdJA8pTthVR5Ju0W0SNUaazXtcD3RyksAk3wN/n7rCGK+
+ M5uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741387191; x=1741991991;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ztej1BH9DZD90s0lU7Teqpf3X8cBF6MU9CYCXJiixE4=;
- b=Tz1fYLKJg8DjFj/n9eDKdI3z99vnDXzkVHDGA2gVp84u+LrMJFzop+YvHJrkDfDo+t
- 7Kjb9axHtnDHmJOoJmEh82UVi8jIkHxo0gMt0enMeBxB0waz4VPkhI5TwWtoBAsDwkIy
- phJi7FZLjmzqWeWN/Lk3temK+Q/OunJVgBflBhgs+xXzdAsxspRqE6w/Y5IfrDumUekm
- lb/WO3gbmZiMwFu++9VAJ2AofwjtJpDQxopuVXqfCIYKU3DDBR+s2ffcCdsb4KQg9vRz
- ZJTEyP8gHSzXXrqsvm36PiIT1bqP6w2J7tlVyyMJVwH07OJDkKqoQSv69M/kOTQmtX0T
- 8wCg==
-X-Gm-Message-State: AOJu0YwG8ZM+dkOAFZ0ih75awdJFzusXCLMEO7oxTCDA8bG2coY0Wpyd
- z7NopIG1Jxevh4VDyt4+Yp5HZEdQoXLJtxTNQgwlqXzrnQX1gCPDQr+bLYg9E+znE5K7bU2g0Lo
- n4UM=
-X-Gm-Gg: ASbGncvZG+iF5Ep2pFWhyPzkqKlLeujXPh2wf8LYe2/ujelXzE9OeWNZpHLBAMLcsz4
- Knmp+xbF9TQMZOq3r+q0WRbr7lkhRdswPUjh47mIJxJmwccR8g5a8GFeOwS4IwHUip6Gmrv3+xA
- P9bGNLZAsGFJ8IlHwZ/vDGljjQmtvtKELTfC51vyiBiy9KCxTPlMsb9c7oE4p7LhvGSpqJFQPKr
- cJ7QrZQPN+cZSSl1D42FdarqSPdJLBG2WBVlnErB4mx7KdJhL6Cg2cG1pUZo+GwFxdex7t6UGgM
- FiFAxY+LTR+749FZvCkLDI6NqALO8XZa9oyHWre7Fd3PTo+geE+Fmdw8JZAtqm9Pf+8iuJVqv5a
- JR4W3jLfleYX82MLobEw=
-X-Google-Smtp-Source: AGHT+IGc1YzHqfYdRR9uhgBN2OoBbnXQycmTfwMRmP8IwV41H417MHKuatFoeJJZoaR9BfbN2KRtzQ==
-X-Received: by 2002:a05:600c:1990:b0:43b:ccfe:eeee with SMTP id
- 5b1f17b1804b1-43c601d95d8mr45357785e9.11.1741387191034; 
- Fri, 07 Mar 2025 14:39:51 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741387201; x=1741992001;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=koJwEkpLST/7gWyCJsL/yXVo3vaaAtJxi2Nw9A7NzsE=;
+ b=AqKY6p9iHkRLyXAJmYP9KDs+fZGY8/kI/NmHzdt2zLOOq/4w/32M3VWi1rxLTljri4
+ 4JkkmqIj1EB03akC18Nwzpp6QF60H/Qnjc0JgG6NmIErABCX1RoDIFr6mYPPLcGoVGS8
+ qDJITs7TuUNNFBxZRWDHLJrSWsd6+wXA48Fha8Iuo/ZGsEePmQ55fK54z6w4GLVfotAY
+ myFaMeKIhCChbkSUFIZvHVcSnoOk7WCnufMehxjbrnwZgdJNM+i3clNYKTVgOAlbzEgf
+ MQJLC/LcOcndpPwlBtcR4u12Ia7zQhK625tFAR4t2lkKorbVX3Cosxbc8mJKa4mqZ2BD
+ dhJw==
+X-Gm-Message-State: AOJu0YxFTJAUTrSR3XP2juI4s5f1ATBYMoYOJEEUiZX0hlyxOomHX6Xi
+ BXRagI8Vc4/COr6xPbXyPR5crnLCoeB2Qfer7/TILMNqkAvQv1rGJQ/T9/0L5j4ekYbgrDuMnzP
+ O8JY=
+X-Gm-Gg: ASbGncvcovMCpNcXmG8pCfdE+Pkh5ubNJvM6xl1cjHJfE07p/o0xwfz8pfaf5ppS8Mq
+ 6s1zlfzWmWWlX3pJFS+kKtLMF49mtIqhRg57h1+xQDPYaHlgbOL5LkZdsOvWsFo2k3z+HGKqqxG
+ 41HzzOCxFaISVJpMbDpLXzkiKVs/0q9kspvz9SUoqgfs0N/U9jsmN/13XmsB1Xb/rDzO74HZnGk
+ kv5gXHOePxovweL+tv7bcTT6YGzzNraW7CR0rGuigpWzdxqmnqkL8DhS/1bLq2zCK23SQ0ZlPNO
+ u3RNoPZCe3LcYwK6OvJ/qhj501MmoOa6jX/KrftgcoJSAlm3EiXOYbLUicd2l0IZCA6k62C/N25
+ pIIIxinYu+2ybbbxz+Es=
+X-Google-Smtp-Source: AGHT+IHTfQQ3o6s2tPclL8m5IPfAHPblUiprGcBMAb09s4SRWQab9eVED6oixw2cK26H3Rfih78zuA==
+X-Received: by 2002:a05:600c:1c9d:b0:439:643a:c8d5 with SMTP id
+ 5b1f17b1804b1-43c549dcc0amr41814965e9.0.1741387200874; 
+ Fri, 07 Mar 2025 14:40:00 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd8da473sm64093895e9.18.2025.03.07.14.39.50
+ 5b1f17b1804b1-43bdd8da473sm64096865e9.18.2025.03.07.14.39.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 07 Mar 2025 14:39:50 -0800 (PST)
+ Fri, 07 Mar 2025 14:40:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -75,15 +76,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/7] hw/virtio: Build virtio-mem.c once
-Date: Fri,  7 Mar 2025 23:39:42 +0100
-Message-ID: <20250307223949.54040-1-philmd@linaro.org>
+Subject: [PATCH v2 2/7] hw/acpi: Introduce acpi_builtin() helper
+Date: Fri,  7 Mar 2025 23:39:44 +0100
+Message-ID: <20250307223949.54040-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250307223949.54040-1-philmd@linaro.org>
+References: <20250307223949.54040-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,37 +109,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Missing review: #5 (reworked, R-b tags dropped)
+acpi_builtin() can be used to check at runtime whether
+the ACPI subsystem is built in a qemu-system binary.
 
-Since v1:
-- Use max extent size of all archs (David)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+---
+ include/hw/acpi/acpi.h | 3 +++
+ hw/acpi/acpi-stub.c    | 5 +++++
+ hw/acpi/core.c         | 5 +++++
+ 3 files changed, 13 insertions(+)
 
-Replace compile-time checks by runtime ones:
-- CONFIG_DEVICES::CONFIG_ACPI -> acpi_builtin()
-- TARGET_FOO || TARGET_BAR -> qemu_arch_available(FOO|BAR)
-
-Philippe Mathieu-Daudé (7):
-  system: Replace arch_type global by qemu_arch_available() helper
-  hw/acpi: Introduce acpi_builtin() helper
-  hw/i386/fw_cfg: Check ACPI availability with acpi_builtin()
-  hw/virtio/virtio-mem: Remove CONFIG_DEVICES include
-  hw/virtio/virtio-mem: Convert VIRTIO_MEM_USABLE_EXTENT to runtime
-  hw/virtio/virtio-mem: Convert VIRTIO_MEM_HAS_LEGACY_GUESTS to runtime
-  hw/virtio: Compile virtio-mem.c once
-
- include/hw/acpi/acpi.h     |  3 ++
- include/system/arch_init.h |  2 +-
- hw/acpi/acpi-stub.c        |  5 ++
- hw/acpi/core.c             |  5 ++
- hw/i386/fw_cfg.c           |  8 ++--
- hw/scsi/scsi-disk.c        |  2 +-
- hw/virtio/virtio-mem.c     | 96 +++++++++++++++++++++-----------------
- system/arch_init.c         |  5 +-
- system/qdev-monitor.c      |  4 +-
- system/vl.c                |  6 +--
- hw/virtio/meson.build      |  2 +-
- 11 files changed, 83 insertions(+), 55 deletions(-)
-
+diff --git a/include/hw/acpi/acpi.h b/include/hw/acpi/acpi.h
+index e0e51e85b41..d1a4fa2af84 100644
+--- a/include/hw/acpi/acpi.h
++++ b/include/hw/acpi/acpi.h
+@@ -150,6 +150,9 @@ struct ACPIREGS {
+     Notifier wakeup;
+ };
+ 
++/* Return whether ACPI subsystem is built in */
++bool acpi_builtin(void);
++
+ /* PM_TMR */
+ void acpi_pm_tmr_update(ACPIREGS *ar, bool enable);
+ void acpi_pm_tmr_calc_overflow_time(ACPIREGS *ar);
+diff --git a/hw/acpi/acpi-stub.c b/hw/acpi/acpi-stub.c
+index e268ce9b1a9..790bf509e5d 100644
+--- a/hw/acpi/acpi-stub.c
++++ b/hw/acpi/acpi-stub.c
+@@ -25,3 +25,8 @@ void acpi_table_add(const QemuOpts *opts, Error **errp)
+ {
+     g_assert_not_reached();
+ }
++
++bool acpi_builtin(void)
++{
++    return false;
++}
+diff --git a/hw/acpi/core.c b/hw/acpi/core.c
+index 870391ed7c8..58f8964e130 100644
+--- a/hw/acpi/core.c
++++ b/hw/acpi/core.c
+@@ -78,6 +78,11 @@ static void acpi_register_config(void)
+ 
+ opts_init(acpi_register_config);
+ 
++bool acpi_builtin(void)
++{
++    return true;
++}
++
+ static int acpi_checksum(const uint8_t *data, int len)
+ {
+     int sum, i;
 -- 
 2.47.1
 
