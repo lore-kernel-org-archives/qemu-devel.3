@@ -4,99 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A649CC28B23
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 20:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDA19C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 20:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqeV6-0004fk-TJ; Fri, 07 Mar 2025 15:40:57 -0500
+	id 1tqeX2-0008Rj-MV; Fri, 07 Mar 2025 15:42:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tqeUj-0004R5-2m
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:40:37 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tqeWx-0008MO-CD
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:42:52 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tqeUg-0001wn-Mj
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:40:32 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2ff80290e44so2233404a91.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 12:40:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tqeWu-00028Y-Rj
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:42:50 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2241053582dso19189865ad.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 12:42:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1741380029; x=1741984829; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ohIL3BV/104Xh7k2LK2qauY0LQOX7g9NVibMeK73rWw=;
- b=iKDatbPkWhloT8eiSVVqPgSX4g+PdBwKJUPPTfzSgCM3Bd2A1YElwIkOlFxcslY4m5
- lT2VHt0juxfjn7C0OeYnXnofCxxlWM40nR5dFsl6myXbHa96/GZYED3VxyiImxVVF2jx
- ZNmZYcv9mRB2OBPbIgvVosNfHxfQQJKCF0rr23EXnOZ85pq2ZJL2x45Jo5AzlaotuoDL
- OaorC9EE1KgDg7mTdWwkvXwo5+PGLTvHtY/eCNpPml616NLVGM+A8C33k5RuW6tOL7Nx
- N9TNgRVCB3MpgY34WnddRdgJZuXb2lpcF+1tjx7ytHCRDOUBN06HWGqhrK4rfpiBBFew
- hPhA==
+ d=linaro.org; s=google; t=1741380167; x=1741984967; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=du8QOQGF2nqhWzxCQqgYoIbW1gsvamlhUrbkXg3XLe8=;
+ b=rksgBp2om3ntcBxIyyBVRBSEeeKVus0a0+MA8IvaBdztiP3ASqb+JogzyYscKqkPM5
+ gIi2zIF0TJsluXDGD8w1xo15L570gtJpT1W9gVc8C8sNgTobxhXBJa5wO6ML3Rg8lTQ3
+ WgJfsjMRrxowGuWicJgJHJ2JVOYGLpfYtt2XmXOeA260cylZI0m1yfjEVZvUGjkSuGGS
+ ThC4MenjCwtZv6AmL9bzcYKwxh1MucFKkpX6lDl+CUx0LceRopGivgftxiTupQpfDSrD
+ ZLf2JLB9I9f37NxqJ9MvQUqviezoicM4QEm66NbzGFsYcIfUjSidnKHsV/pXQmoKYRuf
+ wzvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741380029; x=1741984829;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ohIL3BV/104Xh7k2LK2qauY0LQOX7g9NVibMeK73rWw=;
- b=SmWzgtYOK+ws3NhzyXUI/Xjm5N+J7a8MtzmFM+KTHzCkymNkv8o1CKMdu+XmZkVn6S
- YEkl5w6sguZIAgSWv2CdVJe4o9NEqKN+49Qt/0CrwKAeH1KK8pmm/DIU3+QXYSVxaFa/
- 4AEtba2X9SYpRecYYDDVIGXHBOL2hUukwEGf9Y0QWCZe6+WiUc2cNkB3pwH8sqlRUGSh
- S9/kWDQIyOZyAkgdQjNBqJcm3WuI/7D/yv5IrwuDPGrfCZSWl346eKv+GPtwt0fTyeMW
- Wck0Ffr6BW8wbLJ15hMYdufKLM6NAvk7dxwLCikZx9WdgnHuNqsevwUbVwiffl2hQ7X3
- R7Vg==
-X-Gm-Message-State: AOJu0YxGn4ogUEUTuuVsF2TSVkrCJ/963s+qrpErGbUTaq5rd+ImGMPw
- GXRfedjSyfUEwGnTGd4K3XRW7qiymIkS+G/q8nGFxFJioHCP9XE7ePsbACn9CV8PQwVK2l/nTAv
- czS+OMyS6sOkUw7NotNnwn7v3IYVHbjb7Y+iJmp+aU8MKTOam77UeXbeJvCOBtjEGR06T3n6A28
- BYvfvV7SBeCALtk4/539wVYOViK9hnTyTVEdgJR2k=
-X-Gm-Gg: ASbGncuZw7U9mshFjlFUh70Fn707FmmVpDA8+dEfC2NiH3u0JCwTu3mHaTnIcLmJQbu
- o3B+uzBKF8PnF6tzrETTpSXLdW0qy4ryZ1eudlM1eELVXJDM9PTv5NTn1PYhMKQ60WBF2vtq66G
- +iO2jY9eh+HfcOJq0mDGXZK/X7mXMxoWnX1ILPR3ZS32umXlt2Nfxr1CRXobLChg0x//E6iLOB2
- XBVYjH5wDtTggzqYAJjo3F2FFiKDvSlrroHwdDs44kpQ6j3oojTbGxFYDT4+sZKx85s+/e5NiIM
- 4WJ4WMUFxXDlcIKzWb+tX2kWpJzyNpzhJI10Qa61wDBmkpCYD0V1Kr1qJ0Xza2GShUui9wiq
-X-Google-Smtp-Source: AGHT+IFk3jj2iAPKHY4isBHv3wjs/MjcPMcFZrxkF8h9RElGBzhuzD4hijmzclDd+QFr/KqNCz38ag==
-X-Received: by 2002:a17:90b:2d83:b0:2ff:64a0:4a58 with SMTP id
- 98e67ed59e1d1-2ff7cf14552mr6416174a91.22.1741380028710; 
- Fri, 07 Mar 2025 12:40:28 -0800 (PST)
-Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ d=1e100.net; s=20230601; t=1741380167; x=1741984967;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=du8QOQGF2nqhWzxCQqgYoIbW1gsvamlhUrbkXg3XLe8=;
+ b=RwhKlhYqT6RIU3G+lkUKvef+0yJG7Hj+B5ZX+9EjwYCm5Hy2bB0WUvj3jvtEx66ezM
+ gBgod+EulSxYK0kiTtZhHs5pfpPrg2IeHHAztBXnH4p1R0FSWZWAY7mMp2R3B90C1EaU
+ pQwr0CUDpfXSQbXAu11bTGZIriN0cj3tEKMN81Y1EV1acyuhQpP491I31V2e1P9xKg2P
+ H+g7ghjTS0R9H+jWmZfxyzI2jwYU0IvVhELzS3CQJvjWzhZBMoVYmxDusAyycrtgRWHM
+ htBb82P8iwidxg/85WfjJ165WILI4SNSVz0m5JDiPB7D3S2gAoQmkzzQRIXmVmFB1ARJ
+ +a5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVwO2QTN3DwlxCFbf+c5D56Pe/Zi7Uv7PfMv3kryhfC0J+4BUL4+dCA08p65e4yBjXFMNUAkeucuXWm@nongnu.org
+X-Gm-Message-State: AOJu0YwlTDuTa24ZvZtWSf2uEGcoXI9AzL+SRpgYI9ZlWEG5EKSSEkVG
+ IStLgajjlDnKYdZq9rGhPMpVb/o0v9oBqtGqZUqvOXEV0BZcNgrXovWYdHPNRDO2/snZgU4WHHI
+ +
+X-Gm-Gg: ASbGnctiEP1MKK0w7d+a9M3ruZWM4nYYtJeKZsHOMCFOgoelr9I6+/qSzenohR8vXI8
+ 54I7cKqZXRfz3m+qxOmdY9gxWsNKBy6wHqSuyzdTNq4iOZ/PINeXbBs6NBikFrxtyYleYdy4dJ+
+ 981quTdMJl/1fc/sxmp+4Cn1XMX9BunSCBQtcMWYcH1S7xDCSV+whUXr+10AU34jnZJ5LWUv6rQ
+ ImuuIjawSwXON54ahqwpauoZNsfOpIcVh5KVMOVDuys6B5s2gYoWx/Qn8ZF7HOiijUbFK+ukg9K
+ r0XuIjgxff8fyNpq7aFvK40FIum1Tr6ut2BmP0veGipTB3nCrFjxioxpsf+HPaLUrf6khjWV09y
+ 5WTz5URS7
+X-Google-Smtp-Source: AGHT+IF+pabbrgtp5ClZ67I4Q0a375fRWyeWGuyJTM4E1w6Uf2hReBGX5lyrMQOH9uSMhrXmwwNDwg==
+X-Received: by 2002:a05:6a20:72a5:b0:1f3:4661:d197 with SMTP id
+ adf61e73a8af0-1f544acd52dmr10283340637.2.1741380167372; 
+ Fri, 07 Mar 2025 12:42:47 -0800 (PST)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff5aa3d3ccsm3270900a91.0.2025.03.07.12.40.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 12:40:28 -0800 (PST)
-From: Jason Chien <jason.chien@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-arm@nongnu.org (open list:MCIMX7D SABRE / i...),
- Jason Chien <jason.chien@sifive.com>
-Subject: [PATCH 3/4] hw/pci-host/designware: Implement
- PCIIOMMUOps.set_downstream_mr()
-Date: Sat,  8 Mar 2025 04:39:36 +0800
-Message-ID: <20250307203952.13871-4-jason.chien@sifive.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20250307203952.13871-1-jason.chien@sifive.com>
-References: <20250307203952.13871-1-jason.chien@sifive.com>
+ 41be03b00d2f7-af281287d78sm3411324a12.74.2025.03.07.12.42.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Mar 2025 12:42:47 -0800 (PST)
+Message-ID: <e4dd7393-47d4-4923-b907-dbb875821274@linaro.org>
+Date: Fri, 7 Mar 2025 12:42:45 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/14] hw/vfio/ap: Check CONFIG_IOMMUFD at runtime using
+ iommufd_builtin()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20250307180337.14811-1-philmd@linaro.org>
+ <20250307180337.14811-13-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250307180337.14811-13-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=jason.chien@sifive.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,93 +106,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The original DesignWare PCIe host implementation could not connect with
-an IOMMU, as both attempted to register PCIIOMMUOps.
+On 3/7/25 10:03, Philippe Mathieu-Daudé wrote:
+> Convert the compile time check on the CONFIG_IOMMUFD definition
+> by a runtime one by calling iommufd_builtin().
+> 
+> Since the file doesn't use any target-specific knowledge anymore,
+> move it to system_ss[] to build it once.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/s390x/kvm/kvm_s390x.h |  2 +-
+>   hw/vfio/ap.c                 | 27 +++++++++++++--------------
+>   hw/vfio/meson.build          |  2 +-
+>   3 files changed, 15 insertions(+), 16 deletions(-)
+> 
+> diff --git a/target/s390x/kvm/kvm_s390x.h b/target/s390x/kvm/kvm_s390x.h
+> index 649dae5948a..7b1cce3e60d 100644
+> --- a/target/s390x/kvm/kvm_s390x.h
+> +++ b/target/s390x/kvm/kvm_s390x.h
+> @@ -10,7 +10,7 @@
+>   #ifndef KVM_S390X_H
+>   #define KVM_S390X_H
+>   
+> -#include "cpu-qom.h"
+> +#include "target/s390x/cpu-qom.h"
+>   
+>   struct kvm_s390_irq;
+>   
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index c7ab4ff57ad..832b98532ea 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -11,7 +11,6 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> -#include CONFIG_DEVICES /* CONFIG_IOMMUFD */
+>   #include <linux/vfio.h>
+>   #include <sys/ioctl.h>
+>   #include "qapi/error.h"
+> @@ -24,7 +23,7 @@
+>   #include "qemu/module.h"
+>   #include "qemu/option.h"
+>   #include "qemu/config-file.h"
+> -#include "kvm/kvm_s390x.h"
+> +#include "target/s390x/kvm/kvm_s390x.h"
 
-This commit resolves the conflict by hooking PCIIOMMUOps.set_downstream_mr()
-through designware_pcie_host_set_mr(), allowing the IOMMU to designate the
-PCIe host's downstream memory region via pci_setup_iommu_downstream_mr()
-without competing for PCIIOMMUOps.
+Do I take from this that this is actually a target-specific device?
+Otherwise the two s390x changes are confusing.
+Is it built once already, due to only being enabled for qemu-system-s390x?
+If so, I question the need to move it out of specific_ss at all.
 
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
----
- hw/pci-host/designware.c         | 18 +++++++++++++++---
- include/hw/pci-host/designware.h |  2 ++
- 2 files changed, 17 insertions(+), 3 deletions(-)
+Anyway, this is two changes -- one for iommufd_builtin and one for meson.build.
 
-diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-index c07740bfaa..fafbf90259 100644
---- a/hw/pci-host/designware.c
-+++ b/hw/pci-host/designware.c
-@@ -404,7 +404,6 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
- {
-     DesignwarePCIERoot *root = DESIGNWARE_PCIE_ROOT(dev);
-     DesignwarePCIEHost *host = designware_pcie_root_to_host(root);
--    MemoryRegion *host_mem = get_system_memory();
-     MemoryRegion *address_space = &host->pci.memory;
-     PCIBridge *br = PCI_BRIDGE(dev);
-     DesignwarePCIEViewport *viewport;
-@@ -445,7 +444,7 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
-         viewport->cr[0]   = DESIGNWARE_PCIE_ATU_TYPE_MEM;
- 
-         source      = &host->pci.address_space_root;
--        destination = host_mem;
-+        destination = &host->bridge_mr;
-         direction   = "Inbound";
- 
-         /*
-@@ -470,7 +469,7 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
- 
-         destination = &host->pci.memory;
-         direction   = "Outbound";
--        source      = host_mem;
-+        source      = get_system_memory();
- 
-         /*
-          * Configure MemoryRegion implementing CPU -> PCI memory
-@@ -675,8 +674,16 @@ static AddressSpace *designware_pcie_host_set_iommu(PCIBus *bus, void *opaque,
-     return &s->pci.address_space;
- }
- 
-+static void designware_pcie_host_set_mr(void *opaque, MemoryRegion *mr)
-+{
-+    DesignwarePCIEHost *s = DESIGNWARE_PCIE_HOST(opaque);
-+
-+    memory_region_add_subregion_overlap(&s->bridge_mr, 0, mr, INT32_MAX);
-+}
-+
- static const PCIIOMMUOps designware_iommu_ops = {
-     .get_address_space = designware_pcie_host_set_iommu,
-+    .set_downstream_mr = designware_pcie_host_set_mr,
- };
- 
- static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
-@@ -713,6 +720,11 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
-                                      TYPE_DESIGNWARE_PCIE_ROOT_BUS);
-     pci->bus->flags |= PCI_BUS_EXTENDED_CONFIG_SPACE;
- 
-+    memory_region_init(&s->bridge_mr, OBJECT(s),
-+                       "pcie-bus-bridge-memory", UINT64_MAX);
-+    memory_region_add_subregion(&s->bridge_mr, 0x0, get_system_memory());
-+    address_space_init(&s->bridge_as, &s->bridge_mr, "pcie-bus-bridge-space");
-+
-     memory_region_init(&s->pci.address_space_root,
-                        OBJECT(s),
-                        "pcie-bus-address-space-root",
-diff --git a/include/hw/pci-host/designware.h b/include/hw/pci-host/designware.h
-index a35a3bd06c..30f1598dbe 100644
---- a/include/hw/pci-host/designware.h
-+++ b/include/hw/pci-host/designware.h
-@@ -97,6 +97,8 @@ struct DesignwarePCIEHost {
-     } pci;
- 
-     MemoryRegion mmio;
-+    AddressSpace bridge_as;
-+    MemoryRegion bridge_mr;
- };
- 
- #endif /* DESIGNWARE_H */
--- 
-2.43.2
 
+r~
 
