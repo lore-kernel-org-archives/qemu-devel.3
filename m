@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1FC9C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 20:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B00CC28B27
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 20:10:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqe0V-0007Lw-I4; Fri, 07 Mar 2025 15:09:19 -0500
+	id 1tqe0a-0007WG-6J; Fri, 07 Mar 2025 15:09:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqe0U-0007JF-BQ
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:09:18 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqe0S-0001Ei-Px
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:09:18 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2243803b776so15661095ad.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 12:09:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741378155; x=1741982955; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jkvAcqf5QyaoHLzZ/dp86AUlBHOQnShBT+8GVLk7y3I=;
- b=MPSnOWoMSS7+aewZqADv4e3b2X0kjQnAMey2vfVlt+IOPmqv/PhbKiDZO7fl/jpH2+
- gLntnMOv6HZWvCamkgWn7afqeTlQWianzntXctf1nKHctS+AZT0ayLRWXAY8APP0Z8OZ
- Z+PqQebCHAbnuifUeB10tQvl9Hg/L1axjbd2bBhabHY1X6zoS0NtwJL9uoJ2MNbmNcQR
- VT+XFLuc2lydnBR127LIX3tB46btIxUpCoJAHnYjcBtP8gMr/cw5dIZfm0C6nXvdduQL
- RXxfr6OHYXCwM78OvdMVS+2IdFd78WWN0vXDzzDAIZWAEYaxmcMm5AnjsIWOmHg33Ri2
- UkHQ==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqe0Y-0007Sj-Od
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:09:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqe0W-0001En-Sj
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:09:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741378156;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JJZ3yZvQXqqljDbi2MKVK9QP5f8yb2eSoyrlU2x3ZiE=;
+ b=Ia/SB/vH5Z9sBfjz54dtA2bAKzDzVNAiNLMmXAF20xeBneRliHeww1AmtdCUtRPxJolp/G
+ 4ZUo9VNEFLMUqzXAe1wEm78OrtxxHpkhkOlnE5elfyAB2TdjlOuhXZJpC1eCs+shTXEePn
+ WPJXJm86J0sRwZi+Mt4NpdrHI+ZEFl8=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-618-Broe5WUtPJivl56XG3NyQw-1; Fri, 07 Mar 2025 15:09:12 -0500
+X-MC-Unique: Broe5WUtPJivl56XG3NyQw-1
+X-Mimecast-MFC-AGG-ID: Broe5WUtPJivl56XG3NyQw_1741378151
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2ff6943febeso3683422a91.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 12:09:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741378155; x=1741982955;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jkvAcqf5QyaoHLzZ/dp86AUlBHOQnShBT+8GVLk7y3I=;
- b=V+954Eqx2tPp6Ojcj86uKUbWNGLKCrGhplmhh0/f8lODFmGXUHAwtlz01BCnem0j2V
- ffY3bGAV3Iz2OMBJwU1LmtST9+np9kDF4EEtyLjBAyXTkMG0ziYUCOfa4mDue/h0eqmp
- V5n7c39F2A0hLTcjGmmUTKh1Bcspnn8Zcc2SJpfrHKhrc6LAKIK+eoJGf2vZR6pLtb6L
- E0GaMaGdXEdaLjv79/Q5vYe0ud80U+xTqXSeWhr/wTmlIHzPMxXFmC/ypXgSHqwmfjaX
- 5ODeCKb761wwh4R9ex9fI7hyCqvDMr/M1238adOmC3HzAywswi+j31+/rPKvZ4++0Mb3
- HDaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUGfGMuYjSNni925ptudn/e33RgyzMuovSPLt532EkOO89NEeUJv/jj0W+TrJSG1ssPv1W6r8mTO9+k@nongnu.org
-X-Gm-Message-State: AOJu0YzyglSiIVn1BemzJ/WAzeYjmPW9Ehs7KBXmF47ZNDJWuk9joPQ5
- 9PDLuOBruFHqNW80AhPl+m5YAf1xTZqwy+W85qNSMdcUoXXAebskK4Yqq6NragEtNnKQxRdEsXf
- G
-X-Gm-Gg: ASbGncvWRBJZYJU2T8UerufxbU/4R+hWK8OlwWwx4+7Oy+pqn4CqZlXaQ9Gj4I0Qoch
- w1D5qP7UqGv3XVcj0WZLW5D8N/nD0Z3I9kbeGbWn0sxU5aiWv257FAh08Zae6V8M7erZAY/yXM0
- yzq6bcSIPEFrqUDQsjkW+71s3kHf+t1qX5NZbBPyXr17QZrQ0hScKVGcZCoFOT3S3AWpnstcMIq
- 4ijBIQvKRKZ4XxsoocQaV+w4nUGCY69IV3RKg/msOTcAleMt3rujZcRqstijtilBJR1MpS1mxWD
- eIEFYq3mnQC05+RZCMVOcfuwUmDox3xHSqbldL4bH+/UJsiRSZHQVSWYCs6xD6BPKOxu4fWrMkd
- ueIEuS3RO
-X-Google-Smtp-Source: AGHT+IGWdntExg+9giqFdZJ8xxyMPbxJY85FxhPogZcpLgA8Nf8vtJ4Fr7pPy7x9CGV1AjAVFhzZfQ==
-X-Received: by 2002:a17:902:e80a:b0:224:1074:63a0 with SMTP id
- d9443c01a7336-22428ab7313mr72701965ad.34.1741378154994; 
- Fri, 07 Mar 2025 12:09:14 -0800 (PST)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736ba87508asm558499b3a.19.2025.03.07.12.09.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 12:09:14 -0800 (PST)
-Message-ID: <6ac48abe-8caf-4897-899e-68af29b2750d@linaro.org>
-Date: Fri, 7 Mar 2025 12:09:13 -0800
+ d=1e100.net; s=20230601; t=1741378151; x=1741982951;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JJZ3yZvQXqqljDbi2MKVK9QP5f8yb2eSoyrlU2x3ZiE=;
+ b=LqTIjPZ9Uo5+ybt+8pEB8p1wF80FuLpDpppfZ8YS3TLsvCbSnnm87rsc81vb7ywg6P
+ jqVD7VIiIF6RoSfSmjoKyYi3znYtnlauGmXFVBD2xfRgKM6LR5lPpLq0wgE6BNYX3LHs
+ 0gYHfjaVd+T1p0ri34gPCVimbd1r7HPIkRVEBCL3dLh7SoiWuChhnzrdeGcSDlOnplET
+ Gb9eqA1BYU8VqDeE6SsN/oEiR4Xf5RIrql4cTysfpyy4eSTDk9RpTAqaC6q0ahVGB6w2
+ ZjudpOaHaAIIiOKXad0g+yFzejhIACTq9O+nRFOBP21lV0/sah7gxp/RG1hVcE0MwBRV
+ ag9Q==
+X-Gm-Message-State: AOJu0YwbVn1wHhsX0mUGcebywpnsn5w+InHVpiN5U+7DwECHdv/NbWE+
+ rb9eF4fcbz5GiQKMpeIcoO0KfvRuFhU7YLrhRM22p1eAv0gFTsah7wwWhHsKdyuRLgqFK1drxn1
+ FInRC1Llth9JgVsfCHsPL43fxuCzIcVLoFIRPnoFHELhR1oVUvz7QbGP+294EWaTVzAh39oV0F7
+ 8XpOfDvvZPmdkdQjmVHUga9C+74ls=
+X-Gm-Gg: ASbGncvGbL0I818v0BMGsiqNzJeri0EeRtwDPY54Nm77rkjvqVJvCgXK0PLrwZJIS8E
+ 58+By5Q6i7hmU/O8z8uDvwKVLy6lR+XRm7pEYC0hhSrdhZNQGQTDvt2Bp7f/HsYksoaMsdA==
+X-Received: by 2002:a17:90a:d404:b0:2fa:562c:c1cf with SMTP id
+ 98e67ed59e1d1-2ffbc1474a2mr1318319a91.1.1741378151410; 
+ Fri, 07 Mar 2025 12:09:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHSTa+l9Dq31taFa9Dd0ZAiq0pgr6nVJ0etltRGJFtNtLlx4dwX1u0uz7/EPtG1lQ0utwyNqUrqteBJT5+boss=
+X-Received: by 2002:a17:90a:d404:b0:2fa:562c:c1cf with SMTP id
+ 98e67ed59e1d1-2ffbc1474a2mr1318298a91.1.1741378151179; Fri, 07 Mar 2025
+ 12:09:11 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/14] system/kvm: Expose
- kvm_irqchip_[add,remove]_change_notifier()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20250307180337.14811-1-philmd@linaro.org>
- <20250307180337.14811-9-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250307180337.14811-9-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+References: <20250305034610.960147-1-jsnow@redhat.com>
+ <20250305034610.960147-5-jsnow@redhat.com>
+ <87o6ydtmua.fsf@pond.sub.org>
+In-Reply-To: <87o6ydtmua.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Fri, 7 Mar 2025 15:08:59 -0500
+X-Gm-Features: AQ5f1Jpw-Kwh48t-Q5DD1-l0fhTC2RInTJi-f4XvxxkAY1joiybVpMfXGdEVBtc
+Message-ID: <CAFn=p-Z2dVfWZ7=Ukyx1U3wfi9+eP+JrJ75md1P8T7Y3Bj0Cag@mail.gmail.com>
+Subject: Re: [PATCH 04/57] docs/sphinx: add compat.py module and nested_parse
+ helper
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000001f0074062fc63291"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,20 +104,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/25 10:03, Philippe Mathieu-Daudé wrote:
-> Currently kvm_irqchip_add_irqfd_notifier() and
-> kvm_irqchip_remove_irqfd_notifier() are only declared on
-> target specific code. There is not particular reason to,
-> as their prototypes don't use anything target related.
-> 
-> Move their declaration with common prototypes, and
-> implement their stub.
+--0000000000001f0074062fc63291
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The description is not accurate, because the new stubs are
-*not* for the functions whose declaration you move.
+On Fri, Mar 7, 2025 at 12:46=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-This feels like two different changes.
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Create a compat module that handles sphinx cross-version compatibility
+> > issues. For the inaugural function, add a nested_parse() helper that
+> > handles differences in line number tracking for nested directive body
+> > parsing.
+> >
+> > Spoilers: there are more cross-version hacks to come throughout the
+> > series.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  docs/sphinx/compat.py | 33 +++++++++++++++++++++++++++++++++
+> >  1 file changed, 33 insertions(+)
+> >  create mode 100644 docs/sphinx/compat.py
+> >
+> > diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
+> > new file mode 100644
+> > index 00000000000..792aca10e39
+> > --- /dev/null
+> > +++ b/docs/sphinx/compat.py
+> > @@ -0,0 +1,33 @@
+> > +"""
+> > +Sphinx cross-version compatibility goop
+> > +"""
+> > +
+> > +from docutils.nodes import Element
+> > +
+> > +from sphinx.util.docutils import SphinxDirective, switch_source_input
+> > +from sphinx.util.nodes import nested_parse_with_titles
+> > +
+> > +
+> > +def nested_parse(directive: SphinxDirective, content_node: Element) ->
+> None:
+> > +    """
+> > +    This helper preserves error parsing context across sphinx versions=
+.
+> > +    """
+> > +
+> > +    # necessary so that the child nodes get the right source/line set
+> > +    content_node.document =3D directive.state.document
+> > +
+> > +    try:
+> > +        # Modern sphinx (6.2.0+) supports proper offsetting for
+> > +        # nested parse error context management
+> > +        nested_parse_with_titles(
+> > +            directive.state,
+> > +            directive.content,
+> > +            content_node,
+> > +            content_offset=3Ddirective.content_offset,
+> > +        )
+> > +    except TypeError:
+> > +        # No content_offset argument. Fall back to SSI method.
+> > +        with switch_source_input(directive.state, directive.content):
+> > +            nested_parse_with_titles(
+> > +                directive.state, directive.content, content_node
+> > +            )
+>
+> The function wraps around sphinx.util.nodes.nested_parse_with_titles().
+> Would calling it nested_parse_with_titles() reduce readers' cognitive
+> load at call sites?
+>
+> Please do not misinterpret my question as a demand.  It's really just a
+> question :)
+>
 
+Sure, easy change.
 
-r~
+--0000000000001f0074062fc63291
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 7, =
+2025 at 12:46=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
+hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
+ target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; Create a compat module that handles sphinx cross-version compatibility=
+<br>
+&gt; issues. For the inaugural function, add a nested_parse() helper that<b=
+r>
+&gt; handles differences in line number tracking for nested directive body<=
+br>
+&gt; parsing.<br>
+&gt;<br>
+&gt; Spoilers: there are more cross-version hacks to come throughout the<br=
+>
+&gt; series.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 docs/sphinx/compat.py | 33 +++++++++++++++++++++++++++++++++<br>
+&gt;=C2=A0 1 file changed, 33 insertions(+)<br>
+&gt;=C2=A0 create mode 100644 docs/sphinx/compat.py<br>
+&gt;<br>
+&gt; diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py<br>
+&gt; new file mode 100644<br>
+&gt; index 00000000000..792aca10e39<br>
+&gt; --- /dev/null<br>
+&gt; +++ b/docs/sphinx/compat.py<br>
+&gt; @@ -0,0 +1,33 @@<br>
+&gt; +&quot;&quot;&quot;<br>
+&gt; +Sphinx cross-version compatibility goop<br>
+&gt; +&quot;&quot;&quot;<br>
+&gt; +<br>
+&gt; +from docutils.nodes import Element<br>
+&gt; +<br>
+&gt; +from sphinx.util.docutils import SphinxDirective, switch_source_input=
+<br>
+&gt; +from sphinx.util.nodes import nested_parse_with_titles<br>
+&gt; +<br>
+&gt; +<br>
+&gt; +def nested_parse(directive: SphinxDirective, content_node: Element) -=
+&gt; None:<br>
+&gt; +=C2=A0 =C2=A0 &quot;&quot;&quot;<br>
+&gt; +=C2=A0 =C2=A0 This helper preserves error parsing context across sphi=
+nx versions.<br>
+&gt; +=C2=A0 =C2=A0 &quot;&quot;&quot;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 # necessary so that the child nodes get the right sourc=
+e/line set<br>
+&gt; +=C2=A0 =C2=A0 content_node.document =3D directive.state.document<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 try:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # Modern sphinx (6.2.0+) supports proper =
+offsetting for<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # nested parse error context management<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 nested_parse_with_titles(<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 directive.state,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 directive.content,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 content_node,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 content_offset=3Ddirective.=
+content_offset,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 )<br>
+&gt; +=C2=A0 =C2=A0 except TypeError:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # No content_offset argument. Fall back t=
+o SSI method.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 with switch_source_input(directive.state,=
+ directive.content):<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 nested_parse_with_titles(<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 directive.sta=
+te, directive.content, content_node<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 )<br>
+<br>
+The function wraps around sphinx.util.nodes.nested_parse_with_titles().<br>
+Would calling it nested_parse_with_titles() reduce readers&#39; cognitive<b=
+r>
+load at call sites?<br>
+<br>
+Please do not misinterpret my question as a demand.=C2=A0 It&#39;s really j=
+ust a<br>
+question :)<br></blockquote><div><br></div><div>Sure, easy change.</div></d=
+iv></div>
+
+--0000000000001f0074062fc63291--
+
 
