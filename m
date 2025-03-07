@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90B85C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD3EC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqTGD-0002t6-TP; Fri, 07 Mar 2025 03:40:49 -0500
+	id 1tqTUa-0006fq-BN; Fri, 07 Mar 2025 03:55:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tqTGC-0002sj-Ic
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:40:48 -0500
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tqTUY-0006fh-T2
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:55:39 -0500
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tqTG9-0005ot-Qf
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:40:48 -0500
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tqTUV-00022Z-BT
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:55:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741336846; x=1772872846;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=HSEx1h7Wj2hEuSbAVMCuuoZ/xzSn15mJMjAE6PL4bZ4=;
- b=Kh+8iiAfYg5BrCGAvbNc4gsjjCqtYai7k5Z+N7IBE73/7xUJWuthmU92
- of49MPrqSvUEtRdpJkjuUeL9rRI1wlqT6yyHUB/ZkBwXLnPAGhOAe9xi9
- LvGr544L16X5QiUF2fjAu/j9+4MpUzNyqnExZzQ2KxsbMG+sR8Lmj9DQS
- QDLL5fMOeHArTs2dVPdVBSTRV6AisTNepMyAZ342D/U9yqmCoRnTQ9uWK
- B6dQdV86zJD9hZax8OsbmZBcFap3NhMPS8okJQBtc9nmVijmg/imtMnYs
- pUctNm8shVQxyAl3CzGDKAazaCBvukviFKCpTGThU/pR5WrdfytMrnJBC A==;
-X-CSE-ConnectionGUID: /fQYdEWIS32AgHEaV8xtIg==
-X-CSE-MsgGUID: l0ax0OeuQhiPgAB1czuDyg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11365"; a="46306007"
-X-IronPort-AV: E=Sophos;i="6.14,228,1736841600"; d="scan'208";a="46306007"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Mar 2025 00:40:42 -0800
-X-CSE-ConnectionGUID: MQYHKvbeSKWtjt9XPsXJGA==
-X-CSE-MsgGUID: n3gH5xQhR5ChX39nvWcjmA==
+ t=1741337735; x=1772873735;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=RpN/LeNWfGyP6YXcs9FmCYAJxwp+Z5cSq5y5kR3MKmw=;
+ b=Gvx3CdWvGlrYvQJLL8sPHKnewXAyHigChSyIlqYuT0YJC4/DnXMBMaKU
+ s96AjykxWQ9xKouG8676yMx35opkVrp9Ct6g3LeteluVcG+dwPaj7qALM
+ Hhj2seqxnCqCeZuFwCVjIFQIjjSjHzBxQUz//FrMSWDzoscra7tEBjcgm
+ Pez4JlLPXgoYG1KEncZ1MPO+E9BWqNB00t9WKV+gvi7Tl4ghOUMkeJPFv
+ e1vDYH524z6Dj79RkBLrTkVQclbfz+A9wdHTuj6TYK+KL4k8nUHe84BH1
+ E+4d52MBQ0QBTz40aSHqxAtQG9d8JVcfhahhLWGcgemfJQXaajk1ocgdm w==;
+X-CSE-ConnectionGUID: mD2BNG5CQfaEGixPsjaJoA==
+X-CSE-MsgGUID: uNA1CVVMQjK9eg+d0kPTkQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11365"; a="29961615"
+X-IronPort-AV: E=Sophos;i="6.14,228,1736841600"; d="scan'208";a="29961615"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Mar 2025 00:55:31 -0800
+X-CSE-ConnectionGUID: bm/QiMATQDK5kl9bpcb14Q==
+X-CSE-MsgGUID: c+VQWqPuQSmOZZgXgIJGBw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="150217523"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Mar 2025 00:40:38 -0800
-Message-ID: <01e203cf-6bed-4939-8881-7fb552daadd7@intel.com>
-Date: Fri, 7 Mar 2025 16:40:34 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/10] [DO NOT MERGE] kvm: Introduce
- kvm_arch_pre_create_vcpu()
-To: Zhao Liu <zhao1.liu@intel.com>, dongli.zhang@oracle.com
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119789356"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 07 Mar 2025 00:55:24 -0800
+Date: Fri, 7 Mar 2025 17:15:32 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
  mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
- likexu@tencent.com, like.xu.linux@gmail.com, zhenyuw@linux.intel.com,
- groug@kaod.org, khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
- den@virtuozzo.com, davydov-max@yandex-team.ru, dapeng1.mi@linux.intel.com,
- joe.jin@oracle.com
+ likexu@tencent.com, like.xu.linux@gmail.com,
+ zhenyuw@linux.intel.com, groug@kaod.org, khorenko@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com
+Subject: Re: [PATCH v2 05/10] target/i386/kvm: extract unrelated code out of
+ kvm_x86_build_cpuid()
+Message-ID: <Z8q5NHQeIgXxTmPO@intel.com>
 References: <20250302220112.17653-1-dongli.zhang@oracle.com>
- <20250302220112.17653-4-dongli.zhang@oracle.com> <Z8hjy/8OBTXEA1kp@intel.com>
- <acef41fc-9eb1-4df7-b7b6-61995a76fcc4@oracle.com>
- <Z8qlrjciHEbdnqaA@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <Z8qlrjciHEbdnqaA@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=xiaoyao.li@intel.com;
+ <20250302220112.17653-6-dongli.zhang@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250302220112.17653-6-dongli.zhang@oracle.com>
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,43 +90,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/2025 3:52 PM, Zhao Liu wrote:
->> I didn't know if I would need to wait until this patch is merged into
->> mainline QEMU. That's why I didn't add my signed-off.
-> 
-> No problem if Xiaoyao is okay with it (copyright of patches need to
-> honor the original author & signed-off). IMO, if your series is accepted
-> first, it also helps to reduce the size of the TDX series, and it helps
-> the subsequent PMU development (like mediated PMU). Conversely, it's
-> also not a big deal; you can simply rebase and remove this patch at that
-> time.
+> +static void kvm_init_pmu_info(CPUX86State *env)
+> +{
+> +    uint32_t eax, edx;
+> +    uint32_t unused;
+> +    uint32_t limit;
+> +
+> +    cpu_x86_cpuid(env, 0, 0, &limit, &unused, &unused, &unused);
 
-Hi Dongli,
+At this stage, CPUID has already been filled and we should not use
+cpu_x86_cpuid() to get the "raw" CPUID info.
 
-Usually, if my TDX series is going to be merged soon, or you think this 
-series won't be accepted soon before TDX series, you can just mention in 
-the cover letter that this series has a dependency on other patch.
+Instead, after kvm_x86_build_cpuid(), the cpuid_find_entry() helper
+should be preferred.
 
-For the case that your series might be accepted earlier, it's better to 
-just grab the patches needed by this series from others' series. Just 
-like what you did here.
+With cpuid_find_entry(), we don't even need to check the limit again.
 
-Like Zhao mentioned, when you grab a patch from others and post with 
-your series, you need keep the original patch as is (the unchanged 
-authorship and signed-off-by chain), in addition to add your 
-signed-off-by at last in the chain.
+> +
+> +    if (limit < 0x0a) {
+> +        return;
+> +    }
 
-> Even I'm thinking that my KVM PMU filter should perhaps base on your work.
-> 
->> I will add in v3 and remove "DO NOT MERGE" if the patch isn't in QEMU when
->> I am sending out v3.
+...
 
-Be sure to add your signed-off-by, which tells you are involved.
+>  int kvm_arch_init_vcpu(CPUState *cs)
+>  {
+>      struct {
+> @@ -2267,6 +2277,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>      cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+>      cpuid_data.cpuid.nent = cpuid_i;
+>  
+> +    kvm_init_pmu_info(env);
+> +
 
-> Okay.
-> 
-> Thanks,
-> Zhao
-> 
+Referring what has_msr_feature_control did, what about the following
+change?
+
+ int kvm_arch_init_vcpu(CPUState *cs)
+ {
+     struct {
+@@ -2277,8 +2240,6 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+     cpuid_data.cpuid.nent = cpuid_i;
+
+-    kvm_init_pmu_info(env);
+-
+     if (((env->cpuid_version >> 8)&0xF) >= 6
+         && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
+            (CPUID_MCE | CPUID_MCA)) {
+@@ -2329,6 +2290,31 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         has_msr_feature_control = true;
+     }
+
++    c = cpuid_find_entry(&cpuid_data.cpuid, 0xa, 0);
++    if (c) {
++        has_architectural_pmu_version = c->eax & 0xff;
++        if (has_architectural_pmu_version > 0) {
++            num_architectural_pmu_gp_counters = (c->eax & 0xff00) >> 8;
++
++            /*
++             * Shouldn't be more than 32, since that's the number of bits
++             * available in EBX to tell us _which_ counters are available.
++             * Play it safe.
++             */
++            if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
++                num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
++            }
++
++            if (has_architectural_pmu_version > 1) {
++                num_architectural_pmu_fixed_counters = c->edx & 0x1f;
++
++                if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
++                    num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
++                }
++            }
++        }
++    }
++
+     if (env->mcg_cap & MCG_LMCE_P) {
+         has_msr_mcg_ext_ctl = has_msr_feature_control = true;
+     }
+---
+
+The above codes check 0xa after 0x1 and 0x7, and uses the local variable
+`c`, so that it doesn't need to wrap another new function.
+
+Regards,
+Zhao
+
+
 
 
