@@ -4,77 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C87C28B23
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F5BC282DE
 	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 12:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqWuu-0000hu-7u; Fri, 07 Mar 2025 07:35:05 -0500
+	id 1tqWv4-0000pR-PE; Fri, 07 Mar 2025 07:35:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqWuc-0000gP-Dc
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:34:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqWuZ-0006SF-Mq
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:34:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741350881;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nyU4FvEO0XmyjoKmFm2hxDQ8gEGOWcrJVGd8cT7cJL8=;
- b=cOpdkZhsaiYC4zgzXWfhe2Es4+xSlWLu4yJzCujIis3tbQ6cBQka3IRBpSvg3t/TlHk1P4
- cqkHTidUFRmGpOv2kHWQwDwlU+PuQOLN8Kp33HIBQrnuMkf05+0BkQSBrT7jZVcnxUDVt/
- 0v/RBKz2nHJGR4rYsEfO/VdL6Q3vO84=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-yYQXiYHzNFKN-DMAoWeOiw-1; Fri,
- 07 Mar 2025 07:34:06 -0500
-X-MC-Unique: yYQXiYHzNFKN-DMAoWeOiw-1
-X-Mimecast-MFC-AGG-ID: yYQXiYHzNFKN-DMAoWeOiw_1741350845
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02C7B180035E; Fri,  7 Mar 2025 12:34:05 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AFF381801747; Fri,  7 Mar 2025 12:34:04 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2950C21E675E; Fri, 07 Mar 2025 13:34:02 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
- =?utf-8?Q?hieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
- Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH 56/57] docs/qapidoc: add intermediate output debugger
-In-Reply-To: <20250305034610.960147-57-jsnow@redhat.com> (John Snow's message
- of "Tue, 4 Mar 2025 22:46:05 -0500")
-References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-57-jsnow@redhat.com>
-Date: Fri, 07 Mar 2025 13:34:02 +0100
-Message-ID: <87o6ydhvet.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqWux-0000jD-2z
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:35:07 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqWuq-0006T7-Ck
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 07:35:06 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3912c09be7dso1063175f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 04:34:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741350897; x=1741955697; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BKuN66wv044dIn1KLjrdWfR3uuqkDA34AnpzetfvukE=;
+ b=txnvPAvqMwlENIU1jDTBkbXa0bBCC7UhJ++C/c/0pzpXGt71qk5CBdysybtY2BvfU6
+ EcBueYRkEgrZJ2gOnxbE11Y7JsYnKLCyqTmfrWXVAAPuqyn36j4dfBLesBkMPEDi0MQf
+ E+RtAdHv5Eq8+QSEn00XSmZw1JuoANEyVOUnMx02WtuE5RA940dpHcebA8E6FF9fdkrL
+ 9g8rFi9CdAQHWWwBKB4diefebNhaS2tteGAXgf0t8Xq8uqCJfooDyCUoR9QtB00wOi9K
+ /CvLnD/MQBPaOSh95qMl5DflStvD2SaciVmspHV8EHpwGEPc+Q9+uYyKH48DidpxalWD
+ xGBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741350897; x=1741955697;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BKuN66wv044dIn1KLjrdWfR3uuqkDA34AnpzetfvukE=;
+ b=KLBBE1J3xKEgZAc1MNPr2pe6/m3dY7LUhiQMW52Iq5JWDhf09BfDkovJu0bB+Ieizn
+ dJa3lFlMl8RK2ntqwJVkHYy3RR0DiuThR5ViGAMiLac8AyevSbujCHQNbfv6JDDvuQqs
+ f8SB9s3Ef22naN1eZfw4mKjZlLwgToAWtzLQvSR9pYM4YnuvlnLnHM7yUWcvHq9aDs2B
+ cEontD4hAFIfjbsd9tvwQNFeSWgPOb7DIc37I85/r545ahN2ye4v8grrfdwslQb75+X7
+ 3rWn64M7ADwsfQVD7CV0DfJ1qr6MQdit+8+yeoIIqZCrGBBjh8I7armp1KzGXcR2c9Ze
+ 5Q3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUW25alg4R/GA9iZCHKRCjuzREzmc51nrYCkseaut7GjJGk1RTH+/Qy51s9ORwu6gspPIHJ4nFKjNRS@nongnu.org
+X-Gm-Message-State: AOJu0Yyan+9iUToEjYPFV/IZ3YID4LBpVlRUk28ywx6lZmSq9XnWgXQr
+ EF2c85Yys/KzSo5A0xKpiot6ttLKCOLsclYQaKlgiTzRWwPwtxyuB3Fq38+vkPY=
+X-Gm-Gg: ASbGncuGjDi95WBw0i8DyiXHPMlokqgzuUN1kch/l2c+PDT2Z45kfgvDZQqS07+/JC2
+ OKP4J8c9uvjzqEvjMo8u29YxMPYT1iUrjjv5lwIU8OBmHzUZeOa9Q5xEDrHNOCP9qh8dgpOp/Dz
+ txpPBglqTf7TezNKgD9f5rN/mQnCmZEbV80AjNPPlis2t6ex5Hx8UI3t5vin9teaeqlYus4UB9R
+ rpeVCGi2RZi2rayadRA+IvCNNUA1eMcaQQXLkLP8DcL3PyW1Gnx+frJS+FzTptUmjXISOhgFY47
+ AMXap3iHFOs8CyjnaGbYwa8any91yJUHhuDauFHDKEdgf1JzLFwVGRGBg6ojqYd1J+hrrddox8q
+ Ss9b56vSq6+nB
+X-Google-Smtp-Source: AGHT+IF0umeJTup3v42XHUUtfvlx6j2HIMYztLMFUq+WzHgsk+gLbqUTXqp3lDHwxo7qOzyYo6VqUQ==
+X-Received: by 2002:a05:6000:4108:b0:390:df6c:592a with SMTP id
+ ffacd0b85a97d-39132d38302mr1887655f8f.29.1741350896834; 
+ Fri, 07 Mar 2025 04:34:56 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bdd8de4ffsm50559865e9.24.2025.03.07.04.34.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Mar 2025 04:34:56 -0800 (PST)
+Message-ID: <69bc17ce-de05-4b4f-88c2-57866c6409c4@linaro.org>
+Date: Fri, 7 Mar 2025 13:34:55 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 10/15] tests/functional: fix race in virtio balloon test
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+References: <20250307115314.1096373-1-thuth@redhat.com>
+ <20250307115314.1096373-11-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250307115314.1096373-11-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,19 +104,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Hi Thomas, Daniel,
 
-> Add debugging output for the qapidoc transmogrifier - setting DEBUG=1
-> will produce .ir files (one for each qapidoc directive) that write the
-> generated rst file to disk to allow for easy debugging and verification
-> of the generated document.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+On 7/3/25 12:53, Thomas Huth wrote:
+> From: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> There are two race conditions in the recently added virtio balloon
+> test
+> 
+>   * The /dev/vda device node is not ready
+>   * The virtio-balloon driver has not issued the first stats refresh
+> 
+> To fix the former, monitor dmesg for a line about 'vda'.
+> 
+> To fix the latter, retry the stats query until seeing fresh data.
+> 
+> Adding 'quiet' to the kernel command line reduces serial output
+> which otherwise slows boot, making it less likely to hit the former
+> race too.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Message-ID: <20250304183340.3749797-1-berrange@redhat.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: David Hildenbrand <david@redhat.com>
+> [thuth: Break long line to avoid checkpatch error]
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/functional/test_virtio_balloon.py | 26 ++++++++++++++++++++-----
+>   1 file changed, 21 insertions(+), 5 deletions(-)
 
-I understand we generally need to examine these .ir files only when
-things go wrong, or maybe to help understanding the transmogrifier.  I
-guess few people will care, and only rarely.  But when we care, we
-likely care a *lot*.  Sure we want to dig the information on how to get
-.ir files out of a commit message then?
+This fix isn't really working, and is more of band-aid IIUC.
 
+With the following patch restricting to KVM accel, do we still want it 
+merged?
 
