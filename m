@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5B6C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF32C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqgKp-0004lI-Kz; Fri, 07 Mar 2025 17:38:27 -0500
+	id 1tqgMI-00063c-BL; Fri, 07 Mar 2025 17:39:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqgKm-0004k7-Cf
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:38:25 -0500
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMG-00063P-4w
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:39:56 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqgKk-00030r-Nd
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:38:24 -0500
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2feae794508so3807515a91.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:38:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMD-0003HM-Jk
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:39:55 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43bd03ed604so19977925e9.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:39:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741387101; x=1741991901; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lpdyTQNoyvLDcPXfv7S+MFAA9YfJCY5NKT43UZABoS8=;
- b=Rji2jgjoI1vR37TnWbZdkp+CF+o/eHihNo2XX2DA/JDTmrV+xeH44ixgUutVr2LrzB
- rTeyTHD5X+/9bx4kTpvpD+mEEB1qUXzyBhV9SmjyKQvUEvLHyUnX0EIaezH0wd8KuBna
- 2KzS/CAQBA/C5CpNepFtWPxfEpP8GK9hxYZ5Gdalazu6UbGIPBjdGVukLvLfO0rfICQL
- 3Pjnk/IlF35xYN2D3inBwBtj/whmfNLqPKpM5iuD/rDPTrBybIUYfW06le/WkyyPHSg1
- brcfOfEhLzDBuXvjlDBg5i4c7rXSr3GdyzMmP05koZ9++Az/0kvxGb2BrJZYuxvCDjND
- BQfQ==
+ d=linaro.org; s=google; t=1741387191; x=1741991991; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ztej1BH9DZD90s0lU7Teqpf3X8cBF6MU9CYCXJiixE4=;
+ b=gpQtb3h334Dvrg6lDqMABM5wk2vIXdHAKktNHF8xJ1y5eEE+TMagNdRoAqk1nVTouv
+ wwWDvd4xYSg4o/ItaYkiXrx6XedgNCVFS3FVXXwcSble39FbyPKIq5I0jgJ+smvZ5+bt
+ +ZSG8EPFwkDYfGAeyfZzwZroFt+Dy9gFDeu/iji/iWRFmvKTM5bkTRVfQIMMDpfRLk46
+ JKioDQp194/xbKjovYDBpgagzz/S80mT8noM8liO4RKDqp+XhVgKXm6CJDxYWx8ciOaX
+ JJLS7/S73U+qj9TTHDKxE1Z2ODiC9UIapeLb2nt4P1j8GU8xH1pTLyoLw35U3NcuMFKZ
+ pjNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741387101; x=1741991901;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lpdyTQNoyvLDcPXfv7S+MFAA9YfJCY5NKT43UZABoS8=;
- b=CJNPV/IdCpcDFUd1vevYCTT/ftY/oM0n66s/sc4yf6PdvK5Xgicdra+Z6t6uq87gwb
- hMv6MMOOOVCpME5peiqajcUeHfbNRph7CFangjl2P5h9n7BZaam7ZgpuBi7ymKKMEvzR
- J8nvlHIs9sOGOJXYUL5I3oYqG4ICFtoAjgVFO8dBLN2ngRGEFP+f3F6b6JPQnPxvKUOc
- KuuyZFPXuIwfAL6H79ddl1BqbdK5zG5pc+9Sb6EBmTqcwjobrU62yDIjVKo0We2mkCFl
- tEGxpqMEJg1bo1iNdx9Y2BYumGv1wOyLWSSIbvTSlqNexvnuiJU/i+I+bcoujOyMDN6s
- 1low==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUHUtorkOHAp3tk0nzeBvrFnf95w7QolHdkmvPmi+9xdOF9MuJE0/LYsNEVzEa1PFbOu4Y2d50aeQ2O@nongnu.org
-X-Gm-Message-State: AOJu0YxWA98x5TL1uH6HW0B0koVy0sQov9hAjNLtC4e+7grsP+19YeA1
- lSzizvkLeccuMP9T1e1tB8yGiRbb2om+EcZeBB5XXkZtLI2Qj+tRKQHUERX9lPs=
-X-Gm-Gg: ASbGncuygtm//MJR01cCpFVkOusNijrrEzclQ98QGgO3hJEv+8h9EsS64cNPtic9OPX
- RrZfxIo0hCVpNCJbwkWpS8sKsZYXTj0wn+mVEKO7RTVBDgxZpuexUxinRPBxfbCh/MC9fOkbu1a
- VZ3btSD8jc5fcF+b2UHPRfKyyPPliBCfByGQZgHls1NeONDWjYuhfhOMEdTTau15XJ7mzuK3CMN
- nD5xyaKJVC1a0M0ua9PeZrL5/ncRspAQs3hM7nM2hdF3UaEQVkhXz4Rqkjy16lrtZkmGUGeuxL3
- sy/c4f/ZGvD6wGymnwYRS24uO5nrReLZI0QL9V5iPrPhXbpIcXNrxpA9ew==
-X-Google-Smtp-Source: AGHT+IFRvX91pdjWbDKnSP+k+ImsF7U6gTpnKvt8Vx6MdsWqPIPr62rb0Sr9WIH7YOso2WdWOgisgw==
-X-Received: by 2002:a17:90b:48ce:b0:2ff:64c3:3bd9 with SMTP id
- 98e67ed59e1d1-2ff7ceee4bdmr6532714a91.23.1741387099805; 
- Fri, 07 Mar 2025 14:38:19 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693e72basm3591779a91.39.2025.03.07.14.38.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 14:38:19 -0800 (PST)
-Message-ID: <41e7da17-5f8b-4cae-8cab-36055f2b4794@linaro.org>
-Date: Fri, 7 Mar 2025 14:38:18 -0800
+ d=1e100.net; s=20230601; t=1741387191; x=1741991991;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ztej1BH9DZD90s0lU7Teqpf3X8cBF6MU9CYCXJiixE4=;
+ b=Tz1fYLKJg8DjFj/n9eDKdI3z99vnDXzkVHDGA2gVp84u+LrMJFzop+YvHJrkDfDo+t
+ 7Kjb9axHtnDHmJOoJmEh82UVi8jIkHxo0gMt0enMeBxB0waz4VPkhI5TwWtoBAsDwkIy
+ phJi7FZLjmzqWeWN/Lk3temK+Q/OunJVgBflBhgs+xXzdAsxspRqE6w/Y5IfrDumUekm
+ lb/WO3gbmZiMwFu++9VAJ2AofwjtJpDQxopuVXqfCIYKU3DDBR+s2ffcCdsb4KQg9vRz
+ ZJTEyP8gHSzXXrqsvm36PiIT1bqP6w2J7tlVyyMJVwH07OJDkKqoQSv69M/kOTQmtX0T
+ 8wCg==
+X-Gm-Message-State: AOJu0YwG8ZM+dkOAFZ0ih75awdJFzusXCLMEO7oxTCDA8bG2coY0Wpyd
+ z7NopIG1Jxevh4VDyt4+Yp5HZEdQoXLJtxTNQgwlqXzrnQX1gCPDQr+bLYg9E+znE5K7bU2g0Lo
+ n4UM=
+X-Gm-Gg: ASbGncvZG+iF5Ep2pFWhyPzkqKlLeujXPh2wf8LYe2/ujelXzE9OeWNZpHLBAMLcsz4
+ Knmp+xbF9TQMZOq3r+q0WRbr7lkhRdswPUjh47mIJxJmwccR8g5a8GFeOwS4IwHUip6Gmrv3+xA
+ P9bGNLZAsGFJ8IlHwZ/vDGljjQmtvtKELTfC51vyiBiy9KCxTPlMsb9c7oE4p7LhvGSpqJFQPKr
+ cJ7QrZQPN+cZSSl1D42FdarqSPdJLBG2WBVlnErB4mx7KdJhL6Cg2cG1pUZo+GwFxdex7t6UGgM
+ FiFAxY+LTR+749FZvCkLDI6NqALO8XZa9oyHWre7Fd3PTo+geE+Fmdw8JZAtqm9Pf+8iuJVqv5a
+ JR4W3jLfleYX82MLobEw=
+X-Google-Smtp-Source: AGHT+IGc1YzHqfYdRR9uhgBN2OoBbnXQycmTfwMRmP8IwV41H417MHKuatFoeJJZoaR9BfbN2KRtzQ==
+X-Received: by 2002:a05:600c:1990:b0:43b:ccfe:eeee with SMTP id
+ 5b1f17b1804b1-43c601d95d8mr45357785e9.11.1741387191034; 
+ Fri, 07 Mar 2025 14:39:51 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bdd8da473sm64093895e9.18.2025.03.07.14.39.50
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 07 Mar 2025 14:39:50 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/7] hw/virtio: Build virtio-mem.c once
+Date: Fri,  7 Mar 2025 23:39:42 +0100
+Message-ID: <20250307223949.54040-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/7] hw/hyperv: remove duplication compilation units
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- alex.bennee@linaro.org, Marcelo Tosatti <mtosatti@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- richard.henderson@linaro.org, manos.pitsidianakis@linaro.org
-References: <20250307215623.524987-1-pierrick.bouvier@linaro.org>
- <fb8f0700-2676-4e7a-8857-ca10f5060b37@linaro.org>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <fb8f0700-2676-4e7a-8857-ca10f5060b37@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,21 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy83LzI1IDE0OjA2LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gT24g
-Ny8zLzI1IDIyOjU2LCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4gV29yayB0b3dhcmRz
-IGhhdmluZyBhIHNpbmdsZSBiaW5hcnksIGJ5IHJlbW92aW5nIGR1cGxpY2F0ZWQgb2JqZWN0
-IGZpbGVzLg0KPj4NCj4+IGh3L2h5cGVydi9oeXBlcnYuYyB3YXMgZXhjbHVkZWQgYXQgdGhp
-cyB0aW1lLCBiZWNhdXNlIGl0IGRlcGVuZHMgb24gdGFyZ2V0DQo+PiBkZXBlbmRlbnQgc3lt
-Ym9sczoNCj4+IC0gZnJvbSBzeXN0ZW0va3ZtLmgNCj4+ICAgICAgIC0ga3ZtX2NoZWNrX2V4
-dGVuc2lvbg0KPj4gICAgICAgLSBrdm1fdm1faW9jdGwNCj4gDQo+IEJ1ZywgdGhlc2Ugc2hv
-dWxkIGJlIGRlY2xhcmVkIG91dHNpZGUgb2YgQ09NUElMSU5HX1BFUl9UQVJHRVQuDQo+DQoN
-ClllcywgSSBub3RpY2VkIHlvdSBzb2x2ZWQgaXQgdGhpcyB3YXkgb24gb25lIG9mIHlvdXIg
-c2VyaWVzLg0KSW4gdGhlIGVuZCwgc2luY2UgUUVNVSBkb2VzIG5vdCBoYXZlIGFueSBzcGVj
-aWZpYyBib3VuZGFyaWVzIGJldHdlZW4gDQpzdWJzeXN0ZW1zIChpLmUuIG5vIHByb3BlciBs
-aWJyYXJpZXMgd2l0aCBwcml2YXRlL3B1YmxpYyBzeW1ib2xzKSwgd2UgDQphcmUgbW9zdGx5
-IGZyZWUgdG8gaW5jbHVkZSBhbnkgc3ltYm9sIHdlIHNlZSBpbiBhbiBoZWFkZXIgYXMgbG9u
-ZyBhcyBpdCANCmRvZXMgbm90IHVzZSBhIHRhcmdldCBkZXBlbmRlbnQgdHlwZSB3aGljaCBj
-aGFuZ2VzIHRoZSBzaWduYXR1cmUuDQoNCj4+IC0gZnJvbSBleGVjL2NwdS1hbGwuaCB8IG1l
-bW9yeV9sZHN0X3BoeXMuaC5pbmMNCj4+ICAgICAgIC0gbGRxX3BoeXMNCj4gDQo+IFllYWgs
-IG5vdCBhbiBlYXN5IG9uZS4NCj4gDQoNCg==
+Missing review: #5 (reworked, R-b tags dropped)
+
+Since v1:
+- Use max extent size of all archs (David)
+
+Replace compile-time checks by runtime ones:
+- CONFIG_DEVICES::CONFIG_ACPI -> acpi_builtin()
+- TARGET_FOO || TARGET_BAR -> qemu_arch_available(FOO|BAR)
+
+Philippe Mathieu-Daudé (7):
+  system: Replace arch_type global by qemu_arch_available() helper
+  hw/acpi: Introduce acpi_builtin() helper
+  hw/i386/fw_cfg: Check ACPI availability with acpi_builtin()
+  hw/virtio/virtio-mem: Remove CONFIG_DEVICES include
+  hw/virtio/virtio-mem: Convert VIRTIO_MEM_USABLE_EXTENT to runtime
+  hw/virtio/virtio-mem: Convert VIRTIO_MEM_HAS_LEGACY_GUESTS to runtime
+  hw/virtio: Compile virtio-mem.c once
+
+ include/hw/acpi/acpi.h     |  3 ++
+ include/system/arch_init.h |  2 +-
+ hw/acpi/acpi-stub.c        |  5 ++
+ hw/acpi/core.c             |  5 ++
+ hw/i386/fw_cfg.c           |  8 ++--
+ hw/scsi/scsi-disk.c        |  2 +-
+ hw/virtio/virtio-mem.c     | 96 +++++++++++++++++++++-----------------
+ system/arch_init.c         |  5 +-
+ system/qdev-monitor.c      |  4 +-
+ system/vl.c                |  6 +--
+ hw/virtio/meson.build      |  2 +-
+ 11 files changed, 83 insertions(+), 55 deletions(-)
+
+-- 
+2.47.1
+
 
