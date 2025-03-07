@@ -4,99 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 089C5C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A7ABC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:05:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcyu-0003Wn-VE; Fri, 07 Mar 2025 14:03:36 -0500
+	id 1tqczq-00047c-6v; Fri, 07 Mar 2025 14:04:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tqcyn-0003Vq-3h
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:03:29 -0500
-Received: from mail-qk1-x729.google.com ([2607:f8b0:4864:20::729])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tqczf-0003xe-FP
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:04:27 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tqcyl-0002py-IG
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:03:28 -0500
-Received: by mail-qk1-x729.google.com with SMTP id
- af79cd13be357-7c3b533a683so247060485a.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:03:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tqczc-0003i2-Kx
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:04:23 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-223594b3c6dso41871865ad.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:04:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741374206; x=1741979006; darn=nongnu.org;
- h=thread-index:content-language:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=WAOzkhzEpY5DWwFo429YeQi4dH4n/O184rVme7sTzpM=;
- b=cmb6Y0lAkR4d+FiGadpeE9FAyS2HD2yojJLv7KtMoP+5pPMuPiKTov95OwJQX+qAF3
- kHQjiv00Es5iC5VkExj9Vyc7rZHnu+6v7Of0/JwKJsZa4U7xTiXEVDWpy9X3GkxvbrpJ
- vfgPmjFlLJW3gtVbDQq9VpH78sh2OqpRQbXTaK24h92EZn/o3olpTmfmi5hKD63U/6up
- gHeYlBopKgYyQMQPLmJGPJhz7n/zzYF8TwikoI6S5E6wK7hnQvVdlCT72XJzhxNs+T2T
- FJHLhJMq09pxJKyHlrGYufvsB6N14x5/5G6jaSx1GBMA91RCy5kXky3xFHhzOUtMHycm
- /I/w==
+ d=linaro.org; s=google; t=1741374258; x=1741979058; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gWT0L4EBMx/nGFskBmpx115GbPBpRrubLUlCXG3QWrg=;
+ b=Q+YlI7CNkPltkxqzJG5qqgxjLzwX1nvBEHLJqGx6LtHitimJU6W6D4JK4aEdJhby9k
+ oOWTwIT0fUxx/QfABqyJQ+22rwr91/eHsH2BkYCQsm6e/Nfz/nSjgiCHYMQR50+1cWIS
+ dnUJvA0u59IRMpud4bZUtQQM+PM4dg56vbw3XTZkTP9frPy/ZK+yztAm3JpLK0plAtbv
+ uXaapQp7eol4/RoLny72zoMMZ6Jo8bqtVx8lXTxvGn1MMeMLodi3BA0u1ut0iqchKcly
+ LYyXObU5XCAaIWQXwmiCxD4X3FC3O9f2ACVCTWT9kvMhngL/f8n2O56FAl/4lHfdPQJI
+ FncA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741374206; x=1741979006;
- h=thread-index:content-language:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WAOzkhzEpY5DWwFo429YeQi4dH4n/O184rVme7sTzpM=;
- b=pyv6ARy9XwRL8kRLoEXHvVu5ZqwTVP8cFtkGLgQf6Xw6u+/WB0OvtOVtH93bftrk3j
- MC+pT1pYg7ymf87p6ISu7wlczqTwh08CgTbXaVwyeUyQ/ZJImaTbZpcUuH7fDZsO56ug
- DA3hYTqLTx7o8m/fEKkzIp1rVsEZ8XqLXNHD+NO6HFTdKNzaUp/FCq++FBajXe7Fbh7/
- BTTxeY4Hfpb1LgfitfX4P7F/oO2SUzFRvvREedtyYRjadE28jz49rWyQGqIPOVMBmhtX
- fVOcrVu/sb6LLPq2o+E3BmWqZr7h6UBV1oB3fllLFzUJ8m5j3YkK8rW3+Y/dX+T/U1sc
- EhrQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVUiMqam5v5q6Qdu/XM6t+BM3sVIBIu6gMUC0Iajrc88I6J++lfI4Vgyiq3XNAuoLRUL02Irgg64GpW@nongnu.org
-X-Gm-Message-State: AOJu0YwSp4blIw0piitYnEN2sFrZsAylAG56QvakeIwap+zbPuif7EBb
- TJKDrTW8SJO6uklyi6znbzjQL6csyml9C3CIUy7TTMQBnyHzPh4D
-X-Gm-Gg: ASbGncvlbb/L/eTXHwOhz2z3x4m+WteiBaduilFYgQvxjIXa+/+QK9F5KruY+YQB999
- GpNYh+wXOTcBoCWaiCADuY3IcGCEt9Gt03Bf/1nbYboazwOG6LdWVw7jAsv7nyt9JRQmeLdxB12
- MR7xQ0RCwGS7+QJwJ/2RvssTw4km5AGTXde+wb8c3zL+USBWIdEZtjPRbuKtoPDkk6GxtR/MoQd
- c7JcnlR05tQNLMI0+MCV9iStnVn4dIx7M4dcwJ9WnsNTV8ujgAwI1SK30H0oyiT9Dw2ysGWnRhv
- iWZBaLWmqztuCL00FMvx3SipEkdD67yy3nVVAinRsVt05E/QwfnkidVXUqfSuhY=
-X-Google-Smtp-Source: AGHT+IE7C2voghsBbuVTW3tNSQiSnLOl2oRPYeMooTc4PQPYTL0tVRQq+v10tTUcX3ODx1STsgC8Sw==
-X-Received: by 2002:a05:620a:1d06:b0:7c3:c853:dfd8 with SMTP id
- af79cd13be357-7c4e61126d1mr631334885a.26.1741374206358; 
- Fri, 07 Mar 2025 11:03:26 -0800 (PST)
-Received: from DESKTOPUU50BPD ([2603:6000:a500:306:f449:4838:1970:9d05])
+ d=1e100.net; s=20230601; t=1741374258; x=1741979058;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gWT0L4EBMx/nGFskBmpx115GbPBpRrubLUlCXG3QWrg=;
+ b=jcpbD9NM7bLmLU+/KMk4uLtyJH3e5awb5h5jqB0ZdC1TeftDEdH1vpGOQiICjsGuay
+ 0oz3HVfWpLY3pnT2H2zjj/wx9kvmk8E3Tkh8TQF6zQeIw8rvpuz90T+77bRAZ+y5tTPO
+ dlAGSoL8kMeIiJHBbpTdzRjv9CIDdkoW0QcQrKoie/vXZcx2P6xgSAIhV5FUroqZxRKU
+ Sm2Ue3NkICTFRNtrKJ1PrNQ9EDsaE7NTxsFK1LUhOjAR0wwA7pl7BmHiIYTgzwiKSFQO
+ hFajyXKQ+DE8VdhideLxJL+aYPT+rF/GVaNoksQxpxcw3Dmy6Py1jxG7IfOmawNOvUrr
+ BtHw==
+X-Gm-Message-State: AOJu0YxJT3U6gosMWYbuxIPKs5zPP4R+gLa5/q4PGEH4rmx1ZLcumpAD
+ iqLFM3xfMgOY4M3PC2s0N6FyXQN3Wf2IvsmRd43E6Yq53qAKxzNZswVwK9WKa2D+DmqhRYC+4+R
+ 2
+X-Gm-Gg: ASbGncvp7Qn0wW1NgNPY3y5jsh1hbD5PXWRBNt9H7jYpoa2lOadAtUdunClbDiU/3P/
+ bRtMcIeOJdIALNF28dhqDqCU28VflS1PEmZGYjVxMxqQOHMQOL6KWs8kx6V/1rl/H+BLsniZfgt
+ 5q5+x1tsTXVjNySKc+yBx2rjvQeU5SJyssQNyRb5qF8e8ST9qOvDuZBZfrBMoxNicnzpqsq/T4K
+ /UdU/lejIe4iaLUIgErg4vwydRkki++AK0jj02AruRfgDzpe5ffdRT0i5TLAlFGmpckqzdO2XJY
+ yvXZm8BtIQV9PVkEtIe+CzNQ/Nrjrb/fd/jhSnKdQx4PjLhV3t7opKaG5bs7umVWlNxb20qcX21
+ W
+X-Google-Smtp-Source: AGHT+IGXTnnd+y5ouiJgs5crFNXgaHLLqtbnyiLJ7OuSnOSl9xTtAYqziaWWoEjdiCp4776ck1TpVw==
+X-Received: by 2002:a17:903:2282:b0:224:2717:7992 with SMTP id
+ d9443c01a7336-22428be5a5amr62909535ad.33.1741374258002; 
+ Fri, 07 Mar 2025 11:04:18 -0800 (PST)
+Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c53d010250sm10612585a.6.2025.03.07.11.03.24
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 07 Mar 2025 11:03:25 -0800 (PST)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
-	<qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
- "'Brian Cain'" <bcain@quicinc.com>
-References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-14-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052628.1011210-14-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 13/38] target/hexagon: Define DCache states
-Date: Fri, 7 Mar 2025 13:03:24 -0600
-Message-ID: <028d01db8f93$9aaa7b30$cfff7190$@gmail.com>
+ d9443c01a7336-22410a91c5bsm33686335ad.186.2025.03.07.11.04.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 07 Mar 2025 11:04:17 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	qemu-stable@nongnu.org
+Subject: [PATCH 2/2] target/arm: Simplify pstate_sm check in sve_access_check
+Date: Fri,  7 Mar 2025 11:04:15 -0800
+Message-ID: <20250307190415.982049-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250307190415.982049-1-richard.henderson@linaro.org>
+References: <20250307190415.982049-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-us
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgLkLMeitOVFuLA=
-X-Antivirus: Norton (VPS 250307-6, 3/7/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::729;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x729.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,43 +101,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+In StreamingMode, fp_access_checked is handled already.
+We cannot fall through to fp_access_check lest we fall
+foul of the double-check assertion.
 
+Cc: qemu-stable@nongnu.org
+Fixes: 285b1d5fcef ("target/arm: Handle SME in sve_access_check")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate-a64.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Friday, February 28, 2025 11:26 PM
-> To: qemu-devel@nongnu.org
-> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
-> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
-> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 13/38] target/hexagon: Define DCache states
-> 
-> From: Brian Cain <bcain@quicinc.com>
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/cpu_bits.h | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h index
-> 6582bb4f16..5d26815eb9 100644
-> --- a/target/hexagon/cpu_bits.h
-> +++ b/target/hexagon/cpu_bits.h
-> @@ -41,6 +41,13 @@ enum hex_cause {
->      HEX_CAUSE_PRIV_USER_NO_SINSN = 0x01b,  };
-> 
-> +enum data_cache_state {
-> +    HEX_DC_STATE_INVALID   = 0x0,
-> +    HEX_DC_STATE_VALID     = 0x1,
-> +    HEX_DC_STATE_RESERVED  = 0x2,
-> +    HEX_DC_STATE_UNUSED_WT = 0x3,
-> +};
-> +
-
-Why is this needed?  QEMU doesn't model the data cache.
-
-
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 48e0ac75b1..723cb3f24a 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1457,22 +1457,20 @@ bool sve_access_check(DisasContext *s)
+ {
+     if (s->pstate_sm || !dc_isar_feature(aa64_sve, s)) {
+         assert(dc_isar_feature(aa64_sme, s));
+-        if (!sme_sm_enabled_check(s)) {
+-            goto fail_exit;
+-        }
+-    } else if (s->sve_excp_el) {
++        bool ret = sme_sm_enabled_check(s);
++        s->sve_access_checked = (ret ? 1 : -1);
++        return ret;
++    }
++    if (s->sve_excp_el) {
++        /* Assert that we only raise one exception per instruction. */
++        assert(!s->sve_access_checked);
+         gen_exception_insn_el(s, 0, EXCP_UDEF,
+                               syn_sve_access_trap(), s->sve_excp_el);
+-        goto fail_exit;
++        s->sve_access_checked = -1;
++        return false;
+     }
+     s->sve_access_checked = 1;
+     return fp_access_check(s);
+-
+- fail_exit:
+-    /* Assert that we only raise one exception per instruction. */
+-    assert(!s->sve_access_checked);
+-    s->sve_access_checked = -1;
+-    return false;
+ }
+ 
+ /*
+-- 
+2.43.0
 
 
