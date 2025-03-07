@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE2BC282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20EE0C28B25
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqgMp-0006QV-R1; Fri, 07 Mar 2025 17:40:31 -0500
+	id 1tqgMM-00065B-7s; Fri, 07 Mar 2025 17:40:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMd-0006HJ-Tx
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:21 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMc-0003bS-41
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:19 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3912baafc58so1585896f8f.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:40:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741387216; x=1741992016; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ffnzgiNvC3uFpe+lcYwlOkxah8KhJcrF9JntmJhQznA=;
- b=gAKg4P0CKNf5qcLU4wGiWdZTGpffmk9cWwDWMNdRiBdeTQgi4jBVBKw80UkGcPgbv5
- 8b2tQSyUWSIgGvn8Sz7AGmd56eLnIgfLGUa/ts9CYJf3Bc13cUjE0uhpI4BoRpLdjrbc
- wfy/Hvg3KFJopGn8IHTg3P/439yJsuY+SfJSSoQElwv0QQY5sixpX4UX91kl1rnRPH4S
- ezhpwwDyLIBQ1dEZE1Jp/h6AmRFatnK10gTh40d0TYtggxSpD8ZqofIeDN7BTpKdf3FQ
- UNexEVwXOBI0tLYsbMQCGp1dEcW4JBhh7DPjrKXtOyjX9wprddRSWC2kLKVZqL/XLymk
- os1A==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqgMK-00064L-5j
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqgMH-0003MT-Qp
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:39:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741387195;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IJtO1z6iWFrZN4uZkCH5WlotaGwpm2Pxxfa0pjhCUdA=;
+ b=VbHVpkkMif0s/H6icUzBNLckaAcHXyzCaACBHEmvqyD9NzGtkJ3gTD4BJHsUGccFhWXB+n
+ aSMwpHAFDmC9wyPr066VGm009lXUlLOuBsZ5VirP+YF9jaBClO+NZTTWcXWBeJGWStBHAr
+ zO5c9zQq4oYIDn9Zx3q9Tfu33ZANBsw=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-326-qXlNs6FxOZGP4B70x29ZzQ-1; Fri, 07 Mar 2025 17:39:54 -0500
+X-MC-Unique: qXlNs6FxOZGP4B70x29ZzQ-1
+X-Mimecast-MFC-AGG-ID: qXlNs6FxOZGP4B70x29ZzQ_1741387193
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2ff798e8c93so2849139a91.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:39:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741387216; x=1741992016;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ffnzgiNvC3uFpe+lcYwlOkxah8KhJcrF9JntmJhQznA=;
- b=UYk3FdKoRUJfr7v9EwdwlaoHvMnFY0u/lOPqa0L3UiVM84SHp8KplrkbvRxBkFnhQh
- rbqTjy3K1y/wNSrhYIRFWf6wylpesix8l9IykM+V40Ab7VyrD/NH4ocG30T6qaNXV76R
- uyk03PBIv6YLT4rM3JK85PLHBN//R/X2hHGOaWIFKuTUBHkc312G7TY+0sat5z9KBonF
- VOnc+dXZw8nZlQ/ghAGueR60hs4n5eFnJtGGMY8SlrLuLRWnpaCqxJbGSUsHKuBVTHDc
- co6yiQgviZbgP1Nl6GYNV7ckhiSq8eg1g9g3/V7bSgYycJfgc72HhEpnqQQve7Bp7pSu
- RwjA==
-X-Gm-Message-State: AOJu0YwwQRnuIrLyNpD8CaOeKhZ/vK/y/v3gS9RTX+YsjaWh1uDUUKt6
- gXDlq619Ec4iIOLLCZog1Kaq48440zP9L73FpWacESAEm9z0lyeUbH2qK+6M2P9K3uOp4Cn9Gny
- cNB0=
-X-Gm-Gg: ASbGnctQdXYTsbiFpSnrmNsqvv71lKo/suRcsnhL2H3Mou3EyRdnSfusUDYjioT69F1
- 7j1bQvZDGU9OBN3KYKz/I3eM6YfXaBzRpV8V7BL2Iak1fqh7ckMG/4atj018n7Nk+AKTap0f2VO
- OtVs+psrIpT1E8utZO4MiS8YA4r3mLRZU5qE4OONj8jCIRgO2tGx13W+07MlkxmNLymxd57LK2U
- MM3F0Z9cNtB22Hs5cLXRuvgAE9M7xOCh7P0FyuBUWhDa+5fA3XGrF21er+Wjb+piaAykUGUu05K
- JdSc+XI7VMWMOgh8fS1mK4rRaKvsh3X12ZqSh21Pe5XSVu6zedqaZ8ET/cTrhWYH/CC+sg4swRk
- zeAHx7FpjdqpNiaWLh9A=
-X-Google-Smtp-Source: AGHT+IFKebrxsQ6T8+ctJmf1stduSmqw5IRD5+7Tfg/JHYWgbjX3Isp5eM32al4bK3y5K3u8at7/FA==
-X-Received: by 2002:a5d:6c65:0:b0:390:e1d2:1dff with SMTP id
- ffacd0b85a97d-39132dcf7f4mr3366037f8f.52.1741387216052; 
- Fri, 07 Mar 2025 14:40:16 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd8de4ffsm65306125e9.24.2025.03.07.14.40.14
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 07 Mar 2025 14:40:14 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 5/7] hw/virtio/virtio-mem: Convert VIRTIO_MEM_USABLE_EXTENT
- to runtime
-Date: Fri,  7 Mar 2025 23:39:47 +0100
-Message-ID: <20250307223949.54040-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250307223949.54040-1-philmd@linaro.org>
-References: <20250307223949.54040-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1741387193; x=1741991993;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IJtO1z6iWFrZN4uZkCH5WlotaGwpm2Pxxfa0pjhCUdA=;
+ b=BT8I9HhDQLp9qGzUYwU096sPRaexwDvwazKOOQnSCn6fQ99/aBSwuo4Rli7hioFcxS
+ +d4vJDwjyLbEczOeEqjYxSh7ZLkQyzW9OSYqMse0cbOJmOSfcaNltIVa8MTWSo+OxJSX
+ NJDq1UEadMHlr7DhDGL+wHgMkxWLM0AWiqs8BDMhn8jPTywW4i/kmX7dNsAD8FUCF12y
+ Pa6EdTB8kxM1yJoQ+SkIZBOq+BZYXPRWyEApWZjw3BHLCmIEBH9xLW0wWP74HVXbLy/N
+ SpAckcYZkELvsU9VJWmdAEVOUP8lXllbaorIYeL3+Ui//VyLTHUU+ZAOpxYPQSOSw00p
+ WLig==
+X-Gm-Message-State: AOJu0YwLVid7z1DNOwevXFb3FKmNBXdrCaiKDRbrDGPFWDGf9HV/Xnwb
+ vD9Y9pqs9usr77tOmP+TBa1FsNTmQ6cKAbJknPAUER8xfYif2XUZnJe5kMZtJxzMY8dWN4jsRr4
+ waqQQCu1Cycp4y1pZ3I/LZ4wXE03U3C95fnydmol48FZvhsZOvN/RomtHHh+9VYcMS/XGOhaSeC
+ dYTDJOnkL/L0qJTln+sjkP8LYI87I=
+X-Gm-Gg: ASbGnctq38Is51U0J57fJPGrgruKeZE+7oTXxxSbuMnYQRB6SEufWc5ezVk4lFWLi9O
+ /2FCRZZYYeBSWLO1gR5JMbrS7OM7mm1qoAIsNBPaRNJ5t+HRp4qu83r1vS/BH5k3irMdVdQ==
+X-Received: by 2002:a17:90b:2883:b0:2ff:692b:b15 with SMTP id
+ 98e67ed59e1d1-2ff7cf29f70mr9322338a91.33.1741387193016; 
+ Fri, 07 Mar 2025 14:39:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHLFsehDE55kYBNqIxyIwe75Q0XMU4E4YmDqL2qaM1Ymca7+gz5zwWwuJw4toKtRccumM+IAW6Xf4tH4xM2Pi4=
+X-Received: by 2002:a17:90b:2883:b0:2ff:692b:b15 with SMTP id
+ 98e67ed59e1d1-2ff7cf29f70mr9322319a91.33.1741387192735; Fri, 07 Mar 2025
+ 14:39:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+References: <20250305034610.960147-1-jsnow@redhat.com>
+ <20250305034610.960147-12-jsnow@redhat.com>
+ <87ikols629.fsf@pond.sub.org>
+In-Reply-To: <87ikols629.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Fri, 7 Mar 2025 17:39:40 -0500
+X-Gm-Features: AQ5f1JpKWypUZlx2CaSwyptXKk3guow1YjjY-iOTTY28xcD13zJxSKvfaieByCI
+Message-ID: <CAFn=p-aXnOy0UBTpsNiorNJwn8DYDC3aVhijK1uYFtScWG5utw@mail.gmail.com>
+Subject: Re: [PATCH 11/57] docs/qapi-domain: add qapi:command directive
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000000a3959062fc84da8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,70 +103,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use qemu_arch_available() to check at runtime if a target
-architecture is built in.
+--0000000000000a3959062fc84da8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Consider the maximum extent size of any architecture built in.
+On Fri, Mar 7, 2025 at 1:34=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/virtio/virtio-mem.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+> John Snow <jsnow@redhat.com> writes:
+>
+> > This commit adds a stubbed version of QAPICommand that utilizes the
+> > QAPIObject class, the qapi:command directive, the :qapi:cmd:
+> > cross-reference role, and the "command" object type in the QAPI object
+> > registry.
+> >
+> > This commit also adds the aforementioned generic QAPIObject class for
+> > use in documenting various QAPI entities in the Sphinx ecosystem.
+> >
+> > They don't do anything *particularly* interesting yet, but that will
+> > come in forthcoming commits.
+> >
+> > Note: some versions of mypy get a little confused over the difference
+> > between class and instance variables; because sphinx's ObjectDescriptio=
+n
+> > does not declare option_spec as a ClassVar (even though it's obvious
+> > that it is), mypy may produce this error:
+> >
+> > qapi-domain.py:125: error: Cannot override instance variable (previousl=
+y
+> > declared on base class "ObjectDescription") with class variable [misc]
+> >
+> > I can't control that; so silence the error with a pragma.
+>
+> Is this still accurate?  qapi-domain.py line 125 is a comment.  I can't
+> see the pragma.
+>
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  docs/sphinx/qapi_domain.py | 146 ++++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 144 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+> > index 104bae709f3..6168c23936f 100644
+> > --- a/docs/sphinx/qapi_domain.py
+> > +++ b/docs/sphinx/qapi_domain.py
+> > @@ -21,9 +21,10 @@
+> >  from docutils import nodes
+> >  from docutils.parsers.rst import directives
+> >
+> > -from compat import nested_parse
+> > +from compat import KeywordNode, SpaceNode, nested_parse
+> >  from sphinx import addnodes
+> > -from sphinx.addnodes import pending_xref
+> > +from sphinx.addnodes import desc_signature, pending_xref
+> > +from sphinx.directives import ObjectDescription
+> >  from sphinx.domains import (
+> >      Domain,
+> >      Index,
+> > @@ -103,6 +104,144 @@ def process_link(
+> >          return title, target
+> >
+> >
+> > +# Alias for the return of handle_signature(), which is used in several
+> places.
+> > +# (In the Python domain, this is Tuple[str, str] instead.)
+> > +Signature =3D str
+> > +
+> > +
+> > +class QAPIObject(ObjectDescription[Signature]):
+> > +    """
+> > +    Description of a generic QAPI object.
+> > +
+> > +    It's not used directly, but is instead subclassed by specific
+> directives.
+> > +    """
+> > +
+> > +    # Inherit some standard options from Sphinx's ObjectDescription
+> > +    option_spec: OptionSpec =3D (  # type:ignore[misc]
+>
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index 5f57eccbb66..6ff9dab0f66 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -15,6 +15,7 @@
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qemu/units.h"
-+#include "system/arch_init.h"
- #include "system/numa.h"
- #include "system/system.h"
- #include "system/reset.h"
-@@ -170,13 +171,24 @@ static bool virtio_mem_has_shared_zeropage(RAMBlock *rb)
-  * necessary (as the section size can change). But it's more likely that the
-  * section size will rather get smaller and not bigger over time.
-  */
--#if defined(TARGET_X86_64) || defined(TARGET_I386) || defined(TARGET_S390X)
--#define VIRTIO_MEM_USABLE_EXTENT (2 * (128 * MiB))
--#elif defined(TARGET_ARM)
--#define VIRTIO_MEM_USABLE_EXTENT (2 * (512 * MiB))
--#else
--#error VIRTIO_MEM_USABLE_EXTENT not defined
--#endif
-+static uint64_t virtio_mem_usable_extent_size(void)
-+{
-+    uint64_t size = 0;
-+
-+    assert(qemu_arch_available(QEMU_ARCH_ARM | QEMU_ARCH_I386 | QEMU_ARCH_S390X));
-+    /*
-+     * FIXME: We should use the maximum of instantiated vCPUs ARCH, but
-+     *        for now it is easier to take the maximum of any ARCH built in.
-+     */
-+    if (qemu_arch_available(QEMU_ARCH_I386 | QEMU_ARCH_S390X)) {
-+        size = MAX(size, 2 * 128 * MiB);
-+    }
-+    if (qemu_arch_available(QEMU_ARCH_ARM)) {
-+        size = MAX(size, 2 * 512 * MiB);
-+    }
-+
-+    return size;
-+}
- 
- static bool virtio_mem_is_busy(void)
- {
-@@ -721,7 +733,7 @@ static void virtio_mem_resize_usable_region(VirtIOMEM *vmem,
-                                             bool can_shrink)
- {
-     uint64_t newsize = MIN(memory_region_size(&vmem->memdev->mr),
--                           requested_size + VIRTIO_MEM_USABLE_EXTENT);
-+                           requested_size + virtio_mem_usable_extent_size());
- 
-     /* The usable region size always has to be multiples of the block size. */
-     newsize = QEMU_ALIGN_UP(newsize, vmem->block_size);
--- 
-2.47.1
+Originally, that pointed here.
+
+
+> > +        ObjectDescription.option_spec.copy()
+> > +    )
+> > +    option_spec.update(
+> > +        {
+> > +            # Borrowed from the Python domain:
+>
+> This is line 125 mentioned above.
+>
+
+Slightly stale.
+
+
+>
+> > +            "module": directives.unchanged,  # Override contextual
+> module name
+> > +        }
+> > +    )
+>
+> [...]
+>
+>
+
+--0000000000000a3959062fc84da8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 7, =
+2025 at 1:34=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
+at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" =
+target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; This commit adds a stubbed version of QAPICommand that utilizes the<br=
+>
+&gt; QAPIObject class, the qapi:command directive, the :qapi:cmd:<br>
+&gt; cross-reference role, and the &quot;command&quot; object type in the Q=
+API object<br>
+&gt; registry.<br>
+&gt;<br>
+&gt; This commit also adds the aforementioned generic QAPIObject class for<=
+br>
+&gt; use in documenting various QAPI entities in the Sphinx ecosystem.<br>
+&gt;<br>
+&gt; They don&#39;t do anything *particularly* interesting yet, but that wi=
+ll<br>
+&gt; come in forthcoming commits.<br>
+&gt;<br>
+&gt; Note: some versions of mypy get a little confused over the difference<=
+br>
+&gt; between class and instance variables; because sphinx&#39;s ObjectDescr=
+iption<br>
+&gt; does not declare option_spec as a ClassVar (even though it&#39;s obvio=
+us<br>
+&gt; that it is), mypy may produce this error:<br>
+&gt;<br>
+&gt; qapi-domain.py:125: error: Cannot override instance variable (previous=
+ly<br>
+&gt; declared on base class &quot;ObjectDescription&quot;) with class varia=
+ble [misc]<br>
+&gt;<br>
+&gt; I can&#39;t control that; so silence the error with a pragma.<br>
+<br>
+Is this still accurate?=C2=A0 qapi-domain.py line 125 is a comment.=C2=A0 I=
+ can&#39;t<br>
+see the pragma.<br>
+<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 docs/sphinx/qapi_domain.py | 146 +++++++++++++++++++++++++++++++=
++++++-<br>
+&gt;=C2=A0 1 file changed, 144 insertions(+), 2 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py<b=
+r>
+&gt; index 104bae709f3..6168c23936f 100644<br>
+&gt; --- a/docs/sphinx/qapi_domain.py<br>
+&gt; +++ b/docs/sphinx/qapi_domain.py<br>
+&gt; @@ -21,9 +21,10 @@<br>
+&gt;=C2=A0 from docutils import nodes<br>
+&gt;=C2=A0 from docutils.parsers.rst import directives<br>
+&gt;=C2=A0 <br>
+&gt; -from compat import nested_parse<br>
+&gt; +from compat import KeywordNode, SpaceNode, nested_parse<br>
+&gt;=C2=A0 from sphinx import addnodes<br>
+&gt; -from sphinx.addnodes import pending_xref<br>
+&gt; +from sphinx.addnodes import desc_signature, pending_xref<br>
+&gt; +from sphinx.directives import ObjectDescription<br>
+&gt;=C2=A0 from sphinx.domains import (<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 Domain,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 Index,<br>
+&gt; @@ -103,6 +104,144 @@ def process_link(<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return title, target<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 <br>
+&gt; +# Alias for the return of handle_signature(), which is used in severa=
+l places.<br>
+&gt; +# (In the Python domain, this is Tuple[str, str] instead.)<br>
+&gt; +Signature =3D str<br>
+&gt; +<br>
+&gt; +<br>
+&gt; +class QAPIObject(ObjectDescription[Signature]):<br>
+&gt; +=C2=A0 =C2=A0 &quot;&quot;&quot;<br>
+&gt; +=C2=A0 =C2=A0 Description of a generic QAPI object.<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 It&#39;s not used directly, but is instead subclassed b=
+y specific directives.<br>
+&gt; +=C2=A0 =C2=A0 &quot;&quot;&quot;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 # Inherit some standard options from Sphinx&#39;s Objec=
+tDescription<br>
+&gt; +=C2=A0 =C2=A0 option_spec: OptionSpec =3D (=C2=A0 # type:ignore[misc]=
+<br></blockquote><div><br></div><div>Originally, that pointed here.</div><d=
+iv>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ObjectDescription.option_spec.copy()<br>
+&gt; +=C2=A0 =C2=A0 )<br>
+&gt; +=C2=A0 =C2=A0 option_spec.update(<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Borrowed from the Python =
+domain:<br>
+<br>
+This is line 125 mentioned above.<br></blockquote><div><br></div><div>Sligh=
+tly stale.</div><div>=C2=A0<br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;module&quot;: directi=
+ves.unchanged,=C2=A0 # Override contextual module name<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 )<br>
+<br>
+[...]<br>
+<br>
+</blockquote></div></div>
+
+--0000000000000a3959062fc84da8--
 
 
