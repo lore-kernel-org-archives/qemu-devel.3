@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57E15C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9860DC28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcsc-0007Ww-Hv; Fri, 07 Mar 2025 13:57:06 -0500
+	id 1tqcsW-0007U8-Ib; Fri, 07 Mar 2025 13:57:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsX-0007US-FR
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:57:01 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1tqcsQ-0007Rj-ED
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:54 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsV-0007oZ-HW
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:57:01 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2ff087762bbso3426749a91.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:59 -0800 (PST)
+ id 1tqcsO-0007m1-GG
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:54 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2235908a30aso15234785ad.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741373818; x=1741978618; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741373811; x=1741978611; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RytMCD0LlZ8TULuAO+TyiQ/M0TGfjDPA2CE/B7x8fYg=;
- b=eRjIM7YLZBgFKoD48CopjteZE+NKJUCbVxUn6Nideg0MKEfs41ZHYRjbU3XnHd2sAe
- 5KFvZdIQ9LT6+902mwaSSuHqhg12oUkV9fs2zsttb3jCGVwu4oyv4E6egrBX25VVBnrg
- h32JE8necZfpJxc0mUA5uixp/WoIW6uMnv/1kUQ1hjA5lOlZhQ0aTz8yIvtLsor0zJwf
- UbBpBeW3qRwctUhW23zQxF9z08ZL2fG4IWG+eKX8Loesm9kbyCosr4eRJtmHIb3fotug
- MIFhUV3klnSBKHjqsH4OlFMP+fgJM1vAes4fzqWcN90qkQvSl0f6rTUJ0AugEjU+xnLR
- eJ2g==
+ bh=SzyDViup58ROLXi9a5eLqmvAZgtt4FP4fwTvGjoaRo8=;
+ b=DywH/P87pkGFFqMRxJ7xn6GRLtOnOdrrX0ym/RwcEANRUHBq7APug8TCsdVZx5OtE2
+ ho45EyhEZfKedbyo+D9mKm3uOslz9zi5h36ErRrVztTdjYgs/d3ygVqIF2D9hui7jRMo
+ L+g34Ogado4luUc0bH7SzDsHungxD6OvYYVHZtPzlfwGhj0xDhWhOzW/6mKUydJDTbxI
+ WTFJfzfMJeTOZR4tDp4J9c3aDm397Uuyax16+ya+avu8hVoO64vLaV95bVdzDMrWN0kL
+ Njnm7DnMoR4yopWHlwhy+eGI+LEBPYKwDxAPPmncHmSmlFQBuXXQZu6zJA+yiqUGyAfx
+ mR+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741373818; x=1741978618;
+ d=1e100.net; s=20230601; t=1741373811; x=1741978611;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RytMCD0LlZ8TULuAO+TyiQ/M0TGfjDPA2CE/B7x8fYg=;
- b=XgEFgcgpqoYDktbpabQUs/Pb6j1g//Z5Xbov8eLoB0Zt3cNv/6HV1weygUfwVKaa4h
- c6qLhIg+RRY6WMUar5SgteW8+pcfD6zzLAv1sE+ZO0wECuv5zcVqrULo4tAdgKGmpB3R
- JXhu9i67io3s7lAqmXMvrFvGyyWyH5fzmQXW60Rbc2xPsnAv0oEbQorq8l8v+ZHUR6v4
- 3fRp3MJJ2uRCrnvTjiPeTR6pmm16J5NkvQ0+mHc5axv0+Pq8wG9jL3R2v40oiMcgdvst
- F87PelKf1rlrV5S1jr3JD0/qUAdAygcHI5RBCA9gPyFWplSVocEzHkga4rZV2z26TCI8
- EOjg==
-X-Gm-Message-State: AOJu0Yzz5hCe1TT+NdZJ+8Mqg1c8HP1chqlZZDzT5uH8Zkbkn51+yAvc
- 5tRenc5Br0ViuHaivVJoK2a6tqbzFxXgEwQTFvuF4FlU5+HIgM3ShWf+3TJAPLVRifLsec2EqB3
+ bh=SzyDViup58ROLXi9a5eLqmvAZgtt4FP4fwTvGjoaRo8=;
+ b=BgMs+5RJ8QykdonwP5ODZbmodKptPcd5VJkNesbapQBTwq38nyoR6wg3UhpNP3SfzZ
+ +hkDuaK35LKdAyXO73MTprOjz1mzlWZ72lDstWWY3FWT2NTbx32tTi2k4dw0Pt4qGhha
+ l49LYa4UNEqvqxiEf/K3BqmGznLG+lfLiSM4Wbe/6WPuehpFKAn2iMjrkI3CNs2jHKcl
+ 7PaBlVdRG5uM9qnETZ8SfUyjcZj+EnIbCoL1pCr4YpZbtBpp4ISx3ZpqynrC1cbYyXje
+ Z3a04yn/BqwZU9hJkVWTbwBL7tXWByQM0aUwvUJAjF+Bq2mTv+DpmqFfEObWtC7GhRpd
+ kqGg==
+X-Gm-Message-State: AOJu0Yz+CzvNXRU9yLaJYRe0JM8jCGNKAgn8IMMnVgwIMnjC6hmWs5mn
+ T1V1FMnlRNjbKPTtmN8Z65tkphgo5EhqlGda+mA7YeTZUzh3OQpz9duLtTSoQMKn99KJefPBGze
  h
-X-Gm-Gg: ASbGnctFAKui2lskGfXOzOHIdPwbmjAwnLguxPkfc3PrPXqOSV7Tlpb8HAogS41rZ2h
- 7xWbAfCCDQxYSK7a8oXUtYB7DqK4VwXnVF25k4StCSm07rxFmpZ5/8UT1Dz+YcJ8JA2ogKcsPrQ
- aKgR5Ee5BwMI7BWb0F0ShdK+5w4h9x0eFQmy+UF5Hx+HPVWGag6BSxEimk5VbtOjem+WtQow8s9
- RaE+7fbuo0/tdTQ1CfGUU8vjyU3o76K/TU/uniCkcqFjI4sSxNHsmbGp0QHATxJvqXZJbQhTlg7
- Eel9UG1j2cKIKR4KwQVl//gWLrfLnX6H+9W8w4l5sYglmj6HzbHh7sNhEvNUXQJ0sIPB7y0go/Z
- H
-X-Google-Smtp-Source: AGHT+IEmanZVN6fDq31cc/MRYn0mF40fpIZsYvaPvVw3Ix+iW7huw2xf2c1FQF5DLOmMB6Al2CfLxQ==
-X-Received: by 2002:a17:90b:52c3:b0:2fe:b77a:2eab with SMTP id
- 98e67ed59e1d1-2ff7cf26f00mr6164815a91.32.1741373817883; 
- Fri, 07 Mar 2025 10:56:57 -0800 (PST)
+X-Gm-Gg: ASbGncvLFfK+oqV52fnFxKQZq24ryrAWzBffERaUeKGj1/7RSEhavypSDkCdgmA4Tfm
+ +9SO+rxZgd3QwQxaZ4SJGBRK2W+8LzFlCEnO8HZ1IqjAN8z/zPdKOTRBgR/PhPsRgkMDISpcSDe
+ vb1yP7UcXMKRKjOlEgxm6R+YrK2NWu9ODCyeJZzCA5nmYj2GxamlWBWPE3ai/OkRWemlteO76IU
+ 1Zy/M5ZNiGSCCsu+BVESFJtOD1t/uVMU1WrzOvyqnr6/cRf9H2LNLlvit22cXM7mA6G/v3hdfXW
+ rlb9QdFyPtD8fCMBdrQY0tIXZdn4Xx9wHWcBCZHq3eS//TYSzDmqMTxZhTIIKIzhtwy7G92L/LQ
+ S
+X-Google-Smtp-Source: AGHT+IHHWMIx9HNmHaffyTP2HpiJ/yDQRPiibxBLg45i8lTaa1UT1sXFbutkrSYnD8yZrerMKPYwUA==
+X-Received: by 2002:a17:902:e5ce:b0:224:26f5:9c1e with SMTP id
+ d9443c01a7336-22428880333mr69820735ad.2.1741373811125; 
+ Fri, 07 Mar 2025 10:56:51 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.57
+ 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 10:56:57 -0800 (PST)
+ Fri, 07 Mar 2025 10:56:50 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-Subject: [PATCH 14/16] include/exec: Split out helper-getpc.h
-Date: Fri,  7 Mar 2025 10:56:43 -0800
-Message-ID: <20250307185645.970034-16-richard.henderson@linaro.org>
+Cc: philmd@linaro.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 04/16] exec: Declare tlb_set_page_full() in 'exec/cputlb.h'
+Date: Fri,  7 Mar 2025 10:56:33 -0800
+Message-ID: <20250307185645.970034-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307185645.970034-1-richard.henderson@linaro.org>
 References: <20250307185645.970034-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,89 +102,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split out GETPC and GETPC_ADJ to a target-independent header.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Move CPU TLB related methods to "exec/cputlb.h".
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20241114011310.3615-16-philmd@linaro.org>
 ---
- include/exec/exec-all.h     | 19 +------------------
- include/exec/helper-getpc.h | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 18 deletions(-)
- create mode 100644 include/exec/helper-getpc.h
+ include/exec/cputlb.h     | 23 +++++++++++++++++++++++
+ include/exec/exec-all.h   | 22 ----------------------
+ target/sparc/mmu_helper.c |  2 +-
+ 3 files changed, 24 insertions(+), 23 deletions(-)
 
+diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+index 6cac7d530f..733ef012d1 100644
+--- a/include/exec/cputlb.h
++++ b/include/exec/cputlb.h
+@@ -21,6 +21,7 @@
+ #define CPUTLB_H
+ 
+ #include "exec/cpu-common.h"
++#include "exec/vaddr.h"
+ 
+ #ifdef CONFIG_TCG
+ 
+@@ -39,4 +40,26 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+ 
+ #endif
+ 
++/**
++ * tlb_set_page_full:
++ * @cpu: CPU context
++ * @mmu_idx: mmu index of the tlb to modify
++ * @addr: virtual address of the entry to add
++ * @full: the details of the tlb entry
++ *
++ * Add an entry to @cpu tlb index @mmu_idx.  All of the fields of
++ * @full must be filled, except for xlat_section, and constitute
++ * the complete description of the translated page.
++ *
++ * This is generally called by the target tlb_fill function after
++ * having performed a successful page table walk to find the physical
++ * address and attributes for the translation.
++ *
++ * At most one entry for a given virtual address is permitted. Only a
++ * single TARGET_PAGE_SIZE region is mapped; @full->lg_page_size is only
++ * used by tlb_flush_page.
++ */
++void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
++                       CPUTLBEntryFull *full);
++
+ #endif
 diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index a758b7a843..22a99ca502 100644
+index f24256fb5e..f43c67366b 100644
 --- a/include/exec/exec-all.h
 +++ b/include/exec/exec-all.h
-@@ -26,6 +26,7 @@
- #endif
- #include "exec/mmu-access-type.h"
- #include "exec/translation-block.h"
-+#include "exec/helper-getpc.h"
+@@ -156,28 +156,6 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+                                                uint16_t idxmap,
+                                                unsigned bits);
  
- #if defined(CONFIG_TCG)
- 
-@@ -177,24 +178,6 @@ void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
- void tb_invalidate_phys_range(tb_page_addr_t start, tb_page_addr_t last);
- void tb_set_jmp_target(TranslationBlock *tb, int n, uintptr_t addr);
- 
--/* GETPC is the true target of the return instruction that we'll execute.  */
--#if defined(CONFIG_TCG_INTERPRETER)
--extern __thread uintptr_t tci_tb_ptr;
--# define GETPC() tci_tb_ptr
--#else
--# define GETPC() \
--    ((uintptr_t)__builtin_extract_return_addr(__builtin_return_address(0)))
--#endif
+-/**
+- * tlb_set_page_full:
+- * @cpu: CPU context
+- * @mmu_idx: mmu index of the tlb to modify
+- * @addr: virtual address of the entry to add
+- * @full: the details of the tlb entry
+- *
+- * Add an entry to @cpu tlb index @mmu_idx.  All of the fields of
+- * @full must be filled, except for xlat_section, and constitute
+- * the complete description of the translated page.
+- *
+- * This is generally called by the target tlb_fill function after
+- * having performed a successful page table walk to find the physical
+- * address and attributes for the translation.
+- *
+- * At most one entry for a given virtual address is permitted. Only a
+- * single TARGET_PAGE_SIZE region is mapped; @full->lg_page_size is only
+- * used by tlb_flush_page.
+- */
+-void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
+-                       CPUTLBEntryFull *full);
 -
--/* The true return address will often point to a host insn that is part of
--   the next translated guest insn.  Adjust the address backward to point to
--   the middle of the call insn.  Subtracting one would do the job except for
--   several compressed mode architectures (arm, mips) which set the low bit
--   to indicate the compressed mode; subtracting two works around that.  It
--   is also the case that there are no host isas that contain a call insn
--   smaller than 4 bytes, so we don't worry about special-casing this.  */
--#define GETPC_ADJ   2
--
- #if !defined(CONFIG_USER_ONLY)
- 
  /**
-diff --git a/include/exec/helper-getpc.h b/include/exec/helper-getpc.h
-new file mode 100644
-index 0000000000..1c8bd72c11
---- /dev/null
-+++ b/include/exec/helper-getpc.h
-@@ -0,0 +1,31 @@
-+/*
-+ * Get host pc for helper unwinding.
-+ *
-+ * Copyright (c) 2003 Fabrice Bellard
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
-+ */
-+
-+#ifndef HELPER_GETPC_H
-+#define HELPER_GETPC_H
-+
-+/* GETPC is the true target of the return instruction that we'll execute.  */
-+#if defined(CONFIG_TCG_INTERPRETER)
-+extern __thread uintptr_t tci_tb_ptr;
-+# define GETPC() tci_tb_ptr
-+#else
-+# define GETPC() \
-+    ((uintptr_t)__builtin_extract_return_addr(__builtin_return_address(0)))
-+#endif
-+
-+/*
-+ * The true return address will often point to a host insn that is part of
-+ * the next translated guest insn.  Adjust the address backward to point to
-+ * the middle of the call insn.  Subtracting one would do the job except for
-+ * several compressed mode architectures (arm, mips) which set the low bit
-+ * to indicate the compressed mode; subtracting two works around that.  It
-+ * is also the case that there are no host isas that contain a call insn
-+ * smaller than 4 bytes, so we don't worry about special-casing this.
-+ */
-+#define GETPC_ADJ   2
-+
-+#endif /* HELPER_GETPC_H */
+  * tlb_set_page_with_attrs:
+  * @cpu: CPU to add this TLB entry for
+diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+index 9ff06026b8..7548d01777 100644
+--- a/target/sparc/mmu_helper.c
++++ b/target/sparc/mmu_helper.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+ #include "cpu.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ #include "qemu/qemu-print.h"
+ #include "trace.h"
 -- 
 2.43.0
 
