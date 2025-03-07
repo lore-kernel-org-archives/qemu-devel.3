@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05047C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 11:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C8FC282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 11:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqWH5-0002Ny-Df; Fri, 07 Mar 2025 06:53:55 -0500
+	id 1tqWGm-0002Jq-F6; Fri, 07 Mar 2025 06:53:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWH4-0002Ni-1g
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWGf-0002Im-Eq
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWH2-0000Lb-FL
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWGc-0000Hm-UE
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741348430;
+ s=mimecast20190719; t=1741348406;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Cd6O1VZDeIT786/XOF02v5jigOV2z1r9juG1O4n0MAM=;
- b=YYw31uqsWAEemIzRC/JuY509eLYUeLTDNYem6tMtfnuQqlE5ROz9aK2IeVlrvjJaNwZjAO
- S7jX4JvA+P2Io3jV2XDnfJCSxdvhZNtXuVHJfnknh7+WtCQUoA2U49sGz2Z4iMzX1FLK7J
- jvn++tyebc90cYCeTFrNkJAkBJQuCUI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=vMXYg46E1/EKnELVNv+IsZFJNwROo+euEPEQdc5q1+M=;
+ b=c1fKdsmuvneyhqTgn2cVft/QaqiINOhaEQb9LAMdViRTtWur2fydG+Z2MPhTy0SMX3svxW
+ WcljG/db9Jc9laRyc1T5wVTmO0jhyxp/mcXbPckDIUyIn+cAd3FhMcQRctpJkNaNPthVpc
+ bRcTGlbd0RPk7SucTjFCgTxzBMPcMqQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-_pdVH5ESOMSRMxsgZakQLw-1; Fri,
- 07 Mar 2025 06:53:47 -0500
-X-MC-Unique: _pdVH5ESOMSRMxsgZakQLw-1
-X-Mimecast-MFC-AGG-ID: _pdVH5ESOMSRMxsgZakQLw_1741348426
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-rpJTABDjOTmo2DS93rYPhQ-1; Fri,
+ 07 Mar 2025 06:53:22 -0500
+X-MC-Unique: rpJTABDjOTmo2DS93rYPhQ-1
+X-Mimecast-MFC-AGG-ID: rpJTABDjOTmo2DS93rYPhQ_1741348401
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD9EA19560A1
- for <qemu-devel@nongnu.org>; Fri,  7 Mar 2025 11:53:46 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF25B19560B3; Fri,  7 Mar 2025 11:53:21 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.60])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 66C561944F2E; Fri,  7 Mar 2025 11:53:43 +0000 (UTC)
+ id 5A77C1944E45; Fri,  7 Mar 2025 11:53:18 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: [PULL 10/15] tests/functional: fix race in virtio balloon test
-Date: Fri,  7 Mar 2025 12:53:09 +0100
-Message-ID: <20250307115314.1096373-11-thuth@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 01/15] tests/functional: remove unused 'bin_prefix' variable
+Date: Fri,  7 Mar 2025 12:53:00 +0100
+Message-ID: <20250307115314.1096373-2-thuth@redhat.com>
 In-Reply-To: <20250307115314.1096373-1-thuth@redhat.com>
 References: <20250307115314.1096373-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,81 +86,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-There are two race conditions in the recently added virtio balloon
-test
+This was copied over from avocado but has not been used in the new
+functional tests.
 
- * The /dev/vda device node is not ready
- * The virtio-balloon driver has not issued the first stats refresh
-
-To fix the former, monitor dmesg for a line about 'vda'.
-
-To fix the latter, retry the stats query until seeing fresh data.
-
-Adding 'quiet' to the kernel command line reduces serial output
-which otherwise slows boot, making it less likely to hit the former
-race too.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250304183340.3749797-1-berrange@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-[thuth: Break long line to avoid checkpatch error]
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250228102738.3064045-2-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/test_virtio_balloon.py | 26 ++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ tests/functional/qemu_test/testcase.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/test_virtio_balloon.py b/tests/functional/test_virtio_balloon.py
-index 67b48e1b4e8..082bf08c4e8 100755
---- a/tests/functional/test_virtio_balloon.py
-+++ b/tests/functional/test_virtio_balloon.py
-@@ -32,7 +32,7 @@ class VirtioBalloonx86(QemuSystemTest):
-         'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 869f3949fe9..9d5611c4d7f 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -192,7 +192,7 @@ def assets_available(self):
+                     return False
+         return True
  
-     DEFAULT_KERNEL_PARAMS = ('root=/dev/vda1 console=ttyS0 net.ifnames=0 '
--                             'rd.rescue')
-+                             'rd.rescue quiet')
+-    def setUp(self, bin_prefix):
++    def setUp(self):
+         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+         self.arch = self.qemu_bin.split('-')[-1]
+         self.socketdir = None
+@@ -254,7 +254,7 @@ def main():
+ class QemuUserTest(QemuBaseTest):
  
-     def wait_for_console_pattern(self, success_message, vm=None):
-         wait_for_console_pattern(
-@@ -47,6 +47,11 @@ def mount_root(self):
-         prompt = '# '
-         self.wait_for_console_pattern(prompt)
+     def setUp(self):
+-        super().setUp('qemu-')
++        super().setUp()
+         self._ldpath = []
  
-+        # Synchronize on virtio-block driver creating the root device
-+        exec_command_and_wait_for_pattern(self,
-+                        "while ! (dmesg -c | grep vda:) ; do sleep 1 ; done",
-+                        "vda1")
-+
-         exec_command_and_wait_for_pattern(self, 'mount /dev/vda1 /sysroot',
-                                           prompt)
-         exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
-@@ -65,10 +70,21 @@ def assert_initial_stats(self):
-             assert val == UNSET_STATS_VALUE
+     def add_ldpath(self, ldpath):
+@@ -277,7 +277,7 @@ class QemuSystemTest(QemuBaseTest):
+     def setUp(self):
+         self._vms = {}
  
-     def assert_running_stats(self, then):
--        ret = self.vm.qmp('qom-get',
--                          {'path': '/machine/peripheral/balloon',
--                           'property': 'guest-stats'})['return']
--        when = ret.get('last-update')
-+        # We told the QEMU to refresh stats every 100ms, but
-+        # there can be a delay between virtio-ballon driver
-+        # being modprobed and seeing the first stats refresh
-+        # Retry a few times for robustness under heavy load
-+        retries = 10
-+        when = 0
-+        while when == 0 and retries:
-+            ret = self.vm.qmp('qom-get',
-+                              {'path': '/machine/peripheral/balloon',
-+                               'property': 'guest-stats'})['return']
-+            when = ret.get('last-update')
-+            if when == 0:
-+                retries = retries - 1
-+                time.sleep(0.5)
-+
-         now = time.time()
+-        super().setUp('qemu-system-')
++        super().setUp()
  
-         assert when > then and when < now
+         console_log = logging.getLogger('console')
+         console_log.setLevel(logging.DEBUG)
 -- 
 2.48.1
 
