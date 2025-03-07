@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D74C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 11:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F9B0C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 11:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqWHH-0002RF-QB; Fri, 07 Mar 2025 06:54:07 -0500
+	id 1tqWGo-0002Kf-FY; Fri, 07 Mar 2025 06:53:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWHG-0002Qa-5N
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:54:06 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWGl-0002Jk-Ts
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWHE-0000No-Mz
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:54:05 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tqWGg-0000IJ-NL
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 06:53:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741348444;
+ s=mimecast20190719; t=1741348409;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vP08kGh1gBxCAKNj7Mea7eFddJb1NSFNTaj+GwlfRgc=;
- b=cAbDG6R3DnI8lkF80ug7eTwfZbxbc88xmWerIwE7U4ta8DloVfJw3sBskWVNTSOqKZycYC
- kDE0UfIDhFG/kF9pY1t0hI+t2QBj6IlCJpsYKd0pLGrxqCk5c7UuKIajbfFUifUtu97CNL
- y93N45pCBIRRjeCeXJIQkeGE5xbm9ws=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=MfhLHfgKPr/FwlLhvjlnugv1UxVPm/hPYhqF6xil7OY=;
+ b=CyucGqpd9VxXsuLX3Hj9lRNGQRAPITDXPQcpTQ0CzUkyVnl48bIYeC0k5wNcwVH/jYucno
+ puejda410ZjuLOd/LLdEf4lWPZllcwaEMhcXdUusGnJBifE2Wh/j+8zkVgzW7y+WyEacz7
+ BXsti6Cmr5A8e1MbCAbojp/ZXe7QhjM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-BDwsAU0sNzqTptpSMzn6-A-1; Fri,
- 07 Mar 2025 06:54:02 -0500
-X-MC-Unique: BDwsAU0sNzqTptpSMzn6-A-1
-X-Mimecast-MFC-AGG-ID: BDwsAU0sNzqTptpSMzn6-A_1741348441
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-tjL5iULGOhmwDoIzDT0zIg-1; Fri,
+ 07 Mar 2025 06:53:26 -0500
+X-MC-Unique: tjL5iULGOhmwDoIzDT0zIg-1
+X-Mimecast-MFC-AGG-ID: tjL5iULGOhmwDoIzDT0zIg_1741348405
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C01B19560BC; Fri,  7 Mar 2025 11:54:01 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB6A91956048; Fri,  7 Mar 2025 11:53:25 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.60])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 21BC91944F2E; Fri,  7 Mar 2025 11:53:58 +0000 (UTC)
+ id 213F11944F2E; Fri,  7 Mar 2025 11:53:21 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Niklas Schnelle <schnelle@linux.ibm.com>
-Subject: [PULL 15/15] s390x/pci: indicate QEMU supports relaxed translation
- for passthrough
-Date: Fri,  7 Mar 2025 12:53:14 +0100
-Message-ID: <20250307115314.1096373-16-thuth@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 02/15] tests/functional: set 'qemu_bin' as an object level field
+Date: Fri,  7 Mar 2025 12:53:01 +0100
+Message-ID: <20250307115314.1096373-3-thuth@redhat.com>
 In-Reply-To: <20250307115314.1096373-1-thuth@redhat.com>
 References: <20250307115314.1096373-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -84,51 +84,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Specifying this bit in the guest CLP response indicates that the guest
-can optionally choose to skip translation and instead use
-identity-mapped operations.
+The 'qemu_bin' field is currently set on the class, despite being
+accessed as if it were an object instance field with 'self.qemu_bin'.
 
-Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Message-ID: <20250226210013.238349-3-mjrosato@linux.ibm.com>
+This is no obvious need to have it as a class field, so move it into
+the object instance.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250228102738.3064045-3-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/s390x/s390-pci-clp.h | 1 +
- hw/s390x/s390-pci-vfio.c        | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ docs/devel/testing/functional.rst      | 2 +-
+ tests/functional/qemu_test/testcase.py | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/s390x/s390-pci-clp.h b/include/hw/s390x/s390-pci-clp.h
-index 03b7f9ba5f7..6a635d693ba 100644
---- a/include/hw/s390x/s390-pci-clp.h
-+++ b/include/hw/s390x/s390-pci-clp.h
-@@ -158,6 +158,7 @@ typedef struct ClpRspQueryPciGrp {
- #define CLP_RSP_QPCIG_MASK_NOI 0xfff
-     uint16_t i;
-     uint8_t version;
-+#define CLP_RSP_QPCIG_MASK_RTR     0x20
- #define CLP_RSP_QPCIG_MASK_FRAME   0x2
- #define CLP_RSP_QPCIG_MASK_REFRESH 0x1
-     uint8_t fr;
-diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-index 443e2229127..6236ac7f1e6 100644
---- a/hw/s390x/s390-pci-vfio.c
-+++ b/hw/s390x/s390-pci-vfio.c
-@@ -238,8 +238,11 @@ static void s390_pci_read_group(S390PCIBusDevice *pbdev,
-         pbdev->pci_group = s390_group_create(pbdev->zpci_fn.pfgid, start_gid);
+diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+index ecc738922b7..bcb5509512e 100644
+--- a/docs/devel/testing/functional.rst
++++ b/docs/devel/testing/functional.rst
+@@ -173,7 +173,7 @@ QEMU binary selection
+ ^^^^^^^^^^^^^^^^^^^^^
  
-         resgrp = &pbdev->pci_group->zpci_group;
-+        if (pbdev->rtr_avail) {
-+            resgrp->fr |= CLP_RSP_QPCIG_MASK_RTR;
-+        }
-         if (cap->flags & VFIO_DEVICE_INFO_ZPCI_FLAG_REFRESH) {
--            resgrp->fr = 1;
-+            resgrp->fr |= CLP_RSP_QPCIG_MASK_REFRESH;
-         }
-         resgrp->dasm = cap->dasm;
-         resgrp->msia = cap->msi_addr;
+ The QEMU binary used for the ``self.vm`` QEMUMachine instance will
+-primarily depend on the value of the ``qemu_bin`` class attribute.
++primarily depend on the value of the ``qemu_bin`` instance attribute.
+ If it is not explicitly set by the test code, its default value will
+ be the result the QEMU_TEST_QEMU_BINARY environment variable.
+ 
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 9d5611c4d7f..058bf270eca 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -33,7 +33,6 @@
+ 
+ class QemuBaseTest(unittest.TestCase):
+ 
+-    qemu_bin = os.getenv('QEMU_TEST_QEMU_BINARY')
+     arch = None
+ 
+     workdir = None
+@@ -193,6 +192,7 @@ def assets_available(self):
+         return True
+ 
+     def setUp(self):
++        self.qemu_bin = os.getenv('QEMU_TEST_QEMU_BINARY')
+         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+         self.arch = self.qemu_bin.split('-')[-1]
+         self.socketdir = None
 -- 
 2.48.1
 
