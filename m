@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E4AC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C9B3C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcsd-0007XF-Eh; Fri, 07 Mar 2025 13:57:07 -0500
+	id 1tqcwQ-0001U1-5Z; Fri, 07 Mar 2025 14:01:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsP-0007Rh-Vz
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:54 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tqcwK-0001Sq-U8
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:00:57 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsN-0007lO-0r
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:53 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22401f4d35aso43049595ad.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tqcwJ-0001Ff-AQ
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:00:56 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-390e3b3d3f4so1151532f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:00:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741373809; x=1741978609; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Vo9EUeboH3pwKtes0Z0Mb9EvndFByljrwhTfKec7eDo=;
- b=nhFj/IK3z40Y/5Zd3T6HBeldI4dHNxZ5zTLO8+JBHgoI5X3qWBSkL99mEu45kC5HzC
- jrfw8gB5peqz4IN5eiOm4hx781MsqSm93ejM1Y0vWwT9G4dYcBtVRLhzq4XqPlun6olR
- mRn2mGi947rd8DVsLcP0XvD6kwXFJ1VCSq7T0Ux/0ZE8AjfkqQehTw8fMr4Q/mEMYwhP
- VXA3+NhjbmE9q5OfG2CB3I1sCN5AORcqbqZJk+QCr9B5vuZ4TAIp3XmfMZVsxF0JsM7k
- ald6ePaF5ceL3c3YUU25T7Hl4zRZDiwk0C5134HV7mooGZffu8uynlNvx/KeGpRNz9pi
- cSqA==
+ d=linaro.org; s=google; t=1741374053; x=1741978853; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=+ov10O5xJ0eWfryJceZIMZwtAJQT4LfG+/G3LlkHNLc=;
+ b=FCxTZz7SFMo7yvbl8hhLP1N3TajhIKMfjPb49eHNopwsx0hVl5+dTJLFHdErGohrV2
+ 5LIyh6kmlWi13g9pxRfUUeg4La/zHPJ6sUQQTG4fEemUY01U6aiIdOn/331YSbnoIY71
+ 3wSheb6dzllMdvwgkqKyGUb/UhwBxmOdFFIFNzjU0dq8s2oVxBOvRVEqe7y17BZuGnUp
+ dmQ+8FBvB9m2v7LOkaUVfGvQvsYBqLZROT2ryrAXqlBjezwg0Xca17TcdL/Q53KHG28M
+ m7qcsw/Q484nLloSRx4T9a67nJB9xqPC/GkbhrJqaTJKtT2wWXLRll72+75ymSI/6FsR
+ CGaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741373809; x=1741978609;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Vo9EUeboH3pwKtes0Z0Mb9EvndFByljrwhTfKec7eDo=;
- b=H0onRnCNrq/Uq8AqtjxGgyzCLpx1V6u7fE1DavMCmJ8Rze4/D6TXCDPqMpQHI70Fex
- bEZBDFbFqjY4CVycPiWhtwH5S3UL1CxdWxAWO2skxIEIpGLFEmx7LKfVJdwgV6WkHkwL
- BY++WPxRzMuASGUxA3YhM7hXZWYr8GRIX0zzFJ1jMpWdGroiCU8lD9Hszj4RTPnNSVGU
- HfSKvxD9g574GJbRw1M1YAYJPufGYXzhiVEtQZXfpfx6MDmIuz419UV/cEEvmaKjVgaz
- Z4DMDpENuqJzKY0JWj4K752cwPWaMpwb2rLaDG7J/KMNzti5dnaqNbxkSmwTWZ4x/Egc
- zWRg==
-X-Gm-Message-State: AOJu0YwD/mKGvAsHvaikPJz4WHfNSi1Euc4YXw82vai0KgZXo9SiHMRt
- yQ/tAqpFmKzvRDX4ttr9a6vunjt9pBpDLx/GJH/OVsKDRU/lVWDWjJ2hBlCwc0ZbIsss4l1Prdc
- f
-X-Gm-Gg: ASbGncszCLlS6va862daGWg3EZA+1CEhJcvq8Cl1WaOadRHFshzkR3MFCL3PLORUU0V
- jxI7Kxi/ACUKB96vFhkhLpRRxAtRhlNWcSGetEklU6pmOVT5Nhya7j20P4xVD5Z5lWbIaLRsuyZ
- ktD2G7cFsWzFePpRJ6ViDKbrwhZIYCRTDhGazD21x489/LAymNKXsx3vH9CtL2WOio/R5D6Q5hX
- dpusXBI3nqP26TGj6Rk+zIHF0OT/eQ06eNXnGStikR13T72BOHme5n6cbBYfgk+HFpkYA9br3mh
- eTxNqV/t9EFXw5NRSDlJeE91SgSMbM9fSUxBXV/8MV823OfV8zHepibXgwBVoWKz6oLTHUKNEdo
- I
-X-Google-Smtp-Source: AGHT+IGz+IGl0p1/KoWRnfRhFVwHK1ZC5+p8HozPLiHkUyNvRY8VHdGXy1/jcUIrhBYmUUHULLtYLA==
-X-Received: by 2002:a17:903:8c6:b0:223:47d9:1964 with SMTP id
- d9443c01a7336-22428ac953fmr78709045ad.34.1741373809531; 
- Fri, 07 Mar 2025 10:56:49 -0800 (PST)
-Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ d=1e100.net; s=20230601; t=1741374053; x=1741978853;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+ov10O5xJ0eWfryJceZIMZwtAJQT4LfG+/G3LlkHNLc=;
+ b=uot94m5LDdA9ui7dUTg4fnHKV7Dr9cvxAxVPF/2CjSJYArNJkb5iD4qSstUUHU1/TW
+ /oBhFksavqiOymFwcvpVklcbHMMBDOjhmYGzKQBlTbj2fuvtPAarToI+lkINXMHoFjG+
+ dUhNsCpmUqhhJ315FJdySdwzdqxVYE5Lq2Zra02Kv45cDjw4tNED1cUiRtorM1jPTj/A
+ sTX5UbYqC1migXU2ZRX4RMHJ9+hQ97NASO7/pmGj7tQyIBf3NLgrKOx/42qQBjUl4Gnd
+ eOxF+w3TpEcwPSB5tJv6zQ7en/ZjwhVrnBCtkRlXb+OOjJyvLBlgN9cQihlCFfVmSBeH
+ 0T7w==
+X-Gm-Message-State: AOJu0Yx+K8u5wK3VwiORotuvXxzQlXi91HuUTCJ1Szj7+1JYNvU0CSER
+ TOBz6PbTStCF4I0Ie2Ul2HhXvhafpPzNRH/UOiQkmcerrdUCpw99vqnvfuwAKMImVL4GlAh/af4
+ 2
+X-Gm-Gg: ASbGncv2GV97sAJbzK4tDmUOtRlAFp5ciUH+dyMzccF1oULOgcFSfCS8vX9BBClFp1h
+ hM3RKFCPcX1kI4Pf7b9GvupPg38Dr4oeuDTf9kVmoOgf3kT4n3Yn8pU5+py41sMc4E+JHEcztYa
+ 9XXVHIXRmOHM4ZpsKXbomT2iV26lC2js88OaGLypiulyI7bu61s8w0O2kCbU2Tj3UBuF+paOlRk
+ bj2LaqSxj0lGMinuBuYU96WW4WZig0i7NYl8HR5DHeZRlmFY//f36vVJ2llNFzyMUdVKPJDxLqw
+ B4e1TMYgHqw5fNgnP1+1OimOOODtzV9/V5IoWS4ugHmfNiw2fg8=
+X-Google-Smtp-Source: AGHT+IHUtqLHeofBpGNp4lhvKCSdp/4teFVcM8y0kf9G06pVKZE2dh5JQYZ+FQCvLyjEOrTugGG4Jg==
+X-Received: by 2002:a05:6000:402a:b0:390:f6be:9a3d with SMTP id
+ ffacd0b85a97d-39132dc5627mr4175296f8f.35.1741374053458; 
+ Fri, 07 Mar 2025 11:00:53 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.49
+ ffacd0b85a97d-3912c0e2eafsm6357147f8f.68.2025.03.07.11.00.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 10:56:49 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Fri, 07 Mar 2025 11:00:52 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-Subject: [PATCH 02/16] accel/tcg: Compile watchpoint.c once
-Date: Fri,  7 Mar 2025 10:56:31 -0800
-Message-ID: <20250307185645.970034-4-richard.henderson@linaro.org>
+Cc: qemu-rust@nongnu.org,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] rust: pl011: Allow NULL chardev argument to pl011_create()
+Date: Fri,  7 Mar 2025 19:00:51 +0000
+Message-ID: <20250307190051.3274226-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250307185645.970034-1-richard.henderson@linaro.org>
-References: <20250307185645.970034-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,77 +97,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move tb_check_watchpoint declaration from tb-internal.h, which is
-still target-specific, to internal-common.h, which isn't.
-Otherwise, all that is required to build watchpoint.c once is
-to include the new exec/cpu-interrupt.h instead of exec/exec-all.h.
+It's valid for the caller to pass a NULL chardev to pl011_create();
+this means "don't set the chardev property on the device", which
+in turn means "act like there's no chardev". All the chardev
+frontend APIs (in C, at least) accept a NULL pointer to mean
+"do nothing".
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+This fixes some failures in 'make check-functional' when Rust support
+is enabled.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- accel/tcg/internal-common.h | 2 ++
- accel/tcg/tb-internal.h     | 2 --
- accel/tcg/watchpoint.c      | 5 ++---
- accel/tcg/meson.build       | 2 +-
- 4 files changed, 5 insertions(+), 6 deletions(-)
+This is my first Rust related patch for QEMU, so I've
+probably got something wrong here :-)
+---
+ rust/hw/char/pl011/src/device.rs | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
-index 7ef620d963..9b6ab3a8cc 100644
---- a/accel/tcg/internal-common.h
-+++ b/accel/tcg/internal-common.h
-@@ -72,4 +72,6 @@ void tcg_exec_unrealizefn(CPUState *cpu);
- /* current cflags for hashing/comparison */
- uint32_t curr_cflags(CPUState *cpu);
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index d0857b470c9..8098f762f4b 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -713,10 +713,12 @@ pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
+     // SAFETY: The callers promise that they have owned references.
+     // They do not gift them to pl011_create, so use `Owned::from`.
+     let irq = unsafe { Owned::<IRQState>::from(&*irq) };
+-    let chr = unsafe { Owned::<Chardev>::from(&*chr) };
  
-+void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
-+
- #endif
-diff --git a/accel/tcg/tb-internal.h b/accel/tcg/tb-internal.h
-index abd423fcf5..62a59a5307 100644
---- a/accel/tcg/tb-internal.h
-+++ b/accel/tcg/tb-internal.h
-@@ -75,6 +75,4 @@ void tb_invalidate_phys_range_fast(ram_addr_t ram_addr,
- 
- bool tb_invalidate_phys_page_unwind(tb_page_addr_t addr, uintptr_t pc);
- 
--void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
--
- #endif
-diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
-index 40112b2b2e..ba8c9859cf 100644
---- a/accel/tcg/watchpoint.c
-+++ b/accel/tcg/watchpoint.c
-@@ -19,11 +19,10 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
--#include "qemu/error-report.h"
--#include "exec/exec-all.h"
-+#include "exec/breakpoint.h"
-+#include "exec/cpu-interrupt.h"
- #include "exec/page-protection.h"
- #include "exec/translation-block.h"
--#include "tb-internal.h"
- #include "system/tcg.h"
- #include "system/replay.h"
- #include "accel/tcg/cpu-ops.h"
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 69f4808ac4..979ce90eb0 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -20,7 +20,6 @@ specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
- 
- specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
-   'cputlb.c',
--  'watchpoint.c',
-   'tcg-accel-ops.c',
-   'tcg-accel-ops-mttcg.c',
-   'tcg-accel-ops-icount.c',
-@@ -30,4 +29,5 @@ specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
- system_ss.add(when: ['CONFIG_TCG'], if_true: files(
-   'icount-common.c',
-   'monitor.c',
-+  'watchpoint.c',
- ))
+     let dev = PL011State::new();
+-    dev.prop_set_chr("chardev", &chr);
++    if !chr.is_null() {
++        let chr = unsafe { Owned::<Chardev>::from(&*chr) };
++        dev.prop_set_chr("chardev", &chr);
++    }
+     dev.sysbus_realize();
+     dev.mmio_map(0, addr);
+     dev.connect_irq(0, &irq);
 -- 
 2.43.0
 
