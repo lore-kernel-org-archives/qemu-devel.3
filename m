@@ -4,84 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B396C282D1
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 00:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE72BC282EC
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 00:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqLql-0004gm-FB; Thu, 06 Mar 2025 19:46:09 -0500
+	id 1tqLrw-00050p-TI; Thu, 06 Mar 2025 19:47:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tqLqF-0004fl-Q3
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 19:45:31 -0500
-Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tqLqC-0001KL-Aw
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 19:45:31 -0500
-Received: by mail-ua1-x931.google.com with SMTP id
- a1e0cc1a2514c-86d2fba8647so1133036241.0
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 16:45:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741308327; x=1741913127; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bBphd+2KFjs0Cd0y8Fd2STViBQkFlCtFX+kqLjAioic=;
- b=XmO2McKI15LQD8K+f8u0wDPLVOczZ+3tr16r9lKTBOz8hPZJbF6LiL3jHnLC1xgb+Q
- +W2yyhB0nnMQoxi8zuvKL97jQhOmw0ebt3usqOU02G5+oiIwaofQIy3oj1/cRUYtCO92
- 51Qhr9y+JLHRMfGgTt3p56j9LcLhTPndj5fLE6c+sgcz50PQHbU3drjYOWS3v/oKROIW
- rXX/zXKNg49Q0sCA+S7Onmw3X5fDNLLpmKfc2GM+mmIuV+Ea3ol5/gk5IEI4nQuF+oEM
- 0G8UQ1zC93FZ0a8lY7GQ4PHPr9s3882tmrC12yZ5N026cALGl7C92SZMdUnCHNiNQTSl
- g12A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741308327; x=1741913127;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bBphd+2KFjs0Cd0y8Fd2STViBQkFlCtFX+kqLjAioic=;
- b=Y4OBx94whbELIH8JS4dZ1MNDjaiQkuhW/vjIPvj2MbOjFsh+kgLZYFyRrVDVjIkDUW
- 2zFjfbg1aaOYdfSjXNke1BoKT7Jn6lmsOV6K7uobeDlS1dJ01fWw1l6ti8GxszrAyoho
- zsfs81C6Qcup/ZgKKs5rHCOAeLRrhOYlgGWUq1KKU6jNifWqybM/dYbRqLw2UDby8M9H
- BHNs9AJ2TYnZx5cnLfOEVPBpUX+76teUGxXQfzfgDiIfBKqJWV80dtE3fJSra0Vpv5ix
- 55dbqW64QhTeNWWUESvTxXTAQfnE01GCjA4leFymiNM2hIBW4HMBui4qiO+u+lArNRDz
- 3Yrw==
-X-Gm-Message-State: AOJu0YwUZeWHX+wo8fxPnYIJdKoTt+b//UlMJ0DQgEouTQvsEWK8kMlk
- wyqVAcn8+xIIoS1tHFdvfXZWQX/8i965NpkId9z04WYBr52yn4O/5VkTwtpfNA4nCrlrpvDQv1q
- x9qF+oUEtE+Rl+GyDfDCMB+XLRj0=
-X-Gm-Gg: ASbGnctWT6cILDLBmcPbEgw9pfosBYmuu+kxfg18KkGOLBCYPpxTS8jJpi0FDZeDLnT
- Mavwmr7ADHA0jI9lI6eWss6/P+pCLGM5fgOF1JBML/xL8/UpaEnxmHnO/MFnCVoBLCrRpdQgPwV
- ATaFzhaNAzILEWJ6sh8nhdW1WMe3YcVNhAInDvFrAjIraexOKAfbYxwPT0
-X-Google-Smtp-Source: AGHT+IG2DlGolwwHFzRQpHcu2gggHIO+DbIoRPQtFhan8c56YzEOhaRH+AOI/zd62EuJ5C1eK9DPv+Sls9aTrtc0Ng4=
-X-Received: by 2002:a05:6102:578f:b0:4bb:e511:15a6 with SMTP id
- ada2fe7eead31-4c30a5eec6cmr1125494137.11.1741308326799; Thu, 06 Mar 2025
- 16:45:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tqLrf-0004v1-KE
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 19:47:05 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tqLrb-0001PC-Vd
+ for qemu-devel@nongnu.org; Thu, 06 Mar 2025 19:46:58 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 246504E6005;
+ Fri, 07 Mar 2025 01:46:51 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id UrQbrTXdLa8h; Fri,  7 Mar 2025 01:46:49 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 109564E6000; Fri, 07 Mar 2025 01:46:49 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0A7D674577C;
+ Fri, 07 Mar 2025 01:46:49 +0100 (CET)
+Date: Fri, 7 Mar 2025 01:46:49 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [RFC PATCH 04/18] qemu: Introduce 'qemu/legacy_binary_info.h'
+In-Reply-To: <5060aa2a-8fd0-4f83-af71-8d6eda1ef756@linaro.org>
+Message-ID: <b6c79dbf-de56-0265-bff0-1775527f55fd@eik.bme.hu>
+References: <20250305153929.43687-1-philmd@linaro.org>
+ <20250305153929.43687-5-philmd@linaro.org>
+ <35177cd6-0741-4c28-a5d5-3529208a31dc@linaro.org>
+ <dd0336c2-c2ed-477c-8f40-eaee2f110238@redhat.com>
+ <21a34cac-855b-4628-a154-e708ea85df59@linaro.org>
+ <CABgObfaKQLizim36Lzqzn+brc5d7m10eKbZV59ZK9+03Kt7eTg@mail.gmail.com>
+ <Z8mMhjwiYCY7Pq4H@redhat.com>
+ <c6953b69-a54d-6d42-343e-dae07266306f@eik.bme.hu>
+ <Z8m8GmPzTum7qEcS@redhat.com>
+ <15694c26-5a08-d786-e1bf-212365b1f957@eik.bme.hu>
+ <5060aa2a-8fd0-4f83-af71-8d6eda1ef756@linaro.org>
 MIME-Version: 1.0
-References: <20250218165757.554178-1-pbonzini@redhat.com>
- <20250218165757.554178-3-pbonzini@redhat.com>
- <CAKmqyKMdUONoXD69m3RH1PeoLLtL8qT-eXweVh9WHEZM5Feufg@mail.gmail.com>
- <ab9b6720-cb48-4b8f-9059-2856c78b5577@redhat.com>
-In-Reply-To: <ab9b6720-cb48-4b8f-9059-2856c78b5577@redhat.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 7 Mar 2025 10:44:58 +1000
-X-Gm-Features: AQ5f1JpytgaTsPd00sP3ki7nrL8Ya2EslIop-maooGVQxn7GYQ4reZlPJlZ-oSU
-Message-ID: <CAKmqyKP4Fe1FHyW=fpxa47SDq=Tz2-7rAcjTxv8W2L9+q5-oCQ@mail.gmail.com>
-Subject: Re: [PATCH 2/7] target/riscv: env->misa_mxl is a constant
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: multipart/mixed;
+ boundary="3866299591-427498849-1741308409=:30480"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,104 +81,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 6, 2025 at 11:00=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-427498849-1741308409=:30480
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Thu, 6 Mar 2025, Pierrick Bouvier wrote:
+> On 3/6/25 07:28, BALATON Zoltan wrote:
+>> On Thu, 6 Mar 2025, Daniel P. Berrangé wrote:
+>>> On Thu, Mar 06, 2025 at 02:45:52PM +0100, BALATON Zoltan wrote:
+>>>> On Thu, 6 Mar 2025, Daniel P. Berrangé wrote:
+>>>>> On Thu, Mar 06, 2025 at 12:34:13PM +0100, Paolo Bonzini wrote:
+>>>>>> Il gio 6 mar 2025, 10:27 Philippe Mathieu-Daudé <philmd@linaro.org> ha
+>>>>>> scritto:
+>>>>>> 
+>>>>>>> This API is to allow refactoring code for heterogeneous emulation,
+>>>>>>> without changing user-facing behavior of current qemu-system binaries,
+>>>>>>> which I now consider as 'legacy'.
+>>>>>>> 
+>>>>>>> Once all current restrictions removed, the new 
+>>>>>>> qemu-system-heterogeneous
+>>>>>>> binary is expected to run any combination of targets.
+>>>>>>> 
+>>>>>>> qemu-system-$target will be a call to qemu-system-heterogeneous with
+>>>>>>> a restricted subset, possibly in the form of:
+>>>>>>>
+>>>>>>>    $ qemu-system-heterogeneous --target aarch64-softmmu
+>>>>>>> 
+>>>>>> 
+>>>>>> Or just qemu-system I guess.
+>>>>>>
+>>>>>>      ^ equivalent of today's qemu-system-aarch64
+>>>>>>> 
+>>>>>>> If you don't like 'qemu_legacy_binary_' prefix, I can use
+>>>>>>> 'qemu_single_binary_' instead.
+>>>>>>> 
+>>>>>> 
+>>>>>> Still there is a problem with renaming binaries (both the "qemu-kvm" 
+>>>>>> case
+>>>>>> and the good/bad case that Richard pointed out).
+>>>>> 
+>>>>> We could special case the '-kvm' suffix, because by its nature it
+>>>>> implies the current binary build target.
+>>>>> 
+>>>>>> 
+>>>>>> I think you should try creating two versions of system/arch_init.c, so 
+>>>>>> that
+>>>>>> it has a separate implementation for heterogeneous vs. single-target
+>>>>>> binaries. Then you can keep separate linking steps for single-target
+>>>>>> binaries and you naturally get the right target info from either the
+>>>>>> target-specific arch_init-single.c, or the --target option for
+>>>>>> arch_init-multi.c.
+>>>>>> 
+>>>>>> (Is --target even necessary? As long as you have a way disambiguate
+>>>>>> same-named machines like -M virt, and have no default machine in the
+>>>>>> multi-target binary, you shouldn't need it).
+>>>>> 
+>>>>> If we did 'query-machines' on qemu-system-heterogeneous, it would
+>>>>> return all machines from all targets. To disambiguate naming there
+>>>>> are various options
+>>>>>
+>>>>>   * The query-machines command would have to gain a new 'target'
+>>>>>     field and we would have to document that uniqness is across
+>>>>>     the tuple (name, target), not merely name. That's a semantic
+>>>>>     change.
+>>>>>
+>>>>>     We would still need a way to express the 'target' when asking
+>>>>>     to instantiate a machine
+>>>>>
+>>>>>   * The query-machines command would have to gain a new 'target'
+>>>>>     paramter so callers can restrict the data they receive back
+>>>>>
+>>>>>     We would still need a way to express the 'target' when asking
+>>>>>     to instantiate a machine
+>>>>>
+>>>>>   * Rename all machine types so they are '<target>-<machine>'
+>>>>>     The query-machines command doesn't change. Apps would have
+>>>>>     to "parse" the machine name to see what 'target' each is
+>>>>>     associated with, or we include an explicit 'target' field
+>>>>>     in the returned data. Instianting a machine would not need
+>>>>>     changing
+>>>> 
+>>>> I think -machine m68k:virt could work, -M help would list machines like:
+>>>> 
+>>>> arm:raspi
+>>>> i386:pc
+>>>> etc.
+>>>> 
+>>>> Management apps could easily find : to separate arch but those that don't
+>>>> care about arch would just work and list more possible machines. Some
+>>>> machines like pc or mac99 that may appear differently in different single
+>>>> arch binary might need to get resolved first. Maybe need a way to search
+>>>> machine list by pattern e.g. as -machine x86_64:help.
+>>> 
+>>> ...except that custom structures/formats in command line args is
+>>> something we've tried very hard to eliminate in Qemu, and instead
+>>> model everything as a distinct fields, using QAPI, so...
+>>> 
+>>> .. if you're meaning "arm:raspi" as a short hand for "target:machine"
+>>>    that would be a design anti-pattern, b
+>>> 
+>>> ...if you're meaning that "arm:raspi" is the full machine name, to be
+>>>    strictly treated as an opaque string that would be acceptable.
+>>> 
+>>> I rather think the latter would not end up being treated as an opaque
+>>> string though - the tempetation to parse it & assign semantics to the
+>>> pieces is just too great. So I'm not a fan of that approach.
+>>>
+>>>  From a QAPI design best pratice POV, the requirement would be for
+>>> 
+>>> -machine target=arm,name=raspi
+>> 
+>> As long as I don't have to type that and can use -M arm:raspi as a
+>> shorthand that's OK but then we could just make an exception for this and
+>> combine target and machine name here for simplicity. Unless it's simpler
+>> to internally use separate name and target attributes and implement a
+>> command line shorthand. You'll also need a way to display machine list
+>> with target and name in a way that's easy to parse for tools for which the
+>> target:name format seems like a trivial way. So I don't mind how you
+>> rationalise it and call all of it the machine name or if it's implemented
+>> as separate name and target attributes but please try to keep the command
+>> line something a human can use too.
+>> 
 >
-> On 3/6/25 02:16, Alistair Francis wrote:
-> > On Wed, Feb 19, 2025 at 3:01=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.=
-com> wrote:
-> >>
-> >> There is nothing that overwrites env->misa_mxl, so it is a constant.  =
-Do
-> >
-> > The idea is that misa_mxl can change, although that's not supported now=
-.
+> Mentioning heterogeneous emulation (i.e., running various cpu architectures 
+> concurrently in the same process) is an interesting topic, but it's way far 
+> beyond the scope of current series, I feel that everyone starts to get lost a 
+> bit here.
+
+The above wasn't about heterogenous emulation but about single binary. 
+That still needs a way to select the machine to emulate.
+
+> Creating a single binary combining all existing QEMU architectures should 
+> *not* have any impact on the existing cli. It's just a code reorganisation, 
+> without any user visible change. Please notice it's just a single binary, not 
+> something introducing heterogeneous emulation.
 >
-> At run-time, or only at configuration time (before realize)?
+> A missing piece in this series is a new driver (i.e. a new main()) forwarding 
+> (argc, argv) to the correct entry point, and adding an option '--target' to 
+> allow people to override or disambiguate the automatically detected target.
 
-Runtime, at least kind of
+So it would have impact on existing CLI as it needs introducing at least 
+one new option. Please note QEMU options are single dash so this could be 
+-target or -T for short then one could do qemu-system -T arm -M raspi. 
+This is another possible CLI for this. For machines that only exist in one 
+arch the target option may not be needed.
 
-The RISC-V spec 1.12 and earlier allows MXL to change at runtime by
-writing to misa.MXL. QEMU doesn't support this and AFAIK no hardware
-does either, but it was something that we might support in the future
-(hence the split).
+> This detection will be based on symlink name used to invoke the binary. For 
+> the binary itself, why not simply call it: ./qemu, or ./qemu-system (if the 
+> scope is only system emulation).
 
-The latest RISC-V priv spec has changed misa.MXL to be read only though.
+This might not work if people want to rename the symlinked name although 
+checking only the prefix could solve that.
 
-So I guess although in theory it can be changed at runtime, we are
-probably never going to support that now that it's deprecated.
+> To come back to heterogeneous topic, even though we can be sure everyone will 
+> have an opinion on the command line interface for that, I'm not sure this is 
+> the first question we should answer. There are more important technical 
+> questions and refactorings to solve, before even thinking about how to use 
+> it.
 
-Now that the latest priv spec has dropped the ability to write to
-misa.MXL we will probably work towards just consolidating misa_mxl_max
-and misa_mxl into a single value that is constant after realise.
+We haven't discussed heterogenous emulation yet and what exact command 
+line syntax to use can wait but discussing what command line option is 
+needed and how to represent it might influence how the internal 
+implementation will be or how easy it will be to implement such command 
+line so it's good to consider that now as it may influence the design. 
+You'll need to store target somewhere so the command line can list it or 
+select it so deciding if it should be an Object property or Machine or 
+Device property might also have impact on the possible command line syntax 
+and vice versa so maybe it's not something you can totally ignore.
 
->
-> >> not let a corrupted migration stream change the value; changing misa_m=
-xl
-> >
-> > Does this actually happen? If the migration data is corrupted won't we
-> > have all sorts of strange issues?
->
-> Generally migration data (just like disk image formats) is treated as
-> security-sensitive, overriding any other considerations.  So you have to
-> assume that the corruption is intentional, and sneaky enough to cause
-> trouble.
+> A simple and good first step could be to have a "magical" board combining 
+> different processing units having different architectures. Having this will 
+> already imply to tackle a lot of technical issues. Then, maybe, it will be 
+> productive to debate about what the command line interface should look like 
+> to have something generic. Maybe it's not even something we'll need.
 
-I'm not convinced that this is the thing that we should be checking
-for. If someone can corrupt the migration data for an attack there are
-better things to change then the MXL
+This isn't something that was discussed above and I agree it's not 
+something to discuss yet.
 
-Alistair
-
->
-> Paolo
->
-> > Alistair
-> >
-> >> would have a snowball effect on, for example, the valid VM modes.
-> >>
-> >> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> >> ---
-> >>   target/riscv/machine.c | 13 +++++++++++++
-> >>   1 file changed, 13 insertions(+)
-> >>
-> >> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> >> index d8445244ab2..c3d8e7c4005 100644
-> >> --- a/target/riscv/machine.c
-> >> +++ b/target/riscv/machine.c
-> >> @@ -375,6 +375,18 @@ static const VMStateDescription vmstate_ssp =3D {
-> >>       }
-> >>   };
-> >>
-> >> +static bool riscv_validate_misa_mxl(void *opaque, int version_id)
-> >> +{
-> >> +    RISCVCPU *cpu =3D RISCV_CPU(opaque);
-> >> +    CPURISCVState *env =3D &cpu->env;
-> >> +    RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(cpu);
-> >> +    uint32_t misa_mxl_saved =3D env->misa_mxl;
-> >> +
-> >> +    /* Preserve misa_mxl even if the migration stream corrupted it  *=
-/
-> >> +    env->misa_mxl =3D mcc->misa_mxl_max;
-> >> +    return misa_mxl_saved =3D=3D mcc->misa_mxl_max;
-> >> +}
-> >> +
-> >>   const VMStateDescription vmstate_riscv_cpu =3D {
-> >>       .name =3D "cpu",
-> >>       .version_id =3D 10,
-> >> @@ -394,6 +406,7 @@ const VMStateDescription vmstate_riscv_cpu =3D {
-> >>           VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
-> >>           VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
-> >>           VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
-> >> +        VMSTATE_VALIDATE("MXL must match", riscv_validate_misa_mxl),
-> >>           VMSTATE_UINT32(env.misa_ext, RISCVCPU),
-> >>           VMSTATE_UNUSED(4),
-> >>           VMSTATE_UINT32(env.misa_ext_mask, RISCVCPU),
-> >> --
-> >> 2.48.1
-> >>
-> >>
-> >
-> >
->
+Regards,
+BALATON Zoltan
+--3866299591-427498849-1741308409=:30480--
 
