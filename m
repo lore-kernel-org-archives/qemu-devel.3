@@ -4,81 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64F8C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 09:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 933C7C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 09:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqUB1-0005mD-6Q; Fri, 07 Mar 2025 04:39:31 -0500
+	id 1tqUIu-0007sd-Vh; Fri, 07 Mar 2025 04:47:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqUAy-0005lz-O7
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 04:39:28 -0500
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqUAw-0004fZ-Kt
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 04:39:28 -0500
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e53a91756e5so1345945276.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 01:39:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741340365; x=1741945165; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FoYUnMOO5qw+G5tvkquUywqLJtBN0w4ltvm0//3rA0o=;
- b=SivyIyQnxL2knBEWUXced7AZz/6A8lLk1o4p4wAW4YaN93sWjRNl26a+zFJv8AtgbN
- YPu+ERX4Fda2fideoytE4oOtgPMQwBUA1D/3TNn956fvMSeL01AaKq4DooAMGua1jHU4
- uIJsEp+drBYVH+dtdL+ZXrRzH2pPuhrtc3ZJICBpdGenCdhpedfId0W585zQdiBG2ZJB
- WPn+Mb2w/bNYF2qbKHc/wY6MBymlxHqgDl7RurMLugIYyzswbtRe15PNI8vA2OnuPw7v
- ty+O9CiCB+QsMbXs8+vy4BhLWKS77wnQw6YMTVScpdZ/SuuGZOLNs9ys8PrDk8EfRNCX
- 4Iag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741340365; x=1741945165;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FoYUnMOO5qw+G5tvkquUywqLJtBN0w4ltvm0//3rA0o=;
- b=pjKdq5suW8de1rcl8FrJ7+AhkRXWN25rD5HKy+Nv540o4bSPle2hozl231/6eQQxQ8
- Sw4z1bl3au/ygDnpXZXcdu8o2fOudLJj29M/EqdRR0Ca0BMEgph4GkK8H/cQdRECxkek
- pjtXGvjpurM6WAc3JLqh7459BRPb0KfaCJmzWYXCjPlKyMSfdYKORyLja45pFku9tcok
- xzIiTI5bG5vxAz86pDlzXM8VHxwpzJLGi7/yqBtFhtr9k5Tn3H2riAMP/5YGBIDjUW99
- OTEKPQg0N9YdXxmdjA42lSn0WP4QvhckZqFe2SthOqs37lJyxMhrbjfkz4aQUbTTZY6a
- Vnig==
-X-Gm-Message-State: AOJu0YyVOJnzoVk6DZ0hEXmwHOx62im7QCR+SGcW0VuBJgf2ejf+MTFJ
- mm9+OOvJo4Uq5Y7YrEzJgvo9FHfjo8agXOPsMmtxy+tYCLZA3qolepb37N0+3zADXazD2UYQlbI
- f3UMuA3JlI5R9mVWjY/8ZvHrJllaXkfvWXeBMmA==
-X-Gm-Gg: ASbGncvL7l1XVZHLT6Mffx4GWExsVnpjaUeeRt4Xm4X1TryEqxEsRZgIDAV16lQKUEo
- 4twsBNUCwHMyTLBuOY2ew5kPImz1a/NgmESUcWq3jBeCi3amjvi6lUAAnhvOBrL9xTdSTbjEUb4
- 1HyGlVAb8Fxf93YhRC8T6eg/RGFxo=
-X-Google-Smtp-Source: AGHT+IGRYO7nnH6tFDH/Ez8nd5a974JZSIeVbjZY/Pa2AX+7qpQhx0vnv/8SPpGXzXfUbCe5YFexHCtySj3eQVDFbx4=
-X-Received: by 2002:a05:6902:2848:b0:e5d:e04f:f2bd with SMTP id
- 3f1490d57ef6-e635c1dc48fmr3281112276.44.1741340365559; Fri, 07 Mar 2025
- 01:39:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tqUIs-0007sP-S8; Fri, 07 Mar 2025 04:47:39 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tqUIq-0000vr-Ro; Fri, 07 Mar 2025 04:47:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=qY2IuMBT01FOC9RrR78BnLimhXagPLFhg+tp43sY9wY=; b=Aaid/L2RzphfO4jFRY+sNvm4DL
+ CcwjqTFN4mRFE16OOIy9SFcIIC9nDGqd8XPznRPJ4TNMqtFZdzveVEn1gLSc057WHnLQts4mg0aWP
+ 5LoIII+Dp0Gy6zNnqyJxYn8Dhn5Sd3Y672Y7i0M5iJphkr5B35cBoXtykAYd6bQH4V6ClHAg6pfFE
+ oktv4dPE2Re6rSlqpUFTHWiEPaZDTRxzgT3MoXI+zmLUirRZ3WVIRQHGn6LJEvBbiRStLwWcB70x5
+ fbgtdWVvKrI6ncqZ3nn6iYOcLMlrWumTp1yJHZkUOWLuphivqzrMC1FEQZlTAn3z8viK/2kGZVZNu
+ MUjPX+8dsVMsfpotIDnlfBTdve/nngk3dIGKExYK445i1Ko41eXi8YHK0xTPpGW1ekwWpCV3dLhwk
+ ku9WAHsTAP1Ecv6wMDR/zYNexrz5jCAKxJ0LRCq7nflSigjwZPvBJZnfIswuI/EvqxKqwnwzH6Dty
+ YM6dimAzKTc2GdWLlt9+NW4+Cphu5seY90pTR4Mwh2FBiCaLs8HWr8pRa9PFbD9yZZ06Fu9jjfADQ
+ NEgKv4nOPoCib86GjSzaF2WPKMSjyYnJahQsaaUZP7pDQ4/ugB7+sWVZy+6DXXYIORdvOSAwnFKzP
+ rs3n/gE1lMAKU5UODXW0OLNIiR+En40KX7y8AaltY=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>, qemu-stable@nongnu.org
+Subject: Re: [PATCH v2 2/2] 9pfs: fix FD leak and reduce latency of
+ v9fs_reclaim_fd()
+Date: Fri, 07 Mar 2025 10:47:33 +0100
+Message-ID: <30024595.HyFKvjELBK@silver>
+In-Reply-To: <5747469d3f039c53147e850b456943a1d4b5485c.1741339452.git.qemu_oss@crudebyte.com>
+References: <cover.1741339452.git.qemu_oss@crudebyte.com>
+ <5747469d3f039c53147e850b456943a1d4b5485c.1741339452.git.qemu_oss@crudebyte.com>
 MIME-Version: 1.0
-References: <20250306163925.2940297-1-peter.maydell@linaro.org>
- <20250306163925.2940297-8-peter.maydell@linaro.org>
- <54de9ed5-6314-4a49-a1ed-cc9d6225897d@linaro.org>
-In-Reply-To: <54de9ed5-6314-4a49-a1ed-cc9d6225897d@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Mar 2025 09:39:13 +0000
-X-Gm-Features: AQ5f1Jpq98pAUIBOzdR_gz11R2zwCYL0WNxIXc9v7cyjfzCtTpQB_FhBDN2bk-w
-Message-ID: <CAFEAcA-iYu3wUb7txeFLKm7T4P8rZWCzaLAZP7+SadqAa7Rn4Q@mail.gmail.com>
-Subject: Re: [PATCH 07/10] target/arm: SCR_EL3.RW should be treated as 1 if
- EL2 doesn't support AArch32
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,43 +69,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Mar 2025 at 22:54, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 3/6/25 08:39, Peter Maydell wrote:
-> > +/* Return the effective value of SCR_EL3.RW */
-> > +static inline bool arm_scr_rw_eff(CPUARMState *env)
-> > +{
-> > +    /*
-> > +     * SCR_EL3.RW has an effective value of 1 if:
-> > +     *  - we are NS and EL2 is implemented but doesn't support AArch32
-> > +     *  - we are S and EL2 is enabled (in which case it must be AArch64)
-> > +     */
-> > +    ARMCPU *cpu = env_archcpu(env);
-> > +    bool ns_and_no_aarch32_el2 = arm_feature(env, ARM_FEATURE_EL2) &&
-> > +        (env->cp15.scr_el3 & SCR_NS) &&
-> > +        !cpu_isar_feature(aa64_aa32_el1, cpu);
-> > +    bool s_and_el2_enabled =
-> > +        (env->cp15.scr_el3 & (SCR_NS | SCR_EEL2)) == SCR_EEL2;
-> > +
-> > +    return ns_and_no_aarch32_el2 || s_and_el2_enabled ||
-> > +        (env->cp15.scr_el3 & SCR_RW);
-> > +}
->
-> The computation here can be simplified.
->
->      if (env->cp15.scr_el3 & SCR_RW) {
->          return true;
+On Friday, March 7, 2025 10:23:02 AM CET Christian Schoenebeck wrote:
+> This patch fixes two different bugs in v9fs_reclaim_fd():
+> 
+> 1. Reduce latency:
+> 
+> This function calls v9fs_co_close() and v9fs_co_closedir() in a loop. Each
+> one of the calls adds two thread hops (between main thread and a fs driver
+> background thread). Each thread hop adds latency, which sums up in
+> function's loop to a significant duration.
+> 
+> Reduce overall latency by open coding what v9fs_co_close() and
+> v9fs_co_closedir() do, executing those and the loop itself altogether in
+> only one background thread block, hence reducing the total amount of
+> thread hops to only two.
+> 
+> 2. Fix file descriptor leak:
+> 
+> The existing code called v9fs_co_close() and v9fs_co_closedir() to close
+> file descriptors. Both functions check right at the beginning if the 9p
+> request was cancelled:
+> 
+>     if (v9fs_request_cancelled(pdu)) {
+>         return -EINTR;
+>     }
+> 
+> So if client sent a 'Tflush' message, v9fs_co_close() / v9fs_co_closedir()
+> returned without having closed the file descriptor and v9fs_reclaim_fd()
+> subsequently freed the FID without its file descriptor being closed, hence
+> leaking those file descriptors.
+> 
+> This 2nd bug is fixed by this patch as well by open coding v9fs_co_close()
+> and v9fs_co_closedir() inside of v9fs_reclaim_fd() and not performing the
+> v9fs_request_cancelled(pdu) check there.
+> 
+> Fixes: 7a46274529c ('hw/9pfs: Add file descriptor reclaim support')
+> Fixes: bccacf6c792 ('hw/9pfs: Implement TFLUSH operation')
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
+>  hw/9pfs/9p.c | 29 ++++++++++++++++++++---------
+>  1 file changed, 20 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index 4f9c2dde9c..80b190ff5b 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -434,6 +434,8 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+>      V9fsFidState *f;
+>      GHashTableIter iter;
+>      gpointer fid;
+> +    int err;
+> +    int nclosed = 0;
+>  
+>      /* prevent multiple coroutines running this function simultaniously */
+>      if (s->reclaiming) {
+> @@ -446,10 +448,10 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+>      QSLIST_HEAD(, V9fsFidState) reclaim_list =
+>          QSLIST_HEAD_INITIALIZER(reclaim_list);
+>  
+> +    /* Pick FIDs to be closed, collect them on reclaim_list. */
+>      while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &f)) {
+>          /*
+> -         * Unlink fids cannot be reclaimed. Check
+> -         * for them and skip them. Also skip fids
+> +         * Unlinked fids cannot be reclaimed, skip those, and also skip fids
+>           * currently being operated on.
+>           */
+>          if (f->ref || f->flags & FID_NON_RECLAIMABLE) {
+> @@ -499,17 +501,26 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+>          }
 >      }
->      if (env->cp15.scr_el3 & SCR_NS) {
->          return arm_feature(env, ARM_FEATURE_EL2) &&
->                 !cpu_isar_feature(aa64_aa32_el1, cpu);
->      } else {
->          return env->cp15.scr_el3 & SCR_EEL2;
->      }
+>      /*
+> -     * Now close the fid in reclaim list. Free them if they
+> -     * are already clunked.
+> +     * Close the picked FIDs altogether on a background I/O driver thread. Do
+> +     * this all at once to keep latency (i.e. amount of thread hops between main
+> +     * thread <-> fs driver background thread) as low as possible.
+>       */
+> +    v9fs_co_run_in_worker({
+> +        QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
+> +            err = (f->fid_type == P9_FID_DIR) ?
+> +                s->ops->closedir(&s->ctx, &f->fs_reclaim) :
+> +                s->ops->close(&s->ctx, &f->fs_reclaim);
+> +            if (!err) {
+> +                /* total_open_fd must only be mutated on main thread */
+> +                nclosed++;
+> +            }
+> +        }
+> +    });
+> +    total_open_fd -= nclosed;
 
-Yes, but at the cost of moving it quite a long
-way from how the condition is specified in the Arm ARM...
+So here is another thing: looking at 'man 2 close' I would say that
+decrementing 'total_open_fd' conditionally based on what close() returned is
+wrong. The man page suggest that the return value of close() should only be
+used for diagnostic purposes, as an error on close() often indicates just an
+error on a previous write() and hence the return value should only be used for
+catching a data loss related to writes.
 
--- PMM
+So this should probably changed here, as well as in v9fs_co_close() /
+v9fs_co_closedir(), part of a separate patch though, so I haven't addressed it
+here yet.
+
+Does this make sense?
+
+/Christian
+
+> +    /* Free the closed FIDs. */
+>      while (!QSLIST_EMPTY(&reclaim_list)) {
+>          f = QSLIST_FIRST(&reclaim_list);
+>          QSLIST_REMOVE(&reclaim_list, f, V9fsFidState, reclaim_next);
+> -        if (f->fid_type == P9_FID_FILE) {
+> -            v9fs_co_close(pdu, &f->fs_reclaim);
+> -        } else if (f->fid_type == P9_FID_DIR) {
+> -            v9fs_co_closedir(pdu, &f->fs_reclaim);
+> -        }
+>          /*
+>           * Now drop the fid reference, free it
+>           * if clunked.
+> 
+
+
 
