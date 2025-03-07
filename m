@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A4F4C28B27
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 20:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70754C28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 20:40:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqeUX-0004OK-I3; Fri, 07 Mar 2025 15:40:21 -0500
+	id 1tqeUS-0004MU-Uj; Fri, 07 Mar 2025 15:40:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tqeUW-0004Nr-Cc
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:40:20 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1tqeUQ-0004KU-QU
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:40:14 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tqeUU-0001ug-7w
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:40:20 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2ff6a98c638so4449769a91.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 12:40:17 -0800 (PST)
+ id 1tqeUN-0001tO-4O
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 15:40:14 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2ff69365e1dso3540290a91.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 12:40:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1741380016; x=1741984816; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2FWXlQU/7CPw40ZorM5xTztxlUlpDOkFuJBD3+uMXoc=;
- b=bCftfwvBFIZxShhYR3QFk+HSrZFHnCL4LZ/Uf2/XPJfK3q7miRmbgOwpepDrEPx19W
- Z05KXDNks8cED2GTvUkUk2FC3heRT6hPg2FaFeOY9efOCvrMUJjXzxwL7hirlmeTgENQ
- Jf9OrzKJCKIyDSR/xz719IhZbfn2mYZUI0nQMQXWuEFGYRPy3AvyQMs6Z8/YAXS+B09B
- rmSGjgW5Ut9uypUj4LBW7Aaq5BxThYs33A/VHJgsVpDJr9aiXwsf0L1YNc/KAStf3uRj
- rhYauNxPmwX8+yGmYOAgdbXnA3eKyXCTUMIXRNlEYhebmkRHRp2S+nBq/aDuoZZmmLTG
- ds/g==
+ d=sifive.com; s=google; t=1741380009; x=1741984809; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dppJGFKe0O8FEfkLqUZJx0Vx/phQ/obvZ/lkzgf8YXE=;
+ b=OodR2xMsmzCUPRieRDPRKUb7fuqm0snDPpxT0mWzr1Zu1rud41ebKMaa7jszr7rdTf
+ kDVCvIi1sRbKk7M0XRM1lqPF1fwYSJRKUfdauINUc/HZjIqR7tCP8bb3AS8dpR2iFWgR
+ xW7aAfGpSXdkGZUkfbqqw4lfBxwKqA88DtGR50MpvwFwFi60HJI8UrUKMDfvBeQrPcQp
+ eutJ9dUtBg2dygFD3lxe+QtWtn/DppVpqtCyUSsQa1+oNHOs/SupwLNanXcNGwC/SW+8
+ +eK/nlNOnlvTiGOAtHuypNVIiHVtgErxnj62W+93t8ohsJoMDNuroIQ6Pmuz8yyKZi/1
+ k1gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741380016; x=1741984816;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2FWXlQU/7CPw40ZorM5xTztxlUlpDOkFuJBD3+uMXoc=;
- b=KsEOnXj67zygR+UB99iCV9JL5prS9H2m8YlJ7iTefFJv78T5Xelo1JRfFjj0hIctgC
- fkVMNcTvoDxUtp4GGlOxYv/zfOJikoHrJxUIQSq/It7Fg92Hovzl6Aeua00pBI4SZEi9
- TAIUv//c0m9sCgOPbMcpuAWDmzbfiR1Nh+C7SZOuoZUgtaAFP3E/7l1zdmNXieFQAVvm
- sVpgb7F42uJnnqmZsCPll1KfSHJuK3wHgxVseN0g17439WII/Cnl4VSRaxKelaOQGY7m
- aAQp9DJnT96wq8PemXUA9Rks+lj1n66dscQmDw2WbMjG3U6GB54DJCm71yFaG43bw5ug
- +SHQ==
-X-Gm-Message-State: AOJu0Yzhq2tSlp4Z4fMbGt/6JFk5dkTu77PmukyvFTYz61Cxi7j3KNNj
- z/23CSI9HBzTG9qbz2TZ4ojxmEWkJallim6PCDP7UydSjVsi+ZN+qz5osQ4yGUPGjHsG9nWfC0L
- xXv648OYFhDDNb/fVTta9/z55JeRsdaiuQmdBFVEttufBqbb4pbHCMmlDHiaWW4buxBSKmPWLjB
- qPgngkLpTJXbHtmon+FeQPSWn6p99bhK0kCY7ez5M=
-X-Gm-Gg: ASbGncsMLVK535eGe8WdAkczzjZhUcPn+uQoKUCp3OG0vrmMYpSvB/5PyvsoPzVfCSB
- pAyeS7/r/Qrqw+tq0E3gkAqFhRDVKgS/+QY2PfJQ15V/eEmMckFtzly0CFjjlgwGBSNkZauxA1t
- UMaop3/gxriJ8aKpssCB2eWUu9XMmYllUNsoxZeR/mI07AJ0v3FPF5Paz68hicmb+8FJhMUzBJg
- Ld/mxsgH9lvhPkkZBgNRsVpEqQAnNLxPyu9EQzhJfUyjx8r3xuosDTS+02vgLog2gNllhoHxvgr
- B/eLrF68Yo/V9JRZBn3lb/rUY2RJokFYDgY1xBRwhSEoLKFyMuX7HVyx4LiWBltduRrVdtn4
-X-Google-Smtp-Source: AGHT+IFFJ/V9KxlOpoiEFBw9twFP49rnKXcC+4GGHwI4zIUDhw+tjQ+4B2JBFaLUsizClPzhjcdYkA==
-X-Received: by 2002:a17:90b:3950:b0:2ff:6167:e92d with SMTP id
- 98e67ed59e1d1-2ff7cef761amr6758275a91.32.1741380016319; 
- Fri, 07 Mar 2025 12:40:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741380009; x=1741984809;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dppJGFKe0O8FEfkLqUZJx0Vx/phQ/obvZ/lkzgf8YXE=;
+ b=JpXNBIENblvTmHqiAvA55oeP6rSCNlFQ8a13BTdMvhLu2XPBY+zhJ7iFfuBFcOTwQu
+ ydxLP4Bd9OLSeUzC78w0Xlf+lFPtjguTgK8Jgpi2b0gz8sitLjlJ/NTRLIYoOWapy+g2
+ cNlEgnccZbn7H6gRff/WnBI2jMzDph5xZnF2Jblae2eM3JXz8a03IAPsrKiionNQLxOU
+ 9jDHIRRrHierp/edSUzELxHNnxh1OmxJRrt7A27v0a/AfRAOc1hBrOZ5wpkS2oudrNQi
+ R+2ZFLM9xrXnGZAFtsZbb6nfLFxreHaNvlRQGlsJ9oXnMJEPZM8qEMQtjMmtNFuAE8wv
+ 9VlA==
+X-Gm-Message-State: AOJu0YxxZHfQMzaSON/jdt7j9YayytQQ6SOl+B5Gajpso0rDydrmegll
+ O90HJZlhXFkp2FTwjxnHHfGC5TjbHnosZP28xlXfcXV2A0qS1WVBLEPep0tt9nsbTm4QVv2MTJb
+ IHVmerOMXQXQmAO4RyfPYcCNqqAYArAPN9riCV+WDIaMlEhkbxyxF3U1HbLTfVaDxO+1q2obcV+
+ hpV+bvs9+MlVlPRVGZ1q6BIbRbcQOBsvycTB/xPTg=
+X-Gm-Gg: ASbGncsSv12ksytJclk/R9QAgBDBmtRTjM+biGMuZr+egBxZ+SkxUhD0PUh3aukh32z
+ HjGd0/cXsruGa5ycAsTcHFdKHrtIA/jw67MMcsvuwZ3nLBhHXk492elx12+XHVK4f3sEcOqqhNR
+ /a6Rz2UeIpXiKmCouDEGe1Pd5YXrhkH02AKSc96SGm247zHJekc1R/0Kbr5mqvliyCxJIP5X1ye
+ A2QXx7nZYzRGAmqbGA+UyJO77I0dLlBJ9bufyIvGi+rvVm0x9auewu6k5IvRW0ZG19xz+N5eOys
+ RpANIOcYOvFs2fQ2M8Q9OknwitXVK97noc0VDxVn7UJyR1ZB3m3FZVIfv05Nt8xJ3AX5M8ol
+X-Google-Smtp-Source: AGHT+IG1Y4/xz6hk0YT4x0gmAAUF+JK6ZT9SziZSR1qtLRcv8OhlbExiO8LM/5kenrUZGBovoHmx2Q==
+X-Received: by 2002:a17:90b:1dce:b0:2ff:62f3:5b19 with SMTP id
+ 98e67ed59e1d1-2ff7ce6f0bcmr7494655a91.13.1741380008547; 
+ Fri, 07 Mar 2025 12:40:08 -0800 (PST)
 Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff5aa3d3ccsm3270900a91.0.2025.03.07.12.40.13
+ 98e67ed59e1d1-2ff5aa3d3ccsm3270900a91.0.2025.03.07.12.40.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 12:40:15 -0800 (PST)
+ Fri, 07 Mar 2025 12:40:08 -0800 (PST)
 From: Jason Chien <jason.chien@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -79,17 +78,15 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  qemu-arm@nongnu.org (open list:MCIMX7D SABRE / i...),
  Jason Chien <jason.chien@sifive.com>
-Subject: [PATCH 1/4] include/hw/pci: Introduce a callback to set the
- downstream mr of PCI hosts
-Date: Sat,  8 Mar 2025 04:39:34 +0800
-Message-ID: <20250307203952.13871-2-jason.chien@sifive.com>
+Subject: [PATCH 0/4] Integrate IOMMUs with PCI hosts that have ATUs
+Date: Sat,  8 Mar 2025 04:39:33 +0800
+Message-ID: <20250307203952.13871-1-jason.chien@sifive.com>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20250307203952.13871-1-jason.chien@sifive.com>
-References: <20250307203952.13871-1-jason.chien@sifive.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=y
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=jason.chien@sifive.com; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=jason.chien@sifive.com; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,41 +109,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Many PCI hosts utilize struct PCIIOMMUOps to implement their ATUs, preventing
-coexistence with IOMMUs, which need to register struct PCIIOMMUOps as well.
+The struct PCIIOMMUOps is designed for use by an IOMMU, but many PCI hosts
+also utilize it to implement their ATUs, preventing coexistence with IOMMUs.
+Overwriting a PCI host’s PCIIOMMUOps disrupts its translation rules.
 
-To resolve this, set_downstream_mr() is introduced, allowing IOMMUs to
-configure the downstream memory region of the PCI host, enabling both to
-coexist.
+This patch series introduces a mechanism to route inbound transactions from
+PCI hosts to the IOMMU, enabling proper integration.
 
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
----
- include/hw/pci/pci.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+The final patch depends on another patch series:
+https://lists.nongnu.org/archive/html/qemu-riscv/2025-03/msg00003.html
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 4002bbeebd..fcf648da19 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -391,6 +391,18 @@ typedef struct PCIIOMMUOps {
-      * @devfn: device and function number
-      */
-     AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
-+    /**
-+     * @set_downstream_mr: set the downstream memory region for the PCI host.
-+     *
-+     * Optional callback that should be implemented if a PCI host registers
-+     * this PCIIOMMUOps. It allows an IOMMU to designate its memory region as
-+     * the downstream memory region of the PCI host.
-+     *
-+     * @opaque: the data passed to pci_setup_iommu().
-+     *
-+     * @mr: the downstream memory region
-+     */
-+    void (*set_downstream_mr)(void *opaque, MemoryRegion *mr);
-     /**
-      * @set_iommu_device: attach a HostIOMMUDevice to a vIOMMU
-      *
+Jason Chien (4):
+  include/hw/pci: Introduce a callback to set the downstream mr of PCI
+    hosts
+  hw/pci: Introduce an API to set PCI host downstream mr for IOMMU
+    integration
+  hw/pci-host/designware: Implement PCIIOMMUOps.set_downstream_mr()
+  hw/riscv/riscv-iommu: Connect the IOMMU with PCI hosts that have ATUs
+
+ hw/pci-host/designware.c         | 18 +++++++++++++++---
+ hw/pci/pci.c                     |  8 ++++++++
+ hw/riscv/riscv-iommu.c           | 15 ++++++++++-----
+ include/hw/pci-host/designware.h |  2 ++
+ include/hw/pci/pci.h             | 21 +++++++++++++++++++++
+ 5 files changed, 56 insertions(+), 8 deletions(-)
+
 -- 
 2.43.2
 
