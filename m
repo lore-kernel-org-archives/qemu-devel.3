@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 868A4C28B28
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 21:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63BDBC28B28
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 21:58:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqfgS-00051A-UZ; Fri, 07 Mar 2025 16:56:44 -0500
+	id 1tqfgP-0004zS-JR; Fri, 07 Mar 2025 16:56:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqfgR-00050Q-Gz
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:56:43 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tqfgO-0004z6-At
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:56:40 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqfgP-0001kL-PG
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:56:43 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-225477548e1so431615ad.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 13:56:41 -0800 (PST)
+ id 1tqfgM-0001jp-Pm
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 16:56:40 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso45566075ad.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 13:56:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741384600; x=1741989400; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741384597; x=1741989397; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9F27FfUGwswIcGWG8chjG9ToIwjCIEVz8dw0HLVPgHE=;
- b=tHEICw/U81rQ/yGMIdAP+wbkRDHHnxqeU7f7vqujqjqIqYVJTqj1rSfRYrFJBcre1g
- Z5xH/aGc4t/vmWnHJTY8jr0xlI+qYCOZWLI/wT08HzKzXmwkk2hgXh1DmlyL4VpDnLUd
- jGru8vsReuJiE3Tqc1Z8Wtczd0T5Ec6Snm9QNT4KvVCXi3KpcBD6NeuBX1/deNb4Qlx3
- 4gPYSf+/C+fnRZrUVYGjTvypAlku2h0H8mneWp1WvBrYL6/Xog4pwoHlZ/xgb4afT7vT
- 7qPEXQQzpR71y5P2VlEyr27KyxmVRDXMjfIbh3HjOHfqo4t3lhN5lFOoM/TGs9VaFV8x
- ToQQ==
+ bh=xUvuEjETtAwgjY+HHVzD3fRoYrhNXj1rMDKPunM+tus=;
+ b=F+g+8vHDpDMKOv/bgDtN/FuHQFjtuooWOzKVxDJNht7hLRyontwpYiimeJD/HjYavR
+ 1fOnJkeIltyYdVjfThJorSKC+BVxMQM+PUdmxocIKlBuUXloJGGKax7KEHFAPnDUdfCt
+ J3Xpf25imh418pfp6+JjFBNmp24BbyqE6zVWR5voCaCrz5pRXQQRFzZyKmsIlAhN6dZL
+ O6j0HB85dg+YMHRpoiLl5BQNgwSDiri4010y8NDvHteOMt9st79cBWbQ2S8RoGNb/fP1
+ 9JocJXBfT6qNVGUBB1SEeVazTDThQ07spSzOpKTWKxDs+C0mJfahHEZSc1gVZBgMMRI1
+ H1ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741384600; x=1741989400;
+ d=1e100.net; s=20230601; t=1741384597; x=1741989397;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9F27FfUGwswIcGWG8chjG9ToIwjCIEVz8dw0HLVPgHE=;
- b=grGmHE/FJOs3zldsnoE7YuKqC6FslwM9gU8ZaZZh26MxdL4sqHcOMxNlwZxUJAyLgT
- +4dmEkZO8PkJIsJRwn0XPE6BwweUb9plX2aJbEUEhl/4L54hjv3fpbqwSwYh9P17X+/z
- YNh251WldcZVKdhVC4FlnjWJ9EP2ak1QFdh3K9n5RwyD3sKON99vmGih8gcnCEhFulMk
- pJDthlNhoV36Dj3xuzzTigZ1CrFK58kozbPMKBDErkvlntloVhNsTrUFbWECsNPEbSqS
- aSeo7thFuOm/SqdNqKMBGfcRFsz5dPqHmUWCL0xmmug5RdZynB+NeZvEsouJGED2g6CL
- K5ug==
-X-Gm-Message-State: AOJu0YzJDuNUuhPC+rzvwjysM5R6Gz3h05HMWDOJyDpBKG+xKcD1T7wY
- sn6ecIiQhtVE42cK0h/xu6HGkHshbLrwa5rrbuaIzrnS8wHkJhTIyx+WdKyBD+DE2E6OSZ1KenU
- z
-X-Gm-Gg: ASbGnctg5AsAIiv5PLFJefFVph48+JiHN6ZRR8SfErdYX7R7jl3XY5cPBwQGpL9jCNm
- gSzx8QpN3ZsweJ4dtDiNn+RiVo42VNuFtTzpiCaVEgGV+7YLF3w06DYksEVe6VAYsF8mhuql0vt
- wWQoNTe4SX/tWjdLOkVyfYo/329+2a8CuvK5gH9SlGfI1BpQ24QtFsVxGi64jEIXm8HPE7KkIFX
- nTD0anVPr4uUxF9vFSNeOwhmVbYNHGYFjLkCG1Ulozhi8KcgMS/rC1BGkdwjQnRYqsNMn0V90E/
- DrP80ZRj1e807zXFD2zshVjf5rxjjxzYc4djSvh4h9NA
-X-Google-Smtp-Source: AGHT+IEpBLPbNDwbFWHbtDFWg/F3o2uXMTLWPQlQ0zMSbaU7eLTdBBkOHLlJs+mEDdjKeNRx4XKwJw==
-X-Received: by 2002:a05:6a00:3a0d:b0:736:362a:6fc8 with SMTP id
- d2e1a72fcca58-736aaae41d7mr6920551b3a.15.1741384600200; 
- Fri, 07 Mar 2025 13:56:40 -0800 (PST)
+ bh=xUvuEjETtAwgjY+HHVzD3fRoYrhNXj1rMDKPunM+tus=;
+ b=f2EwDZW90ay+4G/y4tjOaZueToKAgjvNgq4awEPX4XyvpDiaO9Vw31JVAjxW1myIWO
+ 2kIgA5MirHw3EamO89CwZAeZ0Otz5Q9d1FJJLPC/SHFQkmlgYQXxQQGGZ3SpaUQL2MjH
+ bYSIldCO7XM/IMnF6yOZEBcDjQMsF/S8h79E5tzR8zqcYvpgGXYpsCuxII0TlYdrxtut
+ DnXY1309x9UAldv5GV23Jzj8a1qp1QAVUCh/bh7rUXZ6qZwrePiwxtB3+uUSkmaaR7B3
+ 2ir0xAc5dQdKTmcg/BR5WMkq63m66XUs56OzPyCjkRTMcKbFCh6h0vFuLdlT+RAYwnfX
+ d3vQ==
+X-Gm-Message-State: AOJu0Yxyr0atWCXmdBUooxvS2miqmhjCkAeaiO12qL5fh6v8u6xLaeJW
+ j2oNatu/a1O4aRSqQk5myxoQwXS7+yiHWh6UyT7GnlJzv7Uqvm07tFd5/X+p4yAHXO+xc6nADK1
+ W
+X-Gm-Gg: ASbGncv0XaRIFVvGwFlCKdNIxCwFJFtXTYM7qnsOHb9Okz1eXtZJ7GflFi8QmUjUfg4
+ LQm/tA25sQKm01CU5p27SnKc/ItqgfVdOfZmqIhTbNoxEn9m93Kx6JuV3GZDcQNl6Q0wayiK+rZ
+ ThYpI5EbX/maOzerNqsggWIvbKH9o5xuL4yK0ymlaha5k5zsm5WzHKB0Mk7+030ZH28pvVjELiz
+ qNGCPnFBBOwggnssqDS9WX5wKiB82lLmsOSBpP8TWClRJ836BBKnvBUBTcbXFuL1n39gQJTq6b/
+ m/sX9nymmjlfsijP3sZCCZ3ocnqNIjDUgC2wz4FYCtPP
+X-Google-Smtp-Source: AGHT+IHLPRxB/7hl1LzXp8g7IAxNiV/3hkTKlh4ALyWckQE4KO22jH6W1sRSH0NFB/92LHK2TzzblQ==
+X-Received: by 2002:a05:6a00:b86:b0:736:50c4:3e0f with SMTP id
+ d2e1a72fcca58-736aaa373b8mr6645441b3a.10.1741384597425; 
+ Fri, 07 Mar 2025 13:56:37 -0800 (PST)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736ac9247dcsm2000927b3a.125.2025.03.07.13.56.39
+ d2e1a72fcca58-736ac9247dcsm2000927b3a.125.2025.03.07.13.56.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 13:56:39 -0800 (PST)
+ Fri, 07 Mar 2025 13:56:37 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -70,16 +70,18 @@ Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>,
  "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
  richard.henderson@linaro.org, manos.pitsidianakis@linaro.org
-Subject: [PATCH v4 7/7] hw/hyperv/hyperv_testdev: common compilation unit
-Date: Fri,  7 Mar 2025 13:56:23 -0800
-Message-Id: <20250307215623.524987-8-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 4/7] hw/hyperv/hyperv-proto: move SYNDBG definition from
+ target/i386
+Date: Fri,  7 Mar 2025 13:56:20 -0800
+Message-Id: <20250307215623.524987-5-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250307215623.524987-1-pierrick.bouvier@linaro.org>
 References: <20250307215623.524987-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,23 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Allows them to be available for common compilation units.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/hyperv/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/hyperv/hyperv-proto.h | 12 ++++++++++++
+ target/i386/kvm/hyperv-proto.h   | 12 ------------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/hw/hyperv/meson.build b/hw/hyperv/meson.build
-index 5acd709bdd5..ef5a596c8ab 100644
---- a/hw/hyperv/meson.build
-+++ b/hw/hyperv/meson.build
-@@ -1,5 +1,5 @@
- specific_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'))
--specific_ss.add(when: 'CONFIG_HYPERV_TESTDEV', if_true: files('hyperv_testdev.c'))
-+system_ss.add(when: 'CONFIG_HYPERV_TESTDEV', if_true: files('hyperv_testdev.c'))
- system_ss.add(when: 'CONFIG_VMBUS', if_true: files('vmbus.c'))
- system_ss.add(when: 'CONFIG_SYNDBG', if_true: files('syndbg.c'))
- system_ss.add(when: 'CONFIG_HV_BALLOON', if_true: files('hv-balloon.c', 'hv-balloon-page_range_tree.c', 'hv-balloon-our_range_memslots.c'))
+diff --git a/include/hw/hyperv/hyperv-proto.h b/include/hw/hyperv/hyperv-proto.h
+index 4a2297307b0..fffc5ce342f 100644
+--- a/include/hw/hyperv/hyperv-proto.h
++++ b/include/hw/hyperv/hyperv-proto.h
+@@ -61,6 +61,18 @@
+ #define HV_MESSAGE_X64_APIC_EOI               0x80010004
+ #define HV_MESSAGE_X64_LEGACY_FP_ERROR        0x80010005
+ 
++/*
++ * Hyper-V Synthetic debug options MSR
++ */
++#define HV_X64_MSR_SYNDBG_CONTROL               0x400000F1
++#define HV_X64_MSR_SYNDBG_STATUS                0x400000F2
++#define HV_X64_MSR_SYNDBG_SEND_BUFFER           0x400000F3
++#define HV_X64_MSR_SYNDBG_RECV_BUFFER           0x400000F4
++#define HV_X64_MSR_SYNDBG_PENDING_BUFFER        0x400000F5
++#define HV_X64_MSR_SYNDBG_OPTIONS               0x400000FF
++
++#define HV_X64_SYNDBG_OPTION_USE_HCALLS         BIT(2)
++
+ /*
+  * Message flags
+  */
+diff --git a/target/i386/kvm/hyperv-proto.h b/target/i386/kvm/hyperv-proto.h
+index 464fbf09e35..a9f056f2f3e 100644
+--- a/target/i386/kvm/hyperv-proto.h
++++ b/target/i386/kvm/hyperv-proto.h
+@@ -151,18 +151,6 @@
+ #define HV_X64_MSR_STIMER3_CONFIG               0x400000B6
+ #define HV_X64_MSR_STIMER3_COUNT                0x400000B7
+ 
+-/*
+- * Hyper-V Synthetic debug options MSR
+- */
+-#define HV_X64_MSR_SYNDBG_CONTROL               0x400000F1
+-#define HV_X64_MSR_SYNDBG_STATUS                0x400000F2
+-#define HV_X64_MSR_SYNDBG_SEND_BUFFER           0x400000F3
+-#define HV_X64_MSR_SYNDBG_RECV_BUFFER           0x400000F4
+-#define HV_X64_MSR_SYNDBG_PENDING_BUFFER        0x400000F5
+-#define HV_X64_MSR_SYNDBG_OPTIONS               0x400000FF
+-
+-#define HV_X64_SYNDBG_OPTION_USE_HCALLS         BIT(2)
+-
+ /*
+  * Guest crash notification MSRs
+  */
 -- 
 2.39.5
 
