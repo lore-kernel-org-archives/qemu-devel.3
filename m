@@ -4,56 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 933C7C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 09:48:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A75C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 10:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqUIu-0007sd-Vh; Fri, 07 Mar 2025 04:47:41 -0500
+	id 1tqUdi-00064V-DW; Fri, 07 Mar 2025 05:09:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tqUIs-0007sP-S8; Fri, 07 Mar 2025 04:47:39 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqUdd-00063q-AQ
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:09:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tqUIq-0000vr-Ro; Fri, 07 Mar 2025 04:47:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=qY2IuMBT01FOC9RrR78BnLimhXagPLFhg+tp43sY9wY=; b=Aaid/L2RzphfO4jFRY+sNvm4DL
- CcwjqTFN4mRFE16OOIy9SFcIIC9nDGqd8XPznRPJ4TNMqtFZdzveVEn1gLSc057WHnLQts4mg0aWP
- 5LoIII+Dp0Gy6zNnqyJxYn8Dhn5Sd3Y672Y7i0M5iJphkr5B35cBoXtykAYd6bQH4V6ClHAg6pfFE
- oktv4dPE2Re6rSlqpUFTHWiEPaZDTRxzgT3MoXI+zmLUirRZ3WVIRQHGn6LJEvBbiRStLwWcB70x5
- fbgtdWVvKrI6ncqZ3nn6iYOcLMlrWumTp1yJHZkUOWLuphivqzrMC1FEQZlTAn3z8viK/2kGZVZNu
- MUjPX+8dsVMsfpotIDnlfBTdve/nngk3dIGKExYK445i1Ko41eXi8YHK0xTPpGW1ekwWpCV3dLhwk
- ku9WAHsTAP1Ecv6wMDR/zYNexrz5jCAKxJ0LRCq7nflSigjwZPvBJZnfIswuI/EvqxKqwnwzH6Dty
- YM6dimAzKTc2GdWLlt9+NW4+Cphu5seY90pTR4Mwh2FBiCaLs8HWr8pRa9PFbD9yZZ06Fu9jjfADQ
- NEgKv4nOPoCib86GjSzaF2WPKMSjyYnJahQsaaUZP7pDQ4/ugB7+sWVZy+6DXXYIORdvOSAwnFKzP
- rs3n/gE1lMAKU5UODXW0OLNIiR+En40KX7y8AaltY=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, qemu-stable@nongnu.org
-Subject: Re: [PATCH v2 2/2] 9pfs: fix FD leak and reduce latency of
- v9fs_reclaim_fd()
-Date: Fri, 07 Mar 2025 10:47:33 +0100
-Message-ID: <30024595.HyFKvjELBK@silver>
-In-Reply-To: <5747469d3f039c53147e850b456943a1d4b5485c.1741339452.git.qemu_oss@crudebyte.com>
-References: <cover.1741339452.git.qemu_oss@crudebyte.com>
- <5747469d3f039c53147e850b456943a1d4b5485c.1741339452.git.qemu_oss@crudebyte.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqUdb-0007gR-Q8
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 05:09:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741342141;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uETNzP6ohsKIIAhKXKWs9ACT40YqsmGNOB97aTOHvog=;
+ b=TqKSfDeAumePZjF2x82pYbUjxTeRj7MvDi45s6aoaYy6m8DQf6KER/A9HJ/Z6wsr2sgflF
+ OyoZ1/Xbz72Ny0WS15jW37X5BfyacZVQ7S8pIzqHpWOy0F8HkzamD35yNdyu5FWITNJA7J
+ ouk/TQccooJ2dwVL7aLZQuw7h2Cd7wg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-5cCLQUqsMcS2nxnZ3b72TA-1; Fri,
+ 07 Mar 2025 05:08:56 -0500
+X-MC-Unique: 5cCLQUqsMcS2nxnZ3b72TA-1
+X-Mimecast-MFC-AGG-ID: 5cCLQUqsMcS2nxnZ3b72TA_1741342135
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A2F8B180034D; Fri,  7 Mar 2025 10:08:54 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1ACFA1800373; Fri,  7 Mar 2025 10:08:49 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9ED4221E66C2; Fri, 07 Mar 2025 11:08:46 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
+ =?utf-8?Q?hieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
+ Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH 09/57] docs/qapi-domain: add QAPI xref roles
+In-Reply-To: <20250305034610.960147-10-jsnow@redhat.com> (John Snow's message
+ of "Tue, 4 Mar 2025 22:45:18 -0500")
+References: <20250305034610.960147-1-jsnow@redhat.com>
+ <20250305034610.960147-10-jsnow@redhat.com>
+Date: Fri, 07 Mar 2025 11:08:46 +0100
+Message-ID: <87ldthnoep.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,124 +90,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, March 7, 2025 10:23:02 AM CET Christian Schoenebeck wrote:
-> This patch fixes two different bugs in v9fs_reclaim_fd():
-> 
-> 1. Reduce latency:
-> 
-> This function calls v9fs_co_close() and v9fs_co_closedir() in a loop. Each
-> one of the calls adds two thread hops (between main thread and a fs driver
-> background thread). Each thread hop adds latency, which sums up in
-> function's loop to a significant duration.
-> 
-> Reduce overall latency by open coding what v9fs_co_close() and
-> v9fs_co_closedir() do, executing those and the loop itself altogether in
-> only one background thread block, hence reducing the total amount of
-> thread hops to only two.
-> 
-> 2. Fix file descriptor leak:
-> 
-> The existing code called v9fs_co_close() and v9fs_co_closedir() to close
-> file descriptors. Both functions check right at the beginning if the 9p
-> request was cancelled:
-> 
->     if (v9fs_request_cancelled(pdu)) {
->         return -EINTR;
->     }
-> 
-> So if client sent a 'Tflush' message, v9fs_co_close() / v9fs_co_closedir()
-> returned without having closed the file descriptor and v9fs_reclaim_fd()
-> subsequently freed the FID without its file descriptor being closed, hence
-> leaking those file descriptors.
-> 
-> This 2nd bug is fixed by this patch as well by open coding v9fs_co_close()
-> and v9fs_co_closedir() inside of v9fs_reclaim_fd() and not performing the
-> v9fs_request_cancelled(pdu) check there.
-> 
-> Fixes: 7a46274529c ('hw/9pfs: Add file descriptor reclaim support')
-> Fixes: bccacf6c792 ('hw/9pfs: Implement TFLUSH operation')
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> ---
->  hw/9pfs/9p.c | 29 ++++++++++++++++++++---------
->  1 file changed, 20 insertions(+), 9 deletions(-)
-> 
-> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> index 4f9c2dde9c..80b190ff5b 100644
-> --- a/hw/9pfs/9p.c
-> +++ b/hw/9pfs/9p.c
-> @@ -434,6 +434,8 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
->      V9fsFidState *f;
->      GHashTableIter iter;
->      gpointer fid;
-> +    int err;
-> +    int nclosed = 0;
->  
->      /* prevent multiple coroutines running this function simultaniously */
->      if (s->reclaiming) {
-> @@ -446,10 +448,10 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
->      QSLIST_HEAD(, V9fsFidState) reclaim_list =
->          QSLIST_HEAD_INITIALIZER(reclaim_list);
->  
-> +    /* Pick FIDs to be closed, collect them on reclaim_list. */
->      while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &f)) {
->          /*
-> -         * Unlink fids cannot be reclaimed. Check
-> -         * for them and skip them. Also skip fids
-> +         * Unlinked fids cannot be reclaimed, skip those, and also skip fids
->           * currently being operated on.
->           */
->          if (f->ref || f->flags & FID_NON_RECLAIMABLE) {
-> @@ -499,17 +501,26 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
->          }
->      }
->      /*
-> -     * Now close the fid in reclaim list. Free them if they
-> -     * are already clunked.
-> +     * Close the picked FIDs altogether on a background I/O driver thread. Do
-> +     * this all at once to keep latency (i.e. amount of thread hops between main
-> +     * thread <-> fs driver background thread) as low as possible.
->       */
-> +    v9fs_co_run_in_worker({
-> +        QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
-> +            err = (f->fid_type == P9_FID_DIR) ?
-> +                s->ops->closedir(&s->ctx, &f->fs_reclaim) :
-> +                s->ops->close(&s->ctx, &f->fs_reclaim);
-> +            if (!err) {
-> +                /* total_open_fd must only be mutated on main thread */
-> +                nclosed++;
-> +            }
-> +        }
-> +    });
-> +    total_open_fd -= nclosed;
+John Snow <jsnow@redhat.com> writes:
 
-So here is another thing: looking at 'man 2 close' I would say that
-decrementing 'total_open_fd' conditionally based on what close() returned is
-wrong. The man page suggest that the return value of close() should only be
-used for diagnostic purposes, as an error on close() often indicates just an
-error on a previous write() and hence the return value should only be used for
-catching a data loss related to writes.
+> Add domain-specific cross-reference syntax. As of this commit, that
+> means new :qapi:mod:`block-core` and :qapi:any:`block-core` referencing
+> syntax.
+>
+> :mod: will only find modules, but :any: will find anything registered to
+> the QAPI domain. (In forthcoming commits, this means commands, events,
+> enums, etc.)
 
-So this should probably changed here, as well as in v9fs_co_close() /
-v9fs_co_closedir(), part of a separate patch though, so I haven't addressed it
-here yet.
+I understand :any: will find any QAPI schema definitions.  Does it find
+modules, too?
 
-Does this make sense?
+How could roles narrower than "definition" be useful?
 
-/Christian
+I'm asking because naming rules preclude naming collisions among
+definitions:
 
-> +    /* Free the closed FIDs. */
->      while (!QSLIST_EMPTY(&reclaim_list)) {
->          f = QSLIST_FIRST(&reclaim_list);
->          QSLIST_REMOVE(&reclaim_list, f, V9fsFidState, reclaim_next);
-> -        if (f->fid_type == P9_FID_FILE) {
-> -            v9fs_co_close(pdu, &f->fs_reclaim);
-> -        } else if (f->fid_type == P9_FID_DIR) {
-> -            v9fs_co_closedir(pdu, &f->fs_reclaim);
-> -        }
->          /*
->           * Now drop the fid reference, free it
->           * if clunked.
-> 
+* Events are ALL_CAPS
 
+* Commands are lower-case-with-dashes, except some older ones use
+  underscores (pragma command-name-exceptions).
+
+* Types are CamelCase.  Note that "C" is not considered a camel.
+
+Fine print: these are the rules for stems, i.e. the name without RFQDN
+or 'x-' prefixes, if any.
+
+If :any: finds modules, then commands and modules could collide.
+Nothing else can.
+
+> Creating the cross-references is powered by the QAPIXRefRole class;
+> resolving them is handled by QAPIDomain.resolve_xref().
+>
+> QAPIXrefRole is copied almost verbatim from Sphinx's own
+> PyXrefRole. PyXrefRole (and QAPIXrefRole) adds two features over the
+> base class:
+>
+> (1) Creating a cross-reference with e.g. :py:class:`~class.name`
+> instructs sphinx to omit the fully qualified parts of the resolved name
+> from the actual link text. This may be useful in the future if we add
+> namespaces to QAPI documentation, e.g. :qapi:cmd:`~qsd.blockdev-backup`
+> could link to the QSD-specific documentation for blockdev-backup while
+> omitting that prefix from the link text.
+>
+> (2) Prefixing the link target with a "." changes the search behavior to
+> prefer locally-scoped items first.
+>
+> I think both of these are worth keeping to help manage future namespace
+> issues between QEMU, QSD and QGA; but it's possible it's extraneous. It
+> may possibly be worth keeping just to keep feature parity with Sphinx's
+> other domains; e.g. "principle of least surprise". Dunno.
+
+I generally avoid features without uses.  But I trust your judgement
+here: you decide.
+
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
 
