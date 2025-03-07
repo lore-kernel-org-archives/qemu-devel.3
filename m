@@ -4,86 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7608FC282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85157C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 08:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqShK-0008Av-2T; Fri, 07 Mar 2025 03:04:46 -0500
+	id 1tqSln-0001ge-5w; Fri, 07 Mar 2025 03:09:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqShJ-0008Aj-3F
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:04:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=3Khh=V2=kaod.org=clg@ozlabs.org>)
+ id 1tqSld-0001eu-DM; Fri, 07 Mar 2025 03:09:14 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqShH-0008A5-7D
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 03:04:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741334682;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jK0yFaBRU900Qo1bMZg+7rqMOFRuryusg/EQqR5ZJX8=;
- b=DPUwqqvnf9S6YPyAmdnWScDk8RZjDijjfTPtsu7OFXAY411Z95Cq/pkYJHAc8Wh70Wby6P
- Vl3XBxZo3co0cJ8/HoD6YNpHtvptjqluguO39iyBUio7D6/W2+x9NfCPfSBFeioMWfdgha
- OcizGn1mFqRR9+WZD9iaStx8u5/JtT4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-tuPK_1oVO3uFCapPPmJ4FQ-1; Fri, 07 Mar 2025 03:04:41 -0500
-X-MC-Unique: tuPK_1oVO3uFCapPPmJ4FQ-1
-X-Mimecast-MFC-AGG-ID: tuPK_1oVO3uFCapPPmJ4FQ_1741334680
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43bcddbe609so13633285e9.3
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 00:04:41 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741334680; x=1741939480;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jK0yFaBRU900Qo1bMZg+7rqMOFRuryusg/EQqR5ZJX8=;
- b=HDxGFW5loX+x+FyQLQCPDTyYIzgsp+mDH6f1InctYjm/j2dDKo+1EMVWzol1MhRoCG
- VeCdp7u+Ou35augcU4vqEKurEjpKU11IeexTBAZa2bN5Qd4hwymFr85CLw+zLBG6CH+F
- DSjDKPXD+p7Jixie1vzb6c0eltYrqUvcA27kYZDPMO/xaKfqf4HyTqF9sx1gzNotlc4T
- snlXU+o1Ksxb8n3irwYREObsL/IkCgaQ/O/dNdthTxH72+CuNnNLtl0PD31nJj2ryIAg
- NsMc2PsQ5dalJGfCjPMt8SexKS9TEqrEyaE51jBYsW+8pJvdROiQ5UGSS+VO1Ve0sa11
- Xoqw==
-X-Gm-Message-State: AOJu0YzHHoW9ipPHxyfGWkPKru5lh7zwwrpGRQbkIMAEg0eOqneSSQh1
- 1WWfGHFdHhBIXbpFtULEtuIRon+zfZSMlnpKNSAQjt7WPpqhYmvELTQS/0Rb+HgQqxDAnq78j3j
- 3sEhG6dBySusowi5k9wwWWf1f04vBJRjzugiQHXPiWX90vQtq6FdJ
-X-Gm-Gg: ASbGncvnQFp2GmadH8WdoNhfngJMqP+4F5AaBS3LDuQdJkIvepEFednbD4PqKFdqhei
- cMhRoPnPBGpKR2/nptvXjk6MwO7MC3GGi8Te+jr2SvgotxAWvFRvsKrEuHaGpNGGLbNdhFLhLpd
- dNWVupNjNycZ8qtAnCPpY4CGPIziFfBcXv907lW+RKH4H+azLInWZHjBmKzr0Bnul8i0XXktHZn
- pWwJBp+nXocAv2Wll4jFJszCmp0Btu4D1RLek3Dp2pJ9HLdZvK4QOecscKTGgQo3JLkJR0C3Lal
- rqaHxHyOPkTXWsysEft6J4g2wyKrojsLl9AhDTB+FA03Kf1mpROjJQ==
-X-Received: by 2002:a05:600c:1c03:b0:439:9106:c09 with SMTP id
- 5b1f17b1804b1-43c6021f124mr16866685e9.26.1741334679948; 
- Fri, 07 Mar 2025 00:04:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF6JQaLN2wmJxK9PlOz9/R9CWGZqtMO178Ib4VFn+zU0VWZWbFAYHk8QrwWpX/0YF0fBwJMjQ==
-X-Received: by 2002:a05:600c:1c03:b0:439:9106:c09 with SMTP id
- 5b1f17b1804b1-43c6021f124mr16866355e9.26.1741334679530; 
- Fri, 07 Mar 2025 00:04:39 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd4352ec1sm73960325e9.25.2025.03.07.00.04.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 00:04:39 -0800 (PST)
-Message-ID: <75433541-d80f-47aa-9296-23923c5149c5@redhat.com>
-Date: Fri, 7 Mar 2025 09:04:38 +0100
+ (Exim 4.90_1) (envelope-from <SRS0=3Khh=V2=kaod.org=clg@ozlabs.org>)
+ id 1tqSlX-0002gF-DI; Fri, 07 Mar 2025 03:09:10 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z8JpQ3TzFz4x7D;
+ Fri,  7 Mar 2025 19:09:02 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z8JpM0Kyhz4wy9;
+ Fri,  7 Mar 2025 19:08:57 +1100 (AEDT)
+Message-ID: <deb95684-4cf9-4370-bed1-55327eee400a@kaod.org>
+Date: Fri, 7 Mar 2025 09:08:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/10] vfio/igd: Decoupling quirks with legacy mode
-To: Tomita Moeko <tomitamoeko@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
- <corvin.koehne@gmail.com>
-References: <20250306180131.32970-1-tomitamoeko@gmail.com>
+Subject: Re: [PATCH v6 00/29] Support AST2700 A1
+To: Steven Lee <steven_lee@aspeedtech.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20250307035945.3698802-1-jamin_lin@aspeedtech.com>
+ <3485cd84-2aab-45e7-a72c-ca1d85e007ec@kaod.org>
+ <SI2PR06MB5041DD86414B93AB1C77C759FCD52@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <09cb40d5-dcba-40f5-916e-f303eba911cb@kaod.org>
+ <SI2PR06MB41873452B148F9CC13B149B985D52@SI2PR06MB4187.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
  8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
  yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
@@ -93,52 +56,49 @@ Autocrypt: addr=clg@redhat.com; keydata=
  gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
  70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
  Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250306180131.32970-1-tomitamoeko@gmail.com>
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
+ BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
+ M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
+ 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
+ jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
+ TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
+ neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
+ VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
+ QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
+ ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
+ WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
+ wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
+ SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
+ cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
+ S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
+ 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
+ hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
+ tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
+ t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
+ OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
+ KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
+ o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
+ ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
+ IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
+ d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
+ +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
+ HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
+ l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
+ 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
+ ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
+ KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <SI2PR06MB41873452B148F9CC13B149B985D52@SI2PR06MB4187.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=3Khh=V2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,93 +114,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/25 19:01, Tomita Moeko wrote:
-> This patchset intends to decouple existing quirks from legacy mode.
-> Currently all quirks depends on legacy mode (except x-igd-opregion),
-> which includes following conditions:
-> * Machine type is i440fx
-> * IGD device is at guest BDF 00:02.0
-> * VBIOS in ROM BAR or file
-> * VGA IO/MMIO ranges are claimed by IGD
-> * OpRegion
-> * Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
+On 3/7/25 08:56, Steven Lee wrote:
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@kaod.org>
+>> Sent: Friday, March 7, 2025 3:44 PM
+>> To: Jamin Lin <jamin_lin@aspeedtech.com>; Peter Maydell
+>> <peter.maydell@linaro.org>; Steven Lee <steven_lee@aspeedtech.com>; Troy
+>> Lee <leetroy@gmail.com>; Andrew Jeffery <andrew@codeconstruct.com.au>;
+>> Joel Stanley <joel@jms.id.au>; open list:All patches CC here
+>> <qemu-devel@nongnu.org>; open list:ASPEED BMCs
+>> <qemu-arm@nongnu.org>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>
+>> Subject: Re: [PATCH v6 00/29] Support AST2700 A1
+>>
+>> On 3/7/25 08:36, Jamin Lin wrote:
+>>> Hi Cedric,
+>>>
+>>>> Subject: Re: [PATCH v6 00/29] Support AST2700 A1
+>>>>
+>>>> On 3/7/25 04:59, Jamin Lin wrote:
+>>>>> v1:
+>>>>>     1. Refactor INTC model to support both INTC0 and INTC1.
+>>>>>     2. Support AST2700 A1.
+>>>>>     3. Create ast2700a0-evb machine.
+>>>>>
+>>>>> v2:
+>>>>>      To streamline the review process, split the following patch series into
+>>>>>      three parts.
+>>>>>
+>>>>
+>> https://patchwork.kernel.org/project/qemu-devel/cover/20250121070424.24
+>> 6
+>>>> 5942-1-jamin_lin@aspeedtech.com/
+>>>>>      This patch series focuses on cleaning up the INTC model to
+>>>>>      facilitate future support for the INTC_IO model.
+>>>>>
+>>>>> v3:
+>>>>>     1. Update and add functional test for AST2700
+>>>>>     2. Add AST2700 INTC design guidance and its block diagram.
+>>>>>     3. Retaining the INTC naming and introducing a new INTCIO model to
+>>>> support the AST2700 A1.
+>>>>>     4. Create ast2700a1-evb machine and rename ast2700a0-evb
+>> machine
+>>>>>     5. Fix silicon revision issue and support AST2700 A1.
+>>>>>
+>>>>> v4:
+>>>>>     1. rework functional test for AST2700
+>>>>>     2. the initial machine "ast2700-evb" is aliased to "ast2700a0-evb.
+>>>>>     3. intc: Reduce regs array size by adding a register sub-region
+>>>>>     4. intc: split patch for Support setting different register sizes
+>>>>>     5. update ast2700a1-evb machine parent to TYPE_ASPEED_MACHINE
+>>>>>
+>>>>> v5:
+>>>>>     1. Rename status_addr and addr to status_reg and reg for clarity
+>>>>>     2. Introduce dynamic allocation for regs array
+>>>>>     3. Sort the memmap table by mapping address
+>>>>>     4. ast27x0.c split patch for Support two levels of INTC controllers for
+>>>> AST2700 A1
+>>>>>     5. tests/functional/aspped split patch for Introduce
+>> start_ast2700_test API
+>>>>>     6. keep variable naming for reviewer suggestion.
+>>>>>     7. Add reviewer suggestion and split patch to make more readable.
+>>>>>
+>>>>> v6:
+>>>>>      1. rename reg_size to nr_regs
+>>>>>      2. Fix clean regs size
+>>>>>      3. replace g_malloc with g_new
+>>>>>
+>>>>> With the patch applied, QEMU now supports two machines for running
+>>>> AST2700 SoCs:
+>>>>> ast2700a0-evb: Designed for AST2700 A0
+>>>>> ast2700a1-evb: Designed for AST2700 A1
+>>>>>
+>>>>> Test information
+>>>>> 1. QEMU version:
+>>>>
+>> https://github.com/qemu/qemu/commit/50d38b8921837827ea397d4b20c8b
+>> c
+>>>> 5efe186e53
+>>>>> 2. ASPEED SDK v09.05 pre-built image
+>>>>>
+>> https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.05
+>>>>>       ast2700-default-obmc.tar.gz (AST2700 A1)
+>>>>>
+>>>>
+>> https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/a
+>> st
+>>>> 2700-default-obmc.tar.gz
+>>>>>       ast2700-a0-default-obmc.tar.gz (AST2700 A0)
+>>>>>
+>>>>
+>> https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/a
+>> st
+>>>> 2700-a0-default-obmc.tar.gz
+>>>>>
+>>>>> This patch series depends on the following patch series:
+>>>>>
+>>>>
+>> https://patchwork.kernel.org/project/qemu-devel/cover/20250304064710.21
+>> 2
+>>>> 8993-1-jamin_lin@aspeedtech.com/
+>>>>>
+>>>>
+>> https://patchwork.kernel.org/project/qemu-devel/cover/20250225075622.30
+>> 5
+>>>> 515-1-jamin_lin@aspeedtech.com/
+>>>>>
+>>>>> Jamin Lin (29):
+>>>>>      hw/intc/aspeed: Support setting different memory size
+>>>>>      hw/intc/aspeed: Rename status_addr and addr to status_reg and
+>> reg for
+>>>>>        clarity
+>>>>>      hw/intc/aspeed: Introduce dynamic allocation for regs array
+>>>>>      hw/intc/aspeed: Support setting different register size
+>>>>>      hw/intc/aspeed: Reduce regs array size by adding a register
+>> sub-region
+>>>>>      hw/intc/aspeed: Introduce helper functions for enable and status
+>>>>>        registers
+>>>>>      hw/intc/aspeed: Add object type name to trace events for better
+>>>>>        debugging
+>>>>>      hw/arm/aspeed: Rename IRQ table and machine name for AST2700
+>> A0
+>>>>>      hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ number
+>>>>>      hw/intc/aspeed: Support different memory region ops
+>>>>>      hw/intc/aspeed: Rename num_ints to num_inpins for clarity
+>>>>>      hw/intc/aspeed: Add support for multiple output pins in INTC
+>>>>>      hw/intc/aspeed: Refactor INTC to support separate input and output
+>> pin
+>>>>>        indices
+>>>>>      hw/intc/aspeed: Introduce AspeedINTCIRQ structure to save the irq
+>>>>>        index and register address
+>>>>>      hw/intc/aspeed: Introduce IRQ handler function to reduce code
+>>>>>        duplication
+>>>>>      hw/intc/aspeed: Add Support for Multi-Output IRQ Handling
+>>>>>      hw/intc/aspeed: Add Support for AST2700 INTCIO Controller
+>>>>>      hw/misc/aspeed_scu: Add Support for AST2700/AST2750 A1 Silicon
+>>>>>        Revisions
+>>>>>      hw/arm/aspeed_ast27x0.c Support AST2700 A1 GIC Interrupt
+>> Mapping
+>>>>>      hw/arm/aspeed_ast27x0: Define an Array of AspeedINTCState with
+>> Two
+>>>>>        Instances
+>>>>>      hw/arm/aspeed_ast27x0: Support two levels of INTC controllers for
+>>>>>        AST2700 A1
+>>>>>      hw/arm/aspeed_ast27x0: Add SoC Support for AST2700 A1
+>>>>>      hw/arm/aspeed: Add Machine Support for AST2700 A1
+>>>>>      hw/arm/aspeed_ast27x0: Sort the memmap table by mapping
+>> address
+>>>>>      tests/functional/aspeed: Introduce start_ast2700_test API
+>>>>>      tests/functional/aspeed: Update temperature hwmon path
+>>>>>      tests/functional/aspeed: Update test ASPEED SDK v09.05
+>>>>>      tests/functional/aspeed: Add test case for AST2700 A1
+>>>>>      docs/specs: Add aspeed-intc
+>>>>>
+>>>>>     docs/specs/aspeed-intc.rst              | 136 +++++
+>>>>>     docs/specs/index.rst                    |   1 +
+>>>>>     include/hw/arm/aspeed_soc.h             |   3 +-
+>>>>>     include/hw/intc/aspeed_intc.h           |  36 +-
+>>>>>     include/hw/misc/aspeed_scu.h            |   2 +
+>>>>>     hw/arm/aspeed.c                         |  33 +-
+>>>>>     hw/arm/aspeed_ast27x0.c                 | 329 ++++++++----
+>>>>>     hw/intc/aspeed_intc.c                   | 667
+>>>> ++++++++++++++++++------
+>>>>>     hw/misc/aspeed_scu.c                    |   2 +
+>>>>>     hw/intc/trace-events                    |  25 +-
+>>>>>     tests/functional/test_aarch64_aspeed.py |  47 +-
+>>>>>     11 files changed, 978 insertions(+), 303 deletions(-)
+>>>>>     create mode 100644 docs/specs/aspeed-intc.rst
+>>>>>
+>>>>
+>>>> Applied to aspeed-next.
+>>>>
+>>>
+>>> I really appreciate your great help and support recently. Supporting
+>>> AST2700 A1 is a significant milestone.
+>>
+>> yw.
+>>
+>> What about the "AST27x0 multi-SoC machine" series ?
+>>
+>> Thanks,
+>>
+>> C.
 > 
-> If one of the condition is not met, the quirks will not be applied.
-> However, for recent generations, espcially Gen 11+ devices that removed
-> VBIOS support, not all the conditions are required. For example, on EFI-
-> based systems, VBIOS ROM is unnecessary, and VGA ranges are not used.
+> Hi Cedric,
 > 
-> To have better support on newer UEFI-based VMs, this patchset makes the
-> quirks independent of legacy mode. The BDSM and GGC register quirks are
-> applied to all supported IGD devices, new x-igd-lpc option for the LPC
-> bridge / Host bridge ID quirk is introduced for possible Q35 support.
-> It also prepares for supporting IGD passthrough when it is not primary
-> display later (kernel change will be merged in 6.15).
-> 
-> To maintain backward compatbility with exising configuration, legacy
-> mode will automatically be enabled when:
-> * Machine type is i440fx
-> * IGD device is at guest BDF 00:02.0
-> If the legacy mode behavior is unwanted, option x-igd-legacy-mode=off
-> is provided for users to disable it. Setting x-igd-legacy-mode=on checks
-> if the condition above are met, and set up all the required quirks.
-> 
-> The default value is x-igd-legacy-mode=auto. When the above conditions
-> are all met, it acts as before and continues on any error. Otherwise it
-> is equivalent to x-igd-legacy-mode=off.
-> 
-> When x-igd-legacy-mode is set to on or off, QEMU will fail immediately
-> on error.
-> 
-> The first 2 patches of this patchset was taken from a previous one,
-> details can be found at:
-> https://lore.kernel.org/all/20250124191245.12464-1-tomitamoeko@gmail.com/
-> 
-> This patchest was mainly tested on Alder Lake UHD770, with Debian 12
-> (kernel 6.1), Windows 11 (driver 32.0.101.6458) and Intel GOP driver
-> 17.0.1081.
-> 
-> Due to I caught COVID these days, I am unable to deliver the proposed
-> documentation update before QEMU 10.0 soft-freeze next week. Please help
-> decide whether to make this patch series in 10.0 or next release.
-> 
-> Changelog:
-> v3:
-> * Use OnOffAuto for x-igd-legacy-mode option, default is auto, to keep
->    current behavior.
-> * Added a new patch to solve the possible KVMGT/GVT-g fail.
-> Link: https://lore.kernel.org/all/20250303175220.74917-1-tomitamoeko@gmail.com/
-> 
-> v2:
-> * Keep legacy mode for compatbility
-> * Renamed from "vfio/igd: Remove legacy mode"
-> Link: https://lore.kernel.org/all/20250224182927.31519-1-tomitamoeko@gmail.com/
-> 
-> Tomita Moeko (10):
->    vfio/igd: Remove GTT write quirk in IO BAR 4
->    vfio/igd: Do not include GTT stolen size in etc/igd-bdsm-size
->    vfio/igd: Consolidate OpRegion initialization into a single function
->    vfio/igd: Move LPC bridge initialization to a separate function
->    vfio/pci: Add placeholder for device-specific config space quirks
->    vfio/igd: Refactor vfio_probe_igd_bar4_quirk into pci config quirk
->    vfio/igd: Decouple common quirks from legacy mode
->    vfio/igd: Handle x-igd-opregion option in config quirk
->    vfio/igd: Introduce x-igd-lpc option for LPC bridge ID quirk
->    vfio/igd: Fix broken KVMGT OpRegion support
-> 
->   hw/vfio/igd.c        | 529 +++++++++++++++++++------------------------
->   hw/vfio/pci-quirks.c |  51 +----
->   hw/vfio/pci.c        |  33 +--
->   hw/vfio/pci.h        |  11 +-
->   4 files changed, 248 insertions(+), 376 deletions(-)
-> 
+> I will submit AST27x0 multi-SoC machine v2 patch next week.
+> V2 supports both A0 and A1 chips and depends on Jamin's AST2700 A1 patch.
 
-
-Applied to vfio-next.
+Great ! Then, It is best that you wait for the aspeed-next branch to be
+merged first. Should be next week.
 
 Thanks,
 
 C.
-
 
 
