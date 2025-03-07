@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 563A8C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:51:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74A0EC28B25
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqgXK-0001P7-Sj; Fri, 07 Mar 2025 17:51:22 -0500
+	id 1tqgXV-0001T4-2d; Fri, 07 Mar 2025 17:51:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqgXH-0001Oo-C6
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:51:20 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tqgXT-0001Sr-SJ
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:51:31 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqgXF-00012S-Sc
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:51:19 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tqgXS-00013L-8R
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:51:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741387875;
+ s=mimecast20190719; t=1741387889;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=GK1QJER+uSR3wqOy6SlkOawTyE8X+5phzqXa6+OqlD4=;
- b=YcvyZ9doS8ZWSoSbTxjpWFXqcK+JpH13b9VuRAkvcAVhkva2V2HbkYBA0AI9jZAseXUczd
- aIcGKCvccNfKQEDbSvpYYS68MLfEGui7vQKxAQxasCFi5K9+1KIP4b5XQFtRumn4hy/fUz
- OftjZNKGkegmbGmqp5xAlmsBYE8k7qI=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=oz26d+FuIgu1q88EhP9jh7x2MX/fvMs28gHN80rq4O4=;
+ b=G/wH5eq5IbhvmIaASY/pO51L/nyfnk/xGGce9sBrJP5HsQ6Z5J5mhuC1eTt/KjJyXJ+wBr
+ oyYcH0J9DtNDqdEmcTCJ1pLld4hi3mIotZ3BIx+OuE9XX1pQA3Qt3uum7MDithOjGoj+4k
+ yACMFF7qaL9NLEWmAcYRa5sfcA+eIOc=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-DT2jfQRCPDWzVgMN_Lnl2w-1; Fri, 07 Mar 2025 17:51:11 -0500
-X-MC-Unique: DT2jfQRCPDWzVgMN_Lnl2w-1
-X-Mimecast-MFC-AGG-ID: DT2jfQRCPDWzVgMN_Lnl2w_1741387870
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2ff68033070so3969051a91.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:51:11 -0800 (PST)
+ us-mta-682-Oma41uuJPZitITbWJFv6aQ-1; Fri, 07 Mar 2025 17:51:18 -0500
+X-MC-Unique: Oma41uuJPZitITbWJFv6aQ-1
+X-Mimecast-MFC-AGG-ID: Oma41uuJPZitITbWJFv6aQ_1741387878
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6e8c93fda2aso42091116d6.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:51:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741387870; x=1741992670;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GK1QJER+uSR3wqOy6SlkOawTyE8X+5phzqXa6+OqlD4=;
- b=RZ8lu69ttPJQ8lygVHbiuCdV/XzRf/9J4ENhYqDzfO4jIih9xZbZraE4KK5IUDNegb
- ZV9iu0dChSm9IbbPhei5SJKbu0kqyhr9oJ7njU5rDQXbnM9vVTdWZ625R8g9jQIuFYxj
- B95qsPF2g6Xk+xexWR4jwPGwN1unSLdwQefb5IjhYtNCwRNTnmCKdLuVLl/u2P3f3rvC
- auV+jrP4z0F+RbfUIPlwAJt8lywPxFvXWgAgIGASlKauCupDcEyAEpBaXHW+54gixthc
- fRza8TsP+/sbnUfVstAR9F5SCvbZo1o41JzMmsYjxjWLQvYy3mZ56Nln6LsuxrRXPDAl
- 60aA==
-X-Gm-Message-State: AOJu0YyzQoJ0vfeczeYBlnqw1+uzWVVDYPQC6FNr9Grp1QlqaZN2mwOh
- uGTKx45rZtQCpFKOqTao0kM8cc/9sEYkZNDziYLwRjikwjScqqju/W3LbuJIhLr7y1EpNKlQH45
- vzfQn0n+sBT/8htgRV93Zl8ZzlnamN2wSMTZQa2nFLzsLabW2yS8p5rRCCoWSiCWdh8JWxYCH2u
- e/fTgzwnjuUERNrwh3yKJCfmaONSc=
-X-Gm-Gg: ASbGncugZqUJABQClb+EaIWdmcdyJCSG0EvbjZ3tvgNcahifyYgPlwf4b++xMvHVTH+
- 1d7nWgUymJY33PvQvlJxtGswAIxN4C6GwgGlLXF0N9p0ScIrGSR+SWBmzOb8/VollnDrRag==
-X-Received: by 2002:a17:90a:ec8b:b0:2fe:99cf:f579 with SMTP id
- 98e67ed59e1d1-2ff7ce657b0mr7712089a91.4.1741387870268; 
- Fri, 07 Mar 2025 14:51:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGnfZaJM/jCd1/kK4l1SbkfZlDEEALwID1La2P38TGNHVNM5l1tKDPUD76kr3ydRbd2q4PaK9IurWKI6+zyOp8=
-X-Received: by 2002:a17:90a:ec8b:b0:2fe:99cf:f579 with SMTP id
- 98e67ed59e1d1-2ff7ce657b0mr7712070a91.4.1741387870004; Fri, 07 Mar 2025
- 14:51:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741387878; x=1741992678;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oz26d+FuIgu1q88EhP9jh7x2MX/fvMs28gHN80rq4O4=;
+ b=JMVS2CumTV9a28d1aU5KXOqdMbhUoheo4HG+pODlnw7tRLOnqeCcHUXMbxXMe94h+t
+ GrEyqYlCQZmAB5CHLOUgNl+Mig+CMDJG86p0SdxVJORDBjSti/WpWUmRMIQUh3/FBOKJ
+ 9FL+nD6QqrfSSzPjzqjNNfN9Oascb0hcC8HclLPN0LltZILTb6PdtIrvIcOW6rzOyhg+
+ 0jKuxI83JTQ41zVe8ece1VMdQ6Xv8IJbJnD3asVFMWnoVT/eGVRRdKZxKlwV/mOOOX4k
+ hegOuudGclaeh/a2TGc//wPV7w9V3CBFIdvG+1P97Vom6atU3emz36paOqVS1t4clrKz
+ z03A==
+X-Gm-Message-State: AOJu0Yw5Xs7tInX96JAL57qm+keNRRA89FjrxEF1FkXH+cP4/jCeBACq
+ jN5UFYovPyIcVxRF81SxoWf+vAOv9lUcGOftOjWVJ+C/DwIlLMAdQnPAYtJRoqlNYqF7phZKGu3
+ UX+aCnY/e0xo+0QfDPQbMRXw52s5Ff+IlDhspdd227/qXRb1USupQ
+X-Gm-Gg: ASbGncu5jpsulpcERil5TvbaFaW40FkzWHZDtjabFzeldIr5EbqneHKpiv7FNAU9E6V
+ TYIiJ8TwHJH+/DlkyGGCXmpstQriV15X218Vp8O1m46T9Ct++kz6scJdITCEfdt5A11O2Bgf+7d
+ el6JqGuw2LRymq6eX0PSFaNANSFfruvtwzqNhjcmTItZBG/zWLSdsmuvL/11oUGzm+pEhc7VEvL
+ NB4dEJBz2xRevjPIHc/YDNy/H7tgF7sUXZnEN7w+xa2X84tx+iaK4ZuTRQflBmsILHhjKK4WHB1
+ CXPZ4JY=
+X-Received: by 2002:ad4:5f4f:0:b0:6d8:af66:6344 with SMTP id
+ 6a1803df08f44-6e9005d4a32mr66172456d6.2.1741387878201; 
+ Fri, 07 Mar 2025 14:51:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG+sJwGIF7MyGtPcEWKZL9z4Vkh2nXvsXDeUuPMvruDDwgvytF3D35vh7KhGbasoX3+GoeGww==
+X-Received: by 2002:ad4:5f4f:0:b0:6d8:af66:6344 with SMTP id
+ 6a1803df08f44-6e9005d4a32mr66172226d6.2.1741387877937; 
+ Fri, 07 Mar 2025 14:51:17 -0800 (PST)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e8f707c4b5sm24419366d6.1.2025.03.07.14.51.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 07 Mar 2025 14:51:16 -0800 (PST)
+Date: Fri, 7 Mar 2025 17:51:14 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v7 5/5] migration: add MULTIFD_RECV_SYNC migration command
+Message-ID: <Z8t4YoPEnwJO0sFP@x1.local>
+References: <20250228121749.553184-1-ppandit@redhat.com>
+ <20250228121749.553184-6-ppandit@redhat.com>
+ <Z8G9Wj3DWSgdLkNQ@x1.local>
+ <CAE8KmOxenqyqOxEFozgP1gBZPtneEqcbop9F_f+VW3ukPfw37A@mail.gmail.com>
+ <Z8XBowkG72G-l3L4@x1.local>
+ <CAE8KmOyssf_2RYBw2LLpxP2Z5bmtyU==Qs+4HWp=mOVb9o82-g@mail.gmail.com>
+ <Z8cPnxqOvp1hFpx8@x1.local>
+ <CAE8KmOw1CCQUt0wyELVhy5j-CfwVuA2XNsecW=y6rwJv7dempw@mail.gmail.com>
+ <Z8hJeneeuKqD1i8Q@x1.local>
+ <CAE8KmOyKiEt9t0vUwVyqD7tx01vkm+NHA1p1tmQnJ9mKY0Za7w@mail.gmail.com>
 MIME-Version: 1.0
-References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-16-jsnow@redhat.com>
- <871pv9qo0u.fsf@pond.sub.org>
-In-Reply-To: <871pv9qo0u.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 7 Mar 2025 17:50:57 -0500
-X-Gm-Features: AQ5f1JqP1YsrPfH7n-bbmA9Kj51o5y6Ni7HaN2n6hG2DDuLHaHk9m5n1PZpuuiE
-Message-ID: <CAFn=p-b-R9AORQ2OWj5-MTEzC2m5iyQoWYisJ_Tp1Xk4DZcMjw@mail.gmail.com>
-Subject: Re: [PATCH 15/57] docs/qapi-domain: add "Errors:" field lists
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000068895f062fc87510"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOyKiEt9t0vUwVyqD7tx01vkm+NHA1p1tmQnJ9mKY0Za7w@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,62 +113,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000068895f062fc87510
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Fri, Mar 07, 2025 at 05:15:03PM +0530, Prasad Pandit wrote:
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 65fc4f5eed..da2c49c303 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3401,9 +3401,10 @@ static MigIterateState
+> migration_iteration_run(MigrationState *s)
+>      if (!in_postcopy && must_precopy <= s->threshold_size
+>          && can_switchover && qatomic_read(&s->start_postcopy)) {
+>          if (migrate_multifd()) {
+> -            multifd_send_flush();
+> -            multifd_send_sync_main(MULTIFD_SYNC_LOCAL);
+> -            qemu_savevm_send_multifd_recv_sync(s->to_dst_file);
+> +/*          multifd_send_flush();
+> + *          multifd_send_sync_main(MULTIFD_SYNC_ALL);
+> + *          qemu_savevm_send_multifd_recv_sync(s->to_dst_file);
+> + */
+> +            qemu_savevm_state_complete_multifd(s->to_dst_file);
+>              multifd_send_shutdown();
 
-On Fri, Mar 7, 2025 at 2:48=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
+Forgot to mention one thing:
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > ``:error: descr`` can now be used to document error conditions. The
-> > format of the description is not defined here; so the ability to name
-> > specific types is left to the document writer.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
->
-> By convention, the description is a bullet list, but we don't enforce
-> that in software.  Observation, not a suggestion to start enforcing it
-> now.
->
+If you do flush and sync, IMHO we can keep the threads there and remove
+this shutdown, as long as we are sure it'll be properly shutdown when
+cleanup.
 
-Right. This commit message is accurate, though: this field list type will
-accept any old thing. I have an idea to fix this to make the aesthetics
-better (fixes the misalignment) and to enforce the bulleted list in one
-shot. Not for this series, sorry. Please accept a raincheck.
+With the assertion in dest threads, I think it should be OK.
 
---00000000000068895f062fc87510
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 7, =
-2025 at 2:48=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
-at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" =
-target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; ``:error: descr`` can now be used to document error conditions. The<br=
->
-&gt; format of the description is not defined here; so the ability to name<=
-br>
-&gt; specific types is left to the document writer.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-<br>
-By convention, the description is a bullet list, but we don&#39;t enforce<b=
-r>
-that in software.=C2=A0 Observation, not a suggestion to start enforcing it=
-<br>
-now.<br></blockquote><div><br></div><div>Right. This commit message is accu=
-rate, though: this field list type will accept any old thing. I have an ide=
-a to fix this to make the aesthetics better (fixes the misalignment) and to=
- enforce the bulleted list in one shot. Not for this series, sorry. Please =
-accept a raincheck.</div><div>=C2=A0</div></div></div>
-
---00000000000068895f062fc87510--
+-- 
+Peter Xu
 
 
