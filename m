@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 839E2C28B24
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50243C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:59:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcsZ-0007Uw-86; Fri, 07 Mar 2025 13:57:03 -0500
+	id 1tqcsb-0007Vu-6b; Fri, 07 Mar 2025 13:57:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsO-0007RM-PE
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:52 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1tqcsW-0007UB-P1
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:57:00 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tqcsM-0007lG-PC
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:56:52 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2fecba90cc3so4573505a91.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:50 -0800 (PST)
+ id 1tqcsS-0007nR-Bu
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:57:00 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2ff6a98c638so4296330a91.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 10:56:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741373809; x=1741978609; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741373814; x=1741978614; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jZWYvDukaHCKn8Evm+7YplK9ZxqRKLhmL0oVaH6y4jI=;
- b=Fya8TKmlPnOFMdrlY5Bhma/yZnzm6/Hshr/iKiiwsjXQUOD2ogmJtHD0Es3I1nvjp6
- kzHoZUXDLDe28ywR4SyDTRiBPXDJlI7ULgEyQemBJv73j4D3LM70wokD24XVDfpgNelY
- ghLcAexY4WxTyFAVSODsON7FBZVgiY93BX8SaqxvDLh0iuEa54zsJ4e7xJOcZAI2OPZx
- Q4lfmIJw/A6kkAchBYPHkoBWl+kJmEwWDk1ZrWU5A0EO3JDYaKFpoixbYJ74KYZv0fSW
- IiMPcxiPN4m2PW+lustG5SaKpYY7qdg84Rvzs9vPRco9XQGO0jCCZNZVq3bU0knAR5kj
- IIHg==
+ bh=+PiHnQ+1q+MwLFjoc0q+vLnYcSz+0aCBgyfQrhPwFSE=;
+ b=q0Awfi/0u5fSpnYNDiH4RHSZzixNGbEnhgp675F8MLW3W+gfc3kaA1bThDhshu4WU5
+ EpgOrkiyAIjSspCIGljWHMosZ/fLDLTsHH0Ya39O6frnEKQphu/EwOLkGqqrA98YqV20
+ zkOH74HUcp2C+RDJkRDe+gjVXMusGkPeeIPKHQiCISvyIcB7OIDjtsN9uUNHON03mjBj
+ SdmcLY42WGHNSfDQkgWtLU55Lel14YviXYgwHWsqLvcCS3i7+oUt4kVKDX4mASoi7F0c
+ C8ZmUgbu8JznBUxKQV65FAvhGUn5A4haVoz6Azr9VqVcyd82nHQLNkCTPCT0ZgaeY4+W
+ rOiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741373809; x=1741978609;
+ d=1e100.net; s=20230601; t=1741373814; x=1741978614;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jZWYvDukaHCKn8Evm+7YplK9ZxqRKLhmL0oVaH6y4jI=;
- b=ci+VbYz1Pz8KupIy72B2z1SsQeBcelDP6qIoCDH/OpYyB5/s/GACpO5ztDZP6dQgeL
- JRz3d5J3BN6SD6tUORc1dooz79o//9jsrVsff4lG+g+lRT6TN/VWZDXcY2HlSZTIPfFg
- IFU0iZqlFCrN34W+7a0IlgAajmKWUPexo0ksrmLftwy5m7b6WHW1lnReJOc9z9lztzZr
- CB5wzqto4MgZoLogVsGppWeRQ51yrH24LKupGZiTjF7yswWGgdiJzE/LM7KHNUg5UdGr
- VMJncybgI6PNCIJ/JcJrtOjmfzslyqqxw4lFuh/DfcFP9Ev1JgTe88Bxw6OYGTwBHFp+
- L+Gw==
-X-Gm-Message-State: AOJu0YwOBu1SzEZq1yKj+BVoki+K2FJbEN1RTnW/d+0JmbYWu3VZL7ai
- xTbAJBSfqp4vVD4+KyER1XXWWskYc4j7GaPMVBhE0uolmUnwtmqdmAsERZC2lgUWkuxiboNt2f0
- U
-X-Gm-Gg: ASbGncsZWaTmGRyL54QUr/8eNX5hAgVm9KwOYMcu1YJOLvrWaoFCvEwD6XEx2r2G2U/
- 8SpIzBLkjOlphQLIAQx4vdtpvz+DEb8Iw2Ra7JodZLgKRIszvm48FV0hk2WZ9IwyJ9GT2Brg0d7
- 9BOJ1O+UHyrvWqYOIM16g/1wi5RwTaGB7Hur3I1kUrrTcyMFTJv2ykd49cXILb6GxC1BBYi60Pz
- j/gkaUGK0xaBo/c1nMINakew0FlbkbVSOSbjnPV9TC+0C1BtKmRNjED9DCn8uEloqxmEtPK8f/F
- EHmHcBUUT3FXkwkeKhUMXZl9ZxUuup2MiR+vPfkwUQcCkXnBQB4ef1ZIaezRbAk+4flSFei3YQ2
- 4
-X-Google-Smtp-Source: AGHT+IE70cx2fqD7V7rU/8JSAY/C0kQV5m7e0A7i4hqb43Jwd+uMX0sHLExq9eVPeIE2MqTMGU+pcA==
-X-Received: by 2002:a17:90b:4c:b0:2ff:6a5f:9b39 with SMTP id
- 98e67ed59e1d1-2ff7ce844b6mr8226390a91.18.1741373808901; 
- Fri, 07 Mar 2025 10:56:48 -0800 (PST)
+ bh=+PiHnQ+1q+MwLFjoc0q+vLnYcSz+0aCBgyfQrhPwFSE=;
+ b=Bag3izS06YQ+WmKM0vYfyXjUeOTKk0eUhuuvGsDqJ7YnhfsQHsd5eB2psMTVoOgENc
+ 9LA7GxHSkUQZ+ktUJUMf8n9MpYQ9ZgAGOlT3Cm/ReB1a7f4lDm+uuduf35JPtc0qTThO
+ oJt8ZXHgi99UnDxEK/A9WilB4yZ+PTYNQJYHuJgrl/sbNn9QMOWfOx+oyUR6WUGxW1cA
+ /qWKNt7tDqBFfJq6uWdiQg528aSxYu5aQVCf2AiMqA36HGvS68EZ9aF+BM7sZiHj/JyU
+ 5XzxTzeJ+VYHVc7A/Us67oc8CAD3vNbdcPqIS/XbqBeuarrm29K2AFqugWivWwJmUqja
+ loGg==
+X-Gm-Message-State: AOJu0YxQVm8VkWNXP9gmV3UPWJWSx+aVCRF3UX5WXXgh8mTet0Xn8X0H
+ aZX7S51joFLy8ZH0Bm0VUHERf3XDmAh5EL+/SmUw3R+ozeCh6B0PEuUmw9qHXfLIm4Gdi+D+jqn
+ P
+X-Gm-Gg: ASbGncs2dHhzqIbstJsoGW/DG5WcuKd5/ThMVaAm7J0yHKl38cPE6mRv6NKEahl+zIo
+ o/RXbsjCzhwiIrhtsW6rfjK44b5Z8j2uOUXBKa/SoJvANSBLT76qomtS2SSw0I6ecfV+72qQmYY
+ 7NnubgKA1O8e5sRfM6w78YK4a1SA4NHWbKS7hhxQNOE9zZ0IhfC+LQ1zyzhY3IxkPYm3uZXYgoD
+ 6sgtWZiYSNMkqXPHdeHwpZQH9JVtaqcBmxi/SSXuHUoUHfqlRTuh3lo6BrQ+0RTEj9ZMZzHmDfP
+ wedN+KWHX1hFUFlk4udgsIsH4lGStvh3IA6oQN3fbE7ethk+oUA5+wNFxSU/iUSMlpvs4Yb68Su
+ v
+X-Google-Smtp-Source: AGHT+IHAP61/hSZgoSsHvsBMCrodEwe2ZuEUCuxxP1bAQJZZT6W8VH/ILw0aZpkq0B/r3pO46SXKEA==
+X-Received: by 2002:a17:90b:1d52:b0:2ff:6f88:b04a with SMTP id
+ 98e67ed59e1d1-2ff7ce8222emr7341880a91.15.1741373813760; 
+ Fri, 07 Mar 2025 10:56:53 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.48
+ 98e67ed59e1d1-2ff693534f8sm3391917a91.17.2025.03.07.10.56.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 10:56:48 -0800 (PST)
+ Fri, 07 Mar 2025 10:56:53 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-Subject: [PATCH 01/16] include/exec: Split out exec/cpu-interrupt.h
-Date: Fri,  7 Mar 2025 10:56:30 -0800
-Message-ID: <20250307185645.970034-3-richard.henderson@linaro.org>
+Cc: philmd@linaro.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 08/16] exec: Declare tlb_flush*() in 'exec/cputlb.h'
+Date: Fri,  7 Mar 2025 10:56:37 -0800
+Message-ID: <20250307185645.970034-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307185645.970034-1-richard.henderson@linaro.org>
 References: <20250307185645.970034-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,190 +102,871 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some of these bits are actually common to all cpus; while the
-reset have common reservations for target-specific usage.
-While generic code cannot know what the target-specific usage is,
-common code can know what to do with the bits, e.g. single-step.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Move CPU TLB related methods to "exec/cputlb.h".
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20241114011310.3615-19-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/cpu-all.h       | 53 +--------------------------
- include/exec/cpu-interrupt.h | 70 ++++++++++++++++++++++++++++++++++++
- include/exec/poison.h        | 13 -------
- 3 files changed, 71 insertions(+), 65 deletions(-)
- create mode 100644 include/exec/cpu-interrupt.h
+ include/exec/cputlb.h                | 200 +++++++++++++++++++++++++--
+ include/exec/exec-all.h              | 184 ------------------------
+ accel/tcg/tcg-accel-ops.c            |   2 +-
+ cpu-target.c                         |   1 +
+ hw/intc/armv7m_nvic.c                |   2 +-
+ hw/ppc/spapr_nested.c                |   1 +
+ hw/sh4/sh7750.c                      |   1 +
+ system/watchpoint.c                  |   3 +-
+ target/alpha/sys_helper.c            |   2 +-
+ target/arm/helper.c                  |   1 +
+ target/arm/tcg/tlb-insns.c           |   2 +-
+ target/hppa/mem_helper.c             |   1 +
+ target/i386/helper.c                 |   2 +-
+ target/i386/machine.c                |   2 +-
+ target/i386/tcg/fpu_helper.c         |   2 +-
+ target/i386/tcg/misc_helper.c        |   2 +-
+ target/i386/tcg/system/misc_helper.c |   2 +-
+ target/i386/tcg/system/svm_helper.c  |   2 +-
+ target/loongarch/tcg/csr_helper.c    |   2 +-
+ target/microblaze/mmu.c              |   2 +-
+ target/mips/system/cp0.c             |   2 +-
+ target/mips/tcg/system/cp0_helper.c  |   2 +-
+ target/openrisc/sys_helper.c         |   1 +
+ target/ppc/helper_regs.c             |   2 +-
+ target/ppc/misc_helper.c             |   1 +
+ target/riscv/csr.c                   |   1 +
+ target/riscv/op_helper.c             |   1 +
+ target/riscv/pmp.c                   |   2 +-
+ target/s390x/gdbstub.c               |   2 +-
+ target/s390x/sigp.c                  |   1 +
+ target/s390x/tcg/mem_helper.c        |   1 +
+ target/s390x/tcg/misc_helper.c       |   1 +
+ target/sparc/ldst_helper.c           |   1 +
+ target/xtensa/mmu_helper.c           |   1 +
+ 34 files changed, 224 insertions(+), 211 deletions(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 8f7aebb088..9e6724097c 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -21,6 +21,7 @@
+diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+index cdfaf17403..8125f6809c 100644
+--- a/include/exec/cputlb.h
++++ b/include/exec/cputlb.h
+@@ -25,21 +25,14 @@
+ #include "exec/memattrs.h"
+ #include "exec/vaddr.h"
  
- #include "exec/page-protection.h"
- #include "exec/cpu-common.h"
-+#include "exec/cpu-interrupt.h"
- #include "exec/memory.h"
- #include "exec/tswap.h"
- #include "hw/core/cpu.h"
-@@ -109,58 +110,6 @@ static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val
+-#ifdef CONFIG_TCG
+-
+-#if !defined(CONFIG_USER_ONLY)
+-/* cputlb.c */
++#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+ void tlb_protect_code(ram_addr_t ram_addr);
+ void tlb_unprotect_code(ram_addr_t ram_addr);
+ #endif
  
- CPUArchState *cpu_copy(CPUArchState *env);
+-#endif /* CONFIG_TCG */
+-
+ #ifndef CONFIG_USER_ONLY
+-
+ void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
+ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+-
+ #endif
  
--/* Flags for use in ENV->INTERRUPT_PENDING.
--
--   The numbers assigned here are non-sequential in order to preserve
--   binary compatibility with the vmstate dump.  Bit 0 (0x0001) was
--   previously used for CPU_INTERRUPT_EXIT, and is cleared when loading
--   the vmstate dump.  */
--
--/* External hardware interrupt pending.  This is typically used for
--   interrupts from devices.  */
--#define CPU_INTERRUPT_HARD        0x0002
--
--/* Exit the current TB.  This is typically used when some system-level device
--   makes some change to the memory mapping.  E.g. the a20 line change.  */
--#define CPU_INTERRUPT_EXITTB      0x0004
--
--/* Halt the CPU.  */
--#define CPU_INTERRUPT_HALT        0x0020
--
--/* Debug event pending.  */
--#define CPU_INTERRUPT_DEBUG       0x0080
--
--/* Reset signal.  */
--#define CPU_INTERRUPT_RESET       0x0400
--
--/* Several target-specific external hardware interrupts.  Each target/cpu.h
--   should define proper names based on these defines.  */
--#define CPU_INTERRUPT_TGT_EXT_0   0x0008
--#define CPU_INTERRUPT_TGT_EXT_1   0x0010
--#define CPU_INTERRUPT_TGT_EXT_2   0x0040
--#define CPU_INTERRUPT_TGT_EXT_3   0x0200
--#define CPU_INTERRUPT_TGT_EXT_4   0x1000
--
--/* Several target-specific internal interrupts.  These differ from the
--   preceding target-specific interrupts in that they are intended to
--   originate from within the cpu itself, typically in response to some
--   instruction being executed.  These, therefore, are not masked while
--   single-stepping within the debugger.  */
--#define CPU_INTERRUPT_TGT_INT_0   0x0100
--#define CPU_INTERRUPT_TGT_INT_1   0x0800
--#define CPU_INTERRUPT_TGT_INT_2   0x2000
--
--/* First unused bit: 0x4000.  */
--
--/* The set of all bits that should be masked when single-stepping.  */
--#define CPU_INTERRUPT_SSTEP_MASK \
--    (CPU_INTERRUPT_HARD          \
--     | CPU_INTERRUPT_TGT_EXT_0   \
--     | CPU_INTERRUPT_TGT_EXT_1   \
--     | CPU_INTERRUPT_TGT_EXT_2   \
--     | CPU_INTERRUPT_TGT_EXT_3   \
--     | CPU_INTERRUPT_TGT_EXT_4)
--
- #include "cpu.h"
+ /**
+@@ -101,4 +94,193 @@ void tlb_set_page(CPUState *cpu, vaddr addr,
+                   hwaddr paddr, int prot,
+                   int mmu_idx, vaddr size);
  
- #ifdef CONFIG_USER_ONLY
-diff --git a/include/exec/cpu-interrupt.h b/include/exec/cpu-interrupt.h
-new file mode 100644
-index 0000000000..40715193ca
---- /dev/null
-+++ b/include/exec/cpu-interrupt.h
-@@ -0,0 +1,70 @@
-+/*
-+ * Flags for use with cpu_interrupt()
+-#endif
++#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
++/**
++ * tlb_flush_page:
++ * @cpu: CPU whose TLB should be flushed
++ * @addr: virtual address of page to be flushed
 + *
-+ * Copyright (c) 2003 Fabrice Bellard
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
++ * Flush one page from the TLB of the specified CPU, for all
++ * MMU indexes.
 + */
++void tlb_flush_page(CPUState *cpu, vaddr addr);
 +
-+#ifndef CPU_INTERRUPT_H
-+#define CPU_INTERRUPT_H
-+
-+/*
-+ * The numbers assigned here are non-sequential in order to preserve binary
-+ * compatibility with the vmstate dump.  Bit 0 (0x0001) was previously used
-+ * for CPU_INTERRUPT_EXIT, and is cleared when loading the vmstate dump.
++/**
++ * tlb_flush_page_all_cpus_synced:
++ * @cpu: src CPU of the flush
++ * @addr: virtual address of page to be flushed
++ *
++ * Flush one page from the TLB of all CPUs, for all
++ * MMU indexes.
++ *
++ * When this function returns, no CPUs will subsequently perform
++ * translations using the flushed TLBs.
 + */
++void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr);
 +
-+/*
-+ * External hardware interrupt pending.
-+ * This is typically used for interrupts from devices.
++/**
++ * tlb_flush:
++ * @cpu: CPU whose TLB should be flushed
++ *
++ * Flush the entire TLB for the specified CPU. Most CPU architectures
++ * allow the implementation to drop entries from the TLB at any time
++ * so this is generally safe. If more selective flushing is required
++ * use one of the other functions for efficiency.
 + */
-+#define CPU_INTERRUPT_HARD        0x0002
++void tlb_flush(CPUState *cpu);
 +
-+/*
-+ * Exit the current TB.  This is typically used when some system-level device
-+ * makes some change to the memory mapping.  E.g. the a20 line change.
++/**
++ * tlb_flush_all_cpus_synced:
++ * @cpu: src CPU of the flush
++ *
++ * Flush the entire TLB for all CPUs, for all MMU indexes.
++ *
++ * When this function returns, no CPUs will subsequently perform
++ * translations using the flushed TLBs.
 + */
-+#define CPU_INTERRUPT_EXITTB      0x0004
++void tlb_flush_all_cpus_synced(CPUState *src_cpu);
 +
-+/* Halt the CPU.  */
-+#define CPU_INTERRUPT_HALT        0x0020
-+
-+/* Debug event pending.  */
-+#define CPU_INTERRUPT_DEBUG       0x0080
-+
-+/* Reset signal.  */
-+#define CPU_INTERRUPT_RESET       0x0400
-+
-+/*
-+ * Several target-specific external hardware interrupts.  Each target/cpu.h
-+ * should define proper names based on these defines.
++/**
++ * tlb_flush_page_by_mmuidx:
++ * @cpu: CPU whose TLB should be flushed
++ * @addr: virtual address of page to be flushed
++ * @idxmap: bitmap of MMU indexes to flush
++ *
++ * Flush one page from the TLB of the specified CPU, for the specified
++ * MMU indexes.
 + */
-+#define CPU_INTERRUPT_TGT_EXT_0   0x0008
-+#define CPU_INTERRUPT_TGT_EXT_1   0x0010
-+#define CPU_INTERRUPT_TGT_EXT_2   0x0040
-+#define CPU_INTERRUPT_TGT_EXT_3   0x0200
-+#define CPU_INTERRUPT_TGT_EXT_4   0x1000
++void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr,
++                              uint16_t idxmap);
 +
-+/*
-+ * Several target-specific internal interrupts.  These differ from the
-+ * preceding target-specific interrupts in that they are intended to
-+ * originate from within the cpu itself, typically in response to some
-+ * instruction being executed.  These, therefore, are not masked while
-+ * single-stepping within the debugger.
++/**
++ * tlb_flush_page_by_mmuidx_all_cpus_synced:
++ * @cpu: Originating CPU of the flush
++ * @addr: virtual address of page to be flushed
++ * @idxmap: bitmap of MMU indexes to flush
++ *
++ * Flush one page from the TLB of all CPUs, for the specified
++ * MMU indexes.
++ *
++ * When this function returns, no CPUs will subsequently perform
++ * translations using the flushed TLBs.
 + */
-+#define CPU_INTERRUPT_TGT_INT_0   0x0100
-+#define CPU_INTERRUPT_TGT_INT_1   0x0800
-+#define CPU_INTERRUPT_TGT_INT_2   0x2000
++void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
++                                              uint16_t idxmap);
 +
-+/* First unused bit: 0x4000.  */
++/**
++ * tlb_flush_by_mmuidx:
++ * @cpu: CPU whose TLB should be flushed
++ * @wait: If true ensure synchronisation by exiting the cpu_loop
++ * @idxmap: bitmap of MMU indexes to flush
++ *
++ * Flush all entries from the TLB of the specified CPU, for the specified
++ * MMU indexes.
++ */
++void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap);
 +
-+/* The set of all bits that should be masked when single-stepping.  */
-+#define CPU_INTERRUPT_SSTEP_MASK \
-+    (CPU_INTERRUPT_HARD          \
-+     | CPU_INTERRUPT_TGT_EXT_0   \
-+     | CPU_INTERRUPT_TGT_EXT_1   \
-+     | CPU_INTERRUPT_TGT_EXT_2   \
-+     | CPU_INTERRUPT_TGT_EXT_3   \
-+     | CPU_INTERRUPT_TGT_EXT_4)
++/**
++ * tlb_flush_by_mmuidx_all_cpus_synced:
++ * @cpu: Originating CPU of the flush
++ * @idxmap: bitmap of MMU indexes to flush
++ *
++ * Flush all entries from the TLB of all CPUs, for the specified
++ * MMU indexes.
++ *
++ * When this function returns, no CPUs will subsequently perform
++ * translations using the flushed TLBs.
++ */
++void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu, uint16_t idxmap);
 +
-+#endif /* CPU_INTERRUPT_H */
-diff --git a/include/exec/poison.h b/include/exec/poison.h
-index 35721366d7..8ed04b3108 100644
---- a/include/exec/poison.h
-+++ b/include/exec/poison.h
-@@ -46,19 +46,6 @@
++/**
++ * tlb_flush_page_bits_by_mmuidx
++ * @cpu: CPU whose TLB should be flushed
++ * @addr: virtual address of page to be flushed
++ * @idxmap: bitmap of mmu indexes to flush
++ * @bits: number of significant bits in address
++ *
++ * Similar to tlb_flush_page_mask, but with a bitmap of indexes.
++ */
++void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
++                                   uint16_t idxmap, unsigned bits);
++
++/* Similarly, with broadcast and syncing. */
++void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
++                                                   uint16_t idxmap,
++                                                   unsigned bits);
++
++/**
++ * tlb_flush_range_by_mmuidx
++ * @cpu: CPU whose TLB should be flushed
++ * @addr: virtual address of the start of the range to be flushed
++ * @len: length of range to be flushed
++ * @idxmap: bitmap of mmu indexes to flush
++ * @bits: number of significant bits in address
++ *
++ * For each mmuidx in @idxmap, flush all pages within [@addr,@addr+@len),
++ * comparing only the low @bits worth of each virtual page.
++ */
++void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
++                               vaddr len, uint16_t idxmap,
++                               unsigned bits);
++
++/* Similarly, with broadcast and syncing. */
++void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
++                                               vaddr addr,
++                                               vaddr len,
++                                               uint16_t idxmap,
++                                               unsigned bits);
++#else
++static inline void tlb_flush_page(CPUState *cpu, vaddr addr)
++{
++}
++static inline void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr)
++{
++}
++static inline void tlb_flush(CPUState *cpu)
++{
++}
++static inline void tlb_flush_all_cpus_synced(CPUState *src_cpu)
++{
++}
++static inline void tlb_flush_page_by_mmuidx(CPUState *cpu,
++                                            vaddr addr, uint16_t idxmap)
++{
++}
++
++static inline void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap)
++{
++}
++static inline void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu,
++                                                            vaddr addr,
++                                                            uint16_t idxmap)
++{
++}
++static inline void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu,
++                                                       uint16_t idxmap)
++{
++}
++static inline void tlb_flush_page_bits_by_mmuidx(CPUState *cpu,
++                                                 vaddr addr,
++                                                 uint16_t idxmap,
++                                                 unsigned bits)
++{
++}
++static inline void
++tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
++                                              uint16_t idxmap, unsigned bits)
++{
++}
++static inline void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
++                                             vaddr len, uint16_t idxmap,
++                                             unsigned bits)
++{
++}
++static inline void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
++                                                             vaddr addr,
++                                                             vaddr len,
++                                                             uint16_t idxmap,
++                                                             unsigned bits)
++{
++}
++#endif /* CONFIG_TCG && !CONFIG_USER_ONLY */
++#endif /* CPUTLB_H */
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index a3aa8448d0..a758b7a843 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -27,190 +27,6 @@
+ #include "exec/mmu-access-type.h"
+ #include "exec/translation-block.h"
  
- #pragma GCC poison TARGET_PHYS_ADDR_SPACE_BITS
- 
--#pragma GCC poison CPU_INTERRUPT_HARD
--#pragma GCC poison CPU_INTERRUPT_EXITTB
--#pragma GCC poison CPU_INTERRUPT_HALT
--#pragma GCC poison CPU_INTERRUPT_DEBUG
--#pragma GCC poison CPU_INTERRUPT_TGT_EXT_0
--#pragma GCC poison CPU_INTERRUPT_TGT_EXT_1
--#pragma GCC poison CPU_INTERRUPT_TGT_EXT_2
--#pragma GCC poison CPU_INTERRUPT_TGT_EXT_3
--#pragma GCC poison CPU_INTERRUPT_TGT_EXT_4
--#pragma GCC poison CPU_INTERRUPT_TGT_INT_0
--#pragma GCC poison CPU_INTERRUPT_TGT_INT_1
--#pragma GCC poison CPU_INTERRUPT_TGT_INT_2
+-#if !defined(CONFIG_USER_ONLY) && defined(CONFIG_TCG)
+-/* cputlb.c */
+-/**
+- * tlb_flush_page:
+- * @cpu: CPU whose TLB should be flushed
+- * @addr: virtual address of page to be flushed
+- *
+- * Flush one page from the TLB of the specified CPU, for all
+- * MMU indexes.
+- */
+-void tlb_flush_page(CPUState *cpu, vaddr addr);
+-/**
+- * tlb_flush_page_all_cpus_synced:
+- * @cpu: src CPU of the flush
+- * @addr: virtual address of page to be flushed
+- *
+- * Flush one page from the TLB of all CPUs, for all
+- * MMU indexes.
+- *
+- * When this function returns, no CPUs will subsequently perform
+- * translations using the flushed TLBs.
+- */
+-void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr);
+-/**
+- * tlb_flush:
+- * @cpu: CPU whose TLB should be flushed
+- *
+- * Flush the entire TLB for the specified CPU. Most CPU architectures
+- * allow the implementation to drop entries from the TLB at any time
+- * so this is generally safe. If more selective flushing is required
+- * use one of the other functions for efficiency.
+- */
+-void tlb_flush(CPUState *cpu);
+-/**
+- * tlb_flush_all_cpus_synced:
+- * @cpu: src CPU of the flush
+- *
+- * Flush the entire TLB for all CPUs, for all MMU indexes.
+- *
+- * When this function returns, no CPUs will subsequently perform
+- * translations using the flushed TLBs.
+- */
+-void tlb_flush_all_cpus_synced(CPUState *src_cpu);
+-/**
+- * tlb_flush_page_by_mmuidx:
+- * @cpu: CPU whose TLB should be flushed
+- * @addr: virtual address of page to be flushed
+- * @idxmap: bitmap of MMU indexes to flush
+- *
+- * Flush one page from the TLB of the specified CPU, for the specified
+- * MMU indexes.
+- */
+-void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr,
+-                              uint16_t idxmap);
+-/**
+- * tlb_flush_page_by_mmuidx_all_cpus_synced:
+- * @cpu: Originating CPU of the flush
+- * @addr: virtual address of page to be flushed
+- * @idxmap: bitmap of MMU indexes to flush
+- *
+- * Flush one page from the TLB of all CPUs, for the specified
+- * MMU indexes.
+- *
+- * When this function returns, no CPUs will subsequently perform
+- * translations using the flushed TLBs.
+- */
+-void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+-                                              uint16_t idxmap);
+-/**
+- * tlb_flush_by_mmuidx:
+- * @cpu: CPU whose TLB should be flushed
+- * @wait: If true ensure synchronisation by exiting the cpu_loop
+- * @idxmap: bitmap of MMU indexes to flush
+- *
+- * Flush all entries from the TLB of the specified CPU, for the specified
+- * MMU indexes.
+- */
+-void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap);
+-/**
+- * tlb_flush_by_mmuidx_all_cpus_synced:
+- * @cpu: Originating CPU of the flush
+- * @idxmap: bitmap of MMU indexes to flush
+- *
+- * Flush all entries from the TLB of all CPUs, for the specified
+- * MMU indexes.
+- *
+- * When this function returns, no CPUs will subsequently perform
+- * translations using the flushed TLBs.
+- */
+-void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu, uint16_t idxmap);
 -
- #pragma GCC poison CONFIG_ALPHA_DIS
- #pragma GCC poison CONFIG_HPPA_DIS
- #pragma GCC poison CONFIG_I386_DIS
+-/**
+- * tlb_flush_page_bits_by_mmuidx
+- * @cpu: CPU whose TLB should be flushed
+- * @addr: virtual address of page to be flushed
+- * @idxmap: bitmap of mmu indexes to flush
+- * @bits: number of significant bits in address
+- *
+- * Similar to tlb_flush_page_mask, but with a bitmap of indexes.
+- */
+-void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
+-                                   uint16_t idxmap, unsigned bits);
+-
+-/* Similarly, with broadcast and syncing. */
+-void tlb_flush_page_bits_by_mmuidx_all_cpus_synced
+-    (CPUState *cpu, vaddr addr, uint16_t idxmap, unsigned bits);
+-
+-/**
+- * tlb_flush_range_by_mmuidx
+- * @cpu: CPU whose TLB should be flushed
+- * @addr: virtual address of the start of the range to be flushed
+- * @len: length of range to be flushed
+- * @idxmap: bitmap of mmu indexes to flush
+- * @bits: number of significant bits in address
+- *
+- * For each mmuidx in @idxmap, flush all pages within [@addr,@addr+@len),
+- * comparing only the low @bits worth of each virtual page.
+- */
+-void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-                               vaddr len, uint16_t idxmap,
+-                               unsigned bits);
+-
+-/* Similarly, with broadcast and syncing. */
+-void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+-                                               vaddr addr,
+-                                               vaddr len,
+-                                               uint16_t idxmap,
+-                                               unsigned bits);
+-
+-#else
+-static inline void tlb_flush_page(CPUState *cpu, vaddr addr)
+-{
+-}
+-static inline void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr)
+-{
+-}
+-static inline void tlb_flush(CPUState *cpu)
+-{
+-}
+-static inline void tlb_flush_all_cpus_synced(CPUState *src_cpu)
+-{
+-}
+-static inline void tlb_flush_page_by_mmuidx(CPUState *cpu,
+-                                            vaddr addr, uint16_t idxmap)
+-{
+-}
+-
+-static inline void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap)
+-{
+-}
+-static inline void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu,
+-                                                            vaddr addr,
+-                                                            uint16_t idxmap)
+-{
+-}
+-static inline void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu,
+-                                                       uint16_t idxmap)
+-{
+-}
+-static inline void tlb_flush_page_bits_by_mmuidx(CPUState *cpu,
+-                                                 vaddr addr,
+-                                                 uint16_t idxmap,
+-                                                 unsigned bits)
+-{
+-}
+-static inline void
+-tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+-                                              uint16_t idxmap, unsigned bits)
+-{
+-}
+-static inline void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-                                             vaddr len, uint16_t idxmap,
+-                                             unsigned bits)
+-{
+-}
+-static inline void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+-                                                             vaddr addr,
+-                                                             vaddr len,
+-                                                             uint16_t idxmap,
+-                                                             unsigned bits)
+-{
+-}
+-#endif
+-
+ #if defined(CONFIG_TCG)
+ 
+ /**
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 132c5d1461..53e580d128 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -33,7 +33,7 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/guest-random.h"
+ #include "qemu/timer.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/hwaddr.h"
+ #include "exec/tb-flush.h"
+ #include "exec/translation-block.h"
+diff --git a/cpu-target.c b/cpu-target.c
+index 5aa6c4b0c6..b6e66d5ac0 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -31,6 +31,7 @@
+ #include "exec/tswap.h"
+ #include "exec/replay-core.h"
+ #include "exec/cpu-common.h"
++#include "exec/cputlb.h"
+ #include "exec/exec-all.h"
+ #include "exec/tb-flush.h"
+ #include "exec/log.h"
+diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
+index 5fd0760982..7212c87c68 100644
+--- a/hw/intc/armv7m_nvic.c
++++ b/hw/intc/armv7m_nvic.c
+@@ -22,7 +22,7 @@
+ #include "system/runstate.h"
+ #include "target/arm/cpu.h"
+ #include "target/arm/cpu-features.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/memop.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+index 7def8eb73b..23958c6383 100644
+--- a/hw/ppc/spapr_nested.c
++++ b/hw/ppc/spapr_nested.c
+@@ -1,6 +1,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/cutils.h"
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "helper_regs.h"
+ #include "hw/ppc/ppc.h"
+ #include "hw/ppc/spapr.h"
+diff --git a/hw/sh4/sh7750.c b/hw/sh4/sh7750.c
+index 8892eaddcb..6faf0e3ca8 100644
+--- a/hw/sh4/sh7750.c
++++ b/hw/sh4/sh7750.c
+@@ -36,6 +36,7 @@
+ #include "hw/sh4/sh_intc.h"
+ #include "hw/timer/tmu012.h"
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "trace.h"
+ 
+ typedef struct SH7750State {
+diff --git a/system/watchpoint.c b/system/watchpoint.c
+index 2aa2a9ea63..08dbd8483d 100644
+--- a/system/watchpoint.c
++++ b/system/watchpoint.c
+@@ -19,7 +19,8 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
++#include "exec/target_page.h"
+ #include "hw/core/cpu.h"
+ 
+ /* Add a watchpoint.  */
+diff --git a/target/alpha/sys_helper.c b/target/alpha/sys_helper.c
+index 54ee93f34c..51e3254428 100644
+--- a/target/alpha/sys_helper.c
++++ b/target/alpha/sys_helper.c
+@@ -19,7 +19,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/tb-flush.h"
+ #include "exec/helper-proto.h"
+ #include "system/runstate.h"
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 71dead7241..e786c8df5f 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -18,6 +18,7 @@
+ #include "qemu/timer.h"
+ #include "qemu/bitops.h"
+ #include "qemu/qemu-print.h"
++#include "exec/cputlb.h"
+ #include "exec/exec-all.h"
+ #include "exec/translation-block.h"
+ #include "hw/irq.h"
+diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
+index fadc61a76e..630a481f0f 100644
+--- a/target/arm/tcg/tlb-insns.c
++++ b/target/arm/tcg/tlb-insns.c
+@@ -7,7 +7,7 @@
+  */
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "cpu.h"
+ #include "internals.h"
+ #include "cpu-features.h"
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index 304f0b61e2..fb1d93ef1f 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -21,6 +21,7 @@
+ #include "qemu/log.h"
+ #include "cpu.h"
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ #include "exec/helper-proto.h"
+ #include "hw/core/cpu.h"
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index 3bc15fba6e..c07b1b16ea 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/qapi-events-run-state.h"
+ #include "cpu.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/translation-block.h"
+ #include "system/runstate.h"
+ #ifndef CONFIG_USER_ONLY
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index d9d4f25d1a..70f632a36f 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -1,6 +1,6 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "hw/isa/isa.h"
+ #include "migration/cpu.h"
+ #include "kvm/hyperv.h"
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 4858ae9a5f..c1184ca219 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -21,7 +21,7 @@
+ #include <math.h>
+ #include "cpu.h"
+ #include "tcg-cpu.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/cpu_ldst.h"
+ #include "exec/helper-proto.h"
+ #include "fpu/softfloat.h"
+diff --git a/target/i386/tcg/misc_helper.c b/target/i386/tcg/misc_helper.c
+index ed4cda8001..2b5f092a23 100644
+--- a/target/i386/tcg/misc_helper.c
++++ b/target/i386/tcg/misc_helper.c
+@@ -21,7 +21,7 @@
+ #include "qemu/log.h"
+ #include "cpu.h"
+ #include "exec/helper-proto.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "helper-tcg.h"
+ 
+ /*
+diff --git a/target/i386/tcg/system/misc_helper.c b/target/i386/tcg/system/misc_helper.c
+index c9c4d42f84..ce18c75b9f 100644
+--- a/target/i386/tcg/system/misc_helper.c
++++ b/target/i386/tcg/system/misc_helper.c
+@@ -23,7 +23,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/cpu_ldst.h"
+ #include "exec/address-spaces.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "tcg/helper-tcg.h"
+ #include "hw/i386/apic.h"
+ 
+diff --git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/system/svm_helper.c
+index 5f95b5227b..f9982b72d1 100644
+--- a/target/i386/tcg/system/svm_helper.c
++++ b/target/i386/tcg/system/svm_helper.c
+@@ -21,7 +21,7 @@
+ #include "qemu/log.h"
+ #include "cpu.h"
+ #include "exec/helper-proto.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/cpu_ldst.h"
+ #include "tcg/helper-tcg.h"
+ 
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 6c95be9910..84f7ff25f6 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -12,7 +12,7 @@
+ #include "internals.h"
+ #include "qemu/host-utils.h"
+ #include "exec/helper-proto.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/cpu_ldst.h"
+ #include "hw/irq.h"
+ #include "cpu-csr.h"
+diff --git a/target/microblaze/mmu.c b/target/microblaze/mmu.c
+index 2423ac6172..f8587d5ac4 100644
+--- a/target/microblaze/mmu.c
++++ b/target/microblaze/mmu.c
+@@ -21,7 +21,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+ #include "cpu.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ 
+ static unsigned int tlb_decode_size(unsigned int f)
+diff --git a/target/mips/system/cp0.c b/target/mips/system/cp0.c
+index bae37f515b..ff7d3db00c 100644
+--- a/target/mips/system/cp0.c
++++ b/target/mips/system/cp0.c
+@@ -21,7 +21,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "internal.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ 
+ /* Called for updates to CP0_Status.  */
+ void sync_c0_status(CPUMIPSState *env, CPUMIPSState *cpu, int tc)
+diff --git a/target/mips/tcg/system/cp0_helper.c b/target/mips/tcg/system/cp0_helper.c
+index 79a5c833ce..01a07a169f 100644
+--- a/target/mips/tcg/system/cp0_helper.c
++++ b/target/mips/tcg/system/cp0_helper.c
+@@ -27,7 +27,7 @@
+ #include "internal.h"
+ #include "qemu/host-utils.h"
+ #include "exec/helper-proto.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ 
+ 
+ /* SMP helpers.  */
+diff --git a/target/openrisc/sys_helper.c b/target/openrisc/sys_helper.c
+index 77567afba4..21bc137ccc 100644
+--- a/target/openrisc/sys_helper.c
++++ b/target/openrisc/sys_helper.c
+@@ -21,6 +21,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/helper-proto.h"
+ #include "exception.h"
+ #ifndef CONFIG_USER_ONLY
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index 3ad4273c16..f211bc9830 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "qemu/main-loop.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "system/kvm.h"
+ #include "system/tcg.h"
+ #include "helper_regs.h"
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index f0ca80153b..e379da6010 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -21,6 +21,7 @@
+ #include "qemu/log.h"
+ #include "cpu.h"
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/helper-proto.h"
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 0ebcca4597..49566d3c08 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -25,6 +25,7 @@
+ #include "pmu.h"
+ #include "time_helper.h"
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/tb-flush.h"
+ #include "system/cpu-timers.h"
+ #include "qemu/guest-random.h"
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index f156bfab12..0d4220ba93 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -22,6 +22,7 @@
+ #include "cpu.h"
+ #include "internals.h"
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/cpu_ldst.h"
+ #include "exec/helper-proto.h"
+ #include "trace.h"
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 85ab270dad..b0841d44f4 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -24,7 +24,7 @@
+ #include "qapi/error.h"
+ #include "cpu.h"
+ #include "trace.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ 
+ static bool pmp_write_cfg(CPURISCVState *env, uint32_t addr_index,
+diff --git a/target/s390x/gdbstub.c b/target/s390x/gdbstub.c
+index 6879430adc..6bca376f2b 100644
+--- a/target/s390x/gdbstub.c
++++ b/target/s390x/gdbstub.c
+@@ -21,7 +21,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "s390x-internal.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/gdbstub.h"
+ #include "gdbstub/helpers.h"
+ #include "qemu/bitops.h"
+diff --git a/target/s390x/sigp.c b/target/s390x/sigp.c
+index cf53b23291..6a4d9c5081 100644
+--- a/target/s390x/sigp.c
++++ b/target/s390x/sigp.c
+@@ -15,6 +15,7 @@
+ #include "system/hw_accel.h"
+ #include "system/runstate.h"
+ #include "exec/address-spaces.h"
++#include "exec/cputlb.h"
+ #include "exec/exec-all.h"
+ #include "system/tcg.h"
+ #include "trace.h"
+diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+index ea9fa64d6b..8187b917ba 100644
+--- a/target/s390x/tcg/mem_helper.c
++++ b/target/s390x/tcg/mem_helper.c
+@@ -26,6 +26,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/cpu-common.h"
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ #include "exec/cpu_ldst.h"
+ #include "accel/tcg/cpu-ops.h"
+diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
+index 0245451472..31266aeda4 100644
+--- a/target/s390x/tcg/misc_helper.c
++++ b/target/s390x/tcg/misc_helper.c
+@@ -27,6 +27,7 @@
+ #include "exec/helper-proto.h"
+ #include "qemu/timer.h"
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/cpu_ldst.h"
+ #include "qapi/error.h"
+ #include "tcg_s390x.h"
+diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+index 4c54e45655..b559afc9a9 100644
+--- a/target/sparc/ldst_helper.c
++++ b/target/sparc/ldst_helper.c
+@@ -24,6 +24,7 @@
+ #include "tcg/tcg.h"
+ #include "exec/helper-proto.h"
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ #include "exec/cpu_ldst.h"
+ #ifdef CONFIG_USER_ONLY
+diff --git a/target/xtensa/mmu_helper.c b/target/xtensa/mmu_helper.c
+index 29b84d5dbf..63be741a42 100644
+--- a/target/xtensa/mmu_helper.c
++++ b/target/xtensa/mmu_helper.c
+@@ -32,6 +32,7 @@
+ #include "cpu.h"
+ #include "exec/helper-proto.h"
+ #include "qemu/host-utils.h"
++#include "exec/cputlb.h"
+ #include "exec/exec-all.h"
+ #include "exec/page-protection.h"
+ 
 -- 
 2.43.0
 
