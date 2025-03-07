@@ -4,90 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CDC2C19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 04:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A8ACC282D0
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 05:47:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqPB2-0004VN-Mn; Thu, 06 Mar 2025 23:19:12 -0500
+	id 1tqQXN-0006JA-07; Fri, 07 Mar 2025 00:46:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqPAg-0004Sq-Fq
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 23:18:50 -0500
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqPAe-0008QZ-FW
- for qemu-devel@nongnu.org; Thu, 06 Mar 2025 23:18:50 -0500
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2f9d3d0f55dso2307055a91.1
- for <qemu-devel@nongnu.org>; Thu, 06 Mar 2025 20:18:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741321126; x=1741925926; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dFAjZdCbyiJHacoDTjhAsPPb3neNW4fKSdp0x9cUook=;
- b=Jvdjnu9tWoiKjOi0CVX1WnqHeUjFbvPGW/rgZK/tZlmsZ/a9xJweaAtn0rartxPpju
- o4MAIVyXdkbmXQFFWYnGIwFILW/2QdEHfhNFJjeUH3NlJAETqJxSFHcdAVxXNhUYEnsX
- H8EHb1Q9kB8OPglhd/au8J6L8ATVbFBCHAy6uOoYlcjiD2moPnf9w9L+24lnFXj0flH5
- 4xvpT9X36BDZKNabhcakRck6b0Wgefo1fseQOt0vF3YvILOfWSw4Nk+PscNOOdQw9l2N
- dSpDRTOpDerJg8d8EQQkVzRgqgSn+CHYNYklm23LpRRALU+/13lS0Yd6sCoP2j9VmMRT
- Gh5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741321126; x=1741925926;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dFAjZdCbyiJHacoDTjhAsPPb3neNW4fKSdp0x9cUook=;
- b=dT4umHREqBM1QixaaYmmmvGxlyhN6hPq08KxZa3iHna8weVLqa4ezMKJRv21u9OhYN
- YFCKxflOBWD5ZyHNuDQPNHKezrJbicWsV6YSTtf079t+sz48rqg/DQ0rrd5RpkT9bZTF
- vrzzYBKFgks+KNu41KJWI3cc1PmbZgTXKy/tdtR3RFV9qZwdWLedasKbhttHy+fRi00H
- CQdkgJ49++3Rji97WnnOMmp+pA0G24wBaN8ZQAfdCGibYdfB7csatVJad7ObroJ8k7l2
- EPcIMR1+imSabmmTQ5kjtidhW6jXK6BjtxP81KAl5v5wVLxRO9zB0TZj4TAiyihkWnF5
- qDhQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlsi8M3uDarfh1YsZ4IDK8x35Hdf8RXGdWjpAAc8rAEkipoH2KJr/jZJFquMyVZNIHESW0fnYSvTyL@nongnu.org
-X-Gm-Message-State: AOJu0YwVRiGwPruM4kJ4yDUG/vqZFr96QCArIin1X3oc36Csgz1xhXWa
- KDLQ5DKk9Rp0KYAWx25InQGm486jGk/lF/rvqnAwo6r5ReRLsrTFaavwzQGKoOE=
-X-Gm-Gg: ASbGncsjQcVwMYSViiWMh83GjVN7eLEAMk5WcndH8RjqJnrqY+Z0gh1kPUmwzLc7ed7
- +PVjHCXrr1AjKs3fG2GphZSDNgQeg5F2J60caAcz0u2iAKqUFMeK2gk7+erhIoCP8zjoAc/2H4w
- EUEpdu8r026pZASGps4ngnZMo4eI7xquKSOZ1//bvgMysWmTpQUTOvsBDo+LSd8EBBDTDzUzfQQ
- /bi4IO6G75n/8dwGlNN+U7hX0oGyJoQFs5+euw8xTnc/K3h8SMvSGqQ2Gw1tfIH0msvmaDbkNn6
- tGV1qBY/96sjlU+IjOaTk8J2It2uVFz4UlbOlzIuM0BM6FBa0/+bDwPaDQ==
-X-Google-Smtp-Source: AGHT+IGXEn+b6iOX/+FG4B12I4OtXhcjrSey27k5eDoSw02A3t8cWUGAg/65IrZGT3XATB0ZR7W5UQ==
-X-Received: by 2002:a17:90b:38cd:b0:2ee:741c:e9f4 with SMTP id
- 98e67ed59e1d1-2ff7ce8e5dfmr3140286a91.11.1741321125780; 
- Thu, 06 Mar 2025 20:18:45 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693f6b3asm2080994a91.42.2025.03.06.20.18.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Mar 2025 20:18:45 -0800 (PST)
-Message-ID: <9b2b869e-74bb-4532-8ac9-fb641f4f924e@linaro.org>
-Date: Thu, 6 Mar 2025 20:18:44 -0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqQXL-0006Ip-4R
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 00:46:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqQXJ-0006fg-7n
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 00:46:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741326375;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rG+eEZR1YRqsjeR54znBAI4pudwZxEuMEwqD6HPODTM=;
+ b=AUwF1OFxxX8PdKmK7MdrVGsNiaSz0v9J6Ejtem68caWrP4Fd7HDBSjPunafIFoCmvDkiyU
+ tRpfllEP8I0P43MuvE0fdjZSDIo7uxOqdK8auNAbdkYbhts1+/BNXNGnsPLAH+KPbC7rz3
+ 91RNVSKuYLY4WvuTSRomxLLKFmDB8Jo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-369-khXI9QXgObaj5ovjcpqehA-1; Fri,
+ 07 Mar 2025 00:46:10 -0500
+X-MC-Unique: khXI9QXgObaj5ovjcpqehA-1
+X-Mimecast-MFC-AGG-ID: khXI9QXgObaj5ovjcpqehA_1741326369
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E8B28180035E; Fri,  7 Mar 2025 05:46:08 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C7F31956095; Fri,  7 Mar 2025 05:46:08 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9FCE621E66C2; Fri, 07 Mar 2025 06:46:05 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
+ =?utf-8?Q?hieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
+ Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH 04/57] docs/sphinx: add compat.py module and
+ nested_parse helper
+In-Reply-To: <20250305034610.960147-5-jsnow@redhat.com> (John Snow's message
+ of "Tue, 4 Mar 2025 22:45:13 -0500")
+References: <20250305034610.960147-1-jsnow@redhat.com>
+ <20250305034610.960147-5-jsnow@redhat.com>
+Date: Fri, 07 Mar 2025 06:46:05 +0100
+Message-ID: <87o6ydtmua.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] include/exec: Move TARGET_PAGE_{SIZE,MASK,BITS} to
- target_page.h
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, philmd@linaro.org
-References: <20250306234108.378881-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250306234108.378881-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,184 +91,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/25 15:41, Richard Henderson wrote:
-> Re-use the TARGET_PAGE_BITS_VARY mechanism to define
-> TARGET_PAGE_SIZE and friends when not compiling per-target.
-> Inline qemu_target_page_{size,mask,bits} as they are now trivial.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> 
-> After this, we could in fact remove qemu_target_page_foo(), etc.
-> We certainly don't need to convert any more uses of TARGET_PAGE_FOO.
-> 
-> r~
-> 
-> ---
->   include/exec/cpu-all.h     | 21 +-------------
->   include/exec/poison.h      |  5 ----
->   include/exec/target_page.h | 58 ++++++++++++++++++++++++++++++++++----
->   page-target.c              | 18 ------------
->   page-vary-target.c         |  2 ++
->   5 files changed, 55 insertions(+), 49 deletions(-)
-> 
-> diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-> index 09f537d06f..8f7aebb088 100644
-> --- a/include/exec/cpu-all.h
-> +++ b/include/exec/cpu-all.h
-> @@ -105,26 +105,7 @@ static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val
->   
->   /* page related stuff */
->   #include "exec/cpu-defs.h"
-> -#ifdef TARGET_PAGE_BITS_VARY
-> -# include "exec/page-vary.h"
-> -extern const TargetPageBits target_page;
-> -# ifdef CONFIG_DEBUG_TCG
-> -#  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
-> -                                target_page.bits; })
-> -#  define TARGET_PAGE_MASK   ({ assert(target_page.decided); \
-> -                                (target_long)target_page.mask; })
-> -# else
-> -#  define TARGET_PAGE_BITS   target_page.bits
-> -#  define TARGET_PAGE_MASK   ((target_long)target_page.mask)
-> -# endif
-> -# define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
-> -#else
-> -# define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
-> -# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
-> -# define TARGET_PAGE_MASK    ((target_long)-1 << TARGET_PAGE_BITS)
-> -#endif
-> -
-> -#define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
-> +#include "exec/target_page.h"
->   
->   CPUArchState *cpu_copy(CPUArchState *env);
->   
-> diff --git a/include/exec/poison.h b/include/exec/poison.h
-> index f4283f693a..ce43a12965 100644
-> --- a/include/exec/poison.h
-> +++ b/include/exec/poison.h
-> @@ -44,11 +44,6 @@
->   #pragma GCC poison TARGET_FMT_ld
->   #pragma GCC poison TARGET_FMT_lu
->   
-> -#pragma GCC poison TARGET_PAGE_SIZE
-> -#pragma GCC poison TARGET_PAGE_MASK
-> -#pragma GCC poison TARGET_PAGE_BITS
-> -#pragma GCC poison TARGET_PAGE_ALIGN
-> -
->   #pragma GCC poison CPU_INTERRUPT_HARD
->   #pragma GCC poison CPU_INTERRUPT_EXITTB
->   #pragma GCC poison CPU_INTERRUPT_HALT
-> diff --git a/include/exec/target_page.h b/include/exec/target_page.h
-> index 98ffbb5c23..8e89e5cbe6 100644
-> --- a/include/exec/target_page.h
-> +++ b/include/exec/target_page.h
-> @@ -14,10 +14,56 @@
->   #ifndef EXEC_TARGET_PAGE_H
->   #define EXEC_TARGET_PAGE_H
->   
-> -size_t qemu_target_page_size(void);
-> -int qemu_target_page_mask(void);
-> -int qemu_target_page_bits(void);
-> -int qemu_target_page_bits_min(void);
-> -
-> -size_t qemu_target_pages_to_MiB(size_t pages);
-> +/*
-> + * If compiling per-target, get the real values.
-> + * For generic code, reuse the mechanism for variable page size.
-> + */
-> +#ifdef COMPILING_PER_TARGET
-> +#include "cpu-param.h"
-> +#include "exec/target_long.h"
-> +#define TARGET_PAGE_TYPE  target_long
-> +#else
-> +#define TARGET_PAGE_BITS_VARY
-> +#define TARGET_PAGE_TYPE  int
-> +#endif
-> +
-> +#ifdef TARGET_PAGE_BITS_VARY
-> +# include "exec/page-vary.h"
-> +extern const TargetPageBits target_page;
-> +# ifdef CONFIG_DEBUG_TCG
-> +#  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
-> +                                target_page.bits; })
-> +#  define TARGET_PAGE_MASK   ({ assert(target_page.decided); \
-> +                                (TARGET_PAGE_TYPE)target_page.mask; })
-> +# else
-> +#  define TARGET_PAGE_BITS   target_page.bits
-> +#  define TARGET_PAGE_MASK   ((TARGET_PAGE_TYPE)target_page.mask)
-> +# endif
-> +# define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
-> +#else
-> +# define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
-> +# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
-> +# define TARGET_PAGE_MASK    ((TARGET_PAGE_TYPE)-1 << TARGET_PAGE_BITS)
-> +#endif
-> +
-> +#define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
-> +
-> +static inline size_t qemu_target_page_size(void)
-> +{
-> +    return TARGET_PAGE_SIZE;
-> +}
-> +
-> +static inline int qemu_target_page_mask(void)
-> +{
-> +    return TARGET_PAGE_MASK;
-> +}
-> +
-> +static inline int qemu_target_page_bits(void)
-> +{
-> +    return TARGET_PAGE_BITS;
-> +}
-> +
-> +int qemu_target_page_bits_min(void);
-> +size_t qemu_target_pages_to_MiB(size_t pages);
-> +
->   #endif
-> diff --git a/page-target.c b/page-target.c
-> index 82211c8593..321e43d06f 100644
-> --- a/page-target.c
-> +++ b/page-target.c
-> @@ -8,24 +8,6 @@
->   
->   #include "qemu/osdep.h"
->   #include "exec/target_page.h"
-> -#include "exec/cpu-defs.h"
-> -#include "cpu.h"
-> -#include "exec/cpu-all.h"
-> -
-> -size_t qemu_target_page_size(void)
-> -{
-> -    return TARGET_PAGE_SIZE;
-> -}
-> -
-> -int qemu_target_page_mask(void)
-> -{
-> -    return TARGET_PAGE_MASK;
-> -}
-> -
-> -int qemu_target_page_bits(void)
-> -{
-> -    return TARGET_PAGE_BITS;
-> -}
->   
->   int qemu_target_page_bits_min(void)
->   {
-> diff --git a/page-vary-target.c b/page-vary-target.c
-> index 343b4adb95..1b4a9a10be 100644
-> --- a/page-vary-target.c
-> +++ b/page-vary-target.c
-> @@ -37,5 +37,7 @@ void finalize_target_page_bits(void)
->   {
->   #ifdef TARGET_PAGE_BITS_VARY
->       finalize_target_page_bits_common(TARGET_PAGE_BITS_MIN);
-> +#else
-> +    finalize_target_page_bits_common(TARGET_PAGE_BITS);
->   #endif
->   }
+John Snow <jsnow@redhat.com> writes:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Create a compat module that handles sphinx cross-version compatibility
+> issues. For the inaugural function, add a nested_parse() helper that
+> handles differences in line number tracking for nested directive body
+> parsing.
+>
+> Spoilers: there are more cross-version hacks to come throughout the
+> series.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  docs/sphinx/compat.py | 33 +++++++++++++++++++++++++++++++++
+>  1 file changed, 33 insertions(+)
+>  create mode 100644 docs/sphinx/compat.py
+>
+> diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
+> new file mode 100644
+> index 00000000000..792aca10e39
+> --- /dev/null
+> +++ b/docs/sphinx/compat.py
+> @@ -0,0 +1,33 @@
+> +"""
+> +Sphinx cross-version compatibility goop
+> +"""
+> +
+> +from docutils.nodes import Element
+> +
+> +from sphinx.util.docutils import SphinxDirective, switch_source_input
+> +from sphinx.util.nodes import nested_parse_with_titles
+> +
+> +
+> +def nested_parse(directive: SphinxDirective, content_node: Element) -> None:
+> +    """
+> +    This helper preserves error parsing context across sphinx versions.
+> +    """
+> +
+> +    # necessary so that the child nodes get the right source/line set
+> +    content_node.document = directive.state.document
+> +
+> +    try:
+> +        # Modern sphinx (6.2.0+) supports proper offsetting for
+> +        # nested parse error context management
+> +        nested_parse_with_titles(
+> +            directive.state,
+> +            directive.content,
+> +            content_node,
+> +            content_offset=directive.content_offset,
+> +        )
+> +    except TypeError:
+> +        # No content_offset argument. Fall back to SSI method.
+> +        with switch_source_input(directive.state, directive.content):
+> +            nested_parse_with_titles(
+> +                directive.state, directive.content, content_node
+> +            )
+
+The function wraps around sphinx.util.nodes.nested_parse_with_titles().
+Would calling it nested_parse_with_titles() reduce readers' cognitive
+load at call sites?
+
+Please do not misinterpret my question as a demand.  It's really just a
+question :)
 
 
