@@ -4,206 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED730C28B25
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:48:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A25BC282DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqgUO-0006Lq-9H; Fri, 07 Mar 2025 17:48:20 -0500
+	id 1tqgUr-0006SU-Sz; Fri, 07 Mar 2025 17:48:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1tqgUM-0006J4-9F
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:48:18 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tqgUf-0006Pl-FM
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:48:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1tqgUJ-0000g5-Hn
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:48:17 -0500
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 527LJI83012281;
- Fri, 7 Mar 2025 22:47:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=DdSNich6hsqBbqHV+g14G3nLCBrE/IDsP2qnk5cgTmE=; b=
- RDhcMl9BGSSC6TCov6Oyv/K1J7zo7QMOobJe5/VJwSVZ7rsVvG6xqs1x0jJ4zmMo
- Pmsn4fR6tctf2bCzcc+A6XJA4UbdtJCWxpmmv/dW+CSAkCR+c5KrvC0bp90uplhg
- 0KBU5Q/xMz/Fmjbt5aIQD0pkN/krS2wTkljJWo8CwOIXhxLbJnufCsGP96iXq+uQ
- gC4iPv+tW9tpNgUnhxnLr6MdQwHMpigymFbQXETPcGdWc1Ea2GSU2Hu0w/GQRAYf
- O92LF4TfEY6jY607vP8/0xWupKbXg3pTc3aXE3L4Uqfk0UD9MIFXL2gCE+p4qWhV
- KHXWs5SkGfPUk/S286QCXA==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 453u8ww0mm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 07 Mar 2025 22:47:58 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 527MOS0u003230; Fri, 7 Mar 2025 22:47:58 GMT
-Received: from nam11-co1-obe.outbound.protection.outlook.com
- (mail-co1nam11lp2176.outbound.protection.outlook.com [104.47.56.176])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 453rpe483g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 07 Mar 2025 22:47:58 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KTVJOibS4Y29VxwNUbCKK8fliyKksPYXn2sw8toJ0WJ2cqEPcF3fYdsSFY2luVcl4ZsSuZS/2c66KXzlfFnTu5M67dtNIaIYHiqCmd7o1uEkorEjbMSx4Dbn6i5SYTj80eBYNqPpbPHO4CLJ60vSW9v06JMRVOM0EBjBL8Cwyqp3m9eJJd1lvMbfSUTaBtrQnAKh3L/J9pVNjqgjk/xzBPelV0ZNI87bcIxd1nV53ENBcJJAwWy+V6rF0TONEOU7zMJ1NszDMU6fRA0kOFrWYeJZqdYAMjoaxni22dWnEKKnVLBD0fVhOUnhmt+FD3gA5EfJ4iqIN2pY7+qv+Pijww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DdSNich6hsqBbqHV+g14G3nLCBrE/IDsP2qnk5cgTmE=;
- b=mllKq7aoSkUBocxCWZHT/Q2f8c+LoU7x9HPLvKBE1YtaDQHvNAhAnL0dENYXyLpyn2sH8MvrH4cSNAl/GKqJ/pHFBgTHf02/YAMYRzWTMWfITev9bJ1Pn42aXDEeT5dOTMphgXCOAqDXcZOQtDtSmLDxudXbK35n+rQWe56K1hes27kGcL7a12ARDYfFkiZVrIrFyCgmYcwoE1WLbHZSjm9briOtOdCYEBmmLzNaV/6GVWb0ddqNmBtHmvDFpOXSYHUHo4/ImS0yawHJGTEkUo1AhkniiveauxrV2WE3/NRn0tN91PtvFaLxR8IlaZoimzjRE1EJzHkQkB5Ignk75Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DdSNich6hsqBbqHV+g14G3nLCBrE/IDsP2qnk5cgTmE=;
- b=umIwlT/BdKvGEXnXRMDfK5T97P8jLCUO449psUez4Sqm++bOGxKImcxqO29hsXQHc/uAjpqSVIbgfjzpbepnxOKupzCQL1Lb2F1M/XBeB85DrdumF+yRUZltB6358nya49re0BInFcGXNElfDnM5rHyHcjFTW6NvlN7kgr2Pqr0=
-Received: from BN6PR1001MB2068.namprd10.prod.outlook.com
- (2603:10b6:405:2b::35) by SA1PR10MB6663.namprd10.prod.outlook.com
- (2603:10b6:806:2ba::6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.22; Fri, 7 Mar
- 2025 22:47:55 +0000
-Received: from BN6PR1001MB2068.namprd10.prod.outlook.com
- ([fe80::c9b4:7351:3a7d:942f]) by BN6PR1001MB2068.namprd10.prod.outlook.com
- ([fe80::c9b4:7351:3a7d:942f%4]) with mapi id 15.20.8511.017; Fri, 7 Mar 2025
- 22:47:55 +0000
-Message-ID: <23cca084-2081-408d-a360-22fad0ff5037@oracle.com>
-Date: Fri, 7 Mar 2025 14:47:46 -0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/10] target/i386/kvm: extract unrelated code out of
- kvm_x86_build_cpuid()
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
- likexu@tencent.com, like.xu.linux@gmail.com, zhenyuw@linux.intel.com,
- groug@kaod.org, khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
- den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com
-References: <20250302220112.17653-1-dongli.zhang@oracle.com>
- <20250302220112.17653-6-dongli.zhang@oracle.com> <Z8q5NHQeIgXxTmPO@intel.com>
-Content-Language: en-US
-From: Dongli Zhang <dongli.zhang@oracle.com>
-In-Reply-To: <Z8q5NHQeIgXxTmPO@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO2P123CA0092.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:139::7) To BN6PR1001MB2068.namprd10.prod.outlook.com
- (2603:10b6:405:2b::35)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tqgUc-0000h1-Bq
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:48:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741387710;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ek5+xg41EaS7IN5ZmwoPe8zmBRif1Lf4faAlJF7bo/s=;
+ b=cKmSEpJOYt0YwrUvihiThsT4cGajzka0z6VqLNvf4U4jK+a5APEUd8xXVfi8XpUzPqMejr
+ QKZuajQEHnKj6EO1uqQW/L3M76gwmXbZ7a5z2z6Fwf/T+BZy4cyTZicPDXUX3+hFEKj83Y
+ Qk5fxMSOt3WkK/NhBIsFVKJxlKsXcg4=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-582-y71RpOvZPQ-lgM0vCnu8_w-1; Fri, 07 Mar 2025 17:48:29 -0500
+X-MC-Unique: y71RpOvZPQ-lgM0vCnu8_w-1
+X-Mimecast-MFC-AGG-ID: y71RpOvZPQ-lgM0vCnu8_w_1741387709
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6e8a2052e33so85909806d6.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:48:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741387709; x=1741992509;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ek5+xg41EaS7IN5ZmwoPe8zmBRif1Lf4faAlJF7bo/s=;
+ b=WRPprP1fn8JpOPFFY9RRX9y7WzdxOrXS3gQRIQ2KtZs4fMuP6tyQmFEV1FqBfWusrI
+ eHQXJmY5IzGdGRXhTB8Znojd/CjxX/ZIJFB2VxoG8lbVQH6P09nSsvko0Vbu295H4wiK
+ OPqu6ILLdf9XOYoBCEIaYhxWut5/9h1/GyeukFG4zOJrNJY2ltBsjNXQHXHAX9DokZo6
+ DBhEiloYbPqiurIbAgo1L0nLIeMbPFnn7amSwcg4ZcSKZVwXWu75Nd2vjwUNRtlJG3wj
+ 76rQRytyp/pRthO8fbMheCyHI+lDKBGwYOnxJ/CxX5LRy0mmaPuyWB98R6Nz8iaeIqNP
+ pNBA==
+X-Gm-Message-State: AOJu0Yy1IuHD+3zMxhimOYZMTiOy11NntlFmDnU7M3n53F4kBw31wXZq
+ p/p+POIIO/5ORgTeQHRSBOoRjzuOsz/9g6l0NTo62+mUBg70Jgt8qRcv5Tu426xWnB4HB3qz/K3
+ iKix7i0KpWK8RMMqVnGyOJTpdxSINbe7d3MJWqDIGt3qUjiuNorKQ
+X-Gm-Gg: ASbGnct5AShsZspbGzDEbhaAVD8X/FxRdFLGMO+XQkP1vaXez+M5XbZvtv96XX6T2fJ
+ Sj8dOHtOSO0kjES7zq8GfcRb0Zqw5sbPC8wBr5cz7PppZXa/kHiURq4/1Ucot2dqY14+IAmLljp
+ 3unhUDKwTFPRhukqzZffzgByRxkec+Mi7CRmjOFWU/uY7fEOQXUUMPTr0KDxVdg/kJdBGW1TN9L
+ NNvkgQF+lkfQkXO1niC3R9bEnq7FC+bn5CDGkPHq7Y/5KqWfVweC0JuO0pV20pJtqIhNMjbEUur
+ eXOTsbg=
+X-Received: by 2002:a05:620a:6501:b0:7c3:c46b:d941 with SMTP id
+ af79cd13be357-7c4e16775femr906729885a.6.1741387708754; 
+ Fri, 07 Mar 2025 14:48:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFTkiKkSib6k/2+F9ZZ2+zNWDJqVirem2AD1D0GYVX9EfJLwB59xUhDBb1v3A3sK2dgP/DYRQ==
+X-Received: by 2002:a05:620a:6501:b0:7c3:c46b:d941 with SMTP id
+ af79cd13be357-7c4e16775femr906727285a.6.1741387708442; 
+ Fri, 07 Mar 2025 14:48:28 -0800 (PST)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c3e54ffa60sm299251185a.76.2025.03.07.14.48.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 07 Mar 2025 14:48:27 -0800 (PST)
+Date: Fri, 7 Mar 2025 17:48:24 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v7 5/5] migration: add MULTIFD_RECV_SYNC migration command
+Message-ID: <Z8t3uKo54T_Xls_O@x1.local>
+References: <20250228121749.553184-1-ppandit@redhat.com>
+ <20250228121749.553184-6-ppandit@redhat.com>
+ <Z8G9Wj3DWSgdLkNQ@x1.local>
+ <CAE8KmOxenqyqOxEFozgP1gBZPtneEqcbop9F_f+VW3ukPfw37A@mail.gmail.com>
+ <Z8XBowkG72G-l3L4@x1.local>
+ <CAE8KmOyssf_2RYBw2LLpxP2Z5bmtyU==Qs+4HWp=mOVb9o82-g@mail.gmail.com>
+ <Z8cPnxqOvp1hFpx8@x1.local>
+ <CAE8KmOw1CCQUt0wyELVhy5j-CfwVuA2XNsecW=y6rwJv7dempw@mail.gmail.com>
+ <Z8hJeneeuKqD1i8Q@x1.local>
+ <CAE8KmOyKiEt9t0vUwVyqD7tx01vkm+NHA1p1tmQnJ9mKY0Za7w@mail.gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN6PR1001MB2068:EE_|SA1PR10MB6663:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6903ae77-ca1a-40c8-78bd-08dd5dca1983
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|7416014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Y01wcW9vaWVWNUpTYmUydEFURjR1TzBrRzBwTVlsa0lJckR1UERuOFREZS91?=
- =?utf-8?B?dC81cVVmUHc3UEtUNHRSaDM4bmdxcTZNRCtqRUJqSEJYMHZ4MldxVDNHaE82?=
- =?utf-8?B?a2s1VXVwdVgrd0VZZXM5MlIxakZVUGNBdU1BaCtnd05MSmltMWkwVVY1UDdZ?=
- =?utf-8?B?SWxhLzF5dXRQQ0drUTczS01uT1NGTWN2MUZ4OVF3cHdROERZbUR5M0NVM2Jh?=
- =?utf-8?B?alBrNmw3TjlETTlXZ21GSElBM3FvQ05KNGxPRVRMcUVUSGVRd2dmenF3UmdX?=
- =?utf-8?B?bnUzcENHNVIzSm1rZjNmUUEwWERZOEpCUzVlM3lTWk82SU0xWEV6QlA4VjlL?=
- =?utf-8?B?c295blJlc2FGdGRSakZZKzA3cCsvNVNnblk3Y1RMRzh5NWJNd0xzRzJUMmZt?=
- =?utf-8?B?TTVkb0I2aHhtSG53cU5uMHMzTGpPVTRXU0NKaC94aVdBNXlJaFV4Ui9CdXNz?=
- =?utf-8?B?LzRoejc2dS9lSnp4LzgrMjdEU09FNHZWaWtpR0ZZdEx4Z1FQa01TaXJ4WHd2?=
- =?utf-8?B?K1FGSGp2TWJSQm1kZWpFRlF2dnUrcklSbEhiUFNDelRLTUQ3aXRma3JyYVdH?=
- =?utf-8?B?Q2xHdnVITGhGa05zSTB3Q1hUZEEwYnJDWGxIZ0ZUaXNPNTVSWmRMRlk4Mzlo?=
- =?utf-8?B?UGxFREUwbEVuUTRoVi8zeEdwaVBOV1pVdHk3bzJRY3RMWEVFK3luRkxhRGhM?=
- =?utf-8?B?RERxOWxmQmNsa2d1d3IvQmxOZG5OWDlsTjZpRUJaUjNLQ2xURGJNSmxjL1lH?=
- =?utf-8?B?UExYQjFENGV6bVd4RDlwRHNKeWFzMTFlSnNML2JocWVEMWRiTnNRSWQyaURq?=
- =?utf-8?B?dnd5SUNVREhaUXhrL3lNdWVLOWRBdklPK3VKT0VLOUFOR0UvSHp2Q2Z5ZlNx?=
- =?utf-8?B?S0JuSWVWaUVyTStRVVJvc0ltR1ZkR3pkQW11YjFKb2FKS3B1TVZ5VmZBamts?=
- =?utf-8?B?WFZzeTlTMkNqWVhqOXRnMlQvQnBGMng0R0F6VzhYb1E4OWR1aXR0T05KU0lV?=
- =?utf-8?B?UjV2ZnhuSkkrWW1NRTl0eitDdFg2Sm8xcWhHRjV1OWlYNnNOcUJNZE1VNnc0?=
- =?utf-8?B?MW1wM2xhWWdqL2ZtWHJlUkxHVWdLUEFKcUNicW5BZE9mSFRTeVZrT1JlSHVY?=
- =?utf-8?B?MnJlcDJjUjB1REtWWkF2cFFDZmxzY1FpaGR0aFdkNS9XdW1rTmhHa1pDN1pi?=
- =?utf-8?B?Y0IzYkFmSXhlZ3ZNUEFPa2cxVVZOYXYyM3RBaEsvVkNUYTI1Vkp0U09MaXlt?=
- =?utf-8?B?b3J5OGw5eGRHWVVycTY5N2ZkcjVITVJEQVFDVWNJMDZRYWlodndwY05sWG5D?=
- =?utf-8?B?ekhZNi9jazM1czlGWXNnQjdWTEY3SjUrYmpRbXMvWGgyUVJIVDlUNU05T0dL?=
- =?utf-8?B?clF4am1TUHdjeUpiZHZLVVNhVmNkODZLZkZ1d1VpS2s0eEx2S0hKS3o3U1Zh?=
- =?utf-8?B?VXpqLzdBdkJEUjNKMmM2YXp1NHNUM2ZwUkhaWmNYVEwzcVRYZlZFVkhIOVVj?=
- =?utf-8?B?TFp3a0c3VUxVYlZ2YlJhT0U0bUh4NDMwd2lkUVVkOENqMk1VUEQzcFZNUjUz?=
- =?utf-8?B?MnhzWXBHNERwOTR2bi9vR1Z0blo3NFVkamk3RUNXRjhjdGQ5K1V6K1AxejZU?=
- =?utf-8?B?a3BTV2VsZGZETTdvUEFNZnhKTzZPY0NuSGp3M0pzZDNMS2VxT1l5NmlqOEQw?=
- =?utf-8?B?NWp4d3NNYWJ3Q1RDc2NtRmNjcWlYOUtQYzJ1WGZhL0g0SmJTVitlVlg5N0Yx?=
- =?utf-8?B?ZEVWU05TMklDaE9VQjU0OWFoZTVYSEszUFM1cUgwR1RPZlNRWGt4cGVzNTJx?=
- =?utf-8?B?TGh5dUNSZnNZa3E0cjNaUmw5WUlnZHVZancyc2JxWXdSbUlLMU5Ic1A0cEpN?=
- =?utf-8?Q?N5Q+Z14hJD/l8?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BN6PR1001MB2068.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(7416014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?K0VJZkVCanljajhUN3dqUFh6aFhxbml1NzNpQjgzR0xuNHdhNERxTEJ0R05r?=
- =?utf-8?B?Sy80SGpBNmxucXFudFI3Z3QwUkRpU3YrdXFjNDhrVHJETzc0TllqZm1TdVVB?=
- =?utf-8?B?cVQ3UVI4aW5XNTQ0TmxvNGlxd1VhS1NvSSt3SnFaaEd1bGlHbk8wbzh3aCtM?=
- =?utf-8?B?eFprQWF6aU5ZZ1BmNFEyeVpnbTVua09UN1dvb3dJQ0JvQ00remtUdzhNY2ll?=
- =?utf-8?B?V0p3Q1BmNncrSUtRZllialVTOXJBN01ON0hVMjd6czhMR0VLc3Z0VmVMQk9I?=
- =?utf-8?B?MFZTYmNscUJ0Q2xGb3hKS3JTcGxCNGpJcDVxVDVCNWtEQWN2bHZ6cTJyY0Jz?=
- =?utf-8?B?NFhlVUlCNjMxMzBJVVhHL1JBN2ZYenExN0pLWjBEZXkzODlHbDVnUUJnZWxr?=
- =?utf-8?B?STRVeVNUWEkyUHVpYnBRam1tWE4xTmdVVldZRnZ1dlRWWTJ5cEluR0x6dFFS?=
- =?utf-8?B?aTBJYlNiR3U3VGpwYWMxM0dzTnVjaG51Q3R5RjNTVTYwaG5wV1hXeVJ4SjZm?=
- =?utf-8?B?b0IrVzRYc1N0WWo1RktObWtlTEFuYjNWcjVFV0djMEc1R1FrdEdvWHJxaUhN?=
- =?utf-8?B?WGI3K1FBVDY1WFhneDVhZW54Nm9wMFZxaHJMNE44YjM2ZVZsbTh2YlFKaXAy?=
- =?utf-8?B?bDI0ejFmUnNCcFhwZWNBYk5jQS9hVHEzMm10RXJuU2dKbW5JOFlKTTR6UFV2?=
- =?utf-8?B?YlRSNHdsYlVZUUVQcTV5cVJUczFwZlZLRFpIcm9KdFVPMDEvaE9pT0FWOUVw?=
- =?utf-8?B?TFdXc3ZvREcveHhKekZ1TWEyV3BZb1kyLzR5YmNMUDQ0b2NyanYzVkxhUDA4?=
- =?utf-8?B?UFBrRkVHelpKVUEyUWRZNXp5RWV4WmszQWc1WnU1TjJlSXJ0SFdYczg4dzUv?=
- =?utf-8?B?ZVNURlZkUDZIaFBYQWdTQmVpZFZUaXp4OVJtNnlpWHlwTWUxMEtiMG9XRHMr?=
- =?utf-8?B?YmRnazhPUEpycG9aUUFkYzZ4eWdDT0V2T284MkxvTFU4ck5hQnJXZjJpamVo?=
- =?utf-8?B?ZjdaeGNHTnRaV2phSC9VMm5ZSUxpb3dFNExUZ0pGWWI1Nk8xWlVYa2RoaEYw?=
- =?utf-8?B?OVprY0pTV2JPSGwxb3RuQ3dQczkwY3NGUHQwbE1jN0JTNUtYcENvRld2Y2Fj?=
- =?utf-8?B?aVc0a3BERE9HK1JYWnhNRjhCVkc4cGw3TjNNalNWUS9SK2tUOW1oeEpnbXJE?=
- =?utf-8?B?OGpQNEVHLzZtbUhBZEZHU2tVRXdLSzIxdWpnbUdiZG1CdWRMTXp2REY3aDEx?=
- =?utf-8?B?M2ltUDBxMjFhRlhwUjAwZzV4aWtYV2pMdFBRU2g5a2Y0NXhxaGQySzI2c2lT?=
- =?utf-8?B?c1VuNjRoeGZaSmlBNzl4UVJpMWVpcU82OUVXeU9ZZFBiS0tCOHJmODZocHBO?=
- =?utf-8?B?bE1uaFF3aDJEQTZ4ZzF6NGVhSXpqcGxiWnMxRWJ0SGlydDl5T3h3WmF2TnVv?=
- =?utf-8?B?WkhLejVXNkc1N2tkR1NJaFpEOU5VY3RQazhCcHN3empPU3d1OS8wSERKeDd4?=
- =?utf-8?B?ZHFuUVRJaXk0VUhuRjcyUTcyeVZoRXorUSt3dVJrRWZqVlNJblgvMFFmVlBw?=
- =?utf-8?B?S2VzQXB1MW5RNjJ4dWVGYVA2TVZVZSthQ2FXZUdjSitzZGlVNXJ3WnlGWG1v?=
- =?utf-8?B?MTkvYXVYbC9oQWliKzMxNVFja2ZTMzJtL3p0SEFwb3ZXaHRzSVJpNWs4eFN5?=
- =?utf-8?B?L2NQN2lFSjB1L1VRRDhEREZXL3RGVlg2TnFKWnQrVVBPT0NGVGZiM3hEcmtN?=
- =?utf-8?B?bnQwQ0NwWHRrUDZGVFNPRUNLeE04amt3ZGd6ZGtadFpzczZVSlFqWFczWFNB?=
- =?utf-8?B?TVd2OUFPRi9kRTlETTVqcGVPaTIrTWNQN09ISklxd0U0VEZNZnJHZDhXbFl3?=
- =?utf-8?B?WHY5akQwZVhSM3BMTDc3THNuWnphV3QweGNxcUZSZjRtOFZZZWJrK05KRUNX?=
- =?utf-8?B?c2JOaWFvUEtVUkJJQVRjNWxja09HVFltZi9TdmRybVo1c0x6ajJVeURCaFds?=
- =?utf-8?B?VjBNWnQrdlB6ME5HbnVXRzJSL3JmWjh1Ym1qakt0c3dPU2pTVGxzdHRReUpP?=
- =?utf-8?B?RW5yMUZ1c1RrOTdITG1TM1o3SHRtRE1nWDRSWDNybndwVGRVRXdIdW9ZeW0x?=
- =?utf-8?B?bmp4NSsrQ05Dd3Urck43ZitJU2pBdENRV216dHJ6aEtGWUJwWnozMXVKcDdX?=
- =?utf-8?B?V3c9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 3W33AxGY/J5rjwbXjNA87CeYUDSgvmQgMKLTx2DHuDKIlN4YnUFtpVjwCp1SzZtZWqfT2dAK7tEl2kHhqOIFZgunDjkc7/FELVC3+ywHgJRs4wJvYv8f9YDKTu6xoTPEEYDnCiBJL9BbbstvH3YWQXyatZm9qs6id8bsLldOJ+ChvuFt+shyXrKdTDl7OoFNE66+p7bbE/WB7OCmMnc7b+shZLoX8CHWIxAjyvMJyR16RryJ8vNwQy/HVmihtJV5a+WTwc4IfTxA7ForKaTsXq4Nzn/NXY0WMwPw3RSciMhyJxZkw7WJwAtBx9eP/w5p3fqekXxvv6+f/wyYih/EPJ9NM4YY7K4Ad5PjgiSWujNEqUP9s5XMqts1ML57pP66hJd9QJ3AfATkfA52E//wdsZlMkAbMn1QFzPoYuNxSdxPa4LMgp6UJZ/Pyd6DgwrI1krtLsdSGHpdex++3r5ry6BsUIwpvvGY9DO7GzcXkwiI/sC8O3+/xDzNGzl6nPc2vFIM8+qjWJRZxu8vB/yMsOaL2vdV+2rGBFG8Syx5aMtJKFsv8dDUTj/l9yL7OXid3kMwHfTvyqLEpSyHMPG60B6EyczW0fx6lVeWKHbB/Q8=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6903ae77-ca1a-40c8-78bd-08dd5dca1983
-X-MS-Exchange-CrossTenant-AuthSource: BN6PR1001MB2068.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Mar 2025 22:47:55.2859 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: syH+F/+Bpsjrlyj1Kk+EOwVaHAw7xO/bHScTyyZ46D0SndoeewFG1czZQNS8bFsav9RKzbrefmKSbGVyKDJciQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB6663
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-07_08,2025-03-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- adultscore=0 bulkscore=0
- mlxlogscore=999 malwarescore=0 spamscore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502100000
- definitions=main-2503070172
-X-Proofpoint-ORIG-GUID: 7S7rJmOHiiBpD9FC0qNfmsaOQX9VXBDt
-X-Proofpoint-GUID: 7S7rJmOHiiBpD9FC0qNfmsaOQX9VXBDt
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOyKiEt9t0vUwVyqD7tx01vkm+NHA1p1tmQnJ9mKY0Za7w@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -221,119 +113,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhao,
+On Fri, Mar 07, 2025 at 05:15:03PM +0530, Prasad Pandit wrote:
+> Hello Peter,
+> 
+> On Wed, 5 Mar 2025 at 18:24, Peter Xu <peterx@redhat.com> wrote:
+> > > On Tue, 4 Mar 2025 at 20:05, Peter Xu <peterx@redhat.com> wrote:
+> > > > I think we need the header, the ram is a module.
+> > > > Do similarly like qemu_savevm_state_complete_precopy_iterable() but do
 
-On 3/7/25 1:15 AM, Zhao Liu wrote:
->> +static void kvm_init_pmu_info(CPUX86State *env)
->> +{
->> +    uint32_t eax, edx;
->> +    uint32_t unused;
->> +    uint32_t limit;
->> +
->> +    cpu_x86_cpuid(env, 0, 0, &limit, &unused, &unused, &unused);
-> 
-> At this stage, CPUID has already been filled and we should not use
-> cpu_x86_cpuid() to get the "raw" CPUID info.
-> 
-> Instead, after kvm_x86_build_cpuid(), the cpuid_find_entry() helper
-> should be preferred.
-> 
-> With cpuid_find_entry(), we don't even need to check the limit again.
-> 
->> +
->> +    if (limit < 0x0a) {
->> +        return;
->> +    }
-> 
-> ...
-> 
->>  int kvm_arch_init_vcpu(CPUState *cs)
->>  {
->>      struct {
->> @@ -2267,6 +2277,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
->>      cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
->>      cpuid_data.cpuid.nent = cpuid_i;
->>  
->> +    kvm_init_pmu_info(env);
->> +
-> 
-> Referring what has_msr_feature_control did, what about the following
-> change?
-> 
->  int kvm_arch_init_vcpu(CPUState *cs)
->  {
->      struct {
-> @@ -2277,8 +2240,6 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
->      cpuid_data.cpuid.nent = cpuid_i;
-> 
-> -    kvm_init_pmu_info(env);
-> -
->      if (((env->cpuid_version >> 8)&0xF) >= 6
->          && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
->             (CPUID_MCE | CPUID_MCA)) {
-> @@ -2329,6 +2290,31 @@ int kvm_arch_init_vcpu(CPUState *cs)
->          has_msr_feature_control = true;
->      }
-> 
-> +    c = cpuid_find_entry(&cpuid_data.cpuid, 0xa, 0);
-> +    if (c) {
-> +        has_architectural_pmu_version = c->eax & 0xff;
-> +        if (has_architectural_pmu_version > 0) {
-> +            num_architectural_pmu_gp_counters = (c->eax & 0xff00) >> 8;
-> +
-> +            /*
-> +             * Shouldn't be more than 32, since that's the number of bits
-> +             * available in EBX to tell us _which_ counters are available.
-> +             * Play it safe.
-> +             */
-> +            if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
+[1]
 
-BTW, I may need this bound checking for the PerfMonV2 patch, where the
-number of counters is determined by cpuid(0x80000022).
+> > > > whatever a vmstate hander wants, so it'll be with a header.
+> > >
+> ===
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 65fc4f5eed..da2c49c303 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3401,9 +3401,10 @@ static MigIterateState
+> migration_iteration_run(MigrationState *s)
+>      if (!in_postcopy && must_precopy <= s->threshold_size
+>          && can_switchover && qatomic_read(&s->start_postcopy)) {
+>          if (migrate_multifd()) {
+> -            multifd_send_flush();
+> -            multifd_send_sync_main(MULTIFD_SYNC_LOCAL);
+> -            qemu_savevm_send_multifd_recv_sync(s->to_dst_file);
+> +/*          multifd_send_flush();
+> + *          multifd_send_sync_main(MULTIFD_SYNC_ALL);
+> + *          qemu_savevm_send_multifd_recv_sync(s->to_dst_file);
+> + */
+> +            qemu_savevm_state_complete_multifd(s->to_dst_file);
+>              multifd_send_shutdown();
+>          }
 
-> +                num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
-> +            }
+Please move all of them at the entry of postcopy_start().
+
+>          if (postcopy_start(s, &local_err)) {
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 0b71e988ba..c2b181b0cc 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -1602,6 +1602,37 @@ int qemu_savevm_state_complete_precopy(QEMUFile
+> *f, bool iterable_only)
+>      return qemu_fflush(f);
+>  }
+> 
+> +int qemu_savevm_state_complete_multifd(QEMUFile *f)
+
+I still like the name I provided because it's more generic, above [1].
+
+> +{
+> +    int ret;
+> +    SaveStateEntry *se;
+> +    int64_t start_ts_each, end_ts_each;
 > +
-> +            if (has_architectural_pmu_version > 1) {
-> +                num_architectural_pmu_fixed_counters = c->edx & 0x1f;
-> +
-> +                if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
-> +                    num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
-> +                }
-> +            }
+> +    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+> +        if (strcmp(se->idstr, "ram")) {
+> +            continue;
 > +        }
+> +
+> +        start_ts_each = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
+> +        trace_savevm_section_start(se->idstr, se->section_id);
+> +
+> +        save_section_header(f, se, QEMU_VM_SECTION_END);
+
+Maybe it should be SECTION_PART.   So we provide all iterator a chance to
+do something right before switching to postcopy but before VM stop.  RAM
+can register.
+
+> +
+> +        ret = se->ops->save_live_complete_precopy(f, se->opaque);
+
+Maybe we don't want to run the whole iteration but only flush.  I think for
+simplicity we can make a new hook.
+
+> +        trace_savevm_section_end(se->idstr, se->section_id, ret);
+> +        save_section_footer(f, se);
+> +        if (ret < 0) {
+> +            qemu_file_set_error(f, ret);
+> +            return -1;
+> +        }
+> +        end_ts_each = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
+> +        trace_vmstate_downtime_save("iterable", se->idstr, se->instance_id,
+> +                                    end_ts_each - start_ts_each);
+
+We do not need to account 
+
 > +    }
 > +
->      if (env->mcg_cap & MCG_LMCE_P) {
->          has_msr_mcg_ext_ctl = has_msr_feature_control = true;
->      }
-> ---
+> +    return ret;
+> +}
+> +
+>  /* Give an estimate of the amount left to be transferred,
+>   * the result is split into the amount for units that can and
+>   * for units that can't do postcopy.
+> diff --git a/migration/savevm.h b/migration/savevm.h
+> index 91ae703925..e3789984a1 100644
+> --- a/migration/savevm.h
+> +++ b/migration/savevm.h
+> @@ -70,5 +70,6 @@ int qemu_load_device_state(QEMUFile *f);
+>  int qemu_loadvm_approve_switchover(void);
+>  int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
+>          bool in_postcopy);
+> +int qemu_savevm_state_complete_multifd(QEMUFile *f);
 > 
-> The above codes check 0xa after 0x1 and 0x7, and uses the local variable
-> `c`, so that it doesn't need to wrap another new function.
+>  #endif
+> ====
 > 
+> 63/63 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test
+>      OK             164.02s   79 subtests passed
+> 63/63 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test
+>      OK             164.99s   79 subtests passed
+> ====
+> 
+> * Does the above patch look okay?
+> 
+> ====
+> Guest not dirtying RAM:
+> ===================
+> 2025-03-07 10:57:28.740+0000: initiating migration
+> 2025-03-07T10:57:28.823166Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07T10:58:04.450758Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07T10:58:04.711523Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07 10:58:05.078+0000: shutting down, reason=migrated
+> 
+> 2025-03-07 10:59:44.322+0000: initiating migration
+> 2025-03-07T10:59:44.394714Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07T11:00:20.198360Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07T11:00:20.279135Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07 11:00:20.571+0000: shutting down, reason=migrated
+> ====
+> 
+> Guest dirtying RAM: $ dd if=/dev/urandom of=/tmp/random.bin bs=256M count=32 ...
+> ================
+> 2025-03-07 11:04:00.281+0000: initiating migration
+> 2025-03-07T11:04:00.359426Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07T11:05:51.406988Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07T11:06:56.899920Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07 11:08:02.376+0000: shutting down, reason=migrated
+> 
+> 2025-03-07 11:09:19.295+0000: initiating migration
+> 2025-03-07T11:09:19.372012Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07T11:11:24.217610Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07T11:12:35.342709Z qemu-system-x86_64: info:
+> multifd_ram_flush_and_sync: called
+> 2025-03-07 11:13:48.947+0000: shutting down, reason=migrated
+> ====
+> 
+> * When a guest is running some workload (dirtying memory), it seems to
+> take a little more time before switching to the Postcopy phase.
+> 
+> > Let me know if you want me to write the patches.  That's almost the only
+> > thing left to make it clearer..
+> 
+> * If the above patch is not okay,  it'll help if you share your
+> version of it. Meanwhile I'll split the patch-2 and re-arrange other
+> patches.
 
-How about we still wrap in another new function with &cpuid_data.cpuid as
-an argument?
+Please see above, if that doesn't help you come up with a final version,
+I'll write it.
 
-1. In current patch, we need cpuid(0xa) to query Intel PMU info.
+Thanks,
 
-2. In PATCH 08/10 (AMD), we need cpuid(0x80000001) to determine PERFCORE.
-
-https://lore.kernel.org/all/20250302220112.17653-9-dongli.zhang@oracle.com/
-
-(Otherwise, we may use ((env->features[FEAT_8000_0001_ECX] &
-CPUID_EXT3_PERFCORE), but I prefer something consistent)
-
-
-3. In PATCH 09/10 (AMD PerfMonV2), we need cpuid(0x80000022) to query the
-PerfMonV2 support, and the number of PMU counters.
-
-https://lore.kernel.org/all/20250302220112.17653-10-dongli.zhang@oracle.com/
-
-Thank you very much!
-
-Dongli Zhang
+-- 
+Peter Xu
 
 
