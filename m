@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0DF9C28B24
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD92C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 18:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqcF6-0000jN-II; Fri, 07 Mar 2025 13:16:16 -0500
+	id 1tqcF6-0000j9-3w; Fri, 07 Mar 2025 13:16:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqcF4-0000io-3v
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqcF4-0000iw-NC
  for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:16:14 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqcF1-0004Z1-Gw
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:16:13 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tqcF2-0004eQ-9X
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 13:16:14 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 830371F441;
- Fri,  7 Mar 2025 18:16:03 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D7A9A21190;
+ Fri,  7 Mar 2025 18:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1741371364; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1741371360; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KCyu6U659hl4+BbhYS269+FXsnwSQqSXTjYAb5axr/s=;
- b=AwPEwXEVPViUgxwRmDv+iFsFGeYL/0sxfXj1mlFeD5IpedAyPF452KnoHbpqqFGPZppZPT
- Dvo1QbiKX2rN7A04K6fzNYcIxC1r26VsgSXVy0ALaxMGs7mEzfCt2gEAQA7axReIelyiDt
- iR1VK1mxoAMcovYvnoX0xtqDwLi89Ww=
+ bh=1i7apSn15jQatTnXZMO4odm/liOMWciUMfs5vbKW9dY=;
+ b=RuQ4stkppMwavXpTMBnvtB5+b0qZW80xdYeleRh1OqaH6TTonJTHPOCRy/EnruEZHNSnT/
+ HQPoKYq9ZHMZnD94n1fFSibIG14KeX7HuiHb35lmmpolZaPCMYd32hETdrcOJedLelyVIM
+ eJefTtzJEVy86SLXWzD/X2vr8Uu7WM0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1741371364;
+ s=susede2_ed25519; t=1741371360;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KCyu6U659hl4+BbhYS269+FXsnwSQqSXTjYAb5axr/s=;
- b=KFVa/qgtUAQOlE5RX3g9YF1PcCKtKKLt6biiMK3YOkh8V45TS7DqRF3v1h7dliYi+DGhHD
- oFXGPc95Ux4QgxCQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qlzBqS9O;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Ya1DQomK
+ bh=1i7apSn15jQatTnXZMO4odm/liOMWciUMfs5vbKW9dY=;
+ b=VLyRGyoS0zGkuyi8gMxSXpbUQ6VJv6UlNOZX0GtILB+1dJXhV9R/DCQTcv6l1ca7KnslGh
+ qCsXKD+UpgqpiLCA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ePiWN5bn;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=BiFB5SZG
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1741371363; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1741371359; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KCyu6U659hl4+BbhYS269+FXsnwSQqSXTjYAb5axr/s=;
- b=qlzBqS9OVE7vMsQR9IpiJDrAwZLJg866cGXWc6qqIAWnNpAvLiJ8PLzHO8VyDjpVMUvxSQ
- 0ma+xJuw7Ez32UaisQMDcLxFzZnMfjyiRisP5s4umwvG59bQuFseYYzm8DFY/RCxbB7hsI
- mJh3hKJYkMkFB2g6mC808G/wYoQvhTU=
+ bh=1i7apSn15jQatTnXZMO4odm/liOMWciUMfs5vbKW9dY=;
+ b=ePiWN5bnkK/Uguev+iO2d/FL9AWXx00iTSk8ydLhmSWKwoW1L3G73JRTM9oAkh/uYmi6qi
+ DB270YjOaKjHhYBjs2kH0/EyVw6jXlwQ9xdkt8x6vV+mGOn0ZA5hcy+6OYg6PzLNA1yybq
+ QxcanPUk6TgQ1i01b9t5sshhJOMyteM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1741371363;
+ s=susede2_ed25519; t=1741371359;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KCyu6U659hl4+BbhYS269+FXsnwSQqSXTjYAb5axr/s=;
- b=Ya1DQomKB0PQprrhVj8IUVoIPku062oURgpA+7KyIu3dpa2fYoTrrXb7jFXjGGxMEh4/xt
- gs1AdUXTy17lxrDg==
+ bh=1i7apSn15jQatTnXZMO4odm/liOMWciUMfs5vbKW9dY=;
+ b=BiFB5SZGuBt+aEjkbZVpx2q0tt3sh5WsdkB9Y2I/jQIT+Jxzy7tW8woQ0DYS47IW1HXVyH
+ 8yixcjQMT02uRPAQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2E59513A22;
- Fri,  7 Mar 2025 18:16:01 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 359E513A22;
+ Fri,  7 Mar 2025 18:15:57 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2M9DN+E3y2dNcgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 07 Mar 2025 18:16:01 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qNMOOd03y2dNcgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Mar 2025 18:15:57 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PULL 4/8] migration: check RDMA and capabilities are compatible on
- both sides
-Date: Fri,  7 Mar 2025 15:15:47 -0300
-Message-Id: <20250307181551.19887-5-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Steve Sistare <steven.sistare@oracle.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PULL 2/8] migration: ram block cpr blockers
+Date: Fri,  7 Mar 2025 15:15:45 -0300
+Message-Id: <20250307181551.19887-3-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250307181551.19887-1-farosas@suse.de>
 References: <20250307181551.19887-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 830371F441
+X-Rspamd-Queue-Id: D7A9A21190
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
@@ -101,20 +100,19 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
  TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,oracle.com:email];
  RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_THREE(0.00)[3];
+ RCPT_COUNT_THREE(0.00)[4];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,149 +129,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-Depending on the order of starting RDMA and setting capability,
-they can be categorized into the following scenarios:
-Source:
- S1: [set capabilities] -> [Start RDMA outgoing]
-Destination:
- D1: [set capabilities] -> [Start RDMA incoming]
- D2: [Start RDMA incoming] -> [set capabilities]
+Unlike cpr-reboot mode, cpr-transfer mode cannot save volatile ram blocks
+in the migration stream file and recreate them later, because the physical
+memory for the blocks is pinned and registered for vfio.  Add a blocker
+for volatile ram blocks.
 
-Previously, compatibility between RDMA and capabilities was verified only
-in scenario D1, potentially causing migration failures in other situations.
+Also add a blocker for RAM_GUEST_MEMFD.  Preserving guest_memfd may be
+sufficient for CPR, but it has not been tested yet.
 
-For scenarios S1 and D1, we can seamlessly incorporate
-migration_transport_compatible() to address compatibility between
-channels and capabilities vs transport.
-
-For scenario D2, ensure compatibility within migrate_caps_check().
-
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Message-ID: <20250305062825.772629-3-lizhijian@fujitsu.com>
-[fixup comment alignment]
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Message-ID: <1740667681-257312-1-git-send-email-steven.sistare@oracle.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c | 30 ++++++++++++++++++++----------
- migration/options.c   | 21 +++++++++++++++++++++
- migration/options.h   |  1 +
- 3 files changed, 42 insertions(+), 10 deletions(-)
+ include/exec/memory.h   |  3 ++
+ include/exec/ramblock.h |  1 +
+ migration/savevm.c      |  2 ++
+ system/physmem.c        | 66 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 72 insertions(+)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index d46e776e24..22dd966970 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -259,6 +259,24 @@ migration_channels_and_transport_compatible(MigrationAddress *addr,
-     return true;
- }
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 78c4e0aec8..d09af58c97 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -3203,6 +3203,9 @@ bool ram_block_discard_is_disabled(void);
+  */
+ bool ram_block_discard_is_required(void);
  
-+static bool
-+migration_capabilities_and_transport_compatible(MigrationAddress *addr,
-+                                                Error **errp)
-+{
-+    if (addr->transport == MIGRATION_ADDRESS_TYPE_RDMA) {
-+        return migrate_rdma_caps_check(migrate_get_current()->capabilities,
-+                                       errp);
-+    }
++void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp);
++void ram_block_del_cpr_blocker(RAMBlock *rb);
 +
-+    return true;
-+}
-+
-+static bool migration_transport_compatible(MigrationAddress *addr, Error **errp)
-+{
-+    return migration_channels_and_transport_compatible(addr, errp) &&
-+           migration_capabilities_and_transport_compatible(addr, errp);
-+}
-+
- static gint page_request_addr_cmp(gconstpointer ap, gconstpointer bp)
- {
-     uintptr_t a = (uintptr_t) ap, b = (uintptr_t) bp;
-@@ -750,7 +768,7 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
-     }
- 
-     /* transport mechanism not suitable for migration? */
--    if (!migration_channels_and_transport_compatible(addr, errp)) {
-+    if (!migration_transport_compatible(addr, errp)) {
-         return;
-     }
- 
-@@ -769,14 +787,6 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
-         }
- #ifdef CONFIG_RDMA
-     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_RDMA) {
--        if (migrate_xbzrle()) {
--            error_setg(errp, "RDMA and XBZRLE can't be used together");
--            return;
--        }
--        if (migrate_multifd()) {
--            error_setg(errp, "RDMA and multifd can't be used together");
--            return;
--        }
-         rdma_start_incoming_migration(&addr->u.rdma, errp);
  #endif
-     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_EXEC) {
-@@ -2208,7 +2218,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-     }
  
-     /* transport mechanism not suitable for migration? */
--    if (!migration_channels_and_transport_compatible(addr, errp)) {
-+    if (!migration_transport_compatible(addr, errp)) {
-         return;
-     }
- 
-diff --git a/migration/options.c b/migration/options.c
-index b0ac2ea408..1f3602839d 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -448,6 +448,20 @@ static bool migrate_incoming_started(void)
-     return !!migration_incoming_get_current()->transport_data;
+ #endif
+diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+index 0babd105c0..64484cd821 100644
+--- a/include/exec/ramblock.h
++++ b/include/exec/ramblock.h
+@@ -39,6 +39,7 @@ struct RAMBlock {
+     /* RCU-enabled, writes protected by the ramlist lock */
+     QLIST_ENTRY(RAMBlock) next;
+     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
++    Error *cpr_blocker;
+     int fd;
+     uint64_t fd_offset;
+     int guest_memfd;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 5c4fdfd95e..ce158c3512 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -3514,12 +3514,14 @@ void vmstate_register_ram(MemoryRegion *mr, DeviceState *dev)
+     qemu_ram_set_idstr(mr->ram_block,
+                        memory_region_name(mr), dev);
+     qemu_ram_set_migratable(mr->ram_block);
++    ram_block_add_cpr_blocker(mr->ram_block, &error_fatal);
  }
  
-+bool migrate_rdma_caps_check(bool *caps, Error **errp)
+ void vmstate_unregister_ram(MemoryRegion *mr, DeviceState *dev)
+ {
+     qemu_ram_unset_idstr(mr->ram_block);
+     qemu_ram_unset_migratable(mr->ram_block);
++    ram_block_del_cpr_blocker(mr->ram_block);
+ }
+ 
+ void vmstate_register_ram_global(MemoryRegion *mr)
+diff --git a/system/physmem.c b/system/physmem.c
+index 8c1736f84e..445981a1b4 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -70,7 +70,10 @@
+ 
+ #include "qemu/pmem.h"
+ 
++#include "qapi/qapi-types-migration.h"
++#include "migration/blocker.h"
+ #include "migration/cpr.h"
++#include "migration/options.h"
+ #include "migration/vmstate.h"
+ 
+ #include "qemu/range.h"
+@@ -1903,6 +1906,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+             qemu_mutex_unlock_ramlist();
+             goto out_free;
+         }
++
++        error_setg(&new_block->cpr_blocker,
++                   "Memory region %s uses guest_memfd, "
++                   "which is not supported with CPR.",
++                   memory_region_name(new_block->mr));
++        migrate_add_blocker_modes(&new_block->cpr_blocker, errp,
++                                  MIG_MODE_CPR_TRANSFER,
++                                  -1);
+     }
+ 
+     ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
+@@ -4094,3 +4105,58 @@ bool ram_block_discard_is_required(void)
+     return qatomic_read(&ram_block_discard_required_cnt) ||
+            qatomic_read(&ram_block_coordinated_discard_required_cnt);
+ }
++
++/*
++ * Return true if ram is compatible with CPR.  Do not exclude rom,
++ * because the rom file could change in new QEMU.
++ */
++static bool ram_is_cpr_compatible(RAMBlock *rb)
 +{
-+    if (caps[MIGRATION_CAPABILITY_XBZRLE]) {
-+        error_setg(errp, "RDMA and XBZRLE can't be used together");
-+        return false;
-+    }
-+    if (caps[MIGRATION_CAPABILITY_MULTIFD]) {
-+        error_setg(errp, "RDMA and multifd can't be used together");
-+        return false;
++    MemoryRegion *mr = rb->mr;
++
++    if (!mr || !memory_region_is_ram(mr)) {
++        return true;
 +    }
 +
-+    return true;
++    /* Ram device is remapped in new QEMU */
++    if (memory_region_is_ram_device(mr)) {
++        return true;
++    }
++
++    /*
++     * A file descriptor is passed to new QEMU and remapped, or its backing
++     * file is reopened and mapped.  It must be shared to avoid COW.
++     */
++    if (rb->fd >= 0 && qemu_ram_is_shared(rb)) {
++        return true;
++    }
++
++    return false;
 +}
 +
- /**
-  * @migration_caps_check - check capability compatibility
-  *
-@@ -611,6 +625,13 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
-         }
-     }
- 
-+    /*
-+     * On destination side, check the cases that capability is being set
-+     * after incoming thread has started.
-+     */
-+    if (migrate_rdma() && !migrate_rdma_caps_check(new_caps, errp)) {
-+        return false;
++/*
++ * Add a blocker for each volatile ram block.  This function should only be
++ * called after we know that the block is migratable.  Non-migratable blocks
++ * are either re-created in new QEMU, or are handled specially, or are covered
++ * by a device-level CPR blocker.
++ */
++void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp)
++{
++    assert(qemu_ram_is_migratable(rb));
++
++    if (ram_is_cpr_compatible(rb)) {
++        return;
 +    }
-     return true;
- }
- 
-diff --git a/migration/options.h b/migration/options.h
-index 762be4e641..82d839709e 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -57,6 +57,7 @@ bool migrate_tls(void);
- 
- /* capabilities helpers */
- 
-+bool migrate_rdma_caps_check(bool *caps, Error **errp);
- bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp);
- 
- /* parameters */
++
++    error_setg(&rb->cpr_blocker,
++               "Memory region %s is not compatible with CPR. share=on is "
++               "required for memory-backend objects, and aux-ram-share=on is "
++               "required.", memory_region_name(rb->mr));
++    migrate_add_blocker_modes(&rb->cpr_blocker, errp, MIG_MODE_CPR_TRANSFER,
++                              -1);
++}
++
++void ram_block_del_cpr_blocker(RAMBlock *rb)
++{
++    migrate_del_blocker(&rb->cpr_blocker);
++}
 -- 
 2.35.3
 
