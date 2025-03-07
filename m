@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D27C282DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F00C28B23
 	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZIT-00010m-5u; Fri, 07 Mar 2025 10:07:33 -0500
+	id 1tqZII-0000vq-NM; Fri, 07 Mar 2025 10:07:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIR-000108-Dn
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:31 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1tqZID-0000uh-Oc
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:18 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tqZIO-0008IT-I4
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:31 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3912fdddf8fso908910f8f.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:27 -0800 (PST)
+ id 1tqZIB-00088N-8r
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:07:17 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-390ec449556so2383743f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 07:07:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741360047; x=1741964847; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741360032; x=1741964832; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sPQzlaT0o0OQv6YSIoANGooc60IYlGPPa8yEd55FTZY=;
- b=tEQ2plXsuPBXDt5CX0G0Q1N/bldX2cygHPW5ksPr+6Lf1c37EKQ+aguLtWU7Rf8zCo
- /7upp0JH7jfuZjGE+9ckibz3Fok0ebGzpjiMgEMDD5XROPDI4884iI9lbc7rYELWsZ/M
- YiePlKKAxYuutG7EhVxpbTMuXXjn50azwqo/81DzE8dtMZrZ0GAhB4fNDBek57F3hECi
- EzRsJjrHYBWllGfUrMdBm1W579gIVESNOH6jvDnmz5e649RnPGLYLYt02v8OmR+O/b0D
- C2/QKFyPoEew/iSF24qq4e9it9EvEOWvF1CdgMjIRrlOrNdn/T4V+eaWGWxMFxILJrXV
- LJMQ==
+ :reply-to; bh=+QkSXpcJmb4SjhyzEiZSJ5JG+w4vRWp9nEHIGthYBHI=;
+ b=thqRFN7zE2ku6n9akLdRiBFPzENE5uCDlJgsUdrscgNznRrR2WBJG78H1tOekZDBQE
+ OPFmxXvH8Xb8h4Huge6keL4PAePUx2pp1YAF1a2FWkCmDJAXt1M+K2lj/2Sby3pg0l/o
+ +NOFExdOFx4kwghtUI+O5llA75ExJ3Xt9lumN4o1GN2Hj5ZvAqxt0vHSyFZYFbBmGiIe
+ PvAel6r80J6uVhH3l6p1/dvi2aex2Jy5ZK1aG//GCszIBd2RKkQcV62Ba1SttnqABO6O
+ i8w3oQ1XFUu9vpa9lkzIezrZYRMg8JYK8DVIYeaqy9guZiaYdxI4gVkR/tfuWPccx3fo
+ nDow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741360047; x=1741964847;
+ d=1e100.net; s=20230601; t=1741360032; x=1741964832;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sPQzlaT0o0OQv6YSIoANGooc60IYlGPPa8yEd55FTZY=;
- b=JqGW6j0XlwSMnFsghBCKJ1F1G38/5dBzUIMY2X9i5EJUec6/qjWOCfV2fEMCSP+npw
- 5iic/D+UXkRLEEBlkv6+oJNdkY/i65ITXSlXFR5vVwPVhm5+lgk7dP1CdvQL4KF6dSpt
- pe0CJNFYY2kQRCgXj+efwz2kaY/ZYXPWXGQsA4Y+RJF+syz2anmrYUWp4+an3i6FKh7V
- ctGosvGqmz5hJNcbPpg++dfRaRQGCoCaGfzHF3uPBXfjCULpC8Fp5OzLSHsYFnKX/ZH3
- AGP4DuK2QD0C1GCT7euNK5fXXcw7LCW17PoHZz58B/T0s9q0yJoYw7J2B+D9A5OLwqwR
- INrQ==
-X-Gm-Message-State: AOJu0YyOhLngRYx8sZjh+BHUGxM79g6MlbKyhOOoKTN7olmZDnzPeWUu
- MmwuOGT3PeLqOcFOsY94qXLYZqph8oc8zScHEHEev+RwZLC27NBcvlVP0/08dCnk9xMbQa84Pta
- m
-X-Gm-Gg: ASbGncsG1XDwrBDB6XN3amaisDcovYtZu5d1MyhaTcA+DAQtAuPBJEpDjwhEaSP3p7X
- 2hgTDP+5fHOjLuW4fqR/9HuTrKVQOlxg30L9f6dfo03V1Ma9D3GMp8yuVUu1A89Y8oWNQvRj3am
- JQmlNVGdVPc9QAROLVveDx1mX70rPDmBzbSfBTMAMQwNKjY+3PE+psQm+g8bua9aLNaJRJfHse+
- SnXuKpahnIxxqn5iDZeCGH+o2Zr4vckJzn4rUnMlBOE6TifdAwuUDiHa9OP8KondLhDOaS1nxqs
- QCT3QBOjlLycZvi+ygvUeBPUkJZdayTkXr0odzedRWFTm1bATcU=
-X-Google-Smtp-Source: AGHT+IE8MKMD7umqqa+qkpjcmwKxKoSzmHkMxY4KzV/nOpCvlExwBFHEPs0nKbcJL8/pe3qfIcMFcQ==
-X-Received: by 2002:a5d:5989:0:b0:390:e9ee:f27a with SMTP id
- ffacd0b85a97d-39132143902mr2315721f8f.28.1741360046791; 
- Fri, 07 Mar 2025 07:07:26 -0800 (PST)
+ bh=+QkSXpcJmb4SjhyzEiZSJ5JG+w4vRWp9nEHIGthYBHI=;
+ b=i/DK7xKDwvcdJqadr65nVHNRbNAdS9KupECfPns6AYrBjlrkduHAmhYi6v2/yFtBCR
+ N3Q45YcdpG7REFvATwdpssQOho3iEqHd9HAhCFVY3pqEqg3eDJQ+dlI1tcz3oRiepL/E
+ Sj35ZbhZfLsmU2BBrqoFZ0DKktLgJwK84AOY3x1pFRcZnpSPf+lBqXeDy9rNzcRm5Tvo
+ YSG6cjByLkco5cwYlC1X3NxoQL4cmv9bKOwlMxqj3K9slYq+Snabts8o+nRXGBEXGwSa
+ DMpTdQY9e35FxQHFTToZzqDjFISO03lt4uJ61ejtE+zriY1QwAHrvzGkl3D0eeJcBqIh
+ NRFw==
+X-Gm-Message-State: AOJu0YxxjhsBZrgwOabBX1UwX5JlTVlLf390eGG0U4MlzA+xnK6bj0ud
+ wsRz+VT4g5eOKmeoJQZ5wZCsjnI6SLNxVH+bHbDfqvElsY6uPsXDFvtgo80sFOTkwwGF0HASztg
+ L
+X-Gm-Gg: ASbGncvRUg27ZZI8T50qkiWVnXJKESXr59RglFpR9fqfhRz/o/LQFjYRMAgjWYdnpge
+ xWlvim1Gc66l4FBe2uhN07GRiz0WrFS4Lhhoqrm4HHV3PK/Y4FJcRPWDt2DghPDn74p6SRXOP34
+ Lk3NgRMT6Qpdd8m+PuKWawdIaplUpjrStb62tDdL6/JdGy+Pss8Eg1aPdB/By19bbWKAfRfWGcc
+ N3xOcRVD1mV8NdPg5mtRyscM0RWfrHAEkNlzqjAYemRazVsRMd3MdQte47J1HFxlKJTO/aaiZEK
+ FvuxeAqJm9hcvlx57a4hlxYFNxLfHtK6174QQAAhyqGonmQsQN4=
+X-Google-Smtp-Source: AGHT+IEipGZ5hY4utgxesPXs60KaW82O9P+tVN0ixOB4fdu5HmxoZ0XJJu+edFgwgmsVj3GMfuVdMQ==
+X-Received: by 2002:a05:6000:1a86:b0:391:4f9:a048 with SMTP id
+ ffacd0b85a97d-39132d095e2mr3263933f8f.4.1741360032400; 
+ Fri, 07 Mar 2025 07:07:12 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.25
+ ffacd0b85a97d-3912c1031fdsm5443627f8f.89.2025.03.07.07.07.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 07:07:26 -0800 (PST)
+ Fri, 07 Mar 2025 07:07:11 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/21] target/arm: Correct LDRD atomicity and fault behaviour
-Date: Fri,  7 Mar 2025 15:07:00 +0000
-Message-ID: <20250307150708.3222813-14-peter.maydell@linaro.org>
+Subject: [PULL 01/21] hw/arm/smmu-common: Remove the repeated ttb field
+Date: Fri,  7 Mar 2025 15:06:48 +0000
+Message-ID: <20250307150708.3222813-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250307150708.3222813-1-peter.maydell@linaro.org>
 References: <20250307150708.3222813-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,143 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Our LDRD implementation is wrong in two respects:
+From: JianChunfu <jansef.jian@hj-micro.com>
 
- * if the address is 4-aligned and the load crosses a page boundary
-   and the second load faults and the first load was to the
-   base register (as in cases like "ldrd r2, r3, [r2]", then we
-   must not update the base register before taking the fault
- * if the address is 8-aligned the access must be a 64-bit
-   single-copy atomic access, not two 32-bit accesses
+SMMUTransCfg->ttb is never used in QEMU, TT base address
+can be accessed by SMMUTransCfg->tt[i]->ttb.
 
-Rewrite the handling of the loads in LDRD to use a single
-tcg_gen_qemu_ld_i64() and split the result into the destination
-registers. This allows us to get the atomicity requirements
-right, and also implicitly means that we won't update the
-base register too early for the page-crossing case.
-
-Note that because we no longer increment 'addr' by 4 in the course of
-performing the LDRD we must change the adjustment value we pass to
-op_addr_ri_post() and op_addr_rr_post(): it no longer needs to
-subtract 4 to get the correct value to use if doing base register
-writeback.
-
-STRD has the same problem with not getting the atomicity right;
-we will deal with that in the following commit.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Stu Grossman <stu.grossman@gmail.com>
+Signed-off-by: JianChunfu <jansef.jian@hj-micro.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20250221031034.69822-1-jansef.jian@hj-micro.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250227142746.1698904-2-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate.c | 70 +++++++++++++++++++++++++-------------
- 1 file changed, 46 insertions(+), 24 deletions(-)
+ include/hw/arm/smmu-common.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index d8225b77c8c..93772da39a4 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -5003,10 +5003,49 @@ static bool op_store_rr(DisasContext *s, arg_ldst_rr *a,
-     return true;
- }
- 
-+static void do_ldrd_load(DisasContext *s, TCGv_i32 addr, int rt, int rt2)
-+{
-+    /*
-+     * LDRD is required to be an atomic 64-bit access if the
-+     * address is 8-aligned, two atomic 32-bit accesses if
-+     * it's only 4-aligned, and to give an alignment fault
-+     * if it's not 4-aligned. This is MO_ALIGN_4 | MO_ATOM_SUBALIGN.
-+     * Rt is always the word from the lower address, and Rt2 the
-+     * data from the higher address, regardless of endianness.
-+     * So (like gen_load_exclusive) we avoid gen_aa32_ld_i64()
-+     * so we don't get its SCTLR_B check, and instead do a 64-bit access
-+     * using MO_BE if appropriate and then split the two halves.
-+     *
-+     * For M-profile, and for A-profile before LPAE, the 64-bit
-+     * atomicity is not required. We could model that using
-+     * the looser MO_ATOM_IFALIGN_PAIR, but providing a higher
-+     * level of atomicity than required is harmless (we would not
-+     * currently generate better code for IFALIGN_PAIR here).
-+     *
-+     * This also gives us the correct behaviour of not updating
-+     * rt if the load of rt2 faults; this is required for cases
-+     * like "ldrd r2, r3, [r2]" where rt is also the base register.
-+     */
-+    int mem_idx = get_mem_index(s);
-+    MemOp opc = MO_64 | MO_ALIGN_4 | MO_ATOM_SUBALIGN | s->be_data;
-+    TCGv taddr = gen_aa32_addr(s, addr, opc);
-+    TCGv_i64 t64 = tcg_temp_new_i64();
-+    TCGv_i32 tmp = tcg_temp_new_i32();
-+    TCGv_i32 tmp2 = tcg_temp_new_i32();
-+
-+    tcg_gen_qemu_ld_i64(t64, taddr, mem_idx, opc);
-+    if (s->be_data == MO_BE) {
-+        tcg_gen_extr_i64_i32(tmp2, tmp, t64);
-+    } else {
-+        tcg_gen_extr_i64_i32(tmp, tmp2, t64);
-+    }
-+    store_reg(s, rt, tmp);
-+    store_reg(s, rt2, tmp2);
-+}
-+
- static bool trans_LDRD_rr(DisasContext *s, arg_ldst_rr *a)
- {
--    int mem_idx = get_mem_index(s);
--    TCGv_i32 addr, tmp;
-+    TCGv_i32 addr;
- 
-     if (!ENABLE_ARCH_5TE) {
-         return false;
-@@ -5017,18 +5056,10 @@ static bool trans_LDRD_rr(DisasContext *s, arg_ldst_rr *a)
-     }
-     addr = op_addr_rr_pre(s, a);
- 
--    tmp = tcg_temp_new_i32();
--    gen_aa32_ld_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
--    store_reg(s, a->rt, tmp);
--
--    tcg_gen_addi_i32(addr, addr, 4);
--
--    tmp = tcg_temp_new_i32();
--    gen_aa32_ld_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
--    store_reg(s, a->rt + 1, tmp);
-+    do_ldrd_load(s, addr, a->rt, a->rt + 1);
- 
-     /* LDRD w/ base writeback is undefined if the registers overlap.  */
--    op_addr_rr_post(s, a, addr, -4);
-+    op_addr_rr_post(s, a, addr, 0);
-     return true;
- }
- 
-@@ -5152,23 +5183,14 @@ static bool op_store_ri(DisasContext *s, arg_ldst_ri *a,
- 
- static bool op_ldrd_ri(DisasContext *s, arg_ldst_ri *a, int rt2)
- {
--    int mem_idx = get_mem_index(s);
--    TCGv_i32 addr, tmp;
-+    TCGv_i32 addr;
- 
-     addr = op_addr_ri_pre(s, a);
- 
--    tmp = tcg_temp_new_i32();
--    gen_aa32_ld_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
--    store_reg(s, a->rt, tmp);
--
--    tcg_gen_addi_i32(addr, addr, 4);
--
--    tmp = tcg_temp_new_i32();
--    gen_aa32_ld_i32(s, tmp, addr, mem_idx, MO_UL | MO_ALIGN);
--    store_reg(s, rt2, tmp);
-+    do_ldrd_load(s, addr, a->rt, rt2);
- 
-     /* LDRD w/ base writeback is undefined if the registers overlap.  */
--    op_addr_ri_post(s, a, addr, -4);
-+    op_addr_ri_post(s, a, addr, 0);
-     return true;
- }
- 
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index d1a4a64551d..e5ad55bbae7 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -110,7 +110,6 @@ typedef struct SMMUTransCfg {
+     /* Used by stage-1 only. */
+     bool aa64;                 /* arch64 or aarch32 translation table */
+     bool record_faults;        /* record fault events */
+-    uint64_t ttb;              /* TT base address */
+     uint8_t oas;               /* output address width */
+     uint8_t tbi;               /* Top Byte Ignore */
+     int asid;
 -- 
 2.43.0
 
