@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C5D4C28B24
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF5E1C28B23
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqd5Q-0002UZ-Ik; Fri, 07 Mar 2025 14:10:20 -0500
+	id 1tqd7H-00066G-VP; Fri, 07 Mar 2025 14:12:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqd5P-0002Tv-3g
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:10:19 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tqd75-0005pw-VG
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:12:10 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tqd5N-0005tn-Fb
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:10:18 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2232aead377so46299105ad.0
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:10:17 -0800 (PST)
+ id 1tqd73-000605-Tv
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:12:03 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-223594b3c6dso42005795ad.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 11:12:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741374616; x=1741979416; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TnhPiWQ46KHFDBAFB5FNYntK+UjbBUc/XRUUAjHcGsQ=;
- b=bOK0TSNlSqbc8RsCA2uCIpa4mIkHrgE9tt5w/uV8Ik9YBl2Brkbv448iMt/CZv6QGX
- SyXfvVqmOy7Cqr92dfBfNfIe4OzkMzypaD4rulr0xpNFQSRdvOgTya/Q6hs84k+fQfas
- z9Qy4rPwIDco+IwgN9gr0AsTDEZBTIuQanYR9JiIui9JZvc/ot+272b1fbGOvqlm+vr7
- MlPGE9xOeE59va+RE5ciVqk8UB3OKXYRqazDD1frJg+4R66qKFwpHCEB1I9jLMdXXCfv
- ncepJ3061X5oioOG5HuDtDi25EUBIpzEISy3NOYMGXPNCQt/iEaKdFYfa2M9SL8UPUP2
- /qoA==
+ d=linaro.org; s=google; t=1741374720; x=1741979520; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pO31XiD3H9Op276gmvECOc5hjBFZk+ESYZCRPkxTRlQ=;
+ b=vHbCraLQ4oHzT4TbMjvOdBh+9rESeRDPjtNoC9V9p9+ZlIfEhhCvlemXNxvECQR4g4
+ Fgj7lHIt6GaNFr5EqSj2QQpjuG3pHxJYZ0q1qVH3ZJiCgRB+cHtn2R9I4gcRhHfu7NJe
+ GuZbWFRCV0c7PK4gJGrzIlLbbfvvhvMnBFxfxlX6bTHNUo5s/iOb2IfGKgesXdunVS8w
+ fMvEKstroNl/ObSfG2Twl/NN4BwUfCkkhEiRDV4skp8mJA9rPRszj+g12xXQu5RYwR5y
+ uwoIYvY2XpHTWsa8F35GIkmhWya9XrugAk6qXVjI7oST3PJKa0GQCNjmv9ti+ySMdiY2
+ 56hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741374616; x=1741979416;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TnhPiWQ46KHFDBAFB5FNYntK+UjbBUc/XRUUAjHcGsQ=;
- b=sxv9YFGWxkRXQkTlyQVRTdNo3NrRiB6GmTLuJq1JIwda2nuouc6b0iuRGquVngxYu9
- iILxoSlaBDyBROBN+yf9U6GkyxojeB0ZWiGFEObYhk5vZn6BQs8iOqU36u03pm70IPah
- SNRdfhyHQDbdsUK2ES/Yrwe6ZxySdsuKjMMNtEZSwLNcXCU+TkDIVloSpeS95dgCwvlL
- OmH0bmXMtImehl11uqvPuYTEOz6RPWZIwAWLEz1oxLSojNQse+J6IgWd4+UY4FK2Iwgr
- P5Ur7AML3UJc6Zt0SixZX5STd7YGmem208FxoUZmR4+Dikm9OR463UXZwJ+sRTDhh/af
- VC3A==
-X-Gm-Message-State: AOJu0YyCE91Awo2dsxlNUIfN4Ne5Pu7PaNy/AZg0xg+dZTJxhH5PdgAM
- LQWcylrl2xiMmV4E3el2WPDiHTUOIonh9NSJbw657YAj4E58JNghK/Apxdt2hAyeZ1XFvhWF8cO
- c
-X-Gm-Gg: ASbGncvbZRuXLgnCc1J/Hrh4mWq0Aw0vlYOEg43suPwn4N9o6YJfarm0whAeNv/adQ9
- C48a1bU324ekJMJNOVhggqvL3bB/mOzgnxh1lPYbnC3TJuJaoHEXYQpnBLKLBAsK0R2T78vYNgn
- GXKWCNlhA9Lx5cFgUcq9eM2TmXtRifLNDrsc8mNcfb4ZjU3jXoJ/1Dw4gXBKamsEOYDLs+bBTF3
- LC+Dm9Wt1n3AO8G5sxiW4PB/Ii50l44V45TVLnraBL/nBrsc6Rz5zL9wofHMIFTVNYv+mEVW0eM
- GL49OQoXx5orbNFAV33SDKiHym37VoWhBCXHK6ye/q4n
-X-Google-Smtp-Source: AGHT+IEGvvA50bGtGnRgvOVX3N9VYhhII+Do9EFRBDHvk9BNSJg0ZhWlPN1xhGl54jgDafvpI4oJEA==
-X-Received: by 2002:a17:903:40cb:b0:223:2aab:4626 with SMTP id
- d9443c01a7336-22428880264mr75741745ad.11.1741374616138; 
- Fri, 07 Mar 2025 11:10:16 -0800 (PST)
-Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736b2da32c6sm1449895b3a.149.2025.03.07.11.10.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Mar 2025 11:10:15 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- pierrick.bouvier@linaro.org, alex.bennee@linaro.org, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- richard.henderson@linaro.org, manos.pitsidianakis@linaro.org
-Subject: [PATCH v2 6/7] hw/hyperv/balloon: common balloon compilation units
-Date: Fri,  7 Mar 2025 11:10:02 -0800
-Message-Id: <20250307191003.248950-7-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250307191003.248950-1-pierrick.bouvier@linaro.org>
-References: <20250307191003.248950-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1741374720; x=1741979520;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pO31XiD3H9Op276gmvECOc5hjBFZk+ESYZCRPkxTRlQ=;
+ b=lXYL1FVrvGgPPz8rrdSoQ7eouCpeqZX/ennnlIV/VmpUxZt7E/m0682rktVxjCkq3N
+ OQKjuwb9tm9M6klp0LAxMlTEQ93OPYXi8ZzPTpE5Z6X8Xm0KoQgMTXdxqofjWmMZ9xP+
+ TFJbf8pmrlwY678N2MfblDm72HOj4kKRtVEsoG/eXit22xWxyvja4mY72Qh9Ue5nvjwj
+ 18Gu3qGHQKKscz9BFOaTPawE4kI4+VHJLXB7lmyfu3pFZ53/p5xotfVyEvAWMoLwMWSH
+ lW3cX2r3oj+FeLuqSYUWT4TgFdKTsnz7PDpLakcQA04mHYOsbjfA2xT39/vUrgStxBQ2
+ CI6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU9sJN5Y0TleFjnLDMiJwAd4jTzDcYpXns6nJIedD28WPHutW6BQmoCzM5Q8FsAqnWMc3hzs6NI+4gM@nongnu.org
+X-Gm-Message-State: AOJu0YwRVa6PO5IFQxbukTfSiIhFlUooiUkxIBTo6UIvlBNBDhcpS0iP
+ 2FOgWUbBZbDZjuhRJFzXFXrYlo/3X0NcVHoQzdVdAcX9CtZlCkdHQdB8s0uaE98=
+X-Gm-Gg: ASbGnctuZ7YVW4sX39UnjNANjCv+kRUNp2qgNNXYBPFYJyTFe4NEPDL2wttsGDe44KT
+ bcjRX469LY/12/0p7lur+u60KjdKaX31JdmVfMxOOfoll86z3xsgSq5HHu5Te8yzJGP/BBGJNw9
+ gyrb6zn8Yw1Ws6zDU7YCNmd6ZzTATNrd8odTp0n8GRYhxsskzkW75Dqdkk+eGNeA8xlHoeuLSMz
+ DvK0sJJqeNzAN7tUq4nqCuKzM8PBbxnw3oZd6Mz5tIthw+ghNTRBnmqBn4LskAiCV+6ToBZ2g36
+ I62fw1W8P8gwWXR8c5IRzO0LzfT3PTn0UtO7dckTysPIhmMtvbrUQoMIXA==
+X-Google-Smtp-Source: AGHT+IGVUrnDVPENMOVvIKfP07rxSD/8iHbWa0HaZiz+5HQ+7tEWSLyAEQQjsblmF9s0JsPcS6QPTA==
+X-Received: by 2002:a05:6a00:c95:b0:725:96f2:9e63 with SMTP id
+ d2e1a72fcca58-736aab16545mr8529817b3a.24.1741374720336; 
+ Fri, 07 Mar 2025 11:12:00 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-736abe02bdasm1926596b3a.31.2025.03.07.11.11.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Mar 2025 11:11:59 -0800 (PST)
+Message-ID: <5884d2cc-12b6-41d3-b1e8-77d0d2e79059@linaro.org>
+Date: Fri, 7 Mar 2025 11:11:59 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/16] include/exec: Split out exec/cpu-interrupt.h
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+References: <20250307185645.970034-1-richard.henderson@linaro.org>
+ <20250307185645.970034-3-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250307185645.970034-3-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,23 +103,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- hw/hyperv/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 3/7/25 10:56, Richard Henderson wrote:
+> Some of these bits are actually common to all cpus; while the
+> reset have common reservations for target-specific usage.
+> While generic code cannot know what the target-specific usage is,
+> common code can know what to do with the bits, e.g. single-step.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/exec/cpu-all.h       | 53 +--------------------------
+>   include/exec/cpu-interrupt.h | 70 ++++++++++++++++++++++++++++++++++++
+>   include/exec/poison.h        | 13 -------
+>   3 files changed, 71 insertions(+), 65 deletions(-)
+>   create mode 100644 include/exec/cpu-interrupt.h
+> 
+> diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+> index 8f7aebb088..9e6724097c 100644
+> --- a/include/exec/cpu-all.h
+> +++ b/include/exec/cpu-all.h
+> @@ -21,6 +21,7 @@
+>   
+>   #include "exec/page-protection.h"
+>   #include "exec/cpu-common.h"
+> +#include "exec/cpu-interrupt.h"
+>   #include "exec/memory.h"
+>   #include "exec/tswap.h"
+>   #include "hw/core/cpu.h"
+> @@ -109,58 +110,6 @@ static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val
+>   
+>   CPUArchState *cpu_copy(CPUArchState *env);
+>   
+> -/* Flags for use in ENV->INTERRUPT_PENDING.
+> -
+> -   The numbers assigned here are non-sequential in order to preserve
+> -   binary compatibility with the vmstate dump.  Bit 0 (0x0001) was
+> -   previously used for CPU_INTERRUPT_EXIT, and is cleared when loading
+> -   the vmstate dump.  */
+> -
+> -/* External hardware interrupt pending.  This is typically used for
+> -   interrupts from devices.  */
+> -#define CPU_INTERRUPT_HARD        0x0002
+> -
+> -/* Exit the current TB.  This is typically used when some system-level device
+> -   makes some change to the memory mapping.  E.g. the a20 line change.  */
+> -#define CPU_INTERRUPT_EXITTB      0x0004
+> -
+> -/* Halt the CPU.  */
+> -#define CPU_INTERRUPT_HALT        0x0020
+> -
+> -/* Debug event pending.  */
+> -#define CPU_INTERRUPT_DEBUG       0x0080
+> -
+> -/* Reset signal.  */
+> -#define CPU_INTERRUPT_RESET       0x0400
+> -
+> -/* Several target-specific external hardware interrupts.  Each target/cpu.h
+> -   should define proper names based on these defines.  */
+> -#define CPU_INTERRUPT_TGT_EXT_0   0x0008
+> -#define CPU_INTERRUPT_TGT_EXT_1   0x0010
+> -#define CPU_INTERRUPT_TGT_EXT_2   0x0040
+> -#define CPU_INTERRUPT_TGT_EXT_3   0x0200
+> -#define CPU_INTERRUPT_TGT_EXT_4   0x1000
+> -
+> -/* Several target-specific internal interrupts.  These differ from the
+> -   preceding target-specific interrupts in that they are intended to
+> -   originate from within the cpu itself, typically in response to some
+> -   instruction being executed.  These, therefore, are not masked while
+> -   single-stepping within the debugger.  */
+> -#define CPU_INTERRUPT_TGT_INT_0   0x0100
+> -#define CPU_INTERRUPT_TGT_INT_1   0x0800
+> -#define CPU_INTERRUPT_TGT_INT_2   0x2000
+> -
+> -/* First unused bit: 0x4000.  */
+> -
+> -/* The set of all bits that should be masked when single-stepping.  */
+> -#define CPU_INTERRUPT_SSTEP_MASK \
+> -    (CPU_INTERRUPT_HARD          \
+> -     | CPU_INTERRUPT_TGT_EXT_0   \
+> -     | CPU_INTERRUPT_TGT_EXT_1   \
+> -     | CPU_INTERRUPT_TGT_EXT_2   \
+> -     | CPU_INTERRUPT_TGT_EXT_3   \
+> -     | CPU_INTERRUPT_TGT_EXT_4)
+> -
+>   #include "cpu.h"
+>   
+>   #ifdef CONFIG_USER_ONLY
+> diff --git a/include/exec/cpu-interrupt.h b/include/exec/cpu-interrupt.h
+> new file mode 100644
+> index 0000000000..40715193ca
+> --- /dev/null
+> +++ b/include/exec/cpu-interrupt.h
+> @@ -0,0 +1,70 @@
+> +/*
+> + * Flags for use with cpu_interrupt()
+> + *
+> + * Copyright (c) 2003 Fabrice Bellard
+> + * SPDX-License-Identifier: LGPL-2.1-or-later
+> + */
+> +
+> +#ifndef CPU_INTERRUPT_H
+> +#define CPU_INTERRUPT_H
+> +
+> +/*
+> + * The numbers assigned here are non-sequential in order to preserve binary
+> + * compatibility with the vmstate dump.  Bit 0 (0x0001) was previously used
+> + * for CPU_INTERRUPT_EXIT, and is cleared when loading the vmstate dump.
+> + */
+> +
+> +/*
+> + * External hardware interrupt pending.
+> + * This is typically used for interrupts from devices.
+> + */
+> +#define CPU_INTERRUPT_HARD        0x0002
+> +
+> +/*
+> + * Exit the current TB.  This is typically used when some system-level device
+> + * makes some change to the memory mapping.  E.g. the a20 line change.
+> + */
+> +#define CPU_INTERRUPT_EXITTB      0x0004
+> +
+> +/* Halt the CPU.  */
+> +#define CPU_INTERRUPT_HALT        0x0020
+> +
+> +/* Debug event pending.  */
+> +#define CPU_INTERRUPT_DEBUG       0x0080
+> +
+> +/* Reset signal.  */
+> +#define CPU_INTERRUPT_RESET       0x0400
+> +
+> +/*
+> + * Several target-specific external hardware interrupts.  Each target/cpu.h
+> + * should define proper names based on these defines.
+> + */
+> +#define CPU_INTERRUPT_TGT_EXT_0   0x0008
+> +#define CPU_INTERRUPT_TGT_EXT_1   0x0010
+> +#define CPU_INTERRUPT_TGT_EXT_2   0x0040
+> +#define CPU_INTERRUPT_TGT_EXT_3   0x0200
+> +#define CPU_INTERRUPT_TGT_EXT_4   0x1000
+> +
+> +/*
+> + * Several target-specific internal interrupts.  These differ from the
+> + * preceding target-specific interrupts in that they are intended to
+> + * originate from within the cpu itself, typically in response to some
+> + * instruction being executed.  These, therefore, are not masked while
+> + * single-stepping within the debugger.
+> + */
+> +#define CPU_INTERRUPT_TGT_INT_0   0x0100
+> +#define CPU_INTERRUPT_TGT_INT_1   0x0800
+> +#define CPU_INTERRUPT_TGT_INT_2   0x2000
+> +
+> +/* First unused bit: 0x4000.  */
+> +
+> +/* The set of all bits that should be masked when single-stepping.  */
+> +#define CPU_INTERRUPT_SSTEP_MASK \
+> +    (CPU_INTERRUPT_HARD          \
+> +     | CPU_INTERRUPT_TGT_EXT_0   \
+> +     | CPU_INTERRUPT_TGT_EXT_1   \
+> +     | CPU_INTERRUPT_TGT_EXT_2   \
+> +     | CPU_INTERRUPT_TGT_EXT_3   \
+> +     | CPU_INTERRUPT_TGT_EXT_4)
+> +
+> +#endif /* CPU_INTERRUPT_H */
+> diff --git a/include/exec/poison.h b/include/exec/poison.h
+> index 35721366d7..8ed04b3108 100644
+> --- a/include/exec/poison.h
+> +++ b/include/exec/poison.h
+> @@ -46,19 +46,6 @@
+>   
+>   #pragma GCC poison TARGET_PHYS_ADDR_SPACE_BITS
+>   
+> -#pragma GCC poison CPU_INTERRUPT_HARD
+> -#pragma GCC poison CPU_INTERRUPT_EXITTB
+> -#pragma GCC poison CPU_INTERRUPT_HALT
+> -#pragma GCC poison CPU_INTERRUPT_DEBUG
+> -#pragma GCC poison CPU_INTERRUPT_TGT_EXT_0
+> -#pragma GCC poison CPU_INTERRUPT_TGT_EXT_1
+> -#pragma GCC poison CPU_INTERRUPT_TGT_EXT_2
+> -#pragma GCC poison CPU_INTERRUPT_TGT_EXT_3
+> -#pragma GCC poison CPU_INTERRUPT_TGT_EXT_4
+> -#pragma GCC poison CPU_INTERRUPT_TGT_INT_0
+> -#pragma GCC poison CPU_INTERRUPT_TGT_INT_1
+> -#pragma GCC poison CPU_INTERRUPT_TGT_INT_2
+> -
+>   #pragma GCC poison CONFIG_ALPHA_DIS
+>   #pragma GCC poison CONFIG_HPPA_DIS
+>   #pragma GCC poison CONFIG_I386_DIS
 
-diff --git a/hw/hyperv/meson.build b/hw/hyperv/meson.build
-index a9f2045a9af..5acd709bdd5 100644
---- a/hw/hyperv/meson.build
-+++ b/hw/hyperv/meson.build
-@@ -2,5 +2,5 @@ specific_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'))
- specific_ss.add(when: 'CONFIG_HYPERV_TESTDEV', if_true: files('hyperv_testdev.c'))
- system_ss.add(when: 'CONFIG_VMBUS', if_true: files('vmbus.c'))
- system_ss.add(when: 'CONFIG_SYNDBG', if_true: files('syndbg.c'))
--specific_ss.add(when: 'CONFIG_HV_BALLOON', if_true: files('hv-balloon.c', 'hv-balloon-page_range_tree.c', 'hv-balloon-our_range_memslots.c'))
-+system_ss.add(when: 'CONFIG_HV_BALLOON', if_true: files('hv-balloon.c', 'hv-balloon-page_range_tree.c', 'hv-balloon-our_range_memslots.c'))
- system_ss.add(when: 'CONFIG_HV_BALLOON', if_false: files('hv-balloon-stub.c'))
--- 
-2.39.5
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
