@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFB8C28B24
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11DEBC19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 19:57:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqdoA-0008PA-9h; Fri, 07 Mar 2025 14:56:34 -0500
+	id 1tqdoD-00008U-MH; Fri, 07 Mar 2025 14:56:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liuwe@linux.microsoft.com>)
- id 1tqdnX-000829-T4
+ id 1tqdnX-00082A-TH
  for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:55:57 -0500
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <liuwe@linux.microsoft.com>) id 1tqdnV-0005jS-CI
+ (envelope-from <liuwe@linux.microsoft.com>) id 1tqdnV-0005jQ-9D
  for qemu-devel@nongnu.org; Fri, 07 Mar 2025 14:55:55 -0500
 Received: by linux.microsoft.com (Postfix, from userid 1031)
- id C112C2038F48; Fri,  7 Mar 2025 11:55:36 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C112C2038F48
+ id 8D1C52038F44; Fri,  7 Mar 2025 11:55:36 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8D1C52038F44
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
  s=default; t=1741377336;
- bh=MxGpKYSY5FOMlER43FkSI55pBJAWDJ1DfN8IIWiDEpQ=;
+ bh=d2fAZu/PqNY8jlcVhUGXW696gJRHNcwPYg4hhYIubaQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=fLq3wlBrLV1Saz84SB+l8EajIR4gfeSuMT3Htt7bKZ8ie1TczM/Wq0QNdIPXeLAEM
- zVQ5N8tpB11rG9oaNvwlbu6k8qP/xlO2wxfHO/6kmbb/NSsaEw4A5lA5n4J2PJpjag
- zhlqiXwPsnO2Y8muwLdoD9Pi7i9mc+IubAWHJ00M=
+ b=G+tkSlTqHODBYxoPladG5QPvx6CUKV1qUOA+oaTvrrUlvr22H8aMe7zYNVzSS8Ou2
+ j04ZDsWrzylKELx2HFgjxjDm8Z0NShYs2XaRq6Pj6CH3ez7Q+tipAE8JqGfTyjbeFi
+ L1FXTzaSwF/sPcn//vE0dft1ky1WFcHnnOdhAxIM=
 From: Wei Liu <liuwe@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: wei.liu@kernel.org, dirty@apple.com, rbolshakov@ddn.com,
@@ -37,10 +37,9 @@ Cc: wei.liu@kernel.org, dirty@apple.com, rbolshakov@ddn.com,
  mukeshrathor@microsoft.com, magnuskulke@microsoft.com,
  prapal@microsoft.com, jpiotrowski@microsoft.com, deviv@microsoft.com,
  Wei Liu <liuwe@linux.microsoft.com>
-Subject: [PATCH v2 14/14] MAINTAINERS: add an entry for the x86 instruction
- emulator
-Date: Fri,  7 Mar 2025 11:55:25 -0800
-Message-Id: <1741377325-28175-15-git-send-email-liuwe@linux.microsoft.com>
+Subject: [PATCH v2 10/14] target/i386/hvf: rename some include guards
+Date: Fri,  7 Mar 2025 11:55:21 -0800
+Message-Id: <1741377325-28175-11-git-send-email-liuwe@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1741377325-28175-1-git-send-email-liuwe@linux.microsoft.com>
 References: <1741377325-28175-1-git-send-email-liuwe@linux.microsoft.com>
@@ -68,34 +67,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add myself as a reviewer.
+These headers will be moved out to its own component.
 
 Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
 ---
-v2: new
----
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ target/i386/hvf/x86.h        | 4 ++--
+ target/i386/hvf/x86_decode.h | 4 ++--
+ target/i386/hvf/x86_flags.h  | 6 +++---
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5df6020ed545..02c763e9d14f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -533,6 +533,14 @@ S: Supported
- F: target/i386/whpx/
- F: include/system/whpx.h
+diff --git a/target/i386/hvf/x86.h b/target/i386/hvf/x86.h
+index 063cd0b83ec9..73edccfba006 100644
+--- a/target/i386/hvf/x86.h
++++ b/target/i386/hvf/x86.h
+@@ -16,8 +16,8 @@
+  * License along with this program; if not, see <http://www.gnu.org/licenses/>.
+  */
  
-+X86 Instruction Emulator
-+M: Cameron Esfahani <dirty@apple.com>
-+M: Roman Bolshakov <rbolshakov@ddn.com>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
-+R: Wei Liu <wei.liu@kernel.org>
-+S: Maintained
-+F: target/i386/emulate/
-+
- Guest CPU Cores (Xen)
- ---------------------
- X86 Xen CPUs
+-#ifndef HVF_X86_H
+-#define HVF_X86_H
++#ifndef X86_EMU_DEFS_H
++#define X86_EMU_DEFS_H
+ 
+ typedef struct x86_register {
+     union {
+diff --git a/target/i386/hvf/x86_decode.h b/target/i386/hvf/x86_decode.h
+index a2d7a2a27b68..930d965164a4 100644
+--- a/target/i386/hvf/x86_decode.h
++++ b/target/i386/hvf/x86_decode.h
+@@ -15,8 +15,8 @@
+  * License along with this program; if not, see <http://www.gnu.org/licenses/>.
+  */
+ 
+-#ifndef HVF_X86_DECODE_H
+-#define HVF_X86_DECODE_H
++#ifndef X86_EMU_DECODE_H
++#define X86_EMU_DECODE_H
+ 
+ #include "cpu.h"
+ #include "x86.h"
+diff --git a/target/i386/hvf/x86_flags.h b/target/i386/hvf/x86_flags.h
+index 75c2a7feab53..6c175007b571 100644
+--- a/target/i386/hvf/x86_flags.h
++++ b/target/i386/hvf/x86_flags.h
+@@ -21,8 +21,8 @@
+  * x86 eflags functions
+  */
+ 
+-#ifndef X86_FLAGS_H
+-#define X86_FLAGS_H
++#ifndef X86_EMU_FLAGS_H
++#define X86_EMU_FLAGS_H
+ 
+ #include "cpu.h"
+ void lflags_to_rflags(CPUX86State *env);
+@@ -78,4 +78,4 @@ void SET_FLAGS_OSZAPC_LOGIC16(CPUX86State *env, uint16_t v1, uint16_t v2,
+ void SET_FLAGS_OSZAPC_LOGIC8(CPUX86State *env, uint8_t v1, uint8_t v2,
+                              uint8_t diff);
+ 
+-#endif /* X86_FLAGS_H */
++#endif /* X86_EMU_FLAGS_H */
 -- 
 2.47.2
 
