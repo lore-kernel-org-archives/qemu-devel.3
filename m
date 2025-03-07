@@ -4,74 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36AECC19F32
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 868A5C19F32
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 15:37:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqZjL-0003Hh-9n; Fri, 07 Mar 2025 10:35:19 -0500
+	id 1tqZku-0004AI-VE; Fri, 07 Mar 2025 10:37:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tqZjG-0003GL-DB
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:35:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tqZkf-00048Z-VP; Fri, 07 Mar 2025 10:36:45 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tqZjE-00089r-5M
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 10:35:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741361711;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jKCJK20iZ4Lxz+i3LBfF099FLHJSqlugl9nmS3hCHSo=;
- b=MHjB6C1iLmrmq/Ut2Sgx8k7f9O0WZyzZVsHCCWSGUc6dC5GadJ3wFNLYdhzQrTGCDfJm7v
- sZkVodc/KRFmYzTmt6xUswQyEErrjzfIkMlf2ej5YWb6w7PvKfmpqAf41MRVM0S5dYOtr1
- pww/zSwDJTxIb/jcICS61boytTHTCh0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-vgXDMstqMd2fAuRrDfya3g-1; Fri,
- 07 Mar 2025 10:35:09 -0500
-X-MC-Unique: vgXDMstqMd2fAuRrDfya3g-1
-X-Mimecast-MFC-AGG-ID: vgXDMstqMd2fAuRrDfya3g_1741361708
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9453D1800A38; Fri,  7 Mar 2025 15:35:07 +0000 (UTC)
-Received: from localhost (unknown [10.44.33.78])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DAC591800373; Fri,  7 Mar 2025 15:35:05 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-Subject: Re: [PATCH v2 02/14] arm/kvm: add accessors for storing host
- features into idregs
-In-Reply-To: <8f4b598e-d09d-4d2e-afcc-317a6997ad02@linaro.org>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20250305163819.2477553-1-cohuck@redhat.com>
- <20250305163819.2477553-3-cohuck@redhat.com>
- <8f4b598e-d09d-4d2e-afcc-317a6997ad02@linaro.org>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Fri, 07 Mar 2025 16:35:02 +0100
-Message-ID: <87plisvopl.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tqZkd-0000Xu-Jz; Fri, 07 Mar 2025 10:36:41 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0441C4E6000;
+ Fri, 07 Mar 2025 16:36:22 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id vCyFp1qOsc_A; Fri,  7 Mar 2025 16:36:19 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id E2B9C4E600F; Fri, 07 Mar 2025 16:36:19 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E05AF74577C;
+ Fri, 07 Mar 2025 16:36:19 +0100 (CET)
+Date: Fri, 7 Mar 2025 16:36:19 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH v2 3/5] ppc/amigaone: Add default environment
+In-Reply-To: <3bff4d7a-56c8-44a4-8093-9a7a10699d2b@linaro.org>
+Message-ID: <caf052a4-2a12-ae71-eeb2-86f27cff7ccb@eik.bme.hu>
+References: <cover.1740673173.git.balaton@eik.bme.hu>
+ <4d63f88191612329e0ca8102c7c0d4fc626dc372.1740673173.git.balaton@eik.bme.hu>
+ <84151f43-d952-4515-aee5-04f339baa546@linaro.org>
+ <33e3ef97-749e-4701-4955-0e88d0eb2199@eik.bme.hu>
+ <3bff4d7a-56c8-44a4-8093-9a7a10699d2b@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1937983146-1741361779=:94221"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,105 +69,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 05 2025, Richard Henderson <richard.henderson@linaro.org> wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On 3/5/25 08:38, Cornelia Huck wrote:
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> ---
->>   target/arm/cpu-sysregs.h |  3 +++
->>   target/arm/cpu64.c       | 25 +++++++++++++++++++++++++
->>   target/arm/kvm.c         | 12 ++++++++++++
->>   3 files changed, 40 insertions(+)
+--3866299591-1937983146-1741361779=:94221
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Fri, 7 Mar 2025, Philippe Mathieu-Daudé wrote:
+> On 7/3/25 15:46, BALATON Zoltan wrote:
+>> On Fri, 7 Mar 2025, Philippe Mathieu-Daudé wrote:
+>>> Hi Zoltan,
+>>> 
+>>> Minor review comments in case you respin (not blocking).
+>>> 
+>>> On 27/2/25 17:39, BALATON Zoltan wrote:
+>>>> Initialise empty NVRAM with default values. This also enables IDE UDMA
+>>>> mode in AmigaOS that is faster but has to be enabled in environment
+>>>> due to problems with real hardware but that does not affect emulation
+>>>> so we can use faster defaults here.
+>>>> 
+>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>>> ---
+>>>>   hw/ppc/amigaone.c | 37 ++++++++++++++++++++++++++++++++++++-
+>>>>   1 file changed, 36 insertions(+), 1 deletion(-)
+>>>> 
+>>>> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+>>>> index 849c9fc6e0..5c5585d39a 100644
+>>>> --- a/hw/ppc/amigaone.c
+>>>> +++ b/hw/ppc/amigaone.c
+>>>> @@ -52,6 +52,28 @@ static const char dummy_fw[] = {
+>>>>   #define NVRAM_ADDR 0xfd0e0000
+>>>>   #define NVRAM_SIZE (4 * KiB)
+>>>>   +static char default_env[] =
+>>> 
+>>> 'const'
 >> 
->> diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
->> index de09ebae91a5..54a4fadbf0c1 100644
->> --- a/target/arm/cpu-sysregs.h
->> +++ b/target/arm/cpu-sysregs.h
->> @@ -128,4 +128,7 @@ static const uint32_t id_register_sysreg[NUM_ID_IDX] = {
->>       [CTR_EL0_IDX] = SYS_CTR_EL0,
->>   };
->>   
->> +int get_sysreg_idx(ARMSysRegs sysreg);
->> +uint64_t idregs_sysreg_to_kvm_reg(ARMSysRegs sysreg);
->> +
->>   #endif /* ARM_CPU_SYSREGS_H */
->> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
->> index 8188ede5cc8a..9ae78253cb34 100644
->> --- a/target/arm/cpu64.c
->> +++ b/target/arm/cpu64.c
->> @@ -736,6 +736,31 @@ static void aarch64_a53_initfn(Object *obj)
->>       define_cortex_a72_a57_a53_cp_reginfo(cpu);
->>   }
->>   
->> +#ifdef CONFIG_KVM
->> +
->> +int get_sysreg_idx(ARMSysRegs sysreg)
->> +{
->> +    int i;
->> +
->> +    for (i = 0; i < NUM_ID_IDX; i++) {
->> +        if (id_register_sysreg[i] == sysreg) {
->> +            return i;
->> +        }
->> +    }
->> +    return -1;
->> +}
->> +
->> +uint64_t idregs_sysreg_to_kvm_reg(ARMSysRegs sysreg)
->> +{
->> +    return ARM64_SYS_REG((sysreg & CP_REG_ARM64_SYSREG_OP0_MASK) >> CP_REG_ARM64_SYSREG_OP0_SHIFT,
->> +                         (sysreg & CP_REG_ARM64_SYSREG_OP1_MASK) >> CP_REG_ARM64_SYSREG_OP1_SHIFT,
->> +                         (sysreg & CP_REG_ARM64_SYSREG_CRN_MASK) >> CP_REG_ARM64_SYSREG_CRN_SHIFT,
->> +                         (sysreg & CP_REG_ARM64_SYSREG_CRM_MASK) >> CP_REG_ARM64_SYSREG_CRM_SHIFT,
->> +                         (sysreg & CP_REG_ARM64_SYSREG_OP2_MASK) >> CP_REG_ARM64_SYSREG_OP2_SHIFT);
->> +}
->> +
->> +#endif
+>> OK. Could be fixed up on merge by Nick or I can send a new version if 
+>> needed.
+>> 
+>>>> +    "baudrate=115200\0"
+>>>> +    "stdout=vga\0"
+>>>> +    "stdin=ps2kbd\0"
+>>>> +    "bootcmd=boota; menu; run menuboot_cmd\0"
+>>>> +    "boot1=ide\0"
+>>>> +    "boot2=cdrom\0"
+>>>> +    "boota_timeout=3\0"
+>>>> +    "ide_doreset=on\0"
+>>>> +    "pci_irqa=9\0"
+>>>> +    "pci_irqa_select=level\0"
+>>>> +    "pci_irqb=10\0"
+>>>> +    "pci_irqb_select=level\0"
+>>>> +    "pci_irqc=11\0"
+>>>> +    "pci_irqc_select=level\0"
+>>>> +    "pci_irqd=7\0"
+>>>> +    "pci_irqd_select=level\0"
+>>>> +    "a1ide_irq=1111\0"
+>>>> +    "a1ide_xfer=FFFF\0";
+>>>> +#define CRC32_DEFAULT_ENV 0xb5548481
+>>>> +#define CRC32_ALL_ZEROS   0x603b0489
+>>> 
+>>>> +
+>>>>   #define TYPE_A1_NVRAM "a1-nvram"
+>>>>   OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
+>>>>   @@ -94,7 +116,7 @@ static void nvram_realize(DeviceState *dev, Error 
+>>>> **errp)
+>>>>   {
+>>>>       A1NVRAMState *s = A1_NVRAM(dev);
+>>>>       void *p;
+>>>> -    uint32_t *c;
+>>>> +    uint32_t crc, *c;
+>>>>         memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, 
+>>>> "nvram",
+>>>>                                     NVRAM_SIZE, &error_fatal);
+>>>> @@ -113,12 +135,25 @@ static void nvram_realize(DeviceState *dev, Error 
+>>>> **errp)
+>>>>               return;
+>>>>           }
+>>>>       }
+>>>> +    crc = crc32(0, p + 4, NVRAM_SIZE - 4);
+>>>> +    if (crc == CRC32_ALL_ZEROS) { /* If env is uninitialized set default 
+>>>> */
+>>>> +        *c = cpu_to_be32(CRC32_DEFAULT_ENV);
+>>> 
+>>> Prefer the ld/st API over cpu_to/from:
+>>> 
+>>>           stl_be_p(c, CRC32_DEFAULT_ENV);
+>>> 
+>>>> +        /* Also copies terminating \0 as env is terminated by \0\0 */
+>>>> +        memcpy(p + 4, default_env, sizeof(default_env));
+>>>> +        if (s->blk) {
+>>>> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, 
+>>>> 0);
+>>>> +        }
+>>>> +        return;
+>>>> +    }
+>>>>       if (*c == 0) {
+>>>>           *c = cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
+>>>>           if (s->blk) {
+>>>>               blk_pwrite(s->blk, 0, 4, p, 0);
+>>>>           }
+>>>>       }
+>>>> +    if (be32_to_cpu(*c) != crc) {
+>>> 
+>>>       if (ldl_be_p(c) != crc) {
+>> 
+>> Why? Here we want to convert a value from host CPU endianness to a specific 
+>> endianness and vice versa in code running on the host. (We are not 
+>> accessing guest memory, we operate on the memory region pointer. The guest 
+>> is not even running yet.)
+>> 
+>> Also:
+>> 
+>> static inline int ldl_be_p(const void *ptr)
+>> {
+>>      return be_bswap(ldl_he_p(ptr), 32);
+>> }
+>> 
+>> static inline int ldl_he_p(const void *ptr)
+>> {
+>>      int32_t r;
+>>      __builtin_memcpy(&r, ptr, sizeof(r));
+>>      return r;
+>> }
+>> 
+>> #define be_bswap(v, size) glue(__builtin_bswap, size)(v)
+>> 
+>> so this is
+>> 
+>> int32_t r;
+>> __builtin_memcpy(&r, c, sizeof(r));
 >
-> Why are these here, with an ifdef, instead of in kvm.c?
+> This call makes the address alignment access safe.
 >
-> Rather than a loop over an array, you could do
+> Sometimes we use similar API doing unaligned access and static
+> analyzers complain [*]. Rather than maintaining 2 differents APIs
+> with some corner cases in one, we could always use the reliable
+> one.
 >
-> #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
->      case SYS_##NAME: return NAME##_IDX;
->
-> int get_sysreg_idx(ARMSysRegs sysreg)
-> {
->      switch (sysreg) {
-> #include "cpu-sysregs.h.inc"
->      }
->      g_assert_not_reached();
-> }
->
-> #undef DEF
+> [*] see for example commit 5814c084679 ("hw/net/virtio-net.c: Don't assume IP 
+> length field is aligned")
 
-Ok, now I see where you're going with the DEF(...) magic.
+That concern does not apply here as it's unlikely to have a memory region 
+allocated unaligned so I'd keep this until it's removed from everywhere. 
+We have a lot of uses of cpu_to_, _to_cpu now so it's not likely it would 
+go away soon. I see no advantage in introducing unneeded complexity here 
+to prevent something that cannot happen.
 
+Regards,
+BALATON Zoltan
+
+>> __builtin_bswap32(r);
+>> 
+>> versus
+>> 
+>> static inline type endian ## size ## _to_cpu(type v)
+>> {
+>>      return glue(endian, _bswap)(v, size);
+>> }
+>> 
+>> which is just
+>> 
+>> __builtin_bswap32(*c);
+>> 
+>> The second one makes more sense to me and don't see why I'd want to do it 
+>> in a more cumbersome way when we end up with the same result but simpler.
+>> 
+>> Regards,
+>> BALATON Zoltan
+>> 
+>>>> +        warn_report("NVRAM checksum mismatch");
+>>>> +    }
+>>>>   }
 >
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index da30bdbb2349..2381c87e4ba1 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -246,6 +246,18 @@ static bool kvm_arm_pauth_supported(void)
->>               kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_GENERIC));
->>   }
->>   
->> +/* read a sysreg value and store it in the idregs */
->> +static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf, ARMIDRegisterIdx index)
->> +{
->> +    uint64_t *reg;
->> +    int ret;
->> +
->> +    reg = &ahcf->isar.idregs[index];
->> +    ret = read_sys_reg64(fd, reg,
->> +                         idregs_sysreg_to_kvm_reg(id_register_sysreg[index]));
->> +    return ret;
->> +}
 >
-> Surely this patch doesn't compile by itself,
-> because this will Werror for the unused function.
-
-Hm, I'm pretty positive that I did intermediate compiles while sorting
-the patches here... let me see if I can improve this.
-
+--3866299591-1937983146-1741361779=:94221--
 
