@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390EBC282DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E662C35FF2
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Mar 2025 22:41:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqgMs-0006Xo-8H; Fri, 07 Mar 2025 17:40:34 -0500
+	id 1tqgMu-0006hN-R7; Fri, 07 Mar 2025 17:40:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMn-0006NU-BE
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:29 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMj-0006N9-UB
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:28 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMl-0003c5-KH
- for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:29 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3912c09bea5so1707614f8f.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:40:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqgMh-0003bm-3M
+ for qemu-devel@nongnu.org; Fri, 07 Mar 2025 17:40:25 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43ce71582e9so765215e9.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 14:40:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741387225; x=1741992025; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741387221; x=1741992021; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mnovoaUMqprzKKHYFuoZMJZ/2zGWdVOJkellgnL8PG0=;
- b=czMQKFBYNwLtRP7DsDDarkvweUNXkkfgPiPyqMuqG6BtxfiOHcfehR2bHDv9iYQl+7
- 3Hjdh8XagrlUPVpDWV4YAPdq8O8WTIq911kTDKgEAAqdWipilNHboQ+cSgqzaMML9AMX
- 02vWH4FXm7XaUA+wm1ZlmL2HaTjMuu2GcVVD9NLrQ9s67QKo1LCiFe03+xC+LQQwR4DM
- nErDAh2KMsJpM+cd2oc3eIm7HzHI170z9I0b1G9EpULQxyDE8IVruBsTYJjTmEXqktwH
- vq95f5mgfrduc3vIVWTksT4pFN7xWKIjzXS8IFN1NuB8hny/jiCheQrNI33L9Jat+pP3
- 72Sg==
+ bh=QySqG3zSy3Pvfq1KfaUgxmaXz+8tcYoh2JzWhFmGcNk=;
+ b=gz3ZicF5B4xr8miq6EROllkKUaLLgIhOHB4VFnljfNzQXdr0qGykTA35pXAsuCVIAz
+ q2BvVljt3Z13fvSIie2XDOQPvp54yUZSOKTY0G479k8fYAmxpmuAZfO80sSch2qIvLV7
+ 3SDsTV2ROIYkrWSZEALL60W4XSeZqYYtoHKrxlJbxHxLT+M7or8SVd0/gTsVtdPQWlRv
+ yNURyDzrmulrOIU/p3ICtPGUPpOIqsB1v0vPC+JU9IdatdPXWWHrtESqnu+KfXGe+KHc
+ USIvniABoefgWrfzKaTkpvj/827WyR07CGG1XbWJBjRQ8APi1s3gBOg0T351fFGi9Ytf
+ E44A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741387225; x=1741992025;
+ d=1e100.net; s=20230601; t=1741387221; x=1741992021;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mnovoaUMqprzKKHYFuoZMJZ/2zGWdVOJkellgnL8PG0=;
- b=KCT+3+96PCby4ng/nGlyf4zyR6Ngxz5UMIDncJA/2toyyy4VMYEl5o0yZWe5V2iaLE
- Z2/Cx6L/7E43ht3qvaiPgT6ZdJhUFKkILeaMmt6RKto65t2WU4lJpGv6xwKIV0LnaU1o
- jKQwih6orTuw3t36UCf8hjxkmUgyO+oRQixo+2PvZ53+orz0EqGUq5781GZPUeT9CDpQ
- 8QUiFls4PxkNszH176QXmRzMbBadP1pjha7guN7e0M+NqPKLpnVatL7mybXB4W+xsasl
- P9CKeRZKtHI/8FthfgS+p/P1E9MGnYyM9z6kWoYcYcLM1ZcnMrsPNuQPkn+J6BySq2or
- zdtA==
-X-Gm-Message-State: AOJu0YwR8+B/KQ1AHcrP0bYDY4H1WyzWhsXph063DfpCpJiFLoc4yPd2
- qL6+Uygvc0+HpmdhTl6I1QiIRn3900/PNrnnCZKi+VCFwV/GbKeQgJWGDfTa8V1P+QNhxt2+R9N
- MjyY=
-X-Gm-Gg: ASbGncsZLWooeh0Ji1lrRyHFUVrE6Zr9SKWHOee399zb+nHu9c/JzQ4UB2ipZnjaf+3
- MJULglcaDic7g9LElo0CbQY9Xc3ysjIPBcnjb9dFUuXkgY75koZrSsNvs7OVCMKTUB1dUpCsUQe
- tY8WKDjRunGQzyO6uNYkxYaPoUj+xS8mJhO2QFr62oxzZFlMe8SOcS4g8C2hCeQmZaN+GPpSoXC
- uoZHHZeNFBrG62pER9vJMQU2FdK3Cij0YNapBItUvthu3QSoruIfLscNIxXKQx2tXCZOARIPonM
- XjG1qzSI0751G65H08HfG8WMQSLptimJXuv5QpSBXd1JNmvFyDK88ENUU21mwXzpxr0TI1U34MC
- UvwicG/p+mJ42DekqTbk=
-X-Google-Smtp-Source: AGHT+IGY8etv8/dIDm9L/f7Om9gzMsUEqO/hLEAhAxuVK4Ifw6WAs0qqxGNql5lclqfEMFltDpfVAw==
-X-Received: by 2002:a05:6000:471d:b0:391:20ef:6300 with SMTP id
- ffacd0b85a97d-39132d98c7dmr3250867f8f.37.1741387225570; 
- Fri, 07 Mar 2025 14:40:25 -0800 (PST)
+ bh=QySqG3zSy3Pvfq1KfaUgxmaXz+8tcYoh2JzWhFmGcNk=;
+ b=JBZ1qNro2KRioDiZazcQ8TB5eVvAKz92rSDkElSicynhkms6JtxOgPQmtx8jtL3z9Q
+ ada4EvY++qsRpPZZpUuf6s0vmJvyUoCIFPLnJMgrR5nQRlBGfQ6BfCd0ymUvpSU5XDWB
+ SFXEYxC0wPdn/T/CN2zz9yBpngoPltk3sZE/KjzQDQeh41ArRdyQur95SbpYsoiG2eor
+ vRZhrb/eO9Wuxfh7F7L9i6WQVDea79Fs9oT1v0sD2IagylErzygHFaEdKSiXc08zfL08
+ 14c+wuRDohsXVG0NMOOwUmEnMxOchdIZ87zL2xo6DMshfFMNt2P85XVDGPiAZ6FzbF7J
+ PEsw==
+X-Gm-Message-State: AOJu0Yz8m0zqiaH2br/sfPkxvKm9hl5XVWAzLDg91+arvPWM2j40sxPy
+ VLU+hvk6pquSI0qqe7hMrps+XVkTMmLldfSj/bw8bQKWoF7M0mNSknGpEyjUAZLIV3CoQRQXukk
+ exoA=
+X-Gm-Gg: ASbGncv86U8sDRKFscoSZQmvvxxKNPd+/YpcHEUKJA4hGR29GTEuxA2p6sfms9d97N1
+ PN5KDKQd53XTcsveAS9wqusySqt7+e+1GFVKLFQPY27vU2+5zja0MqUVm15shkinYEuAdNaf9VI
+ VVchwwfig/C6tIFwo1L8RK7Ahiiom3OGgmiW6PNOr3y+DF9F7sHbeUoP0M4ZOvs7qTldr/9Bz3s
+ LOfJlmvgfM1pZivSvLJkTpNXBXAq4WB+1q+hqZOD3oWP5aFFVuCHsryUFWHf/Ew5pAz8XSvHY5k
+ tvTSl+keUhU9Xx4nTEn/CE/BiUU3sw02ZMgMWMk3syG3Dhf35FtmILRF/oNvVlxEEGxwaNNpOZT
+ uMVuaADSzjKxZWxT0b74=
+X-Google-Smtp-Source: AGHT+IEePJ2DBzbYOnHOK3/nOQOx67r9qAItOqsioIdBwpj9FSfUoGxyy4AuCLt9ldt5fb5F8BnNgg==
+X-Received: by 2002:a05:600c:5107:b0:43b:cb05:f932 with SMTP id
+ 5b1f17b1804b1-43c5cf3cca8mr30089325e9.25.1741387220883; 
+ Fri, 07 Mar 2025 14:40:20 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd9471b7sm63627185e9.34.2025.03.07.14.40.24
+ 5b1f17b1804b1-43bdd8dad73sm66358775e9.19.2025.03.07.14.40.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 07 Mar 2025 14:40:25 -0800 (PST)
+ Fri, 07 Mar 2025 14:40:20 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -76,17 +76,18 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 7/7] hw/virtio: Compile virtio-mem.c once
-Date: Fri,  7 Mar 2025 23:39:49 +0100
-Message-ID: <20250307223949.54040-8-philmd@linaro.org>
+Subject: [PATCH v2 6/7] hw/virtio/virtio-mem: Convert
+ VIRTIO_MEM_HAS_LEGACY_GUESTS to runtime
+Date: Fri,  7 Mar 2025 23:39:48 +0100
+Message-ID: <20250307223949.54040-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250307223949.54040-1-philmd@linaro.org>
 References: <20250307223949.54040-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,42 +110,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove unused "exec/ram_addr.h" header. This file doesn't
-use any target specific definitions anymore, compile it
-once by moving it to system_virtio_ss[].
+Use qemu_arch_available() to check at runtime if a target
+architecture is built in.
+Register virtio_mem_legacy_guests_properties[] at runtime.
+Code churn in virtio_mem_device_realize() is due to re-indentation.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: David Hildenbrand <david@redhat.com>
 ---
- hw/virtio/virtio-mem.c | 1 -
- hw/virtio/meson.build  | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ hw/virtio/virtio-mem.c | 61 ++++++++++++++++++++++--------------------
+ 1 file changed, 32 insertions(+), 29 deletions(-)
 
 diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index 5288fe597b3..2e51dcfdf32 100644
+index 6ff9dab0f66..5288fe597b3 100644
 --- a/hw/virtio/virtio-mem.c
 +++ b/hw/virtio/virtio-mem.c
-@@ -25,7 +25,6 @@
- #include "hw/virtio/virtio-mem.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
--#include "exec/ram_addr.h"
- #include "migration/misc.h"
- #include "hw/boards.h"
- #include "hw/qdev-properties.h"
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index a5f9f7999dd..7c3513315cb 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -55,7 +55,7 @@ specific_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock.c
- specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vsock.c'))
- specific_virtio_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng.c'))
- specific_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: [files('virtio-nsm.c', 'cbor-helpers.c'), libcbor])
--specific_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
-+system_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
- specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_SCMI', if_true: files('vhost-user-scmi.c'))
- specific_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SCMI'], if_true: files('vhost-user-scmi-pci.c'))
+@@ -38,9 +38,10 @@ static const VMStateDescription vmstate_virtio_mem_device_early;
+  * We only had legacy x86 guests that did not support
+  * VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE. Other targets don't have legacy guests.
+  */
+-#if defined(TARGET_X86_64) || defined(TARGET_I386)
+-#define VIRTIO_MEM_HAS_LEGACY_GUESTS
+-#endif
++static bool virtio_mem_has_legacy_guests(void)
++{
++    return qemu_arch_available(QEMU_ARCH_I386);
++}
  
+ /*
+  * Let's not allow blocks smaller than 1 MiB, for example, to keep the tracking
+@@ -144,7 +145,6 @@ static uint64_t virtio_mem_default_block_size(RAMBlock *rb)
+     return MAX(page_size, VIRTIO_MEM_MIN_BLOCK_SIZE);
+ }
+ 
+-#if defined(VIRTIO_MEM_HAS_LEGACY_GUESTS)
+ static bool virtio_mem_has_shared_zeropage(RAMBlock *rb)
+ {
+     /*
+@@ -155,7 +155,6 @@ static bool virtio_mem_has_shared_zeropage(RAMBlock *rb)
+     return !qemu_ram_is_shared(rb) && qemu_ram_get_fd(rb) < 0 &&
+            qemu_ram_pagesize(rb) == qemu_real_host_page_size();
+ }
+-#endif /* VIRTIO_MEM_HAS_LEGACY_GUESTS */
+ 
+ /*
+  * Size the usable region bigger than the requested size if possible. Esp.
+@@ -1009,28 +1008,28 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+     rb = vmem->memdev->mr.ram_block;
+     page_size = qemu_ram_pagesize(rb);
+ 
+-#if defined(VIRTIO_MEM_HAS_LEGACY_GUESTS)
+-    switch (vmem->unplugged_inaccessible) {
+-    case ON_OFF_AUTO_AUTO:
+-        if (virtio_mem_has_shared_zeropage(rb)) {
+-            vmem->unplugged_inaccessible = ON_OFF_AUTO_OFF;
+-        } else {
+-            vmem->unplugged_inaccessible = ON_OFF_AUTO_ON;
++    if (virtio_mem_has_legacy_guests()) {
++        switch (vmem->unplugged_inaccessible) {
++        case ON_OFF_AUTO_AUTO:
++            if (virtio_mem_has_shared_zeropage(rb)) {
++                vmem->unplugged_inaccessible = ON_OFF_AUTO_OFF;
++            } else {
++                vmem->unplugged_inaccessible = ON_OFF_AUTO_ON;
++            }
++            break;
++        case ON_OFF_AUTO_OFF:
++            if (!virtio_mem_has_shared_zeropage(rb)) {
++                warn_report("'%s' property set to 'off' with a memdev that does"
++                            " not support the shared zeropage.",
++                            VIRTIO_MEM_UNPLUGGED_INACCESSIBLE_PROP);
++            }
++            break;
++        default:
++            break;
+         }
+-        break;
+-    case ON_OFF_AUTO_OFF:
+-        if (!virtio_mem_has_shared_zeropage(rb)) {
+-            warn_report("'%s' property set to 'off' with a memdev that does"
+-                        " not support the shared zeropage.",
+-                        VIRTIO_MEM_UNPLUGGED_INACCESSIBLE_PROP);
+-        }
+-        break;
+-    default:
+-        break;
++    } else {
++        vmem->unplugged_inaccessible = ON_OFF_AUTO_ON;
+     }
+-#else /* VIRTIO_MEM_HAS_LEGACY_GUESTS */
+-    vmem->unplugged_inaccessible = ON_OFF_AUTO_ON;
+-#endif /* VIRTIO_MEM_HAS_LEGACY_GUESTS */
+ 
+     if (vmem->dynamic_memslots &&
+         vmem->unplugged_inaccessible != ON_OFF_AUTO_ON) {
+@@ -1723,16 +1722,17 @@ static const Property virtio_mem_properties[] = {
+     DEFINE_PROP_BOOL(VIRTIO_MEM_PREALLOC_PROP, VirtIOMEM, prealloc, false),
+     DEFINE_PROP_LINK(VIRTIO_MEM_MEMDEV_PROP, VirtIOMEM, memdev,
+                      TYPE_MEMORY_BACKEND, HostMemoryBackend *),
+-#if defined(VIRTIO_MEM_HAS_LEGACY_GUESTS)
+-    DEFINE_PROP_ON_OFF_AUTO(VIRTIO_MEM_UNPLUGGED_INACCESSIBLE_PROP, VirtIOMEM,
+-                            unplugged_inaccessible, ON_OFF_AUTO_ON),
+-#endif
+     DEFINE_PROP_BOOL(VIRTIO_MEM_EARLY_MIGRATION_PROP, VirtIOMEM,
+                      early_migration, true),
+     DEFINE_PROP_BOOL(VIRTIO_MEM_DYNAMIC_MEMSLOTS_PROP, VirtIOMEM,
+                      dynamic_memslots, false),
+ };
+ 
++static const Property virtio_mem_legacy_guests_properties[] = {
++    DEFINE_PROP_ON_OFF_AUTO(VIRTIO_MEM_UNPLUGGED_INACCESSIBLE_PROP, VirtIOMEM,
++                            unplugged_inaccessible, ON_OFF_AUTO_ON),
++};
++
+ static uint64_t virtio_mem_rdm_get_min_granularity(const RamDiscardManager *rdm,
+                                                    const MemoryRegion *mr)
+ {
+@@ -1885,6 +1885,9 @@ static void virtio_mem_class_init(ObjectClass *klass, void *data)
+     RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(klass);
+ 
+     device_class_set_props(dc, virtio_mem_properties);
++    if (virtio_mem_has_legacy_guests()) {
++        device_class_set_props(dc, virtio_mem_legacy_guests_properties);
++    }
+     dc->vmsd = &vmstate_virtio_mem;
+ 
+     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
 -- 
 2.47.1
 
