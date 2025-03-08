@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75ABDC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D252EC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr274-0003Jf-M1; Sat, 08 Mar 2025 16:53:42 -0500
+	id 1tr271-0003He-3T; Sat, 08 Mar 2025 16:53:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr273-0003Io-A4
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:41 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1tr26y-0003FD-CI
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:36 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr271-0000x2-9w
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:40 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-39129fc51f8so2554226f8f.0
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:53:38 -0800 (PST)
+ id 1tr26w-0000v7-LK
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:36 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3912c09bea5so2293423f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:53:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741470818; x=1742075618; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741470813; x=1742075613; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kS62xgfs4yo8HShma26k5M+Ftf9GvqKCsRAE0pxnfGo=;
- b=KpKO5ub92GLK3qYbm2zNLeCITmh/a5c+7gB8er488gP+pwVZFkyCUTOYa2s78BfHSV
- FAnWGGTgIeS6or6KYhertnRS4Amox3hfVEmuxB3/lGlCgn6fkR9RL3vS/IB7QwQyapIJ
- OgvTDLvI6sIacpPkPj9K8JGheQvb6MQ2UiG1BG2jLpa+i1Cvo3ha4lxtdhNeRmPUgpgT
- RN2Q1zl8Rfv/3WQf+mlRpGHXkJXzR3mi7X2C41ZSszW8L6HyCPt08xMgLYS+cO2VfXA7
- 8Ko8U6gOvgTCpJEN9mf+0+P1O0gzqk24JsUBsH9UogmCz4JviCQMEq8yi7KXII4fd90p
- YboA==
+ bh=nW7/p5GqVTN8cVjBAVNZ8mhXpq1InHLulArjjxzEZbM=;
+ b=XLQUYwQcRnye+bQGAfhXqr3j4X2X54Y1Z1SNSJwj0dVKX0bpPGbKnOXXquXhr0RAC3
+ yUd8bQsg02wFYAupuetmWXFhLfVpQcF+J9wyLDPR1zRq6o+jNFEUw1HU/5MmYHrQTH72
+ HRYQpwiJLK+Xlum7dVihIilyFiFF0lLJBCfhn/A2y9dMUtUMD9wcxEFph3Kn6IGqhAEA
+ f5GN2QBYRCZ0xZqkUYXBrdOuN5Zfq2SIQIyNyKxBR5MsIabSKyF63j14e6SBAr37/f/z
+ dOdgsuT4B3T/LZ834nX+U8A76pJvZM/DwNG2SRhEhqtgK+kkS2T7YZHLcvWNCluZXFOR
+ 0JOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741470818; x=1742075618;
+ d=1e100.net; s=20230601; t=1741470813; x=1742075613;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kS62xgfs4yo8HShma26k5M+Ftf9GvqKCsRAE0pxnfGo=;
- b=djGe3jj60xCtxru7XjSf3zJuQ7G0zRq+58bynmHwea1qZ7K8zKL2PTm0rJQYR0Nqfl
- CGi8Np/4evurp+V8OAOB5ft/6fgziMFt2MBhsvGRkcWRmm1njhcX2LqHUC/aOCN1xkvB
- aHUv+OS1IwVdRQG+2liAZ1ykohm7FsY0ZkZoWnDWe5Lrh/nB8HDUWJlFMf4DLDQ+eB/0
- XIreXSc69TcM++2/eoOwi3IFle1ZROKOqyEezUX5Wl4yXbZ5IZbC1hou+B4jyr5lVA7S
- OT8DPx2h6kNBCBPbN/n4yRSvzSL+McPfXuAkXv8DcyxxuCfPzikxD7pO0KSOlBxTV/EL
- vPnA==
-X-Gm-Message-State: AOJu0YwYoKCauZKSKwxv3U434vdKPxr6gC14b86IezDuc/Fn9XfWykBc
- 5PzBpoloUJmYtz6udWPAyemRzSLntu8ErVTr7d5/A5GVAUokL4esUQSZ2DBJi7oDlnRwjs3h6PU
- N
-X-Gm-Gg: ASbGncu8eBO/+CYM4OicLzXb+P9VE41uCaUOVQ5idGJa+rF6CZsWVq3DTs1/aXt0R5u
- fvzufZrsGponYqtzmuwB/o4S5Pd7cJ0nPGXTKYiFAxKy8ZEILcQk9f3eQe7DbnqsFmt3YfH5Eou
- A0szr/YbkF7KvQsbjrhY1VkF8AC60lSNUjcOPyqdtpoeIEt1g7ON0XWNACRUSULlLOFR3uxaaCw
- 6oDFDoW7pZeJRXrl3CLat7lH7xr/9QMCcILFsFHmJaa6baiKff0d5aUFBQck+pxGEU+aquLjUJ/
- YPyHNYwCM0yoNJDb3rveRU4McOM6tKACc86W68cI8PH1ezY=
-X-Google-Smtp-Source: AGHT+IGQfDphKx/UKpRAuwBvv68Y9Jm2s/k5IWmNxN2exjzPvWjmtnz7v+vrmevbqiEhB/RF0WOS7Q==
-X-Received: by 2002:a5d:584a:0:b0:390:d990:823 with SMTP id
- ffacd0b85a97d-39132d4783fmr4395281f8f.13.1741470817657; 
- Sat, 08 Mar 2025 13:53:37 -0800 (PST)
+ bh=nW7/p5GqVTN8cVjBAVNZ8mhXpq1InHLulArjjxzEZbM=;
+ b=JN2h/M+yu8GT1TkJUMkAczPk9/GDqesP/FJ6N16FR32NMM3nGYiYk4fwXu3G0bzgp0
+ 3T3yjJaHXm9rHgM39Ze7VzNdrTdYLKZ1jf/XG2vYiv1WxQ9C2bKWWA/LZOOuVtnJ6aa6
+ AGifTaT8eDPBbvsuA4mR8hcHmolqsplI91X1pC8NzhsnSVMxF+lzLx20iG6wvNvud82P
+ VZy89dccKMHXr06xxcyvNH/RzBhZVtNyfBdNsM2dpsUVPmOQBxAP33ykR01Ygb8O0Vep
+ PuUcTeePTCpTXQ3FuAk37YqoPdixP/tcegK+kjs8QnM4snp9hhamyISBRlrUCOTLcprl
+ vz/Q==
+X-Gm-Message-State: AOJu0Yxn65BVjWt121oJ/twEyQXsw34GxFAkiGu6Ov7GMq4SpJYUe5or
+ 3StyIfF2+PZGHiIdlqZ49AEyXEfqHt0fum8TDH3V+OBL0juLWhzVT/W/c/5jRic=
+X-Gm-Gg: ASbGnct6SlAZXPdPf9TY8NJlWDGNlFn0DpmXP6WV6lwt8rRDnKIsdjteHBzJi2pGeNZ
+ QNNK6q483xozvUnUrJpwa0tWiET093OFg/Z+/kjKn5bJOSKyFebqZv8rFb35A8OPKJ8s8vFfWjI
+ +yVcwOnhKshxkt5GbIP2fqdbfszRfh5AGnP/sIl6kprnjCyZiRldvn5TP4QBlTkQIN8RkTtMuV6
+ 2iwXI/d5mfHQGL+TR+11OA0PWc8nUyATDJcOljqTW7GVer1EWsUgYaxI5mxLxxbzfVNDQja4kVF
+ zx2zsw5cYGm2Fabnb2R+9aC1k6GB4R+VjI5Ywjbz5LfR2zA=
+X-Google-Smtp-Source: AGHT+IG3ze2BzghgvZv4sVwn3F+qOYJq4eLwFKqrRITHzSKX9Jfe9NBiOvGbF37KIpfCkAfVKqFacg==
+X-Received: by 2002:a05:6000:1a8e:b0:391:23e6:f08c with SMTP id
+ ffacd0b85a97d-39132da91aemr4126646f8f.47.1741470813139; 
+ Sat, 08 Mar 2025 13:53:33 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c103290sm9740850f8f.87.2025.03.08.13.53.31
+ ffacd0b85a97d-3912c104acesm10075480f8f.98.2025.03.08.13.53.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Mar 2025 13:53:34 -0800 (PST)
+ Sat, 08 Mar 2025 13:53:30 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0975760507;
- Sat,  8 Mar 2025 21:53:28 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 49F6760341;
+ Sat,  8 Mar 2025 21:53:27 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 15/31] tests/tcg: fix constraints in test-i386-adcox
-Date: Sat,  8 Mar 2025 21:53:10 +0000
-Message-Id: <20250308215326.2907828-16-alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 08/31] plugins: add explicit dependency in functional tests
+Date: Sat,  8 Mar 2025 21:53:03 +0000
+Message-Id: <20250308215326.2907828-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250308215326.2907828-1-alex.bennee@linaro.org>
 References: <20250308215326.2907828-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,51 +108,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clang complains:
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-  clang -O2 -m64 -mcx16 /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c -o test-i386-adcox -static
-  /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c:32:26: error: invalid input constraint '0' in asm
-          : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
-                           ^
-  /home/alex/lsrc/qemu.git/tests/tcg/i386/test-i386-adcox.c:57:26: error: invalid input constraint '0' in asm
-          : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
-                           ^
-  2 errors generated.
+./tests/functional/test_aarch64_tcg_plugins.py needs to have plugin
+libinsn built. However, it's not listed as a dependency, so meson can't
+know it needs to be built.
 
-Pointing out a numbered input constraint can't point to a read/write
-output [1]. Convert to a read-only input constraint to allow this.
+Thus, we keep track of all plugins, and add them as an explicit
+dependency.
 
-[1] https://lists.llvm.org/pipermail/cfe-commits/Week-of-Mon-20101101/036036.html
-
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 4c134d07b9e ("tests: add a new set of tests to exercise plugins")
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250304222439.2035603-16-alex.bennee@linaro.org>
+Message-Id: <20250304222439.2035603-9-alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/i386/test-i386-adcox.c b/tests/tcg/i386/test-i386-adcox.c
-index 16169efff8..a717064adb 100644
---- a/tests/tcg/i386/test-i386-adcox.c
-+++ b/tests/tcg/i386/test-i386-adcox.c
-@@ -29,7 +29,7 @@ void test_adox_adcx(uint32_t in_c, uint32_t in_o, REG adcx_operand, REG adox_ope
-         "adcx %3, %1;"
-         "pushf; pop %0"
-         : "+r" (flags), "+r" (out_adcx), "+r" (out_adox)
--        : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
-+        : "r" ((REG) - 1), "0" (flags), "1" (out_adcx), "2" (out_adox));
+diff --git a/meson.build b/meson.build
+index 8b9fda4d95..be857cc80c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3664,6 +3664,7 @@ qtest_module_ss = ss.source_set()
  
-     assert(out_adcx == in_c + adcx_operand - 1);
-     assert(out_adox == in_o + adox_operand - 1);
-@@ -53,8 +53,8 @@ void test_adcx_adox(uint32_t in_c, uint32_t in_o, REG adcx_operand, REG adox_ope
-         "adcx %3, %1;"
-         "adox %3, %2;"
-         "pushf; pop %0"
--        : "+r" (flags), "+r" (out_adcx), "+r" (out_adox)
--        : "r" ((REG)-1), "0" (flags), "1" (out_adcx), "2" (out_adox));
-+        : "+r"(flags), "+r"(out_adcx), "+r"(out_adox)
-+        : "r" ((REG)-1));
- 
-     assert(out_adcx == in_c + adcx_operand - 1);
-     assert(out_adox == in_o + adox_operand - 1);
+ modules = {}
+ target_modules = {}
++plugin_modules = []
+ hw_arch = {}
+ target_arch = {}
+ target_system_arch = {}
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 484b9a808c..fa8a426c8b 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -26,3 +26,5 @@ if t.length() > 0
+ else
+   run_target('contrib-plugins', command: find_program('true'))
+ endif
++
++plugin_modules += t
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 4b492135e0..008d72aed8 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -380,7 +380,7 @@ foreach speed : ['quick', 'thorough']
+       # 'run_target' logic below & in Makefile.include
+       test('func-' + testname,
+            python,
+-           depends: [test_deps, test_emulator, emulator_modules],
++           depends: [test_deps, test_emulator, emulator_modules, plugin_modules],
+            env: test_env,
+            args: [testpath],
+            protocol: 'tap',
+diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+index 87a17d67bd..c8cb0626a6 100644
+--- a/tests/tcg/plugins/meson.build
++++ b/tests/tcg/plugins/meson.build
+@@ -19,3 +19,5 @@ if t.length() > 0
+ else
+   run_target('test-plugins', command: find_program('true'))
+ endif
++
++plugin_modules += t
 -- 
 2.39.5
 
