@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD58DC282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CC18C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:54:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr1sW-000731-CT; Sat, 08 Mar 2025 16:38:40 -0500
+	id 1tr278-0003Ly-6F; Sat, 08 Mar 2025 16:53:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr1rF-0005Yu-1d
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:37:31 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tr276-0003LE-1x
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:44 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr1rA-0003vs-ST
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:37:18 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cf034d4abso1402075e9.3
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:37:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tr274-0000y4-HS
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:43 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso17848885e9.0
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:53:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741469834; x=1742074634; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741470821; x=1742075621; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=akRNzOoRRyY/xSKhmyVeI+5UU9kBXMKW6nWI01FbvUE=;
- b=Io2AyQFP+0pG4t9mNFdUsDeQtliT4b9N30kLRMQEQJn6KyOtsTVXXM+QhjO4BJH8AD
- yBua7QK4P/BT1uGx7H2poKbeUICqCRpCe+tU/gwzzoCAQycQmRK/s6i42QUtEv1OMPSd
- gMkMIEiSjtKjJG0P9OZxLQtZogpxQMtCgDZA2d2TLrIbNMLj6sTN8Jasdt1cH+xHghsu
- ddNdR5oyw/QPILobDkoDPkA0YBp4aC2ITC9aBVMXg+3WY1FKklF4n7Fo4w6tT9XDvH+S
- mfcb3iUpEMRKR9fuLcoENDC+Ahy2rVA7yH168LCzLq03EzwBx4+INaeADeRMEnoJdP5m
- wzsw==
+ bh=aDELaWcH8onO5ZCoyKehfG8N5YiojTrTBD0BN28Mrdw=;
+ b=uPmpxX3h/1LJX9yjLeHzFrhEAIch4XnXVEW3QMcKq8GPJaxp0MmdW3kEDAtGEKjVjZ
+ wSRvnlr1UHP92imriJfZ7Zs/sIX2WOw1LUiaMiIL/YSXzXgrgSpH/fjf/x5A3SWRVIHX
+ YBCSfXqYzfxXaTiiJb2Rr56/3doj8amFa3brCF0gYg7PfN2unQF+uAdhBuwm2osZRKsd
+ ubvJTMaSQctFpH3b5j+kM9E80K3BFgHmbEMlFmD9lNoJgg+I0/PpFaEZ3rg8svzbqWl8
+ GY/WYTvVL4xE6rJeisheL7HoqnfP5BnNNU3p9NobVWIDApu8V6i+uq9DKuhPTC0BVHqb
+ FPyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741469834; x=1742074634;
+ d=1e100.net; s=20230601; t=1741470821; x=1742075621;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=akRNzOoRRyY/xSKhmyVeI+5UU9kBXMKW6nWI01FbvUE=;
- b=MGInRME9YWkxZI1Bp7FQYGEtdG5Q5Gai1w9mj2H6XVj4VpqNcOeb4j91WNjlvBfc4R
- LsNtXtXXf1w3jldKFwEmkijZ17EKix41tqsV4bz9R+rha+UnITH7o0utr4eYvRFn8VkZ
- rEjWrdK12WumKgrlEvLTN224WvKQszxZydeMXnUSI4qA1unJy3SsJ7P5NLoEOOQDhTAp
- M48wyIihKiWxGySsRGneOoKKqLJ1/Cb/eRprLkBBmxLKY0gm+d8Kqul55huOdJ2bXqlU
- kgmoH/SWBxXBvAniXzkrOJAPdwSusol2boxWmjj2hoXZxuPECfnx42k4Th4d7i8xq67h
- TtRw==
-X-Gm-Message-State: AOJu0YyZCUkl3cr3C/+7YD3UnnN1Ld43Mz8fJzkzEjUQ3qEQbH0fXtKU
- 6fEe2EdNeCaq6O+HanpuZdQTyMJs7iErt8wZy4vK/GfnyMzdxx9J8gFOda3wkex5WRr/5ODmn/e
- bsf4=
-X-Gm-Gg: ASbGncu5U5uWNQlXV0znOe+JDZTNhhnzQ9TNo2tbNYOlWASh9H7QMc7Sw7bUL1bd8Xf
- ikeHauUJ69qMQ9oXiBVPc02PtX6xhBbvSntzMZsBzk1kzEDo66+d4FyQBK/dnRXu2E4iYQyE0vN
- v256p/yElOyvwt7vjwGWk9tKWeDs0sxcvbIsH7J2hDO+f4o235W2h70YGt6g42VIcPsEhp4dGW2
- K0SyXCOcW5zFjzbVwfCeG+zzwm0loIW5U7amuIMVDXSyGJzlDGfOcNMzt8iheIdJKBDDaEN9+YU
- fXroJJk8SvM/Q5/BPMro3DUnmlga6Z64kj+20n2zFMWeRIGnQnUD4N7B55zOX/qjTl58ddviWjP
- NbkoQRh6xeEqMVshLBfE=
-X-Google-Smtp-Source: AGHT+IFleBt6cR4JT4IujkflDeTTtooakD+z+Ef87GAhnmCJ81BWA/eBLG7qhw2k0d6EmYnU7SMm3w==
-X-Received: by 2002:a05:600c:46d0:b0:439:969e:d80f with SMTP id
- 5b1f17b1804b1-43c60231ddamr59791445e9.31.1741469833745; 
- Sat, 08 Mar 2025 13:37:13 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfbaa94sm9963087f8f.14.2025.03.08.13.37.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 08 Mar 2025 13:37:12 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	BALATON Zoltan <balaton@eik.bme.hu>
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Guenter Roeck <linux@roeck-us.net>, qemu-block@nongnu.org,
- Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org
-Subject: [PATCH v4 06/14] hw/sd/sdhci: Enforce little endianness on PCI devices
-Date: Sat,  8 Mar 2025 22:36:32 +0100
-Message-ID: <20250308213640.13138-7-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250308213640.13138-1-philmd@linaro.org>
-References: <20250308213640.13138-1-philmd@linaro.org>
+ bh=aDELaWcH8onO5ZCoyKehfG8N5YiojTrTBD0BN28Mrdw=;
+ b=eVtRDQ6eaYNfpWI9JF7gDDb7QpuM3VMxk5cK5dqpzsJMizNcYIOfbva/Si3kyCUZrA
+ sk7DQxd9x1l/UEAiHHu56lMq0BfEzGUdnUmhwGPlwnlYY0nw+nMuRxv7cpWXVDnfGEot
+ nfolTkrdjsCPvS6n1h5Cg89ghklUpYhqfKIPJg/05Yl+CICgaklN+lldTNzQNGxGLXat
+ Wh7fF2us9C9giCYVk9T0XosSzFwAj6ponQTQJQ9RVxO6yWmzKNojTQl4cNtl/1zZF17x
+ 3RiRfKxJqRR7xi4KYBgjWOtYj8M0aLNCG4UM1Ar8Y1dfIPp9uJ0URgYDndLdWwf9EjA3
+ ybxw==
+X-Gm-Message-State: AOJu0YxeWzqWVK+FoGqhpIJo1MZFjFDbuqtYZ7oEtYjxmFmTydrPKTns
+ RKKFwJTQ/wT+rkTu+1HK8p1QkCAOj8g1CM9bTnIX3Mo/EMgl/COpPLDWyIWrnyk=
+X-Gm-Gg: ASbGncuunOJ3r7MpdAGzkkvg/N/7jnwK5A2kYv03RqhvTocmpsanHBKIxrOzA36+lH3
+ HTeoeAGKvH9k80d5it0+1QwG+F892LIJH95Dv1eef2B6jj6E63oo7hqkPZ2OjZFw5oGed4+OVSI
+ YfH1heE6si938T6LWtgjxLGMpJ3tIFMvy8jyxyDbO3Q2U4qIp079A5uoXCEd/ddCzfTo5Kxm53Z
+ H3aBbEqrSckdU+Lold25cGyjMMUzN6na8f+gnR8RFWtubQ5BwsmyS7aHNPnzHPnJZ7ZN7mgpkqt
+ 0/aI0j/wj3Xzg7tMS1f2JzLQRg8jyzNObAdoWZ+K+Qf+dIw=
+X-Google-Smtp-Source: AGHT+IHhM1MQeRc3LrbQe4KWHWDmWeGlEKP/XxxIRUjTcGQ+evfdJgy6gQIJrdGU9Bosg9fqEbFYGw==
+X-Received: by 2002:a05:600c:5112:b0:43b:daa3:33df with SMTP id
+ 5b1f17b1804b1-43c68702810mr59128835e9.30.1741470820909; 
+ Sat, 08 Mar 2025 13:53:40 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912bfdfcdasm9756081f8f.23.2025.03.08.13.53.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 08 Mar 2025 13:53:36 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 675B860DA5;
+ Sat,  8 Mar 2025 21:53:29 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 29/31] plugins/api: build only once
+Date: Sat,  8 Mar 2025 21:53:24 +0000
+Message-Id: <20250308215326.2907828-30-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250308215326.2907828-1-alex.bennee@linaro.org>
+References: <20250308215326.2907828-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,26 +105,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the default, but better be safe than sorry.
+Now all the softmmu/user-mode stuff has been split out we can build
+this compilation unit only once.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/sd/sdhci-pci.c | 1 +
- 1 file changed, 1 insertion(+)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20250304222439.2035603-30-alex.bennee@linaro.org>
 
-diff --git a/hw/sd/sdhci-pci.c b/hw/sd/sdhci-pci.c
-index 5268c0dee50..5f82178a76f 100644
---- a/hw/sd/sdhci-pci.c
-+++ b/hw/sd/sdhci-pci.c
-@@ -32,6 +32,7 @@ static void sdhci_pci_realize(PCIDevice *dev, Error **errp)
-     SDHCIState *s = PCI_SDHCI(dev);
+diff --git a/plugins/api.c b/plugins/api.c
+index 832bf6ee5e..604ce06802 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -46,17 +46,6 @@
+ #include "exec/translator.h"
+ #include "disas/disas.h"
+ #include "plugin.h"
+-#ifndef CONFIG_USER_ONLY
+-#include "qapi/error.h"
+-#include "migration/blocker.h"
+-#include "qemu/plugin-memory.h"
+-#include "hw/boards.h"
+-#else
+-#include "qemu.h"
+-#ifdef CONFIG_LINUX
+-#include "loader.h"
+-#endif
+-#endif
  
-     sdhci_initfn(s);
-+    qdev_prop_set_uint8(DEVICE(dev), "endianness", DEVICE_LITTLE_ENDIAN);
-     sdhci_common_realize(s, errp);
-     if (*errp) {
-         return;
+ /* Uninstall and Reset handlers */
+ 
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 942b59e904..d27220d5ff 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -61,9 +61,8 @@ endif
+ user_ss.add(files('user.c', 'api-user.c'))
+ system_ss.add(files('system.c', 'api-system.c'))
+ 
+-common_ss.add(files('loader.c'))
++common_ss.add(files('loader.c', 'api.c'))
+ 
+ specific_ss.add(files(
+   'core.c',
+-  'api.c',
+ ))
 -- 
-2.47.1
+2.39.5
 
 
