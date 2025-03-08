@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BDC7C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E7FC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr38d-0004di-7b; Sat, 08 Mar 2025 17:59:23 -0500
+	id 1tr38d-0004dh-7a; Sat, 08 Mar 2025 17:59:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38T-0004Zu-En
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:13 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tr38S-0004Yv-Du
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:12 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38R-0005Lu-86
+ id 1tr38Q-0005Lf-Lh
  for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:12 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-223959039f4so60749495ad.3
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-225477548e1so10272865ad.0
  for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741474750; x=1742079550; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741474749; x=1742079549; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4u5PBwHEPecUaxrqA3yTEFMGllvxnHxvoZEJcDTq3Zs=;
- b=D4ndGY7BtFWutR9tk1CMKnVIuFIwVa1Bvdu7mOH3sTk141TqOJYXO1/JWBt47g5i6j
- 5wYMyW+hCfGEAAoOcCZ84Eh3j7xotuJUIm6r1PITOAmIBdb5nQYTQXfpGxbNvc+VcE7P
- Mdsdk3L9zrcPeJmHqbM4CufyX5UkU6xdcSjAmqs4kyOrT0sZMlf93iGB2Xqbirv6B4fm
- REhFNwsK+Q3obvQqm02SN7pgZtYEkkRnhdweHdL/H3hZ7l0BXkU0fx0bz7BRJiagUjL/
- N+N80I/CXm3fDfVAebAfBp8yqRgI0AFBQ3dq2jn4dHdtUDwl1uVFZI1X6uJ5L/ejg1oy
- Cw4A==
+ bh=OZUhu3BnFzDT2DJGeBZFOFqKQQp7EogeXchL7RAMkqI=;
+ b=gxQjwbFGTYLCzHiuRkwTvYMJIBp7mICGJ5b197fSY6uQPIoJMWNPEkHS5bWeXmpYDu
+ qcGfY01ahjFCD5dvxoRgClWK5T0dq0n/V9yXWezO9Ig7Tk9Au4Nj3cm+g7Z8ClVyFo9j
+ Pjj9lu4/9U1URrgO+nstGCLbcstiZ49QdH0RoDXN3Brb1MlXkfep364lRQZWgeU7Gvg/
+ tZeAOE/Fa6xiTwl00nmp5WOYECSKYlNRq4mFayywf6q1Dx/tej8LpB1DXtekMcoiuZhx
+ FBFuFkc/ptplFVysi/ei+vFnTDdQBGnSBJSQFqtTg7JCoS4E0JBnme/wqOOwmeJXp4tY
+ LLFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741474750; x=1742079550;
+ d=1e100.net; s=20230601; t=1741474749; x=1742079549;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4u5PBwHEPecUaxrqA3yTEFMGllvxnHxvoZEJcDTq3Zs=;
- b=VUZOrrAAInW12MH3DQE8giEaF6bmKI3+aaG22D2Z56ZNLnI+Lsmd1EHBnh2d8jHoRb
- nl4uPJHUCno0bwAS8HBYqu/8B0iPUG+mHqG8a/aH8yj1NCb1U96XtbRGzC+Z7l6nDL23
- eEZ5YUd+ZIGq3aq+/mjjz0FbP94+jX7lQMkNviCX1yGd/t8xsat+v0hVSKALGzUAwqih
- CUP7RJFX/o/7pUzdpVc5z/k3bmH3nWVODvTgt5KE4Z0sMuCRu57rvvoG0Sm0gMTsjQkx
- WS9WQ3jUaXnRRfkb6GuZSVqr8cipWCu0YLCJwIRejCz656fPy9gUWWDfwBdjorEDwL0A
- KiKg==
-X-Gm-Message-State: AOJu0Yy36Ty49G7KR9tmEDrsHnmS21NCYPnGf4f4FGx6UiYQirgomZ5r
- filJGUCtCUTdfsWrh26USJJhBALYHtH/eoJl42kG1X1gnMnJQ+WiSrrNl2nUvUm7AqjlxV72C6T
+ bh=OZUhu3BnFzDT2DJGeBZFOFqKQQp7EogeXchL7RAMkqI=;
+ b=g50fqURkNgp6MeOs7XJPlC/fTcAJDAwLaOKuOGjy5O89lND/Jd0WyDTEDTmniUJB9X
+ XWQ3ou5tt2b8m8XXfTx2ILP++7OiyaTDrpgWUo+Ppc0Pxt64lqHoHN4sc/Wtoo1rYCOM
+ t/dO/w6aJoLxWHQ0GwApVXe58u4EmSKW+9dc/ExRJLAJvPJQKeEWHkg0m/LNh2dkku8S
+ lEct8+C5RfGor4+AYm3izJckKnWI1ABcFIaL41WlZomgsAZri+KWi5ifgEcDMPTB0T84
+ ++NKeWH07jFV3Atjzaa0CYHlNviiAuSOJyZH6bcu9VupRVFF0kte++OGHOzjoPomUU8x
+ wuYg==
+X-Gm-Message-State: AOJu0YztYefabE3rVDBo+PFWGctIAkaSv8Ag/2rDQH09hRu723g+mOBH
+ nNkxQ046+3nqOBwOy8bZkuxnrzsvqEI4U8jHXWfpzH8kPASahDyY47Yiz3JtWpc66LXjI6Sir1b
  j
-X-Gm-Gg: ASbGncsNRN8EaeMyJB3SiQmpYG6JdLMZf/fpo1Up0fwbUweRJ3CVDDQsjXRTbwu6jmS
- C0+xf8a96RhHp48HqNg/OcZHgfgCB1C8NsoU+N3ewL61PrCUc+glG/tByzAh3OqNAiD4xwlVU9f
- nplD+0AOTQ9w8faz7tgaoOwH5jTlWL9nh82JGk/87SzWARo+ifE6I+BniONumcB8ZVHjSLoQAzI
- X1rNpoUBW4+194RLtp3RCGiLKWwxtPUYkl/MNGRx8Ps57jZO5LUwtCW6g6upgN0RnvrazwFEVAA
- VbPMh66KuHGHdIbVwVU7ZXNscuI4p+/wkyHdRJeYBwRCI5Mb5c688xkldu82gzgnaXZtvx8iRSz
- q
-X-Google-Smtp-Source: AGHT+IHkcp12zRGYST6rP7g60xgT2DJu0QbKhCD1443sluPBgq0OzC7BmkUFpwQydTJzENI4ZmWqhg==
-X-Received: by 2002:a17:902:ec89:b0:224:10a2:cad9 with SMTP id
- d9443c01a7336-22428bd5852mr161238565ad.41.1741474749910; 
+X-Gm-Gg: ASbGncuR2suN/iVXQAOvUii1G70Qgi3odrhR48Ez2h1N/XhDZIWRToE7Qn4k35yQu07
+ 6iiw+1IZukR2C93TER1Cy6QsADvPcz34o9l0UAitRnGdI2TjsmAoCEhYwUlOzH5i+0FvfJRWZOb
+ xxnIS+iZuOtiPLWJMr/71JaBR0wZnlnC/UiSGv5goB6RJjkp+cPmRINed3h/buRX2Bu8sAbEuoZ
+ sLRRKSXkz4KxCnIXold97bonju1aZT7AVshhI/eIdJ8eTMSNOuKH5N6QMhrwRqboOfs+aN79BLw
+ l6je72QeCGETKEmtCnkLMhHJ5o0FDbITmnUL2Mp/CJq0+guBTXaAyXdDZjP8TSJV1SyVOxxaFwT
+ w
+X-Google-Smtp-Source: AGHT+IE3dT/L3ABJKjRYygN4jGaIS5mHRrX+2jiFHVKGPVfWhzLfKEtochPP4IkpERNbxDBRMo5tLQ==
+X-Received: by 2002:a17:903:40cb:b0:223:44c5:4eb8 with SMTP id
+ d9443c01a7336-22428c0752cmr146209285ad.32.1741474749073; 
  Sat, 08 Mar 2025 14:59:09 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.09
+ d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Mar 2025 14:59:09 -0800 (PST)
+ Sat, 08 Mar 2025 14:59:08 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 09/23] exec: Declare tlb_set_page() in 'exec/cputlb.h'
-Date: Sat,  8 Mar 2025 14:58:48 -0800
-Message-ID: <20250308225902.1208237-11-richard.henderson@linaro.org>
+Subject: [PULL 08/23] exec: Declare tlb_set_page_with_attrs() in
+ 'exec/cputlb.h'
+Date: Sat,  8 Mar 2025 14:58:47 -0800
+Message-ID: <20250308225902.1208237-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250308225902.1208237-1-richard.henderson@linaro.org>
 References: <20250308225902.1208237-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,227 +110,120 @@ Move CPU TLB related methods to "exec/cputlb.h".
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20241114011310.3615-18-philmd@linaro.org>
+Message-ID: <20241114011310.3615-17-philmd@linaro.org>
 ---
- include/exec/cputlb.h               | 11 +++++++++++
- include/exec/exec-all.h             |  9 ---------
- target/alpha/helper.c               |  2 +-
- target/avr/helper.c                 |  2 +-
- target/loongarch/tcg/tlb_helper.c   |  1 +
- target/m68k/helper.c                |  1 +
- target/mips/tcg/system/tlb_helper.c |  1 +
- target/openrisc/mmu.c               |  2 +-
- target/ppc/mmu_helper.c             |  1 +
- target/riscv/cpu_helper.c           |  1 +
- target/rx/cpu.c                     |  2 +-
- target/s390x/tcg/excp_helper.c      |  1 +
- target/sh4/helper.c                 |  1 +
- target/tricore/helper.c             |  2 +-
- target/xtensa/helper.c              |  2 +-
- 15 files changed, 24 insertions(+), 15 deletions(-)
+ include/exec/cputlb.h                | 28 ++++++++++++++++++++++++++++
+ include/exec/exec-all.h              | 25 -------------------------
+ target/i386/tcg/system/excp_helper.c |  2 +-
+ target/microblaze/helper.c           |  2 +-
+ 4 files changed, 30 insertions(+), 27 deletions(-)
 
 diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
-index 56dd05a148..cdfaf17403 100644
+index 733ef012d1..56dd05a148 100644
 --- a/include/exec/cputlb.h
 +++ b/include/exec/cputlb.h
-@@ -90,4 +90,15 @@ void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
-                              hwaddr paddr, MemTxAttrs attrs,
-                              int prot, int mmu_idx, vaddr size);
+@@ -21,6 +21,8 @@
+ #define CPUTLB_H
+ 
+ #include "exec/cpu-common.h"
++#include "exec/hwaddr.h"
++#include "exec/memattrs.h"
+ #include "exec/vaddr.h"
+ 
+ #ifdef CONFIG_TCG
+@@ -62,4 +64,30 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+ void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
+                        CPUTLBEntryFull *full);
  
 +/**
-+ * tlb_set_page:
++ * tlb_set_page_with_attrs:
++ * @cpu: CPU to add this TLB entry for
++ * @addr: virtual address of page to add entry for
++ * @paddr: physical address of the page
++ * @attrs: memory transaction attributes
++ * @prot: access permissions (PAGE_READ/PAGE_WRITE/PAGE_EXEC bits)
++ * @mmu_idx: MMU index to insert TLB entry for
++ * @size: size of the page in bytes
 + *
-+ * This function is equivalent to calling tlb_set_page_with_attrs()
-+ * with an @attrs argument of MEMTXATTRS_UNSPECIFIED. It's provided
-+ * as a convenience for CPUs which don't use memory transaction attributes.
++ * Add an entry to this CPU's TLB (a mapping from virtual address
++ * @addr to physical address @paddr) with the specified memory
++ * transaction attributes. This is generally called by the target CPU
++ * specific code after it has been called through the tlb_fill()
++ * entry point and performed a successful page table walk to find
++ * the physical address and attributes for the virtual address
++ * which provoked the TLB miss.
++ *
++ * At most one entry for a given virtual address is permitted. Only a
++ * single TARGET_PAGE_SIZE region is mapped; the supplied @size is only
++ * used by tlb_flush_page.
 + */
-+void tlb_set_page(CPUState *cpu, vaddr addr,
-+                  hwaddr paddr, int prot,
-+                  int mmu_idx, vaddr size);
++void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
++                             hwaddr paddr, MemTxAttrs attrs,
++                             int prot, int mmu_idx, vaddr size);
 +
  #endif
 diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index 62d6300752..a3aa8448d0 100644
+index f43c67366b..62d6300752 100644
 --- a/include/exec/exec-all.h
 +++ b/include/exec/exec-all.h
-@@ -156,15 +156,6 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+@@ -156,31 +156,6 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
                                                 uint16_t idxmap,
                                                 unsigned bits);
  
--/* tlb_set_page:
+-/**
+- * tlb_set_page_with_attrs:
+- * @cpu: CPU to add this TLB entry for
+- * @addr: virtual address of page to add entry for
+- * @paddr: physical address of the page
+- * @attrs: memory transaction attributes
+- * @prot: access permissions (PAGE_READ/PAGE_WRITE/PAGE_EXEC bits)
+- * @mmu_idx: MMU index to insert TLB entry for
+- * @size: size of the page in bytes
 - *
-- * This function is equivalent to calling tlb_set_page_with_attrs()
-- * with an @attrs argument of MEMTXATTRS_UNSPECIFIED. It's provided
-- * as a convenience for CPUs which don't use memory transaction attributes.
+- * Add an entry to this CPU's TLB (a mapping from virtual address
+- * @addr to physical address @paddr) with the specified memory
+- * transaction attributes. This is generally called by the target CPU
+- * specific code after it has been called through the tlb_fill()
+- * entry point and performed a successful page table walk to find
+- * the physical address and attributes for the virtual address
+- * which provoked the TLB miss.
+- *
+- * At most one entry for a given virtual address is permitted. Only a
+- * single TARGET_PAGE_SIZE region is mapped; the supplied @size is only
+- * used by tlb_flush_page.
 - */
--void tlb_set_page(CPUState *cpu, vaddr addr,
--                  hwaddr paddr, int prot,
--                  int mmu_idx, vaddr size);
- #else
- static inline void tlb_flush_page(CPUState *cpu, vaddr addr)
- {
-diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index 2f1000c99f..57cefcba14 100644
---- a/target/alpha/helper.c
-+++ b/target/alpha/helper.c
+-void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
+-                             hwaddr paddr, MemTxAttrs attrs,
+-                             int prot, int mmu_idx, vaddr size);
+ /* tlb_set_page:
+  *
+  * This function is equivalent to calling tlb_set_page_with_attrs()
+diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
+index 864e3140e3..6876329de2 100644
+--- a/target/i386/tcg/system/excp_helper.c
++++ b/target/i386/tcg/system/excp_helper.c
 @@ -20,7 +20,7 @@
  #include "qemu/osdep.h"
- #include "qemu/log.h"
  #include "cpu.h"
+ #include "exec/cpu_ldst.h"
 -#include "exec/exec-all.h"
 +#include "exec/cputlb.h"
  #include "exec/page-protection.h"
- #include "fpu/softfloat-types.h"
- #include "exec/helper-proto.h"
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index 9ea6870e44..3412312ad5 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -23,7 +23,7 @@
- #include "qemu/error-report.h"
- #include "cpu.h"
- #include "accel/tcg/cpu-ops.h"
--#include "exec/exec-all.h"
-+#include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "exec/cpu_ldst.h"
- #include "exec/address-spaces.h"
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index a323606e5a..f6b63c7224 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -12,6 +12,7 @@
- #include "cpu.h"
- #include "internals.h"
- #include "exec/helper-proto.h"
-+#include "exec/cputlb.h"
- #include "exec/exec-all.h"
- #include "exec/page-protection.h"
- #include "exec/cpu_ldst.h"
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index beefeb7069..0bf574830f 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -20,6 +20,7 @@
+ #include "tcg/helper-tcg.h"
+ 
+diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
+index 5d3259ce31..27fc929bee 100644
+--- a/target/microblaze/helper.c
++++ b/target/microblaze/helper.c
+@@ -20,7 +20,7 @@
  
  #include "qemu/osdep.h"
  #include "cpu.h"
-+#include "exec/cputlb.h"
- #include "exec/exec-all.h"
- #include "exec/page-protection.h"
- #include "exec/gdbstub.h"
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index e98bb95951..ca4d6b27bc 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -21,6 +21,7 @@
- 
- #include "cpu.h"
- #include "internal.h"
-+#include "exec/cputlb.h"
- #include "exec/exec-all.h"
- #include "exec/page-protection.h"
- #include "exec/cpu_ldst.h"
-diff --git a/target/openrisc/mmu.c b/target/openrisc/mmu.c
-index c632d5230b..47ac783c52 100644
---- a/target/openrisc/mmu.c
-+++ b/target/openrisc/mmu.c
-@@ -21,7 +21,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "cpu.h"
 -#include "exec/exec-all.h"
 +#include "exec/cputlb.h"
  #include "exec/page-protection.h"
- #include "gdbstub/helpers.h"
  #include "qemu/host-utils.h"
-diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-index a802bc9c62..ad9ba8294c 100644
---- a/target/ppc/mmu_helper.c
-+++ b/target/ppc/mmu_helper.c
-@@ -24,6 +24,7 @@
- #include "kvm_ppc.h"
- #include "mmu-hash64.h"
- #include "mmu-hash32.h"
-+#include "exec/cputlb.h"
- #include "exec/exec-all.h"
- #include "exec/page-protection.h"
  #include "exec/log.h"
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 34092f372d..6c4391d96b 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -23,6 +23,7 @@
- #include "cpu.h"
- #include "internals.h"
- #include "pmu.h"
-+#include "exec/cputlb.h"
- #include "exec/exec-all.h"
- #include "exec/page-protection.h"
- #include "instmap.h"
-diff --git a/target/rx/cpu.c b/target/rx/cpu.c
-index 1c40c8977e..f01e069a90 100644
---- a/target/rx/cpu.c
-+++ b/target/rx/cpu.c
-@@ -21,7 +21,7 @@
- #include "qapi/error.h"
- #include "cpu.h"
- #include "migration/vmstate.h"
--#include "exec/exec-all.h"
-+#include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "exec/translation-block.h"
- #include "hw/loader.h"
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index 4c0b692c9e..f969850f87 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -22,6 +22,7 @@
- #include "qemu/log.h"
- #include "cpu.h"
- #include "exec/helper-proto.h"
-+#include "exec/cputlb.h"
- #include "exec/exec-all.h"
- #include "s390x-internal.h"
- #include "tcg_s390x.h"
-diff --git a/target/sh4/helper.c b/target/sh4/helper.c
-index b8774e046e..7567e6c8b6 100644
---- a/target/sh4/helper.c
-+++ b/target/sh4/helper.c
-@@ -20,6 +20,7 @@
- #include "qemu/osdep.h"
- 
- #include "cpu.h"
-+#include "exec/cputlb.h"
- #include "exec/exec-all.h"
- #include "exec/page-protection.h"
- #include "exec/log.h"
-diff --git a/target/tricore/helper.c b/target/tricore/helper.c
-index 9898752eb0..a64412e6bd 100644
---- a/target/tricore/helper.c
-+++ b/target/tricore/helper.c
-@@ -19,7 +19,7 @@
- #include "qemu/log.h"
- #include "hw/registerfields.h"
- #include "cpu.h"
--#include "exec/exec-all.h"
-+#include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "fpu/softfloat-helpers.h"
- #include "qemu/qemu-print.h"
-diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
-index f64699b116..4824b97e37 100644
---- a/target/xtensa/helper.c
-+++ b/target/xtensa/helper.c
-@@ -28,7 +28,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "cpu.h"
--#include "exec/exec-all.h"
-+#include "exec/cputlb.h"
- #include "gdbstub/helpers.h"
- #include "exec/helper-proto.h"
- #include "qemu/error-report.h"
 -- 
 2.43.0
 
