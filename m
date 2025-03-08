@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F7CC28B2E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDBE7C282EC
 	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr38u-0004jH-0m; Sat, 08 Mar 2025 17:59:40 -0500
+	id 1tr39C-000514-L2; Sat, 08 Mar 2025 17:59:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38S-0004YZ-1w
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:12 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tr38Y-0004bL-4e
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:18 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38Q-0005LT-8B
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:11 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-22401f4d35aso55290105ad.2
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:09 -0800 (PST)
+ id 1tr38W-0005NA-8i
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:17 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso56104845ad.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741474748; x=1742079548; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741474754; x=1742079554; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SzyDViup58ROLXi9a5eLqmvAZgtt4FP4fwTvGjoaRo8=;
- b=EVJKeDS1Ww74kLYbEQRT3RNzv5P6Xn7T+YCqYh1MWvrfsG9nAv0qwX11PU+E9Xqu2s
- gYPikMjIEn6eQFFLRH4MqBI1FltOiLOq7nNw5Vlcu0HPhIubcIXYCYwxGvyseUskjv2J
- 3f6R88vhXliH7UryHVZMKlsICzaV+1AKZ62PJ/k8mPgVH6cmeSGIqNS5Fs0PcEe9S3hi
- k6kNo1XDLxzn2ZNBBQnwGTPDQ311u4IFb+MgACEKTTp8y2aMUv7SPenbW2Gw4y36taAh
- dlFvQHM3kayBm4NfXB58IxoWyzmP1kr7oh6L8bQaF3Ued71lJxAzOuymODEvwmo0RVFk
- qdtg==
+ bh=PQ7VRfSKG1Ts2qHzv0Mc2UE7mllYcyWQa1NNvIfU4kY=;
+ b=FjmXOQR/sVWs+avbB2i2yPM+IpctSSh5ibddNdlXm3T9460Wc52+3/fWTo28DeCm4k
+ ON7HzQG39ZZxG5qDyRAOVrrt28JGIYYHUMgikNu2aN6zbm6eF6DAnjQTIaai8PL0M2Xg
+ qbi26fQJbgFzX7g00s7abPi7opyJKXSmOBjza4YfWeIlJmFDrhhP9W4GCq5gfXnpcQ57
+ LYMgcZCIimBDaoaR05KrpJnqxjuudgkVPapVG7tN7vMglIisMB5h+j6jiSZcc8LoN+sr
+ Afn+fxUEU2Jxtr37pReID1P6sPnilX7rpghwito0yTt1tkYo5ADhhSwajhzs75csbgf2
+ MAQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741474748; x=1742079548;
+ d=1e100.net; s=20230601; t=1741474754; x=1742079554;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SzyDViup58ROLXi9a5eLqmvAZgtt4FP4fwTvGjoaRo8=;
- b=CPpYZnIeJ0xZTiUWLLIHaryR+2Hmd60TZkr7mUI+mnTySJALOxaBBHY+j3DKbBM3xX
- hVPZAxdrN7wWuijCsPvuKgK2fxwJNqCUMy3HPtQKayn30vzsf7jDfWq4Y+Q1GGnS/mcS
- asP4V+/iM8eJwYQFRW9Mwjw1wzMzU5Q7Q0Bw0SoaJDZ9XyYgakx6RuSSV3WckPqAOdW5
- k5+u6l5nDt8+QgOHXkr19s5YRgmBw+CdXy2tJR9mriyrGVeS9/hhvkf58MslQGwn3qSl
- fWwYKxsUflMjc5WsyFEybRi86wxTpx8tUxuzZJjtoarVzKeETN/6WaDN8vpFRcBnAhvK
- vAvA==
-X-Gm-Message-State: AOJu0Yy+1El+UdHW5sKfi30clxpo1/lCnOeNFHcFkO/8cV//1LNYBFBN
- Uix1O6kcm5DRLaCgpw8ZT0qbn2Cjad7M/4JokELKArSHU2vCEOUOOTjDtpF4qiA5T2UTpaT1Q14
+ bh=PQ7VRfSKG1Ts2qHzv0Mc2UE7mllYcyWQa1NNvIfU4kY=;
+ b=dLY+XVREQv21FfEqotKo9Y8sqlUE8z0boMWl16u1WyBMezSHhBmXhDxjv8D9vnTSso
+ 3Uo3EqxTaIteuFCARzBRDIcPDiHjGUUlKDBPevQAwLbSb+mrmrwl2YfzI6qei69cG/DC
+ vxRfg7Dm3tjlhdhAN5dMic4LuVdRe5qUec5zyYlVrd/luOKNeN0MIjCNM2a8zJrH6sQV
+ cEvcKZGMD0YGjB0YoZzeZJ9Eg4srsCq5Ia/wqFmmJSLpNzRRz9tyk625woRYymGT/d5D
+ t9H62AqG5bPSQ3n1A5jIPT+FIbjJxfqrNMjOFZj0ZXFtXTByS9/Al1TKn3RlIr9ocToq
+ PE8A==
+X-Gm-Message-State: AOJu0Yyo+gBXATyoEkBYsarwXeq4Vfv4RuQ8PcJdTfq7ssfnLdgwfu/O
+ 3j6SnIneEBiWwY/f0EldD0YA6tKalF989vCl2A7xeApWav4ZllOz9W66F6Gtv536bRYJ4ljKB9L
  H
-X-Gm-Gg: ASbGncv75FGLEOtoZWj7vYsKZxAaM7gdvjcF9RcXc7RE2oz6IcKujoLSpMc6A6BJCPN
- DSDV8Jgxeos+xJhFq+2aAs/TXbuox/3vf9uTF3Y1dkhEB7h9NVUQe9VochS3ohyCzz53LTujzHf
- /kovAbNTeNloYK3T0LOspFe3Z/SkoFWGgYZfKA9rsCiE6zs6XpguG9Y1mrrSWHPErdUqOf8ciSt
- tH5k0e0O0N3pDy9aakJzVIL8bV11P8CAQ/4tThbUWRPMo0AXWIIebJYfcCuhKfSyDnEXK7rWYOC
- e/15+j0rRSvs3QlxDEZJKu2+YaV0jhjtY6aD3LH2Mod6FY4ospC+4rlce3csyq40s+gsFsid9B9
- c
-X-Google-Smtp-Source: AGHT+IFyJnA1+vdfNfUgsMYdAyxkp/4Lc0qas+OrnJ+irFS+FWN6ufmm4ukreIYxEuOECAoPLeNtgg==
-X-Received: by 2002:a17:903:2445:b0:224:249f:9723 with SMTP id
- d9443c01a7336-22428bd446dmr121049425ad.51.1741474748455; 
- Sat, 08 Mar 2025 14:59:08 -0800 (PST)
+X-Gm-Gg: ASbGncse6uMg8kVnENnUdqmJ+C/MDznS0kJ14LrDQw5rKnz1Vw6Gjmm6+hS+vXiRL40
+ lDy0NzO7sSEG0ahOdHyEcY+t7ig5JRb9ftoGrmFLFvQAbxjGUkhr6gEOtEau51DiKuKbJJfB+ex
+ LvR6yezMTCvbS3w+2KWcFRQB/MBEq165Shze6/tmgGsr+rQF3Oofb7L8euiG4MYzf3zy7NqSc4+
+ d4oOmDCJPP+HucVsnlVvXzzatMYAw5Au2z1RhJqIbIouUfSEjYGsLmXD64d/6K0SVYaEoi2gLHP
+ aTpKnaJdy6RrqO8kMslzuPBsqsztmSPiaAEv93XYDJV8qRJ/+7WiFPMeN+oScSa/yoNZzVxfkDN
+ Z
+X-Google-Smtp-Source: AGHT+IERSo3yeN1yI+8Yqb936MopykyHrFDIBOzqTPWwZuMtjqnS03zdsQTnG9yU1ENTIyh07wIjsg==
+X-Received: by 2002:a17:903:40cb:b0:223:44c5:4eb8 with SMTP id
+ d9443c01a7336-22428c0752cmr146211635ad.32.1741474754592; 
+ Sat, 08 Mar 2025 14:59:14 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.08
+ d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Mar 2025 14:59:08 -0800 (PST)
+ Sat, 08 Mar 2025 14:59:14 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 07/23] exec: Declare tlb_set_page_full() in 'exec/cputlb.h'
-Date: Sat,  8 Mar 2025 14:58:46 -0800
-Message-ID: <20250308225902.1208237-9-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 16/23] accel/tcg: Build tcg-accel-ops-mttcg.c once
+Date: Sat,  8 Mar 2025 14:58:55 -0800
+Message-ID: <20250308225902.1208237-18-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250308225902.1208237-1-richard.henderson@linaro.org>
 References: <20250308225902.1208237-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,105 +100,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+All that is required is to avoid including exec-all.h.
 
-Move CPU TLB related methods to "exec/cputlb.h".
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20241114011310.3615-16-philmd@linaro.org>
 ---
- include/exec/cputlb.h     | 23 +++++++++++++++++++++++
- include/exec/exec-all.h   | 22 ----------------------
- target/sparc/mmu_helper.c |  2 +-
- 3 files changed, 24 insertions(+), 23 deletions(-)
+ accel/tcg/tcg-accel-ops-mttcg.c | 1 -
+ accel/tcg/meson.build           | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
-index 6cac7d530f..733ef012d1 100644
---- a/include/exec/cputlb.h
-+++ b/include/exec/cputlb.h
-@@ -21,6 +21,7 @@
- #define CPUTLB_H
- 
- #include "exec/cpu-common.h"
-+#include "exec/vaddr.h"
- 
- #ifdef CONFIG_TCG
- 
-@@ -39,4 +40,26 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
- 
- #endif
- 
-+/**
-+ * tlb_set_page_full:
-+ * @cpu: CPU context
-+ * @mmu_idx: mmu index of the tlb to modify
-+ * @addr: virtual address of the entry to add
-+ * @full: the details of the tlb entry
-+ *
-+ * Add an entry to @cpu tlb index @mmu_idx.  All of the fields of
-+ * @full must be filled, except for xlat_section, and constitute
-+ * the complete description of the translated page.
-+ *
-+ * This is generally called by the target tlb_fill function after
-+ * having performed a successful page table walk to find the physical
-+ * address and attributes for the translation.
-+ *
-+ * At most one entry for a given virtual address is permitted. Only a
-+ * single TARGET_PAGE_SIZE region is mapped; @full->lg_page_size is only
-+ * used by tlb_flush_page.
-+ */
-+void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
-+                       CPUTLBEntryFull *full);
-+
- #endif
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index f24256fb5e..f43c67366b 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -156,28 +156,6 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
-                                                uint16_t idxmap,
-                                                unsigned bits);
- 
--/**
-- * tlb_set_page_full:
-- * @cpu: CPU context
-- * @mmu_idx: mmu index of the tlb to modify
-- * @addr: virtual address of the entry to add
-- * @full: the details of the tlb entry
-- *
-- * Add an entry to @cpu tlb index @mmu_idx.  All of the fields of
-- * @full must be filled, except for xlat_section, and constitute
-- * the complete description of the translated page.
-- *
-- * This is generally called by the target tlb_fill function after
-- * having performed a successful page table walk to find the physical
-- * address and attributes for the translation.
-- *
-- * At most one entry for a given virtual address is permitted. Only a
-- * single TARGET_PAGE_SIZE region is mapped; @full->lg_page_size is only
-- * used by tlb_flush_page.
-- */
--void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
--                       CPUTLBEntryFull *full);
--
- /**
-  * tlb_set_page_with_attrs:
-  * @cpu: CPU to add this TLB entry for
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 9ff06026b8..7548d01777 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -20,7 +20,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "cpu.h"
+diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
+index ba7cf6819d..bdcc385ae9 100644
+--- a/accel/tcg/tcg-accel-ops-mttcg.c
++++ b/accel/tcg/tcg-accel-ops-mttcg.c
+@@ -30,7 +30,6 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/notify.h"
+ #include "qemu/guest-random.h"
 -#include "exec/exec-all.h"
-+#include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "qemu/qemu-print.h"
- #include "trace.h"
+ #include "hw/boards.h"
+ #include "tcg/startup.h"
+ #include "tcg-accel-ops.h"
+diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+index 87c1394b62..81fb25da5c 100644
+--- a/accel/tcg/meson.build
++++ b/accel/tcg/meson.build
+@@ -20,7 +20,6 @@ specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
+ 
+ specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
+   'cputlb.c',
+-  'tcg-accel-ops-mttcg.c',
+ ))
+ 
+ system_ss.add(when: ['CONFIG_TCG'], if_true: files(
+@@ -28,6 +27,7 @@ system_ss.add(when: ['CONFIG_TCG'], if_true: files(
+   'monitor.c',
+   'tcg-accel-ops.c',
+   'tcg-accel-ops-icount.c',
++  'tcg-accel-ops-mttcg.c',
+   'tcg-accel-ops-rr.c',
+   'watchpoint.c',
+ ))
 -- 
 2.43.0
 
