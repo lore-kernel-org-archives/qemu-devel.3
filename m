@@ -4,89 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FABCC28B2E
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C3DDC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr38y-0004qP-LO; Sat, 08 Mar 2025 17:59:44 -0500
+	id 1tr3Ii-0004Ox-Rm; Sat, 08 Mar 2025 18:09:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38T-0004a3-R0
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:14 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3IM-0004Ic-QQ
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:09:28 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38S-0005MA-6q
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:13 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2243803b776so34770855ad.0
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3IJ-00016G-4L
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:09:26 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43bc63876f1so26011365e9.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 15:09:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741474751; x=1742079551; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HdNSdlVsW8pmir+q1TpDvW924tsDK1wZFdH64G2NXCE=;
- b=d4S+ySGd0IIZNnvc5XiO2CZby5ZRfyJUDM59XkVXDJcFDG54Q1XyBukfdYfkE1RfUO
- NJyVicBw4bi1Kl6J2gvNAgjEZtl+1RNpzbDM1pDvNMNLEkmOHLHfPJfpDk8mc9UAwRs6
- 0SwxFGbFhFX7BTFllSt9XpRCfHvyUsjzwDrVOPTrRzglnGCXcXrtMow+8UT0PHDTubuJ
- J0xBRea9+A0KGykE8j5K+D09VF/TBxrwKofBCK86j19cPgSBi3bI5xUHFC7mSr/K7CqU
- ATOX0z4Jx3u3RRklX/W1/fB1stJkyF/lsLk8b3HK62w9UvtOtJVIuL02CJ2dG3TAGycJ
- BFkw==
+ d=linaro.org; s=google; t=1741475361; x=1742080161; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ObCXdxBV5FFXTAkBikkLyhnu4rSBn8wDnLJnCi+DE38=;
+ b=peEK3T4sYX3LFt9nPD0vVriEH2NCvY+X+chcEU0qEe6Dv2xpyHq/5sXcUe4Ns64lD4
+ RIoHkT1lJx4UfS0U5Y2xCksvxMJ2EzpY+9Uu4G0cH5cmHEM3TgQCxANEHg85igSAYzCY
+ op5lpmV244pUayiO6NYPLfWbaW2lZRXmEQW2G3CW2C2oupGAiWp/gCHGAHoVJm1P30Pe
+ z9rFTG5TUDnfkhV++uE9yBbMdsRc6OdoTnwOogYpW093y4z32Qd9vixSgxLwlujYmP+A
+ RTN+vsYnRv5ceHAeaC51JDZEF2SB54U1X5Fnxw0FJGPo9JQfcrD41fbd3AtTQXfSAh8M
+ sgQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741474751; x=1742079551;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HdNSdlVsW8pmir+q1TpDvW924tsDK1wZFdH64G2NXCE=;
- b=tCDZd3/NFysQDvC0xnOSZlPIAyvrO/4jm9AteMqmnQrys4aZ/MQ7xwktZuTEVAMH5i
- 5uUsxsAW2EBp0CX5pUi9tmoDt8EfjaI9SKlvjoB9eanxZKcPQBqjGkYQK+CoiMPb92qO
- F1AVt92CsrIcqJyye+vDkg6ah8XqOiRP7k6MnElN9ZlfQvmLpVOQCTEuXBqD/ku0EIPG
- QOP7yFMhBX8i4lY+XvdCqCT4LKnTMEpDEbpkYZfCwb7snY/X1wmvbtfp0LjRh7KrGlRn
- AFfsUZJ75jaaV6lSQZQmDcrmmQOUmSVatxeBNwwPFDLLdMly+m7aK355yLn5kuZ+ffru
- 8jNQ==
-X-Gm-Message-State: AOJu0YzS7CSFPWiINOxjtFNlxypkPXej7P0tAuNal2iTq1VXDXPntjW7
- TobbtMy5gAoso7VUDKMGJuktCZZLfNyjKI4BHuEg31gP8qE71X+C5JmyaPlK5gQsdg2xqlCFSgP
- i
-X-Gm-Gg: ASbGncuJdVJ2U9OJ7pClYdn9Qqi6fTi88waDZW0rzxmKufgt0Nnv/XmGyygo3W3zxMy
- +TkD0uKCTg8wWf3FezIT8gIfSKMqN0uPSqpabljnBny4b2E0zyHlrOciolfYMC9B42XqJ6H5QyR
- VX8pFLH9u1GezM0P1iwMcz/KiVk/DIfQkFP1VrxRvsg/H/qcejhsWdpXRm8Vjzot9kvD0wtsK/9
- f80o1O2/qEbflczrbmFfIvfOrA2Pv6WIeT5Zex4UvQCAigLaXgiYT9KAm+1dOeILq76pD/BWmav
- oUEvbqi1r+a9AWN6gzQ4ys375bTH2rruYmHZdhwzK0EWZuLRXCkOzuOsFYo/Ts2Fgml4MNrOpSH
- x
-X-Google-Smtp-Source: AGHT+IHhy4jEVwuJlmpZuyZuoPdNKKBIr6KZn7wc7+YqKBw1r1U/G7vyF8b/EQrKzoGymgN54ytUrg==
-X-Received: by 2002:a17:903:1ca:b0:21b:d105:26b8 with SMTP id
- d9443c01a7336-2242887b209mr100900225ad.7.1741474750725; 
- Sat, 08 Mar 2025 14:59:10 -0800 (PST)
-Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Mar 2025 14:59:10 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1741475361; x=1742080161;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ObCXdxBV5FFXTAkBikkLyhnu4rSBn8wDnLJnCi+DE38=;
+ b=CMrvhWMNzm5BN/EuKF0TBGJgYWqetQ83pUjaYR9z+ezLTFcDNexAIEZnoIDxCGYM2r
+ le8KZp0KWo66dj7dYtfW7c7zjgsY3vR9DuHODqQrXTkgNruQmHl/6JJLCHtbWfGy+xQZ
+ 8azT4OPN0l3w5C5II8XXo89aFYbbFRxfLHDOHYk2ECfnFXzVN6nuAHxJ8XLLc5suC3K5
+ 1V4DY/beUaBKyNXRbRrJJsDgDCAi9Pm/P/MXfOwX223EzKxbvL4Si4iRpde+PWXM/8CV
+ X5FTXbqCuKMubeflsSx25libmoNxP30afo/E/Wmv3dcpf+pFiApmi3aaB0lc16hJOTst
+ VhTg==
+X-Gm-Message-State: AOJu0YxMCpYgVE+a/NnzVw1/mqybSYaWOe7jZfcPsFm1dzF/CXQm/92k
+ X01WZ/Gf0J50XpjJLez6at81AWEwxYNryFwXToiGZKNzC/IfON61qI54nCv40mbp53AMmyhQvJa
+ znVs=
+X-Gm-Gg: ASbGncvROMDI9K7SnqYOHyHcw/gT0RIefyroA/KE2qffDeFwX/69wmtkDLHQAPx4wic
+ X5BefvXXoohUXv33rqfT/86zAv8FkVFqe1gvvzKmCYtNyZ6jUi8sl3kW0O3KGD/K4xV/ypNV00R
+ 3A0I/hPSTx0M5ybYy019ucntui2zZKGMQCmo0yS7fx0Lth1+5d5SaO/kEdGd6xgmKTMGlPAmniL
+ yNlUqm72bNCoXdYNjwgRH54MCCumb+BMnUQVcD2FROt4FIgUdXy4l/AZH8F5AOIRRXsiOcUWBNp
+ zF7FQTug3Lw+NPdCSYKDhQKqs55ZxzNpXe+64+EgJSMhvdsvXTtog+kXQEJrntvzTYGamt2eFVr
+ 0p807F45F4NNgmOgmj8g=
+X-Google-Smtp-Source: AGHT+IF98pReGBpdgLDkhd0lnLr9OBzKY1FVvFofkKlVXFbwmBnEwNlkFJzcxYQ3ZA/xQH45IkWqYg==
+X-Received: by 2002:a05:6000:2107:b0:390:f6aa:4e6f with SMTP id
+ ffacd0b85a97d-39132d306aamr4468226f8f.10.1741475360860; 
+ Sat, 08 Mar 2025 15:09:20 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bd435c88esm125768485e9.36.2025.03.08.15.09.18
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 08 Mar 2025 15:09:20 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 10/23] exec: Declare tlb_hit*() in 'exec/cputlb.h'
-Date: Sat,  8 Mar 2025 14:58:49 -0800
-Message-ID: <20250308225902.1208237-12-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250308225902.1208237-1-richard.henderson@linaro.org>
-References: <20250308225902.1208237-1-richard.henderson@linaro.org>
+Cc: Yi Liu <yi.l.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Eric Farman <farman@linux.ibm.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-s390x@nongnu.org,
+ Eric Auger <eric.auger@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 00/21] hw/vfio: Build various objects once
+Date: Sun,  9 Mar 2025 00:08:56 +0100
+Message-ID: <20250308230917.18907-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,88 +116,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+By doing the following changes:
+- Clean some headers up
+- Replace compile-time CONFIG_KVM check by kvm_enabled()
+- Replace compile-time CONFIG_IOMMUFD check by iommufd_builtin()
+we can build less vfio objects.
 
-Move CPU TLB related methods to "exec/cputlb.h".
+Since v1:
+- Added R-b tags
+- Introduce type_is_registered()
+- Split builtin check VS meson changes (rth)
+- Consider IGD
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20241114011310.3615-20-philmd@linaro.org>
----
- include/exec/cpu-all.h | 23 -----------------------
- accel/tcg/cputlb.c     | 23 +++++++++++++++++++++++
- 2 files changed, 23 insertions(+), 23 deletions(-)
+Philippe Mathieu-Daudé (21):
+  hw/vfio/common: Include missing 'system/tcg.h' header
+  hw/vfio/spapr: Do not include <linux/kvm.h>
+  hw/vfio: Compile some common objects once
+  hw/vfio: Compile more objects once
+  hw/vfio: Compile iommufd.c once
+  system: Declare qemu_[min/max]rampagesize() in 'system/hostmem.h'
+  hw/vfio: Compile display.c once
+  system/kvm: Expose kvm_irqchip_[add,remove]_change_notifier()
+  hw/vfio/pci: Convert CONFIG_KVM check to runtime one
+  qom: Introduce type_is_registered()
+  hw/vfio/igd: Define TYPE_VFIO_PCI_IGD_LPC_BRIDGE
+  hw/vfio/igd: Check CONFIG_VFIO_IGD at runtime using vfio_igd_builtin()
+  hw/vfio/igd: Compile once
+  system/iommufd: Introduce iommufd_builtin() helper
+  hw/vfio/pci: Check CONFIG_IOMMUFD at runtime using iommufd_builtin()
+  hw/vfio/pci: Compile once
+  hw/vfio/ap: Check CONFIG_IOMMUFD at runtime using iommufd_builtin()
+  hw/vfio/ccw: Check CONFIG_IOMMUFD at runtime using iommufd_builtin()
+  hw/vfio/s390x: Compile AP and CCW once
+  hw/vfio/platform: Check CONFIG_IOMMUFD at runtime using
+    iommufd_builtin
+  hw/vfio/platform: Compile once
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 9e6724097c..8cd6c00cf8 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -179,29 +179,6 @@ static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
- /* The two sets of flags must not overlap. */
- QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & TLB_SLOW_FLAGS_MASK);
- 
--/**
-- * tlb_hit_page: return true if page aligned @addr is a hit against the
-- * TLB entry @tlb_addr
-- *
-- * @addr: virtual address to test (must be page aligned)
-- * @tlb_addr: TLB entry address (a CPUTLBEntry addr_read/write/code value)
-- */
--static inline bool tlb_hit_page(uint64_t tlb_addr, vaddr addr)
--{
--    return addr == (tlb_addr & (TARGET_PAGE_MASK | TLB_INVALID_MASK));
--}
--
--/**
-- * tlb_hit: return true if @addr is a hit against the TLB entry @tlb_addr
-- *
-- * @addr: virtual address to test (need not be page aligned)
-- * @tlb_addr: TLB entry address (a CPUTLBEntry addr_read/write/code value)
-- */
--static inline bool tlb_hit(uint64_t tlb_addr, vaddr addr)
--{
--    return tlb_hit_page(tlb_addr, addr & TARGET_PAGE_MASK);
--}
--
- #endif /* !CONFIG_USER_ONLY */
- 
- /* Validate correct placement of CPUArchState. */
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index c8761683a0..fb22048876 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1201,6 +1201,29 @@ void tlb_set_page(CPUState *cpu, vaddr addr,
-                             prot, mmu_idx, size);
- }
- 
-+/**
-+ * tlb_hit_page: return true if page aligned @addr is a hit against the
-+ * TLB entry @tlb_addr
-+ *
-+ * @addr: virtual address to test (must be page aligned)
-+ * @tlb_addr: TLB entry address (a CPUTLBEntry addr_read/write/code value)
-+ */
-+static inline bool tlb_hit_page(uint64_t tlb_addr, vaddr addr)
-+{
-+    return addr == (tlb_addr & (TARGET_PAGE_MASK | TLB_INVALID_MASK));
-+}
-+
-+/**
-+ * tlb_hit: return true if @addr is a hit against the TLB entry @tlb_addr
-+ *
-+ * @addr: virtual address to test (need not be page aligned)
-+ * @tlb_addr: TLB entry address (a CPUTLBEntry addr_read/write/code value)
-+ */
-+static inline bool tlb_hit(uint64_t tlb_addr, vaddr addr)
-+{
-+    return tlb_hit_page(tlb_addr, addr & TARGET_PAGE_MASK);
-+}
-+
- /*
-  * Note: tlb_fill_align() can trigger a resize of the TLB.
-  * This means that all of the caller's prior references to the TLB table
+ docs/devel/vfio-iommufd.rst  |  2 +-
+ hw/vfio/pci-quirks.h         |  8 +++++
+ include/exec/ram_addr.h      |  3 --
+ include/qom/object.h         |  8 +++++
+ include/system/hostmem.h     |  3 ++
+ include/system/iommufd.h     |  6 ++++
+ include/system/kvm.h         |  8 ++---
+ target/s390x/kvm/kvm_s390x.h |  2 +-
+ hw/ppc/spapr_caps.c          |  1 +
+ hw/s390x/s390-virtio-ccw.c   |  1 +
+ hw/vfio/ap.c                 | 27 ++++++++---------
+ hw/vfio/ccw.c                | 27 ++++++++---------
+ hw/vfio/common.c             |  1 +
+ hw/vfio/igd-stubs.c          | 20 +++++++++++++
+ hw/vfio/igd.c                |  4 +--
+ hw/vfio/iommufd.c            |  1 -
+ hw/vfio/migration.c          |  1 -
+ hw/vfio/pci-quirks.c         |  9 +++---
+ hw/vfio/pci.c                | 57 +++++++++++++++++-------------------
+ hw/vfio/platform.c           | 25 ++++++++--------
+ hw/vfio/spapr.c              |  4 +--
+ qom/object.c                 |  5 ++++
+ hw/vfio/meson.build          | 35 +++++++++++++---------
+ 23 files changed, 152 insertions(+), 106 deletions(-)
+ create mode 100644 hw/vfio/igd-stubs.c
+
 -- 
-2.43.0
+2.47.1
 
 
