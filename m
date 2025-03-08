@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30871C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 22:01:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83609C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 22:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr2Dg-0001yi-PR; Sat, 08 Mar 2025 17:00:32 -0500
+	id 1tr2Dm-00029g-5K; Sat, 08 Mar 2025 17:00:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr2DX-0001r6-3x
+ id 1tr2DT-0001hW-61
  for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:00:23 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr2DR-0001vq-Fc
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:00:20 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-39140bd6317so250954f8f.1
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:00:16 -0800 (PST)
+ id 1tr2DQ-0001vi-1G
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:00:17 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4394036c0efso16795995e9.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:00:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741471216; x=1742076016; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741471214; x=1742076014; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=x+gu5ogQAWZshVelvD/gHWlmrGalgc39BzbRjaxXUb0=;
- b=P1x2MFOyZHITd0VCFyOsO9hvXA9/PyN/+0E5YwiyEYg0Ha+PwAxDqE4IcaqWrP7yCh
- Xv7Si4VSIByDM4lGu5nbRCBRB8+97OMXBBSAJvE/+icFMsgB4H1FG1Z6rqGwXOrk1+na
- cM8Y9k8Lt3UW3YI9Eo31n23JoUWOpP1jshr6aCmu1+FaDbVWD+8lDeiZUXlshE6QQksD
- o2jGPtMWapuZVOBRtp8YjKAuQLBWlZ//bhc1MB3196HlvGXuQcxAKYr0a4SU/gdk21tL
- GCRicVLBrbG7SxeKBzjqoV5XX+ISGerFX9YbCbxSUnJjeygkseqcJeHnMblMteSZzC15
- sgDw==
+ bh=b27xhBD0ksksCzDRiT3v7v4kY1rR1YfNmNHzo2TcGOY=;
+ b=dkuSGDekNQe3NdGCIhoIQ6bRS4vVNmEo2bBKYl1H91cUNZN5lOKJxnLX/bAnNvh7bW
+ kEUZZP0vuPui3DoNkFGo9WVa8dGDyxMB59mANkVu16QAj5yKj9M/CE47vHk9Or3UKwd4
+ lLQy9WW8kEOnQLMFvvGUHUdcEWC6kzs20sHafn5qt+lUnRYvadbQS4hGF8bLEOZNUfRc
+ 18BG5EHDwf46W2a5eb/ak6l5VnhZX+3oitB44xs3bDprjLoNGErN4BudnyJVuwYSR8L4
+ 4Lb/vd/EJsl8iqN/Q3gn8+XUiC7EYNOCoOZTYNIhnmY7rzLfGMA0UBRwZRGTAwFT71RE
+ lYZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741471216; x=1742076016;
+ d=1e100.net; s=20230601; t=1741471214; x=1742076014;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=x+gu5ogQAWZshVelvD/gHWlmrGalgc39BzbRjaxXUb0=;
- b=sMUwHNJ/rxwiU9mp4AXfHDLeMyCO1wKpmD/zuSwKKFnn30GQwgVyFcTA9VHzgqUAeY
- yKwKVXG7m4FTyeOVnLKqVUVg5sr2Gk0Fi19R9fheGmiERErExIjOpVeJoxXMyXMOzn2y
- SIG+vJFUBsrgOYNcySNL3SAZd3HysiVD3MX1neGbbNegRU+Bzm3+WR4KbOavmUUxiSY8
- sFSpH/LG2Vpp2gTwAqk9OGPvXeGCZ/f1E+6I2WYS8A1FwExlWfa00hOp3ZhfuHiRluyM
- eUl+q8czjhoaANxEXR/1+9veN46OmYGZ8oWu9+4Uw+ZE8UNnrxdlrLC4MpOhkcnE/m+S
- X23A==
-X-Gm-Message-State: AOJu0YxKVPXLjqnhfBY67F0pcPyFjcLJL6yYIVNv1FrlO9Xvlm18f4dT
- qLcIQD8ACwCE7wTJGZpgy3SXnEu9Y0Jo4gQ0n4A88+Kj4qNWp4QvL8Ngph7GiqqVPw2y+zu9CL6
- A
-X-Gm-Gg: ASbGnct8L+4ph2e02V8kcgb2NWqs2Y75X0+jnwW6NyW65MFSNR1txNke3K+RwDG/0CC
- OBp01KDML6SAC0Oa+Y4fO+k4B4l6GzS4X9k0LiRVtS7mehBzM1ODTDfKkP0GkVaQ42EFm1R7JG8
- 4cvplbBsOtSlKT2kdjWcrHyVQYbCwR6Z0vWg6Emg2W6hB5+DG74p5NXL1Pi4PWTAUnGJZcrn3T2
- jgaRs5QbrzS/ivSJck8BTtsBrVAEf8lBVxKlzj0t3/Zx0wjWBcwuTxZokzCWGiqKnCf0Mcva0lP
- 7q0xqeQGAB3ZhH1Yfwdl8xm/Q4BJgiUgjmbeeILj71VeUJjxIKkcivHjLA==
-X-Google-Smtp-Source: AGHT+IG2jiOEDPTqG92RfaD0GuU7iKgu8zQm+OOJ06p9UHWth5XrxWcyckO/i/rKBwPKPjw4f8WiPA==
-X-Received: by 2002:a5d:6d8c:0:b0:390:e48a:3869 with SMTP id
- ffacd0b85a97d-39132d774a1mr5083686f8f.11.1741471215662; 
- Sat, 08 Mar 2025 14:00:15 -0800 (PST)
+ bh=b27xhBD0ksksCzDRiT3v7v4kY1rR1YfNmNHzo2TcGOY=;
+ b=i3W+K/LR0/KiGWo0Zo7Xm06kWgj2t38HNVXXXV0W0jGx6ZS7MQzeEILo2ATum1X9oh
+ 3y0o2tf2uwCbanxgLEYkvAXqCVaiQzgBtpooRXMSJG3HOkAimry1PyXzhE1qLuE9Sjco
+ bbsle7L2g8ITt14a/kzaVRJMcJG0+olvS6WxoMNNALkMJEi/JrJ+5YVX1rdGatz3UIaA
+ LGvROphdh5GtK3SK4WzJVlhySmauDG9x2GO0juOT0p5CYF+fJK+0lOg27DUxP5uOKesG
+ 21xWYxATHHmRRFss4thOWdM+aWwjQaV9g3G9xxPGf/rZzsa/QvBvgGR6r0RANEpIv7K3
+ UmQA==
+X-Gm-Message-State: AOJu0YwOG0Bfq8OeavcYhppcpK11L7br4K45nX1ne9DOUoXwE12jAJhD
+ ed+vbYAMwazRXMKH8ePIPbo5ccsqHuTNVE1WUQHJAFL+gY27z288L/FbJMu2yxw=
+X-Gm-Gg: ASbGnctHIEN7uKAM4SonIq9D2UnZe0RX1NzIW7NkTe48b/k4bDqUzEaiFiQuMtT4qN+
+ BDZySpfGc6MO5TomvwmQpfXKCeUGJ/vpzUbR0hA9Hx+ZiZsyvmwdoLlcPztp0d9YeYrgtlc93L0
+ vU9+UzR2+abLrvI52xuTfT9oGd7OnxntqPW8QnGQjVS1z/crfa8DEZ1SInRRn1iUAuC+ujw6jDJ
+ 9LEKyjj6xoz+8UYMxMwUnO5mgtVG5qN+x/VPo+3bZrDNN4hcGCrno3hRJDA//p9enjhzXlSFPB6
+ 8X+QqY2cYuyuuRuy/Zvf8sU/f4nvFOZwfVpRAxiOnbsrIwU=
+X-Google-Smtp-Source: AGHT+IGMAcPkKhISvEWjOOWBNpMuBc/yEBkdF+cEJsJ2YvwTWCOQlk2uDA7ZXUtWyE0XHoDHKvHIlQ==
+X-Received: by 2002:a7b:ca4c:0:b0:43c:eb00:50eb with SMTP id
+ 5b1f17b1804b1-43ceb0054a9mr19550155e9.5.1741471214460; 
+ Sat, 08 Mar 2025 14:00:14 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c01de21sm10091320f8f.59.2025.03.08.14.00.12
+ ffacd0b85a97d-3912bfb79b9sm9804987f8f.3.2025.03.08.14.00.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Sat, 08 Mar 2025 14:00:13 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7ED3A606D9;
+ by draig.lan (Postfix) with ESMTP id 931D460794;
  Sat,  8 Mar 2025 21:53:28 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PULL 20/31] plugins/api: use qemu_target_page_mask() to get value
-Date: Sat,  8 Mar 2025 21:53:15 +0000
-Message-Id: <20250308215326.2907828-21-alex.bennee@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 21/31] plugins/loader: populate target_name with target_name()
+Date: Sat,  8 Mar 2025 21:53:16 +0000
+Message-Id: <20250308215326.2907828-22-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250308215326.2907828-1-alex.bennee@linaro.org>
 References: <20250308215326.2907828-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,61 +106,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Requiring TARGET_PAGE_MASK to be defined gets in the way of building
-this unit once. qemu_target_page_mask() will tell us what it is.
+We have a function we can call for this, lets not rely on macros that
+stop us building once.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250304222439.2035603-21-alex.bennee@linaro.org>
+Message-Id: <20250304222439.2035603-22-alex.bennee@linaro.org>
 
-diff --git a/plugins/api.c b/plugins/api.c
-index cf8cdf076a..fa4d495277 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -43,6 +43,7 @@
- #include "tcg/tcg.h"
- #include "exec/exec-all.h"
- #include "exec/gdbstub.h"
-+#include "exec/target_page.h"
- #include "exec/translation-block.h"
- #include "exec/translator.h"
- #include "disas/disas.h"
-@@ -287,7 +288,7 @@ uint64_t qemu_plugin_insn_vaddr(const struct qemu_plugin_insn *insn)
- void *qemu_plugin_insn_haddr(const struct qemu_plugin_insn *insn)
- {
-     const DisasContextBase *db = tcg_ctx->plugin_db;
--    vaddr page0_last = db->pc_first | ~TARGET_PAGE_MASK;
-+    vaddr page0_last = db->pc_first | ~qemu_target_page_mask();
+diff --git a/plugins/loader.c b/plugins/loader.c
+index 99686b5466..827473c8b6 100644
+--- a/plugins/loader.c
++++ b/plugins/loader.c
+@@ -297,7 +297,7 @@ int qemu_plugin_load_list(QemuPluginList *head, Error **errp)
+     struct qemu_plugin_desc *desc, *next;
+     g_autofree qemu_info_t *info = g_new0(qemu_info_t, 1);
  
-     if (db->fake_insn) {
-         return NULL;
-diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
-index 4dfc39bc98..e5182c01d8 100644
---- a/tests/tcg/hexagon/Makefile.target
-+++ b/tests/tcg/hexagon/Makefile.target
-@@ -18,7 +18,7 @@
- # Hexagon doesn't support gdb, so skip the EXTRA_RUNS
- EXTRA_RUNS =
- 
--CFLAGS += -Wno-incompatible-pointer-types -Wno-undefined-internal -Wno-unknown-warning-option
-+CFLAGS += -Wno-incompatible-pointer-types -Wno-undefined-internal
- CFLAGS += -fno-unroll-loops -fno-stack-protector
- 
- HEX_SRC=$(SRC_PATH)/tests/tcg/hexagon
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index c769a7d69d..45c9cfe18c 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -51,7 +51,7 @@ sigreturn-sigmask: LDFLAGS+=-pthread
- # Since this is just a standard piece of library code we've borrowed for a
- # TCG test case, suppress the warning rather than trying to modify the
- # code to work around the compiler.
--sha1: CFLAGS+=-Wno-stringop-overread
-+sha1: CFLAGS+=-Wno-stringop-overread -Wno-unknown-warning-option
- 
- # The vma-pthread seems very sensitive on gitlab and we currently
- # don't know if its exposing a real bug or the test is flaky.
+-    info->target_name = TARGET_NAME;
++    info->target_name = target_name();
+     info->version.min = QEMU_PLUGIN_MIN_VERSION;
+     info->version.cur = QEMU_PLUGIN_VERSION;
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.39.5
 
