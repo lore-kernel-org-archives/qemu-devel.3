@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5382FC282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 22:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17509C28B2F
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 22:00:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr2Dh-00021Q-Mo; Sat, 08 Mar 2025 17:00:33 -0500
+	id 1tr2Dk-00026V-Gx; Sat, 08 Mar 2025 17:00:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr2DX-0001rZ-GZ
+ id 1tr2DX-0001rX-EL
  for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:00:26 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr2DT-0001w9-LV
+ id 1tr2DS-0001w1-Nm
  for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:00:21 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cef0f03cfso1458115e9.3
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:00:18 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-390f5f48eafso1532645f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:00:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741471217; x=1742076017; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741471216; x=1742076016; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kHPgkE2VKXbWtAo5xz8P5MmrKJsVMZHVheDnuaENWnM=;
- b=dwLvrLRskLN8WDa6M/mroDakCXr+g4XTcZmNHtHLDkRpt9UlpaQ0HskQ04F4oXVLly
- E6PsB2ggcbSgmdlGnumS+FTBYzb6/elWxTkTmBfnsegCwUmeQ2NkYefbxeGRr1WHz3HR
- L7YxxwtLDDZsHk1fseS38e5MWE+HBhKoPkQj9KNYeDB2pbIOqLNlNeScvPp1VT7dYPer
- tYAXPb0TtdVjsQR1Nuowb7p4tghIJ6efeycGPNzc3bhRKtiaB49VziG/7QgbXschdD4D
- Yl5ptPsCCE7Vff0GU7Weaiovp5++LTn/WVFN2ncbukAcdlUX8J498GdW8MvimumTRcZB
- +SZw==
+ bh=XTSEMACn/0c5V64g3syCaGORLmqpk06iMyajsjrmkkM=;
+ b=lDfIzRwgFb6wEVHFhPzssMJk6moPZsFF3BzBQLLXqolmIBrjSksfMJW5Awd0JU5HVl
+ nKCm+fxd95qh01aorjAb2fWSyMRBC4aSw7K0tjcY5LvObNv6u0uWQZK48hFUTqhTKRIO
+ 2yNFSyi371DshywSwu4T3+0XrswGZp1T4xDHAOb/KDSulr2qm+n655Gy4cpeYm8YfqXJ
+ iR3vOm/liQkuQUsZX2yCeUoDYtMYLlXXK1widWgUhgh/BSbdaZwEewq6UVh7uZIVLdYt
+ 5hHDr3t3avEGisu9nZE63D8oLUqGREkyXE0tMzudRKO7EMLo5uHClRcYAw8q2fVaNmTM
+ wg+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741471217; x=1742076017;
+ d=1e100.net; s=20230601; t=1741471216; x=1742076016;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kHPgkE2VKXbWtAo5xz8P5MmrKJsVMZHVheDnuaENWnM=;
- b=gA1RQmLqFh/tBqJF0I9LL99Z1qMLpWKRiTXjAy6YvNzEG3A2M1OxoFojHoqtGlaBKk
- W1uW29yYnJb4ApKSbhG7Sqe9noC/T5GmvSTPnUfpnQjKy2pbZgu9gbSTZL+IIMYCJUw+
- zpKEb+RCYfrX111vI8SQs7rxftTBKLucl9Oij1S8xO3IJ5I6AawQWeYqvSBjubr3eurE
- fcDYLNTEYC2lt2LD9gSdFeOFmf1qyABjvreEr34Rd9Hj07Gquog7Z3PIw3ia1gnyKOC9
- c0vUhLImzDdoZ/qpi9DXwS61MjGfCyR9/7WHBlcIJmUc53hr8/8QjymfTe6IiAIZlxiA
- F9jQ==
-X-Gm-Message-State: AOJu0Yz/I212uFxHTdp6WT/nqEGtnIw18fqVEn5oNsqDsyMinpEcQH0m
- jhdvcxJgruxMTlc+wskhNE2WCUUS+Mxq0XjcLCrddI2FNJkPYSxiAR7B6CKXsVI9ZW2kcb6+Qky
- K
-X-Gm-Gg: ASbGncsIz7dCd3HF+H7FtJiJxROFSknrjrU8vrX/vyWmyNS9x9HCO7+2bQ+8iYvUYvm
- HTi2vMSLMWrwvnrCbvZMaUSeGqFnYK3YqrNiUN/llUJj8gAS/EhQ5Hu1yzPcinNYW90f2r9C5lp
- 0rMXtkVcDI3TJFyPA++dTCNt8mVwVvXVHNdkBMsNh1I2jqfHRbfJ33bi+/ag/5hGE8ACse1dTCn
- b1Xjk0yOsTvvrPYu6yElWPj6Q7I0JnsLo7siIAuzYTbyF4ExdKvKvIsp5tumbOLJEMJVep7cwWS
- TJdqBeLG6S/f8Sy8UyqBEinI8of1CU7eI8nqum3I1fdKlDw=
-X-Google-Smtp-Source: AGHT+IH2QYaq1dOEcUUCD645qS8VQpK3XpFcTekjvlXghjqqhWQxYwuF7K/nQlZ+3hggOuyvnqEV0g==
-X-Received: by 2002:a05:600c:3b92:b0:43b:c7ad:55c2 with SMTP id
- 5b1f17b1804b1-43c5a5e9853mr49580275e9.6.1741471217377; 
- Sat, 08 Mar 2025 14:00:17 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd948c1bsm94024045e9.36.2025.03.08.14.00.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=XTSEMACn/0c5V64g3syCaGORLmqpk06iMyajsjrmkkM=;
+ b=uwjz3SuYZaI1oF7JYT3f8WJaQW654fUT3tmrNGo4RozAaBlTtK3bep5zozIwuZMpKq
+ /uPoGIF4CPjPcBBCNX9XeCIYDEddWnGYdJU9Pmzu4f1c22iqqN0+X65VVDHxdznZoAMq
+ YjcpyQN+BvYv4z2XKY4/ehH8+dxOxeYGcrOMS0/yT5Wf5r5MaJHCQRhgUtpurPV/6rtS
+ ngDVH1z/jQOPhNtKR+4HW6I6P69Gk0YfpbQku7LaaxmbTVIYefPfgJjaXFSUGXWOBPT2
+ BD/Sd27SZuDjkwxVSsUzRn2nGTJJxTzskW2YnuYAkbH+cP1O5SOiktNsEFHvmA+LfYVy
+ KhOw==
+X-Gm-Message-State: AOJu0YyLxjTKkT0TNzSdQWf7xxYZDemOu+zuXpMZnkQiVfvhaOiwhAXQ
+ 0JZTOyEjinHPXvLnMoLjLx5CWq2XUBFWayaBDRNJRubnaRxBIQnuVyfs2/QsqNQ=
+X-Gm-Gg: ASbGncuI9kO1zEZLGVfSMfVFVZHy2xi+DEfejgVIxKK/DN65WaJ6upAvLF6D7J3Jclr
+ 1mFl09LGO+HOOryaWzaYtx92YVDDdcC8lj8+K3sYAOeRxadIPmdHcjW1laJqmzBhY61ws2UsZwH
+ m/U+nB5zH3t5f7BnFFly4VBrxycqA7RTHsyOmQyMob1qfJGalgLm/ZmPNKF/kvyXJC6tAP/xe80
+ O7TPUwl+e3jSDmCXPhivYN4t6NQBVlDwub29Swz6kD+LO9JvMeSYDS2IaUEJHTDgSjsjo6Ldt9M
+ S4JmP8rmmNOnfiD3AXlyibQWvIF6gKuRsHo8v1H0cXqtcmw=
+X-Google-Smtp-Source: AGHT+IHYfYjxPrkXuOnOq+vY62bioRZRXxmlVPlDwKoY7XYC+i/711BHt+GUhOYmZzGc9U1Um8XFEg==
+X-Received: by 2002:a5d:588f:0:b0:391:1806:e23d with SMTP id
+ ffacd0b85a97d-39132d7a3b6mr4613227f8f.6.1741471216368; 
  Sat, 08 Mar 2025 14:00:16 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912c0e2bacsm9947154f8f.78.2025.03.08.14.00.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 08 Mar 2025 14:00:13 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EA2D560B06;
+ by draig.lan (Postfix) with ESMTP id 4FA65606CF;
  Sat,  8 Mar 2025 21:53:28 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 25/31] plugins/loader: compile loader only once
-Date: Sat,  8 Mar 2025 21:53:20 +0000
-Message-Id: <20250308215326.2907828-26-alex.bennee@linaro.org>
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 18/31] gitlab: add a new build_unit job to track build size
+Date: Sat,  8 Mar 2025 21:53:13 +0000
+Message-Id: <20250308215326.2907828-19-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250308215326.2907828-1-alex.bennee@linaro.org>
 References: <20250308215326.2907828-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,135 +105,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is very little in loader that is different between builds save
-for a tiny user/system mode difference in the plugin_info structure.
-Create two new files, user and system to hold mode specific helpers
-and move loader into common_ss.
+We want to reduce the total number of build units in the system to get
+on our way to a single binary. It will help to have some numbers so
+lets add a job to gitlab to track our progress.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250304222439.2035603-26-alex.bennee@linaro.org>
+Message-Id: <20250304222439.2035603-19-alex.bennee@linaro.org>
 
-diff --git a/plugins/plugin.h b/plugins/plugin.h
-index 9ed20b5c41..6fbc443b96 100644
---- a/plugins/plugin.h
-+++ b/plugins/plugin.h
-@@ -119,4 +119,10 @@ struct qemu_plugin_scoreboard *plugin_scoreboard_new(size_t element_size);
- 
- void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score);
- 
-+/**
-+ * qemu_plugin_fillin_mode_info() - populate mode specific info
-+ * info: pointer to qemu_info_t structure
-+ */
-+void qemu_plugin_fillin_mode_info(qemu_info_t *info);
-+
- #endif /* PLUGIN_H */
-diff --git a/plugins/loader.c b/plugins/loader.c
-index 827473c8b6..7523d554f0 100644
---- a/plugins/loader.c
-+++ b/plugins/loader.c
-@@ -31,9 +31,6 @@
- #include "qemu/memalign.h"
- #include "hw/core/cpu.h"
- #include "exec/tb-flush.h"
--#ifndef CONFIG_USER_ONLY
--#include "hw/boards.h"
--#endif
- 
- #include "plugin.h"
- 
-@@ -300,14 +297,8 @@ int qemu_plugin_load_list(QemuPluginList *head, Error **errp)
-     info->target_name = target_name();
-     info->version.min = QEMU_PLUGIN_MIN_VERSION;
-     info->version.cur = QEMU_PLUGIN_VERSION;
--#ifndef CONFIG_USER_ONLY
--    MachineState *ms = MACHINE(qdev_get_machine());
--    info->system_emulation = true;
--    info->system.smp_vcpus = ms->smp.cpus;
--    info->system.max_vcpus = ms->smp.max_cpus;
--#else
--    info->system_emulation = false;
--#endif
-+
-+    qemu_plugin_fillin_mode_info(info);
- 
-     QTAILQ_FOREACH_SAFE(desc, head, entry, next) {
-         int err;
-diff --git a/plugins/system.c b/plugins/system.c
-new file mode 100644
-index 0000000000..b3ecc33ba5
+diff --git a/.gitlab-ci.d/check-units.py b/.gitlab-ci.d/check-units.py
+new file mode 100755
+index 0000000000..268a4118d5
 --- /dev/null
-+++ b/plugins/system.c
-@@ -0,0 +1,24 @@
-+/*
-+ * QEMU Plugin system-emulation helpers
-+ *
-+ * Helpers that are specific to system emulation.
-+ *
-+ * Copyright (C) 2017, Emilio G. Cota <cota@braap.org>
-+ * Copyright (C) 2019-2025, Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
++++ b/.gitlab-ci.d/check-units.py
+@@ -0,0 +1,66 @@
++#!/usr/bin/env python3
++#
++# check-units.py: check the number of compilation units and identify
++#                 those that are rebuilt multiple times
++#
++# Copyright (C) 2025 Linaro Ltd.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+#include "qemu/osdep.h"
-+#include "qemu/plugin.h"
-+#include "hw/boards.h"
++from os import access, R_OK, path
++from sys import argv, exit
++import json
++from collections import Counter
 +
-+#include "plugin.h"
 +
-+void qemu_plugin_fillin_mode_info(qemu_info_t *info)
-+{
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    info->system_emulation = true;
-+    info->system.smp_vcpus = ms->smp.cpus;
-+    info->system.max_vcpus = ms->smp.max_cpus;
-+}
-diff --git a/plugins/user.c b/plugins/user.c
-new file mode 100644
-index 0000000000..250d542502
---- /dev/null
-+++ b/plugins/user.c
-@@ -0,0 +1,19 @@
-+/*
-+ * QEMU Plugin user-mode helpers
-+ *
-+ * Helpers that are specific to user-mode.
-+ *
-+ * Copyright (C) 2017, Emilio G. Cota <cota@braap.org>
-+ * Copyright (C) 2019-2025, Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
++def extract_build_units(cc_path):
++    """
++    Extract the build units and their counds from compile_commands.json file.
 +
-+#include "qemu/osdep.h"
-+#include "qemu/plugin.h"
-+#include "plugin.h"
++    Returns:
++        Hash table of ["unit"] = count
++    """
 +
-+void qemu_plugin_fillin_mode_info(qemu_info_t *info)
-+{
-+    info->system_emulation = false;
-+}
-diff --git a/plugins/meson.build b/plugins/meson.build
-index d60be2a4d6..f7820806d3 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -57,8 +57,13 @@ if host_os == 'windows'
-     command: dlltool_cmd
-   )
- endif
++    j = json.load(open(cc_path, 'r'))
++    files = [f['file'] for f in j]
++    build_units = Counter(files)
 +
-+user_ss.add(files('user.c'))
-+system_ss.add(files('system.c'))
++    return build_units
 +
-+common_ss.add(files('loader.c'))
 +
- specific_ss.add(files(
--  'loader.c',
-   'core.c',
-   'api.c',
- ))
++def analyse_units(build_units):
++    """
++    Analyse the build units and report stats and the top 10 rebuilds
++    """
++
++    print(f"Total source files: {len(build_units.keys())}")
++    print(f"Total build units: {sum(units.values())}")
++
++    # Create a sorted list by number of rebuilds
++    sorted_build_units = sorted(build_units.items(),
++                                key=lambda item: item[1],
++                                reverse=True)
++
++    print("Most rebuilt units:")
++    for unit, count in sorted_build_units[:20]:
++        print(f"  {unit} built {count} times")
++
++    print("Least rebuilt units:")
++    for unit, count in sorted_build_units[-10:]:
++        print(f"  {unit} built {count} times")
++
++
++if __name__ == "__main__":
++    if len(argv) != 2:
++        script_name = path.basename(argv[0])
++        print(f"Usage: {script_name} <path_to_compile_commands.json>")
++        exit(1)
++
++    cc_path = argv[1]
++    if path.isfile(cc_path) and access(cc_path, R_OK):
++        units = extract_build_units(cc_path)
++        analyse_units(units)
++        exit(0)
++    else:
++        print(f"{cc_path} doesn't exist or isn't readable")
++        exit(1)
+diff --git a/.gitlab-ci.d/static_checks.yml b/.gitlab-ci.d/static_checks.yml
+index c0ba453382..c3ed6de453 100644
+--- a/.gitlab-ci.d/static_checks.yml
++++ b/.gitlab-ci.d/static_checks.yml
+@@ -70,3 +70,25 @@ check-rust-tools-nightly:
+     expire_in: 2 days
+     paths:
+       - rust/target/doc
++
++check-build-units:
++  extends: .base_job_template
++  stage: build
++  image: $CI_REGISTRY_IMAGE/qemu/debian:$QEMU_CI_CONTAINER_TAG
++  needs:
++    job: amd64-debian-container
++  before_script:
++    - source scripts/ci/gitlab-ci-section
++    - section_start setup "Install Tools"
++    - apt install --assume-yes --no-install-recommends jq
++    - section_end setup
++  script:
++    - mkdir build
++    - cd build
++    - section_start configure "Running configure"
++    - ../configure
++    - cd ..
++    - section_end configure
++    - section_start analyse "Analyse"
++    - .gitlab-ci.d/check-units.py build/compile_commands.json
++    - section_end analyse
 -- 
 2.39.5
 
