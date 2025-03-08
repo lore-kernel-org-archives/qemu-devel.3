@@ -4,91 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6C3CC282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 06:18:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94166C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 06:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqnVO-0002Cr-Eq; Sat, 08 Mar 2025 01:17:50 -0500
+	id 1tqo0a-0001l4-1Q; Sat, 08 Mar 2025 01:50:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tqnVK-0002CV-7z
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 01:17:47 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tqnVI-0006H3-7c
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 01:17:45 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-223fd89d036so53374495ad.1
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 22:17:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741414662; x=1742019462;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=L/KK2VCzW+LoNrIPtwvxc8GN267lZu2Qux8YYpQhYnQ=;
- b=VpvZYznzGsVUVyiT9wAmAhxMm65roOyVU5TlrzHWuqCu0uLJHQJ8ZODyQp7B9ySiHL
- k4ZDR3sHwIOaZPcy/t5sqMeVr19vov0idc0yC+ah53VvoBwsfUqg6kN0aIqnwAIO1IoH
- CB++LeEKf8L88SAGWkx5Q4H90/vKA+XGsqhRAAU0pCPRImwcq86j1da7md0ircFqzhv9
- m/lKhcAqK9Eh1mBv7c7TtwPe1AKkM38iuCbIs+6gwee3dM/OsZOdiV1x4+FsoLsYHPsD
- 4H92SkZyJmW2GwSHncicQ3d5J0Abo/GzjX+1rx9bCJRG9UZ9AbaoXeZ7TTR+eco4yWYc
- k76g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741414662; x=1742019462;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=L/KK2VCzW+LoNrIPtwvxc8GN267lZu2Qux8YYpQhYnQ=;
- b=Nh9adekdPqEv3X6QNYtlDUiFTR9dKWTcSDtyQ97nz2T22cNW0zu+Bt0PbSVqL99FCI
- fBZYB4x/UhWGYofNTAVPAXOw3NXQnvfC4/fjjkDDkITy9jngTqumIN6fgSxeVqRM4fRW
- blBvQcwod9lr3Vk/a0JWskaTLUyl6HymDOSB4COT5iw/6k75N7oIuJZfrvNZBhkGpWV8
- SfyF+D/klctElnUJ8HAlOu957ADDpgOuLhAPde9apqXmU+accVP8I48vtu2GcAh2qF3C
- 7JXAlFuez1jS6jeiXrYdUetqFXEXiSd/AtwpRagyxQxXUzzrj8XOrKb7bD0eac6LXXf5
- +yuA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8xwFjRGiCGa00V7BpBDGmtJ/snMmWgpQX6wtpLiaSfVPqMHDJqVaG2uh72bFdSvBjK3NKL30Q3hi3@nongnu.org
-X-Gm-Message-State: AOJu0YxKbwGRnoopGBCBLfecZ1FfLC0uK1KRu7U5ufjNE/qJo/x4evps
- GhlXIRZlPpCqmxQ4Dgm6QuLqH/u2Q6qwbVDEYhBccHy8R8I6u1vG16/kc8wW49o=
-X-Gm-Gg: ASbGncuaRzxqSDQwHfGix6UZUClK4Ofmne4UlolTkqhr0n8XsLjGBpJ0rMPivBt8Gkx
- PsFPjq0vBkCqP3aFQEtISxWm+yShuW0bONGO9D93kCfqB/U0pa7UUWb5u56Vs2oWREUoHD536jq
- tgojCycyjbEysZPVRC1zYoBGPaTGfTINRsCHDKl+fJb890Q/mSvEUhLNGplzwuPeMYGQpLsIslt
- 2rYRY0+yfy0jru35yUqjB8iTrGG9CxJtfdfWhVpPnmImA/D9eyGWjsbuom9CVK2kj1huu4X9bl4
- CeyDto9oLpr4SHyVFr4dwnsB1dZKL929j4shC1nq/X+lJCcgMoV9VWBwGQ==
-X-Google-Smtp-Source: AGHT+IHd7kUJWuglMlilC3pRCX5D2U6+8e75dr/cgyKEMRQHTyQdcRUGub+1TxgYDGkuEnSIZ2WxEg==
-X-Received: by 2002:a17:902:d48c:b0:223:5de7:6c81 with SMTP id
- d9443c01a7336-22428aa193bmr93541855ad.27.1741414662385; 
- Fri, 07 Mar 2025 22:17:42 -0800 (PST)
-Received: from [157.82.205.237] ([157.82.205.237])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a7f8eesm40234105ad.112.2025.03.07.22.17.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Mar 2025 22:17:42 -0800 (PST)
-Message-ID: <03baae4d-c443-43c6-a1d8-ef1f8461e07c@daynix.com>
-Date: Sat, 8 Mar 2025 15:17:39 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqo0V-0001kJ-7Y
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 01:50:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqo0T-00028F-Qd
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 01:49:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741416595;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YDkjc68dCUjbWlcKeSQlZnYoteC4U2qbbu7XxtoHTCA=;
+ b=Q15szLQE3JbOZqAoPSdUlw2a2zAwXko9I1M7H5RBX087AeziymGPaxgaAeLuokimgfxVzA
+ xBpUXkjrXGqqbPpZb7DyGXVPPsYhHZtXerpaikUKUoDl8a5e5WcBHolVHp/X9rZE/m69jz
+ Nb6C/xlAa4CPUt8FgZ0dfCJJrWhhrzo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-w5-w6O9nOqOk6JQT4q4Y6A-1; Sat,
+ 08 Mar 2025 01:49:50 -0500
+X-MC-Unique: w5-w6O9nOqOk6JQT4q4Y6A-1
+X-Mimecast-MFC-AGG-ID: w5-w6O9nOqOk6JQT4q4Y6A_1741416589
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ECB6918004A9; Sat,  8 Mar 2025 06:49:48 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AD23C1956095; Sat,  8 Mar 2025 06:49:47 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 23E4121E675F; Sat, 08 Mar 2025 07:49:45 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mat?=
+ =?utf-8?Q?hieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
+ Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH 15/57] docs/qapi-domain: add "Errors:" field lists
+In-Reply-To: <CAFn=p-b-R9AORQ2OWj5-MTEzC2m5iyQoWYisJ_Tp1Xk4DZcMjw@mail.gmail.com>
+ (John Snow's message of "Fri, 7 Mar 2025 17:50:57 -0500")
+References: <20250305034610.960147-1-jsnow@redhat.com>
+ <20250305034610.960147-16-jsnow@redhat.com>
+ <871pv9qo0u.fsf@pond.sub.org>
+ <CAFn=p-b-R9AORQ2OWj5-MTEzC2m5iyQoWYisJ_Tp1Xk4DZcMjw@mail.gmail.com>
+Date: Sat, 08 Mar 2025 07:49:45 +0100
+Message-ID: <87bjucdnjq.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] usb-storage: Allow manually adding SCSI device
-To: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-devel@nongnu.org
-Cc: devel@daynix.com
-References: <20250303-usb-v1-1-70f700a181fd@daynix.com>
- <0128cd62-b5d7-4aa1-b169-2a7717d33113@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <0128cd62-b5d7-4aa1-b169-2a7717d33113@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,99 +94,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/03/03 21:17, Paolo Bonzini wrote:
-> On 3/3/25 11:28, Akihiko Odaki wrote:
->> usb-storage automatically adds a SCSI device, but it limits
->> configurability of the added SCSI device and causes usability
->> problems as observed in:
->> https://gitlab.com/libvirt/libvirt/-/issues/368
->>
->> Allow manually adding SCSI device when the drive option is not
->> specified.
-> 
-> I might be misunderstanding what you're doing, but can't you do that 
-> already with usb-bot?
+John Snow <jsnow@redhat.com> writes:
 
-I wtithdraw this patch.
-
-I wrote patches for libvirt to fix its issue mentioned in the patch 
-message according to your suggestion to use usb-bot and it works nicely:
-https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/SVXUWW2426H73XBXJXDUMTDJM3YL37QU/
-
-Regards,
-Akihiko Odaki
-
-> 
-> Paolo
-> 
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/usb/dev-storage-classic.c | 33 ++++++++++++++++-----------------
->>   1 file changed, 16 insertions(+), 17 deletions(-)
+> On Fri, Mar 7, 2025 at 2:48=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+om> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
 >>
->> diff --git a/hw/usb/dev-storage-classic.c b/hw/usb/dev-storage-classic.c
->> index 
->> 56ef39da2e634d1639a07ac4636cdaa000989f5f..33e5a7cfc8bdf3f92b18014e885771aee6d32f5e 100644
->> --- a/hw/usb/dev-storage-classic.c
->> +++ b/hw/usb/dev-storage-classic.c
->> @@ -33,10 +33,9 @@ static void usb_msd_storage_realize(USBDevice *dev, 
->> Error **errp)
->>       BlockBackend *blk = s->conf.blk;
->>       SCSIDevice *scsi_dev;
->> -    if (!blk) {
->> -        error_setg(errp, "drive property not set");
->> -        return;
->> -    }
->> +    usb_desc_create_serial(dev);
->> +    scsi_bus_init(&s->bus, sizeof(s->bus), DEVICE(dev),
->> +                 &usb_msd_scsi_info_storage);
->>       /*
->>        * Hack alert: this pretends to be a block device, but it's really
->> @@ -48,23 +47,23 @@ static void usb_msd_storage_realize(USBDevice 
->> *dev, Error **errp)
->>        *
->>        * The hack is probably a bad idea.
->>        */
->> -    blk_ref(blk);
->> -    blk_detach_dev(blk, DEVICE(s));
->> -    s->conf.blk = NULL;
->> +    if (blk) {
->> +        blk_ref(blk);
->> +        blk_detach_dev(blk, DEVICE(s));
->> +        s->conf.blk = NULL;
->> +
->> +        scsi_dev = scsi_bus_legacy_add_drive(&s->bus, blk, 0, !!s- 
->> >removable,
->> +                                             &s->conf, dev->serial, 
->> errp);
->> +        blk_unref(blk);
->> +        if (!scsi_dev) {
->> +            return;
->> +        }
->> +        s->scsi_dev = scsi_dev;
->> +    }
->> -    usb_desc_create_serial(dev);
->>       usb_desc_init(dev);
->>       dev->flags |= (1 << USB_DEV_FLAG_IS_SCSI_STORAGE);
->> -    scsi_bus_init(&s->bus, sizeof(s->bus), DEVICE(dev),
->> -                 &usb_msd_scsi_info_storage);
->> -    scsi_dev = scsi_bus_legacy_add_drive(&s->bus, blk, 0, !!s- 
->> >removable,
->> -                                         &s->conf, dev->serial, errp);
->> -    blk_unref(blk);
->> -    if (!scsi_dev) {
->> -        return;
->> -    }
->>       usb_msd_handle_reset(dev);
->> -    s->scsi_dev = scsi_dev;
->>   }
->>   static const Property msd_properties[] = {
+>> > ``:error: descr`` can now be used to document error conditions. The
+>> > format of the description is not defined here; so the ability to name
+>> > specific types is left to the document writer.
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
 >>
->> ---
->> base-commit: b69801dd6b1eb4d107f7c2f643adf0a4e3ec9124
->> change-id: 20250301-usb-5dde4bcb1467
+>> By convention, the description is a bullet list, but we don't enforce
+>> that in software.  Observation, not a suggestion to start enforcing it
+>> now.
 >>
->> Best regards,
-> 
+>
+> Right. This commit message is accurate, though: this field list type will
+> accept any old thing. I have an idea to fix this to make the aesthetics
+> better (fixes the misalignment) and to enforce the bulleted list in one
+> shot. Not for this series, sorry. Please accept a raincheck.
+
+You're quite right to resist mission creep.
+
+The commit message could mention the convention, say "The format of the
+description is not defined here (we make it a bulleted list, but that's
+just convention); ..."  Up to you.
 
 
