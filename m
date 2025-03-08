@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F81C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB9FC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr3LN-0002f3-GX; Sat, 08 Mar 2025 18:12:33 -0500
+	id 1tr3Jx-0007pm-BI; Sat, 08 Mar 2025 18:11:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3KI-0000ZX-2L
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:11:28 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3Jl-0007eo-96
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:10:53 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3KF-0001dg-EP
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:11:25 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-391342fc148so1080070f8f.2
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 15:11:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3Ji-0001XI-4s
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:10:52 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-38f2f391864so1623059f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 15:10:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741475481; x=1742080281; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741475448; x=1742080248; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=prGg0Jp93h0bTm2Rvsy5eDeK3CFMwhrsFj/MryWjJGE=;
- b=sYYhYi+Nq8tAEi6Sg2/cM1k/118jecdG2eR8XYOvYZCxthNMIoML9nTeQtm1Vryc9o
- oUPkKQR8V3vQzs+5bCVpA9QY0gCwC1Zuz6G9SrtvjejJBt6yiSUa2sm6hvytN9zysXDe
- 9FFPvcOfKrt3ckAr7a1UXNCFuClOD4UhtLcytgWLFb5NqZOs2Eg6v3MVABXgskeWt7Rh
- QqCC0BC7hDGsO6e2cYynWbcbmcczyB6nm3qyJcF01bgbs1cTo1s7OnBkd91u//7LIwWK
- p/Pi+A3bSi3yJPo7MfJ+Cq6IjhLV9QF7g6/zs78Ci35fkIhFqwB0nsmPRq/k56v4EJh2
- 8Isg==
+ bh=rb5Gq5gjoqNir/3li58uEI51RqNLZd7aJ8wRwb3WrW0=;
+ b=kbYMerpbu2auPrQgtcwk4ahZFARRoh87Uekzd5/A3BAUEhBMr5xZqc1hRD2SiI7R3+
+ UgkizcjzEXcGmQT+vGqQJdlM7fEYQSzp8EybYMTfFiGd9MNDb8K3nazMk1zniP22VZTT
+ 6i1GxivGAFXk2+2v+Cho0a8PKB1T7rJOxgp6Lx/ef1L672frht/5PS+fxPL9ZTMFV5yt
+ 2XWb/TPbcIBoKWowLDzua+726N2Tt1Dtau4IEd2Cy+HjhdQ9lUShKbbmpZ7pZL48wuB/
+ gzZNQmsn+OYcdMl/tboEAI7mBannDnJesG+o8Y9fZbaZ1BR/1vHJBhczKQEmxWNSX3iM
+ cfSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741475481; x=1742080281;
+ d=1e100.net; s=20230601; t=1741475448; x=1742080248;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=prGg0Jp93h0bTm2Rvsy5eDeK3CFMwhrsFj/MryWjJGE=;
- b=RCyU18YSBcavm0aajS7eOxtbB4A8u6yJ3dfJuSydRwxYG3bsnUY/LdjbC83mI32KmA
- 1xGFVGA4yW12ONmCeVQUxrVd8Z/ZA2UG11g/aZgELXCvjF3N/iDBNkk7OT/xCuqooSSd
- FY5O0G1tQTG1W/REYHkc6FP21xlTGYTze/6bLtiSJzW6+f1QkIkCtKANGSXA5vB5Kt4j
- LjgHypITzR0ds0zHR44pmqWvnvYx5dLYUrc0JiFYflf7ivhxDPyZ74+j2efUFLANAaue
- abGbE2xYRbZBjOVEa0xPhsbLbIaT+vqjCIvt7pV8qvwsgo6NwrJfPy1SYNgPGI7XUm6x
- Jt8A==
-X-Gm-Message-State: AOJu0Yw0JLO24689Tuj8EyXXUKr9FsKubT8hTqKvDIcOn4ExhX/IKwJl
- yvJJgf2As37sCDIUonR+7xA7wJgIHbv1f76BvK5XZD/Ke3pb8JfjJ4ew7X7LVoiNkWgbfi3iwRf
- W/Jw=
-X-Gm-Gg: ASbGncuT6R/TCoavvTfTZEY7tElPqUxwO9AyglkY1mrcy8XTin2ySmwoN52hxA95PF5
- Ple2Ivh2oz03zTTEHSbHQoIXFvQmTiMAUBCh/9kMxbROHhRSrU7Ft6h0C5cR59T2z8IuVU4Zwlu
- iEl2AsPamR5QqRplIqieNsWIJXi14Mp51AXi7oHzuOWLrj6AX6N9eGrCwVHGcBgpacaBlxLqnIP
- uVpN3x07KPkB73UVJSsSLKldX60A/qwsOgAHGm6NQOm0c1pKl0aWQ9dhn8O0JT1d3AoSAJlX1pw
- yMV4VrZCtE3C89oKELePhlYsc9MS12InVaskHmtJyjytysMzcFSKH2uTx+DDdqnUWafMT/yvjd2
- qaVe0QbVoV89ERIBNst8=
-X-Google-Smtp-Source: AGHT+IH0XSNDzdAllhDd7qyOz0D5nItYuKr/ugMkLxptVro68gJqgXVXVwkqEYkZomhnl6ZBZh9Tiw==
-X-Received: by 2002:a05:6000:178a:b0:38f:210b:693f with SMTP id
- ffacd0b85a97d-39132de1c59mr4682001f8f.52.1741475481571; 
- Sat, 08 Mar 2025 15:11:21 -0800 (PST)
+ bh=rb5Gq5gjoqNir/3li58uEI51RqNLZd7aJ8wRwb3WrW0=;
+ b=F1oBzDi/C5+QrHXUkS1bRPyzRmxbRI5xKwPxhZOMaPKf0MI3lOb0weveRyZrtgBbMF
+ HU0kseP6Blmdjk+c8J5kA5JO0Rf4ue2mE2WVZ5hiZ0ZWC5YxydQWgx+1+8LB0ViacdE+
+ A5gs0G1v6quIxd082XOjbZaBIC6D74cXHrZZlglcNTi0U13C9oJgnoBeFyk49ZAMvZ4a
+ vVKfkXr+n0DeeSrYUJrQh/B/1d+uA/gEUEe3M+7Z8cMlbrTIlxJ26Az92NG2pAFvrFZF
+ empUFXvQzvHQYE+Wl105bnMQYhzqWjZ4CDUzcCC1YNwHAelQu9bRoT4oFj8RIQtLJyHx
+ i+JA==
+X-Gm-Message-State: AOJu0YxJY0445Lb4zm3wLFYW3rYVVG5w8g5z2lruYiaHNXBPNi2rwk0+
+ ylNetwQK6R0cYQJQeute69mOimbl2HbrQwqSYAoiiO7zLKx2IphkYDDgM25kiXStEyUMXcedYuU
+ fh6A=
+X-Gm-Gg: ASbGnctE3whuypphbV+8a8bngNsgT3uYqQLaBPom9ZUtGvVJL/LOvLc/8KHFf8TjvKY
+ oAzgtuyh3oac5Cu+q+Usf7lmdUREiNBy6gFUHSaHvkJbkcO5Uay0pYmzSLxh/Q3045pnYxRaCH5
+ rIp+aNisXDSm8TdRpZ8a8SCMkzIwOi4hQby77rQQHVgAIkzozlacqGQgNNEv3YA2B23FrOSjuMl
+ gsR0lJv1INtJEw/upRtE52Xr2BdOyaAfh7+qYDMgq/P6Pl/1Mbg8ZtGLBgBUDl/UzvVqdNbXZ7U
+ ydMzIGRqxmfw0ougUUvibZ5b+5619DCCk2lphpLibu5nU3TnNI/jGjIQc7PtkMF772zLmByNZ6V
+ P/qZxAc704fYhW0Bn/Ds=
+X-Google-Smtp-Source: AGHT+IFpyPZ8OHsunTdPUAhz3+hHZqpRzqB+uc+3KU0WeLI4qJr+CM3YEWcq/yPMOmAPEzlWQ4DAbw==
+X-Received: by 2002:a5d:588f:0:b0:390:f394:6274 with SMTP id
+ ffacd0b85a97d-39132da9214mr5345868f8f.52.1741475448065; 
+ Sat, 08 Mar 2025 15:10:48 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c01d81csm10221905f8f.58.2025.03.08.15.11.20
+ ffacd0b85a97d-3912bfb79fbsm10297840f8f.13.2025.03.08.15.10.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 08 Mar 2025 15:11:21 -0800 (PST)
+ Sat, 08 Mar 2025 15:10:46 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>,
@@ -86,17 +86,18 @@ Cc: Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 21/21] hw/vfio/platform: Compile once
-Date: Sun,  9 Mar 2025 00:09:17 +0100
-Message-ID: <20250308230917.18907-22-philmd@linaro.org>
+Subject: [PATCH v2 15/21] hw/vfio/pci: Check CONFIG_IOMMUFD at runtime using
+ iommufd_builtin()
+Date: Sun,  9 Mar 2025 00:09:11 +0100
+Message-ID: <20250308230917.18907-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250308230917.18907-1-philmd@linaro.org>
 References: <20250308230917.18907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,36 +120,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the file doesn't use any target-specific knowledge anymore,
-move it to system_ss[] to build it once.
+Convert the compile time check on the CONFIG_IOMMUFD definition
+by a runtime one by calling iommufd_builtin().
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/vfio/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/vfio/pci.c | 38 ++++++++++++++++++--------------------
+ 1 file changed, 18 insertions(+), 20 deletions(-)
 
-diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-index 3119c841ed9..2bcbd052950 100644
---- a/hw/vfio/meson.build
-+++ b/hw/vfio/meson.build
-@@ -4,7 +4,6 @@ vfio_ss.add(files(
-   'container.c',
- ))
- vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
--vfio_ss.add(when: 'CONFIG_VFIO_PLATFORM', if_true: files('platform.c'))
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 9872884ff8a..e83252766d1 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -19,7 +19,6 @@
+  */
  
- specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
+ #include "qemu/osdep.h"
+-#include CONFIG_DEVICES /* CONFIG_IOMMUFD */
+ #include <linux/vfio.h>
+ #include <sys/ioctl.h>
  
-@@ -27,6 +26,7 @@ system_ss.add(when: ['CONFIG_VFIO', 'CONFIG_IOMMUFD'], if_true: files(
- ))
- system_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
- system_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
-+system_ss.add(when: 'CONFIG_VFIO_PLATFORM', if_true: files('platform.c'))
- system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
-   'display.c',
-   'pci.c',
+@@ -2973,11 +2972,10 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+         if (!(~vdev->host.domain || ~vdev->host.bus ||
+               ~vdev->host.slot || ~vdev->host.function)) {
+             error_setg(errp, "No provided host device");
+-            error_append_hint(errp, "Use -device vfio-pci,host=DDDD:BB:DD.F "
+-#ifdef CONFIG_IOMMUFD
+-                              "or -device vfio-pci,fd=DEVICE_FD "
+-#endif
+-                              "or -device vfio-pci,sysfsdev=PATH_TO_DEVICE\n");
++            error_append_hint(errp, "Use -device vfio-pci,host=DDDD:BB:DD.F %s"
++                              "or -device vfio-pci,sysfsdev=PATH_TO_DEVICE\n",
++                              iommufd_builtin()
++                              ? "or -device vfio-pci,fd=DEVICE_FD " : "");
+             return;
+         }
+         vbasedev->sysfsdev =
+@@ -3412,19 +3410,18 @@ static const Property vfio_pci_dev_properties[] = {
+                                    qdev_prop_nv_gpudirect_clique, uint8_t),
+     DEFINE_PROP_OFF_AUTO_PCIBAR("x-msix-relocation", VFIOPCIDevice, msix_relo,
+                                 OFF_AUTO_PCIBAR_OFF),
+-#ifdef CONFIG_IOMMUFD
+-    DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
+-                     TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
+-#endif
+     DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, skip_vsc_check, true),
+ };
+ 
+-#ifdef CONFIG_IOMMUFD
++static const Property vfio_pci_dev_iommufd_properties[] = {
++    DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
++                     TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
++};
++
+ static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
+ {
+     vfio_device_set_fd(&VFIO_PCI(obj)->vbasedev, str, errp);
+ }
+-#endif
+ 
+ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
+ {
+@@ -3433,9 +3430,10 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
+ 
+     device_class_set_legacy_reset(dc, vfio_pci_reset);
+     device_class_set_props(dc, vfio_pci_dev_properties);
+-#ifdef CONFIG_IOMMUFD
+-    object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
+-#endif
++    if (iommufd_builtin()) {
++        device_class_set_props(dc, vfio_pci_dev_iommufd_properties);
++        object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
++    }
+     dc->desc = "VFIO-based PCI device assignment";
+     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+     pdc->realize = vfio_realize;
+@@ -3540,11 +3538,11 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
+                                           "vf-token",
+                                           "Specify UUID VF token. Required for VF when PF is owned "
+                                           "by another VFIO driver");
+-#ifdef CONFIG_IOMMUFD
+-    object_class_property_set_description(klass, /* 9.0 */
+-                                          "iommufd",
+-                                          "Set host IOMMUFD backend device");
+-#endif
++    if (iommufd_builtin()) {
++        object_class_property_set_description(klass, /* 9.0 */
++                                              "iommufd",
++                                              "Set host IOMMUFD backend device");
++    }
+     object_class_property_set_description(klass, /* 9.1 */
+                                           "x-device-dirty-page-tracking",
+                                           "Disable device dirty page tracking and use "
 -- 
 2.47.1
 
