@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33025C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 20:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68D59C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 20:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr1A4-0002jK-8P; Sat, 08 Mar 2025 15:52:44 -0500
+	id 1tr1AG-0003HE-Oj; Sat, 08 Mar 2025 15:52:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tr1A2-0002iW-7d; Sat, 08 Mar 2025 15:52:42 -0500
+ id 1tr1AD-00037y-9l; Sat, 08 Mar 2025 15:52:53 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tr1A0-0007RR-My; Sat, 08 Mar 2025 15:52:41 -0500
+ id 1tr1AB-0007Sd-Fu; Sat, 08 Mar 2025 15:52:52 -0500
 Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 528KcWGY007425;
- Sat, 8 Mar 2025 20:52:32 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 528KcS6N007400;
+ Sat, 8 Mar 2025 20:52:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FnUx5D
- xvyVdz78/c9VKqX3UpRE72FGx2YcbqIrBra0g=; b=gC2JGkEcH1OLc4iU3aEK6Q
- KK6DIqjSFN473IGz0+iqJMRnyiTGfF7K0J/jtSr5++CYVw0a0Bi7PWK1q/M8jG3H
- X1oDASke7V/52Z4nrG+RQ2dEllGfg65dbdDmespF7xIftnsfK404RY2DfV+46YTy
- 5Iby129LZF6rpeqPMljfMQTmesOCKhpmjdMI7oAe9b74RgsIX0MYHB6FBvoOgUgL
- HUxydXsyBayBog/jhzdpPaHzvSngOSeNXGWn6F2zQVfeR0tyVaHYdRKbfqVa1Mld
- IT9yd73NaGx/jGuDbnaMqVi+K+n0Q8RbuNgotMmSmCaBOHM8K19xAjLRyDkeKNvg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=VEnJnS
+ JjBCRbG7Bxvx6dXvx5T06oIdnpdDOMMIg6Pl8=; b=eP9Z46V1PzPlJi9ulRvNbC
+ geExR+BFmRZcFy2BMRlBs/zaytIracj3kvSjlzOsQMvoDYEIsv5cyD+wBJ0WHlnv
+ qeC1RvPxZtSZeO5QIZ+yMGKGVVWoRVZ4SbpOEq0RedSd6tSi40rJeJ9cII1EWLMs
+ WYygDPNgG0bxM4KN5HW4Vp1K0a2ZXSWc/KzrlKJm6h9t+xBwnwW0/vflI92oYJuh
+ Qhh1FUFpOUP+yqgBidGBECM3BDCmKVogf4GZLN8bQZQOnmbX9i4M4HGJktdTRucA
+ u5+jLgL1SIEaBhjsY0hUJHFtgcS6d9yQANSlXZO0vVnwsJa/GUOpmzdY9XAbbidw
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 458w3yg17b-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 458w3yg17n-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 08 Mar 2025 20:52:31 +0000 (GMT)
+ Sat, 08 Mar 2025 20:52:42 +0000 (GMT)
 Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 528KqVji030222;
- Sat, 8 Mar 2025 20:52:31 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 458w3yg179-1
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 528KqgrX030294;
+ Sat, 8 Mar 2025 20:52:42 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 458w3yg17k-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 08 Mar 2025 20:52:31 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 528IxkB2032243;
- Sat, 8 Mar 2025 20:52:30 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 454cjtp4dy-1
+ Sat, 08 Mar 2025 20:52:42 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 528HKxHL013720;
+ Sat, 8 Mar 2025 20:52:41 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 454e2mdu0t-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 08 Mar 2025 20:52:30 +0000
+ Sat, 08 Mar 2025 20:52:41 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 528KqR2820119812
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 528KqbwW57278730
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 8 Mar 2025 20:52:27 GMT
+ Sat, 8 Mar 2025 20:52:38 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1869320043;
- Sat,  8 Mar 2025 20:52:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C96FA20043;
+ Sat,  8 Mar 2025 20:52:37 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BA9D920040;
- Sat,  8 Mar 2025 20:52:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 90A6220040;
+ Sat,  8 Mar 2025 20:52:35 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.22.32]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sat,  8 Mar 2025 20:52:24 +0000 (GMT)
+ Sat,  8 Mar 2025 20:52:34 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
@@ -73,9 +73,9 @@ To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
 Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
-Subject: [PATCH v5 3/8] ppc/pnv: Add OCC for Power11
-Date: Sun,  9 Mar 2025 02:21:36 +0530
-Message-ID: <20250308205141.3219333-4-adityag@linux.ibm.com>
+Subject: [PATCH v5 6/8] ppc/pnv: Add ChipTOD model for Power11
+Date: Sun,  9 Mar 2025 02:21:39 +0530
+Message-ID: <20250308205141.3219333-7-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250308205141.3219333-1-adityag@linux.ibm.com>
 References: <20250308205141.3219333-1-adityag@linux.ibm.com>
@@ -83,15 +83,15 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: n3-RiZuEWdEm5tusilw3ib4PZDkl8InI
-X-Proofpoint-GUID: jGZ6RK3Ac9-Lh1Cg-28ovWNB2yzRxFCy
+X-Proofpoint-ORIG-GUID: Rz-_5Fop3zK3vw3ztdVPC5Z5QDSHEVNu
+X-Proofpoint-GUID: dA-oJkZySJ0hFYp5_SqOXgZ40XXr88Gd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-08_08,2025-03-07_03,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  adultscore=0
  lowpriorityscore=0 malwarescore=0 clxscore=1015 phishscore=0 spamscore=0
- bulkscore=0 priorityscore=1501 suspectscore=0 mlxscore=0 mlxlogscore=906
+ bulkscore=0 priorityscore=1501 suspectscore=0 mlxscore=0 mlxlogscore=964
  impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502100000 definitions=main-2503080159
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
@@ -119,66 +119,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power11 core is same as Power10, reuse PNV10_OCC initialisation,
-by declaring `PNV11_OCC` as child class of `PNV10_OCC`
+Power11 core is same as Power10. Introduce Power11 ChipTod, which relies
+on the common PnvChipTOD, similar to Power10's ChipTOD.
 
 Cc: Cédric Le Goater <clg@kaod.org>
 Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
 Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
 Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- hw/ppc/pnv_occ.c         | 14 ++++++++++++++
- include/hw/ppc/pnv_occ.h |  2 ++
- 2 files changed, 16 insertions(+)
+ hw/ppc/pnv_chiptod.c         | 37 ++++++++++++++++++++++++++++++++++++
+ include/hw/ppc/pnv_chiptod.h |  2 ++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
-index 48123ceae176..4f510419045e 100644
---- a/hw/ppc/pnv_occ.c
-+++ b/hw/ppc/pnv_occ.c
-@@ -262,6 +262,19 @@ static const TypeInfo pnv_occ_power10_type_info = {
-     .class_init    = pnv_occ_power10_class_init,
+diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
+index c8987ae67a2a..b5e1a2c24647 100644
+--- a/hw/ppc/pnv_chiptod.c
++++ b/hw/ppc/pnv_chiptod.c
+@@ -520,6 +520,42 @@ static const TypeInfo pnv_chiptod_power10_type_info = {
+     }
  };
  
-+static void pnv_occ_power11_class_init(ObjectClass *klass, void *data)
++static int pnv_chiptod_power11_dt_xscom(PnvXScomInterface *dev, void *fdt,
++                             int xscom_offset)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
++    const char compat[] = "ibm,power-chiptod\0ibm,power11-chiptod";
 +
-+    dc->desc = "PowerNV OCC Controller (POWER11)";
++    return pnv_chiptod_dt_xscom(dev, fdt, xscom_offset, compat, sizeof(compat));
 +}
 +
-+static const TypeInfo pnv_occ_power11_type_info = {
-+    .name          = TYPE_PNV11_OCC,
-+    .parent        = TYPE_PNV10_OCC,
-+    .class_init    = pnv_occ_power11_class_init,
++static void pnv_chiptod_power11_class_init(ObjectClass *klass, void *data)
++{
++    PnvChipTODClass *pctc = PNV_CHIPTOD_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    PnvXScomInterfaceClass *xdc = PNV_XSCOM_INTERFACE_CLASS(klass);
++
++    dc->desc = "PowerNV ChipTOD Controller (POWER11)";
++    device_class_set_props(dc, pnv_chiptod_properties);
++
++    xdc->dt_xscom = pnv_chiptod_power11_dt_xscom;
++
++    pctc->broadcast_ttype = chiptod_power10_broadcast_ttype;
++    pctc->tx_ttype_target = chiptod_power10_tx_ttype_target;
++
++    pctc->xscom_size = PNV_XSCOM_CHIPTOD_SIZE;
++}
++
++static const TypeInfo pnv_chiptod_power11_type_info = {
++    .name          = TYPE_PNV11_CHIPTOD,
++    .parent        = TYPE_PNV_CHIPTOD,
++    .instance_size = sizeof(PnvChipTOD),
++    .class_init    = pnv_chiptod_power11_class_init,
++    .interfaces    = (InterfaceInfo[]) {
++        { TYPE_PNV_XSCOM_INTERFACE },
++        { }
++    }
 +};
 +
- static void pnv_occ_realize(DeviceState *dev, Error **errp)
+ static void pnv_chiptod_reset(void *dev)
  {
-     PnvOCC *occ = PNV_OCC(dev);
-@@ -305,6 +318,7 @@ static void pnv_occ_register_types(void)
-     type_register_static(&pnv_occ_power8_type_info);
-     type_register_static(&pnv_occ_power9_type_info);
-     type_register_static(&pnv_occ_power10_type_info);
-+    type_register_static(&pnv_occ_power11_type_info);
+     PnvChipTOD *chiptod = PNV_CHIPTOD(dev);
+@@ -579,6 +615,7 @@ static void pnv_chiptod_register_types(void)
+     type_register_static(&pnv_chiptod_type_info);
+     type_register_static(&pnv_chiptod_power9_type_info);
+     type_register_static(&pnv_chiptod_power10_type_info);
++    type_register_static(&pnv_chiptod_power11_type_info);
  }
  
- type_init(pnv_occ_register_types);
-diff --git a/include/hw/ppc/pnv_occ.h b/include/hw/ppc/pnv_occ.h
-index df321244e3b1..7b5e28f13b4f 100644
---- a/include/hw/ppc/pnv_occ.h
-+++ b/include/hw/ppc/pnv_occ.h
-@@ -34,6 +34,8 @@ DECLARE_INSTANCE_CHECKER(PnvOCC, PNV9_OCC,
-                          TYPE_PNV9_OCC)
- #define TYPE_PNV10_OCC TYPE_PNV_OCC "-POWER10"
- DECLARE_INSTANCE_CHECKER(PnvOCC, PNV10_OCC, TYPE_PNV10_OCC)
-+#define TYPE_PNV11_OCC TYPE_PNV_OCC "-POWER11"
-+DECLARE_INSTANCE_CHECKER(PnvOCC, PNV11_OCC, TYPE_PNV11_OCC)
+ type_init(pnv_chiptod_register_types);
+diff --git a/include/hw/ppc/pnv_chiptod.h b/include/hw/ppc/pnv_chiptod.h
+index fde569bcbfa9..466b06560a28 100644
+--- a/include/hw/ppc/pnv_chiptod.h
++++ b/include/hw/ppc/pnv_chiptod.h
+@@ -17,6 +17,8 @@ OBJECT_DECLARE_TYPE(PnvChipTOD, PnvChipTODClass, PNV_CHIPTOD)
+ DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV9_CHIPTOD, TYPE_PNV9_CHIPTOD)
+ #define TYPE_PNV10_CHIPTOD TYPE_PNV_CHIPTOD "-POWER10"
+ DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV10_CHIPTOD, TYPE_PNV10_CHIPTOD)
++#define TYPE_PNV11_CHIPTOD TYPE_PNV_CHIPTOD "-POWER11"
++DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV11_CHIPTOD, TYPE_PNV11_CHIPTOD)
  
- #define PNV_OCC_SENSOR_DATA_BLOCK_OFFSET 0x00580000
- #define PNV_OCC_SENSOR_DATA_BLOCK_SIZE   0x00025800
+ enum tod_state {
+     tod_error = 0,
 -- 
 2.48.1
 
