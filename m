@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD443C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 08:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F0FCC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 08:44:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqpOY-0000Yg-7i; Sat, 08 Mar 2025 03:18:54 -0500
+	id 1tqpm2-0000u2-0H; Sat, 08 Mar 2025 03:43:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqpOU-0000YN-Gl
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 03:18:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqpOS-0006e8-DL
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 03:18:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741421927;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B81a/BhbyGBTkvGJJ5ADDz3jHOgGpCQzroT0ndQe2xE=;
- b=eHqQRnDKO3XAuYLNdXYuhZ5d2mcyTPZ+iAr8JnHYP8ta/wM/jh6YqOtTbGMOPFfGS1jdom
- Nzw4y6J0Uy6FoqgpJH5sSupGcw1wKYrtX0bG7UVPnpiZxMwfFhNO7+HTm5Voqu8CyuyIje
- W5CRnlr0uLSCMZWQf8lekEPyEcFudjs=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-299-qbjmykSsMuWj4x6lQGVSsw-1; Sat, 08 Mar 2025 03:18:41 -0500
-X-MC-Unique: qbjmykSsMuWj4x6lQGVSsw-1
-X-Mimecast-MFC-AGG-ID: qbjmykSsMuWj4x6lQGVSsw_1741421920
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2ff799be8f5so3089561a91.1
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 00:18:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tqpm0-0000qg-Km
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 03:43:08 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tqply-0007Mh-H6
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 03:43:08 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5dce099f4so3068306a12.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 00:43:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741423384; x=1742028184; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fxo8CzNaGgCZtLobjaeT2NxKeeswU1v2DOLQ/iOoskA=;
+ b=X/ZuEFJzusBseSQAPj099SBwLkYdfaEZB1Ronu5qdT92iZFrmw2TzaGQ1bZEoM+tQ+
+ BtG7vaRCrw3Sya0sLpDAhgYWxXpvVH/iYMLIbRX8otlhBKsB+3e0iMSMwW3Z9W+DUPDX
+ 7mr6enn/h1B3YO5ThMysCObMF+ChJkJT4z4hyFbn6EyP2PCnMJIgAoHusdj6x8DPO3Ce
+ Ke9Rz/UgzanuFGXCM7rBXG7PZeJq8sBdR2v66Xzl3MkGUv2dWX7ehFdpMmG/B7HFCTAA
+ BqNTZHJ/lEa0PFV4BIFcbO1E5GFOfRK37uFW7QVAZws/iAvpjYbYSmhHvECiY4apefJW
+ C+oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741421920; x=1742026720;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=B81a/BhbyGBTkvGJJ5ADDz3jHOgGpCQzroT0ndQe2xE=;
- b=vfIt+kXcoovlPXwO3iGooWM0ouD4Iu5kdJFSFC8NrWXMRSS5m+B0/h8SEgcnVD5k+X
- dBqzCXOTUHZrUFApvhhT1V/V9FvO9oJEPUdov7TzUg+XwDJ2wYw5NYUVJ1C0bDWYd/fi
- m9KDSeOhyxWPRDEvL6+b/2vtguBHUWvbiQn2TbWG07bor44FoFQIxbLMasybBZfk/jx0
- at3RuqrS553tKacEqXVHroyDPKOFwjksFoLkRD6Utr3kevTB3YJQuPVHUj2VF7cI9Rtd
- oZK+uOvTq05Gm7i5wGTFLrrM1F6Fk88Nl6FB9WajNZ68SPaL0LVtZCXvBfmjZziPjYby
- 2lOA==
-X-Gm-Message-State: AOJu0YwXQuLiukLi9sKb3KFIrH6PLRIJK4q1HqeC/PPiE4wIH7TcHR4u
- T4Bl5H+P7LYCgttk/6TIGnrOjK9x3PgVJYaOIE28cRhx8UClnuOnaSOJjo+shgWQU6c4PxvDCeJ
- ZPCA6OPT4fVjpxPSPRtQ8yr9CmSuyQvoUVgkoLzHEcM1CXdZNQ/6b3g/5qW3bqFPs/h/zCkI6a5
- ovFDoYNOpM7siy+7cqb+bzLKp3L+8=
-X-Gm-Gg: ASbGncuG5iPvSsqNiuq4b23rOPJydArahYaGyGwAq2aWmKd8vkhG716c+bPRRLu6FMF
- JRxOS0znu1oiZop7g3P+Nj0YiRpcWxKqYmMPQ4f6AcjlZBo/FxqDh4UCcLZqm9rCtL6oR1w==
-X-Received: by 2002:a17:90a:d605:b0:2ee:db8a:2a01 with SMTP id
- 98e67ed59e1d1-2ff7cf128cdmr9351750a91.30.1741421920292; 
- Sat, 08 Mar 2025 00:18:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEWMXsKToxd12WikzP/anriMgt9G7yQix/ynMkW/q/OTE7sN+FS8dZ0qQSdJyDXOhbyv8UNvsHJQg7Vz7zj69w=
-X-Received: by 2002:a17:90a:d605:b0:2ee:db8a:2a01 with SMTP id
- 98e67ed59e1d1-2ff7cf128cdmr9351729a91.30.1741421920036; Sat, 08 Mar 2025
- 00:18:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741423384; x=1742028184;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fxo8CzNaGgCZtLobjaeT2NxKeeswU1v2DOLQ/iOoskA=;
+ b=xNvlhlxV83ylK/2FcBNGyPjy5vCYsn+6cufAmUdPWYRzUz+YvHyKq/PBl6qn5+1PVD
+ qwUUC5KNovbzSgC4FfDEhKuX2UrqYJIEngPDdCgk14XxQkeNl/afAhzEMdKzD2WjcHqT
+ sDtiVgGRDCq6K9pXu9EKQUQKK6qGHRLr3rOeB2BIoYZOycWyeTP9cgxVSeom6ReJR9vu
+ Cd7XO8kbBdi/6PfG87VPgLQUXSnHKkxRyCnf5Lg+tBisxhWkax2ydaJ5bKZ4vAMZz+41
+ L/+28Stxo3L4dAnd/FeMTMz2ZZEBRauvF82xLcFIbEebhLQ3N+TDJp3F5BAHDnn7dGkr
+ 4JBA==
+X-Gm-Message-State: AOJu0YyVDKh6uClIVpeac6kMAs8GW6ZvdYYXPHzfA+/AOihbCfXev9h2
+ iEzR//Fwod2KTT2uUmDtlJ1CBGyIXllIF8wlyFtd0LtC9lSUCl4bA7vtW/hVicydgUeDrBSbSfT
+ QWshOy4dHQekeUFFaiCnMj5THd1I=
+X-Gm-Gg: ASbGncskEOaBfRR+4wnfw1YvxrQCTOoMHNZLFVSSi7MSpWJhResgCSClWVSHju3A15C
+ xseb8StwaELNhzUCl5rOrRacAh479LKEp+jqFWL8yclxFcKuIqreNThSdz1PTzNSs0eSdQ9+/gY
+ u9Tm9mcUP1+7l5njsEerqLUGiMkQ==
+X-Google-Smtp-Source: AGHT+IGPSHInVkhj0eak+ZcybW586+ISOJ+xbYD/zQ9nJVSXdhDQ582+EeqPiu6hgS47Rm/aDLmTLOacVBCj4kjp7YU=
+X-Received: by 2002:a05:6402:1ed0:b0:5e4:cbee:234c with SMTP id
+ 4fb4d7f45d1cf-5e5e22da6cdmr6301810a12.10.1741423383618; Sat, 08 Mar 2025
+ 00:43:03 -0800 (PST)
 MIME-Version: 1.0
-References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-58-jsnow@redhat.com>
- <87jz91hv8v.fsf@pond.sub.org>
-In-Reply-To: <87jz91hv8v.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Sat, 8 Mar 2025 03:18:27 -0500
-X-Gm-Features: AQ5f1JpcQPnVko_-LZb5a9cLnKqXr7VikrPahFs0j_PtUO4Q8HmDTAEzga0pWRs
-Message-ID: <CAFn=p-ZpDh0HoHwGcnzAqiPmEq0-OX35RiYNEeG8h3Qg8DJNYw@mail.gmail.com>
-Subject: Re: [PATCH 57/57] docs/qapidoc: Add "the members of" pointers
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000f2ba12062fd0622b"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250307181551.19887-1-farosas@suse.de>
+ <20250307181551.19887-9-farosas@suse.de>
+ <4ce8e8e0-3aee-41dd-b1fb-ac9398b0c1d6@linaro.org>
+In-Reply-To: <4ce8e8e0-3aee-41dd-b1fb-ac9398b0c1d6@linaro.org>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Sat, 8 Mar 2025 16:42:51 +0800
+X-Gm-Features: AQ5f1Jr7XqbW4wBZ1fl2nr_Qwxk1akdNv99vL3qwpICuEd5Gj8h6-vyNsBBq5cA
+Message-ID: <CAJSP0QVYqkPhWPYRQUbD0VbiKYsV_AGJnYU+3yaD-4AhKT5p_A@mail.gmail.com>
+Subject: Re: [PULL 8/8] migration: Add qtest for migration over RDMA
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Li Zhijian <lizhijian@fujitsu.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,127 +98,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f2ba12062fd0622b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Mar 7, 2025 at 7:37=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
-
-> John Snow <jsnow@redhat.com> writes:
+On Sat, Mar 8, 2025 at 2:01=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
 >
-> > Add "the members of ..." pointers to Members and Arguments lists where
-> > appropriate, with clickable cross-references - so it's a slight
-> > improvement over the old system :)
+> Hi,
+>
+> On 7/3/25 19:15, Fabiano Rosas wrote:
+> > From: Li Zhijian <lizhijian@fujitsu.com>
 > >
-> > This patch is meant to be a temporary solution until we can review and
-> > merge the inliner.
+> > This qtest requires there is a RDMA(RoCE) link in the host.
+> > In order to make the test work smoothly, introduce a
+> > scripts/rdma-migration-helper.sh to
+> > - setup a new Soft-RoCE(aka RXE) if it's root
+> > - detect existing RoCE link
 > >
-> > The implementation of this patch is a little bit of a hack: Sphinx is
-> > not designed to allow you to mix fields of different "type"; i.e. mixin=
-g
-> > member descriptions and free-form text under the same heading. To
-> > accomplish this with a minimum of hackery, we technically document a
-> > "dummy field" and then just strip off the documentation for that dummy
-> > field in a post-processing step. We use the "q_dummy" variable for this
-> > purpose, then strip it back out before final processing. If this
-> > processing step should fail, you'll see warnings for a bad
-> > cross-reference. (So if you don't see any, it must be working!)
+> > Test will be skipped if there is no available RoCE link.
+>
+> Is it? Runing as user I'm getting:
+>
+>    RDMA ERROR: RDMA host is not set!
+
+The CI is failing too:
+https://gitlab.com/qemu-project/qemu/-/jobs/9350004599#L5590
+
+I have dropped this pull request for now. Please send a new revision
+once the issue has been resolved.
+
+Stefan
+
+>
+> Apparently called via:
+>
+> qemu_start_incoming_migration()
+>    -> rdma_start_incoming_migration()
+>       -> qemu_rdma_dest_init()
+>
+> >   # Start of rdma tests
+> >   # Running /x86_64/migration/precopy/rdma/plain
+> >   Command 'rdma' is not available, please install it first.
+> >   # To enable the test:
+> >   # (1) Run 'scripts/rdma-migration-helper.sh setup' with root and reru=
+n the test
+> >   # or
+> >   # (2) Run the test with root privilege
+>
+> Could this might be the issue, should we skip if not root, as calling
+> the script in "detect" mode makes the new_rdma_link() method to succeed.
+>
+> >   #
+> >   ok 1 /x86_64/migration/precopy/rdma/plain # SKIP No rdma link availab=
+le
+> >   # End of rdma tests
 > >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > Note: Remove the newly added RXE link by executing 'modprobe -r rdma_rx=
+e'
+> > or by specifying 'clean' within this script.
 >
-> Yes, it's a hack, and possibly fragile, but it'll all go away when the
-> inliner lands.  I understand the inliner already exists, but you're
-> holding it back to not balloon the series even more.
+> qtest_add() provides both setup() / teardown() methods.
 >
-
-Just couldn't find any other way to do it with less SLOC. It's a weird
-limitation in the bowels of Sphinx, and the Field classes aren't factored
-aggressively enough to just write my own new Field subclass without also
-having to do a lot of re-implementation that touches a lot of APIs I'd
-rather not muck around with: I literally think that approach, while
-"cleaner" in the traditional sense, is likely *more* porcelain than what
-I've done here.
-
-Thought it was better to just let Sphinx do whatever it does in make_xref,
-and then make some tactical edits on the tail.
-
-Could write a John Steinbeck novella's analysis on all the other approaches
-I tried and why I ruled them out, but. Eh. Just read a John Steinbeck
-novella instead if you want to.
-
-
-> I'm on board.
+> Test leaving system in different state seems bogus to me.
+> More even if the information is buried in a commit description...
+>
+> We shouldn't merge this patch as is IMHO.
+>
+> Regards,
+>
+> Phil.
+>
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> > Message-ID: <20250305062825.772629-7-lizhijian@fujitsu.com>
+> > [reformated the message to be under 90 characters]
+> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > ---
+> >   MAINTAINERS                           |  1 +
+> >   scripts/rdma-migration-helper.sh      | 48 +++++++++++++++++++
+> >   tests/qtest/migration/precopy-tests.c | 69 ++++++++++++++++++++++++++=
++
+> >   3 files changed, 118 insertions(+)
+> >   create mode 100755 scripts/rdma-migration-helper.sh
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 5df6020ed5..56e85adcfb 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -3517,6 +3517,7 @@ R: Li Zhijian <lizhijian@fujitsu.com>
+> >   R: Peter Xu <peterx@redhat.com>
+> >   S: Odd Fixes
+> >   F: migration/rdma*
+> > +F: scripts/rdma-migration-helper.sh
+> >
+> >   Migration dirty limit and dirty page rate
+> >   M: Hyman Huang <yong.huang@smartx.com>
+> > diff --git a/scripts/rdma-migration-helper.sh b/scripts/rdma-migration-=
+helper.sh
+> > new file mode 100755
+> > index 0000000000..08e29a52eb
+> > --- /dev/null
+> > +++ b/scripts/rdma-migration-helper.sh
+> > @@ -0,0 +1,48 @@
+> > +#!/bin/bash
+> > +
+> > +# Copied from blktests
+> > +get_ipv4_addr()
+> > +{
+> > +    ip -4 -o addr show dev "$1" |
+> > +        sed -n 's/.*[[:blank:]]inet[[:blank:]]*\([^[:blank:]/]*\).*/\1=
+/p' |
+> > +        tr -d '\n'
+> > +}
+> > +
+> > +has_soft_rdma()
+> > +{
+> > +    rdma link | grep -q " netdev $1[[:blank:]]*\$"
+> > +}
+> > +
+> > +rdma_rxe_setup_detect()
+> > +{
+> > +    (
+> > +        cd /sys/class/net &&
+> > +            for i in *; do
+> > +                [ -e "$i" ] || continue
+> > +                [ "$i" =3D "lo" ] && continue
+> > +                [ "$(<"$i/addr_len")" =3D 6 ] || continue
+> > +                [ "$(<"$i/carrier")" =3D 1 ] || continue
+> > +
+> > +                has_soft_rdma "$i" && break
+> > +                [ "$operation" =3D "setup" ] &&
+> > +                    rdma link add "${i}_rxe" type rxe netdev "$i" && b=
+reak
+> > +            done
+> > +        has_soft_rdma "$i" || return
+> > +        get_ipv4_addr "$i"
+> > +    )
+> > +}
+> > +
+> > +operation=3D${1:-setup}
+> > +
+> > +command -v rdma >/dev/null || {
+> > +    echo "Command 'rdma' is not available, please install it first." >=
+&2
+> > +    exit 1
+> > +}
+> > +
+> > +if [ "$operation" =3D=3D "setup" ] || [ "$operation" =3D=3D "detect" ]=
+; then
+> > +    rdma_rxe_setup_detect
+> > +elif [ "$operation" =3D=3D "clean" ]; then
+> > +    modprobe -r rdma_rxe
+> > +else
+> > +    echo "Usage: $0 [setup | detect | clean]"
+> > +fi
+> > diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migrat=
+ion/precopy-tests.c
+> > index ba273d10b9..f1fe34020d 100644
+> > --- a/tests/qtest/migration/precopy-tests.c
+> > +++ b/tests/qtest/migration/precopy-tests.c
+> > @@ -99,6 +99,71 @@ static void test_precopy_unix_dirty_ring(void)
+> >       test_precopy_common(&args);
+> >   }
+> >
+> > +#ifdef CONFIG_RDMA
+> > +
+> > +#define RDMA_MIGRATION_HELPER "scripts/rdma-migration-helper.sh"
+> > +static int new_rdma_link(char *buffer, bool verbose)
+> > +{
+> > +    const char *argument =3D (geteuid() =3D=3D 0) ? "setup" : "detect"=
+;
+> > +    char cmd[1024];
+> > +
+> > +    snprintf(cmd, sizeof(cmd), "%s %s %s", RDMA_MIGRATION_HELPER, argu=
+ment,
+> > +             verbose ? "" : "2>/dev/null");
+> > +
+> > +    FILE *pipe =3D popen(cmd, "r");
+> > +    if (pipe =3D=3D NULL) {
+> > +        perror("Failed to run script");
+> > +        return -1;
+> > +    }
+> > +
+> > +    int idx =3D 0;
+> > +    while (fgets(buffer + idx, 128 - idx, pipe) !=3D NULL) {
+> > +        idx +=3D strlen(buffer);
+> > +    }
+> > +
+> > +    int status =3D pclose(pipe);
+> > +    if (status =3D=3D -1) {
+> > +        perror("Error reported by pclose()");
+> > +        return -1;
+> > +    } else if (WIFEXITED(status)) {
+> > +        return WEXITSTATUS(status);
+> > +    }
+> > +
+> > +    return -1;
+> > +}
+> > +
+> > +static void test_precopy_rdma_plain(void)
+> > +{
+> > +    char buffer[128] =3D {};
+> > +    bool verbose =3D g_getenv("QTEST_LOG");
+> > +
+> > +    if (new_rdma_link(buffer, verbose)) {
+> > +        g_test_skip("No rdma link available");
+> > +        if (verbose) {
+> > +            g_test_message(
+> > +                "To enable the test:\n"
+> > +                "(1) Run \'" RDMA_MIGRATION_HELPER
+> > +                " setup\' with root and rerun the test\n"
+> > +                "or\n(2) Run the test with root privilege");
+> > +        }
+> > +        return;
+> > +    }
+> > +
+> > +    /*
+> > +     * TODO: query a free port instead of hard code.
+> > +     * 29200=3D('R'+'D'+'M'+'A')*100
+> > +     **/
+> > +    g_autofree char *uri =3D g_strdup_printf("rdma:%s:29200", buffer);
+> > +
+> > +    MigrateCommon args =3D {
+> > +        .listen_uri =3D uri,
+> > +        .connect_uri =3D uri,
+> > +    };
+> > +
+> > +    test_precopy_common(&args);
+> > +}
+> > +#endif
+> > +
+> >   static void test_precopy_tcp_plain(void)
+> >   {
+> >       MigrateCommon args =3D {
+> > @@ -1124,6 +1189,10 @@ static void migration_test_add_precopy_smoke(Mig=
+rationTestEnv *env)
+> >                          test_multifd_tcp_uri_none);
+> >       migration_test_add("/migration/multifd/tcp/plain/cancel",
+> >                          test_multifd_tcp_cancel);
+> > +#ifdef CONFIG_RDMA
+> > +    migration_test_add("/migration/precopy/rdma/plain",
+> > +                       test_precopy_rdma_plain);
+> > +#endif
+> >   }
+> >
+> >   void migration_test_add_precopy(MigrationTestEnv *env)
 >
 >
-Thank goodness.
-
---000000000000f2ba12062fd0622b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 7, =
-2025 at 7:37=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
-at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" =
-target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Add &quot;the members of ...&quot; pointers to Members and Arguments l=
-ists where<br>
-&gt; appropriate, with clickable cross-references - so it&#39;s a slight<br=
->
-&gt; improvement over the old system :)<br>
-&gt;<br>
-&gt; This patch is meant to be a temporary solution until we can review and=
-<br>
-&gt; merge the inliner.<br>
-&gt;<br>
-&gt; The implementation of this patch is a little bit of a hack: Sphinx is<=
-br>
-&gt; not designed to allow you to mix fields of different &quot;type&quot;;=
- i.e. mixing<br>
-&gt; member descriptions and free-form text under the same heading. To<br>
-&gt; accomplish this with a minimum of hackery, we technically document a<b=
-r>
-&gt; &quot;dummy field&quot; and then just strip off the documentation for =
-that dummy<br>
-&gt; field in a post-processing step. We use the &quot;q_dummy&quot; variab=
-le for this<br>
-&gt; purpose, then strip it back out before final processing. If this<br>
-&gt; processing step should fail, you&#39;ll see warnings for a bad<br>
-&gt; cross-reference. (So if you don&#39;t see any, it must be working!)<br=
->
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-<br>
-Yes, it&#39;s a hack, and possibly fragile, but it&#39;ll all go away when =
-the<br>
-inliner lands.=C2=A0 I understand the inliner already exists, but you&#39;r=
-e<br>
-holding it back to not balloon the series even more.<br></blockquote></div>=
-<div class=3D"gmail_quote gmail_quote_container"><br></div><div class=3D"gm=
-ail_quote gmail_quote_container">Just couldn&#39;t find any other way to do=
- it with less SLOC. It&#39;s a weird limitation in the bowels of Sphinx, an=
-d the Field classes aren&#39;t factored aggressively enough to just write m=
-y own new Field subclass without also having to do a lot of re-implementati=
-on that touches a lot of APIs I&#39;d rather not muck around with: I litera=
-lly think that approach, while &quot;cleaner&quot; in the traditional sense=
-, is likely *more* porcelain than what I&#39;ve done here.</div><div class=
-=3D"gmail_quote gmail_quote_container"><div><br></div><div>Thought it was b=
-etter to just let Sphinx do whatever it does in make_xref, and then make so=
-me tactical edits on the tail.</div><div><br></div><div>Could write a John =
-Steinbeck novella&#39;s analysis on all the other approaches I tried and wh=
-y I ruled them out, but. Eh. Just read a John Steinbeck novella instead if =
-you want to. <br></div><div><br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">
-<br>
-I&#39;m on board.<br>
-<br></blockquote><div><br></div><div>Thank goodness. <br></div></div></div>
-
---000000000000f2ba12062fd0622b--
-
 
