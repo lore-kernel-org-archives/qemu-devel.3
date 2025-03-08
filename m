@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41CA9C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C983DC28B2E
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:00:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr38q-0004ip-Hv; Sat, 08 Mar 2025 17:59:38 -0500
+	id 1tr39W-0005Gk-Is; Sat, 08 Mar 2025 18:00:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38O-0004WD-NU
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:09 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1tr38a-0004dS-JZ
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:20 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38M-0005KF-T4
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:08 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2fea8d8c322so6293473a91.2
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:06 -0800 (PST)
+ id 1tr38Y-0005O4-Pr
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:20 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-22435603572so21548485ad.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741474745; x=1742079545; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741474757; x=1742079557; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cRheBWdAI7lwff+VJqeL2sbgSyjsFMzMB4+nkPr95RE=;
- b=WtnCssfAzGq9IsKFZMd2edyn1neeod47pCxGcGXDvHgXFVecHfm3/aAP8DxFcVUA9b
- sOLKWlZQQ4zlaK4UV02NI/BwZa+1YY1Gpb4eStZePbRESM9MZxHLjfjuYY5xnBUAORcW
- CIr6DECDp/v0xVOR4HQ/2mrvanZEjoYndQUUU1qZwHtXDTl/jeUz+UU4WxO1fxXId2PW
- A/Nb65L0XX7PJd/Ak1kzQFNhx8hW1rw+x1kJdl3Sr7Z1+JS8NSzrJ4N7hqGSfBTHnRb1
- Nw0n37vmzI8QMqpZAPcS0t5yh7ok9G1ieYkZr837+1khMgDJP0cUC94G6BBkpUnrbt15
- hBBg==
+ bh=p/ujorpqouqcIKko4tXnNA5urzRJSLGssu2DzutTfSc=;
+ b=p5V5FVfca4F1oqg8C8kBe7SlDGYjAqCOvJla23Z1IAsC0S7zf0zmYoQxYh1c0OLNJb
+ i/CEw5umRfKHav4mUH4eqiRaTG1Gjm9HDSUJSXXPcJWjBaNvmLMYAqX6tjcRLkDirj+I
+ hzz69clCWLZi/Kg9dieF8xthULnRJLAIN3Nn2vdDeVS4qYcdqQyCO1L2/ixp9z4TsPrG
+ aD7Y8A6GQioVJhkD5yfWRFkqKOuU4Od3HvKcMjMCvT2abNPq6ndKPtTy6BndoH8cZnSo
+ xM08vuWIjyOwG1EYAootPlFOgJscRbqXbRQimJHRxVHfzGFxByKSLOKCO2IR3zJfiJI5
+ yeOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741474745; x=1742079545;
+ d=1e100.net; s=20230601; t=1741474757; x=1742079557;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cRheBWdAI7lwff+VJqeL2sbgSyjsFMzMB4+nkPr95RE=;
- b=JiwoH1pl3Ep4f93sFwePSwQopIFEo1CpkO8gn8fV9jStPXtnKHOu5Qf4FZsRV4hcS7
- WgsogXrV2PsYpF6nm+syXgU9tOa1JzcPMegkQ8LcaN2AdbYZcKstajbBD7ZjppENj38v
- 7exxR27OpCkYPVQ7OVvX1hSmRijI9prXBU+9ADSGGvkFLGTPO8meJcVXtOkve5lLavvq
- yrufZDsAOiMCA9JQli7pNBmEugqMobThAbfpxLH+Ew8fz9C/PuhfIDVcI7ib4qYTzOi9
- DJMYXq+cI1c+YQHbe6pp4M7WHVDj8m3qRNCyU9UaBORfaKxJFyzq8Nq/THPvF1wGrD7R
- LPUA==
-X-Gm-Message-State: AOJu0YwhJBkMhR5DtSSW6aDGez9R2QOOYZAYtJzZpVKP6XwXGFXNpxci
- 5LXUpr631cye1mZirus+2V6mhXYt11eEDXIiEdO8MjKDaMBUiDWXZYw9dGHAZ3F46yUjua3IhsW
- M
-X-Gm-Gg: ASbGncv9t8G79qmQPuQyHFzFxA9uTAYGlNObSvv6CkfngaBhfpK/UD8uJShjwtRX502
- soiYDjTtEEjEsQUjMxAf63sk4JltmDlQSn+w5+lJRr5A9JrPvAqSemuw20Npr/pYJtiuQwztWih
- dUQw1dhozu9chcxuPYRd1OwUB6ghzpwUETBLoJWbhJouDxRqfvinRaFs8ohYHqelaR7LGIG/yFs
- lDDzj5YhXL8OLZoU9VVBADnlbohVPFy+TIjToVgKH4jVhiPgE36VOtF5hyxKnlobCEVsSVdi8Rf
- NGnjOYdljjmJaChULfGnfzo3bUyiZg9HJDXWAkYLPNn4Pl83ZictyKwEoU1ghBQ8xV/1gqD9p7d
+ bh=p/ujorpqouqcIKko4tXnNA5urzRJSLGssu2DzutTfSc=;
+ b=fUsJ1vKkP0IZy/RRoNfO7+lBagPIMi6dKSxPYAOgMFdPf0GNR+QfHxL9iYNkXtZWgZ
+ yppCspeyxJWDqqRWoZ2MYhttnHRfSSTuOtf6cwRfbQ3AelmXYm3YzNFxdHeaP5p7SgTU
+ M21+ileR0B4hBz9XuSn5vNzljDZ1aU1z4984jZjixfhSs+6AnIEhkR+lnAXl/3yh7t2E
+ KrQS8BemS45D/wQj3fQL5wJSOuk0suRGDeXdUrF50PS4al0exk7RxVd2Sq2r6g0Gr4V8
+ DBK7DYG3/5/dPHl1Ol+Ty8IuOFUczoUZcokdCVr48PKJiUNNeEqhl06PtEMHXfLCNXxr
+ AakA==
+X-Gm-Message-State: AOJu0YwZa5UUNyA1MDxuVpZ2VHgFart9tRomol6ewHZ45kRzALnpVDcE
+ Ns7IK+IVWOmgS3gLJ441OjMbMIbpA/Yo0Jiw3kfJYdlRMiUU0ZBq4dj+dwSJJHUaywQmbYRj8Ek
+ c
+X-Gm-Gg: ASbGncvT1JbC9dTnRXzduPxIDfnyNz5ZiVaPTzQQYM5e1mFMq8HREcIEhF3FiBrtWLa
+ 8RBS4zWd9aQeWmIIYpw6b6pKLlaZSev+9Vb/S8pYpN5vFAOgdC8vZ+SAM/CiQRKwZFAd8Syfp7x
+ YU9yQaanMdthvu/PbWVftk96ol+PatIofYjOnuy2e9S8DTzVJDFIkZnxlECKfGJJeTIaxYK5DE+
+ QQFGayM/2ROos9Ky3aG9tumlUMb/s3fFPlbNcD0AP+FG4y3G5TON2QTWgmBA3TnmYepsiyFBi0v
+ qxadC91uL7hWCr1u5sCId1HtOszxn3prNgdxhJkiRke3sG2oZU7TR4rZ2mteLGN9ucG8s7UXw+K
  9
-X-Google-Smtp-Source: AGHT+IEGFA2ZF4SLd9ZHly/2BfabaiNb1U0XGhjt+njYfgnwMxgWHoxAOoVumc6t3IsajdUiaSdBpw==
-X-Received: by 2002:a17:90b:3ec2:b0:2f6:be57:49d2 with SMTP id
- 98e67ed59e1d1-2ff7ce904d1mr15557926a91.17.1741474745404; 
- Sat, 08 Mar 2025 14:59:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHX5OKd5NpDdGRwqNR2juOrvA9bVz/7yCfdk7Uj9EupSXlLOB3enWPEi1UiYDtoo2jlDFEQuw==
+X-Received: by 2002:a17:902:e5d2:b0:224:e33:8896 with SMTP id
+ d9443c01a7336-22428886514mr135961485ad.11.1741474757476; 
+ Sat, 08 Mar 2025 14:59:17 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.04
+ d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Mar 2025 14:59:05 -0800 (PST)
+ Sat, 08 Mar 2025 14:59:17 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 02/23] accel/tcg: Restrict CPU_TLB_DYN_*_BITS definitions to
- accel/tcg/
-Date: Sat,  8 Mar 2025 14:58:41 -0800
-Message-ID: <20250308225902.1208237-4-richard.henderson@linaro.org>
+Subject: [PULL 20/23] qemu/atomic: Rename atomic128-ldst.h headers using
+ .h.inc suffix
+Date: Sat,  8 Mar 2025 14:58:59 -0800
+Message-ID: <20250308225902.1208237-22-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250308225902.1208237-1-richard.henderson@linaro.org>
 References: <20250308225902.1208237-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,91 +104,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-CPU_TLB_DYN_*_BITS definitions are only used by accel/tcg/cputlb.c
-and accel/tcg/translate-all.c. Move them to accel/tcg/tb-internal.h.
+Since commit 139c1837db ("meson: rename included C source files
+to .c.inc"), QEMU standard procedure for included C files is to
+use *.c.inc.
+
+Besides, since commit 6a0057aa22 ("docs/devel: make a statement
+about includes") this is documented in the Coding Style:
+
+  If you do use template header files they should be named with
+  the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
+  being included for expansion.
+
+Therefore rename 'atomic128-ldst.h' as 'atomic128-ldst.h.inc'.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250305191859.71608-1-philmd@linaro.org>
+Message-ID: <20241212141018.59428-3-philmd@linaro.org>
 ---
- accel/tcg/tb-internal.h | 27 +++++++++++++++++++++++++++
- include/exec/cpu-defs.h | 26 --------------------------
- 2 files changed, 27 insertions(+), 26 deletions(-)
+ include/qemu/atomic128.h                                        | 2 +-
+ .../aarch64/host/{atomic128-ldst.h => atomic128-ldst.h.inc}     | 0
+ .../generic/host/{atomic128-ldst.h => atomic128-ldst.h.inc}     | 0
+ .../loongarch64/host/{atomic128-ldst.h => atomic128-ldst.h.inc} | 0
+ .../x86_64/host/{atomic128-ldst.h => atomic128-ldst.h.inc}      | 2 +-
+ host/include/x86_64/host/load-extract-al16-al8.h.inc            | 2 +-
+ 6 files changed, 3 insertions(+), 3 deletions(-)
+ rename host/include/aarch64/host/{atomic128-ldst.h => atomic128-ldst.h.inc} (100%)
+ rename host/include/generic/host/{atomic128-ldst.h => atomic128-ldst.h.inc} (100%)
+ rename host/include/loongarch64/host/{atomic128-ldst.h => atomic128-ldst.h.inc} (100%)
+ rename host/include/x86_64/host/{atomic128-ldst.h => atomic128-ldst.h.inc} (96%)
 
-diff --git a/accel/tcg/tb-internal.h b/accel/tcg/tb-internal.h
-index 90be61f296..abd423fcf5 100644
---- a/accel/tcg/tb-internal.h
-+++ b/accel/tcg/tb-internal.h
-@@ -13,6 +13,33 @@
- #include "exec/exec-all.h"
- #include "exec/translation-block.h"
+diff --git a/include/qemu/atomic128.h b/include/qemu/atomic128.h
+index 03c27022f0..448fb64479 100644
+--- a/include/qemu/atomic128.h
++++ b/include/qemu/atomic128.h
+@@ -59,6 +59,6 @@
+  */
  
-+#ifdef CONFIG_SOFTMMU
-+
-+#define CPU_TLB_DYN_MIN_BITS 6
-+#define CPU_TLB_DYN_DEFAULT_BITS 8
-+
-+# if HOST_LONG_BITS == 32
-+/* Make sure we do not require a double-word shift for the TLB load */
-+#  define CPU_TLB_DYN_MAX_BITS (32 - TARGET_PAGE_BITS)
-+# else /* HOST_LONG_BITS == 64 */
-+/*
-+ * Assuming TARGET_PAGE_BITS==12, with 2**22 entries we can cover 2**(22+12) ==
-+ * 2**34 == 16G of address space. This is roughly what one would expect a
-+ * TLB to cover in a modern (as of 2018) x86_64 CPU. For instance, Intel
-+ * Skylake's Level-2 STLB has 16 1G entries.
-+ * Also, make sure we do not size the TLB past the guest's address space.
-+ */
-+#  ifdef TARGET_PAGE_BITS_VARY
-+#   define CPU_TLB_DYN_MAX_BITS                                  \
-+    MIN(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
-+#  else
-+#   define CPU_TLB_DYN_MAX_BITS                                  \
-+    MIN_CONST(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
-+#  endif
-+# endif
-+
-+#endif /* CONFIG_SOFTMMU */
-+
- #ifdef CONFIG_USER_ONLY
- #include "user/page-protection.h"
- /*
-diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
-index ae18398fa9..9f955f53fd 100644
---- a/include/exec/cpu-defs.h
-+++ b/include/exec/cpu-defs.h
-@@ -46,30 +46,4 @@
+ #include "host/atomic128-cas.h.inc"
+-#include "host/atomic128-ldst.h"
++#include "host/atomic128-ldst.h.inc"
  
- #include "exec/target_long.h"
- 
--#if defined(CONFIG_SOFTMMU) && defined(CONFIG_TCG)
--#define CPU_TLB_DYN_MIN_BITS 6
--#define CPU_TLB_DYN_DEFAULT_BITS 8
--
--# if HOST_LONG_BITS == 32
--/* Make sure we do not require a double-word shift for the TLB load */
--#  define CPU_TLB_DYN_MAX_BITS (32 - TARGET_PAGE_BITS)
--# else /* HOST_LONG_BITS == 64 */
--/*
-- * Assuming TARGET_PAGE_BITS==12, with 2**22 entries we can cover 2**(22+12) ==
-- * 2**34 == 16G of address space. This is roughly what one would expect a
-- * TLB to cover in a modern (as of 2018) x86_64 CPU. For instance, Intel
-- * Skylake's Level-2 STLB has 16 1G entries.
-- * Also, make sure we do not size the TLB past the guest's address space.
-- */
--#  ifdef TARGET_PAGE_BITS_VARY
--#   define CPU_TLB_DYN_MAX_BITS                                  \
--    MIN(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
--#  else
--#   define CPU_TLB_DYN_MAX_BITS                                  \
--    MIN_CONST(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
--#  endif
--# endif
--
--#endif /* CONFIG_SOFTMMU && CONFIG_TCG */
--
+ #endif /* QEMU_ATOMIC128_H */
+diff --git a/host/include/aarch64/host/atomic128-ldst.h b/host/include/aarch64/host/atomic128-ldst.h.inc
+similarity index 100%
+rename from host/include/aarch64/host/atomic128-ldst.h
+rename to host/include/aarch64/host/atomic128-ldst.h.inc
+diff --git a/host/include/generic/host/atomic128-ldst.h b/host/include/generic/host/atomic128-ldst.h.inc
+similarity index 100%
+rename from host/include/generic/host/atomic128-ldst.h
+rename to host/include/generic/host/atomic128-ldst.h.inc
+diff --git a/host/include/loongarch64/host/atomic128-ldst.h b/host/include/loongarch64/host/atomic128-ldst.h.inc
+similarity index 100%
+rename from host/include/loongarch64/host/atomic128-ldst.h
+rename to host/include/loongarch64/host/atomic128-ldst.h.inc
+diff --git a/host/include/x86_64/host/atomic128-ldst.h b/host/include/x86_64/host/atomic128-ldst.h.inc
+similarity index 96%
+rename from host/include/x86_64/host/atomic128-ldst.h
+rename to host/include/x86_64/host/atomic128-ldst.h.inc
+index 8d6f909d3c..4c698e3246 100644
+--- a/host/include/x86_64/host/atomic128-ldst.h
++++ b/host/include/x86_64/host/atomic128-ldst.h.inc
+@@ -69,7 +69,7 @@ static inline void atomic16_set(Int128 *ptr, Int128 val)
+ }
+ #else
+ /* Provide QEMU_ERROR stubs. */
+-#include "host/include/generic/host/atomic128-ldst.h"
++#include "host/include/generic/host/atomic128-ldst.h.inc"
  #endif
+ 
+ #endif /* X86_64_ATOMIC128_LDST_H */
+diff --git a/host/include/x86_64/host/load-extract-al16-al8.h.inc b/host/include/x86_64/host/load-extract-al16-al8.h.inc
+index baa506b7b5..b837c37868 100644
+--- a/host/include/x86_64/host/load-extract-al16-al8.h.inc
++++ b/host/include/x86_64/host/load-extract-al16-al8.h.inc
+@@ -9,7 +9,7 @@
+ #define X86_64_LOAD_EXTRACT_AL16_AL8_H
+ 
+ #ifdef CONFIG_INT128_TYPE
+-#include "host/atomic128-ldst.h"
++#include "host/atomic128-ldst.h.inc"
+ 
+ /**
+  * load_atom_extract_al16_or_al8:
 -- 
 2.43.0
 
