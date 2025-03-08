@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E5ADC282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 08:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCAB0C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 08:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqpIq-0006XZ-5T; Sat, 08 Mar 2025 03:13:00 -0500
+	id 1tqpJn-0006vg-Qk; Sat, 08 Mar 2025 03:14:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqpIl-0006Wt-FC
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 03:12:55 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqpJg-0006qw-R3
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 03:13:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqpIj-0001aG-DE
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 03:12:54 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tqpJf-0002gh-E0
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 03:13:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741421571;
+ s=mimecast20190719; t=1741421630;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6MpzMYR7KXI0tBJ4BESzMuqvySpHf11L/YhHL/+TwC4=;
- b=jVUQ2hygkHgZf7Y3wguHrDjpndyDgAagSJFydh16wLwakdLFShulZOAFIIvIVOPSjMleoX
- /1STjsTyzA8DQeAp9x/NFq3rhnXtCAEgHV77ufLnYWdt3uOmG8fzgc0mZpbkn8tu2lWyto
- iRyfjLsMo1Ivewp7DVpg2m/qASOB1NU=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Rs3YDNZwnE8xY74/07zEPjsAeais+w6Ak9Rd0OFB/Rw=;
+ b=KP+a3fapPcrOT2QSQyBNCzF4WlK/2Jd2mg3EWwxwLmj7w126dAnITHvjhlY2n09LLnhW93
+ f5Evfrl+ln76IHZ9RwhMAR7FVI5CDWjQnWfjOqO/kMUgJNjGf4gL9BItvXV4/aRXluAOz8
+ B2KuLC8iBXWAzREB7f7Oh28mVOFvBts=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128-feY5kytHPZKe4Bp0UZUWjQ-1; Sat, 08 Mar 2025 03:12:48 -0500
-X-MC-Unique: feY5kytHPZKe4Bp0UZUWjQ-1
-X-Mimecast-MFC-AGG-ID: feY5kytHPZKe4Bp0UZUWjQ_1741421568
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2ff7f9a0b9bso2444638a91.0
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 00:12:48 -0800 (PST)
+ us-mta-550-pCbJOCL4PNe0B9--A8Hd3Q-1; Sat, 08 Mar 2025 03:13:48 -0500
+X-MC-Unique: pCbJOCL4PNe0B9--A8Hd3Q-1
+X-Mimecast-MFC-AGG-ID: pCbJOCL4PNe0B9--A8Hd3Q_1741421627
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2feded265deso4647105a91.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 00:13:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741421568; x=1742026368;
+ d=1e100.net; s=20230601; t=1741421627; x=1742026427;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6MpzMYR7KXI0tBJ4BESzMuqvySpHf11L/YhHL/+TwC4=;
- b=q5ncKs0j9KsmGICqUqERsMQA17OelrpGEZ57V5tbbcWiMP68oxkiwpF5nX5JnEgtne
- S9Q+Vqnw+b8dJg1CJI9BBOtM5vrCREUJ23u74+E2/GrWUthAo5zcINgqpoFuYSMWOKyM
- ZfUF8TA89QboOZXSunLfUVuaZ8uqkhdHgnT9isn1KC+XRw1gJX7dpcbbtcI/1ReGG3rb
- LZFmXPhX+mHYu8E4Cz/6848P7zmFQO9fQtALt2as6DS+suEed+gMKSAlMgT/QrXuKUSh
- tkTXzoVJUTKm2vq5SutrprL+7upFDxDcXpLcQmhWHEgw0n8teOoS1DE7v8wv2ObEO5ua
- YS2Q==
-X-Gm-Message-State: AOJu0YxMpc2FzeCHH5XO+nZUEHUbBFXgUrGrvK3KmV94GQToRyI1+BFi
- 76paYxqc+TF7j8jSIAsbjQ3HMwuAsXiKJgc6Tv9fVd07a+42Oli096PxruQRoHcRwntFII9M85b
- Q3GDxPXhqjXdJz0bzmzu1/DTdQP2kj0hUA5QB58Q9ABePm1PCHQ/wq2mkS/HAshVkWJL7Fd/0yH
- 0nuBCDYTQXUrdHVPQ4uSxtrF53JEk=
-X-Gm-Gg: ASbGncuWE+/pUcvtlnREK6N1qmv0mJXwsr6VRj1YTEvPxx06XdeU2yRAyHg1J09t40H
- ViAX27G+3HJgG1JQ6uNlzByDDMIg9n6kWuQECa8gtt6keZ7PWBP9eJbzIM+Lltob10Bbkgg==
-X-Received: by 2002:a17:90b:3887:b0:2fe:e9c6:689e with SMTP id
- 98e67ed59e1d1-2ff7ce84ce1mr10394020a91.8.1741421567766; 
- Sat, 08 Mar 2025 00:12:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFEJ/wowd/Ox0Dxtl0y85oF3qgBleu36LHjdFYoCcIOs2YekZV/PiAB7Wi/pDwwMDkML/3eL9oHMg9UycxsPN0=
-X-Received: by 2002:a17:90b:3887:b0:2fe:e9c6:689e with SMTP id
- 98e67ed59e1d1-2ff7ce84ce1mr10393999a91.8.1741421567483; Sat, 08 Mar 2025
- 00:12:47 -0800 (PST)
+ bh=Rs3YDNZwnE8xY74/07zEPjsAeais+w6Ak9Rd0OFB/Rw=;
+ b=HjqJwpWl9nFscQYLsBxY45364DiRXJhoamq0Y6smEUWyLhT8PKgppEYazBZ1oz7gdU
+ /yGjwg4r9+7VoxBVfVGA7CBGu6e6Cs5arlfcjlRvVKg8Tg6Q3duE6LGOvWtgVGqt9boz
+ D5gUq3P7TurFW8R3OBphZJOhluEy6OpFta4tV+EmCBB90LshVfbNiBUAqRRIxitqZljN
+ cP4YLfZ7HuTlVFDre7OmtGnMJZAxaJ1PkopPvfNSt0s1ei/F61qHJUb1tzVVFacqCKVd
+ Ms2N25Md2T9lSasSdM5eN9Ia/iqNbBjzKSPeWtwfVxcTEiKaoULzrN1Jedh86Ajqlgdc
+ Sl9Q==
+X-Gm-Message-State: AOJu0YyhuypLlQGknyHeducBSA74N7aUkHxUDQqo37lxeAHsEVoa8/dM
+ bwPd1lutP8XxEAAEc/HMCwVo4sLXUu1RaBhQJN7DVDESGYtueOaV6AzpUx/vzHmJrjxiF7By03c
+ OAmtm/sZur2s8Wt2PfThqbaEwzzdjA21FRJsZnQQ8UQ0pN01Oewhn/sV1PsvFr0s+Tko4MyAayk
+ e6L42iVxiaimPcsQAYfhU4yyRyQ+g=
+X-Gm-Gg: ASbGncut4g/d0XdEFo8qxBM8V/8aD2qJwRjCVV4kQ1fW9Kg3pa9A0KvienGNyp7LpwX
+ QLAK/3xFTXDcKet8CS3k7RqMH0+z6ykFKjWKBKetqyS0kH/WoZKL5k950N02REjD5qCvDYQ==
+X-Received: by 2002:a17:90a:d44c:b0:2ff:6488:e026 with SMTP id
+ 98e67ed59e1d1-2ff7cf26d18mr9197797a91.30.1741421627309; 
+ Sat, 08 Mar 2025 00:13:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH4cQnYn0clmVJQ5kmMf2ANsiMPYZ0hJDTviAWGiJLVmJ/NgjYW9oL2XIcs427j/kpXc84zq1iSC5emLHD4+Ro=
+X-Received: by 2002:a17:90a:d44c:b0:2ff:6488:e026 with SMTP id
+ 98e67ed59e1d1-2ff7cf26d18mr9197775a91.30.1741421627058; Sat, 08 Mar 2025
+ 00:13:47 -0800 (PST)
 MIME-Version: 1.0
 References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-52-jsnow@redhat.com>
- <87senphvqr.fsf@pond.sub.org>
-In-Reply-To: <87senphvqr.fsf@pond.sub.org>
+ <20250305034610.960147-57-jsnow@redhat.com>
+ <87o6ydhvet.fsf@pond.sub.org>
+In-Reply-To: <87o6ydhvet.fsf@pond.sub.org>
 From: John Snow <jsnow@redhat.com>
-Date: Sat, 8 Mar 2025 03:12:35 -0500
-X-Gm-Features: AQ5f1JpfDSy29XdQc3XWlZ_g4SbeYtOoYzU_2mic94oU_q5ri0tKxOhtvUn9t7o
-Message-ID: <CAFn=p-bTpr=m9F0+YZHh63dRDyYEEXpWqczDxiDjmuJrnZK5yA@mail.gmail.com>
-Subject: Re: [PATCH 51/57] docs/qapidoc: add visit_entity()
+Date: Sat, 8 Mar 2025 03:13:34 -0500
+X-Gm-Features: AQ5f1Jp9mTVu38nhAzbzVtJMpVQm_pv6yVyWr4onK_b5RYyAoP93r2LppfzEJWs
+Message-ID: <CAFn=p-Z6a3Qq4-uHu1QUwdTrnxRuwKXo9iXwO8PV=hZm-ueTtA@mail.gmail.com>
+Subject: Re: [PATCH 56/57] docs/qapidoc: add intermediate output debugger
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000ef47dd062fd04d25"
+Content-Type: multipart/alternative; boundary="0000000000007c47ee062fd05115"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -103,166 +103,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ef47dd062fd04d25
+--0000000000007c47ee062fd05115
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 7, 2025 at 7:27=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+On Fri, Mar 7, 2025 at 7:34=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
 > wrote:
 
 > John Snow <jsnow@redhat.com> writes:
 >
-> > Finally, the core entry method for a qapi entity.
+> > Add debugging output for the qapidoc transmogrifier - setting DEBUG=3D1
+> > will produce .ir files (one for each qapidoc directive) that write the
+> > generated rst file to disk to allow for easy debugging and verification
+> > of the generated document.
 > >
 > > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  docs/sphinx/qapidoc.py | 21 +++++++++++++++++++++
-> >  1 file changed, 21 insertions(+)
-> >
-> > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-> > index 7308fa0a767..fb2ad7492ae 100644
-> > --- a/docs/sphinx/qapidoc.py
-> > +++ b/docs/sphinx/qapidoc.py
-> > @@ -78,6 +78,8 @@
-> >
-> >
-> >  class Transmogrifier:
-> > +    # pylint: disable=3Dtoo-many-public-methods
-> > +
 >
-> Tsk, tsk, tsk ...  ;-P
+> I understand we generally need to examine these .ir files only when
+> things go wrong, or maybe to help understanding the transmogrifier.  I
+> guess few people will care, and only rarely.  But when we care, we
+> likely care a *lot*.  Sure we want to dig the information on how to get
+> .ir files out of a commit message then?
 >
 
-Strongly tempted to make all the "visit_foo" methods "_handle_foo" and
-delete this line.
+Intend to advertise it in the transmogrifier doc and/or extend the
+doc-writing section of the qapi code gen doc.
 
-... But I don't want to fight with the rebase conflicts on all of the chunk
-context not lining up anymore. So I'll live with this little dishonor for
-now.
-
-
->
-> >      # Field names used for different entity types:
-> >      field_types =3D {
-> >          "enum": "value",
-> > @@ -368,6 +370,25 @@ def visit_freeform(self, doc: QAPIDoc) -> None:
-> >          self.add_lines(text, info)
-> >          self.ensure_blank_line()
-> >
-> > +    def visit_entity(self, ent: QAPISchemaDefinition) -> None:
-> > +        assert ent.info
-> > +
-> > +        try:
-> > +            self._curr_ent =3D ent
-> > +
-> > +            # Squish structs and unions together into an "object"
-> directive.
-> > +            meta =3D ent.meta
-> > +            if meta in ("struct", "union"):
-> > +                meta =3D "object"
-> > +
-> > +            # This line gets credited to the start of the /definition/=
-.
-> > +            self.add_line(f".. qapi:{meta}:: {ent.name}", ent.info)
-> > +            with self.indented():
-> > +                self.preamble(ent)
-> > +                self.visit_sections(ent)
-> > +        finally:
-> > +            self._curr_ent =3D None
-> > +
-> >
-> >  class QAPISchemaGenDepVisitor(QAPISchemaVisitor):
-> >      """A QAPI schema visitor which adds Sphinx dependencies each modul=
-e
->
->
-
---000000000000ef47dd062fd04d25
+--0000000000007c47ee062fd05115
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
 mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 7, =
-2025 at 7:27=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
+2025 at 7:34=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
 at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
 l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
 4,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" =
 target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
 <br>
-&gt; Finally, the core entry method for a qapi entity.<br>
+&gt; Add debugging output for the qapidoc transmogrifier - setting DEBUG=3D=
+1<br>
+&gt; will produce .ir files (one for each qapidoc directive) that write the=
+<br>
+&gt; generated rst file to disk to allow for easy debugging and verificatio=
+n<br>
+&gt; of the generated document.<br>
 &gt;<br>
 &gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
 t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 docs/sphinx/qapidoc.py | 21 +++++++++++++++++++++<br>
-&gt;=C2=A0 1 file changed, 21 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py<br>
-&gt; index 7308fa0a767..fb2ad7492ae 100644<br>
-&gt; --- a/docs/sphinx/qapidoc.py<br>
-&gt; +++ b/docs/sphinx/qapidoc.py<br>
-&gt; @@ -78,6 +78,8 @@<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 class Transmogrifier:<br>
-&gt; +=C2=A0 =C2=A0 # pylint: disable=3Dtoo-many-public-methods<br>
-&gt; +<br>
 <br>
-Tsk, tsk, tsk ...=C2=A0 ;-P<br></blockquote><div><br></div><div>Strongly te=
-mpted to make all the &quot;visit_foo&quot; methods &quot;_handle_foo&quot;=
- and delete this line.</div></div><div class=3D"gmail_quote gmail_quote_con=
-tainer"><br></div><div class=3D"gmail_quote gmail_quote_container">... But =
-I don&#39;t want to fight with the rebase conflicts on all of the chunk con=
-text not lining up anymore. So I&#39;ll live with this little dishonor for =
-now.<div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+I understand we generally need to examine these .ir files only when<br>
+things go wrong, or maybe to help understanding the transmogrifier.=C2=A0 I=
 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 # Field names used for different entity types:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 field_types =3D {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;enum&quot;: &quot;value&quot;,=
-<br>
-&gt; @@ -368,6 +370,25 @@ def visit_freeform(self, doc: QAPIDoc) -&gt; None=
-:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.add_lines(text, info)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.ensure_blank_line()<br>
-&gt;=C2=A0 <br>
-&gt; +=C2=A0 =C2=A0 def visit_entity(self, ent: QAPISchemaDefinition) -&gt;=
- None:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 assert <a href=3D"http://ent.info" rel=3D=
-"noreferrer" target=3D"_blank">ent.info</a><br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 try:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self._curr_ent =3D ent<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Squish structs and unions=
- together into an &quot;object&quot; directive.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 meta =3D ent.meta<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if meta in (&quot;struct&qu=
-ot;, &quot;union&quot;):<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 meta =3D &quo=
-t;object&quot;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # This line gets credited t=
-o the start of the /definition/.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.add_line(f&quot;.. qap=
-i:{meta}:: {<a href=3D"http://ent.name" rel=3D"noreferrer" target=3D"_blank=
-">ent.name</a>}&quot;, <a href=3D"http://ent.info" rel=3D"noreferrer" targe=
-t=3D"_blank">ent.info</a>)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 with self.indented():<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.preamble=
-(ent)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.visit_se=
-ctions(ent)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 finally:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self._curr_ent =3D None<br>
-&gt; +<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 class QAPISchemaGenDepVisitor(QAPISchemaVisitor):<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &quot;&quot;&quot;A QAPI schema visitor which adds=
- Sphinx dependencies each module<br>
-<br>
-</blockquote></div></div>
+guess few people will care, and only rarely.=C2=A0 But when we care, we<br>
+likely care a *lot*.=C2=A0 Sure we want to dig the information on how to ge=
+t<br>
+.ir files out of a commit message then?<br></blockquote><div><br></div><div=
+>Intend to advertise it in the transmogrifier doc and/or extend the doc-wri=
+ting section of the qapi code gen doc.</div><div>=C2=A0</div></div></div>
 
---000000000000ef47dd062fd04d25--
+--0000000000007c47ee062fd05115--
 
 
