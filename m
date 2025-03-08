@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 775F7C28B2F
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 22:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D97B0C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:00:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr38S-0004ZH-RF; Sat, 08 Mar 2025 17:59:12 -0500
+	id 1tr397-0004xd-5m; Sat, 08 Mar 2025 17:59:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38O-0004WA-K0
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:08 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tr38b-0004db-2i
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:21 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38M-0005K6-9w
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:08 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22185cddbffso74606635ad.1
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:05 -0800 (PST)
+ id 1tr38Z-0005OA-Hc
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:20 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2239f8646f6so55704245ad.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741474744; x=1742079544; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741474758; x=1742079558; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nAl4pf8E8sE2qLvyFwJ/6sczfmHaPGMTc7HMlUw0GYQ=;
- b=fdEOrYX0MYKLV5FGoNZXuwV5wzSAa1Y66tiHo8WeHruYGj1B8h1twH1JzoncPfVaF7
- zNKrDaRibmLnvrN8D8dv6LpiESCuWP//FZNC2edvKwtT/DGYFfgnzoXW5dAXSphx9/la
- DVTBrsvnZFu3dvNsVxeWHwlBKSBpGygGz+rTkNkUxt6A/MAr/EktbthxEifa/Yyv+V9M
- wklk5a9vwMFWWx/oUbYK4yqP8Hd9bNwLbM+Q5ruvyxpdeeQ/fn8tAgMJ7AeyrJhyql+/
- AYXz/WMV9gj532LgUPwZsbVXZ+GlBPBHEl+Z7FPbFz0DBpZ6Ay6XMRM4GHGhXhy1c0rc
- zhgg==
+ bh=g4kmr8U/nSCs8j0qCWAgIeO/cec/3d9GL3wtnW/tBPU=;
+ b=N5lggADgjMVkBjkJVafKuVeSJzFTGgVkkyAhTP0Wg9GY1oZYCjyHrKfdrWDDrt4GRd
+ NhbPlFEG8aHrfeVXWw9f6ibmLY4qEgzAgDj+4GzBMjJFI5TQV99G2Fi9vkaNuYLqXEk3
+ s9BxraoqERXQjvuPhzZ2kGU4yFeJosD81Uf4KNf+MxSQYZigubTOv037LdLGp7WUX7Fj
+ baeqqDA41vm9odHFEonV8ESZiyHGGDkTXeJ7SGQnzRWi68BgpR5l2DY2BMWHj0hNtf/w
+ sUyAJR7H/rTwdcHbi3Or2vRy4PM2kwV3OeJ7R52YhNc7UaABts6ES28vJuslUoMvUEaj
+ nbGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741474744; x=1742079544;
+ d=1e100.net; s=20230601; t=1741474758; x=1742079558;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nAl4pf8E8sE2qLvyFwJ/6sczfmHaPGMTc7HMlUw0GYQ=;
- b=A3xlfwyB52ZKMJVA1ajEX9uDfoj5Jclkg6OccDz/fg1gmIhYR7dfcnE/2ujfxB8207
- N/jLvAOzkunx6O1i1jPjohMWWxKX04J8hPoHuQ92egQwv/6kd1p3FeLaTJO9etkFJ+iM
- XjD1bLZXsKn948ot+luZWH2VR/u3FNWEXYWYccfbRPMC0tX07v0IYX5vPeiDERAJGtsY
- dP7pVfLEGQdojAXuLaBkdv9/91DqPhItDCawxGOxVz8HaHUUEMloyvAMiEVWbczQKbY9
- iRyEUNdJKMI4k8YX5ck2D7/SasbiZT29HBabT1wGaNSVMqJ02glF8FTSBJeGB/kcIMIj
- jpmg==
-X-Gm-Message-State: AOJu0YzX/V7kApHdH0OaG+xKXLLp57tb43wf/n7j7pMRanCRjjE205kr
- qa9M+oB9+5FNO0l/h8p1DmIq//BX5JfCpHnDtKnmhH1Pp8ZX4P5wOO9f2DT3q5Pi1uZTy6pTnvU
- j
-X-Gm-Gg: ASbGncsC+m2+aoanjebb4k/iVfQhbam3OzX/wldD1VdECOjWshJUA/+AznrJjYYGYuf
- Eldz2gP64O8dIyqOH3Lyp67v1TiZgTbfUHQkdlliAF1lUNnV6lBUPQKc97KPeqKjlxd5EnOxkNa
- uRG3ksMdDOGSb3oTqaW5QIpLVH4jW6PQMcGakgaHFjIF6xa3c38Ldkk2Dm9STlVa9C287M/yRol
- Dbs0ZAwANqrZSlxmTyicpjcHpbkRfCOKeYbtNo9uGrqJW4hVzuYey0wb3sqC74Ijp7w9dqadKp4
- eTE9NIJlgdiXdOR0z95mNGvfF0SrAUtiC1/Sv3nEXbTCr+TYNrOcy9+piVKJTN5I6MjuWqGU7Ub
- 5
-X-Google-Smtp-Source: AGHT+IGHDGDYT3NF9yTRC8JoEqRr1rOChRHdnPjv3txaRDlpIyKyTQkhIBJ/WJdxE4xorS8TI4fhpg==
-X-Received: by 2002:a17:902:f708:b0:223:4d5e:76a6 with SMTP id
- d9443c01a7336-2244f057623mr79708035ad.1.1741474744602; 
- Sat, 08 Mar 2025 14:59:04 -0800 (PST)
+ bh=g4kmr8U/nSCs8j0qCWAgIeO/cec/3d9GL3wtnW/tBPU=;
+ b=Kcy8Sp6GHAZNV9EfX3wxQpVLdq9UoRd/qs1mG7Or8baAiyKr1FX9iQt3G2v2jnWi29
+ L9LSHKHPL4R0izX8xL8kcqLxWaC1STPdir4+/levLGt/u/elxO2IQJRJynacX5YgDhAR
+ n4ET9J/uj85EITDK2qiMvE5iKBS07ryN612JNouY6nXCJS1r661haWMMM92QIX0qp5Fo
+ EPE3njvARgJ0CmD21xlwcOm7WmDZ3FhYTAz0uQoBhcsR1rDYwCZMQ1E1uC7Bh+JuW+4K
+ j4rY/8jd/8K1Z3fK8C8CtIxNjsoym0MU+ECPkT65MEDbXvLump7zJaDkBOvZwXF4QLdI
+ eDgQ==
+X-Gm-Message-State: AOJu0YxCxjgqub/oB/h0QKZm+Odvbvi2awrfgCZ0oAQUfJT4hKIfO58q
+ A0+tiXUvktkH8IC7LIBnb3EfIGRup4Dqmp1Gv1eMfTlOO0VZKP+JeBqhJ4SXcf0mEhejCfUygU1
+ h
+X-Gm-Gg: ASbGnctDLOPq6J9duhftNQ999IdUqvXUQMGtbm/VaUSJoRnnZn7tKGCk8f2ItAF0pPI
+ n0ac3ZcdWGHx6rzrgGgPb4hj3XQhaJj+BPw106O2piAPbZlcm0UBBuq/Ln9EQUKVV13TmsI7s5e
+ AfJVNnmM+9i+m8xvP2268IRpIivCdWs8HZ5vw6dZfjn6e6Ay8dCelJQv4JL7YVBiDuPEHm0hhsT
+ s/wkr611w1ISr2Bv8P56VS9nXFLzf+E6NZVN7psmvdGCkmshcFbklj+QjSDFF5hLfussnWsz9ET
+ D4JfAzBRLcdQVOiqWfC9PNMe2F1V/u6/o7sMI7Z/U/1f8I84/oLjNfhQAJqBANOc8w1szfQ8T9B
+ R
+X-Google-Smtp-Source: AGHT+IHbdh9wfzupah/15/B9gMaLzg+aHoefK7+ZDpQxhEcFdoEtDgkB4e5lRqTYVgDbm2ZwTeGPVQ==
+X-Received: by 2002:a17:902:d488:b0:215:b9a6:5cb9 with SMTP id
+ d9443c01a7336-2242887eb5cmr146067055ad.5.1741474758076; 
+ Sat, 08 Mar 2025 14:59:18 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.04
+ d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Mar 2025 14:59:04 -0800 (PST)
+ Sat, 08 Mar 2025 14:59:17 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Andreas Schwab <schwab@suse.de>
-Subject: [PATCH v2] linux-user/riscv: Fix handling of cpu mask in
- riscv_hwprobe syscall
-Date: Sat,  8 Mar 2025 14:58:40 -0800
-Message-ID: <20250308225902.1208237-3-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 21/23] qemu/atomic128: Include missing 'qemu/atomic.h' header
+Date: Sat,  8 Mar 2025 14:59:00 -0800
+Message-ID: <20250308225902.1208237-23-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250308225902.1208237-1-richard.henderson@linaro.org>
 References: <20250308225902.1208237-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,95 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The third argument of the syscall contains the size of the
-cpu mask in bytes, not bits.  Nor is the size rounded up to
-a multiple of sizeof(abi_ulong).
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Andreas Schwab <schwab@suse.de>
-Fixes: 9e1c7d982d7 ("linux-user/riscv: Add syscall riscv_hwprobe")
+qatomic_cmpxchg__nocheck() is declared in "qemu/atomic.h".
+Include it in order to avoid when refactoring unrelated headers:
+
+    In file included from ../../accel/tcg/tcg-runtime-gvec.c:22:
+    In file included from include/exec/helper-proto-common.h:10:
+    In file included from include/qemu/atomic128.h:61:
+    host/include/generic/host/atomic128-cas.h.inc:23:11: error: call to undeclared function 'qatomic_cmpxchg__nocheck'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+       23 |     r.i = qatomic_cmpxchg__nocheck(ptr_align, c.i, n.i);
+          |           ^
+    1 error generated.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20241212141018.59428-4-philmd@linaro.org>
 ---
- linux-user/syscall.c | 55 +++++++++++++++++++++++---------------------
- 1 file changed, 29 insertions(+), 26 deletions(-)
+ include/qemu/atomic128.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 02ea4221c9..fcc77c094d 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -9118,35 +9118,38 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
-     }
- }
+diff --git a/include/qemu/atomic128.h b/include/qemu/atomic128.h
+index 448fb64479..31e5c48d8f 100644
+--- a/include/qemu/atomic128.h
++++ b/include/qemu/atomic128.h
+@@ -13,6 +13,7 @@
+ #ifndef QEMU_ATOMIC128_H
+ #define QEMU_ATOMIC128_H
  
--static int cpu_set_valid(abi_long arg3, abi_long arg4)
-+/*
-+ * If the cpumask_t of (target_cpus, cpusetsize) cannot be read: -EFAULT.
-+ * If the cpumast_t has no bits set: -EINVAL.
-+ * Otherwise the cpumask_t contains some bit set: 0.
-+ * Unlike the kernel, we do not mask cpumask_t by the set of online cpus,
-+ * nor bound the search by cpumask_size().
-+ */
-+static int nonempty_cpu_set(abi_ulong cpusetsize, abi_ptr target_cpus)
- {
--    int ret, i, tmp;
--    size_t host_mask_size, target_mask_size;
--    unsigned long *host_mask;
-+    unsigned char *p = lock_user(VERIFY_READ, target_cpus, cpusetsize, 1);
-+    int ret = -TARGET_EFAULT;
++#include "qemu/atomic.h"
+ #include "qemu/int128.h"
  
--    /*
--     * cpu_set_t represent CPU masks as bit masks of type unsigned long *.
--     * arg3 contains the cpu count.
--     */
--    tmp = (8 * sizeof(abi_ulong));
--    target_mask_size = ((arg3 + tmp - 1) / tmp) * sizeof(abi_ulong);
--    host_mask_size = (target_mask_size + (sizeof(*host_mask) - 1)) &
--                     ~(sizeof(*host_mask) - 1);
--
--    host_mask = alloca(host_mask_size);
--
--    ret = target_to_host_cpu_mask(host_mask, host_mask_size,
--                                  arg4, target_mask_size);
--    if (ret != 0) {
--        return ret;
--    }
--
--    for (i = 0 ; i < host_mask_size / sizeof(*host_mask); i++) {
--        if (host_mask[i] != 0) {
--            return 0;
-+    if (p) {
-+        ret = -TARGET_EINVAL;
-+        /*
-+         * Since we only care about the empty/non-empty state of the cpumask_t
-+         * not the individual bits, we do not need to repartition the bits
-+         * from target abi_ulong to host unsigned long.
-+         *
-+         * Note that the kernel does not round up cpusetsize to a multiple of
-+         * sizeof(abi_ulong).  After bounding cpusetsize by cpumask_size(),
-+         * it copies exactly cpusetsize bytes into a zeroed buffer.
-+         */
-+        for (abi_ulong i = 0; i < cpusetsize; ++i) {
-+            if (p[i]) {
-+                ret = 0;
-+                break;
-+            }
-         }
-+        unlock_user(p, target_cpus, 0);
-     }
--    return -TARGET_EINVAL;
-+    return ret;
- }
- 
- static abi_long do_riscv_hwprobe(CPUArchState *cpu_env, abi_long arg1,
-@@ -9163,7 +9166,7 @@ static abi_long do_riscv_hwprobe(CPUArchState *cpu_env, abi_long arg1,
- 
-     /* check cpu_set */
-     if (arg3 != 0) {
--        ret = cpu_set_valid(arg3, arg4);
-+        ret = nonempty_cpu_set(arg3, arg4);
-         if (ret != 0) {
-             return ret;
-         }
+ /*
 -- 
 2.43.0
 
