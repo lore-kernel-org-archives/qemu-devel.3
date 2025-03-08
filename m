@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7115C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6967FC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:13:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr3KK-0000YS-DS; Sat, 08 Mar 2025 18:11:29 -0500
+	id 1tr3L0-0001gv-Sw; Sat, 08 Mar 2025 18:12:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3K6-00007B-DS
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:11:14 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3KD-0000Ws-8V
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:11:24 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3K4-0001bg-9I
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:11:14 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43bccfa7b89so25637325e9.2
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 15:11:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3KA-0001cc-35
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:11:20 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-39130ee05b0so1688723f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 15:11:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741475470; x=1742080270; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741475476; x=1742080276; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SchAlroLdDNdcNXpi1x0hC/CnniZL26bHHU3ofZkp5E=;
- b=HGwmO33t/cREfu+qWyaiqUM3tWoYr1bDzjtkVXmc2XfIJD4sertyYdR+0uUul0udvk
- 5ca9wmnIQ1Zy5Sq1+zuvk/qka3Nj1lElpJ/yzcT79aqZfgxiXCYObrYA6Iq/Iyu6UhAS
- 64x9ecL2wqnaQiCx9ocSr/gsrZmw0/JU26HWDTa4YxiU/sG1IxOdqoDuVjsWVC9sZORm
- ruHOzyeQ64QTOFuV21HOvR2SU56F7+SdMIeRNnAcOw+ftoBbqSefzT1b9zllc4f6ZFLL
- UWVyCd58Z44wkvvB681c/H9WzPcOGsEpdAlIi45dGughIhxTn9JYdM2RLKYxCoxNoYDz
- QvVw==
+ bh=Krkj4W9PXI2bbr9HKRBnaek4mFUNomZTUnghoZDAa+8=;
+ b=os90LoBHFlka3zPbfNT7wB5Zrq4F7WLIMNC9IUBxaQRU1WgWC++RMljkQPwG541nbd
+ fDzZiNraVncksdDFS3kbX2vCzxhr1pUlwW1m/mKFLxVfsDxJRzyXc1N9cskXKuPYhFul
+ wwIS4zA6rDVsOsuVOerPoIzU4JcnXfXIRXeZA3KysHJ9MTKFfH9FceZOQ7Bn76I/9gLN
+ jdmt5Uh7amXLAZxHFF1BvROWVwkLRjL0pcCKIksFj9d+b7IU9UVbUQd6HoJKuZ5FLylY
+ NjYpfS9z0YfGVLrF5F3RLNwQMECrSI0XErn0Gt2+1e+7aBzj69ARcWcUSuVLQeV+EYsH
+ 90Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741475470; x=1742080270;
+ d=1e100.net; s=20230601; t=1741475476; x=1742080276;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SchAlroLdDNdcNXpi1x0hC/CnniZL26bHHU3ofZkp5E=;
- b=NhHlVZyqZicbr5brhuswy5hSFHIWP9BdV6pk16cEHKZNW3fwps2QL9J/Hc9aL5pWXN
- ra0WaONWMW8WmRYXUryMB9yFsUwwIIivUoeqsC7xU0u+Yr+b/6STVvgiahHVgAd1weoU
- v8uaxNzcQ5SVxbgjrhxOhUrCgWAhATgeB1XMNgvgZ9Mk461K/JjaAAEvlPEtEQkfK9tX
- zu5T6FHy8SkPDo+zvyzhhZ9O+j26fiX/6I8LtV6zvwaEhEoIbMxxweQQq4Op8QZHpb8k
- 9V45ztFw51wIVVKS6mfius+Po02ptl80lZrcH0CTGJDQZeZzliakiXgOEs2XkUu99G93
- yqTQ==
-X-Gm-Message-State: AOJu0YxsQva5Y+m6mXYya/lMD7gmfpE/Ef5fh1xgO2wKvRlQZXAKw9v5
- SXLmnfuhP5n8omfBalschtxEZtS8SAT3V07wwmVNInYD9GGgu8jhB5epg5TWHGCJTRH/eK2Ww31
- Tx6o=
-X-Gm-Gg: ASbGncuS+rpkXhT7uthntdgFTT1GBYr5S/lZzHCgmrkCI7cT3g9ZRRa1aN/arvnl0P3
- gnfSyjWHPJf95ACzxf4/UQAVxbVQVMLt3TFOHGTiJD7OcY747Y4vP8D2OJTHsCxvglrd3Pu+ERw
- OBUOgQDUMXenxIIlihtYteKkuyFMqcOM/7Vhq9rMfZ0SEY1MHAurXn5356ujHqTkFkWYdLFgflZ
- 77AvO6Rrc0T9MPre0+/1cwbBB56syWW3Rc2o4Iul1cJtRRwwh2noyTGMquR4Mb4W1KUhMwyCo47
- Y/CXM7syy6h5nfM2dYyDduVFdLcG4YKGNPGKIzRzWle1wj4zHtBV2+Nkfz2a1noglKAx/RbeC5R
- +qK3mjiGxrRGtZ4Fl7Rs=
-X-Google-Smtp-Source: AGHT+IEb/b4LOE2Bgus21ZYrnM3VVzkRV4FDIHRDZ5Yi+DfrCk1Fa3EmoxdciYSS3mQYlPYdKzgUqA==
-X-Received: by 2002:a05:600c:4e89:b0:43b:c448:bc34 with SMTP id
- 5b1f17b1804b1-43c601d0758mr55299595e9.18.1741475470398; 
- Sat, 08 Mar 2025 15:11:10 -0800 (PST)
+ bh=Krkj4W9PXI2bbr9HKRBnaek4mFUNomZTUnghoZDAa+8=;
+ b=pzTNBmfpUN8oNkx2V6Jr9Pn+QjRrHRJAuhtu+hF+AmaLJVloSrNhwktaI/WIV6692L
+ ij8CV7oyDZYDxT1gPE5kAvpAC5MWS6bk0GJb7ZWF1dM/8tmKxWhi4UYkhEj2FogU5OhY
+ t5Z4SZyhFqJ+mSaRgftInDN93Xw+tswMketH+g9gM7TzJeCrcFYAvYJYI7vGlE+cRtoV
+ PxCuGZ2aJoV1y3cQ/YnB+USpjpoecAoiqjyqgykzIOHGiPQh2eRXdJuDIEnstEWiVlXj
+ 5ahc1r2lXwUYyjj2dLtp+KLIi093yPnaRR4m9ldVRrSqWA9xL4Qo6r9Opw7NGtq6fwTJ
+ 2NKw==
+X-Gm-Message-State: AOJu0YyFGgiD8l5aI+7YVCvgmvQOurt9S1NAKtfIXzoVtuzXySm/MYHo
+ 4S2TcfadeMKDEFxGJ/aKdwvp0vcEZg4kvjioKbYKuFfjOHzOebRg2OGtN3YPkrrPGGLr2GwPC7V
+ pBLw=
+X-Gm-Gg: ASbGncvqUP7SK6dmvIscy9PWhGGjXHVmGC0tUbyn26SEJ9UMghTV4C1njc5eyX2flQs
+ IAzub4nap4e6LqUZHXpMeLkZgoiTi5S72vP18y1L53uiAjwy/13YORfveiWI+xPw5vv0NB26J+6
+ wlmVdwkTVD29nZTPqdGTJh8nXLkunmdCIU59aybwG9aynUkWU0AVAhy/X1EWb4YG0MgyvM7XsZW
+ VaZi37CmYSHAsCr3uQCxLtyhe60UPHarGoduiNSzFA32i1ubsoJxEb/O+3ULd4feH0+y/xX36zw
+ iiMFRV1LPmjf1pFJyUlBLDqOlwpf2u9UC/2WAOAmE/xQPLPsX2q9JBUlOrxXvDZaXKVN28GffWN
+ OVdVTalNFBCd/FfHH/Zo=
+X-Google-Smtp-Source: AGHT+IEi5WAhR9L6pJSrF/tDnKMBfesHPV2+gJAeMrFmEGRf8Nfb1OcWHH46hcW/pc42V1sIDxqOTg==
+X-Received: by 2002:a5d:598f:0:b0:391:412b:e22b with SMTP id
+ ffacd0b85a97d-391412be5e4mr1168437f8f.18.1741475476383; 
+ Sat, 08 Mar 2025 15:11:16 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e4065sm10261640f8f.62.2025.03.08.15.11.08
+ ffacd0b85a97d-3912c01de21sm10233750f8f.59.2025.03.08.15.11.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 08 Mar 2025 15:11:09 -0800 (PST)
+ Sat, 08 Mar 2025 15:11:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>,
@@ -86,17 +86,18 @@ Cc: Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 19/21] hw/vfio/s390x: Compile AP and CCW once
-Date: Sun,  9 Mar 2025 00:09:15 +0100
-Message-ID: <20250308230917.18907-20-philmd@linaro.org>
+Subject: [PATCH v2 20/21] hw/vfio/platform: Check CONFIG_IOMMUFD at runtime
+ using iommufd_builtin
+Date: Sun,  9 Mar 2025 00:09:16 +0100
+Message-ID: <20250308230917.18907-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250308230917.18907-1-philmd@linaro.org>
 References: <20250308230917.18907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,70 +120,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the files don't use any target-specific knowledge anymore,
-move them to system_ss[] to build them once, even if they are
-only used for one unique binary (qemu-system-s390x).
-
-Because files in system_ss[] don't get the target/foo/ path in
-their CPPFLAGS, use header paths relative to the root directory.
+Convert the compile time check on the CONFIG_IOMMUFD definition
+by a runtime one by calling iommufd_builtin().
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/s390x/kvm/kvm_s390x.h | 2 +-
- hw/vfio/ap.c                 | 2 +-
- hw/vfio/meson.build          | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ hw/vfio/platform.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/target/s390x/kvm/kvm_s390x.h b/target/s390x/kvm/kvm_s390x.h
-index 649dae5948a..7b1cce3e60d 100644
---- a/target/s390x/kvm/kvm_s390x.h
-+++ b/target/s390x/kvm/kvm_s390x.h
-@@ -10,7 +10,7 @@
- #ifndef KVM_S390X_H
- #define KVM_S390X_H
+diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+index 67bc57409c1..265c550b747 100644
+--- a/hw/vfio/platform.c
++++ b/hw/vfio/platform.c
+@@ -15,7 +15,6 @@
+  */
  
--#include "cpu-qom.h"
-+#include "target/s390x/cpu-qom.h"
+ #include "qemu/osdep.h"
+-#include CONFIG_DEVICES /* CONFIG_IOMMUFD */
+ #include "qapi/error.h"
+ #include <sys/ioctl.h>
+ #include <linux/vfio.h>
+@@ -637,10 +636,11 @@ static const Property vfio_platform_dev_properties[] = {
+     DEFINE_PROP_UINT32("mmap-timeout-ms", VFIOPlatformDevice,
+                        mmap_timeout, 1100),
+     DEFINE_PROP_BOOL("x-irqfd", VFIOPlatformDevice, irqfd_allowed, true),
+-#ifdef CONFIG_IOMMUFD
++};
++
++static const Property vfio_platform_dev_iommufd_properties[] = {
+     DEFINE_PROP_LINK("iommufd", VFIOPlatformDevice, vbasedev.iommufd,
+                      TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
+-#endif
+ };
  
- struct kvm_s390_irq;
+ static void vfio_platform_instance_init(Object *obj)
+@@ -652,12 +652,10 @@ static void vfio_platform_instance_init(Object *obj)
+                      DEVICE(vdev), false);
+ }
  
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index a4ec2b5f9ac..832b98532ea 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -23,7 +23,7 @@
- #include "qemu/module.h"
- #include "qemu/option.h"
- #include "qemu/config-file.h"
--#include "kvm/kvm_s390x.h"
-+#include "target/s390x/kvm/kvm_s390x.h"
- #include "migration/vmstate.h"
- #include "hw/qdev-properties.h"
- #include "hw/s390x/ap-bridge.h"
-diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-index ff9bd4f2e35..3119c841ed9 100644
---- a/hw/vfio/meson.build
-+++ b/hw/vfio/meson.build
-@@ -4,9 +4,7 @@ vfio_ss.add(files(
-   'container.c',
- ))
- vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
--vfio_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
- vfio_ss.add(when: 'CONFIG_VFIO_PLATFORM', if_true: files('platform.c'))
--vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
+-#ifdef CONFIG_IOMMUFD
+ static void vfio_platform_set_fd(Object *obj, const char *str, Error **errp)
+ {
+     vfio_device_set_fd(&VFIO_PLATFORM_DEVICE(obj)->vbasedev, str, errp);
+ }
+-#endif
  
- specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
+ static void vfio_platform_class_init(ObjectClass *klass, void *data)
+ {
+@@ -666,9 +664,10 @@ static void vfio_platform_class_init(ObjectClass *klass, void *data)
  
-@@ -27,6 +25,8 @@ system_ss.add(when: 'CONFIG_VFIO', if_true: files(
- system_ss.add(when: ['CONFIG_VFIO', 'CONFIG_IOMMUFD'], if_true: files(
-   'iommufd.c',
- ))
-+system_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
-+system_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
- system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
-   'display.c',
-   'pci.c',
+     dc->realize = vfio_platform_realize;
+     device_class_set_props(dc, vfio_platform_dev_properties);
+-#ifdef CONFIG_IOMMUFD
+-    object_class_property_add_str(klass, "fd", NULL, vfio_platform_set_fd);
+-#endif
++    if (iommufd_builtin()) {
++        device_class_set_props(dc, vfio_platform_dev_iommufd_properties);
++        object_class_property_add_str(klass, "fd", NULL, vfio_platform_set_fd);
++    }
+     dc->vmsd = &vfio_platform_vmstate;
+     dc->desc = "VFIO-based platform device assignment";
+     sbc->connect_irq_notifier = vfio_start_irqfd_injection;
+@@ -692,11 +691,11 @@ static void vfio_platform_class_init(ObjectClass *klass, void *data)
+     object_class_property_set_description(klass, /* 2.6 */
+                                           "sysfsdev",
+                                           "Host sysfs path of assigned device");
+-#ifdef CONFIG_IOMMUFD
+-    object_class_property_set_description(klass, /* 9.0 */
+-                                          "iommufd",
+-                                          "Set host IOMMUFD backend device");
+-#endif
++    if (iommufd_builtin()) {
++        object_class_property_set_description(klass, /* 9.0 */
++                                              "iommufd",
++                                              "Set host IOMMUFD backend device");
++    }
+ }
+ 
+ static const TypeInfo vfio_platform_dev_info = {
 -- 
 2.47.1
 
