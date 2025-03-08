@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC62FC282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93263C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr26z-0003G5-TL; Sat, 08 Mar 2025 16:53:37 -0500
+	id 1tr270-0003GP-93; Sat, 08 Mar 2025 16:53:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr26x-0003EF-2L
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:35 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1tr26w-0003Di-1w
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:34 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr26u-0000ua-JN
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:34 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-390fdaf2897so2946761f8f.0
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:53:32 -0800 (PST)
+ id 1tr26t-0000u9-6s
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:33 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3913b539aabso409003f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:53:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741470811; x=1742075611; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741470810; x=1742075610; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VPeKq9Y1elDW4TopisjmaJUNcVaePa54zZmUT5VyNw4=;
- b=M7AQDsSdtHAfVgta3N+PMa2EIrKnTmeN65XzoqzbqgAlLHK4S1TUal+FI6CuMi0doL
- 5VfR84EIkviEk2v+xBeNdkS2n5n59M2zK4hIZEz8fl75KfbPvurdgIE1LFAmnpDClwzE
- 9lRaTWUlmLvByCEdENafjkCo22j7S/njf9MXkD7NRG9+LLZvv3JV6Xox8saGJLdz5pda
- xn2OuLmMjofccoBzP7mMlsLzsx1vs0G64dwqPwGR3jarjraql9Gdc2aQjE3b2JzQ8yo3
- U5U7ocbykTLLjBXvrsnaTTJDJOBcgvs3dtY3JfIl9OpMsBv0gcAv+7+/xVGbkB38YMaX
- Ytww==
+ bh=GpopK86QINh7V5h6ymzYJTc948St9iL142EhrxVQFuE=;
+ b=Fe4gFkl5xhJf6QE6/0HwsDTgpHbWod7y2tguMNchoPCTmO34uv6yBvuDSLbiuc0USP
+ cBBxMUS4JAhSXqQXXz9k8MQTHYVKthZDCXFOgS7gHTXuk9kHORrtG5pY5TBsceBkdZyT
+ DxPg/v1L3/HWQxsuRSfqNtleEwIn4YhULGDHYOTy6x4DxSolByhGFGFcyDGzbLpVh29Y
+ 0ICkL9eGsqucJZafLa8K1cAkSQ6x/u4tBJKhwmZG/WADgkNqzejCq5dLAc4p1Nw7WuVu
+ YEuD8aKEm0kz3dvLOYq3dRiOtjOfR3pCH0fpgg4YRVKGQesMc59ktErID6cafQfdGvdB
+ Wh6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741470811; x=1742075611;
+ d=1e100.net; s=20230601; t=1741470810; x=1742075610;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VPeKq9Y1elDW4TopisjmaJUNcVaePa54zZmUT5VyNw4=;
- b=YCystZDfavWwdNOkGWs5kbgVUlVVk2axyM75qILN2VCDMxpe2bwfR9wYqhLcON/4UZ
- gs/98S8VoOTh7dOdUG87NBbhdFdxwu9ZRlJvdEumdMfOMRcMc3maOzRcKrYtTrMwLz56
- WxZwbGtooPgRWUhU7kT6p9Ch2h//ErZdxkUXtFUdJLaD0TTVf2vAHsOZXH7rNiyMKwzr
- fTH1CR8Rt4X87zZfQx/2nx+zXfguh7CoiIRX0rNuVAebRLUNQBfS5iqrF+OgOaiy4fMf
- mefW8SOsMWbDRdN3UpQkDQ2i2rGNxif3mKWrIAX+b0V1OnAYMCL6Fw3tK1fjRPuQzvXm
- 6pIg==
-X-Gm-Message-State: AOJu0YwS+ReJSp99pSXU/MyFBYQq/Ag4qM2uNSYpzcgvITEeX8b0Hifo
- C+NpxxRiZ05F3uqXwwuyUv1tR1IZUc8B05ThciHbbxWLuv/xAmYWzKc+A3U64Kg=
-X-Gm-Gg: ASbGncsNFPe+bWwprkK0tmDtSNfnfPVXvLDEjb3rnzIhX+MsqfY1HNcVhUJ3UNUobt/
- uPdRFNjSqo5fGQTHzYMUk4TjIeqYSzkn3WkKuNNVyzhpShOvrbEL/w//Gwd7VMyN6A5tM2npk5g
- NvGzAAlyctjJSd8kI9d7CyCZEjWlkoeMLga8bj4XsuSCyoaGammYyuYH37dY87OVbE9NH6E/GQV
- lhtZ04JJTe2f+3FiFOY1x77m4izgHJgmLLBHNV+pvrUw/IeFLQ5AVffR76vzLPw7Wl67Uj0Bt0l
- ee2/ZkRr+ygSI2c/zDJWxq4dZC9NWaAkagAx4riV3CWLUBg=
-X-Google-Smtp-Source: AGHT+IEeSBEGPqofpX90PlhcsZJyG2XZz2S05cDg3P7rrBO3yIHDbYKoiOksU42JaFeTxAnc+lLhrA==
-X-Received: by 2002:a5d:6c63:0:b0:390:f0f3:138a with SMTP id
- ffacd0b85a97d-39132d5b4bfmr7387198f8f.27.1741470811166; 
- Sat, 08 Mar 2025 13:53:31 -0800 (PST)
+ bh=GpopK86QINh7V5h6ymzYJTc948St9iL142EhrxVQFuE=;
+ b=d5fWGsDuJOmk29kvTHzkMk5UwPUVxRNQuMRX8+gCtxTGzLrJk56SLOyGt4H1xUhIlI
+ Iw2iQ/6xz3rxBPw+SoIMrXQdgE5g14fHq+WzdqqLHIWMpe8Ovs97PbV/Qg0vBtJ6Qwav
+ S/KdNOFvZCh2/ToWE/R9UqkB1gpVLM7MMdoxZ43PVBqJ0or5Pn4ajsuUOjNiAu+3EDEt
+ mgKFNJ7KEFr7xZu0vpiv/CA0OhBB3cbzBRQXmaMvI8qZJHQE3xf4BPl+Umb7clocPnfp
+ 6SSpYZIzxE46mv5gKI4kTIDVdNa8B90SFujQ0cSvPqPuy6ifo0bNdX2hxhlhdFZSdp8L
+ pvPw==
+X-Gm-Message-State: AOJu0YyiKOLXX1eMU7WFg+CbNd4++af4gUCHYMxGfHXiDmezkSLbyZdr
+ 2F6mSymCuLNqz7WKcAnsAH0gYX5UQo+s9+/deaZNF/BS+NXC550Qn9Vv4wr3AIY=
+X-Gm-Gg: ASbGncs+IbpOSYokieegUh/uWuD0k3F2ddIWvrxfnGmcfRxGfjY/QbS8SB18fN0PVNR
+ y4ib1xa4BFkuS7LYtgLDUsCgoNveR2qhEsBg2Sb5eUNUfKz/b6OzcMnBLCLxKmj2l5XDOaJevbZ
+ ykAI+A1l4JRKKDHVGQYBv9HrmBRiIxBDSs8f3sjXvYDDRWQtolVDGk0LDUHqqRUqug3Co7XggMt
+ 2Xl6sGb+nolY+GszibNBX4KNT1tcVOWxTBx9CPhtmKqEIJ63DJHxSIejlHT1QUR1JBYFfv+KiMv
+ pQqmDArFgBVf/hZLEVImy4/WkbHto3b4AP4oRfFzkdWsvUs=
+X-Google-Smtp-Source: AGHT+IFG3L+dyCEHi+bfCxf01T0I5x8mCkhNtDG76sNTN6hK/OyCCFaXLzB9e0HauEgr/UG+LX0X9g==
+X-Received: by 2002:a5d:47c1:0:b0:390:fe8b:f442 with SMTP id
+ ffacd0b85a97d-39132dc35b2mr5398521f8f.54.1741470809696; 
+ Sat, 08 Mar 2025 13:53:29 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cf04ae69dsm6711725e9.0.2025.03.08.13.53.29
+ 5b1f17b1804b1-43cee22c13fsm17319125e9.40.2025.03.08.13.53.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Mar 2025 13:53:30 -0800 (PST)
+ Sat, 08 Mar 2025 13:53:27 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2F164602CF;
- Sat,  8 Mar 2025 21:53:27 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id E366A5FAA0;
+ Sat,  8 Mar 2025 21:53:26 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PULL 07/31] tests/functional: update the aarch64_virg_gpu images
-Date: Sat,  8 Mar 2025 21:53:02 +0000
-Message-Id: <20250308215326.2907828-8-alex.bennee@linaro.org>
+Subject: [PULL 04/31] tests/functional: bail early if vkmark hangs
+Date: Sat,  8 Mar 2025 21:52:59 +0000
+Message-Id: <20250308215326.2907828-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250308215326.2907828-1-alex.bennee@linaro.org>
 References: <20250308215326.2907828-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,53 +102,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update to the most recent aarch64_virt_gpu image. The principle
-differences are:
+The message:
 
-  - target a v8.0 baseline CPU
-  - latest vkmark (2025.1)
-  - actually uses the rootfs (previously was initrd)
-  - rootfs includes more testing tools for interactive use
+  MESA-VIRTIO: debug: stuck in fence wait with iter at %d
 
-See README.md in https://fileserver.linaro.org/s/ce5jXBFinPxtEdx for
-details about the image creation and the buildroot config.
+Seems to occur more often on debug builds. Rather than waiting for our
+long timeout to hit we might as well bail as soon as we see the
+message.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250304222439.2035603-8-alex.bennee@linaro.org>
+Message-Id: <20250304222439.2035603-5-alex.bennee@linaro.org>
 
 diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-index 4a21d8c6cd..c6f7738e93 100755
+index 9a1ee2befc..eea1e8c973 100755
 --- a/tests/functional/test_aarch64_virt_gpu.py
 +++ b/tests/functional/test_aarch64_virt_gpu.py
-@@ -25,14 +25,14 @@ class Aarch64VirtGPUMachine(LinuxKernelTest):
-     ASSET_VIRT_GPU_KERNEL = Asset(
-         'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
-         'download?path=%2F&files='
--        'Image',
--        '89e5099d26166204cc5ca4bb6d1a11b92c217e1f82ec67e3ba363d09157462f6')
-+        'Image.6.12.16.aarch64',
-+        '7888c51c55d37e86bbbdeb5acea9f08c34e6b0f03c1f5b2463285f6a6f6eec8b')
+@@ -78,7 +78,7 @@ def _launch_virt_gpu(self, gpu_device):
+         self.wait_for_console_pattern('buildroot login:')
+         ec_and_wait(self, 'root', '#')
  
-     ASSET_VIRT_GPU_ROOTFS = Asset(
-         'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
-         'download?path=%2F&files='
--        'rootfs.ext4.zstd',
--        '792da7573f5dc2913ddb7c638151d4a6b2d028a4cb2afb38add513c1924bdad4')
-+        'rootfs.aarch64.ext2.zstd',
-+        'd45118c899420b7e673f1539a37a35480134b3e36e3a59e2cb69b1781cbb14ef')
+-    def _run_virt_weston_test(self, cmd):
++    def _run_virt_weston_test(self, cmd, fail = None):
  
-     def _launch_virt_gpu(self, gpu_device):
+         # make it easier to detect successful return to shell
+         PS1 = 'RES=[$?] # '
+@@ -87,7 +87,7 @@ def _run_virt_weston_test(self, cmd):
+         ec_and_wait(self, 'export XDG_RUNTIME_DIR=/tmp', '#')
+         ec_and_wait(self, f"export PS1='{PS1}'", OK_CMD)
+         full_cmd = f"weston -B headless --renderer gl --shell kiosk -- {cmd}"
+-        ec_and_wait(self, full_cmd, OK_CMD)
++        ec_and_wait(self, full_cmd, OK_CMD, fail)
  
-@@ -47,7 +47,7 @@ def _launch_virt_gpu(self, gpu_device):
-                                'console=ttyAMA0 root=/dev/vda')
+     @skipIfMissingCommands('zstd')
+     def test_aarch64_virt_with_vulkan_gpu(self):
+@@ -95,7 +95,9 @@ def test_aarch64_virt_with_vulkan_gpu(self):
+         self.require_device('virtio-gpu-gl-pci')
  
-         self.vm.add_args("-accel", "tcg")
--        self.vm.add_args("-cpu", "neoverse-v1,pauth-impdef=on")
-+        self.vm.add_args("-cpu", "cortex-a72")
-         self.vm.add_args("-machine", "virt,gic-version=max",
-                          '-kernel', kernel_path,
-                          '-append', kernel_command_line)
+         self._launch_virt_gpu("virtio-gpu-gl-pci,hostmem=4G,blob=on,venus=on")
+-        self._run_virt_weston_test("vkmark -b:duration=1.0")
++        self._run_virt_weston_test("vkmark -b:duration=1.0",
++                                   "debug: stuck in fence wait with iter at")
++
+ 
+ if __name__ == '__main__':
+     LinuxKernelTest.main()
 -- 
 2.39.5
 
