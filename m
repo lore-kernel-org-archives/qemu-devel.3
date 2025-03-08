@@ -4,100 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB9FC282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DE91C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr3Jx-0007pm-BI; Sat, 08 Mar 2025 18:11:07 -0500
+	id 1tr3Pq-0003Pt-TB; Sat, 08 Mar 2025 18:17:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3Jl-0007eo-96
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:10:53 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3Pn-0003Ok-8v
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:17:07 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3Ji-0001XI-4s
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:10:52 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-38f2f391864so1623059f8f.3
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 15:10:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3Pk-0002hh-DA
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:17:06 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43cf257158fso292645e9.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 15:17:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741475448; x=1742080248; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rb5Gq5gjoqNir/3li58uEI51RqNLZd7aJ8wRwb3WrW0=;
- b=kbYMerpbu2auPrQgtcwk4ahZFARRoh87Uekzd5/A3BAUEhBMr5xZqc1hRD2SiI7R3+
- UgkizcjzEXcGmQT+vGqQJdlM7fEYQSzp8EybYMTfFiGd9MNDb8K3nazMk1zniP22VZTT
- 6i1GxivGAFXk2+2v+Cho0a8PKB1T7rJOxgp6Lx/ef1L672frht/5PS+fxPL9ZTMFV5yt
- 2XWb/TPbcIBoKWowLDzua+726N2Tt1Dtau4IEd2Cy+HjhdQ9lUShKbbmpZ7pZL48wuB/
- gzZNQmsn+OYcdMl/tboEAI7mBannDnJesG+o8Y9fZbaZ1BR/1vHJBhczKQEmxWNSX3iM
- cfSQ==
+ d=linaro.org; s=google; t=1741475823; x=1742080623; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=INW01CuM2OwxyeZ3NmWM0knJinOt8Ggn1MBxQ2GRxd4=;
+ b=m1RF+Quq4CHd+TMetiRP6IG6y9RQstB5vuAOIcQGPL+TXBtJ2QX+IccHb+lrevt2pX
+ w1akoEgrl1J0qsdIa+3rsUCKuIBt/ataro1uqePNnKC3ATWVPylc0KAmWUwBTpJJ220G
+ wtozlSmCBKGWe0ScBTDmUBvfx8guLPSrbZrpIAqR+bg9kIbFNIH3SmjYLzEtdPklC4QM
+ mohvl4l8f/3EasQ8N805k3qAsX33a11zZGPry6U+4mphLtS7KXJ9k5WmbeVxFX80gSjz
+ 2PoJlDLUQ6hNGH/9V8rtWZyvejjfyD2Z7Sg1makz57vlCCpSrz29hz51YPt1eNl5lrIF
+ HivA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741475448; x=1742080248;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rb5Gq5gjoqNir/3li58uEI51RqNLZd7aJ8wRwb3WrW0=;
- b=F1oBzDi/C5+QrHXUkS1bRPyzRmxbRI5xKwPxhZOMaPKf0MI3lOb0weveRyZrtgBbMF
- HU0kseP6Blmdjk+c8J5kA5JO0Rf4ue2mE2WVZ5hiZ0ZWC5YxydQWgx+1+8LB0ViacdE+
- A5gs0G1v6quIxd082XOjbZaBIC6D74cXHrZZlglcNTi0U13C9oJgnoBeFyk49ZAMvZ4a
- vVKfkXr+n0DeeSrYUJrQh/B/1d+uA/gEUEe3M+7Z8cMlbrTIlxJ26Az92NG2pAFvrFZF
- empUFXvQzvHQYE+Wl105bnMQYhzqWjZ4CDUzcCC1YNwHAelQu9bRoT4oFj8RIQtLJyHx
- i+JA==
-X-Gm-Message-State: AOJu0YxJY0445Lb4zm3wLFYW3rYVVG5w8g5z2lruYiaHNXBPNi2rwk0+
- ylNetwQK6R0cYQJQeute69mOimbl2HbrQwqSYAoiiO7zLKx2IphkYDDgM25kiXStEyUMXcedYuU
- fh6A=
-X-Gm-Gg: ASbGnctE3whuypphbV+8a8bngNsgT3uYqQLaBPom9ZUtGvVJL/LOvLc/8KHFf8TjvKY
- oAzgtuyh3oac5Cu+q+Usf7lmdUREiNBy6gFUHSaHvkJbkcO5Uay0pYmzSLxh/Q3045pnYxRaCH5
- rIp+aNisXDSm8TdRpZ8a8SCMkzIwOi4hQby77rQQHVgAIkzozlacqGQgNNEv3YA2B23FrOSjuMl
- gsR0lJv1INtJEw/upRtE52Xr2BdOyaAfh7+qYDMgq/P6Pl/1Mbg8ZtGLBgBUDl/UzvVqdNbXZ7U
- ydMzIGRqxmfw0ougUUvibZ5b+5619DCCk2lphpLibu5nU3TnNI/jGjIQc7PtkMF772zLmByNZ6V
- P/qZxAc704fYhW0Bn/Ds=
-X-Google-Smtp-Source: AGHT+IFpyPZ8OHsunTdPUAhz3+hHZqpRzqB+uc+3KU0WeLI4qJr+CM3YEWcq/yPMOmAPEzlWQ4DAbw==
-X-Received: by 2002:a5d:588f:0:b0:390:f394:6274 with SMTP id
- ffacd0b85a97d-39132da9214mr5345868f8f.52.1741475448065; 
- Sat, 08 Mar 2025 15:10:48 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1741475823; x=1742080623;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=INW01CuM2OwxyeZ3NmWM0knJinOt8Ggn1MBxQ2GRxd4=;
+ b=HWzLZaJ39Mh7lL4mYsEEGTr7CCvakIMzmatHac4GbPIgUuqb/PXizNimYyd8IvPFyn
+ 2Efd1190GBITbQx73uRBHfHCHeCOzDPqRxylTz1nT2wBvVQkTvh97yde/x+wdrYmg45r
+ 2esFimiVZPXql8pG/gVVI+GXeq+U/odLN4VFR0Y8d1kAy9eD8ZN5phKfW0foxyPVuzsK
+ ehu6XXHng7mQF6C9TFEBiQtWa4gdIh97Qf2Uc0d7I9bIRcxq/S9h9xP8hxrZO6flFfOh
+ GEtGg+BDAeNfBgs4JEOoYkScwzYmXU95LcFraNX8nUi3Ec5assXRkTlXNRcc9KlmbKHX
+ 3TBg==
+X-Gm-Message-State: AOJu0YyI5wwDs5zDw7+uR0TDtaprjvayet7xtIcr6JoFi1fN/bveHu+u
+ RxS4Hs01FZYEY8OosmdFGHutZQFEQ+zlRG6t/aXbXEpAyWUPS5EJLXJ6af664D8=
+X-Gm-Gg: ASbGncs7oLpQ97Nxk7FHCFJj/ncJmFpUnB7ufuRmutADbhnGb7GnNSS3gdgh2FnmCeG
+ oCzhMMmeGrUV29PMw0z9j1OSnRGTqZQReLDm+PuFplPPSFttNfb5oMW/5UCr/Mzyx/PkojS0cou
+ oWz/OyhbLGocU5PArfDQsEOMT+kgWhxIiwkUtP6DejpgRqXkMU6XxE6q8TlRGPlK33ps+wLUbUj
+ LpxD9u61ZIfTqJuFmcoO5g1alyFR78ZD2914gqJtxFOLXIJ66TfIE79TelcAvB1xUyXLWGLEyVS
+ ul84GF9D/GLXjGYQrNbGmmyOK3l8Nj5msOHIuYwQmzpbwL25021VB/9LZAWwMVQeFYTWjljIoni
+ rQahzj6prjf3f
+X-Google-Smtp-Source: AGHT+IH3RKRQm0i4b3ozgtKHah6fNeUEEJ3R+EjLH4rIYDBdVWX58b8/Upk1EQciUfWiMN5InSk8Mw==
+X-Received: by 2002:a05:600c:3510:b0:43b:cf12:2ca5 with SMTP id
+ 5b1f17b1804b1-43c601d9145mr51835285e9.8.1741475822874; 
+ Sat, 08 Mar 2025 15:17:02 -0800 (PST)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfb79fbsm10297840f8f.13.2025.03.08.15.10.45
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 08 Mar 2025 15:10:46 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Tomita Moeko <tomitamoeko@gmail.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eric Farman <farman@linux.ibm.com>, Eduardo Habkost <eduardo@habkost.net>,
- Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-s390x@nongnu.org,
- Eric Auger <eric.auger@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 15/21] hw/vfio/pci: Check CONFIG_IOMMUFD at runtime using
- iommufd_builtin()
-Date: Sun,  9 Mar 2025 00:09:11 +0100
-Message-ID: <20250308230917.18907-16-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250308230917.18907-1-philmd@linaro.org>
-References: <20250308230917.18907-1-philmd@linaro.org>
+ ffacd0b85a97d-3912c01de21sm10244448f8f.59.2025.03.08.15.17.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 08 Mar 2025 15:17:01 -0800 (PST)
+Message-ID: <142807a2-9536-4483-80ab-5f24793c841f@linaro.org>
+Date: Sun, 9 Mar 2025 00:16:59 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 03/14] hw/sd/sdhci: Introduce SDHCIClass stub
+To: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Guenter Roeck <linux@roeck-us.net>, qemu-block@nongnu.org,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org
+References: <20250308213640.13138-1-philmd@linaro.org>
+ <20250308213640.13138-4-philmd@linaro.org>
+ <1839f9de-2370-50bd-7003-ade92707f137@eik.bme.hu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1839f9de-2370-50bd-7003-ade92707f137@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,101 +110,382 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the compile time check on the CONFIG_IOMMUFD definition
-by a runtime one by calling iommufd_builtin().
+On 8/3/25 23:34, BALATON Zoltan wrote:
+> On Sat, 8 Mar 2025, Philippe Mathieu-Daudé wrote:
+>> TYPE_SYSBUS_SDHCI is a bit odd because it uses an union
+>> to work with both SysBus / PCI parent. As this is not a
+>> normal use, introduce SDHCIClass in its own commit.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> include/hw/sd/sdhci.h | 9 +++++++++
+>> hw/sd/sdhci.c         | 1 +
+>> 2 files changed, 10 insertions(+)
+>>
+>> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+>> index 48247e9a20f..c4b20db3877 100644
+>> --- a/include/hw/sd/sdhci.h
+>> +++ b/include/hw/sd/sdhci.h
+>> @@ -107,6 +107,13 @@ struct SDHCIState {
+>> };
+>> typedef struct SDHCIState SDHCIState;
+>>
+>> +typedef struct SDHCIClass {
+>> +    union {
+>> +        PCIDeviceClass pci_parent_class;
+>> +        SysBusDeviceClass sbd_parent_class;
+>> +    };
+>> +} SDHCIClass;
+>> +
+>> /*
+>>  * Controller does not provide transfer-complete interrupt when not
+>>  * busy.
+>> @@ -123,6 +130,8 @@ DECLARE_INSTANCE_CHECKER(SDHCIState, PCI_SDHCI,
+>> #define TYPE_SYSBUS_SDHCI "generic-sdhci"
+>> DECLARE_INSTANCE_CHECKER(SDHCIState, SYSBUS_SDHCI,
+>>                          TYPE_SYSBUS_SDHCI)
+>> +DECLARE_CLASS_CHECKERS(SDHCIClass, SYSBUS_SDHCI,
+>> +                       TYPE_SYSBUS_SDHCI)
+> 
+> Are these two together just OBJECT_DECLARE_TYPE? Then the above typedefs 
+> are also not needed just the struct definitions.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I'd like to but it isn't possible because the same object state/class is
+used by distinct types (PCI & SysBus).
+
+The following (expected to be correct) change ...:
+-- >8 --
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index 966a1751f50..341b130995b 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -155,10 +155,6 @@ typedef struct SDHCIClass {
+  #define TYPE_PCI_SDHCI "sdhci-pci"
+-DECLARE_INSTANCE_CHECKER(SDHCIState, PCI_SDHCI,
+-                         TYPE_PCI_SDHCI)
++OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, PCI_SDHCI)
+
+  #define TYPE_SYSBUS_SDHCI "generic-sdhci"
+-DECLARE_INSTANCE_CHECKER(SDHCIState, SYSBUS_SDHCI,
+-                         TYPE_SYSBUS_SDHCI)
+-DECLARE_CLASS_CHECKERS(SDHCIClass, SYSBUS_SDHCI,
+-                       TYPE_SYSBUS_SDHCI)
++OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, SYSBUS_SDHCI)
 ---
- hw/vfio/pci.c | 38 ++++++++++++++++++--------------------
- 1 file changed, 18 insertions(+), 20 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 9872884ff8a..e83252766d1 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -19,7 +19,6 @@
-  */
- 
- #include "qemu/osdep.h"
--#include CONFIG_DEVICES /* CONFIG_IOMMUFD */
- #include <linux/vfio.h>
- #include <sys/ioctl.h>
- 
-@@ -2973,11 +2972,10 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-         if (!(~vdev->host.domain || ~vdev->host.bus ||
-               ~vdev->host.slot || ~vdev->host.function)) {
-             error_setg(errp, "No provided host device");
--            error_append_hint(errp, "Use -device vfio-pci,host=DDDD:BB:DD.F "
--#ifdef CONFIG_IOMMUFD
--                              "or -device vfio-pci,fd=DEVICE_FD "
--#endif
--                              "or -device vfio-pci,sysfsdev=PATH_TO_DEVICE\n");
-+            error_append_hint(errp, "Use -device vfio-pci,host=DDDD:BB:DD.F %s"
-+                              "or -device vfio-pci,sysfsdev=PATH_TO_DEVICE\n",
-+                              iommufd_builtin()
-+                              ? "or -device vfio-pci,fd=DEVICE_FD " : "");
-             return;
-         }
-         vbasedev->sysfsdev =
-@@ -3412,19 +3410,18 @@ static const Property vfio_pci_dev_properties[] = {
-                                    qdev_prop_nv_gpudirect_clique, uint8_t),
-     DEFINE_PROP_OFF_AUTO_PCIBAR("x-msix-relocation", VFIOPCIDevice, msix_relo,
-                                 OFF_AUTO_PCIBAR_OFF),
--#ifdef CONFIG_IOMMUFD
--    DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
--                     TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
--#endif
-     DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, skip_vsc_check, true),
- };
- 
--#ifdef CONFIG_IOMMUFD
-+static const Property vfio_pci_dev_iommufd_properties[] = {
-+    DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
-+                     TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
-+};
-+
- static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
- {
-     vfio_device_set_fd(&VFIO_PCI(obj)->vbasedev, str, errp);
- }
--#endif
- 
- static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
- {
-@@ -3433,9 +3430,10 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
- 
-     device_class_set_legacy_reset(dc, vfio_pci_reset);
-     device_class_set_props(dc, vfio_pci_dev_properties);
--#ifdef CONFIG_IOMMUFD
--    object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
--#endif
-+    if (iommufd_builtin()) {
-+        device_class_set_props(dc, vfio_pci_dev_iommufd_properties);
-+        object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
-+    }
-     dc->desc = "VFIO-based PCI device assignment";
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-     pdc->realize = vfio_realize;
-@@ -3540,11 +3538,11 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
-                                           "vf-token",
-                                           "Specify UUID VF token. Required for VF when PF is owned "
-                                           "by another VFIO driver");
--#ifdef CONFIG_IOMMUFD
--    object_class_property_set_description(klass, /* 9.0 */
--                                          "iommufd",
--                                          "Set host IOMMUFD backend device");
--#endif
-+    if (iommufd_builtin()) {
-+        object_class_property_set_description(klass, /* 9.0 */
-+                                              "iommufd",
-+                                              "Set host IOMMUFD backend device");
-+    }
-     object_class_property_set_description(klass, /* 9.1 */
-                                           "x-device-dirty-page-tracking",
-                                           "Disable device dirty page tracking and use "
--- 
-2.47.1
+... produces:
 
+FAILED: libqemu-aarch64-softmmu.a.p/hw_arm_mcimx6ul-evk.c.o
+In file included from ../../hw/arm/mcimx6ul-evk.c:15:
+In file included from include/hw/arm/fsl-imx6ul.h:31:
+include/hw/sd/sdhci.h:165:1: error: redefinition of 
+'glib_autoptr_clear_SDHCIState'
+   165 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, SYSBUS_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1360:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1360 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) (TypeName *_ptr) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1343:49: note: expanded from macro 
+'_GLIB_AUTOPTR_CLEAR_FUNC_NAME'
+  1343 | #define _GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) 
+glib_autoptr_clear_##TypeName
+       |                                                 ^
+<scratch space>:77:1: note: expanded from here
+    77 | glib_autoptr_clear_SDHCIState
+       | ^
+include/hw/sd/sdhci.h:158:1: note: previous definition is here
+   158 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, PCI_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1360:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1360 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) (TypeName *_ptr) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1343:49: note: expanded from macro 
+'_GLIB_AUTOPTR_CLEAR_FUNC_NAME'
+  1343 | #define _GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) 
+glib_autoptr_clear_##TypeName
+       |                                                 ^
+<scratch space>:48:1: note: expanded from here
+    48 | glib_autoptr_clear_SDHCIState
+       | ^
+In file included from ../../hw/arm/mcimx6ul-evk.c:15:
+In file included from include/hw/arm/fsl-imx6ul.h:31:
+include/hw/sd/sdhci.h:165:1: error: redefinition of 
+'glib_autoptr_cleanup_SDHCIState'
+   165 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, SYSBUS_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1362:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1362 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_FUNC_NAME(TypeName) (TypeName **_ptr) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1342:43: note: expanded from macro 
+'_GLIB_AUTOPTR_FUNC_NAME'
+  1342 | #define _GLIB_AUTOPTR_FUNC_NAME(TypeName) 
+glib_autoptr_cleanup_##TypeName
+       |                                           ^
+<scratch space>:78:1: note: expanded from here
+    78 | glib_autoptr_cleanup_SDHCIState
+       | ^
+include/hw/sd/sdhci.h:158:1: note: previous definition is here
+   158 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, PCI_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1362:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1362 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_FUNC_NAME(TypeName) (TypeName **_ptr) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1342:43: note: expanded from macro 
+'_GLIB_AUTOPTR_FUNC_NAME'
+  1342 | #define _GLIB_AUTOPTR_FUNC_NAME(TypeName) 
+glib_autoptr_cleanup_##TypeName
+       |                                           ^
+<scratch space>:49:1: note: expanded from here
+    49 | glib_autoptr_cleanup_SDHCIState
+       | ^
+In file included from ../../hw/arm/mcimx6ul-evk.c:15:
+In file included from include/hw/arm/fsl-imx6ul.h:31:
+include/hw/sd/sdhci.h:165:1: error: redefinition of 
+'glib_autoptr_destroy_SDHCIState'
+   165 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, SYSBUS_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1364:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1364 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_DESTROY_FUNC_NAME(TypeName) (void *_ptr) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1344:51: note: expanded from macro 
+'_GLIB_AUTOPTR_DESTROY_FUNC_NAME'
+  1344 | #define _GLIB_AUTOPTR_DESTROY_FUNC_NAME(TypeName) 
+glib_autoptr_destroy_##TypeName
+       |                                                   ^
+<scratch space>:80:1: note: expanded from here
+    80 | glib_autoptr_destroy_SDHCIState
+       | ^
+include/hw/sd/sdhci.h:158:1: note: previous definition is here
+   158 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, PCI_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1364:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1364 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_DESTROY_FUNC_NAME(TypeName) (void *_ptr) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1344:51: note: expanded from macro 
+'_GLIB_AUTOPTR_DESTROY_FUNC_NAME'
+  1344 | #define _GLIB_AUTOPTR_DESTROY_FUNC_NAME(TypeName) 
+glib_autoptr_destroy_##TypeName
+       |                                                   ^
+<scratch space>:51:1: note: expanded from here
+    51 | glib_autoptr_destroy_SDHCIState
+       | ^
+In file included from ../../hw/arm/mcimx6ul-evk.c:15:
+In file included from include/hw/arm/fsl-imx6ul.h:31:
+include/hw/sd/sdhci.h:165:1: error: redefinition of 
+'glib_listautoptr_cleanup_SDHCIState'
+   165 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, SYSBUS_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1366:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1366 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_LIST_FUNC_NAME(TypeName) (GList **_l) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1346:48: note: expanded from macro 
+'_GLIB_AUTOPTR_LIST_FUNC_NAME'
+  1346 | #define _GLIB_AUTOPTR_LIST_FUNC_NAME(TypeName) 
+glib_listautoptr_cleanup_##TypeName
+       |                                                ^
+<scratch space>:81:1: note: expanded from here
+    81 | glib_listautoptr_cleanup_SDHCIState
+       | ^
+include/hw/sd/sdhci.h:158:1: note: previous definition is here
+   158 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, PCI_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1366:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1366 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_LIST_FUNC_NAME(TypeName) (GList **_l) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1346:48: note: expanded from macro 
+'_GLIB_AUTOPTR_LIST_FUNC_NAME'
+  1346 | #define _GLIB_AUTOPTR_LIST_FUNC_NAME(TypeName) 
+glib_listautoptr_cleanup_##TypeName
+       |                                                ^
+<scratch space>:52:1: note: expanded from here
+    52 | glib_listautoptr_cleanup_SDHCIState
+       | ^
+In file included from ../../hw/arm/mcimx6ul-evk.c:15:
+In file included from include/hw/arm/fsl-imx6ul.h:31:
+include/hw/sd/sdhci.h:165:1: error: redefinition of 
+'glib_slistautoptr_cleanup_SDHCIState'
+   165 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, SYSBUS_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1368:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1368 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_SLIST_FUNC_NAME(TypeName) (GSList **_l) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1348:49: note: expanded from macro 
+'_GLIB_AUTOPTR_SLIST_FUNC_NAME'
+  1348 | #define _GLIB_AUTOPTR_SLIST_FUNC_NAME(TypeName) 
+glib_slistautoptr_cleanup_##TypeName
+       |                                                 ^
+<scratch space>:83:1: note: expanded from here
+    83 | glib_slistautoptr_cleanup_SDHCIState
+       | ^
+include/hw/sd/sdhci.h:158:1: note: previous definition is here
+   158 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, PCI_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1368:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1368 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_SLIST_FUNC_NAME(TypeName) (GSList **_l) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1348:49: note: expanded from macro 
+'_GLIB_AUTOPTR_SLIST_FUNC_NAME'
+  1348 | #define _GLIB_AUTOPTR_SLIST_FUNC_NAME(TypeName) 
+glib_slistautoptr_cleanup_##TypeName
+       |                                                 ^
+<scratch space>:54:1: note: expanded from here
+    54 | glib_slistautoptr_cleanup_SDHCIState
+       | ^
+In file included from ../../hw/arm/mcimx6ul-evk.c:15:
+In file included from include/hw/arm/fsl-imx6ul.h:31:
+include/hw/sd/sdhci.h:165:1: error: redefinition of 
+'glib_queueautoptr_cleanup_SDHCIState'
+   165 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, SYSBUS_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1370:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1370 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_QUEUE_FUNC_NAME(TypeName) (GQueue **_q) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1350:49: note: expanded from macro 
+'_GLIB_AUTOPTR_QUEUE_FUNC_NAME'
+  1350 | #define _GLIB_AUTOPTR_QUEUE_FUNC_NAME(TypeName) 
+glib_queueautoptr_cleanup_##TypeName
+       |                                                 ^
+<scratch space>:85:1: note: expanded from here
+    85 | glib_queueautoptr_cleanup_SDHCIState
+       | ^
+include/hw/sd/sdhci.h:158:1: note: previous definition is here
+   158 | OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, PCI_SDHCI)
+       | ^
+include/qom/object.h:238:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+   238 |     G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+       |     ^
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: expanded from macro 
+'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+  1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+       |   ^
+/usr/include/glib-2.0/glib/gmacros.h:1370:36: note: expanded from macro 
+'_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+  1370 |   static G_GNUC_UNUSED inline void 
+_GLIB_AUTOPTR_QUEUE_FUNC_NAME(TypeName) (GQueue **_q) 
+     \
+       |                                    ^
+/usr/include/glib-2.0/glib/gmacros.h:1350:49: note: expanded from macro 
+'_GLIB_AUTOPTR_QUEUE_FUNC_NAME'
+  1350 | #define _GLIB_AUTOPTR_QUEUE_FUNC_NAME(TypeName) 
+glib_queueautoptr_cleanup_##TypeName
+       |                                                 ^
+<scratch space>:56:1: note: expanded from here
+    56 | glib_queueautoptr_cleanup_SDHCIState
+       | ^
+6 errors generated.
+ninja: build stopped: subcommand failed.
+
+Don't ask me why it is so verbose...
+
+Meanwhile the current legacy macros seems good enough for soft freeze ;)
 
