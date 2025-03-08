@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5460C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:55:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA6ADC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr275-0003L8-T7; Sat, 08 Mar 2025 16:53:43 -0500
+	id 1tr27D-0003P5-9h; Sat, 08 Mar 2025 16:53:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr273-0003J2-K1
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:41 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1tr274-0003Jp-MW
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:42 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr271-0000xD-QN
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:41 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3913d45a148so594003f8f.3
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:53:39 -0800 (PST)
+ id 1tr272-0000xQ-Tr
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:42 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-438a39e659cso17090645e9.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:53:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741470818; x=1742075618; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741470819; x=1742075619; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/rFt/QJLuWh25zQpEuk3M1G9rXxDyCO7fkiaWwlgSTQ=;
- b=mUoJ3EBOZzMFLrJEF6terg6MsJmZCXKoIE3DXgJQ4ZC3BfHryUtVkbQmyg0B6qaLp7
- VboFx0ZqIPUls3OvVaHrC3PQeWMDUytkGGU1ysu8uaSsCZRbEXdArjebTSUSJg+OIUf7
- kwSSfFhe878B5HmRUAUIP8iKC1KUC/ScqQbjcPX7sTA2tzTVr4nGDibvmdHUpLJQN3tx
- gjAaNVUOkTdqaSoULw4BzqgTZ9G6BkwqpisTI8leKSAJTdGc/Az8jLjNpcWIj+0VcD19
- 7Jehab/nhwsAHSvNW2hCTMs7U4eEekh/fn0n32KkXGBjDOxIwVYcoti53ihaqPJ14Pbr
- C5LQ==
+ bh=sIOKeEXB9jLSbKJZtM3r/78Jta+lLdKfVVnoz+aUVcI=;
+ b=vJHzynM4Wt9mz09CIhjpyEGVF3PY7nJ8OMHJMPeoWqxn30wyrZOUf1Gr4gsEy7Kd2r
+ c7RSrhzeSMDD2SBdSdeeWoLnGVTq0WONhKT8c50LEEctdJTMuP+gzXfNsOGYuZhEahqa
+ zoVGEKiyjz9hjr99ELS95KQVqLNwwkr85e1RmBqq0q1R2yGLA+qcMtHGlmx0zP/k+CAF
+ Toi13CU1F3Eg38WACuxQXxFVbYJs5yWO/ACYJsSsvsJu9ElZ7W6mxwnW5BjwSLP+EpKh
+ ygOsp6ko/MEFF8C5v7TPjv0/BgHExYoV1ocf0fjZrd3vh/sajsMoLVghqhACNmClARn2
+ bZsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741470818; x=1742075618;
+ d=1e100.net; s=20230601; t=1741470819; x=1742075619;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/rFt/QJLuWh25zQpEuk3M1G9rXxDyCO7fkiaWwlgSTQ=;
- b=l6pZwnT+NDLjFw263TXf2XB6nChL4h7UMj1VRA9ivZp10qb3PRNmiR2U8Sa0ypdVWy
- BkhVOr9B0XJIfsYhJQYMHMg232eWxlLHofXBFyGXp1HlaYaKOUEu0wq2enTtj16+8tgA
- zszNecY6rE1H1Ls39RY06bwdS7uFK2ShaX7DJkmMDMnCkZ3ziBrdS4YOyhgjNySLYi1P
- 0aDXj1XdN1GFbzI5d1aaRr+LFnV+Ct47EICvLekNbIYDSn9otGgrDzUaBwDPDKvCoHR/
- l2VhbNf9jfGQYH5VwuPobal3KEi2OLVMEe8VH0Gu66hJ1gJzcO7+ZGhvWr771txtNN1D
- +wMg==
-X-Gm-Message-State: AOJu0YwuEM9jJMSAx7OiVDdUe2T3WO5tcYtVMn9ih3AhFrnNCaDI/2nU
- X+eyPl8NUNIKK9rotacrlNNHd6sxyQeWt4f1DVmY/wmQrFbiCGPw8oTtC+lospllKg6JXyOxIPD
- e
-X-Gm-Gg: ASbGncuNgyUuF+QsHtJ2/ufu3mM2kEIqhgp//IGvjzam2tNHjPlMtSQMiZSoYmBrE9L
- +H4ZC5vMARAV2rrFEIsSUiJZeMXmSg+AKvzFS2oRD0kV9oQ+xPa47ZysrygN0Kv0tgh1QeSw53D
- wSw1LYA720iZ+ANjBeEX5orZNQ4AKaR8JV8EzGkPbB1VDDYcwfRdAok6lOkmEB4x0BOqQoNv/2B
- ONlou5kZO4e/1j0ioK9ABW77Vn3xd0rqg7j1nCMbHXb0LHVfymo2W9UGZlxamv712Zishp9woLc
- b7qbK/tA9beoPhprMNXK47YNxvgyUiKYYh6qYZyviF13xc8=
-X-Google-Smtp-Source: AGHT+IFEbvTgwTc8kjJFnGTDvulUcsSzcX5WaEtnaXlMw8BXIxY+qkZPbR8FIPv2ZEGhZ5fLArb84Q==
-X-Received: by 2002:a5d:47c1:0:b0:391:2bcc:11f2 with SMTP id
- ffacd0b85a97d-39132d2ac45mr4864532f8f.1.1741470818313; 
+ bh=sIOKeEXB9jLSbKJZtM3r/78Jta+lLdKfVVnoz+aUVcI=;
+ b=nO4AeHqiI3swuB/iKJ/yhO+PwJkHxgegnamkf6ksJgU/tl+I77decmxtTdivNefoMW
+ AAdOtcwFGHxkOhg+0V9Ig1cOWqc5qGo0EFsHy3aW9ERhrV1h6bugMRa2RAAH3xAQOcgL
+ 7sT2E8NBrbBnXtE8isRH9wQq+b+Lh2kOhm2aJNqlRnXYe3HdPSHvG0SKrJSvXJG3vI1N
+ SXQKcjtKZFyqLS5sfGbiKRaW+cQGZOvOfIcFggD6JKsDv/emZFhj6hOs65I6Fn1F8m+6
+ G1clSq+1uZojUZntqHVuRaARP1AypeQrWdSAXxntdg0YTScAZPKEEIFhnMRDd7dSuDlg
+ JRiQ==
+X-Gm-Message-State: AOJu0YwWRbHxZfZn0W6LuFm3DIwE8Hw9I42YryiG32uqZYo85coL1FMR
+ PKvj9l9TfuvwFPmmN2+XU9t7rtM8Owb6mgiSKFzooAE6SY/4Q7Wnqkv5erUfpDE=
+X-Gm-Gg: ASbGncuHtsnYWr9TX+pTieP73KgatayYEDnXmMGDv6x/U+IC2eE7//6CwmHBbW7kY4O
+ a88uZqL+6hCuLAN9ls+biy5epswWC4EboDM+xRYRRfJrRiclTIqPl7Q0Nbtw1H1bX9nTlSQj4HM
+ LB4M3GmRNFX8ClIbmNfLvCZnwDzJsChSlH9Z4TZjm9tv4dTGPlLYcXEcWHB13Fgk2Ro6nF43sTK
+ /As5OvLGKwE3g4Z+FLXbawK2JCaKZ2Oh/uvUG3AyjgINJqH8JufHSGsrwwJbiZt88uWPaDpHMOZ
+ SzGe7LZWNyiYun6BkjJCoDYKJuqZpEXdKna7MD4ypvsc81A=
+X-Google-Smtp-Source: AGHT+IHlw+3j03s6tCmHUCGygGSDUHvowGx/md8cQs48415TYtZmNj5ic6TBpxr0kT1/ooyeejq5mQ==
+X-Received: by 2002:a05:600c:4ece:b0:43b:c962:ad09 with SMTP id
+ 5b1f17b1804b1-43ce246ffe1mr28775105e9.1.1741470818908; 
  Sat, 08 Mar 2025 13:53:38 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c01de21sm10077662f8f.59.2025.03.08.13.53.30
+ 5b1f17b1804b1-43bd42c55f2sm125755895e9.20.2025.03.08.13.53.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Sat, 08 Mar 2025 13:53:34 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C137C6047E;
- Sat,  8 Mar 2025 21:53:27 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 678585FA87;
+ Sat,  8 Mar 2025 21:53:28 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 12/31] tests/vm: bump timeout for shutdown
-Date: Sat,  8 Mar 2025 21:53:07 +0000
-Message-Id: <20250308215326.2907828-13-alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 19/31] tests/functional: add boot error detection for RME tests
+Date: Sat,  8 Mar 2025 21:53:14 +0000
+Message-Id: <20250308215326.2907828-20-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250308215326.2907828-1-alex.bennee@linaro.org>
 References: <20250308215326.2907828-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,27 +103,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On my fairly beefy machine the timeout was triggering leaving a
-corrupted disk image due to power being pulled before the disk had
-synced. Triple the timeout to avoid this.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+It was identified that those tests randomly fail with a synchronous
+exception at boot (reported by EDK2).
+While we solve this problem, report failure immediately so tests don't
+timeout in CI.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250303185745.2504842-1-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250304222439.2035603-13-alex.bennee@linaro.org>
+Message-Id: <20250304222439.2035603-20-alex.bennee@linaro.org>
 
-diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
-index 6d41ac7574..9e879e966a 100644
---- a/tests/vm/basevm.py
-+++ b/tests/vm/basevm.py
-@@ -83,7 +83,7 @@ class BaseVM(object):
-     # command to halt the guest, can be overridden by subclasses
-     poweroff = "poweroff"
-     # Time to wait for shutdown to finish.
--    shutdown_timeout_default = 30
-+    shutdown_timeout_default = 90
-     # enable IPv6 networking
-     ipv6 = True
-     # This is the timeout on the wait for console bytes.
+diff --git a/tests/functional/test_aarch64_rme_sbsaref.py b/tests/functional/test_aarch64_rme_sbsaref.py
+index 93bb528338..ddcc9493a6 100755
+--- a/tests/functional/test_aarch64_rme_sbsaref.py
++++ b/tests/functional/test_aarch64_rme_sbsaref.py
+@@ -60,7 +60,8 @@ def test_aarch64_rme_sbsaref(self):
+ 
+         self.vm.launch()
+         # Wait for host VM boot to complete.
+-        wait_for_console_pattern(self, 'Welcome to Buildroot')
++        wait_for_console_pattern(self, 'Welcome to Buildroot',
++                                 failure_message='Synchronous Exception at')
+         exec_command_and_wait_for_pattern(self, 'root', '#')
+ 
+         test_realms_guest(self)
+diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional/test_aarch64_rme_virt.py
+index 42b9229b4c..38e01721a4 100755
+--- a/tests/functional/test_aarch64_rme_virt.py
++++ b/tests/functional/test_aarch64_rme_virt.py
+@@ -89,7 +89,8 @@ def test_aarch64_rme_virt(self):
+ 
+         self.vm.launch()
+         # Wait for host VM boot to complete.
+-        wait_for_console_pattern(self, 'Welcome to Buildroot')
++        wait_for_console_pattern(self, 'Welcome to Buildroot',
++                                 failure_message='Synchronous Exception at')
+         exec_command_and_wait_for_pattern(self, 'root', '#')
+ 
+         test_realms_guest(self)
 -- 
 2.39.5
 
