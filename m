@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 694F7C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D13C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:40:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr1sW-00074P-Dj; Sat, 08 Mar 2025 16:38:40 -0500
+	id 1tr1tf-0001LH-CL; Sat, 08 Mar 2025 16:39:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr1rH-0005bO-NM
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:37:39 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr1rs-0005tT-PS
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:38:04 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr1rE-0003wZ-R3
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:37:23 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-39140bd6317so246487f8f.1
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:37:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr1rq-00043J-7c
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:38:00 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43cf05f0c3eso760895e9.0
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:37:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741469839; x=1742074639; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741469876; x=1742074676; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K6w2s7vpLMt8PGTRM64NH99KcirJjbualG9t0DnJnfI=;
- b=cyWVjh0z1ZCNvJBY+sgXujX7MvN5vbGkZ6k1fZwzJmzKapkpld6mOoGPYV9owkDRC2
- yysRDLfW6H7aG3N1YzlSYrMD/qxNTNLyNJkBVwBh8eMyQMFdwxFUCKksRXWPBU+BfH3J
- 3gEAZGraI5tfpJRtbU7V/jk/mLX/CgO02lY1g7wNNfQs0TVi9/crV+09k7D1GKBka9BK
- bnwxbJgT2rZC2c15jpZKOiNlbaiuA6mVSgP3VBlFWbzWtQ1nIMbTolHUZKuu3IcQl7sj
- u8NwQINJaUi80+fLWZXoLZoZL6V0YocwFm4fwQEk3i+cOTcpJ0zdkQvtRFfrvLnhqpIy
- BrPA==
+ bh=JLtBjh/f3t9o68uNAMfvmOYu9CkLCOLT8MqoCkDG4gs=;
+ b=L+sR3UUOzHeFUgqEDIAfDjHC4CY9u4/+goO/j3xHzqcQOuzA3339hzwuE+VoW5355R
+ jjxKS6cLln7M/FZnXdQufKByeJK/LN88OvFe+K6OahlVgM6IqyBeP+o2YvJyIt4T2s61
+ lNU3A+lQePHv7mQTUIRsmP88ynadOPLaELyLDhpq5uQMdGbbvo4h7gFgLdVg7Y2WoFco
+ PHumpJgbcmCkPNqVNEUGF1L+G+fFN1DfOVnp1QV2flxBA5FQqyGA1XXTY7+r2oEVPpgM
+ 3dAB9STHd+PkKEpZrUDnWWGuldLKAcsMmnhv0nj54sL+BitzHsyq+jyUc0zOnu/2NK9F
+ p2KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741469839; x=1742074639;
+ d=1e100.net; s=20230601; t=1741469876; x=1742074676;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=K6w2s7vpLMt8PGTRM64NH99KcirJjbualG9t0DnJnfI=;
- b=sGF6TSIEbEPJrxACREyNKc8qhyFifWHqHhhsJU7xZPwCgyCZo8B6UJqp0/L4PLvU5e
- 1zmH37w+r16bbPn5EeCUFuhVRR//E4MCSAxqEgRvCOxadhA/6+eQdspPvCRyicsSZxTe
- tClCp64qn7eB4sLhCOB7cs2rAcoJrbGvT2ATdc+IDvU+1CZ1s7oZpSjXbVWDQGRGWF2U
- UTqvNO9KiPQxD3Cq/sQqLTzvqZF3HQ6J8nmbTSA82mHl9w+eBzDh8zIv11akOBDVKcql
- X4+sW4e1n9gMLfXYLPoYKCIOOv80o3q93xbl3ArX1Fhk1C/kVrOojFplDINh+17QB/lf
- SCwQ==
-X-Gm-Message-State: AOJu0Yxt0xMt0fzpoeDnddifkeb7uW035jReE1zW7i2aMsexSi/T/DWS
- CviFYvRIA2mmWMdYWj7oBLmP3ksYgnOrKyMkMJfT5p3UztA7gTB2916CsLZA9uyjae3Id/kLqXr
- cTA0=
-X-Gm-Gg: ASbGncta/Lc/UtvYiH9Xbw2aAWk2VDJ3Oukqe1GqPByuLY5xFRFU8aVYW5PGc4u/4Cs
- w0IYYQ3UJi3Ki5Ur8pZ3E+V1sdf9Vv03PaK34xkL5tzUtPJIlyHHQjtZAaHmT9SHxuMv1ejdNwU
- GHXHiGYs3YvhngPYy0Waz1kY+L8Fc8OMoasdt4cMrKVmi/ISbXMjaED+d9HaBvB9k2EP0Oe+trb
- zPSGWvYG8EtJgtpP1Q1Ll0qG+MhPS5PX12fMmX6J8posjuEB9U7G4vU+3/Sh43ow45abCESxGeC
- 5RQDSZ670pLsL9DGjPVu+TKESDlvI3TzD3k8fpYRTSxWR5pf0JlInJtVaThBWkoFMPDwIb67dUf
- VgbgOhdEJD7UHgVc6hQE=
-X-Google-Smtp-Source: AGHT+IHd/Cl9BUOitYGQQY6N+ZtglqfA5CZfDE84IrbB5Vxox40pVnN5He/DwpjGmvVlXSE0s7ybNw==
-X-Received: by 2002:a5d:5f45:0:b0:38d:d9bd:18a6 with SMTP id
- ffacd0b85a97d-39132dc545dmr4796426f8f.42.1741469839210; 
- Sat, 08 Mar 2025 13:37:19 -0800 (PST)
+ bh=JLtBjh/f3t9o68uNAMfvmOYu9CkLCOLT8MqoCkDG4gs=;
+ b=rbA1VJUVu+DpjIRlkJUoIufL3fvQwQN4pY6kjA+5aL+ZnOn8BOexw+Nd8lltm8WqhB
+ 5BhHv3LtHDjDL5GHhAFTdHyOGncIVHjqtCY+7qhuXZVfKqCp7xRQCdb7+InzGw0NT6IZ
+ 4KA0Bzg3PoU4d0styx/o4KoySwOigeGrrYDO/MKHesXumoAptWgc6+k9aq1RguFEhOni
+ 6oE8Xm2IQfSrYQB6mkMJpsMJZAkeQ8ucSwqClGgWR67AZhy/vtgXUn0Quvi5Ut5AFgOU
+ 1hNvbfSCwgSNkBjf0ZP2wswGaS4HpoA6jazFwDtCnHF4o4pWzz25QCTsoflT0PYr9yD0
+ mxjw==
+X-Gm-Message-State: AOJu0YwrF9vfs9hDRDrdrXK1K/id/edUNxXQAn+DTiV8vr4GTk5f10RD
+ f0bvTw0vE2ZiHj+pnteSojnrCBKKptPGDeGNJev5PXaFw0g4B48uq4Z7bxaS4SkkVTK6zF0cH9o
+ DWWY=
+X-Gm-Gg: ASbGncs+A8blFJRGCrl4QJ5YKBVJHxYk4dZ0C7QHl/+2iEFuVAPUggwIrn0/2xmFj3t
+ Gl0Kmpj+jLm5sJSFOe1qWpVyQR+qWz4h1D4za00jFU7UcaS6dBakuo4N2ceIGVNEBw9esgvxXCx
+ 80l1M85WSjFtIml/hSNwKsONZ76OLX2qS8u7//wOBNTjFZJHl02WiP5sUw24Wa8gPyAxbVgyRRy
+ ZHvzwZZMHrnVX1zvlpSfVlUFI1pnVpyDA2a1U45F02e5Cfy6HldAt/Qqv7m03Exxpl8ew5yEXZA
+ J3sBVFyuwM0ge0UpEvtreoB8dQjEf9PWIKDpALe7PtoWmYGF+2Tk/6hEU1Lr0r/sVHemcz/rlMw
+ xwOS4iVjQWhKcvbVMK3A=
+X-Google-Smtp-Source: AGHT+IEoYRNG0z6zBhQsTXQ97/zFMQbechCx5IrGexbDACJ4fVZmJ/aEm5Lfm5X30RMmoI3MQPSsOQ==
+X-Received: by 2002:a05:600c:3ba5:b0:43c:eea9:f45a with SMTP id
+ 5b1f17b1804b1-43ceea9f8f8mr7896745e9.4.1741469876521; 
+ Sat, 08 Mar 2025 13:37:56 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1031e3sm9748796f8f.82.2025.03.08.13.37.17
+ 5b1f17b1804b1-43cec60d122sm21374995e9.18.2025.03.08.13.37.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 08 Mar 2025 13:37:18 -0800 (PST)
+ Sat, 08 Mar 2025 13:37:56 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	BALATON Zoltan <balaton@eik.bme.hu>
@@ -76,18 +76,17 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Guenter Roeck <linux@roeck-us.net>, qemu-block@nongnu.org,
  Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org
-Subject: [PATCH v4 07/14] hw/sd/sdhci: Allow SDHCI classes to register their
- own MemoryRegionOps
-Date: Sat,  8 Mar 2025 22:36:33 +0100
-Message-ID: <20250308213640.13138-8-philmd@linaro.org>
+Subject: [PATCH v4 14/14] hw/ppc/e500: Replace generic SDHCI by Freescale eSDHC
+Date: Sat,  8 Mar 2025 22:36:40 +0100
+Message-ID: <20250308213640.13138-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250308213640.13138-1-philmd@linaro.org>
 References: <20250308213640.13138-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,100 +109,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add MemoryRegionOps as a class property. For now it is only
-used by TYPE_IMX_USDHC.
-Otherwise the default remains in little endian.
+As Zoltan reported, some U-Boot versions seem to expect
+correctly initialized registers before expecting interrupts.
 
+Now than we have a proper Freescale eSDHC implementation,
+use it.
+
+Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/sd/sdhci.h |  1 +
- hw/sd/sdhci.c         | 22 ++++++++--------------
- 2 files changed, 9 insertions(+), 14 deletions(-)
+ hw/ppc/e500.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-index 2709a7a69d5..60a0442c805 100644
---- a/include/hw/sd/sdhci.h
-+++ b/include/hw/sd/sdhci.h
-@@ -112,6 +112,7 @@ typedef struct SDHCIClass {
-         SysBusDeviceClass sbd_parent_class;
-     };
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index e85e000f054..7d15c926887 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -1027,20 +1027,12 @@ void ppce500_init(MachineState *machine)
  
-+    const MemoryRegionOps *io_ops;
-     uint32_t quirks;
-     uint64_t iomem_size;
- } SDHCIClass;
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 637067fef50..ae485f90dfe 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1427,8 +1427,6 @@ void sdhci_initfn(SDHCIState *s)
-                                    sdhci_raise_insertion_irq, s);
-     s->transfer_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-                                      sdhci_data_transfer, s);
+     /* eSDHC */
+     if (pmc->has_esdhc) {
+-        dev = qdev_new(TYPE_UNIMPLEMENTED_DEVICE);
+-        qdev_prop_set_string(dev, "name", "esdhc");
+-        qdev_prop_set_uint64(dev, "size", MPC85XX_ESDHC_REGS_SIZE);
+-        s = SYS_BUS_DEVICE(dev);
+-        sysbus_realize_and_unref(s, &error_fatal);
+-        memory_region_add_subregion(ccsr_addr_space, MPC85XX_ESDHC_REGS_OFFSET,
+-                                    sysbus_mmio_get_region(s, 0));
 -
--    s->io_ops = &sdhci_mmio_le_ops;
- }
- 
- void sdhci_uninitfn(SDHCIState *s)
-@@ -1446,6 +1444,7 @@ void sdhci_common_realize(SDHCIState *s, Error **errp)
-     SDHCIClass *sc = SYSBUS_SDHCI_GET_CLASS(s);
-     const char *class_name = object_get_typename(OBJECT(s));
- 
-+    s->io_ops = sc->io_ops ?: &sdhci_mmio_le_ops;
-     switch (s->endianness) {
-     case DEVICE_LITTLE_ENDIAN:
-         /* s->io_ops is little endian by default */
-@@ -1889,17 +1888,11 @@ static const MemoryRegionOps usdhc_mmio_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
--static void imx_usdhc_init(Object *obj)
--{
--    SDHCIState *s = SYSBUS_SDHCI(obj);
--
--    s->io_ops = &usdhc_mmio_ops;
--}
--
- static void imx_usdhc_class_init(ObjectClass *oc, void *data)
- {
-     SDHCIClass *sc = SYSBUS_SDHCI_CLASS(oc);
- 
-+    sc->io_ops = &usdhc_mmio_ops;
-     sc->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
- 
-     sdhci_common_class_init(oc, data);
-@@ -1956,11 +1949,13 @@ static const MemoryRegionOps sdhci_s3c_mmio_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
--static void sdhci_s3c_init(Object *obj)
-+static void sdhci_s3c_class_init(ObjectClass *oc, void *data)
- {
--    SDHCIState *s = SYSBUS_SDHCI(obj);
-+    SDHCIClass *sc = SYSBUS_SDHCI_CLASS(oc);
- 
--    s->io_ops = &sdhci_s3c_mmio_ops;
-+    sc->io_ops = &sdhci_s3c_mmio_ops;
-+
-+    sdhci_common_class_init(oc, data);
- }
- 
- static const TypeInfo sdhci_types[] = {
-@@ -1982,13 +1977,12 @@ static const TypeInfo sdhci_types[] = {
-     {
-         .name = TYPE_IMX_USDHC,
-         .parent = TYPE_SYSBUS_SDHCI,
--        .instance_init = imx_usdhc_init,
-         .class_init = imx_usdhc_class_init,
-     },
-     {
-         .name = TYPE_S3C_SDHCI,
-         .parent = TYPE_SYSBUS_SDHCI,
--        .instance_init = sdhci_s3c_init,
-+        .class_init = sdhci_s3c_class_init,
-     },
- };
- 
+         /*
+          * Compatible with:
+          * - SD Host Controller Specification Version 2.0 Part A2
+          * (See MPC8569E Reference Manual)
+          */
+-        dev = qdev_new(TYPE_SYSBUS_SDHCI);
++        dev = qdev_new(TYPE_FSL_ESDHC);
+         qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+         qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_BIG);
+         s = SYS_BUS_DEVICE(dev);
 -- 
 2.47.1
 
