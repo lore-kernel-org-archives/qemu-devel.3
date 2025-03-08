@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E7FC282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B18C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr38d-0004dh-7a; Sat, 08 Mar 2025 17:59:23 -0500
+	id 1tr39g-0005yR-Cq; Sat, 08 Mar 2025 18:00:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38S-0004Yv-Du
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:12 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tr38Z-0004cp-QL
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:20 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38Q-0005Lf-Lh
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:12 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-225477548e1so10272865ad.0
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:10 -0800 (PST)
+ id 1tr38Y-0005Ni-24
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:19 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2234e4b079cso53775525ad.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741474749; x=1742079549; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741474757; x=1742079557; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OZUhu3BnFzDT2DJGeBZFOFqKQQp7EogeXchL7RAMkqI=;
- b=gxQjwbFGTYLCzHiuRkwTvYMJIBp7mICGJ5b197fSY6uQPIoJMWNPEkHS5bWeXmpYDu
- qcGfY01ahjFCD5dvxoRgClWK5T0dq0n/V9yXWezO9Ig7Tk9Au4Nj3cm+g7Z8ClVyFo9j
- Pjj9lu4/9U1URrgO+nstGCLbcstiZ49QdH0RoDXN3Brb1MlXkfep364lRQZWgeU7Gvg/
- tZeAOE/Fa6xiTwl00nmp5WOYECSKYlNRq4mFayywf6q1Dx/tej8LpB1DXtekMcoiuZhx
- FBFuFkc/ptplFVysi/ei+vFnTDdQBGnSBJSQFqtTg7JCoS4E0JBnme/wqOOwmeJXp4tY
- LLFA==
+ bh=SM3YyEYj7om0b8jrExKW6zZqdC5bOOIBOd/A+S3re7Q=;
+ b=Yl5FVggx56xhOEKI3VTKFitQpbQWcLTcNT7OWtINwINbA0cbyw7B8g0aXfFzlhvJ4I
+ XFLpmwF5lCQ7kOifDfZAj2A6A2CmjNDEebrLbCTJuAHskbGmAmBKWijb/PpwAUnEC38f
+ LViMl+JL4XeGhNb9BpDW06iR+VNXGhkORB5Pye8BOrwRgrTqr0qs7+ZQg3xNWjx/nvSG
+ UY/tgtMd00DBMCsKHoZwctXzC8rvB7tNt7Abtv/8MQ61EYPrx2zr+QmGYzev5k5MhAiS
+ 37U7xlz/4BFE2U2Z0sZcwTnUQzBMpBx2zjz2/ZrprcvJaVhTzezT+06MtQp0aY5q/Mvs
+ s7Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741474749; x=1742079549;
+ d=1e100.net; s=20230601; t=1741474757; x=1742079557;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OZUhu3BnFzDT2DJGeBZFOFqKQQp7EogeXchL7RAMkqI=;
- b=g50fqURkNgp6MeOs7XJPlC/fTcAJDAwLaOKuOGjy5O89lND/Jd0WyDTEDTmniUJB9X
- XWQ3ou5tt2b8m8XXfTx2ILP++7OiyaTDrpgWUo+Ppc0Pxt64lqHoHN4sc/Wtoo1rYCOM
- t/dO/w6aJoLxWHQ0GwApVXe58u4EmSKW+9dc/ExRJLAJvPJQKeEWHkg0m/LNh2dkku8S
- lEct8+C5RfGor4+AYm3izJckKnWI1ABcFIaL41WlZomgsAZri+KWi5ifgEcDMPTB0T84
- ++NKeWH07jFV3Atjzaa0CYHlNviiAuSOJyZH6bcu9VupRVFF0kte++OGHOzjoPomUU8x
- wuYg==
-X-Gm-Message-State: AOJu0YztYefabE3rVDBo+PFWGctIAkaSv8Ag/2rDQH09hRu723g+mOBH
- nNkxQ046+3nqOBwOy8bZkuxnrzsvqEI4U8jHXWfpzH8kPASahDyY47Yiz3JtWpc66LXjI6Sir1b
- j
-X-Gm-Gg: ASbGncuR2suN/iVXQAOvUii1G70Qgi3odrhR48Ez2h1N/XhDZIWRToE7Qn4k35yQu07
- 6iiw+1IZukR2C93TER1Cy6QsADvPcz34o9l0UAitRnGdI2TjsmAoCEhYwUlOzH5i+0FvfJRWZOb
- xxnIS+iZuOtiPLWJMr/71JaBR0wZnlnC/UiSGv5goB6RJjkp+cPmRINed3h/buRX2Bu8sAbEuoZ
- sLRRKSXkz4KxCnIXold97bonju1aZT7AVshhI/eIdJ8eTMSNOuKH5N6QMhrwRqboOfs+aN79BLw
- l6je72QeCGETKEmtCnkLMhHJ5o0FDbITmnUL2Mp/CJq0+guBTXaAyXdDZjP8TSJV1SyVOxxaFwT
- w
-X-Google-Smtp-Source: AGHT+IE3dT/L3ABJKjRYygN4jGaIS5mHRrX+2jiFHVKGPVfWhzLfKEtochPP4IkpERNbxDBRMo5tLQ==
-X-Received: by 2002:a17:903:40cb:b0:223:44c5:4eb8 with SMTP id
- d9443c01a7336-22428c0752cmr146209285ad.32.1741474749073; 
- Sat, 08 Mar 2025 14:59:09 -0800 (PST)
+ bh=SM3YyEYj7om0b8jrExKW6zZqdC5bOOIBOd/A+S3re7Q=;
+ b=FqIPHKDs0qCAoHjMWPyrw29M3U60+VcSdUsLNx8ZwkoHBmbWHZ81uHLAdI555utMEX
+ qvEZJmHmm8umyu10XjbkWExedHd4yMlzZ4rQSC/T72SW0IoqpL1cIZ4cWziyb7VboVdS
+ LpUTkeMr+kAR7DVhg5FFT7M2qzxJn0I/gbGqxRqvDtOk0P/G7Am+Lksw/QIMMo+3/iKh
+ Ze4eFuan84r6klba9L9jjk8jFh9Pr03R2gDNwn+dHguJb1ibrbiFrh0BS/TVnxAzi4NU
+ rO1WKisfOiRO9FE+zcpuUcRNhca0QRgUdylm8LfDGd+n0Snt8ryGDlpQY+vO09HI2JI+
+ LrkQ==
+X-Gm-Message-State: AOJu0Yz2daI/3oRF8i3/ZCINcar00I7dnwXmd8hTlKCMimAq9x6LD8yV
+ 0vatznvMdkbkZJn4KAOUUsR3JEznyWbqycCRfV9YHAuyufg1vvmS1pES1zeSQs/jZ1MGPVvRXoS
+ G
+X-Gm-Gg: ASbGncu7/hCnbjE8XoR8vIN41cvMDbBN1R/2pQkXjh5WJYvfKNWUx1j8NwGeZaNqmz4
+ x8d3tCCWiODwHRslR3SrIsmZjKqUHn4uLWy1L6C1oUfJIU4+j4EJfmb1TqR8tY75HoUSMjzQwzJ
+ KcDUDCkxhGVI7P9fEeGnxP9c8Ju7OhbMK6FZf59gtqCEBFiUG0POdDkWO21yJyyZFQKRCDybeg+
+ 7he5fem1s3bCrM9NYdpVuG4yGB85scXk/56YlqxDkIRxa+Vae12hnhfZQurNi0KZKUV2h9txl8S
+ sL7K3Mfr917iKTbqC5Yukv8V2zZW6IjL+no6fwl+QEx8t5qZ/vPxRtxhkX1xzTTf6wfxr8F0YMf
+ 6
+X-Google-Smtp-Source: AGHT+IE4GsQGC7Z/Ax/v4k7mnyQzA0lZjnuAlEKhJj654Muy25kX/JMcDjohwciqQY+VMQItg0uSqw==
+X-Received: by 2002:a17:902:d488:b0:224:e0f:4b5 with SMTP id
+ d9443c01a7336-224288866a4mr113585755ad.7.1741474756842; 
+ Sat, 08 Mar 2025 14:59:16 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.08
+ d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Mar 2025 14:59:08 -0800 (PST)
+ Sat, 08 Mar 2025 14:59:16 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 08/23] exec: Declare tlb_set_page_with_attrs() in
- 'exec/cputlb.h'
-Date: Sat,  8 Mar 2025 14:58:47 -0800
-Message-ID: <20250308225902.1208237-10-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 19/23] qemu/atomic: Rename atomic128-cas.h headers using .h.inc
+ suffix
+Date: Sat,  8 Mar 2025 14:58:58 -0800
+Message-ID: <20250308225902.1208237-21-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250308225902.1208237-1-richard.henderson@linaro.org>
 References: <20250308225902.1208237-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,125 +104,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Move CPU TLB related methods to "exec/cputlb.h".
+Since commit 139c1837db ("meson: rename included C source files
+to .c.inc"), QEMU standard procedure for included C files is to
+use *.c.inc.
+
+Besides, since commit 6a0057aa22 ("docs/devel: make a statement
+about includes") this is documented in the Coding Style:
+
+  If you do use template header files they should be named with
+  the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
+  being included for expansion.
+
+Therefore rename 'atomic128-cas.h' as 'atomic128-cas.h.inc'.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20241114011310.3615-17-philmd@linaro.org>
+Message-ID: <20241212141018.59428-2-philmd@linaro.org>
 ---
- include/exec/cputlb.h                | 28 ++++++++++++++++++++++++++++
- include/exec/exec-all.h              | 25 -------------------------
- target/i386/tcg/system/excp_helper.c |  2 +-
- target/microblaze/helper.c           |  2 +-
- 4 files changed, 30 insertions(+), 27 deletions(-)
+ host/include/aarch64/host/atomic128-cas.h                       | 2 +-
+ include/qemu/atomic128.h                                        | 2 +-
+ .../generic/host/{atomic128-cas.h => atomic128-cas.h.inc}       | 0
+ 3 files changed, 2 insertions(+), 2 deletions(-)
+ rename host/include/generic/host/{atomic128-cas.h => atomic128-cas.h.inc} (100%)
 
-diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
-index 733ef012d1..56dd05a148 100644
---- a/include/exec/cputlb.h
-+++ b/include/exec/cputlb.h
-@@ -21,6 +21,8 @@
- #define CPUTLB_H
+diff --git a/host/include/aarch64/host/atomic128-cas.h b/host/include/aarch64/host/atomic128-cas.h
+index 58630107bc..991da4ef54 100644
+--- a/host/include/aarch64/host/atomic128-cas.h
++++ b/host/include/aarch64/host/atomic128-cas.h
+@@ -13,7 +13,7 @@
  
- #include "exec/cpu-common.h"
-+#include "exec/hwaddr.h"
-+#include "exec/memattrs.h"
- #include "exec/vaddr.h"
+ /* Through gcc 10, aarch64 has no support for 128-bit atomics.  */
+ #if defined(CONFIG_ATOMIC128) || defined(CONFIG_CMPXCHG128)
+-#include "host/include/generic/host/atomic128-cas.h"
++#include "host/include/generic/host/atomic128-cas.h.inc"
+ #else
+ static inline Int128 atomic16_cmpxchg(Int128 *ptr, Int128 cmp, Int128 new)
+ {
+diff --git a/include/qemu/atomic128.h b/include/qemu/atomic128.h
+index 88af6d4ea3..03c27022f0 100644
+--- a/include/qemu/atomic128.h
++++ b/include/qemu/atomic128.h
+@@ -58,7 +58,7 @@
+  * Therefore, special case each platform.
+  */
  
- #ifdef CONFIG_TCG
-@@ -62,4 +64,30 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
- void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
-                        CPUTLBEntryFull *full);
+-#include "host/atomic128-cas.h"
++#include "host/atomic128-cas.h.inc"
+ #include "host/atomic128-ldst.h"
  
-+/**
-+ * tlb_set_page_with_attrs:
-+ * @cpu: CPU to add this TLB entry for
-+ * @addr: virtual address of page to add entry for
-+ * @paddr: physical address of the page
-+ * @attrs: memory transaction attributes
-+ * @prot: access permissions (PAGE_READ/PAGE_WRITE/PAGE_EXEC bits)
-+ * @mmu_idx: MMU index to insert TLB entry for
-+ * @size: size of the page in bytes
-+ *
-+ * Add an entry to this CPU's TLB (a mapping from virtual address
-+ * @addr to physical address @paddr) with the specified memory
-+ * transaction attributes. This is generally called by the target CPU
-+ * specific code after it has been called through the tlb_fill()
-+ * entry point and performed a successful page table walk to find
-+ * the physical address and attributes for the virtual address
-+ * which provoked the TLB miss.
-+ *
-+ * At most one entry for a given virtual address is permitted. Only a
-+ * single TARGET_PAGE_SIZE region is mapped; the supplied @size is only
-+ * used by tlb_flush_page.
-+ */
-+void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
-+                             hwaddr paddr, MemTxAttrs attrs,
-+                             int prot, int mmu_idx, vaddr size);
-+
- #endif
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index f43c67366b..62d6300752 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -156,31 +156,6 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
-                                                uint16_t idxmap,
-                                                unsigned bits);
- 
--/**
-- * tlb_set_page_with_attrs:
-- * @cpu: CPU to add this TLB entry for
-- * @addr: virtual address of page to add entry for
-- * @paddr: physical address of the page
-- * @attrs: memory transaction attributes
-- * @prot: access permissions (PAGE_READ/PAGE_WRITE/PAGE_EXEC bits)
-- * @mmu_idx: MMU index to insert TLB entry for
-- * @size: size of the page in bytes
-- *
-- * Add an entry to this CPU's TLB (a mapping from virtual address
-- * @addr to physical address @paddr) with the specified memory
-- * transaction attributes. This is generally called by the target CPU
-- * specific code after it has been called through the tlb_fill()
-- * entry point and performed a successful page table walk to find
-- * the physical address and attributes for the virtual address
-- * which provoked the TLB miss.
-- *
-- * At most one entry for a given virtual address is permitted. Only a
-- * single TARGET_PAGE_SIZE region is mapped; the supplied @size is only
-- * used by tlb_flush_page.
-- */
--void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
--                             hwaddr paddr, MemTxAttrs attrs,
--                             int prot, int mmu_idx, vaddr size);
- /* tlb_set_page:
-  *
-  * This function is equivalent to calling tlb_set_page_with_attrs()
-diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
-index 864e3140e3..6876329de2 100644
---- a/target/i386/tcg/system/excp_helper.c
-+++ b/target/i386/tcg/system/excp_helper.c
-@@ -20,7 +20,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "exec/cpu_ldst.h"
--#include "exec/exec-all.h"
-+#include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "tcg/helper-tcg.h"
- 
-diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-index 5d3259ce31..27fc929bee 100644
---- a/target/microblaze/helper.c
-+++ b/target/microblaze/helper.c
-@@ -20,7 +20,7 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
--#include "exec/exec-all.h"
-+#include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "qemu/host-utils.h"
- #include "exec/log.h"
+ #endif /* QEMU_ATOMIC128_H */
+diff --git a/host/include/generic/host/atomic128-cas.h b/host/include/generic/host/atomic128-cas.h.inc
+similarity index 100%
+rename from host/include/generic/host/atomic128-cas.h
+rename to host/include/generic/host/atomic128-cas.h.inc
 -- 
 2.43.0
 
