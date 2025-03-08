@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F5BBC28B30
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 17:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EC8C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 17:46:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqy9U-0008VM-Rl; Sat, 08 Mar 2025 12:39:56 -0500
+	id 1tqyF8-00043s-Db; Sat, 08 Mar 2025 12:45:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqy9M-0008Qf-1T
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 12:39:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqyEq-0003xR-00
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 12:45:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqy9K-0000Tp-FP
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 12:39:47 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tqyEo-0004B1-HR
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 12:45:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741455585;
+ s=mimecast20190719; t=1741455925;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bGcfUxnZD2BDHLv4HPQl4B+PTJ6sdhEDZmj/JnVgQCA=;
- b=VpZFwkO+X80lVCNQuyJxlGMqRChSIZfbkytkhvZRY6ep6/5Y3iMUTxg1tXHSIuguwFfCaA
- Q86fUU8xf6pzlQ70lhKfX7Qw1GOlTxLeDvxwHaUSKO1Y1GM3DHx9nbVxwOtsdIBsLnGIxQ
- bYX26Xhd/nYcHsLPgZu7x9lwpxdJn0Q=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mjTdkrFZuWvdWTAh1zgNsoJqG2WEZml733leah2m8Gg=;
+ b=DTQ6rHAkmpDgt5/E1TMhTkJFT11ORBouDiW+8kBYQaJh2y5aMhjPCVCCEYENBnriP/FWgf
+ 9tOBcvd36cdf5ttVQ29jWTFS5oltDrFuSBkc2eb9Bw1IYsyZ5zn3LUSOQAzDzIMedBnOCV
+ m76ImN6WrucgkFU4ofoP90Zazzgb8io=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-LzOgod57OF-OEPExBo6uMg-1; Sat, 08 Mar 2025 12:39:43 -0500
-X-MC-Unique: LzOgod57OF-OEPExBo6uMg-1
-X-Mimecast-MFC-AGG-ID: LzOgod57OF-OEPExBo6uMg_1741455582
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-39131f2bbe5so828916f8f.3
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 09:39:43 -0800 (PST)
+ us-mta-421-r9q3G7mpPyqadn2P1OA03w-1; Sat, 08 Mar 2025 12:45:23 -0500
+X-MC-Unique: r9q3G7mpPyqadn2P1OA03w-1
+X-Mimecast-MFC-AGG-ID: r9q3G7mpPyqadn2P1OA03w_1741455923
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3912b54611dso1765534f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 09:45:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741455582; x=1742060382;
+ d=1e100.net; s=20230601; t=1741455922; x=1742060722;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bGcfUxnZD2BDHLv4HPQl4B+PTJ6sdhEDZmj/JnVgQCA=;
- b=YnzBaCShWll5+jrmF4Yoaq+yCTmIJoptPTUxNrRoXKeoFx76ZFvfEhoxxZRirG9/vz
- So+usu8ryWw5atQU6r+MczXfsKUsVjg/iK6QAbcz6iAKU3OeSAQLy6iW5j5tnXkj1Azt
- RVODdb58j1Gag5d4PvCXkQteXjvtuEUdp5+m8Gcy+2EYuzeH44R8mObMRlvF4dEMFwgp
- YUrIqJiRoL9O3DyelTl+bbv5xMvq46eCYOdrfpB/PO7ZWyMQuOsRuT1bVxJQHsW0rplX
- 32S7089nX7dqUSJCxGgMxTgKYsQWy9Vku6qx8P+Bh21Pge0giTH4eHHZXV3yET1ILet9
- ex1w==
+ bh=mjTdkrFZuWvdWTAh1zgNsoJqG2WEZml733leah2m8Gg=;
+ b=kZ7bHVfFLqlor7Vinrp6b/6MCwVCgkyXFRo7iXPL05g0H4Zioc+Ss5YHoPu4dGsP8S
+ 33Jr5Mw2bnIVbPNG3tNCqwXeiSs5Zl+9r685jHQoeg4JteJ12eEqD902M5LjdJsGxmU8
+ o7OIg+5DPhDOcKuDeK59M4ISfGYzqjOn7X3FcmJJUkgg379ls52wZRc1rHbS2j9XafAV
+ pjtSG0Ocua9VpBFFU5NNfrcRtv0ScEk6FkQx0nF+cPSfBg0PIEjvHg2HKq2zjRIpBqON
+ KGQJ5/09sTlUEzxrohB7cqjY/US3t7rUYb1SgUiEip3RH2TdszL3aAlCt5QMCZkc9V5E
+ LfPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJVyFJcDWUlXQxWthln+lXUC/gP+QfFuhMtOYxP6svrHpiDw356EiE19jsklu/+nUsdFhVuPPv0SrE@nongnu.org
-X-Gm-Message-State: AOJu0YwMmYT/9IuJ+zzrsN6orzpM2Qc9hdc+K5Vwk/YMQoDvZPH2kNT6
- s2JJD6nRMmHkPvuK99eEg4XFNn27RPDQSln4+nUewmrUn75oCkWcWBIz8KMxRS1KMiRWlhCTaWT
- Fd+YGOeeUrwTfIByivKcjtdAH5uFIbjHcnxy4vIXD+oVJYDqEXdOH
-X-Gm-Gg: ASbGnctvBiz2dQ1PM+k707nUDVGo64fjyEpett/m+IXEPC70CGWVzi5MET07Njd0e/8
- PnwIE9n2dsR+9v/cUewcpyvP20KbElKezBUzx1mJMPAMYFVoQnUB3VdQY+jAprVKQ6/6sBySRQC
- tXqXXxSruhuTO0exQWrhi24AQP85URqPNsHFxY9Fu1n6s4kr5tWNDH4rs/STw9qiCw77DslQzMk
- qyH4Um4XZ8pBGFt6tISD1/SVF1qwG179dvJsn93kiX67fHrq3hkhf9jtVWgZnJdI0atkx6ckvwd
- H6tddjkJDZxoOza9pv4kiqfNdEYeO3mHshLyEH8bnRWwUlovFnKvdw==
-X-Received: by 2002:a05:6000:1a87:b0:391:2391:2f79 with SMTP id
- ffacd0b85a97d-39132d98a8emr5549110f8f.43.1741455582227; 
- Sat, 08 Mar 2025 09:39:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGQMbpEoddj0se9YngZ5X8Iyjc8r63xl9sjZbhchD57b60ocj0gTwZgLixwwMk5jxxBRj8O/A==
-X-Received: by 2002:a05:6000:1a87:b0:391:2391:2f79 with SMTP id
- ffacd0b85a97d-39132d98a8emr5549097f8f.43.1741455581891; 
- Sat, 08 Mar 2025 09:39:41 -0800 (PST)
+ AJvYcCXhhswBiIPLk0IGsjKMGvZ2z5HjI5v/kwHrwW1e1BIZ58iTPW2i2IV1l6NmerVBpVZm0q9aXWeYI3qj@nongnu.org
+X-Gm-Message-State: AOJu0YwP8DnBM9Pyy/dfYbaO1hRqXarZzvEQj4rqLD6DQxJpOEN6HIbD
+ Xj1Zt6mKEs6eQoSqLBA64pSHI1ukp/NwbST2Ee69AUlTCRYRvnkEPqBs5H9DGdRJwCmXYVYOoLy
+ k8cIx882pLiiJcpvwCR3ioNyR1zGL4KZnPqs0EKe1CVq1G1biPHeuxpcPKmYZESw=
+X-Gm-Gg: ASbGncvk9aU29fLLeiNpMatXaDuB+DxCA93RXRYd62NwybayO9xaJxeyCn07GWuLbBq
+ 6M8t6HX8Mnbhlk9eOAakuXezk4RToE+0WMbx+oS3hribrsRbW/X58nKzNXCHQX50Oe73tBGFVvf
+ /hYodXuFOE0CGSeTK+oyvRv4Al3/PJFcJuWJCNOkKa3j5CsYHWs3h+hQP6l7pC2JV6tzvZ1xro+
+ Kbw3XCU7l1P6iQVPVAaNlvsNF8AimRFHR+QhaeC+Q/2Piu5h3Ii1hCbDJ9vLtVXr/VIZuOgB+4u
+ wEZQ14LujlrLa2deVbO98a7jR7bp3tNRnS5oMmLO7xxPKWfj24hAcg==
+X-Received: by 2002:a05:6000:402a:b0:38f:2efb:b829 with SMTP id
+ ffacd0b85a97d-39132db8f39mr5943458f8f.50.1741455922458; 
+ Sat, 08 Mar 2025 09:45:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE6Mffxb6wYLttfEY21IB4bHy2BmDyFTwXh1nzS54mVgWzfROsEuekoUiHLtDmv/iHFt75pzw==
+X-Received: by 2002:a05:6000:402a:b0:38f:2efb:b829 with SMTP id
+ ffacd0b85a97d-39132db8f39mr5943430f8f.50.1741455922126; 
+ Sat, 08 Mar 2025 09:45:22 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c103aa5sm9499939f8f.94.2025.03.08.09.39.40
+ ffacd0b85a97d-3912bfb7ae4sm9150968f8f.5.2025.03.08.09.45.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 08 Mar 2025 09:39:41 -0800 (PST)
-Message-ID: <a24abb3b-d10d-4891-8d1c-e9fafe6eae6a@redhat.com>
-Date: Sat, 8 Mar 2025 18:39:40 +0100
+ Sat, 08 Mar 2025 09:45:20 -0800 (PST)
+Message-ID: <910fe741-4ce0-482b-840c-132bf693930b@redhat.com>
+Date: Sat, 8 Mar 2025 18:45:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/14] hw/vfio: Compile some common objects once
+Subject: Re: [PATCH 04/14] hw/vfio: Compile more objects once
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -99,7 +99,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Nicholas Piggin <npiggin@gmail.com>, Halil Pasic <pasic@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>
 References: <20250307180337.14811-1-philmd@linaro.org>
- <20250307180337.14811-4-philmd@linaro.org>
+ <20250307180337.14811-5-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -145,19 +145,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250307180337.14811-4-philmd@linaro.org>
+In-Reply-To: <20250307180337.14811-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -174,14 +174,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/7/25 19:03, Philippe Mathieu-Daudé wrote:
-> Some files don't rely on any target-specific knowledge
-> and can be compiled once:
-> 
->   - helpers.c
->   - container-base.c
->   - migration.c (removing unnecessary "exec/ram_addr.h")
->   - migration-multifd.c
->   - cpr.c
+> These files depend on the VFIO symbol in their Kconfig
+> definition. They don't rely on target specific definitions,
+> move them to system_ss[] to build them once.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
@@ -194,50 +189,29 @@ C.
 
 
 > ---
->   hw/vfio/migration.c |  1 -
->   hw/vfio/meson.build | 13 ++++++++-----
->   2 files changed, 8 insertions(+), 6 deletions(-)
+>   hw/vfio/meson.build | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 416643ddd69..fbff46cfc35 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -27,7 +27,6 @@
->   #include "qapi/error.h"
->   #include "qapi/qapi-events-vfio.h"
->   #include "exec/ramlist.h"
-> -#include "exec/ram_addr.h"
->   #include "pci.h"
->   #include "trace.h"
->   #include "hw/hw.h"
 > diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-> index 260d65febd6..8e376cfcbf8 100644
+> index 8e376cfcbf8..2972c6ff8de 100644
 > --- a/hw/vfio/meson.build
 > +++ b/hw/vfio/meson.build
-> @@ -1,12 +1,7 @@
->   vfio_ss = ss.source_set()
->   vfio_ss.add(files(
-> -  'helpers.c',
->     'common.c',
-> -  'container-base.c',
->     'container.c',
-> -  'migration.c',
-> -  'migration-multifd.c',
-> -  'cpr.c',
+> @@ -14,13 +14,13 @@ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
 >   ))
->   vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
->   vfio_ss.add(when: 'CONFIG_IOMMUFD', if_true: files(
-> @@ -25,3 +20,11 @@ vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
->   vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
+>   vfio_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
+>   vfio_ss.add(when: 'CONFIG_VFIO_PLATFORM', if_true: files('platform.c'))
+> -vfio_ss.add(when: 'CONFIG_VFIO_XGMAC', if_true: files('calxeda-xgmac.c'))
+> -vfio_ss.add(when: 'CONFIG_VFIO_AMD_XGBE', if_true: files('amd-xgbe.c'))
+>   vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
+> -vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
 >   
 >   specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
-> +
-> +system_ss.add(when: 'CONFIG_VFIO', if_true: files(
-> +  'helpers.c',
-> +  'container-base.c',
-> +  'migration.c',
-> +  'migration-multifd.c',
-> +  'cpr.c',
-> +))
+>   
+> +system_ss.add(when: 'CONFIG_VFIO_XGMAC', if_true: files('calxeda-xgmac.c'))
+> +system_ss.add(when: 'CONFIG_VFIO_AMD_XGBE', if_true: files('amd-xgbe.c'))
+> +system_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
+>   system_ss.add(when: 'CONFIG_VFIO', if_true: files(
+>     'helpers.c',
+>     'container-base.c',
 
 
