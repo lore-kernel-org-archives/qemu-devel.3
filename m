@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1C0C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 213EBC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 21:56:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr276-0003LF-4G; Sat, 08 Mar 2025 16:53:44 -0500
+	id 1tr26y-0003FT-VW; Sat, 08 Mar 2025 16:53:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr26z-0003G3-N9
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:37 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1tr26w-0003Dx-Kq
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:34 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tr26x-0000vS-CN
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:37 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-39130ee05b0so1667903f8f.3
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:53:34 -0800 (PST)
+ id 1tr26u-0000uB-1Y
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 16:53:34 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43cebe06e9eso2661275e9.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 13:53:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741470814; x=1742075614; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741470810; x=1742075610; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uP5TiKKy+g7zDm1v/BM9VjWiPBsi9a9+GYKmDxVZNDU=;
- b=tQLgd+dRHbreJppvVDOQZVLx+WAqVNL9RWTlcMDKi1BoMyVy2UgBDTRsUkZJ0a38xl
- JRTCUvEpNT9pvBr7hHr8KejcIBh+0FPoGJKtrUIwtbHnbyXBawAYqpJ1WIoCOx4lhzZ4
- 620UQBMdSL1mR5zXrABNN5W4zZlARXNC+zI5MluunL2YlYbgCVtazVComRrLyTZ0l3uO
- fACB7ZpBGIuB9syaoDhc3RZdQgaseLrDqRuRMKDG4cPoCoQ3lEuwljiOZqhvmt/cTE9y
- Lt8J/gTD97u/Vwd0jzCkpSOzzrpSvACI+PuTgn0RThTwkfNuke9x8Sl7lYAapRp1bS8C
- sE9A==
+ bh=L0IWx7DP2oaeVZU3zQdeb+u9JDC8B6jtkTZn3wjhUEU=;
+ b=mYtmL9FnnU0M43spd51Xjo1kOlECf+WtdBYPwt2Pyj3vqhiej6XTprbN2kWc4ygVfl
+ ALyD/5tMy1Hhif3vzyHIn+HoHX+u2bNCVHB19DB+/9VX0/13XYjv18/GTwleqVuhX+8x
+ UYnr71dUQizbJbOJBAvmBJTblMSbOlRHqotbgxYjiFHb637Vrys7eDQtIq9aTaL/2ho2
+ vtw75qiIzIuQllkk//fO+1VUBf1MSvpZK7/QxNjyM0Idzmvbv7AZshKRBSBBvd3thVg8
+ JM+IH4rU4EQwV+Wd5h3qgva1RkQur0GCDRjgV0Zh0my/q1g9Q3sIcgNxtemYFLZm/Bp3
+ ItUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741470814; x=1742075614;
+ d=1e100.net; s=20230601; t=1741470810; x=1742075610;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uP5TiKKy+g7zDm1v/BM9VjWiPBsi9a9+GYKmDxVZNDU=;
- b=t/VeBNc76fFbvzQzJBszzDEsWaeaJu4JhG4Z2khwZvmTSgvMLJLZ++v8D5jllflV8R
- aqcgH6HJ0FWEIloM5wp0Grvct2a99vKCSVXz3v/YcJqozs6wi+rFI3G+F9ehglwSq0Vj
- xCdAsA33huldvvbwiITXTVLhVRvIMNx4qAnoCNBb18UDiQxl9T0Q7j7lTPQxqWX6oJof
- L+bT0sXUce9Dke31j4qKeXEI6VhEUhHUks4UuutyxrvoxlS42iCSODpjtlo9cJcn2H36
- 2TY0VkeqEPup6SECGDNns08OJFA4mKicWyYdiMogoMpGOuXL9RTzu33oPez14iwu8lRI
- Qu2g==
-X-Gm-Message-State: AOJu0Yxx7YvmeuODO19Kc5tXLdzDZDzDuWOaHxQYtKJOeFrKZzmv1iOp
- jHFFycXK5ROtHhT9aawnRT/gXgrrPCUtY63asaEKtr0+8GZbDba8TUbdhUFglto=
-X-Gm-Gg: ASbGnctdWTIREHuUuzfg+ROl8EJaoXezd117gDCspFzdw0pFLFaAF09gm3F9yJIaur6
- neEKoSx71VHZzyFNcuDU7tH7igj6Y6UmszfgRowMKi1WkMzv7A6hKl4mX7ti2kUe4hKT8kaRDJj
- 7uteWfp6uYT35AXeWf+gMjgCePYnhkfa0SVQ9uUzJ52DcJlVf0iAsA3v+XuBO3VZdbZCvASMtky
- qHZpMfp3xn1/EZfDlPLbeRgH0ydXElxw9Jf49EORm0hKtkTm56oDe78wdcz++NOKu2REQE2d3OV
- XRgmtvDMT13d9I6Jccy42dvhqagaxfr4GFgzG1oCfU1csS5GYazoX0WPew==
-X-Google-Smtp-Source: AGHT+IEirWalxOVjPt/KuG1FsttI+w//qnpxKddMslJgsgbCWleV4w4nhSGhRWl0cmzudVS55qRtoQ==
-X-Received: by 2002:a5d:47cc:0:b0:38f:2766:759f with SMTP id
- ffacd0b85a97d-39132dbb069mr5450159f8f.41.1741470813805; 
- Sat, 08 Mar 2025 13:53:33 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e2bacsm9933579f8f.78.2025.03.08.13.53.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=L0IWx7DP2oaeVZU3zQdeb+u9JDC8B6jtkTZn3wjhUEU=;
+ b=xIGUXvMxhERhiWwVP2lkixBsPe0N7fP3R9A9Smf4zWHgaTGCI0YWpm9m4DclN/EMqo
+ 0NPWCKcpLLGF61ZW3cnr/vKGtwHh8wiYk8MnXIZ/H+xEEufnN0H4cynC3MqzAgyMJAtL
+ EraamnTh/ZqkmJyrByvJ9I0aMEBLldnhd9z4deot/YEoEJ5ME2BQSG2UQKl2dyWvEj0v
+ xB5PlwTqCo0xkT2edLBDx4aqW87Cy7jdLNIj7gY7zcHHFoXB0WTFdVzDLCaKNrdLNvQU
+ BJs8kT/Hxwy7MHypI1OkRZM6ZcqN8u48zLnTmHhxZLUe97IpRti2m3DWl8cWuTHBIjap
+ JUwA==
+X-Gm-Message-State: AOJu0YzKdQO15GT/6YhYQ/BQM+KF9ZMc/MXrbPWWMcwVT1EhGmyhpoG5
+ ZEGc1Cy+0K5LNohNRvtJE744WoykrKvPMTkjlkBYtjhDpdZgGFB+eOm96TEsgYk=
+X-Gm-Gg: ASbGncvGW51dUJgnrGlybTWMsxMWrAP3lVahlFYXZOz71QVeg5MbfA9XkoQFuK2crEx
+ yG1xEN+ro31qMHc8xjJd9NPEvbuMZ+FinxfObDJlhRDkUv9zI5bRz/UMmbjcPRJhS/0qt2ZtMo8
+ CgtspwtRbNCt/zkP2ly47QNMd748ekHefpZFB89G2jQO0GehmokgV00uwz2/nEgL443fJVeQC7W
+ F24YEVFdpAnPhVGxU1h4FgHeY9yZ1LKwkv8ksd8pgchi4n8HtkQaw5naj/Ir4MENYR21DQX9bjm
+ hslj0bO97QF7+wixze/8DIAwDiHax9t2puRKMQUl6KTKYZM=
+X-Google-Smtp-Source: AGHT+IEwHzxm2aPr7rRfVwm/Y4qd/aXDg04sBaF7YNdN6lmHWh0Wmmkn1Yg1SO19qRiu7Cjxjqj3wg==
+X-Received: by 2002:a05:600c:4ec6:b0:43b:c0fa:f9c5 with SMTP id
+ 5b1f17b1804b1-43c6024bf6bmr47735765e9.21.1741470810078; 
  Sat, 08 Mar 2025 13:53:30 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912c01952dsm9757036f8f.45.2025.03.08.13.53.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 08 Mar 2025 13:53:27 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 01B0760065;
- Sat,  8 Mar 2025 21:53:27 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id A73275FA05;
+ Sat,  8 Mar 2025 21:53:26 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PULL 05/31] tests/functional: skip vulkan tests with nVidia
-Date: Sat,  8 Mar 2025 21:53:00 +0000
-Message-Id: <20250308215326.2907828-6-alex.bennee@linaro.org>
+ qemu-arm@nongnu.org (open list:Virt)
+Subject: [PULL 01/31] tests/functional: move aarch64 GPU test into own file
+Date: Sat,  8 Mar 2025 21:52:56 +0000
+Message-Id: <20250308215326.2907828-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250308215326.2907828-1-alex.bennee@linaro.org>
 References: <20250308215326.2907828-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,81 +103,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While running the new GPU tests it was noted that the proprietary
-nVidia driver barfed when run under the sanitiser:
-
-  2025-02-20 11:13:08,226: [11:13:07.782] Output 'headless' attempts
-  EOTF mode SDR and colorimetry mode default.
-  2025-02-20 11:13:08,227: [11:13:07.784] Output 'headless' using color
-  profile: stock sRGB color profile
-
-  and that's the last thing it outputs.
-
-  The sanitizer reports that when the framework sends the SIGTERM
-  because of the timeout we get a write to a NULL pointer (but
-  interesting not this time in an atexit callback):
-
-  UndefinedBehaviorSanitizer:DEADLYSIGNAL
-  ==471863==ERROR: UndefinedBehaviorSanitizer: SEGV on unknown address
-  0x000000000000 (pc 0x7a18ceaafe80 bp 0x000000000000 sp 0x7ffe8e3ff6d0
-  T471863)
-  ==471863==The signal is caused by a WRITE memory access.
-  ==471863==Hint: address points to the zero page.
-      #0 0x7a18ceaafe80
-  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x16afe80)
-  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-      #1 0x7a18ce9e72c0
-  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15e72c0)
-  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-      #2 0x7a18ce9f11bb
-  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15f11bb)
-  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-      #3 0x7a18ce6dc9d1
-  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x12dc9d1)
-  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-      #4 0x7a18e7d15326 in vrend_renderer_create_fence
-  /usr/src/virglrenderer-1.0.0-1ubuntu2/obj-x86_64-linux-gnu/../src/vrend_renderer.c:10883:26
-      #5 0x55bfb6621871 in virtio_gpu_virgl_process_cmd
-
-The #dri-devel channel confirmed:
-
-  <digetx> stsquad: nv driver is known to not work with venus, don't use
-      it for testing
-
-So lets skip running the test to avoid known failures.
+I want to expand the number of tests to cover a wide range of
+configurations. That starts with splitting off from the normal virt
+test from which it doesn't really share much code. We can also reduce
+the timeout of the original virt test now it is now longer burdened
+with testing the GPU.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250304222439.2035603-6-alex.bennee@linaro.org>
+Message-Id: <20250304222439.2035603-2-alex.bennee@linaro.org>
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 5df6020ed5..756432add4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2630,6 +2630,7 @@ F: hw/display/virtio-gpu*
+ F: hw/display/virtio-vga.*
+ F: include/hw/virtio/virtio-gpu.h
+ F: docs/system/devices/virtio-gpu.rst
++F: tests/functional/test_aarch64_virt_gpu.py
+ 
+ vhost-user-blk
+ M: Raphael Norwitz <raphael@enfabrica.net>
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 3fd2652c07..4b492135e0 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -18,7 +18,8 @@ test_timeouts = {
+   'aarch64_sbsaref_alpine' : 1200,
+   'aarch64_sbsaref_freebsd' : 720,
+   'aarch64_tuxrun' : 240,
+-  'aarch64_virt' : 720,
++  'aarch64_virt' : 360,
++  'aarch64_virt_gpu' : 480,
+   'acpi_bits' : 420,
+   'arm_aspeed_palmetto' : 120,
+   'arm_aspeed_romulus' : 120,
+@@ -81,6 +82,7 @@ tests_aarch64_system_thorough = [
+   'aarch64_tcg_plugins',
+   'aarch64_tuxrun',
+   'aarch64_virt',
++  'aarch64_virt_gpu',
+   'aarch64_xen',
+   'aarch64_xlnx_versal',
+   'multiprocess',
+diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
+index 95f5ce8b4c..884aad7af6 100755
+--- a/tests/functional/test_aarch64_virt.py
++++ b/tests/functional/test_aarch64_virt.py
+@@ -134,77 +134,6 @@ def test_aarch64_virt_gicv2(self):
+         self.common_aarch64_virt("virt,gic-version=2")
+ 
+ 
+-    ASSET_VIRT_GPU_KERNEL = Asset(
+-        'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
+-        'download?path=%2F&files='
+-        'Image',
+-        '89e5099d26166204cc5ca4bb6d1a11b92c217e1f82ec67e3ba363d09157462f6')
+-
+-    ASSET_VIRT_GPU_ROOTFS = Asset(
+-        'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
+-        'download?path=%2F&files='
+-        'rootfs.ext4.zstd',
+-        '792da7573f5dc2913ddb7c638151d4a6b2d028a4cb2afb38add513c1924bdad4')
+-
+-    @skipIfMissingCommands('zstd')
+-    def test_aarch64_virt_with_gpu(self):
+-        # This tests boots with a buildroot test image that contains
+-        # vkmark and other GPU exercising tools. We run a headless
+-        # weston that nevertheless still exercises the virtio-gpu
+-        # backend.
+-
+-        self.set_machine('virt')
+-        self.require_accelerator("tcg")
+-
+-        kernel_path = self.ASSET_VIRT_GPU_KERNEL.fetch()
+-        image_path = self.uncompress(self.ASSET_VIRT_GPU_ROOTFS, format="zstd")
+-
+-        self.vm.set_console()
+-        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+-                               'console=ttyAMA0 root=/dev/vda')
+-
+-        self.vm.add_args("-accel", "tcg")
+-        self.vm.add_args("-cpu", "neoverse-v1,pauth-impdef=on")
+-        self.vm.add_args("-machine", "virt,gic-version=max",
+-                         '-kernel', kernel_path,
+-                         '-append', kernel_command_line)
+-        self.vm.add_args("-smp", "2", "-m", "2048")
+-        self.vm.add_args("-device",
+-                         "virtio-gpu-gl-pci,hostmem=4G,blob=on,venus=on")
+-        self.vm.add_args("-display", "egl-headless")
+-        self.vm.add_args("-display", "dbus,gl=on")
+-        self.vm.add_args("-device", "virtio-blk-device,drive=hd0")
+-        self.vm.add_args("-blockdev",
+-                         "driver=raw,file.driver=file,"
+-                         "node-name=hd0,read-only=on,"
+-                         f"file.filename={image_path}")
+-        self.vm.add_args("-snapshot")
+-
+-        try:
+-            self.vm.launch()
+-        except VMLaunchFailure as excp:
+-            if "old virglrenderer, blob resources unsupported" in excp.output:
+-                self.skipTest("No blob support for virtio-gpu")
+-            elif "old virglrenderer, venus unsupported" in excp.output:
+-                self.skipTest("No venus support for virtio-gpu")
+-            elif "egl: no drm render node available" in excp.output:
+-                self.skipTest("Can't access host DRM render node")
+-            elif "'type' does not accept value 'egl-headless'" in excp.output:
+-                self.skipTest("egl-headless support is not available")
+-            else:
+-                self.log.info(f"unhandled launch failure: {excp.output}")
+-                raise excp
+-
+-        self.wait_for_console_pattern('buildroot login:')
+-        exec_command(self, 'root')
+-        exec_command(self, 'export XDG_RUNTIME_DIR=/tmp')
+-        exec_command_and_wait_for_pattern(self,
+-                                          "weston -B headless "
+-                                          "--renderer gl "
+-                                          "--shell kiosk "
+-                                          "-- vkmark -b:duration=1.0",
+-                                          "vkmark Score")
+-
+ 
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-index eea1e8c973..32949f6a34 100755
---- a/tests/functional/test_aarch64_virt_gpu.py
+new file mode 100755
+index 0000000000..32af941cd5
+--- /dev/null
 +++ b/tests/functional/test_aarch64_virt_gpu.py
-@@ -17,6 +17,9 @@
- 
- from qemu_test.linuxkernel import LinuxKernelTest
- 
-+from re import search
-+from subprocess import check_output
+@@ -0,0 +1,94 @@
++#!/usr/bin/env python3
++#
++# Functional tests for the various graphics modes we can support.
++#
++# Copyright (c) 2024, 2025 Linaro Ltd.
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
- class Aarch64VirtGPUMachine(LinuxKernelTest):
- 
-     ASSET_VIRT_GPU_KERNEL = Asset(
-@@ -94,6 +97,11 @@ def test_aarch64_virt_with_vulkan_gpu(self):
- 
-         self.require_device('virtio-gpu-gl-pci')
- 
-+        vk_info = check_output(["vulkaninfo", "--summary"], encoding="utf-8")
++from qemu.machine.machine import VMLaunchFailure
 +
-+        if search(r"driverID\s+=\s+DRIVER_ID_NVIDIA_PROPRIETARY", vk_info):
-+            self.skipTest("Test skipped on NVIDIA proprietary driver")
++from qemu_test import Asset
++from qemu_test import exec_command, exec_command_and_wait_for_pattern
++from qemu_test import skipIfMissingCommands
 +
-         self._launch_virt_gpu("virtio-gpu-gl-pci,hostmem=4G,blob=on,venus=on")
-         self._run_virt_weston_test("vkmark -b:duration=1.0",
-                                    "debug: stuck in fence wait with iter at")
++from qemu_test.linuxkernel import LinuxKernelTest
++
++class Aarch64VirtGPUMachine(LinuxKernelTest):
++
++    ASSET_VIRT_GPU_KERNEL = Asset(
++        'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
++        'download?path=%2F&files='
++        'Image',
++        '89e5099d26166204cc5ca4bb6d1a11b92c217e1f82ec67e3ba363d09157462f6')
++
++    ASSET_VIRT_GPU_ROOTFS = Asset(
++        'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
++        'download?path=%2F&files='
++        'rootfs.ext4.zstd',
++        '792da7573f5dc2913ddb7c638151d4a6b2d028a4cb2afb38add513c1924bdad4')
++
++    @skipIfMissingCommands('zstd')
++    def test_aarch64_virt_with_vulkan_gpu(self):
++        # This tests boots with a buildroot test image that contains
++        # vkmark and other GPU exercising tools. We run a headless
++        # weston that nevertheless still exercises the virtio-gpu
++        # backend.
++
++        self.set_machine('virt')
++        self.require_accelerator("tcg")
++
++        kernel_path = self.ASSET_VIRT_GPU_KERNEL.fetch()
++        image_path = self.uncompress(self.ASSET_VIRT_GPU_ROOTFS, format="zstd")
++
++        self.vm.set_console()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               'console=ttyAMA0 root=/dev/vda')
++
++        self.vm.add_args("-accel", "tcg")
++        self.vm.add_args("-cpu", "neoverse-v1,pauth-impdef=on")
++        self.vm.add_args("-machine", "virt,gic-version=max",
++                         '-kernel', kernel_path,
++                         '-append', kernel_command_line)
++        self.vm.add_args("-smp", "2", "-m", "2048")
++        self.vm.add_args("-device",
++                         "virtio-gpu-gl-pci,hostmem=4G,blob=on,venus=on")
++        self.vm.add_args("-display", "egl-headless")
++        self.vm.add_args("-display", "dbus,gl=on")
++        self.vm.add_args("-device", "virtio-blk-device,drive=hd0")
++        self.vm.add_args("-blockdev",
++                         "driver=raw,file.driver=file,"
++                         "node-name=hd0,read-only=on,"
++                         f"file.filename={image_path}")
++        self.vm.add_args("-snapshot")
++
++        try:
++            self.vm.launch()
++        except VMLaunchFailure as excp:
++            if "old virglrenderer, blob resources unsupported" in excp.output:
++                self.skipTest("No blob support for virtio-gpu")
++            elif "old virglrenderer, venus unsupported" in excp.output:
++                self.skipTest("No venus support for virtio-gpu")
++            elif "egl: no drm render node available" in excp.output:
++                self.skipTest("Can't access host DRM render node")
++            elif "'type' does not accept value 'egl-headless'" in excp.output:
++                self.skipTest("egl-headless support is not available")
++            else:
++                self.log.info(f"unhandled launch failure: {excp.output}")
++                raise excp
++
++        self.wait_for_console_pattern('buildroot login:')
++        exec_command(self, 'root')
++        exec_command(self, 'export XDG_RUNTIME_DIR=/tmp')
++        exec_command_and_wait_for_pattern(self,
++                                          "weston -B headless "
++                                          "--renderer gl "
++                                          "--shell kiosk "
++                                          "-- vkmark -b:duration=1.0",
++                                          "vkmark Score")
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.39.5
 
