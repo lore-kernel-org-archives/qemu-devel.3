@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94166C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 06:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A4BC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 06:58:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqo0a-0001l4-1Q; Sat, 08 Mar 2025 01:50:05 -0500
+	id 1tqo7l-0006iF-Dd; Sat, 08 Mar 2025 01:57:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqo0V-0001kJ-7Y
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 01:50:00 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqo7a-0006h7-QO
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 01:57:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqo0T-00028F-Qd
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 01:49:58 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqo7Y-0004EZ-TZ
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 01:57:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741416595;
+ s=mimecast20190719; t=1741417035;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YDkjc68dCUjbWlcKeSQlZnYoteC4U2qbbu7XxtoHTCA=;
- b=Q15szLQE3JbOZqAoPSdUlw2a2zAwXko9I1M7H5RBX087AeziymGPaxgaAeLuokimgfxVzA
- xBpUXkjrXGqqbPpZb7DyGXVPPsYhHZtXerpaikUKUoDl8a5e5WcBHolVHp/X9rZE/m69jz
- Nb6C/xlAa4CPUt8FgZ0dfCJJrWhhrzo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=dLJPMxmXCfogqY6J68Eah5wIIVShxvWPEMLvb3qaGOM=;
+ b=CnT3w7H5lZxTbycXWcyJOu/V2rk6LKIJcXYEcGZymUUMvaMqRAH46jaCg9NiF0HlxMdHf/
+ FgXkPL+acdNI/0FEPEEEY7DWzYyTKBLHxCQ8mog7W40xV4JLmE2JdqD0fVVjDeJ/glkcww
+ 9EVRJ5NLfmbpyAQ5ZBGOS5hLQn/li0M=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-w5-w6O9nOqOk6JQT4q4Y6A-1; Sat,
- 08 Mar 2025 01:49:50 -0500
-X-MC-Unique: w5-w6O9nOqOk6JQT4q4Y6A-1
-X-Mimecast-MFC-AGG-ID: w5-w6O9nOqOk6JQT4q4Y6A_1741416589
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-g5DjMzSrNMWvuK7rvYmWsw-1; Sat,
+ 08 Mar 2025 01:57:13 -0500
+X-MC-Unique: g5DjMzSrNMWvuK7rvYmWsw-1
+X-Mimecast-MFC-AGG-ID: g5DjMzSrNMWvuK7rvYmWsw_1741417032
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ECB6918004A9; Sat,  8 Mar 2025 06:49:48 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 24DD919560BC; Sat,  8 Mar 2025 06:57:12 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD23C1956095; Sat,  8 Mar 2025 06:49:47 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CE88A1801748; Sat,  8 Mar 2025 06:57:10 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 23E4121E675F; Sat, 08 Mar 2025 07:49:45 +0100 (CET)
+ id 4C1CA21E675F; Sat, 08 Mar 2025 07:57:08 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
@@ -55,20 +55,20 @@ Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
  <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
  Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: Re: [PATCH 15/57] docs/qapi-domain: add "Errors:" field lists
-In-Reply-To: <CAFn=p-b-R9AORQ2OWj5-MTEzC2m5iyQoWYisJ_Tp1Xk4DZcMjw@mail.gmail.com>
- (John Snow's message of "Fri, 7 Mar 2025 17:50:57 -0500")
+Subject: Re: [PATCH 16/57] docs/qapi-domain: add "Returns:" field lists
+In-Reply-To: <CAFn=p-ahdYmxDsPg7NmfwBK-vAHFEQ3jkB_vuAEi2Zj-naFWgQ@mail.gmail.com>
+ (John Snow's message of "Fri, 7 Mar 2025 17:58:53 -0500")
 References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-16-jsnow@redhat.com>
- <871pv9qo0u.fsf@pond.sub.org>
- <CAFn=p-b-R9AORQ2OWj5-MTEzC2m5iyQoWYisJ_Tp1Xk4DZcMjw@mail.gmail.com>
-Date: Sat, 08 Mar 2025 07:49:45 +0100
-Message-ID: <87bjucdnjq.fsf@pond.sub.org>
+ <20250305034610.960147-17-jsnow@redhat.com>
+ <87tt85p90k.fsf@pond.sub.org>
+ <CAFn=p-ahdYmxDsPg7NmfwBK-vAHFEQ3jkB_vuAEi2Zj-naFWgQ@mail.gmail.com>
+Date: Sat, 08 Mar 2025 07:57:08 +0100
+Message-ID: <875xkkdn7f.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -96,31 +96,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> On Fri, Mar 7, 2025 at 2:48=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+> On Fri, Mar 7, 2025 at 2:58=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
 om> wrote:
 >
 >> John Snow <jsnow@redhat.com> writes:
 >>
->> > ``:error: descr`` can now be used to document error conditions. The
->> > format of the description is not defined here; so the ability to name
->> > specific types is left to the document writer.
+>> > Add "Returns:" field list syntax to QAPI Commands.
 >> >
->> > Signed-off-by: John Snow <jsnow@redhat.com>
+>> > Like "Arguments:" and "Errors:", the type name isn't currently process=
+ed
+>> > for cross-referencing, but this will be addressed in a forthcoming
+>> > commit.
+>> >
+>> > This patch adds "errors" as a GroupedField, which means that multiple
 >>
->> By convention, the description is a bullet list, but we don't enforce
->> that in software.  Observation, not a suggestion to start enforcing it
->> now.
+>> "errors"?
 >>
 >
-> Right. This commit message is accurate, though: this field list type will
-> accept any old thing. I have an idea to fix this to make the aesthetics
-> better (fixes the misalignment) and to enforce the bulleted list in one
-> shot. Not for this series, sorry. Please accept a raincheck.
+> Copy-pasto :)
+>
+>
+>>
+>> > return values can be annotated - this is only done because Sphinx does
+>> > not seemingly (Maybe I missed it?) support mandatory type arguments to
+>> > Ungrouped fields. Because we want to cross-reference this type
+>> > information later, we want to make the type argument mandatory. As a
+>> > result, you can technically add multiple :return: fields, though I'm n=
+ot
+>> > aware of any circumstance in which you'd need or want
+>> > to. Recommendation: "Don't do that, then."
+>>
+>> scripts/qapi/parser.py rejects duplicate 'Returns:' tags.  So, to do the
+>> thing you shouldn't do, you'd have to use the QAPI domain directly.
+>> I doubt such shenanigans would survive review :)
+>>
+>
+> Sure, but it's a little weird to be in the headspace of writing a domain
+> extension that was based on one which *can* be used directly. I know we
+> won't, but I suppose I am still documenting it and treating it as if you
+> could.
 
-You're quite right to resist mission creep.
+Valid argument.
 
-The commit message could mention the convention, say "The format of the
-description is not defined here (we make it a bulleted list, but that's
-just convention); ..."  Up to you.
+Our test suite only covers use via transmogrifier, not direct use.
+Fixable.  I'm not asking you to fix it now.
+
+Commit message could mention the emerging new QAPI doc tool chain obeys
+"Don't do that, then".  But I figure you have bigger fish to fry.
+
+> More the case, it serves as reference if anyone wants to adjust the
+> behavior of the transmogrifier.
+>
+> So, consider this documentation for me in the future, or whoever touches
+> qapidoc if I am felled by an errant spacerock.
+>
+>
+>>
+>> > Since this field describes an action/event instead of describing a list
+>> > of nouns (arguments, features, errors), I added both the imperative and
+>> > indicative forms (:return: and :returns:) to allow doc writers to use
+>> > whichever mood "feels right" in the source document. The rendered outp=
+ut
+>> > will always use the "Returns:" label, however.
+>> >
+>> > I'm sure you'll let me know how you feel about that. O:-)
+>>
+>> My personal taste is imperative mood, always.
+>>
+>> Sadly, the QAPI schema language uses 'Returns:'.
+>>
+>> The Sphinx Python Domain appears to use :return:.
+>>
+>> I recommend to go for consistency with the Python Domain, and ditch
+>> :returns:.
+>>
+>
+> Done.
+
+Thanks!  A few instrances of "returns" in later commit messages need
+adjustment.
+
+[...]
 
 
