@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E054C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 17:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FE4C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 17:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqy1Z-0003F2-Sm; Sat, 08 Mar 2025 12:31:45 -0500
+	id 1tqy3C-00052V-0H; Sat, 08 Mar 2025 12:33:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1tqy1D-0002zA-DB
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 12:31:34 -0500
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1tqy32-0004zE-DJ
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 12:33:17 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1tqy19-0005Gb-Sb
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 12:31:23 -0500
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2feae794508so4489580a91.0
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 09:31:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1tqy30-0006cb-ML
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 12:33:16 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2fee4d9c2efso5035585a91.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 09:33:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1741455076; x=1742059876;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1741455193; x=1742059993;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JnZnY+5w8KT5OaxlknQ+1yWSBIq7elRr4pilDDb6f9I=;
- b=lwjJDutmJtmWqQfqH3OIjC5RhdjgMhpg0TbMj+jNIQvb1tzd52KSnX/HqeA+sxNFvx
- 873CMlgjGj9jPH6h01kVyfOI4QZJGqoNIpWEPKfuIvCbUuhNDnIKITel7YZFcrjxkuan
- y+N7gFSjN7s2aImWh5OHm+cRF5TqBH1FHv4ipkIX+weVDsNwThZJRWlZ6dp1VOEZDDIA
- 8no0Kp+c6e0jJIXQpAvrAakvkaJP1By8gWbZDXKNSrlxjxtWBl9RHa3yiRcDwtPg7/M1
- YF+5YHoo36UfRxJ7tMV2th1m2tpLSgNbDo4lw+cFvpbnLauDeV/3a2XMhBNVqzoMJlGk
- Bg4w==
+ bh=1lV/16lAA5aKQRfYNLXlCTa7y1dixzCA7JPqIOpAzTA=;
+ b=K7dNWsxwvnbt75JFzxsa83/7OzidtyMJTeZLy0Ztvkql0Or9CgZkl6RMSS0C8QLE2N
+ L3pm7WClb7NeNpaCNzj1aQ/nGygI+wZiLlyN72pEph14KLW/7W31y1p8wBS7oY7LbZ++
+ kEkhFkcWSB2PSILS0ZG8BQugNcGODflr6ZdCcxap1XkPyyhG5G3pn9XVFQyr8Drb4hOG
+ gWGkIS9njPqx/cAXpZg+oah5hlR2pozojiCZ0/1F5Xla/x1eeWotdiZIVDxY3oaoA4Xh
+ yaRfZ3tz8LsdRexRsTJ0sqIIFmg9buVugK/zrxVvcO+0k7+PVo/rb1Auvuy1JqxZKENs
+ Niqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741455076; x=1742059876;
+ d=1e100.net; s=20230601; t=1741455193; x=1742059993;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JnZnY+5w8KT5OaxlknQ+1yWSBIq7elRr4pilDDb6f9I=;
- b=B10nXdObY6ZDv3x/eilV3qDkV7IzS8MKzOlEvZBYqZXgtj7i0f5xGYNVCnNQnogVEw
- QULqYsx3tCAR/UYC3Rbu2VQ+JIG8rePBSXDITwKDxPqn2Qp4hYTvGhOmF+S4NNeOn9i7
- qM0BXGeNdy6NnOXiAPoEys+mKKyruAjMavvlVE70nBpNmLFPBYK2O2RRhWBP6vQ5rN8H
- QcERaj1wqJjOn3Pk+KsQgTJydPMR3kBsr7gmheLJjB3obo7x6voC/u9wVEo7i8OvvXSY
- ZvuisSYeVQqSq1K/IM08Z4CxyYVFdxl6iXaj5/u+Wxz4jhoHpJ+9pv7IwKEYsA8FQ2i8
- +t6w==
-X-Gm-Message-State: AOJu0YygzSgeco5Bn7+ncKNv5DpRbtkEfmgMQ85zrhfiScbJBEA52MDT
- ivRHd/WI8V0mYao5K9TY2syMXQgGEO7Tqn/vLv5eF6Vm3t/LIXwT65plOlMdlTURlwBCp9Ss2Qd
- xz/n4Yto8zhjtCv9gm+wapwa4Pqtmn3FXSR9zHA==
-X-Gm-Gg: ASbGncvXP3KWuGNAuoFNsHOQ/tV2hL0woUGXc80Ob8TVpVrIaWqv11YH8sqfq0qmggM
- PPOwrC2B9y/4k4VQqgo10ElowwReNjl0pTcrDi7sgBSDMi0cGXePljI+eTiZAD7v8YgaZh/aWlw
- cy+y8EVu7zZ7u5ABa1RujlYr9rl2lFL/Fe/2jv
-X-Google-Smtp-Source: AGHT+IHrESadKIvU7p2QoBtkuNxZUZNOw4KZi6sD5CbsIiyP/RRwp4SdyqyRzYF9JWoSGq3nAvy0rNM+MwqwEa7EkV8=
-X-Received: by 2002:a17:90b:1d0a:b0:2ea:aa56:499 with SMTP id
- 98e67ed59e1d1-2ff7ce4f019mr11669463a91.1.1741455074934; Sat, 08 Mar 2025
- 09:31:14 -0800 (PST)
+ bh=1lV/16lAA5aKQRfYNLXlCTa7y1dixzCA7JPqIOpAzTA=;
+ b=IdJeWqe+R7bhsvWVONs68ALGPwE4n29WFeNARaJIHFjnVoIMVQE4WVO/kTEyC+OeE+
+ bWrwffkLA5fYvlEHe5/0PNK3118LJdenjOVmUswkFN4d4xL9iKjCcPU3l5AaGRZOI6NB
+ afJE5ySstLOCfnzXrfEDreSqYNE5nQdGBoY+rd6AapXOn9mOlUC8x8aA1MiQggtY8IYM
+ zbwkpdx+oZxOaqWS+/WCvaGIl8h1VRGD6wAJc6YlgP+/8W02hIN4EonyqcN57jWXcF+O
+ 7jikibMEMM8AZuXkMGB7nFOcrXOCSxAFxA6pJllNDu2NfD8Z23umAGxzyMwCj3mPf6BQ
+ i+rQ==
+X-Gm-Message-State: AOJu0YxX9rvWI9xuTYBUI9rVOMQSWbLx9U9vczjZ43FErZzB4BktYwVM
+ AikwN1bo9eBMRJiZvEQqWhvFgOdpgp0pz5rBh4ToCga8bGcD4fiqQWLn1HLVlnFCcFP4GKRwJor
+ /GXAvidOuysbfCiyiJRw1BsTyTzUfFFEJdb71hg==
+X-Gm-Gg: ASbGncsd9Njq8qeUu3aPnWsbYuXEC7ogWn3xpZpVTWO/1ihDr0wJ8dbBPq4Mv+VS7Dk
+ ylW2jxzAwLwJbTg6bv51IeZ7/lytT52Re/W+NLWl9TRv2VjrA0ibY/SROV1sZltHMLt79yGLO6c
+ 3DfZEiIvIHzi/fJ24LK/8qLFf6r06Zis+oEXN/
+X-Google-Smtp-Source: AGHT+IHisUYdw1a1ZQWDrxQo+qw3mKo23gTj1nzd06zExQPK8WkJ2ycRT3Ukytvz0lIH5iKVo2oQM+jBAVexnExsFYE=
+X-Received: by 2002:a17:90b:4c8a:b0:2f6:d266:f45e with SMTP id
+ 98e67ed59e1d1-2ff7ce50364mr13015879a91.2.1741455192995; Sat, 08 Mar 2025
+ 09:33:12 -0800 (PST)
 MIME-Version: 1.0
 References: <20250308122842.76377-1-philmd@linaro.org>
- <20250308122842.76377-3-philmd@linaro.org>
-In-Reply-To: <20250308122842.76377-3-philmd@linaro.org>
+ <20250308122842.76377-2-philmd@linaro.org>
+In-Reply-To: <20250308122842.76377-2-philmd@linaro.org>
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 8 Mar 2025 10:31:04 -0700
-X-Gm-Features: AQ5f1JoNk52n0xkKJA0OuKT5_cb3oKxOnoonr0iTp12dX6huEVMevRdiTJuYdPc
-Message-ID: <CANCZdfpwH=Y1JmK1Z2NCbo5YZOnzi9dQDPWntOO-wVu0i-C6mQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] bsd-user: Propagate alignment argument to
- mmap_find_vma()
+Date: Sat, 8 Mar 2025 10:33:02 -0700
+X-Gm-Features: AQ5f1JrNFCWPze32CXIaeIeR1cADqvfDd3yYvJ6PnBB2AuZ8wTfo1VO_mXatN5I
+Message-ID: <CANCZdfoe6ezPCb07mRyyEsv0GO1MJFDDaR4rGRW+cEJVmROcCA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/3] bsd-user: Always use mmap_find_vma_aligned() in
+ target_mmap()
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Riku Voipio <riku.voipio@iki.fi>, 
- Laurent Vivier <laurent@vivier.eu>, Kyle Evans <kevans@freebsd.org>
-Content-Type: multipart/alternative; boundary="0000000000002261ff062fd81b22"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1032;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1032.google.com
+ Laurent Vivier <laurent@vivier.eu>, Kyle Evans <kevans@freebsd.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000002bdb2f062fd82251"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -92,7 +93,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002261ff062fd81b22
+--0000000000002bdb2f062fd82251
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -100,109 +101,46 @@ On Sat, Mar 8, 2025 at 5:28=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
 linaro.org>
 wrote:
 
-> Propagate the alignment to mmap_find_vma(), effectively
-> embedding mmap_find_vma_aligned() within mmap_find_vma().
+> Massage target_mmap(): calculate alignment once, then
+> unconditionally call mmap_find_vma_aligned().
 >
-> Add a comment in do_bsd_shmat() to clarify alignment above
-> page size is not required.
->
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  bsd-user/bsd-mem.h |  4 +++-
->  bsd-user/qemu.h    |  2 +-
->  bsd-user/mmap.c    | 10 ++--------
->  3 files changed, 6 insertions(+), 10 deletions(-)
+>  bsd-user/mmap.c | 9 ++++-----
+>  1 file changed, 4 insertions(+), 5 deletions(-)
 >
 
 Reviewed-by: Warner Losh <imp@bsdimp.com>
 
-
-> diff --git a/bsd-user/bsd-mem.h b/bsd-user/bsd-mem.h
-> index f5ec0de24ca..90ca0e33775 100644
-> --- a/bsd-user/bsd-mem.h
-> +++ b/bsd-user/bsd-mem.h
-> @@ -370,9 +370,11 @@ static inline abi_long do_bsd_shmat(int shmid,
-> abi_ulong shmaddr, int shmflg)
->          if (shmaddr) {
->              host_raddr =3D shmat(shmid, (void *)g2h_untagged(shmaddr),
-> shmflg);
->          } else {
-> +            abi_ulong alignment;
->              abi_ulong mmap_start;
->
-> -            mmap_start =3D mmap_find_vma(0, shm_info.shm_segsz);
-> +            alignment =3D 0; /* alignment above page size not required *=
-/
-> +            mmap_start =3D mmap_find_vma(0, shm_info.shm_segsz, alignmen=
-t);
->
-
-Why create a write-only variable that you just pass to this function? Is
-this
-a pattern used elsewhere and if so when?
-
-It's fine, imho, like this, but it is a little odd so I wonder why you did
-it like this.
-There may be something I can learn.
+Here I get why you have a new variable since it's a  little easier to read.
 
 Warner
 
 
->              if (mmap_start =3D=3D -1) {
->                  return -TARGET_ENOMEM;
-> diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-> index 4e97c796318..0b3bd65b180 100644
-> --- a/bsd-user/qemu.h
-> +++ b/bsd-user/qemu.h
-> @@ -242,7 +242,7 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong
-> old_size,
->                         abi_ulong new_addr);
->  int target_msync(abi_ulong start, abi_ulong len, int flags);
->  extern abi_ulong mmap_next_start;
-> -abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size);
-> +abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size, abi_ulong
-> alignment);
->  void mmap_reserve(abi_ulong start, abi_ulong size);
->  void TSA_NO_TSA mmap_fork_start(void);
->  void TSA_NO_TSA mmap_fork_end(int child);
 > diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-> index dfa6e728ab5..3f0df79c375 100644
+> index 346f2cefd32..dfa6e728ab5 100644
 > --- a/bsd-user/mmap.c
 > +++ b/bsd-user/mmap.c
-> @@ -275,8 +275,7 @@ static abi_ulong mmap_find_vma_reserved(abi_ulong
-> start, abi_ulong size,
->   * It must be called with mmap_lock() held.
->   * Return -1 if error.
->   */
-> -static abi_ulong mmap_find_vma_aligned(abi_ulong start, abi_ulong size,
-> -                                       abi_ulong alignment)
-> +abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size, abi_ulong
-> alignment)
->  {
->      void *ptr, *prev;
->      abi_ulong addr;
-> @@ -395,11 +394,6 @@ static abi_ulong mmap_find_vma_aligned(abi_ulong
-> start, abi_ulong size,
->      }
->  }
->
-> -abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size)
-> -{
-> -    return mmap_find_vma_aligned(start, size, 0);
-> -}
-> -
->  /* NOTE: all the constants are the HOST ones */
->  abi_long target_mmap(abi_ulong start, abi_ulong len, int prot,
->                       int flags, int fd, off_t offset)
-> @@ -494,7 +488,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len,
+> @@ -489,13 +489,12 @@ abi_long target_mmap(abi_ulong start, abi_ulong len=
+,
 > int prot,
+>       * before we truncate the length for mapping files below.
+>       */
+>      if (!(flags & MAP_FIXED)) {
+> +        abi_ulong alignment;
+> +
 >          host_len =3D len + offset - host_offset;
 >          host_len =3D HOST_PAGE_ALIGN(host_len);
->          alignment =3D (flags & MAP_ALIGNMENT_MASK) >> MAP_ALIGNMENT_SHIF=
+> -        if ((flags & MAP_ALIGNMENT_MASK) !=3D 0)
+> -            start =3D mmap_find_vma_aligned(real_start, host_len,
+> -                (flags & MAP_ALIGNMENT_MASK) >> MAP_ALIGNMENT_SHIFT);
+> -        else
+> -            start =3D mmap_find_vma(real_start, host_len);
+> +        alignment =3D (flags & MAP_ALIGNMENT_MASK) >> MAP_ALIGNMENT_SHIF=
 T;
-> -        start =3D mmap_find_vma_aligned(real_start, host_len, alignment)=
+> +        start =3D mmap_find_vma_aligned(real_start, host_len, alignment)=
 ;
-> +        start =3D mmap_find_vma(real_start, host_len, alignment);
 >          if (start =3D=3D (abi_ulong)-1) {
 >              errno =3D ENOMEM;
 >              goto fail;
@@ -211,7 +149,7 @@ T;
 >
 >
 
---0000000000002261ff062fd81b22
+--0000000000002bdb2f062fd82251
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -220,115 +158,52 @@ mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Mar 8, =
 2025 at 5:28=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:p=
 hilmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote cla=
 ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">Propagate the alignment to mmap_find_vma=
-(), effectively<br>
-embedding mmap_find_vma_aligned() within mmap_find_vma().<br>
+rgb(204,204,204);padding-left:1ex">Massage target_mmap(): calculate alignme=
+nt once, then<br>
+unconditionally call mmap_find_vma_aligned().<br>
 <br>
-Add a comment in do_bsd_shmat() to clarify alignment above<br>
-page size is not required.<br>
-<br>
+Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
+ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br>
 Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
 aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
 ---<br>
-=C2=A0bsd-user/bsd-mem.h |=C2=A0 4 +++-<br>
-=C2=A0bsd-user/qemu.h=C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A0bsd-user/mmap.c=C2=A0 =C2=A0 | 10 ++--------<br>
-=C2=A03 files changed, 6 insertions(+), 10 deletions(-)<br></blockquote><di=
-v><br></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.=
-com">imp@bsdimp.com</a>&gt;</div><div>=C2=A0</div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">
-diff --git a/bsd-user/bsd-mem.h b/bsd-user/bsd-mem.h<br>
-index f5ec0de24ca..90ca0e33775 100644<br>
---- a/bsd-user/bsd-mem.h<br>
-+++ b/bsd-user/bsd-mem.h<br>
-@@ -370,9 +370,11 @@ static inline abi_long do_bsd_shmat(int shmid, abi_ulo=
-ng shmaddr, int shmflg)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (shmaddr) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0host_raddr =3D shmat(shmid,=
- (void *)g2h_untagged(shmaddr), shmflg);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_ulong alignment;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0abi_ulong mmap_start;<br>
-<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mmap_start =3D mmap_find_vma(0, =
-shm_info.shm_segsz);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 alignment =3D 0; /* alignment ab=
-ove page size not required */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mmap_start =3D mmap_find_vma(0, =
-shm_info.shm_segsz, alignment);<br></blockquote><div><br></div><div>Why cre=
-ate a write-only variable that you just pass to this function? Is this</div=
-><div>a pattern used elsewhere and if so when?</div><div><br></div><div>It&=
-#39;s fine, imho, like this, but it is a little odd so I wonder why you did=
- it like this.</div><div>There may be something I can learn.</div><div><br>=
+=C2=A0bsd-user/mmap.c | 9 ++++-----<br>
+=C2=A01 file changed, 4 insertions(+), 5 deletions(-)<br></blockquote><div>=
+<br></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.co=
+m">imp@bsdimp.com</a>&gt;</div><div><br></div><div>Here I get why you have =
+a new variable since it&#39;s a=C2=A0 little easier to read.</div><div><br>=
 </div><div>Warner</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" s=
 tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
 ding-left:1ex">
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (mmap_start =3D=3D -1) {=
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -TARGE=
-T_ENOMEM;<br>
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h<br>
-index 4e97c796318..0b3bd65b180 100644<br>
---- a/bsd-user/qemu.h<br>
-+++ b/bsd-user/qemu.h<br>
-@@ -242,7 +242,7 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong ol=
-d_size,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 abi_ulong new_addr);<br>
-=C2=A0int target_msync(abi_ulong start, abi_ulong len, int flags);<br>
-=C2=A0extern abi_ulong mmap_next_start;<br>
--abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size);<br>
-+abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size, abi_ulong alignme=
-nt);<br>
-=C2=A0void mmap_reserve(abi_ulong start, abi_ulong size);<br>
-=C2=A0void TSA_NO_TSA mmap_fork_start(void);<br>
-=C2=A0void TSA_NO_TSA mmap_fork_end(int child);<br>
 diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c<br>
-index dfa6e728ab5..3f0df79c375 100644<br>
+index 346f2cefd32..dfa6e728ab5 100644<br>
 --- a/bsd-user/mmap.c<br>
 +++ b/bsd-user/mmap.c<br>
-@@ -275,8 +275,7 @@ static abi_ulong mmap_find_vma_reserved(abi_ulong start=
-, abi_ulong size,<br>
-=C2=A0 * It must be called with mmap_lock() held.<br>
-=C2=A0 * Return -1 if error.<br>
-=C2=A0 */<br>
--static abi_ulong mmap_find_vma_aligned(abi_ulong start, abi_ulong size,<br=
->
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0abi_ulong=
- alignment)<br>
-+abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size, abi_ulong alignme=
-nt)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0void *ptr, *prev;<br>
-=C2=A0 =C2=A0 =C2=A0abi_ulong addr;<br>
-@@ -395,11 +394,6 @@ static abi_ulong mmap_find_vma_aligned(abi_ulong start=
-, abi_ulong size,<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0}<br>
-<br>
--abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size)<br>
--{<br>
--=C2=A0 =C2=A0 return mmap_find_vma_aligned(start, size, 0);<br>
--}<br>
--<br>
-=C2=A0/* NOTE: all the constants are the HOST ones */<br>
-=C2=A0abi_long target_mmap(abi_ulong start, abi_ulong len, int prot,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 int flags, int fd, off_t offset)<br>
-@@ -494,7 +488,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, in=
-t prot,<br>
+@@ -489,13 +489,12 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, =
+int prot,<br>
+=C2=A0 =C2=A0 =C2=A0 * before we truncate the length for mapping files belo=
+w.<br>
+=C2=A0 =C2=A0 =C2=A0 */<br>
+=C2=A0 =C2=A0 =C2=A0if (!(flags &amp; MAP_FIXED)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_ulong alignment;<br>
++<br>
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0host_len =3D len + offset - host_offset;<=
 br>
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0host_len =3D HOST_PAGE_ALIGN(host_len);<b=
 r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0alignment =3D (flags &amp; MAP_ALIGNMENT_=
-MASK) &gt;&gt; MAP_ALIGNMENT_SHIFT;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 start =3D mmap_find_vma_aligned(real_start, ho=
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((flags &amp; MAP_ALIGNMENT_MASK) !=3D 0)<b=
+r>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 start =3D mmap_find_vma_aligned(=
+real_start, host_len,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (flags &amp; MAP_A=
+LIGNMENT_MASK) &gt;&gt; MAP_ALIGNMENT_SHIFT);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 else<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 start =3D mmap_find_vma(real_sta=
+rt, host_len);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 alignment =3D (flags &amp; MAP_ALIGNMENT_MASK)=
+ &gt;&gt; MAP_ALIGNMENT_SHIFT;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 start =3D mmap_find_vma_aligned(real_start, ho=
 st_len, alignment);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 start =3D mmap_find_vma(real_start, host_len, =
-alignment);<br>
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (start =3D=3D (abi_ulong)-1) {<br>
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0errno =3D ENOMEM;<br>
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto fail;<br>
@@ -337,5 +212,5 @@ alignment);<br>
 <br>
 </blockquote></div></div>
 
---0000000000002261ff062fd81b22--
+--0000000000002bdb2f062fd82251--
 
