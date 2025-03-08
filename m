@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B7EDC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 07:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A92DC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 07:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqoXd-0001Q4-Rz; Sat, 08 Mar 2025 02:24:13 -0500
+	id 1tqoXZ-0001OR-0q; Sat, 08 Mar 2025 02:24:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqoXb-0001P0-IG
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 02:24:12 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqoXR-0001NG-QT
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 02:24:03 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqoXZ-0008LR-W7
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 02:24:11 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-390e3b3d3f4so1289436f8f.2
- for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 23:24:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqoXP-0008KS-92
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 02:24:01 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-438a39e659cso14885665e9.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Mar 2025 23:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741418648; x=1742023448; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741418637; x=1742023437; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0ZK0fCYsleMzsa/JHC9c5molUW12aA2YIflz9M8WHro=;
- b=Xs/IWlWaHqMWvfxFhzzL75CcMcuPdm1ktOBD/qw2qJItI4Y1fOsAauHhEXoZ8zHySG
- RwRgjZx+z5NmWeRwxste04EKPbEoIbJ2GqhVoYD0HaWawZUbqKjez6StrJ1/LwuTYsxq
- /Cjm7EcvIpEMnD5XHbSpsSkdc/XLQYb5qp+czMMmA6Z7BVtg1gfWSiisBziU1H5Wf4Kj
- dZvnra/6KDNCETyqjYQz3MkIJ0IpOytgAwtZRMoMNLGRSckKuQl1gXygq7xRdDmXFRMe
- ExIpFXqyyf3iTfp8H1ts200g3p+Vh7OD0UTz/p5BOBAIQG+G5YDk4am5oklmxf/NgyPV
- vQ8w==
+ bh=O7kazZRyRImLPrA4ARMvw47fAUrwdo+TcmyR6boI+Q8=;
+ b=uGKueCZaxDwRKB0zxm5T4tZqz/88qQOd3UvIxlwNI+rvGiJxX5k9artcXUz0vrcZBf
+ aT+4Z56fm6FhgvgThxo9ARCSQ8AKRuZSNufROqjZkCYHvdQkWan/XTSs/raqkcPMCepC
+ mLpB2boeolp8VYqf/72oCwAuuhVqMspdXP+VZDVVJsYzN1a7fgHGWsZerrSRsjffurnq
+ 3rs6nG8sb26oGBzNJ5Vkgxb3Znf+bHFhbenoDJBQQV0lrBIdb6OrjTW8pyUxvWCt72Rt
+ vDExfkQUCQSK4YMZQIr64RFVP7YXjJbWQ7oqBBZ/kD5ztNblfXnGgIBIHgRJS7yeU0Ao
+ ETIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741418648; x=1742023448;
+ d=1e100.net; s=20230601; t=1741418637; x=1742023437;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0ZK0fCYsleMzsa/JHC9c5molUW12aA2YIflz9M8WHro=;
- b=IsweabF2Pe2gioPVdbn+0xP68IAzFwDsiQfhLtHIrJ4bJd9OAwEjJVXj3X7D//tZT1
- SwtExux2XJLOLeK902WbYvQbsaP3cpq0C8eQ6vDROuICcGor4liKvqwC7JylV5iHOtXr
- ba1Ku0PEcD5WlC4lBsIRHKUdQ1AibHf46M8oFzAGGIKizT0TuKbg/QJS3EyoHGcKNWBG
- gc/Pj4e6c3nk68vLmqyInaMU8mKCU/s0mfDVLZTCcmzN0TObt9qI2nTnL0eWEzgoZDUy
- P3o7VHlJ2uIY9/Mg+9bXdpDlzVOa8ULqCtIB/cr2BpSEcRTqGkC5z7qwZC3NXOvB+64i
- Eu9A==
-X-Gm-Message-State: AOJu0Yw4iHzax0xOW7rN0kErN5PQAbF2SLOxq9B1zYa6raBR1a2pyl4s
- Y6cKbgbpLX2aKRJowgtBM7iC7rSuBepudzTZkmxaHtEBWzm96uu98mBlNJWEsGBvDnZEH7yEK08
- 0eW4=
-X-Gm-Gg: ASbGncsZ68s4H3dOwQwlGIkH2cTRW/Ui6JiBDO1Bu6FwpVJUKJCkc4TpVBAvMWFC5/u
- aI04jGZtiiz0TiETQHf9g0iZZhKNh7HiEBxKHKyHdiWZ5HTrM+33s1MZULH88eWIywvxDADvV/9
- jcirXE4NNKDd7AxvxwHI75BlY2g17UKfkdsr5WONFwMqgznXO8KXTx/A5viLUQaU1zylYmlcRVD
- gBbOlxfWn7i6AmIiYgBtwIuSh6rumZDeZuSjgql3yg4zC/lFZbBGlkxDsD3VyLpRDY9HfMPz7H6
- 8z7idOxksKYuQRM992M9NEs7s0OLTTLDWuxeU8skLkaepPeB+OMthQOg1uzMbrouL3anAFZLRbz
- auvsPg58Hnf1jRRlyd+qWV57Thblcxw==
-X-Google-Smtp-Source: AGHT+IFU52KZdpIoYDXT+0zoK0soh+D7/NPAxiNhFiljiVjj4NIM6kzs9VvmZqUsKU6YG3M4GIlmtQ==
-X-Received: by 2002:a5d:5889:0:b0:390:f45e:c851 with SMTP id
- ffacd0b85a97d-39132d8de73mr4857587f8f.21.1741418648332; 
- Fri, 07 Mar 2025 23:24:08 -0800 (PST)
+ bh=O7kazZRyRImLPrA4ARMvw47fAUrwdo+TcmyR6boI+Q8=;
+ b=wr383qkQST/J7BlxXkkGPYEull8W1pRpqvlYjZFPVpxgOemltfvwIgUUN4J3induLy
+ cseBV5v132e7+6yyUKj03p/INf/vskeSxQ9zm7s6i9Z76mObcUOj3qmh6sBybkJ+Gg4j
+ JPMfq+wsE1RbD2TIJrqVdZ45ukPf1woIu0FI1ckGIwkEVCRBgOuJv2eShATaOwn9FhM6
+ ykNa09aIJKqqvwKif+AG8z0sHsS4KLz+6Avwe3znkfjWw4nz2C77xkmBYX+mFWeImSwn
+ Bk7/gYTFt/AI54JBUS0+9hMcJt7eaZHLBdK/4rh8XmMHlMU6xk9acQoXLPqmb+/kS3Bo
+ wbUQ==
+X-Gm-Message-State: AOJu0YxMIYbL50Wlrpj3Q0ARu9upAyssMaEGPupYtfvVUV1zVRClS3u+
+ fpQC8YHAwwWMbHcJI5DkxBiZVZdYSI3ymHqeh30ynkuYym2jk92Uh111AlJ5QPfFuy19T71qgoI
+ +jmY=
+X-Gm-Gg: ASbGnctJP5g58PpBocojIWc02E4qxY7oOB5/AqVNqROTQCrxUDkC5vjQSe2DnT78D+M
+ TICzKtqsVq4dIIwnBBPjrxhaSEghq8T9IVX3ve7orB6r6/kGEHxi1RDu/f5pkNjFoF8Yptee9f7
+ o/G7yThBgArrMILG7/H2yTBuQsKtrEbTQR38Su8dZvFlk5zhgywV7MFHPboP+n3aR+TWh7if4ui
+ HPcIQPXPep34t96e1v9neVWATD/oGBNb9PFwIYNIlOkeG2DY5ouhkPAnxQV25v85XQuDC5CB+a0
+ X9swD62/klZPeTlWAmxpnFDb1vHRs6xj27QOwymyM4SQMZsljCqY6jfnA9bU/O8ykXvdJo/jNzO
+ rOQaz4t4bT7j+PJ8QPCdLVPfWGiZ76Q==
+X-Google-Smtp-Source: AGHT+IG6lu1F4MrwjLyrEw+hb8DV/uF+PitaOMr+pF3KBvKdBH8qbamgRnpWd6nB2TsCcatYjG6Siw==
+X-Received: by 2002:a05:6000:1789:b0:391:1f9:c59a with SMTP id
+ ffacd0b85a97d-39132dd94dcmr4239025f8f.46.1741418637238; 
+ Fri, 07 Mar 2025 23:23:57 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd8c3173sm77095155e9.11.2025.03.07.23.24.06
+ 5b1f17b1804b1-43bd4352ed7sm104826185e9.26.2025.03.07.23.23.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 07 Mar 2025 23:24:06 -0800 (PST)
+ Fri, 07 Mar 2025 23:23:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 17/18] accel/tcg: Build tcg-runtime.c once
-Date: Sat,  8 Mar 2025 08:23:48 +0100
-Message-ID: <20250308072348.65723-4-philmd@linaro.org>
+Subject: [PATCH v2 15/18] accel/tcg: Restrict GETPC_ADJ() to 'tb-internal.h'
+Date: Sat,  8 Mar 2025 08:23:46 +0100
+Message-ID: <20250308072348.65723-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250308072348.65723-1-philmd@linaro.org>
 References: <20250308072348.65723-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,54 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+GETPC_ADJ() is only used within accel/tcg/, no need to
+expose it to all the code base.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/tcg/tcg-runtime.c | 7 +------
- accel/tcg/meson.build   | 2 +-
- 2 files changed, 2 insertions(+), 7 deletions(-)
+ accel/tcg/tb-internal.h | 11 +++++++++++
+ include/exec/exec-all.h |  9 ---------
+ 2 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/accel/tcg/tcg-runtime.c b/accel/tcg/tcg-runtime.c
-index 3d4651b4012..fa7ed9739c7 100644
---- a/accel/tcg/tcg-runtime.c
-+++ b/accel/tcg/tcg-runtime.c
-@@ -23,13 +23,8 @@
-  */
- #include "qemu/osdep.h"
- #include "qemu/host-utils.h"
--#include "cpu.h"
-+#include "exec/cpu-common.h"
- #include "exec/helper-proto-common.h"
--#include "exec/cpu_ldst.h"
--#include "exec/exec-all.h"
--#include "disas/disas.h"
--#include "exec/log.h"
--#include "tcg/tcg.h"
- #include "accel/tcg/getpc.h"
+diff --git a/accel/tcg/tb-internal.h b/accel/tcg/tb-internal.h
+index 62a59a5307e..68aa8d17f41 100644
+--- a/accel/tcg/tb-internal.h
++++ b/accel/tcg/tb-internal.h
+@@ -13,6 +13,17 @@
+ #include "exec/exec-all.h"
+ #include "exec/translation-block.h"
  
- #define HELPER_H  "accel/tcg/tcg-runtime.h"
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 81fb25da5cc..411fe28deac 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -1,5 +1,6 @@
- common_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'cpu-exec-common.c',
-+  'tcg-runtime.c',
- ))
- tcg_specific_ss = ss.source_set()
- tcg_specific_ss.add(files(
-@@ -7,7 +8,6 @@ tcg_specific_ss.add(files(
-   'cpu-exec.c',
-   'tb-maint.c',
-   'tcg-runtime-gvec.c',
--  'tcg-runtime.c',
-   'translate-all.c',
-   'translator.c',
- ))
++/*
++ * The true return address will often point to a host insn that is part of
++ * the next translated guest insn.  Adjust the address backward to point to
++ * the middle of the call insn.  Subtracting one would do the job except for
++ * several compressed mode architectures (arm, mips) which set the low bit
++ * to indicate the compressed mode; subtracting two works around that.  It
++ * is also the case that there are no host isas that contain a call insn
++ * smaller than 4 bytes, so we don't worry about special-casing this.
++ */
++#define GETPC_ADJ   2
++
+ #ifdef CONFIG_SOFTMMU
+ 
+ #define CPU_TLB_DYN_MIN_BITS 6
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index a758b7a8438..2ac98e56c41 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -186,15 +186,6 @@ extern __thread uintptr_t tci_tb_ptr;
+     ((uintptr_t)__builtin_extract_return_addr(__builtin_return_address(0)))
+ #endif
+ 
+-/* The true return address will often point to a host insn that is part of
+-   the next translated guest insn.  Adjust the address backward to point to
+-   the middle of the call insn.  Subtracting one would do the job except for
+-   several compressed mode architectures (arm, mips) which set the low bit
+-   to indicate the compressed mode; subtracting two works around that.  It
+-   is also the case that there are no host isas that contain a call insn
+-   smaller than 4 bytes, so we don't worry about special-casing this.  */
+-#define GETPC_ADJ   2
+-
+ #if !defined(CONFIG_USER_ONLY)
+ 
+ /**
 -- 
 2.47.1
 
