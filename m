@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D97B0C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F7CC28B2E
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr397-0004xd-5m; Sat, 08 Mar 2025 17:59:53 -0500
+	id 1tr38u-0004jH-0m; Sat, 08 Mar 2025 17:59:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38b-0004db-2i
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:21 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tr38S-0004YZ-1w
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:12 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38Z-0005OA-Hc
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:20 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2239f8646f6so55704245ad.2
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:19 -0800 (PST)
+ id 1tr38Q-0005LT-8B
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:11 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-22401f4d35aso55290105ad.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741474758; x=1742079558; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741474748; x=1742079548; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g4kmr8U/nSCs8j0qCWAgIeO/cec/3d9GL3wtnW/tBPU=;
- b=N5lggADgjMVkBjkJVafKuVeSJzFTGgVkkyAhTP0Wg9GY1oZYCjyHrKfdrWDDrt4GRd
- NhbPlFEG8aHrfeVXWw9f6ibmLY4qEgzAgDj+4GzBMjJFI5TQV99G2Fi9vkaNuYLqXEk3
- s9BxraoqERXQjvuPhzZ2kGU4yFeJosD81Uf4KNf+MxSQYZigubTOv037LdLGp7WUX7Fj
- baeqqDA41vm9odHFEonV8ESZiyHGGDkTXeJ7SGQnzRWi68BgpR5l2DY2BMWHj0hNtf/w
- sUyAJR7H/rTwdcHbi3Or2vRy4PM2kwV3OeJ7R52YhNc7UaABts6ES28vJuslUoMvUEaj
- nbGg==
+ bh=SzyDViup58ROLXi9a5eLqmvAZgtt4FP4fwTvGjoaRo8=;
+ b=EVJKeDS1Ww74kLYbEQRT3RNzv5P6Xn7T+YCqYh1MWvrfsG9nAv0qwX11PU+E9Xqu2s
+ gYPikMjIEn6eQFFLRH4MqBI1FltOiLOq7nNw5Vlcu0HPhIubcIXYCYwxGvyseUskjv2J
+ 3f6R88vhXliH7UryHVZMKlsICzaV+1AKZ62PJ/k8mPgVH6cmeSGIqNS5Fs0PcEe9S3hi
+ k6kNo1XDLxzn2ZNBBQnwGTPDQ311u4IFb+MgACEKTTp8y2aMUv7SPenbW2Gw4y36taAh
+ dlFvQHM3kayBm4NfXB58IxoWyzmP1kr7oh6L8bQaF3Ued71lJxAzOuymODEvwmo0RVFk
+ qdtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741474758; x=1742079558;
+ d=1e100.net; s=20230601; t=1741474748; x=1742079548;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=g4kmr8U/nSCs8j0qCWAgIeO/cec/3d9GL3wtnW/tBPU=;
- b=Kcy8Sp6GHAZNV9EfX3wxQpVLdq9UoRd/qs1mG7Or8baAiyKr1FX9iQt3G2v2jnWi29
- L9LSHKHPL4R0izX8xL8kcqLxWaC1STPdir4+/levLGt/u/elxO2IQJRJynacX5YgDhAR
- n4ET9J/uj85EITDK2qiMvE5iKBS07ryN612JNouY6nXCJS1r661haWMMM92QIX0qp5Fo
- EPE3njvARgJ0CmD21xlwcOm7WmDZ3FhYTAz0uQoBhcsR1rDYwCZMQ1E1uC7Bh+JuW+4K
- j4rY/8jd/8K1Z3fK8C8CtIxNjsoym0MU+ECPkT65MEDbXvLump7zJaDkBOvZwXF4QLdI
- eDgQ==
-X-Gm-Message-State: AOJu0YxCxjgqub/oB/h0QKZm+Odvbvi2awrfgCZ0oAQUfJT4hKIfO58q
- A0+tiXUvktkH8IC7LIBnb3EfIGRup4Dqmp1Gv1eMfTlOO0VZKP+JeBqhJ4SXcf0mEhejCfUygU1
- h
-X-Gm-Gg: ASbGnctDLOPq6J9duhftNQ999IdUqvXUQMGtbm/VaUSJoRnnZn7tKGCk8f2ItAF0pPI
- n0ac3ZcdWGHx6rzrgGgPb4hj3XQhaJj+BPw106O2piAPbZlcm0UBBuq/Ln9EQUKVV13TmsI7s5e
- AfJVNnmM+9i+m8xvP2268IRpIivCdWs8HZ5vw6dZfjn6e6Ay8dCelJQv4JL7YVBiDuPEHm0hhsT
- s/wkr611w1ISr2Bv8P56VS9nXFLzf+E6NZVN7psmvdGCkmshcFbklj+QjSDFF5hLfussnWsz9ET
- D4JfAzBRLcdQVOiqWfC9PNMe2F1V/u6/o7sMI7Z/U/1f8I84/oLjNfhQAJqBANOc8w1szfQ8T9B
- R
-X-Google-Smtp-Source: AGHT+IHbdh9wfzupah/15/B9gMaLzg+aHoefK7+ZDpQxhEcFdoEtDgkB4e5lRqTYVgDbm2ZwTeGPVQ==
-X-Received: by 2002:a17:902:d488:b0:215:b9a6:5cb9 with SMTP id
- d9443c01a7336-2242887eb5cmr146067055ad.5.1741474758076; 
- Sat, 08 Mar 2025 14:59:18 -0800 (PST)
+ bh=SzyDViup58ROLXi9a5eLqmvAZgtt4FP4fwTvGjoaRo8=;
+ b=CPpYZnIeJ0xZTiUWLLIHaryR+2Hmd60TZkr7mUI+mnTySJALOxaBBHY+j3DKbBM3xX
+ hVPZAxdrN7wWuijCsPvuKgK2fxwJNqCUMy3HPtQKayn30vzsf7jDfWq4Y+Q1GGnS/mcS
+ asP4V+/iM8eJwYQFRW9Mwjw1wzMzU5Q7Q0Bw0SoaJDZ9XyYgakx6RuSSV3WckPqAOdW5
+ k5+u6l5nDt8+QgOHXkr19s5YRgmBw+CdXy2tJR9mriyrGVeS9/hhvkf58MslQGwn3qSl
+ fWwYKxsUflMjc5WsyFEybRi86wxTpx8tUxuzZJjtoarVzKeETN/6WaDN8vpFRcBnAhvK
+ vAvA==
+X-Gm-Message-State: AOJu0Yy+1El+UdHW5sKfi30clxpo1/lCnOeNFHcFkO/8cV//1LNYBFBN
+ Uix1O6kcm5DRLaCgpw8ZT0qbn2Cjad7M/4JokELKArSHU2vCEOUOOTjDtpF4qiA5T2UTpaT1Q14
+ H
+X-Gm-Gg: ASbGncv75FGLEOtoZWj7vYsKZxAaM7gdvjcF9RcXc7RE2oz6IcKujoLSpMc6A6BJCPN
+ DSDV8Jgxeos+xJhFq+2aAs/TXbuox/3vf9uTF3Y1dkhEB7h9NVUQe9VochS3ohyCzz53LTujzHf
+ /kovAbNTeNloYK3T0LOspFe3Z/SkoFWGgYZfKA9rsCiE6zs6XpguG9Y1mrrSWHPErdUqOf8ciSt
+ tH5k0e0O0N3pDy9aakJzVIL8bV11P8CAQ/4tThbUWRPMo0AXWIIebJYfcCuhKfSyDnEXK7rWYOC
+ e/15+j0rRSvs3QlxDEZJKu2+YaV0jhjtY6aD3LH2Mod6FY4ospC+4rlce3csyq40s+gsFsid9B9
+ c
+X-Google-Smtp-Source: AGHT+IFyJnA1+vdfNfUgsMYdAyxkp/4Lc0qas+OrnJ+irFS+FWN6ufmm4ukreIYxEuOECAoPLeNtgg==
+X-Received: by 2002:a17:903:2445:b0:224:249f:9723 with SMTP id
+ d9443c01a7336-22428bd446dmr121049425ad.51.1741474748455; 
+ Sat, 08 Mar 2025 14:59:08 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.17
+ d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Mar 2025 14:59:17 -0800 (PST)
+ Sat, 08 Mar 2025 14:59:08 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 21/23] qemu/atomic128: Include missing 'qemu/atomic.h' header
-Date: Sat,  8 Mar 2025 14:59:00 -0800
-Message-ID: <20250308225902.1208237-23-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 07/23] exec: Declare tlb_set_page_full() in 'exec/cputlb.h'
+Date: Sat,  8 Mar 2025 14:58:46 -0800
+Message-ID: <20250308225902.1208237-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250308225902.1208237-1-richard.henderson@linaro.org>
 References: <20250308225902.1208237-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,37 +104,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-qatomic_cmpxchg__nocheck() is declared in "qemu/atomic.h".
-Include it in order to avoid when refactoring unrelated headers:
-
-    In file included from ../../accel/tcg/tcg-runtime-gvec.c:22:
-    In file included from include/exec/helper-proto-common.h:10:
-    In file included from include/qemu/atomic128.h:61:
-    host/include/generic/host/atomic128-cas.h.inc:23:11: error: call to undeclared function 'qatomic_cmpxchg__nocheck'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-       23 |     r.i = qatomic_cmpxchg__nocheck(ptr_align, c.i, n.i);
-          |           ^
-    1 error generated.
+Move CPU TLB related methods to "exec/cputlb.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20241212141018.59428-4-philmd@linaro.org>
+Message-ID: <20241114011310.3615-16-philmd@linaro.org>
 ---
- include/qemu/atomic128.h | 1 +
- 1 file changed, 1 insertion(+)
+ include/exec/cputlb.h     | 23 +++++++++++++++++++++++
+ include/exec/exec-all.h   | 22 ----------------------
+ target/sparc/mmu_helper.c |  2 +-
+ 3 files changed, 24 insertions(+), 23 deletions(-)
 
-diff --git a/include/qemu/atomic128.h b/include/qemu/atomic128.h
-index 448fb64479..31e5c48d8f 100644
---- a/include/qemu/atomic128.h
-+++ b/include/qemu/atomic128.h
-@@ -13,6 +13,7 @@
- #ifndef QEMU_ATOMIC128_H
- #define QEMU_ATOMIC128_H
+diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+index 6cac7d530f..733ef012d1 100644
+--- a/include/exec/cputlb.h
++++ b/include/exec/cputlb.h
+@@ -21,6 +21,7 @@
+ #define CPUTLB_H
  
-+#include "qemu/atomic.h"
- #include "qemu/int128.h"
+ #include "exec/cpu-common.h"
++#include "exec/vaddr.h"
  
- /*
+ #ifdef CONFIG_TCG
+ 
+@@ -39,4 +40,26 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+ 
+ #endif
+ 
++/**
++ * tlb_set_page_full:
++ * @cpu: CPU context
++ * @mmu_idx: mmu index of the tlb to modify
++ * @addr: virtual address of the entry to add
++ * @full: the details of the tlb entry
++ *
++ * Add an entry to @cpu tlb index @mmu_idx.  All of the fields of
++ * @full must be filled, except for xlat_section, and constitute
++ * the complete description of the translated page.
++ *
++ * This is generally called by the target tlb_fill function after
++ * having performed a successful page table walk to find the physical
++ * address and attributes for the translation.
++ *
++ * At most one entry for a given virtual address is permitted. Only a
++ * single TARGET_PAGE_SIZE region is mapped; @full->lg_page_size is only
++ * used by tlb_flush_page.
++ */
++void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
++                       CPUTLBEntryFull *full);
++
+ #endif
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index f24256fb5e..f43c67366b 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -156,28 +156,6 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+                                                uint16_t idxmap,
+                                                unsigned bits);
+ 
+-/**
+- * tlb_set_page_full:
+- * @cpu: CPU context
+- * @mmu_idx: mmu index of the tlb to modify
+- * @addr: virtual address of the entry to add
+- * @full: the details of the tlb entry
+- *
+- * Add an entry to @cpu tlb index @mmu_idx.  All of the fields of
+- * @full must be filled, except for xlat_section, and constitute
+- * the complete description of the translated page.
+- *
+- * This is generally called by the target tlb_fill function after
+- * having performed a successful page table walk to find the physical
+- * address and attributes for the translation.
+- *
+- * At most one entry for a given virtual address is permitted. Only a
+- * single TARGET_PAGE_SIZE region is mapped; @full->lg_page_size is only
+- * used by tlb_flush_page.
+- */
+-void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
+-                       CPUTLBEntryFull *full);
+-
+ /**
+  * tlb_set_page_with_attrs:
+  * @cpu: CPU to add this TLB entry for
+diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+index 9ff06026b8..7548d01777 100644
+--- a/target/sparc/mmu_helper.c
++++ b/target/sparc/mmu_helper.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+ #include "cpu.h"
+-#include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ #include "qemu/qemu-print.h"
+ #include "trace.h"
 -- 
 2.43.0
 
