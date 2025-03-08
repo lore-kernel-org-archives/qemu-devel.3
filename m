@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F28C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 12:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A75EC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 13:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqtIr-0006X2-8R; Sat, 08 Mar 2025 07:29:17 -0500
+	id 1tquYu-0002Qw-Np; Sat, 08 Mar 2025 08:49:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqtIU-0006SY-2J
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 07:28:56 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tquYk-0002QX-5K
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 08:49:46 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqtIS-0002At-HO
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 07:28:53 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3913d129c1aso223115f8f.0
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 04:28:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tquYi-0007Ai-1R
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 08:49:45 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43bdc607c3fso16499885e9.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 05:49:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741436930; x=1742041730; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bJ87N+2KXZXtdZu2WpJSCBt2aVSM5GEZOX3NVdYChCE=;
- b=Bab3MX1y6+A2nQWpSa1wm+RN/sSy39h09MToWRAzCUT9y6IPMVqmQwibVpzKOZXuIf
- wPmWy+dDkoL+Isa3IuHIa1kJIS+clDi/nFeyr6E4UrzVPYjR80jRJtpuTcoZzvjOWDEV
- wCTRTUOIyCeGRnwySmuSrK7OsniG1yDoym1TJPeHqgLZlpliQHV2ZCKQaSUGv1f3sPZJ
- vqHeW+XrzpVDjGzmwGBOu8hDQhKnCPD76Z959/Bii6sCzs4kjOH79/2YQgb490Dw/HI0
- Cgklg4HPKm6UTN/g+EVjX+q4D1/blzdfKorLSFBWXMlhL2RaFUAx/WtMLj5dQA6R2IbS
- Oeow==
+ d=linaro.org; s=google; t=1741441780; x=1742046580; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GKR/odgagJQuc1hFFy3FVHW1+FYszYypBPa/N5O6e5o=;
+ b=SUpeYONL8+9CgD9uUvFwCtN85bzxOAYd3h10cZV9rRz3dka64XilB7eoyG5oCesZbn
+ nNYcvyP0HQ3Lj+HCwh/m5ppwmy3r4kVPpjbMZBoo52dNOC/fUhX9nFS4lgpuxyzWM5Bf
+ uxQhWCVp3bDwl9k2Vc8FSHkmd2vLsU8cB/3CvSH08rtkY1ntOMVjDCegPxZXe7rRKDHr
+ YiSOD+nB0//CYnqZtPthFlf9zfo6p/WVeyin/Fh62qb0FwpTMTBRwx5JuU9SSJwEELCq
+ qUES/y6M2WYDUdWzpbbIjemjVABC2qs5gDUJA60CMnHF8AKMtnnajpG4u1WaYvvN4lLA
+ OEzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741436930; x=1742041730;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bJ87N+2KXZXtdZu2WpJSCBt2aVSM5GEZOX3NVdYChCE=;
- b=CJ497Ik27amfCKTB0i6i47fNoHfqARFjjBE2XInp90yWpga1pqExjUAgzLzCRHU4NY
- mmRc7IpqqjoTvjx1BZLNEDQxJmfzlmv39hlidACOquXN7bc+kpLV0+Sg40xDdIpwuVDR
- oES8HhU72Of149qMESZR0ijgA6MA4vFGOyOhooDByNKoILeF4HOLP6IfIJXJSdb+4uGx
- VS4cVA12jyYFRSiFmctZqx6w+CgoDvEkqt+HzkCl6m0sIJzvPNHF4mh94KqbgV//suUF
- ebpasuIUf5nNiby/MOKf8jjZf/+UNdW/UgdrmtBddHBAV2tuGGC25FfUAuTSVzkH5a03
- yvFA==
-X-Gm-Message-State: AOJu0YyQxx7ub5hFmzkH0iIvSXVk9OUx3kkeyC1qvqWhEa+2xaxqFlQX
- yTun+ecGXsTryGzXu8R7grdu1wZwVjuxKl9u7cBt3sXBHS9ZmABP+DNN6cUEcmySS5KnDoIZOPk
- vo64=
-X-Gm-Gg: ASbGncvUgzxG8NADsSb16iWK3b5Gfgt17vKc2y77FnZ/FsgUvf8NH/n8RJK23XLIAaT
- eOXuqptQJwwoHnQ3ADk8B/Uy2e+mvYrqRIIry4y2AY+86PEy4URUSv5ZrQfnM1tBP7xg4EEY7EV
- RQVpcrXsN0l3rin3IAmty+uMe70ugSmJdyhcQEoEG6NfSUMVInz3+nkzfHs2IzEE/Z1iY6Gifnv
- EF0kG0/Wcba8SUt59hhFTmtFySnmo/V6rPkBIbZ0D613dTNcZLVn5TIF8DoYK3tibWnZbJaI9Ki
- fixO27cqwsCSw169u1VsTEGPSYv0peGdggDHTtUXcE+GYCniLmNCvXJeS+80mzYylxkEW7NdnJ0
- CRiEp2mqdX0Ad0fInh5E=
-X-Google-Smtp-Source: AGHT+IF1zAlRHcCE7HeQPpV1KJ6CxscezPz+MVGX+/3jauJK9t8/DKG/AwOW9MeSy7Sd+4Qc1BRKcA==
-X-Received: by 2002:a05:6000:18a9:b0:390:f025:9e85 with SMTP id
- ffacd0b85a97d-3913af2e4bemr2293185f8f.21.1741436929959; 
- Sat, 08 Mar 2025 04:28:49 -0800 (PST)
+ d=1e100.net; s=20230601; t=1741441780; x=1742046580;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GKR/odgagJQuc1hFFy3FVHW1+FYszYypBPa/N5O6e5o=;
+ b=eiWkajULpOku6wcY3aPrdvt87hEV9zkXBGY9tWpctFH36gdoB2c4xHJmR7bPxa1ME2
+ gr66IFwml1ZIg9URtfcoGTtejz2dLw0r5ymaiFzKFFKpmM6Rx375HQIKcnxpsiltRALg
+ vjvRwyr/z1oZjeToDwXAR1QmVhe2SGIR6/+KYhT5pGXkZSY0gqOtG+30E68YFhGOfZGN
+ AYiv/kjmWHyJ5jjDikxJmNwMkPeE0UUgZmP//UkW3nYBkmbupi7eCGsSVGrLViVENFo3
+ 6A30oH1dav4Eg3N121YOfRGJzXrXXVdY9BxCOZ+xPvW0M111TRxrksUhJqhbtk7/Lz4C
+ QnFA==
+X-Gm-Message-State: AOJu0YxmmIlz63Z4so4uEGiw9y64UGaki0FsEumEthHVMgGgkT1AJriI
+ 034smfGksiK5mLFYdoQi2wS+57vEeaAs4lE8RE6BPieXVnvUPdm1Hz5xv7elX5SLnhlh7VDdi1e
+ MiKE=
+X-Gm-Gg: ASbGnctGhbTRp0iw6nfEmBBZXD+YBMrKlPgaj94fLBi/JFPoiULeYo0UQ7y4pZdZcAA
+ FydOKcRg9+s9qrhp82fEde5P+YhAUqXmEbNUFO7jiLJkaXdwp4OMbFtVP8X9CkFZyso8bV8YSZr
+ GongEAzonk4XKYAvA213HDRE06qx31pe1p5k8pVSrjtda+XsV4L3Xm2WwKGBT7LluirzgWarUyk
+ eULgzEziutqJ2PM7hliuTJ9vqcU72flMKQ437d7XJlr1oWnlXX8hWccAoqGcKBFWwRU+d026vjw
+ doPHJ8EWqrh2qdSAvPG5wWWAStLDEsbvbuw4bY/wFQNPSCHviEGLtOy/bWiox5Lkcl6uYtP56h+
+ G9MmsvfGKs67rGkAbyKM=
+X-Google-Smtp-Source: AGHT+IE9B974xtVH3iUUTzDLE7POblCHQTgvboCEYMZTWoWsR4yRLdYUkvfKRDyBnjDQdX6RtKxc7g==
+X-Received: by 2002:a05:600c:1554:b0:439:91dd:cf9c with SMTP id
+ 5b1f17b1804b1-43c601d9492mr53733225e9.10.1741441780466; 
+ Sat, 08 Mar 2025 05:49:40 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cea8076fcsm16162575e9.15.2025.03.08.04.28.48
+ ffacd0b85a97d-3912c103f57sm8873762f8f.91.2025.03.08.05.49.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 08 Mar 2025 04:28:49 -0800 (PST)
+ Sat, 08 Mar 2025 05:49:39 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v4 1/3] bsd-user: Always use mmap_find_vma_aligned() in
- target_mmap()
-Date: Sat,  8 Mar 2025 13:28:40 +0100
-Message-ID: <20250308122842.76377-2-philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] MAINTAINERS: Consolidate core exec/vCPU handling section
+Date: Sat,  8 Mar 2025 14:49:38 +0100
+Message-ID: <20250308134938.77267-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250308122842.76377-1-philmd@linaro.org>
-References: <20250308122842.76377-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,37 +98,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Massage target_mmap(): calculate alignment once, then
-unconditionally call mmap_find_vma_aligned().
+Some common cpu/exec files are listed under the 'TCG CPUs'
+section. Move them to the generic 'Overall Guest CPU Cores'
+one where they belong.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- bsd-user/mmap.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ MAINTAINERS | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-index 346f2cefd32..dfa6e728ab5 100644
---- a/bsd-user/mmap.c
-+++ b/bsd-user/mmap.c
-@@ -489,13 +489,12 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int prot,
-      * before we truncate the length for mapping files below.
-      */
-     if (!(flags & MAP_FIXED)) {
-+        abi_ulong alignment;
-+
-         host_len = len + offset - host_offset;
-         host_len = HOST_PAGE_ALIGN(host_len);
--        if ((flags & MAP_ALIGNMENT_MASK) != 0)
--            start = mmap_find_vma_aligned(real_start, host_len,
--                (flags & MAP_ALIGNMENT_MASK) >> MAP_ALIGNMENT_SHIFT);
--        else
--            start = mmap_find_vma(real_start, host_len);
-+        alignment = (flags & MAP_ALIGNMENT_MASK) >> MAP_ALIGNMENT_SHIFT;
-+        start = mmap_find_vma_aligned(real_start, host_len, alignment);
-         if (start == (abi_ulong)-1) {
-             errno = ENOMEM;
-             goto fail;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 5df6020ed54..783885a84d8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -152,10 +152,7 @@ Overall TCG CPUs
+ M: Richard Henderson <richard.henderson@linaro.org>
+ R: Paolo Bonzini <pbonzini@redhat.com>
+ S: Maintained
+-F: system/cpus.c
+ F: system/watchpoint.c
+-F: cpu-common.c
+-F: cpu-target.c
+ F: page-vary-target.c
+ F: page-vary-common.c
+ F: accel/tcg/
+@@ -165,15 +162,11 @@ F: util/cacheflush.c
+ F: scripts/decodetree.py
+ F: docs/devel/decodetree.rst
+ F: docs/devel/tcg*
+-F: include/exec/cpu*.h
+-F: include/exec/exec-all.h
+ F: include/exec/tb-flush.h
+-F: include/exec/target_long.h
+ F: include/exec/helper*.h
+ F: include/exec/helper*.h.inc
+ F: include/exec/helper-info.c.inc
+ F: include/exec/page-protection.h
+-F: include/system/cpus.h
+ F: include/system/tcg.h
+ F: include/accel/tcg/cpu-ops.h
+ F: host/include/*/host/cpuinfo.h
+@@ -497,12 +490,19 @@ Overall
+ M: Richard Henderson <richard.henderson@linaro.org>
+ R: Paolo Bonzini <pbonzini@redhat.com>
+ S: Maintained
++F: include/exec/cpu*.h
++F: include/exec/exec-all.h
++F: include/exec/target_long.h
+ F: include/qemu/accel.h
+ F: include/system/accel-*.h
++F: include/system/cpus.h
+ F: include/accel/accel-cpu-target.h
+ F: accel/accel-*.c
+ F: accel/Makefile.objs
+ F: accel/stubs/Makefile.objs
++F: cpu-common.c
++F: cpu-target.c
++F: system/cpus.c
+ 
+ Apple Silicon HVF CPUs
+ M: Alexander Graf <agraf@csgraf.de>
 -- 
 2.47.1
 
