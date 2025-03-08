@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61698C282EC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 659C5C28B25
 	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 22:59:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr38Q-0004WS-IT; Sat, 08 Mar 2025 17:59:11 -0500
+	id 1tr38U-0004Zt-D0; Sat, 08 Mar 2025 17:59:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38N-0004TZ-78
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:07 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tr38R-0004Xb-0q
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:11 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tr38L-0005K2-Dr
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:06 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-223fb0f619dso59273975ad.1
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:05 -0800 (PST)
+ id 1tr38P-0005Ky-AV
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 17:59:10 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-223a7065ff8so36670645ad.0
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 14:59:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741474744; x=1742079544; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741474748; x=1742079548; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=flAxIFy+Ab6eUm0+9WbxQUDS52odshsIOHS0bGzzjls=;
- b=P56rkARZZdEBEDwzRA2WuJc4phTPiBnx8nNL8R3xom6duamJJNIw/lA4UNRmqC0hWX
- NxT/zwYyVbhFByeHLbAYjqQnxQXviRLEjQSF7UDgfK8Ow3WB2xPBvb7WZ3b6Sk+UxEcC
- sYwfgnSC7uRu6/GzJrVZgSa22lfPjw3ReIJqES6nyYnNhdhJFZo+NIBgLk9TVPsKiL68
- Jdl5UfAf9Kt4Hfp+v/0DuEYVfGm7b5rw1ThIbf6yKfVG0ztJKlfVCKKKIHURa0+wAtJb
- K8VgGIyw3fq1PFINXHr+YKHk3CZ1hamzM//ukdVmV36E5wXlJ8NQOU9OtruBrbKqnPNC
- cdaA==
+ bh=k6rq6CIIqovi+rqTbWr+nZgRpCqEfphmlSslf2GR3LU=;
+ b=DflgUQCoDWKXKcXvnvw4tqTdDdYo4KGjwmnBsCj9inGEnKd3emkZx+z/y8txDhoCv3
+ FUBpuy70zkzWL5y06ToF/FIQg7XXMEOFdcQKUTn7YUoSpZ1YhGbWC7xGBz5HCYHriVCk
+ Ilhye7GGKnwyep27cWZMbYm8AC64y9OZR+p7x4o8t6qOeNjKROxfMLroH5O+ID2MRqbg
+ zCCbEoiPb8aYAbdtKQUAxPzTzj2mxeY9Bpc5kJ7Wgs0GmOCutgwPwz+kW/KJFPgVgX/U
+ xepqmE+GuXuenUin2cgaB3LDO/kF9q5Sp/y6Bir67w94NzKHygbAFFm+Cg5z0fAGCcss
+ O54w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741474744; x=1742079544;
+ d=1e100.net; s=20230601; t=1741474748; x=1742079548;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=flAxIFy+Ab6eUm0+9WbxQUDS52odshsIOHS0bGzzjls=;
- b=fwEIud0yy4p/jGf7WnYUdL/379rRBoKg2WOy3zCAZM3hMjpQUAIsQP+zEYiHYiVKL/
- tei7K2Z/X6561/xJzpC45qNQ1eEBXEu27u3qMrr3iA8iRIRRopo84xe4XT2AJe+9+ZFt
- C533qBFenIOdGOzamwja0hL85ozx98J6ZlozMuAZhIT+1/dF4uMgX4mnWZvD8fSDoAMI
- gt1CgOJ4ynkHHuFvjTOCiJcn2ggMx64aXjU3uLBtv9GCcY3VUa3yD7vXYhqtjxHo9cyH
- DR9Y9a17/l5V0PqHSgFobZHmyKa9g2gMk6ruuTJjHauOSv1twZ5n2BcZtu1BQcDPb25o
- 4Pog==
-X-Gm-Message-State: AOJu0YzpVBnFTaDUoJirVFADhBoO/T5IdiC34ULonPQ+m9Gl2mlY0HlT
- IblZieXy75NmnegSuAlYJ4xzuw9HQknDXX/q73tc/1k8Ios8B39YPDbKCn1rOCIIOpOUAQ2TWgX
- g
-X-Gm-Gg: ASbGncvyeDBNSGLFaTUfAFUmLYf/ofa0Co1IxHe+lJsoyqgCimR9fZujGP+5C3mH7xE
- Joj2ogPWu4SXt/N7ZxsiChUyLkBEeFxuf1EVHxO1k0YL6bRI7DnrMpLRGr+7ms7Jq4Z1pOq7hc6
- urnD/KKm5MO7c21BhT0p7vsEZAQhBGOFaVXjkHFvcFBecdtH1PlH50WisiIpUbbXnmREA3HyZtB
- yTP6gToJ0vc4lHYEWmq1SaSWDelzMVhknKdW07hok2ift5T0bIJe8ucJTkcGNreyTDs9EQdRzX5
- 1bqkwkTCER8rXSjFe32mmQnrTOPOJjzfUy5xFJ3BLldo8Cg15PXLjBHEh20lFbLf8k+ipoo5Tn+
- O
-X-Google-Smtp-Source: AGHT+IEEatxEcUKp1sk+eEQQ67IOIf6RotYkw8LxaYavtdWhEsYb8Hk8bJITF11MBSJaRuPn3e0akQ==
-X-Received: by 2002:a17:903:40cb:b0:224:24d3:60f4 with SMTP id
- d9443c01a7336-224288940admr133018685ad.15.1741474743967; 
- Sat, 08 Mar 2025 14:59:03 -0800 (PST)
+ bh=k6rq6CIIqovi+rqTbWr+nZgRpCqEfphmlSslf2GR3LU=;
+ b=a1HXUXqUEPU/Q4IWIzBKUlLwnFEs1lxOvHZw/6XtAmQVkWjWKcQT+VHYQwxG8gVBEX
+ fyQaAvzk0mD3cKdlIhONqvLG0pqVEWWTASLA26wDB3azulnoluhWcjFCj8gmfg1XIAtk
+ uwloBMpfVsKOVAHMBH97xOXP1gKS+pNmyMTAMtP6DtfeLfYL7RMVuUP4OYdmHRlIf749
+ 7q9gIz8TKTLwVcN6eX8msyDRctCDFy0AlFVnvpMe6cFXffnJe0obvkp5dMOs3EFJJy01
+ trxe7NtPP4FSFBsXHbBs/EgA2D+6jjoyGOZhL0wHFzBgV0DbqRcTiABl+r72EvjUvw+4
+ UmGg==
+X-Gm-Message-State: AOJu0YyWyxzLbY82Qn8tCaTJaLrtR10xieSDNAC2JX5cbfPs/4sRVhhu
+ 8/J80KMCcOqg6xWKYrrEj+5u6/tkMisYldcd0ehFsNnqDr0c07erHrNg39WZMoJvj8IVV7wiSXZ
+ Z
+X-Gm-Gg: ASbGncsAXL8uaS7dzYNtESJFjCfEMH07T8XReCqHweeD0KBMjH8mfDfgIMbR5qA7MFJ
+ khv8hGzV14ciojXd2Fe1Zjs3Gq8K0YFXa4WtjOcJSKWFrBTwNvBuq39CFjzIAtJdc39pnMLkwGE
+ IoI9ZGPnMTZr9D9S7K0yX3Bek8bexPRZmmZ7yd082MKi38zSzohIPrNinIhm93Ark/WFOkkm4G1
+ kDcULZ/TVad88+7Iop1t9dghaV/VpxyLeYkkzjdUwsMS8pzAQORWYKH4p4N4ONZVDIX1zRBVGKa
+ A9ljduAimHzqrlqvX4o/CNpzO3n9qYIIAlFJUH/PWVXRlREtTzHzWxqwghn1lUkXEG48H9gy8d+
+ b
+X-Google-Smtp-Source: AGHT+IH9sBytUo2G54lMu9pvtKTDQAQ/F4H9J3Vvvdj5UwQMkxdXJwLcG+KKosVlOsYEHOvzwk/P/Q==
+X-Received: by 2002:a17:903:32ce:b0:224:1acc:14db with SMTP id
+ d9443c01a7336-22428993912mr133533525ad.29.1741474747819; 
+ Sat, 08 Mar 2025 14:59:07 -0800 (PST)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.03
+ d9443c01a7336-22410a908a0sm51831175ad.162.2025.03.08.14.59.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Mar 2025 14:59:03 -0800 (PST)
+ Sat, 08 Mar 2025 14:59:07 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/23] linux-user/main: Allow setting tb-size
-Date: Sat,  8 Mar 2025 14:58:39 -0800
-Message-ID: <20250308225902.1208237-2-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 06/23] exec: Declare tlb_reset_dirty*() in 'exec/cputlb.h'
+Date: Sat,  8 Mar 2025 14:58:45 -0800
+Message-ID: <20250308225902.1208237-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250308225902.1208237-1-richard.henderson@linaro.org>
 References: <20250308225902.1208237-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,64 +102,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-While qemu-system can set tb-size using -accel tcg,tb-size=n, there
-is no similar knob for qemu-user. Add one in a way similar to how
-one-insn-per-tb is already handled.
+Move CPU TLB related methods to "exec/cputlb.h".
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240730215532.1442-1-iii@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20241114011310.3615-14-philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/main.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/exec/cputlb.h   | 7 +++++++
+ include/exec/exec-all.h | 3 ---
+ include/exec/ram_addr.h | 1 +
+ system/physmem.c        | 1 +
+ 4 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 5c74c52cc5..e2ec5970be 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -72,6 +72,7 @@ char *exec_path;
- char real_exec_path[PATH_MAX];
+diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+index ef18642a32..6cac7d530f 100644
+--- a/include/exec/cputlb.h
++++ b/include/exec/cputlb.h
+@@ -32,4 +32,11 @@ void tlb_unprotect_code(ram_addr_t ram_addr);
  
- static bool opt_one_insn_per_tb;
-+static unsigned long opt_tb_size;
- static const char *argv0;
- static const char *gdbstub;
- static envlist_t *envlist;
-@@ -425,6 +426,13 @@ static void handle_arg_one_insn_per_tb(const char *arg)
-     opt_one_insn_per_tb = true;
- }
+ #endif /* CONFIG_TCG */
  
-+static void handle_arg_tb_size(const char *arg)
-+{
-+    if (qemu_strtoul(arg, NULL, 0, &opt_tb_size)) {
-+        usage(EXIT_FAILURE);
-+    }
-+}
++#ifndef CONFIG_USER_ONLY
 +
- static void handle_arg_strace(const char *arg)
- {
-     enable_strace = true;
-@@ -517,6 +525,8 @@ static const struct qemu_argument arg_table[] = {
-     {"one-insn-per-tb",
-                    "QEMU_ONE_INSN_PER_TB",  false, handle_arg_one_insn_per_tb,
-      "",           "run with one guest instruction per emulated TB"},
-+    {"tb-size",    "QEMU_TB_SIZE",     true,  handle_arg_tb_size,
-+     "size",       "TCG translation block cache size"},
-     {"strace",     "QEMU_STRACE",      false, handle_arg_strace,
-      "",           "log system calls"},
-     {"seed",       "QEMU_RAND_SEED",   true,  handle_arg_seed,
-@@ -808,6 +818,8 @@ int main(int argc, char **argv, char **envp)
-         accel_init_interfaces(ac);
-         object_property_set_bool(OBJECT(accel), "one-insn-per-tb",
-                                  opt_one_insn_per_tb, &error_abort);
-+        object_property_set_int(OBJECT(accel), "tb-size",
-+                                opt_tb_size, &error_abort);
-         ac->init_machine(NULL);
-     }
++void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
++void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
++
++#endif
++
+ #endif
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 8eb0df48f9..f24256fb5e 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -486,9 +486,6 @@ static inline tb_page_addr_t get_page_addr_code(CPUArchState *env,
  
+ #if !defined(CONFIG_USER_ONLY)
+ 
+-void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
+-void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+-
+ MemoryRegionSection *
+ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr addr,
+                                   hwaddr *xlat, hwaddr *plen,
+diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
+index 94bb3ccbe4..3d8df4edf1 100644
+--- a/include/exec/ram_addr.h
++++ b/include/exec/ram_addr.h
+@@ -23,6 +23,7 @@
+ #include "cpu.h"
+ #include "system/xen.h"
+ #include "system/tcg.h"
++#include "exec/cputlb.h"
+ #include "exec/ramlist.h"
+ #include "exec/ramblock.h"
+ #include "exec/exec-all.h"
+diff --git a/system/physmem.c b/system/physmem.c
+index 8c1736f84e..a6af555f4b 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -32,6 +32,7 @@
+ #endif /* CONFIG_TCG */
+ 
+ #include "exec/exec-all.h"
++#include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ #include "exec/target_page.h"
+ #include "exec/translation-block.h"
 -- 
 2.43.0
 
