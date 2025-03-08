@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD36C28B25
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:10:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E6BC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 23:11:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr3JF-0005Z0-By; Sat, 08 Mar 2025 18:10:22 -0500
+	id 1tr3Is-0004aS-Pu; Sat, 08 Mar 2025 18:09:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3JC-0005Rn-R1
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:10:18 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3Ib-0004NQ-VX
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:09:43 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3J9-0001QS-V0
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:10:18 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so26055325e9.1
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 15:10:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tr3IW-00017x-7Y
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 18:09:40 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3913b539aabso418796f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 15:09:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741475414; x=1742080214; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741475373; x=1742080173; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UEvdVMyvXjdezRQS+46yXb37w36/326vMxQlDhu7A50=;
- b=Bh6xbQk1zoJDHOgVuciI18zYZE3pJ4JkZlC3WxJ8hIKogV6NL21g6BtrWDJbnx+AZj
- q6P9h6v1R6REMpbIfV5EClsQTc3dTymlVyFr2+rEEZX2UO9GjUIUGqg+uKkdOg0+R4s3
- 25bMgcNIMO/WjLG8/Vv5FE1/QhCY5yArP6yM9y0+o67kpc/qP/+KWTWb7MrcEoem24Xa
- EHCbmYFUoZFtyj/ujq/GHamzwYJAWIG0QUMeAWUet9jReD/CCNVFE+ADE0nqElUN4c4G
- KjSIqB5GZWDsaVRxjaDBodeykohUXFOrr+B5tt935typSxFOLQBBHcqVifKYdY3AkZVE
- d0dQ==
+ bh=UiYDGY0x4W7ov/VJy7EJQHs//caAqbf3NrfbrKDB/Hc=;
+ b=dmM55lIQyRTqS8et88SCourPaiveLdRnfeOW4liTwMvH67n92yigOdWvZ81JUmaePI
+ 8ydYEh0sihO5YvVonCyrg7s5n65wDb7ODUwpVfgwkbL4Di4teSeyU4AtqW4UURI2xig4
+ 2Shvrc9w3ne6MGKLTcdKWDlIuDEwBzL/7niRMcahNBo9ZnFL20n/uZ0PAjJITefwJIfo
+ QHMLgZJKnSVng8WY9giadbXyoMFN2kbNeVY7Rk6klH95y9c4thliMP5YKFKmFF5WJkqq
+ y+tzKNjQJ3kGNk03S6/fBQtdcglmj9quG9awmqJ5y1AwdZRrCc7dmcHtu/b3HN7soxOR
+ igKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741475414; x=1742080214;
+ d=1e100.net; s=20230601; t=1741475373; x=1742080173;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UEvdVMyvXjdezRQS+46yXb37w36/326vMxQlDhu7A50=;
- b=pnu86qXnSbD9Za7BbjStygrP1cg8QsB08Qi0FR7QUKyF54hLQq9NT4WdG+Jm/4fG2k
- dKtRGd3ndQ+7mcO974IxXbHdBV1sZVA1FSitoQCkjzKAXK2gEba4fpM741v/tmERiypI
- XSKw3o3YSEGH+RlXzgnHrNPSEwYX8yE5MT0IFjYBrOYp2Kqg5nvPJgZQmub1luOkbjUL
- sZQbrnryFJFYuuO44VuQWudyfhXZuRK+uaL5c9HW1e6oK1LngwKUFTkWaiwPEmIELRjq
- SYKUH4EGF//N90fZSjTys/V1QoNY6olbMyFdKoB3PJD1LZkPMa7N4dCE1aXYju93kNtZ
- NHNA==
-X-Gm-Message-State: AOJu0YzqlC4NPOtKfpFOIv78i8/Y/yqcye4EuZox2mJnywNc+xA6nBK9
- 0JoTEEopjULCKlcDnN/LXBd26nbCSe4VL1NlHe73pFWGWfobuQsPJ2Aa3IXJTUmAvT52+K9ko/D
- mN8g=
-X-Gm-Gg: ASbGnctw2ChRskgo9X+rEbVcl5EQout/jBpyKpVZMHNkMd1xKm/uLm43tfP5AKk3tgj
- s7abEIoGR2d7UDIvBAUY+hcOfsW/OC0uGmEtXKU0s5qdHrXNdqm3G9Z4vKoizNZhFgS78wFLp1H
- FQIrcibE33pCzN/XNcxlfE3anmrKQb+8xzsfOkzf1gT5LExO0pIPIblkTy+UMfjJu4FElquQ7CI
- +wYoz3ulxtUAg7yqQe9bAi8gu1+GdJIsWB8VNy6zeW3dFLfQNZYFvexxqyZ8frm/g4b/dL1KMft
- M4TydyKjqB2fS2Avo8TdNh0UCSB8LaONcltiSBswEFhdtBacKBK5r8tyDhhGWLV8FkRW8ayL5pQ
- PSBasEYSd8nHRnAagO9w=
-X-Google-Smtp-Source: AGHT+IHU+xQMgt3dsdiNnJgEOhNSs6YqxwcUDocahOsxR/CmDr32kZwcNq5kvICgYKsd1qnYF/NWOQ==
-X-Received: by 2002:a05:600c:35d1:b0:439:967b:46fc with SMTP id
- 5b1f17b1804b1-43c601d9167mr53509045e9.8.1741475414122; 
- Sat, 08 Mar 2025 15:10:14 -0800 (PST)
+ bh=UiYDGY0x4W7ov/VJy7EJQHs//caAqbf3NrfbrKDB/Hc=;
+ b=PVsmkTRp05W7n87qDwyEWzbnCqwJ+slAGpTcTZB1If6NnTHQdr0HEgDJlOFZkwxyzm
+ DaoWonCLvwzWZy93M2oBHEmMbLQff53fLrcKzT9HeEZVXuQAJtuKfHOy4bCMs4Nb7PLO
+ zmF7KWwaq6GZufrL70xXYp4d/q4ognEXXqct6JTVcK/yg1Z9nOEjMe/eCYKdgsmlU419
+ tqnVxmjAqqYauS20f7OqDCZXNQLQwoduY80sm87xpZJDH3AUQz2mmpZcy42i5u6tZI2C
+ xeOQF1HgIAYFzxbZXUhZfBu+UU9GZh+3He/2/cpOpdpbMnwiXMsWXZDlKYmTS6/FeG54
+ XW4w==
+X-Gm-Message-State: AOJu0YzzLhIVccjniAFIVvBPJlz7lbFUbVFtJ+O5ULbhvgNnDoBvo8Un
+ Dj+Ay4gAVn/9KMSSziudl/Q5D/dlGq7JHAfsuEjAKMmAcmV7awEMtM3rS7fC2sV6INdVzXgBTXn
+ BWBo=
+X-Gm-Gg: ASbGncu1qrTJN2ViSqAUFraOM04AJ8X5JMRJfrO6nadCWsOoXnX7fH2HTOaB72+R0RY
+ pELEWe9QmQ6A30LYdgaX1iaZ8yew6xk+8lM3JdVFGLFt7IdUpuouM4uGSMDrrj6Ee7cwFdERhBQ
+ s+2ysi+kMQzLSpP3yKQ1Yy1DyIG9hlBobEET7Jw+Qd+gUcUUBjXsm3lLfer5L6L5t9h/8b+yT3Y
+ LSV8xNXeT6klc+8JU6xeeeVII+ohVEfNPr4gBHoH7dAlATnJ1nnpXkIf9lkOTr/Y/Okmf9pwfM7
+ gnAM4Db2WGjUhMcOg1BShpsEm+dIN8vNM7UkfnUzs01AYZ2A+v608I8RiAB+HhsTrsna0iiPQtc
+ yaMXmgjZiJObo/jCYIl0=
+X-Google-Smtp-Source: AGHT+IHYMJqZoHstkmUTso6ugEbg70sSuamLLXL2p0kaDugCZceiL2gWbQnBjC91i2JahXaPJtswDA==
+X-Received: by 2002:a5d:5f8f:0:b0:391:2e0f:efec with SMTP id
+ ffacd0b85a97d-39132d1faebmr5173255f8f.7.1741475373036; 
+ Sat, 08 Mar 2025 15:09:33 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ceef2fb8dsm14915575e9.18.2025.03.08.15.10.12
+ ffacd0b85a97d-3912bfe0004sm9859574f8f.40.2025.03.08.15.09.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 08 Mar 2025 15:10:13 -0800 (PST)
+ Sat, 08 Mar 2025 15:09:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>,
@@ -86,17 +86,17 @@ Cc: Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 09/21] hw/vfio/pci: Convert CONFIG_KVM check to runtime one
-Date: Sun,  9 Mar 2025 00:09:05 +0100
-Message-ID: <20250308230917.18907-10-philmd@linaro.org>
+Subject: [PATCH v2 02/21] hw/vfio/spapr: Do not include <linux/kvm.h>
+Date: Sun,  9 Mar 2025 00:08:58 +0100
+Message-ID: <20250308230917.18907-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250308230917.18907-1-philmd@linaro.org>
 References: <20250308230917.18907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,80 +119,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the runtime kvm_enabled() helper to check whether
-KVM is available or not.
+<linux/kvm.h> is already include by "system/kvm.h" in the next line.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ hw/vfio/spapr.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index fdbc15885d4..9872884ff8a 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -118,8 +118,13 @@ static void vfio_intx_eoi(VFIODevice *vbasedev)
- 
- static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
- {
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index ad4c499eafe..9b5ad05bb1c 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -11,9 +11,6 @@
+ #include "qemu/osdep.h"
+ #include <sys/ioctl.h>
+ #include <linux/vfio.h>
 -#ifdef CONFIG_KVM
--    int irq_fd = event_notifier_get_fd(&vdev->intx.interrupt);
-+    int irq_fd;
-+
-+    if (!kvm_enabled()) {
-+        return true;
-+    }
-+
-+    irq_fd = event_notifier_get_fd(&vdev->intx.interrupt);
- 
-     if (vdev->no_kvm_intx || !kvm_irqfds_enabled() ||
-         vdev->intx.route.mode != PCI_INTX_ENABLED ||
-@@ -171,16 +176,13 @@ fail_irqfd:
- fail:
-     qemu_set_fd_handler(irq_fd, vfio_intx_interrupt, NULL, vdev);
-     vfio_unmask_single_irqindex(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
-+
-     return false;
--#else
--    return true;
+-#include <linux/kvm.h>
 -#endif
- }
+ #include "system/kvm.h"
+ #include "exec/address-spaces.h"
  
- static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
- {
--#ifdef CONFIG_KVM
--    if (!vdev->intx.kvm_accel) {
-+    if (!kvm_enabled() || !vdev->intx.kvm_accel) {
-         return;
-     }
- 
-@@ -211,7 +213,6 @@ static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
-     vfio_unmask_single_irqindex(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
- 
-     trace_vfio_intx_disable_kvm(vdev->vbasedev.name);
--#endif
- }
- 
- static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
-@@ -278,7 +279,6 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
-     pci_config_set_interrupt_pin(vdev->pdev.config, pin);
- 
--#ifdef CONFIG_KVM
-     /*
-      * Only conditional to avoid generating error messages on platforms
-      * where we won't actually use the result anyway.
-@@ -287,7 +287,6 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-         vdev->intx.route = pci_device_route_intx_to_irq(&vdev->pdev,
-                                                         vdev->intx.pin);
-     }
--#endif
- 
-     ret = event_notifier_init(&vdev->intx.interrupt, 0);
-     if (ret) {
 -- 
 2.47.1
 
