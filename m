@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488E4C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 06:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A1A7C282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 07:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqo9C-0007cN-4y; Sat, 08 Mar 2025 01:58:58 -0500
+	id 1tqoAh-0000jd-62; Sat, 08 Mar 2025 02:00:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqo92-0007Z1-WD
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 01:58:50 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqoAc-0000cg-EJ
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 02:00:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqo91-0004M3-Ft
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 01:58:48 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqoAY-0006Z0-0r
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 02:00:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741417125;
+ s=mimecast20190719; t=1741417217;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CBBWpDZBpJt4GnJGzgIbHETib6unOf8AbHn16EGHn1I=;
- b=gncShi9dg5oVVOlZRBNwQS2cHlQ8L8HigKMfvSTp4MDrS57z/mYoP57YUvh9UW8zNTywdv
- Y7RbnaIf9RL8KBLMA+JLm/jviOrohtm1FrjOLJd7IUpkViPB7HcgxqxAGFeotUOgrNvgWA
- WWkJhOewK3Fpsw/KlAAKw0IzmDxx4oQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=7LMKrSa98HMzLeFAXHlrw1CO7UWeHjm12cOtFqntHuE=;
+ b=Rq9HKVOYkkLOwHh5zW9OclfH8GjD0im5myWyu7II516p0bJSq0n4KJj5mN0VpvTqSnc8wx
+ PrnLIt3r0MQHMD79FnwQeqQhI9bErNbALDWtbfR+QTozIt7ZwgUI/5z+Gjg4ZEwMl4/HIK
+ vR+27/a/AuDXOzzHQM0ORALS2H2gcyo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-S3aVdHyQMdub6zQks6OfeQ-1; Sat,
- 08 Mar 2025 01:58:37 -0500
-X-MC-Unique: S3aVdHyQMdub6zQks6OfeQ-1
-X-Mimecast-MFC-AGG-ID: S3aVdHyQMdub6zQks6OfeQ_1741417116
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-TMxjvdEMNY2Yer-SfA7wuQ-1; Sat,
+ 08 Mar 2025 02:00:13 -0500
+X-MC-Unique: TMxjvdEMNY2Yer-SfA7wuQ-1
+X-Mimecast-MFC-AGG-ID: TMxjvdEMNY2Yer-SfA7wuQ_1741417212
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D8541956083; Sat,  8 Mar 2025 06:58:36 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC0E318004A9; Sat,  8 Mar 2025 07:00:12 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CFA441955DCE; Sat,  8 Mar 2025 06:58:35 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 731021956096; Sat,  8 Mar 2025 07:00:11 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4C20221E675F; Sat, 08 Mar 2025 07:58:33 +0100 (CET)
+ id 152A321E66C1; Sat, 08 Mar 2025 08:00:09 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
@@ -55,20 +55,20 @@ Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
  <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
  Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: Re: [PATCH 18/57] docs/qapi-domain: add qapi:alternate directive
-In-Reply-To: <CAFn=p-Y1YkZaG1=E_QGT93EMpiqjkXbq1_jV3GL9ONLt6J05Sg@mail.gmail.com>
- (John Snow's message of "Fri, 7 Mar 2025 18:02:57 -0500")
+Subject: Re: [PATCH 19/57] docs/qapi-domain: add qapi:event directive
+In-Reply-To: <CAFn=p-afzh0nDfRSx3a=yRPzTxyX=92_onSuKwZFUujArkH9Tw@mail.gmail.com>
+ (John Snow's message of "Fri, 7 Mar 2025 18:06:21 -0500")
 References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-19-jsnow@redhat.com>
- <87a59xnny6.fsf@pond.sub.org>
- <CAFn=p-Y1YkZaG1=E_QGT93EMpiqjkXbq1_jV3GL9ONLt6J05Sg@mail.gmail.com>
-Date: Sat, 08 Mar 2025 07:58:33 +0100
-Message-ID: <87y0xgc8km.fsf@pond.sub.org>
+ <20250305034610.960147-20-jsnow@redhat.com>
+ <87v7slm90e.fsf@pond.sub.org>
+ <CAFn=p-afzh0nDfRSx3a=yRPzTxyX=92_onSuKwZFUujArkH9Tw@mail.gmail.com>
+Date: Sat, 08 Mar 2025 08:00:09 +0100
+Message-ID: <87tt84c8hy.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -96,27 +96,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> On Fri, Mar 7, 2025 at 5:18=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+> On Fri, Mar 7, 2025 at 5:26=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
 om> wrote:
 >
 >> John Snow <jsnow@redhat.com> writes:
 >>
->> > Add the .. qapi:alternate:: directive, object, and qapi:alt:`name`
->> > cross-reference role.
+>> > Adds the .. qapi:event:: directive, object, and :qapi:event:`name`
+>> > cross-referencing role.
 >> >
->> > Add the "Choices:" field list for describing alternate choices. Like
->> > other field lists that reference QAPI types, a forthcoming commit will
->> > add cross-referencing support to this field.
+>> > Adds the :memb type name: field list syntax for documenting event data
+>> > members. As this syntax and phrasing will be shared with Structs and
+>> > Unions as well, add the field list definition to a shared abstract
+>> > class.
 >>
->> Nothing wrong with the term "choices" per se, but
->> docs/devel/qapi-code-gen.rst and the Python code call these things
->> "alternatives".  I'd prefer consistency.  Could be done as a follow-up
->> if that's more convenient for you.
+>> docs/devel/qapi-code-gen.rst calls it "event-specific data".  This is
+>> quite a mouthful, so the code usually calls it "arguments".  Not least
+>> because events are kind of like commands going in the other direction
+>> (client to server), and the code dealing with them is often similar.
+>>
+>> Both names make more sense to me than "member".  Hmm.  A rename could be
+>> done as a follow-up if that's more convenient for you.
 >>
 >
-> Done. (Wish you'd said so sooner, though.)
+> Also wish you'd have said sooner :)
 
-Fair!
+Fair again!
+
+> I might punt this one. At least, the next respin probably won't include
+> this.
+>
+> I suppose I think about this in terms of "members of the event object."
+> Let's talk and fix later, changing the name outside of a gigantic series =
+is
+> not difficult at all.
+
+Agree.
 
 [...]
 
