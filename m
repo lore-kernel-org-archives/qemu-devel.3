@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7F4C282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 19:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC8DC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 19:04:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqzS8-0007GR-B4; Sat, 08 Mar 2025 14:03:16 -0500
+	id 1tqzSJ-0007Yr-Vl; Sat, 08 Mar 2025 14:03:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqzRp-0006v1-B8
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 14:02:57 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqzSF-0007RA-S4
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 14:03:25 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqzRm-0003Xk-Jt
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 14:02:57 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43bcbdf79cdso17540975e9.2
- for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 11:02:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tqzSC-0003dH-PT
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 14:03:23 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43bcb1a9890so24927235e9.0
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 11:03:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741460572; x=1742065372; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741460596; x=1742065396; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rwn/2OdTxyJUqPr5de1XSt+8TC9K6iNWTaYptctiUL8=;
- b=uFpRKjcP0F7KDQpED6S4oCH1nXRsUpCgwtB20MWKfLPiZ+CtcPs0cNZStInHZGfSWX
- vCa0Lt2pWPsPAbszlRIId1blXeAkSKl/6wBQMx2K5BW8ScOdOGQtqcQpzRBUwcbmYSNR
- DLDfWm/o17x4QhoF+gm/7rdhWJphfvqP5sb1E+Bf/AuWqyKCZ9o1CjJM5bzVfcAJKZcU
- P9FYerp2Aj/RU6ckSYkh39OOHqoHVS9Sm8SiL7BMasvtdgze03aGLSjkMozhFPU/bvPI
- vpMdAPUw0+4ICYAkdGhuwE28TAQkfmeVhIHcBcd19+GLzFcUcKhCIDD4f9iIb9PyxxTc
- GOJA==
+ bh=pF2WPF4xppL7qEVeYgXT9lZoDPpMUXtxJ+GDygppA/w=;
+ b=Cj9MSuMZzQAM4JK3z5pwIg1BcS6PWnHfy7LwgDyyiV/ks1Ea1D5j/c2QuxB+qn2icQ
+ JIZee6lhW/0sLWWX8ivwfzhAyJ6jEULr4GyvMRrFAzwmca1sXYlk7Tb0gzIJ/UTrjGWv
+ al9aCQLI5Nj+Ns77hU7Tj+eSNtNu+YQRZMwyXFOxbnag973IXaocW5CH+7eBSbRYAPs0
+ igN+Yt3PtU+iL3NfGtw9Fgn9TG5RMmjvDAWSVaT0bu+i9IqbiTxtW1jv4HoxGy2ZVhqh
+ +kpMmGoa8s5qzGBEGz0/E6GCbY8uODwkxd9vdGw7ix1J/SngEg7o/rjATEG5O9SmE7W0
+ vNzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741460572; x=1742065372;
+ d=1e100.net; s=20230601; t=1741460596; x=1742065396;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rwn/2OdTxyJUqPr5de1XSt+8TC9K6iNWTaYptctiUL8=;
- b=gSfJ7UD9KyWNixN9MaQ46QSr1GkCyJMUXuKe3yYH004tIAWiTZGlFQOAd7D1n34bmA
- J6S/ykF3tbf9QcRicRLvmKsJOclDDQEPh1L/PEKq61N0YPSt3liCL3m0wv55wP2AA2id
- Om0wNhcxGRKiqz0Wo/56gpmInph0j6o5vmQjv9xrBFQYAPI5IhDJbk3OaVAToaDUrt+D
- UC9Bk5Zoe0ck69p7KNe0J6CrZa8LcOAG02E6+fRxZmRv4RfIo1TKlJ2ppAIVGw8KDPJi
- 8EsTP9rHEZhck8chnywBKJ+i8vJOCRuGy9B/HfnX57LS5+HqSkpilbywjtJc7igG29tW
- YvpQ==
+ bh=pF2WPF4xppL7qEVeYgXT9lZoDPpMUXtxJ+GDygppA/w=;
+ b=go0Mx/jjSLoqbYue6rBlWmvFVdkHj4SxU/xb0jVy2GxE2XocK6JNsL/sZPflFJEPyd
+ PhvX8S9nLxK/vwPdt+wZ0mWDpWCwNKK8Tx7gN2UZ5X7aihvQ4ZA3VdpD2ewEN6c9Q42h
+ UscpuZtZHz4eRhKOyFIKKUkI7CQtNmenYvxWniBhTX/Pf9Rk+dlQgC3LR+blRvEAaWFp
+ ATOxat1LGfclxqYizQyJu3z/Z0kiDEZweBMjv3lCi8EkmSzrscUmZnY2L8w8ByqcgAn+
+ KHFzP7Q/6fBR/V664Nm5QbhjsBu2nr6PriKGZBL1/oVtfJtk7lwPoRO8bow8c1WMSYAh
+ 6QdQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFrS0fUeh4YnCG1RTgq3JV434T7M8Bjnc6rsGtUSLLRX1m0H5bgpl+0i2+bbzxm+xxIJ4hRD6RQeel@nongnu.org
-X-Gm-Message-State: AOJu0YwfjD96VskceX5yomKPX/YtfJRldOG4jBwaimAfeXMCw+4f9kFy
- S3ai8UHfyRwlVRzJziBlEVNXuADBd61VQNcyN5EwYN5fBLeC7BBWs55ZC9oo9mQ=
-X-Gm-Gg: ASbGncvS6BudOMLvrvxEnjqRHVG1KkEGoL89xhA052InvMIX1ACWjAExILgdmVhr/Xh
- 5vKZ+5mD4TSz1iSUUKLlpphzC3KauUZLfeKZCQ6oUyAfMX4MCGESZJbxP3t7QDP/icc5FYYpC9E
- IKnjfmz+A1J0DtJmJfl42iBTAynUKXyVASWHzH2az5JxDKvrCqtwm9xtBzvCYLtR4br98Ilft7K
- JDTO7LdGKUtQ9apQgih44RtOVX+bLG4ZyxS+4aZgmCgcT+MzvYm3vODCyHG4W2JCGb+5mUQVzho
- gqxEGo/0vSk2GIApNPVWIfC4O/b55bJ7VeRYLABuBrQGvyGimNpZci0aIICN7QK6IREzgT5vkcx
- NFkWbFHqvxrnwuNIm6Jo=
-X-Google-Smtp-Source: AGHT+IHA9aGgy87ZOxQZ8nfWhTBOvxlmT3AOKADViBqk+McQirESqbSBossVZSaxui4uX1x/iY4B2g==
-X-Received: by 2002:a05:600c:4fd2:b0:43b:d040:3dfd with SMTP id
- 5b1f17b1804b1-43c5a631270mr44921095e9.24.1741460571767; 
- Sat, 08 Mar 2025 11:02:51 -0800 (PST)
+ AJvYcCWPHOARO+ztJ2Lt9gS7A8t8VnQtFxMPkMuB9Xkv+0vCSKd2/zsBx4lEzMIIWS3apumfLKvHmZgEitUE@nongnu.org
+X-Gm-Message-State: AOJu0YyNUO84Fs3klOG4vzBlh1Ad1a9dwIusRxLioCCYRAXnX+W+bXE3
+ MnRXdebpdiLClD6OsxvSyp5RHNkRQy6tC5Z8AvwD30ZapCjZDbOv+lURC/bLiqg=
+X-Gm-Gg: ASbGncvnnL6FPBmSPHdlC0sz054n1dft46NlLFFcozyvZQSqleSkoVNldhhK5RJwrNN
+ uF4ZTGdsRReqyYf5yYKZF2kGpSpvA1tw+8XsdfrtIOCLNS1zFGIR77fXDjXXNqkOOuVSh/cShnc
+ l0hU1z7SkxuNVAfhGUR6WwqOJtQhmecqKVkTaUuSsZDUbqDq2PYU2Z0nDcKqihCEXcK7g/QdTww
+ YYXTujh9FukGvXnfUdpbd1V15IZSDcs/5OPO8gAUl3vjNDXmWteIh0Cj6MEZyRvRW+8QJS6m/YJ
+ N1DmrxkKaMKCdR3hfa4zjWEv1vw/UomiBSPfBfJw9KM/O3h4uNFJwuGJrBTgVDyWKP0zJ9hRwbf
+ Eo4o8jgtgBrRtFwScVr1s1o+VfbK9RA==
+X-Google-Smtp-Source: AGHT+IF0i51orFjihfUAu5DQ8uPq1jOUz/Q9as3GtyL8R/YQ1AkgQYbY7ib9CZXVEKj+M3n9uJr1og==
+X-Received: by 2002:a05:6000:18a9:b0:391:bc8:564a with SMTP id
+ ffacd0b85a97d-3913af2dcb5mr2860927f8f.22.1741460595830; 
+ Sat, 08 Mar 2025 11:03:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd41c7cc7sm128352975e9.0.2025.03.08.11.02.50
+ 5b1f17b1804b1-43ce8a493d0sm30603875e9.1.2025.03.08.11.03.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 08 Mar 2025 11:02:51 -0800 (PST)
+ Sat, 08 Mar 2025 11:03:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: BALATON Zoltan <balaton@eik.bme.hu>,
 	qemu-devel@nongnu.org
@@ -74,17 +74,17 @@ Cc: Bernhard Beschow <shentey@gmail.com>,
  Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  Guenter Roeck <linux@roeck-us.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 04/12] hw/sd/sdhci: Make I/O region size a class property
-Date: Sat,  8 Mar 2025 20:02:22 +0100
-Message-ID: <20250308190230.7508-5-philmd@linaro.org>
+Subject: [PATCH v3 09/12] hw/sd/sdhci: Add SDHCIClass::ro::capareg field
+Date: Sat,  8 Mar 2025 20:02:27 +0100
+Message-ID: <20250308190230.7508-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250308190230.7508-1-philmd@linaro.org>
 References: <20250308190230.7508-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,66 +107,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Be ready to have SDHC implementations to cover
-a wider I/O address range.
+Capability register is read-only.
+
+Since we allow instances to clear/set extra bits, log when
+read-only bits normally set by hardware are cleared at
+board level.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/sd/sdhci.h | 1 +
- hw/sd/sdhci.c         | 9 +++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ include/hw/sd/sdhci.h | 5 +++++
+ hw/sd/sdhci.c         | 6 ++++++
+ 2 files changed, 11 insertions(+)
 
 diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-index 0616ce3aa59..2709a7a69d5 100644
+index 60a0442c805..53aef17ad34 100644
 --- a/include/hw/sd/sdhci.h
 +++ b/include/hw/sd/sdhci.h
-@@ -113,6 +113,7 @@ typedef struct SDHCIClass {
-     };
- 
+@@ -115,6 +115,11 @@ typedef struct SDHCIClass {
+     const MemoryRegionOps *io_ops;
      uint32_t quirks;
-+    uint64_t iomem_size;
+     uint64_t iomem_size;
++
++    /* Read-only registers */
++    struct {
++        uint64_t capareg;
++    } ro;
  } SDHCIClass;
  
  /*
 diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 2b7eb11a14a..59d506cafa3 100644
+index 15e6976220f..f08918587ef 100644
 --- a/hw/sd/sdhci.c
 +++ b/hw/sd/sdhci.c
-@@ -1443,6 +1443,7 @@ void sdhci_uninitfn(SDHCIState *s)
- void sdhci_common_realize(SDHCIState *s, Error **errp)
+@@ -73,6 +73,7 @@ static bool sdhci_check_capab_freq_range(SDHCIState *s, const char *desc,
+ 
+ static void sdhci_check_capareg(SDHCIState *s, Error **errp)
  {
-     ERRP_GUARD();
 +    SDHCIClass *sc = SYSBUS_SDHCI_GET_CLASS(s);
- 
-     switch (s->endianness) {
-     case DEVICE_LITTLE_ENDIAN:
-@@ -1468,8 +1469,9 @@ void sdhci_common_realize(SDHCIState *s, Error **errp)
-     s->buf_maxsz = sdhci_get_fifolen(s);
-     s->fifo_buffer = g_malloc0(s->buf_maxsz);
- 
--    memory_region_init_io(&s->iomem, OBJECT(s), s->io_ops, s, "sdhci",
--                          SDHC_REGISTERS_MAP_SIZE);
-+    assert(sc->iomem_size >= SDHC_REGISTERS_MAP_SIZE);
-+    memory_region_init_io(&s->iomem, OBJECT(s), s->io_ops, s,
-+                          object_get_typename(OBJECT(s)), sc->iomem_size);
+     uint64_t msk = s->capareg;
+     uint32_t val;
+     bool y;
+@@ -208,6 +209,11 @@ static void sdhci_check_capareg(SDHCIState *s, Error **errp)
+         qemu_log_mask(LOG_UNIMP,
+                       "SDHCI: unknown CAPAB mask: 0x%016" PRIx64 "\n", msk);
+     }
++    msk = sc->ro.capareg & ~s->capareg;
++    if (msk) {
++        qemu_log_mask(LOG_UNIMP,
++                      "SDHCI: ignored CAPAB mask: 0x%016" PRIx64 "\n", msk);
++    }
  }
  
- void sdhci_common_unrealize(SDHCIState *s)
-@@ -1621,11 +1623,14 @@ static void sdhci_sysbus_unrealize(DeviceState *dev)
- static void sdhci_sysbus_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    SDHCIClass *sc = SYSBUS_SDHCI_CLASS(klass);
- 
-     device_class_set_props(dc, sdhci_sysbus_properties);
-     dc->realize = sdhci_sysbus_realize;
-     dc->unrealize = sdhci_sysbus_unrealize;
- 
-+    sc->iomem_size = SDHC_REGISTERS_MAP_SIZE;
-+
-     sdhci_common_class_init(klass, data);
- }
- 
+ static uint8_t sdhci_slotint(SDHCIState *s)
 -- 
 2.47.1
 
