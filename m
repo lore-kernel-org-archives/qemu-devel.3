@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5EEDC282EC
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 09:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41B9BC282EC
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Mar 2025 09:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tqqMU-0006o3-28; Sat, 08 Mar 2025 04:20:50 -0500
+	id 1tqqNJ-00079o-He; Sat, 08 Mar 2025 04:21:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqqMS-0006nY-K7
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 04:20:48 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqqNH-00077D-KD
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 04:21:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqqMR-0003Ym-2U
- for qemu-devel@nongnu.org; Sat, 08 Mar 2025 04:20:48 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tqqNG-0005JI-Ao
+ for qemu-devel@nongnu.org; Sat, 08 Mar 2025 04:21:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741425644;
+ s=mimecast20190719; t=1741425697;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=h+a2/MdED3U1Ns91jE3+n9Mm/wmTgbAYLFt3qbRZYlw=;
- b=TJil88hqHVFLAjSWKaFMOSFsJvlKtP3VVt5nd1IMbkJHe1DPNavsw8i5fXM0mUNShbhtiy
- mwqJ81RkKmC4Pz/M7rQyrGauADF2MaOHr2Dd5IWRRFG4xEJA6zTeUUeEWZO1jyT5jDSNE+
- I6vU/CvIWPHpWXLa0mqNKXipDupJbqw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=i0YRLgS4GnqclI93WGRKInrC2bBSy+VQSEzmw3yxDfc=;
+ b=gs74+oL5eTk1IqWm+g+rkSgqkH0rtGGfGMygvHtMCzMQv5gZ8WOXyF2OQ+n/pQURaBmFfm
+ kMLTvcSnGixvOvfvtMA+JPP1VTB6KwBbgt77y2GpQhUEHhuVtHcebUQQ8Ld758h2remelO
+ RPQWqiImc/79Oz1MpeWHqpiX0j+KX6Q=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-PoRarZQyN-evQMXROGEXlg-1; Sat,
- 08 Mar 2025 04:20:40 -0500
-X-MC-Unique: PoRarZQyN-evQMXROGEXlg-1
-X-Mimecast-MFC-AGG-ID: PoRarZQyN-evQMXROGEXlg_1741425639
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-et8r_UT_OX6GdohVYizwJA-1; Sat,
+ 08 Mar 2025 04:21:33 -0500
+X-MC-Unique: et8r_UT_OX6GdohVYizwJA-1
+X-Mimecast-MFC-AGG-ID: et8r_UT_OX6GdohVYizwJA_1741425692
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 84AA019560BB; Sat,  8 Mar 2025 09:20:39 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 34B9619560B3; Sat,  8 Mar 2025 09:21:31 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.15])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F5C21828A8D; Sat,  8 Mar 2025 09:20:38 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C2AE71801748; Sat,  8 Mar 2025 09:21:29 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9F86F21E675F; Sat, 08 Mar 2025 10:20:35 +0100 (CET)
+ id 4F80D21E66C1; Sat, 08 Mar 2025 10:21:27 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
@@ -55,20 +55,20 @@ Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Alex
  <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Thomas
  Huth <thuth@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: Re: [PATCH 50/57] docs/qapidoc: add visit_sections() method
-In-Reply-To: <CAFn=p-YEM+DKhmi5h59EUSC9sWLMvAe3S4ibzV=1sN5z9gE7Gg@mail.gmail.com>
- (John Snow's message of "Sat, 8 Mar 2025 03:10:03 -0500")
+Subject: Re: [PATCH 56/57] docs/qapidoc: add intermediate output debugger
+In-Reply-To: <CAFn=p-Z6a3Qq4-uHu1QUwdTrnxRuwKXo9iXwO8PV=hZm-ueTtA@mail.gmail.com>
+ (John Snow's message of "Sat, 8 Mar 2025 03:13:34 -0500")
 References: <20250305034610.960147-1-jsnow@redhat.com>
- <20250305034610.960147-51-jsnow@redhat.com>
- <87wmd1hvse.fsf@pond.sub.org>
- <CAFn=p-YEM+DKhmi5h59EUSC9sWLMvAe3S4ibzV=1sN5z9gE7Gg@mail.gmail.com>
-Date: Sat, 08 Mar 2025 10:20:35 +0100
-Message-ID: <87ikojanfg.fsf@pond.sub.org>
+ <20250305034610.960147-57-jsnow@redhat.com>
+ <87o6ydhvet.fsf@pond.sub.org>
+ <CAFn=p-Z6a3Qq4-uHu1QUwdTrnxRuwKXo9iXwO8PV=hZm-ueTtA@mail.gmail.com>
+Date: Sat, 08 Mar 2025 10:21:27 +0100
+Message-ID: <87ecz7ane0.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -96,54 +96,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> On Fri, Mar 7, 2025 at 7:26=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+> On Fri, Mar 7, 2025 at 7:34=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
 om> wrote:
 >
 >> John Snow <jsnow@redhat.com> writes:
 >>
->> > Implement the actual main dispatch method that processes and handles t=
-he
->> > list of doc sections for a given QAPI entity.
+>> > Add debugging output for the qapidoc transmogrifier - setting DEBUG=3D1
+>> > will produce .ir files (one for each qapidoc directive) that write the
+>> > generated rst file to disk to allow for easy debugging and verification
+>> > of the generated document.
 >> >
 >> > Signed-off-by: John Snow <jsnow@redhat.com>
->> > ---
->> >  docs/sphinx/qapidoc.py | 25 +++++++++++++++++++++++++
->> >  1 file changed, 25 insertions(+)
->> >
->> > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
->> > index ed0269af27d..7308fa0a767 100644
->> > --- a/docs/sphinx/qapidoc.py
->> > +++ b/docs/sphinx/qapidoc.py
->> > @@ -288,6 +288,31 @@ def preamble(self, ent: QAPISchemaDefinition) ->
->> None:
->> >
->> >          self.ensure_blank_line()
->> >
->> > +    def visit_sections(self, ent: QAPISchemaDefinition) -> None:
->> > +        sections =3D ent.doc.all_sections if ent.doc else []
->> > +
->> > +        # Add sections *in the order they are documented*:
 >>
->> Is the order important, or just a matter of style?
+>> I understand we generally need to examine these .ir files only when
+>> things go wrong, or maybe to help understanding the transmogrifier.  I
+>> guess few people will care, and only rarely.  But when we care, we
+>> likely care a *lot*.  Sure we want to dig the information on how to get
+>> .ir files out of a commit message then?
 >>
 >
-> I meant to emphasize the fact that the transmogrifier works "dumbly" on a
-> sequence of sections and nothing else; so the output is strictly in source
-> order.
+> Intend to advertise it in the transmogrifier doc and/or extend the
+> doc-writing section of the qapi code gen doc.
 
-Would
-
-              # Add sections in source order
-
-be clearer?
-
-> The order does wind up mattering a *little*; if you randomized the section
-> order you'd not get good field list grouping, and/or the grouping
-> mechanisms would re-order the documentation so that it wasn't source order
-> anymore.
->
-> Not that this would happen with our parser, but, you asked.
-
-[...]
+Okay!
 
 
