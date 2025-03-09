@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FD6C28B28
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C937C282D1
 	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 10:33:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trDxS-0000pq-D7; Sun, 09 Mar 2025 06:32:34 -0400
+	id 1trDws-00086N-68; Sun, 09 Mar 2025 06:31:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1trDxB-0000Bq-F2
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:32:18 -0400
+ id 1trDwq-00085g-BZ
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:31:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1trDx9-00045r-Cb
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:32:17 -0400
+ id 1trDwo-00042x-Ld
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:31:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741516334;
+ s=mimecast20190719; t=1741516314;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dMUKogfKyzAz46Y4Z8OW5xUGWyWP2F2XLF8CrapiAvY=;
- b=S1F9lOjCctdCtdqIPB9Jry2i/riAmjCL79E/orUy3hvaRDIXQIs20yczyrMfDXaox4ETBG
- jUHpg/vpostIhSgaekFd/+QStsyjv9ZfDng9+5p08sm+mEUrTSCQm3C0dBZXDDtZg7xEsd
- BxZa3fy/NP5oWgI5fnbWVCZrRBoZQbU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=S8IXFl1tjzcTpL3RiOm0U3qS7SeRxt+gon+nIrKlE5k=;
+ b=et7PYwuTYJOEFOpUlS1MQ6EYEVZy6jEJ02FgVpMA8IlNiBUe1S5NZA1ZpiBD1pdXxrsmot
+ pNLLT+ZFVUDhHugHsFhpllBwkemNLFo5h+Xlng9frKgftKWMknGyVhy6122VF5aJvdJdwS
+ QCFKtgXZNJC/7s+cNuvUUXNBYNX2RL8=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-364-STkgT4KGN5m1HWmZ2CCzfg-1; Sun, 09 Mar 2025 06:32:13 -0400
-X-MC-Unique: STkgT4KGN5m1HWmZ2CCzfg-1
-X-Mimecast-MFC-AGG-ID: STkgT4KGN5m1HWmZ2CCzfg_1741516332
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43cf3168b87so1391965e9.2
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 03:32:13 -0700 (PDT)
+ us-mta-86-RRRoSOgCPi-aNM--X11fQQ-1; Sun, 09 Mar 2025 06:31:52 -0400
+X-MC-Unique: RRRoSOgCPi-aNM--X11fQQ-1
+X-Mimecast-MFC-AGG-ID: RRRoSOgCPi-aNM--X11fQQ_1741516311
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-391425471ddso276396f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 03:31:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741516332; x=1742121132;
+ d=1e100.net; s=20230601; t=1741516310; x=1742121110;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dMUKogfKyzAz46Y4Z8OW5xUGWyWP2F2XLF8CrapiAvY=;
- b=xK8wfSgDiv3NZ7d/XSSLzflAJj8ug+f12XWYUmklKtS9q0YB9Mf2E+EWwGXcpeyYQT
- K3Do665ywQwIIcNOdHS7v+SKQu7tX6Uz8oAw2RLUSPSYRy/tm7zUYiF7MtBhLwF/eQQ1
- /V6SnW77vs7w7zz/5p/Z3rJgThmpKBQaDjPIPzOQ81pWebILzqXQbN7nliJn1qNL3Ssy
- 3bIRsAoTo1Vi7IhFzaE9YDXhTWwDmzuRceLpZlXntrDQ1+phxRFt5WLyjSFT1YD3dla0
- 9hnf381sUUb8YwiqF/F3vQbCOEbzGfvxIys70D57MKMrfKrTIiwwF22EG5oMncjugUyZ
- Wydw==
-X-Gm-Message-State: AOJu0YzCZLEow6RZDjpO6okyNKkfhw9gNu3LxEP0N/P3MWtzwFXeI5vf
- 3gfW+sW+4N8kfYH1gCiaJsBABX6fU/1dDpgTOGk3ABr20kjSxBEcRrRRxwQMhnCuGsufS0ImK+q
- 8+Uktu6GLbsi5aifarpl5u4uFkqX4j8J+nLB0bCpUV4jzYolhKGaMzJ1etnDY3ZZZY1B6A+f8BR
- cj8vSq4Ehj4iduCe4RrTeO2vCijk91uwDnk+X+pMY=
-X-Gm-Gg: ASbGncvd/doq8C1ME56KJOUrGzy1e+6jK07gg4QejOcEwpHAW1OBdw+rLab0PRPeWB6
- /6kxgjcOyTIZUX3CGXcMfXuxFU+3hMuPxCKdYhBrvAZEn1Qf4CUUoEcXfXxDEcELZlc6B8ME4Ca
- Yxx7vZsnecaJa5vwixwEP+VERCGzlsSFIlAQWNT6enFN3BelCkSPBPC+rdc0ust4vkwZ0jB13/N
- wFR8U/FM1msP5Jyr9Jyj7I5XgQyw2vVHnkx7+kudT41cZwOz20j2MFxjzFTZdB/xjaOgsJnCLvI
- 1BXt8eNK4IFVHesx4hA+ZA==
-X-Received: by 2002:a05:600c:19cd:b0:43c:f1b8:16ad with SMTP id
- 5b1f17b1804b1-43cf1b81b78mr9503155e9.30.1741516331920; 
- Sun, 09 Mar 2025 03:32:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3i7HQ3BfMVkTqOhiH/ic9cHN5EaI1ROqBFR5mD3dFqHP7nZMruL9PBgJiwzGxWf86YzeFIA==
-X-Received: by 2002:a05:600c:19cd:b0:43c:f1b8:16ad with SMTP id
- 5b1f17b1804b1-43cf1b81b78mr9503005e9.30.1741516331476; 
- Sun, 09 Mar 2025 03:32:11 -0700 (PDT)
+ bh=S8IXFl1tjzcTpL3RiOm0U3qS7SeRxt+gon+nIrKlE5k=;
+ b=AtBNfrWAJ1F7smSEUbeXXCDDP/gUHgooaq/mqrl0nHT+uRtuFUEsNNuRrdG5E1mGan
+ fEB1xeHQLY1XW3bhs8GEbiYnguFylaNyqeUgleT0VnRZcMXuiDOOlRc4eYZp6YBExsbA
+ VS/0gDKYZ0hznb+LMJ9D6O/BFRTOXA2sanKhSgAa+q9x+fVXazGbQdsg/saFsA/BfS6g
+ W2T8wrUuQ8U0xrRQMzEK7ZNkqWAt4chPn8RyEIA3QfjKfS9qf/1Sgoz8oAsv6noTRuyO
+ /YSxTAXJJfbkjaLo8SGG7F62vYsXSnykAljLNOzSIHbQDDTH3qipGwdb6eclNqNPnd12
+ u+8A==
+X-Gm-Message-State: AOJu0Yw2Pv2HmDFYgdf47SZ00F5O7ZOlrNWOgHy03vlKjJqhENucxvTl
+ XUmD0iY/q39gBllIsIZGtUrXy5aYOVCwrwvGEfZ4GOMZwIIqWC4MRBhdBGNyN919bIYWGtc/5uY
+ bgQgKM6EalM9Dmaz9FnYX5eVBzxFQ8CxAThkchixX6W7N6Jl3xHP8Cj5EE7boZM/VW+VSFum26U
+ zC2xOxyXIOcWhM3/TEEj665dQDI1egZtHpQ7Ayn/E=
+X-Gm-Gg: ASbGnctMQSVMiU8Rn3kVNRfN3JZ4ZQz+tZdw7vlTDMYZxi+rdaDbGRcT99dzaMzdZrd
+ J+G1p460IA2tn7d+FksrVLn6EbaZ5bsYTnuE3RQSmI66fhdIf+ET1rOGVhJLirbZOwRNxp9RASK
+ cFCp/J5k+SiaeQ1gK4c3TAOdPxAEw7vgxVHe+YdgAPZI99UrnJOIFAL1kZJhjMZVMD+Op00TwJI
+ P5HT6VSn5J7iHVEoSanHSJOM4zvZeEbsl1XHNLPKG1YY+BfEmah7t3CTNgZYmU3QaZv14bshHIV
+ CCxEV2ZT7qY4V17siSs6lw==
+X-Received: by 2002:a5d:59a8:0:b0:391:2d76:baaa with SMTP id
+ ffacd0b85a97d-39132db1be7mr7390410f8f.46.1741516310313; 
+ Sun, 09 Mar 2025 03:31:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHMGDQfpoP1jSEc42gXxru/mIgJyHc3uFrRPXfX8vLnbnBb8beohFmnKEXXVsNoq7Z99WuZqw==
+X-Received: by 2002:a5d:59a8:0:b0:391:2d76:baaa with SMTP id
+ ffacd0b85a97d-39132db1be7mr7390392f8f.46.1741516309796; 
+ Sun, 09 Mar 2025 03:31:49 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.122.167])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ce3d5a0e2sm58130275e9.12.2025.03.09.03.32.10
+ ffacd0b85a97d-3912c0e1476sm11511766f8f.70.2025.03.09.03.31.48
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Mar 2025 03:32:10 -0700 (PDT)
+ Sun, 09 Mar 2025 03:31:49 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 24/25] meson.build: default to -gsplit-dwarf for debug info
-Date: Sun,  9 Mar 2025 11:31:18 +0100
-Message-ID: <20250309103120.1116448-25-pbonzini@redhat.com>
+Subject: [PULL 13/25] rust: memory: wrap MemoryRegion with Opaque<>
+Date: Sun,  9 Mar 2025 11:31:07 +0100
+Message-ID: <20250309103120.1116448-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250309103120.1116448-1-pbonzini@redhat.com>
 References: <20250309103120.1116448-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,77 +108,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
-
-This option is supported by both gcc (since 4.7) and clang (since
-7.0). Not only does this make the linkers job easier by reducing the
-amount of ELF it needs to parse it also reduces the total build size
-quite considerably. In my case a default build went from 5.8G to
-3.9G (vs 1.9G for --disable-debug-info).
-
-The --disable-split-debug option allows distros to keep all the info
-together for ease of packaging.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Link: https://lore.kernel.org/r/20250306161631.2477685-1-alex.bennee@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build                   | 6 ++++++
- meson_options.txt             | 2 ++
- scripts/meson-buildoptions.sh | 2 ++
- 3 files changed, 10 insertions(+)
+ rust/qemu-api/src/bindings.rs |  3 ---
+ rust/qemu-api/src/memory.rs   | 35 +++++++++++++++++++++--------------
+ 2 files changed, 21 insertions(+), 17 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 6da4eb317c2..4899d896de0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -601,6 +601,10 @@ if get_option('tsan')
-   qemu_ldflags = ['-fsanitize=thread'] + qemu_ldflags
- endif
+diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
+index b791ca6d87f..26cc8de0cf2 100644
+--- a/rust/qemu-api/src/bindings.rs
++++ b/rust/qemu-api/src/bindings.rs
+@@ -34,9 +34,6 @@ unsafe impl Sync for CharBackend {}
+ unsafe impl Send for Chardev {}
+ unsafe impl Sync for Chardev {}
  
-+if get_option('debug') and get_option('split_debug')
-+  qemu_cflags += '-gsplit-dwarf'
-+endif
+-unsafe impl Send for MemoryRegion {}
+-unsafe impl Sync for MemoryRegion {}
+-
+ unsafe impl Send for ObjectClass {}
+ unsafe impl Sync for ObjectClass {}
+ 
+diff --git a/rust/qemu-api/src/memory.rs b/rust/qemu-api/src/memory.rs
+index 713c494ca2e..eff9f09fd7f 100644
+--- a/rust/qemu-api/src/memory.rs
++++ b/rust/qemu-api/src/memory.rs
+@@ -6,9 +6,8 @@
+ 
+ use std::{
+     ffi::{CStr, CString},
+-    marker::{PhantomData, PhantomPinned},
++    marker::PhantomData,
+     os::raw::{c_uint, c_void},
+-    ptr::addr_of,
+ };
+ 
+ pub use bindings::{hwaddr, MemTxAttrs};
+@@ -16,6 +15,7 @@
+ use crate::{
+     bindings::{self, device_endian, memory_region_init_io},
+     callbacks::FnCall,
++    cell::Opaque,
+     prelude::*,
+     zeroable::Zeroable,
+ };
+@@ -132,13 +132,13 @@ fn default() -> Self {
+     }
+ }
+ 
+-/// A safe wrapper around [`bindings::MemoryRegion`].  Compared to the
+-/// underlying C struct it is marked as pinned because the QOM tree
+-/// contains a pointer to it.
+-pub struct MemoryRegion {
+-    inner: bindings::MemoryRegion,
+-    _pin: PhantomPinned,
+-}
++/// A safe wrapper around [`bindings::MemoryRegion`].
++#[repr(transparent)]
++#[derive(qemu_api_macros::Wrapper)]
++pub struct MemoryRegion(Opaque<bindings::MemoryRegion>);
 +
- # Detect support for PT_GNU_RELRO + DT_BIND_NOW.
- # The combination is known as "full relro", because .got.plt is read-only too.
- qemu_ldflags += cc.get_supported_link_arguments('-Wl,-z,relro', '-Wl,-z,now')
-@@ -4583,6 +4587,8 @@ if have_rust
-   summary_info += {'bindgen':         bindgen.full_path()}
-   summary_info += {'bindgen version': bindgen.version()}
- endif
-+# option_cflags is purely for the summary display, meson will pass
-+# -g/-O options directly
- option_cflags = (get_option('debug') ? ['-g'] : [])
- if get_option('optimization') != 'plain'
-   option_cflags += ['-O' + get_option('optimization')]
-diff --git a/meson_options.txt b/meson_options.txt
-index 59d973bca00..3432123fee2 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -362,6 +362,8 @@ option('debug_mutex', type: 'boolean', value: false,
-        description: 'mutex debugging support')
- option('debug_stack_usage', type: 'boolean', value: false,
-        description: 'measure coroutine stack usage')
-+option('split_debug', type: 'boolean', value: true,
-+       description: 'split debug info from object files')
- option('qom_cast_debug', type: 'boolean', value: true,
-        description: 'cast debugging support')
- option('slirp_smbd', type : 'feature', value : 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 3e8e00852b2..aca6e688302 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -504,6 +504,8 @@ _meson_option_parse() {
-     --disable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=false ;;
-     --enable-strip) printf "%s" -Dstrip=true ;;
-     --disable-strip) printf "%s" -Dstrip=false ;;
-+    --enable-split-debug) printf "%s" -Dsplit_debug=true ;;
-+    --disable-split-debug) printf "%s" -Dsplit_debug=false ;;
-     --sysconfdir=*) quote_sh "-Dsysconfdir=$2" ;;
-     --enable-tcg) printf "%s" -Dtcg=enabled ;;
-     --disable-tcg) printf "%s" -Dtcg=disabled ;;
++unsafe impl Send for MemoryRegion {}
++unsafe impl Sync for MemoryRegion {}
+ 
+ impl MemoryRegion {
+     // inline to ensure that it is not included in tests, which only
+@@ -174,13 +174,20 @@ pub fn init_io<T: IsA<Object>>(
+         size: u64,
+     ) {
+         unsafe {
+-            Self::do_init_io(&mut self.inner, owner.cast::<Object>(), &ops.0, name, size);
++            Self::do_init_io(
++                // self.0.as_mut_ptr() needed because Rust tries to call
++                // ObjectDeref::as_mut_ptr() on "&mut Self", instead of coercing
++                // to "&Self" and then calling MemoryRegion::as_mut_ptr().
++                // Revisit if/when ObjectCastMut is not needed anymore; it is
++                // only used in a couple places for initialization.
++                self.0.as_mut_ptr(),
++                owner.cast::<Object>(),
++                &ops.0,
++                name,
++                size,
++            );
+         }
+     }
+-
+-    pub(crate) const fn as_mut_ptr(&self) -> *mut bindings::MemoryRegion {
+-        addr_of!(self.inner) as *mut _
+-    }
+ }
+ 
+ unsafe impl ObjectType for MemoryRegion {
 -- 
 2.48.1
 
