@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E692CC28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 19:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE5C3C28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 19:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trMSn-00012Z-1z; Sun, 09 Mar 2025 15:37:29 -0400
+	id 1trMV5-0002y7-1g; Sun, 09 Mar 2025 15:39:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trMSk-00010u-Jq
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:37:27 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1trMV3-0002xc-8d
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:39:49 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trMSh-0006TE-Py
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:37:25 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-224191d92e4so56256635ad.3
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 12:37:22 -0700 (PDT)
+ id 1trMV1-0006gs-7N
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:39:49 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2fea47bcb51so7388206a91.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 12:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741549042; x=1742153842; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=MT3STjDQDcCpuKL/24twGSo6UOkr+VDdVFMMCjf6edc=;
- b=yUJQVXzUZtdj4RY1Ly8ovBtdu/Yh1JIcASCGLZJHXRkShnIfKtZVeO/bE7sTfWteKd
- vPn5NUuaCobUJwUo+R1YHmLnAMwvpbX4HAuhgwjAQTwElHef8aBT1SN0zq4J8wQYsVP8
- RkNCqLJOwOsMt8tyypXTJfmDJPRJrZE0SnPfpFj+uy4COcSZXsBlJKj3K//bVNFq7t7D
- 1rCXr6WUWLKYak4AlTvdm2IbsIsTw4sCtAqSdx0dE4gzAEgEdX12fWAMpAt2SgEZEoXF
- OG/zVQytytOTb9Sbs2tQwVQz3g/Ke/qMzHKiRiy67TIT1TfDbjFrqk6j+fe7uJqRLi9/
- 1ukA==
+ d=linaro.org; s=google; t=1741549185; x=1742153985; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/GLbu3KyXotsCoBa1QuTZBe4rqaUMhyZKSiWkGUUrAk=;
+ b=PevtAJmC+zZCRBvVnMfo7UQRJKUsyXNMOaMa3AKtiVgwmDabZNTMD8E7CeP+cyu5m0
+ qnDbp2SaNm3aQOLZvzr1yuyI+JBZ2P1bMC6kEaXjcqIOPOwyBgQpjDJGZBYCByEYDy3w
+ RZIan1Quek2vVuR/NshmVCWaJnEzO8iyN4MSGVA12UHqlH5YYwypFkcFx1G6KikaFxAd
+ kfPanqTEbel/XJYaKsdDPmN0+5cT5CwBfa9P+RrGopiM+xQziGXjVdbIDfXPb4kye08g
+ toUR3oA54iFD5ONlL9JaAXSi6lZmvxitujtjR09dKG+EoH58a3tqf/cok9Rp9ZO6UDHk
+ zpFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741549042; x=1742153842;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MT3STjDQDcCpuKL/24twGSo6UOkr+VDdVFMMCjf6edc=;
- b=jeX3U6DLK1harTUgSbKyaH/Wh2sQXE5BkSiLuyhyy2sl9Gtl/NRSQFvEBA6MVJMRPl
- CnqMqd2iup58ZYvbrC8O9WJJ/mVSYGzE5b//g4D9EYfTQLjmR7K5J5hzneQ1IKoUJ9hg
- DQKC37S9wqj4M6tPKzfvmAKyE0eqxZSBgvwNDLGyzZTxo7ovMlUOtdX/di97cfD5Vpz4
- BkMhKi/w5KDDe1W/l6DXCFVy3o11Lt1da9qUwTTs8/RYOw7+z51YS0qBn6cGAxJ52dQL
- /14DmwRU/xcDnqzCDNVWyGmMUQbPrpCXQ1Ek5QTEj2ppNSwWGXE/9VbbpLX8v/FbUX6X
- L1ug==
-X-Gm-Message-State: AOJu0YwP9B3rgPa1GD0zUj3giekKdwTL0bw+pNv2DJ0NAPD5r/LZZAOI
- WtpAw908egpAfwMXtPdcSvjsTpxO11oWsDlZU0Z7mEazRVBfdGZkdaq+loiC15EbVZq7PUay+bq
- j
-X-Gm-Gg: ASbGncu0OlsZGzuPcLY1fdCc2jhDFpbPt/xMxI9uJneboAu9+OWrXihKrHCXDrWjt74
- khaBzHq6jxOF4cqHJiBFpIQcwBY/qDn+qhmggwU6ZGhiW2K9w3zqNXb6UeoV+tVB7sB+p6s/rFC
- f05rVtrSLbuTk/S6QD/46Nu0AgLYJ9A4pLNgG022yrcR8NoNV+H80Ars8tBPqaZn+Cck8+zwAp1
- Di7TW4q+3U/0bhaTODYqDfKVltgg8K+5RS/sF162v8aJB8sDWGt1nOL6UNA1po47XUp9KBVCzfL
- WlNn1C3q+qyal4rz7jjYGaXFHKt27mZPXnyhYQSpMmJa
-X-Google-Smtp-Source: AGHT+IH+dB0CCOZNmpt8GVAk0PYup7OWx+PWNPe+3i8iyacqepyDh2lw3VDZjaEl9pH9UU6RlYG7MQ==
-X-Received: by 2002:a05:6a21:6f07:b0:1f5:79c4:5da2 with SMTP id
- adf61e73a8af0-1f579c473bdmr2368337637.31.1741549041722; 
- Sun, 09 Mar 2025 12:37:21 -0700 (PDT)
-Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af281093136sm6278945a12.18.2025.03.09.12.37.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Mar 2025 12:37:21 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1741549185; x=1742153985;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/GLbu3KyXotsCoBa1QuTZBe4rqaUMhyZKSiWkGUUrAk=;
+ b=wuw6lRywLdrgIkCQnnbBxgNJP8WSffrLu3XzMWnTK8Elrmzdo5SuVOF5Rms7lLzM3j
+ XR6Z2xK9o9Fn1CT0nQgKJOnRe+I6pX87M64o55xF7PeNgSA8YWj2vLM3LWVqRbCdMCWf
+ xWgzdBd/J2ctLvLYcomGROklLk5oVEAa5jaJkQhHvwh+Y4HtaUfgfuowgyzbaU3oaoYF
+ DMPJrE1PMquJiltHxNiKbXZMlZEhJmdoYZITD/BVQG94Ftyd5B0HAmSQ6j8qwU9bP68K
+ blFfmpk3bKtMCX6EhMVZ/n53R5b8Y0VPPkSqz4vO1nYBWnB6+CWOrLM60F4zHadkkDVA
+ pdHQ==
+X-Gm-Message-State: AOJu0YxNTqrCTCxLl4sjENSb/RzdCSS2qg2t+E5FxkCY4QU11YAGwChR
+ ZPNQd7zi4Q8yXOqrxFpLo1JF/tSIHbzTtY1rKaUGAp+MAZAMl6vHOwZTN4Fu9AfvE3Vy0/Ydiw8
+ s
+X-Gm-Gg: ASbGncsIn7xWLLTleF+ntaWBedgyz8Xh2/6d9mUlqpqj8xNep5cGxvmB3pPRpJv3aKT
+ uwyOvNXHuiiN5DEOaeao0UYrSnQ2YxbjsksZQX4W8MnZPWJiOBp+TiIy3wY/DUrlaN6GSrpF0fz
+ PHapEl6cWQeQjvj2RwgKec7dFpi3Ww6YccFAkqFH5XDJcB3K0YCtWnZ1VyOvnZT7UWL+Qm8jFPK
+ +hfttI6a9DjGp8p4vLyhN1kAke0x3zsheR1j5lXKOFIsho/UQAMjdyjCW7gVefWBuJBenyPQ40z
+ T7SiK5YPKu36h11yIBVnywWq6KQgxg512DRPustERp1ShDJPBIaIyADrng==
+X-Google-Smtp-Source: AGHT+IHpxTIpMt521h3ZtiPaAGQbvwh/VU2tPjYl6WME5mcjZ/dCFCV2nKl/h7ocKM/ZlZFUo2LZgA==
+X-Received: by 2002:a17:90b:4c44:b0:2fc:a3b7:1096 with SMTP id
+ 98e67ed59e1d1-2ff7cf128c2mr17429601a91.27.1741549185216; 
+ Sun, 09 Mar 2025 12:39:45 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ff4e7ff9f7sm8365919a91.33.2025.03.09.12.39.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 09 Mar 2025 12:39:44 -0700 (PDT)
+Message-ID: <f039cefe-e1fa-4c58-9eb3-0f7b6f22cf83@linaro.org>
+Date: Sun, 9 Mar 2025 12:39:43 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] system: initialize target_page_bits as soon as possible
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] system: initialize target_page_bits as soon as possible
-Date: Sun,  9 Mar 2025 12:37:12 -0700
-Message-Id: <20250309193712.1405766-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>
+References: <20250309193712.1405766-1-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250309193712.1405766-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,42 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow device init functions to use it, which can be convenient in some
-cases (like hw/hyperv/hyperv.c).
+On 3/9/25 12:37, Pierrick Bouvier wrote:
+> Allow device init functions to use it, which can be convenient in some
+> cases (like hw/hyperv/hyperv.c).
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   system/physmem.c | 1 -
+>   system/vl.c      | 3 +++
+>   2 files changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 8df9f30a0bb..c5fb784a9e1 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -3281,7 +3281,6 @@ void cpu_exec_init_all(void)
+>        * do this much later, rather than requiring board models to state
+>        * up front what their requirements are.
+>        */
+> -    finalize_target_page_bits();
+>       io_mem_init();
+>       memory_map_init();
+>   }
+> diff --git a/system/vl.c b/system/vl.c
+> index ec93988a03a..c64f8c8e808 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -2848,6 +2848,9 @@ void qemu_init(int argc, char **argv)
+>       bool userconfig = true;
+>       FILE *vmstate_dump_file = NULL;
+>   
+> +    /* Set target page info before creating machine and associated devices */
+> +    finalize_target_page_bits();
+> +
+>       qemu_add_opts(&qemu_drive_opts);
+>       qemu_add_drive_opts(&qemu_legacy_drive_opts);
+>       qemu_add_drive_opts(&qemu_common_drive_opts);
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- system/physmem.c | 1 -
- system/vl.c      | 3 +++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+This is related to a very recent change merged.
+58d0053: include/exec: Move TARGET_PAGE_{SIZE,MASK,BITS} to target_page.h
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 8df9f30a0bb..c5fb784a9e1 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3281,7 +3281,6 @@ void cpu_exec_init_all(void)
-      * do this much later, rather than requiring board models to state
-      * up front what their requirements are.
-      */
--    finalize_target_page_bits();
-     io_mem_init();
-     memory_map_init();
- }
-diff --git a/system/vl.c b/system/vl.c
-index ec93988a03a..c64f8c8e808 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2848,6 +2848,9 @@ void qemu_init(int argc, char **argv)
-     bool userconfig = true;
-     FILE *vmstate_dump_file = NULL;
- 
-+    /* Set target page info before creating machine and associated devices */
-+    finalize_target_page_bits();
-+
-     qemu_add_opts(&qemu_drive_opts);
-     qemu_add_drive_opts(&qemu_legacy_drive_opts);
-     qemu_add_drive_opts(&qemu_common_drive_opts);
--- 
-2.39.5
-
+Regards,
+Pierrick
 
