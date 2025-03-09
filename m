@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D25CDC28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE61C282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:43:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trCAg-0007Lj-In; Sun, 09 Mar 2025 04:38:06 -0400
+	id 1trCBf-0001Ti-Ln; Sun, 09 Mar 2025 04:39:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCAa-0006rS-Si
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:38:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCB7-0000mG-U9
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:38:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCAZ-0002ab-8h
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:38:00 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCB4-0002gR-Be
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:38:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741509478;
+ s=mimecast20190719; t=1741509509;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JuA7SVDgD0ex81fpF0cRX+zQ5amNxByPpkZFbXngsX4=;
- b=cnYTXHAs+vEWgNWwOH1n9KGvdDqqE7HD0OzWVwkZ30VoM4c3VUJ8YQFJKuiUBJEwxiL/sA
- LasoHZoky8c/sEB4L9HtBNznTpVcmXlnSiCvURJx5/S2oYbNEfpQpHRdnFWGC6Dfi3VsbC
- SGnnNqGsklg6mmeMXXi58lRybbLsa6E=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=95agMskPgnBc4AkyN44TZ2mvq+7CH/4kl3dTXY02EW8=;
+ b=LX/PZwB63r3Bk4slv5Gxbxp1arFp0mkQfHO4B0yw/aqTR67rBCzvIquU1PV5G8rzfSPSnZ
+ gli+13/O/QvQYwmMR9lyGcoSyKgYnhP5jrpMmxliDmpr/+qkOxtHX/CA0amBGpeOLz2Bow
+ kVmgCTji1P+EjaWv6WYvHSycyTV/HNk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-HMzQy2GgM2GBa8dK4ZTXRg-1; Sun,
- 09 Mar 2025 04:37:54 -0400
-X-MC-Unique: HMzQy2GgM2GBa8dK4ZTXRg-1
-X-Mimecast-MFC-AGG-ID: HMzQy2GgM2GBa8dK4ZTXRg_1741509473
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-386-n5k-mw9OOk6LE9edwXA7PA-1; Sun,
+ 09 Mar 2025 04:38:26 -0400
+X-MC-Unique: n5k-mw9OOk6LE9edwXA7PA-1
+X-Mimecast-MFC-AGG-ID: n5k-mw9OOk6LE9edwXA7PA_1741509505
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 20E791956048; Sun,  9 Mar 2025 08:37:53 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0CBB21801A12; Sun,  9 Mar 2025 08:38:25 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.4])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3106B19560AB; Sun,  9 Mar 2025 08:37:51 +0000 (UTC)
+ id 1144519560AB; Sun,  9 Mar 2025 08:38:22 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -54,23 +54,22 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 47/62] docs/qapidoc: add add_field() and generate_field()
- helper methods
-Date: Sun,  9 Mar 2025 04:35:34 -0400
-Message-ID: <20250309083550.5155-48-jsnow@redhat.com>
+Subject: [PATCH v2 60/62] docs: disambiguate cross-references
+Date: Sun,  9 Mar 2025 04:35:47 -0400
+Message-ID: <20250309083550.5155-61-jsnow@redhat.com>
 In-Reply-To: <20250309083550.5155-1-jsnow@redhat.com>
 References: <20250309083550.5155-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,58 +87,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are simple rST generation methods that assist in getting the types
-and formatting correct for a field list entry. add_field() is a more
-raw, direct call while generate_field() is intended to be used for
-generating the correct field from a member object.
+The next patch will engage the qapidoc transmogrifier, which creates a
+lot of cross-reference targets. Some of the existing targets
+("migration", "qom", "replay") will become ambiguous as a result. Nail
+them down more explicitly to prevent ambiguous cross-reference warnings.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ docs/devel/codebase.rst |  6 +++---
+ docs/glossary.rst       | 10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 0f895a3624a..b87ce288837 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -136,6 +136,20 @@ def ensure_blank_line(self) -> None:
-             # +2: correct for zero/one index, then increment by one.
-             self.add_line_raw("", fname, line + 2)
+diff --git a/docs/devel/codebase.rst b/docs/devel/codebase.rst
+index 4039875ee04..1b09953197b 100644
+--- a/docs/devel/codebase.rst
++++ b/docs/devel/codebase.rst
+@@ -23,7 +23,7 @@ Some of the main QEMU subsystems are:
+ - `Devices<device-emulation>` & Board models
+ - `Documentation <documentation-root>`
+ - `GDB support<GDB usage>`
+-- `Migration<migration>`
++- :ref:`Migration<migration>`
+ - `Monitor<QEMU monitor>`
+ - :ref:`QOM (QEMU Object Model)<qom>`
+ - `System mode<System emulation>`
+@@ -112,7 +112,7 @@ yet, so sometimes the source code is all you have.
+ * `libdecnumber <https://gitlab.com/qemu-project/qemu/-/tree/master/libdecnumber>`_:
+   Import of gcc library, used to implement decimal number arithmetic.
+ * `migration <https://gitlab.com/qemu-project/qemu/-/tree/master/migration>`__:
+-  `Migration framework <migration>`.
++  :ref:`Migration framework <migration>`.
+ * `monitor <https://gitlab.com/qemu-project/qemu/-/tree/master/monitor>`_:
+   `Monitor <QEMU monitor>` implementation (HMP & QMP).
+ * `nbd <https://gitlab.com/qemu-project/qemu/-/tree/master/nbd>`_:
+@@ -193,7 +193,7 @@ yet, so sometimes the source code is all you have.
+   - `lcitool <https://gitlab.com/qemu-project/qemu/-/tree/master/tests/lcitool>`_:
+     Generate dockerfiles for CI containers.
+   - `migration <https://gitlab.com/qemu-project/qemu/-/tree/master/tests/migration>`_:
+-    Test scripts and data for `Migration framework <migration>`.
++    Test scripts and data for :ref:`Migration framework <migration>`.
+   - `multiboot <https://gitlab.com/qemu-project/qemu/-/tree/master/tests/multiboot>`_:
+     Test multiboot functionality for x86_64/i386.
+   - `qapi-schema <https://gitlab.com/qemu-project/qemu/-/tree/master/tests/qapi-schema>`_:
+diff --git a/docs/glossary.rst b/docs/glossary.rst
+index 693d9855dd1..4fa044bfb6e 100644
+--- a/docs/glossary.rst
++++ b/docs/glossary.rst
+@@ -120,7 +120,7 @@ Migration
+ ---------
  
-+    def add_field(
-+        self,
-+        kind: str,
-+        name: str,
-+        body: str,
-+        info: QAPISourceInfo,
-+        typ: Optional[str] = None,
-+    ) -> None:
-+        if typ:
-+            text = f":{kind} {typ} {name}: {body}"
-+        else:
-+            text = f":{kind} {name}: {body}"
-+        self.add_lines(text, info)
-+
-     def format_type(
-         self, ent: Union[QAPISchemaDefinition | QAPISchemaMember]
-     ) -> Optional[str]:
-@@ -160,6 +174,16 @@ def format_type(
+ QEMU can save and restore the execution of a virtual machine between different
+-host systems. This is provided by the `Migration framework<migration>`.
++host systems. This is provided by the :ref:`Migration framework<migration>`.
  
-         return ret
+ NBD
+ ---
+@@ -212,14 +212,14 @@ machine emulator and virtualizer.
+ QOM
+ ---
  
-+    def generate_field(
-+        self,
-+        kind: str,
-+        member: QAPISchemaMember,
-+        body: str,
-+        info: QAPISourceInfo,
-+    ) -> None:
-+        typ = self.format_type(member)
-+        self.add_field(kind, member.name, body, info, typ)
-+
-     # Transmogrification helpers
+-`QEMU Object Model <qom>` is an object oriented API used to define various
+-devices and hardware in the QEMU codebase.
++:ref:`QEMU Object Model <qom>` is an object oriented API used to define
++various devices and hardware in the QEMU codebase.
  
-     def visit_paragraph(self, section: QAPIDoc.Section) -> None:
+ Record/replay
+ -------------
+ 
+-`Record/replay <replay>` is a feature of QEMU allowing to have a deterministic
+-and reproducible execution of a virtual machine.
++:ref:`Record/replay <replay>` is a feature of QEMU allowing to have a
++deterministic and reproducible execution of a virtual machine.
+ 
+ Rust
+ ----
 -- 
 2.48.1
 
