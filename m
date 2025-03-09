@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F5FC28B30
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 13:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2267C28B30
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 13:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trH4d-0007gQ-Ck; Sun, 09 Mar 2025 09:52:11 -0400
+	id 1trH5j-00023c-Qr; Sun, 09 Mar 2025 09:53:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH4T-0007X5-AW
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:52:03 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH5U-0001PJ-P6
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:53:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH4Q-00029J-Ds
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:52:01 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH5S-0003mG-9H
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:53:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741528316;
+ s=mimecast20190719; t=1741528381;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AWWyO4fsVpyI7Xfs4RgjydCQpMsctwr4/XR+I7gPwUo=;
- b=NQSF3pbvYWP9b3ecps8tJ90JF17UmgxOe0w9yDcASgCw0Lcv3/Sa0R/HKP3r5xxjP3bXx4
- M/kjIfnYjIh/Hee0MpzfkV+EyJO9hESFIVx5hpFgr7Z40NcW1VebNPUTCyDYbC5iYDJ7S0
- AAWtZ8IlJ2SFX1U2+Q38D6ut3hyXCPE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=uAYS6UE+iNIB0Ha5J/YqcdKq8LDQBgAql8yfolCh9P0=;
+ b=N9WvVgMDHWE5xBsADgrT7Y7wK47Bh3t5sArBLuIxWc1vnxDt9TP+lQchWOIPhCZmVKCgIw
+ o6cNLswBMY6KdfiwEp9exKEC2wSl5fRByC/8/zpYIkl+R6NBMZSN3H+Pmvz7RaV02IjcTR
+ eHF+H0RcUu9G5Riy+Cp3hcCzFScPE4w=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-IBFb34nhMDiPaLhZ-VET_A-1; Sun,
- 09 Mar 2025 09:51:55 -0400
-X-MC-Unique: IBFb34nhMDiPaLhZ-VET_A-1
-X-Mimecast-MFC-AGG-ID: IBFb34nhMDiPaLhZ-VET_A_1741528314
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-BA3CHkHsNf2YBHM0dZxetQ-1; Sun,
+ 09 Mar 2025 09:52:58 -0400
+X-MC-Unique: BA3CHkHsNf2YBHM0dZxetQ-1
+X-Mimecast-MFC-AGG-ID: BA3CHkHsNf2YBHM0dZxetQ_1741528377
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2FEBE1801A00; Sun,  9 Mar 2025 13:51:54 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85EA519560BB; Sun,  9 Mar 2025 13:52:57 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.17])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2B7BE1956095; Sun,  9 Mar 2025 13:51:51 +0000 (UTC)
+ id E8FF71956094; Sun,  9 Mar 2025 13:52:55 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PULL 07/46] aspeed: Remove duplicate typename in AspeedSoCClass
-Date: Sun,  9 Mar 2025 14:50:51 +0100
-Message-ID: <20250309135130.545764-8-clg@redhat.com>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 32/46] hw/intc/aspeed: Introduce IRQ handler function to reduce
+ code duplication
+Date: Sun,  9 Mar 2025 14:51:16 +0100
+Message-ID: <20250309135130.545764-33-clg@redhat.com>
 In-Reply-To: <20250309135130.545764-1-clg@redhat.com>
 References: <20250309135130.545764-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,124 +85,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SoC type name is stored under AspeedSoCClass which is
-redundant. Use object_get_typename() instead where needed.
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Link: https://lore.kernel.org/qemu-devel/20250218073534.585066-1-clg@redhat.com
+The behavior of the INTC set IRQ is almost identical between INTC and INTCIO.
+To reduce duplicated code, introduce the "aspeed_intc_set_irq_handler" function
+to handle both INTC and INTCIO IRQ behavior. No functional change.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250307035945.3698802-16-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/arm/aspeed_soc.h | 1 -
- hw/arm/aspeed_ast10x0.c     | 3 +--
- hw/arm/aspeed_ast2400.c     | 4 +---
- hw/arm/aspeed_ast2600.c     | 3 +--
- hw/arm/aspeed_ast27x0.c     | 3 +--
- 5 files changed, 4 insertions(+), 10 deletions(-)
+ hw/intc/aspeed_intc.c | 70 ++++++++++++++++++++++++-------------------
+ 1 file changed, 39 insertions(+), 31 deletions(-)
 
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 689f52dae8fb..4a8881ca8b57 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -148,7 +148,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(Aspeed10x0SoCState, ASPEED10X0_SOC)
- struct AspeedSoCClass {
-     DeviceClass parent_class;
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index be24516ec970..3aa97add8bd0 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -76,11 +76,45 @@ static void aspeed_intc_update(AspeedINTCState *s, int inpin_idx,
+     qemu_set_irq(s->output_pins[outpin_idx], level);
+ }
  
--    const char *name;
-     /** valid_cpu_types: NULL terminated array of a single CPU type. */
-     const char * const *valid_cpu_types;
-     uint32_t silicon_rev;
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index e76c7100a1d2..ec329f4991c9 100644
---- a/hw/arm/aspeed_ast10x0.c
-+++ b/hw/arm/aspeed_ast10x0.c
-@@ -116,7 +116,7 @@ static void aspeed_soc_ast1030_init(Object *obj)
-     char typename[64];
++static void aspeed_intc_set_irq_handler(AspeedINTCState *s,
++                                        const AspeedINTCIRQ *intc_irq,
++                                        uint32_t select)
++{
++    const char *name = object_get_typename(OBJECT(s));
++    uint32_t status_reg;
++    int outpin_idx;
++    int inpin_idx;
++
++    status_reg = intc_irq->status_reg;
++    outpin_idx = intc_irq->outpin_idx;
++    inpin_idx = intc_irq->inpin_idx;
++
++    if (s->mask[inpin_idx] || s->regs[status_reg]) {
++        /*
++         * a. mask is not 0 means in ISR mode
++         * sources interrupt routine are executing.
++         * b. status register value is not 0 means previous
++         * source interrupt does not be executed, yet.
++         *
++         * save source interrupt to pending variable.
++         */
++        s->pending[inpin_idx] |= select;
++        trace_aspeed_intc_pending_irq(name, inpin_idx, s->pending[inpin_idx]);
++    } else {
++        /*
++         * notify firmware which source interrupt are coming
++         * by setting status register
++         */
++        s->regs[status_reg] = select;
++        trace_aspeed_intc_trigger_irq(name, inpin_idx, outpin_idx,
++                                      s->regs[status_reg]);
++        aspeed_intc_update(s, inpin_idx, outpin_idx, 1);
++    }
++}
++
+ /*
+- * The address of GICINT128 to GICINT136 are from 0x1000 to 0x1804.
+- * Utilize "address & 0x0f00" to get the irq and irq output pin index
+- * The value of irq should be 0 to num_inpins.
+- * The irq 0 indicates GICINT128, irq 1 indicates GICINT129 and so on.
++ * GICINT128 to GICINT136 map 1:1 to input and output IRQs 0 to 8.
++ * The value of input IRQ should be between 0 and the number of inputs.
+  */
+ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+ {
+@@ -88,20 +122,15 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+     const char *name = object_get_typename(OBJECT(s));
+     const AspeedINTCIRQ *intc_irq;
+-    uint32_t status_reg;
+     uint32_t select = 0;
+     uint32_t enable;
+-    int outpin_idx;
+     int inpin_idx;
      int i;
  
--    if (sscanf(sc->name, "%7s", socname) != 1) {
-+    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
-         g_assert_not_reached();
+     assert(irq < aic->num_inpins);
+ 
+     intc_irq = &aic->irq_table[irq];
+-    status_reg = intc_irq->status_reg;
+-    outpin_idx = intc_irq->outpin_idx;
+     inpin_idx = intc_irq->inpin_idx;
+-
+     trace_aspeed_intc_set_irq(name, inpin_idx, level);
+     enable = s->enable[inpin_idx];
+ 
+@@ -122,28 +151,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
      }
  
-@@ -428,7 +428,6 @@ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, void *data)
-     dc->user_creatable = false;
-     dc->realize = aspeed_soc_ast1030_realize;
+     trace_aspeed_intc_select(name, select);
+-
+-    if (s->mask[inpin_idx] || s->regs[status_reg]) {
+-        /*
+-         * a. mask is not 0 means in ISR mode
+-         * sources interrupt routine are executing.
+-         * b. status register value is not 0 means previous
+-         * source interrupt does not be executed, yet.
+-         *
+-         * save source interrupt to pending variable.
+-         */
+-        s->pending[inpin_idx] |= select;
+-        trace_aspeed_intc_pending_irq(name, inpin_idx, s->pending[inpin_idx]);
+-    } else {
+-        /*
+-         * notify firmware which source interrupt are coming
+-         * by setting status register
+-         */
+-        s->regs[status_reg] = select;
+-        trace_aspeed_intc_trigger_irq(name, inpin_idx, outpin_idx,
+-                                      s->regs[status_reg]);
+-        aspeed_intc_update(s, inpin_idx, outpin_idx, 1);
+-    }
++    aspeed_intc_set_irq_handler(s, intc_irq, select);
+ }
  
--    sc->name = "ast1030-a1";
-     sc->valid_cpu_types = valid_cpu_types;
-     sc->silicon_rev = AST1030_A1_SILICON_REV;
-     sc->sram_size = 0xc0000;
-diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
-index 8784b6e79305..0158f6e9c24e 100644
---- a/hw/arm/aspeed_ast2400.c
-+++ b/hw/arm/aspeed_ast2400.c
-@@ -151,7 +151,7 @@ static void aspeed_ast2400_soc_init(Object *obj)
-     char socname[8];
-     char typename[64];
- 
--    if (sscanf(sc->name, "%7s", socname) != 1) {
-+    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
-         g_assert_not_reached();
-     }
- 
-@@ -515,7 +515,6 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
-     /* Reason: Uses serial_hds and nd_table in realize() directly */
-     dc->user_creatable = false;
- 
--    sc->name         = "ast2400-a1";
-     sc->valid_cpu_types = valid_cpu_types;
-     sc->silicon_rev  = AST2400_A1_SILICON_REV;
-     sc->sram_size    = 0x8000;
-@@ -544,7 +543,6 @@ static void aspeed_soc_ast2500_class_init(ObjectClass *oc, void *data)
-     /* Reason: Uses serial_hds and nd_table in realize() directly */
-     dc->user_creatable = false;
- 
--    sc->name         = "ast2500-a1";
-     sc->valid_cpu_types = valid_cpu_types;
-     sc->silicon_rev  = AST2500_A1_SILICON_REV;
-     sc->sram_size    = 0x9000;
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 07210483bb29..1f994ba26c65 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -157,7 +157,7 @@ static void aspeed_soc_ast2600_init(Object *obj)
-     char socname[8];
-     char typename[64];
- 
--    if (sscanf(sc->name, "%7s", socname) != 1) {
-+    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
-         g_assert_not_reached();
-     }
- 
-@@ -666,7 +666,6 @@ static void aspeed_soc_ast2600_class_init(ObjectClass *oc, void *data)
-     /* Reason: The Aspeed SoC can only be instantiated from a board */
-     dc->user_creatable = false;
- 
--    sc->name         = "ast2600-a3";
-     sc->valid_cpu_types = valid_cpu_types;
-     sc->silicon_rev  = AST2600_A3_SILICON_REV;
-     sc->sram_size    = 0x16400;
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 3e373f966b5f..6506bdfdff68 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -316,7 +316,7 @@ static void aspeed_soc_ast2700_init(Object *obj)
-     char socname[8];
-     char typename[64];
- 
--    if (sscanf(sc->name, "%7s", socname) != 1) {
-+    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
-         g_assert_not_reached();
-     }
- 
-@@ -757,7 +757,6 @@ static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
-     dc->user_creatable = false;
-     dc->realize      = aspeed_soc_ast2700_realize;
- 
--    sc->name         = "ast2700-a0";
-     sc->valid_cpu_types = valid_cpu_types;
-     sc->silicon_rev  = AST2700_A0_SILICON_REV;
-     sc->sram_size    = 0x20000;
+ static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
 -- 
 2.48.1
 
