@@ -4,101 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6047FC282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 09:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED00C282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 09:41:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trD7l-00068D-Da; Sun, 09 Mar 2025 05:39:10 -0400
+	id 1trD9e-0000CO-8D; Sun, 09 Mar 2025 05:41:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1trD7Y-00065f-1a; Sun, 09 Mar 2025 05:38:57 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
+ id 1trD9a-00005r-1s
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 05:41:02 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1trD7V-0003Km-CG; Sun, 09 Mar 2025 05:38:54 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5e5b572e45cso5655671a12.0; 
- Sun, 09 Mar 2025 01:38:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
+ id 1trD9X-0004Ao-DB
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 05:41:01 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2232aead377so67734005ad.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 01:40:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741513118; x=1742117918; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1741513258; x=1742118058;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ax5IGd/4eNrwA4i2MUZdcYcXCJmnFhS/qG7yJ/UodEE=;
- b=EEhiOvJNDaIADPjKkeqQQ1P3/Q/aULVUHB/dRfKfc80P49DnMR0QgVD2+m/X9YzcqO
- hykVQ4o96tqRJKyaV4yjPyR3PFFK6YUHLoJIS/zeGoV3zrSmF4NbHuenGnvufEGtx5Ci
- vui0XjEm7N53KPhYLEIoMAJs5Jn8AiGLn+NGWlzspNJ5LA8euT6mWooom3bZS90JyngQ
- HHWJBFHnzpePJ0uRME35dL5Df8kL7JB470fLKsrhb9taNCRS2yseRNWLD/SknN0ZLmkS
- oan9RcqfKDx9ymoQS3TJqqu5DOTSkX96l1zOwHxK5WMckP+TtWrHXI//x1ZpCDyykHiS
- 20Nw==
+ bh=Eh6xZmod1XJzdJDqa+dorzqnDF3twPcYJbdIGQ8yqlo=;
+ b=VFsKcWzhSWSgAHaM8U54/pTx6Nzh2t0MccjEcz+0ttfnzo61UOe6iea57nq1nu+ckx
+ tec+826oPokkXDb0S7s1bP059LRKMl3QZyRw2JBeJWvac4wqxP8ENJ2BV3EeQILcvclH
+ RTNdE6IsBwIhtnmSd3I6HqKvImSd+n7NgVPByGXcXqvwhGTamsWhbOAht190cuVObgxk
+ IAtDZZBrKTT3Q99ju1cw/XLRInN7eCQKifTV0K/zRwucMe8/dNh7y4xVE7unfmuQm989
+ VYzarw+iCXnDF+QlE0f6fCkQPN/2U80EPJ5PnAWlVmYvTTa6gbK2SS+u5U2lJq73OLP4
+ K9Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741513118; x=1742117918;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1741513258; x=1742118058;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ax5IGd/4eNrwA4i2MUZdcYcXCJmnFhS/qG7yJ/UodEE=;
- b=ulsN40s/2xCJgJP01iQ5f1DBLceOIsQAz44cf1uR/Uh+DAmIjO/ZFplez3q5hGeSTr
- G5BDv+ez6KjeV/tM+YH+/p8Dnv7mJwmRa2M9LKrWsOG0uhZ1c95EtolyFj587IjnKPti
- jJAm9O7HznuzFWyaCnKiCVQZVCI7I87/Jg1vtzg1Uj8tFjakDQeBYrOsvKwb4THy4mvK
- uUQsuchrG/JpDF6kmVKCbTofKVW+YgAadP0Ry/3pgDoLWMtsSSfEQvjV78UMAl4SuetJ
- n1X3kC3XvzPGwbnk3bFKbSMn/qFuKjUj5kLyp2R8Noyp7u0EW/5m16U1vn/UFLcos2dm
- UqAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhOlxMtHAU8MInElw185Mk4S+M4jguYlRpGKD6zcXZMMFLv5K5C+fuAgsXMhvpwv8eEpZfc6fq78DfRg==@nongnu.org,
- AJvYcCWl/gWZplBkfITkQveX75goUpAmX4HFaGJmMW51m4PF6RD10z7nNlLYn0JdEOM40fdUlX/BkQ+xY9a5UQ==@nongnu.org,
- AJvYcCWq4fYhoOtB7UUY6k/hdJVN0LqilF6vncdgD8tlBr+yw5emMjK/I7/vHr2chg/HcJPMFMzwWRw53Q==@nongnu.org,
- AJvYcCXheXhvwgfB9orBe2kSXcKbDwXuStKrf1Mgj20Vbbt48xXm7XN3kKssy1SRqUnSrSY5vTdJnHjRgeI=@nongnu.org
-X-Gm-Message-State: AOJu0Yw+ntLoeCZgwxRexDy8f1/az6sFgtfFuUhB3eGbpcR23aRCm+rv
- s8ca8lK1Q6o1aSApcEzJXL2X3e2t7b61tB6eaWYlg6XrVaghCU3p
-X-Gm-Gg: ASbGncsm095FM7IliNcuORTqEEGHwvM4A728hrC/OFSCrggTvh/ywrvgbhe/2KfJjsx
- +BJ3GlcfI7oVj4mv7z75jMzRL7fZC4/3bpVc80vt860G89mw4oioEWfq6cFfhqC0f0o7EdbVwak
- y+miGA4mRj2lb90dVTvKf38FjJd8/a5osEctIoaWtJIizfalzOGXDhQbM4YLumD6U30sKsMCVN0
- YUzwYl02U2khCyNB0Bgga1pUZRWRWBqyAZc1QYEx9EpLJVTLYBdfC5AtRTr9UivsAIauIPPtFSJ
- 8gaKmMVyuIqcw61QiffcrzMdEkolJllRFoSw+lXiNlCjJSx7QvGGj4HfvMhjwxZWErx8qcCHMe/
- LPDyVwNxDNpAvKJsswhX1xrcjvh1zdQhZr7q5kjCCJRLK4RQe36uF
-X-Google-Smtp-Source: AGHT+IG9uoOXqgJorR1EAYkuZHN2Ri61vsA+KooP+WZEob80FVexWdA7+bvlpNbxurnEp/OaLp9CgQ==
-X-Received: by 2002:a17:907:c302:b0:ac2:4b70:cb97 with SMTP id
- a640c23a62f3a-ac2526ce371mr1005320066b.28.1741513118066; 
- Sun, 09 Mar 2025 01:38:38 -0800 (PST)
-Received: from ?IPv6:::1?
- (dynamic-2a02-3100-1a10-8c00-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
- [2a02:3100:1a10:8c00:69d2:56f6:a5af:50a8])
+ bh=Eh6xZmod1XJzdJDqa+dorzqnDF3twPcYJbdIGQ8yqlo=;
+ b=O6LZdvim6DCfNbjPx8F9hqnaLpv9fGg/Aec0xn24N43llLM5OlhiY8tO0yQBh5wmCw
+ pUCQtBXBWQFn6l+gJw+k1fSrv1mypyryrY0S7yb7sCmGKC6WYruMt1yEKTkpuzOJLPHs
+ qt8vcZMcXED3+SenSici9RgGirlSR902dJJe+N95e1+TaUQ36iOOFRcZx85qRC29WPvL
+ ehuyTSiQSdGI1ApsGccRpxzU54KbXGeXbmVCsaWKilzBV3zmVb00eKCsKEfRzUj82zol
+ ihq/oxdHIZf9xz5XZekCIKEb2/Bj9CqOyjx0e/KC52DEyEExHvBetlPAbLKuFhtBvddT
+ IdsA==
+X-Gm-Message-State: AOJu0YwtRsuIYJwuL6dEiawGdhxNG8JBJP3WDCeje7wm3n3yUBfIiW0+
+ 3/Rpye6TngP899Cz3j5W3LnKCyS4MsyurcaxPuR7Hy6FWbyVeJCcae1xvQFFrQJhfgKy8JZbgxq
+ bZOL66A==
+X-Gm-Gg: ASbGnctyJriiF7Qw0z1ROxpPZ2ygrIXQzjhAARGmr5VKiKCyGR42xiVmMAt4rLKwkKZ
+ 77niE7mXQz2gzWp67SXZuxsZgM4VIVDEYuCo68OENTkWakBVNtutWlQuxaL9lFFD+7DiFVR8aqy
+ rAmUQvkA49abtaQ/Ww+zATqMM7SLMbyXRAVLPSf7LCwkE0H4yXJXYAG6F4DYOWcdU/NfytNEeC/
+ x1TjLs9VA82l5GyvfBvKuIUKvMMN+Kxvtd4WH8cKiV0TYPVwsVkUlGwtzO1Obt2t44PWXeKBLSb
+ m2gdD4s2iCq0p6ZgLOdUGyWzFhmvniTGd3yzpISwzdCLKB+HLH5b
+X-Google-Smtp-Source: AGHT+IFd+dUTlIZVThVJQpaxksgShVwmhZ3DuojwHwy13tAbGh3o917KVQ5nV+6J5rP6kyWftCoAZQ==
+X-Received: by 2002:a17:902:cf07:b0:224:192a:9154 with SMTP id
+ d9443c01a7336-22428a8cf90mr160892165ad.26.1741513257693; 
+ Sun, 09 Mar 2025 01:40:57 -0800 (PST)
+Received: from fedora.smartx.com ([103.85.74.92])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac23973a756sm573848466b.94.2025.03.09.01.38.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 01:38:37 -0800 (PST)
-Date: Sun, 09 Mar 2025 09:27:12 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>
-CC: =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Guenter Roeck <linux@roeck-us.net>, qemu-block@nongnu.org,
- Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org
-Subject: Re: [PATCH v4 09/14] hw/sd/sdhci: Unify default MemoryRegionOps
-In-Reply-To: <20250308213640.13138-10-philmd@linaro.org>
-References: <20250308213640.13138-1-philmd@linaro.org>
- <20250308213640.13138-10-philmd@linaro.org>
-Message-ID: <6FAA573C-D92D-451B-B69B-F4B9095F9F0C@gmail.com>
+ d9443c01a7336-22410ac0794sm57716185ad.259.2025.03.09.01.40.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 09 Mar 2025 01:40:57 -0800 (PST)
+From: Haoqian He <haoqian.he@smartx.com>
+To: qemu-devel@nongnu.org
+Cc: fengli@smartx.com, yuhua@smartx.com, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org (open list:Block layer core)
+Subject: [PATCH 2/3] vhost: return failure if stop virtqueue failed in
+ vhost_dev_stop
+Date: Sun,  9 Mar 2025 05:40:50 -0400
+Message-ID: <20250309094051.3655292-1-haoqian.he@smartx.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20250309090708.3928953-1-haoqian.he@smartx.com>
+References: <20250309090708.3928953-1-haoqian.he@smartx.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=haoqian.he@smartx.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: 14
+X-Spam_score: 1.4
+X-Spam_bar: +
+X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,103 +105,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The backend maybe crash when vhost_dev_stop and GET_VRING_BASE
+would fail, we can return failure to indicate the connection
+with the backend is broken.
 
+Signed-off-by: Haoqian He <haoqian.he@smartx.com>
+---
+ hw/virtio/vhost.c         | 27 +++++++++++++++------------
+ include/hw/virtio/vhost.h |  8 +++++---
+ 2 files changed, 20 insertions(+), 15 deletions(-)
 
-Am 8=2E M=C3=A4rz 2025 21:36:35 UTC schrieb "Philippe Mathieu-Daud=C3=A9" =
-<philmd@linaro=2Eorg>:
->Note, sdhci_mmio_le_ops[] was missing =2Eimpl=2Eaccess_size =3D 4=2E
->
->Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->---
-> hw/sd/sdhci=2Ec | 46 ++++++++++++++++++++--------------------------
-> 1 file changed, 20 insertions(+), 26 deletions(-)
->
->diff --git a/hw/sd/sdhci=2Ec b/hw/sd/sdhci=2Ec
->index a2e7162e289=2E=2E23af3958a1d 100644
->--- a/hw/sd/sdhci=2Ec
->+++ b/hw/sd/sdhci=2Ec
->@@ -1372,30 +1372,22 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t=
- val, unsigned size)
->                        value >> shift, value >> shift);
-> }
->=20
->-static const MemoryRegionOps sdhci_mmio_le_ops =3D {
->-    =2Eread =3D sdhci_read,
->-    =2Ewrite =3D sdhci_write,
->-    =2Evalid =3D {
->-        =2Emin_access_size =3D 1,
->-        =2Emax_access_size =3D 4,
->-        =2Eunaligned =3D false
->+static const MemoryRegionOps sdhci_mmio_ops[2] =3D {
->+    [0 =2E=2E=2E 1] =3D {
->+        =2Eread =3D sdhci_read,
->+        =2Ewrite =3D sdhci_write,
->+        =2Eimpl =3D {
->+            =2Emin_access_size =3D 4,
->+            =2Emax_access_size =3D 4,
->+        },
->+        =2Evalid =3D {
->+            =2Emin_access_size =3D 1,
->+            =2Emax_access_size =3D 4,
->+            =2Eunaligned =3D false
->+        },
->     },
->-    =2Eendianness =3D DEVICE_LITTLE_ENDIAN,
->-};
->-
->-static const MemoryRegionOps sdhci_mmio_be_ops =3D {
->-    =2Eread =3D sdhci_read,
->-    =2Ewrite =3D sdhci_write,
->-    =2Eimpl =3D {
->-        =2Emin_access_size =3D 4,
->-        =2Emax_access_size =3D 4,
->-    },
->-    =2Evalid =3D {
->-        =2Emin_access_size =3D 1,
->-        =2Emax_access_size =3D 4,
->-        =2Eunaligned =3D false
->-    },
->-    =2Eendianness =3D DEVICE_BIG_ENDIAN,
->+    [0]=2Eendianness =3D DEVICE_LITTLE_ENDIAN,
->+    [1]=2Eendianness =3D DEVICE_BIG_ENDIAN,
-> };
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 6aa72fd434..c82bbbe4cc 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1368,23 +1368,23 @@ fail_alloc_desc:
+     return r;
+ }
+ 
+-void vhost_virtqueue_stop(struct vhost_dev *dev,
+-                          struct VirtIODevice *vdev,
+-                          struct vhost_virtqueue *vq,
+-                          unsigned idx)
++int vhost_virtqueue_stop(struct vhost_dev *dev,
++                         struct VirtIODevice *vdev,
++                         struct vhost_virtqueue *vq,
++                         unsigned idx)
+ {
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_state state = {
+         .index = vhost_vq_index,
+     };
+-    int r;
++    int r = 0;
+ 
+     if (virtio_queue_get_desc_addr(vdev, idx) == 0) {
+         /* Don't stop the virtqueue which might have not been started */
+-        return;
++        return 0;
+     }
+ 
+-    r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
++    r |= dev->vhost_ops->vhost_get_vring_base(dev, &state);
+     if (r < 0) {
+         VHOST_OPS_DEBUG(r, "vhost VQ %u ring restore failed: %d", idx, r);
+         /* Connection to the backend is broken, so let's sync internal
+@@ -1412,6 +1412,7 @@ void vhost_virtqueue_stop(struct vhost_dev *dev,
+                        0, virtio_queue_get_avail_size(vdev, idx));
+     vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
+                        0, virtio_queue_get_desc_size(vdev, idx));
++    return r;
+ }
+ 
+ static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
+@@ -2136,9 +2137,10 @@ fail_features:
+ }
+ 
+ /* Host notifiers must be enabled at this point. */
+-void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
++int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+ {
+     int i;
++    int rc = 0;
+ 
+     /* should only be called after backend is connected */
+     assert(hdev->vhost_ops);
+@@ -2157,10 +2159,10 @@ void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+         vhost_dev_set_vring_enable(hdev, false);
+     }
+     for (i = 0; i < hdev->nvqs; ++i) {
+-        vhost_virtqueue_stop(hdev,
+-                             vdev,
+-                             hdev->vqs + i,
+-                             hdev->vq_index + i);
++        rc |= vhost_virtqueue_stop(hdev,
++                                   vdev,
++                                   hdev->vqs + i,
++                                   hdev->vq_index + i);
+     }
+     if (hdev->vhost_ops->vhost_reset_status) {
+         hdev->vhost_ops->vhost_reset_status(hdev);
+@@ -2177,6 +2179,7 @@ void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+     hdev->started = false;
+     vdev->vhost_started = false;
+     hdev->vdev = NULL;
++    return rc;
+ }
+ 
+ int vhost_net_set_backend(struct vhost_dev *hdev,
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index a9469d50bc..fd96ec9c39 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -232,8 +232,10 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
+  * Stop the vhost device. After the device is stopped the notifiers
+  * can be disabled (@vhost_dev_disable_notifiers) and the device can
+  * be torn down (@vhost_dev_cleanup).
++ *
++ * Return: 0 on success, != 0 on error when stopping dev.
+  */
+-void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
++int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
+ 
+ /**
+  * DOC: vhost device configuration handling
+@@ -333,8 +335,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write);
+ 
+ int vhost_virtqueue_start(struct vhost_dev *dev, struct VirtIODevice *vdev,
+                           struct vhost_virtqueue *vq, unsigned idx);
+-void vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
+-                          struct vhost_virtqueue *vq, unsigned idx);
++int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
++                         struct vhost_virtqueue *vq, unsigned idx);
+ 
+ void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
+ void vhost_dev_free_inflight(struct vhost_inflight *inflight);
+-- 
+2.48.1
 
-We introduced sdhci_mmio_be_ops and the endianness property specifically f=
-or the e500 machine=2E We always lied about the endianness property to be i=
-mplemented for all SDHC types, e=2Eg=2E USDHC doesn't implement it=2E Since=
- you'll introduce a dedicated FSL_ESDHC type a few commits later, along wit=
-h its own MemoryRegionOps, I think we should drop the endianness property a=
-nd sdhci_mmio_ops doesn't need to become an array=2E Dropping the endiannes=
-s property also results in avoiding the error conditions you have to deal w=
-ith in the realize method=2E
-
-Best regards,
-Bernhard
-
-P=2ES=2E: IIRC, the Layerscape SoCs also use the fsl,esdhc IP core and the=
-ir endianness can be switched at runtime(!)=2E Since we don't model Layersc=
-ape we can simplify, i=2Ee=2E hardcode the endianness to big endian for now=
-=2E
-
->=20
-> static void sdhci_init_readonly_registers(SDHCIState *s, Error **errp)
->@@ -1443,10 +1435,12 @@ void sdhci_common_realize(SDHCIState *s, Error **=
-errp)
->     ERRP_GUARD();
->     SDHCIClass *sc =3D SYSBUS_SDHCI_GET_CLASS(s);
->     const char *class_name =3D object_get_typename(OBJECT(s));
->+    unsigned ops_index;
->=20
->-    s->io_ops =3D sc->io_ops ?: (s->endianness =3D=3D DEVICE_BIG_ENDIAN =
-?
->-                               &sdhci_mmio_be_ops : &sdhci_mmio_le_ops);
->-    if (s->io_ops->endianness !=3D s->endianness) {
->+    ops_index =3D s->endianness =3D=3D DEVICE_BIG_ENDIAN ? 1 : 0;
->+
->+    s->io_ops =3D sc->io_ops ?: &sdhci_mmio_ops[ops_index];
->+    if (s->io_ops->endianness !=3D sdhci_mmio_ops[ops_index]=2Eendiannes=
-s) {
->         error_setg(errp, "Invalid endianness for SD controller");
->         return;
->     }
 
