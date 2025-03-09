@@ -4,103 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A64C28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 18:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F42AC28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 19:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trLoa-0008Lz-MQ; Sun, 09 Mar 2025 14:55:58 -0400
+	id 1trLti-0003Cw-C1; Sun, 09 Mar 2025 15:01:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trLoT-0008KY-ID
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 14:55:49 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trLtg-00035Y-4t
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:01:12 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trLoR-0003GN-QK
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 14:55:49 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22548a28d0cso28631495ad.3
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 11:55:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trLtb-000496-Gm
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:01:11 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43bc6a6aaf7so27776185e9.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 12:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741546545; x=1742151345; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741546865; x=1742151665; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4gU4h4sxcrlsUKGAX1YrS3hwxdA8CQEkt2CJElxmWaE=;
- b=umhLYbrqMWrYvnWUnU9NQoSQPvm5m+ShrjLkTWJQdgQXg3pnzF+2AyCsAmACM8k3lK
- FSLOLhTzYG13Z6OYcdOUA/TIEuu2AeZiQjgBLPAKzbtjZNIaaXHIqTpKnNm7/mzjBuXw
- RK0zvBOm7y2wbrBpkE8324dbMqziwv1dr4LvHHsF5XtdWL7m9wkjo/1pjEER4BbypIkG
- JDZtqOo8ZrZVF+2h2U6FqBidE9VGnsknMn9CM3Q48Sc/5xrLKVs/g35VlNjD5VkGJ8z8
- e4AMxKmLhRLYSred6SAzXqV7M2q5cBvZX3TaJVeiZs3nXRQBj+nkd/yw3fnkOWjj2swh
- qPpw==
+ bh=g009UrFww2P8l+qxIe1bJHkpF3pMcLhl8nEq6hi+Dek=;
+ b=OI0yHYB6XoIhVfR4nkTQfUvStJo4/4yPBozbgUEC4+QXNVE3Fxvlu6gwMsc0Re1gwO
+ NyMg+1bB3pJlC1cF5XetBH4+KAR87WoUyayY+aaGY6UsFqmX8wWYsEAn7dANJFGDH4mE
+ XABaenwf61zA56ue5g0+2k5NpfQQtCV1ueFKIleR6Cbu1GP/Ovcx82L4cN7dNQ2g4TVg
+ HtaC92+sDHTY04oZqySTZKHc9jrkiLldCp6yJ2r6G5oyKpzZ66GWnar+JLf+g9brUJm7
+ hQ08Pxrow4Xk2KjHagsummdKH+JKVRPU1R0xAxoC99im/8riUksbhvfcAPzYFkYeNWeg
+ e8qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741546545; x=1742151345;
+ d=1e100.net; s=20230601; t=1741546865; x=1742151665;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4gU4h4sxcrlsUKGAX1YrS3hwxdA8CQEkt2CJElxmWaE=;
- b=cL4Xr6mQTtBAqCQuF5p+4//dNB/4ndJKD3oXDf3+6XxVlQABGiDghGMUOqUatYKBio
- TdJPocx8m/ulP3G8k84lxOw6qx95dlr2mSpokZUydNY8bYBu9bJcsdeB7ar668QJRi7n
- vUFpfr1uGYbfhQ95zPfN/DU8tKN/+YjAlPipyVhGXL12nxDv09i8YKNwQEhBSUmSOycT
- 1ylgyMZZPOZCDCLkG1+I+hbJ9Hz9lWRgbS22za08Co4DO6T13dXT6V1cn1jWkFUeoC1s
- AFeH2C9lnxZEWJKYmnBgGFikOhCkb8KpTTG++fnjEbth9WMdSKt0DMVyQP9mLG3ff+oX
- DgvA==
+ bh=g009UrFww2P8l+qxIe1bJHkpF3pMcLhl8nEq6hi+Dek=;
+ b=hOdueA7E9MIyF3Sb+PV2VPqjgKydBt2Hb9kXGCurcyYpxKvw00WPacLxsLoqE7aiSS
+ PtrlETUMGiJj9Ya75JoMxhHhSUIDcIIRI5IQsIu84cxl84yYmb9ApsfE5tYzmOgYg3pa
+ YCWwTi3eE4LaUJFg9Qsu6XcJvEqxuHWiP54b7YsK2xfGwqWlf176aibBw36LPKgGsUOO
+ ZG6DTXtgzYf/DPhQKTKKJl9B7ypLBtrIZ4Vn6mjaFAtDcIw10wyNvFqqUqYfVFqb7EaR
+ G5Mq1s40AikiR61bwOBA3osJjWUW5RT6w8NEBU+M3Z7NP9f7+DOgitTJpVhc5zy/cJGp
+ veFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWW+tsnr+b9j9rHQMK+BNVaEbA6NWkEy0olpcWeJZXfxvAOgh08Zq6f13fE/GxyDE4ViUTpQ8Rv2qM0@nongnu.org
-X-Gm-Message-State: AOJu0Yx8VTZFaClXvDbnq3uMMsTN5Md1l1JNqxVpXXG7JzHiZgHtb/Xl
- efPQWUkM8zs9SebbFLrdUGuTsioWEQJhJT2RGR+83sI/2g9yQcqT0KkP82wV6Co=
-X-Gm-Gg: ASbGncvafwOTAm7mtBZYFxhabjfCtszYNxDT0btyqFC0TxBy+b2oh1X8Gslj9JPzPnS
- e21UAESBvzHAfw70TFtaoo1+Tisa/p91QK00jgl2aopWeP+nH3iMgMHJHK58HFnYd6mTRwbDw6E
- PPoqW1L9Y5I4F/pK5z/bdJPugE5PdrcL5Z1S6+r7lhhEQKOc4P2PwMsX2gESG09JoRwxmAIgPAg
- j4ABjgiZliQIgiUakHSUBfqQgnieNL3k/ofSeUz06+YFQyRHbTsPC65Rye5KjcbWpyDUA5etGgf
- dyGK/NJrCCDvlVwOT7B3KcxmWvNdsIFGkJlfOUO8+vHyXDXyu2qfgAah9Q==
-X-Google-Smtp-Source: AGHT+IFuL76FqajmwOwPA/lhZq1uLDKviZaMHpKL2JQchDhkvmUXqbkX8QrlCr25XZ1XI1w/UYn5IQ==
-X-Received: by 2002:a05:6300:6713:b0:1f3:29a9:6197 with SMTP id
- adf61e73a8af0-1f544aef521mr19743222637.18.1741546545470; 
- Sun, 09 Mar 2025 11:55:45 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af2812887b3sm5259148a12.71.2025.03.09.11.55.44
+ AJvYcCX+7T8OZ3VP0gVaY3lFAWB0JyyRjcclUDSprAE8TzOU7QzEOG8CG55EeAGKFSCtudecTpQWSBixKjD8@nongnu.org
+X-Gm-Message-State: AOJu0YwzBCZP5uF9dugJV/GuyTv2xg8i4xzkE+7qWJG2mDE9nbX1G+Kh
+ NMrpFXPbq9LBkVGHXgO186UT0qJW0haDtmGozpleh2rceFS3VGneZKdKcfmibEg=
+X-Gm-Gg: ASbGncsbiSGVsBNYGmJYllPdB7rfRzA3Y7+nHj4s8Owi8l5k+KOcn6dH8JHJOuBCS/+
+ iluf8ijXPMLjgsaXjF6W4Onxuds8hX/KZeC7aSomBjiPanew9sn6QU1ZXR3Q7QSmX+fLyByKY54
+ dmLDBORikQkVdDSqS+LvfkYfKxeJSpnDlTsPq4qbmZrjyLoRE3I9SPPrz6oytQ+kxS959CpZCGB
+ cxWx4ny+A5/aM6SRNFZk11aO0GHBJX+N0dlvndGYp15bZR1687NlHqU9G7V6pdlBapFzpDwqdRl
+ EAgY5W0o60ItovTqd8kW+5huceQDIjTjiRpgEOuKq22NgOEiwr5M8GL4zs5ETZPpSZsJYOPKpip
+ VwNQSEmHNmgnC6dfZlPkjZCA=
+X-Google-Smtp-Source: AGHT+IFXqJc2l6l1ckeDyePSNg8VCVTFqUuZpWHmW0ANXxji+tJgICu8+1TqnUUqEeG3aty2+AAhMQ==
+X-Received: by 2002:a05:600c:154c:b0:43c:f63c:babb with SMTP id
+ 5b1f17b1804b1-43cf63cc031mr8907385e9.1.1741546865449; 
+ Sun, 09 Mar 2025 12:01:05 -0700 (PDT)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43ce715731csm62116135e9.2.2025.03.09.12.01.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 11:55:45 -0700 (PDT)
-Message-ID: <fda186da-2e31-42d6-8dd6-0ea3141a73e6@linaro.org>
-Date: Sun, 9 Mar 2025 11:55:43 -0700
+ Sun, 09 Mar 2025 12:01:04 -0700 (PDT)
+Message-ID: <f4262519-017d-4ed7-8c17-5d4d72a219a6@linaro.org>
+Date: Sun, 9 Mar 2025 20:01:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
- deprecate
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Christian Borntraeger <borntraeger@linux.ibm.com>,
- qemu-s390x@nongnu.org, devel@lists.libvirt.org,
- Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Anton Johansson <anjo@rev.ng>, qemu-arm <qemu-arm@nongnu.org>
-References: <20240530074544.25444-1-philmd@linaro.org>
- <cb4028fc-9596-47f3-9468-f8912dd48aed@redhat.com>
- <Zl20rAjHLJlZkwxE@redhat.com>
+Subject: Re: [PATCH 2/3] hw/net/smc91c111: Sanitize packet length on tx
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Jason Wang <jasowang@redhat.com>
+References: <20250228174802.1945417-1-peter.maydell@linaro.org>
+ <20250228174802.1945417-3-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <Zl20rAjHLJlZkwxE@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250228174802.1945417-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,51 +103,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNi8zLzI0IDA1OjE4LCBEYW5pZWwgUC4gQmVycmFuZ8OpIHdyb3RlOg0KPiBPbiBGcmks
-IE1heSAzMSwgMjAyNCBhdCAwNjo0Nzo0NUFNICswMjAwLCBUaG9tYXMgSHV0aCB3cm90ZToN
-Cj4+IE9uIDMwLzA1LzIwMjQgMDkuNDUsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3Rl
-Og0KPj4+IFdlIGFyZSB0cnlpbmcgdG8gdW5pZnkgYWxsIHFlbXUtc3lzdGVtLUZPTyB0byBh
-IHNpbmdsZSBiaW5hcnkuDQo+Pj4gSW4gb3JkZXIgdG8gZG8gdGhhdCB3ZSBuZWVkIHRvIHJl
-bW92ZSBRQVBJIHRhcmdldCBzcGVjaWZpYyBjb2RlLg0KPj4+DQo+Pj4gQGR1bXAtc2tleXMg
-aXMgb25seSBhdmFpbGFibGUgb24gcWVtdS1zeXN0ZW0tczM5MHguIFRoaXMgc2VyaWVzDQo+
-Pj4gcmVuYW1lIGl0IGFzIEBkdW1wLXMzOTAtc2tleSwgbWFraW5nIGl0IGF2YWlsYWJsZSBv
-biBvdGhlcg0KPj4+IGJpbmFyaWVzLiBXZSB0YWtlIGNhcmUgb2YgYmFja3dhcmQgY29tcGF0
-aWJpbGl0eSB2aWEgZGVwcmVjYXRpb24uDQo+Pj4NCj4+PiBQaGlsaXBwZSBNYXRoaWV1LURh
-dWTDqSAoNCk6DQo+Pj4gICAgIGh3L3MzOTB4OiBJbnRyb2R1Y2UgdGhlIEBkdW1wLXMzOTAt
-c2tleXMgUU1QIGNvbW1hbmQNCj4+PiAgICAgaHcvczM5MHg6IEludHJvZHVjZSB0aGUgJ2R1
-bXBfczM5MF9za2V5cycgSE1QIGNvbW1hbmQNCj4+PiAgICAgaHcvczM5MHg6IERlcHJlY2F0
-ZSB0aGUgSE1QICdkdW1wX3NrZXlzJyBjb21tYW5kDQo+Pj4gICAgIGh3L3MzOTB4OiBEZXBy
-ZWNhdGUgdGhlIFFNUCBAZHVtcC1za2V5cyBjb21tYW5kDQo+Pg0KPj4gV2h5IGRvIHdlIGhh
-dmUgdG8gcmVuYW1lIHRoZSBjb21tYW5kPyBKdXN0IGZvciB0aGUgc2FrZSBvZiBpdD8gSSB0
-aGluaw0KPj4gcmVuYW1pbmcgSE1QIGNvbW1hbmRzIGlzIG1heWJlIG9rLCBidXQgYnJlYWtp
-bmcgdGhlIEFQSSBpbiBRTVAgaXMgc29tZXRoaW5nDQo+PiB5b3Ugc2hvdWxkIGNvbnNpZGVy
-IHR3aWNlLg0KPiANCj4gVGhhdCB3YXMgZ29pbmcgdG8gYmUgbXkgcXVlc3Rpb24gdG9vLiBT
-ZWVtcyBsaWtlIGl0cyBwb3NzaWJsZSB0byBzaW1wbHkNCj4gc3R1YiBvdXQgdGhlIGV4aXN0
-aW5nIGNvbW1hbmQgZm9yIG90aGVyIHRhcmdldHMuDQo+IA0KPiBUaGUgcmVuYW1pbmcgaXMg
-anVzdCB3aW5kb3cgZHJlc3NpbmcuDQo+IA0KDQpXb3JraW5nIG9uIHNpbmdsZS1iaW5hcnkg
-dG9waWMgbWVhbnMgc3BlY2lmaWNpdGllcyBmcm9tIGV2ZXJ5IHFlbXUgDQpiaW5hcnkvYXJj
-aGl0ZWN0dXJlIGhhcyB0byBiZSBtZXJnZWQgdG9nZXRoZXIuIERlc3BpdGUgYXBwZWFyaW5n
-IGhhcyBhIA0KYmFkIHRoaW5nIG5vdywgaXQncyBkZWZpbml0ZWx5IGEgc3RlcCBmb3J3YXJk
-IGZvciBRRU1VLCBhbmQgd2lsbCBhbGxvdyANCnRvIGVuYWJsZSBuZXcgdXNhZ2VzLg0KDQpU
-aGUgaGFyZCB3YXkgaXMgdG8gdHJpZ2dlciBhIGRlZXAgcmVmYWN0b3JpbmcsIGludm9sdmlu
-ZyBsZW5ndGh5IA0KY29udmVyc2F0aW9ucyB3aGVyZSBjb21wcm9taXNlcyBoYXZlIHRvIGJl
-IGZvdW5kICgibGV0J3MgaW1wbGVtZW50IHRoaXMgDQpmb3IgYWxsIGFyY2giKS4gVGhlIHBy
-YWdtYXRpYyB3YXkgaXMgdG8gZWxpbWluYXRlIG9idmlvdXMgc3R1ZmYuDQoNClRoaXMgY29t
-bWFuZCBpcyBzcGVjaWZpYyB0byBhbiBhcmNoLCBzbyByZW5hbWluZyBpcyBhIGdvb2QgYW5k
-IG9idmlvdXMgDQpzdHJhdGVneS4gRm9yIHRoZSBiYWNrd2FyZCBjb21wYXRpYmxlIGFueGlv
-dXMgZGV2ZWxvcGVyLCBhbm90aGVyIA0Kc3RyYXRlZ3kgd291bGQgYmUgdG8gc2ltcGx5IGRl
-Y2xhcmUgdGhpcyBjb21tYW5kIGlmIHRoZSBydW5uaW5nIHRhcmdldCANCmlzIHMzOTB4LiBC
-dXQgdGhlbiwgeW91IGNyZWF0ZSBhIHByZWNlZGVudCB0byBkbyBzb21ldGhpbmcgdGhhdCBz
-aG91bGQgDQpub3QgaGF2ZSBleGlzdGVkIGluIHRoZSBmaXJzdCBwbGFjZS4NCg0KKzEgZm9y
-IHRoZSByZW5hbWluZywgYW5kIGhvcGUgdGhhdCB1c2VycyBvZiB0aGlzIGNvbW1hbmQgYXJl
-IGFibGUgdG8gDQpjaGFuZ2UgYSBsaW5lIGluIHRoZWlyIHNjcmlwdCB0byBhZGFwdCB0byB0
-aGUgbmV3IGNvbW1hbmQuDQoNCj4+DQo+PiBBbmQgZXZlbiBpZiB3ZSBkZWNpZGUgdG8gcmVu
-YW1lIC4uLiBtYXliZSB3ZSBzaG91bGQgZGlzY3VzcyB3aGV0aGVyIGl0IG1ha2VzDQo+PiBz
-ZW5zZSB0byBjb21lIHVwIHdpdGggYSBnZW5lcmljIGNvbW1hbmQgaW5zdGVhZDogQXMgZmFy
-IGFzIEkga25vdywgQVJNIGFsc28NCj4+IGhhcyBzb21ldGhpbmcgc2ltaWxhciwgY2FsbGVk
-IE1URS4gTWF5YmUgd2UgYWxzbyB3YW50IHRvIGR1bXAgTVRFIGtleXMgb25lDQo+PiBkYXk/
-IFNvIHRoZSBuZXcgY29tbWFuZCBzaG91bGQgbWF5YmUgYmUgY2FsbGVkICJkdW1wLW1lbW9y
-eS1rZXlzIiBpbnN0ZWFkPw0KPj4gT3Igc2hvdWxkIGl0IG1heWJlIHJhdGhlciBiZSBhbiBv
-cHRpb24gdG8gdGhlIGV4aXN0aW5nICJkdW1wLWd1ZXN0LW1lbW9yeSINCj4+IGNvbW1hbmQg
-aW5zdGVhZD8NCj4gDQo+IFdpdGggcmVnYXJkcywNCj4gRGFuaWVsDQoNCg==
+Hi Peter,
+
+On 28/2/25 18:48, Peter Maydell wrote:
+> When the smc91c111 transmits a packet, it must read a control byte
+> which is at the end of the data area and CRC.  However, we don't
+> sanitize the length field in the packet buffer, so if the guest sets
+> the length field to something large we will try to read past the end
+> of the packet data buffer when we access the control byte.
+> 
+> As usual, the datasheet says nothing about the behaviour of the
+> hardware if the guest misprograms it in this way.  It says only that
+> the maximum valid length is 2048 bytes.  We choose to log the guest
+> error and silently drop the packet.
+> 
+> This requires us to factor out the "mark the tx packet as complete"
+> logic, so we can call it for this "drop packet" case as well as at
+> the end of the loop when we send a valid packet.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2742
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/net/smc91c111.c | 34 +++++++++++++++++++++++++++++-----
+>   1 file changed, 29 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+> index 2295c6acf25..23ca99f926a 100644
+> --- a/hw/net/smc91c111.c
+> +++ b/hw/net/smc91c111.c
+> @@ -22,6 +22,13 @@
+>   
+>   /* Number of 2k memory pages available.  */
+>   #define NUM_PACKETS 4
+> +/*
+> + * Maximum size of a data frame, including the leading status word
+> + * and byte count fields and the trailing CRC, last data byte
+> + * and control byte (per figure 8-1 in the Microchip Technology
+
+If control byte is included, ...
+
+> + * LAN91C111 datasheet).
+> + */
+> +#define MAX_PACKET_SIZE 2048
+>   
+>   #define TYPE_SMC91C111 "smc91c111"
+>   OBJECT_DECLARE_SIMPLE_TYPE(smc91c111_state, SMC91C111)
+> @@ -240,6 +247,16 @@ static void smc91c111_release_packet(smc91c111_state *s, int packet)
+>       smc91c111_flush_queued_packets(s);
+>   }
+>   
+> +static void smc91c111_complete_tx_packet(smc91c111_state *s, int packetnum)
+> +{
+> +    if (s->ctr & CTR_AUTO_RELEASE) {
+> +        /* Race?  */
+> +        smc91c111_release_packet(s, packetnum);
+> +    } else if (s->tx_fifo_done_len < NUM_PACKETS) {
+> +        s->tx_fifo_done[s->tx_fifo_done_len++] = packetnum;
+> +    }
+> +}
+> +
+>   /* Flush the TX FIFO.  */
+>   static void smc91c111_do_tx(smc91c111_state *s)
+>   {
+> @@ -263,6 +280,17 @@ static void smc91c111_do_tx(smc91c111_state *s)
+>           *(p++) = 0x40;
+>           len = *(p++);
+>           len |= ((int)*(p++)) << 8;
+> +        if (len >= MAX_PACKET_SIZE) {
+
+isn't MAX_PACKET_SIZE valid? I'm not sure at all but I'd expect:
+
+            if (len > MAX_PACKET_SIZE) {
+
+> +            /*
+> +             * Datasheet doesn't say what to do here, and there is no
+> +             * relevant tx error condition listed. Log, and drop the packet.
+> +             */
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "smc91c111: tx packet with bad length %d, dropping\n",
+> +                          len);
+> +            smc91c111_complete_tx_packet(s, packetnum);
+> +            continue;
+> +        }
+>           len -= 6;
+>           control = p[len + 1];
+>           if (control & 0x20)
+> @@ -291,11 +319,7 @@ static void smc91c111_do_tx(smc91c111_state *s)
+>               }
+>           }
+>   #endif
+> -        if (s->ctr & CTR_AUTO_RELEASE)
+> -            /* Race?  */
+> -            smc91c111_release_packet(s, packetnum);
+> -        else if (s->tx_fifo_done_len < NUM_PACKETS)
+> -            s->tx_fifo_done[s->tx_fifo_done_len++] = packetnum;
+> +        smc91c111_complete_tx_packet(s, packetnum);
+>           qemu_send_packet(qemu_get_queue(s->nic), p, len);
+>       }
+>       s->tx_fifo_len = 0;
+
 
