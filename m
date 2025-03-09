@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B2AC28B28
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E485C28B2F
 	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 23:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trPjc-0003RI-9V; Sun, 09 Mar 2025 19:07:04 -0400
+	id 1trPkK-0003eV-7Z; Sun, 09 Mar 2025 19:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1trPja-0003R4-Kl
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 19:07:02 -0400
+ id 1trPkB-0003Xt-HX
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 19:07:40 -0400
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1trPjX-0004gr-Tq
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 19:07:02 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1741561603; cv=none; 
+ id 1trPk9-0004l4-Pu
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 19:07:39 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1741561645; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=Gu//kbIv1JtnAPCoznUWXPkxMjIke8y1VQLY799L2bh8eAfyGnc5GYuYrdR6J0/oT/7DVrAkccen1fgRicoXQgSnU0btESunXKU0BJ70ZXUJdtmvqrOBTVqxclC1eE5ZmQKIvQb2hrrmEgPLU9thI581zxBo+ATVa7HtUXLmG4g=
+ b=CNL/NCbDzkYzb8syluRzSRw8B/mr9yjr9wc1HDLS6Y2LVCW102H3cX8wqImfPK549fNXFVCuxvBnVvJhUMLUtibspiMmKEvC4Q+vKR3kVy+a36MGAemWWtpQraq3jE2RMveRtSJ8JBHR8aqT66ac5zxjWcEAo9076pPYIAiNgT8=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1741561603;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=bEdXZ8XsEweXcVfjNo0aOl3uqxA6h51gazlqnvqGS7w=; 
- b=PqYZFR3JIxsvGaaEQ788eknBJx8fBttl9Vu+2I/A4jmosYJQmqkiVcpYQG6213dtwyV2WHWh5ULe0LB3EPyyO+OGv9d4Mp66mbb1Ml8z/FYRL2Ds6fgCY6Xa7VHQk3q1rZBPC1VleXHi6apuBUiz6mCtrUjrJeYGw4WnnO+HurE=
+ s=zohoarc; t=1741561645;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=blb8y7Rz6b3Leso+OAXIELBML0HJvsHKGxqmnHSnGAc=; 
+ b=AjY8VZBxQKswRBWkEaMYNpv1gweQKwIsrwVAaJDbYiRG/1zDkKOq1vnJJRfFhiU3k2T4yhNjipX3cGr6KnYiuMDwMW2ji5ZbUrAPffjygHCKz2JdfdNSVB+Myn525xnXq2qR5JeUJCtXQP8ZBB3T74Jau+N4bVZR10+3Ut/hBy0=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1741561603; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1741561645; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=bEdXZ8XsEweXcVfjNo0aOl3uqxA6h51gazlqnvqGS7w=;
- b=EIASCyE6aFSYoxtSoSxULvvHa+ciD32kZycwLHGi9n83N9qF5tnG2Sv+ZA5/WmN/
- JwlpihQpqrzIOSF2K7t9P/Iz16ALvSvOY1YxqA8Inj0EalTBAi0s/5sf0BkoBgtuiZp
- XmmxDsTpYm0M4Gs+W0EDZYM6i2/y0DKlNl1216Dk=
-Received: by mx.zohomail.com with SMTPS id 174156160151722.38926294183659;
- Sun, 9 Mar 2025 16:06:41 -0700 (PDT)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=blb8y7Rz6b3Leso+OAXIELBML0HJvsHKGxqmnHSnGAc=;
+ b=Z/HpJlkR1N8fKMt5g4w/eJbtHppa3H+eFeOUHxwowQuFbfCh4XGt2CT+zmEuJ2gS
+ z4QqQmXw4cmm0NIK9NdlXdzFCrndoZz02Uuq21l5NK2gHhzgo1K8ZyP1nnePz19wVww
+ s5WI2T2mXsk0fX2fVbreHXqNPfM62744ZUtvzgnA=
+Received: by mx.zohomail.com with SMTPS id 174156164308414.923882847207551;
+ Sun, 9 Mar 2025 16:07:23 -0700 (PDT)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -59,15 +59,13 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v9 01/10] ui/sdl2: Restore original context after new context
- creation
-Date: Mon, 10 Mar 2025 02:05:30 +0300
-Message-ID: <20250309230539.125374-2-dmitry.osipenko@collabora.com>
+Subject: [PATCH v9 08/10] docs/system: virtio-gpu: Add link to Mesa VirGL doc
+Date: Mon, 10 Mar 2025 02:05:37 +0300
+Message-ID: <20250309230539.125374-9-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250309230539.125374-1-dmitry.osipenko@collabora.com>
 References: <20250309230539.125374-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -95,36 +93,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SDL API changes GL context to a newly created GL context, which differs
-from other GL providers that don't switch context. Change SDL backend to
-restore the original GL context. This allows Qemu's virtio-gpu to support
-new virglrenderer async-fencing feature for Virgl contexts, otherwise
-virglrenderer's vrend creates a fence-sync context on the Qemu's
-main-loop thread that erroneously stays in-use by the main-loop after
-creation, not allowing vrend's fence-sync thread switch to this new
-context that belongs to it.
+Extend virtio-gpu documentation with a link to the Mesa VirGL
+documentation.
 
+Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- ui/sdl2-gl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ docs/system/devices/virtio-gpu.rst | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index e01d9ab0c7bf..b1fe96d6af22 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -168,6 +168,9 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
-                             SDL_GL_CONTEXT_PROFILE_ES);
-         ctx = SDL_GL_CreateContext(scon->real_window);
-     }
-+
-+    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-+
-     return (QEMUGLContext)ctx;
- }
+diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
+index f20c60016376..f8963c1f13cf 100644
+--- a/docs/system/devices/virtio-gpu.rst
++++ b/docs/system/devices/virtio-gpu.rst
+@@ -59,7 +59,7 @@ on typical modern Linux distributions.
+ virtio-gpu virglrenderer
+ ------------------------
+ 
+-When using virgl accelerated graphics mode in the guest, OpenGL API calls
++When using `virgl`_ accelerated graphics mode in the guest, OpenGL API calls
+ are translated into an intermediate representation (see `Gallium3D`_). The
+ intermediate representation is communicated to the host and the
+ `virglrenderer`_ library on the host translates the intermediate
+@@ -68,6 +68,7 @@ representation back to OpenGL API calls.
+ .. parsed-literal::
+     -device virtio-gpu-gl
+ 
++.. _virgl: https://docs.mesa3d.org/drivers/virgl.html
+ .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
+ .. _virglrenderer: https://gitlab.freedesktop.org/virgl/virglrenderer/
  
 -- 
 2.48.1
