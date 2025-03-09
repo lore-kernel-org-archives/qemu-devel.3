@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F6C2C28B2F
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 13:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E61C2BA1B
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 13:53:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trH4f-0007lK-Rd; Sun, 09 Mar 2025 09:52:13 -0400
+	id 1trH5F-0000W6-TK; Sun, 09 Mar 2025 09:52:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH4b-0007aw-85
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:52:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH55-0008UP-Jp
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:52:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH4Z-0002Mh-KY
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:52:08 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH4z-0002tZ-PR
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:52:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741528326;
+ s=mimecast20190719; t=1741528352;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C/yJdADoP3j47UceQltVcyUw20zz5dtQlfRxAxOoGoc=;
- b=iBc/utIAMXbuCJVfvv+OyNClGvaQ3I+qNPS30C45NE6i6JHjBZjG0M3aWdBCUTlWBefYxj
- kIzuLAoYRx+rJOxPZBB0UfLUYFYLuAFrFZedoCbwdntyuqs5zuKPY7hfufpTUhrKOzXAUW
- i1UBo4gONPsRawdzLTZM4quY9tEGG+Q=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=aUaQKzsvhvvy0N0j9W7320QdEQpLL7U7lFSz1/+kwS4=;
+ b=Ssjmz3Cd6IW5l37dQrmHrLXSTovRHPosFerTBGn8OhTP/u59KB9y5OK2LOFAup7wztYWJB
+ 3KCW8ORz2fl2qle2zKb0iZOadRWsyJOegcPydb/LWKvPZvVFpFXS9jjqz+k+vHugpo0ic/
+ uVpEkfy5JG8Btl539Gp4LB3hgGUe5z0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-3ycyO7WJNkOp5nHbUzm4NA-1; Sun,
- 09 Mar 2025 09:52:03 -0400
-X-MC-Unique: 3ycyO7WJNkOp5nHbUzm4NA-1
-X-Mimecast-MFC-AGG-ID: 3ycyO7WJNkOp5nHbUzm4NA_1741528322
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-303-0MGdjmzFMpWoIey5A9bx3g-1; Sun,
+ 09 Mar 2025 09:52:29 -0400
+X-MC-Unique: 0MGdjmzFMpWoIey5A9bx3g-1
+X-Mimecast-MFC-AGG-ID: 0MGdjmzFMpWoIey5A9bx3g_1741528348
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28538195609E; Sun,  9 Mar 2025 13:52:02 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1591619560B2; Sun,  9 Mar 2025 13:52:28 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.17])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 34B171956094; Sun,  9 Mar 2025 13:51:58 +0000 (UTC)
+ id 7886A1956094; Sun,  9 Mar 2025 13:52:26 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 10/46] hw/arm/aspeed_ast27x0: Add HACE support for AST2700
-Date: Sun,  9 Mar 2025 14:50:54 +0100
-Message-ID: <20250309135130.545764-11-clg@redhat.com>
+Subject: [PULL 21/46] hw/intc/aspeed: Support setting different register size
+Date: Sun,  9 Mar 2025 14:51:05 +0100
+Message-ID: <20250309135130.545764-22-clg@redhat.com>
 In-Reply-To: <20250309135130.545764-1-clg@redhat.com>
 References: <20250309135130.545764-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,58 +86,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-The HACE controller between AST2600 and AST2700 are almost identical.
-The HACE controller registers base address starts at 0x1207_0000 and
-its alarm interrupt is connected to GICINT4.
+Currently, the size of the regs array is 0x2000, which is too large. So far,
+it only use GICINT128 - GICINT134, and the offsets from 0 to 0x1000 are unused.
+To save code size, introduce a new class attribute "reg_size" to set the
+different register sizes for the INTC models in AST2700 and add a regs
+sub-region in the memory container.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Link: https://lore.kernel.org/qemu-devel/20250225075622.305515-4-jamin_lin@aspeedtech.com
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250307035945.3698802-5-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ include/hw/intc/aspeed_intc.h |  2 +-
+ hw/intc/aspeed_intc.c         | 22 +++++-----------------
+ 2 files changed, 6 insertions(+), 18 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 6506bdfdff68..56e43d45ad22 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -67,6 +67,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_RTC]       =  0x12C0F000,
-     [ASPEED_DEV_SDHCI]     =  0x14080000,
-     [ASPEED_DEV_TIMER1]    =  0x12C10000,
-+    [ASPEED_DEV_HACE]      =  0x12070000,
+diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+index 47ea0520b5d8..ec4936b3f486 100644
+--- a/include/hw/intc/aspeed_intc.h
++++ b/include/hw/intc/aspeed_intc.h
+@@ -16,7 +16,6 @@
+ #define TYPE_ASPEED_2700_INTC TYPE_ASPEED_INTC "-ast2700"
+ OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+ 
+-#define ASPEED_INTC_NR_REGS (0x2000 >> 2)
+ #define ASPEED_INTC_NR_INTS 9
+ 
+ struct AspeedINTCState {
+@@ -42,6 +41,7 @@ struct AspeedINTCClass {
+     uint32_t num_lines;
+     uint32_t num_ints;
+     uint64_t mem_size;
++    uint64_t nr_regs;
  };
  
- #define AST2700_MAX_IRQ 256
-@@ -401,6 +402,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
+ #endif /* ASPEED_INTC_H */
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 558901570f82..134922e46fdc 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -120,13 +120,6 @@ static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned int size)
+     uint32_t reg = offset >> 2;
+     uint32_t value = 0;
  
-     snprintf(typename, sizeof(typename), "aspeed.timer-%s", socname);
-     object_initialize_child(obj, "timerctrl", &s->timerctrl, typename);
-+
-+    snprintf(typename, sizeof(typename), "aspeed.hace-%s", socname);
-+    object_initialize_child(obj, "hace", &s->hace, typename);
+-    if (reg >= ASPEED_INTC_NR_REGS) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
+-                      __func__, offset);
+-        return 0;
+-    }
+-
+     value = s->regs[reg];
+     trace_aspeed_intc_read(offset, size, value);
+ 
+@@ -143,13 +136,6 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+     uint32_t change;
+     uint32_t irq;
+ 
+-    if (reg >= ASPEED_INTC_NR_REGS) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
+-                      __func__, offset);
+-        return;
+-    }
+-
+     trace_aspeed_intc_write(offset, size, data);
+ 
+     switch (reg) {
+@@ -288,8 +274,9 @@ static void aspeed_intc_instance_init(Object *obj)
+ static void aspeed_intc_reset(DeviceState *dev)
+ {
+     AspeedINTCState *s = ASPEED_INTC(dev);
++    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+ 
+-    memset(s->regs, 0, ASPEED_INTC_NR_REGS << 2);
++    memset(s->regs, 0, aic->nr_regs << 2);
+     memset(s->enable, 0, sizeof(s->enable));
+     memset(s->mask, 0, sizeof(s->mask));
+     memset(s->pending, 0, sizeof(s->pending));
+@@ -307,9 +294,9 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+ 
+     sysbus_init_mmio(sbd, &s->iomem_container);
+ 
+-    s->regs = g_new(uint32_t, ASPEED_INTC_NR_REGS);
++    s->regs = g_new(uint32_t, aic->nr_regs);
+     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
+-                          TYPE_ASPEED_INTC ".regs", ASPEED_INTC_NR_REGS << 2);
++                          TYPE_ASPEED_INTC ".regs", aic->nr_regs << 2);
+ 
+     memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
+ 
+@@ -361,6 +348,7 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+     aic->num_lines = 32;
+     aic->num_ints = 9;
+     aic->mem_size = 0x4000;
++    aic->nr_regs = 0x2000 >> 2;
  }
  
- /*
-@@ -737,6 +741,17 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->timerctrl), i, irq);
-     }
- 
-+    /* HACE */
-+    object_property_set_link(OBJECT(&s->hace), "dram", OBJECT(s->dram_mr),
-+                             &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->hace), errp)) {
-+        return;
-+    }
-+    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->hace), 0,
-+                    sc->memmap[ASPEED_DEV_HACE]);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
-+                       aspeed_soc_get_irq(s, ASPEED_DEV_HACE));
-+
-     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
-     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
-     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
+ static const TypeInfo aspeed_2700_intc_info = {
 -- 
 2.48.1
 
