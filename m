@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D42C28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 10:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FD6C28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 10:33:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trDwn-00084m-6L; Sun, 09 Mar 2025 06:31:53 -0400
+	id 1trDxS-0000pq-D7; Sun, 09 Mar 2025 06:32:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1trDwk-00083v-M3
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:31:51 -0400
+ id 1trDxB-0000Bq-F2
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:32:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1trDwi-000424-T5
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:31:50 -0400
+ id 1trDx9-00045r-Cb
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:32:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741516308;
+ s=mimecast20190719; t=1741516334;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SqsGJNftWM1nTyRVPF20AlSEyETSkxx30EnRjrvmmVk=;
- b=a2fy4vuLgAeosAVhHbMnHUExe8zRdBenzINgJEewVw9z70Y3+Z1Y7NgjERbg21AOTvut7D
- wANpXPRIUIRT9uqH+4MuQlMXLk5a86oKGmgHlR2P7U9blGlm+nqpCE/N1aeKrq1JFGzNEY
- O/IpChDHOzaf1sT0EYPFCmv9pQvtr+M=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dMUKogfKyzAz46Y4Z8OW5xUGWyWP2F2XLF8CrapiAvY=;
+ b=S1F9lOjCctdCtdqIPB9Jry2i/riAmjCL79E/orUy3hvaRDIXQIs20yczyrMfDXaox4ETBG
+ jUHpg/vpostIhSgaekFd/+QStsyjv9ZfDng9+5p08sm+mEUrTSCQm3C0dBZXDDtZg7xEsd
+ BxZa3fy/NP5oWgI5fnbWVCZrRBoZQbU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-tSD7srqgPGWEQ60yu0FWFg-1; Sun, 09 Mar 2025 06:31:47 -0400
-X-MC-Unique: tSD7srqgPGWEQ60yu0FWFg-1
-X-Mimecast-MFC-AGG-ID: tSD7srqgPGWEQ60yu0FWFg_1741516306
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43bd8fd03a2so14698095e9.3
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 03:31:46 -0700 (PDT)
+ us-mta-364-STkgT4KGN5m1HWmZ2CCzfg-1; Sun, 09 Mar 2025 06:32:13 -0400
+X-MC-Unique: STkgT4KGN5m1HWmZ2CCzfg-1
+X-Mimecast-MFC-AGG-ID: STkgT4KGN5m1HWmZ2CCzfg_1741516332
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43cf3168b87so1391965e9.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 03:32:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741516305; x=1742121105;
+ d=1e100.net; s=20230601; t=1741516332; x=1742121132;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SqsGJNftWM1nTyRVPF20AlSEyETSkxx30EnRjrvmmVk=;
- b=L4v5XeF1jrQKnzydpacHJOCQ5RRt1HZGVnQrQTzoAymUIw4elFRGR4mV+1vfbjj8X1
- azXBkQl727UG67XkRygFyj3ecRtuJnltatN0yaRuyxmMHFTyvXBnMFGf0CZrUUfAQxRu
- vqYDyO7+kQay2acQxC2BuCjTJrH6lEGyD/WTniSOFPRExQ/HJrWa6KF8p2ZFSRgtoeN0
- oG3i6mupzpLuuzLXT4pj3cWsIQL9Idynlf9XQ66NDrwliOY7obFwkG6CC7Xupt3O99J3
- 25sfnugimMnlQPi/mcboIOdm0zFWjlw4HqKXQ0spbYniMT2SikyOczeDaX9qns76ghKe
- gGRA==
-X-Gm-Message-State: AOJu0YwuNgAsVHM7PZqpk/MP7fffMIxLpRK+0y7W2XotzqIuaKEqZyrv
- XES+535VS3F8JYEBF43ARnpq/9IcU0wefuz3mbZR7yyc+be+UU+2jH/vMkcCtcnqavhlZThI5Ro
- Gt56+ecfOP9IozGGjfHozjzP0yPyvlTLE9j9kGKVx5ypBw4A/Hmm1Y0xcHR7plweVnGlr46Kx5x
- c8cipiZHaC4o1hNFPzCsJoyRasP7msdgQ7FzS+z0U=
-X-Gm-Gg: ASbGncsJQ2x2wUJ0tbWJgmV2GE1ewdJmme1qGfIV9chzrKL73xLqqDstfwGHORWyPHl
- zQaYST2+I8YPxAsrJwcs1qGEWMPpxjyydCoeC9MHEmAhJpcukMK2ZIK24McA7EzIRUieTxmLnfs
- n6b858cmdvWYvm22JDTbiM92DYzcEfL2h4sbSawZi4t1vKft6dwGrusbAFPaICmrrbb664g0dHm
- P7+4kSIpS02PTX4llASleC0UfPiUgWaVlbFL10o1bPUVFfwzXqiVvIIbwLdGHkZ3V4iorLgquNQ
- rh4Oy/nE7QpE+XEw7RozvA==
-X-Received: by 2002:a05:6000:402a:b0:38f:23f4:2d7a with SMTP id
- ffacd0b85a97d-39132dc51admr6999166f8f.40.1741516304913; 
- Sun, 09 Mar 2025 03:31:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWqMHHrs3+v9xNSfsdPe2fT+UdNsRv2a2d2TEsa8aRq4RBxexPzD7OXhMaZobte132CpXg1Q==
-X-Received: by 2002:a05:6000:402a:b0:38f:23f4:2d7a with SMTP id
- ffacd0b85a97d-39132dc51admr6999147f8f.40.1741516304407; 
- Sun, 09 Mar 2025 03:31:44 -0700 (PDT)
+ bh=dMUKogfKyzAz46Y4Z8OW5xUGWyWP2F2XLF8CrapiAvY=;
+ b=xK8wfSgDiv3NZ7d/XSSLzflAJj8ug+f12XWYUmklKtS9q0YB9Mf2E+EWwGXcpeyYQT
+ K3Do665ywQwIIcNOdHS7v+SKQu7tX6Uz8oAw2RLUSPSYRy/tm7zUYiF7MtBhLwF/eQQ1
+ /V6SnW77vs7w7zz/5p/Z3rJgThmpKBQaDjPIPzOQ81pWebILzqXQbN7nliJn1qNL3Ssy
+ 3bIRsAoTo1Vi7IhFzaE9YDXhTWwDmzuRceLpZlXntrDQ1+phxRFt5WLyjSFT1YD3dla0
+ 9hnf381sUUb8YwiqF/F3vQbCOEbzGfvxIys70D57MKMrfKrTIiwwF22EG5oMncjugUyZ
+ Wydw==
+X-Gm-Message-State: AOJu0YzCZLEow6RZDjpO6okyNKkfhw9gNu3LxEP0N/P3MWtzwFXeI5vf
+ 3gfW+sW+4N8kfYH1gCiaJsBABX6fU/1dDpgTOGk3ABr20kjSxBEcRrRRxwQMhnCuGsufS0ImK+q
+ 8+Uktu6GLbsi5aifarpl5u4uFkqX4j8J+nLB0bCpUV4jzYolhKGaMzJ1etnDY3ZZZY1B6A+f8BR
+ cj8vSq4Ehj4iduCe4RrTeO2vCijk91uwDnk+X+pMY=
+X-Gm-Gg: ASbGncvd/doq8C1ME56KJOUrGzy1e+6jK07gg4QejOcEwpHAW1OBdw+rLab0PRPeWB6
+ /6kxgjcOyTIZUX3CGXcMfXuxFU+3hMuPxCKdYhBrvAZEn1Qf4CUUoEcXfXxDEcELZlc6B8ME4Ca
+ Yxx7vZsnecaJa5vwixwEP+VERCGzlsSFIlAQWNT6enFN3BelCkSPBPC+rdc0ust4vkwZ0jB13/N
+ wFR8U/FM1msP5Jyr9Jyj7I5XgQyw2vVHnkx7+kudT41cZwOz20j2MFxjzFTZdB/xjaOgsJnCLvI
+ 1BXt8eNK4IFVHesx4hA+ZA==
+X-Received: by 2002:a05:600c:19cd:b0:43c:f1b8:16ad with SMTP id
+ 5b1f17b1804b1-43cf1b81b78mr9503155e9.30.1741516331920; 
+ Sun, 09 Mar 2025 03:32:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH3i7HQ3BfMVkTqOhiH/ic9cHN5EaI1ROqBFR5mD3dFqHP7nZMruL9PBgJiwzGxWf86YzeFIA==
+X-Received: by 2002:a05:600c:19cd:b0:43c:f1b8:16ad with SMTP id
+ 5b1f17b1804b1-43cf1b81b78mr9503005e9.30.1741516331476; 
+ Sun, 09 Mar 2025 03:32:11 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.122.167])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c01d81csm11650657f8f.58.2025.03.09.03.31.43
+ 5b1f17b1804b1-43ce3d5a0e2sm58130275e9.12.2025.03.09.03.32.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Mar 2025 03:31:43 -0700 (PDT)
+ Sun, 09 Mar 2025 03:32:10 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 10/25] rust: qdev: wrap Clock and DeviceState with Opaque<>
-Date: Sun,  9 Mar 2025 11:31:04 +0100
-Message-ID: <20250309103120.1116448-11-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 24/25] meson.build: default to -gsplit-dwarf for debug info
+Date: Sun,  9 Mar 2025 11:31:18 +0100
+Message-ID: <20250309103120.1116448-25-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250309103120.1116448-1-pbonzini@redhat.com>
 References: <20250309103120.1116448-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -108,202 +110,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+From: Alex Bennée <alex.bennee@linaro.org>
+
+This option is supported by both gcc (since 4.7) and clang (since
+7.0). Not only does this make the linkers job easier by reducing the
+amount of ELF it needs to parse it also reduces the total build size
+quite considerably. In my case a default build went from 5.8G to
+3.9G (vs 1.9G for --disable-debug-info).
+
+The --disable-split-debug option allows distros to keep all the info
+together for ease of packaging.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://lore.kernel.org/r/20250306161631.2477685-1-alex.bennee@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/bindings.rs |  6 ----
- rust/qemu-api/src/qdev.rs     | 68 ++++++++++++++++++++++++-----------
- rust/qemu-api/src/vmstate.rs  |  2 +-
- 3 files changed, 49 insertions(+), 27 deletions(-)
+ meson.build                   | 6 ++++++
+ meson_options.txt             | 2 ++
+ scripts/meson-buildoptions.sh | 2 ++
+ 3 files changed, 10 insertions(+)
 
-diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
-index be6dd68c09c..6e70a75a0e6 100644
---- a/rust/qemu-api/src/bindings.rs
-+++ b/rust/qemu-api/src/bindings.rs
-@@ -34,12 +34,6 @@ unsafe impl Sync for CharBackend {}
- unsafe impl Send for Chardev {}
- unsafe impl Sync for Chardev {}
+diff --git a/meson.build b/meson.build
+index 6da4eb317c2..4899d896de0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -601,6 +601,10 @@ if get_option('tsan')
+   qemu_ldflags = ['-fsanitize=thread'] + qemu_ldflags
+ endif
  
--unsafe impl Send for Clock {}
--unsafe impl Sync for Clock {}
--
--unsafe impl Send for DeviceState {}
--unsafe impl Sync for DeviceState {}
--
- unsafe impl Send for MemoryRegion {}
- unsafe impl Sync for MemoryRegion {}
- 
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index 1a4d1f38762..1c4a67b5728 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -10,12 +10,12 @@
-     ptr::NonNull,
- };
- 
--pub use bindings::{Clock, ClockEvent, DeviceClass, DeviceState, Property, ResetType};
-+pub use bindings::{ClockEvent, DeviceClass, Property, ResetType};
- 
- use crate::{
-     bindings::{self, qdev_init_gpio_in, qdev_init_gpio_out, Error, ResettableClass},
-     callbacks::FnCall,
--    cell::bql_locked,
-+    cell::{bql_locked, Opaque},
-     chardev::Chardev,
-     irq::InterruptSource,
-     prelude::*,
-@@ -23,6 +23,22 @@
-     vmstate::VMStateDescription,
- };
- 
-+/// A safe wrapper around [`bindings::Clock`].
-+#[repr(transparent)]
-+#[derive(Debug, qemu_api_macros::Wrapper)]
-+pub struct Clock(Opaque<bindings::Clock>);
++if get_option('debug') and get_option('split_debug')
++  qemu_cflags += '-gsplit-dwarf'
++endif
 +
-+unsafe impl Send for Clock {}
-+unsafe impl Sync for Clock {}
-+
-+/// A safe wrapper around [`bindings::DeviceState`].
-+#[repr(transparent)]
-+#[derive(Debug, qemu_api_macros::Wrapper)]
-+pub struct DeviceState(Opaque<bindings::DeviceState>);
-+
-+unsafe impl Send for DeviceState {}
-+unsafe impl Sync for DeviceState {}
-+
- /// Trait providing the contents of the `ResettablePhases` struct,
- /// which is part of the QOM `Resettable` interface.
- pub trait ResettablePhasesImpl {
-@@ -117,7 +133,10 @@ fn vmsd() -> Option<&'static VMStateDescription> {
- /// We expect the FFI user of this function to pass a valid pointer that
- /// can be downcasted to type `T`. We also expect the device is
- /// readable/writeable from one thread at any time.
--unsafe extern "C" fn rust_realize_fn<T: DeviceImpl>(dev: *mut DeviceState, _errp: *mut *mut Error) {
-+unsafe extern "C" fn rust_realize_fn<T: DeviceImpl>(
-+    dev: *mut bindings::DeviceState,
-+    _errp: *mut *mut Error,
-+) {
-     let state = NonNull::new(dev).unwrap().cast::<T>();
-     T::REALIZE.unwrap()(unsafe { state.as_ref() });
- }
-@@ -251,7 +270,7 @@ fn init_clock_in<F: for<'a> FnCall<(&'a Self::Target, ClockEvent)>>(
-         events: ClockEvent,
-     ) -> Owned<Clock> {
-         fn do_init_clock_in(
--            dev: *mut DeviceState,
-+            dev: &DeviceState,
-             name: &str,
-             cb: Option<unsafe extern "C" fn(*mut c_void, ClockEvent)>,
-             events: ClockEvent,
-@@ -265,14 +284,15 @@ fn do_init_clock_in(
-             unsafe {
-                 let cstr = CString::new(name).unwrap();
-                 let clk = bindings::qdev_init_clock_in(
--                    dev,
-+                    dev.as_mut_ptr(),
-                     cstr.as_ptr(),
-                     cb,
--                    dev.cast::<c_void>(),
-+                    dev.as_void_ptr(),
-                     events.0,
-                 );
- 
--                Owned::from(&*clk)
-+                let clk: &Clock = Clock::from_raw(clk);
-+                Owned::from(clk)
-             }
-         }
- 
-@@ -289,7 +309,7 @@ fn do_init_clock_in(
-             None
-         };
- 
--        do_init_clock_in(self.as_mut_ptr(), name, cb, events)
-+        do_init_clock_in(self.upcast(), name, cb, events)
-     }
- 
-     /// Add an output clock named `name`.
-@@ -304,9 +324,10 @@ fn do_init_clock_in(
-     fn init_clock_out(&self, name: &str) -> Owned<Clock> {
-         unsafe {
-             let cstr = CString::new(name).unwrap();
--            let clk = bindings::qdev_init_clock_out(self.as_mut_ptr(), cstr.as_ptr());
-+            let clk = bindings::qdev_init_clock_out(self.upcast().as_mut_ptr(), cstr.as_ptr());
- 
--            Owned::from(&*clk)
-+            let clk: &Clock = Clock::from_raw(clk);
-+            Owned::from(clk)
-         }
-     }
- 
-@@ -314,7 +335,11 @@ fn prop_set_chr(&self, propname: &str, chr: &Owned<Chardev>) {
-         assert!(bql_locked());
-         let c_propname = CString::new(propname).unwrap();
-         unsafe {
--            bindings::qdev_prop_set_chr(self.as_mut_ptr(), c_propname.as_ptr(), chr.as_mut_ptr());
-+            bindings::qdev_prop_set_chr(
-+                self.upcast().as_mut_ptr(),
-+                c_propname.as_ptr(),
-+                chr.as_mut_ptr(),
-+            );
-         }
-     }
- 
-@@ -323,8 +348,17 @@ fn init_gpio_in<F: for<'a> FnCall<(&'a Self::Target, u32, u32)>>(
-         num_lines: u32,
-         _cb: F,
-     ) {
--        let _: () = F::ASSERT_IS_SOME;
-+        fn do_init_gpio_in(
-+            dev: &DeviceState,
-+            num_lines: u32,
-+            gpio_in_cb: unsafe extern "C" fn(*mut c_void, c_int, c_int),
-+        ) {
-+            unsafe {
-+                qdev_init_gpio_in(dev.as_mut_ptr(), Some(gpio_in_cb), num_lines as c_int);
-+            }
-+        }
- 
-+        let _: () = F::ASSERT_IS_SOME;
-         unsafe extern "C" fn rust_irq_handler<T, F: for<'a> FnCall<(&'a T, u32, u32)>>(
-             opaque: *mut c_void,
-             line: c_int,
-@@ -337,19 +371,13 @@ fn init_gpio_in<F: for<'a> FnCall<(&'a Self::Target, u32, u32)>>(
-         let gpio_in_cb: unsafe extern "C" fn(*mut c_void, c_int, c_int) =
-             rust_irq_handler::<Self::Target, F>;
- 
--        unsafe {
--            qdev_init_gpio_in(
--                self.as_mut_ptr::<DeviceState>(),
--                Some(gpio_in_cb),
--                num_lines as c_int,
--            );
--        }
-+        do_init_gpio_in(self.upcast(), num_lines, gpio_in_cb);
-     }
- 
-     fn init_gpio_out(&self, pins: &[InterruptSource]) {
-         unsafe {
-             qdev_init_gpio_out(
--                self.as_mut_ptr::<DeviceState>(),
-+                self.upcast().as_mut_ptr(),
-                 InterruptSource::slice_as_ptr(pins),
-                 pins.len() as c_int,
-             );
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 1e7ba531e2a..f0510ae769d 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -470,7 +470,7 @@ macro_rules! vmstate_clock {
-                 $crate::assert_field_type!(
-                     $struct_name,
-                     $field_name,
--                    $crate::qom::Owned<$crate::bindings::Clock>
-+                    $crate::qom::Owned<$crate::qdev::Clock>
-                 );
-                 $crate::offset_of!($struct_name, $field_name)
-             },
+ # Detect support for PT_GNU_RELRO + DT_BIND_NOW.
+ # The combination is known as "full relro", because .got.plt is read-only too.
+ qemu_ldflags += cc.get_supported_link_arguments('-Wl,-z,relro', '-Wl,-z,now')
+@@ -4583,6 +4587,8 @@ if have_rust
+   summary_info += {'bindgen':         bindgen.full_path()}
+   summary_info += {'bindgen version': bindgen.version()}
+ endif
++# option_cflags is purely for the summary display, meson will pass
++# -g/-O options directly
+ option_cflags = (get_option('debug') ? ['-g'] : [])
+ if get_option('optimization') != 'plain'
+   option_cflags += ['-O' + get_option('optimization')]
+diff --git a/meson_options.txt b/meson_options.txt
+index 59d973bca00..3432123fee2 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -362,6 +362,8 @@ option('debug_mutex', type: 'boolean', value: false,
+        description: 'mutex debugging support')
+ option('debug_stack_usage', type: 'boolean', value: false,
+        description: 'measure coroutine stack usage')
++option('split_debug', type: 'boolean', value: true,
++       description: 'split debug info from object files')
+ option('qom_cast_debug', type: 'boolean', value: true,
+        description: 'cast debugging support')
+ option('slirp_smbd', type : 'feature', value : 'auto',
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 3e8e00852b2..aca6e688302 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -504,6 +504,8 @@ _meson_option_parse() {
+     --disable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=false ;;
+     --enable-strip) printf "%s" -Dstrip=true ;;
+     --disable-strip) printf "%s" -Dstrip=false ;;
++    --enable-split-debug) printf "%s" -Dsplit_debug=true ;;
++    --disable-split-debug) printf "%s" -Dsplit_debug=false ;;
+     --sysconfdir=*) quote_sh "-Dsysconfdir=$2" ;;
+     --enable-tcg) printf "%s" -Dtcg=enabled ;;
+     --disable-tcg) printf "%s" -Dtcg=disabled ;;
 -- 
 2.48.1
 
