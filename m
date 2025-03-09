@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45520C28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 20:39:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF66C28B2E
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 20:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trNPa-0007HB-FO; Sun, 09 Mar 2025 16:38:14 -0400
+	id 1trNTY-0001ed-9x; Sun, 09 Mar 2025 16:42:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trNPY-0007Gt-WD
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 16:38:13 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trNTU-0001eC-Ob
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 16:42:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trNPX-0003na-6W
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 16:38:12 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trNTT-00056B-AQ
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 16:42:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741552687;
+ s=mimecast20190719; t=1741552934;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=0WwMSiWFFjYEN6smR/7EdmfzCMUMcIM7ih3FNl9P/2Y=;
- b=grCIjUh0aQXgDoifHhkaNVKghWgEBC0M6nXIgDORdDS1zZYcyX9GNyLzP+avAGUEcaKNRh
- OTlBv8j+GaRPHqtoYDuaR4o5wBjqDOYXoUQT1hKsuTxU/ba4euWlYMUqEGqwCen8j5+vPC
- Hs7DsG6JKVr49AMK2drfRNPFwPJfim0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1AhZc1L9hpmK1wuOPR9rh35pKZGS26tJ5NqUIAFyd/U=;
+ b=QI1IgMyLNeGZ+lFkA7lbxcEGPR7jfYHsS0gSEuChr1fhv6vLeZCCafokg5txfZDJKSoIzP
+ OWdK8+KIiwcWPIo1cn6KbDtEOjndbPBhHYLPgzOGRosc7vstYmId1kQ7Z7hp0+p4+jzs4G
+ q25uIwUgyXrE/hBfwPzO6oZftXNDFCQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-AIPz0F0zPwif_yg3h_L3Rg-1; Sun,
- 09 Mar 2025 16:38:02 -0400
-X-MC-Unique: AIPz0F0zPwif_yg3h_L3Rg-1
-X-Mimecast-MFC-AGG-ID: AIPz0F0zPwif_yg3h_L3Rg_1741552681
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-435-p2yMbP1KNPG1uKO_iypsng-1; Sun,
+ 09 Mar 2025 16:42:11 -0400
+X-MC-Unique: p2yMbP1KNPG1uKO_iypsng-1
+X-Mimecast-MFC-AGG-ID: p2yMbP1KNPG1uKO_iypsng_1741552930
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 37C6E19560BC; Sun,  9 Mar 2025 20:38:00 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 56DE71956083; Sun,  9 Mar 2025 20:42:09 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ABBEF1800946; Sun,  9 Mar 2025 20:37:59 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C1DAF18001E9; Sun,  9 Mar 2025 20:42:08 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 277DE21E675F; Sun, 09 Mar 2025 21:37:57 +0100 (CET)
+ id 3BE1721E675F; Sun, 09 Mar 2025 21:42:06 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
@@ -54,17 +54,17 @@ Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
  <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Thomas Huth
  <thuth@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 15/62] docs/qapi-domain: add "Arguments:" field lists
-In-Reply-To: <20250309083550.5155-16-jsnow@redhat.com> (John Snow's message of
- "Sun, 9 Mar 2025 04:35:02 -0400")
+Subject: Re: [PATCH v2 16/62] docs/qapi-domain: add "Features:" field lists
+In-Reply-To: <20250309083550.5155-17-jsnow@redhat.com> (John Snow's message of
+ "Sun, 9 Mar 2025 04:35:03 -0400")
 References: <20250309083550.5155-1-jsnow@redhat.com>
- <20250309083550.5155-16-jsnow@redhat.com>
-Date: Sun, 09 Mar 2025 21:37:57 +0100
-Message-ID: <87ikoi0wka.fsf@pond.sub.org>
+ <20250309083550.5155-17-jsnow@redhat.com>
+Date: Sun, 09 Mar 2025 21:42:06 +0100
+Message-ID: <87ecz60wdd.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -92,27 +92,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> This adds special rendering for Sphinx's typed field lists.
+> Add support for Features field lists. There is no QAPI-specific
+> functionality here, but this could be changed if desired (if we wanted
+> the feature names to link somewhere, for instance.)
 >
-> This patch does not add any QAPI-aware markup, rendering, or
-> cross-referencing for the type names, yet. That feature requires a
-> subclass to TypedField which will happen in its own commit quite a bit
-> later in this series; after all the basic fields and objects have been
-> established first.
->
-> The syntax for this field is:
->
-> :arg type name: description
->    description cont'd
->
-> You can omit the type or the description, but you cannot omit the name
-> -- if you do so, it degenerates into a "normal field list" entry, and
-> probably isn't what you want.
-
-Suggest "You can omit the type or the description.  You should not omit
-the name ..."
-
+> This feature list doesn't have any restrictions, so it can be used to
+> document object-wide features or per-member features as deemed
+> appropriate. It's essentially free-form text.
 >
 > Signed-off-by: John Snow <jsnow@redhat.com>
+
+Mention the new syntax :feat, like the previous patch does for :arg?
 
 
