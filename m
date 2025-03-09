@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86CF5C282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 10:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58EB7C282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 10:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trDwZ-0007zw-72; Sun, 09 Mar 2025 06:31:39 -0400
+	id 1trDwu-00086m-Ic; Sun, 09 Mar 2025 06:32:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1trDwU-0007yR-Ca
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:31:34 -0400
+ id 1trDwr-00086C-JJ
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:31:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1trDwQ-0003zK-Tu
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:31:33 -0400
+ id 1trDwq-00043D-2T
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:31:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741516290;
+ s=mimecast20190719; t=1741516315;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sgIRhA8V2yoGG7hQoR/1cCd/zfNZuMqAha1UxtZ8iWY=;
- b=eZFInYglTldYCPlwjQu1YQRQufeyyVVESJ5j/Wf9qapjhc8eEpKviXNj/f8Agv0i2Hupyf
- XAi4jfQVgT9c9kyu59hQWMqhsSjXMQrErBh6nH0MH4+l5AYNoLqF1TzynFu2hxFSX/SFdk
- 1UDWXRCwL/NkgdyFD2dk11lrJ3iUnPQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vQFYgL5OvkIroXqJVu4wnMdYvtwWSlXNwP+wGqmQy7o=;
+ b=cEZZK01HQAeUVcF1MIbpY3PXmN5cYC8O0PRinTqpBGHxkirgM8bytihkkhnuaaJSUJu/+3
+ D+G99tJ2Brx6b+lKibgkOG/S97pBVQJWgY/uSouIt/6nlN+UlMLyunlUNgDvFAHC/Vk3sK
+ RfKe2MenTl5n+R+AMhwgq9Q6ClegCUQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-224-hqNRVrjQPgW1w-KaP1XSuw-1; Sun, 09 Mar 2025 06:31:28 -0400
-X-MC-Unique: hqNRVrjQPgW1w-KaP1XSuw-1
-X-Mimecast-MFC-AGG-ID: hqNRVrjQPgW1w-KaP1XSuw_1741516287
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43947a0919aso27254715e9.0
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 03:31:27 -0700 (PDT)
+ us-mta-694-sgc4Zv6PM--BMi1USbMh-w-1; Sun, 09 Mar 2025 06:31:53 -0400
+X-MC-Unique: sgc4Zv6PM--BMi1USbMh-w-1
+X-Mimecast-MFC-AGG-ID: sgc4Zv6PM--BMi1USbMh-w_1741516313
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-39131851046so869601f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 03:31:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741516286; x=1742121086;
+ d=1e100.net; s=20230601; t=1741516312; x=1742121112;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sgIRhA8V2yoGG7hQoR/1cCd/zfNZuMqAha1UxtZ8iWY=;
- b=s60xVvhMzvFhocwHY1g8aX8PUOPVk/slh+BoZ+Q969H4uiAQuuYpSfTFpEnIAN6/B2
- ZAuaPew9xEIyz4zWb+8u80C5szsV/4/OuF4ba7KRubtWbmVjdNVErkEXexvVJxoRBRxe
- kf24h/vtxsdaf7urNB0AGc95RlpKGMpZ2l5b9Iorqr6a5EMs7zp3+egGcHPlj0Dz85sT
- Jblu3m52h8z5lGkAE/XkZoDy/mDwvl0aBATbYLA1E4oCZoo6azHTm5pL6NvikiaKu9TN
- g4NG+mGzcrItVA8JGy3CDcJYQG/5lPripjUV0MMPFTppm1N9EIWV1Td7PQi/t+c/Y/IY
- Y2pg==
-X-Gm-Message-State: AOJu0YyiqlOLgFm5TK/CrXELWMlJcYTy6cvzHg7otw9riim8+VXgVI5Q
- 6qYjnn7t7ckwf3jn5vZjG/b7PY6/pxnxDcJXbmsyY/UHt58QJLJGmHR2KwpwxU//F9wkjF83pdl
- jmzUNQ7mmh03AmaN0Dspux+A0IlL+rjGzc43A3LGtDyYZKZDi+wC/83VI1U0qt7ZMXGDEGvF4Jg
- svM2o9jZ4a9NcqTosr5M5fkxrX59B2pGK/5R3n1Po=
-X-Gm-Gg: ASbGncs+MZPWrFq9ggpg3SqoK5w2+eE1SWkpTNmykyHHeTohjQQzoBBAzNq2pNLYlbG
- C63lzXA5wlOv0+/3Y+NpROKSWawgEXgedUN8wQs9lvqV50qN2AdrCbnQUIv1gzACX5SoOlFfs0U
- /a8BzlrpudV7LS2eKy7OQgZFvDquxB4KJIiyiSVvkhOJY4w5+FQgYWFB+XKnVGhTgaIQj6XDi8n
- RWjEZLYIH8aJL5mo4CLbdGTSS73cZ9lClDiJbz6i4oLR0ymB/WLCxoXwqm8OynA3+sS6hqoESPX
- aIdmlj0o1BBFNnksWJlpVQ==
-X-Received: by 2002:a05:6000:1a88:b0:385:d7f9:f157 with SMTP id
- ffacd0b85a97d-39132da227bmr6500345f8f.36.1741516286426; 
- Sun, 09 Mar 2025 03:31:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaDlPjXUfgjM8InPOnJ0iOMoCeRWqonODvrAmP8IvItYQAdPMu3UHu2/qS3UzGctv9e2cfkg==
-X-Received: by 2002:a05:6000:1a88:b0:385:d7f9:f157 with SMTP id
- ffacd0b85a97d-39132da227bmr6500337f8f.36.1741516286047; 
- Sun, 09 Mar 2025 03:31:26 -0700 (PDT)
+ bh=vQFYgL5OvkIroXqJVu4wnMdYvtwWSlXNwP+wGqmQy7o=;
+ b=C90L4imPSNubAsmJg0DdPCN/Kc64qWsztAfhE3LelRuZGyk4nCedut3HQJIuulvw8j
+ 0gx8/jMR6ReHNnOvaIBFefvCEITW1CTBH3+sUxvLJ5c7ytrq+kxJrnEt6FLHSBHYj6Rg
+ 9Q2dV593bU4NHfpOV+RMoAHdo7moanpGBq9OP7FWoF15ivPshzlxCf3e77VDL33LSwFd
+ 6pSdupcezclvIZBhTTGjIZ2ICPy66U+VXm14DmSBZ9j3MBw44hR9Cod2+whE4KUoKuCG
+ Qg0CG+0hz/l+aw3sWE+GD/UYubjcNyYieljoS+mZbRQ8r5sfdp1Slb8i4Y8EpvYixGjJ
+ 6Jxg==
+X-Gm-Message-State: AOJu0YwdFmC3vSxalMTtLrN3o8SYx1VTC4zMeVJrhwHgOV6c6bmJS5iM
+ jGioX+UBnel/qGyTJbQEF9Bp/1vyWNDuVVF0ePKo+X3EFkgywnKq6Oj6Ueb4gvGdAR1LgdbvZwe
+ 8EP84uq+Hh1G71vzm84JX1QkTmEuH6mqVvM+UDzjq9WvGBrLUsYJwyLVZ9g530pN/iT/2kwrs1S
+ JhVBXjSnXmrGhpToLi3nyhCuzp6gD6xdMCE5UBAi8=
+X-Gm-Gg: ASbGnculxDF4kBioIXQmjOp2yrvuR/KOfD3RhSHnlqdk/igoXaB/VvbqmtzZFPKWjho
+ dSrfXqtjr92Cjk0y7x08iP8vV1dDTRV9vleoJPUnygBt6LzSvIV4JLAJ3S0Qf7D1se+MuNLOzQA
+ l7F6c20CVSIXSnlxi3HoE92jKq0oC6y1efcMzLaZ0QTUexrZrAoNtQxDKbNVv6tvUFWUxLF/C3w
+ vWRCrIHcdJ6QTZYWUnuvt1oN7qBYL+fYlrXOWZ7pVJVF/VFJserVVfw35lOS4f7dBOwtipmoGDr
+ 6nUAEcfAny+KrxVT9ZX2wA==
+X-Received: by 2002:a5d:64c7:0:b0:38f:2856:7d96 with SMTP id
+ ffacd0b85a97d-39132d05fdcmr5696771f8f.1.1741516311977; 
+ Sun, 09 Mar 2025 03:31:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCO6TT+AKB+eZ9XjXxviPBqg8zAPsrPqdDOO+q5CXmhHGGaBLNxE1LLFkxshKbXCOnraZSUw==
+X-Received: by 2002:a5d:64c7:0:b0:38f:2856:7d96 with SMTP id
+ ffacd0b85a97d-39132d05fdcmr5696759f8f.1.1741516311565; 
+ Sun, 09 Mar 2025 03:31:51 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.122.167])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1030cfsm11732833f8f.90.2025.03.09.03.31.24
+ ffacd0b85a97d-3912c01cd62sm11289481f8f.46.2025.03.09.03.31.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Mar 2025 03:31:24 -0700 (PDT)
+ Sun, 09 Mar 2025 03:31:50 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Nabih Estefan <nabihestefan@google.com>,
- Patrick Venture <venture@google.com>
-Subject: [PULL 02/25] scripts: dump stdin on meson-buildoptions error
-Date: Sun,  9 Mar 2025 11:30:56 +0100
-Message-ID: <20250309103120.1116448-3-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 14/25] rust: chardev: wrap Chardev with Opaque<>
+Date: Sun,  9 Mar 2025 11:31:08 +0100
+Message-ID: <20250309103120.1116448-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250309103120.1116448-1-pbonzini@redhat.com>
 References: <20250309103120.1116448-1-pbonzini@redhat.com>
@@ -109,40 +108,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nabih Estefan <nabihestefan@google.com>
-
-Dump sys.stdin when it errors on meson-buildoptions.py, letting us debug
-the build errors instead of just saying "Couldn't parse"
-
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-Signed-off-by: Patrick Venture <venture@google.com>
-Link: https://lore.kernel.org/r/20250227180454.2006757-1-venture@google.com
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/meson-buildoptions.py | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ rust/qemu-api/src/bindings.rs | 3 ---
+ rust/qemu-api/src/chardev.rs  | 8 ++++++--
+ rust/qemu-api/src/qdev.rs     | 1 +
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/scripts/meson-buildoptions.py b/scripts/meson-buildoptions.py
-index 4814a8ff61f..a3e22471b2f 100644
---- a/scripts/meson-buildoptions.py
-+++ b/scripts/meson-buildoptions.py
-@@ -241,8 +241,14 @@ def print_parse(options):
-     print("  esac")
-     print("}")
+diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
+index 26cc8de0cf2..c3f36108bd5 100644
+--- a/rust/qemu-api/src/bindings.rs
++++ b/rust/qemu-api/src/bindings.rs
+@@ -31,9 +31,6 @@ unsafe impl Sync for BusState {}
+ unsafe impl Send for CharBackend {}
+ unsafe impl Sync for CharBackend {}
  
+-unsafe impl Send for Chardev {}
+-unsafe impl Sync for Chardev {}
 -
--options = load_options(json.load(sys.stdin))
-+json_data = sys.stdin.read()
-+try:
-+    options = load_options(json.loads(json_data))
-+except:
-+    print("Failure in scripts/meson-buildoptions.py parsing stdin as json",
-+          file=sys.stderr)
-+    print(json_data, file=sys.stderr)
-+    sys.exit(1)
- print("# This file is generated by meson-buildoptions.py, do not edit!")
- print_help(options)
- print_parse(options)
+ unsafe impl Send for ObjectClass {}
+ unsafe impl Sync for ObjectClass {}
+ 
+diff --git a/rust/qemu-api/src/chardev.rs b/rust/qemu-api/src/chardev.rs
+index 74cfb634e5f..a35b9217e90 100644
+--- a/rust/qemu-api/src/chardev.rs
++++ b/rust/qemu-api/src/chardev.rs
+@@ -6,9 +6,13 @@
+ 
+ use std::ffi::CStr;
+ 
+-use crate::{bindings, prelude::*};
++use crate::{bindings, cell::Opaque, prelude::*};
++
++/// A safe wrapper around [`bindings::Chardev`].
++#[repr(transparent)]
++#[derive(qemu_api_macros::Wrapper)]
++pub struct Chardev(Opaque<bindings::Chardev>);
+ 
+-pub type Chardev = bindings::Chardev;
+ pub type ChardevClass = bindings::ChardevClass;
+ 
+ unsafe impl ObjectType for Chardev {
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index 1c4a67b5728..18b4a9ba687 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -334,6 +334,7 @@ fn init_clock_out(&self, name: &str) -> Owned<Clock> {
+     fn prop_set_chr(&self, propname: &str, chr: &Owned<Chardev>) {
+         assert!(bql_locked());
+         let c_propname = CString::new(propname).unwrap();
++        let chr: &Chardev = chr;
+         unsafe {
+             bindings::qdev_prop_set_chr(
+                 self.upcast().as_mut_ptr(),
 -- 
 2.48.1
 
