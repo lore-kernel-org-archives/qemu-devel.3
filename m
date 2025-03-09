@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC2B0C28B2E
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1836BC28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:43:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trCB7-0000c5-VN; Sun, 09 Mar 2025 04:38:35 -0400
+	id 1trC97-0001DS-C7; Sun, 09 Mar 2025 04:36:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCB0-0008TF-NU
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:38:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC8u-000114-Hj
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:36:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCAy-0002f9-O1
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:38:26 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC8s-00022M-JQ
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:36:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741509504;
+ s=mimecast20190719; t=1741509373;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=P0U6vbKgStPdz9Sed/bjse/hydvoS43rfuqUfVd/ad8=;
- b=Yv/2/Ye9SENMx8rd2C2ITYInNopycsFQvMbnWWP04tNChrj+hK2LMB17sTXPvKv5iCpQZA
- Mq+vp9AgQm4gYEu4OfC4NWDDbjnduFdDSKjqTk3jHjoD/YYfuoDWV+Sg8/nqfHTxJSox7x
- bwiXhYloapoVHP1PYvD9CnCck/8x0qg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=/ttKw/vVjjacoXax5pLcJcspfJaVo5c4RH7gYOoGWA8=;
+ b=dDGwKBtVDojuVbOpsPJV5ODcdd6rEydlDhllpEbeMHicvujJM65sZUw3OaXLfhPwZkO0gU
+ WFTC/29bjrb6kSBB68si7ABdAUYjGDKMAA2rWOfbPPOAw3POLuHZxFjQZq/jdYiXr5zjW3
+ vZBvMyVA1mGbHdz7wbYyE4kVh1zz5b0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-205-bUtpYqPbPnu8_Ato5xlRXw-1; Sun,
- 09 Mar 2025 04:38:20 -0400
-X-MC-Unique: bUtpYqPbPnu8_Ato5xlRXw-1
-X-Mimecast-MFC-AGG-ID: bUtpYqPbPnu8_Ato5xlRXw_1741509498
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-178-doFad-ffN0CaGbNaupH4GQ-1; Sun,
+ 09 Mar 2025 04:36:11 -0400
+X-MC-Unique: doFad-ffN0CaGbNaupH4GQ-1
+X-Mimecast-MFC-AGG-ID: doFad-ffN0CaGbNaupH4GQ_1741509370
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F0B2D1956083; Sun,  9 Mar 2025 08:38:17 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 41AF91956048; Sun,  9 Mar 2025 08:36:10 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.4])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DC65219560AB; Sun,  9 Mar 2025 08:38:15 +0000 (UTC)
+ id 4688419560AB; Sun,  9 Mar 2025 08:36:07 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -54,25 +54,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 57/62] docs/qapidoc: Add "the members of" pointers
-Date: Sun,  9 Mar 2025 04:35:44 -0400
-Message-ID: <20250309083550.5155-58-jsnow@redhat.com>
+Subject: [PATCH v2 07/62] docs/qapi-domain: add resolve_any_xref()
+Date: Sun,  9 Mar 2025 04:34:54 -0400
+Message-ID: <20250309083550.5155-8-jsnow@redhat.com>
 In-Reply-To: <20250309083550.5155-1-jsnow@redhat.com>
 References: <20250309083550.5155-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,165 +87,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add "the members of ..." pointers to Members and Arguments lists where
-appropriate, with clickable cross-references - so it's a slight
-improvement over the old system :)
+Add the ability to resolve cross-references using the `any`
+cross-reference syntax. Adding QAPI-specific cross-reference roles will
+be added in a forthcoming commit, and will share the same find_obj()
+helper.
 
-This patch is meant to be a temporary solution until we can review and
-merge the inliner.
+(There's less code needed for the generic cross-reference resolver, so
+it comes first in this series.)
 
-The implementation of this patch is a little bit of a hack: Sphinx is
-not designed to allow you to mix fields of different "type"; i.e. mixing
-member descriptions and free-form text under the same heading. To
-accomplish this with a minimum of hackery, we technically document a
-"dummy field" and then just strip off the documentation for that dummy
-field in a post-processing step. We use the "q_dummy" variable for this
-purpose, then strip it back out before final processing. If this
-processing step should fail, you'll see warnings for a bad
-cross-reference. (So if you don't see any, it must be working!)
+Once again, this code is based very heavily on sphinx.domains.python.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapi_domain.py | 22 +++++++++++++--
- docs/sphinx/qapidoc.py     | 58 +++++++++++++++++++++++++++++++++++++-
- 2 files changed, 77 insertions(+), 3 deletions(-)
+ docs/sphinx/qapi_domain.py | 96 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 93 insertions(+), 3 deletions(-)
 
 diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index ca5e878c8ad..c2c98a80994 100644
+index 3e7718d32d1..f05c2cadf06 100644
 --- a/docs/sphinx/qapi_domain.py
 +++ b/docs/sphinx/qapi_domain.py
-@@ -428,6 +428,24 @@ def _toc_entry_name(self, sig_node: desc_signature) -> str:
-         return ""
+@@ -16,6 +16,9 @@
+     Tuple,
+ )
+ 
++from docutils import nodes
++
++from sphinx.addnodes import pending_xref
+ from sphinx.domains import (
+     Domain,
+     Index,
+@@ -24,10 +27,15 @@
+ )
+ from sphinx.locale import _, __
+ from sphinx.util import logging
++from sphinx.util.nodes import make_refnode
  
  
-+class SpecialTypedField(CompatTypedField):
-+    def make_field(self, *args: Any, **kwargs: Any) -> nodes.field:
-+        ret = super().make_field(*args, **kwargs)
+ if TYPE_CHECKING:
++    from docutils.nodes import Element
 +
-+        # Look for the characteristic " -- " text node that Sphinx
-+        # inserts for each TypedField entry ...
-+        for node in ret.traverse(lambda n: str(n) == " -- "):
-+            par = node.parent
-+            if par.children[0].astext() != "q_dummy":
-+                continue
-+
-+            # If the first node's text is q_dummy, this is a dummy
-+            # field we want to strip down to just its contents.
-+            del par.children[:-1]
-+
-+        return ret
-+
-+
- class QAPICommand(QAPIObject):
-     """Description of a QAPI Command."""
+     from sphinx.application import Sphinx
++    from sphinx.builders import Builder
++    from sphinx.environment import BuildEnvironment
  
-@@ -435,7 +453,7 @@ class QAPICommand(QAPIObject):
-     doc_field_types.extend(
-         [
-             # :arg TypeName ArgName: descr
--            CompatTypedField(
-+            SpecialTypedField(
-                 "argument",
-                 label=_("Arguments"),
-                 names=("arg",),
-@@ -503,7 +521,7 @@ class QAPIObjectWithMembers(QAPIObject):
-     doc_field_types.extend(
-         [
-             # :member type name: descr
--            CompatTypedField(
-+            SpecialTypedField(
-                 "member",
-                 label=_("Members"),
-                 names=("memb",),
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index e8719fac4c1..96ac9f8620e 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -47,8 +47,10 @@
-     QAPISchemaCommand,
-     QAPISchemaDefinition,
-     QAPISchemaEnumMember,
-+    QAPISchemaEvent,
-     QAPISchemaFeature,
-     QAPISchemaMember,
-+    QAPISchemaObjectType,
-     QAPISchemaObjectTypeMember,
-     QAPISchemaType,
-     QAPISchemaVisitor,
-@@ -300,11 +302,61 @@ def preamble(self, ent: QAPISchemaDefinition) -> None:
+ logger = logging.getLogger(__name__)
  
-         self.ensure_blank_line()
+@@ -179,9 +187,91 @@ def merge_domaindata(
+                 )
+                 self.objects[fullname] = obj
  
-+    def _insert_member_pointer(self, ent: QAPISchemaDefinition) -> None:
+-    def resolve_any_xref(self, *args: Any, **kwargs: Any) -> Any:
+-        # pylint: disable=unused-argument
+-        return []
++    def find_obj(
++        self, modname: str, name: str, typ: Optional[str]
++    ) -> list[tuple[str, ObjectEntry]]:
++        """
++        Find a QAPI object for "name", perhaps using the given module.
 +
-+        def _get_target(
-+            ent: QAPISchemaDefinition,
-+        ) -> Optional[QAPISchemaDefinition]:
-+            if isinstance(ent, (QAPISchemaCommand, QAPISchemaEvent)):
-+                return ent.arg_type
-+            if isinstance(ent, QAPISchemaObjectType):
-+                return ent.base
-+            return None
++        Returns a list of (name, object entry) tuples.
 +
-+        target = _get_target(ent)
-+        if target is not None and not target.is_implicit():
-+            assert ent.info
-+            self.add_field(
-+                self.member_field_type,
-+                "q_dummy",
-+                f"The members of :qapi:type:`{target.name}`.",
-+                ent.info,
-+                "q_dummy",
++        :param modname: The current module context (if any!)
++                        under which we are searching.
++        :param name: The name of the x-ref to resolve;
++                     may or may not include a leading module.
++        :param type: The role name of the x-ref we're resolving, if provided.
++                     (This is absent for "any" lookups.)
++        """
++        if not name:
++            return []
++
++        names: list[str] = []
++        matches: list[tuple[str, ObjectEntry]] = []
++
++        fullname = name
++        if "." in fullname:
++            # We're searching for a fully qualified reference;
++            # ignore the contextual module.
++            pass
++        elif modname:
++            # We're searching for something from somewhere;
++            # try searching the current module first.
++            # e.g. :qapi:cmd:`query-block` or `query-block` is being searched.
++            fullname = f"{modname}.{name}"
++
++        if typ is None:
++            # type isn't specified, this is a generic xref.
++            # search *all* qapi-specific object types.
++            objtypes: List[str] = list(self.object_types)
++        else:
++            # type is specified and will be a role (e.g. obj, mod, cmd)
++            # convert this to eligible object types (e.g. command, module)
++            # using the QAPIDomain.object_types table.
++            objtypes = self.objtypes_for_role(typ, [])
++
++        if name in self.objects and self.objects[name].objtype in objtypes:
++            names = [name]
++        elif (
++            fullname in self.objects
++            and self.objects[fullname].objtype in objtypes
++        ):
++            names = [fullname]
++        else:
++            # exact match wasn't found; e.g. we are searching for
++            # `query-block` from a different (or no) module.
++            searchname = "." + name
++            names = [
++                oname
++                for oname in self.objects
++                if oname.endswith(searchname)
++                and self.objects[oname].objtype in objtypes
++            ]
++
++        matches = [(oname, self.objects[oname]) for oname in names]
++        if len(matches) > 1:
++            matches = [m for m in matches if not m[1].aliased]
++        return matches
++
++    def resolve_any_xref(
++        self,
++        env: BuildEnvironment,
++        fromdocname: str,
++        builder: Builder,
++        target: str,
++        node: pending_xref,
++        contnode: Element,
++    ) -> List[Tuple[str, nodes.reference]]:
++        results: List[Tuple[str, nodes.reference]] = []
++        matches = self.find_obj(node.get("qapi:module"), target, None)
++        for name, obj in matches:
++            rolename = self.role_for_objtype(obj.objtype)
++            assert rolename is not None
++            role = f"qapi:{rolename}"
++            refnode = make_refnode(
++                builder, fromdocname, obj.docname, obj.node_id, contnode, name
 +            )
-+
-+        if isinstance(ent, QAPISchemaObjectType) and ent.branches is not None:
-+            for variant in ent.branches.variants:
-+                if variant.type.name == "q_empty":
-+                    continue
-+                assert ent.info
-+                self.add_field(
-+                    self.member_field_type,
-+                    "q_dummy",
-+                    f" When ``{ent.branches.tag_member.name}`` is "
-+                    f"``{variant.name}``: "
-+                    f"The members of :qapi:type:`{variant.type.name}`.",
-+                    ent.info,
-+                    "q_dummy",
-+                )
-+
-     def visit_sections(self, ent: QAPISchemaDefinition) -> None:
-         sections = ent.doc.all_sections if ent.doc else []
++            results.append((role, refnode))
++        return results
  
-+        # Determine the index location at which we should generate
-+        # documentation for "The members of ..." pointers. This should
-+        # go at the end of the members section(s) if any. Note that
-+        # index 0 is assumed to be a plain intro section, even if it is
-+        # empty; and that a members section if present will always
-+        # immediately follow the opening PLAIN section.
-+        gen_index = 1
-+        if len(sections) > 1:
-+            while sections[gen_index].kind == QAPIDoc.Kind.MEMBER:
-+                gen_index += 1
-+                if gen_index >= len(sections):
-+                    break
-+
-         # Add sections *in the order they are documented*:
--        for section in sections:
-+        for i, section in enumerate(sections):
-             # @var is translated to ``var``:
-             section.text = re.sub(r"@([\w-]+)", r"``\1``", section.text)
  
-@@ -326,6 +378,10 @@ def visit_sections(self, ent: QAPISchemaDefinition) -> None:
-             else:
-                 assert False
- 
-+            # Generate "The members of ..." entries if necessary:
-+            if i == gen_index - 1:
-+                self._insert_member_pointer(ent)
-+
-         self.ensure_blank_line()
- 
-     # Transmogrification core methods
+ def setup(app: Sphinx) -> Dict[str, Any]:
 -- 
 2.48.1
 
