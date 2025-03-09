@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70944C282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 12:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADFC0C282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 12:21:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trFaP-0006hs-BO; Sun, 09 Mar 2025 08:16:53 -0400
+	id 1trFdm-000809-Kq; Sun, 09 Mar 2025 08:20:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trFaM-0006gx-RP
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 08:16:50 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trFdU-0007sX-6c
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 08:20:07 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trFaL-0001MF-20
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 08:16:50 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4393dc02b78so19237215e9.3
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 05:16:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trFdQ-00021G-2H
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 08:20:01 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43cf257158fso1809195e9.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 05:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741522607; x=1742127407; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741522797; x=1742127597; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=r36St+rnaojSkYk5+iSomygtCQfeEMh2+rNy1K3V6bc=;
- b=t7FlIhErAvsvD3ibAKyzbD3ry8aHZ5KZkiErj3o9Ot+RbUMB+NrFJ6GydqAVspo38A
- qGrqGbqQXpxvakigVh3M1SPjIB5tVV2h+v4JYIS+s3hQT+KuUPg7SMy2PEoBRZfrQ6uw
- JCA39WbOs/GU8gFSIU3BqFmYr33pyEAi/IIMSjkveKjkd2RpcnGWtNWXmqiyOr1KzYNq
- VolFk7HjffTr/xR9f9vS1hzZZjd+zr8ccySlrxMwqmiiYgYDU8FztalZP9wligUaB9zi
- +WwjqsBpaTk78giSJyTOxmllsnay+uHlVjLDUmx9CEBA3A0dWVeADQRRuQ21W9Sn8cZi
- mPXA==
+ bh=SXFui0VdoFr2d0dHdNdBY+8sQ9ZQjKd4FQUjY4Twe6o=;
+ b=UElvwB0yimBTCv0mZxF4s+KX1pHxtrOZqRMre9G+MCbwBDzeUyDSNPaFvniboZDGcA
+ 5iDo/da/C7MRPGGcFFl9RjQIS/7g4TcxGORvLFRQTAb2SFb933uPcpM4TnoJNbpZ+14s
+ eSDoQ/S5l6llt0uBFbCvPSdUb9R036NXoAClWsjxvtoeDUoDLcuLyE6t5gsipk9iMW93
+ fmnR2TmV81YnzjWT1w5vNZiXsQh8RmblCoO7/fqKWIcLz3B9mcP+YZGLrurBQS16cN/5
+ 0xiqAqSJCEsJyPC420vyFuFWSUI4NxAsIr3a8GibfU7q384CQY0lVp/Pu4GVouxEwgzc
+ YNeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741522607; x=1742127407;
+ d=1e100.net; s=20230601; t=1741522797; x=1742127597;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r36St+rnaojSkYk5+iSomygtCQfeEMh2+rNy1K3V6bc=;
- b=qq0Udx72hQxwdcnscEaYDx2sym/EgdhRVb7waIAMTUpuh5JokpC+5e+Q3QQrYrO5ef
- H6Wi/S0/4v/D3nVykwdc1FZh3POufKTZG00BB+JRfRRmvph61ScXJIfTafe3yqq9ZkTc
- cZjNpf3JkAILE/tBt+ur8gBDfBhx8/Rc1vndY4ZqDvBjyRQF/S2LM9PXHyBk+J9Y8Pbu
- aSmyHeSDmF86HKWBUz6kz2DKAVtNBh41ZAd8lsoVbdVysJ0w5w1Pq6HzINWEZbUXC8OC
- vK7hbJAz8XRNUzKpRqWxCFEJhpPCu1I8Bv5x8XUQ94GhuODWchwlw+LkBbgUTy306CX8
- v9AQ==
-X-Gm-Message-State: AOJu0Yxgn10Dho3BhOzv6Frl1G0MG+Jl8VkelFMTDyXz4C2iGJL/npJT
- 98mJ5KqidwtMcQuMAXKAOPyE6y0cSnIMp3UOo947KD3lHh+I3P/C9zSdUXeDhsQ=
-X-Gm-Gg: ASbGncsB6UC/B4CPib+yjS2bPp/QXw7Ioc0DQ3HYzpMglIjbXFnMxmMHr36oQl7en8/
- TzlWoCFE6SaX+zDlnR06MCLzsR8hyrSKgHPMJZQboKT2j5Xh6DbredDQgII3DSxk6Wz82tg6vsO
- MRgR9OcyxTtriuD9z2vvkyPsr6vt0dUQuigKusoJyfQ3unwQyN5EVsQFkDQxLs+VC5U81C6ajej
- h9YH16U9gtoc7PsNiTcR2tr5p4aQAh2ZrncQWGESJdaGgtVGO6+LbgSG4EcusIY7n0j2QMBX7Z2
- aL2uZWuxnbN5imvosHdAA7mf1M2fNuG+vyv6sf6pp1WFRBymU3T4U4Rm0iYHTEqoI5TkgODHw5T
- 5dFOGeeukC5+S
-X-Google-Smtp-Source: AGHT+IGDQ6kkVJVuB8BhZf/33+0k3GqhrDwCRgF89x4eBfhOIfXY7ti4vGh4Cghau5RHIDV/AsEyPg==
-X-Received: by 2002:a05:600c:3b1e:b0:43b:c965:954d with SMTP id
- 5b1f17b1804b1-43c5a5e92f3mr53387315e9.1.1741522607104; 
- Sun, 09 Mar 2025 05:16:47 -0700 (PDT)
+ bh=SXFui0VdoFr2d0dHdNdBY+8sQ9ZQjKd4FQUjY4Twe6o=;
+ b=dTvyTU1DX53tPJ2bYdFDkMDxxUnTSzls6Dr9HGLn9I74TuXS79uhl+iC57x11xWpn4
+ IYq9gA7yEYTxaJPg2po/zRXXpWQoFADexpieIus6IoZp5VR61kdx6aGOOjgcjxnZlLE7
+ KYFXxq8fuJAR2erdfj5tMQ0g+y1qS9wOddkXB1+LLicWqTVYFfkwlj8CTVHGR32YHzMZ
+ zCGoRcYZE/dYA35w40fHPrLn7RcrNOKJan98QJUoz/6nhbT0cQgbWP0jxG4nEFzVM7ZN
+ 2jG+kzSjtnZd9ePHKNr5mftdQFxpJAnTiu3aQsYDnNfwQoOfjiR+NJ4diRx2PQIPtLzJ
+ dMXw==
+X-Gm-Message-State: AOJu0YwSUjNmvLinZfrDCxrZN4l+G0LKc9Nxb4tUGUcoPHt0ncsFTCNp
+ gX9BBQXvLCi48CbXWmCKm3TYCOvAl+XYXU5vfqqVrWhCGYjjLDPPQn+xik3VOxI=
+X-Gm-Gg: ASbGncvGcMSNGBAoY4X7G7rEMY+WudWMyGZFf7oe1HDV/Ha5nR/aKdxGp9fwvdnz5vk
+ SGZGXApg3QDcHGKFlwl+bun36kURk11mb9LXb9XBRGzmz34wbQDZlGLxJL5jJGLAXDZaB5Lgt91
+ UWb8aPcz9k0eeVoyrII1mO2Bu89y1Qp8/f12bxdQcEsNN/bmQ6q2VJBee8b4+528jIkypyYRaer
+ 2hm2+UVvm+KRqJVKsJymJWpUY7RGGvKZWOTo0clhCEaNj3yyvfXUwUhNc3zDypjZ46g1+EtkrqG
+ mxGq8BT6eTLQM8vLIAJ8DzXixJy+2gCi7lP7BiItSmXhdd1qPsGCt/TzqPFRwCe77Iuhm9qkW1m
+ 6N4szKebN4URo
+X-Google-Smtp-Source: AGHT+IH918KrBlLN5eU8fMRcLMy6zFYbg2aGqUNc1BBgxpyAcSTtii9GVy+MmEqbDACdbwY6xMnUtA==
+X-Received: by 2002:a5d:64c3:0:b0:391:31c8:ba58 with SMTP id
+ ffacd0b85a97d-39132d16dd6mr7161785f8f.10.1741522797338; 
+ Sun, 09 Mar 2025 05:19:57 -0700 (PDT)
 Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd426c56esm149167225e9.8.2025.03.09.05.16.45
+ ffacd0b85a97d-3912c01cd62sm11513220f8f.46.2025.03.09.05.19.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 05:16:46 -0700 (PDT)
-Message-ID: <9d032d3b-7929-4a7f-b5a7-5338a0fc16cd@linaro.org>
-Date: Sun, 9 Mar 2025 13:16:45 +0100
+ Sun, 09 Mar 2025 05:19:56 -0700 (PDT)
+Message-ID: <f59df0e2-d6bf-4950-aaf6-02333183501b@linaro.org>
+Date: Sun, 9 Mar 2025 13:19:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/14] hw/sd/sdhci: Implement Freescale eSDHC as
- TYPE_FSL_ESDHC
+Subject: Re: [PATCH v4 04/14] hw/sd/sdhci: Make quirks a class property
 To: BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -79,22 +78,22 @@ Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  Guenter Roeck <linux@roeck-us.net>, qemu-block@nongnu.org,
  Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org
 References: <20250308213640.13138-1-philmd@linaro.org>
- <20250308213640.13138-14-philmd@linaro.org>
- <9eb8f1a0-75c0-526a-869c-53d01551c97b@eik.bme.hu>
+ <20250308213640.13138-5-philmd@linaro.org>
+ <11b37245-5dee-122b-cdfb-dfc820a38661@eik.bme.hu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <9eb8f1a0-75c0-526a-869c-53d01551c97b@eik.bme.hu>
+In-Reply-To: <11b37245-5dee-122b-cdfb-dfc820a38661@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,39 +109,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/25 12:04, BALATON Zoltan wrote:
+On 9/3/25 12:43, BALATON Zoltan wrote:
 > On Sat, 8 Mar 2025, Philippe Mathieu-Daudé wrote:
->> Per the MPC8569E reference manual, its SDHC I/O range is 4KiB
->> wide, mapped in big endian order, and it only accepts 32-bit
->> aligned access. Set the default register reset values.
+>> All TYPE_IMX_USDHC instances use the quirk:
+>> move it to the class layer.
 >>
->> Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
 >> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> ---
->> include/hw/sd/sdhci.h |  2 ++
->> hw/sd/sdhci.c         | 37 ++++++++++++++++++++++++++++++++++++-
->> 2 files changed, 38 insertions(+), 1 deletion(-)
-
-
->> -/* --- qdev i.MX eSDHC --- */
->> +/* --- Freescale eSDHC (MPC8569ERM Rev.2 from 06/2011) --- */
+>> include/hw/sd/sdhci.h |  3 ++-
+>> hw/sd/sdhci.c         | 15 +++++++++++++--
+>> 2 files changed, 15 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+>> index c4b20db3877..0616ce3aa59 100644
+>> --- a/include/hw/sd/sdhci.h
+>> +++ b/include/hw/sd/sdhci.h
+>> @@ -95,7 +95,6 @@ struct SDHCIState {
+>>
+>>     /* Configurable properties */
+>>     bool pending_insert_quirk; /* Quirk for Raspberry Pi card insert 
+>> int */
+>> -    uint32_t quirks;
+>>     uint8_t endianness;
+>>     uint8_t sd_spec_version;
+>>     uint8_t uhs_mode;
+>> @@ -112,6 +111,8 @@ typedef struct SDHCIClass {
+>>         PCIDeviceClass pci_parent_class;
+>>         SysBusDeviceClass sbd_parent_class;
+>>     };
 >> +
->> +static const MemoryRegionOps fsl_esdhc_mmio_ops = {
->> +    .read = sdhci_read,
->> +    .write = sdhci_write,
->> +    .valid = {
->> +        .min_access_size = 4,
+>> +    uint32_t quirks;
+>> } SDHCIClass;
+>>
+>> /*
+>> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+>> index 4917a9b3632..2b7eb11a14a 100644
+>> --- a/hw/sd/sdhci.c
+>> +++ b/hw/sd/sdhci.c
+>> @@ -345,6 +345,8 @@ static void sdhci_send_command(SDHCIState *s)
+>>     rlen = sdbus_do_command(&s->sdbus, &request, response);
+>>
+>>     if (s->cmdreg & SDHC_CMD_RESPONSE) {
+>> +        SDHCIClass *sc = SYSBUS_SDHCI_GET_CLASS(s);
 > 
-> Does this need max access too? Maybe it could work with 8 and likely 
-> nothing would try to access more than 4 so probably does not matter.
+> I don't like this because it introduces a class look up which may be 
+> costly in a function that could be called frequently. Maybe you could 
+> just drop this patch and leave the quirk handling as it is. Changing it 
+> does not seem to improve the model much.
 
-Per the reference manual (chapter 16):
+I thought about it and was expecting a such comment.
 
-   All eSDHC registers must be accessed as aligned 4-byte quantities.
-   Accesses to the eSDHC registers that are less than 4-bytes are not
-   supported.
-
-There is no precision on max_access_size.
+Initializing a class field in the instance_init is an anti-pattern,
+so I'll keep a cached quirks in SDHCIState.
 
 > Regards,
 > BALATON Zoltan
