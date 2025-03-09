@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F08FC28B2E
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E3B4C282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trC9x-0003VO-VU; Sun, 09 Mar 2025 04:37:22 -0400
+	id 1trC9t-00036v-CQ; Sun, 09 Mar 2025 04:37:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC9j-0002bL-49
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC9j-0002dH-MJ
  for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC9h-0002R4-BG
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:06 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC9h-0002RE-Qj
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741509424;
+ s=mimecast20190719; t=1741509425;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=c8esjTeF+k1c2jlPM70sGxtyoT3CAccDznLIyNNezhU=;
- b=hZN+kyprrVZTyjuU54XhgX1FTDJJz0T8yDq1K9UzFgaPjJ/p3/BJdVGs33LkRINPZYHhu4
- ORMd+Om7h8yOi5MJh5ttijZyEpiu1TofOcSavyMR2gSIBn91disjtV0TJ1tOe/4+UklutW
- PHj9PpKe9y1vjIB4cJVpEjlkZZp5VI0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=6tjFF/ym8NRe3BTciRbB7rmmWPy+1jhJqybyCgkHB84=;
+ b=dDX4PmUFosuDkwD2kx/BUvt5jyUdqjdjKdug7LTk5P6bOaaiUyVZP3XPl4D41VZm17CEv0
+ D5oc7z6DqK+0kCRxXOjGVL0rgppBvoIrjNgdwH+F/LoItAEszl3nwqa/YC5PaslYC5wwWl
+ V2XS1cmlkrYhYS97vYaT6zqQGGV20qM=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-5am_4_XqMS6d67gAseI9Rg-1; Sun,
- 09 Mar 2025 04:37:03 -0400
-X-MC-Unique: 5am_4_XqMS6d67gAseI9Rg-1
-X-Mimecast-MFC-AGG-ID: 5am_4_XqMS6d67gAseI9Rg_1741509422
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-u0OHiWLEO3yohwG57B7-3Q-1; Sun,
+ 09 Mar 2025 04:36:59 -0400
+X-MC-Unique: u0OHiWLEO3yohwG57B7-3Q-1
+X-Mimecast-MFC-AGG-ID: u0OHiWLEO3yohwG57B7-3Q_1741509417
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA35B1809CA3; Sun,  9 Mar 2025 08:37:01 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA944195608A; Sun,  9 Mar 2025 08:36:57 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.4])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1F9BA19560AB; Sun,  9 Mar 2025 08:36:59 +0000 (UTC)
+ id 6729119560AB; Sun,  9 Mar 2025 08:36:54 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -53,23 +53,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 27/62] docs/qapi-domain: add type cross-refs to field lists
-Date: Sun,  9 Mar 2025 04:35:14 -0400
-Message-ID: <20250309083550.5155-28-jsnow@redhat.com>
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
+ Harmonie Snow <harmonie@gmail.com>
+Subject: [PATCH v2 25/62] docs/qapi-domain: add :ifcond: directive option
+Date: Sun,  9 Mar 2025 04:35:12 -0400
+Message-ID: <20250309083550.5155-26-jsnow@redhat.com>
 In-Reply-To: <20250309083550.5155-1-jsnow@redhat.com>
 References: <20250309083550.5155-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,121 +89,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit, finally, adds cross-referencing support to various field
-lists; modeled tightly after Sphinx's own Python domain code.
+Add a special :ifcond: option that allows us to annotate the
+definition-level conditionals.
 
-Cross-referencing support is added to type names provided to :arg:,
-:memb:, :returns: and :choice:.
+The syntax of the argument is currently undefined, but it's possible we
+can apply better formatting in the future. Currently, we just display
+the ifcond string as preformatted text.
 
-:feat:, :error: and :value:, which do not take type names, do not
-support this syntax.
-
-The general syntax is simple:
-
-:arg TypeName ArgName: Lorem Ipsum ...
-
-The domain will transform TypeName into :qapi:type:`TypeName` in this
-basic case, and also apply the ``literal`` decoration to indicate that
-this is a type cross-reference.
-
-For optional arguments, the special "?" suffix is used. Because "*" has
-special meaning in rST that would cause parsing errors, we elect to use
-"?" instead. The special syntax processing strips this character from
-the end of any type name argument and will append ", optional" to the
-rendered output, applying the cross-reference only to the actual type
-name.
-
-The intent here is that the actual syntax in doc-blocks need not change;
-but e.g. qapidoc.py will need to process and transform "@arg foo lorem
-ipsum" into ":arg type? foo: lorem ipsum" based on the schema
-information. Therefore, nobody should ever actually witness this
-intermediate syntax unless they are writing manual documentation or the
-doc transmogrifier breaks.
-
-For array arguments, type names can similarly be surrounded by "[]",
-which are stripped off and then re-appended outside of the
-cross-reference.
-
+Signed-off-by: Harmonie Snow <harmonie@gmail.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapi_domain.py | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ docs/sphinx-static/theme_overrides.css | 13 +++++++++++++
+ docs/sphinx/qapi_domain.py             | 23 +++++++++++++++++++++--
+ 2 files changed, 34 insertions(+), 2 deletions(-)
 
+diff --git a/docs/sphinx-static/theme_overrides.css b/docs/sphinx-static/theme_overrides.css
+index 5f58f1d5246..3fd326613d9 100644
+--- a/docs/sphinx-static/theme_overrides.css
++++ b/docs/sphinx-static/theme_overrides.css
+@@ -237,3 +237,16 @@ div[class^="highlight"] pre {
+ .qapi-deprecated::before {
+     content: '⚠️ ';
+ }
++
++.qapi-ifcond::before {
++    /* gaze ye into the crystal ball to determine feature availability */
++    content: '🔮 ';
++}
++
++.qapi-ifcond {
++    background-color: #f9f5ff;
++    border: solid #dac2ff 6px;
++    padding: 8px;
++    border-radius: 15px;
++    margin: 5px;
++}
 diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index 659b57d1b33..4f4bf328cc7 100644
+index 4fc9608e170..6f599495e45 100644
 --- a/docs/sphinx/qapi_domain.py
 +++ b/docs/sphinx/qapi_domain.py
-@@ -2,6 +2,9 @@
- QAPI domain extension.
- """
+@@ -14,6 +14,7 @@
+     NamedTuple,
+     Optional,
+     Tuple,
++    Union,
+     cast,
+ )
  
-+# The best laid plans of mice and men, ...
-+# pylint: disable=too-many-lines
-+
- from __future__ import annotations
+@@ -181,6 +182,7 @@ class QAPIObject(QAPIDescription):
+             "module": directives.unchanged,  # Override contextual module name
+             # These are QAPI originals:
+             "since": directives.unchanged,
++            "ifcond": directives.unchanged,
+             "deprecated": directives.flag,
+             "unstable": directives.flag,
+         }
+@@ -265,9 +267,14 @@ def _add_infopips(self, contentnode: addnodes.desc_content) -> None:
+         infopips = nodes.container()
+         infopips.attributes["classes"].append("qapi-infopips")
  
- from typing import (
-@@ -116,6 +119,28 @@ def process_link(
+-        def _add_pip(source: str, content: str, classname: str) -> None:
++        def _add_pip(
++            source: str, content: Union[str, List[nodes.Node]], classname: str
++        ) -> None:
+             node = nodes.container(source)
+-            node.append(nodes.Text(content))
++            if isinstance(content, str):
++                node.append(nodes.Text(content))
++            else:
++                node.extend(content)
+             node.attributes["classes"].extend(["qapi-infopip", classname])
+             infopips.append(node)
  
-         return title, target
+@@ -285,6 +292,18 @@ def _add_pip(source: str, content: str, classname: str) -> None:
+                 "qapi-unstable",
+             )
  
-+    def result_nodes(
-+        self,
-+        document: nodes.document,
-+        env: BuildEnvironment,
-+        node: Element,
-+        is_ref: bool,
-+    ) -> Tuple[List[nodes.Node], List[nodes.system_message]]:
++        if self.options.get("ifcond", ""):
++            ifcond = self.options["ifcond"]
++            _add_pip(
++                f":ifcond: {ifcond}",
++                [
++                    nodes.emphasis("", "Availability"),
++                    nodes.Text(": "),
++                    nodes.literal(ifcond, ifcond),
++                ],
++                "qapi-ifcond",
++            )
 +
-+        # node here is the pending_xref node (or whatever nodeclass was
-+        # configured at XRefRole class instantiation time).
-+        results: List[nodes.Node] = [node]
-+
-+        if node.get("qapi:array"):
-+            results.insert(0, nodes.literal("[", "["))
-+            results.append(nodes.literal("]", "]"))
-+
-+        if node.get("qapi:optional"):
-+            results.append(nodes.Text(", "))
-+            results.append(nodes.emphasis("?", "optional"))
-+
-+        return results, []
-+
+         if infopips.children:
+             contentnode.insert(0, infopips)
  
- # Alias for the return of handle_signature(), which is used in several places.
- # (In the Python domain, this is Tuple[str, str] instead.)
-@@ -408,6 +433,7 @@ class QAPICommand(QAPIObject):
-                 "argument",
-                 label=_("Arguments"),
-                 names=("arg",),
-+                typerolename="type",
-                 can_collapse=False,
-             ),
-             # :error: descr
-@@ -421,6 +447,7 @@ class QAPICommand(QAPIObject):
-             GroupedField(
-                 "returnvalue",
-                 label=_("Return"),
-+                rolename="type",
-                 names=("return",),
-                 can_collapse=True,
-             ),
-@@ -456,6 +483,7 @@ class QAPIAlternate(QAPIObject):
-                 "alternative",
-                 label=_("Alternatives"),
-                 names=("alt",),
-+                typerolename="type",
-                 can_collapse=False,
-             ),
-         ]
-@@ -473,6 +501,7 @@ class QAPIObjectWithMembers(QAPIObject):
-                 "member",
-                 label=_("Members"),
-                 names=("memb",),
-+                typerolename="type",
-                 can_collapse=False,
-             ),
-         ]
 -- 
 2.48.1
 
