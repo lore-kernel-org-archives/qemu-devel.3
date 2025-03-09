@@ -4,85 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4E21C28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 19:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E692CC28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 19:38:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trM6v-00017P-0P; Sun, 09 Mar 2025 15:14:53 -0400
+	id 1trMSn-00012Z-1z; Sun, 09 Mar 2025 15:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trM6r-00016t-NY
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:14:51 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trMSk-00010u-Jq
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:37:27 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trM6p-0008Si-Ql
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:14:49 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22423adf751so46606255ad.2
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 12:14:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trMSh-0006TE-Py
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:37:25 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-224191d92e4so56256635ad.3
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 12:37:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741547685; x=1742152485; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=23yOkf5dgZi53mNfH2aRdR3dbE0qN7QGQCtvqukhGHA=;
- b=kgbmyOrcUzVLa9PPUkHAKCPsPKLWHvc3aJlZltsr0kqndS+nJ7c+8mZH5t2yM2niFM
- r3LgCxJdc50H0zGwfw8cJR21CDuxZl1SrJMvupSkv2kcp3eGj/O0nGGhMYHfwmpguRlj
- UPTV4nW0Ao1EdmZ5ajeRSsqbkCODONkBur2SAsuJpSOJUtUso7O9rG4wdsTv9TbpBVus
- 93rxeJDWGOgUTN/EbU1nhR/EdWvA+vFu9hZv61NU+afsQsfLTejN0RQ7QlPPzW4+tt1V
- +uq/Mon8xnGPx7faKOibIptUWafi4ZOdpFVkNsP1eU/4JOegXBkj8APR7t3R1gfbrleW
- sSRg==
+ d=linaro.org; s=google; t=1741549042; x=1742153842; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=MT3STjDQDcCpuKL/24twGSo6UOkr+VDdVFMMCjf6edc=;
+ b=yUJQVXzUZtdj4RY1Ly8ovBtdu/Yh1JIcASCGLZJHXRkShnIfKtZVeO/bE7sTfWteKd
+ vPn5NUuaCobUJwUo+R1YHmLnAMwvpbX4HAuhgwjAQTwElHef8aBT1SN0zq4J8wQYsVP8
+ RkNCqLJOwOsMt8tyypXTJfmDJPRJrZE0SnPfpFj+uy4COcSZXsBlJKj3K//bVNFq7t7D
+ 1rCXr6WUWLKYak4AlTvdm2IbsIsTw4sCtAqSdx0dE4gzAEgEdX12fWAMpAt2SgEZEoXF
+ OG/zVQytytOTb9Sbs2tQwVQz3g/Ke/qMzHKiRiy67TIT1TfDbjFrqk6j+fe7uJqRLi9/
+ 1ukA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741547685; x=1742152485;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=23yOkf5dgZi53mNfH2aRdR3dbE0qN7QGQCtvqukhGHA=;
- b=v3+fAw/VAM8ng45osq6+K/MD46eNKbNSVi+htRrAs2unhoqT+qL3/HrUoIwF2eQqHA
- kscT6eT0o+Wwx/s3fhHvuaLyiKkDxtsP/l12dpjkJS9KI2i/RoV2hxWGhTsKTINNujia
- bXHRiHjDbgzvbvyTip1s9r5YnKAWoIeftRS0lJytH3ghuc66mqHgFC5NOpB8oNqhtmrt
- ZMhw6P1vy9GsuPx6rHUjf6gAK4wlmdwLLkPtX36nX6pW1Sp8Aj1PpYylhtvUqy6oyTDn
- xp4PwsCYbQ2Za5GZ5l2ePSCyD6WngALjTTM0mMBpqiARbznPDEaDw3sH478Fb9JIY4T9
- KKlQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrfM4i8pSz4QTyyLKRyb1ZL7aHfldAHg1ZBnXAIzsJPfwjR76WN0vHTdJJPEOoC7spOVEEokRx6KpS@nongnu.org
-X-Gm-Message-State: AOJu0YzfkUqhhvEdxelrmd5C9t8SM4EToG9bZy1UJ+QYEsg4np8XEh1J
- +BA8E0SXzY3M8O4OBEcdx4vKhF2yYb0Z2m2lhnVLLyYoOa7Y1dI09dKi1YcGOta3FRZ1K6Sho3O
- 1
-X-Gm-Gg: ASbGnctttDI1Fb2YZfa2+/EWEKbicb9BX0K3lsiIhA1b79wZsxMlwPFJWZTzj+KfsQ5
- NklYBR/JGqfDzIDugcfOSb99Wf4TV26m84W6WSUHHl1mIuSMYFDan69KUeh7g51JKQnAIkRG0rE
- D6SIp+T0eiuCcGFU0qXq9qLm5fJn9ztyeN2LBvDmRIi7qc2H4FEhaSE8EnFcWmUoqftPKCqWxxx
- uq7cH53jxqjX/E/p1PoSGMj+cW7iQyjWIVVPZ7bxetnuS5fEt5fVf1JBD895TuMss72TLa6V4Bi
- nf9v5VRbl9Nlgg0AuQEGLelC+THO4LtH5zOn+BREzTPgUa9TRmbY8b2JoXjsc92h+sXHX+rzpNN
- CqBk7PxAE
-X-Google-Smtp-Source: AGHT+IG30J8sdWfv0GW0HC3Y/AGSFg3V7eWJd4q+s5kO8Hr1OFPe7qSQmdTzzFdu1gXiD7OtloBpEw==
-X-Received: by 2002:a17:90b:2d83:b0:2fc:3264:3666 with SMTP id
- 98e67ed59e1d1-2ff7cf317c3mr16092052a91.30.1741547685670; 
- Sun, 09 Mar 2025 12:14:45 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a7f747sm62923515ad.127.2025.03.09.12.14.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 12:14:44 -0700 (PDT)
-Message-ID: <e8584c67-0006-4b30-8987-6783874e346a@linaro.org>
-Date: Sun, 9 Mar 2025 12:14:43 -0700
+ d=1e100.net; s=20230601; t=1741549042; x=1742153842;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MT3STjDQDcCpuKL/24twGSo6UOkr+VDdVFMMCjf6edc=;
+ b=jeX3U6DLK1harTUgSbKyaH/Wh2sQXE5BkSiLuyhyy2sl9Gtl/NRSQFvEBA6MVJMRPl
+ CnqMqd2iup58ZYvbrC8O9WJJ/mVSYGzE5b//g4D9EYfTQLjmR7K5J5hzneQ1IKoUJ9hg
+ DQKC37S9wqj4M6tPKzfvmAKyE0eqxZSBgvwNDLGyzZTxo7ovMlUOtdX/di97cfD5Vpz4
+ BkMhKi/w5KDDe1W/l6DXCFVy3o11Lt1da9qUwTTs8/RYOw7+z51YS0qBn6cGAxJ52dQL
+ /14DmwRU/xcDnqzCDNVWyGmMUQbPrpCXQ1Ek5QTEj2ppNSwWGXE/9VbbpLX8v/FbUX6X
+ L1ug==
+X-Gm-Message-State: AOJu0YwP9B3rgPa1GD0zUj3giekKdwTL0bw+pNv2DJ0NAPD5r/LZZAOI
+ WtpAw908egpAfwMXtPdcSvjsTpxO11oWsDlZU0Z7mEazRVBfdGZkdaq+loiC15EbVZq7PUay+bq
+ j
+X-Gm-Gg: ASbGncu0OlsZGzuPcLY1fdCc2jhDFpbPt/xMxI9uJneboAu9+OWrXihKrHCXDrWjt74
+ khaBzHq6jxOF4cqHJiBFpIQcwBY/qDn+qhmggwU6ZGhiW2K9w3zqNXb6UeoV+tVB7sB+p6s/rFC
+ f05rVtrSLbuTk/S6QD/46Nu0AgLYJ9A4pLNgG022yrcR8NoNV+H80Ars8tBPqaZn+Cck8+zwAp1
+ Di7TW4q+3U/0bhaTODYqDfKVltgg8K+5RS/sF162v8aJB8sDWGt1nOL6UNA1po47XUp9KBVCzfL
+ WlNn1C3q+qyal4rz7jjYGaXFHKt27mZPXnyhYQSpMmJa
+X-Google-Smtp-Source: AGHT+IH+dB0CCOZNmpt8GVAk0PYup7OWx+PWNPe+3i8iyacqepyDh2lw3VDZjaEl9pH9UU6RlYG7MQ==
+X-Received: by 2002:a05:6a21:6f07:b0:1f5:79c4:5da2 with SMTP id
+ adf61e73a8af0-1f579c473bdmr2368337637.31.1741549041722; 
+ Sun, 09 Mar 2025 12:37:21 -0700 (PDT)
+Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af281093136sm6278945a12.18.2025.03.09.12.37.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 09 Mar 2025 12:37:21 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] system: initialize target_page_bits as soon as possible
+Date: Sun,  9 Mar 2025 12:37:12 -0700
+Message-Id: <20250309193712.1405766-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/21] qom: Introduce type_is_registered()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20250308230917.18907-1-philmd@linaro.org>
- <20250308230917.18907-11-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250308230917.18907-11-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,22 +99,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/25 15:09, Philippe Mathieu-Daudé wrote:
-> In order to be able to check whether a QOM type has been
-> registered, introduce the type_is_registered() helper.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   include/qom/object.h | 8 ++++++++
->   qom/object.c         | 5 +++++
->   2 files changed, 13 insertions(+)
+Allow device init functions to use it, which can be convenient in some
+cases (like hw/hyperv/hyperv.c).
 
-Does the non-initialization of the type matter for your usage?
-In other words, would object_class_by_name() do the job just as well?
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ system/physmem.c | 1 -
+ system/vl.c      | 3 +++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-But seems reasonable, anyway.
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+diff --git a/system/physmem.c b/system/physmem.c
+index 8df9f30a0bb..c5fb784a9e1 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3281,7 +3281,6 @@ void cpu_exec_init_all(void)
+      * do this much later, rather than requiring board models to state
+      * up front what their requirements are.
+      */
+-    finalize_target_page_bits();
+     io_mem_init();
+     memory_map_init();
+ }
+diff --git a/system/vl.c b/system/vl.c
+index ec93988a03a..c64f8c8e808 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2848,6 +2848,9 @@ void qemu_init(int argc, char **argv)
+     bool userconfig = true;
+     FILE *vmstate_dump_file = NULL;
+ 
++    /* Set target page info before creating machine and associated devices */
++    finalize_target_page_bits();
++
+     qemu_add_opts(&qemu_drive_opts);
+     qemu_add_drive_opts(&qemu_legacy_drive_opts);
+     qemu_add_drive_opts(&qemu_common_drive_opts);
+-- 
+2.39.5
 
-
-r~
 
