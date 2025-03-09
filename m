@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88767C28B2F
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 17:56:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380ECC28B2F
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 17:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trKq1-0005jj-D4; Sun, 09 Mar 2025 13:53:21 -0400
+	id 1trKsf-0003Xd-Gc; Sun, 09 Mar 2025 13:56:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKpu-0005Uq-73
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:53:14 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKrl-0001qc-F0
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:55:09 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKps-0004tl-Kz
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:53:13 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43ce71582e9so6368945e9.1
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:53:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKrb-00057q-5S
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:55:00 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4394a0c65fcso36475135e9.1
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:54:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741542790; x=1742147590; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741542897; x=1742147697; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vGcEABqB5MF8s9y7Im+YzfdcGovmNjIepWuE2Ltrdio=;
- b=w1NNDaTRlDz7fS6T345ZxXx1VKYGaVAnRpYC11JVDcmv2zIdriBWlP9vHf7YhokG6+
- GI5aJ9vaAf8eu295UpovhpZWXyQEoQvp49YdGh3q5BZLpRvc0qw3Uzqlk9CAyqCm8lZZ
- Ky6luLMygyv9vz34xsL/2oP4AP9wUyQKV4Mz9Bnw0x4+PAWk8e8oAYXVQ+m+Mzlx4XOv
- tANs7WxXNUCuNvUUfa/ZUm5WEm8viqofo3eQ6WnyUtTpWfP1cJ3tveNsAF3LvXnaIlFE
- fDZE9itBU5o+zOZRqiSPbEvU4kIs3AvEPdU2tWNyCuko4bsEhXOCgdXvjFKmoEfMRBxs
- oBxg==
+ :reply-to; bh=sppGnK7gq8hW+5sYH+c2kdETQLMRVDeaVClIKxwTfDI=;
+ b=o/B1LwR8n2EmPV0L3EE3ewrFonn0eBkt4xvojpVkaL1bXc8zvn42DkZZ6fGtx16/ep
+ icoquEsAjNo/vvLRBUsjSnugdt7Z8bnjog7mp6meIiEXqPKWYmxkGFl5TJd5l+blJsb+
+ 65J/5mALSxJ+hG0fF307RkYcJs0cC5F8hOhFSmatHl6Xw9h4kNsC/74gItqEGE3i6tZ5
+ 5/rmAAhqGG6NnvzHftOMDooO4nv9Un4AWsKWQDe+TWgUHt1fmwHWhmOSJeJsfHcYZnGS
+ D05MtHwTgVQZIya5cS5gC9VARZR+kfPMlMjDKxyToDFcmzTswj58/isgClVP1NahCr8s
+ ntnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741542790; x=1742147590;
+ d=1e100.net; s=20230601; t=1741542897; x=1742147697;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vGcEABqB5MF8s9y7Im+YzfdcGovmNjIepWuE2Ltrdio=;
- b=QIJ1p4zBigqHUwN9TMUi8dfnWHGzpiQriELTBo1ec5O5na5SzJsiucu2PHQYA8CLPJ
- exSMQs+6/8r5YjNooZwTMNzKFfg67bOyPdUE/fEG5RlyL4Nc8XCVadRRBgk7ZzkcMEC+
- CC2f5Mi4nuhd6MVTh2M6yxr21+BHKQCpuh9HOK6YDWAQcqvLVmVK2WwRzU6SfIxFcASO
- leISBPsAyb5nB5GwEBsGy6fuCt7m0g8Mo4HrOQHG0xnRdu/kgXiC6U1IhzDPdJ4AS3pn
- ztlOVcrjhJUkRSLowqIHNkUeVFdeb86Q+UDuQSZe3NKAgLGt830ewRv3a56rD1XMhBEj
- OWDg==
-X-Gm-Message-State: AOJu0Yw4WvpCklItFqHGdBcFuDi65oNJoTewgaBa4O1d4Re3XCThSKHu
- /+jQISz7npC2rbnickt92t2bpnR971AzDX1BiRNVXW3bJsQW6/Eq3wvYhTpFgUd87nODFKKPIp/
- 99zA=
-X-Gm-Gg: ASbGncuXd1EjzPvTvtn7DGb0m6n33e/atAM2NBPryOragD/XSNIT2WlNOMD/4xMAHdN
- 0EVaDZgyzBDReIwvNJXVUMnOyVX1bo6NP9l8/qRttERVHw/rpNl5ReqsFfSIhzZjhwm7+MCPy2S
- hck4ep+Q8wQh5uyamNbYs9HMU7+uOIYYsd3JKSJAA3XBuFEeKlAs3VUZi+D+vWO1qGZLn7W/Q0B
- gk8wnup5x+nhH/t+OlNRSjP2h5R0+I9Uyrwps0jMDlcrdXhDMVw9Zqizdena3tNYv3H7PbAIzZH
- udtL311GqERwnLvRupLlIBRE+Yox6z6Vv3pYuFeEquum4z7wzdmhNgl8A5jaEkLvOoi/QytV0kM
- kubcmKCtWmQ5zOjkj2eRWEKfh1w3AMQ==
-X-Google-Smtp-Source: AGHT+IEjRI2FI8/eX28Q3ARWS4drD3f9uGeRrfyhYOGhPLpiYdmQEIBAS3zO7wOdFx2bZh1GKSLIyw==
-X-Received: by 2002:a05:600c:4e45:b0:43c:fa3f:8e5d with SMTP id
- 5b1f17b1804b1-43cfa3f9022mr2504015e9.2.1741542789932; 
- Sun, 09 Mar 2025 10:53:09 -0700 (PDT)
+ bh=sppGnK7gq8hW+5sYH+c2kdETQLMRVDeaVClIKxwTfDI=;
+ b=T9RZ3zRLsxQdQxgk8fIKVFYbvERSS4JAxOFXuilP7Uj1/m51H4MkxHngXr89TGBcvl
+ lZpo7wOImymnJF46+C2o9of+IeVIQr/fgpfxBktk4J8QhCDaZ1NTw62e2szRu8vT5GEK
+ W+7V7biT4nBgeUikohap+KO0KTENVBj3ateiP817SCq3BuC19RVsW0J7z2YiNwpN7U6S
+ 7Ub0qVJZE8q/kIF4psUpaINuRpDG2+1vkRToUAW3a/tZCpgWBjWWWiPN1En0KqDssvd5
+ LSpSa2L8+l7hO0IxamGG2fES5PGYePi7v/zWV/i5eacy1PjBizfRzYU1HxuVuWZ6Sjpc
+ HIfQ==
+X-Gm-Message-State: AOJu0Yx6cogOXjmv/Y+NgOFfEbxqLeNOr00NpzIFxAU//HGPuUUvNlts
+ mfGZhyUBEbIrCQrc4xeC5oS43IL3jayvbOQUjZLDdzvdZCRKX0x3QE9tW51hCJIW1rV5822C1wf
+ RZQE=
+X-Gm-Gg: ASbGncto37tawSKjoqUvn3SxysTbHesRTO1PNT2EaGehM8OPQG9L5FDWSfv+nctSr6D
+ lL7yMrNs6EaVMLxE69TB2D+lGPtuiM3Sit1HQ1lduQg/NG+QLT0FGKxrB+eUVejiX/lmoEN4RKj
+ p95bNC5erjou1Yffxgejss4u37K/N1LdgjeMeU4xcLZnJjNhzhWSx6RERKtkjEiiViOSN5FpS+o
+ adtmqBznPJnnehyvnN6K3YKHnThO3EiwVzBRo2YLYm1cbJ8YpT393JltmawYPb38DxaJdAgK5bT
+ NRk15kVkhkQP8Zdo2ejnj2QOw18FeR4gYtZqW1N/CQTvMPZaGkYT+DO7Q18IMamAsK2RafNWXVE
+ 3fRFVfRZVCJSlian7ea+KOOdL+R47Vg==
+X-Google-Smtp-Source: AGHT+IHHrmjEb1PzTO3ZBcnNZSWa8+jISTfcKZwuSQdT5re9VrPAf1Qc+KD+P6zp0vOLRYJwt1d2zQ==
+X-Received: by 2002:a05:600c:3b0e:b0:43c:f575:e305 with SMTP id
+ 5b1f17b1804b1-43cf575eac0mr10816255e9.8.1741542896875; 
+ Sun, 09 Mar 2025 10:54:56 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ce5d2808dsm62590335e9.13.2025.03.09.10.53.09
+ ffacd0b85a97d-3912bfbab43sm12633687f8f.15.2025.03.09.10.54.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 09 Mar 2025 10:53:09 -0700 (PDT)
+ Sun, 09 Mar 2025 10:54:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/38] target/arm: Prefer cached CpuClass over CPU_GET_CLASS()
- macro
-Date: Sun,  9 Mar 2025 18:51:42 +0100
-Message-ID: <20250309175207.43828-14-philmd@linaro.org>
+Subject: [PULL 35/38] target/tricore: Move has_work() from CPUClass to
+ SysemuCPUOps
+Date: Sun,  9 Mar 2025 18:52:04 +0100
+Message-ID: <20250309175207.43828-36-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250309175207.43828-1-philmd@linaro.org>
 References: <20250309175207.43828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,60 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CpuState caches its CPUClass since commit 6fbdff87062
-("cpu: cache CPUClass in CPUState for hot code paths"),
-use it.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250122093028.52416-11-philmd@linaro.org>
+Message-Id: <20250125170125.32855-23-philmd@linaro.org>
 ---
- target/arm/cpu.c         | 3 +--
- target/arm/tcg/cpu-v7m.c | 3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ target/tricore/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index cacbbc615a2..d7e61d08bbb 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -830,7 +830,6 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
+diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
+index eb794674c8d..16acc4ecb92 100644
+--- a/target/tricore/cpu.c
++++ b/target/tricore/cpu.c
+@@ -165,6 +165,7 @@ static bool tricore_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ #include "hw/core/sysemu-cpu-ops.h"
  
- static bool arm_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
--    CPUClass *cc = CPU_GET_CLASS(cs);
-     CPUARMState *env = cpu_env(cs);
-     uint32_t cur_el = arm_current_el(env);
-     bool secure = arm_is_secure(env);
-@@ -930,7 +929,7 @@ static bool arm_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-  found:
-     cs->exception_index = excp_idx;
-     env->exception.target_el = target_el;
--    cc->tcg_ops->do_interrupt(cs);
-+    cs->cc->tcg_ops->do_interrupt(cs);
-     return true;
- }
+ static const struct SysemuCPUOps tricore_sysemu_ops = {
++    .has_work = tricore_cpu_has_work,
+     .get_phys_page_debug = tricore_cpu_get_phys_page_debug,
+ };
  
-diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
-index 29a41fde694..c4dd3092726 100644
---- a/target/arm/tcg/cpu-v7m.c
-+++ b/target/arm/tcg/cpu-v7m.c
-@@ -19,7 +19,6 @@
+@@ -193,7 +194,6 @@ static void tricore_cpu_class_init(ObjectClass *c, void *data)
+     resettable_class_set_parent_phases(rc, NULL, tricore_cpu_reset_hold, NULL,
+                                        &mcc->parent_phases);
+     cc->class_by_name = tricore_cpu_class_by_name;
+-    cc->has_work = tricore_cpu_has_work;
+     cc->mmu_index = tricore_cpu_mmu_index;
  
- static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
--    CPUClass *cc = CPU_GET_CLASS(cs);
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
-     bool ret = false;
-@@ -35,7 +34,7 @@ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-     if (interrupt_request & CPU_INTERRUPT_HARD
-         && (armv7m_nvic_can_take_pending_exception(env->nvic))) {
-         cs->exception_index = EXCP_IRQ;
--        cc->tcg_ops->do_interrupt(cs);
-+        cs->cc->tcg_ops->do_interrupt(cs);
-         ret = true;
-     }
-     return ret;
+     cc->gdb_read_register = tricore_cpu_gdb_read_register;
 -- 
 2.47.1
 
