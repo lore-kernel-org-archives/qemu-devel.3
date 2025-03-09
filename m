@@ -4,58 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46566C282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 11:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E3CBC282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 12:07:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trF4Z-0002RT-JD; Sun, 09 Mar 2025 07:44:01 -0400
+	id 1trFQ5-00030f-OM; Sun, 09 Mar 2025 08:06:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1trF4N-0002Pa-EC; Sun, 09 Mar 2025 07:43:49 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1trF4L-0007vw-Bk; Sun, 09 Mar 2025 07:43:47 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 008444E602D;
- Sun, 09 Mar 2025 12:43:41 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Pzo-O9mLZXiy; Sun,  9 Mar 2025 12:43:39 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id EB9834E6019; Sun, 09 Mar 2025 12:43:38 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E604A74577C;
- Sun, 09 Mar 2025 12:43:38 +0100 (CET)
-Date: Sun, 9 Mar 2025 12:43:38 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Andrey Smirnov <andrew.smirnov@gmail.com>, 
- Bernhard Beschow <shentey@gmail.com>, 
- Jean-Christophe Dubois <jcd@tribudubois.net>, 
- Guenter Roeck <linux@roeck-us.net>, qemu-block@nongnu.org, 
- Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org
-Subject: Re: [PATCH v4 04/14] hw/sd/sdhci: Make quirks a class property
-In-Reply-To: <20250308213640.13138-5-philmd@linaro.org>
-Message-ID: <11b37245-5dee-122b-cdfb-dfc820a38661@eik.bme.hu>
-References: <20250308213640.13138-1-philmd@linaro.org>
- <20250308213640.13138-5-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1trFPu-0002zU-IU
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 08:06:04 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1trFPs-0006pY-Gp
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 08:06:02 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-abf57138cfaso635709066b.1
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 05:05:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741521958; x=1742126758; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wceicz0F40kTvySS5vdV/AXzv+d9LJILMf9IQ/VOP78=;
+ b=hbTDE5X3o1QUFDIFKxRwImbGM2i3xeU44tmdY5DtgUIZrqxIcy0JzQ6m6dIKVSvz6g
+ ZN6JWh/6STS2Xo9L7ZilxGiz6V6A7Gl9aKcF2isjYGOLxvFneGllK8jT8EBKLXkFkF3B
+ BaWpriHY/dftsWLrrO7v6T2bbPPuc8hC2kQBhaeLFm/2Tg+U1u+kEnX4m5rmZL+8Q2jK
+ jbEV9zrVkrGH23XAvJMnJZatj/OdVUW/02dinh+0827gNnWUior1jh6UducPcReirHas
+ 5rLAXMHMS6EmfPPQYBg5+tXS6qP6LTr65TG4zdiGTpf75cjfVrgMSstVzlmJnJ6nvnRP
+ ODQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741521958; x=1742126758;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wceicz0F40kTvySS5vdV/AXzv+d9LJILMf9IQ/VOP78=;
+ b=KsvLK/OcP15cMZJo1tm0UmcI2xb57tjYXmHrdXmRYO+YQE20HdVWRQr/xXaQE0Hpp3
+ QKYQ8PrBr5Xx40gEd030ROKuDZ6g49hxXgaHnEf5UDZhBazuyAp1aYAaRuyt1gaerzwW
+ LNAD5u/mCrKvLttfoO8mlJSzNmjD+0tmv2AkeJWpA8BjONrjIZ39pWUErgfrWwUBQbRB
+ /r9ZU+AiqMdbPo8YuptBdpPGKbFxMfNKZGZuM+47SNMTZ/eqomClhavogBBcD9hJpLQy
+ TxYiUUsfmKLnV+mfIIEQDqwx5akkQQuShOUDJ6sCNK/JNhLBUJUvTFELxzMyYhRMBFoG
+ 78rw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX+PZx+8UleRoff1tRefZ4IAw6QbTrbKl8LZk0kueoPBDjcY5arcrfXdxIPURZYiHDG8NJIxTqcI44b@nongnu.org
+X-Gm-Message-State: AOJu0YyTNZpwoWnFQKVAcLZfWjJJfXdi01d9F3shjBwcLmecgv+kP6L0
+ Pp1EpzBxKtAsm0xYSWOXjkFNOPwwy2vgqdaq72kgQ15yx5aRrZqxdOeZ1Hd0qAQ=
+X-Gm-Gg: ASbGncuc6Co/fqYWmPEQVjqRPjnCJ84ARZ5RhdYnYWNOxsdrgPUz8E0owHolhudgTKF
+ vGyqDG+b9noBmbuo9xOpOdIwZVRk8MTexw2quAAssEC0LRsgJMY4LF8RNEeWe/7+pK2bu8FAaDE
+ jzmsmyshrcuTW5YrinoskHourdGSZDlVVxjZdfV/Vkq8Vt/FXaIypUgRdopad/e5rV2aiJPCcVq
+ jsWRfXetJRWPaS2SWUHP+PQresvHi6bmlqjA33Z93aaSQ5fKvF1dJRVx/GpJ0TPFBow4+UYgmZX
+ WQeUhtcxAOieq0FsZzmISJQnG6zrQLhA7ZjaFCsibAJwa6s=
+X-Google-Smtp-Source: AGHT+IHMQ1ZxO1JA+JUNqrvna7j7i5aO1GahWjILXSem9umA4s9sQyUQ9gxjmXNe8tyi0NZrOpKg/w==
+X-Received: by 2002:a17:906:564b:b0:ac2:6582:1564 with SMTP id
+ a640c23a62f3a-ac265821f85mr755888666b.27.1741521958207; 
+ Sun, 09 Mar 2025 05:05:58 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac23973810csm583735166b.118.2025.03.09.05.05.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 09 Mar 2025 05:05:57 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E46285F9DA;
+ Sun,  9 Mar 2025 12:05:56 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org,  qemu-stable@nongnu.org
+Subject: Re: [PATCH v3 0/9] target/arm: Implement SEL2 physical and virtual
+ timers
+In-Reply-To: <e5c5e542-f28c-4f4d-884d-ee3defd0a330@tls.msk.ru> (Michael
+ Tokarev's message of "Sun, 9 Mar 2025 08:24:23 +0300")
+References: <20250204125009.2281315-1-peter.maydell@linaro.org>
+ <e5c5e542-f28c-4f4d-884d-ee3defd0a330@tls.msk.ru>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Sun, 09 Mar 2025 12:05:56 +0000
+Message-ID: <87msduo1cr.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="3866299591-103569848-1741520618=:9805"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,100 +107,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Michael Tokarev <mjt@tls.msk.ru> writes:
 
---3866299591-103569848-1741520618=:9805
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+> 04.02.2025 15:50, Peter Maydell wrote:
+>> This patchset is a respin of Alex's patches, with some extra fixes
+>> for bugs I discovered along the way in our existing code (and
+>> a bit of refactoring to make the fixes straightforward). It is:
+>> Based-on: 20250130182309.717346-1-peter.maydell@linaro.org
+>> ("target/arm: Clean up some corner cases of sysreg traps")
+>> because it wants to use the renamed CP_ACCESS_* constants that
+>> that patchset introduced.
+>> The bugfixes are not super exciting as they mostly are oddball
+>> corner cases, but I've cc'd them to stable anyway. The actual
+>> implementation of the missing SEL2 timers also should go to stable.
+>> Alex Benn=C3=A9e (4):
+>>    target/arm: Implement SEL2 physical and virtual timers
+>>    target/arm: document the architectural names of our GTIMERs
+>>    hw/arm: enable secure EL2 timers for virt machine
+>>    hw/arm: enable secure EL2 timers for sbsa machine
+>> Peter Maydell (5):
+>>    target/arm: Apply correct timer offset when calculating deadlines
+>>    target/arm: Don't apply CNTVOFF_EL2 for EL2_VIRT timer
+>>    target/arm: Make CNTPS_* UNDEF from Secure EL1 when Secure EL2 is
+>>      enabled
+>>    target/arm: Always apply CNTVOFF_EL2 for CNTV_TVAL_EL02 accesses
+>>    target/arm: Refactor handling of timer offset for direct register
+>>      accesses
+>
+> Hi!
+>
+> Which stable series this patchset is supposed to be applied to?
+> (Current active stable series are 7.2, 8.2 and 9.2)
+>
+> Or put it in other words, is it supposed to go earlier than the
+> most recent stable series, 9.2?
 
-On Sat, 8 Mar 2025, Philippe Mathieu-Daudé wrote:
-> All TYPE_IMX_USDHC instances use the quirk:
-> move it to the class layer.
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> include/hw/sd/sdhci.h |  3 ++-
-> hw/sd/sdhci.c         | 15 +++++++++++++--
-> 2 files changed, 15 insertions(+), 3 deletions(-)
->
-> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-> index c4b20db3877..0616ce3aa59 100644
-> --- a/include/hw/sd/sdhci.h
-> +++ b/include/hw/sd/sdhci.h
-> @@ -95,7 +95,6 @@ struct SDHCIState {
->
->     /* Configurable properties */
->     bool pending_insert_quirk; /* Quirk for Raspberry Pi card insert int */
-> -    uint32_t quirks;
->     uint8_t endianness;
->     uint8_t sd_spec_version;
->     uint8_t uhs_mode;
-> @@ -112,6 +111,8 @@ typedef struct SDHCIClass {
->         PCIDeviceClass pci_parent_class;
->         SysBusDeviceClass sbd_parent_class;
->     };
-> +
-> +    uint32_t quirks;
-> } SDHCIClass;
->
-> /*
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index 4917a9b3632..2b7eb11a14a 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -345,6 +345,8 @@ static void sdhci_send_command(SDHCIState *s)
->     rlen = sdbus_do_command(&s->sdbus, &request, response);
->
->     if (s->cmdreg & SDHC_CMD_RESPONSE) {
-> +        SDHCIClass *sc = SYSBUS_SDHCI_GET_CLASS(s);
+I'd just do 9.2 because I think as you've found too much has changed.
+That should become available in backports while we wait for trixie to
+stabilise this year.
 
-I don't like this because it introduces a class look up which may be 
-costly in a function that could be called frequently. Maybe you could just 
-drop this patch and leave the quirk handling as it is. Changing it does 
-not seem to improve the model much.
+>
+> For example, the very first patch, "Apply correct timer offset when calcu=
+lating
+> deadlines", does not apply to 8.2 because it lacks v8.2.0-2122-g2808d3b38a
+> "target/arm: Implement FEAT_ECV CNTPOFF_EL2 handling" which touches the s=
+ame
+> line in target/arm/helper.c:gt_recalc_timer().
+>
+> Thanks,
+>
+> /mjt
 
-Regards,
-BALATON Zoltan
-
-> +
->         if (rlen == 4) {
->             s->rspreg[0] = ldl_be_p(response);
->             s->rspreg[1] = s->rspreg[2] = s->rspreg[3] = 0;
-> @@ -366,7 +368,7 @@ static void sdhci_send_command(SDHCIState *s)
->             }
->         }
->
-> -        if (!(s->quirks & SDHCI_QUIRK_NO_BUSY_IRQ) &&
-> +        if (!(sc->quirks & SDHCI_QUIRK_NO_BUSY_IRQ) &&
->             (s->norintstsen & SDHC_NISEN_TRSCMP) &&
->             (s->cmdreg & SDHC_CMD_RESPONSE) == SDHC_CMD_RSP_WITH_BUSY) {
->             s->norintsts |= SDHC_NIS_TRSCMP;
-> @@ -1886,7 +1888,15 @@ static void imx_usdhc_init(Object *obj)
->     SDHCIState *s = SYSBUS_SDHCI(obj);
->
->     s->io_ops = &usdhc_mmio_ops;
-> -    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
-> +}
-> +
-> +static void imx_usdhc_class_init(ObjectClass *oc, void *data)
-> +{
-> +    SDHCIClass *sc = SYSBUS_SDHCI_CLASS(oc);
-> +
-> +    sc->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
-> +
-> +    sdhci_common_class_init(oc, data);
-> }
->
-> /* --- qdev Samsung s3c --- */
-> @@ -1967,6 +1977,7 @@ static const TypeInfo sdhci_types[] = {
->         .name = TYPE_IMX_USDHC,
->         .parent = TYPE_SYSBUS_SDHCI,
->         .instance_init = imx_usdhc_init,
-> +        .class_init = imx_usdhc_class_init,
->     },
->     {
->         .name = TYPE_S3C_SDHCI,
->
---3866299591-103569848-1741520618=:9805--
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
