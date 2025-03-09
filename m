@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A70C28B2F
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 17:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F58C28B2F
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 17:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trKpB-0005AQ-Ew; Sun, 09 Mar 2025 13:52:29 -0400
+	id 1trKoy-00058S-Nq; Sun, 09 Mar 2025 13:52:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKp9-0005AD-FR
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:27 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKow-000589-Su
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:14 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKp7-0004oY-Rn
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:27 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43bc48ff815so19917165e9.0
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:52:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKou-0004mv-DB
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:14 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3912d2c89ecso2906084f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741542744; x=1742147544; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=I3NR+5rxXyS1Unu3/N17nFNE/6t0ATq2jAlqmEXa0yw=;
- b=PQ465ES6JSXBfszIkQO0eQXhPJ5WlEUy9oClOs3Jrh+sAQlNuX75YQkbGcHULmMThx
- nCzHiaxQGj9cJVP5IRs1128QMVgic/WpnVEHcuWFtlp5V65WI6ly0eTvc2Rg6hZcJMKe
- drPoshelWqNluUidD5URnnryrVIn0Sc8govlyiseds41MyXJWvfP2aPNbzPS525CHRvh
- h1rYwYi/5uzNvOV2bK67ktSh/htsjWfeniUjq6cimA/DfQ6IRoPtInYjQOZWj7Ls94Hy
- wlGGdwXGeJDYLqicetuBdcw+EcToFA3XjJiFJGg5c661SJnK3zMlput4msGdqgazjKbd
- EXLQ==
+ d=linaro.org; s=google; t=1741542730; x=1742147530; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=uU8WULxu6dVP2LF9qDMDNW07pyxmrtGdWeVgtgF3eyk=;
+ b=g8z2uzh+4i9LvMmbsmkPd9/7Qd8fDcGuH2ZPHiseov1h9DN+bs338d7WB9UPUHv5kX
+ uulGQvUBEoxoj/H5wy1+q2KnmLgmH1fTywtrAhk5tmf21Kl61hoEhFcTcWPXln+cR8O2
+ hCX+IOYnRat83Y2R3tml0lSBrmZdJSkUx+itTkyYr1QZXxSm5wQieMGm8AjwG09Z5rG5
+ BzGRh/F/hi+kk6zEtpdNtq8oZK1/usX8S2PanHSyxXGxi6RFhxik1GRlVC1XtiZ/xana
+ fSsXwoNpAm42mqPXd+T/Qz848mbltZXj0SYTzeJD3EtWr3pm6o/m+xBszRj2uwnwSooV
+ g1ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741542744; x=1742147544;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=I3NR+5rxXyS1Unu3/N17nFNE/6t0ATq2jAlqmEXa0yw=;
- b=OaJaCfwvfk1jxfmwlt0XQu01bMc8SB53JtXFn7BEOFJE3wLyaJL9dZDmGMo+vaoMdu
- Lw18SsM0Mvn6la5V60Hlk+sQ9u/pF01//BnKC3Aj6bQzsP9CejS9WkPB1bLhW6k6F/on
- UVzpq+5xZovCSMYdOx9+WgAlRHDKksEf0GNjPk6doEb763sj9nKPTmOt9Dd9sXqDusTH
- TCX+easu8nG5Vkm+RLcR7X31eaWO7cNdkys2iSOokJinQ4m0UDFewANq6evJAK0Re2S9
- mtvmX2x7pegZxa7fn4jk5BWn+ocOQT2kfTWIjqG6K2OJWThJSwH2Jk80J1P53b4yT9Mn
- F8CQ==
-X-Gm-Message-State: AOJu0YyBV3XxWPqyIsHICYeFBHKJ6aC5AAyI6vwUYGE0bjjfXHo+uWe1
- m8Bhr2QqvRO+SYBcZw9h1KUCUy2pJoWA1I48DuSYUmIJKDzxRKnS1NBukjojJ2GKCMzy0cKh8He
- hB10=
-X-Gm-Gg: ASbGncuO8PihviY2QH5EOwxt1sxEH9/gZPiB/r92Ju3pEHUCKdJBDqcGk5xFreZECTG
- M2l8FKj1v/4coh/n8DgKT3yJcXmNN00vtJktWN9wZX2iSivtEw/GqNvmgvnRNATMl0AAroRXaRs
- WR7ENlIOJHiI9ohEnEypaYTfeLDcq3+d4HKt1bDIlabdUHDzE9uH2LOCiVkEdzI8mrKKkV4kzxm
- EU2XLe9Rqd6tSylxqQZHUUY/SboGXSPSFCEIZAll+FG0ZtSvFz8y5/nD/wYUdKzGVfzEH6YBnin
- i7ZYfpttOzx2QREEL9DfdStTy7+V6NGU05TPl2J85hzGdJw7JjqP92XDSnzdDOprmSlWRXu23nQ
- Yv39mLsW1k7QimEVcpdPw2CetEiNgbQ==
-X-Google-Smtp-Source: AGHT+IFO1/oUuVaYLKaejKW45XLEgrXqtWD100cEYoy2qq3dChUlbidwJXH/D/Ek//Nzd/t5knxe4A==
-X-Received: by 2002:a05:600c:3054:b0:43b:c270:49ae with SMTP id
- 5b1f17b1804b1-43ce4a4adf9mr37286325e9.0.1741542743696; 
- Sun, 09 Mar 2025 10:52:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741542730; x=1742147530;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uU8WULxu6dVP2LF9qDMDNW07pyxmrtGdWeVgtgF3eyk=;
+ b=FH9zmOOI229s1a0e87Z+1GPVP+32H/KSKS0qduDZtGFknGHGn0UTkZe/MAVPJk3xL1
+ RYyXw2Tu8V0WlkWeG6wDIfJEcq39eFowG6ToyPC8ZjypAV2K7IDFqOjK3V3svo+mbHhg
+ JUP0fV7NrmsdfbtH4/3F1+IO6CN5uLUKcxB+BqsX7z72d1+XGTKpzjgWw6C0feGxtSgH
+ l2PBPd/uL5+zasqixygE37MMjwoecHboKjF63aE0UDLDCxuQkIHlmun3bEJeX1kadjTS
+ z5l5MJf4aZ9osDzfNXLoNtJD6RslJvlqosEGYEF/NZ1D8h3ify46A0z7rkHS7NMeteho
+ LNtg==
+X-Gm-Message-State: AOJu0YwGkqL/QcndC76QjDX4zj9oqjkeygveAh+iVYecm+2V3G8mK4rq
+ rSsaStm+ml7zHJpXeTH2Ohj+EPRVQPUA8nSIDhd2n6Wsd+SutO7pq4PiVj4lgNSm8TvUgqlMn4f
+ lCm0=
+X-Gm-Gg: ASbGncsgAkOMnzx+J9RabJXhD/Pu/2+XnQwiVgVBlxkz1gCmkhyyUrkm1ngzFw86QY6
+ C11PoAQWUNx7tJI27LTH4CTFWXkJ9PmWv9jjTnvRB9oDgPNetj83lr849TrVOt95aAANMyKCVJP
+ KQ5TqgNL/CKcaVogZG34aXoDA5IZ3N4fpBKIEYmUa3C5vCgYj9lMHwQhEjSeMHcN1GWzcxOnY8M
+ s+Bzf/JjOpvIEHE1+Ce75KzOiYsdwgidmanEtnwmpbfBz6AWmUdFSPG8afs8FIgucna+Gmsmdmw
+ QmUmqkp27gMmOwgmlq9Dtx3dhIFgbxrYb0YD6dToq3kAZ86rZZNGZHNoGj66mCUFqCpMcSykOyU
+ mX+rVIzCESwvNuMXuTFE=
+X-Google-Smtp-Source: AGHT+IHKan3/onRTa2uSj+CTdb3F157hnmjc2f6aDGF4GfkPD+WKKxMAxM2EQ8ZlIn4yVkIMBvNAwg==
+X-Received: by 2002:a05:6000:1862:b0:390:fe4b:70b9 with SMTP id
+ ffacd0b85a97d-39132d6c5demr8880759f8f.21.1741542729552; 
+ Sun, 09 Mar 2025 10:52:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cf1b36d14sm27582095e9.37.2025.03.09.10.52.22
+ ffacd0b85a97d-3912c0195casm12645156f8f.53.2025.03.09.10.52.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 09 Mar 2025 10:52:23 -0700 (PDT)
+ Sun, 09 Mar 2025 10:52:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/38] bsd-user: Propagate alignment argument to mmap_find_vma()
-Date: Sun,  9 Mar 2025 18:51:32 +0100
-Message-ID: <20250309175207.43828-4-philmd@linaro.org>
+Subject: [PULL 00/38] Accelerators & CPU patches for 2025-03-09
+Date: Sun,  9 Mar 2025 18:51:29 +0100
+Message-ID: <20250309175207.43828-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250309175207.43828-1-philmd@linaro.org>
-References: <20250309175207.43828-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,86 +95,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Propagate the alignment to mmap_find_vma(), effectively
-embedding mmap_find_vma_aligned() within mmap_find_vma().
+The following changes since commit d9a4282c4b690e45d25c2b933f318bb41eeb271d:
 
-Add a comment in do_bsd_shmat() to clarify alignment above
-page size is not required.
+  Merge tag 'pull-tcg-20250308' of https://gitlab.com/rth7680/qemu into staging (2025-03-09 11:45:00 +0800)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Message-Id: <20250308122842.76377-3-philmd@linaro.org>
----
- bsd-user/bsd-mem.h |  4 +++-
- bsd-user/qemu.h    |  2 +-
- bsd-user/mmap.c    | 10 ++--------
- 3 files changed, 6 insertions(+), 10 deletions(-)
+are available in the Git repository at:
 
-diff --git a/bsd-user/bsd-mem.h b/bsd-user/bsd-mem.h
-index f5ec0de24ca..90ca0e33775 100644
---- a/bsd-user/bsd-mem.h
-+++ b/bsd-user/bsd-mem.h
-@@ -370,9 +370,11 @@ static inline abi_long do_bsd_shmat(int shmid, abi_ulong shmaddr, int shmflg)
-         if (shmaddr) {
-             host_raddr = shmat(shmid, (void *)g2h_untagged(shmaddr), shmflg);
-         } else {
-+            abi_ulong alignment;
-             abi_ulong mmap_start;
- 
--            mmap_start = mmap_find_vma(0, shm_info.shm_segsz);
-+            alignment = 0; /* alignment above page size not required */
-+            mmap_start = mmap_find_vma(0, shm_info.shm_segsz, alignment);
- 
-             if (mmap_start == -1) {
-                 return -TARGET_ENOMEM;
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index 4e97c796318..0b3bd65b180 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -242,7 +242,7 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
-                        abi_ulong new_addr);
- int target_msync(abi_ulong start, abi_ulong len, int flags);
- extern abi_ulong mmap_next_start;
--abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size);
-+abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size, abi_ulong alignment);
- void mmap_reserve(abi_ulong start, abi_ulong size);
- void TSA_NO_TSA mmap_fork_start(void);
- void TSA_NO_TSA mmap_fork_end(int child);
-diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-index dfa6e728ab5..3f0df79c375 100644
---- a/bsd-user/mmap.c
-+++ b/bsd-user/mmap.c
-@@ -275,8 +275,7 @@ static abi_ulong mmap_find_vma_reserved(abi_ulong start, abi_ulong size,
-  * It must be called with mmap_lock() held.
-  * Return -1 if error.
-  */
--static abi_ulong mmap_find_vma_aligned(abi_ulong start, abi_ulong size,
--                                       abi_ulong alignment)
-+abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size, abi_ulong alignment)
- {
-     void *ptr, *prev;
-     abi_ulong addr;
-@@ -395,11 +394,6 @@ static abi_ulong mmap_find_vma_aligned(abi_ulong start, abi_ulong size,
-     }
- }
- 
--abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size)
--{
--    return mmap_find_vma_aligned(start, size, 0);
--}
--
- /* NOTE: all the constants are the HOST ones */
- abi_long target_mmap(abi_ulong start, abi_ulong len, int prot,
-                      int flags, int fd, off_t offset)
-@@ -494,7 +488,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int prot,
-         host_len = len + offset - host_offset;
-         host_len = HOST_PAGE_ALIGN(host_len);
-         alignment = (flags & MAP_ALIGNMENT_MASK) >> MAP_ALIGNMENT_SHIFT;
--        start = mmap_find_vma_aligned(real_start, host_len, alignment);
-+        start = mmap_find_vma(real_start, host_len, alignment);
-         if (start == (abi_ulong)-1) {
-             errno = ENOMEM;
-             goto fail;
+  https://github.com/philmd/qemu.git tags/accel-cpus-20250309
+
+for you to fetch changes up to 8ff6ff09b9890ba390395d7510eca1025f7284df:
+
+  MAINTAINERS: Consolidate core exec/vCPU handling section (2025-03-09 17:00:47 +0100)
+
+----------------------------------------------------------------
+Generic CPUs / accelerators patch queue
+
+- Reduce "exec/tb-flush.h" inclusion on linux-user
+- Consider alignment in bsd-user's mmap_find_vma()
+- Unify MMAP common user emulation API
+- Simplify cpu-target.c further
+- Prefer cached CpuClass over CPU_GET_CLASS() macro
+- Restrict CPU has_work() handlers to system emulation
+- Consolidate core exec/vCPU section in MAINTAINERS
+
+Following spurious checkpatch error deliberately ignored:
+
+  8/38 Checking commit e27fa95fb9d1 (accel: Prefer cached CpuClass over CPU_GET_CLASS() macro)
+  ERROR: space prohibited after that '&&' (ctx:ExW)
+  #112: FILE: accel/tcg/watchpoint.c:120:
+  +                && cpu->cc->tcg_ops->debug_check_watchpoint
+                  ^
+
+  total: 1 errors, 0 warnings, 74 lines checked
+
+----------------------------------------------------------------
+
+Philippe Mathieu-Daudé (38):
+  linux-user: Only include 'exec/tb-flush.h' header when necessary
+  bsd-user: Always use mmap_find_vma_aligned() in target_mmap()
+  bsd-user: Propagate alignment argument to mmap_find_vma()
+  user: Extract common MMAP API to 'user/mmap.h'
+  cpus: Register VMState per user / system emulation
+  cpus: Build cpu_exec_[un]realizefn() methods once
+  cpus: Prefer cached CpuClass over CPU_GET_CLASS() macro
+  accel: Prefer cached CpuClass over CPU_GET_CLASS() macro
+  user: Prefer cached CpuClass over CPU_GET_CLASS() macro
+  disas: Prefer cached CpuClass over CPU_GET_CLASS() macro
+  gdbstub: Prefer cached CpuClass over CPU_GET_CLASS() macro
+  hw/acpi: Prefer cached CpuClass over CPU_GET_CLASS() macro
+  target/arm: Prefer cached CpuClass over CPU_GET_CLASS() macro
+  cpus: Restrict cpu_has_work() to system emulation
+  cpus: Un-inline cpu_has_work()
+  cpus: Introduce SysemuCPUOps::has_work() handler
+  target/alpha: Move has_work() from CPUClass to SysemuCPUOps
+  target/arm: Move has_work() from CPUClass to SysemuCPUOps
+  target/avr: Move has_work() from CPUClass to SysemuCPUOps
+  target/hexagon: Remove CPUClass:has_work() handler
+  target/hppa: Move has_work() from CPUClass to SysemuCPUOps
+  target/i386: Move has_work() from CPUClass to SysemuCPUOps
+  target/loongarch: Move has_work() from CPUClass to SysemuCPUOps
+  target/m68k: Move has_work() from CPUClass to SysemuCPUOps
+  target/microblaze: Move has_work() from CPUClass to SysemuCPUOps
+  target/mips: Move has_work() from CPUClass to SysemuCPUOps
+  target/openrisc: Move has_work() from CPUClass to SysemuCPUOps
+  target/ppc: Move has_work() from CPUClass to SysemuCPUOps
+  target/riscv: Move has_work() from CPUClass to SysemuCPUOps
+  target/rx: Move has_work() from CPUClass to SysemuCPUOps
+  target/s390x: Restrict I/O handler installers to system emulation
+  target/s390x: Move has_work() from CPUClass to SysemuCPUOps
+  target/sh4: Move has_work() from CPUClass to SysemuCPUOps
+  target/sparc: Move has_work() from CPUClass to SysemuCPUOps
+  target/tricore: Move has_work() from CPUClass to SysemuCPUOps
+  target/xtensa: Move has_work() from CPUClass to SysemuCPUOps
+  cpus: Remove CPUClass::has_work() handler
+  MAINTAINERS: Consolidate core exec/vCPU handling section
+
+ MAINTAINERS                      |  14 +--
+ bsd-user/bsd-mem.h               |   4 +-
+ bsd-user/qemu.h                  |  12 +--
+ include/accel/tcg/cpu-ops.h      |   2 +-
+ include/hw/core/cpu.h            |  35 +++---
+ include/hw/core/sysemu-cpu-ops.h |   4 +
+ include/user/mmap.h              |  32 ++++++
+ linux-user/alpha/target_proc.h   |   2 +-
+ linux-user/user-internals.h      |   1 -
+ linux-user/user-mmap.h           |  19 +---
+ target/i386/cpu.h                |   4 +-
+ target/mips/internal.h           |   4 +-
+ target/riscv/internals.h         |   4 +-
+ target/s390x/s390x-internal.h    |   5 +
+ accel/accel-target.c             |  12 +--
+ accel/tcg/tcg-accel-ops.c        |   3 +-
+ accel/tcg/translate-all.c        |   2 +-
+ accel/tcg/watchpoint.c           |   9 +-
+ bsd-user/mmap.c                  |  17 +--
+ bsd-user/signal.c                |   4 +-
+ cpu-common.c                     |  10 +-
+ cpu-target.c                     | 146 -------------------------
+ disas/disas-common.c             |   5 +-
+ gdbstub/gdbstub.c                |  26 ++---
+ gdbstub/system.c                 |   7 +-
+ gdbstub/user-target.c            |   6 +-
+ gdbstub/user.c                   |   7 +-
+ hw/acpi/cpu.c                    |   4 +-
+ hw/acpi/cpu_hotplug.c            |   3 +-
+ hw/core/cpu-common.c             |  47 +++++---
+ hw/core/cpu-system.c             | 179 +++++++++++++++++++++++++------
+ hw/core/cpu-user.c               |  17 +++
+ linux-user/mmap.c                |   1 +
+ linux-user/signal.c              |   4 +-
+ linux-user/syscall.c             |   1 +
+ target/alpha/cpu.c               |   4 +-
+ target/arm/cpu.c                 |   7 +-
+ target/arm/tcg/cpu-v7m.c         |   3 +-
+ target/avr/cpu.c                 |   2 +-
+ target/hexagon/cpu.c             |   6 --
+ target/hppa/cpu.c                |   4 +-
+ target/i386/cpu.c                |   8 +-
+ target/loongarch/cpu.c           |   8 +-
+ target/m68k/cpu.c                |   4 +-
+ target/microblaze/cpu.c          |   4 +-
+ target/mips/cpu.c                |   4 +-
+ target/openrisc/cpu.c            |   4 +-
+ target/ppc/cpu_init.c            |   4 +-
+ target/riscv/cpu.c               |   8 +-
+ target/rx/cpu.c                  |   2 +-
+ target/s390x/cpu-system.c        |  18 ++++
+ target/s390x/cpu.c               |  18 ----
+ target/s390x/interrupt.c         |   8 +-
+ target/sh4/cpu.c                 |   4 +-
+ target/sparc/cpu.c               |   4 +-
+ target/tricore/cpu.c             |   2 +-
+ target/xtensa/cpu.c              |  12 +--
+ 57 files changed, 384 insertions(+), 406 deletions(-)
+ create mode 100644 include/user/mmap.h
+
 -- 
 2.47.1
 
