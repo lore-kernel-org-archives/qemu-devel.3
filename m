@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C0B2C28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 17:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B922FC28B2F
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 17:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trKrZ-0001Gq-90; Sun, 09 Mar 2025 13:54:58 -0400
+	id 1trKpT-0005Ca-KK; Sun, 09 Mar 2025 13:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKrC-0000Zv-1C
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:54:37 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKpN-0005C9-Nc
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:41 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKr6-00054Q-43
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:54:32 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3912e96c8e8so1818957f8f.2
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:54:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKpL-0004pz-Nd
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:41 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-391342fc148so1343664f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741542866; x=1742147666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741542758; x=1742147558; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AvjB3P0WeLn6QuXjictfvS8poYJ3HIL+ASsPoBqctfA=;
- b=xwGtDH8R6K+Ud1/OTFlefXwTUZTu0vUJMQURmFBXEoiOJZGSkd+YfXJT7we6LlShyU
- ekJ5v1Gk3j9P3eDMSnj/4DFZdkoCm+vx6S4cPlMxLa7kMT4J0lrsVXuslkMwb0kG35Ty
- jIFks8Rlxw2gXp94GRXjQxP1EmcMmGlmDZ1jLHCDL2HHaj1I7XkhvAjc0dqMZ+9BdK3V
- tSXG/MAkxm5Uooww+CCYkwJVCA6DJT4Kyq2LQRmZATAa1hmslLIy6Tncq0IW4hN1Pz19
- gmP1u9dzgzPqkU8rzzAHgVA8qG6PG5CgeZyHWx7wNqNQty+95Xnr5erkLtXacvTXCs1c
- dyAQ==
+ :reply-to; bh=XCeL7qLhCXyawqpFh374doAuSUcQFtoZ56lrH3Aj2ao=;
+ b=NTP4Hy/1nypXSu3QMI7r74VNdq3lAzUOIBisCb4teEDBLpcYXtH3GxVngNewcdzeFV
+ oXaWjCXhBwI3YJd3oNXXnmrOVdmWjsDnhmGCxVUUaol4dRLh0SHCZP8JPnDgd4CM0MkL
+ bVYGIFw3tBtaoyGW+ZrHZCn92/dzYcotJ3NEyD1iuzQ+SKfbPiCd5Fryb4XjI0gEQszd
+ jDP6hcV/t/5hzMpkbQZSy7qa717dVbbKdZA42Fktd3N7YLCD6BHJwRUjuxEy1m09Wbiw
+ vz9eFyJY/7sWvHmmjMjBZr4qZMWPPHq+2qgtLGknZOeSrUA6fNxr/YH5dXKztK9eGTjH
+ v2FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741542866; x=1742147666;
+ d=1e100.net; s=20230601; t=1741542758; x=1742147558;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AvjB3P0WeLn6QuXjictfvS8poYJ3HIL+ASsPoBqctfA=;
- b=Z0Y7eYHudsL+K5K8fv6JH9LqnuZQCsN4Xg3H75MsN2rFl7K/b/uPJ7JQgOE5AIzT4f
- C6vGGSObgm540iwtLl9Dz3CyvcbGVbnBVHMht/dlnSdvs7Ns2UJEGncj27bq8uA1MZcC
- Rx+SOTJWkRTeEL5tob1AgmKQQqUh6BBBN/X5ixbOeM/8491LDR8aHi6ibvnZVcTalkG1
- P3RRkPGgdoS8nFdKaHAYe5rFmUMm/mRA75RDeUinKrUGa1GPrIS52tE26+Vm/EHb6Wn3
- zocBtSIqRB2aCHitMljjWX4N8AOGpHZ9eb7aOigZ+SDJSUKA/PQac1hbVfzLrqnkaale
- g/MQ==
-X-Gm-Message-State: AOJu0YyPz+EYRg85WcdVFyXv+mxWxjyhgu3ka28XUNzXPsqcJhxczj1p
- cOLFfYzUK+cpQFtu/L1CMsLR/7rE74RwxF7SaCv4V0y0YYIHo6a6TjAjnO7mGcyyuEpeuM459Fm
- rOn8=
-X-Gm-Gg: ASbGncuiNVsCNsSRSXOT4lcu2bV6r/TY5Re1MLJYoG+6lvwQ/WBkqiyPUku7CYFrb7I
- +J1lh/zMNEQsOWdpdu3zZktdi3rJUdU47O5VeDIGNI31fa8nxENNItoW06W55ZqJJbpyj7/QUSh
- FJWOwHX1AB3DdAmc0FMOETdY2zvKgqQ7+6t1ATgkUci3inv0GGlUHUUcnMhXGGaH+9TGLzPgVYN
- qTDouQh9QokxGcpckWdMlkU3b/goah9cyxJhdZTJsK6fT/zm1ICh8cou4r8wUW8MmMuRWU8mbr3
- 4HYuJrVf/rRMlBKA+myTQrgTuuJrl7hNnVO/JvsITlBoX1IMCDm2ounxAoAJ8y4cAvOl1wWN8a8
- OmgUUMv3KYqdmoSvPbU0V56Ld40oIOg==
-X-Google-Smtp-Source: AGHT+IEXYfgyF/IUzLtxLa83K2GGuWIvkzeW1ji8i7bI+4ynxpJGqDt9lnDUfwc0jRe+Z5qD7aofeQ==
-X-Received: by 2002:a5d:64aa:0:b0:390:e853:85bd with SMTP id
- ffacd0b85a97d-39132db1108mr7323981f8f.48.1741542866082; 
- Sun, 09 Mar 2025 10:54:26 -0700 (PDT)
+ bh=XCeL7qLhCXyawqpFh374doAuSUcQFtoZ56lrH3Aj2ao=;
+ b=i/lFQhHChF1P3pECIZR/ep+zlFO7q4sva9xnCBdwEv7cR39sHApHnPKYPyVtdkhEmF
+ /lL0OTainycnXrZi3I5Xd3XFLn/NwRDu2Mquw6j2e8r63J5E5GXsOUVi0x+bY+TZUSB6
+ GkDjeee0Qzn0+kz536n+gEA6OVj7xOWcdvCeQvSqviMPdMbnl5lwX8Xup+FWZVicF76K
+ JzNlBYUmWBqzm8h8V4Y583hjHmYYbgWzkf1KN06btlL2zBvsCvj55Nk0YML+NvgjlA3M
+ 9vHv2KfWbBh/eAvk9DwN6fU/ry0RZdZlxHwsNMzrIQmG/R/I63ecHvL9RhXXy5vhyNq6
+ aA+g==
+X-Gm-Message-State: AOJu0YzZcDWxgFdjSepd0nnnsMkf1O3U2vdToiUIJ+5NIt+kstnjj1VN
+ 5pcE22KCtCQcALPW+X+4AuUwj2b0eqW1UIPXQhFztI8QZJHEvmzjiii9I9e/Y6NVBVhdU0srmTF
+ UvQ8=
+X-Gm-Gg: ASbGncsXvEMzK3s+M19N2/El352kf2yfsjtDXG/MP7SLbGKySS5aOLLedFYbGUyx9sf
+ 7jUn5Mm7zSWD612AgnKDsLykXJqnfqP0d7JK0/tRgMyDnQKfVr/d4nRPFWf+XGmzhFxzQSIp1t0
+ YZ7x5oVaCgn0/xTbG4RZUyj9thDykKXsEeuleHGuLL2Y0/pid3M3NkABLl3G/ottVa1qZL3xw8D
+ 3zkIOhyKrUPqVlXGGZwTc2Xca6TXXbg9gbflnssQLcbgly2qoNRKj8CdZxtSA5D+298znFqi7O2
+ CTwRwAApKF6+iphwl6x2hn2pHuQQ5otKdcXKuE94qObD/wSbnA/6pcBJ1iRncQOxQZd/XBXioSe
+ S2YDsFSgVfwgubt3TId0=
+X-Google-Smtp-Source: AGHT+IGS6SH0UrFipcFsIlm1EyzudTT+VD7XHBwkuoasmMLi2DQfY7DqLJMDaQ7n8so3Mh9NUJVOMg==
+X-Received: by 2002:adf:a3cf:0:b0:391:4231:40a with SMTP id
+ ffacd0b85a97d-391423105ccmr1503457f8f.33.1741542757730; 
+ Sun, 09 Mar 2025 10:52:37 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cfa97399esm2532275e9.14.2025.03.09.10.54.25
+ 5b1f17b1804b1-43ce720f93bsm60298215e9.25.2025.03.09.10.52.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 09 Mar 2025 10:54:25 -0700 (PDT)
+ Sun, 09 Mar 2025 10:52:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/38] target/riscv: Move has_work() from CPUClass to
- SysemuCPUOps
-Date: Sun,  9 Mar 2025 18:51:58 +0100
-Message-ID: <20250309175207.43828-30-philmd@linaro.org>
+Subject: [PULL 06/38] cpus: Build cpu_exec_[un]realizefn() methods once
+Date: Sun,  9 Mar 2025 18:51:35 +0100
+Message-ID: <20250309175207.43828-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250309175207.43828-1-philmd@linaro.org>
 References: <20250309175207.43828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,73 +98,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Now that cpu_exec_realizefn() and cpu_exec_unrealizefn()
+methods don't use any target specific definition anymore,
+we can move them to cpu-common.c to be able to build them
+once.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250125170125.32855-17-philmd@linaro.org>
+Message-Id: <20250123234415.59850-21-philmd@linaro.org>
 ---
- target/riscv/internals.h | 4 +++-
- target/riscv/cpu.c       | 8 +++-----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ cpu-target.c         | 29 -----------------------------
+ hw/core/cpu-common.c | 26 ++++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 29 deletions(-)
 
-diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-index 67291933f84..213aff31d85 100644
---- a/target/riscv/internals.h
-+++ b/target/riscv/internals.h
-@@ -142,8 +142,10 @@ static inline float16 check_nanbox_h(CPURISCVState *env, uint64_t f)
+diff --git a/cpu-target.c b/cpu-target.c
+index bc9c537c575..cae77374b38 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -25,38 +25,9 @@
+ #include "system/cpus.h"
+ #include "exec/tswap.h"
+ #include "exec/replay-core.h"
+-#include "exec/cpu-common.h"
+ #include "exec/log.h"
+ #include "accel/accel-cpu-target.h"
+ #include "trace/trace-root.h"
+-#include "qemu/accel.h"
+-#include "hw/core/cpu.h"
+-
+-bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
+-{
+-    if (!accel_cpu_common_realize(cpu, errp)) {
+-        return false;
+-    }
+-
+-    /* Wait until cpu initialization complete before exposing cpu. */
+-    cpu_list_add(cpu);
+-
+-    cpu_vmstate_register(cpu);
+-
+-    return true;
+-}
+-
+-void cpu_exec_unrealizefn(CPUState *cpu)
+-{
+-    cpu_vmstate_unregister(cpu);
+-
+-    cpu_list_remove(cpu);
+-    /*
+-     * Now that the vCPU has been removed from the RCU list, we can call
+-     * accel_cpu_common_unrealize, which may free fields using call_rcu.
+-     */
+-    accel_cpu_common_unrealize(cpu);
+-}
+ 
+ char *cpu_model_from_type(const char *typename)
+ {
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index d5cd227fe6d..5671d8d4f54 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -193,6 +193,20 @@ static void cpu_common_parse_features(const char *typename, char *features,
      }
  }
  
--/* Our implementation of CPUClass::has_work */
-+#ifndef CONFIG_USER_ONLY
-+/* Our implementation of SysemuCPUOps::has_work */
- bool riscv_cpu_has_work(CPUState *cs);
-+#endif
- 
- /* Zjpm addr masking routine */
- static inline target_ulong adjust_addr_body(CPURISCVState *env,
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 1c000c30f8d..09ded6829a2 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1006,9 +1006,9 @@ static vaddr riscv_cpu_get_pc(CPUState *cs)
-     return env->pc;
++bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
++{
++    if (!accel_cpu_common_realize(cpu, errp)) {
++        return false;
++    }
++
++    /* Wait until cpu initialization complete before exposing cpu. */
++    cpu_list_add(cpu);
++
++    cpu_vmstate_register(cpu);
++
++    return true;
++}
++
+ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+ {
+     CPUState *cpu = CPU(dev);
+@@ -234,6 +248,18 @@ static void cpu_common_unrealizefn(DeviceState *dev)
+     cpu_exec_unrealizefn(cpu);
  }
  
-+#ifndef CONFIG_USER_ONLY
- bool riscv_cpu_has_work(CPUState *cs)
++void cpu_exec_unrealizefn(CPUState *cpu)
++{
++    cpu_vmstate_unregister(cpu);
++
++    cpu_list_remove(cpu);
++    /*
++     * Now that the vCPU has been removed from the RCU list, we can call
++     * accel_cpu_common_unrealize, which may free fields using call_rcu.
++     */
++    accel_cpu_common_unrealize(cpu);
++}
++
+ static void cpu_common_initfn(Object *obj)
  {
--#ifndef CONFIG_USER_ONLY
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
-     /*
-@@ -1018,10 +1018,8 @@ bool riscv_cpu_has_work(CPUState *cs)
-     return riscv_cpu_all_pending(env) != 0 ||
-         riscv_cpu_sirq_pending(env) != RISCV_EXCP_NONE ||
-         riscv_cpu_vsirq_pending(env) != RISCV_EXCP_NONE;
--#else
--    return true;
--#endif
- }
-+#endif /* !CONFIG_USER_ONLY */
- 
- static int riscv_cpu_mmu_index(CPUState *cs, bool ifetch)
- {
-@@ -3029,6 +3027,7 @@ static int64_t riscv_get_arch_id(CPUState *cs)
- #include "hw/core/sysemu-cpu-ops.h"
- 
- static const struct SysemuCPUOps riscv_sysemu_ops = {
-+    .has_work = riscv_cpu_has_work,
-     .get_phys_page_debug = riscv_cpu_get_phys_page_debug,
-     .write_elf64_note = riscv_cpu_write_elf64_note,
-     .write_elf32_note = riscv_cpu_write_elf32_note,
-@@ -3050,7 +3049,6 @@ static void riscv_cpu_common_class_init(ObjectClass *c, void *data)
-                                        &mcc->parent_phases);
- 
-     cc->class_by_name = riscv_cpu_class_by_name;
--    cc->has_work = riscv_cpu_has_work;
-     cc->mmu_index = riscv_cpu_mmu_index;
-     cc->dump_state = riscv_cpu_dump_state;
-     cc->set_pc = riscv_cpu_set_pc;
+     CPUState *cpu = CPU(obj);
 -- 
 2.47.1
 
