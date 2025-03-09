@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A924EC282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8CEC28B2E
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trC9y-0003dT-Ml; Sun, 09 Mar 2025 04:37:22 -0400
+	id 1trCBc-0001HV-P5; Sun, 09 Mar 2025 04:39:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC9n-0002p8-6r
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCAr-0007sK-GL
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:38:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC9l-0002Ro-Mi
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:10 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCAp-0002di-Oh
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:38:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741509428;
+ s=mimecast20190719; t=1741509495;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M4NWkQ4ouYUL+mKJBAl/nb9/STXk2k++zJ8lVadQp84=;
- b=PVCZduGIKZUlH5Oc9zqtY7k10DHtenHhvwF/T4czdFPjZjFozb2u/Qblp633r3UUXo5FWK
- 83TFqUUIUyH2W06nbdM7idboNPPXSIcv3MSPHE621n81iFjlH/e8Zrvx2m3su0p6SY8Z63
- K0CpBuSzrndeMYcGxwSSTDsGvgttfnU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=V4s70R+tlsvIqbcve4GWCzOtP+KUyGx5LNp3NIFno9k=;
+ b=KJMnk9/vwG1EtCVSIDktxRgI98YPhIiepVLLdYXGBo6eo0S5zLnXRHD3XSlyKfedOSdFiz
+ 8luG+R45No/ALK4adn2G+XtzZBq7syc63sg43v0J1p71ans4jJhyQqAucIhUhVrqXlzRUH
+ 34t/HtViOU9uGPWPH1R2sgMjg/P4kWY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-dGMRpGuGOaawMvEHKL_saA-1; Sun,
- 09 Mar 2025 04:37:05 -0400
-X-MC-Unique: dGMRpGuGOaawMvEHKL_saA-1
-X-Mimecast-MFC-AGG-ID: dGMRpGuGOaawMvEHKL_saA_1741509424
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-M9dmwdB2PmKjJ6ROkm_cww-1; Sun,
+ 09 Mar 2025 04:38:12 -0400
+X-MC-Unique: M9dmwdB2PmKjJ6ROkm_cww-1
+X-Mimecast-MFC-AGG-ID: M9dmwdB2PmKjJ6ROkm_cww_1741509490
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82655180899B; Sun,  9 Mar 2025 08:37:04 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D551E180049D; Sun,  9 Mar 2025 08:38:10 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.4])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5C50A19560AB; Sun,  9 Mar 2025 08:37:02 +0000 (UTC)
+ id 02FFD19560AB; Sun,  9 Mar 2025 08:38:07 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -53,24 +53,23 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
- Harmonie Snow <harmonie@gmail.com>
-Subject: [PATCH v2 28/62] docs/qapi-domain: add CSS styling
-Date: Sun,  9 Mar 2025 04:35:15 -0400
-Message-ID: <20250309083550.5155-29-jsnow@redhat.com>
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
+Subject: [PATCH v2 54/62] docs/qapidoc: implement transmogrify() method
+Date: Sun,  9 Mar 2025 04:35:41 -0400
+Message-ID: <20250309083550.5155-55-jsnow@redhat.com>
 In-Reply-To: <20250309083550.5155-1-jsnow@redhat.com>
 References: <20250309083550.5155-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,95 +87,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Improve the general look and feel of generated QAPI docs.
+This is the true top-level processor for the new transmogrifier;
+responsible both for generating the intermediate rST and then running
+the nested parse on that generated document to produce the final
+docutils tree that is then - very finally - postprocessed by sphinx for
+final rendering to HTML &c.
 
-Attempt to limit line lengths to offer a more comfortable measure on
-maximized windows, and improve some margin and spacing for field lists.
-
-Signed-off-by: Harmonie Snow <harmonie@gmail.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx-static/theme_overrides.css | 56 +++++++++++++++++++++++++-
- 1 file changed, 54 insertions(+), 2 deletions(-)
+ docs/sphinx/qapidoc.py | 49 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 48 insertions(+), 1 deletion(-)
 
-diff --git a/docs/sphinx-static/theme_overrides.css b/docs/sphinx-static/theme_overrides.css
-index 3fd326613d9..92f395054a8 100644
---- a/docs/sphinx-static/theme_overrides.css
-+++ b/docs/sphinx-static/theme_overrides.css
-@@ -18,8 +18,8 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index 5fd8a7c1fc1..11b8fca21ec 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -2,6 +2,7 @@
+ #
+ # QEMU qapidoc QAPI file parsing extension
+ #
++# Copyright (c) 2024 Red Hat
+ # Copyright (c) 2020 Linaro
+ #
+ # This work is licensed under the terms of the GNU GPLv2 or later.
+@@ -24,6 +25,8 @@
+ https://www.sphinx-doc.org/en/master/development/index.html
+ """
  
- .rst-content dl:not(.docutils) dt {
-     border-top: none;
--    border-left: solid 3px #ccc;
--    background-color: #f0f0f0;
-+    border-left: solid 5px #bcc6d2;
-+    background-color: #eaedf1;
-     color: black;
- }
++# pylint: disable=too-many-lines
++
+ from __future__ import annotations
  
-@@ -211,6 +211,18 @@ div[class^="highlight"] pre {
+ from contextlib import contextmanager
+@@ -56,6 +59,7 @@
+ from sphinx import addnodes
+ from sphinx.directives.code import CodeBlock
+ from sphinx.errors import ExtensionError
++from sphinx.util import logging
+ from sphinx.util.docutils import switch_source_input
+ from sphinx.util.nodes import nested_parse_with_titles
  
- /* QAPI domain theming */
+@@ -76,6 +80,8 @@
  
-+/* most content in a qapi object definition should not eclipse about
-+   80ch, but nested field lists are explicitly exempt due to their
-+   two-column nature */
-+.qapi dd *:not(dl) {
-+    max-width: 80ch;
-+}
+ __version__ = "1.0"
+ 
++logger = logging.getLogger(__name__)
 +
-+/* but the content column itself should still be less than ~80ch. */
-+.qapi .field-list dd {
-+    max-width: 80ch;
-+}
+ 
+ class Transmogrifier:
+     # pylint: disable=too-many-public-methods
+@@ -95,6 +101,10 @@ def __init__(self) -> None:
+         self._result = StringList()
+         self.indent = 0
+ 
++    @property
++    def result(self) -> StringList:
++        return self._result
 +
- .qapi-infopips {
-     margin-bottom: 1em;
- }
-@@ -250,3 +262,43 @@ div[class^="highlight"] pre {
-     border-radius: 15px;
-     margin: 5px;
- }
+     @property
+     def entity(self) -> QAPISchemaDefinition:
+         assert self._curr_ent is not None
+@@ -444,7 +454,43 @@ def new_serialno(self) -> str:
+         return "qapidoc-%d" % env.new_serialno("qapidoc")
+ 
+     def transmogrify(self, schema: QAPISchema) -> nodes.Element:
+-        raise NotImplementedError
++        logger.info("Transmogrifying QAPI to rST ...")
++        vis = Transmogrifier()
++        modules = set()
 +
-+/* code blocks */
-+.qapi div[class^="highlight"] {
-+    width: fit-content;
-+    background-color: #fffafd;
-+    border: 2px solid #ffe1f3;
-+}
++        for doc in schema.docs:
++            module_source = doc.info.fname
++            if module_source not in modules:
++                vis.visit_module(module_source)
++                modules.add(module_source)
 +
-+/* note, warning, etc. */
-+.qapi .admonition {
-+    width: fit-content;
-+}
++            if doc.symbol:
++                ent = schema.lookup_entity(doc.symbol)
++                assert isinstance(ent, QAPISchemaDefinition)
++                vis.visit_entity(ent)
++            else:
++                vis.visit_freeform(doc)
 +
-+/* pad the top of the field-list so the text doesn't start directly at
-+   the top border; primarily for the field list labels, but adjust the
-+   field bodies as well for parity. */
-+dl.field-list > dt:first-of-type, dl.field-list > dd:first-of-type {
-+    padding-top: 0.3em;
-+}
++        logger.info("Transmogrification complete.")
 +
-+dl.field-list > dt:last-of-type, dl.field-list > dd:last-of-type {
-+    padding-bottom: 0.3em;
-+}
++        contentnode = nodes.section()
++        content = vis.result
++        titles_allowed = True
 +
-+/* pad the field list labels so they don't crash into the border */
-+dl.field-list > dt {
-+    padding-left: 0.5em;
-+    padding-right: 0.5em;
-+}
++        logger.info("Transmogrifier running nested parse ...")
++        with switch_source_input(self.state, content):
++            if titles_allowed:
++                node: nodes.Element = nodes.section()
++                node.document = self.state.document
++                nested_parse_with_titles(self.state, content, contentnode)
++            else:
++                node = nodes.paragraph()
++                node.document = self.state.document
++                self.state.nested_parse(content, 0, contentnode)
++        logger.info("Transmogrifier's nested parse completed.")
++        sys.stdout.flush()
 +
-+/* Add a little padding between field list sections */
-+dl.field-list > dd:not(:last-child) {
-+    padding-bottom: 1em;
-+}
-+
-+/* Sphinx 3.x: unresolved xrefs */
-+.rst-content *:not(a) > code.xref {
-+    font-weight: 400;
-+    color: #333333;
-+}
++        return contentnode
+ 
+     def legacy(self, schema: QAPISchema) -> nodes.Element:
+         vis = QAPISchemaGenRSTVisitor(self)
+@@ -578,6 +624,7 @@ def run(self) -> List[nodes.Node]:
+ 
+ def setup(app: Sphinx) -> ExtensionMetadata:
+     """Register qapi-doc directive with Sphinx"""
++    app.setup_extension("qapi_domain")
+     app.add_config_value("qapidoc_srctree", None, "env")
+     app.add_directive("qapi-doc", QAPIDocDirective)
+     app.add_directive("qmp-example", QMPExample)
 -- 
 2.48.1
 
