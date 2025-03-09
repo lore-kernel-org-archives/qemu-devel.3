@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10CAEC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 21:00:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80630C28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 21:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trNk2-0004ib-2t; Sun, 09 Mar 2025 16:59:23 -0400
+	id 1trNkZ-0004oR-El; Sun, 09 Mar 2025 16:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trNjj-0004Si-FF
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 16:59:03 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trNjy-0004if-7k
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 16:59:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trNjX-0007EF-TH
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 16:59:02 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trNjw-0007on-JM
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 16:59:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741553821;
+ s=mimecast20190719; t=1741553954;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Ro8XkoWL2wyA0+551wDEq005vzKjyzvoRrDng2tN6Aw=;
- b=LOX0A/W14FjESFO6uWuyQqxn+rrldBhF2nvy14qxtyfp09Anku1zgSOUTfnKEalnqO6fB6
- EUOB7RFUr4CYsgFSDKUK7DMayY8qWciYg4AgkgA5C5n7C7KP0f17qF6ZihBCiRNrYEFEcW
- ng3jnkOwJu5F7h097dZHUHM/KRASHYU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=RPtu7Ssd5cYqS0sN379K7wjAU1gPT1bxbThQdUYy9no=;
+ b=fWOYBAzYLQf0tmgxRCQ0j5zWtE+GuBGy4MU49PE8vnvdHsb84Z7MtaNX08ANZFEi1MBNwk
+ zVyHut09h8iV0GK3oRbO6NZgky5nY86DUi/KrMxOWO3lEp9QsywDRsa9DLUgaLL1/Klt1d
+ C8Tj6zZFpe3CRz55BH1zCgvckP3D7/g=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-5oUufa6fNVyswBvnSfLkaQ-1; Sun,
- 09 Mar 2025 16:51:27 -0400
-X-MC-Unique: 5oUufa6fNVyswBvnSfLkaQ-1
-X-Mimecast-MFC-AGG-ID: 5oUufa6fNVyswBvnSfLkaQ_1741553486
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-cQRRqC-WPE-bEYOLZqjBig-1; Sun,
+ 09 Mar 2025 16:59:11 -0400
+X-MC-Unique: cQRRqC-WPE-bEYOLZqjBig-1
+X-Mimecast-MFC-AGG-ID: cQRRqC-WPE-bEYOLZqjBig_1741553950
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 869A9180035C; Sun,  9 Mar 2025 20:51:26 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1AAD2195608A; Sun,  9 Mar 2025 20:59:10 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28847180094A; Sun,  9 Mar 2025 20:51:26 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8C4931956096; Sun,  9 Mar 2025 20:59:09 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B3C0121E675F; Sun, 09 Mar 2025 21:51:23 +0100 (CET)
+ id 12F5721E675F; Sun, 09 Mar 2025 21:59:07 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
@@ -53,20 +53,19 @@ Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
  Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
  <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Thomas Huth
  <thuth@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell
- <peter.maydell@linaro.org>,  Harmonie Snow <harmonie@gmail.com>
-Subject: Re: [PATCH v2 23/62] docs/qapi-domain: add :deprecated: directive
- option
-In-Reply-To: <20250309083550.5155-24-jsnow@redhat.com> (John Snow's message of
- "Sun, 9 Mar 2025 04:35:10 -0400")
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v2 41/62] qapi/source: allow multi-line QAPISourceInfo
+ advancing
+In-Reply-To: <20250309083550.5155-42-jsnow@redhat.com> (John Snow's message of
+ "Sun, 9 Mar 2025 04:35:28 -0400")
 References: <20250309083550.5155-1-jsnow@redhat.com>
- <20250309083550.5155-24-jsnow@redhat.com>
-Date: Sun, 09 Mar 2025 21:51:23 +0100
-Message-ID: <87y0xeylkk.fsf@pond.sub.org>
+ <20250309083550.5155-42-jsnow@redhat.com>
+Date: Sun, 09 Mar 2025 21:59:07 +0100
+Message-ID: <87ldtdzzs4.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -94,43 +93,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> Although "deprecated" is a feature (and *will* appear in the features
-> list), add a special :deprecated: option to generate an eye-catch that
-> makes this information very hard to miss.
+> This is for the sake of the new rST generator (the "transmogrifier") so
+> we can advance multiple lines on occasion while keeping the
+> generated<-->source mappings accurate.
 >
-> (The intent is to modify qapidoc.py to add this option whenever it
-> detects that the features list attached to a definition contains the
-> "deprecated" entry.)
+> next_line now simply takes an optional n parameter which chooses the
+> number of lines to advance.
 >
-> -
+> RFC: Here's the exorbitant detail on why I want this:
 >
-> RFC: Technically, this object-level option is un-needed and could be
-> replaced with a standard content-level directive that e.g. qapidoc.py
-> could insert at the beginning of the content block. I've done it here as
-> an option to demonstrate how it would be possible to do.
->
-> It's a matter of taste for "where" we feel like implementing it.
->
-> One benefit of doing it this way is that we can create a single
-> containing box to set CSS style options controlling the flow of multiple
-> infoboxes. The other way to achieve that would be to create a directive
-> that allows us to set multiple options instead, e.g.:
->
-> .. qapi:infoboxes:: deprecated unstable
->
-> or possibly:
->
-> .. qapi:infoboxes::
->    :deprecated:
->    :unstable:
->
-> For now, I've left these as top-level QAPI object options. "Hey, it works."
+> This is used mainly when converting section syntax in free-form
+> documentation to more traditional rST section header syntax, which
+> does not always line up 1:1 for line counts.
 
-I think we agreed to delete the text from RFC: until here.
+Obvious way to resolve the RFC:
 
-> P.S., I outsourced the CSS ;)
+  The next patch will use this when converting ...
+
 >
-> Signed-off-by: Harmonie Snow <harmonie@gmail.com>
+> For example:
+>
+> ```
+>  ##
+>  # = Section     <-- Info is pointing here, "L1"
+>  #
+>  # Lorem Ipsum
+>  ##
+> ```
+>
+> would be transformed to rST as:
+>
+> ```
+> =======        <-- L1
+> Section        <-- L1
+> =======        <-- L1
+>                <-- L2
+> Lorem Ipsum    <-- L3
+> ```
+>
+> After consuming the single "Section" line from the source, we want to
+> advance the source pointer to the next non-empty line which requires
+> jumping by more than one line.
+>
 > Signed-off-by: John Snow <jsnow@redhat.com>
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
