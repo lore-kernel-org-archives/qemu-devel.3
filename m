@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7341EC282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 05:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F7FC282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 06:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tr99f-0002vF-6Y; Sun, 09 Mar 2025 00:24:51 -0500
+	id 1trARU-0006QI-4u; Sun, 09 Mar 2025 01:47:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tr99Y-0002ta-2R; Sun, 09 Mar 2025 00:24:44 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trARL-0006Pi-CP
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 01:47:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tr99W-0003az-AE; Sun, 09 Mar 2025 00:24:43 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 62ACDFB6B2;
- Sun, 09 Mar 2025 08:23:39 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 83C371C70C1;
- Sun,  9 Mar 2025 08:24:23 +0300 (MSK)
-Message-ID: <e5c5e542-f28c-4f4d-884d-ee3defd0a330@tls.msk.ru>
-Date: Sun, 9 Mar 2025 08:24:23 +0300
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trARI-0004Mg-13
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 01:47:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741502824;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=L2FU/pvjs1DZxasK1ePwUu4NaGpNTy30ZAuLbmRvR6w=;
+ b=YPMasSj8aWv9n7U7aFirLCcuAJgywfkYz0IScukqbB/bXQ/5xv1fjUWacOEeH7BxBCPGPx
+ 1mn+txFEoc3qX31de5nqGbN9plJqsw56wil/kvzs5NmNgQxsxXYYkkJkbE+EWMV4Zf+vwF
+ FVhXzAs9x3FwIaihkzidGD/Huf8cU88=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-681-JhiB9VPjMXm07aGhS7bYvw-1; Sun, 09 Mar 2025 01:47:02 -0500
+X-MC-Unique: JhiB9VPjMXm07aGhS7bYvw-1
+X-Mimecast-MFC-AGG-ID: JhiB9VPjMXm07aGhS7bYvw_1741502822
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2ff5f3be6e6so5456715a91.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Mar 2025 22:47:02 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741502822; x=1742107622;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=L2FU/pvjs1DZxasK1ePwUu4NaGpNTy30ZAuLbmRvR6w=;
+ b=k5hjRjDevKBqyDB1mObd1lYSKwcXaXSpEN4a8dv925BEWxMkXuHXEXL5r1kgkajRWp
+ Vir0iRVsC612n05IVCnSzbx5OOlwAuKekYYmsORzceSOMk0oZaUwtMQ+qF3jl7HEqbOI
+ bliCsjJgMfJOkridgQjRk/spcz1QpUI9fbP2uNKdKssgnctLVFxfXf8m4E66Ng9hAju8
+ KtmwiKVebVOrULAt+N2A8KTScTGNDdoqUiu4rLX1zaz79Lm6kJfBcCq83goOw2GPkFyL
+ 3ipfqB5qCbVgfNR7rcKs4FpOQ8gCbw5lty0IyolnO3DnX+6knks3fhv//0jng6HDS6gI
+ PBaA==
+X-Gm-Message-State: AOJu0YzRU8Qr8j3ozE8Vgqwo9F2uKyy4dH6+sQ7CoDu04p3qxgrZQFkQ
+ dLiqHguaKMcZ9aYORX9UT0wahtlR+FE6bLKg+NR2bfRcVnpns5t8ghr+4XvyhhdWVgHwjIvJAEX
+ QeP2mC0qDmrRBFQC0P3dGiPf/SFHtpytmDCgjT4jRTi1vPhRS2RQmZ+djD2qjVRN3P18iGH4CrE
+ 7V2DahWvEb6jyxjThAD/Vn9Megias=
+X-Gm-Gg: ASbGncvx2VN3CDzkx9NaGcjYd9d7kLiQvT4hxX1r+L7E5WOVcGEjKmf0CFHxa/ahvGq
+ jbA9zoK5Zh9AVqrkHMS0bW4YykxyhEb0D+ILL3R9gAnGJX6/YkB7YEqZwM5Joi05yIyfWKA==
+X-Received: by 2002:a17:90b:1d0a:b0:2ea:aa56:499 with SMTP id
+ 98e67ed59e1d1-2ff7ce4f019mr14013088a91.1.1741502821719; 
+ Sat, 08 Mar 2025 22:47:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEzuUdIuSbDfKNk5zbV6OcLihWm6W6bB2M/WJG/DH83u20kL+s8xPfWx6JkYvLqrdG/keTNnpXO6HKBicHFFxg=
+X-Received: by 2002:a17:90b:1d0a:b0:2ea:aa56:499 with SMTP id
+ 98e67ed59e1d1-2ff7ce4f019mr14013071a91.1.1741502821420; Sat, 08 Mar 2025
+ 22:47:01 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/9] target/arm: Implement SEL2 physical and virtual
- timers
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20250204125009.2281315-1-peter.maydell@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250204125009.2281315-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250305034610.960147-1-jsnow@redhat.com>
+ <20250305034610.960147-36-jsnow@redhat.com>
+ <878qphkq4i.fsf@pond.sub.org>
+ <CAFn=p-bjiZcLGtaOh01745Qb4zpSWdj8G5LeXBOb8=5Uex-ytQ@mail.gmail.com>
+ <878qpe7oi8.fsf@pond.sub.org>
+In-Reply-To: <878qpe7oi8.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Sun, 9 Mar 2025 01:46:47 -0500
+X-Gm-Features: AQ5f1Jq0EuphOAR4-vDgQ8tZ_jKl8ZbS_6J9dPBxx6EuMEAqxgYzcfO_WWKQHJ8
+Message-ID: <CAFn=p-bSPJ+P_VxrHyVVBhp2dF4KNfTTSYniOQDi8RQ8DHbg_Q@mail.gmail.com>
+Subject: Re: [PATCH 35/57] docs/qapidoc: Fix static typing on qapidoc.py
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000000bf846062fe3390b"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,50 +106,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-04.02.2025 15:50, Peter Maydell wrote:
-> This patchset is a respin of Alex's patches, with some extra fixes
-> for bugs I discovered along the way in our existing code (and
-> a bit of refactoring to make the fixes straightforward). It is:
-> 
-> Based-on: 20250130182309.717346-1-peter.maydell@linaro.org
-> ("target/arm: Clean up some corner cases of sysreg traps")
-> 
-> because it wants to use the renamed CP_ACCESS_* constants that
-> that patchset introduced.
-> 
-> The bugfixes are not super exciting as they mostly are oddball
-> corner cases, but I've cc'd them to stable anyway. The actual
-> implementation of the missing SEL2 timers also should go to stable.
-> 
-> Alex Bennée (4):
->    target/arm: Implement SEL2 physical and virtual timers
->    target/arm: document the architectural names of our GTIMERs
->    hw/arm: enable secure EL2 timers for virt machine
->    hw/arm: enable secure EL2 timers for sbsa machine
-> 
-> Peter Maydell (5):
->    target/arm: Apply correct timer offset when calculating deadlines
->    target/arm: Don't apply CNTVOFF_EL2 for EL2_VIRT timer
->    target/arm: Make CNTPS_* UNDEF from Secure EL1 when Secure EL2 is
->      enabled
->    target/arm: Always apply CNTVOFF_EL2 for CNTV_TVAL_EL02 accesses
->    target/arm: Refactor handling of timer offset for direct register
->      accesses
+--0000000000000bf846062fe3390b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi!
+On Sun, Mar 9, 2025 at 12:38=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-Which stable series this patchset is supposed to be applied to?
-(Current active stable series are 7.2, 8.2 and 9.2)
+> John Snow <jsnow@redhat.com> writes:
+>
+> > On Fri, Mar 7, 2025 at 7:00=E2=80=AFAM Markus Armbruster <armbru@redhat=
+.com>
+> wrote:
+> >
+> >> John Snow <jsnow@redhat.com> writes:
+> >>
+> >> > Now that the legacy code is factored out, fix up the typing on the
+> >> > remaining code in qapidoc.py. Add a type ignore to qapi_legacy.py to
+> >> > prevent the errors there from bleeding out into qapidoc.py.
+> >> >
+> >> > Signed-off-by: John Snow <jsnow@redhat.com>
+> >> > ---
+> >> >  docs/sphinx/qapidoc.py        | 40
+> ++++++++++++++++++++++-------------
+> >> >  docs/sphinx/qapidoc_legacy.py |  1 +
+> >> >  2 files changed, 26 insertions(+), 15 deletions(-)
+> >> >
+> >> > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+> >> > index f4abf42e7bf..5246832b68c 100644
+> >> > --- a/docs/sphinx/qapidoc.py
+> >> > +++ b/docs/sphinx/qapidoc.py
+> >> > @@ -24,17 +24,18 @@
+> >> >  https://www.sphinx-doc.org/en/master/development/index.html
+> >> >  """
+> >> >
+> >> > +from __future__ import annotations
+> >> > +
+> >> >  import os
+> >> >  import sys
+> >> > -from typing import List
+> >> > +from typing import TYPE_CHECKING
+> >> >
+> >> >  from docutils import nodes
+> >> >  from docutils.parsers.rst import Directive, directives
+> >> >  from qapi.error import QAPIError
+> >> > -from qapi.gen import QAPISchemaVisitor
+> >> > -from qapi.schema import QAPISchema
+> >> > +from qapi.schema import QAPISchema, QAPISchemaVisitor
+> >> >
+> >> > -from qapidoc_legacy import QAPISchemaGenRSTVisitor
+> >> > +from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
+> >> >  from sphinx import addnodes
+> >> >  from sphinx.directives.code import CodeBlock
+> >> >  from sphinx.errors import ExtensionError
+> >> > @@ -42,6 +43,15 @@
+> >> >  from sphinx.util.nodes import nested_parse_with_titles
+> >> >
+> >> >
+> >> > +if TYPE_CHECKING:
+> >> > +    from typing import Any, List, Sequence
+> >> > +
+> >> > +    from docutils.statemachine import StringList
+> >> > +
+> >> > +    from sphinx.application import Sphinx
+> >> > +    from sphinx.util.typing import ExtensionMetadata
+> >>
+> >> Can you briefly explain why this needs to be conditional?
+> >>
+> >
+> > No requisite, but if they aren't used outside of type hints, they don't
+> > actually need to be imported at runtime (when we use from __future__
+> import
+> > annotations). Improves startup speed slightly and potentially makes the
+> > plugin less porcelain at runtime.
+>
+> Should we do that for all typing-only imports everywhere?
+>
 
-Or put it in other words, is it supposed to go earlier than the
-most recent stable series, 9.2?
+Maybe! It's probably not too important, I just noticed Sphinx internals
+doing it a lot and started following along because it seemed like a good
+idea.
 
-For example, the very first patch, "Apply correct timer offset when calculating
-deadlines", does not apply to 8.2 because it lacks v8.2.0-2122-g2808d3b38a
-"target/arm: Implement FEAT_ECV CNTPOFF_EL2 handling" which touches the same
-line in target/arm/helper.c:gt_recalc_timer().
+--0000000000000bf846062fe3390b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Mar 9, =
+2025 at 12:38=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
+hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
+ target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; On Fri, Mar 7, 2025 at 7:00=E2=80=AFAM Markus Armbruster &lt;<a href=
+=3D"mailto:armbru@redhat.com" target=3D"_blank">armbru@redhat.com</a>&gt; w=
+rote:<br>
+&gt;<br>
+&gt;&gt; John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank=
+">jsnow@redhat.com</a>&gt; writes:<br>
+&gt;&gt;<br>
+&gt;&gt; &gt; Now that the legacy code is factored out, fix up the typing o=
+n the<br>
+&gt;&gt; &gt; remaining code in qapidoc.py. Add a type ignore to qapi_legac=
+y.py to<br>
+&gt;&gt; &gt; prevent the errors there from bleeding out into qapidoc.py.<b=
+r>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.c=
+om" target=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+&gt;&gt; &gt; ---<br>
+&gt;&gt; &gt;=C2=A0 docs/sphinx/qapidoc.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 | 40 =
+++++++++++++++++++++++-------------<br>
+&gt;&gt; &gt;=C2=A0 docs/sphinx/qapidoc_legacy.py |=C2=A0 1 +<br>
+&gt;&gt; &gt;=C2=A0 2 files changed, 26 insertions(+), 15 deletions(-)<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py<=
+br>
+&gt;&gt; &gt; index f4abf42e7bf..5246832b68c 100644<br>
+&gt;&gt; &gt; --- a/docs/sphinx/qapidoc.py<br>
+&gt;&gt; &gt; +++ b/docs/sphinx/qapidoc.py<br>
+&gt;&gt; &gt; @@ -24,17 +24,18 @@<br>
+&gt;&gt; &gt;=C2=A0 <a href=3D"https://www.sphinx-doc.org/en/master/develop=
+ment/index.html" rel=3D"noreferrer" target=3D"_blank">https://www.sphinx-do=
+c.org/en/master/development/index.html</a><br>
+&gt;&gt; &gt;=C2=A0 &quot;&quot;&quot;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; +from __future__ import annotations<br>
+&gt;&gt; &gt; +<br>
+&gt;&gt; &gt;=C2=A0 import os<br>
+&gt;&gt; &gt;=C2=A0 import sys<br>
+&gt;&gt; &gt; -from typing import List<br>
+&gt;&gt; &gt; +from typing import TYPE_CHECKING<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;=C2=A0 from docutils import nodes<br>
+&gt;&gt; &gt;=C2=A0 from docutils.parsers.rst import Directive, directives<=
+br>
+&gt;&gt; &gt;=C2=A0 from qapi.error import QAPIError<br>
+&gt;&gt; &gt; -from qapi.gen import QAPISchemaVisitor<br>
+&gt;&gt; &gt; -from qapi.schema import QAPISchema<br>
+&gt;&gt; &gt; +from qapi.schema import QAPISchema, QAPISchemaVisitor<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; -from qapidoc_legacy import QAPISchemaGenRSTVisitor<br>
+&gt;&gt; &gt; +from qapidoc_legacy import QAPISchemaGenRSTVisitor=C2=A0 # t=
+ype: ignore<br>
+&gt;&gt; &gt;=C2=A0 from sphinx import addnodes<br>
+&gt;&gt; &gt;=C2=A0 from sphinx.directives.code import CodeBlock<br>
+&gt;&gt; &gt;=C2=A0 from sphinx.errors import ExtensionError<br>
+&gt;&gt; &gt; @@ -42,6 +43,15 @@<br>
+&gt;&gt; &gt;=C2=A0 from sphinx.util.nodes import nested_parse_with_titles<=
+br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; +if TYPE_CHECKING:<br>
+&gt;&gt; &gt; +=C2=A0 =C2=A0 from typing import Any, List, Sequence<br>
+&gt;&gt; &gt; +<br>
+&gt;&gt; &gt; +=C2=A0 =C2=A0 from docutils.statemachine import StringList<b=
+r>
+&gt;&gt; &gt; +<br>
+&gt;&gt; &gt; +=C2=A0 =C2=A0 from sphinx.application import Sphinx<br>
+&gt;&gt; &gt; +=C2=A0 =C2=A0 from sphinx.util.typing import ExtensionMetada=
+ta<br>
+&gt;&gt;<br>
+&gt;&gt; Can you briefly explain why this needs to be conditional?<br>
+&gt;&gt;<br>
+&gt;<br>
+&gt; No requisite, but if they aren&#39;t used outside of type hints, they =
+don&#39;t<br>
+&gt; actually need to be imported at runtime (when we use from __future__ i=
+mport<br>
+&gt; annotations). Improves startup speed slightly and potentially makes th=
+e<br>
+&gt; plugin less porcelain at runtime.<br>
+<br>
+Should we do that for all typing-only imports everywhere?<br></blockquote><=
+div><br></div><div>Maybe! It&#39;s probably not too important, I just notic=
+ed Sphinx internals doing it a lot and started following along because it s=
+eemed like a good idea.</div></div></div>
 
-/mjt
+--0000000000000bf846062fe3390b--
+
 
