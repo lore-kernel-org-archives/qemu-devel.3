@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6205C282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:45:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D19D6C28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:46:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trCAI-0005Wn-C2; Sun, 09 Mar 2025 04:37:42 -0400
+	id 1trC9I-0001aj-Q1; Sun, 09 Mar 2025 04:36:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCAA-00052b-TP
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:35 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC9G-0001XJ-U6
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:36:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCA8-0002VD-My
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:34 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC9F-0002NV-7Z
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:36:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741509452;
+ s=mimecast20190719; t=1741509396;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NNqDpq0iJIveYhg6oQ1eKKTueZtlSKNrRW9Qrz0iOMU=;
- b=TXMnbWWSStwXyc8yBeXzNwMK0PrDqHWtmK0jv2KNdpUDyV+6ylCwKxjzsTPOBzRbXSN9YI
- Nlbbx3t9zwwflCassdniO9riCKpBdfhMLmRNvD4Q+yPWmRCJ9am/y4e+eBjam/i2wTgwis
- 30W26o06qJpnNCIbSOWIroHG+ceJpCY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=iy4sk8XUPSlWFCWehJjWqosoNvmomQz4u0Z1DEbJpdg=;
+ b=PVKy7yp1QF+B/gzoj2YSxqdXUjtf9ieHpeukc7Gr6p/6aKely5u1mWFsEfMhWBMHuWwnJQ
+ uvaqzMJX2FVwDuILyqq4emzgLGjtQPCa/B9jk4FrrDCiJddsS33uiRtRIdLTTcpURYDl+0
+ ojAR2WRStPJ5Je5L+VwKjCoR5o/WNh4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-624--58jPyFTNzOZX0s-yWCh-w-1; Sun,
- 09 Mar 2025 04:37:28 -0400
-X-MC-Unique: -58jPyFTNzOZX0s-yWCh-w-1
-X-Mimecast-MFC-AGG-ID: -58jPyFTNzOZX0s-yWCh-w_1741509447
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-538--l_WZ1wnPw-b8i1nY39gfw-1; Sun,
+ 09 Mar 2025 04:36:33 -0400
+X-MC-Unique: -l_WZ1wnPw-b8i1nY39gfw-1
+X-Mimecast-MFC-AGG-ID: -l_WZ1wnPw-b8i1nY39gfw_1741509392
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B01FE1800257; Sun,  9 Mar 2025 08:37:27 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2323019560BB; Sun,  9 Mar 2025 08:36:32 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.4])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BC8CB19560AB; Sun,  9 Mar 2025 08:37:25 +0000 (UTC)
+ id F155919560AB; Sun,  9 Mar 2025 08:36:29 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -54,9 +54,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 37/62] docs/qapidoc: Fix static typing on qapidoc.py
-Date: Sun,  9 Mar 2025 04:35:24 -0400
-Message-ID: <20250309083550.5155-38-jsnow@redhat.com>
+Subject: [PATCH v2 16/62] docs/qapi-domain: add "Features:" field lists
+Date: Sun,  9 Mar 2025 04:35:03 -0400
+Message-ID: <20250309083550.5155-17-jsnow@redhat.com>
 In-Reply-To: <20250309083550.5155-1-jsnow@redhat.com>
 References: <20250309083550.5155-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -87,145 +87,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that the legacy code is factored out, fix up the typing on the
-remaining code in qapidoc.py. Add a type ignore to qapi_legacy.py to
-prevent the errors there from bleeding out into qapidoc.py.
+Add support for Features field lists. There is no QAPI-specific
+functionality here, but this could be changed if desired (if we wanted
+the feature names to link somewhere, for instance.)
+
+This feature list doesn't have any restrictions, so it can be used to
+document object-wide features or per-member features as deemed
+appropriate. It's essentially free-form text.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py        | 40 ++++++++++++++++++++++-------------
- docs/sphinx/qapidoc_legacy.py |  1 +
- 2 files changed, 26 insertions(+), 15 deletions(-)
+ docs/sphinx/qapi_domain.py | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index f4abf42e7bf..5246832b68c 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -24,17 +24,18 @@
- https://www.sphinx-doc.org/en/master/development/index.html
- """
+diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+index c0a1a1f9ee8..21d487514ec 100644
+--- a/docs/sphinx/qapi_domain.py
++++ b/docs/sphinx/qapi_domain.py
+@@ -33,7 +33,7 @@
+ from sphinx.locale import _, __
+ from sphinx.roles import XRefRole
+ from sphinx.util import logging
+-from sphinx.util.docfields import TypedField
++from sphinx.util.docfields import GroupedField, TypedField
+ from sphinx.util.nodes import make_id, make_refnode
  
-+from __future__ import annotations
+ 
+@@ -184,6 +184,16 @@ class QAPIObject(QAPIDescription):
+         }
+     )
+ 
++    doc_field_types = [
++        # :feat name: descr
++        GroupedField(
++            "feature",
++            label=_("Features"),
++            names=("feat",),
++            can_collapse=False,
++        ),
++    ]
 +
- import os
- import sys
--from typing import List
-+from typing import TYPE_CHECKING
- 
- from docutils import nodes
- from docutils.parsers.rst import Directive, directives
- from qapi.error import QAPIError
--from qapi.gen import QAPISchemaVisitor
--from qapi.schema import QAPISchema
-+from qapi.schema import QAPISchema, QAPISchemaVisitor
- 
--from qapidoc_legacy import QAPISchemaGenRSTVisitor
-+from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
- from sphinx import addnodes
- from sphinx.directives.code import CodeBlock
- from sphinx.errors import ExtensionError
-@@ -42,6 +43,15 @@
- from sphinx.util.nodes import nested_parse_with_titles
- 
- 
-+if TYPE_CHECKING:
-+    from typing import Any, List, Sequence
-+
-+    from docutils.statemachine import StringList
-+
-+    from sphinx.application import Sphinx
-+    from sphinx.util.typing import ExtensionMetadata
-+
-+
- __version__ = "1.0"
- 
- 
-@@ -53,11 +63,11 @@ class QAPISchemaGenDepVisitor(QAPISchemaVisitor):
-     schema file associated with each module in the QAPI input.
-     """
- 
--    def __init__(self, env, qapidir):
-+    def __init__(self, env: Any, qapidir: str) -> None:
-         self._env = env
-         self._qapidir = qapidir
- 
--    def visit_module(self, name):
-+    def visit_module(self, name: str) -> None:
-         if name != "./builtin":
-             qapifile = self._qapidir + "/" + name
-             self._env.note_dependency(os.path.abspath(qapifile))
-@@ -65,10 +75,10 @@ def visit_module(self, name):
- 
- 
- class NestedDirective(Directive):
--    def run(self):
-+    def run(self) -> Sequence[nodes.Node]:
-         raise NotImplementedError
- 
--    def do_parse(self, rstlist, node):
-+    def do_parse(self, rstlist: StringList, node: nodes.Node) -> None:
-         """
-         Parse rST source lines and add them to the specified node
- 
-@@ -93,15 +103,15 @@ class QAPIDocDirective(NestedDirective):
-     }
-     has_content = False
- 
--    def new_serialno(self):
-+    def new_serialno(self) -> str:
-         """Return a unique new ID string suitable for use as a node's ID"""
-         env = self.state.document.settings.env
-         return "qapidoc-%d" % env.new_serialno("qapidoc")
- 
--    def transmogrify(self, schema) -> nodes.Element:
-+    def transmogrify(self, schema: QAPISchema) -> nodes.Element:
-         raise NotImplementedError
- 
--    def legacy(self, schema) -> nodes.Element:
-+    def legacy(self, schema: QAPISchema) -> nodes.Element:
-         vis = QAPISchemaGenRSTVisitor(self)
-         vis.visit_begin(schema)
-         for doc in schema.docs:
-@@ -109,9 +119,9 @@ def legacy(self, schema) -> nodes.Element:
-                 vis.symbol(doc, schema.lookup_entity(doc.symbol))
-             else:
-                 vis.freeform(doc)
--        return vis.get_document_node()
-+        return vis.get_document_node()  # type: ignore
- 
--    def run(self):
-+    def run(self) -> Sequence[nodes.Node]:
-         env = self.state.document.settings.env
-         qapifile = env.config.qapidoc_srctree + "/" + self.arguments[0]
-         qapidir = os.path.dirname(qapifile)
-@@ -185,7 +195,7 @@ def _highlightlang(self) -> addnodes.highlightlang:
-         )
-         return node
- 
--    def admonition_wrap(self, *content) -> List[nodes.Node]:
-+    def admonition_wrap(self, *content: nodes.Node) -> List[nodes.Node]:
-         title = "Example:"
-         if "title" in self.options:
-             title = f"{title} {self.options['title']}"
-@@ -231,7 +241,7 @@ def run(self) -> List[nodes.Node]:
-         return self.admonition_wrap(*content_nodes)
- 
- 
--def setup(app):
-+def setup(app: Sphinx) -> ExtensionMetadata:
-     """Register qapi-doc directive with Sphinx"""
-     app.add_config_value("qapidoc_srctree", None, "env")
-     app.add_directive("qapi-doc", QAPIDocDirective)
-diff --git a/docs/sphinx/qapidoc_legacy.py b/docs/sphinx/qapidoc_legacy.py
-index 679f38356b1..13520f4c26b 100644
---- a/docs/sphinx/qapidoc_legacy.py
-+++ b/docs/sphinx/qapidoc_legacy.py
-@@ -1,4 +1,5 @@
- # coding=utf-8
-+# type: ignore
- #
- # QEMU qapidoc QAPI file parsing extension
- #
+     def get_signature_prefix(self) -> List[nodes.Node]:
+         """Returns a prefix to put before the object name in the signature."""
+         assert self.objtype
 -- 
 2.48.1
 
