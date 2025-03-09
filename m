@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F5EC28B2F
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 13:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9B6C28B2F
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 13:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trH6T-0004ov-5I; Sun, 09 Mar 2025 09:54:05 -0400
+	id 1trH5f-0001mW-2v; Sun, 09 Mar 2025 09:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH5k-0002B8-PO
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:53:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH5R-0001Kk-R9
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:53:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH5h-0003xj-Tr
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:53:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH5P-0003gq-P0
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:53:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741528397;
+ s=mimecast20190719; t=1741528379;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lY/mgkz7UKbtun2cufg6h3yp/eLSgCuByf8NHRBx48M=;
- b=DJEXSXqOjABfR6hG4/4tPHdnXQ0QoVGQJVsFwpufjQP5kk2gUPKZh+Mou7KNVqkXhPXStA
- aLmrjFUXB7FhftqftT7vFBxepdDjGDmUXAZLm9yzINYXgl1wwjXkQsgjiNQ8oauoBC6WRo
- 8T4fqT5rzsffyKQXDoPI6+dt33505Dk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=o3pM6y0mmoYB+krbKwiwV4STa1UotSeq0YcJABHT1wA=;
+ b=X5Y4oLfF0dW/LS5DVdM4BaKoWDpm5I3fdG8wb6DwhkLvFXns0C4zyj4XAiNg+iX4yLnrV1
+ 5gXUOrwoMPTPRtHaUAgfocfr/tyah0hJeVHm0SzpYwCMLiY6R5/N/KEuChT47wGfPf+6SY
+ /wawHaeH7GgII7WsqNmziBUIc/jvbLM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-163-HoPlnY55N2mTQ43_Vz7RuA-1; Sun,
- 09 Mar 2025 09:53:13 -0400
-X-MC-Unique: HoPlnY55N2mTQ43_Vz7RuA-1
-X-Mimecast-MFC-AGG-ID: HoPlnY55N2mTQ43_Vz7RuA_1741528393
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-oDvCFGIvPrmsAw4EpdrNaA-1; Sun,
+ 09 Mar 2025 09:52:56 -0400
+X-MC-Unique: oDvCFGIvPrmsAw4EpdrNaA-1
+X-Mimecast-MFC-AGG-ID: oDvCFGIvPrmsAw4EpdrNaA_1741528375
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0084B195608B; Sun,  9 Mar 2025 13:53:13 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6ED12180AF4C; Sun,  9 Mar 2025 13:52:55 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.17])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4ED171956094; Sun,  9 Mar 2025 13:53:11 +0000 (UTC)
+ id AADDE1956094; Sun,  9 Mar 2025 13:52:53 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 39/46] hw/arm/aspeed_ast27x0: Add SoC Support for AST2700 A1
-Date: Sun,  9 Mar 2025 14:51:23 +0100
-Message-ID: <20250309135130.545764-40-clg@redhat.com>
+Subject: [PULL 31/46] hw/intc/aspeed: Introduce AspeedINTCIRQ structure to
+ save the irq index and register address
+Date: Sun,  9 Mar 2025 14:51:15 +0100
+Message-ID: <20250309135130.545764-32-clg@redhat.com>
 In-Reply-To: <20250309135130.545764-1-clg@redhat.com>
 References: <20250309135130.545764-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -86,124 +87,222 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-The memory map for AST2700 A1 remains compatible with AST2700 A0. However, the
-IRQ mapping has been updated for AST2700 A1, with GIC interrupts now ranging
-from 192 to 201. Add a new IRQ map table for AST2700 A1.
-Add "aspeed_soc_ast2700a1_class_init" to initialize the AST2700 A1 SoC.
+The INTC controller supports GICINT128 to GICINT136, mapping 1:1 to input and
+output IRQs 0 to 8. Previously, the formula "address & 0x0f00" was used to
+derive the IRQ index numbers.
+
+However, the INTC controller also supports GICINT192_201, mapping 1 input IRQ
+pin to 10 output IRQ pins. The pin numbers for input and output are different.
+It is difficult to use a formula to determine the index number of INTC model
+supported input and output IRQs.
+
+To simplify and improve readability, introduces the AspeedINTCIRQ structure to
+save the input/output IRQ index and its enable/status register address.
+
+Introduce the "aspeed_2700_intc_irqs" table to store IRQ information for INTC.
+Introduce the "aspeed_intc_get_irq" function to retrieve the input/output IRQ
+pin index from the provided status/enable register address.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250307035945.3698802-23-jamin_lin@aspeedtech.com
-[ clg: Removed sc->name ]
+Link: https://lore.kernel.org/qemu-devel/20250307035945.3698802-15-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0.c | 79 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+ include/hw/intc/aspeed_intc.h | 10 ++++
+ hw/intc/aspeed_intc.c         | 87 +++++++++++++++++++----------------
+ 2 files changed, 58 insertions(+), 39 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 8ed57d23ef1c..682ab9bf8a38 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -120,6 +120,52 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
-     [ASPEED_DEV_SDHCI]     = 133,
+diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+index 2a22e3084615..e6c3a27264b3 100644
+--- a/include/hw/intc/aspeed_intc.h
++++ b/include/hw/intc/aspeed_intc.h
+@@ -19,6 +19,14 @@ OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+ #define ASPEED_INTC_MAX_INPINS 9
+ #define ASPEED_INTC_MAX_OUTPINS 9
+ 
++typedef struct AspeedINTCIRQ {
++    int inpin_idx;
++    int outpin_idx;
++    int num_outpins;
++    uint32_t enable_reg;
++    uint32_t status_reg;
++} AspeedINTCIRQ;
++
+ struct AspeedINTCState {
+     /*< private >*/
+     SysBusDevice parent_obj;
+@@ -46,6 +54,8 @@ struct AspeedINTCClass {
+     uint64_t nr_regs;
+     uint64_t reg_offset;
+     const MemoryRegionOps *reg_ops;
++    const AspeedINTCIRQ *irq_table;
++    int irq_table_count;
  };
  
-+static const int aspeed_soc_ast2700a1_irqmap[] = {
-+    [ASPEED_DEV_SDMC]      = 0,
-+    [ASPEED_DEV_HACE]      = 4,
-+    [ASPEED_DEV_XDMA]      = 5,
-+    [ASPEED_DEV_UART4]     = 8,
-+    [ASPEED_DEV_SCU]       = 12,
-+    [ASPEED_DEV_RTC]       = 13,
-+    [ASPEED_DEV_EMMC]      = 15,
-+    [ASPEED_DEV_TIMER1]    = 16,
-+    [ASPEED_DEV_TIMER2]    = 17,
-+    [ASPEED_DEV_TIMER3]    = 18,
-+    [ASPEED_DEV_TIMER4]    = 19,
-+    [ASPEED_DEV_TIMER5]    = 20,
-+    [ASPEED_DEV_TIMER6]    = 21,
-+    [ASPEED_DEV_TIMER7]    = 22,
-+    [ASPEED_DEV_TIMER8]    = 23,
-+    [ASPEED_DEV_DP]        = 28,
-+    [ASPEED_DEV_LPC]       = 192,
-+    [ASPEED_DEV_IBT]       = 192,
-+    [ASPEED_DEV_KCS]       = 192,
-+    [ASPEED_DEV_I2C]       = 194,
-+    [ASPEED_DEV_ADC]       = 194,
-+    [ASPEED_DEV_GPIO]      = 194,
-+    [ASPEED_DEV_FMC]       = 195,
-+    [ASPEED_DEV_WDT]       = 195,
-+    [ASPEED_DEV_PWM]       = 195,
-+    [ASPEED_DEV_I3C]       = 195,
-+    [ASPEED_DEV_UART0]     = 196,
-+    [ASPEED_DEV_UART1]     = 196,
-+    [ASPEED_DEV_UART2]     = 196,
-+    [ASPEED_DEV_UART3]     = 196,
-+    [ASPEED_DEV_UART5]     = 196,
-+    [ASPEED_DEV_UART6]     = 196,
-+    [ASPEED_DEV_UART7]     = 196,
-+    [ASPEED_DEV_UART8]     = 196,
-+    [ASPEED_DEV_UART9]     = 196,
-+    [ASPEED_DEV_UART10]    = 196,
-+    [ASPEED_DEV_UART11]    = 196,
-+    [ASPEED_DEV_UART12]    = 196,
-+    [ASPEED_DEV_ETH1]      = 196,
-+    [ASPEED_DEV_ETH2]      = 196,
-+    [ASPEED_DEV_ETH3]      = 196,
-+    [ASPEED_DEV_PECI]      = 197,
-+    [ASPEED_DEV_SDHCI]     = 197,
+ #endif /* ASPEED_INTC_H */
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 1cbee0e17a5f..be24516ec970 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -40,7 +40,23 @@ REG32(GICINT135_STATUS,     0x704)
+ REG32(GICINT136_EN,         0x800)
+ REG32(GICINT136_STATUS,     0x804)
+ 
+-#define GICINT_STATUS_BASE     R_GICINT128_STATUS
++static const AspeedINTCIRQ *aspeed_intc_get_irq(AspeedINTCClass *aic,
++                                                uint32_t reg)
++{
++    int i;
++
++    for (i = 0; i < aic->irq_table_count; i++) {
++        if (aic->irq_table[i].enable_reg == reg ||
++            aic->irq_table[i].status_reg == reg) {
++            return &aic->irq_table[i];
++        }
++    }
++
++    /*
++     * Invalid reg.
++     */
++    g_assert_not_reached();
++}
+ 
+ /*
+  * Update the state of an interrupt controller pin by setting
+@@ -54,17 +70,7 @@ static void aspeed_intc_update(AspeedINTCState *s, int inpin_idx,
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+     const char *name = object_get_typename(OBJECT(s));
+ 
+-    if (inpin_idx >= aic->num_inpins) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid input pin index: %d\n",
+-                      __func__, inpin_idx);
+-        return;
+-    }
+-
+-    if (outpin_idx >= aic->num_outpins) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid output pin index: %d\n",
+-                      __func__, outpin_idx);
+-        return;
+-    }
++    assert((outpin_idx < aic->num_outpins) && (inpin_idx < aic->num_inpins));
+ 
+     trace_aspeed_intc_update_irq(name, inpin_idx, outpin_idx, level);
+     qemu_set_irq(s->output_pins[outpin_idx], level);
+@@ -81,21 +87,20 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+     AspeedINTCState *s = (AspeedINTCState *)opaque;
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+     const char *name = object_get_typename(OBJECT(s));
+-    uint32_t status_reg = GICINT_STATUS_BASE + ((0x100 * irq) >> 2);
++    const AspeedINTCIRQ *intc_irq;
++    uint32_t status_reg;
+     uint32_t select = 0;
+     uint32_t enable;
+     int outpin_idx;
+     int inpin_idx;
+     int i;
+ 
+-    outpin_idx = irq;
+-    inpin_idx = irq;
++    assert(irq < aic->num_inpins);
+ 
+-    if (irq >= aic->num_inpins) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid input pin index: %d\n",
+-                      __func__, irq);
+-        return;
+-    }
++    intc_irq = &aic->irq_table[irq];
++    status_reg = intc_irq->status_reg;
++    outpin_idx = intc_irq->outpin_idx;
++    inpin_idx = intc_irq->inpin_idx;
+ 
+     trace_aspeed_intc_set_irq(name, inpin_idx, level);
+     enable = s->enable[inpin_idx];
+@@ -146,21 +151,16 @@ static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
+ {
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+     const char *name = object_get_typename(OBJECT(s));
++    const AspeedINTCIRQ *intc_irq;
+     uint32_t reg = offset >> 2;
+     uint32_t old_enable;
+     uint32_t change;
+     int inpin_idx;
+-    uint32_t irq;
+ 
+-    irq = (offset & 0x0f00) >> 8;
+-    inpin_idx = irq;
++    intc_irq = aspeed_intc_get_irq(aic, reg);
++    inpin_idx = intc_irq->inpin_idx;
+ 
+-    if (inpin_idx >= aic->num_inpins) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: Invalid input pin index: %d\n",
+-                      __func__, inpin_idx);
+-        return;
+-    }
++    assert(inpin_idx < aic->num_inpins);
+ 
+     /*
+      * The enable registers are used to enable source interrupts.
+@@ -202,26 +202,21 @@ static void aspeed_intc_status_handler(AspeedINTCState *s, hwaddr offset,
+ {
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+     const char *name = object_get_typename(OBJECT(s));
++    const AspeedINTCIRQ *intc_irq;
+     uint32_t reg = offset >> 2;
+     int outpin_idx;
+     int inpin_idx;
+-    uint32_t irq;
+ 
+     if (!data) {
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid data 0\n", __func__);
+         return;
+     }
+ 
+-    irq = (offset & 0x0f00) >> 8;
+-    outpin_idx = irq;
+-    inpin_idx = irq;
++    intc_irq = aspeed_intc_get_irq(aic, reg);
++    outpin_idx = intc_irq->outpin_idx;
++    inpin_idx = intc_irq->inpin_idx;
+ 
+-    if (inpin_idx >= aic->num_inpins) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: Invalid input pin index: %d\n",
+-                      __func__, inpin_idx);
+-        return;
+-    }
++    assert(inpin_idx < aic->num_inpins);
+ 
+     /* clear status */
+     s->regs[reg] &= ~data;
+@@ -411,6 +406,18 @@ static const TypeInfo aspeed_intc_info = {
+     .abstract = true,
+ };
+ 
++static AspeedINTCIRQ aspeed_2700_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
++    {0, 0, 1, R_GICINT128_EN, R_GICINT128_STATUS},
++    {1, 1, 1, R_GICINT129_EN, R_GICINT129_STATUS},
++    {2, 2, 1, R_GICINT130_EN, R_GICINT130_STATUS},
++    {3, 3, 1, R_GICINT131_EN, R_GICINT131_STATUS},
++    {4, 4, 1, R_GICINT132_EN, R_GICINT132_STATUS},
++    {5, 5, 1, R_GICINT133_EN, R_GICINT133_STATUS},
++    {6, 6, 1, R_GICINT134_EN, R_GICINT134_STATUS},
++    {7, 7, 1, R_GICINT135_EN, R_GICINT135_STATUS},
++    {8, 8, 1, R_GICINT136_EN, R_GICINT136_STATUS},
 +};
 +
- /* GICINT 128 */
- /* GICINT 192 */
- static const int ast2700_gic128_gic192_intcmap[] = {
-@@ -864,6 +910,33 @@ static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
-     sc->get_irq      = aspeed_soc_ast2700_get_irq;
+ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -423,6 +430,8 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+     aic->mem_size = 0x4000;
+     aic->nr_regs = 0x808 >> 2;
+     aic->reg_offset = 0x1000;
++    aic->irq_table = aspeed_2700_intc_irqs;
++    aic->irq_table_count = ARRAY_SIZE(aspeed_2700_intc_irqs);
  }
  
-+static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, void *data)
-+{
-+    static const char * const valid_cpu_types[] = {
-+        ARM_CPU_TYPE_NAME("cortex-a35"),
-+        NULL
-+    };
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
-+
-+    /* Reason: The Aspeed SoC can only be instantiated from a board */
-+    dc->user_creatable = false;
-+    dc->realize      = aspeed_soc_ast2700_realize;
-+
-+    sc->valid_cpu_types = valid_cpu_types;
-+    sc->silicon_rev  = AST2700_A1_SILICON_REV;
-+    sc->sram_size    = 0x20000;
-+    sc->spis_num     = 3;
-+    sc->wdts_num     = 8;
-+    sc->macs_num     = 3;
-+    sc->uarts_num    = 13;
-+    sc->num_cpus     = 4;
-+    sc->uarts_base   = ASPEED_DEV_UART0;
-+    sc->irqmap       = aspeed_soc_ast2700a1_irqmap;
-+    sc->memmap       = aspeed_soc_ast2700_memmap;
-+    sc->get_irq      = aspeed_soc_ast2700_get_irq;
-+}
-+
- static const TypeInfo aspeed_soc_ast27x0_types[] = {
-     {
-         .name           = TYPE_ASPEED27X0_SOC,
-@@ -876,6 +949,12 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
-         .instance_init  = aspeed_soc_ast2700_init,
-         .class_init     = aspeed_soc_ast2700a0_class_init,
-     },
-+    {
-+        .name           = "ast2700-a1",
-+        .parent         = TYPE_ASPEED27X0_SOC,
-+        .instance_init  = aspeed_soc_ast2700_init,
-+        .class_init     = aspeed_soc_ast2700a1_class_init,
-+    },
- };
- 
- DEFINE_TYPES(aspeed_soc_ast27x0_types)
+ static const TypeInfo aspeed_2700_intc_info = {
 -- 
 2.48.1
 
