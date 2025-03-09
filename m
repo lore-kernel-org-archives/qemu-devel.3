@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB712C28B2F
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 17:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D8DC28B2F
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 17:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trKJQ-0004NQ-Je; Sun, 09 Mar 2025 13:19:40 -0400
+	id 1trKp1-00059C-BI; Sun, 09 Mar 2025 13:52:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1trKJM-0004Mr-8i
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:19:36 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKoz-00058l-O7
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:17 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1trKJG-00065P-Ty
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:19:35 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cebe06e9eso5145505e9.3
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:19:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKoy-0004ni-7q
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:17 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43bd03ed604so29843715e9.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:52:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741540764; x=1742145564; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=zd7sNYltQbDeg8BujY3Oc2Qj273T+OtyPIpGg6jTeE8=;
- b=x2DeQbp+MBa2ShcJmHToA2WY8fiRG2I+YcpQhdK87ivxBview6S/xUwRNBJ3WsbGI+
- UCee8SoDWg3jZNq2lfRPqKN7COObTgykyGUqMEkM1uGUqDm3wMzRD0kemsmSmJc9UPNa
- /zoJhL1OUuWpSI2zngq0MtgheyX7Z57CW7a8AtJ2mDvt6IxuLsIPvrApwkL4VGXTaw+T
- 7jdJ/kSU8D9xcGkvlcsvsLCioEd6fyx6j6Bmx5Hl7aUFdrZ+EP1TVlXmFJbbVLF59TRY
- YHdjWrdVmBhX7H3AdOCWnUpqXfrZ08VNTw0EYLlAoKnWZ7Z8pU0bD6qSe3XNuaGLZ8wk
- zt5Q==
+ d=linaro.org; s=google; t=1741542734; x=1742147534; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=M4O7vzSf9Kqz7dSwzKnWekJP1fOmdxWNIgHecTPSDb8=;
+ b=TmqscUnW2XiPmBXpZXE+ic1WAq9AnVt/cSlC0fp1WOdYCAZuH175o2xbwJR48FlgEi
+ GjSIlpsaSniq5R5cDw3BLfRmtiMtLIHUytoLotuXkPT0z0OGSC8Jwb/WNJAtuTPCCfSI
+ gIt0s0x3dTfLg9fhwQOujd6ju7qms9Dk4NytNufJBZ2ALM1nzO4DNlZJZWuGv0BF2nbQ
+ b90p04Ga9QYIEwvQcnLnJ7m9PQf+tcfeIOKLidb7czax0kKTiq7p61RDDbpnhgc9Ypkf
+ OQ9gYzg8KVRFxqsP5LSLnqoNuqMgPS+w/E1o+5hWCMTy+QHJllg5pslv+f7pbGdfR8oJ
+ MkKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741540764; x=1742145564;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zd7sNYltQbDeg8BujY3Oc2Qj273T+OtyPIpGg6jTeE8=;
- b=V8gcpz4FfKSnNPHgwSNXC/gMHNNTpehan1Mj3DBxLsb7f0ShxT0mSuPLaX1UU/u7Wd
- IuhK2yZzHcrsTyZeOsSquiHz2ilpfZGDkx2TSceBRyjCyWiIGWNwWo9DyCR6Q2DkBhUA
- IbX1jpfUXajXMb36cP7mM3K0mw9cxs+ut+RF9Qh6ZKJdeTL7RlHMYuIhN3eP4Q2QqJoh
- Pir2SITQmcLv6CGk5izHsKYlANoMj9pwtD+LMpUYnk0HNYbMZfpRbQ7oYasPtTrImdJF
- sqkcqsZODyydlB5Ry9mb80X9dhQfXbxcsS3RlnHz2IBhHDcg3+LIHD1+PtleJBFB00ba
- EUDg==
-X-Gm-Message-State: AOJu0YxSXAHUR4aroipb/Ph+Gta3Mq6JD31NlAzrVmgKVs0zfsFSS+J+
- Cdtb0/c0/nZ2j/F+p5AEdBi0UXEAoeE95aCsKZqwyVf2k384E/vpQxL9OCZtGMQ=
-X-Gm-Gg: ASbGncvj1AvQNsofWM41vntTat503hZyAPji26AaAuNLIZa7qcOohfO7f/0qf4xrZnJ
- IRu9381SvLaCJf7q+Q6JFU+Wgs6pEHAzhhyk89vstQA33c8wFOUwMS6xnwaCIKBjQ1WRsUIYzni
- IlazEuOk4cIdp50wSEg2d5xwHMni/UI2eQQjTMAnN4o4VyFrzNOY1iCF3DzWfBgSPNKOpugglcO
- wJNtgMxRwAVcbyoJxvm3ySrZBpZmeTKKZkN+jmW8sp8qBKnkGhb302n2t3aiKM2ph78MapYTaWu
- zRag7UGqYZG5UYmL5maw8/qU7gyENCEkkf58vdFfv2ne4xk=
-X-Google-Smtp-Source: AGHT+IF8hxC0WCiX90/U94HguDJJ6TLVR6V59946wXqubqcBlC71Ms1lv8P5bPV1eKAm3wuXGZ/50g==
-X-Received: by 2002:a05:600c:1c04:b0:43c:f629:66f4 with SMTP id
- 5b1f17b1804b1-43cf62969f2mr10963505e9.0.1741540763684; 
- Sun, 09 Mar 2025 10:19:23 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ce3d5a0e2sm67265395e9.12.2025.03.09.10.19.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Mar 2025 10:19:23 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2EA645F9DA;
- Sun,  9 Mar 2025 17:19:22 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1741542734; x=1742147534;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=M4O7vzSf9Kqz7dSwzKnWekJP1fOmdxWNIgHecTPSDb8=;
+ b=TGrl6pLfbLqKc8YfzVBQFiNqmYSroME1RI2mf9fwe7GIp3dzqZ4vKs8q/GgadFa8S4
+ 09QRo0EWVWfihrDDvw3qGa39IGrTgI94yqtBZ4SOyCkJAGv4Nw5R5ps2VQV1mEFrxS2C
+ wgUvn+Gz+tU9JZwAZM4Ermpnrb/+Xp0gENdGsMJ7BHCsTzNBtfq1Er91l87uL6oXbr0g
+ bf/DAdgR/3Q5vqHWxEY9FK9K/GXtsyhzBoFSFI7FfM8HBndyO4ENvjz5SbQTsczG8/z6
+ Fsm6O5kloz8NoL6ChHemkhhuT/fMD3TyAwZPoxed5uotbXvp/sATWFT6kZJ7tUCJMgeo
+ TPFw==
+X-Gm-Message-State: AOJu0Ywv/gmMgS+BZ6onf9kE7P2JlADBiUX/PUDwzGxPunkEY26PVIR3
+ 46R0zH8vbwLSFtVL+Ffg0c5XTeK2FvT5JJO5eL2FlEoRO0I7Iy6l1GiUy0bH1tEc1FKCopyHjze
+ rhDc=
+X-Gm-Gg: ASbGncup1I15Bozfk7QpGHc1m9OPrikQqLGhC0E2f7Ihfkv8EQDtfDRxteiIUQC5jkq
+ knk3+Vw1MLUtmFfPR59PQBWqQMjPBHD0Kb+6STve2x/hhA/e6feolypP28gRnFTAH5uTe7wq9bc
+ p8wst5sh5nxvHptx+FVxfQwu6UOLsd0IPBHSrvCeutmkhCI7EUOGSg5I1jbBCrVr4CMG5nEbJTS
+ Z9hdnOOGxBVT15hcQtKRGL2iR/xEaV2GRcypa44NFTPWbPeskzUSeKb7XzUHqIpupaoWBSLdvC0
+ WXVWNDfW8qH4BoD4n7ORN2ijhTPdIgYeuXliREdQRocUkmiZ8ZPB/mYh7E+EIyR4NyUQP3j52or
+ ohSC2rU1PmftjBccBwmc=
+X-Google-Smtp-Source: AGHT+IFTlCdl+LWaEswVfeZ3CDBAxjhaVLpaV/I3z41fiJQBbcwKpLGfvC0fcX3KjAtZUw5+W3xGdw==
+X-Received: by 2002:a05:6000:1862:b0:390:fe4b:70b9 with SMTP id
+ ffacd0b85a97d-39132d6c5demr8880879f8f.21.1741542734240; 
+ Sun, 09 Mar 2025 10:52:14 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bdd93c9b6sm120766395e9.29.2025.03.09.10.52.13
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 09 Mar 2025 10:52:13 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH] tests/functional: skip vulkan tests when not configured
-Date: Sun,  9 Mar 2025 17:19:08 +0000
-Message-Id: <20250309171908.3087067-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+Subject: [PULL 01/38] linux-user: Only include 'exec/tb-flush.h' header when
+ necessary
+Date: Sun,  9 Mar 2025 18:51:30 +0100
+Message-ID: <20250309175207.43828-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250309175207.43828-1-philmd@linaro.org>
+References: <20250309175207.43828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,52 +99,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CI images don't have the vulkan drivers for the non-existent
-hardware even if they can't see the DRI devices. Skip the test early
-in this case. While at it fix the missing logging which doesn't seem
-to like f-strings.
+Very few source files require to access "exec/tb-flush.h"
+declarations, and except a pair, they all include it
+explicitly. No need to overload the generic "user-internals.h".
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20250102182521.65428-2-philmd@linaro.org>
 ---
- tests/functional/test_aarch64_virt_gpu.py | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ linux-user/user-internals.h | 1 -
+ linux-user/mmap.c           | 1 +
+ linux-user/syscall.c        | 1 +
+ 3 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-index c6f7738e93..f19a47f8b6 100755
---- a/tests/functional/test_aarch64_virt_gpu.py
-+++ b/tests/functional/test_aarch64_virt_gpu.py
-@@ -18,7 +18,7 @@
- from qemu_test.linuxkernel import LinuxKernelTest
+diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+index b9b05c1d11f..4aa253b5663 100644
+--- a/linux-user/user-internals.h
++++ b/linux-user/user-internals.h
+@@ -20,7 +20,6 @@
  
- from re import search
--from subprocess import check_output
-+from subprocess import check_output, CalledProcessError
+ #include "user/thunk.h"
+ #include "exec/exec-all.h"
+-#include "exec/tb-flush.h"
+ #include "qemu/log.h"
  
- class Aarch64VirtGPUMachine(LinuxKernelTest):
- 
-@@ -75,7 +75,7 @@ def _launch_virt_gpu(self, gpu_device):
-             elif "'type' does not accept value 'egl-headless'" in excp.output:
-                 self.skipTest("egl-headless support is not available")
-             else:
--                self.log.info(f"unhandled launch failure: {excp.output}")
-+                self.log.info("unhandled launch failure: %s", excp.output)
-                 raise excp
- 
-         self.wait_for_console_pattern('buildroot login:')
-@@ -119,7 +119,11 @@ def test_aarch64_virt_with_vulkan_gpu(self):
- 
-         self.require_device('virtio-gpu-gl-pci')
- 
--        vk_info = check_output(["vulkaninfo", "--summary"], encoding="utf-8")
-+        try:
-+            vk_info = check_output(["vulkaninfo", "--summary"],
-+                                   encoding="utf-8")
-+        except CalledProcessError as excp:
-+            self.skipTest(f"Miss-configured host Vulkan: {excp.output}")
- 
-         if search(r"driverID\s+=\s+DRIVER_ID_NVIDIA_PROPRIETARY", vk_info):
-             self.skipTest("Test skipped on NVIDIA proprietary driver")
+ extern char *exec_path;
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 6828b17a63f..d1f36e6f16b 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -21,6 +21,7 @@
+ #include "trace.h"
+ #include "exec/log.h"
+ #include "exec/page-protection.h"
++#include "exec/tb-flush.h"
+ #include "exec/translation-block.h"
+ #include "qemu.h"
+ #include "user/page-protection.h"
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 02ea4221c96..b32de763f7e 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -26,6 +26,7 @@
+ #include "tcg/startup.h"
+ #include "target_mman.h"
+ #include "exec/page-protection.h"
++#include "exec/tb-flush.h"
+ #include "exec/translation-block.h"
+ #include <elf.h>
+ #include <endian.h>
 -- 
-2.39.5
+2.47.1
 
 
