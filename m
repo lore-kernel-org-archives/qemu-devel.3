@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A80E0C282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4E5C282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:45:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trCAV-0006Tx-QR; Sun, 09 Mar 2025 04:37:56 -0400
+	id 1trC8y-00014q-7M; Sun, 09 Mar 2025 04:36:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCAO-00067U-8f
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:48 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC8q-0000zW-Gn
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:36:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCAL-0002YG-S0
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:47 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC8o-00021Y-NL
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:36:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741509464;
+ s=mimecast20190719; t=1741509369;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FhNc4XlKtZhVDqpp/h1XYzOnc0rVdthJ98dnkqQG2fU=;
- b=aiK/a3OUCqP1oLVZ5LrT9Bv/vGUqkzwBpXqMs/Rdf9blF8riJCrXIxn6LT3n7LoAW8J46j
- t76RTCfi9QfiNsA3ghaT8Cjqe8a0+yGo9j0P/U1f9Kke6K3G0M6qsG6JEz4tc1N06EkGt7
- C2/xkqXoNHuOdFFjrQ8uhX8GV4nmecM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=SPN+AdqQcOZLZ0qAqGOllNYeST6xcSvGExD6rN2zgnE=;
+ b=Y6fl8ozlVYb/apqAaTi8Jp4fDb9tmlYlK13zhZPgsIRX7plEOWt1UwrKp++bdPj8hhKTRR
+ C4BzKC5ouHH6jxMzGANSxFa00H4gFXBj1r8QCpCDNIMcscGZoX14zUv9qTs0wjFDbF2jBY
+ s7ZKUSIYt2q4ZmgOPGqqNz9r0izWqTY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-vV4ydShjOvaQPPg2o8xOEw-1; Sun,
- 09 Mar 2025 04:37:39 -0400
-X-MC-Unique: vV4ydShjOvaQPPg2o8xOEw-1
-X-Mimecast-MFC-AGG-ID: vV4ydShjOvaQPPg2o8xOEw_1741509458
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-496-onWWf3GBMw6aKqy28L8l-A-1; Sun,
+ 09 Mar 2025 04:36:06 -0400
+X-MC-Unique: onWWf3GBMw6aKqy28L8l-A-1
+X-Mimecast-MFC-AGG-ID: onWWf3GBMw6aKqy28L8l-A_1741509365
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ECF1B195608F; Sun,  9 Mar 2025 08:37:37 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF34D180AB19; Sun,  9 Mar 2025 08:36:04 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.4])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0B6F619560AB; Sun,  9 Mar 2025 08:37:35 +0000 (UTC)
+ id E40E719560AB; Sun,  9 Mar 2025 08:36:02 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -54,10 +54,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 41/62] qapi/source: allow multi-line QAPISourceInfo
- advancing
-Date: Sun,  9 Mar 2025 04:35:28 -0400
-Message-ID: <20250309083550.5155-42-jsnow@redhat.com>
+Subject: [PATCH v2 05/62] docs/qapi-domain: add QAPI domain object registry
+Date: Sun,  9 Mar 2025 04:34:52 -0400
+Message-ID: <20250309083550.5155-6-jsnow@redhat.com>
 In-Reply-To: <20250309083550.5155-1-jsnow@redhat.com>
 References: <20250309083550.5155-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -88,65 +87,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is for the sake of the new rST generator (the "transmogrifier") so
-we can advance multiple lines on occasion while keeping the
-generated<-->source mappings accurate.
+This is the first step towards QAPI domain cross-references and a QAPI
+reference index.
 
-next_line now simply takes an optional n parameter which chooses the
-number of lines to advance.
+This patch just creates the object registry, and updates the
+merge_domaindata stub method now that we have actual data we may need to
+merge.
 
-RFC: Here's the exorbitant detail on why I want this:
-
-This is used mainly when converting section syntax in free-form
-documentation to more traditional rST section header syntax, which
-does not always line up 1:1 for line counts.
-
-For example:
-
-```
- ##
- # = Section     <-- Info is pointing here, "L1"
- #
- # Lorem Ipsum
- ##
-```
-
-would be transformed to rST as:
-
-```
-=======        <-- L1
-Section        <-- L1
-=======        <-- L1
-               <-- L2
-Lorem Ipsum    <-- L3
-```
-
-After consuming the single "Section" line from the source, we want to
-advance the source pointer to the next non-empty line which requires
-jumping by more than one line.
+Note that how to handle merge conflict resolution is unhandled, as the
+Sphinx python domain itself does not handle it either. I do not know how
+to intentionally trigger it, so I've left an assertion instead if it
+should ever come up ...
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- scripts/qapi/source.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ docs/sphinx/qapi_domain.py | 77 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 75 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/qapi/source.py b/scripts/qapi/source.py
-index 7b379fdc925..ffdc3f482ac 100644
---- a/scripts/qapi/source.py
-+++ b/scripts/qapi/source.py
-@@ -47,9 +47,9 @@ def set_defn(self, meta: str, name: str) -> None:
-         self.defn_meta = meta
-         self.defn_name = name
+diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+index a1983d94440..f3ece42bc2a 100644
+--- a/docs/sphinx/qapi_domain.py
++++ b/docs/sphinx/qapi_domain.py
+@@ -9,10 +9,12 @@
+     AbstractSet,
+     Any,
+     Dict,
++    NamedTuple,
+     Tuple,
+ )
  
--    def next_line(self: T) -> T:
-+    def next_line(self: T, n: int = 1) -> T:
-         info = copy.copy(self)
--        info.line += 1
-+        info.line += n
-         return info
+ from sphinx.domains import Domain, ObjType
++from sphinx.locale import __
+ from sphinx.util import logging
  
-     def loc(self) -> str:
+ 
+@@ -22,22 +24,93 @@
+ logger = logging.getLogger(__name__)
+ 
+ 
++class ObjectEntry(NamedTuple):
++    docname: str
++    node_id: str
++    objtype: str
++    aliased: bool
++
++
+ class QAPIDomain(Domain):
+     """QAPI language domain."""
+ 
+     name = "qapi"
+     label = "QAPI"
+ 
++    # This table associates cross-reference object types (key) with an
++    # ObjType instance, which defines the valid cross-reference roles
++    # for each object type.
++
++    # Actual table entries for module, command, event, etc will come in
++    # forthcoming commits.
+     object_types: Dict[str, ObjType] = {}
++
+     directives = {}
+     roles = {}
+-    initial_data: Dict[str, Dict[str, Tuple[Any]]] = {}
++
++    # Moved into the data property at runtime;
++    # this is the internal index of reference-able objects.
++    initial_data: Dict[str, Dict[str, Tuple[Any]]] = {
++        "objects": {},  # fullname -> ObjectEntry
++    }
++
+     indices = []
+ 
++    @property
++    def objects(self) -> Dict[str, ObjectEntry]:
++        ret = self.data.setdefault("objects", {})
++        return ret  # type: ignore[no-any-return]
++
++    def note_object(
++        self,
++        name: str,
++        objtype: str,
++        node_id: str,
++        aliased: bool = False,
++        location: Any = None,
++    ) -> None:
++        """Note a QAPI object for cross reference."""
++        if name in self.objects:
++            other = self.objects[name]
++            if other.aliased and aliased is False:
++                # The original definition found. Override it!
++                pass
++            elif other.aliased is False and aliased:
++                # The original definition is already registered.
++                return
++            else:
++                # duplicated
++                logger.warning(
++                    __(
++                        "duplicate object description of %s, "
++                        "other instance in %s, use :no-index: for one of them"
++                    ),
++                    name,
++                    other.docname,
++                    location=location,
++                )
++        self.objects[name] = ObjectEntry(
++            self.env.docname, node_id, objtype, aliased
++        )
++
++    def clear_doc(self, docname: str) -> None:
++        for fullname, obj in list(self.objects.items()):
++            if obj.docname == docname:
++                del self.objects[fullname]
++
+     def merge_domaindata(
+         self, docnames: AbstractSet[str], otherdata: Dict[str, Any]
+     ) -> None:
+-        pass
++        for fullname, obj in otherdata["objects"].items():
++            if obj.docname in docnames:
++                # Sphinx's own python domain doesn't appear to bother to
++                # check for collisions. Assert they don't happen and
++                # we'll fix it if/when the case arises.
++                assert fullname not in self.objects, (
++                    "bug - collision on merge?"
++                    f" {fullname=} {obj=} {self.objects[fullname]=}"
++                )
++                self.objects[fullname] = obj
+ 
+     def resolve_any_xref(self, *args: Any, **kwargs: Any) -> Any:
+         # pylint: disable=unused-argument
 -- 
 2.48.1
 
