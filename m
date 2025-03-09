@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A774C28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 18:01:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B02C28B2F
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 18:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trKpn-0005Ja-7q; Sun, 09 Mar 2025 13:53:07 -0400
+	id 1trKpL-0005Bv-4y; Sun, 09 Mar 2025 13:52:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKpk-0005Iy-H1
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:53:04 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKpJ-0005BV-FW
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:37 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKpi-0004sa-NQ
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:53:04 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-391342fc0b5so2663754f8f.3
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:53:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKpH-0004pY-B3
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:37 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43cfa7e7f54so360745e9.1
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:52:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741542781; x=1742147581; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741542753; x=1742147553; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zPyx2ZZAkNbMr4x6s2PTNuf6aA8UZ98dZ1dk69dQsTE=;
- b=MaiPxAJUwRpirsMtDE4UxIQBrUefQvKv1cFGooDyVXwQinSdxbsGFOlvq//Iw+Gag9
- EgRybst2qtfIcUmk5jsVyDsHZf0V/lQx4a4vrpkkeyifKxU+mXv2vfjpssXsbM2wsd+5
- vNZl5H5OnErrv75NOiTZ3YW6I6H0IqO3TH6TGV+vxuaxJvm8WE8CcYL1fGi/sha9pclQ
- h+d2Jk7LYLIukhoYh+Kl3qqRh6x0hJbqjuZGyROOMb7NghBTE0chWfhqji9Jmme4XK+Y
- D1IQjoAJPoqZDuhQVgK3oCO5a/4QjBPeWZuwCiRxtNRvPrNCalvd4v/vVAiraC69uf8p
- gbxg==
+ :reply-to; bh=QQMXAv5xvYvddKVDqqWSooantykqUZCrwTUpETmsqTQ=;
+ b=Ri6BuPzrqyGI/zrtBYx8RGWD7PWZOnbcQTdP27z937dtE+mN6hQjvuF9kpuFLhzdFC
+ 02NyH6CZF3qxdO+XdIHdm1fRie6VgE8VqSykWxs4vWHPgCklo+9ro3haUPkwCD3JQ83Y
+ lfycOBmBrlsl2Kn+E4pJzJ5k5zKT56hAnOnC1wCvB/gPpiGIaXNXvYj+NTMrNmCGYgtI
+ yCmQRaZ5ZrMritCZsDJsY+zTcG7kAeEJaIkdMeT2mH8FAe4VXR9XY6pojZjxyfNh4OYs
+ sL0jsG9G6zGjcZrzgmbrwa/UO8PUBien+tyYxGq53aHzb/iN/Es4S1dzhABzreTTR5df
+ vnmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741542781; x=1742147581;
+ d=1e100.net; s=20230601; t=1741542753; x=1742147553;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zPyx2ZZAkNbMr4x6s2PTNuf6aA8UZ98dZ1dk69dQsTE=;
- b=UNG3stBebNn+jQGnJX/ZAEnt2Vx7ztfK07ssvmIi4nJgBAAYG/k5+ejoapqTHaTZBJ
- /KhjlUjIrmwmFbKSeM+C3IC1fCKTw0+u04/rm5dUCcPtPlWgCkVxOMZbpzvffP7ZWtwz
- 1/qUXR4L77Bi4FV4O9ceEoxqgfxiNzlEe5VQNMOdc9gX/pZd52rVFUrdFJlwzllgZCu8
- aNrpGirF46hvP6VaGu5Dh/tfiJ9Ag/hJhF0fI7+CpU7ehrLyQTo9N+yI8EnEPK2mYx2D
- 8RluGAbOVXxoipWF34ubsnR2PadDzcLq61kJPpIpO52O5JS7YSgkijLRv2shu0pvmREJ
- tJzQ==
-X-Gm-Message-State: AOJu0YxKnK6XcSiAq9iubm/DcscKfa6pFcmBh3hgOH2gvtP9k+FFp3Ut
- Bnpq3pzbU9/dbq2ocaSu27LJIQVRoAXOUtDoeNVM4cinLdZrM202SEdsGjtPIB8mL+L4Q1C7hEU
- UhlY=
-X-Gm-Gg: ASbGncuaJTsSOkC70J7G7L4JhHKj7wYYZi1Hj7FyG/bDyHGTdvO1JH0twGIqglx+GR/
- I10CM9V22kUEFsgM15Wiy5rMG3TmMrdEpg8FYq01VAMwPGeFMYH2obv/04cOe2QiWQeb2Hm8p5t
- 9muD9kYbiewWedU2vxb5JsTMqe75i+GPKiLgOQWKQygkPGItKAO8PQ5z9OzJ1zoyvHoHiLmnkrj
- Smriq3hHKo8HFmm9W8H0AgF+39hfKMJ/ijRoT0DDCfdW5wTUIrIFiVNAD/H5j5MhbFP+wistWbq
- ct9wqrXfo4sWyyFY3d+BoxvEqtfSQ2YdGzWcK+SrbCSHWRsP0g6ARqBasO88/WOla1xddqostIl
- b48nwTRaT9NqsJzIekno=
-X-Google-Smtp-Source: AGHT+IHmO+bWJSrOEAyN9lLmq1Vflz0VK5BCLNB1EApRjdXsGsfwc5eYwvUi2DRAxNJE9BOaYpf65g==
-X-Received: by 2002:a05:6000:1a88:b0:385:d7f9:f157 with SMTP id
- ffacd0b85a97d-39132da227bmr6965076f8f.36.1741542780765; 
- Sun, 09 Mar 2025 10:53:00 -0700 (PDT)
+ bh=QQMXAv5xvYvddKVDqqWSooantykqUZCrwTUpETmsqTQ=;
+ b=AAYQEQSrROyniYlnyNxfwgQg5prILdf06DAJ5C37COQ1aQE56EpIFPZOjjhI6Z9KFN
+ vBGkpuloqjDaLoPrHGSqQ/a3hKPyneD7ZAFc5vgBOg4wh+ZWh+/A/CpTwd2klWf+Bts7
+ c1IZ0YOw3irJGe0B8knw5tmGlWmIii/HCGbth/OchfNKj9UshL66Dsvaiq8r89Glv7XP
+ ezBdfJtlcjQo/ZGiKoaD0H4wJPkP5iD4ot/Q4NAB0/rKeQ4ifa304Mh0fWCXXgeTqZIz
+ D2R+aGBcdIkXYPmXi/lmcA7rpQeewsq+gtUF0DU/ftjl2Jt2+41x/0ko0k3bRbMrUrJo
+ 9etA==
+X-Gm-Message-State: AOJu0YyikHfb6VKQk+zWP9c/HDEhnTAhmeCFXYisyR4783m4IrQd0xaM
+ lZUW8ri25zes5+CsAYNokv0u3VXzUaiq1sbiRwNFdDDg7k0bHBMhxeVpubuDkSbc/bWfWMwABVs
+ XyJ8=
+X-Gm-Gg: ASbGnctL+T+ic9KUBXfKQzY4OIEW09fZtpy0NeUJMl4Nk1+CkEaz5V19Z7vpV+osmQX
+ n4Ez5CwEIYf5grVq4kyRgEVQQWXcUtYyrzrQ85Yjd5Kpy+8u56SBP5OCp0BKxVd/XFVVltAbkQg
+ OIBYOhD13evb+K4C07IGK3GBGXyNOxFx+cWIwn6N1jvnrR2JBSFBFg1zVu4VRxn6qHu/XH4Q/nZ
+ KQ/GsUxc1ew+ibeXIqqpF7ikeD4MX4zdTBEjty7HJQdEP7n0Kf5lTfYagnfTtu8G+rbgHBINkD4
+ V5LDl2PJyZf6Tl1GRJZSoBLIzi7nzN5fZnMzKGGNFj84GsmNam+/31QVzPyUjhI1akfVy76Y/FO
+ RJXInBPzlI9v17enu15c=
+X-Google-Smtp-Source: AGHT+IFBQ2PzvPYM30ir5SMDietqS1NgRZHrfcxQshuaH4Sc4c6Lx+LC+3/Mvs5tYJvqne0Sr1eOfw==
+X-Received: by 2002:a05:600c:1f92:b0:439:5f04:4f8d with SMTP id
+ 5b1f17b1804b1-43ce4dcf8e4mr32496245e9.12.1741542753119; 
+ Sun, 09 Mar 2025 10:52:33 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ceba8d727sm51272085e9.25.2025.03.09.10.53.00
+ 5b1f17b1804b1-43bd42c588dsm147408655e9.21.2025.03.09.10.52.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 09 Mar 2025 10:53:00 -0700 (PDT)
+ Sun, 09 Mar 2025 10:52:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/38] gdbstub: Prefer cached CpuClass over CPU_GET_CLASS()
- macro
-Date: Sun,  9 Mar 2025 18:51:40 +0100
-Message-ID: <20250309175207.43828-12-philmd@linaro.org>
+Subject: [PULL 05/38] cpus: Register VMState per user / system emulation
+Date: Sun,  9 Mar 2025 18:51:34 +0100
+Message-ID: <20250309175207.43828-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250309175207.43828-1-philmd@linaro.org>
 References: <20250309175207.43828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,175 +98,351 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CpuState caches its CPUClass since commit 6fbdff87062
-("cpu: cache CPUClass in CPUState for hot code paths"),
-use it.
+Simplify cpu-target.c by extracting mixed vmstate code
+into the cpu_vmstate_register() / cpu_vmstate_unregister()
+helpers, implemented in cpu-user.c and cpu-system.c.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250122093028.52416-9-philmd@linaro.org>
+Message-Id: <20250123234415.59850-20-philmd@linaro.org>
 ---
- gdbstub/gdbstub.c     | 26 +++++++++-----------------
- gdbstub/system.c      |  7 ++-----
- gdbstub/user-target.c |  6 ++----
- gdbstub/user.c        |  7 ++-----
- 4 files changed, 15 insertions(+), 31 deletions(-)
+ include/hw/core/cpu.h |   2 +
+ cpu-target.c          | 121 +-----------------------------------------
+ hw/core/cpu-system.c  | 115 +++++++++++++++++++++++++++++++++++++++
+ hw/core/cpu-user.c    |  12 +++++
+ 4 files changed, 131 insertions(+), 119 deletions(-)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index e366df12d4a..282e13e163f 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -354,7 +354,6 @@ static const char *get_feature_xml(const char *p, const char **newp,
-                                    GDBProcess *process)
- {
-     CPUState *cpu = gdb_get_first_cpu_in_process(process);
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-     GDBRegisterState *r;
-     size_t len;
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 9dd6ac7c763..bc0c9468344 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -1165,6 +1165,8 @@ G_NORETURN void cpu_abort(CPUState *cpu, const char *fmt, ...)
+ /* $(top_srcdir)/cpu.c */
+ void cpu_class_init_props(DeviceClass *dc);
+ void cpu_exec_initfn(CPUState *cpu);
++void cpu_vmstate_register(CPUState *cpu);
++void cpu_vmstate_unregister(CPUState *cpu);
+ bool cpu_exec_realizefn(CPUState *cpu, Error **errp);
+ void cpu_exec_unrealizefn(CPUState *cpu);
+ void cpu_exec_reset_hold(CPUState *cpu);
+diff --git a/cpu-target.c b/cpu-target.c
+index b6e66d5ac02..bc9c537c575 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -21,115 +21,17 @@
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "qemu/qemu-print.h"
+-#include "migration/vmstate.h"
+-#ifndef CONFIG_USER_ONLY
+-#include "hw/core/sysemu-cpu-ops.h"
+-#endif
+ #include "system/accel-ops.h"
+ #include "system/cpus.h"
+-#include "system/tcg.h"
+ #include "exec/tswap.h"
+ #include "exec/replay-core.h"
+ #include "exec/cpu-common.h"
+-#include "exec/cputlb.h"
+-#include "exec/exec-all.h"
+-#include "exec/tb-flush.h"
+ #include "exec/log.h"
+ #include "accel/accel-cpu-target.h"
+ #include "trace/trace-root.h"
+ #include "qemu/accel.h"
+ #include "hw/core/cpu.h"
  
-@@ -377,11 +376,11 @@ static const char *get_feature_xml(const char *p, const char **newp,
-                          "<!DOCTYPE target SYSTEM \"gdb-target.dtd\">"
-                          "<target>"));
- 
--            if (cc->gdb_arch_name) {
-+            if (cpu->cc->gdb_arch_name) {
-                 g_ptr_array_add(
-                     xml,
-                     g_markup_printf_escaped("<architecture>%s</architecture>",
--                                            cc->gdb_arch_name(cpu)));
-+                                            cpu->cc->gdb_arch_name(cpu)));
-             }
-             for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-                 r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-@@ -520,11 +519,10 @@ GArray *gdb_get_register_list(CPUState *cpu)
- 
- int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-     GDBRegisterState *r;
- 
--    if (reg < cc->gdb_num_core_regs) {
--        return cc->gdb_read_register(cpu, buf, reg);
-+    if (reg < cpu->cc->gdb_num_core_regs) {
-+        return cpu->cc->gdb_read_register(cpu, buf, reg);
-     }
- 
-     for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-@@ -538,11 +536,10 @@ int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
- 
- static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-     GDBRegisterState *r;
- 
--    if (reg < cc->gdb_num_core_regs) {
--        return cc->gdb_write_register(cpu, mem_buf, reg);
-+    if (reg < cpu->cc->gdb_num_core_regs) {
-+        return cpu->cc->gdb_write_register(cpu, mem_buf, reg);
-     }
- 
-     for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-@@ -570,7 +567,7 @@ static void gdb_register_feature(CPUState *cpu, int base_reg,
- 
- void gdb_init_cpu(CPUState *cpu)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-+    CPUClass *cc = cpu->cc;
-     const GDBFeature *feature;
- 
-     cpu->gdb_regs = g_array_new(false, false, sizeof(GDBRegisterState));
-@@ -1646,11 +1643,8 @@ void gdb_extend_qsupported_features(char *qflags)
- 
- static void handle_query_supported(GArray *params, void *user_ctx)
- {
--    CPUClass *cc;
+-#ifndef CONFIG_USER_ONLY
+-static int cpu_common_post_load(void *opaque, int version_id)
+-{
+-    if (tcg_enabled()) {
+-        CPUState *cpu = opaque;
 -
-     g_string_printf(gdbserver_state.str_buf, "PacketSize=%x", MAX_PACKET_LENGTH);
--    cc = CPU_GET_CLASS(first_cpu);
--    if (cc->gdb_core_xml_file) {
-+    if (first_cpu->cc->gdb_core_xml_file) {
-         g_string_append(gdbserver_state.str_buf, ";qXfer:features:read+");
-     }
- 
-@@ -1697,7 +1691,6 @@ static void handle_query_supported(GArray *params, void *user_ctx)
- static void handle_query_xfer_features(GArray *params, void *user_ctx)
- {
-     GDBProcess *process;
--    CPUClass *cc;
-     unsigned long len, total_len, addr;
-     const char *xml;
-     const char *p;
-@@ -1708,8 +1701,7 @@ static void handle_query_xfer_features(GArray *params, void *user_ctx)
-     }
- 
-     process = gdb_get_cpu_process(gdbserver_state.g_cpu);
--    cc = CPU_GET_CLASS(gdbserver_state.g_cpu);
--    if (!cc->gdb_core_xml_file) {
-+    if (!gdbserver_state.g_cpu->cc->gdb_core_xml_file) {
-         gdb_put_packet("");
-         return;
-     }
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 416c1dbe1e9..dd22ff0fb3a 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -456,8 +456,6 @@ static int phy_memory_mode;
- int gdb_target_memory_rw_debug(CPUState *cpu, hwaddr addr,
-                                uint8_t *buf, int len, bool is_write)
- {
--    CPUClass *cc;
+-        /*
+-         * 0x01 was CPU_INTERRUPT_EXIT. This line can be removed when the
+-         * version_id is increased.
+-         */
+-        cpu->interrupt_request &= ~0x01;
 -
-     if (phy_memory_mode) {
-         if (is_write) {
-             cpu_physical_memory_write(addr, buf, len);
-@@ -467,9 +465,8 @@ int gdb_target_memory_rw_debug(CPUState *cpu, hwaddr addr,
-         return 0;
-     }
- 
--    cc = CPU_GET_CLASS(cpu);
--    if (cc->memory_rw_debug) {
--        return cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-+    if (cpu->cc->memory_rw_debug) {
-+        return cpu->cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-     }
- 
-     return cpu_memory_rw_debug(cpu, addr, buf, len, is_write);
-diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
-index 4bfcf78aaab..43231e695e8 100644
---- a/gdbstub/user-target.c
-+++ b/gdbstub/user-target.c
-@@ -233,10 +233,8 @@ void gdb_handle_query_offsets(GArray *params, void *user_ctx)
- static inline int target_memory_rw_debug(CPUState *cpu, target_ulong addr,
-                                          uint8_t *buf, int len, bool is_write)
+-        tlb_flush(cpu);
+-
+-        /*
+-         * loadvm has just updated the content of RAM, bypassing the
+-         * usual mechanisms that ensure we flush TBs for writes to
+-         * memory we've translated code from. So we must flush all TBs,
+-         * which will now be stale.
+-         */
+-        tb_flush(cpu);
+-    }
+-
+-    return 0;
+-}
+-
+-static int cpu_common_pre_load(void *opaque)
+-{
+-    CPUState *cpu = opaque;
+-
+-    cpu->exception_index = -1;
+-
+-    return 0;
+-}
+-
+-static bool cpu_common_exception_index_needed(void *opaque)
+-{
+-    CPUState *cpu = opaque;
+-
+-    return tcg_enabled() && cpu->exception_index != -1;
+-}
+-
+-static const VMStateDescription vmstate_cpu_common_exception_index = {
+-    .name = "cpu_common/exception_index",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .needed = cpu_common_exception_index_needed,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_INT32(exception_index, CPUState),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-static bool cpu_common_crash_occurred_needed(void *opaque)
+-{
+-    CPUState *cpu = opaque;
+-
+-    return cpu->crash_occurred;
+-}
+-
+-static const VMStateDescription vmstate_cpu_common_crash_occurred = {
+-    .name = "cpu_common/crash_occurred",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .needed = cpu_common_crash_occurred_needed,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_BOOL(crash_occurred, CPUState),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-const VMStateDescription vmstate_cpu_common = {
+-    .name = "cpu_common",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .pre_load = cpu_common_pre_load,
+-    .post_load = cpu_common_post_load,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(halted, CPUState),
+-        VMSTATE_UINT32(interrupt_request, CPUState),
+-        VMSTATE_END_OF_LIST()
+-    },
+-    .subsections = (const VMStateDescription * const []) {
+-        &vmstate_cpu_common_exception_index,
+-        &vmstate_cpu_common_crash_occurred,
+-        NULL
+-    }
+-};
+-#endif
+-
+ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
  {
--    CPUClass *cc;
--    cc = CPU_GET_CLASS(cpu);
--    if (cc->memory_rw_debug) {
--        return cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-+    if (cpu->cc->memory_rw_debug) {
-+        return cpu->cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-     }
-     return cpu_memory_rw_debug(cpu, addr, buf, len, is_write);
+     if (!accel_cpu_common_realize(cpu, errp)) {
+@@ -139,33 +41,14 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
+     /* Wait until cpu initialization complete before exposing cpu. */
+     cpu_list_add(cpu);
+ 
+-#ifdef CONFIG_USER_ONLY
+-    assert(qdev_get_vmsd(DEVICE(cpu)) == NULL ||
+-           qdev_get_vmsd(DEVICE(cpu))->unmigratable);
+-#else
+-    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
+-        vmstate_register(NULL, cpu->cpu_index, &vmstate_cpu_common, cpu);
+-    }
+-    if (cpu->cc->sysemu_ops->legacy_vmsd != NULL) {
+-        vmstate_register(NULL, cpu->cpu_index, cpu->cc->sysemu_ops->legacy_vmsd, cpu);
+-    }
+-#endif /* CONFIG_USER_ONLY */
++    cpu_vmstate_register(cpu);
+ 
+     return true;
  }
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 3730f32c415..67403e5a252 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -743,11 +743,8 @@ int gdb_continue_partial(char *newstates)
- int gdb_target_memory_rw_debug(CPUState *cpu, hwaddr addr,
-                                uint8_t *buf, int len, bool is_write)
+ 
+ void cpu_exec_unrealizefn(CPUState *cpu)
  {
--    CPUClass *cc;
+-#ifndef CONFIG_USER_ONLY
+-    CPUClass *cc = CPU_GET_CLASS(cpu);
 -
--    cc = CPU_GET_CLASS(cpu);
--    if (cc->memory_rw_debug) {
--        return cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-+    if (cpu->cc->memory_rw_debug) {
-+        return cpu->cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-     }
-     return cpu_memory_rw_debug(cpu, addr, buf, len, is_write);
+-    if (cc->sysemu_ops->legacy_vmsd != NULL) {
+-        vmstate_unregister(NULL, cc->sysemu_ops->legacy_vmsd, cpu);
+-    }
+-    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
+-        vmstate_unregister(NULL, &vmstate_cpu_common, cpu);
+-    }
+-#endif
++    cpu_vmstate_unregister(cpu);
+ 
+     cpu_list_remove(cpu);
+     /*
+diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
+index e511507e13b..6c89d76e498 100644
+--- a/hw/core/cpu-system.c
++++ b/hw/core/cpu-system.c
+@@ -21,11 +21,15 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "exec/address-spaces.h"
++#include "exec/cputlb.h"
+ #include "exec/memory.h"
++#include "exec/tb-flush.h"
+ #include "exec/tswap.h"
+ #include "hw/qdev-core.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/core/sysemu-cpu-ops.h"
++#include "migration/vmstate.h"
++#include "system/tcg.h"
+ 
+ bool cpu_paging_enabled(const CPUState *cpu)
+ {
+@@ -194,3 +198,114 @@ void cpu_exec_initfn(CPUState *cpu)
+     cpu->memory = get_system_memory();
+     object_ref(OBJECT(cpu->memory));
  }
++
++static int cpu_common_post_load(void *opaque, int version_id)
++{
++    if (tcg_enabled()) {
++        CPUState *cpu = opaque;
++
++        /*
++         * 0x01 was CPU_INTERRUPT_EXIT. This line can be removed when the
++         * version_id is increased.
++         */
++        cpu->interrupt_request &= ~0x01;
++
++        tlb_flush(cpu);
++
++        /*
++         * loadvm has just updated the content of RAM, bypassing the
++         * usual mechanisms that ensure we flush TBs for writes to
++         * memory we've translated code from. So we must flush all TBs,
++         * which will now be stale.
++         */
++        tb_flush(cpu);
++    }
++
++    return 0;
++}
++
++static int cpu_common_pre_load(void *opaque)
++{
++    CPUState *cpu = opaque;
++
++    cpu->exception_index = -1;
++
++    return 0;
++}
++
++static bool cpu_common_exception_index_needed(void *opaque)
++{
++    CPUState *cpu = opaque;
++
++    return tcg_enabled() && cpu->exception_index != -1;
++}
++
++static const VMStateDescription vmstate_cpu_common_exception_index = {
++    .name = "cpu_common/exception_index",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = cpu_common_exception_index_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_INT32(exception_index, CPUState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static bool cpu_common_crash_occurred_needed(void *opaque)
++{
++    CPUState *cpu = opaque;
++
++    return cpu->crash_occurred;
++}
++
++static const VMStateDescription vmstate_cpu_common_crash_occurred = {
++    .name = "cpu_common/crash_occurred",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = cpu_common_crash_occurred_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BOOL(crash_occurred, CPUState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++const VMStateDescription vmstate_cpu_common = {
++    .name = "cpu_common",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .pre_load = cpu_common_pre_load,
++    .post_load = cpu_common_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(halted, CPUState),
++        VMSTATE_UINT32(interrupt_request, CPUState),
++        VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_cpu_common_exception_index,
++        &vmstate_cpu_common_crash_occurred,
++        NULL
++    }
++};
++
++void cpu_vmstate_register(CPUState *cpu)
++{
++    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
++        vmstate_register(NULL, cpu->cpu_index, &vmstate_cpu_common, cpu);
++    }
++    if (cpu->cc->sysemu_ops->legacy_vmsd != NULL) {
++        vmstate_register(NULL, cpu->cpu_index,
++                         cpu->cc->sysemu_ops->legacy_vmsd, cpu);
++    }
++}
++
++void cpu_vmstate_unregister(CPUState *cpu)
++{
++    CPUClass *cc = CPU_GET_CLASS(cpu);
++
++    if (cc->sysemu_ops->legacy_vmsd != NULL) {
++        vmstate_unregister(NULL, cc->sysemu_ops->legacy_vmsd, cpu);
++    }
++    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
++        vmstate_unregister(NULL, &vmstate_cpu_common, cpu);
++    }
++}
+diff --git a/hw/core/cpu-user.c b/hw/core/cpu-user.c
+index cdd8de2fefa..1892acdee0f 100644
+--- a/hw/core/cpu-user.c
++++ b/hw/core/cpu-user.c
+@@ -10,6 +10,7 @@
+ #include "hw/qdev-core.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/core/cpu.h"
++#include "migration/vmstate.h"
+ 
+ static const Property cpu_user_props[] = {
+     /*
+@@ -30,3 +31,14 @@ void cpu_exec_initfn(CPUState *cpu)
+ {
+     /* nothing to do */
+ }
++
++void cpu_vmstate_register(CPUState *cpu)
++{
++    assert(qdev_get_vmsd(DEVICE(cpu)) == NULL ||
++           qdev_get_vmsd(DEVICE(cpu))->unmigratable);
++}
++
++void cpu_vmstate_unregister(CPUState *cpu)
++{
++    /* nothing to do */
++}
 -- 
 2.47.1
 
