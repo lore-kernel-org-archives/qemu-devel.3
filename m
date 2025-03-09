@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91904C28B2E
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 10:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECDB7C282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 10:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trDwr-00085q-8a; Sun, 09 Mar 2025 06:31:57 -0400
+	id 1trDxE-0000GY-Dz; Sun, 09 Mar 2025 06:32:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1trDwp-00085P-9B
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:31:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1trDx3-0008Km-Hx
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:32:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1trDwn-00042o-JM
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:31:55 -0400
+ id 1trDx1-00044x-V9
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:32:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741516312;
+ s=mimecast20190719; t=1741516327;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Hp60NgzpFm3jMkNxot3ICZaotMUbZm/BSXyoCpaAV7I=;
- b=Pa47r29bOM3jK34OxvDj8dXR8bojhtZo6bRy+8a3nHknCg1jep0zi+Vm3ys99b3MClQanb
- UIiAsO/3mkKNLjcZ1BDd7UeB+PyJdIgiu1V9zzVzGkeiq9pw6BH1RKRQcz2tgOXfdvJbEb
- QLnVPDDH9PpUECsW+fDJpc2HpDr1R88=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wbOO8hVPA/iWAR/aAhdUbZRw20JyRLfj8f5+lfhW6z4=;
+ b=f56xFQ/q5fRRJ5xKwH10x7sJzVgqR7d66isShiuPnevRosR6+0c/h4xqoMDV4ufrQpDElV
+ 0fByPyWKgTZyentDyLvCLdt4VDLoB+A12UqZaesIMAKXS9G/imfW5+V8WADy/nnngHxZkG
+ 7gcXcxfHvtJmZW0bTc+SZk/SexSRctE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-IumTV9SnNla_oK7-K6eE7w-1; Sun, 09 Mar 2025 06:31:50 -0400
-X-MC-Unique: IumTV9SnNla_oK7-K6eE7w-1
-X-Mimecast-MFC-AGG-ID: IumTV9SnNla_oK7-K6eE7w_1741516309
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-39142ce2151so136462f8f.1
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 03:31:49 -0700 (PDT)
+ us-mta-102-ZD91VZRqMv2_raEFtfK2tw-1; Sun, 09 Mar 2025 06:32:05 -0400
+X-MC-Unique: ZD91VZRqMv2_raEFtfK2tw-1
+X-Mimecast-MFC-AGG-ID: ZD91VZRqMv2_raEFtfK2tw_1741516324
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4388eee7073so19653695e9.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 03:32:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741516308; x=1742121108;
+ d=1e100.net; s=20230601; t=1741516324; x=1742121124;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Hp60NgzpFm3jMkNxot3ICZaotMUbZm/BSXyoCpaAV7I=;
- b=hz1MTepqXqNKjRnl/GUIzafzp/4AQbuimBnR8MjDmHSavNWIA5XQcHsUUzHtGoJSI6
- VTCLShkWL0aYh2giMPULbjlMK2Me+Wl5dQrg2ZUMdzohRaTA4jqIa1uZ9NKnxKW6+CEs
- 0KcEoK2+8dgBcb6H5mAUPZ7JhwsqRazu+lriWAi7sb+8KBDiWKs0FdthlX6ZdpAAPbmT
- rEM2RoA1ILTN/qxymvyYrfMC8SsMGuZlaboWj2Z57mJvo8BywWtB5Uk5lzcmVXlGax/S
- Qrf/Su7Xx8qCMDFvGi8dji4sKk1+XeP8KaNoR7YH4afuHmjXx/m2LC83nFmZ/M361vft
- PQqg==
-X-Gm-Message-State: AOJu0Yz2ZB6G+4ftK4130wXMkG1CKLfNuvIPYO2LnP66DlrlMHaOxo6/
- als6U46NlUugSdp2OeZ467YAQ7M2DTtX31bBrtNCiIK6pdNplbVomkOz6HdUmNTh7uyL8p+NtcP
- OA+UthCDdFT8pEIgs0/oblnQz4d34UO2M0S6OpYpM4Szn0dvL/36GsVSTfhN8xDzuNb/XNdRy0s
- 8bOK1em8ysFnUQ/ifo/9cfYBxCTB7zmvtCH2s/wLw=
-X-Gm-Gg: ASbGnctwBsekvyFB5a99TbWrzqwhEds6OtIC+LYazuDBqtpeQ99yVyUMHsLKsIH0P9X
- nsyJqibkQEIj0XApTQ59p177YqgKTq4nxzhftjfBl6mlU2hV6J4zKVGCIeoPZcltdyoqNDb1naH
- Ks8gxaXJOv0X4J9IlL4CdE7Q+hTpV6/0Omqp4jGrHfm5BoKyEa9Tpyagpu7m0JdXAPrvm54G/wx
- 8OS/qe4cR9R1i0c/oQrYzl5pwYgTUkXm11Z0JDV5f6rhYATT8miKjs0tObcR+GqXzBnCH3TNckv
- dqMBIwOb8L2WkKxtSC1t+g==
-X-Received: by 2002:a5d:47cc:0:b0:391:23de:b1b4 with SMTP id
- ffacd0b85a97d-39132db0648mr6275542f8f.45.1741516308602; 
- Sun, 09 Mar 2025 03:31:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUGvbKAW3FccWIUTK2Y3T66VPkgXr2R6M+osFDEOctQI2KE0VCwH2WHNCtzOXg98YsFaVZsg==
-X-Received: by 2002:a5d:47cc:0:b0:391:23de:b1b4 with SMTP id
- ffacd0b85a97d-39132db0648mr6275527f8f.45.1741516308147; 
- Sun, 09 Mar 2025 03:31:48 -0700 (PDT)
+ bh=wbOO8hVPA/iWAR/aAhdUbZRw20JyRLfj8f5+lfhW6z4=;
+ b=AGK0qh0Xa8a/nmnbvXGSTu3C1pWHZYuDnZBPFt+xeD8r2nb8ntmp5/ra3FeCQAjIvd
+ +JiBf32hLIxpXDDNv1iGV3KU7dJ2a2KEDHS0pFniJPxUCKmHE1ZUY8yxYX7t3bH0EHnJ
+ mFb0aRyCFZt1IRydYeh2NUipAFYhaaRuGNc81/mvnxEX9Hpb7WNp2pD7orxIMZgOG0Bs
+ 8EDXX11V/W+aag+hkXjM9GJnAL1+HeCLcB5gVNiDdb9EOgDjhuPxtQV5WkCQoafpE8+k
+ 9JdjAGwO7pit2jUJEQFEvl88a1cwxsueTTFwtiwtvq+BEmdfM/XTaXPNvPGvBQJytCoD
+ vy2Q==
+X-Gm-Message-State: AOJu0YxCyvam0bHiLvp9R9hyWYC/Wc0+RggL7KAr4iWwi+g17lsxMhcx
+ PpUxBIxIl50PVNSS1u6yCWJp/+KKhp3u67hi4BZlmo8AcTqZFkEgxRRe4mFZAU2q1WHNSdvlBNX
+ EH7Qxnd2xBEce+MBRRchPz6XpQszzYX9ZorlXzYc8tkPc3CMdAGcKv2QdiKXBrGN4FYxfeXvWsC
+ 66pLiXFwkXglEX6naAk5LW6+/mutWqrKLQdY0UMGg=
+X-Gm-Gg: ASbGncuq2fAZaGd3StVRBKW5ZH5lH++VNwLtPpvd2EIvBIIiyRAIndK/jVQUhsS38zn
+ Dghy0VGhCtpc8NUIDVGh5R2a2CYrpD3aN32yUo0wB5sy0W2Q40WsAD6Zst2DQ4AOg+2G8Qhy8rj
+ /cud9x8APHpy45+Y5NQkSTF27f9lqVXR/X1RiTfzpTtXmqj2C/q/eFYhzKjYWgosIEhlYedXTG6
+ 5G+V5NrU1zg5XlefBE6qdA7iEi0k4cf4v7pTosp5ueuYNWHW0u7/0Sgub46UuKbLuT3uty6WM03
+ gM/KFTvLbyCaATHPBL9zzA==
+X-Received: by 2002:a05:600c:754:b0:43b:bfa7:c7d with SMTP id
+ 5b1f17b1804b1-43ce4aa8771mr35085235e9.2.1741516323984; 
+ Sun, 09 Mar 2025 03:32:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4U1sgQ7Yw11hS4ilbfOvsS17ZMTC35iONV4y2gUHL6UcXuIB0x3ffoCM4oxaREM4OhAelVA==
+X-Received: by 2002:a05:600c:754:b0:43b:bfa7:c7d with SMTP id
+ 5b1f17b1804b1-43ce4aa8771mr35085035e9.2.1741516323467; 
+ Sun, 09 Mar 2025 03:32:03 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.122.167])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e2f10sm11558920f8f.65.2025.03.09.03.31.47
+ 5b1f17b1804b1-43bdd8b0461sm114516235e9.4.2025.03.09.03.32.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Mar 2025 03:31:47 -0700 (PDT)
+ Sun, 09 Mar 2025 03:32:01 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/25] rust: sysbus: wrap SysBusDevice with Opaque<>
-Date: Sun,  9 Mar 2025 11:31:06 +0100
-Message-ID: <20250309103120.1116448-13-pbonzini@redhat.com>
+Subject: [PULL 20/25] rust: pl011: pass around registers::Data
+Date: Sun,  9 Mar 2025 11:31:14 +0100
+Message-ID: <20250309103120.1116448-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250309103120.1116448-1-pbonzini@redhat.com>
 References: <20250309103120.1116448-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,117 +108,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The values stored in the Fifo are instances of the bitfield-struct
+registers::Data.  Convert as soon as possible the value written
+into DR, and always refer to the bitfield struct; it's generally
+cleaner other than PL011State::receive having to do a double
+conversion u8=>u32=>registers::Data.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/bindings.rs |  3 ---
- rust/qemu-api/src/sysbus.rs   | 29 +++++++++++++++++++++--------
- 2 files changed, 21 insertions(+), 11 deletions(-)
+ rust/hw/char/pl011/src/device.rs | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
-index 6e70a75a0e6..b791ca6d87f 100644
---- a/rust/qemu-api/src/bindings.rs
-+++ b/rust/qemu-api/src/bindings.rs
-@@ -40,9 +40,6 @@ unsafe impl Sync for MemoryRegion {}
- unsafe impl Send for ObjectClass {}
- unsafe impl Sync for ObjectClass {}
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 4e282bc9e9d..af93ae8bebe 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -234,7 +234,7 @@ pub(self) fn write(
+         match offset {
+             DR => {
+                 // interrupts always checked
+-                let _ = self.loopback_tx(value);
++                let _ = self.loopback_tx(value.into());
+                 self.int_level |= Interrupt::TX.0;
+                 return true;
+             }
+@@ -301,7 +301,7 @@ pub(self) fn write(
  
--unsafe impl Send for SysBusDevice {}
--unsafe impl Sync for SysBusDevice {}
--
- // SAFETY: this is a pure data struct
- unsafe impl Send for CoalescedMemoryRange {}
- unsafe impl Sync for CoalescedMemoryRange {}
-diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
-index 0790576d446..e92502a8fe6 100644
---- a/rust/qemu-api/src/sysbus.rs
-+++ b/rust/qemu-api/src/sysbus.rs
-@@ -6,11 +6,11 @@
- 
- use std::{ffi::CStr, ptr::addr_of_mut};
- 
--pub use bindings::{SysBusDevice, SysBusDeviceClass};
-+pub use bindings::SysBusDeviceClass;
- 
- use crate::{
-     bindings,
--    cell::bql_locked,
-+    cell::{bql_locked, Opaque},
-     irq::{IRQState, InterruptSource},
-     memory::MemoryRegion,
-     prelude::*,
-@@ -18,6 +18,14 @@
-     qom::Owned,
- };
- 
-+/// A safe wrapper around [`bindings::SysBusDevice`].
-+#[repr(transparent)]
-+#[derive(Debug, qemu_api_macros::Wrapper)]
-+pub struct SysBusDevice(Opaque<bindings::SysBusDevice>);
-+
-+unsafe impl Send for SysBusDevice {}
-+unsafe impl Sync for SysBusDevice {}
-+
- unsafe impl ObjectType for SysBusDevice {
-     type Class = SysBusDeviceClass;
-     const TYPE_NAME: &'static CStr =
-@@ -49,7 +57,7 @@ pub trait SysBusDeviceMethods: ObjectDeref
-     fn init_mmio(&self, iomem: &MemoryRegion) {
-         assert!(bql_locked());
-         unsafe {
--            bindings::sysbus_init_mmio(self.as_mut_ptr(), iomem.as_mut_ptr());
-+            bindings::sysbus_init_mmio(self.upcast().as_mut_ptr(), iomem.as_mut_ptr());
-         }
+     #[inline]
+     #[must_use]
+-    fn loopback_tx(&mut self, value: u32) -> bool {
++    fn loopback_tx(&mut self, value: registers::Data) -> bool {
+         // Caveat:
+         //
+         // In real hardware, TX loopback happens at the serial-bit level
+@@ -370,7 +370,7 @@ fn loopback_mdmctrl(&mut self) -> bool {
      }
  
-@@ -60,14 +68,16 @@ fn init_mmio(&self, iomem: &MemoryRegion) {
-     fn init_irq(&self, irq: &InterruptSource) {
-         assert!(bql_locked());
-         unsafe {
--            bindings::sysbus_init_irq(self.as_mut_ptr(), irq.as_ptr());
-+            bindings::sysbus_init_irq(self.upcast().as_mut_ptr(), irq.as_ptr());
-         }
+     fn loopback_break(&mut self, enable: bool) -> bool {
+-        enable && self.loopback_tx(registers::Data::BREAK.into())
++        enable && self.loopback_tx(registers::Data::BREAK)
      }
  
-     // TODO: do we want a type like GuestAddress here?
-     fn mmio_addr(&self, id: u32) -> Option<u64> {
-         assert!(bql_locked());
--        let sbd = self.upcast();
-+        // SAFETY: the BQL ensures that no one else writes to sbd.mmio[], and
-+        // the SysBusDevice must be initialized to get an IsA<SysBusDevice>.
-+        let sbd = unsafe { *self.upcast().as_ptr() };
-         let id: usize = id.try_into().unwrap();
-         if sbd.mmio[id].memory.is_null() {
-             None
-@@ -81,7 +91,7 @@ fn mmio_map(&self, id: u32, addr: u64) {
-         assert!(bql_locked());
-         let id: i32 = id.try_into().unwrap();
-         unsafe {
--            bindings::sysbus_mmio_map(self.as_mut_ptr(), id, addr);
-+            bindings::sysbus_mmio_map(self.upcast().as_mut_ptr(), id, addr);
-         }
+     fn set_read_trigger(&mut self) {
+@@ -429,11 +429,11 @@ pub fn fifo_depth(&self) -> u32 {
      }
  
-@@ -93,7 +103,7 @@ fn connect_irq(&self, id: u32, irq: &Owned<IRQState>) {
-         let id: i32 = id.try_into().unwrap();
-         let irq: &IRQState = irq;
-         unsafe {
--            bindings::sysbus_connect_irq(self.as_mut_ptr(), id, irq.as_mut_ptr());
-+            bindings::sysbus_connect_irq(self.upcast().as_mut_ptr(), id, irq.as_mut_ptr());
+     #[must_use]
+-    pub fn put_fifo(&mut self, value: u32) -> bool {
++    pub fn put_fifo(&mut self, value: registers::Data) -> bool {
+         let depth = self.fifo_depth();
+         assert!(depth > 0);
+         let slot = (self.read_pos + self.read_count) & (depth - 1);
+-        self.read_fifo[slot] = registers::Data::from(value);
++        self.read_fifo[slot] = value;
+         self.read_count += 1;
+         self.flags.set_receive_fifo_empty(false);
+         if self.read_count == depth {
+@@ -578,7 +578,8 @@ fn receive(&self, buf: &[u8]) {
+             return;
          }
-     }
+         let mut regs = self.regs.borrow_mut();
+-        let update_irq = !regs.loopback_enabled() && regs.put_fifo(buf[0].into());
++        let c: u32 = buf[0].into();
++        let update_irq = !regs.loopback_enabled() && regs.put_fifo(c.into());
+         // Release the BqlRefCell before calling self.update()
+         drop(regs);
  
-@@ -101,7 +111,10 @@ fn sysbus_realize(&self) {
-         // TODO: return an Error
-         assert!(bql_locked());
-         unsafe {
--            bindings::sysbus_realize(self.as_mut_ptr(), addr_of_mut!(bindings::error_fatal));
-+            bindings::sysbus_realize(
-+                self.upcast().as_mut_ptr(),
-+                addr_of_mut!(bindings::error_fatal),
-+            );
+@@ -591,7 +592,7 @@ fn event(&self, event: Event) {
+         let mut update_irq = false;
+         let mut regs = self.regs.borrow_mut();
+         if event == Event::CHR_EVENT_BREAK && !regs.loopback_enabled() {
+-            update_irq = regs.put_fifo(registers::Data::BREAK.into());
++            update_irq = regs.put_fifo(registers::Data::BREAK);
          }
-     }
- }
+         // Release the BqlRefCell before calling self.update()
+         drop(regs);
 -- 
 2.48.1
 
