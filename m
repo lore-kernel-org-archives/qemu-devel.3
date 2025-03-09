@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F0AC28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 18:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B90C28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 18:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trKp6-00059e-IB; Sun, 09 Mar 2025 13:52:24 -0400
+	id 1trKq6-0006JF-50; Sun, 09 Mar 2025 13:53:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKp5-00059U-Kq
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:23 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKq2-0005zV-H3
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:53:22 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKp4-0004o7-35
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:23 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43bc30adad5so20000015e9.1
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:52:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKq0-0004uf-St
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:53:22 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-39104c1cbbdso1652098f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:53:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741542739; x=1742147539; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741542799; x=1742147599; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rGVH3ZQmQ46V7zOspwriiKsX0Emdo3m/I01cSo1IH7Y=;
- b=nyzUPbe+BxoaYJP5thJOBYGwokRFQ2YP86uhLSXqNEmokc7cpqpZk8uuUL24CR7IFf
- thymKOvp/kt1EOtjvS7t4zKJOaQruXaMVSgyXQj91inADEz/tmLdLy+P4l+Rm4ANU7cj
- mTWNCJzaT8RCjTv1CvrO/a9r5SnvZI7uJqbaFVpb8ssmAO/2qIZuN0+y0U/dOzSYUTo2
- kDt5uHKLeKOCBqL1+JqDFiPvC/xan8VOU6TabLlVK66McByWoDNtbzz3Ymyo1YLi3f6F
- 4rME4jY4Odqz+tg6rHCqF1LIO9OkT07zrG62/qJhyTBRv7Uv0rN2hocBE6Fr9SgolHst
- xNXg==
+ :reply-to; bh=kJwfrdswVmk/LMsQRUhZo65LUrcnqQS9NNFjSZtvKz8=;
+ b=qUiLJmvnxovEZ2DgAwZhUOucwKsgK25n3AQWIahtXVW3EUM7+Tk1EtzCeMVLdrDJw0
+ 9Ynab2cyb2yPR5uLI/o0kLwL4oKWPV+0xP+uaGnk0okgo/8XdAgk5hFHQx33HGfFNpEZ
+ EYWRizH+n3L42xQS+91WHupP2LLPAFEnW4JuvoJtNZvbTaf5M6V2ukKEdgIru64J0UzU
+ ZxP5oiMcTXumiBlOC7h/isA1Gydts+upATOc8Ama9Oi5PAoBaMeOaDz0+6E1kQB1/CXn
+ v9wiEu3AxS2/aw5rbmNzswIjMypnToP4g7Zzqxu8y2d4Jh+dlds1GIi77Xv3LwH1pZID
+ bzag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741542739; x=1742147539;
+ d=1e100.net; s=20230601; t=1741542799; x=1742147599;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rGVH3ZQmQ46V7zOspwriiKsX0Emdo3m/I01cSo1IH7Y=;
- b=DuZTg7b+q2zOUYX8noIyVVXObzrlBjUxAkjw6TMWJUg4Pb1NGFYWPLTEjw8j1TNDzF
- 3WdugMrHSXAQunx/IEWorHXB9MIXLNd7KPJuHcbZJKj/ZmRbefaLCheWk8TRRn+IUglN
- xY2lPA1UZMmJ+MIyq8AY6JLfCv9gQgAVHoWzIo12G9eOghP6pOMQ51xpHng3vV9h12rK
- jbt0ONDqBQQZ2uAPE2wrVIL67anB7Ip/m2glYx+8yC7Q9GVCpLCRkVBUaOKptKbDuD9t
- p6dZr+/Xu+PZsvordkPW+x3a+cu1jVcbwLQ7dK5wFFqSpQ7aLT4Nluj1mNDBJeOYdtXH
- QFRA==
-X-Gm-Message-State: AOJu0YzW+ptVqQnYN2a0qOtcMPFwF+YYmAbT3Raf1aGrjVZBwUuLnd9p
- 08Ge8zct3bgYKwr6LVKGJWdGhwyFfXVzk4TFGsF07jJPjyIy+OYqVZuk4ic6dZkItgktPW8RIwI
- zPBs=
-X-Gm-Gg: ASbGncudwCXeoEG0xbsVf0AQ4lk2/umkE3gqnuqcgneni0G2TTR8us/oD2boQEUQsYc
- DEOvC15TXfc5H4x8px0UQKe5dNeQl+gcDMI4b+k6YtkVUwfZRMctxHyorO7x/vePh8PJEG5vJpj
- AR/dUe8g5tyaH+2JBxACNSbgIRoZjkH+QWfiPgNMeuq03e69N64+xB1E+m5ikJFc5VpYUCjYkZt
- loH0/ug0yxPo+rIrd8pr3WtGXJLMBOaZIEXlqsZxzMgF9ZUP3l955v/2jfB8lwYz5HS2PbqUXM6
- gFRizOrdGgmiQe9Imyp4Ux+E+23Nl8Z7WZn8P0Clpqj4YoHF3lLYuRLOzmNXX2HuTNEH+qFo/uk
- DVazsEOXRm/6y15AMAqo=
-X-Google-Smtp-Source: AGHT+IEhpen0OT/wpjIsedM9olTkpqA0r2zexZbUkn3PQErVXSKJU0+PVrkG3oWBI/ZNw5TO5UZs0g==
-X-Received: by 2002:a05:600c:358e:b0:43b:cc42:c54f with SMTP id
- 5b1f17b1804b1-43c5a60eab5mr77702865e9.14.1741542738896; 
- Sun, 09 Mar 2025 10:52:18 -0700 (PDT)
+ bh=kJwfrdswVmk/LMsQRUhZo65LUrcnqQS9NNFjSZtvKz8=;
+ b=LtRO+Mpc3VLclvhETIdS6eGCed80rrJUJvNodTc8kuMEQ76yo1LwrRWB6AcW3zXbuF
+ /o+dhJdWQzSQwPthz0LSK+Pc5R2juuYtFwRVZASSTNxMzemIO+t8Np8Xoa523fskkrny
+ 7tIMcn/ZJCAtnQfWTtGWKYKs40XfvPtC0TvubvWUon2faK4+E0ZSF3m/gzADjEFJ2AYc
+ H0IW4D+nB2pauX7nB7n3m753Eb2UpIU8MckaKSL5PtL0Vp2BLtkWGAJt+CzwQmPylnBU
+ 6nSL9tId5so8QRZkEv/im29umpumQJodSQ8VVOJ1hi6RBWCG+ePHJnDOtx53n5bHYUJL
+ 9//A==
+X-Gm-Message-State: AOJu0YxJ9EFbbXvM/t6BlDlkM1Uio69x6zUR3A6OaVt6K1NBTUuLgtEQ
+ 3pGQVwfrMJYYjNOqvkYomr4/9FqdvF/gWILMEfGkRjw5fIJDAVcN6QZWJ9RksuG6SZB2ghrkfr4
+ agj4=
+X-Gm-Gg: ASbGnctmKTA23lX2id8VdaNwjDCmXRslVfsPmE4Ar6RpjoxsmnzQu9NxXNJou9eC2iR
+ VDTAj1HfsyM16vkfSLPwVOvz8eIX+jZlWvhuouwCiAIRujViVZ/8578/AvAqCQ55eUGUbuQJfwA
+ HlTz+LAvekUiG2rvAcerMNEeRcwx/jDM3EPCk3Hk3tPUOhGZfSSuKbJ9BMLfK9eV4aspjOGriW3
+ g44fXWpix6/th3x+LPR5nV1wTiv2W6/f00tTfjPQIQ+RHmu6bIBV1yVHRFhH4YpUU+AxOo8uo/R
+ cOJYlIhUscBdCCxZ1hUYMQJA/Xcr/6ZQc64C1UA+KiJVFbcx0ks9dxwUuFgw3AMOyKTtyQpm9sx
+ mrLvDRYWhWJUsNg+jHXlrJZSrhSbRGw==
+X-Google-Smtp-Source: AGHT+IFj7MlJ3IXyXNZyZR/J0GOE21ra2mEaKB+08tr5d3uq/PFrRliq9IE3yeOCgZfddOvBxLyUIA==
+X-Received: by 2002:a05:6000:18a3:b0:391:2d8f:dd56 with SMTP id
+ ffacd0b85a97d-39132d98ea9mr6501853f8f.29.1741542799089; 
+ Sun, 09 Mar 2025 10:53:19 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cf27f8ef3sm25932595e9.11.2025.03.09.10.52.18
+ ffacd0b85a97d-3912c0e308dsm12701851f8f.67.2025.03.09.10.53.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 09 Mar 2025 10:52:18 -0700 (PDT)
+ Sun, 09 Mar 2025 10:53:18 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/38] bsd-user: Always use mmap_find_vma_aligned() in
- target_mmap()
-Date: Sun,  9 Mar 2025 18:51:31 +0100
-Message-ID: <20250309175207.43828-3-philmd@linaro.org>
+Subject: [PULL 15/38] cpus: Un-inline cpu_has_work()
+Date: Sun,  9 Mar 2025 18:51:44 +0100
+Message-ID: <20250309175207.43828-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250309175207.43828-1-philmd@linaro.org>
 References: <20250309175207.43828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,39 +98,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Massage target_mmap(): calculate alignment once, then
-unconditionally call mmap_find_vma_aligned().
+In order to expand cpu_has_work(), un-inline it.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Message-Id: <20250308122842.76377-2-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250125170125.32855-3-philmd@linaro.org>
 ---
- bsd-user/mmap.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ include/hw/core/cpu.h | 6 +-----
+ hw/core/cpu-system.c  | 6 ++++++
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-index 346f2cefd32..dfa6e728ab5 100644
---- a/bsd-user/mmap.c
-+++ b/bsd-user/mmap.c
-@@ -489,13 +489,12 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int prot,
-      * before we truncate the length for mapping files below.
-      */
-     if (!(flags & MAP_FIXED)) {
-+        abi_ulong alignment;
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 2d4ebb79905..a54dd2cf699 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -758,11 +758,7 @@ bool cpu_virtio_is_big_endian(CPUState *cpu);
+  *
+  * Returns: %true if the CPU has work, %false otherwise.
+  */
+-static inline bool cpu_has_work(CPUState *cpu)
+-{
+-    g_assert(cpu->cc->has_work);
+-    return cpu->cc->has_work(cpu);
+-}
++bool cpu_has_work(CPUState *cpu);
+ 
+ #endif /* CONFIG_USER_ONLY */
+ 
+diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
+index e29664d39bb..c10e3c9ba64 100644
+--- a/hw/core/cpu-system.c
++++ b/hw/core/cpu-system.c
+@@ -31,6 +31,12 @@
+ #include "migration/vmstate.h"
+ #include "system/tcg.h"
+ 
++bool cpu_has_work(CPUState *cpu)
++{
++    g_assert(cpu->cc->has_work);
++    return cpu->cc->has_work(cpu);
++}
 +
-         host_len = len + offset - host_offset;
-         host_len = HOST_PAGE_ALIGN(host_len);
--        if ((flags & MAP_ALIGNMENT_MASK) != 0)
--            start = mmap_find_vma_aligned(real_start, host_len,
--                (flags & MAP_ALIGNMENT_MASK) >> MAP_ALIGNMENT_SHIFT);
--        else
--            start = mmap_find_vma(real_start, host_len);
-+        alignment = (flags & MAP_ALIGNMENT_MASK) >> MAP_ALIGNMENT_SHIFT;
-+        start = mmap_find_vma_aligned(real_start, host_len, alignment);
-         if (start == (abi_ulong)-1) {
-             errno = ENOMEM;
-             goto fail;
+ bool cpu_paging_enabled(const CPUState *cpu)
+ {
+     if (cpu->cc->sysemu_ops->get_paging_enabled) {
 -- 
 2.47.1
 
