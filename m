@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B922FC28B2F
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 17:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E736DC28B2E
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 17:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trKpT-0005Ca-KK; Sun, 09 Mar 2025 13:52:48 -0400
+	id 1trKr3-0000JL-VS; Sun, 09 Mar 2025 13:54:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKpN-0005C9-Nc
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:41 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKqt-0008RI-Jd
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:54:16 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKpL-0004pz-Nd
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:52:41 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-391342fc148so1343664f8f.2
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:52:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trKqr-000508-T1
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 13:54:15 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3912d2c89ecso2907020f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 10:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741542758; x=1742147558; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741542852; x=1742147652; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XCeL7qLhCXyawqpFh374doAuSUcQFtoZ56lrH3Aj2ao=;
- b=NTP4Hy/1nypXSu3QMI7r74VNdq3lAzUOIBisCb4teEDBLpcYXtH3GxVngNewcdzeFV
- oXaWjCXhBwI3YJd3oNXXnmrOVdmWjsDnhmGCxVUUaol4dRLh0SHCZP8JPnDgd4CM0MkL
- bVYGIFw3tBtaoyGW+ZrHZCn92/dzYcotJ3NEyD1iuzQ+SKfbPiCd5Fryb4XjI0gEQszd
- jDP6hcV/t/5hzMpkbQZSy7qa717dVbbKdZA42Fktd3N7YLCD6BHJwRUjuxEy1m09Wbiw
- vz9eFyJY/7sWvHmmjMjBZr4qZMWPPHq+2qgtLGknZOeSrUA6fNxr/YH5dXKztK9eGTjH
- v2FQ==
+ :reply-to; bh=4ROoqZyq+JYACAQOwfrSif1wT020r29BY9+8qi9Qxys=;
+ b=XYQ8nfhOq1F/jzwMEgi6cIXo1LjKlD256tSyRhHZH72DGFG3/2gAV8RAnw/kj/QWek
+ eC8qo9pICbM389I/fPPpxNZhclcvJokQ3dl4eNEF41jx90uErUaA+sSWK8F/Wa9t1uj/
+ WjzmyKif4nkgH1X/1JGPA2b7FYguVXA6qTjdAbK+w/6AgLkgv88gHyKeqah1NNyFtK9K
+ 0WfffFsMYaVCV4C3kHCtoL/DfO8jQyzt1kZmGb7OcI+FjKyvDmbaxd5oWowUQl0hCuLL
+ C0p9QdYNDYbPyy2neGZUfY/8x22vW0JeMUg7Ovg2yZOJs7RQ+aKPZkG3obTQCfRpfmiC
+ ci9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741542758; x=1742147558;
+ d=1e100.net; s=20230601; t=1741542852; x=1742147652;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XCeL7qLhCXyawqpFh374doAuSUcQFtoZ56lrH3Aj2ao=;
- b=i/lFQhHChF1P3pECIZR/ep+zlFO7q4sva9xnCBdwEv7cR39sHApHnPKYPyVtdkhEmF
- /lL0OTainycnXrZi3I5Xd3XFLn/NwRDu2Mquw6j2e8r63J5E5GXsOUVi0x+bY+TZUSB6
- GkDjeee0Qzn0+kz536n+gEA6OVj7xOWcdvCeQvSqviMPdMbnl5lwX8Xup+FWZVicF76K
- JzNlBYUmWBqzm8h8V4Y583hjHmYYbgWzkf1KN06btlL2zBvsCvj55Nk0YML+NvgjlA3M
- 9vHv2KfWbBh/eAvk9DwN6fU/ry0RZdZlxHwsNMzrIQmG/R/I63ecHvL9RhXXy5vhyNq6
- aA+g==
-X-Gm-Message-State: AOJu0YzZcDWxgFdjSepd0nnnsMkf1O3U2vdToiUIJ+5NIt+kstnjj1VN
- 5pcE22KCtCQcALPW+X+4AuUwj2b0eqW1UIPXQhFztI8QZJHEvmzjiii9I9e/Y6NVBVhdU0srmTF
- UvQ8=
-X-Gm-Gg: ASbGncsXvEMzK3s+M19N2/El352kf2yfsjtDXG/MP7SLbGKySS5aOLLedFYbGUyx9sf
- 7jUn5Mm7zSWD612AgnKDsLykXJqnfqP0d7JK0/tRgMyDnQKfVr/d4nRPFWf+XGmzhFxzQSIp1t0
- YZ7x5oVaCgn0/xTbG4RZUyj9thDykKXsEeuleHGuLL2Y0/pid3M3NkABLl3G/ottVa1qZL3xw8D
- 3zkIOhyKrUPqVlXGGZwTc2Xca6TXXbg9gbflnssQLcbgly2qoNRKj8CdZxtSA5D+298znFqi7O2
- CTwRwAApKF6+iphwl6x2hn2pHuQQ5otKdcXKuE94qObD/wSbnA/6pcBJ1iRncQOxQZd/XBXioSe
- S2YDsFSgVfwgubt3TId0=
-X-Google-Smtp-Source: AGHT+IGS6SH0UrFipcFsIlm1EyzudTT+VD7XHBwkuoasmMLi2DQfY7DqLJMDaQ7n8so3Mh9NUJVOMg==
-X-Received: by 2002:adf:a3cf:0:b0:391:4231:40a with SMTP id
- ffacd0b85a97d-391423105ccmr1503457f8f.33.1741542757730; 
- Sun, 09 Mar 2025 10:52:37 -0700 (PDT)
+ bh=4ROoqZyq+JYACAQOwfrSif1wT020r29BY9+8qi9Qxys=;
+ b=dqt8+QmSEbbbGRn+8U5LViJzN019Np7QzSey1uyXNLky+hGmpU2iBNXoyl+XsO+00M
+ 69OH3Ab5XwsLKnz87beLk44pIqWNfM9UFn34ROzx6E8pG6rzxaHH4cXWub/sd8kcPDMT
+ HPjuiKzVCSCONAGA3aeElJLA5v02IUvdqIJzJMt6ggIkqIsXyQQxbQkEEuKSBwJGzg6C
+ dy2YZ+KOkEw8EXf5qjSXMtGD0oWpzsGFlkUBt3cLxMQcWaKQppflC9lCLXj5l0aVx65U
+ Aybc8kS3rOR44Zh87JU4AM/iZgc/n1LPf+TkX69jbinc8ELxPiJFLQ4y8onBRzJQ+YAG
+ PCWA==
+X-Gm-Message-State: AOJu0YwH3LppezVG3LHNwMkPoUd7PAhUDbO/xZFpIk4viLoRFSP8tinZ
+ SLAkT/rBq7MUTDYq+ydEud6UmoghX+PCYs5Hk+3Kopwj9V4gfoQxfD68Ea+luzvyx5UwJ2tnRWY
+ +P7s=
+X-Gm-Gg: ASbGncvzqjyReqtUoqsmFpl3hcR8Z5D+PdIjc991skhnMpGQKz2so+HtVltJPJcTf5X
+ HVAIJi68gBe7YOGPpvoo/mWeIDNRfrwB+xKgE32K3Npl1HJyQeHuu4rXqjWPpJoJvslx4cA+ojj
+ Lrgb8VkM/UOVRgWYa+xYUfPiEHUyPJbMxihIN9nFNXKek/rnOvoVwGiE4KS7eP5vncfG/EYqhPA
+ m5eq1twXDCCgYc2d6UGiRBYn6vozVvZZwgf8vV6Fmi9R8Zn8CPdsxP/panU4oiUS7BMOGh3Q6AG
+ byDPzuNYQ8Q07WND+xcZMUuMZTzfk14rTb0DlZXzlMWvF5A/RVw0GaN6eUvu1k0ztiYbGT+wRcq
+ Tq8g8jGAwhsdK2X4rK5U=
+X-Google-Smtp-Source: AGHT+IGsq15d/WrgN/FzkgoL/Cmsg3TYiS//QTc2+OKBuUUiFb2QBSDnaAGrO1hmyAwIAUm/L4F4qQ==
+X-Received: by 2002:a5d:6d8c:0:b0:391:2a9a:47a3 with SMTP id
+ ffacd0b85a97d-39132b5b802mr6855978f8f.0.1741542851926; 
+ Sun, 09 Mar 2025 10:54:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ce720f93bsm60298215e9.25.2025.03.09.10.52.36
+ ffacd0b85a97d-3912c01ebddsm12728542f8f.60.2025.03.09.10.54.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 09 Mar 2025 10:52:37 -0700 (PDT)
+ Sun, 09 Mar 2025 10:54:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/38] cpus: Build cpu_exec_[un]realizefn() methods once
-Date: Sun,  9 Mar 2025 18:51:35 +0100
-Message-ID: <20250309175207.43828-7-philmd@linaro.org>
+Subject: [PULL 26/38] target/mips: Move has_work() from CPUClass to
+ SysemuCPUOps
+Date: Sun,  9 Mar 2025 18:51:55 +0100
+Message-ID: <20250309175207.43828-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250309175207.43828-1-philmd@linaro.org>
 References: <20250309175207.43828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,106 +99,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that cpu_exec_realizefn() and cpu_exec_unrealizefn()
-methods don't use any target specific definition anymore,
-we can move them to cpu-common.c to be able to build them
-once.
+Move has_work() from CPUClass to SysemuCPUOps and
+cpu_mips_hw_interrupts_enabled() to system.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250123234415.59850-21-philmd@linaro.org>
+Message-Id: <20250125170125.32855-14-philmd@linaro.org>
 ---
- cpu-target.c         | 29 -----------------------------
- hw/core/cpu-common.c | 26 ++++++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 29 deletions(-)
+ target/mips/internal.h | 4 ++--
+ target/mips/cpu.c      | 4 +++-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/cpu-target.c b/cpu-target.c
-index bc9c537c575..cae77374b38 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -25,38 +25,9 @@
- #include "system/cpus.h"
- #include "exec/tswap.h"
- #include "exec/replay-core.h"
--#include "exec/cpu-common.h"
- #include "exec/log.h"
- #include "accel/accel-cpu-target.h"
- #include "trace/trace-root.h"
--#include "qemu/accel.h"
--#include "hw/core/cpu.h"
--
--bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
--{
--    if (!accel_cpu_common_realize(cpu, errp)) {
--        return false;
--    }
--
--    /* Wait until cpu initialization complete before exposing cpu. */
--    cpu_list_add(cpu);
--
--    cpu_vmstate_register(cpu);
--
--    return true;
--}
--
--void cpu_exec_unrealizefn(CPUState *cpu)
--{
--    cpu_vmstate_unregister(cpu);
--
--    cpu_list_remove(cpu);
--    /*
--     * Now that the vCPU has been removed from the RCU list, we can call
--     * accel_cpu_common_unrealize, which may free fields using call_rcu.
--     */
--    accel_cpu_common_unrealize(cpu);
--}
+diff --git a/target/mips/internal.h b/target/mips/internal.h
+index 91c786cff8a..28eb28936ba 100644
+--- a/target/mips/internal.h
++++ b/target/mips/internal.h
+@@ -162,8 +162,6 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val);
  
- char *cpu_model_from_type(const char *typename)
+ extern const VMStateDescription vmstate_mips_cpu;
+ 
+-#endif /* !CONFIG_USER_ONLY */
+-
+ static inline bool cpu_mips_hw_interrupts_enabled(CPUMIPSState *env)
  {
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index d5cd227fe6d..5671d8d4f54 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -193,6 +193,20 @@ static void cpu_common_parse_features(const char *typename, char *features,
+     return (env->CP0_Status & (1 << CP0St_IE)) &&
+@@ -206,6 +204,8 @@ static inline bool cpu_mips_hw_interrupts_pending(CPUMIPSState *env)
+     return r;
+ }
+ 
++#endif /* !CONFIG_USER_ONLY */
++
+ void msa_reset(CPUMIPSState *env);
+ 
+ /* cp0_timer.c */
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index e76298699ab..b207106dd79 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -132,6 +132,7 @@ static vaddr mips_cpu_get_pc(CPUState *cs)
+     return cpu->env.active_tc.PC;
+ }
+ 
++#if !defined(CONFIG_USER_ONLY)
+ static bool mips_cpu_has_work(CPUState *cs)
+ {
+     CPUMIPSState *env = cpu_env(cs);
+@@ -177,6 +178,7 @@ static bool mips_cpu_has_work(CPUState *cs)
      }
+     return has_work;
  }
++#endif /* !CONFIG_USER_ONLY */
  
-+bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
-+{
-+    if (!accel_cpu_common_realize(cpu, errp)) {
-+        return false;
-+    }
-+
-+    /* Wait until cpu initialization complete before exposing cpu. */
-+    cpu_list_add(cpu);
-+
-+    cpu_vmstate_register(cpu);
-+
-+    return true;
-+}
-+
- static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+ static int mips_cpu_mmu_index(CPUState *cs, bool ifunc)
  {
-     CPUState *cpu = CPU(dev);
-@@ -234,6 +248,18 @@ static void cpu_common_unrealizefn(DeviceState *dev)
-     cpu_exec_unrealizefn(cpu);
- }
+@@ -534,6 +536,7 @@ static ObjectClass *mips_cpu_class_by_name(const char *cpu_model)
+ #include "hw/core/sysemu-cpu-ops.h"
  
-+void cpu_exec_unrealizefn(CPUState *cpu)
-+{
-+    cpu_vmstate_unregister(cpu);
-+
-+    cpu_list_remove(cpu);
-+    /*
-+     * Now that the vCPU has been removed from the RCU list, we can call
-+     * accel_cpu_common_unrealize, which may free fields using call_rcu.
-+     */
-+    accel_cpu_common_unrealize(cpu);
-+}
-+
- static void cpu_common_initfn(Object *obj)
- {
-     CPUState *cpu = CPU(obj);
+ static const struct SysemuCPUOps mips_sysemu_ops = {
++    .has_work = mips_cpu_has_work,
+     .get_phys_page_debug = mips_cpu_get_phys_page_debug,
+     .legacy_vmsd = &vmstate_mips_cpu,
+ };
+@@ -577,7 +580,6 @@ static void mips_cpu_class_init(ObjectClass *c, void *data)
+                                        &mcc->parent_phases);
+ 
+     cc->class_by_name = mips_cpu_class_by_name;
+-    cc->has_work = mips_cpu_has_work;
+     cc->mmu_index = mips_cpu_mmu_index;
+     cc->dump_state = mips_cpu_dump_state;
+     cc->set_pc = mips_cpu_set_pc;
 -- 
 2.47.1
 
