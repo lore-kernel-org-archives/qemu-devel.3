@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D9FCC28B2F
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 14:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABAC3C28B2F
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 14:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trHMz-0000hR-NB; Sun, 09 Mar 2025 10:11:10 -0400
+	id 1trHWA-0002lP-US; Sun, 09 Mar 2025 10:20:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Uc6e=V4=kaod.org=clg@ozlabs.org>)
- id 1trHMv-0000h3-PG; Sun, 09 Mar 2025 10:11:05 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Uc6e=V4=kaod.org=clg@ozlabs.org>)
- id 1trHMs-0007O5-W1; Sun, 09 Mar 2025 10:11:05 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Z9hl613kTz4x3p;
- Mon, 10 Mar 2025 01:10:58 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Z9hl30cPbz4x04;
- Mon, 10 Mar 2025 01:10:54 +1100 (AEDT)
-Message-ID: <f9ea56e0-a104-4acd-a27e-7d2813efe319@kaod.org>
-Date: Sun, 9 Mar 2025 15:10:52 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trHW9-0002kE-2V
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 10:20:37 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trHW6-0002bM-GF
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 10:20:36 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43cebe06e9eso4664645e9.3
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 07:20:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741530032; x=1742134832; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3D+54oeVa7Fu6Truwxl080HVFieDV+B30R54rKr/+W4=;
+ b=a9Yz3cy4yZ902pGjaiITV2icFnbS/CMgzU9q9eVnCfueyqXypGN8L2jJfCQ9vTSjOT
+ U9YH6lm8iQ1cRxwRoUFhBNmj521rikksggwSam/VeR8DZs7yps/2uAONv7qnRCaCBSu2
+ 6S3upfjbVOkuyRZ4UbBQjlEVDBJThoDOMWYqfblv3YsMbblcKJisNdTyTFtyqV1M7qgE
+ ebuq8JRNNbjHaERoOCXfmR03hdCwgD74d924kJrR2JvfOh4Q9zNwG4BXAVYSv6wtuqzu
+ YnO5M0H+mr9oPuH7QDBp17ZO1DHHLuTU2EXo4Ybdt+ydKMOQjPjn8aOf9FbU0mDyMoQm
+ yd6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741530032; x=1742134832;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3D+54oeVa7Fu6Truwxl080HVFieDV+B30R54rKr/+W4=;
+ b=XT2+DLPxZRL293hhhO27tvshd38dqxXrvNrpRXb7ikKby1DcHWw/4co+nWEZ8Fw+Ra
+ bsI55JdKk5rZbgjO2Q7V8MwZnIeW+fbLec87jCFIu13ByCrpCHRL+Vx/oonw731ATkEf
+ MBVe8S36crzkg2iDZuUMBV45+lM6d5B7YDLwwBIdvSaAkyXzhtrQwMJkMWcUjbJUOtfD
+ 7Ki64HcIWTiKr734L9MNCtUMExT2ktCFzjuN0mAqYJG9FBLzyqu3zNwHMDTt6k+YRkva
+ UM/xYxaHGhn5LAPZ20KYzP9HUXjf3LGIumAlMIYLjSPKYtNmM3e8IqpzbF6/XahNRz2s
+ 0YYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV3GcaT96MZm/rcbLuGy8tI2hznmuAI2ZAi6+jYOw7dCJiShOKO21RbbfeqbTmf62CKro8QbArKOXAk@nongnu.org
+X-Gm-Message-State: AOJu0Yx2OPsEA/qbJYJWTa2rn/+Z/YJNLbQwde/UfdhuVodb8iVAAtNj
+ hWyicdJlJL280nsKyfmrymr0b24eroOF4eIk2u4nFMEir9QNaU97Cr8QF2vYaBA=
+X-Gm-Gg: ASbGncuUlWpicX0KIt2JeOzObDaO1sm+VSPddOMzgz3B6Y/jBA/sQAbJkVIb8/khali
+ hm1KO0Oa7uQJ4mUHhKaIwSqi53gWRpsfqwydoD3nZsngBS6NcHZRdt/MMcir7gNtaP2Oycmx5Du
+ SONkMr7a2K3umkdgpaLfHsyHAmbzvAl4Y+puEAkOOORWS0LlVAW5QaIk1afbdGufv40CLuOhQvr
+ r1fy5xjEpbfp0fYkPFetd6FxIKuEQoUXldh/k1aM7IZcMcRmzRkYMlYv96xiKSYv60z69+88gwF
+ bHqe/N3BNRXk5kmvN0XqSiUDEgEHVYSPvywkIYQzr37kmQj1/kqiJuLfpk95j9RD9Iiuj+1Onst
+ 4zDxG9DWfPhn1
+X-Google-Smtp-Source: AGHT+IHRYdM3B+PIG/TzHNAJg8acZVklC4NUJKMtLVlFaGPbuZjAzBfla4VCtls/IuxkbP1o+yeb8A==
+X-Received: by 2002:a05:6000:1fab:b0:390:f476:81c3 with SMTP id
+ ffacd0b85a97d-39132d51364mr5599054f8f.20.1741530032141; 
+ Sun, 09 Mar 2025 07:20:32 -0700 (PDT)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43cf1b36d14sm22790515e9.37.2025.03.09.07.20.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 09 Mar 2025 07:20:31 -0700 (PDT)
+Message-ID: <33b01373-6046-4b96-9407-66966c5b7f36@linaro.org>
+Date: Sun, 9 Mar 2025 15:20:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 8/8] ppc/pnv: Update skiboot to support Power11
-To: Aditya Gupta <adityag@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250308205141.3219333-1-adityag@linux.ibm.com>
- <20250308205141.3219333-9-adityag@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250308205141.3219333-9-adityag@linux.ibm.com>
+Subject: Re: [PATCH v4 03/14] hw/sd/sdhci: Introduce SDHCIClass stub
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Guenter Roeck <linux@roeck-us.net>, qemu-block@nongnu.org,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org
+References: <20250308213640.13138-1-philmd@linaro.org>
+ <20250308213640.13138-4-philmd@linaro.org>
+ <1839f9de-2370-50bd-7003-ade92707f137@eik.bme.hu>
+ <142807a2-9536-4483-80ab-5f24793c841f@linaro.org>
+ <670a5a3c-3476-5b8d-775a-ebff83acc33d@eik.bme.hu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <670a5a3c-3476-5b8d-775a-ebff83acc33d@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=Uc6e=V4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,32 +113,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/25 21:51, Aditya Gupta wrote:
-> Update skiboot.lid to below commit which adds support for booting on
-> Power11:
+On 9/3/25 01:08, BALATON Zoltan wrote:
+> On Sun, 9 Mar 2025, Philippe Mathieu-Daudé wrote:
+>> On 8/3/25 23:34, BALATON Zoltan wrote:
+>>> On Sat, 8 Mar 2025, Philippe Mathieu-Daudé wrote:
+>>>> TYPE_SYSBUS_SDHCI is a bit odd because it uses an union
+>>>> to work with both SysBus / PCI parent. As this is not a
+>>>> normal use, introduce SDHCIClass in its own commit.
+>>>>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>> include/hw/sd/sdhci.h | 9 +++++++++
+>>>> hw/sd/sdhci.c         | 1 +
+>>>> 2 files changed, 10 insertions(+)
+>>>>
+>>>> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+>>>> index 48247e9a20f..c4b20db3877 100644
+>>>> --- a/include/hw/sd/sdhci.h
+>>>> +++ b/include/hw/sd/sdhci.h
+>>>> @@ -107,6 +107,13 @@ struct SDHCIState {
+>>>> };
+>>>> typedef struct SDHCIState SDHCIState;
+>>>>
+>>>> +typedef struct SDHCIClass {
+>>>> +    union {
+>>>> +        PCIDeviceClass pci_parent_class;
+>>>> +        SysBusDeviceClass sbd_parent_class;
+>>>> +    };
+>>>> +} SDHCIClass;
+>>>> +
+>>>> /*
+>>>>  * Controller does not provide transfer-complete interrupt when not
+>>>>  * busy.
+>>>> @@ -123,6 +130,8 @@ DECLARE_INSTANCE_CHECKER(SDHCIState, PCI_SDHCI,
+>>>> #define TYPE_SYSBUS_SDHCI "generic-sdhci"
+>>>> DECLARE_INSTANCE_CHECKER(SDHCIState, SYSBUS_SDHCI,
+>>>>                          TYPE_SYSBUS_SDHCI)
+>>>> +DECLARE_CLASS_CHECKERS(SDHCIClass, SYSBUS_SDHCI,
+>>>> +                       TYPE_SYSBUS_SDHCI)
+>>>
+>>> Are these two together just OBJECT_DECLARE_TYPE? Then the above 
+>>> typedefs are also not needed just the struct definitions.
+>>
+>> I'd like to but it isn't possible because the same object state/class is
+>> used by distinct types (PCI & SysBus).
+>>
+>> The following (expected to be correct) change ...:
+>> -- >8 --
+>> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+>> index 966a1751f50..341b130995b 100644
+>> --- a/include/hw/sd/sdhci.h
+>> +++ b/include/hw/sd/sdhci.h
+>> @@ -155,10 +155,6 @@ typedef struct SDHCIClass {
+>> #define TYPE_PCI_SDHCI "sdhci-pci"
+>> -DECLARE_INSTANCE_CHECKER(SDHCIState, PCI_SDHCI,
+>> -                         TYPE_PCI_SDHCI)
+>> +OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, PCI_SDHCI)
 > 
->      commit 785a5e3070a8 ("platform: Identify correct bmc platform based on bmc hw version")
+> It would be same as the original patch if you omit this one and only use 
+> OBJECT_DECLARE_TYPE below.
+
+Indeed that works. Kind of a kludge. Not worth than what we have, so
+I'll take it.
+
+> You didn't add CLASS_CHECKER to the PCI 
+> version in the original patch either. But I see now it's more complex 
+> and so maybe it's not so easy.
+
+Yeah, I'll postpone the QOM parentship cleanup for later.
+
 > 
-> Built with glibc 2.40 and gcc 14.2 (Fedora 41)
+>> #define TYPE_SYSBUS_SDHCI "generic-sdhci"
+>> -DECLARE_INSTANCE_CHECKER(SDHCIState, SYSBUS_SDHCI,
+>> -                         TYPE_SYSBUS_SDHCI)
+>> -DECLARE_CLASS_CHECKERS(SDHCIClass, SYSBUS_SDHCI,
+>> -                       TYPE_SYSBUS_SDHCI)
+>> +OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, SYSBUS_SDHCI)
+>> ---
 > 
-> Signed-off-by: Aditya Gupta<adityag@linux.ibm.com>
-> ---
-> Should the roms/skiboot submodule also be updated ?
+> [...]
 > 
-> I see it has generally been updated on skiboot releases with versions,
-> eg. 7.1, 7.0. No newer version available for upstream/master.
-> ---
-> ---
->   pc-bios/skiboot.lid | Bin 2527328 -> 2527424 bytes
->   1 file changed, 0 insertions(+), 0 deletions(-)
-
-This change should come first as a sub maintainer PR, to avoid sending 2.5MB
-on the mailing list :/ See how SLOF is handled.
-
-
-Thanks,
-
-C.
-
+>> Meanwhile the current legacy macros seems good enough for soft freeze ;)
+> 
+> Good enough for me. I was also happy with my way simpler solution. This 
+> is much more clean up already.
+> 
+> Regards,
+> BALATON Zoltan
 
 
