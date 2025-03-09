@@ -4,88 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 556E8C28B2F
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 13:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8CD3C28B30
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 13:45:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trGrO-0002X2-9F; Sun, 09 Mar 2025 09:38:30 -0400
+	id 1trGxm-0005nQ-QB; Sun, 09 Mar 2025 09:45:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trGrM-0002Wc-Tn
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:38:29 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trGrL-0006vV-DX
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:38:28 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3913d129c1aso600190f8f.0
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 06:38:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741527505; x=1742132305; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oVfRmG3N0agKxZ/pzScoqVCWi/34yYIo+YBpdzeyP5Y=;
- b=kL6/U+XcoVLqIIMd/ZZtkZm4dOMzUcrlZt2iBJPxJRUVi5afbz0HOdWiUcilh+6pnT
- l2zC1WhwT82kxGRmk4Wo81a4A+TE8mSiWAu9XjaopY6hXfJfklZcA8SYOf1UYa/vSOWt
- pyc34QfZPVg3Fs3zK+MhU0hu2jEXXQKPj/SgK53DQAK04n7qwgYNECqY/Prp1mi2Sp/j
- 4u8wYri62yqbB9zd0VMeS+/68BOhB8FoA72vGkLmHttPa2dF0SlGwbhQ8tsJVWNd0qU0
- TVGMff7Yu/uKDj9pUTa6zNLq+ui0fCWygWQvVZU+RdYUfNT4fdeEzerbee7wSRa0r9Ia
- sQeA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1trGxj-0005kN-JB
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:45:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1trGxh-0000X0-Kz
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:45:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741527897;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xeQRXUeac0cyXNcpET1/Wh49WrmctkonQAKUMBhZahE=;
+ b=SUGgyvmouRVFe3zPqN93WGaTYyMravYaD9xIjDEsxnh1XtVrdPTtu1Vattcllz9FL+ZaTj
+ uwWjEENLn4XSKWe2D2RJUARd2fws30YBmYT4Z7EFJ73I68DBrf/vV8+mYouo/Vs59I1PFG
+ juSF7OX3bUpKjMp2lDsb/Xm6UuzVuiE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-62-dhxSpzznPpa8vUmpIDXeXg-1; Sun, 09 Mar 2025 09:44:52 -0400
+X-MC-Unique: dhxSpzznPpa8vUmpIDXeXg-1
+X-Mimecast-MFC-AGG-ID: dhxSpzznPpa8vUmpIDXeXg_1741527891
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43bc5a18c52so14616915e9.3
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 06:44:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741527505; x=1742132305;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oVfRmG3N0agKxZ/pzScoqVCWi/34yYIo+YBpdzeyP5Y=;
- b=w0NSszHG0QFE5rLhbgSMZCtpOGF6AzIUWuZuKMsajvf5+TkiqiMO27bY0bTbeH7y5W
- y0jIbK8ej8P68+DZGKvQP3Vg5h8vkH2G05IyESnBixkJOqBBhqzuM9HND0mxX1k1/MGq
- amIwUTQeEcUZr8Q2o3/8/J6IHYEALboONYcV/Y3rlXnYw8wqTjv3fAi3/aelFUt8tWwf
- KNCIYiJFjd3l3H4BK05fcz1i5qnJbay/uv3GAqFF0G7fMgkyCinDNpkF4PbxEsrauE/6
- Gzv5qK5lxmjvNkL89Q7S27sTL3tmFWNvqa4lGivhg5Xg7mF3YA+6CzvHqnd7+EKEItZ+
- gi7Q==
-X-Gm-Message-State: AOJu0YxCsBs+/LHV+Jzbx0WHAYgKXaNedtQN2I8KwE7dSwt6irCV9zPf
- UE8I0JuVMNv3ihAMD96jO33c+QH0zHXRtXv9yZK3m7zaBPPUJMPcgAfQ+51KgSC7bGOdeLOOWWA
- scpY=
-X-Gm-Gg: ASbGncu2rNF/AodTHo/KBodmVcBYM1l3Oq24cc8LUiweCpV7U069FVWaX/2Sgdyxr3a
- N1mIr85bJNkkoKk6N+DqNd5IEKnbQLbhetqCNKzq4aoyr1pvTIAxcq0ueZJgqkZZknl2WtHCDFI
- Ps1gNZ7W4ZdI43lxI9OqJpBYQYHQRib8Yb1IzL5+whHCcaDdM5mhEVYZ824nUQ9t7pXCDNO424A
- OqMOjHEYk3ReDMoUVLZ6WD3CaGQ0o3Bf7kwMFpSlP/PaF3Li0VtuL8haELI9wWg0TjKJJnavdc5
- Esza1PSjC1yC+2JVAmuCHvoW71RM953Jbk827Fy6bO7CYTUWCLEYx8BNaPzjY2gmgZlm7ufgyzU
- LzsXNcztsQFh4
-X-Google-Smtp-Source: AGHT+IGbkdKgP6Ox4qywKYNJ6WtAQ4ipCXtwlwQUaBMtrzQ+0Ce4CP0R1CUcC30eFXrO60cSoBNX2w==
-X-Received: by 2002:a5d:64ab:0:b0:390:f9d0:5e7 with SMTP id
- ffacd0b85a97d-3913af025b1mr4079448f8f.13.1741527505105; 
- Sun, 09 Mar 2025 06:38:25 -0700 (PDT)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c01cd31sm11983489f8f.52.2025.03.09.06.38.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 06:38:24 -0700 (PDT)
-Message-ID: <17d686cd-dee5-457f-8089-0ae92dfebd57@linaro.org>
-Date: Sun, 9 Mar 2025 14:38:23 +0100
+ d=1e100.net; s=20230601; t=1741527891; x=1742132691;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xeQRXUeac0cyXNcpET1/Wh49WrmctkonQAKUMBhZahE=;
+ b=njtD/q+i/9zBKoH/kViMhKFuAxyGFbqR/pCxdrLycsRE3F1VyAXRYww/a+eMTqvuC3
+ 1aEc+v3lm6xkzQfc7J75ZPM+ZA4VtrxAQZvYxM0tnV1euBIZO4/etVZNcZkQBlph2d8W
+ XmRtZteVN79xTG0AV8SJvUZFjgqhbNuYjoDO+LvoQJ3TLZivPBEfailRkNpZaQuUAQ/t
+ Az1RaSMu74eAntmGIuYGx95uvPtoODi7HbTMBTVKy5yXAQfQG6LxjuD4mLjYgj2WLZul
+ PdVJN0cPUZao1uvysIpgftfEr85cc/oWFJ9EnhesZ4yXiJtzQrMFRQ84I3q1qjL88sYP
+ 43ag==
+X-Gm-Message-State: AOJu0YzT4SFSMYxOd6Md2kLozDIqVixbXPp1MCNZQsvJyanFGcq3mEOJ
+ 2stn1VXGZF2tUMhS8xjaWehBKDcy0x40UlhmYLAbPXmCtALTiaITtq+dW/AXpj/u9C4M3vOB2u5
+ AcMsgZjbCqLNlTjsaolpC8Pb7iV+5HXROGsfGH8BixC7iU2SFrWeR
+X-Gm-Gg: ASbGncuWjMIYTqsv0t3ZOG+9iEmaZH4cqH1eoeou82WRbQoyt9gp3yVluW5+1172tri
+ WcNwLRM07gGHs0lHRZfshu3QadpeLJL5tyrRa73nRUeR8jMlyHXZ/ymR+wIe4LYE1X/GECpuoc4
+ 45/JsmssrrUfCbWgm7EBPFHn+wNxQQzF9NPjE2FEc2eza9bAohFcrHdbTl6LWII1jvkR+Ii/luS
+ 7CzAGUXU/NIiiDI9ga72vsVNbn56CqxzitU36kzHS2kHDcq+uWYU2lsGzMsHBiMxWw47LuTBvp+
+ /Ts2k4N7Gg==
+X-Received: by 2002:a05:600c:1d03:b0:43c:eacc:9d68 with SMTP id
+ 5b1f17b1804b1-43ceacca125mr25621065e9.20.1741527889310; 
+ Sun, 09 Mar 2025 06:44:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEXXkv3HVD9fxvENVNk4LatFdn0te6WVj51hT/4P49ZwAQAdPWN9rcWSjXJf1Wx0GrCc6fF7A==
+X-Received: by 2002:a05:600c:1d03:b0:43c:eacc:9d68 with SMTP id
+ 5b1f17b1804b1-43ceacca125mr25620835e9.20.1741527887423; 
+ Sun, 09 Mar 2025 06:44:47 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43ceaac390bsm47922525e9.35.2025.03.09.06.44.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 09 Mar 2025 06:44:46 -0700 (PDT)
+Date: Sun, 9 Mar 2025 09:44:43 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
+ marcel.apfelbaum@gmail.com, jon.grimm@amd.com,
+ santosh.shukla@amd.com, vasant.hegde@amd.com, Wei.Huang2@amd.com,
+ kraxel@redhat.com, bsd@redhat.com, berrange@redhat.com, ddutile@redhat.com
+Subject: Re: [PATCH] pci-ids.rst: Add Red Hat pci-id for AMD IOMMU device
+Message-ID: <20250309094039-mutt-send-email-mst@kernel.org>
+References: <20250304183747.639382-1-suravee.suthikulpanit@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/24] cpus: Restrict CPU has_work() handlers to system
- emulation
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20250125170125.32855-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250125170125.32855-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250304183747.639382-1-suravee.suthikulpanit@amd.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,33 +107,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/1/25 18:01, Philippe Mathieu-Daudé wrote:
+On Tue, Mar 04, 2025 at 06:37:47PM +0000, Suravee Suthikulpanit wrote:
+> The QEMU-emulated AMD IOMMU PCI device is implemented based on the AMD I/O
+> Virtualization Technology (IOMMU) Specification [1]. The PCI id for this
+> device is platform-specific.
+> 
+> Currently, the QEMU-emulated AMD IOMMU device is using AMD vendor id and
+> undefined device id.
+> 
+> Therefore, change the vendor id to Red Hat and request a new QEMU-specific
+> device id.
+> 
+> [1] https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/specifications/48882_IOMMU.pdf
+> 
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 
-> Philippe Mathieu-Daudé (24):
->    cpus: Restrict cpu_has_work() to system emulation
->    cpus: Un-inline cpu_has_work()
->    cpus: Introduce SysemuCPUOps::has_work() handler
->    target/alpha: Move has_work() from CPUClass to SysemuCPUOps
->    target/arm: Move has_work() from CPUClass to SysemuCPUOps
->    target/avr: Move has_work() from CPUClass to SysemuCPUOps
->    target/hexagon: Remove CPUClass:has_work() handler
->    target/hppa: Move has_work() from CPUClass to SysemuCPUOps
->    target/i386: Move has_work() from CPUClass to SysemuCPUOps
->    target/loongarch: Move has_work() from CPUClass to SysemuCPUOps
->    target/m68k: Move has_work() from CPUClass to SysemuCPUOps
->    target/microblaze: Move has_work() from CPUClass to SysemuCPUOps
->    target/mips: Move has_work() from CPUClass to SysemuCPUOps
->    target/openrisc: Move has_work() from CPUClass to SysemuCPUOps
->    target/ppc: Move has_work() from CPUClass to SysemuCPUOps
->    target/riscv: Move has_work() from CPUClass to SysemuCPUOps
->    target/rx: Move has_work() from CPUClass to SysemuCPUOps
->    target/s390x: Restrict I/O handler installers to system emulation
->    target/s390x: Move has_work() from CPUClass to SysemuCPUOps
->    target/sh4: Move has_work() from CPUClass to SysemuCPUOps
->    target/sparc: Move has_work() from CPUClass to SysemuCPUOps
->    target/tricore: Move has_work() from CPUClass to SysemuCPUOps
->    target/xtensa: Move has_work() from CPUClass to SysemuCPUOps
->    cpus: Remove CPUClass::has_work() handler
+Will the existing drivers bind with the device then?
 
-Series queued, thanks.
+
+> ---
+>  docs/specs/pci-ids.rst | 2 ++
+>  hw/i386/amd_iommu.c    | 3 ++-
+>  include/hw/pci/pci.h   | 1 +
+>  3 files changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+> index 261b0f359f..2416a70a2d 100644
+> --- a/docs/specs/pci-ids.rst
+> +++ b/docs/specs/pci-ids.rst
+> @@ -100,6 +100,8 @@ PCI devices (other than virtio):
+>    PCI UFS device (``-device ufs``)
+>  1b36:0014
+>    PCI RISC-V IOMMU device
+> +1b36:0015
+> +  PCI AMD IOMMU device (``-device amd-iommu``)
+>  
+>  All these devices are documented in :doc:`index`.
+>  
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index dda1a5781f..4d8564249c 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -1766,7 +1766,8 @@ static void amdvi_pci_class_init(ObjectClass *klass, void *data)
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+>      PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+>  
+> -    k->vendor_id = PCI_VENDOR_ID_AMD;
+> +    k->vendor_id = PCI_VENDOR_ID_REDHAT;
+> +    k->device_id = PCI_DEVICE_ID_REDHAT_AMD_IOMMU;
+>      k->class_id = 0x0806;
+>      k->realize = amdvi_pci_realize;
+>  
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index 4002bbeebd..da44e6673d 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -117,6 +117,7 @@ extern bool pci_available;
+>  #define PCI_DEVICE_ID_REDHAT_ACPI_ERST   0x0012
+>  #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
+>  #define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
+> +#define PCI_DEVICE_ID_REDHAT_AMD_IOMMU   0x0015
+>  #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
+>  
+>  #define FMT_PCIBUS                      PRIx64
+> -- 
+> 2.34.1
+
 
