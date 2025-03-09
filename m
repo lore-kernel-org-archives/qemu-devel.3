@@ -4,90 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52388C282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 09:49:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA43C282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 10:29:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trDHR-0002iG-Nd; Sun, 09 Mar 2025 05:49:09 -0400
+	id 1trDtn-0006lb-UJ; Sun, 09 Mar 2025 06:28:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1trDHN-0002hW-T9
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 05:49:07 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1trDHM-0005wN-3u
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 05:49:05 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-aaeec07b705so501625866b.2
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 01:49:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741513742; x=1742118542; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o4xd6Ir4Wx21YW59Ig1VfzJLWzIWxmse+MUK5JEbCCU=;
- b=PjHLggOggoSJFUCMrn8huoFj4VTMwEQioSfBHR27PM1H6yGMaaF+lrwDamVyI3UEDl
- e7iHq9w/6sy2Xl8zErQMpTS9EPKPdQqnsw0CCS/2RjGiOLX6LLPE8Hafq2GIqeP2mvf/
- Ur+XLMrtk4hB1knw7G0yGouoi9CTwciGXEgzgrGfBf8kIb2WMOKS28GWBYhLLoH/TUK6
- iPbn4fae2/N5sKQPm141YQ88BtxWoZ3S3yxnyXEkUqgOBDbZOtdKNx9b/z5EuwQp40n3
- +cKpggqBthffGLDHu+A+72uZcbBFSzlz6ErZY13iHgeuXfEda/jAPz8a/lhL1gO3wotC
- kXmw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1trDtm-0006gi-1S
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:28:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1trDtk-0002rl-8E
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 06:28:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741516118;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y3/T5P2oAUF10DYW7ZiBW/R86qLT70rCJsxPBXNqRHM=;
+ b=cIeCssYCErMWG3Ql8e1LqRyjF+09C3P5OggjoijAYe81tf6P11lyQ18ej4xJ1HAklnnssG
+ qvzGUxHblvg1e8DhL2awXDTGcLRFqzT8GblT5upZYSp7pK2K39S8bW8KoyEOb5d++YNgSe
+ a34wKhZ2PbSoQOpPZBX/SLcg87dHmXU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-n1M0LwHgN0GmahCCzxG8kQ-1; Sun, 09 Mar 2025 06:28:36 -0400
+X-MC-Unique: n1M0LwHgN0GmahCCzxG8kQ-1
+X-Mimecast-MFC-AGG-ID: n1M0LwHgN0GmahCCzxG8kQ_1741516115
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43cebfa08ccso5190515e9.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 03:28:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741513742; x=1742118542;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1741516115; x=1742120915;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o4xd6Ir4Wx21YW59Ig1VfzJLWzIWxmse+MUK5JEbCCU=;
- b=hQFX15aTGVOmHegTCEhPX7ODLPo0wixJYFnGUoiiXWlaKpTIgTFhChQfy+tdNyu3WS
- 5TynXY9B2vg9t4Ra+9cwlVcl6PfvGwZQhx14OSvX7rTKlF6YmMUR2VUvVmNk16OPiaJ7
- Ixtv28rYwChleeQp+Pdck04VA7WnES1vJshxzECEvR/WqIvO5/cerD4XemnA1ObKbJ+r
- 2j6Osw4zYboCOuSINuFxuMu8UHjyx3gBlMr/94b1A7YqyIYMtvN+xyo07t+qZjFqXfGm
- 4tCj8/uxaIqyNrOEfIXQGbJOhWy7AGlP5EokVQEyLI0B0M21n29YG8aT9vnxZ8N1Dt8U
- J8dw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWO+a3LCpDzAS4nwgd3WukVN4z2MdklJxIPECbAughnEjXNYlCRzy7kgjrAD+g6dGGfO5HZR8Wlwafk@nongnu.org
-X-Gm-Message-State: AOJu0YywLF8vUmtceT+NXiGavyYHHG7u5qrPxKbiUPHVspcr66W24YIi
- mksS5Ru/EjuHchuB9UYZUoo+6Amo/u1vg60dh/fb/Hc54+yWDkz8gpfAiQ==
-X-Gm-Gg: ASbGncu3JnBeXKTub/w9/h/LSF2ZblZhN55g/zPLcTv3kRqzOAE310jl14xrTMlF6+Y
- dFDtw0T9sAL/KqQ+Kw7YBwpc1nWv6uJAQltxtrf62ilhRrpZEu3RQODUZxVPHqV9c3OOWzVKoFk
- nEPenXZw3FpRmA818XwnXNzvnh1CjIM5C5pEwXu6qZeLo+WYI611s26HqRmJJVJvJXX3ZY9mhPQ
- xzgO3pgIE/liE2FTaieVmpud4KQP05C8xXUdZY+1ZsOvI0MwM4mIpRQy+zgOKSdRMGTPxknKd52
- LFwqpVsFZMuRds3xDptMX0qfC8hw1POa5n8v1Yyqm6pgmbt11EhfSU9tfDBG6jOoc4Ol3Yb+jQJ
- iPGhhoa0orx/rYU0g/v8cQhAftSTAPBmeMRlKF2T/k+ZRYfzRINjQ
-X-Google-Smtp-Source: AGHT+IGoPF0MeF+CSYG4JaNJM+3JfXmvMk9ttRdIURqawaZ6R0N1sJCCkZQggNIXRQsZsSAapH0I1g==
-X-Received: by 2002:a17:906:794f:b0:abc:b96:7bd2 with SMTP id
- a640c23a62f3a-ac2525dce7amr1236204366b.11.1741513741956; 
- Sun, 09 Mar 2025 01:49:01 -0800 (PST)
-Received: from ?IPv6:::1?
- (dynamic-2a02-3100-1a10-8c00-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
- [2a02:3100:1a10:8c00:69d2:56f6:a5af:50a8])
+ bh=Y3/T5P2oAUF10DYW7ZiBW/R86qLT70rCJsxPBXNqRHM=;
+ b=C43VxlbC6M3t/FN94sI7QtOa/7pNzKiNpSAnjeE/5K+DbY0wkKgCvLp2Hm5OKNZNTj
+ vTNe36TLenPAUrcHctN2/wqOyD9f9G9XNdisP37maGPiFQCiwkqNKY9y13vAUHZjZywF
+ +qKZtBGxzt6UBIgYZhP2I46zFpkqEWUyBmZ0HEoxfj+lS/eT49keBHEyag3UEpvpdweJ
+ ky8JEmhzoF2knXnL2cL/e5qXGt5+wi+21MlYpokMvX0To3R/B6IeTKHlZ1mhRI0QszBM
+ mMuqMGkFt+ibT8OTa2WTr+H+jHVeBJD3nGMlv64Y03kLZ2kgHXHGRVoHgu9HUJw1TIUe
+ MRxA==
+X-Gm-Message-State: AOJu0YyULGkgVYF/7YSizvC3uDFR2A+X66+xgx25SCYqWszzGATIFRZI
+ TVfUpTP0CMvLG8mkt1TznETUWFpn2ElwzgUwXfZy/ZpfePIsqqotp5eb6PHNsxIe0OO5dJbS01B
+ 0y23UwyZPPkDci9MjVmgcHu5AtsYTZ97T8MvHmhsOtfnJSCwYebn+
+X-Gm-Gg: ASbGncu/LUlbde8z2AS/QYU1U9iaWrPKaaOViwAGbpu8Ua1Qu46Uh7cgCIZcyUZ2Xlz
+ AVIGhzPF8OM3VslB4WjUiv9Uj4P0Wg2CP3uzWhQUZDwlfxY5MH7ugTh8xCF4iIGRUjCT6w4hxhC
+ 53InJPqmEUrrddjsBZLx+5CmTjbpv2vuL5B2qZ23JRFe7mLILUUNKab0rtIwbuPREYSkLZJXpxv
+ UDNp6QfEC9slB+mStwgryfBOXkHk7yucHJb8YYerB3S5MVFy5OygwKpnMWD0fLpTT8mxj0pPtmJ
+ n2SEkWG+x+/RzEhHpWZw9w==
+X-Received: by 2002:a05:600c:3556:b0:43c:ec27:8de1 with SMTP id
+ 5b1f17b1804b1-43cec278ef4mr23694855e9.10.1741516115328; 
+ Sun, 09 Mar 2025 03:28:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJfQbufps26AdeJodkGGedO21xdIzJbZQEfykTBPLsX+8CK4YzvQjFZedo8tZ4vubcxQY9DA==
+X-Received: by 2002:a05:600c:3556:b0:43c:ec27:8de1 with SMTP id
+ 5b1f17b1804b1-43cec278ef4mr23694725e9.10.1741516115043; 
+ Sun, 09 Mar 2025 03:28:35 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.122.167])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac239438955sm577956766b.19.2025.03.09.01.49.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 01:49:01 -0800 (PST)
-Date: Sun, 09 Mar 2025 09:49:00 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-CC: Thomas Huth <thuth@redhat.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_tests/functional=3A_Requi?=
- =?US-ASCII?Q?re_=27user=27_netdev_for_ppc64_e500_test?=
-In-Reply-To: <20250308071328.193694-1-clg@redhat.com>
-References: <20250308071328.193694-1-clg@redhat.com>
-Message-ID: <B2FAB7F7-B42F-45C8-8ED5-72BB2F89EDAF@gmail.com>
+ 5b1f17b1804b1-43bdd8b0461sm114433225e9.4.2025.03.09.03.28.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 09 Mar 2025 03:28:34 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+	qemu-rust@nongnu.org
+Subject: Re: [PATCH] rust: pl011: Allow NULL chardev argument to pl011_create()
+Date: Sun,  9 Mar 2025 11:25:19 +0100
+Message-ID: <20250309102518.1115001-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250307190051.3274226-1-peter.maydell@linaro.org>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,35 +108,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+> This is my first Rust related patch for QEMU, so I've
+> probably got something wrong here :-)
 
+No no, that was all good!  Applied, thanks.
 
-Am 8=2E M=C3=A4rz 2025 07:13:28 UTC schrieb "C=C3=A9dric Le Goater" <clg@r=
-edhat=2Ecom>:
->When commit 72cdd672e18c extended the ppc64 e500 test to add network
->support, it forgot to require the 'user' netdev backend=2E Fix that=2E
->
->Fixes: 72cdd672e18c ("tests/functional: Replace the ppc64 e500 advent cal=
-endar test")
->Signed-off-by: C=C3=A9dric Le Goater <clg@redhat=2Ecom>
->---
-> tests/functional/test_ppc64_e500=2Epy | 1 +
-> 1 file changed, 1 insertion(+)
->
->diff --git a/tests/functional/test_ppc64_e500=2Epy b/tests/functional/tes=
-t_ppc64_e500=2Epy
->index 9ce7ae6c4798=2E=2Ef5fcad9f6b66 100755
->--- a/tests/functional/test_ppc64_e500=2Epy
->+++ b/tests/functional/test_ppc64_e500=2Epy
->@@ -20,6 +20,7 @@ class E500Test(LinuxKernelTest):
->=20
->     def test_ppc64_e500_buildroot(self):
->         self=2Eset_machine('ppce500')
->+        self=2Erequire_netdev('user')
->         self=2Ecpu =3D 'e5500'
->=20
->         uimage_path =3D self=2EASSET_BR2_E5500_UIMAGE=2Efetch()
+Paolo
 
-Thanks for taking care of it, C=C3=A9dric=2E
-
-Acked-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
