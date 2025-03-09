@@ -4,85 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21702C28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 18:55:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A64C28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 18:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trLnT-0007m1-UG; Sun, 09 Mar 2025 14:54:47 -0400
+	id 1trLoa-0008Lz-MQ; Sun, 09 Mar 2025 14:55:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trLnP-0007le-MG
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 14:54:44 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trLoT-0008KY-ID
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 14:55:49 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trLnO-00030f-7q
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 14:54:43 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-22435603572so26148385ad.1
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 11:54:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trLoR-0003GN-QK
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 14:55:49 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-22548a28d0cso28631495ad.3
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 11:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741546480; x=1742151280; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741546545; x=1742151345; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aTZMi2Ox3sWCdU7vkKaTOfMg7d81yatyGVq7y2TsqEo=;
- b=U3oJrzntiBFoG08aJRtJ6BfgY/bDz9CxMbFICfXrOxLb4lyf4ve4k1VNk0SNb6T/Ns
- X5WDxiMpiOU0fwsif8hWqU+WzMQWPVrVLU4o9WlnESAs9PqStbMdI/bEhe2PM5GLVjIF
- +fk4NtedREYBPP0BD2zbOy6+cwfPfHWsBFKz+1Lupg28oP5WKcHy0VqjJNzHNK52AFsl
- Qyfr3n7I2Y2cLWpDktPIl6yRXHySX7EAZLv4wvJnovXYman2sOOh/ag4gn81Xp+TaVcw
- 3JJjfDJ/KIglB8FDIDuqmZ7gkRG/nigcqetraPUWAW6Jl/U19x38V0hUpUdk8FWQkoq4
- gFPw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4gU4h4sxcrlsUKGAX1YrS3hwxdA8CQEkt2CJElxmWaE=;
+ b=umhLYbrqMWrYvnWUnU9NQoSQPvm5m+ShrjLkTWJQdgQXg3pnzF+2AyCsAmACM8k3lK
+ FSLOLhTzYG13Z6OYcdOUA/TIEuu2AeZiQjgBLPAKzbtjZNIaaXHIqTpKnNm7/mzjBuXw
+ RK0zvBOm7y2wbrBpkE8324dbMqziwv1dr4LvHHsF5XtdWL7m9wkjo/1pjEER4BbypIkG
+ JDZtqOo8ZrZVF+2h2U6FqBidE9VGnsknMn9CM3Q48Sc/5xrLKVs/g35VlNjD5VkGJ8z8
+ e4AMxKmLhRLYSred6SAzXqV7M2q5cBvZX3TaJVeiZs3nXRQBj+nkd/yw3fnkOWjj2swh
+ qPpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741546480; x=1742151280;
+ d=1e100.net; s=20230601; t=1741546545; x=1742151345;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aTZMi2Ox3sWCdU7vkKaTOfMg7d81yatyGVq7y2TsqEo=;
- b=EFa23fKslBaATbuu9UwgBj/VKD4c655a00vJbiOGFOEuZNMNZNe0ezccrMA2hPNgw9
- lw/AxChVZyBWnGxQT6yXMEAd5ObBT7FQiT9zfVNhogPz3+rx6PJ6TOseNrMqh+uhfTVd
- ZDQ2bInYEsKVH8rKgLo7FQU9YofNustod8L2lDHr/4xD51VcqY0oiBFi6acqd3UQl/fQ
- fn3LSDKY+cqmHFu0mjBi/MwmLVxp+hEJKZus2TgBSldEh+MrE0btXfewQE4JdAkkv05h
- aooQkwbAv2vjZr9voR/ICQtkV1V8dblafLMooY8T9O5nkmEnnZI6goonnxzLcdLlDYGd
- v1zA==
+ bh=4gU4h4sxcrlsUKGAX1YrS3hwxdA8CQEkt2CJElxmWaE=;
+ b=cL4Xr6mQTtBAqCQuF5p+4//dNB/4ndJKD3oXDf3+6XxVlQABGiDghGMUOqUatYKBio
+ TdJPocx8m/ulP3G8k84lxOw6qx95dlr2mSpokZUydNY8bYBu9bJcsdeB7ar668QJRi7n
+ vUFpfr1uGYbfhQ95zPfN/DU8tKN/+YjAlPipyVhGXL12nxDv09i8YKNwQEhBSUmSOycT
+ 1ylgyMZZPOZCDCLkG1+I+hbJ9Hz9lWRgbS22za08Co4DO6T13dXT6V1cn1jWkFUeoC1s
+ AFeH2C9lnxZEWJKYmnBgGFikOhCkb8KpTTG++fnjEbth9WMdSKt0DMVyQP9mLG3ff+oX
+ DgvA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUP0+vQqDrTB0UI+xXaN+uo/l8+R+VvBITE9jEGK4Nwiq3UYiy9nB+gVOhxKwYqnhAkKu1TnCndM5Yf@nongnu.org
-X-Gm-Message-State: AOJu0Yz+i2nA3bEyjFHJacurtU2hFVtCE/FWXlonOPTeGEFcsSpA8yYa
- vXBSwNIT7UZCDnZ6+5uX1D0uId7zNhsUbBYAsUeRgnUI+DjH+uq+Ew6ltl2ZO/Q=
-X-Gm-Gg: ASbGncsRI3sljh7GNI+gmjL3po+mL1CZmBjZZSHtV3sglMBJ8UroN6/Z6fPXnquPf6I
- uZ8DPA4DKvUyJ83U6k6RBbXY8vYm995J7vbb9A5DbiKQroK4lHwl3A4GNQz5b4iHBxw8eAvU3h7
- MnBIMEdXgjBMSUxpsLIihykq5ElSBx8/Bw+WBTne847qCz47TVz6HehVx/JEbOCai/peEkV30U1
- lq6895Ji6sTESEbjE2m6UtUwHHA/oCKo+V2lJg+zv9JZpfaXmDVEVPz5dmmJA23c8FyQMVOWNhN
- WjiKu0o5ziTnug0oCm3ZhpyBX1A2MJBuOHjk6Wr4u4Gw2ErkNCCRFlQLVtKiZS86afVS/NoeTNE
- YPTNgDo49609c7kjNroU=
-X-Google-Smtp-Source: AGHT+IFeObLgJtHVcJDJKQD1fEKjqMNawpoG1OnNFO2PQhvxW6kgX1Dpd8OEYr+uvBHxCe87ov0ILg==
-X-Received: by 2002:a17:902:e802:b0:220:da88:2009 with SMTP id
- d9443c01a7336-22428c12f78mr161789305ad.45.1741546480101; 
- Sun, 09 Mar 2025 11:54:40 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ AJvYcCWW+tsnr+b9j9rHQMK+BNVaEbA6NWkEy0olpcWeJZXfxvAOgh08Zq6f13fE/GxyDE4ViUTpQ8Rv2qM0@nongnu.org
+X-Gm-Message-State: AOJu0Yx8VTZFaClXvDbnq3uMMsTN5Md1l1JNqxVpXXG7JzHiZgHtb/Xl
+ efPQWUkM8zs9SebbFLrdUGuTsioWEQJhJT2RGR+83sI/2g9yQcqT0KkP82wV6Co=
+X-Gm-Gg: ASbGncvafwOTAm7mtBZYFxhabjfCtszYNxDT0btyqFC0TxBy+b2oh1X8Gslj9JPzPnS
+ e21UAESBvzHAfw70TFtaoo1+Tisa/p91QK00jgl2aopWeP+nH3iMgMHJHK58HFnYd6mTRwbDw6E
+ PPoqW1L9Y5I4F/pK5z/bdJPugE5PdrcL5Z1S6+r7lhhEQKOc4P2PwMsX2gESG09JoRwxmAIgPAg
+ j4ABjgiZliQIgiUakHSUBfqQgnieNL3k/ofSeUz06+YFQyRHbTsPC65Rye5KjcbWpyDUA5etGgf
+ dyGK/NJrCCDvlVwOT7B3KcxmWvNdsIFGkJlfOUO8+vHyXDXyu2qfgAah9Q==
+X-Google-Smtp-Source: AGHT+IFuL76FqajmwOwPA/lhZq1uLDKviZaMHpKL2JQchDhkvmUXqbkX8QrlCr25XZ1XI1w/UYn5IQ==
+X-Received: by 2002:a05:6300:6713:b0:1f3:29a9:6197 with SMTP id
+ adf61e73a8af0-1f544aef521mr19743222637.18.1741546545470; 
+ Sun, 09 Mar 2025 11:55:45 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736b6305227sm4305237b3a.16.2025.03.09.11.54.39
+ 41be03b00d2f7-af2812887b3sm5259148a12.71.2025.03.09.11.55.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 11:54:39 -0700 (PDT)
-Message-ID: <4c139702-f13a-41f9-82f1-af3c98cf4a65@linaro.org>
-Date: Sun, 9 Mar 2025 11:54:38 -0700
+ Sun, 09 Mar 2025 11:55:45 -0700 (PDT)
+Message-ID: <fda186da-2e31-42d6-8dd6-0ea3141a73e6@linaro.org>
+Date: Sun, 9 Mar 2025 11:55:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/21] system/kvm: Expose
- kvm_irqchip_[add,remove]_change_notifier()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20250308230917.18907-1-philmd@linaro.org>
- <20250308230917.18907-9-philmd@linaro.org>
+Subject: Re: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
+ deprecate
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-s390x@nongnu.org, devel@lists.libvirt.org,
+ Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>, qemu-arm <qemu-arm@nongnu.org>
+References: <20240530074544.25444-1-philmd@linaro.org>
+ <cb4028fc-9596-47f3-9468-f8912dd48aed@redhat.com>
+ <Zl20rAjHLJlZkwxE@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250308230917.18907-9-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <Zl20rAjHLJlZkwxE@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,32 +116,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/25 15:09, Philippe Mathieu-Daudé wrote:
-> Currently kvm_irqchip_add_irqfd_notifier() and
-> kvm_irqchip_remove_irqfd_notifier() are only declared on
-> target specific code. There is not particular reason to,
-> as their prototypes don't use anything target related.
-> 
-> Move their declaration with common prototypes, otherwise
-> the next commit would trigger:
-> 
->    hw/vfio/pci.c: In function ‘vfio_realize’:
->    hw/vfio/pci.c:3178:9: error: implicit declaration of function ‘kvm_irqchip_add_change_notifier’
->     3178 |         kvm_irqchip_add_change_notifier(&vdev->irqchip_change_notifier);
->          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->          |         kvm_irqchip_add_irqfd_notifier
->    hw/vfio/pci.c:3236:9: error: implicit declaration of function ‘kvm_irqchip_remove_change_notifier’
->     3236 |         kvm_irqchip_remove_change_notifier(&vdev->irqchip_change_notifier);
->          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->          |         kvm_irqchip_remove_irqfd_notifier
-> 
-> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   include/system/kvm.h | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
+T24gNi8zLzI0IDA1OjE4LCBEYW5pZWwgUC4gQmVycmFuZ8OpIHdyb3RlOg0KPiBPbiBGcmks
+IE1heSAzMSwgMjAyNCBhdCAwNjo0Nzo0NUFNICswMjAwLCBUaG9tYXMgSHV0aCB3cm90ZToN
+Cj4+IE9uIDMwLzA1LzIwMjQgMDkuNDUsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3Rl
+Og0KPj4+IFdlIGFyZSB0cnlpbmcgdG8gdW5pZnkgYWxsIHFlbXUtc3lzdGVtLUZPTyB0byBh
+IHNpbmdsZSBiaW5hcnkuDQo+Pj4gSW4gb3JkZXIgdG8gZG8gdGhhdCB3ZSBuZWVkIHRvIHJl
+bW92ZSBRQVBJIHRhcmdldCBzcGVjaWZpYyBjb2RlLg0KPj4+DQo+Pj4gQGR1bXAtc2tleXMg
+aXMgb25seSBhdmFpbGFibGUgb24gcWVtdS1zeXN0ZW0tczM5MHguIFRoaXMgc2VyaWVzDQo+
+Pj4gcmVuYW1lIGl0IGFzIEBkdW1wLXMzOTAtc2tleSwgbWFraW5nIGl0IGF2YWlsYWJsZSBv
+biBvdGhlcg0KPj4+IGJpbmFyaWVzLiBXZSB0YWtlIGNhcmUgb2YgYmFja3dhcmQgY29tcGF0
+aWJpbGl0eSB2aWEgZGVwcmVjYXRpb24uDQo+Pj4NCj4+PiBQaGlsaXBwZSBNYXRoaWV1LURh
+dWTDqSAoNCk6DQo+Pj4gICAgIGh3L3MzOTB4OiBJbnRyb2R1Y2UgdGhlIEBkdW1wLXMzOTAt
+c2tleXMgUU1QIGNvbW1hbmQNCj4+PiAgICAgaHcvczM5MHg6IEludHJvZHVjZSB0aGUgJ2R1
+bXBfczM5MF9za2V5cycgSE1QIGNvbW1hbmQNCj4+PiAgICAgaHcvczM5MHg6IERlcHJlY2F0
+ZSB0aGUgSE1QICdkdW1wX3NrZXlzJyBjb21tYW5kDQo+Pj4gICAgIGh3L3MzOTB4OiBEZXBy
+ZWNhdGUgdGhlIFFNUCBAZHVtcC1za2V5cyBjb21tYW5kDQo+Pg0KPj4gV2h5IGRvIHdlIGhh
+dmUgdG8gcmVuYW1lIHRoZSBjb21tYW5kPyBKdXN0IGZvciB0aGUgc2FrZSBvZiBpdD8gSSB0
+aGluaw0KPj4gcmVuYW1pbmcgSE1QIGNvbW1hbmRzIGlzIG1heWJlIG9rLCBidXQgYnJlYWtp
+bmcgdGhlIEFQSSBpbiBRTVAgaXMgc29tZXRoaW5nDQo+PiB5b3Ugc2hvdWxkIGNvbnNpZGVy
+IHR3aWNlLg0KPiANCj4gVGhhdCB3YXMgZ29pbmcgdG8gYmUgbXkgcXVlc3Rpb24gdG9vLiBT
+ZWVtcyBsaWtlIGl0cyBwb3NzaWJsZSB0byBzaW1wbHkNCj4gc3R1YiBvdXQgdGhlIGV4aXN0
+aW5nIGNvbW1hbmQgZm9yIG90aGVyIHRhcmdldHMuDQo+IA0KPiBUaGUgcmVuYW1pbmcgaXMg
+anVzdCB3aW5kb3cgZHJlc3NpbmcuDQo+IA0KDQpXb3JraW5nIG9uIHNpbmdsZS1iaW5hcnkg
+dG9waWMgbWVhbnMgc3BlY2lmaWNpdGllcyBmcm9tIGV2ZXJ5IHFlbXUgDQpiaW5hcnkvYXJj
+aGl0ZWN0dXJlIGhhcyB0byBiZSBtZXJnZWQgdG9nZXRoZXIuIERlc3BpdGUgYXBwZWFyaW5n
+IGhhcyBhIA0KYmFkIHRoaW5nIG5vdywgaXQncyBkZWZpbml0ZWx5IGEgc3RlcCBmb3J3YXJk
+IGZvciBRRU1VLCBhbmQgd2lsbCBhbGxvdyANCnRvIGVuYWJsZSBuZXcgdXNhZ2VzLg0KDQpU
+aGUgaGFyZCB3YXkgaXMgdG8gdHJpZ2dlciBhIGRlZXAgcmVmYWN0b3JpbmcsIGludm9sdmlu
+ZyBsZW5ndGh5IA0KY29udmVyc2F0aW9ucyB3aGVyZSBjb21wcm9taXNlcyBoYXZlIHRvIGJl
+IGZvdW5kICgibGV0J3MgaW1wbGVtZW50IHRoaXMgDQpmb3IgYWxsIGFyY2giKS4gVGhlIHBy
+YWdtYXRpYyB3YXkgaXMgdG8gZWxpbWluYXRlIG9idmlvdXMgc3R1ZmYuDQoNClRoaXMgY29t
+bWFuZCBpcyBzcGVjaWZpYyB0byBhbiBhcmNoLCBzbyByZW5hbWluZyBpcyBhIGdvb2QgYW5k
+IG9idmlvdXMgDQpzdHJhdGVneS4gRm9yIHRoZSBiYWNrd2FyZCBjb21wYXRpYmxlIGFueGlv
+dXMgZGV2ZWxvcGVyLCBhbm90aGVyIA0Kc3RyYXRlZ3kgd291bGQgYmUgdG8gc2ltcGx5IGRl
+Y2xhcmUgdGhpcyBjb21tYW5kIGlmIHRoZSBydW5uaW5nIHRhcmdldCANCmlzIHMzOTB4LiBC
+dXQgdGhlbiwgeW91IGNyZWF0ZSBhIHByZWNlZGVudCB0byBkbyBzb21ldGhpbmcgdGhhdCBz
+aG91bGQgDQpub3QgaGF2ZSBleGlzdGVkIGluIHRoZSBmaXJzdCBwbGFjZS4NCg0KKzEgZm9y
+IHRoZSByZW5hbWluZywgYW5kIGhvcGUgdGhhdCB1c2VycyBvZiB0aGlzIGNvbW1hbmQgYXJl
+IGFibGUgdG8gDQpjaGFuZ2UgYSBsaW5lIGluIHRoZWlyIHNjcmlwdCB0byBhZGFwdCB0byB0
+aGUgbmV3IGNvbW1hbmQuDQoNCj4+DQo+PiBBbmQgZXZlbiBpZiB3ZSBkZWNpZGUgdG8gcmVu
+YW1lIC4uLiBtYXliZSB3ZSBzaG91bGQgZGlzY3VzcyB3aGV0aGVyIGl0IG1ha2VzDQo+PiBz
+ZW5zZSB0byBjb21lIHVwIHdpdGggYSBnZW5lcmljIGNvbW1hbmQgaW5zdGVhZDogQXMgZmFy
+IGFzIEkga25vdywgQVJNIGFsc28NCj4+IGhhcyBzb21ldGhpbmcgc2ltaWxhciwgY2FsbGVk
+IE1URS4gTWF5YmUgd2UgYWxzbyB3YW50IHRvIGR1bXAgTVRFIGtleXMgb25lDQo+PiBkYXk/
+IFNvIHRoZSBuZXcgY29tbWFuZCBzaG91bGQgbWF5YmUgYmUgY2FsbGVkICJkdW1wLW1lbW9y
+eS1rZXlzIiBpbnN0ZWFkPw0KPj4gT3Igc2hvdWxkIGl0IG1heWJlIHJhdGhlciBiZSBhbiBv
+cHRpb24gdG8gdGhlIGV4aXN0aW5nICJkdW1wLWd1ZXN0LW1lbW9yeSINCj4+IGNvbW1hbmQg
+aW5zdGVhZD8NCj4gDQo+IFdpdGggcmVnYXJkcywNCj4gRGFuaWVsDQoNCg==
 
