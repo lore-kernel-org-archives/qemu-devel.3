@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC225C28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 19:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45520C28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 20:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trMWs-0003xM-I8; Sun, 09 Mar 2025 15:41:42 -0400
+	id 1trNPa-0007HB-FO; Sun, 09 Mar 2025 16:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trMWr-0003wk-8W
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:41:41 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trNPY-0007Gt-WD
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 16:38:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trMWp-0007Fk-N3
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 15:41:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trNPX-0003na-6W
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 16:38:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741549297;
+ s=mimecast20190719; t=1741552687;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=M9Viint+1u07GvfKUjLKvIEhfKpN9VKKo4uY2ue+Uro=;
- b=JvJ1VjNHQpyOJXnz9pdpcZfBYbngLCBj5eG3WmAzoyR8L30DPs+/NSLzpPE+cH2TMu8P2d
- CFItndMLKlm7kPz9glN2WOUdPwZf5mI6CuLUa3eH3cR1gA42AkzchA96hRh2l1RreIwecB
- DEBdDSf3GP5HbdP7djsRZWx72sySM2o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=0WwMSiWFFjYEN6smR/7EdmfzCMUMcIM7ih3FNl9P/2Y=;
+ b=grCIjUh0aQXgDoifHhkaNVKghWgEBC0M6nXIgDORdDS1zZYcyX9GNyLzP+avAGUEcaKNRh
+ OTlBv8j+GaRPHqtoYDuaR4o5wBjqDOYXoUQT1hKsuTxU/ba4euWlYMUqEGqwCen8j5+vPC
+ Hs7DsG6JKVr49AMK2drfRNPFwPJfim0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-231-ZpkZxwypNiOqRt_3spR06A-1; Sun,
- 09 Mar 2025 15:41:32 -0400
-X-MC-Unique: ZpkZxwypNiOqRt_3spR06A-1
-X-Mimecast-MFC-AGG-ID: ZpkZxwypNiOqRt_3spR06A_1741549291
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-AIPz0F0zPwif_yg3h_L3Rg-1; Sun,
+ 09 Mar 2025 16:38:02 -0400
+X-MC-Unique: AIPz0F0zPwif_yg3h_L3Rg-1
+X-Mimecast-MFC-AGG-ID: AIPz0F0zPwif_yg3h_L3Rg_1741552681
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 644AA19560B7; Sun,  9 Mar 2025 19:41:31 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 37C6E19560BC; Sun,  9 Mar 2025 20:38:00 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D142C1800945; Sun,  9 Mar 2025 19:41:30 +0000 (UTC)
+ id ABBEF1800946; Sun,  9 Mar 2025 20:37:59 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 678C521E66C1; Sun, 09 Mar 2025 20:41:28 +0100 (CET)
+ id 277DE21E675F; Sun, 09 Mar 2025 21:37:57 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
@@ -54,13 +54,13 @@ Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
  <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Thomas Huth
  <thuth@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 02/62] qapi: shush pylint up
-In-Reply-To: <20250309083550.5155-3-jsnow@redhat.com> (John Snow's message of
- "Sun, 9 Mar 2025 04:34:49 -0400")
+Subject: Re: [PATCH v2 15/62] docs/qapi-domain: add "Arguments:" field lists
+In-Reply-To: <20250309083550.5155-16-jsnow@redhat.com> (John Snow's message of
+ "Sun, 9 Mar 2025 04:35:02 -0400")
 References: <20250309083550.5155-1-jsnow@redhat.com>
- <20250309083550.5155-3-jsnow@redhat.com>
-Date: Sun, 09 Mar 2025 20:41:28 +0100
-Message-ID: <87msdu0z6f.fsf@pond.sub.org>
+ <20250309083550.5155-16-jsnow@redhat.com>
+Date: Sun, 09 Mar 2025 21:37:57 +0100
+Message-ID: <87ikoi0wka.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -92,81 +92,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> Shhhhh!
+> This adds special rendering for Sphinx's typed field lists.
 >
-> This patch is RFC quality, I wasn't in the mood to actually solve
-> problems so much as I was in the mood to continue working on the Sphinx
-> rework.
+> This patch does not add any QAPI-aware markup, rendering, or
+> cross-referencing for the type names, yet. That feature requires a
+> subclass to TypedField which will happen in its own commit quite a bit
+> later in this series; after all the basic fields and objects have been
+> established first.
+>
+> The syntax for this field is:
+>
+> :arg type name: description
+>    description cont'd
+>
+> You can omit the type or the description, but you cannot omit the name
+> -- if you do so, it degenerates into a "normal field list" entry, and
+> probably isn't what you want.
 
-Does this patch leave anything in need of cleanup?  If yes, mark the
-spots with TODO comments, please.  If no, drop the sentence above?
+Suggest "You can omit the type or the description.  You should not omit
+the name ..."
 
->         Plus, I don't think the code I am patching has hit origin/master
-> yet ...
-
-This is no longer correct.
-
+>
 > Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  scripts/qapi/backend.py | 2 ++
->  scripts/qapi/main.py    | 8 +++-----
->  2 files changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
-> index 14e60aa67af..49ae6ecdd33 100644
-> --- a/scripts/qapi/backend.py
-> +++ b/scripts/qapi/backend.py
-> @@ -13,6 +13,7 @@
->  
->  
->  class QAPIBackend(ABC):
-> +    # pylint: disable=too-few-public-methods
->  
->      @abstractmethod
->      def generate(self,
-> @@ -36,6 +37,7 @@ def generate(self,
->  
->  
->  class QAPICBackend(QAPIBackend):
-> +    # pylint: disable=too-few-public-methods
->  
->      def generate(self,
->                   schema: QAPISchema,
-> diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
-> index 5b4679abcf1..01155373bd0 100644
-> --- a/scripts/qapi/main.py
-> +++ b/scripts/qapi/main.py
-> @@ -38,8 +38,7 @@ def create_backend(path: str) -> QAPIBackend:
->      try:
->          mod = import_module(module_path)
->      except Exception as ex:
-> -        print(f"unable to import '{module_path}': {ex}", file=sys.stderr)
-> -        sys.exit(1)
-> +        raise QAPIError(f"unable to import '{module_path}': {ex}") from ex
->  
->      try:
->          klass = getattr(mod, class_name)
-> @@ -51,9 +50,8 @@ def create_backend(path: str) -> QAPIBackend:
->      try:
->          backend = klass()
->      except Exception as ex:
-> -        print(f"backend '{path}' cannot be instantiated: {ex}",
-> -              file=sys.stderr)
-> -        sys.exit(1)
-> +        raise QAPIError(
-> +            f"backend '{path}' cannot be instantiated: {ex}") from ex
->  
->      if not isinstance(backend, QAPIBackend):
->          print(f"backend '{path}' must be an instance of QAPIBackend",
-
-Missed in my review of the patch that added this code: the caller
-catches QAPIError, and returns non-zero exit code on catch.  The
-caller's caller passes the exit code to sys.exit().  Leaving the
-sys.exit() to the callers is cleaner.
-
-However, you convert only two out of five error paths from sys.exit() to
-raise.  All or nothing, please.
-
-Maybe split the patch into a "# pylint:" and a "raise QAPIError" part?
 
 
