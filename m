@@ -4,92 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CCBEC28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 23:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21991C28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 23:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trPom-0001fB-R1; Sun, 09 Mar 2025 19:12:24 -0400
+	id 1trPxR-0005mj-0z; Sun, 09 Mar 2025 19:21:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trPok-0001eu-Cf
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 19:12:22 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1trPxI-0005m9-Nq
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 19:21:12 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trPoi-0005KB-Gc
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 19:12:22 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2ff694d2d4dso4887329a91.0
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 16:12:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1trPxD-0007WP-7j
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 19:21:12 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2f44353649aso5449801a91.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 16:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741561937; x=1742166737; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PXRbHu8x90hukYnGU9wlOylN3H1Xir5LCrXpfAMg7Xw=;
- b=q3mZDYi/QuRN30i3gEEO7fKhKF6YSxW4Nv32g4K1xe3Z7ipYHJ/4v7t66KtTsmN9xb
- uyahM70IDc1I7g17PJI0TW+tqqKydzdKtnuxW3skeFjL8GKqdIMa08laeiqymvIXnI7g
- qEJArYiWphzv2TUB7HMYVOu5cpcZ5vhUu6mWDyB1JEKwoTFWD3WUQCt4IanWh6Gy11um
- TQHLK0RSmIwhWUe0EHkmmu1ZRsIMg7uiY7ABw4ieSuHZsoW8WUwIzPJ/ycXpaiCBTgXT
- yWQYOB3RQhtpl0CGQbBkhoikKvX4i8f8tlpv7t8rD0/yQRHGakRMASjLgTawfcI/Htay
- YWFg==
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1741562462; x=1742167262;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=dkybY9rPwcuwaJyhRKGheT34o+oeghuxuPPeSQErNL8=;
+ b=Bm3JsjJs62u196yKxntuDzQrCGpQL8c/EdLpVucthWFjVjMOZt/LTuaR9kHLcRTsmF
+ sL0/JRuV2Ly3TBF/x7IvWaEBx63p4/tmqlf8CWNRo0m7vjwTJqbnIwATKY4dYcGyD+EP
+ qbNoS1pX6l1KgRSTPbpFkGyEp49cqCooDW73LElAZW0cdoHRUOcIMH2gqUvjW9A5iRH+
+ Uv4RREY2TmvYeB2JXS6+0hKGlL6E6EbPjJCcRDvixHULHPejZqQ4CATb5QTKj+wQpwPr
+ UsmeLQwpsH4AXaGI/gcrESxMVHkIEjYOKhhufuMUvjyujW+uvYqNmBMUFvM+ya22IW+a
+ JRXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741561937; x=1742166737;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PXRbHu8x90hukYnGU9wlOylN3H1Xir5LCrXpfAMg7Xw=;
- b=hmaS9oBnBJloV3WjC8rRBUdweudZX67B+PYddCrCROY3QuG7j5mXZZ5vmnOVnM62P6
- j/HxEXqytNWsbT30ne1LNvX1+kTqecF7hhuMhcaEXGuPz8SJM6VtPhTbWRFizzIx1UAI
- T9yC2zjjJ5YoeuZlDZzm/8T0DTMRaeZiFkSBEG/TBs8Q2Ofn6so4MdbYiNjNKc9avhDo
- c3ZBJOG77+Wvx/NEwyo9egBs8Ozve1fgYnNVDIETdO66Omwi4FZAXFSDuBdbdDHuJYef
- SudN6BkBOHTg8pUnIDKXsO0Y3w3KiLHk/IwgSLI5BGv8itWr2IbaZIpf+h9o5AQUYHOl
- TBPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWND6YtqDUzsysklSPtfiz0FM7KFDBfkdsGv1V67lyEaAnCPmjXcggjLXe0CVEdshiW0BcQxAzfBXJm@nongnu.org
-X-Gm-Message-State: AOJu0YxahjCHPCjENnOCy0ctmq2WH6Muhczkj2gCna3ZP0IxQxJkAcC4
- O2iISAvrs61+Pzv3c50o+sv/DwpjEBPlrHYRzZ/6wrq5u4+MVS0DunhpP2rro18=
-X-Gm-Gg: ASbGncurzJySmjcrsefoLWzRb4S8vypT+bVvj928ReR8lEtPFSwxpLhekZ4XhgBiiOF
- p5xk8rB/1jXzFq+wENPPCc/WylLNd4AVNCjVoDQF9jrj6ty7dFZQNQP5OEQsUPeGZxYNkxbu8IR
- oPmS+sS9VWfEoQBvNXNo1pg1N0GiQ73bs+jTrSG2iSPfXSGenW7D+g+VKlbgQdfK+YgsbR69qDb
- 5bgugxTaJHqSiUxwsKoQ7p/t6VsZgfmn12BzT5VinNw9Ow3f6YA1bmQG8BgNXAIgYUcLI6/Op0M
- JTY6BhEwgcKlTuTCiSGinWSBjcTcAPvxKnOtioC9qiERleSnYLH+WBsnFgY36vXPpE0gRF/NklU
- 6JluBv3Dn
-X-Google-Smtp-Source: AGHT+IFgK4ql2d39FjgruYYnfjUX2ZW5E2pzZhfQqufbW6AVOyWlIyfZOcm78p7Ei9SmJL5GVsYF8A==
-X-Received: by 2002:a17:90b:380e:b0:2ff:682b:b759 with SMTP id
- 98e67ed59e1d1-2ff7ce5805bmr19027860a91.7.1741561937490; 
- Sun, 09 Mar 2025 16:12:17 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693f991fsm7435793a91.48.2025.03.09.16.12.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 16:12:17 -0700 (PDT)
-Message-ID: <172cb398-4859-4ed4-9e1b-9f05a88de6f4@linaro.org>
-Date: Sun, 9 Mar 2025 16:12:15 -0700
+ d=1e100.net; s=20230601; t=1741562462; x=1742167262;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dkybY9rPwcuwaJyhRKGheT34o+oeghuxuPPeSQErNL8=;
+ b=cXghDoo8oIzbzxbDW4Gnomtkg8IdqHts1GgQkngMvfYZcaswpLFkWCp1pLoXD8TvgM
+ BgjKF741PajQ4K7kxFnOyNr4HxCZU+qTP8qSadBm3BSUMDvFNA4PNYHHOMRiXJTBykkz
+ 7DzW4rVPiTx015knUaqYlZHOKJqqCEYT4K8g+QMtb/oiwhm/eyvNEXxVR/2gwLJ9tCw0
+ CIRFRR+/hivaFJzQ6DoG4n4WbdVIDYJecZ/BIAyjFwPmwv/Tqg+7xN+wCMNLQ5XFMj26
+ Z0xmXpygbOg6Fuiu75TL0cBVbE2l4ITH1kPoRxqQDr5BVkOuCd0w8EZDgXVUTtFYgilF
+ VYDg==
+X-Gm-Message-State: AOJu0YztasTMIp/FI2tUNuMTMzftNyPwOG5uho2r0qXzXQxXjci5edp7
+ cciZIOTgopxonXPPiFvrwRcI0qYsKxsr9vmb6vJerPjjdcXs6Q5p6Pr86aHwJJmV/gX5NgeV82l
+ Sp4GhhB51k2kul9WAvYkJ7mp7aeU3tw4wObgQovjtueXhj/sOpqE=
+X-Gm-Gg: ASbGnctMXnS3NZvMaTYy/iYdWnNGfolGjm/6lKWfFeVEt7IlXkeQedB25eswP1duZks
+ NVxrr1AhErK180IbFlALlk3zL3xTPPr4eulG4u5sZCLmt6IrgXvr06lcHyHTTkgkdbVNrdQSwT+
+ bRscnw72wxas6OmNmo4hyoZbMVBw==
+X-Google-Smtp-Source: AGHT+IEgdqXGvecDd32bsjMC2NLXoZCCiz/3Tk6x4+0ZjGZXm00XbKebTFNff7D5VYwhYpi0vMK/xQ65Eu2yUxCWfFk=
+X-Received: by 2002:a17:90b:3ec2:b0:2fa:228d:5af2 with SMTP id
+ 98e67ed59e1d1-2ff7ce9b7d0mr19109221a91.15.1741562462607; Sun, 09 Mar 2025
+ 16:21:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system: initialize target_page_bits as soon as possible
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>
-References: <20250309193712.1405766-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250309193712.1405766-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250307130951.4816-1-philmd@linaro.org>
+ <20250307130951.4816-3-philmd@linaro.org>
+In-Reply-To: <20250307130951.4816-3-philmd@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Sun, 9 Mar 2025 17:20:51 -0600
+X-Gm-Features: AQ5f1Jo6bUjUELjdFVxptOGt1krIMHXeRYiGwRgTzPHrVTJwZAKMfZqYvDCJeQU
+Message-ID: <CANCZdfpOnuvfW1V88kUC0Tqi8cQe-G7e_CD942jAd5yhsdh-VQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] bsd-user: Propagate alignment argument to
+ mmap_find_vma()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
+ Riku Voipio <riku.voipio@iki.fi>, Kyle Evans <kevans@freebsd.org>
+Content-Type: multipart/alternative; boundary="000000000000f037d7062ff11b90"
+Received-SPF: none client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,45 +92,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/25 12:37, Pierrick Bouvier wrote:
-> Allow device init functions to use it, which can be convenient in some
-> cases (like hw/hyperv/hyperv.c).
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+--000000000000f037d7062ff11b90
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Mar 7, 2025 at 6:10=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org>
+wrote:
+
+> Propagate the alignment to mmap_find_vma(), effectively
+> embedding mmap_find_vma_aligned() within mmap_find_vma().
+>
+> Since we ignore the alignment in do_bsd_shmat(), leave a
+> FIXME comment.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->   system/physmem.c | 1 -
->   system/vl.c      | 3 +++
->   2 files changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 8df9f30a0bb..c5fb784a9e1 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3281,7 +3281,6 @@ void cpu_exec_init_all(void)
->        * do this much later, rather than requiring board models to state
->        * up front what their requirements are.
->        */
-> -    finalize_target_page_bits();
->       io_mem_init();
->       memory_map_init();
->   }
-> diff --git a/system/vl.c b/system/vl.c
-> index ec93988a03a..c64f8c8e808 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2848,6 +2848,9 @@ void qemu_init(int argc, char **argv)
->       bool userconfig = true;
->       FILE *vmstate_dump_file = NULL;
->   
-> +    /* Set target page info before creating machine and associated devices */
-> +    finalize_target_page_bits();
+>  bsd-user/bsd-mem.h |  2 +-
+>  bsd-user/qemu.h    |  2 +-
+>  bsd-user/mmap.c    | 10 ++--------
+>  3 files changed, 4 insertions(+), 10 deletions(-)
+>
 
-This is far too early, and therefore incorrect.
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 
-You have to wait until after all possible calls to set_preferred_target_page_bits(). The 
-only relevant call is in arm_cpu_realizefn, invoked from the MachineClass.init, invoked 
-from machine_run_board_init().
+--000000000000f037d7062ff11b90
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 7, =
+2025 at 6:10=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:p=
+hilmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote cla=
+ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
+rgb(204,204,204);padding-left:1ex">Propagate the alignment to mmap_find_vma=
+(), effectively<br>
+embedding mmap_find_vma_aligned() within mmap_find_vma().<br>
+<br>
+Since we ignore the alignment in do_bsd_shmat(), leave a<br>
+FIXME comment.<br>
+<br>
+Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
+aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0bsd-user/bsd-mem.h |=C2=A0 2 +-<br>
+=C2=A0bsd-user/qemu.h=C2=A0 =C2=A0 |=C2=A0 2 +-<br>
+=C2=A0bsd-user/mmap.c=C2=A0 =C2=A0 | 10 ++--------<br>
+=C2=A03 files changed, 4 insertions(+), 10 deletions(-)<br></blockquote><di=
+v><br></div><div>Reviewed-by: Warner=C2=A0Losh &lt;<a href=3D"mailto:imp@bs=
+dimp.com">imp@bsdimp.com</a>&gt;</div></div></div>
 
-r~
+--000000000000f037d7062ff11b90--
 
