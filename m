@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68EEC28B28
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 22:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A771DC28B28
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 22:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trPDP-0000lx-Hs; Sun, 09 Mar 2025 18:33:47 -0400
+	id 1trPHj-0004pA-9k; Sun, 09 Mar 2025 18:38:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1trPDO-0000la-W5; Sun, 09 Mar 2025 18:33:47 -0400
-Received: from mail-ua1-x92f.google.com ([2607:f8b0:4864:20::92f])
+ id 1trPHf-0004os-Sf; Sun, 09 Mar 2025 18:38:13 -0400
+Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1trPDN-0007ST-Fg; Sun, 09 Mar 2025 18:33:46 -0400
-Received: by mail-ua1-x92f.google.com with SMTP id
- a1e0cc1a2514c-86d30c329f2so3671418241.0; 
- Sun, 09 Mar 2025 15:33:44 -0700 (PDT)
+ id 1trPHe-0007yY-5d; Sun, 09 Mar 2025 18:38:11 -0400
+Received: by mail-ua1-x92d.google.com with SMTP id
+ a1e0cc1a2514c-86911fd168dso1323627241.1; 
+ Sun, 09 Mar 2025 15:38:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741559624; x=1742164424; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741559888; x=1742164688; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QZt39XP6czpEK3Q/IABd/Gd5rSB6/M1eKNQS1jsJZrQ=;
- b=EBq94RezrJsqfYoziEcWaB1llrjfyAZyipFiqRnsmgFrlS+ZHysd2JjqMox1Dl1zLR
- /EheZsYbdoQeGXxlZiO3KDuflVc7VQfjMekgpp8FhsIsCwXT7R24KL7grbBe22QUlAET
- GzsuJoMcCbdc6l1TA+zZFt4yUabT8R6a9QBaMTRW7FiZ4bu6m4qhBTXYg6dnA5fCH0R+
- /SKAPhgLRgPvljFJlZyxXjCckqCDoJfzBC54xaoYM3ij7126TfWWVrULw+2PqX+U2793
- yWca2N8ZPIS3bM65YRM5pzk1bHxvFTaD5tqM0Wl5rjlw+2km9SfgpH3KmxvVLoX/kyO+
- RLuw==
+ bh=qLrfYDNSbARUiWYEnQ3bHAIPyDx6gJAPhXca1L9mGy0=;
+ b=IEbZhKEXyU5SyNLHPJYS9b2cPGnBG2Pymson87x1zVkkF9vZRqMDiiXnXOQlebZ3Qo
+ nCDnuxpHTd35WyaCAg3jWiL0Hs8huj5Xa7hZP5YWK6PoyjrTBNxPBwjVckXgKbj9gDnT
+ /ZjN988mJPl/1FGQQzY8VjhGJz1GfEYBed6fTf0zdai/zwpcsoF9riGuGxwrxsechxcj
+ Njtgtm4+/rIDfM7MNvqJEgJTSMiOfTm9DEfm4KGCbDfr2YEkVZpXqru3SH7BPWqldqyE
+ VFoouaaKKg6THJW13Bv5+ufJ1BYflBojjbK0YLS3MF3ICnZ5F4O9X7Go5QY1Oj0dKMiE
+ jBvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741559624; x=1742164424;
+ d=1e100.net; s=20230601; t=1741559888; x=1742164688;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QZt39XP6czpEK3Q/IABd/Gd5rSB6/M1eKNQS1jsJZrQ=;
- b=d2R6hIvszIr0kj7Hqn15wLKs67xYGBkVCeGBnOCstOXpqYJAdNm7j8VU6IX7KYRCaH
- DTnhOA6gFxksA1NSf2+FIg03o8FpHil16LVkdrC+PSCZOCgRgt25cT98olzQBk4/EdZR
- ICm4XrZHyBBucyT918+8WOPsuuBCzTn/6m/bf1FMh61vig/HhsozBZ7xkxBBWqz6MK5a
- u9an/WxHpUm0RxK0g4U20k+GPS8Kk/BCQGAvleA5syZveq+Gh+X7SCSESbn/7IxjKPMz
- kcTFUBNQPd6U7CCOdvO79Aht2qn5na/wgiqGJUgeqfhT+HG/d2vgs29ufHqTEn7yUq6d
- LUAQ==
+ bh=qLrfYDNSbARUiWYEnQ3bHAIPyDx6gJAPhXca1L9mGy0=;
+ b=Y5zvwraY20+h4G0Nl0oasFEk4sjNtE69LceOSuYb8A4Smv4btlW+TSHuHwLwjO5QX4
+ Eceeck9OEjTjXdx3JnvuWPwcL6j52RFLgcZrWRSIIs6zkP+Z9P5Yt8yIF7bttHmfNaY1
+ 2qS/vLl0v3YnIXj+aVGpA+nh1o5yUmApjd/jISOkcNAfaewQyDqTrzw3x0TcGB22VJ/9
+ gxVdgeDIFtyEi4CXPgRH6zEDvSNvPJUcVGEOVbSlAETvUZb5iUn3irDUqIy2EKc807ME
+ ZoecJzTLUGGHR8HbD0+GA6326AqTC5cxk6iT2yNI9pm41MSoXwZKshhXTdE8WHeCM7GW
+ s88w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVkjErPdLkevhk7z9veEOSOxIZ67Ebds9haMs8U9Xm/nYmmyEQTj3Npn1rd43FdpqcdiRaxMeVUF2Rz@nongnu.org
-X-Gm-Message-State: AOJu0Yz/aIOTpw5fYGRAlDp7U3iiyEEnI96LL6fGwkOaDDQ3aNpnhor2
- Gupe3xsnUPfv4L8r667Uvi5/KsntF4Lkzs0fGNTdaYqEZ9K6xtOfDUPoIOXrsc4o5eFJzq9NXRt
- thUiqvP+ACJ5axhR/7C8xzprPeJ4=
-X-Gm-Gg: ASbGncubdoi8IAqPrYKgljtOD0ruFsnd4+b6gy84WroUd8FqCnjBUoqMHfaVz95Ws3k
- ZjwRi04ARbDyPKLH20UW5gZW6RvZYmG4CvpYVcdlhxJB/KGWIbC1vQXmNkVyRCB2UAMhijU/8nR
- pXK504j17L+KEmj1gtK3cgtg/pMfJZWH2h3wiygLLiJyl+PKFmkRcOKy+i7F4kY03JhQ==
-X-Google-Smtp-Source: AGHT+IGNyxDnLTki6bU1Uygr/sFuMCHeHh511Av7faNbbDVgrwU7eW9ohBLplB4pEeaOFOIz3iAH0e5Etskw4EjezxI=
-X-Received: by 2002:a05:6102:1626:b0:4c2:fd52:c2c4 with SMTP id
- ada2fe7eead31-4c31b758b61mr3821909137.12.1741559623704; Sun, 09 Mar 2025
- 15:33:43 -0700 (PDT)
+ AJvYcCVx6d6ETdyggA+dv8/W/S6B2jUEdCP5iPKxaiDDR+mJPlx1clTcXcGOkcnooHyehlg058eqGS2UWLES@nongnu.org
+X-Gm-Message-State: AOJu0Yxm0ZXXRUCrgwvkpUcP4Cvs+dJEvOR2K2NxAcBH7mM8YaWaMhQC
+ UJLVSkw7CyAjDCNanmwPSHM0xTvjMGTijL2RnqMBdBzy1gAfWWv2i+dpKiaEn+W+0gn75vbPjfa
+ slNRSVhkUCspcs7ywg5qgozp9mIY=
+X-Gm-Gg: ASbGncsV+v5C0w36dTHYKT7X73AXN1j+bAc6sC0+aOkWi+gPrpOGUZKxhjJzmuNSGNU
+ bnD8KOw1DzwZ70ZlRkg11UttsWrAZgfcUzazfmI5UZUG8HGSfR1joUjLEZ+gYrzaWtFg2MCoeHW
+ VlMc+IsnrSSNWTuFA8KNQdK7oSPB0tnNiloL5DnRqtWKRLYvpxYknSlO8=
+X-Google-Smtp-Source: AGHT+IEaEVNn79NWhewx7J3mmd5xZFGfu76vuwPyrgmxkd40Um4Ffius0Ck9vkZRaGgxAe0uTLoWAr3Ty0Ji861vLUI=
+X-Received: by 2002:a05:6102:2b97:b0:4c3:9b0:9e6b with SMTP id
+ ada2fe7eead31-4c30a5aa37amr7786107137.10.1741559887725; Sun, 09 Mar 2025
+ 15:38:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250301173751.9446-1-jason.chien@sifive.com>
-In-Reply-To: <20250301173751.9446-1-jason.chien@sifive.com>
+References: <20250307124602.1905754-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20250307124602.1905754-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 10 Mar 2025 08:33:17 +1000
-X-Gm-Features: AQ5f1JpCfoIHen0vuGccLJoTlyLxfAA0BWCT42aGOLicsoA6N_oHvPULsivgKJA
-Message-ID: <CAKmqyKOQAhj14C8QBoMiVPUiJGr33xqN+QfmeT5z6eZQvAW+Gw@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/riscv/riscv-iommu: Fix process directory table walk
-To: Jason Chien <jason.chien@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Mon, 10 Mar 2025 08:37:41 +1000
+X-Gm-Features: AQ5f1JrOqFCVrghNUeIYtHaSVjBf93rWH53Clukl3U3gcl7KcVYPXXFHEwwbQVw
+Message-ID: <CAKmqyKPzHB9OypwxNjXKwETVnq+-8NPoFk2JWweu1UmMhYKOag@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv/csr.c: fix OVERFLOW_BEFORE_WIDEN in
+ rmw_sctrdepth()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
+ peter.maydell@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92f;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,73 +97,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 2, 2025 at 3:39=E2=80=AFAM Jason Chien <jason.chien@sifive.com>=
- wrote:
+On Fri, Mar 7, 2025 at 10:47=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> The PPN field in a non-leaf PDT entry is positioned differently from that
-> in a leaf PDT entry. The original implementation incorrectly used the lea=
-f
-> entry's PPN mask to extract the PPN from a non-leaf entry, leading to an
-> erroneous page table walk.
+> Coverity found the following issue:
 >
-> This commit introduces new macros to properly define the fields for
-> non-leaf PDT entries and corrects the page table walk.
+>   >>>     CID 1593156:  Integer handling issues  (OVERFLOW_BEFORE_WIDEN)
+>   >>>     Potentially overflowing expression "0x10 << depth" with type
+>   "int" (32 bits, signed) is evaluated using 32-bit arithmetic, and then
+>   used in a context that expects an expression of type "uint64_t" (64
+>   bits, unsigned).
+>   4299             depth =3D 16 << depth;
 >
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
+> Fix it by forcing the expression to be 64 bits wide by using '16ULL'.
+>
+> Resolves: Coverity CID 1593156
+> Fixes: c48bd18eae ("target/riscv: Add support for Control Transfer Record=
+s extension CSRs.")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  hw/riscv/riscv-iommu-bits.h | 6 +++++-
->  hw/riscv/riscv-iommu.c      | 4 ++--
->  2 files changed, 7 insertions(+), 3 deletions(-)
+>  target/riscv/csr.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-> index b7cb1bc736..1017d73fc6 100644
-> --- a/hw/riscv/riscv-iommu-bits.h
-> +++ b/hw/riscv/riscv-iommu-bits.h
-> @@ -415,12 +415,16 @@ enum riscv_iommu_fq_causes {
->  #define RISCV_IOMMU_DC_MSIPTP_MODE_OFF  0
->  #define RISCV_IOMMU_DC_MSIPTP_MODE_FLAT 1
->
-> +/* 2.2 Process Directory Table */
-> +#define RISCV_IOMMU_PDTE_VALID          BIT_ULL(0)
-> +#define RISCV_IOMMU_PDTE_PPN            RISCV_IOMMU_PPN_FIELD
-> +
->  /* Translation attributes fields */
->  #define RISCV_IOMMU_PC_TA_V             BIT_ULL(0)
->  #define RISCV_IOMMU_PC_TA_RESERVED      GENMASK_ULL(63, 32)
->
->  /* First stage context fields */
-> -#define RISCV_IOMMU_PC_FSC_PPN          GENMASK_ULL(43, 0)
-> +#define RISCV_IOMMU_PC_FSC_PPN          RISCV_IOMMU_ATP_PPN_FIELD
->  #define RISCV_IOMMU_PC_FSC_RESERVED     GENMASK_ULL(59, 44)
->
->  enum riscv_iommu_fq_ttypes {
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index d46beb2d64..76e0fcd873 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -1042,10 +1042,10 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState =
-*s, RISCVIOMMUContext *ctx)
->              return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 0ebcca4597..e832ff3ca9 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -4296,7 +4296,7 @@ static RISCVException rmw_sctrdepth(CPURISCVState *=
+env, int csrno,
 >          }
->          le64_to_cpus(&de);
-> -        if (!(de & RISCV_IOMMU_PC_TA_V)) {
-> +        if (!(de & RISCV_IOMMU_PDTE_VALID)) {
->              return RISCV_IOMMU_FQ_CAUSE_PDT_INVALID;
->          }
-> -        addr =3D PPN_PHYS(get_field(de, RISCV_IOMMU_PC_FSC_PPN));
-> +        addr =3D PPN_PHYS(get_field(de, RISCV_IOMMU_PDTE_PPN));
+>
+>          /* Update sctrstatus.WRPTR with a legal value */
+> -        depth =3D 16 << depth;
+> +        depth =3D 16ULL << depth;
+>          env->sctrstatus =3D
+>              env->sctrstatus & (~SCTRSTATUS_WRPTR_MASK | (depth - 1));
 >      }
->
->      riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_PD_WALK);
 > --
-> 2.43.2
+> 2.48.1
 >
 >
 
