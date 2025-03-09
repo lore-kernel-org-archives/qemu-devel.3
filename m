@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E3CBC282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 12:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B1EC282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 12:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trFQ5-00030f-OM; Sun, 09 Mar 2025 08:06:13 -0400
+	id 1trFUD-0004eG-Mq; Sun, 09 Mar 2025 08:10:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1trFPu-0002zU-IU
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 08:06:04 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trFUB-0004dg-Ag
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 08:10:27 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1trFPs-0006pY-Gp
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 08:06:02 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-abf57138cfaso635709066b.1
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 05:05:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trFU8-0007jb-UO
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 08:10:26 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-39140bd6317so463256f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 05:10:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741521958; x=1742126758; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wceicz0F40kTvySS5vdV/AXzv+d9LJILMf9IQ/VOP78=;
- b=hbTDE5X3o1QUFDIFKxRwImbGM2i3xeU44tmdY5DtgUIZrqxIcy0JzQ6m6dIKVSvz6g
- ZN6JWh/6STS2Xo9L7ZilxGiz6V6A7Gl9aKcF2isjYGOLxvFneGllK8jT8EBKLXkFkF3B
- BaWpriHY/dftsWLrrO7v6T2bbPPuc8hC2kQBhaeLFm/2Tg+U1u+kEnX4m5rmZL+8Q2jK
- jbEV9zrVkrGH23XAvJMnJZatj/OdVUW/02dinh+0827gNnWUior1jh6UducPcReirHas
- 5rLAXMHMS6EmfPPQYBg5+tXS6qP6LTr65TG4zdiGTpf75cjfVrgMSstVzlmJnJ6nvnRP
- ODQQ==
+ d=linaro.org; s=google; t=1741522222; x=1742127022; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=G4ZDkgTp0Qbvx+Fnrw0EZGMDkC0eNizdgfhsnXh0cLA=;
+ b=WappyTddOi072YamBYCCpTK4m74aw0QMIwdkOKnlXWpIWSDvWt2m6i3q97p/xUNhSf
+ vdnWEFhg4FB/7EaGmjH/N+oWqVV1W7BOAvCjtFH1Q5G0H6vKZRgyMWDT2CMOaoewcVbt
+ 6IYA3Bv3O3nLVfpUgHbYvGsdvOga6G8pce18UZBZENYwOa6i1LYhp4JD0B/Ty/6S+PAh
+ lwophBH9g+FkaFjPQn+SpWjtXNL70dXk3Avr1YxgBqTibWq+sPmgjQfUIU+fCkwIPBRq
+ XyD8V4TboVVSKx0/v9WbOIvYn4jeZkQTkU1nllbO+4z1ExisSWw03cjnq5wq4YO3LV93
+ nDtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741521958; x=1742126758;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wceicz0F40kTvySS5vdV/AXzv+d9LJILMf9IQ/VOP78=;
- b=KsvLK/OcP15cMZJo1tm0UmcI2xb57tjYXmHrdXmRYO+YQE20HdVWRQr/xXaQE0Hpp3
- QKYQ8PrBr5Xx40gEd030ROKuDZ6g49hxXgaHnEf5UDZhBazuyAp1aYAaRuyt1gaerzwW
- LNAD5u/mCrKvLttfoO8mlJSzNmjD+0tmv2AkeJWpA8BjONrjIZ39pWUErgfrWwUBQbRB
- /r9ZU+AiqMdbPo8YuptBdpPGKbFxMfNKZGZuM+47SNMTZ/eqomClhavogBBcD9hJpLQy
- TxYiUUsfmKLnV+mfIIEQDqwx5akkQQuShOUDJ6sCNK/JNhLBUJUvTFELxzMyYhRMBFoG
- 78rw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX+PZx+8UleRoff1tRefZ4IAw6QbTrbKl8LZk0kueoPBDjcY5arcrfXdxIPURZYiHDG8NJIxTqcI44b@nongnu.org
-X-Gm-Message-State: AOJu0YyTNZpwoWnFQKVAcLZfWjJJfXdi01d9F3shjBwcLmecgv+kP6L0
- Pp1EpzBxKtAsm0xYSWOXjkFNOPwwy2vgqdaq72kgQ15yx5aRrZqxdOeZ1Hd0qAQ=
-X-Gm-Gg: ASbGncuc6Co/fqYWmPEQVjqRPjnCJ84ARZ5RhdYnYWNOxsdrgPUz8E0owHolhudgTKF
- vGyqDG+b9noBmbuo9xOpOdIwZVRk8MTexw2quAAssEC0LRsgJMY4LF8RNEeWe/7+pK2bu8FAaDE
- jzmsmyshrcuTW5YrinoskHourdGSZDlVVxjZdfV/Vkq8Vt/FXaIypUgRdopad/e5rV2aiJPCcVq
- jsWRfXetJRWPaS2SWUHP+PQresvHi6bmlqjA33Z93aaSQ5fKvF1dJRVx/GpJ0TPFBow4+UYgmZX
- WQeUhtcxAOieq0FsZzmISJQnG6zrQLhA7ZjaFCsibAJwa6s=
-X-Google-Smtp-Source: AGHT+IHMQ1ZxO1JA+JUNqrvna7j7i5aO1GahWjILXSem9umA4s9sQyUQ9gxjmXNe8tyi0NZrOpKg/w==
-X-Received: by 2002:a17:906:564b:b0:ac2:6582:1564 with SMTP id
- a640c23a62f3a-ac265821f85mr755888666b.27.1741521958207; 
- Sun, 09 Mar 2025 05:05:58 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac23973810csm583735166b.118.2025.03.09.05.05.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Mar 2025 05:05:57 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E46285F9DA;
- Sun,  9 Mar 2025 12:05:56 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,
- qemu-devel@nongnu.org,  qemu-stable@nongnu.org
-Subject: Re: [PATCH v3 0/9] target/arm: Implement SEL2 physical and virtual
- timers
-In-Reply-To: <e5c5e542-f28c-4f4d-884d-ee3defd0a330@tls.msk.ru> (Michael
- Tokarev's message of "Sun, 9 Mar 2025 08:24:23 +0300")
-References: <20250204125009.2281315-1-peter.maydell@linaro.org>
- <e5c5e542-f28c-4f4d-884d-ee3defd0a330@tls.msk.ru>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Sun, 09 Mar 2025 12:05:56 +0000
-Message-ID: <87msduo1cr.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1741522222; x=1742127022;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=G4ZDkgTp0Qbvx+Fnrw0EZGMDkC0eNizdgfhsnXh0cLA=;
+ b=ZIAwimfX6rIxkvjU5T7xuP9XBJJnASO0axrAoycx1D9H5WgX6eZsTx8Byu8XqpBtdK
+ zWcZYZ8h2q/KhUJmGeMaAhPG+9b4tluC1v4yasciYkB5NDE9hDKR5zTUbJBsDfF2jV7Y
+ r+cIC3Voqh/WhIz1GSbx+7zvZGtRKlUf7Uv85Wj53G5EVry75tZ+Q+MQxkjVDyfso82W
+ KN5m4zDq1V7jPRw2+dQLxL/F7PBDBt9vpPknimDsgwHCkCxpgU7N3FCElVzcdrMBY6a9
+ e08/md367Yo/aPbVp6+radZiueDwHz56cN9L7Tvcza5Y7qHCLIb3HMnlN3sTViIuLCva
+ YMdw==
+X-Gm-Message-State: AOJu0YwqoiaK5yJPYfsG9Ky7UIZG8UZVW3kY0pepRE8pgNYkyb1dXIgS
+ 7RE+Mytm2EOS86L+Jia7hWqgZk/no7SPTsYN7g2w3MYKmh8dMWCOqnLHkXId/bBVA3QMxY7gjQ8
+ 7d0s=
+X-Gm-Gg: ASbGnculhlmNnO4aXHyLxREZLxCefKHujgjQCVEHp2U2Zr0RAcyPezvoij9CoFvSkL5
+ PW0xT41tH9ASaiIULe7kJ3ReDFsfOSvp1PUpRW48yFyBgPWwDsIz4BAqklDNsf+SMIUnFq2sqYm
+ kHrzafS8+pvCjo0EVoSbs+qF/mSn52WT/3AKgHltRKR/1e79PCkrVhvCo43rfb+s5F0KrIsoLmT
+ 8J/vWyqlix6qdocHLBKMB95HGmkidI4kxOzi8QN4Xcov866E2RLbOBN1jLrsNdOXozZkSV2uC/n
+ qsvzNg37LbudGphRB3WG9NFKYFpgd1yrcs1WLv4ldL1YG5dBiubdpTZXZX8CdmdCRSst/OSvrG4
+ RfM986qpeUGj/6otCuR2FAOQ=
+X-Google-Smtp-Source: AGHT+IHxAowrIgdTP8xxmJRJwP7S68EcVPfNAnYSDHqCdLriuxvLqYGYUZL8qdvE2IJFzoEl/s0SSA==
+X-Received: by 2002:a5d:6484:0:b0:391:2c0c:1270 with SMTP id
+ ffacd0b85a97d-39132d77726mr5744963f8f.1.1741522222519; 
+ Sun, 09 Mar 2025 05:10:22 -0700 (PDT)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912bfdfcb8sm11898828f8f.33.2025.03.09.05.10.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 09 Mar 2025 05:10:21 -0700 (PDT)
+Message-ID: <b2b475e6-e5c7-4ae7-a5ba-c605ccc6bf84@linaro.org>
+Date: Sun, 9 Mar 2025 13:10:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Consolidate core exec/vCPU handling section
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250308134938.77267-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250308134938.77267-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,58 +101,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Tokarev <mjt@tls.msk.ru> writes:
+On 8/3/25 14:49, Philippe Mathieu-Daudé wrote:
+> Some common cpu/exec files are listed under the 'TCG CPUs'
+> section. Move them to the generic 'Overall Guest CPU Cores'
+> one where they belong.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   MAINTAINERS | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 
-> 04.02.2025 15:50, Peter Maydell wrote:
->> This patchset is a respin of Alex's patches, with some extra fixes
->> for bugs I discovered along the way in our existing code (and
->> a bit of refactoring to make the fixes straightforward). It is:
->> Based-on: 20250130182309.717346-1-peter.maydell@linaro.org
->> ("target/arm: Clean up some corner cases of sysreg traps")
->> because it wants to use the renamed CP_ACCESS_* constants that
->> that patchset introduced.
->> The bugfixes are not super exciting as they mostly are oddball
->> corner cases, but I've cc'd them to stable anyway. The actual
->> implementation of the missing SEL2 timers also should go to stable.
->> Alex Benn=C3=A9e (4):
->>    target/arm: Implement SEL2 physical and virtual timers
->>    target/arm: document the architectural names of our GTIMERs
->>    hw/arm: enable secure EL2 timers for virt machine
->>    hw/arm: enable secure EL2 timers for sbsa machine
->> Peter Maydell (5):
->>    target/arm: Apply correct timer offset when calculating deadlines
->>    target/arm: Don't apply CNTVOFF_EL2 for EL2_VIRT timer
->>    target/arm: Make CNTPS_* UNDEF from Secure EL1 when Secure EL2 is
->>      enabled
->>    target/arm: Always apply CNTVOFF_EL2 for CNTV_TVAL_EL02 accesses
->>    target/arm: Refactor handling of timer offset for direct register
->>      accesses
->
-> Hi!
->
-> Which stable series this patchset is supposed to be applied to?
-> (Current active stable series are 7.2, 8.2 and 9.2)
->
-> Or put it in other words, is it supposed to go earlier than the
-> most recent stable series, 9.2?
-
-I'd just do 9.2 because I think as you've found too much has changed.
-That should become available in backports while we wait for trixie to
-stabilise this year.
-
->
-> For example, the very first patch, "Apply correct timer offset when calcu=
-lating
-> deadlines", does not apply to 8.2 because it lacks v8.2.0-2122-g2808d3b38a
-> "target/arm: Implement FEAT_ECV CNTPOFF_EL2 handling" which touches the s=
-ame
-> line in target/arm/helper.c:gt_recalc_timer().
->
-> Thanks,
->
-> /mjt
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Patch queued, thanks.
 
