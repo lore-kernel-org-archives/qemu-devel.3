@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EEAFC28B2F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F5FC28B30
 	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 13:57:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trH5P-00018U-MK; Sun, 09 Mar 2025 09:52:59 -0400
+	id 1trH4d-0007gQ-Ck; Sun, 09 Mar 2025 09:52:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH5E-0000YU-4x
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:52:48 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH4T-0007X5-AW
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:52:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH5A-0003EJ-0n
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:52:47 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trH4Q-00029J-Ds
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 09:52:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741528363;
+ s=mimecast20190719; t=1741528316;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=71gYa93+m7oj7BHFz1te5Iel24DuZsxmP79Je1U5hyk=;
- b=V4/nSQve2Bo9MBD5LMDU0VAkxStewkbw9BXtfkZMi0dZ9XnPbB3IEo/t0Yk6nUB8p3MUu4
- mVNR1WcewFJnzPrJFDdss83//dDHDhs7+Uh98E0IaJrAzwzrB6Lx5ImGT9M5f4qzZAATMt
- ANBrmmczho/KtOxBphh0oUPdlKBgilM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=AWWyO4fsVpyI7Xfs4RgjydCQpMsctwr4/XR+I7gPwUo=;
+ b=NQSF3pbvYWP9b3ecps8tJ90JF17UmgxOe0w9yDcASgCw0Lcv3/Sa0R/HKP3r5xxjP3bXx4
+ M/kjIfnYjIh/Hee0MpzfkV+EyJO9hESFIVx5hpFgr7Z40NcW1VebNPUTCyDYbC5iYDJ7S0
+ AAWtZ8IlJ2SFX1U2+Q38D6ut3hyXCPE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-463-g9B5wXuCMpCfbSQi7QrVug-1; Sun,
- 09 Mar 2025 09:52:37 -0400
-X-MC-Unique: g9B5wXuCMpCfbSQi7QrVug-1
-X-Mimecast-MFC-AGG-ID: g9B5wXuCMpCfbSQi7QrVug_1741528356
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-IBFb34nhMDiPaLhZ-VET_A-1; Sun,
+ 09 Mar 2025 09:51:55 -0400
+X-MC-Unique: IBFb34nhMDiPaLhZ-VET_A-1
+X-Mimecast-MFC-AGG-ID: IBFb34nhMDiPaLhZ-VET_A_1741528314
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7143E1800349; Sun,  9 Mar 2025 13:52:36 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2FEBE1801A00; Sun,  9 Mar 2025 13:51:54 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.17])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D42EC1956094; Sun,  9 Mar 2025 13:52:34 +0000 (UTC)
+ id 2B7BE1956095; Sun,  9 Mar 2025 13:51:51 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 25/46] hw/arm/aspeed: Rename IRQ table and machine name for
- AST2700 A0
-Date: Sun,  9 Mar 2025 14:51:09 +0100
-Message-ID: <20250309135130.545764-26-clg@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>
+Subject: [PULL 07/46] aspeed: Remove duplicate typename in AspeedSoCClass
+Date: Sun,  9 Mar 2025 14:50:51 +0100
+Message-ID: <20250309135130.545764-8-clg@redhat.com>
 In-Reply-To: <20250309135130.545764-1-clg@redhat.com>
 References: <20250309135130.545764-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,96 +84,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+The SoC type name is stored under AspeedSoCClass which is
+redundant. Use object_get_typename() instead where needed.
 
-Currently, AST2700 SoC only supports A0. To support AST2700 A1, rename its IRQ
-table and machine name.
-
-To follow the machine deprecation rule, the initial machine "ast2700-evb" is
-aliased to "ast2700a0-evb." In the future, we will alias "ast2700-evb" to new
-SoCs, such as "ast2700a1-evb."
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250307035945.3698802-9-jamin_lin@aspeedtech.com
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Link: https://lore.kernel.org/qemu-devel/20250218073534.585066-1-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c         | 9 +++++----
- hw/arm/aspeed_ast27x0.c | 8 ++++----
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ include/hw/arm/aspeed_soc.h | 1 -
+ hw/arm/aspeed_ast10x0.c     | 3 +--
+ hw/arm/aspeed_ast2400.c     | 4 +---
+ hw/arm/aspeed_ast2600.c     | 3 +--
+ hw/arm/aspeed_ast27x0.c     | 3 +--
+ 5 files changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index c6c18596d62e..18f7c450dadd 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1673,12 +1673,13 @@ static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
-                             TYPE_TMP105, 0x4d);
- }
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 689f52dae8fb..4a8881ca8b57 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -148,7 +148,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(Aspeed10x0SoCState, ASPEED10X0_SOC)
+ struct AspeedSoCClass {
+     DeviceClass parent_class;
  
--static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
-+static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+-    const char *name;
+     /** valid_cpu_types: NULL terminated array of a single CPU type. */
+     const char * const *valid_cpu_types;
+     uint32_t silicon_rev;
+diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+index e76c7100a1d2..ec329f4991c9 100644
+--- a/hw/arm/aspeed_ast10x0.c
++++ b/hw/arm/aspeed_ast10x0.c
+@@ -116,7 +116,7 @@ static void aspeed_soc_ast1030_init(Object *obj)
+     char typename[64];
+     int i;
  
--    mc->desc = "Aspeed AST2700 EVB (Cortex-A35)";
-+    mc->alias = "ast2700-evb";
-+    mc->desc = "Aspeed AST2700 A0 EVB (Cortex-A35)";
-     amc->soc_name  = "ast2700-a0";
-     amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
-     amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
-@@ -1817,9 +1818,9 @@ static const TypeInfo aspeed_machine_types[] = {
-         .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
- #ifdef TARGET_AARCH64
-     }, {
--        .name          = MACHINE_TYPE_NAME("ast2700-evb"),
-+        .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
-         .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_ast2700_evb_class_init,
-+        .class_init    = aspeed_machine_ast2700a0_evb_class_init,
- #endif
-     }, {
-         .name          = TYPE_ASPEED_MACHINE,
+-    if (sscanf(sc->name, "%7s", socname) != 1) {
++    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
+         g_assert_not_reached();
+     }
+ 
+@@ -428,7 +428,6 @@ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, void *data)
+     dc->user_creatable = false;
+     dc->realize = aspeed_soc_ast1030_realize;
+ 
+-    sc->name = "ast1030-a1";
+     sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev = AST1030_A1_SILICON_REV;
+     sc->sram_size = 0xc0000;
+diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+index 8784b6e79305..0158f6e9c24e 100644
+--- a/hw/arm/aspeed_ast2400.c
++++ b/hw/arm/aspeed_ast2400.c
+@@ -151,7 +151,7 @@ static void aspeed_ast2400_soc_init(Object *obj)
+     char socname[8];
+     char typename[64];
+ 
+-    if (sscanf(sc->name, "%7s", socname) != 1) {
++    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
+         g_assert_not_reached();
+     }
+ 
+@@ -515,7 +515,6 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
+     /* Reason: Uses serial_hds and nd_table in realize() directly */
+     dc->user_creatable = false;
+ 
+-    sc->name         = "ast2400-a1";
+     sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2400_A1_SILICON_REV;
+     sc->sram_size    = 0x8000;
+@@ -544,7 +543,6 @@ static void aspeed_soc_ast2500_class_init(ObjectClass *oc, void *data)
+     /* Reason: Uses serial_hds and nd_table in realize() directly */
+     dc->user_creatable = false;
+ 
+-    sc->name         = "ast2500-a1";
+     sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2500_A1_SILICON_REV;
+     sc->sram_size    = 0x9000;
+diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+index 07210483bb29..1f994ba26c65 100644
+--- a/hw/arm/aspeed_ast2600.c
++++ b/hw/arm/aspeed_ast2600.c
+@@ -157,7 +157,7 @@ static void aspeed_soc_ast2600_init(Object *obj)
+     char socname[8];
+     char typename[64];
+ 
+-    if (sscanf(sc->name, "%7s", socname) != 1) {
++    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
+         g_assert_not_reached();
+     }
+ 
+@@ -666,7 +666,6 @@ static void aspeed_soc_ast2600_class_init(ObjectClass *oc, void *data)
+     /* Reason: The Aspeed SoC can only be instantiated from a board */
+     dc->user_creatable = false;
+ 
+-    sc->name         = "ast2600-a3";
+     sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2600_A3_SILICON_REV;
+     sc->sram_size    = 0x16400;
 diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index f14d2ea1753d..44ddfdd2c6c9 100644
+index 3e373f966b5f..6506bdfdff68 100644
 --- a/hw/arm/aspeed_ast27x0.c
 +++ b/hw/arm/aspeed_ast27x0.c
-@@ -73,7 +73,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
- #define AST2700_MAX_IRQ 256
+@@ -316,7 +316,7 @@ static void aspeed_soc_ast2700_init(Object *obj)
+     char socname[8];
+     char typename[64];
  
- /* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
--static const int aspeed_soc_ast2700_irqmap[] = {
-+static const int aspeed_soc_ast2700a0_irqmap[] = {
-     [ASPEED_DEV_UART0]     = 132,
-     [ASPEED_DEV_UART1]     = 132,
-     [ASPEED_DEV_UART2]     = 132,
-@@ -766,7 +766,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     create_unimplemented_device("ast2700.io", 0x0, 0x4000000);
- }
+-    if (sscanf(sc->name, "%7s", socname) != 1) {
++    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
+         g_assert_not_reached();
+     }
  
--static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
-+static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
- {
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-a35"),
-@@ -788,7 +788,7 @@ static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
-     sc->uarts_num    = 13;
-     sc->num_cpus     = 4;
-     sc->uarts_base   = ASPEED_DEV_UART0;
--    sc->irqmap       = aspeed_soc_ast2700_irqmap;
-+    sc->irqmap       = aspeed_soc_ast2700a0_irqmap;
-     sc->memmap       = aspeed_soc_ast2700_memmap;
-     sc->get_irq      = aspeed_soc_ast2700_get_irq;
- }
-@@ -803,7 +803,7 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
-         .name           = "ast2700-a0",
-         .parent         = TYPE_ASPEED27X0_SOC,
-         .instance_init  = aspeed_soc_ast2700_init,
--        .class_init     = aspeed_soc_ast2700_class_init,
-+        .class_init     = aspeed_soc_ast2700a0_class_init,
-     },
- };
+@@ -757,7 +757,6 @@ static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
+     dc->user_creatable = false;
+     dc->realize      = aspeed_soc_ast2700_realize;
  
+-    sc->name         = "ast2700-a0";
+     sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2700_A0_SILICON_REV;
+     sc->sram_size    = 0x20000;
 -- 
 2.48.1
 
