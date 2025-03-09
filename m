@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99937C282D1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB766C282D1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Mar 2025 08:41:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trCAK-0005lM-QN; Sun, 09 Mar 2025 04:37:45 -0400
+	id 1trC9s-00031D-4X; Sun, 09 Mar 2025 04:37:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCAH-0005QX-8W
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC9e-0002GB-Eh
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trCAF-0002W9-FR
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:40 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trC9c-0002Q2-41
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 04:37:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741509458;
+ s=mimecast20190719; t=1741509418;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BQvE/HneCGz1g30jzw3OwriCq5NXZt5xVT54X3KVDic=;
- b=hSUg1wwzmY98YpuYzBhXzty9mwPd3KMirExwQITzzsvaMeuP7JzEDTYITcS/vPg5MK/Msm
- 754pg5AmG2CNR38bWdQlaeIU5tGOtY6kq5gEt7voSV6i91GtiNp4t7wuxIzrkAdN0g6bfd
- CZD5vM6dbYwJEtKQQodhNLcx8lAN+QQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=yVok9rWan7B5jXvOIyFSeD+lqTlTYIOvHpccvlJg+qE=;
+ b=Mb/by/4IWA30KXrkEX8NqfdsuEiENwS6uB5DHzbDF+QWqOgadJc9g67gxmbSG8uiJ+pVmO
+ XJz+o/Jk+ARumx5ZYGi1Hv/sLUYZPC/tRVZajTfFr2cN1r5Y7f5MWYPIp+TNPM879AtsIP
+ EkSP8RMT3VIu/oMWSDGomGCvY6xTRng=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-28-X6xWUR4bNEmvwiA1Hn-4mA-1; Sun,
- 09 Mar 2025 04:37:34 -0400
-X-MC-Unique: X6xWUR4bNEmvwiA1Hn-4mA-1
-X-Mimecast-MFC-AGG-ID: X6xWUR4bNEmvwiA1Hn-4mA_1741509453
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-UYfbJ6xNMw2LD5uqFogcwQ-1; Sun,
+ 09 Mar 2025 04:36:53 -0400
+X-MC-Unique: UYfbJ6xNMw2LD5uqFogcwQ-1
+X-Mimecast-MFC-AGG-ID: UYfbJ6xNMw2LD5uqFogcwQ_1741509412
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7051D19560B0; Sun,  9 Mar 2025 08:37:33 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3267818007E1; Sun,  9 Mar 2025 08:36:52 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.4])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8609F19560AB; Sun,  9 Mar 2025 08:37:31 +0000 (UTC)
+ id 1972A19560AB; Sun,  9 Mar 2025 08:36:49 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -53,23 +53,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 39/62] docs/qapidoc: add transmogrifier class stub
-Date: Sun,  9 Mar 2025 04:35:26 -0400
-Message-ID: <20250309083550.5155-40-jsnow@redhat.com>
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
+ Harmonie Snow <harmonie@gmail.com>
+Subject: [PATCH v2 23/62] docs/qapi-domain: add :deprecated: directive option
+Date: Sun,  9 Mar 2025 04:35:10 -0400
+Message-ID: <20250309083550.5155-24-jsnow@redhat.com>
 In-Reply-To: <20250309083550.5155-1-jsnow@redhat.com>
 References: <20250309083550.5155-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,122 +89,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the beginnings of the Transmogrifier class by adding the rST
-conversion helpers that will be used to build the virtual rST document.
+Although "deprecated" is a feature (and *will* appear in the features
+list), add a special :deprecated: option to generate an eye-catch that
+makes this information very hard to miss.
 
-This version of the class does not actually "do anything" yet; each
-individual feature is added one-at-a-time in the forthcoming commits.
+(The intent is to modify qapidoc.py to add this option whenever it
+detects that the features list attached to a definition contains the
+"deprecated" entry.)
 
+-
+
+RFC: Technically, this object-level option is un-needed and could be
+replaced with a standard content-level directive that e.g. qapidoc.py
+could insert at the beginning of the content block. I've done it here as
+an option to demonstrate how it would be possible to do.
+
+It's a matter of taste for "where" we feel like implementing it.
+
+One benefit of doing it this way is that we can create a single
+containing box to set CSS style options controlling the flow of multiple
+infoboxes. The other way to achieve that would be to create a directive
+that allows us to set multiple options instead, e.g.:
+
+.. qapi:infoboxes:: deprecated unstable
+
+or possibly:
+
+.. qapi:infoboxes::
+   :deprecated:
+   :unstable:
+
+For now, I've left these as top-level QAPI object options. "Hey, it works."
+
+P.S., I outsourced the CSS ;)
+
+Signed-off-by: Harmonie Snow <harmonie@gmail.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 73 ++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 70 insertions(+), 3 deletions(-)
+ docs/sphinx-static/theme_overrides.css | 25 +++++++++++++++++++++++++
+ docs/sphinx/qapi_domain.py             | 26 ++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 5246832b68c..c243bb6faaa 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -26,14 +26,17 @@
- 
- from __future__ import annotations
- 
-+from contextlib import contextmanager
- import os
- import sys
- from typing import TYPE_CHECKING
- 
- from docutils import nodes
- from docutils.parsers.rst import Directive, directives
-+from docutils.statemachine import StringList
- from qapi.error import QAPIError
- from qapi.schema import QAPISchema, QAPISchemaVisitor
-+from qapi.source import QAPISourceInfo
- 
- from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
- from sphinx import addnodes
-@@ -44,9 +47,12 @@
- 
- 
- if TYPE_CHECKING:
--    from typing import Any, List, Sequence
--
--    from docutils.statemachine import StringList
-+    from typing import (
-+        Any,
-+        Generator,
-+        List,
-+        Sequence,
-+    )
- 
-     from sphinx.application import Sphinx
-     from sphinx.util.typing import ExtensionMetadata
-@@ -55,6 +61,67 @@
- __version__ = "1.0"
- 
- 
-+class Transmogrifier:
-+    def __init__(self) -> None:
-+        self._result = StringList()
-+        self.indent = 0
+diff --git a/docs/sphinx-static/theme_overrides.css b/docs/sphinx-static/theme_overrides.css
+index 965ecac54fd..3765cab1b20 100644
+--- a/docs/sphinx-static/theme_overrides.css
++++ b/docs/sphinx-static/theme_overrides.css
+@@ -208,3 +208,28 @@ div[class^="highlight"] pre {
+         color: inherit;
+     }
+ }
 +
-+    # General-purpose rST generation functions
++/* QAPI domain theming */
 +
-+    def get_indent(self) -> str:
-+        return "   " * self.indent
++.qapi-infopips {
++    margin-bottom: 1em;
++}
 +
-+    @contextmanager
-+    def indented(self) -> Generator[None]:
-+        self.indent += 1
-+        try:
-+            yield
-+        finally:
-+            self.indent -= 1
++.qapi-infopip {
++    display: inline-block;
++    padding: 0em 0.5em 0em 0.5em;
++    margin: 0.25em;
++}
 +
-+    def add_line_raw(self, line: str, source: str, *lineno: int) -> None:
-+        """Append one line of generated reST to the output."""
++.qapi-deprecated {
++    background-color: #fffef5;
++    border: solid #fff176 6px;
++    font-weight: bold;
++    padding: 8px;
++    border-radius: 15px;
++    margin: 5px;
++}
 +
-+        # NB: Sphinx uses zero-indexed lines; subtract one.
-+        lineno = tuple((n - 1 for n in lineno))
++.qapi-deprecated::before {
++    content: '⚠️ ';
++}
+diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+index e84affaaec2..482f4bcde3b 100644
+--- a/docs/sphinx/qapi_domain.py
++++ b/docs/sphinx/qapi_domain.py
+@@ -181,6 +181,7 @@ class QAPIObject(QAPIDescription):
+             "module": directives.unchanged,  # Override contextual module name
+             # These are QAPI originals:
+             "since": directives.unchanged,
++            "deprecated": directives.flag,
+         }
+     )
+ 
+@@ -257,6 +258,31 @@ def _object_hierarchy_parts(
+ 
+         return tuple(fullname.split("."))
+ 
++    def _add_infopips(self, contentnode: addnodes.desc_content) -> None:
++        # Add various eye-catches and things that go below the signature
++        # bar, but precede the user-defined content.
++        infopips = nodes.container()
++        infopips.attributes["classes"].append("qapi-infopips")
 +
-+        if line.strip():
-+            # not a blank line
-+            self._result.append(
-+                self.get_indent() + line.rstrip("\n"), source, *lineno
++        def _add_pip(source: str, content: str, classname: str) -> None:
++            node = nodes.container(source)
++            node.append(nodes.Text(content))
++            node.attributes["classes"].extend(["qapi-infopip", classname])
++            infopips.append(node)
++
++        if "deprecated" in self.options:
++            _add_pip(
++                ":deprecated:",
++                f"This {self.objtype} is deprecated.",
++                "qapi-deprecated",
 +            )
-+        else:
-+            self._result.append("", source, *lineno)
 +
-+    def add_line(self, content: str, info: QAPISourceInfo) -> None:
-+        # NB: We *require* an info object; this works out OK because we
-+        # don't document built-in objects that don't have
-+        # one. Everything else should.
-+        self.add_line_raw(content, info.fname, info.line)
++        if infopips.children:
++            contentnode.insert(0, infopips)
 +
-+    def add_lines(
-+        self,
-+        content: str,
-+        info: QAPISourceInfo,
-+    ) -> None:
-+        lines = content.splitlines(True)
-+        for i, line in enumerate(lines):
-+            self.add_line_raw(line, info.fname, info.line + i)
++    def transform_content(self, content_node: addnodes.desc_content) -> None:
++        self._add_infopips(content_node)
 +
-+    def ensure_blank_line(self) -> None:
-+        # Empty document -- no blank line required.
-+        if not self._result:
-+            return
-+
-+        # Last line isn't blank, add one.
-+        if self._result[-1].strip():  # pylint: disable=no-member
-+            fname, line = self._result.info(-1)
-+            assert isinstance(line, int)
-+            # New blank line is credited to one-after the current last line.
-+            # +2: correct for zero/one index, then increment by one.
-+            self.add_line_raw("", fname, line + 2)
-+
-+
- class QAPISchemaGenDepVisitor(QAPISchemaVisitor):
-     """A QAPI schema visitor which adds Sphinx dependencies each module
+     def _toc_entry_name(self, sig_node: desc_signature) -> str:
+         # This controls the name in the TOC and on the sidebar.
  
 -- 
 2.48.1
