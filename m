@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D048EC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 09:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39A57C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 09:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trZEL-00053N-AR; Mon, 10 Mar 2025 05:15:27 -0400
+	id 1trZKf-0007Yo-IZ; Mon, 10 Mar 2025 05:21:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trZEB-000538-Tj
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:15:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trZE9-0005SW-W7
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:15:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741598111;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=y0a5BkC4oDiKT+w+LCs5WR6HYRnWmgtrDZOaCHmX/mw=;
- b=AMv/lqZr8qbIg/6aqVBOtqTQC/eYPmZtynkgqk+bFiyzwyClvvRn4I30yVXfNs30IzGLSq
- ud8z1Z2xL79QdxCaZglAJDEGO+rKKuLJxQ6KEzk3QW37ErURVufrBb0oOgtft31c8B9Q3t
- AaaOSHKC6+XNrCnOtT3OTHyy2WSQaSM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-58-4MCYVW6HNPa6Vijg9CjzmQ-1; Mon,
- 10 Mar 2025 05:15:08 -0400
-X-MC-Unique: 4MCYVW6HNPa6Vijg9CjzmQ-1
-X-Mimecast-MFC-AGG-ID: 4MCYVW6HNPa6Vijg9CjzmQ_1741598107
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7117319560AF; Mon, 10 Mar 2025 09:15:07 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D42F19560AD; Mon, 10 Mar 2025 09:15:07 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CB59021E66C4; Mon, 10 Mar 2025 10:15:04 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Thomas Huth
- <thuth@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 10/62] docs/qapi-domain: Add ObjectDescription
- abstract class
-In-Reply-To: <20250309083550.5155-11-jsnow@redhat.com> (John Snow's message of
- "Sun, 9 Mar 2025 04:34:57 -0400")
-References: <20250309083550.5155-1-jsnow@redhat.com>
- <20250309083550.5155-11-jsnow@redhat.com>
-Date: Mon, 10 Mar 2025 10:15:04 +0100
-Message-ID: <87jz8xtffr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1trZKe-0007YX-5e
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:21:56 -0400
+Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1trZKZ-0006W9-LQ
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:21:55 -0400
+Received: by mail-yb1-xb35.google.com with SMTP id
+ 3f1490d57ef6-e5372a2fbddso3324735276.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 02:21:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741598509; x=1742203309; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=a9kXDjFxTemfhCDsR7y7sBVjDH2Rsj9X0LFfEidaQ7o=;
+ b=Md3GEjDkubWis43B4n2ybqs1B8efDlJtspgaTPTJjxrMQ+RAvBquTgAl7Nj/cuy+US
+ v2y8cOMACWwtG9V/vQbfJa3cWzpxpNucnKKSX9cDyZ4SXeoDZPoNt5j9r++VWk1I6bnY
+ 1U3AutyXBAw7Iix1Rfy0OvROqtuSBgQOdGIutgEssgCvj1SyW0YzhQlZMvHsQ5AarrKe
+ 5jYyWWi6BqYJwkLO8A8UkpN7qMA2h1/JlaR81Z5m1ttKfneAFmhFK+m8ecHmDqU9+JSY
+ ljeTImFVZcwkcRlbxUG6hkMaFjmLjpk6JID1nKAH77JNnQtg8SBFEs0M0kFFpPFXTbHH
+ y3xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741598509; x=1742203309;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=a9kXDjFxTemfhCDsR7y7sBVjDH2Rsj9X0LFfEidaQ7o=;
+ b=PafO6nQgqQCNXrPpqwFWNsEv3dyerjLj5mvhPAg9QhMBd1Wf6yF3Y5bAhpzAU5707f
+ b9gTr37KYdCWXbDYmdVi3BUwweXR981T6o0d2mOstK4aMTJ3GF6GPQmt8h/oKUuNx/Ng
+ 0HcfXwMsgo8oIGR/Mv4hBHj3v9Cz3J5MkBmHztlUsWzQ3dXgPv5UpNcRzFkd49j7AgNo
+ zg7aJGjpYyNQqx1Q8GtDz08iGpJa5Coh6E4pTHZyKwa87K1sTzl1qRLM8ZHlIBG8eK8z
+ DkWiwdbYv1+WKrMv9wCPn4OrV2OmkoBDDnJpWFrKsJMqDFHQ5LyVbb72aOgxfE2w6CRh
+ FMTQ==
+X-Gm-Message-State: AOJu0YycRTz02K1+JB2uFAt6Xt9czvEmBDt7u5HmUjJ7FZFUqnjb4CTC
+ KFUPu567f7LhFxFqwrcyHCWc2PAzT4n9ozs7kVj/0Ff3/Yg/D4lsU/g/b+1wdragRXhnq52tY3U
+ alTOnekgbjHcP7oolDzByFa6SU82NnFp3LDbhSQ==
+X-Gm-Gg: ASbGncuCwTqQdQ7l0p+BwUgcuF7gj32p/UAbFu4Ec2vtDNbYBSVjYcZoFjDtD94zzJr
+ mdAGnWbjsMUf6gb5YHQYZjuRk0GN++shmPfoWj/P+2jZStwPPu3ggie9CbKNZRLHhexbkFwUt2N
+ aKRIh8L0aCyAvV8kYQpZ6MtGnbCiQ=
+X-Google-Smtp-Source: AGHT+IGghKX1xMXFfNOEB7W6IqN3zKNeLBfL9w4xJWR+pG5Z7/FKpWtHodrz5Ukdm8PWHiw7Gq1izMUxm4eFHWF1UNU=
+X-Received: by 2002:a05:6902:1201:b0:e57:87b3:d2e0 with SMTP id
+ 3f1490d57ef6-e635c10191cmr18229782276.3.1741598509109; Mon, 10 Mar 2025
+ 02:21:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250129082045.1319203-1-pbonzini@redhat.com>
+In-Reply-To: <20250129082045.1319203-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 10 Mar 2025 09:21:37 +0000
+X-Gm-Features: AQ5f1Jq5stmSoKjijHUzDxEGedI2RntT7xSQFoiE5r9bRwQ9oollASvgtL5Tm7w
+Message-ID: <CAFEAcA9=G4sdXrxWcmq9wMqu1-ZRNxObQD3hmnFauYwiQr_8YQ@mail.gmail.com>
+Subject: Re: [PATCH] gitlab-ci: include full Rust backtraces in test runs
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,124 +91,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> This class is a generic, top-level directive for documenting some kind
-> of QAPI thingamajig that we expect to go into the Index. This class
-> doesn't do much by itself, and it isn't yet associated with any
-> particular directive.
+On Wed, 29 Jan 2025 at 08:21, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> Only handle_signature() is defined in the base class; get_index_text and
-> add_target_and_index are new methods defined here; they are based
-> heavily on the layout and format of the Python domain's general object
-> class.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  docs/sphinx/qapi_domain.py | 65 ++++++++++++++++++++++++++++++++++++--
->  1 file changed, 63 insertions(+), 2 deletions(-)
+>  .gitlab-ci.d/buildtest-template.yml | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-> index 49d42c0921c..0365891f354 100644
-> --- a/docs/sphinx/qapi_domain.py
-> +++ b/docs/sphinx/qapi_domain.py
-> @@ -14,11 +14,13 @@
->      NamedTuple,
->      Optional,
->      Tuple,
-> +    cast,
->  )
->  
->  from docutils import nodes
->  
-> -from sphinx.addnodes import pending_xref
-> +from sphinx.addnodes import desc_signature, pending_xref
-> +from sphinx.directives import ObjectDescription
->  from sphinx.domains import (
->      Domain,
->      Index,
-> @@ -28,7 +30,7 @@
->  from sphinx.locale import _, __
->  from sphinx.roles import XRefRole
->  from sphinx.util import logging
-> -from sphinx.util.nodes import make_refnode
-> +from sphinx.util.nodes import make_id, make_refnode
->  
->  
->  if TYPE_CHECKING:
-> @@ -96,6 +98,65 @@ def process_link(
->          return title, target
->  
->  
-> +Signature = str
-> +
-> +
-> +class QAPIDescription(ObjectDescription[Signature]):
-> +    """
-> +    Generic QAPI description.
-> +
-> +    Abstract class, not instantiated directly.
-> +    """
-> +
-> +    def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
-> +        # Do nothing. The return value here is the "name" of the entity
-> +        # being documented; for QAPI, this is the same as the
-> +        # "signature", which is just a name.
-> +
-> +        # Normally this method must also populate signode with nodes to
-> +        # render the signature; here we do nothing instead.
-> +        return sig
-> +
-> +    def get_index_text(self, name: Signature) -> Tuple[str, str]:
-> +        """Return the text for the index entry of the object."""
-> +
-> +        # NB: this is used for the global index, not the QAPI index.
-> +        return ("single", f"{name} (QMP {self.objtype})")
-> +
-> +    def add_target_and_index(
-> +        self, name: Signature, sig: str, signode: desc_signature
-> +    ) -> None:
-> +        # name is the return value of handle_signature.
-> +        # sig is the original, raw text argument to handle_signature.
-> +        # For QAPI, these are identical, currently.
-> +
-> +        assert self.objtype
-> +
-> +        # If we're documenting a module, don't include the module as
-> +        # part of the FQN.
-> +        modname = ""
-> +        if self.objtype != "module":
-> +            modname = self.options.get(
-> +                "module", self.env.ref_context.get("qapi:module")
-> +            )
-> +        fullname = (modname + "." if modname else "") + name
-> +
-> +        node_id = make_id(self.env, self.state.document, self.objtype, fullname)
+> diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+> index 39da7698b09..4cc19239319 100644
+> --- a/.gitlab-ci.d/buildtest-template.yml
+> +++ b/.gitlab-ci.d/buildtest-template.yml
+> @@ -63,6 +63,7 @@
+>    stage: test
+>    image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+>    script:
+> +    - export RUST_BACKTRACE=1
+>      - source scripts/ci/gitlab-ci-section
+>      - section_start buildenv "Setting up to run tests"
+>      - scripts/git-submodule.sh update roms/SLOF
+> --
 
-pycodestyle-3 points out:
+This will only add the rust backtraces when the tests
+are run from the CI logs, not when you locally run
+"make check" or similar. There's probably a better place
+to put this...
 
-    docs/sphinx/qapi_domain.py:144:80: E501 line too long (80 > 79 characters)
-
-> +        signode["ids"].append(node_id)
-> +
-> +        self.state.document.note_explicit_target(signode)
-> +        domain = cast(QAPIDomain, self.env.get_domain("qapi"))
-> +        domain.note_object(fullname, self.objtype, node_id, location=signode)
-
-This one's pushing it, too :)
-
-> +
-> +        if "no-index-entry" not in self.options:
-> +            arity, indextext = self.get_index_text(name)
-> +            assert self.indexnode is not None
-> +            if indextext:
-> +                self.indexnode["entries"].append(
-> +                    (arity, indextext, node_id, "", None)
-> +                )
-> +
-> +
->  class QAPIIndex(Index):
->      """
->      Index subclass to provide the QAPI definition index.
-
+-- PMM
 
