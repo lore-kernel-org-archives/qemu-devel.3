@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3A49C282EC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE6F5C282DE
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 04:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trVEU-0003Ai-SE; Mon, 10 Mar 2025 00:59:18 -0400
+	id 1trVE9-0002fO-N2; Mon, 10 Mar 2025 00:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trVEG-0002mb-VD
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 00:59:05 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1trVE7-0002dl-Im
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 00:58:55 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trVEF-0008E5-Aq
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 00:59:04 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2243803b776so52191105ad.0
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 21:59:02 -0700 (PDT)
+ id 1trVE4-00089V-Gp
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 00:58:55 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-22548a28d0cso35990505ad.3
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 21:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741582742; x=1742187542; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741582731; x=1742187531; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pcOq/B0qkF7oBYEuLqTVXYwaTmG9K1DoxB38gebkidU=;
- b=MmAje4LwQBE2I1ZMIg8wQsLaVTq+sBbZfC4bNlM/JcEAPe0dqg3IaOO502cq8Qz2E/
- uRexT1Neu2vw6vS/0ZKGMfJLG2POAHFRjeBSxHK9HD3y2Lt+zGFgtO3LJ2WkitirgTro
- 6Lavx7SHQe5V9ycv1dYH3otkngjF4Jh6alAF0n/zV6RY5mr1FrNfMPNJC4YEHV8iXSFZ
- x4oC+nolMNUNYMserNjQAB8vdAyadFiOwikpQZhaYJ/k5/3OD+wn2jG35Rr+jPbvhStY
- Al52QVCeMMU6WaxhoDAT0rcRkUyaIq+ullAs3Ep13rXunxp2CRKVymsKdsOmOsc9nMdz
- /DhQ==
+ bh=1JZyw573LWlQgbC9bGnVcpJUmDARxtxiYGI4BMcj5vE=;
+ b=VLHaBYUyG7viQO2dbAkNjLUCtJCKq/23NN2citHXBDltpRObJxOhpmRKwVDh2HxAtS
+ YFNI7TQqtUIqy1s8tB/1rVhUhoeVPP5qwMY2DDH88qWpZqiuxGoTfBhAFQAbtwozO09F
+ XBIHaBmO010vXwaOU0PTuKWxtx0n4t+zwTaQwCilmBp/3C3zWPchi2JNqJ/Yer+SucJm
+ 70EZfggY1E/r8AmHvR2xuMXRZIGzBNSKgQoiCUxG7u66YuwnGFMEPaFlj93wnXSBUzlp
+ jldxpItyDgBOYSeiu3/8ihroYCNiH9JtTJEU6HeWi6Rh1j9mmJzmv92UYJfoQdVoLw+C
+ OtsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741582742; x=1742187542;
+ d=1e100.net; s=20230601; t=1741582731; x=1742187531;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pcOq/B0qkF7oBYEuLqTVXYwaTmG9K1DoxB38gebkidU=;
- b=o304f6QxLkBtxC2z+X/7ADs0wQ+4RdfyKYi1qPcmbo8fWidW5Dwy2gCbpyGao96mMc
- 3p+mFScAAfv0uiVo745fhWtWmZwConlgWhbvQUsP7zd3nirnjDARR5EaD/rNxVTbBAHw
- Qp1SrrlRkTxykOsm5ZFEHnEY7f67VwGqp4RM0qvh8GmUWbYwZ1735HHA4TuaopbqvHSh
- qUT7vDjeVHxmC/+23uvHfRonbdoucKpQayi3t2KXfMU5ho/hpGLZR4hikdkSrkbd1gt+
- wfhQRr5OVminDoJK5TOrr2WVOuAvJ5CLAyn4TA6dANlMSAa0xQAwpv+EcAJutDJYwUhJ
- 8fAw==
-X-Gm-Message-State: AOJu0YwRRVINzI1H8CrDurXsKEH3aHnlnSiPkNav79ZPv7GaL72iD5Xt
- 0bdkuoR09QBls36eYtyMEFzTZYA8M3NlkZY4fW74AMKRZi+Hy8u+koKgiKpPUEQ1DprE4Y6T9Jm
- R4Wo=
-X-Gm-Gg: ASbGnctyzXP1lQmRc2a/Ox9iVwa9yRJ4pErYZ1+3EZ98bpoqvooWzj4IaURNRic7d7L
- ytogVJYaiJmy+V9GSpQlucGHzzxQN7S0Goc/J5psDhCl9GktypJ6eayU2M4gULPwanW3ki7yDSr
- k8w8Rr+QuHAquK56lWbixjw0Ftv2FC4bvDTZ2LvszApOnmoD7UiByyyIYFnqdsT5d/5Prne6ttw
- mz059Z7IciCOUb3VYZFXOSqFPJOC6dzw1QerTX+ThKfXTUeergGRdzrrmhJRvvxelNPdF+Z5T6q
- nNyLUiEW+ponrrvYrxoDN0jiq+pbD48J2KFY2j1cJall
-X-Google-Smtp-Source: AGHT+IEEpEpujiC2fwj7VGkMO+uHTookE/oxRvy3WzoSDUTK3dbiUUraMl3feFU8Mr38LhiryglRJw==
-X-Received: by 2002:a05:6a21:8dc2:b0:1ee:c1b2:76d4 with SMTP id
- adf61e73a8af0-1f544f67b54mr22292031637.40.1741582742058; 
- Sun, 09 Mar 2025 21:59:02 -0700 (PDT)
+ bh=1JZyw573LWlQgbC9bGnVcpJUmDARxtxiYGI4BMcj5vE=;
+ b=MRRdUSzZVkLWBmqBEcpOxqGRh8UkqgLwcXwZeSqA9dLloNNCgl1BTXZqeAZz+hb20m
+ ySRwkCQg7FIf637/Kd4f/pl89sO/2j5gfsBayG6AEj//XTo+X06UuGBvYIj+8nEagFaT
+ sQzE5jTKG2mk6AF1gH8geQ9JvNCZ73vRVAogIdp+IUmQHT656LABIvEWGUCBVev+8eVC
+ ajD7Y+ZHEZdweRm5P84q1Lsy2xIMeY/svuQ4e7k7alI1qnxZbd5gZMYlry2SalGHEZ+z
+ 15FuDR1AQ2gs7h8/Z07Rq9evVqT66WCHu2Iya3+6UvILaltm/f2yP3H7ywj6OmbskQYn
+ uT6Q==
+X-Gm-Message-State: AOJu0YzdjyGtHdVd4irpSG2tcufNeI34xfgdHKg9QMdRoKyep+LqgXCt
+ N8KpyB1v5CoDMOx62joD6bHPYCDoQYyy28GmlhisZsqLeExj1N2iuRLopVlIQ0IgUt3yQHrpU6i
+ t8dM=
+X-Gm-Gg: ASbGnctQ13NJb/RmHKX+0hPweLlubHrcDy24dKIA+qUzMiwuLHYRVANPi0j3an9Djrp
+ nK0bo48ur8itQTE7q1JUYdTyyg5Ql3uffHDdeIpNCusMVkUjc5EW4gHdHm44Z6iBbAU6R7UlDlI
+ N53RDCLSinxB3BmapIbCCxlzWEhM10ESTg5LwnAinVTAfJWYf6GKfXo2vjt9TyehnzShLxIfYE+
+ yuE3ItROTATQdKCtsY19OWDycSc9MeHw0Wk/8Dt9CKzm/Hbgd8ivA2LQ3xYGEXFo1HRUE2/6n6n
+ UIW+N7eHX1EkXmXgxZX/tiMndDy33qfY5aJ2DFaBf4Ux
+X-Google-Smtp-Source: AGHT+IHsrTctZA7T98GoAjZcAG6E707cPIOSM6QcsZhsVvq9UPUg2kUQ9eJxgIpK7zPxh80fLwzPDw==
+X-Received: by 2002:a17:902:f644:b0:224:76f:9e45 with SMTP id
+ d9443c01a7336-22428a8c6femr219904905ad.21.1741582731096; 
+ Sun, 09 Mar 2025 21:58:51 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736d2ae318csm1708308b3a.53.2025.03.09.21.59.00
+ d2e1a72fcca58-736d2ae318csm1708308b3a.53.2025.03.09.21.58.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Mar 2025 21:59:01 -0700 (PDT)
+ Sun, 09 Mar 2025 21:58:50 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
@@ -82,16 +82,17 @@ Cc: qemu-ppc@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
  Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org,
  Stefano Stabellini <sstabellini@kernel.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 10/16] exec/ram_addr: remove dependency on cpu.h
-Date: Sun,  9 Mar 2025 21:58:36 -0700
-Message-Id: <20250310045842.2650784-11-pierrick.bouvier@linaro.org>
+Subject: [PATCH 01/16] exec/memory_ldst: extract memory_ldst declarations from
+ cpu-all.h
+Date: Sun,  9 Mar 2025 21:58:27 -0700
+Message-Id: <20250310045842.2650784-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
 References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,31 +115,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+They are now accessible through exec/memory.h instead, and we make sure
+all variants are available for common or target dependent code.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/exec/ram_addr.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/exec/cpu-all.h         | 12 ------------
+ include/exec/memory_ldst.h.inc | 13 +++++--------
+ 2 files changed, 5 insertions(+), 20 deletions(-)
 
-diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
-index 3d8df4edf15..7c011fadd11 100644
---- a/include/exec/ram_addr.h
-+++ b/include/exec/ram_addr.h
-@@ -20,13 +20,14 @@
- #define RAM_ADDR_H
- 
- #ifndef CONFIG_USER_ONLY
--#include "cpu.h"
- #include "system/xen.h"
- #include "system/tcg.h"
- #include "exec/cputlb.h"
- #include "exec/ramlist.h"
- #include "exec/ramblock.h"
- #include "exec/exec-all.h"
-+#include "exec/memory.h"
-+#include "exec/target_page.h"
- #include "qemu/rcu.h"
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index 8cd6c00cf89..17ea82518a0 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -69,18 +69,6 @@
  
  #include "exec/hwaddr.h"
+ 
+-#define SUFFIX
+-#define ARG1         as
+-#define ARG1_DECL    AddressSpace *as
+-#define TARGET_ENDIANNESS
+-#include "exec/memory_ldst.h.inc"
+-
+-#define SUFFIX       _cached_slow
+-#define ARG1         cache
+-#define ARG1_DECL    MemoryRegionCache *cache
+-#define TARGET_ENDIANNESS
+-#include "exec/memory_ldst.h.inc"
+-
+ static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val)
+ {
+     address_space_stl_notdirty(as, addr, val,
+diff --git a/include/exec/memory_ldst.h.inc b/include/exec/memory_ldst.h.inc
+index 92ad74e9560..74519a88de0 100644
+--- a/include/exec/memory_ldst.h.inc
++++ b/include/exec/memory_ldst.h.inc
+@@ -19,7 +19,8 @@
+  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+  */
+ 
+-#ifdef TARGET_ENDIANNESS
++uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL,
++    hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
+ uint16_t glue(address_space_lduw, SUFFIX)(ARG1_DECL,
+     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
+ uint32_t glue(address_space_ldl, SUFFIX)(ARG1_DECL,
+@@ -28,15 +29,15 @@ uint64_t glue(address_space_ldq, SUFFIX)(ARG1_DECL,
+     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
+ void glue(address_space_stl_notdirty, SUFFIX)(ARG1_DECL,
+     hwaddr addr, uint32_t val, MemTxAttrs attrs, MemTxResult *result);
++void glue(address_space_stb, SUFFIX)(ARG1_DECL,
++    hwaddr addr, uint8_t val, MemTxAttrs attrs, MemTxResult *result);
+ void glue(address_space_stw, SUFFIX)(ARG1_DECL,
+     hwaddr addr, uint16_t val, MemTxAttrs attrs, MemTxResult *result);
+ void glue(address_space_stl, SUFFIX)(ARG1_DECL,
+     hwaddr addr, uint32_t val, MemTxAttrs attrs, MemTxResult *result);
+ void glue(address_space_stq, SUFFIX)(ARG1_DECL,
+     hwaddr addr, uint64_t val, MemTxAttrs attrs, MemTxResult *result);
+-#else
+-uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL,
+-    hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
++
+ uint16_t glue(address_space_lduw_le, SUFFIX)(ARG1_DECL,
+     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
+ uint16_t glue(address_space_lduw_be, SUFFIX)(ARG1_DECL,
+@@ -49,8 +50,6 @@ uint64_t glue(address_space_ldq_le, SUFFIX)(ARG1_DECL,
+     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
+ uint64_t glue(address_space_ldq_be, SUFFIX)(ARG1_DECL,
+     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
+-void glue(address_space_stb, SUFFIX)(ARG1_DECL,
+-    hwaddr addr, uint8_t val, MemTxAttrs attrs, MemTxResult *result);
+ void glue(address_space_stw_le, SUFFIX)(ARG1_DECL,
+     hwaddr addr, uint16_t val, MemTxAttrs attrs, MemTxResult *result);
+ void glue(address_space_stw_be, SUFFIX)(ARG1_DECL,
+@@ -63,9 +62,7 @@ void glue(address_space_stq_le, SUFFIX)(ARG1_DECL,
+     hwaddr addr, uint64_t val, MemTxAttrs attrs, MemTxResult *result);
+ void glue(address_space_stq_be, SUFFIX)(ARG1_DECL,
+     hwaddr addr, uint64_t val, MemTxAttrs attrs, MemTxResult *result);
+-#endif
+ 
+ #undef ARG1_DECL
+ #undef ARG1
+ #undef SUFFIX
+-#undef TARGET_ENDIANNESS
 -- 
 2.39.5
 
