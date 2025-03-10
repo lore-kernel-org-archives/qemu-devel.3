@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3833C28B2E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99266C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:30:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trYVg-0006oc-OP; Mon, 10 Mar 2025 04:29:17 -0400
+	id 1trYVy-00070N-Sz; Mon, 10 Mar 2025 04:29:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1trYVd-0006nd-3u
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:29:13 -0400
+ id 1trYVx-000701-JU
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:29:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1trYVX-0005zz-N2
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:29:10 -0400
+ id 1trYVu-00064P-EB
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:29:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741595346;
+ s=mimecast20190719; t=1741595369;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oVjbBJxeizQKwyH9IYKCuRHaFa6Vx3kvMheG1OPh2D4=;
- b=BXDdD3WP+JJPyeahz6tbwvhdC+I5H1dTlOrQiUMF8XL6Dt1vEG7cY0WQnVibZkvNp+2mUp
- 28k9NqLk69ojiFkkxneDRfCmU8CNeJTnaxBwk9q4OlBLQAVRc7cEzYRx1JJhDtelebIDX3
- /mq1A/4W0PoagOxeonS9ns8IR+j+oJ4=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=H9IUHSXAtOcyBX6406ivSQAj3+/L2kwNFrYXokmmlkw=;
+ b=UHqDqT6Yuw4l456vMUg9fQf7UJsOYraItR/R3erETQw5EwILATFJA0CViH+PZ0O0WgvIjQ
+ hiWoXpS/dRoGH31pwjqSnfhNENpf0EkfDSCL7xdreRVdjjPHv1MC4T8dOWG+D7JEN1UZDP
+ 9dJqxb3wfUQtimcBUlLrpeUwW1RLaDo=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-sZhbqclgOM6kFRVzYvjuCg-1; Mon, 10 Mar 2025 04:29:02 -0400
-X-MC-Unique: sZhbqclgOM6kFRVzYvjuCg-1
-X-Mimecast-MFC-AGG-ID: sZhbqclgOM6kFRVzYvjuCg_1741595341
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3913037ac4eso2067978f8f.2
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 01:29:02 -0700 (PDT)
+ us-mta-465-aPievjI4Po-TBIPuDoC2rQ-1; Mon, 10 Mar 2025 04:29:28 -0400
+X-MC-Unique: aPievjI4Po-TBIPuDoC2rQ-1
+X-Mimecast-MFC-AGG-ID: aPievjI4Po-TBIPuDoC2rQ_1741595367
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3913aea90b4so691096f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 01:29:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741595341; x=1742200141;
+ d=1e100.net; s=20230601; t=1741595366; x=1742200166;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=oVjbBJxeizQKwyH9IYKCuRHaFa6Vx3kvMheG1OPh2D4=;
- b=jU8gaXyBon8iRpJEL7tmd6vY0amqKcdeG379HxYzBszA56sM53BSmW5gtWZlr/77bU
- 12A/awvJcLN8W69LD5gr9TmWpodr0XrMscr8TOiWDGq9jj9SHgjiU+YBPwMaJ0K188GU
- yroQQRzZLsb7kTLQ9xzpjoz2kooHfJXuFOzwRTAbs5JWxrHEKULYQjMsMnGvWAzn6GsK
- LSSjNpAmQ+gXvP/H2JvSREzlP3m8dpcOBxqI4ggOxOu4J2y99htLCp+Pmh36vVIhyZzW
- LhlTBL4yxaGFOPuUDX2Edn9V/Wh2ikc7vtx/KfOoHAjJ7lWwPRxJdLajiqzO/vvewNha
- OILA==
+ bh=H9IUHSXAtOcyBX6406ivSQAj3+/L2kwNFrYXokmmlkw=;
+ b=FwOlWfvGCHdMm+AmQCRnzh9UTT4099mu4T6ydmz+GYBvmYA+yaS2vbiHH3h3m8OsLf
+ AL7DI6MMxBeOXOyLZmbyElUSMSc4jTYhJKTY8ioyfsGMW5gpeqDmXf3eCyt83d/sOpzX
+ rsPIlY/AvKDCHfcUKpFMO2XNQwWCAxElAXamYLB17uyWnFdJUVYojk9xFDRGXfs1ev0K
+ Ood15zL6H3DEmoeyAnk90TQ93J+H7qel+vFkD4mYMv8o1938bvvS4umpqRA14oH+fUsx
+ j7w8senJtd9OC8pIXs5Ls5TJZip0BPJ0RGL+XBvKIzgo5x4zrf0KJUP2FKdBEX52XqJM
+ 54ug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVn0OtagtHZ1VCIbc6ojx7OI0bkjqUy+va9DvPcKA5mDsIzLzSRJf3MMTws8xay0dj3XC97ige/HnnI@nongnu.org
-X-Gm-Message-State: AOJu0Yz87/khptjGIQdalmipKjXCxbycrs+5MQzc0B/FrrIDnyMVepqT
- JvuZzy+L4v88Uh+RxqsWt1zVTN86vMNvB816Oj2ZObsJRLluaDPeVr6ZKfnR0NnBHhpxDnIKdTp
- /Z3KN6E4prHiZxlR/mHVT3npIIOiei+uIOUelhZnT6YDtJoWkeiC+
-X-Gm-Gg: ASbGncucUc8MmFoRsmHS/QkCOhcR3T2r9f0OFS1kXDbXt+qYmus66W/1gT5rtxJlGto
- br4AlBuK78TbjOKlkme24V4uPoJw4qkEnmEaUVWgt3DKYc7A7LM8V9l2mGSJ1YPeJq+5ZVNKVGp
- 6lZ68wZFQzjmA6DgxQ1gnh0halEvWqrY7Re7sM7MwiY/1AGx1dtmIIDrXbMlfnJ22DwY/SAb1BZ
- lN48bqffAVl0WKwSEa9h/vRZwN8CMylLPVx77cET32mxa0cuFDws3wRHVHKqsXF8NLcU0CKD+vJ
- 2r2o0EyzbABvSXPPMOOeJ6IWErzCQ8SVHviPdC2u/T7xQ/KP6uYicgcLYijB6Gk=
-X-Received: by 2002:a05:6000:1564:b0:390:e7c1:59c0 with SMTP id
- ffacd0b85a97d-39132d7b834mr7461703f8f.26.1741595341269; 
- Mon, 10 Mar 2025 01:29:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG/fGEoXcdfMlt63beLE5rNQAhJ3draZYtFDcErJMWsY/uZoh4ZX9iQIidqn0/hJZ55v0WD7Q==
-X-Received: by 2002:a05:6000:1564:b0:390:e7c1:59c0 with SMTP id
- ffacd0b85a97d-39132d7b834mr7461682f8f.26.1741595340861; 
- Mon, 10 Mar 2025 01:29:00 -0700 (PDT)
+ AJvYcCVLb10uFVs4bVmuSBNJs1oShmrfmc5D8gep4vriyTMs4Qr0qz9ZSLRfJDJlP/LKxSwsPAbZSUOHL2Ha@nongnu.org
+X-Gm-Message-State: AOJu0YzAsSJ4h4DNbtNECSObiTxY4ciRnX7T3jzxyisk7asn4gFOKy9f
+ muRGlUdP0hHwxK2yOsIwsJ1qdciiE1Il6dfS1lO9ptSbFJYG7fpTm6Ib+nOZkjbZHGK0esxxqqq
+ FLidJhiBk2w5Pp/Tcki5ZAwlOxHk8CE+d8z43EQI/KQclzQ+Yh3td9POdTIrD
+X-Gm-Gg: ASbGncv+A65k0mc63DsJSp9FJHM4xp0PJ6Bp2SkwO/ZRqwULRSYEtYFw8KqgyZDjCxQ
+ Xi6dHcHlT2l9rAQN102QHOETTYwaH3A6AQS4g7e3TVrQ4pLHJmNajSPkDGRp5VwYshEJUTlZtBS
+ 6VPnxPbSSYuTr3z4HOudfeM48vNnSdgDkkweQ+euN4qGtUZLY+18a2ODVSL7EeRnm7VAUh4bTJ/
+ ZwDIcdF6RhGZ0iiW8sbAb6adlT6QEYH2+10T0O8PcXoycZm9DM7NU2/0DA9rcm+ZB9e3cJEacc5
+ NDgbPrxjxhlbmpTV5g7v41jgVRO/XARTcnkQ9wtvGB/rU/Zi0hz5JZx53q5V6Eo=
+X-Received: by 2002:a5d:6c66:0:b0:391:4763:2a with SMTP id
+ ffacd0b85a97d-39147630139mr2479781f8f.47.1741595366694; 
+ Mon, 10 Mar 2025 01:29:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHPNJntjpr3gMQ8m9M8Z5B8/nqI3UcZG0kOxTXkmBrWyewceDf0RpQnBesTDqtsAR+C/l5M/A==
+X-Received: by 2002:a5d:6c66:0:b0:391:4763:2a with SMTP id
+ ffacd0b85a97d-39147630139mr2479753f8f.47.1741595366332; 
+ Mon, 10 Mar 2025 01:29:26 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfb7ae4sm13782577f8f.5.2025.03.10.01.28.57
+ ffacd0b85a97d-3912c103f57sm14175885f8f.91.2025.03.10.01.29.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 01:29:00 -0700 (PDT)
-Message-ID: <cbaf536a-e182-40c7-9517-803b9035bbc7@redhat.com>
-Date: Mon, 10 Mar 2025 09:28:56 +0100
+ Mon, 10 Mar 2025 01:29:25 -0700 (PDT)
+Message-ID: <1671aad2-ab9e-4462-88c1-11389d299c76@redhat.com>
+Date: Mon, 10 Mar 2025 09:29:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/21] system: Declare qemu_[min/max]rampagesize() in
- 'system/hostmem.h'
+Subject: Re: [PATCH v2 07/21] hw/vfio: Compile display.c once
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -105,9 +104,9 @@ Cc: Yi Liu <yi.l.liu@intel.com>,
  Jason Herne <jjherne@linux.ibm.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
 References: <20250308230917.18907-1-philmd@linaro.org>
- <20250308230917.18907-7-philmd@linaro.org>
+ <20250308230917.18907-8-philmd@linaro.org>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250308230917.18907-7-philmd@linaro.org>
+In-Reply-To: <20250308230917.18907-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124;
@@ -140,98 +139,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 3/9/25 12:09 AM, Philippe Mathieu-Daudé wrote:
-> Both qemu_minrampagesize() and qemu_maxrampagesize() are
-> related to host memory backends, having the following call
-> stack:
->
->   qemu_minrampagesize()
->      -> find_min_backend_pagesize()
->          -> object_dynamic_cast(obj, TYPE_MEMORY_BACKEND)
->
->   qemu_maxrampagesize()
->      -> find_max_backend_pagesize()
->         -> object_dynamic_cast(obj, TYPE_MEMORY_BACKEND)
->
-> Having TYPE_MEMORY_BACKEND defined in "system/hostmem.h":
->
->   include/system/hostmem.h:23:#define TYPE_MEMORY_BACKEND "memory-backend"
->
-> Move their prototype declaration to "system/hostmem.h".
+> display.c doesn't rely on target specific definitions,
+> move it to system_ss[] to build it once.
 >
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
 Eric
 > ---
->  include/exec/ram_addr.h    | 3 ---
->  include/system/hostmem.h   | 3 +++
->  hw/ppc/spapr_caps.c        | 1 +
->  hw/s390x/s390-virtio-ccw.c | 1 +
->  hw/vfio/spapr.c            | 1 +
->  5 files changed, 6 insertions(+), 3 deletions(-)
+>  hw/vfio/meson.build | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
-> index 94bb3ccbe42..ccc8df561af 100644
-> --- a/include/exec/ram_addr.h
-> +++ b/include/exec/ram_addr.h
-> @@ -101,9 +101,6 @@ static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
->  
->  bool ramblock_is_pmem(RAMBlock *rb);
->  
-> -long qemu_minrampagesize(void);
-> -long qemu_maxrampagesize(void);
-> -
->  /**
->   * qemu_ram_alloc_from_file,
->   * qemu_ram_alloc_from_fd:  Allocate a ram block from the specified backing
-> diff --git a/include/system/hostmem.h b/include/system/hostmem.h
-> index 5c21ca55c01..62642e602ca 100644
-> --- a/include/system/hostmem.h
-> +++ b/include/system/hostmem.h
-> @@ -93,4 +93,7 @@ bool host_memory_backend_is_mapped(HostMemoryBackend *backend);
->  size_t host_memory_backend_pagesize(HostMemoryBackend *memdev);
->  char *host_memory_backend_get_name(HostMemoryBackend *backend);
->  
-> +long qemu_minrampagesize(void);
-> +long qemu_maxrampagesize(void);
-> +
->  #endif
-> diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-> index 904bff87ce1..9e53d0c1fd1 100644
-> --- a/hw/ppc/spapr_caps.c
-> +++ b/hw/ppc/spapr_caps.c
-> @@ -34,6 +34,7 @@
->  #include "kvm_ppc.h"
->  #include "migration/vmstate.h"
->  #include "system/tcg.h"
-> +#include "system/hostmem.h"
->  
->  #include "hw/ppc/spapr.h"
->  
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index 51ae0c133d8..1261d93b7ce 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -41,6 +41,7 @@
->  #include "hw/s390x/tod.h"
->  #include "system/system.h"
->  #include "system/cpus.h"
-> +#include "system/hostmem.h"
->  #include "target/s390x/kvm/pv.h"
->  #include "migration/blocker.h"
->  #include "qapi/visitor.h"
-> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-> index 9b5ad05bb1c..1a5d1611f2c 100644
-> --- a/hw/vfio/spapr.c
-> +++ b/hw/vfio/spapr.c
-> @@ -12,6 +12,7 @@
->  #include <sys/ioctl.h>
->  #include <linux/vfio.h>
->  #include "system/kvm.h"
-> +#include "system/hostmem.h"
->  #include "exec/address-spaces.h"
->  
->  #include "hw/vfio/vfio-common.h"
+> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+> index 5c9ec7e8971..a8939c83865 100644
+> --- a/hw/vfio/meson.build
+> +++ b/hw/vfio/meson.build
+> @@ -5,7 +5,6 @@ vfio_ss.add(files(
+>  ))
+>  vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
+>  vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+> -  'display.c',
+>    'pci-quirks.c',
+>    'pci.c',
+>  ))
+> @@ -28,3 +27,6 @@ system_ss.add(when: 'CONFIG_VFIO', if_true: files(
+>  system_ss.add(when: ['CONFIG_VFIO', 'CONFIG_IOMMUFD'], if_true: files(
+>    'iommufd.c',
+>  ))
+> +system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+> +  'display.c',
+> +))
 
 
