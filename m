@@ -4,110 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDC8C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EDD4C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trebh-0001Vz-KT; Mon, 10 Mar 2025 10:59:53 -0400
+	id 1trecM-00027x-SN; Mon, 10 Mar 2025 11:00:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1trebd-0001Qh-5q; Mon, 10 Mar 2025 10:59:49 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1trebb-0004qr-0N; Mon, 10 Mar 2025 10:59:48 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52ADslSI017830;
- Mon, 10 Mar 2025 14:59:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=VCCDkV
- o4v2mZbPP3dj2xaTnIBwqPL29dT3N4QxSz6wk=; b=A5BNX7gaCHrD2u5V3Kq5uI
- KZqr3TzsI5HzcQ4A4PmPNYQJcaaeXU+Gdj/ga872ktGCAcEZGh2eVTDttwagsYNA
- Js2pnj2SYgT9qjFU5GsobE9p+g6psu1uoeBG6yancjlAJISSaRGZ+TRW7/099O2H
- pcRBdB4/1Z5H3zN5pXX+pBsqQKFxHVCIo1aDrw0FCmDIu+PfidsoS7e9bWv/GFGI
- IayOnjFkKFUTKcPLXRvNfB2pQwTJtQpndzQE+bdeUad7hfiRJzy+GKdI688CKXfB
- Ah3CK1SeyQ0J71kaeswcONEEdOYRhXqodxzC1oCuglvtTU/VkTBivBUWRsccxCkw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 459rf935ur-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Mar 2025 14:59:36 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52AEtNnJ002999;
- Mon, 10 Mar 2025 14:59:36 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 459rf935uj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Mar 2025 14:59:36 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52AC3MWG014527;
- Mon, 10 Mar 2025 14:59:35 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4592ek6v98-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Mar 2025 14:59:35 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52AExVam36110616
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 10 Mar 2025 14:59:31 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9D11120043;
- Mon, 10 Mar 2025 14:59:31 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8310920040;
- Mon, 10 Mar 2025 14:59:29 +0000 (GMT)
-Received: from [9.39.21.21] (unknown [9.39.21.21])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 10 Mar 2025 14:59:29 +0000 (GMT)
-Message-ID: <d9ca52cd-6afd-4ed2-9e99-76ca5cbf7b80@linux.ibm.com>
-Date: Mon, 10 Mar 2025 20:29:28 +0530
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1trec8-00022M-6d
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:00:23 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1trec6-00055M-4S
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:00:19 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 71BEE1F387;
+ Mon, 10 Mar 2025 15:00:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741618814; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FKIj5ahfcwF7PtWoFFei8wOioIbURtYulKxbN8cwDp8=;
+ b=l3URDviXPannmkmUifZEAVnUBF0W2X0baHkQB4DgvnixwCUrCDZNrIKUXhjuIZZ16+iKHx
+ aqWtoHzRDzWm8X2ZwXL2/lP/1PNlsVgPc8QwoViF4lH6fYwOMREd/26Hn+a4cwsT/WRtbU
+ oPC1tXVonM2Wur5QvDQFvR4M1npHgxs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741618814;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FKIj5ahfcwF7PtWoFFei8wOioIbURtYulKxbN8cwDp8=;
+ b=nGrsX+pgbyOCb/uq/AI7Eu1PtgxtPLGmKlihiOpDJmayeg1s1zu5QsA3tGhkYXKBiJcsRR
+ IenyJdtOMgQrxhCw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=l3URDviX;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=nGrsX+pg
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741618814; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FKIj5ahfcwF7PtWoFFei8wOioIbURtYulKxbN8cwDp8=;
+ b=l3URDviXPannmkmUifZEAVnUBF0W2X0baHkQB4DgvnixwCUrCDZNrIKUXhjuIZZ16+iKHx
+ aqWtoHzRDzWm8X2ZwXL2/lP/1PNlsVgPc8QwoViF4lH6fYwOMREd/26Hn+a4cwsT/WRtbU
+ oPC1tXVonM2Wur5QvDQFvR4M1npHgxs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741618814;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FKIj5ahfcwF7PtWoFFei8wOioIbURtYulKxbN8cwDp8=;
+ b=nGrsX+pgbyOCb/uq/AI7Eu1PtgxtPLGmKlihiOpDJmayeg1s1zu5QsA3tGhkYXKBiJcsRR
+ IenyJdtOMgQrxhCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DBC7A139E7;
+ Mon, 10 Mar 2025 15:00:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id AQz/JX3+zmf7QgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 10 Mar 2025 15:00:13 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, Philippe =?utf-8?Q?Mat?=
+ =?utf-8?Q?hieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, "stefanha@gmail.com" <stefanha@gmail.com>
+Subject: Re: [PULL 8/8] migration: Add qtest for migration over RDMA
+In-Reply-To: <e9d7960d-f6ca-4322-a469-0d953d7dbfa7@fujitsu.com>
+References: <20250307181551.19887-1-farosas@suse.de>
+ <20250307181551.19887-9-farosas@suse.de>
+ <4ce8e8e0-3aee-41dd-b1fb-ac9398b0c1d6@linaro.org>
+ <e9d7960d-f6ca-4322-a469-0d953d7dbfa7@fujitsu.com>
+Date: Mon, 10 Mar 2025 12:00:11 -0300
+Message-ID: <87h641szgk.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 8/8] ppc/pnv: Update skiboot to support Power11
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250308205141.3219333-1-adityag@linux.ibm.com>
- <20250308205141.3219333-9-adityag@linux.ibm.com>
- <f9ea56e0-a104-4acd-a27e-7d2813efe319@kaod.org>
- <094f0623-e483-4097-aca0-9f320b27af1a@linux.ibm.com>
- <04b8c4ce-0a58-4f50-97e4-b1cc30b8b340@kaod.org>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <04b8c4ce-0a58-4f50-97e4-b1cc30b8b340@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: CZeGY1QBXGMl80FsEEg2FyolDYkFnHtG
-X-Proofpoint-GUID: eH4SWktn27AbppkaDP0QWsmsBmNvEIxj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-10_06,2025-03-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 mlxlogscore=637
- phishscore=0 bulkscore=0 mlxscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503100117
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 71BEE1F387
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; TO_DN_EQ_ADDR_SOME(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com]; RCVD_TLS_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; MID_RHS_MATCH_FROM(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo, suse.de:mid, suse.de:dkim]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,39 +138,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/03/25 17:15, Cédric Le Goater wrote:
-> On 3/10/25 11:31, Aditya Gupta wrote:
->>>> <...snip...>
->>>>   pc-bios/skiboot.lid | Bin 2527328 -> 2527424 bytes
->>>>   1 file changed, 0 insertions(+), 0 deletions(-)
+"Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org> writes:
+
+> Hi Philippe,
+>
+> Thanks for your testing.
+>
+>
+> On 08/03/2025 14:00, Philippe Mathieu-Daud=C3=A9 wrote:
+>> Hi,
+>>=20
+>> On 7/3/25 19:15, Fabiano Rosas wrote:
+>>> From: Li Zhijian <lizhijian@fujitsu.com>
 >>>
->>> This change should come first as a sub maintainer PR, to avoid 
->>> sending 2.5MB
->>> on the mailing list :/ See how SLOF is handled.
+>>> This qtest requires there is a RDMA(RoCE) link in the host.
+>>> In order to make the test work smoothly, introduce a
+>>> scripts/rdma-migration-helper.sh to
+>>> - setup a new Soft-RoCE(aka RXE) if it's root
+>>> - detect existing RoCE link
 >>>
->> Sorry didn't know this. I just checked the git log of skiboot.lid and 
->> thought maybe it's this same way of sending patches.
->
-> For example, see  :
->
-> https://lore.kernel.org/qemu-devel/CACPK8XfoKNxr6_KkDFFZm0P5w9m_ddD5E4SeuAkypXXr7swR7A@mail.gmail.com/
->
-Thanks for the example Cédric. Now I see.
-
-
-> To be sent before v6.
-
-Sure, will wait for the maintainer to send it first before v6.
-
-
-Thanks,
-
-- Aditya Gupta
-
->
-> Thanks,
->
-> C.
+>>> Test will be skipped if there is no available RoCE link.
+>>=20
+>> Is it? Runing as user I'm getting:
+>>=20
+>>  =C2=A0 RDMA ERROR: RDMA host is not set!
 >
 >
+> It's unexpected behavior.
+>
+> It implies that the script terminated successfully with an exit
+> code of 0(there is a RDMA link), yet failed to display its canonical
+> IPv4 address.
+>
+> Stefan also mentioned the same error...
+> https://gitlab.com/qemu-project/qemu/-/jobs/9350004599#L5590
+>
+> I couldn't reproduce your error.
+>
+> Could you share the output of this script with a normal user,
+> $ scripts/rdma-migration-helper.sh detect
+>
+> if your had a rdma/RXE link, please share the output of its ip
+> $ ip -4 -o addr show dev <NIC>
+>
+> Where the <NIC> is an interface associated with the RoCE(RXE), for example
+>
+> $ rdma link
+> link enp2s0_rxe/1 state ACTIVE physical_state LINK_UP netdev enp2s0
+>
+> then the <NIC> is enp2s0
+>
+>
+>>=20
+>> Apparently called via:
+>>=20
+>> qemu_start_incoming_migration()
+>>  =C2=A0 -> rdma_start_incoming_migration()
+>>  =C2=A0=C2=A0=C2=A0=C2=A0 -> qemu_rdma_dest_init()
+>>=20
+>>> =C2=A0 # Start of rdma tests
+>>> =C2=A0 # Running /x86_64/migration/precopy/rdma/plain
+>>> =C2=A0 Command 'rdma' is not available, please install it first.
+>>> =C2=A0 # To enable the test:
+>>> =C2=A0 # (1) Run 'scripts/rdma-migration-helper.sh setup' with root and=
+ rerun the test
+>>> =C2=A0 # or
+>>> =C2=A0 # (2) Run the test with root privilege
+>>=20
+>> Could this might be the issue, should we skip if not root, as calling
+>> the script in "detect" mode makes the new_rdma_link() method to succeed.
+>
+> It's expected the 'detect' should succeed and print a IPv4 address
+>
+>>=20
+>>> =C2=A0 #
+>>> =C2=A0 ok 1 /x86_64/migration/precopy/rdma/plain # SKIP No rdma link av=
+ailable
+>>> =C2=A0 # End of rdma tests
+>>>
+>>> Note: Remove the newly added RXE link by executing 'modprobe -r rdma_rx=
+e'
+>>> or by specifying 'clean' within this script.
+>>=20
+>> qtest_add() provides both setup() / teardown() methods.>=20
+>
+> This may require a minor refactor of the migration-test framework to
+> enable support for setup() and teardown() methods.
+>
+> Let me see...
+>
+>
+>
+>> Test leaving system in different state seems bogus to me.
+>
+> At this point, I'm unable to refute. It indeed dirty the
+> It indeed might dirty the system.
+>
+>
+> A palatable compromise might be that, regardless of whether one is a
+> root user or not, this test is only supported on hosts with RDMA link.
+>
+> Otherwise, it will provide an SKIP warning.
+>
+>       # Run 'scripts/rdma-migration-helper.sh setup' with root and rerun =
+the test
+>       # Optional: run 'scripts/rdma-migration-helper.sh clean' to revert =
+the 'setup'
+>
+> For local users, they can independently use this script to set up and cle=
+an RDMA,
+> as they are aware of the modifications they have made to the system.
+
+Yes, let's skip it unless the user has very explicitly set things up.
+
 
