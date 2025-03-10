@@ -4,87 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16EADC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 10:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3912C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 10:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1traOV-0008QO-MB; Mon, 10 Mar 2025 06:29:59 -0400
+	id 1traPy-0002K1-6v; Mon, 10 Mar 2025 06:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1traOT-0008PC-5w
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:29:57 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1traOQ-0001Fn-VO
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:29:56 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-39140bd6317so956801f8f.1
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 03:29:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741602593; x=1742207393; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+9H8yzUqnFGE1iE+v3OEk3XLWxU02TF3f9IPBab7k/s=;
- b=o5L4RXdQ71Iat53bnjM87P14Z3bLlrvnAgsPcT57RiG+DWW1zMb/vPu+IzEhkxM/lj
- sNqlQjFgskI3vh+086XKx7OtY+o+kB4dc3ENLzi2dMVhS2cyq8c062MT/hjU7BoTS5L1
- 7W7ZLh/ikUFNRTUcLHwNbsO+808OXg8S2Vx2XOZ+/zCV7liX6J1w4kJYd8wc9rexnHCp
- qq9HTB7y0qxCe0oL3v3/pCpZLviKvSu+MQwCsFmxG2qOEtfvlSx3OQ07KY+DwVkXPL+O
- bCiu/VR3Inxhb1iIYVyk2j51z2jUd/OjeepK0+KPVcJE1Ns/PNg/GEVGycII0AnqYrkS
- LBEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741602593; x=1742207393;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+9H8yzUqnFGE1iE+v3OEk3XLWxU02TF3f9IPBab7k/s=;
- b=Ehs1AkuptQ/Q8rtJYX+qBY3oDgyEfNoMdyHbkqSpwpPnHeInK/DyJo6XYuTsIlNOVO
- rHAIYfcPKQzOQlJm0fzR3wYDfB1NdqiHochDbFvu05+g5RWgkmj98bBn9QLKOqhuCFeK
- foQB1e+C4fkSTrcQ7Qqp2oQuWYz4JOtIsZTIgo7sjAJRbLHbeIICe2D7v9MliOzH5pre
- 2kEWKXdeseQz8Kyc5o0vW2n6Gn5iM471LiBNyBy2jFDjMycF2nSdge2/4QuCESgyJTEU
- j/CW59+bSgE2V7+PNjRZuD0NDnxnFAWF+f9cARnpKcR9Wug5PUTZVb2pyEgO/n+zkiia
- TRlA==
-X-Gm-Message-State: AOJu0YyM56/uJVHMMczGavq58w8FSRkG/++nYer5v5IT+nSCbCvD5VFJ
- wi5DtW6PQjFG6eZEA3/RGMuA+htPWe9BwP4U/cv4GCTDjQgdC9GJ5SOc21qxZvl1GMkQMoGbfnR
- T
-X-Gm-Gg: ASbGncto/l7a3dPrS9Mbd8q95StLhepuDxqeWvqbQ1MD0kls3oV7xeDxAYLj108a/B+
- 3xfAW+opZvPgj2QHO7jpWnvNibi0ZwtpBoDhpHIQrOjOoMQ04tyafoxMMNFwB7wTQr81gRB+8QA
- br1osyjyshnasDPCFDvTap/eg6tkaLGGwJpAxqYGEFhonEGxkELevWQB0PwQQ/gfqWriwJ3strw
- 5abC8pOrsB/HIbKg1J87NV+SteH5rbzhDinqfQUs6+rn4WK1XMrvTowU3PYvVZ4kscR5kVhZGQp
- ZpX/o9pxy4rB7tRnB8nKcQZLs3zlDg3i67iBGIhFgZvA9SEFXL0=
-X-Google-Smtp-Source: AGHT+IHV5F2Jr2zLhbz0KN50hfYH78Trabii68SLIHsv4aD4xoq/mHK2HSekrdqRTFM0QJByE4psxg==
-X-Received: by 2002:a5d:6482:0:b0:38f:3e39:20ae with SMTP id
- ffacd0b85a97d-39132dc580amr9862319f8f.43.1741602593101; 
- Mon, 10 Mar 2025 03:29:53 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cfcbdd0a7sm13036945e9.11.2025.03.10.03.29.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Mar 2025 03:29:51 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] meson.build: Set RUST_BACKTRACE for all tests
-Date: Mon, 10 Mar 2025 10:29:50 +0000
-Message-ID: <20250310102950.3752908-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1traPt-0002JC-U6; Mon, 10 Mar 2025 06:31:26 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1traPs-0001hB-AF; Mon, 10 Mar 2025 06:31:25 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52A78w79018245;
+ Mon, 10 Mar 2025 10:31:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=rL6/G6
+ P9e6PGVF/Gq2kilRzgVCHa/6g7KMixQ+UOhf8=; b=OaW9zX+cKUkLCWIIUdY0BS
+ zXFbFdN7C9iZkc38zssrHgHva8O+7UFyslZw/mQleN9Ifih4zXTApxJC5JMXLKbg
+ isptoT9/48Z6gxz+4OgPuRw1itmSoGfT2RQ+ZeeeL9Z/zIIIjxe0NnfK1f9w80Vz
+ f6otYny2lspL0Foki26cJCQyUshIWembMcrsdFDFwLOkRSTxlSUustSXRzLETmai
+ Y9Ty5apyJHA3rLOFYJfm5wDUi2c7FvHZhASIJeyDAzPq5WRZNyqpJSilHXO9LmGk
+ KFsu3Nwu+2e1XL4Ww78x88ASDK2Ybb8821EZWRZ32igx/LTnetD3r5wZ2Cq1xdLQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 459cdnktca-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Mar 2025 10:31:19 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52AARhub008249;
+ Mon, 10 Mar 2025 10:31:19 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 459cdnktc8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Mar 2025 10:31:19 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52A80FOh014921;
+ Mon, 10 Mar 2025 10:31:18 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4592ek5ubv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Mar 2025 10:31:18 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52AAVF3u37093886
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 10 Mar 2025 10:31:15 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EC1472004D;
+ Mon, 10 Mar 2025 10:31:14 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0BAA02004B;
+ Mon, 10 Mar 2025 10:31:13 +0000 (GMT)
+Received: from [9.109.199.160] (unknown [9.109.199.160])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 10 Mar 2025 10:31:12 +0000 (GMT)
+Message-ID: <094f0623-e483-4097-aca0-9f320b27af1a@linux.ibm.com>
+Date: Mon, 10 Mar 2025 16:01:12 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 8/8] ppc/pnv: Update skiboot to support Power11
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20250308205141.3219333-1-adityag@linux.ibm.com>
+ <20250308205141.3219333-9-adityag@linux.ibm.com>
+ <f9ea56e0-a104-4acd-a27e-7d2813efe319@kaod.org>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <f9ea56e0-a104-4acd-a27e-7d2813efe319@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: MuXFOQov9W7JdWEkysjwjcOshZ68D3ih
+X-Proofpoint-ORIG-GUID: wT4mwWZxHdbM0zQb3v766gmZ3KEIW0hA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-10_04,2025-03-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ lowpriorityscore=0 spamscore=0 phishscore=0 mlxlogscore=873
+ priorityscore=1501 bulkscore=0 adultscore=0 malwarescore=0 suspectscore=0
+ mlxscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503100083
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,53 +122,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to capture potential Rust backtraces on panics in our test
-logs, which isn't Rust's default behaviour.  Set RUST_BACKTRACE=1 in
-the add_test_setup environments, so that all our tests get run with
-this environment variable set.
+On 09/03/25 19:40, Cédric Le Goater wrote:
 
-This makes the setting of that variable in the gitlab CI template
-redundant, so we can remove it.
+> On 3/8/25 21:51, Aditya Gupta wrote:
+>> Update skiboot.lid to below commit which adds support for booting on
+>> Power11:
+>>
+>>      commit 785a5e3070a8 ("platform: Identify correct bmc platform 
+>> based on bmc hw version")
+>>
+>> Built with glibc 2.40 and gcc 14.2 (Fedora 41)
+>>
+>> Signed-off-by: Aditya Gupta<adityag@linux.ibm.com>
+>> ---
+>> Should the roms/skiboot submodule also be updated ?
+>>
+>> I see it has generally been updated on skiboot releases with versions,
+>> eg. 7.1, 7.0. No newer version available for upstream/master.
+>> ---
+>> ---
+>>   pc-bios/skiboot.lid | Bin 2527328 -> 2527424 bytes
+>>   1 file changed, 0 insertions(+), 0 deletions(-)
+>
+> This change should come first as a sub maintainer PR, to avoid sending 
+> 2.5MB
+> on the mailing list :/ See how SLOF is handled.
+>
+Sorry didn't know this. I just checked the git log of skiboot.lid and 
+thought maybe it's this same way of sending patches.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- meson.build                         | 9 ++++++---
- .gitlab-ci.d/buildtest-template.yml | 1 -
- 2 files changed, 6 insertions(+), 4 deletions(-)
+Will skip sending this in v6.
 
-diff --git a/meson.build b/meson.build
-index 8b9fda4d95e..2f373dc675f 100644
---- a/meson.build
-+++ b/meson.build
-@@ -5,9 +5,12 @@ project('qemu', ['c'], meson_version: '>=1.5.0',
- 
- meson.add_devenv({ 'MESON_BUILD_ROOT' : meson.project_build_root() })
- 
--add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true)
--add_test_setup('slow', exclude_suites: ['thorough'], env: ['G_TEST_SLOW=1', 'SPEED=slow'])
--add_test_setup('thorough', env: ['G_TEST_SLOW=1', 'SPEED=thorough'])
-+add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true,
-+              env: ['RUST_BACKTRACE=1'])
-+add_test_setup('slow', exclude_suites: ['thorough'],
-+               env: ['G_TEST_SLOW=1', 'SPEED=slow', 'RUST_BACKTRACE=1'])
-+add_test_setup('thorough',
-+               env: ['G_TEST_SLOW=1', 'SPEED=thorough', 'RUST_BACKTRACE=1'])
- 
- meson.add_postconf_script(find_program('scripts/symlink-install-tree.py'))
- 
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 4cc19239319..39da7698b09 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -63,7 +63,6 @@
-   stage: test
-   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
-   script:
--    - export RUST_BACKTRACE=1
-     - source scripts/ci/gitlab-ci-section
-     - section_start buildenv "Setting up to run tests"
-     - scripts/git-submodule.sh update roms/SLOF
--- 
-2.43.0
 
+Thanks,
+
+- Aditya Gupta
+
+>
+> Thanks,
+>
+> C.
+>
+>
 
