@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 963C7C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 16:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C99DC282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 16:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trgMI-0002NN-Fp; Mon, 10 Mar 2025 12:52:06 -0400
+	id 1trgNh-0003O7-GZ; Mon, 10 Mar 2025 12:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1trgMD-0002MH-I4
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:52:01 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1trgNe-0003MF-Hh
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:53:30 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1trgMB-0005mu-9w
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:52:01 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43ce71582e9so13217395e9.1
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 09:51:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1trgNb-0005ut-3G
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:53:28 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-219f8263ae0so85359895ad.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 09:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741625517; x=1742230317; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xBQ/YVCUlvngj51gT+nGmhV/w3YqnO2x51QPa+teq/c=;
- b=hDfrE7SxOBc5OExLwwb8wJ1WAnB9aBKamTIFF0mybcb9fJv3UYXHXcrJxWTGBy3CdY
- pjBj6mp1d1bC0RNRF7x3TWLGyEv7Iu3yCd3u9ApoH/aQ98j5aUej47N8pBvT/2I+uHf2
- HKWaUxctR5EoNR/x9mIj8In6RFPIlUuOYe/mIbWwpyVXXD81NWsn6dAA62d4OZYSOmc4
- /nFpIfsfJz15lg1OICRLM54YjZB/7Wu3VMIMjK53ojg2JgEYa4f+Znb95KBeposg6PXZ
- Qoe5DCvLY4JCrOAKvaXB1HHfvtLK4fEowfj9D7x8DslwNA06vaooWxyiejFDu5YlzG5F
- TvxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741625517; x=1742230317;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ d=linaro.org; s=google; t=1741625604; x=1742230404; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xBQ/YVCUlvngj51gT+nGmhV/w3YqnO2x51QPa+teq/c=;
- b=H94MUeNKim/WbZLXYR0m+rpLJWrQYf8t9ED+pFdxSNy7uH23659AL+QmaeC5gJL8av
- i7f0oyC/+t/eSngrq0m1r7aAWYwJ9rGsZj1MIuxRnaP7OSAaeOplWJIlxGoLqFr9rmG6
- mzp8laG7Paa/WyiZS4ynOkyoL3mc+JN+8X513fSIvWeQKFsWQsu9oh4h4J9sYvm6coG1
- /fEtpzRJXnwtVxdI0WmUUzXYTOvfmetvMAthaGCJ8d0ftnZPIYya4SIAzY7/OxuWozIW
- G/szArRgojQUXXeY52Ym4RtdqfXbfl7hoU8ALqeeBdH4mv6oAbOMrhjY6mPk2Hcnqewf
- ci+Q==
-X-Gm-Message-State: AOJu0YwEGI5WqgxE1b97coX/O9kU+UX5kMaQ0UfAN2RElDx7mN/P7TQH
- gP0Ls9m1XT9x4piOPQs0+n4BnifNwL8q9nNT22P3Io0hMqMUJ4xzG1ANijAopBg=
-X-Gm-Gg: ASbGnctjj2md+cZ2bhvmcb0SRBP+EtS0sCIoUOHiSD3isU8psCNeLhmc6m6pvSTETAq
- knrv8EiDJlD80i//Cfxr0SkxCv4s7U/5eLVs18kIIu28e+wFL2PLNnNqrnudVEvIeI/C847L/Vg
- jamD6p7z5x4hGXfPKwRB9nA9J1sN1bw37GzRwmg0pvJ1zHAEJSNp6qRMp6ufQKeFze9g7IoOVnL
- bOOJ3i8LuJoRNGTE1Cqhmlk/1unv9SKQ8C0RQh/K/GWVLDFGjB2WNc+XkQJscbYN9auiQlpozpJ
- 3Z/bnwZyrjXyCU2Qyrifspy9CG31px00sysq73J9RpLh54U=
-X-Google-Smtp-Source: AGHT+IEsbZZg+DwJcwND+qk6+cSg4ztQzlrOGXS1w4qnPv2Ub2nPuQOnkGbr6torseuO1NXZTpwciw==
-X-Received: by 2002:a05:600c:5103:b0:439:685e:d4c8 with SMTP id
- 5b1f17b1804b1-43c5a60eda3mr98405685e9.15.1741625516936; 
- Mon, 10 Mar 2025 09:51:56 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cf27f8ef3sm55474135e9.11.2025.03.10.09.51.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Mar 2025 09:51:56 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 88A455F748;
- Mon, 10 Mar 2025 16:51:55 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: David Milosevic <david.milosevic@9elements.com>
-Cc: qemu-devel@nongnu.org,  Marcello Sylvester Bauer
- <marcello.bauer@9elements.com>,  pizhenwei@bytedance.com
-Subject: Re: [RFC] Proposal for a QEMU video subsystem for cameras and webcams
-In-Reply-To: <CAFUY6-d5GZSrDzD0vUEF6P4YnstMjx=G3Q77iFGLt3eBUf5WUA@mail.gmail.com>
- (David Milosevic's message of "Mon, 10 Mar 2025 17:23:21 +0100")
-References: <CAFUY6-d5GZSrDzD0vUEF6P4YnstMjx=G3Q77iFGLt3eBUf5WUA@mail.gmail.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Mon, 10 Mar 2025 16:51:55 +0000
-Message-ID: <87senk7rro.fsf@draig.linaro.org>
+ bh=79s8+mstomonepX5d5d+DntInPkYCBzA5RgBbJU2qMM=;
+ b=T1xgxSyTtuqLbzIDhduX3YQgXweZYfh1Agx4B6us4cPs4XXqow2sVeQnR958FCggpb
+ MrI+1jPujhMDYFfUwTGHB3uUYdFROpOv7j+eRs2ST6z/Yo2pozoltnd0VjyiJdxDajdW
+ BgbMpmB3ZJbvJXQx5xCZBDl+mmIsVHzNffyTskyUraOpJQR7v9v+WB6/R71IJzjigQlv
+ MHi9ggAQo4Yk8glFWDBFDFgbf5E8tLFWPEG5kJRNhtz9bTMP0zh3JeWss388CEhkev9U
+ we1DR6X3YnsTk7Sfpk7mR0bd1qOhGwBJK4q2tpJU66FgyD/aYtWzlBCsnBZ354IiSrrc
+ +N3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741625604; x=1742230404;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=79s8+mstomonepX5d5d+DntInPkYCBzA5RgBbJU2qMM=;
+ b=PTqvCTJrJpIqPrKVb6U3l/T/H4Bcf+f6r0KFuASqR953bFD8DdAMvwKUI0r9kpyo6a
+ Vqtq40eydOgUcvIoRhn6WFNxK+61fSkoghYxJ3rrMeLi3dIbK8HWTYasSim99N+RSe4H
+ TNmbV2E1bIwkTAQaNfzW2550o2HPCdc62z6kChoBQ6BKBUvzuF3QODCXA1rPw0vSspMb
+ L30Lltnis6gIQ6bEiG0vaElFNUBJ2ddpICig58t1cFwnqL06eou8DYVi+KLBU2aMh9QB
+ 5O6szQinj2xKtxSazg9JedOuKE8+Q/FhmZV70CCJb++VOTl9LVpY+NDKlK1dkaz6olsK
+ IIsg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXiho46a6fn3vl+3JUUNO3NVsPYqbYYFyjHLqDLcTDHjXz29D0bjYS0h5dltlPyUEn1zDL2F2L0/q3n@nongnu.org
+X-Gm-Message-State: AOJu0YyLVmxtuxaEFy+nKfYbfyYZD/Fly0J37LwOoUoT+zv+WLE3Ea7J
+ uFu3Ae9n8dzqMKB2A8oJ70D0zcdaSsOJiKRRRZ9dIO9m0nWHYSr1Xnam3sBp2LWdtO3TZDxzVvB
+ 3
+X-Gm-Gg: ASbGnctjdyKAqV+D93CrwWw54igf7pMbfBApGqPRB8FFvM1BNtr7OeAMBQMpiuzvnAd
+ w7Reuy3yrg+1M/3qaaNwd7iZcYPvqtQhAPdGfDS89MdG6ZENfoOnFtZBd9P3p2svNu2/StiNhCv
+ ETlAiHBdDmqcUeWu05WlWC2cjOH1ooH9MRGX8UmMSANDqscnnXJ8BBql5Zf03bsECMOy948nAKv
+ bO3cxlu0bcv7bk99E4NtftLC+INAs23WOPFkZ3vyA/RsguciAz2bV86JIrH8OxOHCYArvcxf0kD
+ IuOk3ThvRwFvxu22wvH9HkBrWJFj7CBErUNEgsGUgj+GZmeLom5KfNiVsH2wWF27cJIWqgDRx8s
+ M3dWyApRG
+X-Google-Smtp-Source: AGHT+IFJNUhJNfL9FybzRLZ7ieGbS5gea6wSS/VpsHLNRCOMmBxROeDSVG14q4XM3wni0qXv3CHv1g==
+X-Received: by 2002:a05:6a00:4b14:b0:736:34ff:be7 with SMTP id
+ d2e1a72fcca58-736eb87c863mr720964b3a.15.1741625604676; 
+ Mon, 10 Mar 2025 09:53:24 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-736d2e94e53sm2921051b3a.118.2025.03.10.09.53.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Mar 2025 09:53:24 -0700 (PDT)
+Message-ID: <e20b6a44-b371-4154-8dc9-5f3cb4a3f570@linaro.org>
+Date: Mon, 10 Mar 2025 09:53:22 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/16] qemu/bswap: implement {ld,st}.*_p as functions
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
+ <20250310045842.2650784-6-pierrick.bouvier@linaro.org>
+ <4ac28725-33bc-4b29-a941-03784566d330@linaro.org>
+ <6a0cd17e-1c76-4b2d-b781-ea7f438cc4b2@linaro.org>
+ <6dc11a37-06d7-400a-b45e-a151d660eb6f@linaro.org>
+ <15816b7b-f120-4235-a1a9-333bc0f69fe1@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <15816b7b-f120-4235-a1a9-333bc0f69fe1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,81 +108,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-David Milosevic <david.milosevic@9elements.com> writes:
+On 3/10/25 09:43, Pierrick Bouvier wrote:
+> On 3/10/25 09:37, Richard Henderson wrote:
+>> On 3/10/25 09:14, Pierrick Bouvier wrote:
+>>> On 3/10/25 09:08, Richard Henderson wrote:
+>>>> On 3/9/25 21:58, Pierrick Bouvier wrote:
+>>>>> For now, they are duplicate of the same macros in cpu-all.h that we
+>>>>> eliminate in next commit.
+>>>>>
+>>>>> Keep code readable by not defining them with macros, but simply their
+>>>>> implementation.
+>>>>>
+>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>
+>>>> Why do you want these in bswap.h, rather than tswap.h?
+>>>> They're target swaps, after all.
+>>>>
+>>>>
+>>>> r~
+>>>
+>>> No preference on that, I simply added them to the same file than their explicit endianness
+>>> variant. Would you prefer the endianness agnostic variant to be in tswap.h instead?
+>>
+>> I think I would.
+> 
+> Ok, I will move it.
+> 
+>>
+>> In addition, I think we want
+>>
+>> #ifdef COMPILING_PER_TARGET
+>> #define target_words_bigendian()  TARGET_BIG_ENDIAN
+>> #else
+>> bool target_words_bigendian(void);
+>> #endif
+>>
+>> moving the conditional from around target_needs_bswap just below.
+>>
+>> With that, we eliminate the extra branch that you're otherwise
+>> adding to target-specific code with this patch.
+>>
+> 
+> I understand the change requested, but should we really aim in that direction? In the end, 
+> if we pursue the compilation units deduplication, the branch will be present anyway.
+> 
+> I'm ok with your change, just asking if we really want to preserve target specific code 
+> until the "end".
 
-> Dear QEMU Developers,
->
-> I would like to propose the development of a video subsystem in QEMU, wit=
-h the initial
-> implementation focusing on UVC video device emulation and support for mul=
-tiple
-> backends, including V4L2, GStreamer, and libcamera.
->
-> This work is already in progress at 9elements, and we would like to upstr=
-eam it.
->
-> =3D=3D Motivation
->
-> Currently, USB pass-through is the only way to make video devices availab=
-le to guests, which
->
->     - excludes non-USB cameras (e.g., MIPI)
->     - performs poorly with high-resolution cameras
->     - does not work with USB 3.0 video devices (Issue #1613)
->
-> =3D=3D Proposal
->
-> We aim to introduce a video subsystem in QEMU that allows for the impleme=
-ntation of various
-> video devices, similar to how QEMU handles audio. The first device implem=
-entation will be
-> UVC (USB Video Class) device emulation, with support for multiple backend=
-s. Future extensions
-> could include virtio-video or other PCI-based video devices.
+All of target/ is target specific.  De-duplication will not eliminate that.
 
-Are you aware of virtio-media? It was an alternative proposal to
-virtio-video which effectively becomes an encapsulation of v4l to the
-guest.
 
-Kernel patches: https://lore.kernel.org/lkml/20250201-virtio-media-v2-1-ac8=
-40681452d@gmail.com/
-VirtIO spec: https://lore.kernel.org/virtio-comment/20250120085015.956057-1=
--aesteve@redhat.com/T/
-=20
-
-> Supported backends:
->
->     - Video4Linux (V4L2)
->     - GStreamer
->     - libcamera
->
-> =3D=3D Example: V4L2 Backend
->
-> Once implemented, a typical QEMU command line for using a V4L2 backend wo=
-uld look like this
->
->     ./build/qemu-system-x86_64 \
->         -device qemu-xhci \
->         -videodev v4l2,id=3Dcam0,device=3D/dev/video0 \
->         -device usb-video,videodev=3Dcam0
->
-> This sets up a UVC emulated device in the guest, using /dev/video0 from t=
-he
-> host via the V4L2 backend.
->
-> =3D=3D Next Steps
->
-> We welcome feedback on design considerations and integration approaches. =
-Let us know
-> if there are existing discussions or preferred directions for this work.
->
-> Best regards,
->
-> David Milosevic
-> Firmware Developer
-> 9elements
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
