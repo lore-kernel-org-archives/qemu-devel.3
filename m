@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61930C282DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBADBC28B2E
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:15:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trens-0002Z1-Kx; Mon, 10 Mar 2025 11:12:28 -0400
+	id 1trenu-0002ie-NG; Mon, 10 Mar 2025 11:12:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1trenE-0002D6-4V
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:58 -0400
+ id 1tren6-00029H-SG
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:40 -0400
 Received: from smtp1.lauterbach.com ([62.154.241.196])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1tren9-0007h3-TT
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:47 -0400
-Received: (qmail 30817 invoked by uid 484); 10 Mar 2025 15:11:11 -0000
+ id 1tren0-0007iC-EP
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:40 -0400
+Received: (qmail 30961 invoked by uid 484); 10 Mar 2025 15:11:13 -0000
 X-Qmail-Scanner-Diagnostics: from 10.2.13.100 by smtp1.lauterbach.com
  (envelope-from <mario.fleischmann@lauterbach.com>,
  uid 484) with qmail-scanner-2.11 
  (mhr: 1.0. clamdscan: 0.99/21437. spamassassin: 3.4.0.  
  Clear:RC:1(10.2.13.100):. 
- Processed in 0.013285 secs); 10 Mar 2025 15:11:11 -0000
+ Processed in 0.012861 secs); 10 Mar 2025 15:11:13 -0000
 Received: from unknown (HELO mflpc1.LTB.LAN)
  (Authenticated_SSL:mfleischmann@[10.2.13.100])
  (envelope-sender <mario.fleischmann@lauterbach.com>)
  by smtp1.lauterbach.com (qmail-ldap-1.03) with TLS_AES_256_GCM_SHA384
  encrypted SMTP
- for <qemu-devel@nongnu.org>; 10 Mar 2025 15:11:11 -0000
+ for <qemu-devel@nongnu.org>; 10 Mar 2025 15:11:13 -0000
 From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, philmd@linaro.org, armbru@redhat.com,
  christian.boenig@lauterbach.com,
  Mario Fleischmann <mario.fleischmann@lauterbach.com>,
- Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 09/16] mcd: Implement register query
-Date: Mon, 10 Mar 2025 16:05:03 +0100
-Message-Id: <20250310150510.200607-10-mario.fleischmann@lauterbach.com>
+ Eric Blake <eblake@redhat.com>
+Subject: [PATCH 15/16] mcd: Implement trigger control
+Date: Mon, 10 Mar 2025 16:05:09 +0100
+Message-Id: <20250310150510.200607-16-mario.fleischmann@lauterbach.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
 References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
@@ -73,249 +72,851 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly map MCD register groups to GDB features lists
+MCD's trigger API functions support multiple triggers by expecting a pointer
+to the trigger instance. Each trigger structure reserves the first four bytes
+for its size. To get the specific structure, read a uint32_t at passed pointer
+and compare it to the sizes of known trigger structures.
+
+This approach does not work for serialization. The sizes might vary between
+host machines and pointers cannot be sent over the network anyway.
+
+Therefore, we define a MCDTrig structure which explicitly lists all supported
+trigger types as optional fields:
+
+* mcd_trig_simple_core_st: mcd-trig-simple-core
+* mcd_trig_complex_core_st: mcd-trig-complex-core
 
 Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 ---
- mcd/libmcd_qapi.c         |  48 +++++++
- mcd/libmcd_qapi.h         |   8 ++
- mcd/mcdserver.c           | 237 ++++++++++++++++++++++++++++--
- mcd/mcdstub_qapi.c        |  93 ++++++++++++
- qapi/mcd.json             | 296 ++++++++++++++++++++++++++++++++++++++
- tests/qtest/libmcd-test.c |  40 ++++++
- tests/qtest/libmcd-test.h |   6 +
- tests/qtest/mcd-test.c    |  85 +++++++++++
- 8 files changed, 803 insertions(+), 10 deletions(-)
+ mcd/libmcd_qapi.c  | 155 +++++++++++-
+ mcd/libmcd_qapi.h  |  21 ++
+ mcd/mcdserver.c    | 585 ++++++++++++++++++++++++++++++++++++++++++--
+ mcd/mcdstub_qapi.c | 290 ++++++++++++++++++++++
+ qapi/mcd.json      | 588 +++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 1619 insertions(+), 20 deletions(-)
 
 diff --git a/mcd/libmcd_qapi.c b/mcd/libmcd_qapi.c
-index 0421152705..99177b2fd2 100644
+index 8088a9eed2..db3d11d3e5 100644
 --- a/mcd/libmcd_qapi.c
 +++ b/mcd/libmcd_qapi.c
-@@ -147,3 +147,51 @@ MCDMemspace *marshal_mcd_memspace(const mcd_memspace_st *mem_space)
+@@ -188,7 +188,8 @@ mcd_addr_st unmarshal_mcd_addr(MCDAddr *addr)
+     return unmarshal;
+ }
  
+-MCDRegisterInfo *marshal_mcd_register_info(const mcd_register_info_st *reg_info)
++MCDRegisterInfo *marshal_mcd_register_info(
++    const mcd_register_info_st *reg_info)
+ {
+     MCDRegisterInfo *marshal = g_malloc0(sizeof(*marshal));
+ 
+@@ -224,6 +225,158 @@ MCDCoreState *marshal_mcd_core_state(const mcd_core_state_st *state)
      return marshal;
  }
-+
-+MCDRegisterGroup *marshal_mcd_register_group(
-+    const mcd_register_group_st *reg_group)
+ 
++MCDTrigInfo *marshal_mcd_trig_info(const mcd_trig_info_st *trig_info)
 +{
-+    MCDRegisterGroup *marshal = g_malloc0(sizeof(*marshal));
++    MCDTrigInfo *marshal = g_malloc0(sizeof(*marshal));
 +
-+    *marshal = (MCDRegisterGroup) {
-+        .reg_group_id = reg_group->reg_group_id,
-+        .reg_group_name = g_strdup(reg_group->reg_group_name),
-+        .n_registers = reg_group->n_registers,
++    *marshal = (MCDTrigInfo) {
++        .type = trig_info->type,
++        .option = trig_info->option,
++        .action = trig_info->action,
++        .trig_number = trig_info->trig_number,
++        .state_number = trig_info->state_number,
++        .counter_number = trig_info->counter_number,
++        .sw_breakpoints = trig_info->sw_breakpoints,
 +    };
 +
 +    return marshal;
 +}
 +
-+MCDAddr *marshal_mcd_addr(const mcd_addr_st *addr)
++MCDCtrigInfo *marshal_mcd_ctrig_info(const mcd_ctrig_info_st *trig_info)
 +{
-+    MCDAddr *marshal = g_malloc0(sizeof(*marshal));
++    MCDCtrigInfo *marshal = g_malloc0(sizeof(*marshal));
 +
-+    *marshal = (MCDAddr) {
-+        .address = addr->address,
-+        .mem_space_id = addr->mem_space_id,
-+        .addr_space_id = addr->addr_space_id,
-+        .addr_space_type = addr->addr_space_type,
++    *marshal = (MCDCtrigInfo) {
++        .ctrig_id = trig_info->ctrig_id,
++        .info_str = g_strdup(trig_info->info_str),
 +    };
 +
 +    return marshal;
 +}
 +
-+MCDRegisterInfo *marshal_mcd_register_info(const mcd_register_info_st *reg_info)
++MCDTrigSimpleCore *marshal_mcd_trig_simple_core(
++    mcd_trig_simple_core_st const *trig_simple_core)
 +{
-+    MCDRegisterInfo *marshal = g_malloc0(sizeof(*marshal));
++    MCDTrigSimpleCore *marshal = g_malloc0(sizeof(*marshal));
 +
-+    *marshal = (MCDRegisterInfo) {
-+        .addr = marshal_mcd_addr(&reg_info->addr),
-+        .reg_group_id = reg_info->reg_group_id,
-+        .regname = g_strdup(reg_info->regname),
-+        .regsize = reg_info->regsize,
-+        .core_mode_mask_read = reg_info->core_mode_mask_read,
-+        .core_mode_mask_write = reg_info->core_mode_mask_write,
-+        .side_effects_read = reg_info->has_side_effects_read,
-+        .side_effects_write = reg_info->has_side_effects_write,
-+        .reg_type = reg_info->reg_type,
-+        .hw_thread_id = reg_info->hw_thread_id,
++    *marshal = (MCDTrigSimpleCore) {
++        .type = trig_simple_core->type,
++        .option = trig_simple_core->option,
++        .action = trig_simple_core->action,
++        .action_param = trig_simple_core->action_param,
++        .modified = trig_simple_core->modified,
++        .state_mask = trig_simple_core->state_mask,
++        .addr_start = marshal_mcd_addr(&trig_simple_core->addr_start),
++        .addr_range = trig_simple_core->addr_range,
 +    };
 +
 +    return marshal;
 +}
++
++mcd_trig_simple_core_st unmarshal_mcd_trig_simple_core(
++     MCDTrigSimpleCore *trig_simple_core)
++{
++    mcd_trig_simple_core_st unmarshal =  {
++        .struct_size = sizeof(mcd_trig_simple_core_st),
++        .type = trig_simple_core->type,
++        .option = trig_simple_core->option,
++        .action = trig_simple_core->action,
++        .action_param = trig_simple_core->action_param,
++        .modified = trig_simple_core->modified,
++        .state_mask = trig_simple_core->state_mask,
++        .addr_start = unmarshal_mcd_addr(trig_simple_core->addr_start),
++        .addr_range = trig_simple_core->addr_range,
++    };
++
++    return unmarshal;
++}
++
++MCDTrigComplexCore *marshal_mcd_trig_complex_core(
++    mcd_trig_complex_core_st const *trig_complex_core)
++{
++    MCDTrigComplexCore *marshal = g_malloc0(sizeof(*marshal));
++
++    *marshal = (MCDTrigComplexCore) {
++        .type = trig_complex_core->type,
++        .option = trig_complex_core->option,
++        .action = trig_complex_core->action,
++        .action_param = trig_complex_core->action_param,
++        .modified = trig_complex_core->modified,
++        .state_mask = trig_complex_core->state_mask,
++        .addr_start = marshal_mcd_addr(&trig_complex_core->addr_start),
++        .addr_range = trig_complex_core->addr_range,
++        .data_start = trig_complex_core->data_start,
++        .data_range = trig_complex_core->data_range,
++        .data_mask = trig_complex_core->data_mask,
++        .data_size = trig_complex_core->data_size,
++        .hw_thread_id = trig_complex_core->hw_thread_id,
++        .sw_thread_id = trig_complex_core->sw_thread_id,
++        .core_mode_mask = trig_complex_core->core_mode_mask,
++    };
++
++    return marshal;
++}
++
++mcd_trig_complex_core_st unmarshal_mcd_trig_complex_core(
++     MCDTrigComplexCore *trig_complex_core)
++{
++    mcd_trig_complex_core_st unmarshal =  {
++        .struct_size = sizeof(mcd_trig_complex_core_st),
++        .type = trig_complex_core->type,
++        .option = trig_complex_core->option,
++        .action = trig_complex_core->action,
++        .action_param = trig_complex_core->action_param,
++        .modified = trig_complex_core->modified,
++        .state_mask = trig_complex_core->state_mask,
++        .addr_start = unmarshal_mcd_addr(trig_complex_core->addr_start),
++        .addr_range = trig_complex_core->addr_range,
++        .data_start = trig_complex_core->data_start,
++        .data_range = trig_complex_core->data_range,
++        .data_mask = trig_complex_core->data_mask,
++        .data_size = trig_complex_core->data_size,
++        .hw_thread_id = trig_complex_core->hw_thread_id,
++        .sw_thread_id = trig_complex_core->sw_thread_id,
++        .core_mode_mask = trig_complex_core->core_mode_mask,
++    };
++
++    return unmarshal;
++}
++
++MCDTrigState *marshal_mcd_trig_state(const mcd_trig_state_st *trig_info)
++{
++    MCDTrigState *marshal = g_malloc0(sizeof(*marshal));
++
++    *marshal = (MCDTrigState) {
++        .active = trig_info->active,
++        .captured = trig_info->captured,
++        .captured_valid = trig_info->captured_valid,
++        .count_value = trig_info->count_value,
++        .count_valid = trig_info->count_valid,
++    };
++
++    return marshal;
++}
++
++MCDTrigSetState *marshal_mcd_trig_set_state(
++    const mcd_trig_set_state_st *trig_state)
++{
++    MCDTrigSetState *marshal = g_malloc0(sizeof(*marshal));
++
++    *marshal = (MCDTrigSetState) {
++        .active = trig_state->active,
++        .state = trig_state->state,
++        .state_valid = trig_state->state_valid,
++        .trig_bus = trig_state->trig_bus,
++        .trig_bus_valid = trig_state->trig_bus_valid,
++        .trace = trig_state->trace,
++        .trace_valid = trig_state->trace_valid,
++        .analysis = trig_state->analysis,
++        .analysis_valid = trig_state->analysis_valid,
++    };
++
++    return marshal;
++}
++
+ MCDTx *marshal_mcd_tx(const mcd_tx_st *tx)
+ {
+     MCDTx *marshal = g_malloc0(sizeof(*marshal));
 diff --git a/mcd/libmcd_qapi.h b/mcd/libmcd_qapi.h
-index 7e874dec25..edcc6d0b7c 100644
+index 27bb945db5..133dfbf9d3 100644
 --- a/mcd/libmcd_qapi.h
 +++ b/mcd/libmcd_qapi.h
-@@ -27,6 +27,14 @@ MCDCoreConInfo *marshal_mcd_core_con_info(const mcd_core_con_info_st *con_info);
+@@ -37,6 +37,21 @@ MCDRegisterInfo *marshal_mcd_register_info(
  
- MCDMemspace *marshal_mcd_memspace(const mcd_memspace_st *mem_space);
+ MCDCoreState *marshal_mcd_core_state(const mcd_core_state_st *state);
  
-+MCDRegisterGroup *marshal_mcd_register_group(
-+    const mcd_register_group_st *reg_group);
++MCDTrigInfo *marshal_mcd_trig_info(const mcd_trig_info_st *trig_info);
 +
-+MCDAddr *marshal_mcd_addr(const mcd_addr_st *addr);
++MCDCtrigInfo *marshal_mcd_ctrig_info(const mcd_ctrig_info_st *trig_info);
 +
-+MCDRegisterInfo *marshal_mcd_register_info(
-+    const mcd_register_info_st *reg_info);
++MCDTrigSimpleCore *marshal_mcd_trig_simple_core(
++    const mcd_trig_simple_core_st *trig_simple_core);
 +
- mcd_api_version_st unmarshal_mcd_api_version(MCDAPIVersion *api_version);
++MCDTrigComplexCore *marshal_mcd_trig_complex_core(
++    const mcd_trig_complex_core_st *trig_complex_core);
++
++MCDTrigState *marshal_mcd_trig_state(const mcd_trig_state_st *trig_info);
++
++MCDTrigSetState *marshal_mcd_trig_set_state(
++    const mcd_trig_set_state_st *trig_state);
++
+ MCDTx *marshal_mcd_tx(const mcd_tx_st *tx);
  
- mcd_core_con_info_st unmarshal_mcd_core_con_info(MCDCoreConInfo *con_info);
+ MCDTxlist *marshal_mcd_txlist(const mcd_txlist_st *txlist);
+@@ -47,6 +62,12 @@ mcd_core_con_info_st unmarshal_mcd_core_con_info(MCDCoreConInfo *con_info);
+ 
+ mcd_addr_st unmarshal_mcd_addr(MCDAddr *addr);
+ 
++mcd_trig_simple_core_st unmarshal_mcd_trig_simple_core(
++    MCDTrigSimpleCore *trig_simple_core);
++
++mcd_trig_complex_core_st unmarshal_mcd_trig_complex_core(
++    MCDTrigComplexCore *trig_complex_core);
++
+ mcd_tx_st unmarshal_mcd_tx(MCDTx *tx);
+ 
+ mcd_txlist_st unmarshal_mcd_txlist(MCDTxlist *txlist);
 diff --git a/mcd/mcdserver.c b/mcd/mcdserver.c
-index f924bf3799..f0cda23981 100644
+index bdb4767060..649c4d387b 100644
 --- a/mcd/mcdserver.c
 +++ b/mcd/mcdserver.c
-@@ -13,6 +13,7 @@
- #include "mcd_api.h"
- #include "hw/boards.h"
- #include "exec/tswap.h"
-+#include "exec/gdbstub.h"
- 
- /* Custom memory space type */
- static const mcd_mem_type_et MCD_MEM_SPACE_IS_SECURE = 0x00010000;
-@@ -55,12 +56,14 @@ static const mcd_error_info_st MCD_ERROR_NONE = {
- /**
-  * struct mcdcore_state - State of a core.
-  *
-- * @last_error:    Error info of most recent executed core-related function.
-- * @custom_error:  Reserves memory for custom MCD errors.
-- * @info:          Core connection information.
-- * @open_core:     Open core instance as allocated in mcd_open_core_f().
-- * @cpu:           QEMU's internal CPU handle.
-- * @memory_spaces: Memory spaces as queried by mcd_qry_mem_spaces_f().
-+ * @last_error:      Error info of most recent executed core-related function.
-+ * @custom_error:    Reserves memory for custom MCD errors.
-+ * @info:            Core connection information.
-+ * @open_core:       Open core instance as allocated in mcd_open_core_f().
-+ * @cpu:             QEMU's internal CPU handle.
-+ * @memory_spaces:   Memory spaces as queried by mcd_qry_mem_spaces_f().
-+ * @register_groups: Register groups as queried by mcd_qry_reg_groups_f().
-+ * @registers:       Registers as queried by mcd_qry_reg_map_f().
+@@ -71,7 +71,10 @@ static const mcd_error_info_st MCD_ERROR_NONE = {
+  * @register_groups:         Register groups as queried by
+  *                           mcd_qry_reg_groups_f().
+  * @registers:               Registers as queried by mcd_qry_reg_map_f().
++ * @triggers:                Triggers as created in mcd_create_trig_f().
+  * @vm_state_change_handler: State change handler.
++ * @num_created_triggers:    Total amount of created triggers since last
++ *                           mcd_open_server_f().
   *
   * MCD is mainly being used on the core level:
   * After the initial query functions, a core connection is opened in
-@@ -77,6 +80,8 @@ typedef struct mcdcore_state {
-     mcd_core_st *open_core;
-     CPUState *cpu;
-     GArray *memory_spaces;
-+    GArray *register_groups;
-+    GArray *registers;
+@@ -91,6 +94,8 @@ typedef struct mcdcore_state {
+     GArray *register_groups;
+     GArray *registers;
+     VMChangeStateEntry *vm_state_change_handler;
++    GArray *triggers;
++    uint32_t num_created_triggers;
  } mcdcore_state;
  
  /**
-@@ -267,6 +272,10 @@ mcd_return_et mcd_open_server_f(const char *system_key,
-             .open_core = NULL,
-             .cpu = cpu,
-             .memory_spaces = g_array_new(false, true, sizeof(mcd_memspace_st)),
-+            .register_groups = g_array_new(false, true,
-+                                           sizeof(mcd_register_group_st)),
-+            .registers = g_array_new(false, true,
-+                                     sizeof(mcd_register_info_st)),
+@@ -101,6 +106,8 @@ typedef struct mcdcore_state {
+  * @open_server:  Open server instance as allocated in mcd_open_server_f().
+  * @system_key:   System key as provided in mcd_open_server_f()
+  * @cores:        Internal core information database.
++ * @bp_cpu:       CPU hitting the most recent break-/watchpoint.
++ * @bp_addr:      Address of the most recent break-/watchpoint.
+  */
+ typedef struct mcdserver_state {
+     const mcd_error_info_st *last_error;
+@@ -108,6 +115,8 @@ typedef struct mcdserver_state {
+     mcd_server_st *open_server;
+     char system_key[MCD_KEY_LEN];
+     GArray *cores;
++    CPUState const *bp_cpu;
++    vaddr bp_addr;
+ } mcdserver_state;
+ 
+ static mcdserver_state g_server_state = {
+@@ -115,8 +124,24 @@ static mcdserver_state g_server_state = {
+     .open_server = NULL,
+     .system_key = "",
+     .cores = NULL,
++    .bp_cpu = NULL,
+ };
+ 
++/**
++ * struct mcd_active_trigger - Identifiable active trigger
++ *
++ * @trig: Trigger instance as created in mcd_create_trig_f().
++ * @id:   Unique trigger identifier.
++ *
++ * Currently, only mcd_trig_simple_core_st is supported.
++ */
++typedef struct mcd_active_trigger {
++    mcd_trig_simple_core_st trig;
++    uint32_t id;
++    bool captured;
++} mcd_active_trigger;
++
++
+ static mcdcore_state *find_core(const mcd_core_con_info_st *core_con_info)
+ {
+     uint32_t core_id;
+@@ -140,6 +165,16 @@ static void mcd_handle_vm_state_change(void *opaque, bool running,
+ {
+     mcdcore_state *core_state = (mcdcore_state *)opaque;
+     CPUState *cpu = core_state->cpu;
++    CPUClass *cc = CPU_GET_CLASS(cpu);
++
++    if (state == RUN_STATE_DEBUG && cpu->watchpoint_hit) {
++        g_server_state.bp_cpu = cpu;
++        g_server_state.bp_addr = cpu->watchpoint_hit->vaddr;
++        cpu->watchpoint_hit = NULL;
++    } else if (cpu_breakpoint_test(cpu, cc->get_pc(cpu), BP_GDB)) {
++        g_server_state.bp_cpu = cpu;
++        g_server_state.bp_addr = cc->get_pc(cpu);
++    }
+ 
+     /* disable single step if it was enabled */
+     cpu_single_step(cpu, 0);
+@@ -295,7 +330,9 @@ mcd_return_et mcd_open_server_f(const char *system_key,
+                                            sizeof(mcd_register_group_st)),
+             .registers = g_array_new(false, true,
+                                      sizeof(mcd_register_info_st)),
++            .triggers = g_array_new(false, true, sizeof(mcd_active_trigger)),
+             .vm_state_change_handler = NULL,
++            .num_created_triggers = 0,
          };
          pstrcpy(c.info.core, MCD_UNIQUE_NAME_LEN, cpu_model);
          g_array_append_val(g_server_state.cores, c);
-@@ -306,6 +315,10 @@ mcd_return_et mcd_close_server_f(const mcd_server_st *server)
-         if (c->open_core) {
-             mcd_close_core_f(c->open_core);
-         }
-+
-+        g_array_free(c->memory_spaces, true);
-+        g_array_free(c->register_groups, true);
-+        g_array_free(c->registers, true);
+@@ -339,6 +376,7 @@ mcd_return_et mcd_close_server_f(const mcd_server_st *server)
+         g_array_free(c->memory_spaces, true);
+         g_array_free(c->register_groups, true);
+         g_array_free(c->registers, true);
++        g_array_free(c->triggers, true);
      }
  
      g_array_free(g_server_state.cores, true);
-@@ -538,6 +551,59 @@ static mcd_return_et query_memspaces(mcdcore_state *core_state)
-     return MCD_RET_ACT_NONE;
- }
- 
-+static mcd_return_et query_registers(mcdcore_state *core_state)
-+{
-+    GArray *gdb_regs = core_state->cpu->gdb_regs;
-+    assert(gdb_regs);
-+
-+    g_array_set_size(core_state->register_groups, 0);
-+    g_array_set_size(core_state->registers, 0);
-+
-+    for (int feature_id = 0; feature_id < gdb_regs->len; feature_id++) {
-+        GDBRegisterState *f = &g_array_index(gdb_regs, GDBRegisterState,
-+                                             feature_id);
-+        /* register group ID 0 is reserved */
-+        uint32_t group_id = feature_id + 1;
-+        uint32_t num_regs = 0;
-+
-+        GByteArray *mem_buf = g_byte_array_new();
-+        for (int i = 0; i < f->feature->num_regs; i++) {
-+            const char *name = f->feature->regs[i];
-+            if (name) {
-+                int reg_id = f->base_reg + i;
-+                int bitsize = gdb_read_register(core_state->cpu,
-+                                                mem_buf, reg_id) * 8;
-+                mcd_register_info_st r = {
-+                    .addr = {
-+                        .address = (uint64_t) reg_id,
-+                        /* memory space "GDB Registers" */
-+                        .mem_space_id = core_state->memory_spaces->len,
-+                        .addr_space_type = MCD_NOTUSED_ID,
-+                    },
-+                    .reg_group_id = group_id,
-+                    .regsize = (uint32_t) bitsize,
-+                    .reg_type = MCD_REG_TYPE_SIMPLE,
-+                    /* ID 0 reserved */
-+                    .hw_thread_id = core_state->info.core_id + 1,
-+                };
-+                strncpy(r.regname, name, MCD_REG_NAME_LEN - 1);
-+                g_array_append_val(core_state->registers, r);
-+                num_regs++;
-+            }
-+        }
-+        g_byte_array_free(mem_buf, true);
-+
-+        mcd_register_group_st rg = {
-+            .reg_group_id = group_id,
-+            .n_registers = num_regs,
-+        };
-+        strncpy(rg.reg_group_name, f->feature->name, MCD_REG_NAME_LEN - 1);
-+        g_array_append_val(core_state->register_groups, rg);
-+    }
-+
-+    return MCD_RET_ACT_NONE;
-+}
-+
- mcd_return_et mcd_open_core_f(const mcd_core_con_info_st *core_con_info,
-                               mcd_core_st **core)
- {
-@@ -583,6 +649,10 @@ mcd_return_et mcd_open_core_f(const mcd_core_con_info_st *core_con_info,
-         return g_server_state.last_error->return_status;
-     }
- 
-+    if (query_registers(core_state) != MCD_RET_ACT_NONE) {
-+        return g_server_state.last_error->return_status;
-+    }
-+
-     *core = g_malloc(sizeof(mcd_core_st));
-     info = g_malloc(sizeof(mcd_core_con_info_st));
-     *info = *core_con_info;
-@@ -626,6 +696,8 @@ mcd_return_et mcd_close_core_f(const mcd_core_st *core)
-     core_state->open_core = NULL;
-     core_state->cpu = NULL;
-     g_array_set_size(core_state->memory_spaces, 0);
-+    g_array_set_size(core_state->register_groups, 0);
-+    g_array_set_size(core_state->registers, 0);
+@@ -682,6 +720,8 @@ mcd_return_et mcd_open_core_f(const mcd_core_con_info_st *core_con_info,
+     core_state->last_error = &MCD_ERROR_NONE;
+     core_state->vm_state_change_handler = qemu_add_vm_change_state_handler(
+         mcd_handle_vm_state_change, core_state);
++    g_array_set_size(core_state->triggers, 0);
++    core_state->num_created_triggers = 0;
  
      g_server_state.last_error = &MCD_ERROR_NONE;
      return g_server_state.last_error->return_status;
-@@ -771,16 +843,161 @@ mcd_return_et mcd_qry_reg_groups_f(const mcd_core_st *core,
-                                    uint32_t *num_reg_groups,
-                                    mcd_register_group_st *reg_groups)
+@@ -722,6 +762,8 @@ mcd_return_et mcd_close_core_f(const mcd_core_st *core)
+     g_array_set_size(core_state->memory_spaces, 0);
+     g_array_set_size(core_state->register_groups, 0);
+     g_array_set_size(core_state->registers, 0);
++    g_array_set_size(core_state->triggers, 0);
++    core_state->num_created_triggers = 0;
+ 
+     g_server_state.last_error = &MCD_ERROR_NONE;
+     return g_server_state.last_error->return_status;
+@@ -1037,68 +1079,553 @@ mcd_return_et mcd_qry_reg_compound_f(const mcd_core_st *core,
+ mcd_return_et mcd_qry_trig_info_f(const mcd_core_st *core,
+                                   mcd_trig_info_st *trig_info)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (!trig_info) {
++        core_state->last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return core_state->last_error->return_status;
++    }
++
++    *trig_info = (mcd_trig_info_st){
++        .type = MCD_TRIG_TYPE_IP |
++                MCD_TRIG_TYPE_READ |
++                MCD_TRIG_TYPE_WRITE |
++                MCD_TRIG_TYPE_RW,
++        .option = MCD_TRIG_OPT_DEFAULT,
++        .action = MCD_TRIG_ACTION_DBG_DEBUG,
++        .trig_number = 0,
++        .state_number = 0,
++        .counter_number = 0,
++        .sw_breakpoints = false,
++    };
++
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
+ }
+ 
+ mcd_return_et mcd_qry_ctrigs_f(const mcd_core_st *core, uint32_t start_index,
+                                uint32_t *num_ctrigs,
+                                mcd_ctrig_info_st *ctrig_info)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++
++    if (!core || !num_ctrigs) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (*num_ctrigs == 0) {
++        core_state->last_error = &MCD_ERROR_NONE;
++        return core_state->last_error->return_status;
++    }
++
++    if (start_index > 0) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_PARAM,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "custom triggers are currently not supported",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    *num_ctrigs = 0;
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
++}
++
++static mcd_return_et mcd_create_trig_simple_core(mcdcore_state *core_state,
++                                                 mcd_trig_simple_core_st *trig)
++{
++    uint32_t ms_id = trig->addr_start.mem_space_id;
++    const mcd_memspace_st *ms;
++    int ret_val;
++
++    /* memory space ID 0 is reserved */
++    if (ms_id == 0 || ms_id > core_state->memory_spaces->len) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_PARAM,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "unknown memory space ID",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    ms = &g_array_index(core_state->memory_spaces, mcd_memspace_st, ms_id - 1);
++    if (!(ms->mem_type & MCD_MEM_SPACE_IS_LOGICAL)) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_PARAM,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "only logical trigger addresses are supported",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    switch (trig->type) {
++    case MCD_TRIG_TYPE_IP:
++        ret_val = cpu_breakpoint_insert(core_state->cpu,
++                                        trig->addr_start.address,
++                                        BP_GDB, NULL);
++        break;
++    case MCD_TRIG_TYPE_WRITE:
++        ret_val = cpu_watchpoint_insert(core_state->cpu,
++                                        trig->addr_start.address, 4,
++                                        BP_GDB | BP_MEM_WRITE, NULL);
++        break;
++    case MCD_TRIG_TYPE_READ:
++        ret_val = cpu_watchpoint_insert(core_state->cpu,
++                                        trig->addr_start.address, 4,
++                                        BP_GDB | BP_MEM_READ, NULL);
++        break;
++    case MCD_TRIG_TYPE_RW:
++        ret_val = cpu_watchpoint_insert(core_state->cpu,
++                                        trig->addr_start.address, 4,
++                                        BP_GDB | BP_MEM_ACCESS, NULL);
++        break;
++    default:
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_TRIG_CREATE,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "unknown trigger type",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    if (ret_val != 0) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_TRIG_CREATE,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "trigger could not be created",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    return MCD_RET_ACT_NONE;
+ }
+ 
+ mcd_return_et mcd_create_trig_f(const mcd_core_st *core, void *trig,
+                                 uint32_t *trig_id)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++    uint32_t struct_size;
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (!trig || !trig_id) {
++        core_state->last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return core_state->last_error->return_status;
++    }
++
++    struct_size = *((uint32_t *)trig);
++    if (struct_size == (uint32_t) sizeof(mcd_trig_simple_core_st) ||
++        struct_size == (uint32_t) sizeof(mcd_trig_complex_core_st))
++    {
++        /* only trig_simple_cores are currently supported */
++        mcd_trig_simple_core_st *simple_trig = (mcd_trig_simple_core_st *)trig;
++
++        if (mcd_create_trig_simple_core(core_state, simple_trig) !=
++            MCD_RET_ACT_NONE) {
++            return core_state->last_error->return_status;
++        }
++
++        *trig_id = ++core_state->num_created_triggers;
++        mcd_active_trigger t = {
++            .trig = *simple_trig,
++            .id = *trig_id,
++            .captured = false,
++        };
++        g_array_append_val(core_state->triggers, t);
++    } else {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_TRIG_CREATE,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "trigger with struct_size not supported",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
++}
++
++/*
++ * find_trig() - Searches for a trigger with trig_id in the core-internal
++ *               trigger list. If found, the trigger as well as (optionally)
++ *               its index in the internal list are returned.
++ */
++static mcd_active_trigger *find_trig(mcdcore_state *core_state,
++                                     uint32_t trig_id,
++                                     uint32_t *trig_array_index)
++{
++    g_assert(core_state->triggers);
++    for (uint32_t i = 0; i < core_state->triggers->len; i++) {
++        mcd_active_trigger *t = &g_array_index(core_state->triggers,
++                                               mcd_active_trigger, i);
++        if (t->id == trig_id) {
++            if (trig_array_index) {
++                *trig_array_index = i;
++            }
++            return t;
++        }
++    }
++
++    return NULL;
+ }
+ 
+ mcd_return_et mcd_qry_trig_f(const mcd_core_st *core, uint32_t trig_id,
+                              uint32_t max_trig_size, void *trig)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++    mcd_active_trigger *active_trig;
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (max_trig_size < sizeof(*active_trig)) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_RESULT_TOO_LONG,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    if (!trig) {
++        core_state->last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return core_state->last_error->return_status;
++    }
++
++    active_trig = find_trig(core_state, trig_id, NULL);
++    if (!active_trig) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_TRIG_ACCESS,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "trigger with trig_id not found",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    memcpy(trig, &active_trig->trig, sizeof(active_trig->trig));
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
++}
++
++static mcd_return_et mcd_remove_trig_simple_core(mcdcore_state *core_state,
++                                                 mcd_trig_simple_core_st *trig)
++{
++    int ret_val;
++
++    switch (trig->type) {
++    case MCD_TRIG_TYPE_IP:
++        ret_val = cpu_breakpoint_remove(core_state->cpu,
++                                    trig->addr_start.address,
++                                    BP_GDB);
++        break;
++    case MCD_TRIG_TYPE_WRITE:
++        ret_val = cpu_watchpoint_remove(core_state->cpu,
++                                        trig->addr_start.address, 4,
++                                        BP_GDB | BP_MEM_WRITE);
++        break;
++    case MCD_TRIG_TYPE_READ:
++        ret_val = cpu_watchpoint_remove(core_state->cpu,
++                                        trig->addr_start.address, 4,
++                                        BP_GDB | BP_MEM_READ);
++        break;
++    case MCD_TRIG_TYPE_RW:
++        ret_val = cpu_watchpoint_remove(core_state->cpu,
++                                        trig->addr_start.address, 4,
++                                        BP_GDB | BP_MEM_ACCESS);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    if (ret_val != 0) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_TRIG_CREATE,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "trigger could not be removed",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    return MCD_RET_ACT_NONE;
+ }
+ 
+ mcd_return_et mcd_remove_trig_f(const mcd_core_st *core, uint32_t trig_id)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++    mcd_active_trigger *trig;
++    uint32_t trig_index;
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    trig = find_trig(core_state, trig_id, &trig_index);
++    if (!trig) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_TRIG_ACCESS,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "trigger with trig_id not found",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    if (mcd_remove_trig_simple_core(core_state, &trig->trig)
++        != MCD_RET_ACT_NONE) {
++        return core_state->last_error->return_status;
++    }
++
++    g_array_remove_index(core_state->triggers, trig_index);
++
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
+ }
+ 
+ mcd_return_et mcd_qry_trig_state_f(const mcd_core_st *core, uint32_t trig_id,
+                                    mcd_trig_state_st *trig_state)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++    mcd_active_trigger *trig;
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (!trig_state) {
++        core_state->last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return core_state->last_error->return_status;
++    }
++
++    trig = find_trig(core_state, trig_id, NULL);
++    if (!trig) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_TRIG_ACCESS,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "trigger with trig_id not found",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    /* triggers are always active */
++    *trig_state = (mcd_trig_state_st) {
++        .active = true,
++        .captured = trig->captured,
++        .captured_valid = true,
++        .count_valid = false,
++    };
++
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
+ }
+ 
+ mcd_return_et mcd_activate_trig_set_f(const mcd_core_st *core)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    /* Triggers are already activated when being created */
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
+ }
+ 
+ mcd_return_et mcd_remove_trig_set_f(const mcd_core_st *core)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    g_assert(core_state->triggers);
++
++    while (core_state->triggers->len > 0) {
++        uint32_t len = core_state->triggers->len;
++        mcd_active_trigger *trig = &g_array_index(core_state->triggers,
++                                                  mcd_active_trigger, 0);
++        if (mcd_remove_trig_f(core, trig->id) != MCD_RET_ACT_NONE) {
++            return core_state->last_error->return_status;
++        }
++        g_assert(core_state->triggers->len == len - 1);
++    }
++
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
+ }
+ 
+ mcd_return_et mcd_qry_trig_set_f(const mcd_core_st *core, uint32_t start_index,
+                                  uint32_t *num_trigs, uint32_t *trig_ids)
  {
 -    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
 -    return g_server_state.last_error->return_status;
 +    uint32_t i;
 +    mcdcore_state *core_state;
 +
-+    if (!core || !num_reg_groups) {
++    if (!core || !num_trigs) {
 +        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
 +        return g_server_state.last_error->return_status;
 +    }
@@ -326,70 +927,55 @@ index f924bf3799..f0cda23981 100644
 +        return g_server_state.last_error->return_status;
 +    }
 +
-+    g_assert(core_state->register_groups);
++    g_assert(core_state->triggers);
 +
-+    if (core_state->register_groups->len == 0) {
-+        core_state->custom_error = (mcd_error_info_st) {
-+            .return_status = MCD_RET_ACT_HANDLE_ERROR,
-+            .error_code = MCD_ERR_NO_REG_GROUPS,
-+            .error_events = MCD_ERR_EVT_NONE,
-+            .error_str = "",
-+        };
-+        core_state->last_error = &core_state->custom_error;
-+        return core_state->last_error->return_status;
-+    }
-+
-+    if (*num_reg_groups == 0) {
-+        *num_reg_groups = core_state->register_groups->len;
++    if (*num_trigs == 0) {
++        *num_trigs = core_state->triggers->len;
 +        core_state->last_error = &MCD_ERROR_NONE;
 +        return core_state->last_error->return_status;
 +    }
 +
-+    if (start_index >= core_state->register_groups->len) {
++    if (start_index >= core_state->triggers->len) {
 +        core_state->custom_error = (mcd_error_info_st) {
 +            .return_status = MCD_RET_ACT_HANDLE_ERROR,
 +            .error_code = MCD_ERR_PARAM,
 +            .error_events = MCD_ERR_EVT_NONE,
-+            .error_str = "start_index exceeds the number of register groups",
++            .error_str = "start_index exceeds the number of triggers",
 +        };
 +        core_state->last_error = &core_state->custom_error;
 +        return core_state->last_error->return_status;
 +    }
 +
-+    if (!reg_groups) {
++    if (!trig_ids) {
 +        core_state->last_error = &MCD_ERROR_INVALID_NULL_PARAM;
 +        return core_state->last_error->return_status;
 +    }
 +
-+    for (i = 0; i < *num_reg_groups &&
-+         start_index + i < core_state->register_groups->len; i++) {
++    for (i = 0; i < *num_trigs &&
++         start_index + i < core_state->triggers->len; i++) {
 +
-+        reg_groups[i] = g_array_index(core_state->register_groups,
-+                                      mcd_register_group_st, start_index + i);
++        mcd_active_trigger *t = &g_array_index(core_state->triggers,
++                                               mcd_active_trigger,
++                                               start_index + i);
++        trig_ids[i] = t->id;
 +    }
 +
-+    *num_reg_groups = i;
++    *num_trigs = i;
 +
 +    core_state->last_error = &MCD_ERROR_NONE;
 +    return core_state->last_error->return_status;
  }
  
- mcd_return_et mcd_qry_reg_map_f(const mcd_core_st *core, uint32_t reg_group_id,
-                                 uint32_t start_index, uint32_t *num_regs,
-                                 mcd_register_info_st *reg_info)
+ mcd_return_et mcd_qry_trig_set_state_f(const mcd_core_st *core,
+                                        mcd_trig_set_state_st *trig_state)
  {
 -    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
--    return g_server_state.last_error->return_status;
 +    mcdcore_state *core_state;
-+    bool query_all_regs = reg_group_id == 0;
-+    bool query_num_only;
 +
-+    if (!core || !num_regs) {
++    if (!core) {
 +        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
 +        return g_server_state.last_error->return_status;
 +    }
-+
-+    query_num_only = *num_regs == 0;
 +
 +    core_state = find_core(core->core_con_info);
 +    if (!core_state || core_state->open_core != core) {
@@ -397,100 +983,63 @@ index f924bf3799..f0cda23981 100644
 +        return g_server_state.last_error->return_status;
 +    }
 +
-+    if (core_state->register_groups->len == 0 ||
-+        reg_group_id > core_state->register_groups->len) {
-+
-+        core_state->custom_error = (mcd_error_info_st) {
-+            .return_status = MCD_RET_ACT_HANDLE_ERROR,
-+            .error_code = MCD_ERR_REG_GROUP_ID,
-+            .error_events = MCD_ERR_EVT_NONE,
-+            .error_str = "",
-+        };
-+        core_state->last_error = &core_state->custom_error;
++    if (!trig_state) {
++        core_state->last_error = &MCD_ERROR_INVALID_NULL_PARAM;
 +        return core_state->last_error->return_status;
 +    }
 +
-+    /*
-+     * Depending on reg_group_id, start_index refers either to the total list of
-+     * register or a single register group.
-+     */
++    *trig_state = (mcd_trig_set_state_st) {
++        .active = true,
++        .state_valid = false,
++        .trig_bus_valid = false,
++        .trace_valid = false,
++        .analysis_valid = false,
++    };
 +
-+    if (query_all_regs) {
-+        if (start_index >= core_state->registers->len) {
-+            core_state->custom_error = (mcd_error_info_st) {
-+                .return_status = MCD_RET_ACT_HANDLE_ERROR,
-+                .error_code = MCD_ERR_PARAM,
-+                .error_events = MCD_ERR_EVT_NONE,
-+                .error_str = "start_index exceeds the number of registers",
-+            };
-+            core_state->last_error = &core_state->custom_error;
-+            return core_state->last_error->return_status;
-+        };
-+
-+        if (*num_regs == 0) {
-+            *num_regs = core_state->registers->len;
-+        } else if (*num_regs > core_state->registers->len - start_index) {
-+            *num_regs = core_state->registers->len - start_index;
-+        }
-+    } else {
-+        mcd_register_group_st *rg = &g_array_index(core_state->register_groups,
-+            mcd_register_group_st, reg_group_id - 1);
-+
-+        if (start_index > rg->n_registers) {
-+            core_state->custom_error = (mcd_error_info_st) {
-+                .return_status = MCD_RET_ACT_HANDLE_ERROR,
-+                .error_code = MCD_ERR_PARAM,
-+                .error_events = MCD_ERR_EVT_NONE,
-+                .error_str = "start_index exceeds the number of registers",
-+            };
-+            core_state->last_error = &core_state->custom_error;
-+            return core_state->last_error->return_status;
-+        }
-+
-+        if (*num_regs == 0) {
-+            *num_regs = rg->n_registers;
-+        } else if (*num_regs > rg->n_registers - start_index) {
-+            *num_regs = rg->n_registers - start_index;
-+        }
-+
-+        for (uint32_t rg_id = 0; rg_id < reg_group_id - 1; rg_id++) {
-+            mcd_register_group_st *prev_rg = &g_array_index(
-+                core_state->register_groups, mcd_register_group_st, rg_id);
-+            start_index += prev_rg->n_registers;
-+        }
-+    }
-+
-+    if (!query_num_only) {
-+        for (uint32_t i = 0; i < *num_regs; i++) {
-+            reg_info[i] = g_array_index(
-+                core_state->registers, mcd_register_info_st, start_index + i);
-+        }
-+    }
-+
-+    core_state->last_error = &MCD_ERROR_NONE;
-+    return core_state->last_error->return_status;
++    g_server_state.last_error = &MCD_ERROR_NONE;
+     return g_server_state.last_error->return_status;
  }
  
- mcd_return_et mcd_qry_reg_compound_f(const mcd_core_st *core,
+@@ -1505,6 +2032,26 @@ mcd_return_et mcd_qry_state_f(const mcd_core_st *core, mcd_core_state_st *state)
+         break;
+     }
+ 
++    if (state->state == MCD_CORE_STATE_DEBUG && g_server_state.bp_cpu) {
++        if (g_server_state.bp_cpu == core_state->cpu) {
++            state->event = MCD_CORE_EVENT_TRIGGER_CHANGE;
++            GArray *trigs = core_state->triggers;
++            for (int i = 0; i < trigs->len; i++) {
++                mcd_active_trigger *t = &g_array_index(trigs,
++                                                       mcd_active_trigger, i);
++                if (g_server_state.bp_addr >= t->trig.addr_start.address
++                &&  g_server_state.bp_addr <= t->trig.addr_start.address
++                                            + t->trig.addr_range) {
++                    state->trig_id = t->id;
++                    t->captured = true;
++                }
++            }
++            g_server_state.bp_cpu = NULL;
++        } else {
++            state->state = MCD_CORE_STATE_HALTED;
++        }
++    }
++
+     g_server_state.last_error = &MCD_ERROR_NONE;
+     return g_server_state.last_error->return_status;
+ }
 diff --git a/mcd/mcdstub_qapi.c b/mcd/mcdstub_qapi.c
-index 437d2c2e3e..6aa72b025c 100644
+index 872fb7c9da..a1d5cbc5d9 100644
 --- a/mcd/mcdstub_qapi.c
 +++ b/mcd/mcdstub_qapi.c
-@@ -412,3 +412,96 @@ MCDQryMemSpacesResult *qmp_mcd_qry_mem_spaces(uint32_t core_uid,
+@@ -621,3 +621,293 @@ MCDQryStateResult *qmp_mcd_qry_state(uint32_t core_uid, Error **errp)
      g_stub_state.on_error_ask_server = true;
      return result;
  }
 +
-+MCDQryRegGroupsResult *qmp_mcd_qry_reg_groups(uint32_t core_uid,
-+                                              uint32_t start_index,
-+                                              uint32_t num_reg_groups,
-+                                              Error **errp)
++MCDQryTrigInfoResult *qmp_mcd_qry_trig_info(uint32_t core_uid, Error **errp)
 +{
-+    MCDRegisterGroupList **tailp;
-+    MCDRegisterGroup *rg;
-+    mcd_register_group_st *reg_groups = NULL;
-+    bool query_num_only = num_reg_groups == 0;
-+    MCDQryRegGroupsResult *result = g_malloc0(sizeof(*result));
++    MCDQryTrigInfoResult *result = g_malloc0(sizeof(*result));
++    mcd_trig_info_st trig_info;
 +    mcd_core_st *core = NULL;
 +
 +    result->return_status = retrieve_open_core(core_uid, &core);
@@ -499,44 +1048,23 @@ index 437d2c2e3e..6aa72b025c 100644
 +        return result;
 +    }
 +
-+    if (!query_num_only) {
-+        reg_groups = g_malloc0(num_reg_groups * sizeof(*reg_groups));
-+    }
-+
-+    result->return_status = mcd_qry_reg_groups_f(core, start_index,
-+                                                 &num_reg_groups, reg_groups);
-+
++    result->return_status = mcd_qry_trig_info_f(core, &trig_info);
 +    if (result->return_status == MCD_RET_ACT_NONE) {
-+        result->has_num_reg_groups = true;
-+        result->num_reg_groups = num_reg_groups;
-+        if (!query_num_only) {
-+            result->has_reg_groups = true;
-+            tailp = &(result->reg_groups);
-+            for (uint32_t i = 0; i < num_reg_groups; i++) {
-+                rg = marshal_mcd_register_group(reg_groups + i);
-+                QAPI_LIST_APPEND(tailp, rg);
-+            }
-+        }
-+    }
-+
-+    if (!query_num_only) {
-+        g_free(reg_groups);
++        result->trig_info = marshal_mcd_trig_info(&trig_info);
 +    }
 +
 +    g_stub_state.on_error_ask_server = true;
 +    return result;
 +}
 +
-+MCDQryRegMapResult *qmp_mcd_qry_reg_map(uint32_t core_uid,
-+                                        uint32_t reg_group_id,
-+                                        uint32_t start_index, uint32_t num_regs,
-+                                        Error **errp)
++MCDQryCtrigsResult *qmp_mcd_qry_ctrigs(uint32_t core_uid, uint32_t start_index,
++                                       uint32_t num_ctrigs, Error **errp)
 +{
-+    MCDRegisterInfoList **tailp;
-+    MCDRegisterInfo *r;
-+    mcd_register_info_st *regs = NULL;
-+    bool query_num_only = num_regs == 0;
-+    MCDQryRegMapResult *result = g_malloc0(sizeof(*result));
++    MCDCtrigInfoList **tailp;
++    MCDCtrigInfo *info;
++    MCDQryCtrigsResult *result = g_malloc0(sizeof(*result));
++    mcd_ctrig_info_st *ctrig_info = NULL;
++    bool query_num_only = num_ctrigs == 0;
 +    mcd_core_st *core = NULL;
 +
 +    result->return_status = retrieve_open_core(core_uid, &core);
@@ -546,519 +1074,860 @@ index 437d2c2e3e..6aa72b025c 100644
 +    }
 +
 +    if (!query_num_only) {
-+        regs = g_malloc0(num_regs * sizeof(*regs));
++        ctrig_info = g_malloc0(num_ctrigs * sizeof(*ctrig_info));
 +    }
 +
-+    result->return_status = mcd_qry_reg_map_f(core, reg_group_id,
-+                                              start_index, &num_regs,
-+                                              regs);
++    result->return_status = mcd_qry_ctrigs_f(core, start_index, &num_ctrigs,
++                                             ctrig_info);
 +
 +    if (result->return_status == MCD_RET_ACT_NONE) {
-+        result->has_num_regs = true;
-+        result->num_regs = num_regs;
++        result->has_num_ctrigs = true;
++        result->num_ctrigs = num_ctrigs;
 +        if (!query_num_only) {
-+            result->has_reg_info = true;
-+            tailp = &(result->reg_info);
-+            for (uint32_t i = 0; i < num_regs; i++) {
-+                r = marshal_mcd_register_info(regs + i);
-+                QAPI_LIST_APPEND(tailp, r);
++            result->has_ctrig_info = true;
++            tailp = &(result->ctrig_info);
++            for (uint32_t i = 0; i < num_ctrigs; i++) {
++                info = marshal_mcd_ctrig_info(ctrig_info + i);
++                QAPI_LIST_APPEND(tailp, info);
 +            }
 +        }
 +    }
 +
 +    if (!query_num_only) {
-+        g_free(regs);
++        g_free(ctrig_info);
++    }
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
++MCDCreateTrigResult *qmp_mcd_create_trig(uint32_t core_uid, MCDTrig *trig,
++                                         Error **errp)
++{
++    MCDCreateTrigResult *result = g_malloc0(sizeof(*result));
++    mcd_trig_simple_core_st trig_simple;
++    mcd_trig_complex_core_st trig_complex;
++    void *trig_p;
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++
++    if (trig->trig_simple_core) {
++        trig_simple = unmarshal_mcd_trig_simple_core(trig->trig_simple_core);
++        trig_p = (void *) &trig_simple;
++    } else if (trig->trig_complex_core) {
++        trig_complex = unmarshal_mcd_trig_complex_core(trig->trig_complex_core);
++        trig_p = (void *) &trig_complex;
++    } else {
++        g_assert_not_reached();
++    }
++
++    uint32_t trig_id;
++    result->return_status = mcd_create_trig_f(core, trig_p, &trig_id);
++    if (result->return_status == MCD_RET_ACT_NONE) {
++        result->has_trig_id = true;
++        result->trig_id = trig_id;
++        result->trig = g_malloc0(sizeof(*result->trig));
++        if (trig_p == &trig_simple) {
++            result->trig->trig_simple_core =
++                marshal_mcd_trig_simple_core(&trig_simple);
++            result->trig->trig_complex_core = NULL;
++        } else if (trig_p == &trig_complex) {
++            result->trig->trig_complex_core =
++                marshal_mcd_trig_complex_core(&trig_complex);
++            result->trig->trig_simple_core = NULL;
++        } else {
++            g_assert_not_reached();
++        }
++    }
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
++MCDQryTrigResult *qmp_mcd_qry_trig(uint32_t core_uid, uint32_t trig_id,
++                                   Error **errp)
++{
++    MCDQryTrigResult *result = g_malloc0(sizeof(*result));
++    /* Currently, only trig simple and complex cores are supported */
++    mcd_trig_complex_core_st trig;
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    result->return_status = mcd_qry_trig_f(core, trig_id, sizeof(trig), &trig);
++
++    if (result->return_status == MCD_RET_ACT_NONE) {
++        result->trig = g_malloc0(sizeof(*result->trig));
++        if (trig.struct_size == sizeof(mcd_trig_complex_core_st)) {
++            result->trig->trig_complex_core =
++                marshal_mcd_trig_complex_core(&trig);
++        } else if (trig.struct_size == sizeof(mcd_trig_simple_core_st)) {
++            mcd_trig_simple_core_st *trig_simple =
++                (mcd_trig_simple_core_st *) &trig;
++            result->trig->trig_simple_core =
++                marshal_mcd_trig_simple_core(trig_simple);
++        } else {
++            g_assert_not_reached();
++        }
++    }
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
++MCDRemoveTrigResult *qmp_mcd_remove_trig(uint32_t core_uid, uint32_t trig_id,
++                                         Error **errp)
++{
++    MCDRemoveTrigResult *result = g_malloc0(sizeof(*result));
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    result->return_status = mcd_remove_trig_f(core, trig_id);
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
++MCDQryTrigStateResult *qmp_mcd_qry_trig_state(uint32_t core_uid,
++                                              uint32_t trig_id, Error **errp)
++{
++    MCDQryTrigStateResult *result = g_malloc0(sizeof(*result));
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    mcd_trig_state_st trig_state;
++    result->return_status = mcd_qry_trig_state_f(core, trig_id, &trig_state);
++    if (result->return_status == MCD_RET_ACT_NONE) {
++        result->trig_state = marshal_mcd_trig_state(&trig_state);
++    }
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
++MCDActivateTrigSetResult *qmp_mcd_activate_trig_set(uint32_t core_uid,
++                                                    Error **errp)
++{
++    MCDActivateTrigSetResult *result = g_malloc0(sizeof(*result));
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    result->return_status = mcd_activate_trig_set_f(core);
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
++MCDActivateTrigSetResult *qmp_mcd_remove_trig_set(uint32_t core_uid,
++                                                  Error **errp)
++{
++    MCDActivateTrigSetResult *result = g_malloc0(sizeof(*result));
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    result->return_status = mcd_remove_trig_set_f(core);
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
++MCDQryTrigSetResult *qmp_mcd_qry_trig_set(uint32_t core_uid,
++                                          uint32_t start_index,
++                                          uint32_t num_trigs, Error **errp)
++{
++    uint32List **tailp;
++    MCDQryTrigSetResult *result = g_malloc0(sizeof(*result));
++    uint32_t *trig_ids = NULL;
++    bool query_num_only = num_trigs == 0;
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    if (!query_num_only) {
++        trig_ids = g_malloc0(num_trigs * sizeof(*trig_ids));
++    }
++
++    result->return_status = mcd_qry_trig_set_f(core, start_index, &num_trigs,
++                                               trig_ids);
++
++    if (result->return_status == MCD_RET_ACT_NONE) {
++        result->has_num_trigs = true;
++        result->num_trigs = num_trigs;
++        if (!query_num_only) {
++            result->has_trig_ids = true;
++            tailp = &(result->trig_ids);
++            for (uint32_t i = 0; i < num_trigs; i++) {
++                QAPI_LIST_APPEND(tailp, trig_ids[i]);
++            }
++        }
++    }
++
++    if (!query_num_only) {
++        g_free(trig_ids);
++    }
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
++MCDQryTrigSetStateResult *qmp_mcd_qry_trig_set_state(uint32_t core_uid,
++                                                     Error **errp)
++{
++    MCDQryTrigSetStateResult *result = g_malloc0(sizeof(*result));
++    mcd_trig_set_state_st trig_state;
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    result->return_status = mcd_qry_trig_set_state_f(core, &trig_state);
++    if (result->return_status == MCD_RET_ACT_NONE) {
++        result->trig_state = marshal_mcd_trig_set_state(&trig_state);
 +    }
 +
 +    g_stub_state.on_error_ask_server = true;
 +    return result;
 +}
 diff --git a/qapi/mcd.json b/qapi/mcd.json
-index 214933e279..936016de45 100644
+index b4f21995e3..8934d2d057 100644
 --- a/qapi/mcd.json
 +++ b/qapi/mcd.json
-@@ -215,6 +215,98 @@
-     'core-mode-mask-write'    : 'uint32' } }
+@@ -306,6 +306,238 @@
+     'reg-type'            : 'uint32',
+     'hw-thread-id'        : 'uint32' } }
  
- 
++
 +##
-+# @MCDRegisterGroup:
++# @MCDTrigInfo:
 +#
-+# Structure type containing register group information.
++# Structure type containing information about trigger capabilities.
 +#
-+# @reg-group-id:   Contains the ID of this register group. A register group ID
-+#                  must be unique within the scope of a target core. ID '0' is
-+#                  reserved.
-+# @reg-group-name: The name of a register group. A register group name cannot
-+#                  be longer than MCD_REG_NAME_LEN characters (use
-+#                  representative names).
-+# @n-registers:    Number of registers part of this group.
++# @type:           Supported trigger types (OR'ed bitmask).
++# @option:         Supported trigger options (OR'ed bitmask).
++# @action:         Supported trigger actions (OR'ed bitmask).
++# @trig-number:    Number of usable triggers (or 0 if number not known).
++# @state-number:   Number of states of the trigger set's state machine (or 0 if
++#                  not known).
++# @counter-number: Number of usable counters (or 0 if not known)
++# @sw-breakpoints: True if software breakpoints via code patch are available.
 +#
 +# Since: 9.1
 +##
-+{ 'struct': 'MCDRegisterGroup',
++{ 'struct': 'MCDTrigInfo',
 +  'data': {
-+    'reg-group-id'  : 'uint32',
-+    'reg-group-name': 'str',
-+    'n-registers'   : 'uint32' } }
++      'type'          : 'uint32',
++      'option'        : 'uint32',
++      'action'        : 'uint32',
++      'trig-number'   : 'uint32',
++      'state-number'  : 'uint32',
++      'counter-number': 'uint32',
++      'sw-breakpoints': 'bool' } }
 +
 +
 +##
-+# @MCDAddr:
++# @MCDCtrigInfo:
 +#
-+# Structure type containing a completely resolved logical or physical memory
-+# address.
++# Structure type containing information about a custom trigger.
 +#
-+# @address:         Address value within a memory space, expressed in bytes.
-+# @mem-space-id:    ID of the memory space associated with this address, e.g. a
-+#                   program memory, a data memory or registers .
-+# @addr-space-id:   ID of the address space in which this address is valid.
-+# @addr-space-type: Type of the address space in which this address is valid.
++# @ctrig-id: Custom trigger ID, ID 0 is reserved.
++# @info-str: Description of the custom trigger.
 +#
 +# Since: 9.1
 +##
-+{ 'struct': 'MCDAddr',
++{ 'struct': 'MCDCtrigInfo',
 +  'data': {
-+    'address'        : 'uint64',
-+    'mem-space-id'   : 'uint32',
-+    'addr-space-id'  : 'uint32',
-+    'addr-space-type': 'uint32' } }
++    'ctrig-id': 'uint32',
++    'info-str': 'str' } }
 +
 +
 +##
-+# @MCDRegisterInfo:
++# @MCDTrigSimpleCore:
 +#
-+# Structure type containing register information for a single register.
++# Structure type containing information about a simple core trigger condition.
 +#
-+# @addr:                   Either the address of a memory mapped register or
-+#                          the register address in a dedicated
-+#                          "register memory space"
-+# @reg-group-id:           ID of the group this register belongs to.
-+# @regname:                The name of a register. A register name cannot be
-+#                          longer than MCD_REG_NAME_LEN characters (use
-+#                          representative names).
-+# @regsize:                Register size in bits.
-+# @core-mode-mask-read:    Mask of core modes for which read accesses are
-+#                          impossible. A set bit indicates that read accesses
-+#                          are denied in this mode. Bit 0 represents core mode
-+#                          '1', bit 31 represents core mode 32. Overrides
-+#                          @core-mode-mask-read of the corresponding
-+#                          mcd_memspace_st.
-+# @core-mode-mask-write:   Mask of core modes for which write accesses are
-+#                          impossible. A set bit indicates that write accesses
-+#                          are denied in this mode. Bit 0 represents core mode
-+#                          '1', bit 31 represents core mode '32'. Overrides
-+#                          @core-mode-mask-write of the corresponding
-+#                          mcd_memspace_st.
-+# @side-effects-read:      Reading this register can trigger side effects.
-+# @side-effects-write:     Writing this register can trigger side effects.
-+# @reg-type:               Register type (simple, compound or partial)
-+# @hw-thread-id:           Hardware thread ID this register belongs to. The ID
-+#                          must be set to '0' if the register is not assigned
-+#                          to a hardware thread.
++# @type:           Trigger type, for this structure type it must be one of:
++#                  - %MCD_TRIG_TYPE_IP
++#                  - %MCD_TRIG_TYPE_READ
++#                  - %MCD_TRIG_TYPE_WRITE
++#                  - %MCD_TRIG_TYPE_RW
++#                  - %MCD_TRIG_TYPE_NOCYCLE
++# @option:         Adds further qualifiers to the trigger or overrides the
++#                  behaviour (multiple options possible)
++# @action:         Action to be taken on trigger. Only one per trigger allowed.
++# @action-param:   Parameter for action - depends on the selected action.
++# @modified:       Set to "TRUE" on return of @mcd-create-trig if trigger
++#                  was modified by implementation, untouched otherwise.
++# @state-mask:     Set bits indicate that this trigger is inactive when
++#                  reaching the corresponding state of the state machine. Bit 0
++#                  represents state '1' of the state machine. Only to be
++#                  considered if %MCD_TRIG_OPT_STATE_IS_CONDITION is set in
++#                  @option.
++# @addr-start:     Start address for the address range the trigger shall be
++#                  activated for.
++# @addr-range:     Size of the address range for the trigger (in bytes). If it
++#                  is set to '0', the trigger is activated by an access to a
++#                  single address. If it is set to '1', the range of addresses
++#                  is two (@addr_start + 1). The address range can be
++#                  "inverted" if %MCD_TRIG_OPT_OUT_OF_RANGE is set in @option.
 +#
 +# Since: 9.1
 +##
-+{ 'struct': 'MCDRegisterInfo',
++{ 'struct': 'MCDTrigSimpleCore',
 +  'data': {
-+    'addr'                : 'MCDAddr',
-+    'reg-group-id'        : 'uint32',
-+    'regname'             : 'str',
-+    'regsize'             : 'uint32',
-+    'core-mode-mask-read' : 'uint32',
-+    'core-mode-mask-write': 'uint32',
-+    'side-effects-read'   : 'bool',
-+    'side-effects-write'  : 'bool',
-+    'reg-type'            : 'uint32',
-+    'hw-thread-id'        : 'uint32' } }
++  'type'        : 'uint32',
++  'option'      : 'uint32',
++  'action'      : 'uint32',
++  'action-param': 'uint32',
++  'modified'    : 'bool',
++  'state-mask'  : 'uint32',
++  'addr-start'  : 'MCDAddr',
++  'addr-range'  : 'uint64' }}
++
++
++##
++# @MCDTrigComplexCore:
++#
++# Structure type containing information about a complex core trigger condition.
++#
++# @type:           Trigger type, for this structure type it must be one of:
++#                  - %MCD_TRIG_TYPE_IP
++#                  - %MCD_TRIG_TYPE_READ
++#                  - %MCD_TRIG_TYPE_WRITE
++#                  - %MCD_TRIG_TYPE_RW
++#                  - %MCD_TRIG_TYPE_NOCYCLE
++# @option:         Adds further qualifiers to the trigger or overrides the
++#                  behaviour (multiple options possible)
++# @action:         Action to be taken on trigger. Only one per trigger allowed.
++# @action-param:   Parameter for action - depends on the selected action.
++# @modified:       Set to "TRUE" on return of @mcd-create-trig if trigger
++#                  was modified by implementation, untouched otherwise.
++# @state-mask:     Set bits indicate that this trigger is inactive when
++#                  reaching the corresponding state of the state machine. Bit 0
++#                  represents state '1' of the state machine. Only to be
++#                  considered if %MCD_TRIG_OPT_STATE_IS_CONDITION is set in
++#                  @option.
++# @addr-start:     Start address for the address range the trigger shall be
++#                  activated for.
++# @addr-range:     Size of the address range for the trigger (in bytes). If it
++#                  is set to '0', the trigger is activated by an access to a
++#                  single address. If it is set to '1', the range of addresses
++#                  is two (@addr_start + 1). The address range can be
++#                  "inverted" if %MCD_TRIG_OPT_OUT_OF_RANGE is set in @option.
++# @data-start:     Data comparison value of the trigger. Only considered if
++#                  %MCD_TRIG_OPT_DATA_IS_CONDITION is set in @option. Setting
++#                  option %MCD_TRIG_OPT_NOT_DATA activates the trigger on a
++#                  data mismatch.
++# @data-range:     Size of the data value range for the trigger. If it is set
++#                  to '0', the trigger is activated on a match with a single
++#                  value. If it is set to '1', the range of values is two
++#                  (@data_range + 1). Option %MCD_TRIG_OPT_SIGNED_DATA may be
++#                  set in @option if the data shall be interpreted as signed.
++#                  This usually also requires the option
++#                  %MCD_TRIG_OPT_DATASIZE_IS_CONDITION to be set in @option.
++# @data-mask:      Only value bits are considered for which the mask is set to
++#                  '0'
++# @data-size:      Size of the access in bytes. If set to '0' the size shall
++#                  not be considered. Shall be only considered if
++#                  %MCD_TRIG_OPT_DATASIZE_IS_CONDITION is set in @option.
++# @hw-thread-id:   ID of the hardware thread this trigger is associated with.
++# @sw-thread-id:   ID of the software thread this trigger is associated with.
++# @core-mode-mask: Mask of core modes for which the trigger shall not be
++#                  activated. A set bit disables the trigger for the
++#                  corresponding mode. Bit 0 represents core mode '1', bit 31
++#                  represents core mode '32'.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDTrigComplexCore',
++  'data': {
++    'type'          : 'uint32',
++    'option'        : 'uint32',
++    'action'        : 'uint32',
++    'action-param'  : 'uint32',
++    'modified'      : 'bool',
++    'state-mask'    : 'uint32',
++    'addr-start'    : 'MCDAddr',
++    'addr-range'    : 'uint64',
++    'data-start'    : 'uint64',
++    'data-range'    : 'uint64',
++    'data-mask'     : 'uint64',
++    'data-size'     : 'uint32',
++    'hw-thread-id'  : 'uint32',
++    'sw-thread-id'  : 'uint64',
++    'core-mode-mask': 'uint32' }}
++
++
++##
++# @MCDTrig:
++#
++# Compound structure which can be set to every supported trigger type.
++# Only one member is supposed to be set at once.
++#
++# @trig-simple-core:  Simple core trigger condition.
++# @trig-complex-core: Complex core trigger condition.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDTrig',
++  'data': {
++    '*trig-simple-core':  'MCDTrigSimpleCore',
++    '*trig-complex-core': 'MCDTrigComplexCore' } }
++
++
++##
++# @MCDTrigState:
++#
++# Structure type containing a trigger state.
++#
++# @active:         Was active at the point of time the trigger set was
++#                  uploaded.
++# @captured:       Activated at least once after trigger got downloaded to the
++#                  target.
++# @captured-valid: The information in @captured is valid.
++# @count-value:    Current value of the counter (for counter triggers).
++# @count-valid:    The information in @count-value is valid.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDTrigState',
++  'data': {
++     'active'        : 'bool',
++     'captured'      : 'bool',
++     'captured-valid': 'bool',
++     'count-value'   : 'uint64',
++     'count-valid'   : 'bool' } }
++
++
++##
++# @MCDTrigSetState:
++#
++# Structure type containing a trigger state.
++#
++# @active: Set if the trigger set is currently active.
++# @state: Current state of the trigger set's state machine.
++# @state-valid: Current state is valid.
++# @trig-bus: Current state of trigger bus.
++# @trig-bus-valid: Current state of trig-bus is valid.
++# @trace: Current state of trace start/stop.
++# @trace-valid: Current state is valid.
++# @analysis: Current state of performance analysis start/stop.
++# @analysis-valid: Current state is valid.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDTrigSetState',
++  'data': {
++    'active'        : 'bool',
++    'state'         : 'uint32',
++    'state-valid'   : 'bool',
++    'trig-bus'      : 'uint32',
++    'trig-bus-valid': 'bool',
++    'trace'         : 'bool',
++    'trace-valid'   : 'bool',
++    'analysis'      : 'bool',
++    'analysis-valid': 'bool' } }
 +
 +
  ##
- # == Target Initialization API
- ##
-@@ -1077,3 +1169,207 @@
-      'start-index'   : 'uint32',
-      'num-mem-spaces': 'uint32' },
-   'returns': 'MCDQryMemSpacesResult' }
+ # @MCDTx:
+ #
+@@ -1647,3 +1879,359 @@
+ { 'command': 'mcd-qry-state',
+   'data': { 'core-uid': 'uint32' },
+   'returns': 'MCDQryStateResult' }
 +
 +
 +##
-+# @MCDQryRegGroupsResult:
-+#
-+# Return value of @mcd-qry-reg-groups.
-+#
-+# @return-status:  Return code.
-+# @num-reg-groups: Number of returned register groups. In case the input value
-+#                  of @num-reg-groups is '0', this is the number of all
-+#                  available register groups for the selected core.
-+# @reg-groups:     Register group information.
-+#
-+# Since: 9.1
++# == Target Trigger Setup API
 +##
-+{ 'struct': 'MCDQryRegGroupsResult',
-+  'data': {
-+    'return-status'  : 'uint32',
-+    '*num-reg-groups': 'uint32',
-+    '*reg-groups'    : [ 'MCDRegisterGroup' ] }}
 +
 +
 +##
-+# @mcd-qry-reg-groups:
++# @MCDQryTrigInfoResult:
 +#
-+# Function querying the register groups defined for a particular component.
-+#
-+# @core-uid:       Unique ID of the core the calling function addresses.
-+# @start-index:    Start index of the requested register groups. This refers
-+#                  to an internal list of the target side implementation.
-+# @num-reg-groups: Number of register groups, information is requested of. If
-+#                  it is set to '0', no register groups information is returned
-+#                  but the number of all available register groups for the
-+#                  selected core.
-+#
-+# Returns: @MCDQryRegGroupsResult
-+#
-+# Since: 9.1
-+##
-+{ 'command': 'mcd-qry-reg-groups',
-+  'data': {
-+    'core-uid'      : 'uint32',
-+    'start-index'   : 'uint32',
-+    'num-reg-groups': 'uint32' },
-+  'returns': 'MCDQryRegGroupsResult' }
-+
-+
-+##
-+# @MCDQryRegMapResult:
-+#
-+# Return value of @mcd-qry-reg-map.
++# Return value of @mcd-qry-trig-info.
 +#
 +# @return-status: Return code.
-+# @num-regs:      Number of returned registers. In case the input value of
-+#                 @num-regs is '0', this is the number of all available register
-+#                 for the selected register group.
-+# @reg-info:      Register information.
++# @trig-info:     Information about supported triggers.
 +#
 +# Since: 9.1
 +##
-+{ 'struct': 'MCDQryRegMapResult',
++{ 'struct': 'MCDQryTrigInfoResult',
 +  'data': {
 +    'return-status': 'uint32',
-+    '*num-regs'    : 'uint32',
-+    '*reg-info'    : [ 'MCDRegisterInfo' ] }}
++    '*trig-info'   : 'MCDTrigInfo' }}
++
 +
 +##
-+# @mcd-qry-reg-map:
++# @mcd-qry-trig-info:
 +#
-+# Function querying the register information of a particular register group.
++# Function querying information about trigger capabilities.
 +#
-+# @core-uid:     Unique ID of the core the calling function addresses.
-+# @reg-group-id: ID of the register group detailed register information is
-+#                requested for.
-+# @start-index:  Start index of the requested registers. This refers to an
-+#                internal list of the target side implementation.
-+# @num-regs:     Number of registers, information is requested of. If it
-+#                is set to '0', no register information is returned but the
-+#                number of all available registers within for the selected
-+#                register group.
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
 +#
-+# Returns: @MCDQryRegMapResult
++# Returns: @MCDQryTrigInfoResult
 +#
 +# Since: 9.1
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "mcd-qry-reg-groups",
-+#          "arguments": { "core-uid": 1,
-+#                         "start-index": 0,
-+#                         "num-reg-groups": 3 } }
-+#     <- {
-+#            "return": {
-+#                "reg-groups": [
-+#                    {
-+#                        "reg-group-id": 1,
-+#                        "reg-group-name": "org.gnu.gdb.aarch64.core",
-+#                        "n-registers": 34
-+#                    },
-+#                    {
-+#                        "reg-group-id": 2,
-+#                        "reg-group-name": "org.gnu.gdb.aarch64.fpu",
-+#                        "n-registers": 34
-+#                    },
-+#                    {
-+#                        "reg-group-id": 3,
-+#                        "reg-group-name": "org.qemu.gdb.arm.sys.regs",
-+#                        "n-registers": 210
-+#                    }
-+#                ],
-+#                "return-status": 0,
-+#                "num-reg-groups": 3
-+#            }
-+#        }
-+#     -> { "execute": "mcd-qry-reg-map",
-+#          "arguments": { "core-uid": 1,
-+#                         "reg-group-id": 1,
-+#                         "start-index": 0,
-+#                         "num-regs": 34 } }
-+#     <- {
-+#            "return": {
-+#                "reg-info": [
-+#                    {
-+#                        "reg-group-id": 1,
-+#                        "regname": "x0",
-+#                        "side-effects-read": false,
-+#                        "addr": {
-+#                            "mem-space-id": 5,
-+#                            "addr-space-id": 0,
-+#                            "address": 0,
-+#                            "addr-space-type": 0
-+#                        },
-+#                        "reg-type": 0,
-+#                        "core-mode-mask-write": 0,
-+#                        "core-mode-mask-read": 0,
-+#                        "regsize": 64,
-+#                        "hw-thread-id": 0,
-+#                        "side-effects-write": false
-+#                    },
-+#                    {
-+#                        "reg-group-id": 1,
-+#                        "regname": "x1",
-+#                        "side-effects-read": false,
-+#                        "addr": {
-+#                            "mem-space-id": 5,
-+#                            "addr-space-id": 0,
-+#                            "address": 1,
-+#                            "addr-space-type": 0
-+#                        },
-+#                        "reg-type": 0,
-+#                        "core-mode-mask-write": 0,
-+#                        "core-mode-mask-read": 0,
-+#                        "regsize": 64,
-+#                        "hw-thread-id": 0,
-+#                        "side-effects-write": false
-+#                    },
-+#                    {
-+#                        "reg-group-id": 1,
-+#                        "regname": "x2",
-+#                        "side-effects-read": false,
-+#                        "addr": {
-+#                            "mem-space-id": 5,
-+#                            "addr-space-id": 0,
-+#                            "address": 2,
-+#                            "addr-space-type": 0
-+#                        },
-+#                        "reg-type": 0,
-+#                        "core-mode-mask-write": 0,
-+#                        "core-mode-mask-read": 0,
-+#                        "regsize": 64,
-+#                        "hw-thread-id": 0,
-+#                        "side-effects-write": false
-+#                    },
-+#                    {
-+#                        "reg-group-id": 1,
-+#                        "regname": "x3",
-+#                        "side-effects-read": false,
-+#                        "addr": {
-+#                            "mem-space-id": 5,
-+#                            "addr-space-id": 0,
-+#                            "address": 3,
-+#                            "addr-space-type": 0
-+#                        },
-+#                        "reg-type": 0,
-+#                        "core-mode-mask-write": 0,
-+#                        "core-mode-mask-read": 0,
-+#                        "regsize": 64,
-+#                        "hw-thread-id": 0,
-+#                        "side-effects-write": false
-+#                    },
-+#                    ...
-+#                ],
-+#                "return-status": 0,
-+#                "num-regs": 34
-+#            }
-+#        }
 +##
-+{ 'command': 'mcd-qry-reg-map',
++{ 'command': 'mcd-qry-trig-info',
++  'data': { 'core-uid': 'uint32' },
++  'returns': 'MCDQryTrigInfoResult' }
++
++
++##
++# @MCDQryCtrigsResult:
++#
++# Return value of @mcd-qry-ctrigs.
++#
++# @return-status: Return code.
++# @num-ctrigs:    Number of returned custom triggers. In case the input value of
++#                 @num_ctrigs is '0', this is the number of all available custom
++#                 triggers for the selected core.
++# @ctrig-info:    Custom trigger information.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDQryCtrigsResult',
++  'data': {
++    'return-status': 'uint32',
++    '*num-ctrigs'  : 'uint32',
++    '*ctrig-info'  : [ 'MCDCtrigInfo' ] }}
++
++
++##
++# @mcd-qry-ctrigs:
++#
++# Function querying information about custom triggers.
++#
++# @core-uid:    Unique identifier of the open core as returned by
++#               @mcd-open-core.
++# @start-index: Start index of the requested custom triggers. This refers
++#               to an internal list of the target side implementation.
++# @num-ctrigs:  Number of custom triggers, information is requested of. If it is
++#               set to '0', no custom trigger information is returned but the
++#               number of all available custom triggers for the selected core.
++#
++# Returns: @MCDQryCtrigsResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-qry-ctrigs',
++  'data': {
++    'core-uid'   : 'uint32',
++    'start-index': 'uint32',
++    'num-ctrigs' : 'uint32' },
++  'returns': 'MCDQryCtrigsResult' }
++
++
++##
++# @MCDCreateTrigResult:
++#
++# Return value of @mcd-create-trig.
++#
++# @return-status: Return code.
++# @trig:          Information about the created trigger object.
++# @trig-id:       Unique ID for the newly created trigger returned by the API
++#                 implementation. A value of '0' indicates that the breakpoint
++#                 is set, but cannot be identified by an ID. Removing such
++#                 breakpoints is only possible by calling @mcd-remove-trig-set.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDCreateTrigResult',
++  'data': {
++    'return-status': 'uint32',
++    '*trig'        : 'MCDTrig',
++    '*trig-id'     : 'uint32' }}
++
++
++##
++# @mcd-create-trig:
++#
++# Function allowing the creation of a new trigger.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++# @trig:     Information about the trigger object to be created.
++#
++# Returns: @MCDCreateTrigResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-create-trig',
 +  'data': {
 +    'core-uid': 'uint32',
-+    'reg-group-id': 'uint32',
-+    'start-index': 'uint32',
-+    'num-regs': 'uint32' },
-+  'returns': 'MCDQryRegMapResult' }
-diff --git a/tests/qtest/libmcd-test.c b/tests/qtest/libmcd-test.c
-index 9e41a0218f..82a39366b2 100644
---- a/tests/qtest/libmcd-test.c
-+++ b/tests/qtest/libmcd-test.c
-@@ -278,3 +278,43 @@ MCDQryMemSpacesResult *qtest_mcd_qry_mem_spaces(
- 
-     return unmarshal;
- }
++    'trig'    : 'MCDTrig' },
++  'returns': 'MCDCreateTrigResult' }
 +
-+MCDQryRegGroupsResult *qtest_mcd_qry_reg_groups(
-+    QTestState *qts, q_obj_mcd_qry_reg_groups_arg *args)
-+{
-+    Visitor *v;
-+    QObject *marshal;
-+    QDict *arg, *resp;
-+    QObject *ret;
-+    bool ok;
-+    MCDQryRegGroupsResult *unmarshal;
 +
-+    MARSHAL_ARGS(q_obj_mcd_qry_reg_groups_arg);
++##
++# @MCDQryTrigResult:
++#
++# Return value of @mcd-qry-trig.
++#
++# @return-status: Return code.
++# @trig:          Information about the trigger object.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDQryTrigResult',
++  'data': {
++    'return-status': 'uint32',
++    '*trig'        : 'MCDTrig' }}
 +
-+    resp = qtest_qmp(qts, "{'execute': 'mcd-qry-reg-groups',"
-+                          "'arguments': %p}", arg);
 +
-+    UNMARSHAL_RESULT(MCDQryRegGroupsResult);
++##
++# @mcd-qry-trig:
++#
++# Function querying the contents of a trigger.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++# @trig-id:  ID of the trigger the user queries.
++#
++# Returns: @MCDQryTrigResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-qry-trig',
++  'data': {
++    'core-uid': 'uint32',
++    'trig-id' : 'uint32'},
++  'returns': 'MCDQryTrigResult' }
 +
-+    return unmarshal;
-+}
 +
-+MCDQryRegMapResult *qtest_mcd_qry_reg_map(QTestState *qts,
-+                                          q_obj_mcd_qry_reg_map_arg *args)
-+{
-+    Visitor *v;
-+    QObject *marshal;
-+    QDict *arg, *resp;
-+    QObject *ret;
-+    bool ok;
-+    MCDQryRegMapResult *unmarshal;
++##
++# @MCDRemoveTrigResult:
++#
++# Return value of @mcd-remove-trig.
++#
++# @return-status: Return code.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDRemoveTrigResult', 'data': { 'return-status': 'uint32' } }
 +
-+    MARSHAL_ARGS(q_obj_mcd_qry_reg_map_arg);
 +
-+    resp = qtest_qmp(qts, "{'execute': 'mcd-qry-reg-map',"
-+                          "'arguments': %p}", arg);
++##
++# @mcd-remove-trig:
++#
++# Function allowing a user to delete a particular trigger from a trigger set.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++# @trig-id:  ID of the trigger the user wants to delete.
++#
++# Returns: @MCDRemoveTrigResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-remove-trig',
++  'data': {
++    'core-uid': 'uint32',
++    'trig-id' : 'uint32' },
++  'returns': 'MCDRemoveTrigResult' }
 +
-+    UNMARSHAL_RESULT(MCDQryRegMapResult);
 +
-+    return unmarshal;
-+}
-diff --git a/tests/qtest/libmcd-test.h b/tests/qtest/libmcd-test.h
-index 26f35b8931..266b6fe854 100644
---- a/tests/qtest/libmcd-test.h
-+++ b/tests/qtest/libmcd-test.h
-@@ -50,4 +50,10 @@ MCDCloseCoreResult *qtest_mcd_close_core(QTestState *qts,
- MCDQryMemSpacesResult *qtest_mcd_qry_mem_spaces(QTestState *qts,
-     q_obj_mcd_qry_mem_spaces_arg *args);
- 
-+MCDQryRegGroupsResult *qtest_mcd_qry_reg_groups(QTestState *qts,
-+    q_obj_mcd_qry_reg_groups_arg *args);
++##
++# @MCDQryTrigStateResult:
++#
++# Return value of @mcd-qry-trig-state.
++#
++# @return-status: Return code.
++# @trig-state:    Queried Trigger state.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDQryTrigStateResult',
++  'data': {
++    'return-status': 'uint32',
++    '*trig-state'  : 'MCDTrigState' }}
 +
-+MCDQryRegMapResult *qtest_mcd_qry_reg_map(QTestState *qts,
-+                                          q_obj_mcd_qry_reg_map_arg *args);
 +
- #endif /* LIBMCD_TEST_H */
-diff --git a/tests/qtest/mcd-test.c b/tests/qtest/mcd-test.c
-index 7deca39f93..820408a9a9 100644
---- a/tests/qtest/mcd-test.c
-+++ b/tests/qtest/mcd-test.c
-@@ -355,8 +355,12 @@ static void test_qry_core_info(void)
-     MCDCoreConInfoList *core_head = cores_query->core_con_info;
-     for (uint32_t c = 0; c < cores_query->num_cores; c++) {
-         q_obj_mcd_qry_mem_spaces_arg qry_mem_spaces_args;
-+        q_obj_mcd_qry_reg_groups_arg qry_reg_groups_args;
-+        q_obj_mcd_qry_reg_map_arg qry_reg_map_args;
-         q_obj_mcd_close_core_arg close_core_args;
-         MCDQryMemSpacesResult *qry_mem_spaces_result;
-+        MCDQryRegGroupsResult *qry_reg_groups_result;
-+        MCDQryRegMapResult *qry_reg_map_result;
-         MCDCloseCoreResult *close_core_result;
- 
-         MCDCoreConInfo *core_con_info = core_head->value;
-@@ -374,6 +378,8 @@ static void test_qry_core_info(void)
-                                 core_con_info->core_id);
-         }
- 
-+        /* Memory Space Query */
++##
++# @mcd-qry-trig-state:
++#
++# Function allowing a user to query the trigger states from the target.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++# @trig-id:  ID of the trigger, the tool queries the state for.
++#
++# Returns: @MCDQryTrigStateResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-qry-trig-state',
++  'data': {
++    'core-uid': 'uint32',
++    'trig-id' : 'uint32' },
++  'returns': 'MCDQryTrigStateResult' }
 +
-         qry_mem_spaces_args = (q_obj_mcd_qry_mem_spaces_arg) {
-             .core_uid = open_core_result->core_uid,
-             .start_index = 0,
-@@ -411,6 +417,85 @@ static void test_qry_core_info(void)
-         }
- 
-         qapi_free_MCDQryMemSpacesResult(qry_mem_spaces_result);
 +
-+        /* Register Query */
++##
++# @MCDActivateTrigSetResult:
++#
++# Return value of @mcd-activate-trig-set.
++#
++# @return-status: Return code.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDActivateTrigSetResult', 'data': { 'return-status': 'uint32' } }
 +
-+        qry_reg_groups_args = (q_obj_mcd_qry_reg_groups_arg) {
-+            .core_uid = open_core_result->core_uid,
-+            .start_index = 0,
-+            .num_reg_groups = 0, /* query only number of register groups */
-+        };
 +
-+        qry_reg_groups_result = qtest_mcd_qry_reg_groups(qts,
-+                                                        &qry_reg_groups_args);
-+        g_assert(qry_reg_groups_result->return_status == MCD_RET_ACT_NONE);
-+        g_assert(qry_reg_groups_result->has_num_reg_groups);
++##
++# @mcd-activate-trig-set:
++#
++# Function allowing a user to activate a trigger set on the target.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++#
++# Returns: @MCDActivateTrigSetResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-activate-trig-set',
++  'data': { 'core-uid': 'uint32' },
++  'returns': 'MCDActivateTrigSetResult' }
 +
-+        if (qry_reg_groups_result->num_reg_groups == 0) {
-+            fprintf(stderr, "[WARN]\tTNo register groups!\n");
-+        }
 +
-+        qry_reg_groups_args.num_reg_groups =
-+            qry_reg_groups_result->num_reg_groups;
++##
++# @MCDRemoveTrigSetResult:
++#
++# Return value of @mcd-remove-trig-set.
++#
++# @return-status: Return code.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDRemoveTrigSetResult', 'data': { 'return-status': 'uint32' } }
 +
-+        qapi_free_MCDQryRegGroupsResult(qry_reg_groups_result);
-+        qry_reg_groups_result = qtest_mcd_qry_reg_groups(qts,
-+                                                         &qry_reg_groups_args);
-+        g_assert(qry_reg_groups_result->return_status == MCD_RET_ACT_NONE);
-+        g_assert(qry_reg_groups_result->has_num_reg_groups);
 +
-+        if (verbose) {
-+            MCDRegisterGroupList *rg_head = qry_reg_groups_result->reg_groups;
-+            for (uint32_t i = 0;
-+                 i < qry_reg_groups_result->num_reg_groups; i++) {
-+                MCDRegisterGroup *rg = rg_head->value;
-+                if (verbose) {
-+                    fprintf(stderr, "\tRegister Group: %s (#%d) with "
-+                                    "%d registers\n",
-+                                    rg->reg_group_name,
-+                                    rg->reg_group_id,
-+                                    rg->n_registers);
-+                }
-+                rg_head = rg_head->next;
-+            }
-+        }
++##
++# @mcd-remove-trig-set:
++#
++# Function allowing a user to delete a trigger set.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++#
++# Returns: @MCDActivateTrigSetResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-remove-trig-set',
++  'data': { 'core-uid': 'uint32' },
++  'returns': 'MCDActivateTrigSetResult' }
 +
-+        qapi_free_MCDQryRegGroupsResult(qry_reg_groups_result);
 +
-+        qry_reg_map_args = (q_obj_mcd_qry_reg_map_arg) {
-+            .core_uid = open_core_result->core_uid,
-+            .reg_group_id = 0,
-+            .start_index = 0,
-+            .num_regs = 0, /* query only number of registers */
-+        };
++##
++# @MCDQryTrigSetResult:
++#
++# Return value of @mcd-qry-trig-set.
++#
++# @return-status: Return code.
++# @num-trigs:     The number of returned triggers. In case the input value of
++#                 @num_trigs is '0', this is the number of all available triggers
++#                 of this core's trigger set.
++# @trig-ids:      List of trigger IDs set in the target.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDQryTrigSetResult',
++  'data': {
++    'return-status': 'uint32',
++    '*num-trigs'   : 'uint32',
++    '*trig-ids'    : [ 'uint32' ] }}
 +
-+        qry_reg_map_result = qtest_mcd_qry_reg_map(qts, &qry_reg_map_args);
-+        g_assert(qry_reg_map_result->return_status == MCD_RET_ACT_NONE);
-+        g_assert(qry_reg_map_result->has_num_regs);
 +
-+        if (verbose) {
-+            fprintf(stderr, "\t%d registers found\n",
-+                qry_reg_map_result->num_regs);
-+        }
++##
++# @mcd-qry-trig-set:
++#
++# Function querying the contents of a trigger set.
++#
++# @core-uid:    Unique identifier of the open core as returned by
++#               @mcd-open-core.
++# @start-index: Start index of the requested triggers. This refers to an
++#               internal list of the target side implementation.
++# @num-trigs:   The number of queried triggers starting from the defined
++#               @start-index. If it is set to '0', no triggers are returned but
++#               the number of all available triggers of the trigger set.
++#
++# Returns: @MCDQryTrigSetResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-qry-trig-set',
++  'data': {
++      'core-uid'   : 'uint32',
++      'start-index': 'uint32',
++      'num-trigs'  : 'uint32' },
++  'returns': 'MCDQryTrigSetResult' }
 +
-+        qry_reg_map_args.num_regs = qry_reg_map_result->num_regs;
-+        qapi_free_MCDQryRegMapResult(qry_reg_map_result);
 +
-+        qry_reg_map_result = qtest_mcd_qry_reg_map(qts, &qry_reg_map_args);
-+        g_assert(qry_reg_map_result->return_status == MCD_RET_ACT_NONE);
-+        g_assert(qry_reg_map_result->has_num_regs);
-+        if (verbose) {
-+            MCDRegisterInfoList *r_head = qry_reg_map_result->reg_info;
-+            for (uint32_t i = 0;
-+                 i < qry_reg_map_result->num_regs; i++) {
-+                MCDRegisterInfo *r = r_head->value;
-+                fprintf(stderr, "\tRegister: %s (#%lx)\n",
-+                        r->regname, r->addr->address);
-+                r_head = r_head->next;
-+            }
-+        }
-+        qapi_free_MCDQryRegMapResult(qry_reg_map_result);
++##
++# @MCDQryTrigSetStateResult:
++#
++# Return value of @mcd-qry-trig-set-state.
++#
++# @return-status: Return code.
++# @trig-state:    Information about the current state of the trigger set.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDQryTrigSetStateResult',
++  'data': {
++    'return-status': 'uint32',
++    '*trig-state'  : 'MCDTrigSetState' }}
 +
-         close_core_args.core_uid = open_core_result->core_uid;
-         close_core_result = qtest_mcd_close_core(qts, &close_core_args);
-         g_assert(close_core_result->return_status == MCD_RET_ACT_NONE);
++
++##
++# @mcd-qry-trig-set-state:
++#
++# Function querying the state of a trigger set.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++#
++# Returns: @MCDQryTrigSetStateResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-qry-trig-set-state',
++  'data': { 'core-uid': 'uint32' },
++  'returns': 'MCDQryTrigSetStateResult' }
 -- 
 2.34.1
 
