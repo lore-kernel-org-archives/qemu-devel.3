@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A71EC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 23:11:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D04D6C28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 23:11:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trmGc-00074s-1t; Mon, 10 Mar 2025 19:10:38 -0400
+	id 1trmH6-0007Zn-ST; Mon, 10 Mar 2025 19:11:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1trmGa-00072r-2W; Mon, 10 Mar 2025 19:10:36 -0400
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ id 1trmH4-0007Z4-OM
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 19:11:06 -0400
+Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1trmGY-0006T0-8A; Mon, 10 Mar 2025 19:10:35 -0400
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-51eb1823a8eso2227779e0c.3; 
- Mon, 10 Mar 2025 16:10:31 -0700 (PDT)
+ id 1trmH2-0006Vf-Vi
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 19:11:06 -0400
+Received: by mail-vk1-xa34.google.com with SMTP id
+ 71dfb90a1353d-523ffbe0dbcso2021214e0c.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 16:10:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741648231; x=1742253031; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741648257; x=1742253057; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mB7J9pKOy2EnIGyufeEuF2v8jeCrtGwK6JtASiaaOBY=;
- b=bPSgK/IN6EJ27rrFix65OK4ASHBTOaEd3qAJgD0pmuYyT5HUJuEwRl10eaF3hHDCTx
- T2UUGtCxJ9GRBqPWbvi/+lVAY7RnyFXuFnEdPVXlyYCb0sn904a6PDlLSHZVVMo/p803
- V9+r3yf5tp6EiQH7SowqjchWLMUPNDGQK9bnJS1bsuf2unLE+2bOHpuzraruYKzqZ+3l
- jyCwBwg09s4LAR4spxpvsn4+AMY38d414TkBRxB1mBG3uURZC6wtffnvmzCbL8k8jCX3
- EP6tx3t4eQFQBpmOq6BlbMyUv+7OGTIhuInAeyPzgwp8E8VwB5hlzpKLcdmppM+3ynvm
- 6iPA==
+ bh=WYwWucOsTx3nF2AZhXgoS68O3t5GWvroI7hfbrzqlzM=;
+ b=ecYv8smFyEhSzHF+MXbbn8RvU3Yrn5aULtSiditqw421Lxzsdj+sy13vdam84XEbbp
+ JapIbpHbupVbOGDcLgc5P/I1SNYFJKnFMbYidr0fQq/Tp+X5oAsRhVKkpOJO3DTaSM7A
+ 79t3kQh8se6FmMXAIgr7dGIA/ve/iJERSvdsQslMAsL2ip1S9udlEFvppNqd0cw32fcV
+ lX0EKArzJR9CwpPsr6Ire+lhawvFyW0jyQM6ol1y+sq5FqSdt7kLFziUcWKDLkDJB+nt
+ iYPjM1ijvRWyz5tHaCChvq5ffV07r6YWuJLDkGhfMVTdPbIfdPe+kFYLIvtE+SmHeAqx
+ 8Afg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741648231; x=1742253031;
+ d=1e100.net; s=20230601; t=1741648257; x=1742253057;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mB7J9pKOy2EnIGyufeEuF2v8jeCrtGwK6JtASiaaOBY=;
- b=EOZ208f0URPgITidbEqRI4pFbvjhBhnHHziaEUzgRbK9KbLmP30Vwv0kP6H/4V5oXA
- zNNERvMH8/jDRtgb48vp0pYK7+3zSuqkiDlUaLVOQNtiz+tyZ0zqasEzeuUXKRJtRrXA
- 2FflAXeMQ96PZ1TDvk3LkrdlC9N5E1Ry3Joa74MKwEgQIjSK5eO9HsMPmXeGMa27iTT3
- lC67pe301C8OHZchrWnYc+65aEN1NfXqMM8mSSz3c2OnyatpjUziNOoGTHeKx1+ueIZY
- si88J9cxJbhG+CKF98rNCXOSBU2t29hYPZfExX6bVsdYmFWrPBzSlpreztWyxqrkn3Dj
- vhZw==
+ bh=WYwWucOsTx3nF2AZhXgoS68O3t5GWvroI7hfbrzqlzM=;
+ b=T7qziVHTJUGkElPLNz1KgsTfJn+s4JmZOTxeqSIFUNVWV2zXyvRtiaQAzQhN4luaWb
+ k2MboabPUvcxQFG8/hSOsmZHNFgwOdCMQr779t8mFhhRnkhpiL7qXu8xllM6e1bLZe2L
+ YnQrTFk2Xjnl5bO2z7UbWc5Du8R8CoZEq3gavg07X06+fs+qu1jYAq2/y0wfgdh7ibOx
+ fb69RmAZ540TOoxacQnk/dwLV8Y4AwyB0cH8CyNKQKAqwb3vMuCd4e55+brBomnkxd/E
+ 7ty3Y+DHDT4UzoKqxh/JDwQkT4ChDUbWmOVAFohbbSbbAeVmSRX3sk1Xlhm1UYOJhn3w
+ GOqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTpzG31zUQYZsq6fbpT0xxMJrg9/bB/72K25Wrhm65QOHyBfmJyWwOnCWTCX5qOtO5UejDjH26PAtmZw==@nongnu.org
-X-Gm-Message-State: AOJu0YxKHmHzuDsCNYAur/iuCxkkWTq8++hAFEfq0ttkqvW75WweyIuU
- 16PDd8i6D9pW8rYCAJNIbyNvPlo5nF6eI4YCO0F3w8UbPHlMy/W1B7djQeLM36gSo9A4Ha4mz30
- W36ENRlW3eiX2nm1d8LP4pa67Bno=
-X-Gm-Gg: ASbGncvR1G6YmH28G1CYTeskGP3agE1uypuTy21IiHlkWbu/lq31zHoYXwCT9mBPlPK
- 7XoTo9+4IaZypniei9k/fDtVJA+nuF7s7GwJw8qFqj/o9CsUZgx2K4E99V06SkZEvph7HAUHb1v
- I7odndvbAIqQf1eYlBF/AjVmbJ7afF6vDQkhHVVFrGQqekb1yjX2UpbT9E
-X-Google-Smtp-Source: AGHT+IFh8LMDHRTua0iVZj0kn1r2TriB27mDwNTkFdTnL1p84lWZNEF4D4449g9TrgvgfGLGLww5tX1fFCYU5FK/7dU=
-X-Received: by 2002:a05:6102:3a0b:b0:4c1:85d9:5641 with SMTP id
- ada2fe7eead31-4c30a5e7d37mr8907405137.11.1741648230986; Mon, 10 Mar 2025
- 16:10:30 -0700 (PDT)
+ AJvYcCUlh+MLt8xAEfq19CadbqHLJBUtA5KKXY/gOyyTebACeakmnSBN5bnPFbk82sNtJLArBz9kEx5WBjMj@nongnu.org
+X-Gm-Message-State: AOJu0YwitiMbRoFZGX8+X4wMuVvT2v9TCyuU7IyR0ACYE+kOIb277q1h
+ 9/jun3HLGWzyLdVYn/KOd/ld6uAKxr6KUyZuwvW532uTeaF69CzBzFv8rwtwy/nDElGwFSRSU9k
+ 1a0ncXuwg4nbYtP4ywBYOCj0T39A=
+X-Gm-Gg: ASbGnctCeXT4WSTVC7AfDzYopxsAWxJo5QabNbgjPz+Cx3/4SQS4XLbafnAHdKMtKPa
+ +Zz5D8lhI3V8eS3IN3SDYiLhFy/lXifp2tmc/PXE7i12nGuJXYlUah7+ntjpIHK8SFeJkpfNZVZ
+ nHCAGOxOjEqVLYba3r66rCMvwwUjKFRkdTUQO5SOGBrzY+rKqUbdwcira2
+X-Google-Smtp-Source: AGHT+IHFLn1E0fZJdlQONY/yIaYofNJ6kOe52b51fWafEOs8F/TYeMcBCys7+63PBuFzlvY+tMqTFUUF6PCBB/puBDs=
+X-Received: by 2002:a05:6102:c14:b0:4bb:e80b:473d with SMTP id
+ ada2fe7eead31-4c34d23a3ccmr1210616137.6.1741648257314; Mon, 10 Mar 2025
+ 16:10:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250308225902.1208237-1-richard.henderson@linaro.org>
- <20250308225902.1208237-3-richard.henderson@linaro.org>
-In-Reply-To: <20250308225902.1208237-3-richard.henderson@linaro.org>
+References: <mvmo6yglouz.fsf@suse.de>
+In-Reply-To: <mvmo6yglouz.fsf@suse.de>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 11 Mar 2025 09:10:05 +1000
-X-Gm-Features: AQ5f1JpOwDBE4ynATCvzlnTGSha4ENgxfzd1qTDtykaXla47p9sFpfFeP611p54
-Message-ID: <CAKmqyKOTFQCp9gHvWvKeDoWDpbP+eh4=qXpDrZyS9S1R0jJKYw@mail.gmail.com>
-Subject: Re: [PATCH v2] linux-user/riscv: Fix handling of cpu mask in
- riscv_hwprobe syscall
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- Andreas Schwab <schwab@suse.de>
+Date: Tue, 11 Mar 2025 09:10:31 +1000
+X-Gm-Features: AQ5f1Jo4-Cz3AQTOeRm8z_9pGFup2mzkBXPaT-uJhrp_x-PLWsGOLtUbKeXMsYE
+Message-ID: <CAKmqyKOdZn__jJH4Pzsqm5Rv2my1Kq3Gn8fefRb4+wKLko=pWA@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: fix handling of cpu mask in riscv_hwprobe
+ syscall
+To: Andreas Schwab <schwab@suse.de>
+Cc: Laurent Vivier <laurent@vivier.eu>, Palmer Dabbelt <palmer@rivosinc.com>, 
+ Robbin Ehn <rehn@rivosinc.com>, Alistair Francis <alistair.francis@wdc.com>,
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,117 +99,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 9, 2025 at 9:00=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Wed, Mar 5, 2025 at 2:54=E2=80=AFAM Andreas Schwab <schwab@suse.de> wrot=
+e:
 >
-> The third argument of the syscall contains the size of the
-> cpu mask in bytes, not bits.  Nor is the size rounded up to
-> a multiple of sizeof(abi_ulong).
+> The third argument of the riscv_hwprobe syscall contains the size of the
+> cpu mask in bytes, not bits.
 >
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Andreas Schwab <schwab@suse.de>
-> Fixes: 9e1c7d982d7 ("linux-user/riscv: Add syscall riscv_hwprobe")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Andreas Schwab <schwab@suse.de>
 
-Thanks!
+Richard sent a v2 that I have applied:
 
-Applied to riscv-to-apply.next
+https://patchew.org/QEMU/20250308225902.1208237-3-richard.henderson@linaro.=
+org/
 
 Alistair
 
 > ---
->  linux-user/syscall.c | 55 +++++++++++++++++++++++---------------------
->  1 file changed, 29 insertions(+), 26 deletions(-)
+>  linux-user/syscall.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 >
 > diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index 02ea4221c9..fcc77c094d 100644
+> index a22a5df8cc..4cc1a31d0d 100644
 > --- a/linux-user/syscall.c
 > +++ b/linux-user/syscall.c
-> @@ -9118,35 +9118,38 @@ static void risc_hwprobe_fill_pairs(CPURISCVState=
+> @@ -9120,16 +9120,16 @@ static void risc_hwprobe_fill_pairs(CPURISCVState=
  *env,
->      }
->  }
 >
-> -static int cpu_set_valid(abi_long arg3, abi_long arg4)
-> +/*
-> + * If the cpumask_t of (target_cpus, cpusetsize) cannot be read: -EFAULT=
-.
-> + * If the cpumast_t has no bits set: -EINVAL.
-> + * Otherwise the cpumask_t contains some bit set: 0.
-> + * Unlike the kernel, we do not mask cpumask_t by the set of online cpus=
-,
-> + * nor bound the search by cpumask_size().
-> + */
-> +static int nonempty_cpu_set(abi_ulong cpusetsize, abi_ptr target_cpus)
+>  static int cpu_set_valid(abi_long arg3, abi_long arg4)
 >  {
 > -    int ret, i, tmp;
-> -    size_t host_mask_size, target_mask_size;
-> -    unsigned long *host_mask;
-> +    unsigned char *p =3D lock_user(VERIFY_READ, target_cpus, cpusetsize,=
- 1);
-> +    int ret =3D -TARGET_EFAULT;
+> +    int ret, i;
+>      size_t host_mask_size, target_mask_size;
+>      unsigned long *host_mask;
 >
-> -    /*
-> -     * cpu_set_t represent CPU masks as bit masks of type unsigned long =
+>      /*
+>       * cpu_set_t represent CPU masks as bit masks of type unsigned long =
 *.
 > -     * arg3 contains the cpu count.
-> -     */
+> +     * arg3 contains the size of the cpu mask.
+>       */
 > -    tmp =3D (8 * sizeof(abi_ulong));
 > -    target_mask_size =3D ((arg3 + tmp - 1) / tmp) * sizeof(abi_ulong);
-> -    host_mask_size =3D (target_mask_size + (sizeof(*host_mask) - 1)) &
-> -                     ~(sizeof(*host_mask) - 1);
-> -
-> -    host_mask =3D alloca(host_mask_size);
-> -
-> -    ret =3D target_to_host_cpu_mask(host_mask, host_mask_size,
-> -                                  arg4, target_mask_size);
-> -    if (ret !=3D 0) {
-> -        return ret;
-> -    }
-> -
-> -    for (i =3D 0 ; i < host_mask_size / sizeof(*host_mask); i++) {
-> -        if (host_mask[i] !=3D 0) {
-> -            return 0;
-> +    if (p) {
-> +        ret =3D -TARGET_EINVAL;
-> +        /*
-> +         * Since we only care about the empty/non-empty state of the cpu=
-mask_t
-> +         * not the individual bits, we do not need to repartition the bi=
-ts
-> +         * from target abi_ulong to host unsigned long.
-> +         *
-> +         * Note that the kernel does not round up cpusetsize to a multip=
-le of
-> +         * sizeof(abi_ulong).  After bounding cpusetsize by cpumask_size=
-(),
-> +         * it copies exactly cpusetsize bytes into a zeroed buffer.
-> +         */
-> +        for (abi_ulong i =3D 0; i < cpusetsize; ++i) {
-> +            if (p[i]) {
-> +                ret =3D 0;
-> +                break;
-> +            }
->          }
-> +        unlock_user(p, target_cpus, 0);
->      }
-> -    return -TARGET_EINVAL;
-> +    return ret;
->  }
+> +    target_mask_size =3D (arg3 + (sizeof(abi_ulong) - 1)) &
+> +                       ~(sizeof(abi_ulong) - 1);
+>      host_mask_size =3D (target_mask_size + (sizeof(*host_mask) - 1)) &
+>                       ~(sizeof(*host_mask) - 1);
 >
->  static abi_long do_riscv_hwprobe(CPUArchState *cpu_env, abi_long arg1,
-> @@ -9163,7 +9166,7 @@ static abi_long do_riscv_hwprobe(CPUArchState *cpu_=
-env, abi_long arg1,
->
->      /* check cpu_set */
->      if (arg3 !=3D 0) {
-> -        ret =3D cpu_set_valid(arg3, arg4);
-> +        ret =3D nonempty_cpu_set(arg3, arg4);
->          if (ret !=3D 0) {
->              return ret;
->          }
 > --
-> 2.43.0
+> 2.48.1
 >
+>
+> --
+> Andreas Schwab, SUSE Labs, schwab@suse.de
+> GPG Key fingerprint =3D 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D=
+7
+> "And now for something completely different."
 >
 
