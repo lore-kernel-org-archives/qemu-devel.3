@@ -4,71 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8073DC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6805C28B2E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 09:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trYuP-0002C9-7N; Mon, 10 Mar 2025 04:54:49 -0400
+	id 1trZ5Q-0008KI-3u; Mon, 10 Mar 2025 05:06:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fujunjie1@qq.com>) id 1trYAL-0001vH-G2
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:07:14 -0400
-Received: from xmbghk7.mail.qq.com ([43.163.128.47])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fujunjie1@qq.com>) id 1trYA0-0001HN-Ap
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:07:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1741593997; bh=1m3NpkLP/3kCEEfq6yVIpcmTeGIdXnJV/p1gVEI3Baw=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Lr+kdzdAwSolZjPMmgDA3ZWPUJzbKFWfeOUN5ufNg2OG9Xsc5etqcM8MDogoRQuHW
- eQvzdWhh3p6hG08n23igfpYieecJz3ipPVuLBdw7TZk4uAmrRB4o5AQpRGx51+wqFH
- LGaP5auHh1TQZQSXOZBa4SU3qoi7oIGyZBa7slRw=
-Received: from localhost.localdomain ([2408:8409:1921:9c88:8c6b:6c8:9ab7:c93e])
- by newxmesmtplogicsvrsza36-0.qq.com (NewEsmtp) with SMTP
- id 1469C4ED; Mon, 10 Mar 2025 16:05:06 +0800
-X-QQ-mid: xmsmtpt1741593906tf5rqj6n6
-Message-ID: <tencent_E9F3F01E0D2303378E16505CE4CF208AA908@qq.com>
-X-QQ-XMAILINFO: NzOHSugmTg7X1YVOCHdceq8Z1QLyi0d59A5grrf3cTfFXKpskIKhksx1fYvO3I
- ij/gK6eaWDYGapxhRzn/UpsIxMAqrFgAT9Fq7ULEZ5RW1POj5fRgfT6onhddhwoV1Qb80+1pKXmk
- mFGn/Uw/OgmgEpQeEZ76wkv22amBskHid/yKTYB40o89ypuWtQlkkkB8H66cBFxY+G4NxPaCzgv9
- pvwcCp7lwP/B9ISvisSCnZoRkIPog6M87djiXH/Qvdr97FqO/V9YUcP4KhIjyfNUWfzIYxHqQ/TJ
- H9JK66RVr3wYBxd0qnl9ip9gehTeW5P/1V0nY28iS4rBXjydCnlC3YpEAqpx9bl96gJJEk5xY3An
- dCOvxnFK/2BSKepkhb1hOi0DYiOQmJPiMGlFEmCRvUSJD4sFPaV1lkEKlOBscYazKTt04PnkYtHf
- j8JzaU0DBQ1r62gADqsXqEkAalPIvvZBpwyXxZ3ChE+udTHibw+YfwD7+y1uZvjl8f7jL6/LdpAg
- 7dscFvLVZpiXpYCj2yOcDYy+OJYmPb/rPFl04u9kXNVUQpTO8C3SN0pYa2yVLQt/pKCyZ4ivk4E/
- f+LfYtQW8JU0ON3nOkq9I5e4rDRETnHDcJdaObKUeBiWq1+ANUjgo1LsH00lq02UxfSi/dGc0RaD
- Kl5M+gUcb8gY0VI7UPmbQ2kuJ/IjD86Y7/KNzUCWx94LdZbU4jRFK1f86iJo331MApHse0DU3Efz
- uZ6Ul2Du27vLEPLq1IHz+qeGaJzdnqmGMkqZaBAH663pIxZwjlEW07w41bcprFqJQxEBcs1wpDOn
- NoeWiZTijdwdcpa3S6TJPl4TRUWVk5bG/QAEEKisqEt+fDk8qZ0iWDmt6rICPnIG/jvj66EmVal1
- GGZaHa7DL88FFsaUPOpJalyqxN5YpH9q8ZRmoSxStQ9IvSzhojNs7j84fDvHdTWXSVdMGUHHr//t
- cyASLnTU0=
-X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
-From: Junjie Fu <fujunjie1@qq.com>
-To: qemu-devel@nongnu.org
-Cc: Jonathan.Cameron@Huawei.com, linux-cxl@vger.kernel.org,
- viacheslav.dubeyko@bytedance.com, zhitingz@cs.utexas.edu
-Subject: CXL memory pooling emulation inqury
-Date: Mon, 10 Mar 2025 16:02:45 +0800
-X-OQ-MSGID: <20250310080245.291632-1-fujunjie1@qq.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230215151854.00003e34@Huawei.com>
-References: <20230215151854.00003e34@Huawei.com>
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1trZ5K-0008Gt-9a
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:06:06 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1trZ5I-0003uN-FG
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:06:06 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22548a28d0cso40257075ad.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 02:06:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741597561; x=1742202361; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:references:to:subject:from
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hs7+unaKl2CtCEMbcrC+vLxqiUsD7/N7LF09BCQ50TY=;
+ b=HRuJF/cOLobWfPBsfnq31v94/L0s0vlfaImRGkp/+6yBIn5+wV57MJ47mCAH98aad8
+ sB1j7xTBeaeVo9J1XxaoONFLu8nVUPwJKHUNYaI+/xhM2wUnkTHMBmRecyTq3sm7rkLl
+ sp3cwkC30JvFuOraOO7DdWYegpB/VmEBh6izgEafCAPBpnd/YKR1NKYW833q9SLH1HrX
+ hBhzO7gw19Zpt7dirqasphHip5PJL0wHA+f8t47jpkoZydXxDQfN/shBIzHCaQBIbqlg
+ hJLVHfaK8K0RmtVQC6RvpEJmLh9fzcSPDJZwiH6RXPNmh9Sc3LJybpTTsMfCVKJWE2Up
+ 1JlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741597561; x=1742202361;
+ h=content-transfer-encoding:in-reply-to:cc:references:to:subject:from
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Hs7+unaKl2CtCEMbcrC+vLxqiUsD7/N7LF09BCQ50TY=;
+ b=mOh4emsSm93+8r5iE2sPk0xxTC/Q/XUOj9SOmFua4U9dZpdXWQJbQBZMpqRHg097Ur
+ +Fv4Sl/zVaABaNT0yWW+HVFM5zxCtxK5VvcV4Z+S9zMCnXApp6O9EtunztE5hvBSiCZT
+ AyoWG40uYmjSbiJra7iLa4oUS/dVPO/130EnEwL83vfG0qGGvbGuH2ktG8uD3J6N84GK
+ +cGgl1r7YpQtK9qeJ6oJcWrY/9GUWJsKzAk4vah76caDMCG0grlKXkH++wt/dNx1yBai
+ 8LbbLEi6BTFi4d7yA8EeY6J2H/u128RMUTmVTqUrkc+rG4YYidhlPYETVzon7uuQZIQ0
+ yEAw==
+X-Gm-Message-State: AOJu0YwxMgdx3wgPenji5rDg23DfANTi5k2kuBuRugJELKJhwZm4pvC2
+ o2R/I4qlw8ZP1sif+KwbF1HaRc0Ecb8oxL7ATM/8Lkq9etUZfEqW
+X-Gm-Gg: ASbGncsuYNxP2FMLSYeW4ZkG+wcQsTiE+urQCSgC2by34wiJNefLDVowZZ6I1YLZdwH
+ SZfGXxQdzyeTLDSK96sLCPD3qHbepPS0gCqbT44+rQv7SQoAkxmJR/wZ4Kb/jfz2y10vIprv4de
+ EoifcJ4HMoUvScXVzn+TCheZgk9D5PJCxTjgeVZqDICshlT/oNtmbPA0ZLs/tIz49yWEvG2bkqk
+ DO1xn+wWaBbfGI0ZOKG0ebjkielIlMmbmTKNzynuZPZy20Bm/m3WNboShLEc+Ie7Qx7pjWD+FnX
+ 1gZis2mKY/pnL+QgF575ssmiSi2ug0xpqrcMjHNELsHS7X9BVdgxUEVsBmwn
+X-Google-Smtp-Source: AGHT+IHp0JPjZvz3saCdbYkqFdxbm/QqI8Y2rhGhC6OFU64E5BTeq0jK6HgCDy1kSr2dgcBTAHrZ8Q==
+X-Received: by 2002:a17:903:2f86:b0:223:4b88:780f with SMTP id
+ d9443c01a7336-22428895b52mr163817725ad.17.1741597560956; 
+ Mon, 10 Mar 2025 02:06:00 -0700 (PDT)
+Received: from [101.5.21.253] ([101.5.21.253])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-224109ddffesm72845795ad.40.2025.03.10.02.05.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Mar 2025 02:06:00 -0700 (PDT)
+Message-ID: <ad31f5db-a432-49b9-bb98-0e2315960832@gmail.com>
+Date: Mon, 10 Mar 2025 17:04:49 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Zheng Huang <hz1624917200@gmail.com>
+Subject: Re: [PATCH] virtio-pci: fix memory leak from device realization
+ failure
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <7702b335-6e92-47c7-baf9-a384f75a0db3@gmail.com>
+ <69cb6f19-d87a-4ddf-9fca-612b30828679@gmail.com>
+ <c6bf97bf-df26-495d-9886-dfda55cc99db@linaro.org>
+Cc: qemu-devel@nongnu.org
+In-Reply-To: <c6bf97bf-df26-495d-9886-dfda55cc99db@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=43.163.128.47; envelope-from=fujunjie1@qq.com;
- helo=xmbghk7.mail.qq.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=hz1624917200@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 10 Mar 2025 04:54:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,30 +103,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Note though that there is a long way to go before we can do what you
-> want.  The steps I'd expect to see along the way:
->
-> 1) Emulate an Multi Headed Device.
->    Initially connect two heads to different host bridges on a single QEMU
->    machine.  That lets us test most of the code flows without needing
->    to handle tests that involve multiple machines.
->    Later, we could add a means to connect between two instances of QEMU.
-> 2) Add DCD support (we'll need the kernel side of that as well)
-> 3) Wire it all up.
-> 4) Do the same for a Switch with MLDs behind it so we can poke the fun
->    corners.
 
+Hi Philippe,
 
-Hi,Jonathan
+On 2025/2/28 17:24, Philippe Mathieu-Daudé wrote:
+> Hi Zheng,
+> 
+> On 28/2/25 06:03, Zheng Huang wrote:
+>> This commit adds failback routine for `virtio_pci_realize` to
+>> fix the memory leak of an address space and the virtio-net device object.
+>> If the realization of the device failed, the address space should be
+>> destroyed too.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2845
+>>
+>> Signed-off-by: Zheng Huang <hz1624917200@outlook.com>
+>>
+>> ---
+>>   hw/virtio/virtio-pci.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+>> index c773a9130c..4b0d8cd90a 100644
+>> --- a/hw/virtio/virtio-pci.c
+>> +++ b/hw/virtio/virtio-pci.c
+>> @@ -2266,6 +2266,9 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+>>       virtio_pci_bus_new(&proxy->bus, sizeof(proxy->bus), proxy);
+>>       if (k->realize) {
+>>           k->realize(proxy, errp);
+>> +        if (*errp) {
+>> +            address_space_destroy(&proxy->modern_cfg_mem_as);
+>> +        }
+>>       }
+>>   }
+>>   
+> 
+> I think instead we want to add an instance_init in virtio_pci_class_init
+> and move the address_space_init call from virtio_pci_realize there.
+> 
+> Regards,
+> 
+> Phil.
 
-Given your previous exploration, I would like to ask the following questions:
-1.Does QEMU currently support simulating the above CXL memory pooling scenario?
+I have reviewed the relevant code again and found that if address_space_init
+is moved into instance_init, it will not be able to take follow-up actions
+such as free the AS if device realization failed, thus failing to address the
+issue. Additionally, I referred to the code for AS initialization and
+destruction in other devices and found that they are managed in device
+realize and unrealize handlers. Therefore, I still believe the previous
+approach is a better choice.
 
-2.If not fully supported yet, are there any available development branches 
-or patches that implement this functionality?
+If there are other potential solutions or considerations that I might have
+missed, please let me know. I'm looking forward to hearing your thoughts!
 
-3.Are there any guidelines or considerations for configuring and testing CXL memory pooling in QEMU?
+Sorry to bother you again, but I wanted to follow up on my previous email. Apologize
+if this is inconvenient
 
-I sincerely appreciate your time and guidance on this topic!
+Best regards,
 
+Zheng.
 
