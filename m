@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85319C2BA1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 05:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A04E2C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 05:03:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trVEP-0002xB-O7; Mon, 10 Mar 2025 00:59:13 -0400
+	id 1trVE7-0002dt-Q3; Mon, 10 Mar 2025 00:58:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trVEE-0002jV-KJ
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 00:59:02 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1trVE5-0002ce-OA
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 00:58:53 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trVEB-0008Cb-Ic
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 00:59:01 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-224100e9a5cso67677985ad.2
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 21:58:59 -0700 (PDT)
+ id 1trVE3-000894-Ta
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 00:58:53 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-223594b3c6dso65469375ad.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 21:58:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741582738; x=1742187538; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8s25jeAGTcBk8xCVR99anv09nY4TtNOY1pAkSQYXuE0=;
- b=FT2AMJmHPXRPAFnTCSUvwxAyd8qigQBdwqs3pQGAweV0AAQUZurWGzj3Q8QReepFfs
- 0wrE4ZHYegSPjEsl2gLm6ggHjt2CDd8Q8b3HmcOLLRTE56fg/vTxymABUKlabEZNhrVr
- ippkwC7tzKq9RUF0fDXlDcDYm6mFNbDadxh5bvYImksfRF/eUMS/JIp+cretcZpR/YpI
- 0XBGpKQ9I5ZLKiYCtcRZuTnyGkL4XK277KSZb4B1LWZdyMK6th3nauVhMSJw0PMYqd+M
- Xn3vRjxy3ZsrpIiU/YwWwpa8P7gPk4dAfaNWbJC9y6UWiKeYOVkWFoe28EYapIK0mSrF
- eQGw==
+ d=linaro.org; s=google; t=1741582730; x=1742187530; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CyMnY8DCOyhH4sll8UBWjGQBOdpS4N2V2sRcD5CyECM=;
+ b=hfLiPxvyqxmTjLmZ3nHbM5hovdVZpMl8UjjeM9FOXEt19EmPihv0lDDEUNXHbaz+A2
+ grqQ439HrcAOhn+hbFe8/8kAgY6IEegpzXEqbP+qowOj7j92KbsgpqeNp80JrzHrWNt6
+ agXIGxUsEmhL+VhlqgWKC/JjNNo7Q3g0KcH+K9zBCqTdsE+2iFQBi4UPJFsPI8tFVN7W
+ UQVPyAFxA+dxkYjlRwW99bsNZant7KFzGDvkxkQN4CrMJwZzazXCfz9M2Hw9zy/vJwX8
+ TxCYLJr3iRvzcrioUCmNv0pUuWlUth5YkejF2bofZPs4SBBaug3zm/HJnwHapxPuo/v+
+ 1OeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741582738; x=1742187538;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8s25jeAGTcBk8xCVR99anv09nY4TtNOY1pAkSQYXuE0=;
- b=chQOQa8XnZoa0mzv+NjkZJD+k0l5iL04Le1ZDltv+HXGFFJNzvdW0cL9s2qrGwzELz
- NL/2fhWeokcuyr5XA0eedSGDyYTTvHxzhAc3/B4Y2BHN/BTxqtHYB0idMHlvuMivl54Z
- D2DEw0U+XVI+IYnpQEFd+amUcCCN3VMt++59D+43Kdz2LzbbI8BeQDTOuX3Vj+dCBYOG
- kcJfeLmzanT7Lyq5lOsBUHD8ZTQ+3UUwHp9Chx7SGfMj4HY8V33SUviBIQ19fxIrz7mU
- 6/B9Mn9Zfeir8miomNc9gE64IqbHLI9bdhrgLI2y9TFdKMp/iXAUDvmzM3trRwAZde/J
- HtnQ==
-X-Gm-Message-State: AOJu0Ywuz0vwieBWgYF/0puuLhPN+OFqbA1V08StXgsQrG/+Q4syATHd
- 5sFwubmQAxc+I0RLgkvrJTSfVhHcDkvuBQSnUYqt4nqoj9TpbYEVFnITsF2U3avaZ4a83BU956B
- aOJ0=
-X-Gm-Gg: ASbGncvhPhWdi0cMYwW8HV65eZ/SQgrvh+FM81seakm0IGtV22pYS564/TZMb3XGwie
- ZDpNKNFOC73O7JF6hWdn+IeoHJpxuvXGag2ek2gbQrDvmcwpQOsXQEFcKrGiQP3CJFMhMXA+577
- cq4k//TVJj981Rws9dMdSESZhwo+D1nFY7UMjaw0uMo6RmHZXMuMSlqvGrWEgtFOu6Lq743vcuK
- foF1uSLtF7Rx/5LfjfZFwhZlU2iY+hcoAIno3+i0ep0L87ouZIvSpTzR1O2jsaA2VCo1dcV8Xa5
- cMp85PFrZZhMYLQlupmjf+hxsxqoSOv12+O0VJ0jqvibNm1ZAPnbhVI=
-X-Google-Smtp-Source: AGHT+IGRoGZ7coEeYo9o9fE7YTKv7YM5Vcb8VYcCl0LtzUFuhPuPAIbAabhl/TEnMhgrans4FlUiUA==
-X-Received: by 2002:a17:902:f648:b0:220:d601:a704 with SMTP id
- d9443c01a7336-22428a967a4mr181654565ad.18.1741582738292; 
- Sun, 09 Mar 2025 21:58:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741582730; x=1742187530;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CyMnY8DCOyhH4sll8UBWjGQBOdpS4N2V2sRcD5CyECM=;
+ b=TePJt39Tknia7slZkZsyCmMY6J0ZLv8NSxOB9zOZUQa7BM3+ZOzLYuIqnRAy0wMpSO
+ QkypdM0W3PCqOMqxZRpB2QpBsSVTNY2tPvvJe9RDa+kB18/6uIn2nia1W6CIo6OLfMVn
+ CwH5m0tL53zUtIvI+AqWnnE1fu2hXz1MYxO0/NWw+ZwlkmbNR6bpBCIhjXsfBly9k50R
+ x/0kyOoq5t9GJoINJttOY0bmsvNAOoLLHDkwGdlEG6R6OfukzgMP5wKHxcMK2QUyIlwO
+ GRx5j4Eh3OUf0LOQHAqSzTJrjncFDl+TTCaUEP5ia0jErRqkCaow+s6BeiTUOuiPj4iW
+ Om8A==
+X-Gm-Message-State: AOJu0YwszJeg/pbzHBGytBPJblAI4V1YeK3TZvD1+N2Zdh/DHEMMImBf
+ l0p9ZQxscAEYVsDnkfM5boHQNdiXKgWD9OEOrlacaHZzOaXQQMSgr9TAYhuxNl2Xed6MQnP4ood
+ Rpcc=
+X-Gm-Gg: ASbGncuA1telyNQzRbxNlaQNCXX/zTGOAmgeJWANfGbW5O3dh2/cW2ss5CzhSoy/Zsp
+ Kw3PjjhIc3bsFzMaKscDgcndUflGXX20+4cWCBR+1lF1Y15V437TkdL+Ravjv4wE3tKUI071Lkm
+ 09c2VtgwtiufqlF3hcoMEi8EdLJL0oupaNmsbYTgEArRPi3wzh2sDSmqRzL4EHCkSlASjaZJrel
+ sEGl3g95dUsN1bRdwj7kFHQ3NVUwUg5alaa59XaaC7LMMyodJMm9BddKTp+OgCUAdGSs+kZfhlR
+ n0dszxHhj9YlLst76by0r88LObESqRpGMYImaIAfMYul30K+t2nKcJk=
+X-Google-Smtp-Source: AGHT+IFBRE9vcuWy/8QGIVJH+CegCd8ZXFRntWgx7wfqbQL9hdyzkh8MEMl2t2vqfLHGN0wEW9B3Eg==
+X-Received: by 2002:a05:6a00:b4e:b0:736:57cb:f2b6 with SMTP id
+ d2e1a72fcca58-736aaa1acf0mr17943212b3a.12.1741582729877; 
+ Sun, 09 Mar 2025 21:58:49 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736d2ae318csm1708308b3a.53.2025.03.09.21.58.57
+ d2e1a72fcca58-736d2ae318csm1708308b3a.53.2025.03.09.21.58.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Mar 2025 21:58:57 -0700 (PDT)
+ Sun, 09 Mar 2025 21:58:49 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
@@ -82,23 +81,22 @@ Cc: qemu-ppc@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
  Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org,
  Stefano Stabellini <sstabellini@kernel.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 07/16] codebase: prepare to remove cpu.h from exec/exec-all.h
-Date: Sun,  9 Mar 2025 21:58:33 -0700
-Message-Id: <20250310045842.2650784-8-pierrick.bouvier@linaro.org>
+Subject: [PATCH 00/16] make system memory API available for common code
+Date: Sun,  9 Mar 2025 21:58:26 -0700
+Message-Id: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
-References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,92 +112,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- include/tcg/tcg-op.h           | 1 +
- target/ppc/helper_regs.h       | 2 ++
- hw/ppc/spapr_nested.c          | 1 +
- hw/sh4/sh7750.c                | 1 +
- page-vary-target.c             | 3 ++-
- target/riscv/bitmanip_helper.c | 1 +
- 6 files changed, 8 insertions(+), 1 deletion(-)
+The main goal of this series is to be able to call any memory ld/st function
+from code that is *not* target dependent. As a positive side effect, we can
+turn related system compilation units into common code.
 
-diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
-index a02850583bd..bc46b5570c4 100644
---- a/include/tcg/tcg-op.h
-+++ b/include/tcg/tcg-op.h
-@@ -9,6 +9,7 @@
- #define TCG_TCG_OP_H
- 
- #include "tcg/tcg-op-common.h"
-+#include "exec/target_long.h"
- 
- #ifndef TARGET_LONG_BITS
- #error must include QEMU headers
-diff --git a/target/ppc/helper_regs.h b/target/ppc/helper_regs.h
-index 8196c1346dc..b928c2c452d 100644
---- a/target/ppc/helper_regs.h
-+++ b/target/ppc/helper_regs.h
-@@ -20,6 +20,8 @@
- #ifndef HELPER_REGS_H
- #define HELPER_REGS_H
- 
-+#include "target/ppc/cpu.h"
-+
- void hreg_swap_gpr_tgpr(CPUPPCState *env);
- void hreg_compute_hflags(CPUPPCState *env);
- void hreg_update_pmu_hflags(CPUPPCState *env);
-diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-index 23958c6383a..18bbb1403c6 100644
---- a/hw/ppc/spapr_nested.c
-+++ b/hw/ppc/spapr_nested.c
-@@ -2,6 +2,7 @@
- #include "qemu/cutils.h"
- #include "exec/exec-all.h"
- #include "exec/cputlb.h"
-+#include "exec/target_long.h"
- #include "helper_regs.h"
- #include "hw/ppc/ppc.h"
- #include "hw/ppc/spapr.h"
-diff --git a/hw/sh4/sh7750.c b/hw/sh4/sh7750.c
-index 6faf0e3ca8b..41306fb6008 100644
---- a/hw/sh4/sh7750.c
-+++ b/hw/sh4/sh7750.c
-@@ -29,6 +29,7 @@
- #include "hw/irq.h"
- #include "hw/sh4/sh.h"
- #include "system/system.h"
-+#include "target/sh4/cpu.h"
- #include "hw/qdev-properties.h"
- #include "hw/qdev-properties-system.h"
- #include "sh7750_regs.h"
-diff --git a/page-vary-target.c b/page-vary-target.c
-index 3f81144cda8..12fda410bb0 100644
---- a/page-vary-target.c
-+++ b/page-vary-target.c
-@@ -20,8 +20,9 @@
- #define IN_PAGE_VARY 1
- 
- #include "qemu/osdep.h"
--#include "exec/page-vary.h"
- #include "exec/exec-all.h"
-+#include "exec/page-vary.h"
-+#include "exec/target_page.h"
- 
- bool set_preferred_target_page_bits(int bits)
- {
-diff --git a/target/riscv/bitmanip_helper.c b/target/riscv/bitmanip_helper.c
-index b99c4a39a1f..d93312a811c 100644
---- a/target/riscv/bitmanip_helper.c
-+++ b/target/riscv/bitmanip_helper.c
-@@ -21,6 +21,7 @@
- #include "qemu/osdep.h"
- #include "qemu/host-utils.h"
- #include "exec/exec-all.h"
-+#include "exec/target_long.h"
- #include "exec/helper-proto.h"
- #include "tcg/tcg.h"
- 
+The first 6 patches remove dependency of memory API to cpu headers and remove
+dependency to target specific code. This could be a series on its own, but it's
+great to be able to turn system memory compilation units into common code to
+make sure it can't regress, and prove it achieves the desired result.
+
+The next patches remove more dependencies on cpu headers (exec-all,
+memory-internal, ram_addr).
+Then, we add access to a needed function from kvm, some xen stubs, and we
+finally can turn our compilation units into common code.
+
+Every commit was tested to build correctly for all targets (on windows, linux,
+macos), and the series was fully tested by running all tests we have (linux,
+x86_64 host).
+
+Pierrick Bouvier (16):
+  exec/memory_ldst: extract memory_ldst declarations from cpu-all.h
+  exec/memory_ldst_phys: extract memory_ldst_phys declarations from
+    cpu-all.h
+  include: move target_words_bigendian() from tswap to bswap
+  exec/memory.h: make devend_memop target agnostic
+  qemu/bswap: implement {ld,st}.*_p as functions
+  exec/cpu-all.h: we can now remove ld/st macros
+  codebase: prepare to remove cpu.h from exec/exec-all.h
+  exec/exec-all: remove dependency on cpu.h
+  exec/memory-internal: remove dependency on cpu.h
+  exec/ram_addr: remove dependency on cpu.h
+  system/kvm: make kvm_flush_coalesced_mmio_buffer() accessible for
+    common code
+  exec/ram_addr: call xen_hvm_modified_memory only if xen is enabled
+  hw/xen: add stubs for various functions
+  system/physmem: compilation unit is now common to all targets
+  system/memory: make compilation unit common
+  system/ioport: make compilation unit common
+
+ include/exec/cpu-all.h              | 52 ------------------
+ include/exec/exec-all.h             |  1 -
+ include/exec/memory-internal.h      |  2 -
+ include/exec/memory.h               | 48 ++++++++++++++---
+ include/exec/ram_addr.h             | 11 ++--
+ include/exec/tswap.h                | 11 ----
+ include/qemu/bswap.h                | 82 +++++++++++++++++++++++++++++
+ include/system/kvm.h                |  6 +--
+ include/tcg/tcg-op.h                |  1 +
+ target/ppc/helper_regs.h            |  2 +
+ include/exec/memory_ldst.h.inc      | 13 ++---
+ include/exec/memory_ldst_phys.h.inc |  5 +-
+ hw/ppc/spapr_nested.c               |  1 +
+ hw/sh4/sh7750.c                     |  1 +
+ hw/xen/xen_stubs.c                  | 56 ++++++++++++++++++++
+ page-vary-target.c                  |  3 +-
+ system/ioport.c                     |  1 -
+ system/memory.c                     | 22 +++++---
+ target/riscv/bitmanip_helper.c      |  1 +
+ hw/xen/meson.build                  |  3 ++
+ system/meson.build                  |  6 +--
+ 21 files changed, 225 insertions(+), 103 deletions(-)
+ create mode 100644 hw/xen/xen_stubs.c
+
 -- 
 2.39.5
 
