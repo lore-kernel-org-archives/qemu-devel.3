@@ -4,55 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2566AC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 16:24:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA85C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 16:24:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trfvA-0007n8-3u; Mon, 10 Mar 2025 12:24:04 -0400
+	id 1trfup-0007kM-Kr; Mon, 10 Mar 2025 12:23:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1trfv0-0007lZ-J3; Mon, 10 Mar 2025 12:23:55 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1trfuv-0001xC-KY; Mon, 10 Mar 2025 12:23:54 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZBMXl1Mw4z6L4s6;
- Tue, 11 Mar 2025 00:19:19 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id D050814011F;
- Tue, 11 Mar 2025 00:23:41 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.47.68.114) by
- frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 10 Mar 2025 17:23:40 +0100
-To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <mst@redhat.com>, <zhao1.liu@intel.com>, <dapeng1.mi@linux.intel.com>,
- <armbru@redhat.com>, <farman@linux.ibm.com>, <peter.maydell@linaro.org>,
- <anisinha@redhat.com>, <shannon.zhaosl@gmail.com>, <imammedo@redhat.com>,
- <mtosatti@redhat.com>, <berrange@redhat.com>, <richard.henderson@linaro.org>, 
- <shameerali.kolothum.thodi@huawei.com>, <jonathan.cameron@huawei.com>,
- <jiangkunkun@huawei.com>, <yangyicong@hisilicon.com>, <linuxarm@huawei.com>
-Subject: [PATCH v8 0/6] Specifying cache topology on ARM
-Date: Mon, 10 Mar 2025 16:23:31 +0000
-Message-ID: <20250310162337.844-1-alireza.sanaee@huawei.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <david.milosevic@9elements.com>)
+ id 1trfum-0007jz-RS
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:23:41 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <david.milosevic@9elements.com>)
+ id 1trfui-0001wG-SU
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:23:39 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-223959039f4so88874505ad.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 09:23:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=9elements.com; s=google; t=1741623812; x=1742228612; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=hTbOaGZrrF4NiuEL8VQfK3c6ke2rWoltj4cL0ScM9Wc=;
+ b=U2sWwJMivvlHOzT1WtoufcNeZBVfNPYubH5sWS4M4fNZF5hh9kIeXjXDIgrK10O3vB
+ fEKv7ekpdBHF/hNdRfwyZlsDZA1ymjWL/vVlhXpYZrloJdgSYv37r1+uCgvjbxh5jJ45
+ sifToNTn4ZLYDc+dRCQefuJ0wIwU+/Z1QZ/P5/aoTXJ7o1w/pmumiR/8pxrfVo579YgM
+ A9iuF2Mwl5nHKjgCn2LHwYicMB/5PfKdN+Y07ShDTp5Dx4VWTN9wEE4BTd1QIA9NT1xh
+ NvhoYtX55qCcuFXeVlKnNf2uaVOya7Sgo/JqWMt0j9L17JPth+j4UJxQOBu+BWHMKOUe
+ HsYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741623812; x=1742228612;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hTbOaGZrrF4NiuEL8VQfK3c6ke2rWoltj4cL0ScM9Wc=;
+ b=CiAQma71q64vUkq8qmDcp0GhmgyKcz58dfMAX8aUYevBYddYaKNZbjL8Vbn661M3t2
+ 2LNJ76z/06V+QjKkJCxoutxLBz5kOHoJL+7QeXR8BazH/9474N6St7ueO/ROVTEgyzUy
+ iKlik6YKmgDeOYKI9/DZUWKUb0EPM4R+YSjzlQB8em8wk9kJFo5Q9z7LHlCwvWWj6nRd
+ n8lKjvPaPlezQKDV+PaVUTA/1gCAdv6jhhwvajZXCT84AE+9b4FaacSnW2ae5aiBqYIs
+ qTGC2kM7pF5bJ1bbXlrzgvLpLfVAJmsKfkes3F00EIgcBRoCaBLp+1xqPqa8oYidC3WA
+ YCZA==
+X-Gm-Message-State: AOJu0YxsdTNumVfWsRqjdU60S41XeGfguYv3ZTsw2LcxtcFIdKxTEqKC
+ IeaMS7i1o2JoRAPMd8QSiXLQuIsnYtfc//Nhs8eGwoY1NtgeNXi9DlAQmCDQdohlBRSlBNwHhAe
+ jxiznON/RqVtXdftfYazmWD52EbCQgA3/ARli1kZXSzhBplW7r0n/eQ==
+X-Gm-Gg: ASbGnctomRCeItIdod7nR/Cce0Zum3a8d1P+TtXg+R4S2eIktGCYihxb3YYdcA4ApM9
+ j85vqsT5RWDggGOZ33txVov5voQGnmGktwUD7EvfKrk+B4lEshkBMmaQ3Fb6nlKid6BKLN+5gvH
+ OE2CVhObXigPXyQIOTnSVao3w/d51DojezQ+ixw8KW8rHwM3N22QbYfpq5QU+ZXv+ebrAExw==
+X-Google-Smtp-Source: AGHT+IHWlh0oXnPD4mSllzeuJA4pXl0oSaqI0QuU54S3k0U2eQ4NvXpnFuZKowHrusYu/44/dULG+6bRYyiJBdB+4CM=
+X-Received: by 2002:a05:6a20:7483:b0:1ee:d317:48e9 with SMTP id
+ adf61e73a8af0-1f544ad8152mr26227068637.6.1741623812283; Mon, 10 Mar 2025
+ 09:23:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.47.68.114]
-X-ClientProxiedBy: lhrpeml100005.china.huawei.com (7.191.160.25) To
- frapeml500003.china.huawei.com (7.182.85.28)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+From: David Milosevic <david.milosevic@9elements.com>
+Date: Mon, 10 Mar 2025 17:23:21 +0100
+X-Gm-Features: AQ5f1JqrIHKwihG5RF8uCuxPla-D1NqPMMLVWTM4hSBV46j4RrdJ1NY6yiAkL_c
+Message-ID: <CAFUY6-d5GZSrDzD0vUEF6P4YnstMjx=G3Q77iFGLt3eBUf5WUA@mail.gmail.com>
+Subject: [RFC] Proposal for a QEMU video subsystem for cameras and webcams
+To: qemu-devel@nongnu.org
+Cc: Marcello Sylvester Bauer <marcello.bauer@9elements.com>,
+ pizhenwei@bytedance.com
+Content-Type: multipart/alternative; boundary="000000000000a9fa94062fff64dc"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=david.milosevic@9elements.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,143 +86,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Specifying the cache layout in virtual machines is useful for
-applications and operating systems to fetch accurate information about
-the cache structure and make appropriate adjustments. Enforcing correct
-sharing information can lead to better optimizations. This patch enables
-the specification of cache layout through a command line parameter,
-building on a patch set by Intel [1,2,3]. It uses this set as a
-foundation.  The device tree and ACPI/PPTT table, and device tree are
-populated based on user-provided information and CPU topology.
+--000000000000a9fa94062fff64dc
+Content-Type: text/plain; charset="UTF-8"
 
-Example:
+Dear QEMU Developers,
 
+I would like to propose the development of a video subsystem in QEMU, with
+the initial
+implementation focusing on UVC video device emulation and support for
+multiple
+backends, including V4L2, GStreamer, and libcamera.
 
-+----------------+                            +----------------+
-|    Socket 0    |                            |    Socket 1    |
-|    (L3 Cache)  |                            |    (L3 Cache)  |
-+--------+-------+                            +--------+-------+
-         |                                             |
-+--------+--------+                            +--------+--------+
-|   Cluster 0     |                            |   Cluster 0     |
-|   (L2 Cache)    |                            |   (L2 Cache)    |
-+--------+--------+                            +--------+--------+
-         |                                             |
-+--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
-|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
-|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
-+--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
-         |                   |                       |                   |
-+--------+              +--------+              +--------+          +--------+
-|Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
-+--------+              +--------+              +--------+          +--------+
-|Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
-+--------+              +--------+              +--------+          +--------+
+This work is already in progress at 9elements, and we would like to
+upstream it.
 
+== Motivation
 
-The following command will represent the system relying on **ACPI PPTT tables**.
+Currently, USB pass-through is the only way to make video devices available
+to guests, which
 
-./qemu-system-aarch64 \
- -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
- -cpu max \
- -m 2048 \
- -smp sockets=2,clusters=1,cores=2,threads=2 \
- -kernel ./Image.gz \
- -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
- -initrd rootfs.cpio.gz \
- -bios ./edk2-aarch64-code.fd \
- -nographic
+    - excludes non-USB cameras (e.g., MIPI)
+    - performs poorly with high-resolution cameras
+    - does not work with USB 3.0 video devices (Issue #1613)
 
-The following command will represent the system relying on **the device tree**.
+== Proposal
 
-./qemu-system-aarch64 \
- -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
- -cpu max \
- -m 2048 \
- -smp sockets=2,clusters=1,cores=2,threads=2 \
- -kernel ./Image.gz \
- -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=off" \
- -initrd rootfs.cpio.gz \
- -nographic
+We aim to introduce a video subsystem in QEMU that allows for the
+implementation of various
+video devices, similar to how QEMU handles audio. The first device
+implementation will be
+UVC (USB Video Class) device emulation, with support for multiple backends.
+Future extensions
+could include virtio-video or other PCI-based video devices.
 
-Failure cases:
-    1) There are scenarios where caches exist in systems' registers but
-    left unspecified by users. In this case qemu returns failure.
+Supported backends:
 
-    2) SMT threads cannot share caches which is not very common. More
-    discussions here [4].
+    - Video4Linux (V4L2)
+    - GStreamer
+    - libcamera
 
-Currently only three levels of caches are supported to be specified from
-the command line. However, increasing the value does not require
-significant changes. Further, this patch assumes l2 and l3 unified
-caches and does not allow l(2/3)(i/d). The level terminology is
-thread/core/cluster/socket right now. Hierarchy assumed in this patch:
-Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
+== Example: V4L2 Backend
 
-TODO:
-  1) Making the code to work with arbitrary levels
-  2) Separated data and instruction cache at L2 and L3.
-  3) Additional cache controls.  e.g. size of L3 may not want to just
-  match the underlying system, because only some of the associated host
-  CPUs may be bound to this VM.
+Once implemented, a typical QEMU command line for using a V4L2 backend
+would look like this
 
-[1] https://lore.kernel.org/kvm/20240908125920.1160236-1-zhao1.liu@intel.com/
-[2] https://lore.kernel.org/qemu-devel/20241101083331.340178-1-zhao1.liu@intel.com/
-[3] https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
-[4] https://lore.kernel.org/devicetree-spec/20250203120527.3534-1-alireza.sanaee@huawei.com/
+    ./build/qemu-system-x86_64 \
+        -device qemu-xhci \
+        -videodev v4l2,id=cam0,device=/dev/video0 \
+        -device usb-video,videodev=cam0
 
-Change Log:
-  v7->v8:
-   * rebase: Merge tag 'pull-nbd-2024-08-26' of https://repo.or.cz/qemu/ericb into staging
-   * I mis-included a file in patch #4 and I removed it in this one.
+This sets up a UVC emulated device in the guest, using /dev/video0 from the
+host via the V4L2 backend.
 
-  v6->v7:
-   * Intel stuff got pulled up, so rebase.
-   * added some discussions on device tree.
+== Next Steps
 
-  v5->v6:
-   * Minor bug fix.
-   * rebase based on new Intel patchset.
-     - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
+We welcome feedback on design considerations and integration approaches.
+Let us know
+if there are existing discussions or preferred directions for this work.
 
-  v4->v5:
-    * Added Reviewed-by tags.
-    * Applied some comments.
+Best regards,
 
-  v3->v4:
-    * Device tree added.
+David Milosevic
+Firmware Developer
+9elements
 
-Depends-on: Building PPTT with root node and identical implementation flag
-Depends-on: Msg-id: 20250306023342.508-1-alireza.sanaee@huawei.com
+--000000000000a9fa94062fff64dc
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Alireza Sanaee (6):
-  target/arm/tcg: increase cache level for cpu=max
-  arm/virt.c: add cache hierarchy to device tree
-  bios-tables-test: prepare to change ARM ACPI virt PPTT
-  hw/acpi/aml-build.c: add cache hierarchy to pptt table
-  tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
-  Update the ACPI tables according to the acpi aml_build change, also
-    empty bios-tables-test-allowed-diff.h.
+<div dir=3D"ltr"><div>Dear QEMU Developers,<br><br>I would like to propose =
+the development of a video subsystem in QEMU, with the initial<br>implement=
+ation focusing on UVC video device emulation and support for multiple<br>ba=
+ckends, including V4L2, GStreamer, and libcamera.<br><br>This work is alrea=
+dy in progress at 9elements, and we would like to upstream it.<br><br>=3D=
+=3D Motivation<br><br>Currently, USB pass-through is the only way to make v=
+ideo devices available to guests, which<br><br>=C2=A0 =C2=A0 - excludes non=
+-USB cameras (e.g., MIPI)<br>=C2=A0 =C2=A0 - performs poorly with high-reso=
+lution cameras<br>=C2=A0 =C2=A0 - does not work with USB 3.0 video devices =
+(Issue #1613)<br><br>=3D=3D Proposal<br><br>We aim to introduce a video sub=
+system in QEMU that allows for the implementation of various<br>video devic=
+es, similar to how QEMU handles audio. The first device implementation will=
+ be<br>UVC (USB Video Class) device emulation, with support for multiple ba=
+ckends. Future extensions<br>could include virtio-video or other PCI-based =
+video devices.<br><br>Supported backends:<br><br>=C2=A0 =C2=A0 - Video4Linu=
+x (V4L2)<br>=C2=A0 =C2=A0 - GStreamer<br>=C2=A0 =C2=A0 - libcamera<br><br>=
+=3D=3D Example: V4L2 Backend<br><br>Once implemented, a typical QEMU comman=
+d line for using a V4L2 backend would look like this<br><br>=C2=A0 =C2=A0 .=
+/build/qemu-system-x86_64 \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 -device qemu-xhc=
+i \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 -videodev v4l2,id=3Dcam0,device=3D/dev/v=
+ideo0 \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 -device usb-video,videodev=3Dcam0<br=
+><br>This sets up a UVC emulated device in the guest, using /dev/video0 fro=
+m the<br>host via the V4L2 backend.<br><br>=3D=3D Next Steps<br><br>We welc=
+ome feedback on design considerations and integration approaches. Let us kn=
+ow<br>if there are existing discussions or preferred directions for this wo=
+rk.<br><br>Best regards,<br><br>David Milosevic<br>Firmware Developer<br>9e=
+lements</div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"g=
+mail_signature"><div dir=3D"ltr"><div style=3D"color:rgb(34,34,34);font-fam=
+ily:Helvetica;background-color:rgb(255,255,255);line-height:11px">
+</div></div></div></div>
 
- hw/acpi/aml-build.c                        | 205 +++++++++++-
- hw/arm/virt-acpi-build.c                   |   8 +-
- hw/arm/virt.c                              | 350 +++++++++++++++++++++
- hw/cpu/core.c                              |  92 ++++++
- hw/loongarch/virt-acpi-build.c             |   2 +-
- include/hw/acpi/aml-build.h                |   4 +-
- include/hw/arm/virt.h                      |   4 +
- include/hw/cpu/core.h                      |  27 ++
- target/arm/tcg/cpu64.c                     |  13 +
- tests/data/acpi/aarch64/virt/PPTT.topology | Bin 356 -> 540 bytes
- tests/qtest/bios-tables-test.c             |   4 +
- 11 files changed, 701 insertions(+), 8 deletions(-)
-
--- 
-2.34.1
-
+--000000000000a9fa94062fff64dc--
 
