@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C62DC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16EBDC28B2E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:22:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trYNE-0006UK-BB; Mon, 10 Mar 2025 04:20:32 -0400
+	id 1trYNG-0006Uo-R6; Mon, 10 Mar 2025 04:20:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1trYNC-0006Ty-H4
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:20:30 -0400
+ id 1trYN9-0006T0-Eg
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:20:27 -0400
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1trYNA-0004PV-3Z
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:20:30 -0400
+ id 1trYN3-0004PV-Ec
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:20:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741594828; x=1773130828;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=jc+MM1PaxuEIdOSl04LSzW2Hm+iS2U1LUcyIKZi7jKI=;
- b=J/Iy8jWbAOTzqK1/D50GHBaa+kgm9DawhCq95Zl5O4q6OiKUt4z8jes+
- rI7Kk33I2luvTdQ9v1dl8PUm8GJkt9yLs/+qErVCbb2RQ8wE3akJKRL1G
- h/541Wp4bLvc5Y/CuoLkMSx9bqF7OB5vSSvMQ0lMFpxN2RKU5YHe389ba
- oJ99vHldIqaEgHf9Wi4Skk6j25LpSOi28HaRzZ71yTY2/Wu41EUaN1jAK
- y1r1+1L9jXvCqW8kw0FqHj/BmR+zZSB5rlsaMHmbYX3CIhmecZIN0+fDP
- qCFJqUxV25+BvqljQHQK6ZGRLMBGlHS7ha4jBWrpDLrGP5+e2BDcIcXYr w==;
-X-CSE-ConnectionGUID: w1OwNfL2Q8+MhBgmGmJ88Q==
-X-CSE-MsgGUID: dKu5nZnwTCuTvYVvrjthVw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11368"; a="42688464"
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="42688464"
+ t=1741594821; x=1773130821;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=LXWNHMvLvXD0VwhJ6IcIyTnGaD9zgRK8HpIgyy3vA6E=;
+ b=EqKd2OxFOxo3A/sCAw/Z85503bOZ451Ufyddrk/67kbau7Ml4YmlelCo
+ SH+t7fMPqTsOBNnpM/T4pK4VXtqmeGbXeVD8r2yENI+ur1pjRtZX5T3vs
+ fGc0PhwUonrxgKZKb/ujxxybvvfmGPCzSub4aaLLoCbm1LlNJvjHtdCK3
+ Zh2h693ZQEMlzDi6yxS8pvor4U2pOqecGk7n+kXy4SrKb+GhW7anQ5F0e
+ vUcyiCGetANH5TLNa0nHkY/tc5sPt1Y8hMzk4dEJTnmqDj9dRX1vT2lN5
+ +pVCoHxCOLseFqu4qqQogEsHF0lRPep41HZzmoNgTkIO6cdLU3r56L57J Q==;
+X-CSE-ConnectionGUID: XhvEvJ3zTF2DPG84egPgoQ==
+X-CSE-MsgGUID: m7jA3MhLRMa9ysuwpqvweA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11368"; a="42688440"
+X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="42688440"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2025 01:20:26 -0700
-X-CSE-ConnectionGUID: rFbQ405CSFuduoZ3ISdGHw==
-X-CSE-MsgGUID: obLDyxTXS4uay3UWGzWUvA==
+ 10 Mar 2025 01:20:16 -0700
+X-CSE-ConnectionGUID: 8jJCGZSLQg+TyO4E3PI0/w==
+X-CSE-MsgGUID: rn7e5Ph6R2+rfXMhZWE4GA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="150862807"
+X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="150862776"
 Received: from emr-bkc.sh.intel.com ([10.112.230.82])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2025 01:20:23 -0700
+ 10 Mar 2025 01:20:13 -0700
 From: Chenyi Qiang <chenyi.qiang@intel.com>
 To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
  Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -55,13 +55,10 @@ Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
  Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
  Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: [PATCH v3 3/7] memory: Unify the definiton of ReplayRamPopulate() and
- ReplayRamDiscard()
-Date: Mon, 10 Mar 2025 16:18:31 +0800
-Message-ID: <20250310081837.13123-4-chenyi.qiang@intel.com>
+Subject: [PATCH v3 0/7] Enable shared device assignment
+Date: Mon, 10 Mar 2025 16:18:28 +0800
+Message-ID: <20250310081837.13123-1-chenyi.qiang@intel.com>
 X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20250310081837.13123-1-chenyi.qiang@intel.com>
-References: <20250310081837.13123-1-chenyi.qiang@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.16;
@@ -89,221 +86,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update ReplayRamDiscard() function to return the result and unify the
-ReplayRamPopulate() and ReplayRamDiscard() to ReplayRamStateChange() at
-the same time due to their identical definitions. This unification
-simplifies related structures, such as VirtIOMEMReplayData, which makes
-it more cleaner and maintainable. It also paves the way for future
-extension when introducing new ReplayRamDiscard() functions to return
-the results.
+This is the v3 series of the shared device assignment support.
 
-Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
----
-Changes in v3:
-    - Newly added.
----
- hw/virtio/virtio-mem.c | 20 ++++++++++----------
- include/exec/memory.h  | 31 ++++++++++++++++---------------
- migration/ram.c        |  5 +++--
- system/memory.c        | 12 ++++++------
- 4 files changed, 35 insertions(+), 33 deletions(-)
+The overview of this series:
+- Patch 1-3: preparation patches. The function exposure and some
+  defintion change to return values.
+- Patch 4-5: Introduce a new object to implement RamDiscardManager
+  interface and a callback to notify the shared/private state change.
+- Patch 6: Store the new object including guest_memfd information in
+  RAMBlock. Register the RamDiscardManager instance to the target
+  RAMBlock's MemoryRegion so that the object can notify the page
+  conversion events to other systems.
+- Patch 7: Unlock the coordinate discard so that the shared device
+  assignment (VFIO) can work with guest_memfd.
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index d0d3a0240f..816ae8abdd 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -1733,7 +1733,7 @@ static bool virtio_mem_rdm_is_populated(const RamDiscardManager *rdm,
- }
- 
- struct VirtIOMEMReplayData {
--    void *fn;
-+    ReplayRamStateChange fn;
-     void *opaque;
- };
- 
-@@ -1741,12 +1741,12 @@ static int virtio_mem_rdm_replay_populated_cb(MemoryRegionSection *s, void *arg)
- {
-     struct VirtIOMEMReplayData *data = arg;
- 
--    return ((ReplayRamPopulate)data->fn)(s, data->opaque);
-+    return data->fn(s, data->opaque);
- }
- 
- static int virtio_mem_rdm_replay_populated(const RamDiscardManager *rdm,
-                                            MemoryRegionSection *s,
--                                           ReplayRamPopulate replay_fn,
-+                                           ReplayRamStateChange replay_fn,
-                                            void *opaque)
- {
-     const VirtIOMEM *vmem = VIRTIO_MEM(rdm);
-@@ -1765,14 +1765,14 @@ static int virtio_mem_rdm_replay_discarded_cb(MemoryRegionSection *s,
- {
-     struct VirtIOMEMReplayData *data = arg;
- 
--    ((ReplayRamDiscard)data->fn)(s, data->opaque);
-+    data->fn(s, data->opaque);
-     return 0;
- }
- 
--static void virtio_mem_rdm_replay_discarded(const RamDiscardManager *rdm,
--                                            MemoryRegionSection *s,
--                                            ReplayRamDiscard replay_fn,
--                                            void *opaque)
-+static int virtio_mem_rdm_replay_discarded(const RamDiscardManager *rdm,
-+                                           MemoryRegionSection *s,
-+                                           ReplayRamStateChange replay_fn,
-+                                           void *opaque)
- {
-     const VirtIOMEM *vmem = VIRTIO_MEM(rdm);
-     struct VirtIOMEMReplayData data = {
-@@ -1781,8 +1781,8 @@ static void virtio_mem_rdm_replay_discarded(const RamDiscardManager *rdm,
-     };
- 
-     g_assert(s->mr == &vmem->memdev->mr);
--    virtio_mem_for_each_unplugged_section(vmem, s, &data,
--                                          virtio_mem_rdm_replay_discarded_cb);
-+    return virtio_mem_for_each_unplugged_section(vmem, s, &data,
-+                                                 virtio_mem_rdm_replay_discarded_cb);
- }
- 
- static void virtio_mem_rdm_register_listener(RamDiscardManager *rdm,
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 390477b588..aa67d84329 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -566,8 +566,7 @@ static inline void ram_discard_listener_init(RamDiscardListener *rdl,
-     rdl->double_discard_supported = double_discard_supported;
- }
- 
--typedef int (*ReplayRamPopulate)(MemoryRegionSection *section, void *opaque);
--typedef void (*ReplayRamDiscard)(MemoryRegionSection *section, void *opaque);
-+typedef int (*ReplayRamStateChange)(MemoryRegionSection *section, void *opaque);
- 
- /*
-  * RamDiscardManagerClass:
-@@ -641,36 +640,38 @@ struct RamDiscardManagerClass {
-     /**
-      * @replay_populated:
-      *
--     * Call the #ReplayRamPopulate callback for all populated parts within the
-+     * Call the #ReplayRamStateChange callback for all populated parts within the
-      * #MemoryRegionSection via the #RamDiscardManager.
-      *
-      * In case any call fails, no further calls are made.
-      *
-      * @rdm: the #RamDiscardManager
-      * @section: the #MemoryRegionSection
--     * @replay_fn: the #ReplayRamPopulate callback
-+     * @replay_fn: the #ReplayRamStateChange callback
-      * @opaque: pointer to forward to the callback
-      *
-      * Returns 0 on success, or a negative error if any notification failed.
-      */
-     int (*replay_populated)(const RamDiscardManager *rdm,
-                             MemoryRegionSection *section,
--                            ReplayRamPopulate replay_fn, void *opaque);
-+                            ReplayRamStateChange replay_fn, void *opaque);
- 
-     /**
-      * @replay_discarded:
-      *
--     * Call the #ReplayRamDiscard callback for all discarded parts within the
-+     * Call the #ReplayRamStateChange callback for all discarded parts within the
-      * #MemoryRegionSection via the #RamDiscardManager.
-      *
-      * @rdm: the #RamDiscardManager
-      * @section: the #MemoryRegionSection
--     * @replay_fn: the #ReplayRamDiscard callback
-+     * @replay_fn: the #ReplayRamStateChange callback
-      * @opaque: pointer to forward to the callback
-+     *
-+     * Returns 0 on success, or a negative error if any notification failed.
-      */
--    void (*replay_discarded)(const RamDiscardManager *rdm,
--                             MemoryRegionSection *section,
--                             ReplayRamDiscard replay_fn, void *opaque);
-+    int (*replay_discarded)(const RamDiscardManager *rdm,
-+                            MemoryRegionSection *section,
-+                            ReplayRamStateChange replay_fn, void *opaque);
- 
-     /**
-      * @register_listener:
-@@ -713,13 +714,13 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
- 
- int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
-                                          MemoryRegionSection *section,
--                                         ReplayRamPopulate replay_fn,
-+                                         ReplayRamStateChange replay_fn,
-                                          void *opaque);
- 
--void ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
--                                          MemoryRegionSection *section,
--                                          ReplayRamDiscard replay_fn,
--                                          void *opaque);
-+int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-+                                         MemoryRegionSection *section,
-+                                         ReplayRamStateChange replay_fn,
-+                                         void *opaque);
- 
- void ram_discard_manager_register_listener(RamDiscardManager *rdm,
-                                            RamDiscardListener *rdl,
-diff --git a/migration/ram.c b/migration/ram.c
-index ce28328141..053730367b 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -816,8 +816,8 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
-     return ret;
- }
- 
--static void dirty_bitmap_clear_section(MemoryRegionSection *section,
--                                       void *opaque)
-+static int dirty_bitmap_clear_section(MemoryRegionSection *section,
-+                                      void *opaque)
- {
-     const hwaddr offset = section->offset_within_region;
-     const hwaddr size = int128_get64(section->size);
-@@ -836,6 +836,7 @@ static void dirty_bitmap_clear_section(MemoryRegionSection *section,
-     }
-     *cleared_bits += bitmap_count_one_with_offset(rb->bmap, start, npages);
-     bitmap_clear(rb->bmap, start, npages);
-+    return 0;
- }
- 
- /*
-diff --git a/system/memory.c b/system/memory.c
-index 62d6b410f0..8622d17133 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2147,7 +2147,7 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
- 
- int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
-                                          MemoryRegionSection *section,
--                                         ReplayRamPopulate replay_fn,
-+                                         ReplayRamStateChange replay_fn,
-                                          void *opaque)
- {
-     RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_GET_CLASS(rdm);
-@@ -2156,15 +2156,15 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
-     return rdmc->replay_populated(rdm, section, replay_fn, opaque);
- }
- 
--void ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
--                                          MemoryRegionSection *section,
--                                          ReplayRamDiscard replay_fn,
--                                          void *opaque)
-+int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-+                                         MemoryRegionSection *section,
-+                                         ReplayRamStateChange replay_fn,
-+                                         void *opaque)
- {
-     RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_GET_CLASS(rdm);
- 
-     g_assert(rdmc->replay_discarded);
--    rdmc->replay_discarded(rdm, section, replay_fn, opaque);
-+    return rdmc->replay_discarded(rdm, section, replay_fn, opaque);
- }
- 
- void ram_discard_manager_register_listener(RamDiscardManager *rdm,
+Compared with v2 series, the main changes are:
+
+- Introduce the new patch 04 to unify the definiton of ReplayRamPopulate()
+  and ReplayRamDiscard().
+- In state_change() callback, fallback to a "1 block at a time" handling in case of
+  mixed state. In addition, change the bitmap before calling the
+  listener so that the listener can do the change according to the
+  latest status.
+- In kvm_convert_memory(), use ReplayPopulated() and ReplayDiscard()
+  interface to trigger set_attribute() and add the undo operation if
+  state_change() failed.
+- v2: https://lore.kernel.org/qemu-devel/20250217081833.21568-1-chenyi.qiang@intel.com/
+
+More small changes or details can be found in the individual patches.
+
+---
+Original cover letter:
+
+Background
+==========
+Confidential VMs have two classes of memory: shared and private memory.
+Shared memory is accessible from the host/VMM while private memory is
+not. Confidential VMs can decide which memory is shared/private and
+convert memory between shared/private at runtime.
+
+"guest_memfd" is a new kind of fd whose primary goal is to serve guest
+private memory. In current implementation, shared memory is allocated
+with normal methods (e.g. mmap or fallocate) while private memory is
+allocated from guest_memfd. When a VM performs memory conversions, QEMU
+frees pages via madvise or via PUNCH_HOLE on memfd or guest_memfd from
+one side, and allocates new pages from the other side. This will cause a
+stale IOMMU mapping issue mentioned in [1] when we try to enable shared
+device assignment in confidential VMs.
+
+Solution
+========
+The key to enable shared device assignment is to update the IOMMU mappings
+on page conversion. RamDiscardManager, an existing interface currently
+utilized by virtio-mem, offers a means to modify IOMMU mappings in
+accordance with VM page assignment. Page conversion is similar to
+hot-removing a page in one mode and adding it back in the other.
+
+This series implements a RamDiscardManager for confidential VMs and
+utilizes its infrastructure to notify VFIO of page conversions.
+
+Relationship with in-place page conversion
+==========================================
+To support 1G page support for guest_memfd [2], the current direction is to
+allow mmap() of guest_memfd to userspace so that both private and shared
+memory can use the same physical pages as the backend. This in-place page
+conversion design eliminates the need to discard pages during shared/private
+conversions. However, device assignment will still be blocked because the
+in-place page conversion will reject the conversion when the page is pinned
+by VFIO.
+
+To address this, the key difference lies in the sequence of VFIO map/unmap
+operations and the page conversion. It can be adjusted to achieve
+unmap-before-conversion-to-private and map-after-conversion-to-shared,
+ensuring compatibility with guest_memfd.
+
+Limitation
+==========
+One limitation is that VFIO expects the DMA mapping for a specific IOVA
+to be mapped and unmapped with the same granularity. The guest may
+perform partial conversions, such as converting a small region within a
+larger region. To prevent such invalid cases, all operations are
+performed with 4K granularity. This could be optimized after the
+cut_mapping operation [3] is introduced in future. We can alway perform a
+split-before-unmap if partial conversions happen. If the split succeeds,
+the unmap will succeed and be atomic. If the split fails, the unmap
+process fails.
+
+Testing
+=======
+This patch series is tested based on TDX patches available at:
+KVM: https://github.com/intel/tdx/tree/kvm-coco-queue-snapshot/kvm-coco-queue-snapshot-20250308
+QEMU: https://github.com/intel-staging/qemu-tdx/tree/tdx-upstream-snapshot-2025-03-10
+
+To facilitate shared device assignment with the NIC, employ the legacy
+type1 VFIO with the QEMU command:
+
+qemu-system-x86_64 [...]
+    -device vfio-pci,host=XX:XX.X
+
+The parameter of dma_entry_limit needs to be adjusted. For example, a
+16GB guest needs to adjust the parameter like
+vfio_iommu_type1.dma_entry_limit=4194304.
+
+If use the iommufd-backed VFIO with the qemu command:
+
+qemu-system-x86_64 [...]
+    -object iommufd,id=iommufd0 \
+    -device vfio-pci,host=XX:XX.X,iommufd=iommufd0
+
+No additional adjustment required.
+
+Following the bootup of the TD guest, the guest's IP address becomes
+visible, and iperf is able to successfully send and receive data.
+
+Related link
+============
+[1] https://lore.kernel.org/qemu-devel/20240423150951.41600-54-pbonzini@redhat.com/
+[2] https://lore.kernel.org/lkml/cover.1726009989.git.ackerleytng@google.com/
+[3] https://lore.kernel.org/linux-iommu/7-v1-01fa10580981+1d-iommu_pt_jgg@nvidia.com/
+
+Chenyi Qiang (7):
+  memory: Export a helper to get intersection of a MemoryRegionSection
+    with a given range
+  memory: Change memory_region_set_ram_discard_manager() to return the
+    result
+  memory: Unify the definiton of ReplayRamPopulate() and
+    ReplayRamDiscard()
+  memory-attribute-manager: Introduce MemoryAttributeManager to manage
+    RAMBLock with guest_memfd
+  memory-attribute-manager: Introduce a callback to notify the
+    shared/private state change
+  memory: Attach MemoryAttributeManager to guest_memfd-backed RAMBlocks
+  RAMBlock: Make guest_memfd require coordinate discard
+
+ accel/kvm/kvm-all.c                       |  50 ++-
+ hw/virtio/virtio-mem.c                    |  81 ++--
+ include/exec/memory.h                     |  64 ++-
+ include/exec/ramblock.h                   |   2 +
+ include/system/memory-attribute-manager.h |  60 +++
+ migration/ram.c                           |   5 +-
+ system/memory-attribute-manager.c         | 471 ++++++++++++++++++++++
+ system/memory.c                           |  22 +-
+ system/meson.build                        |   1 +
+ system/physmem.c                          |  17 +-
+ 10 files changed, 690 insertions(+), 83 deletions(-)
+ create mode 100644 include/system/memory-attribute-manager.h
+ create mode 100644 system/memory-attribute-manager.c
+
 -- 
 2.43.5
 
