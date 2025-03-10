@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E6A8C282DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5943C28B30
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trcG6-0003jY-5L; Mon, 10 Mar 2025 08:29:28 -0400
+	id 1trcG8-0003kd-Ez; Mon, 10 Mar 2025 08:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1trcFx-0003gW-Rc
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:29:18 -0400
+ id 1trcFz-0003hW-8b
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:29:20 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1trcFt-000683-JU
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:29:17 -0400
+ id 1trcFt-000684-K7
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:29:18 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1trcFg-00000000ZO7-2Pv8; Mon, 10 Mar 2025 13:29:00 +0100
-Message-ID: <6f05eeb5-252b-4dd1-ac7f-5122ea8c4232@maciej.szmigiero.name>
-Date: Mon, 10 Mar 2025 13:28:55 +0100
+ id 1trcFg-00000000ZO7-2lny; Mon, 10 Mar 2025 13:29:00 +0100
+Message-ID: <02e02924-61ad-4e15-bf41-a1c9d91a7e2d@maciej.szmigiero.name>
+Date: Mon, 10 Mar 2025 13:28:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 0/7] hw/hyperv: remove duplication compilation units
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
  alex.bennee@linaro.org, qemu-devel@nongnu.org,
  Marcelo Tosatti <mtosatti@redhat.com>, richard.henderson@linaro.org,
@@ -39,6 +39,7 @@ References: <20250307215623.524987-1-pierrick.bouvier@linaro.org>
  <8c511d16-05d6-4852-86fc-a3be993557c7@linaro.org>
  <8d2a19a8-e0a4-4050-8ba5-9baa9b47782f@maciej.szmigiero.name>
  <91ddf98c-3a5d-404b-9e80-ed4580c1c373@linaro.org>
+ <440fe370-a0d3-4a32-97e2-e5f219f79933@linaro.org>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -82,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <91ddf98c-3a5d-404b-9e80-ed4580c1c373@linaro.org>
+In-Reply-To: <440fe370-a0d3-4a32-97e2-e5f219f79933@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -93,7 +94,7 @@ X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,47 +110,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.03.2025 00:33, Pierrick Bouvier wrote:
-> Hi Maciej,
-> 
-> On 3/7/25 14:31, Maciej S. Szmigiero wrote:
->> Hi Philippe,
+On 10.03.2025 01:14, Philippe Mathieu-Daudé wrote:
+> On 10/3/25 00:33, Pierrick Bouvier wrote:
+>> Hi Maciej,
 >>
->> On 7.03.2025 23:25, Philippe Mathieu-Daudé wrote:
->>> Hi Maciej,
+>> On 3/7/25 14:31, Maciej S. Szmigiero wrote:
+>>> Hi Philippe,
 >>>
->>> On 7/3/25 22:56, Pierrick Bouvier wrote:
->>>> Work towards having a single binary, by removing duplicated object files.
+>>> On 7.03.2025 23:25, Philippe Mathieu-Daudé wrote:
+>>>> Hi Maciej,
+>>>>
+>>>> On 7/3/25 22:56, Pierrick Bouvier wrote:
+>>>>> Work towards having a single binary, by removing duplicated object files.
+>>>>
+>>>>> Pierrick Bouvier (7):
+>>>>>     hw/hyperv/hv-balloon-stub: common compilation unit
+>>>>>     hw/hyperv/hyperv.h: header cleanup
+>>>>>     hw/hyperv/vmbus: common compilation unit
+>>>>>     hw/hyperv/hyperv-proto: move SYNDBG definition from target/i386
+>>>>>     hw/hyperv/syndbg: common compilation unit
+>>>>>     hw/hyperv/balloon: common balloon compilation units
+>>>>>     hw/hyperv/hyperv_testdev: common compilation unit
+>>>>
+>>>> If you are happy with this series and provide your Ack-by tag,
+>>>> I can take it in my next hw-misc pull request if that helps.
 >>>
->>>> Pierrick Bouvier (7):
->>>>     hw/hyperv/hv-balloon-stub: common compilation unit
->>>>     hw/hyperv/hyperv.h: header cleanup
->>>>     hw/hyperv/vmbus: common compilation unit
->>>>     hw/hyperv/hyperv-proto: move SYNDBG definition from target/i386
->>>>     hw/hyperv/syndbg: common compilation unit
->>>>     hw/hyperv/balloon: common balloon compilation units
->>>>     hw/hyperv/hyperv_testdev: common compilation unit
+>>> There's nothing obviously wrong in the patch set,
+>>> but if we can defer this to Monday then I could do
+>>> a runtime check with a Windows VM too.
 >>>
->>> If you are happy with this series and provide your Ack-by tag,
->>> I can take it in my next hw-misc pull request if that helps.
 >>
->> There's nothing obviously wrong in the patch set,
->> but if we can defer this to Monday then I could do
->> a runtime check with a Windows VM too.
+>> this series needs some fixup after the merge of 58d0053: include/exec: Move TARGET_PAGE_{SIZE,MASK,BITS} to target_page.h.
 >>
+>> I'll re-spin it later, so don't waste your time trying it.
 > 
-> this series needs some fixup after the merge of 58d0053: include/exec: Move TARGET_PAGE_{SIZE,MASK,BITS} to target_page.h.
-> 
-> I'll re-spin it later, so don't waste your time trying it.
+> 1, 2 & 4 are not affected. Until someone object, I plan to include them
+> in my next hw-misc pull request on Tuesday.
 
-Waiting for updated series then.
-  
-> Thanks,
-> Pierrick
-> 
+These patches seem fine and low-risk, no objections here.
 
 Thanks,
 Maciej
-
 
 
