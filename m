@@ -4,97 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02764C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 06:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E79ACC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 07:05:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trWyt-0006Vs-VD; Mon, 10 Mar 2025 02:51:19 -0400
+	id 1trXC6-000772-Bg; Mon, 10 Mar 2025 03:04:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1trWym-0006Ue-Od
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 02:51:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1trXBz-00076P-NE
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 03:04:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1trWyk-0004lc-Ix
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 02:51:12 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1trXBx-00077i-V9
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 03:04:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741589464;
+ s=mimecast20190719; t=1741590287;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8GBRA05wdnzbQG3xk8B3B0joQGCEbAwT9Wh72qsSn38=;
- b=PdWtHqxNm+gjE5yQwKexBOVTg+kMTfpCHBW+5c0zK9sW6hnEmy9ClhuO+9rnfa0lHiTLjm
- yg+MLBWejHBMtP0lwznjGUbmIXlrKLSKAwXj7QrsbelaBtlFLueYf8cqFLfSsAOeFSCo/C
- KBiy70JrwVxgrFMTRp8i2rqRxgzHDBI=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Zg6i9PdiDMFf2Xj1Q+YoFq6UiGTD9+WRi3LKv0Gb7s8=;
+ b=SexKamSHMSLCrbrF8U5DKTeZVhdICLOq/7Z5035JB3dI9aW6pZlWWZVdOjrrJmK1cZzpDz
+ oWU2o1iFOyyfMMZXeImNodRHId1gsv/OvHMn7Qny6hmgrOv5W53ne4FIs16rb4v8Q8DXYG
+ Tr1vyUd2KlGGXq8f5biN4jUIvaxccDQ=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-492-yiqPBiu2NZSV0I__3p_KOA-1; Mon, 10 Mar 2025 02:51:02 -0400
-X-MC-Unique: yiqPBiu2NZSV0I__3p_KOA-1
-X-Mimecast-MFC-AGG-ID: yiqPBiu2NZSV0I__3p_KOA_1741589462
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5e5edf8a509so2121250a12.1
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 23:51:02 -0700 (PDT)
+ us-mta-371-jlZu5LjBNlWeNtVQgBpaZQ-1; Mon, 10 Mar 2025 03:04:44 -0400
+X-MC-Unique: jlZu5LjBNlWeNtVQgBpaZQ-1
+X-Mimecast-MFC-AGG-ID: jlZu5LjBNlWeNtVQgBpaZQ_1741590283
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ac1e442740cso358997066b.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 00:04:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741589462; x=1742194262;
+ d=1e100.net; s=20230601; t=1741590283; x=1742195083;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8GBRA05wdnzbQG3xk8B3B0joQGCEbAwT9Wh72qsSn38=;
- b=GMm1WeQn1fpUP71XgHIx0vgNxIjHGjWxY3ln8arcDh6JCYH8Pp6DpQWX06HuXgRb59
- tchVqoTembV05A70nwazJi+cZ6z4+s1QzW9Q/8VT9/VzmV51JXvj7J++LHW15gLJxrBI
- 8R2A3zKPXGSaPGzOPs43mcm92gm99wsNwfbCe+Ep3r4COmcBZGwAnLOfsaxSQDhgPMV1
- ahLhIyj7J15xnqKk1oQe5aO9CncqD+X+LlQlm9X+YHRRh9JOvV88bnH1EHcICbKt750x
- ojhSZMaK0Lz6TcV6AiwcVkRpBNUjL9lyohkVXui/Dc++Rl1vFhrzyau0zYhDWKavorPv
- UkyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPXadtQaKkehXJJ/9IKWSC9PpI5VT6Xs9mAMzWeQrHZ5te1bg63iUTj45uJPOogQ2H4BeFFjIcNl66@nongnu.org
-X-Gm-Message-State: AOJu0Yxi71cy6FLReVcklKTqBP21n8jHy0MVU98rWkIqCLv0eyEXabr+
- mhT963yIiukjuUMIUrV6UdB4WCXRrUfiThBHTcd7gkbVt+Tfu7PN4wVoon6fZF0/5bT46LjQiHo
- roz5N00TGDPT9Z1NLboIR5Pr1vLCPHAIEkLBVYf2WUcfSDmjnFBQW
-X-Gm-Gg: ASbGncsXIMi9dzoXpAkghJHX+hJviob4KeUmztiofKdzaqMC3GeYhRXBcJCkVVMzJLV
- Xxzue/2VumCZZZY9bW+qoyeOoOf7fhwzcmdMRyAZMPgihG4+AteZAYiHKKELVax33fuhTx0BeyP
- 9cqvhp4u0D3UWGNj44B/uETyxjDm2OTltwopFsCR/TBnJxM/BSJwaYVi3dxOQCIO2nsgdq3JNqU
- BV2xBk1mgIlMEmpSXp4l+25HSodpQinZL3tlYSR6YPejlQzywH6GBt6ya423g2wGNh0KCDXo91R
- CUj3DndMALLLChD00vObyE8PaT4Hm8alNPbzF1b6Nt60qjA=
-X-Received: by 2002:a05:6402:210c:b0:5e6:e842:f9fa with SMTP id
- 4fb4d7f45d1cf-5e6e843093emr3055296a12.19.1741589461715; 
- Sun, 09 Mar 2025 23:51:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWuTxENoZgDcOy2VpT8G5VK30DCOMhCiyjiLwmrl0Cs4mUtrQAY39PLYj513OsIf1UTi3zYQ==
-X-Received: by 2002:a05:6402:210c:b0:5e6:e842:f9fa with SMTP id
- 4fb4d7f45d1cf-5e6e843093emr3055277a12.19.1741589461370; 
- Sun, 09 Mar 2025 23:51:01 -0700 (PDT)
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Zg6i9PdiDMFf2Xj1Q+YoFq6UiGTD9+WRi3LKv0Gb7s8=;
+ b=a/g5TseLrQFbCIbzhhJ8rvRIksSbyu68HfPD/MmEHBwsG70ThmEwgksikZmDaqa651
+ LxmpvzV52OK6SVkGnNdJrM4DIWf/sFrzX+4Qsz27WmUr0NBX0Dd8/SiI6suK+jIK01wM
+ ZZJMCxGVrGwOwBjnnsXy6+SplL3klRNYTky+ywZ7Eev15AjXJcuheQy/RPQrMHueKs9y
+ QkY+JdB/R49J03EAZ144q1UoSWFnY5dFC/dZyxndi05r5qvbEQ0ZfzZJG0JW8IBVzsfh
+ V98QKS4sDfPGLz5CBZ/vRrW8hcshxlzxsJwAIkC2lDKVf9M/I+rNmVfevwAB8JSjuSzU
+ vYag==
+X-Gm-Message-State: AOJu0Yzq4lDJ6hGtW2It3+XqbWsX55Seop6ays4Tn757JXH2R2/Rx4F0
+ kgOe0D+/WuDGN6is09gBftmome7hrAFIL3m/q3ocEnar61zZD2QXAeatINouT5b9nu8YifIVJdW
+ NZRESxd7febc1HZcv3tdGWZATTad9fnvFBCdrzwL65wmGkB13wnJ6qXR51kqJyZW8OkD67EWe68
+ 5HPwQAxYGwiNuVk+Y493Q8ovDU+cl2LwOE
+X-Gm-Gg: ASbGncsN0Y59lsSi/17mCag7cEBidEKXSEt8NmSXYGcowienDwUb6CqArcz3vVXDFyv
+ fNJBxrcCqe3RaY/8PcVOUakFu9EMYBy9pjC8ujQKsqXZb2ZKqJEyO+SQzvGWlRsg96QrvjW47vp
+ DzyYXjq8ITmrikdW8WFPMdCJ8YUBbePX3xUlIKvBytp/8Qlo9DookT2D4Ifmb66CYKft7+rdO7X
+ e7eiXddvwn+RAaRjXWrRiQrFFsxzF4/F5DaSIX5er7HVif8wchMfPsfrElm5NpTaKcCndfqDDIQ
+ t+NBgIlGe25ZEgxxN51KfymURLA42EzCb3d7uFI665YFYVc=
+X-Received: by 2002:a17:907:3f9b:b0:ac1:ddaa:2c11 with SMTP id
+ a640c23a62f3a-ac25210ff7emr1463713666b.0.1741590283012; 
+ Mon, 10 Mar 2025 00:04:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrbeOrX5sFwExi9v8xTa4kQUmOqfvEMF52okDfTQZn6lw9Xb+dk00SEUjToiTB7yA3ufofvA==
+X-Received: by 2002:a17:907:3f9b:b0:ac1:ddaa:2c11 with SMTP id
+ a640c23a62f3a-ac25210ff7emr1463710466b.0.1741590282583; 
+ Mon, 10 Mar 2025 00:04:42 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
  [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e5c768f9a4sm6371157a12.71.2025.03.09.23.50.58
+ a640c23a62f3a-ac292fc25f0sm209839366b.35.2025.03.10.00.04.40
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 23:51:00 -0700 (PDT)
-Message-ID: <d74d3ff3-3830-4682-87e3-a42ed57068d9@redhat.com>
-Date: Mon, 10 Mar 2025 07:50:57 +0100
+ Mon, 10 Mar 2025 00:04:41 -0700 (PDT)
+Message-ID: <ce0f0c13-0e04-444f-b5db-8fdb7af6f945@redhat.com>
+Date: Mon, 10 Mar 2025 08:04:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
- deprecate
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Christian Borntraeger <borntraeger@linux.ibm.com>,
- qemu-s390x@nongnu.org, devel@lists.libvirt.org,
- Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Anton Johansson <anjo@rev.ng>, qemu-arm <qemu-arm@nongnu.org>
-References: <20240530074544.25444-1-philmd@linaro.org>
- <cb4028fc-9596-47f3-9468-f8912dd48aed@redhat.com>
- <Zl20rAjHLJlZkwxE@redhat.com>
- <fda186da-2e31-42d6-8dd6-0ea3141a73e6@linaro.org>
+Subject: Re: [PATCH] tests/qtest/cpu-plug-test: Add cpu hotplug support for
+ LoongArch
+To: qemu-devel@nongnu.org
+References: <20250310062456.2453189-1-maobibo@loongson.cn>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -139,19 +123,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <fda186da-2e31-42d6-8dd6-0ea3141a73e6@linaro.org>
+In-Reply-To: <20250310062456.2453189-1-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,56 +151,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/03/2025 19.55, Pierrick Bouvier wrote:
-> On 6/3/24 05:18, Daniel P. Berrangé wrote:
->> On Fri, May 31, 2024 at 06:47:45AM +0200, Thomas Huth wrote:
->>> On 30/05/2024 09.45, Philippe Mathieu-Daudé wrote:
->>>> We are trying to unify all qemu-system-FOO to a single binary.
->>>> In order to do that we need to remove QAPI target specific code.
->>>>
->>>> @dump-skeys is only available on qemu-system-s390x. This series
->>>> rename it as @dump-s390-skey, making it available on other
->>>> binaries. We take care of backward compatibility via deprecation.
->>>>
->>>> Philippe Mathieu-Daudé (4):
->>>>     hw/s390x: Introduce the @dump-s390-skeys QMP command
->>>>     hw/s390x: Introduce the 'dump_s390_skeys' HMP command
->>>>     hw/s390x: Deprecate the HMP 'dump_skeys' command
->>>>     hw/s390x: Deprecate the QMP @dump-skeys command
->>>
->>> Why do we have to rename the command? Just for the sake of it? I think
->>> renaming HMP commands is maybe ok, but breaking the API in QMP is something
->>> you should consider twice.
->>
->> That was going to be my question too. Seems like its possible to simply
->> stub out the existing command for other targets.
->>
->> The renaming is just window dressing.
->>
+On 10/03/2025 07.24, Bibo Mao wrote:
+> Add cpu hotplug testcase support for LoongArch system, it passes to
+> run with command "make check-qtest-loongarch64" as following:
+>    qemu:qtest+qtest-loongarch64 / qtest-loongarch64/cpu-plug-test OK 0.64s 1 subtests passed
 > 
-> Working on single-binary topic means specificities from every qemu binary/ 
-> architecture has to be merged together. Despite appearing has a bad thing 
-> now, it's definitely a step forward for QEMU, and will allow to enable new 
-> usages.
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   tests/qtest/cpu-plug-test.c | 28 ++++++++++++++++++++++++++++
+>   tests/qtest/meson.build     |  2 +-
+>   2 files changed, 29 insertions(+), 1 deletion(-)
 > 
-> The hard way is to trigger a deep refactoring, involving lengthy 
-> conversations where compromises have to be found ("let's implement this for 
-> all arch"). The pragmatic way is to eliminate obvious stuff.
-> 
-> This command is specific to an arch, so renaming is a good and obvious 
-> strategy. For the backward compatible anxious developer, another strategy 
-> would be to simply declare this command if the running target is s390x. But 
-> then, you create a precedent to do something that should not have existed in 
-> the first place. 
-> 
-> +1 for the renaming, and hope that users of this command are able to change 
-> a line in their script to adapt to the new command.
+> diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
+> index 6633abfc10..790b9693b3 100644
+> --- a/tests/qtest/cpu-plug-test.c
+> +++ b/tests/qtest/cpu-plug-test.c
+> @@ -156,6 +156,32 @@ static void add_s390x_test_case(const char *mname)
+>       g_free(path);
+>   }
+>   
+> +static void add_loongarch_test_case(const char *mname)
+> +{
+> +    char *path;
+> +    PlugTestData *data;
+> +
+> +    if (!g_str_has_prefix(mname, "virt")) {
+> +        return;
+> +    }
+> +
+> +    data = g_new(PlugTestData, 1);
+> +    data->machine = g_strdup(mname);
+> +    data->cpu_model = "la464";
+> +    data->device_model = g_strdup("la464-loongarch-cpu");
+> +    data->sockets = 1;
+> +    data->cores = 3;
+> +    data->threads = 1;
+> +    data->maxcpus = data->sockets * data->cores * data->threads;
+> +
+> +    path = g_strdup_printf("cpu-plug/%s/device-add/%ux%ux%u&maxcpus=%u",
+> +                           mname, data->sockets, data->cores,
+> +                           data->threads, data->maxcpus);
+> +    qtest_add_data_func_full(path, data, test_plug_with_device_add,
+> +                             test_data_free);
+> +    g_free(path);
+> +}
+> +
+>   int main(int argc, char **argv)
+>   {
+>       const char *arch = qtest_get_arch();
+> @@ -168,6 +194,8 @@ int main(int argc, char **argv)
+>           qtest_cb_for_every_machine(add_pseries_test_case, g_test_quick());
+>       } else if (g_str_equal(arch, "s390x")) {
+>           qtest_cb_for_every_machine(add_s390x_test_case, g_test_quick());
+> +    } else if (g_str_equal(arch, "loongarch64")) {
+> +        qtest_cb_for_every_machine(add_loongarch_test_case, g_test_quick());
 
-Sorry, but no: We've got plenty of other target specific commands... 
-rtc-reset-reinjection , query-sev, query-gic-capabilities, just to name some 
-few. So unless you provide a patch series to rename *all* of them and 
-deprecate the previous names, I don't see the point why changing just one 
-single s390x command is necessary.
+There seems to be only one unversioned "virt" machine for loongarch, so 
+using qtest_cb_for_every_machine() and g_str_has_prefix(mname, "virt") in 
+above function seems unnecessary? I'd suggest to call 
+add_loongarch_test_case() here directly instead and only add the single test 
+case for the virt machine there. Or do you plan to introduce other machines 
+any time soon?
+
+>       }
+>   
+>       return g_test_run();
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 8a6243382a..60e16614b2 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -149,7 +149,7 @@ qtests_hppa = \
+>   
+>   qtests_loongarch64 = qtests_filter + \
+>     (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
+> -  ['boot-serial-test']
+> +  ['boot-serial-test', 'cpu-plug-test']
+
+I'd like to suggest to put tests on separate lines here (we do it for most 
+of the other targets already), that will make "git blame" more useful in the 
+future when the list changed a couple of times.
 
   Thomas
 
