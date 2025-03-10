@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2A7CC28B2E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 00:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64C1C28B28
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 00:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trQfQ-0001uk-30; Sun, 09 Mar 2025 20:06:48 -0400
+	id 1trQfA-0001lx-7M; Sun, 09 Mar 2025 20:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQfL-0001pv-47
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:06:43 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQf7-0001l2-0d
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:06:29 -0400
 Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQfD-0007It-LK
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:06:42 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQf3-0007GG-2r
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:06:28 -0400
 Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cfa7e7f54so1252325e9.1
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 17:06:35 -0700 (PDT)
+ 5b1f17b1804b1-43cef0f03cfso4785455e9.3
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 17:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741565194; x=1742169994; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QSCzkaWIhjHTeY3hvC0iPh38QiDjdtlUv2/bUUP3CZQ=;
- b=xB3cRIu4YwBsEV1XSmZOJ8cIlthIe+qreXMWFecgSQJm46m72J95mycCX9CQWMwDZl
- NvK9BD21pm7hA6ZHKElqRIz+1Z/qbn2WBBLkfct5+ax9FJY+wXkC2yvm4kvgLX8HW8py
- XfpqhoN+KCPo9mQ/SmyHA4dBiS4xXkPhOXiQA286SjXRvfZqW6NO7ZQEdnxcZWZW5rOZ
- HjWj8x4Y2V43poiejokYBhHlNZWbidDz7svgx+YWB5k3B3ggrdOAqCfayOxglFicuZKD
- Tiszd20zCJUDnrHkEwWp1Rn8IIC4UWKdAOdnsoVEvC/GbFHzKG+AtkLwprznSH3FIvBl
- GaCw==
+ d=linaro.org; s=google; t=1741565183; x=1742169983; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vluwFSKp6e7zoU80eebsr7FlbxAE5fBxSqh6kQbHYLQ=;
+ b=KWF8VMPUgkgBl+NQu/36q1Sii3Go+nz/wZzd40CGS4mPelfzqlsW2QWEphCONnnp4d
+ g6X5QuMhVwRxXGOyZIkLSwzEGDXHHZ+4btKl9/ly0i5JjOg9vtzn/JRAoztwg++rCjGk
+ Sy/mtgX3dSvZejhF/dXpfhEdpAJ8fZpuCensZFC2c2Zni3p68XzIlCbJJcLjIOvMcllV
+ ijS42ZDTBONIFwcxmFUK68NdRb8HUupkC/FWeFHOyS24FOsmF1ptXVTG6Pr42Tjnic5K
+ Hd9V2HRdmryDRGkNjgH4iA71wh/gf7zl/wt6nhDnUToy20mPqRkIlS60aaS9qRRFCa1F
+ 5lIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741565194; x=1742169994;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QSCzkaWIhjHTeY3hvC0iPh38QiDjdtlUv2/bUUP3CZQ=;
- b=SoNXgaFpx5lMFwRe/akjNM423i6QnWTgtxIAQIkcCRed6SHW4FIbL+P48yF0YmiEa9
- YEdyeS8vZM/0V7+SutkTWYDBVocPyUYQPYr/Iw504NCAtLML+aYKxqFJ42YXtyJDIepV
- urmpFhPO6QPFQip8MgBeKBZeplnOJWjY4pK8Ar1g+/gWI4zJPlng31Uu+nJXtQKjAi/c
- Cham/+x46nFmFSBliGlhVtL561kUohoYDEkd/iuB/TsbuBxEdaqA5hdbPmIQsS0B/Zb+
- WVnvblriXUbIDIKYusjr5FF+V/of2wjClr24Tdmmzxp77kVfXHjv7IoBIPQCBV0K+Upt
- C8Tg==
+ d=1e100.net; s=20230601; t=1741565183; x=1742169983;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vluwFSKp6e7zoU80eebsr7FlbxAE5fBxSqh6kQbHYLQ=;
+ b=ERIG75Qfs8kB6I+fLvzk+yIo4knw5QGtYrMMP3WS6b2H/hQiiLMMW3wJP89U3irdnH
+ 78gFH16LiP4e1ZpTgAY8apTFI+32TUNUmOg2FtLv2nONlV/jiIjZ6YnKXA5AnjCWMaqO
+ rTlhrZ/UdnE2YNFRzgpdmPRl1CnN+owzQiFHNZwvw9tHNwTYMmBRn5U+8BPTd6wOqPTI
+ PqfS7XgMw0Nwl+JZmGFCwLoGD6hH9qFXrvb2D1NxiudYLAGCzQ5hgxUhl/MJNK/8wAOp
+ tcRMzDu8PiwQqS9WYBgNQmMacKSA0964I0QGw0k9chB3FSWo1DEBQ/Hqpf8kGOpvm1o/
+ Wolg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIhKm97Rajuc+KpHy6DmWr2jKrbPefFqBRGaFb6Bvrhsvm/y2xQ1esuRVdF0tPyp6kWK1ud+hfDbfP@nongnu.org
-X-Gm-Message-State: AOJu0YyQMP1xqYMyOcQthUs/SLuCC5Wrb3ziP0vU3rrN+rc9QUqDLrrX
- n43XCcpWoHTkzxlYNUhIcpPuMAH3ChTHExSqNyfydwd3JBMRXm0Xb8Im6PfXukg=
-X-Gm-Gg: ASbGncv8i7ePiFmTxbHnpu2bnpB4yktjS0SyJFOLVG7XAOfwmbK6pY54Jd07t2tWxfy
- RV83vzNUqSeNF0fqYRpEXEpKoxnnq9/ncRpX6j6Ju59r/6W8ImTA7ffrTLTVzyDVP36seB43xAA
- 9zbshMaxpmjRqv+K6li8X0NB2uU7xE90M5Qw0AziXB0n3WIXRhR3XCHirWoqotrbZQgN9ydKRhF
- RLPDqPZXweLSy7MhyzKNtQewtyUOn3/q9G+RIF/fY5XLkrFpNgddWAFUu1I3V4wz+mnSthbfLnh
- /ZLk+ERo/G5+nqq3eXNBx45rpuqFJf+zwTcPjNHSXC00pT3wvY+GFPEzErQt+82gnhiqfToBOQe
- nUqAA2nG7sZpl4URTng4=
-X-Google-Smtp-Source: AGHT+IFbKwVNHM+WpFEKBfNJvsjk7dqcL6E6e9F2hjbj3R6N2hwQR7KolOqI9zLWIxHHnb9PxpCqKA==
-X-Received: by 2002:a05:600c:4ba8:b0:43b:4829:8067 with SMTP id
- 5b1f17b1804b1-43ce4abb2f5mr41307265e9.6.1741565194123; 
- Sun, 09 Mar 2025 17:06:34 -0700 (PDT)
+ AJvYcCVb29MWFcwSeYaSck8XyPZofgFbKtnNaX1C9zRknJj67LxGBaoNJwnSDB1hLNHxgVuQGrkrFlWdXzbI@nongnu.org
+X-Gm-Message-State: AOJu0Yz+sHK9HeORuEA5eqxWownVuRfDfGTimwgYM7Dd7uak6A0SmU9L
+ o7yrBfZVjAjmPZ5G6dYz3X2f7j7QwBHVjz3C1SZkVzD1Z6VwYlKA4vw37tQT9tM=
+X-Gm-Gg: ASbGncvKw9vV8vzt14LZCTuoxAeTgFoyKT/H+GmNGp9Hei0MmEdflXemmLzR/fkg+1x
+ nNPqNGxY0pmm4dquyoi6PkJeSfGIsKbm/5ZLAHsuKfo7EeUpCqMWE0icmxKtOcHmeRkK0O8QGEt
+ OAePf5BSNvxFF60EEp9BgV4/VjdpSHVwsM9IvwFxfCRbrhDLr/3ydcij3WPOv5D18HpBsfwujBX
+ cwk1K+SQ/QNJ2bE8eJvjmH8OQ+jMDTIwf2fhJgJ9ryCyd1o7LmRytgC+nzAQhFLSoFMiFA/++3X
+ Knpm0JIoOl671AaIiKryo9/2g0C96vOl7YZzzJhRRVMTvGtTNpg+jrBURTfmRZmgflaR5KaiiNS
+ Yy/agg64oH7PfzaL1Ix7CKQE/20lb2A==
+X-Google-Smtp-Source: AGHT+IGXQGVRl/PbnRa8YqPLCqfxr6IXZ2UAWjlgzILsr9g7wtjeJG/FGLjoRfyLER+TiVWgoQeHew==
+X-Received: by 2002:a05:600c:5103:b0:439:685e:d4c8 with SMTP id
+ 5b1f17b1804b1-43c5a60eda3mr70337825e9.15.1741565183204; 
+ Sun, 09 Mar 2025 17:06:23 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cea7f2afasm32401525e9.3.2025.03.09.17.06.32
+ 5b1f17b1804b1-43cfbae50aasm4329205e9.8.2025.03.09.17.06.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 09 Mar 2025 17:06:33 -0700 (PDT)
+ Sun, 09 Mar 2025 17:06:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: BALATON Zoltan <balaton@eik.bme.hu>,
 	qemu-devel@nongnu.org
@@ -80,14 +79,12 @@ Cc: Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-block@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: [PATCH v5 02/14] hw/sd/sdhci: Remove need for SDHCIState::vendor field
-Date: Mon, 10 Mar 2025 01:06:08 +0100
-Message-ID: <20250310000620.70120-3-philmd@linaro.org>
+Subject: [PATCH v5 00/14] hw/sd/sdhci: Set reset value of interrupt registers
+Date: Mon, 10 Mar 2025 01:06:06 +0100
+Message-ID: <20250310000620.70120-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250310000620.70120-1-philmd@linaro.org>
-References: <20250310000620.70120-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
@@ -113,147 +110,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All instances of TYPE_IMX_USDHC set vendor=SDHCI_VENDOR_IMX.
-No need to special-case it.
+Since v4:
+- Convert quirks (Zoltan)
+- Cache class to avoid invalid cast with PCI
+- Remove 'endianness' property (Bernhard)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/sd/sdhci-internal.h |  1 -
- include/hw/sd/sdhci.h  |  4 ----
- hw/arm/fsl-imx25.c     |  2 --
- hw/arm/fsl-imx6.c      |  2 --
- hw/arm/fsl-imx6ul.c    |  2 --
- hw/arm/fsl-imx7.c      |  2 --
- hw/arm/fsl-imx8mp.c    |  2 --
- hw/sd/sdhci.c          | 14 ++++----------
- 8 files changed, 4 insertions(+), 25 deletions(-)
+Since v3:
+- Fix "hw/qdev-properties-system.h" (first patch)
+- Convert to EndianMode (patch #10)
 
-diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
-index 9f768c418e0..9072b06bdde 100644
---- a/hw/sd/sdhci-internal.h
-+++ b/hw/sd/sdhci-internal.h
-@@ -311,7 +311,6 @@ extern const VMStateDescription sdhci_vmstate;
-     DEFINE_PROP_UINT8("endianness", _state, endianness, DEVICE_LITTLE_ENDIAN), \
-     DEFINE_PROP_UINT8("sd-spec-version", _state, sd_spec_version, 2), \
-     DEFINE_PROP_UINT8("uhs", _state, uhs_mode, UHS_NOT_SUPPORTED), \
--    DEFINE_PROP_UINT8("vendor", _state, vendor, SDHCI_VENDOR_NONE), \
-     \
-     /* Capabilities registers provide information on supported
-      * features of this specific host controller implementation */ \
-diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-index 38c08e28598..48247e9a20f 100644
---- a/include/hw/sd/sdhci.h
-+++ b/include/hw/sd/sdhci.h
-@@ -99,7 +99,6 @@ struct SDHCIState {
-     uint8_t endianness;
-     uint8_t sd_spec_version;
-     uint8_t uhs_mode;
--    uint8_t vendor;        /* For vendor specific functionality */
-     /*
-      * Write Protect pin default active low for detecting SD card
-      * to be protected. Set wp_inverted to invert the signal.
-@@ -108,9 +107,6 @@ struct SDHCIState {
- };
- typedef struct SDHCIState SDHCIState;
- 
--#define SDHCI_VENDOR_NONE       0
--#define SDHCI_VENDOR_IMX        1
--
- /*
-  * Controller does not provide transfer-complete interrupt when not
-  * busy.
-diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
-index 5359a6d8d3b..02214ca1a1c 100644
---- a/hw/arm/fsl-imx25.c
-+++ b/hw/arm/fsl-imx25.c
-@@ -243,8 +243,6 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
-                                  &error_abort);
-         object_property_set_uint(OBJECT(&s->esdhc[i]), "capareg",
-                                  IMX25_ESDHC_CAPABILITIES, &error_abort);
--        object_property_set_uint(OBJECT(&s->esdhc[i]), "vendor",
--                                 SDHCI_VENDOR_IMX, &error_abort);
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->esdhc[i]), errp)) {
-             return;
-         }
-diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-index dc86338b3a5..a114dc0d63d 100644
---- a/hw/arm/fsl-imx6.c
-+++ b/hw/arm/fsl-imx6.c
-@@ -327,8 +327,6 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-                                  &error_abort);
-         object_property_set_uint(OBJECT(&s->esdhc[i]), "capareg",
-                                  IMX6_ESDHC_CAPABILITIES, &error_abort);
--        object_property_set_uint(OBJECT(&s->esdhc[i]), "vendor",
--                                 SDHCI_VENDOR_IMX, &error_abort);
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->esdhc[i]), errp)) {
-             return;
-         }
-diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
-index 34c4aa15cd0..ce8d3ef535f 100644
---- a/hw/arm/fsl-imx6ul.c
-+++ b/hw/arm/fsl-imx6ul.c
-@@ -531,8 +531,6 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
-             FSL_IMX6UL_USDHC2_IRQ,
-         };
- 
--        object_property_set_uint(OBJECT(&s->usdhc[i]), "vendor",
--                                 SDHCI_VENDOR_IMX, &error_abort);
-         sysbus_realize(SYS_BUS_DEVICE(&s->usdhc[i]), &error_abort);
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->usdhc[i]), 0,
-diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
-index 3374018cde0..ed1f10bca26 100644
---- a/hw/arm/fsl-imx7.c
-+++ b/hw/arm/fsl-imx7.c
-@@ -471,8 +471,6 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
-             FSL_IMX7_USDHC3_IRQ,
-         };
- 
--        object_property_set_uint(OBJECT(&s->usdhc[i]), "vendor",
--                                 SDHCI_VENDOR_IMX, &error_abort);
-         sysbus_realize(SYS_BUS_DEVICE(&s->usdhc[i]), &error_abort);
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->usdhc[i]), 0,
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 1ea98e14635..c3f6da63220 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -524,8 +524,6 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-             { fsl_imx8mp_memmap[FSL_IMX8MP_USDHC3].addr, FSL_IMX8MP_USDHC3_IRQ },
-         };
- 
--        object_property_set_uint(OBJECT(&s->usdhc[i]), "vendor",
--                                 SDHCI_VENDOR_IMX, &error_abort);
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->usdhc[i]), errp)) {
-             return;
-         }
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 1f45a77566c..149b748cbee 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1731,16 +1731,10 @@ usdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
- 
-     case USDHC_VENDOR_SPEC:
-         s->vendor_spec = value;
--        switch (s->vendor) {
--        case SDHCI_VENDOR_IMX:
--            if (value & USDHC_IMX_FRC_SDCLK_ON) {
--                s->prnsts &= ~SDHC_IMX_CLOCK_GATE_OFF;
--            } else {
--                s->prnsts |= SDHC_IMX_CLOCK_GATE_OFF;
--            }
--            break;
--        default:
--            break;
-+        if (value & USDHC_IMX_FRC_SDCLK_ON) {
-+            s->prnsts &= ~SDHC_IMX_CLOCK_GATE_OFF;
-+        } else {
-+            s->prnsts |= SDHC_IMX_CLOCK_GATE_OFF;
-         }
-         break;
- 
+Rainy saturday, time for some hobbyist contributions :)
+
+In this series we try to address the issue Zoltan reported
+and try to fix in [*], but using a more generic approach.
+The SDHCI code ends up better consolidated and ready to
+scale for more vendor implementations.
+
+[*] https://lore.kernel.org/qemu-devel/20250210160329.DDA7F4E600E@zero.eik.bme.hu/
+
+Philippe Mathieu-Daudé (14):
+  hw/qdev-properties-system: Include missing 'qapi/qapi-types-common.h'
+  hw/sd/sdhci: Remove need for SDHCIState::vendor field
+  hw/sd/sdhci: Redefine SDHCI_QUIRK_NO_BUSY_IRQ bitmask as bit
+  hw/sd/sdhci: Include 'wp-inverted' property in quirk bitmask
+  hw/sd/sdhci: Include 'pending-insert-quirk' property in quirk bitmask
+  hw/sd/sdhci: Introduce SDHCIClass stub
+  hw/sd/sdhci: Make quirks a class property
+  hw/sd/sdhci: Make I/O region size a class property
+  hw/sd/sdhci: Allow SDHCI classes to register their own MemoryRegionOps
+  hw/sd/sdhci: Allow SDHCI classes to register their own read-only regs
+  hw/sd/sdhci: Allow SDHCI classes to have different register reset
+    values
+  hw/sd/sdhci: Implement Freescale eSDHC as TYPE_FSL_ESDHC
+  hw/ppc/e500: Replace generic SDHCI by Freescale eSDHC
+  hw/sd/sdhci: Remove unnecessary 'endianness' property
+
+ hw/sd/sdhci-internal.h              |  26 ++---
+ include/hw/qdev-properties-system.h |   1 +
+ include/hw/sd/sdhci.h               |  83 ++++++++++----
+ hw/arm/aspeed.c                     |   2 +-
+ hw/arm/fsl-imx25.c                  |   2 -
+ hw/arm/fsl-imx6.c                   |   2 -
+ hw/arm/fsl-imx6ul.c                 |   2 -
+ hw/arm/fsl-imx7.c                   |   2 -
+ hw/arm/fsl-imx8mp.c                 |   2 -
+ hw/ppc/e500.c                       |  12 +-
+ hw/sd/sdhci-pci.c                   |   1 +
+ hw/sd/sdhci.c                       | 166 ++++++++++++++++++----------
+ 12 files changed, 184 insertions(+), 117 deletions(-)
+
 -- 
 2.47.1
 
