@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35E2C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 18:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B25BC282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 18:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trhxk-0006rc-AD; Mon, 10 Mar 2025 14:34:52 -0400
+	id 1tri1M-0004de-Ql; Mon, 10 Mar 2025 14:38:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trhxe-0006qa-Oi
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:34:48 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tri1C-0004aA-RW
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:38:29 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trhxc-0006Ya-D2
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:34:46 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43bc63876f1so39423015e9.3
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 11:34:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tri1A-0007HZ-LN
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:38:26 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-224341bbc1dso54161045ad.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 11:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741631682; x=1742236482; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1741631901; x=1742236701; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ig1QLeUzWhgICseKHBkmFF5Dr6h85FznjTxwtYpR7WQ=;
- b=FHDePD4yvOyIAQxScjHHxQTwy2opQDg7oTmRQI+/O0KjKBqsFCL1T7CkWwJWL6Bo8Z
- uISqF5y2Ot9Xk4BI4+GqkNKFFZZaDshf5MW8JHJJQPZULn7/z6oxLiy1Si3vhpGVMZNh
- g1/JHRyBUtdcm3KJy9MfGb5QVML255MBHFUffTOHJBxiXLTPbyBs3Byf/4M//1ticLKw
- Gu6M8AYZ53mvSkYojhHwtsOCoh9bfxAuoDEIxe5BmHd5QXhEIoRNSOT/GhDlPsy1aPhH
- fHF11Pn0LbEbRtuNc8eYQcOUMPaP9/7KJhISUdf73M+OgqqWh5asrmg6jda84us/gvMJ
- 9Ryg==
+ bh=/DP5AjGkk70wA+kwuqXB6qU7MxjRwwqk69PGEbR4F1w=;
+ b=lLHAaL8S/wyBDsRHLcfNZfKTxiur430dkeUnANJJumtJL3b2E1vL7kbYBrACG8Z74j
+ h9VHmRP3DSqC6imEvHHCjVr/5+GepbG19jaLuFy5m8RY3XDUfTouEuPKoBVBk0AKv7Sw
+ afLSLkFIcogVJI/6wzobAApZVG7vOS035WjWphnGZNx2mMaeprRuA4gGT1arR/+x1GQI
+ FLO2dT8/x7S+qg9iPgDVjrontZPF2BW2ASkphGx/Y/pdPo1sY5fj2xxo8MVpNKJOP+OG
+ xlq29WQu8dgOroPxHAONBlus2gXp2gLQEicPQCERFvXTB8QEOHVQjVc6j9ysknN6VzRH
+ ef+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741631682; x=1742236482;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1741631901; x=1742236701;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ig1QLeUzWhgICseKHBkmFF5Dr6h85FznjTxwtYpR7WQ=;
- b=vHJguv5eDkSHBjHTSzAMPgfgaScil0Jla2XVgxi2udCv7F6AwIVKUM9gD7APj2GNQm
- 7mjMxNomuwFPQZnPHMY1ghgoUKM4o/Xtf7hgsLGpOR3QxgHdbmIcpLOwlNtJ3F4EI1ab
- 8f3Zm7sBZMa1p0ul+slePhI4kzJyCr3b05Izgr9r8DYMx8RTBSPOgVLhZ/1e4TwrPXAj
- 6qv51k9GX+6PN50xWHP6QpVfw3ONbAtPWqW2cu9AOlTde52LzxiGtFgg5jXh3yAxmIWz
- r1Dopohendp8sIsEYShq3C/bWEr3PK8R7nWZdMKYHHPvcfNLTCo8q5MDRcdqPHDHgOIH
- 5lJw==
-X-Gm-Message-State: AOJu0YySdxAt62rWnvJKqBzRxJ+MAiSL+m+eBYvQs1t89On2aof2HVYR
- HGX3P48cFqh0xpaDj5S1Dzm8rs58VZcIi4QaFfI9tYOUexUFutoFizyNZfNMrMw=
-X-Gm-Gg: ASbGncsLqhjIkyLRMTkwa5Ig066VZvRakBfwgfYfJuH0U6kZ1I6iWXxbnlavsc981Qp
- bJcGFHTIRjL04unMWBI6EvFxlRN5DZwBZhL6cLpQTQhTOcySgjqvlrzDIIKbrOoNzOxR6t21hUG
- PIYB7/8M/0ONhabGBN0UvK0qZS0zf7+SnlYZoq095x3UVP/cfTnpWj5Ik4szR+R6rGSDsVmL+ex
- jWpnhOacjAcyYF1mPyfCORRQjxsPm3gdMMV60ry8zi73STtPFfmzpAwCJqG4GUk6Dw62JOR5GyS
- TGiFOe8ENufrKxyPZoKkaROQUSOovRFB8nmJtz3AnfHew880WmDQCknfEHEAucHW7GaRtmwdhEr
- OnJldDDy5I8Oa
-X-Google-Smtp-Source: AGHT+IET2UYFUO0ZcvRvSCC5+6R8CcR6v8yeLgEkOYpLWGpc0TkN/14GrAgQG2ziXJ7GfjZf2Hv+1g==
-X-Received: by 2002:a05:600c:1f92:b0:43c:e5c2:394 with SMTP id
- 5b1f17b1804b1-43ce5c2054emr80264665e9.0.1741631682368; 
- Mon, 10 Mar 2025 11:34:42 -0700 (PDT)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bd42c588dsm179071945e9.21.2025.03.10.11.34.40
+ bh=/DP5AjGkk70wA+kwuqXB6qU7MxjRwwqk69PGEbR4F1w=;
+ b=uWZl3qu5cJE6RHtdXT6vhKrWEv6BWrSOmFKAMWCz/Et/tSJ/nZSq6GLgAZ374ExibU
+ P9VJieS9CXYAQmp92n8WeKQeT4RcxB2Q9YZfxeoySMZij7gOOMuo4Q5Wj9E6C63NJN8F
+ fPFeo8B3p6JlIE2NTGKLO+jGMf+g2WUNKyIVPQxc2g5kyWA2v7MUxI5G6oSuAte8CWIS
+ v2M1kzGNsKDmfERpPOxJaJwU8W/P6lpmreS5ih2bljw+Em/hvN+olf4vugDH+bvhPS8p
+ 2dv1N6/3TNbm/vt2/bI/jCHGJ6m9cAAiQfRB56egTimSbPvdnJqymo+TlqeocguUb20Q
+ pSqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX+udKc+QgSaHXhA6VMKeGQiL/DF5rn5JA4F5509ncSZFvXtu4N1dZanL6SSb5BZ04hu3f+RBfTozl+@nongnu.org
+X-Gm-Message-State: AOJu0YxJxQTONag0G6158H+BrsORs1qpy9mhVF2sl6BG1YeDi3gFg7SS
+ 9In0x9OWHyWbJStcWFMf2vbrZmrnPYOy8YLdAET8Wwugmz9rmwMLVG1FYgirymwqFJR77p0ALpJ
+ wOS8=
+X-Gm-Gg: ASbGncv3mFyhI1vXZWubsPejnKMS0AkGguprqD7GFCM13nfQlW11KxwLquGvTlzJ3YN
+ 0mkzc7yFYgZd4d02mgUXouGmqs+dkS3i2oiOWgu2fL43+tdki0KYWWtAzp/m6m8ZqwVX+qQ6jkF
+ JTJ6LeHs1iiiM+wpM4NiedpYMzSnXSD9oS3GvI+PoIpXCT0kHyiCkOpZZ736D8JBkCFxGBGJkuV
+ MwtFM6xho4Lg4x7BAEaf0ST9ADivlUU6hnTBLEbTox1izVUJN03hj6SXApF7CAMHU0bQi/Gajs2
+ ZcHSKk4DXn9zw+fD241Kb96UnEhVHsYkYJPm3weivYXPWLg8whQxdwxZrQ==
+X-Google-Smtp-Source: AGHT+IGuIyinBDl/hnQ54/dDKijd7oKxOoedXYG5HmZVr4E3KOARPWgq6G/gjBlq/QB9dQ6YO6lp6w==
+X-Received: by 2002:a17:903:2d1:b0:224:1eaa:5de1 with SMTP id
+ d9443c01a7336-22592e2ca63mr11300885ad.18.1741631900874; 
+ Mon, 10 Mar 2025 11:38:20 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73698206989sm8698359b3a.21.2025.03.10.11.38.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 11:34:41 -0700 (PDT)
-Message-ID: <d1162824-4326-4ac2-b24f-fa18a3ee91cb@linaro.org>
-Date: Mon, 10 Mar 2025 19:34:40 +0100
+ Mon, 10 Mar 2025 11:38:20 -0700 (PDT)
+Message-ID: <ebcdf213-fcd7-4417-9b2e-8fb3826a8002@linaro.org>
+Date: Mon, 10 Mar 2025 11:38:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 14/14] hw/sd/sdhci: Remove unnecessary 'endianness'
- property
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Bernhard Beschow <shentey@gmail.com>, Guenter Roeck <linux@roeck-us.net>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
- Joel Stanley <joel@jms.id.au>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, Andrey Smirnov <andrew.smirnov@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-block@nongnu.org,
- Jamin Lin <jamin_lin@aspeedtech.com>
-References: <20250310000620.70120-1-philmd@linaro.org>
- <20250310000620.70120-15-philmd@linaro.org>
- <d97b9dd5-e569-636d-8ee7-b1a48c402429@eik.bme.hu>
- <0fa157de-ee4e-4b7f-b08e-bdf65e1840ad@linaro.org>
- <6ecc3790-e5a1-4d02-aefa-c6d632936a6a@roeck-us.net>
- <e58acfaf-5255-4710-ad34-7331401ffa86@linaro.org>
- <E66E09F3-0E28-44D7-972C-1E72D789E9E0@gmail.com>
- <20adfeac-df39-45d1-9c5b-95fe7cafbbde@kaod.org>
+Subject: Re: [PATCH 15/16] system/memory: make compilation unit common
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20adfeac-df39-45d1-9c5b-95fe7cafbbde@kaod.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
+ <20250310045842.2650784-16-pierrick.bouvier@linaro.org>
+ <76b4e445-0676-4982-a2c8-d273c49a9170@linaro.org>
+ <2d631838-e8a5-48d9-8235-9a41ffc3381c@linaro.org>
+ <76269a95-652a-4064-8f2f-6584b0677191@linaro.org>
+ <b411c27f-3f38-4d22-97ff-fa36ae77fb6e@linaro.org>
+ <5bd88057-3e3e-4c34-9d06-68916c95f647@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <5bd88057-3e3e-4c34-9d06-68916c95f647@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,185 +109,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/3/25 19:24, Cédric Le Goater wrote:
-> On 3/10/25 18:38, Bernhard Beschow wrote:
->>
->>
->> Am 10. März 2025 17:31:57 UTC schrieb "Philippe Mathieu-Daudé" 
->> <philmd@linaro.org>:
->>> On 10/3/25 16:56, Guenter Roeck wrote:
->>>> On 3/10/25 08:27, Philippe Mathieu-Daudé wrote:
->>>>> On 10/3/25 15:09, BALATON Zoltan wrote:
->>>>>> On Mon, 10 Mar 2025, Philippe Mathieu-Daudé wrote:
->>>>>>> The previous commit removed the single use of instance
->>>>>>> setting the "endianness" property.
->>>>>>>
->>>>>>> Since classes can register their io_ops with correct
->>>>>>> endianness, no need to support different ones.
->>>>>>>
->>>>>>> Remove the code related to SDHCIState::endianess field.
->>>>>>>
->>>>>>> Remove the now unused SDHCIState::io_ops field, since we
->>>>>>> directly use the class one.
->>>>>>>
->>>>>>> Suggested-by: Bernhard Beschow <shentey@gmail.com>
->>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>> ---
->>>>>>> hw/sd/sdhci-internal.h |  1 -
->>>>>>> include/hw/sd/sdhci.h  |  2 --
->>>>>>> hw/sd/sdhci.c          | 33 +++------------------------------
->>>>>>> 3 files changed, 3 insertions(+), 33 deletions(-)
->>>>>>>
->>>>>>> diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
->>>>>>> index d99a8493db2..e4da6c831d1 100644
->>>>>>> --- a/hw/sd/sdhci-internal.h
->>>>>>> +++ b/hw/sd/sdhci-internal.h
->>>>>>> @@ -308,7 +308,6 @@ extern const VMStateDescription sdhci_vmstate;
->>>>>>> #define SDHC_CAPAB_REG_DEFAULT 0x057834b4
->>>>>>>
->>>>>>> #define DEFINE_SDHCI_COMMON_PROPERTIES(_state) \
->>>>>>> -    DEFINE_PROP_UINT8("endianness", _state, endianness, 
->>>>>>> DEVICE_LITTLE_ENDIAN), \
->>>>>>>      DEFINE_PROP_UINT8("sd-spec-version", _state, 
->>>>>>> sd_spec_version, 2), \
->>>>>>>      DEFINE_PROP_UINT8("uhs", _state, uhs_mode, 
->>>>>>> UHS_NOT_SUPPORTED), \
->>>>>>>      \
->>>>>>> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
->>>>>>> index e8fced5eedc..1016a5b5b77 100644
->>>>>>> --- a/include/hw/sd/sdhci.h
->>>>>>> +++ b/include/hw/sd/sdhci.h
->>>>>>> @@ -54,7 +54,6 @@ struct SDHCIState {
->>>>>>>      AddressSpace sysbus_dma_as;
->>>>>>>      AddressSpace *dma_as;
->>>>>>>      MemoryRegion *dma_mr;
->>>>>>> -    const MemoryRegionOps *io_ops;
->>>>>>>
->>>>>>>      QEMUTimer *insert_timer;       /* timer for 'changing' sd 
->>>>>>> card. */
->>>>>>>      QEMUTimer *transfer_timer;
->>>>>>> @@ -105,7 +104,6 @@ struct SDHCIState {
->>>>>>>
->>>>>>>      /* Configurable properties */
->>>>>>>      uint32_t quirks;
->>>>>>> -    uint8_t endianness;
->>>>>>>      uint8_t sd_spec_version;
->>>>>>>      uint8_t uhs_mode;
->>>>>>> };
->>>>>>> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
->>>>>>> index 47e4bd1a610..cbb9f4ae8c0 100644
->>>>>>> --- a/hw/sd/sdhci.c
->>>>>>> +++ b/hw/sd/sdhci.c
->>>>>>> @@ -1391,17 +1391,6 @@ sdhci_write(void *opaque, hwaddr offset, 
->>>>>>> uint64_t val, unsigned size)
->>>>>>> }
->>>>>>>
->>>>>>> static const MemoryRegionOps sdhci_mmio_le_ops = {
->>>>>>> -    .read = sdhci_read,
->>>>>>> -    .write = sdhci_write,
->>>>>>> -    .valid = {
->>>>>>> -        .min_access_size = 1,
->>>>>>> -        .max_access_size = 4,
->>>>>>> -        .unaligned = false
->>>>>>> -    },
->>>>>>> -    .endianness = DEVICE_LITTLE_ENDIAN,
->>>>>>> -};
->>>>>>> -
->>>>>>> -static const MemoryRegionOps sdhci_mmio_be_ops = {
->>>>>>>      .read = sdhci_read,
->>>>>>>      .write = sdhci_write,
->>>>>>>      .impl = {
->>>>>>> @@ -1413,7 +1402,7 @@ static const MemoryRegionOps 
->>>>>>> sdhci_mmio_be_ops = {
->>>>>>>          .max_access_size = 4,
->>>>>>>          .unaligned = false
->>>>>>>      },
->>>>>>> -    .endianness = DEVICE_BIG_ENDIAN,
->>>>>>> +    .endianness = DEVICE_LITTLE_ENDIAN,
->>>>>>> };
->>>>>>>
->>>>>>> static void sdhci_init_readonly_registers(SDHCIState *s, Error 
->>>>>>> **errp)
->>>>>>> @@ -1467,23 +1456,6 @@ void sdhci_common_realize(SDHCIState *s, 
->>>>>>> Error **errp)
->>>>>>>      SDHCIClass *sc = s->sc;
->>>>>>>      const char *class_name = object_get_typename(OBJECT(s));
->>>>>>>
->>>>>>> -    s->io_ops = sc->io_ops ?: &sdhci_mmio_le_ops;
->>>>>>> -    switch (s->endianness) {
->>>>>>> -    case DEVICE_LITTLE_ENDIAN:
->>>>>>> -        /* s->io_ops is little endian by default */
->>>>>>> -        break;
->>>>>>> -    case DEVICE_BIG_ENDIAN:
->>>>>>> -        if (s->io_ops != &sdhci_mmio_le_ops) {
->>>>>>> -            error_setg(errp, "SD controller doesn't support big 
->>>>>>> endianness");
->>>>>>> -            return;
->>>>>>> -        }
->>>>>>> -        s->io_ops = &sdhci_mmio_be_ops;
->>>>>>> -        break;
->>>>>>> -    default:
->>>>>>> -        error_setg(errp, "Incorrect endianness");
->>>>>>> -        return;
->>>>>>> -    }
->>>>>>> -
->>>>>>>      sdhci_init_readonly_registers(s, errp);
->>>>>>>      if (*errp) {
->>>>>>>          return;
->>>>>>> @@ -1493,7 +1465,7 @@ void sdhci_common_realize(SDHCIState *s, 
->>>>>>> Error **errp)
->>>>>>>      s->fifo_buffer = g_malloc0(s->buf_maxsz);
->>>>>>>
->>>>>>>      assert(sc->iomem_size >= SDHC_REGISTERS_MAP_SIZE);
->>>>>>> -    memory_region_init_io(&s->iomem, OBJECT(s), s->io_ops, s, 
->>>>>>> class_name,
->>>>>>> +    memory_region_init_io(&s->iomem, OBJECT(s), sc->io_ops, s, 
->>>>>>> class_name,
->>>>>>>                            sc->iomem_size);
->>>>>>> }
->>>>>>>
->>>>>>> @@ -1578,6 +1550,7 @@ void sdhci_common_class_init(ObjectClass 
->>>>>>> *klass, const void *data)
->>>>>>>      dc->vmsd = &sdhci_vmstate;
->>>>>>>      device_class_set_legacy_reset(dc, sdhci_poweron_reset);
->>>>>>>
->>>>>>> +    sc->io_ops = &sdhci_mmio_le_ops;
->>>>>>
->>>>>> You call common_class_init in subclass class_inits last so this 
->>>>>> would overwrite what subclass has set, doesn't it? I think you 
->>>>>> either have to change order in subclass class_init methods or not 
->>>>>> set this here.
->>>>>
->>>>> Oops... I'm surprised tests passed. Do we have coverage for sdhci on
->>>>> e500 machines? Or are we only testing them via virtio PCI block 
->>>>> storage?
->>>>
->>>> Not sure if that is what you are asking, but I have been testing it 
->>>> with
->>>> sdhci-pci for a long time (not this series, though).
->>>
->>> I'm referring to the Freescale eSDHC controller of PPC e500 machines
->>> (see previous patch).
->>
->> I think testing SDHCI is generally difficult since the images need to 
->> be resized to a power of two.
-
-historical references for this "sdcard power of 2" limitation:
-https://lore.kernel.org/qemu-devel/20210623180021.898286-1-f4bug@amsat.org/
-https://lore.kernel.org/qemu-devel/4b846383-83bf-4252-a172-95604f2f585b@linaro.org/
-
-> Any idea how to do this with the new 
->> functional tests?
-> 
-> we can truncate to 64M the rootfs used in  :
-> 
->     tests/functional/test_ppc64_e500.py
-> 
-> and boot from it in a new test if that's supported by the machine.
-
-Yes, that is the best we can do until we implement the async DMA.
-
-Regards,
-
-Phil.
+T24gMy8xMC8yNSAxMToyNywgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
+IDEwLzMvMjUgMTk6MDQsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBPbiAzLzEwLzI1
+IDEwOjU4LCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90ZToNCj4+PiBPbiAzLzEwLzI1IDEwOjQ3
+LCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4+Pj4gTWF5YmUgYmV0dGVyIGFzDQo+Pj4+
+Pg0KPj4+Pj4gIMKgwqDCoMKgwqDCoCBNZW1PcCBtb3AgPSAodGFyZ2V0X3dvcmRzX2JpZ2Vu
+ZGlhbigpID8gTU9fQkUgOiBNT19MRSkgfA0KPj4+Pj4gc2l6ZV9tZW1vcChzaXplKTsNCj4+
+Pj4+ICDCoMKgwqDCoMKgwqAgYWRqdXN0X2VuZGlhbm5lc3MobXIsICZtcmZkLmRhdGEsIHNp
+emVfbWVtb3Aoc2l6ZSksIG1vcCk7DQo+Pj4+Pg0KPj4+Pg0KPj4+PiBEbyB5b3UgdGhpbmsg
+ZGVmaW5pbmcgTU9fVEUgYXMgdGhpcyBleHByZXNzaW9uIGlzIGEgZ29vZCBpZGVhPw0KPj4+
+DQo+Pj4gVGhlcmUgYXJlIG5vdCBzbyBtYW55IHJlZmVyZW5jZXMgdG8gTU9fVEUgb3V0c2lk
+ZSB0YXJnZXQvIG9yIGFjY2VsL3RjZy8uDQo+Pj4NCj4+PiBJbmRlZWQsIGFmdGVyIHRoaXMg
+Y2hhbmdlLCB0aGUgb25seSBvbmVzIGxlZnQgYXJlIGluIGh3L2FybS9hcm12N20uYywNCj4+
+PiB3aGljaCAoYmVjYXVzZSBpdCdzIEFybSkgY2FuIGJlIGNoYW5nZWQgdG8gTU9fTEUuDQo+
+Pj4NCj4+DQo+PiBJIHNlZSBhIGJpdCBtb3JlIHRoYW4gdGhhdCAoMTcgZmlsZXMpOg0KPj4g
+aHcvYXJtL2FybXY3bS5jDQo+PiBpbmNsdWRlL2V4ZWMvbWVtb3AuaA0KPj4gdGFyZ2V0L2Fy
+bS90Y2cvaGVscGVyLWE2NC5jDQo+PiB0YXJnZXQvYXJtL3RjZy90cmFuc2xhdGUuYw0KPj4g
+dGFyZ2V0L2hleGFnb24vaWRlZi1wYXJzZXIvcGFyc2VyLWhlbHBlcnMuYw0KPj4gdGFyZ2V0
+L2hwcGEvdHJhbnNsYXRlLmMNCj4+IHRhcmdldC9pMzg2L3RjZy9lbWl0LmMuaW5jDQo+PiB0
+YXJnZXQvbG9vbmdhcmNoL3RjZy9pbnNuX3RyYW5zL3RyYW5zX3ZlYy5jLmluYw0KPj4gdGFy
+Z2V0L202OGsvdHJhbnNsYXRlLmMNCj4+IHRhcmdldC9taXBzL3RjZy9taXBzMTZlX3RyYW5z
+bGF0ZS5jLmluYw0KPj4gdGFyZ2V0L3Jpc2N2L3RyYW5zbGF0ZS5jDQo+PiB0YXJnZXQvcngv
+dHJhbnNsYXRlLmMNCj4+IHRhcmdldC9zMzkweC90Y2cvbWVtX2hlbHBlci5jDQo+PiB0YXJn
+ZXQvczM5MHgvdGNnL3RyYW5zbGF0ZS5jDQo+PiB0YXJnZXQvczM5MHgvdGNnL3RyYW5zbGF0
+ZV92eC5jLmluYw0KPj4gdGFyZ2V0L3NwYXJjL2xkc3RfaGVscGVyLmMNCj4+IHRhcmdldC9z
+cGFyYy90cmFuc2xhdGUuYw0KPiANCj4gRm9yIHRhcmdldHMgdGllZCB0byBzaW5nbGUgZW5k
+aWFubmVzcywgd2UgY2FuIHJlcGxhY2UgdXNpbmcgZ3NlZCwNCj4gYnV0IHVzaW5nIGEgaGVs
+cGVyIGlzIGNsZWFyZXIgKHNlZSBmb3IgZXhhbXBsZSBjb21taXQgNDE1YWFlNTQzZWQNCj4g
+dGFyZ2V0L21pY3JvYmxhemU6IENvbnNpZGVyIGVuZGlhbm5lc3Mgd2hpbGUgdHJhbnNsYXRp
+bmcgY29kZSIpLg0KPiANCg0KVGhhdCdzIGdvb2QsIEkganVzdCB3YW50IHRvIGtlZXAgdGhp
+cyBzZXJpZXMgZm9jdXMgb24gbWluaW1hbCBjaGFuZ2VzIHRvIA0KYWNoaWV2ZSB0aGUgY3Vy
+cmVudCBnb2FsLCBhbmQgbm90IGJyaW5nIGFueSBhZGRpdGlvbmFsIHJlZmFjdG9yaW5nIGhl
+cmUuDQoNCj4+IFBsdXMgbW9yZSAoMjIgZmlsZXMpIHdobyByZWxpZXMgb246DQo+PiBNT19U
+RSogdmFyaWFudHMgKHdoaWNoIHJlbGllcyBvbiBNT19URSB0cmFuc2l0aXZlbHkpDQo+Pg0K
+Pj4gVGh1cyBteSBwcm9wb3NhbCB0byBoYXZlIGEgZmlyc3QgY2hhbmdlIHRvIE1PX1RFIGRl
+ZmluaXRpb24sIGFuZA0KPj4gZXZlbnR1YWxseSBkbyB0aGUgY2hhbmdlIGxhdGVyLg0KPj4N
+Cj4+IFdoYXQgZG8geW91IHRoaW5rPw0KPiANCj4gUmVtb3ZpbmcgTU9fVEUgaXMgaW4gbXkg
+VE9ETyBsaXN0Lg0KPiANCj4gSSBzdGFydGVkIHdpdGggTWljcm9ibGF6ZSAobm93IG1lcmdl
+ZCkgdG8gZ2V0IGZhbWlsaWFyLCB0aGVuIGhhZA0KPiBhIGxvb2sgYXQgQVJNIChzZWUgaS5l
+Lg0KPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzIwMjQwOTI0MTkxOTMy
+LjQ5Mzg2LTEtcGhpbG1kQGxpbmFyby5vcmcvDQo+IGFuZA0KPiBodHRwczovL2xvcmUua2Vy
+bmVsLm9yZy9xZW11LWRldmVsL2Q4MzE2MDBhLTlhNjEtNDVjMS1hNTM1LWY3NWJiNjRjZGZm
+NEBsaW5hcm8ub3JnLykuDQo+IEkgYWxzbyB0b29rIGNhcmUgb2YgTUlQUyBmZXcgeWVhcnMg
+YWdvIGJ1dCBJIG5lZWQgdG8gcmViYXNlLA0KPiBob3dldmVyIGl0IGlzbid0IGluIHRoZSBw
+cmlvcml0eSBsaXN0Lg0KDQpJbnN0ZWFkIG9mIGRvaW5nIGEgZnVsbCBjb2RlYmFzZSByZWZh
+Y3RvcmluZy9jbGVhbnVwLCB3ZSBjYW4gYWRvcHQgYSAiYXMgDQpuZWVkZWQgYmFzaXMiIGFw
+cHJvYWNoLg0KDQpCYXNpY2FsbHkgYXJjaGl0ZWN0dXJlcyB0aGF0IGNhbiBoYXZlIHZhcnlp
+bmcgZW5kaWFubmVzcyBtdXN0IGJlIGhhbmRsZWQgDQooc2luY2UgdGhlaXIgY29tcGlsYXRp
+b24gdW5pdHMgYXJlIGR1cGxpY2F0ZWQgZm9yIHZhcmlhbnRzKS4NCkZvciB0aGUgcmVzdCwg
+YXMgUmljaGFyZCBtZW50aW9uZWQgb24gdGhpcyBzZXJpZXMsIHRoZSBjb2RlIHdpbGwgc3Rh
+eSANCnRhcmdldCBzcGVjaWZpYywgY29tcGlsaW5nIHdpdGggYSBzaW5nbGUgc2V0IG9mIGRl
+ZmluZXMsIHdoaWNoIGlzIHdoYXQgDQp3ZSByZWFsbHkgYWltIGZvci4NCg0KU2FtZSBkaXNj
+dXNzaW9uIHdpbGwgaGFwcGVuIGZvciBhcmNoaXRlY3R1cmVzIHdpdGggZmlsZXMgZHVwbGlj
+YXRlZCANCmJldHdlZW4gMzIvNjQgYml0cyB2YXJpYW50cy4NCg==
 
