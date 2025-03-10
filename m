@@ -4,103 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F69DC28B2E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 16:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F6FC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 16:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trgQm-0005jt-8C; Mon, 10 Mar 2025 12:56:44 -0400
+	id 1trgRN-0006Fc-Hq; Mon, 10 Mar 2025 12:57:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trgQk-0005iY-MM
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:56:42 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trgQi-0006Ql-J4
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:56:42 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2ff4a4f901fso6624752a91.2
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 09:56:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741625799; x=1742230599; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZkjkedmykN6Dnae+6hPjYb5eiAU0Rz5li5jIqpcMQ1w=;
- b=iANxVSePFuTsAxE5T2+qhuI/xZZkefBYL3HlXom59t3T2zmykfpnZfWj9h6pbEX2uf
- suuyMRTwxLgZJguXuca7uc9QPREVErlbCIwpJT92wRwz4JXx1gzXb1+7jICv1MB8qUaY
- DEtfZKIPlIYCMuizEVz9eoUiPfm74T/nbjd/B08K+0HS2TpWro59BazcA4A0rW9Rlxdb
- 4x9yga02b45t2bkZ6iWfWcrB99EYjAGCDjb4EzW7HCPSOK4Yv+UQsBWWCWwZQPuKcpqt
- eQknCrJCWLpwKs3PNsOskH5MY25MF0afDDeWvEl/yOtG0JXkZHaOAqYmLWTcz9AZ44zq
- hhGA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1trgRJ-00068f-VK
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:57:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1trgRH-0006UG-W7
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:57:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741625833;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=NnQd6GXKdZCsxGCbhqxlgR8PSdZP8cTUAbiIYh/a6uE=;
+ b=BBEQ6M1a2Gh1wSwSqnReJ4/jEhpuASLMDa7spEDok/yykhUDo8Rq3hMKtszKsCaRK5RGFo
+ bAwnpIcigiXd8X2OYUdM+l+cV3J7gN3WN8y15vMx29j5QUGmoABaRrn0UQ4y4oR7wzlDLR
+ YNZcAvZHuUMPIyQkqPvxKZLds2+/Rjs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-605-1_vSo77vPYaFRXh0eMfVlQ-1; Mon, 10 Mar 2025 12:57:11 -0400
+X-MC-Unique: 1_vSo77vPYaFRXh0eMfVlQ-1
+X-Mimecast-MFC-AGG-ID: 1_vSo77vPYaFRXh0eMfVlQ_1741625830
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43cebfa08ccso13495365e9.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 09:57:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741625799; x=1742230599;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZkjkedmykN6Dnae+6hPjYb5eiAU0Rz5li5jIqpcMQ1w=;
- b=jro2Sh9YVqpjEa8ZQlsHelGa4gdUvhjMEYrHG5zo/Wpdb5ABdgfS8c9wdPqKhJNgms
- E7nGXhEvtawFsJmayEDzOVVtrDkH8mdTOpZ28jMnSyqtMzQhNARP65+SUzY4bAVg7aAw
- 7Wullt03M0/k+vdnxw57lCdT0qDyt4blUbnpryxx/ooKje5L4i3vouPwkrYVuOq63i2e
- xivJO+M1+q4ZIDr/tQkGZxfrM9uZpcREBdmLJaQAjHqqRuHC+J1PyVNfl9L3HR3GfViW
- +RcaNM0ieUVveBp9vCgXKcaXviUPufFO5l//DZRLEUOc6tBitkwwK42s3AsULE2wvIYH
- VnYQ==
-X-Gm-Message-State: AOJu0YwH0orHKM93H84+qTu7jsh/eWlwtFOg5nmZw3/MUFiOrVApD+id
- JNuEbM44+yTzqEePnLQ4SnNtBJ5gnrD1M67ODlDtZBUyVgWoFYIrqBWPmWCzDSI=
-X-Gm-Gg: ASbGncs5ptqX71CwHylza7vH+qvpcKryA3JhxqvXhbXjnTd9/CYi7LNjZIRjtJyS/x1
- HFuQZLDxW7RUl8ZnY2vJumv9H+c/741lKBlk7C6kIAE1UxDb0a5TOqH2G8thvkRiEFcCEgV6NPX
- 39ZX0UlvYnlrqDZlbDtnpSYZfxoDwPKeditJ8fnt3IVK2lJkYQUXjHPwCF/Z/oXKrk4iMNk4uMN
- ncdxE/EKGv9V4q2yk4jHTqiyxPLXccFydSZ/IM68gSm+cDnzzYHuf1V59hhTwA+wMJlWE3KAb38
- FdGiAccfwCQVj+FOrSgz7NVO2E32JxNyjAHha00iAZsh5ZD/C/RCWy6sHA==
-X-Google-Smtp-Source: AGHT+IHIbgCn3Exn+AALN657KIom6PGObNAGMKxJbf0VIqQkDogxhfDXJch+Uz3paJ/iK/pOhThzrA==
-X-Received: by 2002:a17:90b:4a51:b0:2fa:e9b:33b8 with SMTP id
- 98e67ed59e1d1-300ff10caacmr851943a91.18.1741625798731; 
- Mon, 10 Mar 2025 09:56:38 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410aa883asm80360745ad.239.2025.03.10.09.56.37
+ d=1e100.net; s=20230601; t=1741625830; x=1742230630;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NnQd6GXKdZCsxGCbhqxlgR8PSdZP8cTUAbiIYh/a6uE=;
+ b=b0gYbvCfcgf4m7Tyb13bb9E5zWVkgKHrApViqFhzN3Q+3Zuzm6rFlwT3Zgrb1uLogm
+ NCJzKGMnVzBAxSbMu2DSgVgWUVyhA+yX5f4dlkwPWsV6C1rQeAbDAThqd8hcH3IMdy7u
+ kfAxFlhPBax1yNng9Ea/rU7HxVVvpoT+Mdr4RxgCLKoEyDJxsT5o+P42sTaQUy+ox8MI
+ cIVQaDrEiDuhWVvB7dSmYWlZUvKCVMLax6OkPOdan+L0QIZSE3fg9q6DwqQPCIDREDqt
+ M759LNKMDRjSVIe6xBs/lbydDJPUoX4b0SrAyBPFaHhfxhHhHp3rHYrw+iN+BdbXYVCt
+ p39w==
+X-Gm-Message-State: AOJu0Yy1I3kZNX+uLQNtjHs1OBIfEDL4RJHu5mGQUc+NDKmVJRvgry9R
+ 8y9WeadLkqmlrR+Z521sey9/QmkMJ3BEeyQkDhDo001YbttGZdscywviox2cjjUXbv7gIhpUx5l
+ AQkm66DeUeS3xi76E1gDCwvSX2ZIMHeX4uL3LN4RDfxVK42wMd5t3
+X-Gm-Gg: ASbGncsGyO0pE6T5jgdihbBmz+xXxL3nr5nR+jARQDHtFNzscAhtW+L0P1E/p0OJFyR
+ AnlBP6wnxTWNESovK4Nq2zZ3aaGHGkmWyRW6IOuv8/LKY6gpVOLwQCIWgEms7g9ipoPGt96kHwH
+ PaNXaxDnt4slGaeCgd5u+X0GZTXbZVUJbnE9zJbliO4uzimiOMuUD6i3h7aBD9WX72o1Z/f18sR
+ Esiyj7KWtSE0Z7nZVPdYccIKHKolK29xxRN973j4eihbMEdeaxqCkDaY97P3p7gW70ErX3Dbwny
+ BclwKH68ociDxOhT2khaoeSglboeABGhqrLu18YrvHHMWow=
+X-Received: by 2002:a05:600c:5129:b0:43c:f689:88ce with SMTP id
+ 5b1f17b1804b1-43cf6898affmr37532655e9.20.1741625829941; 
+ Mon, 10 Mar 2025 09:57:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0VoyRENnFGpdECPD03BAyc3yN21ELbFzOq7YAAhJqWkTmskQAtMb1mRzx8NeVYbtAwGj7ZQ==
+X-Received: by 2002:a05:600c:5129:b0:43c:f689:88ce with SMTP id
+ 5b1f17b1804b1-43cf6898affmr37532405e9.20.1741625829573; 
+ Mon, 10 Mar 2025 09:57:09 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
+ [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43ce5d2808dsm92667295e9.13.2025.03.10.09.57.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 09:56:38 -0700 (PDT)
-Message-ID: <a57faa36-2e66-4438-accc-0cbfdeebf100@linaro.org>
-Date: Mon, 10 Mar 2025 09:56:36 -0700
+ Mon, 10 Mar 2025 09:57:09 -0700 (PDT)
+Message-ID: <1cd5fa82-50db-418c-bd9e-ce6fda3c6ee4@redhat.com>
+Date: Mon, 10 Mar 2025 17:57:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/16] make system memory API available for common code
+Subject: Re: [RFC] Proposal for a QEMU video subsystem for cameras and webcams
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Milosevic <david.milosevic@9elements.com>
+Cc: qemu-devel@nongnu.org,
+ Marcello Sylvester Bauer <marcello.bauer@9elements.com>,
+ pizhenwei@bytedance.com
+References: <CAFUY6-d5GZSrDzD0vUEF6P4YnstMjx=G3Q77iFGLt3eBUf5WUA@mail.gmail.com>
+ <87senk7rro.fsf@draig.linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, alex.bennee@linaro.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, kvm@vger.kernel.org,
- Peter Xu <peterx@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- David Hildenbrand <david@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- Paul Durrant <paul@xen.org>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anthony PERARD <anthony@xenproject.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>, manos.pitsidianakis@linaro.org,
- qemu-riscv@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- xen-devel@lists.xenproject.org, Stefano Stabellini <sstabellini@kernel.org>
-References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
- <f231b3be-b308-56cf-53ff-1a6a7fb4da5c@eik.bme.hu>
- <c5b9eea9-c412-461d-b79b-0fa2f72128ee@linaro.org>
-In-Reply-To: <c5b9eea9-c412-461d-b79b-0fa2f72128ee@linaro.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <87senk7rro.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,95 +154,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/25 09:28, Pierrick Bouvier wrote:
-> Hi Zoltan,
+On 10/03/2025 17.51, Alex Bennée wrote:
+> David Milosevic <david.milosevic@9elements.com> writes:
 > 
-> On 3/10/25 06:23, BALATON Zoltan wrote:
->> On Sun, 9 Mar 2025, Pierrick Bouvier wrote:
->>> The main goal of this series is to be able to call any memory ld/st function
->>> from code that is *not* target dependent.
+>> Dear QEMU Developers,
 >>
->> Why is that needed?
+>> I would like to propose the development of a video subsystem in QEMU, with the initial
+>> implementation focusing on UVC video device emulation and support for multiple
+>> backends, including V4L2, GStreamer, and libcamera.
 >>
-> 
-> this series belongs to the "single binary" topic, where we are trying to
-> build a single QEMU binary with all architectures embedded.
-> 
-> To achieve that, we need to have every single compilation unit compiled
-> only once, to be able to link a binary without any symbol conflict.
-> 
-> A consequence of that is target specific code (in terms of code relying
-> of target specific macros) needs to be converted to common code,
-> checking at runtime properties of the target we run. We are tackling
-> various places in QEMU codebase at the same time, which can be confusing
-> for the community members.
-> 
-> This series take care of system memory related functions and associated
-> compilation units in system/.
-> 
->>> As a positive side effect, we can
->>> turn related system compilation units into common code.
+>> This work is already in progress at 9elements, and we would like to upstream it.
 >>
->> Are there any negative side effects? In particular have you done any
->> performance benchmarking to see if this causes a measurable slow down?
->> Such as with the STREAM benchmark:
->> https://stackoverflow.com/questions/56086993/what-does-stream-memory-bandwidth-benchmark-really-measure
+>> == Motivation
 >>
->> Maybe it would be good to have some performance tests similiar to
->> functional tests that could be run like the CI tests to detect such
->> performance changes. People report that QEMU is getting slower and slower
->> with each release. Maybe it could be a GSoC project to make such tests but
->> maybe we're too late for that.
+>> Currently, USB pass-through is the only way to make video devices available to guests, which
 >>
+>>      - excludes non-USB cameras (e.g., MIPI)
+>>      - performs poorly with high-resolution cameras
+>>      - does not work with USB 3.0 video devices (Issue #1613)
+>>
+>> == Proposal
+>>
+>> We aim to introduce a video subsystem in QEMU that allows for the implementation of various
+>> video devices, similar to how QEMU handles audio. The first device implementation will be
+>> UVC (USB Video Class) device emulation, with support for multiple backends. Future extensions
+>> could include virtio-video or other PCI-based video devices.
 > 
-> I agree with you, and it's something we have mentioned during our
-> "internal" conversations. Testing performance with existing functional
-> tests would already be a first good step. However, given the poor
-> reliability we have on our CI runners, I think it's a bit doomed.
-> 
-> Ideally, every QEMU release cycle should have a performance measurement
-> window to detect potential sources of regressions.
-> 
-> To answer to your specific question, I am trying first to get a review
-> on the approach taken. We can always optimize in next series version, in
-> case we identify it's a big deal to introduce a branch for every memory
-> related function call.
-> 
-> In all cases, transforming code relying on compile time
-> optimization/dead code elimination through defines to runtime checks
-> will *always* have an impact, even though it should be minimal in most
-> of cases. But the maintenance and compilation time benefits, as well as
-> the perspectives it opens (single binary, heterogeneous emulation, use
-> QEMU as a library) are worth it IMHO.
-> 
->> Regards,
->> BALATON Zoltan
-> 
-> Regards,
-> Pierrick
+> Are you aware of virtio-media? It was an alternative proposal to
+> virtio-video which effectively becomes an encapsulation of v4l to the
+> guest.
+
+... but USB video would also be nice, wouldn't it? That could enable guests 
+to use webcams without needing additional virtio drivers for it, I think?
+
+>> Supported backends:
+>>
+>>      - Video4Linux (V4L2)
+>>      - GStreamer
+>>      - libcamera
+>>
+>> == Example: V4L2 Backend
+>>
+>> Once implemented, a typical QEMU command line for using a V4L2 backend would look like this
+>>
+>>      ./build/qemu-system-x86_64 \
+>>          -device qemu-xhci \
+>>          -videodev v4l2,id=cam0,device=/dev/video0 \
+
+Just a quick comment here: QEMU tries often to avoid to introduce new 
+top-level command line switches nowadays. Would it be possible to use 
+"-object" for this instead, like it is e.g. done with the memory backends or 
+rng backends?
+
+  Thomas
+
+
+>>          -device usb-video,videodev=cam0
+>>
+>> This sets up a UVC emulated device in the guest, using /dev/video0 from the
+>> host via the V4L2 backend.
+>>
+>> == Next Steps
+>>
+>> We welcome feedback on design considerations and integration approaches. Let us know
+>> if there are existing discussions or preferred directions for this work.
+>>
+>> Best regards,
+>>
+>> David Milosevic
+>> Firmware Developer
+>> 9elements
 > 
 
-As a side note, we recently did some work around performance analysis 
-(for aarch64), as you can see here [1]. In the end, QEMU performance 
-depends (roughly in this order) on:
-1. quality of code generated by TCG
-2. helper code to implement instructions
-3. mmu emulation
-
-Other state of the art translators that exist are faster (fex, box64) 
-mainly by enhancing 1, and relying on various tricks to avoid 
-translating some libraries calls. But those translators are host/target 
-specific, and the ratio of instructions generated (vs target ones read) 
-is much lower than QEMU. In the experimentation listed in the blog, I 
-observed that for qemu-system-aarch64, we have an average expansion 
-factor of around 18 (1 guest insn translates to 18 host ones).
-
-For users seeing performance decreases, beyond the QEMU code changes, 
-adding new target instructions may add new helpers, which may be called 
-by the stack people use, and they can sometimes observe a slower behaviour.
-
-There are probably some other low hanging fruits for other target 
-architectures.
-
-[1] https://www.linaro.org/blog/qemu-a-tale-of-performance-analysis/
 
