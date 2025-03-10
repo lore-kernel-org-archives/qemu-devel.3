@@ -4,100 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A71CC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 13:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FBF6C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 13:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trdEX-0005Ja-NH; Mon, 10 Mar 2025 09:31:53 -0400
+	id 1trdEH-0005Eg-JJ; Mon, 10 Mar 2025 09:31:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trdEN-0005HW-4U
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 09:31:44 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trdEK-0007Nv-LR
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 09:31:42 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43cebe06e9eso9812325e9.3
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 06:31:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741613498; x=1742218298; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/gwWwhAuWqbYhYJM2CzOTGOLTxTRCMppZ1Oq+j9Tbsc=;
- b=z77ob94UxIasnrg1B6VWFwIvcBhYlGqpU9vSZaAyXg1MYnMMMu4dZrg9nFCgS+BPj0
- ow3Iuof29yyoVAC3hmpTuNFrR5RiYZjf5GC7Q94Cg8dXVoAxflhx4KRXrqqt1TXgPyQB
- bwqlbNhr2IcJfz4UXP4zHL1UlXueN6xCm++VRTbpaPzjEarRRlSWEubEN5SBQUb9R531
- u5sbBztprlaOeI2VFilz46XgYYzZbeLYUs8j05AmdNY3S2lqlP8XZtjLVeEdp+SXY0D4
- BDd9N7RWqrlNsoRbMF+BwbX8t3nNv9XZiP1CwVXCMS4XiRvIOsWpHVTfDPRqf+7cEt1E
- NESg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741613498; x=1742218298;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/gwWwhAuWqbYhYJM2CzOTGOLTxTRCMppZ1Oq+j9Tbsc=;
- b=kC+bMYk1eu0t4HIMwHPdTVyhur1HD2y8RDLsyV3LS2lpRqwmXuRjNpFsiUFcP0rcxL
- xcHiIYevrWmzOKAQWQIuj1IG2GiQf/kKfGGJNrWlEcz9T847PO45SuQ8Zn7gJptbmgcH
- NeHAi+fSabQkLj/66Z1lt0aLcu9z0mgffBjS9/0WuB0plIJfpi8RQGiWgdMCjeGhw8d/
- ooJ1/DVhukfkn3f3moh+fVWSqWZ3gD4CLr7TiECLhlfi1QIa+hwb9+VQUVxpXli6CLlC
- QEK40g1umy1Tj99CWXH4EOvwAhMSjY14NZ3iLaVDdF4Inr9nXcWwjvOB+gwJE87eSpXg
- NPMQ==
-X-Gm-Message-State: AOJu0YywbdKD2mpKCcdawaMwD2PKki2t0l4vfN/qttyaTRXc8DytscYn
- D5yLxkIn29YXQZVJLJlS0P6v/YU149GdU61DDdOpH4JdVmUArRNSp9tX8fOcwiNAJXetokI6V2H
- diPA=
-X-Gm-Gg: ASbGncsehSj0tDCe0nvkaMjrCVa9E4/Xj9hRfMCCTdfFKF55Ki+S0jbgtUWoDwTo/MT
- ngxWKntrkCEqu4zSQULr3OccBaE1+us6thwgkzmXR5TbGBJlplEcbHGzIQaNusF5qaX2fCaRGbi
- IQnuO+mriH1QHNLxPXV9pUPXcpAK/yO1tLvXD95Y+26NSRznfOb/MzJV+B7zmbSCZjus/c+WFwO
- e4pBwx9vqi/U/KBNQvSiMJTAY3L1J7p/CIHUSY7chTrh9rqVJY3WuQKgLTlul7/KGsH+h8+Ehem
- ZM776S7s3I5uPMJJJWDnajZgKqBfZBVL9Lsrc1bX5GEOzKU2wE5jUR64Uz6Gs5uQ1b9+yjAGrmh
- cTx6n9WDRN1UmskMxAns=
-X-Google-Smtp-Source: AGHT+IG+1qThTujopH3oS5hjb/iXtkKLkXTJkbpsk2OIfey5iVDRiHVoOptoHe/uqxJRTWnw9tTX3g==
-X-Received: by 2002:a05:600c:4fc1:b0:43b:cd0d:9466 with SMTP id
- 5b1f17b1804b1-43c601d9251mr72915935e9.9.1741613496945; 
- Mon, 10 Mar 2025 06:31:36 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e1476sm14922878f8f.70.2025.03.10.06.31.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Mar 2025 06:31:36 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-s390x@nongnu.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
- Eric Farman <farman@linux.ibm.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 3/3] qapi/machine: Make @dump-skeys command generic
-Date: Mon, 10 Mar 2025 14:31:18 +0100
-Message-ID: <20250310133118.3881-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250310133118.3881-1-philmd@linaro.org>
-References: <20250310133118.3881-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1trdEC-0005EE-Sf; Mon, 10 Mar 2025 09:31:32 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1trdEA-0007LS-O6; Mon, 10 Mar 2025 09:31:32 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3270C4E6030;
+ Mon, 10 Mar 2025 14:31:25 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id KYwbHkbacqMQ; Mon, 10 Mar 2025 14:31:23 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 416A24E602E; Mon, 10 Mar 2025 14:31:23 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3F35D74577C;
+ Mon, 10 Mar 2025 14:31:23 +0100 (CET)
+Date: Mon, 10 Mar 2025 14:31:23 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>, 
+ Joel Stanley <joel@jms.id.au>, Bernhard Beschow <shentey@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Andrey Smirnov <andrew.smirnov@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Guenter Roeck <linux@roeck-us.net>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-block@nongnu.org, 
+ Jamin Lin <jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH v5 03/14] hw/sd/sdhci: Redefine SDHCI_QUIRK_NO_BUSY_IRQ
+ bitmask as bit
+In-Reply-To: <20250310000620.70120-4-philmd@linaro.org>
+Message-ID: <e9dc5c0f-50ad-e066-a3b0-1d58e8f68062@eik.bme.hu>
+References: <20250310000620.70120-1-philmd@linaro.org>
+ <20250310000620.70120-4-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-935087992-1741613483=:72286"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,125 +76,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reduce misc-target.json by one target specific command.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- qapi/machine.json          | 18 ++++++++++++++++++
- qapi/misc-target.json      | 19 -------------------
- hw/core/machine-qmp-cmds.c | 13 +++++++++++++
- hw/s390x/s390-skeys.c      |  6 +-----
- 4 files changed, 32 insertions(+), 24 deletions(-)
+--3866299591-935087992-1741613483=:72286
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index a6b8795b09e..53680bf0998 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1898,3 +1898,21 @@
- { 'command': 'x-query-interrupt-controllers',
-   'returns': 'HumanReadableText',
-   'features': [ 'unstable' ]}
-+
-+##
-+# @dump-skeys:
-+#
-+# Dump guest's storage keys
-+#
-+# @filename: the path to the file to dump to
-+#
-+# Since: 2.5
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "dump-skeys",
-+#          "arguments": { "filename": "/tmp/skeys" } }
-+#     <- { "return": {} }
-+##
-+{ 'command': 'dump-skeys',
-+  'data': { 'filename': 'str' } }
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index 8d70bd24d8c..42e4a7417dc 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -274,25 +274,6 @@
-   'returns': 'SevAttestationReport',
-   'if': 'TARGET_I386' }
- 
--##
--# @dump-skeys:
--#
--# Dump guest's storage keys
--#
--# @filename: the path to the file to dump to
--#
--# Since: 2.5
--#
--# .. qmp-example::
--#
--#     -> { "execute": "dump-skeys",
--#          "arguments": { "filename": "/tmp/skeys" } }
--#     <- { "return": {} }
--##
--{ 'command': 'dump-skeys',
--  'data': { 'filename': 'str' },
--  'if': 'TARGET_S390X' }
--
- ##
- # @GICCapability:
- #
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 3130c5cd456..b9ed0963bb4 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -10,6 +10,7 @@
- #include "qemu/osdep.h"
- #include "hw/acpi/vmgenid.h"
- #include "hw/boards.h"
-+#include "hw/core/sysemu-cpu-ops.h"
- #include "hw/intc/intc.h"
- #include "hw/mem/memory-device.h"
- #include "qapi/error.h"
-@@ -406,3 +407,15 @@ GuidInfo *qmp_query_vm_generation_id(Error **errp)
-     info->guid = qemu_uuid_unparse_strdup(&vms->guid);
-     return info;
- }
-+
-+void qmp_dump_skeys(const char *filename, Error **errp)
-+{
-+    CPUState *cpu = first_cpu; /* FIXME */
-+
-+    if (!cpu->cc->sysemu_ops->qmp_dump_skeys) {
-+        error_setg(errp, "Storage keys information not available"
-+                         " for this architecture");
-+        return;
-+    }
-+    cpu->cc->sysemu_ops->qmp_dump_skeys(filename, errp);
-+}
-diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
-index 686c118ebcd..6bd608b5aa3 100644
---- a/hw/s390x/s390-skeys.c
-+++ b/hw/s390x/s390-skeys.c
-@@ -15,6 +15,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/s390x/storage-keys.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-commands-machine.h"
- #include "qapi/qapi-commands-misc-target.h"
- #include "qobject/qdict.h"
- #include "qemu/error-report.h"
-@@ -219,11 +220,6 @@ out:
-     fclose(f);
- }
- 
--void qmp_dump_skeys(const char *filename, Error **errp)
--{
--    s390_qmp_dump_skeys(filename, errp);
--}
--
- static bool qemu_s390_skeys_are_enabled(S390SKeysState *ss)
- {
-     QEMUS390SKeysState *skeys = QEMU_S390_SKEYS(ss);
--- 
-2.47.1
+On Mon, 10 Mar 2025, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> include/hw/sd/sdhci.h | 8 ++++----
+> hw/sd/sdhci.c         | 4 ++--
+> 2 files changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+> index 48247e9a20f..096d607f4b7 100644
+> --- a/include/hw/sd/sdhci.h
+> +++ b/include/hw/sd/sdhci.h
+> @@ -108,13 +108,13 @@ struct SDHCIState {
+> typedef struct SDHCIState SDHCIState;
+>
+> /*
+> - * Controller does not provide transfer-complete interrupt when not
+> - * busy.
+> - *
+>  * NOTE: This definition is taken out of Linux kernel and so the
+>  * original bit number is preserved
+>  */
+> -#define SDHCI_QUIRK_NO_BUSY_IRQ    BIT(14)
+> +enum {
+> +    /* Controller does not provide transfer-complete interrupt when not busy. */
+> +    SDHCI_QUIRK_NO_BUSY_IRQ                     = 14,
+> +};
 
+I think this is better as a define, then you don't have to remember to add 
+BIT() on usage and prevent this churn. I'd say drop this patch and adjust 
+the comment in next patch but if you're attached to it I don't mind that 
+much.
+
+Regards,
+BALATON Zoltan
+
+> #define TYPE_PCI_SDHCI "sdhci-pci"
+> DECLARE_INSTANCE_CHECKER(SDHCIState, PCI_SDHCI,
+> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+> index 149b748cbee..1dc942a0e06 100644
+> --- a/hw/sd/sdhci.c
+> +++ b/hw/sd/sdhci.c
+> @@ -366,7 +366,7 @@ static void sdhci_send_command(SDHCIState *s)
+>             }
+>         }
+>
+> -        if (!(s->quirks & SDHCI_QUIRK_NO_BUSY_IRQ) &&
+> +        if (!(s->quirks & BIT(SDHCI_QUIRK_NO_BUSY_IRQ)) &&
+>             (s->norintstsen & SDHC_NISEN_TRSCMP) &&
+>             (s->cmdreg & SDHC_CMD_RESPONSE) == SDHC_CMD_RSP_WITH_BUSY) {
+>             s->norintsts |= SDHC_NIS_TRSCMP;
+> @@ -1886,7 +1886,7 @@ static void imx_usdhc_init(Object *obj)
+>     SDHCIState *s = SYSBUS_SDHCI(obj);
+>
+>     s->io_ops = &usdhc_mmio_ops;
+> -    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
+> +    s->quirks = BIT(SDHCI_QUIRK_NO_BUSY_IRQ);
+> }
+>
+> /* --- qdev Samsung s3c --- */
+>
+--3866299591-935087992-1741613483=:72286--
 
