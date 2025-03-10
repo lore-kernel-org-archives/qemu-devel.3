@@ -4,85 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3216C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F773C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:32:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trcGM-0003rg-Ah; Mon, 10 Mar 2025 08:29:44 -0400
+	id 1trcIf-0005jj-Ge; Mon, 10 Mar 2025 08:32:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1trcGK-0003qr-MF
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:29:40 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1trcHx-0005ak-Go; Mon, 10 Mar 2025 08:31:21 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1trcGI-0006Dp-7m
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:29:40 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1741609759; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=JRMUIZ2P1dbud9nz772QplJXHgeT01b5jEZa7IkHniHKcnNiUuzZuhZk0bFIgZoVBuSeo8pRZn2lZv4ZGUJqKu8OGsZdpfCPigjP4WzojokG0S0X5CaX/QTr6j8yQwQwQTZmxQSUHNkd2yhhJLobnM0qfJAQkZQY6M/a4l3xzf4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1741609759;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=awIvpUzffD0A1Q8aN1RQ39QrgmgweCLMP3iaubfG3CM=; 
- b=S9T8BVYV19yrHzekjpYNRocPXkQgmFBU8YGk9PB+XTkmmpFpDCD3VTJipJIBsTP/z4IiP9AodQny0ypGKtONctp0CJo8NTVMgtL7uKJLbF+YTtXf3x6U0l81KQ4mXElYyS3IMwIVcNOfNKQBY2N2OFmSBkPho/kQuhrF7TLFAAA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1741609759; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=awIvpUzffD0A1Q8aN1RQ39QrgmgweCLMP3iaubfG3CM=;
- b=YsSZph3DGGfkNqGAOfdFqc5vxvCfkbHTn8rYkerbRR5zbbDiKg3rwkJuXxvM491+
- 7Js+BUfPEXRf5cb46DZsWZvJnO5zmwYyy6ktGOEjyzC2vwxbMtEYLet6BnOg0YKhAtj
- f+tzRgCM5piC8K7l71fn1KlDbRHgoV2bWnaajcO8=
-Received: by mx.zohomail.com with SMTPS id 1741609756471554.8248487674084;
- Mon, 10 Mar 2025 05:29:16 -0700 (PDT)
-Message-ID: <44613051-05e2-4811-aeb9-ad0affd24d74@collabora.com>
-Date: Mon, 10 Mar 2025 15:29:09 +0300
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1trcHt-0006ZN-UK; Mon, 10 Mar 2025 08:31:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=PC2rKpsiEjh3Imi2o4iS3KshXmSKtchm8Wk7PK3Ltuw=; b=LOJ/6Fv/1H6s3jZt
+ 8umbukbLuu/8MAvfCgZiG7uSis8niRCH8I2YwQdAvMN991ULazJtmidj56Kds8DcVUImzFahzmWyW
+ /3H378AgIXHFRIdDeWEuTYuLFdO8GsHKa7GOoWoUA+7c42cS+rgkZGiw+qwmRT/nBRS7sPyj0rYu/
+ /GBST2pyzA0PPdsvcaT1w8X19QDApCdxrEcRd2lKb5hjItGb5s4LU9iK+ofeuel4Yqlkzm2Eyo0Rm
+ GtlKAt/Sz4y0tuHI9aUhLgEpWHdwXd1k7yhAnH9jF1LtcVyxMm7Le9kv4/ea1wmkMYjlmXYu46QsX
+ WlfWR2GaJbmCO2Ic9A==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1trcHZ-003s4L-0F;
+ Mon, 10 Mar 2025 12:30:57 +0000
+Date: Mon, 10 Mar 2025 12:30:57 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-s390x@nongnu.org, devel@lists.libvirt.org,
+ Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>, qemu-arm <qemu-arm@nongnu.org>
+Subject: Re: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
+ deprecate
+Message-ID: <Z87bgdM4uJLR6RWS@gallifrey>
+References: <20240530074544.25444-1-philmd@linaro.org>
+ <cb4028fc-9596-47f3-9468-f8912dd48aed@redhat.com>
+ <Zl20rAjHLJlZkwxE@redhat.com>
+ <fda186da-2e31-42d6-8dd6-0ea3141a73e6@linaro.org>
+ <d74d3ff3-3830-4682-87e3-a42ed57068d9@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 10/10] docs/system: virtio-gpu: Document host/guest
- requirements
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250310120555.150077-1-dmitry.osipenko@collabora.com>
- <20250310120555.150077-11-dmitry.osipenko@collabora.com>
- <06751210-413b-499f-8ddf-05659179fdb7@daynix.com>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <06751210-413b-499f-8ddf-05659179fdb7@daynix.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+In-Reply-To: <d74d3ff3-3830-4682-87e3-a42ed57068d9@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 12:20:24 up 305 days, 23:34,  1 user,  load average: 0.03, 0.01, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,25 +86,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/25 15:25, Akihiko Odaki wrote:
-> On 2025/03/10 21:05, Dmitry Osipenko wrote:
->> From: Alex Benn√©e <alex.bennee@linaro.org>
->>
->> This attempts to tidy up the VirtIO GPU documentation to make the list
->> of requirements clearer. There are still a lot of moving parts and the
->> distros have some catching up to do before this is all handled
->> automatically.
->>
->> Signed-off-by: Alex Benn√©e <alex.bennee@linaro.org>
->> Cc: Sergio Lopez Pascual <slp@redhat.com>
->> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->> [dmitry.osipenko@collabora.com: Extended and corrected doc]
+* Thomas Huth (thuth@redhat.com) wrote:
+> On 09/03/2025 19.55, Pierrick Bouvier wrote:
+> > On 6/3/24 05:18, Daniel P. BerrangÈ wrote:
+> > > On Fri, May 31, 2024 at 06:47:45AM +0200, Thomas Huth wrote:
+> > > > On 30/05/2024 09.45, Philippe Mathieu-DaudÈ wrote:
+> > > > > We are trying to unify all qemu-system-FOO to a single binary.
+> > > > > In order to do that we need to remove QAPI target specific code.
+> > > > > 
+> > > > > @dump-skeys is only available on qemu-system-s390x. This series
+> > > > > rename it as @dump-s390-skey, making it available on other
+> > > > > binaries. We take care of backward compatibility via deprecation.
+> > > > > 
+> > > > > Philippe Mathieu-DaudÈ (4):
+> > > > > ††† hw/s390x: Introduce the @dump-s390-skeys QMP command
+> > > > > ††† hw/s390x: Introduce the 'dump_s390_skeys' HMP command
+> > > > > ††† hw/s390x: Deprecate the HMP 'dump_skeys' command
+> > > > > ††† hw/s390x: Deprecate the QMP @dump-skeys command
+> > > > 
+> > > > Why do we have to rename the command? Just for the sake of it? I think
+> > > > renaming HMP commands is maybe ok, but breaking the API in QMP is something
+> > > > you should consider twice.
+> > > 
+> > > That was going to be my question too. Seems like its possible to simply
+> > > stub out the existing command for other targets.
+> > > 
+> > > The renaming is just window dressing.
+> > > 
+> > 
+> > Working on single-binary topic means specificities from every qemu
+> > binary/ architecture has to be merged together. Despite appearing has a
+> > bad thing now, it's definitely a step forward for QEMU, and will allow
+> > to enable new usages.
+> > 
+> > The hard way is to trigger a deep refactoring, involving lengthy
+> > conversations where compromises have to be found ("let's implement this
+> > for all arch"). The pragmatic way is to eliminate obvious stuff.
+> > 
+> > This command is specific to an arch, so renaming is a good and obvious
+> > strategy. For the backward compatible anxious developer, another
+> > strategy would be to simply declare this command if the running target
+> > is s390x. But then, you create a precedent to do something that should
+> > not have existed in the first place.
+> > 
+> > +1 for the renaming, and hope that users of this command are able to
+> > change a line in their script to adapt to the new command.
 > 
-> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Sorry, but no: We've got plenty of other target specific commands...
+> rtc-reset-reinjection , query-sev, query-gic-capabilities, just to name some
+> few. So unless you provide a patch series to rename *all* of them and
+> deprecate the previous names, I don't see the point why changing just one
+> single s390x command is necessary.
 
-Thanks a lot for the quick review!
+I'd probably agree; mind you, it wouldn't be a bad convention to
+adopt in general.
+For HMP, since there's no need to have a fixed schema for a command,
+it would be fine to have a generic command for all architectures
+that have a similar idea even if their data is very different.
 
+Dave
+
+>  Thomas
+> 
 -- 
-Best regards,
-Dmitry
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
