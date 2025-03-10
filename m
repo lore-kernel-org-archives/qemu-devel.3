@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA14C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 18:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D8BC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 18:26:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trha1-0003nt-LD; Mon, 10 Mar 2025 14:10:21 -0400
+	id 1trhp4-0002wd-GR; Mon, 10 Mar 2025 14:25:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trhZs-0003ln-QT
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:10:18 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trhp2-0002ux-64
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:25:52 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trhZq-0001fX-36
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:10:12 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-223a7065ff8so10607255ad.0
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 11:10:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trhox-0004zr-3j
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:25:49 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-22435603572so46817415ad.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 11:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741630208; x=1742235008; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Zvg20SNZGKCL735dTa8NcfaW9bphEgyvvnbYDC+SG6Y=;
- b=xpwImGMASOwGYXu3hORB9ocTC4EjM3c52IqW8ukfxfALN5AysfOpUnkoCEigmMqoL6
- AxwENURJekgKQlD+aG/NqEMcLtTgs4ReWHAknJKFcZCNPMOazpKV0zMc9yDRzhYsmMFu
- aK2G9EPyRwHlEkGjP4p/n6+gPQjLYWhwOV06TJSN3PP4azQvi3UuKu1TwxdfXNnOHWru
- lZcp+yTqXEiC/iZOQIzw42ag8kK5dmNx2cNHq4FWn4zAKtGx17lNZArHix5ZF/Q9hBXA
- ujXW9PR3N9yylbbQe65nJrTk4sXx3nEtBEXXPf3G2t9fTQlq3/1y3txBmfpXYpyNm+i6
- M5sQ==
+ d=linaro.org; s=google; t=1741631145; x=1742235945; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KSKBNUoOMaSJMJbZ9WQrcFIJV7xoz2EWdS5LY2oMTCU=;
+ b=jS0GSv2867WsMlQZRfrjXZkd7gM56ZAnGp/HOOdhwLoNVUK/Q14+Tjvbsixbm/LsZx
+ hJHnMSwJ+1SGCIAD9iDm30IQDxapuX/aaLZuUxW3Lzkp+pslupVhUckJOMsRyNUw6FLP
+ Y+GzF+rf5vBskXW5lpboARx/4vFiw7HOOUzJGtM+bOAGT8YMhzu9ISpNnI72hLtYlj/i
+ RjA0JdqpLDTxyy3PRJXHCsRMMzmn/xqcfLZxBZbQCKWtCN7prtIAslrwoo/megsuqNVC
+ jEPou4CLNnGiOh0But+g1zDZHeuIo0FyrPo+gTKAUpW3PkqAHzMkl6P30iC50IGhLYeV
+ dnqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741630208; x=1742235008;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1741631145; x=1742235945;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zvg20SNZGKCL735dTa8NcfaW9bphEgyvvnbYDC+SG6Y=;
- b=qk53vw8eNZsW8VYyWC449Z8dGFPWccFCiF1OLbsJf4CyGzHf/n+zf5434kc7cUdQKl
- VRZn5JeMw3R7xdqkKp4ktPUCqeUWLc5p8W904TrP16cg6WjyigEVhKOGbTxzk9A/i12a
- veHtLh9beziap1OhoCMrOQFvcqc1tPYFEylr6fqv5tx908X6hDRDueljEAwTWZdNn6fn
- +A1F8sNjq/wZHe6L56ljOjxmMGhwLHrMJwvEPWFvbcK2rFK53O4MZp2qTfIzW2fbj3cD
- p5jgvnpmB8868MnL0LHcBlX1tJD0jrDRT8gN65DiDNKeIELz8D9HZlFsZuNAZVzghMBJ
- XRVw==
+ bh=KSKBNUoOMaSJMJbZ9WQrcFIJV7xoz2EWdS5LY2oMTCU=;
+ b=h8gS8kZB8J7FpiT6Ihat65oH1bc/5C5cziZSZGh8HvDlVNuGsBwXwJHum45p0qbCAu
+ BT2iWEV3TGepxa1p4y7qsoSkV0mD5KUdQX6WkFoBOnUisZFu4UtKvpTvEJGHcv+A/N0w
+ OS5OI1stgW7HZVsO8KlB34qGWhVjF9VLKQcS4CuYRBhURdTPqqd0O1A3o78DlgHz+/V+
+ iqb++zbNvay+QwxBXi9BsjTCXRFFNtvA+dp4Woj01lrivumabAgAB3TFhKrBl7CHbRwQ
+ 5p3k5WQ//kw4+oDtT1G2vvsFRTYwxw5i8T1ZGP7BzIxGGnXN1VK0Fl7t/Z7SLhJ/Gmo7
+ Q2Pw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfxqj+HQMLsMHPVJ2tpnlihR9KJWd9FTch+DLt/aRl13kIy48xdQQmDOSc6tlGivZFfIz8XsnhcO8O@nongnu.org
-X-Gm-Message-State: AOJu0YzUlI3jBw0xi8cEG+dgq85BxmEt81T6AybFZDoFvJVZLS12QnfO
- qW4eJTysX8ewJMnV1IWhBdY2Cx7zV13uTE55ujrI8ynjtVFF482bHY54DFwqhqN0Yqy4yicKd3o
- v
-X-Gm-Gg: ASbGncuAJVKkDs5HmRaaNPcDw4ABuVRrp3kkDp+25tsQ5vu3D8N0lpoqnQymCZszVqP
- j12W4ze/xbsR1qhcFPNaLnk+LopQsbB+CsD0afU10yZgWaXfEF2PTEFJxcsC/S5nbXW/B5s6r+R
- ItIjc360KocCkgWsqIWmD/iTT9v/zDNXll9U3IQCw3EEce57s/IsoTgJ/8QOXm7acQIGaTEp0Db
- QDWao+MO8MkgUf4/iu8yxbMStAYYoLfxNK1Nf/e800yGRHP8uVTLNP+VcZqDKXcHlU4CaGXQAdV
- NliaIh0pd7M0VeBZgbLNgWmM4LS0csp1fHqGfBQMIWmwP8PPNBp1h5ZJYFwMqoLFm/ujrXWD5SW
- XyxVFEcfaNum0lu5BL+c=
-X-Google-Smtp-Source: AGHT+IEl5foc1wOvSTzz8isV7osGSDHSNslvVEv47u+D6mpnxFcw7582xo64tn8jrLtUNfUOofPEfw==
-X-Received: by 2002:a17:903:189:b0:21f:564:80a4 with SMTP id
- d9443c01a7336-22428ab796fmr184366175ad.33.1741630208100; 
- Mon, 10 Mar 2025 11:10:08 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ AJvYcCWC978U2Vdq0vSlC5m4hixR42Bz+o0oUTIUdXlHgewHJ5rrC9W3zj/FjAueE8rCNn7NaYWeb2uafCZ8@nongnu.org
+X-Gm-Message-State: AOJu0YzUhq5FKKUa88heeQbnN5mzVJ2rTs1fKYB0djMjD8zkDgFXjR6v
+ figc1Svhn8ApgpDhi9udfc8OUDGRMW2wb8XTZ7jeuhPZ/bZOFpTPLx7xZwlJkaI=
+X-Gm-Gg: ASbGncvPIgZ5HD5bvJMm5LbaQT1zvrY1vM76pmJ7im0pRmHtDwJ7OO0jB+AL2xHzK22
+ VnwRh7wY57JnDkykvevZ64m1seRFkvvxFvXzDiXgAjKZKt12qF9nPkNXHpTocLOkPp5Euoe26RW
+ zKr/0wQgFrVFKTSHrmmiDG3nrlAuCZqtH0jdXfMumIUWCyFHcZig0lRIrjZVQzMBt43HnKGqmSG
+ 9kfh0qpDKLtkPteTXkfEDV338nPVY5Dv3pMTLr1zvlMMq8Z0b/QWuaF7To8IXBIWMw/o7lCqQQl
+ pDP3Z6toxozJsd9d/p8I9u6fnLrcmgnpH8UO1sOMAY0LMqkdOGXsZsmpCQ==
+X-Google-Smtp-Source: AGHT+IFLXONTXd00z7yIexpr1dJ5yz68pgcY1g64VUr5JpbmUzYrrAsoFI9nGxJQE1d7JX8bKB9Gyw==
+X-Received: by 2002:a17:902:e745:b0:223:fabd:4f99 with SMTP id
+ d9443c01a7336-22428886adcmr248964255ad.5.1741631144735; 
+ Mon, 10 Mar 2025 11:25:44 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-224109ddfc7sm81416715ad.22.2025.03.10.11.10.07
+ d2e1a72fcca58-736adabdd0esm7012805b3a.68.2025.03.10.11.25.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 11:10:07 -0700 (PDT)
-Message-ID: <0decdead-5d97-4623-8d3d-22bd8d7c8980@linaro.org>
-Date: Mon, 10 Mar 2025 11:10:06 -0700
+ Mon, 10 Mar 2025 11:25:44 -0700 (PDT)
+Message-ID: <ca1e9b24-74d6-4b5a-a8df-c62429fd0b3a@linaro.org>
+Date: Mon, 10 Mar 2025 11:25:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 15/16] system/memory: make compilation unit common
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
  <20250310045842.2650784-16-pierrick.bouvier@linaro.org>
  <76b4e445-0676-4982-a2c8-d273c49a9170@linaro.org>
  <2d631838-e8a5-48d9-8235-9a41ffc3381c@linaro.org>
  <76269a95-652a-4064-8f2f-6584b0677191@linaro.org>
  <b411c27f-3f38-4d22-97ff-fa36ae77fb6e@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <b411c27f-3f38-4d22-97ff-fa36ae77fb6e@linaro.org>
+ <0decdead-5d97-4623-8d3d-22bd8d7c8980@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <0decdead-5d97-4623-8d3d-22bd8d7c8980@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,54 +107,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/25 11:04, Pierrick Bouvier wrote:
-> On 3/10/25 10:58, Richard Henderson wrote:
->> On 3/10/25 10:47, Pierrick Bouvier wrote:
->>>> Maybe better as
->>>>
->>>>        MemOp mop = (target_words_bigendian() ? MO_BE : MO_LE) | size_memop(size);
->>>>        adjust_endianness(mr, &mrfd.data, size_memop(size), mop);
->>>>
->>>
->>> Do you think defining MO_TE as this expression is a good idea?
->>
->> There are not so many references to MO_TE outside target/ or accel/tcg/.
->>
->> Indeed, after this change, the only ones left are in hw/arm/armv7m.c,
->> which (because it's Arm) can be changed to MO_LE.
->>
-> 
-> I see a bit more than that (17 files):
-> hw/arm/armv7m.c
-> include/exec/memop.h
-> target/arm/tcg/helper-a64.c
-> target/arm/tcg/translate.c
-> target/hexagon/idef-parser/parser-helpers.c
-> target/hppa/translate.c
-> target/i386/tcg/emit.c.inc
-> target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> target/m68k/translate.c
-> target/mips/tcg/mips16e_translate.c.inc
-> target/riscv/translate.c
-> target/rx/translate.c
-> target/s390x/tcg/mem_helper.c
-> target/s390x/tcg/translate.c
-> target/s390x/tcg/translate_vx.c.inc
-> target/sparc/ldst_helper.c
-> target/sparc/translate.c
-> 
-> Plus more (22 files) who relies on:
-> MO_TE* variants (which relies on MO_TE transitively)
-
-As I said, *outside* target/ and accel/tcg/.
-
-> Thus my proposal to have a first change to MO_TE definition, and eventually do the change 
-> later.
-> 
-> What do you think?
-
-I don't think a change to MO_TE is necessary.
-
-
-r~
+T24gMy8xMC8yNSAxMToxMCwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDMvMTAv
+MjUgMTE6MDQsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBPbiAzLzEwLzI1IDEwOjU4
+LCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90ZToNCj4+PiBPbiAzLzEwLzI1IDEwOjQ3LCBQaWVy
+cmljayBCb3V2aWVyIHdyb3RlOg0KPj4+Pj4gTWF5YmUgYmV0dGVyIGFzDQo+Pj4+Pg0KPj4+
+Pj4gIMKgwqDCoMKgwqDCoCBNZW1PcCBtb3AgPSAodGFyZ2V0X3dvcmRzX2JpZ2VuZGlhbigp
+ID8gTU9fQkUgOiBNT19MRSkgfCBzaXplX21lbW9wKHNpemUpOw0KPj4+Pj4gIMKgwqDCoMKg
+wqDCoCBhZGp1c3RfZW5kaWFubmVzcyhtciwgJm1yZmQuZGF0YSwgc2l6ZV9tZW1vcChzaXpl
+KSwgbW9wKTsNCj4+Pj4+DQo+Pj4+DQo+Pj4+IERvIHlvdSB0aGluayBkZWZpbmluZyBNT19U
+RSBhcyB0aGlzIGV4cHJlc3Npb24gaXMgYSBnb29kIGlkZWE/DQo+Pj4NCj4+PiBUaGVyZSBh
+cmUgbm90IHNvIG1hbnkgcmVmZXJlbmNlcyB0byBNT19URSBvdXRzaWRlIHRhcmdldC8gb3Ig
+YWNjZWwvdGNnLy4NCj4+Pg0KPj4+IEluZGVlZCwgYWZ0ZXIgdGhpcyBjaGFuZ2UsIHRoZSBv
+bmx5IG9uZXMgbGVmdCBhcmUgaW4gaHcvYXJtL2FybXY3bS5jLA0KPj4+IHdoaWNoIChiZWNh
+dXNlIGl0J3MgQXJtKSBjYW4gYmUgY2hhbmdlZCB0byBNT19MRS4NCj4+Pg0KPj4NCj4+IEkg
+c2VlIGEgYml0IG1vcmUgdGhhbiB0aGF0ICgxNyBmaWxlcyk6DQo+PiBody9hcm0vYXJtdjdt
+LmMNCj4+IGluY2x1ZGUvZXhlYy9tZW1vcC5oDQo+PiB0YXJnZXQvYXJtL3RjZy9oZWxwZXIt
+YTY0LmMNCj4+IHRhcmdldC9hcm0vdGNnL3RyYW5zbGF0ZS5jDQo+PiB0YXJnZXQvaGV4YWdv
+bi9pZGVmLXBhcnNlci9wYXJzZXItaGVscGVycy5jDQo+PiB0YXJnZXQvaHBwYS90cmFuc2xh
+dGUuYw0KPj4gdGFyZ2V0L2kzODYvdGNnL2VtaXQuYy5pbmMNCj4+IHRhcmdldC9sb29uZ2Fy
+Y2gvdGNnL2luc25fdHJhbnMvdHJhbnNfdmVjLmMuaW5jDQo+PiB0YXJnZXQvbTY4ay90cmFu
+c2xhdGUuYw0KPj4gdGFyZ2V0L21pcHMvdGNnL21pcHMxNmVfdHJhbnNsYXRlLmMuaW5jDQo+
+PiB0YXJnZXQvcmlzY3YvdHJhbnNsYXRlLmMNCj4+IHRhcmdldC9yeC90cmFuc2xhdGUuYw0K
+Pj4gdGFyZ2V0L3MzOTB4L3RjZy9tZW1faGVscGVyLmMNCj4+IHRhcmdldC9zMzkweC90Y2cv
+dHJhbnNsYXRlLmMNCj4+IHRhcmdldC9zMzkweC90Y2cvdHJhbnNsYXRlX3Z4LmMuaW5jDQo+
+PiB0YXJnZXQvc3BhcmMvbGRzdF9oZWxwZXIuYw0KPj4gdGFyZ2V0L3NwYXJjL3RyYW5zbGF0
+ZS5jDQo+Pg0KPj4gUGx1cyBtb3JlICgyMiBmaWxlcykgd2hvIHJlbGllcyBvbjoNCj4+IE1P
+X1RFKiB2YXJpYW50cyAod2hpY2ggcmVsaWVzIG9uIE1PX1RFIHRyYW5zaXRpdmVseSkNCj4g
+DQo+IEFzIEkgc2FpZCwgKm91dHNpZGUqIHRhcmdldC8gYW5kIGFjY2VsL3RjZy8uDQo+IA0K
+DQpHb3QgaXQuDQpXZSBjYW4gcmVwbGFjZSB0aGUgaHcvYXJtIGVudHJ5IHdoZW4gdGFja2xp
+bmcgdGhpcyBwYXJ0IGxhdGVyLg0KDQo+PiBUaHVzIG15IHByb3Bvc2FsIHRvIGhhdmUgYSBm
+aXJzdCBjaGFuZ2UgdG8gTU9fVEUgZGVmaW5pdGlvbiwgYW5kIGV2ZW50dWFsbHkgZG8gdGhl
+IGNoYW5nZQ0KPj4gbGF0ZXIuDQo+Pg0KPj4gV2hhdCBkbyB5b3UgdGhpbms/DQo+IA0KPiBJ
+IGRvbid0IHRoaW5rIGEgY2hhbmdlIHRvIE1PX1RFIGlzIG5lY2Vzc2FyeS4NCj4gDQo+IA0K
+PiByfg0KDQo=
 
