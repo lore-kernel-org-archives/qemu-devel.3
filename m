@@ -4,93 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81799C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 218CDC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:39:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trh1m-0008MH-5B; Mon, 10 Mar 2025 13:34:58 -0400
+	id 1trh66-0005FF-Co; Mon, 10 Mar 2025 13:39:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1trh1b-0008Hy-23
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:34:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1trh1X-0004GC-PL
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:34:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741628078;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3heVs68im2e3T8kN2zQIbqXCs7edjrTXcHgwZGWeoRo=;
- b=Tw3m/KByTTKp+HJL6LkFeqKJvVmn0SYm0BuZzpNIvtrfQrKFHCglGOeSoLQxEhqa6d4osG
- LOPARKzKIdoyilAtMxF5TF7iJwKoFTeNoexSMvrjkcVN9xGDRWNNP/HqJaAIO6xh/L9kLM
- 8Tz8+txuCD172YrtgVJ+MNJa9znt4xc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-210-iaCM8EIoP0eJ0pMzHe6NVQ-1; Mon, 10 Mar 2025 13:34:37 -0400
-X-MC-Unique: iaCM8EIoP0eJ0pMzHe6NVQ-1
-X-Mimecast-MFC-AGG-ID: iaCM8EIoP0eJ0pMzHe6NVQ_1741628076
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-391425471d6so668112f8f.3
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 10:34:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1trh5m-00056E-50; Mon, 10 Mar 2025 13:39:06 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1trh5j-0004td-Cr; Mon, 10 Mar 2025 13:39:05 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3913cf69784so2604326f8f.1; 
+ Mon, 10 Mar 2025 10:39:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741628339; x=1742233139; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Xr2Y+MevTuIvJzsA1IaemgzQ4R1hz38lboCWSlBzF2A=;
+ b=Ax0dvtUo4tAeMjiRKWuKFtpDZVLxtkZV1L0fTHjYfzQw78o4gTkO+FCY4nRH1CkVMa
+ WQ4mVvZLCdNz6HST2d+ybEvyw9Ol7+qqI/0ubwxCnIJpXaZbCAR5mVIT+VYbCi9RIOsp
+ GIsFZSO87KkdgWByDJxj5wZM2kgT5lO7KqVM6dI8Fdirpg3MJa6ebPLw/R65dpdGrCXO
+ SwcnZ0dyG/tnZpLQxO63tTRVsvh0snQcQdgRFXfTFxeDonhiEEt73MCA2nTdBAedailp
+ h8QJ+WsZMAU8d7niYUqM5/dWKPIyWK8BMH6v9zruqRQAiJPlc6+uQPcIwrpHWUHXEtlM
+ 5/Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741628075; x=1742232875;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1741628339; x=1742233139;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3heVs68im2e3T8kN2zQIbqXCs7edjrTXcHgwZGWeoRo=;
- b=kgaT4mLeNjgkJAu57UF2djW0iv4IjEU4nhnmVviuOle+gRE/EcTC6HyQh01xfZl2xr
- 7l43daFMS3fgodcXaz2XzBN797phFaMkWwa7P2pLeZO98gnbDc4IhqFXjPpv7Ms7TRjn
- KVXC7jysB5v8oh+bXXvLYLjAEds8nAzAZfQTrIFW3KYfqoG/j8aqm/bPVZ2mP538WJml
- C5KOTBjLSXnOGxXYKpnG7zETGs9NAIeBya/jvcdSSII+KFI8zywZx4KmXk8fuMmPet9w
- VRdOhMPUZDJanY4iPrRYT1ZdS553Tga+W8pDg9ClnBdCazfMGNI7dHeMzfeC2KxzjKJb
- Z6Wg==
-X-Gm-Message-State: AOJu0YwxEbS5qraE0CwPXqVYSaAtvs2OBZWfazp/3lVeKkxNmsOmzEb+
- sTcFwvwbIzMmrgjghSbc7kagSDXRdk3Mv4EmpQCL0yaDwag6w8j2Tn+q9tZ1fBKmJ9OqYgQn8mU
- hvaTLe/YT+Fdvn14F+BfW78qAlCGnjEQ2CVX4wKyzMOiSXRPt07TjZUOkzvs6Qifaz4NGA1CQuU
- nE8XJ99Yp1T2Kgwi9Fn266JnG41SwppULE+TxjI8bS
-X-Gm-Gg: ASbGncs2Dw0QPDBq7/Sw7YmTepuGhwAaumCFlnXs+pBeh0tnI8zE3CfGK1ATVO8HVmu
- kypZrs6OjewjB6OF0seDH2Nv+LlJDD+31BuTCCxFgGg3B8TZ2RD+Qwf9rHKi8NVhCyf1/oMUsGP
- w=
-X-Received: by 2002:a05:6000:144d:b0:38f:3a89:fdb5 with SMTP id
- ffacd0b85a97d-39132d244fdmr9042189f8f.11.1741628075540; 
- Mon, 10 Mar 2025 10:34:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEEbZl1Sn5gXGywNo1kKAW/vSHmv4Mz/2Wuf/9W4IHmyj/A+GGWrkHw7JlFocBsxVMzjJT4QicQHoTxgDZxI8o=
-X-Received: by 2002:a05:6000:144d:b0:38f:3a89:fdb5 with SMTP id
- ffacd0b85a97d-39132d244fdmr9042174f8f.11.1741628075261; Mon, 10 Mar 2025
- 10:34:35 -0700 (PDT)
+ bh=Xr2Y+MevTuIvJzsA1IaemgzQ4R1hz38lboCWSlBzF2A=;
+ b=rgTYaWMLgdgc7WgN8nfLHrzUT/rkY0bSGDPu5Fni2Q1s8UsrV0lCYB0q/0pMMf0EP/
+ tvWVz9UnL8VMzAfm377DQ6xT/SwxPbj7hCpbgyv/NA00EZhSd/K4hemGH1sT0RdRz30j
+ 0lT1qY0wU/CVknk8DaaULJ2uCbObUPjVndAGGXyGveCImkhyP8RFJNsqQy7g9TUoY5dQ
+ 5AaGYkzrg6iOrml6a6H2XaXJ59GiIfzJqZTSlQbVqwYRndA8nJM8/evAboAoqlqVxEKQ
+ Gn0nuC/lqYieUpKhrjc1Eri7IaCz/fL7re+g1Jv8LLCvchbB7WoN0YUj3B85DwEgHshQ
+ VYIg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUwnGse9qlDZKuk99zOydgjiAARx6QEeP0Jw2oaXJDZydtQz1NkTr7pgEpW9vEP67UjuviFru0EtOA=@nongnu.org,
+ AJvYcCVJjn892WKLmo4A8G6H9tCtXBJerWPdaV4gI8oGe3db9MT4+Dcrl3eYSAvK4Ob3DbEpq9kHLNFoZQ==@nongnu.org,
+ AJvYcCVOpq99Qva/pfc7bXzAaREd3nYagGLQfQcQp71hNcI1bEVPCF9s6DGv8wHwxS5CDlHUhu1xluZYwUzTnA==@nongnu.org
+X-Gm-Message-State: AOJu0Yw4ZdLClAqD0YcGxH9msz9OrVwgjZHfqOclrIwWSU7MhmZzGk6W
+ kAGY80vdm6fMnRjqKRkAXsLuy/FNlsLkGPOVEy1bvZe1pa1fagIV
+X-Gm-Gg: ASbGncsMWDL29SJSf79QF0EiJZpfzMEYX5xVUBfQNXfCqsU/lzfADkEZ4ixexrCrfBA
+ J5WlO/wRzfEE0ngWVh3GNEAZN7DAh84FVlruGW6QukUrqnHxmC/EWktztnFJQF/GJFtxByacuVi
+ RvzCt/OGV4Om5p9vKIftdAiJ+sGo3SXbcn2X+f30nyNWXB86LOeNFidEvoNRmKALr0CPVDP9mhs
+ vMhF2ghBfgxB9QVkR3hhhsKRyAxuN+gaKuHYVp+DvZhf7IxAngmPtnAIu/R+icik1izX9GAWdhW
+ ppCqyisLQy8IzImH4OFQ7dCR0JNEu+3P06+XWjXCekuJNo74e/VLC5vO7CgJbdS1ZZw1H+ozSNz
+ TJlzvUNIOJN4Pm4qKGFRA1upbwjJkzCFXZt2lXJY/+bPcZghL8wBJ
+X-Google-Smtp-Source: AGHT+IHKfmMY1bv/Xrw/mkW/zMOk3DMhE1rtX0XPgAz7znAya9xYZJhsc+Q3w+LrUaudOl1NZ3ta4Q==
+X-Received: by 2002:a05:6000:18a3:b0:391:1473:2a08 with SMTP id
+ ffacd0b85a97d-39132d08b84mr12040374f8f.7.1741628339095; 
+ Mon, 10 Mar 2025 10:38:59 -0700 (PDT)
+Received: from ?IPv6:::1?
+ (dynamic-2a02-3100-2dbb-fc00-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
+ [2a02:3100:2dbb:fc00:69d2:56f6:a5af:50a8])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac27e72fbadsm413946366b.154.2025.03.10.10.38.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Mar 2025 10:38:58 -0700 (PDT)
+Date: Mon, 10 Mar 2025 17:38:57 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Guenter Roeck <linux@roeck-us.net>, BALATON Zoltan <balaton@eik.bme.hu>
+CC: qemu-devel@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
+ Joel Stanley <joel@jms.id.au>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org, Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
+ =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-block@nongnu.org,
+ Jamin Lin <jamin_lin@aspeedtech.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v5_14/14=5D_hw/sd/sdhci=3A_Rem?=
+ =?US-ASCII?Q?ove_unnecessary_=27endianness=27_property?=
+In-Reply-To: <e58acfaf-5255-4710-ad34-7331401ffa86@linaro.org>
+References: <20250310000620.70120-1-philmd@linaro.org>
+ <20250310000620.70120-15-philmd@linaro.org>
+ <d97b9dd5-e569-636d-8ee7-b1a48c402429@eik.bme.hu>
+ <0fa157de-ee4e-4b7f-b08e-bdf65e1840ad@linaro.org>
+ <6ecc3790-e5a1-4d02-aefa-c6d632936a6a@roeck-us.net>
+ <e58acfaf-5255-4710-ad34-7331401ffa86@linaro.org>
+Message-ID: <E66E09F3-0E28-44D7-972C-1E72D789E9E0@gmail.com>
 MIME-Version: 1.0
-References: <20250218165757.554178-1-pbonzini@redhat.com>
- <20250218165757.554178-3-pbonzini@redhat.com>
- <CAKmqyKMdUONoXD69m3RH1PeoLLtL8qT-eXweVh9WHEZM5Feufg@mail.gmail.com>
- <ab9b6720-cb48-4b8f-9059-2856c78b5577@redhat.com>
- <CAKmqyKP4Fe1FHyW=fpxa47SDq=Tz2-7rAcjTxv8W2L9+q5-oCQ@mail.gmail.com>
-In-Reply-To: <CAKmqyKP4Fe1FHyW=fpxa47SDq=Tz2-7rAcjTxv8W2L9+q5-oCQ@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 10 Mar 2025 18:34:23 +0100
-X-Gm-Features: AQ5f1JouT81kjyWhvBf4-5WXGxLAAe0fhWxQhB-36jybUzoDnaxpixNE919Om2Y
-Message-ID: <CABgObfbVWoCwM7W0Mej_4FyfDLHagtun-ieHPpynsfO=s9M4=A@mail.gmail.com>
-Subject: Re: [PATCH 2/7] target/riscv: env->misa_mxl is a constant
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,78 +120,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 7, 2025 at 1:45=E2=80=AFAM Alistair Francis <alistair23@gmail.c=
-om> wrote:
-> I'm not convinced that this is the thing that we should be checking
-> for. If someone can corrupt the migration data for an attack there are
-> better things to change then the MXL
 
-In principle you could have code that uses 2 << MXL to compute the
-size of a memcpy, or something like that... never say never. :)
 
-Do you prefer turning all the priv_ver, vext_ver, misa_mxl,
-misa_ext_mask fields into VMSTATE_UNUSED? That would also be okay.
-
-I would also add a check for misa_ext against misa_ext_mask and
-riscv_cpu_validate_set_extensions().
-
-Paolo
-
-> Alistair
->
-> >
-> > Paolo
-> >
-> > > Alistair
-> > >
-> > >> would have a snowball effect on, for example, the valid VM modes.
-> > >>
-> > >> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > >> ---
-> > >>   target/riscv/machine.c | 13 +++++++++++++
-> > >>   1 file changed, 13 insertions(+)
-> > >>
-> > >> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> > >> index d8445244ab2..c3d8e7c4005 100644
-> > >> --- a/target/riscv/machine.c
-> > >> +++ b/target/riscv/machine.c
-> > >> @@ -375,6 +375,18 @@ static const VMStateDescription vmstate_ssp =3D=
- {
-> > >>       }
-> > >>   };
-> > >>
-> > >> +static bool riscv_validate_misa_mxl(void *opaque, int version_id)
-> > >> +{
-> > >> +    RISCVCPU *cpu =3D RISCV_CPU(opaque);
-> > >> +    CPURISCVState *env =3D &cpu->env;
-> > >> +    RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(cpu);
-> > >> +    uint32_t misa_mxl_saved =3D env->misa_mxl;
-> > >> +
-> > >> +    /* Preserve misa_mxl even if the migration stream corrupted it =
- */
-> > >> +    env->misa_mxl =3D mcc->misa_mxl_max;
-> > >> +    return misa_mxl_saved =3D=3D mcc->misa_mxl_max;
-> > >> +}
-> > >> +
-> > >>   const VMStateDescription vmstate_riscv_cpu =3D {
-> > >>       .name =3D "cpu",
-> > >>       .version_id =3D 10,
-> > >> @@ -394,6 +406,7 @@ const VMStateDescription vmstate_riscv_cpu =3D {
-> > >>           VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
-> > >>           VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
-> > >>           VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
-> > >> +        VMSTATE_VALIDATE("MXL must match", riscv_validate_misa_mxl)=
+Am 10=2E M=C3=A4rz 2025 17:31:57 UTC schrieb "Philippe Mathieu-Daud=C3=A9"=
+ <philmd@linaro=2Eorg>:
+>On 10/3/25 16:56, Guenter Roeck wrote:
+>> On 3/10/25 08:27, Philippe Mathieu-Daud=C3=A9 wrote:
+>>> On 10/3/25 15:09, BALATON Zoltan wrote:
+>>>> On Mon, 10 Mar 2025, Philippe Mathieu-Daud=C3=A9 wrote:
+>>>>> The previous commit removed the single use of instance
+>>>>> setting the "endianness" property=2E
+>>>>>=20
+>>>>> Since classes can register their io_ops with correct
+>>>>> endianness, no need to support different ones=2E
+>>>>>=20
+>>>>> Remove the code related to SDHCIState::endianess field=2E
+>>>>>=20
+>>>>> Remove the now unused SDHCIState::io_ops field, since we
+>>>>> directly use the class one=2E
+>>>>>=20
+>>>>> Suggested-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>>>>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>>>>> ---
+>>>>> hw/sd/sdhci-internal=2Eh |=C2=A0 1 -
+>>>>> include/hw/sd/sdhci=2Eh=C2=A0 |=C2=A0 2 --
+>>>>> hw/sd/sdhci=2Ec=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 | 33 +++------------------------------
+>>>>> 3 files changed, 3 insertions(+), 33 deletions(-)
+>>>>>=20
+>>>>> diff --git a/hw/sd/sdhci-internal=2Eh b/hw/sd/sdhci-internal=2Eh
+>>>>> index d99a8493db2=2E=2Ee4da6c831d1 100644
+>>>>> --- a/hw/sd/sdhci-internal=2Eh
+>>>>> +++ b/hw/sd/sdhci-internal=2Eh
+>>>>> @@ -308,7 +308,6 @@ extern const VMStateDescription sdhci_vmstate;
+>>>>> #define SDHC_CAPAB_REG_DEFAULT 0x057834b4
+>>>>>=20
+>>>>> #define DEFINE_SDHCI_COMMON_PROPERTIES(_state) \
+>>>>> -=C2=A0=C2=A0=C2=A0 DEFINE_PROP_UINT8("endianness", _state, endianne=
+ss, DEVICE_LITTLE_ENDIAN), \
+>>>>> =C2=A0=C2=A0=C2=A0 DEFINE_PROP_UINT8("sd-spec-version", _state, sd_s=
+pec_version, 2), \
+>>>>> =C2=A0=C2=A0=C2=A0 DEFINE_PROP_UINT8("uhs", _state, uhs_mode, UHS_NO=
+T_SUPPORTED), \
+>>>>> =C2=A0=C2=A0=C2=A0 \
+>>>>> diff --git a/include/hw/sd/sdhci=2Eh b/include/hw/sd/sdhci=2Eh
+>>>>> index e8fced5eedc=2E=2E1016a5b5b77 100644
+>>>>> --- a/include/hw/sd/sdhci=2Eh
+>>>>> +++ b/include/hw/sd/sdhci=2Eh
+>>>>> @@ -54,7 +54,6 @@ struct SDHCIState {
+>>>>> =C2=A0=C2=A0=C2=A0 AddressSpace sysbus_dma_as;
+>>>>> =C2=A0=C2=A0=C2=A0 AddressSpace *dma_as;
+>>>>> =C2=A0=C2=A0=C2=A0 MemoryRegion *dma_mr;
+>>>>> -=C2=A0=C2=A0=C2=A0 const MemoryRegionOps *io_ops;
+>>>>>=20
+>>>>> =C2=A0=C2=A0=C2=A0 QEMUTimer *insert_timer;=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 /* timer for 'changing' sd card=2E */
+>>>>> =C2=A0=C2=A0=C2=A0 QEMUTimer *transfer_timer;
+>>>>> @@ -105,7 +104,6 @@ struct SDHCIState {
+>>>>>=20
+>>>>> =C2=A0=C2=A0=C2=A0 /* Configurable properties */
+>>>>> =C2=A0=C2=A0=C2=A0 uint32_t quirks;
+>>>>> -=C2=A0=C2=A0=C2=A0 uint8_t endianness;
+>>>>> =C2=A0=C2=A0=C2=A0 uint8_t sd_spec_version;
+>>>>> =C2=A0=C2=A0=C2=A0 uint8_t uhs_mode;
+>>>>> };
+>>>>> diff --git a/hw/sd/sdhci=2Ec b/hw/sd/sdhci=2Ec
+>>>>> index 47e4bd1a610=2E=2Ecbb9f4ae8c0 100644
+>>>>> --- a/hw/sd/sdhci=2Ec
+>>>>> +++ b/hw/sd/sdhci=2Ec
+>>>>> @@ -1391,17 +1391,6 @@ sdhci_write(void *opaque, hwaddr offset, uint=
+64_t val, unsigned size)
+>>>>> }
+>>>>>=20
+>>>>> static const MemoryRegionOps sdhci_mmio_le_ops =3D {
+>>>>> -=C2=A0=C2=A0=C2=A0 =2Eread =3D sdhci_read,
+>>>>> -=C2=A0=C2=A0=C2=A0 =2Ewrite =3D sdhci_write,
+>>>>> -=C2=A0=C2=A0=C2=A0 =2Evalid =3D {
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =2Emin_access_size =3D 1=
 ,
-> > >>           VMSTATE_UINT32(env.misa_ext, RISCVCPU),
-> > >>           VMSTATE_UNUSED(4),
-> > >>           VMSTATE_UINT32(env.misa_ext_mask, RISCVCPU),
-> > >> --
-> > >> 2.48.1
-> > >>
-> > >>
-> > >
-> > >
-> >
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =2Emax_access_size =3D 4=
+,
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =2Eunaligned =3D false
+>>>>> -=C2=A0=C2=A0=C2=A0 },
+>>>>> -=C2=A0=C2=A0=C2=A0 =2Eendianness =3D DEVICE_LITTLE_ENDIAN,
+>>>>> -};
+>>>>> -
+>>>>> -static const MemoryRegionOps sdhci_mmio_be_ops =3D {
+>>>>> =C2=A0=C2=A0=C2=A0 =2Eread =3D sdhci_read,
+>>>>> =C2=A0=C2=A0=C2=A0 =2Ewrite =3D sdhci_write,
+>>>>> =C2=A0=C2=A0=C2=A0 =2Eimpl =3D {
+>>>>> @@ -1413,7 +1402,7 @@ static const MemoryRegionOps sdhci_mmio_be_ops=
+ =3D {
+>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =2Emax_access_size =3D 4,
+>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =2Eunaligned =3D false
+>>>>> =C2=A0=C2=A0=C2=A0 },
+>>>>> -=C2=A0=C2=A0=C2=A0 =2Eendianness =3D DEVICE_BIG_ENDIAN,
+>>>>> +=C2=A0=C2=A0=C2=A0 =2Eendianness =3D DEVICE_LITTLE_ENDIAN,
+>>>>> };
+>>>>>=20
+>>>>> static void sdhci_init_readonly_registers(SDHCIState *s, Error **err=
+p)
+>>>>> @@ -1467,23 +1456,6 @@ void sdhci_common_realize(SDHCIState *s, Erro=
+r **errp)
+>>>>> =C2=A0=C2=A0=C2=A0 SDHCIClass *sc =3D s->sc;
+>>>>> =C2=A0=C2=A0=C2=A0 const char *class_name =3D object_get_typename(OB=
+JECT(s));
+>>>>>=20
+>>>>> -=C2=A0=C2=A0=C2=A0 s->io_ops =3D sc->io_ops ?: &sdhci_mmio_le_ops;
+>>>>> -=C2=A0=C2=A0=C2=A0 switch (s->endianness) {
+>>>>> -=C2=A0=C2=A0=C2=A0 case DEVICE_LITTLE_ENDIAN:
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* s->io_ops is little e=
+ndian by default */
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+>>>>> -=C2=A0=C2=A0=C2=A0 case DEVICE_BIG_ENDIAN:
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (s->io_ops !=3D &sdhc=
+i_mmio_le_ops) {
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+error_setg(errp, "SD controller doesn't support big endianness");
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+return;
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->io_ops =3D &sdhci_mmi=
+o_be_ops;
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+>>>>> -=C2=A0=C2=A0=C2=A0 default:
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp, "Incorr=
+ect endianness");
+>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+>>>>> -=C2=A0=C2=A0=C2=A0 }
+>>>>> -
+>>>>> =C2=A0=C2=A0=C2=A0 sdhci_init_readonly_registers(s, errp);
+>>>>> =C2=A0=C2=A0=C2=A0 if (*errp) {
+>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+>>>>> @@ -1493,7 +1465,7 @@ void sdhci_common_realize(SDHCIState *s, Error=
+ **errp)
+>>>>> =C2=A0=C2=A0=C2=A0 s->fifo_buffer =3D g_malloc0(s->buf_maxsz);
+>>>>>=20
+>>>>> =C2=A0=C2=A0=C2=A0 assert(sc->iomem_size >=3D SDHC_REGISTERS_MAP_SIZ=
+E);
+>>>>> -=C2=A0=C2=A0=C2=A0 memory_region_init_io(&s->iomem, OBJECT(s), s->i=
+o_ops, s, class_name,
+>>>>> +=C2=A0=C2=A0=C2=A0 memory_region_init_io(&s->iomem, OBJECT(s), sc->=
+io_ops, s, class_name,
+>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 sc->iomem_size);
+>>>>> }
+>>>>>=20
+>>>>> @@ -1578,6 +1550,7 @@ void sdhci_common_class_init(ObjectClass *klas=
+s, const void *data)
+>>>>> =C2=A0=C2=A0=C2=A0 dc->vmsd =3D &sdhci_vmstate;
+>>>>> =C2=A0=C2=A0=C2=A0 device_class_set_legacy_reset(dc, sdhci_poweron_r=
+eset);
+>>>>>=20
+>>>>> +=C2=A0=C2=A0=C2=A0 sc->io_ops =3D &sdhci_mmio_le_ops;
+>>>>=20
+>>>> You call common_class_init in subclass class_inits last so this would=
+ overwrite what subclass has set, doesn't it? I think you either have to ch=
+ange order in subclass class_init methods or not set this here=2E
+>>>=20
+>>> Oops=2E=2E=2E I'm surprised tests passed=2E Do we have coverage for sd=
+hci on
+>>> e500 machines? Or are we only testing them via virtio PCI block storag=
+e?
+>>=20
+>> Not sure if that is what you are asking, but I have been testing it wit=
+h
+>> sdhci-pci for a long time (not this series, though)=2E
 >
+>I'm referring to the Freescale eSDHC controller of PPC e500 machines
+>(see previous patch)=2E
 
+I think testing SDHCI is generally difficult since the images need to be r=
+esized to a power of two=2E Any idea how to do this with the new functional=
+ tests?
 
