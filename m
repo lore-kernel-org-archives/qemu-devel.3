@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF34C28B28
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 00:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF65BC28B2E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 00:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trQfR-0001vK-3F; Sun, 09 Mar 2025 20:06:49 -0400
+	id 1trQhU-0003a7-Dq; Sun, 09 Mar 2025 20:08:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQfP-0001ud-Uv
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:06:47 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQgB-0002NE-8k
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:07:42 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQfO-0007L6-0m
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:06:47 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43bcc85ba13so28999095e9.0
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 17:06:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQg9-0007Vf-La
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:07:35 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43cfa7e7f54so1254185e9.1
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 17:07:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741565204; x=1742170004; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741565251; x=1742170051; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dQS2FpqOs5TSI58lEsf5ODh6U5Cq4SEzmJ94sUa1jSg=;
- b=hDtuaXB+7emPGfX07HSZgKmQPenHFt1Ikhz69OYJPeMkJobeRLLTq+Ypf6ntonqor/
- q86+VPYQG0lAKu12tQN4/i9fNN6XWdrslzIszwIj8Pl4WPKCBwUXHDXaRSjfDIn2qkul
- X67GUpq/VLP8Dp0EzkRIZ3AT6BaH8/2xMXw56cNUvEjs4kYGJPZMAtcbgNdUMs6869Lm
- z3ZW9MylhPNjOxqTRK+J3/YWJkSZCvuIeKIiTP4ZKAKoNL75Ds0yYdsTG1iUlt7jRwYO
- 24DK4+xSfuHXr/gCssgbhzYfjjWOUuakbaGkcdzKoUAWwDVnMHfrlQKYZI5MGJLbht0z
- hFXQ==
+ bh=G5cfsxYC6Xjld/r/JqOEermJubm5JBpQoqIXWekO6mg=;
+ b=nneatwbfbwVp29rYFzmzKnhJyWbGVwcoEEkNxxnkcVkkC5N8N4QY6UHC3vNBZsaeG8
+ ON23bCJpsWrbF65stmMmQSqRmkADUX35HoCKHgWcanB0DIpk2qhcFaxTNZM9SJKoHKf6
+ 8GxBwGA5qxX3PHTMVzSuyRsoY26Xxm9la5TveVz0TvZcQS8Qt4Ip+QYqvARc6staAjCt
+ naofQY0BqQNEFlTcV9rv46gp05SmPOPFFhVrcIUXKl8+bVRRRGexXol+iP8zkgwUiOTS
+ llXoCIMnD58QPY+I+6+wxwfmtsFgK4TworV2A23XK7FEuJRLzyG4hV9TJLN6Bt7qOPdw
+ 2F1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741565204; x=1742170004;
+ d=1e100.net; s=20230601; t=1741565251; x=1742170051;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dQS2FpqOs5TSI58lEsf5ODh6U5Cq4SEzmJ94sUa1jSg=;
- b=UZz1SMnG1owA2ck+aELL2/eABq6LoaxA3ra2c3DBGlEhM5XXVcpaCh3mK63f0gmkun
- Kong9JAKqgJISuAA9VhlJ0EZTK092gYEq4zDGbChu7/41Gsxdd+q1O92ZJWE3btsndWD
- S7S1n7sZ+oU/BWozmdP97/60wy7kdpaKkMmJK+9jLRh7Ca6eVYiC97vmHOwtA4K5oca8
- v9MPT/5ga3r4okRnSY3nazN8rdFekzhzIOcknZ3wsATrclm8JQWQD7fcQvJBVkyltAu4
- iEIa4ADJLP7nyFsYSQ9we2vcDMCrBGPx4FiMYHZ2DxoZw+Jb3Z3rGmGcLD6ue4ymVFLh
- sdSw==
+ bh=G5cfsxYC6Xjld/r/JqOEermJubm5JBpQoqIXWekO6mg=;
+ b=NVQM80XAioX2HhFyPXhY5UCNQKzhky4pfDADla9SPLSzLfiWq7bbKmBEInuzCyQ3pN
+ bhv4jMH7T/JrFJE0pkUUYDc9SvsWOOBWT9TxtBkpJgvuKDcnftlSnKx2mGeS4CwSBozK
+ EpCCyY814sLLr2Yuf8XyEqbXPpBJwErkqsoLPac3Yi/YMFRSdhVjdNcah9lKbvGsyydS
+ anrLneLZkqMIG11m0TKB9xjZcdW4r+BW6gatB6QMq/UJ8ymxDLe5Tb2kwVuqA4Ne5aI8
+ LRJGpwArdFD0PixOJKBvDf7pwWyO8gYi5k0/i6TUEzzXp25FALGQYT1Sup4yYNSaRLpK
+ kk2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwM9WqMp8GhSOUQ5CF0CIsdQ2YYytkt7eiNIVbpton9qwTfIuLC6PhNpG1LpFTvPOaSgG2hyvpXC/6@nongnu.org
-X-Gm-Message-State: AOJu0Yy8Xfro3JzL3V6+8XNcyP29O3vt8Uw1VqejP9jw6S1EsnZHuplP
- tUjMgUfFufaCWut5Wfhjv9fnvD1+gdOaEWVsRs8+OsFSxdPg7QXImUcJmHug7uA4CwdBbUTOV/5
- asqQ=
-X-Gm-Gg: ASbGnct7RcJ7Emr90/AC7Ik6L+HXHku7KQlMOn5nnSTpG2cAXBqvqoD7eEYS8QhCaTp
- Ilja6mPktgsYXbRjXqeqlxcQNGZz16T/gkKSwje1nEiZb3ckfNg6rYL23zizsTlYG017Dw1+W7b
- Q/mZWjp2sLiMQ7uFXrQr4M5r0au6nL22NfWDO4LgsWHDPoX14CAPZrrCmOEwA7x5Mn0vturEAd7
- vySGQzRqFpiW57TWLLqGQObf52n4CwSPk4v9EFquZQtKv+0qLLGGstfufebEo9yaFa1I008a16t
- AZOi42N7j512YPQeAe+RITctpwb5ZlTP2uxW/oPvZoEtPYAixqt3sj2/ywikUy4v1syoHJGouvp
- mUX1wTgwcVr0frxCHzwcIU2pppEFndw==
-X-Google-Smtp-Source: AGHT+IFr14s6HjqqrWZZrFGpCXSJytRcV6kVf92IRNM60n81pYTKgxi5dkVIFwWd6bTQjQFryczrGw==
-X-Received: by 2002:a05:600c:5129:b0:43c:f689:88ce with SMTP id
- 5b1f17b1804b1-43cf6898affmr12074285e9.20.1741565204360; 
- Sun, 09 Mar 2025 17:06:44 -0700 (PDT)
+ AJvYcCWJrOMYmGPDjdGP+gKUf9hNFQg4lNsDeKVsVsKewrSw59mw2ZNO3iZdQ6CotuuWLr1uMKc+iL/XENyC@nongnu.org
+X-Gm-Message-State: AOJu0YwxEyhS6rBNqeUqkJSH2abq0DmA/YuJJZ+X8CGC9JWmllZc9N7T
+ fPwr1efhtu84jhqVCxTrWUQUcMsO1Cv7+PPZ/WXTXaQYUATt4ckHaMPf+qsZMhE=
+X-Gm-Gg: ASbGncv3BlDgYr/JbTNcWcRQ8hgV/U0GPTjBCXGKL61Vxwx8OUXwDWK4323p29fZMSc
+ 9s1ys+/mfZ5D/GqDikgl0CllLwPCXWHesZLg+4W0Y+A+3HgKzcUprqycOTplXedEgDN79zoNJB2
+ mlSW6gk2tTnEvlSOPOGQDatHkC7pOtoBd+BRLF1Qzw1tzZSIcy6XLv6aGkv0fV+Jwpi2Aq9O1Y8
+ 2cKbG2nHJ6cbj7rGvi4RdQJoYH0m6yzIPeWR1WbPhfY+8SK7zNBFCXBXM6d7LSOBctKYXB1CR3E
+ Sll9Gnkrcihzf+JsYuUOrdJdeKQQHBNAJn6sOkqqMjOqgi3Plv62cxcysLG0G+X6UYBqWpsSYxv
+ pJTJvMilBVShFT4IdF3g=
+X-Google-Smtp-Source: AGHT+IEhh9NwzECdI4Tc9MSV2/EcCXRTLQg8iKhWY8DRcCUsXG/E2Q6uVro6pRDyFUpCZzEIGYjSNA==
+X-Received: by 2002:a05:600c:1d01:b0:439:8e95:796a with SMTP id
+ 5b1f17b1804b1-43ce4dd80fdmr46685805e9.13.1741565251461; 
+ Sun, 09 Mar 2025 17:07:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43bdd8db6c7sm127555375e9.22.2025.03.09.17.06.43
+ ffacd0b85a97d-3912c0e222dsm13208524f8f.72.2025.03.09.17.07.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 09 Mar 2025 17:06:43 -0700 (PDT)
+ Sun, 09 Mar 2025 17:07:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: BALATON Zoltan <balaton@eik.bme.hu>,
 	qemu-devel@nongnu.org
@@ -81,18 +80,17 @@ Cc: Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-block@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: [PATCH v5 04/14] hw/sd/sdhci: Include 'wp-inverted' property in quirk
- bitmask
-Date: Mon, 10 Mar 2025 01:06:10 +0100
-Message-ID: <20250310000620.70120-5-philmd@linaro.org>
+Subject: [PATCH v5 13/14] hw/ppc/e500: Replace generic SDHCI by Freescale eSDHC
+Date: Mon, 10 Mar 2025 01:06:19 +0100
+Message-ID: <20250310000620.70120-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250310000620.70120-1-philmd@linaro.org>
 References: <20250310000620.70120-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,99 +113,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Import Linux's SDHCI_QUIRK_INVERTED_WRITE_PROTECT quirk definition.
+Zoltan reported some U-Boot versions seem to want registers
+to be initialized correctly before expecting interrupts.
 
-Replace 'wp_inverted' boolean by a bit in quirk bitmask.
+Now than we have a proper Freescale eSDHC implementation,
+use it.
 
+Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/sd/sdhci.h | 16 ++++++++++------
- hw/arm/aspeed.c       |  2 +-
- hw/sd/sdhci.c         |  6 +++---
- 3 files changed, 14 insertions(+), 10 deletions(-)
+ hw/ppc/e500.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-index 096d607f4b7..d2e4f0f0050 100644
---- a/include/hw/sd/sdhci.h
-+++ b/include/hw/sd/sdhci.h
-@@ -30,7 +30,14 @@
- #include "hw/sd/sd.h"
- #include "qom/object.h"
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index fe8b9f79621..2de7d94df9c 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -49,7 +49,6 @@
+ #include "hw/i2c/i2c.h"
+ #include "hw/irq.h"
+ #include "hw/sd/sdhci.h"
+-#include "hw/misc/unimp.h"
  
--/* SD/MMC host controller state */
-+/*
-+ * SD/MMC host controller state
-+ *
-+ * QEMU interface:
-+ *  + QOM property "wp-inverted-quirk" inverts the Write Protect pin
-+ *    polarity (by default the polarity is active low for detecting SD
-+ *    card to be protected).
-+ */
- struct SDHCIState {
-     /*< private >*/
-     union {
-@@ -99,11 +106,6 @@ struct SDHCIState {
-     uint8_t endianness;
-     uint8_t sd_spec_version;
-     uint8_t uhs_mode;
--    /*
--     * Write Protect pin default active low for detecting SD card
--     * to be protected. Set wp_inverted to invert the signal.
--     */
--    bool wp_inverted;
- };
- typedef struct SDHCIState SDHCIState;
+ #define EPAPR_MAGIC                (0x45504150)
+ #define DTC_LOAD_PAD               0x1800000
+@@ -1027,22 +1026,13 @@ void ppce500_init(MachineState *machine)
  
-@@ -114,6 +116,8 @@ typedef struct SDHCIState SDHCIState;
- enum {
-     /* Controller does not provide transfer-complete interrupt when not busy. */
-     SDHCI_QUIRK_NO_BUSY_IRQ                     = 14,
-+    /* Controller reports inverted write-protect state */
-+    SDHCI_QUIRK_INVERTED_WRITE_PROTECT          = 16,
- };
- 
- #define TYPE_PCI_SDHCI "sdhci-pci"
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 98bf071139b..daee2376d50 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -412,7 +412,7 @@ static void aspeed_machine_init(MachineState *machine)
-     if (amc->sdhci_wp_inverted) {
-         for (i = 0; i < bmc->soc->sdhci.num_slots; i++) {
-             object_property_set_bool(OBJECT(&bmc->soc->sdhci.slots[i]),
--                                     "wp-inverted", true, &error_abort);
-+                                     "wp-inverted-quirk", true, &error_abort);
-         }
-     }
-     if (machine->kernel_filename) {
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 1dc942a0e06..19c600d5bfc 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -274,7 +274,7 @@ static void sdhci_set_readonly(DeviceState *dev, bool level)
- {
-     SDHCIState *s = (SDHCIState *)dev;
- 
--    if (s->wp_inverted) {
-+    if (s->quirks & BIT(SDHCI_QUIRK_INVERTED_WRITE_PROTECT)) {
-         level = !level;
-     }
- 
-@@ -1555,12 +1555,12 @@ void sdhci_common_class_init(ObjectClass *klass, const void *data)
- 
- static const Property sdhci_sysbus_properties[] = {
-     DEFINE_SDHCI_COMMON_PROPERTIES(SDHCIState),
-+    DEFINE_PROP_BIT("wp-inverted-quirk", SDHCIState, quirks,
-+                    SDHCI_QUIRK_INVERTED_WRITE_PROTECT, false),
-     DEFINE_PROP_BOOL("pending-insert-quirk", SDHCIState, pending_insert_quirk,
-                      false),
-     DEFINE_PROP_LINK("dma", SDHCIState,
-                      dma_mr, TYPE_MEMORY_REGION, MemoryRegion *),
--    DEFINE_PROP_BOOL("wp-inverted", SDHCIState,
--                     wp_inverted, false),
- };
- 
- static void sdhci_sysbus_init(Object *obj)
+     /* eSDHC */
+     if (pmc->has_esdhc) {
+-        dev = qdev_new(TYPE_UNIMPLEMENTED_DEVICE);
+-        qdev_prop_set_string(dev, "name", "esdhc");
+-        qdev_prop_set_uint64(dev, "size", MPC85XX_ESDHC_REGS_SIZE);
+-        s = SYS_BUS_DEVICE(dev);
+-        sysbus_realize_and_unref(s, &error_fatal);
+-        memory_region_add_subregion(ccsr_addr_space, MPC85XX_ESDHC_REGS_OFFSET,
+-                                    sysbus_mmio_get_region(s, 0));
+-
+         /*
+          * Compatible with:
+          * - SD Host Controller Specification Version 2.0 Part A2
+          * (See MPC8569E Reference Manual)
+          */
+-        dev = qdev_new(TYPE_SYSBUS_SDHCI);
++        dev = qdev_new(TYPE_FSL_ESDHC);
+         qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+-        qdev_prop_set_uint8(dev, "endianness", DEVICE_BIG_ENDIAN);
+         s = SYS_BUS_DEVICE(dev);
+         sysbus_realize_and_unref(s, &error_fatal);
+         sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, MPC85XX_ESDHC_IRQ));
 -- 
 2.47.1
 
