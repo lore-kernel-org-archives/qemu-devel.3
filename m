@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77073C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EED28C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:12:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trgfJ-0003e8-4e; Mon, 10 Mar 2025 13:11:45 -0400
+	id 1trgfL-0003iP-QA; Mon, 10 Mar 2025 13:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1trgep-0003L8-W8
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:11:16 -0400
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1trges-0003MW-Tf
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:11:20 -0400
 Received: from us-smtp-delivery-44.mimecast.com ([205.139.111.44])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1trgen-00016O-3x
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:11:15 -0400
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1trgeq-00017A-Lq
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:11:18 -0400
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-LB6jWpV7M6ySJc6IZ8N9Xg-1; Mon,
- 10 Mar 2025 13:11:08 -0400
-X-MC-Unique: LB6jWpV7M6ySJc6IZ8N9Xg-1
-X-Mimecast-MFC-AGG-ID: LB6jWpV7M6ySJc6IZ8N9Xg_1741626667
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-576-EUluAfaIM4aII6IHLH7jig-1; Mon,
+ 10 Mar 2025 13:11:12 -0400
+X-MC-Unique: EUluAfaIM4aII6IHLH7jig-1
+X-Mimecast-MFC-AGG-ID: EUluAfaIM4aII6IHLH7jig_1741626671
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B104180AF55; Mon, 10 Mar 2025 17:11:06 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22A36180025B; Mon, 10 Mar 2025 17:11:10 +0000 (UTC)
 Received: from bahia.redhat.com (unknown [10.22.64.233])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 481BE1801752; Mon, 10 Mar 2025 17:11:04 +0000 (UTC)
+ id BF66918001DE; Mon, 10 Mar 2025 17:11:08 +0000 (UTC)
 From: Greg Kurz <groug@kaod.org>
 To: qemu-devel@nongnu.org
 Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>
-Subject: [PATCH 1/4] 9pfs: local : Introduce local_fid_fd() helper
-Date: Mon, 10 Mar 2025 18:10:58 +0100
-Message-ID: <20250310171101.138380-2-groug@kaod.org>
+Subject: [PATCH 3/4] 9pfs: Introduce ftruncate file op
+Date: Mon, 10 Mar 2025 18:11:00 +0100
+Message-ID: <20250310171101.138380-4-groug@kaod.org>
 In-Reply-To: <20250310171101.138380-1-groug@kaod.org>
 References: <20250310171101.138380-1-groug@kaod.org>
 MIME-Version: 1.0
@@ -69,60 +69,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor out duplicated code to a single helper. More users to come.
+Add an ftruncate operation to the fs driver and use if when a fid has
+a valid file descriptor. This is required to support more cases where
+the client wants to do an action on an unlinked file which it still
+has an open file decriptor for.
+
+Only 9P2000.L was considered.
 
 Signed-off-by: Greg Kurz <groug@kaod.org>
 ---
- hw/9pfs/9p-local.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ fsdev/file-op-9p.h |  2 ++
+ hw/9pfs/9p-local.c |  9 +++++++++
+ hw/9pfs/9p-synth.c |  8 ++++++++
+ hw/9pfs/9p.c       |  6 +++++-
+ hw/9pfs/cofs.c     | 18 ++++++++++++++++++
+ hw/9pfs/coth.h     |  2 ++
+ 6 files changed, 44 insertions(+), 1 deletion(-)
 
+diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+index 39fee185f4ce..40a40f7d8af8 100644
+--- a/fsdev/file-op-9p.h
++++ b/fsdev/file-op-9p.h
+@@ -165,6 +165,8 @@ struct FileOperations {
+                     V9fsPath *newdir, const char *new_name);
+     int (*unlinkat)(FsContext *ctx, V9fsPath *dir, const char *name, int flags);
+     bool (*has_valid_handle)(int fid_type, V9fsFidOpenState *fs);
++    int (*ftruncate)(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
++                     off_t size);
+ };
+ 
+ #endif
 diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 928523afcc6c..c4366c867988 100644
+index 03e5304ef888..fa763b0662f5 100644
 --- a/hw/9pfs/9p-local.c
 +++ b/hw/9pfs/9p-local.c
-@@ -766,10 +766,9 @@ out:
+@@ -1046,6 +1046,14 @@ static int local_truncate(FsContext *ctx, V9fsPath *fs_path, off_t size)
+     return ret;
+ }
+ 
++static int local_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
++                           off_t size)
++{
++    int fd = local_fid_fd(fid_type, fs);
++
++    return ftruncate(fd, size);
++}
++
+ static int local_chown(FsContext *fs_ctx, V9fsPath *fs_path, FsCred *credp)
+ {
+     char *dirpath = g_path_get_dirname(fs_path->data);
+@@ -1619,4 +1627,5 @@ FileOperations local_ops = {
+     .renameat  = local_renameat,
+     .unlinkat = local_unlinkat,
+     .has_valid_handle = local_has_valid_handle,
++    .ftruncate = local_ftruncate,
+ };
+diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+index fa0b187a1b80..7f0e13f0ddd8 100644
+--- a/hw/9pfs/9p-synth.c
++++ b/hw/9pfs/9p-synth.c
+@@ -356,6 +356,13 @@ static int synth_truncate(FsContext *ctx, V9fsPath *path, off_t offset)
+     return -1;
+ }
+ 
++static int synth_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
++                           off_t size)
++{
++    errno = ENOSYS;
++    return -1;
++}
++
+ static int synth_chmod(FsContext *fs_ctx, V9fsPath *path, FsCred *credp)
+ {
+     errno = EPERM;
+@@ -656,4 +663,5 @@ FileOperations synth_ops = {
+     .renameat     = synth_renameat,
+     .unlinkat     = synth_unlinkat,
+     .has_valid_handle = synth_has_valid_handle,
++    .ftruncate    = synth_ftruncate,
+ };
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 969fb2f8c494..35b2ed900a01 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -1733,7 +1733,11 @@ static void coroutine_fn v9fs_setattr(void *opaque)
+         }
+     }
+     if (v9iattr.valid & (P9_ATTR_SIZE)) {
+-        err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
++        if (fid_has_valid_handle(pdu->s, fidp)) {
++            err = v9fs_co_ftruncate(pdu, fidp, v9iattr.size);
++        } else {
++            err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
++        }
+         if (err < 0) {
+             goto out;
+         }
+diff --git a/hw/9pfs/cofs.c b/hw/9pfs/cofs.c
+index 67e3ae5c5ccd..893466fb1a44 100644
+--- a/hw/9pfs/cofs.c
++++ b/hw/9pfs/cofs.c
+@@ -184,6 +184,24 @@ int coroutine_fn v9fs_co_truncate(V9fsPDU *pdu, V9fsPath *path, off_t size)
      return err;
  }
  
--static int local_fstat(FsContext *fs_ctx, int fid_type,
--                       V9fsFidOpenState *fs, struct stat *stbuf)
-+static int local_fid_fd(int fid_type, V9fsFidOpenState *fs)
- {
--    int err, fd;
-+    int fd;
- 
-     if (fid_type == P9_FID_DIR) {
-         fd = dirfd(fs->dir.stream);
-@@ -777,6 +776,14 @@ static int local_fstat(FsContext *fs_ctx, int fid_type,
-         fd = fs->fd;
-     }
- 
-+    return fd;
++int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp, off_t size)
++{
++    int err;
++    V9fsState *s = pdu->s;
++
++    if (v9fs_request_cancelled(pdu)) {
++        return -EINTR;
++    }
++    v9fs_co_run_in_worker(
++        {
++            err = s->ops->ftruncate(&s->ctx, fidp->fid_type, &fidp->fs, size);
++            if (err < 0) {
++                err = -errno;
++            }
++        });
++    return err;
 +}
 +
-+static int local_fstat(FsContext *fs_ctx, int fid_type,
-+                       V9fsFidOpenState *fs, struct stat *stbuf)
-+{
-+    int err, fd = local_fid_fd(fid_type, fs);
-+
-     err = fstat(fd, stbuf);
-     if (err) {
-         return err;
-@@ -1167,13 +1174,7 @@ out:
- static int local_fsync(FsContext *ctx, int fid_type,
-                        V9fsFidOpenState *fs, int datasync)
- {
--    int fd;
--
--    if (fid_type == P9_FID_DIR) {
--        fd = dirfd(fs->dir.stream);
--    } else {
--        fd = fs->fd;
--    }
-+    int fd = local_fid_fd(fid_type, fs);
+ int coroutine_fn v9fs_co_mknod(V9fsPDU *pdu, V9fsFidState *fidp,
+                                V9fsString *name, uid_t uid, gid_t gid,
+                                dev_t dev, mode_t mode, struct stat *stbuf)
+diff --git a/hw/9pfs/coth.h b/hw/9pfs/coth.h
+index 2c54249b3577..0b8ee4c56495 100644
+--- a/hw/9pfs/coth.h
++++ b/hw/9pfs/coth.h
+@@ -109,5 +109,7 @@ int coroutine_fn v9fs_co_name_to_path(V9fsPDU *, V9fsPath *,
+                                       const char *, V9fsPath *);
+ int coroutine_fn v9fs_co_st_gen(V9fsPDU *pdu, V9fsPath *path, mode_t,
+                                 V9fsStatDotl *v9stat);
++int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp,
++                                   off_t size);
  
-     if (datasync) {
-         return qemu_fdatasync(fd);
+ #endif
 -- 
 2.48.1
 
