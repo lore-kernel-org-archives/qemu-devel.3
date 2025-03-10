@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64C1C28B28
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 00:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABB92C28B28
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 00:10:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trQfA-0001lx-7M; Sun, 09 Mar 2025 20:06:32 -0400
+	id 1trQfn-0002AY-F3; Sun, 09 Mar 2025 20:07:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQf7-0001l2-0d
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:06:29 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQfi-00028W-Nf
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:07:07 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQf3-0007GG-2r
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:06:28 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cef0f03cfso4785455e9.3
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 17:06:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQff-0007OF-VJ
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:07:06 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43bc63876f1so31288705e9.3
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 17:07:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741565183; x=1742169983; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vluwFSKp6e7zoU80eebsr7FlbxAE5fBxSqh6kQbHYLQ=;
- b=KWF8VMPUgkgBl+NQu/36q1Sii3Go+nz/wZzd40CGS4mPelfzqlsW2QWEphCONnnp4d
- g6X5QuMhVwRxXGOyZIkLSwzEGDXHHZ+4btKl9/ly0i5JjOg9vtzn/JRAoztwg++rCjGk
- Sy/mtgX3dSvZejhF/dXpfhEdpAJ8fZpuCensZFC2c2Zni3p68XzIlCbJJcLjIOvMcllV
- ijS42ZDTBONIFwcxmFUK68NdRb8HUupkC/FWeFHOyS24FOsmF1ptXVTG6Pr42Tjnic5K
- Hd9V2HRdmryDRGkNjgH4iA71wh/gf7zl/wt6nhDnUToy20mPqRkIlS60aaS9qRRFCa1F
- 5lIA==
+ d=linaro.org; s=google; t=1741565222; x=1742170022; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nrSyjlqQLxIdz5EnxNr6LHBBkoV7ANv7WOr2ucCNGYM=;
+ b=io3IZVhJOyKBeVHK9/jJU+7iU6yvP9QrIxS+r43oHKyQ43BIA1aSsDnuJVO9pivJDQ
+ Vws15/9C8YmtAmGh85qKqZZAX0jqGTxiNB1qxzgcFrwo3KKW3l+P5/XIWZfLifQUqOnb
+ E+hor9F/l8wcv9z9Lk1r4UU9esRGYjMvA5iQx/6JApI4uAOr3G+cKRrvr5WkPTgZepi8
+ Ujxe+UvgvEEnkOnE101oJdQBBckvu11hl7LyJ5Je1Vgz7tZDXtGqxYxJ+dksIrjShOBk
+ 5IIdGtJdoMDZKSjVZHvTV00BocVUSu2J2wcO+J42qohaOVaGnxq5Gb9g+mDyB/iUYsnS
+ d3aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741565183; x=1742169983;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vluwFSKp6e7zoU80eebsr7FlbxAE5fBxSqh6kQbHYLQ=;
- b=ERIG75Qfs8kB6I+fLvzk+yIo4knw5QGtYrMMP3WS6b2H/hQiiLMMW3wJP89U3irdnH
- 78gFH16LiP4e1ZpTgAY8apTFI+32TUNUmOg2FtLv2nONlV/jiIjZ6YnKXA5AnjCWMaqO
- rTlhrZ/UdnE2YNFRzgpdmPRl1CnN+owzQiFHNZwvw9tHNwTYMmBRn5U+8BPTd6wOqPTI
- PqfS7XgMw0Nwl+JZmGFCwLoGD6hH9qFXrvb2D1NxiudYLAGCzQ5hgxUhl/MJNK/8wAOp
- tcRMzDu8PiwQqS9WYBgNQmMacKSA0964I0QGw0k9chB3FSWo1DEBQ/Hqpf8kGOpvm1o/
- Wolg==
+ d=1e100.net; s=20230601; t=1741565222; x=1742170022;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nrSyjlqQLxIdz5EnxNr6LHBBkoV7ANv7WOr2ucCNGYM=;
+ b=dJxV0IhIAO03SSSPpC1PoE4lvS+35hJn/xmUQzjOSEJqwGN6rLsrW3xnjiuC0uvNhO
+ 7reII7iMKLkLSQt055pGmjpnZ5+JyWBx8QNCHvZR0rNAY5lkQeSTOWs8GtI5pR9HAszC
+ A3Wgky8f4xXAtFtZKEWtqIiZZMWDIrgx7NDcZ6A7fDkcrrcmaLWpQlVq4VHWt3ESuW1r
+ AynkYUIxMraBQQZWDxtx1zR4024dngJiQSVgfJcAZhK+J2p9ArSWCZKjc3c+8H+EJaoO
+ O0NMWXIidHdzfD53aBtXlbeyGHDYyAuyzYETYt81bfiQ1g1U4bUmOhW45MUgwsrRi1Sm
+ 7C+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVb29MWFcwSeYaSck8XyPZofgFbKtnNaX1C9zRknJj67LxGBaoNJwnSDB1hLNHxgVuQGrkrFlWdXzbI@nongnu.org
-X-Gm-Message-State: AOJu0Yz+sHK9HeORuEA5eqxWownVuRfDfGTimwgYM7Dd7uak6A0SmU9L
- o7yrBfZVjAjmPZ5G6dYz3X2f7j7QwBHVjz3C1SZkVzD1Z6VwYlKA4vw37tQT9tM=
-X-Gm-Gg: ASbGncvKw9vV8vzt14LZCTuoxAeTgFoyKT/H+GmNGp9Hei0MmEdflXemmLzR/fkg+1x
- nNPqNGxY0pmm4dquyoi6PkJeSfGIsKbm/5ZLAHsuKfo7EeUpCqMWE0icmxKtOcHmeRkK0O8QGEt
- OAePf5BSNvxFF60EEp9BgV4/VjdpSHVwsM9IvwFxfCRbrhDLr/3ydcij3WPOv5D18HpBsfwujBX
- cwk1K+SQ/QNJ2bE8eJvjmH8OQ+jMDTIwf2fhJgJ9ryCyd1o7LmRytgC+nzAQhFLSoFMiFA/++3X
- Knpm0JIoOl671AaIiKryo9/2g0C96vOl7YZzzJhRRVMTvGtTNpg+jrBURTfmRZmgflaR5KaiiNS
- Yy/agg64oH7PfzaL1Ix7CKQE/20lb2A==
-X-Google-Smtp-Source: AGHT+IGXQGVRl/PbnRa8YqPLCqfxr6IXZ2UAWjlgzILsr9g7wtjeJG/FGLjoRfyLER+TiVWgoQeHew==
-X-Received: by 2002:a05:600c:5103:b0:439:685e:d4c8 with SMTP id
- 5b1f17b1804b1-43c5a60eda3mr70337825e9.15.1741565183204; 
- Sun, 09 Mar 2025 17:06:23 -0700 (PDT)
+ AJvYcCUf8bKRKzg6TdQhQYZmE2Lcx5p114/Y4PAoRmulWgTsxtbhHNtDSeR3/1/mOhbxIyPvmgJ9fwmEkWzu@nongnu.org
+X-Gm-Message-State: AOJu0Yy+KmnMYKF+TM50XKWGCAe9DDNS0tMKj6KSqRJep1yikX7z9Akg
+ AhO0+rDE6FqbhIJSlZvhcHCowhN17Zg1/ZSGtr+n1/UoKkaNy7FKKJzmjgonNDs=
+X-Gm-Gg: ASbGncsB6kO6pfUglrVzYehOIrimNYiOrI8SSwuodCSk1+TEZUXP+jMDra/968WOjRt
+ V/Pcud0XQxKShaH9EcgEXhmLoN2EgkTG7C79Z4CakvmcBZ6yMcTYCAudXBiMDWxthBBUVsxQJO9
+ i3g53yrw16psiLz9b5AtdTL5aZU4tSaPWKucj+fo6YaDQoEdkDrVffvCS8uFMZkNvtQTyjkYtHM
+ xmo7zkp/Q0lAXjsKvWls81Gibs9/+YQnk2M2RjQryZOf0bgq4PnCW1jZEVuPJI4dOM/c4gcE9rk
+ I4z41GWFvw8M476eTP/7OjbyHTlL3xrIITgw3j75RC+6sqWSMNKF64+3NuVb3Rq30V3TSGmIdd7
+ /cHQ4mIOcaZc6pZwSeVE=
+X-Google-Smtp-Source: AGHT+IF858cwE1RzW5WeHVoN0/VwJuGZY/TNoX99uh/LJTh6Ystvp8OJwOp0Q4+zLVVLApqHif71Zw==
+X-Received: by 2002:a05:600c:4687:b0:43c:efae:a73 with SMTP id
+ 5b1f17b1804b1-43cefae1393mr24142295e9.10.1741565220740; 
+ Sun, 09 Mar 2025 17:07:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cfbae50aasm4329205e9.8.2025.03.09.17.06.21
+ 5b1f17b1804b1-43cf7b88494sm20159685e9.0.2025.03.09.17.06.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 09 Mar 2025 17:06:22 -0700 (PDT)
+ Sun, 09 Mar 2025 17:07:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: BALATON Zoltan <balaton@eik.bme.hu>,
 	qemu-devel@nongnu.org
@@ -79,15 +80,17 @@ Cc: Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-block@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: [PATCH v5 00/14] hw/sd/sdhci: Set reset value of interrupt registers
-Date: Mon, 10 Mar 2025 01:06:06 +0100
-Message-ID: <20250310000620.70120-1-philmd@linaro.org>
+Subject: [PATCH v5 07/14] hw/sd/sdhci: Make quirks a class property
+Date: Mon, 10 Mar 2025 01:06:13 +0100
+Message-ID: <20250310000620.70120-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250310000620.70120-1-philmd@linaro.org>
+References: <20250310000620.70120-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,55 +113,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v4:
-- Convert quirks (Zoltan)
-- Cache class to avoid invalid cast with PCI
-- Remove 'endianness' property (Bernhard)
+Allow to enforce implementations quirks by the class.
 
-Since v3:
-- Fix "hw/qdev-properties-system.h" (first patch)
-- Convert to EndianMode (patch #10)
+All TYPE_IMX_USDHC instances use the quirk: move it
+to the class layer.
 
-Rainy saturday, time for some hobbyist contributions :)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/sd/sdhci.h |  2 ++
+ hw/sd/sdhci.c         | 12 +++++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-In this series we try to address the issue Zoltan reported
-and try to fix in [*], but using a more generic approach.
-The SDHCI code ends up better consolidated and ready to
-scale for more vendor implementations.
-
-[*] https://lore.kernel.org/qemu-devel/20250210160329.DDA7F4E600E@zero.eik.bme.hu/
-
-Philippe Mathieu-Daudé (14):
-  hw/qdev-properties-system: Include missing 'qapi/qapi-types-common.h'
-  hw/sd/sdhci: Remove need for SDHCIState::vendor field
-  hw/sd/sdhci: Redefine SDHCI_QUIRK_NO_BUSY_IRQ bitmask as bit
-  hw/sd/sdhci: Include 'wp-inverted' property in quirk bitmask
-  hw/sd/sdhci: Include 'pending-insert-quirk' property in quirk bitmask
-  hw/sd/sdhci: Introduce SDHCIClass stub
-  hw/sd/sdhci: Make quirks a class property
-  hw/sd/sdhci: Make I/O region size a class property
-  hw/sd/sdhci: Allow SDHCI classes to register their own MemoryRegionOps
-  hw/sd/sdhci: Allow SDHCI classes to register their own read-only regs
-  hw/sd/sdhci: Allow SDHCI classes to have different register reset
-    values
-  hw/sd/sdhci: Implement Freescale eSDHC as TYPE_FSL_ESDHC
-  hw/ppc/e500: Replace generic SDHCI by Freescale eSDHC
-  hw/sd/sdhci: Remove unnecessary 'endianness' property
-
- hw/sd/sdhci-internal.h              |  26 ++---
- include/hw/qdev-properties-system.h |   1 +
- include/hw/sd/sdhci.h               |  83 ++++++++++----
- hw/arm/aspeed.c                     |   2 +-
- hw/arm/fsl-imx25.c                  |   2 -
- hw/arm/fsl-imx6.c                   |   2 -
- hw/arm/fsl-imx6ul.c                 |   2 -
- hw/arm/fsl-imx7.c                   |   2 -
- hw/arm/fsl-imx8mp.c                 |   2 -
- hw/ppc/e500.c                       |  12 +-
- hw/sd/sdhci-pci.c                   |   1 +
- hw/sd/sdhci.c                       | 166 ++++++++++++++++++----------
- 12 files changed, 184 insertions(+), 117 deletions(-)
-
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index c42aeab6848..ee1e7ef4b10 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -116,6 +116,8 @@ struct SDHCIClass {
+         PCIDeviceClass pci_parent_class;
+         SysBusDeviceClass sbd_parent_class;
+     };
++
++    uint32_t quirks;
+ };
+ 
+ /*
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 176bee6b8f5..570d825d130 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1427,6 +1427,7 @@ void sdhci_initfn(SDHCIState *s)
+                                    sdhci_raise_insertion_irq, s);
+     s->transfer_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+                                      sdhci_data_transfer, s);
++    s->quirks = s->sc->quirks;
+ 
+     s->io_ops = &sdhci_mmio_le_ops;
+ }
+@@ -1888,7 +1889,15 @@ static void imx_usdhc_init(Object *obj)
+     SDHCIState *s = SYSBUS_SDHCI(obj);
+ 
+     s->io_ops = &usdhc_mmio_ops;
+-    s->quirks = BIT(SDHCI_QUIRK_NO_BUSY_IRQ);
++}
++
++static void imx_usdhc_class_init(ObjectClass *oc, void *data)
++{
++    SDHCIClass *sc = SYSBUS_SDHCI_CLASS(oc);
++
++    sc->quirks = BIT(SDHCI_QUIRK_NO_BUSY_IRQ);
++
++    sdhci_common_class_init(oc, data);
+ }
+ 
+ /* --- qdev Samsung s3c --- */
+@@ -1969,6 +1978,7 @@ static const TypeInfo sdhci_types[] = {
+         .name = TYPE_IMX_USDHC,
+         .parent = TYPE_SYSBUS_SDHCI,
+         .instance_init = imx_usdhc_init,
++        .class_init = imx_usdhc_class_init,
+     },
+     {
+         .name = TYPE_S3C_SDHCI,
 -- 
 2.47.1
 
