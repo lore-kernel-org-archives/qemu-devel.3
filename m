@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE19C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4411C28B2E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tren4-00026h-2z; Mon, 10 Mar 2025 11:11:38 -0400
+	id 1tren3-00024a-LI; Mon, 10 Mar 2025 11:11:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1tremz-00021y-2v
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:33 -0400
+ id 1tremy-00020g-Ag
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:32 -0400
 Received: from smtp1.lauterbach.com ([62.154.241.196])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1tremu-0007fk-F6
+ id 1tremu-0007hV-Nq
  for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:32 -0400
-Received: (qmail 30673 invoked by uid 484); 10 Mar 2025 15:11:09 -0000
+Received: (qmail 30843 invoked by uid 484); 10 Mar 2025 15:11:12 -0000
 X-Qmail-Scanner-Diagnostics: from 10.2.13.100 by smtp1.lauterbach.com
  (envelope-from <mario.fleischmann@lauterbach.com>,
  uid 484) with qmail-scanner-2.11 
  (mhr: 1.0. clamdscan: 0.99/21437. spamassassin: 3.4.0.  
  Clear:RC:1(10.2.13.100):. 
- Processed in 0.013291 secs); 10 Mar 2025 15:11:09 -0000
+ Processed in 0.013133 secs); 10 Mar 2025 15:11:12 -0000
 Received: from unknown (HELO mflpc1.LTB.LAN)
  (Authenticated_SSL:mfleischmann@[10.2.13.100])
  (envelope-sender <mario.fleischmann@lauterbach.com>)
  by smtp1.lauterbach.com (qmail-ldap-1.03) with TLS_AES_256_GCM_SHA384
  encrypted SMTP
- for <qemu-devel@nongnu.org>; 10 Mar 2025 15:11:09 -0000
+ for <qemu-devel@nongnu.org>; 10 Mar 2025 15:11:11 -0000
 From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, philmd@linaro.org, armbru@redhat.com,
  christian.boenig@lauterbach.com,
  Mario Fleischmann <mario.fleischmann@lauterbach.com>,
- Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 03/16] mcd: Implement target initialization API
-Date: Mon, 10 Mar 2025 16:04:57 +0100
-Message-Id: <20250310150510.200607-4-mario.fleischmann@lauterbach.com>
+ Eric Blake <eblake@redhat.com>
+Subject: [PATCH 10/16] mcd: Implement runstate control
+Date: Mon, 10 Mar 2025 16:05:04 +0100
+Message-Id: <20250310150510.200607-11-mario.fleischmann@lauterbach.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
 References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
@@ -73,724 +72,286 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The target initialization API ensures that the requested and provided
-MCD versions are compatible.
-
-* implement mcd_initialize_f and mcd_qry_error_info_f in mcdserver
-* implement QMP stub functionality
-* add QTest
-
-Thanks to the QMP integration in QTest, function arguments and results
-can be (de)serialized automatically.
+Currently, only global stop is implemented
 
 Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 ---
- MAINTAINERS               |   2 +
- mcd/libmcd_qapi.c         |  66 ++++++++++++++
- mcd/libmcd_qapi.h         |  26 ++++++
- mcd/mcdserver.c           |  44 ++++++++-
- mcd/mcdstub_qapi.c        |  35 ++++++++
- mcd/meson.build           |   2 +-
- qapi/mcd.json             | 183 ++++++++++++++++++++++++++++++++++++++
- tests/qtest/libmcd-test.c |  88 ++++++++++++++++++
- tests/qtest/libmcd-test.h |  23 +++++
- tests/qtest/mcd-test.c    |  93 +++++++++++++++++++
- tests/qtest/meson.build   |   2 +
- 11 files changed, 562 insertions(+), 2 deletions(-)
- create mode 100644 mcd/libmcd_qapi.c
- create mode 100644 mcd/libmcd_qapi.h
- create mode 100644 tests/qtest/libmcd-test.c
- create mode 100644 tests/qtest/libmcd-test.h
- create mode 100644 tests/qtest/mcd-test.c
+ mcd/mcdserver.c    |  74 +++++++++++++++++++++++++++++++--
+ mcd/mcdstub_qapi.c |  52 +++++++++++++++++++++++
+ qapi/mcd.json      | 100 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 222 insertions(+), 4 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 58d94b392f..0687a6baef 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3107,6 +3107,8 @@ S: Maintained
- F: mcd/*
- F: docs/interop/mcd.rst
- F: qapi/mcd.json
-+F: tests/qtest/libmcd-test.*
-+F: tests/qtest/mcd-test.c
- 
- Memory API
- M: Paolo Bonzini <pbonzini@redhat.com>
-diff --git a/mcd/libmcd_qapi.c b/mcd/libmcd_qapi.c
-new file mode 100644
-index 0000000000..bc147072a1
---- /dev/null
-+++ b/mcd/libmcd_qapi.c
-@@ -0,0 +1,66 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * QAPI marshalling helpers for structures of the MCD API
-+ *
-+ * Copyright (c) 2025 Lauterbach GmbH
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libmcd_qapi.h"
-+
-+MCDAPIVersion *marshal_mcd_api_version(const mcd_api_version_st *api_version)
-+{
-+    MCDAPIVersion *marshal = g_malloc0(sizeof(*marshal));
-+
-+    *marshal = (MCDAPIVersion) {
-+        .v_api_major = api_version->v_api_major,
-+        .v_api_minor = api_version->v_api_minor,
-+        .author = g_strdup(api_version->author),
-+    };
-+
-+    return marshal;
-+}
-+
-+mcd_api_version_st unmarshal_mcd_api_version(MCDAPIVersion *api_version)
-+{
-+    mcd_api_version_st unmarshal =  {
-+        .v_api_major = api_version->v_api_major,
-+        .v_api_minor = api_version->v_api_minor,
-+    };
-+    strncpy(unmarshal.author, api_version->author, MCD_API_IMP_VENDOR_LEN - 1);
-+    return unmarshal;
-+}
-+
-+MCDImplVersionInfo *marshal_mcd_impl_version_info(
-+    const mcd_impl_version_info_st *impl_info)
-+{
-+    MCDImplVersionInfo *marshal = g_malloc0(sizeof(*marshal));
-+
-+    *marshal = (MCDImplVersionInfo) {
-+        .v_api = marshal_mcd_api_version(&impl_info->v_api),
-+        .v_imp_major = impl_info->v_imp_major,
-+        .v_imp_minor = impl_info->v_imp_minor,
-+        .v_imp_build = impl_info->v_imp_build,
-+        .vendor = g_strdup(impl_info->vendor),
-+        .date = g_strdup(impl_info->date),
-+    };
-+
-+    return marshal;
-+}
-+
-+MCDErrorInfo *marshal_mcd_error_info(const mcd_error_info_st *error_info)
-+{
-+    MCDErrorInfo *marshal = g_malloc0(sizeof(*marshal));
-+
-+    *marshal = (MCDErrorInfo) {
-+        .return_status = error_info->return_status,
-+        .error_code = error_info->error_code,
-+        .error_events = error_info->error_events,
-+        .error_str = g_strdup(error_info->error_str),
-+    };
-+
-+    return marshal;
-+}
-diff --git a/mcd/libmcd_qapi.h b/mcd/libmcd_qapi.h
-new file mode 100644
-index 0000000000..fc7436bf65
---- /dev/null
-+++ b/mcd/libmcd_qapi.h
-@@ -0,0 +1,26 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * QAPI marshalling helpers for structures of the MCD API
-+ *
-+ * Copyright (c) 2025 Lauterbach GmbH
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef LIBMCD_QAPI_H
-+#define LIBMCD_QAPI_H
-+
-+#include "mcd_api.h"
-+#include "qapi-types-mcd.h"
-+
-+MCDAPIVersion *marshal_mcd_api_version(const mcd_api_version_st *api_version);
-+
-+MCDImplVersionInfo *marshal_mcd_impl_version_info(
-+    const mcd_impl_version_info_st *impl_info);
-+
-+MCDErrorInfo *marshal_mcd_error_info(const mcd_error_info_st *error_info);
-+
-+mcd_api_version_st unmarshal_mcd_api_version(MCDAPIVersion *api_version);
-+
-+#endif /* LIBMCD_QAPI_H */
 diff --git a/mcd/mcdserver.c b/mcd/mcdserver.c
-index a20708db1b..6e941f0531 100644
+index f0cda23981..9e46ea5fa5 100644
 --- a/mcd/mcdserver.c
 +++ b/mcd/mcdserver.c
-@@ -8,6 +8,7 @@
-  * See the COPYING file in the top-level directory.
-  */
+@@ -14,6 +14,8 @@
+ #include "hw/boards.h"
+ #include "exec/tswap.h"
+ #include "exec/gdbstub.h"
++#include "hw/core/cpu.h"
++#include "system/runstate.h"
  
-+#include "qemu/osdep.h"
- #include "mcd_api.h"
+ /* Custom memory space type */
+ static const mcd_mem_type_et MCD_MEM_SPACE_IS_SECURE = 0x00010000;
+@@ -1087,13 +1089,53 @@ mcd_return_et mcd_execute_txlist_f(const mcd_core_st *core,
  
- static const mcd_error_info_st MCD_ERROR_NOT_IMPLEMENTED = {
-@@ -17,6 +18,13 @@ static const mcd_error_info_st MCD_ERROR_NOT_IMPLEMENTED = {
-     .error_str = "",
- };
- 
-+static const mcd_error_info_st MCD_ERROR_INVALID_NULL_PARAM = {
-+    .return_status = MCD_RET_ACT_HANDLE_ERROR,
-+    .error_code = MCD_ERR_PARAM,
-+    .error_events = MCD_ERR_EVT_NONE,
-+    .error_str = "null was invalidly passed as a parameter",
-+};
-+
- static const mcd_error_info_st MCD_ERROR_NONE = {
-     .return_status = MCD_RET_ACT_NONE,
-     .error_code = MCD_ERR_NONE,
-@@ -24,6 +32,9 @@ static const mcd_error_info_st MCD_ERROR_NONE = {
-     .error_str = "",
- };
- 
-+/* reserves memory for custom errors */
-+static mcd_error_info_st custom_mcd_error;
-+
- /**
-  * struct mcdserver_state - State of the MCD server
-  *
-@@ -40,12 +51,43 @@ static mcdserver_state g_server_state = {
- mcd_return_et mcd_initialize_f(const mcd_api_version_st *version_req,
-                                mcd_impl_version_info_st *impl_info)
+ mcd_return_et mcd_run_f(const mcd_core_st *core, bool global)
  {
 -    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
-+    if (!version_req || !impl_info) {
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++
++    if (g_server_state.cores->len > 1 && global) {
++        vm_start();
++        g_server_state.last_error = &MCD_ERROR_NONE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (!core) {
 +        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
 +        return g_server_state.last_error->return_status;
 +    }
 +
-+    *impl_info = (mcd_impl_version_info_st) {
-+        .v_api = (mcd_api_version_st) {
-+            .v_api_major = MCD_API_VER_MAJOR,
-+            .v_api_minor = MCD_API_VER_MINOR,
-+            .author = MCD_API_VER_AUTHOR,
-+        },
-+        .v_imp_major = QEMU_VERSION_MAJOR,
-+        .v_imp_minor = QEMU_VERSION_MINOR,
-+        .v_imp_build = 0,
-+        .vendor = "QEMU",
-+        .date = __DATE__,
-+    };
-+
-+    if (version_req->v_api_major == MCD_API_VER_MAJOR &&
-+        version_req->v_api_minor <= MCD_API_VER_MINOR) {
-+        g_server_state.last_error = &MCD_ERROR_NONE;
-+    } else {
-+        custom_mcd_error = (mcd_error_info_st) {
-+            .return_status = MCD_RET_ACT_HANDLE_ERROR,
-+            .error_code = MCD_ERR_GENERAL,
-+            .error_events = MCD_ERR_EVT_NONE,
-+            .error_str = "incompatible versions",
-+        };
-+        g_server_state.last_error = &custom_mcd_error;
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
 +    }
 +
++    if (!runstate_needs_reset() && !runstate_is_running() &&
++        !vm_prepare_start(false)) {
++        cpu_resume(core_state->cpu);
++        qemu_clock_enable(QEMU_CLOCK_VIRTUAL, true);
++    }
++
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
+ }
+ 
+ mcd_return_et mcd_stop_f(const mcd_core_st *core, bool global)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
++    if (g_server_state.cores->len > 1 && !global) {
++        g_server_state.custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_FN_UNIMPLEMENTED,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "core-specific stop not implemented",
++        };
++        g_server_state.last_error = &g_server_state.custom_error;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (runstate_is_running()) {
++        vm_stop(RUN_STATE_DEBUG);
++    }
++
++    g_server_state.last_error = &MCD_ERROR_NONE;
      return g_server_state.last_error->return_status;
  }
  
- void mcd_exit_f(void)
+@@ -1120,7 +1162,31 @@ mcd_return_et mcd_step_f(const mcd_core_st *core, bool global,
+ 
+ mcd_return_et mcd_set_global_f(const mcd_core_st *core, bool enable)
  {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
++    mcdcore_state *core_state;
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (!enable) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_GENERAL,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "global stop activities cannot be disabled",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
 +    g_server_state.last_error = &MCD_ERROR_NONE;
-     return;
+     return g_server_state.last_error->return_status;
  }
  
 diff --git a/mcd/mcdstub_qapi.c b/mcd/mcdstub_qapi.c
-index 6f79ae38a9..a76d2d081f 100644
+index 6aa72b025c..635f95181b 100644
 --- a/mcd/mcdstub_qapi.c
 +++ b/mcd/mcdstub_qapi.c
-@@ -10,4 +10,39 @@
-  * See the COPYING file in the top-level directory.
-  */
- 
-+#include "qemu/osdep.h"
- #include "mcd_api.h"
-+#include "libmcd_qapi.h"
-+#include "qapi/qapi-commands-mcd.h"
+@@ -505,3 +505,55 @@ MCDQryRegMapResult *qmp_mcd_qry_reg_map(uint32_t core_uid,
+     g_stub_state.on_error_ask_server = true;
+     return result;
+ }
 +
-+MCDInitializeResult *qmp_mcd_initialize(MCDAPIVersion *version_req,
-+                                        Error **errp)
++MCDRunResult *qmp_mcd_run(uint32_t core_uid, bool global, Error **errp)
 +{
-+    mcd_impl_version_info_st impl_info;
-+    MCDInitializeResult *result = g_malloc0(sizeof(*result));
-+    mcd_api_version_st version_req_unmarshalled =
-+        unmarshal_mcd_api_version(version_req);
++    MCDRunResult *result = g_malloc0(sizeof(*result));
++    mcd_core_st *core = NULL;
 +
-+    result->return_status = mcd_initialize_f(&version_req_unmarshalled,
-+                                             &impl_info);
-+
-+    if (result->return_status == MCD_RET_ACT_NONE) {
-+        result->impl_info = marshal_mcd_impl_version_info(&impl_info);
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
 +    }
 +
++    result->return_status = mcd_run_f(core, global);
++
++    g_stub_state.on_error_ask_server = true;
 +    return result;
 +}
 +
-+void qmp_mcd_exit(Error **errp)
++MCDStopResult *qmp_mcd_stop(uint32_t core_uid, bool global, Error **errp)
 +{
-+    mcd_exit_f();
-+}
++    MCDStopResult *result = g_malloc0(sizeof(*result));
++    mcd_core_st *core = NULL;
 +
-+MCDErrorInfo *qmp_mcd_qry_error_info(Error **errp)
-+{
-+    MCDErrorInfo *result;
-+    mcd_error_info_st error_info;
-+    mcd_qry_error_info_f(NULL, &error_info);
-+    result = marshal_mcd_error_info(&error_info);
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    result->return_status = mcd_stop_f(core, global);
++
++    g_stub_state.on_error_ask_server = true;
 +    return result;
 +}
-diff --git a/mcd/meson.build b/mcd/meson.build
-index bc783dae54..90d1c6be67 100644
---- a/mcd/meson.build
-+++ b/mcd/meson.build
-@@ -1,7 +1,7 @@
- # MCD is only supported in system emulation
- mcd_system_ss = ss.source_set()
- 
--mcd_system_ss.add(files('mcdserver.c', 'mcdstub_qapi.c'))
-+mcd_system_ss.add(files('mcdserver.c', 'mcdstub_qapi.c', 'libmcd_qapi.c'))
- mcd_system_ss = mcd_system_ss.apply({})
- 
- libmcd_system = static_library('mcd_system',
++
++MCDSetGlobalResult *qmp_mcd_set_global(uint32_t core_uid, bool enable,
++                                       Error **errp)
++{
++    MCDSetGlobalResult *result = g_malloc0(sizeof(*result));
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    result->return_status = mcd_set_global_f(core, enable);
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
 diff --git a/qapi/mcd.json b/qapi/mcd.json
-index 701fd03ece..7b42a74036 100644
+index 936016de45..c8b82e7f82 100644
 --- a/qapi/mcd.json
 +++ b/qapi/mcd.json
-@@ -4,3 +4,186 @@
- ##
- # = Multi-Core Debug (MCD) API
- ##
+@@ -1373,3 +1373,103 @@
+     'start-index': 'uint32',
+     'num-regs': 'uint32' },
+   'returns': 'MCDQryRegMapResult' }
 +
 +
 +##
-+# == Definition of Structures
++# == Target Execution Control API
 +##
 +
 +
 +##
-+# @MCDAPIVersion:
++# @MCDRunResult:
 +#
-+# Structure type containing the MCD API version information of the tool.
-+#
-+# @v-api-major: API major version.
-+# @v-api-minor: API minor version.
-+# @author:      API name of the author of this MCD API version.
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'MCDAPIVersion',
-+  'data': {
-+    'v-api-major': 'uint16',
-+    'v-api-minor': 'uint16',
-+    'author':      'str' } }
-+
-+
-+##
-+# @MCDImplVersionInfo:
-+#
-+# Structure type containing the MCD API implementation information.
-+#
-+# @v-api:       Implemented API version.
-+# @v-imp-major: Major version number of this implementation.
-+# @v-imp-minor: Minor version number of this implementation.
-+# @v-imp-build: Build number of this implementation.
-+# @vendor:      Name of vendor of the implementation.
-+# @date:        String from __DATE__ macro at compile time.
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'MCDImplVersionInfo',
-+  'data': {
-+    'v-api'      : 'MCDAPIVersion',
-+    'v-imp-major': 'uint16',
-+    'v-imp-minor': 'uint16',
-+    'v-imp-build': 'uint16',
-+    'vendor'     : 'str',
-+    'date'       : 'str' } }
-+
-+
-+##
-+# @MCDErrorInfo:
-+#
-+# Structure type containing the error status and error event notification.
-+#
-+# @return-status: Return status from the last API call.
-+# @error-code:    Detailed error code from the last API call.
-+# @error-events:  Detailed event code from the last API call.
-+# @error-str:     Detailed error text string from the last API call.
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'MCDErrorInfo',
-+  'data': {
-+    'return-status': 'uint32',
-+    'error-code'   : 'uint32',
-+    'error-events' : 'uint32',
-+    'error-str'    : 'str' }}
-+
-+
-+##
-+# == Target Initialization API
-+##
-+
-+
-+##
-+# @MCDInitializeResult:
-+#
-+# Return value of @mcd-initialize.
++# Return value of @MCDRunResult.
 +#
 +# @return-status: Return code.
 +#
-+# @impl-info: Information about the QEMU build, its version and the version of
-+#             the implemented MCD API.
++# Since: 9.1
++##
++{ 'struct': 'MCDRunResult', 'data': { 'return-status': 'uint32' } }
++
++
++##
++# @mcd-run:
++#
++# Function starting execution on a particular core.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++# @global:   Set to "TRUE" if all cores of a system shall start execution.
++#            Otherwise, starting execution of selected core only.
++#
++# Returns: @MCDRunResult
 +#
 +# Since: 9.1
 +##
-+{ 'struct': 'MCDInitializeResult',
++{ 'command': 'mcd-run',
 +  'data': {
-+    'return-status': 'uint32',
-+    '*impl-info'   : 'MCDImplVersionInfo' } }
++    'core-uid': 'uint32',
++    'global'  : 'bool' },
++  'returns': 'MCDRunResult' }
 +
 +
 +##
-+# @mcd-initialize:
++# @MCDStopResult:
 +#
-+# Function initializing the interaction between a tool-side implementation and
-+# target-side implementation.
++# Return value of @mcd-stop.
 +#
-+# @version-req: MCD API version as requested by an upper layer.
-+#
-+# Returns: @MCDInitializeResult
-+#
-+# Since: 9.1
-+#
-+# .. qmp-example::
-+#    :title: Check compatibility with MCD server
-+#
-+#     -> { "execute": "mcd-initialize",
-+#          "arguments": { "version-req": { "v-api-major": 1,
-+#                                          "v-api-minor": 1,
-+#                                          "author": "" } } }
-+#     <- {
-+#            "return": {
-+#                "impl-info": {
-+#                    "v-api": {
-+#                        "v-api-minor": 1,
-+#                        "v-api-major": 1,
-+#                        "author": "QEMU Release"
-+#                    },
-+#                    "vendor": "QEMU",
-+#                    "v-imp-minor": 2,
-+#                    "v-imp-major": 9,
-+#                    "v-imp-build": 0,
-+#                    "date": "Dec 18 2024"
-+#                },
-+#                "return-status": 0
-+#            }
-+#        }
-+##
-+{ 'command': 'mcd-initialize',
-+  'data': { 'version-req': 'MCDAPIVersion' },
-+  'returns': 'MCDInitializeResult' }
-+
-+
-+##
-+# @mcd-exit:
-+#
-+# Function cleaning up all core and server connections from a tool.
++# @return-status: Return code.
 +#
 +# Since: 9.1
 +##
-+{ 'command': 'mcd-exit' }
++{ 'struct': 'MCDStopResult', 'data': { 'return-status': 'uint32' } }
 +
 +
 +##
-+# == Core Connection API
-+##
-+
-+
-+##
-+# @mcd-qry-error-info:
++# @mcd-stop:
 +#
-+# Function allowing the access to detailed error and/or event information after
-+# an API call.
++# Function stopping execution on a particular core.
 +#
-+# Returns: @MCDErrorInfo
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++# @global:   Set to "TRUE" if all cores of a system shall stop execution.
++#            Otherwise, stopping execution of selected core only.
++#
++# Returns: @MCDStopResult
 +#
 +# Since: 9.1
-+#
-+# .. qmp-example::
-+#    :title: Incompatible MCD versions
-+#
-+#     -> { "execute": "mcd-initialize",
-+#          "arguments": { "version-req": { "v-api-major": 2,
-+#                                          "v-api-minor": 0,
-+#                                          "author": "" } } }
-+#     <- {
-+#            "return": {
-+#                "return-status": 3
-+#            }
-+#        }
-+#     -> { "execute": "mcd-qry-error-info" }
-+#     <- {
-+#            "return": {
-+#                "error-str": "incompatible versions",
-+#                "error-code": 3840,
-+#                "error-events": 0,
-+#                "return-status": 3
-+#            }
-+#        }
 +##
-+{ 'command': 'mcd-qry-error-info',
-+  'returns': 'MCDErrorInfo' }
-diff --git a/tests/qtest/libmcd-test.c b/tests/qtest/libmcd-test.c
-new file mode 100644
-index 0000000000..597ebec9b5
---- /dev/null
-+++ b/tests/qtest/libmcd-test.c
-@@ -0,0 +1,88 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * QTest helpers for functions of the MCD API
-+ *
-+ * Copyright (c) 2025 Lauterbach GmbH
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
++{ 'command': 'mcd-stop',
++  'data': {
++    'core-uid': 'uint32',
++    'global'  : 'bool' },
++  'returns': 'MCDStopResult' }
 +
-+#include "qemu/osdep.h"
-+#include "libmcd-test.h"
-+#include "mcd/mcd_api.h"
-+#include "mcd/libmcd_qapi.h"
-+#include "qobject/qdict.h"
-+#include "qobject/qlist.h"
-+#include "qobject/qjson.h"
-+#include "qapi/qapi-commands-mcd.h"
-+#include "qapi/qapi-visit-mcd.h"
-+#include "qapi/qobject-input-visitor.h"
-+#include "qapi/compat-policy.h"
++##
++# @MCDSetGlobalResult:
++#
++# Return value of @mcd-set-global.
++#
++# @return-status: Return code.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDSetGlobalResult', 'data': { 'return-status': 'uint32' } }
 +
-+/*
-+ * We can use the %p format specifier of qtest_qmp() to automatically
-+ * serialize the arguments into JSON.
-+ * The serialization works only after the arguments have been converted into
-+ * a QDict.
-+ */
 +
-+ #define MARSHAL_ARGS(type) do {                     \
-+    v = qobject_output_visitor_new_qmp(&marshal);    \
-+    ok = visit_start_struct(v, NULL, (void **)&args, \
-+                            sizeof(type), NULL);     \
-+    g_assert(ok);                                    \
-+    ok = visit_type_##type##_members(v, args, NULL); \
-+    g_assert(ok);                                    \
-+    ok = visit_check_struct(v, NULL);                \
-+    g_assert(ok);                                    \
-+    visit_end_struct(v, (void **)&args);             \
-+    visit_complete(v, &marshal);                     \
-+    visit_free(v);                                   \
-+    arg = qobject_to(QDict, marshal);                \
-+} while (0)
-+
-+#define UNMARSHAL_RESULT(type) do {                    \
-+    ret = qdict_get(resp, "return");                   \
-+    g_assert(ret);                                     \
-+    v = qobject_input_visitor_new(ret);                \
-+    ok = visit_type_##type(v, NULL, &unmarshal, NULL); \
-+    g_assert(ok);                                      \
-+    visit_free(v);                                     \
-+    qobject_unref(resp);                               \
-+} while (0)
-+
-+MCDInitializeResult *qtest_mcd_initialize(QTestState *qts,
-+                                          q_obj_mcd_initialize_arg *args)
-+{
-+    Visitor *v;
-+    QObject *marshal;
-+    QDict *arg, *resp;
-+    QObject *ret;
-+    bool ok;
-+    MCDInitializeResult *unmarshal;
-+
-+    MARSHAL_ARGS(q_obj_mcd_initialize_arg);
-+
-+    resp = qtest_qmp(qts, "{'execute': 'mcd-initialize',"
-+                          "'arguments': %p}", arg);
-+
-+    UNMARSHAL_RESULT(MCDInitializeResult);
-+
-+    return unmarshal;
-+}
-+
-+MCDErrorInfo *qtest_mcd_qry_error_info(QTestState *qts)
-+{
-+    Visitor *v;
-+    QDict *resp;
-+    QObject *ret;
-+    bool ok;
-+    MCDErrorInfo *unmarshal;
-+
-+    resp = qtest_qmp(qts, "{'execute': 'mcd-qry-error-info'}");
-+
-+    UNMARSHAL_RESULT(MCDErrorInfo);
-+
-+    return unmarshal;
-+}
-diff --git a/tests/qtest/libmcd-test.h b/tests/qtest/libmcd-test.h
-new file mode 100644
-index 0000000000..1c5da9de62
---- /dev/null
-+++ b/tests/qtest/libmcd-test.h
-@@ -0,0 +1,23 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * QTest helpers for functions of the MCD API
-+ *
-+ * Copyright (c) 2025 Lauterbach GmbH
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef LIBMCD_TEST_H
-+#define LIBMCD_TEST_H
-+
-+#include "libqtest.h"
-+#include "mcd/mcd_api.h"
-+#include "qapi/qapi-visit-mcd.h"
-+
-+MCDInitializeResult *qtest_mcd_initialize(QTestState *qts,
-+                                          q_obj_mcd_initialize_arg *args);
-+
-+MCDErrorInfo *qtest_mcd_qry_error_info(QTestState *qts);
-+
-+#endif /* LIBMCD_TEST_H */
-diff --git a/tests/qtest/mcd-test.c b/tests/qtest/mcd-test.c
-new file mode 100644
-index 0000000000..275fb46aaa
---- /dev/null
-+++ b/tests/qtest/mcd-test.c
-@@ -0,0 +1,93 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Architecture independent QTests for the MCD server with QAPI stub
-+ *
-+ * Copyright (c) 2025 Lauterbach GmbH
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "mcd/mcd_api.h"
-+#include "mcd/libmcd_qapi.h"
-+#include "qapi/qapi-visit-mcd.h"
-+#include "qapi/qapi-types-mcd.h"
-+#include "qapi/qobject-input-visitor.h"
-+#include "qapi/compat-policy.h"
-+#include "libmcd-test.h"
-+
-+#define QEMU_EXTRA_ARGS ""
-+
-+static bool verbose;
-+
-+static void test_initialize(void)
-+{
-+    QTestState *qts = qtest_init(QEMU_EXTRA_ARGS);
-+    MCDErrorInfo *error_info;
-+
-+    mcd_api_version_st version_req = {
-+        .v_api_major = MCD_API_VER_MAJOR,
-+        .v_api_minor = MCD_API_VER_MINOR,
-+        .author = "",
-+    };
-+
-+    q_obj_mcd_initialize_arg qapi_args = {
-+        .version_req = marshal_mcd_api_version(&version_req),
-+    };
-+
-+    MCDInitializeResult *result = qtest_mcd_initialize(qts, &qapi_args);
-+    g_assert(result->return_status == MCD_RET_ACT_NONE);
-+
-+    if (verbose) {
-+        fprintf(stderr, "[INFO]\tAPI v%d.%d (%s)\n",
-+                        result->impl_info->v_api->v_api_major,
-+                        result->impl_info->v_api->v_api_minor,
-+                        result->impl_info->v_api->author);
-+        fprintf(stderr, "[INFO]\tImplementation v%d.%d.%d %s (%s)\n",
-+                        result->impl_info->v_imp_major,
-+                        result->impl_info->v_imp_minor,
-+                        result->impl_info->v_imp_build,
-+                        result->impl_info->date,
-+                        result->impl_info->vendor);
-+    }
-+
-+    qapi_free_MCDAPIVersion(qapi_args.version_req);
-+    qapi_free_MCDInitializeResult(result);
-+
-+    /* Incompatible version */
-+    version_req = (mcd_api_version_st) {
-+        .v_api_major = MCD_API_VER_MAJOR,
-+        .v_api_minor = MCD_API_VER_MINOR + 1,
-+        .author = "",
-+    };
-+
-+    qapi_args.version_req = marshal_mcd_api_version(&version_req);
-+    result = qtest_mcd_initialize(qts, &qapi_args);
-+    g_assert(result->return_status != MCD_RET_ACT_NONE);
-+
-+    error_info = qtest_mcd_qry_error_info(qts);
-+    g_assert(error_info->error_code == MCD_ERR_GENERAL);
-+
-+    if (verbose) {
-+        fprintf(stderr, "[INFO]\tInitialization with newer API failed "
-+                        "successfully: %s\n", error_info->error_str);
-+    }
-+
-+    qapi_free_MCDAPIVersion(qapi_args.version_req);
-+    qapi_free_MCDInitializeResult(result);
-+    qapi_free_MCDErrorInfo(error_info);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+    char *v_env = getenv("V");
-+    verbose = v_env && atoi(v_env) >= 1;
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("mcd/initialize", test_initialize);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 8a6243382a..1e39a7191b 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -30,6 +30,7 @@ qtests_generic = [
-   'qos-test',
-   'readconfig-test',
-   'netdev-socket',
-+  'mcd-test',
- ]
- if enable_modules
-   qtests_generic += [ 'modules-test' ]
-@@ -383,6 +384,7 @@ qtests = {
-   'netdev-socket': files('netdev-socket.c', '../unit/socket-helpers.c'),
-   'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
-   'ast2700-smc-test': files('aspeed-smc-utils.c', 'ast2700-smc-test.c'),
-+  'mcd-test': files('mcd-test.c', 'libmcd-test.c', '../../mcd/libmcd_qapi.c'),
- }
- 
- if vnc.found()
++##
++# @mcd-set-global:
++#
++# Function enabling/disabling global stop and run activities on this core.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++# @enable:   Set to "TRUE" if this core should perform global run or stop
++#            activities.
++#
++# Returns: @MCDSetGlobalResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-set-global',
++  'data': {
++    'core-uid': 'uint32',
++    'enable'  : 'bool' },
++  'returns': 'MCDSetGlobalResult' }
 -- 
 2.34.1
 
