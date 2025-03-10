@@ -4,80 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F6A1C28B30
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA877C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:24:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trbve-0002hI-OJ; Mon, 10 Mar 2025 08:08:21 -0400
+	id 1trcA2-0005iH-9J; Mon, 10 Mar 2025 08:23:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1trbvS-0002We-9O
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:08:06 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1trc9r-0005eV-2C
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:22:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1trbvN-0002Nc-4n
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:08:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1741608464; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=dxsb8AzzQGfe4j6zGuMba3oJcN4RJzV4DVj/5JNbSkcqSjfPZW9cBKEKaxhK6sRU2vpD5W9SaWkp69H02P/S8pIff9uUyRvefsCsy18GwVh93QgzLmZZ/Ezq+PHltlAS3yd5RSZzJmANtQGKx1O8HXUckhT2V5a4s3+dZde6+8U=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1741608464;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=wE26Gm0U6X0LH93WBmKW/zoY4FD4VjuQqrJTj0wIi5A=; 
- b=h4iRYtlQDgtEkdSr2jBACHBAA8MSUxAVA+KdKcHPv3JCOK9/f1svEfnr9k3EC1qGadJ1shzeXTq8n+1iO4TXPedEx9tr8bEKPPECsQ6Sk//8r3xwiE78PHjM/iUjul7AMWvTj7LoYAmbpQTDLEX7uKMT1qCNs7TCP2Z8VnMTv+g=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1741608464; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=wE26Gm0U6X0LH93WBmKW/zoY4FD4VjuQqrJTj0wIi5A=;
- b=QIJE9vdmVjkJPGeZBNC6XiTDzIoBfqoqHbzLb9Jdo1oKXDnF0VNkVPzCy/LqOYjv
- lJ6WvzQ4pvmwjk3Q9WP9GJvQAaSDKO6sPXmTIskMsgUJrX6h0N3fwyoucbTKsRpHdED
- CN75rBHo1eotZimQFQ62J45fOdmdgnopYYWXHbOs=
-Received: by mx.zohomail.com with SMTPS id 1741608463220338.52424538936293;
- Mon, 10 Mar 2025 05:07:43 -0700 (PDT)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v11 10/10] docs/system: virtio-gpu: Document host/guest
- requirements
-Date: Mon, 10 Mar 2025 15:05:55 +0300
-Message-ID: <20250310120555.150077-11-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250310120555.150077-1-dmitry.osipenko@collabora.com>
-References: <20250310120555.150077-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1trc9o-0004wt-IC
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:22:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741609374;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oWpLQ5UffopEreR+h80b09wvJlbh0Nvw29HAc/Y4daY=;
+ b=FviXPVdw87EirkBrm57WBXM4YdeDZZnlbSDqqjx0FmOWzZ+r5g9VXTdd8h7x7QdiG1AKSK
+ arSsL4n2vafjXrt/J7VngfG/9QV3ZhMyme1vZNPfwMJvhS78uxK3R/pkKgrpjlfi679HU2
+ QC3HlpA0cV1pJ39JAGHlz/6Y3k/MJlc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-CJpEny4QOQmhWo1hZvRRRg-1; Mon,
+ 10 Mar 2025 08:22:53 -0400
+X-MC-Unique: CJpEny4QOQmhWo1hZvRRRg-1
+X-Mimecast-MFC-AGG-ID: CJpEny4QOQmhWo1hZvRRRg_1741609372
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A7D7219560AD; Mon, 10 Mar 2025 12:22:51 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.72.112.39])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4E7411800370; Mon, 10 Mar 2025 12:22:48 +0000 (UTC)
+From: Jason Wang <jasowang@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ Si-Wei Liu <si-wei.liu@oracle.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 1/5] net: parameterize the removing client from nc list
+Date: Mon, 10 Mar 2025 20:22:36 +0800
+Message-ID: <20250310122240.2908-2-jasowang@redhat.com>
+In-Reply-To: <20250310122240.2908-1-jasowang@redhat.com>
+References: <20250310122240.2908-1-jasowang@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,159 +85,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-This attempts to tidy up the VirtIO GPU documentation to make the list
-of requirements clearer. There are still a lot of moving parts and the
-distros have some catching up to do before this is all handled
-automatically.
+This change is used in later commits so we can avoid the removal of the
+netclient if it is delayed.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Sergio Lopez Pascual <slp@redhat.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-[dmitry.osipenko@collabora.com: Extended and corrected doc]
+No functional change intended.
+
+Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- docs/system/devices/virtio-gpu.rst | 101 ++++++++++++++++++++++++++++-
- 1 file changed, 98 insertions(+), 3 deletions(-)
+ net/net.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
-index ea3eb052df3c..ed952468c331 100644
---- a/docs/system/devices/virtio-gpu.rst
-+++ b/docs/system/devices/virtio-gpu.rst
-@@ -5,14 +5,28 @@ virtio-gpu
- ==========
+diff --git a/net/net.c b/net/net.c
+index a3996d5c62..4eb78a1299 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -381,9 +381,12 @@ NetClientState *qemu_get_peer(NetClientState *nc, int queue_index)
+     return ncs->peer;
+ }
  
- This document explains the setup and usage of the virtio-gpu device.
--The virtio-gpu device paravirtualizes the GPU and display controller.
-+The virtio-gpu device provides a GPU and display controller
-+paravirtualized using VirtIO. It supports a number of different modes
-+from simple 2D displays to fully accelerated 3D graphics.
+-static void qemu_cleanup_net_client(NetClientState *nc)
++static void qemu_cleanup_net_client(NetClientState *nc,
++                                    bool remove_from_net_clients)
+ {
+-    QTAILQ_REMOVE(&net_clients, nc, next);
++    if (remove_from_net_clients) {
++        QTAILQ_REMOVE(&net_clients, nc, next);
++    }
  
--Linux kernel support
----------------------
-+Linux guest kernel support
-+--------------------------
+     if (nc->info->cleanup) {
+         nc->info->cleanup(nc);
+@@ -442,14 +445,14 @@ void qemu_del_net_client(NetClientState *nc)
+         }
  
- virtio-gpu requires a guest Linux kernel built with the
- ``CONFIG_DRM_VIRTIO_GPU`` option.
+         for (i = 0; i < queues; i++) {
+-            qemu_cleanup_net_client(ncs[i]);
++            qemu_cleanup_net_client(ncs[i], true);
+         }
  
-+3D acceleration
-+---------------
-+
-+3D acceleration of a virtualized GPU is still an evolving field.
-+Depending on the 3D mode you are running you may need to override
-+distribution supplied libraries with more recent versions or enable
-+build options. There are a number of requirements the host must meet
-+to be able to be able to support guests. QEMU must be able to access the
-+host's GPU and for the best performance be able to reliably share GPU
-+memory with the guest. Details of 3D acceleration requirements are
-+described in a further sections.
-+
- QEMU virtio-gpu variants
- ------------------------
+         return;
+     }
  
-@@ -65,8 +79,14 @@ intermediate representation is communicated to the host and the
- `virglrenderer`_ library on the host translates the intermediate
- representation back to OpenGL API calls.
+     for (i = 0; i < queues; i++) {
+-        qemu_cleanup_net_client(ncs[i]);
++        qemu_cleanup_net_client(ncs[i], true);
+         qemu_free_net_client(ncs[i]);
+     }
+ }
+@@ -474,7 +477,7 @@ void qemu_del_nic(NICState *nic)
+     for (i = queues - 1; i >= 0; i--) {
+         NetClientState *nc = qemu_get_subqueue(nic, i);
  
-+By default OpenGL version on guest is limited to 4.3. In order to enable
-+OpenGL 4.6 support, virtio-gpu  host blobs feature (``hostmem`` and ``blob``
-+fields) should be enabled.  The ``hostmem`` field specifies the size of
-+virtio-gpu host memory window. This is typically between 256M and 8G.
-+
- .. parsed-literal::
-     -device virtio-gpu-gl
-+    -device virtio-gpu-gl,hostmem=8G,blob=true
+-        qemu_cleanup_net_client(nc);
++        qemu_cleanup_net_client(nc, true);
+         qemu_free_net_client(nc);
+     }
  
- .. _virgl: https://docs.mesa3d.org/drivers/virgl.html
- .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
-@@ -94,6 +114,63 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
- 
- .. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
- 
-+.. list-table:: Linux Host Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+    - Libvirglrenderer Version
-+  * - OpenGL pass-through
-+    - Any Linux version compatible with QEMU if not using host blobs feature,
-+      Linux 6.13+ otherwise
-+    - 0.8.2+
-+  * - Vulkan pass-through
-+    - Linux 6.13+
-+    - 1.0.0+
-+  * - AMDGPU DRM native context
-+    - Linux 6.13+
-+    - 1.1.0+
-+  * - Freedreno DRM native context
-+    - Linux 6.4+
-+    - 1.0.0+
-+  * - Intel i915 DRM native context
-+    - Linux 6.13+
-+    - `mr1384`_
-+  * - Asahi DRM native context
-+    - `Downstream version`_ of Asahi Linux kernel
-+    - `mr1274`_
-+
-+.. _mr1384: https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1384
-+.. _mr1274: https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1274
-+.. _Downstream version: https://github.com/AsahiLinux/linux
-+
-+.. list-table:: Linux Guest Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+    - Mesa Version
-+  * - OpenGL pass-through
-+    - Any Linux version supporting virtio-gpu
-+    - 16.0.0+
-+  * - Vulkan pass-through
-+    - Linux 5.16+
-+    - 24.2.0+
-+  * - AMDGPU DRM native context
-+    - Linux 6.14+
-+    - 25.0.0+
-+  * - Freedreno DRM native context
-+    - Linux 6.14+
-+    - 23.1.0+
-+  * - Intel i915 DRM native context
-+    - Linux 6.14+
-+    - `mr29870`_
-+  * - Asahi DRM native context
-+    - Linux 6.14+
-+    - 24.2.0+
-+
-+.. _mr29870: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
-+
- virtio-gpu rutabaga
- -------------------
- 
-@@ -133,3 +210,21 @@ Surfaceless is the default if ``wsi`` is not specified.
- .. _Wayland display passthrough: https://www.youtube.com/watch?v=OZJiHMtIQ2M
- .. _gfxstream-enabled rutabaga: https://crosvm.dev/book/appendix/rutabaga_gfx.html
- .. _guest Wayland proxy: https://crosvm.dev/book/devices/wayland.html
-+
-+.. list-table:: Linux Host Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+  * - Vulkan+Wayland pass-through
-+    - Linux 6.13+
-+
-+.. list-table:: Linux Guest Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+    - Mesa Version
-+  * - Vulkan+Wayland pass-through
-+    - Linux 5.16+
-+    - 24.3.0+
 -- 
-2.48.1
+2.42.0
 
 
