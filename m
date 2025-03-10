@@ -4,75 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 451B8C35FF1
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:19:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F819C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:19:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1treu4-0004Ye-6O; Mon, 10 Mar 2025 11:18:52 -0400
+	id 1trenW-0002GP-EX; Mon, 10 Mar 2025 11:12:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tretd-0004E6-Lt
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:18:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1tren4-00026v-2C
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:38 -0400
+Received: from smtp1.lauterbach.com ([62.154.241.196])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tretV-0000EK-Ms
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:18:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741619890;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aloKF6e170pqbB0gtTTzQhws2MC76Lta+o++pyupFOE=;
- b=IlRo0UvOeRE3dqTR78Z3SycRVe+DyMVXu/dvLfaJo6robmJtf2DWv+dCBII1zAnDjP14eg
- VwzzYJvcvClU5psfTIiB26RLIZOoVX8W9wA1Gr1letbTxa/5U15BAIYV5ESv4Ign2/2j8S
- MFHwrccqiZzzq+iYIqlqGxh3cIL+/ac=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-Xu1Ebas8MWqq8qIxcOdhtg-1; Mon,
- 10 Mar 2025 11:18:06 -0400
-X-MC-Unique: Xu1Ebas8MWqq8qIxcOdhtg-1
-X-Mimecast-MFC-AGG-ID: Xu1Ebas8MWqq8qIxcOdhtg_1741619885
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 966EA180AF4C; Mon, 10 Mar 2025 15:18:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.222])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC8EF19560AD; Mon, 10 Mar 2025 15:17:59 +0000 (UTC)
-Date: Mon, 10 Mar 2025 16:17:57 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Peter Krempa <pkrempa@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Fam Zheng <fam@euphon.net>, Peter Xu <peterx@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org,
- David Hildenbrand <david@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH 11/12] virtio-scsi: add iothread-vq-mapping parameter
-Message-ID: <Z88CpZelTBC2DbCR@redhat.com>
-References: <20250213180043.713434-1-stefanha@redhat.com>
- <20250213180043.713434-12-stefanha@redhat.com>
- <Z874HlqTKgI5aiBW@redhat.com> <Z8744QIGJUEykuDd@angien.pipo.sk>
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1tremz-0007i7-Tz
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:37 -0400
+Received: (qmail 30940 invoked by uid 484); 10 Mar 2025 15:11:13 -0000
+X-Qmail-Scanner-Diagnostics: from 10.2.13.100 by smtp1.lauterbach.com
+ (envelope-from <mario.fleischmann@lauterbach.com>,
+ uid 484) with qmail-scanner-2.11 
+ (mhr: 1.0. clamdscan: 0.99/21437. spamassassin: 3.4.0.  
+ Clear:RC:1(10.2.13.100):. 
+ Processed in 0.012684 secs); 10 Mar 2025 15:11:13 -0000
+Received: from unknown (HELO mflpc1.LTB.LAN)
+ (Authenticated_SSL:mfleischmann@[10.2.13.100])
+ (envelope-sender <mario.fleischmann@lauterbach.com>)
+ by smtp1.lauterbach.com (qmail-ldap-1.03) with TLS_AES_256_GCM_SHA384
+ encrypted SMTP
+ for <qemu-devel@nongnu.org>; 10 Mar 2025 15:11:13 -0000
+From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, philmd@linaro.org, armbru@redhat.com,
+ christian.boenig@lauterbach.com,
+ Mario Fleischmann <mario.fleischmann@lauterbach.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: [PATCH 14/16] mcd: Implement single stepping
+Date: Mon, 10 Mar 2025 16:05:08 +0100
+Message-Id: <20250310150510.200607-15-mario.fleischmann@lauterbach.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
+References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z8744QIGJUEykuDd@angien.pipo.sk>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-Qmail-Scanner-2.11: added fake Content-Type header
+Content-Type: text/plain
+Received-SPF: pass client-ip=62.154.241.196;
+ envelope-from=mario.fleischmann@lauterbach.com; helo=smtp1.lauterbach.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,85 +72,292 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 10.03.2025 um 15:37 hat Peter Krempa geschrieben:
-> On Mon, Mar 10, 2025 at 15:33:02 +0100, Kevin Wolf wrote:
-> > Am 13.02.2025 um 19:00 hat Stefan Hajnoczi geschrieben:
-> > > Allow virtio-scsi virtqueues to be assigned to different IOThreads. This
-> > > makes it possible to take advantage of host multi-queue block layer
-> > > scalability by assigning virtqueues that have affinity with vCPUs to
-> > > different IOThreads that have affinity with host CPUs. The same feature
-> > > was introduced for virtio-blk in the past:
-> > > https://developers.redhat.com/articles/2024/09/05/scaling-virtio-blk-disk-io-iothread-virtqueue-mapping
-> > > 
-> > > Here are fio randread 4k iodepth=64 results from a 4 vCPU guest with an
-> > > Intel P4800X SSD:
-> > > iothreads IOPS
-> > > ------------------------------
-> > > 1         189576
-> > > 2         312698
-> > > 4         346744
-> > > 
-> > > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > 
-> > As Peter already noted, the interface is a bit confusing in that it
-> > considers the control and event queue just normal queues like any other
-> > and you need to specify a mapping for them, too (even though you
-> > probably don't care about them).
-> > 
-> > I wonder if it wouldn't be better to use the iothread-vq-mapping
-> > property only for command queues and to have separate properties for the
-> > event and control queue. I think this would be less surprising to users.
-> 
-> In the v2 of libvirt's patches I've proposed:
-> 
->         <driver queues='3'>
->           <iothreads>
->             <iothread id='2'>
->               <queue id='ctrl'/>
->               <queue id='event'/>
->               <queue id='1'/>
->             </iothread>
->             <iothread id='3'>
->               <queue id='0'/>
->               <queue id='2'/>
->             </iothread>
->           </iothreads>
->         </driver>
-> 
-> To map the queues by name explicitly so that it's clear what's
-> happening.
-> 
-> In my proposed it auto-translates ctrl and event into 0 and 1 and the
-> command queues into N+2.
+gdbstub: abort gdb_set_stop_cpu when step is issued by mcdserver
+Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+---
+ gdbstub/gdbstub.c  |   6 ++-
+ mcd/mcdserver.c    | 115 +++++++++++++++++++++++++++++++++++++++++----
+ mcd/mcdstub_qapi.c |  17 +++++++
+ qapi/mcd.json      |  38 ++++++++++++++-
+ 4 files changed, 164 insertions(+), 12 deletions(-)
 
-Note that if I understand patch 12 correctly, the 'ctrl' queue setting
-will never actually take effect. So libvirt probably shouln't even offer
-it (and neither should QEMU).
-
-> > It would also allow you to use the round robin allocation for command
-> > queues while using a different setting for the special queues - in
-> > particular, the event queue is currently no_poll, which disables polling
-> > for the whole AioContext, so you probably want to have it just anywhere
-> > else, but not in the iothreads you use for command queues. This should
-> > probably also be the default.
-> 
-> This sounds like an important bit of information. If that stays like
-> this I think libvirt should also document this.
-> 
-> The proposed libvirt patch also words the recommendation to use the
-> round-robin approach unless specific needs arise so if qemu did the
-> correct thing here it would be great.
-
-Yes, I consider this a QEMU bug that should be fixed. It's no_poll not
-in the sense that we must use the eventfd because we can't otherwise
-figure out if it's ready, but that we don't usually care about new
-things being ready in the queue.
-
-But if we always tie the event queue to the main loop, too, it would
-already be worked around for most cases - the main loop generally won't
-be able to poll anyway because of other fd handlers that don't support
-polling.
-
-Kevin
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 830854ef72..3821ebc0ba 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -226,6 +226,10 @@ GDBProcess *gdb_get_process(uint32_t pid)
+ 
+ static GDBProcess *gdb_get_cpu_process(CPUState *cpu)
+ {
++    if (!gdbserver_state.processes) {
++        return NULL;
++    }
++
+     return gdb_get_process(gdb_get_cpu_pid(cpu));
+ }
+ 
+@@ -2272,7 +2276,7 @@ void gdb_set_stop_cpu(CPUState *cpu)
+ {
+     GDBProcess *p = gdb_get_cpu_process(cpu);
+ 
+-    if (!p->attached) {
++    if (!p || !p->attached) {
+         /*
+          * Having a stop CPU corresponding to a process that is not attached
+          * confuses GDB. So we ignore the request.
+diff --git a/mcd/mcdserver.c b/mcd/mcdserver.c
+index 837c0276e7..bdb4767060 100644
+--- a/mcd/mcdserver.c
++++ b/mcd/mcdserver.c
+@@ -59,14 +59,19 @@ static const mcd_error_info_st MCD_ERROR_NONE = {
+ /**
+  * struct mcdcore_state - State of a core.
+  *
+- * @last_error:      Error info of most recent executed core-related function.
+- * @custom_error:    Reserves memory for custom MCD errors.
+- * @info:            Core connection information.
+- * @open_core:       Open core instance as allocated in mcd_open_core_f().
+- * @cpu:             QEMU's internal CPU handle.
+- * @memory_spaces:   Memory spaces as queried by mcd_qry_mem_spaces_f().
+- * @register_groups: Register groups as queried by mcd_qry_reg_groups_f().
+- * @registers:       Registers as queried by mcd_qry_reg_map_f().
++ * @last_error:              Error info of most recent executed core-related
++ *                           function.
++ * @custom_error:            Reserves memory for custom MCD errors.
++ * @info:                    Core connection information.
++ * @open_core:               Open core instance as allocated in
++ *                           mcd_open_core_f().
++ * @cpu:                     QEMU's internal CPU handle.
++ * @memory_spaces:           Memory spaces as queried by
++ *                           mcd_qry_mem_spaces_f().
++ * @register_groups:         Register groups as queried by
++ *                           mcd_qry_reg_groups_f().
++ * @registers:               Registers as queried by mcd_qry_reg_map_f().
++ * @vm_state_change_handler: State change handler.
+  *
+  * MCD is mainly being used on the core level:
+  * After the initial query functions, a core connection is opened in
+@@ -85,6 +90,7 @@ typedef struct mcdcore_state {
+     GArray *memory_spaces;
+     GArray *register_groups;
+     GArray *registers;
++    VMChangeStateEntry *vm_state_change_handler;
+ } mcdcore_state;
+ 
+ /**
+@@ -129,6 +135,16 @@ static mcdcore_state *find_core(const mcd_core_con_info_st *core_con_info)
+     return core;
+ }
+ 
++static void mcd_handle_vm_state_change(void *opaque, bool running,
++                                       RunState state)
++{
++    mcdcore_state *core_state = (mcdcore_state *)opaque;
++    CPUState *cpu = core_state->cpu;
++
++    /* disable single step if it was enabled */
++    cpu_single_step(cpu, 0);
++}
++
+ mcd_return_et mcd_initialize_f(const mcd_api_version_st *version_req,
+                                mcd_impl_version_info_st *impl_info)
+ {
+@@ -279,6 +295,7 @@ mcd_return_et mcd_open_server_f(const char *system_key,
+                                            sizeof(mcd_register_group_st)),
+             .registers = g_array_new(false, true,
+                                      sizeof(mcd_register_info_st)),
++            .vm_state_change_handler = NULL,
+         };
+         pstrcpy(c.info.core, MCD_UNIQUE_NAME_LEN, cpu_model);
+         g_array_append_val(g_server_state.cores, c);
+@@ -663,6 +680,8 @@ mcd_return_et mcd_open_core_f(const mcd_core_con_info_st *core_con_info,
+     (*core)->instance = NULL;
+     core_state->open_core = *core;
+     core_state->last_error = &MCD_ERROR_NONE;
++    core_state->vm_state_change_handler = qemu_add_vm_change_state_handler(
++        mcd_handle_vm_state_change, core_state);
+ 
+     g_server_state.last_error = &MCD_ERROR_NONE;
+     return g_server_state.last_error->return_status;
+@@ -694,6 +713,8 @@ mcd_return_et mcd_close_core_f(const mcd_core_st *core)
+         return g_server_state.last_error->return_status;
+     }
+ 
++    qemu_del_vm_change_state_handler(core_state->vm_state_change_handler);
++    core_state->vm_state_change_handler = NULL;
+     g_free((void *)core->core_con_info);
+     g_free((void *)core);
+     core_state->open_core = NULL;
+@@ -1329,8 +1350,82 @@ mcd_return_et mcd_qry_current_time_f(const mcd_core_st *core,
+ mcd_return_et mcd_step_f(const mcd_core_st *core, bool global,
+                          mcd_core_step_type_et step_type, uint32_t n_steps)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++    int supported_step_flags = SSTEP_ENABLE | SSTEP_NOIRQ | SSTEP_NOTIMER;
++
++    if (global) {
++        g_server_state.custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_FN_UNIMPLEMENTED,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "global step not implemented",
++        };
++        g_server_state.last_error = &g_server_state.custom_error;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (n_steps != 1) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_PARAM,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "only single step supported",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    if (runstate_needs_reset()) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_GENERAL,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "internal error: runstate needs reset",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    if (vm_prepare_start(true) != 0) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_GENERAL,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "internal error: vm_prepare_start failed",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    if (step_type != MCD_CORE_STEP_TYPE_INSTR) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_TXLIST_TX,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "step type not supported",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    supported_step_flags &= accel_supported_gdbstub_sstep_flags();
++    cpu_single_step(core_state->cpu, supported_step_flags);
++    cpu_resume(core_state->cpu);
++    qemu_clock_enable(QEMU_CLOCK_VIRTUAL, true);
++
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
+ }
+ 
+ mcd_return_et mcd_set_global_f(const mcd_core_st *core, bool enable)
+diff --git a/mcd/mcdstub_qapi.c b/mcd/mcdstub_qapi.c
+index 724b7ff7ea..872fb7c9da 100644
+--- a/mcd/mcdstub_qapi.c
++++ b/mcd/mcdstub_qapi.c
+@@ -566,6 +566,23 @@ MCDStopResult *qmp_mcd_stop(uint32_t core_uid, bool global, Error **errp)
+     return result;
+ }
+ 
++MCDStepResult *qmp_mcd_step(uint32_t core_uid, bool global, uint32_t step_type,
++                            uint32_t n_steps, Error **errp)
++{
++    MCDStepResult *result = g_malloc0(sizeof(*result));
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++    result->return_status = mcd_step_f(core, global, step_type, n_steps);
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
+ MCDSetGlobalResult *qmp_mcd_set_global(uint32_t core_uid, bool enable,
+                                        Error **errp)
+ {
+diff --git a/qapi/mcd.json b/qapi/mcd.json
+index fabb3eea89..b4f21995e3 100644
+--- a/qapi/mcd.json
++++ b/qapi/mcd.json
+@@ -1549,6 +1549,43 @@
+     'global'  : 'bool' },
+   'returns': 'MCDStopResult' }
+ 
++
++##
++# @MCDStepResult:
++#
++# Return value of @mcd-step.
++#
++# @return-status: Return code.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDStepResult', 'data': { 'return-status': 'uint32' } }
++
++
++##
++# @mcd-step:
++#
++# Function stepping a target core based on the particular step type.
++#
++# @core-uid:  Unique identifier of the open core as returned by @mcd-open-core.
++# @global:    Set to "TRUE" if all cores of a system shall start
++#             execution. Otherwise, starting execution of selected core only.
++# @step-type: The unit, the stepping of the target core is based on.
++# @n-steps:   The number of steps, the target core is stepped for.
++#
++# Returns: @MCDStepResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-step',
++  'data': {
++    'core-uid' : 'uint32',
++    'global'   : 'bool',
++    'step-type': 'uint32',
++    'n-steps'  : 'uint32' },
++  'returns': 'MCDStepResult' }
++
++
+ ##
+ # @MCDSetGlobalResult:
+ #
+@@ -1580,7 +1617,6 @@
+     'enable'  : 'bool' },
+   'returns': 'MCDSetGlobalResult' }
+ 
+-
+ ##
+ # @MCDQryStateResult:
+ #
+-- 
+2.34.1
 
 
