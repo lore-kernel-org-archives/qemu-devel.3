@@ -4,92 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18AC6C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 19:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8ADCC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 19:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1triY6-0003ph-Ih; Mon, 10 Mar 2025 15:12:26 -0400
+	id 1trinH-0002Hb-0V; Mon, 10 Mar 2025 15:28:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1triXx-0003op-5d
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 15:12:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1triXu-0004rQ-KG
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 15:12:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741633932;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1trinF-0002Ev-S2
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 15:28:05 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1trinD-0007IH-1u
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 15:28:05 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id F2D6F1F387;
+ Mon, 10 Mar 2025 19:28:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741634881; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=b85ZEHYSbq8JZLOmn7bdeImz7K0kuutIZ0nl1LUMAkw=;
- b=QZzQl+pRor0xEInbfCDZmV0qp6vEEIcl4B8KMX/2MsVTwv5+NlJ/O7o6KN5XZzCjolC/xk
- Lah95xsQMi9uh80jEEMhcZCUBS2CehLJhi3tVEIh/jA2rdWrrPhxKtSgINFctk7qdaHkUM
- wd7F3kC4RfL69h5TSYu+JeR07qXbfvs=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-HvPH0nSAPxWtiZMJEwACUA-1; Mon, 10 Mar 2025 15:12:09 -0400
-X-MC-Unique: HvPH0nSAPxWtiZMJEwACUA-1
-X-Mimecast-MFC-AGG-ID: HvPH0nSAPxWtiZMJEwACUA_1741633929
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c24bb4f502so866036185a.3
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 12:12:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741633929; x=1742238729;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=b85ZEHYSbq8JZLOmn7bdeImz7K0kuutIZ0nl1LUMAkw=;
- b=Dt75bfe9lL4qvWPwsmJcJcUz4Kf8sSlCDhknPTkOQC5J0YzRcWOOvUGf2kQQ4bnB25
- 09iYKByQ5q03Ft5kfID3angob9vR5KT+EB7wjhm2jr/dy7VU8IV039C10+/+KAjAJmEd
- f+m7qFWSrrAMOSOqlDXid9e4f01bzqfeKtnI/WPJnw3/MmPnC1uOVhTJMzLyV3g2sGpj
- 1tTlGLbUOTuLsN47h6S3t+0BN6IZV8GdLXmmu5AjaWcaSJOM+dX6XbKB8aICFAUxey7z
- /HZWVUnk6A3uQkxPdqxXpS6ct4lhz/LzGlB4vRvYJXhCfEMw5kyPky1PTxuu0u4EIJDj
- PEqA==
-X-Gm-Message-State: AOJu0Yw2CgjzJsZj+Fd8CTHmg/uba4TQX32KXTWWqyt6vYRfxpTffW3v
- Iubeo3xqpj7IplLvUknezmqA8skjxrJ88eiKqMy+WX/8He/DpY0ygU+LasyKR26Xt4DTSVXDNgv
- /r35PTBmqyHncYkpZJCSI6rs/75TFLnGikbfC4B4AkjBRUOhOlbw4
-X-Gm-Gg: ASbGnctD4fbLh4Z2gAkvZf8NaINsJc50Cs8K7ScGmadetQFmZFWmxsI0BEt+vL9MikP
- KOu1Ol4R4znlrBUIsm1LTVZ7i/mRB9Kmy9Zsxv0S+L6Hv3/l4L2LDaxHEyRRJqz7g8jwA+vtmci
- IC6jM/lDQIYU4XaBs+zuDao4JIU8GT69o3h/vpRrEQK7lDn5K5xo/Atxaf3u4j1xhK/In5uzjXl
- kG+tn6nRWNVRC13vzqsChK7pGJSZXHtyYLCm5eHOMpxbNvTXMXElFnQSjr6krD4KWjJxrUGRAZr
- obINHr8=
-X-Received: by 2002:a05:620a:6503:b0:7c5:4a3a:bc07 with SMTP id
- af79cd13be357-7c54a3abf56mr1012575185a.5.1741633929217; 
- Mon, 10 Mar 2025 12:12:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYq0tyY1x58WlikPD2s2zfgey5EDDi4UHA//9LvXFWNZ/HrEP4BkRahLIuiGW3HZ3dHnHxaQ==
-X-Received: by 2002:a05:620a:6503:b0:7c5:4a3a:bc07 with SMTP id
- af79cd13be357-7c54a3abf56mr1012571685a.5.1741633928796; 
- Mon, 10 Mar 2025 12:12:08 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c5564bffefsm185956385a.39.2025.03.10.12.12.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Mar 2025 12:12:08 -0700 (PDT)
-Date: Mon, 10 Mar 2025 15:12:05 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Manish Mishra <manish.mishra@nutanix.com>
-Cc: qemu-devel@nongnu.org, leobras@redhat.com, berrange@redhat.com,
- farosas@suse.de
-Subject: Re: [PATCH v2] QIOChannelSocket: Flush zerocopy socket error queue
- on ENOBUF failure for sendmsg
-Message-ID: <Z885hS6QmGOZYj7N@x1.local>
-References: <20250310011500.240782-1-manish.mishra@nutanix.com>
+ bh=+BQ7/WypFMjzZKif1tRbn1PMrQ/bPDJjEOXjkp75u6w=;
+ b=Zly8LgjZf5z9IDF8adpOQuzIK9YX/E1wRaY1g4yLBRF8vun9J0HKAmP5N2z3mPlwQiZ+Zs
+ g6OTQfqDojXSuWytDWfpWTOQ0/i/VYof6dF4ho8pEsi2FyicSxZ3EH0oQMsTpzDBBjw7Oi
+ IpgBGQhBwdyhtsaEF/o395CjOwHoKP0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741634881;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+BQ7/WypFMjzZKif1tRbn1PMrQ/bPDJjEOXjkp75u6w=;
+ b=pc5PJNxYWAD5dAD6Kx6GdfMI6JhSxAXSTGOME6CINWRqHS4w6wa5j5ktqkPo0xYfml5QAQ
+ vsX4WV6HK+s+cPDQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741634880; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+BQ7/WypFMjzZKif1tRbn1PMrQ/bPDJjEOXjkp75u6w=;
+ b=g8pzJ2aKYEa7RXYziVmmjVeyp1TQyUPfwtDJ9gi3CxYImV4me+NWyhNzTIsLadZLHStAmm
+ 37yhZUZ//TkPop9n8wXOJuYvVz326/eDTh0Tvif3vLcE5NjXmr81yJQbi18t22jNHJaI/S
+ mtcotwQDqKzgB537EJ8q3Tq0KiUo+3w=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741634880;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+BQ7/WypFMjzZKif1tRbn1PMrQ/bPDJjEOXjkp75u6w=;
+ b=H/dXmahOb+a806UAPawRMe1gSQ/C9BjfWdkpg+fbjsJJY4Zm0nzVI51vOnC3tEP7bvPq30
+ hMSWdpNMbHRaDUAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6046F1399F;
+ Mon, 10 Mar 2025 19:28:00 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id LPfBB0A9z2ddFAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 10 Mar 2025 19:28:00 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero"
+ <mail@maciej.szmigiero.name>, =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>
+Subject: Re: [PATCH 1/2] migration: Add some documentation for multifd
+In-Reply-To: <Z88DmvrNrW5Q1n7y@x1.local>
+References: <20250307134203.29443-1-farosas@suse.de>
+ <20250307134203.29443-2-farosas@suse.de> <Z8ssc0NETt9KJjTG@x1.local>
+ <87tt84u0d2.fsf@suse.de> <Z8tv53G5s9MLYv6f@x1.local>
+ <87o6y9t14g.fsf@suse.de> <Z88DmvrNrW5Q1n7y@x1.local>
+Date: Mon, 10 Mar 2025 16:27:57 -0300
+Message-ID: <87ecz4adoi.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250310011500.240782-1-manish.mishra@nutanix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.985]; MIME_GOOD(-0.10)[text/plain];
+ FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; MISSING_XM_UA(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,284 +119,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 09, 2025 at 09:15:00PM -0400, Manish Mishra wrote:
-> We allocate extra metadata SKBs in case of a zerocopy send. This metadata
-> memory is accounted for in the OPTMEM limit. If there is any error while
-> sending zerocopy packets or if zerocopy is skipped, these metadata SKBs are
-> queued in the socket error queue. This error queue is freed when userspace
-> reads it.
-> 
-> Usually, if there are continuous failures, we merge the metadata into a single
-> SKB and free another one. As a result, it never exceeds the OPTMEM limit.
-> However, if there is any out-of-order processing or intermittent zerocopy
-> failures, this error chain can grow significantly, exhausting the OPTMEM limit.
-> As a result, all new sendmsg requests fail to allocate any new SKB, leading to
-> an ENOBUF error. Depending on the amount of data queued before the flush
-> (i.e., large live migration iterations), even large OPTMEM limits are prone to
-> failure.
-> 
-> To work around this, if we encounter an ENOBUF error with a zerocopy sendmsg,
-> we flush the error queue and retry once more.
-> 
-> Additionally, this patch removes the dirty_sync_missed_zero_copy migration
-> stat. This stat is not used anywhere and does not seem useful. Removing it
-> simplifies the patch.
+Peter Xu <peterx@redhat.com> writes:
 
-IMHO it's still useful, it's just that if it's for debugging purpose, it's
-optional to expose it via QAPI.  Then if without exposing it to upper
-layer, it can simplify the change this patch wanted to introduce.  We can
-still keep it a tracepoint.
+> On Mon, Mar 10, 2025 at 11:24:15AM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Fri, Mar 07, 2025 at 04:06:17PM -0300, Fabiano Rosas wrote:
+>> >> > I never tried vsock, would it be used in any use case?
+>> >> >
+>> >> 
+>> >> I don't know, I'm going by what's in the code.
+>> >> 
+>> >> > It seems to be introduced by accident in 72a8192e225cea, but I'm not sure.
+>> >> > Maybe there's something I missed.
+>> >> 
+>> >> The code was always had some variation of:
+>> >> 
+>> >> static bool transport_supports_multi_channels(SocketAddress *saddr)
+>> >> {
+>> >>     return strstart(uri, "tcp:", NULL) || strstart(uri, "unix:", NULL) ||
+>> >>            strstart(uri, "vsock:", NULL);
+>> >> }
+>> >> 
+>> >> Introduced by b7acd65707 ("migration: allow multifd for socket protocol
+>> >> only").
+>> >
+>> > Looks like a copy-paste error..  I found it, should be 9ba3b2baa1
+>> > ("migration: add vsock as data channel support").
+>> >
+>> > https://lore.kernel.org/all/2bc0e226-ee71-330a-1bcd-bd9d097509bc@huawei.com/
+>> > https://kvmforum2019.sched.com/event/Tmzh/zero-next-generation-virtualization-platform-for-huawei-cloud-jinsong-liu-zhichao-huang-huawei
+>> > https://e.huawei.com/sa/material/event/HC/e37b9c4c33e14e869bb1183fab468fed
+>> >
+>> 
+>> Great, thanks for finding those. I'll add it to my little "lore"
+>> folder. This kind of information is always good to know.
+>> 
+>> > So if I read it right.. the VM in this case is inside a container or
+>> > something, then it talks to an "agent" on a PCIe device which understands
+>> > virtio-vsock protocol.  So maybe vsock just performs better than other ways
+>> > to dig that tunnel for the container.
+>> >
+>> > In that case, mentioning vsock is at least ok.
+>> >
+>> > [...]
+>> >
+>> >> >> +After the channels have been put into a wait state by the sync
+>> >> >> +functions, the client code may continue to transmit additional data by
+>> >> >> +issuing ``multifd_send()`` once again.
+>> >> >> +
+>> >> >> +Note:
+>> >> >> +
+>> >> >> +- the RAM migration does, effectively, a global synchronization by
+>> >> >> +  chaining a call to ``multifd_send_sync_main()`` with the emission of a
+>> >> >> +  flag on the main migration channel (``RAM_SAVE_FLAG_MULTIFD_FLUSH``)
+>> >> >
+>> >> > ... or RAM_SAVE_FLAG_EOS ... depending on the machine type.
+>> >> >
+>> >> 
+>> >> Eh.. big compatibility mess. I rather not mention it.
+>> >
+>> > It's not strictly a compatibility mess.  IIUC, it was used to be designed
+>> > to always work with EOS.  I think at that time Juan was still focused on
+>> > making it work and not whole perf tunings, but then we found it can be a
+>> > major perf issue if we flush too soon.  Then if we flush it once per round,
+>> > it may not always pair with a EOS.  That's why we needed a new message.
+>> >
+>> 
+>> Being fully honest, at the time I got the impression the situation was
+>> "random person inside RH decided to measure performance of random thing
+>> and upstream maintainer felt pressure to push a fix".
+>> 
+>> Whether that was the case or not, it doesn't matter now, but we can't
+>> deny that this _has_ generated some headache, just look at how many
+>> issues arose from the introduction of that flag.
+>
+> I might be the "random person" here.  I remember I raised this question to
+> Juan on why we need to flush for each iteration.
+>
 
-Meanwhile, please consider spliting the patch into two:
+It's a good question indeed. It was the right call to address it, I just
+wish we had come up with a more straight-forward solution to it.
 
-  - Removal of dirty_sync_missed_zero_copy, we need to copy QAPI
-    maintainers for this one.  We can add a tracepoint altogether.
+> I also remember we did perf test, we can redo it.  But we can discuss the
+> design first.
+>
+> To me, this is a fairly important question to ask.  Fundamentally, the very
+> initial question is why do we need periodic flush and sync at all.  It's
+> because we want to make sure new version of pages to land later than old
+> versions.
+>
+> Note that we can achieve that in other ways too. E.g., if we only enqueue a
+> page to a specific multifd thread (e.g. page_index % n_multifd_threads),
+> then it'll guarantee the ordering without flush and sync, because new / old
+> version for the same page will only go via the same channel, which
+> guarantees ordering of packets in time order naturally.
 
-  - The real work for the workaround on the flush
+Right.
 
-> 
-> V2:
->   1. Removed the dirty_sync_missed_zero_copy migration stat.
->   2. Made the call to qio_channel_socket_flush_internal() from
->      qio_channel_socket_writev() non-blocking.
-> 
-> Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
-> ---
->  include/io/channel.h           |  3 +-
->  io/channel-socket.c            | 57 ++++++++++++++++++++++++----------
->  migration/migration-hmp-cmds.c |  5 ---
->  migration/migration-stats.h    |  5 ---
->  migration/migration.c          |  2 --
->  migration/multifd.c            |  3 --
->  6 files changed, 41 insertions(+), 34 deletions(-)
-> 
-> diff --git a/include/io/channel.h b/include/io/channel.h
-> index 62b657109c..c393764ab7 100644
-> --- a/include/io/channel.h
-> +++ b/include/io/channel.h
-> @@ -980,8 +980,7 @@ int coroutine_mixed_fn qio_channel_writev_full_all(QIOChannel *ioc,
->   * If not implemented, acts as a no-op, and returns 0.
->   *
->   * Returns -1 if any error is found,
-> - *          1 if every send failed to use zero copy.
-> - *          0 otherwise.
-> + *          0 on success.
->   */
->  
->  int qio_channel_flush(QIOChannel *ioc,
-> diff --git a/io/channel-socket.c b/io/channel-socket.c
-> index 608bcf066e..0f2a5c2b5f 100644
-> --- a/io/channel-socket.c
-> +++ b/io/channel-socket.c
-> @@ -37,6 +37,12 @@
->  
->  #define SOCKET_MAX_FDS 16
->  
-> +#ifdef QEMU_MSG_ZEROCOPY
-> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-> +                                             bool block,
-> +                                             Error **errp);
-> +#endif
-> +
->  SocketAddress *
->  qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
->                                       Error **errp)
-> @@ -566,6 +572,7 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
->      size_t fdsize = sizeof(int) * nfds;
->      struct cmsghdr *cmsg;
->      int sflags = 0;
-> +    bool zero_copy_flush_pending = TRUE;
+> But that at least has risk of not being able to fully leverage the
+> bandwidth, e.g., worst case is the guest has dirty pages that are
+> accidentally always hashed to the same channel; consider a program
+> keeps dirtying every 32K on a 4K psize system with 8 channels.  Or
+> something like that.
+>
+> Not documenting EOS part is ok too from that pov, because it's confusing
+> too on why we need to flush per EOS.  Per-round is more understandable from
+> that POV, because we want to make sure new version lands later, and
+> versioning boost for pages only happen per-round, not per-iteration.
+>
+>> 
+>> > But hey, you're writting a doc that helps everyone.  You deserve to decide
+>> > whether you like to mention it or not on this one. :)
+>> 
+>> My rant aside, I really want to avoid any readers having to think too
+>> much about this flush thing. We're already seeing some confusion when
+>> discussing it with Prasad in the other thread. The code itself and the
+>> git log are more reliable to explain the compat situation IMO.
+>> 
+>> >
+>> > IIRC we updated our compat rule so we maintain each machine type for only 6
+>> > years.  It means the whole per-iteration + EOS stuff can be removed in 3.5
+>> > years or so - we did that work in July 2022.  So it isn't that important
+>> > either to mention indeed.
+>> >
+>> 
+>> Yep, that as well.
+>> 
+>> >> 
+>> >> > Maybe we should also add a sentence on the relationship of
+>> >> > MULTIFD_FLAG_SYNC and RAM_SAVE_FLAG_MULTIFD_FLUSH (or RAM_SAVE_FLAG_EOS ),
+>> >> > in that they should always be sent together, and only if so would it
+>> >> > provide ordering of multifd messages and what happens in the main migration
+>> >> > thread.
+>> >> >
+>> >> 
+>> >> The problem is that RAM_SAVE_FLAGs are a ram.c thing. In theory the need
+>> >> for RAM_SAVE_FLAG_MULTIFD_FLUSH is just because the RAM migration is
+>> >> driven by the source machine by the flags that are put on the
+>> >> stream. IOW, this is a RAM migration design, not a multifd design. The
+>> >> multifd design is (could be, we decide) that once sync packets are sent,
+>> >> _something_ must do the following:
+>> >> 
+>> >>     for (i = 0; i < thread_count; i++) {
+>> >>         trace_multifd_recv_sync_main_wait(i);
+>> >>         qemu_sem_wait(&multifd_recv_state->sem_sync);
+>> >>     }
+>> >> 
+>> >> ... which is already part of multifd_recv_sync_main(), but that just
+>> >> _happens to be_ called by ram.c when it sees the
+>> >> RAM_SAVE_FLAG_MULTIFD_FLUSH flag on the stream, that's not a multifd
+>> >> design requirement. The ram.c code could for instance do the sync when
+>> >> some QEMU_VM_SECTION_EOS (or whatever it's called) appears.
+>> >
+>> > I still think it should be done in RAM code only.  One major goal (if not
+>> > the only goal..) is it wants to order different versions of pages and
+>> > that's only what the RAM module is about, not migration in general.
+>> >
+>> > From that POV, having a QEMU_VM_* is kind of the wrong layer - they should
+>> > work for migration in general.
+>> >
+>> > Said so, I agree we do violate it from time to time, for example, we have a
+>> > bunch of subcmds (MIG_CMD_POSTCOPY*) just for postcopy, which is under
+>> > QEMU_VM_COMMAND.  But IIUC that was either kind of ancient (so we need to
+>> > stick with them now.. postcopy was there for 10 years) or it needs some
+>> > ping-pong messages in which case QEMU_VM_COMMAND is the easiest.. IMHO we
+>> > should still try to stick with the layering if possible.
+>> 
+>> All good points, but I was talking of something else:
+>> 
+>> I was just throwing an example of how it could be done differently to
+>> make the point clear that the recv_sync has nothing to do with the ram
+>> flag, that's just implementation detail. I was thinking specifically
+>> about the multifd+postcopy work where we might need syncs but there is
+>> no RAM_FLAGS there.
+>> 
+>> We don't actually _need_ to sync with the migration thread on the
+>> destination like that. The client could send control information in it's
+>> opaque packet (instead of in the migration thread) or in a completely
+>> separate channel if it wanted. That sync is also not necessary if there
+>> is no dependency around the data being transferred (i.e. mapped-ram just
+>> takes data form the file and writes to guest memory)
+>
+> Mapped-ram is definitely different.
+>
+> For sockets, IIUC we do rely on the messages on the multifd channels _and_
+> the message on the main channel.
+>
+> So I may not have fully get your points above, but..
 
-I'd call it zerocopy_flush_once = FALSE.  "pending" may imply it needs to
-be done at some point, but it's not always needed, afaict.  It's a throttle
-that "if try it we should try no more than once" - logically speaking there
-must be no concurrent writters to the same iochannel, it means if it's
-about fallback messages eating up the optmem limit, one flush should always
-work, or it must be some other real errors that we need to report, hence
-"once".
+My point is just a theoretical one. We _could_ make this work with a
+different mechanism. And that's why I'm being careful in what to
+document, that's all.
 
-I think we should also add a rich comment above the variable or the code
-below to explain the issue.  It might make the code more readable too
-without looking into git history.
+> See how it more or
+> less implemented a remote memory barrier kind of thing _with_ the main
+> channel message:
+>
+>      main channel    multifd channel 1        multifd channel 2      
+>      ------------    -----------------        -----------------
+>                        send page P v1
+>   +------------------------------------------------------------------+
+>   |  RAM_SAVE_FLAG_MULTIFD_FLUSH                                     |
+>   |                    MULTIFD_FLAG_SYNC        MULTIFD_FLAG_SYNC    |
+>   +------------------------------------------------------------------+
+>                                                 send page P v2
+>
 
->  
->      memset(control, 0, CMSG_SPACE(sizeof(int) * SOCKET_MAX_FDS));
->  
-> @@ -612,9 +619,21 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
->              goto retry;
->          case ENOBUFS:
->              if (flags & QIO_CHANNEL_WRITE_FLAG_ZERO_COPY) {
-> -                error_setg_errno(errp, errno,
-> -                                 "Process can't lock enough memory for using MSG_ZEROCOPY");
-> -                return -1;
-> +                if (zero_copy_flush_pending) {
-> +                    ret = qio_channel_socket_flush_internal(ioc, false, errp);
-> +                    if (ret < 0) {
-> +                        error_setg_errno(errp, errno,
-> +                                         "Zerocopy flush failed");
-> +                        return -1;
-> +                    }
-> +                    zero_copy_flush_pending = FALSE;
-> +                    goto retry;
-> +                } else {
-> +                    error_setg_errno(errp, errno,
-> +                                     "Process can't lock enough memory for "
-> +                                     "using MSG_ZEROCOPY");
-> +                    return -1;
-> +                }
->              }
->              break;
->          }
-> @@ -725,8 +744,9 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
->  
->  
->  #ifdef QEMU_MSG_ZEROCOPY
-> -static int qio_channel_socket_flush(QIOChannel *ioc,
-> -                                    Error **errp)
-> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-> +                                             bool block,
-> +                                             Error **errp)
->  {
->      QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
->      struct msghdr msg = {};
-> @@ -734,7 +754,6 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
->      struct cmsghdr *cm;
->      char control[CMSG_SPACE(sizeof(*serr))];
->      int received;
-> -    int ret;
->  
->      if (sioc->zero_copy_queued == sioc->zero_copy_sent) {
->          return 0;
-> @@ -744,16 +763,19 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
->      msg.msg_controllen = sizeof(control);
->      memset(control, 0, sizeof(control));
->  
-> -    ret = 1;
-> -
->      while (sioc->zero_copy_sent < sioc->zero_copy_queued) {
->          received = recvmsg(sioc->fd, &msg, MSG_ERRQUEUE);
->          if (received < 0) {
->              switch (errno) {
->              case EAGAIN:
-> -                /* Nothing on errqueue, wait until something is available */
-> -                qio_channel_wait(ioc, G_IO_ERR);
-> -                continue;
-> +                if (block) {
-> +                    /* Nothing on errqueue, wait until something is
-> +                     * available.
-> +                     */
-> +                    qio_channel_wait(ioc, G_IO_ERR);
-> +                    continue;
-> +                }
-> +                return 0;
->              case EINTR:
->                  continue;
->              default:
-> @@ -790,14 +812,15 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
->  
->          /* No errors, count successfully finished sendmsg()*/
->          sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
-> -
-> -        /* If any sendmsg() succeeded using zero copy, return 0 at the end */
-> -        if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
-> -            ret = 0;
-> -        }
+This is a nice way of diagramming that!
 
-We could attach a tracepoint to not lose the debug-ability showing whether
-zerocopy is working or got falled back.
+> Then v1 and v2 of the page P are ordered.
+>
+> If without the message on the main channel:
+>
+>      main channel    multifd channel 1        multifd channel 2      
+>      ------------    -----------------        -----------------
+>                        send page P v1
+>                        MULTIFD_FLAG_SYNC
+>                                                 MULTIFD_FLAG_SYNC
+>                                                 send page P v2
+>
+> Then I don't see what protects reorder of arrival of messages like:
+>
+>      main channel    multifd channel 1        multifd channel 2      
+>      ------------    -----------------        -----------------
+>                                                 MULTIFD_FLAG_SYNC
+>                                                 send page P v2
+>                        send page P v1
+>                        MULTIFD_FLAG_SYNC
+>
 
->      }
->  
-> -    return ret;
-> +    return 0;
-> +}
-> +
-> +static int qio_channel_socket_flush(QIOChannel *ioc,
-> +                                    Error **errp)
-> +{
-> +    return qio_channel_socket_flush_internal(ioc, true, errp);
->  }
->  
->  #endif /* QEMU_MSG_ZEROCOPY */
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 49c26daed3..4533ce91ae 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -138,11 +138,6 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
->              monitor_printf(mon, "postcopy ram: %" PRIu64 " kbytes\n",
->                             info->ram->postcopy_bytes >> 10);
->          }
-> -        if (info->ram->dirty_sync_missed_zero_copy) {
-> -            monitor_printf(mon,
-> -                           "Zero-copy-send fallbacks happened: %" PRIu64 " times\n",
-> -                           info->ram->dirty_sync_missed_zero_copy);
-> -        }
->      }
->  
->      if (info->xbzrle_cache) {
-> diff --git a/migration/migration-stats.h b/migration/migration-stats.h
-> index 05290ade76..80a3d4be93 100644
-> --- a/migration/migration-stats.h
-> +++ b/migration/migration-stats.h
-> @@ -50,11 +50,6 @@ typedef struct {
->       * Number of times we have synchronized guest bitmaps.
->       */
->      Stat64 dirty_sync_count;
-> -    /*
-> -     * Number of times zero copy failed to send any page using zero
-> -     * copy.
-> -     */
-> -    Stat64 dirty_sync_missed_zero_copy;
->      /*
->       * Number of bytes sent at migration completion stage while the
->       * guest is stopped.
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 1833cfe358..2ab19ca858 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1231,8 +1231,6 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
->      info->ram->mbps = s->mbps;
->      info->ram->dirty_sync_count =
->          stat64_get(&mig_stats.dirty_sync_count);
-> -    info->ram->dirty_sync_missed_zero_copy =
-> -        stat64_get(&mig_stats.dirty_sync_missed_zero_copy);
->      info->ram->postcopy_requests =
->          stat64_get(&mig_stats.postcopy_requests);
->      info->ram->page_size = page_size;
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index dfb5189f0e..ee6b2d3cba 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -607,9 +607,6 @@ static int multifd_zero_copy_flush(QIOChannel *c)
->          error_report_err(err);
->          return -1;
->      }
-> -    if (ret == 1) {
-> -        stat64_add(&mig_stats.dirty_sync_missed_zero_copy, 1);
-> -    }
-
-If we want to remove this, we need to remove the variable in QAPI too.
-
-# @dirty-sync-missed-zero-copy: Number of times dirty RAM
-#     synchronization could not avoid copying dirty pages.  This is
-#     between 0 and @dirty-sync-count * @multifd-channels.  (since
-#     7.1)
-
-Personally I'd remove it directly, but others may not always agree... in
-this case, the safe approach is to mark it deprecate and update this in
-docs/about/deprecated.rst.  Then you can leave it to us to finally remove
-this entry (or send another patch after two qemu releases).
-
-Thanks,
-
->  
->      return ret;
->  }
-> -- 
-> 2.43.0
-> 
-
--- 
-Peter Xu
-
+That's all fine. As long as the recv part doesn't see them out of
+order. I'll try to write some code to confirm so I don't waste too much
+of your time.
 
