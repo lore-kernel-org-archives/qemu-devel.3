@@ -4,84 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D5E8C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 10:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA44C28B2E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 10:50:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trahp-0006cE-PG; Mon, 10 Mar 2025 06:50:00 -0400
+	id 1trah8-0006OO-SF; Mon, 10 Mar 2025 06:49:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1trahg-0006Ub-Gk
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:49:50 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1trahd-0004wM-UW
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:49:47 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-6fbaa0582a6so35510827b3.1
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 03:49:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741603784; x=1742208584; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lPdgGObt3I9W5H3oCG0ujbSqzvoCHpdJpv7djxg/VTY=;
- b=mAm6IcypiywWxMzJSct1xCVvVVfSWy+P/kfRDLiMa1tRxjHyQobOjGMKs0UXyddazh
- d7S2gjQ8gyRFiJjR1iooZh50qzA4CBCjnrMAaZApYXHGg+ZUli1oY5TE8sE6LXIjks6M
- QVmlOrz0VK+hDuLveOFHvEKwROATcV4KqSCH3UksW5+c1axuCQ2vrhTQAqXYGFLm38MG
- k9LjgEvh8Kp/bctKTRzdiZ+VnsEDUXjUwNYcWzmcZxDlSNB1AuNHfhVqZjPdPGtArXvJ
- 7QjHnntllOhuNg0uVsBPyZeoEsuBzJJU+v7IPyktwvwyN9Qjcg9o0QUr7+LcLjjSK7Dt
- Lmgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741603784; x=1742208584;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lPdgGObt3I9W5H3oCG0ujbSqzvoCHpdJpv7djxg/VTY=;
- b=bvHOXUctE6gGnBclZvz/TTmXs6LaJaAJQbe/04Nx0g0ApHAUyPyFcSwkm1gwQwxcux
- ZO2YGbEvCZ8eZHVXNqV/obR3149KMuxtT/VjOWND/tXdgqmygHeU99sqBCuxS506OkbF
- 4N85EgLltMsFXAECmQKLj0qDMd9V1+QxVeiEtH6qdHHq9P4+/YqFNMebtq0bUt2wM2TT
- KpBGmXKtsxN/p+HMckKAQQ9sd1x7mEtEAmfABQCAeCx4Rw0Fu0bfpNKqSAkKwMwbgtr/
- A4MgG6LkGnqFjTI1HZQC0BVcGh2VNsOhGrb7Rif5ARGPlaasX7imW6c+lMxwehoD8M+L
- H0wg==
-X-Gm-Message-State: AOJu0Yx6jaB5EJ61oCVVDTlrvleZfIIXiMcN7YY6kUlWcb7enFPv6W6c
- lY6dJHNiPQDBa3gbnxdCHUyBqmyJkIiGvG4gfcr+rwgYnXIQIRuBhRdpuuAiDzIu1U1HcqqZnYx
- X+5b7CVLNyH5y4V7HmF/PrW4zMjefPBAhQ4wBwA==
-X-Gm-Gg: ASbGncuT9WJnLrciES0Hb69qQu8WmLyMtnhpkhZgnHdrjiXQ5pkCwN9W6ElQjk9+3Ae
- S7/Cha0yeHsunJhacNq88PqFHYD3RRMPhFUjiuJT71aOBHSSsA3OPPZSZNjLDA2NaW4w0uX7HV+
- HeThdebus2e/NFL6v0Od7ceD3MKa8=
-X-Google-Smtp-Source: AGHT+IFxOTniQtNa/zwfV4kAdswht7O6AS0MIzFwYlsNnMlGfWu3+gJ6Gp3T8T9nXvsarNKl10dZJR3IRzpejU16EM0=
-X-Received: by 2002:a05:6902:70f:b0:e60:915b:188 with SMTP id
- 3f1490d57ef6-e636f7e9a04mr10189653276.18.1741603784612; Mon, 10 Mar 2025
- 03:49:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1trah4-0006NM-J9
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:49:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1trah2-0004rg-GB
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:49:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741603747;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=I36Dcvi268C2V8W9mc+7VsefR7nGxhlXfzQDjKPhpfE=;
+ b=Li04kZXkOiLbTYJZdQ7zVhNxKdCvltzl8g373JRH8wTnhgK9FOqAyWKZY7ANMZAIcIIaEu
+ P4HvjRa7GsTkeOrxYFI9z8nbSW+lIgsSwadFD9AQBW9huKJj7cLbqAUnSo/Y6JDE0lJldC
+ Idc0VbiaIIFZ2lUaxxVWPo6BXMV+S7o=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-270-UyEXadnENGW9rt4aAi1DbQ-1; Mon,
+ 10 Mar 2025 06:49:03 -0400
+X-MC-Unique: UyEXadnENGW9rt4aAi1DbQ-1
+X-Mimecast-MFC-AGG-ID: UyEXadnENGW9rt4aAi1DbQ_1741603743
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8FEE519560A1; Mon, 10 Mar 2025 10:49:02 +0000 (UTC)
+Received: from merkur.redhat.com (unknown [10.45.225.222])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AF1721800944; Mon, 10 Mar 2025 10:49:00 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com, gerben@altlinux.org, qemu-stable@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] block: Zero block driver state before reopening
+Date: Mon, 10 Mar 2025 11:48:58 +0100
+Message-ID: <20250310104858.28221-1-kwolf@redhat.com>
 MIME-Version: 1.0
-References: <3cca4eb3-09d1-4467-81fd-27a5bfe19a3e@csclub.uwaterloo.ca>
- <CAFEAcA9kED+fB1repp2+r-zMfZ_5ZeAkZq2ChyxjSUo1j5gAFQ@mail.gmail.com>
- <aef79501-b99f-4e84-b6fe-14dec1e030e6@csclub.uwaterloo.ca>
- <CAFEAcA9ht=T_XqKaKB-PaNK9joQFYgks37JHjqUO-qkaNe7YUQ@mail.gmail.com>
- <d714a7c2-2291-4a85-abcc-81648da1ef57@csclub.uwaterloo.ca>
- <CAFEAcA-9Nj9KrcPwoBBT88wK=NUPsorT71XbBbyLJYOemmkojQ@mail.gmail.com>
- <3660e47b-0f37-4e6d-8bbd-7d646eb67207@csclub.uwaterloo.ca>
-In-Reply-To: <3660e47b-0f37-4e6d-8bbd-7d646eb67207@csclub.uwaterloo.ca>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 10 Mar 2025 10:49:33 +0000
-X-Gm-Features: AQ5f1JrK2AJr7PnVsjxXkms3FcAS4rRuyNa3gw_NEhUjC6t3NN5Lnc8cXvVU0Sc
-Message-ID: <CAFEAcA87OntUbW+CnebWZirnrHw4ZwFwROeRs4qJd91O6B3U4w@mail.gmail.com>
-Subject: Re: [PATCH] bcm2838: Add GIC-400 timer interupt connections
-To: Sourojeet Adhikari <s23adhik@csclub.uwaterloo.ca>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,50 +79,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 10 Mar 2025 at 06:29, Sourojeet Adhikari
-<s23adhik@csclub.uwaterloo.ca> wrote:
->
-> Hello,
->
-> So far I've figured out that I need to add a member called SplitIRQ
-> in the BCMSocPeripheralBaseState struct, which is of size defined
-> by `BCM2835_NUM_SPLITTERS`. Then from what I can tell through
-> reading through the codebase, I should do something similar to
-> what happens in `exynos4210.c` in the `exynos4210_init_board_irqs`
-> function?
+Block drivers assume in their .bdrv_open() implementation that their
+state in bs->opaque has been zeroed; it is initially allocated with
+g_malloc0() in bdrv_open_driver().
 
-QEMU qdev devices have a multiple-stage initialization process:
- (1) 'init', which in this case means calling object_initialize_child().
-     In this case you should do this in raspi_peripherals_base_init(),
-     where we do this for the other child devices of the common
-     peripheral base object.
- (2) set properties (in this case the "num-lines" property, which
-     needs to be set to 2). You do this in the parent object's 'realize'
-     method, in this case bcm_soc_peripherals_common_realize().
-     There are several different equivalent APIs to set a simple
-     integer property; using qdev_prop_set_uint16() like the exynos
-     code does is fine.
- (3) realize the device by calling qdev_realize(); this has to be
-     done after all properties are set.
- (4) wire up the input and output GPIO lines (you want to wire up
-     a GPIO only once the devices on both ends have been realized).
-     For this case, in the bcm_soc_peripherals_common_realize()
-     function we're going to wire up the the device's outbound
-     IRQ to the input of the appropriate splitter, and connect
-     output 0 of that splitter to the BCM2835_IC correct interrupt
-     controller input.
- (5) The last bit of wiring, where we connect splitter output 1 to
-     the correct GIC input, we do in bcm2838.c, and only after
-     we've called 'realize' for both the bcm2835_peripherals object
-     and the GIC object.
+bdrv_snapshot_goto() needs to make sure that it is zeroed again before
+calling drv->bdrv_open() to avoid that block drivers use stale values.
 
-> Sorry for taking a while to get back and still having quite a few
-> questions about this. Thank you for helping me out with writting
-> this patch.
+One symptom of this bug is VMDK running into a double free when the user
+tries to apply an internal snapshot like 'qemu-img snapshot -a test
+test.vmdk'. This should be a graceful error because VMDK doesn't support
+internal snapshots.
 
-No worries; this stuff is all quite complicated and we don't
-really document it very well.
+==25507== Invalid free() / delete / delete[] / realloc()
+==25507==    at 0x484B347: realloc (vg_replace_malloc.c:1801)
+==25507==    by 0x54B592A: g_realloc (gmem.c:171)
+==25507==    by 0x1B221D: vmdk_add_extent (../block/vmdk.c:570)
+==25507==    by 0x1B1084: vmdk_open_sparse (../block/vmdk.c:1059)
+==25507==    by 0x1AF3D8: vmdk_open (../block/vmdk.c:1371)
+==25507==    by 0x1A2AE0: bdrv_snapshot_goto (../block/snapshot.c:299)
+==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
+==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
+==25507==  Address 0x832f3e0 is 0 bytes inside a block of size 272 free'd
+==25507==    at 0x4846B83: free (vg_replace_malloc.c:989)
+==25507==    by 0x54AEAC4: g_free (gmem.c:208)
+==25507==    by 0x1AF629: vmdk_close (../block/vmdk.c:2889)
+==25507==    by 0x1A2A9C: bdrv_snapshot_goto (../block/snapshot.c:290)
+==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
+==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
 
-thanks
--- PMM
+This error was discovered by fuzzing qemu-img.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Denis Rastyogin <gerben@altlinux.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ block/snapshot.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/block/snapshot.c b/block/snapshot.c
+index 9c44780e96..22567f1fb9 100644
+--- a/block/snapshot.c
++++ b/block/snapshot.c
+@@ -296,6 +296,7 @@ int bdrv_snapshot_goto(BlockDriverState *bs,
+         bdrv_graph_wrunlock();
+ 
+         ret = bdrv_snapshot_goto(fallback_bs, snapshot_id, errp);
++        memset(bs->opaque, 0, drv->instance_size);
+         open_ret = drv->bdrv_open(bs, options, bs->open_flags, &local_err);
+         qobject_unref(options);
+         if (open_ret < 0) {
+-- 
+2.48.1
+
 
