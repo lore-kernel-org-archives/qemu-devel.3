@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43136C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 07:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27693C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 07:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trXi4-0003Xk-Sn; Mon, 10 Mar 2025 03:38:01 -0400
+	id 1trXiY-0003ki-AX; Mon, 10 Mar 2025 03:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trXi2-0003WV-MF
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 03:37:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trXiV-0003fr-Jn
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 03:38:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trXi0-000557-Mz
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 03:37:58 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trXiU-0005A5-1r
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 03:38:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741592275;
+ s=mimecast20190719; t=1741592305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sMCwxi4oqEg2aDVfEhF+u35D/4iuGDnhOX5TVHZZxXU=;
- b=hr5gWJdBHyy8957d6kH8DMU+JcHUqnFUEkOZTo5pKAr6PP1u8Cps6mqs7VzYBqbO0Y6Grg
- h6jog6eCE9i/IJcdVr+AdpYKJdLMvBTeBVf8wAPMPzmLYISjciUtPfDu2uz7TLBbZlbmnG
- p8adwBIKlg6dcYsoyxAOmm9AQGMNApI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fcGMiPuXUpwi+/5XTTpJX6j45pWqFypmx1+7cGeA7kA=;
+ b=PO/AaP19EnY6mJ/vrZq2z3UZCN1qpVq3m+kidkci07hUOu1NcpM6gE/WiCmNG9Dt7wQwP+
+ js9I4UdrZ3t7Ht6r8sFSbcB7nvVdnLKeGhMnQvYb5Rwknv3TGUqqscgKKPeV/fEr0Fjw8S
+ dr+YrkWavobzKV2col7zSm/d/uzRc+Q=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-77-TjnWQckMOHe0oq3K2_PN0w-1; Mon, 10 Mar 2025 03:37:53 -0400
-X-MC-Unique: TjnWQckMOHe0oq3K2_PN0w-1
-X-Mimecast-MFC-AGG-ID: TjnWQckMOHe0oq3K2_PN0w_1741592272
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43bd0586b86so26289865e9.3
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 00:37:53 -0700 (PDT)
+ us-mta-400-MBhcFaGtPCGsPrH-sZHXkQ-1; Mon, 10 Mar 2025 03:38:20 -0400
+X-MC-Unique: MBhcFaGtPCGsPrH-sZHXkQ-1
+X-Mimecast-MFC-AGG-ID: MBhcFaGtPCGsPrH-sZHXkQ_1741592299
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-391315098b2so1234299f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 00:38:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741592272; x=1742197072;
+ d=1e100.net; s=20230601; t=1741592299; x=1742197099;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sMCwxi4oqEg2aDVfEhF+u35D/4iuGDnhOX5TVHZZxXU=;
- b=mxCXCRtdzja4UJXBpWkNJdok6EvaEqqIiG+EmzSmneRczpSuJ3SdMghPRY45xHNKZG
- 2ch6jlg+btVRzfBkc83fCMu78fNsOCGaqJmJWSeC8j3aUuqP0x3T3+zN26N4cUwktzKi
- w4o6wD3tvBfiFdrXmFe6/FkxUhWeL2bo5+vnWETo4xG/rzEsjsw9uh0HLUMldUIX6pDV
- CGWs6hnSoL9SkfwVeGHlT/koBFLtoHKTpgjMwoc3W9RQ0jX+m3Ds0SAmpavv6TBlUQC8
- PJ8inGIUIPFX2kLeOyxY6oToHSRQvO+lYt+aivZRUdPGZduW1puvw32PbXGNjionQHnz
- 8pyw==
+ bh=fcGMiPuXUpwi+/5XTTpJX6j45pWqFypmx1+7cGeA7kA=;
+ b=RlY+uxnWfotXQoT1aOWjzkGWfuHdeaCfT+IvHZe4+OV/R4YrZzPTLaIcfgNasCNUk9
+ 0MuwasrvSFJ3lA7Nm27Vbux6p2fRpIkQVIrg5G+iEm75y00TA4No2FgPRRYEHUaA4Tf4
+ gy94AN+o6TN1CketxCF/ztXz/ZtDWxBO5NBgw30BsC8i9RTi61gowE/Fk3X3PpkCsGJc
+ LnSVAHsX37FvGJlxBX/OydZKGJlJM+alHSfnR8S1HLtv7oAet+tB6Ahj7DPgXzTNqxvg
+ m8XP+AlyUS9g8GX6/1uGWAy81y77LUYQwHSGCRqHxoo+Sr27gX72PUZBIFqpT8AG6v35
+ +hhg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgyIdk40XlLh9n7ZgUTysWqqH77sSlnO4fwFCgoDeZl6CQtmkPr+XlofAEhLZsDZUWVktVFRfGfYax@nongnu.org
-X-Gm-Message-State: AOJu0YxRRXb54cHz0r5D71Vl0o5TB4oNHfGSvClqFqwAxIDbctYIOL4N
- XiqSpKDH9RSe+J9KcXm9Acdepa88caajciWps2sM4BXHoTAGxvg3Ue2QKqPgzBWti7Ac3KaMA+w
- xtYfy9aFUt2HYWFkzWs8IpN7ugPBnSgb4StiY62RKSfUxsBmAugKH
-X-Gm-Gg: ASbGncv0yXqb69PIOhDm2Sjs9RxXHgrTK+aNK/yt+/tlasg7wYQpCHYRfBk5bpnENZ9
- IPkWXueI9jibkRzn/wqgBqjRNXxEqwWixk8doAuebF8vgYQUk2HXK6DsXPR/r6KU+1i6dgmtulr
- Uz1CrASQPlBOeL48dVg8vqmcRLjZrefEzBIgmtXkbeSxBf42xA9iWaRbxJQ4+M/KqqiG1e4lrlg
- 8HSZ6veG1ve7ymoe8xL8DfCTNShwPWuLjmafgfocIkmySjE7yKr7MTHh67ROGjEN1nlMn7iHBvZ
- 2vb7K0CII++SMk3LuCikogDVBnvAduUh1J9YaQz7YjP8uDG+ZkoyzQ==
-X-Received: by 2002:a05:600c:444d:b0:43c:fe15:41cb with SMTP id
- 5b1f17b1804b1-43cfe154379mr2716625e9.15.1741592272116; 
- Mon, 10 Mar 2025 00:37:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG0srL6ClQbw24aDHYv2dVWgkXh+JPH04ci+BWOkV8mVfq/7veXu6PGHViDtDsb+PYl3QA6tQ==
-X-Received: by 2002:a05:600c:444d:b0:43c:fe15:41cb with SMTP id
- 5b1f17b1804b1-43cfe154379mr2716335e9.15.1741592271730; 
- Mon, 10 Mar 2025 00:37:51 -0700 (PDT)
+ AJvYcCX64sBe8PKS7WuTLoonZA4sRGSXsvaVNP952vwVoGnkqDsIni61D+nx4Df4z0bz3lRZCnyt0MZYHYlZ@nongnu.org
+X-Gm-Message-State: AOJu0Yw2bjiMpVElBrU+UH0/lnXjnBQl+s09wjKda0cMb1TrSllEj2I+
+ IQZoNR78DfPo53XRub/vvOeEBH8XSBx5IIhKIgm8ZNxFUDc2UfM0JHiQiBTM5gz+P2o7/VPD526
+ auSAe4WFaBr2AgKFKKZurOiL+FuWOu7DtUL2DBG4XKas7cehwDXib
+X-Gm-Gg: ASbGncvCDL1TYHjvd8/ykSXcKPVihgZfQNHlFXDjNBCZqpgwzdHqvMER6t7if1VEzef
+ UqJp+0MtMdHwEY64KmYSfM1CITlEo/6zS3cCobygyqcwtMC/NwcW7rOhbRFnLbjBYs6j9VXdYpk
+ FAB5hv9efwx2lhzPuEqjXJxY6+jlIWN0wmyMqDKaTRBtngdQMudAUHyIcOYS2N4v2DDtG2U0XMB
+ PeUvasYOb5cRCCKvLpBXbBDR/bI1s0etEJDBwTn1vAauNQgTPAxk7k6zjy7/Lubl6qkecrrn09B
+ UdkSjV/Lo+JQ22Tm9oi7qPgMzEU8ec4zobeBg+iAmJcV8vkWsfzk1A==
+X-Received: by 2002:a5d:64aa:0:b0:390:e853:85bd with SMTP id
+ ffacd0b85a97d-39132db1108mr8321567f8f.48.1741592298833; 
+ Mon, 10 Mar 2025 00:38:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0MGS9KJUmdCejnHIUD/RZQ1jDAmK+3msRX4LEXUMNgnJkjKsldrWGKI/drvwRgRDBSDmiVQ==
+X-Received: by 2002:a5d:64aa:0:b0:390:e853:85bd with SMTP id
+ ffacd0b85a97d-39132db1108mr8321532f8f.48.1741592298503; 
+ Mon, 10 Mar 2025 00:38:18 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cfaf6892csm14788515e9.24.2025.03.10.00.37.50
+ 5b1f17b1804b1-43bd435c88esm164018355e9.36.2025.03.10.00.38.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 00:37:50 -0700 (PDT)
-Message-ID: <415339c1-8f83-4059-949e-63ef0c28b4b9@redhat.com>
-Date: Mon, 10 Mar 2025 08:37:49 +0100
+ Mon, 10 Mar 2025 00:38:17 -0700 (PDT)
+Message-ID: <6c9b7ba4-e894-44b5-8a35-eee310c50c94@redhat.com>
+Date: Mon, 10 Mar 2025 08:38:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/21] hw/vfio/igd: Check CONFIG_VFIO_IGD at runtime
- using vfio_igd_builtin()
+Subject: Re: [PATCH v2 10/21] qom: Introduce type_is_registered()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>,
@@ -101,7 +100,7 @@ Cc: Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
 References: <20250308230917.18907-1-philmd@linaro.org>
- <20250308230917.18907-13-philmd@linaro.org>
+ <20250308230917.18907-11-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -147,17 +146,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250308230917.18907-13-philmd@linaro.org>
+In-Reply-To: <20250308230917.18907-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -176,122 +175,60 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/9/25 00:09, Philippe Mathieu-Daudé wrote:
-> Convert the compile time check on the CONFIG_VFIO_IGD definition
-> by a runtime one by calling vfio_igd_builtin(), which check
-> whether VFIO_IGD is built in a qemu-system binary.
+> In order to be able to check whether a QOM type has been
+> registered, introduce the type_is_registered() helper.
 > 
-> Add stubs to avoid when VFIO_IGD is not built in:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-I thought we were trying to avoid stubs in QEMU build. Did that change ?
+FWIW,
 
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-> 
->    /usr/bin/ld: libqemu-x86_64-softmmu.a.p/hw_vfio_pci-quirks.c.o: in function `vfio_bar_quirk_setup':
->    /usr/bin/ld: ../hw/vfio/pci-quirks.c:1216: undefined reference to `vfio_probe_igd_bar0_quirk'
->    /usr/bin/ld: ../hw/vfio/pci-quirks.c:1217: undefined reference to `vfio_probe_igd_bar4_quirk'
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/vfio/pci-quirks.h |  6 ++++++
->   hw/vfio/igd-stubs.c  | 20 ++++++++++++++++++++
->   hw/vfio/pci-quirks.c |  9 ++++-----
->   hw/vfio/meson.build  |  3 +++
->   4 files changed, 33 insertions(+), 5 deletions(-)
->   create mode 100644 hw/vfio/igd-stubs.c
+>   include/qom/object.h | 8 ++++++++
+>   qom/object.c         | 5 +++++
+>   2 files changed, 13 insertions(+)
 > 
-> diff --git a/hw/vfio/pci-quirks.h b/hw/vfio/pci-quirks.h
-> index fdaa81f00aa..dcdb1962600 100644
-> --- a/hw/vfio/pci-quirks.h
-> +++ b/hw/vfio/pci-quirks.h
-> @@ -13,6 +13,7 @@
->   #define HW_VFIO_VFIO_PCI_QUIRKS_H
->   
->   #include "qemu/osdep.h"
-> +#include "qom/object.h"
->   #include "exec/memop.h"
->   
->   /*
-> @@ -71,4 +72,9 @@ extern const MemoryRegionOps vfio_generic_mirror_quirk;
->   
->   #define TYPE_VFIO_PCI_IGD_LPC_BRIDGE "vfio-pci-igd-lpc-bridge"
->   
-> +static inline bool vfio_igd_builtin(void)
-> +{
-> +    return type_is_registered(TYPE_VFIO_PCI_IGD_LPC_BRIDGE);
-> +}
-> +
->   #endif /* HW_VFIO_VFIO_PCI_QUIRKS_H */
-> diff --git a/hw/vfio/igd-stubs.c b/hw/vfio/igd-stubs.c
-> new file mode 100644
-> index 00000000000..5d4e88aeb1b
-> --- /dev/null
-> +++ b/hw/vfio/igd-stubs.c
-> @@ -0,0 +1,20 @@
-> +/*
-> + * IGD device quirk stubs
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * Copyright (C) Linaro, Ltd.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "pci.h"
-> +
-> +void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-> +{
-> +    g_assert_not_reached();
-> +}
-> +
-> +void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
-> +{
-> +    g_assert_not_reached();
-> +}
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index c53591fe2ba..22cb35af8cc 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -11,7 +11,6 @@
+> diff --git a/include/qom/object.h b/include/qom/object.h
+> index 9192265db76..5b5333017e0 100644
+> --- a/include/qom/object.h
+> +++ b/include/qom/object.h
+> @@ -898,6 +898,14 @@ Type type_register_static(const TypeInfo *info);
 >    */
+>   void type_register_static_array(const TypeInfo *infos, int nr_infos);
 >   
->   #include "qemu/osdep.h"
-> -#include CONFIG_DEVICES
->   #include "exec/memop.h"
->   #include "qemu/units.h"
->   #include "qemu/log.h"
-> @@ -1213,10 +1212,10 @@ void vfio_bar_quirk_setup(VFIOPCIDevice *vdev, int nr)
->       vfio_probe_nvidia_bar5_quirk(vdev, nr);
->       vfio_probe_nvidia_bar0_quirk(vdev, nr);
->       vfio_probe_rtl8168_bar2_quirk(vdev, nr);
-> -#ifdef CONFIG_VFIO_IGD
-> -    vfio_probe_igd_bar0_quirk(vdev, nr);
-> -    vfio_probe_igd_bar4_quirk(vdev, nr);
-> -#endif
-> +    if (vfio_igd_builtin()) {
-> +        vfio_probe_igd_bar0_quirk(vdev, nr);
-> +        vfio_probe_igd_bar4_quirk(vdev, nr);
-> +    }
+> +/**
+> + * type_is_registered:
+> + * @typename: The @typename to check.
+> + *
+> + * Returns: %true if @typename has been registered, %false otherwise.
+> + */
+> +bool type_is_registered(const char *typename);
+> +
+>   /**
+>    * DEFINE_TYPES:
+>    * @type_array: The array containing #TypeInfo structures to register
+> diff --git a/qom/object.c b/qom/object.c
+> index 01618d06bd8..be442980049 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -100,6 +100,11 @@ static TypeImpl *type_table_lookup(const char *name)
+>       return g_hash_table_lookup(type_table_get(), name);
 >   }
 >   
->   void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int nr)
-> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-> index a8939c83865..6ab711d0539 100644
-> --- a/hw/vfio/meson.build
-> +++ b/hw/vfio/meson.build
-> @@ -17,6 +17,9 @@ specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
->   
->   system_ss.add(when: 'CONFIG_VFIO_XGMAC', if_true: files('calxeda-xgmac.c'))
->   system_ss.add(when: 'CONFIG_VFIO_AMD_XGBE', if_true: files('amd-xgbe.c'))
-> +system_ss.add(when: 'CONFIG_VFIO_IGD', if_false: files(
-> +  'igd-stubs.c',
-> +))
->   system_ss.add(when: 'CONFIG_VFIO', if_true: files(
->     'helpers.c',
->     'container-base.c',
+> +bool type_is_registered(const char *typename)
+> +{
+> +    return !!type_table_lookup(typename);
+> +}
+> +
+>   static TypeImpl *type_new(const TypeInfo *info)
+>   {
+>       TypeImpl *ti = g_malloc0(sizeof(*ti));
 
 
