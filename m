@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A10E9C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 13:42:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1849BC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 13:44:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trdOq-0001G5-9d; Mon, 10 Mar 2025 09:42:32 -0400
+	id 1trdPi-00023a-69; Mon, 10 Mar 2025 09:43:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1trdOo-0001Db-4C
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 09:42:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1trdPX-00020Q-U8
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 09:43:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1trdOi-0000kv-6Z
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 09:42:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1trdPW-0000rN-C7
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 09:43:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741614142;
+ s=mimecast20190719; t=1741614193;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=pVc1xljRU9aGr7tIWpyBkpIMJKF1GPiLLEQngvnAdAo=;
- b=J3l+1fLGYp9U0IMgZ0vLlnOwI8posSq+YS9x5hsxyBYW7/mCVlmB+57RwrXHbObI8d9wfB
- UIitHEfmWZ14ueRWfH0xPbVgjZuzRgYdMB+fLHzEX3/hE+Zn6dIVPKPVBMimOvZib4k5ze
- rGDJ+5JdK67dl769BI+zwQ9R8uxD1CE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=h5b3bmBIXhHNIPVGDO/nJ9sRw96ymCSXCdwhWNxU5VM=;
+ b=NlAF7g+R+cGP7Ecay0FbioO+iFfmhGN5uLCk0YMHbbu/IZoZX5K5SsTnQkr12bRkEXpZlH
+ w0Ul1t/dM10tyO18UdmRMVLTU7E2GQpbDH8ljSRaGWRo0+13s60hZbcORnDCKyja9x7+XB
+ GgbL5djyiMT3uUX7n9Lfbxe70O2yXYE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-157-Yj59_-k8O-Sk6UO3BRRLXg-1; Mon, 10 Mar 2025 09:42:17 -0400
-X-MC-Unique: Yj59_-k8O-Sk6UO3BRRLXg-1
-X-Mimecast-MFC-AGG-ID: Yj59_-k8O-Sk6UO3BRRLXg_1741614136
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3912fe32b08so2093035f8f.3
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 06:42:17 -0700 (PDT)
+ us-mta-376-eZx2HUKnN6aYY10ql9cm9w-1; Mon, 10 Mar 2025 09:43:12 -0400
+X-MC-Unique: eZx2HUKnN6aYY10ql9cm9w-1
+X-Mimecast-MFC-AGG-ID: eZx2HUKnN6aYY10ql9cm9w_1741614191
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4394040fea1so20281875e9.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 06:43:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741614136; x=1742218936;
+ d=1e100.net; s=20230601; t=1741614191; x=1742218991;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pVc1xljRU9aGr7tIWpyBkpIMJKF1GPiLLEQngvnAdAo=;
- b=BStuwPesh0/kaPdU4rsKsTi8mKQZg4v7+8Fl/JZLwnry6JCmjznAwt3VTGrst2gt/r
- 8oxnMcmFgCsoFCWY/F09NFEej744xoyqlXTp8kEOMIwt3GJar/MuwUdnYdh5toJfZr2E
- IM2+2Fu4FFMjKMn2KSTQUPO3Mn9tsZDxh7pd4uaCqrIdcZ8+JUAVlOEzMSNMrzWZwwEl
- WblTG6RpsNrzXnhyrKuGIR2VB3amPWl3CZSWiv7Di6FmhqdI8c32MyHKsZWmPhN5bM/o
- FDJBmYj2DqBbMpU9WFS+IvS5RM66F1icU1Nro+1Zzsqkpeeq/fUQJye4hfXMRfAZs4j6
- Hd+g==
+ bh=h5b3bmBIXhHNIPVGDO/nJ9sRw96ymCSXCdwhWNxU5VM=;
+ b=BWKzWRnSS4F7I3JCk7tz1gQkBlIVa/9PgVGBWUSit1lfFRGTdlx0c9UodERqv9eWZ0
+ S+nV9tx8abdkKFCeTyggVkS5Ib1B28dZF52tjuKyLtEnpRuPvH5fs5tViWPB7BvzuJVQ
+ Tl9ogiN97qOLC/EP9EQobTAd96ARR9mY5+ma9+dY2A3KIppM2qByq2bfncjw3sXZjOdG
+ bCgy2EuBZBrMf3wQN3pZvihh3PUe5ANF1F4y7VffX11pZWlGnlmTEr52s65905K5us7s
+ zR0YVfdhQa/wxKSC6QyYlfM6zXzL1UAlqcw0PLphLgAHU0W6/Pigaz5Pf7kXVrZbB+3I
+ /9Bg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVoR8hCxf30yptOCllEI9qVNjiOdRdDxwpj57iVoIQXu4EWHzrbP5qYyVsRSnU+f/S7HN9Eae3ea17e@nongnu.org
-X-Gm-Message-State: AOJu0Yx/EuekMqxR5TUz12/oMj0m5nmHUTEAs7frEbIp1ttTAUekXLQK
- 9/IYW8ryF9ljLkfhUf72xxbcTdDtzvZ/XmfrkBPQ1IYhHCJruIjAv+GSWETow7cg8FN8VeVqpxd
- 6h8UrTS25VPKpScEOWXipgOBV2v88H9uG4zghoUBtWMMKy+lswqZ4c74TCXdK
-X-Gm-Gg: ASbGncv//4n0de1kPlQtpeJWdsX6/RDATRk7kyHmovSR2Kdn9CFwEb48OIvHaSB1F0G
- J3WBd/xawnNO/Qh1fmqrWQy9yA5JtXMhVfkcuW0sOBXV8bruPdti8vnmzxKcDF7SDjmhcMgCtcq
- Fntm++EmnIIvIdXLjwdCRuNLBQNdYBNZUjAr/F++yMurgThaK4zdSv8H+iYnE6NhSf4aUZKv09Y
- GpyZ4ye/0PZX7zG8wmTh6A8W7J0R0durXz5dCO+EOqpoilVm2usTUOiPUvznn/kD8JY4BziS8F1
- QtxkY/RsggkIVrMlrxzNSsdZn7cmDcCZJzJt9QcFBuhE3IY=
-X-Received: by 2002:a5d:64e3:0:b0:391:4873:7935 with SMTP id
- ffacd0b85a97d-39148737b3amr3051755f8f.28.1741614136483; 
- Mon, 10 Mar 2025 06:42:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH8GOq4fyh46Klw3kOcfg4d7zxtYpyHlahW8rdRcrzYmHtEr9uETBzGBh/rUS2myC1dV90Ziw==
-X-Received: by 2002:a5d:64e3:0:b0:391:4873:7935 with SMTP id
- ffacd0b85a97d-39148737b3amr3051719f8f.28.1741614136091; 
- Mon, 10 Mar 2025 06:42:16 -0700 (PDT)
+ AJvYcCUxImGYrMceSi0hW+EX/iHmbXLkDjlav6hMTImandiMH0gFveoQU9DaDdIIZ++CkPFgjUrWf4/mveIl@nongnu.org
+X-Gm-Message-State: AOJu0Yyv9f25KqC2IuDJRkOQsbQ6VmAo3kuGE1hI4CJHF383Mxm++FyR
+ 651Awec15KIpWeiBzMM/rYBvCZ6WXEdMorOzIsuZZE7QfSqtHeUHHQ9eHRKcqhVHoVixWGmUZhf
+ UCcJCnZjx1mUzZDUtLRNsWnrjPbiXe8yZ9eHz70wrUxGQkOs1oJ+y
+X-Gm-Gg: ASbGnctcd/u2gyag8RY5wISI1QBHYJSGzv7qNKcIHh3046CE560mZyDCi3ypBh3APoZ
+ e6aIPuyjQAvlkcADPQ4c1wl90Xv1NnQvNeUKWkP1MzRCIQWq0noCB1R7vf9F6+jcNfsVeXyHlDT
+ sD+HHPfiYmIW7ZcArmpbJeIRiyTURgkPNNvrMf0NXy+NX1EQhn+htsCO+sLdVy0Ci6tVCKma56D
+ cyjuNB/GqzFHMm+c2WSaMqAm/aaEanFi0Q2xyc+OjGKWVa5MLQbeYKZMjiy4SDRWplrbCAeUxEf
+ 4R/T4y67aR12LAquaOkOgfxICXLsPi1R0MpX7MdgWjuArOY=
+X-Received: by 2002:a05:600c:4e92:b0:43b:c857:e9d7 with SMTP id
+ 5b1f17b1804b1-43ce4ac81acmr50779595e9.5.1741614191214; 
+ Mon, 10 Mar 2025 06:43:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF6q4mW1VzYWSf5tdsH1cguKrf9WOG0/2hsBVM+Y/BCi75F3Yx6Xbd/KOZSGqpthgPSqAZCoQ==
+X-Received: by 2002:a05:600c:4e92:b0:43b:c857:e9d7 with SMTP id
+ 5b1f17b1804b1-43ce4ac81acmr50779295e9.5.1741614190861; 
+ Mon, 10 Mar 2025 06:43:10 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
  [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfba87csm15363219f8f.17.2025.03.10.06.42.14
+ 5b1f17b1804b1-43cec487fb2sm72266965e9.37.2025.03.10.06.43.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 06:42:15 -0700 (PDT)
-Message-ID: <79ff5eec-4030-45b2-931e-a4415c9a0b2e@redhat.com>
-Date: Mon, 10 Mar 2025 14:42:13 +0100
+ Mon, 10 Mar 2025 06:43:10 -0700 (PDT)
+Message-ID: <a22ed7ce-3512-4210-ad31-c25a16be96cb@redhat.com>
+Date: Mon, 10 Mar 2025 14:43:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] hw/s390x: Expose s390_qmp_dump_skeys() prototype
+Subject: Re: [PATCH v2 2/3] cpus: Introduce SysemuCPUOps::qmp_dump_skeys()
+ callback
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
@@ -93,7 +94,7 @@ Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Anton Johansson <anjo@rev.ng>
 References: <20250310133118.3881-1-philmd@linaro.org>
- <20250310133118.3881-2-philmd@linaro.org>
+ <20250310133118.3881-3-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -138,19 +139,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250310133118.3881-2-philmd@linaro.org>
+In-Reply-To: <20250310133118.3881-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,14 +168,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/03/2025 14.31, Philippe Mathieu-Daudé wrote:
-> In preparation to make @dump-skeys command generic,
-> extract s390_qmp_dump_skeys() out of qmp_dump_skeys().
+> Allow generic CPUs to dump the architecture storage keys.
+> 
+> Being specific to s390x, it is only implemented there.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/s390x/storage-keys.h | 1 +
->   hw/s390x/s390-skeys.c           | 7 ++++++-
->   2 files changed, 7 insertions(+), 1 deletion(-)
+>   include/hw/core/sysemu-cpu-ops.h | 6 ++++++
+>   target/s390x/cpu-system.c        | 2 ++
+>   2 files changed, 8 insertions(+)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
