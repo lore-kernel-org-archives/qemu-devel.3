@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8952C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 03:45:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67929C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 03:46:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trU3m-0005Pe-Mm; Sun, 09 Mar 2025 23:44:10 -0400
+	id 1trU5a-0006FB-2a; Sun, 09 Mar 2025 23:46:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trU3k-0005Ot-3U; Sun, 09 Mar 2025 23:44:08 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1trU5O-0006E8-S0; Sun, 09 Mar 2025 23:45:51 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trU3h-00017G-Ja; Sun, 09 Mar 2025 23:44:07 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-223a7065ff8so52018065ad.0; 
- Sun, 09 Mar 2025 20:44:04 -0700 (PDT)
+ id 1trU5L-0001Td-UG; Sun, 09 Mar 2025 23:45:50 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2235189adaeso60426565ad.0; 
+ Sun, 09 Mar 2025 20:45:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741578243; x=1742183043; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=gmail.com; s=20230601; t=1741578343; x=1742183143; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Cd929fU5g3wK32OwmkWHXbxR6sgCaf/WTkW9sgkKymk=;
- b=VhZvqCRaJkeGUwd52A5YZ0XaLhdvHnbCBwFCb704r8mOZ3W4Sqt9Y0zpcluWkrueER
- Qg9lM4uxxoRLwKrIwr+UIp8WYSUklsM5pDnPyt8vAgBukXeVZAHvbMR04lCnmi6Z4P6x
- XZVe2A0C6hvBHktVYqhyIvghKrFnipyxJYhMAKQ50ScqYOdgcJoFZgR3is04ovRFfzNI
- 9EFhmgzOiDVf5N1F73owVL1XsZDUnncPtXjupJJblzhr/fc9HUBCkkStG2cR9uuJmBiF
- SmRH7ox3gd8zhZxsiA4qqYE4YRs7kPGQ8lBHUtKdvtlGuKQV/+381HiNXchYjaoIv3Ha
- /UHw==
+ bh=Mw/jeUERkLKAweK7RS1n9/MfoGe6ceetjaT2xMBOY3w=;
+ b=DTRQLuurUW7NFDiAhh85wVG/n4KnphFxM1fyOEpEPCDnCtmLsrLhG67D2QJBAEBaZi
+ 65RqKaHlRX/PpsvcP8Cn+RI5A/cL+GtT4UZod/ZPfHCSeL+v42JRSoUEKEPOVI39yqXa
+ /cRb9PGw42TWavV3yoK3P5mCSdp5UudkgfkSr2Pv0yJsuXxNUMp44ZL66AYHC6ixlB0x
+ VwoBhIyoft0hiAiRKjVCYK7y5Xvsoksh10PbMuX4Sn8qnUro1YNAumumuCX9uZMPYXgP
+ O948eet9OflcPFfWOxZ5A+OCxrpBAh6F6lDZIFA8/jwI3aX9pitfCpn8/FyX3dvFbtKq
+ nQ5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741578243; x=1742183043;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=1e100.net; s=20230601; t=1741578343; x=1742183143;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Cd929fU5g3wK32OwmkWHXbxR6sgCaf/WTkW9sgkKymk=;
- b=pVpuB3fa90I5nIeMTBin02yGD/VibK1J3qpc3l2oLJTGKh3ifJ6xUXVYl7QzRlH8Cr
- IN09wri/MQYzD6Ya0aEX4KPjnnTuJ+nmB+XzEO7OoqBXoPmyUa9EJ3XVAb7KJDmmThB4
- kRI7bIvWuGpWvyI4/0KZTrGnmnVXl93YcwnLTcXYhNSkPoWwV48mF6uY4oibymB1+UVG
- Wfd2karbW7oBXEYlA6n2G6N+L6Ovdg8xWvupp7EeBWH0Lv5lpI6TlC87ovnb4cWTKftM
- 5eglExWVrNN2fBIu8A7/ttli5/2k93BzthQAeLC6XtWE8s1WH7If4xPkSs8blkgdM+Ud
- nc3A==
+ bh=Mw/jeUERkLKAweK7RS1n9/MfoGe6ceetjaT2xMBOY3w=;
+ b=xRpVPMp95AA/Ic+heapu9/SgGLGUVOs2pfaoNN5TY7nMKX2BDn/wGIVgiCN3QvcYtM
+ QjKGuSVz+PtcVb2Li/uKAufruhCbb9qpqnTtszor+eYjPIbw67HvWgjPC5wqd9i3fyZ8
+ muKzHQj+JrhQoXITm5kUD7ilKE5TsgHKK5LJUWCFWIv8owSQU4exkFNqEyeFwg14W1By
+ /O5CcDXfwnCTQ3f7QpRKCFqz3azM0e2ByxvI5c018nbMOXs5gd7zuipDoDoebCK77Na8
+ BpMeDNb6gAwRXLdmr8MFvxOc3km7XUpoDfoA0Z/EZ7t+IWd2Gx2sl1ruB+DHZO8D2Pxc
+ sMHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4HoApVi5gaL5JO+f3ZsJ8chE4RhJBmfc8ZT3UdekWZh8cD8bhPMnGHz6P35nK0eID2fV5CHM947rb@nongnu.org
-X-Gm-Message-State: AOJu0YyeHPWk9YkULBpk9qP9wLS3NtCCWQ1cNzaLmvg+rx7VzspE/PNh
- ZPdihN8fIxMc5GwfUsqXTfYIvCCODxQIrhvQDai3t8XTKpzardRW
-X-Gm-Gg: ASbGncu/iM04OXqVceW/IwP0DGn3hF6uJ5KlNetZjWVcX8FmyQ57MyQCSzFV8AOdUqz
- v4+aanKccReKsnyycZVBPmmBswbmqpd4Vlusxa1OriBVeLucy3dEKbcVEEbhte7xCHQz8o5zk5f
- f+oH48/i8hrviwA4gl5GVelH5tbjYJQZS6/TRYyCEs/mTY8/DRvMw3SS7BcS+7csU5S6shiYksE
- PUiWLraxV3bfal7mPbVGs3rS4JwRMokXFzp4PKLNyx8whUaiChPW+M9NaphTsgwbSiM02kpzlBf
- R4TcinZh8Oxj40BE1lZp3cQi8S9uIpWFLPK9rUiT2+xemUZQUIg=
-X-Google-Smtp-Source: AGHT+IGUGm6Fe3FjXn1MABknzaXjSWpQ0Z/CpE0bO1/HmVUBA6ddRAR69ldM7MiitgyMSjt8ODKWvg==
-X-Received: by 2002:a05:6a00:4b4a:b0:736:5c8e:baaa with SMTP id
- d2e1a72fcca58-736aa9bc0e9mr17523057b3a.2.1741578243430; 
- Sun, 09 Mar 2025 20:44:03 -0700 (PDT)
+ AJvYcCXFRPWmR+MjF9m/vy1sF+YPBHqudra4pOrdIwXmbgEy10betw10Lsd/5sqe1QZBh/QS7iK17A5Wimq1@nongnu.org
+X-Gm-Message-State: AOJu0YyDCFjIBQnARH5Gy5IyBqLCJt1MrfuWVRxLA00rkZfL9oNg2krK
+ 4b0jF7t3JVCFdxfRdbPnEg2NzLb5XGQOn6uU3JTwumQw9U/dW4+o
+X-Gm-Gg: ASbGncsNtMKqh7GsOjRxEBXZPjzv28T5z6X1HU0fXzgatzKBrvV7R2XvEw0hBzt2Vh1
+ u1mcuxOyFHgy6LptedYcd5b7lz17tcRKQfI9r3B+Bx+0guFRkZ9QoSwt2XrmrEwbu9DzOner4Uo
+ ICT2Id4MkzPxW94sQBQ/JAQHjq7ZKq+nofAZaeRHWwf8Qc3AMI9YXqdFhuELNAofcJzOwPqzoQt
+ kTWuIZG0K8AQX6GjDzAouGttVKiqwvIvAbwD/aJIJMjTy3o5Jk23bj8zRrjwf+eLocUIhxFbU2+
+ nQLOKC7CQkRTbRCX0W1CDo16vu/ok8EtX2HHu8jaFIqYfiO8kos=
+X-Google-Smtp-Source: AGHT+IE/clwcB/avF7in6VmHWT9tVSTl/Ax2K+FDdg5y5h8VJo/IWaTy3H/lE6pPV4MiYZK87+YjCg==
+X-Received: by 2002:a17:902:ced1:b0:223:5187:a886 with SMTP id
+ d9443c01a7336-2246454ad58mr118137345ad.22.1741578343457; 
+ Sun, 09 Mar 2025 20:45:43 -0700 (PDT)
 Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736c11ba2cfsm3353416b3a.122.2025.03.09.20.43.59
+ d9443c01a7336-22410aa5ebbsm67126535ad.229.2025.03.09.20.45.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 20:44:02 -0700 (PDT)
+ Sun, 09 Mar 2025 20:45:43 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 10 Mar 2025 13:43:57 +1000
-Message-Id: <D8C9YKZJ15BI.12G2MRXUIPQYS@gmail.com>
-Subject: Re: [PATCH v2 03/14] ppc/xive2: Add grouping level to notification
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Michael Kowal" <kowal@linux.ibm.com>, <qemu-devel@nongnu.org>
+Date: Mon, 10 Mar 2025 13:45:37 +1000
+Message-Id: <D8C9ZUZXOE3W.NOK6K9FTGTMP@gmail.com>
 Cc: <qemu-ppc@nongnu.org>, <fbarrat@linux.ibm.com>, <milesg@linux.ibm.com>,
  <danielhb413@gmail.com>, <david@gibson.dropbear.id.au>,
  <harshpb@linux.ibm.com>, <thuth@redhat.com>, <lvivier@redhat.com>,
  <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 02/14] ppc/xive: Rename ipb_to_pipr() to
+ xive_ipb_to_pipr()
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Michael Kowal" <kowal@linux.ibm.com>, <qemu-devel@nongnu.org>
 X-Mailer: aerc 0.19.0
 References: <20241210000527.9541-1-kowal@linux.ibm.com>
- <20241210000527.9541-5-kowal@linux.ibm.com>
-In-Reply-To: <20241210000527.9541-5-kowal@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+ <20241210000527.9541-4-kowal@linux.ibm.com>
+In-Reply-To: <20241210000527.9541-4-kowal@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,32 +104,124 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue Dec 10, 2024 at 10:05 AM AEST, Michael Kowal wrote:
-> From: Frederic Barrat <fbarrat@linux.ibm.com>
+> Renamed function to follow the convention of the other function names.
 >
-> The NSR has a (so far unused) grouping level field. When a interrupt
-> is presented, that field tells the hypervisor or OS if the interrupt
-> is for an individual VP or for a VP-group/crowd. This patch reworks
-> the presentation API to allow to set/unset the level when
-> raising/accepting an interrupt.
->
-> It also renames xive_tctx_ipb_update() to xive_tctx_pipr_update() as
-> the IPB is only used for VP-specific target, whereas the PIPR always
-> needs to be updated.
->
-> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
 > Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 
-BTW. the series went a bit out of whack, I suspect because of an older
-iteration of patches leftover from a previous git format-patch, then
-git send-email *.patch picks up some of the old patches if they were
-renamed or reordered.
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-Don't worry this has bitten me before. Would be nice if send-email had
-some heuristic to sanity check metadata in cover letter and subject
-lines to warn about this...
+> ---
+>  include/hw/ppc/xive.h | 16 ++++++++++++----
+>  hw/intc/xive.c        | 22 ++++++----------------
+>  2 files changed, 18 insertions(+), 20 deletions(-)
+>
+> diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+> index ebee982528..41a4263a9d 100644
+> --- a/include/hw/ppc/xive.h
+> +++ b/include/hw/ppc/xive.h
+> @@ -130,11 +130,9 @@
+>   *   TCTX   Thread interrupt Context
+>   *
+>   *
+> - * Copyright (c) 2017-2018, IBM Corporation.
+> - *
+> - * This code is licensed under the GPL version 2 or later. See the
+> - * COPYING file in the top-level directory.
+> + * Copyright (c) 2017-2024, IBM Corporation.
+>   *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+>   */
+> =20
+>  #ifndef PPC_XIVE_H
+> @@ -510,6 +508,16 @@ static inline uint8_t xive_priority_to_ipb(uint8_t p=
+riority)
+>          0 : 1 << (XIVE_PRIORITY_MAX - priority);
+>  }
+> =20
+> +/*
+> + * Convert an Interrupt Pending Buffer (IPB) register to a Pending
+> + * Interrupt Priority Register (PIPR), which contains the priority of
+> + * the most favored pending notification.
+> + */
+> +static inline uint8_t xive_ipb_to_pipr(uint8_t ibp)
+> +{
+> +    return ibp ? clz32((uint32_t)ibp << 24) : 0xff;
+> +}
+> +
+>  /*
+>   * XIVE Thread Interrupt Management Aera (TIMA)
+>   *
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index 245e4d181a..7b06a48139 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -3,8 +3,7 @@
+>   *
+>   * Copyright (c) 2017-2018, IBM Corporation.
+>   *
+> - * This code is licensed under the GPL version 2 or later. See the
+> - * COPYING file in the top-level directory.
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+>   */
+> =20
+>  #include "qemu/osdep.h"
+> @@ -27,15 +26,6 @@
+>   * XIVE Thread Interrupt Management context
+>   */
+> =20
+> -/*
+> - * Convert an Interrupt Pending Buffer (IPB) register to a Pending
+> - * Interrupt Priority Register (PIPR), which contains the priority of
+> - * the most favored pending notification.
+> - */
+> -static uint8_t ipb_to_pipr(uint8_t ibp)
+> -{
+> -    return ibp ? clz32((uint32_t)ibp << 24) : 0xff;
+> -}
+> =20
+>  static uint8_t exception_mask(uint8_t ring)
+>  {
+> @@ -159,7 +149,7 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_=
+t ring, uint8_t cppr)
+>       * Recompute the PIPR based on local pending interrupts.  The PHYS
+>       * ring must take the minimum of both the PHYS and POOL PIPR values.
+>       */
+> -    pipr_min =3D ipb_to_pipr(regs[TM_IPB]);
+> +    pipr_min =3D xive_ipb_to_pipr(regs[TM_IPB]);
+>      ring_min =3D ring;
+> =20
+>      /* PHYS updates also depend on POOL values */
+> @@ -169,7 +159,7 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_=
+t ring, uint8_t cppr)
+>          /* POOL values only matter if POOL ctx is valid */
+>          if (pool_regs[TM_WORD2] & 0x80) {
+> =20
+> -            uint8_t pool_pipr =3D ipb_to_pipr(pool_regs[TM_IPB]);
+> +            uint8_t pool_pipr =3D xive_ipb_to_pipr(pool_regs[TM_IPB]);
+> =20
+>              /*
+>               * Determine highest priority interrupt and
+> @@ -193,7 +183,7 @@ void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t rin=
+g, uint8_t ipb)
+>      uint8_t *regs =3D &tctx->regs[ring];
+> =20
+>      regs[TM_IPB] |=3D ipb;
+> -    regs[TM_PIPR] =3D ipb_to_pipr(regs[TM_IPB]);
+> +    regs[TM_PIPR] =3D xive_ipb_to_pipr(regs[TM_IPB]);
+>      xive_tctx_notify(tctx, ring);
+>  }
+> =20
+> @@ -841,9 +831,9 @@ void xive_tctx_reset(XiveTCTX *tctx)
+>       * CPPR is first set.
+>       */
+>      tctx->regs[TM_QW1_OS + TM_PIPR] =3D
+> -        ipb_to_pipr(tctx->regs[TM_QW1_OS + TM_IPB]);
+> +        xive_ipb_to_pipr(tctx->regs[TM_QW1_OS + TM_IPB]);
+>      tctx->regs[TM_QW3_HV_PHYS + TM_PIPR] =3D
+> -        ipb_to_pipr(tctx->regs[TM_QW3_HV_PHYS + TM_IPB]);
+> +        xive_ipb_to_pipr(tctx->regs[TM_QW3_HV_PHYS + TM_IPB]);
+>  }
+> =20
+>  static void xive_tctx_realize(DeviceState *dev, Error **errp)
 
-I think I've been able to untangle it.
-
-Thanks,
-Nick
 
