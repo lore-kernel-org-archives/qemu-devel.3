@@ -4,62 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC7FC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 13:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB64C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 13:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trdIt-0001iA-NP; Mon, 10 Mar 2025 09:36:23 -0400
+	id 1trdKP-0002gp-4J; Mon, 10 Mar 2025 09:37:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1trdIp-0001go-NZ; Mon, 10 Mar 2025 09:36:19 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1trdKM-0002f7-O8
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 09:37:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1trdIn-0007w0-1G; Mon, 10 Mar 2025 09:36:19 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7EBCD4E6032;
- Mon, 10 Mar 2025 14:36:13 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 3jK-PwBdSr9O; Mon, 10 Mar 2025 14:36:11 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8991B4E6029; Mon, 10 Mar 2025 14:36:11 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8707174577C;
- Mon, 10 Mar 2025 14:36:11 +0100 (CET)
-Date: Mon, 10 Mar 2025 14:36:11 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>, 
- Joel Stanley <joel@jms.id.au>, Bernhard Beschow <shentey@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Andrey Smirnov <andrew.smirnov@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Guenter Roeck <linux@roeck-us.net>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-block@nongnu.org, 
- Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: Re: [PATCH v5 04/14] hw/sd/sdhci: Include 'wp-inverted' property in
- quirk bitmask
-In-Reply-To: <20250310000620.70120-5-philmd@linaro.org>
-Message-ID: <74401f6a-c081-b521-fa3a-f4abb0e67df7@eik.bme.hu>
-References: <20250310000620.70120-1-philmd@linaro.org>
- <20250310000620.70120-5-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1trdKK-00083K-W6
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 09:37:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741613870;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y9NRuclYVD9IAmen/TEb43j9UR7fvNxCJFWwcY5iass=;
+ b=VSUVhhe18htc/8uD7phFEHUXiMu1XpTSb+MCeiBKaC6kfrwejpIJpvdJcMhqh1t4CzL57Q
+ LjZLaiJHipfNvJQsYp6l23oeGcP1CPtS5+mJiLy+5lvPRjXh1/GmRjkq6NvIMzIPAPlpiR
+ GaLceIyAXvABPcQhcPYKPPgb3pZjKA8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-376-oT-yOQauM_aTRmatz76m5A-1; Mon,
+ 10 Mar 2025 09:37:47 -0400
+X-MC-Unique: oT-yOQauM_aTRmatz76m5A-1
+X-Mimecast-MFC-AGG-ID: oT-yOQauM_aTRmatz76m5A_1741613864
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44AE11955DCD; Mon, 10 Mar 2025 13:37:44 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.222])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 18F623001D0E; Mon, 10 Mar 2025 13:37:39 +0000 (UTC)
+Date: Mon, 10 Mar 2025 14:37:37 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Peter Xu <peterx@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org,
+ David Hildenbrand <david@redhat.com>, pkrempa@redhat.com,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH 04/12] scsi: introduce requests_lock
+Message-ID: <Z87rIcwaBfAaxzLs@redhat.com>
+References: <20250213180043.713434-1-stefanha@redhat.com>
+ <20250213180043.713434-5-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1502737573-1741613771=:72286"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250213180043.713434-5-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -77,118 +88,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Am 13.02.2025 um 19:00 hat Stefan Hajnoczi geschrieben:
+> SCSIDevice keeps track of in-flight requests for device reset and Task
+> Management Functions (TMFs). The request list requires protection so
+> that multi-threaded SCSI emulation can be implemented in commits that
+> follow.
+> 
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---3866299591-1502737573-1741613771=:72286
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Some of this feels quite heavy-handed, and I imagine that having to take
+the lock in every request could cause considerable lock contention only
+so that we can iterate all requests in a slow path.
 
-On Mon, 10 Mar 2025, Philippe Mathieu-Daudé wrote:
-> Import Linux's SDHCI_QUIRK_INVERTED_WRITE_PROTECT quirk definition.
->
-> Replace 'wp_inverted' boolean by a bit in quirk bitmask.
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> include/hw/sd/sdhci.h | 16 ++++++++++------
-> hw/arm/aspeed.c       |  2 +-
-> hw/sd/sdhci.c         |  6 +++---
-> 3 files changed, 14 insertions(+), 10 deletions(-)
->
-> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-> index 096d607f4b7..d2e4f0f0050 100644
-> --- a/include/hw/sd/sdhci.h
-> +++ b/include/hw/sd/sdhci.h
-> @@ -30,7 +30,14 @@
-> #include "hw/sd/sd.h"
-> #include "qom/object.h"
->
-> -/* SD/MMC host controller state */
-> +/*
-> + * SD/MMC host controller state
-> + *
-> + * QEMU interface:
-> + *  + QOM property "wp-inverted-quirk" inverts the Write Protect pin
-> + *    polarity (by default the polarity is active low for detecting SD
-> + *    card to be protected).
-> + */
-> struct SDHCIState {
->     /*< private >*/
->     union {
-> @@ -99,11 +106,6 @@ struct SDHCIState {
->     uint8_t endianness;
->     uint8_t sd_spec_version;
->     uint8_t uhs_mode;
-> -    /*
-> -     * Write Protect pin default active low for detecting SD card
-> -     * to be protected. Set wp_inverted to invert the signal.
-> -     */
-> -    bool wp_inverted;
-> };
-> typedef struct SDHCIState SDHCIState;
->
-> @@ -114,6 +116,8 @@ typedef struct SDHCIState SDHCIState;
+This works for now, but maybe in the long run, we want to teach the
+SCSI layer about (virt)queues, and have a separate request list per
+queue (= AioContext)?
 
-Now that we have two adjust comment above here to say "These defines"
+Kevin
 
-> enum {
->     /* Controller does not provide transfer-complete interrupt when not busy. */
->     SDHCI_QUIRK_NO_BUSY_IRQ                     = 14,
-> +    /* Controller reports inverted write-protect state */
-> +    SDHCI_QUIRK_INVERTED_WRITE_PROTECT          = 16,
-> };
-
-and I'd say keep this defines that also matches what Linux has.
-
-> #define TYPE_PCI_SDHCI "sdhci-pci"
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index 98bf071139b..daee2376d50 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -412,7 +412,7 @@ static void aspeed_machine_init(MachineState *machine)
->     if (amc->sdhci_wp_inverted) {
->         for (i = 0; i < bmc->soc->sdhci.num_slots; i++) {
->             object_property_set_bool(OBJECT(&bmc->soc->sdhci.slots[i]),
-> -                                     "wp-inverted", true, &error_abort);
-> +                                     "wp-inverted-quirk", true, &error_abort);
-
-Why rename it? That would break command lines that use this.
-
-Regards,
-BALATON Zoltan
-
->         }
->     }
->     if (machine->kernel_filename) {
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index 1dc942a0e06..19c600d5bfc 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -274,7 +274,7 @@ static void sdhci_set_readonly(DeviceState *dev, bool level)
-> {
->     SDHCIState *s = (SDHCIState *)dev;
->
-> -    if (s->wp_inverted) {
-> +    if (s->quirks & BIT(SDHCI_QUIRK_INVERTED_WRITE_PROTECT)) {
->         level = !level;
->     }
->
-> @@ -1555,12 +1555,12 @@ void sdhci_common_class_init(ObjectClass *klass, const void *data)
->
-> static const Property sdhci_sysbus_properties[] = {
->     DEFINE_SDHCI_COMMON_PROPERTIES(SDHCIState),
-> +    DEFINE_PROP_BIT("wp-inverted-quirk", SDHCIState, quirks,
-> +                    SDHCI_QUIRK_INVERTED_WRITE_PROTECT, false),
->     DEFINE_PROP_BOOL("pending-insert-quirk", SDHCIState, pending_insert_quirk,
->                      false),
->     DEFINE_PROP_LINK("dma", SDHCIState,
->                      dma_mr, TYPE_MEMORY_REGION, MemoryRegion *),
-> -    DEFINE_PROP_BOOL("wp-inverted", SDHCIState,
-> -                     wp_inverted, false),
-> };
->
-> static void sdhci_sysbus_init(Object *obj)
->
---3866299591-1502737573-1741613771=:72286--
 
