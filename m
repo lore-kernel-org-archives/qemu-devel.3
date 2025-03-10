@@ -4,69 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D187C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A82C28B2E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trYHL-0005Ft-GX; Mon, 10 Mar 2025 04:14:27 -0400
+	id 1trYND-0006UF-S3; Mon, 10 Mar 2025 04:20:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1trYHH-0005Fe-CX
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:14:23 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1trYHB-0002j7-O7
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:14:22 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxG6xOn85n4HuQAA--.17410S3;
- Mon, 10 Mar 2025 16:14:07 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMAxj8VKn85nFk9BAA--.47175S3;
- Mon, 10 Mar 2025 16:14:05 +0800 (CST)
-Subject: Re: [PATCH] tests/qtest/cpu-plug-test: Add cpu hotplug support for
- LoongArch
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20250310062456.2453189-1-maobibo@loongson.cn>
- <ce0f0c13-0e04-444f-b5db-8fdb7af6f945@redhat.com>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <ffad81a0-cbc7-9596-77b7-e1a9c38eccf7@loongson.cn>
-Date: Mon, 10 Mar 2025 16:13:25 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1trYNB-0006Tm-WA
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:20:30 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1trYN6-0004Ql-KB
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:20:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1741594824; x=1773130824;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=SdF5xZxwT1B/fJL7eNhWt5x8go9X0aH01ikKl69PbXM=;
+ b=hAWbg2ID24O9+qZsodHHNCyc05IAbQFuNxdZ4U8k+qWPFPTe1OrgpiJi
+ 6mmnj/YOauhDru5zNtpURWLvwB3wASi9S9UJts2Sx1X8UTIys8H8yZirn
+ zE5Kuir58gufxYCprVoLZDBgJynJlepZqiTkr0nkOhS9+daaDpV83zWmv
+ duQCXPY7iv5V3xq82Vf6S0nPMA69tykkKJqPXpg58+cPwpBMh9iKVdh/5
+ jOYiiLoQOba8+DikSm7ufX3ODfJzI85b1Gygh5E7EpJJvCIsdfu8Dkahx
+ ZQTAZ3CXvzaSllCb+fJNU6fro8+5kS88L528FLkYV3a7JHfVHCXqeQPis w==;
+X-CSE-ConnectionGUID: bq+hC4Q3S7aEiXFMtDBdNQ==
+X-CSE-MsgGUID: L1OlR1l3SxO5r1UXPfV9yw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11368"; a="42688454"
+X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="42688454"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Mar 2025 01:20:23 -0700
+X-CSE-ConnectionGUID: X70SiXx8S1iJooE6XqbCkw==
+X-CSE-MsgGUID: DSf7WM4yQ4qv41AiUP25eg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="150862796"
+Received: from emr-bkc.sh.intel.com ([10.112.230.82])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Mar 2025 01:20:20 -0700
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+Subject: [PATCH v3 2/7] memory: Change memory_region_set_ram_discard_manager()
+ to return the result
+Date: Mon, 10 Mar 2025 16:18:30 +0800
+Message-ID: <20250310081837.13123-3-chenyi.qiang@intel.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20250310081837.13123-1-chenyi.qiang@intel.com>
+References: <20250310081837.13123-1-chenyi.qiang@intel.com>
 MIME-Version: 1.0
-In-Reply-To: <ce0f0c13-0e04-444f-b5db-8fdb7af6f945@redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxj8VKn85nFk9BAA--.47175S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCw17uFW3ZF1UKryfCw4kGrX_yoWrWr47pr
- WkArW5KrW8Arn5J3WxGF1UWFyFvr17G3Z8Jr4IqF1UCrZxGr10gr4jga1qgFnrAw48Zr48
- Aw1kJrnxu3ZrJFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UE-erU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.702,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.16;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,102 +89,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Modify memory_region_set_ram_discard_manager() to return false if a
+RamDiscardManager is already set in the MemoryRegion. The caller must
+handle this failure, such as having virtio-mem undo its actions and fail
+the realize() process. Opportunistically move the call earlier to avoid
+complex error handling.
 
+This change is beneficial when introducing a new RamDiscardManager
+instance besides virtio-mem. After
+ram_block_coordinated_discard_require(true) unlocks all
+RamDiscardManager instances, only one instance is allowed to be set for
+a MemoryRegion at present.
 
-On 2025/3/10 下午3:04, Thomas Huth wrote:
-> On 10/03/2025 07.24, Bibo Mao wrote:
->> Add cpu hotplug testcase support for LoongArch system, it passes to
->> run with command "make check-qtest-loongarch64" as following:
->>    qemu:qtest+qtest-loongarch64 / qtest-loongarch64/cpu-plug-test OK 
->> 0.64s 1 subtests passed
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   tests/qtest/cpu-plug-test.c | 28 ++++++++++++++++++++++++++++
->>   tests/qtest/meson.build     |  2 +-
->>   2 files changed, 29 insertions(+), 1 deletion(-)
->>
->> diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
->> index 6633abfc10..790b9693b3 100644
->> --- a/tests/qtest/cpu-plug-test.c
->> +++ b/tests/qtest/cpu-plug-test.c
->> @@ -156,6 +156,32 @@ static void add_s390x_test_case(const char *mname)
->>       g_free(path);
->>   }
->> +static void add_loongarch_test_case(const char *mname)
->> +{
->> +    char *path;
->> +    PlugTestData *data;
->> +
->> +    if (!g_str_has_prefix(mname, "virt")) {
->> +        return;
->> +    }
->> +
->> +    data = g_new(PlugTestData, 1);
->> +    data->machine = g_strdup(mname);
->> +    data->cpu_model = "la464";
->> +    data->device_model = g_strdup("la464-loongarch-cpu");
->> +    data->sockets = 1;
->> +    data->cores = 3;
->> +    data->threads = 1;
->> +    data->maxcpus = data->sockets * data->cores * data->threads;
->> +
->> +    path = g_strdup_printf("cpu-plug/%s/device-add/%ux%ux%u&maxcpus=%u",
->> +                           mname, data->sockets, data->cores,
->> +                           data->threads, data->maxcpus);
->> +    qtest_add_data_func_full(path, data, test_plug_with_device_add,
->> +                             test_data_free);
->> +    g_free(path);
->> +}
->> +
->>   int main(int argc, char **argv)
->>   {
->>       const char *arch = qtest_get_arch();
->> @@ -168,6 +194,8 @@ int main(int argc, char **argv)
->>           qtest_cb_for_every_machine(add_pseries_test_case, 
->> g_test_quick());
->>       } else if (g_str_equal(arch, "s390x")) {
->>           qtest_cb_for_every_machine(add_s390x_test_case, 
->> g_test_quick());
->> +    } else if (g_str_equal(arch, "loongarch64")) {
->> +        qtest_cb_for_every_machine(add_loongarch_test_case, 
->> g_test_quick());
-> 
-> There seems to be only one unversioned "virt" machine for loongarch, so 
-> using qtest_cb_for_every_machine() and g_str_has_prefix(mname, "virt") 
-> in above function seems unnecessary? I'd suggest to call 
-> add_loongarch_test_case() here directly instead and only add the single 
-> test case for the virt machine there. Or do you plan to introduce other 
-> machines any time soon?
-There is no plan to introduce other machines from my side now, only new 
-cpu type will be added.
+Suggested-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+---
+Changes in v3:
+    - Move set_ram_discard_manager() up to avoid a g_free()
+    - Clean up set_ram_discard_manager() definition
 
-Yeap, calling add_loongarch_test_case() here directly is better, will 
-modify it in next patch.
-> 
->>       }
->>       return g_test_run();
->> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
->> index 8a6243382a..60e16614b2 100644
->> --- a/tests/qtest/meson.build
->> +++ b/tests/qtest/meson.build
->> @@ -149,7 +149,7 @@ qtests_hppa = \
->>   qtests_loongarch64 = qtests_filter + \
->>     (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? 
->> ['numa-test'] : []) + \
->> -  ['boot-serial-test']
->> +  ['boot-serial-test', 'cpu-plug-test']
-> 
-> I'd like to suggest to put tests on separate lines here (we do it for 
-> most of the other targets already), that will make "git blame" more 
-> useful in the future when the list changed a couple of times.
-Sure, will put tests on separate lines. And thanks for reviewing and the 
-good suggestions.
+Changes in v2:
+    - newly added.
+---
+ hw/virtio/virtio-mem.c | 29 ++++++++++++++++-------------
+ include/exec/memory.h  |  6 +++---
+ system/memory.c        | 10 +++++++---
+ 3 files changed, 26 insertions(+), 19 deletions(-)
 
-Regards
-Bibo Mao
-> 
->   Thomas
-> 
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index 21f16e4912..d0d3a0240f 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -1049,6 +1049,17 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    /*
++     * Set ourselves as RamDiscardManager before the plug handler maps the
++     * memory region and exposes it via an address space.
++     */
++    if (memory_region_set_ram_discard_manager(&vmem->memdev->mr,
++                                              RAM_DISCARD_MANAGER(vmem))) {
++        error_setg(errp, "Failed to set RamDiscardManager");
++        ram_block_coordinated_discard_require(false);
++        return;
++    }
++
+     /*
+      * We don't know at this point whether shared RAM is migrated using
+      * QEMU or migrated using the file content. "x-ignore-shared" will be
+@@ -1124,13 +1135,6 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+     vmem->system_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
+     vmem->system_reset->vmem = vmem;
+     qemu_register_resettable(obj);
+-
+-    /*
+-     * Set ourselves as RamDiscardManager before the plug handler maps the
+-     * memory region and exposes it via an address space.
+-     */
+-    memory_region_set_ram_discard_manager(&vmem->memdev->mr,
+-                                          RAM_DISCARD_MANAGER(vmem));
+ }
+ 
+ static void virtio_mem_device_unrealize(DeviceState *dev)
+@@ -1138,12 +1142,6 @@ static void virtio_mem_device_unrealize(DeviceState *dev)
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VirtIOMEM *vmem = VIRTIO_MEM(dev);
+ 
+-    /*
+-     * The unplug handler unmapped the memory region, it cannot be
+-     * found via an address space anymore. Unset ourselves.
+-     */
+-    memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
+-
+     qemu_unregister_resettable(OBJECT(vmem->system_reset));
+     object_unref(OBJECT(vmem->system_reset));
+ 
+@@ -1156,6 +1154,11 @@ static void virtio_mem_device_unrealize(DeviceState *dev)
+     virtio_del_queue(vdev, 0);
+     virtio_cleanup(vdev);
+     g_free(vmem->bitmap);
++    /*
++     * The unplug handler unmapped the memory region, it cannot be
++     * found via an address space anymore. Unset ourselves.
++     */
++    memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
+     ram_block_coordinated_discard_require(false);
+ }
+ 
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 3bebc43d59..390477b588 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -2487,13 +2487,13 @@ static inline bool memory_region_has_ram_discard_manager(MemoryRegion *mr)
+  *
+  * This function must not be called for a mapped #MemoryRegion, a #MemoryRegion
+  * that does not cover RAM, or a #MemoryRegion that already has a
+- * #RamDiscardManager assigned.
++ * #RamDiscardManager assigned. Return 0 if the rdm is set successfully.
+  *
+  * @mr: the #MemoryRegion
+  * @rdm: #RamDiscardManager to set
+  */
+-void memory_region_set_ram_discard_manager(MemoryRegion *mr,
+-                                           RamDiscardManager *rdm);
++int memory_region_set_ram_discard_manager(MemoryRegion *mr,
++                                          RamDiscardManager *rdm);
+ 
+ /**
+  * memory_region_find: translate an address/size relative to a
+diff --git a/system/memory.c b/system/memory.c
+index b17b5538ff..62d6b410f0 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2115,12 +2115,16 @@ RamDiscardManager *memory_region_get_ram_discard_manager(MemoryRegion *mr)
+     return mr->rdm;
+ }
+ 
+-void memory_region_set_ram_discard_manager(MemoryRegion *mr,
+-                                           RamDiscardManager *rdm)
++int memory_region_set_ram_discard_manager(MemoryRegion *mr,
++                                          RamDiscardManager *rdm)
+ {
+     g_assert(memory_region_is_ram(mr));
+-    g_assert(!rdm || !mr->rdm);
++    if (mr->rdm && rdm) {
++        return -EBUSY;
++    }
++
+     mr->rdm = rdm;
++    return 0;
+ }
+ 
+ uint64_t ram_discard_manager_get_min_granularity(const RamDiscardManager *rdm,
+-- 
+2.43.5
 
 
