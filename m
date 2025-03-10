@@ -4,60 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9F72C28B2E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:18:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5A7C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:19:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trenW-0002GM-Ea; Mon, 10 Mar 2025 11:12:06 -0400
+	id 1tretB-0003g9-J2; Mon, 10 Mar 2025 11:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1tren3-00026Z-Qo
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:37 -0400
-Received: from smtp1.lauterbach.com ([62.154.241.196])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1tremy-0007hx-Do
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:11:37 -0400
-Received: (qmail 30868 invoked by uid 484); 10 Mar 2025 15:11:12 -0000
-X-Qmail-Scanner-Diagnostics: from 10.2.13.100 by smtp1.lauterbach.com
- (envelope-from <mario.fleischmann@lauterbach.com>,
- uid 484) with qmail-scanner-2.11 
- (mhr: 1.0. clamdscan: 0.99/21437. spamassassin: 3.4.0.  
- Clear:RC:1(10.2.13.100):. 
- Processed in 0.012867 secs); 10 Mar 2025 15:11:12 -0000
-Received: from unknown (HELO mflpc1.LTB.LAN)
- (Authenticated_SSL:mfleischmann@[10.2.13.100])
- (envelope-sender <mario.fleischmann@lauterbach.com>)
- by smtp1.lauterbach.com (qmail-ldap-1.03) with TLS_AES_256_GCM_SHA384
- encrypted SMTP
- for <qemu-devel@nongnu.org>; 10 Mar 2025 15:11:12 -0000
-From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, philmd@linaro.org, armbru@redhat.com,
- christian.boenig@lauterbach.com,
- Mario Fleischmann <mario.fleischmann@lauterbach.com>,
- Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 11/16] mcd test: Implement core state query
-Date: Mon, 10 Mar 2025 16:05:05 +0100
-Message-Id: <20250310150510.200607-12-mario.fleischmann@lauterbach.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
-References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tresX-00030c-Vl; Mon, 10 Mar 2025 11:17:23 -0400
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tresV-00008c-KD; Mon, 10 Mar 2025 11:17:17 -0400
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-223fd89d036so85540565ad.1; 
+ Mon, 10 Mar 2025 08:17:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741619829; x=1742224629; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9hRR9eFzKTibA6SanHS7Z7NacsATBx5TBcKCL5oIsCc=;
+ b=Hbg/9Pf6Bthg2VkvMvgVnFyFfwh1oMYf/M4hkm4R40CKdxMqX9bqAoB3Y7NjrZy5dK
+ wRciPim/twF/vIY9QFfIL0I3Jxduu6WufXrd7tFFSVmanvlFCYHfXtB0c+1JqGOLXeFU
+ LUtBOJb/B2HmcziRqWTsImNwRXn/UoD7ZDvYL8xfUp5NgkYA/QcGnka7pcYAYVrCnFca
+ gArn4bq1V+XNbpvNBw8fzaowfG+GjfIo8xDjeI8pueI+2biweNRy/fToUHWTj7FcR8fW
+ jP4uhVUlvTBOsiQ/N9L/AbH86kzOpzZhE6cdjvAA7PmSxonzS+7mr61VwRE2/Fe6Rp5w
+ DMpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741619829; x=1742224629;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9hRR9eFzKTibA6SanHS7Z7NacsATBx5TBcKCL5oIsCc=;
+ b=bqYr1QMy3HKFiTmipQOj6Y79DwdJ42SGSEKNmpLobDUU3vdH9KpQfdY+xZ6Z2NhBN0
+ eMfJRXgkSl4OJhWvHp/oM7awhWKoMeznhxB6aKm+Zj6TdqSW5bfSXLr6Ze/cYO7Epop2
+ gmLLpBIHxGs+hF5A/m1qVk3gk/nL9QmhnORrTtLM9vPyYTpd/N7I99rzX8ipQeKveRRd
+ stOInZaFQb0sXX5qp5zMsVMVi5maUOTt4O52yhumI8Npg3yOuVSKhDEYpiVF70iDXnRI
+ hZRsY3SmrxcH5LyeYPf1TucCkQpPG4BKTLYNPOplTah14f8DudWv8aSuHyIISvRIFrgX
+ dj4Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUNLsvpyjyRjmkEe/jp+22Uu2zXwajD+tfurNEMA4Y3c/AyW4BizhSx50hPGJtKzhJyBC5UK7Yg5sSHQw==@nongnu.org,
+ AJvYcCUcuU3iPztE/Q2DTmvpgOx8JgP4CMas3jl8845zqHban9xQztcCtNZd4DHeYrhddfgic73j0LzfX4o=@nongnu.org,
+ AJvYcCWa5qV/85kQZ1C0GMxxTGOPBpqY+lTFzoF5lRLmQI0zH9LhPXSsx1ZWKbWg6MDu4bqaJn8yyrrQOm43@nongnu.org
+X-Gm-Message-State: AOJu0YwAMAVZCwfi0JD/jC62+VOeuMjo5fS1er/RSM98/Z6TVlaP2Hx8
+ gOE4rfPehhYnrl1K385q3kiTdEi0Xn78AlvjVRJ8YqTRuiY8zVQ=
+X-Gm-Gg: ASbGncveHPhVCLCf/e6yq0oeNc4nfGH3ReeBseMh03bzw7D9MB0eF4tJiTqeiPNEx81
+ 9kCSceXJTdgrvx26A9Kdldp4dqwyqRCofX6PEn/veBOI6OqAGChiKybo74p3aHLJudpdU8ELixk
+ hmaXM11TPeRgKcL6xPL1g436Ei6qcmSjzRjzLwNg8vKmEQQyqwsbBwCKVdPidzu7uZ9NETuAfQo
+ ePI7uE91jrTJ55CjIn++Dwtm2VVGULnzSEigbQ4b/18nKcorDnOvwbTn8Dzn6jwPuOduflZonZs
+ vnl3U5hRVYEP6w1PRpjYvTo9pwv9EO6gYBNkuWCqX6vIMg25
+X-Google-Smtp-Source: AGHT+IGoPEqYRu6kEb6iHvvB5lodkJM7ycEzmRHAEsrCpUaTNhIDOTfpdN//UjZ7KzKlSQrUCMm6Wg==
+X-Received: by 2002:a17:902:e80a:b0:223:f408:c3f8 with SMTP id
+ d9443c01a7336-22428897491mr261740075ad.14.1741619829297; 
+ Mon, 10 Mar 2025 08:17:09 -0700 (PDT)
+Received: from [192.168.0.113] ([58.38.42.149])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22410ac0794sm79129765ad.259.2025.03.10.08.17.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Mar 2025 08:17:08 -0700 (PDT)
+Message-ID: <324d8b90-198b-40df-bd91-02cda9443e94@gmail.com>
+Date: Mon, 10 Mar 2025 23:16:59 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 12/21] hw/vfio/igd: Check CONFIG_VFIO_IGD at runtime
+ using vfio_igd_builtin()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Eric Farman <farman@linux.ibm.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-s390x@nongnu.org,
+ Eric Auger <eric.auger@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250308230917.18907-1-philmd@linaro.org>
+ <20250308230917.18907-13-philmd@linaro.org>
+ <415339c1-8f83-4059-949e-63ef0c28b4b9@redhat.com>
+ <7fc9e684-d677-4ae6-addb-9983f74166b3@linaro.org>
+Content-Language: en-US
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <7fc9e684-d677-4ae6-addb-9983f74166b3@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Qmail-Scanner-2.11: added fake Content-Type header
-Content-Type: text/plain
-Received-SPF: pass client-ip=62.154.241.196;
- envelope-from=mario.fleischmann@lauterbach.com; helo=smtp1.lauterbach.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,465 +124,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Depending on the VM and CPU state, core states can be queried:
+On 3/10/25 21:43, Philippe Mathieu-Daudé wrote:
+> On 10/3/25 08:37, Cédric Le Goater wrote:
+>> On 3/9/25 00:09, Philippe Mathieu-Daudé wrote:
+>>> Convert the compile time check on the CONFIG_VFIO_IGD definition
+>>> by a runtime one by calling vfio_igd_builtin(), which check
+>>> whether VFIO_IGD is built in a qemu-system binary.
+>>>
+>>> Add stubs to avoid when VFIO_IGD is not built in:
+>>
+>> I thought we were trying to avoid stubs in QEMU build. Did that change ?
+> 
+> Hmm so you want remove the VFIO_IGD Kconfig symbol and have it always
+> builtin with VFIO. It might make sense for quirks, since vfio_realize()
+> already checks for the VFIO_FEATURE_ENABLE_IGD_OPREGION feature.
+> 
+> I'll see if there aren't other implications I missed.
+> 
+> Thanks,
+> 
+> Phil.
 
-* MCD_CORE_STATE_DEBUG:   VM halted or CPU artifically stopped
-* MCD_CORE_STATE_RUNNING: VM and CPU running
-* MCD_CORE_STATE_HALTED:  CPU suspended
+I personally suggest keeping the VFIO_IGD Kconfig symbol to prevent
+building IGD-specific code into non x86 target. The change Cedric
+mentioned in another reply [1] moves VFIO_FEATURE_ENABLE_IGD_OPREGION
+from vfio_realize() to igd.c.
 
-Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
----
- mcd/libmcd_qapi.c         |  16 +++++
- mcd/libmcd_qapi.h         |   2 +
- mcd/mcdserver.c           |  48 ++++++++++++++-
- mcd/mcdstub_qapi.c        |  21 +++++++
- qapi/mcd.json             |  55 +++++++++++++++++
- tests/qtest/libmcd-test.c |  59 +++++++++++++++++++
- tests/qtest/libmcd-test.h |   9 +++
- tests/qtest/mcd-test.c    | 120 +++++++++++++++++++++++++++++++++++++-
- 8 files changed, 328 insertions(+), 2 deletions(-)
+[1] https://lore.kernel.org/qemu-devel/20250306180131.32970-1-tomitamoeko@gmail.com/
 
-diff --git a/mcd/libmcd_qapi.c b/mcd/libmcd_qapi.c
-index 99177b2fd2..44fc9bd6b4 100644
---- a/mcd/libmcd_qapi.c
-+++ b/mcd/libmcd_qapi.c
-@@ -195,3 +195,19 @@ MCDRegisterInfo *marshal_mcd_register_info(const mcd_register_info_st *reg_info)
- 
-     return marshal;
- }
-+
-+MCDCoreState *marshal_mcd_core_state(const mcd_core_state_st *state)
-+{
-+    MCDCoreState *marshal = g_malloc0(sizeof(*marshal));
-+
-+    *marshal = (MCDCoreState) {
-+        .state = state->state,
-+        .event = state->event,
-+        .hw_thread_id = state->hw_thread_id,
-+        .trig_id = state->trig_id,
-+        .stop_str = g_strdup(state->stop_str),
-+        .info_str = g_strdup(state->info_str),
-+    };
-+
-+    return marshal;
-+}
-diff --git a/mcd/libmcd_qapi.h b/mcd/libmcd_qapi.h
-index edcc6d0b7c..7d68d60f02 100644
---- a/mcd/libmcd_qapi.h
-+++ b/mcd/libmcd_qapi.h
-@@ -35,6 +35,8 @@ MCDAddr *marshal_mcd_addr(const mcd_addr_st *addr);
- MCDRegisterInfo *marshal_mcd_register_info(
-     const mcd_register_info_st *reg_info);
- 
-+MCDCoreState *marshal_mcd_core_state(const mcd_core_state_st *state);
-+
- mcd_api_version_st unmarshal_mcd_api_version(MCDAPIVersion *api_version);
- 
- mcd_core_con_info_st unmarshal_mcd_core_con_info(MCDCoreConInfo *con_info);
-diff --git a/mcd/mcdserver.c b/mcd/mcdserver.c
-index 9e46ea5fa5..116fbfaa30 100644
---- a/mcd/mcdserver.c
-+++ b/mcd/mcdserver.c
-@@ -16,6 +16,7 @@
- #include "exec/gdbstub.h"
- #include "hw/core/cpu.h"
- #include "system/runstate.h"
-+#include "system/hw_accel.h"
- 
- /* Custom memory space type */
- static const mcd_mem_type_et MCD_MEM_SPACE_IS_SECURE = 0x00010000;
-@@ -1192,7 +1193,52 @@ mcd_return_et mcd_set_global_f(const mcd_core_st *core, bool enable)
- 
- mcd_return_et mcd_qry_state_f(const mcd_core_st *core, mcd_core_state_st *state)
- {
--    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
-+    mcdcore_state *core_state;
-+    RunState rs;
-+
-+    if (!core || !state) {
-+        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
-+        return g_server_state.last_error->return_status;
-+    }
-+
-+    *state = (mcd_core_state_st) {
-+        .stop_str = "",
-+        .info_str = "",
-+    };
-+
-+    core_state = find_core(core->core_con_info);
-+    if (!core_state || core_state->open_core != core) {
-+        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
-+        return g_server_state.last_error->return_status;
-+    }
-+
-+    cpu_synchronize_state(core_state->cpu);
-+    rs = runstate_get();
-+    switch (rs) {
-+    case RUN_STATE_PRELAUNCH:
-+    case RUN_STATE_DEBUG:
-+    case RUN_STATE_PAUSED:
-+        state->state = MCD_CORE_STATE_DEBUG;
-+        pstrcpy(state->stop_str, MCD_INFO_STR_LEN, "RUN_STATE_PAUSED");
-+        break;
-+    case RUN_STATE_RUNNING:
-+        if (core_state->cpu->running) {
-+            state->state = MCD_CORE_STATE_RUNNING;
-+        } else if (core_state->cpu->stopped) {
-+            state->state = MCD_CORE_STATE_DEBUG;
-+        } else if (core_state->cpu->halted) {
-+            state->state = MCD_CORE_STATE_HALTED;
-+            pstrcpy(state->info_str, MCD_INFO_STR_LEN, "halted");
-+        } else {
-+            state->state = MCD_CORE_STATE_UNKNOWN;
-+        }
-+        break;
-+    default:
-+        state->state = MCD_CORE_STATE_UNKNOWN;
-+        break;
-+    }
-+
-+    g_server_state.last_error = &MCD_ERROR_NONE;
-     return g_server_state.last_error->return_status;
- }
- 
-diff --git a/mcd/mcdstub_qapi.c b/mcd/mcdstub_qapi.c
-index 635f95181b..e1bde14b47 100644
---- a/mcd/mcdstub_qapi.c
-+++ b/mcd/mcdstub_qapi.c
-@@ -557,3 +557,24 @@ MCDSetGlobalResult *qmp_mcd_set_global(uint32_t core_uid, bool enable,
-     g_stub_state.on_error_ask_server = true;
-     return result;
- }
-+
-+MCDQryStateResult *qmp_mcd_qry_state(uint32_t core_uid, Error **errp)
-+{
-+    MCDQryStateResult *result = g_malloc0(sizeof(*result));
-+    mcd_core_state_st state;
-+    mcd_core_st *core = NULL;
-+
-+    result->return_status = retrieve_open_core(core_uid, &core);
-+    if (result->return_status != MCD_RET_ACT_NONE) {
-+        g_stub_state.on_error_ask_server = false;
-+        return result;
-+    }
-+
-+    result->return_status = mcd_qry_state_f(core, &state);
-+    if (result->return_status == MCD_RET_ACT_NONE) {
-+        result->state = marshal_mcd_core_state(&state);
-+    }
-+
-+    g_stub_state.on_error_ask_server = true;
-+    return result;
-+}
-diff --git a/qapi/mcd.json b/qapi/mcd.json
-index c8b82e7f82..3560658451 100644
---- a/qapi/mcd.json
-+++ b/qapi/mcd.json
-@@ -307,6 +307,29 @@
-     'hw-thread-id'        : 'uint32' } }
- 
- 
-+##
-+# @MCDCoreState:
-+#
-+# Structure type containing the state of a core.
-+#
-+# @state:        Core state.
-+# @event:        Core events (OR'ed bitmask)
-+# @hw-thread-id: ID of the hardware thread that caused the core to stop.
-+# @trig-id:      ID of the trigger that caused the core to stop.
-+# @stop-str:     Detailed description of a special stop reason.
-+# @info-str:     Detailed description of the core state.
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'MCDCoreState',
-+  'data': {
-+    'state'       : 'uint32',
-+    'event'       : 'uint32',
-+    'hw-thread-id': 'uint32',
-+    'trig-id'     : 'uint32',
-+    'stop-str'    : 'str',
-+    'info-str'    : 'str' } }
-+
- ##
- # == Target Initialization API
- ##
-@@ -1473,3 +1496,35 @@
-     'core-uid': 'uint32',
-     'enable'  : 'bool' },
-   'returns': 'MCDSetGlobalResult' }
-+
-+
-+##
-+# @MCDQryStateResult:
-+#
-+# Return value of @mcd-qry-state.
-+#
-+# @return-status: Return code.
-+# @state:         The current execution state of the target core.
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'MCDQryStateResult',
-+  'data': {
-+    'return-status': 'uint32',
-+    '*state': 'MCDCoreState' }}
-+
-+
-+##
-+# @mcd-qry-state:
-+#
-+# Function querying the execution state of a target core.
-+#
-+# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
-+#
-+# Returns: @MCDQryStateResult
-+#
-+# Since: 9.1
-+##
-+{ 'command': 'mcd-qry-state',
-+  'data': { 'core-uid': 'uint32' },
-+  'returns': 'MCDQryStateResult' }
-diff --git a/tests/qtest/libmcd-test.c b/tests/qtest/libmcd-test.c
-index 82a39366b2..52f3ffcaa1 100644
---- a/tests/qtest/libmcd-test.c
-+++ b/tests/qtest/libmcd-test.c
-@@ -316,5 +316,64 @@ MCDQryRegMapResult *qtest_mcd_qry_reg_map(QTestState *qts,
- 
-     UNMARSHAL_RESULT(MCDQryRegMapResult);
- 
-+    return unmarshal;
-+
-+}
-+
-+MCDRunResult *qtest_mcd_run(QTestState *qts, q_obj_mcd_run_arg *args)
-+{
-+    Visitor *v;
-+    QObject *marshal;
-+    QDict *arg, *resp;
-+    QObject *ret;
-+    bool ok;
-+    MCDRunResult *unmarshal;
-+
-+    MARSHAL_ARGS(q_obj_mcd_run_arg);
-+
-+    resp = qtest_qmp(qts, "{'execute': 'mcd-run',"
-+                          "'arguments': %p}", arg);
-+
-+    UNMARSHAL_RESULT(MCDRunResult);
-+
-+    return unmarshal;
-+}
-+
-+MCDStopResult *qtest_mcd_stop(QTestState *qts, q_obj_mcd_stop_arg *args)
-+{
-+    Visitor *v;
-+    QObject *marshal;
-+    QDict *arg, *resp;
-+    QObject *ret;
-+    bool ok;
-+    MCDStopResult *unmarshal;
-+
-+    MARSHAL_ARGS(q_obj_mcd_stop_arg);
-+
-+    resp = qtest_qmp(qts, "{'execute': 'mcd-stop',"
-+                          "'arguments': %p}", arg);
-+
-+    UNMARSHAL_RESULT(MCDStopResult);
-+
-+    return unmarshal;
-+}
-+
-+MCDQryStateResult *qtest_mcd_qry_state(QTestState *qts,
-+                                       q_obj_mcd_qry_state_arg *args)
-+{
-+    Visitor *v;
-+    QObject *marshal;
-+    QDict *arg, *resp;
-+    QObject *ret;
-+    bool ok;
-+    MCDQryStateResult *unmarshal;
-+
-+    MARSHAL_ARGS(q_obj_mcd_qry_state_arg);
-+
-+    resp = qtest_qmp(qts, "{'execute': 'mcd-qry-state',"
-+                          "'arguments': %p}", arg);
-+
-+    UNMARSHAL_RESULT(MCDQryStateResult);
-+
-     return unmarshal;
- }
-diff --git a/tests/qtest/libmcd-test.h b/tests/qtest/libmcd-test.h
-index 266b6fe854..e45386847d 100644
---- a/tests/qtest/libmcd-test.h
-+++ b/tests/qtest/libmcd-test.h
-@@ -56,4 +56,13 @@ MCDQryRegGroupsResult *qtest_mcd_qry_reg_groups(QTestState *qts,
- MCDQryRegMapResult *qtest_mcd_qry_reg_map(QTestState *qts,
-                                           q_obj_mcd_qry_reg_map_arg *args);
- 
-+MCDRunResult *qtest_mcd_run(QTestState *qts,
-+                            q_obj_mcd_run_arg *args);
-+
-+MCDStopResult *qtest_mcd_stop(QTestState *qts,
-+                              q_obj_mcd_stop_arg *args);
-+
-+MCDQryStateResult *qtest_mcd_qry_state(QTestState *qts,
-+                                       q_obj_mcd_qry_state_arg *args);
-+
- #endif /* LIBMCD_TEST_H */
-diff --git a/tests/qtest/mcd-test.c b/tests/qtest/mcd-test.c
-index 820408a9a9..9ab6b8e675 100644
---- a/tests/qtest/mcd-test.c
-+++ b/tests/qtest/mcd-test.c
-@@ -18,7 +18,7 @@
- #include "qapi/compat-policy.h"
- #include "libmcd-test.h"
- 
--#define QEMU_EXTRA_ARGS ""
-+#define QEMU_EXTRA_ARGS "-accel tcg"
- 
- static bool verbose;
- 
-@@ -87,6 +87,45 @@ static MCDQryCoresResult *open_server_query_cores(QTestState *qts)
-     return qry_cores_result;
- }
- 
-+static mcd_core_state_et check_core_state(QTestState *qts, uint32_t core_uid)
-+{
-+    mcd_core_state_et state;
-+
-+    q_obj_mcd_qry_state_arg qry_state_args = {
-+        .core_uid = core_uid,
-+    };
-+
-+    MCDQryStateResult *qry_state_result = qtest_mcd_qry_state(qts,
-+                                                              &qry_state_args);
-+
-+    g_assert(qry_state_result->return_status == MCD_RET_ACT_NONE);
-+    g_assert(qry_state_result->state);
-+    state = qry_state_result->state->state;
-+
-+    if (verbose) {
-+        fprintf(stderr, "[INFO]\tCore state: ");
-+        switch (qry_state_result->state->state) {
-+        case MCD_CORE_STATE_RUNNING:
-+            fprintf(stderr, "running\n");
-+            break;
-+        case MCD_CORE_STATE_HALTED:
-+            fprintf(stderr, "halted\n");
-+            break;
-+        case MCD_CORE_STATE_DEBUG:
-+            fprintf(stderr, "debug\n");
-+            break;
-+        case MCD_CORE_STATE_UNKNOWN:
-+            fprintf(stderr, "unknown\n");
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
-+
-+    qapi_free_MCDQryStateResult(qry_state_result);
-+    return state;
-+}
-+
- static void test_initialize(void)
- {
-     QTestState *qts = qtest_init(QEMU_EXTRA_ARGS);
-@@ -510,6 +549,84 @@ static void test_qry_core_info(void)
-     qtest_quit(qts);
- }
- 
-+static void test_go_stop(void)
-+{
-+    QTestState *qts = qtest_init(QEMU_EXTRA_ARGS);
-+    mcd_core_state_et core_state;
-+    MCDQryCoresResult *cores_query = open_server_query_cores(qts);
-+
-+    MCDCoreConInfoList *core_head = cores_query->core_con_info;
-+    for (uint32_t c = 0; c < cores_query->num_cores; c++) {
-+        q_obj_mcd_stop_arg stop_args = {
-+            .global = true, /* only global stops currently supported */
-+        };
-+
-+        q_obj_mcd_run_arg run_args = {
-+            .global = true,
-+        };
-+
-+        q_obj_mcd_close_core_arg close_core_args;
-+
-+        MCDRunResult *run_result;
-+        MCDStopResult *stop_result;
-+        MCDOpenCoreResult *open_core_result;
-+        MCDCloseCoreResult *close_core_result;
-+
-+        MCDCoreConInfo *core_con_info = core_head->value;
-+        q_obj_mcd_open_core_arg open_core_args = {
-+            .core_con_info = core_con_info,
-+        };
-+
-+        if (verbose) {
-+            fprintf(stderr, "[INFO]\tTesting core %s (#%d)...\n",
-+                            core_con_info->core,
-+                            core_con_info->core_id);
-+        }
-+
-+        open_core_result = qtest_mcd_open_core(qts, &open_core_args);
-+        g_assert(open_core_result->return_status == MCD_RET_ACT_NONE);
-+        g_assert(open_core_result->has_core_uid);
-+
-+        check_core_state(qts, open_core_result->core_uid);
-+
-+        if (verbose) {
-+            fprintf(stderr, "[INFO]\tStop core\n");
-+        }
-+
-+        stop_args.core_uid = open_core_result->core_uid;
-+        stop_result = qtest_mcd_stop(qts, &stop_args);
-+        g_assert(stop_result->return_status == MCD_RET_ACT_NONE);
-+        qapi_free_MCDStopResult(stop_result);
-+
-+        core_state = check_core_state(qts, open_core_result->core_uid);
-+        g_assert(core_state == MCD_CORE_STATE_DEBUG);
-+
-+        if (verbose) {
-+            fprintf(stderr, "[INFO]\tResume core\n");
-+        }
-+
-+        run_args.core_uid = open_core_result->core_uid;
-+        run_result = qtest_mcd_run(qts, &run_args);
-+        g_assert(run_result->return_status == MCD_RET_ACT_NONE);
-+        qapi_free_MCDRunResult(run_result);
-+
-+        core_state = check_core_state(qts, open_core_result->core_uid);
-+        g_assert(core_state == MCD_CORE_STATE_RUNNING);
-+
-+        close_core_args.core_uid = open_core_result->core_uid;
-+        close_core_result = qtest_mcd_close_core(qts, &close_core_args);
-+        g_assert(close_core_result->return_status == MCD_RET_ACT_NONE);
-+
-+        qapi_free_MCDCloseCoreResult(close_core_result);
-+        qapi_free_MCDOpenCoreResult(open_core_result);
-+        core_head = core_head->next;
-+    }
-+
-+    qapi_free_MCDQryCoresResult(cores_query);
-+    qtest_mcd_exit(qts);
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char *argv[])
- {
-     char *v_env = getenv("V");
-@@ -522,5 +639,6 @@ int main(int argc, char *argv[])
-     qtest_add_func("mcd/qry-cores", test_qry_cores);
-     qtest_add_func("mcd/open-core", test_open_core);
-     qtest_add_func("mcd/qry-core-info", test_qry_core_info);
-+    qtest_add_func("mcd/go-stop", test_go_stop);
-     return g_test_run();
- }
--- 
-2.34.1
-
+Thanks,
+Moeko
 
