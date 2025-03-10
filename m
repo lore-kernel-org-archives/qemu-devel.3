@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C11DC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E338FC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:55:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trcdc-00022k-R4; Mon, 10 Mar 2025 08:53:45 -0400
+	id 1trcdd-000236-J4; Mon, 10 Mar 2025 08:53:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1trcdT-00021v-Gu
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:53:36 -0400
+ id 1trcdU-000220-3o
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:53:39 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1trcdP-0001Qm-Sr
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:53:33 -0400
+ id 1trcdS-0001Qz-5F
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:53:35 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1trcdK-00000000ZRz-1t2w; Mon, 10 Mar 2025 13:53:26 +0100
-Message-ID: <3d837e2c-6456-4e94-97fa-a34ba4a47316@maciej.szmigiero.name>
-Date: Mon, 10 Mar 2025 13:53:21 +0100
+ id 1trcdN-00000000ZRz-0ZpG; Mon, 10 Mar 2025 13:53:29 +0100
+Message-ID: <da727e43-bf1d-45dc-b60e-51df3ca0c7fd@maciej.szmigiero.name>
+Date: Mon, 10 Mar 2025 13:53:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 2/2] vfio/migration: Use BE byte order for device state
  wire packets
-To: Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
  <f0bf02377f18f3cf6b8942528b3b5bce97fb6ab7.1741344976.git.maciej.szmigiero@oracle.com>
  <aaad9f89-56c8-4df7-bb36-fb212b39ade4@nvidia.com>
+ <51f2cf5d-4396-40aa-9801-00dd2b135391@redhat.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,9 +84,9 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <aaad9f89-56c8-4df7-bb36-fb212b39ade4@nvidia.com>
+In-Reply-To: <51f2cf5d-4396-40aa-9801-00dd2b135391@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
  envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
 X-Spam_score_int: -18
@@ -110,32 +111,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.03.2025 09:17, Avihai Horon wrote:
-> 
-> On 07/03/2025 12:57, Maciej S. Szmigiero wrote:
->> External email: Use caution opening links or attachments
+On 10.03.2025 10:23, Cédric Le Goater wrote:
+> On 3/10/25 09:17, Avihai Horon wrote:
 >>
+>> On 07/03/2025 12:57, Maciej S. Szmigiero wrote:
+>>> External email: Use caution opening links or attachments
+>>>
+>>>
+>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>
+>>> Wire data commonly use BE byte order (including in the existing migration
+>>> protocol), use it also for for VFIO device state packets.
 >>
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>> Nit: should we add a sentence about the motivation? Something like:
 >>
->> Wire data commonly use BE byte order (including in the existing migration
->> protocol), use it also for for VFIO device state packets.
+>> This will allow VFIO multifd device state transfer between hosts with different endianness.
+>> Although currently there is no such use case, it's good to have it now for completeness.
 > 
-> Nit: should we add a sentence about the motivation? Something like:
+> Maciej,
 > 
-> This will allow VFIO multifd device state transfer between hosts with different endianness.
-> Although currently there is no such use case, it's good to have it now for completeness.
+> Could you please send a v2 with this change ?  and
 
-Added this paragraph to the commit message in v2.
+I've sent v2 now as a standalone patch.
 
+>>>
+>>> Fixes: 3228d311ab18 ("vfio/migration: Multifd device state transfer support - received buffers queuing")
+>>> Fixes: 6d644baef203 ("vfio/migration: Multifd device state transfer support - send side")
+> 
+> we don't need these Fixes trailers because the feature is not part of
+> a released QEMU version yet.
+
+Removed these tags now.
+
+I've originally added them because you said last week it's going to be a "Fixes" patch:
+https://lore.kernel.org/qemu-devel/7eb4dd80-0ae3-4522-bd1d-b004c19c4bf2@redhat.com/
+
+>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 >>
->> Fixes: 3228d311ab18 ("vfio/migration: Multifd device state transfer support - received buffers queuing")
->> Fixes: 6d644baef203 ("vfio/migration: Multifd device state transfer support - send side")
->> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+>>
+>> Thanks.
 > 
-> Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+> Thanks Avihai,
 > 
-> Thanks.
+> C.
 
 Thanks,
 Maciej
