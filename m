@@ -4,110 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E98EEC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 18:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E1C5C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 18:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trhp1-0002uv-9r; Mon, 10 Mar 2025 14:25:51 -0400
+	id 1trhqh-0004w3-Gk; Mon, 10 Mar 2025 14:27:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Dnhs=V5=kaod.org=clg@ozlabs.org>)
- id 1trhoZ-0002q2-Sw; Mon, 10 Mar 2025 14:25:24 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Dnhs=V5=kaod.org=clg@ozlabs.org>)
- id 1trhoW-0004tw-Tw; Mon, 10 Mar 2025 14:25:23 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZBQL06rJ9z4xG8;
- Tue, 11 Mar 2025 05:25:12 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZBQKn1jXBz4xZ7;
- Tue, 11 Mar 2025 05:25:00 +1100 (AEDT)
-Message-ID: <20adfeac-df39-45d1-9c5b-95fe7cafbbde@kaod.org>
-Date: Mon, 10 Mar 2025 19:24:58 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trhqf-0004ru-Fp
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:27:33 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trhqc-0005FS-Vc
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:27:33 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3914a5def6bso857012f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 11:27:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741631249; x=1742236049; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vmdCEnwkZ4b2bMvN4tcIf2KJNeH44T6fztnYQ1cjcMw=;
+ b=BIzDyBDDBqowIe/ldf7/xjNXfQ1rYooWFiwq2TFsebk7Dy7G2Xl0OXz63rgV3NdEWz
+ aq3WACNSnga5XNVKhDM358OGe0QZYtXW87NOjbp9+rQp+kRddc2FvRIALYAHMx06EH3G
+ CDJNlr5HLddZepaeQBlOlec8zK7pQNeAnRB8d/sZcCROENCTcG7p+90Lkfq5E4V+pI2I
+ 2zkvYwOzlGFCg/EXt4DJfLykXMnk80M9l4CvmSXYW+5X8/4ch4ACviZhlZ52mkBLw5ke
+ i1UYmWSthx8GL3HXa4XkS6CTrStTCAi1r8Xso2eenT8y20nlfdnw/i/Hcydl6JpNbL1R
+ 4Cyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741631249; x=1742236049;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vmdCEnwkZ4b2bMvN4tcIf2KJNeH44T6fztnYQ1cjcMw=;
+ b=fez25oHYKpyeL6iLsgg9kwXxyTjyJNT+bIdDI23as2Z/yvYs6XBze9KdxmgFe+KYse
+ 28+EatjCT2HAsz0ZaaroC9PbCv5T9uEDQIt3jYjrT9XIF7Q24Q/5O/92ZYLbJiAUX/Li
+ 7PW5MLQ7nHf8lwpUFyOfiwdfSsEpy2rbpU2vdCW2ATUbTkFFlrdJrAsJZdK7IpZkb2oT
+ 3Nc/Hm57hpdC40qQGIhmi6vBcXYOwwVI0gTwwoJT2QAnoDzmdkYCHQkCGYMH8R7KJegL
+ QOerbuLFzfRuOAxmdwS30qLxUmrpFEnqk6hR6ke2wplTiC2v+siCK6jbHObaDUqcXB+S
+ YMwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUbHOBTqE5fP8J0mz7N+3yrD6/fT/Lp5SbuFHMhk6gdLNP85fyu3Pl8936lL+Zcn6TOFgGOkXsqiWz3@nongnu.org
+X-Gm-Message-State: AOJu0YzJrfVRXbwKAL8IIZQ+8OAlxGJvoTFeJnITy0zJwoKvW9j29OWN
+ rktqXw9gAvX7/VmAmktNn8OZHkVJhkWThNjFFInm1lNp4hU73JMXCl/PRg4CvO4=
+X-Gm-Gg: ASbGncs9y9zd6uxj6BcvTqXcKgNk4YmDNamGMCa/a2xWbBujQYpKsLgF72DLO735oFj
+ J65Vcqre96n0g78rrqAJsCsym1lhFL0TfWlqbWj1jtJsJzoEmoqxx96ynq/ut5ZoUxy0rpBpCKh
+ aj1huVcKTem8b9sCfEhFk4wd57hXTRzl/ONeolcYi2o5A7oVYEuzNWFZH4Z9N3eh6e67ZTb6AxR
+ lkx74jqTLgOPt13lMcGn7R9d4Rm0KU1HbT/ib9nYJpAPpyjxHBHAVBQtD9meDA9jgtghuIi/eX9
+ LNam+WZxWV8q1t7x8wL56DwNfjtQru8pXti+UzlyGgIoF/N5DDVyCDL8zckxvYRIU/VOF+SEmk8
+ Q6GodrqtihpZl
+X-Google-Smtp-Source: AGHT+IGkbbEYweu/+J9wOaUpp01xiq8tCAsovfwOvMG1Q4sc/xSm/XnBBjrDzfBVoDkuNiffQ9ZoJA==
+X-Received: by 2002:a05:6000:1fa9:b0:391:31f2:b998 with SMTP id
+ ffacd0b85a97d-39132d16fdcmr10029688f8f.6.1741631248833; 
+ Mon, 10 Mar 2025 11:27:28 -0700 (PDT)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43bd4352e29sm181160055e9.32.2025.03.10.11.27.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Mar 2025 11:27:28 -0700 (PDT)
+Message-ID: <5bd88057-3e3e-4c34-9d06-68916c95f647@linaro.org>
+Date: Mon, 10 Mar 2025 19:27:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 14/14] hw/sd/sdhci: Remove unnecessary 'endianness'
- property
-To: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Guenter Roeck <linux@roeck-us.net>, BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
- Joel Stanley <joel@jms.id.au>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, Andrey Smirnov <andrew.smirnov@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-block@nongnu.org,
- Jamin Lin <jamin_lin@aspeedtech.com>
-References: <20250310000620.70120-1-philmd@linaro.org>
- <20250310000620.70120-15-philmd@linaro.org>
- <d97b9dd5-e569-636d-8ee7-b1a48c402429@eik.bme.hu>
- <0fa157de-ee4e-4b7f-b08e-bdf65e1840ad@linaro.org>
- <6ecc3790-e5a1-4d02-aefa-c6d632936a6a@roeck-us.net>
- <e58acfaf-5255-4710-ad34-7331401ffa86@linaro.org>
- <E66E09F3-0E28-44D7-972C-1E72D789E9E0@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <E66E09F3-0E28-44D7-972C-1E72D789E9E0@gmail.com>
+Subject: Re: [PATCH 15/16] system/memory: make compilation unit common
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
+ <20250310045842.2650784-16-pierrick.bouvier@linaro.org>
+ <76b4e445-0676-4982-a2c8-d273c49a9170@linaro.org>
+ <2d631838-e8a5-48d9-8235-9a41ffc3381c@linaro.org>
+ <76269a95-652a-4064-8f2f-6584b0677191@linaro.org>
+ <b411c27f-3f38-4d22-97ff-fa36ae77fb6e@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <b411c27f-3f38-4d22-97ff-fa36ae77fb6e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=Dnhs=V5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,160 +106,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/25 18:38, Bernhard Beschow wrote:
-> 
-> 
-> Am 10. März 2025 17:31:57 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
->> On 10/3/25 16:56, Guenter Roeck wrote:
->>> On 3/10/25 08:27, Philippe Mathieu-Daudé wrote:
->>>> On 10/3/25 15:09, BALATON Zoltan wrote:
->>>>> On Mon, 10 Mar 2025, Philippe Mathieu-Daudé wrote:
->>>>>> The previous commit removed the single use of instance
->>>>>> setting the "endianness" property.
->>>>>>
->>>>>> Since classes can register their io_ops with correct
->>>>>> endianness, no need to support different ones.
->>>>>>
->>>>>> Remove the code related to SDHCIState::endianess field.
->>>>>>
->>>>>> Remove the now unused SDHCIState::io_ops field, since we
->>>>>> directly use the class one.
->>>>>>
->>>>>> Suggested-by: Bernhard Beschow <shentey@gmail.com>
->>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>> ---
->>>>>> hw/sd/sdhci-internal.h |  1 -
->>>>>> include/hw/sd/sdhci.h  |  2 --
->>>>>> hw/sd/sdhci.c          | 33 +++------------------------------
->>>>>> 3 files changed, 3 insertions(+), 33 deletions(-)
->>>>>>
->>>>>> diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
->>>>>> index d99a8493db2..e4da6c831d1 100644
->>>>>> --- a/hw/sd/sdhci-internal.h
->>>>>> +++ b/hw/sd/sdhci-internal.h
->>>>>> @@ -308,7 +308,6 @@ extern const VMStateDescription sdhci_vmstate;
->>>>>> #define SDHC_CAPAB_REG_DEFAULT 0x057834b4
->>>>>>
->>>>>> #define DEFINE_SDHCI_COMMON_PROPERTIES(_state) \
->>>>>> -    DEFINE_PROP_UINT8("endianness", _state, endianness, DEVICE_LITTLE_ENDIAN), \
->>>>>>      DEFINE_PROP_UINT8("sd-spec-version", _state, sd_spec_version, 2), \
->>>>>>      DEFINE_PROP_UINT8("uhs", _state, uhs_mode, UHS_NOT_SUPPORTED), \
->>>>>>      \
->>>>>> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
->>>>>> index e8fced5eedc..1016a5b5b77 100644
->>>>>> --- a/include/hw/sd/sdhci.h
->>>>>> +++ b/include/hw/sd/sdhci.h
->>>>>> @@ -54,7 +54,6 @@ struct SDHCIState {
->>>>>>      AddressSpace sysbus_dma_as;
->>>>>>      AddressSpace *dma_as;
->>>>>>      MemoryRegion *dma_mr;
->>>>>> -    const MemoryRegionOps *io_ops;
->>>>>>
->>>>>>      QEMUTimer *insert_timer;       /* timer for 'changing' sd card. */
->>>>>>      QEMUTimer *transfer_timer;
->>>>>> @@ -105,7 +104,6 @@ struct SDHCIState {
->>>>>>
->>>>>>      /* Configurable properties */
->>>>>>      uint32_t quirks;
->>>>>> -    uint8_t endianness;
->>>>>>      uint8_t sd_spec_version;
->>>>>>      uint8_t uhs_mode;
->>>>>> };
->>>>>> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
->>>>>> index 47e4bd1a610..cbb9f4ae8c0 100644
->>>>>> --- a/hw/sd/sdhci.c
->>>>>> +++ b/hw/sd/sdhci.c
->>>>>> @@ -1391,17 +1391,6 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
->>>>>> }
->>>>>>
->>>>>> static const MemoryRegionOps sdhci_mmio_le_ops = {
->>>>>> -    .read = sdhci_read,
->>>>>> -    .write = sdhci_write,
->>>>>> -    .valid = {
->>>>>> -        .min_access_size = 1,
->>>>>> -        .max_access_size = 4,
->>>>>> -        .unaligned = false
->>>>>> -    },
->>>>>> -    .endianness = DEVICE_LITTLE_ENDIAN,
->>>>>> -};
->>>>>> -
->>>>>> -static const MemoryRegionOps sdhci_mmio_be_ops = {
->>>>>>      .read = sdhci_read,
->>>>>>      .write = sdhci_write,
->>>>>>      .impl = {
->>>>>> @@ -1413,7 +1402,7 @@ static const MemoryRegionOps sdhci_mmio_be_ops = {
->>>>>>          .max_access_size = 4,
->>>>>>          .unaligned = false
->>>>>>      },
->>>>>> -    .endianness = DEVICE_BIG_ENDIAN,
->>>>>> +    .endianness = DEVICE_LITTLE_ENDIAN,
->>>>>> };
->>>>>>
->>>>>> static void sdhci_init_readonly_registers(SDHCIState *s, Error **errp)
->>>>>> @@ -1467,23 +1456,6 @@ void sdhci_common_realize(SDHCIState *s, Error **errp)
->>>>>>      SDHCIClass *sc = s->sc;
->>>>>>      const char *class_name = object_get_typename(OBJECT(s));
->>>>>>
->>>>>> -    s->io_ops = sc->io_ops ?: &sdhci_mmio_le_ops;
->>>>>> -    switch (s->endianness) {
->>>>>> -    case DEVICE_LITTLE_ENDIAN:
->>>>>> -        /* s->io_ops is little endian by default */
->>>>>> -        break;
->>>>>> -    case DEVICE_BIG_ENDIAN:
->>>>>> -        if (s->io_ops != &sdhci_mmio_le_ops) {
->>>>>> -            error_setg(errp, "SD controller doesn't support big endianness");
->>>>>> -            return;
->>>>>> -        }
->>>>>> -        s->io_ops = &sdhci_mmio_be_ops;
->>>>>> -        break;
->>>>>> -    default:
->>>>>> -        error_setg(errp, "Incorrect endianness");
->>>>>> -        return;
->>>>>> -    }
->>>>>> -
->>>>>>      sdhci_init_readonly_registers(s, errp);
->>>>>>      if (*errp) {
->>>>>>          return;
->>>>>> @@ -1493,7 +1465,7 @@ void sdhci_common_realize(SDHCIState *s, Error **errp)
->>>>>>      s->fifo_buffer = g_malloc0(s->buf_maxsz);
->>>>>>
->>>>>>      assert(sc->iomem_size >= SDHC_REGISTERS_MAP_SIZE);
->>>>>> -    memory_region_init_io(&s->iomem, OBJECT(s), s->io_ops, s, class_name,
->>>>>> +    memory_region_init_io(&s->iomem, OBJECT(s), sc->io_ops, s, class_name,
->>>>>>                            sc->iomem_size);
->>>>>> }
->>>>>>
->>>>>> @@ -1578,6 +1550,7 @@ void sdhci_common_class_init(ObjectClass *klass, const void *data)
->>>>>>      dc->vmsd = &sdhci_vmstate;
->>>>>>      device_class_set_legacy_reset(dc, sdhci_poweron_reset);
->>>>>>
->>>>>> +    sc->io_ops = &sdhci_mmio_le_ops;
->>>>>
->>>>> You call common_class_init in subclass class_inits last so this would overwrite what subclass has set, doesn't it? I think you either have to change order in subclass class_init methods or not set this here.
+On 10/3/25 19:04, Pierrick Bouvier wrote:
+> On 3/10/25 10:58, Richard Henderson wrote:
+>> On 3/10/25 10:47, Pierrick Bouvier wrote:
+>>>> Maybe better as
 >>>>
->>>> Oops... I'm surprised tests passed. Do we have coverage for sdhci on
->>>> e500 machines? Or are we only testing them via virtio PCI block storage?
+>>>>        MemOp mop = (target_words_bigendian() ? MO_BE : MO_LE) | 
+>>>> size_memop(size);
+>>>>        adjust_endianness(mr, &mrfd.data, size_memop(size), mop);
+>>>>
 >>>
->>> Not sure if that is what you are asking, but I have been testing it with
->>> sdhci-pci for a long time (not this series, though).
+>>> Do you think defining MO_TE as this expression is a good idea?
 >>
->> I'm referring to the Freescale eSDHC controller of PPC e500 machines
->> (see previous patch).
+>> There are not so many references to MO_TE outside target/ or accel/tcg/.
+>>
+>> Indeed, after this change, the only ones left are in hw/arm/armv7m.c,
+>> which (because it's Arm) can be changed to MO_LE.
+>>
 > 
-> I think testing SDHCI is generally difficult since the images need to be resized to a power of two. Any idea how to do this with the new functional tests?
+> I see a bit more than that (17 files):
+> hw/arm/armv7m.c
+> include/exec/memop.h
+> target/arm/tcg/helper-a64.c
+> target/arm/tcg/translate.c
+> target/hexagon/idef-parser/parser-helpers.c
+> target/hppa/translate.c
+> target/i386/tcg/emit.c.inc
+> target/loongarch/tcg/insn_trans/trans_vec.c.inc
+> target/m68k/translate.c
+> target/mips/tcg/mips16e_translate.c.inc
+> target/riscv/translate.c
+> target/rx/translate.c
+> target/s390x/tcg/mem_helper.c
+> target/s390x/tcg/translate.c
+> target/s390x/tcg/translate_vx.c.inc
+> target/sparc/ldst_helper.c
+> target/sparc/translate.c
 
-we can truncate to 64M the rootfs used in  :
+For targets tied to single endianness, we can replace using gsed,
+but using a helper is clearer (see for example commit 415aae543ed
+target/microblaze: Consider endianness while translating code").
 
-    tests/functional/test_ppc64_e500.py
+> Plus more (22 files) who relies on:
+> MO_TE* variants (which relies on MO_TE transitively)
+> 
+> Thus my proposal to have a first change to MO_TE definition, and 
+> eventually do the change later.
+> 
+> What do you think?
 
-and boot from it in a new test if that's supported by the machine.
+Removing MO_TE is in my TODO list.
 
-
-Thanks,
-
-C.
-
-
-
-
+I started with Microblaze (now merged) to get familiar, then had
+a look at ARM (see i.e.
+https://lore.kernel.org/qemu-devel/20240924191932.49386-1-philmd@linaro.org/ 
+and
+https://lore.kernel.org/qemu-devel/d831600a-9a61-45c1-a535-f75bb64cdff4@linaro.org/).
+I also took care of MIPS few years ago but I need to rebase,
+however it isn't in the priority list.
 
