@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45D23C28B28
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 01:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ADAEC28B28
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 01:29:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trRqP-0002VF-8D; Sun, 09 Mar 2025 21:22:13 -0400
+	id 1trRwd-0003ve-42; Sun, 09 Mar 2025 21:28:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trRqN-0002Ul-7e
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 21:22:11 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trRwW-0003vE-SN
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 21:28:33 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trRqL-0005Ha-1I
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 21:22:10 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43bcbdf79cdso20945805e9.2
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 18:22:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trRwV-0006PC-2q
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 21:28:32 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3913b539aabso713392f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 18:28:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741569727; x=1742174527; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9e5aV7YQbUvontpDsTrK6eK7yd4RTpsE6tpVFvOqS/0=;
- b=GWxRsbjyYFu6yB+LH1fEguQPGyyzrpS4l3O67bNpf7g1YzEVlMMVHAauhJNywd9oPW
- nTQNIz+yZtMnFiT/3tBZIuqM9gfFWK+6udAvXSWwl82pGQ1sTxp57Jm7UlZJ5ovatfMO
- SeCkIbEYt3KABs6McgzyNjZIohiPuD5SexziewfkhODipK/GxGQDOHxO2vqQT+mvzxtJ
- u6RsEUUQ23qCIEbqoy98/I3ZIfjvSYjZxvUTxnPJeRqcGEPYFA0phJbroM82S/4d7fxc
- b7basBJYHdjUzuiWjC7oM/MqcL3MEkHdUryl27Hn8R8bJ+i2VBQnHGzxmkRUnj68zQIr
- WtmA==
+ d=linaro.org; s=google; t=1741570109; x=1742174909; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZuKji3TX6tvR6tij8RWO++VDOISRmSy52iwsHPgl6P4=;
+ b=uQZPGoMH/H93jcc7fZNQgfLwAieWXXY3FzYPNwu1S33/ljKV24SMbKUw17oPiRR0yw
+ SaSgj4RjD2GXF8qUIn8ZpXBIu4DFsC3oivT+VJMel57VKD5YHKUqGmexnmQJLE0omhTX
+ 9+TBoLaD1AOCUhd9mxKVqcK9r37EobjIrpwmPYgCXA4VAdzlB8CxUEhM5IZlrNFqHD33
+ CfZ9v2dr+izxXX0J2nRYLfj0V/dzcfMuDqJGAhRffACNi+8dA4UmVhWUtRrjsr0Wa8m6
+ xyYkrEAi2rGTo4Lqvzzm69CIw5a7huq3J3wlnRcep1zQeDZZwHqs+UJqJVxsCmENPJ9L
+ xGqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741569727; x=1742174527;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9e5aV7YQbUvontpDsTrK6eK7yd4RTpsE6tpVFvOqS/0=;
- b=G5u/DXe9B3m45BGXeac1BjAjCCaT27xitbEHn1V+M/f7J+oDPNTKSuCw0RisZGzCgV
- OhOEcxse4fA+qftBJUX4Ub5/Wj4bgEvPJ7kpffUHxWbAQPrO5PFleAA40ZhsFfZs5tNs
- J6PSnwMD4PYrG/7pxHFxmx06hS8J5Z7E722FVYA0MIPY3P7igj3qelQDO2rxXieLsHC7
- 7mzMW2km+LHGrae6CYp/n7uYGmFnMD1FT6dwIkEnEZNcAEe+nnhK5DESuAKWBAGl5UFm
- JaZCZ75K0rVNAWOhfDPkKB8b8YGZOUD4dHg+UDFjqO8DJ0KTcNnroC+9CR+rvrbD9eGF
- Lorg==
-X-Gm-Message-State: AOJu0Yx+JgNeULvQKgo6FuKWYnSeBm+Ccrr9Qz3/vfiyEwq+fPGiG4W0
- gtyvKx1eTKkX8tjyTDDmkVtUV5+lx5XqIYM8pe+oX2OvbcEhNDgkKSFuuOKhb/LHJ2WDC/gG3QS
- Iyv8=
-X-Gm-Gg: ASbGncsl5bfEI0RTWUurJkBOQdwsyJLhzlIcpL0IyZW7fXDOsJRAL0W5kEbmkUnItU2
- QbdUxe9K91tHOsmiDKyBN7gVhsUKD0k8Ipo4ERn/PLzc2YI7WqV++lVNBnrvXaGawBo7UYJkyT4
- uVOxseJPJvxGg+g4HIg+atY2+nEjuAmQOvKVYnx4+Tv+Pxmi/ZT1WNoVTpAlRt2rIbGOOYjQx29
- C/9Uj8Y9K6wYz2nOZhdQE1wMj7fCsCoEmkQUZcpDASTJllRI6uHTScra9LFoAcbjmRw4ePh9y6j
- +vxuDASlv1q5QMD2nr0mYqkSPOEV4iw9FvNN3oeJly+0qUrDGHunqSVbc/xhe8BK50Cbn7Zj2Z6
- t+MOxvLbbqVqm
-X-Google-Smtp-Source: AGHT+IFxALTgduQBnsKg042rL06YID+DbqlSfiKHv6R04yAm6kzyfxeZFPan8cC7fBryE+35sSLwLQ==
-X-Received: by 2002:a05:600c:a3a1:b0:43c:e478:889 with SMTP id
- 5b1f17b1804b1-43ce47808eamr49833215e9.0.1741569726761; 
- Sun, 09 Mar 2025 18:22:06 -0700 (PDT)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1741570109; x=1742174909;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZuKji3TX6tvR6tij8RWO++VDOISRmSy52iwsHPgl6P4=;
+ b=r+wo6Z6w1cJ8h7KSZ/NyX5eRDVJpOScSX5yM6RcowNaXO06Sm2V9XY46NW3wW5P+uy
+ clFVs+LAoC5DA8CtYD3yd69V3LbgPpwThjCP3d1OL2HDFPKriTj6QoibAdN32mQQupYe
+ X3ITJm6O/fMkPxIKNp2I5UtiVm3GRPFNb9Wwf8yRTbt9u28Y6tPFBxZnwypaJA3NXy/z
+ 6R2Y/WYg0oHX797sg7ZwuHV3JUcycFxBBvo4fOCHnpPGkeARacTsmEA9FN6ISQDn8Gu0
+ arJu02rGz0Aw8Y+0meLHCkvsthPsarYwObSs6Q1FsRwk3VmSVgjjDhCpPhuOdQj6vkr2
+ tbUA==
+X-Gm-Message-State: AOJu0YyGNghRUeHASqXv4GP7OxxWjo1efV6eri7fKs8yRGquExYzf0ot
+ WohWMthQ8+XqjUkOghadve7nGzReg5oypWUXwpk/JYOvKuCo8fVJB4cEcX3ZXFADuFxVpt8Ghhx
+ XiL8=
+X-Gm-Gg: ASbGncvP7RrXrgsqlSP9MzGXktzl2ei/jjAKp7x3fXkEA+r9ptMfR2i57jVqaZJJHPn
+ VYv9wDfnoHOchAt5gfQ6JO5Hre1aRih6+jpo6kjVq7IJdDtmcum2/5JSn/+n/rjGuaETDgZMQ4/
+ 0QdDMRSLQJ1urZSsz4ML1ZKy/J0jER6bEPAIZ3UhZ0qph8wI5gqZlcvFsGK6IWWijbEVRnOhgNZ
+ JZOjzjDTs81oTY6GFeYoBpWsh1RYIk+d74dzuLnGbtXZ6NFLjpWKIrLogvKb6qUidjbMEemjVKZ
+ FZ2aVxxitBhgtP1vI6Q+NQIwR71XJJJHL2ZeIaDVjDuj+jYopRL1taHoGoF+0kYRKPCaJBDmoBI
+ KfvmXCARv9myKqZyhL4c=
+X-Google-Smtp-Source: AGHT+IFtgpsGprqlaqk5f63nyyVzGzsREmLq/AX4qELWJT65J+3LyUsh5oPaAL9dZz2jHK1qh1lD/A==
+X-Received: by 2002:a5d:5e10:0:b0:391:122c:8ab with SMTP id
+ ffacd0b85a97d-39132d5f36emr5316062f8f.22.1741570109152; 
+ Sun, 09 Mar 2025 18:28:29 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e1d67sm13334534f8f.74.2025.03.09.18.22.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 18:22:06 -0700 (PDT)
-Message-ID: <6ab75235-0ba3-45be-a0cf-ec3ae96e856d@linaro.org>
-Date: Mon, 10 Mar 2025 02:22:04 +0100
+ ffacd0b85a97d-3912bfb7934sm13527928f8f.12.2025.03.09.18.28.26
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 09 Mar 2025 18:28:27 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v7 0/7] hw/char/pl011: Implement TX (async) FIFO to avoid
+ blocking the main loop
+Date: Mon, 10 Mar 2025 02:28:18 +0100
+Message-ID: <20250310012825.79614-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 09/41] hw/vmapple/vmapple: Add vmapple machine type
-To: qemu-devel@nongnu.org, qemu-arm <qemu-arm@nongnu.org>,
- Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alexander Graf <graf@amazon.com>, Phil Dennis-Jordan
- <phil@philjordan.eu>, Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20250305012157.96463-1-philmd@linaro.org>
- <20250305012157.96463-10-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250305012157.96463-10-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,83 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/3/25 02:21, Philippe Mathieu-Daudé wrote:
-> From: Alexander Graf <graf@amazon.com>
-> 
-> Apple defines a new "vmapple" machine type as part of its proprietary
-> macOS Virtualization.Framework vmm. This machine type is similar to the
-> virt one, but with subtle differences in base devices, a few special
-> vmapple device additions and a vastly different boot chain.
-> 
-> This patch reimplements this machine type in QEMU. To use it, you
-> have to have a readily installed version of macOS for VMApple,
-> run on macOS with -accel hvf, pass the Virtualization.Framework
-> boot rom (AVPBooter) in via -bios, pass the aux and root volume as pflash
-> and pass aux and root volume as virtio drives. In addition, you also
-> need to find the machine UUID and pass that as -M vmapple,uuid= parameter:
-> 
-> $ qemu-system-aarch64 -accel hvf -M vmapple,uuid=0x1234 -m 4G \
->      -bios /System/Library/Frameworks/Virtualization.framework/Versions/A/Resources/AVPBooter.vmapple2.bin
->      -drive file=aux,if=pflash,format=raw \
->      -drive file=root,if=pflash,format=raw \
->      -drive file=aux,if=none,id=aux,format=raw \
->      -device vmapple-virtio-blk-pci,variant=aux,drive=aux \
->      -drive file=root,if=none,id=root,format=raw \
->      -device vmapple-virtio-blk-pci,variant=root,drive=root
-> 
-> With all these in place, you should be able to see macOS booting
-> successfully.
-> 
-> Known issues:
->   - Currently only macOS 12 guests are supported. The boot process for
->     13+ will need further investigation and adjustment.
-> 
-> Signed-off-by: Alexander Graf <graf@amazon.com>
-> Co-authored-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Message-ID: <20241223221645.29911-15-phil@philjordan.eu>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   MAINTAINERS                 |   1 +
->   docs/system/arm/vmapple.rst |  65 ++++
->   docs/system/target-arm.rst  |   1 +
->   hw/vmapple/vmapple.c        | 618 ++++++++++++++++++++++++++++++++++++
->   contrib/vmapple/uuid.sh     |  12 +
->   hw/vmapple/Kconfig          |  21 ++
->   hw/vmapple/meson.build      |   1 +
->   7 files changed, 719 insertions(+)
->   create mode 100644 docs/system/arm/vmapple.rst
->   create mode 100644 hw/vmapple/vmapple.c
->   create mode 100755 contrib/vmapple/uuid.sh
+Hi,
 
+This series add support for (async) FIFO on the transmit path
+of the PL011 UART.
 
-> +static void vmapple_machine_class_init(ObjectClass *oc, void *data)
-> +{
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +
-> +    mc->init = mach_vmapple_init;
-> +    mc->max_cpus = 32;
-> +    mc->block_default_type = IF_VIRTIO;
-> +    mc->no_cdrom = 1;
-> +    mc->pci_allow_0_address = true;
-> +    mc->minimum_page_bits = 12;
-> +    mc->possible_cpu_arch_ids = vmapple_possible_cpu_arch_ids;
-> +    mc->cpu_index_to_instance_props = vmapple_cpu_index_to_props;
-> +    mc->default_cpu_type = ARM_CPU_TYPE_NAME("host");
+Since v6:
+- Incorporated Peter's fixes in corresponding patches
 
-Not sure how I missed that earlier, but I'm now getting:
+Since v5:
+- Rebased (few patches already merged)
+- Do not forbid disabled UART/receiver (Peter)
+- Use fifo8_peek API for wrapped buffer (Mark)
 
-$ make check-qtest-aarch64
-qemu-system-aarch64: The 'host' CPU type can only be used with KVM or HVF
+Since v4:
+- Rebased (loopback)
+- Addressed Richard & Juan migration comments
+- Split in smaller patches
 
-> +    mc->get_default_cpu_node_id = vmapple_get_default_cpu_node_id;
-> +    mc->default_ram_id = "mach-vmapple.ram";
-> +    mc->desc = "Apple aarch64 Virtual Machine";
-> +
-> +    compat_props_add(mc->compat_props, vmapple_compat_defaults,
-> +                     G_N_ELEMENTS(vmapple_compat_defaults));
-> +}
+Since v3:
+- Document migration bits (Alex, Richard)
+- Just check FIFO is not empty in pl011_xmit_fifo_state_needed (rth)
+- In pl011_xmit check TX enabled first, and ignore < 8-bit TX (rth)
+
+Since v2:
+- Added R-b tags
+- Addressed Richard comments on migration
+
+Since v1:
+- Restrict pl011_ops[] impl access_size,
+- Do not check transmitter is enabled (Peter),
+- Addressed Alex's review comments,
+- Simplified migration trying to care about backward compat,
+  but still unsure...
+
+Philippe Mathieu-Daudé (7):
+  hw/char/pl011: Add transmit FIFO to PL011State
+  hw/char/pl011: Introduce pl011_xmit()
+  hw/char/pl011: Factor pl011_xmit_cb() out as GSource
+  hw/char/pl011: Trace FIFO enablement
+  hw/char/pl011: Consider TX FIFO overrun error
+  hw/char/pl011: Drain TX FIFO when no backend connected
+  hw/char/pl011: Implement TX FIFO
+
+ include/hw/char/pl011.h |   2 +
+ hw/char/pl011.c         | 150 +++++++++++++++++++++++++++++++++++++---
+ hw/char/trace-events    |   8 +++
+ 3 files changed, 150 insertions(+), 10 deletions(-)
+
+-- 
+2.47.1
 
 
