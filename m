@@ -4,58 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC954C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 13:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3293C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 14:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trddi-0002lr-BK; Mon, 10 Mar 2025 09:57:54 -0400
+	id 1trdpb-0007aO-VR; Mon, 10 Mar 2025 10:10:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1trddc-0002lP-M0
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 09:57:51 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1trdpY-0007Us-HU; Mon, 10 Mar 2025 10:10:08 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1trdda-0003C4-4P
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 09:57:48 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZBJKd1Yp9z6H7Xd;
- Mon, 10 Mar 2025 21:54:29 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 915BE140D1A;
- Mon, 10 Mar 2025 21:57:34 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 10 Mar
- 2025 14:57:33 +0100
-Date: Mon, 10 Mar 2025 13:57:31 +0000
-To: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-CC: <qemu-devel@nongnu.org>, <pbonzini@redhat.com>, <mtosatti@redhat.com>,
- <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <jon.grimm@amd.com>,
- <santosh.shukla@amd.com>, <vasant.hegde@amd.com>, <Wei.Huang2@amd.com>,
- <kraxel@redhat.com>, <bsd@redhat.com>, <berrange@redhat.com>,
- <ddutile@redhat.com>, <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH] pci-ids.rst: Add Red Hat pci-id for AMD IOMMU device
-Message-ID: <20250310135731.00005b1f@huawei.com>
-In-Reply-To: <20250304183747.639382-1-suravee.suthikulpanit@amd.com>
-References: <20250304183747.639382-1-suravee.suthikulpanit@amd.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1trdpW-0005KA-0Z; Mon, 10 Mar 2025 10:10:08 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 463A44E6032;
+ Mon, 10 Mar 2025 15:10:00 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id XOEKomB5uHDl; Mon, 10 Mar 2025 15:09:58 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 4327F4E6029; Mon, 10 Mar 2025 15:09:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 40CC574577C;
+ Mon, 10 Mar 2025 15:09:58 +0100 (CET)
+Date: Mon, 10 Mar 2025 15:09:58 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>, 
+ Joel Stanley <joel@jms.id.au>, Bernhard Beschow <shentey@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Andrey Smirnov <andrew.smirnov@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Guenter Roeck <linux@roeck-us.net>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-block@nongnu.org, 
+ Jamin Lin <jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH v5 14/14] hw/sd/sdhci: Remove unnecessary 'endianness'
+ property
+In-Reply-To: <20250310000620.70120-15-philmd@linaro.org>
+Message-ID: <d97b9dd5-e569-636d-8ee7-b1a48c402429@eik.bme.hu>
+References: <20250310000620.70120-1-philmd@linaro.org>
+ <20250310000620.70120-15-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-983117665-1741615798=:72286"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,90 +73,148 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 4 Mar 2025 18:37:47 +0000
-Suravee Suthikulpanit <suravee.suthikulpanit@amd.com> wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> The QEMU-emulated AMD IOMMU PCI device is implemented based on the AMD I/O
-> Virtualization Technology (IOMMU) Specification [1]. The PCI id for this
-> device is platform-specific.
-> 
-> Currently, the QEMU-emulated AMD IOMMU device is using AMD vendor id and
-> undefined device id.
-> 
-> Therefore, change the vendor id to Red Hat and request a new QEMU-specific
-> device id.
-> 
-> [1] https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/specifications/48882_IOMMU.pdf
-> 
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+--3866299591-983117665-1741615798=:72286
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-As a heads up, I believe we have a similar problem with a few of the CXL IDs.
-The root port and type 3 device both use Intel IDs that were not reserved
-for this purpose.  VID=0x8086, DID=0x7075 and DID=0x0d93
-
-Switch ports and switch-cci are using valid Hisilicon IDs that are for
-emulation of these device only and are registered in our tracker
-for these IDs so won't get 'reused'.
-
-In both those cases the driver binds on class code in Linux so an ID
-change to resolve this would be fine for Linux - I can't speak for
-other OS.
-
-Jonathan
-
-
-
-
+On Mon, 10 Mar 2025, Philippe Mathieu-Daudé wrote:
+> The previous commit removed the single use of instance
+> setting the "endianness" property.
+>
+> Since classes can register their io_ops with correct
+> endianness, no need to support different ones.
+>
+> Remove the code related to SDHCIState::endianess field.
+>
+> Remove the now unused SDHCIState::io_ops field, since we
+> directly use the class one.
+>
+> Suggested-by: Bernhard Beschow <shentey@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  docs/specs/pci-ids.rst | 2 ++
->  hw/i386/amd_iommu.c    | 3 ++-
->  include/hw/pci/pci.h   | 1 +
->  3 files changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-> index 261b0f359f..2416a70a2d 100644
-> --- a/docs/specs/pci-ids.rst
-> +++ b/docs/specs/pci-ids.rst
-> @@ -100,6 +100,8 @@ PCI devices (other than virtio):
->    PCI UFS device (``-device ufs``)
->  1b36:0014
->    PCI RISC-V IOMMU device
-> +1b36:0015
-> +  PCI AMD IOMMU device (``-device amd-iommu``)
->  
->  All these devices are documented in :doc:`index`.
->  
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index dda1a5781f..4d8564249c 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -1766,7 +1766,8 @@ static void amdvi_pci_class_init(ObjectClass *klass, void *data)
->      DeviceClass *dc = DEVICE_CLASS(klass);
->      PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
->  
-> -    k->vendor_id = PCI_VENDOR_ID_AMD;
-> +    k->vendor_id = PCI_VENDOR_ID_REDHAT;
-> +    k->device_id = PCI_DEVICE_ID_REDHAT_AMD_IOMMU;
->      k->class_id = 0x0806;
->      k->realize = amdvi_pci_realize;
->  
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index 4002bbeebd..da44e6673d 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -117,6 +117,7 @@ extern bool pci_available;
->  #define PCI_DEVICE_ID_REDHAT_ACPI_ERST   0x0012
->  #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
->  #define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
-> +#define PCI_DEVICE_ID_REDHAT_AMD_IOMMU   0x0015
->  #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
->  
->  #define FMT_PCIBUS                      PRIx64
+> hw/sd/sdhci-internal.h |  1 -
+> include/hw/sd/sdhci.h  |  2 --
+> hw/sd/sdhci.c          | 33 +++------------------------------
+> 3 files changed, 3 insertions(+), 33 deletions(-)
+>
+> diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
+> index d99a8493db2..e4da6c831d1 100644
+> --- a/hw/sd/sdhci-internal.h
+> +++ b/hw/sd/sdhci-internal.h
+> @@ -308,7 +308,6 @@ extern const VMStateDescription sdhci_vmstate;
+> #define SDHC_CAPAB_REG_DEFAULT 0x057834b4
+>
+> #define DEFINE_SDHCI_COMMON_PROPERTIES(_state) \
+> -    DEFINE_PROP_UINT8("endianness", _state, endianness, DEVICE_LITTLE_ENDIAN), \
+>     DEFINE_PROP_UINT8("sd-spec-version", _state, sd_spec_version, 2), \
+>     DEFINE_PROP_UINT8("uhs", _state, uhs_mode, UHS_NOT_SUPPORTED), \
+>     \
+> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+> index e8fced5eedc..1016a5b5b77 100644
+> --- a/include/hw/sd/sdhci.h
+> +++ b/include/hw/sd/sdhci.h
+> @@ -54,7 +54,6 @@ struct SDHCIState {
+>     AddressSpace sysbus_dma_as;
+>     AddressSpace *dma_as;
+>     MemoryRegion *dma_mr;
+> -    const MemoryRegionOps *io_ops;
+>
+>     QEMUTimer *insert_timer;       /* timer for 'changing' sd card. */
+>     QEMUTimer *transfer_timer;
+> @@ -105,7 +104,6 @@ struct SDHCIState {
+>
+>     /* Configurable properties */
+>     uint32_t quirks;
+> -    uint8_t endianness;
+>     uint8_t sd_spec_version;
+>     uint8_t uhs_mode;
+> };
+> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+> index 47e4bd1a610..cbb9f4ae8c0 100644
+> --- a/hw/sd/sdhci.c
+> +++ b/hw/sd/sdhci.c
+> @@ -1391,17 +1391,6 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+> }
+>
+> static const MemoryRegionOps sdhci_mmio_le_ops = {
+> -    .read = sdhci_read,
+> -    .write = sdhci_write,
+> -    .valid = {
+> -        .min_access_size = 1,
+> -        .max_access_size = 4,
+> -        .unaligned = false
+> -    },
+> -    .endianness = DEVICE_LITTLE_ENDIAN,
+> -};
+> -
+> -static const MemoryRegionOps sdhci_mmio_be_ops = {
+>     .read = sdhci_read,
+>     .write = sdhci_write,
+>     .impl = {
+> @@ -1413,7 +1402,7 @@ static const MemoryRegionOps sdhci_mmio_be_ops = {
+>         .max_access_size = 4,
+>         .unaligned = false
+>     },
+> -    .endianness = DEVICE_BIG_ENDIAN,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> };
+>
+> static void sdhci_init_readonly_registers(SDHCIState *s, Error **errp)
+> @@ -1467,23 +1456,6 @@ void sdhci_common_realize(SDHCIState *s, Error **errp)
+>     SDHCIClass *sc = s->sc;
+>     const char *class_name = object_get_typename(OBJECT(s));
+>
+> -    s->io_ops = sc->io_ops ?: &sdhci_mmio_le_ops;
+> -    switch (s->endianness) {
+> -    case DEVICE_LITTLE_ENDIAN:
+> -        /* s->io_ops is little endian by default */
+> -        break;
+> -    case DEVICE_BIG_ENDIAN:
+> -        if (s->io_ops != &sdhci_mmio_le_ops) {
+> -            error_setg(errp, "SD controller doesn't support big endianness");
+> -            return;
+> -        }
+> -        s->io_ops = &sdhci_mmio_be_ops;
+> -        break;
+> -    default:
+> -        error_setg(errp, "Incorrect endianness");
+> -        return;
+> -    }
+> -
+>     sdhci_init_readonly_registers(s, errp);
+>     if (*errp) {
+>         return;
+> @@ -1493,7 +1465,7 @@ void sdhci_common_realize(SDHCIState *s, Error **errp)
+>     s->fifo_buffer = g_malloc0(s->buf_maxsz);
+>
+>     assert(sc->iomem_size >= SDHC_REGISTERS_MAP_SIZE);
+> -    memory_region_init_io(&s->iomem, OBJECT(s), s->io_ops, s, class_name,
+> +    memory_region_init_io(&s->iomem, OBJECT(s), sc->io_ops, s, class_name,
+>                           sc->iomem_size);
+> }
+>
+> @@ -1578,6 +1550,7 @@ void sdhci_common_class_init(ObjectClass *klass, const void *data)
+>     dc->vmsd = &sdhci_vmstate;
+>     device_class_set_legacy_reset(dc, sdhci_poweron_reset);
+>
+> +    sc->io_ops = &sdhci_mmio_le_ops;
 
+You call common_class_init in subclass class_inits last so this would 
+overwrite what subclass has set, doesn't it? I think you either have to 
+change order in subclass class_init methods or not set this here.
+
+Regards,
+BALATON Zoltan
+
+>     sc->iomem_size = SDHC_REGISTERS_MAP_SIZE;
+> }
+>
+>
+--3866299591-983117665-1741615798=:72286--
 
