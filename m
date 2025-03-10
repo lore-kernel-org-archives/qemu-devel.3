@@ -4,120 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C757C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D187C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trYBc-0002dY-Nn; Mon, 10 Mar 2025 04:08:32 -0400
+	id 1trYHL-0005Ft-GX; Mon, 10 Mar 2025 04:14:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1trYBZ-0002cF-BX
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:08:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1trYBW-0001UT-U6
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:08:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741594103;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pL2ObvzrNSvxyqAwP+KydM2AQVwV9P3+kj9fufE1kXc=;
- b=hnyBN5T8PdO7OHm1CMb/aQVGbf+OaI+P9R7m6wffvl8HyeXJ5z0MjZu4BbxBuJORkkdBXq
- c3V8w3pmE5oH9NPI6GYbcB8JrIZGlfO3WJI11qSqQXktIY32FhDX/v5W8e0zbqa4dD8xQj
- 64Cq0lLQpO/8pYoUAvhAAW1hdFVpHLg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-381-zVjJKSxsNF-cB2GvlUpAng-1; Mon, 10 Mar 2025 04:08:19 -0400
-X-MC-Unique: zVjJKSxsNF-cB2GvlUpAng-1
-X-Mimecast-MFC-AGG-ID: zVjJKSxsNF-cB2GvlUpAng_1741594099
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43cf64f1dc5so3257125e9.2
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 01:08:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741594098; x=1742198898;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pL2ObvzrNSvxyqAwP+KydM2AQVwV9P3+kj9fufE1kXc=;
- b=aY43VcXaMM/5NDQ1SCEV8rdEfZz5G2LV9gKN3M+NZq1YBnV9d34D3MrVoYHji9hS/V
- yF1qp7WMFiBEa+x21AIPem/3E37M7lttUiKp83XTLFF7/iqMy0/QtWmLHZmvaLYUVRA2
- rznf7fp1LuOzOsBmTm4qZzO5LD6j+CoMxyjlWKWXcL0DBU78r0Yg37pzb9zGVWVk1Jp+
- nVbmaii3QKqzPxDbVyBoLIELoVWDKKLYloaAjc3/a/2e3WvUSmKvddl9S19n5rR2xiOX
- NaW1o+gkkP7HLVx6UExGNSDGY9PHtKmYn+NXdyTRsGEDegvhqM9m3AGeMfSnbc0T1o2m
- ZomQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXD22IhcTXQHVuRgj/ssgdnsIjjXl10uD45ritABzklmH61cMABWid9HKTA5RMFxu27SgTlmzkYeyC/@nongnu.org
-X-Gm-Message-State: AOJu0YzEgbq481KfXjQSFQkA0J38ykorqcktB9wP3vG/bfg2GDk6g3n8
- PcwegwYMsSwQdiOnuCFAbvG/Sq3+HyJOD1GlYfHvkQDLk9o9qaKgUzsLkngslYS/nAtdfMZjD01
- rzu6eOjlJgznsmIWUFyljSiLBV0FiD300TM/FHyU9I4agM5jY53tg
-X-Gm-Gg: ASbGncu5uDrysFjBr+LPNS7ShhVnRu0RZlLchoVhOTG1aZ10epEfHzen8hHPtDKr4YW
- 8wtP18olopxOv83t1E5E4LwQBEznpzklQ3T9ZXhE8iQYaGFjCMMggkIVGZX+yn8C+gmOX2OeMg2
- yPLb5TGeO65RU20lLM3MJ0R7PB6PphmzHFyKTDQdpRANZ/QlJ4bVuK/QL2sH0KObxtucyrCJbpE
- eELhb3DqQzVumzIhU/9+ae1bPRP6lnJUlFwkGa6SRyjyBgYyLajfiniEG6FhYdj/TqOxjH9NsQ1
- kvvS62CJmvEtRzOmtjtamTTTYEAt1Lu7OuDjp0dWIKKsWDhiPOMqmHyjup7mNoU=
-X-Received: by 2002:a5d:47a2:0:b0:38d:d7a4:d447 with SMTP id
- ffacd0b85a97d-39132da0f2fmr6809691f8f.34.1741594098699; 
- Mon, 10 Mar 2025 01:08:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHcuk8O08VAJ1w4B9X3sHWn33Nr3w+1n8EOHcUeysuu3RyyFRhoQg2nYaSRkMkylCw7Z8pRwQ==
-X-Received: by 2002:a5d:47a2:0:b0:38d:d7a4:d447 with SMTP id
- ffacd0b85a97d-39132da0f2fmr6809655f8f.34.1741594098301; 
- Mon, 10 Mar 2025 01:08:18 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cfcbdd0a7sm9338655e9.11.2025.03.10.01.08.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 01:08:16 -0700 (PDT)
-Message-ID: <510b65b4-3b7c-42b7-9108-4fd438055535@redhat.com>
-Date: Mon, 10 Mar 2025 09:08:13 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1trYHH-0005Fe-CX
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:14:23 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1trYHB-0002j7-O7
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:14:22 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxG6xOn85n4HuQAA--.17410S3;
+ Mon, 10 Mar 2025 16:14:07 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAxj8VKn85nFk9BAA--.47175S3;
+ Mon, 10 Mar 2025 16:14:05 +0800 (CST)
+Subject: Re: [PATCH] tests/qtest/cpu-plug-test: Add cpu hotplug support for
+ LoongArch
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+References: <20250310062456.2453189-1-maobibo@loongson.cn>
+ <ce0f0c13-0e04-444f-b5db-8fdb7af6f945@redhat.com>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <ffad81a0-cbc7-9596-77b7-e1a9c38eccf7@loongson.cn>
+Date: Mon, 10 Mar 2025 16:13:25 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/21] hw/vfio/common: Include missing 'system/tcg.h'
- header
+In-Reply-To: <ce0f0c13-0e04-444f-b5db-8fdb7af6f945@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Tomita Moeko
- <tomitamoeko@gmail.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eric Farman <farman@linux.ibm.com>, Eduardo Habkost <eduardo@habkost.net>,
- Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-s390x@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
-References: <20250308230917.18907-1-philmd@linaro.org>
- <20250308230917.18907-2-philmd@linaro.org>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250308230917.18907-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-CM-TRANSID: qMiowMAxj8VKn85nFk9BAA--.47175S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxCw17uFW3ZF1UKryfCw4kGrX_yoWrWr47pr
+ WkArW5KrW8Arn5J3WxGF1UWFyFvr17G3Z8Jr4IqF1UCrZxGr10gr4jga1qgFnrAw48Zr48
+ Aw1kJrnxu3ZrJFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UE-erU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.702,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -132,43 +79,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
+On 2025/3/10 下午3:04, Thomas Huth wrote:
+> On 10/03/2025 07.24, Bibo Mao wrote:
+>> Add cpu hotplug testcase support for LoongArch system, it passes to
+>> run with command "make check-qtest-loongarch64" as following:
+>>    qemu:qtest+qtest-loongarch64 / qtest-loongarch64/cpu-plug-test OK 
+>> 0.64s 1 subtests passed
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   tests/qtest/cpu-plug-test.c | 28 ++++++++++++++++++++++++++++
+>>   tests/qtest/meson.build     |  2 +-
+>>   2 files changed, 29 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
+>> index 6633abfc10..790b9693b3 100644
+>> --- a/tests/qtest/cpu-plug-test.c
+>> +++ b/tests/qtest/cpu-plug-test.c
+>> @@ -156,6 +156,32 @@ static void add_s390x_test_case(const char *mname)
+>>       g_free(path);
+>>   }
+>> +static void add_loongarch_test_case(const char *mname)
+>> +{
+>> +    char *path;
+>> +    PlugTestData *data;
+>> +
+>> +    if (!g_str_has_prefix(mname, "virt")) {
+>> +        return;
+>> +    }
+>> +
+>> +    data = g_new(PlugTestData, 1);
+>> +    data->machine = g_strdup(mname);
+>> +    data->cpu_model = "la464";
+>> +    data->device_model = g_strdup("la464-loongarch-cpu");
+>> +    data->sockets = 1;
+>> +    data->cores = 3;
+>> +    data->threads = 1;
+>> +    data->maxcpus = data->sockets * data->cores * data->threads;
+>> +
+>> +    path = g_strdup_printf("cpu-plug/%s/device-add/%ux%ux%u&maxcpus=%u",
+>> +                           mname, data->sockets, data->cores,
+>> +                           data->threads, data->maxcpus);
+>> +    qtest_add_data_func_full(path, data, test_plug_with_device_add,
+>> +                             test_data_free);
+>> +    g_free(path);
+>> +}
+>> +
+>>   int main(int argc, char **argv)
+>>   {
+>>       const char *arch = qtest_get_arch();
+>> @@ -168,6 +194,8 @@ int main(int argc, char **argv)
+>>           qtest_cb_for_every_machine(add_pseries_test_case, 
+>> g_test_quick());
+>>       } else if (g_str_equal(arch, "s390x")) {
+>>           qtest_cb_for_every_machine(add_s390x_test_case, 
+>> g_test_quick());
+>> +    } else if (g_str_equal(arch, "loongarch64")) {
+>> +        qtest_cb_for_every_machine(add_loongarch_test_case, 
+>> g_test_quick());
+> 
+> There seems to be only one unversioned "virt" machine for loongarch, so 
+> using qtest_cb_for_every_machine() and g_str_has_prefix(mname, "virt") 
+> in above function seems unnecessary? I'd suggest to call 
+> add_loongarch_test_case() here directly instead and only add the single 
+> test case for the virt machine there. Or do you plan to introduce other 
+> machines any time soon?
+There is no plan to introduce other machines from my side now, only new 
+cpu type will be added.
 
-On 3/9/25 12:08 AM, Philippe Mathieu-Daudé wrote:
-> Always include necessary headers explicitly, to avoid
-> when refactoring unrelated ones:
->
->   hw/vfio/common.c:1176:45: error: implicit declaration of function ‘tcg_enabled’;
->    1176 |                                             tcg_enabled() ? DIRTY_CLIENTS_ALL :
->         |                                             ^~~~~~~~~~~
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Yeap, calling add_loongarch_test_case() here directly is better, will 
+modify it in next patch.
+> 
+>>       }
+>>       return g_test_run();
+>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+>> index 8a6243382a..60e16614b2 100644
+>> --- a/tests/qtest/meson.build
+>> +++ b/tests/qtest/meson.build
+>> @@ -149,7 +149,7 @@ qtests_hppa = \
+>>   qtests_loongarch64 = qtests_filter + \
+>>     (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? 
+>> ['numa-test'] : []) + \
+>> -  ['boot-serial-test']
+>> +  ['boot-serial-test', 'cpu-plug-test']
+> 
+> I'd like to suggest to put tests on separate lines here (we do it for 
+> most of the other targets already), that will make "git blame" more 
+> useful in the future when the list changed a couple of times.
+Sure, will put tests on separate lines. And thanks for reviewing and the 
+good suggestions.
 
-Eric
-> ---
->  hw/vfio/common.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index 7a4010ef4ee..b1596b6bf64 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -42,6 +42,7 @@
->  #include "migration/misc.h"
->  #include "migration/blocker.h"
->  #include "migration/qemu-file.h"
-> +#include "system/tcg.h"
->  #include "system/tpm.h"
->  
->  VFIODeviceList vfio_device_list =
+Regards
+Bibo Mao
+> 
+>   Thomas
+> 
 
 
