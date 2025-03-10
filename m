@@ -4,76 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37FC1C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 05:55:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C40CC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 06:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trW6N-0008Br-6w; Mon, 10 Mar 2025 01:54:59 -0400
+	id 1trWSc-0002cy-Vs; Mon, 10 Mar 2025 02:17:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1trW6H-0008BW-Gc
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 01:54:53 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1trW6E-0002PI-VZ
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 01:54:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741586091; x=1773122091;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=1if8kCzFykxRHlFQsVAw9s4TMtD6YxgLSUGTBrtLggo=;
- b=X43KfKx1Aqp8nBSErF2vJWiSZdaYZhYnae3D+OocvspaJBKQ9ld7C5X1
- 0Ol1D1E22znkcgUAYZdFoLqDzx4C0kQSVvTzTbgt5fZ3hur4SgeSCiTp3
- pbRj3PXliV38a5uAT+Z9cKNNb1NsMWujE6y5bFWJLh3Yssd63zsmePAgX
- 1WIZ/PFfh3cJTJT4fSxdQG9H/vBWlU7lvV1DGI06ScgA/YVVVpjx8VXg4
- aemm/A0W9tQ/PNh+SNv+zRKwN1RDVp9iKeqlunrwcY16tX6AVdJkYv824
- SEVC3lFTt9xJ9pyZJBFKmLkNea70LUm6lKAdtl2xx54MKWCqJw17CgxPf g==;
-X-CSE-ConnectionGUID: aqQFr6lXTDe1l1puVNrGFg==
-X-CSE-MsgGUID: QZzgvhcYTaS2a8VKj1i1Ew==
-X-IronPort-AV: E=McAfee;i="6700,10204,11368"; a="59974677"
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="59974677"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Mar 2025 22:54:47 -0700
-X-CSE-ConnectionGUID: KBvqclvjRFqWgIt2V7Es1w==
-X-CSE-MsgGUID: WqZ6P5YMQxCmvukuV2rF9w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="150828926"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 09 Mar 2025 22:54:43 -0700
-Date: Mon, 10 Mar 2025 14:14:52 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
- likexu@tencent.com, like.xu.linux@gmail.com,
- zhenyuw@linux.intel.com, groug@kaod.org, khorenko@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
- davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com
-Subject: Re: [PATCH v2 07/10] target/i386/kvm: query kvm.enable_pmu parameter
-Message-ID: <Z86DXK0MAuC+mP/Y@intel.com>
-References: <20250302220112.17653-1-dongli.zhang@oracle.com>
- <20250302220112.17653-8-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1trWSb-0002cM-46
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 02:17:57 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1trWSX-0007GF-Fc
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 02:17:56 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-219f8263ae0so69271195ad.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 23:17:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741587471; x=1742192271;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DLwBe2cjMgHJPEz92iz7ArkMS0Lec2n7/WEuV7kR1dI=;
+ b=kYLDVYtGxw+sNCElj6uLGBE2cTZKYX6zeUDYO7QZR/3WPAL7Z0/008HXqr5CDMk8/x
+ StjBT51YV7+ht9xZXeDgcNUm0nPvYti0c6381VrUI3YW+A4M9KWQ//OUEmYd1urhma1U
+ f+WXcUOFagZq6rQZz+PdbBhlYbc8KRqqP0UNTya1MPTo+rNX6z8PqVje84cF2+xYSCNX
+ uEl8kSkvzziFt7f81VTXYTo3Y2c8Ak3c1lNGNMsWD51yCn0zydymt6WlU/srUJmjeXc5
+ dBRsgcCPCrihJUdTLBylCFYoctWivbypKX8ub6KSgmJ3dVXL1NhHKYQfKbesJM+Tnsxk
+ vUrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741587471; x=1742192271;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DLwBe2cjMgHJPEz92iz7ArkMS0Lec2n7/WEuV7kR1dI=;
+ b=taQWcMwVmNVcye7VqGH8JsusV/p5wF7d7tnabXCkwcJinchgyT3oVgT6aq4U/tYi7M
+ hkE2EKtfc79QaEmf41qiafEZ81IUMtR5pd8FObV5pkQUwoZHBUfkVPNn7L0+wFaxzcHk
+ J/flm3zYZsQvrjjssJHrj2pb8gZOFQr/B6hF30kCk0otJe4Sup/hmbae9wrRRKG4XsuQ
+ l/KuIhRgYe0iflpQjGK44ikQJquRhj9eS9tEr8m9sE/FXEL6g3dC4mz+cm80qDdULKd8
+ puREnk9cEDyBafIYO7Fb6DWPMGTIthlM5sY5uR2SFt7p697ZGMFSHlPu0axYicgjukZ3
+ Zj1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjBfg/RwYS9C5rFyjf2c0KTzIzN+kCyGezPnfGbXVEFtxZTN2/9Jb+Tz5r1MXB4ebrbWSQayX4rrFj@nongnu.org
+X-Gm-Message-State: AOJu0YxFDDqcBPmeOs92I5xvT83ne/uKqsfCM0NsAbo295UQ8TILk7Vj
+ mI02m67MDDxrqKAYQiABIZc0q+hFEe90I4kCI8C6sfu3yfYeGQjhthiHve0lx3I=
+X-Gm-Gg: ASbGncvTu1F4Ux/5gRSi0CL/p3HuUVPCTOSRWIdRiFvmV3oh3e8EKWQXSnJRO7tto43
+ kLcdDS99EyiEBsMplSSiWAleIb5uCeNvqoGmYMG5EX1ZcWz2kinED41wfg1Ukkx3epjTHySQOqV
+ 6LAswxph6w5HtSgRTnhp0x9N+FrMH5JhjLiUWV4BC+lB4MJ01p7LnlAhhAJsPg0gNgLfvU3GTlX
+ Y855jOaFC6WIg7DLCMCHiSk/KBREG6zhc+h7r/yg9cncFDsuU3zb5QcC6OxiUATiMXqwv2ynt1O
+ i5YGyddqo/7QJ50Kh4/UMuUQ5OvKw+zqWef+rQF2xKkZfIGOt/sOf7nEcQ==
+X-Google-Smtp-Source: AGHT+IE60Atd89jsnJwFyH27jYg29WCHbrxurqvw5DSbvgOreQB0wUJMGWz9XYuNjuQn0mkNGsEOVA==
+X-Received: by 2002:a05:6a00:2351:b0:736:4644:86e6 with SMTP id
+ d2e1a72fcca58-736aa9fdb77mr17903127b3a.12.1741587470807; 
+ Sun, 09 Mar 2025 23:17:50 -0700 (PDT)
+Received: from [157.82.205.237] ([157.82.205.237])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-736b064ae4dsm5450730b3a.23.2025.03.09.23.17.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 09 Mar 2025 23:17:50 -0700 (PDT)
+Message-ID: <45c80b4a-530a-4ded-976e-26628556c119@daynix.com>
+Date: Mon, 10 Mar 2025 15:17:44 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 10/10] docs/system: virtio-gpu: Document host/guest
+ requirements
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250309230539.125374-1-dmitry.osipenko@collabora.com>
+ <20250309230539.125374-11-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20250309230539.125374-11-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250302220112.17653-8-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,116 +120,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 02, 2025 at 02:00:15PM -0800, Dongli Zhang wrote:
-> Date: Sun,  2 Mar 2025 14:00:15 -0800
-> From: Dongli Zhang <dongli.zhang@oracle.com>
-> Subject: [PATCH v2 07/10] target/i386/kvm: query kvm.enable_pmu parameter
-> X-Mailer: git-send-email 2.43.5
+On 2025/03/10 8:05, Dmitry Osipenko wrote:
+> From: Alex Benn√©e <alex.bennee@linaro.org>
 > 
-> There is no way to distinguish between the following scenarios:
+> This attempts to tidy up the VirtIO GPU documentation to make the list
+> of requirements clearer. There are still a lot of moving parts and the
+> distros have some catching up to do before this is all handled
+> automatically.
 > 
-> (1) KVM_CAP_PMU_CAPABILITY is not supported.
-> (2) KVM_CAP_PMU_CAPABILITY is supported but disabled via the module
-> parameter kvm.enable_pmu=N.
+> Signed-off-by: Alex Benn√©e <alex.bennee@linaro.org>
+> Cc: Sergio Lopez Pascual <slp@redhat.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> [dmitry.osipenko@collabora.com: Extended and corrected doc]
+> ---
+>   docs/system/devices/virtio-gpu.rst | 90 +++++++++++++++++++++++++++++-
+>   1 file changed, 87 insertions(+), 3 deletions(-)
 > 
-> In scenario (1), there is no way to fully disable AMD PMU virtualization.
-> 
-> In scenario (2), PMU virtualization is completely disabled by the KVM
-> module.
+> diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
+> index ea3eb052df3c..88c7b6011711 100644
+> --- a/docs/system/devices/virtio-gpu.rst
+> +++ b/docs/system/devices/virtio-gpu.rst
+> @@ -5,14 +5,28 @@ virtio-gpu
+>   ==========
+>   
+>   This document explains the setup and usage of the virtio-gpu device.
+> -The virtio-gpu device paravirtualizes the GPU and display controller.
+> +The virtio-gpu device provides a GPU and display controller
+> +paravirtualized using VirtIO. It supports a number of different modes
+> +from simple 2D displays to fully accelerated 3D graphics.
+>   
+> -Linux kernel support
+> ---------------------
+> +Linux guest kernel support
+> +--------------------------
+>   
+>   virtio-gpu requires a guest Linux kernel built with the
+>   ``CONFIG_DRM_VIRTIO_GPU`` option.
+>   
+> +3D acceleration
+> +---------------
+> +
+> +3D acceleration of a virtualized GPU is still an evolving field.
+> +Depending on the 3D mode you are running you may need to override
+> +distribution supplied libraries with more recent versions or enable
+> +build options. There are a number of requirements the host must meet
+> +to be able to be able to support guests. QEMU must be able to access the
+> +host's GPU and for the best performance be able to reliably share GPU
+> +memory with the guest. Details of 3D acceleration requirements are
+> +described in a further sections.
+> +
+>   QEMU virtio-gpu variants
+>   ------------------------
+>   
+> @@ -65,8 +79,14 @@ intermediate representation is communicated to the host and the
+>   `virglrenderer`_ library on the host translates the intermediate
+>   representation back to OpenGL API calls.
+>   
+> +By default OpenGL version on guest is limited to 4.3. In order to enable
+> +OpenGL 4.6 support, virtio-gpu  host blobs feature (``hostmem`` and ``blob``
+> +fields) should be enabled.  The ``hostmem`` field specifies the size of
+> +virtio-gpu host memory window. This is typically between 256M and 8G.
+> +
+>   .. parsed-literal::
+>       -device virtio-gpu-gl
+> +    -device virtio-gpu-gl,hostmem=8G,blob=true
+>   
+>   .. _virgl: https://docs.mesa3d.org/drivers/virgl.html
+>   .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
+> @@ -94,6 +114,52 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
+>   
+>   .. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
+>   
+> +.. list-table:: Linux Host Requirements
+> +  :header-rows: 1
+> +
+> +  * - Capability
+> +    - Kernel Version
+> +  * - OpenGL pass-through
+> +    - Any Linux version compatible with QEMU if not using host blobs feature,
+> +      Linux 6.13+ otherwise
+> +  * - Vulkan pass-through
+> +    - Linux 6.13+
+> +  * - AMDGPU DRM native context
+> +    - Linux 6.13+
+> +  * - Freedreno DRM native context
+> +    - Linux 6.4+
+> +  * - Intel i915 DRM native context
+> +    - Linux 6.13+
+> +  * - Asahi DRM native context
+> +    - Downstream version of Asahi Linux kernel
 
-KVM_CAP_PMU_CAPABILITY is introduced since ba7bb663f554 ("KVM: x86:
-Provide per VM capability for disabling PMU virtualization") in v5.18,
-so I understand you want to handle the old linux before v5.18.
+Having a link for Asahi like one for i915 DRM native context merge 
+request would be nice.
 
-Let's sort out all the cases:
+> +
+> +.. list-table:: Linux Guest Requirements
+> +  :header-rows: 1
+> +
+> +  * - Capability
+> +    - Kernel Version
+> +    - Mesa Version
+> +  * - OpenGL pass-through
+> +    - Any Linux version supporting virtio-gpu
+> +    - 16.0.0+
+> +  * - Vulkan pass-through
+> +    - Linux 5.16+
+> +    - 24.2.0+
+> +  * - AMDGPU DRM native context
+> +    - Linux 6.14+
+> +    - 25.0.0+
+> +  * - Freedreno DRM native context
+> +    - Linux 6.14+
+> +    - 23.1.0+
+> +  * - Intel i915 DRM native context
+> +    - Linux 6.14+
+> +    - `mr29870`_
+> +  * - Asahi DRM native context
+> +    - Linux 6.14+
+> +    - 24.2.0+
+> +
+> +.. _mr29870: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
+> +
+>   virtio-gpu rutabaga
+>   -------------------
+>   
+> @@ -133,3 +199,21 @@ Surfaceless is the default if ``wsi`` is not specified.
+>   .. _Wayland display passthrough: https://www.youtube.com/watch?v=OZJiHMtIQ2M
+>   .. _gfxstream-enabled rutabaga: https://crosvm.dev/book/appendix/rutabaga_gfx.html
+>   .. _guest Wayland proxy: https://crosvm.dev/book/devices/wayland.html
+> +
+> +.. list-table:: Linux Host Requirements
+> +  :header-rows: 1
+> +
+> +  * - Capability
+> +    - Kernel version
+> +  * - Vulkan+Wayland pass-through
+> +    - Linux 6.13+
+> +
+> +.. list-table:: Linux Guest Requirements
+> +  :header-rows: 1
+> +
+> +  * - Capability
+> +    - Kernel Version
+> +    - Mesa Version
+> +  * - Vulkan pass-through
 
-1) v5.18 and after, if the parameter "enable_pmu" is Y and then
-   KVM_CAP_PMU_CAPABILITY exists, so everything could work.
+The "Linux Host Requirements" refers to "Vulkan+Wayland pass-through" 
+but this table refers to "Vulkan pass-through". Please make them consistent.
 
-2) v5.18 and after, "enable_pmu" is N and then KVM_CAP_PMU_CAPABILITY
-   doesn't exist, QEMU needs to helpe user disable vPMU.
+Regards,
+Akihiko Odaki
 
-3) v5.17 (since "enable_pmu" is introduced in v5.17 since 4732f2444acd
-   ("KVM: x86: Making the module parameter of vPMU more common")),
-   there's no KVM_CAP_PMU_CAPABILITY and vPMU enablement depends on
-   "enable_pmu". QEMU's enable_pmu option should depend on kvm
-   parameter.
-
-4) before v5.17, there's no "enable_pmu" so that there's no way to
-   fully disable AMD PMU.
-
-IIUC, you want to distinguish 2) and 3). And your current codes won't
-break old kernels on 4) because "kvm_pmu_disabled" defaults false.
-Therefore, overall the idea of this patch is good for me.
-
-But IMO, the logics all above can be compatible by:
-
- * First check the KVM_CAP_PMU_CAPABILITY,
- * Only if KVM_CAP_PMU_CAPABILITY doesn't exist, then check the kvm parameter
-
-...instead of always checking the parameter as you are currently doing.
-
-What about this change? :-)
-
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 4902694129f9..9a6044e41a82 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2055,13 +2055,34 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-          * behavior on Intel platform because current "pmu" property works
-          * as expected.
-          */
--        if (has_pmu_cap && !X86_CPU(cpu)->enable_pmu) {
--            ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
--                                    KVM_PMU_CAP_DISABLE);
--            if (ret < 0) {
--                error_setg_errno(errp, -ret,
--                                 "Failed to set KVM_PMU_CAP_DISABLE");
--                return ret;
-+        if (has_pmu_cap) {
-+            if (!X86_CPU(cpu)->enable_pmu) {
-+                ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
-+                                        KVM_PMU_CAP_DISABLE);
-+                if (ret < 0) {
-+                    error_setg_errno(errp, -ret,
-+                                     "Failed to set KVM_PMU_CAP_DISABLE");
-+                    return ret;
-+                }
-+            }
-+        } else {
-+            /*
-+             * KVM_CAP_PMU_CAPABILITY is introduced in Linux v5.18. For old linux,
-+             * we have to check enable_pmu parameter for vPMU support.
-+             */
-+            g_autofree char *kvm_enable_pmu;
-+
-+            /*
-+             * The kvm.enable_pmu's permission is 0444. It does not change until a
-+             * reload of the KVM module.
-+             */
-+            if (g_file_get_contents("/sys/module/kvm/parameters/enable_pmu",
-+                &kvm_enable_pmu, NULL, NULL)) {
-+                if (*kvm_enable_pmu == 'N' && !X86_CPU(cpu)->enable_pmu) {
-+                    error_setg(errp, "Failed to enable PMU since "
-+                               "KVM's enable_pmu parameter is disabled");
-+                    return -1;
-+                }
-             }
-         }
-     }
-
----
-
-This example not only eliminates the static variable °∞kvm_pmu_disabled°±,
-but also explicitly informs the user that vPMU is not available and
-QEMU's "pmu" option doesn't work.
-
-As a comparison, your patch 8 actually "silently" disables PMU (in the
-kvm_init_pmu_info()) and user can only find it in Guest through PMU
-exceptions.
-
-Thanks,
-Zhao
+> +    - Linux 5.16+
+> +    - 24.3.0+
 
 
 
