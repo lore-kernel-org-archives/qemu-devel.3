@@ -4,109 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3912C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 10:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5DCC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 10:32:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1traPy-0002K1-6v; Mon, 10 Mar 2025 06:31:30 -0400
+	id 1traQa-00037y-Sg; Mon, 10 Mar 2025 06:32:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1traPt-0002JC-U6; Mon, 10 Mar 2025 06:31:26 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1traPs-0001hB-AF; Mon, 10 Mar 2025 06:31:25 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52A78w79018245;
- Mon, 10 Mar 2025 10:31:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=rL6/G6
- P9e6PGVF/Gq2kilRzgVCHa/6g7KMixQ+UOhf8=; b=OaW9zX+cKUkLCWIIUdY0BS
- zXFbFdN7C9iZkc38zssrHgHva8O+7UFyslZw/mQleN9Ifih4zXTApxJC5JMXLKbg
- isptoT9/48Z6gxz+4OgPuRw1itmSoGfT2RQ+ZeeeL9Z/zIIIjxe0NnfK1f9w80Vz
- f6otYny2lspL0Foki26cJCQyUshIWembMcrsdFDFwLOkRSTxlSUustSXRzLETmai
- Y9Ty5apyJHA3rLOFYJfm5wDUi2c7FvHZhASIJeyDAzPq5WRZNyqpJSilHXO9LmGk
- KFsu3Nwu+2e1XL4Ww78x88ASDK2Ybb8821EZWRZ32igx/LTnetD3r5wZ2Cq1xdLQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 459cdnktca-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Mar 2025 10:31:19 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52AARhub008249;
- Mon, 10 Mar 2025 10:31:19 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 459cdnktc8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Mar 2025 10:31:19 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52A80FOh014921;
- Mon, 10 Mar 2025 10:31:18 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4592ek5ubv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Mar 2025 10:31:18 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52AAVF3u37093886
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 10 Mar 2025 10:31:15 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EC1472004D;
- Mon, 10 Mar 2025 10:31:14 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0BAA02004B;
- Mon, 10 Mar 2025 10:31:13 +0000 (GMT)
-Received: from [9.109.199.160] (unknown [9.109.199.160])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 10 Mar 2025 10:31:12 +0000 (GMT)
-Message-ID: <094f0623-e483-4097-aca0-9f320b27af1a@linux.ibm.com>
-Date: Mon, 10 Mar 2025 16:01:12 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1traQY-00037J-Rb
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:32:06 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1traQW-0001nq-Mv
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:32:06 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e63a159525bso484783276.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 03:32:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741602723; x=1742207523; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kJpDhnofloE+E6zKZqdvAEr5CqPfN+KyQtHOX1ArmcY=;
+ b=U1UwWrRUxorA6IZU11jnMLHe/3BLTGU00ou5Pzth5hbqbp/1+QRJNVgasMLCz+joYy
+ TtgVS4x1mGcR3NVIcD3x6qS+e6JGZ1tgeSFuhN+IympUlrSu8FABKW7iXjmpjqvkLmcP
+ aOe1eolsjlXkyKbD2VutTZkvJA5HiOoHcxiRy2JlL2N4H4TENk1VpZ4wQRqwyoMVYJNo
+ DFIlXuqq6BcWVI7OVCsQe+J14gi68ZO9xx1kFHHF3tctwKoAQURwmxL/Z51ZxPX78z9Q
+ YasDMxHo/8v34uU6y/RYKV8NN6EM8yHq+86PY3KFcGiHdKSMOa9hYgOpsgbWaUuNBhOT
+ vz/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741602723; x=1742207523;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kJpDhnofloE+E6zKZqdvAEr5CqPfN+KyQtHOX1ArmcY=;
+ b=w+rFEG9v0kCFA3XathUB8gmKDbtFEP041E6eMCfKpkJ3Taa/rONEKfugH1RQL2Gl2I
+ oS4wRu6J+1XbrAqURQge20W1m0Acbptyby45y+S0Izw7bHCu+J/TPcX+Z7CGq/h4aWW5
+ hkDSLFF7B/411rC7tXrfTdf592AzvN8bhQBtbpnpQyaVwJjXKYGBI5/UzxVUVoCDxHea
+ ItTe9DJ3EjLTYuFL5uMYDugRkPV3mzN5e4YtrEqW7V4AImHE9JvPl0V8BlWAFCUe7yx/
+ FEqU1vpjPiec4a4XivGwJtj0KEcPgAbGy9K1oTTm0X8M+9elqzFDt9OHt4Aic1xEUZTj
+ fAMw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhkpIt0l6stsAGTcy+/AEkE64c/kF/ApI9zw0ZKU1mtn3tJCR9/YVXQJ/28nPM67c9T2fR3HDvtRha@nongnu.org
+X-Gm-Message-State: AOJu0YxQ1HmMO8G9++FifRRp4Am/+ZHtmBl9ylEDBBXs/LrQ7ICTMcb0
+ 8qAPQ2CIPldsXzPlJhvzujVMb03QbOeQRPcPE4bdZUFcLIWsXY9JVs6DVDCp8Z7tJA/NDbErPee
+ 822clLCUrfZPyElPR4sMhPfCIVFU5XTFvVee5DQ==
+X-Gm-Gg: ASbGncsMdM/nVYJbdmmJ/3FEE2pflL9wo8n6xyQ3JpWoTDmRn724MG9Rq2uRVtntxls
+ U4CxbqKJaCHP/BP8Ge19LiU0n5u8RX/nZj7dalnEYUucvLYnOvgxfzXpIjMufYXhDFT28WVMvDL
+ BIvxGgGrAs+vIKXVkjI/M4+5402KmNWMpZb08+1A==
+X-Google-Smtp-Source: AGHT+IG8Z01w8vvI9FPMsCApAm4JEKCHpiezl2fzFiQsmW+3q6kYJJJ9YEvi0W1cxDtV2hkW2Pg3CnRP7WfOslouavY=
+X-Received: by 2002:a05:6902:1684:b0:e5e:23c5:a8c8 with SMTP id
+ 3f1490d57ef6-e635c177acemr15907161276.22.1741602722863; Mon, 10 Mar 2025
+ 03:32:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 8/8] ppc/pnv: Update skiboot to support Power11
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250308205141.3219333-1-adityag@linux.ibm.com>
- <20250308205141.3219333-9-adityag@linux.ibm.com>
- <f9ea56e0-a104-4acd-a27e-7d2813efe319@kaod.org>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <f9ea56e0-a104-4acd-a27e-7d2813efe319@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: MuXFOQov9W7JdWEkysjwjcOshZ68D3ih
-X-Proofpoint-ORIG-GUID: wT4mwWZxHdbM0zQb3v766gmZ3KEIW0hA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-10_04,2025-03-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015
- lowpriorityscore=0 spamscore=0 phishscore=0 mlxlogscore=873
- priorityscore=1501 bulkscore=0 adultscore=0 malwarescore=0 suspectscore=0
- mlxscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503100083
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250129082045.1319203-1-pbonzini@redhat.com>
+ <CAFEAcA9=G4sdXrxWcmq9wMqu1-ZRNxObQD3hmnFauYwiQr_8YQ@mail.gmail.com>
+ <Z86v8Y70sGThWb_V@redhat.com>
+ <CABgObfbuj3SbqpDkUnKux1EWCudiksQxbWr_4Sck5tTLr5QqeA@mail.gmail.com>
+In-Reply-To: <CABgObfbuj3SbqpDkUnKux1EWCudiksQxbWr_4Sck5tTLr5QqeA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 10 Mar 2025 10:31:51 +0000
+X-Gm-Features: AQ5f1JqC_9ULke36BduxV2H9hr_OqCBGORRYJSzaaDZpkNZTulhZhV_rXlQ5UpA
+Message-ID: <CAFEAcA8bbXBYy774AMFo=yiRSN4qZnOyaC+sOV0zP11d49mUvg@mail.gmail.com>
+Subject: Re: [PATCH] gitlab-ci: include full Rust backtraces in test runs
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,46 +99,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/03/25 19:40, Cédric Le Goater wrote:
-
-> On 3/8/25 21:51, Aditya Gupta wrote:
->> Update skiboot.lid to below commit which adds support for booting on
->> Power11:
->>
->>      commit 785a5e3070a8 ("platform: Identify correct bmc platform 
->> based on bmc hw version")
->>
->> Built with glibc 2.40 and gcc 14.2 (Fedora 41)
->>
->> Signed-off-by: Aditya Gupta<adityag@linux.ibm.com>
->> ---
->> Should the roms/skiboot submodule also be updated ?
->>
->> I see it has generally been updated on skiboot releases with versions,
->> eg. 7.1, 7.0. No newer version available for upstream/master.
->> ---
->> ---
->>   pc-bios/skiboot.lid | Bin 2527328 -> 2527424 bytes
->>   1 file changed, 0 insertions(+), 0 deletions(-)
+On Mon, 10 Mar 2025 at 09:40, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> This change should come first as a sub maintainer PR, to avoid sending 
-> 2.5MB
-> on the mailing list :/ See how SLOF is handled.
+> On Mon, Mar 10, 2025 at 10:25=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrang=
+e@redhat.com> wrote:
+> > > This will only add the rust backtraces when the tests
+> > > are run from the CI logs, not when you locally run
+> > > "make check" or similar. There's probably a better place
+> > > to put this...
+> >
+> > Meson's  'test()' command accepts env variables, but it'll be somewhat
+> > tedious to add the same env to all case where we use test. Might want
+> > to define a common 'testenv' set at the top level meson.build and then
+> > reference it from every 'test()', unless meson has built-in support
+> > for globally applied env vars that I'm missing.
 >
-Sorry didn't know this. I just checked the git log of skiboot.lid and 
-thought maybe it's this same way of sending patches.
+> It can be added to add_test_setup().
 
-Will skip sending this in v6.
+Thanks -- I just sent a patch to do it that way:
 
+https://patchew.org/QEMU/20250310102950.3752908-1-peter.maydell@linaro.org/
 
-Thanks,
-
-- Aditya Gupta
-
->
-> Thanks,
->
-> C.
->
->
+-- PMM
 
