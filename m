@@ -4,85 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C64EC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF88C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1treex-0004Od-Ep; Mon, 10 Mar 2025 11:03:15 -0400
+	id 1trehv-0007ic-Tz; Mon, 10 Mar 2025 11:06:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.67cefb0e.v1-1f1809525b724d30974b587fa46d1235@bounce.vates.tech>)
- id 1treeq-0004Md-Io
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:03:10 -0400
-Received: from mail186-3.suw21.mandrillapp.com ([198.2.186.3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.67cefb0e.v1-1f1809525b724d30974b587fa46d1235@bounce.vates.tech>)
- id 1treen-0005La-He
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:03:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
- s=mte1; t=1741617934; x=1741887934;
- bh=D8pjLz1P43cjnB28y4d+UMASewJChwKWZNDkhhJymtM=;
- h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
- Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
- Subject:From;
- b=SLK41gsP9e4/+UHsXs/FBI6xKKKK6ArJNu3TtfQMD7pVdOhgkBSP+smkpuQG/0NLV
- 9g83sZoXoRizWvlCJ28lny0nKPx5lPFg8ZLR4/7fGYrsiISHCW3xtIlN4Ab1W2aI/5
- vOy3lKImpIirNKxQeVhEqywpdCefWQOc1zdPT6dO5UZdbM8HA5Fp8BzN2IHB5gjUjA
- nqcYyKCR1imlNjeRFUkVPzzJrVwNPBZVZe4lLuAHq8Uf5OQXIqWjlyi9Wx7yJ+Ur4w
- ilfngcOtKpr6D04NsDtipIXq2qb1NhEQdmEx0VvZetR8xmtaCx/BZZE8vjNcIrT261
- Rj3QF3Mz0GN1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech; s=mte1;
- t=1741617934; x=1741878434; i=anthony.perard@vates.tech;
- bh=D8pjLz1P43cjnB28y4d+UMASewJChwKWZNDkhhJymtM=;
- h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
- Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
- Subject:From;
- b=ANzBvICEauVO5w0HQPEqkzGD/y5vlB2Hm81O1juShsFHCeE5BRwguDyPQpdlgBgni
- kFdkMoFmLBQfxGD56nQgye7f/eCOdvlTYSfz8A7IbCpccoJeDB2aUSHtlFDeh2FF/y
- 7Gg8PFoibNP4ewj9sQtyM9Kx8EelrFk7GxEI1GuziIm9qs/nppXZpDbUG641RiVKrc
- vED/6G+M6qqp9XeXRQf+16eap59KvwRWQPrWoIC00PsZeSlEtGXA9HpPk2U0B22FR3
- xEYApb+SY729I4BSsI/XrCJGHN2k72gwetYKXiE9q0HGSA/vDKPR34V2QXf+FyB0T+
- MtIuxg9/GOp0A==
-Received: from pmta10.mandrill.prod.suw01.rsglab.com (localhost [127.0.0.1])
- by mail186-3.suw21.mandrillapp.com (Mailchimp) with ESMTP id 4ZBKSZ1lHDzDRHyB6
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 14:45:34 +0000 (GMT)
-From: "Anthony PERARD" <anthony.perard@vates.tech>
-Subject: =?utf-8?Q?[PULL=201/3]=20xen/passthrough:=20use=20gsi=20to=20map=20pirq=20when=20dom0=20is=20PVH?=
-Received: from [37.26.189.201] by mandrillapp.com id
- 1f1809525b724d30974b587fa46d1235; Mon, 10 Mar 2025 14:45:34 +0000
-X-Mailer: git-send-email 2.39.5
-X-Bm-Disclaimer: Yes
-X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
-X-Bm-Transport-Timestamp: 1741617933291
-To: qemu-devel@nongnu.org
-Cc: "Jiqian Chen" <Jiqian.Chen@amd.com>,
- "Anthony PERARD" <anthony.perard@vates.tech>
-Message-Id: <20250310144516.28828-2-anthony.perard@vates.tech>
-In-Reply-To: <20250310144516.28828-1-anthony.perard@vates.tech>
-References: <20250310144516.28828-1-anthony.perard@vates.tech>
-X-Native-Encoded: 1
-X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,
- =20including=20all=20headers,
- =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.1f1809525b724d30974b587fa46d1235?=
-X-Mandrill-User: md_30504962
-Feedback-ID: 30504962:30504962.20250310:md
-Date: Mon, 10 Mar 2025 14:45:34 +0000
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trehr-0007fT-VC
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:06:15 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trehp-0006NV-LF
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:06:15 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43cf0d787eeso13266555e9.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 08:06:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741619169; x=1742223969; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tVsLM72gyPB5SrUlYGkCkGlspILo45o/4cQJSFs0z9I=;
+ b=xDWCkoOJM5aEaemg2NwoLXkma9eRPVeWa3MQUvX5xlTv29TMSA1CTWvRhVrHPpYtN7
+ UxoFX+QQ0+UmzOhEeZZ1hU7pAnlCWWa8KOZZaaalTwI0uhM4LuEnqeVLrWhg+5H8L4+B
+ rWR1dAMzWHDYUZiZ3aoeUULOJphx2ZOwMxmXd0yo/IEidp2eeGRDG1aC+gkqExBSJNwl
+ 7cTqIxQxReOv5U6t0+AXSec6rbePBTHW3qNtbZXkz3qWEgSA9OfCUIRMdavPiZDZ/tbZ
+ piI0bzEFTJEQer5OTaERktj13ZCLnRmrpo2uiPEz9wrA+1HBuj9BeNrbm7JeJuMBTByN
+ YPyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741619169; x=1742223969;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tVsLM72gyPB5SrUlYGkCkGlspILo45o/4cQJSFs0z9I=;
+ b=Dk6BYQfz2SWc4Tf8PfEwrUvwE0SxBhsR79ah1enKqVnUPhHFx0tdRNST69kDB8WMdc
+ /X9t2vopEqFvfQxK/1xdoJCAY6ah2XWv2azUT324IKRrP9SpWSjvlWdmk+wX2IPa0DVM
+ 6U8ov6RrpGiQzVMs3qyPyIYsy9ljPA95Qpg1VXTCBfh/TOTwJDiJ7ngSvmotUnEqLrc9
+ jNZ+KzN0CON+2TL/D9n15vlIUpa6abY/dysfsmPbnkJpFb1unSoEgiQe5o5NEOLnhinV
+ 6AYmzFsRLAbiruJZBmROGOuXpisuwx3ValiQEUiHCw3RZUMd72LarrNK8ChkTUMxFpxH
+ Gy4w==
+X-Gm-Message-State: AOJu0YyqFccTFtbmQrj0QPPZOQMfm8v0YzJQmNMwW9L0QO7pB7kv613d
+ nyeDy8woDhX0jnanxC/FNp4Pg2rpur3Zs6GhRtLYjRh+8Ygpiz7H2A/v2YsB1i4=
+X-Gm-Gg: ASbGncsfUbggleaJwfHZOK0Bn1Zu5n1s5oqzc5yZDdeuONq5Un4hsLXRsOFzJ6o0B3+
+ Q8t2vkKY+xBBIo7ZagrqoFErZCeekyKaC1691teYCUIsN05zWZNhKs49qXgnOlXzR2mzIMY93O/
+ ArRlt7OgpfWYjvKiN8hMv4i8SaqvCJH0Am/PMtV9leCmCVwDiL8BiZEm4TkPwc5DHbA0FR/Hofm
+ CXphWRJvYfijNYoQa+G43BIXQT3XFASGBaxetOy5P5dPH9xc6DW9eFYnnPswR/TOhgnuh5/zPL0
+ 17QKMzp90OvNb3q7SWVc+PzPiblzQ7GGPWiJIDrs15ZEZs5Zloyrj6IY2dqn93HKJU2C9gjQF9N
+ TuDTpedzWvzt2
+X-Google-Smtp-Source: AGHT+IHCVsB4+hK4M4JETFVszkZnO8yYMCS88WIPOq3Qklxz4Hq02PR53L/pkzbFiJFItkBg4PnPvg==
+X-Received: by 2002:a5d:47c1:0:b0:391:2bcc:11f2 with SMTP id
+ ffacd0b85a97d-39132d2ac45mr8116094f8f.1.1741619167118; 
+ Mon, 10 Mar 2025 08:06:07 -0700 (PDT)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912c0e3099sm15631297f8f.69.2025.03.10.08.06.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Mar 2025 08:06:05 -0700 (PDT)
+Message-ID: <7b7cdad8-a807-4c16-9498-1676f3d28b9b@linaro.org>
+Date: Mon, 10 Mar 2025 16:06:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.2.186.3;
- envelope-from=bounce-md_30504962.67cefb0e.v1-1f1809525b724d30974b587fa46d1235@bounce.vates.tech;
- helo=mail186-3.suw21.mandrillapp.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] cpus: Introduce SysemuCPUOps::qmp_dump_skeys()
+ callback
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-s390x@nongnu.org,
+ Halil Pasic <pasic@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Eric Farman <farman@linux.ibm.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+References: <20250310133118.3881-1-philmd@linaro.org>
+ <20250310133118.3881-3-philmd@linaro.org> <Z87s-Z0IM0613sbG@redhat.com>
+ <b6988de5-42ed-4e3f-ab39-921912e9be0c@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <b6988de5-42ed-4e3f-ab39-921912e9be0c@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,129 +114,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jiqian Chen <Jiqian.Chen@amd.com>
+On 10/3/25 14:48, Thomas Huth wrote:
+> On 10/03/2025 14.45, Daniel P. Berrangé wrote:
+>> On Mon, Mar 10, 2025 at 02:31:17PM +0100, Philippe Mathieu-Daudé wrote:
+>>> Allow generic CPUs to dump the architecture storage keys.
+>>>
+>>> Being specific to s390x, it is only implemented there.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   include/hw/core/sysemu-cpu-ops.h | 6 ++++++
+>>>   target/s390x/cpu-system.c        | 2 ++
+>>>   2 files changed, 8 insertions(+)
+>>>
+>>> diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/ 
+>>> sysemu-cpu-ops.h
+>>> index 877892373f9..d3534cba65c 100644
+>>> --- a/include/hw/core/sysemu-cpu-ops.h
+>>> +++ b/include/hw/core/sysemu-cpu-ops.h
+>>> @@ -47,6 +47,12 @@ typedef struct SysemuCPUOps {
+>>>        *       a memory access with the specified memory transaction 
+>>> attributes.
+>>>        */
+>>>       int (*asidx_from_attrs)(CPUState *cpu, MemTxAttrs attrs);
+>>> +
+>>> +    /**
+>>> +     * @qmp_dump_skeys: Callback to dump guest's storage keys to 
+>>> @filename.
+>>> +     */
+>>> +    void (*qmp_dump_skeys)(const char *filename, Error **errp);
+>>
+>> Is it right to hook this onto the CPU object ? In the next patch
+>> the code arbitrarily picks the 1st CPU and adds a "FIXME" annotation,
+>> but the actual impl of dump code doesn't seem to be tied to any CPU
+>> object at all, it is getting what looks like a global singleton
+>> object holding the keys.
+>>
+>> IOW, should this hook be against the machine type instead, if it
+>> is dumping global state, not tied to a specific CPU ?
 
-In PVH dom0, when passthrough a device to domU, QEMU code
-xen_pt_realize->xc_physdev_map_pirq wants to use gsi, but in current codes
-the gsi number is got from file /sys/bus/pci/devices/<sbdf>/irq, that is
-wrong, because irq is not equal with gsi, they are in different spaces, so
-pirq mapping fails.
+Great analysis!
 
-To solve above problem, use new interface of Xen, xc_pcidev_get_gsi to get
-gsi and use xc_physdev_map_pirq_gsi to map pirq when dom0 is PVH.
+> Hmm, you've got a point - the storage keys are part of the memory, not 
+> of the CPU, so they might rather belong to the machine instead, indeed.
+> 
+>   Thomas
+> 
 
-Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-Signed-off-by: Huang Rui <ray.huang@amd.com>
-Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-Acked-by: Anthony PERARD <anthony@xenproject.org>
-Reviewed-by: Stewart Hildebrand <stewart.hildebrand@amd.com>
-Message-Id: <20241106061418.3655304-1-Jiqian.Chen@amd.com>
-Signed-off-by: Anthony PERARD <anthony.perard@vates.tech>
----
- hw/xen/xen_pt.c      | 60 ++++++++++++++++++++++++++++++++++++++++++++
- include/hw/pci/pci.h |  4 +++
- 2 files changed, 64 insertions(+)
-
-diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
-index e2bd4c7d41..9487f68f2e 100644
---- a/hw/xen/xen_pt.c
-+++ b/hw/xen/xen_pt.c
-@@ -766,6 +766,57 @@ static void xen_pt_destroy(PCIDevice *d) {
- }
- /* init */
- 
-+#if CONFIG_XEN_CTRL_INTERFACE_VERSION >= 42000
-+static bool xen_pt_need_gsi(void)
-+{
-+    FILE *fp;
-+    int len;
-+    /*
-+     * The max length of guest_type is "PVH"+'\n'+'\0', it is 5,
-+     * so here set the length of type to be twice.
-+     */
-+    char type[10];
-+    const char *guest_type = "/sys/hypervisor/guest_type";
-+
-+    fp = fopen(guest_type, "r");
-+    if (!fp) {
-+        error_report("Cannot open %s: %s", guest_type, strerror(errno));
-+        return false;
-+    }
-+
-+    if (fgets(type, sizeof(type), fp)) {
-+        len = strlen(type);
-+        if (len) {
-+            type[len - 1] = '\0';
-+            if (!strcmp(type, "PVH")) {
-+                fclose(fp);
-+                return true;
-+            }
-+        }
-+    }
-+
-+    fclose(fp);
-+    return false;
-+}
-+
-+static int xen_pt_map_pirq_for_gsi(PCIDevice *d, int *pirq)
-+{
-+    int gsi;
-+    XenPCIPassthroughState *s = XEN_PT_DEVICE(d);
-+
-+    gsi = xc_pcidev_get_gsi(xen_xc,
-+                            PCI_SBDF(s->real_device.domain,
-+                                     s->real_device.bus,
-+                                     s->real_device.dev,
-+                                     s->real_device.func));
-+    if (gsi >= 0) {
-+        return xc_physdev_map_pirq_gsi(xen_xc, xen_domid, gsi, pirq);
-+    }
-+
-+    return gsi;
-+}
-+#endif
-+
- static void xen_pt_realize(PCIDevice *d, Error **errp)
- {
-     ERRP_GUARD();
-@@ -847,7 +898,16 @@ static void xen_pt_realize(PCIDevice *d, Error **errp)
-         goto out;
-     }
- 
-+#if CONFIG_XEN_CTRL_INTERFACE_VERSION >= 42000
-+    if (xen_pt_need_gsi()) {
-+        rc = xen_pt_map_pirq_for_gsi(d, &pirq);
-+    } else {
-+        rc = xc_physdev_map_pirq(xen_xc, xen_domid, machine_irq, &pirq);
-+    }
-+#else
-     rc = xc_physdev_map_pirq(xen_xc, xen_domid, machine_irq, &pirq);
-+#endif
-+
-     if (rc < 0) {
-         XEN_PT_ERR(d, "Mapping machine irq %u to pirq %i failed, (err: %d)\n",
-                    machine_irq, pirq, errno);
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index c220cc8449..822fbacdf0 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -23,6 +23,10 @@ extern bool pci_available;
- #define PCI_SLOT_MAX            32
- #define PCI_FUNC_MAX            8
- 
-+#define PCI_SBDF(seg, bus, dev, func) \
-+            ((((uint32_t)(seg)) << 16) | \
-+            (PCI_BUILD_BDF(bus, PCI_DEVFN(dev, func))))
-+
- /* Class, Vendor and Device IDs from Linux's pci_ids.h */
- #include "hw/pci/pci_ids.h"
- 
--- 
-
-
-Anthony Perard | Vates XCP-ng Developer
-
-XCP-ng & Xen Orchestra - Vates solutions
-
-web: https://vates.tech
 
