@@ -4,111 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9F0DC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD84C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:24:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1treyy-0005A7-RY; Mon, 10 Mar 2025 11:23:57 -0400
+	id 1trezE-0005tx-N5; Mon, 10 Mar 2025 11:24:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1treyu-0004w1-3D
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:23:52 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1treyj-00019p-TT
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 11:23:51 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4394a0c65fcso47555615e9.1
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 08:23:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741620218; x=1742225018; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IBr75c6ytYUhwEvF7FkBd0CgtESgZ7S9ZWDGt+QgV04=;
- b=iSEAAbYkNu93b6DzwbqzYCQCY2AgB7Xkz//fvIZQDvWssw0UCkAuEiLQHsxQ5Sl4rZ
- jWx6S17CaU0pmWTAhBTswRSWIx6onpvNlVBv2Qng6408MajPdaHw3DPFOyyhSoxBzxW7
- QI1i0ghywy9qcd1OxU2fhpntVMNbz3Z/Fc4RCSzAQb0ZpkXiKdIXZK2/Dc9iOM9E71XR
- 4eYN3j68U6hVI1p/JpXoi9j4Mils6nWtFetnWkZ2g3jiDV0YGIZZySGxfR7f6WAWmt91
- aODMeO76yWrBAR5WqlvIWpsYGM1xNaK3ee1TuJozN7IfiTYFsq5Q9T+yagu81Hlij+Y6
- vZVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741620218; x=1742225018;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IBr75c6ytYUhwEvF7FkBd0CgtESgZ7S9ZWDGt+QgV04=;
- b=kj3gh7mSfRrWDvsIG+Hn8WpRTNxOH8CZOgbLeA2YcwRq+467lqPBZZYrQghWqVnyIQ
- PFs7Tx/Ia1lgQKlLx2LEUItL5MGGi5B0e2u3jfny7m0KZLyhGN+smGl+78iP1rmInw6R
- rSjpU2nenhNCQGOZylMO7URG3ZMIizYAPiTWtKaZgedlm1L4vcRNpEJJ9lqe1byhlaa6
- 0xPX+C9T1ZZnFM/HRRpToOq13s8zZOo2aTGpvmjvWGMhPikmCU8ML4fhY/HRYeTIdgD2
- 0jgTMxrlNKgYcpth1/dTn4SO+Wl3wz8qQhDHGddCtcTPztYqy8xqtXJm365CxaJe46R/
- PHgA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGz7PKWvo+xOav+ijwoZdO8y/+FDyYflnvBP6xpXQufOsqytmyI8amQ5i4njINgMCmV78IUMTFi3pU@nongnu.org
-X-Gm-Message-State: AOJu0YyvFXU9fDiH5lLtslNnENzM/38HUhPHUC4UIwbXzx+y/KRVqrrX
- cbd9lRl7Cyi2/M+kKaeFYRpq+Cn83EOMywyint3CykfMbGzUJroWZNC3zNK3Nvc=
-X-Gm-Gg: ASbGncsVCJHjyGcHTQUSrZ8kvGBxZD1UDqW/ZQK5LTwrCF3/B5E5CgXTq3tyt4hJt3U
- 2VOeU3o6RdW8rch0cYGlmnJTAP0kd8g8SfwrKr1DjvuxElwYwCHgcQCn5IJdX3O322TCEvIkw2X
- vZv6hpyfccYl08ZAtGn9OY35Y42rTQpn239mA64hNRdtK/d7ulj3FXL4P1DOt6hnj01qB0qEWs2
- LoWH7xplylHEoWhm6ijYB6pludA4wjYiUanWKHd53ZjGNyUDwJEOYAP+RkWEViETkI/JlXIPm2N
- M0vJbWHzH2I3ZBqdxW//xr2BgZWlLRTHxzz7fcGUlrNaDkXo0ztVDc0cof9JC5sEi7cnygAOxYw
- pykXhXJl4j1E9l7mSu1sHfsM=
-X-Google-Smtp-Source: AGHT+IHAV10499kmP8yqAIvnYFZpY+88ERj2RcF7X5uZrwnaq9soz6c1PpTRcxcyvgnk2ZNi6F0Kyw==
-X-Received: by 2002:a05:600c:1c1e:b0:43c:fc00:f94f with SMTP id
- 5b1f17b1804b1-43cfc00fb6dmr26978915e9.23.1741620217533; 
- Mon, 10 Mar 2025 08:23:37 -0700 (PDT)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e2bb7sm15441920f8f.63.2025.03.10.08.23.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 08:23:36 -0700 (PDT)
-Message-ID: <13c7e4c3-d5d6-4b56-9d6e-cec50727d3a7@linaro.org>
-Date: Mon, 10 Mar 2025 16:23:35 +0100
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1trez8-0005n7-6Q; Mon, 10 Mar 2025 11:24:06 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1trez4-0001Ba-JM; Mon, 10 Mar 2025 11:24:05 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52ACS4vW021525;
+ Mon, 10 Mar 2025 15:23:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=KGw1cJ
+ H+AsQn8X0onCpFdB1YxFDZQ6KCAWAiW1gSpf0=; b=tpbWPK8wcjXw8458d1FLzl
+ CzX+Gcr4hOfMe3LaCMIdJkyDpX5pcpfhoO3eQlHzHIAnmA+xjHlgfFZS8U0vVPit
+ YyyV1xBAvNUIs6tg/OC/dW6a8gHPphdkjjLsJ08QqUONTS7+Eq+XXJu+rwuWp/KO
+ 9QHX0gTyYlPn6TNn1hRukGDowarR99UjF8d3ND1B/a4/4EcGTkh9qY9rO9a911BC
+ 8/XkpDeu9/bK0DGGH6DMtdp/jC85FXb5Ey0F8oosAf+bB9TJ2kwVm3Kj17FpJ4+W
+ FDI71XOuW2YF+CdSoskLdVh3tmk7zEMp8aMQStYnU/qOn4jueTmlAFPHYKVJ8PtQ
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45a042ryp9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Mar 2025 15:23:58 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52AEjKxq022265;
+ Mon, 10 Mar 2025 15:23:57 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45917n78ba-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Mar 2025 15:23:57 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52AFNub820382400
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 10 Mar 2025 15:23:56 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E21815806A;
+ Mon, 10 Mar 2025 15:23:55 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C7D8158055;
+ Mon, 10 Mar 2025 15:23:54 +0000 (GMT)
+Received: from [9.61.250.189] (unknown [9.61.250.189])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 10 Mar 2025 15:23:54 +0000 (GMT)
+Message-ID: <c0730cdd-e37d-49f3-bfe7-240cd0a887c1@linux.ibm.com>
+Date: Mon, 10 Mar 2025 11:23:54 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/21] hw/vfio/igd: Check CONFIG_VFIO_IGD at runtime
- using vfio_igd_builtin()
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Tomita Moeko
- <tomitamoeko@gmail.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eric Farman <farman@linux.ibm.com>, Eduardo Habkost <eduardo@habkost.net>,
- Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-s390x@nongnu.org,
- Eric Auger <eric.auger@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250308230917.18907-1-philmd@linaro.org>
- <20250308230917.18907-13-philmd@linaro.org>
- <415339c1-8f83-4059-949e-63ef0c28b4b9@redhat.com>
- <7fc9e684-d677-4ae6-addb-9983f74166b3@linaro.org>
- <8f62d7ac-7109-4975-84a2-4a7fa345dd74@redhat.com>
+Subject: Re: [RFC PATCH v2 1/5] linux-headers: NOTFORMERGE - placeholder uapi
+ updates for AP config change
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-s390x@nongnu.org, Vasily Gorbik <gor@linux.ibm.com>
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
+References: <20250204170759.36540-1-rreyes@linux.ibm.com>
+ <20250204170759.36540-2-rreyes@linux.ibm.com>
+ <52dddefa-a9d6-41e7-ad23-a93f65896034@redhat.com>
+ <27ccfad0-99d1-47a5-8370-2b16ea924ac9@linux.ibm.com>
+ <b274c191-36db-4671-8361-59d2688d16de@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8f62d7ac-7109-4975-84a2-4a7fa345dd74@redhat.com>
+From: Rorie Reyes <rreyes@linux.ibm.com>
+In-Reply-To: <b274c191-36db-4671-8361-59d2688d16de@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: mIuLDsKFjPuVA1gU3f2PMtTljaG6GB_C
+X-Proofpoint-ORIG-GUID: mIuLDsKFjPuVA1gU3f2PMtTljaG6GB_C
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-10_05,2025-03-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxlogscore=999
+ impostorscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 spamscore=0
+ adultscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503100114
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rreyes@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,32 +116,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/3/25 14:51, Cédric Le Goater wrote:
-> On 3/10/25 14:43, Philippe Mathieu-Daudé wrote:
->> On 10/3/25 08:37, Cédric Le Goater wrote:
->>> On 3/9/25 00:09, Philippe Mathieu-Daudé wrote:
->>>> Convert the compile time check on the CONFIG_VFIO_IGD definition
->>>> by a runtime one by calling vfio_igd_builtin(), which check
->>>> whether VFIO_IGD is built in a qemu-system binary.
->>>>
->>>> Add stubs to avoid when VFIO_IGD is not built in:
->>>
->>> I thought we were trying to avoid stubs in QEMU build. Did that change ?
+
+On 3/10/25 10:38 AM, Cédric Le Goater wrote:
+> Hello Rorie,
+>
+>
+>
+> On 3/10/25 15:20, Rorie Reyes wrote:
+>> On 2/5/25 3:38 AM, Cédric Le Goater wrote:
 >>
->> Hmm so you want remove the VFIO_IGD Kconfig symbol and have it always
->> builtin with VFIO. It might make sense for quirks, since vfio_realize()
->> already checks for the VFIO_FEATURE_ENABLE_IGD_OPREGION feature.
-> 
-> I have explored this option in the past and it's much more work.
-> Stubs are fine IMO, if we can have them, but I remember someone
-> telling me (you ?) that we were trying to remove them.
-
-We shouldn't have target-specific stubs.
-(currently CONFIG_DEVICES::VFIO_IGD is target specific).
-
-I don't think we can avoid host-specific stubs.
-
-In unified binary, CONFIG_DEVICES disappears, VFIO_IGD
-will be handled like host configuration. Although if possible I'd
-rather remove VFIO_IGD, unconditionally including all quirks.
+>>>
+>>> Are the kernel changes planned for 6.14 ?
+>>>
+>>> FYI, QEMU 10.0 hard freeze is scheduled for 2025-03-18 which is
+>>> approximately when 6.14-rc7 will be released.
+>>>
+>>> Thanks,
+>>>
+>>> C. 
+>>
+>> Vasily - Since you applied my kernel patches already ([RFC PATCH v2] 
+>> s390/vfio-ap: Notify userspace that guest's AP config changed when 
+>> mdev removed), would you be able to answer Cedric's
+>>
+>> a question?
+>>
+>> Cedric - I have some changes I need to make based on Tony's review 
+>> comments from Friday, but I'll wait to post it once you get an answer 
+>> for your question. Sorry I took a while to respond. I had to
+>>
+>> make some changes for my kernel code this past month.
+>>
+>
+> AFAICT, the changes were merged in the s390 sub-maintainer tree,
+> 07d89045bffea30ef08b902c2441a3329e44f29d, and they haven't reached
+> Linux master yet. Seems a bit late for the 6.14 cycle now.
+>
+> linux-headers in QEMU are in sync with version 6.14-rc3 and that
+> should the last update before QEMU 10.0 soft-freeze tomorrow.
+>
+> Most likely, this series should now target the next cycles:
+> Linux 6.15 and QEMU 10.1. We have time.
+>
+>
+> Thanks,
+>
+> C.
+Thanks Cedric! I'll post the v3 patch from Tony's review
 
