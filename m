@@ -4,70 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42710C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 18:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42FFC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 18:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trhSo-0006oJ-H9; Mon, 10 Mar 2025 14:02:55 -0400
+	id 1trhUR-0008Li-En; Mon, 10 Mar 2025 14:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1trhSZ-0006kd-RB
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:02:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1trhSX-00005h-Tr
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:02:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741629753;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=+NZy2pbvXWaO3zQl4lVy+L3m8nqQQn+lkf1of1gSyyE=;
- b=JRvAgLiecdbRQjTCIKyMMrptc28QVgOek1rgYVDzhSfQm5XV7CC8rsFshiuMoqNgqVnROH
- pxcuGAFag1v2XFUse4VDPr6+2MmSl8Qn6YwdgBtpn2b2aMLXYcf45cuqXjm0KCAHITql1O
- dGe3nI4140K+73pM2MaR9BpsEQIZQLk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-137-Nn3ykrbtMHSWySDuCBBwLQ-1; Mon,
- 10 Mar 2025 14:02:28 -0400
-X-MC-Unique: Nn3ykrbtMHSWySDuCBBwLQ-1
-X-Mimecast-MFC-AGG-ID: Nn3ykrbtMHSWySDuCBBwLQ_1741629748
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F24E1955BD2; Mon, 10 Mar 2025 18:02:27 +0000 (UTC)
-Received: from lenovo-t14s.redhat.com (unknown [10.45.224.138])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B194A1956094; Mon, 10 Mar 2025 18:02:24 +0000 (UTC)
-From: Laurent Vivier <lvivier@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Stefano Brivio <sbrivio@redhat.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH] docs: Explain how to use passt
-Date: Mon, 10 Mar 2025 19:00:50 +0100
-Message-ID: <20250310180050.112682-1-lvivier@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trhUP-0008J8-6s
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:04:33 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trhUL-0000Jb-Gl
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 14:04:31 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2254e0b4b79so18152595ad.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 11:04:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741629868; x=1742234668; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=171ad/3m6TpRhj8AL5WvycUa8BOYOsUsJ0+Ae/voETc=;
+ b=dI92KO7o0TKAZs1FSiNQaVxcERrKukpBN1xKCWD3iE2fv7ucs/ItNPtnSeEDGyftKt
+ Wf7Q6KNQEmiXhiPC224yjA30bp6js4tSB4lerY9bC5FWcpGFh1zbChPS79WgoIRiY57n
+ pTwrr102D2ZX4FJIvnBc2HRfd4MxLaIGMxHa+yAtBtuAROlxwJjyoKYwGDW3WzE4Nf3I
+ Tp+dDQ3q8c93MscE2xyfCa9OrCN4uUUgRn18wGp2yxudpY5wmLKgZvIWw4oCXCZs4Cla
+ uGBvBEpfp4o3mWS597dhlwrBN7ccSOWcRt+dU8qqg1LJ9612Dgl0ZGEEsC7oZqB0Sr1d
+ SlGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741629868; x=1742234668;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=171ad/3m6TpRhj8AL5WvycUa8BOYOsUsJ0+Ae/voETc=;
+ b=HQVipfZdvaWeY8223EVS2LZh/Q3sjcEwJQ3e9T1uyWpWjcyx5SBCGxAKCL9WPA7/XK
+ NzrnwVe0Uwj4swR21yFZ/8Cljg3w26QFTlyEDpZDb6cQt4C9RE7qv8zM/D7iscLVcOgH
+ kwDjSdPbec2LgRvtCY2uB90sjL+0Lqt8AhRoxg+rota2a5VhB2mJYBrQIyi5VaoPmTxn
+ /lt+c97uJhGjR85KU7XnkbLnHHgImje7l0STqLH0ZRz9Arc8keFSJEvVv4XDxczZpoCO
+ BxNeqPtWLr9RBZoHwNYRRYYexYhsxf5+MruW8downm8LXeJeiGGcZP5UT8KUBMH6ldn7
+ YE0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8xic/71fBL08z+Zw1q2U66AVtwXYczMXkmR4TqzyTo2pqlnPbmOh7i8XL6payK5YyJRXJpHyWs+SJ@nongnu.org
+X-Gm-Message-State: AOJu0Yzmo9fjxJVp2g6QkAGYD2CBVw/iPMGJTYhYe4xhb4It9siTBCG5
+ LC5ZeohT785tBWE5cGGUXDZZIahL3acNR2GMo+guy0iPNvLwLGBB5QPryB0nQmw=
+X-Gm-Gg: ASbGncsbtRmqnAmLRH+k0IDEqjqXSAwh2aVEfQF30oyjcRpgi8iGZNlvGWQl3c9zD56
+ Ee0lhsJJ8GI+jrLjSTbAzQ9NEra2t40H0iuD8CPfzAaYTU+/ENCe/5u4lTbfdZckB5GSwAQMogH
+ 8EhuogkN92/JycOPyPYsh8KcO0EQ3e57ikypLgaU6eBeQEf3lrhUuhsCqicfrBZ12vFPeMkbIap
+ ctxkRt86fvBxSQ8TaNX7DqCMXUYBT7CYSoDng4YXPQX/KB44RhNHpgtVVFUeHnQKuhIYKd8u2s5
+ pqETqMBHp9nxHywS6te9jKYXzzEmAjTZbFErj6PZW6CY1ZBm9yEtrOGbFQ==
+X-Google-Smtp-Source: AGHT+IEdDABoZ+WcuAcizsjTSWhdSSNrXe39PcAwNXY1AKSwOOstsTN186eoqVpvfGt0FCM8zrbQPA==
+X-Received: by 2002:a05:6a00:ac5:b0:736:5dc6:a14f with SMTP id
+ d2e1a72fcca58-736aab14d4emr22821071b3a.23.1741629867680; 
+ Mon, 10 Mar 2025 11:04:27 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af281096763sm8063071a12.30.2025.03.10.11.04.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Mar 2025 11:04:27 -0700 (PDT)
+Message-ID: <b411c27f-3f38-4d22-97ff-fa36ae77fb6e@linaro.org>
+Date: Mon, 10 Mar 2025 11:04:26 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- PDS_OTHER_BAD_TLD=0.47, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 15/16] system/memory: make compilation unit common
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
+ <20250310045842.2650784-16-pierrick.bouvier@linaro.org>
+ <76b4e445-0676-4982-a2c8-d273c49a9170@linaro.org>
+ <2d631838-e8a5-48d9-8235-9a41ffc3381c@linaro.org>
+ <76269a95-652a-4064-8f2f-6584b0677191@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <76269a95-652a-4064-8f2f-6584b0677191@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,122 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a chapter to explain how to use passt(1) instead of '-net user'.
-passt(1) can be connected to QEMU using UNIX socket or vhost-user.
-With vhost-user, migration of the VM is allowed and internal state of
-passt(1) is transfered from one side to the other
-
-Bug: https://gitlab.com/qemu-project/qemu/-/issues/2827
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
----
- docs/system/devices/net.rst | 93 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 93 insertions(+)
-
-diff --git a/docs/system/devices/net.rst b/docs/system/devices/net.rst
-index 2ab516d4b097..5f70b1039198 100644
---- a/docs/system/devices/net.rst
-+++ b/docs/system/devices/net.rst
-@@ -77,6 +77,99 @@ When using the ``'-netdev user,hostfwd=...'`` option, TCP or UDP
- connections can be redirected from the host to the guest. It allows for
- example to redirect X11, telnet or SSH connections.
- 
-+Using passt as the user mode network stack
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+`passt(1)`_ can be used as a simple replacement for SLIRP (``-net user``).
-+`passt(1)`_ doesn't require any capability or privilege. `passt(1)`_ has
-+better performance than ``-net user``, full IPv6 support and better security
-+as it's a daemon that is not executed in QEMU context.
-+
-+`passt(1)`_ can be connected to QEMU either by using a socket
-+(``-netdev stream``) or using the vhost-user interface (``-netdev vhost-user``).
-+See `passt web site`_ and `passt(1)`_ for more details on passt.
-+
-+.. _passt web site: https://passt.top/
-+.. _passt(1): https://passt.top/builds/latest/web/passt.1.html
-+
-+To use socket based passt interface:
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Start `passt(1)`_ as a daemon::
-+
-+   passt
-+
-+It will print the path of the UNIX domain socket QEMU can connect to.
-+Then you can connect your QEMU instance to `passt(1)`_:
-+
-+.. parsed-literal::
-+   |qemu_system| [...OPTIONS...] -device virtio-net-pci,netdev=netdev0 -netdev stream,id=netdev0,server=off,addr.type=unix,addr.path=/tmp/passt_1.socket
-+
-+Where ``/tmp/passt_1.socket`` is the UNIX socket created by `passt(1)`_ to
-+communicate with QEMU.
-+
-+To use vhost-based interface:
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Start passt with ``--vhost-user``::
-+
-+   passt --vhost-user
-+
-+Then to connect QEMU:
-+
-+.. parsed-literal::
-+   |qemu_system| [...OPTIONS...] -m $RAMSIZE -chardev socket,id=chr0,path=/tmp/passt_1.socket -netdev vhost-user,id=netdev0,chardev=chr0 -device virtio-net,netdev=netdev0 -object memory-backend-memfd,id=memfd0,share=on,size=$RAMSIZE -numa node,memdev=memfd0
-+
-+Where ``$RAMSIZE`` is the memory size of your VM ``-m`` and ``-object memory-backend-memfd,size=`` must match.
-+
-+Migration of passt:
-+^^^^^^^^^^^^^^^^^^^
-+
-+When `passt(1)`_ is connected to QEMU using the vhost-user interface it can
-+be migrated with QEMU and the network connections are not interrupted.
-+
-+As `passt(1)`_ runs with no privileges, it relies on passt-repair to save and
-+load TCP connections state, using the TCP_REPAIR socket option.
-+The passt-repair helper needs to have the CAP_NET_ADMIN capability, or run as root. If passt-repair is not available, TCP connections will not be preserved.
-+
-+Example of migration of a guest on the same host
-+________________________________________________
-+
-+Before being able to run passt-repair, the CAP_NET_ADMIN capability must be set
-+on the file, run as root::
-+
-+   setcat cap_net_admin+eip ./passt-repair
-+
-+Start `passt(1)`_ for the source side::
-+
-+   passt
-+
-+Start passt-repair::
-+
-+   passt-repair /tmp/passt_1.socket.repair
-+
-+Start source side QEMU with a monitor to be able to send the migrate command:
-+
-+.. parsed-literal::
-+   |qemu_system| [...OPTIONS...] [...VHOST USER OPTIONS...] -monitor stdio
-+
-+Start `passt(1)`_ for the destination side::
-+
-+   passt
-+
-+Start passt-repair::
-+
-+   passt-repair /tmp/passt_2.socket.repair
-+
-+Start QEMU with the ``-incoming`` parameter:
-+
-+.. parsed-literal::
-+   |qemu_system| [...OPTIONS...] [...VHOST USER OPTIONS...] -incoming tcp:localhost:4444
-+
-+Then in the source guest monitor the migration can be started::
-+
-+   (qemu) migrate tcp:localhost:4444
-+
- Hubs
- ~~~~
- 
--- 
-2.48.1
-
+T24gMy8xMC8yNSAxMDo1OCwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDMvMTAv
+MjUgMTA6NDcsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+Pj4gTWF5YmUgYmV0dGVyIGFz
+DQo+Pj4NCj4+PiAgwqDCoMKgwqDCoCBNZW1PcCBtb3AgPSAodGFyZ2V0X3dvcmRzX2JpZ2Vu
+ZGlhbigpID8gTU9fQkUgOiBNT19MRSkgfCBzaXplX21lbW9wKHNpemUpOw0KPj4+ICDCoMKg
+wqDCoMKgIGFkanVzdF9lbmRpYW5uZXNzKG1yLCAmbXJmZC5kYXRhLCBzaXplX21lbW9wKHNp
+emUpLCBtb3ApOw0KPj4+DQo+Pg0KPj4gRG8geW91IHRoaW5rIGRlZmluaW5nIE1PX1RFIGFz
+IHRoaXMgZXhwcmVzc2lvbiBpcyBhIGdvb2QgaWRlYT8NCj4gDQo+IFRoZXJlIGFyZSBub3Qg
+c28gbWFueSByZWZlcmVuY2VzIHRvIE1PX1RFIG91dHNpZGUgdGFyZ2V0LyBvciBhY2NlbC90
+Y2cvLg0KPiANCj4gSW5kZWVkLCBhZnRlciB0aGlzIGNoYW5nZSwgdGhlIG9ubHkgb25lcyBs
+ZWZ0IGFyZSBpbiBody9hcm0vYXJtdjdtLmMsDQo+IHdoaWNoIChiZWNhdXNlIGl0J3MgQXJt
+KSBjYW4gYmUgY2hhbmdlZCB0byBNT19MRS4NCj4gDQoNCkkgc2VlIGEgYml0IG1vcmUgdGhh
+biB0aGF0ICgxNyBmaWxlcyk6DQpody9hcm0vYXJtdjdtLmMNCmluY2x1ZGUvZXhlYy9tZW1v
+cC5oDQp0YXJnZXQvYXJtL3RjZy9oZWxwZXItYTY0LmMNCnRhcmdldC9hcm0vdGNnL3RyYW5z
+bGF0ZS5jDQp0YXJnZXQvaGV4YWdvbi9pZGVmLXBhcnNlci9wYXJzZXItaGVscGVycy5jDQp0
+YXJnZXQvaHBwYS90cmFuc2xhdGUuYw0KdGFyZ2V0L2kzODYvdGNnL2VtaXQuYy5pbmMNCnRh
+cmdldC9sb29uZ2FyY2gvdGNnL2luc25fdHJhbnMvdHJhbnNfdmVjLmMuaW5jDQp0YXJnZXQv
+bTY4ay90cmFuc2xhdGUuYw0KdGFyZ2V0L21pcHMvdGNnL21pcHMxNmVfdHJhbnNsYXRlLmMu
+aW5jDQp0YXJnZXQvcmlzY3YvdHJhbnNsYXRlLmMNCnRhcmdldC9yeC90cmFuc2xhdGUuYw0K
+dGFyZ2V0L3MzOTB4L3RjZy9tZW1faGVscGVyLmMNCnRhcmdldC9zMzkweC90Y2cvdHJhbnNs
+YXRlLmMNCnRhcmdldC9zMzkweC90Y2cvdHJhbnNsYXRlX3Z4LmMuaW5jDQp0YXJnZXQvc3Bh
+cmMvbGRzdF9oZWxwZXIuYw0KdGFyZ2V0L3NwYXJjL3RyYW5zbGF0ZS5jDQoNClBsdXMgbW9y
+ZSAoMjIgZmlsZXMpIHdobyByZWxpZXMgb246DQpNT19URSogdmFyaWFudHMgKHdoaWNoIHJl
+bGllcyBvbiBNT19URSB0cmFuc2l0aXZlbHkpDQoNClRodXMgbXkgcHJvcG9zYWwgdG8gaGF2
+ZSBhIGZpcnN0IGNoYW5nZSB0byBNT19URSBkZWZpbml0aW9uLCBhbmQgDQpldmVudHVhbGx5
+IGRvIHRoZSBjaGFuZ2UgbGF0ZXIuDQoNCldoYXQgZG8geW91IHRoaW5rPw0KDQo+IA0KPiBy
+fg0KDQo=
 
