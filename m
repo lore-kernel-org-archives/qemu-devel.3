@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CFAC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:44:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F337BC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:48:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trhAa-0007Qi-SB; Mon, 10 Mar 2025 13:44:05 -0400
+	id 1trhE6-0000Yh-FZ; Mon, 10 Mar 2025 13:47:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trhAQ-0007DQ-RZ
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:43:59 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trhDx-0000Xw-LR
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:47:36 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trhAN-0005SY-Hp
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:43:52 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-22401f4d35aso81085255ad.2
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 10:43:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trhDv-00066a-Hv
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:47:33 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-22548a28d0cso18328095ad.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 10:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741628621; x=1742233421; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741628849; x=1742233649; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Lk+8gKxBMVf3UkRami9FYZhFRWfvuym/g3vvdDoVV6w=;
- b=LBfs55HYJPY9u5EVhbETHrRBS9/dAN0PzY4+l7KlqAMtA75/LSz7ZHvz3Et1w7bVjd
- WO7kT+CoC1H9NE1TZu3oBIZXWe4QoFeXp8HC9tfmSCDnUrBKVmqnjeykENKWP/4K0aAr
- txuEJvXt3M7EtlXn0PklO0b+Cxhp17KjUkkV6JmeIWRhC/BR4Xz4gVuen8YriW5mHoms
- royYbFyTiWShVnv50cPM4xrvj3Hl/6cHGNnsrFzDwOHG9utGJjlOa8eZD1KPrPfPuarB
- fnCjZr1BxyKa868F9jOkdKFVcTFRRpJm+vuUqAMiF5w0kw63o3eJEGIlQoBxW9mCxdQO
- Xs0w==
+ bh=0vsbUvRy2E8ihEsWBlGsSCiTTWpxpzjkP8pjgwFQvLc=;
+ b=PXiiQLMKv6dpyl90GDyqd+otaY0BPS9Q1C0QK46YCeshuXMoxffsh1vhLHceBQqQ+3
+ AgQeZl+89Pl3SqZ/XwuvJgrk3T9NNl7pJgDlNEnJT1tcyrfM3AlYQ4fqAm6ylw65S1Rz
+ ZCOv/WPej0AZbg3ZUUeV9glff33R0oArGiuX2o+JhNbUzhT7IefXwXQjq+fz+fDi/3YE
+ x+Kzh2S+a5OaLhx6/JSRs7gzDUadVaaQ7SfnJBXAKKwtjTo8xb1Gkgm4jnzaIgnIli39
+ f9WNvCq4W6+wYxb5cTmWiamIM83ynreMGCJIAwQOEiZPaCdb0sDJkdxUpqBfkwhYtryb
+ ov9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741628621; x=1742233421;
+ d=1e100.net; s=20230601; t=1741628849; x=1742233649;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Lk+8gKxBMVf3UkRami9FYZhFRWfvuym/g3vvdDoVV6w=;
- b=AMpKpAWOghla2Hc9UvKvvlabApsN+qxER3iL9aa+6hWcSXKwo9L53N9HQ/6w39n4R/
- i1rAvpprgl2A7ylFEib5mhP/bIBmdSo0VfNqXsnXAjn8LMJ/IU6bldRC+S9LPOYWpMj8
- mUi9T4ydG6gBrgPApLaklwQBiQ8wsgs3SrrCsh7SS9Mtpbg1tDuIo4cewQckqsN8v8gD
- QDzOo9ofgq1fvpZZ47kbGh0D6Ms6YUBh3vpWicfp5VQE3JnZvF4/RnRuO/qIqxFUfBry
- 0cc3JFCefguJpcApWyHNPkjsGQ3+vZzJznDhTm7rw6Ub2jKWubUD4+7doDWA9trzKlhN
- 5Ivg==
+ bh=0vsbUvRy2E8ihEsWBlGsSCiTTWpxpzjkP8pjgwFQvLc=;
+ b=jr588MR0Ks3jcMtP2jDiuvncoIxv1pAJI4HMA/LmadBIPsFUV0EpFBNe4E75CVpRA2
+ 7d70CIpRf4vV9eOqS3JtS/dRxzW09BRDCZULwJEd6MuhvNSWSwUlHGnuC4sdWzsAhBmC
+ RIyQJb+/Jxn+NpLHSYZSNpWmCTVR4nP7eJp48BFl9YrerbEikCpUfVTzxv3WIWSWySYc
+ 7Re2ZvONbSg+Mye3BETisL24Eijmu/edBFWTEM0YmlKFgPODnfObBwZHTal2CcX39eez
+ uqbVWJIqqk7D2WNhBy9LBKGZUCaTdHq2hEckDhOpWSYBi09eNwx/S411wQrIOyiGYytq
+ 5LLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPjZDE922vrvkvnoPrxk+hm+EahZaAKbrP7Y0AQRFF4Y8vmENpLtC2dCPjaSO9wB/odzodwU1phLRG@nongnu.org
-X-Gm-Message-State: AOJu0YwBLdfZLQuGd/J7dxrRWA5OFHQ+sfRoerkj35TQkSKqNbekVDnE
- wsDQAZCliv8uZ3wfJ38+d1Xsyhfl+nM9vvdx0DQqmTtBm3FM9DLG369hUOB0AWM=
-X-Gm-Gg: ASbGncuWubtnXpywVKk2njXyZub02F3/2vNb8b/mcwAj8R3izvwNCd4WZS0LCanx01X
- ntbvrCvCVKXYUMV3mjnDZ3drv4tuBcaCnYPQeNnpBou3Uovac4mgXFTDN4s4RRUeB/4mA920CW+
- 7Bd7yVz3yd9hfN5OR9rKYShp9jHAtAl3bKxSHnzPPn356+wlKKbzqL7MD5tFdnPEKHZDymRnnXH
- SS5ZLu/+5t45FxhThdmfGJZTt+PxuSYt7tMWA2poCU87yTl7A8MM0NVSXkFst7kWMSGOuXSd0G0
- 8QSD/LZuOahTbedi4u1Xhg4TQQ/gbq6cBJYZGmUAnWNXec4th/bveLFMT8nbwYOQDJKJ4U4uWDS
- /94gVv0NO
-X-Google-Smtp-Source: AGHT+IEDfBNGUsVlKoaNdSW/sZabx60Mld/aDlfrRINrcRXW9Xfo7e1G/308seo7ZPf2Thoa0rutxg==
-X-Received: by 2002:a05:6a20:c6c1:b0:1f5:59e5:8ad2 with SMTP id
- adf61e73a8af0-1f58cb40fa8mr1143980637.24.1741628621616; 
- Mon, 10 Mar 2025 10:43:41 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ AJvYcCV6HKWoDbVQ3RnjF9fNvThkwCfchm1diUV0tYNLjyS0nJD7l2G/QzzS//KQ9AtyaVQVj40+f6XekuL4@nongnu.org
+X-Gm-Message-State: AOJu0Yx0W2IWFMYyUBhDH/Hk46AH9uA7MghqnLWiyopSRNG84bm/eXe4
+ IkkQ+IrMMe2MRNtPA16sWpHnlCsGSpxLOKoVnpSmLnvpvecBWfTC8KLntXMqgimnXpwngVPz6kk
+ qAJc=
+X-Gm-Gg: ASbGncutzN2b4OKsUBE9tv5XFIxco3ndsSgT+DXvJRsZPp0ne2CEuUwqCB65YrcaLLb
+ /rSt7Ght7+doQPr2di8tx3xqA7ACLp0Rcv2wjm8Iy2aOs4pQB9nVbeyQ4LsYTGU+aHdvvp7XvKK
+ u3l3tTh0U9TS3xru5Ma2VMz0KPRGv1zZ8KguKZbatPjFmP77QZHk0e2EG3fnlaSp48E+2/ZGVO6
+ 8ZdXIPKwz22ZjLAsxXLcRwRBN/lGkGHNv/A6MPB0kqwKQlphZRJozng89CHWfI0dGkeiuINxD+Y
+ RQcmc2v1K64Evwam8oEgvorGVRn9ltlX2CsEOikGgUJHaEFhJ5vaU1iN/g==
+X-Google-Smtp-Source: AGHT+IFZ5LgNFzuY6Tj46fepG2FZ0kezQ1BO+V4MjwLORuvn50iHhXl1xjHdTPc9CGD5IjNW6pB1sQ==
+X-Received: by 2002:a17:903:1788:b0:220:f87d:9d5b with SMTP id
+ d9443c01a7336-22428a8ca41mr245314135ad.24.1741628849113; 
+ Mon, 10 Mar 2025 10:47:29 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736af3a69b2sm6677266b3a.6.2025.03.10.10.43.41
+ d9443c01a7336-22410aa4cc5sm81277835ad.220.2025.03.10.10.47.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 10:43:41 -0700 (PDT)
-Message-ID: <43a433c9-e556-42a1-b1a3-28473b086496@linaro.org>
-Date: Mon, 10 Mar 2025 10:43:39 -0700
+ Mon, 10 Mar 2025 10:47:28 -0700 (PDT)
+Message-ID: <2d631838-e8a5-48d9-8235-9a41ffc3381c@linaro.org>
+Date: Mon, 10 Mar 2025 10:47:27 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/16] system/ioport: make compilation unit common
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 15/16] system/memory: make compilation unit common
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
- <20250310045842.2650784-17-pierrick.bouvier@linaro.org>
+ <20250310045842.2650784-16-pierrick.bouvier@linaro.org>
+ <76b4e445-0676-4982-a2c8-d273c49a9170@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250310045842.2650784-17-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <76b4e445-0676-4982-a2c8-d273c49a9170@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,15 +104,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/25 21:58, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   system/ioport.c    | 1 -
->   system/meson.build | 2 +-
->   2 files changed, 1 insertion(+), 2 deletions(-)
+On 3/10/25 10:43, Richard Henderson wrote:
+> On 3/9/25 21:58, Pierrick Bouvier wrote:
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    system/memory.c    | 22 +++++++++++++++-------
+>>    system/meson.build |  2 +-
+>>    2 files changed, 16 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/system/memory.c b/system/memory.c
+>> index 4c829793a0a..b401be8b5f1 100644
+>> --- a/system/memory.c
+>> +++ b/system/memory.c
+>> @@ -355,11 +355,11 @@ static void flatview_simplify(FlatView *view)
+>>    
+>>    static bool memory_region_big_endian(MemoryRegion *mr)
+>>    {
+>> -#if TARGET_BIG_ENDIAN
+>> -    return mr->ops->endianness != DEVICE_LITTLE_ENDIAN;
+>> -#else
+>> -    return mr->ops->endianness == DEVICE_BIG_ENDIAN;
+>> -#endif
+>> +    if (target_words_bigendian()) {
+>> +        return mr->ops->endianness != DEVICE_LITTLE_ENDIAN;
+>> +    } else {
+>> +        return mr->ops->endianness == DEVICE_BIG_ENDIAN;
+>> +    }
+>>    }
+> 
+> This should use the same expression as for patch 4:
+> 
+>       return (end == DEVICE_NATIVE_ENDIAN
+>               ? target_words_bigendian()
+>               : end == DEVICE_BIG_ENDIAN);
+> 
+> Which perhaps ought to be split out to it's own inline function?
+> 
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Good point, I'll add this.
 
+>>    
+>>    static void adjust_endianness(MemoryRegion *mr, uint64_t *data, MemOp op)
+>> @@ -2584,7 +2584,11 @@ void memory_region_add_eventfd(MemoryRegion *mr,
+>>        unsigned i;
+>>    
+>>        if (size) {
+>> -        adjust_endianness(mr, &mrfd.data, size_memop(size) | MO_TE);
+>> +        if (target_words_bigendian()) {
+>> +            adjust_endianness(mr, &mrfd.data, size_memop(size) | MO_BE);
+>> +        } else {
+>> +            adjust_endianness(mr, &mrfd.data, size_memop(size) | MO_LE);
+>> +        }
+> 
+> Maybe better as
+> 
+>       MemOp mop = (target_words_bigendian() ? MO_BE : MO_LE) | size_memop(size);
+>       adjust_endianness(mr, &mrfd.data, size_memop(size), mop);
+> 
 
-r~
+Do you think defining MO_TE as this expression is a good idea?
+
+I'm afraid it's a bit too much implicit though, but it would save us 
+from the hassle to change a lot of code using MO_BE, MO_LE (and all 
+other variants defined in MemOp enum).
+
+> 
+> r~
+
 
