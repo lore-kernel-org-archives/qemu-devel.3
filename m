@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D316AC28B30
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 09:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68430C28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 09:55:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trZqF-0006HM-78; Mon, 10 Mar 2025 05:54:38 -0400
+	id 1trZqE-0006Eb-3Y; Mon, 10 Mar 2025 05:54:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1trZq6-0006Ad-57
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:54:26 -0400
+ id 1trZq4-00068K-5T
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:54:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1trZq4-0003T3-Ef
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:54:25 -0400
+ id 1trZq1-0003Rk-9o
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:54:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741600463;
+ s=mimecast20190719; t=1741600458;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wtuqdOuiecVVRmmjSp3gslEg0ualkMi9F/wEULB6TGE=;
- b=SF3pdZUmMtenn1J/SiFXA2aTvqrk4wD9E6CL0mhR1b96djIJbEQOX9yy+7OXJUYfsliG38
- uSAjavF4fVud3uoVnFjfL8fm+68800tDVGTowUGmllS4BrZpp9TwovWXjNsWCDpocMWtox
- x/uIW5RTgn0ROn/znZ0EMBfIesH5Mno=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tR0W3AO0rtff4oh62slL6VIU1K2VGl5ZuTDMwGnr9WQ=;
+ b=a/nD+Dx/IhpBLUVX5NRenDwpdc0yf6+HEA0RAJjPnX7Hvac1UpgBVxwI7nNPeZOsTXfxpQ
+ 5ZKF9c2P0Vmb5ieuXmKb7RYLIFTBb+dLPws3MdoIWYYzkCaDfwx40rPvwDlBKFPYUnaE29
+ 6G1wVJ6cm8dV4XKkoo6/rVY4BaZUtd4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-XnqH7brXOcO85ir_7nUz6Q-1; Mon, 10 Mar 2025 05:54:22 -0400
-X-MC-Unique: XnqH7brXOcO85ir_7nUz6Q-1
-X-Mimecast-MFC-AGG-ID: XnqH7brXOcO85ir_7nUz6Q_1741600461
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3913f546dfbso1032729f8f.1
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 02:54:22 -0700 (PDT)
+ us-mta-685-w6BIYLVgOK-52JL1F9IlpQ-1; Mon, 10 Mar 2025 05:54:17 -0400
+X-MC-Unique: w6BIYLVgOK-52JL1F9IlpQ-1
+X-Mimecast-MFC-AGG-ID: w6BIYLVgOK-52JL1F9IlpQ_1741600456
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3912d9848a7so1596784f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 02:54:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741600461; x=1742205261;
+ d=1e100.net; s=20230601; t=1741600456; x=1742205256;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wtuqdOuiecVVRmmjSp3gslEg0ualkMi9F/wEULB6TGE=;
- b=ZJYSIxXOnrGlEiKTPWITe4jsHNUW0iAHgQokv5+Gnv6rEBO3TwpGz348uN0ZX7uoZ0
- ruYM3BK43dBuNywtcnADU9CyKM9aZObLl/+UF2G2Carbes6KPzjhpZmxsKnpq+5g9zF6
- xjvWFFkKdIhT8p+F+vAklR6PIU3a1qdDJD+9oDi5Ko7CKBjtCu/db8qilg+1uvPJ0NOT
- pk7Nc/bdkQMU60kTvWdyu3nMr2G4dRjA28ooiDnPPIyboYsbhMBDvI9FzG/1gPAVru3G
- TnIdQalSjm5q0K19hVnovREGvDDFe7DDn5H4ifB/NJtXu51igYWqOqrET+bKJI2QVmx0
- v8mw==
+ bh=tR0W3AO0rtff4oh62slL6VIU1K2VGl5ZuTDMwGnr9WQ=;
+ b=jVvGYf/TWhFuoBEaOt8/e/aQO9aAMHSr+ghTO5dXTwx1RyDz1m8QKP7NsT117iNQ3a
+ F4c+0YZU9kZDUQ+2YT9Vlo0zKnigU0ygygGd+0NxZKbYW4qst8J4ykSUXPI7ZX+dDS58
+ k6fuKr08mdTbto8fhUHRYVBxViBYZzcXpWuvD6S41jihq1jYy+x7hYijD0vBPoLpVIYY
+ H6aW8EFbzPuGelhB2ihd45AM0IaDjck2J1Qk4zez1xUj1V8JltFcWrI4Q13fKTCLtZKY
+ 9o1rihWCC2ndRA8s8G/ZB8LERk8D3sdwe3cnsfEknj9kdVak7aRjL+kX8mlklam95lnT
+ vZSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUV+gjKBxyBtwBAwi5v2plx51yXzIeusOn4JkNlzVDLym6DQn7z6pE+gJX10GEUWlJz40B4RSyMFc8D@nongnu.org
-X-Gm-Message-State: AOJu0Yz17JLiFiLUL7Lsw8J2O8/RO7E26hGBQcbNj0Fo3Iaf9pPVl3dF
- vjHriC/s/bgFh+ehTu/qtV6XKo97MsuG/JkhAivOCC1qLQQA57rwAqudQvdznmxpYcePTlQxwUU
- YwceB445ZCBxQopLzrDruSWsG6qhz/IVvsi3IcTwNOiY5vI4AwsZz
-X-Gm-Gg: ASbGnctqe+9XBDnl/T65/2EWcenhHgD5PTvObFc8OC6WWcnf1fv43+DRSlifY8EVOx+
- 5dBEj5r9RPYtTl2nZoQbXsrkwuFLeiYkb0HngoMnSZQi8N6/hIfuy8m1Uc17if3+hb8LR7B+/vV
- hnFC152MV31/XK335ZXHBsGuSWqhd91RZ4JPslMWWOgySgcy/vQFyrfOLFHIXqEyxzMKfCld++a
- rFghzZx9ESo3TZIRTAnMlCSbA1tSpVltLrl7+LyYE+/hKiS/mom1Sn1sdXyQ63ivRBifT1c+dV/
- 7/Ewxso5UAhlMKhIPLM700/u24Powz7uoEawFkSvoBcoN858S8Qs8TKQFt4Ir+I=
-X-Received: by 2002:a5d:47cc:0:b0:391:3049:d58d with SMTP id
- ffacd0b85a97d-39132b58ad8mr9968020f8f.0.1741600461029; 
- Mon, 10 Mar 2025 02:54:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEgn6vs3wtpQflZqcFKB+5gsLSC3ji/MtXlKgd119Pz3EhyxOK5skvoV6airBMnFiGNkKyOOg==
-X-Received: by 2002:a5d:47cc:0:b0:391:3049:d58d with SMTP id
- ffacd0b85a97d-39132b58ad8mr9967987f8f.0.1741600460622; 
- Mon, 10 Mar 2025 02:54:20 -0700 (PDT)
+ AJvYcCWXntF1XjXgv4vy9U/oakELD5Bw/7MOPTZCsXmIVl21tO7SI0DATBoc6FWZwEkWR91BqJuZTclHUS2g@nongnu.org
+X-Gm-Message-State: AOJu0Yx4uBbGF0mlmqekQgIbHSN/lDylQ+vq4aOi2gaWXy8Bs/u7z7FZ
+ L09/TINCCbCBffOyku1Ub2A/H67P67wztx/WhkC0FNvqXsuJDbFBoPv0qvN9lG7NDp0bM3JvrZ5
+ Z4lj5bcUYKnGysXbC5MXxcYoVZrGam8uskmcsPNB5tsigrsYjvWOm
+X-Gm-Gg: ASbGncso0Kpc0Q1pC9vnb+N6D/cTP+QNBSsfQ/Ykqa/KnRUHJuUXvLHj3jNwHkpa4p/
+ 0Tkl8diYPnhQwukFDCgK+j2ylRgGLTN1KYPeyZIf9kPv6YmGwNN3q8BcjTlKDJkwSmf6lfTZQG+
+ /hMbSXDlOaYD1DgEtrzfAXQrHQVT30In0m0Dh8Ghas1KSZTUe/7x801tD0jj7JdV2chGfFThd8l
+ 12mAg3UB1o8JEjXueZNPyItmnqp0tTHIvtc0R1KDjX+7dt2tdzED0dS3F5r6AYgubcGZICwU2Qc
+ tROp1UqAKw6oAqovA3K28cI+NlBeLzIJQWLVqDBNUazA+tAo4jimQvHAfShwqgs=
+X-Received: by 2002:a05:6000:156f:b0:391:27f1:fbf3 with SMTP id
+ ffacd0b85a97d-3913af3d5e7mr4701969f8f.27.1741600456234; 
+ Mon, 10 Mar 2025 02:54:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBwMz5OAHxD3v4jQKjBgjVWOLGr7PcCA4jbJyJk6K4hEfZpzb5fBnmL6u2Po0UZEfWnTksjg==
+X-Received: by 2002:a05:6000:156f:b0:391:27f1:fbf3 with SMTP id
+ ffacd0b85a97d-3913af3d5e7mr4701924f8f.27.1741600455800; 
+ Mon, 10 Mar 2025 02:54:15 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfb7ae4sm13985560f8f.5.2025.03.10.02.54.16
+ ffacd0b85a97d-3912bfb7ae4sm13985560f8f.5.2025.03.10.02.54.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 02:54:19 -0700 (PDT)
-Message-ID: <35eb4589-fea5-47e6-a0f2-c30cc7afd72d@redhat.com>
-Date: Mon, 10 Mar 2025 10:54:16 +0100
+ Mon, 10 Mar 2025 02:54:14 -0700 (PDT)
+Message-ID: <28c102c1-d157-4d22-a351-9fcc8f4260fd@redhat.com>
+Date: Mon, 10 Mar 2025 10:54:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/21] qom: Introduce type_is_registered()
+Subject: Re: [PATCH v2 09/21] hw/vfio/pci: Convert CONFIG_KVM check to runtime
+ one
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -104,9 +105,9 @@ Cc: Yi Liu <yi.l.liu@intel.com>,
  Jason Herne <jjherne@linux.ibm.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
 References: <20250308230917.18907-1-philmd@linaro.org>
- <20250308230917.18907-11-philmd@linaro.org>
+ <20250308230917.18907-10-philmd@linaro.org>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250308230917.18907-11-philmd@linaro.org>
+In-Reply-To: <20250308230917.18907-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124;
@@ -118,7 +119,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,56 +136,100 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
+Hi Philippe,
 
 On 3/9/25 12:09 AM, Philippe Mathieu-Daudé wrote:
-> In order to be able to check whether a QOM type has been
-> registered, introduce the type_is_registered() helper.
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Use the runtime kvm_enabled() helper to check whether
+> KVM is available or not.
+
+Miss the "why" of this patch.
+
+By the way I fail to remember/see where kvm_allowed is set.
+
+I am also confused because we still have some code, like in
+vfio/common.c which does both checks:
+#ifdef CONFIG_KVM
+        if (kvm_enabled()) {
+            max_memslots = kvm_get_max_memslots();
+        }
+#endif
+
+
+Thanks
 
 Eric
-> ---
->  include/qom/object.h | 8 ++++++++
->  qom/object.c         | 5 +++++
->  2 files changed, 13 insertions(+)
+
 >
-> diff --git a/include/qom/object.h b/include/qom/object.h
-> index 9192265db76..5b5333017e0 100644
-> --- a/include/qom/object.h
-> +++ b/include/qom/object.h
-> @@ -898,6 +898,14 @@ Type type_register_static(const TypeInfo *info);
->   */
->  void type_register_static_array(const TypeInfo *infos, int nr_infos);
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>  hw/vfio/pci.c | 19 +++++++++----------
+>  1 file changed, 9 insertions(+), 10 deletions(-)
+>
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index fdbc15885d4..9872884ff8a 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -118,8 +118,13 @@ static void vfio_intx_eoi(VFIODevice *vbasedev)
 >  
-> +/**
-> + * type_is_registered:
-> + * @typename: The @typename to check.
-> + *
-> + * Returns: %true if @typename has been registered, %false otherwise.
-> + */
-> +bool type_is_registered(const char *typename);
+>  static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+>  {
+> -#ifdef CONFIG_KVM
+> -    int irq_fd = event_notifier_get_fd(&vdev->intx.interrupt);
+> +    int irq_fd;
 > +
->  /**
->   * DEFINE_TYPES:
->   * @type_array: The array containing #TypeInfo structures to register
-> diff --git a/qom/object.c b/qom/object.c
-> index 01618d06bd8..be442980049 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -100,6 +100,11 @@ static TypeImpl *type_table_lookup(const char *name)
->      return g_hash_table_lookup(type_table_get(), name);
+> +    if (!kvm_enabled()) {
+> +        return true;
+> +    }
+> +
+> +    irq_fd = event_notifier_get_fd(&vdev->intx.interrupt);
+>  
+>      if (vdev->no_kvm_intx || !kvm_irqfds_enabled() ||
+>          vdev->intx.route.mode != PCI_INTX_ENABLED ||
+> @@ -171,16 +176,13 @@ fail_irqfd:
+>  fail:
+>      qemu_set_fd_handler(irq_fd, vfio_intx_interrupt, NULL, vdev);
+>      vfio_unmask_single_irqindex(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+> +
+>      return false;
+> -#else
+> -    return true;
+> -#endif
 >  }
 >  
-> +bool type_is_registered(const char *typename)
-> +{
-> +    return !!type_table_lookup(typename);
-> +}
-> +
->  static TypeImpl *type_new(const TypeInfo *info)
+>  static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
 >  {
->      TypeImpl *ti = g_malloc0(sizeof(*ti));
+> -#ifdef CONFIG_KVM
+> -    if (!vdev->intx.kvm_accel) {
+> +    if (!kvm_enabled() || !vdev->intx.kvm_accel) {
+>          return;
+>      }
+>  
+> @@ -211,7 +213,6 @@ static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
+>      vfio_unmask_single_irqindex(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+>  
+>      trace_vfio_intx_disable_kvm(vdev->vbasedev.name);
+> -#endif
+>  }
+>  
+>  static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
+> @@ -278,7 +279,6 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>      vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
+>      pci_config_set_interrupt_pin(vdev->pdev.config, pin);
+>  
+> -#ifdef CONFIG_KVM
+>      /*
+>       * Only conditional to avoid generating error messages on platforms
+>       * where we won't actually use the result anyway.
+> @@ -287,7 +287,6 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>          vdev->intx.route = pci_device_route_intx_to_irq(&vdev->pdev,
+>                                                          vdev->intx.pin);
+>      }
+> -#endif
+>  
+>      ret = event_notifier_init(&vdev->intx.interrupt, 0);
+>      if (ret) {
 
 
