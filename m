@@ -4,77 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15E46C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 07:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B26C1C28B2E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 07:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trXXk-0002hJ-P4; Mon, 10 Mar 2025 03:27:20 -0400
+	id 1trXb5-0003pN-0m; Mon, 10 Mar 2025 03:30:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1trXXV-0002gL-5g
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 03:27:07 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trXat-0003oI-UP
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 03:30:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1trXXP-0003E9-Qm
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 03:27:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741591620; x=1773127620;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=dtga0v/Ir792RWLzkgeY1Rc/Z50MXyKQb9VMOzOY2JY=;
- b=BfGJZKgN6IktiXJyMmraUKg9yH+jMs6zPARAKGf0OqDo1gm/qfYtKluf
- OvnYRljY7HLiDZjO1bJstQaKBfox5Aamdr3NMGT/1Bfoi66HWqUUMDwxO
- I4u1dCoC7yPU3nqsMLB6IRktQ/LzBwdZhC/r24VrxU63XwXMaU8K07Py2
- xtCxot0RirNDGfr78+uTqnj7IcE8biexFsZFQRpKNBFVpbKnamb8WHdk1
- 9PAgsTw5k1O3mKCwtyzNzDrTFKnBh/uGCMwSy73eXmBto+thGsEqrjxUH
- LoeN6VpyMW7fPtJHidJveK4yfpXAnycIQjovBExASaLGwmQU8XyF4OIGj A==;
-X-CSE-ConnectionGUID: TZlIpGnjTrO1i1qf4C0glA==
-X-CSE-MsgGUID: //iHjYVeTlOvyVuQyMpmwQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11368"; a="42285208"
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="42285208"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2025 00:26:56 -0700
-X-CSE-ConnectionGUID: UW5bvEmlSIKwTZYALKXqew==
-X-CSE-MsgGUID: mf5ohgmBSwKbuNOWYs58tQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="124508499"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 10 Mar 2025 00:26:50 -0700
-Date: Mon, 10 Mar 2025 15:47:00 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
- likexu@tencent.com, like.xu.linux@gmail.com,
- zhenyuw@linux.intel.com, groug@kaod.org, khorenko@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
- davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com
-Subject: Re: [PATCH v2 08/10] target/i386/kvm: reset AMD PMU registers during
- VM reset
-Message-ID: <Z86Y9BxV6p25A2Wo@intel.com>
-References: <20250302220112.17653-1-dongli.zhang@oracle.com>
- <20250302220112.17653-9-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trXas-0003vX-2I
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 03:30:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741591832;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=krlEDP3GXo3cM258GWEqxo3BD92ehzggFzDjVF2WABk=;
+ b=KFmcCkuY77cA/i/E5APSPTVhhiGeU5MtLfflQpyLXOIiHQRfbs2unX69jfxlqvZbuUrX7T
+ tFNCgySs9X4NBokiETqP24v+y6diqVuED/QEWJ21JvleJwT1ahzKHBKhpi4GuYsZzV3qtz
+ fkKiE3AlgN7aS8bShfqTgGxpg5YkcZg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-332-2-KukLJ_N5qW6ZxO32nTTA-1; Mon, 10 Mar 2025 03:30:29 -0400
+X-MC-Unique: 2-KukLJ_N5qW6ZxO32nTTA-1
+X-Mimecast-MFC-AGG-ID: 2-KukLJ_N5qW6ZxO32nTTA_1741591829
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3913aaf1e32so1193279f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 00:30:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741591828; x=1742196628;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=krlEDP3GXo3cM258GWEqxo3BD92ehzggFzDjVF2WABk=;
+ b=Nz6dkvh7gpTI+uVM9S7J/eEyKLIZL88JSo6i5pwJhRLmwo2nXmLX/uXOoi5nNWespO
+ VYNCrBRMOJ0txV0Wzd0Rlal42ei54UAQVGZ8dzTFIAVmWWYiu2uZAa0/eTEiM9pDDok8
+ u6BBn7y87i6/VuJ86tQmwXSnxNrq+zVMiN2WivUx0TBuiLWBDe7bvCSzgUOEQVpIHnto
+ o4qamS5KhvuFqg7l8uVwmYZlgQIFZu3rP7nXfMRddMS0Q8aZbWiB7+5WgBZ2e/PhSLsD
+ Wt3pxFLP8rd8mhG2axO5WK+8TEy3QrdHxMu2t5XR4boAcTwTNu7AXDZ19HXuWiRoHHfy
+ HcNA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV1d9gmyhnKcYqrjqfIEBbI6eL9IP10GlOz7XzkdSdPgv5cYl0OJvVnbNsgKcYjffYNhR8SI4Bz0B3J@nongnu.org
+X-Gm-Message-State: AOJu0YxMkQ9J0kB94fpY8NrvWFJIHGTLjBpiy5PjYWuHm7P2q3OSGZs2
+ b1gMqWn4XnD7N05fvEPXsROgIE7XW6al5CXJVEewHZc03DLBu4dw5HDiuMosxu54iJuIbHJO2+w
+ HflmWajVcikIq9olDlPf+B0S6YD0vmH5Ulj5ku1E8xDI5oS4nVokR
+X-Gm-Gg: ASbGncsW8RH8KGj5fln/Cy07ZMsVpzjIqej1IHkxE5mj92weI+XZInD5ZAdda7GlhJi
+ tWztfgsNQCo+41GCoMvyrgxBsjQxzNYSNMQkx9xYowoAwkZOWyWkWF+aH7thOaMzG8/4PvB7MaP
+ sEXXNt5OmhpnsWs209e8fM3G4GlIXeWApFHDY+d87q9shy6obv7efQARrN0WSuBrLQ75QihuJ32
+ NpF9J4/KA0KoyzuXc9ozjUlKztk8LlQPQ9soTNBiDlRiPtonDtps3ZO0+/8xChglUIh4aiCL+Ci
+ pZtaxUe4rK/jc1LK7uZvltCGpsFQfx7hjDtzFaY+kxq/lhaJP6Q+tg==
+X-Received: by 2002:adf:ab15:0:b0:391:3406:b4e1 with SMTP id
+ ffacd0b85a97d-3913406b6admr5378235f8f.15.1741591828492; 
+ Mon, 10 Mar 2025 00:30:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQOGJTi+O2EN+RNQ98u/reASHxCZCdFKws0eREN+y5W/BlTt9FIhX00cH0Bl+E5k7tlNa3Qw==
+X-Received: by 2002:adf:ab15:0:b0:391:3406:b4e1 with SMTP id
+ ffacd0b85a97d-3913406b6admr5378221f8f.15.1741591828076; 
+ Mon, 10 Mar 2025 00:30:28 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912c0e2bb7sm14185478f8f.63.2025.03.10.00.30.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Mar 2025 00:30:27 -0700 (PDT)
+Message-ID: <d540329f-2e13-44b0-ac27-72681dded0d8@redhat.com>
+Date: Mon, 10 Mar 2025 08:30:26 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250302220112.17653-9-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] vfio/migration: Use BE byte order for device state
+ wire packets
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
+ <f0bf02377f18f3cf6b8942528b3b5bce97fb6ab7.1741344976.git.maciej.szmigiero@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <f0bf02377f18f3cf6b8942528b3b5bce97fb6ab7.1741344976.git.maciej.szmigiero@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,219 +161,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(+EwanHai for zhaoxin case...)
+Avihai,
 
-...
-
-> -static void kvm_init_pmu_info(CPUX86State *env)
-> +static void kvm_init_pmu_info_intel(CPUX86State *env)
->  {
->      uint32_t eax, edx;
->      uint32_t unused;
-> @@ -2106,6 +2106,94 @@ static void kvm_init_pmu_info(CPUX86State *env)
->      }
->  }
->  
-> +static void kvm_init_pmu_info_amd(CPUX86State *env)
-> +{
-> +    uint32_t unused;
-> +    int64_t family;
-> +    uint32_t ecx;
-> +
-> +    has_pmu_version = 0;
-> +
-> +    /*
-> +     * To determine the CPU family, the following code is derived from
-> +     * x86_cpuid_version_get_family().
-> +     */
-> +    family = (env->cpuid_version >> 8) & 0xf;
-> +    if (family == 0xf) {
-> +        family += (env->cpuid_version >> 20) & 0xff;
-> +    }
-> +
-> +    /*
-> +     * Performance-monitoring supported from K7 and later.
-> +     */
-> +    if (family < 6) {
-> +        return;
-> +    }
-
-I understand we can get family by object_property_get_int() helper:
-
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 4902694129f9..ff08c7bfee6c 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2106,27 +2106,22 @@ static void kvm_init_pmu_info_intel(CPUX86State *env)
-     }
- }
-
--static void kvm_init_pmu_info_amd(CPUX86State *env)
-+static void kvm_init_pmu_info_amd(X86CPU *cpu)
- {
-+    CPUX86State *env = &cpu->env;
-     uint32_t eax, ebx, ecx;
-     uint32_t unused;
-     int64_t family;
-
-     has_pmu_version = 0;
-
--    /*
--     * To determine the CPU family, the following code is derived from
--     * x86_cpuid_version_get_family().
--     */
--    family = (env->cpuid_version >> 8) & 0xf;
--    if (family == 0xf) {
--        family += (env->cpuid_version >> 20) & 0xff;
-+    family = object_property_get_int(OBJECT(cpu), "family", &error_abort);
-+    if (family < 0) {
-+        return;
-     }
-
--    /*
--     * Performance-monitoring supported from K7 and later.
--     */
-     if (family < 6) {
-+        error_report("AMD performance-monitoring is supported from K7 and later")
-         return;
-     }
-
-@@ -2197,7 +2192,7 @@ static void kvm_init_pmu_info(CPUState *cs)
-     if (IS_INTEL_CPU(env)) {
-         kvm_init_pmu_info_intel(env);
-     } else if (IS_AMD_CPU(env)) {
--        kvm_init_pmu_info_amd(env);
-+        kvm_init_pmu_info_amd(cpu);
-     }
- }
-
----
-Then for consistency, kvm_init_pmu_info_intel() could also accept
-"X86CPU *cpu" as the argument.
-
-> +    has_pmu_version = 1;
-> +
-> +    cpu_x86_cpuid(env, 0x80000001, 0, &unused, &unused, &ecx, &unused);
-> +
-> +    if (!(ecx & CPUID_EXT3_PERFCORE)) {
-> +        num_pmu_gp_counters = AMD64_NUM_COUNTERS;
-> +        return;
-> +    }
-> +
-> +    num_pmu_gp_counters = AMD64_NUM_COUNTERS_CORE;
-> +}
-
-...
-
-> +static void kvm_init_pmu_info(CPUState *cs)
-> +{
-> +    X86CPU *cpu = X86_CPU(cs);
-> +    CPUX86State *env = &cpu->env;
-> +
-> +    /*
-> +     * The PMU virtualization is disabled by kvm.enable_pmu=N.
-> +     */
-> +    if (kvm_pmu_disabled) {
-> +        return;
-> +    }
-
-As I said in patch 7, we could return an error instead.
-
-> +    /*
-> +     * It is not supported to virtualize AMD PMU registers on Intel
-> +     * processors, nor to virtualize Intel PMU registers on AMD processors.
-> +     */
-> +    if (!is_same_vendor(env)) {
-
-Here it deserves a warning like:
-
-error_report("host doesn't support requested feature: vPMU\n");
-
-> +        return;
-> +    }
->
-> +    /*
-> +     * If KVM_CAP_PMU_CAPABILITY is not supported, there is no way to
-> +     * disable the AMD pmu virtualization.
-> +     *
-> +     * If KVM_CAP_PMU_CAPABILITY is supported !cpu->enable_pmu
-> +     * indicates the KVM has already disabled the PMU virtualization.
-> +     */
-> +    if (has_pmu_cap && !cpu->enable_pmu) {
-> +        return;
-> +    }
-
-Could we only check "cpu->enable_pmu" at the beginning of this function?
-then if pmu is already disabled, we don't need to initialize the pmu info.
-
-> +    if (IS_INTEL_CPU(env)) {
-
-Zhaoxin also supports architectural PerfMon in 0xa.
-
-I'm not sure if this check should also involve Zhaoxin CPU, so cc
-zhaoxin guys for double check.
-
-> +        kvm_init_pmu_info_intel(env);
-> +    } else if (IS_AMD_CPU(env)) {
-> +        kvm_init_pmu_info_amd(env);
-> +    }
-> +}
-> +
->  int kvm_arch_init_vcpu(CPUState *cs)
->  {
->      struct {
-> @@ -2288,7 +2376,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
->      cpuid_data.cpuid.nent = cpuid_i;
->  
-> -    kvm_init_pmu_info(env);
-> +    kvm_init_pmu_info(cs);
->  
->      if (((env->cpuid_version >> 8)&0xF) >= 6
->          && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
-> @@ -4064,7 +4152,7 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
->              kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
->          }
->  
-> -        if (has_pmu_version > 0) {
-> +        if (IS_INTEL_CPU(env) && has_pmu_version > 0) {
-
-ditto.
-
->              if (has_pmu_version > 1) {
->                  /* Stop the counter.  */
->                  kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
-> @@ -4095,6 +4183,38 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
->                                    env->msr_global_ctrl);
->              }
->          }
-> +
-
-...
-
->          /*
->           * Hyper-V partition-wide MSRs: to avoid clearing them on cpu hot-add,
->           * only sync them to KVM on the first cpu
-> @@ -4542,7 +4662,8 @@ static int kvm_get_msrs(X86CPU *cpu)
->      if (env->features[FEAT_KVM] & CPUID_KVM_POLL_CONTROL) {
->          kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
->      }
-> -    if (has_pmu_version > 0) {
-> +
-> +    if (IS_INTEL_CPU(env) && has_pmu_version > 0) {
-
-ditto.
-
->          if (has_pmu_version > 1) {
->              kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
->              kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
-> @@ -4558,6 +4679,35 @@ static int kvm_get_msrs(X86CPU *cpu)
->          }
->      }
->
+Could you send a Ack on this patch ?
 
 Thanks,
-Zhao
 
+C.
+
+
+On 3/7/25 11:57, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> 
+> Wire data commonly use BE byte order (including in the existing migration
+> protocol), use it also for for VFIO device state packets.
+> 
+> Fixes: 3228d311ab18 ("vfio/migration: Multifd device state transfer support - received buffers queuing")
+> Fixes: 6d644baef203 ("vfio/migration: Multifd device state transfer support - send side")
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> ---
+>   hw/vfio/migration-multifd.c | 15 ++++++++++-----
+>   1 file changed, 10 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+> index a9d41b9f1cb1..e816461e1652 100644
+> --- a/hw/vfio/migration-multifd.c
+> +++ b/hw/vfio/migration-multifd.c
+> @@ -13,6 +13,7 @@
+>   #include "hw/vfio/vfio-common.h"
+>   #include "migration/misc.h"
+>   #include "qapi/error.h"
+> +#include "qemu/bswap.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/lockable.h"
+>   #include "qemu/main-loop.h"
+> @@ -208,12 +209,16 @@ bool vfio_multifd_load_state_buffer(void *opaque, char *data, size_t data_size,
+>           return false;
+>       }
+>   
+> +    packet->version = be32_to_cpu(packet->version);
+>       if (packet->version != VFIO_DEVICE_STATE_PACKET_VER_CURRENT) {
+>           error_setg(errp, "%s: packet has unknown version %" PRIu32,
+>                      vbasedev->name, packet->version);
+>           return false;
+>       }
+>   
+> +    packet->idx = be32_to_cpu(packet->idx);
+> +    packet->flags = be32_to_cpu(packet->flags);
+> +
+>       if (packet->idx == UINT32_MAX) {
+>           error_setg(errp, "%s: packet index is invalid", vbasedev->name);
+>           return false;
+> @@ -682,9 +687,9 @@ vfio_save_complete_precopy_thread_config_state(VFIODevice *vbasedev,
+>   
+>       packet_len = sizeof(*packet) + bioc->usage;
+>       packet = g_malloc0(packet_len);
+> -    packet->version = VFIO_DEVICE_STATE_PACKET_VER_CURRENT;
+> -    packet->idx = idx;
+> -    packet->flags = VFIO_DEVICE_STATE_CONFIG_STATE;
+> +    packet->version = cpu_to_be32(VFIO_DEVICE_STATE_PACKET_VER_CURRENT);
+> +    packet->idx = cpu_to_be32(idx);
+> +    packet->flags = cpu_to_be32(VFIO_DEVICE_STATE_CONFIG_STATE);
+>       memcpy(&packet->data, bioc->data, bioc->usage);
+>   
+>       if (!multifd_queue_device_state(idstr, instance_id,
+> @@ -734,7 +739,7 @@ vfio_multifd_save_complete_precopy_thread(SaveLiveCompletePrecopyThreadData *d,
+>       }
+>   
+>       packet = g_malloc0(sizeof(*packet) + migration->data_buffer_size);
+> -    packet->version = VFIO_DEVICE_STATE_PACKET_VER_CURRENT;
+> +    packet->version = cpu_to_be32(VFIO_DEVICE_STATE_PACKET_VER_CURRENT);
+>   
+>       for (idx = 0; ; idx++) {
+>           ssize_t data_size;
+> @@ -755,7 +760,7 @@ vfio_multifd_save_complete_precopy_thread(SaveLiveCompletePrecopyThreadData *d,
+>               break;
+>           }
+>   
+> -        packet->idx = idx;
+> +        packet->idx = cpu_to_be32(idx);
+>           packet_size = sizeof(*packet) + data_size;
+>   
+>           if (!multifd_queue_device_state(d->idstr, d->instance_id,
+> 
 
 
