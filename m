@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D777C282DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A78C282EC
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 15:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trfAw-00085R-1o; Mon, 10 Mar 2025 11:36:18 -0400
+	id 1trfAq-0007va-0r; Mon, 10 Mar 2025 11:36:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1trfAg-0007mA-R0; Mon, 10 Mar 2025 11:36:04 -0400
+ id 1trfAm-0007r1-Pd; Mon, 10 Mar 2025 11:36:09 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1trfAd-0002rW-Uy; Mon, 10 Mar 2025 11:36:02 -0400
+ id 1trfAg-0002s1-1w; Mon, 10 Mar 2025 11:36:07 -0400
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52AE36mG027632;
- Mon, 10 Mar 2025 15:35:56 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52AE36mH027632;
+ Mon, 10 Mar 2025 15:36:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=4y7Z4ulkeA46Y85MBkCjURd1rZUNbnb3cHlVP3Yde
- a8=; b=dOlBtGg153DMMysbzU5JrT2mH0ZJ4zPn+dcSJkJN0zQj9AY9Z35u65TX8
- Z3wjdeKTNmwyNqtjxpY8CzJhivCZkSyXa0SNKkxVGzBKEj05wvjJEeewSR7jQTMX
- hF39KnmX5EZ9dYilXBXP4Q7t7eopMHdRl1QD1D02Hgab029i2r+uHI2wzos9E7fw
- 8bZ2Srd1uC3tsdxL4v6HTi7iRBlkrlxNL9RTlzrexgOgUPDQSBbpo6VkT4EuyfHs
- GNJd73HTGpwa1wGmvL5FU6JurgbPabQ+hSvoygRaPz2TE5LgXODzvgetjeTH/Epp
- CECYOVnYfE7TG8YdHx3Y9eTP+5P9g==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45a1gp0hhv-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=V1zQ7DU6YKCzAKK2v
+ fOjrNyEEeGyOyVFAocraLbPY8s=; b=YIGjQJemOaMLVvYMgNFtmZA5d2cBEQMNC
+ Gy+u8xy+wyfaal5ejpKcCWYM0Xc4pVlvsLdkmDd83Z9ml8ijbT4uMtQoUjlzPfva
+ /iXoyHu4ZHW0fCLNoxKdh0tnahwNsH1AlseNEJzfcVIywJDzBA+U6bB1BHjBIT/e
+ btXR+hIxAbXVnbpW1KZ+3pWNQd+LMD3o+nd8YIW+NJrIWlws8+jA2T9Ob9BS2/2a
+ 5y/rbpWXLmXh2oR+sVgAdQ28AnyAxykwE2+hgY/aOyixUtwrqBCsvd+Qkn/+iF3h
+ dMrY+gvr5v/7LEDd+u1/SmmO4gm+pWDL11jb9rf/WkbUmvUC+IdGQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45a1gp0hj4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Mar 2025 15:35:55 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52AEdhVD027544;
- Mon, 10 Mar 2025 15:35:54 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4591qkf7g2-1
+ Mon, 10 Mar 2025 15:35:59 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52ADkCwE006987;
+ Mon, 10 Mar 2025 15:35:58 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45907syghh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Mar 2025 15:35:54 +0000
+ Mon, 10 Mar 2025 15:35:58 +0000
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52AFZq2e15008492
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52AFZvsY26149388
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 10 Mar 2025 15:35:52 GMT
+ Mon, 10 Mar 2025 15:35:57 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4B7685805D;
- Mon, 10 Mar 2025 15:35:53 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1DACA5805D;
+ Mon, 10 Mar 2025 15:35:57 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7CFE558052;
- Mon, 10 Mar 2025 15:35:52 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4D87158068;
+ Mon, 10 Mar 2025 15:35:56 +0000 (GMT)
 Received: from MacBookPro.ibm.com (unknown [9.61.250.189])
  by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 10 Mar 2025 15:35:52 +0000 (GMT)
+ Mon, 10 Mar 2025 15:35:56 +0000 (GMT)
 From: Rorie Reyes <rreyes@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
  jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
  alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com,
  akrowiak@linux.ibm.com, rreyes@linux.ibm.com
-Subject: [RFC PATCH v3 0/5] Report vfio-ap configuration changes
-Date: Mon, 10 Mar 2025 11:35:47 -0400
-Message-ID: <20250310153552.32987-1-rreyes@linux.ibm.com>
+Subject: [RFC PATCH v3 4/5] hw/vfio/ap: Storing event information for an AP
+ configuration change event
+Date: Mon, 10 Mar 2025 11:35:51 -0400
+Message-ID: <20250310153552.32987-5-rreyes@linux.ibm.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250310153552.32987-1-rreyes@linux.ibm.com>
+References: <20250310153552.32987-1-rreyes@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: oRFgQeKLBfRwkE_eNoKYY2_hwVSVTZHD
-X-Proofpoint-ORIG-GUID: oRFgQeKLBfRwkE_eNoKYY2_hwVSVTZHD
+X-Proofpoint-GUID: ns7-C5Z9-PpSAKWCZW1VZCmRypaFEOgM
+X-Proofpoint-ORIG-GUID: ns7-C5Z9-PpSAKWCZW1VZCmRypaFEOgM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-10_06,2025-03-07_03,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  mlxscore=0 clxscore=1015
- mlxlogscore=894 suspectscore=0 spamscore=0 impostorscore=0 bulkscore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 impostorscore=0 bulkscore=0
  phishscore=0 malwarescore=0 priorityscore=1501 adultscore=0
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502100000 definitions=main-2503100121
@@ -106,46 +109,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changelog:
+These functions can be invoked by the function that handles interception
+of the CHSC SEI instruction for requests indicating the accessibility of
+one or more adjunct processors has changed.
 
-v3:
-- changes that were made to patch 3/5 should have been made in
-patch 2/5
+Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+---
+ hw/vfio/ap.c                 | 38 ++++++++++++++++++++++++++++++++++++
+ include/hw/s390x/ap-bridge.h | 22 +++++++++++++++++++++
+ 2 files changed, 60 insertions(+)
 
-v2:
-- removed warnings that weren't needed
-- added unregister function
-- removed whitelines
-- changed variable names for consistency
-- removed rc variable and returning 1 or 0 outright
-- reversed logics for if statements
-- using g_free() instead of free()
-- replaced hardcoded numeric values by defining them with #define
-in the header
-
---------------------------------------------------------------------------
-This patch series creates and registers a handler that is called when
-userspace is notified by the kernel that a guest's AP configuration has
-changed. The handler in turn notifies the guest that its AP configuration
-has changed. This allows the guest to immediately respond to AP
-configuration changes rather than relying on polling or some other
-inefficient mechanism for detecting config changes.
-
-Rorie Reyes (5):
-  linux-headers: NOTFORMERGE - placeholder uapi updates for AP config
-    change
-  hw/vfio/ap: notification handler for AP config changed event
-  hw/vfio/ap: store object indicating AP config changed in a queue
-  hw/vfio/ap: Storing event information for an AP configuration change
-    event
-  s390: implementing CHSC SEI for AP config change
-
- hw/vfio/ap.c                 | 79 ++++++++++++++++++++++++++++++++++++
- include/hw/s390x/ap-bridge.h | 22 ++++++++++
- linux-headers/linux/vfio.h   |  1 +
- target/s390x/ioinst.c        | 11 ++++-
- 4 files changed, 111 insertions(+), 2 deletions(-)
-
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index ddab764ab4..a152a90ca8 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -94,6 +94,44 @@ static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
+ 
+ }
+ 
++int ap_chsc_sei_nt0_get_event(void *res)
++{
++    APConfigChgEvent *cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
++    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
++
++    memset(nt0_res, 0, sizeof(*nt0_res));
++
++    if (!cfg_chg_event) {
++        return 1;
++    }
++
++    QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
++    g_free(cfg_chg_event);
++
++    /*
++     * If there are any AP configuration change events in the queue,
++     * indicate to the caller that there is pending event info in
++     * the response block
++     */
++    if (ap_chsc_sei_nt0_have_event()) {
++        nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
++    }
++
++    nt0_res->length = sizeof(ChscSeiNt0Res);
++    nt0_res->code = NT0_RES_RESPONSE_CODE;
++    nt0_res->nt = NT0_RES_NT_DEFAULT;
++    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
++    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
++
++    return 0;
++
++}
++
++int ap_chsc_sei_nt0_have_event(void)
++{
++    return !QTAILQ_EMPTY(&cfg_chg_events);
++}
++
+ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+                                           unsigned int irq, Error **errp)
+ {
+diff --git a/include/hw/s390x/ap-bridge.h b/include/hw/s390x/ap-bridge.h
+index 470e439a98..f4d838bf99 100644
+--- a/include/hw/s390x/ap-bridge.h
++++ b/include/hw/s390x/ap-bridge.h
+@@ -16,4 +16,26 @@
+ 
+ void s390_init_ap(void);
+ 
++typedef struct ChscSeiNt0Res {
++    uint16_t length;
++    uint16_t code;
++    uint8_t reserved1;
++    uint16_t reserved2;
++    uint8_t nt;
++#define PENDING_EVENT_INFO_BITMASK 0x80;
++    uint8_t flags;
++    uint8_t reserved3;
++    uint8_t rs;
++    uint8_t cc;
++} QEMU_PACKED ChscSeiNt0Res;
++
++#define NT0_RES_RESPONSE_CODE 1;
++#define NT0_RES_NT_DEFAULT    0;
++#define NT0_RES_RS_AP_CHANGE  5;
++#define NT0_RES_CC_AP_CHANGE  3;
++
++int ap_chsc_sei_nt0_get_event(void *res);
++
++int ap_chsc_sei_nt0_have_event(void);
++
+ #endif
 -- 
 2.48.1
 
