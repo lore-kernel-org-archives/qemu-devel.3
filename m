@@ -4,68 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FE6C28B30
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 11:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 673D2C28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 11:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tratI-0006iO-Ht; Mon, 10 Mar 2025 07:01:48 -0400
+	id 1trayS-000108-TQ; Mon, 10 Mar 2025 07:07:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1trasn-0006Px-1e
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 07:01:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1trasl-0006vH-EX
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 07:01:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741604472;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tXpEai54IsgN5h4NUDyKwAS46tnU3YIf2hGmXR6cIpI=;
- b=GVrMkLZclVQhK5rqs8w5GEoYR0dkWE8GaXV671jAzcXt2m4uKQ6mO/gJnecJYY3M0fRAAj
- xPjC/hgaWf/c419MIQmCMJUWjBy9iYV6wCG7nkg9sncyGHjSgJdr0gnm7BVLgng8IctcZ9
- iYHhVcSRUgLBlpbVSCtjHB0TwdPhNnI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-fP8TvOWtNyK4w-8vjZE6Kg-1; Mon,
- 10 Mar 2025 07:01:11 -0400
-X-MC-Unique: fP8TvOWtNyK4w-8vjZE6Kg-1
-X-Mimecast-MFC-AGG-ID: fP8TvOWtNyK4w-8vjZE6Kg_1741604470
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF5F019560B7; Mon, 10 Mar 2025 11:01:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.222])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C6F8C1956096; Mon, 10 Mar 2025 11:01:07 +0000 (UTC)
-Date: Mon, 10 Mar 2025 12:01:05 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: gerben@altlinux.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, sdl.qemu@linuxtesting.org
-Subject: Re: [PATCH] block/snapshot: fix *errp handling in bdrv_snapshot_goto
-Message-ID: <Z87GcceOGOM4wAkI@redhat.com>
-References: <20250304080213.36099-1-gerben@altlinux.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1trayG-0000xu-G0
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 07:06:57 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1trayD-0008QP-JY
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 07:06:56 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e461015fbd4so2970565276.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 04:06:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741604810; x=1742209610; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j6mQmd6Njjt2p1jxk5g9NsE0d0ki07qN+wzTeEd4ugg=;
+ b=GzaWwJHMAFBnGug6CZxjD6Hf3kmSiPHdB9myzlNHo/vA0qc5uSLDgM/D/e/8pyRy7F
+ Ww/QEqVnoUkhT/bBSUGHJTtP31b37TokzvtZibwqYpBWYjpB/8lv/ILIqYO1V8QuqgJe
+ AoK1N1s380Ar6oRSw4FSkLLh1OyIgeE7kir9MmCoP7fUDhhqcrNNnuHI8XbwASMB1GKt
+ DbrvUM9v+holpL/Rx2+T0x2ApimJUipnzx7uVsWvLX+AnDS8J7FpGMQXViiCdPagUiHB
+ udsr3xERUI7ROjEZFGCH2tFSJ5x0x6wY+UEUtUfABzZi1dMbtvPKVAHtQrBqEBMFUqv4
+ pDvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741604810; x=1742209610;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=j6mQmd6Njjt2p1jxk5g9NsE0d0ki07qN+wzTeEd4ugg=;
+ b=H+6CwY2FN2RO86WxY3LNvifmbFbmlNU/21kWr5hpKZwYYE4kEdpyIbAFRZcQG22nFF
+ URdyXMboJlg5wiCvx2lf3HHnFV3VuM/evIrfFuwK5Dl+BL74O6W/LN4vxa3Kcvwja3w3
+ wjnK+zeY2b0dCj804FMo1nk5/Q0zleBWRpmH3lnlvkJlbt2hHOevRFj4Uv6vTqvSEb2I
+ C0vwa5HT12Vgq2CGa/ce5T2fmCMeNUuzT7RzEcxrRHIPaBLnpzgYbrjxkWlueXHdKEGE
+ ksQKk/wercKLmZIApntjRlOuTKaZumkJl6hafVas150nrWeI90RoWRNxVbCjNPb9YBys
+ rRhA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhxxTtJ7R3ZKpnRiI1+i6RxIuWQUGh0YRGLu3ubx4MRQNI6s2if7yhadRsQKVMWfUyflWK7spyCGSX@nongnu.org
+X-Gm-Message-State: AOJu0YyxiOLnAoH9pRecOff2pL6IIFfSoPfAejJD5oCQwdw1ysFrQbJo
+ R9DW+LICXNjOIbVufs+f/0SXRQRGwhd84xBKTUwfKAZDS30OUB6bDz0u4RLLkw+pqq5OOZ5Cfty
+ XVngAOt7L1DctG8IlYfgLPm0jTAF2zAnuhrjLcQ==
+X-Gm-Gg: ASbGnctG2nymllPWaynXTWYP8TnvbWXu4nW8OfHIQ1dC3cEEdnfJ8VrecTi/V8okfm3
+ 0YpXK0XCkZWcFFOReU2owliR39MmTxqDXWz2Y/zFDZ2h/kecPJEs4STQDHxK4hMy+1946kOmH0c
+ ezkqxd+s9NHpuKQ1YCukyzy9YvbBs=
+X-Google-Smtp-Source: AGHT+IGnYBIYtRdN0rXZlLlka6GZsJM0T0TkpI4vozVniqsHTf86S/CAYYbwf8hNL3b7NdPAZ3QcYrRD70WWDpSFqhg=
+X-Received: by 2002:a05:6902:1886:b0:e5d:b88a:5536 with SMTP id
+ 3f1490d57ef6-e635c1f9fb3mr16200610276.44.1741604810304; Mon, 10 Mar 2025
+ 04:06:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250304080213.36099-1-gerben@altlinux.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250228174802.1945417-1-peter.maydell@linaro.org>
+ <20250228174802.1945417-3-peter.maydell@linaro.org>
+ <f4262519-017d-4ed7-8c17-5d4d72a219a6@linaro.org>
+In-Reply-To: <f4262519-017d-4ed7-8c17-5d4d72a219a6@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 10 Mar 2025 11:06:38 +0000
+X-Gm-Features: AQ5f1JowbqcIWeYiHaUbzMJc59rQGzmFNqDmmWjPgHGKu3KiEmwo_SjiT1OlBQw
+Message-ID: <CAFEAcA9vw-Qgt4MBd=g-RTC1joHsHYBmtASHpL=SBnBjoW0nWA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] hw/net/smc91c111: Sanitize packet length on tx
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,70 +98,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 04.03.2025 um 09:01 hat gerben@altlinux.org geschrieben:
-> From: Denis Rastyogin <gerben@altlinux.org>
-> 
-> This error was discovered by fuzzing qemu-img.
-> 
-> If bdrv_snapshot_goto() returns an error, it is not handled immediately,
-> allowing *errp to be reassigned when qcow_open() fails, which triggers
-> assert(*errp == NULL) in util/error.c: void error_setv().
-> 
-> This patch ensures that errors from bdrv_snapshot_goto() are handled
-> immediately after the call, preventing *errp from being modified twice
-> and avoiding unnecessary assertion failures.
-> 
-> Closes: https://gitlab.com/qemu-project/qemu/-/issues/2851
-> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
-> ---
->  block/snapshot.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/block/snapshot.c b/block/snapshot.c
-> index 9c44780e96..d1b5a8d33d 100644
-> --- a/block/snapshot.c
-> +++ b/block/snapshot.c
-> @@ -296,14 +296,20 @@ int bdrv_snapshot_goto(BlockDriverState *bs,
->          bdrv_graph_wrunlock();
->  
->          ret = bdrv_snapshot_goto(fallback_bs, snapshot_id, errp);
-> +        if (ret < 0) {
-> +            bdrv_unref(fallback_bs);
-> +            bs->drv = NULL;
-> +            /* A bdrv_snapshot_goto() error takes precedence */
-> +            error_propagate(errp, local_err);
-> +            return ret;
-> +        }
+On Sun, 9 Mar 2025 at 19:01, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+> On 28/2/25 18:48, Peter Maydell wrote:
+> > --- a/hw/net/smc91c111.c
+> > +++ b/hw/net/smc91c111.c
+> > @@ -22,6 +22,13 @@
+> >
+> >   /* Number of 2k memory pages available.  */
+> >   #define NUM_PACKETS 4
+> > +/*
+> > + * Maximum size of a data frame, including the leading status word
+> > + * and byte count fields and the trailing CRC, last data byte
+> > + * and control byte (per figure 8-1 in the Microchip Technology
+>
+> If control byte is included, ...
+>
+> > + * LAN91C111 datasheet).
+> > + */
+> > +#define MAX_PACKET_SIZE 2048
+> >
+> >   #define TYPE_SMC91C111 "smc91c111"
+> >   OBJECT_DECLARE_SIMPLE_TYPE(smc91c111_state, SMC91C111)
+> > @@ -240,6 +247,16 @@ static void smc91c111_release_packet(smc91c111_sta=
+te *s, int packet)
+> >       smc91c111_flush_queued_packets(s);
+> >   }
+> >
+> > +static void smc91c111_complete_tx_packet(smc91c111_state *s, int packe=
+tnum)
+> > +{
+> > +    if (s->ctr & CTR_AUTO_RELEASE) {
+> > +        /* Race?  */
+> > +        smc91c111_release_packet(s, packetnum);
+> > +    } else if (s->tx_fifo_done_len < NUM_PACKETS) {
+> > +        s->tx_fifo_done[s->tx_fifo_done_len++] =3D packetnum;
+> > +    }
+> > +}
+> > +
+> >   /* Flush the TX FIFO.  */
+> >   static void smc91c111_do_tx(smc91c111_state *s)
+> >   {
+> > @@ -263,6 +280,17 @@ static void smc91c111_do_tx(smc91c111_state *s)
+> >           *(p++) =3D 0x40;
+> >           len =3D *(p++);
+> >           len |=3D ((int)*(p++)) << 8;
+> > +        if (len >=3D MAX_PACKET_SIZE) {
+>
+> isn't MAX_PACKET_SIZE valid? I'm not sure at all but I'd expect:
+>
+>             if (len > MAX_PACKET_SIZE) {
 
-Now you return without having reopened the image!
+Yes, thanks, good catch. The max value in the byte count
+field is 2048. We subtract 6, and then look at p[len + 1],
+which will be p[2048 - 6 + 1] =3D p[2043], where the value of
+p is data+4 (because we incremented it 4 times as we dealt
+with the status and byte count fields).
+So p[2043] is data[2047], which is the last in-bounds byte,
+and a byte-count field of 2048 is not an overrun.
 
->          open_ret = drv->bdrv_open(bs, options, bs->open_flags, &local_err);
->          qobject_unref(options);
->          if (open_ret < 0) {
->              bdrv_unref(fallback_bs);
->              bs->drv = NULL;
-> -            /* A bdrv_snapshot_goto() error takes precedence */
->              error_propagate(errp, local_err);
-> -            return ret < 0 ? ret : open_ret;
-> +            return open_ret;
->          }
+(Also, I just noticed that the data sheet says that for tx
+frames the transmit byte count least significant bit will be
+assumed 0 by the controller regardless of the value written
+in memory. So we ought to zero out the LSB of 'len' after we
+read it from the packet. That's not an overflow, though
+(since we already subtracted 6 from len), just a bug...
+Plus it looks like we don't handle the case of "odd-length
+frame and CRC field present" right, since we don't do anything
+about the last-data-byte being behind the CRC field. I think
+that given the unimportance of this device model I'll settle
+for just fixing the overruns and leave these other nominal
+bugs alone.)
 
-I don't see a problem in the old code. local_err is still NULL at this
-point, so it's safe to pass it to drv->bdrv_open(). A previous error
-from bdrv_snapshot_goto() is stored in errp, which is separate.
-
-The line in qcow.c (test.qed is misleading as a filename!) that causes
-the assertion failure is this:
-
-    error_setg(&s->migration_blocker, "The qcow format used by node '%s' "
-               "does not support live migration",
-               bdrv_get_device_or_node_name(bs));
-
-This is an internal field that is not related to either error in
-bdrv_snapshot_goto(). This is another instance of the same bug that
-bs->opaque needs to be zeroed before calling drv->bdrv_open(). I sent a
-patch for that.
-
-Kevin
-
+thanks
+-- PMM
 
