@@ -4,70 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C760C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 21:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F84FC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 21:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trkHJ-000629-I6; Mon, 10 Mar 2025 17:03:14 -0400
+	id 1trkJd-0000fV-AN; Mon, 10 Mar 2025 17:05:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1trkGy-0005tB-Jo; Mon, 10 Mar 2025 17:02:55 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trkJU-0000O0-Fc
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 17:05:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1trkGv-0004wc-Mc; Mon, 10 Mar 2025 17:02:52 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AF51A4E602E;
- Mon, 10 Mar 2025 22:02:42 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id IphZi4_PVs8l; Mon, 10 Mar 2025 22:02:40 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6B4A84E601A; Mon, 10 Mar 2025 22:02:40 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6816074577D;
- Mon, 10 Mar 2025 22:02:40 +0100 (CET)
-Date: Mon, 10 Mar 2025 22:02:40 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, alex.bennee@linaro.org, 
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, kvm@vger.kernel.org, 
- Peter Xu <peterx@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- David Hildenbrand <david@redhat.com>, Weiwei Li <liwei1518@gmail.com>, 
- Paul Durrant <paul@xen.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Anthony PERARD <anthony@xenproject.org>, 
- Yoshinori Sato <ysato@users.sourceforge.jp>, 
- manos.pitsidianakis@linaro.org, qemu-riscv@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org, 
- Stefano Stabellini <sstabellini@kernel.org>
-Subject: Re: [PATCH 00/16] make system memory API available for common code
-In-Reply-To: <86acf98f-99d6-4a93-b62f-c83571b0ae09@linaro.org>
-Message-ID: <5c6a446b-e715-cc38-b212-3291ecc426d2@eik.bme.hu>
-References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
- <f231b3be-b308-56cf-53ff-1a6a7fb4da5c@eik.bme.hu>
- <c5b9eea9-c412-461d-b79b-0fa2f72128ee@linaro.org>
- <a57faa36-2e66-4438-accc-0cbfdeebf100@linaro.org>
- <6b3e48e2-0730-09e2-55b1-35daff4ecf75@eik.bme.hu>
- <86acf98f-99d6-4a93-b62f-c83571b0ae09@linaro.org>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trkJS-0005Uu-9Z
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 17:05:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741640723;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lXx82qNHSWsCBOckdtbgrfg5VsDZK/dx7DyAYgsAiTc=;
+ b=Pv7zIogXSmzdkwOv7zYuOsuvIVT4vgwyiFjCxLrv6u21HobFwMsyOH5UxhScpeBE1KgDR5
+ PAGyAE6xz1Xi3IG/WucacDLCjvhKF7/xTH0I8qK3VqQIJqDEEn1a4jWvWdA+BQfNeNw7el
+ zOwc3aYYH3DK/4t/jrK2lGWRn1LmqkA=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-451-Az-hORC8M0a3ra4OdkixQA-1; Mon, 10 Mar 2025 17:05:20 -0400
+X-MC-Unique: Az-hORC8M0a3ra4OdkixQA-1
+X-Mimecast-MFC-AGG-ID: Az-hORC8M0a3ra4OdkixQA_1741640720
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-22403329f9eso78786375ad.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 14:05:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741640719; x=1742245519;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lXx82qNHSWsCBOckdtbgrfg5VsDZK/dx7DyAYgsAiTc=;
+ b=oV6HYdJ08fRo6pg8l0u3sufqGAArem+YkHNZlHsEimzBvcS3F6FiiaCli7ZEqhdpvN
+ LE4l6jS028LW/jQC6jFY/yY0PvwEGcJxmo9X2GpPOewPISpyZjsqMKNvRxPhczsChvy5
+ dwBioU51HjJyJPsCTZMzYTYWUjPhaLhH8HksYkgOLNSEuZI+FPK1VWiIKPTz/4/NtSUR
+ pPD/DKKrh1RcyDaZxa0RMxPHnOVSMizLI30AArsZADvEc31qJOwJT0qyc7HE69mX8dVy
+ pBEiXK8tWLgtkCVkG8JPipivgVcXUXnU0mp2G3RPr6ij4xqR3Ci2U8gyKgWNy79uqyGt
+ w1MA==
+X-Gm-Message-State: AOJu0YwBYaMpq4YtYnEiKZ925JuXAO+28s2nw+PUzMYxtzhl+moapegA
+ 6uS90QhoXJ2Tz7r/SVc3qTGys6lDQrMBMUhlaCq3J1xJUcZ5NqLfsz/CfSxwTkD1DSqtLmV3egG
+ bIxjGKvpiuQIq2UGqNs7onsBMby+0MNSr8x6awD2cIey6E34EN7tMhZNljokoLIMkJ5HGNTwlG8
+ CPaZ/52FzWyyPMBB3rZS2EC0ErjHM=
+X-Gm-Gg: ASbGncuGgwd0KhbL2RL/rlP7ZKMC1wCbmwZFZ7NT7JGV0cq7iLwVkPRcMDe2HzZLL1o
+ Q7h/ewULL4lyyzfwrf0OHmo6MExsZgqGvmgtoXOTZ+4g3SG/uBNvVdiCcqzdbs5JLTymfHXQW75
+ aO3siaAxEDRJQi9cjj+EucArbT9a7l
+X-Received: by 2002:a17:902:ecc2:b0:221:7e36:b13e with SMTP id
+ d9443c01a7336-22428899c47mr249054415ad.12.1741640719531; 
+ Mon, 10 Mar 2025 14:05:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5wrp2SAjaODSTEsMqdw26lZCCBtTA+nvIdOb+nHvG6BGCYzs2xvjfC9toAYKQXzhodsMRt/NxvVAToIlbbP8=
+X-Received: by 2002:a17:902:ecc2:b0:221:7e36:b13e with SMTP id
+ d9443c01a7336-22428899c47mr249054005ad.12.1741640719108; Mon, 10 Mar 2025
+ 14:05:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, URIBL_SBL_A=0.1 autolearn=no autolearn_force=no
+References: <20250309083550.5155-1-jsnow@redhat.com>
+ <20250309083550.5155-44-jsnow@redhat.com>
+ <878qpdzzl4.fsf@pond.sub.org>
+In-Reply-To: <878qpdzzl4.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 10 Mar 2025 17:05:07 -0400
+X-Gm-Features: AQ5f1Jq668fRoOWlHsE05tqMvDaqCHY4eOACtPMCZkw_TpJ1dqihLfIZq6YxRJQ
+Message-ID: <CAFn=p-aCgniz3nDYOketOE5Y6_GF7gaiOpV27H29RSwV7kaOag@mail.gmail.com>
+Subject: Re: [PATCH v2 43/62] docs/qapidoc: add preamble() method
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: multipart/alternative; boundary="00000000000063b2db06300354c5"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,222 +107,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 10 Mar 2025, Pierrick Bouvier wrote:
-> On 3/10/25 12:40, BALATON Zoltan wrote:
->> On Mon, 10 Mar 2025, Pierrick Bouvier wrote:
->>> On 3/10/25 09:28, Pierrick Bouvier wrote:
->>>> Hi Zoltan,
->>>> 
->>>> On 3/10/25 06:23, BALATON Zoltan wrote:
->>>>> On Sun, 9 Mar 2025, Pierrick Bouvier wrote:
->>>>>> The main goal of this series is to be able to call any memory ld/st
->>>>>> function
->>>>>> from code that is *not* target dependent.
->>>>> 
->>>>> Why is that needed?
->>>>> 
->>>> 
->>>> this series belongs to the "single binary" topic, where we are trying to
->>>> build a single QEMU binary with all architectures embedded.
->> 
->> Yes I get it now, I just forgot as this wasn't mentioned so the goal
->> wasn't obvious.
->> 
->
-> The more I work on this topic, the more I realize we miss a clear and concise 
-> document (wiki page, or anything than can be edited easily - not email) 
-> explaining this to other developers, and that we could share as a link, and 
-> enhance based on the questions asked.
+--00000000000063b2db06300354c5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Maybe you can start collecting FAQ on a wiki page so you don't have to 
-answer them multiple times. I think most people aware of this though just 
-may not associate a series with it if not mentioned in the description.
+On Sun, Mar 9, 2025 at 5:03=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
+> wrote:
 
->>>> To achieve that, we need to have every single compilation unit compiled
->>>> only once, to be able to link a binary without any symbol conflict.
->>>> 
->>>> A consequence of that is target specific code (in terms of code relying
->>>> of target specific macros) needs to be converted to common code,
->>>> checking at runtime properties of the target we run. We are tackling
->>>> various places in QEMU codebase at the same time, which can be confusing
->>>> for the community members.
->> 
->> Mentioning this single binary in related series may help reminding readers
->> about the context.
->> 
+> John Snow <jsnow@redhat.com> writes:
 >
-> I'll make sure to mention this "name" in the title for next series, thanks!
+> > This method adds the options/preamble to each definition block. Notably=
+,
+> > :since: and :ifcond: are added, as are any "special features" such as
+> > :deprecated: and :unstable:.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  docs/sphinx/qapidoc.py | 41 ++++++++++++++++++++++++++++++++++++++---
+> >  1 file changed, 38 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+> > index cf5dbb0133d..d8bf0073dfa 100644
+> > --- a/docs/sphinx/qapidoc.py
+> > +++ b/docs/sphinx/qapidoc.py
+> > @@ -37,7 +37,12 @@
+> >  from docutils.parsers.rst import Directive, directives
+> >  from docutils.statemachine import StringList
+> >  from qapi.error import QAPIError
+> > -from qapi.schema import QAPISchema, QAPISchemaVisitor
+> > +from qapi.parser import QAPIDoc
+> > +from qapi.schema import (
+> > +    QAPISchema,
+> > +    QAPISchemaDefinition,
+> > +    QAPISchemaVisitor,
+> > +)
+> >  from qapi.source import QAPISourceInfo
+> >
+> >  from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
+> > @@ -56,8 +61,6 @@
+> >          Sequence,
+> >      )
+> >
+> > -    from qapi.parser import QAPIDoc
+> > -
 >
->>>> This series take care of system memory related functions and associated
->>>> compilation units in system/.
->>>> 
->>>>>> As a positive side effect, we can
->>>>>> turn related system compilation units into common code.
->>>>> 
->>>>> Are there any negative side effects? In particular have you done any
->>>>> performance benchmarking to see if this causes a measurable slow down?
->>>>> Such as with the STREAM benchmark:
->>>>> https://stackoverflow.com/questions/56086993/what-does-stream-memory-bandwidth-benchmark-really-measure
->>>>> 
->>>>> Maybe it would be good to have some performance tests similiar to
->>>>> functional tests that could be run like the CI tests to detect such
->>>>> performance changes. People report that QEMU is getting slower and 
->>>>> slower
->>>>> with each release. Maybe it could be a GSoC project to make such tests 
->>>>> but
->>>>> maybe we're too late for that.
->>>>> 
->>>> 
->>>> I agree with you, and it's something we have mentioned during our
->>>> "internal" conversations. Testing performance with existing functional
->>>> tests would already be a first good step. However, given the poor
->>>> reliability we have on our CI runners, I think it's a bit doomed.
->>>> 
->>>> Ideally, every QEMU release cycle should have a performance measurement
->>>> window to detect potential sources of regressions.
->> 
->> Maybe instead of aiming for full CI like performance testing something
->> simpler like a few tests that excercise some apects each like STREAM that
->> tests memory access, copying a file from network and/or disk that tests
->> I/O and mp3 encode with lame for example that's supposed to test floating
->> point and SIMD might be simpler to do. It could be made a bootable image
->> that just runs the test and reports a number (I did that before for
->> qemu-system-ppc when we wanted to test an issue that on some hosts it ran
->> slower). Such test could be run by somebody making changes so they could
->> call these before and after their patch to quickly check if there's
->> anything to improve. This may be less through then full performance
->> testing but still give some insight and better than not testing anything
->> for performance.
->> 
->> I'm bringig this topic up to try to keep awareness on this so QEMU can
->> remain true to its name. (Although I'm not sure if originally the Q in the
->> name stood for the time it took to write or its performance but it's
->> hopefully still a goal to keep it fast.)
->> 
+> Accident?
 >
-> You do well to remind that, but as always, the problem is that "run by 
-> somebody" is not an enforceable process.
->
->>>> To answer to your specific question, I am trying first to get a review
->>>> on the approach taken. We can always optimize in next series version, in
->>>> case we identify it's a big deal to introduce a branch for every memory
->>>> related function call.
->> 
->> I'm not sure we can always optimise after the fact so sometimes it can be
->> necessary to take performance in consideration while designing changes.
->> 
->
-> In the context of single binary concerned series, we mostly introduce a few 
-> branches in various spots, to do a runtime check.
-> As Richard mentioned in this series, we can keep target code exactly as it 
-> is.
->
->>>> In all cases, transforming code relying on compile time
->>>> optimization/dead code elimination through defines to runtime checks
->>>> will *always* have an impact,
->> 
->> Yes, that's why it would be good to know how much impact is that.
->> 
->>>> even though it should be minimal in most of cases.
->> 
->> Hopefully but how do we know if we don't even test for it?
->> 
->
-> In the case of this series, I usually so a local test booting (automatically) 
-> an x64 debian stable vm, that poweroff itself as part of its init.
->
-> With and without this series, the variation is below the average one I have 
-> between two runs (<1 sec, for a total of 40 seconds), so the impact is 
-> litterally invisible.
 
-That's good to hear. Some overhead which is unavoidable is OK I just hope 
-we can avoid which is not unavoidable and try to do something about what 
-would have noticable performance penalty. If you're already aware of that 
-and do that then that's all I wanted to say, nothing new.
+I don't know. isort decided to move it and none of my tooling complains
+about it.
 
->>>> But the maintenance and compilation time benefits, as well as
->>>> the perspectives it opens (single binary, heterogeneous emulation, use
->>>> QEMU as a library) are worth it IMHO.
->> 
->> I'm not so sure about that. Heterogeneous emulation sounds interesting but
->> is it needed most of the time? Using QEMU as a library also may not be
->> common and limited by licencing. The single binary would simplify packages
->> but then this binary may get huge so it's slower to load, may take more
->> resources to run and more time to compile and if somebody only needs one
->> architecture why do I want to include all of the others and wait for it to
->> compile using up a lot of space on my disk? So in other words, while these
->> are interesting and good goals could it be achieved with keeping the
->> current way of building single ARCH binary as opposed to single binary
->> with multiple archs and not throwing out the optimisations a single arch
->> binary can use? Which one is better may depend on the use case so if
->> possible it would be better to allow both keeping what we have and adding
->> multi arch binary on top not replacing the current way completely.
->> 
+
 >
-> Thanks, it's definitely interesting to hear the concerns on this, so we can 
-> address them, and find the best and minimal solution to achive the desired 
-> goal.
+> >      from sphinx.application import Sphinx
+> >      from sphinx.util.typing import ExtensionMetadata
+> >
+> > @@ -125,6 +128,38 @@ def ensure_blank_line(self) -> None:
+> >              # +2: correct for zero/one index, then increment by one.
+> >              self.add_line_raw("", fname, line + 2)
+> >
+> > +    # Transmogrification helpers
+> > +
+> > +    def preamble(self, ent: QAPISchemaDefinition) -> None:
+> > +        """
+> > +        Generate option lines for qapi entity directives.
+> > +        """
+> > +        if ent.doc and ent.doc.since:
+> > +            assert ent.doc.since.kind =3D=3D QAPIDoc.Kind.SINCE
+> > +            # Generated from the entity's docblock; info location is
+> exact.
+> > +            self.add_line(f":since: {ent.doc.since.text}",
+> ent.doc.since.info)
 >
-> I'll answer point by point.
+> Break the line aftee the comma?
 >
-> QEMU as a library: that's what Unicorn is 
-> (https://www.unicorn-engine.org/docs/beyond_qemu.html), which is used by a 
-> lot of researchers. Talking frequently with some of them, they would be happy 
-> to have such a library directly with upstream QEMU, so it can benefit from 
-> all the enhancements done to TCG. It's mostly a use case for security 
-> researchers/engineers, but definitely a valid one. Just look at the list of 
-> QEMU downstream forks focused on that. Combining this with plugins would be 
-> amazing, and only grow our list of users.
+> > +
+> > +        if ent.ifcond.is_present():
+> > +            doc =3D ent.ifcond.docgen()
+> > +            assert ent.info
+> > +            # Generated from entity definition; info location is
+> approximate.
+> > +            self.add_line(f":ifcond: {doc}", ent.info)
+> > +
+> > +        # Hoist special features such as :deprecated: and :unstable:
+> > +        # into the options block for the entity. If, in the future, ne=
+w
+> > +        # special features are added, qapi-domain will chirp about
+> > +        # unrecognized options and fail until they are handled in
+> > +        # qapi-domain.
+> > +        for feat in ent.features:
+> > +            if feat.is_special():
+> > +                # FIXME: handle ifcond if present. How to display that
 >
-> For the heterogeneous scenario, yes it's not the most common case. But we 
-> *must*, in terms of QEMU binary, be able to have a single binary first. By 
-> that, I mean the need is to be able to link a binary with several arch 
-> present, without any symbol conflict.
-
-OK Unicorn engine explains it and it needs multiple targets in single 
-library (which maybe is the real goal, not a single binary here and that 
-only needs targets not all devices). By the way I think multiple-arch is 
-what they really mean on that beyond_qemu.html page above under 
-Thread-safety.
-
-> The other approach possible is to rename many functions through QEMU codebase 
-> by adding a target_prefix everywhere, which would be ugly and endless. That's 
-> why we are currently using the "remove duplicated compilation units" 
-> pragmatic approach. As well, we can do a lot of headers cleanup on the way 
-> (removing useless dependencies), which is good for everyone.
+> If I remember correctly, you wanted to mention this FIXME in the commit
+> message.
 >
-> For compilation times, it will only speed it up, because in case you have 
-> only specific targets, non-needed files won't be compiled/linked. For multi 
-> target setup, it's only a speed up (with all targets, it would be a drop from 
-> 9000+ CUs to around 4000+). Less disk space as well, most notable in debug.
-> As well, having files compiled only once allow to use reliably code 
-> indexation tools (clangd for instance), instead of picking a random CU 
-> setting based on one target.
-> Finally, having a single binary would mean it's easy to use LTO (or at least 
-> distros would use it easily), and get the same or better performance as what 
-> we have today.
+> > +                # information is TBD.
+> > +                # Generated from entity def; info location is
+> approximate.
+> > +                assert feat.info
+> > +                self.add_line(f":{feat.name}:", feat.info)
+> > +
+> > +        self.ensure_blank_line()
+> > +
+> >      # Transmogrification core methods
+> >
+> >      def visit_module(self, path: str) -> None:
 >
-> The "current" way, with several binaries, can be kept forever if people
+>
 
-As I said I think that would be needed as there are valid use cases for 
-both.
+--00000000000063b2db06300354c5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> wants. But it's not feasible to keep headers and cu compatible for both 
-> modes. It would be a lot of code duplication, and that is really not 
-> desirable IMHO. So we need to do those system wide changes and convince the 
-> community it's a good progress for everyone.
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Mar 9, =
+2025 at 5:03=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
+at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" =
+target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; This method adds the options/preamble to each definition block. Notabl=
+y,<br>
+&gt; :since: and :ifcond: are added, as are any &quot;special features&quot=
+; such as<br>
+&gt; :deprecated: and :unstable:.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 docs/sphinx/qapidoc.py | 41 ++++++++++++++++++++++++++++++++++++=
+++---<br>
+&gt;=C2=A0 1 file changed, 38 insertions(+), 3 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py<br>
+&gt; index cf5dbb0133d..d8bf0073dfa 100644<br>
+&gt; --- a/docs/sphinx/qapidoc.py<br>
+&gt; +++ b/docs/sphinx/qapidoc.py<br>
+&gt; @@ -37,7 +37,12 @@<br>
+&gt;=C2=A0 from docutils.parsers.rst import Directive, directives<br>
+&gt;=C2=A0 from docutils.statemachine import StringList<br>
+&gt;=C2=A0 from qapi.error import QAPIError<br>
+&gt; -from qapi.schema import QAPISchema, QAPISchemaVisitor<br>
+&gt; +from qapi.parser import QAPIDoc<br>
+&gt; +from qapi.schema import (<br>
+&gt; +=C2=A0 =C2=A0 QAPISchema,<br>
+&gt; +=C2=A0 =C2=A0 QAPISchemaDefinition,<br>
+&gt; +=C2=A0 =C2=A0 QAPISchemaVisitor,<br>
+&gt; +)<br>
+&gt;=C2=A0 from qapi.source import QAPISourceInfo<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 from qapidoc_legacy import QAPISchemaGenRSTVisitor=C2=A0 # type:=
+ ignore<br>
+&gt; @@ -56,8 +61,6 @@<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Sequence,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 )<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 from qapi.parser import QAPIDoc<br>
+&gt; -<br>
+<br>
+Accident?<br></blockquote><div><br></div><div>I don&#39;t know. isort decid=
+ed to move it and none of my tooling complains about it.</div><div>=C2=A0</=
+div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
+der-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 from sphinx.application import Sphinx<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 from sphinx.util.typing import ExtensionMetadata<b=
+r>
+&gt;=C2=A0 <br>
+&gt; @@ -125,6 +128,38 @@ def ensure_blank_line(self) -&gt; None:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # +2: correct for zero=
+/one index, then increment by one.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.add_line_raw(&quo=
+t;&quot;, fname, line + 2)<br>
+&gt;=C2=A0 <br>
+&gt; +=C2=A0 =C2=A0 # Transmogrification helpers<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 def preamble(self, ent: QAPISchemaDefinition) -&gt; Non=
+e:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;&quot;&quot;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 Generate option lines for qapi entity dir=
+ectives.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;&quot;&quot;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ent.doc and ent.doc.since:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 assert ent.doc.since.kind =
+=3D=3D QAPIDoc.Kind.SINCE<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Generated from the entity=
+&#39;s docblock; info location is exact.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.add_line(f&quot;:since=
+: {ent.doc.since.text}&quot;, <a href=3D"http://ent.doc.since.info" rel=3D"=
+noreferrer" target=3D"_blank">ent.doc.since.info</a>)<br>
+<br>
+Break the line aftee the comma?<br>
+<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ent.ifcond.is_present():<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 doc =3D ent.ifcond.docgen()=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 assert <a href=3D"http://en=
+t.info" rel=3D"noreferrer" target=3D"_blank">ent.info</a><br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Generated from entity def=
+inition; info location is approximate.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.add_line(f&quot;:ifcon=
+d: {doc}&quot;, <a href=3D"http://ent.info" rel=3D"noreferrer" target=3D"_b=
+lank">ent.info</a>)<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # Hoist special features such as :depreca=
+ted: and :unstable:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # into the options block for the entity. =
+If, in the future, new<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # special features are added, qapi-domain=
+ will chirp about<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # unrecognized options and fail until the=
+y are handled in<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # qapi-domain.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for feat in ent.features:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if feat.is_special():<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # FIXME: hand=
+le ifcond if present. How to display that<br>
+<br>
+If I remember correctly, you wanted to mention this FIXME in the commit<br>
+message.<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # information=
+ is TBD.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Generated f=
+rom entity def; info location is approximate.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 assert <a hre=
+f=3D"http://feat.info" rel=3D"noreferrer" target=3D"_blank">feat.info</a><b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.add_line=
+(f&quot;:{<a href=3D"http://feat.name" rel=3D"noreferrer" target=3D"_blank"=
+>feat.name</a>}:&quot;, <a href=3D"http://feat.info" rel=3D"noreferrer" tar=
+get=3D"_blank">feat.info</a>)<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 self.ensure_blank_line()<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 # Transmogrification core methods<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 def visit_module(self, path: str) -&gt; None:<br>
+<br>
+</blockquote></div></div>
 
-It would be nice to keep optimisations where possible and it seems it 
-might be possible sometimes so just take that in consideration as well not 
-just one goal.
+--00000000000063b2db06300354c5--
 
-> Kudos to Philippe who has been doing this long and tedious work for several 
-> years now, and I hope that with some fresh eyes/blood, it can be completed 
-> soon.
-
-Absolutely and I did not mean to say not to do it just added another view 
-point for consideration.
-
-Regards,
-BALATON Zoltan
 
