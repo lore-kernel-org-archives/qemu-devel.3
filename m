@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 892DFC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 05:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED68C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 05:21:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trVUe-0008Lw-E2; Mon, 10 Mar 2025 01:16:00 -0400
+	id 1trVYi-000245-GN; Mon, 10 Mar 2025 01:20:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trVUY-0008KJ-Kh; Mon, 10 Mar 2025 01:15:56 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1trVYC-0001Q4-Eg; Mon, 10 Mar 2025 01:19:40 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trVUV-0003UX-Hs; Mon, 10 Mar 2025 01:15:54 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-22435603572so30166365ad.1; 
- Sun, 09 Mar 2025 22:15:50 -0700 (PDT)
+ id 1trVY6-00041e-I7; Mon, 10 Mar 2025 01:19:38 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-22548a28d0cso36300575ad.3; 
+ Sun, 09 Mar 2025 22:19:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741583749; x=1742188549; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=gmail.com; s=20230601; t=1741583971; x=1742188771; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LqscwxC1/15aB95zsPv13agbtqon+y4YdpwoAPcCFSA=;
- b=QLn8PyxJ9KHVJsYgvEas6hVxrRtUhond9a9usp5aymyFUpt2tneX1R7Yo3WDlUnUhj
- cvYfVGKUujlkbbaa6iqFd0K5FLAntP+NKvgfhVJsWBvTf7pSinkhZC5aQEm9ZmaEtSjx
- C9vl7ThuH7/tcK/SFRWSeRHNPQ23uvXucx+3MMS7zFQW24VU/xFVfuvJO9Fe7SBb7FQx
- JQK9raJ5SD/YHZgB697aX0ejr56d1xY8vVfCsV9728lPtj6xMvZbl26blIYiftYaoY5x
- sG3jw27/wom2fJ6C9r5jZB1Y++WOa0JVpGzIIE6zBFYKWu5Oikw+hdE0C/Gu+el0t5w6
- OEaA==
+ bh=CAprJb8UP2za43jr3RvXjtgVjRlegJVoUpaptfFY28E=;
+ b=eY2EfdoXh+41c+bRlUo5dyIfp+elRiIrazjRJLqWosKDKQqK4TdVWbB46kBAMMmy/h
+ Scwge5XEp9GKGwxVOePDIK//kSMY6gHBnbOXhXQkHFUimL0NFByBrmERF7BuEzcwYCfx
+ Zd3jYb2QK0vPjoRV0vTBLghNQgeI3Lt+jLvWIVlcRZyXJyDOnwpPuDJ4BuoOi/Mw7sG2
+ kU49VSCsswjo6P/C/YbjWHS10QSCcYgm9z6TDA2anPaBEfYOqGN2J3lKjTATzrlav6Cy
+ JLkPTHZtXToNWkJ1xsCzBMUvjRiWoenoLIBAuy+aI5tm151YRrG4rjdR8UkY5St/p7Mc
+ DBMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741583749; x=1742188549;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=1e100.net; s=20230601; t=1741583971; x=1742188771;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=LqscwxC1/15aB95zsPv13agbtqon+y4YdpwoAPcCFSA=;
- b=U+oNRqYMGBVJ/u6mAsu9TCaPTjsE/egpnvn5MRds65QWCljbzJO9kp7pIzl1cFe7N7
- 6kXXAQtaMoac7znn5kWHY7kvp5F0zqLZztyiWV7ycQRr77PNyb0C22AFvdKiC3qR0N1I
- SdMReNMmFgJLJylTe6YPWPr9F0ScJ4Ch4mCMqB+CMecR7FiOEgtPJhSFvahNgRr6DkWK
- gB6L24Hg9iVkCIDWCo8NXKvfDyyo2nPBA+nPTCXQ1CBd4R7idNBEAo0Qd3HnM5OFyj3+
- z7M032rErGaMBNA9LrO3b9ZOcpCKtwheQKJ86Ovg20PC0SJXt8ECkDNNKFc/lyBzAJ+s
- +cJQ==
+ bh=CAprJb8UP2za43jr3RvXjtgVjRlegJVoUpaptfFY28E=;
+ b=MkG39rZ7msVa1ZDsJUBqaIwjNXV4NiXsg69WDMAC/V1x5+IYM3UjT27g7K/gx0LTtO
+ kNA6tyVFSGbQrOhgzxeDZRQnUPXRUj8MCnD3HIWIJmA5LRHeBgAIWPi8gRPr5U7K+OrZ
+ UPEUp6cAVZH6KJqkftD31E0QtSseYgHqIe7B05opaAyThxERxJf5w5azxBWUYXHawyp0
+ HXaO7bMtBAJVgEC09pGYbXdF+X0b8bP1LfYm78zmQxl66+GhiPdKvhJhV7u8PL+c7We3
+ feKmer6V67mJuT7pRJXHkv1NAB2dOnfQ8xwUcaQtrQeQv5LpXlatXuX3VbjPgtjW+iSH
+ dUsQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjbbHpqJTFTuh2BsdkjMw2TLwsRZavfDsNLlGCZWTf0UAszGSLmIjL2k+K2ZSKoN4UGDzMKeLm0tJ0@nongnu.org
-X-Gm-Message-State: AOJu0YzzJpMTotZxf/RyzV+KoYa3uIcpyWt7qvrLPqrFD+Fumv+oclHe
- Z1KVHoX1o2jFH+viHeD4ThiLp75TOr5swOsGQZocvEEA+h2qjaBH
-X-Gm-Gg: ASbGnctEulKeWZJZciPG3mMoUwvW7qOztZhFC7DEbQFA7WdoFL341YJj6aLaLb1p2sP
- c7rKMYtqnwngzymXSpu6yQ5mzxCqFcwM+sYw8G5vlZpbEKGXQLkkcxuHSpEAGD+7q4E7ZVa9jfD
- 0ZG1zYcff8jfGbyQ7xopZ6qaP3IbVZvWsHbp8h9sGRApjKpIT9R3a/GoZW3x0IgvCij/9COd547
- 8TrDDuSgXE0KE1kYFXNmHLlnXfLSrzAv4ZeZi1I8D2lEGgeXPRxWN2z/j5ryvpp/7NKa73uxf08
- zFXf3vG5fmCOd9MtSq29EVoAxFa8TnKmuFU/MexdMqtNOGe1pWQ=
-X-Google-Smtp-Source: AGHT+IHH3PkWapUOIGr2oNEYYoFDeCIX3A24N5mvUKuFELe+ltYRTTb1vHO57amuSMDqGo3A/I89gQ==
-X-Received: by 2002:a05:6a20:4393:b0:1f5:77ed:40b9 with SMTP id
- adf61e73a8af0-1f577ed417amr5358072637.40.1741583749536; 
- Sun, 09 Mar 2025 22:15:49 -0700 (PDT)
+ AJvYcCVcUSMJNhj7MXEGlpLr0Sqa9b8FVAhbSROU9Ag2LqvFFlm9mXfrxY4RxpJveg+EBUITr/4jktsatDi5@nongnu.org
+X-Gm-Message-State: AOJu0Yzd7K67smw1/KlAhjDyF83BIc1QR1JVF22nOI20I0AuWABGV8Te
+ Zw2ta+ImrRPiq9CIRomiaxrr+PodUAIKp6Y8Ird6q9WBwIthvprV
+X-Gm-Gg: ASbGncv63xN5ZftLyelFsW1Lpjct05oRyHJAFjKA5j+8kXBIaDh7562gJ2FU7XaP550
+ yw583w9F45rIwBLf3+pQqDhmO1laQ6q2+9I8OMKsbpJ6R317P/8aAvfXbI59Uc5bZ3g45C7r96d
+ S+SBtQejnJOhmGuZ2UwYXykM4rb6np6+Ef7blK359Szzp4XzvNQDMWASpr8g6eJfEKbPdlegdw/
+ 36lLPGPO3jdYT26CvTcIXtyLCuRA7fz8Yv22kO6wcAZuykYOQQyzl7Z25/P6BmvleCwQXn4iXHs
+ Zi9ecU29JI6Dt3EMUqExgdIzZw0V4rn+29lcyO/S
+X-Google-Smtp-Source: AGHT+IHC8CZfIAnyv1kwBS3GKxa3KvTke5y9sEpttqbBpGWa3dodLZpb3WCfNXKDXDtqkmwhC6JOkA==
+X-Received: by 2002:a05:6a00:139a:b0:736:520a:58f9 with SMTP id
+ d2e1a72fcca58-736aaadf082mr16398722b3a.17.1741583970696; 
+ Sun, 09 Mar 2025 22:19:30 -0700 (PDT)
 Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af40411619dsm4311417a12.14.2025.03.09.22.15.45
+ d2e1a72fcca58-736bdd78cbfsm3809489b3a.33.2025.03.09.22.19.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 22:15:49 -0700 (PDT)
+ Sun, 09 Mar 2025 22:19:30 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 10 Mar 2025 15:15:43 +1000
-Message-Id: <D8CBWUFRY8SC.3QZQ4P3K236GE@gmail.com>
-Subject: Re: [PATCH v2 11/14] pnv/xive: Only support crowd size of 0, 2, 4
- and 16
+Date: Mon, 10 Mar 2025 15:19:24 +1000
+Message-Id: <D8CBZO42SQ6J.1JDDSFNBPRZO7@gmail.com>
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "Michael Kowal" <kowal@linux.ibm.com>, <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, <fbarrat@linux.ibm.com>, <milesg@linux.ibm.com>,
  <danielhb413@gmail.com>, <david@gibson.dropbear.id.au>,
  <harshpb@linux.ibm.com>, <thuth@redhat.com>, <lvivier@redhat.com>,
  <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 13/14] pnv/xive: Fix problem with treating NVGC as a NVP
 X-Mailer: aerc 0.19.0
 References: <20241210000527.9541-1-kowal@linux.ibm.com>
- <20241210000527.9541-21-kowal@linux.ibm.com>
-In-Reply-To: <20241210000527.9541-21-kowal@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
+ <20241210000527.9541-24-kowal@linux.ibm.com>
+In-Reply-To: <20241210000527.9541-24-kowal@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,24 +102,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This one got folded back into the crowd matching patch, so I
-will take that version but LGTM.
-
-Thanks,
-Nick
-
 On Tue Dec 10, 2024 at 10:05 AM AEST, Michael Kowal wrote:
-> From: Glenn Miles <milesg@linux.vnet.ibm.com>
+> From: Glenn Miles <milesg@linux.ibm.com>
 >
-> XIVE crowd sizes are encoded into a 2-bit field as follows:
->   0: 0b00
->   2: 0b01
->   4: 0b10
->  16: 0b11
+> When booting with PHYP, the blk/index for a NVGC was being
+> mistakenly treated as the blk/index for a NVP.  Renamed
+> nvp_blk/nvp_idx throughout the code to nvx_blk/nvx_idx to prevent
+> confusion in the future and now we delay loading the NVP until
+> the point where we know that the block and index actually point to
+> a NVP.
 >
-> A crowd size of 8 is not supported.
->
+> Suggested-by: Michael Kowal <kowal@us.ibm.com>
+> Fixes: ("ppc/xive2: Support crowd-matching when looking for target")
 > Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
 > Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 > ---
+
+I think this one should be folded into previous patches.
+
+Thanks,
+Nick
 
