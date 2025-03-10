@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6A5FC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 20:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F2ADC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 20:37:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trjrX-0001FX-Vs; Mon, 10 Mar 2025 16:36:36 -0400
+	id 1trjrY-0001Fg-P5; Mon, 10 Mar 2025 16:36:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3SU3PZwcKCmYOSQPSHMKSSKPI.GSQUIQY-HIZIPRSRKRY.SVK@flex--komlodi.bounces.google.com>)
- id 1trjrT-0001DL-0O
+ <3R03PZwcKCmQMQONQFKIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--komlodi.bounces.google.com>)
+ id 1trjrS-0001DK-Sz
  for qemu-devel@nongnu.org; Mon, 10 Mar 2025 16:36:32 -0400
-Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
+Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3SU3PZwcKCmYOSQPSHMKSSKPI.GSQUIQY-HIZIPRSRKRY.SVK@flex--komlodi.bounces.google.com>)
- id 1trjrR-000120-42
+ <3R03PZwcKCmQMQONQFKIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--komlodi.bounces.google.com>)
+ id 1trjrP-000119-D5
  for qemu-devel@nongnu.org; Mon, 10 Mar 2025 16:36:30 -0400
-Received: by mail-pj1-x1049.google.com with SMTP id
- 98e67ed59e1d1-2ff5296726fso13669535a91.0
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 13:36:26 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-2242f3fd213so52261995ad.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 13:36:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1741638985; x=1742243785; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=HcIbczbXWzXmssnolrGy2c9QlvIETBPe2l1e01JG0+0=;
- b=F66jqR7duSafR5+6Uf0QU3ZUwFi9jf/E1kXax9z4NVKbBgNIx41uX/B2ySErhjfKu9
- 751nIP99mlA0ijFk4qAhHwVHDJNFhdYTiWyEuz3YOBPLr1t7q8zGm1A4LXn+8vWlRODs
- IC0Oroq4yU3obi0lT9k5pSvPZWxjfRsU0rK1Hr8dyK1yCEsnGDdBHLMRnL2bvjfd7zk1
- MmQc8Wo+E8kctPiiHKihai8hSCdgjXtP0g8oivzoBhOIWMD9LZgFgSNajVxQL6D4uCKc
- svvHhGPFSi5F2iSpZp40pvNfccx8jNXAQfaghLBIXlJE7uI1PsebR7ZlYnyv+LV1od6K
- rdrg==
+ d=google.com; s=20230601; t=1741638983; x=1742243783; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=U6kjlby6gR+5lUKTiKqGDet2q5G17Sdtz8VHLqhFM2U=;
+ b=j1nmOdPy5Zt9btbmsVXhyUJeO2RhqvC3bOhjKQ4RgEUIC57FQmJlfKwukl9X7oD8qZ
+ 8aPhHmAlWBOKjdDFHsDnit6AXx41s1XngECmgiI4jgXdODpsbpNBJnjv2ap3GIxbqAkv
+ f+Hr0JddhxoUAMTPoj+wuhWmYkkxSrzQHQ/lY1/7wfgjmUCqzWejfuaItQBb2/6TATQg
+ la9It9lVhuYOea8AnlSs7B8AcBSrnN5W0ZHZCtJ/cx0iILio348QpJaU5+aHhUfAhbsj
+ Pkrubps7ErWQW6KNW4rVYn+FvrqOtPoAl0+qf4H0oGVBA1tOSfYkhjdSWPlQqimON/b5
+ BHGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741638985; x=1742243785;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HcIbczbXWzXmssnolrGy2c9QlvIETBPe2l1e01JG0+0=;
- b=VnE6V8FwXSQo+p79OcrIRkn+sXLeGmEPIz7vAH9Soirn0qq+FEXORrhM57R8JbDQWP
- ku0fmbbrmzjcjb4QGA6afGpIwVSoyHLBNNkLOmMpZoTBFo434aW9WQMjbJ2fFmEyrLQG
- M8W5j65si8ExgRVbCk9YS/QAovsT+D6A1wqwRFI9GA+4jT4gWmXD0um0cvi35QfpObKn
- +g3FGDDY+uoCiQsPdIhQFhHQRDbm2Y1d+lILjW9NAhLL/RKSKMNEa2Og12YhTCrH5NBJ
- FDd7rKfGk9IS5E0M2J7rwhopVBnBabnm5kYjXuOer+ADNjXyzkuEgXPUZkWqm0p6JtVu
- hiVQ==
-X-Gm-Message-State: AOJu0YzKGlL1hnmiWYV8Dj7zyt67+p/+f8DCuSa9fzPQUTR4ULAgJEw6
- HaHLrk6kRZBTTZqFyZl7MiHSKVGArAfKWAHnRljiWwXwtDj2HIAoswQrFpLnkonfJsUrJL4iFAE
- Nzmud5H2oMVUlhwDTXftxRTrRI4NCf+TSyukczgfksFzLoTkarmrHIvzEStT5dPS3nBS+mTNoyy
- GNrOZeRzuRbCN0XUkqMycIiC69+6utsgFDSGPy
-X-Google-Smtp-Source: AGHT+IFPU9A1OiqpmILP3O9ls7mns7jcrCnRnFA+8mh3z+80Fp3XTqxC8LJkcM0ImSqskmKfmSq6O6BhUOMM
-X-Received: from pjqx5.prod.google.com ([2002:a17:90a:b005:b0:2ff:852c:ceb8])
+ d=1e100.net; s=20230601; t=1741638983; x=1742243783;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=U6kjlby6gR+5lUKTiKqGDet2q5G17Sdtz8VHLqhFM2U=;
+ b=O5LDFKbpHigc8COjr9+/bs5huwzIybEov7iiEOFEZ9Stb/dUZsiPVcriIw444rtnrz
+ LP0+aCOHoOUus9+hKz65mVMlJzpvsu3U5WYlOwVxsoEdtsLjN5g8Ohjlqj2Aifw29OeP
+ fM5o47HHJ02FSp8enFBEo5IscjI0TI9XG15MAxqtPECVVumj9715HsA+MCnszwlgbFSf
+ y7AW1HaHIGeHv7+Zt8v9hqLfpREaO15RuaVGv7fdhjagBmdxWmhhtYxs9bkwDRlSB9jL
+ ewEIF5cIIXMkoVZ2xFMEhyBsUeJpjcO+lOyCdbdtXB4U77d74IlyHGKrz3rPSLGcn/U1
+ fIYw==
+X-Gm-Message-State: AOJu0YwceV19pxuPxqB0BCQGF3kKWdGnF/GhY3eFOM+C4zUCoC9czWTG
+ WoGOIT8RAZGpBBXkga+uMBYIq/v3vta+C/UpEhEye32aNJLTDIWHmKhr7Xd8Yq6TXzwnVM7ykHM
+ l96vEYL7cUG8yA4OUlQMWbX1wtd+jHG0TDsS9xzsSdTl7887QoG8XGGcAi6WYyET2kBarRN1jbY
+ NEMGxbebsnc5Gs17FTcXx50UzyDtoGAir2Uv0M
+X-Google-Smtp-Source: AGHT+IHqU2Jea/hS4O1+U1/rJCq897uTnq0UXG7T4EqSAQOJrOGmwftBjx5X3ybdUdvGlzjCjirY5ZA4dMTA
+X-Received: from plge14.prod.google.com ([2002:a17:902:cf4e:b0:220:da6b:5d08])
  (user=komlodi job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:17c2:b0:2ff:4bac:6f9c
- with SMTP id 98e67ed59e1d1-2ff7cf144a4mr22535453a91.28.1741638985285; Mon, 10
- Mar 2025 13:36:25 -0700 (PDT)
-Date: Mon, 10 Mar 2025 20:36:22 +0000
-In-Reply-To: <20250310203622.1827940-1-komlodi@google.com>
+ 2002:a17:903:2405:b0:220:fe51:1aab
+ with SMTP id d9443c01a7336-22428c05613mr289463985ad.38.1741638983645; Mon, 10
+ Mar 2025 13:36:23 -0700 (PDT)
+Date: Mon, 10 Mar 2025 20:36:21 +0000
 Mime-Version: 1.0
-References: <20250310203622.1827940-1-komlodi@google.com>
 X-Mailer: git-send-email 2.49.0.rc0.332.g42c0ae87b1-goog
-Message-ID: <20250310203622.1827940-2-komlodi@google.com>
-Subject: [PATCH 1/1] util/cacheflush: Make first DSB unconditional on aarch64
+Message-ID: <20250310203622.1827940-1-komlodi@google.com>
+Subject: [PATCH 0/1] util/cacheflush: Make first DSB unconditional on aarch64
 From: Joe Komlodi <komlodi@google.com>
 To: qemu-devel@nongnu.org
 Cc: slongfield@google.com, richard.henderson@linaro.org, pbonzini@redhat.com, 
  komlodi@google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
- envelope-from=3SU3PZwcKCmYOSQPSHMKSSKPI.GSQUIQY-HIZIPRSRKRY.SVK@flex--komlodi.bounces.google.com;
- helo=mail-pj1-x1049.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
+ envelope-from=3R03PZwcKCmQMQONQFKIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--komlodi.bounces.google.com;
+ helo=mail-pl1-x649.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -94,43 +92,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On ARM hosts with CTR_EL0.DIC and CTR_EL0.IDC set, this would only cause
-an ISB to be executed during cache maintenance, which could lead to QEMU
-executing TBs containing garbage instructions.
+Hi all,
 
-This seems to be because the ISB finishes executing instructions and
-flushes the pipeline, but the ISB doesn't guarantee that writes from the
-executed instructions are committed. If a small enough TB is created, it's
-possible that the writes setting up the TB aren't committed by the time the
-TB is executed.
+This fixes some TCG TB corruption we would occasionally see on aarch64
+hosts in certain situations. Specifically, if the host had CTR_EL0.DIC
+and CTR_EL0.IDC set, and if the TBs generated were very small, the
+instructions in the TB would sometimes be garbage. This would mostly
+result in a SIGILL when executing the TB, or sometimes a SIGSEGV if the
+garbage instruction was to branch to a garbage address.
 
-This function is intended to be a port of the gcc implementation
-(https://github.com/gcc-mirror/gcc/blob/85b46d0795ac76bc192cb8f88b646a647acf98c1/libgcc/config/aarch64/sync-cache.c#L67)
-which makes the first DSB unconditional, so we can fix the synchronization
-issue by doing that as well.
+If a host has CTR_EL0.DIC and CTR_EL0.IDC set, the aarch64 cache
+maintenance function doesn't execute a DSB, which seems to be the cause
+of the corruption. I think it's because the ISB guarantees that the
+instructions will be executed, but doesn't guarantee that any
+outstanding writes will be fully committed.
+This only seemed to happen on very small TBs, which I'm guessing is
+because there's much fewer instructions between the TB being generated and
+executed, which could lead to writes not being committed before execution.
 
-Signed-off-by: Joe Komlodi <komlodi@google.com>
----
- util/cacheflush.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+This function is intended to be a copy of the upstream gcc one, which
+does an unconditional DSB, so we can fix this by just doing that as well.
 
-diff --git a/util/cacheflush.c b/util/cacheflush.c
-index a08906155a..1d12899a39 100644
---- a/util/cacheflush.c
-+++ b/util/cacheflush.c
-@@ -279,9 +279,11 @@ void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
-         for (p = rw & -dcache_lsize; p < rw + len; p += dcache_lsize) {
-             asm volatile("dc\tcvau, %0" : : "r" (p) : "memory");
-         }
--        asm volatile("dsb\tish" : : : "memory");
-     }
- 
-+    /* DSB unconditionally to ensure any outstanding writes are committed. */
-+    asm volatile("dsb\tish" : : : "memory");
-+
-     /*
-      * If CTR_EL0.DIC is enabled, Instruction cache cleaning to the Point
-      * of Unification is not required for instruction to data coherence.
+Thanks!
+Joe
+
+Joe Komlodi (1):
+  util/cacheflush: Make first DSB unconditional on aarch64
+
+ util/cacheflush.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
 -- 
 2.49.0.rc0.332.g42c0ae87b1-goog
 
