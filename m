@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AABFBC28B2E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 10:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7E1C28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 10:29:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1traEW-0004vA-HN; Mon, 10 Mar 2025 06:19:40 -0400
+	id 1traNG-0007fk-DG; Mon, 10 Mar 2025 06:28:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1traEU-0004u1-5P
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:19:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1traER-0007tM-Mg
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:19:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741601973;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1V04zJWSMfxQfLVn2Wfju4G0wq/3yi/bM0+RtBtDDlQ=;
- b=gFjgIHrmIuKc9DonP+zYCgVqe/Sw2ZNB83i7gsIcZ0A6tI2I6/98autbrgUJ+6MApsTBvl
- L4fW4RZCX0LhGIJBhZafZrSJsleDGnBettwY+Tjfpm1zRAesn96GPz+aMfAK35OVcZgl8u
- EG2ZAvqfXPKb34XVptfOzSiSYw3BQ8c=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615--aVpzHzoPZSbriccvETrOg-1; Mon,
- 10 Mar 2025 06:19:30 -0400
-X-MC-Unique: -aVpzHzoPZSbriccvETrOg-1
-X-Mimecast-MFC-AGG-ID: -aVpzHzoPZSbriccvETrOg_1741601969
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71A63180035D; Mon, 10 Mar 2025 10:19:28 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DBD2E19560AD; Mon, 10 Mar 2025 10:19:27 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5D17821E66C4; Mon, 10 Mar 2025 11:19:25 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Thomas Huth
- <thuth@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 59/62] qapi/parser: add undocumented stub members to
- all_sections
-In-Reply-To: <20250309083550.5155-60-jsnow@redhat.com> (John Snow's message of
- "Sun, 9 Mar 2025 04:35:46 -0400")
-References: <20250309083550.5155-1-jsnow@redhat.com>
- <20250309083550.5155-60-jsnow@redhat.com>
-Date: Mon, 10 Mar 2025 11:19:25 +0100
-Message-ID: <871pv52no2.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1traND-0007en-Id
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:28:39 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1traN8-0000xT-KE
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:28:39 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43bcc04d4fcso23662225e9.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 03:28:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741602512; x=1742207312; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ha06NxopoyqRvQI/XZs/BZ1HMCeMvHjmNb/s5Nuvw1o=;
+ b=S6rHeCM/SIKEpG/GiV01bxgrzg+QLYAq+nNqS924lq69YLNm5sGtmKXSHm5vZmL2r5
+ i6gCm3CB3HJa8ZSTCeuZcVdDNOivdUnr+4C3rgRFJ+eqD5PR/i9fbhMiFSZ4y97yH//X
+ egrH+M1IBGbVAvBlRnjLUl/K2Y439kyQ4/A369477vbndqN8zIcxqmHDRSom+SiQM2dB
+ 5h6lxuEwISAtjFzNfEG/iNf+r2G/SCc8w+Mg8Yn4GqZNLyAcL5sH1eIcPatIAArW6mFX
+ VQuSJuLMqnIZa2yN/fhZJpF7UjxK4prmXvP3PFIM100SxN2gagQf5CrGS6ImfdpBHsDr
+ N7Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741602512; x=1742207312;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ha06NxopoyqRvQI/XZs/BZ1HMCeMvHjmNb/s5Nuvw1o=;
+ b=OmMeQqJQn5xBrbOwRFKWq92+77x0X+z8x0XQqFBr8FUQ1JKkShePX3rNuzM7NS2/jB
+ UkBMCZ58C9WpIIqW1XmCoZt1ykvSoA764VjX7RYEaNDOwA/bm3frwwfnKVZ95lBr8Yuw
+ cpV0VLDrlPwOIaEnx44ygxbf2h7q+O8456y+ujxgOUeCUKeHFxP/4MuQukaxwqW+eXRh
+ HcWDP8M57Jwb4wYgBYRNAGVScjuFZUcEUXOdqwauPyM7xq7VmYprIFaZSOZ20j8aAxBB
+ QVA67Pvc3wzboLsbqxcZTrZ6+qvrpbPVWFTj3E3T3u+j3SfjrOGRigZid+HpgJpEBYkM
+ Og0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUlFQfW1YhZprVXHlxrqK7xCBfTcV9DAFY0Km7YIi4p+duu0QWxeWaR80tvQSdNjQthgiFLHu59rO8V@nongnu.org
+X-Gm-Message-State: AOJu0YyuT8rovCjAgeD8XZ0h3dew1sBqozqqHMQ+80hgBtEX/uGaPHEp
+ Jx+1DK07BCL4LfjctSc7Y+ixkXnaKBGv3in+ljeuYFva1hp9PLXgN/ez6aHxI5k=
+X-Gm-Gg: ASbGncvEGXxjOOKufG1LhKxS/fMDIIfAQ5VMIBxryYGtjDMWMdIbkgQnzhelrNZ+FF2
+ gjErDK5qrDR6eRyhSOIa3P7whOLIqkSHxPlE/zIa83OjOAxvs5D+b3p4oS80Y09rJIIHwUPAx/O
+ ZlG4gFNZ0w8uFHqJup9Ez6FdwTtUXOEKymAUv61Qr237881GuIaJN6pwtJSLtVj9XgScLv/BGnp
+ Q6Y1ltnXgvse4TK81FbVAG5xZHEX/FGUc53j6mnfpFq/0pqACtkFOO8Y061IvDyK+KXgKDa1hMr
+ Mbo2M5m8nWFg4OYo6wI6WBG3Kf7rjJNzuWKCrWmhbyoH+80hYQg=
+X-Google-Smtp-Source: AGHT+IHusQLbULw5cQQ/WbffaxrnxFS0ComN2eSzg9xsxJoVwfJPZEUlxO2hd8rWsie/N4wPRXB3iQ==
+X-Received: by 2002:a5d:64a8:0:b0:391:23e7:968d with SMTP id
+ ffacd0b85a97d-39132db703cmr6853563f8f.47.1741602512520; 
+ Mon, 10 Mar 2025 03:28:32 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912bfb79fbsm14684029f8f.13.2025.03.10.03.28.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 10 Mar 2025 03:28:31 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] tests/functional: Bump up arm_replay timeout
+Date: Mon, 10 Mar 2025 10:28:30 +0000
+Message-ID: <20250310102830.3752440-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,51 +98,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On my machine the arm_replay test takes over 2 minutes to run
+in a config with Rust enabled and debug enabled:
 
-> This helps simplify the new doc generator if it doesn't have to check
-> for undocumented members, it can just blindly operate on a sequence of
-> QAPIDoc.Section instances.
->
-> NB: If there is no existing 'member' section, these undocumented stub
-> members will be inserted directly after the leading section.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  scripts/qapi/parser.py | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
->
-> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> index 11c11bb09e5..58cb9f41ae8 100644
-> --- a/scripts/qapi/parser.py
-> +++ b/scripts/qapi/parser.py
-> @@ -789,8 +789,21 @@ def connect_member(self, member: 'QAPISchemaMember') -> None:
->                  raise QAPISemError(member.info,
->                                     "%s '%s' lacks documentation"
->                                     % (member.role, member.name))
-> -            self.args[member.name] = QAPIDoc.ArgSection(
-> +            section = QAPIDoc.ArgSection(
->                  self.info, QAPIDoc.Kind.MEMBER, member.name)
-> +            self.args[member.name] = section
-> +
-> +            # Insert stub documentation section for missing member docs.
-> +            # Determine where to insert stub doc - it should go at the
-> +            # end of the members section(s), if any. Note that index 0
-> +            # is assumed to be an untagged intro section, even if it is
-> +            # empty.
+$ time (cd build/rust ; PYTHONPATH=../../python:../../tests/functional
+QEMU_TEST_QEMU_BINARY=./qemu-system-arm ./pyvenv/bin/python3
+../../tests/functional/test_arm_replay.py)
+TAP version 13
+ok 1 test_arm_replay.ArmReplay.test_cubieboard
+ok 2 test_arm_replay.ArmReplay.test_vexpressa9
+ok 3 test_arm_replay.ArmReplay.test_virt
+1..3
 
-Please add
+real    2m16.564s
+user    2m13.461s
+sys     0m3.523s
 
-               # TODO drop when undocumented members are outlawed
+Bump up the timeout to 4 minutes.
 
-> +            index = 1
-> +            if len(self.all_sections) > 1:
-> +                while self.all_sections[index].kind == QAPIDoc.Kind.MEMBER:
-> +                    index += 1
-> +            self.all_sections.insert(index, section)
-> +
->          self.args[member.name].connect(member)
->  
->      def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/functional/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 97c3f4ad4e9..608732bec63 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -31,6 +31,7 @@ test_timeouts = {
+   'arm_orangepi' : 540,
+   'arm_quanta_gsj' : 240,
+   'arm_raspi2' : 120,
++  'arm_replay' : 240,
+   'arm_tuxrun' : 240,
+   'arm_sx1' : 360,
+   'intel_iommu': 300,
+-- 
+2.43.0
 
 
