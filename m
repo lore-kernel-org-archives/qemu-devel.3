@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA527C28B28
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 03:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90060C28B28
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 03:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trTjW-00031T-Iq; Sun, 09 Mar 2025 23:23:14 -0400
+	id 1trTo8-00050f-I3; Sun, 09 Mar 2025 23:28:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trTjN-00030L-L7; Sun, 09 Mar 2025 23:23:07 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1trTo6-00050P-Cd; Sun, 09 Mar 2025 23:27:58 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trTjL-0005Gf-TS; Sun, 09 Mar 2025 23:23:05 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2ff784dc055so4522635a91.1; 
- Sun, 09 Mar 2025 20:23:02 -0700 (PDT)
+ id 1trTo4-0006D7-NF; Sun, 09 Mar 2025 23:27:58 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2ff6cf448b8so7269285a91.3; 
+ Sun, 09 Mar 2025 20:27:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741576981; x=1742181781; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741577275; x=1742182075; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3R0Q93nr1IJe8MQVvelF0y9qBKU1481GwrKtY1xvySU=;
- b=ebpXwh3V4buspaHKs57536fWkTZDKJnKqEoNA3U0sH29i8+M6aIT1isESMByowAGYe
- sB8Xw1tyiDuPy/yLHrFuGcO4rIe/x63JaEL4qJ5rohgSNAFIqgAR8W584whbCjZoDxt8
- gmdPNz0kPnnworSMhp//U2ft+sBPu89rIQJddOTDz0qrFVpAKi/i7ggsHw4+bNVa4ZlP
- Z4VY9wR5cOh16vVZOujSL3h6VM28aCwe1jU0hj5KGBsACDXJNmIjUr3jS88Ajr0EUcbQ
- 2Rxok6dbAyjsJzZiCT75X5UUdI6cqwVrVIA8rbeB+tHRuVjrRX2lKgjJTeR8+x8y4V20
- oE1w==
+ bh=VkC8tP0hctYpo03T8g4388EWChg0670hgTHC/2lQT5I=;
+ b=D5Xh7lL6aKTE5xryJpv+oM0oFGB5r/mzOjVynAPP9xDd0mNeinJogdbepK9rApTe/I
+ Bpx2HvGoHcZAF6T78QeO2ma/BV2/u80vRAuC2514xSqj30F41l6eYocFH8C+UkuzbwPl
+ jNJgl51+YypqPSmhGnrHiXwwAYhHxW3060K78ordUIutdJ3PS61V+PBr34p8Cj/Ru1Fs
+ fVL25N2JqjS99sCpyC8Tkz3JtmWwY8EGUx7sJ0bPZv6HO9ElChKi4twb7jyTPluUJggq
+ NdA4eRDE0oECgG3bE35GK1wwziJ/YoKDRe3AUGOVaXla/K9xbSRUhytZ0oi/Tjk7J7B9
+ ZI6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741576981; x=1742181781;
+ d=1e100.net; s=20230601; t=1741577275; x=1742182075;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=3R0Q93nr1IJe8MQVvelF0y9qBKU1481GwrKtY1xvySU=;
- b=U9q4Ftr2Myw6upQD+IRwXyBAJYf2Tl4H6hkcmnRgBfn3BE1KaAMD1wUSkL8vqikCbm
- UyA/wMTAooFQhdMR8w4AtB9Bh+2VztMUTCbm4xAqFuVzevHJZdCVYJOVgGU59xr5Y8SE
- cuqDYu2fXPmHibRALaB5dhtxuIg2bYTUO9LOkCLFPoF6oSCwqIcl4fbScShLA5LwGYnV
- xjy554UXzwLzAPJxtohRgHR+hcWdZR8mJhx3f1IJ8a7kEo3UqsgUIKFR75ECUUrZOGEb
- LlFqYa3c4Bcqf6Igb/xFkG3CFkfVpUvGujWupIpSYSL1rn/MioWeFZGRbWKq3LC8I5wT
- KsAQ==
+ bh=VkC8tP0hctYpo03T8g4388EWChg0670hgTHC/2lQT5I=;
+ b=wp4r2ZStbWrOV6iqi4IW2velqwarmW9CaT5JzC57VPU3ZjyJL3Wzh+g3vWi1QryZRS
+ rjGL/NMCOvyc5VlaPl6M4k39WdSumOKIdH0JTv9lO77nIDPk4ylTtfCDPKsG+Rjn5w9/
+ Zkdk0+k/PQ/AejYMpxdFVSESHT9dOc7a7AQGkFuC6L84RHnYqV7CcGQgIRbEGPWopmtz
+ hyIc0DsjHG789jFquJzoCeYuMkoZ7nvIBC5TWXKCS7w3pdF9BeMzh4rANjesnawj5X8Q
+ pFzS2q597oqv/PAaKSdf7uA1dz/T8QTlb5FISENi1FId2p7wPw8ZJaqaLO2RvbygM3P5
+ 2FDQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU584bP/nAGAo05b7SNYom2AeVLD87FuumtixM+J8CJoQ2LG9jQQJkJuujIyTwemf9tRJ1qnw5vPfG/@nongnu.org
-X-Gm-Message-State: AOJu0Yx64D/cTaB1oXf2HEKpMidQ10LcW5cPAq1MDeUibulXv2WPCOiR
- GIq/Rai8saNwHycSmSGOZEfuzdhe4ZhUBbw7OthBJ4Z1yAhBtWVF
-X-Gm-Gg: ASbGncszp9PUagsYYxN/etbkZyQMpxzeUhNrxdrbyo5TKeK2O7kNUl1bl37FFRH3t0v
- c5SSJunyE5E9B4bv3Aqd47priOMKFVjpe4PtEZX1ZnWsN1USJzoSM9IRPSyd6CUYW5lAh/CBtAr
- ZHCOyScQbjtzZ6QmAw2Bnka4kDlP3ZYGg0iJejezlKRIB0W0Z+/9TI4CuVYHEqFzjIERK1okis7
- bTZ7sHp1yROH1DO81QmENsN7K7pSFUlUm24n3l4wqn18XxUHicth/ijeup+GLarIjaomzirNZRZ
- QDDOF+yzLVegmx09WmXawPswElzWxO334CtRaWt4xHr9gJ2tVkA=
-X-Google-Smtp-Source: AGHT+IHoLEjb2gaAnbIxH6TfOkRp+pvvZSsikzlvzWie7wZWvb+QJaxlNgA0g+1lhPmxs7f9offhJQ==
-X-Received: by 2002:a17:90b:3887:b0:2ee:c6c8:d89f with SMTP id
- 98e67ed59e1d1-2ff7ce84497mr20681290a91.14.1741576981318; 
- Sun, 09 Mar 2025 20:23:01 -0700 (PDT)
+ AJvYcCXYuSTeRw5P1o8FKfv6u13W0cDhYV5/368Z5LzPcU0vYGW6a309JpwZ/1LSef1Uo8RZRUxRu7ACOOt3@nongnu.org
+X-Gm-Message-State: AOJu0Yxk0gr1ZliSGYoEtRtjp4ei9/+XQ3JeKrhqn2q/BWmyCnZl3o3C
+ COsQLVMbuWE3l3qqclbeGgjWjtOhq7MQxaxdFR5UtozBKF4jhZpK
+X-Gm-Gg: ASbGncuofKQnKXddP87eGk+56E5EGvH3UFzwlCofjkKIAAK1rs6l8axc6QG1zqhp2DE
+ /xs0OaxHfsqKMPMt08ONvAZ1Alxfupyrp1uXThkoeXDMraZvOtwYUcr3cjheF8aClhgcvjHSmyE
+ Iakcw4slhDHNqhBEsOuD5xyaSer/Tsay8w/ed1qjmjcKOqOFHAAqH3bVrS3Wkd8nDZrhat5PSPd
+ Ehun+0L0XdFIIhk6X4HJ7xujEUddekto0lI5UuI4tqtbsyIh09ZVrrwFmrUo6m4IkATlrpXZR6T
+ VA6+XdavYx1BdOfxv/7ntFMXe7XhTdls89OmHN7G
+X-Google-Smtp-Source: AGHT+IGreMQgnR6M/DNR2jaTLkK6bZLPVgxm7EQ6/hPRAliTFJg4WfgSVbiVT5x4CMgm/aIY8MN+FQ==
+X-Received: by 2002:a17:90b:3b48:b0:2ee:c91a:acf7 with SMTP id
+ 98e67ed59e1d1-2ff7ce7b5f5mr18421994a91.4.1741577274416; 
+ Sun, 09 Mar 2025 20:27:54 -0700 (PDT)
 Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff69374306sm6796602a91.22.2025.03.09.20.22.56
+ d9443c01a7336-22410a91971sm66713145ad.165.2025.03.09.20.27.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 20:23:00 -0700 (PDT)
+ Sun, 09 Mar 2025 20:27:53 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 10 Mar 2025 13:22:54 +1000
-Message-Id: <D8C9IGYPAKYS.1SCN2F0HQSP4Z@gmail.com>
+Date: Mon, 10 Mar 2025 13:27:47 +1000
+Message-Id: <D8C9M7S4G9O9.2GJZI8XKEC0X9@gmail.com>
 Cc: <qemu-ppc@nongnu.org>, <fbarrat@linux.ibm.com>, <milesg@linux.ibm.com>,
  <danielhb413@gmail.com>, <david@gibson.dropbear.id.au>,
  <harshpb@linux.ibm.com>, <thuth@redhat.com>, <lvivier@redhat.com>,
  <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 01/14] ppc/xive2: Update NVP save/restore for group
- attributes
+Subject: Re: [PATCH v2 02/14] ppc/xive2: Add grouping level to notification
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "Michael Kowal" <kowal@linux.ibm.com>, <qemu-devel@nongnu.org>
 X-Mailer: aerc 0.19.0
 References: <20241210000527.9541-1-kowal@linux.ibm.com>
- <20241210000527.9541-2-kowal@linux.ibm.com>
-In-Reply-To: <20241210000527.9541-2-kowal@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102b.google.com
+ <20241210000527.9541-3-kowal@linux.ibm.com>
+In-Reply-To: <20241210000527.9541-3-kowal@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,113 +105,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue Dec 10, 2024 at 10:05 AM AEST, Michael Kowal wrote:
 > From: Frederic Barrat <fbarrat@linux.ibm.com>
 >
-> If the 'H' attribute is set on the NVP structure, the hardware
-> automatically saves and restores some attributes from the TIMA in the
-> NVP structure.
-> The group-specific attributes LSMFB, LGS and T have an extra flag to
-> individually control what is saved/restored.
+> The NSR has a (so far unused) grouping level field. When a interrupt
+> is presented, that field tells the hypervisor or OS if the interrupt
+> is for an individual VP or for a VP-group/crowd. This patch reworks
+> the presentation API to allow to set/unset the level when
+> raising/accepting an interrupt.
+>
+> It also renames xive_tctx_ipb_update() to xive_tctx_pipr_update() as
+> the IPB is only used for VP-specific target, whereas the PIPR always
+> needs to be updated.
 >
 > Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
 > Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+> ---
+
+[...]
+
+> @@ -495,16 +502,20 @@ static void xive_tctx_need_resend(XiveRouter *xrtr,=
+ XiveTCTX *tctx,
+>          /* Reset the NVT value */
+>          nvt.w4 =3D xive_set_field32(NVT_W4_IPB, nvt.w4, 0);
+>          xive_router_write_nvt(xrtr, nvt_blk, nvt_idx, &nvt, 4);
+> -    }
+> +
+> +        uint8_t *regs =3D &tctx->regs[TM_QW1_OS];
+> +        regs[TM_IPB] |=3D ipb;
+> +}
+
+Indentation bug here.
+
+> +
+>      /*
+> -     * Always call xive_tctx_ipb_update(). Even if there were no
+> +     * Always call xive_tctx_pipr_update(). Even if there were no
+>       * escalation triggered, there could be a pending interrupt which
+>       * was saved when the context was pulled and that we need to take
+>       * into account by recalculating the PIPR (which is not
+>       * saved/restored).
+>       * It will also raise the External interrupt signal if needed.
+>       */
+> -    xive_tctx_ipb_update(tctx, TM_QW1_OS, ipb);
+> +    xive_tctx_pipr_update(tctx, TM_QW1_OS, 0xFF, 0); /* fxb */
+>  }
+> =20
+>  /*
+
+[...]
+
+> @@ -594,15 +596,15 @@ static void xive2_tctx_need_resend(Xive2Router *xrt=
+r, XiveTCTX *tctx,
+>          nvp.w2 =3D xive_set_field32(NVP2_W2_IPB, nvp.w2, 0);
+>          xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
+>      }
+> +    regs[TM_IPB] =3D ipb;
+> +    backlog_prio =3D xive_ipb_to_pipr(ipb);
+> +    backlog_level =3D 0;
+
+There is also a bug here, ipb should be OR'ed into the IPB
+reg (as xive1 code above does).
+
+We have this fixed up in our internal tree, I have have just
+folded that fix in here (Mike is on vacation so I've been trying
+to help wrangle the xive patches...).
+
+Otherwise I think it looks good.
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-> ---
->  include/hw/ppc/xive2_regs.h | 10 +++++++---
->  hw/intc/xive2.c             | 23 ++++++++++++++++++-----
->  2 files changed, 25 insertions(+), 8 deletions(-)
->
-> diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
-> index 1d00c8df64..e88d6eab1e 100644
-> --- a/include/hw/ppc/xive2_regs.h
-> +++ b/include/hw/ppc/xive2_regs.h
-> @@ -1,10 +1,9 @@
->  /*
->   * QEMU PowerPC XIVE2 internal structure definitions (POWER10)
->   *
-> - * Copyright (c) 2019-2022, IBM Corporation.
-> + * Copyright (c) 2019-2024, IBM Corporation.
->   *
-> - * This code is licensed under the GPL version 2 or later. See the
-> - * COPYING file in the top-level directory.
-> + * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> =20
->  #ifndef PPC_XIVE2_REGS_H
-> @@ -152,6 +151,9 @@ typedef struct Xive2Nvp {
->          uint32_t       w0;
->  #define NVP2_W0_VALID              PPC_BIT32(0)
->  #define NVP2_W0_HW                 PPC_BIT32(7)
-> +#define NVP2_W0_L                  PPC_BIT32(8)
-> +#define NVP2_W0_G                  PPC_BIT32(9)
-> +#define NVP2_W0_T                  PPC_BIT32(10)
->  #define NVP2_W0_ESC_END            PPC_BIT32(25) /* 'N' bit 0:ESB  1:END=
- */
->  #define NVP2_W0_PGOFIRST           PPC_BITMASK32(26, 31)
->          uint32_t       w1;
-> @@ -163,6 +165,8 @@ typedef struct Xive2Nvp {
->  #define NVP2_W2_CPPR               PPC_BITMASK32(0, 7)
->  #define NVP2_W2_IPB                PPC_BITMASK32(8, 15)
->  #define NVP2_W2_LSMFB              PPC_BITMASK32(16, 23)
-> +#define NVP2_W2_T                  PPC_BIT32(27)
-> +#define NVP2_W2_LGS                PPC_BITMASK32(28, 31)
->          uint32_t       w3;
->          uint32_t       w4;
->  #define NVP2_W4_ESC_ESB_BLOCK      PPC_BITMASK32(0, 3)  /* N:0 */
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index d1df35e9b3..24e504fce1 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -1,10 +1,9 @@
->  /*
->   * QEMU PowerPC XIVE2 interrupt controller model (POWER10)
->   *
-> - * Copyright (c) 2019-2022, IBM Corporation..
-> + * Copyright (c) 2019-2024, IBM Corporation..
->   *
-> - * This code is licensed under the GPL version 2 or later. See the
-> - * COPYING file in the top-level directory.
-> + * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> =20
->  #include "qemu/osdep.h"
-> @@ -313,7 +312,19 @@ static void xive2_tctx_save_ctx(Xive2Router *xrtr, X=
-iveTCTX *tctx,
-> =20
->      nvp.w2 =3D xive_set_field32(NVP2_W2_IPB, nvp.w2, regs[TM_IPB]);
->      nvp.w2 =3D xive_set_field32(NVP2_W2_CPPR, nvp.w2, regs[TM_CPPR]);
-> -    nvp.w2 =3D xive_set_field32(NVP2_W2_LSMFB, nvp.w2, regs[TM_LSMFB]);
-> +    if (nvp.w0 & NVP2_W0_L) {
-> +        /*
-> +         * Typically not used. If LSMFB is restored with 0, it will
-> +         * force a backlog rescan
-> +         */
-> +        nvp.w2 =3D xive_set_field32(NVP2_W2_LSMFB, nvp.w2, regs[TM_LSMFB=
-]);
-> +    }
-> +    if (nvp.w0 & NVP2_W0_G) {
-> +        nvp.w2 =3D xive_set_field32(NVP2_W2_LGS, nvp.w2, regs[TM_LGS]);
-> +    }
-> +    if (nvp.w0 & NVP2_W0_T) {
-> +        nvp.w2 =3D xive_set_field32(NVP2_W2_T, nvp.w2, regs[TM_T]);
-> +    }
->      xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
-> =20
->      nvp.w1 =3D xive_set_field32(NVP2_W1_CO, nvp.w1, 0);
-> @@ -527,7 +538,9 @@ static uint8_t xive2_tctx_restore_os_ctx(Xive2Router =
-*xrtr, XiveTCTX *tctx,
->      xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, nvp, 2);
-> =20
->      tctx->regs[TM_QW1_OS + TM_CPPR] =3D cppr;
-> -    /* we don't model LSMFB */
-> +    tctx->regs[TM_QW1_OS + TM_LSMFB] =3D xive_get_field32(NVP2_W2_LSMFB,=
- nvp->w2);
-> +    tctx->regs[TM_QW1_OS + TM_LGS] =3D xive_get_field32(NVP2_W2_LGS, nvp=
-->w2);
-> +    tctx->regs[TM_QW1_OS + TM_T] =3D xive_get_field32(NVP2_W2_T, nvp->w2=
-);
-> =20
->      nvp->w1 =3D xive_set_field32(NVP2_W1_CO, nvp->w1, 1);
->      nvp->w1 =3D xive_set_field32(NVP2_W1_CO_THRID_VALID, nvp->w1, 1);
 
 
